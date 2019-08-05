@@ -6,7 +6,7 @@ import AssertionError from 'assertion-error';
 /**
  * Returns a promise which resolves when all subscriptions are ready.
  */
-export const subscriptionsReady = () => new Promise(resolve => {
+export const subscriptionsReady = () => new Promise((resolve) => {
 	const poll = Meteor.setInterval(() => {
 		if (DDP._allSubscriptionsReady()) {
 			Meteor.clearInterval(poll);
@@ -21,22 +21,22 @@ export const subscriptionsReady = () => new Promise(resolve => {
  * The test function is run in response to dom mutation events. See:
  * https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
  */
-export const elementsReady = (test) => new Promise(resolve  => {
-	let result = test([]);
+export const elementsReady = test => new Promise((resolve) => {
+	const result = test([]);
 	if (result !== undefined) {
 		resolve(result);
-	}
-	else {
-		const observer = new MutationObserver(function(mutations) {
-			let result = test(mutations);
+	} else {
+		const observer = new MutationObserver(((mutations) => {
+			// eslint-disable-next-line no-shadow
+			const result = test(mutations);
 			if (result !== undefined) {
 				observer.disconnect();
 				resolve(result);
 			}
-		});
+		}));
 
 		observer.observe(document.body, {
-			childList: true, subtree: true, attributes: false, characterData: false
+			childList: true, subtree: true, attributes: false, characterData: false,
 		});
 	}
 });
@@ -53,7 +53,7 @@ export const elementsReady = (test) => new Promise(resolve  => {
   * rejected when the assertion throws something which is not an AssertionError
   * or when the timeout runs out without the assertion coming through.
   */
-export const waitFor = (assertion, timeout=1000) => () => new Promise((resolve, reject) => {
+export const waitFor = (assertion, timeout = 1000) => () => new Promise((resolve, reject) => {
 	const start = new Date().getTime();
 	let timer = false;
 	let observer = false;
@@ -87,6 +87,6 @@ export const waitFor = (assertion, timeout=1000) => () => new Promise((resolve, 
 	observer = new MutationObserver(tryIt);
 
 	observer.observe(document.body, {
-		childList: true, subtree: true, attributes: true, characterData: true
+		childList: true, subtree: true, attributes: true, characterData: true,
 	});
 });

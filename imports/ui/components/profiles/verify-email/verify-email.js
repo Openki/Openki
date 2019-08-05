@@ -1,11 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert.js';
+import Alert from '/imports/api/alerts/alert';
 
 import './verify-email.html';
 
-Template.verifyEmail.onCreated(function() {
+// eslint-disable-next-line func-names
+Template.verifyEmail.onCreated(function () {
 	this.sending = new ReactiveVar(false);
 });
 
@@ -18,7 +19,7 @@ Template.verifyEmail.helpers({
 Template.verifyEmail.events({
 	'click .js-verify-mail-btn'(event, instance) {
 		instance.sending.set(true);
-		Meteor.call('sendVerificationEmail', function(err) {
+		Meteor.call('sendVerificationEmail', (err) => {
 			if (err) {
 				instance.sending.set(false);
 				Alert.error(err, 'Failed to send verification mail');
@@ -26,5 +27,5 @@ Template.verifyEmail.events({
 				Alert.success(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'));
 			}
 		});
-	}
+	},
 });

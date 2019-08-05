@@ -1,42 +1,49 @@
-import { IsEmail } from '/imports/utils/email-tools.js';
+import IsEmail from '/imports/utils/email-tools';
 
-Accounts.onCreateUser(function(options, user) {
+Accounts.onCreateUser((options, user) => {
 	if (options.profile) {
+		// eslint-disable-next-line no-param-reassign
 		user.profile = options.profile;
 	} else {
+		// eslint-disable-next-line no-param-reassign
 		user.profile = {};
 	}
 	// Collect info where a username could possibly be found
-	var name_providers = [user, user.profile];
-	if (user.services) name_providers = name_providers.concat(_.toArray(user.services));
+	let nameProviders = [user, user.profile];
+	if (user.services) nameProviders = nameProviders.concat(_.toArray(user.services));
 
 	// Try to glean a username
-	var name = false;
-	var username = false;
-	var provider = false;
-	while ((provider = name_providers.pop()) !== undefined) {
+	let name = false;
+	let username = false;
+	let provider = false;
+	// eslint-disable-next-line no-cond-assign
+	while ((provider = nameProviders.pop()) !== undefined) {
 		if (!name && provider.name) name = provider.name;
 		if (!username && provider.username) username = provider.username;
 	}
 
 	// We're not picky and try assigning a name no questions asked
+	// eslint-disable-next-line no-param-reassign
 	user.username = username || name;
+	// eslint-disable-next-line no-param-reassign
 	user.profile.name = name || username;
 
 	if (!user.privileges) {
+		// eslint-disable-next-line no-param-reassign
 		user.privileges = [];
 	}
 
 	// Read email-address if provided
-	var providedEmail = false;
-	var verified = true; // Assume verified unless there is a flag that says it's not
-	let services = user.services;
+	let providedEmail = false;
+	let verified = true; // Assume verified unless there is a flag that says it's not
+	const services = user.services;
 	if (services) {
-		for (let provider of ['facebook', 'google', 'github']) {
-			let provided = services[provider];
+		// eslint-disable-next-line no-shadow, no-restricted-syntax
+		for (const provider of ['facebook', 'google', 'github']) {
+			const provided = services[provider];
 			if (provided && provided.email) {
 				providedEmail = provided.email;
-				if (typeof provided.verified_email === "boolean") {
+				if (typeof provided.verified_email === 'boolean') {
 					verified = provided.verified_email;
 				}
 			}
@@ -44,19 +51,22 @@ Accounts.onCreateUser(function(options, user) {
 	}
 
 	if (providedEmail) {
-		user.emails = [{ 'address': providedEmail, 'verified': verified }];
+		// eslint-disable-next-line no-param-reassign
+		user.emails = [{ address: providedEmail, verified }];
 	}
 
+	// eslint-disable-next-line no-param-reassign
 	user.groups = [];
+	// eslint-disable-next-line no-param-reassign
 	user.badges = [user._id];
 
+	// eslint-disable-next-line no-param-reassign
 	user.notifications = true;
 
 	return user;
 });
 
 Accounts.validateNewUser((user) => {
-
 	if (user.emails) {
 		const email = user.emails[0].address;
 
@@ -69,73 +79,72 @@ Accounts.validateNewUser((user) => {
 });
 
 
-
 Accounts.config({
-	sendVerificationEmail: true
+	sendVerificationEmail: true,
 });
 
-
-Accounts.emailTemplates.verifyEmail.subject = function(user) {
+// eslint-disable-next-line func-names
+Accounts.emailTemplates.verifyEmail.subject = function (user) {
 	return mf('verifyEmail.subject',
 		{
 			SITE: Accounts.emailTemplates.siteName,
-			NAME: user.name
+			NAME: user.name,
 		},
-		"[{SITE}] Welcome to the {SITE} community, {NAME}"
-	);
+		'[{SITE}] Welcome to the {SITE} community, {NAME}');
 };
 
-Accounts.emailTemplates.verifyEmail.text = function(user, url) {
+// eslint-disable-next-line func-names
+Accounts.emailTemplates.verifyEmail.text = function (user, url) {
 	return mf('verifyEmail.text',
 		{
 			SITE: Accounts.emailTemplates.siteName,
 			NAME: user.username,
-			URL: url
+			URL: url,
 		},
-		"Hi {NAME}\n"
-		+ "\n"
+		'Hi {NAME}\n'
+		+ '\n'
 		+ "We're happy that you are part of the {SITE} community.\n"
-		+ "\n"
-		+ "You can click this link \n"
-		+ "{URL}\n"
-		+ "to verify your email address. \n"
+		+ '\n'
+		+ 'You can click this link \n'
+		+ '{URL}\n'
+		+ 'to verify your email address. \n'
 		+ "This helps us knowing you're a real person. :)\n"
-		+ "\n"
-		+ "Sincerely\n"
-		+ "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)"
-	);
+		+ '\n'
+		+ 'Sincerely\n'
+		+ "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)");
 };
 
-Accounts.emailTemplates.resetPassword.subject = function(user) {
+// eslint-disable-next-line func-names
+Accounts.emailTemplates.resetPassword.subject = function () {
 	return mf('resetPassword.subject',
 		{
 			SITE: Accounts.emailTemplates.siteName,
 		},
-		"Reset your password on {SITE}"
-	);
+		'Reset your password on {SITE}');
 };
 
-Accounts.urls.resetPassword = function(token) {
-	return Meteor.absoluteUrl('reset-password/' + token);
+// eslint-disable-next-line func-names
+Accounts.urls.resetPassword = function (token) {
+	return Meteor.absoluteUrl(`reset-password/${token}`);
 };
 
-Accounts.emailTemplates.resetPassword.text = function(user, url) {
+// eslint-disable-next-line func-names
+Accounts.emailTemplates.resetPassword.text = function (user, url) {
 	return mf('resetPassword.text',
 		{
 			SITE: Accounts.emailTemplates.siteName,
 			NAME: user.username,
-			URL: url
+			URL: url,
 		},
-		"Hi {NAME}\n"
-		+ "\n"
-		+ "You requested to reset your password on {SITE}.\n"
-		+ "\n"
-		+ "You can click on \n"
-		+ "{URL}\n"
-		+ "to reset your password. \n"
-		+ "If you did not request this message, you can safely delete it.\n"
-		+ "\n"
-		+ "Regards\n"
-		+ "{SITE} server at your service"
-	);
+		'Hi {NAME}\n'
+		+ '\n'
+		+ 'You requested to reset your password on {SITE}.\n'
+		+ '\n'
+		+ 'You can click on \n'
+		+ '{URL}\n'
+		+ 'to reset your password. \n'
+		+ 'If you did not request this message, you can safely delete it.\n'
+		+ '\n'
+		+ 'Regards\n'
+		+ '{SITE} server at your service');
 };

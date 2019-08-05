@@ -10,22 +10,22 @@
 export default function FilterPreview(options) {
 	const instance = options.instance || false;
 	const course = instance ? instance.$('.course-compact') : $('.course-compact');
-	const property = options.property;
+	const { property } = options;
 
 	// build selector class
 	let selector;
 
-	if (property == 'state') {
+	if (property === 'state') {
 		selector = options.id;
 	} else {
-		selector = property + '-' + options.id;
+		selector = `${property}-${options.id}`;
 	}
 
-	if (property == 'role') {
-		selector = 'needs-' + selector;
+	if (property === 'role') {
+		selector = `needs-${selector}`;
 	}
 
-	selector = '.' + selector;
+	selector = `.${selector}`;
 
 	// create class for courses which are to be faded out and
 	// add a suffix if the fading effect is delayed
@@ -37,8 +37,8 @@ export default function FilterPreview(options) {
 
 	// for properties which have labels used on the courses,
 	// highlight the labels too
-	if (property == 'category' || property == 'group') {
-		const labelClass = '.js-' + property + '-label' + selector;
+	if (property === 'category' || property === 'group') {
+		const labelClass = `.js-${property}-label${selector}`;
 		const label = instance ? instance.$(labelClass) : $(labelClass);
 
 		label.parent().toggleClass('highlight');

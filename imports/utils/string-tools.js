@@ -1,12 +1,14 @@
-export default StringTools = {};
+const StringTools = {};
 
 /** Truncate long strings, adding ellipsis char when the string was long
   *
   * @param {String} src the string to be truncated
   * @param {Number} max the maximum length of the string
-  * @param {String} ellipsis the string to add that signifies that src was truncated, preset "…", does not count towards max.
+  * @param {String} ellipsis the string to add that signifies that src was truncated,
+  * preset "…", does not count towards max.
   */
-StringTools.truncate = function(src, max, ellipsis = '…') {
+// eslint-disable-next-line func-names
+StringTools.truncate = function (src, max, ellipsis = '…') {
 	check(src, String);
 	check(max, Number);
 	if (src.length > max) {
@@ -20,9 +22,10 @@ StringTools.truncate = function(src, max, ellipsis = '…') {
   * @param {String} input the string to be capitalized
   * @return the capitalized string
   */
-StringTools.capitalize = function(input) {
+// eslint-disable-next-line func-names
+StringTools.capitalize = function (input) {
 	check(input, String);
-    return input.charAt(0).toUpperCase() + input.slice(1);
+	return input.charAt(0).toUpperCase() + input.slice(1);
 };
 
 StringTools.markedName = (search, name) => {
@@ -34,44 +37,49 @@ StringTools.markedName = (search, name) => {
 	if (match) {
 		const term = match[0];
 		const parts = name.split(term);
-		marked =
-			parts
+		marked = parts
 			.map(Blaze._escape)
-			.join('<strong>' + Blaze._escape(term) + '</strong>');
+			.join(`<strong>${Blaze._escape(term)}</strong>`);
 	} else {
 		marked = Blaze._escape(name);
 	}
 	return Spacebars.SafeString(marked);
 };
 
-StringTools.slug = function(text) {
+// eslint-disable-next-line func-names
+StringTools.slug = function (text) {
 	return text
 		.toLowerCase()
-		.replace(/[^\w ]+/g,'')
-		.replace(/ +/g,'-');
+		.replace(/[^\w ]+/g, '')
+		.replace(/ +/g, '-');
 };
 
-
-StringTools.escapeRegex = function(string) {
-	return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+// eslint-disable-next-line func-names
+StringTools.escapeRegex = function (string) {
+	return string.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
 };
 
 
 // Remove non-printable chars and linebreaks from string
 // All runs of whitespace are replaced with one space.
-StringTools.saneTitle = function(unsaneText) {
-	let text = unsaneText.replace(/[\n\r]/g, "");
+// eslint-disable-next-line func-names
+StringTools.saneTitle = function (unsaneText) {
+	let text = unsaneText.replace(/[\n\r]/g, '');
 	text = text.replace(/\s+/g, ' ');
 	return StringTools.saneText(text);
 };
 
 
 // Remove non-printable chars from string
-StringTools.saneText = function(unsaneText) {
+// eslint-disable-next-line func-names
+StringTools.saneText = function (unsaneText) {
 	// Remove all ASCII control chars except the line feed.
-	var re = /[\0-\x09\x0B-\x1F\x7F]/g;
+	// eslint-disable-next-line no-control-regex
+	const re = /[\0-\x09\x0B-\x1F\x7F]/g;
 
-	const text = unsaneText.replace(re, "");
+	const text = unsaneText.replace(re, '');
 
 	return text.trim();
 };
+
+export default StringTools;

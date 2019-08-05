@@ -1,4 +1,4 @@
-import Regions from '/imports/api/regions/regions.js';
+import Regions from '/imports/api/regions/regions';
 import moment from 'moment-timezone';
 
 /** Serialize local time for mongo
@@ -26,27 +26,29 @@ import moment from 'moment-timezone';
   * users). This is infeasible. Thus future dates must be stored as local time.
   */
 
-export default LocalTime = {};
+const LocalTime = {};
 
-LocalTime.zone = function(regionId) {
-	var region = Regions.findOne(regionId);
+// eslint-disable-next-line func-names
+LocalTime.zone = function (regionId) {
+	const region = Regions.findOne(regionId);
 	if (!region) {
-		throw "Unable to load region " + regionId;
+		throw new Error(`Unable to load region ${regionId}`);
 	}
 
-	var tz = region.tz;
+	const { tz } = region;
 
 	return {
 		fromString(date) { return moment.tz(date, tz); },
 		toString(date) { return moment.tz(date, tz).format('YYYY-MM-DD[T]HH:mm'); },
-		at(date) { return moment.tz(date, tz); }
+		at(date) { return moment.tz(date, tz); },
 	};
 };
 
 
 /** Turn a moment object into a local date string without time offset
   */
-LocalTime.toString = function(date) {
+// eslint-disable-next-line func-names
+LocalTime.toString = function (date) {
 	return moment(date).format('YYYY-MM-DD[T]HH:mm');
 };
 
@@ -54,31 +56,36 @@ LocalTime.toString = function(date) {
   *
   * Note that the returned date will be faux UTC.
   */
-LocalTime.fromString = function(dateStr) {
+// eslint-disable-next-line func-names
+LocalTime.fromString = function (dateStr) {
 	return moment.utc(dateStr);
 };
 
-
-LocalTime.now = function() {
+// eslint-disable-next-line func-names
+LocalTime.now = function () {
 	return moment().add(moment().utcOffset(), 'minutes');
 };
 
-LocalTime.toGlobal = function(time, regionId) {
-	var region = Regions.findOne(regionId);
+// eslint-disable-next-line func-names
+LocalTime.toGlobal = function (time, regionId) {
+	const region = Regions.findOne(regionId);
 	if (!region) {
-		throw "Unable to load region";
+		throw new Error('Unable to load region');
 	}
-	tz = region.tz;
+	const { tz } = region;
 
-	return moment.tz(moment(time).format("YYYY-MM-DD[T]HH:mm"), tz);
+	return moment.tz(moment(time).format('YYYY-MM-DD[T]HH:mm'), tz);
 };
 
-LocalTime.fromDate = function(time, regionId) {
-	var region = Regions.findOne(regionId);
+// eslint-disable-next-line func-names
+LocalTime.fromDate = function (time, regionId) {
+	const region = Regions.findOne(regionId);
 	if (!region) {
-		throw "Unable to load region";
+		throw new Error('Unable to load region');
 	}
-	tz = region.tz;
+	const { tz } = region;
 
-	return moment(time).tz(time, tz).format("YYYY-MM-DD[T]HH:mm");
+	return moment(time).tz(time, tz).format('YYYY-MM-DD[T]HH:mm');
 };
+
+export default LocalTime;

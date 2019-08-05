@@ -1,14 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import Roles from '/imports/api/roles/roles.js';
+import Roles from '/imports/api/roles/roles';
 
-import PleaseLogin from '/imports/ui/lib/please-login.js';
-import Alert from '/imports/api/alerts/alert.js';
-import { HasRoleUser } from '/imports/utils/course-role-utils.js';
+import PleaseLogin from '/imports/ui/lib/please-login';
+import Alert from '/imports/api/alerts/alert';
+import { HasRoleUser } from '/imports/utils/course-role-utils';
 
-import '/imports/ui/components/profiles/course-list/profile-course-list.js';
-import '/imports/ui/components/profiles/verify-email/verify-email.js';
+import '/imports/ui/components/profiles/course-list/profile-course-list';
+import '/imports/ui/components/profiles/verify-email/verify-email';
 
 import './userprofile.html';
 
@@ -32,38 +32,38 @@ Template.userprofile.helpers({
 	},
 
 	showSettings() {
-		var showPrivileges = Template.instance().data.showPrivileges;
-		var showInviteGroups = this.inviteGroups.count && this.inviteGroups.count() > 0;
+		const { showPrivileges } = Template.instance().data;
+		const showInviteGroups = this.inviteGroups.count && this.inviteGroups.count() > 0;
 		return showPrivileges || showInviteGroups;
 	},
 	roles() {
 		return _.clone(Roles).reverse();
 	},
 	coursesByRole(role) {
-		var templateData = Template.instance().data;
-		var involvedIn = templateData.involvedIn;
-		var userID = templateData.user._id;
-		var coursesForRole = [];
+		const templateData = Template.instance().data;
+		const { involvedIn } = templateData;
+		const userID = templateData.user._id;
+		const coursesForRole = [];
 
-		involvedIn.forEach(function(course) {
-			if(!!HasRoleUser(course.members, role, userID)) {
+		involvedIn.forEach((course) => {
+			if (HasRoleUser(course.members, role, userID)) {
 				coursesForRole.push(course);
 			}
 		});
 		return coursesForRole;
 	},
 	roleUserList() {
-		return 'roles.'+this.type+'.userList';
+		return `roles.${this.type}.userList`;
 	},
 	getName() {
 		return Template.instance().data.user.username;
-	}
+	},
 });
 
 
 Template.userprofile.events({
 	'click button.giveAdmin'() {
-		Meteor.call('user.addPrivilege', this.user._id, 'admin', function(err) {
+		Meteor.call('user.addPrivilege', this.user._id, 'admin', (err) => {
 			if (err) {
 				Alert.error(err, 'Unable to add privilege');
 			} else {
@@ -73,8 +73,8 @@ Template.userprofile.events({
 	},
 
 	'click .js-remove-privilege-btn'(event, template) {
-		var priv = template.$(event.target).data('priv');
-		Meteor.call('user.removePrivilege', this.user._id, priv, function(err) {
+		const priv = template.$(event.target).data('priv');
+		Meteor.call('user.removePrivilege', this.user._id, priv, (err) => {
 			if (err) {
 				Alert.error(err, 'Unable to remove privilege');
 			} else {
@@ -83,11 +83,11 @@ Template.userprofile.events({
 		});
 	},
 
-	'click button.draftIntoGroup'(event, template) {
-		var groupId = this._id;
-		var name = this.name;
-		var userId = Template.parentData().user._id;
-		Meteor.call('group.updateMembership', userId, groupId, true, function(err) {
+	'click button.draftIntoGroup'() {
+		const groupId = this._id;
+		const { name } = this;
+		const userId = Template.parentData().user._id;
+		Meteor.call('group.updateMembership', userId, groupId, true, (err) => {
 			if (err) {
 				Alert.error(err, 'Unable to draft user into group');
 			} else {
@@ -96,12 +96,12 @@ Template.userprofile.events({
 		});
 	},
 
-	'click .js-group-expel-btn'(event, template) {
+	'click .js-group-expel-btn'() {
 		Tooltips.hide();
-		var groupId = this._id;
-		var name = this.name;
-		var userId = Template.parentData().user._id;
-		Meteor.call('group.updateMembership', userId, groupId, false, function(err) {
+		const groupId = this._id;
+		const { name } = this;
+		const userId = Template.parentData().user._id;
+		Meteor.call('group.updateMembership', userId, groupId, false, (err) => {
 			if (err) {
 				Alert.error(err, 'Unable to expel user from group');
 			} else {
@@ -111,7 +111,8 @@ Template.userprofile.events({
 	},
 });
 
-Template.emailBox.onCreated(function() {
+// eslint-disable-next-line func-names
+Template.emailBox.onCreated(function () {
 	this.verificationMailSent = new ReactiveVar(false);
 	this.busy(false);
 });
@@ -122,10 +123,10 @@ Template.emailBox.onRendered(function emailBoxOnRendered() {
 
 Template.emailBox.helpers({
 	hasEmail() {
-		var user = Meteor.user();
+		const user = Meteor.user();
 		if (!user) return false;
 
-		var emails = user.emails;
+		const { emails } = user;
 		return emails && emails[0];
 	},
 
@@ -135,13 +136,13 @@ Template.emailBox.helpers({
 
 	verificationMailSent() {
 		return Template.instance().verificationMailSent.get();
-	}
+	},
 });
 
 Template.emailBox.events({
 	'click .js-verify-mail'(e, instance) {
 		instance.verificationMailSent.set(true);
-		Meteor.call('sendVerificationEmail', function(err) {
+		Meteor.call('sendVerificationEmail', (err) => {
 			if (err) {
 				instance.verificationMailSent.set(false);
 				Alert.error(err, 'Failed to send verification mail');
@@ -163,19 +164,20 @@ Template.emailBox.events({
 		event.preventDefault();
 		if (PleaseLogin()) return;
 
-		var rec_user_id = this.user._id;
-		var rec_user = Meteor.users.findOne({_id:rec_user_id});
-		if(rec_user){
-			if(rec_user.username){
-				rec_user = rec_user.username;
+		const recUserId = this.user._id;
+		let recUser = Meteor.users.findOne({ _id: recUserId });
+		if (recUser) {
+			if (recUser.username) {
+				recUser = recUser.username;
 			}
 		}
 
-		var message = template.$('#emailmessage').val();
-		var revealAddress = template.$('#sendOwnAdress').is(':checked');
-		var receiveCopy = template.$('#receiveCopy').is(':checked');
+		const message = template.$('#emailmessage').val();
+		const revealAddress = template.$('#sendOwnAdress').is(':checked');
+		const receiveCopy = template.$('#receiveCopy').is(':checked');
 
 		if (message.length < '2') {
+			// eslint-disable-next-line no-alert
 			alert(mf('profile.mail.longertext', 'longer text please'));
 			return;
 		}
@@ -187,7 +189,7 @@ Template.emailBox.events({
 			message,
 			revealAddress,
 			receiveCopy,
-			function(error, result) {
+			(error) => {
 				template.busy(false);
 				if (error) {
 					Alert.error(error, '');
@@ -195,7 +197,7 @@ Template.emailBox.events({
 					Alert.success(mf('profile.mail.sent', 'Your message was sent'));
 					template.$('#emailmessage').val('');
 				}
-			}
+			},
 		);
-	}
+	},
 });

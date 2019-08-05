@@ -1,58 +1,61 @@
-import Regions from '/imports/api/regions/regions.js';
-import UrlTools from '/imports/utils/url-tools.js';
-import IpLocation from '/imports/utils/ip-location.js';
+import Regions from '/imports/api/regions/regions';
+import UrlTools from '/imports/utils/url-tools';
+import IpLocation from '/imports/utils/ip-location';
 
-export default RegionSelection = {};
+const RegionSelection = {};
 
 /** List of routes that show different results when the region changes.
   */
-RegionSelection.regionDependentRoutes =
-	['home', 'find', 'calendar', 'venueMap', 'groupDetails'];
+RegionSelection.regionDependentRoutes = ['home', 'find', 'calendar', 'venueMap', 'groupDetails'];
 
 /** Subscribe to list of regions and configure the regions
   * This checks client storage for a region setting. When there is no previously
   * selected region, we ask the server to do geolocation. If that fails too,
   * we just set the region to 'all regions'. */
-RegionSelection.init = function() {
+// eslint-disable-next-line func-names
+RegionSelection.init = function () {
 	// We assume the initial onLogin() callback comes before the regions' ready.
 	// We have no guarantee for this however!
-	Accounts.onLogin(function() {
-		var user = Meteor.user();
+	Accounts.onLogin(() => {
+		const user = Meteor.user();
 
-		var regionId = user.profile.regionId;
+		const { regionId } = user.profile;
 		if (regionId) Session.set('region', regionId);
 	});
 
-	Meteor.subscribe('regions', function() {
-		var selectors =
-			[ Session.get('region')
-			, UrlTools.queryParam('region')
-			, localStorage.getItem('region')
-			].filter(Boolean);
+	Meteor.subscribe('regions', () => {
+		const selectors = [Session.get('region'),
+			UrlTools.queryParam('region'),
+			localStorage.getItem('region'),
+		].filter(Boolean);
 
-		var useAsRegion = function(regionId) {
+		const useAsRegion = function (regionId) {
 			if (!regionId) return;
 
 			// Special case 'all'
-			if (regionId == 'all') {
-				Session.set("region", regionId);
+			if (regionId === 'all') {
+				Session.set('region', regionId);
+				// eslint-disable-next-line consistent-return
 				return true;
 			}
 
 			// Normal case region ID
 			if (Regions.findOne({ _id: regionId })) {
-				Session.set("region", regionId);
+				Session.set('region', regionId);
+				// eslint-disable-next-line consistent-return
 				return true;
 			}
 
 			// Special case by name so you can do ?region=Spilistan
-			var region = Regions.findOne({ name: regionId });
+			const region = Regions.findOne({ name: regionId });
 			if (region) {
-				Session.set("region", region._id);
+				Session.set('region', region._id);
+				// eslint-disable-next-line consistent-return
 				return true;
 			}
 
 			// Ignore invalid region ID
+			// eslint-disable-next-line consistent-return
 			return false;
 		};
 
@@ -64,8 +67,9 @@ RegionSelection.init = function() {
 
 		// Ask geolocation server to place us so the splash-screen has our best
 		// guess selected.
-		IpLocation.detect(function(region, reason) {
-			console.log("Region autodetection: " + reason);
+		IpLocation.detect((region, reason) => {
+			// eslint-disable-next-line no-console
+			console.log(`Region autodetection: ${reason}`);
 			if (region) {
 				useAsRegion(region._id);
 				return;
@@ -76,3 +80,5 @@ RegionSelection.init = function() {
 		});
 	});
 };
+
+export default RegionSelection;

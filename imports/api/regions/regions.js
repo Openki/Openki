@@ -6,10 +6,12 @@ import { Mongo } from 'meteor/mongo';
 // name             -> String
 // loc              -> Geodata {type:Point, coordinates: [long, lat]}  (not lat-long !)
 // timeZone         -> String,  ex: "UTC+01:00"
-// courseCount      -> Number of courses in that region, calculated field (does not count internal courses)
-// futureEventCount -> Number of future events in that region, calculated field (does not count internal courses)
+// courseCount      -> Number of courses in that region, calculated field
+//                     (does not count internal courses)
+// futureEventCount -> Number of future events in that region, calculated field
+//                     (does not count internal courses)
 // featuredGroup    -> ID of featured group
 // ===========================
 
 export default Regions = new Mongo.Collection('Regions');
-if (Meteor.isServer) Regions._ensureIndex({ loc : '2dsphere' });
+if (Meteor.isServer) Regions._ensureIndex({ loc: '2dsphere' });

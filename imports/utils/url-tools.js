@@ -1,8 +1,6 @@
-export default UrlTools = {
+const UrlTools = {
 	paramsToQueryString(params) {
-		var queryParams = _.map(params, function(param, name) {
-			return encodeURIComponent(name) + '=' + encodeURIComponent(param);
-		});
+		const queryParams = _.map(params, (param, name) => `${encodeURIComponent(name)}=${encodeURIComponent(param)}`);
 
 		return queryParams.join('&');
 	},
@@ -10,11 +8,13 @@ export default UrlTools = {
 	// Get the value of a query parameter by name
 	// returns parameter value as string or undefined
 	queryParam(name) {
-		var params = location.search.substring(1).split('&');
-		for (var i in params) {
-			var keyval = params[i].split('=');
+		const params = document.location.search.substring(1).split('&');
+		for (let i = 0; i < params.length; i += 1) {
+			const keyval = params[i].split('=');
 			if (decodeURIComponent(keyval[0]) === name) return decodeURIComponent(keyval[1]);
 		}
 		return undefined;
-	}
+	},
 };
+
+export default UrlTools;

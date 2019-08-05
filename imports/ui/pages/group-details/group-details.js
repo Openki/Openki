@@ -1,88 +1,91 @@
-"use strict";
+
+
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
-import Groups from '/imports/api/groups/groups.js';
-import PleaseLogin from '/imports/ui/lib/please-login.js';
-import Editable from '/imports/ui/lib/editable.js';
-import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
-import Alert from '/imports/api/alerts/alert.js';
-import IsGroupMember from '/imports/utils/is-group-member.js';
+import Groups from '/imports/api/groups/groups';
+import PleaseLogin from '/imports/ui/lib/please-login';
+import Editable from '/imports/ui/lib/editable';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import Alert from '/imports/api/alerts/alert';
+import IsGroupMember from '/imports/utils/is-group-member';
 
-import '/imports/ui/components/buttons/buttons.js';
-import '/imports/ui/components/editable/editable.js';
-import '/imports/ui/components/groups/settings/group-settings.js';
+import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/editable/editable';
+import '/imports/ui/components/groups/settings/group-settings';
 
 import './group-details.html';
 
-Template.groupDetails.onCreated(function() {
-	var instance = this;
+// eslint-disable-next-line func-names
+Template.groupDetails.onCreated(function () {
+	const instance = this;
 
 	instance.busy(false);
 
-	const group = instance.data.group;
-	var groupId = group._id;
+	const { group } = instance.data;
+	const groupId = group._id;
 	instance.mayEdit = new ReactiveVar(false);
 	instance.editingSettings = new ReactiveVar(false);
 
-	var handleSaving = function(err, groupId) {
+	const handleSaving = function (err) {
 		if (err) {
 			Alert.error(err, 'Saving the group went wrong');
 		} else {
 			Alert.success(mf(
 				'groupDetails.changesSaved',
 				{ GROUP: group.name },
-				'Your changes to the group "{GROUP}" have been saved.'
+				'Your changes to the group "{GROUP}" have been saved.',
 			));
 		}
 	};
 
-	var showControls = !this.data.isNew;
+	const showControls = !this.data.isNew;
 
 	instance.editableName = new Editable(
 		true,
-		function(newName) {
-			Meteor.call("group.save", groupId, { name: newName }, handleSaving);
-		},
-		mf('group.name.placeholder',  'Name of your group, institution, community or program'),
-		showControls
+		((newName) => {
+			Meteor.call('group.save', groupId, { name: newName }, handleSaving);
+		}),
+		mf('group.name.placeholder', 'Name of your group, institution, community or program'),
+		showControls,
 	);
 
 	instance.editableShort = new Editable(
 		true,
-		function(newShort) {
-			Meteor.call("group.save", groupId, { short: newShort }, handleSaving);
-		},
+		((newShort) => {
+			Meteor.call('group.save', groupId, { short: newShort }, handleSaving);
+		}),
 		mf('group.short.placeholder', 'Abbreviation'),
-		showControls
+		showControls,
 	);
 
 	instance.editableClaim = new Editable(
 		true,
-		function(newClaim) {
-			Meteor.call("group.save", groupId, { claim: newClaim }, handleSaving);
-		},
+		((newClaim) => {
+			Meteor.call('group.save', groupId, { claim: newClaim }, handleSaving);
+		}),
 		mf('group.claim.placeholder', 'The core idea'),
-		showControls
+		showControls,
 	);
 
 	instance.editableDescription = new Editable(
 		false,
-		function(newDescription) {
-			Meteor.call("group.save", groupId, { description: newDescription }, handleSaving);
-		},
+		((newDescription) => {
+			Meteor.call('group.save', groupId, { description: newDescription }, handleSaving);
+		}),
 		mf('group.description.placeholder', 'Describe the audience, the interests and activities of your group.'),
-		showControls
+		showControls,
 	);
 
 
-	instance.autorun(function() {
-		var data = Template.currentData();
-		var group = Groups.findOne(groupId) || {};
-		var userId = Meteor.userId();
-		var mayEdit = data.isNew || userId && IsGroupMember(userId, groupId);
+	instance.autorun(() => {
+		const data = Template.currentData();
+		// eslint-disable-next-line no-shadow
+		const group = Groups.findOne(groupId) || {};
+		const userId = Meteor.userId();
+		const mayEdit = data.isNew || (userId && IsGroupMember(userId, groupId));
 		instance.mayEdit.set(mayEdit);
 
 		instance.editableName.setText(group.name);
@@ -99,47 +102,47 @@ Template.groupDetails.helpers({
 	},
 
 	headerClasses() {
-		var classes = [];
+		const classes = [];
 		if (this.group.logo) classes.push('has-logo');
 		if (Template.instance().mayEdit.get()) classes.push('is-editable');
 		return classes.join(' ');
 	},
 	editableName() {
-		var instance = Template.instance();
+		const instance = Template.instance();
 		return instance.mayEdit.get() && instance.editableName;
 	},
 	editableShort() {
-		var instance = Template.instance();
+		const instance = Template.instance();
 		return instance.mayEdit.get() && instance.editableShort;
 	},
 	hasContent() {
-		var group = this.group;
-		var isNew = this.isNew;
+		const { group } = this;
+		const { isNew } = this;
 		if (isNew) {
 			return true;
-		} else {
-			return group.claim || group.description;
 		}
+		return group.claim || group.description;
 	},
 	editableClaim() {
-		var instance = Template.instance();
+		const instance = Template.instance();
 		return instance.mayEdit.get() && instance.editableClaim;
 	},
 	editableDescription() {
-		var instance = Template.instance();
+		const instance = Template.instance();
 		return instance.mayEdit.get() && instance.editableDescription;
 	},
 	mayEdit() {
-		var instance = Template.instance();
+		const instance = Template.instance();
 		return instance.mayEdit.get();
 	},
 	editingSettings() {
-		var instance = Template.instance();
+		const instance = Template.instance();
 		return instance.mayEdit.get() && Template.instance().editingSettings.get();
 	},
 });
 
 Template.groupDetails.events({
+	// eslint-disable-next-line consistent-return
 	'click .js-group-settings'(event, instance) {
 		if (PleaseLogin()) return false;
 		instance.editingSettings.set(!instance.editingSettings.get());
@@ -150,7 +153,7 @@ Template.groupDetails.events({
 			name: instance.editableName.getEdited(),
 			short: instance.editableShort.getEdited(),
 			claim: instance.editableClaim.getEdited(),
-			description: instance.editableDescription.getEdited()
+			description: instance.editableDescription.getEdited(),
 		};
 
 		instance.busy('saving');
@@ -168,7 +171,7 @@ Template.groupDetails.events({
 					Alert.success(mf(
 						'groupDetails.groupCreated',
 						{ GROUP: group.name },
-						'The Group {GROUP} has been created!'
+						'The Group {GROUP} has been created!',
 					));
 					Router.go('groupDetails', { _id: groupId });
 				}
@@ -176,11 +179,11 @@ Template.groupDetails.events({
 		});
 	},
 
-	'click .js-group-cancel'(event, instance) {
+	'click .js-group-cancel'() {
 		Router.go('/'); // Got a better idea?
 	},
 
-	'click .js-group-remove-filter'(event, instance) {
+	'click .js-group-remove-filter'() {
 		Router.go('/'); // Got a better idea?
-	}
+	},
 });

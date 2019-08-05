@@ -15,11 +15,11 @@ commitShort=$(git rev-parse --short HEAD)
 timestamp=$(git log -1 --date=short --pretty=format:%cd)
 cat > server/version.js << EOF
 VERSION = {
-	"basic": "$ver",
-	"complete": "$completeVer",
-	"branch": "$branch",
-	"commit": "$commit",
-	"commitShort": "$commitShort",
-	"commitDate": "$timestamp"
+	basic: '$ver',
+	complete: '$completeVer',
+	branch: '$branch',
+	commit: '$commit',
+	commitShort: '$commitShort',
+	commitDate: '$timestamp',
 };
 EOF

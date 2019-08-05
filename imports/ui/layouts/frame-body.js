@@ -1,4 +1,4 @@
-import '/imports/ui/components/alerts/alerts.js';
+import '/imports/ui/components/alerts/alerts';
 
 import './frame-body.html';
 
@@ -9,5 +9,5 @@ import './frame-body.html';
 Template.frameLayout.events({
 	'click .js-download'(event) {
 		event.stopPropagation();
-	}
+	},
 });

@@ -1,7 +1,7 @@
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import Groups from '/imports/api/groups/groups.js';
-import Regions from '/imports/api/regions/regions.js';
+import Groups from '/imports/api/groups/groups';
+import Regions from '/imports/api/regions/regions';
 
 import './featured-group.html';
 
@@ -14,9 +14,7 @@ Template.featuredGroup.onCreated(function featuredGroupOnCreated() {
 		return false;
 	};
 
-	this.featuredGroup = () => {
-		return Groups.findOne(this.featuredGroupId());
-	};
+	this.featuredGroup = () => Groups.findOne(this.featuredGroupId());
 
 	this.autorun(() => {
 		const gid = this.featuredGroupId();
@@ -27,9 +25,7 @@ Template.featuredGroup.onCreated(function featuredGroupOnCreated() {
 });
 
 Template.featuredGroup.helpers({
-	featuredGroup: () => {
-		return Template.instance().featuredGroup();
-	},
+	featuredGroup: () => Template.instance().featuredGroup(),
 
-	regionName: () => Regions.findOne(Session.get('region')).name
+	regionName: () => Regions.findOne(Session.get('region')).name,
 });

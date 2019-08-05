@@ -11,22 +11,25 @@ import './map.html';
  *
  * */
 
-Template.map.onCreated(function() {
+// eslint-disable-next-line func-names
+Template.map.onCreated(function () {
 	this.fullscreen = new ReactiveVar(false);
 });
 
-var FaIcon = function(faClass) {
-	return function() {
-		return L.DomUtil.create('span', 'fa fa-'+faClass);
+const FaIcon = function (faClass) {
+	// eslint-disable-next-line func-names
+	return function () {
+		return L.DomUtil.create('span', `fa fa-${faClass}`);
 	};
 };
 
-var FaCompIcon = function(opClass, icClass) {
-	return function() {
-		var cont = L.DomUtil.create('span', 'fa');
-		L.DomUtil.create('i', 'fa fa-'+opClass, cont);
+const FaCompIcon = function (opClass, icClass) {
+	// eslint-disable-next-line func-names
+	return function () {
+		const cont = L.DomUtil.create('span', 'fa');
+		L.DomUtil.create('i', `fa fa-${opClass}`, cont);
 
-		var ic = L.DomUtil.create('i', 'fa fa-lg fa-'+icClass, cont);
+		const ic = L.DomUtil.create('i', `fa fa-lg fa-${icClass}`, cont);
 		ic.style.position = 'absolute';
 		ic.style.left = '0.7ex';
 		L.DomUtil.setOpacity(ic, 0.5);
@@ -35,109 +38,113 @@ var FaCompIcon = function(opClass, icClass) {
 	};
 };
 
-var OpenkiControl = L.Control.extend({
+const OpenkiControl = L.Control.extend({
 	options: {
 		icon: null,
 		action: '',
 		title: '',
-		position: 'topright'
+		position: 'topright',
 	},
 
 	initialize(options) {
 		L.Util.setOptions(this, options);
 	},
 
-	onAdd(map) {
-		var elm = this.options.icon();
-		L.DomUtil.addClass(elm, this.options.action);
-		elm.setAttribute('title', this.options.title);
-		return elm;
-	}
+	onAdd() {
+		const elem = this.options.icon();
+		L.DomUtil.addClass(elem, this.options.action);
+		elem.setAttribute('title', this.options.title);
+		return elem;
+	},
 });
 
-Template.map.onRendered(function() {
-	var instance = this;
+// eslint-disable-next-line func-names
+Template.map.onRendered(function () {
+	const instance = this;
 
-	var layers = {};
-	var centers = {};
+	const layers = {};
+	const centers = {};
 
 	L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
 
-	var options = {
+	const options = {
 		zoomControl: false,
-		attributionControl: false
+		attributionControl: false,
 	};
 
-	var map = L.map(instance.find('.map'), options).setView(L.latLng(0,0), 1);
+	const map = L.map(instance.find('.map'), options).setView(L.latLng(0, 0), 1);
 
 
 	// Add tiles depending on language
-	var tiles = null;
-	var tileLayers = {
+	let tiles = null;
+	const tileLayers = {
 		// unfortunately for 'de' the tile.openstreetmap.de server does not support SSL
-		'fr'() {
+		fr() {
 			return L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
 				maxZoom: 19,
-				attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+				attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			});
 		},
-		'default'() {
-			return  L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		default() {
+			return L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				maxZoom: 19,
-				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			});
-		}
+		},
 	};
 
-	instance.autorun(function() {
+	instance.autorun(() => {
 		if (tiles) map.removeLayer(tiles);
-		var tileF = tileLayers[Session.get('locale')];
-		if (!tileF) tileF = tileLayers['default'];
+		let tileF = tileLayers[Session.get('locale')];
+		if (!tileF) tileF = tileLayers.default;
 		tiles = tileF();
 		tiles.addTo(map);
 	});
 
 
 	// Depending on view state, different controls are shown
-	var zoomControl = L.control.zoom({
+	const zoomControl = L.control.zoom({
 		zoomInTitle: mf('map.zoomInTitle', 'zoom in'),
-		zoomOutTitle: mf('map.zoomOutTitle', 'zoom out')
+		zoomOutTitle: mf('map.zoomOutTitle', 'zoom out'),
 	});
-	var attributionControl = L.control.attribution();
-	var scaleControl = L.control.scale({
-		imperial: Session.equals('locale', 'en')
+	const attributionControl = L.control.attribution();
+	const scaleControl = L.control.scale({
+		imperial: Session.equals('locale', 'en'),
 	});
-	var fullscreenControl = new OpenkiControl({
+	const fullscreenControl = new OpenkiControl({
 		icon: FaIcon('arrows-alt'),
 		action: 'js-make-fullscreen',
-		title: mf('map.fullscreen', 'big map')
+		title: mf('map.fullscreen', 'big map'),
 	});
-	var closeFullscreenControl = new OpenkiControl({
+	const closeFullscreenControl = new OpenkiControl({
 		icon: FaIcon('close'),
 		action: 'js-close-fullscreen',
-		title: mf('map.fullscreenClose', 'close')
+		title: mf('map.fullscreenClose', 'close'),
 	});
-	var addMarkerControl = new OpenkiControl({
+	const addMarkerControl = new OpenkiControl({
 		icon: FaCompIcon('plus', 'map-marker'),
 		action: 'js-add-marker',
-		title: mf('map.addMarker', 'set marker')
+		title: mf('map.addMarker', 'set marker'),
 	});
-	var removeMarkerControl = new OpenkiControl({
+	const removeMarkerControl = new OpenkiControl({
 		icon: FaCompIcon('minus', 'map-marker'),
 		action: 'js-remove-marker',
-		title: mf('map.removeMarker', 'remove the marker')
+		title: mf('map.removeMarker', 'remove the marker'),
 	});
 
-	instance.autorun(function() {
-		var fullscreen = instance.fullscreen.get();
-		var mini = instance.data.mini;
+	instance.autorun(() => {
+		const fullscreen = instance.fullscreen.get();
+		const { mini } = instance.data;
 
-		var show = function(control, toggle) {
+		const show = function (control, toggle) {
+			// eslint-disable-next-line no-param-reassign
 			toggle = !!toggle; // coerce to bool
 
+			// eslint-disable-next-line no-param-reassign
 			if (control.shown === undefined) control.shown = false;
 
 			if (control.shown !== toggle) {
+				// eslint-disable-next-line no-param-reassign
 				control.shown = toggle;
 				if (toggle) {
 					map.addControl(control);
@@ -155,115 +162,120 @@ Template.map.onRendered(function() {
 
 		// This is actually a function we can call to establish a reactive
 		// dependeny into the other instance.
-		var allowPlacing = instance.data.allowPlacing;
+		const { allowPlacing } = instance.data;
 		show(addMarkerControl, allowPlacing && allowPlacing());
 
-		var allowRemoving = instance.data.allowRemoving;
+		const { allowRemoving } = instance.data;
 		show(removeMarkerControl, allowRemoving && allowRemoving());
 	});
 
-	var geojsonProposedMarkerOptions = {
+	const geojsonProposedMarkerOptions = {
 		radius: 8,
-		fillColor: "#12f",
-		color: "#222",
+		fillColor: '#12f',
+		color: '#222',
 		weight: 1,
 		opacity: 0.9,
-		fillOpacity: 0.4
+		fillOpacity: 0.4,
 	};
 
 	// Zoom to show all markers
 	// This is debounc'd so it's only done after the last marker in a series is added
-	var fitBounds = _.debounce(function() {
-		var bounds = L.latLngBounds([]);
-		var count = 0;
-		for (var layerPos in layers) {
+	const fitBounds = _.debounce(() => {
+		const bounds = L.latLngBounds([]);
+		let count = 0;
+		// eslint-disable-next-line guard-for-in, no-restricted-syntax
+		for (const layerPos in layers) {
 			bounds.extend(layers[layerPos].getBounds());
 			count += 1;
 		}
 
-		var maxZoom = 16;
+		let maxZoom = 16;
 
 		// Use center markers when there are no other markers
 		if (count < 1) {
-			for (var centerPos in centers) {
+			// eslint-disable-next-line guard-for-in, no-restricted-syntax
+			for (const centerPos in centers) {
 				bounds.extend(centers[centerPos]);
 				count += 1;
 			}
-			if (count == 1) maxZoom = 13;
+			if (count === 1) maxZoom = 13;
 		}
 
 		if (bounds.isValid()) {
-			map.fitBounds(bounds, { padding: [20, 20], maxZoom: maxZoom });
+			map.fitBounds(bounds, { padding: [20, 20], maxZoom });
 		}
 	}, 100);
 
 	fitBounds();
 
 	// This must be one of the ugliest pieces of code I've written ever
-	var mainIcon = L.divIcon({
-		'html': '<span class="fa fa-map-marker" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>'
+	const mainIcon = L.divIcon({
+		html: '<span class="fa fa-map-marker" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
 	});
 
 	// Tracked so that observe() will be stopped when the template is destroyed
-	Tracker.autorun(function() {
-		var markers = instance.data.markers;
+	Tracker.autorun(() => {
+		const { markers } = instance.data;
 
-		var addMarker = function(mark) {
+		const addMarker = function (mark) {
 			// Marks that have the center flage set are not displayed but used for anchoring the map
 			if (mark.center) {
 				centers[mark._id] = L.geoJson(mark.loc).getBounds();
 			} else {
-				var marker = L.geoJson(mark.loc, {
+				const marker = L.geoJson(mark.loc, {
 					pointToLayer(feature, latlng) {
-						var marker;
+						// eslint-disable-next-line no-shadow
+						let marker;
 						if (mark.proposed) {
 							marker = L.circleMarker(latlng, geojsonProposedMarkerOptions);
 						} else {
 							marker = L.marker(latlng, {
 								icon: mainIcon,
-								draggable: mark.draggable }
-							);
+								draggable: mark.draggable,
+							});
 						}
-						// When the marker is clicked, mark it as 'selected' in the collection, and deselect all others
-						marker.on('click', function() {
+						// When the marker is clicked, mark it as 'selected' in the collection,
+						// and deselect all others.
+						marker.on('click', () => {
 							markers.update({}, { $set: { selected: false } });
 							markers.update(mark._id, { $set: { selected: true } });
 						});
-						marker.on('dragend', function(event) {
-							var marker = event.target;
-							var latLng = marker.getLatLng();
-							var loc = {
-								type: "Point",
-								coordinates: [latLng.lng, latLng.lat]
+						marker.on('dragend', (event) => {
+							// eslint-disable-next-line no-shadow
+							const marker = event.target;
+							const latLng = marker.getLatLng();
+							const loc = {
+								type: 'Point',
+								coordinates: [latLng.lng, latLng.lat],
 							};
 							map.panTo(latLng);
-							markers.update(mark._id, { $set: { loc: loc } });
+							markers.update(mark._id, { $set: { loc } });
 						});
-						marker.on('mouseover', function() {
+						marker.on('mouseover', () => {
 							markers.update({}, { $set: { hover: false } }, { multi: true });
 							markers.update(mark._id, { $set: { hover: true } });
 						});
-						marker.on('mouseout', function() {
+						marker.on('mouseout', () => {
 							markers.update({}, { $set: { hover: false } }, { multi: true });
 						});
 						return marker;
-					}
+					},
 				});
 				layers[mark._id] = marker;
 				marker.addTo(map);
 			}
 		};
 
-		var removeMarker = function(mark) {
+		const removeMarker = function (mark) {
 			if (layers[mark._id]) map.removeLayer(layers[mark._id]);
 			delete layers[mark._id];
 			delete centers[mark._id];
 		};
 
-		var updateMarker = function(mark) {
-			var layer = layers[mark._id];
+		const updateMarker = function (mark) {
+			const layer = layers[mark._id];
 			if (!layer) return;
-			layer.setStyle({ weight: mark.hover ? 5 : 1});
+			layer.setStyle({ weight: mark.hover ? 5 : 1 });
 		};
 
 		markers.find().observe({
@@ -272,38 +284,40 @@ Template.map.onRendered(function() {
 				fitBounds();
 			},
 
-			changed(mark, oldMark)  {
+			changed(mark) {
 				updateMarker(mark);
 			},
 
 			removed(mark) {
 				removeMarker(mark);
 				fitBounds();
-			}
+			},
 		});
 	});
 
-	Tracker.autorun(function() {
+	Tracker.autorun(() => {
 		instance.fullscreen.get();
-		window.setTimeout(function() {
+		window.setTimeout(() => {
 			map.invalidateSize();
 			fitBounds();
 		}, 0);
 	});
 
-	instance.proposeMarker = function() {
-		var center = map.getCenter();
+	// eslint-disable-next-line func-names
+	instance.proposeMarker = function () {
+		const center = map.getCenter();
 		instance.data.markers.insert({
 			proposed: true,
 			selected: true,
-			loc: { type: 'Point', coordinates: [center.lng, center.lat] }
+			loc: { type: 'Point', coordinates: [center.lng, center.lat] },
 		});
 	};
 
-	instance.removeMarker = function() {
+	// eslint-disable-next-line func-names
+	instance.removeMarker = function () {
 		instance.data.markers.update(
 			{ main: true },
-			{ $set: { remove: true } }
+			{ $set: { remove: true } },
 		);
 	};
 });
@@ -311,16 +325,15 @@ Template.map.onRendered(function() {
 Template.map.helpers({
 	mapContainerClass() {
 		if (Template.instance().fullscreen.get()) {
-			return "map-fullscreen";
-		} else {
-			return "map-box";
+			return 'map-fullscreen';
 		}
+		return 'map-box';
 	},
 
 	mapStyleInner() {
-		var style = [];
+		const style = [];
 		if (Template.instance().fullscreen.get()) {
-			style.push("z-index: 9999");
+			style.push('z-index: 9999');
 		}
 		return style.join(';');
 	},
@@ -330,14 +343,14 @@ Template.map.helpers({
 	},
 
 	fullscreenControl() {
-		var instance = Template.instance();
+		const instance = Template.instance();
 		return !instance.data.mini && !Template.instance().fullscreen.get();
 	},
 });
 
 
 Template.map.events({
-	'click'(event, instance) {
+	click(event, instance) {
 		if (instance.data.mini) instance.fullscreen.set(true);
 	},
 
@@ -357,8 +370,8 @@ Template.map.events({
 		instance.fullscreen.set(false);
 	},
 
-	'keyup'(event, instance) {
+	keyup(event, instance) {
 		// Press escape to close fullscreen
-		if (event.keyCode == 27) instance.fullscreen.set(false);
-	}
+		if (event.keyCode === 27) instance.fullscreen.set(false);
+	},
 });

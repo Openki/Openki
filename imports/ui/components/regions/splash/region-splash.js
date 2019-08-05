@@ -2,7 +2,7 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import '/imports/ui/components/regions/selection/region-selection.js';
+import '/imports/ui/components/regions/selection/region-selection';
 
 import './region-splash.html';
 
@@ -14,8 +14,9 @@ Template.regionSplash.events({
 	'hidden.bs.modal #regionSplash'() {
 		const regionId = Session.get('region') || 'all';
 		try {
-			localStorage.setItem("region", regionId); // to survive page reload
+			localStorage.setItem('region', regionId); // to survive page reload
 		} catch (e) {
+			// eslint-disable-next-line no-console
 			console.error(e);
 		}
 
@@ -37,5 +38,5 @@ Template.regionSplash.events({
 	'click #loginForRegion'(event, instance) {
 		$('#accountTasks').modal('show');
 		instance.$('#regionSplash').modal('hide');
-	}
+	},
 });

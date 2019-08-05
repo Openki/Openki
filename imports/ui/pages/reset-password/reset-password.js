@@ -2,31 +2,37 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert.js';
+import Alert from '/imports/api/alerts/alert';
 
-import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/buttons/buttons';
 
 import './reset-password.html';
 
+// eslint-disable-next-line func-names
 Template.resetPassword.onCreated(function () {
-	var instance = this;
+	const instance = this;
 	instance.busy(false);
-	instance.password = new ReactiveVar("");
+	instance.password = new ReactiveVar('');
 	instance.passwordValid = new ReactiveVar(false);
 	instance.passwordSame = new ReactiveVar(false);
 	instance.passwordNotSame = new ReactiveVar(false);
 	instance.showPassword = new ReactiveVar(false);
 
-	instance.updatePassword = function() {
-		var password = $('.js-pwd-reset').val();
+	// eslint-disable-next-line func-names
+	instance.updatePassword = function () {
+		const password = $('.js-pwd-reset').val();
 		instance.password.set(password);
 
 		if (instance.showPassword.get()) {
 			instance.passwordValid.set(password.length > 0);
 		} else {
-			var passwordConfirm = $('.js-confirm-pwd-reset').val();
+			const passwordConfirm = $('.js-confirm-pwd-reset').val();
 			instance.passwordSame.set(password.length > 0 && password === passwordConfirm);
-			instance.passwordNotSame.set(passwordConfirm && password.length <= passwordConfirm.length && password !== passwordConfirm);
+			instance.passwordNotSame.set(
+				passwordConfirm
+				&& password.length <= passwordConfirm.length
+				&& password !== passwordConfirm,
+			);
 			instance.passwordValid.set(password.length > 0 && password === passwordConfirm);
 		}
 	};
@@ -34,25 +40,25 @@ Template.resetPassword.onCreated(function () {
 
 
 Template.resetPassword.helpers({
-	'showPassword'(action) {
+	showPassword() {
 		return Template.instance().showPassword.get();
 	},
 
-	'passwordSame'(action) {
+	passwordSame() {
 		return Template.instance().passwordSame.get();
 	},
 
-	'passwordNotSame'(action) {
+	passwordNotSame() {
 		return Template.instance().passwordNotSame.get();
 	},
 
-	'passwordFieldType'(action) {
-		return Template.instance().showPassword.get() ? "text" : "password";
+	passwordFieldType() {
+		return Template.instance().showPassword.get() ? 'text' : 'password';
 	},
 
-	'submitDisabled'() {
+	submitDisabled() {
 		return Template.instance().passwordValid.get() ? '' : 'disabled';
-	}
+	},
 });
 
 Template.resetPassword.events({
@@ -70,13 +76,13 @@ Template.resetPassword.events({
 		instance.updatePassword();
 	},
 
-	'submit'(event, instance) {
-		instance.busy("saving");
+	submit(event, instance) {
+		instance.busy('saving');
 		event.preventDefault();
 
-        var password = instance.$('.js-pwd-reset').val();
-		var token = Template.instance().data;
-		Accounts.resetPassword(token, password, function(err) {
+		const password = instance.$('.js-pwd-reset').val();
+		const token = Template.instance().data;
+		Accounts.resetPassword(token, password, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.error(err, 'Unable to reset password');
@@ -85,9 +91,9 @@ Template.resetPassword.events({
 				Router.go('profile');
 			}
 		});
-    },
+	},
 
 	'click .js-cancel-reset-pwd'() {
 		Router.go('/');
-	}
+	},
 });

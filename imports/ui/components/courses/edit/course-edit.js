@@ -3,45 +3,46 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
-import Categories from '/imports/api/categories/categories.js';
-import Courses from '/imports/api/courses/courses.js';
-import Groups from '/imports/api/groups/groups.js';
-import Regions from '/imports/api/regions/regions.js';
-import Roles from '/imports/api/roles/roles.js';
+import Categories from '/imports/api/categories/categories';
+import Courses from '/imports/api/courses/courses';
+import Groups from '/imports/api/groups/groups';
+import Regions from '/imports/api/regions/regions';
+import Roles from '/imports/api/roles/roles';
 
-import StringTools from '/imports/utils/string-tools.js';
-import Editable from '/imports/ui/lib/editable.js';
-import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
-import Alert from '/imports/api/alerts/alert.js';
-import { HasRoleUser } from '/imports/utils/course-role-utils.js';
+import StringTools from '/imports/utils/string-tools';
+import Editable from '/imports/ui/lib/editable';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import Alert from '/imports/api/alerts/alert';
+import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 
-import '/imports/ui/components/buttons/buttons.js';
-import '/imports/ui/components/courses/categories/course-categories.js';
-import '/imports/ui/components/editable/editable.js';
-import '/imports/ui/components/price-policy/price-policy.js';
-import '/imports/ui/components/regions/tag/region-tag.js';
+import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/courses/categories/course-categories';
+import '/imports/ui/components/editable/editable';
+import '/imports/ui/components/price-policy/price-policy';
+import '/imports/ui/components/regions/tag/region-tag';
 
 import './course-edit.html';
 
-Template.courseEdit.onCreated(function() {
-	var instance = this;
+// eslint-disable-next-line func-names
+Template.courseEdit.onCreated(function () {
+	const instance = this;
 
 	instance.busy(false);
 
 	// Show category selection right away for new courses
-	var editingCategories = !this.data || !this.data._id;
+	const editingCategories = !this.data || !this.data._id;
 	this.editingCategories = new ReactiveVar(editingCategories);
-	this.selectedCategories = new ReactiveVar(this.data && this.data.categories || []);
+	this.selectedCategories = new ReactiveVar((this.data && this.data.categories) || []);
 
 	instance.editableDescription = new Editable(
 		false,
 		false,
-		mf('course.description.placeholder', "Describe your idea, so that more people will find it and that they`ll know what to expect."),
-		false
+		mf('course.description.placeholder', 'Describe your idea, so that more people will find it and that they`ll know what to expect.'),
+		false,
 	);
 
-	instance.autorun(function() {
+	instance.autorun(() => {
 		instance.editableDescription.setText(Template.currentData().description);
 	});
 
@@ -67,7 +68,8 @@ Template.courseEdit.onCreated(function() {
 			this.$('#editform_name').val('');
 			this.$('.editable-textarea').html('');
 			this.selectedCategories.set([]);
-			this.$('.js-check-role').each(function() {
+			// eslint-disable-next-line func-names
+			this.$('.js-check-role').each(function () {
 				this.checked = false;
 				$(this).trigger('change');
 			});
@@ -86,7 +88,7 @@ Template.courseEdit.helpers({
 
 	availableSubcategories(category) {
 		// Hide if parent categories not selected
-		var selectedCategories = Template.instance().selectedCategories.get();
+		const selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.indexOf(category) < 0) return [];
 
 		return Categories[category];
@@ -97,49 +99,48 @@ Template.courseEdit.helpers({
 	},
 
 	availableRoles() {
-		return Roles.filter(role => {
+		return Roles.filter((role) => {
 			// Roles that are always on are not selectable here
 			if (role.preset) return false;
 
 			// In the normal view, all roles are selectable
 			if (!this.isFrame) return true;
 
-			const neededRoles = this.neededRoles;
+			const { neededRoles } = this;
 			if (neededRoles && neededRoles.length) {
 				if (!neededRoles.includes(role.type)) return false;
-			} else {
-				if (role.type == 'host') return false;
-			}
+			} else if (role.type === 'host') return false;
 
 			return true;
 		});
 	},
 
 	roleDescription() {
-		return 'roles.'+this.type+'.description';
+		return `roles.${this.type}.description`;
 	},
 
 	roleSubscription() {
-		return 'roles.'+this.type+'.subscribe';
+		return `roles.${this.type}.subscribe`;
 	},
 
 	isChecked() {
-		var selectedCategories = Template.instance().selectedCategories.get();
-		if (selectedCategories.length && selectedCategories.indexOf(''+this) >= 0) {
+		const selectedCategories = Template.instance().selectedCategories.get();
+		if (selectedCategories.length && selectedCategories.indexOf(`${this}`) >= 0) {
 			return 'checkbox-checked';
 		}
 		return '';
 	},
 
+	// eslint-disable-next-line consistent-return
 	checkCategory() {
-		var selectedCategories = Template.instance().selectedCategories.get();
+		const selectedCategories = Template.instance().selectedCategories.get();
 		if (selectedCategories.length) {
-			return selectedCategories.indexOf(''+this) >= 0 ? 'checked' : '';
+			return selectedCategories.indexOf(`${this}`) >= 0 ? 'checked' : '';
 		}
 	},
 
 	hasRole() {
-		var instance = Template.instance();
+		const instance = Template.instance();
 		return instance.data && instance.data.members && HasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
 	},
 
@@ -155,31 +156,31 @@ Template.courseEdit.helpers({
 	},
 
 	currentRegion(region) {
-		var currentRegion = Session.get('region');
-		return currentRegion && region._id == currentRegion;
+		const currentRegion = Session.get('region');
+		return currentRegion && region._id === currentRegion;
 	},
 
 	isInternal() {
-		return this.internal ? "checked" : null;
+		return this.internal ? 'checked' : null;
 	},
 
 	proposeFromQuery() {
-		var parentInstance = Template.instance().parentInstance();
-		var filter = parentInstance.filter;
+		const parentInstance = Template.instance().parentInstance();
+		const { filter } = parentInstance;
 		if (!filter) return false;
 
-		var search = filter.toParams().search;
+		const { search } = filter.toParams();
 		if (!search) return false;
 
-		var filterQuery = filter.toQuery();
-		var results = Courses.findFilter(filterQuery, 1);
+		const filterQuery = filter.toQuery();
+		const results = Courses.findFilter(filterQuery, 1);
 
 		return (results.count() === 0) && search;
 	},
 
 	courseSearch() {
-		var parentInstance = Template.instance().parentInstance();
-		var filterParams = parentInstance.filter.toParams();
+		const parentInstance = Template.instance().parentInstance();
+		const filterParams = parentInstance.filter.toParams();
 
 		return filterParams.search;
 	},
@@ -188,10 +189,11 @@ Template.courseEdit.helpers({
 		return Template.instance().editableDescription;
 	},
 
+	// eslint-disable-next-line consistent-return
 	newCourseGroupName() {
 		if (this.group) {
-			var groupId = this.group;
-			var group = Groups.findOne(groupId);
+			const groupId = this.group;
+			const group = Groups.findOne(groupId);
 			if (group) return group.name;
 		}
 	},
@@ -207,12 +209,14 @@ Template.courseEdit.helpers({
 		return false;
 	},
 
+	// eslint-disable-next-line consistent-return
 	showSavedMessage() {
 		if (this.isFrame) {
 			return Template.instance().showSavedMessage.get();
 		}
 	},
 
+	// eslint-disable-next-line consistent-return
 	savedCourseLink() {
 		if (this.isFrame) {
 			const course = Template.instance().savedCourse.get();
@@ -220,6 +224,7 @@ Template.courseEdit.helpers({
 		}
 	},
 
+	// eslint-disable-next-line consistent-return
 	savedCourseName() {
 		if (this.isFrame) {
 			const course = Template.instance().savedCourse.get();
@@ -233,7 +238,7 @@ Template.courseEdit.helpers({
 		if (Template.instance().data.isFrame) classes.push('is-frame');
 
 		return classes.join(' ');
-	}
+	},
 });
 
 
@@ -247,14 +252,14 @@ Template.courseEdit.events({
 		event.preventDefault();
 
 		const roles = {};
-		instance.$('.js-check-role').each(function() {
+		// eslint-disable-next-line func-names
+		instance.$('.js-check-role').each(function () {
 			roles[this.name] = this.checked;
 		});
 
 		// for frame: if a group id is given, check for the internal flag in the
 		// url query
-		const internal =
-			instance.data.group
+		const internal = instance.data.group
 			? instance.data.internal || false
 			: instance.$('.js-check-internal').is(':checked');
 
@@ -266,7 +271,8 @@ Template.courseEdit.events({
 		};
 
 		if (changes.name.length === 0) {
-			alert("Please provide a title");
+			// eslint-disable-next-line no-alert
+			alert('Please provide a title');
 			return;
 		}
 
@@ -277,7 +283,7 @@ Template.courseEdit.events({
 		const courseId = course._id ? course._id : '';
 		const isNew = courseId === '';
 		if (isNew) {
-			const data = instance.data;
+			const { data } = instance;
 			if (data.isFrame && data.region) {
 				// The region was preset for the frame
 				changes.region = data.region;
@@ -285,7 +291,8 @@ Template.courseEdit.events({
 				changes.region = instance.$('.region_select').val();
 			}
 			if (!changes.region) {
-				alert("Please select a region");
+				// eslint-disable-next-line no-alert
+				alert('Please select a region');
 				return;
 			}
 
@@ -298,7 +305,8 @@ Template.courseEdit.events({
 
 		changes.subs = [];
 		changes.unsubs = [];
-		instance.$('.js-check-enroll').each(function() {
+		// eslint-disable-next-line func-names
+		instance.$('.js-check-enroll').each(function () {
 			const role = this.name;
 			const subscribe = !!this.checked;
 			if (subscribe) {
@@ -310,39 +318,38 @@ Template.courseEdit.events({
 
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveCourse', 'Login and save course'), () => {
+			// eslint-disable-next-line no-shadow
 			Meteor.call('course.save', courseId, changes, (err, courseId) => {
 				instance.busy(false);
 				if (err) {
 					Alert.error(err, 'Saving the course went wrong');
+				} else if (instance.data.isFrame) {
+					instance.savedCourseId.set(courseId);
+					instance.showSavedMessage.set(true);
+					instance.resetFields();
 				} else {
-					if (instance.data.isFrame) {
-						instance.savedCourseId.set(courseId);
-						instance.showSavedMessage.set(true);
-						instance.resetFields();
+					if (isNew) {
+						Alert.success(mf(
+							'message.courseCreated',
+							{ NAME: changes.name },
+							'The course "{NAME}" has been created!',
+						));
 					} else {
-						if (isNew) {
-							Alert.success(mf(
-								'message.courseCreated',
-								{ NAME: changes.name },
-								'The course "{NAME}" has been created!'
-							));
-						} else {
-							Alert.success(mf(
-								'message.courseChangesSaved',
-								{ NAME: changes.name },
-								'Your changes to the course "{NAME}" have been saved.'
-							));
-						}
-
-						Router.go('showCourse', { _id: courseId });
+						Alert.success(mf(
+							'message.courseChangesSaved',
+							{ NAME: changes.name },
+							'Your changes to the course "{NAME}" have been saved.',
+						));
 					}
+
+					Router.go('showCourse', { _id: courseId });
 				}
 			});
 		});
 	},
 
 	'click .js-course-edit-cancel'(event, instance) {
-		var course = instance.data;
+		const course = instance.data;
 
 		if (course._id) {
 			Router.go('showCourse', course);
@@ -351,14 +358,14 @@ Template.courseEdit.events({
 		}
 	},
 
-	'click .js-edit-categories'(event, template) {
+	'click .js-edit-categories'() {
 		Template.instance().editingCategories.set(true);
 	},
 
 	'change .js-category-checkbox'(event, instance) {
-		var catKey = ''+this;
-		var selectedCategories = instance.selectedCategories.get();
-		var checked = instance.$('input.cat_'+catKey).prop('checked');
+		const catKey = `${this}`;
+		let selectedCategories = instance.selectedCategories.get();
+		const checked = instance.$(`input.cat_${catKey}`).prop('checked');
 		if (checked) {
 			selectedCategories.push(catKey);
 			selectedCategories = _.uniq(selectedCategories);
@@ -372,36 +379,38 @@ Template.courseEdit.events({
 		}
 
 		instance.selectedCategories.set(selectedCategories);
-	}
+	},
 });
 
-Template.courseEditRole.onCreated(function() {
+// eslint-disable-next-line func-names
+Template.courseEditRole.onCreated(function () {
 	this.checked = new ReactiveVar(false);
 });
 
-Template.courseEditRole.onRendered(function() {
-	const data = this.data;
+// eslint-disable-next-line func-names
+Template.courseEditRole.onRendered(function () {
+	const { data } = this;
 	const selectedRoles = data.selected;
 
 	if (selectedRoles) {
 		this.checked.set(
-			selectedRoles.indexOf(data.role.type) >= 0
+			selectedRoles.indexOf(data.role.type) >= 0,
 		);
 	}
 });
 
 Template.courseEditRole.helpers({
 	roleDescription() {
-		return 'roles.'+this.role.type+'.description';
+		return `roles.${this.role.type}.description`;
 	},
 
 	roleSubscription() {
-		return 'roles.'+this.role.type+'.subscribe';
+		return `roles.${this.role.type}.subscribe`;
 	},
 
 	checkRole() {
-		var instance = Template.instance();
-		return instance.checked.get() ? "checked" : null;
+		const instance = Template.instance();
+		return instance.checked.get() ? 'checked' : null;
 	},
 
 	hasRole() {
@@ -410,26 +419,25 @@ Template.courseEditRole.helpers({
 });
 
 Template.courseEditRole.events({
-	"change .js-check-role"(event, instance) {
-		instance.checked.set(instance.$(".js-check-role").prop("checked"));
-	}
+	'change .js-check-role'(event, instance) {
+		instance.checked.set(instance.$('.js-check-role').prop('checked'));
+	},
 });
 
-Template.courseTitle.onCreated(function() {
-
-	this.proposedSearch = new ReactiveVar("");
+// eslint-disable-next-line func-names
+Template.courseTitle.onCreated(function () {
+	this.proposedSearch = new ReactiveVar('');
 	this.focused = new ReactiveVar(false);
 
 	this.dropdownVisible = () => this.focused.get() && this.proposedSearch.get().length > 3;
 
 	this.autorun(() => {
 		if (this.dropdownVisible()) {
-			this.subscribe('Courses.findFilter', {search: this.proposedSearch.get(), region: Session.get('region')});
+			this.subscribe('Courses.findFilter', { search: this.proposedSearch.get(), region: Session.get('region') });
 			if (!this.$('.dropdown').hasClass('open')) {
 				this.$('.dropdown-toggle').dropdown('toggle');
 			}
 		}
-
 	});
 });
 
@@ -448,19 +456,19 @@ Template.courseTitle.helpers({
 Template.courseTitle.events({
 	'keydown .js-title'(event, instance) {
 		if (event.keyCode === 9) {
-			instance.$(".dropdown-toggle").dropdown("toggle");
+			instance.$('.dropdown-toggle').dropdown('toggle');
 			instance.focused.set(false);
 		}
 	},
 
 	'keyup .js-title'(event, instance) {
-		//arrow down does not work in bootstrap dropdown widget
+		// arrow down does not work in bootstrap dropdown widget
 		if (event.keyCode === 40) {
-			instance.$(".js-proposed-courses").find("a:first").focus();
+			instance.$('.js-proposed-courses').find('a:first').focus();
 		}
 	},
 
-	'input .js-title': _.debounce( (event, instance) => {
+	'input .js-title': _.debounce((event, instance) => {
 		instance.proposedSearch.set(event.target.value);
 	}, 220),
 
@@ -470,11 +478,10 @@ Template.courseTitle.events({
 	},
 
 	'focusout .js-proposed-search'(event, instance) {
-		if(instance.$(event.relatedTarget).closest(".js-proposed-search").length === 0)
-			instance.focused.set(false);
+		if (instance.$(event.relatedTarget).closest('.js-proposed-search').length === 0) instance.focused.set(false);
 	},
 
 	'keydown .js-dropdown-entry'(event, instance) {
-		if(event.keyCode === 9 && !event.shiftKey) instance.$('.dropdown-toggle').dropdown('toggle');
-	}
+		if (event.keyCode === 9 && !event.shiftKey) instance.$('.dropdown-toggle').dropdown('toggle');
+	},
 });

@@ -1,2 +1,2 @@
-import '/imports/api/courses/methods.js';
-import '/imports/api/course-discussions/methods.js';
+import '/imports/api/courses/methods';
+import '/imports/api/course-discussions/methods';

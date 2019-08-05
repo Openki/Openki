@@ -1,6 +1,9 @@
-UpdatesAvailable.removeRoles = function() {
-	var Roles = new Meteor.Collection("Roles");
-	var count = Roles.find().count();
+const UpdatesAvailable = [];
+
+// eslint-disable-next-line func-names
+UpdatesAvailable.removeRoles = function () {
+	const Roles = new Meteor.Collection('Roles');
+	const count = Roles.find().count();
 	Roles.rawCollection().drop();
 	return count;
 };

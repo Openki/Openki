@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import { Courses } from '/imports/api/courses/courses.js';
-import Events from '/imports/api/events/events.js';
-import Regions from './regions.js';
+import Courses from '/imports/api/courses/courses';
+import Events from '/imports/api/events/events';
+import Regions from './regions';
 
 Meteor.methods({
 	'region.updateCounters'(selector) {
@@ -10,8 +10,7 @@ Meteor.methods({
 			const regionId = region._id;
 
 			const courseCount = Courses.find({ region: regionId, internal: false }).count();
-			const futureEventCount =
-				Events
+			const futureEventCount = Events
 				.find({ region: regionId, internal: false, start: { $gte: new Date() } })
 				.count();
 
@@ -25,5 +24,5 @@ Meteor.methods({
 
 	'region.unsetFeaturedGroup'(regionId) {
 		Regions.update(regionId, { $set: { featuredGroup: false } });
-	}
+	},
 });

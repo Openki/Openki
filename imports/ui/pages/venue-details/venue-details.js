@@ -1,21 +1,23 @@
-"use strict";
-import Events from '/imports/api/events/events.js';
-import Regions from '/imports/api/regions/regions.js';
-import Alert from '/imports/api/alerts/alert.js';
 
-import '/imports/ui/components/buttons/buttons.js';
-import '/imports/ui/components/events/list/event-list.js';
-import '/imports/ui/components/map/map.js';
-import '/imports/ui/components/profile-link/profile-link.js';
-import '/imports/ui/components/venues/edit/venue-edit.js';
+
+import Events from '/imports/api/events/events';
+import Regions from '/imports/api/regions/regions';
+import Alert from '/imports/api/alerts/alert';
+
+import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/events/list/event-list';
+import '/imports/ui/components/map/map';
+import '/imports/ui/components/profile-link/profile-link';
+import '/imports/ui/components/venues/edit/venue-edit';
 
 import './venue-details.html';
 
-Template.venueDetails.onCreated(function() {
-	var instance = this;
+// eslint-disable-next-line func-names
+Template.venueDetails.onCreated(function () {
+	const instance = this;
 	instance.busy();
 
-	var isNew = !this.data.venue._id;
+	const isNew = !this.data.venue._id;
 	this.editing = new ReactiveVar(isNew);
 	this.verifyDeleteVenue = new ReactiveVar(false);
 
@@ -25,41 +27,45 @@ Template.venueDetails.onCreated(function() {
 	this.eventsCount = new ReactiveVar();
 	this.pastEventsCount = new ReactiveVar();
 
-	var markers = new Meteor.Collection(null);
+	const markers = new Meteor.Collection(null);
 	this.markers = markers;
 
-	this.setLocation = function(loc) {
+	// eslint-disable-next-line func-names
+	this.setLocation = function (loc) {
 		markers.remove({ main: true });
 		if (loc) {
 			markers.insert({
-				loc: loc,
-				main: true
+				loc,
+				main: true,
 			});
 		}
 	};
 
-	this.setRegion = function(region) {
+	// eslint-disable-next-line func-names
+	this.setRegion = function (region) {
 		markers.remove({ center: true });
 		if (region && region.loc) {
 			markers.insert({
 				loc: region.loc,
-				center: true
+				center: true,
 			});
 		}
 	};
 
-	this.autorun(function() {
+	this.autorun(() => {
 		if (!isNew) {
 			instance.subscribe('Events.findFilter', { venue: instance.data.venue._id });
 		}
 	});
 
-	this.getEvents = function(past) {
+	// eslint-disable-next-line func-names
+	this.getEvents = function (past) {
 		if (isNew) return;
 
-		var limit, count;
-		var predicate = { venue: this.data.venue._id };
-		var now = minuteTime.get();
+		let limit; let
+			count;
+		const predicate = { venue: this.data.venue._id };
+		const now = minuteTime.get();
 
 		if (past) {
 			predicate.before = now;
@@ -71,16 +77,20 @@ Template.venueDetails.onCreated(function() {
 			count = instance.eventsCount;
 		}
 
-		var events = Events.findFilter(predicate).fetch();
+		let events = Events.findFilter(predicate).fetch();
 		count.set(events.length);
 		if (limit) events = events.slice(0, limit);
 
+		// eslint-disable-next-line consistent-return
 		return events;
 	};
 
-	this.unloadedEvents = function(past) {
-		var instance = Template.instance();
-		var limit, count;
+	// eslint-disable-next-line func-names
+	this.unloadedEvents = function (past) {
+		// eslint-disable-next-line no-shadow
+		const instance = Template.instance();
+		let limit; let
+			count;
 
 		if (past) {
 			limit = instance.maxPastEvents.get();
@@ -90,26 +100,27 @@ Template.venueDetails.onCreated(function() {
 			count = instance.eventsCount.get();
 		}
 
-		var unloaded = count - limit;
+		let unloaded = count - limit;
 
-		var increaseBy = instance.increaseBy;
+		const { increaseBy } = instance;
 		unloaded = (unloaded > increaseBy) ? increaseBy : unloaded;
 
 		return unloaded;
 	};
 });
 
-Template.venueDetails.onRendered(function() {
-	var instance = this;
+// eslint-disable-next-line func-names
+Template.venueDetails.onRendered(function () {
+	const instance = this;
 
 	instance.busy(false);
 
-	instance.autorun(function() {
-		var data = Template.currentData();
+	instance.autorun(() => {
+		const data = Template.currentData();
 
 		instance.setLocation(data.venue.loc);
 
-		var region = Regions.findOne(data.venue.region);
+		const region = Regions.findOne(data.venue.region);
 		instance.setRegion(region);
 	});
 });
@@ -128,20 +139,21 @@ Template.venueDetails.helpers({
 		return Template.instance().markers;
 	},
 
+	// eslint-disable-next-line consistent-return
 	coords() {
 		if (this.loc && this.loc.coordinates) {
-			var fmt = function(coord) {
-				var sign = '';
+			const fmt = function (coord) {
+				let sign = '';
 				if (coord > 0) sign = '+';
 				if (coord < 0) sign = '-';
 				return sign + coord.toPrecision(6);
 			};
-			var coords = {
+			const coords = {
 				LAT: fmt(this.loc.coordinates[1]),
 				LON: fmt(this.loc.coordinates[0]),
 			};
 
-			return mf('venueDetails.coordinates', coords, "Coordinates: {LAT} {LON}");
+			return mf('venueDetails.coordinates', coords, 'Coordinates: {LAT} {LON}');
 		}
 	},
 
@@ -158,7 +170,7 @@ Template.venueDetails.helpers({
 	},
 
 	eventsLimited() {
-		var instance = Template.instance();
+		const instance = Template.instance();
 		return instance.eventsCount.get() > instance.maxEvents.get();
 	},
 
@@ -171,13 +183,13 @@ Template.venueDetails.helpers({
 	},
 
 	pastEventsLimited() {
-		var instance = Template.instance();
+		const instance = Template.instance();
 		return instance.pastEventsCount.get() > instance.maxPastEvents.get();
 	},
 
 	unloadedPastEvents() {
 		return Template.instance().unloadedEvents(true);
-	}
+	},
 });
 
 
@@ -196,9 +208,9 @@ Template.venueDetails.events({
 	},
 
 	'click .js-venue-delete-confirm'(event, instance) {
-		var venue = instance.data.venue;
+		const { venue } = instance.data;
 		instance.busy('deleting');
-		Meteor.call('venue.remove', venue._id, function(err, result) {
+		Meteor.call('venue.remove', venue._id, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.error(err, 'Deleting the venue went wrong');
@@ -210,12 +222,12 @@ Template.venueDetails.events({
 	},
 
 	'click .js-show-more-events'(e, instance) {
-		var limit = instance.maxEvents;
+		const limit = instance.maxEvents;
 		limit.set(limit.get() + instance.increaseBy);
 	},
 
 	'click .js-show-more-past-events'(e, instance) {
-		var limit = instance.maxPastEvents;
+		const limit = instance.maxPastEvents;
 		limit.set(limit.get() + instance.increaseBy);
-	}
+	},
 });

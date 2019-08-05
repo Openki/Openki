@@ -1,24 +1,26 @@
-"use strict";
+
+
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
-import Regions from '/imports/api/regions/regions.js';
-import Venues from '/imports/api/venues/venues.js';
-import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
-import Editable from '/imports/ui/lib/editable.js';
-import LocationTracker from '/imports/ui/lib/location-tracker.js';
-import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
-import Alert from '/imports/api/alerts/alert.js';
+import Regions from '/imports/api/regions/regions';
+import Venues from '/imports/api/venues/venues';
+import CleanedRegion from '/imports/ui/lib/cleaned-region';
+import Editable from '/imports/ui/lib/editable';
+import LocationTracker from '/imports/ui/lib/location-tracker';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import Alert from '/imports/api/alerts/alert';
 
-import '/imports/ui/components/buttons/buttons.js';
-import '/imports/ui/components/editable/editable.js';
-import '/imports/ui/components/map/map.js';
+import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/editable/editable';
+import '/imports/ui/components/map/map';
 
 import './venue-edit.html';
 
-Template.venueEdit.onCreated(function() {
-	var instance = this;
+// eslint-disable-next-line func-names
+Template.venueEdit.onCreated(function () {
+	const instance = this;
 
 	instance.busy(false);
 
@@ -31,9 +33,9 @@ Template.venueEdit.onCreated(function() {
 	instance.selectedRegion = new ReactiveVar();
 	instance.regionSelectable = new ReactiveVar(false);
 	if (instance.isNew) {
-		instance.autorun(function() {
+		instance.autorun(() => {
 			// If the session sets the region, we use it
-			var sessionRegion = CleanedRegion(Session.get('region'));
+			const sessionRegion = CleanedRegion(Session.get('region'));
 
 			instance.selectedRegion.set(sessionRegion);
 
@@ -47,8 +49,8 @@ Template.venueEdit.onCreated(function() {
 		instance.selectedRegion.set(this.data.region);
 	}
 
-	instance.autorun(function() {
-		var regionId = instance.selectedRegion.get();
+	instance.autorun(() => {
+		const regionId = instance.selectedRegion.get();
 		instance.locationTracker.setRegion(regionId);
 	});
 
@@ -60,8 +62,11 @@ Template.venueEdit.onCreated(function() {
 				// replace it by a main one. This is only a little weird.
 				instance.locationTracker.markers.remove({ proposed: true });
 
+				// eslint-disable-next-line no-param-reassign
 				mark.main = true;
+				// eslint-disable-next-line no-param-reassign
 				mark.draggable = true;
+				// eslint-disable-next-line no-param-reassign
 				delete mark.proposed;
 				instance.locationTracker.markers.insert(mark);
 			}
@@ -71,18 +76,18 @@ Template.venueEdit.onCreated(function() {
 			if (mark.remove) {
 				instance.locationTracker.markers.remove(mark._id);
 			}
-		}
+		},
 	});
 
 	instance.editableDescription = new Editable(
 		false,
 		false,
 		mf('venue.edit.description.placeholder', 'Some words about this venue'),
-		false
+		false,
 	);
 
-	instance.autorun(function() {
-		var data = Template.currentData();
+	instance.autorun(() => {
+		const data = Template.currentData();
 		data.editableDescription = instance.editableDescription;
 		instance.editableDescription.setText(data.description);
 	});
@@ -91,7 +96,7 @@ Template.venueEdit.onCreated(function() {
 Template.venueEdit.helpers({
 	displayAdditionalInfo() {
 		return {
-			style: 'display: '+(Template.instance().showAdditionalInfo.get() ? 'block' : 'none')
+			style: `display: ${Template.instance().showAdditionalInfo.get() ? 'block' : 'none'}`,
 		};
 	},
 
@@ -99,7 +104,7 @@ Template.venueEdit.helpers({
 		return Template.instance().showAdditionalInfo.get();
 	},
 
-	regions(){
+	regions() {
 		return Regions.find();
 	},
 
@@ -120,42 +125,45 @@ Template.venueEdit.helpers({
 	},
 
 	allowPlacing() {
-		var locationTracker = Template.instance().locationTracker;
+		const { locationTracker } = Template.instance();
 
 		// We return a function so the reactive dependency on locationState is
 		// established from within the map template which will call it.
-		return function() {
+		// eslint-disable-next-line func-names
+		return function () {
 			// We only allow placing if we don't have a selected location yet
 			return !locationTracker.markers.findOne({ main: true });
 		};
 	},
 
 	allowRemoving() {
-		var locationTracker = Template.instance().locationTracker;
+		const { locationTracker } = Template.instance();
 
-		return function() {
+		// eslint-disable-next-line func-names
+		return function () {
 			return locationTracker.markers.findOne({ main: true });
 		};
-	}
+	},
 });
 
 Template.venueEdit.events({
-	'submit'(event, instance) {
+	submit(event, instance) {
 		event.preventDefault();
 
-		const changes =
-			{ name:            instance.$('.js-name').val()
-			, address:         instance.$('.js-address').val()
-			, route:           instance.$('.js-route').val()
-			, short:           instance.$('.js-short').val()
-			, maxPeople:       parseInt(instance.$('.js-maxPeople').val(), 10)
-			, maxWorkplaces:   parseInt(instance.$('.js-maxWorkplaces').val(), 10)
-			, facilities:      []
-			, otherFacilities: instance.$('.js-otherFacilities').val()
-			, website:         instance.$('.js-website').val()
-		    };
+		const changes = {
+			name: instance.$('.js-name').val(),
+			address: instance.$('.js-address').val(),
+			route: instance.$('.js-route').val(),
+			short: instance.$('.js-short').val(),
+			maxPeople: parseInt(instance.$('.js-maxPeople').val(), 10),
+			maxWorkplaces: parseInt(instance.$('.js-maxWorkplaces').val(), 10),
+			facilities: [],
+			otherFacilities: instance.$('.js-otherFacilities').val(),
+			website: instance.$('.js-website').val(),
+		};
 
 		if (!changes.name) {
+			// eslint-disable-next-line no-alert
 			alert(mf('venue.create.plsGiveVenueName', 'Please give your venue a name'));
 			return;
 		}
@@ -164,11 +172,12 @@ Template.venueEdit.events({
 		if (newDescription) changes.description = newDescription;
 
 		if (changes.description.trim().length === 0) {
+			// eslint-disable-next-line no-alert
 			alert(mf('venue.create.plsProvideDescription', 'Please provide a description for your venue'));
 			return;
 		}
 
-		Venues.facilityOptions.forEach(facility => {
+		Venues.facilityOptions.forEach((facility) => {
 			if (instance.$(`.js-${facility}`).prop('checked')) {
 				changes.facilities.push(facility);
 			}
@@ -177,6 +186,7 @@ Template.venueEdit.events({
 		if (instance.isNew) {
 			changes.region = instance.selectedRegion.get();
 			if (!changes.region) {
+				// eslint-disable-next-line no-alert
 				alert(mf('venue.create.plsSelectRegion', 'Please select a region'));
 				return;
 			}
@@ -186,6 +196,7 @@ Template.venueEdit.events({
 		if (marker) {
 			changes.loc = marker.loc;
 		} else {
+			// eslint-disable-next-line no-alert
 			alert(mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'));
 			return;
 		}
@@ -230,10 +241,10 @@ Template.venueEdit.events({
 
 Template.venueEditAdditionalInfo.helpers({
 	facilitiesCheck(name) {
-		var attrs = { class: 'js-' + name };
+		const attrs = { class: `js-${name}` };
 		if (this.facilities[name]) {
 			attrs.checked = 'checked';
 		}
 		return attrs;
-	}
+	},
 });

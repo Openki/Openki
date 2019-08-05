@@ -2,23 +2,24 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import UrlTools from '/imports/utils/url-tools.js';
+import UrlTools from '/imports/utils/url-tools';
 
 import './kiosk-link.html';
 
 Template.kioskLink.helpers({
 	link() {
-		var filterParams = Session.get('kioskFilter');
+		const filterParams = Session.get('kioskFilter');
 		if (!filterParams) return;
 
 		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
-		var queryString = UrlTools.paramsToQueryString(filterParams);
+		const queryString = UrlTools.paramsToQueryString(filterParams);
 
-		var options = {};
+		const options = {};
 		if (queryString.length) {
 			options.query = queryString;
 		}
 
+		// eslint-disable-next-line consistent-return
 		return Router.url('kioskEvents', {}, options);
 	},
 });
@@ -26,5 +27,5 @@ Template.kioskLink.helpers({
 Template.kioskLink.events({
 	'click .js-remove-back-to-kiosk'() {
 		return Session.set('kioskFilter', false);
-	}
+	},
 });

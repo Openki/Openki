@@ -1,18 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 
-import Venues from '../venues.js';
+import Venues from '../venues';
 
-Meteor.publish ('venues', function(region) {
+Meteor.publish('venues', (region) => {
 	check(region, Match.Maybe(String));
-	var find = {};
+	const find = {};
 	if (region) find.region = region;
 	return Venues.find(find);
 });
 
-Meteor.publish ('venueDetails', function(id) {
-	return Venues.find(id);
-});
+Meteor.publish('venueDetails', id => Venues.find(id));
 
-Meteor.publish('Venues.findFilter', function(find, limit) {
-	return Venues.findFilter(find, limit);
-});
+Meteor.publish('Venues.findFilter', (find, limit) => Venues.findFilter(find, limit));

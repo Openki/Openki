@@ -1,16 +1,20 @@
-UpdatesAvailable["2017.05.08 providedEmail"] = function() {
-	var count = 0;
-	Meteor.users.find({ 'emails.0': null }).forEach(function(user) {
+const UpdatesAvailable = [];
+
+// eslint-disable-next-line func-names
+UpdatesAvailable['2017.05.08 providedEmail'] = function () {
+	let count = 0;
+	Meteor.users.find({ 'emails.0': null }).forEach((user) => {
 		// Read email-address if provided
-		var providedEmail = false;
-		var verified = true; // Assume verified unless there is a flag that says it's not
-		let services = user.services;
+		let providedEmail = false;
+		let verified = true; // Assume verified unless there is a flag that says it's not
+		const services = user.services;
 		if (services) {
-			for (let provider of ['facebook', 'google', 'github']) {
-				let provided = services[provider];
+			// eslint-disable-next-line no-restricted-syntax
+			for (const provider of ['facebook', 'google', 'github']) {
+				const provided = services[provider];
 				if (provided && provided.email) {
 					providedEmail = provided.email;
-					if (typeof provided.verified_email === "boolean") {
+					if (typeof provided.verified_email === 'boolean') {
 						verified = provided.verified_email;
 					}
 				}
@@ -21,9 +25,10 @@ UpdatesAvailable["2017.05.08 providedEmail"] = function() {
 			try {
 				count += Meteor.users.update(
 					user._id,
-					{ $set: { emails: [{ address: providedEmail, verified: verified }] } }
+					{ $set: { emails: [{ address: providedEmail, verified }] } },
 				);
-			} catch(e) {
+			} catch (e) {
+				// eslint-disable-next-line no-console
 				console.log(e);
 			}
 		}

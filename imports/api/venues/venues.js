@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
-import Filtering from '/imports/utils/filtering.js';
-import Predicates from '/imports/utils/predicates.js';
-import StringTools from '/imports/utils/string-tools.js';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import Filtering from '/imports/utils/filtering';
+import Predicates from '/imports/utils/predicates';
+import StringTools from '/imports/utils/string-tools';
 
 // _id          ID
 // editor       user ID
@@ -25,7 +25,7 @@ import StringTools from '/imports/utils/string-tools.js';
 
 /** Venue objects represent locations where events take place.
   */
-Venue = function() {
+const Venue = function () {
 	this.facilities = {};
 };
 
@@ -34,32 +34,31 @@ Venue = function() {
   * @param {Object} venue
   * @return {Boolean}
   */
-Venue.prototype.editableBy = function(user) {
+// eslint-disable-next-line func-names
+Venue.prototype.editableBy = function (user) {
 	if (!user) return false;
-	var isNew = !this._id;
+	const isNew = !this._id;
 	return isNew // Anybody may create a new location
 		|| user._id === this.editor
 		|| UserPrivilegeUtils.privileged(user, 'admin'); // Admins can edit all venues
 };
 
-export default Venues = new Mongo.Collection("Venues", {
+const Venues = new Mongo.Collection('Venues', {
 	transform(venue) {
 		return _.extend(new Venue(), venue);
-	}
+	},
 });
 
-if (Meteor.isServer) Venues._ensureIndex({loc : "2dsphere"});
+if (Meteor.isServer) Venues._ensureIndex({ loc: '2dsphere' });
 
 Venues.Filtering = () => Filtering(
-	{ region: Predicates.id
-	}
+	{ region: Predicates.id },
 );
 
 
-Venues.facilityOptions =
-	[ 'projector', 'screen', 'audio', 'blackboard', 'whiteboard'
-	, 'flipchart', 'wifi', 'kitchen', 'wheelchairs'
-	];
+Venues.facilityOptions = ['projector', 'screen', 'audio', 'blackboard', 'whiteboard',
+	'flipchart', 'wifi', 'kitchen', 'wheelchairs',
+];
 
 /* Find venues for given filters
  *
@@ -69,8 +68,9 @@ Venues.facilityOptions =
  * limit: how many to find
  *
  */
-Venues.findFilter = function(filter, limit, skip, sort) {
-	var find = {};
+// eslint-disable-next-line func-names
+Venues.findFilter = function (filter, limit, skip, sort) {
+	const find = {};
 	const options = { skip, sort };
 
 	if (limit > 0) {
@@ -82,11 +82,11 @@ Venues.findFilter = function(filter, limit, skip, sort) {
 	}
 
 	if (filter.search) {
-		var searchTerms = filter.search.split(/\s+/);
-		find.$and = _.map(searchTerms, function(searchTerm) {
-			return { name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } };
-		});
+		const searchTerms = filter.search.split(/\s+/);
+		find.$and = _.map(searchTerms, searchTerm => ({ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }));
 	}
 
 	return Venues.find(find, options);
 };
+
+export default Venues;

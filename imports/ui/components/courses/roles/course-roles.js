@@ -2,23 +2,24 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import SaveAfterLogin from '/imports/ui/lib/save-after-login.js';
+import Alert from '/imports/api/alerts/alert';
+import { Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subscription';
 
-import {Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subscription.js';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
-import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/buttons/buttons';
 
 import './course-roles.html';
 
-
-
-Template.courseRole.onCreated(function() {
+// eslint-disable-next-line func-names
+Template.courseRole.onCreated(function () {
 	this.busy(false);
 	this.enrolling = new ReactiveVar(false);
 	this.showFirstSteps = new ReactiveVar(false);
 
 	// Build a subscribe change
-	this.subscribe = function(comment) {
+	// eslint-disable-next-line func-names
+	this.subscribe = function (comment) {
 		const user = Users.currentUser();
 		return new Subscribe(this.data.course, user, this.data.roletype.type, comment);
 	};
@@ -30,11 +31,12 @@ Template.courseRole.onCreated(function() {
 			const user = Meteor.user();
 			const change = new Unsubscribe(this.data.course, user, this.data.roletype.type);
 			if (change.validFor(user)) {
-				processChange(change, ()=> {
-					Alert.success(mf("course.roles.unsubscribed", {NAME: this.data.course.name}, "Unsubscribed from course {NAME}"));
+				processChange(change, () => {
+					Alert.success(mf('course.roles.unsubscribed', { NAME: this.data.course.name }, 'Unsubscribed from course {NAME}'));
 				});
 			} else {
-				console.log(change+" not valid for "+user);
+				// eslint-disable-next-line no-console
+				console.log(`${change} not valid for ${user}`);
 			}
 		});
 	}
@@ -47,26 +49,26 @@ Template.courseRole.helpers({
 
 	roleSubscribe() {
 		let role = this.type;
-		if (role == 'participant') role = 'interested';
+		if (role === 'participant') role = 'interested';
 
-		return 'roles.' + role + '.subscribe';
+		return `roles.${role}.subscribe`;
 	},
 
 	roleSubscribed() {
 		let role = this.type;
-		if (role == 'participant') role = 'interested';
+		if (role === 'participant') role = 'interested';
 
-		return 'roles.' + role + '.subscribed';
+		return `roles.${role}.subscribed`;
 	},
 
 	roleIs(type) {
 		return this.roletype.type === type;
 	},
 
-	maySubscribe: function() {
+	maySubscribe() {
 		const operator = Users.currentUser();
 		return Template.instance().subscribe().validFor(operator);
-	}
+	},
 });
 
 Template.courseRole.events({
@@ -108,7 +110,7 @@ Template.courseRole.events({
 
 	'click #firstStepsComment'() {
 		$('.course-page-btn.js-discussion-edit').click();
-		location.hash = '#discussion';
+		window.location.hash = '#discussion';
 		RouterAutoscroll.scheduleScroll();
-	}
+	},
 });

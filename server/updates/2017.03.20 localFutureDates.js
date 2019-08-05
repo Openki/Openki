@@ -1,16 +1,19 @@
-import LocalTime from '/imports/utils/local-time.js';
-import Log from '/imports/api/log/log.js';
-import Events from '/imports/api/events/events.js';
-import Regions from '/imports/api/regions/regions.js';
+import LocalTime from '/imports/utils/local-time';
+import Log from '/imports/api/log/log';
+import Events from '/imports/api/events/events';
+import Regions from '/imports/api/regions/regions';
 
-var updateName = '2017.03.20 localFutureDates';
+const updateName = '2017.03.20 localFutureDates';
 
-UpdatesAvailable[updateName] = function() {
-	var count = 0;
+const UpdatesAvailable = [];
 
-	var setTz = function(regionId, tz) {
+// eslint-disable-next-line func-names
+UpdatesAvailable[updateName] = function () {
+	let count = 0;
+
+	const setTz = function (regionId, tz) {
 		count += 1;
-		Regions.update(regionId, { $set: { tz: tz }, $unset: { timeZone: true } });
+		Regions.update(regionId, { $set: { tz }, $unset: { timeZone: true } });
 	};
 
 	setTz('9JyFCoKWkxnf8LWPh', 'Europe/Zurich'); // Testistan
@@ -31,25 +34,30 @@ UpdatesAvailable[updateName] = function() {
 	setTz('JEhc83S4SdsJE0e', 'Europe/Zurich'); // Fribourg
 	setTz('wvoJEz0eSerrAJ', 'Europe/Zurich'); // Winterthur
 
-	Events.find().forEach(function(event) {
+	Events.find().forEach((event) => {
 		try {
-			var regionZone = LocalTime.zone(event.region);
-			Events.update(event._id, { $set:
-				{ startLocal:    regionZone.toString(event.start)
-				, endLocal:      regionZone.toString(event.end)
-				}
+			const regionZone = LocalTime.zone(event.region);
+			Events.update(event._id, {
+				$set:
+				{
+					startLocal: regionZone.toString(event.start),
+					endLocal: regionZone.toString(event.end),
+				},
 			});
 			count += 1;
-		}
-		catch (e) {
-			var rel = [updateName, event._id];
-			Log.record('Update.Error', rel,
-				{ event: event._id
-				, error: e
-				, update: updateName
-				}
+		} catch (e) {
+			const rel = [updateName, event._id];
+			Log.record(
+				'Update.Error',
+				rel,
+				{
+					event: event._id,
+					error: e,
+					update: updateName,
+				},
 			);
-			console.log("Unable to update local time for event "+ event._id + ": " + e);
+			// eslint-disable-next-line no-console
+			console.log(`Unable to update local time for event ${event._id}: ${e}`);
 		}
 	});
 

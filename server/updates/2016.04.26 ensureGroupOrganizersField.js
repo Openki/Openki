@@ -1,5 +1,12 @@
-import Courses from '/imports/api/courses/courses.js';
+import Courses from '/imports/api/courses/courses';
 
-UpdatesAvailable.ensureGroupOrganizersField = function() {
-	return Courses.update({ groupOrganizers: null }, { $set: { groupOrganizers: [] } }, { multi: true });
+const UpdatesAvailable = [];
+
+// eslint-disable-next-line func-names
+UpdatesAvailable.ensureGroupOrganizersField = function () {
+	return Courses.update(
+		{ groupOrganizers: null },
+		{ $set: { groupOrganizers: [] } },
+		{ multi: true },
+	);
 };

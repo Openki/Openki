@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-import Filtering from '/imports/utils/filtering.js';
-import Predicates from '/imports/utils/predicates.js';
+import Filtering from '/imports/utils/filtering';
+import Predicates from '/imports/utils/predicates';
 
 /** The Application Log records user and system decisions. It is intended to
   * become the single source of truth within the application.
@@ -38,16 +38,17 @@ import Predicates from '/imports/utils/predicates.js';
 export default Log = new Mongo.Collection('Log');
 
 Log.Filtering = () => Filtering(
-	{ start: Predicates.date
-	, rel:   Predicates.ids
-	, tr:    Predicates.ids
-	}
+	{
+		start: Predicates.date,
+		rel: Predicates.ids,
+		tr: Predicates.ids,
+	},
 );
 
 if (Meteor.isServer) {
-	Log._ensureIndex({ tr: 1});
-	Log._ensureIndex({ ts: 1});
-	Log._ensureIndex({ rel: 1});
+	Log._ensureIndex({ tr: 1 });
+	Log._ensureIndex({ ts: 1 });
+	Log._ensureIndex({ rel: 1 });
 }
 
 class ResultLogger {
@@ -70,6 +71,7 @@ class ResultLogger {
 		if (message) resolution.message = message;
 
 		if (this.printToLog) {
+			// eslint-disable-next-line no-console
 			console.log({ id: this.id, resolution });
 		}
 
@@ -84,41 +86,44 @@ class ResultLogger {
   * @param  {String} rel     - related ID
   * @param  {Object} body    - log body depending on track
   */
-Log.record = function(track, rel, body) {
+// eslint-disable-next-line func-names
+Log.record = function (track, rel, body) {
 	check(track, String);
 	check(rel, [String]);
 	check(body, Object);
-	var entry =
-		{ tr: track
-		, ts: new Date()
-		, rel: rel
-	, body: body
-	, res: []
-		};
+	const entry = {
+		tr: track,
+		ts: new Date(),
+		rel,
+		body,
+		res: [],
+	};
 
 	const id = Log.insert(entry);
 
 	const printToLog = Meteor.settings.printLog;
 	if (printToLog) {
+		// eslint-disable-next-line no-console
 		console.log(entry);
 	}
 
 	return new ResultLogger(id, printToLog);
 };
 
-Log.findFilter = function(filter, limit) {
+// eslint-disable-next-line func-names
+Log.findFilter = function (filter, limit) {
 	check(filter,
-		{ start: Match.Optional(Date)
-		, rel: Match.Optional([String])
-		, tr: Match.Optional([String])
-		}
-	);
+		{
+			start: Match.Optional(Date),
+			rel: Match.Optional([String]),
+			tr: Match.Optional([String]),
+		});
 	check(limit, Number);
 
 	const query = {};
 	if (filter.start) query.ts = { $lte: filter.start };
-	if (filter.rel) query.$or = [ { _id: { $in: filter.rel} }, { rel: { $in: filter.rel } } ];
+	if (filter.rel) query.$or = [{ _id: { $in: filter.rel } }, { rel: { $in: filter.rel } }];
 	if (filter.tr) query.tr = { $in: filter.tr };
 
-	return Log.find(query, { sort: { ts: -1 }, limit: limit });
+	return Log.find(query, { sort: { ts: -1 }, limit });
 };

@@ -1,31 +1,35 @@
-import LocalTime from '/imports/utils/local-time.js';
-import Log from '/imports/api/log/log.js';
-import Events from '/imports/api/events/events.js';
+import LocalTime from '/imports/utils/local-time';
+import Log from '/imports/api/log/log';
+import Events from '/imports/api/events/events';
 
-var updateName = '2017.08.01 fixLocalDates';
+const updateName = '2017.08.01 fixLocalDates';
 
-UpdatesAvailable[updateName] = function() {
-	var count = 0;
+const UpdatesAvailable = [];
 
-	Events.find({ replicaOf: {$not:{$size: 0}} }).forEach(function(event) {
+// eslint-disable-next-line func-names
+UpdatesAvailable[updateName] = function () {
+	let count = 0;
+
+	Events.find({ replicaOf: { $not: { $size: 0 } } }).forEach((event) => {
 		try {
-			var regionZone = LocalTime.zone(event.region);
-			Events.update(event._id, { $set:
-				{ startLocal:    regionZone.toString(event.start)
-				, endLocal:      regionZone.toString(event.end)
-				}
+			const regionZone = LocalTime.zone(event.region);
+			Events.update(event._id, {
+				$set:
+				{
+					startLocal: regionZone.toString(event.start),
+					endLocal: regionZone.toString(event.end),
+				},
 			});
 			count += 1;
-		}
-		catch (e) {
-			var rel = [updateName, event._id];
-			Log.record('Update.Error', rel,
-				{ event: event._id
-				, error: e
-				, update: updateName
-				}
-			);
-			console.log("Unable to update local time for event "+ event._id + ": " + e);
+		} catch (e) {
+			const rel = [updateName, event._id];
+			Log.record('Update.Error', rel, {
+				event: event._id,
+				error: e,
+				update: updateName,
+			});
+			// eslint-disable-next-line no-console
+			console.log(`Unable to update local time for event ${event._id}: ${e}`);
 		}
 	});
 

@@ -1,56 +1,59 @@
-import Analytics from '/imports/ui/lib/analytics.js';
-import Predicates from '/imports/utils/predicates.js';
-import Profile from '/imports/utils/profile.js';
-import LocalTime from '/imports/utils/local-time.js';
-import Metatags from '/imports/utils/metatags.js';
-import CourseTemplate from '/imports/ui/lib/course-template.js';
-import CssFromQuery from '/imports/ui/lib/css-from-query.js';
-import CleanedRegion from '/imports/ui/lib/cleaned-region.js';
-import Courses from '/imports/api/courses/courses.js';
-import Events from '/imports/api/events/events.js';
-import Groups from '/imports/api/groups/groups.js';
-import Roles from '/imports/api/roles/roles.js';
-import Venues from '/imports/api/venues/venues.js';
-import { HasRoleUser } from '/imports/utils/course-role-utils.js';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
+import Courses from '/imports/api/courses/courses';
+import Events from '/imports/api/events/events';
+import Groups from '/imports/api/groups/groups';
+import Roles from '/imports/api/roles/roles';
+import Venues from '/imports/api/venues/venues';
+
+import Analytics from '/imports/ui/lib/analytics';
+import CleanedRegion from '/imports/ui/lib/cleaned-region';
+import CourseTemplate from '/imports/ui/lib/course-template';
+import CssFromQuery from '/imports/ui/lib/css-from-query';
+
+import Filtering from '/imports/utils/filtering';
+import { HasRoleUser } from '/imports/utils/course-role-utils';
+import LocalTime from '/imports/utils/local-time';
+import Metatags from '/imports/utils/metatags';
+import Predicates from '/imports/utils/predicates';
+import Profile from '/imports/utils/profile';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 function finderRoute(path) {
 	return {
-		path: path,
+		path,
 		template: 'findWrap',
 		yieldRegions: {
-			'featuredGroup': { to: 'aboveContent' }
+			featuredGroup: { to: 'aboveContent' },
 		},
 		data() {
-			var query = this.params.query;
+			const { query } = this.params;
 
 			// Add filter options for the homepage
 			return _.extend(query, {
 				internal: false,
-				region: Session.get('region')
+				region: Session.get('region'),
 			});
 		},
 		onAfterAction() {
-			var search = this.params.query.search;
+			const { search } = this.params.query;
 			if (search) {
-				Metatags.setCommonTags(mf('find.windowtitle', {SEARCH: search}, 'Find "{SEARCH}"'));
+				Metatags.setCommonTags(mf('find.windowtitle', { SEARCH: search }, 'Find "{SEARCH}"'));
 			} else {
 				Metatags.setCommonTags(mf('find.WhatLearn?'));
 			}
-		}
+		},
 	};
 }
 
-var makeFilterQuery = function(params) {
-	var filter = Events.Filtering().read(params).done();
+const makeFilterQuery = function (params) {
+	const filter = Events.Filtering().read(params).done();
 
-	var query = filter.toQuery();
+	const query = filter.toQuery();
 
-	var start;
+	let start;
 	if (params.start) start = moment(params.start);
 	if (!start || !start.isValid()) start = moment(minuteTime.get()).startOf('day');
 
-	var end;
+	let end;
 	if (params.end) end = moment(params.end);
 	if (!end || !end.isValid()) end = moment(start).add(1, 'day');
 
@@ -60,16 +63,16 @@ var makeFilterQuery = function(params) {
 };
 
 function loadroles(course) {
-	var userId = Meteor.userId();
-	return _.reduce(Roles, function(goodroles, roletype) {
-		var role = roletype.type;
-		var sub = HasRoleUser(course.members, role, userId);
+	const userId = Meteor.userId();
+	return _.reduce(Roles, (goodroles, roletype) => {
+		const role = roletype.type;
+		const sub = HasRoleUser(course.members, role, userId);
 		if (course.roles && course.roles.indexOf(role) !== -1) {
 			goodroles.push({
-				roletype: roletype,
-				role: role,
+				roletype,
+				role,
 				subscribed: !!sub,
-				course: course
+				course,
 			});
 		}
 		return goodroles;
@@ -80,10 +83,11 @@ if (Meteor.isClient) {
 	Analytics.installRouterActions(Router);
 }
 
+// eslint-disable-next-line array-callback-return, func-names
 Router.map(function () {
 	this.route('adminPanel', {
 		path: 'admin',
-		template: 'adminPanel'
+		template: 'adminPanel',
 	});
 
 	this.route('calendar', {
@@ -92,17 +96,17 @@ Router.map(function () {
 		data() { return this.params; },
 		onAfterAction() {
 			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
-		}
+		},
 	});
 
 	this.route('FAQ', {
 		path: '/FAQ',
-		template: 'FAQ'
+		template: 'FAQ',
 	});
 
 	this.route('featureGroup', {
 		path: 'admin/feature-group',
-		template: 'featureGroup'
+		template: 'featureGroup',
 	});
 
 	this.route('find', finderRoute('/find'));
@@ -117,13 +121,13 @@ Router.map(function () {
 		},
 		onAfterAction() {
 			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
-		}
+		},
 	});
 
 	this.route('frameCourselist', {
 		path: '/frame/courselist',
 		template: 'frameCourselist',
-		layoutTemplate: 'frameLayout'
+		layoutTemplate: 'frameLayout',
 	});
 
 	this.route('frameEvents', {
@@ -133,26 +137,26 @@ Router.map(function () {
 		waitOn() {
 			this.filter = Events.Filtering().read(this.params.query).done();
 
-			var filterParams = this.filter.toParams();
+			const filterParams = this.filter.toParams();
 			filterParams.after = minuteTime.get();
 
-			var limit = parseInt(this.params.query.count, 10) || 6;
+			const limit = parseInt(this.params.query.count, 10) || 6;
 
-			return Meteor.subscribe('Events.findFilter', filterParams, limit*2);
+			return Meteor.subscribe('Events.findFilter', filterParams, limit * 2);
 		},
 
 		data() {
-			var filterParams = this.filter.toParams();
+			const filterParams = this.filter.toParams();
 			filterParams.after = minuteTime.get();
 
-			var limit = parseInt(this.params.query.count, 10) || 6;
+			const limit = parseInt(this.params.query.count, 10) || 6;
 
 			return Events.findFilter(filterParams, limit);
 		},
 
 		onAfterAction() {
 			Metatags.setCommonTags(mf('event.list.windowtitle', 'Events'));
-		}
+		},
 	});
 
 	this.route('framePropose', {
@@ -161,27 +165,28 @@ Router.map(function () {
 		layoutTemplate: 'frameLayout',
 		waitOn: () => Meteor.subscribe('regions'),
 		data() {
-			const predicates =
-				{ region: Predicates.id
-				, group: Predicates.id
-				, neededRoles: Predicates.ids
-				, internal: Predicates.flag
-				};
+			const predicates = {
+				region: Predicates.id,
+				group: Predicates.id,
+				neededRoles: Predicates.ids,
+				internal: Predicates.flag,
+			};
 			const params = Filtering(predicates).read(this.params.query).done();
 
 			// add mentor role to be checked and the isFrame flag
 			return Object.assign(
 				params.toQuery(),
-				{ roles: ['mentor']
-				, isFrame: true
-				}
+				{
+					roles: ['mentor'],
+					isFrame: true,
+				},
 			);
 		},
 		onAfterAction() {
 			Metatags.setCommonTags(
-				mf('course.propose.windowtitle', 'Propose new course')
+				mf('course.propose.windowtitle', 'Propose new course'),
 			);
-		}
+		},
 	});
 
 	this.route('frameSchedule', {
@@ -195,7 +200,7 @@ Router.map(function () {
 		layoutTemplate: 'frameWeek',
 		onAfterAction() {
 			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
-		}
+		},
 	});
 
 	this.route('groupDetails', {
@@ -209,7 +214,7 @@ Router.map(function () {
 			let group;
 			const isNew = this.params._id === 'create';
 			if (isNew) {
-				group = { _id: 'create'	};
+				group = { _id: 'create' };
 			} else {
 				group = Groups.findOne(this.params._id);
 			}
@@ -218,17 +223,19 @@ Router.map(function () {
 
 			const courseQuery = Object.assign(this.params.query, {
 				group: group._id,
-				region: Session.get('region')
+				region: Session.get('region'),
 			});
 
-			return { courseQuery, group, isNew, showCourses: !isNew };
+			return {
+				courseQuery, group, isNew, showCourses: !isNew,
+			};
 		},
 		onAfterAction() {
-			var group = Groups.findOne({_id: this.params._id});
+			const group = Groups.findOne({ _id: this.params._id });
 			if (group) {
 				Metatags.setCommonTags(group.name);
 			}
-		}
+		},
 	});
 
 	this.route('home', finderRoute('/'));
@@ -237,15 +244,15 @@ Router.map(function () {
 		path: '/kiosk/events',
 		layoutTemplate: 'kioskLayout',
 		waitOn() {
-			var now = minuteTime.get(); // Time dependency so this will be reactively updated
+			const now = minuteTime.get(); // Time dependency so this will be reactively updated
 
 			this.filter = Events.Filtering().read(this.params.query).done();
 			Session.set('kioskFilter', this.filter.toParams());
 
-			var queryFuture = this.filter.toParams();
+			const queryFuture = this.filter.toParams();
 			queryFuture.after = now;
 
-			var queryOngoing= this.filter.toParams();
+			const queryOngoing = this.filter.toParams();
 			queryOngoing.ongoing = now;
 
 			return [
@@ -255,41 +262,41 @@ Router.map(function () {
 		},
 
 		data() {
-			var now = minuteTime.get();
-			var tomorrow = new Date(now);
+			const now = minuteTime.get();
+			const tomorrow = new Date(now);
 			tomorrow.setHours(tomorrow.getHours() + 24);
 			tomorrow.setHours(0);
 
-			var queryFuture = this.filter.toParams();
+			const queryFuture = this.filter.toParams();
 			queryFuture.after = tomorrow;
 
-			var queryToday = this.filter.toParams();
+			const queryToday = this.filter.toParams();
 			queryToday.after = now;
 			queryToday.before = tomorrow;
 
-			var queryNow = this.filter.toParams();
+			const queryNow = this.filter.toParams();
 			queryNow.ongoing = now;
 
-			var filterParams = this.filter.toParams();
+			const filterParams = this.filter.toParams();
 			return {
 				today: Events.findFilter(queryToday, 20),
 				future: Events.findFilter(queryFuture, 10),
 				ongoing: Events.findFilter(queryNow),
-				filter: filterParams
+				filter: filterParams,
 			};
 		},
 		onAfterAction() {
-			this.timer = Meteor.setInterval(function() {
+			this.timer = Meteor.setInterval(() => {
 				Session.set('seconds', new Date());
 			}, 1000);
 			Metatags.setCommonTags(mf('event.list.windowtitle', 'Events'));
 		},
 		unload() {
 			Meteor.clearInterval(this.timer);
-		}
+		},
 	});
 
-	this.route('log',  {
+	this.route('log', {
 		path: '/log',
 		template: 'showLog',
 		data() {
@@ -297,17 +304,17 @@ Router.map(function () {
 		},
 		onAfterAction() {
 			Metatags.setCommonTags(mf('log.list.windowtitle', 'Log'));
-		}
+		},
 	});
 
-	this.route('pages', {									///////// static /////////
+	this.route('pages', { // /////// static /////////
 		path: 'page/:page_name',
 		action() {
 			this.render(this.params.page_name);
 		},
 		onAfterAction() {
 			Metatags.setCommonTags(this.params.page_name);
-		}
+		},
 	});
 
 	this.route('profile', {
@@ -315,21 +322,21 @@ Router.map(function () {
 		waitOn() {
 			return [
 				Meteor.subscribe('groupsFind', { own: true }),
-				Meteor.subscribe('Venues.findFilter', { editor: Meteor.userId() })
+				Meteor.subscribe('Venues.findFilter', { editor: Meteor.userId() }),
 			];
 		},
 		data() {
-			var data = {};
-			var user = Meteor.user();
+			const data = {};
+			const user = Meteor.user();
 			data.loggedIn = !!user;
 			if (data.loggedIn) {
-				var userdata = {
+				const userdata = {
 					_id: user._id,
 					name: user.username,
 					privacy: user.privacy,
 					notifications: user.notifications,
 					groups: Groups.findFilter({ own: true }),
-					venues: Venues.find({ editor: user._id })
+					venues: Venues.find({ editor: user._id }),
 				};
 				userdata.have_email = user.emails && user.emails.length > 0;
 				if (userdata.have_email) {
@@ -345,10 +352,10 @@ Router.map(function () {
 		onAfterAction() {
 			const user = Meteor.user();
 			if (user) {
-				const title = mf('profile.settings.windowtitle', {USER: user.username}, 'My Profile Settings - {USER}');
+				const title = mf('profile.settings.windowtitle', { USER: user.username }, 'My Profile Settings - {USER}');
 				Metatags.setCommonTags(title);
 			}
-		}
+		},
 	});
 
 	this.route('proposeCourse', {
@@ -357,17 +364,17 @@ Router.map(function () {
 		onAfterAction() {
 			Metatags.setCommonTags(mf('course.propose.windowtitle', 'Propose new course'));
 		},
-		data: CourseTemplate
+		data: CourseTemplate,
 	});
 
 	this.route('resetPassword', {
-		path: "reset-password/:token",
+		path: 'reset-password/:token',
 		data() {
 			return this.params.token;
 		},
 		onAfterAction() {
-			document.title = mf('resetPassword.siteTitle', "Reset password");
-		}
+			document.title = mf('resetPassword.siteTitle', 'Reset password');
+		},
 	});
 
 	this.route('showCourse', {
@@ -377,56 +384,57 @@ Router.map(function () {
 			return Meteor.subscribe('courseDetails', this.params._id);
 		},
 		data() {
-			var course = Courses.findOne({_id: this.params._id});
+			const course = Courses.findOne({ _id: this.params._id });
 
 			if (!course) return false;
 
 			function getMember(members, user) {
 				if (!members) return false;
-				var member = false;
-				members.forEach(function(member_candidate) {
-					if (member_candidate.user == user) {
-						member = member_candidate;
+				let member = false;
+				// eslint-disable-next-line consistent-return
+				members.forEach((memberCandidate) => {
+					if (memberCandidate.user === user) {
+						member = memberCandidate;
 						return true; // break
 					}
 				});
 				return member;
 			}
 
-			var userId = Meteor.userId();
-			var member = getMember(course.members, userId);
-			var data = {
+			const userId = Meteor.userId();
+			const member = getMember(course.members, userId);
+			const data = {
 				edit: !!this.params.query.edit,
 				roles_details: loadroles(course),
-				course: course,
-				member: member,
-				select: this.params.query.select
+				course,
+				member,
+				select: this.params.query.select,
 			};
 			return data;
 		},
 		onAfterAction() {
-			var data = this.data();
+			const data = this.data();
 			if (data) {
-				var course = data.course;
-				Metatags.setCommonTags(mf('course.windowtitle', {COURSE: course.name}, 'Course: {COURSE}'));
+				const { course } = data;
+				Metatags.setCommonTags(mf('course.windowtitle', { COURSE: course.name }, 'Course: {COURSE}'));
 			}
-		}
+		},
 	});
 
 	this.route('showCourseHistory', {
 		path: 'course/:_id/:slug/History',
-		//template: 'coursehistory',
+		// template: 'coursehistory',
 		waitOn() {
 			return [
-				Meteor.subscribe('courseDetails', this.params._id)
+				Meteor.subscribe('courseDetails', this.params._id),
 			];
 		},
 		data() {
-			var course = Courses.findOne({_id: this.params._id});
+			const course = Courses.findOne({ _id: this.params._id });
 			return {
-				course: course
+				course,
 			};
-		}
+		},
 	});
 
 	this.route('showEvent', {
@@ -434,26 +442,26 @@ Router.map(function () {
 		template: 'eventPage',
 		notFoundTemplate: 'eventNotFound',
 		waitOn() {
-			var subs = [
-				Meteor.subscribe('event', this.params._id)
+			const subs = [
+				Meteor.subscribe('event', this.params._id),
 			];
-			var courseId = this.params.query.courseId;
+			const { courseId } = this.params.query;
 			if (courseId) {
 				subs.push(Meteor.subscribe('courseDetails', courseId));
 			}
 			return subs;
 		},
 		data() {
-			var event;
-			var create = 'create' == this.params._id;
+			let event;
+			const create = this.params._id === 'create';
 			if (create) {
-				var propose = LocalTime.now().add(1, 'week').startOf('hour');
+				const propose = LocalTime.now().add(1, 'week').startOf('hour');
 				event = {
 					new: true,
 					startLocal: LocalTime.toString(propose),
 					endLocal: LocalTime.toString(moment(propose).add(2, 'hour')),
 				};
-				var course = Courses.findOne(this.params.query.courseId);
+				const course = Courses.findOne(this.params.query.courseId);
 				if (course) {
 					event.title = course.name;
 					event.courseId = course._id;
@@ -462,12 +470,12 @@ Router.map(function () {
 					event.internal = course.internal;
 				}
 			} else {
-				event = Events.findOne({_id: this.params._id});
+				event = Events.findOne({ _id: this.params._id });
 				if (!event) return false;
 			}
 
 			return event;
-		}
+		},
 	});
 
 	this.route('timetable', {
@@ -477,71 +485,77 @@ Router.map(function () {
 			return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params && this.params.query), 200);
 		},
 		data() {
-			var query = makeFilterQuery(this.params.query);
+			const query = makeFilterQuery(this.params.query);
 
-			var start;
-			var end;
+			let start;
+			let end;
 
-			var events = Events.findFilter(query, 200).fetch();
+			const events = Events.findFilter(query, 200).fetch();
 
 			// collect time when first event starts and last event ends
-			events.forEach(function(event) {
-				if (!start || event.start < start    ) start = event.start;
-				if (!end   || end         < event.end) end   = event.end;
+			events.forEach((event) => {
+				if (!start || event.start < start) start = event.start;
+				if (!end || end < event.end) end = event.end;
 			});
 
 			if (!start || !end) return [];
 
 			start = moment(start).startOf('hour');
-			end   = moment(end).startOf('hour');
+			end = moment(end).startOf('hour');
 
-			var startAbs = start.toDate().getTime();
-			var endAbs   = end.toDate().getTime();
+			const startAbs = start.toDate().getTime();
+			const endAbs = end.toDate().getTime();
 
-			var span = endAbs - startAbs;
-			var days = {};
-			var hours = {};
-			var cursor = moment(start);
+			const span = endAbs - startAbs;
+			const days = {};
+			const hours = {};
+			const cursor = moment(start);
 			do {
-				var month = cursor.month();
-				var day = cursor.day();
-				days[''+month+day] = {
+				const month = cursor.month();
+				const day = cursor.day();
+				days[`${month}${day}`] = {
 					moment: moment(cursor).startOf('day'),
 					relStart: Math.max(-0.1, (moment(cursor).startOf('day').toDate().getTime() - startAbs) / span),
-					relEnd:   Math.max(-0.1, (endAbs - moment(cursor).startOf('day').add(1, 'day').toDate().getTime()) / span)
+					relEnd: Math.max(-0.1, (endAbs - moment(cursor).startOf('day').add(1, 'day').toDate()
+						.getTime()) / span),
 				};
-				var hour = cursor.hour();
-				hours[''+month+day+hour] = {
+				const hour = cursor.hour();
+				hours[`${month}${day}${hour}`] = {
 					moment: moment(cursor).startOf('hour'),
 					relStart: Math.max(-0.1, (moment(cursor).startOf('hour').toDate().getTime() - startAbs) / span),
-					relEnd:   Math.max(-0.1, (endAbs - moment(cursor).startOf('hour').add(1, 'hour').toDate().getTime()) / span)
+					relEnd: Math.max(-0.1, (endAbs - moment(cursor).startOf('hour').add(1, 'hour').toDate()
+						.getTime()) / span),
 				};
 				cursor.add(1, 'hour');
-			} while(cursor.isBefore(end));
+			} while (cursor.isBefore(end));
 
-			var perVenue = {};
-			var useVenue = function(venue) {
-				var id = venue._id || '#'+venue.name;
+			const perVenue = {};
+			const useVenue = function (venue) {
+				const id = venue._id || `#${venue.name}`;
 				if (!perVenue[id]) {
 					perVenue[id] = {
-						venue: venue,
-						rows: []
+						venue,
+						rows: [],
 					};
 				}
 				return perVenue[id].rows;
 			};
 
-			events.forEach(function(event) {
+			events.forEach((event) => {
+				// eslint-disable-next-line no-param-reassign
 				event.relStart = (event.start.getTime() - startAbs) / span;
-				event.relEnd   = (endAbs - event.end.getTime()) / span;
-				var placed = false;
+				// eslint-disable-next-line no-param-reassign
+				event.relEnd = (endAbs - event.end.getTime()) / span;
+				let placed = false;
 
-				var venueRows = useVenue(event.venue);
-				for (var rowNr in venueRows) {
-					var row = venueRows[rowNr];
-					var last = undefined;
-					for (var eventNr in row) {
-						var placedEvent = row[eventNr];
+				const venueRows = useVenue(event.venue);
+				// eslint-disable-next-line guard-for-in, no-restricted-syntax
+				for (const rowNr in venueRows) {
+					const row = venueRows[rowNr];
+					let last;
+					// eslint-disable-next-line guard-for-in, no-restricted-syntax
+					for (const eventNr in row) {
+						const placedEvent = row[eventNr];
 						if (!last || placedEvent.end > last) last = placedEvent.end;
 					}
 					if (last <= event.start) {
@@ -558,7 +572,7 @@ Router.map(function () {
 			return {
 				days: _.toArray(days),
 				hours: _.toArray(hours),
-				grouped: _.toArray(perVenue)
+				grouped: _.toArray(perVenue),
 			};
 		},
 	});
@@ -572,33 +586,35 @@ Router.map(function () {
 			];
 		},
 		data() {
-			var user = Meteor.users.findOne({_id: this.params._id});
+			const user = Meteor.users.findOne({ _id: this.params._id });
 			if (!user) return; // not loaded?
 
 			// What privileges the user has
-			var privileges = _.reduce(['admin'], function(ps, p) {
+			const privileges = _.reduce(['admin'], (ps, p) => {
+				// eslint-disable-next-line no-param-reassign
 				ps[p] = UserPrivilegeUtils.privileged(user, p);
 				return ps;
 			}, {});
 
-			var alterPrivileges = UserPrivilegeUtils.privilegedTo('admin');
-			var showPrivileges = alterPrivileges || (user.privileges && user.privileges.length);
+			const alterPrivileges = UserPrivilegeUtils.privilegedTo('admin');
+			const showPrivileges = alterPrivileges || (user.privileges && user.privileges.length);
 
+			// eslint-disable-next-line consistent-return
 			return {
-				'user': user,
-				'alterPrivileges': alterPrivileges,
-				'privileges': privileges,
-				'inviteGroups': Groups.findFilter({ own: true }),
-				'showPrivileges': showPrivileges
+				user,
+				alterPrivileges,
+				privileges,
+				inviteGroups: Groups.findFilter({ own: true }),
+				showPrivileges,
 			};
 		},
 		onAfterAction() {
-			var user = Meteor.users.findOne({_id: this.params._id});
+			const user = Meteor.users.findOne({ _id: this.params._id });
 			if (!user) return; // wtf
 
-			const title = mf('profile.windowtitle', {USER: user.username}, "Profile of {USER}");
+			const title = mf('profile.windowtitle', { USER: user.username }, 'Profile of {USER}');
 			Metatags.setCommonTags(title);
-		}
+		},
 	});
 
 	this.route('venueDetails', {
@@ -610,17 +626,17 @@ Router.map(function () {
 		},
 
 		data() {
-			var id = this.params._id;
+			const id = this.params._id;
 
-			var venue;
-			var data = {};
+			let venue;
+			const data = {};
 			if (id === 'create') {
-				var userId = Meteor.userId();
+				const userId = Meteor.userId();
 				venue = new Venue();
 				venue.region = CleanedRegion(Session.get('region'));
 				venue.editor = userId;
 			} else {
-				venue = Venues.findOne({_id: this.params._id});
+				venue = Venues.findOne({ _id: this.params._id });
 				if (!venue) return false; // Not found
 			}
 
@@ -630,21 +646,21 @@ Router.map(function () {
 		},
 
 		onAfterAction() {
-			var data = this.data();
+			const data = this.data();
 			if (!data) return;
 
-			var venue = data.venue;
-			var title;
+			const { venue } = data;
+			let title;
 			if (venue._id) {
 				title = venue.name;
 			} else {
-				title = mf('venue.edit.siteTitle.create', "Create Venue");
+				title = mf('venue.edit.siteTitle.create', 'Create Venue');
 			}
 			Metatags.setCommonTags(title);
-		}
+		},
 	});
 
-	this.route('venueMap',{
+	this.route('venueMap', {
 		path: 'venues',
 		template: 'venueMap',
 		waitOn() {
@@ -652,17 +668,17 @@ Router.map(function () {
 		},
 		onAfterAction() {
 			Metatags.setCommonTags(mf('venue.map.windowtitle', 'Venues map'));
-		}
+		},
 	});
 });
 
-Router.route('/profile/unsubscribe/:token', function() {
+// eslint-disable-next-line func-names
+Router.route('/profile/unsubscribe/:token', function () {
+	const unsubToken = this.params.token;
 
-	var unsubToken = this.params.token;
+	const accepted = Profile.Notifications.unsubscribe(unsubToken);
 
-	var accepted = Profile.Notifications.unsubscribe(unsubToken);
-
-	var query = {};
+	const query = {};
 	if (accepted) {
 		query.unsubscribed = '';
 	} else {
@@ -670,11 +686,11 @@ Router.route('/profile/unsubscribe/:token', function() {
 	}
 
 	this.response.writeHead(302, {
-		'Location': Router.url('profile', {}, { query: query })
+		Location: Router.url('profile', {}, { query }),
 	});
 
 	this.response.end();
 }, {
 	name: 'profile.unsubscribe',
-	where: 'server'
+	where: 'server',
 });

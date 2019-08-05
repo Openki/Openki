@@ -3,21 +3,22 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import RegionSelection from '/imports/utils/region-selection.js';
-import UpdateViewport from '/imports/ui/lib/update-viewport.js';
-import ScssVars from '/imports/ui/lib/scss-vars.js';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils.js';
+import RegionSelection from '/imports/utils/region-selection';
+import Introduction from '/imports/ui/lib/introduction';
+import ScssVars from '/imports/ui/lib/scss-vars';
+import UpdateViewport from '/imports/ui/lib/update-viewport';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-import '/imports/ui/components/account-tasks/account-tasks.js';
-import '/imports/ui/components/alerts/alerts.js';
-import '/imports/ui/components/email-request/email-request.js';
-import '/imports/ui/components/featured-group/featured-group.js';
-import '/imports/ui/components/footer/footer.js';
-import '/imports/ui/components/introduction/introduction.js';
-import '/imports/ui/components/kiosk-link/kiosk-link.js';
-import '/imports/ui/components/navbar/navbar.js';
-import '/imports/ui/components/regions/splash/region-splash.js';
-import '/imports/ui/components/translate-info/translate-info.js';
+import '/imports/ui/components/account-tasks/account-tasks';
+import '/imports/ui/components/alerts/alerts';
+import '/imports/ui/components/email-request/email-request';
+import '/imports/ui/components/featured-group/featured-group';
+import '/imports/ui/components/footer/footer';
+import '/imports/ui/components/introduction/introduction';
+import '/imports/ui/components/kiosk-link/kiosk-link';
+import '/imports/ui/components/navbar/navbar';
+import '/imports/ui/components/regions/splash/region-splash';
+import '/imports/ui/components/translate-info/translate-info';
 
 import './app-body.html';
 
@@ -27,8 +28,8 @@ Template.layout.helpers({
 	},
 
 	translate() {
-		var route = Router.current().route;
-		return route && route.getName() === "mfTrans";
+		const { route } = Router.current();
+		return route && route.getName() === 'mfTrans';
 	},
 
 	mayTranslate() {
@@ -36,7 +37,7 @@ Template.layout.helpers({
 	},
 
 	showRegionSplash() {
-		var route = Router.current().route;
+		const { route } = Router.current();
 		if (!route) return false;
 
 		return (
@@ -50,7 +51,7 @@ Template.layout.helpers({
 	isAdmin: () => UserPrivilegeUtils.privilegedTo('admin'),
 
 	isNotAdminPanel() {
-		const route = Router.current().route;
+		const { route } = Router.current();
 		return route && route.getName() !== 'adminPanel';
 	},
 });
@@ -58,16 +59,17 @@ Template.layout.helpers({
 Template.layout.events({
 	// Clicks on the logo toggle the intro blurb, but only when already on home
 	'click .js-toggle-introduction'() {
-		var route = Router.current().route;
-		if (route && route.options.template === "findWrap") {
+		const { route } = Router.current();
+		if (route && route.options.template === 'findWrap') {
 			Introduction.showIntro();
 		}
 	},
 });
 
-Template.layout.rendered = function() {
-	$(window).resize(function(){ UpdateViewport(); });
-	Session.set('isRetina', (window.devicePixelRatio == 2));
+// eslint-disable-next-line func-names
+Template.layout.rendered = function () {
+	$(window).resize(() => { UpdateViewport(); });
+	Session.set('isRetina', (window.devicePixelRatio === 2));
 };
 
 /* Workaround to prevent iron-router from messing with server-side downloads
@@ -77,7 +79,7 @@ Template.layout.rendered = function() {
 Template.layout.events({
 	'click .js-download'(event) {
 		event.stopPropagation();
-	}
+	},
 });
 
 RouterAutoscroll.marginTop = ScssVars.navbarHeight;

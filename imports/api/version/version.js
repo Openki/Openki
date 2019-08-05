@@ -11,4 +11,6 @@ import { Mongo } from 'meteor/mongo';
 // "restart"       -> Date      ISODate("2016-01-14T00:24:46.610Z")
 // ===========================
 
-export default Version = new Mongo.Collection('Version');
+const Version = new Mongo.Collection('Version');
+
+export default Version;

@@ -3,21 +3,21 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert.js';
-import Groups from '/imports/api/groups/groups.js';
-import TemplateMixins from '/imports/ui/lib/template-mixins.js';
-import UserSearchPrefix from '/imports/utils/user-search-prefix.js';
+import Alert from '/imports/api/alerts/alert';
+import Groups from '/imports/api/groups/groups';
+import UserSearchPrefix from '/imports/utils/user-search-prefix';
 
-import '/imports/ui/components/buttons/buttons.js';
+import '/imports/ui/components/buttons/buttons';
 
 import './group-settings.html';
 
-Template.groupSettings.onCreated(function() {
-	var instance = this;
+// eslint-disable-next-line func-names
+Template.groupSettings.onCreated(function () {
+	const instance = this;
 
-	//strip https:// from logoUrl because its already labeled as prefix
-	const logoUrl = instance.data.group.logoUrl;
-	if ( logoUrl.startsWith('https://') ) {
+	// strip https:// from logoUrl because its already labeled as prefix
+	const { logoUrl } = instance.data.group;
+	if (logoUrl.startsWith('https://')) {
 		instance.data.group.logoUrl = logoUrl.replace('https://', '');
 	}
 
@@ -25,8 +25,8 @@ Template.groupSettings.onCreated(function() {
 
 	instance.userSearch = new ReactiveVar('');
 
-	instance.autorun(function() {
-		var search = instance.userSearch.get();
+	instance.autorun(() => {
+		const search = instance.userSearch.get();
 		if (search.length > 0) {
 			Meteor.subscribe('userSearch', search);
 		}
@@ -35,35 +35,35 @@ Template.groupSettings.onCreated(function() {
 
 Template.groupSettings.helpers({
 	foundUsers() {
-		var instance = Template.instance();
+		const instance = Template.instance();
 
-		var search = instance.userSearch.get();
+		const search = instance.userSearch.get();
 		if (search === '') return false;
 
-		var group = Groups.findOne(Router.current().params._id);
+		const group = Groups.findOne(Router.current().params._id);
 		return UserSearchPrefix(search, { exclude: group.members, limit: 30 });
 	},
 
 	kioskEventURL() {
-		return Router.routes.kioskEvents.url({}, { query: {group: this._id} });
+		return Router.routes.kioskEvents.url({}, { query: { group: this._id } });
 	},
 	timetableURL() {
-		return Router.routes.timetable.url({}, { query: {group: this._id} });
+		return Router.routes.timetable.url({}, { query: { group: this._id } });
 	},
 	scheduleURL() {
-	return Router.routes.frameSchedule.url({}, { query: {group: this._id} });
+		return Router.routes.frameSchedule.url({}, { query: { group: this._id } });
 	},
 	frameEventsURL() {
-		return Router.routes.frameEvents.url({}, { query: {group: this._id} });
+		return Router.routes.frameEvents.url({}, { query: { group: this._id } });
 	},
 	frameWeekURL() {
-		return Router.routes.frameWeek.url({}, { query: {group: this._id} });
+		return Router.routes.frameWeek.url({}, { query: { group: this._id } });
 	},
 	frameCalendarURL() {
-		return Router.routes.frameCalendar.url({}, { query: {group: this._id} });
+		return Router.routes.frameCalendar.url({}, { query: { group: this._id } });
 	},
 	frameListURL() {
-		return Router.routes.frameCourselist.url({}, { query: {group: this._id} });
+		return Router.routes.frameCourselist.url({}, { query: { group: this._id } });
 	},
 });
 
@@ -72,10 +72,10 @@ Template.groupSettings.events({
 		instance.userSearch.set(instance.$('.js-search-users').val());
 	},
 
-	'click .js-member-add-btn'(event, instance) {
-		var memberId = this._id;
-		var groupId = Router.current().params._id;
-		Meteor.call("group.updateMembership", memberId, groupId, true, function(err) {
+	'click .js-member-add-btn'() {
+		const memberId = this._id;
+		const groupId = Router.current().params._id;
+		Meteor.call('group.updateMembership', memberId, groupId, true, (err) => {
 			if (err) {
 				Alert.error(err, 'Could not add member');
 			} else {
@@ -84,16 +84,16 @@ Template.groupSettings.events({
 				Alert.success(mf(
 					'groupSettings.memberAdded',
 					{ MEMBER: memberName, GROUP: groupName },
-					'"{MEMBER}" has been added as a member to the group "{GROUP}"'
+					'"{MEMBER}" has been added as a member to the group "{GROUP}"',
 				));
 			}
 		});
 	},
 
-	'click .js-member-remove-btn'(event, instance) {
-		var memberId = ''+this;
-		var groupId = Router.current().params._id;
-		Meteor.call("group.updateMembership", memberId, groupId, false, function(err) {
+	'click .js-member-remove-btn'() {
+		const memberId = `${this}`;
+		const groupId = Router.current().params._id;
+		Meteor.call('group.updateMembership', memberId, groupId, false, (err) => {
 			if (err) {
 				Alert.error(err, 'Could not remove member');
 			} else {
@@ -102,7 +102,7 @@ Template.groupSettings.events({
 				Alert.success(mf(
 					'groupSettings.memberRemoved',
 					{ MEMBER: memberName, GROUP: groupName },
-					'"{MEMBER}" has been removed from to the group "{GROUP}"'
+					'"{MEMBER}" has been removed from to the group "{GROUP}"',
 				));
 			}
 		});
@@ -118,24 +118,24 @@ Template.groupSettings.events({
 	'click .js-group-edit-save'(event, instance) {
 		event.preventDefault();
 
-		var parentInstance = instance.parentInstance(); // Not available in callback
+		const parentInstance = instance.parentInstance(); // Not available in callback
 
 		let url = instance.$('.js-logo-url').val().trim();
 
-		//strip protocol if needed
-		if ( url.includes('://') ) {
+		// strip protocol if needed
+		if (url.includes('://')) {
 			url = url.split('://')[1];
 		}
 
-		url = 'https://' + url;
+		url = `https://${url}`;
 
 		instance.busy('saving');
 		const changes = {
-			logoUrl: url
+			logoUrl: url,
 		};
 
 		const groupId = instance.data.group._id;
-		Meteor.call("group.save", groupId, changes, function(err) {
+		Meteor.call('group.save', groupId, changes, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.error(err, 'Could not save settings');
@@ -144,7 +144,7 @@ Template.groupSettings.events({
 				Alert.success(mf(
 					'groupSettings.groupChangesSaved',
 					{ GROUP: groupName },
-					'Your changes to the settings of the group "{GROUP}" have been saved.'
+					'Your changes to the settings of the group "{GROUP}" have been saved.',
 				));
 				parentInstance.editingSettings.set(false);
 			}
@@ -153,5 +153,5 @@ Template.groupSettings.events({
 
 	'click .js-group-edit-cancel'(event, instance) {
 		instance.parentInstance().editingSettings.set(false);
-	}
+	},
 });

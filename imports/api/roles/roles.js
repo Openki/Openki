@@ -5,27 +5,29 @@
 // "show_subscribers" -> Boolean
 // ===========================
 
-export default Roles =
-	[
-		{ 'type':        'participant'
-		, 'icon':        'fa fa-user'
-		, 'preset':      true
-		, 'show_subscribers': true
-		}
-	,
-		{ 'type':        'mentor'
-		, 'icon':        'fa fa-graduation-cap'
-		, 'show_subscribers': true
-		}
-	,
-		{ 'type':        'host'
-		, 'icon':        'fa fa-home'
-		, 'show_subscribers': true
-		}
-	,
-		{ 'type':        'team'
-		, 'icon':        'fa fa-bullhorn'
-		, 'preset':      true
-		, 'show_subscribers': true
-		}
-	];
+const Roles = [
+	{
+		type: 'participant',
+		icon: 'fa fa-user',
+		preset: true,
+		show_subscribers: true,
+	},
+	{
+		type: 'mentor',
+		icon: 'fa fa-graduation-cap',
+		show_subscribers: true,
+	},
+	{
+		type: 'host',
+		icon: 'fa fa-home',
+		show_subscribers: true,
+	},
+	{
+		type: 'team',
+		icon: 'fa fa-bullhorn',
+		preset: true,
+		show_subscribers: true,
+	},
+];
+
+export default Roles;

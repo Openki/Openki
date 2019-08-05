@@ -1,40 +1,44 @@
-export default Analytics = {};
 import $ from 'jquery';
 import { Match } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { Promise } from 'meteor/promise';
+
+const Analytics = {};
 
 let loading;
 
 let tracker;
 
 const SettingsPattern = Match.ObjectIncluding({
-	'url': String,
-	'site': Match.Integer,
+	url: String,
+	site: Match.Integer,
 });
 
 const MatomoPattern = Match.ObjectIncluding({
-	'getTracker': Match.Where($.isFunction),
+	getTracker: Match.Where($.isFunction),
 });
 
 /**
  * Returns true if matomo analytics settings are configured.
  */
-Analytics.isConfigured = function() {
+// eslint-disable-next-line func-names
+Analytics.isConfigured = function () {
 	return Match.test(Meteor.settings.public.matomo, SettingsPattern);
 };
 
 /**
  * Returns true if the tracker exists.
  */
-Analytics.hasTracker = function() {
+// eslint-disable-next-line func-names
+Analytics.hasTracker = function () {
 	return !!tracker;
 };
 
 /**
  * Returns a promise resolving to the global Matomo object.
  */
-Analytics.load = function() {
+// eslint-disable-next-line func-names
+Analytics.load = function () {
 	let result;
 
 	// Piwik/Matomo entry point is the global window.Piwik object. That one
@@ -43,8 +47,7 @@ Analytics.load = function() {
 	// the alias.
 	if (Match.test(window.AnalyticsTracker, MatomoPattern)) {
 		result = Promise.resolve(window.AnalyticsTracker);
-	}
-	else {
+	} else {
 		result = new Promise((resolve, reject) => {
 			check(Meteor.settings.public.matomo, SettingsPattern);
 			const config = Meteor.settings.public.matomo;
@@ -54,13 +57,13 @@ Analytics.load = function() {
 				loading = $.ajax({
 					url: config.url + (config.jsPath || 'js/'),
 					cache: true,
-					dataType: "script",
+					dataType: 'script',
 				}).always(() => {
 					loading = false;
 				});
 			}
 
-			loading.done((script, textStatus) => {
+			loading.done(() => {
 				check(window.AnalyticsTracker, MatomoPattern);
 				resolve(window.AnalyticsTracker);
 			}).fail((jqxhr, settings, exception) => {
@@ -75,7 +78,8 @@ Analytics.load = function() {
 /**
  * Returns a promise resolving to the configured matomo tracker object.
  */
-Analytics.tracker = function() {
+// eslint-disable-next-line func-names
+Analytics.tracker = function () {
 	return Analytics.load().then((matomo) => {
 		check(Meteor.settings.public.matomo, SettingsPattern);
 		if (!tracker) {
@@ -94,10 +98,11 @@ Analytics.tracker = function() {
  * Example:
  *     Analytics.trytrack((tracker) => tracker.trackPageView());
  */
-Analytics.trytrack = function(callback) {
+// eslint-disable-next-line func-names
+Analytics.trytrack = function (callback) {
 	if (Analytics.isConfigured()) {
-		Analytics.tracker().then(callback, function(err) {
-			Meteor._debug("Exception when gathering analytics data", err);
+		Analytics.tracker().then(callback, (err) => {
+			Meteor._debug('Exception when gathering analytics data', err);
 		});
 	}
 };
@@ -105,21 +110,25 @@ Analytics.trytrack = function(callback) {
 /**
  * Installs action-hooks on the router.
  */
-Analytics.installRouterActions = function(router) {
+// eslint-disable-next-line func-names
+Analytics.installRouterActions = function (router) {
 	let started;
 
-	router.onBeforeAction(function() {
+	// eslint-disable-next-line func-names
+	router.onBeforeAction(function () {
 		if (Analytics.hasTracker()) {
-			Analytics.trytrack((tracker) => tracker.deleteCustomVariables());
+			// eslint-disable-next-line no-shadow
+			Analytics.trytrack(tracker => tracker.deleteCustomVariables());
 			started = new Date();
 		}
 		this.next();
 	});
 
-	router.onAfterAction(function() {
+	router.onAfterAction(() => {
 		// Router.onAfterAction sometimes fires more than once on each page run.
 		// https://github.com/iron-meteor/iron-router/issues/1031
 		if (Tracker.currentComputation.firstRun) {
+			// eslint-disable-next-line no-shadow
 			Analytics.trytrack((tracker) => {
 				if (started) {
 					tracker.setGenerationTimeMs(new Date() - started);
@@ -133,3 +142,5 @@ Analytics.installRouterActions = function(router) {
 		}
 	});
 };
+
+export default Analytics;

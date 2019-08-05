@@ -1,4 +1,4 @@
-import Metatags from '/imports/utils/metatags.js';
+import Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/layouts';
 import '/imports/ui/pages';
@@ -10,7 +10,8 @@ Router.configure({
 });
 Router.onBeforeAction('dataNotFound');
 
-Router.onBeforeAction(function() {
+// eslint-disable-next-line func-names
+Router.onBeforeAction(function () {
 	Metatags.removeAll();
 	this.next();
 });

@@ -1,7 +1,7 @@
-import './register-api.js';
+import './register-api';
 
-import './api.json.js';
-import './fixtures.js';
-import './notifications.js';
-import './login.js';
-import './users.js';
+import './api.json';
+import './fixtures';
+import './notifications';
+import './login';
+import './users';

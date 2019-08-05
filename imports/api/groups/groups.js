@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-import Filtering from '/imports/utils/filtering.js';
+import Filtering from '/imports/utils/filtering';
 
 // ======== DB-Model: ========
 // "_id"           -> ID
@@ -12,10 +12,10 @@ import Filtering from '/imports/utils/filtering.js';
 // "members"       -> List of userIds
 // ===========================
 
-export default Groups = new Mongo.Collection("Groups");
+const Groups = new Mongo.Collection('Groups');
 
 Groups.Filtering = () => Filtering(
-	{}
+	{},
 );
 
 /* Find groups for given filters
@@ -25,8 +25,9 @@ Groups.Filtering = () => Filtering(
  *   user: Limit to groups where given user ID is a member (client only)
  *
  */
-Groups.findFilter = function(filter, limit, skip, sort) {
-	var find = {};
+// eslint-disable-next-line func-names
+Groups.findFilter = function (filter, limit, skip, sort) {
+	const find = {};
 
 	const options = { skip, sort };
 
@@ -35,17 +36,19 @@ Groups.findFilter = function(filter, limit, skip, sort) {
 	}
 
 	if (filter.own) {
-		var me = Meteor.userId();
+		const me = Meteor.userId();
 		if (!me) return []; // I don't exist? How could I be in a group?!
 
 		find.members = me;
 	}
 
 	// If the property is set but falsy, we don't return anything
-	if (filter.hasOwnProperty('user')) {
+	if (Object.prototype.hasOwnProperty.call(filter, 'user')) {
 		if (!filter.user) return [];
 		find.members = filter.user;
 	}
 
 	return Groups.find(find, options);
 };
+
+export default Groups;

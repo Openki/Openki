@@ -1,12 +1,13 @@
 import { Template } from 'meteor/templating';
 
-import '/imports/ui/components/events/list/event-list.js';
+import '/imports/ui/components/events/list/event-list';
 
 import './events-frame.html';
 
-Template.frameEvents.onRendered(function() {
-	var instance = this;
-	this.autorun(function() {
-		instance.$("a").attr("target", "_blank");
+// eslint-disable-next-line func-names
+Template.frameEvents.onRendered(function () {
+	const instance = this;
+	this.autorun(() => {
+		instance.$('a').attr('target', '_blank');
 	});
 });

@@ -2,18 +2,20 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 import './participant-contact.html';
 
-Template.participantContact.onCreated(function() {
+// eslint-disable-next-line func-names
+Template.participantContact.onCreated(function () {
 	this.userSub = Meteor.subscribe('user', this.data.participant);
 
 
 	this.state = new ReactiveDict();
 
 	this.state.setDefault({
-		'showModal': false
+		showModal: false,
 	});
 });
 
-Template.participantContact.onRendered(function() {
+// eslint-disable-next-line func-names
+Template.participantContact.onRendered(function () {
 	this.autorun(() => {
 		if (this.state.get('showModal')) {
 			Meteor.defer(() => {
@@ -29,7 +31,7 @@ Template.participantContact.helpers({
 		const instance = Template.instance();
 		return () => {
 			instance.$('.js-participant-contact-modal').modal('hide');
-		}
+		};
 	},
 
 	showParticipantContact() {
@@ -56,5 +58,5 @@ Template.participantContact.events({
 
 	'hidden.bs.modal .js-participant-contact-modal'(event, instance) {
 		instance.state.set('showModal', false);
-	}
+	},
 });

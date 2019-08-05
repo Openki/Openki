@@ -1,6 +1,6 @@
 export default function CourseTemplate() {
 	return {
 		roles: ['host', 'mentor'],
-		region: Session.get('region')
+		region: Session.get('region'),
 	};
 }

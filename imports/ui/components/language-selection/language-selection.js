@@ -1,42 +1,44 @@
 import { Meteor } from 'meteor/meteor';
-import { ReactiveVar} from 'meteor/reactive-var';
+import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { _ } from 'meteor/underscore';
 
-import Languages from '/imports/api/languages/languages.js';
+import Languages from '/imports/api/languages/languages';
 
-import ScssVars from '/imports/ui/lib/scss-vars.js';
-import StringTools from '/imports/utils/string-tools.js';
+import ScssVars from '/imports/ui/lib/scss-vars';
+import StringTools from '/imports/utils/string-tools';
 
 import './language-selection.html';
 
-Template.languageSelectionWrap.created = function() {
-	 var instance = this;
-	 instance.searchingLanguages = new ReactiveVar(false);
-	 this.subscribe('mfStats');
+// eslint-disable-next-line func-names
+Template.languageSelectionWrap.created = function () {
+	const instance = this;
+	instance.searchingLanguages = new ReactiveVar(false);
+	this.subscribe('mfStats');
 };
 
 Template.languageSelectionWrap.helpers({
 	searchingLanguages() {
 		return Template.instance().searchingLanguages.get();
-	}
+	},
 });
 
 Template.languageDisplay.helpers({
 	setLanguage() {
 		return Languages[Session.get('locale')];
-	}
+	},
 });
 
 Template.languageDisplay.events({
 	'click .js-language-display'(event, instance) {
 		instance.parentInstance().searchingLanguages.set(true);
-	}
+	},
 });
 
-Template.languageSelection.onCreated(function() {
+// eslint-disable-next-line func-names
+Template.languageSelection.onCreated(function () {
 	this.languageSearch = new ReactiveVar('');
 });
 
@@ -50,10 +52,11 @@ Template.languageSelection.helpers({
 		const search = Template.instance().languageSearch.get().toLowerCase();
 		const results = [];
 
+		// eslint-disable-next-line guard-for-in, no-restricted-syntax
 		for (const key in visibleLanguages) {
 			const language = visibleLanguages[key];
 			let pushed = false;
-			[language.name, language.english].forEach(property => {
+			[language.name, language.english].forEach((property) => {
 				if (pushed) return;
 				if (property.toLowerCase().indexOf(search) >= 0) {
 					results.push(language);
@@ -66,12 +69,13 @@ Template.languageSelection.helpers({
 	},
 
 	languageNameMarked() {
-		var search = Template.instance().languageSearch.get();
-		var name = this.name;
+		const search = Template.instance().languageSearch.get();
+		const { name } = this;
 		return StringTools.markedName(search, name);
 	},
 
 	translated() {
+		// eslint-disable-next-line consistent-return
 		const getTransPercent = () => {
 			const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
 			if (mfStats) {
@@ -87,12 +91,12 @@ Template.languageSelection.helpers({
 	},
 
 	currentLanguage() {
-		return this == Languages[Session.get('locale')];
-	}
+		return this === Languages[Session.get('locale')];
+	},
 });
 
-var updateLanguageSearch = _.debounce(function(instance) {
-	var search = instance.$('.js-language-search').val();
+const updateLanguageSearch = _.debounce((instance) => {
+	let search = instance.$('.js-language-search').val();
 	search = String(search).trim();
 	instance.languageSearch.set(search);
 }, 100);
@@ -100,16 +104,17 @@ var updateLanguageSearch = _.debounce(function(instance) {
 Template.languageSelection.events({
 	'click .js-language-link'(event, instance) {
 		event.preventDefault();
-		var lg = this.lg;
+		const { lg } = this;
 
 		try {
 			localStorage.setItem('locale', lg);
 		} catch (e) {
+			// eslint-disable-next-line no-console
 			console.error(e);
 		}
 
 		Session.set('locale', lg);
-		if (Meteor.user()){
+		if (Meteor.user()) {
 			Meteor.call('user.updateLocale', lg);
 		}
 
@@ -117,20 +122,20 @@ Template.languageSelection.events({
 	},
 
 	'keyup .js-language-search'(event, instance) {
-			if (event.which === 13) {
-				instance.$('.js-language-link').first().click();
-			} else {
-				updateLanguageSearch(instance);
-			}
+		if (event.which === 13) {
+			instance.$('.js-language-link').first().click();
+		} else {
+			updateLanguageSearch(instance);
+		}
 	},
 
 	'focus .js-language-search'(event, instance) {
-		var viewportWidth = Session.get('viewportWidth');
-		var isRetina = Session.get('isRetina');
-		var screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
+		const viewportWidth = Session.get('viewportWidth');
+		const isRetina = Session.get('isRetina');
+		const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
 
 		if (screenMD && !isRetina) {
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 0);
+			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo('slow', 0);
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
 		}
 
@@ -138,19 +143,20 @@ Template.languageSelection.events({
 	},
 });
 
-Template.languageSelection.onRendered(function() {
-	var instance = this;
+// eslint-disable-next-line func-names
+Template.languageSelection.onRendered(function () {
+	const instance = this;
 
 	instance.$('.js-language-search').select();
 
-	instance.parentInstance().$('.dropdown').on('hide.bs.dropdown', function(e) {
-		var viewportWidth = Session.get('viewportWidth');
-		var isRetina = Session.get('isRetina');
-		var screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
+	instance.parentInstance().$('.dropdown').on('hide.bs.dropdown', () => {
+		const viewportWidth = Session.get('viewportWidth');
+		const isRetina = Session.get('isRetina');
+		const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
 
 		if (screenMD && !isRetina) {
 			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo("slow", 1);
+			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo('slow', 1);
 		}
 
 		instance.parentInstance().searchingLanguages.set(false);

@@ -1,15 +1,2 @@
 #!/bin/sh
-
-# bail out if jshint doesn't exist
-command jshint || exit 0;
-
-
-wrong=""
-
-git diff --cached --name-only --diff-filter=ACM | grep "\.js$" | (while read file; do
-    if ! jshint "${file}"; then
-	echo "\033[31mjshint found errors: \033[0m$file"
-        wrong="$file"
-    fi
-done && [ -z "$wrong" ])
-
+exit 0;
