@@ -203,8 +203,7 @@ Template.find.events({
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			// eslint-disable-next-line guard-for-in, no-restricted-syntax
-			for (const i in filters) instance.filter.disable(filters[i]);
+			filters.forEach(filter => instance.filter.disable(filters[i]));
 			instance.filter.done();
 			instance.updateUrl();
 		}
