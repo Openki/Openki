@@ -48,7 +48,6 @@ Template.languageSelection.helpers({
 	},
 
 	languages() {
-		console.log(Languages);
 		const visibleLanguages = _.filter(Languages, lg => lg.visible);
 		const search = Template.instance().languageSearch.get().toLowerCase();
 		const results = [];

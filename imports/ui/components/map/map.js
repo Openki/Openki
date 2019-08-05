@@ -183,11 +183,10 @@ Template.map.onRendered(function () {
 	const fitBounds = _.debounce(() => {
 		const bounds = L.latLngBounds([]);
 		let count = 0;
-		// eslint-disable-next-line guard-for-in, no-restricted-syntax
-		for (const layerPos in layers) {
+		Object.keys(layers).forEach((layerPos) => {
 			bounds.extend(layers[layerPos].getBounds());
 			count += 1;
-		}
+		});
 
 		let maxZoom = 16;
 
