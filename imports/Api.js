@@ -17,14 +17,16 @@ const maybeUrl = function (route, context) {
 
 const Api = {
 	groups:
-		apiResponse(Groups, (group) => {
-			// eslint-disable-next-line no-param-reassign
+		apiResponse(Groups, (originalGroup) => {
+			const group = {};
+			Object.assign(group, originalGroup);
 			group.link = Router.url('groupDetails', group);
 			return group;
 		}),
 	venues:
-		apiResponse(Venues, (venue) => {
-			// eslint-disable-next-line no-param-reassign
+		apiResponse(Venues, (originalVenue) => {
+			const venue = {};
+			Object.assign(venue, originalVenue);
 			venue.link = Router.url('venueDetails', venue);
 			return venue;
 		}),
