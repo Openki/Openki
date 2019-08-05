@@ -41,7 +41,6 @@ module.exports = {
 		sourceType: 'module',
 	},
 	rules: {
-		'func-names': ['error', 'as-needed'],
 		'import/no-absolute-path': ['error', { esmodule: false }],
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
 		indent: ['error', 'tab'],
@@ -69,6 +68,9 @@ module.exports = {
 		],
 		'object-shorthand': ['error', 'always'],
 		'prefer-destructuring': ['error', { object: false, array: false }],
+
+		//disabled rules
+		'func-names': [0],
 	},
 	settings: {
 		'import/resolver': 'meteor',

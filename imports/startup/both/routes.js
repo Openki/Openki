@@ -541,31 +541,28 @@ Router.map(function () {
 				return perVenue[id].rows;
 			};
 
-			events.forEach((event) => {
-				// eslint-disable-next-line no-param-reassign
+			events.forEach((originalEvent) => {
+				const event = {};
+				Object.assign(event, originalEvent);
 				event.relStart = (event.start.getTime() - startAbs) / span;
-				// eslint-disable-next-line no-param-reassign
 				event.relEnd = (endAbs - event.end.getTime()) / span;
 				let placed = false;
 
-				const venueRows = useVenue(event.venue);
-				// eslint-disable-next-line guard-for-in, no-restricted-syntax
-				for (const rowNr in venueRows) {
-					const row = venueRows[rowNr];
+				const venues = useVenue(event.venue);
+				venues.forEach((venue) => {
 					let last;
-					// eslint-disable-next-line guard-for-in, no-restricted-syntax
-					for (const eventNr in row) {
-						const placedEvent = row[eventNr];
+					venues.forEach((placedEvent) => {
 						if (!last || placedEvent.end > last) last = placedEvent.end;
-					}
+					});
 					if (last <= event.start) {
-						row.push(event);
+						venue.push(event);
 						placed = true;
-						break;
+						return true;
 					}
-				}
+					return false;
+				});
 				if (!placed) {
-					venueRows.push([event]);
+					venues.push([event]);
 				}
 			});
 
