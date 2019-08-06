@@ -162,7 +162,7 @@ Template.regionSelection.events({
 
 	'focus .js-region-search'(event, instance) {
 		if (instance.focusFromShowAllRegions) {
-			// eslint-disable-next-line no-param-reassign
+			/* eslint-disable-next-line no-param-reassign */
 			instance.focusFromShowAllRegions = false;
 			return;
 		}
@@ -171,7 +171,7 @@ Template.regionSelection.events({
 
 	'click .js-show-all-regions'(event, instance) {
 		instance.state.set('showAllRegions', true);
-		// eslint-disable-next-line no-param-reassign
+		/* eslint-disable-next-line no-param-reassign */
 		instance.focusFromShowAllRegions = true;
 		instance.$('.js-region-search').select();
 		return false; // prevent dropdown default behavior for this specific <li>
