@@ -54,13 +54,15 @@ Template.languageSelection.helpers({
 
 		visibleLanguages.forEach((visibleLanguage) => {
 			let pushed = false;
-			[visibleLanguage.name, visibleLanguage.english].forEach((property) => {
-				if (pushed) return true;
-				if (property.toLowerCase().indexOf(search) >= 0) {
+			[visibleLanguage.name, visibleLanguage.english].every((property) => {
+				if (pushed) {
+					return false;
+				}
+				if (property.toLowerCase().includes(search)) {
 					results.push(visibleLanguage);
 					pushed = true;
 				}
-				return false;
+				return true;
 			});
 		});
 		return results;

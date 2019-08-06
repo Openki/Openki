@@ -549,7 +549,7 @@ Router.map(function () {
 				let placed = false;
 
 				const venues = useVenue(event.venue);
-				venues.forEach((venue) => {
+				venues.every((venue) => {
 					let last;
 					venues.forEach((placedEvent) => {
 						if (!last || placedEvent.end > last) last = placedEvent.end;
@@ -557,9 +557,9 @@ Router.map(function () {
 					if (last <= event.start) {
 						venue.push(event);
 						placed = true;
-						return true;
+						return false;
 					}
-					return false;
+					return true;
 				});
 				if (!placed) {
 					venues.push([event]);

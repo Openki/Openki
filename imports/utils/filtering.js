@@ -99,12 +99,12 @@ const Filtering = function (availablePredicates) {
 
 		if (same) {
 			// Look closer
-			Object.keys(predicates).forEach((name) => {
+			Object.keys(predicates).every((name) => {
 				same = predicates[name].equals(settled[name]);
 				if (!same) {
 					dep.changed();
 				}
-				return !same;
+				return same;
 			});
 		}
 		return self;
