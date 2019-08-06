@@ -47,24 +47,20 @@ const helpers = {
 		if (date) return moment(date).format('L');
 	},
 
-	// eslint-disable-next-line consistent-return
 	dateLong(date) {
 		if (date) {
 			Session.get('timeLocale');
-			// eslint-disable-next-line no-param-reassign
-			date = moment(moment(date).toDate());
 			return moment(date).format('LL');
 		}
+		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	dateShort(date) {
 		if (date) {
 			Session.get('timeLocale');
-			// eslint-disable-next-line no-param-reassign
-			date = moment(moment(date).toDate());
 			return moment(date).format('l');
 		}
+		return false;
 	},
 
 	// eslint-disable-next-line consistent-return
