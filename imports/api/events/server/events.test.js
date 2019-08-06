@@ -44,10 +44,10 @@ if (Meteor.isClient) {
 				assert.isString(eventId, 'event.save returns an eventId string');
 				return { event, eventId };
 			})
-				.then(({ event, eventId }) => {
-					// eslint-disable-next-line no-param-reassign
+				.then(({ originalEvent, eventId }) => {
+					event = {};
+					Object.assign(event, originalEvent);
 					delete event.region;
-					// eslint-disable-next-line no-param-reassign
 					event.title += ' No really';
 					return promiseMeteorCall('event.save', { eventId, changes: event });
 				})
