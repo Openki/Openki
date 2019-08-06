@@ -1,13 +1,40 @@
 import Alerts from './alerts';
 
 const Alert = {
+	/** convert to Error if type string
+	  *
+	  * @param {Error, String} error
+	  *
+	  */
+	_toError(error) {
+		if (typeof error === 'string') {
+			return new Error(error);
+		}
+		return error;
+	}
+
+	/** set message to '' if undefined
+	  *
+	  * @param {String} message
+	  *
+	  */
+	_prepMessage(message) {
+		if (message === undefined) {
+			return '';
+		}
+		return message;
+	}
+
 	/** Add an error alert
       *
-      * @param  {Error}   error        - error object
-      * @param  {String}  message      - the message text
+      * @param  {Error, String}   error        - error object or string
+      * @param  {String}          message      - the message text
       *
       */
-	error(error, message) {
+	error(originalError, originalMessage) {
+		const error = this._toError(originalError);
+		const message = this._prepMessage(originalMessage);
+
 		check(error, Error);
 		check(message, String);
 
