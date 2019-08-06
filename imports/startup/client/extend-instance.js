@@ -7,11 +7,11 @@
 Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
 	let { view } = this;
 	if (typeof levels === 'undefined') {
-		// eslint-disable-next-line no-param-reassign
+		/* eslint-disable-next-line no-param-reassign */
 		levels = 1;
 	}
 	while (view) {
-		// eslint-disable-next-line no-param-reassign, no-plusplus
+		/* eslint-disable-next-line no-param-reassign, no-plusplus */
 		if (view.name.substring(0, 9) === 'Template.' && !(levels--)) {
 			return view.templateInstance();
 		}

@@ -587,8 +587,9 @@ Router.map(function () {
 			if (!user) return; // not loaded?
 
 			// What privileges the user has
-			const privileges = _.reduce(['admin'], (ps, p) => {
-				// eslint-disable-next-line no-param-reassign
+			const privileges = _.reduce(['admin'], (originalPs, p) => {
+				const ps = {};
+				Object.assign(ps, originalPs);
 				ps[p] = UserPrivilegeUtils.privileged(user, p);
 				return ps;
 			}, {});

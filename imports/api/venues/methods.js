@@ -65,9 +65,10 @@ Meteor.methods({
 			set.maxWorkplaces = Math.min(1e10, Math.max(0, changes.maxWorkplaces));
 		}
 		if (changes.facilities !== undefined) {
-			set.facilities = _.reduce(changes.facilities, (fs, f) => {
+			set.facilities = _.reduce(changes.facilities, (originalFs, f) => {
+				const fs = {};
+				Object.assign(fs, originalFs);
 				if (Venues.facilityOptions.indexOf(f) >= 0) {
-					// eslint-disable-next-line no-param-reassign
 					fs[f] = true;
 				}
 				return fs;
@@ -89,7 +90,7 @@ Meteor.methods({
 
 			set.region = region._id;
 
-			// eslint-disable-next-line no-param-reassign
+			/* eslint-disable-next-line no-param-reassign */
 			venueId = Venues.insert({
 				editor: user._id,
 				createdby: user._id,
