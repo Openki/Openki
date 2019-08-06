@@ -35,7 +35,7 @@ Template.frameSchedule.onCreated(function () {
 
 
 		const rawSeps = (query.sep || '').split(',');
-		const seps = rawSeps.filter(rawSep => rawSep.length) // get rid of 0-length
+		const seps = [...new Set(rawSeps.filter(rawSep => rawSep.length) // get rid of 0-length
 			.map((rawSep) => { // standardize format
 				if (rawSep.length < 3) {
 					return parseInt(`${rawSep}00`, 10);
@@ -47,14 +47,13 @@ Template.frameSchedule.onCreated(function () {
 				const h = Math.floor(hm / 100);
 				const m = hm % 100;
 				return h * 60 + m;
-			});
-		const separators = _.uniq(seps);
-		instance.separators.set(separators);
+			}))];
+		instance.separators.set(seps);
 
 		const readInterval = parseInt(query.interval, 10);
 		if (!Number.isNaN(readInterval) && readInterval > 0) {
 			instance.interval.set(readInterval);
-		} else if (separators.length > 0) {
+		} else if (seps.length > 0) {
 			instance.interval.set(24 * 60);
 		} else {
 			instance.interval.set(60);
