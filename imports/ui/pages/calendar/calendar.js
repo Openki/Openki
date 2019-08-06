@@ -131,14 +131,12 @@ Template.calendarDay.helpers({
 
 
 Template.calendarNav.helpers({
-	// eslint-disable-next-line consistent-return
 	weekNr(date) {
 		if (date) {
 			Session.get('timeLocale');
-			// eslint-disable-next-line no-param-reassign
-			date = moment(moment(date).toDate());
 			return moment(date).week();
 		}
+		return false;
 	},
 
 	endDateTo(date) {

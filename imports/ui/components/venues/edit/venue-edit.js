@@ -55,18 +55,17 @@ Template.venueEdit.onCreated(function () {
 	});
 
 	instance.locationTracker.markers.find().observe({
-		added(mark) {
+		added(originalMark) {
+			const mark = {};
+			Object.assign(mark, originalMark);
 			if (mark.proposed) {
 				// The map widget does not reactively update markers when their
 				// flags change. So we remove the propsed marker it added and
 				// replace it by a main one. This is only a little weird.
 				instance.locationTracker.markers.remove({ proposed: true });
 
-				// eslint-disable-next-line no-param-reassign
 				mark.main = true;
-				// eslint-disable-next-line no-param-reassign
 				mark.draggable = true;
-				// eslint-disable-next-line no-param-reassign
 				delete mark.proposed;
 				instance.locationTracker.markers.insert(mark);
 			}
