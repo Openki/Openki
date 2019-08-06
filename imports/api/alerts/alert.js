@@ -11,7 +11,7 @@ const Alert = {
 			return new Error(error);
 		}
 		return error;
-	}
+	},
 
 	/** set message to '' if undefined
 	  *
@@ -23,7 +23,7 @@ const Alert = {
 			return '';
 		}
 		return message;
-	}
+	},
 
 	/** Add an error alert
       *
