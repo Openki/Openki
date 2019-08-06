@@ -3,9 +3,12 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
+import Alert from '/imports/api/alerts/alert';
 import Regions from '/imports/api/regions/regions';
-import RegionSelection from '/imports/utils/region-selection';
+
 import FilterPreview from '/imports/ui/lib/filter-preview';
+
+import RegionSelection from '/imports/utils/region-selection';
 import StringTools from '/imports/utils/string-tools';
 
 import './region-selection.html';
@@ -58,8 +61,10 @@ Template.regionSelection.onCreated(function () {
 		try {
 			localStorage.setItem('region', regionId); // to survive page reload
 		} catch (e) {
-			// eslint-disable-next-line no-console
-			console.error(e);
+			Alert.error(
+				new Error(e),
+				'',
+			);
 		}
 
 		Session.set('region', regionId);

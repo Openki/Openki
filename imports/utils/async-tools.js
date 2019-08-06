@@ -10,7 +10,7 @@ AsyncTools.checkUpdateOne = function (err, aff) {
 // eslint-disable-next-line func-names
 AsyncTools.logErrors = function (err, ret) {
 	if (err) {
-		// eslint-disable-next-line no-console
+		/* eslint-disable-next-line no-console */
 		console.log(err.stack);
 	}
 	return ret;
@@ -44,7 +44,7 @@ if (Meteor.isServer) {
 				return tryClean(clean, tries - 1);
 			}
 		}, (reason) => {
-			// eslint-disable-next-line no-console
+			/* eslint-disable-next-line no-console */
 			console.log(`Cleansing function failed: ${reason}`);
 		});
 	};

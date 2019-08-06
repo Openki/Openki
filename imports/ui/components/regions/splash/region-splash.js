@@ -2,6 +2,8 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
+import Alert from '/imports/api/alerts/alert';
+
 import '/imports/ui/components/regions/selection/region-selection';
 
 import './region-splash.html';
@@ -16,8 +18,10 @@ Template.regionSplash.events({
 		try {
 			localStorage.setItem('region', regionId); // to survive page reload
 		} catch (e) {
-			// eslint-disable-next-line no-console
-			console.error(e);
+			Alert.error(
+				new Error(e),
+				'',
+			);
 		}
 
 		Session.set('showRegionSplash', false);

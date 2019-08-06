@@ -35,8 +35,10 @@ const helpers = {
 	},
 
 	log(context) {
-		// eslint-disable-next-line no-console
-		if (window.console) console.log(arguments.length > 0 ? context : this);
+		if (window.console) {
+			/* eslint-disable-next-line no-console */
+			console.log(arguments.length > 0 ? context : this);
+		}
 	},
 
 	// eslint-disable-next-line consistent-return
@@ -214,7 +216,7 @@ const usernameFromId = (function () {
 				// eslint-disable-next-line no-shadow
 				Meteor.call('user.name', userId, (err, user) => {
 					if (err) {
-						// eslint-disable-next-line no-console
+						/* eslint-disable-next-line no-console */
 						console.warn(err);
 					}
 					cache[userId] = user || '?!';

@@ -1,6 +1,7 @@
 import Regions from '/imports/api/regions/regions';
-import UrlTools from '/imports/utils/url-tools';
+
 import IpLocation from '/imports/utils/ip-location';
+import UrlTools from '/imports/utils/url-tools';
 
 const RegionSelection = {};
 
@@ -68,7 +69,7 @@ RegionSelection.init = function () {
 		// Ask geolocation server to place us so the splash-screen has our best
 		// guess selected.
 		IpLocation.detect((region, reason) => {
-			// eslint-disable-next-line no-console
+			/* eslint-disable-next-line no-console */
 			console.log(`Region autodetection: ${reason}`);
 			if (region) {
 				useAsRegion(region._id);

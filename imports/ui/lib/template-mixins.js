@@ -1,3 +1,5 @@
+import Alert from '/imports/api/alerts/alert';
+
 const TemplateMixins = {
 	/** Setup expand/collaps logic for a template
 	*
@@ -159,8 +161,10 @@ const TemplateMixins = {
 				add(key) {
 					const message = mapping[key];
 					if (!message) {
-						// eslint-disable-next-line no-console
-						console.log('Unmapped error ', key);
+						Alert.error(
+							new Error('Unmapped error'),
+							key,
+						)
 						return;
 					}
 

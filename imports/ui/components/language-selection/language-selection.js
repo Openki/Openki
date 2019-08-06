@@ -5,6 +5,7 @@ import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { _ } from 'meteor/underscore';
 
+import Alert from '/imports/api/alerts/alert';
 import Languages from '/imports/api/languages/languages';
 
 import ScssVars from '/imports/ui/lib/scss-vars';
@@ -109,8 +110,10 @@ Template.languageSelection.events({
 		try {
 			localStorage.setItem('locale', lg);
 		} catch (e) {
-			// eslint-disable-next-line no-console
-			console.error(e);
+			Alert.error(
+				new Error(e),
+				'',
+			);
 		}
 
 		Session.set('locale', lg);

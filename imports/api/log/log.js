@@ -71,7 +71,7 @@ class ResultLogger {
 		if (message) resolution.message = message;
 
 		if (this.printToLog) {
-			// eslint-disable-next-line no-console
+			/* eslint-disable-next-line no-console */
 			console.log({ id: this.id, resolution });
 		}
 
@@ -103,7 +103,7 @@ Log.record = function (track, rel, body) {
 
 	const printToLog = Meteor.settings.printLog;
 	if (printToLog) {
-		// eslint-disable-next-line no-console
+		/* eslint-disable-next-line no-console */
 		console.log(entry);
 	}
 

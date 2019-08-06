@@ -95,7 +95,7 @@ Meteor.startup(() => {
 		const setLocale = moment.locale(desiredLocale);
 		Session.set('timeLocale', setLocale);
 		if (desiredLocale !== setLocale) {
-			// eslint-disable-next-line no-console
+			/* eslint-disable-next-line no-console */
 			console.log(`Date formatting set to ${setLocale} because ${desiredLocale} not available`);
 		}
 

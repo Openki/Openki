@@ -1,6 +1,8 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 
+import Alert from '/imports/api/alerts/alert';
+
 const Introduction = {
 	init() {
 		Session.set('ShowIntro', localStorage.getItem('intro') !== 'done');
@@ -35,8 +37,10 @@ const Introduction = {
 		try {
 			localStorage.setItem('intro', 'done');
 		} catch (e) {
-			// eslint-disable-next-line no-console
-			console.error(e);
+			Alert.error(
+					new Error(e),
+					'',
+			);
 		}
 	},
 };

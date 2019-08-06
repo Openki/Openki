@@ -3,11 +3,13 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import CleanedRegion from '/imports/ui/lib/cleaned-region';
-import TemplateMixins from '/imports/ui/lib/template-mixins';
-import IsEmail from '/imports/utils/email-tools';
 import Alert from '/imports/api/alerts/alert';
+
+import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import ScssVars from '/imports/ui/lib/scss-vars';
+import TemplateMixins from '/imports/ui/lib/template-mixins';
+
+import IsEmail from '/imports/utils/email-tools';
 
 import './account-tasks.html';
 
@@ -182,8 +184,10 @@ Template.loginFrame.events({
 		const { service } = event.currentTarget.dataset;
 		const loginMethod = `loginWith${service}`;
 		if (!Meteor[loginMethod]) {
-			// eslint-disable-next-line no-console
-			console.log(`don't have ${loginMethod}`);
+			Alert.error(
+				new Error(`don't have ${loginMethod}`),
+				'',
+			);
 			return;
 		}
 

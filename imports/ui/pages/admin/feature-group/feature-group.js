@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
+import Alert from '/imports/api/alerts/alert';
 import Groups from '/imports/api/groups/groups';
 import Regions from '/imports/api/regions/regions';
 
@@ -31,8 +32,10 @@ Template.featureGroup.events({
 		instance.busy('saving');
 		Meteor.call('region.featureGroup', regionId, groupId, (err) => {
 			if (err) {
-				// eslint-disable-next-line no-console
-				console.error(err);
+				Alert.error(
+					new Error(err),
+					'',
+				);
 			} else {
 				instance.busy(false);
 			}
@@ -43,8 +46,10 @@ Template.featureGroup.events({
 		instance.busy('deleting');
 		Meteor.call('region.unsetFeaturedGroup', Session.get('region'), (err) => {
 			if (err) {
-				// eslint-disable-next-line no-console
-				console.error(err);
+				Alert.error(
+					new Error(err),
+					'',
+				);
 			} else {
 				instance.busy(false);
 			}
