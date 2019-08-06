@@ -16,7 +16,7 @@ const ensure = {
 		const prng = Prng('ensureUser');
 
 		if (!name) {
-			// eslint-disable-next-line no-param-reassign
+			/* eslint-disable-next-line no-param-reassign */
 			name = 'Ed Dillinger';
 		}
 		const email = (`${name.split(' ').join('')}@openki.example`).toLowerCase();
