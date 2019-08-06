@@ -38,8 +38,8 @@ const Introduction = {
 			localStorage.setItem('intro', 'done');
 		} catch (e) {
 			Alert.error(
-					new Error(e),
-					'',
+				new Error(e),
+				'',
 			);
 		}
 	},

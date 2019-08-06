@@ -45,7 +45,7 @@ if (Meteor.isClient) {
 				return { event, eventId };
 			})
 				.then(({ originalEvent, eventId }) => {
-					event = {};
+					const event = {};
 					Object.assign(event, originalEvent);
 					delete event.region;
 					event.title += ' No really';

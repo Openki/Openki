@@ -164,7 +164,7 @@ const TemplateMixins = {
 						Alert.error(
 							new Error('Unmapped error'),
 							key,
-						)
+						);
 						return;
 					}
 

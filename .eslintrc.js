@@ -43,34 +43,14 @@ module.exports = {
 	rules: {
 		'import/no-absolute-path': ['error', { esmodule: false }],
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-		indent: ['error', 'tab'],
+		'indent': ['error', 'tab'],
 		'no-tabs': ['error', { allowIndentationTabs: true }],
-		'no-underscore-dangle': [
-			'error',
-			{
-				allow: [
-					'_alert',
-					'_allSubscriptionsReady',
-					'_debug',
-					'_ensureIndex',
-					'_escape',
-					'_id',
-					'_months',
-					'_monthsNominativeEl',
-					'_monthsShort',
-					'_transform',
-					'_week',
-					'_weekdays',
-					'_weekdaysMin',
-					'_weekdaysShort',
-				],
-			},
-		],
 		'object-shorthand': ['error', 'always'],
 		'prefer-destructuring': ['error', { object: false, array: false }],
 
 		//disabled rules
 		'func-names': [0],
+		'no-underscore-dangle': [0],
 	},
 	settings: {
 		'import/resolver': 'meteor',
