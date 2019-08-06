@@ -25,30 +25,29 @@ Template.frameSchedule.onCreated(function () {
 		instance.repeatingOnly.set(Object.prototype.hasOwnProperty.call(query, 'repeating'));
 
 		let scheduleStart;
-		if (query.start) scheduleStart = moment(query.start);
-		if (!scheduleStart || !scheduleStart.isValid()) scheduleStart = moment(minuteTime.get()).startOf('week');
+		if (query.start) {
+			scheduleStart = moment(query.start);
+		}
+		if (!scheduleStart || !scheduleStart.isValid()) {
+			scheduleStart = moment(minuteTime.get()).startOf('week');
+		}
 		instance.scheduleStart.set(scheduleStart);
 
 
 		const rawSeps = (query.sep || '').split(',');
-		const seps = [];
-		_.each(rawSeps, (rawSep) => {
-			if (rawSep.length === 0) {
-				return;
-			}
-
-			if (rawSep.length < 3) {
-				// eslint-disable-next-line no-param-reassign
-				rawSep += '00';
-			}
-
-			const hm = parseInt(rawSep, 10);
-			if (!Number.isNaN(hm)) {
+		const seps = rawSeps.filter(rawSep => rawSep.length) // get rid of 0-length
+			.map((rawSep) => { // standardize format
+				if (rawSep.length < 3) {
+					return parseInt(`${rawSep}00`, 10);
+				}
+				return parseInt(rawSep, 10);
+			})
+			.filter(hm => !Number.isNaN(hm)) // filter NaN's
+			.map((hm) => { // convert to minutes
 				const h = Math.floor(hm / 100);
 				const m = hm % 100;
-				seps.push(h * 60 + m);
-			}
-		});
+				return h * 60 + m;
+			});
 		const separators = _.uniq(seps);
 		instance.separators.set(separators);
 
