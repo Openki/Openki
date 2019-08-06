@@ -70,7 +70,7 @@ Meteor.methods({
 		if (Object.getOwnPropertyNames(updates).length === 0) return;
 
 		if (isNew) {
-			// eslint-disable-next-line no-param-reassign
+			/* eslint-disable-next-line no-param-reassign */
 			groupId = Groups.insert(_.extend(group, updates));
 			Meteor.call('user.updateBadges', userId);
 		} else {
