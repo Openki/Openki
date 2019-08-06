@@ -4,17 +4,17 @@
   * @returns {Blaze.TemplateInstance}
   */
 // eslint-disable-next-line consistent-return, func-names
-Blaze.TemplateInstance.prototype.parentInstance = function (originalLevels) {
+Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
 	let { view } = this;
-	let levels = originalLevels;
 	if (typeof levels === 'undefined') {
+		/* eslint-disable-next-line no-param-reassign */
 		levels = 1;
 	}
 	while (view) {
-		if (view.name.substring(0, 9) === 'Template.' && !levels) {
+		/* eslint-disable-next-line no-param-reassign, no-plusplus */
+		if (view.name.substring(0, 9) === 'Template.' && !(levels--)) {
 			return view.templateInstance();
 		}
-		levels -= 1;
 		view = view.parentView;
 	}
 };
