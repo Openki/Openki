@@ -3,8 +3,7 @@ import Log from './log';
 
 Meteor.methods({
 	'log.clientError'(originalReport) {
-		const report = {};
-		Object.assign(report, originalReport);
+		const report = Object.assign({}, originalReport);
 		check(
 			report,
 			{

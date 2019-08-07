@@ -1,8 +1,7 @@
 import IsEmail from '/imports/utils/email-tools';
 
 Accounts.onCreateUser((options, originalUser) => {
-	const user = {};
-	Object.assign(user, originalUser);
+	const user = Object.assign({}, originalUser);
 	if (options.profile) {
 		user.profile = options.profile;
 	} else {

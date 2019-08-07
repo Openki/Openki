@@ -133,8 +133,7 @@ Template.map.onRendered(function () {
 		const { mini } = instance.data;
 
 		const show = function (originalControl, originalToggle) {
-			const control = {};
-			Object.assign(control, originalControl);
+			const control = Object.assign({}, originalControl);
 			const toggle = !!originalToggle; // coerce to bool
 
 			if (control.shown === undefined) control.shown = false;

@@ -108,8 +108,7 @@ Template.eventEditVenue.onCreated(function () {
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
 			added(originalLocation) {
-				const location = {};
-				Object.assign(location, originalLocation);
+				const location = Object.assign({}, originalLocation);
 				location.proposed = true;
 				location.presetName = location.name;
 				location.presetAddress = location.address;

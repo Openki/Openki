@@ -6,8 +6,7 @@ UpdatesAvailable.renameEventCourseId = function () {
 	let updated = 0;
 
 	Events.find({}).fetch().forEach((originalEvent) => {
-		const event = {};
-		Object.assign(event, originalEvent);
+		const event = Object.assign({}, originalEvent);
 		event.courseId = event.course_id;
 		delete event.course_id;
 		updated += Events.update(event._id, event);

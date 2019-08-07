@@ -99,8 +99,7 @@ Template.frameSchedule.onCreated(function () {
 		// Load events but keep only the first when they repeat on the same
 		// weekday at the same time.
 		const dedupedEvents = Events.findFilter(filter.toQuery()).map((originalEvent) => {
-			const event = {};
-			Object.assign(event, originalEvent);
+			const event = Object.assign({}, originalEvent);
 			const eventStart = LocalTime.fromString(event.startLocal);
 
 			// Build key that is the same for events of the same course that
@@ -149,8 +148,7 @@ Template.frameSchedule.onCreated(function () {
 
 		// Place found events into the slots
 		dedupedEvents.forEach((originalEvent) => {
-			const event = {};
-			Object.assign(event, originalEvent);
+			const event = Object.assign({}, originalEvent);
 			const eventStart = LocalTime.fromString(event.startLocal);
 
 			event.repCount = repetitionCountDay[event.repKeyDay];

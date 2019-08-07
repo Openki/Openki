@@ -55,8 +55,7 @@ Template.venueEdit.onCreated(function () {
 
 	instance.locationTracker.markers.find().observe({
 		added(originalMark) {
-			const mark = {};
-			Object.assign(mark, originalMark);
+			const mark = Object.assign({}, originalMark);
 			if (mark.proposed) {
 				// The map widget does not reactively update markers when their
 				// flags change. So we remove the propsed marker it added and

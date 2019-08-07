@@ -45,8 +45,7 @@ if (Meteor.isClient) {
 				return { event, eventId };
 			})
 				.then(({ originalEvent, eventId }) => {
-					const event = {};
-					Object.assign(event, originalEvent);
+					const event = Object.assign({}, originalEvent);
 					delete event.region;
 					event.title += ' No really';
 					return promiseMeteorCall('event.save', { eventId, changes: event });

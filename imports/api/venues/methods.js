@@ -66,8 +66,7 @@ Meteor.methods({
 		}
 		if (changes.facilities !== undefined) {
 			set.facilities = _.reduce(changes.facilities, (originalFs, f) => {
-				const fs = {};
-				Object.assign(fs, originalFs);
+				const fs = Object.assign({}, originalFs);
 				if (Venues.facilityOptions.indexOf(f) >= 0) {
 					fs[f] = true;
 				}

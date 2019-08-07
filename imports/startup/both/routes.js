@@ -542,8 +542,7 @@ Router.map(function () {
 			};
 
 			events.forEach((originalEvent) => {
-				const event = {};
-				Object.assign(event, originalEvent);
+				const event = Object.assign({}, originalEvent);
 				event.relStart = (event.start.getTime() - startAbs) / span;
 				event.relEnd = (endAbs - event.end.getTime()) / span;
 				let placed = false;
@@ -588,8 +587,7 @@ Router.map(function () {
 
 			// What privileges the user has
 			const privileges = _.reduce(['admin'], (originalPs, p) => {
-				const ps = {};
-				Object.assign(ps, originalPs);
+				const ps = Object.assign({}, originalPs);
 				ps[p] = UserPrivilegeUtils.privileged(user, p);
 				return ps;
 			}, {});
