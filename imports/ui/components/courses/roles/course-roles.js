@@ -11,14 +11,12 @@ import '/imports/ui/components/buttons/buttons';
 
 import './course-roles.html';
 
-// eslint-disable-next-line func-names
 Template.courseRole.onCreated(function () {
 	this.busy(false);
 	this.enrolling = new ReactiveVar(false);
 	this.showFirstSteps = new ReactiveVar(false);
 
 	// Build a subscribe change
-	// eslint-disable-next-line func-names
 	this.subscribe = function (comment) {
 		const user = Users.currentUser();
 		return new Subscribe(this.data.course, user, this.data.roletype.type, comment);

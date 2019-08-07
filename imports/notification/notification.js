@@ -34,7 +34,6 @@ const logo = function (path) {
   *
   * @param entry Notification.Event log entry to process
   */
-// eslint-disable-next-line func-names
 Notification.send = function (entry) {
 	// Find out for which recipients sending has already been attempted.
 	const concluded = {};
@@ -132,7 +131,6 @@ Notification.SendResult = {};
   *                              that far)
   * @param  {String} reason    - why this log entry was recorded
   */
-// eslint-disable-next-line func-names
 Notification.SendResult.record = function (note, unsubToken, sent, recipient, message, reason) {
 	check(sent, Boolean);
 	check(unsubToken, Match.Maybe(String));

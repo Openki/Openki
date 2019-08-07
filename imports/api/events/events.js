@@ -55,14 +55,12 @@ export const OEvent = function () {
 	this.editors = [];
 };
 
-// eslint-disable-next-line func-names
 OEvent.prototype.editableBy = function (user) {
 	if (!user) return false;
 	if (UserPrivilegeUtils.privileged(user, 'admin')) return true;
 	return _.intersection(user.badges, this.editors).length > 0;
 };
 
-// eslint-disable-next-line func-names
 OEvent.prototype.sameTime = function (event) {
 	return ['startLocal', 'endLocal'].every((time) => {
 		const timeA = LocalTime.fromString(this[time]);
@@ -99,7 +97,6 @@ Events.Filtering = () => Filtering(
 /** @summary recalculate the group-related fields of an event
   * @param {eventId} the event to update
   */
-// eslint-disable-next-line func-names
 Events.updateGroups = function (eventId) {
 	// eslint-disable-next-line consistent-return
 	AsyncTools.untilClean((resolve, reject) => {
@@ -173,7 +170,6 @@ Events.updateGroups = function (eventId) {
  * The events are sorted by start date (ascending, before-filter causes descending order)
  *
  */
-// eslint-disable-next-line func-names
 Events.findFilter = function (filter, limit, skip, sort) {
 	const find = {};
 	const and = [];

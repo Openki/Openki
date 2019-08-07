@@ -7,7 +7,6 @@ const StringTools = {};
   * @param {String} ellipsis the string to add that signifies that src was truncated,
   * preset "…", does not count towards max.
   */
-// eslint-disable-next-line func-names
 StringTools.truncate = function (src, max, ellipsis = '…') {
 	check(src, String);
 	check(max, Number);
@@ -22,7 +21,6 @@ StringTools.truncate = function (src, max, ellipsis = '…') {
   * @param {String} input the string to be capitalized
   * @return the capitalized string
   */
-// eslint-disable-next-line func-names
 StringTools.capitalize = function (input) {
 	check(input, String);
 	return input.charAt(0).toUpperCase() + input.slice(1);
@@ -46,7 +44,6 @@ StringTools.markedName = (search, name) => {
 	return Spacebars.SafeString(marked);
 };
 
-// eslint-disable-next-line func-names
 StringTools.slug = function (text) {
 	return text
 		.toLowerCase()
@@ -54,7 +51,6 @@ StringTools.slug = function (text) {
 		.replace(/ +/g, '-');
 };
 
-// eslint-disable-next-line func-names
 StringTools.escapeRegex = function (string) {
 	return string.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
 };
@@ -62,7 +58,6 @@ StringTools.escapeRegex = function (string) {
 
 // Remove non-printable chars and linebreaks from string
 // All runs of whitespace are replaced with one space.
-// eslint-disable-next-line func-names
 StringTools.saneTitle = function (unsaneText) {
 	let text = unsaneText.replace(/[\n\r]/g, '');
 	text = text.replace(/\s+/g, ' ');
@@ -71,10 +66,9 @@ StringTools.saneTitle = function (unsaneText) {
 
 
 // Remove non-printable chars from string
-// eslint-disable-next-line func-names
 StringTools.saneText = function (unsaneText) {
 	// Remove all ASCII control chars except the line feed.
-	// eslint-disable-next-line no-control-regex
+	/* eslint-disable-next-line no-control-regex */
 	const re = /[\0-\x09\x0B-\x1F\x7F]/g;
 
 	const text = unsaneText.replace(re, '');

@@ -24,7 +24,6 @@ mfPkg.loadLangs('en');
 
 
 // close any verification dialogs still open
-// eslint-disable-next-line func-names
 Router.onBeforeAction(function () {
 	Tooltips.hide();
 

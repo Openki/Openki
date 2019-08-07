@@ -7,7 +7,6 @@ import '/imports/ui/components/map/map';
 
 import './venues-map.html';
 
-// eslint-disable-next-line func-names
 Template.venueMap.onCreated(function () {
 	const instance = this;
 

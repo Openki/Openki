@@ -20,7 +20,6 @@ import '/imports/ui/components/send-message/send-message';
 
 import './course-members.html';
 
-// eslint-disable-next-line func-names
 Template.courseMembers.onCreated(function () {
 	this.increaseBy = 10;
 	this.membersDisplayLimit = new ReactiveVar(this.increaseBy);
@@ -78,7 +77,6 @@ Template.courseMembers.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.courseMember.onCreated(function () {
 	const instance = this;
 	instance.subscribe('user', this.data.member.user);
@@ -99,7 +97,6 @@ Template.courseMember.onCreated(function () {
 		instance.editableMessage.setText(data.member.comment);
 	});
 
-	// eslint-disable-next-line func-names
 	instance.subscribeToTeam = function () {
 		const user = Users.findOne(this.data.member.user);
 		if (!user) return false; // Probably not loaded yet
@@ -107,7 +104,6 @@ Template.courseMember.onCreated(function () {
 		return new Subscribe(this.data.course, user, 'team');
 	};
 
-	// eslint-disable-next-line func-names
 	instance.removeFromTeam = function () {
 		const user = Users.findOne(this.data.member.user);
 		if (!user) return false; // Probably not loaded yet

@@ -13,7 +13,6 @@ import StringTools from '/imports/utils/string-tools';
 
 import './region-selection.html';
 
-// eslint-disable-next-line func-names
 Template.regionSelectionWrap.onCreated(function () {
 	this.subscribe('Regions');
 	this.state = new ReactiveDict();
@@ -32,7 +31,6 @@ Template.regionDisplay.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.regionSelection.onCreated(function () {
 	this.state = new ReactiveDict();
 	this.state.setDefault(
@@ -92,9 +90,7 @@ Template.regionSelection.onCreated(function () {
 	};
 });
 
-// eslint-disable-next-line func-names
 Template.regionSelection.onRendered(function () {
-	// eslint-disable-next-line func-names
 	Meteor.defer(function () {
 		if (!this.data || !this.data.isSplash) this.$('.js-region-search').select();
 	});

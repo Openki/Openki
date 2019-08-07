@@ -69,7 +69,6 @@ const Alert = {
       * @param  {String} message - the message text
       *
       */
-	// eslint-disable-next-line func-names
 	Alert[type] = function (message) {
 		check(message, String);
 		this._alert(type, message);

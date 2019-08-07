@@ -13,7 +13,6 @@ RegionSelection.regionDependentRoutes = ['home', 'find', 'calendar', 'venueMap',
   * This checks client storage for a region setting. When there is no previously
   * selected region, we ask the server to do geolocation. If that fails too,
   * we just set the region to 'all regions'. */
-// eslint-disable-next-line func-names
 RegionSelection.init = function () {
 	// We assume the initial onLogin() callback comes before the regions' ready.
 	// We have no guarantee for this however!

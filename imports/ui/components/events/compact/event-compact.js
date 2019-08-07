@@ -5,7 +5,6 @@ import '/imports/ui/components/venues/link/venue-link';
 
 import './event-compact.html';
 
-// eslint-disable-next-line func-names
 Template.eventCompact.onCreated(function () {
 	this.withDate = this.parentInstance().data.withDate;
 });
@@ -34,7 +33,6 @@ Template.eventCompact.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.eventCompact.rendered = function () {
 	this.$('.event-compact').dotdotdot();
 };

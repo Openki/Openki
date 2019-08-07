@@ -75,7 +75,6 @@ Accounts.config({
 	sendVerificationEmail: true,
 });
 
-// eslint-disable-next-line func-names
 Accounts.emailTemplates.verifyEmail.subject = function (user) {
 	return mf('verifyEmail.subject',
 		{
@@ -85,7 +84,6 @@ Accounts.emailTemplates.verifyEmail.subject = function (user) {
 		'[{SITE}] Welcome to the {SITE} community, {NAME}');
 };
 
-// eslint-disable-next-line func-names
 Accounts.emailTemplates.verifyEmail.text = function (user, url) {
 	return mf('verifyEmail.text',
 		{
@@ -106,7 +104,6 @@ Accounts.emailTemplates.verifyEmail.text = function (user, url) {
 		+ "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)");
 };
 
-// eslint-disable-next-line func-names
 Accounts.emailTemplates.resetPassword.subject = function () {
 	return mf('resetPassword.subject',
 		{
@@ -115,12 +112,10 @@ Accounts.emailTemplates.resetPassword.subject = function () {
 		'Reset your password on {SITE}');
 };
 
-// eslint-disable-next-line func-names
 Accounts.urls.resetPassword = function (token) {
 	return Meteor.absoluteUrl(`reset-password/${token}`);
 };
 
-// eslint-disable-next-line func-names
 Accounts.emailTemplates.resetPassword.text = function (user, url) {
 	return mf('resetPassword.text',
 		{

@@ -13,7 +13,6 @@ const notificationJoin = {};
   * @param      {String} newRole      - new role of the participant
   * @param      {String} message      - Optional message of the new participant
   */
-// eslint-disable-next-line func-names
 notificationJoin.record = function (courseId, participantId, newRole, message) {
 	check(courseId, String);
 	check(participantId, String);
@@ -43,7 +42,6 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	Log.record('Notification.Send', [course._id, participant._id], body);
 };
 
-// eslint-disable-next-line func-names
 notificationJoin.Model = function (entry) {
 	const { body } = entry;
 	const course = Courses.findOne(body.courseId);

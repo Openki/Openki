@@ -24,7 +24,6 @@ import Alert from '/imports/api/alerts/alert';
 
 import './event-edit.html';
 
-// eslint-disable-next-line func-names
 Template.eventEdit.onCreated(function () {
 	const instance = this;
 	instance.busy(false);
@@ -69,7 +68,6 @@ Template.eventEdit.onCreated(function () {
 
 	/** Get current local time depending on selected region
 	  * Returned as faux-UTC moment-object. */
-	// eslint-disable-next-line func-names
 	instance.now = function () {
 		return LocalTime.nowFauxUTC(instance.selectedRegion.get());
 	};
@@ -145,7 +143,6 @@ function updateTimes(template, updateEnd) {
 	template.$('#editEventDuration').val(duration.toString());
 }
 
-// eslint-disable-next-line func-names
 Template.eventEdit.onRendered(function () {
 	const instance = this;
 	updateTimes(instance, false);

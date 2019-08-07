@@ -12,7 +12,6 @@ import '/imports/ui/components/venues/edit/venue-edit';
 
 import './venue-details.html';
 
-// eslint-disable-next-line func-names
 Template.venueDetails.onCreated(function () {
 	const instance = this;
 	instance.busy();
@@ -30,7 +29,6 @@ Template.venueDetails.onCreated(function () {
 	const markers = new Meteor.Collection(null);
 	this.markers = markers;
 
-	// eslint-disable-next-line func-names
 	this.setLocation = function (loc) {
 		markers.remove({ main: true });
 		if (loc) {
@@ -41,7 +39,6 @@ Template.venueDetails.onCreated(function () {
 		}
 	};
 
-	// eslint-disable-next-line func-names
 	this.setRegion = function (region) {
 		markers.remove({ center: true });
 		if (region && region.loc) {
@@ -58,7 +55,6 @@ Template.venueDetails.onCreated(function () {
 		}
 	});
 
-	// eslint-disable-next-line func-names
 	this.getEvents = function (past) {
 		if (isNew) return;
 
@@ -85,7 +81,6 @@ Template.venueDetails.onCreated(function () {
 		return events;
 	};
 
-	// eslint-disable-next-line func-names
 	this.unloadedEvents = function (past) {
 		// eslint-disable-next-line no-shadow
 		const instance = Template.instance();
@@ -109,7 +104,6 @@ Template.venueDetails.onCreated(function () {
 	};
 });
 
-// eslint-disable-next-line func-names
 Template.venueDetails.onRendered(function () {
 	const instance = this;
 

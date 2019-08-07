@@ -10,7 +10,6 @@ import '../profiles/verify-email/verify-email';
 
 import './send-message.html';
 
-// eslint-disable-next-line func-names
 Template.sendMessage.onCreated(function () {
 	this.busy(false);
 	this.state = new ReactiveDict();
@@ -23,7 +22,6 @@ Template.sendMessage.onCreated(function () {
 	);
 });
 
-// eslint-disable-next-line func-names
 Template.sendMessage.onRendered(function () {
 	this.$('.js-email-message').select();
 });

@@ -83,7 +83,7 @@ if (Meteor.isClient) {
 	Analytics.installRouterActions(Router);
 }
 
-// eslint-disable-next-line array-callback-return, func-names
+// eslint-disable-next-line array-callback-return
 Router.map(function () {
 	this.route('adminPanel', {
 		path: 'admin',
@@ -670,7 +670,6 @@ Router.map(function () {
 	});
 });
 
-// eslint-disable-next-line func-names
 Router.route('/profile/unsubscribe/:token', function () {
 	const unsubToken = this.params.token;
 

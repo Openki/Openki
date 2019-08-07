@@ -1,13 +1,11 @@
 const AsyncTools = {};
 
-// eslint-disable-next-line func-names
 AsyncTools.checkUpdateOne = function (err, aff) {
 	if (err) throw err;
 	if (aff !== 1) throw new Error(`Query affected ${aff} docs, expected 1`);
 };
 
 // Simple async callback receiver that logs errors
-// eslint-disable-next-line func-names
 AsyncTools.logErrors = function (err, ret) {
 	if (err) {
 		/* eslint-disable-next-line no-console */
@@ -49,14 +47,12 @@ if (Meteor.isServer) {
 		});
 	};
 
-	// eslint-disable-next-line func-names
 	AsyncTools.untilClean = function (clean) {
 		return tryClean(clean, maxTries);
 	};
 }
 
 if (Meteor.isClient) {
-	// eslint-disable-next-line func-names
 	AsyncTools.untilClean = function () {
 		return new Promise(() => {}); /* promise that doesn't resolve */
 	};

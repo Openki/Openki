@@ -34,7 +34,6 @@ const Venue = function () {
   * @param {Object} venue
   * @return {Boolean}
   */
-// eslint-disable-next-line func-names
 Venue.prototype.editableBy = function (user) {
 	if (!user) return false;
 	const isNew = !this._id;
@@ -68,7 +67,6 @@ Venues.facilityOptions = ['projector', 'screen', 'audio', 'blackboard', 'whitebo
  * limit: how many to find
  *
  */
-// eslint-disable-next-line func-names
 Venues.findFilter = function (filter, limit, skip, sort) {
 	const find = {};
 	const options = { skip, sort };

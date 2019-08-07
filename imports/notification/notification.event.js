@@ -13,7 +13,6 @@ const notificationEvent = {};
   * @param {Boolean} isNew     - whether the event is a new one
   * @param {String}  additionalMessage - custom message
   */
-// eslint-disable-next-line func-names
 notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	check(eventId, String);
 	check(isNew, Boolean);
@@ -45,7 +44,6 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	Log.record('Notification.Send', [course._id], body);
 };
 
-// eslint-disable-next-line func-names
 notificationEvent.Model = function (entry) {
 	const event = Events.findOne(entry.body.eventId);
 	let course = false;

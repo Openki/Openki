@@ -24,7 +24,6 @@ import '/imports/ui/components/regions/tag/region-tag';
 
 import './course-edit.html';
 
-// eslint-disable-next-line func-names
 Template.courseEdit.onCreated(function () {
 	const instance = this;
 
@@ -68,7 +67,6 @@ Template.courseEdit.onCreated(function () {
 			this.$('#editform_name').val('');
 			this.$('.editable-textarea').html('');
 			this.selectedCategories.set([]);
-			// eslint-disable-next-line func-names
 			this.$('.js-check-role').each(function () {
 				this.checked = false;
 				$(this).trigger('change');
@@ -252,7 +250,6 @@ Template.courseEdit.events({
 		event.preventDefault();
 
 		const roles = {};
-		// eslint-disable-next-line func-names
 		instance.$('.js-check-role').each(function () {
 			roles[this.name] = this.checked;
 		});
@@ -305,7 +302,6 @@ Template.courseEdit.events({
 
 		changes.subs = [];
 		changes.unsubs = [];
-		// eslint-disable-next-line func-names
 		instance.$('.js-check-enroll').each(function () {
 			const role = this.name;
 			const subscribe = !!this.checked;
@@ -382,12 +378,10 @@ Template.courseEdit.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.courseEditRole.onCreated(function () {
 	this.checked = new ReactiveVar(false);
 });
 
-// eslint-disable-next-line func-names
 Template.courseEditRole.onRendered(function () {
 	const { data } = this;
 	const selectedRoles = data.selected;
@@ -424,7 +418,6 @@ Template.courseEditRole.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.courseTitle.onCreated(function () {
 	this.proposedSearch = new ReactiveVar('');
 	this.focused = new ReactiveVar(false);

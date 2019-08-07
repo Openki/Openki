@@ -3,7 +3,6 @@ import Venues from '/imports/api/venues/venues';
 
 const UpdatesAvailable = [];
 
-// eslint-disable-next-line func-names
 UpdatesAvailable['2016.08.23 renameVenues'] = function () {
 	const Locations = new Meteor.Collection('Locations');
 	let copied = 0;

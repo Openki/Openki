@@ -3,7 +3,6 @@ import CourseDiscussions from '/imports/api/course-discussions/course-discussion
 const UpdatesAvailable = [];
 
 // Standardize field names in CourseDiscussions documents
-// eslint-disable-next-line func-names
 UpdatesAvailable.renameDiscussionFields = function () {
 	const AllPosts = CourseDiscussions.find({});
 	AllPosts.fetch().forEach((originalPost) => {

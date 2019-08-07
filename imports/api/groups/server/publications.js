@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 
 import Groups from '../groups';
 
-// eslint-disable-next-line func-names
 Meteor.publish('groupsFind', function (originalFilter) {
 	const filter = {};
 	Object.assign(filter, originalFilter);

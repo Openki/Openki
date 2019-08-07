@@ -5,7 +5,6 @@ import { assert } from 'chai';
 import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test';
 
 if (Meteor.isClient) {
-	// eslint-disable-next-line func-names
 	describe('Frontpage', function () {
 		this.timeout(30000);
 		beforeEach((done) => {

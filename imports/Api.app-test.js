@@ -14,7 +14,6 @@ const assertGoodHeaders = function (result) {
 // Construct a function that fails if it's ever called with a lesser value than the one before
 const AssertAscending = function (base, message) {
 	let current = base;
-	// eslint-disable-next-line func-names
 	return function (next) {
 		assert.isAtLeast(next, current, message);
 		current = next;
@@ -23,7 +22,6 @@ const AssertAscending = function (base, message) {
 
 const AssertDescending = function (base, message) {
 	let current = base;
-	// eslint-disable-next-line func-names
 	return function (next) {
 		assert.isAtMost(next, current, message);
 		current = next;
@@ -32,7 +30,6 @@ const AssertDescending = function (base, message) {
 
 const AssertAscendingString = function (base, message) {
 	let current = base.toLowerCase();
-	// eslint-disable-next-line func-names
 	return function (next) {
 		const lowerNext = next.toLowerCase();
 		const side = current.localeCompare(lowerNext);
@@ -44,7 +41,6 @@ const AssertAscendingString = function (base, message) {
 };
 
 if (Meteor.isClient) {
-	// eslint-disable-next-line func-names
 	describe('Api', function () {
 		this.timeout(2000);
 		describe('GroupApi', () => {

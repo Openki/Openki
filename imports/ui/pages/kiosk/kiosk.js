@@ -47,7 +47,6 @@ Template.kioskEvent.helpers({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.kioskEvent.rendered = function () {
 	this.$('.kiosk-event').dotdotdot();
 };

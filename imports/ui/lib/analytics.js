@@ -21,7 +21,6 @@ const MatomoPattern = Match.ObjectIncluding({
 /**
  * Returns true if matomo analytics settings are configured.
  */
-// eslint-disable-next-line func-names
 Analytics.isConfigured = function () {
 	return Match.test(Meteor.settings.public.matomo, SettingsPattern);
 };
@@ -29,7 +28,6 @@ Analytics.isConfigured = function () {
 /**
  * Returns true if the tracker exists.
  */
-// eslint-disable-next-line func-names
 Analytics.hasTracker = function () {
 	return !!tracker;
 };
@@ -37,7 +35,6 @@ Analytics.hasTracker = function () {
 /**
  * Returns a promise resolving to the global Matomo object.
  */
-// eslint-disable-next-line func-names
 Analytics.load = function () {
 	let result;
 
@@ -78,7 +75,6 @@ Analytics.load = function () {
 /**
  * Returns a promise resolving to the configured matomo tracker object.
  */
-// eslint-disable-next-line func-names
 Analytics.tracker = function () {
 	return Analytics.load().then((matomo) => {
 		check(Meteor.settings.public.matomo, SettingsPattern);
@@ -98,7 +94,6 @@ Analytics.tracker = function () {
  * Example:
  *     Analytics.trytrack((tracker) => tracker.trackPageView());
  */
-// eslint-disable-next-line func-names
 Analytics.trytrack = function (callback) {
 	if (Analytics.isConfigured()) {
 		Analytics.tracker().then(callback, (err) => {
@@ -110,11 +105,9 @@ Analytics.trytrack = function (callback) {
 /**
  * Installs action-hooks on the router.
  */
-// eslint-disable-next-line func-names
 Analytics.installRouterActions = function (router) {
 	let started;
 
-	// eslint-disable-next-line func-names
 	router.onBeforeAction(function () {
 		if (Analytics.hasTracker()) {
 			// eslint-disable-next-line no-shadow

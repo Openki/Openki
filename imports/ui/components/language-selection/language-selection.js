@@ -13,7 +13,6 @@ import StringTools from '/imports/utils/string-tools';
 
 import './language-selection.html';
 
-// eslint-disable-next-line func-names
 Template.languageSelectionWrap.created = function () {
 	const instance = this;
 	instance.searchingLanguages = new ReactiveVar(false);
@@ -38,7 +37,6 @@ Template.languageDisplay.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.languageSelection.onCreated(function () {
 	this.languageSearch = new ReactiveVar('');
 });
@@ -146,7 +144,6 @@ Template.languageSelection.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.languageSelection.onRendered(function () {
 	const instance = this;
 

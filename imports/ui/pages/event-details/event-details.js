@@ -51,7 +51,6 @@ Template.eventPage.onCreated(() => {
 	Metatags.setCommonTags(title, description);
 });
 
-// eslint-disable-next-line func-names
 Template.event.onCreated(function () {
 	const event = this.data;
 	this.busy(false);
@@ -167,13 +166,11 @@ Template.event.events({
 
 
 TemplateMixins.Expandible(Template.eventDisplay);
-// eslint-disable-next-line func-names
 Template.eventDisplay.onCreated(function () {
 	this.locationTracker = LocationTracker();
 	this.replicating = new ReactiveVar(false);
 });
 
-// eslint-disable-next-line func-names
 Template.eventDisplay.onRendered(function () {
 	this.locationTracker.setRegion(this.data.region);
 	this.locationTracker.setLocation(this.data.venue);

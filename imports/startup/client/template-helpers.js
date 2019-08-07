@@ -153,7 +153,6 @@ Object.keys(helpers).forEach(name => Template.registerHelper(name, helpers[name]
 
 /* Get a username from ID
  */
-// eslint-disable-next-line func-names
 const usernameFromId = (function () {
 	// We cache the username lookups
 	// To prevent unlimited cache-growth, after a enough lookups we
@@ -174,7 +173,6 @@ const usernameFromId = (function () {
 		},
 	});
 
-	// eslint-disable-next-line func-names
 	return function (userId) {
 		if (!userId) return mf('noUser_placeholder', 'someone');
 

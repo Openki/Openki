@@ -25,7 +25,6 @@ Groups.Filtering = () => Filtering(
  *   user: Limit to groups where given user ID is a member (client only)
  *
  */
-// eslint-disable-next-line func-names
 Groups.findFilter = function (filter, limit, skip, sort) {
 	const find = {};
 

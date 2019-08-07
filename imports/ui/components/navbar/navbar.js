@@ -11,7 +11,6 @@ import '/imports/ui/components/language-selection/language-selection';
 
 import './navbar.html';
 
-// eslint-disable-next-line func-names
 Template.navbar.onRendered(function () {
 	const instance = this;
 	const viewportWidth = Session.get('viewportWidth');

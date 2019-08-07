@@ -12,7 +12,6 @@ import '/imports/ui/components/loading/loading';
 
 import './calendar.html';
 
-// eslint-disable-next-line func-names
 Template.calendar.onCreated(function () {
 	const instance = this;
 
@@ -65,7 +64,6 @@ const updateUrl = function (event, instance) {
 	event.preventDefault();
 };
 
-// eslint-disable-next-line func-names
 Template.calendar.onRendered(function () {
 	// change of week does not trigger onRendered again
 	this.autorun(() => {
@@ -73,7 +71,6 @@ Template.calendar.onRendered(function () {
 		if (moment().format('w') === Template.instance().filter.get('start').format('w')) {
 			const instance = Template.instance();
 			if (instance.eventSub.ready()) {
-				// eslint-disable-next-line func-names
 				Meteor.defer(function () {
 					const elem = this.$('.js-calendar-date').eq(moment().weekday());
 					// calendar nav and topnav are together 103 px fixed height, we add 7px margin
@@ -144,12 +141,10 @@ Template.calendarNav.helpers({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.calendarNav.onCreated(function () {
 	this.currentUnit = new ReactiveVar('week');
 });
 
-// eslint-disable-next-line func-names
 Template.calendarNav.onRendered(function () {
 	const navContainer = this.$('.calendar-nav-container');
 	navContainer.slideDown();
@@ -225,7 +220,6 @@ Template.calendarNavControl.helpers({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.calendarAddEvent.onRendered(function () {
 	const instance = this;
 	const eventCaption = instance.$('.event-caption-add');

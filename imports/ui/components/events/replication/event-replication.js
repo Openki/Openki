@@ -37,7 +37,6 @@ Template.eventReplication.onCreated(function eventReplicationOnCreated() {
 	instance.replicateEndDate = new ReactiveVar(replicaStartDate(moment(data.start).add(1, 'week')));
 });
 
-// eslint-disable-next-line func-names
 Template.eventReplication.onRendered(function () {
 	const instance = this;
 

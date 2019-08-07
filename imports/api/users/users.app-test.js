@@ -7,7 +7,6 @@ const createDummy = function () {
 };
 
 if (Meteor.isClient) {
-	// eslint-disable-next-line func-names
 	describe('Profile', function () {
 		this.timeout(30000);
 		describe('User creation', () => {
@@ -30,7 +29,6 @@ if (Meteor.isClient) {
 			}));
 		});
 
-		// eslint-disable-next-line func-names
 		describe('User modification', function () {
 			this.timeout(30000);
 			const oldDummy = createDummy();

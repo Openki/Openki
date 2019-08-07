@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-// eslint-disable-next-line func-names
 Meteor.publish('user', function (userId) {
 	const fields = {
 		username: 1,
@@ -21,7 +20,6 @@ Meteor.publish('user', function (userId) {
 
 // Always publish their own data for logged-in users
 // https://github.com/meteor/guide/issues/651
-// eslint-disable-next-line func-names
 Meteor.publish(null, function () {
 	return Meteor.users.find(this.userId);
 });

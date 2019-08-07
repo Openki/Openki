@@ -8,7 +8,6 @@ import LocalTime from '/imports/utils/local-time';
 
 import './schedule-frame.html';
 
-// eslint-disable-next-line func-names
 Template.frameSchedule.onCreated(function () {
 	const filter = Events.Filtering();
 
@@ -75,7 +74,6 @@ Template.frameSchedule.onCreated(function () {
 	instance.days = new ReactiveVar([]);
 	instance.intervals = new ReactiveVar([]);
 	instance.slots = new ReactiveVar({});
-	// eslint-disable-next-line func-names
 	instance.kindMap = function () { return 0; };
 
 	const getRepKeyId = (event) => {
@@ -191,7 +189,6 @@ Template.frameSchedule.onCreated(function () {
 		// Build list of most used titles (first few chars)
 		const mostUsedKinds = _.sortBy(_.pairs(kinds), kv => -kv[1]);
 		const kindRank = _.object(_.map(mostUsedKinds.slice(0, 15), (kv, rank) => [kv[0], rank + 1]));
-		// eslint-disable-next-line func-names
 		instance.kindMap = function (title) {
 			const kindId = title.substr(0, 5);
 			if (kindRank[kindId]) return kindRank[kindId];

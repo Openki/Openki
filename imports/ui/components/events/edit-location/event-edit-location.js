@@ -14,7 +14,6 @@ import '/imports/ui/components/venues/link/venue-link';
 
 import './event-edit-location.html';
 
-// eslint-disable-next-line func-names
 Template.eventEditVenue.onCreated(function () {
 	const instance = this;
 	// Something, somewhere, must have gone terribly wrong (for this line to exist)
@@ -28,7 +27,6 @@ Template.eventEditVenue.onCreated(function () {
 	// unset: no location selected
 	// preset: one of the preset locations is referenced
 	// own: name and coordinates were entered for this event specifically
-	// eslint-disable-next-line func-names
 	instance.locationIs = function (type) {
 		const location = instance.location.get();
 		if (!location) return type === 'unset';
@@ -47,7 +45,6 @@ Template.eventEditVenue.onCreated(function () {
 		instance.locationTracker.setRegion(regionId);
 	});
 
-	// eslint-disable-next-line func-names
 	instance.reset = function () {
 		instance.locationTracker.markers.remove({ proposed: true });
 	};
@@ -166,7 +163,6 @@ Template.eventEditVenue.helpers({
 		// We return a function so the reactive dependency on locationState is
 		// established from within the map template which will call it. The
 		// craziness is strong with this one.
-		// eslint-disable-next-line func-names
 		return function () {
 			return !location.get().loc;
 		};
@@ -176,7 +172,6 @@ Template.eventEditVenue.helpers({
 		const { locationIs } = Template.instance();
 		const { location } = Template.instance();
 
-		// eslint-disable-next-line func-names
 		return function () {
 			return locationIs('own') && location.get().loc;
 		};

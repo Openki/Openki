@@ -2,7 +2,6 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 import './participant-contact.html';
 
-// eslint-disable-next-line func-names
 Template.participantContact.onCreated(function () {
 	this.userSub = Meteor.subscribe('user', this.data.participant);
 
@@ -14,7 +13,6 @@ Template.participantContact.onCreated(function () {
 	});
 });
 
-// eslint-disable-next-line func-names
 Template.participantContact.onRendered(function () {
 	this.autorun(() => {
 		if (this.state.get('showModal')) {
