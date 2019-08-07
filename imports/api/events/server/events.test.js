@@ -6,8 +6,11 @@ import Events from '/imports/api/events/events';
 function promiseMeteorCall(...args) {
 	return new Promise((resolve, reject) => {
 		Meteor.call(...args, (err, result) => {
-			if (err) reject(err);
-			else resolve(result);
+			if (err) {
+				reject(err);
+			} else {
+				resolve(result);
+			}
 		});
 	});
 }
@@ -17,8 +20,11 @@ if (Meteor.isClient) {
 		it('Stores an event', (done) => {
 			new Promise((resolve, reject) => {
 				Meteor.loginWithPassword('greg', 'greg', (err) => {
-					if (err) reject(err);
-					else resolve();
+					if (err) {
+						reject(err);
+					} else {
+						resolve();
+					}
 				});
 			}).then(() => {
 				const theFuture = new Date();
@@ -61,8 +67,11 @@ if (Meteor.isClient) {
 
 			return new Promise((resolve, reject) => {
 				Meteor.loginWithPassword('greg', 'greg', (err) => {
-					if (err) reject(err);
-					else resolve();
+					if (err) {
+						reject(err);
+					} else {
+						resolve();
+					}
 				});
 			}).then(() => {
 				const theFuture = new Date();

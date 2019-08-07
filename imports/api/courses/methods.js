@@ -93,7 +93,9 @@ Meteor.methods({
 
 		const course = loadCourse(courseId);
 
-		if (!course.editableBy(user)) throw new Meteor.Error(401, 'edit not permitted');
+		if (!course.editableBy(user)) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
 
 		/* Changes we want to perform */
 		const set = {};
@@ -142,7 +144,9 @@ Meteor.methods({
 			}
 		}
 
-		if (changes.categories) set.categories = changes.categories.slice(0, 20);
+		if (changes.categories) {
+			set.categories = changes.categories.slice(0, 20);
+		}
 		if (changes.name) {
 			set.name = StringTools.saneTitle(changes.name).substring(0, 1000);
 			set.slug = StringTools.slug(set.name);
@@ -158,7 +162,9 @@ Meteor.methods({
 			if (changes.groups) {
 				testedGroups = _.map(changes.groups, (groupId) => {
 					const group = Groups.findOne(groupId);
-					if (!group) throw new Meteor.Error(404, `no group with id ${groupId}`);
+					if (!group) {
+						throw new Meteor.Error(404, `no group with id ${groupId}`);
+					}
 					return group._id;
 				});
 			}
@@ -167,7 +173,9 @@ Meteor.methods({
 
 			/* region cannot be changed */
 			const region = Regions.findOne({ _id: changes.region });
-			if (!region) throw new Meteor.Error(404, 'region missing');
+			if (!region) {
+				throw new Meteor.Error(404, 'region missing');
+			}
 			set.region = region._id;
 
 			/* When a course is created, the creator is automatically added as sole member of the team */
@@ -213,8 +221,12 @@ Meteor.methods({
 
 	'course.remove'(courseId) {
 		const course = Courses.findOne({ _id: courseId });
-		if (!course) throw new Meteor.Error(404, 'no such course');
-		if (!course.editableBy(Meteor.user())) throw new Meteor.Error(401, 'edit not permitted');
+		if (!course) {
+			throw new Meteor.Error(404, 'no such course');
+		}
+		if (!course.editableBy(Meteor.user())) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
 		Events.remove({ courseId });
 		Courses.remove(courseId);
 	},

@@ -14,7 +14,9 @@ export const processChange = function (change, done) {
 			console.log(err);
 			Alert.error(err, '');
 		}
-		if (done) done();
+		if (done) {
+			done();
+		}
 	});
 };
 
@@ -233,7 +235,9 @@ export class Unsubscribe extends Change {
 	}
 
 	permitted(operator) {
-		if (!operator) return false;
+		if (!operator) {
+			return false;
+		}
 
 		// Admins may do anything
 		if (operator.privileged('admin')) {
@@ -317,7 +321,9 @@ export class Message extends Change {
 	}
 
 	permitted(operator) {
-		if (!operator) return false;
+		if (!operator) {
+			return false;
+		}
 
 		// The other roles can only be unsubscribed from by the users themselves
 		return operator._id === this.user._id;

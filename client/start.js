@@ -35,7 +35,9 @@ Router.onBeforeAction(function () {
 // Try to guess a sensible language
 Meteor.startup(() => {
 	const useLocale = function (lang) {
-		if (!lang) return false;
+		if (!lang) {
+			return false;
+		}
 
 		let locale = false;
 		if (Languages[lang]) {
@@ -55,8 +57,12 @@ Meteor.startup(() => {
 	};
 
 	// Check query parameter and cookies
-	if (useLocale(UrlTools.queryParam('lg'))) return;
-	if (useLocale(localStorage.getItem('locale'))) return;
+	if (useLocale(UrlTools.queryParam('lg'))) {
+		return;
+	}
+	if (useLocale(localStorage.getItem('locale'))) {
+		return;
+	}
 
 	// Try to access the preferred languages. For the legacy browsers that don't
 	// expose it we could ask the server for the Accept-Language headers but I'm
@@ -70,7 +76,9 @@ Meteor.startup(() => {
 
 	// Here we ask for the browser UI language which may not be what the visitor
 	// wanted. Oh well.
-	if (useLocale(navigator.language)) return;
+	if (useLocale(navigator.language)) {
+		return;
+	}
 
 	// Give up. Here's to Cultural Homogenization.
 	useLocale('en');
@@ -133,7 +141,9 @@ Accounts.onLogin(() => {
 	const user = Meteor.user();
 
 	const locale = user.profile.locale;
-	if (locale) Session.set('locale', locale);
+	if (locale) {
+		Session.set('locale', locale);
+	}
 });
 
 Accounts.onEmailVerificationLink((token) => {

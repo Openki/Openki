@@ -117,13 +117,19 @@ Meteor.methods({
 			changes.time_created = now;
 			if (changes.courseId) {
 				const course = Courses.findOne(changes.courseId);
-				if (!course) throw new Meteor.Error(404, 'course not found');
-				if (!course.editableBy(user)) throw new Meteor.Error(401, 'not permitted');
+				if (!course) {
+					throw new Meteor.Error(404, 'course not found');
+				}
+				if (!course.editableBy(user)) {
+					throw new Meteor.Error(401, 'not permitted');
+				}
 			}
 
 			if (changes.replicaOf) {
 				const parent = Events.findOne(changes.replicaOf);
-				if (!parent) throw new Meteor.Error(404, 'replica parent not found');
+				if (!parent) {
+					throw new Meteor.Error(404, 'replica parent not found');
+				}
 				if (parent.courseId !== changes.courseId) {
 					throw new Meteor.Error(400, 'replica must be in same course');
 				}
@@ -198,7 +204,9 @@ Meteor.methods({
 				let endMoment;
 				if (changes.endLocal) {
 					endMoment = regionZone.fromString(changes.endLocal);
-					if (!endMoment.isValid()) throw new Meteor.Error(400, 'Invalid end date');
+					if (!endMoment.isValid()) {
+						throw new Meteor.Error(400, 'Invalid end date');
+					}
 				} else {
 					endMoment = regionZone.fromString(event.endLocal);
 				}
@@ -279,14 +287,22 @@ Meteor.methods({
 		check(eventId, String);
 
 		const user = Meteor.user();
-		if (!user) throw new Meteor.Error(401, 'please log in');
+		if (!user) {
+			throw new Meteor.Error(401, 'please log in');
+		}
 		const event = Events.findOne(eventId);
-		if (!event) throw new Meteor.Error(404, 'No such event');
-		if (!event.editableBy(user)) throw new Meteor.Error(401, 'not permitted');
+		if (!event) {
+			throw new Meteor.Error(404, 'No such event');
+		}
+		if (!event.editableBy(user)) {
+			throw new Meteor.Error(401, 'not permitted');
+		}
 
 		Events.remove(eventId);
 
-		if (event.courseId) Meteor.call('course.updateNextEvent', event.courseId);
+		if (event.courseId) {
+			Meteor.call('course.updateNextEvent', event.courseId);
+		}
 		Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);
 	},
 
@@ -396,11 +412,15 @@ Meteor.methods({
 
 		const event = Events.findOne(eventId);
 		// ignore broken eventIds
-		if (!event) return;
+		if (!event) {
+			return;
+		}
 
 		// if you cant load course its probably because the event doesnt have one
 		const course = Courses.findOne(event.courseId);
-		if (!course) return;
+		if (!course) {
+			return;
+		}
 
 		const change = new Subscribe(course, user, 'participant');
 

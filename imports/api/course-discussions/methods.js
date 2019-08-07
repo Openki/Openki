@@ -96,7 +96,9 @@ Meteor.methods({
 		const update = sanitizeComment(comment);
 
 		const originalComment = CourseDiscussions.findOne(comment._id);
-		if (!originalComment) throw new Meteor.Error(404, 'no such comment');
+		if (!originalComment) {
+			throw new Meteor.Error(404, 'no such comment');
+		}
 
 		const user = Meteor.user();
 		if (!CourseDiscussionUtils.mayEditPost(user, originalComment)) {

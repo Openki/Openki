@@ -22,6 +22,8 @@ Meteor.publish('eventsForCourse', courseId => Events.find({ courseId }));
 
 Meteor.publish('affectedReplica', (eventId) => {
 	const event = Events.findOne(eventId);
-	if (!event) throw new Meteor.Error(400, `provided event id ${eventId} is invalid`);
+	if (!event) {
+		throw new Meteor.Error(400, `provided event id ${eventId} is invalid`);
+	}
 	return Events.find(AffectedReplicaSelectors(event));
 });

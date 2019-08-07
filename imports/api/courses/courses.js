@@ -81,7 +81,9 @@ export class Course {
 	  * @return {Boolean}
 	  */
 	editableBy(user) {
-		if (!user) return false;
+		if (!user) {
+			return false;
+		}
 		const isNew = !this._id;
 		return isNew // Anybody may create a new course
 			|| UserPrivilegeUtils.privileged(user, 'admin') // Admins can edit all courses
@@ -166,7 +168,9 @@ Courses.findFilter = function (filter, limit, sortParams) {
 	const order = sortParams || [];
 
 	const find = {};
-	if (filter.region && filter.region !== 'all') find.region = filter.region;
+	if (filter.region && filter.region !== 'all') {
+		find.region = filter.region;
+	}
 
 	if (filter.state === 'proposal') {
 		find.lastEvent = { $eq: null };

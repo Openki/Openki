@@ -11,7 +11,9 @@ const apiResponse = function (collection, formatter) {
 };
 
 const maybeUrl = function (route, context) {
-	if (!context || !context._id) return undefined;
+	if (!context || !context._id) {
+		return undefined;
+	}
 	return Router.url(route, context);
 };
 

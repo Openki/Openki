@@ -56,8 +56,12 @@ export const OEvent = function () {
 };
 
 OEvent.prototype.editableBy = function (user) {
-	if (!user) return false;
-	if (UserPrivilegeUtils.privileged(user, 'admin')) return true;
+	if (!user) {
+		return false;
+	}
+	if (UserPrivilegeUtils.privileged(user, 'admin')) {
+		return true;
+	}
 	return _.intersection(user.badges, this.editors).length > 0;
 };
 
@@ -216,7 +220,9 @@ Events.findFilter = function (filter, limit, skip, sort) {
 
 	if (filter.before) {
 		find.end = { $lt: filter.before };
-		if (!filter.after) startSortOrder = 'desc';
+		if (!filter.after) {
+			startSortOrder = 'desc';
+		}
 	}
 
 	if (filter.venue) {
