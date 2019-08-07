@@ -124,11 +124,13 @@ Courses.Filtering = () => Filtering(
 
 // Update list of editors
 Courses.updateGroups = function (courseId) {
-	// eslint-disable-next-line consistent-return
+	/* eslint-disable-next-line consistent-return */
 	AsyncTools.untilClean((resolve, reject) => {
 		const course = Courses.findOne(courseId);
 		// If the course doesn't exist it doesn't need updating
-		if (!course) return resolve(true);
+		if (!course) {
+			return resolve(true);
+		}
 
 		const editors = course.groupOrganizers.slice();
 

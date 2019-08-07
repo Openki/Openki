@@ -52,12 +52,14 @@ const registerMethod = function (method) {
 
 const loadCourse = (courseId) => {
 	// new!
-	if (courseId.length === 0) {
+	if (courseId === '') {
 		return new Course();
 	}
 
 	const course = Courses.findOne({ _id: courseId });
-	if (!course) throw new Meteor.Error(404, 'Course not found');
+	if (!course) {
+		throw new Meteor.Error(404, 'Course not found');
+	}
 	return course;
 };
 
@@ -205,7 +207,7 @@ Meteor.methods({
 			});
 		}
 
-		// eslint-disable-next-line consistent-return
+		/* eslint-disable-next-line consistent-return */
 		return courseId;
 	},
 
