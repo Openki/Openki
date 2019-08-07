@@ -15,7 +15,7 @@ Accounts.onCreateUser((options, originalUser) => {
 	let name = false;
 	let username = false;
 	let provider = false;
-	// eslint-disable-next-line no-cond-assign
+	/* eslint-disable-next-line no-cond-assign */
 	while ((provider = nameProviders.pop()) !== undefined) {
 		if (!name && provider.name) name = provider.name;
 		if (!username && provider.username) username = provider.username;

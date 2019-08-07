@@ -3,16 +3,17 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
+import Alert from '/imports/api/alerts/alert';
 import Categories from '/imports/api/categories/categories';
 import Courses from '/imports/api/courses/courses';
 import Groups from '/imports/api/groups/groups';
 import Regions from '/imports/api/regions/regions';
 import Roles from '/imports/api/roles/roles';
 
-import StringTools from '/imports/utils/string-tools';
 import Editable from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import Alert from '/imports/api/alerts/alert';
+
+import StringTools from '/imports/utils/string-tools';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 
@@ -123,18 +124,12 @@ Template.courseEdit.helpers({
 
 	isChecked() {
 		const selectedCategories = Template.instance().selectedCategories.get();
-		if (selectedCategories.length && selectedCategories.indexOf(`${this}`) >= 0) {
-			return 'checkbox-checked';
-		}
-		return '';
+		return selectedCategories.includes(`${this}`) ? 'checkbox-checked' : '';
 	},
 
-	// eslint-disable-next-line consistent-return
 	checkCategory() {
 		const selectedCategories = Template.instance().selectedCategories.get();
-		if (selectedCategories.length) {
-			return selectedCategories.indexOf(`${this}`) >= 0 ? 'checked' : '';
-		}
+		return selectedCategories.includes(`${this}`) ? 'checked' : '';
 	},
 
 	hasRole() {
@@ -187,13 +182,15 @@ Template.courseEdit.helpers({
 		return Template.instance().editableDescription;
 	},
 
-	// eslint-disable-next-line consistent-return
 	newCourseGroupName() {
 		if (this.group) {
 			const groupId = this.group;
 			const group = Groups.findOne(groupId);
-			if (group) return group.name;
+			if (group) {
+				return group.name;
+			}
 		}
+		return false;
 	},
 
 	showInternalCheckbox() {
@@ -207,27 +204,31 @@ Template.courseEdit.helpers({
 		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	showSavedMessage() {
 		if (this.isFrame) {
 			return Template.instance().showSavedMessage.get();
 		}
+		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	savedCourseLink() {
 		if (this.isFrame) {
 			const course = Template.instance().savedCourse.get();
-			if (course) return Router.url('showCourse', course);
+			if (course) {
+				return Router.url('showCourse', course);
+			}
 		}
+		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	savedCourseName() {
 		if (this.isFrame) {
 			const course = Template.instance().savedCourse.get();
-			if (course) return course.name;
+			if (course) {
+				return course.name;
+			}
 		}
+		return false;
 	},
 
 	editBodyClasses() {
@@ -268,8 +269,7 @@ Template.courseEdit.events({
 		};
 
 		if (changes.name.length === 0) {
-			// eslint-disable-next-line no-alert
-			alert('Please provide a title');
+			Alert.error(mf('course.edit.error.title', 'Please provide a title'));
 			return;
 		}
 
@@ -288,8 +288,7 @@ Template.courseEdit.events({
 				changes.region = instance.$('.region_select').val();
 			}
 			if (!changes.region) {
-				// eslint-disable-next-line no-alert
-				alert('Please select a region');
+				Alert.error(mf('course.edit.error.region', 'Please select a region'));
 				return;
 			}
 

@@ -162,8 +162,9 @@ Template.courseGroupList.helpers({
 		if (user && course.editableBy(user)) {
 			const hasOrgRights = course.groupOrganizers.indexOf(groupId) > -1;
 			tools.push({
-				// eslint-disable-next-line max-len
-				toolTemplate: hasOrgRights ? Template.courseGroupRemoveOrganizer : Template.courseGroupMakeOrganizer,
+				toolTemplate: hasOrgRights
+					? Template.courseGroupRemoveOrganizer
+					: Template.courseGroupMakeOrganizer,
 				groupId,
 				course,
 			});

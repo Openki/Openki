@@ -47,10 +47,12 @@ Template.usersCourselist.helpers({
 		return `roles.${this.type}.myList`;
 	},
 
-	// eslint-disable-next-line consistent-return
 	getName() {
 		const { username } = Template.instance().data.profileData.user;
-		if (username) return username;
+		if (username) {
+			return username;
+		}
+		return false;
 	},
 	roleShort() {
 		return `roles.${this.type}.short`;

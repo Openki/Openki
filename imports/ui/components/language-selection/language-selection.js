@@ -74,13 +74,13 @@ Template.languageSelection.helpers({
 	},
 
 	translated() {
-		// eslint-disable-next-line consistent-return
 		const getTransPercent = () => {
 			const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
 			if (mfStats) {
 				const langStats = mfStats.langs.find(stats => stats.lang === this.lg);
 				return langStats.transPercent;
 			}
+			return false;
 		};
 
 		const percent = (this.lg === mfPkg.native) ? 100 : getTransPercent();

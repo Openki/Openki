@@ -14,17 +14,22 @@ const Filtering = function (availablePredicates) {
 
 	self.add = function (name, param) {
 		try {
-			if (!availablePredicates[name]) throw new FilteringReadError(param, `No predicate ${name}`);
+			if (!availablePredicates[name]) {
+				throw new FilteringReadError(param, `No predicate ${name}`);
+			}
 			const toAdd = availablePredicates[name](param);
-			if (toAdd === undefined) return; // Filter construction failed, leave as-is
+			if (toAdd === undefined) {
+				return false; // Filter construction failed, leave as-is
+			}
 
 			if (predicates[name]) {
 				predicates[name] = predicates[name].merge(toAdd);
 			} else {
 				predicates[name] = toAdd;
 			}
-			if (!predicates[name]) delete predicates[name];
-			// eslint-disable-next-line consistent-return
+			if (!predicates[name]) {
+				delete predicates[name];
+			}
 			return self;
 		} catch (e) {
 			if (e instanceof FilteringReadError) {

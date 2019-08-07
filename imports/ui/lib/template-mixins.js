@@ -127,18 +127,19 @@ const TemplateMixins = {
 	 */
 	FormfieldErrors(template, mapping) {
 		template.helpers({
-			// eslint-disable-next-line consistent-return
 			errorClass(field) {
 				if (Template.instance().errors.messages.findOne({ field })) {
 					return 'has-error';
 				}
+				return false;
 			},
 			errorMessage(field) {
 				const message = Template.instance().errors.messages.findOne({ field });
-				if (!message) return;
+				if (!message) {
+					return false;
+				}
 
 				const text = mapping[message.key].text();
-				// eslint-disable-next-line consistent-return
 				return Spacebars.SafeString(
 					`<span class="help-block warning-block">${
 						Blaze._escape(text)
@@ -157,10 +158,7 @@ const TemplateMixins = {
 				add(key) {
 					const message = mapping[key];
 					if (!message) {
-						Alert.error(
-							new Error('Unmapped error'),
-							key,
-						);
+						Alert.error('Unmapped error', key);
 						return;
 					}
 

@@ -140,10 +140,12 @@ Template.groupDetails.helpers({
 });
 
 Template.groupDetails.events({
-	// eslint-disable-next-line consistent-return
 	'click .js-group-settings'(event, instance) {
-		if (PleaseLogin()) return false;
+		if (PleaseLogin()) {
+			return false;
+		}
 		instance.editingSettings.set(!instance.editingSettings.get());
+		return true;
 	},
 
 	'click .js-group-save'(event, instance) {

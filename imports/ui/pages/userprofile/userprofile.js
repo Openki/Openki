@@ -1,10 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
+import Alert from '/imports/api/alerts/alert';
 import Roles from '/imports/api/roles/roles';
 
 import PleaseLogin from '/imports/ui/lib/please-login';
-import Alert from '/imports/api/alerts/alert';
+
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list';
@@ -176,8 +177,7 @@ Template.emailBox.events({
 		const receiveCopy = template.$('#receiveCopy').is(':checked');
 
 		if (message.length < '2') {
-			// eslint-disable-next-line no-alert
-			alert(mf('profile.mail.longertext', 'longer text please'));
+			Alert.error(mf('profile.mail.longertext', 'longer text please'));
 			return;
 		}
 

@@ -4,13 +4,14 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
+import Alert from '/imports/api/alerts/alert';
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
+
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import Editable from '/imports/ui/lib/editable';
 import LocationTracker from '/imports/ui/lib/location-tracker';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import Alert from '/imports/api/alerts/alert';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
@@ -158,8 +159,7 @@ Template.venueEdit.events({
 		};
 
 		if (!changes.name) {
-			// eslint-disable-next-line no-alert
-			alert(mf('venue.create.plsGiveVenueName', 'Please give your venue a name'));
+			Alert.error(mf('venue.create.plsGiveVenueName', 'Please give your venue a name'));
 			return;
 		}
 
@@ -167,8 +167,9 @@ Template.venueEdit.events({
 		if (newDescription) changes.description = newDescription;
 
 		if (changes.description.trim().length === 0) {
-			// eslint-disable-next-line no-alert
-			alert(mf('venue.create.plsProvideDescription', 'Please provide a description for your venue'));
+			Alert.error(
+				mf('venue.create.plsProvideDescription', 'Please provide a description for your venue'),
+			);
 			return;
 		}
 
@@ -181,8 +182,7 @@ Template.venueEdit.events({
 		if (instance.isNew) {
 			changes.region = instance.selectedRegion.get();
 			if (!changes.region) {
-				// eslint-disable-next-line no-alert
-				alert(mf('venue.create.plsSelectRegion', 'Please select a region'));
+				Alert.error(mf('venue.create.plsSelectRegion', 'Please select a region'));
 				return;
 			}
 		}
@@ -191,8 +191,7 @@ Template.venueEdit.events({
 		if (marker) {
 			changes.loc = marker.loc;
 		} else {
-			// eslint-disable-next-line no-alert
-			alert(mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'));
+			Alert.error(mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'));
 			return;
 		}
 

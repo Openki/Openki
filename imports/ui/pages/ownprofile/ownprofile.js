@@ -46,14 +46,18 @@ Template.profile.helpers({
 		return this.user.groups.count();
 	},
 
-	// eslint-disable-next-line consistent-return
 	notificationsChecked() {
-		if (this.user.notifications) return 'checked';
+		if (this.user.notifications) {
+			return 'checked';
+		}
+		return '';
 	},
 
-	// eslint-disable-next-line consistent-return
 	privacyChecked() {
-		if (this.user.privacy) return 'checked';
+		if (this.user.privacy) {
+			return 'checked';
+		}
+		return '';
 	},
 
 	isVenueEditor() {

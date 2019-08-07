@@ -6,21 +6,22 @@
 
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import LocalTime from '/imports/utils/local-time';
-import Editable from '/imports/ui/lib/editable';
-import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import Regions from '/imports/api/regions/regions';
-
+import Alert from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
+import Regions from '/imports/api/regions/regions';
+
+import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import Editable from '/imports/ui/lib/editable';
+
+import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
+import LocalTime from '/imports/utils/local-time';
+
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/events/edit-location/event-edit-location';
 import '/imports/ui/components/price-policy/price-policy';
 import '/imports/ui/components/regions/tag/region-tag';
-
-import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
-import Alert from '/imports/api/alerts/alert';
 
 import './event-edit.html';
 
@@ -196,9 +197,11 @@ Template.eventEdit.helpers({
 		return Events.find(AffectedReplicaSelectors(this)).count();
 	},
 
-	// eslint-disable-next-line consistent-return
 	disabledIfDayChanged() {
-		if (Template.instance().state.get('startDayChanged')) return 'disabled';
+		if (Template.instance().state.get('startDayChanged')) {
+			return 'disabled';
+		}
+		return '';
 	},
 
 	startDayChanged() {
@@ -256,12 +259,12 @@ Template.eventEdit.helpers({
 		return Template.instance().uploaded.get();
 	},
 
-	// eslint-disable-next-line consistent-return
 	course() {
 		const { courseId } = this;
 		if (courseId) {
 			return Courses.findOne({ _id: courseId });
 		}
+		return false;
 	},
 	notifyChecked() {
 		return Template.instance().notifyChecked.get();
@@ -276,8 +279,13 @@ Template.eventEdit.events({
 		const start = getEventStartMoment(instance);
 		if (!start.isValid()) {
 			const exampleDate = moment().format('L');
-			// eslint-disable-next-line no-alert
-			alert(mf('event.edit.dateFormatWarning', { EXAMPLEDATE: exampleDate }, 'Date format must be of the form {EXAMPLEDATE}'));
+			Alert.error(
+				mf(
+					'event.edit.dateFormatWarning',
+					{ EXAMPLEDATE: exampleDate },
+					'Date format must be of the form {EXAMPLEDATE}',
+				),
+			);
 			return;
 		}
 		const end = getEventEndMoment(instance);
@@ -292,8 +300,7 @@ Template.eventEdit.events({
 		};
 
 		if (editevent.title.length === 0) {
-			// eslint-disable-next-line no-alert
-			alert(mf('event.edit.plzProvideTitle', 'Please provide a title'));
+			Alert.error(mf('event.edit.plzProvideTitle', 'Please provide a title'));
 			return;
 		}
 
@@ -301,8 +308,7 @@ Template.eventEdit.events({
 		if (newDescription) editevent.description = newDescription;
 
 		if (!editevent.description) {
-			// eslint-disable-next-line no-alert
-			alert(mf('event.edit.plzProvideDescr', 'Please provide a description'));
+			Alert.error(mf('event.edit.plzProvideDescr', 'Please provide a description'));
 			return;
 		}
 
@@ -316,8 +322,9 @@ Template.eventEdit.events({
 			} else {
 				editevent.region = instance.selectedRegion.get();
 				if (!editevent.region || editevent.region === 'all') {
-					// eslint-disable-next-line no-alert
-					alert(mf('event.edit.plzSelectRegion', 'Please select the region for this event'));
+					Alert.error(
+						mf('event.edit.plzSelectRegion', 'Please select the region for this event'),
+					);
 					return;
 				}
 

@@ -83,7 +83,7 @@ if (Meteor.isClient) {
 	Analytics.installRouterActions(Router);
 }
 
-// eslint-disable-next-line array-callback-return
+/* eslint-disable-next-line array-callback-return */
 Router.map(function () {
 	this.route('adminPanel', {
 		path: 'admin',
@@ -389,14 +389,16 @@ Router.map(function () {
 			if (!course) return false;
 
 			function getMember(members, user) {
-				if (!members) return false;
+				if (!members) {
+					return false;
+				}
 				let member = false;
-				// eslint-disable-next-line consistent-return
-				members.forEach((memberCandidate) => {
+				members.every((memberCandidate) => {
 					if (memberCandidate.user === user) {
 						member = memberCandidate;
-						return true; // break
+						return false; // break
 					}
+					return true;
 				});
 				return member;
 			}
@@ -583,7 +585,9 @@ Router.map(function () {
 		},
 		data() {
 			const user = Meteor.users.findOne({ _id: this.params._id });
-			if (!user) return; // not loaded?
+			if (!user) {
+				return false; // not loaded?
+			}
 
 			// What privileges the user has
 			const privileges = _.reduce(['admin'], (originalPs, p) => {
@@ -595,7 +599,6 @@ Router.map(function () {
 			const alterPrivileges = UserPrivilegeUtils.privilegedTo('admin');
 			const showPrivileges = alterPrivileges || (user.privileges && user.privileges.length);
 
-			// eslint-disable-next-line consistent-return
 			return {
 				user,
 				alterPrivileges,

@@ -173,7 +173,7 @@ const mvDateHandler = function (unit, instance) {
 		start.add(amount, unit).add(weekCorrection, 'week').startOf('week');
 	}
 	calendarInstance.filter.add('start', start).done();
-	// eslint-disable-next-line no-restricted-globals
+	/* eslint-disable-next-line no-restricted-globals */
 	updateUrl(event, calendarInstance);
 	return false;
 };

@@ -132,7 +132,9 @@ Template.post.helpers({
 
 	notAllResponsesShown() {
 		const instance = Template.instance();
-		if (!instance.isParent) return;
+		if (!instance.isParent) {
+			return false;
+		}
 
 		const limit = instance.limit.get();
 		const count = CourseDiscussions
@@ -142,7 +144,6 @@ Template.post.helpers({
 			)
 			.count();
 
-		// eslint-disable-next-line consistent-return
 		return limit && count > limit;
 	},
 

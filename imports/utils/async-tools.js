@@ -29,7 +29,7 @@ if (Meteor.isServer) {
 	const tryClean = function (clean, tries) {
 		return new Promise((resolve, reject) => {
 			clean(resolve, reject);
-		// eslint-disable-next-line consistent-return
+		/* eslint-disable-next-line consistent-return */
 		}).then((cleaned) => {
 			if (!cleaned) {
 				if (tries < 1) {

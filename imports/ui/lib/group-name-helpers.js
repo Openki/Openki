@@ -10,19 +10,23 @@ function subbedGroup(group) {
 
 const GroupNameHelpers = {
 	short() {
-		if (!this) return;
+		if (!this) {
+			return false;
+		}
 		const group = subbedGroup(this);
-		// eslint-disable-next-line consistent-return
-		if (!group) return '-';
-		// eslint-disable-next-line consistent-return
+		if (!group) {
+			return '-';
+		}
 		return group.short;
 	},
 	name() {
-		if (!this) return;
+		if (!this) {
+			return false;
+		}
 		const group = subbedGroup(this);
-		// eslint-disable-next-line consistent-return
-		if (!group) return mf('group.missing', 'Group does not exist');
-		// eslint-disable-next-line consistent-return
+		if (!group) {
+			return mf('group.missing', 'Group does not exist');
+		}
 		return group.name;
 	},
 };

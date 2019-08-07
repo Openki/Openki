@@ -76,9 +76,11 @@ Template.event.onCreated(function () {
 });
 
 Template.event.helpers({
-	// eslint-disable-next-line consistent-return
 	course() {
-		if (this.courseId) return Courses.findOne(this.courseId);
+		if (this.courseId) {
+			return Courses.findOne(this.courseId);
+		}
+		return false;
 	},
 
 	editing() {
@@ -91,10 +93,12 @@ Template.event.helpers({
 });
 
 Template.eventDisplay.helpers({
-	// eslint-disable-next-line consistent-return
 	weekday(date) {
 		Session.get('timeLocale'); // it depends
-		if (date) return moment(date).format('dddd');
+		if (date) {
+			return moment(date).format('dddd');
+		}
+		return false;
 	},
 
 	mayEdit() {
@@ -177,10 +181,12 @@ Template.eventDisplay.onRendered(function () {
 });
 
 Template.eventDisplay.helpers({
-	// eslint-disable-next-line consistent-return
 	weekday(date) {
 		Session.get('timeLocale'); // it depends
-		if (date) return moment(date).format('dddd');
+		if (date) {
+			return moment(date).format('dddd');
+		}
+		return false;
 	},
 
 	mayEdit() {
@@ -228,10 +234,11 @@ Template.eventGroupList.helpers({
 				});
 			}
 			if (ownGroup && event.editableBy(user)) {
-				const hasOrgRights = event.groupOrganizers.indexOf(groupId) > -1;
+				const hasOrgRights = event.groupOrganizers.includes(groupId);
 				tools.push({
-					// eslint-disable-next-line max-len
-					toolTemplate: hasOrgRights ? Template.eventGroupRemoveOrganizer : Template.eventGroupMakeOrganizer,
+					toolTemplate: hasOrgRights
+						? Template.eventGroupRemoveOrganizer
+						: Template.eventGroupMakeOrganizer,
 					groupId,
 					event,
 				});

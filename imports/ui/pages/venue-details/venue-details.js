@@ -134,7 +134,6 @@ Template.venueDetails.helpers({
 		return Template.instance().markers;
 	},
 
-	// eslint-disable-next-line consistent-return
 	coords() {
 		if (this.loc && this.loc.coordinates) {
 			const fmt = function (coord) {
@@ -150,6 +149,7 @@ Template.venueDetails.helpers({
 
 			return mf('venueDetails.coordinates', coords, 'Coordinates: {LAT} {LON}');
 		}
+		return false;
 	},
 
 	facilityNames() {

@@ -9,7 +9,9 @@ import './kiosk-link.html';
 Template.kioskLink.helpers({
 	link() {
 		const filterParams = Session.get('kioskFilter');
-		if (!filterParams) return;
+		if (!filterParams) {
+			return false;
+		}
 
 		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 		const queryString = UrlTools.paramsToQueryString(filterParams);
@@ -19,7 +21,6 @@ Template.kioskLink.helpers({
 			options.query = queryString;
 		}
 
-		// eslint-disable-next-line consistent-return
 		return Router.url('kioskEvents', {}, options);
 	},
 });
