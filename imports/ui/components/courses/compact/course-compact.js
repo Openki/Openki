@@ -51,16 +51,19 @@ Template.courseCompact.helpers({
 });
 
 Template.courseCompactEvent.helpers({
-	// eslint-disable-next-line consistent-return
 	dateFormat(date) {
-		if (date) return moment(date).format('l');
+		if (date) {
+			return moment(date).format('l');
+		}
+		return false;
 	},
-	// eslint-disable-next-line consistent-return
+
 	dateToRelativeString(date) {
 		if (date) {
 			const relative = moment().to(date);
 			return relative.charAt(0).toUpperCase() + relative.slice(1);
 		}
+		return false;
 	},
 	roleIcon: type => _.findWhere(Roles, { type }).icon,
 });

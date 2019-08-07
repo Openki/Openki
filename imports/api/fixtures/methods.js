@@ -171,8 +171,9 @@ if (Meteor.settings.testdata) {
 
 			course._id = ensure.fixedId([course.name, course.description]);
 
-			// eslint-disable-next-line max-len
-			course.date = prng() > 0.50 ? new Date(new Date().getTime() + ((prng() - 0.25) * 8000000000)) : false;
+			course.date = prng() > 0.50
+				? new Date(new Date().getTime() + ((prng() - 0.25) * 8000000000))
+				: false;
 			const age = Math.floor(prng() * 80000000000);
 			course.time_created = new Date(new Date().getTime() - age);
 			course.time_lastedit = new Date(new Date().getTime() - age * 0.25);
@@ -277,8 +278,9 @@ if (Meteor.settings.testdata) {
 
 				event.startLocal = LocalTime.toString(date);
 				event.start = regionZone.fromString(event.startLocal).toDate();
-				// eslint-disable-next-line max-len
-				event.endLocal = LocalTime.toString(new Date(date.getTime() + humandistrib(prng) * 1000 * 60 * 4));
+				event.endLocal = LocalTime.toString(
+					new Date(date.getTime() + humandistrib(prng) * 1000 * 60 * 4),
+				);
 				event.end = regionZone.fromString(event.endLocal).toDate();
 
 				const { members } = course;
@@ -315,8 +317,9 @@ if (Meteor.settings.testdata) {
 				comment.text = HtmlTools.saneHtml(_.sample(words, 5).join(' ') + _.sample(words, Math.floor(prng() * 30)).join(' '));
 
 				comment.time_created = sometimesAfter(course.time_created);
-				// eslint-disable-next-line max-len
-				comment.time_updated = (prng() < 0.9) ? comment.time_created : sometimesAfter(comment.time_created);
+				comment.time_updated = (prng() < 0.9)
+					? comment.time_created
+					: sometimesAfter(comment.time_created);
 
 				let commenter;
 				if (!courseMembers || prng() < 0.2) {

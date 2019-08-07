@@ -73,12 +73,14 @@ Template.discussion.helpers({
 		};
 	},
 
-	// eslint-disable-next-line consistent-return
 	limited() {
 		const instance = Template.instance();
 		const limit = instance.limit.get();
 
-		if (limit) return instance.count.get() > limit;
+		if (limit) {
+			return instance.count.get() > limit;
+		}
+		return false;
 	},
 
 	count() {
@@ -113,7 +115,9 @@ Template.post.helpers({
 		// Note that the 'discussion' subscription from the 'discussion' template
 		// covers responses as well
 		const instance = Template.instance();
-		if (!instance.isParent) return;
+		if (!instance.isParent) {
+			return false;
+		}
 
 		const replies = CourseDiscussions
 			.find(
@@ -123,7 +127,6 @@ Template.post.helpers({
 			.fetch();
 
 		const limit = instance.limit.get();
-		// eslint-disable-next-line consistent-return
 		return limit ? replies.slice(-(limit)) : replies;
 	},
 

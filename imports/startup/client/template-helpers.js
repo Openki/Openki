@@ -41,10 +41,12 @@ const helpers = {
 		}
 	},
 
-	// eslint-disable-next-line consistent-return
 	dateformat(date) {
 		Session.get('timeLocale');
-		if (date) return moment(date).format('L');
+		if (date) {
+			return moment(date).format('L');
+		}
+		return false;
 	},
 
 	dateLong(date) {
@@ -63,7 +65,6 @@ const helpers = {
 		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	dateformat_mini_fullmonth(date) {
 		Session.get('timeLocale'); // it depends
 		if (date) {
@@ -71,25 +72,32 @@ const helpers = {
 			const year = m.year() !== moment().year() ? ` ${m.format('YYYY')}` : '';
 			return moment(date).format('D. MMMM') + year;
 		}
+		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	timeformat(date) {
 		Session.get('timeLocale');
-		if (date) return moment(date).format('LT');
+		if (date) {
+			return moment(date).format('LT');
+		}
+		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	fromNow(date) {
 		Session.get('fineTime');
 		Session.get('timeLocale'); // it depends
-		if (date) return moment(date).fromNow();
+		if (date) {
+			return moment(date).fromNow();
+		}
+		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	weekdayShort(date) {
 		Session.get('timeLocale'); // it depends
-		if (date) return moment(date).format('ddd');
+		if (date) {
+			return moment(date).format('ddd');
+		}
+		return false;
 	},
 
 	// Strip HTML markup
