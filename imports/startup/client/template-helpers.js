@@ -177,20 +177,20 @@ const usernameFromId = (function () {
 		if (!userId) return mf('noUser_placeholder', 'someone');
 
 		// Consult cache
-		let user = cache[userId];
-		if (user === undefined) {
+		let cachedUser = cache[userId];
+		if (cachedUser === undefined) {
 			// Consult old cache
-			user = previousCache[userId];
+			cachedUser = previousCache[userId];
 
 			// Carry to new cache if it was present in the old
-			if (user !== undefined) {
-				cache[userId] = user;
+			if (cachedUser !== undefined) {
+				cache[userId] = cachedUser;
 			}
 		}
 
-		if (user === undefined) {
+		if (cachedUser === undefined) {
 			// Substitute until the name (or its absence) is loaded
-			user = '◌';
+			cachedUser = '◌';
 
 			if (pending[userId]) {
 				pending[userId].depend();
@@ -207,7 +207,6 @@ const usernameFromId = (function () {
 					lookups = 0;
 				}
 
-				// eslint-disable-next-line no-shadow
 				Meteor.call('user.name', userId, (err, user) => {
 					if (err) {
 						/* eslint-disable-next-line no-console */
@@ -220,8 +219,8 @@ const usernameFromId = (function () {
 			}
 		}
 
-		if (user) {
-			return user;
+		if (cachedUser) {
+			return cachedUser;
 		}
 		return `userId: ${userId}`;
 	};
