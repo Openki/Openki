@@ -280,12 +280,11 @@ Meteor.methods({
 	// Update the venue field for all events matching the selector
 	'event.updateVenue'(selector) {
 		const idOnly = { fields: { _id: 1 } };
-		Events.find(selector, idOnly).forEach((event) => {
-			const eventId = event._id;
+		Events.find(selector, idOnly).forEach((originalEvent) => {
+			const eventId = originalEvent._id;
 
 			// eslint-disable-next-line consistent-return
 			AsyncTools.untilClean((resolve, reject) => {
-				// eslint-disable-next-line no-shadow
 				const event = Events.findOne(eventId);
 				if (!event) return resolve(true); // Nothing was successfully updated, we're done.
 
