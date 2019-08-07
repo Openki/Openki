@@ -56,7 +56,9 @@ Template.venueDetails.onCreated(function () {
 	});
 
 	this.getEvents = function (past) {
-		if (isNew) return;
+		if (isNew) {
+			return false;
+		}
 
 		let limit; let
 			count;
@@ -75,9 +77,10 @@ Template.venueDetails.onCreated(function () {
 
 		let events = Events.findFilter(predicate).fetch();
 		count.set(events.length);
-		if (limit) events = events.slice(0, limit);
+		if (limit) {
+			events = events.slice(0, limit);
+		}
 
-		// eslint-disable-next-line consistent-return
 		return events;
 	};
 
