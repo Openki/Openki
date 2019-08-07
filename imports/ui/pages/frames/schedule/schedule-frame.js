@@ -78,6 +78,17 @@ Template.frameSchedule.onCreated(function () {
 	// eslint-disable-next-line func-names
 	instance.kindMap = function () { return 0; };
 
+	const getRepKeyId = (event) => {
+		// If there is no courseId, we fall back to replicationId, then _id.
+		if (event.courseId) {
+			return event.courseId;
+		}
+		if (event.replicaOf) {
+			return event.replicaOf;
+		}
+		return event._id;
+	};
+
 	this.autorun(() => {
 		const scheduleStart = moment(filter.get('after'));
 		const interval = instance.interval.get();
@@ -89,23 +100,14 @@ Template.frameSchedule.onCreated(function () {
 
 		// Load events but keep only the first when they repeat on the same
 		// weekday at the same time.
-		const dedupedEvents = [];
-		Events.findFilter(filter.toQuery()).forEach((event) => {
+		const dedupedEvents = Events.findFilter(filter.toQuery()).map((originalEvent) => {
+			const event = {};
+			Object.assign(event, originalEvent);
 			const eventStart = LocalTime.fromString(event.startLocal);
 
 			// Build key that is the same for events of the same course that
 			// start on the same time.
-			let repKey = `${eventStart.hour()}-${eventStart.minute()}-`;
-
-			// If there is no courseId, we fall back to replicationId, then _id.
-			if (event.courseId) {
-				repKey += event.courseId;
-			} else if (event.replicaOf) {
-				repKey += event.replicaOf;
-			} else {
-				repKey += event._id;
-			}
-
+			const repKey = `${eventStart.hour()}-${eventStart.minute()}-${getRepKeyId(event)}`;
 
 			if (repetitionCount[repKey] >= 1) {
 				repetitionCount[repKey] += 1;
@@ -119,12 +121,11 @@ Template.frameSchedule.onCreated(function () {
 			} else {
 				repetitionCountDay[repKeyDay] = 1;
 
-				// eslint-disable-next-line no-param-reassign
 				event.repKey = repKey;
-				// eslint-disable-next-line no-param-reassign
 				event.repKeyDay = repKeyDay;
-				dedupedEvents.push(event);
+				return event;
 			}
+			return false;
 		});
 
 		// Because we need to find the closest separator later on we create a
@@ -132,11 +133,10 @@ Template.frameSchedule.onCreated(function () {
 		const separators = instance.separators.get().slice().reverse();
 
 		// List of intervals where events or separators are placed
-		// eslint-disable-next-line no-shadow
-		const intervals = _.reduce(separators, (intervals, separator) => {
-			// eslint-disable-next-line no-param-reassign
-			intervals[separator] = separator;
-			return intervals;
+		const intervals = _.reduce(separators, (rIntervals, separator) => {
+			/* eslint-disable-next-line no-param-reassign */
+			rIntervals[separator] = separator;
+			return rIntervals;
 		}, {});
 
 		// List of days where events where found
@@ -150,10 +150,11 @@ Template.frameSchedule.onCreated(function () {
 		const kinds = {};
 
 		// Place found events into the slots
-		_.each(dedupedEvents, (event) => {
+		dedupedEvents.forEach((originalEvent) => {
+			const event = {};
+			Object.assign(event, originalEvent);
 			const eventStart = LocalTime.fromString(event.startLocal);
 
-			// eslint-disable-next-line no-param-reassign
 			event.repCount = repetitionCountDay[event.repKeyDay];
 			if (event.repCount < 2 && instance.repeatingOnly.get()) {
 				// Skip
