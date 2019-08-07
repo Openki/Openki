@@ -198,8 +198,7 @@ Template.frameSchedule.onCreated(function () {
 		_.each(slots, (dayslots, min) => {
 			_.each(dayslots, (slot, day) => {
 				slots[min][day] = _.sortBy(slot, (event) => {
-					// eslint-disable-next-line no-shadow
-					const kindRank = (instance.kindMap(event.title) || 100) + 100;
+					const dayslotKindRank = (instance.kindMap(event.title) || 100) + 100;
 					const countRank = 10000 - repetitionCount[event.repKey];
 					// We add repetitionCount to the sort criteria so that the
 					// output hopefully looks more stable through the weekdays
@@ -207,7 +206,7 @@ Template.frameSchedule.onCreated(function () {
 					// each slot
 					return `${100 + event.start.getHours()
 					}-${100 + event.start.getMinutes()
-					}-${kindRank
+					}-${dayslotKindRank
 					}-${countRank
 					}-${event.title}`;
 				});

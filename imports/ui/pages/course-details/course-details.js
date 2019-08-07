@@ -77,11 +77,10 @@ Template.courseDetailsPage.onCreated(function () {
 
 	this.autorun(() => {
 		const data = Template.currentData();
-		// eslint-disable-next-line no-shadow
-		const { course } = data;
+		const { name: courseName, description: courseDescription } = data.course;
 
-		instance.editableName.setText(course.name);
-		instance.editableDescription.setText(course.description);
+		instance.editableName.setText(courseName);
+		instance.editableDescription.setText(courseDescription);
 	});
 });
 
