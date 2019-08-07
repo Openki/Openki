@@ -314,7 +314,7 @@ Template.courseEdit.events({
 
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveCourse', 'Login and save course'), () => {
-			// eslint-disable-next-line no-shadow
+			/* eslint-disable-next-line no-shadow */
 			Meteor.call('course.save', courseId, changes, (err, courseId) => {
 				instance.busy(false);
 				if (err) {

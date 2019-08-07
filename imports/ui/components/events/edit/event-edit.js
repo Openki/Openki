@@ -347,7 +347,7 @@ Template.eventEdit.events({
 					changes: editevent,
 					comment: addNotificationMessage,
 				},
-				// eslint-disable-next-line no-shadow
+				/* eslint-disable-next-line no-shadow */
 				(err, eventId) => {
 					instance.busy(false);
 					if (err) {
