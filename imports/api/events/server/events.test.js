@@ -54,7 +54,7 @@ if (Meteor.isClient) {
 				.then(() => done(), done);
 		});
 		it('Sanitizes event strings', () => {
-			// eslint-disable-next-line no-tabs
+			/* eslint-disable-next-line no-tabs */
 			const titleWithExcessiveWhitespace = ' 1  2     3	4      \n';
 			const expectedTitle = '1 2 3 4';
 			const textWithNonPrintables = "See what's hidden in your string… or be​hind﻿";
