@@ -5,8 +5,7 @@ const UpdatesApplied = new Meteor.Collection('UpdatesApplied');
 const applyUpdates = function () {
 	const skipInitial = UpdatesApplied.find().count() === 0;
 
-	// eslint-disable-next-line no-restricted-syntax
-	for (const name in UpdatesAvailable) {
+	Object.keys(UpdatesAvailable).forEach((name) => {
 		if (UpdatesApplied.find({ name }).count() === 0) {
 			const entry = {
 				name,
@@ -27,7 +26,7 @@ const applyUpdates = function () {
 			}
 			UpdatesApplied.insert(entry);
 		}
-	}
+	});
 };
 
 export default applyUpdates;
