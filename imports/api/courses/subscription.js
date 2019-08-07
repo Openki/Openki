@@ -113,7 +113,9 @@ export class Subscribe extends Change {
 	}
 
 	permitted(operator) {
-		if (!operator) return false;
+		if (!operator) {
+			return false;
+		}
 
 		// Admins may subscribe to all roles
 		if (operator.privileged('admin')) {
@@ -133,7 +135,7 @@ export class Subscribe extends Change {
 				const candidateRoles = ['participant', 'mentor', 'host'];
 
 				// In for a penny, in for a pound
-				// eslint-disable-next-line no-restricted-syntax
+				/* eslint-disable-next-line no-restricted-syntax */
 				for (const role of candidateRoles) {
 					if (this.course.userHasRole(this.user._id, role)) {
 						return true;
@@ -310,7 +312,7 @@ export class Message extends Change {
 		return `${this.constructor.method}()`;
 	}
 
-	// eslint-disable-next-line class-methods-use-this
+	/* eslint-disable-next-line class-methods-use-this */
 	validate() {
 		return true;
 	}
