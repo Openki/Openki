@@ -76,8 +76,7 @@ const Api = {
 
 			evr.groups = [];
 			const groups = ev.groups || [];
-			// eslint-disable-next-line no-restricted-syntax
-			for (const groupId of groups) {
+			groups.forEach((groupId) => {
 				const group = Groups.findOne(groupId);
 				if (group) {
 					evr.groups.push(
@@ -89,7 +88,7 @@ const Api = {
 						},
 					);
 				}
-			}
+			});
 
 			return evr;
 		}),
