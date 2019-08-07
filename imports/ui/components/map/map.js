@@ -132,13 +132,16 @@ Template.map.onRendered(function () {
 		const fullscreen = instance.fullscreen.get();
 		const { mini } = instance.data;
 
-		const show = function (originalControl, originalToggle) {
-			const control = Object.assign({}, originalControl);
+		const show = function (control, originalToggle) {
 			const toggle = !!originalToggle; // coerce to bool
 
-			if (control.shown === undefined) control.shown = false;
+			if (control.shown === undefined) {
+				/* eslint-disable-next-line no-param-reassign */
+				control.shown = false;
+			}
 
 			if (control.shown !== toggle) {
+				/* eslint-disable-next-line no-param-reassign */
 				control.shown = toggle;
 				if (toggle) {
 					map.addControl(control);
