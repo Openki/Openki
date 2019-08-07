@@ -29,7 +29,6 @@ module.exports = {
 		SharedArrayBuffer: 'readonly',
 		ShowServerError: 'writable',
 		sitemaps: 'readonly',
-		SortSpec: 'writable',
 		SSR: 'writable',
 		Tooltips: 'writable',
 		Users: 'writable',
