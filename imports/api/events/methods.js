@@ -297,10 +297,12 @@ Meteor.methods({
 		Events.find(selector, idOnly).forEach((originalEvent) => {
 			const eventId = originalEvent._id;
 
-			// eslint-disable-next-line consistent-return
+			/* eslint-disable-next-line consistent-return */
 			AsyncTools.untilClean((resolve, reject) => {
 				const event = Events.findOne(eventId);
-				if (!event) return resolve(true); // Nothing was successfully updated, we're done.
+				if (!event) {
+					return resolve(true); // Nothing was successfully updated, we're done.
+				}
 
 				if (!_.isObject(event.venue)) {
 					// This happens only at creation when the field was not initialized correctly
@@ -316,7 +318,9 @@ Meteor.methods({
 				let update;
 				if (venue) {
 					// Do not update venue for historical events
-					if (event.start < new Date()) return resolve(true);
+					if (event.start < new Date()) {
+						return resolve(true);
+					}
 
 					// Sync values to the values set in the venue document
 					update = {
