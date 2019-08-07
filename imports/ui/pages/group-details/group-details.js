@@ -81,16 +81,15 @@ Template.groupDetails.onCreated(function () {
 
 	instance.autorun(() => {
 		const data = Template.currentData();
-		// eslint-disable-next-line no-shadow
-		const group = Groups.findOne(groupId) || {};
+		const currentGroup = Groups.findOne(groupId) || {};
 		const userId = Meteor.userId();
 		const mayEdit = data.isNew || (userId && IsGroupMember(userId, groupId));
 		instance.mayEdit.set(mayEdit);
 
-		instance.editableName.setText(group.name);
-		instance.editableShort.setText(group.short);
-		instance.editableClaim.setText(group.claim);
-		instance.editableDescription.setText(group.description);
+		instance.editableName.setText(currentGroup.name);
+		instance.editableShort.setText(currentGroup.short);
+		instance.editableClaim.setText(currentGroup.claim);
+		instance.editableDescription.setText(currentGroup.description);
 	});
 });
 
