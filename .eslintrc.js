@@ -43,6 +43,7 @@ module.exports = {
 		'import/no-absolute-path': ['error', { esmodule: false }],
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
 		'indent': ['error', 'tab'],
+		'no-restricted-syntax': ['error', 'ForInStatement', 'LabeledStatement', 'WithStatement'],
 		'no-tabs': ['error', { allowIndentationTabs: true }],
 		'object-shorthand': ['error', 'always'],
 		'prefer-destructuring': ['error', { object: false, array: false }],
