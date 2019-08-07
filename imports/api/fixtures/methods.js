@@ -208,8 +208,7 @@ if (Meteor.settings.testdata) {
 		const prng = Prng('eventsGenerate');
 		let count = 0;
 
-		// eslint-disable-next-line no-shadow
-		const venues = [
+		const testVenues = [
 			'Haus am See',
 			'Kongresszentrum',
 			'Volkshaus',
@@ -245,7 +244,7 @@ if (Meteor.settings.testdata) {
 				event.groups = course.groups;
 				event.groupOrganizers = [];
 
-				const venue = venues[Math.floor(prng() * venues.length)];
+				const venue = testVenues[Math.floor(prng() * testVenues.length)];
 				event.venue = ensure.venue(venue, event.region);
 
 				if (prng() > 0.6) {
