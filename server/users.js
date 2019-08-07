@@ -1,11 +1,11 @@
 import IsEmail from '/imports/utils/email-tools';
 
-Accounts.onCreateUser((options, user) => {
+Accounts.onCreateUser((options, originalUser) => {
+	const user = {};
+	Object.assign(user, originalUser);
 	if (options.profile) {
-		// eslint-disable-next-line no-param-reassign
 		user.profile = options.profile;
 	} else {
-		// eslint-disable-next-line no-param-reassign
 		user.profile = {};
 	}
 	// Collect info where a username could possibly be found
@@ -23,13 +23,10 @@ Accounts.onCreateUser((options, user) => {
 	}
 
 	// We're not picky and try assigning a name no questions asked
-	// eslint-disable-next-line no-param-reassign
 	user.username = username || name;
-	// eslint-disable-next-line no-param-reassign
 	user.profile.name = name || username;
 
 	if (!user.privileges) {
-		// eslint-disable-next-line no-param-reassign
 		user.privileges = [];
 	}
 
@@ -38,29 +35,24 @@ Accounts.onCreateUser((options, user) => {
 	let verified = true; // Assume verified unless there is a flag that says it's not
 	const services = user.services;
 	if (services) {
-		// eslint-disable-next-line no-shadow, no-restricted-syntax
-		for (const provider of ['facebook', 'google', 'github']) {
-			const provided = services[provider];
+		['facebook', 'google', 'github'].forEach((loginProvider) => {
+			const provided = services[loginProvider];
 			if (provided && provided.email) {
 				providedEmail = provided.email;
 				if (typeof provided.verified_email === 'boolean') {
 					verified = provided.verified_email;
 				}
 			}
-		}
+		});
 	}
 
 	if (providedEmail) {
-		// eslint-disable-next-line no-param-reassign
 		user.emails = [{ address: providedEmail, verified }];
 	}
 
-	// eslint-disable-next-line no-param-reassign
 	user.groups = [];
-	// eslint-disable-next-line no-param-reassign
 	user.badges = [user._id];
 
-	// eslint-disable-next-line no-param-reassign
 	user.notifications = true;
 
 	return user;

@@ -18,7 +18,7 @@ const Predicates = {
 			return {
 				merge(other) { return make(_.union(ids, other.get())); },
 				without(predicate) {
-					// eslint-disable-next-line no-param-reassign
+					/* eslint-disable-next-line no-param-reassign */
 					ids = _.difference(ids, predicate.get());
 					if (ids.length === 0) return false;
 					return make(ids);

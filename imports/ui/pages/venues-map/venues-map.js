@@ -33,14 +33,12 @@ Template.venueMap.onCreated(function () {
 		// Here we assume venues are not changed or removed.
 		instance.locationTracker.markers.remove({});
 		Venues.findFilter(query).observe({
-			added(location) {
-				// eslint-disable-next-line no-param-reassign
+			added(originalLocation) {
+				const location = {};
+				Object.assign(location, originalLocation);
 				location.proposed = true;
-				// eslint-disable-next-line no-param-reassign
 				location.presetName = location.name;
-				// eslint-disable-next-line no-param-reassign
 				location.presetAddress = location.address;
-				// eslint-disable-next-line no-param-reassign
 				location.preset = true;
 				instance.locationTracker.markers.insert(location);
 			},

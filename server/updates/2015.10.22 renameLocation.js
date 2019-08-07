@@ -5,9 +5,10 @@ const UpdatesAvailable = [];
 // The location field becomes an object
 // eslint-disable-next-line func-names
 UpdatesAvailable.renameLocationName = function () {
-	Events.find({}).fetch().forEach((event) => {
+	Events.find({}).fetch().forEach((originalEvent) => {
+		const event = {};
+		Object.assign(event, originalEvent);
 		if (typeof event.location === 'string') {
-			// eslint-disable-next-line no-param-reassign
 			event.location = { name: event.location };
 
 			Events.update(event._id, event);
