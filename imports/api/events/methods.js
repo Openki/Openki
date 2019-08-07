@@ -137,7 +137,9 @@ Meteor.methods({
 			if (changes.groups) {
 				testedGroups = _.map(changes.groups, (groupId) => {
 					const group = Groups.findOne(groupId);
-					if (!group) throw new Meteor.Error(404, `no group with id ${groupId}`);
+					if (!group) {
+						throw new Meteor.Error(404, `no group with id ${groupId}`);
+					}
 					return group._id;
 				});
 			}
@@ -156,10 +158,14 @@ Meteor.methods({
 			);
 		} else {
 			event = Events.findOne(eventId);
-			if (!event) throw new Meteor.Error(404, 'No such event');
+			if (!event) {
+				throw new Meteor.Error(404, 'No such event');
+			}
 		}
 
-		if (!event.editableBy(user)) throw new Meteor.Error(401, 'not permitted');
+		if (!event.editableBy(user)) {
+			throw new Meteor.Error(401, 'not permitted');
+		}
 
 		const region = Regions.findOne(event.region);
 
@@ -173,10 +179,14 @@ Meteor.methods({
 		// This section needs a rewrite even more than the rest of this method
 		if (changes.startLocal) {
 			const startMoment = regionZone.fromString(changes.startLocal);
-			if (!startMoment.isValid()) throw new Meteor.Error(400, 'Invalid start date');
+			if (!startMoment.isValid()) {
+				throw new Meteor.Error(400, 'Invalid start date');
+			}
 
 			if (startMoment.isBefore(new Date())) {
-				if (isNew) throw new Meteor.Error(400, 'Event start in the past');
+				if (isNew) {
+					throw new Meteor.Error(400, 'Event start in the past');
+				}
 
 				// No changing the date of past events
 				delete changes.startLocal;
@@ -242,7 +252,9 @@ Meteor.methods({
 				}
 			}
 
-			if (comment != null) comment = comment.trim().substr(0, 2000);
+			if (comment != null) {
+				comment = comment.trim().substr(0, 2000);
+			}
 
 			Notification.Event.record(eventId, isNew, comment);
 		}
@@ -253,10 +265,12 @@ Meteor.methods({
 			Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);
 
 			// the assumption is that all replicas have the same course if any
-			if (event.courseId) Meteor.call('course.updateNextEvent', event.courseId, AsyncTools.logErrors);
+			if (event.courseId) {
+				Meteor.call('course.updateNextEvent', event.courseId, AsyncTools.logErrors);
+			}
 		}
 
-		// eslint-disable-next-line consistent-return
+		/* eslint-disable-next-line consistent-return */
 		return eventId;
 	},
 

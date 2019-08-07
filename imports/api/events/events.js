@@ -98,21 +98,27 @@ Events.Filtering = () => Filtering(
   * @param {eventId} the event to update
   */
 Events.updateGroups = function (eventId) {
-	// eslint-disable-next-line consistent-return
+	/* eslint-disable-next-line consistent-return */
 	AsyncTools.untilClean((resolve, reject) => {
 		const event = Events.findOne(eventId);
-		if (!event) return resolve(true); // Nothing was successfully updated, we're done.
+		if (!event) {
+			return resolve(true); // Nothing was successfully updated, we're done.
+		}
 
 		// The creator of the event as well as any groups listed as organizers
 		// are allowed to edit.
 		let editors = event.groupOrganizers.slice(); // Clone
-		if (event.createdBy) editors.push(event.createdBy);
+		if (event.createdBy) {
+			editors.push(event.createdBy);
+		}
 
 		// If an event has a parent course, it inherits all groups and all editors from it.
 		let courseGroups = [];
 		if (event.courseId) {
 			const course = Courses.findOne(event.courseId);
-			if (!course) throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
+			if (!course) {
+				throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
+			}
 
 			courseGroups = course.groups;
 			editors = _.union(editors, course.editors);
