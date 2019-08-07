@@ -112,11 +112,11 @@ Template.find.onCreated(function () {
 	// When there are filters set, show the filtering pane
 	instance.autorun(() => {
 		// eslint-disable-next-line no-restricted-syntax
-		for (const name in filter.toParams()) {
+		Object.keys(filter.toParams()).forEach((name) => {
 			if (hiddenFilters.indexOf(name) > -1) {
 				instance.showingFilters.set(true);
 			}
-		}
+		});
 	});
 
 	// Update whenever filter changes
