@@ -37,7 +37,9 @@ Template.groupSettings.helpers({
 		const instance = Template.instance();
 
 		const search = instance.userSearch.get();
-		if (search === '') return false;
+		if (search === '') {
+			return false;
+		}
 
 		const group = Groups.findOne(Router.current().params._id);
 		return UserSearchPrefix(search, { exclude: group.members, limit: 30 });

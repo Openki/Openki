@@ -56,7 +56,9 @@ Template.emailRequestModal.events({
 			instance.errors.add('noEmail');
 		}
 
-		if (instance.errors.present()) return;
+		if (instance.errors.present()) {
+			return;
+		}
 
 		instance.busy('saving');
 		Meteor.call('user.updateEmail', email, (err) => {

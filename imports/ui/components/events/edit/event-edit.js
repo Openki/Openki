@@ -184,8 +184,9 @@ Template.eventEdit.helpers({
 	},
 
 	showRegionTag() {
-		if (this.courseId) return false;
-		if (!this._id) return false;
+		if (!this._id || this.courseId) {
+			return false;
+		}
 		return true;
 	},
 
@@ -232,8 +233,9 @@ Template.eventEdit.helpers({
 	showRegionSelection() {
 		// You can select the region for events that are new and not associated
 		// with a course
-		if (this._id) return false;
-		if (this.courseId) return false;
+		if (this._id || this.courseId) {
+			return false;
+		}
 		return true;
 	},
 
@@ -305,7 +307,9 @@ Template.eventEdit.events({
 		}
 
 		const newDescription = instance.data.editableDescription.getEdited();
-		if (newDescription) editevent.description = newDescription;
+		if (newDescription) {
+			editevent.description = newDescription;
+		}
 
 		if (!editevent.description) {
 			Alert.error(mf('event.edit.plzProvideDescr', 'Please provide a description'));
@@ -389,7 +393,9 @@ Template.eventEdit.events({
 	},
 
 	'click .js-event-edit-cancel'(event, instance) {
-		if (instance.data.new) window.history.back();
+		if (instance.data.new) {
+			window.history.back();
+		}
 		instance.parent.editing.set(false);
 	},
 

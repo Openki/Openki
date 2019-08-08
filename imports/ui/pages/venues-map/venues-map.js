@@ -66,7 +66,9 @@ Template.venueMap.helpers({
 	regionName() {
 		const regionId = Template.instance().filter.get('region');
 		const regionObj = Regions.findOne(regionId);
-		if (regionObj) return regionObj.name;
+		if (regionObj) {
+			return regionObj.name;
+		}
 		return false;
 	},
 });

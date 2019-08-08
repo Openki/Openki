@@ -9,7 +9,9 @@ Accounts.onCreateUser((options, originalUser) => {
 	}
 	// Collect info where a username could possibly be found
 	let nameProviders = [user, user.profile];
-	if (user.services) nameProviders = nameProviders.concat(_.toArray(user.services));
+	if (user.services) {
+		nameProviders = nameProviders.concat(_.toArray(user.services));
+	}
 
 	// Try to glean a username
 	let name = false;
@@ -17,8 +19,12 @@ Accounts.onCreateUser((options, originalUser) => {
 	let provider = false;
 	/* eslint-disable-next-line no-cond-assign */
 	while ((provider = nameProviders.pop()) !== undefined) {
-		if (!name && provider.name) name = provider.name;
-		if (!username && provider.username) username = provider.username;
+		if (!name && provider.name) {
+			name = provider.name;
+		}
+		if (!username && provider.username) {
+			username = provider.username;
+		}
 	}
 
 	// We're not picky and try assigning a name no questions asked

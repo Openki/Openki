@@ -88,7 +88,9 @@ Template.courseEdit.helpers({
 	availableSubcategories(category) {
 		// Hide if parent categories not selected
 		const selectedCategories = Template.instance().selectedCategories.get();
-		if (selectedCategories.indexOf(category) < 0) return [];
+		if (selectedCategories.indexOf(category) < 0) {
+			return [];
+		}
 
 		return Categories[category];
 	},
@@ -100,15 +102,23 @@ Template.courseEdit.helpers({
 	availableRoles() {
 		return Roles.filter((role) => {
 			// Roles that are always on are not selectable here
-			if (role.preset) return false;
+			if (role.preset) {
+				return false;
+			}
 
 			// In the normal view, all roles are selectable
-			if (!this.isFrame) return true;
+			if (!this.isFrame) {
+				return true;
+			}
 
 			const { neededRoles } = this;
 			if (neededRoles && neededRoles.length) {
-				if (!neededRoles.includes(role.type)) return false;
-			} else if (role.type === 'host') return false;
+				if (!neededRoles.includes(role.type)) {
+					return false;
+				}
+			} else if (role.type === 'host') {
+				return false;
+			}
 
 			return true;
 		});
@@ -160,10 +170,14 @@ Template.courseEdit.helpers({
 	proposeFromQuery() {
 		const parentInstance = Template.instance().parentInstance();
 		const { filter } = parentInstance;
-		if (!filter) return false;
+		if (!filter) {
+			return false;
+		}
 
 		const { search } = filter.toParams();
-		if (!search) return false;
+		if (!search) {
+			return false;
+		}
 
 		const filterQuery = filter.toQuery();
 		const results = Courses.findFilter(filterQuery, 1);
@@ -196,7 +210,9 @@ Template.courseEdit.helpers({
 	showInternalCheckbox() {
 		const user = Meteor.user();
 
-		if (this.isFrame) return false;
+		if (this.isFrame) {
+			return false;
+		}
 		if (user && user.groups) {
 			return user.groups.length > 0;
 		}
@@ -234,7 +250,9 @@ Template.courseEdit.helpers({
 	editBodyClasses() {
 		const classes = [];
 
-		if (Template.instance().data.isFrame) classes.push('is-frame');
+		if (Template.instance().data.isFrame) {
+			classes.push('is-frame');
+		}
 
 		return classes.join(' ');
 	},
@@ -274,7 +292,9 @@ Template.courseEdit.events({
 		}
 
 		const newDescription = instance.editableDescription.getEdited();
-		if (newDescription) changes.description = newDescription;
+		if (newDescription) {
+			changes.description = newDescription;
+		}
 
 		const course = instance.data;
 		const courseId = course._id ? course._id : '';
@@ -470,10 +490,14 @@ Template.courseTitle.events({
 	},
 
 	'focusout .js-proposed-search'(event, instance) {
-		if (instance.$(event.relatedTarget).closest('.js-proposed-search').length === 0) instance.focused.set(false);
+		if (instance.$(event.relatedTarget).closest('.js-proposed-search').length === 0) {
+			instance.focused.set(false);
+		}
 	},
 
 	'keydown .js-dropdown-entry'(event, instance) {
-		if (event.keyCode === 9 && !event.shiftKey) instance.$('.dropdown-toggle').dropdown('toggle');
+		if (event.keyCode === 9 && !event.shiftKey) {
+			instance.$('.dropdown-toggle').dropdown('toggle');
+		}
 	},
 });

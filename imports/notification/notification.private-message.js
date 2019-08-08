@@ -42,7 +42,9 @@ notificationPrivateMessage.record = function (
 	const recipients = [recipientId];
 	if (sendCopyToSender) {
 		const sender = Users.findOne(senderId);
-		if (!sender) throw new Meteor.Error(404, 'Sender not found');
+		if (!sender) {
+			throw new Meteor.Error(404, 'Sender not found');
+		}
 
 		const senderAddress = sender.emailAddress();
 		if (senderAddress) {
@@ -76,8 +78,12 @@ notificationPrivateMessage.Model = function (entry) {
 
 	return {
 		vars(userLocale, actualRecipient) {
-			if (!sender) throw new Error('Sender does not exist (0.o)');
-			if (!targetRecipient) throw new Error('targetRecipient does not exist (0.o)');
+			if (!sender) {
+				throw new Error('Sender does not exist (0.o)');
+			}
+			if (!targetRecipient) {
+				throw new Error('targetRecipient does not exist (0.o)');
+			}
 
 			const subjectvars = { SENDER: StringTools.truncate(sender.username, 10) };
 			const subject = mf('notification.privateMessage.mail.subject', subjectvars, 'Private message from {SENDER}', userLocale);

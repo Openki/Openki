@@ -12,7 +12,9 @@ const registerAttempt = track => (attempt) => {
 	delete body.user;
 
 	const rel = [];
-	if (body.userId) rel.push(body.userId);
+	if (body.userId) {
+		rel.push(body.userId);
+	}
 
 	Log.record(track, rel, body);
 };

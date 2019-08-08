@@ -86,14 +86,18 @@ Meteor.methods({
 
 	'user.remove'() {
 		const user = Meteor.user();
-		if (user) Meteor.users.remove({ _id: user._id });
+		if (user) {
+			Meteor.users.remove({ _id: user._id });
+		}
 	},
 
 	'user.addPrivilege'(userId, privilege) {
 		// At the moment, only admins may hand out privileges, so this is easy
 		if (UserPrivilegeUtils.privilegedTo('admin')) {
 			const user = Meteor.users.findOne({ _id: userId });
-			if (!user) throw new Meteor.Error(404, 'User not found');
+			if (!user) {
+				throw new Meteor.Error(404, 'User not found');
+			}
 			Meteor.users.update(
 				{ _id: user._id },
 				{ $addToSet: { privileges: privilege } },

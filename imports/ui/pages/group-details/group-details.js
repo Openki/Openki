@@ -101,8 +101,12 @@ Template.groupDetails.helpers({
 
 	headerClasses() {
 		const classes = [];
-		if (this.group.logo) classes.push('has-logo');
-		if (Template.instance().mayEdit.get()) classes.push('is-editable');
+		if (this.group.logo) {
+			classes.push('has-logo');
+		}
+		if (Template.instance().mayEdit.get()) {
+			classes.push('is-editable');
+		}
 		return classes.join(' ');
 	},
 	editableName() {

@@ -170,13 +170,19 @@ Template.frameSchedule.onCreated(function () {
 			intervals[mins] = mins;
 
 
-			if (!slots[mins]) slots[mins] = {};
-			if (!slots[mins][day]) slots[mins][day] = [];
+			if (!slots[mins]) {
+				slots[mins] = {};
+			}
+			if (!slots[mins][day]) {
+				slots[mins][day] = [];
+			}
 
 			slots[mins][day].push(event);
 
 			const kindId = event.title.substr(0, 5);
-			if (!kinds[kindId]) kinds[kindId] = 1;
+			if (!kinds[kindId]) {
+				kinds[kindId] = 1;
+			}
 			kinds[kindId] += 1;
 		});
 
@@ -189,7 +195,9 @@ Template.frameSchedule.onCreated(function () {
 		const kindRank = _.object(_.map(mostUsedKinds.slice(0, 15), (kv, rank) => [kv[0], rank + 1]));
 		instance.kindMap = function (title) {
 			const kindId = title.substr(0, 5);
-			if (kindRank[kindId]) return kindRank[kindId];
+			if (kindRank[kindId]) {
+				return kindRank[kindId];
+			}
 			return false;
 		};
 
@@ -259,7 +267,9 @@ Template.frameSchedule.helpers({
 
 	showDate() {
 		// The date is shown if an event has no repetitions...
-		if (this.repCount < 2) return true;
+		if (this.repCount < 2) {
+			return true;
+		}
 
 		// ... or if it doesn't occur this week.
 		const instance = Template.instance();

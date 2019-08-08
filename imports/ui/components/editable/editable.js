@@ -8,7 +8,9 @@ import './editable.html';
 	template.onCreated(function () {
 		// This reeks
 		const data = Template.currentData();
-		if (!data) throw new Error('Editable got empty data');
+		if (!data) {
+			throw new Error('Editable got empty data');
+		}
 		this.state = data.connect(this);
 	});
 
@@ -19,7 +21,9 @@ import './editable.html';
 		let changedByUser = false;
 
 		instance.getEdited = function () {
-			if (!instance.state || !instance.state.changed.get()) return false;
+			if (!instance.state || !instance.state.changed.get()) {
+				return false;
+			}
 			return instance.state.simple ? editable.text().trim() : editable.html().trim();
 		};
 
@@ -34,7 +38,9 @@ import './editable.html';
 
 			// HACK remove placeholder when there is content
 			// We should be using setContent() anyway, but it's not defined?!
-			if (text && text.length > 0) editable.removeClass('medium-editor-placeholder');
+			if (text) {
+				editable.removeClass('medium-editor-placeholder');
+			}
 		};
 
 		// Automatically replace contents when text changes

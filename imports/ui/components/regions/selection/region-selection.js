@@ -48,7 +48,9 @@ Template.regionSelection.onCreated(function () {
 	this.regions = (active = true) => {
 		const query = { futureEventCount: active ? { $gt: 0 } : { $eq: 0 } };
 		const search = this.state.get('search');
-		if (search !== '') query.name = new RegExp(search, 'i');
+		if (search !== '') {
+			query.name = new RegExp(search, 'i');
+		}
 
 		return Regions.find(query, { sort: { futureEventCount: -1, name: 1 } });
 	};
@@ -75,7 +77,9 @@ Template.regionSelection.onCreated(function () {
 		// the homepage for those
 		if (changed) {
 			const routeName = Router.current().route.getName();
-			if (RegionSelection.regionDependentRoutes.indexOf(routeName) < 0) Router.go('/');
+			if (RegionSelection.regionDependentRoutes.indexOf(routeName) < 0) {
+				Router.go('/');
+			}
 		}
 		this.close();
 	};
@@ -92,7 +96,9 @@ Template.regionSelection.onCreated(function () {
 
 Template.regionSelection.onRendered(function () {
 	Meteor.defer(function () {
-		if (!this.data || !this.data.isSplash) this.$('.js-region-search').select();
+		if (!this.data || !this.data.isSplash) {
+			this.$('.js-region-search').select();
+		}
 	});
 
 	this.parentInstance().$('.dropdown').on('hide.bs.dropdown', () => {

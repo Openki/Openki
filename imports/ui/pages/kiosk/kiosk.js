@@ -13,7 +13,9 @@ Template.kioskEvents.helpers({
 		instance.subscribe('group', groupId);
 
 		const group = Groups.findOne({ _id: groupId });
-		if (group) return group.short;
+		if (group) {
+			return group.short;
+		}
 		return '';
 	},
 	showTime() {

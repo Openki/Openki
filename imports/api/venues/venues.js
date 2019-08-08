@@ -35,7 +35,9 @@ const Venue = function () {
   * @return {Boolean}
   */
 Venue.prototype.editableBy = function (user) {
-	if (!user) return false;
+	if (!user) {
+		return false;
+	}
 	const isNew = !this._id;
 	return isNew // Anybody may create a new location
 		|| user._id === this.editor
@@ -48,7 +50,9 @@ const Venues = new Mongo.Collection('Venues', {
 	},
 });
 
-if (Meteor.isServer) Venues._ensureIndex({ loc: '2dsphere' });
+if (Meteor.isServer) {
+	Venues._ensureIndex({ loc: '2dsphere' });
+}
 
 Venues.Filtering = () => Filtering(
 	{ region: Predicates.id },

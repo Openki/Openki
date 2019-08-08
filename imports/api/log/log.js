@@ -68,7 +68,9 @@ class ResultLogger {
 
 	record(success, message) {
 		const resolution = { ts: new Date(), success };
-		if (message) resolution.message = message;
+		if (message) {
+			resolution.message = message;
+		}
 
 		if (this.printToLog) {
 			/* eslint-disable-next-line no-console */
@@ -119,9 +121,15 @@ Log.findFilter = function (filter, limit) {
 	check(limit, Number);
 
 	const query = {};
-	if (filter.start) query.ts = { $lte: filter.start };
-	if (filter.rel) query.$or = [{ _id: { $in: filter.rel } }, { rel: { $in: filter.rel } }];
-	if (filter.tr) query.tr = { $in: filter.tr };
+	if (filter.start) {
+		query.ts = { $lte: filter.start };
+	}
+	if (filter.rel) {
+		query.$or = [{ _id: { $in: filter.rel } }, { rel: { $in: filter.rel } }];
+	}
+	if (filter.tr) {
+		query.tr = { $in: filter.tr };
+	}
 
 	return Log.find(query, { sort: { ts: -1 }, limit });
 };

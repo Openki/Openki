@@ -149,7 +149,9 @@ Template.event.events({
 	},
 
 	'click .js-event-edit'(event, instance) {
-		if (PleaseLogin()) return;
+		if (PleaseLogin()) {
+			return;
+		}
 		instance.editing.set(true);
 	},
 

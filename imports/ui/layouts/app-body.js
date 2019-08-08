@@ -38,7 +38,9 @@ Template.layout.helpers({
 
 	showRegionSplash() {
 		const { route } = Router.current();
-		if (!route) return false;
+		if (!route) {
+			return false;
+		}
 
 		return (
 			RegionSelection.regionDependentRoutes.indexOf(route.getName()) >= 0

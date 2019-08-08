@@ -18,13 +18,19 @@ const UpdateMethods = {
 			check(enable, Boolean);
 
 			const doc = collection.findOne(docId);
-			if (!doc) throw new Meteor.Error(404, 'Doc not found');
+			if (!doc) {
+				throw new Meteor.Error(404, 'Doc not found');
+			}
 
 			const group = Groups.findOne(groupId);
-			if (!group) throw new Meteor.Error(404, 'Group not found');
+			if (!group) {
+				throw new Meteor.Error(404, 'Group not found');
+			}
 
 			const user = Meteor.user();
-			if (!user) throw new Meteor.Error(401, 'not permitted');
+			if (!user) {
+				throw new Meteor.Error(401, 'not permitted');
+			}
 
 			const mayPromote = user.mayPromoteWith(group._id);
 			const mayEdit = doc.editableBy(user);
@@ -32,17 +38,23 @@ const UpdateMethods = {
 			const update = {};
 			if (enable) {
 				// The user is allowed to add the group if she is part of the group
-				if (!mayPromote) throw new Meteor.Error(401, 'not permitted');
+				if (!mayPromote) {
+					throw new Meteor.Error(401, 'not permitted');
+				}
 				update.$addToSet = { groups: group._id };
 			} else {
 				// The user is allowed to remove the group if she is part of the group
 				// or if she has editing rights on the course
-				if (!mayPromote && !mayEdit) throw new Meteor.Error(401, 'not permitted');
+				if (!mayPromote && !mayEdit) {
+					throw new Meteor.Error(401, 'not permitted');
+				}
 				update.$pull = { groups: group._id, groupOrganizers: group._id };
 			}
 
 			collection.update(doc._id, update);
-			if (Meteor.isServer) collection.updateGroups(doc._id);
+			if (Meteor.isServer) {
+				collection.updateGroups(doc._id);
+			}
 		};
 	},
 
@@ -59,20 +71,28 @@ const UpdateMethods = {
 			check(enable, Boolean);
 
 			const doc = collection.findOne(docId);
-			if (!doc) throw new Meteor.Error(404, 'Doc not found');
+			if (!doc) {
+				throw new Meteor.Error(404, 'Doc not found');
+			}
 
 			const group = Groups.findOne(groupId);
-			if (!group) throw new Meteor.Error(404, 'Group not found');
+			if (!group) {
+				throw new Meteor.Error(404, 'Group not found');
+			}
 
 			const user = Meteor.user();
-			if (!user || !doc.editableBy(user)) throw new Meteor.Error(401, 'Not permitted');
+			if (!user || !doc.editableBy(user)) {
+				throw new Meteor.Error(401, 'Not permitted');
+			}
 
 			const update = {};
 			const op = enable ? '$addToSet' : '$pull';
 			update[op] = { groupOrganizers: group._id };
 
 			collection.update(doc._id, update);
-			if (Meteor.isServer) collection.updateGroups(doc._id);
+			if (Meteor.isServer) {
+				collection.updateGroups(doc._id);
+			}
 		};
 	},
 };

@@ -13,10 +13,14 @@ const notificationComment = {};
 notificationComment.record = function (commentId) {
 	check(commentId, String);
 	const comment = CourseDiscussions.findOne(commentId);
-	if (!comment) throw new Meteor.Error(`No CourseDiscussion entry for ${commentId}`);
+	if (!comment) {
+		throw new Meteor.Error(`No CourseDiscussion entry for ${commentId}`);
+	}
 
 	const course = Courses.findOne(comment.courseId);
-	if (!course) throw new Meteor.Error(`No course entry for ${commentId}`);
+	if (!course) {
+		throw new Meteor.Error(`No course entry for ${commentId}`);
+	}
 
 	const body = {};
 	body.commentId = comment._id;
@@ -41,7 +45,9 @@ notificationComment.record = function (commentId) {
 
 			CourseDiscussions.find(threadSelector).forEach((threadComment) => {
 				const partId = threadComment.userId;
-				if (partId) recipients.push(partId);
+				if (partId) {
+					recipients.push(partId);
+				}
 			});
 		}
 
@@ -76,8 +82,12 @@ notificationComment.Model = function (entry) {
 
 	return {
 		vars(userLocale) {
-			if (!comment) throw new Error('Comment does not exist (0.o)');
-			if (!course) throw new Error('Course does not exist (0.o)');
+			if (!comment) {
+				throw new Error('Comment does not exist (0.o)');
+			}
+			if (!course) {
+				throw new Error('Course does not exist (0.o)');
+			}
 
 			const subjectvars = {
 				COURSE: StringTools.truncate(course.name, 10),

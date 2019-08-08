@@ -44,7 +44,9 @@ Template.FAQ.onRendered(function () {
 	this.$('a').not('[href^="#"]').attr('target', '_blank');
 
 	const { hash } = Router.current().params;
-	if (hash) this.scrollTo(hash);
+	if (hash) {
+		this.scrollTo(hash);
+	}
 });
 
 Template.FAQ.helpers({
@@ -55,10 +57,14 @@ Template.FAQ.helpers({
 		// if the FAQ  doesn't exist with the specific locale fall back to the
 		// more general one
 		let locale = Session.get('locale');
-		if (templateNotFound(locale)) locale = locale.slice(0, 2);
+		if (templateNotFound(locale)) {
+			locale = locale.slice(0, 2);
+		}
 
 		// if this still doesn't work, use english locale
-		if (templateNotFound(locale)) locale = 'en';
+		if (templateNotFound(locale)) {
+			locale = 'en';
+		}
 
 		return templatePrefix + locale;
 	},

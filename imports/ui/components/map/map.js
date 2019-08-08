@@ -89,9 +89,13 @@ Template.map.onRendered(function () {
 	};
 
 	instance.autorun(() => {
-		if (tiles) map.removeLayer(tiles);
+		if (tiles) {
+			map.removeLayer(tiles);
+		}
 		let tileF = tileLayers[Session.get('locale')];
-		if (!tileF) tileF = tileLayers.default;
+		if (!tileF) {
+			tileF = tileLayers.default;
+		}
 		tiles = tileF();
 		tiles.addTo(map);
 	});
@@ -192,7 +196,9 @@ Template.map.onRendered(function () {
 				bounds.extend(centers[centerPos]);
 				count += 1;
 			});
-			if (count === 1) maxZoom = 13;
+			if (count === 1) {
+				maxZoom = 13;
+			}
 		}
 
 		if (bounds.isValid()) {
@@ -259,14 +265,18 @@ Template.map.onRendered(function () {
 		};
 
 		const removeMarker = function (mark) {
-			if (layers[mark._id]) map.removeLayer(layers[mark._id]);
+			if (layers[mark._id]) {
+				map.removeLayer(layers[mark._id]);
+			}
 			delete layers[mark._id];
 			delete centers[mark._id];
 		};
 
 		const updateMarker = function (mark) {
 			const layer = layers[mark._id];
-			if (!layer) return;
+			if (!layer) {
+				return;
+			}
 			layer.setStyle({ weight: mark.hover ? 5 : 1 });
 		};
 
@@ -341,7 +351,9 @@ Template.map.helpers({
 
 Template.map.events({
 	click(event, instance) {
-		if (instance.data.mini) instance.fullscreen.set(true);
+		if (instance.data.mini) {
+			instance.fullscreen.set(true);
+		}
 	},
 
 	'mousedown .js-add-marker'(event, instance) {
@@ -362,6 +374,8 @@ Template.map.events({
 
 	keyup(event, instance) {
 		// Press escape to close fullscreen
-		if (event.keyCode === 27) instance.fullscreen.set(false);
+		if (event.keyCode === 27) {
+			instance.fullscreen.set(false);
+		}
 	},
 });

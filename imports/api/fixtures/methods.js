@@ -269,10 +269,14 @@ if (Meteor.settings.testdata) {
 				const hour = date.getHours();
 
 				// Events outside daylight 8-21 should be unlikely
-				if (prng() > 0.2 && (hour < 8 || hour > 21)) date.setHours(hour + 12);
+				if (prng() > 0.2 && (hour < 8 || hour > 21)) {
+					date.setHours(hour + 12);
+				}
 
 				// Quarter hours should be most common
-				if (prng() > 0.05) date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15);
+				if (prng() > 0.05) {
+					date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15);
+				}
 
 				const regionZone = LocalTime.zone(event.region);
 
@@ -351,7 +355,9 @@ if (Meteor.settings.testdata) {
 		},
 
 		'fixtures.create'() {
-			if (Regions.find().count() === 0) regionsCreate();
+			if (Regions.find().count() === 0) {
+				regionsCreate();
+			}
 			groupsCreate();
 			venuesCreate();
 			coursesCreate();

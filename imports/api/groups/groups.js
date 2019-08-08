@@ -43,7 +43,9 @@ Groups.findFilter = function (filter, limit, skip, sort) {
 
 	// If the property is set but falsy, we don't return anything
 	if (Object.prototype.hasOwnProperty.call(filter, 'user')) {
-		if (!filter.user) return [];
+		if (!filter.user) {
+			return [];
+		}
 		find.members = filter.user;
 	}
 

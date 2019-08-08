@@ -124,7 +124,9 @@ Template.emailBox.onRendered(function emailBoxOnRendered() {
 Template.emailBox.helpers({
 	hasEmail() {
 		const user = Meteor.user();
-		if (!user) return false;
+		if (!user) {
+			return false;
+		}
 
 		const { emails } = user;
 		return emails && emails[0];
@@ -162,7 +164,9 @@ Template.emailBox.events({
 
 	'submit form.sendMail'(event, template) {
 		event.preventDefault();
-		if (PleaseLogin()) return;
+		if (PleaseLogin()) {
+			return;
+		}
 
 		const recUserId = this.user._id;
 		let recUser = Meteor.users.findOne({ _id: recUserId });

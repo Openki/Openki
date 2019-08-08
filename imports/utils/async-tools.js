@@ -1,8 +1,12 @@
 const AsyncTools = {};
 
 AsyncTools.checkUpdateOne = function (err, aff) {
-	if (err) throw err;
-	if (aff !== 1) throw new Error(`Query affected ${aff} docs, expected 1`);
+	if (err) {
+		throw err;
+	}
+	if (aff !== 1) {
+		throw new Error(`Query affected ${aff} docs, expected 1`);
+	}
 };
 
 // Simple async callback receiver that logs errors

@@ -58,7 +58,9 @@ Template.discussion.helpers({
 		instance.count.set(count);
 
 		const limit = instance.limit.get();
-		if (limit) posts = posts.slice(0, limit);
+		if (limit) {
+			posts = posts.slice(0, limit);
+		}
 
 		return posts;
 	},
@@ -156,7 +158,9 @@ Template.post.helpers({
 	},
 
 	newResponse() {
-		if (this.parentId) return false;
+		if (this.parentId) {
+			return false;
+		}
 		return {
 			new: true,
 			parentId: this._id,
@@ -179,7 +183,9 @@ Template.postShow.helpers({
 		const classes = [];
 
 		classes.push(this.parentId ? 'discussion-comment' : 'discussion-post');
-		if (this.saving) classes.push('is-saving');
+		if (this.saving) {
+			classes.push('is-saving');
+		}
 
 		return { class: classes.join(' ') };
 	},
@@ -238,7 +244,9 @@ Template.postEdit.helpers({
 	},
 
 	anonDisabled() {
-		if (Meteor.user()) return {};
+		if (Meteor.user()) {
+			return {};
+		}
 		return { disabled: 1 };
 	},
 
@@ -251,7 +259,9 @@ Template.postEdit.helpers({
 	},
 
 	notifyAllChecked() {
-		if (!this.new) return {};
+		if (!this.new) {
+			return {};
+		}
 		if (this.notifyAll) {
 			return { checked: 1 };
 		}
@@ -259,10 +269,14 @@ Template.postEdit.helpers({
 	},
 
 	canNotifyAll() {
-		if (Template.instance().anon.get()) return false;
+		if (Template.instance().anon.get()) {
+			return false;
+		}
 
 		const course = Courses.findOne(this.courseId);
-		if (!course) return false;
+		if (!course) {
+			return false;
+		}
 
 		const userId = Meteor.userId();
 		return userId && HasRoleUser(course.members, 'team', userId);

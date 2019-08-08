@@ -145,7 +145,9 @@ Template.courseMember.helpers({
 	},
 
 	mayUnsubscribeFromTeam(label) {
-		if (label !== 'team') return false;
+		if (label !== 'team') {
+			return false;
+		}
 		const change = Template.instance().removeFromTeam();
 		return change && change.validFor(Meteor.user());
 	},

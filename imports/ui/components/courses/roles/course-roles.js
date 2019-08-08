@@ -48,16 +48,18 @@ Template.courseRole.helpers({
 	enrolling() { return Template.instance().enrolling.get(); },
 
 	roleSubscribe() {
-		let role = this.type;
-		if (role === 'participant') role = 'interested';
-
+		const role = this.type;
+		if (role === 'participant') {
+			return 'roles.interested.subscribe';
+		}
 		return `roles.${role}.subscribe`;
 	},
 
 	roleSubscribed() {
-		let role = this.type;
-		if (role === 'participant') role = 'interested';
-
+		const role = this.type;
+		if (role === 'participant') {
+			return 'roles.interested.subscribe';
+		}
 		return `roles.${role}.subscribed`;
 	},
 

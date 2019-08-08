@@ -24,7 +24,9 @@ UpdatesAvailable[updateName] = function () {
 
 		const update = { $set: { text: saneRichText } };
 		const updated = CourseDiscussions.update(comment._id, update);
-		if (updated) count += 1;
+		if (updated) {
+			count += 1;
+		}
 	});
 
 	return count;

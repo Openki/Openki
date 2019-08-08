@@ -137,10 +137,10 @@ Template.venueDetails.helpers({
 	coords() {
 		if (this.loc && this.loc.coordinates) {
 			const fmt = function (coord) {
-				let sign = '';
-				if (coord > 0) sign = '+';
-				if (coord < 0) sign = '-';
-				return sign + coord.toPrecision(6);
+				if (coord < 0) {
+					return `-${coord.toPrecision(6)}`;
+				}
+				return `+${coord.toPrecision(6)}`;
 			};
 			const coords = {
 				LAT: fmt(this.loc.coordinates[1]),

@@ -7,8 +7,12 @@ const Filtering = function (availablePredicates) {
 	self.clear = function () { predicates = {}; return this; };
 
 	self.get = function (name) {
-		if (Tracker.active) dep.depend();
-		if (!settledPredicates[name]) return undefined;
+		if (Tracker.active) {
+			dep.depend();
+		}
+		if (!settledPredicates[name]) {
+			return undefined;
+		}
 		return settledPredicates[name].get();
 	};
 
@@ -64,7 +68,9 @@ const Filtering = function (availablePredicates) {
 		if (predicates[name]) {
 			predicates[name] = predicates[name].without(toRemove);
 		}
-		if (!predicates[name]) delete predicates[name];
+		if (!predicates[name]) {
+			delete predicates[name];
+		}
 		return self;
 	};
 
@@ -107,7 +113,9 @@ const Filtering = function (availablePredicates) {
 	};
 
 	self.toParams = function () {
-		if (Tracker.active) dep.depend();
+		if (Tracker.active) {
+			dep.depend();
+		}
 		const params = {};
 		Object.keys(settledPredicates).forEach((name) => {
 			params[name] = settledPredicates[name].param();
@@ -116,7 +124,9 @@ const Filtering = function (availablePredicates) {
 	};
 
 	self.toQuery = function () {
-		if (Tracker.active) dep.depend();
+		if (Tracker.active) {
+			dep.depend();
+		}
 		const query = {};
 		Object.keys(settledPredicates).forEach((name) => {
 			query[name] = settledPredicates[name].query();

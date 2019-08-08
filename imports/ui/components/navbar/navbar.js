@@ -63,7 +63,9 @@ Template.navbar.helpers({
 	activeClass(linkRoute, id) {
 		const router = Router.current();
 		if (router.route && router.route.getName() === linkRoute) {
-			if (typeof id === 'string' && router.params._id !== id) return '';
+			if (typeof id === 'string' && router.params._id !== id) {
+				return '';
+			}
 			return 'navbar-link-active';
 		}
 		return '';
@@ -125,7 +127,9 @@ Template.ownUserFrame.events({
 		Meteor.logout();
 
 		const routeName = Router.current().route.getName();
-		if (routeName === 'profile') Router.go('userprofile', Meteor.user());
+		if (routeName === 'profile') {
+			Router.go('userprofile', Meteor.user());
+		}
 	},
 
 	'click .btn'() { $('.collapse').collapse('hide'); },

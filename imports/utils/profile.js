@@ -85,7 +85,9 @@ Profile.Notifications.change = function (userId, enable, relId, reason) {
 	check(reason, String);
 
 	const rel = [userId];
-	if (relId) rel.push(relId);
+	if (relId) {
+		rel.push(relId);
+	}
 	Log.record('Profile.Notifications', rel,
 		{
 			userId,

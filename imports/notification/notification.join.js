@@ -20,10 +20,14 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	check(message, Match.Optional(String));
 
 	const course = Courses.findOne(courseId);
-	if (!course) throw new Meteor.Error(`No course entry for ${courseId}`);
+	if (!course) {
+		throw new Meteor.Error(`No course entry for ${courseId}`);
+	}
 
 	const participant = Meteor.users.findOne(participantId);
-	if (!course) throw new Meteor.Error(`No user entry for ${participantId}`);
+	if (!course) {
+		throw new Meteor.Error(`No user entry for ${participantId}`);
+	}
 
 	const body = {};
 	body.courseId = course._id;
@@ -49,8 +53,12 @@ notificationJoin.Model = function (entry) {
 
 	return {
 		vars(userLocale) {
-			if (!newParticipant) throw new Error('New participant does not exist (0.o)');
-			if (!course) throw new Error('Course does not exist (0.o)');
+			if (!newParticipant) {
+				throw new Error('New participant does not exist (0.o)');
+			}
+			if (!course) {
+				throw new Error('Course does not exist (0.o)');
+			}
 
 			const roleTitle = mf(`roles.${body.newRole}.short`, {}, undefined, userLocale);
 			const subjectvars = {

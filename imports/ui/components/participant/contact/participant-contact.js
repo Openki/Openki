@@ -34,7 +34,9 @@ Template.participantContact.helpers({
 
 	showParticipantContact() {
 		const userId = Meteor.userId();
-		if (!userId) return false;
+		if (!userId) {
+			return false;
+		}
 
 		return userId !== this.participant;
 	},

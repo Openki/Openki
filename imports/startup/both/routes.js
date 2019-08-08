@@ -50,12 +50,20 @@ const makeFilterQuery = function (params) {
 	const query = filter.toQuery();
 
 	let start;
-	if (params.start) start = moment(params.start);
-	if (!start || !start.isValid()) start = moment(minuteTime.get()).startOf('day');
+	if (params.start) {
+		start = moment(params.start);
+	}
+	if (!start || !start.isValid()) {
+		start = moment(minuteTime.get()).startOf('day');
+	}
 
 	let end;
-	if (params.end) end = moment(params.end);
-	if (!end || !end.isValid()) end = moment(start).add(1, 'day');
+	if (params.end) {
+		end = moment(params.end);
+	}
+	if (!end || !end.isValid()) {
+		end = moment(start).add(1, 'day');
+	}
 
 	query.period = [start.toDate(), end.toDate()];
 
@@ -219,7 +227,9 @@ Router.map(function () {
 				group = Groups.findOne(this.params._id);
 			}
 
-			if (!group) return false;
+			if (!group) {
+				return false;
+			}
 
 			const courseQuery = Object.assign(this.params.query, {
 				group: group._id,
@@ -386,7 +396,9 @@ Router.map(function () {
 		data() {
 			const course = Courses.findOne({ _id: this.params._id });
 
-			if (!course) return false;
+			if (!course) {
+				return false;
+			}
 
 			function getMember(members, user) {
 				if (!members) {
@@ -473,7 +485,9 @@ Router.map(function () {
 				}
 			} else {
 				event = Events.findOne({ _id: this.params._id });
-				if (!event) return false;
+				if (!event) {
+					return false;
+				}
 			}
 
 			return event;
@@ -496,11 +510,17 @@ Router.map(function () {
 
 			// collect time when first event starts and last event ends
 			events.forEach((event) => {
-				if (!start || event.start < start) start = event.start;
-				if (!end || end < event.end) end = event.end;
+				if (!start || event.start < start) {
+					start = event.start;
+				}
+				if (!end || end < event.end) {
+					end = event.end;
+				}
 			});
 
-			if (!start || !end) return [];
+			if (!start || !end) {
+				return [];
+			}
 
 			start = moment(start).startOf('hour');
 			end = moment(end).startOf('hour');
@@ -553,7 +573,9 @@ Router.map(function () {
 				venues.every((venue) => {
 					let last;
 					venues.forEach((placedEvent) => {
-						if (!last || placedEvent.end > last) last = placedEvent.end;
+						if (!last || placedEvent.end > last) {
+							last = placedEvent.end;
+						}
 					});
 					if (last <= event.start) {
 						venue.push(event);
@@ -636,7 +658,9 @@ Router.map(function () {
 				venue.editor = userId;
 			} else {
 				venue = Venues.findOne({ _id: this.params._id });
-				if (!venue) return false; // Not found
+				if (!venue) {
+					return false; // Not found
+				}
 			}
 
 			data.venue = venue;
@@ -646,7 +670,9 @@ Router.map(function () {
 
 		onAfterAction() {
 			const data = this.data();
-			if (!data) return;
+			if (!data) {
+				return;
+			}
 
 			const { venue } = data;
 			let title;

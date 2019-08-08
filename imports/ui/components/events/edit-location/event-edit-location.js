@@ -29,9 +29,15 @@ Template.eventEditVenue.onCreated(function () {
 	// own: name and coordinates were entered for this event specifically
 	instance.locationIs = function (type) {
 		const location = instance.location.get();
-		if (!location) return type === 'unset';
-		if (location._id) return type === 'preset';
-		if (location.name || location.loc) return type === 'own';
+		if (!location) {
+			return type === 'unset';
+		}
+		if (location._id) {
+			return type === 'preset';
+		}
+		if (location.name || location.loc) {
+			return type === 'own';
+		}
 		return type === 'unset';
 	};
 
@@ -57,8 +63,12 @@ Template.eventEditVenue.onCreated(function () {
 				// store it as new location for the event
 				const updLocation = instance.location.get();
 				updLocation.loc = mark.loc;
-				if (mark.presetName) updLocation.name = mark.presetName;
-				if (mark.presetAddress) updLocation.address = mark.presetAddress;
+				if (mark.presetName) {
+					updLocation.name = mark.presetName;
+				}
+				if (mark.presetAddress) {
+					updLocation.address = mark.presetAddress;
+				}
 				if (mark.preset) {
 					updLocation._id = mark._id;
 					updLocation.editor = mark.editor;
@@ -79,7 +89,9 @@ Template.eventEditVenue.onCreated(function () {
 				if (mark.remove) {
 					delete updLocation.loc;
 				} else {
-					if (_.isEqual(mark.loc, updLocation.loc)) return;
+					if (_.isEqual(mark.loc, updLocation.loc)) {
+						return;
+					}
 					updLocation.loc = mark.loc;
 				}
 				instance.location.set(updLocation);
@@ -90,7 +102,9 @@ Template.eventEditVenue.onCreated(function () {
 	instance.autorun(() => {
 		// Do not search preset locations when one is already chosen or when
 		// searching address
-		if (instance.locationIs('preset') || instance.addressSearch.get()) return;
+		if (instance.locationIs('preset') || instance.addressSearch.get()) {
+			return;
+		}
 
 		const search = instance.search.get().trim();
 		instance.locationTracker.markers.remove({ proposed: true });

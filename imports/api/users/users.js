@@ -63,7 +63,9 @@ export default Users = Meteor.users;
   */
 Users.currentUser = function () {
 	const logged = Meteor.user();
-	if (logged) return logged;
+	if (logged) {
+		return logged;
+	}
 
 	const anon = new User();
 	anon._id = 'anon';
@@ -80,7 +82,9 @@ Users.currentUser = function () {
   */
 User.prototype.mayPromoteWith = function (group) {
 	const groupId = IdTools.extract(group);
-	if (!groupId) return false;
+	if (!groupId) {
+		return false;
+	}
 	return this.groups.indexOf(groupId) >= 0;
 };
 

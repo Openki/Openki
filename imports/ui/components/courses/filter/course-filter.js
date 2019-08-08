@@ -45,12 +45,18 @@ Template.filter.helpers({
 		// check if one of the filters indicated as filters is active
 		let activeVisibleFilter = false;
 		instance.visibleFilters.forEach((filter) => {
-			if (parentInstance.filter.get(filter)) activeVisibleFilter = true;
+			if (parentInstance.filter.get(filter)) {
+				activeVisibleFilter = true;
+			}
 		});
 
-		if (activeVisibleFilter) classes.push('active');
+		if (activeVisibleFilter) {
+			classes.push('active');
+		}
 
-		if (parentInstance.showingFilters.get()) classes.push('open');
+		if (parentInstance.showingFilters.get()) {
+			classes.push('open');
+		}
 
 		return classes.join(' ');
 	},

@@ -40,13 +40,19 @@ if (Meteor.isClient) {
 					profile: { name: oldDummy },
 					password: 'hunter2',
 				}, (err) => {
-					if (err) reject(err);
-					else resolve();
+					if (err) {
+						reject(err);
+					} else {
+						resolve();
+					}
 				});
 			}).then(() => new Promise((resolve, reject) => {
 				Meteor.loginWithPassword(oldDummy, 'hunter2', (err) => {
-					if (err) reject(err);
-					else resolve();
+					if (err) {
+						reject(err);
+					} else {
+						resolve();
+					}
 				});
 			})).then(() => new Promise((resolve) => {
 				const user = Meteor.user();

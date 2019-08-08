@@ -31,8 +31,11 @@ if (Meteor.isClient) {
 				.then(waitFor(findExpectedFormTitle))
 				.then(() => new Promise((done, reject) => {
 					Meteor.loginWithPassword('Seee', 'greg', (err) => {
-						if (err) reject(err);
-						else done();
+						if (err) {
+							reject(err);
+						} else {
+							done();
+						}
 					});
 				}))
 				.then(() => {

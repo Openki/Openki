@@ -32,8 +32,11 @@ if (Meteor.isClient) {
 			// We want to support this.
 				.then(() => new Promise((done, reject) => {
 					Meteor.loginWithPassword('Seee', 'greg', (err) => {
-						if (err) reject(err);
-						else done();
+						if (err) {
+							reject(err);
+						} else {
+							done();
+						}
 					});
 				}))
 				.then(waitFor(findCommentField))

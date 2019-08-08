@@ -89,8 +89,12 @@ Template.courseDetailsPage.helpers({ // more helpers in course.roles.js
 		return this.course && this.course.editableBy(Meteor.user());
 	},
 	coursestate() {
-		if (this.nextEvent) return 'has-upcoming-events';
-		if (this.lastEvent) return 'has-past-events';
+		if (this.nextEvent) {
+			return 'has-upcoming-events';
+		}
+		if (this.lastEvent) {
+			return 'has-past-events';
+		}
 		return 'is-proposal';
 	},
 	mobileViewport() {
@@ -115,7 +119,9 @@ Template.courseDetailsDescription.helpers({
 
 Template.courseDetailsPage.events({
 	'click .js-delete-course-confirm'(event, instance) {
-		if (PleaseLogin()) return;
+		if (PleaseLogin()) {
+			return;
+		}
 
 		const { course } = instance.data;
 		instance.busy('deleting');
@@ -136,7 +142,9 @@ Template.courseDetailsPage.events({
 
 	'click .js-course-edit'(event, instance) {
 		instance.collapse();
-		if (PleaseLogin()) return;
+		if (PleaseLogin()) {
+			return;
+		}
 
 		const { course } = instance.data;
 		Router.go('showCourse', course, { query: { edit: 'course' } });

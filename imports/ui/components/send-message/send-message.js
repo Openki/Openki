@@ -29,7 +29,9 @@ Template.sendMessage.onRendered(function () {
 Template.sendMessage.helpers({
 	hasEmail() {
 		const user = Meteor.user();
-		if (!user) return false;
+		if (!user) {
+			return false;
+		}
 
 		const { emails } = user;
 		return emails && emails[0];
@@ -62,7 +64,9 @@ Template.sendMessage.events({
 		event.preventDefault();
 		instance.busy('sending');
 
-		if (PleaseLogin()) return;
+		if (PleaseLogin()) {
+			return;
+		}
 
 		const { state } = instance;
 		const message = instance.$('.js-email-message').val();
@@ -79,9 +83,13 @@ Template.sendMessage.events({
 		};
 
 		const data = Template.currentData();
-		if (data.courseId) options.courseId = data.courseId;
+		if (data.courseId) {
+			options.courseId = data.courseId;
+		}
 
-		if (data.eventId) options.eventId = data.eventId;
+		if (data.eventId) {
+			options.eventId = data.eventId;
+		}
 
 		Meteor.call('sendEmail', data.recipientId, message, options, (err) => {
 			instance.busy(false);
@@ -90,7 +98,9 @@ Template.sendMessage.events({
 			} else {
 				Alert.success(mf('profile.mail.sent', 'Your message was sent'));
 				instance.$('.js-email-message').val('');
-				if (data.onDone) data.onDone();
+				if (data.onDone) {
+					data.onDone();
+				}
 			}
 		});
 	},

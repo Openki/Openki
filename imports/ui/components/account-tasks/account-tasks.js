@@ -75,7 +75,9 @@ Template.loginFrame.onCreated(function () {
 
 Template.loginFrame.onRendered(function () {
 	const { transferMail } = this.parentInstance();
-	if (transferMail) this.$('.js-username').val(transferMail);
+	if (transferMail) {
+		this.$('.js-username').val(transferMail);
+	}
 
 	this.$('input').first().select();
 });
@@ -157,7 +159,9 @@ Template.loginFrame.events({
 			instance.errors.add('noUsername');
 		}
 
-		if (instance.errors.present()) return;
+		if (instance.errors.present()) {
+			return;
+		}
 
 		const password = instance.$('.js-password').val();
 
@@ -219,14 +223,19 @@ Template.registerFrame.onCreated(function () {
 Template.registerFrame.onRendered(function () {
 	const parentInstance = this.parentInstance();
 
-	const { transferUsername } = parentInstance;
-	if (transferUsername) this.$('.js-username').val(transferUsername);
+	const { transferUsername, transferPassword, transferMail } = parentInstance;
 
-	const { transferPassword } = parentInstance;
-	if (transferPassword) this.$('.js-password').val(transferPassword);
+	if (transferUsername) {
+		this.$('.js-username').val(transferUsername);
+	}
 
-	const { transferMail } = parentInstance;
-	if (transferMail) this.$('.js-email').val(transferMail);
+	if (transferPassword) {
+		this.$('.js-password').val(transferPassword);
+	}
+
+	if (transferMail) {
+		this.$('.js-email').val(transferMail);
+	}
 
 	this.$('input').first().select();
 });
@@ -296,8 +305,9 @@ Template.registerFrame.events({
 			instance.errors.add('noEmail');
 		}
 
-		if (instance.errors.present()) return;
-
+		if (instance.errors.present()) {
+			return;
+		}
 
 		instance.busy('registering');
 		Accounts.createUser({ username, password, email }, (err) => {

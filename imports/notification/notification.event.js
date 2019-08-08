@@ -17,13 +17,17 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	check(eventId, String);
 	check(isNew, Boolean);
 	const event = Events.findOne(eventId);
-	if (!event) throw new Meteor.Error(`No event for${eventId}`);
+	if (!event) {
+		throw new Meteor.Error(`No event for${eventId}`);
+	}
 
 	// What do we do when we receive an event which is not attached to a course?
 	// For now when we don't have a course we just go through the motions but
 	// the recipient list will be empty.
 	let course = false;
-	if (event.courseId) course = Courses.findOne(event.courseId);
+	if (event.courseId) {
+		course = Courses.findOne(event.courseId);
+	}
 
 	const body = {};
 	body.new = isNew;
@@ -58,9 +62,15 @@ notificationEvent.Model = function (entry) {
 
 	return {
 		vars(userLocale) {
-			if (!event) throw new Error('Event does not exist (0.o)');
-			if (!course) throw new Error('Course does not exist (0.o)');
-			if (!region) throw new Error('Region does not exist (0.o)');
+			if (!event) {
+				throw new Error('Event does not exist (0.o)');
+			}
+			if (!course) {
+				throw new Error('Course does not exist (0.o)');
+			}
+			if (!region) {
+				throw new Error('Region does not exist (0.o)');
+			}
 
 			// Show dates in local time and in users locale
 			const regionZone = LocalTime.zone(event.region);

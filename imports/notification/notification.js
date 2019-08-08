@@ -111,7 +111,9 @@ Notification.send = function (entry) {
 				Notification.SendResult.record(entry, unsubToken, true, recipientId, mail, 'success');
 			} catch (e) {
 				let reason = e;
-				if (typeof e === 'object' && 'toJSON' in e) reason = e.toJSON();
+				if (typeof e === 'object' && 'toJSON' in e) {
+					reason = e.toJSON();
+				}
 				Notification.SendResult.record(entry, unsubToken, false, recipientId, mail, reason);
 			}
 		}
@@ -145,7 +147,9 @@ Notification.SendResult.record = function (note, unsubToken, sent, recipient, me
 	};
 
 	const rel = [note._id, recipient];
-	if (unsubToken) rel.push(unsubToken);
+	if (unsubToken) {
+		rel.push(unsubToken);
+	}
 
 	Log.record('Notification.SendResult', rel, entry);
 };

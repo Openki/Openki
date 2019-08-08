@@ -17,7 +17,9 @@ Meteor.methods({
 		});
 
 		const userId = Meteor.userId();
-		if (!userId) throw new Meteor.Error(401, 'please log-in');
+		if (!userId) {
+			throw new Meteor.Error(401, 'please log-in');
+		}
 
 		const isNew = groupId === 'create';
 
@@ -30,7 +32,9 @@ Meteor.methods({
 			};
 		} else {
 			group = Groups.findOne(groupId);
-			if (!group) throw new Meteor.Error(404, 'Group not found');
+			if (!group) {
+				throw new Meteor.Error(404, 'Group not found');
+			}
 		}
 
 		// User must be member of group to edit it
@@ -67,7 +71,9 @@ Meteor.methods({
 		}
 
 		// Don't update nothing
-		if (Object.getOwnPropertyNames(updates).length === 0) return;
+		if (Object.getOwnPropertyNames(updates).length === 0) {
+			return;
+		}
 
 		if (isNew) {
 			/* eslint-disable-next-line no-param-reassign */
@@ -86,7 +92,9 @@ Meteor.methods({
 		check(groupId, String);
 
 		const senderId = Meteor.userId();
-		if (!senderId) throw new Meteor.Error('Not permitted');
+		if (!senderId) {
+			throw new Meteor.Error('Not permitted');
+		}
 
 		// Only current members of the group may draft other people into it
 		// We build a selector that only finds the group if the sender is a
@@ -99,10 +107,14 @@ Meteor.methods({
 		// This check is not strictly necessary when the update uses the same
 		// selector. It generates an error message though, whereas the update is
 		// blind to that.
-		if (!Groups.findOne(sel)) throw new Meteor.Error('No permitted');
+		if (!Groups.findOne(sel)) {
+			throw new Meteor.Error('No permitted');
+		}
 
 		const user = Meteor.users.findOne({ _id: userId });
-		if (!user) throw new Meteor.Error(404, 'User not found');
+		if (!user) {
+			throw new Meteor.Error(404, 'User not found');
+		}
 
 		let update;
 		if (join) {
@@ -116,6 +128,8 @@ Meteor.methods({
 		// but can still add somebody else to the group.
 		Groups.update(sel, update);
 
-		if (Meteor.isServer) Meteor.call('user.updateBadges', user._id);
+		if (Meteor.isServer) {
+			Meteor.call('user.updateBadges', user._id);
+		}
 	},
 });

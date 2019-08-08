@@ -70,8 +70,11 @@ Template.find.onCreated(function () {
 			}
 			Categories[mainCategory].forEach((subCategory) => {
 				if (mf(`category.${subCategory}`).toLowerCase().includes(queryToLowerCase)) {
-					if (results[mainCategory]) results[mainCategory].push(subCategory);
-					else results[subCategory] = [];
+					if (results[mainCategory]) {
+						results[mainCategory].push(subCategory);
+					} else {
+						results[subCategory] = [];
+					}
 				}
 			});
 		});
@@ -245,7 +248,9 @@ Template.find.helpers({
 
 	hasMore() {
 		const instance = Template.instance();
-		if (!instance.coursesReady.get()) return false;
+		if (!instance.coursesReady.get()) {
+			return false;
+		}
 
 		const filterQuery = instance.filter.toQuery();
 		const limit = instance.courseLimit.get();

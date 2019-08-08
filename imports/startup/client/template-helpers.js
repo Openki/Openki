@@ -182,7 +182,9 @@ const usernameFromId = (function () {
 	});
 
 	return function (userId) {
-		if (!userId) return mf('noUser_placeholder', 'someone');
+		if (!userId) {
+			return mf('noUser_placeholder', 'someone');
+		}
 
 		// Consult cache
 		let cachedUser = cache[userId];

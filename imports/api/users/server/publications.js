@@ -9,7 +9,9 @@ Meteor.publish('user', function (userId) {
 	};
 
 	// Admins may see other's privileges
-	if (UserPrivilegeUtils.privileged(Meteor.users.findOne(this.userId), 'admin')) fields.privileges = 1;
+	if (UserPrivilegeUtils.privileged(Meteor.users.findOne(this.userId), 'admin')) {
+		fields.privileges = 1;
+	}
 
 	return Meteor.users.find(
 		{ _id: userId },

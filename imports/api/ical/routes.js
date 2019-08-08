@@ -13,11 +13,15 @@ function sendIcal(events, response) {
 		const end = dbevent.end || dbevent.start;
 
 		let location = [];
-		if (dbevent.room) location.push(dbevent.room);
+		if (dbevent.room) {
+			location.push(dbevent.room);
+		}
 		if (dbevent.venue) {
 			const { venue } = dbevent;
 			location.push(venue.name);
-			if (venue.address) location.push(venue.address);
+			if (venue.address) {
+				location.push(venue.address);
+			}
 		}
 		location = location.join(', ');
 

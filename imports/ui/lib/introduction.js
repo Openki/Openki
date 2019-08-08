@@ -17,7 +17,9 @@ const Introduction = {
 
 	openedIntro() {
 		const opened = Session.get('OpenedIntro');
-		if (opened !== undefined) return opened;
+		if (opened !== undefined) {
+			return opened;
+		}
 
 		const { route } = Router.current();
 		const routeName = route && route.getName();

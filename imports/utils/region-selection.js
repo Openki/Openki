@@ -20,7 +20,9 @@ RegionSelection.init = function () {
 		const user = Meteor.user();
 
 		const { regionId } = user.profile;
-		if (regionId) Session.set('region', regionId);
+		if (regionId) {
+			Session.set('region', regionId);
+		}
 	});
 
 	Meteor.subscribe('regions', () => {
@@ -58,7 +60,9 @@ RegionSelection.init = function () {
 		};
 
 		// If any of these regions are usable we stop here
-		if (selectors.some(useAsRegion)) return;
+		if (selectors.some(useAsRegion)) {
+			return;
+		}
 
 		// If no region has been selected previously, we show the splash-screen.
 		Session.set('showRegionSplash', selectors.length < 1);

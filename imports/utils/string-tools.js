@@ -27,7 +27,9 @@ StringTools.capitalize = function (input) {
 };
 
 StringTools.markedName = (search, name) => {
-	if (search === '') return name;
+	if (search === '') {
+		return name;
+	}
 	const match = name.match(new RegExp(search, 'i'));
 
 	// To add markup we have to escape all the parts separately
