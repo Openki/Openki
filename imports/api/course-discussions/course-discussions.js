@@ -11,8 +11,10 @@ import { Mongo } from 'meteor/mongo';
 // "parentId"     -> ID_CourseDiscussions  (optional)
 // ===========================
 
-export default CourseDiscussions = new Mongo.Collection('CourseDiscussions');
+const CourseDiscussions = new Mongo.Collection('CourseDiscussions');
 
 CourseDiscussions.validComment = function (text) {
 	return text.trim().length > 0;
 };
+
+export default CourseDiscussions;

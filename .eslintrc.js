@@ -12,7 +12,6 @@ module.exports = {
 	],
 	globals: {
 		Atomics: 'readonly',
-		CourseDiscussions: 'writable',
 		FilteringReadError: 'writable',
 		L: 'readonly',
 		Log: 'writable',
