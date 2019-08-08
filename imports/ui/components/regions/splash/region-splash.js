@@ -40,7 +40,7 @@ Template.regionSplash.events({
 	},
 
 	'click #loginForRegion'(event, instance) {
-		$('#accountTasks').modal('show');
+		$('.js-account-tasks').modal('show');
 		instance.$('#regionSplash').modal('hide');
 	},
 });

@@ -17,7 +17,7 @@ Template.accountTasks.onCreated(function () {
 	this.accountTask = new ReactiveVar('login');
 	this.autorun(() => {
 		if (Session.equals('pleaseLogin', true)) {
-			this.$('#accountTasks').modal('show');
+			this.$('.js-account-tasks').modal('show');
 		}
 	});
 });
@@ -28,7 +28,7 @@ Template.accountTasks.helpers({
 });
 
 Template.accountTasks.events({
-	'show.bs.modal #accountTasks'(event, instance) {
+	'show.bs.modal .js-account-tasks'(event, instance) {
 		/* eslint-disable-next-line no-param-reassign */
 		instance.transferUsername = false;
 		/* eslint-disable-next-line no-param-reassign */
@@ -37,15 +37,15 @@ Template.accountTasks.events({
 		instance.transferMail = false;
 	},
 
-	'shown.bs.modal #accountTasks'(event, instance) {
+	'shown.bs.modal .js-account-tasks'(event, instance) {
 		instance.$('input').first().select();
 	},
 
-	'hide.bs.modal #accountTasks'(event, instance) {
+	'hide.bs.modal .js-account-tasks'(event, instance) {
 		instance.$('input').val('');
 	},
 
-	'hidden.bs.modal #accountTasks'(event, instance) {
+	'hidden.bs.modal .js-account-tasks'(event, instance) {
 		instance.accountTask.set('login');
 		Session.set('pleaseLogin', false);
 	},
@@ -174,7 +174,7 @@ Template.loginFrame.events({
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
-				$('#accountTasks').modal('hide');
+				$('.js-account-tasks').modal('hide');
 			}
 		});
 	},
@@ -202,7 +202,7 @@ Template.loginFrame.events({
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
-				$('#accountTasks').modal('hide');
+				$('.js-account-tasks').modal('hide');
 			}
 		});
 	},
@@ -318,7 +318,7 @@ Template.registerFrame.events({
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
-				$('#accountTasks').modal('hide');
+				$('.js-account-tasks').modal('hide');
 				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
 					Meteor.call('user.regionChange', regionId);

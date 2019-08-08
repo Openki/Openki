@@ -3,6 +3,6 @@ export default function PleaseLogin() {
 		return false;
 	}
 	Session.set('pleaseLogin', true);
-	$('#accountTasks').modal('show');
+	$('.js-account-tasks').modal('show');
 	return true;
 }
