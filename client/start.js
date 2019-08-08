@@ -67,12 +67,9 @@ Meteor.startup(() => {
 	// Try to access the preferred languages. For the legacy browsers that don't
 	// expose it we could ask the server for the Accept-Language headers but I'm
 	// too lazy to implement this. It would become obsolete anyway.
-	(navigator.languages || []).every((language) => {
-		if (useLocale(language)) {
-			return false;
-		}
-		return true;
-	});
+	for (const language of navigator.languages || []) {
+		if (useLocale(language)) return;
+	}
 
 	// Here we ask for the browser UI language which may not be what the visitor
 	// wanted. Oh well.
