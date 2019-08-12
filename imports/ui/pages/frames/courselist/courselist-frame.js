@@ -56,7 +56,7 @@ Template.frameCourselist.helpers({
 });
 
 Template.frameCourselist.events({
-	'click #showMoreCourses'(event, instance) {
+	'click .js-show-more-courses'(event, instance) {
 		const { limit } = instance;
 		limit.set(limit.get() + 5);
 	},

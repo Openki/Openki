@@ -23,7 +23,7 @@ Template.featureGroup.helpers({
 });
 
 Template.featureGroup.events({
-	'submit #featureGroup'(event, instance) {
+	'submit .js-feature-group'(event, instance) {
 		event.preventDefault();
 
 		const regionId = Session.get('region');

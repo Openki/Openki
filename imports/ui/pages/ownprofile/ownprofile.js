@@ -188,12 +188,12 @@ Template.profile.events({
 			});
 	},
 
-	'submit #changePwd'(event, instance) {
+	'submit .js-change-pwd'(event, instance) {
 		event.preventDefault();
-		const old = document.getElementById('oldpassword').value;
-		const pass = document.getElementById('newpassword').value;
+		const old = document.querySelector('.js-old-pwd').value;
+		const pass = document.querySelector('.js-new-pwd').value;
 		if (pass !== '') {
-			if (pass !== document.getElementById('newpassword_confirm').value) {
+			if (pass !== document.querySelector('.js-new-pwd-confirm').value) {
 				Alert.warning(mf('profile.passwordMismatch', "Sorry, Your new passwords don't match"));
 				return;
 			}

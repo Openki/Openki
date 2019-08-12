@@ -84,7 +84,7 @@ Template.filter.helpers({
 });
 
 Template.filter.events({
-	'click #toggleFilters'(event, instance) {
+	'click .js-toggle-filters'(event, instance) {
 		const parentInstance = instance.parentInstance();
 		const { showingFilters } = parentInstance;
 

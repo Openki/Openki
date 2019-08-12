@@ -128,13 +128,13 @@
 					</div>
 					{{#if changingPass}}
 					<div class="details-form">
-						<form class="form-horizontal" id="changePwd">
+						<form class="js-change-pwd form-horizontal">
 							<div class="form-group">
 								<label for="oldpassword" class="control-label">
 									{{mf 'profile.input.oldPassword' 'Your current password'}}
 								</label>
 								<div class="control-input">
-									<input type="password" class="form-control" id="oldpassword" value=""/>
+									<input type="password" class="js-old-pwd form-control" id="oldpassword" value=""/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -142,7 +142,7 @@
 									{{mf 'profile.input.newPassword' 'New password'}}
 								</label>
 								<div class="control-input">
-									<input type="password" class="form-control" id="newpassword" value=""/>
+									<input type="password" class="js-new-pwd form-control" id="newpassword" value=""/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -150,7 +150,7 @@
 									{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
 								</label>
 								<div class="control-input">
-									<input type="password" class="form-control" id="newpassword_confirm" value=""/>
+									<input type="password" class="js-new-pwd-confirm form-control" id="newpassword_confirm" value=""/>
 								</div>
 							</div>
 							<div class="form-actions">

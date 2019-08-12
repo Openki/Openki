@@ -327,7 +327,7 @@ Template.registerFrame.events({
 		});
 	},
 
-	'click #backToLogin'(event, instance) {
+	'click .js-back-to-login'(event, instance) {
 		instance.parentInstance().accountTask.set('login');
 	},
 });

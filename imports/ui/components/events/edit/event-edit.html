@@ -21,8 +21,7 @@
 			<div class="form-group">
 				<label>{{mf 'course.event.edit.title' 'Event title'}}</label>
 				<input type="text"
-				       class="form-control input-lg"
-				       id="eventEditTitle"
+				       class="js-event-title form-control input-lg"
 				       name="_"
 				       placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
 				       size="30"
@@ -48,8 +47,7 @@
 							<span class="fa fa-hourglass-start fa-fw" aria-hidden="true"></span>
 						</span>
 						<input type="text"
-						       class="form-control"
-						       id="editEventStartTime"
+						       class="js-event-start-time form-control"
 						       size="5"
 						       value="{{timeformat startLocal}}"
 						       {{disableForPast}}>
@@ -69,7 +67,7 @@
 							<span class="fa fa-hourglass-end fa-fw" aria-hidden="true"></span>
 						</span>
 						<input type="number"
-						       class="form-control"
+						       class="js-event-duration form-control"
 						       id="editEventDuration"
 						       value=""
 						       size="5"
@@ -88,8 +86,7 @@
 							<span class="fa fa-hourglass-end fa-fw" aria-hidden="true"></span>
 						</span>
 						<input type="text"
-						       class="form-control"
-						       id="editEventEndTime"
+						       class="js-event-end-time form-control"
 						       size="5"
 						       value="{{timeformat endLocal}}
 						       {{disableForPast}}">
@@ -142,8 +139,7 @@
 							<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
 						</span>
 						<input type="text"
-						       class="form-control"
-						       id="eventEditRoom"
+						       class="js-event-room form-control"
 						       size="40"
 						       value="{{room}}">
 					</div>
@@ -275,7 +271,7 @@
 							<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
 						</span>
 						<textarea rows="3"
-						       class="form-control js-event-edit-add-message"
+						       class="form-control js-event-add-message"
 						       maxlength="2000"
 						       placeholder="{{mf 'event.edit.additionalMessage' 'If you feel good, describe what the members of the course should know.'}}"></textarea>
 					</div>
@@ -284,7 +280,7 @@
 
 			<div class="form-actions">
 				{{> buttonSave saving=saving}}
-				{{> buttonCancel event="js-event-edit-cancel"}}
+				{{> buttonCancel event="js-event-cancel"}}
 			</div>
 		</div>
 	</div>

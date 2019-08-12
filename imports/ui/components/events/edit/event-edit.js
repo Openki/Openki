@@ -83,7 +83,7 @@ const readDateTime = function (dateStr, timeStr) {
 const getEventStartMoment = function (template) {
 	return readDateTime(
 		template.$('.js-event-start-date').val(),
-		template.$('#editEventStartTime').val(),
+		template.$('.js-event-start-time').val(),
 	);
 };
 
@@ -92,7 +92,7 @@ const getEventEndMoment = function (template) {
 	const startMoment = getEventStartMoment(template);
 	let endMoment = readDateTime(
 		startMoment.format('L'),
-		template.$('#editEventEndTime').val(),
+		template.$('.js-event-end-time').val(),
 	);
 
 	// If the end time is earlier than the start time, assume the event
@@ -103,7 +103,7 @@ const getEventEndMoment = function (template) {
 	if (endMoment.diff(startMoment) < 0) {
 		endMoment = readDateTime(
 			startMoment.add(1, 'day').format('L'),
-			template.$('#editEventEndTime').val(),
+			template.$('.js-event-end-time').val(),
 		);
 	}
 
@@ -112,7 +112,7 @@ const getEventEndMoment = function (template) {
 
 
 const getEventDuration = function (template) {
-	const duration = parseInt(template.$('#editEventDuration').val(), 10);
+	const duration = parseInt(template.$('.js-event-duration').val(), 10);
 	return Math.max(0, duration);
 };
 
@@ -138,10 +138,10 @@ function updateTimes(template, updateEnd) {
 	}
 
 	duration = end.diff(start, 'minutes');
-	template.$('#edit_event_startdate').val(start.format('L'));
-	template.$('#editEventStartTime').val(start.format('LT'));
-	template.$('#editEventEndTime').val(end.format('LT'));
-	template.$('#editEventDuration').val(duration.toString());
+	template.$('.js-event-start-date').val(start.format('L'));
+	template.$('.js-event-start-time').val(start.format('LT'));
+	template.$('.js-event-end-time').val(end.format('LT'));
+	template.$('.js-event-duration').val(duration.toString());
 }
 
 Template.eventEdit.onRendered(function () {
@@ -293,9 +293,9 @@ Template.eventEdit.events({
 		const end = getEventEndMoment(instance);
 
 		const editevent = {
-			title: instance.$('#eventEditTitle').val(),
+			title: instance.$('.js-event-title').val(),
 			venue: instance.selectedLocation.get(),
-			room: instance.$('#eventEditRoom').val(),
+			room: instance.$('.js-event-room').val(),
 			startLocal: LocalTime.toString(start),
 			endLocal: LocalTime.toString(end),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
@@ -345,7 +345,7 @@ Template.eventEdit.events({
 		const updateReplicas = instance.state.get('updateReplicas');
 		const updateChangedReplicas = instance.state.get('updateChangedReplicas');
 		const sendNotifications = instance.$('.js-check-notify').is(':checked');
-		const addNotificationMessage = instance.$('.js-event-edit-add-message').val();
+		const addNotificationMessage = instance.$('.js-event-add-message').val();
 
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveEvent', 'Login and save event'), () => {
@@ -392,7 +392,7 @@ Template.eventEdit.events({
 		});
 	},
 
-	'click .js-event-edit-cancel'(event, instance) {
+	'click .js-event-cancel'(event, instance) {
 		if (instance.data.new) {
 			window.history.back();
 		}
@@ -415,11 +415,11 @@ Template.eventEdit.events({
 		});
 	},
 
-	'change #editEventDuration, change .js-event-start-date, change #editEventStartTime'(event, template) {
+	'change .js-event-duration, change .js-event-start-date, change .js-event-start-time'(event, template) {
 		updateTimes(template, true);
 	},
 
-	'change #editEventEndTime'(event, template) {
+	'change .js-event-end-time'(event, template) {
 		updateTimes(template, false);
 	},
 

@@ -116,7 +116,7 @@ Template.loginButton.helpers({
 });
 
 Template.loginButton.events({
-	'click #openLogin'() {
+	'click .js-open-login'() {
 		$('.js-account-tasks').modal('show');
 	},
 });

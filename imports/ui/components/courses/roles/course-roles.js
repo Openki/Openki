@@ -110,7 +110,7 @@ Template.courseRole.events({
 		instance.showFirstSteps.set(!instance.showFirstSteps.get());
 	},
 
-	'click #firstStepsComment'() {
+	'click .js-first-steps-comment'() {
 		$('.course-page-btn.js-discussion-edit').click();
 		window.location.hash = '#discussion';
 		RouterAutoscroll.scheduleScroll();
