@@ -158,7 +158,7 @@ const TemplateMixins = {
 				add(key) {
 					const message = mapping[key];
 					if (!message) {
-						Alert.error('Unmapped error', key);
+						Alert.error('Unmapped error');
 						return;
 					}
 

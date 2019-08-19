@@ -7,18 +7,13 @@ const Alert = {
       * @param  {String}  message         - the message text
       *
       */
-	error(errorString, originalMessage) {
-		const message = (originalMessage === undefined) ? '' : originalMessage;
-
+	error(errorString) {
 		check(errorString, String);
-		check(message, String);
-
-		const error = new Error(errorString, message);
 
 		const errorMessage = mf(
-			'_serverError',
-			{ ERROR: error, MESSAGE: message },
-			'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.',
+			'_clientError',
+			{ ERROR: errorString },
+			'There was an error: "{ERROR}." Sorry about this.',
 		);
 
 		this._alert('error', errorMessage, 60000);
