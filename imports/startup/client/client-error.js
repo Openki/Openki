@@ -9,11 +9,7 @@ const reportToServer = function (error) {
 		clientId,
 		userAgent: window.navigator.userAgent,
 	};
-	Meteor.call('log.clientError', report, (err) => {
-		if (err) {
-			/* eslint-disable-next-line no-console */
-			console.log(err);
-		}
+	Meteor.call('log.clientError', report, () => {
 	});
 };
 

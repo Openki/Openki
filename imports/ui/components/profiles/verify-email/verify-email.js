@@ -21,7 +21,7 @@ Template.verifyEmail.events({
 		Meteor.call('sendVerificationEmail', (err) => {
 			if (err) {
 				instance.sending.set(false);
-				Alert.error(err, 'Failed to send verification mail');
+				Alert.serverError(err, 'Failed to send verification mail');
 			} else {
 				Alert.success(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'));
 			}

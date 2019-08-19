@@ -63,7 +63,7 @@ Template.event.onCreated(function () {
 			Meteor.call('event.addParticipant', event._id, (err) => {
 				this.busy(false);
 				if (err) {
-					Alert.error(err, '');
+					Alert.serverError(err, '');
 				}
 			});
 		});
@@ -128,10 +128,13 @@ Template.event.events({
 		const { title } = oEvent;
 		const course = oEvent.courseId;
 		instance.busy('deleting');
-		Meteor.call('event.remove', oEvent._id, (error) => {
+		Meteor.call('event.remove', oEvent._id, (err) => {
 			instance.busy(false);
-			if (error) {
-				Alert.error(error, `Could not remove event '${title}'`);
+			if (err) {
+				Alert.serverError(
+					err,
+					'Could not remove event',
+				);
 			} else {
 				Alert.success(mf(
 					'eventDetails.eventRemoved',
@@ -164,7 +167,7 @@ Template.event.events({
 		Meteor.call('event.removeParticipant', instance.data._id, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, '');
+				Alert.serverError(err, '');
 			}
 		});
 	},
@@ -265,9 +268,12 @@ Template.eventGroupAdd.events({
 	'click .js-add-group'(e, instance) {
 		const event = instance.data;
 		const groupId = e.currentTarget.value;
-		Meteor.call('event.promote', event._id, groupId, true, (error) => {
-			if (error) {
-				Alert.error(error, 'Failed to add group');
+		Meteor.call('event.promote', event._id, groupId, true, (err) => {
+			if (err) {
+				Alert.serverError(
+					err,
+					'Failed to add group',
+				);
 			} else {
 				const groupName = Groups.findOne(groupId).name;
 				Alert.success(mf(
@@ -288,9 +294,12 @@ Template.eventGroupRemove.events({
 	'click .js-remove'(e, instance) {
 		const { event } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('event.promote', event._id, groupId, false, (error) => {
-			if (error) {
-				Alert.error(error, 'Failed to remove group');
+		Meteor.call('event.promote', event._id, groupId, false, (err) => {
+			if (err) {
+				Alert.serverError(
+					err,
+					'Failed to remove group',
+				);
 			} else {
 				const groupName = Groups.findOne(groupId).name;
 				Alert.success(mf(
@@ -310,9 +319,12 @@ Template.eventGroupMakeOrganizer.events({
 	'click .js-makeOrganizer'(e, instance) {
 		const { event } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('event.editing', event._id, groupId, true, (error) => {
-			if (error) {
-				Alert.error(error, 'Failed to give group editing rights');
+		Meteor.call('event.editing', event._id, groupId, true, (err) => {
+			if (err) {
+				Alert.serverError(
+					err,
+					'Failed to give group editing rights',
+				);
 			} else {
 				const groupName = Groups.findOne(groupId).name;
 				Alert.success(mf(
@@ -332,11 +344,14 @@ Template.eventGroupRemoveOrganizer.events({
 	'click .js-removeOrganizer'(e, instance) {
 		const { event } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('event.editing', event._id, groupId, false, (error) => {
-			if (error) {
-				Alert.error(error, 'Failed to remove organizer status');
+		Meteor.call('event.editing', event._id, groupId, false, (err) => {
+			const groupName = Groups.findOne(groupId).name;
+			if (err) {
+				Alert.serverError(
+					err,
+					'Failed to remove organizer status',
+				);
 			} else {
-				const groupName = Groups.findOne(groupId).name;
 				Alert.success(mf(
 					'eventGroupAdd.membersCanNoLongerEditEvent',
 					{ GROUP: groupName, EVENT: event.title },

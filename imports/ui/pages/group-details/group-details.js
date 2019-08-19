@@ -30,7 +30,14 @@ Template.groupDetails.onCreated(function () {
 
 	const handleSaving = function (err) {
 		if (err) {
-			Alert.error(err, 'Saving the group went wrong');
+			Alert.serverError(
+				err,
+				mf(
+					'groupDetails.saveError',
+					{ GROUP: group.name },
+					'Saving the group "{GROUP}" went wrong',
+				),
+			);
 		} else {
 			Alert.success(mf(
 				'groupDetails.changesSaved',
@@ -165,7 +172,13 @@ Template.groupDetails.events({
 			Meteor.call('group.save', 'create', group, (err, groupId) => {
 				instance.busy(false);
 				if (err) {
-					Alert.error(err, 'Saving the group went wrong');
+					Alert.serverError(
+						err,
+						mf(
+							'groupDetails.saveError',
+							{ GROUP: group.name },
+						),
+					);
 				} else {
 					instance.editableName.end();
 					instance.editableShort.end();

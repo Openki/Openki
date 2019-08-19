@@ -48,7 +48,10 @@ Template.sendMessage.events({
 		Meteor.call('sendVerificationEmail', (err) => {
 			if (err) {
 				instance.state.set('verificationMailSent', false);
-				Alert.error(err, 'Failed to send verification mail');
+				Alert.serverError(
+					err,
+					mf('profile.sendVerificationMailFailed', 'Failed to send verification mail'),
+				);
 			} else {
 				Alert.success(mf('profile.sentVerificationMail'));
 			}
@@ -94,7 +97,10 @@ Template.sendMessage.events({
 		Meteor.call('sendEmail', data.recipientId, message, options, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, 'danger');
+				Alert.serverError(
+					err,
+					mf('profile.mail.sendFailed', 'Your message was not sent'),
+				);
 			} else {
 				Alert.success(mf('profile.mail.sent', 'Your message was sent'));
 				instance.$('.js-email-message').val('');

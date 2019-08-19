@@ -39,10 +39,7 @@ const Introduction = {
 		try {
 			localStorage.setItem('intro', 'done');
 		} catch (e) {
-			Alert.error(
-				new Error(e),
-				'',
-			);
+			Alert.serverError(e, '');
 		}
 	},
 };

@@ -231,7 +231,7 @@ Template.eventEditVenue.events({
 			params: nominatimQuery,
 		}, (error, result) => {
 			if (error) {
-				Alert.error(error, '');
+				Alert.serverError(error, '');
 				return;
 			}
 

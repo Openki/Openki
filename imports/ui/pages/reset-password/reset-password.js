@@ -83,7 +83,10 @@ Template.resetPassword.events({
 		Accounts.resetPassword(token, password, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, 'Unable to reset password');
+				Alert.serverError(
+					err,
+					mf('resetPassword.passwordResetError', 'Unable to reset password'),
+				);
 			} else {
 				Alert.success(mf('resetPassword.passwordReset.', 'Your password has been reset.'));
 				Router.go('profile');

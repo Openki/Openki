@@ -1,40 +1,36 @@
 import Alerts from './alerts';
 
 const Alert = {
-	/** convert to Error if type string
-	  *
-	  * @param {Error, String} error
-	  *
-	  */
-	_toError(error) {
-		if (typeof error === 'string') {
-			return new Error(error);
-		}
-		return error;
-	},
+	/** Create an error from String
+      *
+      * @param  {String}  errorString     - error type
+      * @param  {String}  message         - the message text
+      *
+      */
+	error(errorString, originalMessage) {
+		const message = (originalMessage === undefined) ? '' : originalMessage;
 
-	/** set message to '' if undefined
-	  *
-	  * @param {String} message
-	  *
-	  */
-	_prepMessage(message) {
-		if (message === undefined) {
-			return '';
-		}
-		return message;
+		check(errorString, String);
+		check(message, String);
+
+		const error = new Error(errorString, message);
+
+		const errorMessage = mf(
+			'_serverError',
+			{ ERROR: error, MESSAGE: message },
+			'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.',
+		);
+
+		this._alert('error', errorMessage, 60000);
 	},
 
 	/** Add an error alert
       *
-      * @param  {Error, String}   error        - error object or string
-      * @param  {String}          message      - the message text
+      * @param  {Error}   error        - error object
+      * @param  {String}  message      - the message text
       *
       */
-	error(originalError, originalMessage) {
-		const error = this._toError(originalError);
-		const message = this._prepMessage(originalMessage);
-
+	serverError(error, message) {
 		check(error, Error);
 		check(message, String);
 

@@ -55,16 +55,18 @@ Template.venueEdit.onCreated(function () {
 	});
 
 	instance.locationTracker.markers.find().observe({
-		added(originalMark) {
-			const mark = Object.assign({}, originalMark);
+		added(mark) {
 			if (mark.proposed) {
 				// The map widget does not reactively update markers when their
 				// flags change. So we remove the propsed marker it added and
 				// replace it by a main one. This is only a little weird.
 				instance.locationTracker.markers.remove({ proposed: true });
 
+				/* eslint-disable-next-line no-param-reassign */
 				mark.main = true;
+				/* eslint-disable-next-line no-param-reassign */
 				mark.draggable = true;
+				/* eslint-disable-next-line no-param-reassign */
 				delete mark.proposed;
 				instance.locationTracker.markers.insert(mark);
 			}
@@ -159,7 +161,9 @@ Template.venueEdit.events({
 		};
 
 		if (!changes.name) {
-			Alert.error(mf('venue.create.plsGiveVenueName', 'Please give your venue a name'));
+			Alert.error(
+				mf('venue.create.plsGiveVenueName', 'Please give your venue a name'),
+			);
 			return;
 		}
 
@@ -184,7 +188,9 @@ Template.venueEdit.events({
 		if (instance.isNew) {
 			changes.region = instance.selectedRegion.get();
 			if (!changes.region) {
-				Alert.error(mf('venue.create.plsSelectRegion', 'Please select a region'));
+				Alert.error(
+					mf('venue.create.plsSelectRegion', 'Please select a region'),
+				);
 				return;
 			}
 		}
@@ -193,7 +199,9 @@ Template.venueEdit.events({
 		if (marker) {
 			changes.loc = marker.loc;
 		} else {
-			Alert.error(mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'));
+			Alert.error(
+				mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'),
+			);
 			return;
 		}
 
@@ -203,7 +211,10 @@ Template.venueEdit.events({
 			Meteor.call('venue.save', venueId, changes, (err, res) => {
 				instance.busy(false);
 				if (err) {
-					Alert.error(err, 'Saving the venue went wrong');
+					Alert.serverError(
+						err,
+						mf('venue.saving.error', 'Saving the venue went wrong'),
+					);
 				} else {
 					Alert.success(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'));
 					if (instance.isNew) {

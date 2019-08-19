@@ -33,10 +33,7 @@ Template.courseRole.onCreated(function () {
 					Alert.success(mf('course.roles.unsubscribed', { NAME: this.data.course.name }, 'Unsubscribed from course {NAME}'));
 				});
 			} else {
-				Alert.error(
-					new Error(`${change} not valid for ${user}`),
-					'',
-				);
+				Alert.error(`${change} not valid for ${user}`);
 			}
 		});
 	}

@@ -569,10 +569,10 @@ Router.map(function () {
 				event.relEnd = (endAbs - event.end.getTime()) / span;
 				let placed = false;
 
-				const venues = useVenue(event.venue);
-				venues.every((venue) => {
+				const venueRows = useVenue(event.venue);
+				venueRows.every((venue) => {
 					let last;
-					venues.forEach((placedEvent) => {
+					venueRows.forEach((placedEvent) => {
 						if (!last || placedEvent.end > last) {
 							last = placedEvent.end;
 						}
@@ -585,7 +585,7 @@ Router.map(function () {
 					return true;
 				});
 				if (!placed) {
-					venues.push([event]);
+					venueRows.push([event]);
 				}
 			});
 

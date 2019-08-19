@@ -61,10 +61,7 @@ Template.regionSelection.onCreated(function () {
 		try {
 			localStorage.setItem('region', regionId); // to survive page reload
 		} catch (e) {
-			Alert.error(
-				new Error(e),
-				'',
-			);
+			Alert.error(e);
 		}
 
 		Session.set('region', regionId);

@@ -44,7 +44,10 @@ Template.courseDetailsPage.onCreated(function () {
 		((newName) => {
 			Meteor.call('course.save', course._id, { name: newName }, (err) => {
 				if (err) {
-					Alert.error(err, 'Saving the course went wrong');
+					Alert.serverError(
+						err,
+						mf('course.save.error', 'Saving the course went wrong'),
+					);
 				} else {
 					Alert.success(mf(
 						'courseDetails.message.nameChanged',
@@ -62,7 +65,10 @@ Template.courseDetailsPage.onCreated(function () {
 		((newDescription) => {
 			Meteor.call('course.save', course._id, { description: newDescription }, (err) => {
 				if (err) {
-					Alert.error(err, 'Saving the course went wrong');
+					Alert.serverError(
+						err,
+						mf('course.save.error'),
+					);
 				} else {
 					Alert.success(mf(
 						'courseDetails.message.descriptionChanged',
@@ -125,10 +131,13 @@ Template.courseDetailsPage.events({
 
 		const { course } = instance.data;
 		instance.busy('deleting');
-		Meteor.call('course.remove', course._id, (error) => {
+		Meteor.call('course.remove', course._id, (err) => {
 			instance.busy(false);
-			if (error) {
-				Alert.error(error, `Removing the proposal '${course.name}' went wrong`);
+			if (err) {
+				Alert.serverError(
+					err,
+					'Removing the course "{COURSE}" went wrong',
+				);
 			} else {
 				Alert.success(mf(
 					'courseDetailsPage.message.courseHasBeenDeleted',
@@ -196,9 +205,12 @@ Template.courseGroupAdd.events({
 	'click .js-add-group'(event, instance) {
 		const course = instance.data;
 		const groupId = event.currentTarget.value;
-		Meteor.call('course.promote', course._id, groupId, true, (error) => {
-			if (error) {
-				Alert.error(error, 'Failed to add group');
+		Meteor.call('course.promote', course._id, groupId, true, (err) => {
+			if (err) {
+				Alert.serverError(
+					err,
+					'Failed to add group',
+				);
 			} else {
 				const groupName = Groups.findOne(groupId).name;
 				Alert.success(mf(
@@ -219,9 +231,12 @@ Template.courseGroupRemove.events({
 	'click .js-remove'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('course.promote', course._id, groupId, false, (error) => {
-			if (error) {
-				Alert.error(error, 'Failed to remove group');
+		Meteor.call('course.promote', course._id, groupId, false, (err) => {
+			if (err) {
+				Alert.serverError(
+					err,
+					'Failed to remove group',
+				);
 			} else {
 				const groupName = Groups.findOne(groupId).name;
 				Alert.success(mf(
@@ -242,9 +257,12 @@ Template.courseGroupMakeOrganizer.events({
 	'click .js-makeOrganizer'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('course.editing', course._id, groupId, true, (error) => {
-			if (error) {
-				Alert.error(error, 'Failed to give group editing rights');
+		Meteor.call('course.editing', course._id, groupId, true, (err) => {
+			if (err) {
+				Alert.serverError(
+					err,
+					'Failed to give group editing rights',
+				);
 			} else {
 				const groupName = Groups.findOne(groupId).name;
 				Alert.success(mf(
@@ -265,9 +283,12 @@ Template.courseGroupRemoveOrganizer.events({
 	'click .js-removeOrganizer'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('course.editing', course._id, groupId, false, (error) => {
-			if (error) {
-				Alert.error(error, 'Failed to remove organizer status');
+		Meteor.call('course.editing', course._id, groupId, false, (err) => {
+			if (err) {
+				Alert.serverError(
+					err,
+					'Failed to remove organizer status',
+				);
 			} else {
 				const groupName = Groups.findOne(groupId).name;
 				Alert.success(mf(

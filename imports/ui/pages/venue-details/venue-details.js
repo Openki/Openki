@@ -208,7 +208,7 @@ Template.venueDetails.events({
 		Meteor.call('venue.remove', venue._id, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, 'Deleting the venue went wrong');
+				Alert.serverError(err, 'Deleting the venue went wrong');
 			} else {
 				Alert.success(mf('venue.removed', { NAME: venue.name }, 'Removed venue "{NAME}".'));
 				Router.go('profile');

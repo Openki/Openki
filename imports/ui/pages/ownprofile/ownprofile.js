@@ -204,7 +204,13 @@ Template.profile.events({
 			}
 			Accounts.changePassword(old, pass, (err) => {
 				if (err) {
-					Alert.error(err, 'Failed to change your password');
+					Alert.serverError(
+						err,
+						mf(
+							'profile.passwordChangeError',
+							'Failed to change your password',
+						),
+					);
 				} else {
 					Alert.success(mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'));
 					instance.changingPass.set(false);

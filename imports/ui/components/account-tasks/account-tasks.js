@@ -185,7 +185,7 @@ Template.loginFrame.events({
 		const { service } = event.currentTarget.dataset;
 		const loginMethod = `loginWith${service}`;
 		if (!Meteor[loginMethod]) {
-			Alert.error(
+			Alert.serverError(
 				new Error(`don't have ${loginMethod}`),
 				'',
 			);
@@ -197,7 +197,7 @@ Template.loginFrame.events({
 		}, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, '');
+				Alert.serverError(err, '');
 			} else {
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
@@ -365,7 +365,7 @@ Template.forgotPwdFrame.events({
 		}, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, 'We were unable to send a mail to this address');
+				Alert.serverError(err, 'We were unable to send a mail to this address');
 			} else {
 				Alert.success(mf(
 					'forgotPassword.emailSent',

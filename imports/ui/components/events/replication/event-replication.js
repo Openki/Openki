@@ -216,7 +216,7 @@ Template.eventReplication.events({
 			Meteor.call('event.save', args, (error) => {
 				responses += 1;
 				if (error) {
-					Alert.error(error, mf(
+					Alert.serverError(error, mf(
 						'eventReplication.errWithReason',
 						{ START: moment(replicaEvent.startLocal).format('llll') },
 						'Creating the copy on "{START}" failed.',

@@ -108,10 +108,7 @@ Template.languageSelection.events({
 		try {
 			localStorage.setItem('locale', lg);
 		} catch (e) {
-			Alert.error(
-				new Error(e),
-				'',
-			);
+			Alert.error(e);
 		}
 
 		Session.set('locale', lg);

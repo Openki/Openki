@@ -12,7 +12,7 @@ export const processChange = function (change, done) {
 		if (err) {
 			/* eslint-disable-next-line no-console */
 			console.log(err);
-			Alert.error(err, '');
+			Alert.serverError(err, '');
 		}
 		if (done) {
 			done();

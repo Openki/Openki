@@ -281,7 +281,7 @@ Template.eventEdit.events({
 		const start = getEventStartMoment(instance);
 		if (!start.isValid()) {
 			const exampleDate = moment().format('L');
-			Alert.error(
+			Alert.serverError(
 				mf(
 					'event.edit.dateFormatWarning',
 					{ EXAMPLEDATE: exampleDate },
@@ -362,7 +362,7 @@ Template.eventEdit.events({
 				(err, eventId) => {
 					instance.busy(false);
 					if (err) {
-						Alert.error(err, 'Saving the event went wrong');
+						Alert.serverError(err, 'Saving the event went wrong');
 					} else {
 						if (isNew) {
 							Router.go('showEvent', { _id: eventId });

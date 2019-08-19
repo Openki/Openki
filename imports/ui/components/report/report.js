@@ -35,10 +35,13 @@ Template.report.events({
 			document.title,
 			window.location.href,
 			navigator.userAgent,
-			instance.$('#reportMessage').val(),
-			(error) => {
-				if (error) {
-					Alert.error(error, 'Your report could not be sent');
+			instance.$('.js-report-message').val(),
+			(err) => {
+				if (err) {
+					Alert.serverError(
+						err,
+						mf('report.notSent', 'Your report could not be sent'),
+					);
 				} else {
 					Alert.success(mf('report.confirm', 'Your report was sent. A human will try to find an appropriate solution.'));
 				}

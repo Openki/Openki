@@ -147,7 +147,7 @@ Accounts.onEmailVerificationLink((token) => {
 	Router.go('profile');
 	Accounts.verifyEmail(token, (error) => {
 		if (error) {
-			Alert.error(error, 'Address could not be verified');
+			Alert.serverError(error, 'Address could not be verified');
 		} else {
 			Alert.success(mf(
 				'email.verified',

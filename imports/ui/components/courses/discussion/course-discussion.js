@@ -328,7 +328,7 @@ Template.post.events({
 		Meteor.call(method, comment, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, 'Posting your comment went wrong');
+				Alert.serverError(err, 'Posting your comment went wrong');
 			}
 		});
 
@@ -344,7 +344,7 @@ Template.post.events({
 		event.stopImmediatePropagation();
 		Meteor.call('courseDiscussion.deleteComment', this._id, (err) => {
 			if (err) {
-				Alert.error(err, 'Could not delete comment');
+				Alert.serverError(err, 'Could not delete comment');
 			} else {
 				Alert.success(mf('discussionPost.deleted', 'Comment has been deleted.'));
 			}

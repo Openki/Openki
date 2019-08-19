@@ -32,10 +32,7 @@ Template.featureGroup.events({
 		instance.busy('saving');
 		Meteor.call('region.featureGroup', regionId, groupId, (err) => {
 			if (err) {
-				Alert.error(
-					new Error(err),
-					'',
-				);
+				Alert.serverError(err, '');
 			} else {
 				instance.busy(false);
 			}
@@ -46,10 +43,7 @@ Template.featureGroup.events({
 		instance.busy('deleting');
 		Meteor.call('region.unsetFeaturedGroup', Session.get('region'), (err) => {
 			if (err) {
-				Alert.error(
-					new Error(err),
-					'',
-				);
+				Alert.serverError(err, '');
 			} else {
 				instance.busy(false);
 			}

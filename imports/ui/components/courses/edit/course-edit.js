@@ -287,7 +287,7 @@ Template.courseEdit.events({
 		};
 
 		if (changes.name.length === 0) {
-			Alert.error(mf('course.edit.error.title', 'Please provide a title'));
+			Alert.serverError(mf('course.edit.error.title', 'Please provide a title'));
 			return;
 		}
 
@@ -308,7 +308,7 @@ Template.courseEdit.events({
 				changes.region = instance.$('.region_select').val();
 			}
 			if (!changes.region) {
-				Alert.error(mf('course.edit.error.region', 'Please select a region'));
+				Alert.serverError(mf('course.edit.error.region', 'Please select a region'));
 				return;
 			}
 
@@ -337,7 +337,7 @@ Template.courseEdit.events({
 			Meteor.call('course.save', courseId, changes, (err, courseId) => {
 				instance.busy(false);
 				if (err) {
-					Alert.error(err, 'Saving the course went wrong');
+					Alert.serverError(err, 'Saving the course went wrong');
 				} else if (instance.data.isFrame) {
 					instance.savedCourseId.set(courseId);
 					instance.showSavedMessage.set(true);
