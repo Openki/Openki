@@ -8,7 +8,6 @@ import '/imports/ui/components/buttons/buttons';
 
 import './reset-password.html';
 
-// eslint-disable-next-line func-names
 Template.resetPassword.onCreated(function () {
 	const instance = this;
 	instance.busy(false);
@@ -18,7 +17,6 @@ Template.resetPassword.onCreated(function () {
 	instance.passwordNotSame = new ReactiveVar(false);
 	instance.showPassword = new ReactiveVar(false);
 
-	// eslint-disable-next-line func-names
 	instance.updatePassword = function () {
 		const password = $('.js-pwd-reset').val();
 		instance.password.set(password);
@@ -85,7 +83,10 @@ Template.resetPassword.events({
 		Accounts.resetPassword(token, password, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, 'Unable to reset password');
+				Alert.serverError(
+					err,
+					mf('resetPassword.passwordResetError', 'Unable to reset password'),
+				);
 			} else {
 				Alert.success(mf('resetPassword.passwordReset.', 'Your password has been reset.'));
 				Router.go('profile');

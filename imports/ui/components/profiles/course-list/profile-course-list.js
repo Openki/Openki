@@ -9,13 +9,11 @@ import '/imports/ui/components/loading/loading';
 
 import './profile-course-list.html';
 
-// eslint-disable-next-line func-names
 Template.usersCourselist.onCreated(function () {
 	const instance = this;
 	const id = instance.data.profileData.user._id;
 
 	instance.courseSub = instance.subscribe('Courses.findFilter', { userInvolved: id });
-	// eslint-disable-next-line func-names
 	instance.coursesByRole = function (role) {
 		return Courses.find({
 			members: {
@@ -49,10 +47,12 @@ Template.usersCourselist.helpers({
 		return `roles.${this.type}.myList`;
 	},
 
-	// eslint-disable-next-line consistent-return
 	getName() {
 		const { username } = Template.instance().data.profileData.user;
-		if (username) return username;
+		if (username) {
+			return username;
+		}
+		return false;
 	},
 	roleShort() {
 		return `roles.${this.type}.short`;

@@ -21,7 +21,6 @@ import './find.html';
 const hiddenFilters = ['needsRole', 'categories'];
 const filters = hiddenFilters.concat(['state']);
 
-// eslint-disable-next-line func-names
 Template.find.onCreated(function () {
 	const instance = this;
 
@@ -29,7 +28,6 @@ Template.find.onCreated(function () {
 	// This creates a browser history entry so it is not done on every filter
 	// change. For example, when the search-field receives keydowns, the filter
 	// is updated but the change is not reflected in the URI.
-	// eslint-disable-next-line func-names
 	instance.updateUrl = function () {
 		const urlParams = instance.filter.toParams();
 		delete urlParams.region; // HACK region is kept in the session (for bad reasons)
@@ -55,7 +53,6 @@ Template.find.onCreated(function () {
 		return true;
 	};
 
-	// eslint-disable-next-line func-names
 	instance.updateCategorySearch = function (query) {
 		instance.categorySearch.set(query);
 
@@ -64,21 +61,23 @@ Template.find.onCreated(function () {
 			return;
 		}
 
-		const lowQuery = query.toLowerCase();
+		const queryToLowerCase = query.toLowerCase();
 		const results = {};
-		// eslint-disable-next-line guard-for-in, no-restricted-syntax
-		for (const mainCategory in Categories) {
-			if (mf(`category.${mainCategory}`).toLowerCase().indexOf(lowQuery) >= 0) {
+
+		Object.keys(Categories).forEach((mainCategory) => {
+			if (mf(`category.${mainCategory}`).toLowerCase().includes(queryToLowerCase)) {
 				results[mainCategory] = [];
 			}
-			for (let i = 0; i < Categories[mainCategory].length; i += 1) {
-				const subCategory = Categories[mainCategory][i];
-				if (mf(`category.${subCategory}`).toLowerCase().indexOf(lowQuery) >= 0) {
-					if (results[mainCategory]) results[mainCategory].push(subCategory);
-					else results[subCategory] = [];
+			Categories[mainCategory].forEach((subCategory) => {
+				if (mf(`category.${subCategory}`).toLowerCase().includes(queryToLowerCase)) {
+					if (results[mainCategory]) {
+						results[mainCategory].push(subCategory);
+					} else {
+						results[subCategory] = [];
+					}
 				}
-			}
-		}
+			});
+		});
 		instance.categorySearchResults.set(results);
 	};
 
@@ -115,12 +114,11 @@ Template.find.onCreated(function () {
 
 	// When there are filters set, show the filtering pane
 	instance.autorun(() => {
-		// eslint-disable-next-line no-restricted-syntax
-		for (const name in filter.toParams()) {
+		Object.keys(filter.toParams()).forEach((name) => {
 			if (hiddenFilters.indexOf(name) > -1) {
 				instance.showingFilters.set(true);
 			}
-		}
+		});
 	});
 
 	// Update whenever filter changes
@@ -204,8 +202,7 @@ Template.find.events({
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			// eslint-disable-next-line guard-for-in, no-restricted-syntax
-			for (const i in filters) instance.filter.disable(filters[i]);
+			filters.forEach(filter => instance.filter.disable(filter));
 			instance.filter.done();
 			instance.updateUrl();
 		}
@@ -251,7 +248,9 @@ Template.find.helpers({
 
 	hasMore() {
 		const instance = Template.instance();
-		if (!instance.coursesReady.get()) return false;
+		if (!instance.coursesReady.get()) {
+			return false;
+		}
 
 		const filterQuery = instance.filter.toQuery();
 		const limit = instance.courseLimit.get();

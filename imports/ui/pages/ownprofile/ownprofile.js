@@ -19,7 +19,6 @@ import '/imports/ui/components/venues/link/venue-link';
 import './ownprofile.html';
 
 TemplateMixins.Expandible(Template.profile);
-// eslint-disable-next-line func-names
 Template.profile.onCreated(function () {
 	this.busy(false);
 	this.editing = new ReactiveVar(false);
@@ -47,14 +46,18 @@ Template.profile.helpers({
 		return this.user.groups.count();
 	},
 
-	// eslint-disable-next-line consistent-return
 	notificationsChecked() {
-		if (this.user.notifications) return 'checked';
+		if (this.user.notifications) {
+			return 'checked';
+		}
+		return '';
 	},
 
-	// eslint-disable-next-line consistent-return
 	privacyChecked() {
-		if (this.user.privacy) return 'checked';
+		if (this.user.privacy) {
+			return 'checked';
+		}
+		return '';
 	},
 
 	isVenueEditor() {
@@ -185,12 +188,12 @@ Template.profile.events({
 			});
 	},
 
-	'submit #changePwd'(event, instance) {
+	'submit .js-change-pwd'(event, instance) {
 		event.preventDefault();
-		const old = document.getElementById('oldpassword').value;
-		const pass = document.getElementById('newpassword').value;
+		const old = document.querySelector('.js-old-pwd').value;
+		const pass = document.querySelector('.js-new-pwd').value;
 		if (pass !== '') {
-			if (pass !== document.getElementById('newpassword_confirm').value) {
+			if (pass !== document.querySelector('.js-new-pwd-confirm').value) {
 				Alert.warning(mf('profile.passwordMismatch', "Sorry, Your new passwords don't match"));
 				return;
 			}
@@ -201,7 +204,13 @@ Template.profile.events({
 			}
 			Accounts.changePassword(old, pass, (err) => {
 				if (err) {
-					Alert.error(err, 'Failed to change your password');
+					Alert.serverError(
+						err,
+						mf(
+							'profile.passwordChangeError',
+							'Failed to change your password',
+						),
+					);
 				} else {
 					Alert.success(mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'));
 					instance.changingPass.set(false);

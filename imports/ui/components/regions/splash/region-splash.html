@@ -1,5 +1,5 @@
 <template name="regionSplash">
-	<div class="modal regions-splash" tabindex="-1" role="dialog" id="regionSplash">
+	<div class="js-region-splash modal regions-splash" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -23,14 +23,14 @@
 					<div class="regions-splash-selection">
 						{{> regionSelection isSplash=true}}
 						<button
-							class="btn btn-primary"
+							class="js-confirm-region btn btn-primary"
 							type="button"
-							id="confirmRegion">
+						>
 							{{mf 'regionSplash.ok' 'Go!'}}
 						</button>
 					</div>
 					<div class="regions-splash-login">
-						<button id="loginForRegion" class="btn-link" type="button">
+						<button class="js-login-for-region btn-link" type="button">
 							<i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>
 							{{mf 'regionsSplash.login' 'Log in to use your last selected region'}}
 						</button>

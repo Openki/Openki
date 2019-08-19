@@ -6,7 +6,6 @@ import { jQuery } from 'meteor/jquery';
 import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test';
 
 if (Meteor.isClient) {
-	// eslint-disable-next-line func-names
 	describe('Subscribe to participant role', function () {
 		this.timeout(30000);
 		const comment = 'Bi now, gay later.';
@@ -33,8 +32,11 @@ if (Meteor.isClient) {
 			// We want to support this.
 				.then(() => new Promise((done, reject) => {
 					Meteor.loginWithPassword('Seee', 'greg', (err) => {
-						if (err) reject(err);
-						else done();
+						if (err) {
+							reject(err);
+						} else {
+							done();
+						}
 					});
 				}))
 				.then(waitFor(findCommentField))

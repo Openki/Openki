@@ -18,7 +18,6 @@ Template.deleteCourseEvents.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.deleteEventsModal.onCreated(function () {
 	this.busy(false);
 
@@ -48,7 +47,6 @@ Template.deleteEventsModal.onCreated(function () {
 	});
 });
 
-// eslint-disable-next-line func-names
 Template.deleteEventsModal.onRendered(function () {
 	this.$('.js-delete-events-modal').modal('show');
 });
@@ -66,11 +64,11 @@ Template.deleteEventsModal.helpers({
 		return Template.instance().state.get('selectedEvents').length;
 	},
 
-	// eslint-disable-next-line consistent-return
 	disabledIfNoEventsSelected() {
 		if (Template.instance().state.get('selectedEvents').length === 0) {
 			return 'disabled';
 		}
+		return '';
 	},
 });
 
@@ -121,7 +119,7 @@ Template.deleteEventsModal.events({
 			Meteor.call('event.remove', event._id, (err) => {
 				responses += 1;
 				if (err) {
-					Alert.error(err, mf(
+					Alert.serverError(err, mf(
 						'deleteEventsModal.errWithReason',
 						{ TITLE: event.title, START: moment(event.startLocal).format('llll') },
 						'Deleting the event "{TITLE} ({START})" failed.',

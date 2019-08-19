@@ -30,7 +30,9 @@ export default function FilterPreview(options) {
 	// create class for courses which are to be faded out and
 	// add a suffix if the fading effect is delayed
 	let fadeClass = 'filter-no-match';
-	if (options.delayed) fadeClass += '-delayed';
+	if (options.delayed) {
+		fadeClass += '-delayed';
+	}
 
 	// fade out the courses which don't match the selector
 	course.not(selector).toggleClass(fadeClass, options.activate);

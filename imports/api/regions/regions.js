@@ -14,4 +14,6 @@ import { Mongo } from 'meteor/mongo';
 // ===========================
 
 export default Regions = new Mongo.Collection('Regions');
-if (Meteor.isServer) Regions._ensureIndex({ loc: '2dsphere' });
+if (Meteor.isServer) {
+	Regions._ensureIndex({ loc: '2dsphere' });
+}

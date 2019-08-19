@@ -2,14 +2,12 @@ import Events from '/imports/api/events/events';
 
 const UpdatesAvailable = [];
 
-// eslint-disable-next-line func-names
 UpdatesAvailable.renameEventCourseId = function () {
 	let updated = 0;
 
-	Events.find({}).fetch().forEach((event) => {
-		// eslint-disable-next-line no-param-reassign
+	Events.find({}).fetch().forEach((originalEvent) => {
+		const event = Object.assign({}, originalEvent);
 		event.courseId = event.course_id;
-		// eslint-disable-next-line no-param-reassign
 		delete event.course_id;
 		updated += Events.update(event._id, event);
 	});

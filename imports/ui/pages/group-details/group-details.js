@@ -18,7 +18,6 @@ import '/imports/ui/components/groups/settings/group-settings';
 
 import './group-details.html';
 
-// eslint-disable-next-line func-names
 Template.groupDetails.onCreated(function () {
 	const instance = this;
 
@@ -31,7 +30,14 @@ Template.groupDetails.onCreated(function () {
 
 	const handleSaving = function (err) {
 		if (err) {
-			Alert.error(err, 'Saving the group went wrong');
+			Alert.serverError(
+				err,
+				mf(
+					'groupDetails.saveError',
+					{ GROUP: group.name },
+					'Saving the group "{GROUP}" went wrong',
+				),
+			);
 		} else {
 			Alert.success(mf(
 				'groupDetails.changesSaved',
@@ -82,16 +88,15 @@ Template.groupDetails.onCreated(function () {
 
 	instance.autorun(() => {
 		const data = Template.currentData();
-		// eslint-disable-next-line no-shadow
-		const group = Groups.findOne(groupId) || {};
+		const currentGroup = Groups.findOne(groupId) || {};
 		const userId = Meteor.userId();
 		const mayEdit = data.isNew || (userId && IsGroupMember(userId, groupId));
 		instance.mayEdit.set(mayEdit);
 
-		instance.editableName.setText(group.name);
-		instance.editableShort.setText(group.short);
-		instance.editableClaim.setText(group.claim);
-		instance.editableDescription.setText(group.description);
+		instance.editableName.setText(currentGroup.name);
+		instance.editableShort.setText(currentGroup.short);
+		instance.editableClaim.setText(currentGroup.claim);
+		instance.editableDescription.setText(currentGroup.description);
 	});
 });
 
@@ -103,8 +108,12 @@ Template.groupDetails.helpers({
 
 	headerClasses() {
 		const classes = [];
-		if (this.group.logo) classes.push('has-logo');
-		if (Template.instance().mayEdit.get()) classes.push('is-editable');
+		if (this.group.logo) {
+			classes.push('has-logo');
+		}
+		if (Template.instance().mayEdit.get()) {
+			classes.push('is-editable');
+		}
 		return classes.join(' ');
 	},
 	editableName() {
@@ -142,10 +151,12 @@ Template.groupDetails.helpers({
 });
 
 Template.groupDetails.events({
-	// eslint-disable-next-line consistent-return
 	'click .js-group-settings'(event, instance) {
-		if (PleaseLogin()) return false;
+		if (PleaseLogin()) {
+			return false;
+		}
 		instance.editingSettings.set(!instance.editingSettings.get());
+		return true;
 	},
 
 	'click .js-group-save'(event, instance) {
@@ -161,7 +172,13 @@ Template.groupDetails.events({
 			Meteor.call('group.save', 'create', group, (err, groupId) => {
 				instance.busy(false);
 				if (err) {
-					Alert.error(err, 'Saving the group went wrong');
+					Alert.serverError(
+						err,
+						mf(
+							'groupDetails.saveError',
+							{ GROUP: group.name },
+						),
+					);
 				} else {
 					instance.editableName.end();
 					instance.editableShort.end();

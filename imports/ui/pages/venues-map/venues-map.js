@@ -7,7 +7,6 @@ import '/imports/ui/components/map/map';
 
 import './venues-map.html';
 
-// eslint-disable-next-line func-names
 Template.venueMap.onCreated(function () {
 	const instance = this;
 
@@ -33,14 +32,11 @@ Template.venueMap.onCreated(function () {
 		// Here we assume venues are not changed or removed.
 		instance.locationTracker.markers.remove({});
 		Venues.findFilter(query).observe({
-			added(location) {
-				// eslint-disable-next-line no-param-reassign
+			added(originalLocation) {
+				const location = Object.assign({}, originalLocation);
 				location.proposed = true;
-				// eslint-disable-next-line no-param-reassign
 				location.presetName = location.name;
-				// eslint-disable-next-line no-param-reassign
 				location.presetAddress = location.address;
-				// eslint-disable-next-line no-param-reassign
 				location.preset = true;
 				instance.locationTracker.markers.insert(location);
 			},
@@ -70,7 +66,9 @@ Template.venueMap.helpers({
 	regionName() {
 		const regionId = Template.instance().filter.get('region');
 		const regionObj = Regions.findOne(regionId);
-		if (regionObj) return regionObj.name;
+		if (regionObj) {
+			return regionObj.name;
+		}
 		return false;
 	},
 });

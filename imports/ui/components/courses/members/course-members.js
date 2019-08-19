@@ -20,7 +20,6 @@ import '/imports/ui/components/send-message/send-message';
 
 import './course-members.html';
 
-// eslint-disable-next-line func-names
 Template.courseMembers.onCreated(function () {
 	this.increaseBy = 10;
 	this.membersDisplayLimit = new ReactiveVar(this.increaseBy);
@@ -78,7 +77,6 @@ Template.courseMembers.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.courseMember.onCreated(function () {
 	const instance = this;
 	instance.subscribe('user', this.data.member.user);
@@ -99,7 +97,6 @@ Template.courseMember.onCreated(function () {
 		instance.editableMessage.setText(data.member.comment);
 	});
 
-	// eslint-disable-next-line func-names
 	instance.subscribeToTeam = function () {
 		const user = Users.findOne(this.data.member.user);
 		if (!user) return false; // Probably not loaded yet
@@ -107,7 +104,6 @@ Template.courseMember.onCreated(function () {
 		return new Subscribe(this.data.course, user, 'team');
 	};
 
-	// eslint-disable-next-line func-names
 	instance.removeFromTeam = function () {
 		const user = Users.findOne(this.data.member.user);
 		if (!user) return false; // Probably not loaded yet
@@ -118,9 +114,11 @@ Template.courseMember.onCreated(function () {
 
 
 Template.courseMember.helpers({
-	// eslint-disable-next-line consistent-return
 	ownUserMemberClass() {
-		if (this.member.user === Meteor.userId()) return 'is-own-user';
+		if (this.member.user === Meteor.userId()) {
+			return 'is-own-user';
+		}
+		return '';
 	},
 
 	memberRoles() {
@@ -134,11 +132,11 @@ Template.courseMember.helpers({
 		return change && change.validFor(Meteor.user());
 	},
 
-	// eslint-disable-next-line consistent-return
 	rolelistIcon(roletype) {
 		if (roletype !== 'participant') {
 			return Roles.find(role => role.type === roletype).icon;
 		}
+		return '';
 	},
 
 	editableMessage() {
@@ -147,7 +145,9 @@ Template.courseMember.helpers({
 	},
 
 	mayUnsubscribeFromTeam(label) {
-		if (label !== 'team') return false;
+		if (label !== 'team') {
+			return false;
+		}
 		const change = Template.instance().removeFromTeam();
 		return change && change.validFor(Meteor.user());
 	},

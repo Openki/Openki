@@ -11,7 +11,6 @@ import '/imports/ui/components/courses/categories/course-categories';
 
 import './course-filter.html';
 
-// eslint-disable-next-line func-names
 Template.filter.onCreated(function () {
 	this.stateFilters = [
 		{
@@ -46,12 +45,18 @@ Template.filter.helpers({
 		// check if one of the filters indicated as filters is active
 		let activeVisibleFilter = false;
 		instance.visibleFilters.forEach((filter) => {
-			if (parentInstance.filter.get(filter)) activeVisibleFilter = true;
+			if (parentInstance.filter.get(filter)) {
+				activeVisibleFilter = true;
+			}
 		});
 
-		if (activeVisibleFilter) classes.push('active');
+		if (activeVisibleFilter) {
+			classes.push('active');
+		}
 
-		if (parentInstance.showingFilters.get()) classes.push('open');
+		if (parentInstance.showingFilters.get()) {
+			classes.push('open');
+		}
 
 		return classes.join(' ');
 	},
@@ -79,7 +84,7 @@ Template.filter.helpers({
 });
 
 Template.filter.events({
-	'click #toggleFilters'(event, instance) {
+	'click .js-toggle-filters'(event, instance) {
 		const parentInstance = instance.parentInstance();
 		const { showingFilters } = parentInstance;
 
@@ -121,7 +126,6 @@ Template.filter.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.additionalFilters.onCreated(function () {
 	this.findInstance = this.parentInstance(2);
 
@@ -140,14 +144,13 @@ Template.additionalFilters.onCreated(function () {
 		},
 	].map((role) => {
 		// add icon from Roles collection to role object
-		// eslint-disable-next-line no-param-reassign
+		/* eslint-disable-next-line no-param-reassign */
 		role.icon = _.findWhere(Roles, { type: role.name }).icon;
 
 		return role;
 	});
 });
 
-// eslint-disable-next-line func-names
 Template.additionalFilters.onRendered(function () {
 	const instance = this;
 	const catSelect = instance.$('.filter-categories-select');

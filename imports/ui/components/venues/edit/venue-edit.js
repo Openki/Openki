@@ -4,13 +4,14 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
+import Alert from '/imports/api/alerts/alert';
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
+
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import Editable from '/imports/ui/lib/editable';
 import LocationTracker from '/imports/ui/lib/location-tracker';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import Alert from '/imports/api/alerts/alert';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
@@ -18,7 +19,6 @@ import '/imports/ui/components/map/map';
 
 import './venue-edit.html';
 
-// eslint-disable-next-line func-names
 Template.venueEdit.onCreated(function () {
 	const instance = this;
 
@@ -62,11 +62,11 @@ Template.venueEdit.onCreated(function () {
 				// replace it by a main one. This is only a little weird.
 				instance.locationTracker.markers.remove({ proposed: true });
 
-				// eslint-disable-next-line no-param-reassign
+				/* eslint-disable-next-line no-param-reassign */
 				mark.main = true;
-				// eslint-disable-next-line no-param-reassign
+				/* eslint-disable-next-line no-param-reassign */
 				mark.draggable = true;
-				// eslint-disable-next-line no-param-reassign
+				/* eslint-disable-next-line no-param-reassign */
 				delete mark.proposed;
 				instance.locationTracker.markers.insert(mark);
 			}
@@ -129,7 +129,6 @@ Template.venueEdit.helpers({
 
 		// We return a function so the reactive dependency on locationState is
 		// established from within the map template which will call it.
-		// eslint-disable-next-line func-names
 		return function () {
 			// We only allow placing if we don't have a selected location yet
 			return !locationTracker.markers.findOne({ main: true });
@@ -139,7 +138,6 @@ Template.venueEdit.helpers({
 	allowRemoving() {
 		const { locationTracker } = Template.instance();
 
-		// eslint-disable-next-line func-names
 		return function () {
 			return locationTracker.markers.findOne({ main: true });
 		};
@@ -163,17 +161,21 @@ Template.venueEdit.events({
 		};
 
 		if (!changes.name) {
-			// eslint-disable-next-line no-alert
-			alert(mf('venue.create.plsGiveVenueName', 'Please give your venue a name'));
+			Alert.error(
+				mf('venue.create.plsGiveVenueName', 'Please give your venue a name'),
+			);
 			return;
 		}
 
 		const newDescription = instance.data.editableDescription.getEdited();
-		if (newDescription) changes.description = newDescription;
+		if (newDescription) {
+			changes.description = newDescription;
+		}
 
 		if (changes.description.trim().length === 0) {
-			// eslint-disable-next-line no-alert
-			alert(mf('venue.create.plsProvideDescription', 'Please provide a description for your venue'));
+			Alert.error(
+				mf('venue.create.plsProvideDescription', 'Please provide a description for your venue'),
+			);
 			return;
 		}
 
@@ -186,8 +188,9 @@ Template.venueEdit.events({
 		if (instance.isNew) {
 			changes.region = instance.selectedRegion.get();
 			if (!changes.region) {
-				// eslint-disable-next-line no-alert
-				alert(mf('venue.create.plsSelectRegion', 'Please select a region'));
+				Alert.error(
+					mf('venue.create.plsSelectRegion', 'Please select a region'),
+				);
 				return;
 			}
 		}
@@ -196,8 +199,9 @@ Template.venueEdit.events({
 		if (marker) {
 			changes.loc = marker.loc;
 		} else {
-			// eslint-disable-next-line no-alert
-			alert(mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'));
+			Alert.error(
+				mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'),
+			);
 			return;
 		}
 
@@ -207,7 +211,10 @@ Template.venueEdit.events({
 			Meteor.call('venue.save', venueId, changes, (err, res) => {
 				instance.busy(false);
 				if (err) {
-					Alert.error(err, 'Saving the venue went wrong');
+					Alert.serverError(
+						err,
+						mf('venue.saving.error', 'Saving the venue went wrong'),
+					);
 				} else {
 					Alert.success(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'));
 					if (instance.isNew) {

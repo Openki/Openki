@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import '/imports/utils/sort-spec';
+import SortSpec from '/imports/utils/sort-spec';
 
 // This should not be here
 msgfmt.init('en');

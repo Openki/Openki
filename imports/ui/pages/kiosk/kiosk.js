@@ -13,7 +13,9 @@ Template.kioskEvents.helpers({
 		instance.subscribe('group', groupId);
 
 		const group = Groups.findOne({ _id: groupId });
-		if (group) return group.short;
+		if (group) {
+			return group.short;
+		}
 		return '';
 	},
 	showTime() {
@@ -31,11 +33,13 @@ Template.kioskEvent.helpers({
 		return Template.instance().parentInstance().data.timePeriod;
 	},
 
-	// eslint-disable-next-line consistent-return
 	timeFromNow(date) {
 		Session.get('fineTime');
 		Session.get('timeLocale'); // it depends
-		if (date) return moment(date).fromNow();
+		if (date) {
+			return moment(date).fromNow();
+		}
+		return false;
 	},
 
 	isOngoing() {
@@ -47,7 +51,6 @@ Template.kioskEvent.helpers({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.kioskEvent.rendered = function () {
 	this.$('.kiosk-event').dotdotdot();
 };

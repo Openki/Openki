@@ -14,7 +14,6 @@ import '/imports/ui/components/venues/link/venue-link';
 
 import './event-edit-location.html';
 
-// eslint-disable-next-line func-names
 Template.eventEditVenue.onCreated(function () {
 	const instance = this;
 	// Something, somewhere, must have gone terribly wrong (for this line to exist)
@@ -28,12 +27,17 @@ Template.eventEditVenue.onCreated(function () {
 	// unset: no location selected
 	// preset: one of the preset locations is referenced
 	// own: name and coordinates were entered for this event specifically
-	// eslint-disable-next-line func-names
 	instance.locationIs = function (type) {
 		const location = instance.location.get();
-		if (!location) return type === 'unset';
-		if (location._id) return type === 'preset';
-		if (location.name || location.loc) return type === 'own';
+		if (!location) {
+			return type === 'unset';
+		}
+		if (location._id) {
+			return type === 'preset';
+		}
+		if (location.name || location.loc) {
+			return type === 'own';
+		}
 		return type === 'unset';
 	};
 
@@ -47,7 +51,6 @@ Template.eventEditVenue.onCreated(function () {
 		instance.locationTracker.setRegion(regionId);
 	});
 
-	// eslint-disable-next-line func-names
 	instance.reset = function () {
 		instance.locationTracker.markers.remove({ proposed: true });
 	};
@@ -60,8 +63,12 @@ Template.eventEditVenue.onCreated(function () {
 				// store it as new location for the event
 				const updLocation = instance.location.get();
 				updLocation.loc = mark.loc;
-				if (mark.presetName) updLocation.name = mark.presetName;
-				if (mark.presetAddress) updLocation.address = mark.presetAddress;
+				if (mark.presetName) {
+					updLocation.name = mark.presetName;
+				}
+				if (mark.presetAddress) {
+					updLocation.address = mark.presetAddress;
+				}
 				if (mark.preset) {
 					updLocation._id = mark._id;
 					updLocation.editor = mark.editor;
@@ -82,7 +89,9 @@ Template.eventEditVenue.onCreated(function () {
 				if (mark.remove) {
 					delete updLocation.loc;
 				} else {
-					if (_.isEqual(mark.loc, updLocation.loc)) return;
+					if (_.isEqual(mark.loc, updLocation.loc)) {
+						return;
+					}
 					updLocation.loc = mark.loc;
 				}
 				instance.location.set(updLocation);
@@ -93,7 +102,9 @@ Template.eventEditVenue.onCreated(function () {
 	instance.autorun(() => {
 		// Do not search preset locations when one is already chosen or when
 		// searching address
-		if (instance.locationIs('preset') || instance.addressSearch.get()) return;
+		if (instance.locationIs('preset') || instance.addressSearch.get()) {
+			return;
+		}
 
 		const search = instance.search.get().trim();
 		instance.locationTracker.markers.remove({ proposed: true });
@@ -110,14 +121,11 @@ Template.eventEditVenue.onCreated(function () {
 
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
-			added(location) {
-				// eslint-disable-next-line no-param-reassign
+			added(originalLocation) {
+				const location = Object.assign({}, originalLocation);
 				location.proposed = true;
-				// eslint-disable-next-line no-param-reassign
 				location.presetName = location.name;
-				// eslint-disable-next-line no-param-reassign
 				location.presetAddress = location.address;
-				// eslint-disable-next-line no-param-reassign
 				location.preset = true;
 				instance.locationTracker.markers.insert(location);
 			},
@@ -168,7 +176,6 @@ Template.eventEditVenue.helpers({
 		// We return a function so the reactive dependency on locationState is
 		// established from within the map template which will call it. The
 		// craziness is strong with this one.
-		// eslint-disable-next-line func-names
 		return function () {
 			return !location.get().loc;
 		};
@@ -178,7 +185,6 @@ Template.eventEditVenue.helpers({
 		const { locationIs } = Template.instance();
 		const { location } = Template.instance();
 
-		// eslint-disable-next-line func-names
 		return function () {
 			return locationIs('own') && location.get().loc;
 		};
@@ -225,7 +231,7 @@ Template.eventEditVenue.events({
 			params: nominatimQuery,
 		}, (error, result) => {
 			if (error) {
-				Alert.error(error, '');
+				Alert.serverError(error, '');
 				return;
 			}
 

@@ -4,7 +4,9 @@
   * @return true if there is a member with the given role, and false otherwise.
   */
 export function HasRole(members, role) {
-	if (!members) return false;
+	if (!members) {
+		return false;
+	}
 	return members.some(member => member.roles.indexOf(role) !== -1);
 }
 

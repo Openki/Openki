@@ -34,9 +34,10 @@ const Venue = function () {
   * @param {Object} venue
   * @return {Boolean}
   */
-// eslint-disable-next-line func-names
 Venue.prototype.editableBy = function (user) {
-	if (!user) return false;
+	if (!user) {
+		return false;
+	}
 	const isNew = !this._id;
 	return isNew // Anybody may create a new location
 		|| user._id === this.editor
@@ -49,7 +50,9 @@ const Venues = new Mongo.Collection('Venues', {
 	},
 });
 
-if (Meteor.isServer) Venues._ensureIndex({ loc: '2dsphere' });
+if (Meteor.isServer) {
+	Venues._ensureIndex({ loc: '2dsphere' });
+}
 
 Venues.Filtering = () => Filtering(
 	{ region: Predicates.id },
@@ -68,7 +71,6 @@ Venues.facilityOptions = ['projector', 'screen', 'audio', 'blackboard', 'whitebo
  * limit: how many to find
  *
  */
-// eslint-disable-next-line func-names
 Venues.findFilter = function (filter, limit, skip, sort) {
 	const find = {};
 	const options = { skip, sort };

@@ -27,10 +27,12 @@ Template.introduction.helpers({
 		return Introduction.openedIntro();
 	},
 
-	// eslint-disable-next-line consistent-return
 	isInCalendar() {
 		const currentRoute = Router.current().route;
-		if (currentRoute) return currentRoute.getName() === 'calendar';
+		if (currentRoute) {
+			return currentRoute.getName() === 'calendar';
+		}
+		return false;
 	},
 
 	clearfixFor(triggerSize) {

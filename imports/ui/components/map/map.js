@@ -1,6 +1,5 @@
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
-// import { L } from 'meteor/bevanhunt:leaflet';
 
 import './map.html';
 
@@ -11,20 +10,17 @@ import './map.html';
  *
  * */
 
-// eslint-disable-next-line func-names
 Template.map.onCreated(function () {
 	this.fullscreen = new ReactiveVar(false);
 });
 
 const FaIcon = function (faClass) {
-	// eslint-disable-next-line func-names
 	return function () {
 		return L.DomUtil.create('span', `fa fa-${faClass}`);
 	};
 };
 
 const FaCompIcon = function (opClass, icClass) {
-	// eslint-disable-next-line func-names
 	return function () {
 		const cont = L.DomUtil.create('span', 'fa');
 		L.DomUtil.create('i', `fa fa-${opClass}`, cont);
@@ -58,7 +54,6 @@ const OpenkiControl = L.Control.extend({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.map.onRendered(function () {
 	const instance = this;
 
@@ -94,9 +89,13 @@ Template.map.onRendered(function () {
 	};
 
 	instance.autorun(() => {
-		if (tiles) map.removeLayer(tiles);
+		if (tiles) {
+			map.removeLayer(tiles);
+		}
 		let tileF = tileLayers[Session.get('locale')];
-		if (!tileF) tileF = tileLayers.default;
+		if (!tileF) {
+			tileF = tileLayers.default;
+		}
 		tiles = tileF();
 		tiles.addTo(map);
 	});
@@ -136,15 +135,16 @@ Template.map.onRendered(function () {
 		const fullscreen = instance.fullscreen.get();
 		const { mini } = instance.data;
 
-		const show = function (control, toggle) {
-			// eslint-disable-next-line no-param-reassign
-			toggle = !!toggle; // coerce to bool
+		const show = function (control, originalToggle) {
+			const toggle = !!originalToggle; // coerce to bool
 
-			// eslint-disable-next-line no-param-reassign
-			if (control.shown === undefined) control.shown = false;
+			if (control.shown === undefined) {
+				/* eslint-disable-next-line no-param-reassign */
+				control.shown = false;
+			}
 
 			if (control.shown !== toggle) {
-				// eslint-disable-next-line no-param-reassign
+				/* eslint-disable-next-line no-param-reassign */
 				control.shown = toggle;
 				if (toggle) {
 					map.addControl(control);
@@ -183,22 +183,22 @@ Template.map.onRendered(function () {
 	const fitBounds = _.debounce(() => {
 		const bounds = L.latLngBounds([]);
 		let count = 0;
-		// eslint-disable-next-line guard-for-in, no-restricted-syntax
-		for (const layerPos in layers) {
+		Object.keys(layers).forEach((layerPos) => {
 			bounds.extend(layers[layerPos].getBounds());
 			count += 1;
-		}
+		});
 
 		let maxZoom = 16;
 
 		// Use center markers when there are no other markers
 		if (count < 1) {
-			// eslint-disable-next-line guard-for-in, no-restricted-syntax
-			for (const centerPos in centers) {
+			Object.keys(centers).forEach((centerPos) => {
 				bounds.extend(centers[centerPos]);
 				count += 1;
+			});
+			if (count === 1) {
+				maxZoom = 13;
 			}
-			if (count === 1) maxZoom = 13;
 		}
 
 		if (bounds.isValid()) {
@@ -224,7 +224,7 @@ Template.map.onRendered(function () {
 			} else {
 				const marker = L.geoJson(mark.loc, {
 					pointToLayer(feature, latlng) {
-						// eslint-disable-next-line no-shadow
+						/* eslint-disable-next-line no-shadow */
 						let marker;
 						if (mark.proposed) {
 							marker = L.circleMarker(latlng, geojsonProposedMarkerOptions);
@@ -241,9 +241,7 @@ Template.map.onRendered(function () {
 							markers.update(mark._id, { $set: { selected: true } });
 						});
 						marker.on('dragend', (event) => {
-							// eslint-disable-next-line no-shadow
-							const marker = event.target;
-							const latLng = marker.getLatLng();
+							const latLng = event.target.getLatLng();
 							const loc = {
 								type: 'Point',
 								coordinates: [latLng.lng, latLng.lat],
@@ -267,14 +265,18 @@ Template.map.onRendered(function () {
 		};
 
 		const removeMarker = function (mark) {
-			if (layers[mark._id]) map.removeLayer(layers[mark._id]);
+			if (layers[mark._id]) {
+				map.removeLayer(layers[mark._id]);
+			}
 			delete layers[mark._id];
 			delete centers[mark._id];
 		};
 
 		const updateMarker = function (mark) {
 			const layer = layers[mark._id];
-			if (!layer) return;
+			if (!layer) {
+				return;
+			}
 			layer.setStyle({ weight: mark.hover ? 5 : 1 });
 		};
 
@@ -303,7 +305,6 @@ Template.map.onRendered(function () {
 		}, 0);
 	});
 
-	// eslint-disable-next-line func-names
 	instance.proposeMarker = function () {
 		const center = map.getCenter();
 		instance.data.markers.insert({
@@ -313,7 +314,6 @@ Template.map.onRendered(function () {
 		});
 	};
 
-	// eslint-disable-next-line func-names
 	instance.removeMarker = function () {
 		instance.data.markers.update(
 			{ main: true },
@@ -351,7 +351,9 @@ Template.map.helpers({
 
 Template.map.events({
 	click(event, instance) {
-		if (instance.data.mini) instance.fullscreen.set(true);
+		if (instance.data.mini) {
+			instance.fullscreen.set(true);
+		}
 	},
 
 	'mousedown .js-add-marker'(event, instance) {
@@ -372,6 +374,8 @@ Template.map.events({
 
 	keyup(event, instance) {
 		// Press escape to close fullscreen
-		if (event.keyCode === 27) instance.fullscreen.set(false);
+		if (event.keyCode === 27) {
+			instance.fullscreen.set(false);
+		}
 	},
 });

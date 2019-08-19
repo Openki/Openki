@@ -12,7 +12,6 @@ import '/imports/ui/components/venues/edit/venue-edit';
 
 import './venue-details.html';
 
-// eslint-disable-next-line func-names
 Template.venueDetails.onCreated(function () {
 	const instance = this;
 	instance.busy();
@@ -30,7 +29,6 @@ Template.venueDetails.onCreated(function () {
 	const markers = new Meteor.Collection(null);
 	this.markers = markers;
 
-	// eslint-disable-next-line func-names
 	this.setLocation = function (loc) {
 		markers.remove({ main: true });
 		if (loc) {
@@ -41,7 +39,6 @@ Template.venueDetails.onCreated(function () {
 		}
 	};
 
-	// eslint-disable-next-line func-names
 	this.setRegion = function (region) {
 		markers.remove({ center: true });
 		if (region && region.loc) {
@@ -58,9 +55,10 @@ Template.venueDetails.onCreated(function () {
 		}
 	});
 
-	// eslint-disable-next-line func-names
 	this.getEvents = function (past) {
-		if (isNew) return;
+		if (isNew) {
+			return false;
+		}
 
 		let limit; let
 			count;
@@ -79,16 +77,14 @@ Template.venueDetails.onCreated(function () {
 
 		let events = Events.findFilter(predicate).fetch();
 		count.set(events.length);
-		if (limit) events = events.slice(0, limit);
+		if (limit) {
+			events = events.slice(0, limit);
+		}
 
-		// eslint-disable-next-line consistent-return
 		return events;
 	};
 
-	// eslint-disable-next-line func-names
 	this.unloadedEvents = function (past) {
-		// eslint-disable-next-line no-shadow
-		const instance = Template.instance();
 		let limit; let
 			count;
 
@@ -109,7 +105,6 @@ Template.venueDetails.onCreated(function () {
 	};
 });
 
-// eslint-disable-next-line func-names
 Template.venueDetails.onRendered(function () {
 	const instance = this;
 
@@ -139,14 +134,13 @@ Template.venueDetails.helpers({
 		return Template.instance().markers;
 	},
 
-	// eslint-disable-next-line consistent-return
 	coords() {
 		if (this.loc && this.loc.coordinates) {
 			const fmt = function (coord) {
-				let sign = '';
-				if (coord > 0) sign = '+';
-				if (coord < 0) sign = '-';
-				return sign + coord.toPrecision(6);
+				if (coord < 0) {
+					return `-${coord.toPrecision(6)}`;
+				}
+				return `+${coord.toPrecision(6)}`;
 			};
 			const coords = {
 				LAT: fmt(this.loc.coordinates[1]),
@@ -155,6 +149,7 @@ Template.venueDetails.helpers({
 
 			return mf('venueDetails.coordinates', coords, 'Coordinates: {LAT} {LON}');
 		}
+		return false;
 	},
 
 	facilityNames() {
@@ -213,7 +208,7 @@ Template.venueDetails.events({
 		Meteor.call('venue.remove', venue._id, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, 'Deleting the venue went wrong');
+				Alert.serverError(err, 'Deleting the venue went wrong');
 			} else {
 				Alert.success(mf('venue.removed', { NAME: venue.name }, 'Removed venue "{NAME}".'));
 				Router.go('profile');

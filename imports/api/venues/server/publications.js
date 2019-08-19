@@ -5,7 +5,9 @@ import Venues from '../venues';
 Meteor.publish('venues', (region) => {
 	check(region, Match.Maybe(String));
 	const find = {};
-	if (region) find.region = region;
+	if (region) {
+		find.region = region;
+	}
 	return Venues.find(find);
 });
 

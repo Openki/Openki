@@ -50,12 +50,20 @@ const makeFilterQuery = function (params) {
 	const query = filter.toQuery();
 
 	let start;
-	if (params.start) start = moment(params.start);
-	if (!start || !start.isValid()) start = moment(minuteTime.get()).startOf('day');
+	if (params.start) {
+		start = moment(params.start);
+	}
+	if (!start || !start.isValid()) {
+		start = moment(minuteTime.get()).startOf('day');
+	}
 
 	let end;
-	if (params.end) end = moment(params.end);
-	if (!end || !end.isValid()) end = moment(start).add(1, 'day');
+	if (params.end) {
+		end = moment(params.end);
+	}
+	if (!end || !end.isValid()) {
+		end = moment(start).add(1, 'day');
+	}
 
 	query.period = [start.toDate(), end.toDate()];
 
@@ -83,7 +91,7 @@ if (Meteor.isClient) {
 	Analytics.installRouterActions(Router);
 }
 
-// eslint-disable-next-line array-callback-return, func-names
+/* eslint-disable-next-line array-callback-return */
 Router.map(function () {
 	this.route('adminPanel', {
 		path: 'admin',
@@ -219,7 +227,9 @@ Router.map(function () {
 				group = Groups.findOne(this.params._id);
 			}
 
-			if (!group) return false;
+			if (!group) {
+				return false;
+			}
 
 			const courseQuery = Object.assign(this.params.query, {
 				group: group._id,
@@ -386,17 +396,21 @@ Router.map(function () {
 		data() {
 			const course = Courses.findOne({ _id: this.params._id });
 
-			if (!course) return false;
+			if (!course) {
+				return false;
+			}
 
 			function getMember(members, user) {
-				if (!members) return false;
+				if (!members) {
+					return false;
+				}
 				let member = false;
-				// eslint-disable-next-line consistent-return
-				members.forEach((memberCandidate) => {
+				members.every((memberCandidate) => {
 					if (memberCandidate.user === user) {
 						member = memberCandidate;
-						return true; // break
+						return false; // break
 					}
+					return true;
 				});
 				return member;
 			}
@@ -471,7 +485,9 @@ Router.map(function () {
 				}
 			} else {
 				event = Events.findOne({ _id: this.params._id });
-				if (!event) return false;
+				if (!event) {
+					return false;
+				}
 			}
 
 			return event;
@@ -494,11 +510,17 @@ Router.map(function () {
 
 			// collect time when first event starts and last event ends
 			events.forEach((event) => {
-				if (!start || event.start < start) start = event.start;
-				if (!end || end < event.end) end = event.end;
+				if (!start || event.start < start) {
+					start = event.start;
+				}
+				if (!end || end < event.end) {
+					end = event.end;
+				}
 			});
 
-			if (!start || !end) return [];
+			if (!start || !end) {
+				return [];
+			}
 
 			start = moment(start).startOf('hour');
 			end = moment(end).startOf('hour');
@@ -541,29 +563,27 @@ Router.map(function () {
 				return perVenue[id].rows;
 			};
 
-			events.forEach((event) => {
-				// eslint-disable-next-line no-param-reassign
+			events.forEach((originalEvent) => {
+				const event = Object.assign({}, originalEvent);
 				event.relStart = (event.start.getTime() - startAbs) / span;
-				// eslint-disable-next-line no-param-reassign
 				event.relEnd = (endAbs - event.end.getTime()) / span;
 				let placed = false;
 
 				const venueRows = useVenue(event.venue);
-				// eslint-disable-next-line guard-for-in, no-restricted-syntax
-				for (const rowNr in venueRows) {
-					const row = venueRows[rowNr];
+				venueRows.every((venue) => {
 					let last;
-					// eslint-disable-next-line guard-for-in, no-restricted-syntax
-					for (const eventNr in row) {
-						const placedEvent = row[eventNr];
-						if (!last || placedEvent.end > last) last = placedEvent.end;
-					}
+					venueRows.forEach((placedEvent) => {
+						if (!last || placedEvent.end > last) {
+							last = placedEvent.end;
+						}
+					});
 					if (last <= event.start) {
-						row.push(event);
+						venue.push(event);
 						placed = true;
-						break;
+						return false;
 					}
-				}
+					return true;
+				});
 				if (!placed) {
 					venueRows.push([event]);
 				}
@@ -587,11 +607,13 @@ Router.map(function () {
 		},
 		data() {
 			const user = Meteor.users.findOne({ _id: this.params._id });
-			if (!user) return; // not loaded?
+			if (!user) {
+				return false; // not loaded?
+			}
 
 			// What privileges the user has
-			const privileges = _.reduce(['admin'], (ps, p) => {
-				// eslint-disable-next-line no-param-reassign
+			const privileges = _.reduce(['admin'], (originalPs, p) => {
+				const ps = Object.assign({}, originalPs);
 				ps[p] = UserPrivilegeUtils.privileged(user, p);
 				return ps;
 			}, {});
@@ -599,7 +621,6 @@ Router.map(function () {
 			const alterPrivileges = UserPrivilegeUtils.privilegedTo('admin');
 			const showPrivileges = alterPrivileges || (user.privileges && user.privileges.length);
 
-			// eslint-disable-next-line consistent-return
 			return {
 				user,
 				alterPrivileges,
@@ -637,7 +658,9 @@ Router.map(function () {
 				venue.editor = userId;
 			} else {
 				venue = Venues.findOne({ _id: this.params._id });
-				if (!venue) return false; // Not found
+				if (!venue) {
+					return false; // Not found
+				}
 			}
 
 			data.venue = venue;
@@ -647,7 +670,9 @@ Router.map(function () {
 
 		onAfterAction() {
 			const data = this.data();
-			if (!data) return;
+			if (!data) {
+				return;
+			}
 
 			const { venue } = data;
 			let title;
@@ -672,7 +697,6 @@ Router.map(function () {
 	});
 });
 
-// eslint-disable-next-line func-names
 Router.route('/profile/unsubscribe/:token', function () {
 	const unsubToken = this.params.token;
 

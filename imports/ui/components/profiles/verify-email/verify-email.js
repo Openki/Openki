@@ -5,7 +5,6 @@ import Alert from '/imports/api/alerts/alert';
 
 import './verify-email.html';
 
-// eslint-disable-next-line func-names
 Template.verifyEmail.onCreated(function () {
 	this.sending = new ReactiveVar(false);
 });
@@ -22,7 +21,7 @@ Template.verifyEmail.events({
 		Meteor.call('sendVerificationEmail', (err) => {
 			if (err) {
 				instance.sending.set(false);
-				Alert.error(err, 'Failed to send verification mail');
+				Alert.serverError(err, 'Failed to send verification mail');
 			} else {
 				Alert.success(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'));
 			}

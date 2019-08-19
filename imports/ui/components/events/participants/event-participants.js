@@ -7,7 +7,6 @@ import '/imports/ui/components/profile-link/profile-link';
 
 import './event-participants.html';
 
-// eslint-disable-next-line func-names
 Template.eventParticipants.onCreated(function () {
 	this.increaseBy = 10;
 	this.participantsDisplayLimit = new ReactiveVar(this.increaseBy);
@@ -45,8 +44,10 @@ Template.eventParticipants.events({
 });
 
 Template.eventParticipant.helpers({
-	// eslint-disable-next-line consistent-return
 	ownUserParticipantClass() {
-		if (this.participant === Meteor.userId()) return 'is-own-user';
+		if (this.participant === Meteor.userId()) {
+			return 'is-own-user';
+		}
+		return '';
 	},
 });

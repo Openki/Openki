@@ -2,7 +2,6 @@ import Regions from '/imports/api/regions/regions';
 
 const IpLocation = {};
 
-// eslint-disable-next-line func-names
 IpLocation.detect = function (handler) {
 	// SPECIAL CASE
 	// When we're connected to localhost, it's likely a dev-setup.

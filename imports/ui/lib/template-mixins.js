@@ -1,3 +1,5 @@
+import Alert from '/imports/api/alerts/alert';
+
 const TemplateMixins = {
 	/** Setup expand/collaps logic for a template
 	*
@@ -22,11 +24,9 @@ const TemplateMixins = {
 	* </template>
 	*/
 	Expandible(template) {
-		// eslint-disable-next-line func-names
 		template.onCreated(function () {
 			const expander = Random.id(); // Token to keep track of which Expandible is open
 			this.expander = expander; // Read by event handlers
-			// eslint-disable-next-line func-names
 			this.collapse = function () {
 				if (Session.equals('verify', expander)) {
 					Session.set('verify', false);
@@ -57,7 +57,6 @@ const TemplateMixins = {
 			return Math.abs(dx - e.screenX) < 5 && Math.abs(dy - e.screenY) < 5;
 		};
 
-		// eslint-disable-next-line func-names
 		template.onCreated(function () {
 			this.expanded = new ReactiveVar(false);
 		});
@@ -128,18 +127,19 @@ const TemplateMixins = {
 	 */
 	FormfieldErrors(template, mapping) {
 		template.helpers({
-			// eslint-disable-next-line consistent-return
 			errorClass(field) {
 				if (Template.instance().errors.messages.findOne({ field })) {
 					return 'has-error';
 				}
+				return false;
 			},
 			errorMessage(field) {
 				const message = Template.instance().errors.messages.findOne({ field });
-				if (!message) return;
+				if (!message) {
+					return false;
+				}
 
 				const text = mapping[message.key].text();
-				// eslint-disable-next-line consistent-return
 				return Spacebars.SafeString(
 					`<span class="help-block warning-block">${
 						Blaze._escape(text)
@@ -148,7 +148,6 @@ const TemplateMixins = {
 			},
 		});
 
-		// eslint-disable-next-line func-names
 		template.onCreated(function () {
 			const messages = new Mongo.Collection(null);
 			this.errors = {
@@ -159,8 +158,7 @@ const TemplateMixins = {
 				add(key) {
 					const message = mapping[key];
 					if (!message) {
-						// eslint-disable-next-line no-console
-						console.log('Unmapped error ', key);
+						Alert.error('Unmapped error');
 						return;
 					}
 

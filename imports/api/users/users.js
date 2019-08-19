@@ -61,10 +61,11 @@ export default Users = Meteor.users;
   * If the user is not logged-in, a placeholder "anon" object is
   * returned.
   */
-// eslint-disable-next-line func-names
 Users.currentUser = function () {
 	const logged = Meteor.user();
-	if (logged) return logged;
+	if (logged) {
+		return logged;
+	}
 
 	const anon = new User();
 	anon._id = 'anon';
@@ -79,10 +80,11 @@ Users.currentUser = function () {
   *
   * The user must be a member of the group to be allowed to promote things with it.
   */
-// eslint-disable-next-line func-names
 User.prototype.mayPromoteWith = function (group) {
 	const groupId = IdTools.extract(group);
-	if (!groupId) return false;
+	if (!groupId) {
+		return false;
+	}
 	return this.groups.indexOf(groupId) >= 0;
 };
 
@@ -90,7 +92,6 @@ User.prototype.mayPromoteWith = function (group) {
   *
   * @returns String with email address or Boolean false
   */
-// eslint-disable-next-line func-names
 User.prototype.emailAddress = function () {
 	return (this.emails
 		&& this.emails[0]
@@ -102,7 +103,6 @@ User.prototype.emailAddress = function () {
   *
   * @returns String with verified email address or Boolean false
   */
-// eslint-disable-next-line func-names
 User.prototype.verifiedEmailAddress = function () {
 	const emailRecord = this.emails && this.emails[0];
 	return (emailRecord
@@ -111,13 +111,11 @@ User.prototype.verifiedEmailAddress = function () {
 		|| false;
 };
 
-// eslint-disable-next-line func-names
 User.prototype.privileged = function (role) {
 	return this.privileges
 		&& this.privileges.indexOf(role) > -1;
 };
 
-// eslint-disable-next-line func-names
 Meteor.users._transform = function (user) {
 	return _.extend(new User(), user);
 };

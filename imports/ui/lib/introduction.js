@@ -1,6 +1,8 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 
+import Alert from '/imports/api/alerts/alert';
+
 const Introduction = {
 	init() {
 		Session.set('ShowIntro', localStorage.getItem('intro') !== 'done');
@@ -15,7 +17,9 @@ const Introduction = {
 
 	openedIntro() {
 		const opened = Session.get('OpenedIntro');
-		if (opened !== undefined) return opened;
+		if (opened !== undefined) {
+			return opened;
+		}
 
 		const { route } = Router.current();
 		const routeName = route && route.getName();
@@ -35,8 +39,7 @@ const Introduction = {
 		try {
 			localStorage.setItem('intro', 'done');
 		} catch (e) {
-			// eslint-disable-next-line no-console
-			console.error(e);
+			Alert.serverError(e, '');
 		}
 	},
 };

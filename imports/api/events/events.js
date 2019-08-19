@@ -55,14 +55,16 @@ export const OEvent = function () {
 	this.editors = [];
 };
 
-// eslint-disable-next-line func-names
 OEvent.prototype.editableBy = function (user) {
-	if (!user) return false;
-	if (UserPrivilegeUtils.privileged(user, 'admin')) return true;
+	if (!user) {
+		return false;
+	}
+	if (UserPrivilegeUtils.privileged(user, 'admin')) {
+		return true;
+	}
 	return _.intersection(user.badges, this.editors).length > 0;
 };
 
-// eslint-disable-next-line func-names
 OEvent.prototype.sameTime = function (event) {
 	return ['startLocal', 'endLocal'].every((time) => {
 		const timeA = LocalTime.fromString(this[time]);
@@ -99,23 +101,28 @@ Events.Filtering = () => Filtering(
 /** @summary recalculate the group-related fields of an event
   * @param {eventId} the event to update
   */
-// eslint-disable-next-line func-names
 Events.updateGroups = function (eventId) {
-	// eslint-disable-next-line consistent-return
+	/* eslint-disable-next-line consistent-return */
 	AsyncTools.untilClean((resolve, reject) => {
 		const event = Events.findOne(eventId);
-		if (!event) return resolve(true); // Nothing was successfully updated, we're done.
+		if (!event) {
+			return resolve(true); // Nothing was successfully updated, we're done.
+		}
 
 		// The creator of the event as well as any groups listed as organizers
 		// are allowed to edit.
 		let editors = event.groupOrganizers.slice(); // Clone
-		if (event.createdBy) editors.push(event.createdBy);
+		if (event.createdBy) {
+			editors.push(event.createdBy);
+		}
 
 		// If an event has a parent course, it inherits all groups and all editors from it.
 		let courseGroups = [];
 		if (event.courseId) {
 			const course = Courses.findOne(event.courseId);
-			if (!course) throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
+			if (!course) {
+				throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
+			}
 
 			courseGroups = course.groups;
 			editors = _.union(editors, course.editors);
@@ -173,7 +180,6 @@ Events.updateGroups = function (eventId) {
  * The events are sorted by start date (ascending, before-filter causes descending order)
  *
  */
-// eslint-disable-next-line func-names
 Events.findFilter = function (filter, limit, skip, sort) {
 	const find = {};
 	const and = [];
@@ -214,7 +220,9 @@ Events.findFilter = function (filter, limit, skip, sort) {
 
 	if (filter.before) {
 		find.end = { $lt: filter.before };
-		if (!filter.after) startSortOrder = 'desc';
+		if (!filter.after) {
+			startSortOrder = 'desc';
+		}
 	}
 
 	if (filter.venue) {

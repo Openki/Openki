@@ -35,7 +35,9 @@ Meteor.methods({
 		const isNew = venueId.length === 0;
 		if (!isNew) {
 			venue = Venues.findOne(venueId);
-			if (!venue) throw new Meteor.Error(404, 'Venue not found');
+			if (!venue) {
+				throw new Meteor.Error(404, 'Venue not found');
+			}
 		}
 
 		/* Changes we want to perform */
@@ -50,9 +52,15 @@ Meteor.methods({
 			set.slug = StringTools.slug(set.name);
 		}
 
-		if (changes.address !== undefined) set.address = changes.address.trim().substring(0, 40 * 1024);
-		if (changes.route !== undefined) set.route = changes.route.trim().substring(0, 40 * 1024);
-		if (changes.short !== undefined) set.short = changes.short.trim().substring(0, 40);
+		if (changes.address !== undefined) {
+			set.address = changes.address.trim().substring(0, 40 * 1024);
+		}
+		if (changes.route !== undefined) {
+			set.route = changes.route.trim().substring(0, 40 * 1024);
+		}
+		if (changes.short !== undefined) {
+			set.short = changes.short.trim().substring(0, 40);
+		}
 		if (changes.loc !== undefined) {
 			set.loc = changes.loc;
 			set.loc.type = 'Point';
@@ -65,9 +73,9 @@ Meteor.methods({
 			set.maxWorkplaces = Math.min(1e10, Math.max(0, changes.maxWorkplaces));
 		}
 		if (changes.facilities !== undefined) {
-			set.facilities = _.reduce(changes.facilities, (fs, f) => {
+			set.facilities = _.reduce(changes.facilities, (originalFs, f) => {
+				const fs = Object.assign({}, originalFs);
 				if (Venues.facilityOptions.indexOf(f) >= 0) {
-					// eslint-disable-next-line no-param-reassign
 					fs[f] = true;
 				}
 				return fs;
@@ -85,11 +93,13 @@ Meteor.methods({
 		if (isNew) {
 			/* region cannot be changed */
 			const region = Regions.findOne(changes.region);
-			if (!region) throw new Meteor.Error(404, 'region missing');
+			if (!region) {
+				throw new Meteor.Error(404, 'region missing');
+			}
 
 			set.region = region._id;
 
-			// eslint-disable-next-line no-param-reassign
+			/* eslint-disable-next-line no-param-reassign */
 			venueId = Venues.insert({
 				editor: user._id,
 				createdby: user._id,

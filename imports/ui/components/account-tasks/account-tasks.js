@@ -3,20 +3,21 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import CleanedRegion from '/imports/ui/lib/cleaned-region';
-import TemplateMixins from '/imports/ui/lib/template-mixins';
-import IsEmail from '/imports/utils/email-tools';
 import Alert from '/imports/api/alerts/alert';
+
+import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import ScssVars from '/imports/ui/lib/scss-vars';
+import TemplateMixins from '/imports/ui/lib/template-mixins';
+
+import IsEmail from '/imports/utils/email-tools';
 
 import './account-tasks.html';
 
-// eslint-disable-next-line func-names
 Template.accountTasks.onCreated(function () {
 	this.accountTask = new ReactiveVar('login');
 	this.autorun(() => {
 		if (Session.equals('pleaseLogin', true)) {
-			this.$('#accountTasks').modal('show');
+			this.$('.js-account-tasks').modal('show');
 		}
 	});
 });
@@ -27,30 +28,29 @@ Template.accountTasks.helpers({
 });
 
 Template.accountTasks.events({
-	'show.bs.modal #accountTasks'(event, instance) {
-		// eslint-disable-next-line no-param-reassign
+	'show.bs.modal .js-account-tasks'(event, instance) {
+		/* eslint-disable-next-line no-param-reassign */
 		instance.transferUsername = false;
-		// eslint-disable-next-line no-param-reassign
+		/* eslint-disable-next-line no-param-reassign */
 		instance.transferPassword = false;
-		// eslint-disable-next-line no-param-reassign
+		/* eslint-disable-next-line no-param-reassign */
 		instance.transferMail = false;
 	},
 
-	'shown.bs.modal #accountTasks'(event, instance) {
+	'shown.bs.modal .js-account-tasks'(event, instance) {
 		instance.$('input').first().select();
 	},
 
-	'hide.bs.modal #accountTasks'(event, instance) {
+	'hide.bs.modal .js-account-tasks'(event, instance) {
 		instance.$('input').val('');
 	},
 
-	'hidden.bs.modal #accountTasks'(event, instance) {
+	'hidden.bs.modal .js-account-tasks'(event, instance) {
 		instance.accountTask.set('login');
 		Session.set('pleaseLogin', false);
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.loginFrame.onCreated(function () {
 	this.busy(false);
 
@@ -73,10 +73,11 @@ Template.loginFrame.onCreated(function () {
 	];
 });
 
-// eslint-disable-next-line func-names
 Template.loginFrame.onRendered(function () {
 	const { transferMail } = this.parentInstance();
-	if (transferMail) this.$('.js-username').val(transferMail);
+	if (transferMail) {
+		this.$('.js-username').val(transferMail);
+	}
 
 	this.$('input').first().select();
 });
@@ -122,7 +123,7 @@ Template.loginFrame.events({
 
 		const username = instance.$('.js-username').val();
 		if (IsEmail(username)) {
-			// eslint-disable-next-line no-param-reassign
+			/* eslint-disable-next-line no-param-reassign */
 			instance.parentInstance().transferMail = username;
 		}
 
@@ -158,7 +159,9 @@ Template.loginFrame.events({
 			instance.errors.add('noUsername');
 		}
 
-		if (instance.errors.present()) return;
+		if (instance.errors.present()) {
+			return;
+		}
 
 		const password = instance.$('.js-password').val();
 
@@ -171,7 +174,7 @@ Template.loginFrame.events({
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
-				$('#accountTasks').modal('hide');
+				$('.js-account-tasks').modal('hide');
 			}
 		});
 	},
@@ -182,8 +185,10 @@ Template.loginFrame.events({
 		const { service } = event.currentTarget.dataset;
 		const loginMethod = `loginWith${service}`;
 		if (!Meteor[loginMethod]) {
-			// eslint-disable-next-line no-console
-			console.log(`don't have ${loginMethod}`);
+			Alert.serverError(
+				new Error(`don't have ${loginMethod}`),
+				'',
+			);
 			return;
 		}
 
@@ -192,12 +197,12 @@ Template.loginFrame.events({
 		}, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, '');
+				Alert.serverError(err, '');
 			} else {
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
-				$('#accountTasks').modal('hide');
+				$('.js-account-tasks').modal('hide');
 			}
 		});
 	},
@@ -211,23 +216,26 @@ Template.loginFrame.helpers({
 	OAuthServices: () => Template.instance().OAuthServices,
 });
 
-// eslint-disable-next-line func-names
 Template.registerFrame.onCreated(function () {
 	this.busy(false);
 });
 
-// eslint-disable-next-line func-names
 Template.registerFrame.onRendered(function () {
 	const parentInstance = this.parentInstance();
 
-	const { transferUsername } = parentInstance;
-	if (transferUsername) this.$('.js-username').val(transferUsername);
+	const { transferUsername, transferPassword, transferMail } = parentInstance;
 
-	const { transferPassword } = parentInstance;
-	if (transferPassword) this.$('.js-password').val(transferPassword);
+	if (transferUsername) {
+		this.$('.js-username').val(transferUsername);
+	}
 
-	const { transferMail } = parentInstance;
-	if (transferMail) this.$('.js-email').val(transferMail);
+	if (transferPassword) {
+		this.$('.js-password').val(transferPassword);
+	}
+
+	if (transferMail) {
+		this.$('.js-email').val(transferMail);
+	}
 
 	this.$('input').first().select();
 });
@@ -297,8 +305,9 @@ Template.registerFrame.events({
 			instance.errors.add('noEmail');
 		}
 
-		if (instance.errors.present()) return;
-
+		if (instance.errors.present()) {
+			return;
+		}
 
 		instance.busy('registering');
 		Accounts.createUser({ username, password, email }, (err) => {
@@ -309,7 +318,7 @@ Template.registerFrame.events({
 				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
-				$('#accountTasks').modal('hide');
+				$('.js-account-tasks').modal('hide');
 				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
 					Meteor.call('user.regionChange', regionId);
@@ -318,18 +327,16 @@ Template.registerFrame.events({
 		});
 	},
 
-	'click #backToLogin'(event, instance) {
+	'click .js-back-to-login'(event, instance) {
 		instance.parentInstance().accountTask.set('login');
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.forgotPwdFrame.onCreated(function () {
 	this.busy(false);
 	this.emailIsValid = new ReactiveVar(false);
 });
 
-// eslint-disable-next-line func-names
 Template.forgotPwdFrame.onRendered(function () {
 	const { transferMail } = this.parentInstance();
 	if (transferMail) {
@@ -358,7 +365,7 @@ Template.forgotPwdFrame.events({
 		}, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, 'We were unable to send a mail to this address');
+				Alert.serverError(err, 'We were unable to send a mail to this address');
 			} else {
 				Alert.success(mf(
 					'forgotPassword.emailSent',

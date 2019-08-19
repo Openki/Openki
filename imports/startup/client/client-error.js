@@ -9,9 +9,7 @@ const reportToServer = function (error) {
 		clientId,
 		userAgent: window.navigator.userAgent,
 	};
-	Meteor.call('log.clientError', report, (err) => {
-		// eslint-disable-next-line no-console
-		if (err) console.log(err);
+	Meteor.call('log.clientError', report, () => {
 	});
 };
 
@@ -61,10 +59,9 @@ const discriminatoryReporting = function (args) {
 
 // wrap the Meteor debug function
 const meteorDebug = Meteor._debug;
-// eslint-disable-next-line func-names
 Meteor._debug = function (/* arguments */) {
-	// eslint-disable-next-line prefer-rest-params
+	/* eslint-disable-next-line prefer-rest-params */
 	meteorDebug.apply(this, arguments);
-	// eslint-disable-next-line prefer-rest-params
+	/* eslint-disable-next-line prefer-rest-params */
 	discriminatoryReporting(arguments);
 };

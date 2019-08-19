@@ -1,13 +1,31 @@
 import Alerts from './alerts';
 
 const Alert = {
+	/** Create an error from String
+      *
+      * @param  {String}  errorString     - error type
+      * @param  {String}  message         - the message text
+      *
+      */
+	error(errorString) {
+		check(errorString, String);
+
+		const errorMessage = mf(
+			'_clientError',
+			{ ERROR: errorString },
+			'There was an error: "{ERROR}." Sorry about this.',
+		);
+
+		this._alert('error', errorMessage, 60000);
+	},
+
 	/** Add an error alert
       *
       * @param  {Error}   error        - error object
       * @param  {String}  message      - the message text
       *
       */
-	error(error, message) {
+	serverError(error, message) {
 		check(error, Error);
 		check(message, String);
 
@@ -42,7 +60,6 @@ const Alert = {
       * @param  {String} message - the message text
       *
       */
-	// eslint-disable-next-line func-names
 	Alert[type] = function (message) {
 		check(message, String);
 		this._alert(type, message);

@@ -27,11 +27,10 @@ export const elementsReady = test => new Promise((resolve) => {
 		resolve(result);
 	} else {
 		const observer = new MutationObserver(((mutations) => {
-			// eslint-disable-next-line no-shadow
-			const result = test(mutations);
-			if (result !== undefined) {
+			const mutationsResult = test(mutations);
+			if (mutationsResult !== undefined) {
 				observer.disconnect();
-				resolve(result);
+				resolve(mutationsResult);
 			}
 		}));
 
@@ -59,8 +58,12 @@ export const waitFor = (assertion, timeout = 1000) => () => new Promise((resolve
 	let observer = false;
 
 	const clearWatchers = () => {
-		if (timer) Meteor.clearTimeout(timer);
-		if (observer) observer.disconnect();
+		if (timer) {
+			Meteor.clearTimeout(timer);
+		}
+		if (observer) {
+			observer.disconnect();
+		}
 	};
 
 	const tryIt = () => {
@@ -81,7 +84,9 @@ export const waitFor = (assertion, timeout = 1000) => () => new Promise((resolve
 		return false;
 	};
 
-	if (tryIt()) return;
+	if (tryIt()) {
+		return;
+	}
 
 	timer = Meteor.setTimeout(tryIt, timeout);
 	observer = new MutationObserver(tryIt);

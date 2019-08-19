@@ -37,7 +37,6 @@ Template.eventReplication.onCreated(function eventReplicationOnCreated() {
 	instance.replicateEndDate = new ReactiveVar(replicaStartDate(moment(data.start).add(1, 'week')));
 });
 
-// eslint-disable-next-line func-names
 Template.eventReplication.onRendered(function () {
 	const instance = this;
 
@@ -114,14 +113,18 @@ Template.eventReplication.helpers({
 
 const getEventFrequency = (instance) => {
 	let startDate = moment(instance.$('#replicateStart').val(), 'L');
-	if (!startDate.isValid()) return [];
+	if (!startDate.isValid()) {
+		return [];
+	}
 	if (startDate.isBefore(moment())) {
 		// Jump forward in time so we don't have to look at all these old dates
 		startDate = replicaStartDate(startDate);
 	}
 
 	const endDate = moment(instance.$('#replicateEnd').val(), 'L');
-	if (!endDate.isValid()) return [];
+	if (!endDate.isValid()) {
+		return [];
+	}
 	const frequency = instance.$('.js-replicate-frequency:checked').val();
 
 	const frequencies = {
@@ -131,7 +134,9 @@ const getEventFrequency = (instance) => {
 		biWeekly: { unit: 'weeks', interval: 2 },
 	};
 
-	if (frequencies[frequency] === undefined) return [];
+	if (frequencies[frequency] === undefined) {
+		return [];
+	}
 	const { unit } = frequencies[frequency];
 
 	const { interval } = frequencies[frequency];
@@ -148,8 +153,10 @@ const getEventFrequency = (instance) => {
 		const daysFromOriginal = repStart.diff(originDay, 'days');
 		if (daysFromOriginal !== 0 && repStart.isAfter(now)) {
 			days.push(daysFromOriginal);
-			if (frequency === 'once') break;
-			if (days.length >= repLimit) break;
+			if (frequency === 'once'
+				|| days.length >= repLimit) {
+				break;
+			}
 		}
 
 		repStart.add(interval, unit);
@@ -199,7 +206,9 @@ Template.eventReplication.events({
 			};
 
 			const { courseId } = instance.data;
-			if (courseId) replicaEvent.courseId = courseId;
+			if (courseId) {
+				replicaEvent.courseId = courseId;
+			}
 
 			// To create a new event, pass an empty Id
 			const eventId = '';
@@ -207,7 +216,7 @@ Template.eventReplication.events({
 			Meteor.call('event.save', args, (error) => {
 				responses += 1;
 				if (error) {
-					Alert.error(error, mf(
+					Alert.serverError(error, mf(
 						'eventReplication.errWithReason',
 						{ START: moment(replicaEvent.startLocal).format('llll') },
 						'Creating the copy on "{START}" failed.',

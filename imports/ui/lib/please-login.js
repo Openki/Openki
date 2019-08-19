@@ -1,6 +1,8 @@
 export default function PleaseLogin() {
-	if (Meteor.userId()) return false;
+	if (Meteor.userId()) {
+		return false;
+	}
 	Session.set('pleaseLogin', true);
-	$('#accountTasks').modal('show');
+	$('.js-account-tasks').modal('show');
 	return true;
 }

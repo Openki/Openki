@@ -25,7 +25,6 @@ Groups.Filtering = () => Filtering(
  *   user: Limit to groups where given user ID is a member (client only)
  *
  */
-// eslint-disable-next-line func-names
 Groups.findFilter = function (filter, limit, skip, sort) {
 	const find = {};
 
@@ -44,7 +43,9 @@ Groups.findFilter = function (filter, limit, skip, sort) {
 
 	// If the property is set but falsy, we don't return anything
 	if (Object.prototype.hasOwnProperty.call(filter, 'user')) {
-		if (!filter.user) return [];
+		if (!filter.user) {
+			return [];
+		}
 		find.members = filter.user;
 	}
 

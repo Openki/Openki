@@ -6,8 +6,11 @@ import Events from '/imports/api/events/events';
 function promiseMeteorCall(...args) {
 	return new Promise((resolve, reject) => {
 		Meteor.call(...args, (err, result) => {
-			if (err) reject(err);
-			else resolve(result);
+			if (err) {
+				reject(err);
+			} else {
+				resolve(result);
+			}
 		});
 	});
 }
@@ -17,8 +20,11 @@ if (Meteor.isClient) {
 		it('Stores an event', (done) => {
 			new Promise((resolve, reject) => {
 				Meteor.loginWithPassword('greg', 'greg', (err) => {
-					if (err) reject(err);
-					else resolve();
+					if (err) {
+						reject(err);
+					} else {
+						resolve();
+					}
 				});
 			}).then(() => {
 				const theFuture = new Date();
@@ -44,17 +50,16 @@ if (Meteor.isClient) {
 				assert.isString(eventId, 'event.save returns an eventId string');
 				return { event, eventId };
 			})
-				.then(({ event, eventId }) => {
-					// eslint-disable-next-line no-param-reassign
+				.then(({ originalEvent, eventId }) => {
+					const event = Object.assign({}, originalEvent);
 					delete event.region;
-					// eslint-disable-next-line no-param-reassign
 					event.title += ' No really';
 					return promiseMeteorCall('event.save', { eventId, changes: event });
 				})
 				.then(() => done(), done);
 		});
 		it('Sanitizes event strings', () => {
-			// eslint-disable-next-line no-tabs
+			/* eslint-disable-next-line no-tabs */
 			const titleWithExcessiveWhitespace = ' 1  2     3	4      \n';
 			const expectedTitle = '1 2 3 4';
 			const textWithNonPrintables = "See what's hidden in your string… or be​hind﻿";
@@ -62,8 +67,11 @@ if (Meteor.isClient) {
 
 			return new Promise((resolve, reject) => {
 				Meteor.loginWithPassword('greg', 'greg', (err) => {
-					if (err) reject(err);
-					else resolve();
+					if (err) {
+						reject(err);
+					} else {
+						resolve();
+					}
 				});
 			}).then(() => {
 				const theFuture = new Date();

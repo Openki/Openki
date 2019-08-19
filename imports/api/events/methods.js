@@ -117,13 +117,19 @@ Meteor.methods({
 			changes.time_created = now;
 			if (changes.courseId) {
 				const course = Courses.findOne(changes.courseId);
-				if (!course) throw new Meteor.Error(404, 'course not found');
-				if (!course.editableBy(user)) throw new Meteor.Error(401, 'not permitted');
+				if (!course) {
+					throw new Meteor.Error(404, 'course not found');
+				}
+				if (!course.editableBy(user)) {
+					throw new Meteor.Error(401, 'not permitted');
+				}
 			}
 
 			if (changes.replicaOf) {
 				const parent = Events.findOne(changes.replicaOf);
-				if (!parent) throw new Meteor.Error(404, 'replica parent not found');
+				if (!parent) {
+					throw new Meteor.Error(404, 'replica parent not found');
+				}
 				if (parent.courseId !== changes.courseId) {
 					throw new Meteor.Error(400, 'replica must be in same course');
 				}
@@ -137,7 +143,9 @@ Meteor.methods({
 			if (changes.groups) {
 				testedGroups = _.map(changes.groups, (groupId) => {
 					const group = Groups.findOne(groupId);
-					if (!group) throw new Meteor.Error(404, `no group with id ${groupId}`);
+					if (!group) {
+						throw new Meteor.Error(404, `no group with id ${groupId}`);
+					}
 					return group._id;
 				});
 			}
@@ -156,10 +164,14 @@ Meteor.methods({
 			);
 		} else {
 			event = Events.findOne(eventId);
-			if (!event) throw new Meteor.Error(404, 'No such event');
+			if (!event) {
+				throw new Meteor.Error(404, 'No such event');
+			}
 		}
 
-		if (!event.editableBy(user)) throw new Meteor.Error(401, 'not permitted');
+		if (!event.editableBy(user)) {
+			throw new Meteor.Error(401, 'not permitted');
+		}
 
 		const region = Regions.findOne(event.region);
 
@@ -173,10 +185,14 @@ Meteor.methods({
 		// This section needs a rewrite even more than the rest of this method
 		if (changes.startLocal) {
 			const startMoment = regionZone.fromString(changes.startLocal);
-			if (!startMoment.isValid()) throw new Meteor.Error(400, 'Invalid start date');
+			if (!startMoment.isValid()) {
+				throw new Meteor.Error(400, 'Invalid start date');
+			}
 
 			if (startMoment.isBefore(new Date())) {
-				if (isNew) throw new Meteor.Error(400, 'Event start in the past');
+				if (isNew) {
+					throw new Meteor.Error(400, 'Event start in the past');
+				}
 
 				// No changing the date of past events
 				delete changes.startLocal;
@@ -188,7 +204,9 @@ Meteor.methods({
 				let endMoment;
 				if (changes.endLocal) {
 					endMoment = regionZone.fromString(changes.endLocal);
-					if (!endMoment.isValid()) throw new Meteor.Error(400, 'Invalid end date');
+					if (!endMoment.isValid()) {
+						throw new Meteor.Error(400, 'Invalid end date');
+					}
 				} else {
 					endMoment = regionZone.fromString(event.endLocal);
 				}
@@ -242,7 +260,9 @@ Meteor.methods({
 				}
 			}
 
-			if (comment != null) comment = comment.trim().substr(0, 2000);
+			if (comment != null) {
+				comment = comment.trim().substr(0, 2000).trim();
+			}
 
 			Notification.Event.record(eventId, isNew, comment);
 		}
@@ -253,10 +273,12 @@ Meteor.methods({
 			Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);
 
 			// the assumption is that all replicas have the same course if any
-			if (event.courseId) Meteor.call('course.updateNextEvent', event.courseId, AsyncTools.logErrors);
+			if (event.courseId) {
+				Meteor.call('course.updateNextEvent', event.courseId, AsyncTools.logErrors);
+			}
 		}
 
-		// eslint-disable-next-line consistent-return
+		/* eslint-disable-next-line consistent-return */
 		return eventId;
 	},
 
@@ -265,14 +287,22 @@ Meteor.methods({
 		check(eventId, String);
 
 		const user = Meteor.user();
-		if (!user) throw new Meteor.Error(401, 'please log in');
+		if (!user) {
+			throw new Meteor.Error(401, 'please log in');
+		}
 		const event = Events.findOne(eventId);
-		if (!event) throw new Meteor.Error(404, 'No such event');
-		if (!event.editableBy(user)) throw new Meteor.Error(401, 'not permitted');
+		if (!event) {
+			throw new Meteor.Error(404, 'No such event');
+		}
+		if (!event.editableBy(user)) {
+			throw new Meteor.Error(401, 'not permitted');
+		}
 
 		Events.remove(eventId);
 
-		if (event.courseId) Meteor.call('course.updateNextEvent', event.courseId);
+		if (event.courseId) {
+			Meteor.call('course.updateNextEvent', event.courseId);
+		}
 		Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);
 	},
 
@@ -280,14 +310,15 @@ Meteor.methods({
 	// Update the venue field for all events matching the selector
 	'event.updateVenue'(selector) {
 		const idOnly = { fields: { _id: 1 } };
-		Events.find(selector, idOnly).forEach((event) => {
-			const eventId = event._id;
+		Events.find(selector, idOnly).forEach((originalEvent) => {
+			const eventId = originalEvent._id;
 
-			// eslint-disable-next-line consistent-return
+			/* eslint-disable-next-line consistent-return */
 			AsyncTools.untilClean((resolve, reject) => {
-				// eslint-disable-next-line no-shadow
 				const event = Events.findOne(eventId);
-				if (!event) return resolve(true); // Nothing was successfully updated, we're done.
+				if (!event) {
+					return resolve(true); // Nothing was successfully updated, we're done.
+				}
 
 				if (!_.isObject(event.venue)) {
 					// This happens only at creation when the field was not initialized correctly
@@ -303,7 +334,9 @@ Meteor.methods({
 				let update;
 				if (venue) {
 					// Do not update venue for historical events
-					if (event.start < new Date()) return resolve(true);
+					if (event.start < new Date()) {
+						return resolve(true);
+					}
 
 					// Sync values to the values set in the venue document
 					update = {
@@ -329,7 +362,7 @@ Meteor.methods({
 						}
 					});
 			}).catch((reason) => {
-				// eslint-disable-next-line no-console
+				/* eslint-disable-next-line no-console */
 				console.log('Failed event.updateVenue: ', reason);
 			});
 		});
@@ -379,11 +412,15 @@ Meteor.methods({
 
 		const event = Events.findOne(eventId);
 		// ignore broken eventIds
-		if (!event) return;
+		if (!event) {
+			return;
+		}
 
 		// if you cant load course its probably because the event doesnt have one
 		const course = Courses.findOne(event.courseId);
-		if (!course) return;
+		if (!course) {
+			return;
+		}
 
 		const change = new Subscribe(course, user, 'participant');
 

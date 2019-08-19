@@ -5,6 +5,7 @@ import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { _ } from 'meteor/underscore';
 
+import Alert from '/imports/api/alerts/alert';
 import Languages from '/imports/api/languages/languages';
 
 import ScssVars from '/imports/ui/lib/scss-vars';
@@ -12,7 +13,6 @@ import StringTools from '/imports/utils/string-tools';
 
 import './language-selection.html';
 
-// eslint-disable-next-line func-names
 Template.languageSelectionWrap.created = function () {
 	const instance = this;
 	instance.searchingLanguages = new ReactiveVar(false);
@@ -37,7 +37,6 @@ Template.languageDisplay.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.languageSelection.onCreated(function () {
 	this.languageSearch = new ReactiveVar('');
 });
@@ -52,19 +51,19 @@ Template.languageSelection.helpers({
 		const search = Template.instance().languageSearch.get().toLowerCase();
 		const results = [];
 
-		// eslint-disable-next-line guard-for-in, no-restricted-syntax
-		for (const key in visibleLanguages) {
-			const language = visibleLanguages[key];
+		visibleLanguages.forEach((visibleLanguage) => {
 			let pushed = false;
-			[language.name, language.english].forEach((property) => {
-				if (pushed) return;
-				if (property.toLowerCase().indexOf(search) >= 0) {
-					results.push(language);
+			[visibleLanguage.name, visibleLanguage.english].every((property) => {
+				if (pushed) {
+					return false;
+				}
+				if (property.toLowerCase().includes(search)) {
+					results.push(visibleLanguage);
 					pushed = true;
 				}
+				return true;
 			});
-		}
-
+		});
 		return results;
 	},
 
@@ -75,13 +74,13 @@ Template.languageSelection.helpers({
 	},
 
 	translated() {
-		// eslint-disable-next-line consistent-return
 		const getTransPercent = () => {
 			const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
 			if (mfStats) {
 				const langStats = mfStats.langs.find(stats => stats.lang === this.lg);
 				return langStats.transPercent;
 			}
+			return false;
 		};
 
 		const percent = (this.lg === mfPkg.native) ? 100 : getTransPercent();
@@ -109,8 +108,7 @@ Template.languageSelection.events({
 		try {
 			localStorage.setItem('locale', lg);
 		} catch (e) {
-			// eslint-disable-next-line no-console
-			console.error(e);
+			Alert.error(e);
 		}
 
 		Session.set('locale', lg);
@@ -143,7 +141,6 @@ Template.languageSelection.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.languageSelection.onRendered(function () {
 	const instance = this;
 

@@ -11,14 +11,12 @@ import '/imports/ui/components/buttons/buttons';
 
 import './course-roles.html';
 
-// eslint-disable-next-line func-names
 Template.courseRole.onCreated(function () {
 	this.busy(false);
 	this.enrolling = new ReactiveVar(false);
 	this.showFirstSteps = new ReactiveVar(false);
 
 	// Build a subscribe change
-	// eslint-disable-next-line func-names
 	this.subscribe = function (comment) {
 		const user = Users.currentUser();
 		return new Subscribe(this.data.course, user, this.data.roletype.type, comment);
@@ -35,8 +33,7 @@ Template.courseRole.onCreated(function () {
 					Alert.success(mf('course.roles.unsubscribed', { NAME: this.data.course.name }, 'Unsubscribed from course {NAME}'));
 				});
 			} else {
-				// eslint-disable-next-line no-console
-				console.log(`${change} not valid for ${user}`);
+				Alert.error(`${change} not valid for ${user}`);
 			}
 		});
 	}
@@ -48,16 +45,18 @@ Template.courseRole.helpers({
 	enrolling() { return Template.instance().enrolling.get(); },
 
 	roleSubscribe() {
-		let role = this.type;
-		if (role === 'participant') role = 'interested';
-
+		const role = this.type;
+		if (role === 'participant') {
+			return 'roles.interested.subscribe';
+		}
 		return `roles.${role}.subscribe`;
 	},
 
 	roleSubscribed() {
-		let role = this.type;
-		if (role === 'participant') role = 'interested';
-
+		const role = this.type;
+		if (role === 'participant') {
+			return 'roles.interested.subscribe';
+		}
 		return `roles.${role}.subscribed`;
 	},
 
@@ -108,7 +107,7 @@ Template.courseRole.events({
 		instance.showFirstSteps.set(!instance.showFirstSteps.get());
 	},
 
-	'click #firstStepsComment'() {
+	'click .js-first-steps-comment'() {
 		$('.course-page-btn.js-discussion-edit').click();
 		window.location.hash = '#discussion';
 		RouterAutoscroll.scheduleScroll();

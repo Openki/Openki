@@ -11,18 +11,19 @@ if (Meteor.isClient) {
 					region: '9JyFCoKWkxnf8LWPh', // Testistan
 				};
 
-				// eslint-disable-next-line consistent-return
 				Meteor.call('venue.save', '', venue, (err, createdId) => {
-					if (err) return done(err);
+					if (err) {
+						return done(err);
+					}
 					const venueId = createdId;
 					assert.isString(venueId, 'got an event ID');
 
 					// Try saving it again with a change
 					venue.name += '!';
-					// eslint-disable-next-line no-shadow
-					Meteor.call('venue.save', venueId, venue, (err) => {
-						done(err);
+					Meteor.call('venue.save', venueId, venue, (subErr) => {
+						done(subErr);
 					});
+					return true;
 				});
 			};
 
@@ -33,10 +34,12 @@ if (Meteor.isClient) {
 			if (Meteor.userId()) {
 				testCreate();
 			} else {
-				// eslint-disable-next-line consistent-return
 				Meteor.loginWithPassword('FeeLing', 'greg', (err) => {
-					if (err) return done(err);
+					if (err) {
+						return done(err);
+					}
 					testCreate();
+					return true;
 				});
 			}
 		});

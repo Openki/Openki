@@ -7,8 +7,7 @@ import Venues from '/imports/api/venues/venues';
 const ensure = {
 	fixedId(strings) {
 		const md5 = crypto.createHash('md5');
-		// eslint-disable-next-line no-restricted-syntax
-		for (const str of strings) md5.update(str);
+		strings.forEach(str => md5.update(str));
 		return md5.digest('hex').substring(0, 10);
 	},
 
@@ -16,18 +15,22 @@ const ensure = {
 		const prng = Prng('ensureUser');
 
 		if (!name) {
-			// eslint-disable-next-line no-param-reassign
+			/* eslint-disable-next-line no-param-reassign */
 			name = 'Ed Dillinger';
 		}
 		const email = (`${name.split(' ').join('')}@openki.example`).toLowerCase();
 
-		// eslint-disable-next-line no-constant-condition
+		/* eslint-disable-next-line no-constant-condition */
 		while (true) {
 			let user = Meteor.users.findOne({ 'emails.address': email });
-			if (user) return user;
+			if (user) {
+				return user;
+			}
 
 			user = Meteor.users.findOne({ username: name });
-			if (user) return user;
+			if (user) {
+				return user;
+			}
 
 			const id = Accounts.createUser({
 				username: name,
@@ -53,25 +56,29 @@ const ensure = {
 	},
 
 	region(name) {
-		// eslint-disable-next-line no-constant-condition
+		/* eslint-disable-next-line no-constant-condition */
 		while (true) {
 			const region = Regions.findOne({ name });
-			if (region) return region._id;
+			if (region) {
+				return region._id;
+			}
 
 			const id = Regions.insert({
 				name,
 				loc: { type: 'Point', coordinates: [8.3, 47.05] },
 			});
-			// eslint-disable-next-line no-console
+			/* eslint-disable-next-line no-console */
 			console.log(`Added region: ${name} ${id}`);
 		}
 	},
 
 	group(short) {
-		// eslint-disable-next-line no-constant-condition
+		/* eslint-disable-next-line no-constant-condition */
 		while (true) {
 			const group = Groups.findOne({ short });
-			if (group) return group._id;
+			if (group) {
+				return group._id;
+			}
 
 			const id = ensure.fixedId([short]);
 			Groups.insert({
@@ -81,7 +88,7 @@ const ensure = {
 				members: [ensure.user('EdDillinger')._id],
 				description: 'Fixture group',
 			});
-			// eslint-disable-next-line no-console
+			/* eslint-disable-next-line no-console */
 			console.log(`Added fixture group '${short}' id: ${id}`);
 		}
 	},
@@ -89,10 +96,12 @@ const ensure = {
 	venue(name, regionId) {
 		const prng = Prng('ensureVenue');
 
-		// eslint-disable-next-line no-constant-condition
+		/* eslint-disable-next-line no-constant-condition */
 		while (true) {
 			let venue = Venues.findOne({ name, region: regionId });
-			if (venue) return venue;
+			if (venue) {
+				return venue;
+			}
 
 			venue = {
 				name,

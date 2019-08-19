@@ -1,10 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
+import Alert from '/imports/api/alerts/alert';
 import Roles from '/imports/api/roles/roles';
 
 import PleaseLogin from '/imports/ui/lib/please-login';
-import Alert from '/imports/api/alerts/alert';
+
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list';
@@ -65,7 +66,7 @@ Template.userprofile.events({
 	'click button.giveAdmin'() {
 		Meteor.call('user.addPrivilege', this.user._id, 'admin', (err) => {
 			if (err) {
-				Alert.error(err, 'Unable to add privilege');
+				Alert.serverError(err, 'Unable to add privilege');
 			} else {
 				Alert.success(mf('privilege.addedAdmin', 'Granted admin privilege'));
 			}
@@ -76,7 +77,7 @@ Template.userprofile.events({
 		const priv = template.$(event.target).data('priv');
 		Meteor.call('user.removePrivilege', this.user._id, priv, (err) => {
 			if (err) {
-				Alert.error(err, 'Unable to remove privilege');
+				Alert.serverError(err, 'Unable to remove privilege');
 			} else {
 				Alert.success(mf('privilege.removed', 'Removed privilege'));
 			}
@@ -89,7 +90,7 @@ Template.userprofile.events({
 		const userId = Template.parentData().user._id;
 		Meteor.call('group.updateMembership', userId, groupId, true, (err) => {
 			if (err) {
-				Alert.error(err, 'Unable to draft user into group');
+				Alert.serverError(err, 'Unable to draft user into group');
 			} else {
 				Alert.success(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'));
 			}
@@ -103,7 +104,7 @@ Template.userprofile.events({
 		const userId = Template.parentData().user._id;
 		Meteor.call('group.updateMembership', userId, groupId, false, (err) => {
 			if (err) {
-				Alert.error(err, 'Unable to expel user from group');
+				Alert.serverError(err, 'Unable to expel user from group');
 			} else {
 				Alert.success(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'));
 			}
@@ -111,7 +112,6 @@ Template.userprofile.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.emailBox.onCreated(function () {
 	this.verificationMailSent = new ReactiveVar(false);
 	this.busy(false);
@@ -124,7 +124,9 @@ Template.emailBox.onRendered(function emailBoxOnRendered() {
 Template.emailBox.helpers({
 	hasEmail() {
 		const user = Meteor.user();
-		if (!user) return false;
+		if (!user) {
+			return false;
+		}
 
 		const { emails } = user;
 		return emails && emails[0];
@@ -145,7 +147,7 @@ Template.emailBox.events({
 		Meteor.call('sendVerificationEmail', (err) => {
 			if (err) {
 				instance.verificationMailSent.set(false);
-				Alert.error(err, 'Failed to send verification mail');
+				Alert.serverError(err, 'Failed to send verification mail');
 			} else {
 				Alert.success(mf('profile.sentVerificationMail'));
 			}
@@ -162,7 +164,9 @@ Template.emailBox.events({
 
 	'submit form.sendMail'(event, template) {
 		event.preventDefault();
-		if (PleaseLogin()) return;
+		if (PleaseLogin()) {
+			return;
+		}
 
 		const recUserId = this.user._id;
 		let recUser = Meteor.users.findOne({ _id: recUserId });
@@ -177,8 +181,7 @@ Template.emailBox.events({
 		const receiveCopy = template.$('#receiveCopy').is(':checked');
 
 		if (message.length < '2') {
-			// eslint-disable-next-line no-alert
-			alert(mf('profile.mail.longertext', 'longer text please'));
+			Alert.serverError(mf('profile.mail.longertext', 'longer text please'));
 			return;
 		}
 
@@ -189,10 +192,10 @@ Template.emailBox.events({
 			message,
 			revealAddress,
 			receiveCopy,
-			(error) => {
+			(err) => {
 				template.busy(false);
-				if (error) {
-					Alert.error(error, '');
+				if (err) {
+					Alert.serverError(err, '');
 				} else {
 					Alert.success(mf('profile.mail.sent', 'Your message was sent'));
 					template.$('#emailmessage').val('');

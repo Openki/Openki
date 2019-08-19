@@ -24,7 +24,6 @@ mfPkg.loadLangs('en');
 
 
 // close any verification dialogs still open
-// eslint-disable-next-line func-names
 Router.onBeforeAction(function () {
 	Tooltips.hide();
 
@@ -36,7 +35,9 @@ Router.onBeforeAction(function () {
 // Try to guess a sensible language
 Meteor.startup(() => {
 	const useLocale = function (lang) {
-		if (!lang) return false;
+		if (!lang) {
+			return false;
+		}
 
 		let locale = false;
 		if (Languages[lang]) {
@@ -56,20 +57,25 @@ Meteor.startup(() => {
 	};
 
 	// Check query parameter and cookies
-	if (useLocale(UrlTools.queryParam('lg'))) return;
-	if (useLocale(localStorage.getItem('locale'))) return;
+	if (useLocale(UrlTools.queryParam('lg'))) {
+		return;
+	}
+	if (useLocale(localStorage.getItem('locale'))) {
+		return;
+	}
 
 	// Try to access the preferred languages. For the legacy browsers that don't
 	// expose it we could ask the server for the Accept-Language headers but I'm
 	// too lazy to implement this. It would become obsolete anyway.
-	// eslint-disable-next-line no-restricted-syntax
-	for (const i in navigator.languages || []) {
-		if (useLocale(navigator.languages[i])) return;
+	for (const language of navigator.languages || []) {
+		if (useLocale(language)) return;
 	}
 
 	// Here we ask for the browser UI language which may not be what the visitor
 	// wanted. Oh well.
-	if (useLocale(navigator.language)) return;
+	if (useLocale(navigator.language)) {
+		return;
+	}
 
 	// Give up. Here's to Cultural Homogenization.
 	useLocale('en');
@@ -95,7 +101,7 @@ Meteor.startup(() => {
 		const setLocale = moment.locale(desiredLocale);
 		Session.set('timeLocale', setLocale);
 		if (desiredLocale !== setLocale) {
-			// eslint-disable-next-line no-console
+			/* eslint-disable-next-line no-console */
 			console.log(`Date formatting set to ${setLocale} because ${desiredLocale} not available`);
 		}
 
@@ -132,14 +138,16 @@ Accounts.onLogin(() => {
 	const user = Meteor.user();
 
 	const locale = user.profile.locale;
-	if (locale) Session.set('locale', locale);
+	if (locale) {
+		Session.set('locale', locale);
+	}
 });
 
 Accounts.onEmailVerificationLink((token) => {
 	Router.go('profile');
 	Accounts.verifyEmail(token, (error) => {
 		if (error) {
-			Alert.error(error, 'Address could not be verified');
+			Alert.serverError(error, 'Address could not be verified');
 		} else {
 			Alert.success(mf(
 				'email.verified',

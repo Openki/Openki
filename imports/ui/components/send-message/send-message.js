@@ -10,7 +10,6 @@ import '../profiles/verify-email/verify-email';
 
 import './send-message.html';
 
-// eslint-disable-next-line func-names
 Template.sendMessage.onCreated(function () {
 	this.busy(false);
 	this.state = new ReactiveDict();
@@ -23,7 +22,6 @@ Template.sendMessage.onCreated(function () {
 	);
 });
 
-// eslint-disable-next-line func-names
 Template.sendMessage.onRendered(function () {
 	this.$('.js-email-message').select();
 });
@@ -31,7 +29,9 @@ Template.sendMessage.onRendered(function () {
 Template.sendMessage.helpers({
 	hasEmail() {
 		const user = Meteor.user();
-		if (!user) return false;
+		if (!user) {
+			return false;
+		}
 
 		const { emails } = user;
 		return emails && emails[0];
@@ -48,7 +48,10 @@ Template.sendMessage.events({
 		Meteor.call('sendVerificationEmail', (err) => {
 			if (err) {
 				instance.state.set('verificationMailSent', false);
-				Alert.error(err, 'Failed to send verification mail');
+				Alert.serverError(
+					err,
+					mf('profile.sendVerificationMailFailed', 'Failed to send verification mail'),
+				);
 			} else {
 				Alert.success(mf('profile.sentVerificationMail'));
 			}
@@ -64,14 +67,15 @@ Template.sendMessage.events({
 		event.preventDefault();
 		instance.busy('sending');
 
-		if (PleaseLogin()) return;
+		if (PleaseLogin()) {
+			return;
+		}
 
 		const { state } = instance;
 		const message = instance.$('.js-email-message').val();
 
 		if (message.length < 2) {
-			// eslint-disable-next-line no-alert
-			alert(mf('profile.mail.longertext', 'longer text please'));
+			Alert.error(mf('profile.mail.longertext', 'longer text please'));
 			instance.busy(false);
 			return;
 		}
@@ -82,18 +86,27 @@ Template.sendMessage.events({
 		};
 
 		const data = Template.currentData();
-		if (data.courseId) options.courseId = data.courseId;
+		if (data.courseId) {
+			options.courseId = data.courseId;
+		}
 
-		if (data.eventId) options.eventId = data.eventId;
+		if (data.eventId) {
+			options.eventId = data.eventId;
+		}
 
 		Meteor.call('sendEmail', data.recipientId, message, options, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, 'danger');
+				Alert.serverError(
+					err,
+					mf('profile.mail.sendFailed', 'Your message was not sent'),
+				);
 			} else {
 				Alert.success(mf('profile.mail.sent', 'Your message was sent'));
 				instance.$('.js-email-message').val('');
-				if (data.onDone) data.onDone();
+				if (data.onDone) {
+					data.onDone();
+				}
 			}
 		});
 	},

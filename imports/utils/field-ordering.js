@@ -26,8 +26,12 @@ const genComp = function (a, b) {
 		// So it will be sorted under whatever locale the server is running.
 		return a.localeCompare(b, { sensitivity: 'accent' });
 	}
-	if (a < b) return -1;
-	if (a > b) return 1;
+	if (a < b) {
+		return -1;
+	}
+	if (a > b) {
+		return 1;
+	}
 	return 0;
 };
 

@@ -10,7 +10,6 @@ import './faq.en.md';
 import './faq.fr.md';
 import './faq.html';
 
-// eslint-disable-next-line func-names
 Template.FAQ.onCreated(function () {
 	this.headerTag = 'h3';
 	this.contentTags = 'p, ul';
@@ -27,11 +26,9 @@ Template.FAQ.onCreated(function () {
 	};
 });
 
-// eslint-disable-next-line func-names
 Template.FAQ.onRendered(function () {
 	// in order to create nice IDs for the questions also for non-english
 	// alphabets we make our own ones
-	// eslint-disable-next-line func-names
 	this.$(this.headerTag).each(function () {
 		const title = $(this);
 		const id = title
@@ -47,7 +44,9 @@ Template.FAQ.onRendered(function () {
 	this.$('a').not('[href^="#"]').attr('target', '_blank');
 
 	const { hash } = Router.current().params;
-	if (hash) this.scrollTo(hash);
+	if (hash) {
+		this.scrollTo(hash);
+	}
 });
 
 Template.FAQ.helpers({
@@ -58,10 +57,14 @@ Template.FAQ.helpers({
 		// if the FAQ  doesn't exist with the specific locale fall back to the
 		// more general one
 		let locale = Session.get('locale');
-		if (templateNotFound(locale)) locale = locale.slice(0, 2);
+		if (templateNotFound(locale)) {
+			locale = locale.slice(0, 2);
+		}
 
 		// if this still doesn't work, use english locale
-		if (templateNotFound(locale)) locale = 'en';
+		if (templateNotFound(locale)) {
+			locale = 'en';
+		}
 
 		return templatePrefix + locale;
 	},

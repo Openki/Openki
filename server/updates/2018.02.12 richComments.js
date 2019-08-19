@@ -7,7 +7,6 @@ const updateName = '2018.02.12 richComments';
 
 const UpdatesAvailable = [];
 
-// eslint-disable-next-line func-names
 UpdatesAvailable[updateName] = function () {
 	let count = 0;
 
@@ -25,7 +24,9 @@ UpdatesAvailable[updateName] = function () {
 
 		const update = { $set: { text: saneRichText } };
 		const updated = CourseDiscussions.update(comment._id, update);
-		if (updated) count += 1;
+		if (updated) {
+			count += 1;
+		}
 	});
 
 	return count;

@@ -12,7 +12,6 @@ import Log from '/imports/api/log/log';
 
 import './log.html';
 
-// eslint-disable-next-line func-names
 Template.showLog.onCreated(function () {
 	const instance = this;
 	const batchLoad = 100;
@@ -136,7 +135,9 @@ Template.showLog.events({
 		filter.disable('tr');
 
 		const trStr = $('.js-tr-input').val().trim();
-		if (trStr) filter.add('tr', trStr);
+		if (trStr) {
+			filter.add('tr', trStr);
+		}
 
 		filter.done();
 	}, 200),
@@ -156,7 +157,9 @@ Template.showLog.events({
 		filter.disable('rel');
 
 		const relStr = $('.js-rel-input').val().trim();
-		if (relStr) filter.add('rel', relStr);
+		if (relStr) {
+			filter.add('rel', relStr);
+		}
 
 		filter.done();
 	}, 200),

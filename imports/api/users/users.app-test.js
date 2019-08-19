@@ -7,7 +7,6 @@ const createDummy = function () {
 };
 
 if (Meteor.isClient) {
-	// eslint-disable-next-line func-names
 	describe('Profile', function () {
 		this.timeout(30000);
 		describe('User creation', () => {
@@ -30,7 +29,6 @@ if (Meteor.isClient) {
 			}));
 		});
 
-		// eslint-disable-next-line func-names
 		describe('User modification', function () {
 			this.timeout(30000);
 			const oldDummy = createDummy();
@@ -42,13 +40,19 @@ if (Meteor.isClient) {
 					profile: { name: oldDummy },
 					password: 'hunter2',
 				}, (err) => {
-					if (err) reject(err);
-					else resolve();
+					if (err) {
+						reject(err);
+					} else {
+						resolve();
+					}
 				});
 			}).then(() => new Promise((resolve, reject) => {
 				Meteor.loginWithPassword(oldDummy, 'hunter2', (err) => {
-					if (err) reject(err);
-					else resolve();
+					if (err) {
+						reject(err);
+					} else {
+						resolve();
+					}
 				});
 			})).then(() => new Promise((resolve) => {
 				const user = Meteor.user();

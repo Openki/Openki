@@ -13,7 +13,6 @@ const notificationJoin = {};
   * @param      {String} newRole      - new role of the participant
   * @param      {String} message      - Optional message of the new participant
   */
-// eslint-disable-next-line func-names
 notificationJoin.record = function (courseId, participantId, newRole, message) {
 	check(courseId, String);
 	check(participantId, String);
@@ -21,10 +20,14 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	check(message, Match.Optional(String));
 
 	const course = Courses.findOne(courseId);
-	if (!course) throw new Meteor.Error(`No course entry for ${courseId}`);
+	if (!course) {
+		throw new Meteor.Error(`No course entry for ${courseId}`);
+	}
 
 	const participant = Meteor.users.findOne(participantId);
-	if (!course) throw new Meteor.Error(`No user entry for ${participantId}`);
+	if (!course) {
+		throw new Meteor.Error(`No user entry for ${participantId}`);
+	}
 
 	const body = {};
 	body.courseId = course._id;
@@ -43,7 +46,6 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	Log.record('Notification.Send', [course._id, participant._id], body);
 };
 
-// eslint-disable-next-line func-names
 notificationJoin.Model = function (entry) {
 	const { body } = entry;
 	const course = Courses.findOne(body.courseId);
@@ -51,8 +53,12 @@ notificationJoin.Model = function (entry) {
 
 	return {
 		vars(userLocale) {
-			if (!newParticipant) throw new Error('New participant does not exist (0.o)');
-			if (!course) throw new Error('Course does not exist (0.o)');
+			if (!newParticipant) {
+				throw new Error('New participant does not exist (0.o)');
+			}
+			if (!course) {
+				throw new Error('Course does not exist (0.o)');
+			}
 
 			const roleTitle = mf(`roles.${body.newRole}.short`, {}, undefined, userLocale);
 			const subjectvars = {
@@ -63,7 +69,6 @@ notificationJoin.Model = function (entry) {
 			const subject = mf('notification.join.mail.subject', subjectvars, '{USER} joined {COURSE}: {ROLE}', userLocale);
 
 			const figures = [];
-			// eslint-disable-next-line no-restricted-syntax
 			for (const role of ['host', 'mentor', 'participant']) {
 				if (course.roles.includes(role)) {
 					figures.push(

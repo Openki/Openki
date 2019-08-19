@@ -15,20 +15,26 @@ const updateEmail = function (email, user) {
 
 	// for users with email not yet set, we dont want to force them
 	// to enter a email when they change other profile settings.
-	if (newEmail === oldEmail) return;
+	if (newEmail === oldEmail) {
+		return false;
+	}
 
-	// eslint-disable-next-line consistent-return
-	if (!newEmail) return ApiError('noEmail', 'Please enter a email.');
+	if (!newEmail) {
+		return ApiError('noEmail', 'Please enter a email.');
+	}
 
-	// eslint-disable-next-line consistent-return
-	if (!IsEmail(newEmail)) return ApiError('emailNotValid', 'email invalid');
+	if (!IsEmail(newEmail)) {
+		return ApiError('emailNotValid', 'email invalid');
+	}
 
 	// Don't allow using an address somebody else uses
 	const existingUser = Accounts.findUserByEmail(newEmail);
-	// eslint-disable-next-line consistent-return
-	if (existingUser) return ApiError('emailExists', 'Email already exists.');
+	if (existingUser) {
+		return ApiError('emailExists', 'Email already exists.');
+	}
 
 	Profile.Email.change(user._id, newEmail, 'profile change');
+	return true;
 };
 
 Meteor.methods({
@@ -38,7 +44,6 @@ Meteor.methods({
 		Profile.Region.change(Meteor.userId(), newRegion, 'client call');
 	},
 
-	// eslint-disable-next-line consistent-return
 	'user.updateData'(username, email, notifications) {
 		check(username, String);
 		check(email, String);
@@ -50,7 +55,9 @@ Meteor.methods({
 		// causes us to fail.
 
 		const user = Meteor.user();
-		if (!user) return ApiError('plzLogin', 'Not logged-in');
+		if (!user) {
+			return ApiError('plzLogin', 'Not logged-in');
+		}
 
 		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
 
@@ -64,26 +71,33 @@ Meteor.methods({
 		if (user.notifications !== notifications) {
 			Profile.Notifications.change(user._id, notifications, undefined, 'profile change');
 		}
+		return true;
 	},
 
-	// eslint-disable-next-line consistent-return
 	'user.updateEmail'(email) {
 		check(email, String);
 		const user = Meteor.user();
-		if (!user) return ApiError('plzLogin', 'Not logged-in');
+		if (!user) {
+			return ApiError('plzLogin', 'Not logged-in');
+		}
 		updateEmail(email, user);
+		return true;
 	},
 
 	'user.remove'() {
 		const user = Meteor.user();
-		if (user) Meteor.users.remove({ _id: user._id });
+		if (user) {
+			Meteor.users.remove({ _id: user._id });
+		}
 	},
 
 	'user.addPrivilege'(userId, privilege) {
 		// At the moment, only admins may hand out privileges, so this is easy
 		if (UserPrivilegeUtils.privilegedTo('admin')) {
 			const user = Meteor.users.findOne({ _id: userId });
-			if (!user) throw new Meteor.Error(404, 'User not found');
+			if (!user) {
+				throw new Meteor.Error(404, 'User not found');
+			}
 			Meteor.users.update(
 				{ _id: user._id },
 				{ $addToSet: { privileges: privilege } },
@@ -94,7 +108,9 @@ Meteor.methods({
 
 	'user.removePrivilege'(userId, privilege) {
 		const user = Meteor.users.findOne({ _id: userId });
-		if (!user) throw new Meteor.Error(404, 'User not found');
+		if (!user) {
+			throw new Meteor.Error(404, 'User not found');
+		}
 
 		const operator = Meteor.user();
 
@@ -110,14 +126,15 @@ Meteor.methods({
 
 	// Recalculate the groups and badges field
 	'user.updateBadges'(selector) {
-		Meteor.users.find(selector).forEach((user) => {
-			const userId = user._id;
+		Meteor.users.find(selector).forEach((originalUser) => {
+			const userId = originalUser._id;
 
-			// eslint-disable-next-line consistent-return
+			/* eslint-disable-next-line consistent-return */
 			AsyncTools.untilClean((resolve, reject) => {
-				// eslint-disable-next-line no-shadow
 				const user = Meteor.users.findOne(userId);
-				if (!user) return resolve(true);
+				if (!user) {
+					return resolve(true);
+				}
 
 				const groups = [];
 				Groups.find({ members: user._id }).forEach((group) => {
@@ -157,7 +174,9 @@ Meteor.methods({
 	'user.name'(userId) {
 		this.unblock();
 		const user = Meteor.users.findOne(userId, { fields: { username: 1 } });
-		if (!user) return false;
+		if (!user) {
+			return false;
+		}
 		return user.username;
 	},
 

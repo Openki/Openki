@@ -10,11 +10,13 @@ import Notification from '/imports/notification/notification';
 export const processChange = function (change, done) {
 	Meteor.call(change.constructor.method, change.dict(), (err) => {
 		if (err) {
-			// eslint-disable-next-line no-console
+			/* eslint-disable-next-line no-console */
 			console.log(err);
-			Alert.error(err, '');
+			Alert.serverError(err, '');
 		}
-		if (done) done();
+		if (done) {
+			done();
+		}
 	});
 };
 
@@ -113,7 +115,9 @@ export class Subscribe extends Change {
 	}
 
 	permitted(operator) {
-		if (!operator) return false;
+		if (!operator) {
+			return false;
+		}
 
 		// Admins may subscribe to all roles
 		if (operator.privileged('admin')) {
@@ -133,7 +137,6 @@ export class Subscribe extends Change {
 				const candidateRoles = ['participant', 'mentor', 'host'];
 
 				// In for a penny, in for a pound
-				// eslint-disable-next-line no-restricted-syntax
 				for (const role of candidateRoles) {
 					if (this.course.userHasRole(this.user._id, role)) {
 						return true;
@@ -232,7 +235,9 @@ export class Unsubscribe extends Change {
 	}
 
 	permitted(operator) {
-		if (!operator) return false;
+		if (!operator) {
+			return false;
+		}
 
 		// Admins may do anything
 		if (operator.privileged('admin')) {
@@ -310,13 +315,15 @@ export class Message extends Change {
 		return `${this.constructor.method}()`;
 	}
 
-	// eslint-disable-next-line class-methods-use-this
+	/* eslint-disable-next-line class-methods-use-this */
 	validate() {
 		return true;
 	}
 
 	permitted(operator) {
-		if (!operator) return false;
+		if (!operator) {
+			return false;
+		}
 
 		// The other roles can only be unsubscribed from by the users themselves
 		return operator._id === this.user._id;

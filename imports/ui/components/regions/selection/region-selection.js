@@ -3,14 +3,16 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
+import Alert from '/imports/api/alerts/alert';
 import Regions from '/imports/api/regions/regions';
-import RegionSelection from '/imports/utils/region-selection';
+
 import FilterPreview from '/imports/ui/lib/filter-preview';
+
+import RegionSelection from '/imports/utils/region-selection';
 import StringTools from '/imports/utils/string-tools';
 
 import './region-selection.html';
 
-// eslint-disable-next-line func-names
 Template.regionSelectionWrap.onCreated(function () {
 	this.subscribe('Regions');
 	this.state = new ReactiveDict();
@@ -29,7 +31,6 @@ Template.regionDisplay.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.regionSelection.onCreated(function () {
 	this.state = new ReactiveDict();
 	this.state.setDefault(
@@ -47,7 +48,9 @@ Template.regionSelection.onCreated(function () {
 	this.regions = (active = true) => {
 		const query = { futureEventCount: active ? { $gt: 0 } : { $eq: 0 } };
 		const search = this.state.get('search');
-		if (search !== '') query.name = new RegExp(search, 'i');
+		if (search !== '') {
+			query.name = new RegExp(search, 'i');
+		}
 
 		return Regions.find(query, { sort: { futureEventCount: -1, name: 1 } });
 	};
@@ -58,8 +61,7 @@ Template.regionSelection.onCreated(function () {
 		try {
 			localStorage.setItem('region', regionId); // to survive page reload
 		} catch (e) {
-			// eslint-disable-next-line no-console
-			console.error(e);
+			Alert.error(e);
 		}
 
 		Session.set('region', regionId);
@@ -72,7 +74,9 @@ Template.regionSelection.onCreated(function () {
 		// the homepage for those
 		if (changed) {
 			const routeName = Router.current().route.getName();
-			if (RegionSelection.regionDependentRoutes.indexOf(routeName) < 0) Router.go('/');
+			if (RegionSelection.regionDependentRoutes.indexOf(routeName) < 0) {
+				Router.go('/');
+			}
 		}
 		this.close();
 	};
@@ -87,11 +91,11 @@ Template.regionSelection.onCreated(function () {
 	};
 });
 
-// eslint-disable-next-line func-names
 Template.regionSelection.onRendered(function () {
-	// eslint-disable-next-line func-names
 	Meteor.defer(function () {
-		if (!this.data || !this.data.isSplash) this.$('.js-region-search').select();
+		if (!this.data || !this.data.isSplash) {
+			this.$('.js-region-search').select();
+		}
 	});
 
 	this.parentInstance().$('.dropdown').on('hide.bs.dropdown', () => {
@@ -157,7 +161,7 @@ Template.regionSelection.events({
 
 	'focus .js-region-search'(event, instance) {
 		if (instance.focusFromShowAllRegions) {
-			// eslint-disable-next-line no-param-reassign
+			/* eslint-disable-next-line no-param-reassign */
 			instance.focusFromShowAllRegions = false;
 			return;
 		}
@@ -166,7 +170,7 @@ Template.regionSelection.events({
 
 	'click .js-show-all-regions'(event, instance) {
 		instance.state.set('showAllRegions', true);
-		// eslint-disable-next-line no-param-reassign
+		/* eslint-disable-next-line no-param-reassign */
 		instance.focusFromShowAllRegions = true;
 		instance.$('.js-region-search').select();
 		return false; // prevent dropdown default behavior for this specific <li>

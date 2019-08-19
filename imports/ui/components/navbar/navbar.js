@@ -11,7 +11,6 @@ import '/imports/ui/components/language-selection/language-selection';
 
 import './navbar.html';
 
-// eslint-disable-next-line func-names
 Template.navbar.onRendered(function () {
 	const instance = this;
 	const viewportWidth = Session.get('viewportWidth');
@@ -64,7 +63,9 @@ Template.navbar.helpers({
 	activeClass(linkRoute, id) {
 		const router = Router.current();
 		if (router.route && router.route.getName() === linkRoute) {
-			if (typeof id === 'string' && router.params._id !== id) return '';
+			if (typeof id === 'string' && router.params._id !== id) {
+				return '';
+			}
 			return 'navbar-link-active';
 		}
 		return '';
@@ -115,8 +116,8 @@ Template.loginButton.helpers({
 });
 
 Template.loginButton.events({
-	'click #openLogin'() {
-		$('#accountTasks').modal('show');
+	'click .js-open-login'() {
+		$('.js-account-tasks').modal('show');
 	},
 });
 
@@ -126,7 +127,9 @@ Template.ownUserFrame.events({
 		Meteor.logout();
 
 		const routeName = Router.current().route.getName();
-		if (routeName === 'profile') Router.go('userprofile', Meteor.user());
+		if (routeName === 'profile') {
+			Router.go('userprofile', Meteor.user());
+		}
 	},
 
 	'click .btn'() { $('.collapse').collapse('hide'); },

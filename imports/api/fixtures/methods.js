@@ -26,8 +26,9 @@ const Prng = function (staticseed) {
 // Make a number that looks like a human chose it, favouring 2 and 5
 const humandistrib = function (prng) {
 	const factors = [0, 0, 1, 2, 2, 3, 5, 5];
-	// eslint-disable-next-line max-len
-	return factors[Math.floor(Math.random() * factors.length)] * (prng() > 0.7 ? humandistrib(prng) : 1) + (prng() > 0.5 ? humandistrib(prng) : 0);
+	return factors[Math.floor(Math.random() * factors.length)]
+		* (prng() > 0.7 ? humandistrib(prng) : 1)
+		+ (prng() > 0.5 ? humandistrib(prng) : 0);
 };
 
 // Select a date that is after the given date
@@ -54,7 +55,6 @@ const sometimesAfter = function (date) {
 // This guard is here until we find a better solution.
 if (Meteor.settings.testdata) {
 	const regionsCreate = function () {
-		// eslint-disable-next-line no-restricted-syntax
 		for (const r of regions) {
 			const region = Object.assign({}, r); // clone
 			if (region.loc) {
@@ -68,7 +68,6 @@ if (Meteor.settings.testdata) {
 	};
 
 	const groupsCreate = function () {
-		// eslint-disable-next-line no-restricted-syntax
 		for (const g of groups) {
 			const group = Object.assign({}, g);
 			group.createdby = 'ServerScript_loadingTestgroups';
@@ -88,11 +87,12 @@ if (Meteor.settings.testdata) {
 		// week but keep the weekday.
 		let dateOffset = 0;
 
-		// eslint-disable-next-line no-restricted-syntax
 		for (const e of events) {
 			const event = Object.assign({}, e);
-			// eslint-disable-next-line no-continue
-			if (Events.findOne({ _id: event._id })) continue; // Don't create events that exist already
+			if (Events.findOne({ _id: event._id })) {
+				/* eslint-disable-next-line no-continue */
+				continue; // Don't create events that exist already
+			}
 			event.createdBy = ensure.user(event.createdby)._id;
 			event.groups = _.map(event.groups, ensure.group);
 			event.groupOrganizers = [];
@@ -139,7 +139,6 @@ if (Meteor.settings.testdata) {
 			Regions.findOne('EZqQLGL4PtFCxCNrp'),
 		];
 
-		// eslint-disable-next-line no-restricted-syntax
 		for (const v of venues) {
 			const venueData = Object.assign({}, v);
 			venueData.region = prng() > 0.85 ? testRegions[0] : testRegions[1];
@@ -159,10 +158,8 @@ if (Meteor.settings.testdata) {
 	const coursesCreate = function () {
 		const prng = Prng('createCourses');
 
-		// eslint-disable-next-line no-restricted-syntax
 		for (const c of courses) {
 			const course = Object.assign({}, c);
-			// eslint-disable-next-line no-restricted-syntax
 			for (const member of course.members) {
 				member.user = ensure.user(member.user)._id;
 			}
@@ -174,8 +171,9 @@ if (Meteor.settings.testdata) {
 
 			course._id = ensure.fixedId([course.name, course.description]);
 
-			// eslint-disable-next-line max-len
-			course.date = prng() > 0.50 ? new Date(new Date().getTime() + ((prng() - 0.25) * 8000000000)) : false;
+			course.date = prng() > 0.50
+				? new Date(new Date().getTime() + ((prng() - 0.25) * 8000000000))
+				: false;
 			const age = Math.floor(prng() * 80000000000);
 			course.time_created = new Date(new Date().getTime() - age);
 			course.time_lastedit = new Date(new Date().getTime() - age * 0.25);
@@ -208,8 +206,7 @@ if (Meteor.settings.testdata) {
 		const prng = Prng('eventsGenerate');
 		let count = 0;
 
-		// eslint-disable-next-line no-shadow
-		const venues = [
+		const testVenues = [
 			'Haus am See',
 			'Kongresszentrum',
 			'Volkshaus',
@@ -245,7 +242,7 @@ if (Meteor.settings.testdata) {
 				event.groups = course.groups;
 				event.groupOrganizers = [];
 
-				const venue = venues[Math.floor(prng() * venues.length)];
+				const venue = testVenues[Math.floor(prng() * testVenues.length)];
 				event.venue = ensure.venue(venue, event.region);
 
 				if (prng() > 0.6) {
@@ -272,17 +269,22 @@ if (Meteor.settings.testdata) {
 				const hour = date.getHours();
 
 				// Events outside daylight 8-21 should be unlikely
-				if (prng() > 0.2 && (hour < 8 || hour > 21)) date.setHours(hour + 12);
+				if (prng() > 0.2 && (hour < 8 || hour > 21)) {
+					date.setHours(hour + 12);
+				}
 
 				// Quarter hours should be most common
-				if (prng() > 0.05) date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15);
+				if (prng() > 0.05) {
+					date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15);
+				}
 
 				const regionZone = LocalTime.zone(event.region);
 
 				event.startLocal = LocalTime.toString(date);
 				event.start = regionZone.fromString(event.startLocal).toDate();
-				// eslint-disable-next-line max-len
-				event.endLocal = LocalTime.toString(new Date(date.getTime() + humandistrib(prng) * 1000 * 60 * 4));
+				event.endLocal = LocalTime.toString(
+					new Date(date.getTime() + humandistrib(prng) * 1000 * 60 * 4),
+				);
 				event.end = regionZone.fromString(event.endLocal).toDate();
 
 				const { members } = course;
@@ -319,8 +321,9 @@ if (Meteor.settings.testdata) {
 				comment.text = HtmlTools.saneHtml(_.sample(words, 5).join(' ') + _.sample(words, Math.floor(prng() * 30)).join(' '));
 
 				comment.time_created = sometimesAfter(course.time_created);
-				// eslint-disable-next-line max-len
-				comment.time_updated = (prng() < 0.9) ? comment.time_created : sometimesAfter(comment.time_created);
+				comment.time_updated = (prng() < 0.9)
+					? comment.time_created
+					: sometimesAfter(comment.time_created);
 
 				let commenter;
 				if (!courseMembers || prng() < 0.2) {
@@ -352,7 +355,9 @@ if (Meteor.settings.testdata) {
 		},
 
 		'fixtures.create'() {
-			if (Regions.find().count() === 0) regionsCreate();
+			if (Regions.find().count() === 0) {
+				regionsCreate();
+			}
 			groupsCreate();
 			venuesCreate();
 			coursesCreate();

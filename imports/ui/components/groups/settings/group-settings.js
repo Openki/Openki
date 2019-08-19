@@ -11,7 +11,6 @@ import '/imports/ui/components/buttons/buttons';
 
 import './group-settings.html';
 
-// eslint-disable-next-line func-names
 Template.groupSettings.onCreated(function () {
 	const instance = this;
 
@@ -38,7 +37,9 @@ Template.groupSettings.helpers({
 		const instance = Template.instance();
 
 		const search = instance.userSearch.get();
-		if (search === '') return false;
+		if (search === '') {
+			return false;
+		}
 
 		const group = Groups.findOne(Router.current().params._id);
 		return UserSearchPrefix(search, { exclude: group.members, limit: 30 });
@@ -77,7 +78,7 @@ Template.groupSettings.events({
 		const groupId = Router.current().params._id;
 		Meteor.call('group.updateMembership', memberId, groupId, true, (err) => {
 			if (err) {
-				Alert.error(err, 'Could not add member');
+				Alert.serverError(err, 'Could not add member');
 			} else {
 				const memberName = Meteor.users.findOne(memberId).username;
 				const groupName = Groups.findOne(groupId).name;
@@ -95,7 +96,7 @@ Template.groupSettings.events({
 		const groupId = Router.current().params._id;
 		Meteor.call('group.updateMembership', memberId, groupId, false, (err) => {
 			if (err) {
-				Alert.error(err, 'Could not remove member');
+				Alert.serverError(err, 'Could not remove member');
 			} else {
 				const memberName = Meteor.users.findOne(memberId).username;
 				const groupName = Groups.findOne(groupId).name;
@@ -138,7 +139,7 @@ Template.groupSettings.events({
 		Meteor.call('group.save', groupId, changes, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, 'Could not save settings');
+				Alert.serverError(err, 'Could not save settings');
 			} else {
 				const groupName = Groups.findOne(groupId).name;
 				Alert.success(mf(

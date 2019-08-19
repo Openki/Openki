@@ -11,20 +11,22 @@ const apiResponse = function (collection, formatter) {
 };
 
 const maybeUrl = function (route, context) {
-	if (!context || !context._id) return undefined;
+	if (!context || !context._id) {
+		return undefined;
+	}
 	return Router.url(route, context);
 };
 
 const Api = {
 	groups:
-		apiResponse(Groups, (group) => {
-			// eslint-disable-next-line no-param-reassign
+		apiResponse(Groups, (originalGroup) => {
+			const group = Object.assign({}, originalGroup);
 			group.link = Router.url('groupDetails', group);
 			return group;
 		}),
 	venues:
-		apiResponse(Venues, (venue) => {
-			// eslint-disable-next-line no-param-reassign
+		apiResponse(Venues, (originalVenue) => {
+			const venue = Object.assign({}, originalVenue);
 			venue.link = Router.url('venueDetails', venue);
 			return venue;
 		}),
@@ -74,8 +76,7 @@ const Api = {
 
 			evr.groups = [];
 			const groups = ev.groups || [];
-			// eslint-disable-next-line no-restricted-syntax
-			for (const groupId of groups) {
+			groups.forEach((groupId) => {
 				const group = Groups.findOne(groupId);
 				if (group) {
 					evr.groups.push(
@@ -87,7 +88,7 @@ const Api = {
 						},
 					);
 				}
-			}
+			});
 
 			return evr;
 		}),

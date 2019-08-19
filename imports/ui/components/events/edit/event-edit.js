@@ -6,25 +6,25 @@
 
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import LocalTime from '/imports/utils/local-time';
-import Editable from '/imports/ui/lib/editable';
-import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import Regions from '/imports/api/regions/regions';
-
+import Alert from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
+import Regions from '/imports/api/regions/regions';
+
+import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import Editable from '/imports/ui/lib/editable';
+
+import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
+import LocalTime from '/imports/utils/local-time';
+
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/events/edit-location/event-edit-location';
 import '/imports/ui/components/price-policy/price-policy';
 import '/imports/ui/components/regions/tag/region-tag';
 
-import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
-import Alert from '/imports/api/alerts/alert';
-
 import './event-edit.html';
 
-// eslint-disable-next-line func-names
 Template.eventEdit.onCreated(function () {
 	const instance = this;
 	instance.busy(false);
@@ -69,7 +69,6 @@ Template.eventEdit.onCreated(function () {
 
 	/** Get current local time depending on selected region
 	  * Returned as faux-UTC moment-object. */
-	// eslint-disable-next-line func-names
 	instance.now = function () {
 		return LocalTime.nowFauxUTC(instance.selectedRegion.get());
 	};
@@ -84,7 +83,7 @@ const readDateTime = function (dateStr, timeStr) {
 const getEventStartMoment = function (template) {
 	return readDateTime(
 		template.$('.js-event-start-date').val(),
-		template.$('#editEventStartTime').val(),
+		template.$('.js-event-start-time').val(),
 	);
 };
 
@@ -93,7 +92,7 @@ const getEventEndMoment = function (template) {
 	const startMoment = getEventStartMoment(template);
 	let endMoment = readDateTime(
 		startMoment.format('L'),
-		template.$('#editEventEndTime').val(),
+		template.$('.js-event-end-time').val(),
 	);
 
 	// If the end time is earlier than the start time, assume the event
@@ -104,7 +103,7 @@ const getEventEndMoment = function (template) {
 	if (endMoment.diff(startMoment) < 0) {
 		endMoment = readDateTime(
 			startMoment.add(1, 'day').format('L'),
-			template.$('#editEventEndTime').val(),
+			template.$('.js-event-end-time').val(),
 		);
 	}
 
@@ -113,7 +112,7 @@ const getEventEndMoment = function (template) {
 
 
 const getEventDuration = function (template) {
-	const duration = parseInt(template.$('#editEventDuration').val(), 10);
+	const duration = parseInt(template.$('.js-event-duration').val(), 10);
 	return Math.max(0, duration);
 };
 
@@ -139,13 +138,12 @@ function updateTimes(template, updateEnd) {
 	}
 
 	duration = end.diff(start, 'minutes');
-	template.$('#edit_event_startdate').val(start.format('L'));
-	template.$('#editEventStartTime').val(start.format('LT'));
-	template.$('#editEventEndTime').val(end.format('LT'));
-	template.$('#editEventDuration').val(duration.toString());
+	template.$('.js-event-start-date').val(start.format('L'));
+	template.$('.js-event-start-time').val(start.format('LT'));
+	template.$('.js-event-end-time').val(end.format('LT'));
+	template.$('.js-event-duration').val(duration.toString());
 }
 
-// eslint-disable-next-line func-names
 Template.eventEdit.onRendered(function () {
 	const instance = this;
 	updateTimes(instance, false);
@@ -186,8 +184,9 @@ Template.eventEdit.helpers({
 	},
 
 	showRegionTag() {
-		if (this.courseId) return false;
-		if (!this._id) return false;
+		if (!this._id || this.courseId) {
+			return false;
+		}
 		return true;
 	},
 
@@ -199,9 +198,11 @@ Template.eventEdit.helpers({
 		return Events.find(AffectedReplicaSelectors(this)).count();
 	},
 
-	// eslint-disable-next-line consistent-return
 	disabledIfDayChanged() {
-		if (Template.instance().state.get('startDayChanged')) return 'disabled';
+		if (Template.instance().state.get('startDayChanged')) {
+			return 'disabled';
+		}
+		return '';
 	},
 
 	startDayChanged() {
@@ -232,8 +233,9 @@ Template.eventEdit.helpers({
 	showRegionSelection() {
 		// You can select the region for events that are new and not associated
 		// with a course
-		if (this._id) return false;
-		if (this.courseId) return false;
+		if (this._id || this.courseId) {
+			return false;
+		}
 		return true;
 	},
 
@@ -259,12 +261,12 @@ Template.eventEdit.helpers({
 		return Template.instance().uploaded.get();
 	},
 
-	// eslint-disable-next-line consistent-return
 	course() {
 		const { courseId } = this;
 		if (courseId) {
 			return Courses.findOne({ _id: courseId });
 		}
+		return false;
 	},
 	notifyChecked() {
 		return Template.instance().notifyChecked.get();
@@ -279,33 +281,38 @@ Template.eventEdit.events({
 		const start = getEventStartMoment(instance);
 		if (!start.isValid()) {
 			const exampleDate = moment().format('L');
-			// eslint-disable-next-line no-alert
-			alert(mf('event.edit.dateFormatWarning', { EXAMPLEDATE: exampleDate }, 'Date format must be of the form {EXAMPLEDATE}'));
+			Alert.serverError(
+				mf(
+					'event.edit.dateFormatWarning',
+					{ EXAMPLEDATE: exampleDate },
+					'Date format must be of the form {EXAMPLEDATE}',
+				),
+			);
 			return;
 		}
 		const end = getEventEndMoment(instance);
 
 		const editevent = {
-			title: instance.$('#eventEditTitle').val(),
+			title: instance.$('.js-event-title').val(),
 			venue: instance.selectedLocation.get(),
-			room: instance.$('#eventEditRoom').val(),
+			room: instance.$('.js-event-room').val(),
 			startLocal: LocalTime.toString(start),
 			endLocal: LocalTime.toString(end),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
 		};
 
 		if (editevent.title.length === 0) {
-			// eslint-disable-next-line no-alert
-			alert(mf('event.edit.plzProvideTitle', 'Please provide a title'));
+			Alert.error(mf('event.edit.plzProvideTitle', 'Please provide a title'));
 			return;
 		}
 
 		const newDescription = instance.data.editableDescription.getEdited();
-		if (newDescription) editevent.description = newDescription;
+		if (newDescription) {
+			editevent.description = newDescription;
+		}
 
 		if (!editevent.description) {
-			// eslint-disable-next-line no-alert
-			alert(mf('event.edit.plzProvideDescr', 'Please provide a description'));
+			Alert.error(mf('event.edit.plzProvideDescr', 'Please provide a description'));
 			return;
 		}
 
@@ -319,8 +326,9 @@ Template.eventEdit.events({
 			} else {
 				editevent.region = instance.selectedRegion.get();
 				if (!editevent.region || editevent.region === 'all') {
-					// eslint-disable-next-line no-alert
-					alert(mf('event.edit.plzSelectRegion', 'Please select the region for this event'));
+					Alert.error(
+						mf('event.edit.plzSelectRegion', 'Please select the region for this event'),
+					);
 					return;
 				}
 
@@ -337,7 +345,7 @@ Template.eventEdit.events({
 		const updateReplicas = instance.state.get('updateReplicas');
 		const updateChangedReplicas = instance.state.get('updateChangedReplicas');
 		const sendNotifications = instance.$('.js-check-notify').is(':checked');
-		const addNotificationMessage = instance.$('.js-event-edit-add-message').val();
+		const addNotificationMessage = instance.$('.js-event-add-message').val();
 
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveEvent', 'Login and save event'), () => {
@@ -350,11 +358,11 @@ Template.eventEdit.events({
 					changes: editevent,
 					comment: addNotificationMessage,
 				},
-				// eslint-disable-next-line no-shadow
+				/* eslint-disable-next-line no-shadow */
 				(err, eventId) => {
 					instance.busy(false);
 					if (err) {
-						Alert.error(err, 'Saving the event went wrong');
+						Alert.serverError(err, 'Saving the event went wrong');
 					} else {
 						if (isNew) {
 							Router.go('showEvent', { _id: eventId });
@@ -384,8 +392,10 @@ Template.eventEdit.events({
 		});
 	},
 
-	'click .js-event-edit-cancel'(event, instance) {
-		if (instance.data.new) window.history.back();
+	'click .js-event-cancel'(event, instance) {
+		if (instance.data.new) {
+			window.history.back();
+		}
 		instance.parent.editing.set(false);
 	},
 
@@ -405,11 +415,11 @@ Template.eventEdit.events({
 		});
 	},
 
-	'change #editEventDuration, change .js-event-start-date, change #editEventStartTime'(event, template) {
+	'change .js-event-duration, change .js-event-start-date, change .js-event-start-time'(event, template) {
 		updateTimes(template, true);
 	},
 
-	'change #editEventEndTime'(event, template) {
+	'change .js-event-end-time'(event, template) {
 		updateTimes(template, false);
 	},
 

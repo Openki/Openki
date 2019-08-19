@@ -4,7 +4,6 @@ import Alerts from '/imports/api/alerts/alerts';
 
 import './alerts.html';
 
-// eslint-disable-next-line func-names
 Template.alerts.onCreated(function () {
 	this.updateSpacerHeight = () => {
 		this.$('.alert-messages-spacer').height(this.$('.alert-messages').height());
@@ -17,7 +16,6 @@ Template.alerts.helpers({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.alert.onCreated(function () {
 	this.remove = (alertId) => {
 		const $alert = this.$('.alert-message');
@@ -30,7 +28,6 @@ Template.alert.onCreated(function () {
 	};
 });
 
-// eslint-disable-next-line func-names
 Template.alert.onRendered(function () {
 	this.parentInstance().updateSpacerHeight();
 	const alert = Template.currentData();
@@ -41,7 +38,9 @@ Template.alert.onRendered(function () {
 
 Template.alert.events({
 	'click .js-remove-alert'(event, instance) {
-		if (instance.timedRemove) clearTimeout(instance.timedRemove);
+		if (instance.timedRemove) {
+			clearTimeout(instance.timedRemove);
+		}
 		instance.remove(this._id);
 	},
 });

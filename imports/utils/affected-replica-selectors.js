@@ -5,7 +5,9 @@ const AffectedReplicaSelectors = function (event) {
 	// Only replicas future from the edited event are updated
 	// replicas in the past are never updated
 	let futureDate = event.start;
-	if (futureDate < new Date()) futureDate = new Date();
+	if (futureDate < new Date()) {
+		futureDate = new Date();
+	}
 
 	const selector = {
 		_id: { $ne: event._id }, // so the event is not considered to be its own replica

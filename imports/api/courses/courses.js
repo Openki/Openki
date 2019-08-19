@@ -67,13 +67,23 @@ export class Course {
 		this.groupOrganizers = [];
 	}
 
+	/** Check if the course is new (not yet saved).
+	  *
+	  * @return {Boolean}
+	  */
+	isNew() {
+		return !this._id;
+	}
+
 	/** Check whether a user may edit the course.
 	  *
 	  * @param {Object} user
 	  * @return {Boolean}
 	  */
 	editableBy(user) {
-		if (!user) return false;
+		if (!user) {
+			return false;
+		}
 		const isNew = !this._id;
 		return isNew // Anybody may create a new course
 			|| UserPrivilegeUtils.privileged(user, 'admin') // Admins can edit all courses
@@ -115,13 +125,14 @@ Courses.Filtering = () => Filtering(
 );
 
 // Update list of editors
-// eslint-disable-next-line func-names
 Courses.updateGroups = function (courseId) {
-	// eslint-disable-next-line consistent-return
+	/* eslint-disable-next-line consistent-return */
 	AsyncTools.untilClean((resolve, reject) => {
 		const course = Courses.findOne(courseId);
 		// If the course doesn't exist it doesn't need updating
-		if (!course) return resolve(true);
+		if (!course) {
+			return resolve(true);
+		}
 
 		const editors = course.groupOrganizers.slice();
 
@@ -146,19 +157,20 @@ Courses.updateGroups = function (courseId) {
 		// At some point we'll have to figure out a proper caching hierarchy
 		Meteor.call('event.updateGroups', { courseId });
 	}, (reason) => {
-		// eslint-disable-next-line no-console
+		/* eslint-disable-next-line no-console */
 		console.log(`Failed updateGroups: ${reason}`);
 	});
 };
 
-// eslint-disable-next-line func-names
 Courses.findFilter = function (filter, limit, sortParams) {
 	check(sortParams, Match.Optional([[Match.Any]]));
 
 	const order = sortParams || [];
 
 	const find = {};
-	if (filter.region && filter.region !== 'all') find.region = filter.region;
+	if (filter.region && filter.region !== 'all') {
+		find.region = filter.region;
+	}
 
 	if (filter.state === 'proposal') {
 		find.lastEvent = { $eq: null };

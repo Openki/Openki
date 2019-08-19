@@ -12,7 +12,6 @@ const invalidDigestedPassword = {
 };
 
 if (Meteor.isClient) {
-	// eslint-disable-next-line func-names
 	describe('Login', function () {
 		this.timeout(10000);
 		it('should work with good credentials', (done) => {
@@ -21,11 +20,12 @@ if (Meteor.isClient) {
 					user: { username: 'greg' },
 					password: gregsDigestedPassword,
 				},
-				// eslint-disable-next-line consistent-return
 				(err, response) => {
-					if (err) return done(err);
+					if (err) {
+						return done(err);
+					}
 					expect(response.token).to.be.a('string');
-					done();
+					return done();
 				});
 		});
 

@@ -8,15 +8,18 @@ import Venues from '/imports/api/venues/venues';
 
 if (Meteor.settings.testdata) {
 	const logResult = function (error, result) {
-		if (error) throw error;
-		// eslint-disable-next-line no-console
+		if (error) {
+			throw error;
+		}
+		/* eslint-disable-next-line no-console */
 		console.log(result);
 	};
 
 	const ifCollectionEmpty = function (collection, methods) {
 		if (collection.find().count() === 0) {
-			// eslint-disable-next-line no-restricted-syntax
-			for (const method of methods) Meteor.call(method, logResult);
+			for (const method of methods) {
+				Meteor.call(method, logResult);
+			}
 		}
 	};
 

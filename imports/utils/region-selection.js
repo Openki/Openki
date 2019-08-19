@@ -1,6 +1,7 @@
 import Regions from '/imports/api/regions/regions';
-import UrlTools from '/imports/utils/url-tools';
+
 import IpLocation from '/imports/utils/ip-location';
+import UrlTools from '/imports/utils/url-tools';
 
 const RegionSelection = {};
 
@@ -12,7 +13,6 @@ RegionSelection.regionDependentRoutes = ['home', 'find', 'calendar', 'venueMap',
   * This checks client storage for a region setting. When there is no previously
   * selected region, we ask the server to do geolocation. If that fails too,
   * we just set the region to 'all regions'. */
-// eslint-disable-next-line func-names
 RegionSelection.init = function () {
 	// We assume the initial onLogin() callback comes before the regions' ready.
 	// We have no guarantee for this however!
@@ -20,7 +20,9 @@ RegionSelection.init = function () {
 		const user = Meteor.user();
 
 		const { regionId } = user.profile;
-		if (regionId) Session.set('region', regionId);
+		if (regionId) {
+			Session.set('region', regionId);
+		}
 	});
 
 	Meteor.subscribe('regions', () => {
@@ -30,19 +32,19 @@ RegionSelection.init = function () {
 		].filter(Boolean);
 
 		const useAsRegion = function (regionId) {
-			if (!regionId) return;
+			if (!regionId) {
+				return false;
+			}
 
 			// Special case 'all'
 			if (regionId === 'all') {
 				Session.set('region', regionId);
-				// eslint-disable-next-line consistent-return
 				return true;
 			}
 
 			// Normal case region ID
 			if (Regions.findOne({ _id: regionId })) {
 				Session.set('region', regionId);
-				// eslint-disable-next-line consistent-return
 				return true;
 			}
 
@@ -50,17 +52,17 @@ RegionSelection.init = function () {
 			const region = Regions.findOne({ name: regionId });
 			if (region) {
 				Session.set('region', region._id);
-				// eslint-disable-next-line consistent-return
 				return true;
 			}
 
 			// Ignore invalid region ID
-			// eslint-disable-next-line consistent-return
 			return false;
 		};
 
 		// If any of these regions are usable we stop here
-		if (selectors.some(useAsRegion)) return;
+		if (selectors.some(useAsRegion)) {
+			return;
+		}
 
 		// If no region has been selected previously, we show the splash-screen.
 		Session.set('showRegionSplash', selectors.length < 1);
@@ -68,7 +70,7 @@ RegionSelection.init = function () {
 		// Ask geolocation server to place us so the splash-screen has our best
 		// guess selected.
 		IpLocation.detect((region, reason) => {
-			// eslint-disable-next-line no-console
+			/* eslint-disable-next-line no-console */
 			console.log(`Region autodetection: ${reason}`);
 			if (region) {
 				useAsRegion(region._id);

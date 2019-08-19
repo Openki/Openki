@@ -34,7 +34,6 @@ const logo = function (path) {
   *
   * @param entry Notification.Event log entry to process
   */
-// eslint-disable-next-line func-names
 Notification.send = function (entry) {
 	// Find out for which recipients sending has already been attempted.
 	const concluded = {};
@@ -112,7 +111,9 @@ Notification.send = function (entry) {
 				Notification.SendResult.record(entry, unsubToken, true, recipientId, mail, 'success');
 			} catch (e) {
 				let reason = e;
-				if (typeof e === 'object' && 'toJSON' in e) reason = e.toJSON();
+				if (typeof e === 'object' && 'toJSON' in e) {
+					reason = e.toJSON();
+				}
 				Notification.SendResult.record(entry, unsubToken, false, recipientId, mail, reason);
 			}
 		}
@@ -132,7 +133,6 @@ Notification.SendResult = {};
   *                              that far)
   * @param  {String} reason    - why this log entry was recorded
   */
-// eslint-disable-next-line func-names
 Notification.SendResult.record = function (note, unsubToken, sent, recipient, message, reason) {
 	check(sent, Boolean);
 	check(unsubToken, Match.Maybe(String));
@@ -147,7 +147,9 @@ Notification.SendResult.record = function (note, unsubToken, sent, recipient, me
 	};
 
 	const rel = [note._id, recipient];
-	if (unsubToken) rel.push(unsubToken);
+	if (unsubToken) {
+		rel.push(unsubToken);
+	}
 
 	Log.record('Notification.SendResult', rel, entry);
 };

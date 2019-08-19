@@ -38,7 +38,9 @@ Template.layout.helpers({
 
 	showRegionSplash() {
 		const { route } = Router.current();
-		if (!route) return false;
+		if (!route) {
+			return false;
+		}
 
 		return (
 			RegionSelection.regionDependentRoutes.indexOf(route.getName()) >= 0
@@ -66,7 +68,6 @@ Template.layout.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.layout.rendered = function () {
 	$(window).resize(() => { UpdateViewport(); });
 	Session.set('isRetina', (window.devicePixelRatio === 2));

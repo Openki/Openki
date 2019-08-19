@@ -35,37 +35,36 @@ const helpers = {
 	},
 
 	log(context) {
-		// eslint-disable-next-line no-console
-		if (window.console) console.log(arguments.length > 0 ? context : this);
+		if (window.console) {
+			/* eslint-disable-next-line no-console */
+			console.log(arguments.length > 0 ? context : this);
+		}
 	},
 
-	// eslint-disable-next-line consistent-return
 	dateformat(date) {
 		Session.get('timeLocale');
-		if (date) return moment(date).format('L');
+		if (date) {
+			return moment(date).format('L');
+		}
+		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	dateLong(date) {
 		if (date) {
 			Session.get('timeLocale');
-			// eslint-disable-next-line no-param-reassign
-			date = moment(moment(date).toDate());
 			return moment(date).format('LL');
 		}
+		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	dateShort(date) {
 		if (date) {
 			Session.get('timeLocale');
-			// eslint-disable-next-line no-param-reassign
-			date = moment(moment(date).toDate());
 			return moment(date).format('l');
 		}
+		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	dateformat_mini_fullmonth(date) {
 		Session.get('timeLocale'); // it depends
 		if (date) {
@@ -73,25 +72,32 @@ const helpers = {
 			const year = m.year() !== moment().year() ? ` ${m.format('YYYY')}` : '';
 			return moment(date).format('D. MMMM') + year;
 		}
+		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	timeformat(date) {
 		Session.get('timeLocale');
-		if (date) return moment(date).format('LT');
+		if (date) {
+			return moment(date).format('LT');
+		}
+		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	fromNow(date) {
 		Session.get('fineTime');
 		Session.get('timeLocale'); // it depends
-		if (date) return moment(date).fromNow();
+		if (date) {
+			return moment(date).fromNow();
+		}
+		return false;
 	},
 
-	// eslint-disable-next-line consistent-return
 	weekdayShort(date) {
 		Session.get('timeLocale'); // it depends
-		if (date) return moment(date).format('ddd');
+		if (date) {
+			return moment(date).format('ddd');
+		}
+		return false;
 	},
 
 	// Strip HTML markup
@@ -151,14 +157,10 @@ const helpers = {
 	},
 };
 
-// eslint-disable-next-line guard-for-in, no-restricted-syntax
-for (const name in helpers) {
-	Template.registerHelper(name, helpers[name]);
-}
+Object.keys(helpers).forEach(name => Template.registerHelper(name, helpers[name]));
 
 /* Get a username from ID
  */
-// eslint-disable-next-line func-names
 const usernameFromId = (function () {
 	// We cache the username lookups
 	// To prevent unlimited cache-growth, after a enough lookups we
@@ -179,25 +181,26 @@ const usernameFromId = (function () {
 		},
 	});
 
-	// eslint-disable-next-line func-names
 	return function (userId) {
-		if (!userId) return mf('noUser_placeholder', 'someone');
+		if (!userId) {
+			return mf('noUser_placeholder', 'someone');
+		}
 
 		// Consult cache
-		let user = cache[userId];
-		if (user === undefined) {
+		let cachedUser = cache[userId];
+		if (cachedUser === undefined) {
 			// Consult old cache
-			user = previousCache[userId];
+			cachedUser = previousCache[userId];
 
 			// Carry to new cache if it was present in the old
-			if (user !== undefined) {
-				cache[userId] = user;
+			if (cachedUser !== undefined) {
+				cache[userId] = cachedUser;
 			}
 		}
 
-		if (user === undefined) {
+		if (cachedUser === undefined) {
 			// Substitute until the name (or its absence) is loaded
-			user = '◌';
+			cachedUser = '◌';
 
 			if (pending[userId]) {
 				pending[userId].depend();
@@ -214,10 +217,9 @@ const usernameFromId = (function () {
 					lookups = 0;
 				}
 
-				// eslint-disable-next-line no-shadow
 				Meteor.call('user.name', userId, (err, user) => {
 					if (err) {
-						// eslint-disable-next-line no-console
+						/* eslint-disable-next-line no-console */
 						console.warn(err);
 					}
 					cache[userId] = user || '?!';
@@ -227,8 +229,8 @@ const usernameFromId = (function () {
 			}
 		}
 
-		if (user) {
-			return user;
+		if (cachedUser) {
+			return cachedUser;
 		}
 		return `userId: ${userId}`;
 	};

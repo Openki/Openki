@@ -13,12 +13,10 @@ Template.emailRequest.helpers({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.emailRequestModal.onCreated(function () {
 	this.busy(false);
 });
 
-// eslint-disable-next-line func-names
 Template.emailRequestModal.onRendered(function () {
 	this.$('.js-email-request-modal').modal('show');
 });
@@ -58,7 +56,9 @@ Template.emailRequestModal.events({
 			instance.errors.add('noEmail');
 		}
 
-		if (instance.errors.present()) return;
+		if (instance.errors.present()) {
+			return;
+		}
 
 		instance.busy('saving');
 		Meteor.call('user.updateEmail', email, (err) => {
@@ -79,12 +79,10 @@ Template.emailValidation.helpers({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.emailValidationModal.onCreated(function () {
 	this.busy(false);
 });
 
-// eslint-disable-next-line func-names
 Template.emailValidationModal.onRendered(function () {
 	this.$('.js-email-validation-modal').modal('show');
 });

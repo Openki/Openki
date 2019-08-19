@@ -68,15 +68,12 @@ Meteor.startup(() => {
 		}
 	}
 
-	if (Meteor.settings.admins) {
-		// eslint-disable-next-line guard-for-in, no-restricted-syntax
-		for (const name in Meteor.settings.admins) {
-			const user = Meteor.users.findOne({ username: Meteor.settings.admins[name] });
-			if (user) {
-				Meteor.users.update({ _id: user._id }, { $addToSet: { privileges: 'admin' } });
-			}
+	(Meteor.settings.admins || []).forEach((username) => {
+		const user = Meteor.users.findOne({ username });
+		if (user) {
+			Meteor.users.update({ _id: user._id }, { $addToSet: { privileges: 'admin' } });
 		}
-	}
+	});
 
 	/* Initialize cache-fields on startup */
 

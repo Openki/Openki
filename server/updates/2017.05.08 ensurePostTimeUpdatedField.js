@@ -2,7 +2,6 @@ import CourseDiscussions from '/imports/api/course-discussions/course-discussion
 
 const UpdatesAvailable = [];
 
-// eslint-disable-next-line func-names
 UpdatesAvailable['2017.05.08 ensurePostTimeUpdatedField'] = function () {
 	let count = 0;
 

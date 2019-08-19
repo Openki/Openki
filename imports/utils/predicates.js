@@ -10,7 +10,9 @@ const Predicates = {
 		};
 	},
 	id(param) {
-		if (param === 'all') return false;
+		if (param === 'all') {
+			return false;
+		}
 		return Predicates.string(param);
 	},
 	ids(param) {
@@ -18,9 +20,11 @@ const Predicates = {
 			return {
 				merge(other) { return make(_.union(ids, other.get())); },
 				without(predicate) {
-					// eslint-disable-next-line no-param-reassign
+					/* eslint-disable-next-line no-param-reassign */
 					ids = _.difference(ids, predicate.get());
-					if (ids.length === 0) return false;
+					if (ids.length === 0) {
+						return false;
+					}
 					return make(ids);
 				},
 				get() { return ids; },
@@ -38,7 +42,9 @@ const Predicates = {
 		return make(_.uniq(param.split(',')));
 	},
 	require(param) {
-		if (!param) return false;
+		if (!param) {
+			return false;
+		}
 		return {
 			merge(other) { return other; },
 			without() { return false; },
@@ -49,7 +55,9 @@ const Predicates = {
 		};
 	},
 	flag(param) {
-		if (param === undefined) return false;
+		if (param === undefined) {
+			return false;
+		}
 		const state = !!parseInt(param, 2); // boolean
 
 		return {
@@ -62,14 +70,18 @@ const Predicates = {
 		};
 	},
 	date(param) {
-		if (!param) throw new FilteringReadError(param, 'Empty date');
+		if (!param) {
+			throw new FilteringReadError(param, 'Empty date');
+		}
 		let date;
 
 		if (param === 'now') {
 			date = moment();
 		} else {
 			date = moment(param, ['YYYY-MM-DD', moment.ISO_8601]); // Param is ISO date or moment() object
-			if (!date.isValid()) throw new FilteringReadError(param, 'Invalid date');
+			if (!date.isValid()) {
+				throw new FilteringReadError(param, 'Invalid date');
+			}
 		}
 
 		return {

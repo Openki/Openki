@@ -13,7 +13,6 @@ import '/imports/ui/components/buttons/buttons';
 
 import './course-discussion.html';
 
-// eslint-disable-next-line func-names
 Template.discussion.onCreated(function () {
 	this.count = new ReactiveVar(0);
 
@@ -59,7 +58,9 @@ Template.discussion.helpers({
 		instance.count.set(count);
 
 		const limit = instance.limit.get();
-		if (limit) posts = posts.slice(0, limit);
+		if (limit) {
+			posts = posts.slice(0, limit);
+		}
 
 		return posts;
 	},
@@ -74,12 +75,14 @@ Template.discussion.helpers({
 		};
 	},
 
-	// eslint-disable-next-line consistent-return
 	limited() {
 		const instance = Template.instance();
 		const limit = instance.limit.get();
 
-		if (limit) return instance.count.get() > limit;
+		if (limit) {
+			return instance.count.get() > limit;
+		}
+		return false;
 	},
 
 	count() {
@@ -93,7 +96,6 @@ Template.discussion.events({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.post.onCreated(function () {
 	const post = this.data;
 
@@ -115,7 +117,9 @@ Template.post.helpers({
 		// Note that the 'discussion' subscription from the 'discussion' template
 		// covers responses as well
 		const instance = Template.instance();
-		if (!instance.isParent) return;
+		if (!instance.isParent) {
+			return false;
+		}
 
 		const replies = CourseDiscussions
 			.find(
@@ -125,13 +129,14 @@ Template.post.helpers({
 			.fetch();
 
 		const limit = instance.limit.get();
-		// eslint-disable-next-line consistent-return
 		return limit ? replies.slice(-(limit)) : replies;
 	},
 
 	notAllResponsesShown() {
 		const instance = Template.instance();
-		if (!instance.isParent) return;
+		if (!instance.isParent) {
+			return false;
+		}
 
 		const limit = instance.limit.get();
 		const count = CourseDiscussions
@@ -141,7 +146,6 @@ Template.post.helpers({
 			)
 			.count();
 
-		// eslint-disable-next-line consistent-return
 		return limit && count > limit;
 	},
 
@@ -154,7 +158,9 @@ Template.post.helpers({
 	},
 
 	newResponse() {
-		if (this.parentId) return false;
+		if (this.parentId) {
+			return false;
+		}
 		return {
 			new: true,
 			parentId: this._id,
@@ -177,7 +183,9 @@ Template.postShow.helpers({
 		const classes = [];
 
 		classes.push(this.parentId ? 'discussion-comment' : 'discussion-post');
-		if (this.saving) classes.push('is-saving');
+		if (this.saving) {
+			classes.push('is-saving');
+		}
 
 		return { class: classes.join(' ') };
 	},
@@ -196,7 +204,6 @@ Template.postShow.helpers({
 	},
 });
 
-// eslint-disable-next-line func-names
 Template.postEdit.onCreated(function () {
 	this.anon = new ReactiveVar(!this.data.userId);
 	this.validComment = new ReactiveVar(CourseDiscussions.validComment(this.data.text));
@@ -237,7 +244,9 @@ Template.postEdit.helpers({
 	},
 
 	anonDisabled() {
-		if (Meteor.user()) return {};
+		if (Meteor.user()) {
+			return {};
+		}
 		return { disabled: 1 };
 	},
 
@@ -250,7 +259,9 @@ Template.postEdit.helpers({
 	},
 
 	notifyAllChecked() {
-		if (!this.new) return {};
+		if (!this.new) {
+			return {};
+		}
 		if (this.notifyAll) {
 			return { checked: 1 };
 		}
@@ -258,10 +269,14 @@ Template.postEdit.helpers({
 	},
 
 	canNotifyAll() {
-		if (Template.instance().anon.get()) return false;
+		if (Template.instance().anon.get()) {
+			return false;
+		}
 
 		const course = Courses.findOne(this.courseId);
-		if (!course) return false;
+		if (!course) {
+			return false;
+		}
 
 		const userId = Meteor.userId();
 		return userId && HasRoleUser(course.members, 'team', userId);
@@ -313,7 +328,7 @@ Template.post.events({
 		Meteor.call(method, comment, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.error(err, 'Posting your comment went wrong');
+				Alert.serverError(err, 'Posting your comment went wrong');
 			}
 		});
 
@@ -329,7 +344,7 @@ Template.post.events({
 		event.stopImmediatePropagation();
 		Meteor.call('courseDiscussion.deleteComment', this._id, (err) => {
 			if (err) {
-				Alert.error(err, 'Could not delete comment');
+				Alert.serverError(err, 'Could not delete comment');
 			} else {
 				Alert.success(mf('discussionPost.deleted', 'Comment has been deleted.'));
 			}
