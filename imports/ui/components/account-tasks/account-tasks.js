@@ -270,10 +270,7 @@ TemplateMixins.FormfieldErrors(Template.registerFrame, {
 		field: 'email',
 	},
 	'email invalid': {
-		text: () => mf(
-			'register.warning.emailNotValid',
-			'your email seems to have an error.',
-		),
+		text: () => mf('register.warning.emailNotValid'),
 		field: 'email',
 	},
 	'Email already exists.': {

@@ -89,7 +89,7 @@
 				<label>{{mf 'profile.mail.content' 'Your message:'}}</label>
 				<textarea class="form-control"
 					id="emailmessage"
-					placeholder="{{mf 'profile.mail.placeholder' 'Hi {USER}! …' USER=this.user.username}}"
+					placeholder="{{mf 'profile.mail.placeholder' USER=this.user.username}}"
 					rows="3"></textarea>
 			</div>
 		{{#if hasEmail}}
@@ -116,10 +116,7 @@
 				<div class="form-group">
                     <p class="help-block">
                         <i class="fa fa-info fa-fw" aria-hidden="true"></i>
-                        {{#mf KEY='userprofile.infoForUnverifiedMail'}}
-                            In order to receive a copy to your E-Mail address or
-                            attach it to the message, you need to verify your address.
-                        {{/mf}}
+                        {{mf 'userprofile.infoForUnverifiedMail'}}
                     </p>
                     {{> verifyEmail}}
 				</div>
