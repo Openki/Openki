@@ -34,34 +34,36 @@
 			{{> report}}
 		</div>
 	</div>
-	<div class="event-wrapper-aside">
-		<div class="page-component">
-			<div class="event-page-component-header">
-				<h4>
-					{{mf 'event.details.registration' 'Registration'}}
-				</h4>
+	{{#unless editing}}
+		<div class="event-wrapper-aside">
+			<div class="page-component">
+				<div class="event-page-component-header">
+					<h4>
+						{{mf 'event.details.registration' 'Registration'}}
+					</h4>
+				</div>
+			</div>
+			<div class="page-component">
+				<b>
+					{{#unless userRegisteredForEvent}}
+						{{mf 'event.details.i-participate-no' 'Let us know that you are participating in this event. Your registration is binding.'}}
+					{{else}}
+						{{mf 'event.details.i-participate-yes' 'You are now registered. Your registration is binding.'}}
+					{{/unless}}
+				</b>
+			</div>
+			<div class="page-component">
+				{{#unless userRegisteredForEvent}}
+					{{> buttonRegister event="js-register-event"}}
+				{{else}}
+					{{> buttonUnregister event="js-unregister-event"}}
+				{{/unless}}
+			</div>
+			<div class="page-component">
+				{{> eventParticipants}}
 			</div>
 		</div>
-		<div class="page-component">
-			<b>
-				{{#unless userRegisteredForEvent}}
-					{{mf 'event.details.i-participate-no' 'Let us know that you are participating in this event. Your registration is binding.'}}
-				{{else}}
-					{{mf 'event.details.i-participate-yes' 'You are now registered. Your registration is binding.'}}
-				{{/unless}}
-			</b>
-		</div>
-		<div class="page-component">
-			{{#unless userRegisteredForEvent}}
-				{{> buttonRegister event="js-register-event"}}
-			{{else}}
-				{{> buttonUnregister event="js-unregister-event"}}
-			{{/unless}}
-		</div>
-		<div class="page-component">
-			{{> eventParticipants}}
-		</div>
-	</div>
+	{{/unless}}
 </template>
 
 <template name="eventDisplay">
