@@ -92,30 +92,6 @@ Template.event.helpers({
 	},
 });
 
-Template.eventDisplay.helpers({
-	weekday(date) {
-		Session.get('timeLocale'); // it depends
-		if (date) {
-			return moment(date).format('dddd');
-		}
-		return false;
-	},
-
-	mayEdit() {
-		return this.editableBy(Meteor.user());
-	},
-	eventMarkers() {
-		return Template.instance().locationTracker.markers;
-	},
-	hasVenue() {
-		return this.venue && this.venue.loc;
-	},
-
-	replicating() {
-		return Template.instance().replicating.get();
-	},
-});
-
 Template.event.events({
 	'mouseover .event-course-header, mouseout .event-course-header'(event, instance) {
 		instance.$(event.currentTarget).toggleClass('highlight', event.type === 'mouseover');
@@ -167,7 +143,7 @@ Template.event.events({
 		Meteor.call('event.removeParticipant', instance.data._id, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.serverError(err, '');
+				Alert.serverError(err, 'could not remove participant');
 			}
 		});
 	},
@@ -208,6 +184,7 @@ Template.eventDisplay.helpers({
 		return Template.instance().replicating.get();
 	},
 });
+
 
 Template.eventDisplay.events({
 	'click .js-show-replication'(event, instance) {
