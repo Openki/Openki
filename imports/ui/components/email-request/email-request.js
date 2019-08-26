@@ -23,10 +23,7 @@ Template.emailRequestModal.onRendered(function () {
 
 TemplateMixins.FormfieldErrors(Template.emailRequestModal, {
 	noEmail: {
-		text: () => mf(
-			'register.warning.noEmailProvided',
-			'Please enter an email to register.',
-		),
+		text: () => mf('register.warning.noEmailProvided'),
 		field: 'email',
 	},
 	'email invalid': {
@@ -37,10 +34,7 @@ TemplateMixins.FormfieldErrors(Template.emailRequestModal, {
 		field: 'email',
 	},
 	emailExists: {
-		text: () => mf(
-			'register.warning.emailExists',
-			'This email already exists. Is this your second account?',
-		),
+		text: () => mf('register.warning.emailExists'),
 		field: 'email',
 	},
 });
