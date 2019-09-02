@@ -55,6 +55,7 @@ const sometimesAfter = function (date) {
 // This guard is here until we find a better solution.
 if (Meteor.settings.testdata) {
 	const regionsCreate = function () {
+		/* eslint-disable-next-line no-restricted-syntax */
 		for (const r of regions) {
 			const region = Object.assign({}, r); // clone
 			if (region.loc) {
@@ -68,6 +69,7 @@ if (Meteor.settings.testdata) {
 	};
 
 	const groupsCreate = function () {
+		/* eslint-disable-next-line no-restricted-syntax */
 		for (const g of groups) {
 			const group = Object.assign({}, g);
 			group.createdby = 'ServerScript_loadingTestgroups';
@@ -87,6 +89,7 @@ if (Meteor.settings.testdata) {
 		// week but keep the weekday.
 		let dateOffset = 0;
 
+		/* eslint-disable-next-line no-restricted-syntax */
 		for (const e of events) {
 			const event = Object.assign({}, e);
 			if (Events.findOne({ _id: event._id })) {
@@ -139,6 +142,7 @@ if (Meteor.settings.testdata) {
 			Regions.findOne('EZqQLGL4PtFCxCNrp'),
 		];
 
+		/* eslint-disable-next-line no-restricted-syntax */
 		for (const v of venues) {
 			const venueData = Object.assign({}, v);
 			venueData.region = prng() > 0.85 ? testRegions[0] : testRegions[1];
@@ -158,8 +162,10 @@ if (Meteor.settings.testdata) {
 	const coursesCreate = function () {
 		const prng = Prng('createCourses');
 
+		/* eslint-disable-next-line no-restricted-syntax */
 		for (const c of courses) {
 			const course = Object.assign({}, c);
+			/* eslint-disable-next-line no-restricted-syntax */
 			for (const member of course.members) {
 				member.user = ensure.user(member.user)._id;
 			}

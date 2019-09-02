@@ -69,6 +69,7 @@ notificationJoin.Model = function (entry) {
 			const subject = mf('notification.join.mail.subject', subjectvars, '{USER} joined {COURSE}: {ROLE}', userLocale);
 
 			const figures = [];
+			/* eslint-disable-next-line no-restricted-syntax */
 			for (const role of ['host', 'mentor', 'participant']) {
 				if (course.roles.includes(role)) {
 					figures.push(

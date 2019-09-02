@@ -17,6 +17,7 @@ if (Meteor.settings.testdata) {
 
 	const ifCollectionEmpty = function (collection, methods) {
 		if (collection.find().count() === 0) {
+			/* eslint-disable-next-line no-restricted-syntax */
 			for (const method of methods) {
 				Meteor.call(method, logResult);
 			}
