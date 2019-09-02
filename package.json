@@ -19,6 +19,7 @@
     "jquery": "^3.4.1",
     "meteor-node-stubs": "^0.2.11",
     "moment-timezone": "^0.5.25",
+    "sanitize-html": "^1.16.1",
     "seedrandom": "^2.4.4",
     "shariff": "^1.26.2",
     "url": "^0.11.0"
