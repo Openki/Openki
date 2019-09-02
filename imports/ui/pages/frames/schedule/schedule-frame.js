@@ -76,17 +76,6 @@ Template.frameSchedule.onCreated(function () {
 	instance.slots = new ReactiveVar({});
 	instance.kindMap = function () { return 0; };
 
-	const getRepKeyId = (event) => {
-		// If there is no courseId, we fall back to replicationId, then _id.
-		if (event.courseId) {
-			return event.courseId;
-		}
-		if (event.replicaOf) {
-			return event.replicaOf;
-		}
-		return event._id;
-	};
-
 	this.autorun(() => {
 		const scheduleStart = moment(filter.get('after'));
 		const interval = instance.interval.get();
@@ -98,13 +87,23 @@ Template.frameSchedule.onCreated(function () {
 
 		// Load events but keep only the first when they repeat on the same
 		// weekday at the same time.
-		const dedupedEvents = Events.findFilter(filter.toQuery()).map((originalEvent) => {
-			const event = Object.assign({}, originalEvent);
+		const dedupedEvents = [];
+		Events.findFilter(filter.toQuery()).forEach((event) => {
 			const eventStart = LocalTime.fromString(event.startLocal);
 
 			// Build key that is the same for events of the same course that
 			// start on the same time.
-			const repKey = `${eventStart.hour()}-${eventStart.minute()}-${getRepKeyId(event)}`;
+			let repKey = `${eventStart.hour()}-${eventStart.minute()}-`;
+
+			// If there is no courseId, we fall back to replicationId, then _id.
+			if (event.courseId) {
+				repKey += event.courseId;
+			} else if (event.replicaOf) {
+				repKey += event.replicaOf;
+			} else {
+				repKey += event._id;
+			}
+
 
 			if (repetitionCount[repKey] >= 1) {
 				repetitionCount[repKey] += 1;
@@ -118,12 +117,14 @@ Template.frameSchedule.onCreated(function () {
 			} else {
 				repetitionCountDay[repKeyDay] = 1;
 
+				// eslint-disable-next-line no-param-reassign
 				event.repKey = repKey;
+				// eslint-disable-next-line no-param-reassign
 				event.repKeyDay = repKeyDay;
-				return event;
+				dedupedEvents.push(event);
 			}
-			return false;
 		});
+
 
 		// Because we need to find the closest separator later on we create a
 		// reversed copy which is easier to search.
