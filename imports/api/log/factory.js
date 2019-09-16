@@ -53,9 +53,8 @@ const mixin = function (log, isServer, printToLog) {
 	);
 
 	class ResultLogger {
-		constructor(id, printToLog) {
+		constructor(id) {
 			this.id = id;
-			this.printToLog = printToLog;
 		}
 
 		success(message) {
@@ -71,7 +70,7 @@ const mixin = function (log, isServer, printToLog) {
 			const resolution = { ts: new Date(), success };
 			if (message) resolution.message = message;
 
-			if (this.printToLog) {
+			if (printToLog) {
 				// eslint-disable-next-line no-console
 				console.log({ id: this.id, resolution });
 			}
@@ -104,7 +103,7 @@ const mixin = function (log, isServer, printToLog) {
 			console.log(entry);
 		}
 
-		return new ResultLogger(id, printToLog);
+		return new ResultLogger(id);
 	};
 
 	log.findFilter = function (filter, limit) {
