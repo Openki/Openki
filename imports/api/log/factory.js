@@ -1,3 +1,8 @@
+// Becase the mixin() function assigns properties
+// to the log object, we can't use the
+// no-param-reassign safeguard here.
+/* eslint no-param-reassign: 0 */
+
 import Filtering from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
 
@@ -67,6 +72,7 @@ const mixin = function (log, isServer, printToLog) {
 			if (message) resolution.message = message;
 
 			if (this.printToLog) {
+				// eslint-disable-next-line no-console
 				console.log({ id: this.id, resolution });
 			}
 			log.update(this.id, { $push: { res: resolution } });
@@ -94,6 +100,7 @@ const mixin = function (log, isServer, printToLog) {
 		const id = log.insert(entry);
 
 		if (printToLog) {
+			// eslint-disable-next-line no-console
 			console.log(entry);
 		}
 
@@ -118,6 +125,15 @@ const mixin = function (log, isServer, printToLog) {
 	};
 };
 
+/**
+ * The logFactory Knows how to create log collections.
+ *
+ * It can create two types:
+ *
+ * logFactory.mongo: A log backed by the mongo DB
+ *
+ * logFactory.fake: An in-memory log useful for tests
+ */
 const logFactory = {
 	mongo: (mongo, isServer, printToLog) => {
 		const log = new mongo.Collection('Log');

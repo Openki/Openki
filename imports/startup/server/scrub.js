@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import schedule from 'node-schedule';
 
-import Log from '/imports/api/log/log.js';
-import { Scrubber } from '/server/lib/scrub.js';
+import Log from '/imports/api/log/log';
+import { Scrubber } from '/server/lib/scrub';
 
 
 Meteor.startup(() => {
