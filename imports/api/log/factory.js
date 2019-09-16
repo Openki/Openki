@@ -1,5 +1,5 @@
-import Filtering from '/imports/utils/filtering.js';
-import Predicates from '/imports/utils/predicates.js';
+import Filtering from '/imports/utils/filtering';
+import Predicates from '/imports/utils/predicates';
 
 /** The Application Log records user and system decisions. It is intended to
   * become the single source of truth within the application.
@@ -32,18 +32,19 @@ import Predicates from '/imports/utils/predicates.js';
   *       Contents of the log entry. These are not indexed and depend on the
   *       track.
   */
-const mixin = function(log, isServer, printToLog) {
+const mixin = function (log, isServer, printToLog) {
 	if (isServer) {
-		log._ensureIndex({tr: 1});
-		log._ensureIndex({ts: 1});
-		log._ensureIndex({rel: 1});
+		log._ensureIndex({ tr: 1 });
+		log._ensureIndex({ ts: 1 });
+		log._ensureIndex({ rel: 1 });
 	}
 
 	log.Filtering = () => Filtering(
-		{ start: Predicates.date
-		, rel:   Predicates.ids
-		, tr:    Predicates.ids
-		}
+		{
+			start: Predicates.date,
+			rel: Predicates.ids,
+			tr: Predicates.ids,
+		},
 	);
 
 	class ResultLogger {
@@ -78,17 +79,17 @@ const mixin = function(log, isServer, printToLog) {
 	 * @param  {String} rel     - related ID
 	 * @param  {Object} body    - log body depending on track
 	 */
-	log.record = function(track, rel, body) {
+	log.record = function (track, rel, body) {
 		check(track, String);
 		check(rel, [String]);
 		check(body, Object);
-		var entry =
-			{ tr: track
-			, ts: new Date()
-			, rel: rel
-		, body: body
-		, res: []
-			};
+		const entry = {
+			tr: track,
+			ts: new Date(),
+			rel,
+			body,
+			res: [],
+		};
 
 		const id = log.insert(entry);
 
@@ -99,21 +100,21 @@ const mixin = function(log, isServer, printToLog) {
 		return new ResultLogger(id, printToLog);
 	};
 
-	log.findFilter = function(filter, limit) {
+	log.findFilter = function (filter, limit) {
 		check(filter,
-			{ start: Match.Optional(Date)
-			, rel: Match.Optional([String])
-			, tr: Match.Optional([String])
-			}
-		);
+			{
+				start: Match.Optional(Date),
+				rel: Match.Optional([String]),
+				tr: Match.Optional([String]),
+			});
 		check(limit, Number);
 
 		const query = {};
 		if (filter.start) query.ts = { $lte: filter.start };
-		if (filter.rel) query.$or = [ { _id: { $in: filter.rel} }, { rel: { $in: filter.rel } } ];
+		if (filter.rel) query.$or = [{ _id: { $in: filter.rel } }, { rel: { $in: filter.rel } }];
 		if (filter.tr) query.tr = { $in: filter.tr };
 
-		return log.find(query, { sort: { ts: -1 }, limit: limit });
+		return log.find(query, { sort: { ts: -1 }, limit });
 	};
 };
 
@@ -129,6 +130,6 @@ const logFactory = {
 		mixin(log, false, false);
 		return log;
 	},
- };
+};
 
 export { logFactory as default, logFactory };
