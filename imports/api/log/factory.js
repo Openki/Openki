@@ -71,7 +71,7 @@ const mixin = function (log, isServer, printToLog) {
 			if (message) resolution.message = message;
 
 			if (printToLog) {
-				// eslint-disable-next-line no-console
+				/* eslint-disable-next-line no-console */
 				console.log({ id: this.id, resolution });
 			}
 			log.update(this.id, { $push: { res: resolution } });
@@ -99,7 +99,7 @@ const mixin = function (log, isServer, printToLog) {
 		const id = log.insert(entry);
 
 		if (printToLog) {
-			// eslint-disable-next-line no-console
+			/* eslint-disable-next-line no-console */
 			console.log(entry);
 		}
 
