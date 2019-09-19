@@ -21,5 +21,21 @@
 			"clientId": "01234-xyz123.apps.googleusercontent.com",
 			"secret": "XYz_123"
 		}
-	}
+	},
+	"scrub":
+		[ { "name": "scrub client-errors", "comment": "client-side errors may contain sensitive data, drop them quickly"
+		  , "grace": 7, "select": { "tr": "clientError" }, "remove": true
+		  }
+
+		, { "name": "drop resume-logins",  "comment": "Resume-Logins are not very interesting"
+		  , "grace": 7, "select": { "tr": "Login.Success", "body": {"type": "resume"}}, "remove": true
+		  }
+		, { "name": "scrub logins", "comment": "We want to remember user logins but not the details"
+		  , "grace": 8, "select": { "tr": "Login.Success"}, "unset": [ "connection", "username" ]
+		  }
+
+    , { "name": "drop send-results", "comment": "We keep notification send results for troublehooting"
+		  , "grace": 61, "select": { "tr": "Notification.SendResult"}, "remove": true
+		  }
+		]
 }

@@ -20,6 +20,7 @@
     "meteor-node-stubs": "^0.2.11",
     "moment-timezone": "^0.5.25",
     "sanitize-html": "git+https://github.com/O-clock-Dev/sanitize-html-without-postcss.git#80c0d1addddbaf561feba012a058c24b532533c5",
+    "node-schedule": "^1.3.2",
     "seedrandom": "^2.4.4",
     "shariff": "^1.26.2",
     "url": "^0.11.0"
