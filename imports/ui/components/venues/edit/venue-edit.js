@@ -109,7 +109,8 @@ Template.venueEdit.helpers({
 	},
 
 	showMapSelection() {
-		return Template.instance().regionSelectable.get() || !!Template.instance().selectedRegion.get();
+		return Template.instance().regionSelectable.get()
+		|| Boolean(Template.instance().selectedRegion.get());
 	},
 
 	regionSelectable() {
@@ -117,7 +118,7 @@ Template.venueEdit.helpers({
 	},
 
 	regionSelected() {
-		return !!Template.instance().selectedRegion.get();
+		return Boolean(Template.instance().selectedRegion.get());
 	},
 
 	venueMarkers() {

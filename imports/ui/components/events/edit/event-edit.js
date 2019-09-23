@@ -180,7 +180,7 @@ Template.eventEdit.onRendered(function () {
 Template.eventEdit.helpers({
 
 	hasParentCourse() {
-		return !!this.courseId;
+		return Boolean(this.courseId);
 	},
 
 	showRegionTag() {

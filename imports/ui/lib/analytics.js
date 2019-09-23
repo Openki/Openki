@@ -29,7 +29,7 @@ Analytics.isConfigured = function () {
  * Returns true if the tracker exists.
  */
 Analytics.hasTracker = function () {
-	return !!tracker;
+	return Boolean(tracker);
 };
 
 /**

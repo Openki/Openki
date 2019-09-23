@@ -156,7 +156,7 @@ Meteor.methods({
 				changes.endLocal = changes.startLocal;
 			}
 
-			changes.internal = !!changes.internal;
+			changes.internal = Boolean(changes.internal);
 
 			// Synthesize event document because the code below relies on it
 			event = _.extend(

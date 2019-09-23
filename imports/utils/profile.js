@@ -141,7 +141,7 @@ Profile.Region.change = function (userId, regionId, reason) {
 	check(reason, String);
 
 	const region = Regions.findOne(regionId);
-	const accepted = !!region;
+	const accepted = Boolean(region);
 
 	Log.record('Profile.Region', [userId, regionId],
 		{

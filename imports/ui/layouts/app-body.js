@@ -33,7 +33,7 @@ Template.layout.helpers({
 	},
 
 	mayTranslate() {
-		return !!Meteor.user();
+		return Boolean(Meteor.user());
 	},
 
 	showRegionSplash() {

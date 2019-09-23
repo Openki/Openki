@@ -136,7 +136,7 @@ Template.map.onRendered(function () {
 		const { mini } = instance.data;
 
 		const show = function (control, originalToggle) {
-			const toggle = !!originalToggle; // coerce to bool
+			const toggle = Boolean(originalToggle);
 
 			if (control.shown === undefined) {
 				/* eslint-disable-next-line no-param-reassign */

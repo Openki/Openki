@@ -323,7 +323,7 @@ Template.courseEdit.events({
 		changes.unsubs = [];
 		instance.$('.js-check-enroll').each(function () {
 			const role = this.name;
-			const subscribe = !!this.checked;
+			const subscribe = Boolean(this.checked);
 			if (subscribe) {
 				changes.subs.push(role);
 			} else {
