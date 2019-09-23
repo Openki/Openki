@@ -58,7 +58,7 @@ const Predicates = {
 		if (param === undefined) {
 			return false;
 		}
-		const state = !!parseInt(param, 2); // boolean
+		const state = Boolean(parseInt(param, 2));
 
 		return {
 			merge(other) { return other; },

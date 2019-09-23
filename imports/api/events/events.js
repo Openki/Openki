@@ -263,7 +263,7 @@ Events.findFilter = function (filter, limit, skip, sort) {
 	}
 
 	if (filter.internal !== undefined) {
-		find.internal = !!filter.internal;
+		find.internal = Boolean(filter.internal);
 	}
 
 	if (filter.search) {

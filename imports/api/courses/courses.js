@@ -236,7 +236,7 @@ Courses.findFilter = function (filter, limit, sortParams) {
 	}
 
 	if (filter.internal !== undefined) {
-		find.internal = !!filter.internal;
+		find.internal = Boolean(filter.internal);
 	}
 
 	if (filter.search) {

@@ -79,7 +79,7 @@ function loadroles(course) {
 			goodroles.push({
 				roletype,
 				role,
-				subscribed: !!sub,
+				subscribed: Boolean(sub),
 				course,
 			});
 		}
@@ -338,7 +338,7 @@ Router.map(function () {
 		data() {
 			const data = {};
 			const user = Meteor.user();
-			data.loggedIn = !!user;
+			data.loggedIn = Boolean(user);
 			if (data.loggedIn) {
 				const userdata = {
 					_id: user._id,
@@ -351,7 +351,7 @@ Router.map(function () {
 				userdata.have_email = user.emails && user.emails.length > 0;
 				if (userdata.have_email) {
 					userdata.email = user.emails[0].address;
-					userdata.verified = !!user.emails[0].verified;
+					userdata.verified = Boolean(user.emails[0].verified);
 				}
 
 				data.user = userdata;
@@ -418,7 +418,7 @@ Router.map(function () {
 			const userId = Meteor.userId();
 			const member = getMember(course.members, userId);
 			const data = {
-				edit: !!this.params.query.edit,
+				edit: Boolean(this.params.query.edit),
 				roles_details: loadroles(course),
 				course,
 				member,

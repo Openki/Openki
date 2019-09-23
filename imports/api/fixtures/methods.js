@@ -117,7 +117,7 @@ if (Meteor.settings.testdata) {
 			}
 
 			event.venue = ensure.venue(event.venue, event.region);
-			event.internal = !!event.internal;
+			event.internal = Boolean(event.internal);
 
 
 			const regionZone = LocalTime.zone(event.region);
@@ -173,7 +173,7 @@ if (Meteor.settings.testdata) {
 			course.createdby = ensure.user(course.createdby)._id;
 
 			course.slug = StringTools.slug(course.name);
-			course.internal = !!course.internal;
+			course.internal = Boolean(course.internal);
 
 			course._id = ensure.fixedId([course.name, course.description]);
 
