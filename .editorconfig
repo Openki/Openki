@@ -14,5 +14,4 @@ charset = utf-8
 
 # Tab indentation
 [*.{html, js}]
-indent_size = 4
 indent_style = tab
