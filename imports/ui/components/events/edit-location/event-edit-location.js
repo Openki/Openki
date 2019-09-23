@@ -22,7 +22,9 @@ Template.eventEditVenue.onCreated(function () {
 	instance.locationTracker = LocationTracker();
 	instance.location = instance.parent.selectedLocation;
 	instance.search = new ReactiveVar('');
-	instance.addressSearch = new ReactiveVar(Boolean(instance.location.get().name));
+	instance.addressSearch = new ReactiveVar(
+		Boolean(instance.location.get().name),
+	);
 
 	// unset: no location selected
 	// preset: one of the preset locations is referenced
@@ -195,7 +197,9 @@ Template.eventEditVenue.helpers({
 	},
 
 	searching() {
-		return Boolean(Template.instance().location.get().name);
+		return Boolean(
+			Template.instance().location.get().name,
+		);
 	},
 
 });

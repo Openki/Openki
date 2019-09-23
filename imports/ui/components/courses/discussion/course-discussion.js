@@ -317,8 +317,8 @@ Template.post.events({
 				comment.parentId = instance.data.parentId;
 			}
 
-			comment.anon = Boolean(instance.$('.js-anon').prop('checked'));
-			comment.notifyAll = Boolean(instance.$('.js-notify-all').prop('checked'));
+			comment.anon = instance.$('.js-anon').prop('checked');
+			comment.notifyAll = instance.$('.js-notify-all').prop('checked');
 		} else {
 			comment._id = instance.data._id;
 		}
