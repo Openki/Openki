@@ -13,7 +13,7 @@ const invalidDigestedPassword = {
 
 if (Meteor.isClient) {
 	describe('Login', function () {
-		this.timeout(10000);
+		this.timeout(30000);
 		it('should work with good credentials', (done) => {
 			Meteor.call('login',
 				{

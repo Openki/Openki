@@ -42,7 +42,7 @@ const AssertAscendingString = function (base, message) {
 
 if (Meteor.isClient) {
 	describe('Api', function () {
-		this.timeout(2000);
+		this.timeout(6000);
 		describe('GroupApi', () => {
 			describe('Get all groups', () => {
 				it('should return JSON response', () => {
