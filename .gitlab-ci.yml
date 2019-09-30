@@ -1,9 +1,43 @@
+image: ubuntu:latest
+
+
 stages:
   - cleanup
   - test
   - deploy
 
-# TODO test
+
+cache:
+  paths:
+  - node_modules/
+  - .npm/
+  - .meteor/
+
+
+variables:
+  DISPLAY: ":99.0"
+  # Reduce git traffic
+  GIT_DEPTH: "10"
+  METEOR_ALLOW_SUPERUSER: "true"
+  TOOL_NODE_FLAGS: '--max_old_space_size=4096'
+
+
+cleanup:
+  stage: cleanup
+  script:
+  - rm -rf .meteor/ .npm/ node_modules/
+  only:
+  - dev
+  - staging
+  - master
+
+
+test:
+  stage: test
+  tags:
+  - gitlab-org
+  script: ./ci/test.sh
+
 
 deploy_staging:
   stage: deploy
