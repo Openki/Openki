@@ -28,7 +28,7 @@
   "devDependencies": {
     "assertion-error": "^1.1.0",
     "chai": "^4.2.0",
-    "chromedriver": "^75.1.0",
+    "chromedriver": "^77.0.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-import-resolver-meteor": "^0.4.0",

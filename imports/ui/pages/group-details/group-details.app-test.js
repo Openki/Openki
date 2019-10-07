@@ -7,7 +7,7 @@ import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test';
 
 if (Meteor.isClient) {
 	describe('Create course in group', function () {
-		this.timeout(10000);
+		this.timeout(30000);
 		const randomTitle = `TEST${1000 + Math.floor(Math.random() * 9000)}`;
 		it('saves course for group', () => {
 			Router.go('/group/fd3a8d98d4');

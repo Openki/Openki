@@ -6,7 +6,7 @@ import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test';
 
 if (Meteor.isClient) {
 	describe('Frontpage', function () {
-		this.timeout(30000);
+		this.timeout(60000);
 		beforeEach((done) => {
 			Meteor.call('fixtures.clean', done);
 		});
