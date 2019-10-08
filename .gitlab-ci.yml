@@ -1,4 +1,4 @@
-image: schlibbuz/test2
+image: openki/meteor-ubuntu-chrome-testenv:1.0.0
 
 
 stages:
