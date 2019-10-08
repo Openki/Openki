@@ -1,4 +1,4 @@
-image: ubuntu:latest
+image: schlibbuz/test2
 
 
 stages:
@@ -37,6 +37,7 @@ test:
   tags:
   - gitlab-org
   script: ./ci/test.sh
+  allow_failure: true
 
 
 deploy_staging:
