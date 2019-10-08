@@ -37,6 +37,7 @@ test:
   tags:
   - gitlab-org
   script: ./ci/test.sh
+  allow_failure: true
 
 
 deploy_staging:
