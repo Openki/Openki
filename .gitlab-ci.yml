@@ -1,4 +1,4 @@
-image: openki/alpine-chromium:1.0.0
+image: openki/meteor-ubuntu-chrome-testenv:1.0.0
 
 
 stages:
