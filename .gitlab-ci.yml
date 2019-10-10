@@ -1,9 +1,11 @@
-image: schlibbuz/test2
+image: openki/meteor-chromium:1.0.0
 
 
 stages:
   - cleanup
+  - lint
   - test
+  - app-test
   - deploy
 
 
@@ -32,11 +34,23 @@ cleanup:
   - master
 
 
+lint:
+  stage: lint
+  script: ./ci/lint.sh
+
+
 test:
   stage: test
   tags:
   - gitlab-org
   script: ./ci/test.sh
+
+
+app-test:
+  stage: app-test
+  tags:
+  - gitlab-org
+  script: ./ci/app-test.sh
   allow_failure: true
 
 
