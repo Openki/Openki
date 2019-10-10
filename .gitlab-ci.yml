@@ -41,6 +41,8 @@ lint:
 
 test:
   stage: test
+  tags:
+  - gitlab-org
   script: ./ci/test.sh
 
 
