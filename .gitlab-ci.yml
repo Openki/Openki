@@ -3,7 +3,9 @@ image: openki/alpine-chromium:1.0.0
 
 stages:
   - cleanup
+  - lint
   - test
+  - app-test
   - deploy
 
 
