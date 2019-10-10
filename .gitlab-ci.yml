@@ -32,11 +32,21 @@ cleanup:
   - master
 
 
+lint:
+  stage: lint
+  script: ./ci/lint.sh
+
+
 test:
   stage: test
+  script: ./ci/test.sh
+
+
+app-test:
+  stage: app-test
   tags:
   - gitlab-org
-  script: ./ci/test.sh
+  script: ./ci/app-test.sh
   allow_failure: true
 
 
