@@ -494,6 +494,11 @@ Router.map(function () {
 		},
 	});
 
+	this.route('stats', {
+		path: 'stats',
+		template: 'stats',
+	});
+
 	this.route('timetable', {
 		path: '/kiosk/timetable',
 		layoutTemplate: 'timetableLayout',
