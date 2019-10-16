@@ -1,3 +1,62 @@
 <template name="stats">
-	<p>Hello{{ count }}</p>
+	<div class="container-fluid">
+		<h1>
+		{{#if regionName}}
+			{{mf 'region.list.titleForRegion' 'Overview {REGION}' REGION=regionName}}
+		{{else}}
+			{{mf 'region.list.title' 'Regions'}}
+		{{/if}}
+		</h1>
+		{{#if statsReady}}
+			<div class="stats-wrap">
+				<h2>{{mf 'regions.stats.header' 'group statistics'}}</h2>
+				<table class="stats">
+					<thead>
+						<tr>
+							<th>{{mf 'region.stats.group' 'group'}}</th>
+							<th colspan="2">{{mf 'region.stats.courses' 'courses'}}</th>
+							<th colspan="2">{{mf 'region.stats.events' 'events'}}</th>
+							<th>{{mf 'region.stats.usersParticipating' 'users participating'}}</th>
+						</tr>
+						<tr>
+							<th>&nbsp;</th>
+							<th>{{mf 'region.stats.courses.total' 'total'}}</th>
+							<th>{{mf 'region.stats.courses.active' 'active'}}</th>
+							<th>{{mf 'region.stats.events.passed' 'passed'}}</th>
+							<th>{{mf 'region.stats.events.future' 'future'}}</th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="js-stats-row">
+							<td>{{mf 'region.stats.total' 'total'}}</td>
+							<td class="number" title="some users participate in multiple events">{{regionStats.total.numCourses}}</td>
+							<td class="number">{{regionStats.total.activeCourses}}</td>
+							<td class="number">{{regionStats.total.passedEvents}}</td>
+							<td class="number">{{regionStats.total.futureEvents}}</td>
+							<td class="number">{{regionStats.total.usersParticipating}}</td>
+						</tr>
+						{{#each regionStats.detail}}
+							<tr class="js-stats-row">
+								<td>
+									{{#if group}}
+										{{> groupNameFull group}}
+									{{else}}
+										{{mf 'region.stats.ungrouped' 'ungrouped'}}
+									{{/if}}
+								</td>
+								<td class="number">{{this.numCourses}}</td>
+								<td class="number">{{this.activeCourses}}</td>
+								<td class="number">{{this.passedEvents}}</td>
+								<td class="number">{{this.futureEvents}}</td>
+								<td class="number">{{this.usersParticipating}}</td>
+							</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+		{{else}}
+			{{> loadingPage }}
+		{{/if}}
+	</div>
 </template>

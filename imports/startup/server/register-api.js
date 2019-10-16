@@ -10,7 +10,6 @@ import '/imports/api/log/methods';
 import '/imports/api/log/server/publications';
 import '/imports/api/regions/methods';
 import '/imports/api/regions/server/publications';
-import '/imports/api/stats/stats';
 import '/imports/api/stats/methods';
 import '/imports/api/users/users';
 import '/imports/api/users/methods';
