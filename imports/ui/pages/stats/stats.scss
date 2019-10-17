@@ -1,0 +1,25 @@
+.stats-wrap {
+	padding: 4rem 0;
+}
+
+.stats {
+	margin-left: -5px;
+}
+
+.stats th {
+	font-weight: bold;
+	text-align: center;
+}
+
+.stats td,
+.stats th {
+	padding: 5px;
+}
+
+.stats .number {
+	text-align: right;
+}
+
+.stats tbody tr:hover {
+	background-color: #ffa500;
+}
