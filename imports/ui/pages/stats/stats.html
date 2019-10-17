@@ -40,9 +40,9 @@
 							<tr class="js-stats-row">
 								<td>
 									{{#if group}}
-										{{> groupNameFull group}}
+										{{ groupName }}
 									{{else}}
-										{{mf 'region.stats.ungrouped' 'ungrouped'}}
+										{{mf 'region.stats.ungrouped' groupName}}
 									{{/if}}
 								</td>
 								<td class="number">{{this.numCourses}}</td>

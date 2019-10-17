@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
+import Groups from '/imports/api/groups/groups';
 
 
 const getCourses = (regionId) => {
@@ -76,7 +77,15 @@ const getActiveCoursesStats = (courses) => {
 
 const getGroupStats = (region, group) => {
 	let groupFilter = group;
-	if (!groupFilter) groupFilter = { $eq: [] };
+	if (!groupFilter) {
+		groupFilter = { $eq: [] };
+	}
+	
+	const groupRow = Groups.findOne({ _id: group }, { fields: { name: 1, _id: 0 } });
+	
+	
+	const groupName = groupRow ? groupRow.name : 'ungrouped';
+	
 
 	const courses = Courses.find({ region, groups: groupFilter });
 	const numCourses = courses.count();
@@ -85,6 +94,7 @@ const getGroupStats = (region, group) => {
 	const usersParticipating = getUsersParticpating(courses);
 	return {
 		group,
+		groupName,
 		numCourses,
 		activeCourses,
 		passedEvents,
