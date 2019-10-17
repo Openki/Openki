@@ -83,11 +83,17 @@ const getGroupStats = (region, group) => {
 
 	const groupRow = Groups.findOne({ _id: group }, { fields: { name: 1, _id: 0 } });
 
-
 	const groupName = groupRow ? groupRow.name : 'ungrouped';
 
+	const courseFilter = {
+		groups: groupFilter,
+	}
 
-	const courses = Courses.find({ region, groups: groupFilter });
+	if (region) {
+		courseFilter.region =region;
+	}
+
+	const courses = Courses.find(courseFilter);
 	const numCourses = courses.count();
 	const activeCourses = getActiveCoursesStats(courses);
 	const { passedEvents, futureEvents } = getEventStats(courses);
