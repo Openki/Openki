@@ -4,6 +4,8 @@ import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
 
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+
 
 const getCourses = (regionId) => {
 	const filter = {};
@@ -131,7 +133,10 @@ const getRegionStats = (regionFilter) => {
 
 Meteor.methods({
 	'stats.region'(regionId) {
-		const regionFilter = regionId === 'all_regions' ? '' : regionId;
-		return getRegionStats(regionFilter);
+		if (UserPrivilegeUtils.privileged(Meteor.user(), 'admin')) {
+			const regionFilter = regionId === 'all_regions' ? '' : regionId;
+			return getRegionStats(regionFilter);
+		}
+		return {};
 	},
 });

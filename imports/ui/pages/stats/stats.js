@@ -1,5 +1,7 @@
 import { Router } from 'meteor/iron:router';
 
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+
 import './stats.html';
 
 
@@ -23,6 +25,9 @@ Template.stats.onCreated(function () {
 });
 
 Template.stats.helpers({
+	isAdmin() {
+		return UserPrivilegeUtils.privileged(Meteor.user(), 'admin');
+	},
 	regionStats() {
 		return Template.instance().stats;
 	},
