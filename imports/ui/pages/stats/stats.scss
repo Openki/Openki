@@ -11,7 +11,8 @@
 	text-align: center;
 }
 
-.stats td, .stats th {
+.stats td,
+.stats th {
 	padding: 5px;
 }
 
@@ -20,5 +21,5 @@
 }
 
 .stats tbody tr:hover {
-	background-color: orange;
+	background-color: #ffa500;
 }
