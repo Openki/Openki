@@ -87,10 +87,10 @@ const getGroupStats = (region, group) => {
 
 	const courseFilter = {
 		groups: groupFilter,
-	}
+	};
 
 	if (region) {
-		courseFilter.region =region;
+		courseFilter.region = region;
 	}
 
 	const courses = Courses.find(courseFilter);
