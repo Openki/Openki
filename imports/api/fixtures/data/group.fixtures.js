@@ -115,15 +115,15 @@ const groups = [{
 	description: 'Die Gruppe "Kurzfristig Sport" ist gedacht für Menschen mit wenig Verbindlichkeitsbedürfnis. Wer also nicht fix die eine Sportart zum selben Wochentag um die gleichen Zeit am selben Ort treiben will oder kann und sich aber gerne trotzdem mal austoben will oder muss, soll hier angesprochen sein, mitzumachen. <br> Heute abend gibts Volleyball, Pinpong und Stockkampf, dann mach ich vielleicht lieber Morgen mit beim offenen Fussball.',
 	members: ['greg'],
 }, {
-	"members" : [
-		"Spammer 澳大利亚门"
+	members: [
+		'Spammer 澳大利亚门',
 	],
-	"short" : "澳大利亚*门*",
-	"name" : "澳大利亚*门*金*沙*国*加QQ1279827483申请36--128元彩金你来找我发 请访问我们的",
-	"claim" : "\n\t\t\t",
-	"description" : "\n\t\t\t",
-	"logoUrl" : "",
-	"backgroundUrl" : ""
+	short: '澳大利亚*门*',
+	name: '澳大利亚*门*金*沙*国*加QQ1279827483申请36--128元彩金你来找我发 请访问我们的',
+	claim: '\n\t\t\t',
+	description: '\n\t\t\t',
+	logoUrl: '',
+	backgroundUrl: '',
 }, {
 	name: '',
 	short: '',
