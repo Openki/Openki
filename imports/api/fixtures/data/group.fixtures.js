@@ -118,8 +118,8 @@ const groups = [{
 	members: [
 		'Spammer 澳大利亚门',
 	],
-	short: '澳大利亚*门*',
-	name: '澳大利亚*门*金*沙*国*加QQ1279827483申请36--128元彩金你来找我发 请访问我们的',
+	short: '澳大利亚门',
+	name: '澳大利亚门金沙国*加QQ1279827483申请36--128元彩金你来找我发 请访问我们的',
 	claim: '\n\t\t\t',
 	description: '\n\t\t\t',
 	logoUrl: '',
