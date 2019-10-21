@@ -65,14 +65,18 @@ const getUsersParticpating = (courses) => {
 
 const getActiveCoursesStats = (courses) => {
 	let activeCourses = 0;
-	courses.forEach(() => {
-		const events = Events.find({
+	courses.forEach((course) => {
+		const query = {
+			courseId: course._id,
 			$and: [
 				{ start: { $gte: moment().subtract(2, 'weeks').toDate() } },
 				{ start: { $lt: moment().add(6, 'months').toDate() } },
 			],
-		}, { fields: { groups: 1 } });
-		if (events.count()) activeCourses += 1;
+		};
+		const activeEvent = Events.findOne(query, { fields: { groups: 1 } });
+		if (activeEvent) {
+			activeCourses += 1;
+		}
 	});
 	return activeCourses;
 };

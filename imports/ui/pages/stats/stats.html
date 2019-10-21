@@ -13,9 +13,9 @@
 				</h1>
 				<div>
 					<select class="js-stats-region-selector">
-						<option value="all_regions">All regions</option>
+						<option value="all_regions" {{selectedRegion}}>All regions</option>
 						{{#each regions}}
-							<option value="{{_id}}">{{name}}</option>
+							<option value="{{_id}}" {{selectedRegion}}>{{name}}</option>
 						{{/each}}
 					</select>
 				</div>

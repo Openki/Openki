@@ -20,10 +20,9 @@ Template.stats.onCreated(function () {
 	this.subscribe('Regions');
 	this.regionName = new ReactiveVar(false);
 	this.region = new ReactiveVar(getRegionFromQuery());
-	console.log(this.region.get());
 	this.stats = new ReactiveVar(false);
-	
-	
+
+
 	this.autorun(() => {
 		this.stats.set(false);
 		Meteor.call('stats.region', this.region.get(), (err, stats) => {
@@ -40,21 +39,21 @@ Template.stats.helpers({
 		return UserPrivilegeUtils.privileged(Meteor.user(), 'admin');
 	},
 	regionName() {
-			console.log(Template.instance().region.get());
-			const currentRegion = Regions.findOne({_id: Template.instance().region.get()});
-			console.log(currentRegion);
-			return currentRegion.name;
+		const currentRegion = Regions.findOne({ _id: Template.instance().region.get() });
+		return currentRegion ? currentRegion.name : '';
 	},
 	regions() {
 		return Regions.find();
 	},
 	regionStats() {
-		const regionSelector = document.querySelector('.js-stats-region-selector');
-		
-		if (regionSelector) {
-			regionSelector.value = Template.instance().region.get();
-		}
 		return Template.instance().stats.get();
+	},
+	selectedRegion() {
+		if (!Object.prototype.hasOwnProperty.call(this, '_id')
+		&& Template.instance().region.get() === 'all_regions') {
+			return 'selected';
+		}
+		return this._id === Template.instance().region.get() ? 'selected' : '';
 	},
 });
 
