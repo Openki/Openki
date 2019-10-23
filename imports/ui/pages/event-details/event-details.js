@@ -27,6 +27,7 @@ import '/imports/ui/components/venues/link/venue-link';
 
 import './event-details.html';
 
+
 /** Checks if there is enough data ro make a reasonable jsonLd
   *
   * @param {Object} - the event data
@@ -36,6 +37,7 @@ const checkJsonLdMinReqs = data => Object.prototype.hasOwnProperty.call(data, 'n
 	&& Object.prototype.hasOwnProperty.call(data, 'startDate')
 	&& Object.prototype.hasOwnProperty.call(data, 'endDate')
 	&& Object.prototype.hasOwnProperty.call(data, 'location');
+
 
 /** creates the jsonLd
   *
@@ -55,6 +57,7 @@ const createJsonLd = (data) => {
 	};
 	return ldObject;
 };
+
 
 /** Adds a jsonLd to the eventDetails html-template
   *
