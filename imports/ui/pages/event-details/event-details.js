@@ -27,13 +27,23 @@ import '/imports/ui/components/venues/link/venue-link';
 
 import './event-details.html';
 
-
+/** Checks if there is enough data ro make a reasonable jsonLd
+  *
+  * @param {Object} - the event data
+  * @return {boolean}
+  */
 const checkJsonLdMinReqs = data => Object.prototype.hasOwnProperty.call(data, 'name')
 	&& Object.prototype.hasOwnProperty.call(data, 'startDate')
 	&& Object.prototype.hasOwnProperty.call(data, 'endDate')
 	&& Object.prototype.hasOwnProperty.call(data, 'location');
 
-
+/** creates the jsonLd
+  *
+  * https://developers.google.com/search/docs/data-types/event
+  *
+  * @param {Object} - the event data
+  * @return {Object} - jsonLd
+  */
 const createJsonLd = (data) => {
 	const ldObject = {
 		'@context': 'https://schema.org',
@@ -46,7 +56,10 @@ const createJsonLd = (data) => {
 	return ldObject;
 };
 
-
+/** Adds a jsonLd to the eventDetails html-template
+  *
+  * @param {Object} - the event data
+  */
 const addJsonLd = (data) => {
 	if (checkJsonLdMinReqs(data)) {
 		$(document).ready(() => {
@@ -86,6 +99,7 @@ Template.eventPage.onCreated(() => {
 });
 
 Template.eventPage.onRendered(function () {
+	// adds additional metadata for search-engines
 	addJsonLd(this.data);
 });
 
