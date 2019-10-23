@@ -27,6 +27,30 @@ import '/imports/ui/components/venues/link/venue-link';
 
 import './event-details.html';
 
+const createJsonLd = (data) => {
+	const ldObject = {
+		'@context': 'https://schema.org',
+		'@type': 'Event',
+		name: data.title,
+		startDate: data.startLocal,
+		endDate: data.endLocal,
+	};
+	return ldObject;
+};
+
+
+const addJsonLd = (data) => {
+	$(document).ready(() => {
+		const jsonLdTag = document.createElement('script');
+		jsonLdTag.type = 'application/ld+json';
+		const jsonLd = createJsonLd(data);
+		const jsonLdTextNode = document.createTextNode(JSON.stringify(jsonLd, null, 4));
+		jsonLdTag.appendChild(jsonLdTextNode);
+		$('body').append(jsonLdTag);
+	});
+};
+
+
 Template.eventPage.onCreated(() => {
 	const event = Events.findOne(Router.current().params._id);
 	let title;
@@ -49,6 +73,10 @@ Template.eventPage.onCreated(() => {
 		title = mf('event.windowtitle.create', 'Create event');
 	}
 	Metatags.setCommonTags(title, description);
+});
+
+Template.eventPage.onRendered(function () {
+	addJsonLd(this.data);
 });
 
 Template.event.onCreated(function () {
