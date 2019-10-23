@@ -40,9 +40,9 @@ const checkJsonLdMinReqs = data => Object.prototype.hasOwnProperty.call(data, 't
 
 
 /**
-	  * @param {Object} - the event data
-	  * @return {Object} - jsonLd geo part
-	  */
+  * @param {Object} - the event data
+  * @return {Object} - jsonLd geo part
+  */
 const addGeoToJsonLd = (data) => {
 	if (
 		Object.prototype.hasOwnProperty.call(data.venue, 'loc')
