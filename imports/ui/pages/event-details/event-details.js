@@ -57,6 +57,8 @@ const addGeoToJsonLd = (data) => {
 	}
 	return undefined;
 };
+
+
 /** creates the jsonLd
   *
   * https://developers.google.com/search/docs/data-types/event
