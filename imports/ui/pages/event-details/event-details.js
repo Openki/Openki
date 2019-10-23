@@ -33,10 +33,10 @@ import './event-details.html';
   * @param {Object} - the event data
   * @return {boolean}
   */
-const checkJsonLdMinReqs = data => Object.prototype.hasOwnProperty.call(data, 'name')
-	&& Object.prototype.hasOwnProperty.call(data, 'startDate')
-	&& Object.prototype.hasOwnProperty.call(data, 'endDate')
-	&& Object.prototype.hasOwnProperty.call(data, 'location');
+const checkJsonLdMinReqs = data => Object.prototype.hasOwnProperty.call(data, 'title')
+	&& Object.prototype.hasOwnProperty.call(data, 'startLocal')
+	&& Object.prototype.hasOwnProperty.call(data, 'endLocal')
+	&& Object.prototype.hasOwnProperty.call(data, 'venue');
 
 
 /** creates the jsonLd
@@ -53,7 +53,7 @@ const createJsonLd = (data) => {
 		name: data.title,
 		startDate: data.startLocal,
 		endDate: data.endLocal,
-		location: data,
+		location: data.venue.name,
 	};
 	return ldObject;
 };
