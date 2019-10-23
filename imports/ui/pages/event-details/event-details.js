@@ -39,6 +39,26 @@ const checkJsonLdMinReqs = data => Object.prototype.hasOwnProperty.call(data, 't
 	&& Object.prototype.hasOwnProperty.call(data, 'venue');
 
 
+/**
+  * @param {Object} - the event data
+  * @return {Object} - jsonLd geo part
+  */
+const addGeoToJsonLd = (data) => {
+	if (
+		Object.prototype.hasOwnProperty.call(data.venue, 'loc')
+		&& Object.prototype.hasOwnProperty.call(data.venue.loc, 'coordinates')
+		&& data.venue.loc.coordinates.length === 2
+	) {
+		return {
+			'@type': 'GeoCoordinates',
+			latitude: data.venue.loc.coordinates[1],
+			longitude: data.venue.loc.coordinates[0],
+		};
+	}
+	return undefined;
+};
+
+
 /** creates the jsonLd
   *
   * https://developers.google.com/search/docs/data-types/event
@@ -55,9 +75,14 @@ const createJsonLd = (data) => {
 		endDate: data.endLocal,
 		location: {
 			'@type': 'Place',
+			address: {
+				'@type': 'PostalAddress',
+				addressLocality: data.venue.name,
+			},
 			name: data.venue.name,
 		},
 	};
+	ldObject.location.geo = addGeoToJsonLd(data);
 	return ldObject;
 };
 
