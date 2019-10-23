@@ -55,6 +55,11 @@ const createJsonLd = (data) => {
 		endDate: data.endLocal,
 		location: {
 			'@type': 'Place',
+			geo: {
+				'@type': 'GeoCoordinates',
+				latitude: data.venue.loc.coordinates[1],
+				longitude: data.venue.loc.coordinates[0],
+			},
 			name: data.venue.name,
 		},
 	};
