@@ -44,7 +44,11 @@ const checkJsonLdMinReqs = data => Object.prototype.hasOwnProperty.call(data, 't
 	  * @return {Object} - jsonLd geo part
 	  */
 const addGeoToJsonLd = (data) => {
-	if (data.venue.loc && data.venue.loc.coordinates && data.venue.loc.coordinates.length === 2) {
+	if (
+		Object.prototype.hasOwnProperty.call(data.venue, 'loc')
+		&& Object.prototype.hasOwnProperty.call(data.venue.loc, 'coordinates')
+		&& data.venue.loc.coordinates.length === 2
+	) {
 		return {
 			'@type': 'GeoCoordinates',
 			latitude: data.venue.loc.coordinates[1],
