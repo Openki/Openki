@@ -27,6 +27,59 @@ import '/imports/ui/components/venues/link/venue-link';
 
 import './event-details.html';
 
+
+/** Checks if there is enough data ro make a reasonable jsonLd
+  *
+  * @param {Object} - the event data
+  * @return {boolean}
+  */
+const checkJsonLdMinReqs = data => Object.prototype.hasOwnProperty.call(data, 'title')
+	&& Object.prototype.hasOwnProperty.call(data, 'startLocal')
+	&& Object.prototype.hasOwnProperty.call(data, 'endLocal')
+	&& Object.prototype.hasOwnProperty.call(data, 'venue');
+
+
+/** creates the jsonLd
+  *
+  * https://developers.google.com/search/docs/data-types/event
+  *
+  * @param {Object} - the event data
+  * @return {Object} - jsonLd
+  */
+const createJsonLd = (data) => {
+	const ldObject = {
+		'@context': 'https://schema.org',
+		'@type': 'Event',
+		name: data.title,
+		startDate: data.startLocal,
+		endDate: data.endLocal,
+		location: {
+			'@type': 'Place',
+			name: data.venue.name,
+		},
+	};
+	return ldObject;
+};
+
+
+/** Adds a jsonLd to the eventDetails html-template
+  *
+  * @param {Object} - the event data
+  */
+const addJsonLd = (data) => {
+	if (checkJsonLdMinReqs(data)) {
+		$(document).ready(() => {
+			const jsonLdTag = document.createElement('script');
+			jsonLdTag.type = 'application/ld+json';
+			const jsonLd = createJsonLd(data);
+			const jsonLdTextNode = document.createTextNode(JSON.stringify(jsonLd, null, 4));
+			jsonLdTag.appendChild(jsonLdTextNode);
+			$('body').append(jsonLdTag);
+		});
+	}
+};
+
+
 Template.eventPage.onCreated(() => {
 	const event = Events.findOne(Router.current().params._id);
 	let title;
@@ -49,6 +102,11 @@ Template.eventPage.onCreated(() => {
 		title = mf('event.windowtitle.create', 'Create event');
 	}
 	Metatags.setCommonTags(title, description);
+});
+
+Template.eventPage.onRendered(function () {
+	// adds additional metadata for search-engines
+	addJsonLd(this.data);
 });
 
 Template.event.onCreated(function () {
