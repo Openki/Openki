@@ -53,7 +53,10 @@ const createJsonLd = (data) => {
 		name: data.title,
 		startDate: data.startLocal,
 		endDate: data.endLocal,
-		location: data.venue.name,
+		location: {
+			'@type': 'Place',
+			name: data.venue.name,
+		},
 	};
 	return ldObject;
 };
