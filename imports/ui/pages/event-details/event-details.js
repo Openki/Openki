@@ -27,6 +27,13 @@ import '/imports/ui/components/venues/link/venue-link';
 
 import './event-details.html';
 
+
+const checkJsonLdMinReqs = data => Object.prototype.hasOwnProperty.call(data, 'name')
+	&& Object.prototype.hasOwnProperty.call(data, 'startDate')
+	&& Object.prototype.hasOwnProperty.call(data, 'endDate')
+	&& Object.prototype.hasOwnProperty.call(data, 'location');
+
+
 const createJsonLd = (data) => {
 	const ldObject = {
 		'@context': 'https://schema.org',
@@ -34,20 +41,23 @@ const createJsonLd = (data) => {
 		name: data.title,
 		startDate: data.startLocal,
 		endDate: data.endLocal,
+		location: data,
 	};
 	return ldObject;
 };
 
 
 const addJsonLd = (data) => {
-	$(document).ready(() => {
-		const jsonLdTag = document.createElement('script');
-		jsonLdTag.type = 'application/ld+json';
-		const jsonLd = createJsonLd(data);
-		const jsonLdTextNode = document.createTextNode(JSON.stringify(jsonLd, null, 4));
-		jsonLdTag.appendChild(jsonLdTextNode);
-		$('body').append(jsonLdTag);
-	});
+	if (checkJsonLdMinReqs(data)) {
+		$(document).ready(() => {
+			const jsonLdTag = document.createElement('script');
+			jsonLdTag.type = 'application/ld+json';
+			const jsonLd = createJsonLd(data);
+			const jsonLdTextNode = document.createTextNode(JSON.stringify(jsonLd, null, 4));
+			jsonLdTag.appendChild(jsonLdTextNode);
+			$('body').append(jsonLdTag);
+		});
+	}
 };
 
 
