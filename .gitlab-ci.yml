@@ -38,7 +38,7 @@ lint:
   stage: lint
   script: ./ci/lint.sh
 
-
+# Unit tests
 test:
   stage: test
   tags:
@@ -46,6 +46,7 @@ test:
   script: ./ci/test.sh
 
 
+# e2e tests
 app-test:
   stage: app-test
   tags:
@@ -61,6 +62,7 @@ deploy_dev:
     TARGET_HOST: dev
   only:
   - dev
+  when: always
   trigger: Openki/sysadmin/deploy-config
 
 
