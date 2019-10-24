@@ -86,7 +86,7 @@ Meteor.methods({
 			startLocal: Match.Optional(String),
 			endLocal: Match.Optional(String),
 			internal: Match.Optional(Boolean),
-			maxParticipants: Number,
+			maxParticipants: Match.Optional(String),
 		};
 
 		const isNew = eventId === '';
