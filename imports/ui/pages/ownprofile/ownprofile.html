@@ -62,10 +62,10 @@
 							<div class="form-group">
 								<div class="control-btn">
 									<div class="checkbox">
-										<label title="{{mf 'profile.notification.subscribeDetails' 'Decide if you want to receive notifications via email'}}">
+										<label>
 											<input type="checkbox" class="js-notifications" {{notificationsChecked}}/>
 											<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
-											{{mf 'profile.toggle.notifications' 'Receive notifications'}}
+											{{mf 'profile.toggle.notifications' 'Receive notifications via email'}}
 										</label>
 									</div>
 								</div>
@@ -112,9 +112,9 @@
 								{{/unless}}
 							{{/if}}
 							<div class="details-info-group">
-								<div class="details-info-label" title="{{mf 'profile.notification.subscribeDetails' 'Decide if you want to receive notifications via email'}}">
+								<div class="details-info-label">
 									<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
-									{{mf 'profile.notification.subscribe' 'Get notifications'}}
+									{{mf 'profile.notification.subscribe' 'Get notifications via email'}}
 								</div>
 								<div class="details-info-data">
 									{{#if user.notifications}}
