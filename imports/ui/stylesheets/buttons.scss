@@ -51,6 +51,10 @@ $btn-background-colors: (
 	@extend .btn-default;
 }
 
+.btn-warning {
+	@extend .btn-warning;
+}
+
 .btn-cancel,
 .btn-delete,
 .btn-remove {

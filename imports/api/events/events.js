@@ -36,6 +36,8 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 // replicaOf       -> ID of the replication parent, only cloned events have this
 
+// maxParticipants -> maximum participants of event
+
 
 /** Calculated fields
   *

@@ -173,6 +173,22 @@ Template.event.helpers({
 	userRegisteredForEvent() {
 		return this.participants && this.participants.includes(Meteor.userId());
 	},
+
+	eventAcceptsParticipants() {
+		// no maxParticipants
+		if (!this.maxParticipants) {
+			return true;
+		}
+
+		if (!this.participants) {
+			return true;
+		}
+
+		if (this.participants.length < this.maxParticipants) {
+			return true;
+		}
+		return false;
+	},
 });
 
 Template.event.events({

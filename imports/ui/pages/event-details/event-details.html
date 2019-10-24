@@ -54,7 +54,11 @@
 			</div>
 			<div class="page-component">
 				{{#unless userRegisteredForEvent}}
-					{{> buttonRegister event="js-register-event"}}
+					{{#if eventAcceptsParticipants}}
+						{{> buttonRegister event="js-register-event"}}
+					{{else}}
+						{{> buttonRegistrationClosed}}
+					{{/if}}
 				{{else}}
 					{{> buttonUnregister event="js-unregister-event"}}
 				{{/unless}}
@@ -298,6 +302,22 @@
 		{{else}}
 			<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 			{{mf 'event.details.register' 'Register'}}
+		{{/if}}
+	</button>
+</template>
+
+<template name="buttonRegistrationClosed">
+	<button
+		type="button"
+		class="btn btn-warning btn-event {{event}}"
+		{{disabledIfBusy}}
+	>
+		{{#if busy 'registering'}}
+			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			{{mf '_button.registering' 'Adding you to waiting queue...'}}
+		{{else}}
+			<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+			{{mf 'event.details.isFullyBooked' 'Event is fully booked'}}
 		{{/if}}
 	</button>
 </template>
