@@ -340,6 +340,7 @@ Template.eventEdit.events({
 				}
 				editevent.groups = groups;
 			}
+			editevent.maxParticipants = 0;
 		}
 
 		const updateReplicas = instance.state.get('updateReplicas');
