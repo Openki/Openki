@@ -54,15 +54,36 @@ app-test:
   allow_failure: true
 
 
+deploy_dev:
+  stage: deploy
+  variables:
+    SOURCE_BRANCH: dev
+    TARGET_HOST: dev
+  only:
+  - dev
+  trigger: Openki/sysadmin/deploy-config
+
+
 deploy_staging:
   stage: deploy
   variables:
-    SOURCE_BRANCH: master
+    SOURCE_BRANCH: staging
     TARGET_HOST: staging
   only:
   - staging
+  trigger: Openki/sysadmin/deploy-config
+
+
+deploy_live:
+  stage: deploy
+  variables:
+    SOURCE_BRANCH: master
+    TARGET_HOST: live
+  only:
   - master
   trigger: Openki/sysadmin/deploy-config
+
+
 
 ## Not possible yet: https://gitlab.com/gitlab-org/gitlab-ce/issues/27818
 #deploy_prod:
@@ -72,6 +93,5 @@ deploy_staging:
 #    TARGET_HOST: live
 #  only:
 #  - master
-#  - tags
 #  trigger: Openki/sysadmin/deploy-config
 #
