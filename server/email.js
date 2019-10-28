@@ -26,7 +26,7 @@ const getReportEmails = () => {
 		sender: 'reporter@mail.openki.net',
 		recipient: 'admins@openki.net',
 	};
-	if (Meteor.setting.reporter) {
+	if (Meteor.settings.reporter) {
 		if (Meteor.settings.reporter.sender) {
 			reportEmails.sender = Meteor.settings.reporter.sender;
 		}
