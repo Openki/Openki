@@ -220,7 +220,10 @@ Meteor.methods({
 			}
 		}
 
-
+		// user wants to remove the limit
+		if (changes.maxParticipants === '') {
+			changes.maxParticipants = 0;
+		}
 		// input-validation maxParticipants
 		const parsedMaxParticipants = parseInt(changes.maxParticipants, 10);
 		// not a number
@@ -239,11 +242,6 @@ Meteor.methods({
 			throw new Meteor.Error(400, 'number must be 0 or more');
 		}
 
-		// dont set if value is 0
-		if (parsedMaxParticipants === 0) {
-			delete changes.maxParticipants;
-		}
-
 		// prevent to choose a value which is lower than actual registered participants
 		if (changes.maxParticipants) {
 			// if maxParticipants is 0 or no participants registered yet,
@@ -258,6 +256,13 @@ Meteor.methods({
 					);
 				}
 			}
+		}
+
+		// unset if value is 0
+		const unsets = {};
+		if (parsedMaxParticipants === 0) {
+			delete changes.maxParticipants;
+			unsets.maxParticipants = 1;
 		}
 		// end
 
@@ -278,7 +283,11 @@ Meteor.methods({
 			changes.groupOrganizers = [];
 			eventId = Events.insert(changes);
 		} else {
-			Events.update(eventId, { $set: changes });
+			if (Object.keys(unsets).length) {
+				Events.update(eventId, { $set: changes, $unset: unsets });
+			} else {
+				Events.update(eventId, { $set: changes });
+			}
 
 			if (updateReplicas) {
 				const replicaSync = ReplicaSync(event, updateChangedReplicas);

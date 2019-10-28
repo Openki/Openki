@@ -300,7 +300,7 @@ Template.eventEdit.events({
 			startLocal: LocalTime.toString(start),
 			endLocal: LocalTime.toString(end),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
-			maxParticipants: instance.$('.js-event-max-participants').val(),
+			maxParticipants: instance.$('.js-event-max-participants').val().trim(),
 		};
 
 		if (editevent.title.length === 0) {
