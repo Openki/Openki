@@ -145,15 +145,6 @@ function updateTimes(template, updateEnd) {
 }
 
 
-const getMaxParticipants = (number) => {
-	const maxParticipants = parseInt(number, 10);
-
-	if (Number.isNaN(maxParticipants) || maxParticipants <= 0) {
-		return String('');
-	}
-	return String(maxParticipants);
-};
-
 Template.eventEdit.onRendered(function () {
 	const instance = this;
 	updateTimes(instance, false);
@@ -302,10 +293,6 @@ Template.eventEdit.events({
 		}
 		const end = getEventEndMoment(instance);
 
-		const maxParticipants = getMaxParticipants(
-			instance.$('.js-event-max-participants').val(),
-		);
-
 		const editevent = {
 			title: instance.$('.js-event-title').val(),
 			venue: instance.selectedLocation.get(),
@@ -313,7 +300,7 @@ Template.eventEdit.events({
 			startLocal: LocalTime.toString(start),
 			endLocal: LocalTime.toString(end),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
-			maxParticipants,
+			maxParticipants: instance.$('.js-event-max-participants').val(),
 		};
 
 		if (editevent.title.length === 0) {
