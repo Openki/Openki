@@ -7,6 +7,7 @@
 		"siteStage": "DEV"
 	},
 	"siteEmail": "HMMM@legit.example"
+, "reporter": { "sender": "reporter@mail.openki.net", "recipient": "admins@openki.net"}
 , "printLog": true
 , "PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }
 }

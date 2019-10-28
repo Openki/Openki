@@ -13,6 +13,30 @@ if (Meteor.settings.public && Meteor.settings.public.siteName) {
 	Accounts.emailTemplates.siteName = Meteor.settings.public.siteName;
 }
 
+/**
+ * provides sender and recipient email for report-email,defaults to
+ * sender reporter@mail.openki.net and recipient admins@openki.net
+ * if not set in configfile.
+ *
+ * @returns {object} - the desired sender and rcpt email
+ */
+const getReportEmails = () => {
+	// preset, please override from configfile
+	const reportEmails = {
+		sender: 'reporter@mail.openki.net',
+		recipient: 'admins@openki.net',
+	};
+	if (Meteor.setting.reporter) {
+		if (Meteor.settings.reporter.sender) {
+			reportEmails.sender = Meteor.settings.reporter.sender;
+		}
+		if (Meteor.settings.reporter.recipient) {
+			reportEmails.recipient = Meteor.settings.reporter.recipient;
+		}
+	}
+	return reportEmails;
+};
+
 
 Meteor.methods({
 	sendVerificationEmail() {
@@ -77,9 +101,10 @@ Meteor.methods({
 
 		SSR.compileTemplate('messageReport', Assets.getText('messages/report.html'));
 
+		const reportEmail = getReportEmails();
 		Email.send({
-			from: 'reporter@mail.openki.net',
-			to: 'admins@openki.net',
+			from: reportEmail.sender,
+			to: reportEmail.recipient,
 			subject: `Report: ${subject}`,
 			html: SSR.render('messageReport', {
 				reporter,
