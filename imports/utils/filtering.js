@@ -103,11 +103,11 @@ const Filtering = function (availablePredicates) {
 			// Look closer
 			Object.keys(predicates).every((name) => {
 				same = predicates[name].equals(settled[name]);
-				if (!same) {
-					dep.changed();
-				}
 				return same;
 			});
+		}
+		if (!same) {
+			dep.changed();
 		}
 		return self;
 	};

@@ -10,6 +10,9 @@ const Predicates = {
 		};
 	},
 	id(param) {
+		if (param === 'all') {
+			return false;
+		}
 		return Predicates.string(param);
 	},
 	ids(param) {
