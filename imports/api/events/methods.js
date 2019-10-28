@@ -220,6 +220,20 @@ Meteor.methods({
 			}
 		}
 
+		// prevent to choose a value which is lower than actual registered participants
+		if (changes.maxParticipants) {
+			// if maxParticipants is 0, we dont need this check, 0 means no participant limit.
+			if (event.participants && event.maxParticipants) {
+				const numParticipantsRegistered = event.participants.length;
+				if (numParticipantsRegistered > changes.maxParticipants) {
+					throw new Meteor.Error(
+						400,
+						`the minimal possible value is ${numParticipantsRegistered}, `
+						+ `because ${numParticipantsRegistered} users have already registered.`,
+					);
+				}
+			}
+		}
 
 		if (Meteor.isServer) {
 			const sanitizedDescription = StringTools.saneText(changes.description);
