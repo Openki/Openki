@@ -221,6 +221,47 @@ Meteor.methods({
 		}
 
 
+		// input-validation maxParticipants
+		const parsedMaxParticipants = parseInt(changes.maxParticipants, 10);
+		// not a number
+		if (Number.isNaN(parsedMaxParticipants)) {
+			throw new Meteor.Error(400, 'value must be a number');
+		}
+
+		// dont allow unexpected characters
+		/* eslint-disable-next-line eqeqeq */
+		if (changes.maxParticipants != parsedMaxParticipants) {
+			throw new Meteor.Error(400, 'number must be integer');
+		}
+
+		// cannot be negative
+		if (parsedMaxParticipants < 0) {
+			throw new Meteor.Error(400, 'number must be 0 or more');
+		}
+
+		// dont set if value is 0
+		if (parsedMaxParticipants === 0) {
+			delete changes.maxParticipants;
+		}
+
+		// prevent to choose a value which is lower than actual registered participants
+		if (changes.maxParticipants) {
+			// if maxParticipants is 0 or no participants registered yet,
+			// we dont need this check, 0 means no participant limit.
+			if (event.participants && event.maxParticipants) {
+				const numParticipantsRegistered = event.participants.length;
+				if (numParticipantsRegistered > changes.maxParticipants) {
+					throw new Meteor.Error(
+						400,
+						`the minimal possible value is ${numParticipantsRegistered}, `
+						+ `because ${numParticipantsRegistered} users have already registered.`,
+					);
+				}
+			}
+		}
+		// end
+
+
 		if (Meteor.isServer) {
 			const sanitizedDescription = StringTools.saneText(changes.description);
 			changes.description = HtmlTools.saneHtml(sanitizedDescription);
