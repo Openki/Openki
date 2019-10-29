@@ -366,3 +366,15 @@ Template.postEdit.events({
 		instance.anon.set(instance.$('.js-anon').prop('checked'));
 	},
 });
+
+Template.profileIcon.helpers({
+
+	discussionLogo() {
+		return Meteor.settings.public.discussionLogo.src;
+	},
+
+	discussionAlt() {
+		return Meteor.settings.public.discussionLogo.alt;
+	},
+
+});
