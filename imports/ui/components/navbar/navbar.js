@@ -50,12 +50,11 @@ Template.navbar.helpers({
 	},
 
 	headerLogo() {
-		console.log(Meteor.settings.headerLogo.src);
-		return Meteor.settings.headerLogo.src;
+		return Meteor.settings.public.headerLogo.src;
 	},
 
 	headerAlt() {
-		return Meteor.settings.headerLogo.alt;
+		return Meteor.settings.public.headerLogo.alt;
 	},
 
 	notConnected() {
