@@ -10,4 +10,5 @@
 , "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"}
 , "printLog": true
 , "PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }
+, "headerLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" }
 }
