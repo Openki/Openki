@@ -210,11 +210,13 @@
 		{{#if this}}
 			<a href="/user/{{this}}/{{username this}}">
 				<img class="discussion-profile-icon"
-					src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"/>
+					src="/logo/{{discussionLogo}}"
+					alt="{{mf 'courseDiscussion.logoAlt' discussionAlt }}"/>
 			</a>
 		{{else}}
 			<img class="discussion-profile-icon"
-				src="/logo/OpenkiLogo_quadratisch_2kanal_alpha.png"/>
+				src="/logo/{{discussionLogo}}"
+				alt="{{mf 'courseDiscussion.logoAlt' discussionAlt }}"/>
 		{{/if}}
 	</div>
 </template>

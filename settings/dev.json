@@ -5,7 +5,8 @@
 	"public": {
 		"siteName": "Hmmm",
 		"siteStage": "DEV",
-		"headerLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" }
+		"headerLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" },
+		"discussionLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" }
 	},
 	"siteEmail": "HMMM@legit.example"
 , "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"}
