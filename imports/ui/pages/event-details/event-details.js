@@ -59,9 +59,29 @@ const addGeoToJsonLd = (data) => {
 };
 
 
-/** creates the jsonLd
+/** add offer information to jsonLd
   *
   * https://developers.google.com/search/docs/data-types/event
+  *
+  * @param {Object} - the event data
+  * @return {Object} - jsonLd-fragment for offers
+  */
+const addOffersToJsonLd = data => ({ '@type': 'AggregateOffer', price: data.price || 'free' });
+
+
+/** add performer information to jsonLd. use groups as perfomers,
+  * if no groups are present createdby is assumed as performer.
+  *
+  * @param {Object} - the event data
+  * @return {Object} - jsonLd-fragment for performer
+  */
+const addPerformerToJsonLd = data => ({
+	'@type': 'PerformingGroup',
+	name: data.groups.join(', ') || data.createdby,
+});
+
+
+/** creates the jsonLd
   *
   * @param {Object} - the event data
   * @return {Object} - jsonLd
@@ -81,6 +101,10 @@ const createJsonLd = (data) => {
 			},
 			name: data.venue.name,
 		},
+		description: data.description || data.title,
+		image: `https://openki.net/logo/${Meteor.settings.public.headerLogo.src}`,
+		offers: addOffersToJsonLd(data),
+		performer: addPerformerToJsonLd(data),
 	};
 	ldObject.location.geo = addGeoToJsonLd(data);
 	return ldObject;
@@ -305,7 +329,7 @@ Template.eventGroupList.helpers({
 			const event = Template.parentData();
 
 			// Groups may be adopted from the course, these cannot be removed
-			const ownGroup = event.groups.indexOf(groupId) >= 0;
+			const ownGroup = event.groups.includes(groupId);
 
 			if (ownGroup && (user.mayPromoteWith(groupId) || event.editableBy(user))) {
 				tools.push({
