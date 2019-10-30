@@ -66,9 +66,7 @@ const addGeoToJsonLd = (data) => {
   * @param {Object} - the event data
   * @return {Object} - jsonLd-fragment for offers
   */
-const addOffersToJsonLd = (data) => {
-	return { '@type': 'AggregateOffer', price: 'free'};
-};
+const addOffersToJsonLd = data => ({ '@type': 'AggregateOffer', price: data.price || 'free' });
 
 
 /** add performer information to jsonLd. use groups as perfomers,
@@ -77,12 +75,10 @@ const addOffersToJsonLd = (data) => {
   * @param {Object} - the event data
   * @return {Object} - jsonLd-fragment for performer
   */
-const addPerformerToJsonLd = (data) => {
-	return {
-		'@type': 'PerformingGroup',
-		'name': data.groups.join(', ') || data.createdby,
-	};
-};
+const addPerformerToJsonLd = data => ({
+	'@type': 'PerformingGroup',
+	name: data.groups.join(', ') || data.createdby,
+});
 
 
 /** creates the jsonLd
@@ -133,7 +129,7 @@ const addJsonLd = (data) => {
 };
 
 
-Template.eventPage.onCreated(function() {
+Template.eventPage.onCreated(() => {
 	const event = Events.findOne(Router.current().params._id);
 	let title;
 	let description = '';
