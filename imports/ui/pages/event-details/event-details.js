@@ -75,10 +75,17 @@ const addOffersToJsonLd = data => ({ '@type': 'AggregateOffer', price: data.pric
   * @param {Object} - the event data
   * @return {Object} - jsonLd-fragment for performer
   */
-const addPerformerToJsonLd = data => ({
-	'@type': 'PerformingGroup',
-	name: data.groups.join(', ') || data.createdby,
-});
+const addPerformerToJsonLd = (data) => {
+	const eventGroups = Groups.find({ _id: { $in: data.groups } });
+	const preformingGroups = [];
+	eventGroups.forEach((eventGroup) => {
+		preformingGroups.push(eventGroup.name);
+	});
+	return {
+		'@type': 'PerformingGroup',
+		name: preformingGroups.join(', ') || data.createdby,
+	};
+};
 
 
 /** creates the jsonLd
@@ -129,7 +136,7 @@ const addJsonLd = (data) => {
 };
 
 
-Template.eventPage.onCreated(() => {
+Template.eventPage.onCreated(function () {
 	const event = Events.findOne(Router.current().params._id);
 	let title;
 	let description = '';
@@ -147,16 +154,19 @@ Template.eventPage.onCreated(() => {
 			},
 			'{VENUE} in {REGION}',
 		);
+		const allEventGroups = event.groups;
+		this.subscribe('groupsFind', { _id: { $in: allEventGroups } }, (err) => {
+			if (!err) {
+				// adds additional metadata for search-engines
+				addJsonLd(this.data);
+			}
+		});
 	} else {
 		title = mf('event.windowtitle.create', 'Create event');
 	}
 	Metatags.setCommonTags(title, description);
 });
 
-Template.eventPage.onRendered(function () {
-	// adds additional metadata for search-engines
-	addJsonLd(this.data);
-});
 
 Template.event.onCreated(function () {
 	const event = this.data;
