@@ -72,12 +72,11 @@ const addOffersToJsonLd = data => ({ '@type': 'AggregateOffer', price: data.pric
 /** add performer information to jsonLd. use groups as perfomers,
   * if no groups are present createdby is assumed as performer.
   *
-  * @param {Object} - the event data
   * @return {Object} - jsonLd-fragment for performer
   */
-const addPerformerToJsonLd = data => ({
+const addPerformerToJsonLd = () => ({
 	'@type': 'PerformingGroup',
-	name: data.groups.join(', ') || data.createdby,
+	name: 'co-created',
 });
 
 
@@ -151,12 +150,9 @@ Template.eventPage.onCreated(() => {
 		title = mf('event.windowtitle.create', 'Create event');
 	}
 	Metatags.setCommonTags(title, description);
+	addJsonLd(event);
 });
 
-Template.eventPage.onRendered(function () {
-	// adds additional metadata for search-engines
-	addJsonLd(this.data);
-});
 
 Template.event.onCreated(function () {
 	const event = this.data;
