@@ -72,17 +72,12 @@ const addOffersToJsonLd = data => ({ '@type': 'AggregateOffer', price: data.pric
 /** add performer information to jsonLd. use groups as perfomers,
   * if no groups are present createdby is assumed as performer.
   *
-  * @param {Object} - the event data
   * @return {Object} - jsonLd-fragment for performer
   */
-const addPerformerToJsonLd = (data) => {
-	const eventGroups = Groups.find({ _id: { $in: data.groups } });
-
-	return {
-		'@type': 'PerformingGroup',
-		name: 'co-created',
-	};
-};
+const addPerformerToJsonLd = () => ({
+	'@type': 'PerformingGroup',
+	name: 'co-created',
+});
 
 
 /** creates the jsonLd
@@ -133,7 +128,7 @@ const addJsonLd = (data) => {
 };
 
 
-Template.eventPage.onCreated(function () {
+Template.eventPage.onCreated(() => {
 	const event = Events.findOne(Router.current().params._id);
 	let title;
 	let description = '';
@@ -151,17 +146,11 @@ Template.eventPage.onCreated(function () {
 			},
 			'{VENUE} in {REGION}',
 		);
-		const allEventGroups = event.groups;
-		this.subscribe('groupsFind', { _id: { $in: allEventGroups } }, (err) => {
-			if (!err) {
-				// adds additional metadata for search-engines
-				addJsonLd(this.data);
-			}
-		});
 	} else {
 		title = mf('event.windowtitle.create', 'Create event');
 	}
 	Metatags.setCommonTags(title, description);
+	addJsonLd(event);
 });
 
 
