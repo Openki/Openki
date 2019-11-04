@@ -101,7 +101,7 @@ const createJsonLd = (data) => {
 			name: data.venue.name,
 		},
 		description: data.description || data.title,
-		image: `https://openki.net/logo/${Meteor.settings.public.headerLogo.src}`,
+		image: `https://openki.net/logo/${Meteor.settings.public.ogLogo.src}`,
 		offers: addOffersToJsonLd(data),
 		performer: addPerformerToJsonLd(data),
 	};
