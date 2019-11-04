@@ -77,13 +77,10 @@ const addOffersToJsonLd = data => ({ '@type': 'AggregateOffer', price: data.pric
   */
 const addPerformerToJsonLd = (data) => {
 	const eventGroups = Groups.find({ _id: { $in: data.groups } });
-	const preformingGroups = [];
-	eventGroups.forEach((eventGroup) => {
-		preformingGroups.push(eventGroup.name);
-	});
+
 	return {
 		'@type': 'PerformingGroup',
-		name: preformingGroups.join(', ') || data.createdby,
+		name: 'co-created',
 	};
 };
 
