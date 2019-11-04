@@ -49,6 +49,14 @@ Template.navbar.helpers({
 		return Meteor.status().status === 'connecting';
 	},
 
+	headerLogo() {
+		return Meteor.settings.public.headerLogo.src;
+	},
+
+	headerAlt() {
+		return Meteor.settings.public.headerLogo.alt;
+	},
+
 	notConnected() {
 		return Meteor.status().status !== 'connecting' && Meteor.status().status !== 'connected';
 	},

@@ -59,9 +59,28 @@ const addGeoToJsonLd = (data) => {
 };
 
 
-/** creates the jsonLd
+/** add offer information to jsonLd
   *
   * https://developers.google.com/search/docs/data-types/event
+  *
+  * @param {Object} - the event data
+  * @return {Object} - jsonLd-fragment for offers
+  */
+const addOffersToJsonLd = data => ({ '@type': 'AggregateOffer', price: data.price || 'free' });
+
+
+/** add performer information to jsonLd. use groups as perfomers,
+  * if no groups are present createdby is assumed as performer.
+  *
+  * @return {Object} - jsonLd-fragment for performer
+  */
+const addPerformerToJsonLd = () => ({
+	'@type': 'PerformingGroup',
+	name: 'co-created',
+});
+
+
+/** creates the jsonLd
   *
   * @param {Object} - the event data
   * @return {Object} - jsonLd
@@ -81,6 +100,10 @@ const createJsonLd = (data) => {
 			},
 			name: data.venue.name,
 		},
+		description: data.description || data.title,
+		image: `https://openki.net/logo/${Meteor.settings.public.ogLogo.src}`,
+		offers: addOffersToJsonLd(data),
+		performer: addPerformerToJsonLd(data),
 	};
 	ldObject.location.geo = addGeoToJsonLd(data);
 	return ldObject;
@@ -127,12 +150,9 @@ Template.eventPage.onCreated(() => {
 		title = mf('event.windowtitle.create', 'Create event');
 	}
 	Metatags.setCommonTags(title, description);
+	addJsonLd(event);
 });
 
-Template.eventPage.onRendered(function () {
-	// adds additional metadata for search-engines
-	addJsonLd(this.data);
-});
 
 Template.event.onCreated(function () {
 	const event = this.data;
@@ -305,7 +325,7 @@ Template.eventGroupList.helpers({
 			const event = Template.parentData();
 
 			// Groups may be adopted from the course, these cannot be removed
-			const ownGroup = event.groups.indexOf(groupId) >= 0;
+			const ownGroup = event.groups.includes(groupId);
 
 			if (ownGroup && (user.mayPromoteWith(groupId) || event.editableBy(user))) {
 				tools.push({
