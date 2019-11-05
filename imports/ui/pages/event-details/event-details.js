@@ -146,11 +146,11 @@ Template.eventPage.onCreated(() => {
 			},
 			'{VENUE} in {REGION}',
 		);
+		addJsonLd(event);
 	} else {
 		title = mf('event.windowtitle.create', 'Create event');
 	}
 	Metatags.setCommonTags(title, description);
-	addJsonLd(event);
 });
 
 
