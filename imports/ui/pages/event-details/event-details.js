@@ -146,11 +146,11 @@ Template.eventPage.onCreated(() => {
 			},
 			'{VENUE} in {REGION}',
 		);
+		addJsonLd(event);
 	} else {
 		title = mf('event.windowtitle.create', 'Create event');
 	}
 	Metatags.setCommonTags(title, description);
-	addJsonLd(event);
 });
 
 
@@ -179,22 +179,7 @@ Template.event.onCreated(function () {
 });
 
 Template.event.helpers({
-	course() {
-		if (this.courseId) {
-			return Courses.findOne(this.courseId);
-		}
-		return false;
-	},
-
-	editing() {
-		return this.new || Template.instance().editing.get();
-	},
-
-	userRegisteredForEvent() {
-		return this.participants && this.participants.includes(Meteor.userId());
-	},
-
-	eventAcceptsParticipants() {
+	acceptsParticipants() {
 		// no maxParticipants
 		if (!this.maxParticipants) {
 			return true;
@@ -208,6 +193,25 @@ Template.event.helpers({
 			return true;
 		}
 		return false;
+	},
+
+	course() {
+		if (this.courseId) {
+			return Courses.findOne(this.courseId);
+		}
+		return false;
+	},
+
+	editing() {
+		return this.new || Template.instance().editing.get();
+	},
+
+	isFuture() {
+		return moment().isBefore(this.end);
+	},
+
+	userRegisteredForEvent() {
+		return this.participants && this.participants.includes(Meteor.userId());
 	},
 });
 
