@@ -1,14 +1,15 @@
+import Events from '/imports/api/events/events';
+
 import UpdatesAvailable from '/server/lib/updates';
-/** Clean bogus null recipients
+
+
+/** extend events with maxParticipants
   *
   * extend events-collection with the new field maxParticpants
   * and set a default value of 0
   */
-/* eslint-disable-next-line no-undef */
-UpdatesAvailable['2019.11.08 eventAddMaxParticipants'] = () => {
-	return Events.update(
-		{ maxParticipants: { $exists: false } },
-		{ maxParticipants: 0 },
-		{ multi: true },
-	);
-};
+UpdatesAvailable['2019.11.08 eventAddMaxParticipants'] = () => Events.update(
+	{ maxParticipants: { $exists: false } },
+	{ maxParticipants: 0 },
+	{ multi: true },
+);
