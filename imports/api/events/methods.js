@@ -424,8 +424,6 @@ Meteor.methods({
 		if (!user) {
 			throw new Meteor.Error(401, 'please log in');
 		}
-		Events.update({ _id: eventId }, { $addToSet: { participants: user._id } });
-
 
 		const event = Events.findOne(eventId);
 		// ignore broken eventIds
@@ -433,6 +431,12 @@ Meteor.methods({
 			return;
 		}
 
+		// dont allow participant-mutations if event has passed
+		if (moment().isAfter(event.end)) {
+			throw new Meteor.Error(401, 'cannot register, event has already passed');
+		}
+
+		Events.update({ _id: eventId }, { $addToSet: { participants: user._id } });
 		// if you cant load course its probably because the event doesnt have one
 		const course = Courses.findOne(event.courseId);
 		if (!course) {
@@ -449,6 +453,17 @@ Meteor.methods({
 		if (!Meteor.user()) {
 			throw new Meteor.Error(401, 'please log in');
 		}
+
+		const event = Events.findOne(eventId);
+		// ignore broken eventIds
+		if (!event) {
+			return;
+		}
+		// dont allow participant-mutations if event has passed
+		if (moment().isAfter(event.end)) {
+			throw new Meteor.Error(401, 'cannot unregister, event has already passed');
+		}
+
 		Events.update({ _id: eventId }, { $pull: { participants: Meteor.userId() } });
 	},
 });
