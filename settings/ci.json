@@ -4,7 +4,10 @@
 	"admins": ["greg", "FeeLing", "IvanZ"],
 	"public": {
 		"siteName": "Hmmm",
-		"siteStage": "DEV"
+		"siteStage": "DEV",
+		"headerLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" },
+		"discussionLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" },
+		"ogLogo": { "src": "openki_logo_2018.png"}
 	},
 	"siteEmail": "HMMM@legit.example"
 }

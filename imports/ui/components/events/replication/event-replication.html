@@ -5,24 +5,24 @@
 				<nav>
 					<ul class="nav nav-tabs replica-nav-tabs">
 						<li role="presentation" class="active">
-							<a href="#datepicker" data-toggle="tab">
-								<span class="fa fa-calendar-check-o fa-fw" aria-hidden="true"></span>
-								{{mf 'event.replication.changeToPicker' 'Pick dates'}}
-							</a>
-						</li>
-						<li role="presentation">
 							<a href="#frequency" data-toggle="tab">
 								<span class="fa fa-list fa-fw" aria-hidden="true"></span>
 								{{mf 'event.replication.changeToPattern' 'Select frequency'}}
 							</a>
 						</li>
+						<li role="presentation">
+							<a href="#datepicker" data-toggle="tab">
+								<span class="fa fa-calendar-check-o fa-fw" aria-hidden="true"></span>
+								{{mf 'event.replication.changeToPicker' 'Pick dates'}}
+							</a>
+						</li>
 					</ul>
 				</nav>
 				<div class="tab-content replica-tab-content">
-					<div class="tab-pane active" id="datepicker">
+					<div class="tab-pane" id="datepicker">
 						<div class="js-replicate-datepick"></div>
 					</div>
-					<div class="tab-pane form-group" id="frequency">
+					<div class="tab-pane form-group active" id="frequency">
 						<label for="replicateStart">
 							{{mf 'event.replication.interval.start' 'Interval Start'}}
 						</label>

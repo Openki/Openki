@@ -86,6 +86,7 @@ Meteor.methods({
 			startLocal: Match.Optional(String),
 			endLocal: Match.Optional(String),
 			internal: Match.Optional(Boolean),
+			maxParticipants: Match.Optional(Match.Integer),
 		};
 
 		const isNew = eventId === '';
@@ -216,6 +217,22 @@ Meteor.methods({
 				}
 				changes.endLocal = regionZone.toString(endMoment);
 				changes.end = endMoment.toDate();
+			}
+		}
+
+		// prevent to choose a value which is lower than actual registered participants
+		if (changes.maxParticipants) {
+			// if maxParticipants is 0 or no participants registered yet,
+			// we dont need this check, 0 means no participant limit.
+			if (event.participants && event.maxParticipants) {
+				const numParticipantsRegistered = event.participants.length;
+				if (numParticipantsRegistered > changes.maxParticipants) {
+					throw new Meteor.Error(
+						400,
+						`the minimal possible value is ${numParticipantsRegistered}, `
+						+ `because ${numParticipantsRegistered} users have already registered.`,
+					);
+				}
 			}
 		}
 
@@ -407,8 +424,6 @@ Meteor.methods({
 		if (!user) {
 			throw new Meteor.Error(401, 'please log in');
 		}
-		Events.update({ _id: eventId }, { $addToSet: { participants: user._id } });
-
 
 		const event = Events.findOne(eventId);
 		// ignore broken eventIds
@@ -416,6 +431,12 @@ Meteor.methods({
 			return;
 		}
 
+		// dont allow participant-mutations if event has passed
+		if (moment().isAfter(event.end)) {
+			throw new Meteor.Error(401, 'cannot register, event has already passed');
+		}
+
+		Events.update({ _id: eventId }, { $addToSet: { participants: user._id } });
 		// if you cant load course its probably because the event doesnt have one
 		const course = Courses.findOne(event.courseId);
 		if (!course) {
@@ -432,6 +453,17 @@ Meteor.methods({
 		if (!Meteor.user()) {
 			throw new Meteor.Error(401, 'please log in');
 		}
+
+		const event = Events.findOne(eventId);
+		// ignore broken eventIds
+		if (!event) {
+			return;
+		}
+		// dont allow participant-mutations if event has passed
+		if (moment().isAfter(event.end)) {
+			throw new Meteor.Error(401, 'cannot unregister, event has already passed');
+		}
+
 		Events.update({ _id: eventId }, { $pull: { participants: Meteor.userId() } });
 	},
 });

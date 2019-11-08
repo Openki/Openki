@@ -36,29 +36,35 @@
 	</div>
 	{{#unless editing}}
 		<div class="event-wrapper-aside">
-			<div class="page-component">
-				<div class="event-page-component-header">
-					<h4>
-						{{mf 'event.details.registration' 'Registration'}}
-					</h4>
+			{{#if isFuture}}
+				<div class="page-component">
+					<div class="event-page-component-header">
+						<h4>
+							{{mf 'event.details.registration' 'Registration'}}
+						</h4>
+					</div>
 				</div>
-			</div>
-			<div class="page-component">
-				<b>
+				<div class="page-component">
+					<b>
+						{{#unless userRegisteredForEvent}}
+							{{mf 'event.details.i-participate-no' 'Let us know that you are participating in this event. Your registration is binding.'}}
+						{{else}}
+							{{mf 'event.details.i-participate-yes' 'You are now registered. Your registration is binding.'}}
+						{{/unless}}
+					</b>
+				</div>
+				<div class="page-component">
 					{{#unless userRegisteredForEvent}}
-						{{mf 'event.details.i-participate-no' 'Let us know that you are participating in this event. Your registration is binding.'}}
+						{{#if acceptsParticipants}}
+							{{> buttonRegister event="js-register-event"}}
+						{{else}}
+							{{> buttonRegistrationClosed}}
+						{{/if}}
 					{{else}}
-						{{mf 'event.details.i-participate-yes' 'You are now registered. Your registration is binding.'}}
+						{{> buttonUnregister event="js-unregister-event"}}
 					{{/unless}}
-				</b>
-			</div>
-			<div class="page-component">
-				{{#unless userRegisteredForEvent}}
-					{{> buttonRegister event="js-register-event"}}
-				{{else}}
-					{{> buttonUnregister event="js-unregister-event"}}
-				{{/unless}}
-			</div>
+				</div>
+			{{/if}}
 			<div class="page-component">
 				{{> eventParticipants}}
 			</div>
@@ -298,6 +304,22 @@
 		{{else}}
 			<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 			{{mf 'event.details.register' 'Register'}}
+		{{/if}}
+	</button>
+</template>
+
+<template name="buttonRegistrationClosed">
+	<button
+		type="button"
+		class="btn btn-warning btn-event {{event}}"
+		{{disabledIfBusy}}
+	>
+		{{#if busy 'registering'}}
+			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			{{mf '_button.addingYouToWaitingQueue' 'Adding you to waiting queue...'}}
+		{{else}}
+			<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+			{{mf 'event.details.isFullyBooked' 'Event is fully booked'}}
 		{{/if}}
 	</button>
 </template>

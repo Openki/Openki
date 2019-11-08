@@ -203,6 +203,7 @@ Template.eventReplication.events({
 				// delegate the same replicaOf ID for this replica if the replicated event is also a replica
 				replicaOf: instance.data.replicaOf || instance.data._id,
 				internal: instance.data.internal,
+				maxParticipants: instance.data.maxParticipants,
 			};
 
 			const { courseId } = instance.data;

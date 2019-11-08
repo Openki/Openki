@@ -144,6 +144,26 @@ function updateTimes(template, updateEnd) {
 	template.$('.js-event-duration').val(duration.toString());
 }
 
+/**
+ * validates input for maxParticipants
+ * @param {String} - the user-input
+ * @return - an integer if the input passed validation.
+ */
+const validateMaxParticipants = (maxParticipants) => {
+	const intVal = parseInt(maxParticipants, 10);
+	/* eslint-disable-next-line eqeqeq */
+	if (intVal != maxParticipants) {
+		Alert.error(mf('event.edit.mustBeInteger', 'Number must be integer'));
+		return false;
+	}
+	if (intVal < 0) {
+		Alert.error(mf('event.edit.mustBePositive', 'Number must be positive'));
+		return false;
+	}
+	return intVal;
+};
+
+
 Template.eventEdit.onRendered(function () {
 	const instance = this;
 	updateTimes(instance, false);
@@ -268,6 +288,10 @@ Template.eventEdit.helpers({
 		}
 		return false;
 	},
+	maxParticipants() {
+		// show empty input instead of 0
+		return this.maxParticipants || '';
+	},
 	notifyChecked() {
 		return Template.instance().notifyChecked.get();
 	},
@@ -299,7 +323,13 @@ Template.eventEdit.events({
 			startLocal: LocalTime.toString(start),
 			endLocal: LocalTime.toString(end),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
+			maxParticipants: validateMaxParticipants(instance.$('.js-event-max-participants').val().trim() || 0),
 		};
+
+		// validation was unsuccessful
+		if (editevent.maxParticipants === false) {
+			return;
+		}
 
 		if (editevent.title.length === 0) {
 			Alert.error(mf('event.edit.plzProvideTitle', 'Please provide a title'));
