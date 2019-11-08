@@ -8,7 +8,7 @@ function getSiteTitlePrefix() {
 }
 
 function getSiteDefaultImage() {
-	return Meteor.settings.siteDefaultImage || 'https://openki.net/logo/openki_logo_2018.png';
+	return Meteor.settings.siteDefaultImage || `${Meteor.absoluteUrl()}logo/openki_logo_2018.png`;
 }
 
 Metatags.removeAll = function () {
