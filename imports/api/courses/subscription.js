@@ -274,9 +274,14 @@ export class Unsubscribe extends Change {
 	}
 
 	apply() {
+		const update = { $pull: { 'members.$.roles': this.role } };
+		// Unsubscribe from team also means remove editor rights.
+		if (this.role === 'team') {
+			update.$pull.editors = this.user._id;
+		}
 		Courses.update(
 			{ _id: this.course._id, 'members.user': this.user._id },
-			{ $pull: { 'members.$.roles': this.role } },
+			update,
 		);
 
 		// Housekeeping: Remove members that have no role left
