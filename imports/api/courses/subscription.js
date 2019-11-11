@@ -1,6 +1,7 @@
 import Courses, { Course } from './courses';
 
 import Alert from '/imports/api/alerts/alert';
+import Events from '/imports/api/events/events';
 import { User } from '/imports/api/users/users';
 import { check } from 'meteor/check';
 
@@ -274,9 +275,19 @@ export class Unsubscribe extends Change {
 	}
 
 	apply() {
+		const update = { $pull: { 'members.$.roles': this.role } };
+		// Unsubscribe from team also means remove editor rights.
+		if (this.role === 'team') {
+			update.$pull.editors = this.user._id;
+			Events.update(
+				{ courseId: this.course._id },
+				{ $pull: { editors: this.user._id } },
+				{ multi: true },
+			);
+		}
 		Courses.update(
 			{ _id: this.course._id, 'members.user': this.user._id },
-			{ $pull: { 'members.$.roles': this.role } },
+			update,
 		);
 
 		// Housekeeping: Remove members that have no role left
