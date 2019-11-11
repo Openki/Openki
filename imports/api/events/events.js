@@ -111,12 +111,8 @@ Events.updateGroups = function (eventId) {
 			return resolve(true); // Nothing was successfully updated, we're done.
 		}
 
-		// The creator of the event as well as any groups listed as organizers
-		// are allowed to edit.
+		// Any groups listed as organizers are allowed to edit.
 		let editors = event.groupOrganizers.slice(); // Clone
-		if (event.createdBy) {
-			editors.push(event.createdBy);
-		}
 
 		// If an event has a parent course, it inherits all groups and all editors from it.
 		let courseGroups = [];
