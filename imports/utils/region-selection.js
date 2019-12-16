@@ -18,10 +18,11 @@ RegionSelection.init = function () {
 	// We have no guarantee for this however!
 	Accounts.onLogin(() => {
 		const user = Meteor.user();
-
-		const { regionId } = user.profile;
-		if (regionId) {
-			Session.set('region', regionId);
+		if (user) {
+			const { regionId } = user.profile;
+			if (regionId) {
+				Session.set('region', regionId);
+			}
 		}
 	});
 
