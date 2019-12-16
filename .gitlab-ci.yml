@@ -5,7 +5,6 @@ stages:
   - cleanup
   - lint
   - test
-  - app-test
   - deploy
 
 
@@ -48,7 +47,7 @@ test:
 
 # e2e tests
 app-test:
-  stage: app-test
+  stage: test
   tags:
   - gitlab-org
   script: ./ci/app-test.sh
