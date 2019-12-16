@@ -139,9 +139,11 @@ Meteor.startup(UpdateViewport);
 Accounts.onLogin(() => {
 	const user = Meteor.user();
 
-	const locale = user.profile.locale;
-	if (locale) {
-		Session.set('locale', locale);
+	if (user) {
+		const locale = user.profile.locale;
+		if (locale) {
+			Session.set('locale', locale);
+		}
 	}
 });
 
