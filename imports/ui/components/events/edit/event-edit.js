@@ -323,7 +323,7 @@ Template.eventEdit.events({
 			startLocal: LocalTime.toString(start),
 			endLocal: LocalTime.toString(end),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
-			maxParticipants: validateMaxParticipants(instance.$('.js-event-max-participants').val().trim() || 0),
+			maxParticipants: validateMaxParticipants(instance.$('.js-event-max-participants').val() || 0),
 		};
 
 		// validation was unsuccessful

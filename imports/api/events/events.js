@@ -124,6 +124,8 @@ Events.updateGroups = function (eventId) {
 
 			courseGroups = course.groups;
 			editors = _.union(editors, course.editors);
+		} else {
+			editors.push(event.createdBy);
 		}
 
 		const update = {
