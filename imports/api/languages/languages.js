@@ -61,6 +61,14 @@ const Languages = {
 			short: 'fr',
 			english: 'French',
 			visible: true,
+		},	
+	ko:
+		{
+			lg: 'ko',
+			name: '한국어',
+			short: 'ko',
+			english: 'Korean',
+			visible: false,
 		},
 	pt:
 		{
