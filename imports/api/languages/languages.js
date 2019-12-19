@@ -61,7 +61,7 @@ const Languages = {
 			short: 'fr',
 			english: 'French',
 			visible: true,
-		},	
+		},
 	ko:
 		{
 			lg: 'ko',
