@@ -4,7 +4,7 @@
 # but you can also edit it by hand.
 
 accounts-password@1.5.1
-accounts-base@1.4.3
+accounts-base@1.4.5
 email@1.2.3
 standard-app-packages@1.0.9
 check@1.3.1
@@ -32,7 +32,7 @@ fortawesome:fontawesome
 msgfmt:core
 msgfmt:extract
 msgfmt:ui
-accounts-google@1.3.2
+accounts-google@1.3.3
 msavin:mongol
 bevanhunt:leaflet
 http@1.4.2
@@ -44,7 +44,7 @@ fourseven:scss
 lookback:tooltips
 gadicohen:robots-txt
 shell-server
-ecmascript@0.12.4
+ecmascript@0.13.0
 wanglian:bootstrap3-datepicker
 meteortesting:mocha
 facebook-config-ui
@@ -57,3 +57,5 @@ simple:markdown-templating
 gadicohen:sitemaps
 standard-minifier-css
 mdg:seo
+rzymek:moment-locale-pt
+rzymek:moment-locale-ko
