@@ -27,15 +27,15 @@
 	}
 }
 
-.frame-list-item-toggle-indicator {
+.frame-list-item-toggle-indicator,
+.frame-list-item-interested {
 	@include td-float(right);
 	font-size: small;
 	opacity: .6;
 }
 
 .frame-list-item-interested {
-	float: right;
-	margin-right: 10px;
+	@include td-margin(right, 10px);
 }
 
 .frame-list-item-time {

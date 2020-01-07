@@ -73,6 +73,9 @@ Template.frameCourselistCourse.helpers({
 	toggleIndicatorIcon() {
 		return Template.instance().expanded.get() ? 'minus' : 'plus';
 	},
+	interestedPersons() {
+		return this.members.length;
+	},
 });
 
 Template.frameCourselistCourse.events({
