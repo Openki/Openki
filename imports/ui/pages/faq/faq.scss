@@ -11,9 +11,9 @@
 	h3 {
 		border-bottom: 1px solid $blue-lighter;
 		cursor: pointer;
+		font-size: 1.2em;
 		padding-bottom: 5px;
 		transition: border-color .15s;
-		font-size: 1.20em;
 
 		&:hover,
 		&.active {
