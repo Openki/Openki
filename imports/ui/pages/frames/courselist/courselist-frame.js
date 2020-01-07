@@ -71,7 +71,7 @@ Template.frameCourselistCourse.helpers({
 	regionOf: course => Regions.findOne(course.region).name,
 	expanded: () => Template.instance().expanded.get(),
 	toggleIndicatorIcon() {
-		return Template.instance().expanded.get() ? 'minus' : 'plus';
+		return Template.instance().expanded.get() ? 'angle-up' : 'angle-down';
 	},
 	interestedPersons() {
 		return this.members.length;
