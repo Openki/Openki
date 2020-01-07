@@ -32,6 +32,16 @@
 				{{/if}}
 			{{/if}}
 			<div class="edit-page-body course-edit-body {{editBodyClasses}}">
+				<div class="form-group clearfix">
+					<button class="btn btn-huge btn-xadd" style="width: 48%; border-radius: 5px;">
+						<i class="fa fa-user fa-lg fa-fw"></i>
+						{{mf 'course.edit.iWantToLearn' 'I want to learn!'}}
+					</button>
+					<button class="btn btn-huge btn-add" style="float: right; width: 48%; border-radius: 5px;">
+						<i class="fa fa-graduation-cap fa-lg fa-fw"></i>
+						{{mf 'course.edit.iCanTeach' 'I can teach!'}}
+					</button>
+				</div>
 				{{#if _id}}
 					{{> regionTag}}
 				{{/if}}
