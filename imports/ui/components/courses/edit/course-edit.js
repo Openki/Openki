@@ -35,7 +35,7 @@ Template.courseEdit.onCreated(function () {
 	const editingCategories = !this.data || !this.data._id;
 	this.editingCategories = new ReactiveVar(editingCategories);
 	this.selectedCategories = new ReactiveVar((this.data && this.data.categories) || []);
-	
+
 	this.enrolledParticipant = new ReactiveVar(true);
 	this.enrolledMentor = new ReactiveVar(false);
 	this.enrolledRoles = new ReactiveDict(null, {
@@ -280,21 +280,21 @@ Template.courseEdit.helpers({
 
 
 Template.courseEdit.events({
-	
+
 	'click .js-button-enroll.mentor'(event, instance) {
 		instance.enrolledRoles.set(
 			'mentor',
-			instance.enrolledRoles.get('mentor') ? false : true,
+			!instance.enrolledRoles.get('mentor'),
 		);
 	},
 
 	'click .js-button-enroll.participant'(event, instance) {
 		instance.enrolledRoles.set(
 			'participant',
-			instance.enrolledRoles.get('participant') ? false : true,
+			!instance.enrolledRoles.get('participant'),
 		);
 	},
-	
+
 	'click .js-check-enroll.mentor'(event, instance) {
 		instance.enrolledRoles.set(
 			'mentor',
@@ -440,7 +440,6 @@ Template.courseEdit.events({
 
 Template.courseEditRole.onCreated(function () {
 	this.checked = new ReactiveVar(false);
-	
 });
 
 Template.courseEditRole.onRendered(function () {
