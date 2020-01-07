@@ -33,14 +33,14 @@
 			{{/if}}
 			<div class="edit-page-body course-edit-body {{editBodyClasses}}">
 				<div class="form-group clearfix">
-					<button class="btn btn-huge btn-xadd" style="width: 48%; border-radius: 5px;">
+					<span class="btn btn-huge {{#if enrolledParticipant}}btn-add{{/if}} js-button-enroll participant" style="width: 48%; border-radius: 5px;">
 						<i class="fa fa-user fa-lg fa-fw"></i>
 						{{mf 'course.edit.iWantToLearn' 'I want to learn!'}}
-					</button>
-					<button class="btn btn-huge btn-add" style="float: right; width: 48%; border-radius: 5px;">
+					</span>
+					<span class="btn btn-huge {{#if enrolledMentor}}btn-add{{/if}} js-button-enroll mentor" style="float: right; width: 48%; border-radius: 5px;">
 						<i class="fa fa-graduation-cap fa-lg fa-fw"></i>
 						{{mf 'course.edit.iCanTeach' 'I can teach!'}}
-					</button>
+					</span>
 				</div>
 				{{#if _id}}
 					{{> regionTag}}
@@ -113,7 +113,7 @@
 					<div class="form-group-element">
 						<label>{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
 						{{#each availableRoles}}
-							{{> courseEditRole selected=../roles role=this members=../members}}
+							{{> courseEditRole selected=../roles role=this members=../members enrolledRoles=enrolledRoles}}
 						{{/each}}
 					</div>
 					{{#if showRegionSelection}}

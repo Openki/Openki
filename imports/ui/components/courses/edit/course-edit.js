@@ -1,4 +1,5 @@
 import { Session } from 'meteor/session';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
@@ -34,6 +35,13 @@ Template.courseEdit.onCreated(function () {
 	const editingCategories = !this.data || !this.data._id;
 	this.editingCategories = new ReactiveVar(editingCategories);
 	this.selectedCategories = new ReactiveVar((this.data && this.data.categories) || []);
+	
+	this.enrolledParticipant = new ReactiveVar(true);
+	this.enrolledMentor = new ReactiveVar(false);
+	this.enrolledRoles = new ReactiveDict(null, {
+		participant: true,
+		mentor: false,
+	});
 
 	instance.editableDescription = new Editable(
 		false,
@@ -77,6 +85,10 @@ Template.courseEdit.onCreated(function () {
 });
 
 Template.courseEdit.helpers({
+	enrolledRoles() {
+		return Template.instance().enrolledRoles;
+	},
+
 	query() {
 		return Session.get('search');
 	},
@@ -93,6 +105,14 @@ Template.courseEdit.helpers({
 		}
 
 		return Categories[category];
+	},
+
+	enrolledParticipant() {
+		return Template.instance().enrolledRoles.get('participant');
+	},
+
+	enrolledMentor() {
+		return Template.instance().enrolledRoles.get('mentor');
 	},
 
 	editingCategories() {
@@ -260,6 +280,27 @@ Template.courseEdit.helpers({
 
 
 Template.courseEdit.events({
+	
+	'click .js-button-enroll.mentor'(event, instance) {
+		instance.enrolledRoles.set(
+			'mentor',
+			instance.enrolledRoles.get('mentor') ? false : true,
+		);
+	},
+
+	'click .js-button-enroll.participant'(event, instance) {
+		instance.enrolledRoles.set(
+			'participant',
+			instance.enrolledRoles.get('participant') ? false : true,
+		);
+	},
+	
+	'click .js-check-enroll.mentor'(event, instance) {
+		instance.enrolledRoles.set(
+			'mentor',
+			instance.$(event.target).is(':checked'),
+		);
+	},
 
 	'click .close'(event, instance) {
 		instance.showSavedMessage.set(false);
@@ -399,15 +440,17 @@ Template.courseEdit.events({
 
 Template.courseEditRole.onCreated(function () {
 	this.checked = new ReactiveVar(false);
+	
 });
 
 Template.courseEditRole.onRendered(function () {
 	const { data } = this;
 	const selectedRoles = data.selected;
+	const enrolledRoles = data.enrolledRoles;
 
-	if (selectedRoles) {
+	if (enrolledRoles) {
 		this.checked.set(
-			selectedRoles.indexOf(data.role.type) >= 0,
+			enrolledRoles.get(data.role.type),
 		);
 	}
 });
@@ -423,7 +466,8 @@ Template.courseEditRole.helpers({
 
 	checkRole() {
 		const instance = Template.instance();
-		return instance.checked.get() ? 'checked' : null;
+		console.log(instance.data.role.type);
+		return instance.data.enrolledRoles.get('mentor') ? 'checked' : null;
 	},
 
 	hasRole() {
@@ -433,7 +477,8 @@ Template.courseEditRole.helpers({
 
 Template.courseEditRole.events({
 	'change .js-check-role'(event, instance) {
-		instance.checked.set(instance.$('.js-check-role').prop('checked'));
+		console.log(instance);
+		instance.data.enrolledRoles.set(instance.data.role.type, instance.$('.js-check-role').prop('checked'));
 	},
 });
 
