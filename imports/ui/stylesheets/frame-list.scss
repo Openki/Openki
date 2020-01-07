@@ -33,6 +33,11 @@
 	opacity: .6;
 }
 
+.frame-list-item-interested {
+	float: right;
+	margin-right: 10px;
+}
+
 .frame-list-item-time {
 	@include td-margin(right, 10px);
 	font-weight: normal;
