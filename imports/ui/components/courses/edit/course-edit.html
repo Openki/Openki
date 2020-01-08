@@ -32,16 +32,18 @@
 				{{/if}}
 			{{/if}}
 			<div class="edit-page-body course-edit-body {{editBodyClasses}}">
-				<div class="form-group clearfix">
-					<span class="btn btn-huge {{#if enrolledParticipant}}btn-add{{else}}btn-default{{/if}} js-button-enroll participant" style="width: 48%; border-radius: 5px;">
-						<i class="fa fa-user fa-lg fa-fw"></i>
-						{{mf 'course.edit.iWantToLearn' 'I want to learn!'}}
-					</span>
-					<span class="btn btn-huge {{#if enrolledMentor}}btn-add{{else}}btn-default{{/if}} js-button-enroll mentor" style="float: right; width: 48%; border-radius: 5px;">
-						<i class="fa fa-graduation-cap fa-lg fa-fw"></i>
-						{{mf 'course.edit.iCanTeach' 'I can teach!'}}
-					</span>
-				</div>
+				{{#if isFrame}}
+					<div class="form-group clearfix">
+						<span class="btn btn-huge {{#if enrolledParticipant}}btn-add{{else}}btn-default{{/if}} js-button-enroll participant" style="width: 48%; border-radius: 5px;">
+							<i class="fa fa-user fa-lg fa-fw"></i>
+							{{mf 'course.edit.iWantToLearn' 'I want to learn!'}}
+						</span>
+						<span class="btn btn-huge {{#if enrolledMentor}}btn-add{{else}}btn-default{{/if}} js-button-enroll mentor" style="float: right; width: 48%; border-radius: 5px;">
+							<i class="fa fa-graduation-cap fa-lg fa-fw"></i>
+							{{mf 'course.edit.iCanTeach' 'I can teach!'}}
+						</span>
+					</div>
+				{{/if}}
 				{{#if _id}}
 					{{> regionTag}}
 				{{/if}}
@@ -110,12 +112,14 @@
 							</button>
 						{{/if}}
 					</div>
-					<div class="form-group-element">
-						<label>{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
-						{{#each availableRoles}}
-							{{> courseEditRole selected=../roles role=this members=../members enrolledRoles=enrolledRoles}}
-						{{/each}}
-					</div>
+					{{#unless isFrame}}
+						<div class="form-group-element">
+							<label>{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
+							{{#each availableRoles}}
+								{{> courseEditRole selected=../roles role=this members=../members enrolledRoles=enrolledRoles}}
+							{{/each}}
+						</div>
+					{{/unless}}
 					{{#if showRegionSelection}}
 						<div class="form-group-element">
 							<label>{{mf 'course.edit.region' 'Region'}}</label>

@@ -464,9 +464,8 @@ Template.courseEditRole.helpers({
 	},
 
 	checkRole() {
-		const instance = Template.instance();
-		console.log(instance.data.role.type);
-		return instance.data.enrolledRoles.get('mentor') ? 'checked' : null;
+		const data = Template.instance().data;
+		return data.selected.includes(data.role.type) ? 'checked' : null;
 	},
 
 	hasRole() {
@@ -476,8 +475,7 @@ Template.courseEditRole.helpers({
 
 Template.courseEditRole.events({
 	'change .js-check-role'(event, instance) {
-		console.log(instance);
-		instance.data.enrolledRoles.set(instance.data.role.type, instance.$('.js-check-role').prop('checked'));
+		instance.data.checked.set(instance.$('.js-check-role').prop('checked'));
 	},
 });
 
