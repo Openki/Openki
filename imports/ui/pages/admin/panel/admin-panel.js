@@ -2,7 +2,6 @@ import { Template } from 'meteor/templating';
 
 import './admin-panel.html';
 
-// Test
 Template.adminPanel.helpers({
 	tasks: () => (
 		[
