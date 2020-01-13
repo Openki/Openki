@@ -36,11 +36,11 @@ Template.courseEdit.onCreated(function () {
 	this.editingCategories = new ReactiveVar(editingCategories);
 	this.selectedCategories = new ReactiveVar((this.data && this.data.categories) || []);
 
-	this.enrolledParticipant = new ReactiveVar(true);
-	this.enrolledMentor = new ReactiveVar(false);
 	this.enrolledRoles = new ReactiveDict(null, {
-		participant: true,
-		mentor: false,
+		participant: this.data.roles && this.data.roles.includes('participant'),
+		mentor: this.data.roles && this.data.roles.includes('mentor'),
+		host: this.data.roles && this.data.roles.includes('host'),
+		team: this.data.roles && this.data.roles.includes('mentor') || this.data.roles && this.data.roles.includes('host'),
 	});
 
 	instance.editableDescription = new Editable(
@@ -281,24 +281,18 @@ Template.courseEdit.helpers({
 
 Template.courseEdit.events({
 
-	'click .js-button-enroll.mentor'(event, instance) {
+	'click .js-button-enroll'(event, instance) {
 		instance.enrolledRoles.set(
-			'mentor',
-			!instance.enrolledRoles.get('mentor'),
+			event.target.name,
+			!instance.enrolledRoles.get(event.target.name),
 		);
 	},
 
-	'click .js-button-enroll.participant'(event, instance) {
+	'change .js-check-enroll'(event, instance) {
+		console.log(instance.enrolledRoles);
 		instance.enrolledRoles.set(
-			'participant',
-			!instance.enrolledRoles.get('participant'),
-		);
-	},
-
-	'click .js-check-enroll.mentor'(event, instance) {
-		instance.enrolledRoles.set(
-			'mentor',
-			instance.$(event.target).is(':checked'),
+			event.target.name,
+			event.target.checked,
 		);
 	},
 
@@ -362,13 +356,13 @@ Template.courseEdit.events({
 
 		changes.subs = [];
 		changes.unsubs = [];
-		instance.$('.js-check-enroll').each(function () {
-			const role = this.name;
-			const subscribe = Boolean(this.checked);
-			if (subscribe) {
-				changes.subs.push(role);
+		const possibleRoles = document.querySelectorAll('.js-check-enroll');
+		Object.entries(instance.enrolledRoles.all()).forEach(([key, val]) => {
+			console.log(`subbed for role ${key}? ${val}`);
+			if (val === true) {
+				changes.subs.push(key);
 			} else {
-				changes.unsubs.push(role);
+				changes.unsubs.push(key);
 			}
 		});
 
@@ -444,14 +438,11 @@ Template.courseEditRole.onCreated(function () {
 
 Template.courseEditRole.onRendered(function () {
 	const { data } = this;
-	const selectedRoles = data.selected;
 	const enrolledRoles = data.enrolledRoles;
 
-	if (enrolledRoles) {
-		this.checked.set(
-			enrolledRoles.get(data.role.type),
-		);
-	}
+	this.checked.set(
+		enrolledRoles.get(data.role.type),
+	);
 });
 
 Template.courseEditRole.helpers({
