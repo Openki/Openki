@@ -40,7 +40,7 @@ Template.courseEdit.onCreated(function () {
 		participant: this.data.roles && this.data.roles.includes('participant'),
 		mentor: this.data.roles && this.data.roles.includes('mentor'),
 		host: this.data.roles && this.data.roles.includes('host'),
-		team: this.data.roles && this.data.roles.includes('mentor') || this.data.roles && this.data.roles.includes('host'),
+		team: (this.data.roles && this.data.roles.includes('mentor')) || (this.data.roles && this.data.roles.includes('host')),
 	});
 
 	instance.editableDescription = new Editable(
@@ -289,7 +289,6 @@ Template.courseEdit.events({
 	},
 
 	'change .js-check-enroll'(event, instance) {
-		console.log(instance.enrolledRoles);
 		instance.enrolledRoles.set(
 			event.target.name,
 			event.target.checked,
@@ -356,9 +355,7 @@ Template.courseEdit.events({
 
 		changes.subs = [];
 		changes.unsubs = [];
-		const possibleRoles = document.querySelectorAll('.js-check-enroll');
 		Object.entries(instance.enrolledRoles.all()).forEach(([key, val]) => {
-			console.log(`subbed for role ${key}? ${val}`);
 			if (val === true) {
 				changes.subs.push(key);
 			} else {
