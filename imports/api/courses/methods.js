@@ -192,6 +192,7 @@ Meteor.methods({
 			courseId = Courses.insert(set);
 
 			Meteor.call('course.updateNextEvent', courseId);
+			Courses.updateGroups(courseId);
 		} else {
 			Courses.update({ _id: courseId }, { $set: set }, AsyncTools.checkUpdateOne);
 		}
