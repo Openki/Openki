@@ -60,7 +60,8 @@ if (Meteor.isClient) {
 				}))
 				// Members of the group the course was created in must be able to
 				// edit the course.
-				// See ticket #1331 group members can not edit all courses despite their group being in the orga-team
+				// See ticket #1331 group members can not edit all courses despite their
+				// group being in the orga-team.
 				// So we login as a member of "SKG" then check whether the edit button shows up.
 				.then(() => new Promise((done, reject) => {
 					Meteor.logout((err) => {
@@ -83,7 +84,7 @@ if (Meteor.isClient) {
 				.then(waitFor(() => {
 					assert(
 						jQuery('.js-course-edit').length > 0,
-						'User from group can edit course'
+						'User from group can edit course',
 					);
 				}));
 		});
