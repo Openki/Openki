@@ -68,6 +68,14 @@ if (Meteor.settings.testdata) {
 		return `Inserted ${regions.length} region fixtures.`;
 	};
 
+	const usersCreate = function () {
+		ensure.user('greg', true);
+		ensure.user('Seee', true);
+		ensure.user('1u', true);
+		ensure.user('validated_mail', true);
+		return `Inserted user fixtures.`;
+	};
+
 	const groupsCreate = function () {
 		/* eslint-disable-next-line no-restricted-syntax */
 		for (const g of groups) {
@@ -364,12 +372,14 @@ if (Meteor.settings.testdata) {
 			if (Regions.find().count() === 0) {
 				regionsCreate();
 			}
+			usersCreate();
 			groupsCreate();
 			venuesCreate();
 			coursesCreate();
 			eventsGenerate();
 		},
 
+		'fixtures.users.create': usersCreate,
 		'fixtures.regions.create': regionsCreate,
 		'fixtures.groups.create': groupsCreate,
 		'fixtures.events.create': eventsCreate,

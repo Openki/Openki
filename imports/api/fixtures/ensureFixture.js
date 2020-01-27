@@ -11,7 +11,7 @@ const ensure = {
 		return md5.digest('hex').substring(0, 10);
 	},
 
-	user(name) {
+	user(name, verified) {
 		const prng = Prng('ensureUser');
 
 		if (!name) {
@@ -52,6 +52,12 @@ const ensure = {
 					lastLogin: new Date(time - age / 30),
 				},
 			});
+
+			if (verified) {
+				Meteor.users.update({ _id: id }, {
+					$set: { 'emails.0.verified': true }
+				});
+			}
 		}
 	},
 
