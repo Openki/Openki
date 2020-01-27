@@ -1,5 +1,4 @@
 import { Session } from 'meteor/session';
-import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
@@ -27,38 +26,39 @@ import '/imports/ui/components/regions/tag/region-tag';
 import './course-edit.html';
 
 Template.courseEdit.onCreated(function () {
-	const instance = this;
-
-	instance.busy(false);
+	this.busy(false);
 
 	// Show category selection right away for new courses
 	const editingCategories = !this.data || !this.data._id;
 	this.editingCategories = new ReactiveVar(editingCategories);
 	this.selectedCategories = new ReactiveVar((this.data && this.data.categories) || []);
 
-	this.enrolledRoles = new ReactiveDict(null, {
-		participant: this.data.roles && this.data.roles.includes('participant'),
-		mentor: this.data.roles && this.data.roles.includes('mentor'),
-		host: this.data.roles && this.data.roles.includes('host'),
-		team: (this.data.roles && this.data.roles.includes('mentor')) || (this.data.roles && this.data.roles.includes('host')),
-	});
-
-	instance.editableDescription = new Editable(
+	this.editableDescription = new Editable(
 		false,
 		false,
 		mf('course.description.placeholder', 'Describe your idea, so that more people will find it and that they`ll know what to expect.'),
 		false,
 	);
 
-	instance.autorun(() => {
-		instance.editableDescription.setText(Template.currentData().description);
+	this.autorun(() => {
+		this.editableDescription.setText(Template.currentData().description);
 	});
 
-	if (instance.data.group) {
-		instance.subscribe('group', instance.data.group);
+	if (this.data.group) {
+		this.subscribe('group', this.data.group);
 	}
 
+	this.fullRoleSelection = true;
+
 	if (this.data.isFrame) {
+		// When we're in the propose frame, show a simplified role selection
+		console.log(this.data.roles)
+		this.simpleRoleSelection = this.data.roles.includes('mentor');
+		this.fullRoleSelection = false;
+
+		// Keep state of simple role selection
+		this.simpleSelectedRole = new ReactiveVar('participant');
+
 		this.savedCourse = new ReactiveVar(false);
 		this.savedCourseId = new ReactiveVar(false);
 		this.showSavedMessage = new ReactiveVar(false);
@@ -76,17 +76,27 @@ Template.courseEdit.onCreated(function () {
 			this.$('#editform_name').val('');
 			this.$('.editable-textarea').html('');
 			this.selectedCategories.set([]);
-			this.$('.js-check-role').each(function () {
-				this.checked = false;
-				$(this).trigger('change');
-			});
+			this.simpleSelectedRole.set('participant');
 		};
 	}
 });
 
 Template.courseEdit.helpers({
-	enrolledRoles() {
-		return Template.instance().enrolledRoles;
+	simpleRoleSelection() {
+		return Template.instance().simpleRoleSelection;
+	},
+
+	fullRoleSelection() {
+		return Template.instance().fullRoleSelection;
+	},
+
+	simpleRoleActiveClass(role) {
+		// HACK using btn-add and btn-edit to show activation state
+		// It would be better to introduce own classes for this task.
+		if (Template.instance().simpleSelectedRole.get() === role) {
+			return 'btn-add active';
+		}
+		return 'btn-edit';
 	},
 
 	query() {
@@ -107,14 +117,6 @@ Template.courseEdit.helpers({
 		return Categories[category];
 	},
 
-	enrolledParticipant() {
-		return Template.instance().enrolledRoles.get('participant');
-	},
-
-	enrolledMentor() {
-		return Template.instance().enrolledRoles.get('mentor');
-	},
-
 	editingCategories() {
 		return Template.instance().editingCategories.get();
 	},
@@ -123,20 +125,6 @@ Template.courseEdit.helpers({
 		return Roles.filter((role) => {
 			// Roles that are always on are not selectable here
 			if (role.preset) {
-				return false;
-			}
-
-			// In the normal view, all roles are selectable
-			if (!this.isFrame) {
-				return true;
-			}
-
-			const { neededRoles } = this;
-			if (neededRoles && neededRoles.length) {
-				if (!neededRoles.includes(role.type)) {
-					return false;
-				}
-			} else if (role.type === 'host') {
 				return false;
 			}
 
@@ -280,18 +268,9 @@ Template.courseEdit.helpers({
 
 
 Template.courseEdit.events({
-
-	'click .js-button-enroll'(event, instance) {
-		instance.enrolledRoles.set(
-			event.target.name,
-			!instance.enrolledRoles.get(event.target.name),
-		);
-	},
-
-	'change .js-check-enroll'(event, instance) {
-		instance.enrolledRoles.set(
-			event.target.name,
-			event.target.checked,
+	'change input[name=role]'(event, instance) {
+		instance.simpleSelectedRole.set(
+			instance.$('input[name=role]:checked').val(),
 		);
 	},
 
@@ -302,11 +281,6 @@ Template.courseEdit.events({
 	'submit form, click .js-course-edit-save'(event, instance) {
 		event.preventDefault();
 
-		const roles = {};
-		instance.$('.js-check-role').each(function () {
-			roles[this.name] = this.checked;
-		});
-
 		// for frame: if a group id is given, check for the internal flag in the
 		// url query
 		const internal = instance.data.group
@@ -314,7 +288,6 @@ Template.courseEdit.events({
 			: instance.$('.js-check-internal').is(':checked');
 
 		const changes = {
-			roles,
 			internal,
 			name: StringTools.saneTitle(instance.$('#editform_name').val()),
 			categories: instance.selectedCategories.get(),
@@ -353,15 +326,33 @@ Template.courseEdit.events({
 			changes.groups = groups;
 		}
 
+		changes.roles = {};
 		changes.subs = [];
 		changes.unsubs = [];
-		Object.entries(instance.enrolledRoles.all()).forEach(([key, val]) => {
-			if (val === true) {
-				changes.subs.push(key);
-			} else {
-				changes.unsubs.push(key);
+
+		if (instance.simpleRoleSelection) {
+			instance.data.roles.forEach((role) => {
+				changes.roles[role] = true;
+			});
+			if (instance.simpleSelectedRole.get() === 'mentor') {
+				changes.subs.push('mentor');
 			}
-		});
+		}
+
+		if (instance.fullRoleSelection) {
+			instance.$('.js-check-role').each(function () {
+				changes.roles[this.name] = this.checked;
+			});
+			instance.$('.js-check-enroll').each(function () {
+				const role = this.name;
+				const subscribe = Boolean(this.checked);
+				if (subscribe) {
+					changes.subs.push(role);
+				} else {
+					changes.unsubs.push(role);
+				}
+			});
+		}
 
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveCourse', 'Login and save course'), () => {
@@ -435,11 +426,13 @@ Template.courseEditRole.onCreated(function () {
 
 Template.courseEditRole.onRendered(function () {
 	const { data } = this;
-	const enrolledRoles = data.enrolledRoles;
+	const selectedRoles = data.selected;
 
-	this.checked.set(
-		enrolledRoles.get(data.role.type),
-	);
+	if (selectedRoles) {
+		this.checked.set(
+			selectedRoles.indexOf(data.role.type) >= 0,
+		);
+	}
 });
 
 Template.courseEditRole.helpers({
@@ -452,8 +445,8 @@ Template.courseEditRole.helpers({
 	},
 
 	checkRole() {
-		const data = Template.instance().data;
-		return data.selected.includes(data.role.type) ? 'checked' : null;
+		const instance = Template.instance();
+		return instance.checked.get() ? 'checked' : null;
 	},
 
 	hasRole() {
@@ -463,7 +456,7 @@ Template.courseEditRole.helpers({
 
 Template.courseEditRole.events({
 	'change .js-check-role'(event, instance) {
-		instance.data.checked.set(instance.$('.js-check-role').prop('checked'));
+		instance.checked.set(instance.$('.js-check-role').prop('checked'));
 	},
 });
 

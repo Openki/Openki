@@ -32,26 +32,6 @@
 				{{/if}}
 			{{/if}}
 			<div class="edit-page-body course-edit-body {{editBodyClasses}}">
-				{{#if isFrame}}
-					<div class="form-group clearfix">
-						<span
-							class="btn btn-huge {{#if enrolledParticipant}}btn-add{{else}}btn-default{{/if}} js-button-enroll participant"
-							style="width: 48%; border-radius: 5px;"
-							name="participant"
-						>
-							<i class="fa fa-user fa-lg fa-fw"></i>
-							{{mf 'course.edit.iWantToLearn' 'I want to learn!'}}
-						</span>
-						<span
-							class="btn btn-huge {{#if enrolledMentor}}btn-add{{else}}btn-default{{/if}} js-button-enroll mentor"
-							style="float: right; width: 48%; border-radius: 5px;"
-							name="mentor"
-						>
-							<i class="fa fa-graduation-cap fa-lg fa-fw"></i>
-							{{mf 'course.edit.iCanTeach' 'I can teach!'}}
-						</span>
-					</div>
-				{{/if}}
 				{{#if _id}}
 					{{> regionTag}}
 				{{/if}}
@@ -70,6 +50,36 @@
 							{{/mf}}
 						</a>
 					</div>
+				{{/if}}
+				{{#if simpleRoleSelection}}
+				<div class="form-group">
+					<label id="learnOrTeachTitle">{{mf 'course.edit.learnOrTeach' 'Learn or teach?'}}</label>
+					<div class="btn-group-toggle clearfix" role="group" aria-labelledby="learnOrTeachTitle">
+						<label
+							class="btn btn-huge {{simpleRoleActiveClass 'participant'}}"
+						>
+							<input
+								type="radio"
+								name="role"
+								value="participant"
+								checked
+							>
+							<i class="fa fa-user fa-lg fa-fw"></i>
+							{{mf 'course.edit.iWantToLearn' 'I want to learn'}}
+						</label>
+						<label
+							class="btn btn-huge {{simpleRoleActiveClass 'mentor'}}"
+						>
+							<input
+								type="radio"
+								name="role"
+								value="mentor"
+							>
+							<i class="fa fa-graduation-cap fa-lg fa-fw"></i>
+							{{mf 'course.edit.iCanTeach' 'I can teach'}}
+						</label>
+					</div>
+				</div>
 				{{/if}}
 				{{>courseTitle}}
 				<div class="form-group">
@@ -120,14 +130,14 @@
 							</button>
 						{{/if}}
 					</div>
-					{{#unless isFrame}}
+					{{#if fullRoleSelection}}
 						<div class="form-group-element">
 							<label>{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
 							{{#each availableRoles}}
-								{{> courseEditRole selected=../roles role=this members=../members enrolledRoles=enrolledRoles}}
+								{{> courseEditRole selected=../roles role=this members=../members}}
 							{{/each}}
 						</div>
-					{{/unless}}
+					{{/if}}
 					{{#if showRegionSelection}}
 						<div class="form-group-element">
 							<label>{{mf 'course.edit.region' 'Region'}}</label>
