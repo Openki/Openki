@@ -52,7 +52,6 @@ Template.courseEdit.onCreated(function () {
 
 	if (this.data.isFrame) {
 		// When we're in the propose frame, show a simplified role selection
-		console.log(this.data.roles)
 		this.simpleRoleSelection = this.data.roles.includes('mentor');
 		this.fullRoleSelection = false;
 
@@ -73,7 +72,7 @@ Template.courseEdit.onCreated(function () {
 		});
 
 		this.resetFields = () => {
-			this.$('#editform_name').val('');
+			this.$('.js-title').val('');
 			this.$('.editable-textarea').html('');
 			this.selectedCategories.set([]);
 			this.simpleSelectedRole.set('participant');
@@ -289,7 +288,7 @@ Template.courseEdit.events({
 
 		const changes = {
 			internal,
-			name: StringTools.saneTitle(instance.$('#editform_name').val()),
+			name: StringTools.saneTitle(instance.$('.js-title').val()),
 			categories: instance.selectedCategories.get(),
 		};
 
@@ -312,7 +311,7 @@ Template.courseEdit.events({
 				// The region was preset for the frame
 				changes.region = data.region;
 			} else {
-				changes.region = instance.$('.region_select').val();
+				changes.region = instance.$('.js-select-region').val();
 			}
 			if (!changes.region) {
 				Alert.serverError(mf('course.edit.error.region', 'Please select a region'));

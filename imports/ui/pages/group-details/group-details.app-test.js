@@ -13,7 +13,7 @@ if (Meteor.isClient) {
 			Router.go('/group/fd3a8d98d4');
 			const haveEditfield = () => {
 				assert(
-					jQuery('#editform_name').length > 0,
+					jQuery('.js-title').length > 0,
 					'New course edit field present',
 				);
 			};
@@ -40,8 +40,8 @@ if (Meteor.isClient) {
 				}))
 				.then(() => {
 				// Create the course
-					jQuery('#editform_name').val(randomTitle);
-					jQuery('.region_select').val('9JyFCoKWkxnf8LWPh'); // Testistan
+					jQuery('.js-title').val(randomTitle);
+					jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
 					jQuery('.js-course-edit-save').click();
 
 				// We should be redirected to the created course

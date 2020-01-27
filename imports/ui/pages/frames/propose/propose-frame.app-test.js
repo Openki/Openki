@@ -14,7 +14,7 @@ if (Meteor.isClient) {
 
 			const haveEditfield = () => {
 				assert(
-					jQuery('#editform_name').length > 0,
+					jQuery('.js-title').length > 0,
 					'New course edit field present',
 				);
 			};
@@ -32,8 +32,8 @@ if (Meteor.isClient) {
 				}))
 				.then(() => {
 					jQuery('input[value=mentor]').click();
-					jQuery('#editform_name').val(randomTitle);
-					jQuery('.region_select').val('9JyFCoKWkxnf8LWPh'); // Testistan
+					jQuery('.js-title').val(randomTitle);
+					jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
 					jQuery('.js-course-edit-save').click();
 				})
 				.then(waitFor(() => {
