@@ -54,30 +54,40 @@
 				{{#if simpleRoleSelection}}
 				<div class="form-group">
 					<label id="learnOrTeachTitle">{{mf 'course.edit.learnOrTeach' 'Learn or teach?'}}</label>
-					<div class="btn-group-toggle clearfix" role="group" aria-labelledby="learnOrTeachTitle">
-						<label
-							class="btn btn-huge {{simpleRoleActiveClass 'participant'}}"
-						>
-							<input
-								type="radio"
-								name="role"
-								value="participant"
-								checked
+					<div
+						class="btn-group-toggle clearfix course-edit-roles"
+						role="group"
+						aria-labelledby="learnOrTeachTitle"
+					>
+						<div class="course-edit-role">
+							<label
+								class="btn btn-huge {{simpleRoleActiveClass 'participant'}} course-edit-role-btn"
 							>
-							<i class="fa fa-user fa-lg fa-fw"></i>
-							{{mf 'course.edit.iWantToLearn' 'I want to learn'}}
-						</label>
-						<label
-							class="btn btn-huge {{simpleRoleActiveClass 'mentor'}}"
-						>
-							<input
-								type="radio"
-								name="role"
-								value="mentor"
+								<input
+									class="course-edit-role-radio"
+									type="radio"
+									name="role"
+									value="participant"
+									checked
+								>
+								<i class="fa fa-user fa-lg fa-fw"></i>
+								{{mf 'course.edit.iWantToLearn' 'I want to learn'}}
+							</label>
+						</div>
+						<div class="course-edit-role">
+							<label
+								class="btn btn-huge {{simpleRoleActiveClass 'mentor'}} course-edit-role-btn"
 							>
-							<i class="fa fa-graduation-cap fa-lg fa-fw"></i>
-							{{mf 'course.edit.iCanTeach' 'I can teach'}}
-						</label>
+								<input
+									class="course-edit-role-radio"
+									type="radio"
+									name="role"
+									value="mentor"
+								>
+								<i class="fa fa-graduation-cap fa-lg fa-fw"></i>
+								{{mf 'course.edit.iCanTeach' 'I can teach'}}
+							</label>
+						</div>
 					</div>
 				</div>
 				{{/if}}
