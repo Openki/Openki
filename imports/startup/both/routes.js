@@ -179,16 +179,19 @@ Router.map(function () {
 				neededRoles: Predicates.ids,
 				internal: Predicates.flag,
 			};
-			const params = Filtering(predicates).read(this.params.query).done();
+			const params = Filtering(predicates).read(this.params.query).done().toQuery();
 
-			// add mentor role to be checked and the isFrame flag
-			return Object.assign(
-				params.toQuery(),
-				{
-					roles: ['mentor'],
-					isFrame: true,
-				},
+			if (!params.neededRoles) {
+				params.neededRoles = ['mentor'];
+			}
+			params.roles = ['mentor', 'host'].filter(
+				role => params.neededRoles.includes(role),
 			);
+			delete params.neededRoles;
+
+			params.isFrame = true;
+
+			return params;
 		},
 		onAfterAction() {
 			Metatags.setCommonTags(
