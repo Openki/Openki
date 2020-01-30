@@ -55,7 +55,7 @@ const ensure = {
 
 			if (verified) {
 				Meteor.users.update({ _id: id }, {
-					$set: { 'emails.0.verified': true }
+					$set: { 'emails.0.verified': true },
 				});
 			}
 		}

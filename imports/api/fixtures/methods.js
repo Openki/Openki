@@ -73,7 +73,7 @@ if (Meteor.settings.testdata) {
 		ensure.user('Seee', true);
 		ensure.user('1u', true);
 		ensure.user('validated_mail', true);
-		return `Inserted user fixtures.`;
+		return 'Inserted user fixtures.';
 	};
 
 	const groupsCreate = function () {
