@@ -28,6 +28,7 @@ if (Meteor.settings.testdata) {
 		// Remove the rate-limiting to allow the tests repeated logins
 		Accounts.removeDefaultRateLimit();
 
+		ifCollectionEmpty(Meteor.users, ['fixtures.users.create']);
 		ifCollectionEmpty(Regions, ['fixtures.regions.create']);
 		ifCollectionEmpty(Groups, ['fixtures.groups.create']);
 		ifCollectionEmpty(Venues, ['fixtures.venues.create']);
