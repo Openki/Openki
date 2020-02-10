@@ -24,3 +24,19 @@
 .proposed-courses > .dropdown-header > .fa {
     margin-right: 7px;
 }
+
+.course-edit-roles {
+	@include make-row;
+}
+
+.course-edit-role {
+	@include td-make-xs-column(6);
+}
+
+.course-edit-role-btn {
+	width: 100%;
+}
+
+.course-edit-role-radio {
+	display: none;
+}
