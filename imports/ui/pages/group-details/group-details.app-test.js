@@ -13,7 +13,7 @@ if (Meteor.isClient) {
 			Router.go('/group/fd3a8d98d4');
 			const haveEditfield = () => {
 				assert(
-					jQuery('#editform_name').length > 0,
+					jQuery('.js-title').length > 0,
 					'New course edit field present',
 				);
 			};
@@ -40,8 +40,8 @@ if (Meteor.isClient) {
 				}))
 				.then(() => {
 				// Create the course
-					jQuery('#editform_name').val(randomTitle);
-					jQuery('.region_select').val('9JyFCoKWkxnf8LWPh'); // Testistan
+					jQuery('.js-title').val(randomTitle);
+					jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
 					jQuery('.js-course-edit-save').click();
 
 				// We should be redirected to the created course
@@ -56,6 +56,35 @@ if (Meteor.isClient) {
 					assert.match(
 						jQuery('.js-group-label').text(), /SKG/,
 						'The course is in the group it was created in',
+					);
+				}))
+				// Members of the group the course was created in must be able to
+				// edit the course.
+				// See ticket #1331 group members can not edit all courses despite their
+				// group being in the orga-team.
+				// So we login as a member of "SKG" then check whether the edit button shows up.
+				.then(() => new Promise((done, reject) => {
+					Meteor.logout((err) => {
+						if (err) {
+							reject(err);
+						} else {
+							done();
+						}
+					});
+				}))
+				.then(() => new Promise((done, reject) => {
+					Meteor.loginWithPassword('Normalo', 'greg', (err) => {
+						if (err) {
+							reject(err);
+						} else {
+							done();
+						}
+					});
+				}))
+				.then(waitFor(() => {
+					assert(
+						jQuery('.js-course-edit').length > 0,
+						'User from group can edit course',
 					);
 				}));
 		});

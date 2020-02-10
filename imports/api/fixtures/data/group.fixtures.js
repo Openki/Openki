@@ -101,7 +101,7 @@ const groups = [{
 	short: 'SKG',
 	claim: 'nein, ja, nein, nein, ja.',
 	description: 'Das Ziel der KommunikationsGuerilla ist das Ziel. Die Kommunikationsguerilla ist das Mittel. Der Zweck ist die Befreiung. Das Mittel zur Befreiung ist der Mensch. Der Mensch, der in der fremdverschuldeten Unmündigkeit liegt.',
-	members: ['1u'],
+	members: ['1u', 'Normalo'],
 }, {
 	name: 'Lern Dich Frei',
 	short: 'LDF',

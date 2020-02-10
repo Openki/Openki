@@ -51,6 +51,46 @@
 						</a>
 					</div>
 				{{/if}}
+				{{#if simpleRoleSelection}}
+				<div class="form-group">
+					<label id="learnOrTeachTitle">{{mf 'course.edit.learnOrTeach' 'Learn or teach?'}}</label>
+					<div
+						class="btn-group-toggle clearfix course-edit-roles"
+						role="group"
+						aria-labelledby="learnOrTeachTitle"
+					>
+						<div class="course-edit-role">
+							<label
+								class="btn btn-huge {{simpleRoleActiveClass 'participant'}} course-edit-role-btn"
+							>
+								<input
+									class="course-edit-role-radio"
+									type="radio"
+									name="role"
+									value="participant"
+									checked
+								>
+								<i class="fa fa-user fa-lg fa-fw"></i>
+								{{mf 'course.edit.iWantToLearn' 'I want to learn'}}
+							</label>
+						</div>
+						<div class="course-edit-role">
+							<label
+								class="btn btn-huge {{simpleRoleActiveClass 'mentor'}} course-edit-role-btn"
+							>
+								<input
+									class="course-edit-role-radio"
+									type="radio"
+									name="role"
+									value="mentor"
+								>
+								<i class="fa fa-graduation-cap fa-lg fa-fw"></i>
+								{{mf 'course.edit.iCanTeach' 'I can teach'}}
+							</label>
+						</div>
+					</div>
+				</div>
+				{{/if}}
 				{{>courseTitle}}
 				<div class="form-group">
 					<label>{{mf 'course.edit.description' 'Description'}}</label>
@@ -100,12 +140,14 @@
 							</button>
 						{{/if}}
 					</div>
-					<div class="form-group-element">
-						<label>{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
-						{{#each availableRoles}}
-							{{> courseEditRole selected=../roles role=this members=../members}}
-						{{/each}}
-					</div>
+					{{#if fullRoleSelection}}
+						<div class="form-group-element">
+							<label>{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
+							{{#each availableRoles}}
+								{{> courseEditRole selected=../roles role=this members=../members}}
+							{{/each}}
+						</div>
+					{{/if}}
 					{{#if showRegionSelection}}
 						<div class="form-group-element">
 							<label>{{mf 'course.edit.region' 'Region'}}</label>
@@ -113,7 +155,7 @@
 								<div class="input-group-addon">
 									<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 								</div>
-								<select class="region_select form-control" name='region'>
+								<select class="js-select-region form-control" name='region'>
 									<option value='' disabled selected class="select-placeholder">
 										{{mf '_selection.pleaseSelect'}}
 									</option>
@@ -179,7 +221,7 @@
 </template>
 
 <template name="courseTitle">
-    <div class="form-group js-proposed-search">
+	<div class="form-group js-proposed-search">
 		<label>{{mf 'course.edit.title' 'Title'}}</label>
 		<div class="dropdown">
 			<input class="form-control input-lg js-title dropdown-toggle"
@@ -189,18 +231,18 @@
 				type="text"
 				data-toggle="dropdown"
 				value="{{name}}" />
-	    {{#if proposedCourses.count}}
-	    	<ul class="dropdown-menu proposed-courses js-proposed-courses" role="menu"  aria-labelledby="editform_name">
-		        <li class="dropdown-header">
-		            <i class="fa fa-info" aria-hidden="true"></i>
-		            {{mf 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
-		        </li>
-		        <li role="separator" class="divider"></li>
-	        {{#each proposedCourses}}
-	            <li class="dropdown-entry js-dropdown-entry" role="presentation"><a href="{{pathFor 'showCourse'}}" role="menuitem" tabindex="-1">{{name}}</a></li>
-	        {{/each}}
-	    	</ul>
-    	{{/if}}
+		{{#if proposedCourses.count}}
+			<ul class="dropdown-menu proposed-courses js-proposed-courses" role="menu"  aria-labelledby="editform_name">
+				<li class="dropdown-header">
+					<i class="fa fa-info" aria-hidden="true"></i>
+					{{mf 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
+				</li>
+				<li role="separator" class="divider"></li>
+			{{#each proposedCourses}}
+				<li class="dropdown-entry js-dropdown-entry" role="presentation"><a href="{{pathFor 'showCourse'}}" role="menuitem" tabindex="-1">{{name}}</a></li>
+			{{/each}}
+			</ul>
+		{{/if}}
 		</div>
 	</div>
 </template>

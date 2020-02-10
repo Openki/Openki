@@ -73,6 +73,10 @@ $btn-background-colors: (
 	}
 }
 
+.btn-huge {
+	@include btn-lg;
+}
+
 .remove-btn {
 	background-color: transparent;
 	border: 0;
