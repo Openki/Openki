@@ -25,7 +25,7 @@ import StringTools from '/imports/utils/string-tools';
 
 /** Venue objects represent locations where events take place.
   */
-const Venue = function () {
+export const Venue = function () { //  export was missing added by miri
 	this.facilities = {};
 };
 
