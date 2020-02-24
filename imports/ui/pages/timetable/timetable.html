@@ -31,7 +31,7 @@
 				{{#each rows}}
 					<div class="timetable-row-section">
 						{{#each this}}
-							<a href="{{pathFor  'showEvent'}}" class="timetable-event" style={{position}}>
+							<div class="timetable-event" style={{position}}>
 								<div class="timetable-event-title">
 									{{this.title}}
 								</div>
@@ -40,7 +40,7 @@
 									{{timeformat start}} - {{timeformat end}}
 								</div>
 								<div class="timetable-event-description">{{{description}}}</div>
-							</a>
+							</div>
 						{{/each}}
 					</div>
 				{{/each}}
