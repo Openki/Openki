@@ -2,7 +2,7 @@ import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
 import Roles from '/imports/api/roles/roles';
-import Venues from '/imports/api/venues/venues';
+import Venues, { Venue } from '/imports/api/venues/venues'; // Use default and { named, ... } exports
 
 import Analytics from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
