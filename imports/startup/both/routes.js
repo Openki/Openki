@@ -578,7 +578,7 @@ Router.map(function () {
 				let placed = false;
 
 				const venueRows = useVenue(event.venue);
-				venueRows.every((venue) => {
+				venueRows.every((venueRow) => {
 					let last;
 					venueRows.forEach((placedEvent) => {
 						if (!last || placedEvent.end > last) {
@@ -586,7 +586,7 @@ Router.map(function () {
 						}
 					});
 					if (last <= event.start) {
-						venue.push(event);
+						venueRow.push(event);
 						placed = true;
 						return false;
 					}
