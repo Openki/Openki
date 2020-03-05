@@ -533,10 +533,10 @@ Router.map(function () {
 			start = moment(start).startOf('hour');
 			end = moment(end).startOf('hour');
 
-			const startAbs = start.toDate().getTime();
-			const endAbs = end.toDate().getTime();
+			const timestampStart = start.toDate().getTime();
+			const timestampEnd = end.toDate().getTime();
 
-			const span = endAbs - startAbs;
+			const span = timestampEnd - timestampStart;
 			const days = {};
 			const hours = {};
 			const cursor = moment(start);
@@ -545,15 +545,15 @@ Router.map(function () {
 				const day = cursor.day();
 				days[`${month}${day}`] = {
 					moment: moment(cursor).startOf('day'),
-					relStart: Math.max(-0.1, (moment(cursor).startOf('day').toDate().getTime() - startAbs) / span),
-					relEnd: Math.max(-0.1, (endAbs - moment(cursor).startOf('day').add(1, 'day').toDate()
+					relStart: Math.max(-0.1, (moment(cursor).startOf('day').toDate().getTime() - timestampStart) / span),
+					relEnd: Math.max(-0.1, (timestampEnd - moment(cursor).startOf('day').add(1, 'day').toDate()
 						.getTime()) / span),
 				};
 				const hour = cursor.hour();
 				hours[`${month}${day}${hour}`] = {
 					moment: moment(cursor).startOf('hour'),
-					relStart: Math.max(-0.1, (moment(cursor).startOf('hour').toDate().getTime() - startAbs) / span),
-					relEnd: Math.max(-0.1, (endAbs - moment(cursor).startOf('hour').add(1, 'hour').toDate()
+					relStart: Math.max(-0.1, (moment(cursor).startOf('hour').toDate().getTime() - timestampStart) / span),
+					relEnd: Math.max(-0.1, (timestampEnd - moment(cursor).startOf('hour').add(1, 'hour').toDate()
 						.getTime()) / span),
 				};
 				cursor.add(1, 'hour');
@@ -573,8 +573,8 @@ Router.map(function () {
 
 			events.forEach((originalEvent) => {
 				const event = Object.assign({}, originalEvent);
-				event.relStart = (event.start.getTime() - startAbs) / span;
-				event.relEnd = (endAbs - event.end.getTime()) / span;
+				event.relStart = (event.start.getTime() - timestampStart) / span;
+				event.relEnd = (timestampEnd - event.end.getTime()) / span;
 				let placed = false;
 
 				const venueRows = useVenue(event.venue);
