@@ -42,6 +42,10 @@
 	&:hover {
 		z-index: 1;
 	}
+
+	&--room {
+		border-top-width: 0;
+	}
 }
 
 .timetable-location {
