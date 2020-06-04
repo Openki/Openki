@@ -1,7 +1,7 @@
 .timetable {
-	padding-top: 5px;
-	overflow: hidden;
 	min-height: 100%;
+	overflow: hidden;
+	padding-top: 5px;
 }
 
 .timetable-header {
@@ -113,7 +113,7 @@
 }
 
 .timetable-event-title:hover ~ .timetable-event-time {
-	min-width: 130px;	
+	min-width: 130px;
 }
 
 .timetable-event-title:hover ~ .timetable-event-description {
