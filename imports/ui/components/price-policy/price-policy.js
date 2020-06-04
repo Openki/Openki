@@ -34,6 +34,20 @@ Template.pricePolicyContent.helpers({
 		return classes.join(' ');
 	},
 
+	/**
+	 * Checks if price-policy is enabled for this instance.
+	 * Its only disabled if you set the pricePolicyEnabled-var
+	 * explicitly to false.
+	 */
+	pricePolicyEnabled() {
+		const pricePolicyEnabled = Meteor.settings.public.pricePolicyEnabled;
+		if (pricePolicyEnabled === false) {
+			return false;
+		}
+		// price policy setting is not set, is ambiguos, or is set explicitly to true.
+		return true;
+	},
+
 	pricePolicyLink() {
 		const link = '/FAQ';
 		let locale = Session.get('locale');
