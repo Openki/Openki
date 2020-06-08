@@ -18,3 +18,5 @@ server/version.js
 node_modules/
 
 server/extracts.msgfmt*
+
+.vscode/
