@@ -8,6 +8,7 @@
 		"headerLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" },
 		"discussionLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" },
 		"ogLogo": { "src": "openki_logo_2018.png"},
+		"mailLogo": "mails/openki.png",
 		"pricePolicyEnabled": false,
 		"footerLinks":
 			[	{ "link": "http://about.openki.net/"

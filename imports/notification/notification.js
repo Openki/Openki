@@ -89,7 +89,7 @@ Notification.send = function (entry) {
 				vars.siteName = siteName;
 				vars.locale = userLocale;
 				vars.username = username;
-				vars.logo = logo('mails/logo.png');
+				vars.logo = logo(Meteor.settings.public.mailLogo);
 
 				let message = SSR.render(model.template, vars);
 
