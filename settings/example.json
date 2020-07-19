@@ -6,7 +6,22 @@
 		"matomo": {
 			"url": "https://analytics.mydomain.com/",
 			"site": 1
-		}
+		},
+		"pricePolicyEnabled": false,
+		"footerLinks":
+			[	{ "link": "http://about.openki.net/"
+				, "key": "footer.aboutOpenki"
+				, "title_key": "navigation.footer.about.title"
+				}
+			,	{ "link": "/FAQ"
+				, "key": "main.faq_link"
+				, "title_key": "navigation.footer.faq.title"
+				}
+			,	{ "link": "https://gitlab.com/Openki/Openki/"
+				, "text": "GitLab"
+				, "title_key": "navigation.footer.codeOnGitLab"
+				}
+			]
 	},
 	"service": {
 		"facebook": {

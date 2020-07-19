@@ -5,6 +5,17 @@ import Version from '/imports/api/version/version';
 import './footer.html';
 
 Template.footer.helpers({
+	links() {
+		const links = [];
+		for (linkSpec of Meteor.settings.public.footerLinks) {
+			links.push({
+				"link": linkSpec.link,
+				"text": linkSpec.key ? mf(linkSpec.key) : linkSpec.text,
+				"title": linkSpec.title_key ? mf(linkSpec.title_key) : ""
+			});
+		}
+		return links;
+	},
 	version() {
 		const version = Version.findOne();
 		return version && version.basic + (version.branch !== 'master' ? ` ${version.branch}` : '');
