@@ -82,7 +82,7 @@ deploy_live:
     TARGET_HOST: live
   only:
   - master
-  when: manual
+  when:manual
   trigger: Openki/sysadmin/deploy-config
 
 
