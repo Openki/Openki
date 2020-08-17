@@ -82,10 +82,6 @@ deploy_live:
     TARGET_HOST: live
   only:
   - master
-  environment:
-    name: production
-    url: https://openki.net
-  when: manual
   trigger: Openki/sysadmin/deploy-config
 
 
