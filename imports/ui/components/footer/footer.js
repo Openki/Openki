@@ -7,7 +7,7 @@ import './footer.html';
 Template.footer.helpers({
 	links() {
 		const links = [];
-		for (linkSpec of Meteor.settings.public.footerLinks) {
+		for (let linkSpec of Meteor.settings.public.footerLinks) {
 			links.push({
 				'link': linkSpec.link,
 				'text': linkSpec.key ? mf(linkSpec.key) : linkSpec.text,
