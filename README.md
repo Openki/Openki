@@ -69,14 +69,24 @@ In the interest of having a open and welcoming environment for everyone, we agre
 - There are other actions, for example `meteor npm run js-lint`.
 
 
-### Running app-test
+### Running the tests
 
 To run the app-tests, you need a `chromedriver` binary. On Debian, you can get one with  `apt install chromuim-driver`. Also make sure to run `meteor npm install`.
 
-Run tests with
+Run tests with:
 
     meteor npm run app-test
 
+Run linters with these two commands:
+
+    meteor npm run sass-lint
+    meteor npm run eslint
+
+### Fixing weird errors
+
+In case you get weird errors when starting (eg. error 14) try this command:
+
+    meteor reset
 
 ### Documentation
 - The technical documentation is here on GitLab in the :book: [Wiki](https://gitlab.com/Openki/Openki/wikis/home)
