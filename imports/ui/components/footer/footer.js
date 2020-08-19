@@ -7,11 +7,11 @@ import './footer.html';
 Template.footer.helpers({
 	links() {
 		const links = [];
-		for (let linkSpec of Meteor.settings.public.footerLinks) {
+		for (const linkSpec of Meteor.settings.public.footerLinks) {
 			links.push({
-				'link': linkSpec.link,
-				'text': linkSpec.key ? mf(linkSpec.key) : linkSpec.text,
-				'title': linkSpec.title_key ? mf(linkSpec.title_key) : ''
+				link: linkSpec.link,
+				text: linkSpec.key ? mf(linkSpec.key) : linkSpec.text,
+				title: linkSpec.title_key ? mf(linkSpec.title_key) : '',
 			});
 		}
 		return links;
