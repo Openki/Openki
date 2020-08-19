@@ -9,9 +9,9 @@ Template.footer.helpers({
 		const links = [];
 		for (linkSpec of Meteor.settings.public.footerLinks) {
 			links.push({
-				"link": linkSpec.link,
-				"text": linkSpec.key ? mf(linkSpec.key) : linkSpec.text,
-				"title": linkSpec.title_key ? mf(linkSpec.title_key) : ""
+				'link': linkSpec.link,
+				'text': linkSpec.key ? mf(linkSpec.key) : linkSpec.text,
+				'title': linkSpec.title_key ? mf(linkSpec.title_key) : ''
 			});
 		}
 		return links;
