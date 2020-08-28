@@ -35,13 +35,15 @@ cleanup:
 
 lint:
   stage: lint
+  tags:
+  - gitlab-org
   script: ./ci/lint.sh
 
 # Unit tests
 test:
   stage: test
   tags:
-  - gitlab-org
+  - panter
   script: ./ci/test.sh
 
 
@@ -49,7 +51,7 @@ test:
 app-test:
   stage: test
   tags:
-  - gitlab-org
+  - panter
   script: ./ci/app-test.sh
   allow_failure: true
 
