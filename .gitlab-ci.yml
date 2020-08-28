@@ -43,7 +43,7 @@ lint:
 test:
   stage: test
   tags:
-  - panter
+  - gitlab-org
   script: ./ci/test.sh
 
 
@@ -51,7 +51,7 @@ test:
 app-test:
   stage: test
   tags:
-  - panter
+  - gitlab-org-docker
   script: ./ci/app-test.sh
   allow_failure: true
 
