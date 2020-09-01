@@ -19,7 +19,7 @@ const helpers = {
 		if (typeof Meteor.settings.public.courseGuideLink === 'string' && Meteor.settings.public.courseGuideLink !== '') {
 			return Meteor.settings.public.courseGuideLink;
 		}
-		
+
 		const locale = Session.get('locale');
 		// default fallback language
 		let guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
@@ -37,11 +37,11 @@ const helpers = {
 		}
 		return guideLink;
 	},
-	
+
 	faqLink() {
 		return Meteor.settings.public.faqLink || '/FAQ';
 	},
-	
+
 	aboutLink() {
 		return Meteor.settings.public.aboutLink || 'https://about.openki.net';
 	},
