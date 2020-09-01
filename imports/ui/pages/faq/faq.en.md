@@ -6,7 +6,7 @@
 
 Openki is an open education platform. Courses can be proposed, discussed, developed, organized and published. The focus is on the promotion of self-organization, the bringing together of people, groupings and initiatives, and ensure a barrier-free exchange of experiences and knowledge. The courses are accessible to all, regardless of their financial situation. The organization behind it is non-profit and Open Source.
 
-Find out more about [Openki and its philosophy](http://about.openki.net/) or read about [the basic concepts behind the Openki platform](http://about.openki.net/?page_id=1216).
+Find out more about [Openki and its philosophy](https://about.openki.net/) or read about [the basic concepts behind the Openki platform](https://about.openki.net/?page_id=1216).
 
 
 ### What does the name "Openki" actually means?
@@ -107,9 +107,9 @@ Many tools are already available on the web freely and humans can link them to O
 
 * Create your own wiki: [https://www.wikispaces.com/content/classroom](https://www.wikispaces.com/content/classroom)
 * Compose texts: [Etherpad](https://etherpad.wikimedia.org) or [Hackpad](https://hackpad.com)
-* Simple voting: [Dudle](https://dudle.inf.tu-dresden.de/) or [Papillon](http://papilio.niadomo.net/create/) or [Framadate](http://framadate.org)
+* Simple voting: [Dudle](https://dudle.inf.tu-dresden.de/) or [Papillon](http://papilio.niadomo.net/create/) or [Framadate](https://framadate.org)
 * More complex choices in a group: [https://loomio.org](https://loomio.org)
-* Upload files: [https://wetransfer.com/](https://wetransfer.com/) or self-host a [NextCloud](http://nextcloud.com) instance.
+* Upload files: [https://wetransfer.com/](https://wetransfer.com/) or self-host a [NextCloud](https://nextcloud.com) instance.
 
 
 ## Mentoring
