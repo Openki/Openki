@@ -6,7 +6,7 @@
 
 Openki est une plateforme d'éducation ouverte. Des cours peuvent être proposés, discutés, développés, organisés et publiés. Les principes les plus importants sont la promotion de l'auto-organisation, le rassemblement des personnes, des groupes et des initiatives et l'organisation de l'échange d'expériences et de savoirs sans barrières à l'entrée. Les cours sont accessibles à toutes et tous, quelle que soit leur situation financière. L'organisation derrière Openki est à but non lucratif et Open Source.
 
-En savoir plus sur [Openki et sa philosophie](http://about.openki.net/) ou sur [les concepts derrière Openki](http://about.openki.net/?page_id=1216).
+En savoir plus sur [Openki et sa philosophie](https://about.openki.net/) ou sur [les concepts derrière Openki](https://about.openki.net/?page_id=1216).
 
 
 ### Que signifie le mot "Openki" ?
@@ -106,7 +106,7 @@ De nombreux outils sont disponibles sur le web et vous pouvez pointer vers eux d
 
 * Créer son propre wiki : [https://www.wikispaces.com/content/classroom](https://www.wikispaces.com/content/classroom)
 * Rédiger des documents : [Etherpad](https://etherpad.wikimedia.org) ou [Hackpad](https://hackpad.com)
-* Vote ou sondage : [Framadate](http://framadate.org) ou [Dudle](https://dudle.inf.tu-dresden.de/) ou [Papillon](http://papilio.niadomo.net/create/)
+* Vote ou sondage : [Framadate](https://framadate.org) ou [Dudle](https://dudle.inf.tu-dresden.de/) ou [Papillon](http://papilio.niadomo.net/create/)
 * Décision et gouvernance en groupe : [https://loomio.org](https://loomio.org)
 * Partage de fichiers : [https://wetransfer.com/](https://wetransfer.com/)
 

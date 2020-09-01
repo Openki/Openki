@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 const Metatags = {};
 
 function getSiteTitlePrefix() {
-	return Meteor.settings.siteTitlePrefix || 'Openki - ';
+	return Meteor.settings.siteTitlePrefix || `${Meteor.settings.public.siteName}  - `;
 }
 
 function getSiteDefaultImage() {

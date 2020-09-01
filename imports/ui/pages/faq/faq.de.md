@@ -4,7 +4,7 @@
 ### Was ist Openki?
 Openki ist eine offene Bildungsplattform. Auf ihr können Kurse vorgeschlagen, diskutiert, entwickelt, organisiert und ausgeschrieben werden. Der Fokus liegt dabei auf der Förderung von Selbstorganisation, dem Zusammenbringen von Menschen, Gruppierungen und Initiativen und gewährleistet einen hürdefreien Austausch von Erfahrung und Wissen. Die Kurse sind für alle zugänglich, unabhängig von der finanziellen Situation. Die Organisation dahinter ist Non-profit und OpenSource.
 
-[Hier](http://about.openki.net/) findest du mehr über Openki und dessen Philosophie. Wie die Webseite konzeptionell funktioniert, erfährst du  [hier](http://about.openki.net/?page_id=1216).
+[Hier](https://about.openki.net/) findest du mehr über Openki und dessen Philosophie. Wie die Webseite konzeptionell funktioniert, erfährst du  [hier](https://about.openki.net/?page_id=1216).
 
 ### Was bedeutet der Name "Openki" eigentlich?
 Openki ist Ukrainisch (опеньки), heisst übersetzt auf deutsch Hallimasch und ist ein Pilz. Hier [seine Wikipedia Seite](https://de.wikipedia.org/wiki/Hallimasche).

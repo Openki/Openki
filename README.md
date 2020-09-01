@@ -1,7 +1,7 @@
 Openki [![Build Status](https://travis-ci.org/Openki/Openki.svg?branch=master)](https://travis-ci.org/Openki/Openki) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250) [![Maintainability](https://api.codeclimate.com/v1/badges/49da9e86d8722b2162b8/maintainability)](https://codeclimate.com/github/Openki/Openki/maintainability)
 ====
 
-**Platform for open education** – Free software built with [Meteor.js](http://meteor.com)
+**Platform for open education** – Free software built with [Meteor.js](https://meteor.com)
 
 An interactive web-platform to provide barrier-free access to education for everyone.
 It is a simple to use open-source tool for local, self-organized knowledge-exchange:
@@ -13,12 +13,12 @@ and as an instrument which simplifies the organization of “peer-to-peer” sha
 <br>
 Beside the longterm public installations, Openki can be used at unconferences, BarCamps as well as in democratic schools and participatory festivals.
 
-[  read on...](http://about.openki.net "our blog")
+[  read on...](https://about.openki.net "our blog")
 <div align="right"> (★ Star us if you like the idea)</div>
 
 - Live: [openki.net](https://openki.net)
-- Demo/Playground: [sandbox.openki.net](http://sandbox.openki.net/?region=Englistan "running here")
-- Concept: [about.openki.net](http://about.openki.net "our blog")
+- Demo/Playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Englistan "running here")
+- Concept: [about.openki.net](https://about.openki.net "our blog")
 - Contact: [dev-core[at]lists.openki.net](mailto:dev-core[_at_]lists.openki.net "write us")
 
 ----
@@ -90,7 +90,7 @@ In case you get weird errors when starting (eg. error 14) try this command:
 
 ### Documentation
 - The technical documentation is here on GitLab in the :book: [Wiki](https://gitlab.com/Openki/Openki/wikis/home)
-- More documentation can be found on our [blog](http://about.openki.net/?page_id=1043)
+- More documentation can be found on our [blog](https://about.openki.net/?page_id=1043)
 
 ### License
 - AGPL – GNU Affero General Public License (for the sourcecode)
