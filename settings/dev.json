@@ -23,7 +23,10 @@
 				, "text": "GitLab"
 				, "title_key": "navigation.footer.codeOnGitLab"
 				}
-			]
+			],
+		"faqLink": "/FAQ",
+		"courseGuideLink": null,
+		"aboutLink": "https://about.openki.net"
 	},
 	"siteEmail": "HMMM@legit.example"
 , "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"}
