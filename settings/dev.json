@@ -1,96 +1,75 @@
-{
-	"testdata": 1,
-	"admins": ["greg", "FeeLing", "IvanZ"],
-	"robots": false,
-	"public": {
-		"siteName": "Hmmm",
-		"siteStage": "DEV",
-		"headerLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" },
-		"discussionLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" },
-		"ogLogo": { "src": "openki_logo_2018.png"},
-		"mailLogo": "mails/openki.png",
-		"pricePolicyEnabled": false,
-		"footerLinks":
-			[	{ "link": "http://about.openki.net/"
-				, "key": "footer.aboutOpenki"
-				, "title_key": "navigation.footer.about.title"
-				}
-			,	{ "link": "/FAQ"
-				, "key": "main.faq_link"
-				, "title_key": "navigation.footer.faq.title"
-				}
-			,	{ "link": "https://gitlab.com/Openki/Openki/"
-				, "text": "GitLab"
-				, "title_key": "navigation.footer.codeOnGitLab"
-				}
-			],
-		"faqLink": "/FAQ",
-		"courseGuideLink": null,
-		"aboutLink": "https://about.openki.net",
-		"categories": {
-			"sports":
-				[
-					"martialarts",
-					"teamsport",
-					"artistry"
-				],
-			"handicraft":
-				[
-					"metalwood",
-					"electronics",
-					"fabric",
-					"gardening",
-					"construction"
-				],
-			"sciences":
-				[
-					"geography",
-					"physics",
-					"medicine",
-					"mathematics",
-					"chemistry",
-					"biology"
-				],
-			"humanities":
-				[
-					"languages",
-					"history",
-					"sociology",
-					"politics",
-					"philosophy",
-					"lawbusiness"
-				],
-			"culture":
-				[
-					"literature",
-					"theatre",
-					"music",
-					"dance",
-					"fineart",
-					"design",
-					"photography",
-					"film",
-					"cooking",
-					"subculture"
-				],
-			"computer":
-				[
-					"internet",
-					"programming",
-					"operating"
-				],
-			"misc":
-				[
-					"♥undefined♥",
-					"experimental",
-					"spiritual",
-					"education",
-					"ecology"
-				]
+{ "admins": ["greg"]
+, "testdata_commented": 0
+, "public":
+	{ "siteName": "SVEB.space"
+	, "siteStage": "Live"
+	, "headerLogo":
+		{ "src": "sveb_logo.png"
+		, "alt": "SVEB / FSEA - Logo"
 		}
-	},
-	"siteEmail": "HMMM@legit.example", 
-	"reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"},
-	"printLog": true,
-	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }
+	, "discussionLogo":
+		{ "src": "OpenkiLogo_quadratisch_2kanal_alpha.png"
+		, "alt": "Openki Logo used as user icon"
+		}
+	, "ogLogo": { "src": "sveb_logo.png"}
+	, "matomo":
+		{ "url": "https://analytics.openki.net/"
+		, "site": 4
+		}
+	, "pricePolicyEnabled": false
+	, "footerLinks":
+		[	{ "link": "https://alice.ch/de/themen/digitales-lernen/sveb.space"
+			, "text": "über den SVEB.space"
+			}
+		,	{ "link": "https://alice.ch/index.php?id=661"
+			, "key": "main.faq_link"
+			, "title_key": "navigation.footer.faq.title"
+			}
+		]
+	, "faqLink": "https://alice.ch/index.php?id=661"
+	, "courseGuideLink": "https://alice.ch/de/themen/digitales-lernen/sveb.space"
+	, "aboutLink": "https://alice.ch/de/themen/digitales-lernen/sveb.space"
+	, "categories":{
+			"didactics":[]
+			,"languages":[]
+			,"history":[]
+			,"sociology":[]
+			,"politics":[]
+			,"management":[]
+			,"philosophy":[]
+			,"law":[]
+			,"marketing":[]
+			,"business":[]
+			,"strategy":[]
+			,"education":[]
+			,"digitallearning":[]
+			,"culture":[]
+			,"sciences":[]
+			,"misc":[]
+		}
+	}
+, "siteEmail": "SVEB.space <notification@mail.sveb.space>"
+, "robots": true
+, "service":
+	{ "facebook": { "appId": "330853451237593", "secret": "0b7e14a999ce6ada5fdc1f5a78ffa488" }
+	, "google": { "clientId": "460177141281-u07u471ekj4jlhstmu1o9u8to8jirk7v.apps.googleusercontent.com", "secret": "jtuOUV29OofCjzFTU61Y0usm"}
+	}
+, "PrerenderIO": { "serviceUrl": "http://localhost:3000/", "token": "live" }
+, "scrub":
+	[ { "name": "scrub client-errors", "comment": "client-side errors may contain sensitive data, drop them quickly"
+	  , "grace": 7, "select": { "tr": "clientError" }, "remove": true
+	  }
+
+	, { "name": "drop resume-logins", "comment": "Resume-Logins are not very interesting"
+	  , "grace": 7, "select": { "tr": "Login.Success", "body": {"type": "resume"}}, "remove": true
+	  }
+
+	, { "name": "scrub logins", "comment": "We want to remember user logins but not the details"
+	  , "grace": 8, "select": { "tr": "Login.Success"}, "unset": [ "connection", "username" ]
+	  }
+
+	, { "name": "drop send-results", "comment": "We keep notification send results for troublehooting"
+	  , "grace": 61, "select": { "tr": "Notification.SendResult"}, "remove": true
+	  }
+	]
 }
