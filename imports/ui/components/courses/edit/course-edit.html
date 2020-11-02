@@ -110,7 +110,9 @@
 											value="1"
 											{{checkCategory}}/>
 										{{> categoryLabel}}
-										<i class="fa fa-angle-down fa-fw {{isChecked}}"></i>
+										{{#if hasSubcategories this}}
+											<i class="fa fa-angle-down fa-fw {{isChecked}}"></i>
+										{{/if}}
 									</label>
 								</div>
 								{{#each availableSubcategories this}}
