@@ -106,6 +106,10 @@ Template.courseEdit.helpers({
 		return Object.keys(Categories);
 	},
 
+	hasSubcategories(category) {
+		return Categories[category].length > 0;
+	},
+
 	availableSubcategories(category) {
 		// Hide if parent categories not selected
 		const selectedCategories = Template.instance().selectedCategories.get();
