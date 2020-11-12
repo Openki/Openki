@@ -77,7 +77,7 @@ deploy_staging:
   trigger: Openki/sysadmin/deploy-config
 
 
-deploy_live:
+deploy_sandbox:
   stage: deploy
   variables:
     SOURCE_BRANCH: master
