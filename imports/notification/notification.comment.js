@@ -110,6 +110,7 @@ notificationComment.Model = function (entry) {
 					comment,
 					commenter,
 					commenterName,
+					siteName: Meteor.settings.public.siteName,
 				}
 			);
 		},
