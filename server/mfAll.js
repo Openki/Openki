@@ -26742,7 +26742,7 @@ mfPkg.syncAll({
       "_id": "xyaevB9sE2CoL8cLR",
       "key": "notification.comment.mail.linktext",
       "lang": "en",
-      "text": "➜ View and answer comment",
+      "text": "➜ See comment on {SITENAME}",
       "mtime": 1526905031386,
       "revisionId": "gWdoMrn9a8wvhYSdS",
       "file": "private/mails/notificationCommentMail.html",
