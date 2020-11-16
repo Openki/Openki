@@ -1,4 +1,4 @@
-import { IsEmail, logo } from '/imports/utils/email-tools';
+import IsEmail, { logo } from '/imports/utils/email-tools';
 
 Accounts.onCreateUser((options, originalUser) => {
 	const user = Object.assign({}, originalUser);
