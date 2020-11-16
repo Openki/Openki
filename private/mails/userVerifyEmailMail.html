@@ -35,19 +35,14 @@
 		</tr>
 		<tr>
 		<td>
-			{{#mf KEY='verifyEmail.text' SITE=siteName NAME=username URL=url}}
-			Hi {NAME}
- 
-			Wer'e happy that you are part of the {SITE} community.
-			
-			You can click this link 
-			{URL}
-			to verify your email address. 
-			This helps us knowing you're a real person. :)
-			
-			Sincerely
-			Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)
-			{{/mf}}
+			{{mf "verifyEmail.gretting" "Hi {NAME}" NAME=username}}<br/>
+			<br/>
+			{{mf "verifyEmail.introduction" "Wer'e happy that you are part of the {SITE} community." SITE=siteName}}<br/>
+			<br/>
+			{{mf "verifyEmail.Verification" "You can click this link {URL} to verify your email address. This helps us knowing you're a real person. :)" URL=url}}<br/>
+			<br/>
+			{{mf "verifyEmail.farewell" "Sincerely"}}<br/>
+			{{mf "verifyEmail.postscript" "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)" SITE=siteName}}
 		</td>
 		</tr>
 		<tr>
@@ -56,7 +51,7 @@
 					<tr>
 						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
 							<a href="{{urlFor 'profile'}}" style="color:#fff !important; text-decoration: underline;">
-								{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}
+								{{mf "verifyEmail.profileLink" "Visit your profile"}}
 							</a>
 						</td>
 					</tr>
