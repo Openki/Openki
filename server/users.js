@@ -89,12 +89,12 @@ Accounts.emailTemplates.verifyEmail.subject = function (user) {
 };
 
 Accounts.emailTemplates.verifyEmail.html = function (user, url) {
-	return  SSR.render("userVerifyEmailMail", {
+	return SSR.render('userVerifyEmailMail', {
 		siteName: Accounts.emailTemplates.siteName,
 		logo: logo(Meteor.settings.public.mailLogo),
 		username: user.username,
-		url: url
-	})
+		url,
+	});
 };
 
 Accounts.emailTemplates.resetPassword.subject = function () {
@@ -110,10 +110,10 @@ Accounts.urls.resetPassword = function (token) {
 };
 
 Accounts.emailTemplates.resetPassword.html = function (user, url) {
-	return  SSR.render("userResetPasswordMail", {
+	return SSR.render('userResetPasswordMail', {
 		siteName: Accounts.emailTemplates.siteName,
 		logo: logo(Meteor.settings.public.mailLogo),
 		username: user.username,
-		url: url,
+		url,
 	});
 };
