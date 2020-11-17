@@ -1,4 +1,4 @@
-import IsEmail from '/imports/utils/email-tools';
+import IsEmail, { logo } from '/imports/utils/email-tools';
 
 Accounts.onCreateUser((options, originalUser) => {
 	const user = Object.assign({}, originalUser);
@@ -75,7 +75,6 @@ Accounts.validateNewUser((user) => {
 	return true;
 });
 
-
 Accounts.config({
 	sendVerificationEmail: true,
 });
@@ -90,23 +89,23 @@ Accounts.emailTemplates.verifyEmail.subject = function (user) {
 };
 
 Accounts.emailTemplates.verifyEmail.text = function (user, url) {
-	return mf('verifyEmail.text',
-		{
-			SITE: Accounts.emailTemplates.siteName,
-			NAME: user.username,
-			URL: url,
-		},
-		'Hi {NAME}\n'
-		+ '\n'
-		+ "We're happy that you are part of the {SITE} community.\n"
-		+ '\n'
-		+ 'You can click this link \n'
-		+ '{URL}\n'
-		+ 'to verify your email address. \n'
-		+ "This helps us knowing you're a real person. :)\n"
-		+ '\n'
-		+ 'Sincerely\n'
-		+ "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)");
+	return `${mf('verifyEmail.gretting', 'Hi {NAME}', { NAME: user.username })}
+	
+${mf('verifyEmail.introduction', "Wer'e happy that you are part of the {SITE} community.", { SITE: Accounts.emailTemplates.siteName })}
+
+${mf('verifyEmail.Verification', "You can click this link {URL} to verify your email address. This helps us knowing you're a real person. :)", { URL: url })}
+
+${mf('verifyEmail.farewell', 'Sincerely')}
+${mf('verifyEmail.postscript', "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)", { SITE: Accounts.emailTemplates.siteName })}`;
+};
+
+Accounts.emailTemplates.verifyEmail.html = function (user, url) {
+	return SSR.render('userVerifyEmailMail', {
+		siteName: Accounts.emailTemplates.siteName,
+		logo: logo(Meteor.settings.public.mailLogo),
+		username: user.username,
+		url,
+	});
 };
 
 Accounts.emailTemplates.resetPassword.subject = function () {
@@ -122,21 +121,21 @@ Accounts.urls.resetPassword = function (token) {
 };
 
 Accounts.emailTemplates.resetPassword.text = function (user, url) {
-	return mf('resetPassword.text',
-		{
-			SITE: Accounts.emailTemplates.siteName,
-			NAME: user.username,
-			URL: url,
-		},
-		'Hi {NAME}\n'
-		+ '\n'
-		+ 'You requested to reset your password on {SITE}.\n'
-		+ '\n'
-		+ 'You can click on \n'
-		+ '{URL}\n'
-		+ 'to reset your password. \n'
-		+ 'If you did not request this message, you can safely delete it.\n'
-		+ '\n'
-		+ 'Regards\n'
-		+ '{SITE} server at your service');
+	return `${mf('resetPassword.gretting', { NAME: user.username }, 'Hi {NAME}')}
+				
+${mf('resetPassword.introduction', { SITE: Accounts.emailTemplates.siteName }, 'You requested to reset your password on {SITE}.')}
+
+${mf('resetPassword.Verification', { URL: url }, 'You can click on {URL} to reset your password. If you did not request this message, you can safely delete it.')}
+
+${mf('resetPassword.farewell', 'Regards')}
+${mf('resetPassword.postscript', { SITE: Accounts.emailTemplates.siteName }, '{SITE} server at your service')}`;
+};
+
+Accounts.emailTemplates.resetPassword.html = function (user, url) {
+	return SSR.render('userResetPasswordMail', {
+		siteName: Accounts.emailTemplates.siteName,
+		logo: logo(Meteor.settings.public.mailLogo),
+		username: user.username,
+		url,
+	});
 };
