@@ -14,6 +14,7 @@ export default IsEmail;
   * path: a file path relative to private/
   */
 export const logo = function (path) {
+	check(path, String);
 	const cid = Random.id();
 	this.url = `cid:${cid}`;
 	this.attachement = {
