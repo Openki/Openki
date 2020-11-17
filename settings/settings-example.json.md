@@ -4,6 +4,8 @@ This file descripts all configurations and customization options. Remove the com
 	"testdata": 1, // Generates test data, is not needed for the productive system
 	"admins": ["greg", "FeeLing", "IvanZ"], // User Administrator Accounts
 	"robots": false, // Tells robots/crawlers whether to index the website or not
+	"siteTitlePrefix": "", // The title to be shown in social media 
+	"siteDefaultImage": "", // The image to be shown in social media 
 	"public": {
 		"siteName": "Openki-clone", 
 		"testWarning": 1, // Shows a banner saying that this is only for testing
