@@ -93,7 +93,8 @@ Accounts.emailTemplates.verifyEmail.text = function (user, url) {
 	
 ${mf('verifyEmail.introduction', "Wer'e happy that you are part of the {SITE} community.", { SITE: Accounts.emailTemplates.siteName })}
 
-${mf('verifyEmail.Verification', "You can click this link {URL} to verify your email address. This helps us knowing you're a real person. :)", { URL: url })}
+${mf('verifyEmail.verification', "You can click this link to verify your email address. This helps us knowing you're a real person. :)")}
+${url}
 
 ${mf('verifyEmail.farewell', 'Sincerely')}
 ${mf('verifyEmail.postscript', "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)", { SITE: Accounts.emailTemplates.siteName })}`;
@@ -125,7 +126,8 @@ Accounts.emailTemplates.resetPassword.text = function (user, url) {
 				
 ${mf('resetPassword.introduction', { SITE: Accounts.emailTemplates.siteName }, 'You requested to reset your password on {SITE}.')}
 
-${mf('resetPassword.Verification', { URL: url }, 'You can click on {URL} to reset your password. If you did not request this message, you can safely delete it.')}
+${mf('resetPassword.verification', 'You can click on this link to reset your password. If you did not request this message, you can safely delete it.')}
+${url}
 
 ${mf('resetPassword.farewell', 'Regards')}
 ${mf('resetPassword.postscript', { SITE: Accounts.emailTemplates.siteName }, '{SITE} server at your service')}`;
