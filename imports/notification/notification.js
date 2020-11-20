@@ -74,6 +74,7 @@ Notification.send = function (entry) {
 
 				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken });
 				vars.siteName = siteName;
+				vars.siteUrl = Meteor.absoluteUrl();
 				vars.locale = userLocale;
 				vars.username = username;
 				vars.logo = logo(Meteor.settings.public.mailLogo);

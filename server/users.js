@@ -103,6 +103,7 @@ ${mf('verifyEmail.postscript', "Your ever so faithful {SITE} living on a virtual
 Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 	return SSR.render('userVerifyEmailMail', {
 		siteName: Accounts.emailTemplates.siteName,
+		siteUrl: Meteor.absoluteUrl(),
 		logo: logo(Meteor.settings.public.mailLogo),
 		username: user.username,
 		url,
@@ -136,6 +137,7 @@ ${mf('resetPassword.postscript', { SITE: Accounts.emailTemplates.siteName }, '{S
 Accounts.emailTemplates.resetPassword.html = function (user, url) {
 	return SSR.render('userResetPasswordMail', {
 		siteName: Accounts.emailTemplates.siteName,
+		siteUrl: Meteor.absoluteUrl(),
 		logo: logo(Meteor.settings.public.mailLogo),
 		username: user.username,
 		url,
