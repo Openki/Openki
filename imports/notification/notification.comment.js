@@ -109,6 +109,7 @@ notificationComment.Model = function (entry) {
 					subject,
 					comment,
 					commenter,
+					commenterLink: Meteor.absoluteUrl(`user/${commenter.id}/${commenterName}`),
 					commenterName,
 					siteName: Meteor.settings.public.siteName,
 				}

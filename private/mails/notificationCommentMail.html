@@ -64,7 +64,7 @@
 
 				{{#if commenter}}
 				    <br/>
-					<a href="/user/{{commenter.id}}/{{commenterName}}">{{mf "notification.comment.mail.commenterlink" '➜ See profile from {USERNAME}' USERNAME=commenterName LOCALE=locale}}</a>
+					<a href="{{commenterLink}}">{{mf "notification.comment.mail.commenterlink" '➜ See profile from {USERNAME}' USERNAME=commenterName LOCALE=locale}}</a>
 				{{/if}}
 			</td>
 		</tr>
