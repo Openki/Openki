@@ -307,7 +307,9 @@ Template.registerFrame.events({
 		}
 
 		instance.busy('registering');
-		Accounts.createUser({ username, password, email }, (err) => {
+		Accounts.createUser({
+			username, password, email, profile: { locale: Session.get('locale') },
+		}, (err) => {
 			instance.busy(false);
 			if (err) {
 				instance.errors.add(err.reason);
