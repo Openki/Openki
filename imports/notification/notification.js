@@ -8,27 +8,14 @@ import notificationComment from '/imports/notification/notification.comment';
 import notificationJoin from '/imports/notification/notification.join';
 import notificationPrivateMessage from '/imports/notification/notification.private-message';
 
+import { logo } from '/imports/utils/email-tools';
+
 const Notification = {};
 
 Notification.Event = notificationEvent;
 Notification.Comment = notificationComment;
 Notification.Join = notificationJoin;
 Notification.PrivateMessage = notificationPrivateMessage;
-
-/** Logo that can be attached to mails
-  *
-  * path: a file path relative to private/
-  */
-const logo = function (path) {
-	const cid = Random.id();
-	this.url = `cid:${cid}`;
-	this.attachement = {
-		cid,
-		path: Assets.absoluteFilePath(path),
-		filename: false,
-	};
-	return this;
-};
 
 /** Handle event notification
   *
@@ -87,6 +74,7 @@ Notification.send = function (entry) {
 
 				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken });
 				vars.siteName = siteName;
+				vars.siteUrl = Meteor.absoluteUrl();
 				vars.locale = userLocale;
 				vars.username = username;
 				vars.logo = logo(Meteor.settings.public.mailLogo);
