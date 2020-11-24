@@ -7228,13 +7228,13 @@ mfPkg.syncAll({
       "revisionId": "yy9RuKZf8wZkMZu89"
     },
     "courseGroupAdd.membersCanNoLongerEditCourse": {
+      "_id": "j4WEYsDLF33w7qKgH",
       "key": "courseGroupAdd.membersCanNoLongerEditCourse",
       "lang": "de",
       "text": "Das Mitglied der Gruppe \"{GROUP}\" kann den Kurs \"{COURSE}\" nicht länger bearbeiten.",
       "ctime": 1605513178514,
       "mtime": 1605513178514,
-      "revisionId": "8AyPFQeucZNLgkhni",
-      "_id": "j4WEYsDLF33w7qKgH"
+      "revisionId": "8AyPFQeucZNLgkhni"
     },
     "courses.creator.defaultMessage": {
       "_id": "oC83Fhk2r4t5QHNj6",
@@ -12147,13 +12147,13 @@ mfPkg.syncAll({
       "revisionId": "CLGdE7TNjbdmEdRAi"
     },
     "_button.registering": {
+      "_id": "nmg2RdjRmeMeFAAsq",
       "key": "_button.registering",
       "lang": "de_ZH",
       "text": "Registrierä",
       "ctime": 1605278315927,
       "mtime": 1605278315927,
-      "revisionId": "q3LW2dAEzRzZE2syX",
-      "_id": "nmg2RdjRmeMeFAAsq"
+      "revisionId": "q3LW2dAEzRzZE2syX"
     },
     "_button.save": {
       "_id": "2BCHf9mLzgMuJD2M9",
@@ -12192,157 +12192,157 @@ mfPkg.syncAll({
       "revisionId": "NS8E4o8a5TPr89B6B"
     },
     "_message.added": {
+      "_id": "9WwkHhstYeN2DJa6M",
       "key": "_message.added",
       "lang": "de_ZH",
       "text": "dezuä gfüägt",
       "ctime": 1605278641522,
       "mtime": 1605278641522,
-      "revisionId": "QDfXSExh7PupotPfz",
-      "_id": "9WwkHhstYeN2DJa6M"
+      "revisionId": "QDfXSExh7PupotPfz"
     },
     "_message.removed": {
+      "_id": "5i4zSPr6s6ErpcuD3",
       "key": "_message.removed",
       "lang": "de_ZH",
       "text": "entfärnt",
       "ctime": 1605278651825,
       "mtime": 1605278651825,
-      "revisionId": "Qh2cNXQKMhAJi8CEt",
-      "_id": "5i4zSPr6s6ErpcuD3"
+      "revisionId": "Qh2cNXQKMhAJi8CEt"
     },
     "_message.saved": {
+      "_id": "Sjt59c4mZdagyu7qs",
       "key": "_message.saved",
       "lang": "de_ZH",
       "text": "gspeichäred",
       "ctime": 1605512436413,
       "mtime": 1605512436413,
-      "revisionId": "tqhjoL6Cz62qAGRDv",
-      "_id": "Sjt59c4mZdagyu7qs"
+      "revisionId": "tqhjoL6Cz62qAGRDv"
     },
     "_option.off": {
+      "_id": "bFzA4WQaAm9cf6a2Y",
       "key": "_option.off",
       "lang": "de_ZH",
       "text": "ab",
       "ctime": 1605278661306,
       "mtime": 1605278661306,
-      "revisionId": "PCBS7KSGh7WE6fSAy",
-      "_id": "bFzA4WQaAm9cf6a2Y"
+      "revisionId": "PCBS7KSGh7WE6fSAy"
     },
     "_option.on": {
+      "_id": "zxcEnaygXFWRor9q3",
       "key": "_option.on",
       "lang": "de_ZH",
       "text": "ah",
       "ctime": 1605278664142,
       "mtime": 1605278664142,
-      "revisionId": "ZTiTt4xGGrPWaxoZs",
-      "_id": "zxcEnaygXFWRor9q3"
+      "revisionId": "ZTiTt4xGGrPWaxoZs"
     },
     "_selection.pleaseSelect": {
+      "_id": "NtjxkTmFNC5BGwKuo",
       "key": "_selection.pleaseSelect",
       "lang": "de_ZH",
       "text": "Bitte uswählä",
       "ctime": 1605278674439,
       "mtime": 1605278674439,
-      "revisionId": "xaYvAvC9aqJeY7zv6",
-      "_id": "NtjxkTmFNC5BGwKuo"
+      "revisionId": "xaYvAvC9aqJeY7zv6"
     },
     "_serverError": {
+      "_id": "RxhZyb7oo5mD5WGFx",
       "key": "_serverError",
       "lang": "de_ZH",
       "text": "Ups, da hät öpis nöd funktioniert... Äntschuldigung",
       "ctime": 1605278698851,
       "mtime": 1605278698851,
-      "revisionId": "FkGYSx9G4Ck2xAppy",
-      "_id": "RxhZyb7oo5mD5WGFx"
+      "revisionId": "FkGYSx9G4Ck2xAppy"
     },
     "adminPanel.backToDashboard": {
+      "_id": "SZwM8fAjzD3rM6ipC",
       "key": "adminPanel.backToDashboard",
       "lang": "de_ZH",
       "text": "Gahn zrugg zum Täschbord",
       "ctime": 1605618979942,
       "mtime": 1605618979942,
-      "revisionId": "vQJASYbPJv5MkvX26",
-      "_id": "SZwM8fAjzD3rM6ipC"
+      "revisionId": "vQJASYbPJv5MkvX26"
     },
     "adminPanel.pleaseLogin": {
+      "_id": "SEc2CtmyRyBPSgGkm",
       "key": "adminPanel.pleaseLogin",
       "lang": "de_ZH",
       "text": "Nur für Administratorä",
       "ctime": 1605278718413,
       "mtime": 1605278718413,
-      "revisionId": "kvavmsEuDCNvRq9PD",
-      "_id": "SEc2CtmyRyBPSgGkm"
+      "revisionId": "kvavmsEuDCNvRq9PD"
     },
     "backToKiosk": {
+      "_id": "kkDvGrgpPD9HqbatG",
       "key": "backToKiosk",
       "lang": "de_ZH",
       "text": "zrugg zude Übersicht",
       "ctime": 1605278733310,
       "mtime": 1605278733310,
-      "revisionId": "tQmMRTzhbkMmezbPA",
-      "_id": "kkDvGrgpPD9HqbatG"
+      "revisionId": "tQmMRTzhbkMmezbPA"
     },
     "backToLink.backTo": {
+      "_id": "GjM2hXZoLP5PxvYtR",
       "key": "backToLink.backTo",
       "lang": "de_ZH",
       "text": "Zrugg zu",
       "ctime": 1605278737515,
       "mtime": 1605278737515,
-      "revisionId": "GgCmujY6jRg9nTjGb",
-      "_id": "GjM2hXZoLP5PxvYtR"
+      "revisionId": "GgCmujY6jRg9nTjGb"
     },
     "calendar.next.month.long": {
+      "_id": "A6WgfJ3AzgPr3wc5k",
       "key": "calendar.next.month.long",
       "lang": "de_ZH",
       "text": "Gahn zum nägste Monet",
       "ctime": 1605278748298,
       "mtime": 1605278748298,
-      "revisionId": "xhFdhGMyZ47xRcDu8",
-      "_id": "A6WgfJ3AzgPr3wc5k"
+      "revisionId": "xhFdhGMyZ47xRcDu8"
     },
     "calendar.next.month.short": {
+      "_id": "EBuTYa9fWpbKSwwZc",
       "key": "calendar.next.month.short",
       "lang": "de_ZH",
       "text": "Nägst Monet",
       "ctime": 1605278757308,
       "mtime": 1605278757308,
-      "revisionId": "CC58vbDGFRBqMAeke",
-      "_id": "EBuTYa9fWpbKSwwZc"
+      "revisionId": "CC58vbDGFRBqMAeke"
     },
     "calendar.next.week.long": {
+      "_id": "MtooajNusG7n9jfLn",
       "key": "calendar.next.week.long",
       "lang": "de_ZH",
       "text": "Gahn zude nägste Wuche",
       "ctime": 1605278766410,
       "mtime": 1605278766410,
-      "revisionId": "gfzwhJJuCufrsnjmb",
-      "_id": "MtooajNusG7n9jfLn"
+      "revisionId": "gfzwhJJuCufrsnjmb"
     },
     "calendar.next.week.short": {
+      "_id": "AArq8nDAFkZjSR2pX",
       "key": "calendar.next.week.short",
       "lang": "de_ZH",
       "text": "nägst Wuche",
       "ctime": 1605512469918,
       "mtime": 1605512469918,
-      "revisionId": "XmgtWuZPwJCuY2PZF",
-      "_id": "AArq8nDAFkZjSR2pX"
+      "revisionId": "XmgtWuZPwJCuY2PZF"
     },
     "calendar.next.year.long": {
+      "_id": "nGmZ68gb6M5xAiRnN",
       "key": "calendar.next.year.long",
       "lang": "de_ZH",
       "text": "Gahn zum nägste Jahr",
       "ctime": 1605278779771,
       "mtime": 1605278779771,
-      "revisionId": "F9mkfKtyZiaaEA6BA",
-      "_id": "nGmZ68gb6M5xAiRnN"
+      "revisionId": "F9mkfKtyZiaaEA6BA"
     },
     "calendar.next.year.short": {
+      "_id": "JsYZGJgi7juNBrRnt",
       "key": "calendar.next.year.short",
       "lang": "de_ZH",
       "text": "Nägst Jahr",
       "ctime": 1605278785665,
       "mtime": 1605278785665,
-      "revisionId": "KfejnJWbHAovH2iaF",
-      "_id": "JsYZGJgi7juNBrRnt"
+      "revisionId": "KfejnJWbHAovH2iaF"
     },
     "calendar.noCoursesThisDay": {
       "_id": "rh9nmHMxuPT5GhpRQ",
@@ -12354,49 +12354,49 @@ mfPkg.syncAll({
       "revisionId": "DBHjbJ7EFo4JxPo9B"
     },
     "calendar.previous.month.long": {
+      "_id": "m5zNYXPQRX72kBTPG",
       "key": "calendar.previous.month.long",
       "lang": "de_ZH",
       "text": "Gahn zum letschte Monet",
       "ctime": 1605278803802,
       "mtime": 1605278803802,
-      "revisionId": "frEo3W4PjCX52haor",
-      "_id": "m5zNYXPQRX72kBTPG"
+      "revisionId": "frEo3W4PjCX52haor"
     },
     "calendar.previous.month.short": {
+      "_id": "EeWt8f87WvQZ92D5x",
       "key": "calendar.previous.month.short",
       "lang": "de_ZH",
       "text": "Letscht Monet",
       "ctime": 1605278817352,
       "mtime": 1605278817352,
-      "revisionId": "W9w3MmJZpK7p4doHv",
-      "_id": "EeWt8f87WvQZ92D5x"
+      "revisionId": "W9w3MmJZpK7p4doHv"
     },
     "calendar.previous.week.long": {
+      "_id": "CHRMXEhPFTLbvkBdw",
       "key": "calendar.previous.week.long",
       "lang": "de_ZH",
       "text": "Gahn zude letschte Wuche",
       "ctime": 1605278900164,
       "mtime": 1605278907744,
-      "revisionId": "LcsJuPeKcQzKXBA8o",
-      "_id": "CHRMXEhPFTLbvkBdw"
+      "revisionId": "LcsJuPeKcQzKXBA8o"
     },
     "calendar.previous.week.short": {
+      "_id": "3gMwEujYrtawv3Ms5",
       "key": "calendar.previous.week.short",
       "lang": "de_ZH",
       "text": "Letscht Wuche",
       "ctime": 1605278916223,
       "mtime": 1605278916223,
-      "revisionId": "2v2SLZYcHM2RSCvN5",
-      "_id": "3gMwEujYrtawv3Ms5"
+      "revisionId": "2v2SLZYcHM2RSCvN5"
     },
     "calendar.previous.year.long": {
+      "_id": "qDkcQGaCmLx5TRbrA",
       "key": "calendar.previous.year.long",
       "lang": "de_ZH",
       "text": "Gahn zum letschte Jahr",
       "ctime": 1605278987950,
       "mtime": 1605278987950,
-      "revisionId": "btRFDCdvqZHtBhi3c",
-      "_id": "qDkcQGaCmLx5TRbrA"
+      "revisionId": "btRFDCdvqZHtBhi3c"
     },
     "calendar.previous.year.short": {
       "_id": "efQjxfAhSZaECLDv6",
@@ -12525,22 +12525,22 @@ mfPkg.syncAll({
       "revisionId": "BrTDhzyWe7a2hqipz"
     },
     "category.ecology": {
+      "_id": "A8mSH8NpQMxsmQZtW",
       "key": "category.ecology",
       "lang": "de_ZH",
       "text": "Ökologie",
       "ctime": 1605278998485,
       "mtime": 1605278998485,
-      "revisionId": "ro5ofrici4SDuaf24",
-      "_id": "A8mSH8NpQMxsmQZtW"
+      "revisionId": "ro5ofrici4SDuaf24"
     },
     "category.education": {
+      "_id": "Nyh6DWGSdiAZyZ373",
       "key": "category.education",
       "lang": "de_ZH",
       "text": "Bildig",
       "ctime": 1605279010712,
       "mtime": 1605279010712,
-      "revisionId": "XZLakwCrLgkbSaooS",
-      "_id": "Nyh6DWGSdiAZyZ373"
+      "revisionId": "XZLakwCrLgkbSaooS"
     },
     "category.electronics": {
       "_id": "S87s8AWyMcnw7Ebfj",
@@ -12895,13 +12895,13 @@ mfPkg.syncAll({
       "revisionId": "hmhEti3NdGC5ivanH"
     },
     "course.compact.interestedCount": {
+      "_id": "mum4F3MuAC72XmEhJ",
       "key": "course.compact.interestedCount",
       "lang": "de_ZH",
       "text": "{NUM, plural, =0 {Niemer isch} eini {Ei Person isch} anderi {# Personä sind}} interessiärt",
       "ctime": 1605619094129,
       "mtime": 1605619094129,
-      "revisionId": "jqGM5jwR4astYwj9w",
-      "_id": "mum4F3MuAC72XmEhJ"
+      "revisionId": "jqGM5jwR4astYwj9w"
     },
     "course.compact.interestedCountOwn": {
       "_id": "qpwf77qfsSKdRFryc",
@@ -12913,22 +12913,22 @@ mfPkg.syncAll({
       "revisionId": "F8CdfHqYMHw8bT4GS"
     },
     "course.compact.membersCount": {
+      "_id": "PvBMj2NnHKNqRCbpt",
       "key": "course.compact.membersCount",
       "lang": "de_ZH",
       "text": "Has {NUM, plural, =0 {kei Teilnähmer} eine {ein Teilnähmer} anderi {# Teilnähmer}}",
       "ctime": 1605619133769,
       "mtime": 1605619133769,
-      "revisionId": "tc6N9TWm9PipzLtH4",
-      "_id": "PvBMj2NnHKNqRCbpt"
+      "revisionId": "tc6N9TWm9PipzLtH4"
     },
     "course.compact.youAreInterested": {
+      "_id": "4hgv3hfDTGtauerHP",
       "key": "course.compact.youAreInterested",
       "lang": "de_ZH",
       "text": "Du bisch interessiert",
       "ctime": 1605279029576,
       "mtime": 1605279029576,
-      "revisionId": "L9NtEQDzYBhQbEzNS",
-      "_id": "4hgv3hfDTGtauerHP"
+      "revisionId": "L9NtEQDzYBhQbEzNS"
     },
     "course.createEventInfo": {
       "_id": "EDKSHuFoofKQjrK2m",
@@ -12940,22 +12940,22 @@ mfPkg.syncAll({
       "revisionId": "2BxZcoAnhu3FqmEsa"
     },
     "course.delete.confirm.button": {
+      "_id": "pnhZFQEikcyG4h2fB",
       "key": "course.delete.confirm.button",
       "lang": "de_ZH",
       "text": "Lösch dä Kurs und all sini Verastaltigä",
       "ctime": 1605279061673,
       "mtime": 1605279061673,
-      "revisionId": "AJFF4nPqzFKzyjGYx",
-      "_id": "pnhZFQEikcyG4h2fB"
+      "revisionId": "AJFF4nPqzFKzyjGYx"
     },
     "course.delete.confirm.button.busy": {
+      "_id": "fBbvJ3ezJJsWJvhJL",
       "key": "course.delete.confirm.button.busy",
       "lang": "de_ZH",
       "text": "Dä Kurs lösche...",
       "ctime": 1605279080889,
       "mtime": 1605279080889,
-      "revisionId": "qcYsuXuZoZLmyF7H2",
-      "_id": "fBbvJ3ezJJsWJvhJL"
+      "revisionId": "qcYsuXuZoZLmyF7H2"
     },
     "course.description.placeholder": {
       "_id": "m8QhyqCjWhpS8Ys8h",
@@ -12976,76 +12976,76 @@ mfPkg.syncAll({
       "revisionId": "TTeTDi2q4dRAGBDTi"
     },
     "course.detail.remove.other.team": {
+      "_id": "F84v8iEQpThvt8J7H",
       "key": "course.detail.remove.other.team",
       "lang": "de_ZH",
       "text": "Wötsch die Person würkli usem team use rüehre?",
       "ctime": 1605279099357,
       "mtime": 1605279099357,
-      "revisionId": "o8BRY84f2GaJrh4SX",
-      "_id": "F84v8iEQpThvt8J7H"
+      "revisionId": "o8BRY84f2GaJrh4SX"
     },
     "course.detail.remove.yourself.team": {
+      "_id": "mXfTaQPzLJLX8btCK",
       "key": "course.detail.remove.yourself.team",
       "lang": "de_ZH",
       "text": "Wetsch di sälber usem Team löschä? Nume es anders Teammitglied chan di wieder dezue tue",
       "ctime": 1605512544826,
       "mtime": 1605512552092,
-      "revisionId": "23dPXsy89SbjESmSR",
-      "_id": "mXfTaQPzLJLX8btCK"
+      "revisionId": "23dPXsy89SbjESmSR"
     },
     "course.details.eventsLoadingHeader": {
+      "_id": "4oY3MCk8t2mi2km9Y",
       "key": "course.details.eventsLoadingHeader",
       "lang": "de_ZH",
       "text": "Verastaltige",
       "ctime": 1605279106429,
       "mtime": 1605279106429,
-      "revisionId": "LggHmtpPJo52ikJSX",
-      "_id": "4oY3MCk8t2mi2km9Y"
+      "revisionId": "LggHmtpPJo52ikJSX"
     },
     "course.details.is-proposalTag": {
+      "_id": "6Y7c5EysjwoHobumB",
       "key": "course.details.is-proposalTag",
       "lang": "de_ZH",
       "text": "Vorschlag",
       "ctime": 1605512560518,
       "mtime": 1605512560518,
-      "revisionId": "or2ZbCkpYtmoyMpNj",
-      "_id": "6Y7c5EysjwoHobumB"
+      "revisionId": "or2ZbCkpYtmoyMpNj"
     },
     "course.details.members.title": {
+      "_id": "k2e6cEPk4xaKPugwm",
       "key": "course.details.members.title",
       "lang": "de_ZH",
       "text": "{NUM, plural,\n\t\t\t\t\t=0 {kei co-Lernendi bisher}\n\t\t\t\t\tone {1 Co-Lernendä}\n\t\t\t\t\tother {# Co-Lerndendi}\n\t\t\t\t}",
       "ctime": 1605619210495,
       "mtime": 1605619210495,
-      "revisionId": "7g6i5fzzmwxwfLMAQ",
-      "_id": "k2e6cEPk4xaKPugwm"
+      "revisionId": "7g6i5fzzmwxwfLMAQ"
     },
     "course.details.noEvents": {
+      "_id": "rhdjPLfvpRgrXFPCi",
       "key": "course.details.noEvents",
       "lang": "de_ZH",
       "text": "Dä Kurs hät kei Verastaltige",
       "ctime": 1605512573793,
       "mtime": 1605512573793,
-      "revisionId": "yEHgaxk95udNsYGav",
-      "_id": "rhdjPLfvpRgrXFPCi"
+      "revisionId": "yEHgaxk95udNsYGav"
     },
     "course.details.removeTeam.others.header": {
+      "_id": "DRWGznZXQ6XDevFWt",
       "key": "course.details.removeTeam.others.header",
       "lang": "de_ZH",
       "text": "Teammitglied entfärne",
       "ctime": 1605512753794,
       "mtime": 1605512753794,
-      "revisionId": "bv5CRQpWp6K2TDfCt",
-      "_id": "DRWGznZXQ6XDevFWt"
+      "revisionId": "bv5CRQpWp6K2TDfCt"
     },
     "course.details.removeTeam.self.header": {
+      "_id": "wM3ssbEQWqRnjyyAw",
       "key": "course.details.removeTeam.self.header",
       "lang": "de_ZH",
       "text": "Entfärn dich sälber usem Team",
       "ctime": 1605512770070,
       "mtime": 1605512770070,
-      "revisionId": "CGtCPsGsdMjggFgsp",
-      "_id": "wM3ssbEQWqRnjyyAw"
+      "revisionId": "CGtCPsGsdMjggFgsp"
     },
     "course.details.repl_menu_btn": {
       "_id": "xx6krEaK5Nba8sKQL",
@@ -13104,13 +13104,13 @@ mfPkg.syncAll({
       "revisionId": "6hTKn6sPdJewfdqbR"
     },
     "course.discussion.deleteCommentButton": {
+      "_id": "t7SLsFzTmkcBWLZLJ",
       "key": "course.discussion.deleteCommentButton",
       "lang": "de_ZH",
       "text": "Lösche",
       "ctime": 1605512775186,
       "mtime": 1605512775187,
-      "revisionId": "8CiSMjxyhNecjHQRu",
-      "_id": "t7SLsFzTmkcBWLZLJ"
+      "revisionId": "8CiSMjxyhNecjHQRu"
     },
     "course.discussion.notifyAll": {
       "_id": "oaQarSF4YZkPCH7yp",
@@ -13170,31 +13170,31 @@ mfPkg.syncAll({
       "fuzzy": true
     },
     "course.discussions.showAllComments": {
+      "_id": "qemPm9W3MDhY6vyu2",
       "key": "course.discussions.showAllComments",
       "lang": "de_ZH",
       "text": "Zeig alli {NUM} Kommentär",
       "ctime": 1605512800304,
       "mtime": 1605512800304,
-      "revisionId": "pq2RPmCEimf7fmKPk",
-      "_id": "qemPm9W3MDhY6vyu2"
+      "revisionId": "pq2RPmCEimf7fmKPk"
     },
     "course.discussions.showPreviousReplies": {
+      "_id": "fE72ryE7jSsgWB4JF",
       "key": "course.discussions.showPreviousReplies",
       "lang": "de_ZH",
       "text": "Zeig alli vorherige Kommentär",
       "ctime": 1605512892188,
       "mtime": 1605512892188,
-      "revisionId": "PFK7SkoMHne2zWqC8",
-      "_id": "fE72ryE7jSsgWB4JF"
+      "revisionId": "PFK7SkoMHne2zWqC8"
     },
     "course.docs.noFiles": {
+      "_id": "6Lb5uMP4dAjmwnYZF",
       "key": "course.docs.noFiles",
       "lang": "de_ZH",
       "text": "Dä Kurs hät kei ahghänkti Dokumänt",
       "ctime": 1605512904693,
       "mtime": 1605512910308,
-      "revisionId": "wLLxBGqMcAMGrxHLA",
-      "_id": "6Lb5uMP4dAjmwnYZF"
+      "revisionId": "wLLxBGqMcAMGrxHLA"
     },
     "course.download_cal": {
       "_id": "tZfBuxGtER2FjZZjw",
@@ -13256,22 +13256,22 @@ mfPkg.syncAll({
       "revisionId": "NjCyAaRQ5hm59Bs4z"
     },
     "course.edit.intern": {
+      "_id": "5zSfYSjaw6GBW2s8D",
       "key": "course.edit.intern",
       "lang": "de_ZH",
       "text": "Ufde Hauptsiitä verstecke",
       "ctime": 1605619239602,
       "mtime": 1605619239602,
-      "revisionId": "w6L79i9aX7rHmYgJv",
-      "_id": "5zSfYSjaw6GBW2s8D"
+      "revisionId": "w6L79i9aX7rHmYgJv"
     },
     "course.edit.internDescription": {
+      "_id": "7XwwfEFmrw4pMAbek",
       "key": "course.edit.internDescription",
       "lang": "de_ZH",
       "text": "Nume zeigä wänn'd uf Kurs-Gruppene luegsch",
       "ctime": 1605619285337,
       "mtime": 1605619285337,
-      "revisionId": "7Gp4Lhqr3eZyqyi8f",
-      "_id": "7XwwfEFmrw4pMAbek"
+      "revisionId": "7Gp4Lhqr3eZyqyi8f"
     },
     "course.edit.linkToCourse": {
       "_id": "KJuiQcaqk4bMXeoi9",
@@ -13310,13 +13310,13 @@ mfPkg.syncAll({
       "revisionId": "xK3JadsAqbTQ26Nog"
     },
     "course.edit.proposeInGroup": {
+      "_id": "78heN2HpmbsvX9Kmn",
       "key": "course.edit.proposeInGroup",
       "lang": "de_ZH",
       "text": "Schlahn en noie Kurs vor ide Gruppä {GROUP}",
       "ctime": 1605512954550,
       "mtime": 1605512954550,
-      "revisionId": "AL5Pf8GNqu84PEYbG",
-      "_id": "78heN2HpmbsvX9Kmn"
+      "revisionId": "AL5Pf8GNqu84PEYbG"
     },
     "course.edit.region": {
       "_id": "xuBHRjXF7BWTsG8n3",
@@ -13358,13 +13358,13 @@ mfPkg.syncAll({
       "fuzzy": true
     },
     "course.event.edit.AddMessage": {
+      "_id": "djHBSy4cJ9CtEe2Dz",
       "key": "course.event.edit.AddMessage",
       "lang": "de_ZH",
       "text": "Nachricht hinzuefüege",
       "ctime": 1605279128012,
       "mtime": 1605279128012,
-      "revisionId": "aHdLhyXXexPiLrf6Z",
-      "_id": "djHBSy4cJ9CtEe2Dz"
+      "revisionId": "aHdLhyXXexPiLrf6Z"
     },
     "course.event.edit.add": {
       "_id": "gREhysACMQdc6jbeD",
@@ -13385,13 +13385,13 @@ mfPkg.syncAll({
       "revisionId": "AxuSrNoRfh72Zw5rG"
     },
     "course.event.edit.deleteEvents": {
+      "_id": "yf8S2HMthaFnoKn5E",
       "key": "course.event.edit.deleteEvents",
       "lang": "de_ZH",
       "text": "Verastaltige lösche",
       "ctime": 1605279139416,
       "mtime": 1605279139416,
-      "revisionId": "JmpPYJ2yyfCkA5hBk",
-      "_id": "yf8S2HMthaFnoKn5E"
+      "revisionId": "JmpPYJ2yyfCkA5hBk"
     },
     "course.event.edit.desc": {
       "_id": "nGogm3C6C2bMA2CNb",
@@ -13488,13 +13488,13 @@ mfPkg.syncAll({
       "fuzzy": true
     },
     "course.events.futureListLink": {
+      "_id": "H5xwva2hyqfRJFc4J",
       "key": "course.events.futureListLink",
       "lang": "de_ZH",
       "text": "chömendi Ahläss",
       "ctime": 1605279148879,
       "mtime": 1605279148879,
-      "revisionId": "djjG8dyMNATsor45s",
-      "_id": "H5xwva2hyqfRJFc4J"
+      "revisionId": "djjG8dyMNATsor45s"
     },
     "course.events.ongoinglist": {
       "_id": "mPYwMbzCvfkAsJwe3",
@@ -13524,13 +13524,13 @@ mfPkg.syncAll({
       "revisionId": "bcykmQTFFzzGXfXAY"
     },
     "course.events.showAllEvents": {
+      "_id": "rygARfEDRBMWKdr5X",
       "key": "course.events.showAllEvents",
       "lang": "de_ZH",
       "text": "Zeig alli Veraschtaltige",
       "ctime": 1605512970748,
       "mtime": 1605512970748,
-      "revisionId": "gKZzS9WkdydCmZLyk",
-      "_id": "rygARfEDRBMWKdr5X"
+      "revisionId": "gKZzS9WkdydCmZLyk"
     },
     "course.events.upcominglist": {
       "_id": "bzub6XW5zsSeyPk3v",
@@ -13542,22 +13542,22 @@ mfPkg.syncAll({
       "revisionId": "Znd2eKjTgresKp9hr"
     },
     "course.group.addOrgText": {
+      "_id": "WmbQb6eby9HTNPs2y",
       "key": "course.group.addOrgText",
       "lang": "de_ZH",
       "text": "Gib d Rächt zum bearbeite",
       "ctime": 1605619322369,
       "mtime": 1605619329400,
-      "revisionId": "M5Lk3maC4C2G55jt9",
-      "_id": "WmbQb6eby9HTNPs2y"
+      "revisionId": "M5Lk3maC4C2G55jt9"
     },
     "course.group.addText": {
+      "_id": "5KwFPAZAS8AnqQz3q",
       "key": "course.group.addText",
       "lang": "de_ZH",
       "text": "verlink ä Gruppä",
       "ctime": 1605619309865,
       "mtime": 1605619309865,
-      "revisionId": "MStBj6Zuwjv5TuQqh",
-      "_id": "5KwFPAZAS8AnqQz3q"
+      "revisionId": "MStBj6Zuwjv5TuQqh"
     },
     "course.group.confimOrgButton": {
       "_id": "ZtMuL3i7movNjehhJ",
@@ -13578,13 +13578,13 @@ mfPkg.syncAll({
       "revisionId": "u9jTXHmbf6a6gjY7w"
     },
     "course.group.confirmOrgNotes": {
+      "_id": "J2y4Dx2sWyY9M7CFn",
       "key": "course.group.confirmOrgNotes",
       "lang": "de_ZH",
       "text": "Alli Teilnähmer vode Gruppä chönd de Kurs bearbeite und noii Veraschtaltige erstelle.",
       "ctime": 1605619370060,
       "mtime": 1605619370060,
-      "revisionId": "XB24ZCddb6PN5jYJ4",
-      "_id": "J2y4Dx2sWyY9M7CFn"
+      "revisionId": "XB24ZCddb6PN5jYJ4"
     },
     "course.group.remove": {
       "_id": "3MLGrYWYfnbKqudbb",
@@ -13596,13 +13596,13 @@ mfPkg.syncAll({
       "revisionId": "2RZW3LisztQwBgcZw"
     },
     "course.group.removeOrgText": {
+      "_id": "9FRixegcPRrChhzAK",
       "key": "course.group.removeOrgText",
       "lang": "de_ZH",
       "text": "D Bearbeitigsrächt wägneh",
       "ctime": 1605619466683,
       "mtime": 1605619466683,
-      "revisionId": "cvrba2EmFu4xCAnK6",
-      "_id": "9FRixegcPRrChhzAK"
+      "revisionId": "cvrba2EmFu4xCAnK6"
     },
     "course.history.created_by": {
       "_id": "7nyTDCYhvHYxBxh4o",
@@ -31071,13 +31071,13 @@ mfPkg.syncAll({
       "revisionId": "Es3JBRMP8hhCfhnFR"
     },
     "course.compact.interestedCountOwn": {
+      "_id": "Qm8PZ2wcfNbwEoKEy",
       "key": "course.compact.interestedCountOwn",
       "lang": "es",
       "text": "Y tu eres uno de esos",
       "ctime": 1605623945050,
       "mtime": 1605623945051,
-      "revisionId": "PvP52Ewf7CRh26Lea",
-      "_id": "Qm8PZ2wcfNbwEoKEy"
+      "revisionId": "PvP52Ewf7CRh26Lea"
     },
     "course.description.placeholder": {
       "_id": "6dBneiiN8DYGK74hZ",
@@ -53419,6 +53419,6 @@ mfPkg.syncAll({
     }
   }
 }, {
-  "exportedAt": 1605869923030,
+  "exportedAt": 1606237051940,
   "updatedAt": 1605623945051
 });
