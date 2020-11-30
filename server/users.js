@@ -106,7 +106,7 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 };
 
 Accounts.emailTemplates.resetPassword.subject = function () {
-	return mf('resetPassword.subject', { SITE: Accounts.emailTemplates.siteName, }, 'Reset your password on {SITE}');
+	return mf('resetPassword.subject', { SITE: Accounts.emailTemplates.siteName }, 'Reset your password on {SITE}');
 };
 
 Accounts.urls.resetPassword = function (token) {
