@@ -45,7 +45,7 @@ const regions = [{
 	_id: '987sdfgnDSDf238dd',
 	tz: 'Europe/Zurich',
 	custom: {
-		siteName: 'Zoomland',
+		siteName: 'Jitsiland',
 		siteStage: 'Online',
 		headerLogo: {
 			src: 'sveb_logo.png',

@@ -77,7 +77,7 @@ Notification.send = function (entry) {
 				vars.siteUrl = Meteor.absoluteUrl();
 				vars.locale = userLocale;
 				vars.username = username;
-				vars.logo = logo(Meteor.settings.public.mailLogo);
+				vars.logo = logo(vars.customMailLogo || Meteor.settings.public.mailLogo);
 
 				let message = SSR.render(model.template, vars);
 

@@ -99,6 +99,11 @@ notificationEvent.Model = function (entry) {
 				venueLine = [venue.name, venue.address].filter(Boolean).join(', ');
 			}
 
+			let siteName = Meteor.settings.public.siteName;
+			if (region.custom && region.custom.siteName) {
+				siteName = region.custom.siteName;
+			}
+
 			return (
 				{
 					event,
@@ -115,6 +120,7 @@ notificationEvent.Model = function (entry) {
 					new: entry.body.new,
 					subject,
 					additionalMessage: entry.body.additionalMessage,
+					customSiteName: siteName,
 				}
 			);
 		},
