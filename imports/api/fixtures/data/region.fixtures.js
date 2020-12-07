@@ -40,6 +40,11 @@ const regions = [{
 	region: 'TG',
 	loc: [47.556, 8.8965],
 	tz: 'Europe/Zurich',
+}, {
+	name: 'Online',
+	_id: '987sdfgnDSDf238dd',
+	tz: 'Europe/Zurich',
+	siteName: 'Zoomland',
 },
 ];
 export default regions;
