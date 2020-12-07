@@ -11,7 +11,14 @@ import { Mongo } from 'meteor/mongo';
 // futureEventCount -> Number of future events in that region, calculated field
 //                     (does not count internal courses)
 // featuredGroup    -> ID of featured group
-// siteName         -> String (Optional)
+// custom           -> {
+//      siteName: String,
+//      siteStage: String,
+//      headerLogo: {
+//            src: String,
+//            alt: String,
+//     },
+//    } (Optional)
 // ===========================
 
 export default Regions = new Mongo.Collection('Regions');
@@ -19,6 +26,26 @@ if (Meteor.isServer) {
 	Regions._ensureIndex({ loc: '2dsphere' });
 }
 
+/**
+ * Returns the region from the db based on the session setting.
+ * @returns {{
+	_id: string
+	name: string
+	loc?:  { type: Point, coordinates: [long, lat] }
+	timeZone: string
+	courseCount: number
+	futureEventCount: number
+	featuredGroup: string
+	custom?: {
+		siteName: string,
+			siteStage: string,
+				headerLogo: {
+			src: string,
+				alt: string,
+		},
+	}
+}}
+ */
 Regions.currentRegion = function () {
 	if (Session.get('region')) {
 		return Regions.findOne(Session.get('region'));

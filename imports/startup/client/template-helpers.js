@@ -6,8 +6,10 @@ import Regions from '/imports/api/regions/regions';
 const helpers = {
 	siteName() {
 		const currentRegion = Regions.currentRegion();
-		if (currentRegion && currentRegion.siteName) {
-			return currentRegion.siteName;
+		if (currentRegion
+			&& currentRegion.custom
+			&& currentRegion.custom.siteName) {
+			return currentRegion.custom.siteName;
 		}
 
 		if (Meteor.settings.public && Meteor.settings.public.siteName) {

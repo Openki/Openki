@@ -44,7 +44,14 @@ const regions = [{
 	name: 'Online',
 	_id: '987sdfgnDSDf238dd',
 	tz: 'Europe/Zurich',
-	siteName: 'Zoomland',
+	custom: {
+		siteName: 'Zoomland',
+		siteStage: 'Online',
+		headerLogo: {
+			src: 'sveb_logo.png',
+			alt: 'Online Logo',
+		},
+	},
 },
 ];
 export default regions;
