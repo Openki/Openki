@@ -21,8 +21,7 @@ if (Meteor.isServer) {
 
 Regions.currentRegion = function () {
 	if (Session.get('region')) {
-		const currentRegion = Regions.findOne(Session.get('region'));
-		return currentRegion;
+		return Regions.findOne(Session.get('region'));
 	}
 	return undefined;
 };
