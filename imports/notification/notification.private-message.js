@@ -92,13 +92,16 @@ notificationPrivateMessage.Model = function (entry) {
 			// Find out whether this is the copy sent to the sender.
 			const senderCopy = sender._id === actualRecipient._id;
 
-			let siteName = Meteor.settings.public.siteName;
+			let siteName;
+			let mailLogo;
 			if (sender.region) {
 				const region = Regions.findOne(sender.region);
-				if (region && region.custom && region.custom.siteName) {
+				if (region && region.custom) {
 					siteName = region.custom.siteName;
+					mailLogo = region.custom.mailLogo;
 				}
 			}
+			siteName = siteName || Meteor.settings.public.siteName;
 
 			const vars = {
 				sender,
@@ -108,6 +111,7 @@ notificationPrivateMessage.Model = function (entry) {
 				senderCopy,
 				recipientName: targetRecipient.username,
 				customSiteName: siteName,
+				customMailLogo: mailLogo,
 			};
 
 			if (!senderCopy && body.revealSenderAddress) {

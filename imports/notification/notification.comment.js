@@ -103,13 +103,16 @@ notificationComment.Model = function (entry) {
 				subject = mf('notification.comment.mail.subject.anon', subjectvars, 'Anonymous comment on {COURSE}: {TITLE}', userLocale);
 			}
 
-			let siteName = Meteor.settings.public.siteName;
+			let siteName;
+			let mailLogo;
 			if (course.region) {
 				const region = Regions.findOne(course.region);
-				if (region && region.custom && region.custom.siteName) {
+				if (region && region.custom) {
 					siteName = region.custom.siteName;
+					mailLogo = region.custom.mailLogo;
 				}
 			}
+			siteName = siteName || Meteor.settings.public.siteName;
 
 			return (
 				{
@@ -121,6 +124,7 @@ notificationComment.Model = function (entry) {
 					commenterLink: Meteor.absoluteUrl(`user/${comment.userId}/${commenterName}`),
 					commenterName,
 					customSiteName: siteName,
+					customMailLogo: mailLogo,
 				}
 			);
 		},

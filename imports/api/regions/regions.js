@@ -17,7 +17,8 @@ import { Mongo } from 'meteor/mongo';
 //      headerLogo: {
 //            src: String,
 //            alt: String,
-//     },
+//      },
+//      mailLogo: string,
 //    } (Optional)
 // ===========================
 
@@ -38,11 +39,12 @@ if (Meteor.isServer) {
 	featuredGroup: string
 	custom?: {
 		siteName: string,
-			siteStage: string,
-				headerLogo: {
+		siteStage: string,
+		headerLogo: {
 			src: string,
-				alt: string,
+			alt: string,
 		},
+		mailLogo: string,
 	}
 }}
  */
