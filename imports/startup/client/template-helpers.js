@@ -4,7 +4,7 @@ import Groups from '/imports/api/groups/groups';
 
 const helpers = {
 	siteName() {
-		if (Meteor.settings.public && Meteor.settings.public.siteName) {
+		if (Meteor.settings.public.siteName) {
 			return Meteor.settings.public.siteName;
 		}
 		return 'Hmmm';
@@ -16,7 +16,7 @@ const helpers = {
 	},
 
 	guideLink() {
-		if (typeof Meteor.settings.public.courseGuideLink === 'string' && Meteor.settings.public.courseGuideLink !== '') {
+		if (Meteor.settings.public.courseGuideLink) {
 			return Meteor.settings.public.courseGuideLink;
 		}
 

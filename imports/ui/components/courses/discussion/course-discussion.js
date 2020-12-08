@@ -370,11 +370,11 @@ Template.postEdit.events({
 Template.profileIcon.helpers({
 
 	discussionLogo() {
-		return Meteor.settings.public.discussionLogo.src;
+		return Meteor.settings.public.discussionLogo?.src;
 	},
 
 	discussionAlt() {
-		return Meteor.settings.public.discussionLogo.alt;
+		return Meteor.settings.public.discussionLogo?.alt;
 	},
 
 });

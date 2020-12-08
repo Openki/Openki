@@ -16,16 +16,15 @@ import './userprofile.html';
 Template.userprofile.helpers({
 	// whether userprofile is for the logged-in user
 	ownuser() {
-		return this.user && this.user._id === Meteor.userId();
+		return this.user?._id === Meteor.userId();
 	},
 
 	acceptsMessages() {
-		return this.user
-			&& this.user.acceptsMessages;
+		return this.user?.acceptsMessages;
 	},
 
 	groupMember(group, user) {
-		return user && group && group.members && group.members.indexOf(user._id) >= 0;
+		return user && group?.members?.indexOf(user._id) >= 0;
 	},
 
 	showInviteGroups() {

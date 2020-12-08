@@ -60,7 +60,7 @@ Notification.send = function (entry) {
 				const { address } = email;
 
 				const { username } = user;
-				const userLocale = (user.profile && user.profile.locale) || 'en';
+				const userLocale = user.profile?.locale || 'en';
 
 				const { siteName } = Accounts.emailTemplates;
 				const subjectPrefix = `[${siteName}] `;
@@ -69,8 +69,7 @@ Notification.send = function (entry) {
 
 				const vars = model.vars(userLocale, user);
 
-				const fromAddress = vars.fromAddress
-								|| Accounts.emailTemplates.from;
+				const fromAddress = vars.fromAddress || Accounts.emailTemplates.from;
 
 				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken });
 				vars.siteName = siteName;

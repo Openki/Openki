@@ -351,7 +351,7 @@ Router.map(function () {
 					groups: Groups.findFilter({ own: true }),
 					venues: Venues.find({ editor: user._id }),
 				};
-				userdata.have_email = user.emails && user.emails.length > 0;
+				userdata.have_email = user.emails?.length > 0;
 				if (userdata.have_email) {
 					userdata.email = user.emails[0].address;
 					userdata.verified = Boolean(user.emails[0].verified);

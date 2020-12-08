@@ -101,7 +101,7 @@ const createJsonLd = (data) => {
 			name: data.venue.name,
 		},
 		description: data.description || data.title,
-		image: Meteor.absoluteUrl(`logo/${Meteor.settings.public.ogLogo.src}`),
+		image: Meteor.absoluteUrl(`logo/${Meteor.settings.public.ogLogo?.src || 'openki_logo_2018.png'}`),
 		offers: addOffersToJsonLd(data),
 		performer: addPerformerToJsonLd(data),
 	};
@@ -211,7 +211,7 @@ Template.event.helpers({
 	},
 
 	userRegisteredForEvent() {
-		return this.participants && this.participants.includes(Meteor.userId());
+		return  this.participants?.includes(Meteor.userId());
 	},
 });
 
@@ -300,7 +300,7 @@ Template.eventDisplay.helpers({
 		return Template.instance().locationTracker.markers;
 	},
 	hasVenue() {
-		return this.venue && this.venue.loc;
+		return this.venue?.loc;
 	},
 
 	replicating() {

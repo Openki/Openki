@@ -38,7 +38,7 @@ Template.navbar.onRendered(function () {
 
 Template.navbar.helpers({
 	showTestWarning() {
-		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.testWarning;
+		return Meteor.settings.public.testWarning;
 	},
 
 	connected() {
@@ -50,11 +50,11 @@ Template.navbar.helpers({
 	},
 
 	headerLogo() {
-		return Meteor.settings.public.headerLogo.src;
+		return Meteor.settings.public.headerLogo?.src;
 	},
 
 	headerAlt() {
-		return Meteor.settings.public.headerLogo.alt;
+		return Meteor.settings.public.headerLogo?.alt;
 	},
 
 	notConnected() {
@@ -62,15 +62,13 @@ Template.navbar.helpers({
 	},
 
 	siteStage() {
-		if (Meteor.settings.public && Meteor.settings.public.siteStage) {
-			return Meteor.settings.public.siteStage;
-		}
-		return '';
+		return Meteor.settings.public.siteStage || '';
+
 	},
 
 	activeClass(linkRoute, id) {
 		const router = Router.current();
-		if (router.route && router.route.getName() === linkRoute) {
+		if (router.route?.getName() === linkRoute) {
 			if (typeof id === 'string' && router.params._id !== id) {
 				return '';
 			}

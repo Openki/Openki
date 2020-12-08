@@ -42,7 +42,7 @@ Accounts.onCreateUser((options, originalUser) => {
 	if (services) {
 		['facebook', 'google', 'github'].forEach((loginProvider) => {
 			const provided = services[loginProvider];
-			if (provided && provided.email) {
+			if (provided?.email) {
 				providedEmail = provided.email;
 				if (typeof provided.verified_email === 'boolean') {
 					verified = provided.verified_email;

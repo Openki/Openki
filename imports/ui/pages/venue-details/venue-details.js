@@ -41,7 +41,7 @@ Template.venueDetails.onCreated(function () {
 
 	this.setRegion = function (region) {
 		markers.remove({ center: true });
-		if (region && region.loc) {
+		if (region?.loc) {
 			markers.insert({
 				loc: region.loc,
 				center: true,
@@ -135,7 +135,7 @@ Template.venueDetails.helpers({
 	},
 
 	coords() {
-		if (this.loc && this.loc.coordinates) {
+		if (this.loc?.coordinates) {
 			const fmt = function (coord) {
 				if (coord < 0) {
 					return `-${coord.toPrecision(6)}`;

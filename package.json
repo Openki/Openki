@@ -29,10 +29,10 @@
     "assertion-error": "^1.1.0",
     "chai": "^4.2.0",
     "chromedriver": "^77.0.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb-base": "^14.2.0",
     "eslint-import-resolver-meteor": "^0.4.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.22.1",
     "sass-lint": "^1.13.1",
     "selenium-webdriver": "^3.6.0"
   },
