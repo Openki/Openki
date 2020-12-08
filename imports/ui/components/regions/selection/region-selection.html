@@ -78,15 +78,15 @@
 					{{/if}}
 				</a>
 			</li>
-			{{#each region in regions}}
-				{{> regionSelectionItem region}}
-			{{/each}}
-			{{#if inactiveRegions.count}}
-				{{#if state 'showAllRegions'}}
-					{{#each region in inactiveRegions}}
-						{{> regionSelectionItem region}}
-					{{/each}}
-				{{else}}
+			{{#if state 'showAllRegions'}}
+				{{#each region in allRegions}}
+					{{> regionSelectionItem region}}
+				{{/each}}
+			{{else}}
+				{{#each region in mostActiveRegions}}
+					{{> regionSelectionItem region}}
+				{{/each}}
+				{{#if hasMoreRegions}}
 					<li class="divider" role="separator"></li>
 					<li>
 						<button class="btn-link js-show-all-regions" type="button">
