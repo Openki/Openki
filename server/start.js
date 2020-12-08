@@ -68,7 +68,7 @@ Meteor.startup(() => {
 		}
 	}
 
-	(Meteor.settings.admins || []).forEach((username) => {
+	(Meteor.settings.admins || []).forEach(username => {
 		const user = Meteor.users.findOne({ username });
 		if (user) {
 			Meteor.users.update({ _id: user._id }, { $addToSet: { privileges: 'admin' } });

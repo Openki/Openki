@@ -77,7 +77,7 @@ Template.pricePolicyContent.events({
 			Meteor.call('user.hidePricePolicy', user);
 		}
 
-		Analytics.trytrack((tracker) => {
+		Analytics.trytrack(tracker => {
 			tracker.trackEvent('price', 'hide policy');
 		});
 	},

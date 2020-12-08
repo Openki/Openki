@@ -93,7 +93,7 @@ Meteor.methods({
 			const deployDate = moment(version.activation).format('lll');
 			const restart = moment(version.lastStart).format('lll');
 			versionString = `<br>The running version is [${Accounts.emailTemplates.siteName}] ${fullVersion}  @ commit ${commit
-				}<br>It was deployed on ${deployDate},`
+			}<br>It was deployed on ${deployDate},`
 				+ `<br>and last restarted on ${restart}.`;
 		}
 

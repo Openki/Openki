@@ -408,7 +408,7 @@ Router.map(function () {
 					return false;
 				}
 				let member = false;
-				members.every((memberCandidate) => {
+				members.every(memberCandidate => {
 					if (memberCandidate.user === user) {
 						member = memberCandidate;
 						return false; // break
@@ -517,7 +517,7 @@ Router.map(function () {
 			const events = Events.findFilter(query, 200).fetch();
 
 			// collect time when first event starts and last event ends
-			events.forEach((event) => {
+			events.forEach(event => {
 				if (!start || event.start < start) {
 					start = event.start;
 				}
@@ -571,16 +571,16 @@ Router.map(function () {
 				return perVenue[id].rows;
 			};
 
-			events.forEach((originalEvent) => {
-				const event = Object.assign({}, originalEvent);
+			events.forEach(originalEvent => {
+				const event = { ...originalEvent };
 				event.relStart = (event.start.getTime() - timestampStart) / span;
 				event.relEnd = (timestampEnd - event.end.getTime()) / span;
 				let placed = false;
 
 				const venueRows = useVenue(event.venue);
-				venueRows.forEach((venueRow) => {
+				venueRows.forEach(venueRow => {
 					let last;
-					venueRow.forEach((placedEvent) => {
+					venueRow.forEach(placedEvent => {
 						if (!last || placedEvent.end > last) {
 							last = placedEvent.end;
 						}
@@ -621,7 +621,7 @@ Router.map(function () {
 
 			// What privileges the user has
 			const privileges = _.reduce(['admin'], (originalPs, p) => {
-				const ps = Object.assign({}, originalPs);
+				const ps = { ...originalPs };
 				ps[p] = UserPrivilegeUtils.privileged(user, p);
 				return ps;
 			}, {});

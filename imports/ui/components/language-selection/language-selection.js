@@ -51,9 +51,9 @@ Template.languageSelection.helpers({
 		const search = Template.instance().languageSearch.get().toLowerCase();
 		const results = [];
 
-		visibleLanguages.forEach((visibleLanguage) => {
+		visibleLanguages.forEach(visibleLanguage => {
 			let pushed = false;
-			[visibleLanguage.name, visibleLanguage.english].every((property) => {
+			[visibleLanguage.name, visibleLanguage.english].every(property => {
 				if (pushed) {
 					return false;
 				}
@@ -94,7 +94,7 @@ Template.languageSelection.helpers({
 	},
 });
 
-const updateLanguageSearch = _.debounce((instance) => {
+const updateLanguageSearch = _.debounce(instance => {
 	let search = instance.$('.js-language-search').val();
 	search = String(search).trim();
 	instance.languageSearch.set(search);

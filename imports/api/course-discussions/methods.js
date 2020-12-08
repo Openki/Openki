@@ -9,7 +9,7 @@ import StringTools from '/imports/utils/string-tools';
 import HtmlTools from '/imports/utils/html-tools';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 
-const sanitizeComment = (comment) => {
+const sanitizeComment = comment => {
 	const saneTitle = StringTools.saneTitle(comment.title).substr(0, 200).trim();
 
 	// String-truncating HTML may leave a broken tag at the end

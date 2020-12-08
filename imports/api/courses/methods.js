@@ -50,7 +50,7 @@ const registerMethod = function (method) {
 	Meteor.methods({ [method.method]: apply });
 };
 
-const loadCourse = (courseId) => {
+const loadCourse = courseId => {
 	// new!
 	if (courseId === '') {
 		return new Course();
@@ -101,7 +101,7 @@ Meteor.methods({
 		const set = {};
 
 		if (changes.roles) {
-			_.each(Roles, (roletype) => {
+			_.each(Roles, roletype => {
 				const { type } = roletype;
 				const shouldHave = roletype.preset || (changes.roles && changes.roles[type]);
 				const have = course.roles.indexOf(type) !== -1;
@@ -160,7 +160,7 @@ Meteor.methods({
 			// You can add newly created courses to any group
 			let testedGroups = [];
 			if (changes.groups) {
-				testedGroups = _.map(changes.groups, (groupId) => {
+				testedGroups = _.map(changes.groups, groupId => {
 					const group = Groups.findOne(groupId);
 					if (!group) {
 						throw new Meteor.Error(404, `no group with id ${groupId}`);
@@ -199,7 +199,7 @@ Meteor.methods({
 
 		if (changes.subs) {
 			const changedCourse = Courses.findOne(courseId);
-			changes.subs.forEach((role) => {
+			changes.subs.forEach(role => {
 				const change = new Subscribe(changedCourse, user, role);
 				if (change.validFor(user)) {
 					processChange(change);
@@ -208,7 +208,7 @@ Meteor.methods({
 		}
 		if (changes.unsubs) {
 			const changedCourse = Courses.findOne(courseId);
-			changes.unsubs.forEach((role) => {
+			changes.unsubs.forEach(role => {
 				const change = new Unsubscribe(changedCourse, user, role);
 				if (change.validFor(user)) {
 					processChange(change);
@@ -234,7 +234,7 @@ Meteor.methods({
 
 	// Update the nextEvent field for the courses matching the selector
 	'course.updateNextEvent'(selector) {
-		Courses.find(selector).forEach((course) => {
+		Courses.find(selector).forEach(course => {
 			const futureEvents = Events.find(
 				{ courseId: course._id, start: { $gt: new Date() } },
 			).count();
@@ -291,7 +291,7 @@ Meteor.methods({
 
 	// Recalculate the editors field
 	'course.updateGroups'(selector) {
-		Courses.find(selector).forEach((course) => {
+		Courses.find(selector).forEach(course => {
 			Courses.updateGroups(course._id);
 		});
 	},

@@ -57,7 +57,7 @@ if (Meteor.settings.testdata) {
 	const regionsCreate = function () {
 		/* eslint-disable-next-line no-restricted-syntax */
 		for (const r of regions) {
-			const region = Object.assign({}, r); // clone
+			const region = { ...r }; // clone
 			if (region.loc) {
 				const coordinates = region.loc.reverse(); // GeoJSON takes latitude first
 				region.loc = { type: 'Point', coordinates };
@@ -79,7 +79,7 @@ if (Meteor.settings.testdata) {
 	const groupsCreate = function () {
 		/* eslint-disable-next-line no-restricted-syntax */
 		for (const g of groups) {
-			const group = Object.assign({}, g);
+			const group = { ...g };
 			group.createdby = 'ServerScript_loadingTestgroups';
 
 			// Always use same id for same group to avoid broken urls while testing
@@ -99,7 +99,7 @@ if (Meteor.settings.testdata) {
 
 		/* eslint-disable-next-line no-restricted-syntax */
 		for (const e of events) {
-			const event = Object.assign({}, e);
+			const event = { ...e };
 			if (Events.findOne({ _id: event._id })) {
 				/* eslint-disable-next-line no-continue */
 				continue; // Don't create events that exist already
@@ -152,7 +152,7 @@ if (Meteor.settings.testdata) {
 
 		/* eslint-disable-next-line no-restricted-syntax */
 		for (const v of venues) {
-			const venueData = Object.assign({}, v);
+			const venueData = { ...v };
 			venueData.region = prng() > 0.85 ? testRegions[0] : testRegions[1];
 
 			const venue = ensure.venue(venueData.name, venueData.region._id);
@@ -172,7 +172,7 @@ if (Meteor.settings.testdata) {
 
 		/* eslint-disable-next-line no-restricted-syntax */
 		for (const c of courses) {
-			const course = Object.assign({}, c);
+			const course = { ...c };
 			/* eslint-disable-next-line no-restricted-syntax */
 			for (const member of course.members) {
 				member.user = ensure.user(member.user)._id;
@@ -245,7 +245,7 @@ if (Meteor.settings.testdata) {
 			'Moscow',
 		];
 
-		Courses.find().forEach((course) => {
+		Courses.find().forEach(course => {
 			const eventCount = Math.floor((prng() * 1.6) ** 10);
 			for (let n = 0; n < eventCount; n += 1) {
 				const event = {};
@@ -321,7 +321,7 @@ if (Meteor.settings.testdata) {
 		let count = 0;
 
 		const userCount = Meteor.users.find().count();
-		Courses.find().forEach((course) => {
+		Courses.find().forEach(course => {
 			const createCount = Math.floor((prng() * 2) ** 4);
 			const courseMembers = course.members.length;
 			let { description } = course;

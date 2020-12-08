@@ -180,7 +180,7 @@ Template.venueEdit.events({
 			return;
 		}
 
-		Venues.facilityOptions.forEach((facility) => {
+		Venues.facilityOptions.forEach(facility => {
 			if (instance.$(`.js-${facility}`).prop('checked')) {
 				changes.facilities.push(facility);
 			}

@@ -113,7 +113,7 @@ Profile.Notifications.unsubscribe = function (token) {
 	// Find the relevant notification result
 	Log.find({
 		rel: token,
-	}).forEach((entry) => {
+	}).forEach(entry => {
 		// See whether it was indeed a secret token.
 		// This check is not redundant because public ID like courseID
 		// are also written into the rel-index and would be found if provided.

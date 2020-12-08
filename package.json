@@ -27,9 +27,10 @@
   },
   "devDependencies": {
     "assertion-error": "^1.1.0",
+    "babel-eslint": "^10.1.0",
     "chai": "^4.2.0",
     "chromedriver": "^77.0.0",
-    "eslint": "^7.10.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-import-resolver-meteor": "^0.4.0",
     "eslint-plugin-import": "^2.22.1",
@@ -41,7 +42,7 @@
     "test": "TEST_BROWSER_DRIVER=chrome meteor test --settings settings/ci.json --once --driver-package meteortesting:mocha",
     "app-test": "TEST_BROWSER_DRIVER=chrome meteor test --settings settings/ci.json --full-app --once --driver-package meteortesting:mocha",
     "test-live": "TEST_WATCH=1 meteor test --settings settings/ci.json --full-app --driver-package meteortesting:mocha",
-    "eslint": "eslint -- .",
+    "eslint": "eslint -- . ",
     "sass-lint": "sass-lint --verbose"
   },
   "repository": {

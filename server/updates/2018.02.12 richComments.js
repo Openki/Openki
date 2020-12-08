@@ -10,7 +10,7 @@ const UpdatesAvailable = [];
 UpdatesAvailable[updateName] = function () {
 	let count = 0;
 
-	CourseDiscussions.find().forEach((comment) => {
+	CourseDiscussions.find().forEach(comment => {
 		const richText = HtmlTools.plainToHtml(comment.text);
 		const saneRichText = HtmlTools.saneHtml(richText);
 		const rel = [updateName, comment._id];

@@ -13,7 +13,7 @@ const reportToServer = function (error) {
 	});
 };
 
-window.addEventListener('error', (event) => {
+window.addEventListener('error', event => {
 	reportToServer(event.error);
 });
 

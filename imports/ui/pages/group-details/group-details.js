@@ -51,7 +51,7 @@ Template.groupDetails.onCreated(function () {
 
 	instance.editableName = new Editable(
 		true,
-		((newName) => {
+		(newName => {
 			Meteor.call('group.save', groupId, { name: newName }, handleSaving);
 		}),
 		mf('group.name.placeholder', 'Name of your group, institution, community or program'),
@@ -60,7 +60,7 @@ Template.groupDetails.onCreated(function () {
 
 	instance.editableShort = new Editable(
 		true,
-		((newShort) => {
+		(newShort => {
 			Meteor.call('group.save', groupId, { short: newShort }, handleSaving);
 		}),
 		mf('group.short.placeholder', 'Abbreviation'),
@@ -69,7 +69,7 @@ Template.groupDetails.onCreated(function () {
 
 	instance.editableClaim = new Editable(
 		true,
-		((newClaim) => {
+		(newClaim => {
 			Meteor.call('group.save', groupId, { claim: newClaim }, handleSaving);
 		}),
 		mf('group.claim.placeholder', 'The core idea'),
@@ -78,7 +78,7 @@ Template.groupDetails.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		((newDescription) => {
+		(newDescription => {
 			Meteor.call('group.save', groupId, { description: newDescription }, handleSaving);
 		}),
 		mf('group.description.placeholder', 'Describe the audience, the interests and activities of your group.'),

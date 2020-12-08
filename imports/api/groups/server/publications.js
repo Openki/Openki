@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import Groups from '../groups';
 
 Meteor.publish('groupsFind', function (originalFilter) {
-	const filter = Object.assign({}, originalFilter);
+	const filter = { ...originalFilter };
 	// Filter function on the server doesn't have access to current user ID
 	if (filter.own) {
 		delete filter.own;

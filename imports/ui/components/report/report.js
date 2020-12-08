@@ -36,7 +36,7 @@ Template.report.events({
 			window.location.href,
 			navigator.userAgent,
 			instance.$('.js-report-message').val(),
-			(err) => {
+			err => {
 				if (err) {
 					Alert.serverError(
 						err,

@@ -30,7 +30,7 @@ if (Meteor.isClient) {
 				.then(waitFor(haveEditfield))
 				.then(waitFor(findExpectedFormTitle))
 				.then(() => new Promise((done, reject) => {
-					Meteor.loginWithPassword('Seee', 'greg', (err) => {
+					Meteor.loginWithPassword('Seee', 'greg', err => {
 						if (err) {
 							reject(err);
 						} else {
@@ -64,7 +64,7 @@ if (Meteor.isClient) {
 				// group being in the orga-team.
 				// So we login as a member of "SKG" then check whether the edit button shows up.
 				.then(() => new Promise((done, reject) => {
-					Meteor.logout((err) => {
+					Meteor.logout(err => {
 						if (err) {
 							reject(err);
 						} else {
@@ -73,7 +73,7 @@ if (Meteor.isClient) {
 					});
 				}))
 				.then(() => new Promise((done, reject) => {
-					Meteor.loginWithPassword('Normalo', 'greg', (err) => {
+					Meteor.loginWithPassword('Normalo', 'greg', err => {
 						if (err) {
 							reject(err);
 						} else {

@@ -124,7 +124,7 @@ Template.eventEditVenue.onCreated(function () {
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
 			added(originalLocation) {
-				const location = Object.assign({}, originalLocation);
+				const location = { ...originalLocation };
 				location.proposed = true;
 				location.presetName = location.name;
 				location.presetAddress = location.address;
@@ -249,7 +249,7 @@ Template.eventEditVenue.events({
 					'Found no results for address "{ADDRESS}"',
 				));
 			}
-			_.each(found, (foundLocation) => {
+			_.each(found, foundLocation => {
 				const marker = {
 					loc: { type: 'Point', coordinates: [foundLocation.lon, foundLocation.lat] },
 					proposed: true,

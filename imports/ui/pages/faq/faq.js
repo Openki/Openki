@@ -14,7 +14,7 @@ Template.FAQ.onCreated(function () {
 	this.headerTag = 'h3';
 	this.contentTags = 'p, ul';
 
-	this.scrollTo = (id) => {
+	this.scrollTo = id => {
 		const idSelector = `#${decodeURIComponent(id)}`;
 		const targetTitle = this.$(idSelector);
 		if (targetTitle.length) {

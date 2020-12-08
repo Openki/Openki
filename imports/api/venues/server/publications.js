@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import Venues from '../venues';
 
-Meteor.publish('venues', (region) => {
+Meteor.publish('venues', region => {
 	check(region, Match.Maybe(String));
 	const find = {};
 	if (region) {

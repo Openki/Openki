@@ -44,7 +44,7 @@ Template.filter.helpers({
 
 		// check if one of the filters indicated as filters is active
 		let activeVisibleFilter = false;
-		instance.visibleFilters.forEach((filter) => {
+		instance.visibleFilters.forEach(filter => {
 			if (parentInstance.filter.get(filter)) {
 				activeVisibleFilter = true;
 			}
@@ -89,7 +89,7 @@ Template.filter.events({
 		const { showingFilters } = parentInstance;
 
 		if (showingFilters.get()) {
-			instance.visibleFilters.forEach((filter) => {
+			instance.visibleFilters.forEach(filter => {
 				parentInstance.filter.disable(filter);
 			});
 
@@ -142,7 +142,7 @@ Template.additionalFilters.onCreated(function () {
 			name: 'host',
 			label: mf('find.needsHost', 'Looking for a host'),
 		},
-	].map((role) => {
+	].map(role => {
 		// add icon from Roles collection to role object
 		/* eslint-disable-next-line no-param-reassign */
 		role.icon = _.findWhere(Roles, { type: role.name }).icon;

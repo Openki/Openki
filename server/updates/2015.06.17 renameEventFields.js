@@ -7,8 +7,8 @@ const UpdatesAvailable = [];
 // Somehow the enddate got corrupted and for the current data we can fix it by just resetting the
 // day
 UpdatesAvailable.renameEventFields = function () {
-	Events.find({}).fetch().forEach((originalEvent) => {
-		const event = Object.assign({}, originalEvent);
+	Events.find({}).fetch().forEach(originalEvent => {
+		const event = { ...originalEvent };
 		if (event.startdate) {
 			event.start = event.startdate;
 			delete event.startdate;

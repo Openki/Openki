@@ -43,7 +43,7 @@ notificationComment.record = function (commentId) {
 					],
 			};
 
-			CourseDiscussions.find(threadSelector).forEach((threadComment) => {
+			CourseDiscussions.find(threadSelector).forEach(threadComment => {
 				const partId = threadComment.userId;
 				if (partId) {
 					recipients.push(partId);

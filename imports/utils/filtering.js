@@ -44,7 +44,7 @@ const Filtering = function (availablePredicates) {
 	};
 
 	self.read = function (list) {
-		Object.keys(list).forEach((name) => {
+		Object.keys(list).forEach(name => {
 			try {
 				self.add(name, list[name]);
 			} catch (e) {
@@ -101,7 +101,7 @@ const Filtering = function (availablePredicates) {
 
 		if (same) {
 			// Look closer
-			Object.keys(predicates).every((name) => {
+			Object.keys(predicates).every(name => {
 				same = predicates[name].equals(settled[name]);
 				return same;
 			});
@@ -117,7 +117,7 @@ const Filtering = function (availablePredicates) {
 			dep.depend();
 		}
 		const params = {};
-		Object.keys(settledPredicates).forEach((name) => {
+		Object.keys(settledPredicates).forEach(name => {
 			params[name] = settledPredicates[name].param();
 		});
 		return params;
@@ -128,7 +128,7 @@ const Filtering = function (availablePredicates) {
 			dep.depend();
 		}
 		const query = {};
-		Object.keys(settledPredicates).forEach((name) => {
+		Object.keys(settledPredicates).forEach(name => {
 			query[name] = settledPredicates[name].query();
 		});
 		return query;

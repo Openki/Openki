@@ -9,7 +9,7 @@ import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';
 import Notification from '/imports/notification/notification';
 
 export const processChange = function (change, done) {
-	Meteor.call(change.constructor.method, change.dict(), (err) => {
+	Meteor.call(change.constructor.method, change.dict(), err => {
 		if (err) {
 			/* eslint-disable-next-line no-console */
 			console.log(err);

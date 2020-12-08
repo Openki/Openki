@@ -9,7 +9,7 @@ import { Session } from 'meteor/session';
 export default function SaveAfterLogin(instance, loginAction, afterLogin) {
 	let openedLogin = false;
 
-	instance.autorun((computation) => {
+	instance.autorun(computation => {
 		// if the user is loggged in stop the computation and call the save function
 		if (Meteor.user()) {
 			computation.stop();

@@ -12,7 +12,7 @@ import { check } from 'meteor/check';
 // SortSpec.fromString(str) reads a string of the form "name,-age"
 // SortSpec.unordered() builds a SortSpec which imposes no ordering.
 
-const SortSpec = (spec) => {
+const SortSpec = spec => {
 	check(spec, [[String]]);
 	return { spec: () => spec };
 };
@@ -20,7 +20,7 @@ const SortSpec = (spec) => {
 SortSpec.fromString = function (spec) {
 	check(spec, String);
 
-	return SortSpec(spec.split(',').filter(Boolean).map((field) => {
+	return SortSpec(spec.split(',').filter(Boolean).map(field => {
 		if (field.indexOf('-') === 0) {
 			return [field.slice(1), 'desc'];
 		}

@@ -27,11 +27,11 @@ if (Meteor.isClient) {
 			};
 			return subscriptionsReady()
 				.then(waitFor(findJoinButton))
-				.then((button) => { button.click(); })
+				.then(button => { button.click(); })
 			// Purposefully only logging in after having decided to participate
 			// We want to support this.
 				.then(() => new Promise((done, reject) => {
-					Meteor.loginWithPassword('Seee', 'greg', (err) => {
+					Meteor.loginWithPassword('Seee', 'greg', err => {
 						if (err) {
 							reject(err);
 						} else {
@@ -40,7 +40,7 @@ if (Meteor.isClient) {
 					});
 				}))
 				.then(waitFor(findCommentField))
-				.then((field) => {
+				.then(field => {
 					field.text(comment);
 					jQuery('.js-role-subscribe-btn').click();
 				})

@@ -115,8 +115,8 @@ Template.deleteEventsModal.events({
 		const events = instance.state.get('selectedEvents');
 		let removed = 0;
 		let responses = 0;
-		events.forEach((event) => {
-			Meteor.call('event.remove', event._id, (err) => {
+		events.forEach(event => {
+			Meteor.call('event.remove', event._id, err => {
 				responses += 1;
 				if (err) {
 					Alert.serverError(err, mf(

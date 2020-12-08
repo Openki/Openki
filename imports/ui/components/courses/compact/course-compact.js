@@ -29,18 +29,18 @@ Template.courseCompact.helpers({
 
 		const roles = _.map(Roles, role => role.type);
 
-		_.each(roles, (role) => {
+		_.each(roles, role => {
 			const roleDisengaged = !HasRole(course.members, role);
 			if (course.roles.indexOf(role) >= 0 && roleDisengaged) {
 				filterPreviewClasses.push(`needs-role-${role}`);
 			}
 		});
 
-		_.each(course.categories, (category) => {
+		_.each(course.categories, category => {
 			filterPreviewClasses.push(`category-${category}`);
 		});
 
-		_.each(course.groups, (group) => {
+		_.each(course.groups, group => {
 			filterPreviewClasses.push(`group-${group}`);
 		});
 

@@ -10,14 +10,14 @@ if (Meteor.isClient) {
 	describe('Profile', function () {
 		this.timeout(30000);
 		describe('User creation', () => {
-			it('updates the acceptsMessage flag', () => new Promise((resolve) => {
+			it('updates the acceptsMessage flag', () => new Promise(resolve => {
 				const dummy = createDummy();
 				Accounts.createUser({
 					username: dummy,
 					email: `${dummy}@openki.example`,
 					profile: { name: dummy },
 					password: 'hunter2',
-				}, (error) => {
+				}, error => {
 					assert.isNotOk(error, 'not expecting creation errors');
 
 					// Rely on the test runner to declare the test failed when it
@@ -39,7 +39,7 @@ if (Meteor.isClient) {
 					email: `${oldDummy}@openki.example`,
 					profile: { name: oldDummy },
 					password: 'hunter2',
-				}, (err) => {
+				}, err => {
 					if (err) {
 						reject(err);
 					} else {
@@ -47,20 +47,20 @@ if (Meteor.isClient) {
 					}
 				});
 			}).then(() => new Promise((resolve, reject) => {
-				Meteor.loginWithPassword(oldDummy, 'hunter2', (err) => {
+				Meteor.loginWithPassword(oldDummy, 'hunter2', err => {
 					if (err) {
 						reject(err);
 					} else {
 						resolve();
 					}
 				});
-			})).then(() => new Promise((resolve) => {
+			})).then(() => new Promise(resolve => {
 				const user = Meteor.user();
 				Meteor.call('user.updateData',
 					newDummy,
 					user.emails[0].address,
 					user.notifications,
-					(err) => {
+					err => {
 						if (err) {
 							assert.isNotOk(err, 'not expecting username-change errors');
 						}

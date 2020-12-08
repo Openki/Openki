@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import Courses from '../courses';
 
-Meteor.publish('courses', (region) => {
+Meteor.publish('courses', region => {
 	if (!region) {
 		return Courses.find();
 	}

@@ -43,7 +43,7 @@ const checkJsonLdMinReqs = data => Object.prototype.hasOwnProperty.call(data, 't
   * @param {Object} - the event data
   * @return {Object} - jsonLd geo part
   */
-const addGeoToJsonLd = (data) => {
+const addGeoToJsonLd = data => {
 	if (
 		Object.prototype.hasOwnProperty.call(data.venue, 'loc')
 		&& Object.prototype.hasOwnProperty.call(data.venue.loc, 'coordinates')
@@ -85,7 +85,7 @@ const addPerformerToJsonLd = () => ({
   * @param {Object} - the event data
   * @return {Object} - jsonLd
   */
-const createJsonLd = (data) => {
+const createJsonLd = data => {
 	const ldObject = {
 		'@context': 'https://schema.org',
 		'@type': 'Event',
@@ -114,7 +114,7 @@ const createJsonLd = (data) => {
   *
   * @param {Object} - the event data
   */
-const addJsonLd = (data) => {
+const addJsonLd = data => {
 	if (checkJsonLdMinReqs(data)) {
 		$(document).ready(() => {
 			const jsonLdTag = document.createElement('script');
@@ -163,7 +163,7 @@ Template.event.onCreated(function () {
 	this.addParticipant = () => {
 		SaveAfterLogin(this, mf('loginAction.enrollEvent', 'Login and enroll for event'), () => {
 			this.busy('registering');
-			Meteor.call('event.addParticipant', event._id, (err) => {
+			Meteor.call('event.addParticipant', event._id, err => {
 				this.busy(false);
 				if (err) {
 					Alert.serverError(err, '');
@@ -211,7 +211,7 @@ Template.event.helpers({
 	},
 
 	userRegisteredForEvent() {
-		return  this.participants?.includes(Meteor.userId());
+		return this.participants?.includes(Meteor.userId());
 	},
 });
 
@@ -227,7 +227,7 @@ Template.event.events({
 		const { title } = oEvent;
 		const course = oEvent.courseId;
 		instance.busy('deleting');
-		Meteor.call('event.remove', oEvent._id, (err) => {
+		Meteor.call('event.remove', oEvent._id, err => {
 			instance.busy(false);
 			if (err) {
 				Alert.serverError(
@@ -263,7 +263,7 @@ Template.event.events({
 
 	'click .js-unregister-event'(event, instance) {
 		instance.busy('unregistering');
-		Meteor.call('event.removeParticipant', instance.data._id, (err) => {
+		Meteor.call('event.removeParticipant', instance.data._id, err => {
 			instance.busy(false);
 			if (err) {
 				Alert.serverError(err, 'could not remove participant');
@@ -368,7 +368,7 @@ Template.eventGroupAdd.events({
 	'click .js-add-group'(e, instance) {
 		const event = instance.data;
 		const groupId = e.currentTarget.value;
-		Meteor.call('event.promote', event._id, groupId, true, (err) => {
+		Meteor.call('event.promote', event._id, groupId, true, err => {
 			if (err) {
 				Alert.serverError(
 					err,
@@ -394,7 +394,7 @@ Template.eventGroupRemove.events({
 	'click .js-remove'(e, instance) {
 		const { event } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('event.promote', event._id, groupId, false, (err) => {
+		Meteor.call('event.promote', event._id, groupId, false, err => {
 			if (err) {
 				Alert.serverError(
 					err,
@@ -419,7 +419,7 @@ Template.eventGroupMakeOrganizer.events({
 	'click .js-makeOrganizer'(e, instance) {
 		const { event } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('event.editing', event._id, groupId, true, (err) => {
+		Meteor.call('event.editing', event._id, groupId, true, err => {
 			if (err) {
 				Alert.serverError(
 					err,
@@ -444,7 +444,7 @@ Template.eventGroupRemoveOrganizer.events({
 	'click .js-removeOrganizer'(e, instance) {
 		const { event } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('event.editing', event._id, groupId, false, (err) => {
+		Meteor.call('event.editing', event._id, groupId, false, err => {
 			const groupName = Groups.findOne(groupId).name;
 			if (err) {
 				Alert.serverError(

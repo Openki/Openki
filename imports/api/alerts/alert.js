@@ -54,7 +54,7 @@ const Alert = {
 	},
 };
 
-['success', 'warning'].forEach((type) => {
+['success', 'warning'].forEach(type => {
 	/** Add an alert of type XY, using the default options
       *
       * @param  {String} message - the message text

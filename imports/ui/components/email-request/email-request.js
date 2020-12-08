@@ -55,7 +55,7 @@ Template.emailRequestModal.events({
 		}
 
 		instance.busy('saving');
-		Meteor.call('user.updateEmail', email, (err) => {
+		Meteor.call('user.updateEmail', email, err => {
 			instance.busy(false);
 			if (err) {
 				instance.errors.add(err.reason);
@@ -85,7 +85,7 @@ Template.emailValidationModal.events({
 	'click .js-send-validation-email'(event, instance) {
 		instance.busy('sending');
 		event.preventDefault();
-		Meteor.call('sendVerificationEmail', (err) => {
+		Meteor.call('sendVerificationEmail', err => {
 			instance.busy(false);
 			if (err) {
 				ShowServerError('Failed to send verification mail', err);

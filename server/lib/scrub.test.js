@@ -39,7 +39,7 @@ describe('The Log-Scrubber', () => {
 		assert.equal(log.find({ tr: 'test' }).count(), 1);
 	});
 
-	it('unsets only specified field', (done) => {
+	it('unsets only specified field', done => {
 		const log = logFactory.fake();
 		log.record('test', [], { a: 'a', b: 'b' });
 

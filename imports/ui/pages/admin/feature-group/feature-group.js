@@ -30,7 +30,7 @@ Template.featureGroup.events({
 		const groupId = instance.$('#groupToBeFeatured').val();
 
 		instance.busy('saving');
-		Meteor.call('region.featureGroup', regionId, groupId, (err) => {
+		Meteor.call('region.featureGroup', regionId, groupId, err => {
 			if (err) {
 				Alert.serverError(err, '');
 			} else {
@@ -41,7 +41,7 @@ Template.featureGroup.events({
 
 	'click .js-unset-featured-group'(event, instance) {
 		instance.busy('deleting');
-		Meteor.call('region.unsetFeaturedGroup', Session.get('region'), (err) => {
+		Meteor.call('region.unsetFeaturedGroup', Session.get('region'), err => {
 			if (err) {
 				Alert.serverError(err, '');
 			} else {

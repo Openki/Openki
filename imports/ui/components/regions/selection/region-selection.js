@@ -55,7 +55,7 @@ Template.regionSelection.onCreated(function () {
 		return Regions.find(query, { sort: { futureEventCount: -1, name: 1 } });
 	};
 
-	this.changeRegion = (regionId) => {
+	this.changeRegion = regionId => {
 		const changed = !Session.equals('region', regionId);
 
 		try {

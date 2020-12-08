@@ -8,7 +8,7 @@ import '/imports/ui/components/buttons/buttons';
 
 import './event-replication.html';
 
-const replicaStartDate = (originalDate) => {
+const replicaStartDate = originalDate => {
 	const originalMoment = moment(originalDate);
 	const startMoment = moment.max(originalMoment, moment());
 	startMoment.day(originalMoment.day());
@@ -111,7 +111,7 @@ Template.eventReplication.helpers({
 	},
 });
 
-const getEventFrequency = (instance) => {
+const getEventFrequency = instance => {
 	let startDate = moment(instance.$('#replicateStart').val(), 'L');
 	if (!startDate.isValid()) {
 		return [];
@@ -189,7 +189,7 @@ Template.eventReplication.events({
 		const replicaDays = instance.activeDays();
 		let removed = 0;
 		let responses = 0;
-		replicaDays.forEach((days) => {
+		replicaDays.forEach(days => {
 			/* create a new event for each time interval */
 			const replicaEvent = {
 				startLocal: LocalTime.toString(moment(startLocal).add(days, 'days')),
@@ -214,7 +214,7 @@ Template.eventReplication.events({
 			// To create a new event, pass an empty Id
 			const eventId = '';
 			const args = { eventId, changes: replicaEvent };
-			Meteor.call('event.save', args, (error) => {
+			Meteor.call('event.save', args, error => {
 				responses += 1;
 				if (error) {
 					Alert.serverError(error, mf(

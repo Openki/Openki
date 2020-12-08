@@ -7,10 +7,10 @@ import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test';
 if (Meteor.isClient) {
 	describe('Frontpage', function () {
 		this.timeout(60000);
-		beforeEach((done) => {
+		beforeEach(done => {
 			Meteor.call('fixtures.clean', done);
 		});
-		beforeEach((done) => {
+		beforeEach(done => {
 			Meteor.call('fixtures.create', done);
 		});
 		it('should list 8 courses for unauthenticated user (Testistan)', () => {

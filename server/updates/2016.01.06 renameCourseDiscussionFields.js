@@ -5,8 +5,8 @@ const UpdatesAvailable = [];
 // Standardize field names in CourseDiscussions documents
 UpdatesAvailable.renameDiscussionFields = function () {
 	const AllPosts = CourseDiscussions.find({});
-	AllPosts.fetch().forEach((originalPost) => {
-		const post = Object.assign({}, originalPost);
+	AllPosts.fetch().forEach(originalPost => {
+		const post = { ...originalPost };
 		post.courseId = post.course_ID;
 		delete post.course_ID;
 
