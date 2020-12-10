@@ -1,5 +1,6 @@
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 import Courses from '/imports/api/courses/courses';
+import Regions from '/imports/api/regions/regions';
 import Log from '/imports/api/log/log';
 
 import StringTools from '/imports/utils/string-tools';
@@ -102,6 +103,17 @@ notificationComment.Model = function (entry) {
 				subject = mf('notification.comment.mail.subject.anon', subjectvars, 'Anonymous comment on {COURSE}: {TITLE}', userLocale);
 			}
 
+			let siteName;
+			let mailLogo;
+			if (course.region) {
+				const region = Regions.findOne(course.region);
+				if (region && region.custom) {
+					siteName = region.custom.siteName;
+					mailLogo = region.custom.mailLogo;
+				}
+			}
+			siteName = siteName || Meteor.settings.public.siteName;
+
 			return (
 				{
 					course,
@@ -111,7 +123,8 @@ notificationComment.Model = function (entry) {
 					commenter,
 					commenterLink: Meteor.absoluteUrl(`user/${comment.userId}/${commenterName}`),
 					commenterName,
-					siteName: Meteor.settings.public.siteName,
+					customSiteName: siteName,
+					customMailLogo: mailLogo,
 				}
 			);
 		},

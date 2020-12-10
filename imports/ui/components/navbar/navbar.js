@@ -50,11 +50,27 @@ Template.navbar.helpers({
 	},
 
 	headerLogo() {
-		return Meteor.settings.public.headerLogo?.src;
+		const currentRegion = Regions.currentRegion();
+		if (currentRegion?.custom?.headerLogo?.src) {
+			return currentRegion.custom.headerLogo.src;
+		}
+
+		if (Meteor.settings.public.headerLogo?.src) {
+			return Meteor.settings.public.headerLogo.src;
+		}
+		return '';
 	},
 
 	headerAlt() {
-		return Meteor.settings.public.headerLogo?.alt;
+		const currentRegion = Regions.currentRegion();
+		if (currentRegion?.custom?.headerLogo?.alt) {
+			return currentRegion.custom.headerLogo.alt;
+		}
+
+		if (Meteor.settings.public.headerLogo?.alt) {
+			return Meteor.settings.public.headerLogo.alt;
+		}
+		return '';
 	},
 
 	notConnected() {
@@ -62,7 +78,15 @@ Template.navbar.helpers({
 	},
 
 	siteStage() {
-		return Meteor.settings.public.siteStage || '';
+		const currentRegion = Regions.currentRegion();
+		if (currentRegion?.custom?.siteStage) {
+			return currentRegion.custom.siteStage;
+		}
+
+		if (Meteor.settings.public.siteStage) {
+			return Meteor.settings.public.siteStage;
+		}
+		return '';
 	},
 
 	activeClass(linkRoute, id) {

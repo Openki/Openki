@@ -1,12 +1,19 @@
 import { Template } from 'meteor/templating';
 import Groups from '/imports/api/groups/groups';
+import Regions from '/imports/api/regions/regions';
 
 
 const helpers = {
 	siteName() {
+		const currentRegion = Regions.currentRegion();
+		if (currentRegion?.custom?.siteName) {
+			return currentRegion.custom.siteName;
+		}
+
 		if (Meteor.settings.public.siteName) {
 			return Meteor.settings.public.siteName;
 		}
+
 		return 'Hmmm';
 	},
 

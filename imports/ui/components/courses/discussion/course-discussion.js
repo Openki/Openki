@@ -323,6 +323,8 @@ Template.post.events({
 			comment._id = instance.data._id;
 		}
 
+		comment.notifyAll = comment.notifyAll || false;
+
 		instance.editing.set(false);
 		instance.busy('saving');
 		Meteor.call(method, comment, (err) => {
