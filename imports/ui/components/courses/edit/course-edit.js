@@ -44,9 +44,24 @@ Template.courseEdit.onCreated(function () {
 		this.editableDescription.setText(Template.currentData().description);
 	});
 
-	if (this.data.group) {
-		this.subscribe('group', this.data.group);
+	if (!this.data.isFrame) {
+		if (this.data.group) this.subscribe('group', this.data.group);
+	} else if (this.data.teamGroups) {
+		this.data.teamGroups.forEach((g) => {
+			this.subscribe('group', g);
+		});
 	}
+
+	this.showInternalCheckbox = new ReactiveVar(false);
+	this.autorun(() => {
+		let internalOption = false;
+		const user = Meteor.user();
+		if (!this.data.isFrame && this.data.group && (user && user.groups)) {
+			// show only if user is in the given group
+			internalOption = user.groups.includes(this.data.group);
+		}
+		this.showInternalCheckbox.set(internalOption);
+	});
 
 	this.fullRoleSelection = true;
 
@@ -58,18 +73,17 @@ Template.courseEdit.onCreated(function () {
 		// Keep state of simple role selection
 		this.simpleSelectedRole = new ReactiveVar('participant');
 
-		this.savedCourse = new ReactiveVar(false);
 		this.savedCourseId = new ReactiveVar(false);
 		this.showSavedMessage = new ReactiveVar(false);
 
 		this.autorun(() => {
 			const courseId = this.savedCourseId.get();
 			if (courseId) {
-				this.subscribe('courseDetails', courseId, () => {
-					this.savedCourse.set(Courses.findOne(courseId));
-				});
+				this.subscribe('courseDetails', courseId);
 			}
 		});
+
+		this.getSavedCourse = () => Courses.findOne(this.savedCourseId.get());
 
 		this.resetFields = () => {
 			this.$('.js-title').val('');
@@ -219,16 +233,7 @@ Template.courseEdit.helpers({
 	},
 
 	showInternalCheckbox() {
-		const user = Meteor.user();
-
-		if (this.isFrame) {
-			return false;
-		}
-		if (user && user.groups) {
-			return user.groups.length > 0;
-		}
-
-		return false;
+		return Template.instance().showInternalCheckbox.get();
 	},
 
 	showSavedMessage() {
@@ -240,7 +245,7 @@ Template.courseEdit.helpers({
 
 	savedCourseLink() {
 		if (this.isFrame) {
-			const course = Template.instance().savedCourse.get();
+			const course = Template.instance().getSavedCourse();
 			if (course) {
 				return Router.url('showCourse', course);
 			}
@@ -250,7 +255,7 @@ Template.courseEdit.helpers({
 
 	savedCourseName() {
 		if (this.isFrame) {
-			const course = Template.instance().savedCourse.get();
+			const course = Template.instance().getSavedCourse();
 			if (course) {
 				return course.name;
 			}
@@ -284,11 +289,21 @@ Template.courseEdit.events({
 	'submit form, click .js-course-edit-save'(event, instance) {
 		event.preventDefault();
 
-		// for frame: if a group id is given, check for the internal flag in the
-		// url query
-		const internal = instance.data.group
-			? instance.data.internal || false
-			: instance.$('.js-check-internal').is(':checked');
+		const { data } = instance;
+		const hasTeamGroups = Boolean(data.teamGroups && data.teamGroups.length);
+
+		let internal;
+		if (instance.showInternalCheckbox.get()) {
+			// Usually an "internal" checkbox is displayed so that the users of a group can choose
+			// whether the course is internal or not.
+			internal = instance.$('.js-check-internal').is(':checked');
+		} else if (data.isFrame && hasTeamGroups) {
+			// When in a frame for a group, the `internal` query-param can be set to control whether
+			// the group wants the entered courses to be internal.
+			internal = data.internal;
+		}
+		// Default is not internal
+		internal = internal || false;
 
 		const changes = {
 			internal,
@@ -310,7 +325,6 @@ Template.courseEdit.events({
 		const courseId = course._id ? course._id : '';
 		const isNew = courseId === '';
 		if (isNew) {
-			const { data } = instance;
 			if (data.isFrame && data.region) {
 				// The region was preset for the frame
 				changes.region = data.region;
@@ -323,8 +337,12 @@ Template.courseEdit.events({
 			}
 
 			const groups = [];
-			if (data.group) {
-				groups.push(data.group);
+			if (!data.isFrame) {
+				if (data.group) {
+					groups.push(data.group);
+				}
+			} else if (hasTeamGroups) {
+				groups.push(...data.teamGroups);
 			}
 			changes.groups = groups;
 		}
@@ -334,7 +352,7 @@ Template.courseEdit.events({
 		changes.unsubs = [];
 
 		if (instance.simpleRoleSelection) {
-			instance.data.roles.forEach((role) => {
+			data.roles.forEach((role) => {
 				changes.roles[role] = true;
 			});
 			if (instance.simpleSelectedRole.get() === 'mentor') {
