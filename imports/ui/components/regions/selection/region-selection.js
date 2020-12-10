@@ -21,7 +21,7 @@ Template.regionSelectionWrap.onCreated(function () {
 
 Template.regionDisplay.helpers({
 	currentRegion() {
-		return Regions.findOne(Session.get('region'));
+		return Regions.currentRegion();
 	},
 });
 

@@ -47,6 +47,19 @@ const regions = [{
 	region: 'TG',
 	loc: [47.556, 8.8965],
 	tz: 'Europe/Zurich',
+}, {
+	name: 'Online',
+	_id: '987sdfgnDSDf238dd',
+	tz: 'Europe/Zurich',
+	custom: {
+		siteName: 'Jitsiland',
+		siteStage: 'Online',
+		headerLogo: {
+			src: 'sveb_logo.png',
+			alt: 'Online Logo',
+		},
+		mailLogo: 'mails/sveb.png',
+	},
 },
 ];
 export default regions;

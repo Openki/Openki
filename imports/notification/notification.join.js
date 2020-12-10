@@ -81,6 +81,17 @@ notificationJoin.Model = function (entry) {
 				}
 			}
 
+			let siteName;
+			let mailLogo;
+			if (course.region) {
+				const region = Regions.findOne(course.region);
+				if (region && region.custom) {
+					siteName = region.custom.siteName;
+					mailLogo = region.custom.mailLogo;
+				}
+			}
+			siteName = siteName || Meteor.settings.public.siteName;
+
 			return (
 				{
 					course,
@@ -91,6 +102,8 @@ notificationJoin.Model = function (entry) {
 					roleTitle,
 					message: HtmlTools.plainToHtml(body.message),
 					figures,
+					customSiteName: siteName,
+					customMailLogo: mailLogo,
 				}
 			);
 		},
