@@ -16,15 +16,14 @@
 							<td width="45" valign="top" style="padding: 0px 10px 0px 20px;">
 								<a href="{{siteUrl}}">
 								<img src="{{logo.url}}"
-									width="45"
 									height="45"
 									border="0"
-									alt="{{siteName}} Logo"
+									alt="{{customSiteName}} Logo"
 									style="padding-bottom: 0px; outline:none; text-decoration:none; -ms-interpolation-mode: bicubic; border:none;">
 								</a>
 								</td>
 							<td width="455" style="padding: 0px; font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter;">
-								<a href="{{siteUrl}}" style="color: #fff !important; text-decoration: none !important;">{{siteName}}</a>
+								<a href="{{siteUrl}}" style="color: #fff !important; text-decoration: none !important;">{{customSiteName}}</a>
 							</td>
 						</tr>
 				</table>
@@ -67,7 +66,7 @@
 					<tr>
 						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
 							<a href="{{unsubLink}}" style="color:#fff !important; text-decoration: underline;">
-								{{mf "notification.event.mail.unsubLink" LOCALE=locale}}
+								{{mf "notification.event.mail.unsubLink" SITENAME=siteName LOCALE=locale}}
 							</a>
 							&nbsp;
 							<a href="{{urlFor 'profile'}}" style="color:#fff !important; text-decoration: underline;">

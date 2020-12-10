@@ -102,7 +102,7 @@ Template.groupDetails.onCreated(function () {
 
 Template.groupDetails.helpers({
 	isFeatured() {
-		const region = Regions.findOne(Session.get('region'));
+		const region = Regions.currentRegion();
 		return region && region.featuredGroup === this.group._id;
 	},
 
