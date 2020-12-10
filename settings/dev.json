@@ -1,7 +1,6 @@
 {
-	"testdata": 1,
 	"admins": ["greg", "FeeLing", "IvanZ"],
-	"robots": false,
+	"testdata": true,
 	"public": {
 		"siteName": "Hmmm",
 		"siteStage": "DEV",
@@ -9,88 +8,89 @@
 		"discussionLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" },
 		"ogLogo": { "src": "openki_logo_2018.png"},
 		"mailLogo": "mails/openki.png",
-		"pricePolicyEnabled": false,
+		"regionSelection": { "minNumber": 5 },
+		"pricePolicyEnabled": true,
 		"footerLinks":
-			[	{ "link": "http://about.openki.net/"
-				, "key": "footer.aboutOpenki"
-				, "title_key": "navigation.footer.about.title"
-				}
-			,	{ "link": "/FAQ"
-				, "key": "main.faq_link"
-				, "title_key": "navigation.footer.faq.title"
-				}
-			,	{ "link": "https://gitlab.com/Openki/Openki/"
-				, "text": "GitLab"
-				, "title_key": "navigation.footer.codeOnGitLab"
-				}
-			],
+		[	{ "link": "http://about.openki.net/"
+			, "key": "footer.aboutOpenki"
+			, "title_key": "navigation.footer.about.title"
+			}
+		,	{ "link": "/FAQ"
+			, "key": "main.faq_link"
+			, "title_key": "navigation.footer.faq.title"
+			}
+		,	{ "link": "https://gitlab.com/Openki/Openki/"
+			, "text": "GitLab"
+			, "title_key": "navigation.footer.codeOnGitLab"
+			}
+		],
 		"faqLink": "/FAQ",
 		"courseGuideLink": null,
 		"aboutLink": "https://about.openki.net",
-		"categories": {
-			"sports":
-				[
-					"martialarts",
-					"teamsport",
-					"artistry"
-				],
-			"handicraft":
-				[
-					"metalwood",
-					"electronics",
-					"fabric",
-					"gardening",
-					"construction"
-				],
-			"sciences":
-				[
-					"geography",
-					"physics",
-					"medicine",
-					"mathematics",
-					"chemistry",
-					"biology"
-				],
-			"humanities":
-				[
-					"languages",
-					"history",
-					"sociology",
-					"politics",
-					"philosophy",
-					"lawbusiness"
-				],
-			"culture":
-				[
-					"literature",
-					"theatre",
-					"music",
-					"dance",
-					"fineart",
-					"design",
-					"photography",
-					"film",
-					"cooking",
-					"subculture"
-				],
-			"computer":
-				[
-					"internet",
-					"programming",
-					"operating"
-				],
-			"misc":
-				[
-					"♥undefined♥",
-					"experimental",
-					"spiritual",
-					"education",
-					"ecology"
-				]
+		"categories": {"sports":
+			[
+				"martialarts",
+				"teamsport",
+				"artistry"
+			],
+		"handicraft":
+			[
+				"metalwood",
+				"electronics",
+				"fabric",
+				"gardening",
+				"construction"
+			],
+		"sciences":
+			[
+				"geography",
+				"physics",
+				"medicine",
+				"mathematics",
+				"chemistry",
+				"biology"
+			],
+		"humanities":
+			[
+				"languages",
+				"history",
+				"sociology",
+				"politics",
+				"philosophy",
+				"lawbusiness"
+			],
+		"culture":
+			[
+				"literature",
+				"theatre",
+				"music",
+				"dance",
+				"fineart",
+				"design",
+				"photography",
+				"film",
+				"cooking",
+				"subculture"
+			],
+		"computer":
+			[
+				"internet",
+				"programming",
+				"operating"
+			],
+		"misc":
+			[
+				"♥undefined♥",
+				"experimental",
+				"spiritual",
+				"education",
+				"ecology"
+			]
 		}
 	},
 	"siteEmail": "HMMM@legit.example", 
 	"reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"},
+	"robots": false, 
 	"printLog": true,
 	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }
 }
