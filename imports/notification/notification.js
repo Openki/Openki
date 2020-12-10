@@ -70,14 +70,17 @@ Notification.send = function (entry) {
 				const vars = model.vars(userLocale, user);
 
 				const fromAddress = vars.fromAddress
-								|| Accounts.emailTemplates.from;
+					|| Accounts.emailTemplates.from;
 
 				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken });
+				// For everything that is global use siteName from global settings, eg. unsubscribe
 				vars.siteName = siteName;
+				// For everything context specifig us customSiteName from the region, eg. courses
+				vars.customSiteName = vars.customSiteName || vars.siteName;
 				vars.siteUrl = Meteor.absoluteUrl();
 				vars.locale = userLocale;
 				vars.username = username;
-				vars.logo = logo(Meteor.settings.public.mailLogo);
+				vars.logo = logo(vars.customMailLogo || Meteor.settings.public.mailLogo);
 
 				let message = SSR.render(model.template, vars);
 

@@ -82,7 +82,7 @@ Users.currentUser = function () {
   */
 User.prototype.mayPromoteWith = function (group) {
 	const groupId = IdTools.extract(group);
-	if (!groupId) {
+	if (!groupId || !this.groups) {
 		return false;
 	}
 	return this.groups.indexOf(groupId) >= 0;

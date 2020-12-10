@@ -99,6 +99,14 @@ notificationEvent.Model = function (entry) {
 				venueLine = [venue.name, venue.address].filter(Boolean).join(', ');
 			}
 
+			let siteName;
+			let mailLogo;
+			if (region.custom) {
+				siteName = region.custom.siteName;
+				mailLogo = region.custom.mailLogo;
+			}
+			siteName = siteName || Meteor.settings.public.siteName;
+
 			return (
 				{
 					event,
@@ -115,6 +123,8 @@ notificationEvent.Model = function (entry) {
 					new: entry.body.new,
 					subject,
 					additionalMessage: entry.body.additionalMessage,
+					customSiteName: siteName,
+					customMailLogo: mailLogo,
 				}
 			);
 		},
