@@ -4,6 +4,7 @@ import { Mongo } from 'meteor/mongo';
 // ======== DB-Model: ========
 // _id              -> ID
 // name             -> String
+// nameEn           -> String
 // loc              -> Geodata {type:Point, coordinates: [long, lat]}  (not lat-long !) (Optional)
 // timeZone         -> String,  ex: "UTC+01:00"
 // courseCount      -> Number of courses in that region, calculated field
