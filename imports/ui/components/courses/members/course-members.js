@@ -129,7 +129,7 @@ Template.courseMember.helpers({
 
 	maySubscribeToTeam() {
 		const change = Template.instance().subscribeToTeam();
-		return change && change.validFor(Meteor.user());
+		return change?.validFor(Meteor.user());
 	},
 
 	rolelistIcon(roletype) {

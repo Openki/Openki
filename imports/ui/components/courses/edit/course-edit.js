@@ -56,7 +56,7 @@ Template.courseEdit.onCreated(function () {
 	this.autorun(() => {
 		let internalOption = false;
 		const user = Meteor.user();
-		if (!this.data.isFrame && this.data.group && (user && user.groups)) {
+		if (!this.data.isFrame && this.data.group && (user?.groups)) {
 			// show only if user is in the given group
 			internalOption = user.groups.includes(this.data.group);
 		}
@@ -169,7 +169,7 @@ Template.courseEdit.helpers({
 
 	hasRole() {
 		const instance = Template.instance();
-		return instance.data && instance.data.members && HasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
+		return instance.data?.members && HasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
 	},
 
 	showRegionSelection() {
@@ -290,7 +290,7 @@ Template.courseEdit.events({
 		event.preventDefault();
 
 		const { data } = instance;
-		const hasTeamGroups = Boolean(data.teamGroups && data.teamGroups.length);
+		const hasTeamGroups = Boolean(data.teamGroups?.length);
 
 		let internal;
 		if (instance.showInternalCheckbox.get()) {
