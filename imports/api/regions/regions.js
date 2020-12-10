@@ -31,13 +31,14 @@ if (Meteor.isServer) {
 /**
  * Returns the region from the db based on the session setting.
  * @returns {{
-	_id: string
-	name: string
-	loc?:  { type: Point, coordinates: [long, lat] }
-	timeZone: string
-	courseCount: number
-	futureEventCount: number
-	featuredGroup: string
+	_id: string,
+	name: string,
+	nameEn: string,
+	loc?:  { type: Point, coordinates: [long, lat] },
+	timeZone: string,
+	courseCount: number,
+	futureEventCount: number,
+	featuredGroup: string,
 	custom?: {
 		siteName: string,
 		siteStage: string,
