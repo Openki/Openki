@@ -203,7 +203,7 @@ Template.showLogEntry.helpers(
 	{
 		date() {
 			const { date } = Template.instance().filter.toParams();
-			return (date?.toISOString()) || '';
+			return date?.toISOString() || '';
 		},
 		shortId(id) {
 			return id.substr(0, 8);

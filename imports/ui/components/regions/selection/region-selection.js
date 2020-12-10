@@ -45,7 +45,7 @@ Template.regionSelection.onCreated(function () {
 		this.state.set('showAllRegions', search !== '');
 	});
 
-	this.minNumberOfRegionInSelection = (Meteor.settings.public.regionSelection?.minNumber) || 3;
+	this.minNumberOfRegionInSelection = Meteor.settings.public.regionSelection?.minNumber || 3;
 
 	/**
 	 * Query some regions

@@ -47,6 +47,7 @@ module.exports = {
 		'object-shorthand': ['error', 'always'],
 		'prefer-destructuring': ['error', { object: false, array: false }],
 		'no-multiple-empty-lines': ['error', { max: 2 }],
+		'no-extra-parens': ['error'],
 
 		//disabled rules
 		'func-names': [0],

@@ -56,7 +56,7 @@ Template.courseEdit.onCreated(function () {
 	this.autorun(() => {
 		let internalOption = false;
 		const user = Meteor.user();
-		if (!this.data.isFrame && this.data.group && (user?.groups)) {
+		if (!this.data.isFrame && this.data.group && user?.groups) {
 			// show only if user is in the given group
 			internalOption = user.groups.includes(this.data.group);
 		}

@@ -84,7 +84,7 @@ Template.languageSelection.helpers({
 		};
 
 		const percent = this.lg === mfPkg.native ? 100 : getTransPercent();
-		const rating = percent >= 75 && 'well-translated';
+		const rating = (percent >= 75) && 'well-translated';
 
 		return { percent, rating };
 	},
