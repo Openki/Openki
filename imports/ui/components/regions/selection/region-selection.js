@@ -47,7 +47,7 @@ Template.regionSelection.onCreated(function () {
 
 	this.minNumberOfRegionInSelection = (Meteor.settings.public
 		&& Meteor.settings.public.regionSelection
-		&& Meteor.settings.public.regionSelection.minNumber) || 3;
+		&& Meteor.settings.public.regionSelection.minNumber) || 5;
 
 	/**
 	 * Query some regions
