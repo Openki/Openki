@@ -49,7 +49,7 @@ if (Meteor.isClient) {
 				.then(waitFor(() => {
 					assert(
 						jQuery('.course-details').length > 0,
-						'Details of the new course are shown',
+						`Details of the new course ${randomTitle} are shown`,
 					);
 				}))
 				.then(waitFor(() => {

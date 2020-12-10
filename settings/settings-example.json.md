@@ -23,6 +23,7 @@ This file descripts all configurations and customization options. Remove the com
 			"src": "openki_logo_2018.png" // The image to be shown in social media 
 		},
 		"mailLogo": "mails/openki.png",
+		"regionSelection": { "minNumber": 3 }, // The minimum number of regions displayed in the Regions selection.
 		"matomo": {
 			"url": "https://analytics.mydomain.com/", 
 			"site": 1 // Matomo id

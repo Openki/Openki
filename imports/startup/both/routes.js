@@ -175,11 +175,17 @@ Router.map(function () {
 		data() {
 			const predicates = {
 				region: Predicates.id,
-				group: Predicates.id,
+				addTeamGroups: Predicates.ids,
 				neededRoles: Predicates.ids,
 				internal: Predicates.flag,
 			};
 			const params = Filtering(predicates).read(this.params.query).done().toQuery();
+
+			if (params.addTeamGroups) {
+				// For security reasons only 5 groups are allowed
+				params.teamGroups = params.addTeamGroups.slice(0, 5);
+			}
+			delete params.addTeamGroups;
 
 			if (!params.neededRoles) {
 				params.neededRoles = ['mentor'];
