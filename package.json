@@ -42,7 +42,7 @@
     "test": "TEST_BROWSER_DRIVER=chrome meteor test --settings settings/ci.json --once --driver-package meteortesting:mocha",
     "app-test": "TEST_BROWSER_DRIVER=chrome meteor test --settings settings/ci.json --full-app --once --driver-package meteortesting:mocha",
     "test-live": "TEST_WATCH=1 meteor test --settings settings/ci.json --full-app --driver-package meteortesting:mocha",
-    "eslint": "eslint -- . ",
+    "eslint": "eslint -- .",
     "sass-lint": "sass-lint --verbose"
   },
   "repository": {
