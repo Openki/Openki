@@ -14,7 +14,7 @@ const invalidDigestedPassword = {
 if (Meteor.isClient) {
 	describe('Login', function () {
 		this.timeout(30000);
-		it('should work with good credentials', done => {
+		it('should work with good credentials', (done) => {
 			Meteor.call('login',
 				{
 					user: { username: 'greg' },
@@ -29,26 +29,26 @@ if (Meteor.isClient) {
 				});
 		});
 
-		it('should fail with bad username', done => {
+		it('should fail with bad username', (done) => {
 			Meteor.call('login',
 				{
 					user: { username: 'bogus username' },
 					password: gregsDigestedPassword,
 				},
-				err => {
+				(err) => {
 					expect(err).to.be.an('object');
 					expect(err.error).to.equal(403);
 					done();
 				});
 		});
 
-		it('should fail with bad password', done => {
+		it('should fail with bad password', (done) => {
 			Meteor.call('login',
 				{
 					user: { username: 'greg' },
 					password: invalidDigestedPassword,
 				},
-				err => {
+				(err) => {
 					expect(err).to.be.an('object');
 					expect(err.error).to.equal(403);
 					done();

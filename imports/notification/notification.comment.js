@@ -43,7 +43,7 @@ notificationComment.record = function (commentId) {
 					],
 			};
 
-			CourseDiscussions.find(threadSelector).forEach(threadComment => {
+			CourseDiscussions.find(threadSelector).forEach((threadComment) => {
 				const partId = threadComment.userId;
 				if (partId) {
 					recipients.push(partId);
@@ -53,7 +53,7 @@ notificationComment.record = function (commentId) {
 
 		// Don't send to author of comment
 		if (comment.userId) {
-			recipients = recipients.filter(r => r !== comment.userId);
+			recipients = recipients.filter((r) => r !== comment.userId);
 		}
 
 		body.recipients = _.uniq(recipients);

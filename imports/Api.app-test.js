@@ -55,10 +55,10 @@ if (Meteor.isClient) {
 			describe('Get all events', () => {
 				it('returns JSON response', () => {
 					const events = Meteor.absoluteUrl('/api/0/json/events');
-					return fetch(events).then(result => {
+					return fetch(events).then((result) => {
 						assertGoodHeaders(result);
 						return result.json();
-					}).then(json => {
+					}).then((json) => {
 						const { data } = json;
 						assert.isNotEmpty(data);
 					});
@@ -68,14 +68,14 @@ if (Meteor.isClient) {
 			describe('Get events from the future', () => {
 				it('returns nonempty JSON response', () => {
 					const events = Meteor.absoluteUrl('/api/0/json/events?after=now');
-					return fetch(events).then(result => {
+					return fetch(events).then((result) => {
 						assertGoodHeaders(result);
 						return result.json();
-					}).then(json => {
+					}).then((json) => {
 						const { data } = json;
 						assert.isNotEmpty(data);
 
-						const starts = _.pluck(data, 'start').map(datestr => new Date(datestr));
+						const starts = _.pluck(data, 'start').map((datestr) => new Date(datestr));
 
 						// Because we start at the current time, this test will also detect events
 						// in the past as order violation
@@ -84,21 +84,21 @@ if (Meteor.isClient) {
 				});
 				it('sorts by start-date', () => {
 					const events = Meteor.absoluteUrl('/api/0/json/events?after=now&sort=start');
-					return fetch(events).then(result => {
+					return fetch(events).then((result) => {
 						assertGoodHeaders(result);
 						return result.json();
-					}).then(json => {
-						const starts = _.pluck(json.data, 'start').map(datestr => new Date(datestr));
+					}).then((json) => {
+						const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr));
 						starts.forEach(AssertAscending(new Date(), 'ascending ordering of start-dates was requested'));
 					});
 				});
 
 				it('sorts by title, descending', () => {
 					const events = Meteor.absoluteUrl('/api/0/json/events?after=now&sort=-title');
-					return fetch(events).then(result => {
+					return fetch(events).then((result) => {
 						assertGoodHeaders(result);
 						return result.json();
-					}).then(json => {
+					}).then((json) => {
 						const titles = _.pluck(json.data, 'title');
 						titles.reverse();
 						titles.forEach(AssertAscendingString('', 'descending ordering of titles was requested'));
@@ -110,13 +110,13 @@ if (Meteor.isClient) {
 				it('finds events for group', () => {
 					const groupId = '43df1efc02'; // "DIY-BE" group
 					const events = Meteor.absoluteUrl(`/api/0/json/events?group=${groupId}`);
-					return fetch(events).then(result => {
+					return fetch(events).then((result) => {
 						assertGoodHeaders(result);
 						return result.json();
-					}).then(json => {
+					}).then((json) => {
 						const { data } = json;
 						assert.isNotEmpty(data);
-						data.forEach(event => {
+						data.forEach((event) => {
 							assert.include(event.groups, groupId, 'only events for selected group');
 						});
 					});
@@ -126,14 +126,14 @@ if (Meteor.isClient) {
 			describe('Get events from the past', () => {
 				it('should return JSON response', () => {
 					const events = Meteor.absoluteUrl('/api/0/json/events?before=now');
-					return fetch(events).then(result => {
+					return fetch(events).then((result) => {
 						assertGoodHeaders(result);
 						return result.json();
-					}).then(json => {
+					}).then((json) => {
 						const { data } = json;
 						assert.isNotEmpty(data);
 
-						const starts = _.pluck(json.data, 'start').map(datestr => new Date(datestr));
+						const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr));
 
 						// Because we start at the current time, this test will also detect if events from the
 						// future as order violation
@@ -147,7 +147,7 @@ if (Meteor.isClient) {
 			describe('Get all venues', () => {
 				it('should return JSON response', () => {
 					const venues = Meteor.absoluteUrl('/api/0/json/venues');
-					return fetch(venues).then(result => {
+					return fetch(venues).then((result) => {
 						assertGoodHeaders(result);
 					});
 				});
@@ -158,11 +158,11 @@ if (Meteor.isClient) {
 					const testistan = '9JyFCoKWkxnf8LWPh';
 					const venues = Meteor.absoluteUrl(`/api/0/json/venues?region=${testistan}`);
 					return fetch(venues)
-						.then(result => result.json())
-						.then(json => {
+						.then((result) => result.json())
+						.then((json) => {
 							const { data } = json;
 							assert.isNotEmpty(data);
-							data.forEach(element => {
+							data.forEach((element) => {
 								assert.equal(element.region, testistan, 'region must be testistan');
 							});
 						});

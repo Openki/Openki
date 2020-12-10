@@ -45,7 +45,7 @@ Template.introduction.helpers({
 			screenSize = 'screenXS';
 		}
 
-		return (triggerSize === screenSize);
+		return triggerSize === screenSize;
 	},
 });
 

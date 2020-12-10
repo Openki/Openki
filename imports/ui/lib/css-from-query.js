@@ -22,7 +22,7 @@ export default class CssFromQuery {
 	  * @return {CssFromQuery Object}
 	  */
 	addCustomizableProperties(properties) {
-		properties.forEach(property => {
+		properties.forEach((property) => {
 			const [key, name, selector] = property;
 			this.customizableProperties.push({ key, name, selector });
 		});
@@ -31,7 +31,7 @@ export default class CssFromQuery {
 
 	getCssRules() {
 		this.cssRules = [];
-		this.customizableProperties.forEach(property => {
+		this.customizableProperties.forEach((property) => {
 			const queryValue = this.query[property.key];
 			let cssValue;
 			if (typeof queryValue !== 'undefined') {

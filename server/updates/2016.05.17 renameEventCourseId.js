@@ -5,7 +5,7 @@ const UpdatesAvailable = [];
 UpdatesAvailable.renameEventCourseId = function () {
 	let updated = 0;
 
-	Events.find({}).fetch().forEach(originalEvent => {
+	Events.find({}).fetch().forEach((originalEvent) => {
 		const event = { ...originalEvent };
 		event.courseId = event.course_id;
 		delete event.course_id;

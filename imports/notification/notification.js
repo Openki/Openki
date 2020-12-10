@@ -30,13 +30,13 @@ Notification.send = function (entry) {
 			tr: 'Notification.SendResult',
 			rel: entry._id,
 		},
-	).forEach(result => {
+	).forEach((result) => {
 		concluded[result.body.recipient] = true;
 	});
 
 	const model = Notification[entry.body.model].Model(entry);
 
-	_.each(entry.body.recipients, recipientId => {
+	_.each(entry.body.recipients, (recipientId) => {
 		if (!concluded[recipientId]) {
 			let mail = null;
 			let unsubToken = null;

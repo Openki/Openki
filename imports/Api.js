@@ -19,19 +19,19 @@ const maybeUrl = function (route, context) {
 
 const Api = {
 	groups:
-		apiResponse(Groups, originalGroup => {
+		apiResponse(Groups, (originalGroup) => {
 			const group = { ...originalGroup };
 			group.link = Router.url('groupDetails', group);
 			return group;
 		}),
 	venues:
-		apiResponse(Venues, originalVenue => {
+		apiResponse(Venues, (originalVenue) => {
 			const venue = { ...originalVenue };
 			venue.link = Router.url('venueDetails', venue);
 			return venue;
 		}),
 	events:
-		apiResponse(Events, ev => {
+		apiResponse(Events, (ev) => {
 			const evr = {
 				id: ev._id,
 				title: ev.title,
@@ -76,7 +76,7 @@ const Api = {
 
 			evr.groups = [];
 			const groups = ev.groups || [];
-			groups.forEach(groupId => {
+			groups.forEach((groupId) => {
 				const group = Groups.findOne(groupId);
 				if (group) {
 					evr.groups.push(

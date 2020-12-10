@@ -18,7 +18,7 @@ Template.verifyEmail.helpers({
 Template.verifyEmail.events({
 	'click .js-verify-mail-btn'(event, instance) {
 		instance.sending.set(true);
-		Meteor.call('sendVerificationEmail', err => {
+		Meteor.call('sendVerificationEmail', (err) => {
 			if (err) {
 				instance.sending.set(false);
 				Alert.serverError(err, 'Failed to send verification mail');

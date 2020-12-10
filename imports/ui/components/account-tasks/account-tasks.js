@@ -23,7 +23,7 @@ Template.accountTasks.onCreated(function () {
 });
 
 Template.accountTasks.helpers({
-	activeAccountTask: task => Template.instance().accountTask.get() === task,
+	activeAccountTask: (task) => Template.instance().accountTask.get() === task,
 	pleaseLogin: () => Session.get('pleaseLogin'),
 });
 
@@ -166,7 +166,7 @@ Template.loginFrame.events({
 		const password = instance.$('.js-password').val();
 
 		instance.busy('logging-in');
-		Meteor.loginWithPassword(user, password, err => {
+		Meteor.loginWithPassword(user, password, (err) => {
 			instance.busy(false);
 			if (err) {
 				instance.errors.add(err.reason);
@@ -194,7 +194,7 @@ Template.loginFrame.events({
 
 		instance.busy(service);
 		Meteor[loginMethod]({
-		}, err => {
+		}, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.serverError(err, '');
@@ -309,7 +309,7 @@ Template.registerFrame.events({
 		instance.busy('registering');
 		Accounts.createUser({
 			username, password, email, profile: { locale: Session.get('locale') },
-		}, err => {
+		}, (err) => {
 			instance.busy(false);
 			if (err) {
 				instance.errors.add(err.reason);
@@ -361,7 +361,7 @@ Template.forgotPwdFrame.events({
 		instance.busy('requesting-pw-reset');
 		Accounts.forgotPassword({
 			email: instance.$('.js-reset-pw-email').val(),
-		}, err => {
+		}, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.serverError(err, 'We were unable to send a mail to this address');

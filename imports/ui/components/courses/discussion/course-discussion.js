@@ -129,7 +129,7 @@ Template.post.helpers({
 			.fetch();
 
 		const limit = instance.limit.get();
-		return limit ? replies.slice(-(limit)) : replies;
+		return limit ? replies.slice(-limit) : replies;
 	},
 
 	notAllResponsesShown() {
@@ -325,7 +325,7 @@ Template.post.events({
 
 		instance.editing.set(false);
 		instance.busy('saving');
-		Meteor.call(method, comment, err => {
+		Meteor.call(method, comment, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.serverError(err, 'Posting your comment went wrong');
@@ -342,7 +342,7 @@ Template.post.events({
 	'click button.js-delete-comment'(event) {
 		Tooltips.hide();
 		event.stopImmediatePropagation();
-		Meteor.call('courseDiscussion.deleteComment', this._id, err => {
+		Meteor.call('courseDiscussion.deleteComment', this._id, (err) => {
 			if (err) {
 				Alert.serverError(err, 'Could not delete comment');
 			} else {

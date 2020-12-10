@@ -149,7 +149,7 @@ function updateTimes(template, updateEnd) {
  * @param {String} - the user-input
  * @return - an integer if the input passed validation.
  */
-const validateMaxParticipants = maxParticipants => {
+const validateMaxParticipants = (maxParticipants) => {
 	const intVal = parseInt(maxParticipants, 10);
 	/* eslint-disable-next-line eqeqeq */
 	if (intVal != maxParticipants) {
@@ -234,7 +234,7 @@ Template.eventEdit.helpers({
 			Events
 				.find(AffectedReplicaSelectors(this))
 				.fetch()
-				.filter(replica => !replica.sameTime(this))
+				.filter((replica) => !replica.sameTime(this))
 		);
 	},
 

@@ -26,7 +26,7 @@ Meteor.publish(null, function () {
 	return Meteor.users.find(this.userId);
 });
 
-Meteor.publish('userSearch', search => {
+Meteor.publish('userSearch', (search) => {
 	check(search, String);
 	return UserSearchPrefix(search, { fields: { username: 1 }, limit: 10 });
 });

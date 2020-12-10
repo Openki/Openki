@@ -249,7 +249,7 @@ Template.eventEditVenue.events({
 					'Found no results for address "{ADDRESS}"',
 				));
 			}
-			_.each(found, foundLocation => {
+			_.each(found, (foundLocation) => {
 				const marker = {
 					loc: { type: 'Point', coordinates: [foundLocation.lon, foundLocation.lat] },
 					proposed: true,

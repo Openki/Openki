@@ -84,7 +84,7 @@ if (Meteor.settings.testdata) {
 
 			// Always use same id for same group to avoid broken urls while testing
 			group._id = ensure.fixedId([group.name, group.description]);
-			group.members = _.map(group.members, name => ensure.user(name)._id);
+			group.members = _.map(group.members, (name) => ensure.user(name)._id);
 			Groups.insert(group);
 		}
 
@@ -245,7 +245,7 @@ if (Meteor.settings.testdata) {
 			'Moscow',
 		];
 
-		Courses.find().forEach(course => {
+		Courses.find().forEach((course) => {
 			const eventCount = Math.floor((prng() * 1.6) ** 10);
 			for (let n = 0; n < eventCount; n += 1) {
 				const event = {};
@@ -289,7 +289,7 @@ if (Meteor.settings.testdata) {
 
 				// Quarter hours should be most common
 				if (prng() > 0.05) {
-					date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15);
+					date.setMinutes(Math.floor(date.getMinutes() / 15) * 15);
 				}
 
 				const regionZone = LocalTime.zone(event.region);
@@ -321,7 +321,7 @@ if (Meteor.settings.testdata) {
 		let count = 0;
 
 		const userCount = Meteor.users.find().count();
-		Courses.find().forEach(course => {
+		Courses.find().forEach((course) => {
 			const createCount = Math.floor((prng() * 2) ** 4);
 			const courseMembers = course.members.length;
 			let { description } = course;
@@ -335,7 +335,7 @@ if (Meteor.settings.testdata) {
 				comment.text = HtmlTools.saneHtml(_.sample(words, 5).join(' ') + _.sample(words, Math.floor(prng() * 30)).join(' '));
 
 				comment.time_created = sometimesAfter(course.time_created);
-				comment.time_updated = (prng() < 0.9)
+				comment.time_updated = prng() < 0.9
 					? comment.time_created
 					: sometimesAfter(comment.time_created);
 

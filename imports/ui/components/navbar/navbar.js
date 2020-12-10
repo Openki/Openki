@@ -28,7 +28,7 @@ Template.navbar.onRendered(function () {
 			activeNavLink.toggleClass('navbar-link-covering', notAtTop);
 		});
 	} else {
-		$(document).click(event => {
+		$(document).click((event) => {
 			if (this.$(event.target).parents('.navbar-collapse').length === 0) {
 				this.$('.navbar-collapse').collapse('hide');
 			}

@@ -9,7 +9,7 @@ const UpdatesAvailable = [];
 UpdatesAvailable[updateName] = function () {
 	let count = 0;
 
-	Events.find({ replicaOf: { $not: { $size: 0 } } }).forEach(event => {
+	Events.find({ replicaOf: { $not: { $size: 0 } } }).forEach((event) => {
 		try {
 			const regionZone = LocalTime.zone(event.region);
 			Events.update(event._id, {

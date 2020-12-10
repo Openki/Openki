@@ -71,7 +71,7 @@ Template.regionSelection.onCreated(function () {
 		});
 	};
 
-	this.changeRegion = regionId => {
+	this.changeRegion = (regionId) => {
 		const changed = !Session.equals('region', regionId);
 
 		try {

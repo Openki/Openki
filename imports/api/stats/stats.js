@@ -3,7 +3,7 @@ import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
 
 
-const getCourses = regionId => {
+const getCourses = (regionId) => {
 	const filter = {};
 	if (regionId && regionId !== 'all_regions') {
 		filter.region = regionId;
@@ -11,17 +11,17 @@ const getCourses = regionId => {
 	return Courses.find(filter);
 };
 
-const getGroupIds = courses => {
+const getGroupIds = (courses) => {
 	const groupIds = [];
-	courses.forEach(course => {
-		course.groups.forEach(group => {
+	courses.forEach((course) => {
+		course.groups.forEach((group) => {
 			if (!groupIds.includes(group)) groupIds.push(group);
 		});
 	});
 	return groupIds;
 };
 
-const getGroupStatsTotal = stats => {
+const getGroupStatsTotal = (stats) => {
 	const totalStats = {
 		group: 'total',
 		numCourses: 0,
@@ -30,7 +30,7 @@ const getGroupStatsTotal = stats => {
 		futureEvents: 0,
 		usersParticipating: 0,
 	};
-	stats.detail.forEach(stat => {
+	stats.detail.forEach((stat) => {
 		totalStats.numCourses += stat.numCourses;
 		totalStats.activeCourses += stat.activeCourses;
 		totalStats.passedEvents += stat.passedEvents;
@@ -40,28 +40,28 @@ const getGroupStatsTotal = stats => {
 	return totalStats;
 };
 
-const getEventStats = courses => {
+const getEventStats = (courses) => {
 	const now = new Date();
 	let passedEvents = 0;
 	let futureEvents = 0;
-	courses.forEach(course => {
+	courses.forEach((course) => {
 		passedEvents += Events.find({ courseId: course._id, end: { $lt: now } }).count();
 		futureEvents += Events.find({ courseId: course._id, end: { $gte: now } }).count();
 	});
 	return { passedEvents, futureEvents };
 };
 
-const getUsersParticpating = courses => {
+const getUsersParticpating = (courses) => {
 	let usersParticipating = 0;
-	courses.forEach(course => {
+	courses.forEach((course) => {
 		usersParticipating += course.members.length;
 	});
 	return usersParticipating;
 };
 
-const getActiveCoursesStats = courses => {
+const getActiveCoursesStats = (courses) => {
 	let activeCourses = 0;
-	courses.forEach(course => {
+	courses.forEach((course) => {
 		const query = {
 			courseId: course._id,
 			$and: [
@@ -119,7 +119,7 @@ const Stats = {
 		);
 		const stats = { detail: [] };
 
-		groupIds.forEach(groupId => {
+		groupIds.forEach((groupId) => {
 			stats.detail.push(
 				getGroupStats(regionFilter, groupId),
 			);

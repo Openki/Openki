@@ -68,7 +68,7 @@ OEvent.prototype.editableBy = function (user) {
 };
 
 OEvent.prototype.sameTime = function (event) {
-	return ['startLocal', 'endLocal'].every(time => {
+	return ['startLocal', 'endLocal'].every((time) => {
 		const timeA = LocalTime.fromString(this[time]);
 		const timeB = LocalTime.fromString(event[time]);
 
@@ -268,7 +268,7 @@ Events.findFilter = function (filter, limit, skip, sort) {
 
 	if (filter.search) {
 		const searchTerms = filter.search.split(/\s+/);
-		searchTerms.forEach(searchTerm => {
+		searchTerms.forEach((searchTerm) => {
 			and.push({
 				$or: [
 					{ title: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },

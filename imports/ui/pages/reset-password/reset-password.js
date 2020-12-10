@@ -80,7 +80,7 @@ Template.resetPassword.events({
 
 		const password = instance.$('.js-pwd-reset').val();
 		const token = Template.instance().data;
-		Accounts.resetPassword(token, password, err => {
+		Accounts.resetPassword(token, password, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.serverError(

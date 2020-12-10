@@ -26,7 +26,7 @@ const ReplicaSync = function (event, updateChangedReplicas) {
 		const startTime = { hour: startMoment.hour(), minute: startMoment.minute() };
 		const timeDelta = moment(changes.end).diff(startMoment);
 
-		Events.find(AffectedReplicaSelectors(event)).forEach(replica => {
+		Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
 			const replicaChanges = { ...changes }; // Shallow clone
 
 			const updateTime = changes.start
@@ -142,7 +142,7 @@ Meteor.methods({
 
 			let testedGroups = [];
 			if (changes.groups) {
-				testedGroups = _.map(changes.groups, groupId => {
+				testedGroups = _.map(changes.groups, (groupId) => {
 					const group = Groups.findOne(groupId);
 					if (!group) {
 						throw new Meteor.Error(404, `no group with id ${groupId}`);
@@ -327,7 +327,7 @@ Meteor.methods({
 	// Update the venue field for all events matching the selector
 	'event.updateVenue'(selector) {
 		const idOnly = { fields: { _id: 1 } };
-		Events.find(selector, idOnly).forEach(originalEvent => {
+		Events.find(selector, idOnly).forEach((originalEvent) => {
 			const eventId = originalEvent._id;
 
 			/* eslint-disable-next-line consistent-return */
@@ -378,7 +378,7 @@ Meteor.methods({
 							resolve(result.result.nModified === 0);
 						}
 					});
-			}).catch(reason => {
+			}).catch((reason) => {
 				/* eslint-disable-next-line no-console */
 				console.log('Failed event.updateVenue: ', reason);
 			});
@@ -388,7 +388,7 @@ Meteor.methods({
 	// Update the group-related fields of events matching the selector
 	'event.updateGroups'(selector) {
 		const idOnly = { fields: { _id: 1 } };
-		Events.find(selector, idOnly).forEach(event => {
+		Events.find(selector, idOnly).forEach((event) => {
 			Events.updateGroups(event._id);
 		});
 	},

@@ -33,7 +33,7 @@ UpdatesAvailable[updateName] = function () {
 	setTz('JEhc83S4SdsJE0e', 'Europe/Zurich'); // Fribourg
 	setTz('wvoJEz0eSerrAJ', 'Europe/Zurich'); // Winterthur
 
-	Events.find().forEach(event => {
+	Events.find().forEach((event) => {
 		try {
 			const regionZone = LocalTime.zone(event.region);
 			Events.update(event._id, {

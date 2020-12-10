@@ -68,7 +68,7 @@ Template.courseEvents.helpers({
 
 	haveMoreEvents() {
 		const instance = Template.instance();
-		return instance.haveMoreEvents() && (!instance.showAllEvents.get());
+		return instance.haveMoreEvents() && !instance.showAllEvents.get();
 	},
 
 	ready() {

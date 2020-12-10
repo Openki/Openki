@@ -22,7 +22,7 @@ if (Meteor.isClient) {
 			return subscriptionsReady()
 				.then(waitFor(haveEditfield))
 				.then(() => new Promise((done, reject) => {
-					Meteor.loginWithPassword('Seee', 'greg', err => {
+					Meteor.loginWithPassword('Seee', 'greg', (err) => {
 						if (err) {
 							reject(err);
 						} else {

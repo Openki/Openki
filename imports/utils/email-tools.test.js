@@ -5,9 +5,9 @@ import IsEmail from './email-tools';
 msgfmt.init('en');
 
 describe('Email validation', () => {
-	const isEmail = str => expect(IsEmail(str)).to.be.true;
-	const isNotEmail = str => expect(IsEmail(str)).to.be.false;
-	const fails = notaString => expect(() => IsEmail(notaString)).to.throw();
+	const isEmail = (str) => expect(IsEmail(str)).to.be.true;
+	const isNotEmail = (str) => expect(IsEmail(str)).to.be.false;
+	const fails = (notaString) => expect(() => IsEmail(notaString)).to.throw();
 
 	it('accepts normal emails', () => {
 		isEmail('Jah7reix.poo0Ooz0@geemail.com');

@@ -183,7 +183,7 @@ Template.map.onRendered(function () {
 	const fitBounds = _.debounce(() => {
 		const bounds = L.latLngBounds([]);
 		let count = 0;
-		Object.keys(layers).forEach(layerPos => {
+		Object.keys(layers).forEach((layerPos) => {
 			bounds.extend(layers[layerPos].getBounds());
 			count += 1;
 		});
@@ -192,7 +192,7 @@ Template.map.onRendered(function () {
 
 		// Use center markers when there are no other markers
 		if (count < 1) {
-			Object.keys(centers).forEach(centerPos => {
+			Object.keys(centers).forEach((centerPos) => {
 				bounds.extend(centers[centerPos]);
 				count += 1;
 			});
@@ -240,7 +240,7 @@ Template.map.onRendered(function () {
 							markers.update({}, { $set: { selected: false } });
 							markers.update(mark._id, { $set: { selected: true } });
 						});
-						marker.on('dragend', event => {
+						marker.on('dragend', (event) => {
 							const latLng = event.target.getLatLng();
 							const loc = {
 								type: 'Point',

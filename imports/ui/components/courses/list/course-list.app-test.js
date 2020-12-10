@@ -7,10 +7,10 @@ import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test';
 if (Meteor.isClient) {
 	describe('Frontpage', function () {
 		this.timeout(60000);
-		beforeEach(done => {
+		beforeEach((done) => {
 			Meteor.call('fixtures.clean', done);
 		});
-		beforeEach(done => {
+		beforeEach((done) => {
 			Meteor.call('fixtures.create', done);
 		});
 		it('should list 8 courses for unauthenticated user (Testistan)', () => {
@@ -23,7 +23,7 @@ if (Meteor.isClient) {
 					assert.equal(titles.length, 8, 'expect to see test course titles');
 					return titles;
 				}, 6000))
-				.then(titles => waitFor(() => {
+				.then((titles) => waitFor(() => {
 					assert.equal(titles[0].textContent, 'Sprachaustausch');
 					assert.equal(titles[1].textContent, 'Game Design mit Unity');
 					assert.equal(titles[2].textContent, 'Aikido');

@@ -36,20 +36,20 @@ Template.courseMembers.helpers({
 	},
 
 	ownUserMember() {
-		return this.members.find(member => member.user === Meteor.userId());
+		return this.members.find((member) => member.user === Meteor.userId());
 	},
 
 	sortedMembers() {
 		const { members } = this;
 		members.sort((a, b) => {
-			const aRoles = a.roles.filter(role => role !== 'participant');
-			const bRoles = b.roles.filter(role => role !== 'participant');
+			const aRoles = a.roles.filter((role) => role !== 'participant');
+			const bRoles = b.roles.filter((role) => role !== 'participant');
 			return bRoles.length - aRoles.length;
 		});
 		// check if logged-in user is in members and if so put him on top
 		const userId = Meteor.userId();
-		if (userId && members.some(member => member.user === userId)) {
-			const userArrayPosition = members.findIndex(member => member.user === userId);
+		if (userId && members.some((member) => member.user === userId)) {
+			const userArrayPosition = members.findIndex((member) => member.user === userId);
 			const currentMember = members[userArrayPosition];
 			// remove current user form array and readd him at index 0
 			members.splice(userArrayPosition, 1); // remove
@@ -83,12 +83,12 @@ Template.courseMember.onCreated(function () {
 
 	instance.editableMessage = new Editable(
 		true,
-		(newMessage => {
+		(newMessage) => {
 			const change = new Message(instance.data.course, Meteor.user(), newMessage);
 			processChange(change, () => {
 				Alert.success(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));
 			});
-		}),
+		},
 		mf('roles.message.placeholder', 'My interests...'),
 	);
 
@@ -122,7 +122,7 @@ Template.courseMember.helpers({
 	},
 
 	memberRoles() {
-		return this.member.roles.filter(role => role !== 'participant');
+		return this.member.roles.filter((role) => role !== 'participant');
 	},
 
 	roleShort() { return `roles.${this}.short`; },
@@ -134,7 +134,7 @@ Template.courseMember.helpers({
 
 	rolelistIcon(roletype) {
 		if (roletype !== 'participant') {
-			return Roles.find(role => role.type === roletype).icon;
+			return Roles.find((role) => role.type === roletype).icon;
 		}
 		return '';
 	},
@@ -161,7 +161,7 @@ Template.courseMember.helpers({
 Template.removeFromTeamDropdown.helpers({
 	isNotPriviledgedSelf() {
 		const notPriviledgedUser = !UserPrivilegeUtils.privileged(Meteor.userId(), 'admin');
-		return (this.member.user === Meteor.userId() && notPriviledgedUser);
+		return this.member.user === Meteor.userId() && notPriviledgedUser;
 	},
 });
 

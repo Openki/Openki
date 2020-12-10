@@ -8,7 +8,7 @@ import '/imports/ui/components/buttons/buttons';
 
 import './event-replication.html';
 
-const replicaStartDate = originalDate => {
+const replicaStartDate = (originalDate) => {
 	const originalMoment = moment(originalDate);
 	const startMoment = moment.max(originalMoment, moment());
 	startMoment.day(originalMoment.day());
@@ -52,8 +52,8 @@ Template.eventReplication.onRendered(function () {
 			autoclose: true,
 			startDate: new Date(),
 			format: {
-				toDisplay: date => moment(date).format('L'),
-				toValue: date => moment(date, 'L').toDate(),
+				toDisplay: (date) => moment(date).format('L'),
+				toValue: (date) => moment(date, 'L').toDate(),
 			},
 		});
 
@@ -92,11 +92,11 @@ Template.eventReplication.helpers({
 		return moment(endDate).format('ddd');
 	},
 
-	localDate: date => moment(date).format('l'),
+	localDate: (date) => moment(date).format('l'),
 
-	fullDate: date => moment(date).format('LLLL'),
+	fullDate: (date) => moment(date).format('LLLL'),
 
-	weekDay: date => moment(date).format('ddd'),
+	weekDay: (date) => moment(date).format('ddd'),
 
 	affectedReplicaCount() {
 		Template.instance().subscribe('affectedReplica', this._id);
@@ -107,11 +107,11 @@ Template.eventReplication.helpers({
 
 	replicaDates() {
 		const start = moment(this.start);
-		return Template.instance().activeDays().map(days => moment(start).add(days, 'days'));
+		return Template.instance().activeDays().map((days) => moment(start).add(days, 'days'));
 	},
 });
 
-const getEventFrequency = instance => {
+const getEventFrequency = (instance) => {
 	let startDate = moment(instance.$('#replicateStart').val(), 'L');
 	if (!startDate.isValid()) {
 		return [];
@@ -171,7 +171,7 @@ Template.eventReplication.events({
 		const pickDays = event.dates;
 
 		const origin = moment(instance.data.start).startOf('day');
-		const days = pickDays.map(date => moment(date).diff(origin, 'days'));
+		const days = pickDays.map((date) => moment(date).diff(origin, 'days'));
 		instance.pickDays.set(days);
 	},
 
@@ -189,7 +189,7 @@ Template.eventReplication.events({
 		const replicaDays = instance.activeDays();
 		let removed = 0;
 		let responses = 0;
-		replicaDays.forEach(days => {
+		replicaDays.forEach((days) => {
 			/* create a new event for each time interval */
 			const replicaEvent = {
 				startLocal: LocalTime.toString(moment(startLocal).add(days, 'days')),
@@ -214,7 +214,7 @@ Template.eventReplication.events({
 			// To create a new event, pass an empty Id
 			const eventId = '';
 			const args = { eventId, changes: replicaEvent };
-			Meteor.call('event.save', args, error => {
+			Meteor.call('event.save', args, (error) => {
 				responses += 1;
 				if (error) {
 					Alert.serverError(error, mf(

@@ -72,7 +72,7 @@ Template.profile.helpers({
 		const userID = templateData.user._id;
 		const coursesForRole = [];
 
-		involvedIn.forEach(course => {
+		involvedIn.forEach((course) => {
 			if (HasRoleUser(course.members, role, userID)) {
 				coursesForRole.push(course);
 			}
@@ -178,7 +178,7 @@ Template.profile.events({
 			instance.$('.js-username').val(),
 			instance.$('.js-email').val(),
 			instance.$('.js-notifications').prop('checked'),
-			err => {
+			(err) => {
 				if (err) {
 					instance.errors.add(err.error);
 				} else {
@@ -202,7 +202,7 @@ Template.profile.events({
 				Alert.warning(mf('profile.passwordShort', 'Your desired password is too short, sorry.'));
 				return;
 			}
-			Accounts.changePassword(old, pass, err => {
+			Accounts.changePassword(old, pass, (err) => {
 				if (err) {
 					Alert.serverError(
 						err,

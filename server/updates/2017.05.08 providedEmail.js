@@ -2,13 +2,13 @@ const UpdatesAvailable = [];
 
 UpdatesAvailable['2017.05.08 providedEmail'] = function () {
 	let count = 0;
-	Meteor.users.find({ 'emails.0': null }).forEach(user => {
+	Meteor.users.find({ 'emails.0': null }).forEach((user) => {
 		// Read email-address if provided
 		let providedEmail = false;
 		let verified = true; // Assume verified unless there is a flag that says it's not
 		const services = user.services;
 		if (services) {
-			['facebook', 'google', 'github'].forEach(provider => {
+			['facebook', 'google', 'github'].forEach((provider) => {
 				const provided = services[provider];
 				if (provided?.email) {
 					providedEmail = provided.email;

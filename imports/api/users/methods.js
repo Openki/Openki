@@ -126,7 +126,7 @@ Meteor.methods({
 
 	// Recalculate the groups and badges field
 	'user.updateBadges'(selector) {
-		Meteor.users.find(selector).forEach(originalUser => {
+		Meteor.users.find(selector).forEach((originalUser) => {
 			const userId = originalUser._id;
 
 			/* eslint-disable-next-line consistent-return */
@@ -137,7 +137,7 @@ Meteor.methods({
 				}
 
 				const groups = [];
-				Groups.find({ members: user._id }).forEach(group => {
+				Groups.find({ members: user._id }).forEach((group) => {
 					groups.push(group._id);
 				});
 

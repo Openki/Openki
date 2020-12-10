@@ -5,7 +5,7 @@ const UpdatesApplied = new Meteor.Collection('UpdatesApplied');
 const applyUpdates = function () {
 	const skipInitial = UpdatesApplied.find().count() === 0;
 
-	Object.keys(UpdatesAvailable).forEach(name => {
+	Object.keys(UpdatesAvailable).forEach((name) => {
 		if (UpdatesApplied.find({ name }).count() === 0) {
 			const entry = {
 				name,

@@ -34,15 +34,15 @@ Template.frameSchedule.onCreated(function () {
 
 
 		const rawSeps = (query.sep || '').split(',');
-		const seps = [...new Set(rawSeps.filter(rawSep => rawSep.length) // get rid of 0-length
-			.map(rawSep => { // standardize format
+		const seps = [...new Set(rawSeps.filter((rawSep) => rawSep.length) // get rid of 0-length
+			.map((rawSep) => { // standardize format
 				if (rawSep.length < 3) {
 					return parseInt(`${rawSep}00`, 10);
 				}
 				return parseInt(rawSep, 10);
 			})
-			.filter(hm => !Number.isNaN(hm)) // filter NaN's
-			.map(hm => { // convert to minutes
+			.filter((hm) => !Number.isNaN(hm)) // filter NaN's
+			.map((hm) => { // convert to minutes
 				const h = Math.floor(hm / 100);
 				const m = hm % 100;
 				return h * 60 + m;
@@ -88,7 +88,7 @@ Template.frameSchedule.onCreated(function () {
 		// Load events but keep only the first when they repeat on the same
 		// weekday at the same time.
 		const dedupedEvents = [];
-		Events.findFilter(filter.toQuery()).forEach(event => {
+		Events.findFilter(filter.toQuery()).forEach((event) => {
 			const eventStart = LocalTime.fromString(event.startLocal);
 
 			// Build key that is the same for events of the same course that
@@ -148,7 +148,7 @@ Template.frameSchedule.onCreated(function () {
 		const kinds = {};
 
 		// Place found events into the slots
-		dedupedEvents.forEach(originalEvent => {
+		dedupedEvents.forEach((originalEvent) => {
 			const event = { ...originalEvent };
 			const eventStart = LocalTime.fromString(event.startLocal);
 
@@ -165,7 +165,7 @@ Template.frameSchedule.onCreated(function () {
 
 			const minuteDiff = eventStart.diff(dayStart, 'minutes');
 			const intervalStart = Math.floor(minuteDiff / interval) * interval;
-			const closestSeparator = _.find(separators, sep => sep <= minuteDiff);
+			const closestSeparator = _.find(separators, (sep) => sep <= minuteDiff);
 
 			const mins = Math.max(intervalStart, closestSeparator || 0);
 			intervals[mins] = mins;
@@ -192,7 +192,7 @@ Template.frameSchedule.onCreated(function () {
 		instance.intervals.set(_.values(intervals).sort(numCmp));
 
 		// Build list of most used titles (first few chars)
-		const mostUsedKinds = _.sortBy(_.pairs(kinds), kv => -kv[1]);
+		const mostUsedKinds = _.sortBy(_.pairs(kinds), (kv) => -kv[1]);
 		const kindRank = _.object(_.map(mostUsedKinds.slice(0, 15), (kv, rank) => [kv[0], rank + 1]));
 		instance.kindMap = function (title) {
 			const kindId = title.substr(0, 5);
@@ -204,7 +204,7 @@ Template.frameSchedule.onCreated(function () {
 
 		_.each(slots, (dayslots, min) => {
 			_.each(dayslots, (slot, day) => {
-				slots[min][day] = _.sortBy(slot, event => {
+				slots[min][day] = _.sortBy(slot, (event) => {
 					const dayslotKindRank = (instance.kindMap(event.title) || 100) + 100;
 					const countRank = 10000 - repetitionCount[event.repKey];
 					// We add repetitionCount to the sort criteria so that the
@@ -232,19 +232,19 @@ Template.frameSchedule.helpers({
 	days() {
 		const instance = Template.instance();
 		const scheduleStart = instance.scheduleStart.get();
-		return _.map(instance.days.get(), day => moment(scheduleStart).add(day, 'days').format('dddd'));
+		return _.map(instance.days.get(), (day) => moment(scheduleStart).add(day, 'days').format('dddd'));
 	},
 
 	intervals() {
 		const instance = Template.instance();
 		const slots = instance.slots.get();
 
-		return _.map(instance.intervals.get(), mins => {
+		return _.map(instance.intervals.get(), (mins) => {
 			const intervalStart = moment().hour(0).minute(mins);
 			return {
 				intervalStart,
 				intervalLabel: intervalStart.format('LT'),
-				slots: _.map(instance.days.get(), day => (slots[mins] && slots[mins][day]) || []),
+				slots: _.map(instance.days.get(), (day) => (slots[mins] && slots[mins][day]) || []),
 			};
 		});
 	},

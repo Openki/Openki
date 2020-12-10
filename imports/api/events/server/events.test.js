@@ -17,9 +17,9 @@ function promiseMeteorCall(...args) {
 
 if (Meteor.isClient) {
 	describe('Event save', () => {
-		it('Stores an event', done => {
+		it('Stores an event', (done) => {
 			new Promise((resolve, reject) => {
-				Meteor.loginWithPassword('greg', 'greg', err => {
+				Meteor.loginWithPassword('greg', 'greg', (err) => {
 					if (err) {
 						reject(err);
 					} else {
@@ -44,8 +44,8 @@ if (Meteor.isClient) {
 					region: regionId,
 					internal: true,
 				};
-			}).then(event => promiseMeteorCall('event.save', { eventId: '', changes: event }).then(
-				eventId => ({ event, eventId }),
+			}).then((event) => promiseMeteorCall('event.save', { eventId: '', changes: event }).then(
+				(eventId) => ({ event, eventId }),
 			)).then(({ event, eventId }) => {
 				assert.isString(eventId, 'event.save returns an eventId string');
 				return { event, eventId };
@@ -66,7 +66,7 @@ if (Meteor.isClient) {
 			const expectedText = "See what's hidden in your string… or behind";
 
 			return new Promise((resolve, reject) => {
-				Meteor.loginWithPassword('greg', 'greg', err => {
+				Meteor.loginWithPassword('greg', 'greg', (err) => {
 					if (err) {
 						reject(err);
 					} else {
@@ -92,11 +92,11 @@ if (Meteor.isClient) {
 				};
 
 				return promiseMeteorCall('saveEvent', { eventId: '', changes: event });
-			}).then(eventId => new Promise(resolve => {
+			}).then((eventId) => new Promise((resolve) => {
 				Meteor.subscribe('event', eventId, () => {
 					resolve(Events.findOne(eventId));
 				});
-			})).then(event => {
+			})).then((event) => {
 				assert.equal(event.title, expectedTitle);
 				assert.equal(event.description, expectedText);
 			});

@@ -3,7 +3,7 @@ import { assert } from 'chai';
 
 if (Meteor.isClient) {
 	describe('Venue save', () => {
-		it('Stores a venue', done => {
+		it('Stores a venue', (done) => {
 			const testCreate = () => {
 				const venue = {
 					name: 'Dönerbude am Ende der Galaxis',
@@ -20,7 +20,7 @@ if (Meteor.isClient) {
 
 					// Try saving it again with a change
 					venue.name += '!';
-					Meteor.call('venue.save', venueId, venue, subErr => {
+					Meteor.call('venue.save', venueId, venue, (subErr) => {
 						done(subErr);
 					});
 					return true;
@@ -34,7 +34,7 @@ if (Meteor.isClient) {
 			if (Meteor.userId()) {
 				testCreate();
 			} else {
-				Meteor.loginWithPassword('FeeLing', 'greg', err => {
+				Meteor.loginWithPassword('FeeLing', 'greg', (err) => {
 					if (err) {
 						return done(err);
 					}

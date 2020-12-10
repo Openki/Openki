@@ -30,7 +30,7 @@ Template.sharing.events({
 		const source = $(event.currentTarget).parent().attr('class').replace('shariff-button', '')
 			.trim();
 
-		Analytics.trytrack(tracker => {
+		Analytics.trytrack((tracker) => {
 			tracker.trackEvent('social', `${source} clicked`);
 		});
 	},

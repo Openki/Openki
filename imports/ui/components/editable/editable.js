@@ -4,7 +4,7 @@ import '/imports/ui/components/buttons/buttons';
 
 import './editable.html';
 
-[Template.editable, Template.editableTextarea].forEach(template => {
+[Template.editable, Template.editableTextarea].forEach((template) => {
 	template.onCreated(function () {
 		// This reeks
 		const data = Template.currentData();

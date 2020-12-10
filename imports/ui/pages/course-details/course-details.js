@@ -41,8 +41,8 @@ Template.courseDetailsPage.onCreated(function () {
 
 	instance.editableName = new Editable(
 		true,
-		(newName => {
-			Meteor.call('course.save', course._id, { name: newName }, err => {
+		(newName) => {
+			Meteor.call('course.save', course._id, { name: newName }, (err) => {
 				if (err) {
 					Alert.serverError(
 						err,
@@ -56,14 +56,14 @@ Template.courseDetailsPage.onCreated(function () {
 					));
 				}
 			});
-		}),
+		},
 		mf('course.title.placeholder'),
 	);
 
 	instance.editableDescription = new Editable(
 		false,
-		(newDescription => {
-			Meteor.call('course.save', course._id, { description: newDescription }, err => {
+		(newDescription) => {
+			Meteor.call('course.save', course._id, { description: newDescription }, (err) => {
 				if (err) {
 					Alert.serverError(
 						err,
@@ -77,7 +77,7 @@ Template.courseDetailsPage.onCreated(function () {
 					));
 				}
 			});
-		}),
+		},
 		mf('course.description.placeholder'),
 	);
 
@@ -131,7 +131,7 @@ Template.courseDetailsPage.events({
 
 		const { course } = instance.data;
 		instance.busy('deleting');
-		Meteor.call('course.remove', course._id, err => {
+		Meteor.call('course.remove', course._id, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.serverError(
@@ -205,7 +205,7 @@ Template.courseGroupAdd.events({
 	'click .js-add-group'(event, instance) {
 		const course = instance.data;
 		const groupId = event.currentTarget.value;
-		Meteor.call('course.promote', course._id, groupId, true, err => {
+		Meteor.call('course.promote', course._id, groupId, true, (err) => {
 			if (err) {
 				Alert.serverError(
 					err,
@@ -231,7 +231,7 @@ Template.courseGroupRemove.events({
 	'click .js-remove'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('course.promote', course._id, groupId, false, err => {
+		Meteor.call('course.promote', course._id, groupId, false, (err) => {
 			if (err) {
 				Alert.serverError(
 					err,
@@ -257,7 +257,7 @@ Template.courseGroupMakeOrganizer.events({
 	'click .js-makeOrganizer'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('course.editing', course._id, groupId, true, err => {
+		Meteor.call('course.editing', course._id, groupId, true, (err) => {
 			if (err) {
 				Alert.serverError(
 					err,
@@ -283,7 +283,7 @@ Template.courseGroupRemoveOrganizer.events({
 	'click .js-removeOrganizer'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('course.editing', course._id, groupId, false, err => {
+		Meteor.call('course.editing', course._id, groupId, false, (err) => {
 			if (err) {
 				Alert.serverError(
 					err,

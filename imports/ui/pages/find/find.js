@@ -64,11 +64,11 @@ Template.find.onCreated(function () {
 		const queryToLowerCase = query.toLowerCase();
 		const results = {};
 
-		Object.keys(Categories).forEach(mainCategory => {
+		Object.keys(Categories).forEach((mainCategory) => {
 			if (mf(`category.${mainCategory}`).toLowerCase().includes(queryToLowerCase)) {
 				results[mainCategory] = [];
 			}
-			Categories[mainCategory].forEach(subCategory => {
+			Categories[mainCategory].forEach((subCategory) => {
 				if (mf(`category.${subCategory}`).toLowerCase().includes(queryToLowerCase)) {
 					if (results[mainCategory]) {
 						results[mainCategory].push(subCategory);
@@ -114,7 +114,7 @@ Template.find.onCreated(function () {
 
 	// When there are filters set, show the filtering pane
 	instance.autorun(() => {
-		Object.keys(filter.toParams()).forEach(name => {
+		Object.keys(filter.toParams()).forEach((name) => {
 			if (hiddenFilters.indexOf(name) > -1) {
 				instance.showingFilters.set(true);
 			}
@@ -202,7 +202,7 @@ Template.find.events({
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			filters.forEach(filter => instance.filter.disable(filter));
+			filters.forEach((filter) => instance.filter.disable(filter));
 			instance.filter.done();
 			instance.updateUrl();
 		}
@@ -276,14 +276,14 @@ Template.find.helpers({
 
 	activeFilters() {
 		const activeFilters = Template.instance().filter;
-		return _.any(hiddenFilters, filter => Boolean(activeFilters.get(filter)));
+		return _.any(hiddenFilters, (filter) => Boolean(activeFilters.get(filter)));
 	},
 
 	searchIsLimited() {
 		const activeFilters = Template.instance().filter;
 		const relevantFilters = hiddenFilters.slice(); // clone
 		relevantFilters.push('region');
-		return _.any(relevantFilters, filter => Boolean(activeFilters.get(filter)));
+		return _.any(relevantFilters, (filter) => Boolean(activeFilters.get(filter)));
 	},
 
 	isMobile() {

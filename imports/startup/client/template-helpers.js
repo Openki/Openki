@@ -169,7 +169,7 @@ const helpers = {
 	},
 };
 
-Object.keys(helpers).forEach(name => Template.registerHelper(name, helpers[name]));
+Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[name]));
 
 /* Get a username from ID
  */

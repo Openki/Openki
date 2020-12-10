@@ -45,7 +45,7 @@ Template.userprofile.helpers({
 		const userID = templateData.user._id;
 		const coursesForRole = [];
 
-		involvedIn.forEach(course => {
+		involvedIn.forEach((course) => {
 			if (HasRoleUser(course.members, role, userID)) {
 				coursesForRole.push(course);
 			}
@@ -63,7 +63,7 @@ Template.userprofile.helpers({
 
 Template.userprofile.events({
 	'click button.giveAdmin'() {
-		Meteor.call('user.addPrivilege', this.user._id, 'admin', err => {
+		Meteor.call('user.addPrivilege', this.user._id, 'admin', (err) => {
 			if (err) {
 				Alert.serverError(err, 'Unable to add privilege');
 			} else {
@@ -74,7 +74,7 @@ Template.userprofile.events({
 
 	'click .js-remove-privilege-btn'(event, template) {
 		const priv = template.$(event.target).data('priv');
-		Meteor.call('user.removePrivilege', this.user._id, priv, err => {
+		Meteor.call('user.removePrivilege', this.user._id, priv, (err) => {
 			if (err) {
 				Alert.serverError(err, 'Unable to remove privilege');
 			} else {
@@ -87,7 +87,7 @@ Template.userprofile.events({
 		const groupId = this._id;
 		const { name } = this;
 		const userId = Template.parentData().user._id;
-		Meteor.call('group.updateMembership', userId, groupId, true, err => {
+		Meteor.call('group.updateMembership', userId, groupId, true, (err) => {
 			if (err) {
 				Alert.serverError(err, 'Unable to draft user into group');
 			} else {
@@ -101,7 +101,7 @@ Template.userprofile.events({
 		const groupId = this._id;
 		const { name } = this;
 		const userId = Template.parentData().user._id;
-		Meteor.call('group.updateMembership', userId, groupId, false, err => {
+		Meteor.call('group.updateMembership', userId, groupId, false, (err) => {
 			if (err) {
 				Alert.serverError(err, 'Unable to expel user from group');
 			} else {
@@ -143,7 +143,7 @@ Template.emailBox.helpers({
 Template.emailBox.events({
 	'click .js-verify-mail'(e, instance) {
 		instance.verificationMailSent.set(true);
-		Meteor.call('sendVerificationEmail', err => {
+		Meteor.call('sendVerificationEmail', (err) => {
 			if (err) {
 				instance.verificationMailSent.set(false);
 				Alert.serverError(err, 'Failed to send verification mail');
@@ -191,7 +191,7 @@ Template.emailBox.events({
 			message,
 			revealAddress,
 			receiveCopy,
-			err => {
+			(err) => {
 				template.busy(false);
 				if (err) {
 					Alert.serverError(err, '');

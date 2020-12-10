@@ -139,7 +139,7 @@ Template.courseEdit.helpers({
 	},
 
 	availableRoles() {
-		return Roles.filter(role => {
+		return Roles.filter((role) => {
 			// Roles that are always on are not selectable here
 			if (role.preset) {
 				return false;
@@ -352,7 +352,7 @@ Template.courseEdit.events({
 		changes.unsubs = [];
 
 		if (instance.simpleRoleSelection) {
-			data.roles.forEach(role => {
+			data.roles.forEach((role) => {
 				changes.roles[role] = true;
 			});
 			if (instance.simpleSelectedRole.get() === 'mentor') {

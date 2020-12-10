@@ -45,7 +45,7 @@ Template.sendMessage.helpers({
 Template.sendMessage.events({
 	'click .js-verify-mail'(event, instance) {
 		instance.state.set('verificationMailSent', true);
-		Meteor.call('sendVerificationEmail', err => {
+		Meteor.call('sendVerificationEmail', (err) => {
 			if (err) {
 				instance.state.set('verificationMailSent', false);
 				Alert.serverError(
@@ -94,7 +94,7 @@ Template.sendMessage.events({
 			options.eventId = data.eventId;
 		}
 
-		Meteor.call('sendEmail', data.recipientId, message, options, err => {
+		Meteor.call('sendEmail', data.recipientId, message, options, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.serverError(

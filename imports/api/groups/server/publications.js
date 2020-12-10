@@ -12,4 +12,4 @@ Meteor.publish('groupsFind', function (originalFilter) {
 	return Groups.findFilter(filter);
 });
 
-Meteor.publish('group', groupId => Groups.find(groupId));
+Meteor.publish('group', (groupId) => Groups.find(groupId));

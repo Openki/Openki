@@ -40,7 +40,7 @@ Accounts.onCreateUser((options, originalUser) => {
 	let verified = true; // Assume verified unless there is a flag that says it's not
 	const services = user.services;
 	if (services) {
-		['facebook', 'google', 'github'].forEach(loginProvider => {
+		['facebook', 'google', 'github'].forEach((loginProvider) => {
 			const provided = services[loginProvider];
 			if (provided?.email) {
 				providedEmail = provided.email;
@@ -63,7 +63,7 @@ Accounts.onCreateUser((options, originalUser) => {
 	return user;
 });
 
-Accounts.validateNewUser(user => {
+Accounts.validateNewUser((user) => {
 	if (user.emails) {
 		const email = user.emails[0].address;
 

@@ -76,7 +76,7 @@ Analytics.load = function () {
  * Returns a promise resolving to the configured matomo tracker object.
  */
 Analytics.tracker = function () {
-	return Analytics.load().then(matomo => {
+	return Analytics.load().then((matomo) => {
 		check(Meteor.settings.public.matomo, SettingsPattern);
 		if (!tracker) {
 			const config = Meteor.settings.public.matomo;
@@ -96,7 +96,7 @@ Analytics.tracker = function () {
  */
 Analytics.trytrack = function (callback) {
 	if (Analytics.isConfigured()) {
-		Analytics.tracker().then(callback, err => {
+		Analytics.tracker().then(callback, (err) => {
 			Meteor._debug('Exception when gathering analytics data', err);
 		});
 	}
@@ -111,7 +111,7 @@ Analytics.installRouterActions = function (router) {
 	router.onBeforeAction(function () {
 		if (Analytics.hasTracker()) {
 			/* eslint-disable-next-line no-shadow */
-			Analytics.trytrack(tracker => tracker.deleteCustomVariables());
+			Analytics.trytrack((tracker) => tracker.deleteCustomVariables());
 			started = new Date();
 		}
 		this.next();
@@ -122,7 +122,7 @@ Analytics.installRouterActions = function (router) {
 		// https://github.com/iron-meteor/iron-router/issues/1031
 		if (Tracker.currentComputation.firstRun) {
 			/* eslint-disable-next-line no-shadow */
-			Analytics.trytrack(tracker => {
+			Analytics.trytrack((tracker) => {
 				if (started) {
 					tracker.setGenerationTimeMs(new Date() - started);
 					started = null;

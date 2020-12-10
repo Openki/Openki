@@ -17,7 +17,7 @@ Template.alerts.helpers({
 });
 
 Template.alert.onCreated(function () {
-	this.remove = alertId => {
+	this.remove = (alertId) => {
 		const $alert = this.$('.alert-message');
 		// get 'transition-duration' and convert to miliseconds for fadeOut
 		const duration = parseFloat($alert.css('transition-duration')) * 1000;

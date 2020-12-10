@@ -9,7 +9,7 @@ function sendIcal(events, response) {
 	const calendar = ical({ name: 'Openki Calendar' });
 	let dname;
 
-	events.forEach(dbevent => {
+	events.forEach((dbevent) => {
 		const end = dbevent.end || dbevent.start;
 
 		let location = [];

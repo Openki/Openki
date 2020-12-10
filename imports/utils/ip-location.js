@@ -23,7 +23,7 @@ IpLocation.detect = function (handler) {
 	}
 
 	// Pull location-data from ipinfo.io
-	jQuery.get('https://ipinfo.io/geo', location => {
+	jQuery.get('https://ipinfo.io/geo', (location) => {
 		if (!location.region) {
 			handler(false, 'IP location not accurate enough');
 			return;

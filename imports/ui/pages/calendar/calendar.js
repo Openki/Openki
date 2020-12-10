@@ -229,6 +229,6 @@ Template.calendarAddEvent.onRendered(function () {
 		eventCaption.toggleClass('placeholder', removeClass);
 	}
 
-	eventCaption.on('mouseover mouseout', e => { toggleCaptionClass(e); });
-	instance.$('.event-caption-add-text').on('mouseover mouseout', e => { toggleCaptionClass(e); });
+	eventCaption.on('mouseover mouseout', (e) => { toggleCaptionClass(e); });
+	instance.$('.event-caption-add-text').on('mouseover mouseout', (e) => { toggleCaptionClass(e); });
 });

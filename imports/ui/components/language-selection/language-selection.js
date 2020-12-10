@@ -47,13 +47,13 @@ Template.languageSelection.helpers({
 	},
 
 	languages() {
-		const visibleLanguages = _.filter(Languages, lg => lg.visible);
+		const visibleLanguages = _.filter(Languages, (lg) => lg.visible);
 		const search = Template.instance().languageSearch.get().toLowerCase();
 		const results = [];
 
-		visibleLanguages.forEach(visibleLanguage => {
+		visibleLanguages.forEach((visibleLanguage) => {
 			let pushed = false;
-			[visibleLanguage.name, visibleLanguage.english].every(property => {
+			[visibleLanguage.name, visibleLanguage.english].every((property) => {
 				if (pushed) {
 					return false;
 				}
@@ -77,13 +77,13 @@ Template.languageSelection.helpers({
 		const getTransPercent = () => {
 			const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
 			if (mfStats) {
-				const langStats = mfStats.langs.find(stats => stats.lang === this.lg);
+				const langStats = mfStats.langs.find((stats) => stats.lang === this.lg);
 				return langStats.transPercent;
 			}
 			return false;
 		};
 
-		const percent = (this.lg === mfPkg.native) ? 100 : getTransPercent();
+		const percent = this.lg === mfPkg.native ? 100 : getTransPercent();
 		const rating = percent >= 75 && 'well-translated';
 
 		return { percent, rating };
@@ -94,7 +94,7 @@ Template.languageSelection.helpers({
 	},
 });
 
-const updateLanguageSearch = _.debounce(instance => {
+const updateLanguageSearch = _.debounce((instance) => {
 	let search = instance.$('.js-language-search').val();
 	search = String(search).trim();
 	instance.languageSearch.set(search);

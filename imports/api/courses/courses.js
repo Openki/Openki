@@ -97,7 +97,7 @@ export class Course {
 	  */
 	membersWithRole(role) {
 		check(role, String);
-		return this.members.filter(member => member.roles.indexOf(role) >= 0);
+		return this.members.filter((member) => member.roles.indexOf(role) >= 0);
 	}
 
 	userHasRole(userId, role) {
@@ -136,7 +136,7 @@ Courses.updateGroups = function (courseId) {
 
 		const editors = course.groupOrganizers.slice();
 
-		course.members.forEach(member => {
+		course.members.forEach((member) => {
 			if (member.roles.indexOf('team') >= 0) {
 				editors.push(member.user);
 			}
@@ -156,7 +156,7 @@ Courses.updateGroups = function (courseId) {
 	}).then(() => {
 		// At some point we'll have to figure out a proper caching hierarchy
 		Meteor.call('event.updateGroups', { courseId });
-	}, reason => {
+	}, (reason) => {
 		/* eslint-disable-next-line no-console */
 		console.log(`Failed updateGroups: ${reason}`);
 	});
@@ -241,7 +241,7 @@ Courses.findFilter = function (filter, limit, sortParams) {
 
 	if (filter.search) {
 		const searchTerms = filter.search.split(/\s+/);
-		const searchQueries = _.map(searchTerms, searchTerm => ({
+		const searchQueries = _.map(searchTerms, (searchTerm) => ({
 			$or: [
 				{ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
 				{ description: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },

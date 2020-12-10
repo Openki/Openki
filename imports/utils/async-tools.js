@@ -34,7 +34,7 @@ if (Meteor.isServer) {
 		return new Promise((resolve, reject) => {
 			clean(resolve, reject);
 		/* eslint-disable-next-line consistent-return */
-		}).then(cleaned => {
+		}).then((cleaned) => {
 			if (!cleaned) {
 				if (tries < 1) {
 					// Ooops we ran out of tries.
@@ -45,7 +45,7 @@ if (Meteor.isServer) {
 				}
 				return tryClean(clean, tries - 1);
 			}
-		}, reason => {
+		}, (reason) => {
 			/* eslint-disable-next-line no-console */
 			console.log(`Cleansing function failed: ${reason}`);
 		});

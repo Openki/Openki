@@ -70,7 +70,7 @@ Template.layout.events({
 
 Template.layout.rendered = function () {
 	$(window).resize(() => { UpdateViewport(); });
-	Session.set('isRetina', (window.devicePixelRatio === 2));
+	Session.set('isRetina', window.devicePixelRatio === 2);
 };
 
 /* Workaround to prevent iron-router from messing with server-side downloads

@@ -99,7 +99,7 @@ Template.venueDetails.onCreated(function () {
 		let unloaded = count - limit;
 
 		const { increaseBy } = instance;
-		unloaded = (unloaded > increaseBy) ? increaseBy : unloaded;
+		unloaded = unloaded > increaseBy ? increaseBy : unloaded;
 
 		return unloaded;
 	};
@@ -205,7 +205,7 @@ Template.venueDetails.events({
 	'click .js-venue-delete-confirm'(event, instance) {
 		const { venue } = instance.data;
 		instance.busy('deleting');
-		Meteor.call('venue.remove', venue._id, err => {
+		Meteor.call('venue.remove', venue._id, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.serverError(err, 'Deleting the venue went wrong');

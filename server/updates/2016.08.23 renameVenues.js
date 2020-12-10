@@ -7,7 +7,7 @@ UpdatesAvailable['2016.08.23 renameVenues'] = function () {
 	const Locations = new Meteor.Collection('Locations');
 	let copied = 0;
 
-	Locations.find().forEach(venue => {
+	Locations.find().forEach((venue) => {
 		Venues.upsert(venue._id, venue);
 		copied += 1;
 	});
@@ -16,7 +16,7 @@ UpdatesAvailable['2016.08.23 renameVenues'] = function () {
 
 	let modified = 0;
 
-	Events.find({ location: { $exists: true } }).forEach(originalEvent => {
+	Events.find({ location: { $exists: true } }).forEach((originalEvent) => {
 		const event = { ...originalEvent };
 		event.venue = event.location;
 		delete event.location;
