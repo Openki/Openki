@@ -5,7 +5,7 @@ const IpLocation = {};
 IpLocation.detect = function (handler) {
 	// SPECIAL CASE
 	// When we're connected to localhost, it's likely a dev-setup.
-	const hostname = document.location && document.location.hostname;
+	const hostname = document.location?.hostname;
 	if (hostname === 'localhost' || hostname.indexOf('127.') === 0) {
 		const testistan = Regions.findOne('9JyFCoKWkxnf8LWPh');
 		if (testistan) {

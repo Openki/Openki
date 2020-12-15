@@ -344,7 +344,7 @@ Template.map.helpers({
 
 	fullscreenControl() {
 		const instance = Template.instance();
-		return !instance.data.mini && !Template.instance().fullscreen.get();
+		return !instance.data.mini && !instance.fullscreen.get();
 	},
 });
 

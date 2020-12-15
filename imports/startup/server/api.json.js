@@ -59,7 +59,7 @@ Router.route('api.0.json', {
 			const sortStr = query.sort;
 			const sorting = sortStr ? SortSpec.fromString(sortStr) : SortSpec.unordered();
 
-			const filter = Object.assign({}, query);
+			const filter = { ...query };
 			delete filter.sort;
 			delete filter.limit;
 			delete filter.skip;

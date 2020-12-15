@@ -60,7 +60,7 @@ Notification.send = function (entry) {
 				const { address } = email;
 
 				const { username } = user;
-				const userLocale = (user.profile && user.profile.locale) || 'en';
+				const userLocale = user.profile?.locale || 'en';
 
 				const { siteName } = Accounts.emailTemplates;
 				const subjectPrefix = `[${siteName}] `;

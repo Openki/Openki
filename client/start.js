@@ -115,7 +115,7 @@ Meteor.startup(() => {
 
 		const monthsShort = function () {
 			if (typeof mf.monthsShort === 'function') {
-				return _.map(_.range(12), month => mf.monthsShort(moment().month(month), ''));
+				return _.map(_.range(12), (month) => mf.monthsShort(moment().month(month), ''));
 			}
 			return mf._monthsShort;
 		};

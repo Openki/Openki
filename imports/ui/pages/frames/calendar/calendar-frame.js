@@ -28,7 +28,7 @@ Template.frameCalendar.onCreated(function frameCalendarOnCreated() {
 		this.subscribe('Events.findFilter', filterParams, limit + 1);
 
 		const events = Events.find({}, { sort: { start: 1 }, limit }).fetch();
-		const groupedEvents = _.groupBy(events, event => moment(event.start).format('LL'));
+		const groupedEvents = _.groupBy(events, (event) => moment(event.start).format('LL'));
 
 		this.groupedEvents.set(groupedEvents);
 		this.days.set(Object.keys(groupedEvents));
@@ -42,7 +42,7 @@ Template.frameCalendar.helpers({
 
 	days: () => Template.instance().days.get(),
 
-	eventsOn: day => Template.instance().groupedEvents.get()[day],
+	eventsOn: (day) => Template.instance().groupedEvents.get()[day],
 
 	moreEvents() {
 		const limit = Template.instance().limit.get();

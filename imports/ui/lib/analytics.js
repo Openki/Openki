@@ -111,7 +111,7 @@ Analytics.installRouterActions = function (router) {
 	router.onBeforeAction(function () {
 		if (Analytics.hasTracker()) {
 			/* eslint-disable-next-line no-shadow */
-			Analytics.trytrack(tracker => tracker.deleteCustomVariables());
+			Analytics.trytrack((tracker) => tracker.deleteCustomVariables());
 			started = new Date();
 		}
 		this.next();

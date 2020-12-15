@@ -6,7 +6,7 @@ const UpdatesAvailable = [];
 UpdatesAvailable.renameDiscussionFields = function () {
 	const AllPosts = CourseDiscussions.find({});
 	AllPosts.fetch().forEach((originalPost) => {
-		const post = Object.assign({}, originalPost);
+		const post = { ...originalPost };
 		post.courseId = post.course_ID;
 		delete post.course_ID;
 

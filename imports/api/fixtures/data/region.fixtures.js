@@ -49,6 +49,7 @@ const regions = [{
 	tz: 'Europe/Zurich',
 }, {
 	name: 'Online',
+	nameEn: 'Online',
 	_id: '987sdfgnDSDf238dd',
 	tz: 'Europe/Zurich',
 	custom: {

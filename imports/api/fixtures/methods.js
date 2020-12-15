@@ -57,7 +57,7 @@ if (Meteor.settings.testdata) {
 	const regionsCreate = function () {
 		/* eslint-disable-next-line no-restricted-syntax */
 		for (const r of regions) {
-			const region = Object.assign({}, r); // clone
+			const region = { ...r }; // clone
 			if (region.loc) {
 				const coordinates = region.loc.reverse(); // GeoJSON takes latitude first
 				region.loc = { type: 'Point', coordinates };
@@ -79,12 +79,12 @@ if (Meteor.settings.testdata) {
 	const groupsCreate = function () {
 		/* eslint-disable-next-line no-restricted-syntax */
 		for (const g of groups) {
-			const group = Object.assign({}, g);
+			const group = { ...g };
 			group.createdby = 'ServerScript_loadingTestgroups';
 
 			// Always use same id for same group to avoid broken urls while testing
 			group._id = ensure.fixedId([group.name, group.description]);
-			group.members = _.map(group.members, name => ensure.user(name)._id);
+			group.members = _.map(group.members, (name) => ensure.user(name)._id);
 			Groups.insert(group);
 		}
 
@@ -99,7 +99,7 @@ if (Meteor.settings.testdata) {
 
 		/* eslint-disable-next-line no-restricted-syntax */
 		for (const e of events) {
-			const event = Object.assign({}, e);
+			const event = { ...e };
 			if (Events.findOne({ _id: event._id })) {
 				/* eslint-disable-next-line no-continue */
 				continue; // Don't create events that exist already
@@ -152,7 +152,7 @@ if (Meteor.settings.testdata) {
 
 		/* eslint-disable-next-line no-restricted-syntax */
 		for (const v of venues) {
-			const venueData = Object.assign({}, v);
+			const venueData = { ...v };
 			venueData.region = prng() > 0.85 ? testRegions[0] : testRegions[1];
 
 			const venue = ensure.venue(venueData.name, venueData.region._id);
@@ -172,7 +172,7 @@ if (Meteor.settings.testdata) {
 
 		/* eslint-disable-next-line no-restricted-syntax */
 		for (const c of courses) {
-			const course = Object.assign({}, c);
+			const course = { ...c };
 			/* eslint-disable-next-line no-restricted-syntax */
 			for (const member of course.members) {
 				member.user = ensure.user(member.user)._id;
@@ -289,7 +289,7 @@ if (Meteor.settings.testdata) {
 
 				// Quarter hours should be most common
 				if (prng() > 0.05) {
-					date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15);
+					date.setMinutes(Math.floor(date.getMinutes() / 15) * 15);
 				}
 
 				const regionZone = LocalTime.zone(event.region);
@@ -303,7 +303,7 @@ if (Meteor.settings.testdata) {
 
 				const { members } = course;
 				const randomMember = members[Math.floor(Math.random() * members.length)];
-				event.createdby = ensure.user((randomMember && randomMember.user) || 'Serverscript')._id;
+				event.createdby = ensure.user(randomMember?.user || 'Serverscript')._id;
 				const age = Math.floor(prng() * 10000000000);
 				event.time_created = new Date(new Date().getTime() - age);
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25);
@@ -335,7 +335,7 @@ if (Meteor.settings.testdata) {
 				comment.text = HtmlTools.saneHtml(_.sample(words, 5).join(' ') + _.sample(words, Math.floor(prng() * 30)).join(' '));
 
 				comment.time_created = sometimesAfter(course.time_created);
-				comment.time_updated = (prng() < 0.9)
+				comment.time_updated = prng() < 0.9
 					? comment.time_created
 					: sometimesAfter(comment.time_created);
 

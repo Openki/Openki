@@ -234,7 +234,7 @@ Template.eventEdit.helpers({
 			Events
 				.find(AffectedReplicaSelectors(this))
 				.fetch()
-				.filter(replica => !replica.sameTime(this))
+				.filter((replica) => !replica.sameTime(this))
 		);
 	},
 

@@ -22,7 +22,7 @@ const Introduction = {
 		}
 
 		const { route } = Router.current();
-		const routeName = route && route.getName();
+		const routeName = route?.getName();
 		return routeName === 'home' || routeName === 'find';
 	},
 

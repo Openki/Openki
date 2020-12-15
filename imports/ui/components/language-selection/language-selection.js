@@ -47,7 +47,7 @@ Template.languageSelection.helpers({
 	},
 
 	languages() {
-		const visibleLanguages = _.filter(Languages, lg => lg.visible);
+		const visibleLanguages = _.filter(Languages, (lg) => lg.visible);
 		const search = Template.instance().languageSearch.get().toLowerCase();
 		const results = [];
 
@@ -77,14 +77,14 @@ Template.languageSelection.helpers({
 		const getTransPercent = () => {
 			const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
 			if (mfStats) {
-				const langStats = mfStats.langs.find(stats => stats.lang === this.lg);
+				const langStats = mfStats.langs.find((stats) => stats.lang === this.lg);
 				return langStats.transPercent;
 			}
 			return false;
 		};
 
-		const percent = (this.lg === mfPkg.native) ? 100 : getTransPercent();
-		const rating = percent >= 75 && 'well-translated';
+		const percent = this.lg === mfPkg.native ? 100 : getTransPercent();
+		const rating = (percent >= 75) && 'well-translated';
 
 		return { percent, rating };
 	},

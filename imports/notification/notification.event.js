@@ -51,12 +51,12 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 notificationEvent.Model = function (entry) {
 	const event = Events.findOne(entry.body.eventId);
 	let course = false;
-	if (event && event.courseId) {
+	if (event?.courseId) {
 		course = Courses.findOne(event.courseId);
 	}
 
 	let region = false;
-	if (event && event.region) {
+	if (event?.region) {
 		region = Regions.findOne(event.region);
 	}
 

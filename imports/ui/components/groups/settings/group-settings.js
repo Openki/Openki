@@ -16,7 +16,7 @@ Template.groupSettings.onCreated(function () {
 
 	// strip https:// from logoUrl because its already labeled as prefix
 	const { logoUrl } = instance.data.group;
-	if (logoUrl && logoUrl.startsWith('https://')) {
+	if (logoUrl?.startsWith('https://')) {
 		instance.data.group.logoUrl = logoUrl.replace('https://', '');
 	}
 

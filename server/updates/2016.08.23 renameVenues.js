@@ -17,7 +17,7 @@ UpdatesAvailable['2016.08.23 renameVenues'] = function () {
 	let modified = 0;
 
 	Events.find({ location: { $exists: true } }).forEach((originalEvent) => {
-		const event = Object.assign({}, originalEvent);
+		const event = { ...originalEvent };
 		event.venue = event.location;
 		delete event.location;
 		modified += Events.update(event._id, event);

@@ -41,7 +41,7 @@ Template.courseDetailsPage.onCreated(function () {
 
 	instance.editableName = new Editable(
 		true,
-		((newName) => {
+		(newName) => {
 			Meteor.call('course.save', course._id, { name: newName }, (err) => {
 				if (err) {
 					Alert.serverError(
@@ -56,13 +56,13 @@ Template.courseDetailsPage.onCreated(function () {
 					));
 				}
 			});
-		}),
+		},
 		mf('course.title.placeholder'),
 	);
 
 	instance.editableDescription = new Editable(
 		false,
-		((newDescription) => {
+		(newDescription) => {
 			Meteor.call('course.save', course._id, { description: newDescription }, (err) => {
 				if (err) {
 					Alert.serverError(
@@ -77,7 +77,7 @@ Template.courseDetailsPage.onCreated(function () {
 					));
 				}
 			});
-		}),
+		},
 		mf('course.description.placeholder'),
 	);
 
@@ -92,7 +92,7 @@ Template.courseDetailsPage.onCreated(function () {
 
 Template.courseDetailsPage.helpers({ // more helpers in course.roles.js
 	mayEdit() {
-		return this.course && this.course.editableBy(Meteor.user());
+		return this.course?.editableBy(Meteor.user());
 	},
 	coursestate() {
 		if (this.nextEvent) {
@@ -119,7 +119,7 @@ Template.courseDetailsPage.helpers({ // more helpers in course.roles.js
 
 Template.courseDetailsDescription.helpers({
 	mayEdit() {
-		return this.course && this.course.editableBy(Meteor.user());
+		return this.course?.editableBy(Meteor.user());
 	},
 });
 
@@ -169,7 +169,7 @@ Template.courseGroupList.helpers({
 		const user = Meteor.user();
 		const groupId = String(this);
 		const course = Template.parentData();
-		if ((user && user.mayPromoteWith(groupId)) || course.editableBy(user)) {
+		if (user?.mayPromoteWith(groupId) || course.editableBy(user)) {
 			tools.push({
 				toolTemplate: Template.courseGroupRemove,
 				groupId,

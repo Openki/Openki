@@ -45,9 +45,7 @@ Template.regionSelection.onCreated(function () {
 		this.state.set('showAllRegions', search !== '');
 	});
 
-	this.minNumberOfRegionInSelection = (Meteor.settings.public
-		&& Meteor.settings.public.regionSelection
-		&& Meteor.settings.public.regionSelection.minNumber) || 5;
+	this.minNumberOfRegionInSelection = Meteor.settings.public.regionSelection?.minNumber || 5;
 
 	/**
 	 * Query some regions
@@ -101,7 +99,7 @@ Template.regionSelection.onCreated(function () {
 	// only if it is placed inside a wrap
 	this.close = () => {
 		const parentState = this.parentInstance().state;
-		if (parentState && parentState.get('searchingRegions')) {
+		if (parentState?.get('searchingRegions')) {
 			parentState.set('searchingRegions', false);
 		}
 	};

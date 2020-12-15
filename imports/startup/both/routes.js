@@ -191,7 +191,7 @@ Router.map(function () {
 				params.neededRoles = ['mentor'];
 			}
 			params.roles = ['mentor', 'host'].filter(
-				role => params.neededRoles.includes(role),
+				(role) => params.neededRoles.includes(role),
 			);
 			delete params.neededRoles;
 
@@ -357,7 +357,7 @@ Router.map(function () {
 					groups: Groups.findFilter({ own: true }),
 					venues: Venues.find({ editor: user._id }),
 				};
-				userdata.have_email = user.emails && user.emails.length > 0;
+				userdata.have_email = user.emails?.length > 0;
 				if (userdata.have_email) {
 					userdata.email = user.emails[0].address;
 					userdata.verified = Boolean(user.emails[0].verified);
@@ -578,7 +578,7 @@ Router.map(function () {
 			};
 
 			events.forEach((originalEvent) => {
-				const event = Object.assign({}, originalEvent);
+				const event = { ...originalEvent };
 				event.relStart = (event.start.getTime() - timestampStart) / span;
 				event.relEnd = (timestampEnd - event.end.getTime()) / span;
 				let placed = false;
@@ -627,7 +627,7 @@ Router.map(function () {
 
 			// What privileges the user has
 			const privileges = _.reduce(['admin'], (originalPs, p) => {
-				const ps = Object.assign({}, originalPs);
+				const ps = { ...originalPs };
 				ps[p] = UserPrivilegeUtils.privileged(user, p);
 				return ps;
 			}, {});

@@ -57,7 +57,7 @@ Template.deleteEventsModal.helpers({
 	},
 
 	isSelected() {
-		return Template.instance().state.get('selectedEvents').find(e => e._id === this._id);
+		return Template.instance().state.get('selectedEvents').find((e) => e._id === this._id);
 	},
 
 	numSelectedEvents() {
@@ -93,7 +93,7 @@ Template.deleteEventsModal.events({
 		if (event.target.checked) {
 			selectedEvents.push(this);
 		} else {
-			selectedEvents = selectedEvents.filter(e => e._id !== this._id);
+			selectedEvents = selectedEvents.filter((e) => e._id !== this._id);
 		}
 
 		instance.state.set({ selectedEvents });
@@ -106,7 +106,7 @@ Template.deleteEventsModal.events({
 	'click .js-deselect-event'(e, instance) {
 		const eventId = instance.$(e.target).data('event-id');
 		const selectedEvents = instance.state.get('selectedEvents');
-		instance.state.set('selectedEvents', selectedEvents.filter(event => event._id !== eventId));
+		instance.state.set('selectedEvents', selectedEvents.filter((event) => event._id !== eventId));
 	},
 
 	'click .js-delete-events'(e, instance) {

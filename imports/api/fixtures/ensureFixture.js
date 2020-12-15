@@ -7,7 +7,7 @@ import Venues from '/imports/api/venues/venues';
 const ensure = {
 	fixedId(strings) {
 		const md5 = crypto.createHash('md5');
-		strings.forEach(str => md5.update(str));
+		strings.forEach((str) => md5.update(str));
 		return md5.digest('hex').substring(0, 10);
 	},
 
@@ -18,7 +18,7 @@ const ensure = {
 			/* eslint-disable-next-line no-param-reassign */
 			name = 'Ed Dillinger';
 		}
-		const email = (`${name.split(' ').join('')}@openki.example`).toLowerCase();
+		const email = `${name.split(' ').join('')}@openki.example`.toLowerCase();
 
 		/* eslint-disable-next-line no-constant-condition */
 		while (true) {

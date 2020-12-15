@@ -12,7 +12,7 @@ Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
 	}
 	while (view) {
 		/* eslint-disable-next-line no-param-reassign, no-plusplus */
-		if (view.name.substring(0, 9) === 'Template.' && !(levels--)) {
+		if (view.name.substring(0, 9) === 'Template.' && !levels--) {
 			return view.templateInstance();
 		}
 		view = view.parentView;

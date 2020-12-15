@@ -34,6 +34,7 @@ module.exports = {
 		Venue: 'writable',
 		VERSION: 'writable',
 	},
+	parser: "babel-eslint",
 	parserOptions: {
 		ecmaVersion: 2018,
 		sourceType: 'module',
@@ -45,10 +46,15 @@ module.exports = {
 		'no-tabs': ['error', { allowIndentationTabs: true }],
 		'object-shorthand': ['error', 'always'],
 		'prefer-destructuring': ['error', { object: false, array: false }],
+		'no-multiple-empty-lines': ['error', { max: 2 }],
+		'no-extra-parens': ['error'],
 
 		//disabled rules
 		'func-names': [0],
 		'no-underscore-dangle': [0],
+		'import/no-named-as-default': [0],
+		'import/no-named-as-default-member': [0],
+		'max-classes-per-file': [0],
 	},
 	settings: {
 		'import/resolver': 'meteor',

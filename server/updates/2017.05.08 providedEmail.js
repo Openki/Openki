@@ -10,7 +10,7 @@ UpdatesAvailable['2017.05.08 providedEmail'] = function () {
 		if (services) {
 			['facebook', 'google', 'github'].forEach((provider) => {
 				const provided = services[provider];
-				if (provided && provided.email) {
+				if (provided?.email) {
 					providedEmail = provided.email;
 					if (typeof provided.verified_email === 'boolean') {
 						verified = provided.verified_email;

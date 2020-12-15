@@ -23,7 +23,7 @@ Template.accountTasks.onCreated(function () {
 });
 
 Template.accountTasks.helpers({
-	activeAccountTask: task => Template.instance().accountTask.get() === task,
+	activeAccountTask: (task) => Template.instance().accountTask.get() === task,
 	pleaseLogin: () => Session.get('pleaseLogin'),
 });
 

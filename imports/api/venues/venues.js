@@ -85,7 +85,7 @@ Venues.findFilter = function (filter, limit, skip, sort) {
 
 	if (filter.search) {
 		const searchTerms = filter.search.split(/\s+/);
-		find.$and = _.map(searchTerms, searchTerm => ({ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }));
+		find.$and = _.map(searchTerms, (searchTerm) => ({ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }));
 	}
 
 	return Venues.find(find, options);

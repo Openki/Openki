@@ -33,7 +33,7 @@ import './event-details.html';
   * @param {Object} - the event data
   * @return {boolean}
   */
-const checkJsonLdMinReqs = data => Object.prototype.hasOwnProperty.call(data, 'title')
+const checkJsonLdMinReqs = (data) => Object.prototype.hasOwnProperty.call(data, 'title')
 	&& Object.prototype.hasOwnProperty.call(data, 'startLocal')
 	&& Object.prototype.hasOwnProperty.call(data, 'endLocal')
 	&& Object.prototype.hasOwnProperty.call(data, 'venue');
@@ -66,7 +66,7 @@ const addGeoToJsonLd = (data) => {
   * @param {Object} - the event data
   * @return {Object} - jsonLd-fragment for offers
   */
-const addOffersToJsonLd = data => ({ '@type': 'AggregateOffer', price: data.price || 'free' });
+const addOffersToJsonLd = (data) => ({ '@type': 'AggregateOffer', price: data.price || 'free' });
 
 
 /** add performer information to jsonLd. use groups as perfomers,
@@ -101,7 +101,7 @@ const createJsonLd = (data) => {
 			name: data.venue.name,
 		},
 		description: data.description || data.title,
-		image: Meteor.absoluteUrl(`logo/${Meteor.settings.public.ogLogo.src}`),
+		image: Meteor.absoluteUrl(`logo/${Meteor.settings.public.ogLogo?.src || 'openki_logo_2018.png'}`),
 		offers: addOffersToJsonLd(data),
 		performer: addPerformerToJsonLd(data),
 	};
@@ -211,7 +211,7 @@ Template.event.helpers({
 	},
 
 	userRegisteredForEvent() {
-		return this.participants && this.participants.includes(Meteor.userId());
+		return this.participants?.includes(Meteor.userId());
 	},
 });
 
@@ -300,7 +300,7 @@ Template.eventDisplay.helpers({
 		return Template.instance().locationTracker.markers;
 	},
 	hasVenue() {
-		return this.venue && this.venue.loc;
+		return this.venue?.loc;
 	},
 
 	replicating() {

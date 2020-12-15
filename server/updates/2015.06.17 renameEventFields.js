@@ -8,7 +8,7 @@ const UpdatesAvailable = [];
 // day
 UpdatesAvailable.renameEventFields = function () {
 	Events.find({}).fetch().forEach((originalEvent) => {
-		const event = Object.assign({}, originalEvent);
+		const event = { ...originalEvent };
 		if (event.startdate) {
 			event.start = event.startdate;
 			delete event.startdate;

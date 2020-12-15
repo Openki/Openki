@@ -54,7 +54,7 @@ notificationComment.record = function (commentId) {
 
 		// Don't send to author of comment
 		if (comment.userId) {
-			recipients = recipients.filter(r => r !== comment.userId);
+			recipients = recipients.filter((r) => r !== comment.userId);
 		}
 
 		body.recipients = _.uniq(recipients);

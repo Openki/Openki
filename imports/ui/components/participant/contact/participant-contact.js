@@ -43,7 +43,7 @@ Template.participantContact.helpers({
 
 	userAcceptsMessages() {
 		const user = Meteor.users.findOne(this.participant);
-		return user && user.acceptsMessages;
+		return user?.acceptsMessages;
 	},
 
 	userSubReady() {
