@@ -1,29 +1,18 @@
 This file descripts all configurations and customization options. Remove the comment at the end of the line to make it work. 
 ```
 {
+	"admins": ["greg"], // User Administrator Accounts
 	"prng": "", // Use the "static" value to define that a static seed should be used for test data
-	"testdata": 1, // Generates test data, is not needed for the productive system
-	"admins": ["greg", "FeeLing", "IvanZ"], // User Administrator Accounts
-	"robots": false, // Tells robots/crawlers whether to index the website or not
-	"admins_commented": ["greg"],
-	"testdata_commented": 0,
+	"testdata": true, // Generates test data, is not needed for the productive system
 	"public": {
 		"siteName": "Openki-clone", 
 		"siteStage": "beta", // The text top left at the logo
-		"testWarning": 1, // Shows a banner saying that this is only for testing
-		"headerLogo": {
-			"src": "OpenkiLogo_quadratisch_2kanal_alpha.png",
-			"alt": "Openki Logo"
-		},
-		"discussionLogo": {
-			"src": "OpenkiLogo_quadratisch_2kanal_alpha.png",
-			"alt": "Openki Logo"
-		},
-		"ogLogo": {
-			"src": "openki_logo_2018.png" // The image to be shown in social media 
-		},
+		"testWarning": true, // Shows a banner saying that this is only for testing
+		"headerLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" }, // The logo in the top right corner
+		"discussionLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" }, // The user image placeholder in the discussion section of a course 
+		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media 
 		"mailLogo": "mails/openki.png",
-		"regionSelection": { "minNumber": 3 }, // The minimum number of regions displayed in the Regions selection.
+		"regionSelection": { "minNumber": 5 }, // The minimum number of regions displayed in the Regions selection. Default: 5
 		"matomo": {
 			"url": "https://analytics.mydomain.com/", 
 			"site": 1 // Matomo id
@@ -68,6 +57,8 @@ This file descripts all configurations and customization options. Remove the com
 	},
 	"siteEmail": "" // Sender e-mail address in mails
 	"reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"}, // Sender and recipient address for "Report problem" function
+	"robots": false, // Tells robots/crawlers whether to index the website or not
+	"printLog": false, // Print the log on the server in the console, usually only for development
 	"service": { // OAuth
 		"facebook": {
 			"appId": "567890",
@@ -82,7 +73,6 @@ This file descripts all configurations and customization options. Remove the com
 			"secret": "XYz_123"
 		}
 	},
-	"printLog": false, // Print the log on the server in the console, usually only for development
 	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" } // That web pages are pre-rendered for webcrawlers on the server side so that no client code has to be executed
 	"scrub": // Delete entries from the log or remove critical information, The log can be viewed via .../log
 		[ { "name": "scrub client-errors", "comment": "client-side errors may contain sensitive data, drop them quickly"
