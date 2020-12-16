@@ -107,10 +107,8 @@ notificationComment.Model = function (entry) {
 			let mailLogo;
 			if (course.region) {
 				const region = Regions.findOne(course.region);
-				if (region && region.custom) {
-					siteName = region.custom.siteName;
-					mailLogo = region.custom.mailLogo;
-				}
+				siteName = region?.custom?.siteName;
+				mailLogo = region?.custom?.mailLogo;
 			}
 			siteName = siteName || Meteor.settings.public.siteName;
 

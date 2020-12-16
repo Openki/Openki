@@ -96,10 +96,8 @@ notificationPrivateMessage.Model = function (entry) {
 			let mailLogo;
 			if (sender.region) {
 				const region = Regions.findOne(sender.region);
-				if (region && region.custom) {
-					siteName = region.custom.siteName;
-					mailLogo = region.custom.mailLogo;
-				}
+				siteName = region?.custom?.siteName;
+				mailLogo = region?.custom?.mailLogo;
 			}
 			siteName = siteName || Meteor.settings.public.siteName;
 

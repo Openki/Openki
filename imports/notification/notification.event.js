@@ -99,13 +99,8 @@ notificationEvent.Model = function (entry) {
 				venueLine = [venue.name, venue.address].filter(Boolean).join(', ');
 			}
 
-			let siteName;
-			let mailLogo;
-			if (region.custom) {
-				siteName = region.custom.siteName;
-				mailLogo = region.custom.mailLogo;
-			}
-			siteName = siteName || Meteor.settings.public.siteName;
+			const siteName = region.custom?.siteName || Meteor.settings.public.siteName;
+			const mailLogo = region.custom?.mailLogo;
 
 			return (
 				{
