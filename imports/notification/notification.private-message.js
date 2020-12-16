@@ -94,8 +94,8 @@ notificationPrivateMessage.Model = function (entry) {
 
 			let siteName;
 			let mailLogo;
-			if (sender.region) {
-				const region = Regions.findOne(sender.region);
+			if (actualRecipient.profile?.regionId) {
+				const region = Regions.findOne(actualRecipient.profile?.regionId);
 				siteName = region?.custom?.siteName;
 				mailLogo = region?.custom?.mailLogo;
 			}
