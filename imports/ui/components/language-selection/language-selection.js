@@ -111,10 +111,9 @@ Template.languageSelection.events({
 			Alert.error(e);
 		}
 
+		// The db user update happens in the client/start.js in Tracker.autorun(() => { ... by
+		// messageformat
 		Session.set('locale', lg);
-		if (Meteor.user()) {
-			Meteor.call('user.updateLocale', lg);
-		}
 
 		instance.parentInstance().searchingLanguages.set(false);
 	},
