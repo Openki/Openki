@@ -1,3 +1,6 @@
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 
 const UpdatesAvailable = [];
@@ -22,3 +25,4 @@ UpdatesAvailable.renameDiscussionFields = function () {
 	});
 	return AllPosts.count();
 };
+*/

@@ -1,3 +1,6 @@
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
 import Events from '/imports/api/events/events';
 import Venues from '/imports/api/venues/venues';
 
@@ -25,3 +28,4 @@ UpdatesAvailable['2016.08.23 renameVenues'] = function () {
 
 	return copied + modified;
 };
+*/

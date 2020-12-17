@@ -1,3 +1,6 @@
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
 const UpdatesAvailable = [];
 
 UpdatesAvailable['2017.05.08 providedEmail'] = function () {
@@ -26,7 +29,7 @@ UpdatesAvailable['2017.05.08 providedEmail'] = function () {
 					{ $set: { emails: [{ address: providedEmail, verified }] } },
 				);
 			} catch (e) {
-				/* eslint-disable-next-line no-console */
+				// eslint-disable-next-line no-console
 				console.log(e);
 			}
 		}
@@ -34,3 +37,4 @@ UpdatesAvailable['2017.05.08 providedEmail'] = function () {
 
 	return count;
 };
+*/
