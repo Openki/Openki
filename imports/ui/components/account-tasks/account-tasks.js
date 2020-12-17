@@ -175,6 +175,13 @@ Template.loginFrame.events({
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
 				$('.js-account-tasks').modal('hide');
+
+				const regionId = CleanedRegion(Session.get('region'));
+				if (regionId) {
+					Meteor.call('user.regionChange', regionId);
+				}
+
+				Meteor.call('user.updateLocale', Session.get('locale'));
 			}
 		});
 	},
@@ -203,6 +210,13 @@ Template.loginFrame.events({
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
 				$('.js-account-tasks').modal('hide');
+
+				const regionId = CleanedRegion(Session.get('region'));
+				if (regionId) {
+					Meteor.call('user.regionChange', regionId);
+				}
+
+				Meteor.call('user.updateLocale', Session.get('locale'));
 			}
 		});
 	},
@@ -308,7 +322,7 @@ Template.registerFrame.events({
 
 		instance.busy('registering');
 		Accounts.createUser({
-			username, password, email, profile: { locale: Session.get('locale') },
+			username, password, email,
 		}, (err) => {
 			instance.busy(false);
 			if (err) {
@@ -318,10 +332,13 @@ Template.registerFrame.events({
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
 				$('.js-account-tasks').modal('hide');
+
 				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
 					Meteor.call('user.regionChange', regionId);
 				}
+
+				Meteor.call('user.updateLocale', Session.get('locale'));
 			}
 		});
 	},

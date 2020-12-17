@@ -182,7 +182,7 @@ Meteor.methods({
 
 	'user.updateLocale'(locale) {
 		Meteor.users.update(Meteor.userId(), {
-			$set: { 'profile.locale': locale },
+			$set: { locale },
 		});
 	},
 });
