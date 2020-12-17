@@ -9,6 +9,7 @@ import Roles from '/imports/api/roles/roles';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 import Alert from '/imports/api/alerts/alert';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
+import Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/groups/list/group-list';
@@ -184,6 +185,9 @@ Template.profile.events({
 				} else {
 					Alert.success(mf('profile.updated', 'Updated profile'));
 					instance.editing.set(false);
+					if (instance.data.user.notifications !== instance.$('.js-notifications').prop('checked') && !instance.$('.js-notifications').prop('checked')) {
+						Analytics.trackEvent('Unsubscribe from notifications', 'via profile');
+					}
 				}
 			});
 	},

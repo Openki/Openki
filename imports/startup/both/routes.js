@@ -719,6 +719,8 @@ Router.route('/profile/unsubscribe/:token', function () {
 	const query = {};
 	if (accepted) {
 		query.unsubscribed = '';
+
+		Analytics.trackEvent('Unsubscribe from notifications', 'via e-mail');
 	} else {
 		query['unsubscribe-error'] = '';
 	}
