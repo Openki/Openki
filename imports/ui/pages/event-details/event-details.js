@@ -13,6 +13,8 @@ import TemplateMixins from '/imports/ui/lib/template-mixins';
 import IdTools from '/imports/utils/id-tools';
 import Metatags from '/imports/utils/metatags';
 
+import Analytics from '/imports/ui/lib/analytics';
+
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
 import '/imports/ui/components/events/edit/event-edit';
@@ -167,6 +169,8 @@ Template.event.onCreated(function () {
 				this.busy(false);
 				if (err) {
 					Alert.serverError(err, '');
+				} else {
+					Analytics.trackEvent('RSVP as', 'participant', Regions.findOne(event.region)?.nameEn);
 				}
 			});
 		});
@@ -267,6 +271,8 @@ Template.event.events({
 			instance.busy(false);
 			if (err) {
 				Alert.serverError(err, 'could not remove participant');
+			} else {
+				Analytics.trackEvent('Unsubscribed RSVP as', 'participant', Regions.findOne(instance.data.region)?.nameEn);
 			}
 		});
 	},

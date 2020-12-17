@@ -7,6 +7,8 @@ import { Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subs
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
+import Analytics from '/imports/ui/lib/analytics';
+
 import '/imports/ui/components/buttons/buttons';
 
 import './course-roles.html';
@@ -87,6 +89,8 @@ Template.courseRole.events({
 				instance.showFirstSteps.set(true);
 				instance.busy(false);
 				instance.enrolling.set(false);
+
+				Analytics.trackEvent('Enrolled in Course as', this.roletype.type, Regions.findOne(this.course.region)?.nameEn);
 			});
 		});
 	},
@@ -99,7 +103,9 @@ Template.courseRole.events({
 	'click .js-role-unsubscribe-btn'() {
 		RouterAutoscroll.cancelNext();
 		const change = new Unsubscribe(this.course, Meteor.user(), this.roletype.type);
-		processChange(change);
+		processChange(change, () => {
+			Analytics.trackEvent('Unsubscribed in Course as', this.roletype.type, Regions.findOne(this.course.region)?.nameEn);
+		});
 		return false;
 	},
 

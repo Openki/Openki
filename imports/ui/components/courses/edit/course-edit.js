@@ -15,7 +15,7 @@ import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
 import StringTools from '/imports/utils/string-tools';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
-
+import Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
@@ -386,6 +386,8 @@ Template.courseEdit.events({
 					instance.savedCourseId.set(courseId);
 					instance.showSavedMessage.set(true);
 					instance.resetFields();
+
+					Analytics.trackEvent('created', `course created as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`, Regions.findOne(changes.region)?.nameEn);
 				} else {
 					if (isNew) {
 						Alert.success(mf(
@@ -393,6 +395,8 @@ Template.courseEdit.events({
 							{ NAME: changes.name },
 							'The course "{NAME}" has been created!',
 						));
+
+						Analytics.trackEvent('created', `course created as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`, Regions.findOne(changes.region)?.nameEn);
 					} else {
 						Alert.success(mf(
 							'message.courseChangesSaved',
