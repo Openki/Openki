@@ -1,11 +1,9 @@
 import Users from '/imports/api/users/users';
 
-import UpdatesAvailable from '/server/lib/updates';
-
 /**
  * merge the profile locale into the base locale
  */
-UpdatesAvailable['2020.12.16 mergeUserLocale'] = () => {
+export default function update() {
 	let updated = 0;
 
 	Users.find({}).fetch().forEach((originalUser) => {
@@ -19,4 +17,4 @@ UpdatesAvailable['2020.12.16 mergeUserLocale'] = () => {
 	});
 
 	return updated;
-};
+}
