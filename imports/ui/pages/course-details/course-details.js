@@ -12,6 +12,10 @@ import PleaseLogin from '/imports/ui/lib/please-login';
 import ScssVars from '/imports/ui/lib/scss-vars';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
+import { _ } from 'meteor/underscore';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import Analytics from '/imports/ui/lib/analytics';
+
 import IdTools from '/imports/utils/id-tools';
 
 import '/imports/ui/components/buttons/buttons';
@@ -144,6 +148,16 @@ Template.courseDetailsPage.events({
 					{ COURSE: course.name },
 					'The course "{COURSE}" has been deleted.',
 				));
+
+				let role;
+				if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
+					role = 'team';
+				} else if (UserPrivilegeUtils.privileged(Meteor.user(), 'admin')) {
+					role = 'admin';
+				} else {
+					role = 'unknown';
+				}
+				Analytics.trackEvent('Course deleted as', role, Regions.findOne(course.region)?.nameEn);
 			}
 		});
 		Router.go('/');
