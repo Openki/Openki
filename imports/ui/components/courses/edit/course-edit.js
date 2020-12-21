@@ -387,7 +387,10 @@ Template.courseEdit.events({
 					instance.showSavedMessage.set(true);
 					instance.resetFields();
 
-					Analytics.trackEvent('created', `course created as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`, Regions.findOne(changes.region)?.nameEn);
+					Analytics.trackEvent('created',
+						`course created as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`,
+						Regions.findOne(changes.region)?.nameEn,
+						instance.editableDescription.getTotalFocusTimeInSeconds());
 				} else {
 					if (isNew) {
 						Alert.success(mf(
@@ -395,8 +398,10 @@ Template.courseEdit.events({
 							{ NAME: changes.name },
 							'The course "{NAME}" has been created!',
 						));
-
-						Analytics.trackEvent('created', `course created as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`, Regions.findOne(changes.region)?.nameEn);
+						Analytics.trackEvent('created',
+							`course created as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`,
+							Regions.findOne(changes.region)?.nameEn,
+							instance.editableDescription.getTotalFocusTimeInSeconds());
 					} else {
 						Alert.success(mf(
 							'message.courseChangesSaved',
