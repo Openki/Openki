@@ -112,12 +112,13 @@ notificationEvent.Model = function (entry) {
 					venueLine,
 					regionName: region.name,
 					timeZone: endMoment.format('z'), // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
-					eventLink: Router.url('showEvent', event),
-					courseLink: Router.url('showCourse', course),
-					calLink: Router.url('calEvent', event),
+					eventLink: Router.url('showEvent', event, { query: 'campaign=eventNotify' }),
+					courseLink: Router.url('showCourse', course, { query: 'campaign=eventNotify' }),
+					calLink: Router.url('calEvent', event, { query: 'campaign=eventNotify' }),
 					new: entry.body.new,
 					subject,
 					additionalMessage: entry.body.additionalMessage,
+					customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
 					customSiteName: siteName,
 					customMailLogo: mailLogo,
 				}
