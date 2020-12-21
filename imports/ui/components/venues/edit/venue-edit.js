@@ -12,6 +12,7 @@ import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import Editable from '/imports/ui/lib/editable';
 import LocationTracker from '/imports/ui/lib/location-tracker';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
@@ -173,7 +174,7 @@ Template.venueEdit.events({
 			changes.description = newDescription;
 		}
 
-		if (changes.description.trim().length === 0) {
+		if (changes.description?.trim().length === 0) {
 			Alert.error(
 				mf('venue.create.plsProvideDescription', 'Please provide a description for your venue'),
 			);
@@ -206,7 +207,7 @@ Template.venueEdit.events({
 			return;
 		}
 
-		const venueId = this._id ? this._id : '';
+		const venueId = this._id || '';
 		instance.busy('saving');
 		SaveAfterLogin(instance, mf('loginAction.saveVenue', 'Login and save venue'), () => {
 			Meteor.call('venue.save', venueId, changes, (err, res) => {
@@ -218,7 +219,10 @@ Template.venueEdit.events({
 					);
 				} else {
 					Alert.success(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'));
+
 					if (instance.isNew) {
+						Analytics.trackEvent('created', 'venue created', Regions.findOne(changes.region)?.nameEn);
+
 						Router.go('venueDetails', { _id: res });
 					} else {
 						instance.parentInstance().editing.set(false);
