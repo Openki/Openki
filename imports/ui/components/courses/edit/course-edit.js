@@ -322,7 +322,7 @@ Template.courseEdit.events({
 		}
 
 		const course = instance.data;
-		const courseId = course._id ? course._id : '';
+		const courseId = course._id || '';
 		const isNew = courseId === '';
 		if (isNew) {
 			if (data.isFrame && data.region) {
