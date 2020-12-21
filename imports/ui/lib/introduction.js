@@ -5,7 +5,7 @@ import Alert from '/imports/api/alerts/alert';
 
 const Introduction = {
 	init() {
-		Session.set('ShowIntro', localStorage.getItem('intro') !== 'done');
+		Session.set('ShowIntro', localStorage?.getItem('intro') !== 'done');
 		Session.set('OpenedIntro', undefined);
 	},
 

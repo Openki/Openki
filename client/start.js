@@ -60,7 +60,7 @@ Meteor.startup(() => {
 	if (useLocale(UrlTools.queryParam('lg'))) {
 		return;
 	}
-	if (useLocale(localStorage.getItem('locale'))) {
+	if (useLocale(localStorage?.getItem('locale'))) {
 		return;
 	}
 
