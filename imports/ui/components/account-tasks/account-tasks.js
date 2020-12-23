@@ -179,7 +179,7 @@ Template.loginFrame.events({
 				}
 				$('.js-account-tasks').modal('hide');
 
-				Analytics.trackEvent('Logins with', 'password', Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
+				Analytics.trackEvent('Logins', 'Logins with password', Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
 			}
 		});
 	},
@@ -209,7 +209,7 @@ Template.loginFrame.events({
 				}
 				$('.js-account-tasks').modal('hide');
 
-				Analytics.trackEvent('Logins with', service, Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
+				Analytics.trackEvent('Logins', `Logins with ${service}`, Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
 			}
 		});
 	},
@@ -329,6 +329,8 @@ Template.registerFrame.events({
 				if (regionId) {
 					Meteor.call('user.regionChange', regionId);
 				}
+
+				Analytics.trackEvent('Registers', 'Registers with password', Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
 			}
 		});
 	},

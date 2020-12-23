@@ -186,7 +186,7 @@ Template.profile.events({
 					Alert.success(mf('profile.updated', 'Updated profile'));
 					instance.editing.set(false);
 					if (instance.data.user.notifications !== instance.$('.js-notifications').prop('checked') && !instance.$('.js-notifications').prop('checked')) {
-						Analytics.trackEvent('Unsubscribe from notifications', 'via profile');
+						Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from notifications via profile');
 					}
 				}
 			});

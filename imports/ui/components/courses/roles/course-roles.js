@@ -90,7 +90,7 @@ Template.courseRole.events({
 				instance.busy(false);
 				instance.enrolling.set(false);
 
-				Analytics.trackEvent('Enrolled in Course as', this.roletype.type, Regions.findOne(this.course.region)?.nameEn);
+				Analytics.trackEvent('Enrollments in courses', `Enrollments in courses as ${this.roletype.type}`, Regions.findOne(this.course.region)?.nameEn);
 			});
 		});
 	},
@@ -104,7 +104,7 @@ Template.courseRole.events({
 		RouterAutoscroll.cancelNext();
 		const change = new Unsubscribe(this.course, Meteor.user(), this.roletype.type);
 		processChange(change, () => {
-			Analytics.trackEvent('Unsubscribed in Course as', this.roletype.type, Regions.findOne(this.course.region)?.nameEn);
+			Analytics.trackEvent('Unsubscribes from courses', `Unsubscribes from courses as ${this.roletype.type}`, Regions.findOne(this.course.region)?.nameEn);
 		});
 		return false;
 	},

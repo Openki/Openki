@@ -157,7 +157,7 @@ Template.courseDetailsPage.events({
 				} else {
 					role = 'unknown';
 				}
-				Analytics.trackEvent('Course deleted as', role, Regions.findOne(course.region)?.nameEn);
+				Analytics.trackEvent('Course deletions', `Course deletions as ${role}`, Regions.findOne(course.region)?.nameEn);
 			}
 		});
 		Router.go('/');

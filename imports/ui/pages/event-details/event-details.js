@@ -170,7 +170,7 @@ Template.event.onCreated(function () {
 				if (err) {
 					Alert.serverError(err, '');
 				} else {
-					Analytics.trackEvent('RSVP as', 'participant', Regions.findOne(event.region)?.nameEn);
+					Analytics.trackEvent('RSVPs', 'RSVPs as participant', Regions.findOne(event.region)?.nameEn);
 				}
 			});
 		});
@@ -272,7 +272,7 @@ Template.event.events({
 			if (err) {
 				Alert.serverError(err, 'could not remove participant');
 			} else {
-				Analytics.trackEvent('Unsubscribed RSVP as', 'participant', Regions.findOne(instance.data.region)?.nameEn);
+				Analytics.trackEvent('Unsubscribes RSVPs', 'Unsubscribes RSVPs as participant', Regions.findOne(instance.data.region)?.nameEn);
 			}
 		});
 	},

@@ -720,7 +720,7 @@ Router.route('/profile/unsubscribe/:token', function () {
 	if (accepted) {
 		query.unsubscribed = '';
 
-		Analytics.trackEvent('Unsubscribe from notifications', 'via e-mail');
+		Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from notifications via e-mail');
 	} else {
 		query['unsubscribe-error'] = '';
 	}

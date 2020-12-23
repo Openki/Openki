@@ -147,7 +147,7 @@ Template.deleteEventsModal.events({
 				}
 
 				if (!err) {
-					Analytics.trackEvent('Event deleted as', '', Regions.findOne(event.region)?.nameEn);
+					Analytics.trackEvent('Event deletions', 'Event deletions as team', Regions.findOne(event.region)?.nameEn);
 				}
 			});
 		});

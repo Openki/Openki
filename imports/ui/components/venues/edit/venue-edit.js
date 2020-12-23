@@ -221,7 +221,7 @@ Template.venueEdit.events({
 					Alert.success(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'));
 
 					if (instance.isNew) {
-						Analytics.trackEvent('created', 'venue created', Regions.findOne(changes.region)?.nameEn);
+						Analytics.trackEvent('Venue creations', 'Venue creations', Regions.findOne(changes.region)?.nameEn);
 
 						Router.go('venueDetails', { _id: res });
 					} else {
