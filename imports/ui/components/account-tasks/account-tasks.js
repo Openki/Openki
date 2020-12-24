@@ -57,23 +57,32 @@ Template.accountTasks.events({
 Template.loginFrame.onCreated(function () {
 	this.busy(false);
 
-	this.OAuthServices = [
-		{
-			key: 'google',
-			name: 'Google',
-			serviceName: 'Google',
-		},
-		{
+	const oAuthServices = [];
+	const login = Meteor.settings.public.feature?.login;
+	if (login?.google) {
+		oAuthServices.push(
+			{
+				key: 'google',
+				name: 'Google',
+				serviceName: 'Google',
+			},
+		);
+	}
+	if (login?.facebook) {
+		oAuthServices.push({
 			key: 'facebook',
 			name: 'Facebook',
 			serviceName: 'Facebook',
-		},
-		{
+		});
+	}
+	if (login?.github) {
+		oAuthServices.push({
 			key: 'github',
 			name: 'GitHub',
 			serviceName: 'Github',
-		},
-	];
+		});
+	}
+	this.OAuthServices = oAuthServices;
 });
 
 Template.loginFrame.onRendered(function () {

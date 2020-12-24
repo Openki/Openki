@@ -10,6 +10,13 @@
 		"mailLogo": "mails/openki.png",
 		"regionSelection": { "minNumber": 5 },
 		"pricePolicyEnabled": true,
+		"feature": {
+			"login": {
+				"google": true,
+				"facebook": true,
+				"github": true
+			}
+		},
 		"footerLinks":
 		[	{ "link": "http://about.openki.net/"
 			, "key": "footer.aboutOpenki"
