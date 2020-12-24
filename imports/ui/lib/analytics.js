@@ -52,7 +52,7 @@ Analytics.load = function () {
 			if (!loading) {
 				// Use $.ajax with cache instead of $.loadScript().
 				loading = $.ajax({
-					url: config.url + (config.jsPath || 'js/'),
+					url: `${config.url}${config.jsPath || 'js/'}`,
 					cache: true,
 					dataType: 'script',
 				}).always(() => {
@@ -80,7 +80,7 @@ Analytics.tracker = function () {
 		check(Meteor.settings.public.matomo, SettingsPattern);
 		if (!tracker) {
 			const config = Meteor.settings.public.matomo;
-			tracker = matomo.getTracker(config.url + (config.phpPath || 'js/'), config.site);
+			tracker = matomo.getTracker(`${config.url}${config.phpPath || 'js/'}`, config.site);
 		}
 		return tracker;
 	});
@@ -99,6 +99,20 @@ Analytics.trytrack = function (callback) {
 		Analytics.tracker().then(callback, (err) => {
 			Meteor._debug('Exception when gathering analytics data', err);
 		});
+	}
+};
+/**
+ * Track a event in matomo or log to console.
+ */
+Analytics.trackEvent = function (category, action, name, value) {
+	if (Analytics.isConfigured()) {
+		// eslint-disable-next-line no-shadow
+		Analytics.trytrack((tracker) => {
+			tracker.trackEvent(category, action, name, value);
+		});
+	} else {
+		// eslint-disable-next-line no-console
+		console.info(`Analytics.Event: {category: ${category}, action: ${action}${name ? `, name: ${name}` : ''}${value ? `, value: ${value}` : ''}}`);
 	}
 };
 
