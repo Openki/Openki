@@ -41,9 +41,10 @@ import IdTools from '/imports/utils/id-tools';
 //         loginTockens: [{when: Date, hashed: String}]}}
 // "username"     -> String
 // "emails"       -> [{address: String, verified: Boolean}]
-// "profile"      -> {name: String, locale: Lang, regionId: ID}
+// "profile"      -> {name: String, regionId: ID}
 // "privileges"   -> [admin]
 // "lastLogin"    -> Date
+// "locale"       -> Lang             This value is managed by the messageformat package
 // notificactions: True if the user wants notification mails sent to them
 
 // Calculated fields

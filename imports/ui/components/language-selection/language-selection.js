@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
@@ -111,10 +110,9 @@ Template.languageSelection.events({
 			Alert.error(e);
 		}
 
+		// The db user update happens in the client/start.js in Tracker.autorun(() => { ... by
+		// messageformat
 		Session.set('locale', lg);
-		if (Meteor.user()) {
-			Meteor.call('user.updateLocale', lg);
-		}
 
 		instance.parentInstance().searchingLanguages.set(false);
 	},

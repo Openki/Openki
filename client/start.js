@@ -87,6 +87,7 @@ Meteor.startup(() => {
 	Tracker.autorun(() => {
 		const desiredLocale = Session.get('locale');
 
+		// messageformat set the locale value in the db user
 		mfPkg.setLocale(desiredLocale);
 
 		// Logic taken from mfpkg:core to get text directionality
@@ -140,7 +141,7 @@ Accounts.onLogin(() => {
 	const user = Meteor.user();
 
 	if (user) {
-		const locale = user.profile.locale;
+		const locale = user.locale;
 		if (locale) {
 			Session.set('locale', locale);
 		}
