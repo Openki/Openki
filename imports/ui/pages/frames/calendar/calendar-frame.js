@@ -19,13 +19,30 @@ Template.frameCalendar.onCreated(function frameCalendarOnCreated() {
 	const { query } = Router.current().params;
 	this.limit = new ReactiveVar(parseInt(query.count, 10) || 200);
 
+	let startDate = moment();
+	if (query.start) {
+		startDate = moment(query.start);
+	}
+	let endDate;
+	if (query.end) {
+		endDate = moment(query.end).add(1, 'day');
+	}
+
 	this.autorun(() => {
-		const filter = Events.Filtering().read(query).done();
-		const filterParams = filter.toParams();
-		filterParams.after = new Date();
+		const filter = Events.Filtering().read(query);
+		if (startDate && startDate.isValid()) {
+			filter.add('after', startDate);
+		}
+		if (endDate && endDate.isValid()) {
+			filter.add('end', endDate);
+		}
+
+		filter.done();
+
+		const filterQuery = filter.toQuery();
 		const limit = this.limit.get();
 
-		this.subscribe('Events.findFilter', filterParams, limit + 1);
+		this.subscribe('Events.findFilter', filterQuery, limit + 1);
 
 		const events = Events.find({}, { sort: { start: 1 }, limit }).fetch();
 		const groupedEvents = _.groupBy(events, (event) => moment(event.start).format('LL'));
