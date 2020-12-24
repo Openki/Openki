@@ -99,14 +99,14 @@ Template.courseMember.onCreated(function () {
 
 	instance.subscribeToTeam = function () {
 		const user = Users.findOne(this.data.member.user);
-		if (!user) return false; // Probably not loaded yet
+		if (!user) return undefined; // Probably not loaded yet
 
 		return new Subscribe(this.data.course, user, 'team');
 	};
 
 	instance.removeFromTeam = function () {
 		const user = Users.findOne(this.data.member.user);
-		if (!user) return false; // Probably not loaded yet
+		if (!user) return undefined; // Probably not loaded yet
 
 		return new Unsubscribe(this.data.course, user, 'team');
 	};
