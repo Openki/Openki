@@ -188,6 +188,13 @@ Template.loginFrame.events({
 				}
 				$('.js-account-tasks').modal('hide');
 
+				const regionId = CleanedRegion(Session.get('region'));
+				if (regionId) {
+					Meteor.call('user.regionChange', regionId);
+				}
+
+				Meteor.call('user.updateLocale', Session.get('locale'));
+
 				Analytics.trackEvent('Logins', 'Logins with password', Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
 			}
 		});
@@ -217,6 +224,13 @@ Template.loginFrame.events({
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
 				$('.js-account-tasks').modal('hide');
+
+				const regionId = CleanedRegion(Session.get('region'));
+				if (regionId) {
+					Meteor.call('user.regionChange', regionId);
+				}
+
+				Meteor.call('user.updateLocale', Session.get('locale'));
 
 				Analytics.trackEvent('Logins', `Logins with ${service}`, Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
 			}
@@ -324,7 +338,7 @@ Template.registerFrame.events({
 
 		instance.busy('registering');
 		Accounts.createUser({
-			username, password, email, locale: Session.get('locale'),
+			username, password, email,
 		}, (err) => {
 			instance.busy(false);
 			if (err) {
@@ -334,10 +348,13 @@ Template.registerFrame.events({
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
 				$('.js-account-tasks').modal('hide');
+
 				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
 					Meteor.call('user.regionChange', regionId);
 				}
+
+				Meteor.call('user.updateLocale', Session.get('locale'));
 
 				Analytics.trackEvent('Registers', 'Registers with password', Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
 			}

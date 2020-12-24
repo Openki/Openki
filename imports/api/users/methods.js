@@ -179,4 +179,10 @@ Meteor.methods({
 		}
 		return user.username;
 	},
+
+	'user.updateLocale'(locale) {
+		Meteor.users.update(Meteor.userId(), {
+			$set: { locale },
+		});
+	},
 });
