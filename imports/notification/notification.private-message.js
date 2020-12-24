@@ -103,11 +103,12 @@ notificationPrivateMessage.Model = function (entry) {
 
 			const vars = {
 				sender,
-				senderLink: Router.url('userprofile', sender),
+				senderLink: Router.url('userprofile', sender, { query: 'campaign=privateMessage' }),
 				subject,
 				message: htmlizedMessage,
 				senderCopy,
 				recipientName: targetRecipient.username,
+				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=privateMessage`,
 				customSiteName: siteName,
 				customMailLogo: mailLogo,
 			};

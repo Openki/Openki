@@ -11,6 +11,9 @@ import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import IsEmail from '/imports/utils/email-tools';
 
+import Regions from '/imports/api/regions/regions';
+import Analytics from '/imports/ui/lib/analytics';
+
 import './account-tasks.html';
 
 Template.accountTasks.onCreated(function () {
@@ -54,23 +57,32 @@ Template.accountTasks.events({
 Template.loginFrame.onCreated(function () {
 	this.busy(false);
 
-	this.OAuthServices = [
-		{
-			key: 'google',
-			name: 'Google',
-			serviceName: 'Google',
-		},
-		{
+	const oAuthServices = [];
+	const login = Meteor.settings.public.feature?.login;
+	if (login?.google) {
+		oAuthServices.push(
+			{
+				key: 'google',
+				name: 'Google',
+				serviceName: 'Google',
+			},
+		);
+	}
+	if (login?.facebook) {
+		oAuthServices.push({
 			key: 'facebook',
 			name: 'Facebook',
 			serviceName: 'Facebook',
-		},
-		{
+		});
+	}
+	if (login?.github) {
+		oAuthServices.push({
 			key: 'github',
 			name: 'GitHub',
 			serviceName: 'Github',
-		},
-	];
+		});
+	}
+	this.OAuthServices = oAuthServices;
 });
 
 Template.loginFrame.onRendered(function () {
@@ -182,6 +194,8 @@ Template.loginFrame.events({
 				}
 
 				Meteor.call('user.updateLocale', Session.get('locale'));
+
+				Analytics.trackEvent('Logins', 'Logins with password', Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
 			}
 		});
 	},
@@ -217,6 +231,8 @@ Template.loginFrame.events({
 				}
 
 				Meteor.call('user.updateLocale', Session.get('locale'));
+
+				Analytics.trackEvent('Logins', `Logins with ${service}`, Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
 			}
 		});
 	},
@@ -339,6 +355,8 @@ Template.registerFrame.events({
 				}
 
 				Meteor.call('user.updateLocale', Session.get('locale'));
+
+				Analytics.trackEvent('Registers', 'Registers with password', Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
 			}
 		});
 	},

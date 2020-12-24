@@ -4,6 +4,8 @@ import { Template } from 'meteor/templating';
 
 import Alert from '/imports/api/alerts/alert';
 
+import Analytics from '/imports/ui/lib/analytics';
+
 import './delete-events.html';
 
 Template.deleteCourseEvents.events({
@@ -142,6 +144,10 @@ Template.deleteEventsModal.events({
 						instance.state.set('selectedEvents', []);
 						instance.$('.js-delete-events-modal').modal('hide');
 					}
+				}
+
+				if (!err) {
+					Analytics.trackEvent('Event deletions', 'Event deletions as team', Regions.findOne(event.region)?.nameEn);
 				}
 			});
 		});

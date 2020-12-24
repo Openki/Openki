@@ -162,7 +162,7 @@ Template.regionSelection.helpers({
 Template.regionSelection.events({
 	'click .js-region-link'(event, instance) {
 		event.preventDefault();
-		const regionId = this._id ? this._id : 'all';
+		const regionId = this._id || 'all';
 		instance.changeRegion(regionId.toString());
 	},
 

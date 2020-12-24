@@ -94,12 +94,13 @@ notificationJoin.Model = function (entry) {
 				{
 					course,
 					newParticipant,
-					courseLink: Router.url('showCourse', course),
+					courseLink: Router.url('showCourse', course, { query: 'campaign=joinNotify' }),
 					subject,
 					memberCount: course.members.length,
 					roleTitle,
 					message: HtmlTools.plainToHtml(body.message),
 					figures,
+					customSiteUrl: `${Meteor.absoluteUrl()}?campaign=joinNotify`,
 					customSiteName: siteName,
 					customMailLogo: mailLogo,
 				}

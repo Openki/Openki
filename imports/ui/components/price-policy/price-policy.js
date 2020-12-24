@@ -10,7 +10,7 @@ Template.pricePolicy.helpers({
 	hidePricePolicy() {
 		const hideFlags = [
 			Session.get('hidePricePolicy'),
-			localStorage.getItem('hidePricePolicy'),
+			localStorage?.getItem('hidePricePolicy'),
 		];
 
 		const user = Meteor.user();

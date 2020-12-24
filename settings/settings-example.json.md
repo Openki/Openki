@@ -18,6 +18,13 @@ This file descripts all configurations and customization options. Remove the com
 			"site": 1 // Matomo id
 		},
 		"pricePolicyEnabled": true, // by true, show only indicative prices (DE: Richtpreise)
+		"feature": {
+			"login": { // toggle visibility of login services
+				"google": true,
+				"facebook": true,
+				"github": true
+			}
+		},
 		"footerLinks": [
 			{
 				"link": "https://about.openki.net/",

@@ -19,12 +19,18 @@ import './editable.html';
 		const editable = this.$('.js-editable');
 		let initialized = false;
 		let changedByUser = false;
+		let totalFocusTimeInSeconds = 0;
+		let startGettingFocus;
 
 		instance.getEdited = function () {
 			if (!instance.state || !instance.state.changed.get()) {
 				return false;
 			}
 			return instance.state.simple ? editable.text().trim() : editable.html().trim();
+		};
+
+		instance.getTotalFocusTimeInSeconds = function () {
+			return totalFocusTimeInSeconds;
 		};
 
 		instance.reset = function () {
@@ -58,6 +64,8 @@ import './editable.html';
 			instance.state.store(instance.getEdited());
 			instance.state.changed.set(false);
 			changedByUser = false;
+			startGettingFocus = undefined;
+			totalFocusTimeInSeconds = 0;
 		};
 
 		const options = {
@@ -84,6 +92,13 @@ import './editable.html';
 		editable.on('input', () => {
 			changedByUser = true;
 			instance.state.changed.set(true);
+		});
+
+		editable.on('focus', () => {
+			startGettingFocus = Date.now();
+		});
+		editable.on('blur', () => {
+			totalFocusTimeInSeconds += Math.round((Date.now() - startGettingFocus) / 1000);
 		});
 	});
 
