@@ -115,12 +115,13 @@ notificationComment.Model = function (entry) {
 			return (
 				{
 					course,
-					courseLink: Router.url('showCourse', course, { query: `select=${comment._id}` }),
+					courseLink: Router.url('showCourse', course, { query: `select=${comment._id}&campaign=commentNotify` }),
 					subject,
 					comment,
 					commenter,
-					commenterLink: Meteor.absoluteUrl(`user/${comment.userId}/${commenterName}`),
+					commenterLink: `${Meteor.absoluteUrl(`user/${comment.userId}/${commenterName}`)}?campaign=commentNotify`,
 					commenterName,
+					customSiteUrl: `${Meteor.absoluteUrl()}?campaign=commentNotify`,
 					customSiteName: siteName,
 					customMailLogo: mailLogo,
 				}
