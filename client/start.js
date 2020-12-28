@@ -50,6 +50,12 @@ Meteor.startup(() => {
 			}
 		}
 		if (locale) {
+			try {
+				localStorage.setItem('locale', locale);
+			} catch (e) {
+				Alert.error(e);
+			}
+
 			Session.set('locale', locale);
 			return true;
 		}
@@ -143,6 +149,12 @@ Accounts.onLogin(() => {
 	if (user) {
 		const locale = user.locale;
 		if (locale) {
+			try {
+				localStorage.setItem('locale', locale);
+			} catch (e) {
+				Alert.error(e);
+			}
+
 			Session.set('locale', locale);
 		}
 	}
