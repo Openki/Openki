@@ -1,3 +1,6 @@
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
 import Log from '/imports/api/log/log';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 
@@ -31,3 +34,4 @@ UpdatesAvailable[updateName] = function () {
 
 	return count;
 };
+*/

@@ -11,6 +11,9 @@ import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import IsEmail from '/imports/utils/email-tools';
 
+import Regions from '/imports/api/regions/regions';
+import Analytics from '/imports/ui/lib/analytics';
+
 import './account-tasks.html';
 
 Template.accountTasks.onCreated(function () {
@@ -23,7 +26,7 @@ Template.accountTasks.onCreated(function () {
 });
 
 Template.accountTasks.helpers({
-	activeAccountTask: task => Template.instance().accountTask.get() === task,
+	activeAccountTask: (task) => Template.instance().accountTask.get() === task,
 	pleaseLogin: () => Session.get('pleaseLogin'),
 });
 
@@ -54,23 +57,32 @@ Template.accountTasks.events({
 Template.loginFrame.onCreated(function () {
 	this.busy(false);
 
-	this.OAuthServices = [
-		{
-			key: 'google',
-			name: 'Google',
-			serviceName: 'Google',
-		},
-		{
+	const oAuthServices = [];
+	const login = Meteor.settings.public.feature?.login;
+	if (login?.google) {
+		oAuthServices.push(
+			{
+				key: 'google',
+				name: 'Google',
+				serviceName: 'Google',
+			},
+		);
+	}
+	if (login?.facebook) {
+		oAuthServices.push({
 			key: 'facebook',
 			name: 'Facebook',
 			serviceName: 'Facebook',
-		},
-		{
+		});
+	}
+	if (login?.github) {
+		oAuthServices.push({
 			key: 'github',
 			name: 'GitHub',
 			serviceName: 'Github',
-		},
-	];
+		});
+	}
+	this.OAuthServices = oAuthServices;
 });
 
 Template.loginFrame.onRendered(function () {
@@ -175,6 +187,15 @@ Template.loginFrame.events({
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
 				$('.js-account-tasks').modal('hide');
+
+				const regionId = CleanedRegion(Session.get('region'));
+				if (regionId) {
+					Meteor.call('user.regionChange', regionId);
+				}
+
+				Meteor.call('user.updateLocale', Session.get('locale'));
+
+				Analytics.trackEvent('Logins', 'Logins with password', Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
 			}
 		});
 	},
@@ -203,6 +224,15 @@ Template.loginFrame.events({
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
 				$('.js-account-tasks').modal('hide');
+
+				const regionId = CleanedRegion(Session.get('region'));
+				if (regionId) {
+					Meteor.call('user.regionChange', regionId);
+				}
+
+				Meteor.call('user.updateLocale', Session.get('locale'));
+
+				Analytics.trackEvent('Logins', `Logins with ${service}`, Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
 			}
 		});
 	},
@@ -307,7 +337,9 @@ Template.registerFrame.events({
 		}
 
 		instance.busy('registering');
-		Accounts.createUser({ username, password, email }, (err) => {
+		Accounts.createUser({
+			username, password, email,
+		}, (err) => {
 			instance.busy(false);
 			if (err) {
 				instance.errors.add(err.reason);
@@ -316,10 +348,15 @@ Template.registerFrame.events({
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
 				$('.js-account-tasks').modal('hide');
+
 				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
 					Meteor.call('user.regionChange', regionId);
 				}
+
+				Meteor.call('user.updateLocale', Session.get('locale'));
+
+				Analytics.trackEvent('Registers', 'Registers with password', Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
 			}
 		});
 	},

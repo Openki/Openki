@@ -1,5 +1,9 @@
 
-const UpdatesAvailable = {};
+import update20201216MergeUserLocale from '../updates/2020.12.16 mergeUserLocale';
+
+const UpdatesAvailable = { '2020.12.16 mergeUserLocale': update20201216MergeUserLocale };
+
+
 const UpdatesApplied = new Meteor.Collection('UpdatesApplied');
 
 const applyUpdates = function () {

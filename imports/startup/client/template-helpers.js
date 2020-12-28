@@ -1,12 +1,19 @@
 import { Template } from 'meteor/templating';
 import Groups from '/imports/api/groups/groups';
+import Regions from '/imports/api/regions/regions';
 
 
 const helpers = {
 	siteName() {
-		if (Meteor.settings.public && Meteor.settings.public.siteName) {
+		const currentRegion = Regions.currentRegion();
+		if (currentRegion?.custom?.siteName) {
+			return currentRegion.custom.siteName;
+		}
+
+		if (Meteor.settings.public.siteName) {
 			return Meteor.settings.public.siteName;
 		}
+
 		return 'Hmmm';
 	},
 
@@ -16,6 +23,10 @@ const helpers = {
 	},
 
 	guideLink() {
+		if (Meteor.settings.public.courseGuideLink) {
+			return Meteor.settings.public.courseGuideLink;
+		}
+
 		const locale = Session.get('locale');
 		// default fallback language
 		let guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
@@ -32,6 +43,14 @@ const helpers = {
 			break;
 		}
 		return guideLink;
+	},
+
+	faqLink() {
+		return Meteor.settings.public.faqLink || '/FAQ';
+	},
+
+	aboutLink() {
+		return Meteor.settings.public.aboutLink || 'https://about.openki.net';
 	},
 
 	log(context) {
@@ -157,7 +176,7 @@ const helpers = {
 	},
 };
 
-Object.keys(helpers).forEach(name => Template.registerHelper(name, helpers[name]));
+Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[name]));
 
 /* Get a username from ID
  */

@@ -27,7 +27,7 @@ const ReplicaSync = function (event, updateChangedReplicas) {
 		const timeDelta = moment(changes.end).diff(startMoment);
 
 		Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
-			const replicaChanges = Object.assign({}, changes); // Shallow clone
+			const replicaChanges = { ...changes }; // Shallow clone
 
 			const updateTime = changes.start
 							&& (updateChangedReplicas || replica.sameTime(event));

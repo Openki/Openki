@@ -38,7 +38,7 @@ Template.navbar.onRendered(function () {
 
 Template.navbar.helpers({
 	showTestWarning() {
-		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.testWarning;
+		return Meteor.settings.public.testWarning;
 	},
 
 	connected() {
@@ -50,11 +50,27 @@ Template.navbar.helpers({
 	},
 
 	headerLogo() {
-		return Meteor.settings.public.headerLogo.src;
+		const currentRegion = Regions.currentRegion();
+		if (currentRegion?.custom?.headerLogo?.src) {
+			return currentRegion.custom.headerLogo.src;
+		}
+
+		if (Meteor.settings.public.headerLogo?.src) {
+			return Meteor.settings.public.headerLogo.src;
+		}
+		return '';
 	},
 
 	headerAlt() {
-		return Meteor.settings.public.headerLogo.alt;
+		const currentRegion = Regions.currentRegion();
+		if (currentRegion?.custom?.headerLogo?.alt) {
+			return currentRegion.custom.headerLogo.alt;
+		}
+
+		if (Meteor.settings.public.headerLogo?.alt) {
+			return Meteor.settings.public.headerLogo.alt;
+		}
+		return '';
 	},
 
 	notConnected() {
@@ -62,7 +78,12 @@ Template.navbar.helpers({
 	},
 
 	siteStage() {
-		if (Meteor.settings.public && Meteor.settings.public.siteStage) {
+		const currentRegion = Regions.currentRegion();
+		if (currentRegion?.custom?.siteStage) {
+			return currentRegion.custom.siteStage;
+		}
+
+		if (Meteor.settings.public.siteStage) {
 			return Meteor.settings.public.siteStage;
 		}
 		return '';
@@ -70,7 +91,7 @@ Template.navbar.helpers({
 
 	activeClass(linkRoute, id) {
 		const router = Router.current();
-		if (router.route && router.route.getName() === linkRoute) {
+		if (router.route?.getName() === linkRoute) {
 			if (typeof id === 'string' && router.params._id !== id) {
 				return '';
 			}

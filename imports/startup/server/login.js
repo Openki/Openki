@@ -1,8 +1,8 @@
 import Log from '/imports/api/log/log';
 
 // Record a login attempt in the log
-const registerAttempt = track => (attempt) => {
-	const body = Object.assign({}, attempt);
+const registerAttempt = (track) => (attempt) => {
+	const body = { ...attempt };
 	if (attempt.user) {
 		body.userId = attempt.user._id;
 		body.username = attempt.user.username;

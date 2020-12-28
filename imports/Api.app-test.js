@@ -75,7 +75,7 @@ if (Meteor.isClient) {
 						const { data } = json;
 						assert.isNotEmpty(data);
 
-						const starts = _.pluck(data, 'start').map(datestr => new Date(datestr));
+						const starts = _.pluck(data, 'start').map((datestr) => new Date(datestr));
 
 						// Because we start at the current time, this test will also detect events
 						// in the past as order violation
@@ -88,7 +88,7 @@ if (Meteor.isClient) {
 						assertGoodHeaders(result);
 						return result.json();
 					}).then((json) => {
-						const starts = _.pluck(json.data, 'start').map(datestr => new Date(datestr));
+						const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr));
 						starts.forEach(AssertAscending(new Date(), 'ascending ordering of start-dates was requested'));
 					});
 				});
@@ -133,7 +133,7 @@ if (Meteor.isClient) {
 						const { data } = json;
 						assert.isNotEmpty(data);
 
-						const starts = _.pluck(json.data, 'start').map(datestr => new Date(datestr));
+						const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr));
 
 						// Because we start at the current time, this test will also detect if events from the
 						// future as order violation
@@ -158,7 +158,7 @@ if (Meteor.isClient) {
 					const testistan = '9JyFCoKWkxnf8LWPh';
 					const venues = Meteor.absoluteUrl(`/api/0/json/venues?region=${testistan}`);
 					return fetch(venues)
-						.then(result => result.json())
+						.then((result) => result.json())
 						.then((json) => {
 							const { data } = json;
 							assert.isNotEmpty(data);

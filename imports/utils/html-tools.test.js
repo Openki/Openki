@@ -10,13 +10,13 @@ describe('Converting Text to HTML', () => {
 		assert.notInclude(HtmlTools.plainToHtml('<><'), '<');
 	});
 	it('hyperlinks links', () => {
-		const url = 'http://openki.net';
+		const url = 'https://openki.net';
 		const html = HtmlTools.plainToHtml(url);
 		assert.include(html, 'href');
 		assert.include(html, url);
 	});
 	it('hyperlinks valid', () => {
-		const html = HtmlTools.plainToHtml('http://openki.net');
+		const html = HtmlTools.plainToHtml('https://openki.net');
 		const options = {
 			allowedTags: ['a'],
 			allowedAttributes: {
@@ -27,7 +27,7 @@ describe('Converting Text to HTML', () => {
 		assert.include(sanehtml, 'href');
 	});
 	it('hyperlinks ampersand url', () => {
-		const url = 'http://openki.net/?&';
+		const url = 'https://openki.net/?&';
 		const html = HtmlTools.plainToHtml(url);
 		assert.include(html, '&amp;');
 	});

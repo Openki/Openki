@@ -14,17 +14,16 @@
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
 						<tr bgcolor="#3f819e">
 							<td width="45" valign="top" style="padding: 0px 10px 0px 20px;">
-								<a href="https://openki.net/">
+								<a href="{{siteUrl}}">
 								<img src="{{logo.url}}"
-									width="45"
 									height="45"
 									border="0"
-									alt="{{siteName}} Logo"
+									alt="{{customSiteName}} Logo"
 									style="padding-bottom: 0px; outline:none; text-decoration:none; -ms-interpolation-mode: bicubic; border:none;">
 								</a>
 								</td>
 							<td width="455" style="padding: 0px; font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter;">
-								<a href="https://openki.net/" style="color: #fff !important; text-decoration: none !important;">{{siteName}}</a>
+								<a href="{{siteUrl}}" style="color: #fff !important; text-decoration: none !important;">{{customSiteName}}</a>
 							</td>
 						</tr>
 				</table>
@@ -37,29 +36,17 @@
 				</span>
 			{{#if senderCopy}}
 				<p style="margin: 1em 0;">
-					{{mf
-						"notification.privateMessage.mail.copyintro"
-						'This is your copy of your message that was sent to "{RECIPIENT}"'
-						RECIPIENT=recipientName LOCALE=locale
-					}}
+					{{mf "notification.privateMessage.mail.copyintro" 'This is your copy of your message that was sent to "{RECIPIENT}"' RECIPIENT=recipientName LOCALE=locale}}
 				</p>
 			{{/if}}
 				<p style="margin: 1em 0;">
-					{{mf
-						"notification.privateMessage.mail.intro"
-						'Private message from "{SENDER}"'
-						SENDER=sender.username LOCALE=locale
-					}}
+					{{mf "notification.privateMessage.mail.intro" 'Private message from "{SENDER}"' SENDER=sender.username LOCALE=locale}}
 					{{#if fromAddress}}
 						<a href="mailto:{{fromAddress}}">{{fromAddress}}</a>
 					{{/if}}
 			{{#if courseLink}}
 					<a href="{{courseLink}}">
-						{{mf
-							"notification.privateMessage.mail.fromCourse"
-							'Message sent from course "{COURSE}"'
-							COURSE=courseName LOCALE=locale
-						}}
+						{{mf"notification.privateMessage.mail.fromCourse" 'Message sent from course "{COURSE}"' COURSE=courseName LOCALE=locale}}
 					</a>
 			{{/if}}
 				</p>
@@ -87,7 +74,7 @@
 					<tr>
 						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
 							<a href="{{unsubLink}}" style="color:#fff !important; text-decoration: underline;">
-								{{mf "notification.event.mail.unsubLink" LOCALE=locale}}
+								{{mf "notification.event.mail.unsubLink" SITENAME=siteName LOCALE=locale}}
 							</a>
 							&nbsp;
 							<a href="{{urlFor 'profile'}}" style="color:#fff !important; text-decoration: underline;">

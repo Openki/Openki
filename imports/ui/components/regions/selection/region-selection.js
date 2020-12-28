@@ -21,7 +21,7 @@ Template.regionSelectionWrap.onCreated(function () {
 
 Template.regionDisplay.helpers({
 	currentRegion() {
-		return Regions.findOne(Session.get('region'));
+		return Regions.currentRegion();
 	},
 });
 
@@ -45,14 +45,28 @@ Template.regionSelection.onCreated(function () {
 		this.state.set('showAllRegions', search !== '');
 	});
 
-	this.regions = (active = true) => {
-		const query = { futureEventCount: active ? { $gt: 0 } : { $eq: 0 } };
+	this.minNumberOfRegionInSelection = Meteor.settings.public.regionSelection?.minNumber || 5;
+
+	/**
+	 * Query some regions
+	 * @param {{active?: boolean; limit?: number}} options
+	 */
+	this.regions = (options = {}) => {
+		const query = {};
+
+		if (typeof options.active === 'boolean') {
+			query.futureEventCount = options.active ? { $gt: 0 } : { $eq: 0 };
+		}
+
 		const search = this.state.get('search');
 		if (search !== '') {
 			query.name = new RegExp(search, 'i');
 		}
 
-		return Regions.find(query, { sort: { futureEventCount: -1, name: 1 } });
+		return Regions.find(query, {
+			sort: { futureEventCount: -1, courseCount: -1, name: 1 },
+			limit: options.limit,
+		});
 	};
 
 	this.changeRegion = (regionId) => {
@@ -85,7 +99,7 @@ Template.regionSelection.onCreated(function () {
 	// only if it is placed inside a wrap
 	this.close = () => {
 		const parentState = this.parentInstance().state;
-		if (parentState && parentState.get('searchingRegions')) {
+		if (parentState?.get('searchingRegions')) {
 			parentState.set('searchingRegions', false);
 		}
 	};
@@ -104,9 +118,7 @@ Template.regionSelection.onRendered(function () {
 });
 
 Template.regionSelection.helpers({
-	regions() {
-		return Template.instance().regions();
-	},
+
 
 	allCourses() {
 		return Regions.find().fetch().reduce((acc, region) => acc + region.courseCount, 0);
@@ -116,15 +128,41 @@ Template.regionSelection.helpers({
 		return Regions.find().fetch().reduce((acc, region) => acc + region.futureEventCount, 0);
 	},
 
-	inactiveRegions() {
-		return Template.instance().regions(false);
+	mostActiveRegions() {
+		const minNumber = Template.instance().minNumberOfRegionInSelection;
+
+		const allActiveRegions = Template.instance().regions({ active: true });
+
+		if (allActiveRegions.count() >= minNumber) return allActiveRegions;
+
+		// Query more to have a min Number of regions
+		const someInactiveRegions = Template.instance().regions({
+			active: false,
+			limit: minNumber - allActiveRegions.count(),
+		});
+
+		return [...allActiveRegions, ...someInactiveRegions];
 	},
+
+	hasMoreRegions() {
+		const minNumber = Template.instance().minNumberOfRegionInSelection;
+
+		const numberOfRegions = Template.instance().regions().count();
+
+		return numberOfRegions > minNumber
+		&& numberOfRegions > Template.instance().regions({ active: true }).count();
+	},
+
+	allRegions() {
+		return Template.instance().regions();
+	},
+
 });
 
 Template.regionSelection.events({
 	'click .js-region-link'(event, instance) {
 		event.preventDefault();
-		const regionId = this._id ? this._id : 'all';
+		const regionId = this._id || 'all';
 		instance.changeRegion(regionId.toString());
 	},
 

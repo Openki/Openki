@@ -5,6 +5,13 @@ import Version from '/imports/api/version/version';
 import './footer.html';
 
 Template.footer.helpers({
+	links() {
+		return (Meteor.settings.public.footerLinks || []).map((linkSpec) => ({
+			link: linkSpec.link,
+			text: linkSpec.key ? mf(linkSpec.key) : linkSpec.text,
+			title: linkSpec.title_key ? mf(linkSpec.title_key) : '',
+		}));
+	},
 	version() {
 		const version = Version.findOne();
 		return version && version.basic + (version.branch !== 'master' ? ` ${version.branch}` : '');
@@ -15,14 +22,14 @@ Template.footer.helpers({
 	},
 	commit() {
 		const version = Version.findOne();
-		return version && version.commitShort;
+		return version?.commitShort;
 	},
 	deployed() {
 		const version = Version.findOne();
-		return version && version.activation;
+		return version?.activation;
 	},
 	restart() {
 		const version = Version.findOne();
-		return version && version.lastStart;
+		return version?.lastStart;
 	},
 });

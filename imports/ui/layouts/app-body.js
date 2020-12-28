@@ -24,12 +24,12 @@ import './app-body.html';
 
 Template.layout.helpers({
 	testWarning() {
-		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.testWarning;
+		return Meteor.settings.public.testWarning;
 	},
 
 	translate() {
 		const { route } = Router.current();
-		return route && route.getName() === 'mfTrans';
+		return route?.getName() === 'mfTrans';
 	},
 
 	mayTranslate() {
@@ -62,7 +62,7 @@ Template.layout.events({
 	// Clicks on the logo toggle the intro blurb, but only when already on home
 	'click .js-toggle-introduction'() {
 		const { route } = Router.current();
-		if (route && route.options.template === 'findWrap') {
+		if (route?.options.template === 'findWrap') {
 			Introduction.showIntro();
 		}
 	},
@@ -70,7 +70,7 @@ Template.layout.events({
 
 Template.layout.rendered = function () {
 	$(window).resize(() => { UpdateViewport(); });
-	Session.set('isRetina', (window.devicePixelRatio === 2));
+	Session.set('isRetina', window.devicePixelRatio === 2);
 };
 
 /* Workaround to prevent iron-router from messing with server-side downloads

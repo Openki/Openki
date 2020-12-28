@@ -10,7 +10,7 @@ Template.pricePolicy.helpers({
 	hidePricePolicy() {
 		const hideFlags = [
 			Session.get('hidePricePolicy'),
-			localStorage.getItem('hidePricePolicy'),
+			localStorage?.getItem('hidePricePolicy'),
 		];
 
 		const user = Meteor.user();
@@ -32,6 +32,20 @@ Template.pricePolicyContent.helpers({
 			classes.push(this.wrap);
 		}
 		return classes.join(' ');
+	},
+
+	/**
+	 * Checks if price-policy is enabled for this instance.
+	 * Its only disabled if you set the pricePolicyEnabled-var
+	 * explicitly to false.
+	 */
+	pricePolicyEnabled() {
+		const pricePolicyEnabled = Meteor.settings.public.pricePolicyEnabled;
+		if (pricePolicyEnabled === false) {
+			return false;
+		}
+		// price policy setting is not set, is ambiguos, or is set explicitly to true.
+		return true;
 	},
 
 	pricePolicyLink() {

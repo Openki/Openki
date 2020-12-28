@@ -129,7 +129,7 @@ Template.post.helpers({
 			.fetch();
 
 		const limit = instance.limit.get();
-		return limit ? replies.slice(-(limit)) : replies;
+		return limit ? replies.slice(-limit) : replies;
 	},
 
 	notAllResponsesShown() {
@@ -323,6 +323,8 @@ Template.post.events({
 			comment._id = instance.data._id;
 		}
 
+		comment.notifyAll = comment.notifyAll || false;
+
 		instance.editing.set(false);
 		instance.busy('saving');
 		Meteor.call(method, comment, (err) => {
@@ -370,11 +372,11 @@ Template.postEdit.events({
 Template.profileIcon.helpers({
 
 	discussionLogo() {
-		return Meteor.settings.public.discussionLogo.src;
+		return Meteor.settings.public.discussionLogo?.src;
 	},
 
 	discussionAlt() {
-		return Meteor.settings.public.discussionLogo.alt;
+		return Meteor.settings.public.discussionLogo?.alt;
 	},
 
 });

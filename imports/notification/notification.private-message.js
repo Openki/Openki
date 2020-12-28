@@ -92,13 +92,25 @@ notificationPrivateMessage.Model = function (entry) {
 			// Find out whether this is the copy sent to the sender.
 			const senderCopy = sender._id === actualRecipient._id;
 
+			let siteName;
+			let mailLogo;
+			if (actualRecipient.profile?.regionId) {
+				const region = Regions.findOne(actualRecipient.profile?.regionId);
+				siteName = region?.custom?.siteName;
+				mailLogo = region?.custom?.mailLogo;
+			}
+			siteName = siteName || Meteor.settings.public.siteName;
+
 			const vars = {
 				sender,
-				senderLink: Router.url('userprofile', sender),
+				senderLink: Router.url('userprofile', sender, { query: 'campaign=privateMessage' }),
 				subject,
 				message: htmlizedMessage,
 				senderCopy,
 				recipientName: targetRecipient.username,
+				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=privateMessage`,
+				customSiteName: siteName,
+				customMailLogo: mailLogo,
 			};
 
 			if (!senderCopy && body.revealSenderAddress) {

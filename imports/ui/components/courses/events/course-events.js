@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
+import Analytics from '/imports/ui/lib/analytics';
+
 import Events from '/imports/api/events/events';
 
 import '/imports/ui/components/events/list/event-list';
@@ -68,7 +70,7 @@ Template.courseEvents.helpers({
 
 	haveMoreEvents() {
 		const instance = Template.instance();
-		return instance.haveMoreEvents() && (!instance.showAllEvents.get());
+		return instance.haveMoreEvents() && !instance.showAllEvents.get();
 	},
 
 	ready() {
@@ -115,6 +117,10 @@ Template.courseEvents.events({
 			instance.$('.fade-top').fadeIn(200);
 			instance.$('.fade-bottom').fadeIn(200);
 		}
+	},
+
+	'click .js-track-cal-download'(event, instance) {
+		Analytics.trackEvent('Events downloads', 'Events downloads', Regions.findOne(instance.data.course.region)?.nameEn);
 	},
 });
 

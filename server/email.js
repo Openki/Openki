@@ -9,7 +9,7 @@ if (Meteor.settings.siteEmail) {
 	Accounts.emailTemplates.from = Meteor.settings.siteEmail;
 }
 
-if (Meteor.settings.public && Meteor.settings.public.siteName) {
+if (Meteor.settings.public.siteName) {
 	Accounts.emailTemplates.siteName = Meteor.settings.public.siteName;
 }
 
@@ -26,13 +26,11 @@ const getReportEmails = () => {
 		sender: 'reporter@mail.openki.net',
 		recipient: 'admins@openki.net',
 	};
-	if (Meteor.settings.reporter) {
-		if (Meteor.settings.reporter.sender) {
-			reportEmails.sender = Meteor.settings.reporter.sender;
-		}
-		if (Meteor.settings.reporter.recipient) {
-			reportEmails.recipient = Meteor.settings.reporter.recipient;
-		}
+	if (Meteor.settings.reporter?.sender) {
+		reportEmails.sender = Meteor.settings.reporter.sender;
+	}
+	if (Meteor.settings.reporter?.recipient) {
+		reportEmails.recipient = Meteor.settings.reporter.recipient;
 	}
 	return reportEmails;
 };

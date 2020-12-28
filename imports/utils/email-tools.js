@@ -8,3 +8,19 @@ const IsEmail = function (str) {
 };
 
 export default IsEmail;
+
+/** Logo that can be attached to mails
+  *
+  * path: a file path relative to private/
+  */
+export const logo = function (path) {
+	check(path, String);
+	const cid = Random.id();
+	this.url = `cid:${cid}`;
+	this.attachement = {
+		cid,
+		path: Assets.absoluteFilePath(path),
+		filename: false,
+	};
+	return this;
+};

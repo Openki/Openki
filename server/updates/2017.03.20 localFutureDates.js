@@ -1,3 +1,6 @@
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
 import LocalTime from '/imports/utils/local-time';
 import Log from '/imports/api/log/log';
 import Events from '/imports/api/events/events';
@@ -55,7 +58,7 @@ UpdatesAvailable[updateName] = function () {
 					update: updateName,
 				},
 			);
-			/* eslint-disable-next-line no-console */
+			// eslint-disable-next-line no-console
 			console.log(`Unable to update local time for event ${event._id}: ${e}`);
 		}
 	});
@@ -65,3 +68,4 @@ UpdatesAvailable[updateName] = function () {
 
 	return count;
 };
+*/

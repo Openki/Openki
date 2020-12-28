@@ -25,7 +25,7 @@
 							<div class="icon-text-text">
 								{{mf 'course.propose.CourseInfo' 'Start your own Openki course here. Whether as a mentor or participant, you decide what and how you want to learn. More information here:'}}
 								<a href="{{guideLink}}" target='_blank'>{{mf 'course.propose.guideLink' 'Openki-course-guide'}}</a>,
-								<a href="/FAQ" target="_blank">FAQ</a>
+								<a href="{{faqLink}}" target="_blank">FAQ</a>
 							</div>
 						</div>
 					{{/unless}}
@@ -110,7 +110,9 @@
 											value="1"
 											{{checkCategory}}/>
 										{{> categoryLabel}}
-										<i class="fa fa-angle-down fa-fw {{isChecked}}"></i>
+										{{#if hasSubcategories this}}
+											<i class="fa fa-angle-down fa-fw {{isChecked}}"></i>
+										{{/if}}
 									</label>
 								</div>
 								{{#each availableSubcategories this}}

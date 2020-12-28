@@ -202,7 +202,7 @@ Template.find.events({
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			filters.forEach(filter => instance.filter.disable(filter));
+			filters.forEach((filter) => instance.filter.disable(filter));
 			instance.filter.done();
 			instance.updateUrl();
 		}
@@ -276,14 +276,14 @@ Template.find.helpers({
 
 	activeFilters() {
 		const activeFilters = Template.instance().filter;
-		return _.any(hiddenFilters, filter => Boolean(activeFilters.get(filter)));
+		return _.any(hiddenFilters, (filter) => Boolean(activeFilters.get(filter)));
 	},
 
 	searchIsLimited() {
 		const activeFilters = Template.instance().filter;
 		const relevantFilters = hiddenFilters.slice(); // clone
 		relevantFilters.push('region');
-		return _.any(relevantFilters, filter => Boolean(activeFilters.get(filter)));
+		return _.any(relevantFilters, (filter) => Boolean(activeFilters.get(filter)));
 	},
 
 	isMobile() {

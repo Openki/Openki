@@ -58,8 +58,7 @@ Template.kioskEvent.rendered = function () {
 Template.kioskEventLocation.helpers({
 	showLocation() {
 		// The location is shown when we have a location name and the location is not used as a filter
-		return this.location
-			&& this.location.name
+		return this.location?.name
 			&& !Router.current().params.query.location;
 	},
 });

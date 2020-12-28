@@ -234,7 +234,7 @@ Template.eventEdit.helpers({
 			Events
 				.find(AffectedReplicaSelectors(this))
 				.fetch()
-				.filter(replica => !replica.sameTime(this))
+				.filter((replica) => !replica.sameTime(this))
 		);
 	},
 
@@ -346,7 +346,7 @@ Template.eventEdit.events({
 			return;
 		}
 
-		const eventId = this._id ? this._id : '';
+		const eventId = this._id || '';
 		const isNew = eventId === '';
 		if (isNew) {
 			if (this.courseId) {

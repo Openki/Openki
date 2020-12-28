@@ -20,13 +20,13 @@ const maybeUrl = function (route, context) {
 const Api = {
 	groups:
 		apiResponse(Groups, (originalGroup) => {
-			const group = Object.assign({}, originalGroup);
+			const group = { ...originalGroup };
 			group.link = Router.url('groupDetails', group);
 			return group;
 		}),
 	venues:
 		apiResponse(Venues, (originalVenue) => {
-			const venue = Object.assign({}, originalVenue);
+			const venue = { ...originalVenue };
 			venue.link = Router.url('venueDetails', venue);
 			return venue;
 		}),

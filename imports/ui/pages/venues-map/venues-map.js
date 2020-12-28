@@ -33,7 +33,7 @@ Template.venueMap.onCreated(function () {
 		instance.locationTracker.markers.remove({});
 		Venues.findFilter(query).observe({
 			added(originalLocation) {
-				const location = Object.assign({}, originalLocation);
+				const location = { ...originalLocation };
 				location.proposed = true;
 				location.presetName = location.name;
 				location.presetAddress = location.address;

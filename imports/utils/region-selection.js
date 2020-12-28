@@ -29,7 +29,7 @@ RegionSelection.init = function () {
 	Meteor.subscribe('regions', () => {
 		const selectors = [Session.get('region'),
 			UrlTools.queryParam('region'),
-			localStorage.getItem('region'),
+			localStorage?.getItem('region'),
 		].filter(Boolean);
 
 		const useAsRegion = function (regionId) {

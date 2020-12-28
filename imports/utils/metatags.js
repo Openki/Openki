@@ -4,11 +4,11 @@ import { Meteor } from 'meteor/meteor';
 const Metatags = {};
 
 function getSiteTitlePrefix() {
-	return Meteor.settings.siteTitlePrefix || 'Openki - ';
+	return `${Meteor.settings.public.siteName}  - `;
 }
 
 function getSiteDefaultImage() {
-	return Meteor.settings.siteDefaultImage || `${Meteor.absoluteUrl()}logo/openki_logo_2018.png`;
+	return Meteor.absoluteUrl(`logo/${Meteor.settings.public.ogLogo?.src || 'openki_logo_2018.png'}`);
 }
 
 Metatags.removeAll = function () {

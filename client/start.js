@@ -60,7 +60,7 @@ Meteor.startup(() => {
 	if (useLocale(UrlTools.queryParam('lg'))) {
 		return;
 	}
-	if (useLocale(localStorage.getItem('locale'))) {
+	if (useLocale(localStorage?.getItem('locale'))) {
 		return;
 	}
 
@@ -87,6 +87,7 @@ Meteor.startup(() => {
 	Tracker.autorun(() => {
 		const desiredLocale = Session.get('locale');
 
+		// messageformat set the locale value in the db user
 		mfPkg.setLocale(desiredLocale);
 
 		// Logic taken from mfpkg:core to get text directionality
@@ -115,7 +116,7 @@ Meteor.startup(() => {
 
 		const monthsShort = function () {
 			if (typeof mf.monthsShort === 'function') {
-				return _.map(_.range(12), month => mf.monthsShort(moment().month(month), ''));
+				return _.map(_.range(12), (month) => mf.monthsShort(moment().month(month), ''));
 			}
 			return mf._monthsShort;
 		};
@@ -140,7 +141,7 @@ Accounts.onLogin(() => {
 	const user = Meteor.user();
 
 	if (user) {
-		const locale = user.profile.locale;
+		const locale = user.locale;
 		if (locale) {
 			Session.set('locale', locale);
 		}

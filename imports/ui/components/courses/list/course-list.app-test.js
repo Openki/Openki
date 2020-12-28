@@ -23,7 +23,7 @@ if (Meteor.isClient) {
 					assert.equal(titles.length, 8, 'expect to see test course titles');
 					return titles;
 				}, 6000))
-				.then(titles => waitFor(() => {
+				.then((titles) => waitFor(() => {
 					assert.equal(titles[0].textContent, 'Sprachaustausch');
 					assert.equal(titles[1].textContent, 'Game Design mit Unity');
 					assert.equal(titles[2].textContent, 'Aikido');

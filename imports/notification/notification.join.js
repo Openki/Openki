@@ -35,7 +35,7 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	body.recipients = _.pluck(course.membersWithRole('team'), 'user');
 
 	// Don't send to new member, they know
-	body.recipients = body.recipients.filter(r => r !== participantId);
+	body.recipients = body.recipients.filter((r) => r !== participantId);
 
 	body.newRole = newRole;
 
@@ -81,16 +81,28 @@ notificationJoin.Model = function (entry) {
 				}
 			}
 
+			let siteName;
+			let mailLogo;
+			if (course.region) {
+				const region = Regions.findOne(course.region);
+				siteName = region?.custom?.siteName;
+				mailLogo = region?.custom?.mailLogo;
+			}
+			siteName = siteName || Meteor.settings.public.siteName;
+
 			return (
 				{
 					course,
 					newParticipant,
-					courseLink: Router.url('showCourse', course),
+					courseLink: Router.url('showCourse', course, { query: 'campaign=joinNotify' }),
 					subject,
 					memberCount: course.members.length,
 					roleTitle,
 					message: HtmlTools.plainToHtml(body.message),
 					figures,
+					customSiteUrl: `${Meteor.absoluteUrl()}?campaign=joinNotify`,
+					customSiteName: siteName,
+					customMailLogo: mailLogo,
 				}
 			);
 		},

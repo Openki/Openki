@@ -9,6 +9,6 @@ Meteor.publish('courses', (region) => {
 	return Courses.find({ region });
 });
 
-Meteor.publish('courseDetails', id => Courses.find({ _id: id }));
+Meteor.publish('courseDetails', (id) => Courses.find({ _id: id }));
 
 Meteor.publish('Courses.findFilter', Courses.findFilter);

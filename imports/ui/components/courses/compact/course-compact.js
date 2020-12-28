@@ -27,7 +27,7 @@ Template.courseCompact.helpers({
 		const filterPreviewClasses = [];
 		const course = this;
 
-		const roles = _.map(Roles, role => role.type);
+		const roles = _.map(Roles, (role) => role.type);
 
 		_.each(roles, (role) => {
 			const roleDisengaged = !HasRole(course.members, role);
@@ -65,7 +65,7 @@ Template.courseCompactEvent.helpers({
 		}
 		return false;
 	},
-	roleIcon: type => _.findWhere(Roles, { type }).icon,
+	roleIcon: (type) => _.findWhere(Roles, { type }).icon,
 });
 
 Template.courseCompactRoles.helpers({
@@ -165,7 +165,7 @@ Template.courseCompactRoles.helpers({
 		return roleStateTooltip;
 	},
 
-	roleIcon: type => _.findWhere(Roles, { type }).icon,
+	roleIcon: (type) => _.findWhere(Roles, { type }).icon,
 });
 
 Template.courseCompact.events({

@@ -8,27 +8,14 @@ import notificationComment from '/imports/notification/notification.comment';
 import notificationJoin from '/imports/notification/notification.join';
 import notificationPrivateMessage from '/imports/notification/notification.private-message';
 
+import { logo } from '/imports/utils/email-tools';
+
 const Notification = {};
 
 Notification.Event = notificationEvent;
 Notification.Comment = notificationComment;
 Notification.Join = notificationJoin;
 Notification.PrivateMessage = notificationPrivateMessage;
-
-/** Logo that can be attached to mails
-  *
-  * path: a file path relative to private/
-  */
-const logo = function (path) {
-	const cid = Random.id();
-	this.url = `cid:${cid}`;
-	this.attachement = {
-		cid,
-		path: Assets.absoluteFilePath(path),
-		filename: false,
-	};
-	return this;
-};
 
 /** Handle event notification
   *
@@ -73,7 +60,7 @@ Notification.send = function (entry) {
 				const { address } = email;
 
 				const { username } = user;
-				const userLocale = (user.profile && user.profile.locale) || 'en';
+				const userLocale = user.locale || 'en';
 
 				const { siteName } = Accounts.emailTemplates;
 				const subjectPrefix = `[${siteName}] `;
@@ -83,13 +70,17 @@ Notification.send = function (entry) {
 				const vars = model.vars(userLocale, user);
 
 				const fromAddress = vars.fromAddress
-								|| Accounts.emailTemplates.from;
+					|| Accounts.emailTemplates.from;
 
 				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken });
+				// For everything that is global use siteName from global settings, eg. unsubscribe
 				vars.siteName = siteName;
+				// For everything context specifig us customSiteName from the region, eg. courses
+				vars.customSiteName = vars.customSiteName || vars.siteName;
+				vars.siteUrl = vars.customSiteUrl || Meteor.absoluteUrl();
 				vars.locale = userLocale;
 				vars.username = username;
-				vars.logo = logo('mails/logo.png');
+				vars.logo = logo(vars.customMailLogo || Meteor.settings.public.mailLogo);
 
 				let message = SSR.render(model.template, vars);
 

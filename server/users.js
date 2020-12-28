@@ -1,7 +1,7 @@
-import IsEmail from '/imports/utils/email-tools';
+import IsEmail, { logo } from '/imports/utils/email-tools';
 
 Accounts.onCreateUser((options, originalUser) => {
-	const user = Object.assign({}, originalUser);
+	const user = { ...originalUser };
 	if (options.profile) {
 		user.profile = options.profile;
 	} else {
@@ -42,7 +42,7 @@ Accounts.onCreateUser((options, originalUser) => {
 	if (services) {
 		['facebook', 'google', 'github'].forEach((loginProvider) => {
 			const provided = services[loginProvider];
-			if (provided && provided.email) {
+			if (provided?.email) {
 				providedEmail = provided.email;
 				if (typeof provided.verified_email === 'boolean') {
 					verified = provided.verified_email;
@@ -75,46 +75,38 @@ Accounts.validateNewUser((user) => {
 	return true;
 });
 
-
 Accounts.config({
 	sendVerificationEmail: true,
 });
 
 Accounts.emailTemplates.verifyEmail.subject = function (user) {
-	return mf('verifyEmail.subject',
-		{
-			SITE: Accounts.emailTemplates.siteName,
-			NAME: user.name,
-		},
-		'[{SITE}] Welcome to the {SITE} community, {NAME}');
+	return mf('verifyEmail.subject', { SITE: Accounts.emailTemplates.siteName, NAME: user.name }, '[{SITE}] Welcome to the {SITE} community, {NAME}');
 };
 
 Accounts.emailTemplates.verifyEmail.text = function (user, url) {
-	return mf('verifyEmail.text',
-		{
-			SITE: Accounts.emailTemplates.siteName,
-			NAME: user.username,
-			URL: url,
-		},
-		'Hi {NAME}\n'
-		+ '\n'
-		+ "We're happy that you are part of the {SITE} community.\n"
-		+ '\n'
-		+ 'You can click this link \n'
-		+ '{URL}\n'
-		+ 'to verify your email address. \n'
-		+ "This helps us knowing you're a real person. :)\n"
-		+ '\n'
-		+ 'Sincerely\n'
-		+ "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)");
+	return `${mf('verifyEmail.email.gretting', 'Hi {NAME}', { NAME: user.username })}
+	
+${mf('verifyEmail.email.introduction', "We're happy that you are part of the {SITE} community.", { SITE: Accounts.emailTemplates.siteName })}
+
+${mf('verifyEmail.email.verification', "You can click this link to verify your email address. This helps us knowing you're a real person. :)")}
+${url}
+
+${mf('verifyEmail.email.farewell', 'Sincerely')}
+${mf('verifyEmail.email.postscript', "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)", { SITE: Accounts.emailTemplates.siteName })}`;
+};
+
+Accounts.emailTemplates.verifyEmail.html = function (user, url) {
+	return SSR.render('userVerifyEmailMail', {
+		siteName: Accounts.emailTemplates.siteName,
+		siteUrl: Meteor.absoluteUrl(),
+		logo: logo(Meteor.settings.public.mailLogo),
+		username: user.username,
+		url,
+	});
 };
 
 Accounts.emailTemplates.resetPassword.subject = function () {
-	return mf('resetPassword.subject',
-		{
-			SITE: Accounts.emailTemplates.siteName,
-		},
-		'Reset your password on {SITE}');
+	return mf('resetPassword.subject', { SITE: Accounts.emailTemplates.siteName }, 'Reset your password on {SITE}');
 };
 
 Accounts.urls.resetPassword = function (token) {
@@ -122,21 +114,23 @@ Accounts.urls.resetPassword = function (token) {
 };
 
 Accounts.emailTemplates.resetPassword.text = function (user, url) {
-	return mf('resetPassword.text',
-		{
-			SITE: Accounts.emailTemplates.siteName,
-			NAME: user.username,
-			URL: url,
-		},
-		'Hi {NAME}\n'
-		+ '\n'
-		+ 'You requested to reset your password on {SITE}.\n'
-		+ '\n'
-		+ 'You can click on \n'
-		+ '{URL}\n'
-		+ 'to reset your password. \n'
-		+ 'If you did not request this message, you can safely delete it.\n'
-		+ '\n'
-		+ 'Regards\n'
-		+ '{SITE} server at your service');
+	return `${mf('resetPassword.email.gretting', { NAME: user.username }, 'Hi {NAME}')}
+				
+${mf('resetPassword.email.introduction', { SITE: Accounts.emailTemplates.siteName }, 'You requested to reset your password on {SITE}.')}
+
+${mf('resetPassword.email.verification', 'You can click on this link to reset your password. If you did not request this message, you can safely delete it.')}
+${url}
+
+${mf('resetPassword.email.farewell', 'Regards')}
+${mf('resetPassword.email.postscript', { SITE: Accounts.emailTemplates.siteName }, '{SITE} server at your service')}`;
+};
+
+Accounts.emailTemplates.resetPassword.html = function (user, url) {
+	return SSR.render('userResetPasswordMail', {
+		siteName: Accounts.emailTemplates.siteName,
+		siteUrl: Meteor.absoluteUrl(),
+		logo: logo(Meteor.settings.public.mailLogo),
+		username: user.username,
+		url,
+	});
 };

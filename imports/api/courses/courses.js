@@ -97,7 +97,7 @@ export class Course {
 	  */
 	membersWithRole(role) {
 		check(role, String);
-		return this.members.filter(member => member.roles.indexOf(role) >= 0);
+		return this.members.filter((member) => member.roles.indexOf(role) >= 0);
 	}
 
 	userHasRole(userId, role) {
@@ -241,7 +241,7 @@ Courses.findFilter = function (filter, limit, sortParams) {
 
 	if (filter.search) {
 		const searchTerms = filter.search.split(/\s+/);
-		const searchQueries = _.map(searchTerms, searchTerm => ({
+		const searchQueries = _.map(searchTerms, (searchTerm) => ({
 			$or: [
 				{ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
 				{ description: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },

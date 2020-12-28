@@ -14,17 +14,16 @@
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
 						<tr bgcolor="#3f819e">
 							<td width="45" valign="top" style="padding: 0px 10px 0px 20px;">
-								<a href="https://openki.net/">
+								<a href="{{siteUrl}}">
 								<img src="{{logo.url}}"
-									width="45"
 									height="45"
 									border="0"
-									alt="{{siteName}} Logo"
+									alt="{{customSiteName}} Logo"
 									style="padding-bottom: 0px; outline:none; text-decoration:none; -ms-interpolation-mode: bicubic; border:none;">
 								</a>
 								</td>
 							<td width="455" style="padding: 0px; font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter;">
-								<a href="https://openki.net/" style="color: #fff !important; text-decoration: none !important;">{{siteName}}</a>
+								<a href="{{siteUrl}}" style="color: #fff !important; text-decoration: none !important;">{{customSiteName}}</a>
 							</td>
 						</tr>
 				</table>
@@ -59,8 +58,13 @@
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" style="padding: 10px;">
-				<a href="{{courseLink}}">{{mf "notification.comment.mail.linktext" '➜ Visit course' LOCALE=locale}}</a>
+			<td valign="top" style="padding: 10px; font-family: Source Sans Pro, sans-serif; font-size: 12px;">
+				<a href="{{courseLink}}">{{mf "notification.comment.mail.linktext" '➜ See comment on {SITENAME}' SITENAME=customSiteName LOCALE=locale}}</a>
+
+				{{#if commenter}}
+				    <br/>
+					<a href="{{commenterLink}}">{{mf "notification.comment.mail.commenterlink" '➜ See profile from {USERNAME}' USERNAME=commenterName LOCALE=locale}}</a>
+				{{/if}}
 			</td>
 		</tr>
 		<tr>
@@ -74,7 +78,7 @@
 					<tr>
 						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
 							<a href="{{unsubLink}}" style="color:#fff !important; text-decoration: underline;">
-								{{mf "notification.event.mail.unsubLink" LOCALE=locale}}
+								{{mf "notification.event.mail.unsubLink" SITENAME=siteName LOCALE=locale}}
 							</a>
 							&nbsp;
 							<a href="{{urlFor 'profile'}}" style="color:#fff !important; text-decoration: underline;">

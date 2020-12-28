@@ -35,6 +35,8 @@ cleanup:
 
 lint:
   stage: lint
+  tags:
+  - gitlab-org
   script: ./ci/lint.sh
 
 # Unit tests
@@ -49,7 +51,7 @@ test:
 app-test:
   stage: test
   tags:
-  - gitlab-org
+  - gitlab-org-docker
   script: ./ci/app-test.sh
   allow_failure: true
 
@@ -75,11 +77,11 @@ deploy_staging:
   trigger: Openki/sysadmin/deploy-config
 
 
-deploy_live:
+deploy_sandbox:
   stage: deploy
   variables:
     SOURCE_BRANCH: master
-    TARGET_HOST: live
+    TARGET_HOST: sandbox
   only:
   - master
   trigger: Openki/sysadmin/deploy-config

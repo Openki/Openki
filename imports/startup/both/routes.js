@@ -175,17 +175,23 @@ Router.map(function () {
 		data() {
 			const predicates = {
 				region: Predicates.id,
-				group: Predicates.id,
+				addTeamGroups: Predicates.ids,
 				neededRoles: Predicates.ids,
 				internal: Predicates.flag,
 			};
 			const params = Filtering(predicates).read(this.params.query).done().toQuery();
 
+			if (params.addTeamGroups) {
+				// For security reasons only 5 groups are allowed
+				params.teamGroups = params.addTeamGroups.slice(0, 5);
+			}
+			delete params.addTeamGroups;
+
 			if (!params.neededRoles) {
 				params.neededRoles = ['mentor'];
 			}
 			params.roles = ['mentor', 'host'].filter(
-				role => params.neededRoles.includes(role),
+				(role) => params.neededRoles.includes(role),
 			);
 			delete params.neededRoles;
 
@@ -351,7 +357,7 @@ Router.map(function () {
 					groups: Groups.findFilter({ own: true }),
 					venues: Venues.find({ editor: user._id }),
 				};
-				userdata.have_email = user.emails && user.emails.length > 0;
+				userdata.have_email = user.emails?.length > 0;
 				if (userdata.have_email) {
 					userdata.email = user.emails[0].address;
 					userdata.verified = Boolean(user.emails[0].verified);
@@ -584,7 +590,7 @@ Router.map(function () {
 			};
 
 			events.forEach((originalEvent) => {
-				const event = Object.assign({}, originalEvent);
+				const event = { ...originalEvent };
 				event.relStart = (event.start.getTime() - timestampStart) / span;
 				event.relEnd = (timestampEnd - event.end.getTime()) / span;
 				let placed = false;
@@ -614,7 +620,7 @@ Router.map(function () {
 			// the room name, so "null" (meaning no room) comes first.
 			const grouped = _.toArray(perVenue).map((venueData) => {
 				const perRoom = _.toArray(venueData.perRoom).sort();
-				return Object.assign({}, venueData, { perRoom });
+				return { ...venueData, perRoom };
 			});
 
 			return {
@@ -641,7 +647,7 @@ Router.map(function () {
 
 			// What privileges the user has
 			const privileges = _.reduce(['admin'], (originalPs, p) => {
-				const ps = Object.assign({}, originalPs);
+				const ps = { ...originalPs };
 				ps[p] = UserPrivilegeUtils.privileged(user, p);
 				return ps;
 			}, {});
@@ -733,6 +739,8 @@ Router.route('/profile/unsubscribe/:token', function () {
 	const query = {};
 	if (accepted) {
 		query.unsubscribed = '';
+
+		Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from notifications via e-mail');
 	} else {
 		query['unsubscribe-error'] = '';
 	}
