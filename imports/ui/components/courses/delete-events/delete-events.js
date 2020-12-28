@@ -139,15 +139,13 @@ Template.deleteEventsModal.events({
 							{ NUM: removed },
 							'{NUM, plural, one {Event was} other {# events were}} successfully deleted.',
 						));
+
+						Analytics.trackEvent('Events deletions', 'Events deletions as team', Regions.findOne(event.region)?.nameEn, removed);
 					}
 					if (removed === responses) {
 						instance.state.set('selectedEvents', []);
 						instance.$('.js-delete-events-modal').modal('hide');
 					}
-				}
-
-				if (!err) {
-					Analytics.trackEvent('Event deletions', 'Event deletions as team', Regions.findOne(event.region)?.nameEn);
 				}
 			});
 		});
