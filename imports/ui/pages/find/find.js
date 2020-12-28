@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
+import Alert from '/imports/api/alerts/alert';
 
 import Categories from '/imports/api/categories/categories';
 import Courses from '/imports/api/courses/courses';
@@ -209,6 +210,11 @@ Template.find.events({
 	},
 
 	'click .js-all-regions-btn'() {
+		try {
+			localStorage.setItem('region', 'all');
+		} catch (e) {
+			Alert.error(e);
+		}
 		Session.set('region', 'all');
 	},
 

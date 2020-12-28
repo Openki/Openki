@@ -77,7 +77,6 @@ Template.regionSelection.onCreated(function () {
 		} catch (e) {
 			Alert.error(e);
 		}
-
 		Session.set('region', regionId);
 		if (regionId !== 'all' && Meteor.userId()) {
 			Meteor.call('user.regionChange', regionId);

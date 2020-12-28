@@ -55,7 +55,6 @@ Meteor.startup(() => {
 			} catch (e) {
 				Alert.error(e);
 			}
-
 			Session.set('locale', locale);
 			return true;
 		}
@@ -154,7 +153,6 @@ Accounts.onLogin(() => {
 			} catch (e) {
 				Alert.error(e);
 			}
-
 			Session.set('locale', locale);
 		}
 	}
