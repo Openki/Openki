@@ -75,29 +75,31 @@ Meteor.startup(() => {
 		}
 	});
 
+	Meteor.setTimeout(() => {
 	/* Initialize cache-fields on startup */
 
-	// Resync location cache in events
-	Meteor.call('event.updateVenue', {}, AsyncTools.logErrors);
+		// Resync location cache in events
+		Meteor.call('event.updateVenue', {}, AsyncTools.logErrors);
 
-	// Update list of organizers per course
-	Meteor.call('course.updateGroups', {}, AsyncTools.logErrors);
+		// Update list of organizers per course
+		Meteor.call('course.updateGroups', {}, AsyncTools.logErrors);
 
-	// Update List of badges per user
-	Meteor.call('user.updateBadges', {}, AsyncTools.logErrors);
+		// Update List of badges per user
+		Meteor.call('user.updateBadges', {}, AsyncTools.logErrors);
 
-	Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
+		Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
 
-	// Keep the nextEvent entry updated
-	// On startup do a full scan to catch stragglers
-	Meteor.call('course.updateNextEvent', {}, AsyncTools.logErrors);
-	Meteor.setInterval(
-		() => {
+		// Keep the nextEvent entry updated
+		// On startup do a full scan to catch stragglers
+		Meteor.call('course.updateNextEvent', {}, AsyncTools.logErrors);
+		Meteor.setInterval(
+			() => {
 			// Update nextEvent for courses where it expired
-			Meteor.call('course.updateNextEvent', { 'nextEvent.start': { $lt: new Date() } });
+				Meteor.call('course.updateNextEvent', { 'nextEvent.start': { $lt: new Date() } });
 
-			Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
-		},
-		60 * 1000, // Check every minute
-	);
+				Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
+			},
+			60 * 1000, // Check every minute
+		);
+	}, 0);
 });
