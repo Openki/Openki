@@ -228,7 +228,7 @@ Template.event.events({
 
 	'click .js-event-delete-confirm'(event, instance) {
 		const oEvent = instance.data;
-		const { title } = oEvent;
+		const { title, region } = oEvent;
 		const course = oEvent.courseId;
 		instance.busy('deleting');
 		Meteor.call('event.remove', oEvent._id, (err) => {
@@ -244,6 +244,9 @@ Template.event.events({
 					{ TITLE: title },
 					'The event "{TITLE}" has been deleted.',
 				));
+
+				Analytics.trackEvent('Event deletions', 'Event deletions as team', Regions.findOne(region)?.nameEn);
+
 				if (course) {
 					Router.go('showCourse', { _id: course });
 				} else {

@@ -17,6 +17,9 @@ import Editable from '/imports/ui/lib/editable';
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
 import LocalTime from '/imports/utils/local-time';
 
+import Analytics from '/imports/ui/lib/analytics';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/events/edit-location/event-edit-location';
@@ -401,6 +404,21 @@ Template.eventEdit.events({
 								{ TITLE: editevent.title },
 								'The event "{TITLE}" has been created!',
 							));
+
+							const course = Courses.findOne(editevent.courseId);
+							let role;
+							if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
+								role = 'team';
+							} else if (UserPrivilegeUtils.privileged(Meteor.user(), 'admin')) {
+								role = 'admin';
+							} else {
+								role = 'unknown';
+							}
+							Analytics.trackEvent('Event creations',
+								`Event creations as ${role}`,
+								Regions.findOne(course.region)?.nameEn,
+								Math.round((new Date() - course.time_created)
+									/ 1000 / 60 / 60 / 24 /* Umrechnung in Tage */));
 						} else {
 							Alert.success(mf(
 								'message.eventChangesSaved',

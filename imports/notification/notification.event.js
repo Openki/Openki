@@ -113,7 +113,9 @@ notificationEvent.Model = function (entry) {
 					regionName: region.name,
 					timeZone: endMoment.format('z'), // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
 					eventLink: Router.url('showEvent', event, { query: 'campaign=eventNotify' }),
+					registerToEventLink: Router.url('showEvent', event, { query: 'action=register&campaign=eventNotify' }),
 					courseLink: Router.url('showCourse', course, { query: 'campaign=eventNotify' }),
+					unsubscribeFromCourseLink: Router.url('showCourse', course, { query: 'unsubscribe=participant&campaign=eventNotify' }),
 					calLink: Router.url('calEvent', event, { query: 'campaign=eventNotify' }),
 					new: entry.body.new,
 					subject,

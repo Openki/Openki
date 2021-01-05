@@ -195,7 +195,7 @@ Template.loginFrame.events({
 
 				Meteor.call('user.updateLocale', Session.get('locale'));
 
-				Analytics.trackEvent('Logins', 'Logins with password', Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
+				Analytics.trackEvent('Logins', 'Logins with password', Regions.findOne(regionId)?.nameEn);
 			}
 		});
 	},
