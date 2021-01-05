@@ -11,5 +11,6 @@
 		"mailLogo": "mails/openki.png",
 		"regionSelection": { "minNumber": 5 }
 	},
-	"siteEmail": "HMMM@legit.example"
+	"siteEmail": "HMMM@legit.example",
+	"startup": { "buildDbCacheAsync": false }
 }
