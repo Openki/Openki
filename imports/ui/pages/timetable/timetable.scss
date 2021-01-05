@@ -42,6 +42,10 @@
 	&:hover {
 		z-index: 1;
 	}
+
+	&--room {
+		border-top-width: 0;
+	}
 }
 
 .timetable-location {
@@ -50,6 +54,8 @@
 	padding: 0 1em;
 	position: absolute;
 	width: 12em;
+    max-height: 100%;
+	overflow: hidden;
 }
 
 .timetable-row-section {

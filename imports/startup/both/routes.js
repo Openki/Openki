@@ -566,15 +566,27 @@ Router.map(function () {
 			} while (cursor.isBefore(end));
 
 			const perVenue = {};
-			const useVenue = function (venue) {
+			const useVenue = function (venue, room) {
 				const id = venue._id || `#${venue.name}`;
 				if (!perVenue[id]) {
 					perVenue[id] = {
 						venue,
+						perRoom: {
+							[room]: {
+								room,
+								venue,
+								rows: [],
+							},
+						},
+					};
+				} else if (!perVenue[id].perRoom[room]) {
+					perVenue[id].perRoom[room] = {
+						room,
+						venue,
 						rows: [],
 					};
 				}
-				return perVenue[id].rows;
+				return perVenue[id].perRoom[room].rows;
 			};
 
 			events.forEach((originalEvent) => {
@@ -583,30 +595,38 @@ Router.map(function () {
 				event.relEnd = (timestampEnd - event.end.getTime()) / span;
 				let placed = false;
 
-				const venueRows = useVenue(event.venue);
-				venueRows.forEach((venueRow) => {
+				const room = event.room || null;
+				const roomRows = useVenue(event.venue, room);
+				roomRows.forEach((roomRow) => {
 					let last;
-					venueRow.forEach((placedEvent) => {
+					roomRow.forEach((placedEvent) => {
 						if (!last || placedEvent.end > last) {
 							last = placedEvent.end;
 						}
 					});
 					if (last <= event.start) {
-						venueRow.push(event);
+						roomRow.push(event);
 						placed = true;
 						return false;
 					}
 					return true;
 				});
 				if (!placed) {
-					venueRows.push([event]);
+					roomRows.push([event]);
 				}
+			});
+
+			// Transform the "rows" objects to arrays and sort the room rows by
+			// the room name, so "null" (meaning no room) comes first.
+			const grouped = _.toArray(perVenue).map((venueData) => {
+				const perRoom = _.toArray(venueData.perRoom).sort();
+				return { ...venueData, perRoom };
 			});
 
 			return {
 				days: _.toArray(days),
 				hours: _.toArray(hours),
-				grouped: _.toArray(perVenue),
+				grouped,
 			};
 		},
 	});
