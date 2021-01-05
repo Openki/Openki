@@ -80,7 +80,8 @@ This file descripts all configurations and customization options. Remove the com
 			"secret": "XYz_123"
 		}
 	},
-	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" } // That web pages are pre-rendered for webcrawlers on the server side so that no client code has to be executed
+	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }, // That web pages are pre-rendered for webcrawlers on the server side so that no client code has to be executed
+	"startup": { "buildDbCacheAsync": true }, // Build the cache in the db async or sync. For larger databases it takes a long time until all fields are updated, during this time the startup is blocked. The users cannot use the website. Because in a normal startup the database already has these fields, this task can also be done async.
 	"scrub": // Delete entries from the log or remove critical information, The log can be viewed via .../log
 		[ { "name": "scrub client-errors", "comment": "client-side errors may contain sensitive data, drop them quickly"
 		  , "grace": 7, "select": { "tr": "clientError" }, "remove": true // "grace": 7 means: After 7 days it will be removed

@@ -99,5 +99,6 @@
 	"reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"},
 	"robots": false, 
 	"printLog": true,
-	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }
+	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" },
+	"startup": { "buildDbCacheAsync": true }
 }
