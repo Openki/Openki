@@ -103,7 +103,7 @@ Meteor.startup(() => {
 	});
 
 	/* Initialize cache-fields on startup */
-	if (Meteor.settings.buildDbCacheAsync) {
+	if (Meteor.settings.startup?.buildDbCacheAsync) {
 		Meteor.setTimeout(() => {
 			initializeDbCacheFields();
 		}, 0);
