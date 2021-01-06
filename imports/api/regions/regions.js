@@ -5,7 +5,7 @@ import { Mongo } from 'meteor/mongo';
 // _id              -> ID
 // name             -> String
 // nameEn           -> String
-// loc              -> Geodata {type:Point, coordinates: [long, lat]}  (not lat-long !) (Optional)
+// loc              -> Geodata {type: Point, coordinates: [long, lat]}  (not lat-long !) (Optional)
 // timeZone         -> String,  ex: "UTC+01:00"
 // courseCount      -> Number of courses in that region, calculated field
 //                     (does not count internal courses)
@@ -19,7 +19,7 @@ import { Mongo } from 'meteor/mongo';
 //            src: String,
 //            alt: String,
 //      },
-//      mailLogo: string,
+//      mailLogo: String,
 //    } (Optional)
 // ===========================
 
@@ -31,22 +31,22 @@ if (Meteor.isServer) {
 /**
  * Returns the region from the db based on the session setting.
  * @returns {{
-	_id: string,
-	name: string,
-	nameEn: string,
-	loc?:  { type: Point, coordinates: [long, lat] },
-	timeZone: string,
-	courseCount: number,
-	futureEventCount: number,
-	featuredGroup: string,
+	_id: string;
+	name: string;
+	nameEn: string;
+	loc?:  { type: Point, coordinates: [long, lat] };
+	timeZone: string;
+	courseCount: number;
+	futureEventCount: number;
+	featuredGroup: string;
 	custom?: {
-		siteName: string,
-		siteStage: string,
+		siteName: string;
+		siteStage: string;
 		headerLogo: {
-			src: string,
-			alt: string,
+			src: string;
+			alt: string;
 		},
-		mailLogo: string,
+		mailLogo: string;
 	}
 }}
  */

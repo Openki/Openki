@@ -5,7 +5,7 @@ import UserSearchPrefix from '/imports/utils/user-search-prefix';
 if (Meteor.isClient) {
 	describe('Profile', () => {
 		it('accepts login', (done) => {
-			Meteor.loginWithPassword('Seee', 'greg', err => done(err));
+			Meteor.loginWithPassword('Seee', 'greg', (err) => done(err));
 		});
 		it('does not allow setting duplicate email', (done) => {
 			Meteor.call('user.updateData',

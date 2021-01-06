@@ -94,22 +94,21 @@ notificationPrivateMessage.Model = function (entry) {
 
 			let siteName;
 			let mailLogo;
-			if (sender.region) {
-				const region = Regions.findOne(sender.region);
-				if (region && region.custom) {
-					siteName = region.custom.siteName;
-					mailLogo = region.custom.mailLogo;
-				}
+			if (actualRecipient.profile?.regionId) {
+				const region = Regions.findOne(actualRecipient.profile?.regionId);
+				siteName = region?.custom?.siteName;
+				mailLogo = region?.custom?.mailLogo;
 			}
 			siteName = siteName || Meteor.settings.public.siteName;
 
 			const vars = {
 				sender,
-				senderLink: Router.url('userprofile', sender),
+				senderLink: Router.url('userprofile', sender, { query: 'campaign=privateMessage' }),
 				subject,
 				message: htmlizedMessage,
 				senderCopy,
 				recipientName: targetRecipient.username,
+				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=privateMessage`,
 				customSiteName: siteName,
 				customMailLogo: mailLogo,
 			};

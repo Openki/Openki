@@ -10,7 +10,7 @@ Template.pricePolicy.helpers({
 	hidePricePolicy() {
 		const hideFlags = [
 			Session.get('hidePricePolicy'),
-			localStorage.getItem('hidePricePolicy'),
+			localStorage?.getItem('hidePricePolicy'),
 		];
 
 		const user = Meteor.user();
@@ -77,8 +77,6 @@ Template.pricePolicyContent.events({
 			Meteor.call('user.hidePricePolicy', user);
 		}
 
-		Analytics.trytrack((tracker) => {
-			tracker.trackEvent('price', 'hide policy');
-		});
+		Analytics.trackEvent('price', 'hide policy');
 	},
 });

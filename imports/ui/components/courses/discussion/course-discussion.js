@@ -129,7 +129,7 @@ Template.post.helpers({
 			.fetch();
 
 		const limit = instance.limit.get();
-		return limit ? replies.slice(-(limit)) : replies;
+		return limit ? replies.slice(-limit) : replies;
 	},
 
 	notAllResponsesShown() {
@@ -372,11 +372,11 @@ Template.postEdit.events({
 Template.profileIcon.helpers({
 
 	discussionLogo() {
-		return Meteor.settings.public.discussionLogo.src;
+		return Meteor.settings.public.discussionLogo?.src;
 	},
 
 	discussionAlt() {
-		return Meteor.settings.public.discussionLogo.alt;
+		return Meteor.settings.public.discussionLogo?.alt;
 	},
 
 });

@@ -35,20 +35,25 @@ module.exports = {
 		VERSION: 'writable',
 	},
 	parserOptions: {
-		ecmaVersion: 2018,
+		ecmaVersion: 2020,
 		sourceType: 'module',
 	},
 	rules: {
 		'import/no-absolute-path': ['error', { esmodule: false }],
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-		'indent': ['error', 'tab'],
+		indent: ['error', 'tab'],
 		'no-tabs': ['error', { allowIndentationTabs: true }],
 		'object-shorthand': ['error', 'always'],
 		'prefer-destructuring': ['error', { object: false, array: false }],
+		'no-multiple-empty-lines': ['error', { max: 2 }],
+		'no-extra-parens': ['error'],
 
-		//disabled rules
+		// disabled rules
 		'func-names': [0],
 		'no-underscore-dangle': [0],
+		'import/no-named-as-default': [0],
+		'import/no-named-as-default-member': [0],
+		'max-classes-per-file': [0],
 	},
 	settings: {
 		'import/resolver': 'meteor',

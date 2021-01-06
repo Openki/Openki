@@ -60,7 +60,7 @@ Notification.send = function (entry) {
 				const { address } = email;
 
 				const { username } = user;
-				const userLocale = (user.profile && user.profile.locale) || 'en';
+				const userLocale = user.locale || 'en';
 
 				const { siteName } = Accounts.emailTemplates;
 				const subjectPrefix = `[${siteName}] `;
@@ -77,7 +77,7 @@ Notification.send = function (entry) {
 				vars.siteName = siteName;
 				// For everything context specifig us customSiteName from the region, eg. courses
 				vars.customSiteName = vars.customSiteName || vars.siteName;
-				vars.siteUrl = Meteor.absoluteUrl();
+				vars.siteUrl = vars.customSiteUrl || Meteor.absoluteUrl();
 				vars.locale = userLocale;
 				vars.username = username;
 				vars.logo = logo(vars.customMailLogo || Meteor.settings.public.mailLogo);

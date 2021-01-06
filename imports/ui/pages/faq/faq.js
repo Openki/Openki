@@ -52,7 +52,7 @@ Template.FAQ.onRendered(function () {
 Template.FAQ.helpers({
 	localizedFAQ() {
 		const templatePrefix = 'FAQ_';
-		const templateNotFound = locale => !Template[templatePrefix + locale];
+		const templateNotFound = (locale) => !Template[templatePrefix + locale];
 
 		// if the FAQ  doesn't exist with the specific locale fall back to the
 		// more general one

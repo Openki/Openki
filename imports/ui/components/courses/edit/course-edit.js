@@ -15,7 +15,7 @@ import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
 import StringTools from '/imports/utils/string-tools';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
-
+import Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
@@ -31,7 +31,7 @@ Template.courseEdit.onCreated(function () {
 	// Show category selection right away for new courses
 	const editingCategories = !this.data || !this.data._id;
 	this.editingCategories = new ReactiveVar(editingCategories);
-	this.selectedCategories = new ReactiveVar((this.data && this.data.categories) || []);
+	this.selectedCategories = new ReactiveVar(this.data?.categories || []);
 
 	this.editableDescription = new Editable(
 		false,
@@ -56,7 +56,7 @@ Template.courseEdit.onCreated(function () {
 	this.autorun(() => {
 		let internalOption = false;
 		const user = Meteor.user();
-		if (!this.data.isFrame && this.data.group && (user && user.groups)) {
+		if (!this.data.isFrame && this.data.group && user?.groups) {
 			// show only if user is in the given group
 			internalOption = user.groups.includes(this.data.group);
 		}
@@ -169,7 +169,7 @@ Template.courseEdit.helpers({
 
 	hasRole() {
 		const instance = Template.instance();
-		return instance.data && instance.data.members && HasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
+		return instance.data?.members && HasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
 	},
 
 	showRegionSelection() {
@@ -290,7 +290,7 @@ Template.courseEdit.events({
 		event.preventDefault();
 
 		const { data } = instance;
-		const hasTeamGroups = Boolean(data.teamGroups && data.teamGroups.length);
+		const hasTeamGroups = Boolean(data.teamGroups?.length);
 
 		let internal;
 		if (instance.showInternalCheckbox.get()) {
@@ -322,7 +322,7 @@ Template.courseEdit.events({
 		}
 
 		const course = instance.data;
-		const courseId = course._id ? course._id : '';
+		const courseId = course._id || '';
 		const isNew = courseId === '';
 		if (isNew) {
 			if (data.isFrame && data.region) {
@@ -386,6 +386,11 @@ Template.courseEdit.events({
 					instance.savedCourseId.set(courseId);
 					instance.showSavedMessage.set(true);
 					instance.resetFields();
+
+					Analytics.trackEvent('Course creations',
+						`Course creations as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`,
+						Regions.findOne(changes.region)?.nameEn,
+						instance.editableDescription.getTotalFocusTimeInSeconds());
 				} else {
 					if (isNew) {
 						Alert.success(mf(
@@ -393,6 +398,10 @@ Template.courseEdit.events({
 							{ NAME: changes.name },
 							'The course "{NAME}" has been created!',
 						));
+						Analytics.trackEvent('Course creations',
+							`Course creations as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`,
+							Regions.findOne(changes.region)?.nameEn,
+							instance.editableDescription.getTotalFocusTimeInSeconds());
 					} else {
 						Alert.success(mf(
 							'message.courseChangesSaved',

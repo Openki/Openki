@@ -59,7 +59,7 @@ const Filtering = function (availablePredicates) {
 	};
 
 	self.readAndValidate = function (list) {
-		Object.keys(list).forEach(name => self.add(name, list[name]));
+		Object.keys(list).forEach((name) => self.add(name, list[name]));
 		return self;
 	};
 
@@ -75,7 +75,7 @@ const Filtering = function (availablePredicates) {
 	};
 
 	self.toggle = function (name, param) {
-		if (self.get(name) && self.get(name).indexOf(param) >= 0) {
+		if (self.get(name)?.indexOf(param) >= 0) {
 			self.remove(name, param);
 		} else {
 			self.add(name, param);

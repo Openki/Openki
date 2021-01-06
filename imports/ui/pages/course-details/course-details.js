@@ -12,6 +12,10 @@ import PleaseLogin from '/imports/ui/lib/please-login';
 import ScssVars from '/imports/ui/lib/scss-vars';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
+import { _ } from 'meteor/underscore';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import Analytics from '/imports/ui/lib/analytics';
+
 import IdTools from '/imports/utils/id-tools';
 
 import '/imports/ui/components/buttons/buttons';
@@ -41,7 +45,7 @@ Template.courseDetailsPage.onCreated(function () {
 
 	instance.editableName = new Editable(
 		true,
-		((newName) => {
+		(newName) => {
 			Meteor.call('course.save', course._id, { name: newName }, (err) => {
 				if (err) {
 					Alert.serverError(
@@ -56,13 +60,13 @@ Template.courseDetailsPage.onCreated(function () {
 					));
 				}
 			});
-		}),
+		},
 		mf('course.title.placeholder'),
 	);
 
 	instance.editableDescription = new Editable(
 		false,
-		((newDescription) => {
+		(newDescription) => {
 			Meteor.call('course.save', course._id, { description: newDescription }, (err) => {
 				if (err) {
 					Alert.serverError(
@@ -77,7 +81,7 @@ Template.courseDetailsPage.onCreated(function () {
 					));
 				}
 			});
-		}),
+		},
 		mf('course.description.placeholder'),
 	);
 
@@ -92,7 +96,7 @@ Template.courseDetailsPage.onCreated(function () {
 
 Template.courseDetailsPage.helpers({ // more helpers in course.roles.js
 	mayEdit() {
-		return this.course && this.course.editableBy(Meteor.user());
+		return this.course?.editableBy(Meteor.user());
 	},
 	coursestate() {
 		if (this.nextEvent) {
@@ -119,7 +123,7 @@ Template.courseDetailsPage.helpers({ // more helpers in course.roles.js
 
 Template.courseDetailsDescription.helpers({
 	mayEdit() {
-		return this.course && this.course.editableBy(Meteor.user());
+		return this.course?.editableBy(Meteor.user());
 	},
 });
 
@@ -144,6 +148,16 @@ Template.courseDetailsPage.events({
 					{ COURSE: course.name },
 					'The course "{COURSE}" has been deleted.',
 				));
+
+				let role;
+				if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
+					role = 'team';
+				} else if (UserPrivilegeUtils.privileged(Meteor.user(), 'admin')) {
+					role = 'admin';
+				} else {
+					role = 'unknown';
+				}
+				Analytics.trackEvent('Course deletions', `Course deletions as ${role}`, Regions.findOne(course.region)?.nameEn);
 			}
 		});
 		Router.go('/');
@@ -169,7 +183,7 @@ Template.courseGroupList.helpers({
 		const user = Meteor.user();
 		const groupId = String(this);
 		const course = Template.parentData();
-		if ((user && user.mayPromoteWith(groupId)) || course.editableBy(user)) {
+		if (user?.mayPromoteWith(groupId) || course.editableBy(user)) {
 			tools.push({
 				toolTemplate: Template.courseGroupRemove,
 				groupId,

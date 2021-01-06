@@ -45,9 +45,7 @@ Template.regionSelection.onCreated(function () {
 		this.state.set('showAllRegions', search !== '');
 	});
 
-	this.minNumberOfRegionInSelection = (Meteor.settings.public
-		&& Meteor.settings.public.regionSelection
-		&& Meteor.settings.public.regionSelection.minNumber) || 5;
+	this.minNumberOfRegionInSelection = Meteor.settings.public.regionSelection?.minNumber || 5;
 
 	/**
 	 * Query some regions
@@ -79,7 +77,6 @@ Template.regionSelection.onCreated(function () {
 		} catch (e) {
 			Alert.error(e);
 		}
-
 		Session.set('region', regionId);
 		if (regionId !== 'all' && Meteor.userId()) {
 			Meteor.call('user.regionChange', regionId);
@@ -101,7 +98,7 @@ Template.regionSelection.onCreated(function () {
 	// only if it is placed inside a wrap
 	this.close = () => {
 		const parentState = this.parentInstance().state;
-		if (parentState && parentState.get('searchingRegions')) {
+		if (parentState?.get('searchingRegions')) {
 			parentState.set('searchingRegions', false);
 		}
 	};
@@ -164,7 +161,7 @@ Template.regionSelection.helpers({
 Template.regionSelection.events({
 	'click .js-region-link'(event, instance) {
 		event.preventDefault();
-		const regionId = this._id ? this._id : 'all';
+		const regionId = this._id || 'all';
 		instance.changeRegion(regionId.toString());
 	},
 

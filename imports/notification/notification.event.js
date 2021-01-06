@@ -51,12 +51,12 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 notificationEvent.Model = function (entry) {
 	const event = Events.findOne(entry.body.eventId);
 	let course = false;
-	if (event && event.courseId) {
+	if (event?.courseId) {
 		course = Courses.findOne(event.courseId);
 	}
 
 	let region = false;
-	if (event && event.region) {
+	if (event?.region) {
 		region = Regions.findOne(event.region);
 	}
 
@@ -99,13 +99,8 @@ notificationEvent.Model = function (entry) {
 				venueLine = [venue.name, venue.address].filter(Boolean).join(', ');
 			}
 
-			let siteName;
-			let mailLogo;
-			if (region.custom) {
-				siteName = region.custom.siteName;
-				mailLogo = region.custom.mailLogo;
-			}
-			siteName = siteName || Meteor.settings.public.siteName;
+			const siteName = region.custom?.siteName || Meteor.settings.public.siteName;
+			const mailLogo = region.custom?.mailLogo;
 
 			return (
 				{
@@ -117,12 +112,15 @@ notificationEvent.Model = function (entry) {
 					venueLine,
 					regionName: region.name,
 					timeZone: endMoment.format('z'), // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
-					eventLink: Router.url('showEvent', event),
-					courseLink: Router.url('showCourse', course),
-					calLink: Router.url('calEvent', event),
+					eventLink: Router.url('showEvent', event, { query: 'campaign=eventNotify' }),
+					registerToEventLink: Router.url('showEvent', event, { query: 'action=register&campaign=eventNotify' }),
+					courseLink: Router.url('showCourse', course, { query: 'campaign=eventNotify' }),
+					unsubscribeFromCourseLink: Router.url('showCourse', course, { query: 'unsubscribe=participant&campaign=eventNotify' }),
+					calLink: Router.url('calEvent', event, { query: 'campaign=eventNotify' }),
 					new: entry.body.new,
 					subject,
 					additionalMessage: entry.body.additionalMessage,
+					customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
 					customSiteName: siteName,
 					customMailLogo: mailLogo,
 				}

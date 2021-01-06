@@ -7,7 +7,7 @@ import './featured-group.html';
 Template.featuredGroup.onCreated(function featuredGroupOnCreated() {
 	this.featuredGroupId = () => {
 		const region = Regions.currentRegion();
-		if (region && region.featuredGroup) {
+		if (region?.featuredGroup) {
 			return region.featuredGroup;
 		}
 		return false;

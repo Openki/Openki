@@ -38,13 +38,11 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 Template.frameCourselist.helpers({
 	cssRules: () => new CssFromQuery(Template.instance().query).getCssRules(),
 	ready: () => Template.instance().subscriptionsReady(),
-	courses: () => (
-		Courses.find({},
-			{
-				sort: { time_lastedit: -1 },
-				limit: Template.instance().limit.get(),
-			})
-	),
+	courses: () => Courses.find({},
+		{
+			sort: { time_lastedit: -1 },
+			limit: Template.instance().limit.get(),
+		}),
 	moreCourses() {
 		const limit = Template.instance().limit.get();
 		const courseCount = Courses
@@ -68,7 +66,7 @@ Template.frameCourselistCourse.onCreated(function frameCourselistCourseOnCreated
 
 Template.frameCourselistCourse.helpers({
 	allRegions: () => Session.get('region') === 'all',
-	regionOf: course => Regions.findOne(course.region).name,
+	regionOf: (course) => Regions.findOne(course.region).name,
 	expanded: () => Template.instance().expanded.get(),
 	toggleIndicatorIcon() {
 		return Template.instance().expanded.get() ? 'angle-up' : 'angle-down';

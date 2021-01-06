@@ -11,6 +11,6 @@ Meteor.publish('venues', (region) => {
 	return Venues.find(find);
 });
 
-Meteor.publish('venueDetails', id => Venues.find(id));
+Meteor.publish('venueDetails', (id) => Venues.find(id));
 
 Meteor.publish('Venues.findFilter', (find, limit) => Venues.findFilter(find, limit));

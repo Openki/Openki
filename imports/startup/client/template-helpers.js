@@ -6,13 +6,11 @@ import Regions from '/imports/api/regions/regions';
 const helpers = {
 	siteName() {
 		const currentRegion = Regions.currentRegion();
-		if (currentRegion
-			&& currentRegion.custom
-			&& currentRegion.custom.siteName) {
+		if (currentRegion?.custom?.siteName) {
 			return currentRegion.custom.siteName;
 		}
 
-		if (Meteor.settings.public && Meteor.settings.public.siteName) {
+		if (Meteor.settings.public.siteName) {
 			return Meteor.settings.public.siteName;
 		}
 
@@ -25,7 +23,7 @@ const helpers = {
 	},
 
 	guideLink() {
-		if (typeof Meteor.settings.public.courseGuideLink === 'string' && Meteor.settings.public.courseGuideLink !== '') {
+		if (Meteor.settings.public.courseGuideLink) {
 			return Meteor.settings.public.courseGuideLink;
 		}
 
@@ -178,7 +176,7 @@ const helpers = {
 	},
 };
 
-Object.keys(helpers).forEach(name => Template.registerHelper(name, helpers[name]));
+Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[name]));
 
 /* Get a username from ID
  */

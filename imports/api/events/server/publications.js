@@ -18,7 +18,7 @@ Meteor.publish('event', (eventId) => {
 
 Meteor.publish('Events.findFilter', Events.findFilter);
 
-Meteor.publish('eventsForCourse', courseId => Events.find({ courseId }));
+Meteor.publish('eventsForCourse', (courseId) => Events.find({ courseId }));
 
 Meteor.publish('affectedReplica', (eventId) => {
 	const event = Events.findOne(eventId);

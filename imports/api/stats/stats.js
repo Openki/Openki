@@ -85,7 +85,7 @@ const getGroupStats = (region, group) => {
 
 	const groupRow = Groups.findOne({ _id: group }, { fields: { name: 1, _id: 0 } });
 
-	const groupName = groupRow ? groupRow.name : 'ungrouped';
+	const groupName = groupRow?.name || 'ungrouped';
 
 	const courseFilter = {
 		groups: groupFilter,

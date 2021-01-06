@@ -8,7 +8,7 @@ const UserPrivilegeUtils = {
 			userObject = Meteor.users.findOne({ _id: user });
 		}
 
-		return userObject && userObject.privileged(role);
+		return userObject?.privileged(role);
 	},
 
 	privilegedTo(privilege) {

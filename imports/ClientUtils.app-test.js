@@ -21,18 +21,18 @@ export const subscriptionsReady = () => new Promise((resolve) => {
  * The test function is run in response to dom mutation events. See:
  * https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
  */
-export const elementsReady = test => new Promise((resolve) => {
+export const elementsReady = (test) => new Promise((resolve) => {
 	const result = test([]);
 	if (result !== undefined) {
 		resolve(result);
 	} else {
-		const observer = new MutationObserver(((mutations) => {
+		const observer = new MutationObserver((mutations) => {
 			const mutationsResult = test(mutations);
 			if (mutationsResult !== undefined) {
 				observer.disconnect();
 				resolve(mutationsResult);
 			}
-		}));
+		});
 
 		observer.observe(document.body, {
 			childList: true, subtree: true, attributes: false, characterData: false,

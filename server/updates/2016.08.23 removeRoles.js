@@ -1,3 +1,6 @@
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
 const UpdatesAvailable = [];
 
 UpdatesAvailable.removeRoles = function () {
@@ -6,3 +9,4 @@ UpdatesAvailable.removeRoles = function () {
 	Roles.rawCollection().drop();
 	return count;
 };
+*/

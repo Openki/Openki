@@ -124,7 +124,7 @@ Template.eventEditVenue.onCreated(function () {
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
 			added(originalLocation) {
-				const location = Object.assign({}, originalLocation);
+				const location = { ...originalLocation };
 				location.proposed = true;
 				location.presetName = location.name;
 				location.presetAddress = location.address;
@@ -220,7 +220,7 @@ Template.eventEditVenue.events({
 		const { markers } = instance.locationTracker;
 
 		const region = markers.findOne({ center: true });
-		if (region && region.loc) {
+		if (region?.loc) {
 			nominatimQuery.viewbox = [
 				region.loc.coordinates[0] - 0.1,
 				region.loc.coordinates[1] + 0.1,

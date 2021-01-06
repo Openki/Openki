@@ -1,3 +1,6 @@
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 
 const UpdatesAvailable = [];
@@ -18,3 +21,4 @@ UpdatesAvailable['2017.05.08 ensurePostTimeUpdatedField'] = function () {
 
 	return count;
 };
+*/

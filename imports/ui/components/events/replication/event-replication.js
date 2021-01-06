@@ -52,8 +52,8 @@ Template.eventReplication.onRendered(function () {
 			autoclose: true,
 			startDate: new Date(),
 			format: {
-				toDisplay: date => moment(date).format('L'),
-				toValue: date => moment(date, 'L').toDate(),
+				toDisplay: (date) => moment(date).format('L'),
+				toValue: (date) => moment(date, 'L').toDate(),
 			},
 		});
 
@@ -92,11 +92,11 @@ Template.eventReplication.helpers({
 		return moment(endDate).format('ddd');
 	},
 
-	localDate: date => moment(date).format('l'),
+	localDate: (date) => moment(date).format('l'),
 
-	fullDate: date => moment(date).format('LLLL'),
+	fullDate: (date) => moment(date).format('LLLL'),
 
-	weekDay: date => moment(date).format('ddd'),
+	weekDay: (date) => moment(date).format('ddd'),
 
 	affectedReplicaCount() {
 		Template.instance().subscribe('affectedReplica', this._id);
@@ -107,7 +107,7 @@ Template.eventReplication.helpers({
 
 	replicaDates() {
 		const start = moment(this.start);
-		return Template.instance().activeDays().map(days => moment(start).add(days, 'days'));
+		return Template.instance().activeDays().map((days) => moment(start).add(days, 'days'));
 	},
 });
 
@@ -171,7 +171,7 @@ Template.eventReplication.events({
 		const pickDays = event.dates;
 
 		const origin = moment(instance.data.start).startOf('day');
-		const days = pickDays.map(date => moment(date).diff(origin, 'days'));
+		const days = pickDays.map((date) => moment(date).diff(origin, 'days'));
 		instance.pickDays.set(days);
 	},
 

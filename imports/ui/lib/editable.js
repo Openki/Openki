@@ -16,6 +16,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 //             called again when the source changes.
 //    getEdited: get the edited version of the text, returns false if the field
 //               was not changed
+//    getTotalFocusTimeInSeconds: gives the time in seconds how long the cursor
+//                                was in the field. For statistics and tracking.
 //    end: ends editing mode such as when changes have been saved
 //
 // Instances of editable templates connect() to this to get their interface.
@@ -37,10 +39,11 @@ export default class Editable {
 	}
 
 	getEdited() {
-		if (this.editingInstance) {
-			return this.editingInstance.getEdited();
-		}
-		return false;
+		return this.editingInstance?.getEdited() || false;
+	}
+
+	getTotalFocusTimeInSeconds() {
+		return this.editingInstance?.getTotalFocusTimeInSeconds() || 0;
 	}
 
 	end() {

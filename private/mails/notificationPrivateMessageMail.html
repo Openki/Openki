@@ -36,29 +36,17 @@
 				</span>
 			{{#if senderCopy}}
 				<p style="margin: 1em 0;">
-					{{mf
-						"notification.privateMessage.mail.copyintro"
-						'This is your copy of your message that was sent to "{RECIPIENT}"'
-						RECIPIENT=recipientName LOCALE=locale
-					}}
+					{{mf "notification.privateMessage.mail.copyintro" 'This is your copy of your message that was sent to "{RECIPIENT}"' RECIPIENT=recipientName LOCALE=locale}}
 				</p>
 			{{/if}}
 				<p style="margin: 1em 0;">
-					{{mf
-						"notification.privateMessage.mail.intro"
-						'Private message from "{SENDER}"'
-						SENDER=sender.username LOCALE=locale
-					}}
+					{{mf "notification.privateMessage.mail.intro" 'Private message from "{SENDER}"' SENDER=sender.username LOCALE=locale}}
 					{{#if fromAddress}}
 						<a href="mailto:{{fromAddress}}">{{fromAddress}}</a>
 					{{/if}}
 			{{#if courseLink}}
 					<a href="{{courseLink}}">
-						{{mf
-							"notification.privateMessage.mail.fromCourse"
-							'Message sent from course "{COURSE}"'
-							COURSE=courseName LOCALE=locale
-						}}
+						{{mf"notification.privateMessage.mail.fromCourse" 'Message sent from course "{COURSE}"' COURSE=courseName LOCALE=locale}}
 					</a>
 			{{/if}}
 				</p>
@@ -89,7 +77,7 @@
 								{{mf "notification.event.mail.unsubLink" SITENAME=siteName LOCALE=locale}}
 							</a>
 							&nbsp;
-							<a href="{{urlFor 'profile'}}" style="color:#fff !important; text-decoration: underline;">
+							<a href="{{urlFor 'profile' query='campaign=privateMessage'}}" style="color:#fff !important; text-decoration: underline;">
 								{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}
 							</a>
 						</td>

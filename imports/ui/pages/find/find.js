@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
+import Alert from '/imports/api/alerts/alert';
 
 import Categories from '/imports/api/categories/categories';
 import Courses from '/imports/api/courses/courses';
@@ -202,13 +203,18 @@ Template.find.events({
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			filters.forEach(filter => instance.filter.disable(filter));
+			filters.forEach((filter) => instance.filter.disable(filter));
 			instance.filter.done();
 			instance.updateUrl();
 		}
 	},
 
 	'click .js-all-regions-btn'() {
+		try {
+			localStorage.setItem('region', 'all');
+		} catch (e) {
+			Alert.error(e);
+		}
 		Session.set('region', 'all');
 	},
 
@@ -276,14 +282,14 @@ Template.find.helpers({
 
 	activeFilters() {
 		const activeFilters = Template.instance().filter;
-		return _.any(hiddenFilters, filter => Boolean(activeFilters.get(filter)));
+		return _.any(hiddenFilters, (filter) => Boolean(activeFilters.get(filter)));
 	},
 
 	searchIsLimited() {
 		const activeFilters = Template.instance().filter;
 		const relevantFilters = hiddenFilters.slice(); // clone
 		relevantFilters.push('region');
-		return _.any(relevantFilters, filter => Boolean(activeFilters.get(filter)));
+		return _.any(relevantFilters, (filter) => Boolean(activeFilters.get(filter)));
 	},
 
 	isMobile() {

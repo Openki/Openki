@@ -7,7 +7,7 @@ export function HasRole(members, role) {
 	if (!members) {
 		return false;
 	}
-	return members.some(member => member.roles.indexOf(role) !== -1);
+	return members.some((member) => member.roles.indexOf(role) !== -1);
 }
 
 /** @summary Determine whether a given user has a given role in a members list

@@ -44,14 +44,14 @@ if (Meteor.isClient) {
 					region: regionId,
 					internal: true,
 				};
-			}).then(event => promiseMeteorCall('event.save', { eventId: '', changes: event }).then(
-				eventId => ({ event, eventId }),
+			}).then((event) => promiseMeteorCall('event.save', { eventId: '', changes: event }).then(
+				(eventId) => ({ event, eventId }),
 			)).then(({ event, eventId }) => {
 				assert.isString(eventId, 'event.save returns an eventId string');
 				return { event, eventId };
 			})
 				.then(({ originalEvent, eventId }) => {
-					const event = Object.assign({}, originalEvent);
+					const event = { ...originalEvent };
 					delete event.region;
 					event.title += ' No really';
 					return promiseMeteorCall('event.save', { eventId, changes: event });
@@ -92,7 +92,7 @@ if (Meteor.isClient) {
 				};
 
 				return promiseMeteorCall('saveEvent', { eventId: '', changes: event });
-			}).then(eventId => new Promise((resolve) => {
+			}).then((eventId) => new Promise((resolve) => {
 				Meteor.subscribe('event', eventId, () => {
 					resolve(Events.findOne(eventId));
 				});

@@ -54,7 +54,7 @@ notificationComment.record = function (commentId) {
 
 		// Don't send to author of comment
 		if (comment.userId) {
-			recipients = recipients.filter(r => r !== comment.userId);
+			recipients = recipients.filter((r) => r !== comment.userId);
 		}
 
 		body.recipients = _.uniq(recipients);
@@ -107,22 +107,21 @@ notificationComment.Model = function (entry) {
 			let mailLogo;
 			if (course.region) {
 				const region = Regions.findOne(course.region);
-				if (region && region.custom) {
-					siteName = region.custom.siteName;
-					mailLogo = region.custom.mailLogo;
-				}
+				siteName = region?.custom?.siteName;
+				mailLogo = region?.custom?.mailLogo;
 			}
 			siteName = siteName || Meteor.settings.public.siteName;
 
 			return (
 				{
 					course,
-					courseLink: Router.url('showCourse', course, { query: `select=${comment._id}` }),
+					courseLink: Router.url('showCourse', course, { query: `select=${comment._id}&campaign=commentNotify` }),
 					subject,
 					comment,
 					commenter,
-					commenterLink: Meteor.absoluteUrl(`user/${comment.userId}/${commenterName}`),
+					commenterLink: `${Meteor.absoluteUrl(`user/${comment.userId}/${commenterName}`)}?campaign=commentNotify`,
 					commenterName,
+					customSiteUrl: `${Meteor.absoluteUrl()}?campaign=commentNotify`,
 					customSiteName: siteName,
 					customMailLogo: mailLogo,
 				}
