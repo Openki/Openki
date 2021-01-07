@@ -1,8 +1,11 @@
 
 import update20201216MergeUserLocale from '../updates/2020.12.16 mergeUserLocale';
+import update20210106EnsureVenueSlugField from '../updates/2021.01.06 ensureVenueSlugField';
 
-const UpdatesAvailable = { '2020.12.16 mergeUserLocale': update20201216MergeUserLocale };
-
+const UpdatesAvailable = {
+	'2020.12.16 mergeUserLocale': update20201216MergeUserLocale,
+	'2021.01.06 ensureVenueSlugField': update20210106EnsureVenueSlugField,
+};
 
 const UpdatesApplied = new Meteor.Collection('UpdatesApplied');
 

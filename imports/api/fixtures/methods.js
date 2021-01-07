@@ -23,7 +23,11 @@ const Prng = function (staticseed) {
 	return seedrandom(Meteor.settings.prng === 'static' ? staticseed : undefined);
 };
 
-// Make a number that looks like a human chose it, favouring 2 and 5
+/**
+ * Make a number that looks like a human chose it, favouring 2 and 5
+ * @param {Prng} prng
+ * @returns {number}
+ */
 const humandistrib = function (prng) {
 	const factors = [0, 0, 1, 2, 2, 3, 5, 5];
 	return factors[Math.floor(Math.random() * factors.length)]
@@ -31,11 +35,14 @@ const humandistrib = function (prng) {
 		+ (prng() > 0.5 ? humandistrib(prng) : 0);
 };
 
-// Select a date that is after the given date
-// For past dates a date between the original date and the present is chosen,
-// dates closer to the original date preferred.
-// For future dates, a date between the original date and double the time between now and then
-// is chosen.
+/**
+ * Select a date that is after the given date
+ * For past dates a date between the original date and the present is chosen,
+ * dates closer to the original date preferred.
+ * For future dates, a date between the original date and double the time between now and then
+ * is chosen.
+ * @param {Date} date
+ */
 const sometimesAfter = function (date) {
 	const prng = Prng('sometimesAfter');
 
