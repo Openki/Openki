@@ -14,6 +14,11 @@ Template.adminPanel.helpers({
 			icon: 'fa-users',
 			route: 'featureGroup',
 		},
+		{
+			name: mf('adminPanel.tasks.users', 'Users'),
+			icon: 'fa-user',
+			route: 'users',
+		},
 	]
 	,
 });
