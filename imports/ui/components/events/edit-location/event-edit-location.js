@@ -272,12 +272,12 @@ Template.eventEditVenue.events({
 	},
 
 	'keyup .js-location-search-input'(event, instance) {
-		instance.addressSearch.set(false);
-		instance.search.set(event.target.value);
-
 		const updLocation = instance.location.get();
 		updLocation.name = event.target.value;
 		instance.location.set(updLocation);
+
+		instance.addressSearch.set(false);
+		instance.search.set(event.target.value);
 	},
 
 	'keyup .js-location-address-search'(event, instance) {
