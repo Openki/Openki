@@ -2,21 +2,26 @@
 import { check } from 'meteor/check';
 
 // SortSpec interface
-//
-// spec() returns a  mongo sort-specifier of the form
-//   [['name', 'asc'], ['age', 'desc']]
-//
-// Constructors:
-//
-// SortSpec(spec) builds a SortSpec from a given mongo sort-specifier.
-// SortSpec.fromString(str) reads a string of the form "name,-age"
-// SortSpec.unordered() builds a SortSpec which imposes no ordering.
 
+/**
+ * builds a SortSpec from a given mongo sort-specifier
+ * @param {string[][]} spec
+ */
 const SortSpec = (spec) => {
 	check(spec, [[String]]);
-	return { spec: () => spec };
+	return {
+		/**
+		 * @returns {string[][]} returns a  mongo sort-specifier of the form
+		 * [['name', 'asc'], ['age', 'desc']]
+		 */
+		spec: () => spec,
+	};
 };
 
+/**
+ * reads a string of the form "name,-age"
+ * @param {string} spec
+ */
 SortSpec.fromString = function (spec) {
 	check(spec, String);
 
@@ -28,6 +33,9 @@ SortSpec.fromString = function (spec) {
 	}));
 };
 
+/**
+ * builds a SortSpec which imposes no ordering.
+ */
 SortSpec.unordered = () => SortSpec([]);
 
 export default SortSpec;

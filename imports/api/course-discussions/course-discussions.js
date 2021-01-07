@@ -13,6 +13,9 @@ import { Mongo } from 'meteor/mongo';
 
 const CourseDiscussions = new Mongo.Collection('CourseDiscussions');
 
+/**
+ * @param {string} text
+ */
 CourseDiscussions.validComment = function (text) {
 	return text.trim().length > 0;
 };

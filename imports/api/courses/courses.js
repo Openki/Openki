@@ -123,7 +123,10 @@ Courses.Filtering = () => Filtering(
 	},
 );
 
-// Update list of editors
+/**
+ * Update list of editors
+ * @param {string} courseId
+ */
 Courses.updateGroups = function (courseId) {
 	/* eslint-disable-next-line consistent-return */
 	AsyncTools.untilClean((resolve, reject) => {
