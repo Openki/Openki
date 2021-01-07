@@ -169,9 +169,9 @@ Template.groupDetails.events({
 
 		instance.busy('saving');
 		SaveAfterLogin(instance,
-			 mf('loginAction.saveGroup', 'Login and save group'),
-			 mf('registerAction.saveGroup', 'Register and save group'),
-			 () => {
+			mf('loginAction.saveGroup', 'Login and save group'),
+			mf('registerAction.saveGroup', 'Register and save group'),
+			() => {
 				Meteor.call('group.save', 'create', group, (err, groupId) => {
 					instance.busy(false);
 					if (err) {
