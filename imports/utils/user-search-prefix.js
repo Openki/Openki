@@ -1,5 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 
+/**
+ * @param {string} prefix
+ */
 export default function UserSearchPrefix(prefix, options) {
 	const prefixExp = `^${prefix.replace(/([.*+?^${}()|[\]/\\])/g, '\\$1')}`;
 	const query = { username: new RegExp(prefixExp, 'i') };
