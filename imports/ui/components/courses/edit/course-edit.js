@@ -376,44 +376,47 @@ Template.courseEdit.events({
 		}
 
 		instance.busy('saving');
-		SaveAfterLogin(instance, mf('loginAction.saveCourse', 'Login and save course'), () => {
+		SaveAfterLogin(instance,
+			mf('loginAction.saveCourse', 'Login and save course'),
+			mf('registerAction.saveCourse', 'Register and save course'),
+			() => {
 			/* eslint-disable-next-line no-shadow */
-			Meteor.call('course.save', courseId, changes, (err, courseId) => {
-				instance.busy(false);
-				if (err) {
-					Alert.serverError(err, 'Saving the course went wrong');
-				} else if (instance.data.isFrame) {
-					instance.savedCourseId.set(courseId);
-					instance.showSavedMessage.set(true);
-					instance.resetFields();
+				Meteor.call('course.save', courseId, changes, (err, courseId) => {
+					instance.busy(false);
+					if (err) {
+						Alert.serverError(err, 'Saving the course went wrong');
+					} else if (instance.data.isFrame) {
+						instance.savedCourseId.set(courseId);
+						instance.showSavedMessage.set(true);
+						instance.resetFields();
 
-					Analytics.trackEvent('Course creations',
-						`Course creations as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`,
-						Regions.findOne(changes.region)?.nameEn,
-						instance.editableDescription.getTotalFocusTimeInSeconds());
-				} else {
-					if (isNew) {
-						Alert.success(mf(
-							'message.courseCreated',
-							{ NAME: changes.name },
-							'The course "{NAME}" has been created!',
-						));
 						Analytics.trackEvent('Course creations',
 							`Course creations as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`,
 							Regions.findOne(changes.region)?.nameEn,
 							instance.editableDescription.getTotalFocusTimeInSeconds());
 					} else {
-						Alert.success(mf(
-							'message.courseChangesSaved',
-							{ NAME: changes.name },
-							'Your changes to the course "{NAME}" have been saved.',
-						));
-					}
+						if (isNew) {
+							Alert.success(mf(
+								'message.courseCreated',
+								{ NAME: changes.name },
+								'The course "{NAME}" has been created!',
+							));
+							Analytics.trackEvent('Course creations',
+								`Course creations as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`,
+								Regions.findOne(changes.region)?.nameEn,
+								instance.editableDescription.getTotalFocusTimeInSeconds());
+						} else {
+							Alert.success(mf(
+								'message.courseChangesSaved',
+								{ NAME: changes.name },
+								'Your changes to the course "{NAME}" have been saved.',
+							));
+						}
 
-					Router.go('showCourse', { _id: courseId });
-				}
+						Router.go('showCourse', { _id: courseId });
+					}
+				});
 			});
-		});
 	},
 
 	'click .js-course-edit-cancel'(event, instance) {

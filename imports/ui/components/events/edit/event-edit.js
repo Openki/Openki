@@ -381,63 +381,66 @@ Template.eventEdit.events({
 		const addNotificationMessage = instance.$('.js-event-add-message').val();
 
 		instance.busy('saving');
-		SaveAfterLogin(instance, mf('loginAction.saveEvent', 'Login and save event'), () => {
-			Meteor.call('event.save',
-				{
-					eventId,
-					updateReplicas,
-					updateChangedReplicas,
-					sendNotifications,
-					changes: editevent,
-					comment: addNotificationMessage,
-				},
-				/* eslint-disable-next-line no-shadow */
-				(err, eventId) => {
-					instance.busy(false);
-					if (err) {
-						Alert.serverError(err, 'Saving the event went wrong');
-					} else {
-						if (isNew) {
-							Router.go('showEvent', { _id: eventId });
-							Alert.success(mf(
-								'message.eventCreated',
-								{ TITLE: editevent.title },
-								'The event "{TITLE}" has been created!',
-							));
-
-							const course = Courses.findOne(editevent.courseId);
-							let role;
-							if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
-								role = 'team';
-							} else if (UserPrivilegeUtils.privileged(Meteor.user(), 'admin')) {
-								role = 'admin';
-							} else {
-								role = 'unknown';
-							}
-							Analytics.trackEvent('Event creations',
-								`Event creations as ${role}`,
-								Regions.findOne(course.region)?.nameEn,
-								Math.round((new Date() - course.time_created)
-									/ 1000 / 60 / 60 / 24 /* Umrechnung in Tage */));
+		SaveAfterLogin(instance,
+			mf('loginAction.saveEvent', 'Login and save event'),
+			mf('registerAction.saveEvent', 'Register and save event'),
+			() => {
+				Meteor.call('event.save',
+					{
+						eventId,
+						updateReplicas,
+						updateChangedReplicas,
+						sendNotifications,
+						changes: editevent,
+						comment: addNotificationMessage,
+					},
+					/* eslint-disable-next-line no-shadow */
+					(err, eventId) => {
+						instance.busy(false);
+						if (err) {
+							Alert.serverError(err, 'Saving the event went wrong');
 						} else {
-							Alert.success(mf(
-								'message.eventChangesSaved',
-								{ TITLE: editevent.title },
-								'Your changes to the event "{TITLE}" have been saved.',
-							));
-						}
+							if (isNew) {
+								Router.go('showEvent', { _id: eventId });
+								Alert.success(mf(
+									'message.eventCreated',
+									{ TITLE: editevent.title },
+									'The event "{TITLE}" has been created!',
+								));
 
-						if (updateReplicas) {
-							Alert.success(mf(
-								'eventEdit.replicatesUpdated',
-								{ TITLE: editevent.title },
-								'The replicas of "{TITLE}" have also been updated.',
-							));
+								const course = Courses.findOne(editevent.courseId);
+								let role;
+								if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
+									role = 'team';
+								} else if (UserPrivilegeUtils.privileged(Meteor.user(), 'admin')) {
+									role = 'admin';
+								} else {
+									role = 'unknown';
+								}
+								Analytics.trackEvent('Event creations',
+									`Event creations as ${role}`,
+									Regions.findOne(course.region)?.nameEn,
+									Math.round((new Date() - course.time_created)
+										/ 1000 / 60 / 60 / 24 /* Umrechnung in Tage */));
+							} else {
+								Alert.success(mf(
+									'message.eventChangesSaved',
+									{ TITLE: editevent.title },
+									'Your changes to the event "{TITLE}" have been saved.',
+								));
+							}
+
+							if (updateReplicas) {
+								Alert.success(mf(
+									'eventEdit.replicatesUpdated',
+									{ TITLE: editevent.title },
+									'The replicas of "{TITLE}" have also been updated.',
+								));
+							}
+							instance.parent.editing.set(false);
 						}
-						instance.parent.editing.set(false);
-					}
-				});
-		});
+					});
+			});
 	},
 
 	'click .js-event-cancel'(event, instance) {

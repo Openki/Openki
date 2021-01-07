@@ -163,17 +163,20 @@ Template.event.onCreated(function () {
 	this.subscribe('courseDetails', event.courseId);
 
 	this.addParticipant = () => {
-		SaveAfterLogin(this, mf('loginAction.enrollEvent', 'Login and enroll for event'), () => {
-			this.busy('registering');
-			Meteor.call('event.addParticipant', event._id, (err) => {
-				this.busy(false);
-				if (err) {
-					Alert.serverError(err, '');
-				} else {
-					Analytics.trackEvent('RSVPs', 'RSVPs as participant', Regions.findOne(event.region)?.nameEn);
-				}
+		SaveAfterLogin(this,
+			mf('loginAction.enrollEvent', 'Login and enroll for event'),
+			mf('registerAction.enrollEvent', 'Login and enroll for event'),
+			() => {
+				this.busy('registering');
+				Meteor.call('event.addParticipant', event._id, (err) => {
+					this.busy(false);
+					if (err) {
+						Alert.serverError(err, '');
+					} else {
+						Analytics.trackEvent('RSVPs', 'RSVPs as participant', Regions.findOne(event.region)?.nameEn);
+					}
+				});
 			});
-		});
 	};
 
 	// register from email
