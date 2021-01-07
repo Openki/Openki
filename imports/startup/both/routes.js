@@ -673,7 +673,10 @@ Router.map(function () {
 	});
 
 	this.route('venueDetails', {
-		path: 'venue/:_id/:name?',
+		path: 'venue/:_id/:slug?',
+		/**
+		 * @this {{params: {_id: string; slug?:string;}}}
+		 */
 		waitOn() {
 			return [
 				Meteor.subscribe('venueDetails', this.params._id),

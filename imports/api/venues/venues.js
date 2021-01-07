@@ -25,14 +25,14 @@ import StringTools from '/imports/utils/string-tools';
 
 /** Venue objects represent locations where events take place.
   */
-export const Venue = function () { //  export was missing added by miri
+export const Venue = function () {
 	this.facilities = {};
 };
 
 /** Check whether a user may edit the venue.
   *
-  * @param {Object} venue
-  * @return {Boolean}
+  * @param {object} user
+  * @return {boolean}
   */
 Venue.prototype.editableBy = function (user) {
 	if (!user) {

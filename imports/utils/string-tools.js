@@ -2,10 +2,11 @@ const StringTools = {};
 
 /** Truncate long strings, adding ellipsis char when the string was long
   *
-  * @param {String} src the string to be truncated
-  * @param {Number} max the maximum length of the string
-  * @param {String} ellipsis the string to add that signifies that src was truncated,
+  * @param {string} src the string to be truncated
+  * @param {number} max the maximum length of the string
+  * @param {string} ellipsis the string to add that signifies that src was truncated,
   * preset "…", does not count towards max.
+  * @returns {string}
   */
 StringTools.truncate = function (src, max, ellipsis = '…') {
 	check(src, String);
@@ -18,14 +19,19 @@ StringTools.truncate = function (src, max, ellipsis = '…') {
 
 /** Capitalize first letter of String
   *
-  * @param {String} input the string to be capitalized
-  * @return the capitalized string
+  * @param {string} input the string to be capitalized
+  * @return {string} the capitalized string
   */
 StringTools.capitalize = function (input) {
 	check(input, String);
 	return input.charAt(0).toUpperCase() + input.slice(1);
 };
 
+/**
+ * @param {string} search
+ * @param {string} name
+ * @returns {string}
+ */
 StringTools.markedName = (search, name) => {
 	if (search === '') {
 		return name;
@@ -46,6 +52,9 @@ StringTools.markedName = (search, name) => {
 	return Spacebars.SafeString(marked);
 };
 
+/**
+ * @param {string} text
+ */
 StringTools.slug = function (text) {
 	return text
 		.toLowerCase()
@@ -53,21 +62,28 @@ StringTools.slug = function (text) {
 		.replace(/ +/g, '-');
 };
 
+/**
+ * @param {string} string
+ */
 StringTools.escapeRegex = function (string) {
 	return string.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
 };
 
-
-// Remove non-printable chars and linebreaks from string
-// All runs of whitespace are replaced with one space.
+/**
+ * Remove non-printable chars and linebreaks from string
+ * All runs of whitespace are replaced with one space.
+ * @param {string} unsaneText
+ */
 StringTools.saneTitle = function (unsaneText) {
 	let text = unsaneText.replace(/[\n\r]/g, '');
 	text = text.replace(/\s+/g, ' ');
 	return StringTools.saneText(text);
 };
 
-
-// Remove non-printable chars from string
+/**
+ * Remove non-printable chars from string
+ * @param {string} unsaneText
+ */
 StringTools.saneText = function (unsaneText) {
 	// Remove all ASCII control chars except the line feed.
 	/* eslint-disable-next-line no-control-regex */

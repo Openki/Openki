@@ -67,18 +67,18 @@ export class Course {
 		this.groupOrganizers = [];
 	}
 
-	/** Check if the course is new (not yet saved).
-	  *
-	  * @return {Boolean}
+	/**
+	  * Check if the course is new (not yet saved).
+	  * @return {boolean}
 	  */
 	isNew() {
 		return !this._id;
 	}
 
-	/** Check whether a user may edit the course.
-	  *
+	/**
+	  * Check whether a user may edit the course.
 	  * @param {Object} user
-	  * @return {Boolean}
+	  * @return {boolean}
 	  */
 	editableBy(user) {
 		if (!user) {
@@ -90,10 +90,9 @@ export class Course {
 			|| _.intersection(user.badges, this.editors).length > 0;
 	}
 
-	/** Get list of members with specified role
-	  *
-	  * @param {String} role like 'team'
-	  * @return {List} of members
+	/**
+	  * Get list of members with specified role
+	  * @param {string} role like 'team'
 	  */
 	membersWithRole(role) {
 		check(role, String);
