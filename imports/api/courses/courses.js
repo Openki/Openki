@@ -35,31 +35,7 @@ import { HasRoleUser } from '/imports/utils/course-role-utils';
   * nextEvent: next upcoming event object, only includes the _id and start field
   * lastEvent: most recent event object, only includes the _id and start field
   */
-// ======== DB-Model: ========
-// "_id"           -> ID
-// "name"          -> String
-// "categories"    -> [ID_categories]
-// "tags"          -> List of Strings  (not used)
-// "groups"        -> List ID_groups
-// groupOrganizers List of group ID that are allowed to edit the course
-// "description"   -> String
-// "slug"          -> String
-// "region"        -> ID_region
-// "date"          -> Date             (what for?)
-// "createdby"     -> ID_user
-// "time_created"  -> Date
-// "time_lastedit" -> Date
-// "roles"         -> [role-keys]
-// "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
-// "internal"      -> Boolean
-/** Calculated fields
-  *
-  * editors: List of user and group id allowed to edit the course, calculated from members and
-  *          groupOrganizers
-  * futureEvents: count of events still in the future for this course
-  * nextEvent: next upcoming event object, only includes the _id and start field
-  * lastEvent: most recent event object, only includes the _id and start field
-  */
+
 export class Course {
 	constructor() {
 		this.members = [];
@@ -104,7 +80,6 @@ export class Course {
 	}
 }
 
-
 const Courses = new Mongo.Collection('Courses', {
 	transform(course) {
 		return _.extend(new Course(), course);
@@ -124,16 +99,45 @@ Courses.Filtering = () => Filtering(
 );
 
 /**
- * Update list of editors
+ * Update the number of interested user
  * @param {string} courseId
  */
-Courses.updateGroups = function (courseId) {
-	/* eslint-disable-next-line consistent-return */
+Courses.updateInterested = function (courseId) {
 	AsyncTools.untilClean((resolve, reject) => {
 		const course = Courses.findOne(courseId);
 		// If the course doesn't exist it doesn't need updating
 		if (!course) {
-			return resolve(true);
+			resolve(true);
+		}
+
+		Courses.update(course._id, {
+			$set: {
+				interested: course.members?.length || 0,
+			},
+		}, (err, result) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(result.result.nModified === 0);
+			}
+		});
+	}).then(() => {
+	}, (reason) => {
+		/* eslint-disable-next-line no-console */
+		console.log(`Failed updateInterested: ${reason}`);
+	});
+};
+
+/**
+ * Update list of editors
+ * @param {string} courseId
+ */
+Courses.updateGroups = function (courseId) {
+	AsyncTools.untilClean((resolve, reject) => {
+		const course = Courses.findOne(courseId);
+		// If the course doesn't exist it doesn't need updating
+		if (!course) {
+			resolve(true);
 		}
 
 		const editors = course.groupOrganizers.slice();
@@ -164,6 +168,11 @@ Courses.updateGroups = function (courseId) {
 	});
 };
 
+/**
+ * @param {{ region?: any; state?: any; userInvolved?: any; categories?: any; group?: any; internal?: any; search?: any; needsRole?: any; }} filter
+ * @param {number} limit
+ * @param {any[]} sortParams
+ */
 Courses.findFilter = function (filter, limit, sortParams) {
 	check(sortParams, Match.Optional([[Match.Any]]));
 

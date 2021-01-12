@@ -188,6 +188,7 @@ Meteor.methods({
 			set.editors = [user._id];
 			set.createdby = user._id;
 			set.time_created = new Date();
+			set.interested = 1;
 			/* eslint-disable-next-line no-param-reassign */
 			courseId = Courses.insert(set);
 
@@ -289,7 +290,9 @@ Meteor.methods({
 	'course.editing': UpdateMethods.Editing(Courses),
 
 
-	// Recalculate the editors field
+	/**
+	 * Recalculate the editors field
+	 */
 	'course.updateGroups'(selector) {
 		Courses.find(selector).forEach((course) => {
 			Courses.updateGroups(course._id);
