@@ -169,7 +169,15 @@ Courses.updateGroups = function (courseId) {
 };
 
 /**
- * @param {{ region?: any; state?: any; userInvolved?: any; categories?: any; group?: any; internal?: any; search?: any; needsRole?: any; }} filter
+ * @param {{ region?: string;
+ * state?: "proposal" | "resting" | "upcomingEvent";
+ * userInvolved?: string;
+ * categories?: string[];
+ * group?: string;
+ * internal?: boolean;
+ * search?: string;
+ * needsRole?: ("host"|"mentor"|"team")[];
+ * }} filter
  * @param {number} limit
  * @param {any[]} sortParams
  */
