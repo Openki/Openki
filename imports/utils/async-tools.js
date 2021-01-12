@@ -50,7 +50,8 @@ if (Meteor.isServer) {
 
 	/**
 	 * Repeatedly apply a cleaning function until it reports no update.
-	 * @param {(resolve: (value: boolean) => void, reject: (reason?: any) => void) => void} clean - the cleaning function
+	 * @param {(resolve: (value: boolean) => void, reject: (reason?: any) => void) => void} clean
+	 * - the cleaning function
 	 * @returns {Promise<void>}
 	 *
 	 * This is supposed to settle racing cache updates with the last version
