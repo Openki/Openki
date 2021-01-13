@@ -42,10 +42,10 @@ const ReplicaSync = function (event, updateOptions) {
 		const timeDelta = endMoment.diff(startMoment);
 
 		Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
+			const replicaChanges = updateOptions.infos ? { ...changes } : {};
+
 			const updateTime = timeIsValid && updateOptions.time
 				&& (replica.sameTime(event) || updateOptions.changedReplicas.time);
-
-			const replicaChanges = updateOptions.infos ? { ...changes } : {};
 
 			if (updateTime) {
 				const newStartMoment = moment(replica.start).set(startTime);
@@ -68,7 +68,10 @@ const ReplicaSync = function (event, updateOptions) {
 				delete replicaChanges.endLocal;
 			}
 
-			Events.update({ _id: replica._id }, { $set: replicaChanges });
+			if (updateOptions.infos || updateTime) {
+				// only update if something has changed
+				Events.update({ _id: replica._id }, { $set: replicaChanges });
+			}
 
 			affected += 1;
 		});

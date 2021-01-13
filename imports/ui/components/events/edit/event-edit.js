@@ -40,7 +40,7 @@ Template.eventEdit.onCreated(function () {
 	this.state = new ReactiveDict();
 	this.state.setDefault(
 		{
-			updateReplicasInfo: false,
+			updateReplicasInfos: false,
 			startDayChanged: false,
 			timeChanged: false,
 			updateReplicasTime: false,
@@ -392,7 +392,7 @@ Template.eventEdit.events({
 			}
 		}
 
-		const updateReplicasInfo = instance.state.get('updateReplicasInfo');
+		const updateReplicasInfos = instance.state.get('updateReplicasInfos');
 		const updateReplicasTime = !instance.state.get('startDayChanged') && instance.state.get('timeChanged') && instance.state.get('updateReplicasTime');
 		const updateChangedReplicasTime = updateReplicasTime && instance.state.get('updateChangedReplicasTime');
 		const sendNotifications = instance.$('.js-check-notify').is(':checked');
@@ -403,7 +403,7 @@ Template.eventEdit.events({
 			Meteor.call('event.save',
 				{
 					eventId,
-					updateReplicasInfo,
+					updateReplicasInfos,
 					updateReplicasTime,
 					updateChangedReplicasTime,
 					sendNotifications,
@@ -446,7 +446,7 @@ Template.eventEdit.events({
 							));
 						}
 
-						if (updateReplicasInfo || updateReplicasTime) {
+						if (updateReplicasInfos || updateReplicasTime) {
 							Alert.success(mf(
 								'eventEdit.replicatesUpdated',
 								{ TITLE: editevent.title },
@@ -504,8 +504,8 @@ Template.eventEdit.events({
 		instance.selectedRegion.set(instance.$('.js-select-region').val());
 	},
 
-	'change .js-update-replicas-info'(event, instance) {
-		instance.state.set('updateReplicasInfo', event.target.checked);
+	'change .js-update-replicas-infos'(event, instance) {
+		instance.state.set('updateReplicasInfos', event.target.checked);
 	},
 
 	'change .js-update-replicas-time'(event, instance) {

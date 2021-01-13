@@ -177,7 +177,7 @@
 				{{#if affectedReplicaCount}}
 					<div class="checkbox">
 						<label>
-							<input class="js-update-replicas-info"
+							<input class="js-update-replicas-infos"
 								   type="checkbox"
 								   name="updateReplicasInfo">
 							{{#mf KEY='event.edit.updateReplicasInfo' COUNT=affectedReplicaCount}}
@@ -254,7 +254,9 @@
 										</ul>
 										<div class="checkbox">
 											<label>
-												<input class="js-update-changed-replicas" type="checkbox">
+												<input class="js-update-changed-replicas-time" 
+													type="checkbox"
+													name="updateChangedReplicasTime">
 												{{#mf KEY='event.edit.updateChangedReplicasTime' NUM=changedReplicas.length}}
 												      Overwrite {NUM, plural,
 														one {this events}
