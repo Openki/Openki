@@ -2,10 +2,9 @@ import { check } from 'meteor/check';
 import Alerts from './alerts';
 
 const Alert = {
-	/** Create an error from String
-      *
-      * @param  {String}  errorString     - error type
-      * @param  {String}  message         - the message text
+	/**
+      * Create an error from String
+      * @param  {string}  errorString - error message
       *
       */
 	error(errorString) {
