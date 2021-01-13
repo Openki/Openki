@@ -1,10 +1,14 @@
 // ======== DB-Model: ========
-// "lg"              -> String     ISO 639-1 code
-// "name"            -> String     Full name
-// "short"           -> String     Abbreviation
-// "english"         -> String     English full name
-// ===========================
+/**
+ * @typedef {Object} LanguageEntity
+ * @property {string} lg             ISO 639-1 code
+ * @property {string} name           Full name
+ * @property {string} short          Abbreviation
+ * @property {string} english        English full name
+ * @property {boolean} visible
+ */
 
+/** @type {{[abbreviation:string]: LanguageEntity}} */
 const Languages = {
 	ar:
 		{

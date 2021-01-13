@@ -6,6 +6,9 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 
 Meteor.methods({
+	/**
+	 * @param {string} regionId
+	 */
 	'stats.region'(regionId) {
 		if (UserPrivilegeUtils.privileged(Meteor.user(), 'admin')) {
 			const regionFilter = regionId === 'all_regions' ? '' : regionId;
