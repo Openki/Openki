@@ -1,4 +1,6 @@
 import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
+import moment from 'moment';
 
 import Courses from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
@@ -18,9 +20,16 @@ import LocalTime from '/imports/utils/local-time';
 import StringTools from '/imports/utils/string-tools';
 import UpdateMethods from '/imports/utils/update-methods';
 
+/**
+ * @param {*} event
+ * @param {boolean} updateChangedReplicas
+ */
 const ReplicaSync = function (event, updateChangedReplicas) {
 	let affected = 0;
 
+	/**
+	 * @param {*} changes
+	 */
 	const apply = function (changes) {
 		const startMoment = moment(changes.start);
 		const startTime = { hour: startMoment.hour(), minute: startMoment.minute() };
@@ -31,7 +40,10 @@ const ReplicaSync = function (event, updateChangedReplicas) {
 
 			const updateTime = changes.start
 							&& (updateChangedReplicas || replica.sameTime(event));
-
+			console.info('changes:');
+			console.info(changes);
+			console.info('replica:');
+			console.info(replica);
 			if (updateTime) {
 				const newStartMoment = moment(replica.start).set(startTime);
 				Object.assign(replicaChanges,
@@ -45,6 +57,14 @@ const ReplicaSync = function (event, updateChangedReplicas) {
 					{
 						startLocal: regionZone.toString(replicaChanges.start),
 						endLocal: regionZone.toString(replicaChanges.end),
+					});
+			} else {
+				Object.assign(replicaChanges,
+					{
+						start: replica.start,
+						end: replica.end,
+						startLocal: replica.startLocal,
+						endLocal: replica.endLocal,
 					});
 			}
 
@@ -63,11 +83,23 @@ const ReplicaSync = function (event, updateChangedReplicas) {
 };
 
 Meteor.methods({
+	/**
+	 * @param {{
+	 * changes: any;
+	 * updateReplicasInfo: boolean;
+	 * updateReplicasTime: boolean;
+	 * updateChangedReplicasTime: boolean;
+	 * sendNotifications: boolean;
+	 * eventId: string;
+	 * comment: string | null;
+	 * }} args
+	 */
 	'event.save'(args) {
 		const {
 			changes,
-			updateReplicas,
-			updateChangedReplicas,
+			updateReplicasInfo,
+			updateReplicasTime,
+			updateChangedReplicasTime,
 			sendNotifications,
 		} = args;
 
@@ -256,7 +288,7 @@ Meteor.methods({
 			Events.update(eventId, { $set: changes });
 
 			if (updateReplicas) {
-				const replicaSync = ReplicaSync(event, updateChangedReplicas);
+				const replicaSync = ReplicaSync(event, updateChangedReplicasTime);
 				replicaSync.apply(changes);
 				affectedReplicaCount = replicaSync.affected();
 			}
