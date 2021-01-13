@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
+
 import Log from '/imports/api/log/log';
 import Regions from '/imports/api/regions/regions';
 import Users from '/imports/api/users/users';
@@ -17,6 +20,10 @@ Profile.updateAcceptsMessages = function (user) {
 
 Profile.Username = {};
 
+/**
+ * @param {string} userId
+ * @param {string} newName
+ */
 Profile.Username.change = function (userId, newName) {
 	check(userId, String);
 	check(newName, String);
@@ -47,6 +54,11 @@ Profile.Username.change = function (userId, newName) {
 
 Profile.Email = {};
 
+/**
+ * @param {string} userId
+ * @param {string|undefined} email
+ * @param {string} reason
+ */
 Profile.Email.change = function (userId, email, reason) {
 	check(userId, String);
 	check(email, Match.Optional(String));
@@ -59,6 +71,7 @@ Profile.Email.change = function (userId, email, reason) {
 			reason,
 		});
 
+	/** @type {{ address: string; verified: boolean; }[]} */
 	let newValue = [];
 	if (email) {
 		newValue = [{ address: email, verified: false }];
@@ -73,9 +86,10 @@ Profile.Notifications = {};
 
 /** Update the receiveNotifications setting for a user
   *
-  * @param   {ID} userId - update the setting for this user
-  * @param {Bool} enable - new state of the flag
-  * @param   {ID} rel    - related ID for the Log (optional)
+  * @param {string} userId - update the setting for this user
+  * @param {boolean} enable - new state of the flag
+  * @param {string|undefined} relId    - related ID for the Log (optional)
+  * @param {string} reason
   *
   */
 Profile.Notifications.change = function (userId, enable, relId, reason) {
@@ -102,8 +116,8 @@ Profile.Notifications.change = function (userId, enable, relId, reason) {
 
 /** Handle unsubscribe token
   *
-  * @param {String} token - the unsubscribe token passed by the user
-  * @return {Bool} whether the token was accepted
+  * @param {string} token - the unsubscribe token passed by the user
+  * @return {boolean} whether the token was accepted
   */
 Profile.Notifications.unsubscribe = function (token) {
 	check(token, String);
@@ -130,10 +144,11 @@ Profile.Region = {};
 
 /** Update the selected region for a user
   *
-  * @param {ID} userId   - update region for this user
-  * @param {ID} regionId - choose this region for this user
+  * @param {string} userId   - update region for this user
+  * @param {string} regionId - choose this region for this user
+  * @param {string} reason
   *
-  * @return {Bool} whether the change was accepted
+  * @return {boolean} whether the change was accepted
   */
 Profile.Region.change = function (userId, regionId, reason) {
 	check(userId, String);
