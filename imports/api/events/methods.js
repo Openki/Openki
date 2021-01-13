@@ -26,9 +26,9 @@ import UpdateMethods from '/imports/utils/update-methods';
  *  infos: boolean;
  *  time: boolean;
  *  changedReplicas: { time: boolean; };
- * }} options
+ * }} updateOptions - What should be updated
  */
-const ReplicaSync = function (event, options) {
+const ReplicaSync = function (event, updateOptions) {
 	let affected = 0;
 
 	/**
@@ -36,13 +36,18 @@ const ReplicaSync = function (event, options) {
 	 */
 	const apply = function (changes) {
 		const startMoment = moment(changes.start);
+		const endMoment = moment(changes.end);
+		const timeIsValid = startMoment.isValid() && endMoment.isValid();
 		const startTime = { hour: startMoment.hour(), minute: startMoment.minute() };
-		const timeDelta = moment(changes.end).diff(startMoment);
+		const timeDelta = endMoment.diff(startMoment);
 
 		Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
-			const replicaChanges = options.infos ? { ...changes } : {};
+			const updateTime = timeIsValid && updateOptions.time
+				&& (replica.sameTime(event) || updateOptions.changedReplicas.time);
 
-			if (options.time && (replica.sameTime(event) || options.changedReplicas.time)) {
+			const replicaChanges = updateOptions.infos ? { ...changes } : {};
+
+			if (updateTime) {
 				const newStartMoment = moment(replica.start).set(startTime);
 				Object.assign(replicaChanges,
 					{
@@ -283,12 +288,12 @@ Meteor.methods({
 			Events.update(eventId, { $set: changes });
 
 			if (updateReplicasInfos || updateReplicasTime) {
-				const options = {
+				const updateOptions = {
 					infos: updateReplicasInfos,
 					time: updateReplicasTime,
 					changedReplicas: { time: updateChangedReplicasTime },
 				};
-				const replicaSync = ReplicaSync(event, options);
+				const replicaSync = ReplicaSync(event, updateOptions);
 				replicaSync.apply(changes);
 				affectedReplicaCount = replicaSync.affected();
 			}
