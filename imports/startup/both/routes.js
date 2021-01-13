@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session'
+import moment from 'moment';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';

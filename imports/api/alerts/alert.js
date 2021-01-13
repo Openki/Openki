@@ -1,3 +1,4 @@
+import { check } from 'meteor/check';
 import Alerts from './alerts';
 
 const Alert = {
@@ -40,9 +41,9 @@ const Alert = {
 
 	/** Private method to add an alert message
       *
-      * @param  {String}  type         - type of alert message
-      * @param  {String}  message      - the message text
-      * @param  {Integer} timeout      - timeout for the alert to disappear
+      * @param  {String} type         - type of alert message
+      * @param  {String} message      - the message text
+      * @param  {number} timeout      - timeout for the alert to disappear
       *
       */
 	_alert(type, message, timeout = 4000) {
