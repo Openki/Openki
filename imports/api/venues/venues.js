@@ -40,7 +40,7 @@ export const Venue = function () {
 };
 
 /** Check whether a user may edit the venue.
-  * @this {VenueEnity}
+  * @this {Venue & VenueEnity}
   * @param {object} user
   * @return {boolean}
   */

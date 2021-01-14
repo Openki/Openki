@@ -154,28 +154,29 @@ Events.updateGroups = function (eventId) {
 	});
 };
 
-/* Find events for given filters
- *
- * filter: dictionary with filter options
- *   search: string of words to search for
- *   period: include only events that overlap the given period (list of start and end date)
- *   start: only events that end after this date
- *   before: only events that ended before this date
- *   ongoing: only events that are ongoing during this date
- *   end: only events that started before this date
- *   after: only events starting after this date
- *   venue: only events at this venue (ID)
- *   room: only events in this room (string match)
- *   standalone: only events that are not attached to a course
- *   region: restrict to given region
- *   categories: list of category ID the event must be in
- *   group: the event must be in that group (ID)
- *   groups: the event must be in one of the group ID
- *   course: only events for this course (ID)
- *   internal: only events that are internal (if true) or public (if false)
- * limit: how many to find
- * skip: skip this many before returning results
- * sort: list of fields to sort by
+/**
+ * Find events for given filters
+ * @param {object} filter dictionary with filter options
+ * @param {string} [filter.search] string of words to search for
+ * @param {[Date,Date]} [filter.period] include only events that overlap the given
+ * period (list of start and end date)
+ * @param {Date} [filter.start] only events that end after this date
+ * @param {Date} [filter.before] only events that ended before this date
+ * @param {Date} [filter.ongoing] only events that are ongoing during this date
+ * @param {Date} [filter.end] only events that started before this date
+ * @param {Date} [filter.after] only events starting after this date
+ * @param {string} [filter.venue] only events at this venue (ID)
+ * @param {string} [filter.room] only events in this room (string match)
+ * @param {boolean} [filter.standalone] only events that are not attached to a course
+ * @param {string} [filter.region] restrict to given region
+ * @param {string[]} [filter.categories] list of category ID the event must be in
+ * @param {string} [filter.group] the event must be in that group (ID)
+ * @param {string[]} [filter.groups] the event must be in one of the group ID
+ * @param {string} [filter.course] only events for this course (ID)
+ * @param {boolean} [filter.internal] only events that are internal (if true) or public (if false)
+ * @param {number} [limit] how many to find
+ * @param {number} [skip] skip this many before returning results
+ * @param {any[]} [sort] list of fields to sort by
  *
  * The events are sorted by start date (ascending, before-filter causes descending order)
  *
