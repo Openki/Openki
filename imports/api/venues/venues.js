@@ -6,22 +6,32 @@ import Filtering from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
 import StringTools from '/imports/utils/string-tools';
 
-// _id          ID
-// editor       user ID
-// name         String
-// description  String (HTML)
-// region       region ID
-// loc          GeoJSON coordinates
-// address      String
-// route        String
-
-// Additional information
-// short            String
-// maxPeople        Int
-// maxWorkplaces    Int
-// facilities       {facility-key: Boolean}
-// otherFacilities  String
-// website          URL
+// ======== DB-Model: ========
+/**
+ * @typedef  {Object} VenueEnity
+ * @property {string} [_id]             ID
+ * @property {string} [editor]          user ID
+ * @property {string} [name]
+ * @property {string} [slug]
+ * @property {string} [description]     HTML
+ * @property {string} [region]          ID
+ * @property {{ type: 'Point', coordinates: [number, number] }} [loc] GeoJSON coordinates
+ * (Longitude, Latitude)
+ * @property {string} [address]
+ * @property {string} [route]
+ *
+ * Additional information
+ * @property {string} [short]           ID
+ * @property {number} [maxPeople]       Int
+ * @property {number} [maxWorkplaces]   Int
+ * @property {{[key: string]: string}} [facilities] For keys see: Venues.facilityOptions
+ * @property {string} [otherFacilities]
+ * @property {string} [website]         URL
+ *
+ * @property {string} [createdby]
+ * @property {Date}   [created]
+ * @property {Date}   [updated]
+ */
 
 /** Venue objects represent locations where events take place.
   */
@@ -30,7 +40,7 @@ export const Venue = function () {
 };
 
 /** Check whether a user may edit the venue.
-  *
+  * @this {VenueEnity}
   * @param {object} user
   * @return {boolean}
   */
@@ -63,13 +73,14 @@ Venues.facilityOptions = ['projector', 'screen', 'audio', 'blackboard', 'whitebo
 	'flipchart', 'wifi', 'kitchen', 'wheelchairs',
 ];
 
-/* Find venues for given filters
- *
- * filter: dictionary with filter options
- *   search: string of words to search for
- *   region: restrict to venues in that region
- * limit: how many to find
- *
+/**
+ * Find venues for given filters
+ * @param {object} filter dictionary with filter options
+ * @param {string} filter.search string of words to search for
+ * @param {string} filter.region restrict to venues in that region
+ * @param {number} limit how many to find
+ * @param {number} skip
+ * @param {*} sort
  */
 Venues.findFilter = function (filter, limit, skip, sort) {
 	const find = {};
