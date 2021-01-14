@@ -103,7 +103,7 @@ Template.frameCalendarEvent.events({
 		instance.expanded.set(!instance.expanded.get());
 	},
 
-	'click .js-track-cal-download'(event, instance) {
+	'click .js-track-cal-download'() {
 		Analytics.trackEvent('Events downloads', 'Event downloads via calendar frame', Regions.findOne(this.region)?.nameEn);
 	},
 });
