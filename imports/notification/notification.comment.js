@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+import { _ } from 'meteor/underscore';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 import Courses from '/imports/api/courses/courses';
 import Regions from '/imports/api/regions/regions';
@@ -7,9 +10,9 @@ import StringTools from '/imports/utils/string-tools';
 
 const notificationComment = {};
 
-/** Record the intent to send event notifications
-  *
-  * @param      {ID} commentID - ID for the CourseDiscussions collection
+/**
+  * Record the intent to send event notifications
+  * @param {string} commentId ID for the CourseDiscussions collection
   */
 notificationComment.record = function (commentId) {
 	check(commentId, String);

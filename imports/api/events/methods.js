@@ -30,9 +30,6 @@ import UpdateMethods from '/imports/utils/update-methods';
 const ReplicaSync = function (event, updateOptions) {
 	let affected = 0;
 
-	/**
-	 * @param {*} changes
-	 */
 	const apply = function (changes) {
 		const startMoment = moment(changes.start);
 		const endMoment = moment(changes.end);

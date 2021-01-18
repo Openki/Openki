@@ -1,4 +1,5 @@
-import { Match } from 'meteor/check';
+import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 
 import Courses from '/imports/api/courses/courses';
@@ -10,14 +11,14 @@ import StringTools from '/imports/utils/string-tools';
 
 const notificationPrivateMessage = {};
 
-/** Record the intent to send a private message
-  *
-  * @param      {ID} senderId - id of the user that sends the message
-  * @param      {ID} recipientId - id of the intended recipient
-  * @param  {String} message - the message to transmit
-  * @param    {Bool} revealSenderAddress - include email-address of sender in message
-  * @param    {Bool} sendCopyToSender - send a copy of the message to the author
-  * @param    {Bool} context - dictionary with context ID (course, venue, &c.)
+/**
+  * Record the intent to send a private message
+  * @param {string} senderId id of the user that sends the message
+  * @param {string} recipientId id of the intended recipient
+  * @param {string} message the message to transmit
+  * @param {boolean} revealSenderAddress include email-address of sender in message
+  * @param {boolean} sendCopyToSender send a copy of the message to the author
+  * @param {boolean} context dictionary with context ID (course, venue, &c.)
   */
 notificationPrivateMessage.record = function (
 	senderId,

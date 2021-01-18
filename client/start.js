@@ -1,6 +1,9 @@
 import '/imports/startup/both';
 import '/imports/startup/client';
 
+import { Session } from 'meteor/session';
+import { Router } from 'meteor/iron:router';
+
 import Alert from '/imports/api/alerts/alert';
 import Languages from '/imports/api/languages/languages';
 

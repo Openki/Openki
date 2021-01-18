@@ -1,3 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+import { Router } from 'meteor/iron:router';
+
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Log from '/imports/api/log/log';
@@ -7,11 +11,11 @@ import LocalTime from '/imports/utils/local-time';
 
 const notificationEvent = {};
 
-/** Record the intent to send event notifications
-  *
-  * @param      {ID} eventID   - event to announce
-  * @param {Boolean} isNew     - whether the event is a new one
-  * @param {String}  additionalMessage - custom message
+/**
+  * Record the intent to send event notifications
+  * @param {string} eventId event id to announce
+  * @param {boolean} isNew whether the event is a new one
+  * @param {string} additionalMessage custom message
   */
 notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	check(eventId, String);

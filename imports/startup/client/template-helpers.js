@@ -1,4 +1,6 @@
 import { Template } from 'meteor/templating';
+import moment from 'moment';
+
 import Groups from '/imports/api/groups/groups';
 import Regions from '/imports/api/regions/regions';
 

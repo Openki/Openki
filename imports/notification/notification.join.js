@@ -1,3 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
+import { Router } from 'meteor/iron:router';
+
 import Courses from '/imports/api/courses/courses';
 import Log from '/imports/api/log/log';
 
@@ -6,12 +10,12 @@ import StringTools from '/imports/utils/string-tools';
 
 const notificationJoin = {};
 
-/** Record the intent to send join notifications
-  *
-  * @param      {ID} courseID         - ID for the CourseDiscussions collection
-  * @param      {ID} participantId - ID of the user that joined
-  * @param      {String} newRole      - new role of the participant
-  * @param      {String} message      - Optional message of the new participant
+/**
+  * Record the intent to send join notifications
+  * @param {string} courseId ID for the CourseDiscussions collection
+  * @param {string} participantId ID of the user that joined
+  * @param {string} newRole new role of the participant
+  * @param {string} message Optional message of the new participant
   */
 notificationJoin.record = function (courseId, participantId, newRole, message) {
 	check(courseId, String);
