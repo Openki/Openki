@@ -4,7 +4,11 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 import Alert from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';
@@ -27,6 +31,7 @@ import '/imports/ui/components/price-policy/price-policy';
 import '/imports/ui/components/regions/tag/region-tag';
 
 import './event-edit.html';
+import moment from 'moment';
 
 Template.eventEdit.onCreated(function () {
 	const instance = this;
@@ -35,9 +40,11 @@ Template.eventEdit.onCreated(function () {
 	this.state = new ReactiveDict();
 	this.state.setDefault(
 		{
-			updateReplicas: false,
-			updateChangedReplicas: false,
+			updateReplicasInfos: false,
 			startDayChanged: false,
+			timeChanged: false,
+			updateReplicasTime: false,
+			updateChangedReplicasTime: false,
 		},
 	);
 
@@ -77,7 +84,10 @@ Template.eventEdit.onCreated(function () {
 	};
 });
 
-
+/**
+ * @param {string} dateStr
+ * @param {string} timeStr
+ */
 const readDateTime = function (dateStr, timeStr) {
 	return moment.utc(`${dateStr} ${timeStr}`, 'L LT');
 };
@@ -149,7 +159,7 @@ function updateTimes(template, updateEnd) {
 
 /**
  * validates input for maxParticipants
- * @param {String} - the user-input
+ * @param {String} maxParticipants - the user-input
  * @return - an integer if the input passed validation.
  */
 const validateMaxParticipants = (maxParticipants) => {
@@ -232,6 +242,10 @@ Template.eventEdit.helpers({
 		return Template.instance().state.get('startDayChanged');
 	},
 
+	timeChanged() {
+		return Template.instance().state.get('timeChanged');
+	},
+
 	changedReplicas() {
 		return (
 			Events
@@ -242,11 +256,14 @@ Template.eventEdit.helpers({
 	},
 
 	emphasizeClass() {
-		return Template.instance().state.get('updateReplicas') && 'is-emphasized';
+		if (Template.instance().state.get('updateReplicasTime')) {
+			return 'is-emphasized';
+		}
+		return '';
 	},
 
-	updateChangedReplicas() {
-		return Template.instance().state.get('updateChangedReplicas');
+	updateChangedReplicasTime() {
+		return Template.instance().state.get('updateChangedReplicasTime');
 	},
 
 	regions() {
@@ -375,8 +392,9 @@ Template.eventEdit.events({
 			}
 		}
 
-		const updateReplicas = instance.state.get('updateReplicas');
-		const updateChangedReplicas = instance.state.get('updateChangedReplicas');
+		const updateReplicasInfos = instance.state.get('updateReplicasInfos');
+		const updateReplicasTime = !instance.state.get('startDayChanged') && instance.state.get('timeChanged') && instance.state.get('updateReplicasTime');
+		const updateChangedReplicasTime = updateReplicasTime && instance.state.get('updateChangedReplicasTime');
 		const sendNotifications = instance.$('.js-check-notify').is(':checked');
 		const addNotificationMessage = instance.$('.js-event-add-message').val();
 
@@ -388,8 +406,9 @@ Template.eventEdit.events({
 				Meteor.call('event.save',
 					{
 						eventId,
-						updateReplicas,
-						updateChangedReplicas,
+						updateReplicasInfos,
+						updateReplicasTime,
+						updateChangedReplicasTime,
 						sendNotifications,
 						changes: editevent,
 						comment: addNotificationMessage,
@@ -430,7 +449,7 @@ Template.eventEdit.events({
 								));
 							}
 
-							if (updateReplicas) {
+							if (updateReplicasInfos || updateReplicasTime) {
 								Alert.success(mf(
 									'eventEdit.replicatesUpdated',
 									{ TITLE: editevent.title },
@@ -466,23 +485,37 @@ Template.eventEdit.events({
 		});
 	},
 
-	'change .js-event-duration, change .js-event-start-date, change .js-event-start-time'(event, template) {
-		updateTimes(template, true);
+	'change .js-event-duration, change .js-event-start-date, change .js-event-start-time'(event, instance) {
+		updateTimes(instance, true);
+		const newStart = getEventStartMoment(instance);
+		const newEnd = getEventEndMoment(instance);
+		instance.state.set({
+			timeChanged: !(newStart.isSame(moment.utc(this.startLocal), 'minute') && newEnd.isSame(moment.utc(this.endLocal), 'minute')),
+		});
 	},
 
-	'change .js-event-end-time'(event, template) {
-		updateTimes(template, false);
+	'change .js-event-end-time'(event, instance) {
+		updateTimes(instance, false);
+		const newStart = getEventStartMoment(instance);
+		const newEnd = getEventEndMoment(instance);
+		instance.state.set({
+			timeChanged: !(newStart.isSame(moment.utc(this.startLocal), 'minute') && newEnd.isSame(moment.utc(this.endLocal), 'minute')),
+		});
 	},
 
 	'change .js-select-region'(event, instance) {
 		instance.selectedRegion.set(instance.$('.js-select-region').val());
 	},
 
-	'change .js-update-replicas'(event, instance) {
-		instance.state.set('updateReplicas', event.target.checked);
+	'change .js-update-replicas-infos'(event, instance) {
+		instance.state.set('updateReplicasInfos', event.target.checked);
 	},
 
-	'change .js-update-changed-replicas'(event, instance) {
-		instance.state.set('updateChangedReplicas', event.target.checked);
+	'change .js-update-replicas-time'(event, instance) {
+		instance.state.set('updateReplicasTime', event.target.checked);
+	},
+
+	'change .js-update-changed-replicas-time'(event, instance) {
+		instance.state.set('updateChangedReplicasTime', event.target.checked);
 	},
 });

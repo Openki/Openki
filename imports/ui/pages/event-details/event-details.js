@@ -43,7 +43,7 @@ const checkJsonLdMinReqs = (data) => Object.prototype.hasOwnProperty.call(data, 
 
 /**
   * @param {Object} data - the event data
-  * @return {Object} - jsonLd geo part
+  * @return {Object|undefined} - jsonLd geo part
   */
 const addGeoToJsonLd = (data) => {
 	if (
@@ -65,7 +65,7 @@ const addGeoToJsonLd = (data) => {
   *
   * https://developers.google.com/search/docs/data-types/event
   *
-  * @param {Object} - the event data
+  * @param {Object} data - the event data
   * @return {Object} - jsonLd-fragment for offers
   */
 const addOffersToJsonLd = (data) => ({ '@type': 'AggregateOffer', price: data.price || 'free' });
@@ -84,7 +84,7 @@ const addPerformerToJsonLd = () => ({
 
 /** creates the jsonLd
   *
-  * @param {Object} - the event data
+  * @param {Object} data - the event data
   * @return {Object} - jsonLd
   */
 const createJsonLd = (data) => {
@@ -114,7 +114,7 @@ const createJsonLd = (data) => {
 
 /** Adds a jsonLd to the eventDetails html-template
   *
-  * @param {Object} - the event data
+  * @param {Object} data - the event data
   */
 const addJsonLd = (data) => {
 	if (checkJsonLdMinReqs(data)) {
