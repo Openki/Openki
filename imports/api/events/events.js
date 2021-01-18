@@ -100,15 +100,18 @@ Events.Filtering = () => Filtering(
 	},
 );
 
-/** @summary recalculate the group-related fields of an event
-  * @param {eventId} the event to update
-  */
+/**
+ * Recalculate the group-related fields of an event
+ * @param {string} eventId the event to update
+ */
 Events.updateGroups = function (eventId) {
-	/* eslint-disable-next-line consistent-return */
 	AsyncTools.untilClean((resolve, reject) => {
 		const event = Events.findOne(eventId);
+
 		if (!event) {
-			return resolve(true); // Nothing was successfully updated, we're done.
+			// Nothing was successfully updated, we're done.
+			resolve(true);
+			return;
 		}
 
 		// Any groups listed as organizers are allowed to edit.

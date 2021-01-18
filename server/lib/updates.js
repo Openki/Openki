@@ -1,10 +1,13 @@
 
 import update20201216MergeUserLocale from '../updates/2020.12.16 mergeUserLocale';
 import update20210106EnsureVenueSlugField from '../updates/2021.01.06 ensureVenueSlugField';
+import update20210112EnsureCourseInterestedField from '../updates/2021.01.12 ensureCourseInterestedField';
 
+/** @type {{[name: string]: () => number }} */
 const UpdatesAvailable = {
 	'2020.12.16 mergeUserLocale': update20201216MergeUserLocale,
 	'2021.01.06 ensureVenueSlugField': update20210106EnsureVenueSlugField,
+	'2021.01.12 ensureCourseInterestedField': update20210112EnsureCourseInterestedField,
 };
 
 const UpdatesApplied = new Meteor.Collection('UpdatesApplied');
@@ -14,6 +17,7 @@ const applyUpdates = function () {
 
 	Object.keys(UpdatesAvailable).forEach((name) => {
 		if (UpdatesApplied.find({ name }).count() === 0) {
+			/** @type {{name: string; affected: number; run: Date, applied?: Date}} */
 			const entry = {
 				name,
 				affected: 0,

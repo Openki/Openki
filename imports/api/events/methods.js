@@ -30,7 +30,7 @@ const ReplicaSync = function (event, updateChangedReplicas) {
 			const replicaChanges = { ...changes }; // Shallow clone
 
 			const updateTime = changes.start
-							&& (updateChangedReplicas || replica.sameTime(event));
+				&& (updateChangedReplicas || replica.sameTime(event));
 
 			if (updateTime) {
 				const newStartMoment = moment(replica.start).set(startTime);
@@ -332,17 +332,20 @@ Meteor.methods({
 		Events.find(selector, idOnly).forEach((originalEvent) => {
 			const eventId = originalEvent._id;
 
-			/* eslint-disable-next-line consistent-return */
 			AsyncTools.untilClean((resolve, reject) => {
 				const event = Events.findOne(eventId);
+
 				if (!event) {
-					return resolve(true); // Nothing was successfully updated, we're done.
+					// Nothing was successfully updated, we're done.
+					resolve(true);
+					return;
 				}
 
 				if (!_.isObject(event.venue)) {
 					// This happens only at creation when the field was not initialized correctly
 					Events.update(event._id, { $set: { venue: {} } });
-					return resolve(false);
+					resolve(false);
+					return;
 				}
 
 				let venue = false;
@@ -352,9 +355,10 @@ Meteor.methods({
 
 				let update;
 				if (venue) {
-					// Do not update venue for historical events
 					if (event.start < new Date()) {
-						return resolve(true);
+						// Do not update venue for historical events
+						resolve(true);
+						return;
 					}
 
 					// Sync values to the values set in the venue document
