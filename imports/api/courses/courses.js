@@ -123,10 +123,6 @@ Courses.updateInterested = function (courseId) {
 				resolve(result.result.nModified === 0);
 			}
 		});
-	}).then(() => {
-	}, (reason) => {
-		/* eslint-disable-next-line no-console */
-		console.log(`Failed updateInterested: ${reason}`);
 	});
 };
 
