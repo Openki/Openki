@@ -111,7 +111,7 @@ Template.venueEdit.helpers({
 
 	showMapSelection() {
 		return Template.instance().regionSelectable.get()
-		|| Boolean(Template.instance().selectedRegion.get());
+			|| Boolean(Template.instance().selectedRegion.get());
 	},
 
 	regionSelectable() {
@@ -209,27 +209,30 @@ Template.venueEdit.events({
 
 		const venueId = this._id || '';
 		instance.busy('saving');
-		SaveAfterLogin(instance, mf('loginAction.saveVenue', 'Login and save venue'), () => {
-			Meteor.call('venue.save', venueId, changes, (err, res) => {
-				instance.busy(false);
-				if (err) {
-					Alert.serverError(
-						err,
-						mf('venue.saving.error', 'Saving the venue went wrong'),
-					);
-				} else {
-					Alert.success(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'));
-
-					if (instance.isNew) {
-						Analytics.trackEvent('Venue creations', 'Venue creations', Regions.findOne(changes.region)?.nameEn);
-
-						Router.go('venueDetails', { _id: res });
+		SaveAfterLogin(instance,
+			mf('loginAction.saveVenue', 'Login and save venue'),
+			mf('registerAction.saveVenue', 'Register and save venue'),
+			() => {
+				Meteor.call('venue.save', venueId, changes, (err, res) => {
+					instance.busy(false);
+					if (err) {
+						Alert.serverError(
+							err,
+							mf('venue.saving.error', 'Saving the venue went wrong'),
+						);
 					} else {
-						instance.parentInstance().editing.set(false);
+						Alert.success(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'));
+
+						if (instance.isNew) {
+							Analytics.trackEvent('Venue creations', 'Venue creations', Regions.findOne(changes.region)?.nameEn);
+
+							Router.go('venueDetails', { _id: res });
+						} else {
+							instance.parentInstance().editing.set(false);
+						}
 					}
-				}
+				});
 			});
-		});
 	},
 
 

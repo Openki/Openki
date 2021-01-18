@@ -27,17 +27,20 @@ Template.courseRole.onCreated(function () {
 	// unsubscribe by email
 	// HACK this is not the right place to act on router actions
 	if (Router.current().params.query.unsubscribe === this.data.roletype.type) {
-		SaveAfterLogin(this, mf('loginAction.unsubscribeFromCourse', 'Login and unsubscribe from Course'), () => {
-			const user = Meteor.user();
-			const change = new Unsubscribe(this.data.course, user, this.data.roletype.type);
-			if (change.validFor(user)) {
-				processChange(change, () => {
-					Alert.success(mf('course.roles.unsubscribed', { NAME: this.data.course.name }, 'Unsubscribed from course {NAME}'));
-				});
-			} else {
-				Alert.error(`${change} not valid for ${user}`);
-			}
-		});
+		SaveAfterLogin(this,
+			mf('loginAction.unsubscribeFromCourse', 'Login and unsubscribe from Course'),
+			mf('registerAction.unsubscribeFromCourse', 'Register and unsubscribe from Course'),
+			() => {
+				const user = Meteor.user();
+				const change = new Unsubscribe(this.data.course, user, this.data.roletype.type);
+				if (change.validFor(user)) {
+					processChange(change, () => {
+						Alert.success(mf('course.roles.unsubscribed', { NAME: this.data.course.name }, 'Unsubscribed from course {NAME}'));
+					});
+				} else {
+					Alert.error(`${change} not valid for ${user}`);
+				}
+			});
 	}
 });
 
@@ -83,16 +86,19 @@ Template.courseRole.events({
 		RouterAutoscroll.cancelNext();
 		const comment = instance.$('.js-comment').val().trim();
 		instance.busy('enrolling');
-		SaveAfterLogin(instance, mf('loginAction.enroll', 'Login and enroll'), () => {
-			processChange(instance.subscribe(comment), () => {
-				RouterAutoscroll.cancelNext();
-				instance.showFirstSteps.set(true);
-				instance.busy(false);
-				instance.enrolling.set(false);
+		SaveAfterLogin(instance,
+			mf('loginAction.enroll', 'Login and enroll'),
+			mf('registerAction.enroll', 'Register and enroll'),
+			() => {
+				processChange(instance.subscribe(comment), () => {
+					RouterAutoscroll.cancelNext();
+					instance.showFirstSteps.set(true);
+					instance.busy(false);
+					instance.enrolling.set(false);
 
-				Analytics.trackEvent('Enrollments in courses', `Enrollments in courses as ${this.roletype.type}`, Regions.findOne(this.course.region)?.nameEn);
+					Analytics.trackEvent('Enrollments in courses', `Enrollments in courses as ${this.roletype.type}`, Regions.findOne(this.course.region)?.nameEn);
+				});
 			});
-		});
 	},
 
 	'click .js-role-enroll-cancel'(e, template) {

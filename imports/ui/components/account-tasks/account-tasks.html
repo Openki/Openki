@@ -174,7 +174,11 @@
 					{{mf 'login.register.submit.busy' 'Registering...'}}
 				{{else}}
 					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
-					{{mf 'login.register.submit'}}
+					{{#if pleaseLogin}}
+						{{registerAction}}
+					{{else}}
+						{{mf 'login.register.submit'}}
+					{{/if}}
 				{{/if}}
 			</button>
 		</div>

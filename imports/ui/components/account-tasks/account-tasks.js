@@ -94,10 +94,6 @@ Template.loginFrame.onRendered(function () {
 	this.$('input').first().select();
 });
 
-Template.loginFrame.onDestroyed(() => {
-	Session.set('pleaseLogin', false);
-});
-
 TemplateMixins.FormfieldErrors(Template.loginFrame, {
 	noUsername: {
 		text: () => mf(
@@ -268,6 +264,12 @@ Template.registerFrame.onRendered(function () {
 	}
 
 	this.$('input').first().select();
+});
+
+Template.registerFrame.helpers({
+	pleaseLogin: () => Session.get('pleaseLogin'),
+
+	registerAction: () => Session.get('registerAction'),
 });
 
 TemplateMixins.FormfieldErrors(Template.registerFrame, {
