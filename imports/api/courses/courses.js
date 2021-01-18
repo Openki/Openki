@@ -105,9 +105,11 @@ Courses.Filtering = () => Filtering(
 Courses.updateInterested = function (courseId) {
 	AsyncTools.untilClean((resolve, reject) => {
 		const course = Courses.findOne(courseId);
-		// If the course doesn't exist it doesn't need updating
+
 		if (!course) {
+			// If the course doesn't exist it doesn't need updating
 			resolve(true);
+			return;
 		}
 
 		Courses.update(course._id, {
@@ -135,9 +137,11 @@ Courses.updateInterested = function (courseId) {
 Courses.updateGroups = function (courseId) {
 	AsyncTools.untilClean((resolve, reject) => {
 		const course = Courses.findOne(courseId);
-		// If the course doesn't exist it doesn't need updating
+
 		if (!course) {
+			// If the course doesn't exist it doesn't need updating
 			resolve(true);
+			return;
 		}
 
 		const editors = course.groupOrganizers.slice();

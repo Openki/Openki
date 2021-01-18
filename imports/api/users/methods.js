@@ -123,17 +123,20 @@ Meteor.methods({
 		}
 	},
 
-
-	// Recalculate the groups and badges field
+	/**
+	 * Recalculate the groups and badges field
+	 * @param {*} selector
+	 */
 	'user.updateBadges'(selector) {
 		Meteor.users.find(selector).forEach((originalUser) => {
 			const userId = originalUser._id;
 
-			/* eslint-disable-next-line consistent-return */
 			AsyncTools.untilClean((resolve, reject) => {
 				const user = Meteor.users.findOne(userId);
+
 				if (!user) {
-					return resolve(true);
+					resolve(true);
+					return;
 				}
 
 				const groups = [];
