@@ -185,7 +185,6 @@ Meteor.methods({
 				comment: mf('courses.creator.defaultMessage', '(has proposed this course)'),
 			},
 			];
-			set.editors = [user._id];
 			set.createdby = user._id;
 			set.time_created = new Date();
 			/* eslint-disable-next-line no-param-reassign */
