@@ -190,7 +190,7 @@ export class Subscribe extends Change {
 				{ $set: { 'members.$.comment': this.comment } });
 		}
 
-		// Updated calculated fields
+		// Update member related calculated fields
 		Courses.updateInterested(this.course._id);
 		Courses.updateGroups(this.course._id);
 
@@ -297,7 +297,7 @@ export class Unsubscribe extends Change {
 			{ $pull: { members: { roles: { $size: 0 } } } },
 		);
 
-		// Update calculated fields
+		// Update member related calculated fields
 		Courses.updateInterested(this.course._id);
 		Courses.updateGroups(this.course._id);
 	}

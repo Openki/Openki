@@ -392,7 +392,10 @@ Meteor.methods({
 		});
 	},
 
-	// Update the group-related fields of events matching the selector
+	/**
+	 * Update the group-related fields of events matching the selector
+	 * @param {*} selector
+	 */
 	'event.updateGroups'(selector) {
 		const idOnly = { fields: { _id: 1 } };
 		Events.find(selector, idOnly).forEach((event) => {
