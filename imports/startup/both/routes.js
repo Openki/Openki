@@ -120,6 +120,11 @@ Router.map(function () {
 		template: 'featureGroup',
 	});
 
+	this.route('users', {
+		path: 'admin/users',
+		template: 'users',
+	});
+
 	this.route('find', finderRoute('/find'));
 
 	this.route('frameCalendar', {
