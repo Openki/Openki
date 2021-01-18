@@ -326,7 +326,6 @@ Meteor.methods({
 
 	/**
 	 * Update the venue field for all events matching the selector
-	 * @param {*} selector
 	 */
 	'event.updateVenue'(selector) {
 		const idOnly = { fields: { _id: 1 } };
@@ -394,7 +393,6 @@ Meteor.methods({
 
 	/**
 	 * Update the group-related fields of events matching the selector
-	 * @param {*} selector
 	 */
 	'event.updateGroups'(selector) {
 		const idOnly = { fields: { _id: 1 } };

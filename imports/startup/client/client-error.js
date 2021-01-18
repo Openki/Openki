@@ -1,5 +1,8 @@
 const clientId = Random.id();
 
+/**
+ * @param {{name: string; message: string;}} error
+ */
 const reportToServer = function (error) {
 	const report = {
 		name: error.name,

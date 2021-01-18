@@ -42,7 +42,7 @@ const checkJsonLdMinReqs = (data) => Object.prototype.hasOwnProperty.call(data, 
 
 
 /**
-  * @param {Object} - the event data
+  * @param {Object} data - the event data
   * @return {Object} - jsonLd geo part
   */
 const addGeoToJsonLd = (data) => {
@@ -322,6 +322,10 @@ Template.eventDisplay.events({
 	'click .js-show-replication'(event, instance) {
 		instance.replicating.set(true);
 		instance.collapse();
+	},
+
+	'click .js-track-cal-download'(event, instance) {
+		Analytics.trackEvent('Events downloads', 'Event downloads via event details', Regions.findOne(instance.data.region)?.nameEn);
 	},
 });
 

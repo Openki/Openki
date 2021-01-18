@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
 
 import Regions from '../regions/regions';
 import Venues from './venues';
+/** @typedef {import('./venues').VenueEnity} VenueEnity */
 
 import AsyncTools from '/imports/utils/async-tools';
 import HtmlTools from '/imports/utils/html-tools';
@@ -14,7 +16,7 @@ Meteor.methods({
 				name?: string;
 				description?: string;
 				region?: string;
-				loc?: { type: string, coordinates: number[] };
+				loc?: { type: 'Point', coordinates: [number, number] };
 				address?: string;
 				route?: string;
 				short?: string;
@@ -58,6 +60,7 @@ Meteor.methods({
 		}
 
 		/* Changes we want to perform */
+		/** @type {VenueEnity} */
 		const set = { updated: new Date() };
 
 

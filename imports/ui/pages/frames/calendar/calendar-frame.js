@@ -8,6 +8,8 @@ import { _ } from 'meteor/underscore';
 import Events from '/imports/api/events/events';
 import Regions from '/imports/api/regions/regions';
 
+import Analytics from '/imports/ui/lib/analytics';
+
 import '/imports/ui/components/loading/loading';
 
 import './calendar-frame.html';
@@ -50,8 +52,6 @@ Template.frameCalendar.onCreated(function frameCalendarOnCreated() {
 		this.groupedEvents.set(groupedEvents);
 		this.days.set(Object.keys(groupedEvents));
 	});
-
-	this.allRegions = Session.equals('region', 'all');
 });
 
 Template.frameCalendar.helpers({
@@ -83,7 +83,7 @@ Template.frameCalendarEvent.onCreated(function frameCalendarEventOnCreated() {
 });
 
 Template.frameCalendarEvent.helpers({
-	allRegions: () => Template.instance().parentInstance().allRegions,
+	allRegions: () => Session.equals('region', 'all'),
 
 	regionName() {
 		return Regions.findOne(this.region).name;
@@ -101,5 +101,9 @@ Template.frameCalendarEvent.events({
 		$(event.currentTarget).toggleClass('active');
 		instance.$('.frame-list-item-time').toggle();
 		instance.expanded.set(!instance.expanded.get());
+	},
+
+	'click .js-track-cal-download'() {
+		Analytics.trackEvent('Events downloads', 'Event downloads via calendar frame', Regions.findOne(this.region)?.nameEn);
 	},
 });

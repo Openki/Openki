@@ -17,6 +17,7 @@
     "isomorphic-unfetch": "^2.1.1",
     "jquery": "^3.5.1",
     "meteor-node-stubs": "^1.0.1",
+    "moment": "^2.29.1",
     "moment-timezone": "^0.5.25",
     "node-schedule": "^1.3.2",
     "sanitize-html": "git+https://github.com/O-clock-Dev/sanitize-html-without-postcss.git#80c0d1addddbaf561feba012a058c24b532533c5",

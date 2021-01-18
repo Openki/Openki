@@ -76,7 +76,7 @@ Users.currentUser = function () {
 
 /** Check whether the user may promote things with the given group
   *
-  * @param {String/Object} group - The group to check, this may be an Id or a group object
+  * @param {String|Object} group - The group to check, this may be an Id or a group object
   * @returns {Boolean}
   *
   * The user must be a member of the group to be allowed to promote things with it.
@@ -112,6 +112,9 @@ User.prototype.verifiedEmailAddress = function () {
 		|| false;
 };
 
+/**
+ * @param {string} role
+ */
 User.prototype.privileged = function (role) {
 	return this.privileges
 		&& this.privileges.indexOf(role) > -1;

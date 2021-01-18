@@ -1,10 +1,10 @@
+import { check } from 'meteor/check';
 import Alerts from './alerts';
 
 const Alert = {
-	/** Create an error from String
-      *
-      * @param  {String}  errorString     - error type
-      * @param  {String}  message         - the message text
+	/**
+      * Create an error from String
+      * @param  {string}  errorString - error message
       *
       */
 	error(errorString) {
@@ -21,28 +21,40 @@ const Alert = {
 
 	/** Add an error alert
       *
-      * @param  {Error}   error        - error object
-      * @param  {String}  message      - the message text
+      * @param  {Error | string}   errorOrMessage - error object or message text
+      * @param  {string}  [message] - the message text
       *
       */
-	serverError(error, message) {
-		check(error, Error);
-		check(message, String);
+	serverError(errorOrMessage, message) {
+		if (!message) {
+			check(errorOrMessage, String);
 
-		const errorMessage = mf(
-			'_serverError',
-			{ ERROR: error, MESSAGE: message },
-			'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.',
-		);
+			const errorMessage = mf(
+				'_serverErrorMessageOnly',
+				{ MESSAGE: errorOrMessage },
+				'There was an error on the server: "{MESSAGE}." Sorry about this.',
+			);
 
-		this._alert('error', errorMessage, 60000);
+			this._alert('error', errorMessage, 60000);
+		} else {
+			check(errorOrMessage, Error);
+			check(message, String);
+
+			const errorMessage = mf(
+				'_serverError',
+				{ ERROR: errorOrMessage, MESSAGE: message },
+				'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.',
+			);
+
+			this._alert('error', errorMessage, 60000);
+		}
 	},
 
 	/** Private method to add an alert message
       *
-      * @param  {String}  type         - type of alert message
-      * @param  {String}  message      - the message text
-      * @param  {Integer} timeout      - timeout for the alert to disappear
+      * @param  {String} type         - type of alert message
+      * @param  {String} message      - the message text
+      * @param  {number} timeout      - timeout for the alert to disappear
       *
       */
 	_alert(type, message, timeout = 4000) {

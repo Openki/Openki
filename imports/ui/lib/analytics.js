@@ -105,8 +105,8 @@ Analytics.trytrack = function (callback) {
  * Track a event in matomo or log to console.
  * @param {string} category
  * @param {string} action
- * @param {string} name
- * @param {number} value
+ * @param {string} [name]
+ * @param {number} [value]
  */
 Analytics.trackEvent = function (category, action, name, value) {
 	if (Analytics.isConfigured()) {

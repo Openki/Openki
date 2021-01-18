@@ -1,15 +1,18 @@
 import { Mongo } from 'meteor/mongo';
 
 // ======== DB-Model: ========
-// "_id"          -> ID
-// "title"        -> String
-// "text"         -> String
-// "userId"       -> ID_users undefined if anon comment
-// "courseId"     -> ID_Courses
-// "time_created" -> Date
-// "time_updated" -> Date
-// "parentId"     -> ID_CourseDiscussions  (optional)
-// ===========================
+/**
+ * @typedef {Object} CourseDiscussionEnity
+ * @property {string}  [_id]          ID
+ * @property {string}  [title]
+ * @property {string}  [text]
+ * @property {string}  [userId]       ID_users undefined if anon comment
+ * @property {string}  [courseId]     ID_Courses
+ * @property {boolean} [notifyAll]
+ * @property {Date}    [time_created]
+ * @property {Date}    [time_updated]
+ * @property {string}  [parentId]     ID_CourseDiscussions (optional)
+ */
 
 const CourseDiscussions = new Mongo.Collection('CourseDiscussions');
 
