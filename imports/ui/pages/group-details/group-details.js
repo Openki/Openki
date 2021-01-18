@@ -168,32 +168,35 @@ Template.groupDetails.events({
 		};
 
 		instance.busy('saving');
-		SaveAfterLogin(instance, mf('loginAction.saveGroup', 'Login and save group'), () => {
-			Meteor.call('group.save', 'create', group, (err, groupId) => {
-				instance.busy(false);
-				if (err) {
-					Alert.serverError(
-						err,
-						mf(
-							'groupDetails.saveError',
-							{ GROUP: group.name },
-						),
-					);
-				} else {
-					instance.editableName.end();
-					instance.editableShort.end();
-					instance.editableClaim.end();
-					instance.editableDescription.end();
+		SaveAfterLogin(instance,
+			mf('loginAction.saveGroup', 'Login and save group'),
+			mf('registerAction.saveGroup', 'Register and save group'),
+			() => {
+				Meteor.call('group.save', 'create', group, (err, groupId) => {
+					instance.busy(false);
+					if (err) {
+						Alert.serverError(
+							err,
+							mf(
+								'groupDetails.saveError',
+								{ GROUP: group.name },
+							),
+						);
+					} else {
+						instance.editableName.end();
+						instance.editableShort.end();
+						instance.editableClaim.end();
+						instance.editableDescription.end();
 
-					Alert.success(mf(
-						'groupDetails.groupCreated',
-						{ GROUP: group.name },
-						'The Group {GROUP} has been created!',
-					));
-					Router.go('groupDetails', { _id: groupId });
-				}
+						Alert.success(mf(
+							'groupDetails.groupCreated',
+							{ GROUP: group.name },
+							'The Group {GROUP} has been created!',
+						));
+						Router.go('groupDetails', { _id: groupId });
+					}
+				});
 			});
-		});
 	},
 
 	'click .js-group-cancel'() {

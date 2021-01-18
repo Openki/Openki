@@ -42,8 +42,8 @@ const checkJsonLdMinReqs = (data) => Object.prototype.hasOwnProperty.call(data, 
 
 
 /**
-  * @param {Object} - the event data
-  * @return {Object} - jsonLd geo part
+  * @param {Object} data - the event data
+  * @return {Object|undefined} - jsonLd geo part
   */
 const addGeoToJsonLd = (data) => {
 	if (
@@ -65,7 +65,7 @@ const addGeoToJsonLd = (data) => {
   *
   * https://developers.google.com/search/docs/data-types/event
   *
-  * @param {Object} - the event data
+  * @param {Object} data - the event data
   * @return {Object} - jsonLd-fragment for offers
   */
 const addOffersToJsonLd = (data) => ({ '@type': 'AggregateOffer', price: data.price || 'free' });
@@ -84,7 +84,7 @@ const addPerformerToJsonLd = () => ({
 
 /** creates the jsonLd
   *
-  * @param {Object} - the event data
+  * @param {Object} data - the event data
   * @return {Object} - jsonLd
   */
 const createJsonLd = (data) => {
@@ -114,7 +114,7 @@ const createJsonLd = (data) => {
 
 /** Adds a jsonLd to the eventDetails html-template
   *
-  * @param {Object} - the event data
+  * @param {Object} data - the event data
   */
 const addJsonLd = (data) => {
 	if (checkJsonLdMinReqs(data)) {
@@ -163,17 +163,20 @@ Template.event.onCreated(function () {
 	this.subscribe('courseDetails', event.courseId);
 
 	this.addParticipant = () => {
-		SaveAfterLogin(this, mf('loginAction.enrollEvent', 'Login and enroll for event'), () => {
-			this.busy('registering');
-			Meteor.call('event.addParticipant', event._id, (err) => {
-				this.busy(false);
-				if (err) {
-					Alert.serverError(err, '');
-				} else {
-					Analytics.trackEvent('RSVPs', 'RSVPs as participant', Regions.findOne(event.region)?.nameEn);
-				}
+		SaveAfterLogin(this,
+			mf('loginAction.enrollEvent', 'Login and enroll for event'),
+			mf('registerAction.enrollEvent', 'Login and enroll for event'),
+			() => {
+				this.busy('registering');
+				Meteor.call('event.addParticipant', event._id, (err) => {
+					this.busy(false);
+					if (err) {
+						Alert.serverError(err, '');
+					} else {
+						Analytics.trackEvent('RSVPs', 'RSVPs as participant', Regions.findOne(event.region)?.nameEn);
+					}
+				});
 			});
-		});
 	};
 
 	// register from email
@@ -322,6 +325,10 @@ Template.eventDisplay.events({
 	'click .js-show-replication'(event, instance) {
 		instance.replicating.set(true);
 		instance.collapse();
+	},
+
+	'click .js-track-cal-download'(event, instance) {
+		Analytics.trackEvent('Events downloads', 'Event downloads via event details', Regions.findOne(instance.data.region)?.nameEn);
 	},
 });
 

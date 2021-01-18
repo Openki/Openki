@@ -1,10 +1,13 @@
 // ======== DB-Model: ========
-// "type"             -> String     (name of role)
-// "icon"             -> String     ex: "fa fa-bullhorn"
-// "preset"           -> Boolean    For always-on roles
-// "show_subscribers" -> Boolean
-// ===========================
+/**
+ * @typedef {Object} RoleEntity
+ * @property {string}  type               (name of role)
+ * @property {string}  icon               ex: "fa fa-bullhorn"
+ * @property {boolean} [preset]          For always-on roles
+ * @property {boolean} show_subscribers
+ */
 
+/** @type {RoleEntity[]} */
 const Roles = [
 	{
 		type: 'participant',

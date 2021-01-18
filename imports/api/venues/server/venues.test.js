@@ -6,7 +6,7 @@ if (Meteor.isClient) {
 		it('Stores a venue', (done) => {
 			const testCreate = () => {
 				const venue = {
-					name: 'Dönerbude am Ende der Galaxis',
+					name: 'Dönerbude am Ende / Anfang der Galaxis',
 					description: 'Schön, dass sie uns besuchen, bevor Alles zuende ist.',
 					region: '9JyFCoKWkxnf8LWPh', // Testistan
 				};

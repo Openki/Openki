@@ -3,14 +3,22 @@ import Prng from './Prng';
 import Groups from '/imports/api/groups/groups';
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
+import StringTools from '/imports/utils/string-tools';
 
 const ensure = {
+	/**
+	 * @param {string[]} strings
+	 */
 	fixedId(strings) {
 		const md5 = crypto.createHash('md5');
 		strings.forEach((str) => md5.update(str));
 		return md5.digest('hex').substring(0, 10);
 	},
 
+	/**
+	 * @param {string} name
+	 * @param {boolean} verified
+	 */
 	user(name, verified) {
 		const prng = Prng('ensureUser');
 
@@ -61,6 +69,9 @@ const ensure = {
 		}
 	},
 
+	/**
+	 * @param {string} name
+	 */
 	region(name) {
 		/* eslint-disable-next-line no-constant-condition */
 		while (true) {
@@ -78,6 +89,9 @@ const ensure = {
 		}
 	},
 
+	/**
+	 * @param {string} short
+	 */
 	group(short) {
 		/* eslint-disable-next-line no-constant-condition */
 		while (true) {
@@ -99,6 +113,10 @@ const ensure = {
 		}
 	},
 
+	/**
+	 * @param {string} name
+	 * @param {string} regionId
+	 */
 	venue(name, regionId) {
 		const prng = Prng('ensureVenue');
 
@@ -113,6 +131,8 @@ const ensure = {
 				name,
 				region: regionId,
 			};
+
+			venue.slug = StringTools.slug(venue.name);
 
 			const region = Regions.findOne(regionId);
 			const lat = region.loc.coordinates[1] + (prng() ** 2) * 0.02 * (prng() > 0.5 ? 1 : -1);

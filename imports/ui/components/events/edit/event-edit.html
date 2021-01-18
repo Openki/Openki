@@ -175,85 +175,99 @@
 					</label>
 				</div>
 				{{#if affectedReplicaCount}}
-					<div class="checkbox {{disabledIfDayChanged}}">
+					<div class="checkbox">
 						<label>
-							<input class="js-update-replicas"
+							<input class="js-update-replicas-infos"
 								   type="checkbox"
-								   name="updateReplicas"
-								   {{disabledIfDayChanged}}>
-							{{#mf KEY='event.edit.updateReplicas' COUNT=affectedReplicaCount}}
+								   name="updateReplicasInfo">
+							{{#mf KEY='event.edit.updateReplicasInfo' COUNT=affectedReplicaCount}}
 								Update {COUNT, plural,
-									one {later copy}
-									other {# later copies as well}
+									one {info from later copy}
+									other {infos from # later copies as well}
 								}
 							{{/mf}}
 						</label>
 					</div>
-					{{#if startDayChanged}}
-						<div class="panel panel-danger">
-							<div class="panel-heading">
-								<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
-								{{mf 'event.edit.startDayChanged' 'Updating the copies when the start day has been changed is not (yet) supported.'}}
-							</div>
+					{{#if timeChanged}}
+						<div class="checkbox {{disabledIfDayChanged}}">
+							<label>
+								<input class="js-update-replicas-time"
+									type="checkbox"
+									name="updateReplicasTime"
+									{{disabledIfDayChanged}}>
+								{{#mf KEY='event.edit.updateReplicasTime' COUNT=affectedReplicaCount}}
+									Update time from {COUNT, plural,
+										one {copy}
+										other {copies}
+									}
+								{{/mf}}
+							</label>
 						</div>
-					{{else}}
-						{{#if changedReplicas.length}}
-							<div class="panel panel-warning changed-replicas {{emphasizeClass}}">
+						{{#if startDayChanged}}
+							<div class="panel panel-danger">
 								<div class="panel-heading">
 									<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
-									{{#mf KEY='event.edit.changedReplicas.heading' NUM=changedReplicas.length}}
-										Found {NUM, plural,
-											one {one copy which varies}
-											other {# copies which vary}
-										} in time
-									{{/mf}}
-								</div>
-								<div class="panel-body">
-									{{#unless updateChangedReplicas}}
-										<span class="update-changed-replicas-help">
-											{{#mf KEY='event.edit.changedReplicas.body' NUM=changedReplicas.length}}
-												By default {NUM, plural,
-													one {this copy}
-													other {these copies}
-												} won't be updated as
-												{NUM, plural,
-													one {it has}
-													other {they have}
-												} another time set than the original event:
-											{{/mf}}
-										</span>
-									{{/unless}}
-									<ul>
-										{{#each replica in changedReplicas}}
-											<li>
-												<a href="{{pathFor 'showEvent' replica}}" target="_blank">
-													{{dateformat replica.startLocal}}
-													-
-													{{replica.title}}
-
-													({{timeformat replica.startLocal}}
-													-
-													{{timeformat replica.endLocal}})
-												</a>
-											</li>
-										{{/each}}
-									</ul>
-									<div class="checkbox">
-										<label>
-											<input class="js-update-changed-replicas" type="checkbox">
-											{{#mf KEY='event.edit.updateChangedReplicas' NUM=changedReplicas.length}}
-												Update {NUM, plural,
-													one {this event}
-													other {these events}
-												} (including {NUM, plural,
-													one {it's time}
-													other {their time}
-												}) too
-											{{/mf}}
-										</label>
-										</div>
+									{{mf 'event.edit.startDayChanged' 'Updating the copies when the start day has been changed is not (yet) supported.'}}
 								</div>
 							</div>
+						{{else}}
+							{{#if changedReplicas.length}}
+								<div class="panel panel-warning changed-replicas {{emphasizeClass}}">
+									<div class="panel-heading">
+										<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
+										{{#mf KEY='event.edit.changedReplicas.heading' NUM=changedReplicas.length}}
+											Found {NUM, plural,
+												one {one copy which varies}
+												other {# copies which vary}
+											} in time
+										{{/mf}}
+									</div>
+									<div class="panel-body">
+										{{#unless updateChangedReplicas}}
+											<span class="update-changed-replicas-help">
+												{{#mf KEY='event.edit.changedReplicas.body' NUM=changedReplicas.length}}
+													By default {NUM, plural,
+														one {this copy}
+														other {these copies}
+													} won't be updated as
+													{NUM, plural,
+														one {it has}
+														other {they have}
+													} another time set than the original event:
+												{{/mf}}
+											</span>
+										{{/unless}}
+										<ul>
+											{{#each replica in changedReplicas}}
+												<li>
+													<a href="{{pathFor 'showEvent' replica}}" target="_blank">
+														{{dateformat replica.startLocal}}
+														-
+														{{replica.title}}
+
+														({{timeformat replica.startLocal}}
+														-
+														{{timeformat replica.endLocal}})
+													</a>
+												</li>
+											{{/each}}
+										</ul>
+										<div class="checkbox">
+											<label>
+												<input class="js-update-changed-replicas-time" 
+													type="checkbox"
+													name="updateChangedReplicasTime">
+												{{#mf KEY='event.edit.updateChangedReplicasTime' NUM=changedReplicas.length}}
+												      Overwrite {NUM, plural,
+														one {this events}
+														other {these events}
+													} time too
+												{{/mf}}
+											</label>
+											</div>
+									</div>
+								</div>
+							{{/if}}
 						{{/if}}
 					{{/if}}
 				{{/if}}

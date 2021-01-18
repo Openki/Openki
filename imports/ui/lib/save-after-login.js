@@ -1,12 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 
-/** Handle saving and logging in
-  *
-  * @param  {Object} instance   - the template instance
-  * @param  {Object} afterLogin - the save method
-  */
-export default function SaveAfterLogin(instance, loginAction, afterLogin) {
+/**
+ * Handle saving and logging in
+ * @param {object} instance - the template instance
+ * @param {string} loginAction - Text that is shown to user in the login window
+ * @param {string} registerAction - Text that is shown to user in the register window
+ * @param {() => void} afterLogin - the save method
+ */
+export default function SaveAfterLogin(instance, loginAction, registerAction, afterLogin) {
 	let openedLogin = false;
 
 	instance.autorun((computation) => {
@@ -24,6 +26,7 @@ export default function SaveAfterLogin(instance, loginAction, afterLogin) {
 		// if the user is not logged in open up the login window
 		} else {
 			Session.set('loginAction', loginAction);
+			Session.set('registerAction', registerAction);
 			Session.set('pleaseLogin', true);
 			openedLogin = true;
 		}

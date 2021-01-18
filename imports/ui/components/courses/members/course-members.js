@@ -132,9 +132,12 @@ Template.courseMember.helpers({
 		return change?.validFor(Meteor.user());
 	},
 
+	/**
+	 * @param {string} roletype
+	 */
 	rolelistIcon(roletype) {
 		if (roletype !== 'participant') {
-			return Roles.find((role) => role.type === roletype).icon;
+			return Roles.find((role) => role.type === roletype)?.icon || '';
 		}
 		return '';
 	},
@@ -144,6 +147,9 @@ Template.courseMember.helpers({
 		return mayChangeComment && Template.instance().editableMessage;
 	},
 
+	/**
+	 * @param {string} label
+	 */
 	mayUnsubscribeFromTeam(label) {
 		if (label !== 'team') {
 			return false;

@@ -120,7 +120,7 @@ Template.courseEvents.events({
 	},
 
 	'click .js-track-cal-download'(event, instance) {
-		Analytics.trackEvent('Events downloads', 'Events downloads', Regions.findOne(instance.data.course.region)?.nameEn);
+		Analytics.trackEvent('Events downloads', 'Events downloads via course details', Regions.findOne(instance.data.course.region)?.nameEn);
 	},
 });
 

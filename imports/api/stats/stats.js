@@ -3,6 +3,9 @@ import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
 
 
+/**
+ * @param {string} regionId
+ */
 const getCourses = (regionId) => {
 	const filter = {};
 	if (regionId && regionId !== 'all_regions') {

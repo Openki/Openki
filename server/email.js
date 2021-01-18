@@ -1,4 +1,9 @@
-import { Match } from 'meteor/check';
+import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
+import { Email } from 'meteor/email';
+import { Match, check } from 'meteor/check';
+
+import moment from 'moment';
 
 import Notification from '/imports/notification/notification';
 import HtmlTools from '/imports/utils/html-tools';
@@ -18,7 +23,7 @@ if (Meteor.settings.public.siteName) {
  * sender reporter@mail.openki.net and recipient admins@openki.net
  * if not set in configfile.
  *
- * @returns {object} - the desired sender and rcpt email
+ * @returns {{sender: string; recipient: string;}} - the desired sender and rcpt email
  */
 const getReportEmails = () => {
 	// preset, please override from configfile
@@ -41,6 +46,16 @@ Meteor.methods({
 		Accounts.sendVerificationEmail(this.userId);
 	},
 
+	/**
+	 * @param {string} userId
+	 * @param {string} message
+	 * @param {{
+	 * revealAddress: boolean;
+	 * sendCopy: boolean;
+	 * courseId?: string;
+	 * eventId?: string;
+	 * }} options
+	 */
 	sendEmail(userId, message, options) {
 		check(userId, String);
 		check(message, String);

@@ -1,4 +1,6 @@
 import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
+import moment from 'moment';
 
 import Courses from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
@@ -18,19 +20,31 @@ import LocalTime from '/imports/utils/local-time';
 import StringTools from '/imports/utils/string-tools';
 import UpdateMethods from '/imports/utils/update-methods';
 
-const ReplicaSync = function (event, updateChangedReplicas) {
+/**
+ * @param {{
+ *  infos: boolean;
+ *  time: boolean;
+ *  changedReplicas: { time: boolean; };
+ * }} updateOptions - What should be updated
+ */
+const ReplicaSync = function (event, updateOptions) {
 	let affected = 0;
 
+	/**
+	 * @param {*} changes
+	 */
 	const apply = function (changes) {
 		const startMoment = moment(changes.start);
+		const endMoment = moment(changes.end);
+		const timeIsValid = startMoment.isValid() && endMoment.isValid();
 		const startTime = { hour: startMoment.hour(), minute: startMoment.minute() };
-		const timeDelta = moment(changes.end).diff(startMoment);
+		const timeDelta = endMoment.diff(startMoment);
 
 		Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
-			const replicaChanges = { ...changes }; // Shallow clone
+			const replicaChanges = updateOptions.infos ? { ...changes } : {};
 
-			const updateTime = changes.start
-							&& (updateChangedReplicas || replica.sameTime(event));
+			const updateTime = timeIsValid && updateOptions.time
+				&& (replica.sameTime(event) || updateOptions.changedReplicas.time);
 
 			if (updateTime) {
 				const newStartMoment = moment(replica.start).set(startTime);
@@ -46,9 +60,17 @@ const ReplicaSync = function (event, updateChangedReplicas) {
 						startLocal: regionZone.toString(replicaChanges.start),
 						endLocal: regionZone.toString(replicaChanges.end),
 					});
+			} else {
+				delete replicaChanges.start;
+				delete replicaChanges.end;
+				delete replicaChanges.startLocal;
+				delete replicaChanges.endLocal;
 			}
 
-			Events.update({ _id: replica._id }, { $set: replicaChanges });
+			if (updateOptions.infos || updateTime) {
+				// only update if something has changed
+				Events.update({ _id: replica._id }, { $set: replicaChanges });
+			}
 
 			affected += 1;
 		});
@@ -63,11 +85,23 @@ const ReplicaSync = function (event, updateChangedReplicas) {
 };
 
 Meteor.methods({
+	/**
+	 * @param {{
+	 * changes: any;
+	 * updateReplicasInfos: boolean;
+	 * updateReplicasTime: boolean;
+	 * updateChangedReplicasTime: boolean;
+	 * sendNotifications: boolean;
+	 * eventId: string;
+	 * comment: string | null;
+	 * }} args
+	 */
 	'event.save'(args) {
 		const {
 			changes,
-			updateReplicas,
-			updateChangedReplicas,
+			updateReplicasInfos,
+			updateReplicasTime,
+			updateChangedReplicasTime,
 			sendNotifications,
 		} = args;
 
@@ -255,8 +289,13 @@ Meteor.methods({
 		} else {
 			Events.update(eventId, { $set: changes });
 
-			if (updateReplicas) {
-				const replicaSync = ReplicaSync(event, updateChangedReplicas);
+			if (updateReplicasInfos || updateReplicasTime) {
+				const updateOptions = {
+					infos: updateReplicasInfos,
+					time: updateReplicasTime,
+					changedReplicas: { time: updateChangedReplicasTime },
+				};
+				const replicaSync = ReplicaSync(event, updateOptions);
 				replicaSync.apply(changes);
 				affectedReplicaCount = replicaSync.affected();
 			}
@@ -324,23 +363,28 @@ Meteor.methods({
 	},
 
 
-	// Update the venue field for all events matching the selector
+	/**
+	 * Update the venue field for all events matching the selector
+	 */
 	'event.updateVenue'(selector) {
 		const idOnly = { fields: { _id: 1 } };
 		Events.find(selector, idOnly).forEach((originalEvent) => {
 			const eventId = originalEvent._id;
 
-			/* eslint-disable-next-line consistent-return */
 			AsyncTools.untilClean((resolve, reject) => {
 				const event = Events.findOne(eventId);
+
 				if (!event) {
-					return resolve(true); // Nothing was successfully updated, we're done.
+					// Nothing was successfully updated, we're done.
+					resolve(true);
+					return;
 				}
 
 				if (!_.isObject(event.venue)) {
 					// This happens only at creation when the field was not initialized correctly
 					Events.update(event._id, { $set: { venue: {} } });
-					return resolve(false);
+					resolve(false);
+					return;
 				}
 
 				let venue = false;
@@ -350,9 +394,10 @@ Meteor.methods({
 
 				let update;
 				if (venue) {
-					// Do not update venue for historical events
 					if (event.start < new Date()) {
-						return resolve(true);
+						// Do not update venue for historical events
+						resolve(true);
+						return;
 					}
 
 					// Sync values to the values set in the venue document
@@ -385,7 +430,9 @@ Meteor.methods({
 		});
 	},
 
-	// Update the group-related fields of events matching the selector
+	/**
+	 * Update the group-related fields of events matching the selector
+	 */
 	'event.updateGroups'(selector) {
 		const idOnly = { fields: { _id: 1 } };
 		Events.find(selector, idOnly).forEach((event) => {

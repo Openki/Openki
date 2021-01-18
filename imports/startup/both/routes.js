@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
+import moment from 'moment';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
@@ -115,6 +118,11 @@ Router.map(function () {
 	this.route('featureGroup', {
 		path: 'admin/feature-group',
 		template: 'featureGroup',
+	});
+
+	this.route('users', {
+		path: 'admin/users',
+		template: 'users',
 	});
 
 	this.route('find', finderRoute('/find'));
@@ -673,7 +681,10 @@ Router.map(function () {
 	});
 
 	this.route('venueDetails', {
-		path: 'venue/:_id/:name?',
+		path: 'venue/:_id/:slug?',
+		/**
+		 * @this {{params: {_id: string; slug?:string;}}}
+		 */
 		waitOn() {
 			return [
 				Meteor.subscribe('venueDetails', this.params._id),

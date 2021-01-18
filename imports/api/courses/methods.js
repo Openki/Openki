@@ -86,7 +86,7 @@ Meteor.methods({
 		if (!user) {
 			if (Meteor.is_client) {
 				PleaseLogin();
-				return;
+				return undefined;
 			}
 			throw new Meteor.Error(401, 'please log in');
 		}
@@ -185,13 +185,14 @@ Meteor.methods({
 				comment: mf('courses.creator.defaultMessage', '(has proposed this course)'),
 			},
 			];
-			set.editors = [user._id];
 			set.createdby = user._id;
 			set.time_created = new Date();
 			/* eslint-disable-next-line no-param-reassign */
 			courseId = Courses.insert(set);
 
+			// Init calculated fields
 			Meteor.call('course.updateNextEvent', courseId);
+			Courses.updateInterested(courseId);
 			Courses.updateGroups(courseId);
 		} else {
 			Courses.update({ _id: courseId }, { $set: set }, AsyncTools.checkUpdateOne);
@@ -216,10 +217,12 @@ Meteor.methods({
 			});
 		}
 
-		/* eslint-disable-next-line consistent-return */
 		return courseId;
 	},
 
+	/**
+	 * @param {string} courseId
+	 */
 	'course.remove'(courseId) {
 		const course = Courses.findOne({ _id: courseId });
 		if (!course) {
@@ -232,7 +235,10 @@ Meteor.methods({
 		Courses.remove(courseId);
 	},
 
-	// Update the nextEvent field for the courses matching the selector
+	/**
+	 * Update the nextEvent field for the courses matching the selector
+	 * @param {*} selector
+	 */
 	'course.updateNextEvent'(selector) {
 		Courses.find(selector).forEach((course) => {
 			const futureEvents = Events.find(
@@ -289,7 +295,9 @@ Meteor.methods({
 	'course.editing': UpdateMethods.Editing(Courses),
 
 
-	// Recalculate the editors field
+	/**
+	 * Recalculate the editors field
+	 */
 	'course.updateGroups'(selector) {
 		Courses.find(selector).forEach((course) => {
 			Courses.updateGroups(course._id);

@@ -1,13 +1,32 @@
 import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
 
 import Regions from '../regions/regions';
 import Venues from './venues';
+/** @typedef {import('./venues').VenueEnity} VenueEnity */
 
 import AsyncTools from '/imports/utils/async-tools';
 import HtmlTools from '/imports/utils/html-tools';
 import StringTools from '/imports/utils/string-tools';
 
 Meteor.methods({
+	/**
+	 * @param {string} venueId
+	 * @param {{
+				name?: string;
+				description?: string;
+				region?: string;
+				loc?: { type: 'Point', coordinates: [number, number] };
+				address?: string;
+				route?: string;
+				short?: string;
+				maxPeople?: number;
+				maxWorkplaces?: number;
+				facilities?: string[];
+				otherFacilities?: string;
+				website?: string;
+			}} changes
+	 */
 	'venue.save'(venueId, changes) {
 		check(venueId, String);
 		check(changes,
@@ -41,6 +60,7 @@ Meteor.methods({
 		}
 
 		/* Changes we want to perform */
+		/** @type {VenueEnity} */
 		const set = { updated: new Date() };
 
 
@@ -112,6 +132,9 @@ Meteor.methods({
 		return venueId;
 	},
 
+	/**
+	 * @param {string} venueId
+	 */
 	'venue.remove'(venueId) {
 		check(venueId, String);
 		const venue = Venues.findOne(venueId);

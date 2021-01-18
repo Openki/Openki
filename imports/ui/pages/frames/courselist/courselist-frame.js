@@ -12,11 +12,13 @@ import CssFromQuery from '/imports/ui/lib/css-from-query';
 import '/imports/ui/components/loading/loading';
 
 import './courselist-frame.html';
+import SortSpec from '/imports/utils/sort-spec';
 
 Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 	Metatags.setCommonTags(mf('course.list.windowtitle', 'Courses'));
 
 	this.query = Router.current().params.query;
+	this.sort = Router.current().params.query.sort;
 	this.limit = new ReactiveVar(parseInt(this.query.count, 10) || 5);
 
 	this.autorun(() => {
@@ -25,10 +27,13 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 			.read(this.query)
 			.done();
 
+		const sorting = this.sort ? SortSpec.fromString(this.sort) : SortSpec.unordered();
+
 		this.subscribe(
 			'Courses.findFilter',
 			filter.toParams(),
 			this.limit.get() + 1,
+			sorting.spec(),
 		);
 	});
 
@@ -40,7 +45,6 @@ Template.frameCourselist.helpers({
 	ready: () => Template.instance().subscriptionsReady(),
 	courses: () => Courses.find({},
 		{
-			sort: { time_lastedit: -1 },
 			limit: Template.instance().limit.get(),
 		}),
 	moreCourses() {
