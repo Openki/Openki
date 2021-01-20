@@ -14,7 +14,9 @@ import '/imports/ui/components/profiles/verify-email/verify-email';
 import './userprofile.html';
 
 Template.userprofile.helpers({
-	// whether userprofile is for the logged-in user
+	/**
+	 * whether userprofile is for the logged-in user
+	 */
 	ownuser() {
 		return this.user?._id === Meteor.userId();
 	},

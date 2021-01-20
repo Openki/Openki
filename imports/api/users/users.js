@@ -114,6 +114,7 @@ User.prototype.verifiedEmailAddress = function () {
 
 /**
  * @param {string} role
+ * @returns {boolean}
  */
 User.prototype.privileged = function (role) {
 	return this.privileges

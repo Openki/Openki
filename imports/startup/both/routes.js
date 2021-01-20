@@ -6,6 +6,7 @@ import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
 import Roles from '/imports/api/roles/roles';
 import Venues, { Venue } from '/imports/api/venues/venues'; // Use default and { named, ... } exports
+/** @typedef {import('/imports/api/venues/venues').VenueModel} VenueModel */
 
 import Analytics from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
@@ -694,6 +695,7 @@ Router.map(function () {
 		data() {
 			const id = this.params._id;
 
+			/** @type {VenueModel} */
 			let venue;
 			const data = {};
 			if (id === 'create') {

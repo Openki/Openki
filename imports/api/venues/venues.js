@@ -14,7 +14,7 @@ import StringTools from '/imports/utils/string-tools';
  * @property {string} [name]
  * @property {string} [slug]
  * @property {string} [description]     HTML
- * @property {string} [region]          ID
+ * @property {string|null} [region]          ID
  * @property {{ type: 'Point', coordinates: [number, number] }} [loc] GeoJSON coordinates
  * (Longitude, Latitude)
  * @property {string} [address]
@@ -33,6 +33,10 @@ import StringTools from '/imports/utils/string-tools';
  * @property {Date}   [updated]
  */
 
+/**
+ * @typedef {Venue & VenueEnity} VenueModel
+ */
+
 /** Venue objects represent locations where events take place.
   */
 export const Venue = function () {
@@ -40,7 +44,7 @@ export const Venue = function () {
 };
 
 /** Check whether a user may edit the venue.
-  * @this {Venue & VenueEnity}
+  * @this {VenueModel}
   * @param {object} user
   * @return {boolean}
   */
