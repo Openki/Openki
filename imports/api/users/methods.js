@@ -9,6 +9,8 @@ import ApiError from '/imports/api/ApiError';
 import IsEmail from '/imports/utils/email-tools';
 import StringTools from '/imports/utils/string-tools';
 import AsyncTools from '/imports/utils/async-tools';
+import Courses from '../courses/courses';
+import Events from '../events/events';
 
 const updateEmail = function (email, user) {
 	const newEmail = email.trim() || false;
@@ -95,11 +97,37 @@ Meteor.methods({
 		return true;
 	},
 
-	'user.remove'() {
+	'user.self.remove'() {
 		const user = Meteor.user();
 		if (user) {
 			Meteor.users.remove({ _id: user._id });
 		}
+	},
+
+	/**
+	 * @param {string} [userId]
+	 * @param {object} [options]
+	 * @param {boolean} [options.courses] On true the courses (and events) created by the user
+	 * will also be deleted
+	 */
+	'user.admin.remove'(userId, options) {
+		check(userId, String);
+		check(options, Match.Optional({
+			courses: Match.Optional(Boolean),
+		}));
+
+		if (!UserPrivilegeUtils.privilegedTo('admin')) return;
+
+		if (options?.courses) {
+			Courses.find({ createdby: userId }, { fields: { _id: true } }).fetch()
+				.forEach((course) => {
+					Events.remove({ courseId: course._id });
+				});
+
+			Courses.remove({ createdby: userId });
+		}
+
+		Meteor.users.remove({ _id: userId });
 	},
 
 	/**

@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
@@ -16,6 +17,7 @@ import '/imports/ui/components/profiles/verify-email/verify-email';
 import './userprofile.html';
 
 Template.userprofile.onCreated(function () {
+	this.busy(false);
 	const userId = Template.instance().data.user._id;
 
 	this.verifyUserDelete = new ReactiveVar(false);
@@ -65,7 +67,7 @@ Template.userprofile.helpers({
 	},
 
 	numberOfCoursesAffectedByDelete() {
-		return Template.instance().coursesCreatedBy().length ;
+		return Template.instance().coursesCreatedBy().length;
 	},
 
 	numberOfInterestedAffectedByDelete() {
@@ -75,7 +77,7 @@ Template.userprofile.helpers({
 
 	numberOfFutureEventsAffectedByDelete() {
 		return Template.instance().coursesCreatedBy()
-			.reduce((accumulator, currentValue) => accumulator + currentValue.futureEvents, 0) ;
+			.reduce((accumulator, currentValue) => accumulator + currentValue.futureEvents, 0);
 	},
 });
 
@@ -132,6 +134,16 @@ Template.userprofile.events({
 	'click .js-verify-user-delete-collapse'() {
 		const instance = Template.instance();
 		instance.verifyUserDelete.set(!instance.verifyUserDelete.get());
+	},
+
+	'click .js-verify-user-delete-confirm'(event, instance) {
+		instance.busy('deleting');
+		const userId = Template.parentData().user._id;
+		Meteor.call('user.admin.remove', userId, { courses: true }, () => {
+			instance.busy(false);
+			Alert.success(mf('profile.account.deleted', 'The account has been deleted'));
+			Router.go('users');
+		});
 	},
 });
 
