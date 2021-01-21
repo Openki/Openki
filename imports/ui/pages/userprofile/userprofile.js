@@ -1,17 +1,30 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+
 
 import Alert from '/imports/api/alerts/alert';
 import Roles from '/imports/api/roles/roles';
+import Courses from '/imports/api/courses/courses';
+/** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
 
 import PleaseLogin from '/imports/ui/lib/please-login';
-
-import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list';
 import '/imports/ui/components/profiles/verify-email/verify-email';
 
 import './userprofile.html';
+
+Template.userprofile.onCreated(function () {
+	const userId = Template.instance().data.user._id;
+
+	this.verifyUserDelete = new ReactiveVar(false);
+
+	this.courseSub = this.subscribe('Courses.findFilter', { createdby: userId });
+	this.coursesCreatedBy = function () {
+		return Courses.find({ createdby: userId }).fetch();
+	};
+});
 
 Template.userprofile.helpers({
 	/**
@@ -41,24 +54,28 @@ Template.userprofile.helpers({
 	roles() {
 		return _.clone(Roles).reverse();
 	},
-	coursesByRole(role) {
-		const templateData = Template.instance().data;
-		const { involvedIn } = templateData;
-		const userID = templateData.user._id;
-		const coursesForRole = [];
-
-		involvedIn.forEach((course) => {
-			if (HasRoleUser(course.members, role, userID)) {
-				coursesForRole.push(course);
-			}
-		});
-		return coursesForRole;
-	},
 	roleUserList() {
 		return `roles.${this.type}.userList`;
 	},
 	getName() {
 		return Template.instance().data.user.username;
+	},
+	verifyUserDelete() {
+		return Template.instance().verifyUserDelete.get();
+	},
+
+	numberOfCoursesAffectedByDelete() {
+		return Template.instance().coursesCreatedBy().length ;
+	},
+
+	numberOfInterestedAffectedByDelete() {
+		return Template.instance().coursesCreatedBy()
+			.reduce((accumulator, currentValue) => accumulator + currentValue.interested, 0);
+	},
+
+	numberOfFutureEventsAffectedByDelete() {
+		return Template.instance().coursesCreatedBy()
+			.reduce((accumulator, currentValue) => accumulator + currentValue.futureEvents, 0) ;
 	},
 });
 
@@ -111,6 +128,11 @@ Template.userprofile.events({
 			}
 		});
 	},
+
+	'click .js-verify-user-delete-collapse'() {
+		const instance = Template.instance();
+		instance.verifyUserDelete.set(!instance.verifyUserDelete.get());
+	},
 });
 
 Template.emailBox.onCreated(function () {
@@ -118,7 +140,7 @@ Template.emailBox.onCreated(function () {
 	this.busy(false);
 });
 
-Template.emailBox.onRendered(function emailBoxOnRendered() {
+Template.emailBox.onRendered(function () {
 	this.$('#emailmessage').select();
 });
 
