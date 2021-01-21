@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 
 import Groups from '/imports/api/groups/groups';
 
@@ -38,12 +39,19 @@ const updateEmail = function (email, user) {
 };
 
 Meteor.methods({
-	/** Set user region
-	  */
+	/**
+	 * Set user region
+	 * @param {string} newRegion
+	 */
 	'user.regionChange'(newRegion) {
 		Profile.Region.change(Meteor.userId(), newRegion, 'client call');
 	},
 
+	/**
+	 * @param {string} username
+	 * @param {string} email
+	 * @param {boolean} notifications
+	 */
 	'user.updateData'(username, email, notifications) {
 		check(username, String);
 		check(email, String);
@@ -74,6 +82,9 @@ Meteor.methods({
 		return true;
 	},
 
+	/**
+	 * @param {string} email
+	 */
 	'user.updateEmail'(email) {
 		check(email, String);
 		const user = Meteor.user();
@@ -91,6 +102,10 @@ Meteor.methods({
 		}
 	},
 
+	/**
+	 * @param {string} userId
+	 * @param {string} privilege
+	 */
 	'user.addPrivilege'(userId, privilege) {
 		// At the moment, only admins may hand out privileges, so this is easy
 		if (UserPrivilegeUtils.privilegedTo('admin')) {
@@ -106,6 +121,10 @@ Meteor.methods({
 		}
 	},
 
+	/**
+	 * @param {string} userId
+	 * @param {string} privilege
+	 */
 	'user.removePrivilege'(userId, privilege) {
 		const user = Meteor.users.findOne({ _id: userId });
 		if (!user) {
@@ -125,7 +144,6 @@ Meteor.methods({
 
 	/**
 	 * Recalculate the groups and badges field
-	 * @param {*} selector
 	 */
 	'user.updateBadges'(selector) {
 		Meteor.users.find(selector).forEach((originalUser) => {
@@ -174,6 +192,9 @@ Meteor.methods({
 		);
 	},
 
+	/**
+	 * @param {string} userId
+	 */
 	'user.name'(userId) {
 		this.unblock();
 		const user = Meteor.users.findOne(userId, { fields: { username: 1 } });
