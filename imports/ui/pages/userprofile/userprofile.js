@@ -3,7 +3,6 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-
 import Alert from '/imports/api/alerts/alert';
 import Roles from '/imports/api/roles/roles';
 import Courses from '/imports/api/courses/courses';
