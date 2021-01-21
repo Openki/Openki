@@ -50,6 +50,9 @@ const registerMethod = function (method) {
 	Meteor.methods({ [method.method]: apply });
 };
 
+/**
+ * @param {string} courseId
+ */
 const loadCourse = (courseId) => {
 	// new!
 	if (courseId === '') {
@@ -68,6 +71,9 @@ registerMethod(Unsubscribe);
 registerMethod(Message);
 
 Meteor.methods({
+	/**
+	 * @param {string} courseId
+	 */
 	'course.save'(courseId, changes) {
 		check(courseId, String);
 		check(changes, {
@@ -84,7 +90,7 @@ Meteor.methods({
 
 		const user = Meteor.user();
 		if (!user) {
-			if (Meteor.is_client) {
+			if (Meteor.isClient) {
 				PleaseLogin();
 				return undefined;
 			}
@@ -237,7 +243,6 @@ Meteor.methods({
 
 	/**
 	 * Update the nextEvent field for the courses matching the selector
-	 * @param {*} selector
 	 */
 	'course.updateNextEvent'(selector) {
 		Courses.find(selector).forEach((course) => {
@@ -275,23 +280,23 @@ Meteor.methods({
 		});
 	},
 
-	/** Add or remove a group from the groups list
-	  *
-	  * @param {String} courseId - The course to update
-	  * @param {String} groupId - The group to add or remove
-	  * @param {Boolean} add - Whether to add or remove the group
-	  *
-	  */
+	/**
+	 * Add or remove a group from the groups list
+	 * @param {string} courseId - The course to update
+	 * @param {string} groupId - The group to add or remove
+	 * @param {boolean} add - Whether to add or remove the group
+	 *
+	 */
 	'course.promote': UpdateMethods.Promote(Courses),
 
 
-	/** Add or remove a group from the groupOrganizers list
-	  *
-	  * @param {String} courseId - The course to update
-	  * @param {String} groupId - The group to add or remove
-	  * @param {Boolean} add - Whether to add or remove the group
-	  *
-	  */
+	/**
+	 * Add or remove a group from the groupOrganizers list
+	 * @param {string} courseId - The course to update
+	 * @param {string} groupId - The group to add or remove
+	 * @param {boolean} add - Whether to add or remove the group
+	 *
+	 */
 	'course.editing': UpdateMethods.Editing(Courses),
 
 
