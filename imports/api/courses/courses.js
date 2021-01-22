@@ -123,7 +123,7 @@ Courses.updateInterested = function (courseId) {
 			return;
 		}
 
-		Courses.update(course._id, {
+		Courses.rawCollection().update({ _id: course._id }, {
 			$set: {
 				interested: course.members?.length || 0,
 			},
