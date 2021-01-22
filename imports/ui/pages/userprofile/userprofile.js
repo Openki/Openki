@@ -4,9 +4,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import Alert from '/imports/api/alerts/alert';
-import Roles from '/imports/api/roles/roles';
 import Courses from '/imports/api/courses/courses';
-/** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
 
 import PleaseLogin from '/imports/ui/lib/please-login';
 
@@ -52,28 +50,16 @@ Template.userprofile.helpers({
 		const showInviteGroups = this.inviteGroups.count && this.inviteGroups.count() > 0;
 		return showPrivileges || showInviteGroups;
 	},
-	roles() {
-		return _.clone(Roles).reverse();
-	},
-	roleUserList() {
-		return `roles.${this.type}.userList`;
-	},
-	getName() {
-		return Template.instance().data.user.username;
-	},
 	verifyUserDelete() {
 		return Template.instance().verifyUserDelete.get();
 	},
-
 	numberOfCoursesAffectedByDelete() {
 		return Template.instance().coursesCreatedBy().length;
 	},
-
 	numberOfInterestedAffectedByDelete() {
 		return Template.instance().coursesCreatedBy()
 			.reduce((accumulator, currentValue) => accumulator + currentValue.interested, 0);
 	},
-
 	numberOfFutureEventsAffectedByDelete() {
 		return Template.instance().coursesCreatedBy()
 			.reduce((accumulator, currentValue) => accumulator + currentValue.futureEvents, 0);
@@ -147,7 +133,6 @@ Template.userprofile.events({
 });
 
 Template.emailBox.onCreated(function () {
-	this.verificationMailSent = new ReactiveVar(false);
 	this.busy(false);
 });
 
@@ -169,24 +154,9 @@ Template.emailBox.helpers({
 	hasVerifiedEmail() {
 		return Meteor.user().emails[0].verified;
 	},
-
-	verificationMailSent() {
-		return Template.instance().verificationMailSent.get();
-	},
 });
 
 Template.emailBox.events({
-	'click .js-verify-mail'(e, instance) {
-		instance.verificationMailSent.set(true);
-		Meteor.call('sendVerificationEmail', (err) => {
-			if (err) {
-				instance.verificationMailSent.set(false);
-				Alert.serverError(err, 'Failed to send verification mail');
-			} else {
-				Alert.success(mf('profile.sentVerificationMail'));
-			}
-		});
-	},
 
 	'change .js-send-own-adress'(event, instance) {
 		instance.$('.js-send-own-adress + .checkmark').toggle();
