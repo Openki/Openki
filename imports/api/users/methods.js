@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 
+import Log from '/imports/api/log/log';
 import Groups from '/imports/api/groups/groups';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
@@ -10,8 +11,12 @@ import IsEmail from '/imports/utils/email-tools';
 import StringTools from '/imports/utils/string-tools';
 import AsyncTools from '/imports/utils/async-tools';
 import Courses from '../courses/courses';
+/** @typedef {import('/imports/api/courses/courses').Course} Course */
 import Events from '../events/events';
 
+/**
+ * @param {string} email
+ */
 const updateEmail = function (email, user) {
 	const newEmail = email.trim() || false;
 	const oldEmail = user.emailAddress();
@@ -105,24 +110,30 @@ Meteor.methods({
 	},
 
 	/**
-	 * @param {string} [userId]
+	 * @param {string} userId
+	 * @param {string} reason
 	 * @param {object} [options]
 	 * @param {boolean} [options.courses] On true the courses (and events) created by the user
 	 * will also be deleted
 	 */
-	'user.admin.remove'(userId, options) {
+	'user.admin.remove'(userId, reason, options) {
 		check(userId, String);
+		check(reason, String);
 		check(options, Match.Optional({
 			courses: Match.Optional(Boolean),
 		}));
 
 		if (!UserPrivilegeUtils.privilegedTo('admin')) return;
 
+		/** @type {Course[]} */
+		const deletedCourses = [];
+		let numberOfDeletedEvents = 0;
 		if (options?.courses) {
 			// Remove courses created by this user
-			Courses.find({ createdby: userId }, { fields: { _id: true } }).fetch()
+			Courses.find({ createdby: userId }).fetch()
 				.forEach((course) => {
-					Events.remove({ courseId: course._id });
+					deletedCourses.push(course);
+					numberOfDeletedEvents += Events.remove({ courseId: course._id });
 				});
 
 			Courses.remove({ createdby: userId });
@@ -156,7 +167,20 @@ Meteor.methods({
 			Courses.updateGroups(course._id);
 		});
 
+		const operatorId = Meteor.userId();
+		const user = Meteor.users.findOne(userId);
+		delete user.services;
+
 		Meteor.users.remove({ _id: userId });
+
+		Log.record('user.admin.remove', [operatorId, userId],
+			{
+				operatorId,
+				reason,
+				user,
+				deletedCourses,
+				numberOfDeletedEvents,
+			});
 	},
 
 	/**

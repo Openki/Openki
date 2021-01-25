@@ -122,9 +122,22 @@ Template.userprofile.events({
 	},
 
 	'click .js-verify-user-delete-confirm'(event, instance) {
+		if (PleaseLogin()) {
+			return;
+		}
+
 		instance.busy('deleting');
+
+		const reason = instance.$('.js-reason').val();
+
+		if (reason.length < 4) {
+			Alert.error(mf('profile.admin.remove.reason.longertext', 'longer text please'));
+			instance.busy(false);
+			return;
+		}
+
 		const userId = Template.parentData().user._id;
-		Meteor.call('user.admin.remove', userId, { courses: true }, () => {
+		Meteor.call('user.admin.remove', userId, reason, { courses: true }, () => {
 			instance.busy(false);
 			Alert.success(mf('profile.account.deleted', 'The account has been deleted'));
 			Router.go('users');
