@@ -8,8 +8,8 @@ This file descripts all configurations and customization options. Remove the com
 		"siteName": "Openki-clone", 
 		"siteStage": "beta", // The text top left at the logo
 		"testWarning": true, // Shows a banner saying that this is only for testing
-		"headerLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" }, // The logo in the top right corner
-		"discussionLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" }, // The user image placeholder in the discussion section of a course 
+		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The logo in the top right corner
+		"discussionLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The user image placeholder in the discussion section of a course 
 		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media 
 		"mailLogo": "mails/openki.png",
 		"regionSelection": { "minNumber": 5 }, // The minimum number of regions displayed in the Regions selection. Default: 5
