@@ -53,7 +53,7 @@ const Languages = {
 	es:
 		{
 			lg: 'es',
-			name: 'Castellano',
+			name: 'Español',
 			short: 'es',
 			english: 'Spanish',
 			visible: true,
