@@ -15,6 +15,9 @@ Metatags.removeAll = function () {
 	DocHead.removeDocHeadAddedTags();
 };
 
+/**
+ * @param {string} title
+ */
 Metatags.setCommonTags = function (title, description = '') {
 	document.title = getSiteTitlePrefix() + title;
 

@@ -1,11 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 
-/** @typedef {import('imports/api/users/users').User} User */
+/** @typedef {import('imports/api/users/users').UserModel} UserModel */
 
 const UserPrivilegeUtils = {
 
 	/**
-	 * @param {User|string} user
+	 * @param {UserModel|string} user
 	 * @param {string} role
 	 * @returns {boolean}
 	 */

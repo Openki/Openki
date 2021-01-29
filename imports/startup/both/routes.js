@@ -7,6 +7,7 @@ import Groups from '/imports/api/groups/groups';
 import Roles from '/imports/api/roles/roles';
 import Venues, { Venue } from '/imports/api/venues/venues'; // Use default and { named, ... } exports
 /** @typedef {import('/imports/api/venues/venues').VenueModel} VenueModel */
+/** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
 
 import Analytics from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
@@ -74,6 +75,9 @@ const makeFilterQuery = function (params) {
 	return query;
 };
 
+/**
+ * @param {CourseModel} course
+ */
 function loadroles(course) {
 	const userId = Meteor.userId();
 	return _.reduce(Roles, (goodroles, roletype) => {

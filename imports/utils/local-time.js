@@ -28,6 +28,9 @@ import moment from 'moment-timezone';
 
 const LocalTime = {};
 
+/**
+ * @param {string} regionId
+ */
 LocalTime.zone = function (regionId) {
 	const region = Regions.findOne(regionId);
 	if (!region) {
@@ -37,23 +40,31 @@ LocalTime.zone = function (regionId) {
 	const { tz } = region;
 
 	return {
+		/** @param {Date} date */
 		fromString(date) { return moment.tz(date, tz); },
+		/** @param {Date} date */
 		toString(date) { return moment.tz(date, tz).format('YYYY-MM-DD[T]HH:mm'); },
+		/** @param {Date} date */
 		at(date) { return moment.tz(date, tz); },
 	};
 };
 
 
-/** Turn a moment object into a local date string without time offset
-  */
+/**
+ * Turn a moment object into a local date string without time offset
+ * @param {Date} date
+ */
 LocalTime.toString = function (date) {
 	return moment(date).format('YYYY-MM-DD[T]HH:mm');
 };
 
-/** Read local date from string
-  *
-  * Note that the returned date will be faux UTC.
-  */
+/**
+ * Read local date from string
+ *
+ * Note that the returned date will be faux UTC.
+ *
+ * @param {string} dateStr
+ */
 LocalTime.fromString = function (dateStr) {
 	return moment.utc(dateStr);
 };

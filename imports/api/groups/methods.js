@@ -87,6 +87,11 @@ Meteor.methods({
 		return groupId;
 	},
 
+	/**
+	 * @param {string} userId
+	 * @param {string} groupId
+	 * @param {boolean} join
+	 */
 	'group.updateMembership'(userId, groupId, join) {
 		check(userId, String);
 		check(groupId, String);

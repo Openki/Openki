@@ -1,3 +1,6 @@
+import moment from 'moment';
+import { _ } from 'meteor/underscore';
+
 const Predicates = {
 	string(param) {
 		return {

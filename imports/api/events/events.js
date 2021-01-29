@@ -9,54 +9,56 @@ import Predicates from '/imports/utils/predicates';
 import StringTools from '/imports/utils/string-tools';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
+/** @typedef {import("../users/users").UserModel} UserModel */
+
 // ======== DB-Model: ========
-// _id             -> ID
-// region          -> ID_region
-// title           -> String
-// description     -> String
-// startLocal      -> String of local date when event starts
-// endLocal        -> String of local date when event ends
-//
-// venue {
-//       _id:          Optional reference to a document in the Venues collection
-//                         If this is set, the fields name, loc, and address are synchronized
-//       name:         Descriptive name for the venue
-//       loc:          Event location in GeoJSON format
-//       address:      Address string where the event will take place
-// }
-// room            -> String    (Where inside the building the event will take place)
-// createdBy       -> userId
-// time_created    -> Date
-// time_lastedit   -> Date
-// courseId        -> course._id of parent course, optional
-// internal        -> Boolean    (Events are only displayed when group or venue-filter is active)
+/**
+ * @typedef {Object} EventEntity
+ * @property {string} [_id] ID
+ * @property {string} [region] ID_region
+ * @property {string} [title]
+ * @property {string} [slug]
+ * @property {string} [description]
+ * @property {string} [startLocal] String of local date when event starts
+ * @property {string} [endLocal] String of local date when event ends
+ * @property {object} [venue]
+ * @property {string} [venue._id] Optional reference to a document in the Venues collection
+ * If this is set, the fields name, loc, and address are synchronized
+ * @property {string} [venue.name] Descriptive name for the venue
+ * @property {string} [venue.loc] Event location in GeoJSON format
+ * @property {string} [venue.address] Address string where the event will take place
+ * @property {string} [room] (Where inside the building the event will take place)
+ * @property {string} [createdBy] userId
+ * @property {Date} [time_created]
+ * @property {Date} [time_lastedit]
+ * @property {string} [courseId] course._id of parent course, optional
+ * @property {boolean} [internal] (Events are only displayed when group or venue-filter is active)
+ * @property {string[]} [groups] list of group._id that promote this event
+ * @property {string[]} [groupOrganizers] list of group._id that are allowed to edit the course
+ * @property {string} [replicaOf] ID of the replication parent, only cloned events have this
+ * @property {number} [maxParticipants] maximum participants of event
+ *
+ * Calculated fields
+ *
+ * @property {string[]} [courseGroups] list of group._id inherited from course (if courseId is set)
+ * @property {string[]} [allGroups] all groups that promote this course, both inherited from course
+ * and set on the event itself
+ * @property {string[]} [editors] list of user and group _id that are allowed to edit the event
+ * @property {Date} [start] date object calculated from startLocal field. Use this for ordering
+ *           between events.
+ * @property {Date} [end] date object calculated from endLocal field.
+ */
 
-// groups          -> list of group._id that promote this event
-// groupOrganizers -> list of group._id that are allowed to edit the course
-
-// replicaOf       -> ID of the replication parent, only cloned events have this
-
-// maxParticipants -> maximum participants of event
-
-
-/** Calculated fields
-  *
-  * courseGroups: list of group._id inherited from course (if courseId is set)
-  * allGroups: all groups that promote this course, both inherited from course and set on the event
-  *            itself
-  * editors: list of user and group _id that are allowed to edit the event
-  * start: date object calculated from startLocal field. Use this for ordering
-  *           between events.
-  * end: date object calculated from endLocal field.
-  */
-
-// ===========================
+/** @typedef {OEvent & EventEntity} EventModel */
 
 // Event is a built-in, so we use a different name for this class
 export const OEvent = function () {
 	this.editors = [];
 };
 
+/**
+ * @param {UserModel} user
+ */
 OEvent.prototype.editableBy = function (user) {
 	if (!user) {
 		return false;
@@ -67,6 +69,10 @@ OEvent.prototype.editableBy = function (user) {
 	return _.intersection(user.badges, this.editors).length > 0;
 };
 
+/**
+ * @this {EventModel}
+ * @param {EventModel} event
+ */
 OEvent.prototype.sameTime = function (event) {
 	return ['startLocal', 'endLocal'].every((time) => {
 		const timeA = LocalTime.fromString(this[time]);
