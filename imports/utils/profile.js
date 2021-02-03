@@ -101,25 +101,25 @@ Profile.Email.change = function (userId, email, reason) {
 
 Profile.Notifications = {};
 
-/** Update the receiveNotifications setting for a user
-  *
-  * @param {string} userId - update the setting for this user
-  * @param {boolean} enable - new state of the flag
-  * @param {string|undefined} relId    - related ID for the Log (optional)
-  * @param {string} reason
-  *
-  */
-Profile.Notifications.change = function (userId, enable, relId, reason) {
+/**
+ * Update the receive automated notifications setting for a user
+ * @param {string} userId update the setting for this user
+ * @param {boolean} enable new state of the flag
+ * @param {string|undefined} relatedId related ID for the Log (optional)
+ * @param {string} reason
+ *
+ */
+Profile.Notifications.change = function (userId, enable, relatedId, reason) {
 	check(userId, String);
 	check(enable, Boolean);
-	check(relId, Match.Optional(String));
+	check(relatedId, Match.Optional(String));
 	check(reason, String);
 
-	const rel = [userId];
-	if (relId) {
-		rel.push(relId);
+	const relatedIds = [userId];
+	if (relatedId) {
+		relatedIds.push(relatedId);
 	}
-	Log.record('Profile.Notifications', rel,
+	Log.record('Profile.Notifications', relatedIds,
 		{
 			userId,
 			enable,
@@ -131,11 +131,11 @@ Profile.Notifications.change = function (userId, enable, relId, reason) {
 	});
 };
 
-/** Handle unsubscribe token
-  *
-  * @param {string} token - the unsubscribe token passed by the user
-  * @return {boolean} whether the token was accepted
-  */
+/**
+ * Handle unsubscribe token
+ * @param {string} token the unsubscribe token passed by the user
+ * @return {boolean} whether the token was accepted
+ */
 Profile.Notifications.unsubscribe = function (token) {
 	check(token, String);
 
@@ -159,14 +159,14 @@ Profile.Notifications.unsubscribe = function (token) {
 
 Profile.Region = {};
 
-/** Update the selected region for a user
-  *
-  * @param {string} userId   - update region for this user
-  * @param {string} regionId - choose this region for this user
-  * @param {string} reason
-  *
-  * @return {boolean} whether the change was accepted
-  */
+/**
+ * Update the selected region for a user
+ * @param {string} userId update region for this user
+ * @param {string} regionId choose this region for this user
+ * @param {string} reason
+ *
+ * @return {boolean} whether the change was accepted
+ */
 Profile.Region.change = function (userId, regionId, reason) {
 	check(userId, String);
 	check(regionId, String);
