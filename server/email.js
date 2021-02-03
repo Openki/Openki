@@ -6,6 +6,7 @@ import { Match, check } from 'meteor/check';
 import moment from 'moment';
 
 import Notification from '/imports/notification/notification';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import HtmlTools from '/imports/utils/html-tools';
 
 import Version from '/imports/api/version/version';
@@ -71,7 +72,7 @@ Meteor.methods({
 		if (!recipient) {
 			throw new Meteor.Error(404, 'no such user');
 		}
-		if (!recipient.acceptsPrivateMessages) {
+		if (!(recipient.acceptsPrivateMessages || UserPrivilegeUtils.privilegedTo('admin'))) {
 			throw new Meteor.Error(401, 'this user does not accept private messages from users');
 		}
 

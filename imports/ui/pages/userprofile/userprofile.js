@@ -7,6 +7,7 @@ import Roles from '/imports/api/roles/roles';
 import PleaseLogin from '/imports/ui/lib/please-login';
 
 import { HasRoleUser } from '/imports/utils/course-role-utils';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list';
 import '/imports/ui/components/profiles/verify-email/verify-email';
@@ -22,7 +23,7 @@ Template.userprofile.helpers({
 	},
 
 	acceptsPrivateMessages() {
-		return this.user?.acceptsPrivateMessages;
+		return this.user?.acceptsPrivateMessages || UserPrivilegeUtils.privilegedTo('admin');
 	},
 
 	groupMember(group, user) {
