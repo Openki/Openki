@@ -114,16 +114,16 @@ Notification.send = function (entry) {
 
 Notification.SendResult = {};
 
-/** Record the result of a notification delivery attempt
-  * @param  {object} note      - notification log-entry
-  * @param      {ID} unsubToken - token that can be used to unsubscribe from
-  *                               further notices
-  * @param {Boolean} sent      - whether the notification was sent
-  * @param      {ID} recipient - recipient user ID
-  * @param  {String} message   - generated message (or null if we didn't get
-  *                              that far)
-  * @param  {String} reason    - why this log entry was recorded
-  */
+/**
+ * Record the result of a notification delivery attempt
+* @param {object} note notification log-entry
+* @param {string | null} unsubToken token that can be used to unsubscribe from
+* further notices
+* @param {boolean} sent whether the notification was sent
+* @param {string} recipient recipient user ID
+* @param {string | null} message generated message (or null if we didn't get that far)
+* @param {string} reason why this log entry was recorded
+*/
 Notification.SendResult.record = function (note, unsubToken, sent, recipient, message, reason) {
 	check(sent, Boolean);
 	check(unsubToken, Match.Maybe(String));

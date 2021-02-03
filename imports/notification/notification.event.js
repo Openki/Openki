@@ -15,7 +15,7 @@ const notificationEvent = {};
   * Record the intent to send event notifications
   * @param {string} eventId event id to announce
   * @param {boolean} isNew whether the event is a new one
-  * @param {string} additionalMessage custom message
+  * @param {string} [additionalMessage] custom message
   */
 notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	check(eventId, String);

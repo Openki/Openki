@@ -40,7 +40,7 @@ LocalTime.zone = function (regionId) {
 	const { tz } = region;
 
 	return {
-		/** @param {Date} date */
+		/** @param {string} date */
 		fromString(date) { return moment.tz(date, tz); },
 		/** @param {Date} date */
 		toString(date) { return moment.tz(date, tz).format('YYYY-MM-DD[T]HH:mm'); },

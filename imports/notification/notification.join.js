@@ -15,7 +15,7 @@ const notificationJoin = {};
   * @param {string} courseId ID for the CourseDiscussions collection
   * @param {string} participantId ID of the user that joined
   * @param {string} newRole new role of the participant
-  * @param {string} message Optional message of the new participant
+  * @param {string} [message] Optional message of the new participant
   */
 notificationJoin.record = function (courseId, participantId, newRole, message) {
 	check(courseId, String);

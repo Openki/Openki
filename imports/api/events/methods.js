@@ -84,7 +84,20 @@ const ReplicaSync = function (event, updateOptions) {
 Meteor.methods({
 	/**
 	 * @param {{
-	 * changes: any;
+	 * changes: {
+	 *  title: string;
+	 *  description: string;
+	 *  venue?: Object;
+	 *  room?: string;
+	 *  startLocal?: string;
+	 *  endLocal?: string;
+	 *  internal?: boolean;
+	 *  maxParticipants?: number;
+	 *  courseId?: string;
+	 *  region?: string;
+	 *  replicaOf?: string;
+	 *  groups?: string[];
+	 * };
 	 * updateReplicasInfos: boolean;
 	 * updateReplicasTime: boolean;
 	 * updateChangedReplicasTime: boolean;
