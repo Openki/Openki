@@ -9,6 +9,8 @@ import Regions from '/imports/api/regions/regions';
 
 import LocalTime from '/imports/utils/local-time';
 
+/** @typedef {import('../api/users/users').UserModel} UserModel */
+
 const notificationEvent = {};
 
 /**
@@ -52,6 +54,17 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	Log.record('Notification.Send', [course._id], body);
 };
 
+/** @param {UserModel} user */
+notificationEvent.accepted = function (user) {
+	if (user.notifications === false) {
+		throw new Error('User wishes to not receive automated notifications');
+	}
+
+	if (!user.emails || !user.emails[0] || !user.emails[0].address) {
+		throw new Error('Recipient has no email address registered');
+	}
+};
+
 notificationEvent.Model = function (entry) {
 	const event = Events.findOne(entry.body.eventId);
 
@@ -76,7 +89,7 @@ notificationEvent.Model = function (entry) {
 	}
 
 	return {
-		vars(userLocale) {
+		vars(userLocale, actualRecipient, unsubToken) {
 			if (!event) {
 				throw new Error('Event does not exist (0.o)');
 			}
@@ -119,6 +132,7 @@ notificationEvent.Model = function (entry) {
 
 			return (
 				{
+					unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
 					event,
 					course,
 					eventDate: startMoment.format('LL'),

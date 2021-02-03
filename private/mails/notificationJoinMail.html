@@ -60,17 +60,17 @@
 				<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#fff; font-family: Source Sans Pro, sans-serif; font-size: 10px;">
 					<tr>
 						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
-							{{mf "notification.comment.mail.recpnote" "You receive this message because you're on the team of this course." LOCALE=locale}}
+							{{mf "notification.join.mail.recpnote" "You receive this message because you're on the team of this course." LOCALE=locale}}
 						</td>
 					</tr>
 					<tr>
 						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
 							<a href="{{unsubLink}}" style="color:#fff !important; text-decoration: underline;">
-								{{mf "notification.event.mail.unsubLink" SITENAME=siteName LOCALE=locale}}
+								{{mf "notification.join.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}
 							</a>
 							&nbsp;
 							<a href="{{urlFor 'profile' query='campaign=joinNotify'}}" style="color:#fff !important; text-decoration: underline;">
-								{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}
+								{{mf "notification.join.mail.profileLink" "Visit your profile" LOCALE=locale}}
 							</a>
 						</td>
 					</tr>

@@ -175,6 +175,31 @@ Profile.PrivateMessages.change = function (userId, enable, relatedId, reason) {
 	});
 };
 
+/**
+ * Handle unsubscribe from private messages token
+ * @param {string} token the unsubscribe token passed by the user
+ * @return {boolean} whether the token was accepted
+ */
+Profile.PrivateMessages.unsubscribe = function (token) {
+	check(token, String);
+
+	let accepted = false;
+
+	// Find the relevant private message result
+	Log.find({
+		rel: token,
+	}).forEach((entry) => {
+		// See whether it was indeed a secret token.
+		// This check is not redundant because public ID like courseID
+		// are also written into the rel-index and would be found if provided.
+		if (entry.body.unsubToken === token) {
+			Profile.PrivateMessages.change(entry.body.recipient, false, entry._id, 'unsubscribe token');
+			accepted = true;
+		}
+	});
+	return accepted;
+};
+
 Profile.Region = {};
 
 /**
