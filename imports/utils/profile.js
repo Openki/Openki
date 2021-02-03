@@ -5,8 +5,13 @@ import Log from '/imports/api/log/log';
 import Regions from '/imports/api/regions/regions';
 import Users from '/imports/api/users/users';
 
+/** @typedef {import('../api/users/users').UserModel} UserModel */
+
 const Profile = {};
 
+/**
+ * @param {UserModel} user
+ */
 Profile.updateAcceptsMessages = function (user) {
 	const acceptsMessages = Boolean(user.emailAddress() && user.notifications);
 
@@ -17,6 +22,18 @@ Profile.updateAcceptsMessages = function (user) {
 	}
 };
 
+/**
+ * @param {UserModel} user
+ */
+Profile.updateAcceptsPrivateMessages = function (user) {
+	const acceptsPrivateMessages = Boolean(user.emailAddress() && user.allowPrivateMessages);
+
+	if (user.acceptsPrivateMessages !== acceptsPrivateMessages) {
+		Users.update(user._id, {
+			$set: { acceptsPrivateMessages },
+		});
+	}
+};
 
 Profile.Username = {};
 

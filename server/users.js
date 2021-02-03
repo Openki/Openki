@@ -59,6 +59,7 @@ Accounts.onCreateUser((options, originalUser) => {
 	user.badges = [user._id];
 
 	user.notifications = true;
+	user.allowPrivateMessages = true;
 
 	return user;
 });
