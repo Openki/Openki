@@ -5,7 +5,7 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 Meteor.publish('user', function (userId) {
 	const fields = {
 		username: 1,
-		acceptsMessages: 1,
+		acceptsPrivateMessages: 1,
 	};
 
 	// Admins may see other's privileges

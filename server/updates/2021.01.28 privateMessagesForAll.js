@@ -9,6 +9,7 @@ export default function update() {
 		/** @type {UserModel} */
 		const user = { ...orginalUser };
 		user.allowPrivateMessages = true;
+		delete user.acceptsMessages;
 		updated += Meteor.users.update(user._id, user);
 	});
 

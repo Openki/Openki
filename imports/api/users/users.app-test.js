@@ -22,7 +22,7 @@ if (Meteor.isClient) {
 
 					// Rely on the test runner to declare the test failed when it
 					// never resolves. There is no assert(). Improvements welcome.
-					Meteor.users.find({ username: dummy, acceptsMessages: true }).observe({
+					Meteor.users.find({ username: dummy, acceptsPrivateMessages: true }).observe({
 						added: resolve,
 					});
 				});

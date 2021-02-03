@@ -56,8 +56,6 @@ import IdTools from '/imports/utils/id-tools';
  * checking, calculated by updateBadges()
  * @property {string[]} [groups] (calculated) List of groups the user is a member of, calculated by
  * updateBadges()
- * @property {boolean} [acceptsMessages] (calculated) true if user has email address and the
- * notifications flag is true. This is visible to other users.
  * @property {boolean} [acceptsPrivateMessages] (calculated) true if user has email address and the
  * allowPrivateMessages flag is true. This is visible to other users.
  */

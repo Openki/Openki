@@ -46,7 +46,6 @@ const ensure = {
 				profile: { name },
 				notifications: true,
 				allowPrivateMessages: true,
-				acceptsMessages: true,
 				acceptsPrivateMessages: true,
 			});
 

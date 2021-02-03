@@ -12,19 +12,6 @@ const Profile = {};
 /**
  * @param {UserModel} user
  */
-Profile.updateAcceptsMessages = function (user) {
-	const acceptsMessages = Boolean(user.emailAddress() && user.notifications);
-
-	if (user.acceptsMessages !== acceptsMessages) {
-		Users.update(user._id, {
-			$set: { acceptsMessages },
-		});
-	}
-};
-
-/**
- * @param {UserModel} user
- */
 Profile.updateAcceptsPrivateMessages = function (user) {
 	const acceptsPrivateMessages = Boolean(user.emailAddress() && user.allowPrivateMessages);
 

@@ -21,8 +21,8 @@ Template.userprofile.helpers({
 		return this.user?._id === Meteor.userId();
 	},
 
-	acceptsMessages() {
-		return this.user?.acceptsMessages;
+	acceptsPrivateMessages() {
+		return this.user?.acceptsPrivateMessages;
 	},
 
 	groupMember(group, user) {
