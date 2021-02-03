@@ -54,6 +54,7 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 
 notificationEvent.Model = function (entry) {
 	const event = Events.findOne(entry.body.eventId);
+
 	let course = false;
 	if (event?.courseId) {
 		course = Courses.findOne(event.courseId);
@@ -62,6 +63,16 @@ notificationEvent.Model = function (entry) {
 	let region = false;
 	if (event?.region) {
 		region = Regions.findOne(event.region);
+	}
+
+	let creator = false;
+	if (event?.createdBy) {
+		creator = Meteor.users.findOne(event.createdBy);
+	}
+
+	let creatorName = false;
+	if (creator) {
+		creatorName = creator.username;
 	}
 
 	return {
@@ -124,6 +135,8 @@ notificationEvent.Model = function (entry) {
 					new: entry.body.new,
 					subject,
 					additionalMessage: entry.body.additionalMessage,
+					creator,
+					creatorName,
 					customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
 					customSiteName: siteName,
 					customMailLogo: mailLogo,
