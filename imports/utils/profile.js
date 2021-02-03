@@ -157,6 +157,37 @@ Profile.Notifications.unsubscribe = function (token) {
 };
 
 
+Profile.PrivateMessages = {};
+
+/**
+ * Update the receive private messages setting for a user
+ * @param {string} userId update the setting for this user
+ * @param {boolean} enable new state of the flag
+ * @param {string|undefined} relatedId related ID for the Log (optional)
+ * @param {string} reason
+ */
+Profile.PrivateMessages.change = function (userId, enable, relatedId, reason) {
+	check(userId, String);
+	check(enable, Boolean);
+	check(relatedId, Match.Optional(String));
+	check(reason, String);
+
+	const relatedIds = [userId];
+	if (relatedId) {
+		relatedIds.push(relatedId);
+	}
+	Log.record('Profile.PrivateMessages', relatedIds,
+		{
+			userId,
+			enable,
+			reason,
+		});
+
+	Meteor.users.update(userId, {
+		$set: { allowPrivateMessages: enable },
+	});
+};
+
 Profile.Region = {};
 
 /**

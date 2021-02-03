@@ -54,6 +54,13 @@ Template.profile.helpers({
 		return '';
 	},
 
+	allowPrivateMessagesChecked() {
+		if (this.user.allowPrivateMessages) {
+			return 'checked';
+		}
+		return '';
+	},
+
 	privacyChecked() {
 		if (this.user.privacy) {
 			return 'checked';
@@ -179,6 +186,7 @@ Template.profile.events({
 			instance.$('.js-username').val(),
 			instance.$('.js-email').val(),
 			instance.$('.js-notifications').prop('checked'),
+			instance.$('.js-allowPrivateMessages').prop('checked'),
 			(err) => {
 				if (err) {
 					instance.errors.add(err.error);
@@ -186,7 +194,10 @@ Template.profile.events({
 					Alert.success(mf('profile.updated', 'Updated profile'));
 					instance.editing.set(false);
 					if (instance.data.user.notifications !== instance.$('.js-notifications').prop('checked') && !instance.$('.js-notifications').prop('checked')) {
-						Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from notifications via profile');
+						Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from automated notifications via profile');
+					}
+					if (instance.data.user.allowPrivateMessages !== instance.$('.js-allowPrivateMessages').prop('checked') && !instance.$('.js-allowPrivateMessages').prop('checked')) {
+						Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from private messages via profile');
 					}
 				}
 			});

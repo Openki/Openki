@@ -60,6 +60,7 @@ if (Meteor.isClient) {
 					newDummy,
 					user.emails[0].address,
 					user.notifications,
+					user.allowPrivateMessages,
 					(err) => {
 						if (err) {
 							assert.isNotOk(err, 'not expecting username-change errors');

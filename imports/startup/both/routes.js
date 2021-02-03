@@ -367,6 +367,7 @@ Router.map(function () {
 					name: user.username,
 					privacy: user.privacy,
 					notifications: user.notifications,
+					allowPrivateMessages: user.allowPrivateMessages,
 					groups: Groups.findFilter({ own: true }),
 					venues: Venues.find({ editor: user._id }),
 				};
