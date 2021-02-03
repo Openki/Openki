@@ -65,12 +65,12 @@ notificationEvent.Model = function (entry) {
 		region = Regions.findOne(event.region);
 	}
 
-	let creator = false
+	let creator = false;
 	if (event?.createdBy) {
 		creator = Meteor.users.findOne(event.createdBy);
 	}
 
-	let creatorName = false
+	let creatorName = false;
 	if (creator) {
 		creatorName = creator.username;
 	}
