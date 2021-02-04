@@ -80,6 +80,18 @@
 	max-height: 60px;
 }
 
+// ** Title icon
+//========================================================================================
+.course-compact-indicator {
+	border-radius: 50%;
+	position: absolute;
+	top: 6px;
+	left: 6px;
+	background-color: red;
+	height: 5px;
+	width: 5px;
+}
+
 // ** Categories
 //========================================================================================
 .course-compact-content > .course-categories {
