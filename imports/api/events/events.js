@@ -37,16 +37,15 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
  * @property {string[]} [groupOrganizers] list of group._id that are allowed to edit the course
  * @property {string} [replicaOf] ID of the replication parent, only cloned events have this
  * @property {number} [maxParticipants] maximum participants of event
- *
- * Calculated fields
- *
- * @property {string[]} [courseGroups] list of group._id inherited from course (if courseId is set)
- * @property {string[]} [allGroups] all groups that promote this course, both inherited from course
- * and set on the event itself
- * @property {string[]} [editors] list of user and group _id that are allowed to edit the event
- * @property {Date} [start] date object calculated from startLocal field. Use this for ordering
- *           between events.
- * @property {Date} [end] date object calculated from endLocal field.
+ * @property {string[]} [courseGroups] (calculated) list of group._id inherited from course (if
+ * courseId is set)
+ * @property {string[]} [allGroups] (calculated) all groups that promote this course, both
+ * inherited from course and set on the event itself
+ * @property {string[]} [editors] (calculated) list of user and group _id that are allowed to
+ * edit the event
+ * @property {Date} [start] (calculated) date object calculated from startLocal field. Use this
+ * for ordering between events.
+ * @property {Date} [end] (calculated) date object calculated from endLocal field.
  */
 
 /** @typedef {OEvent & EventEntity} EventModel */

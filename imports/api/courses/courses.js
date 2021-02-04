@@ -29,14 +29,14 @@ import { HasRoleUser } from '/imports/utils/course-role-utils';
  * @property {string[]} roles [role-keys]
  * @property {{"user": string; "roles": string[]; "comment": string;}[]} members
  * @property {boolean} internal
- *
- * Calculated fields
- * @property {string[]} editors List of user and group id allowed to edit the course, calculated
- * from members and groupOrganizers
- * @property {number} futureEvents count of events still in the future for this course
- * @property {object} nextEvent next upcoming event object, only includes the _id and start field
- * @property {object} lastEvent most recent event object, only includes the _id and start field
- * @property {number} interested
+ * @property {string[]} editors (calculated) List of user and group id allowed to edit the course,
+ * calculated from members and groupOrganizers
+ * @property {number} futureEvents  (calculated) count of events still in the future for this course
+ * @property {object} nextEvent  (calculated) next upcoming event object, only includes the _id and
+ * start field
+ * @property {object} lastEvent  (calculated) most recent event object, only includes the _id and
+ * start field
+ * @property {number} interested (calculated)
  */
 
 /** @typedef {Course & CourseEntity} CourseModel */
