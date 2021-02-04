@@ -14,12 +14,13 @@ Template.sharing.onRendered(function () {
 			services: [
 				'twitter',
 				'facebook',
+				'telegram',
 				'whatsapp',
 				'mail',
 			],
 		});
 
-		this.$('.fa').addClass('fa-fw');
+		this.$('.fab, .fas').addClass('fa fa-fw');
 	});
 });
 
