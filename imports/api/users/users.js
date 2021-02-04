@@ -49,13 +49,12 @@ import IdTools from '/imports/utils/id-tools';
  * @property {string} [locale] This value is managed by the messageformat package
  * @property {boolean} [notificactions] True if the user wants notification mails sent to them
  * @property {boolean} [hidePricePolicy]
- * Calculated fields
- * @property {string[]} [badges] union of user's id and group ids for permission checking,
- * calculated by updateBadges()
- * @property {string[]} [groups] List of groups the user is a member of, calculated by
+ * @property {string[]} [badges] (calculated) union of user's id and group ids for permission
+ * checking, calculated by updateBadges()
+ * @property {string[]} [groups] (calculated) List of groups the user is a member of, calculated by
  * updateBadges()
- * @property {boolean} [acceptsMessages] true if user has email address and the notifications
- * flag is true. This is visible to other users.
+ * @property {boolean} [acceptsMessages] (calculated) true if user has email address and the
+ * notifications flag is true. This is visible to other users.
  */
 
 /** @typedef {User & UserEntity} UserModel */
