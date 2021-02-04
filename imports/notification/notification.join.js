@@ -8,6 +8,8 @@ import Log from '/imports/api/log/log';
 import HtmlTools from '/imports/utils/html-tools';
 import StringTools from '/imports/utils/string-tools';
 
+/** @typedef {import('../api/users/users').UserModel} UserModel */
+
 const notificationJoin = {};
 
 /**
@@ -50,13 +52,24 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	Log.record('Notification.Send', [course._id, participant._id], body);
 };
 
+/** @param {UserModel} user */
+notificationJoin.accepted = function (user) {
+	if (user.notifications === false) {
+		throw new Error('User wishes to not receive automated notifications');
+	}
+
+	if (!user.emails || !user.emails[0] || !user.emails[0].address) {
+		throw new Error('Recipient has no email address registered');
+	}
+};
+
 notificationJoin.Model = function (entry) {
 	const { body } = entry;
 	const course = Courses.findOne(body.courseId);
 	const newParticipant = Meteor.users.findOne(body.participantId);
 
 	return {
-		vars(userLocale) {
+		vars(userLocale, actualRecipient, unsubToken) {
 			if (!newParticipant) {
 				throw new Error('New participant does not exist (0.o)');
 			}
@@ -96,6 +109,7 @@ notificationJoin.Model = function (entry) {
 
 			return (
 				{
+					unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
 					course,
 					newParticipant,
 					courseLink: Router.url('showCourse', course, { query: 'campaign=joinNotify' }),

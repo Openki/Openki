@@ -8,6 +8,8 @@ import Log from '/imports/api/log/log';
 
 import StringTools from '/imports/utils/string-tools';
 
+/** @typedef {import('../api/users/users').UserModel} UserModel */
+
 const notificationComment = {};
 
 /**
@@ -68,6 +70,17 @@ notificationComment.record = function (commentId) {
 	Log.record('Notification.Send', [course._id, comment._id], body);
 };
 
+/** @param {UserModel} user */
+notificationComment.accepted = function (user) {
+	if (user.notifications === false) {
+		throw new Error('User wishes to not receive automated notifications');
+	}
+
+	if (!user.emails || !user.emails[0] || !user.emails[0].address) {
+		throw new Error('Recipient has no email address registered');
+	}
+};
+
 notificationComment.Model = function (entry) {
 	const comment = CourseDiscussions.findOne(entry.body.commentId);
 	let course = false;
@@ -85,7 +98,7 @@ notificationComment.Model = function (entry) {
 	}
 
 	return {
-		vars(userLocale) {
+		vars(userLocale, actualRecipient, unsubToken) {
 			if (!comment) {
 				throw new Error('Comment does not exist (0.o)');
 			}
@@ -117,6 +130,7 @@ notificationComment.Model = function (entry) {
 
 			return (
 				{
+					unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
 					course,
 					courseLink: Router.url('showCourse', course, { query: `select=${comment._id}&campaign=commentNotify` }),
 					subject,

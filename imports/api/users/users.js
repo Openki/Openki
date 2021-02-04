@@ -47,17 +47,22 @@ import IdTools from '/imports/utils/id-tools';
  * @property {string[]} [privileges] [admin]
  * @property {Date} [lastLogin]
  * @property {string} [locale] This value is managed by the messageformat package
- * @property {boolean} [notificactions] True if the user wants notification mails sent to them
+ * @property {boolean} [notifications] True if the user wants automated notification mails sent to
+ * them
+ * @property {boolean} [allowPrivateMessages] True if the user wants private messages mails sent
+ * to them from other users
  * @property {boolean} [hidePricePolicy]
  * @property {string[]} [badges] (calculated) union of user's id and group ids for permission
  * checking, calculated by updateBadges()
  * @property {string[]} [groups] (calculated) List of groups the user is a member of, calculated by
  * updateBadges()
- * @property {boolean} [acceptsMessages] (calculated) true if user has email address and the
- * notifications flag is true. This is visible to other users.
+ * @property {boolean} [acceptsPrivateMessages] (calculated) true if user has email address and the
+ * allowPrivateMessages flag is true. This is visible to other users.
  */
 
-/** @typedef {User & UserEntity} UserModel */
+/** @typedef {User & UserEntity & import("meteor/meteor").Meteor.User} UserModel */
+
+/** @typedef {import('../groups/groups').GroupEntity} GroupEntity */
 
 export const User = function () { };
 
@@ -86,7 +91,7 @@ Users.currentUser = function () {
   * The user must be a member of the group to be allowed to promote things with it.
   *
   * @this {UserModel}
-  * @param {String|Object} group - The group to check, this may be an Id or a group object
+  * @param {String|GroupEntity} group - The group to check, this may be an Id or a group object
   */
 User.prototype.mayPromoteWith = function (group) {
 	const groupId = IdTools.extract(group);

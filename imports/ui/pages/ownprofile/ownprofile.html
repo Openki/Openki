@@ -65,7 +65,18 @@
 										<label>
 											<input type="checkbox" class="js-notifications" {{notificationsChecked}}/>
 											<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
-											{{mf 'profile.toggle.notifications' 'Receive notifications via email'}}
+											{{mf 'profile.toggle.notifications' 'Receive automated notifications via email'}}
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="control-btn">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" class="js-allowPrivateMessages" {{allowPrivateMessagesChecked}}/>
+											<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
+											{{mf 'profile.toggle.allowPrivateMessages' 'Receive private messages from users via email'}}
 										</label>
 									</div>
 								</div>
@@ -114,10 +125,23 @@
 							<div class="details-info-group">
 								<div class="details-info-label">
 									<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
-									{{mf 'profile.notification.subscribe' 'Get notifications via email'}}
+									{{mf 'profile.notification.subscribe' 'Get automated notifications via email'}}
 								</div>
 								<div class="details-info-data">
 									{{#if user.notifications}}
+										{{mf '_option.on'}}
+									{{else}}
+										{{mf '_option.off'}}
+									{{/if}}
+								</div>
+							</div>
+							<div class="details-info-group">
+								<div class="details-info-label">
+									<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
+									{{mf 'profile.allowPrivateMessages.subscribe' 'Get private messages from users via email'}}
+								</div>
+								<div class="details-info-data">
+									{{#if user.allowPrivateMessages}}
 										{{mf '_option.on'}}
 									{{else}}
 										{{mf '_option.off'}}

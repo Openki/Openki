@@ -9,6 +9,8 @@ import Users from '/imports/api/users/users';
 import HtmlTools from '/imports/utils/html-tools';
 import StringTools from '/imports/utils/string-tools';
 
+/** @typedef {import('../api/users/users').UserModel} UserModel */
+
 const notificationPrivateMessage = {};
 
 /**
@@ -72,13 +74,24 @@ notificationPrivateMessage.record = function (
 	Log.record('Notification.Send', rel, body);
 };
 
+/** @param {UserModel} user */
+notificationPrivateMessage.accepted = function (user) {
+	if (user.allowPrivateMessages === false) {
+		throw new Error('User wishes to not receive private messages from users');
+	}
+
+	if (!user.emails || !user.emails[0] || !user.emails[0].address) {
+		throw new Error('Recipient has no email address registered');
+	}
+};
+
 notificationPrivateMessage.Model = function (entry) {
 	const { body } = entry;
 	const sender = Meteor.users.findOne(body.sender);
 	const targetRecipient = Meteor.users.findOne(body.targetRecipient);
 
 	return {
-		vars(userLocale, actualRecipient) {
+		vars(userLocale, actualRecipient, unsubToken) {
 			if (!sender) {
 				throw new Error('Sender does not exist (0.o)');
 			}
@@ -103,6 +116,7 @@ notificationPrivateMessage.Model = function (entry) {
 			siteName = siteName || Meteor.settings.public.siteName;
 
 			const vars = {
+				unsubLink: Router.url('profile.privatemessages.unsubscribe', { token: unsubToken }),
 				sender,
 				senderLink: Router.url('userprofile', sender, { query: 'campaign=privateMessage' }),
 				subject,

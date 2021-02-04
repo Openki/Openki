@@ -13,7 +13,7 @@
 					{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
 				</a>
 			{{else}}
-				{{#if acceptsMessages}}
+				{{#if acceptsPrivateMessages}}
 					{{> sendMessage recipientId=user._id}}
 				{{/if}}
 			{{/if}}

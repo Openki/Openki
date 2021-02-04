@@ -367,6 +367,7 @@ Router.map(function () {
 					name: user.username,
 					privacy: user.privacy,
 					notifications: user.notifications,
+					allowPrivateMessages: user.allowPrivateMessages,
 					groups: Groups.findFilter({ own: true }),
 					venues: Venues.find({ editor: user._id }),
 				};
@@ -748,7 +749,7 @@ Router.map(function () {
 	});
 });
 
-Router.route('/profile/unsubscribe/:token', function () {
+Router.route('/profile/notifications/unsubscribe/:token', function () {
 	const unsubToken = this.params.token;
 
 	const accepted = Profile.Notifications.unsubscribe(unsubToken);
@@ -768,6 +769,30 @@ Router.route('/profile/unsubscribe/:token', function () {
 
 	this.response.end();
 }, {
-	name: 'profile.unsubscribe',
+	name: 'profile.notifications.unsubscribe',
+	where: 'server',
+});
+
+Router.route('/profile/privatemessages/unsubscribe/:token', function () {
+	const unsubToken = this.params.token;
+
+	const accepted = Profile.PrivateMessages.unsubscribe(unsubToken);
+
+	const query = {};
+	if (accepted) {
+		query.unsubscribed = '';
+
+		Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from private messages via e-mail');
+	} else {
+		query['unsubscribe-error'] = '';
+	}
+
+	this.response.writeHead(302, {
+		Location: Router.url('profile', {}, { query }),
+	});
+
+	this.response.end();
+}, {
+	name: 'profile.privatemessages.unsubscribe',
 	where: 'server',
 });

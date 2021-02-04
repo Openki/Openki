@@ -10,6 +10,8 @@ import IsEmail from '/imports/utils/email-tools';
 import StringTools from '/imports/utils/string-tools';
 import AsyncTools from '/imports/utils/async-tools';
 
+/** @typedef {import('./users').UserModel} UserModel */
+
 const updateEmail = function (email, user) {
 	const newEmail = email.trim() || false;
 	const oldEmail = user.emailAddress();
@@ -50,18 +52,21 @@ Meteor.methods({
 	/**
 	 * @param {string} username
 	 * @param {string} email
-	 * @param {boolean} notifications
+	 * @param {boolean} allowAutomatedNotification
+	 * @param {boolean} allowPrivateMessages
 	 */
-	'user.updateData'(username, email, notifications) {
+	'user.updateData'(username, email, allowAutomatedNotification, allowPrivateMessages) {
 		check(username, String);
 		check(email, String);
-		check(notifications, Boolean);
+		check(allowAutomatedNotification, Boolean);
+		check(allowPrivateMessages, Boolean);
 
 		// The error handling in this function is flawed in that we drop
 		// out on the first error instead of collecting them. So fields
 		// that are validated later will not be saved if an earlier field
 		// causes us to fail.
 
+		/** @type {UserModel} */
 		const user = Meteor.user();
 		if (!user) {
 			return ApiError('plzLogin', 'Not logged-in');
@@ -69,16 +74,21 @@ Meteor.methods({
 
 		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
 
-		const result = Profile.Username.change(user._id, saneUsername, 'profile change');
+		const result = Profile.Username.change(user._id, saneUsername);
 		if (!result) {
 			return ApiError('nameError', 'Failed to update username');
 		}
 
 		updateEmail(email, user);
 
-		if (user.notifications !== notifications) {
-			Profile.Notifications.change(user._id, notifications, undefined, 'profile change');
+		if (user.notifications !== allowAutomatedNotification) {
+			Profile.Notifications.change(user._id, allowAutomatedNotification, undefined, 'profile change');
 		}
+
+		if (user.allowPrivateMessages !== allowPrivateMessages) {
+			Profile.PrivateMessages.change(user._id, allowPrivateMessages, undefined, 'profile change');
+		}
+
 		return true;
 	},
 
