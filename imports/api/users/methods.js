@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { Match, check } from 'meteor/check';
 
+import Log from '/imports/api/log/log';
 import Groups from '/imports/api/groups/groups';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
@@ -9,9 +10,15 @@ import ApiError from '/imports/api/ApiError';
 import IsEmail from '/imports/utils/email-tools';
 import StringTools from '/imports/utils/string-tools';
 import AsyncTools from '/imports/utils/async-tools';
-
+import Courses from '../courses/courses';
+/** @typedef {import('/imports/api/courses/courses').Course} Course */
+import Events from '../events/events';
 /** @typedef {import('./users').UserModel} UserModel */
 
+/**
+ * @param {string} email
+ * @param {UserModel} user
+ */
 const updateEmail = function (email, user) {
 	const newEmail = email.trim() || false;
 	const oldEmail = user.emailAddress();
@@ -105,11 +112,85 @@ Meteor.methods({
 		return true;
 	},
 
-	'user.remove'() {
+	'user.self.remove'() {
 		const user = Meteor.user();
 		if (user) {
 			Meteor.users.remove({ _id: user._id });
 		}
+	},
+
+	/**
+	 * @param {string} userId
+	 * @param {string} reason
+	 * @param {object} [options]
+	 * @param {boolean} [options.courses] On true the courses (and events) created by the user
+	 * will also be deleted
+	 */
+	'user.admin.remove'(userId, reason, options) {
+		check(userId, String);
+		check(reason, String);
+		check(options, Match.Optional({
+			courses: Match.Optional(Boolean),
+		}));
+
+		if (!UserPrivilegeUtils.privilegedTo('admin')) return;
+
+		/** @type {Course[]} */
+		const deletedCourses = [];
+		let numberOfDeletedEvents = 0;
+		if (options?.courses) {
+			// Remove courses created by this user
+			Courses.find({ createdby: userId }).fetch()
+				.forEach((course) => {
+					deletedCourses.push(course);
+					numberOfDeletedEvents += Events.remove({ courseId: course._id });
+				});
+
+			Courses.remove({ createdby: userId });
+		}
+
+		// Updated courses and events he is involted
+		const courses = Courses.find({ 'members.user': userId }).fetch();
+		courses.forEach((course) => {
+			Events.update(
+				{ courseId: course._id },
+				{ $pull: { editors: userId } },
+				{ multi: true },
+			);
+			Events.update(
+				{ courseId: course._id },
+				{ $pull: { participants: userId } },
+				{ multi: true },
+			);
+
+			Courses.update(
+				{ _id: course._id },
+				{ $pull: { members: { user: userId } } },
+			);
+			Courses.update(
+				{ _id: course._id },
+				{ $pull: { editors: userId } },
+			);
+
+			// Update member related calculated fields
+			Courses.updateInterested(course._id);
+			Courses.updateGroups(course._id);
+		});
+
+		const operatorId = Meteor.userId();
+		const user = Meteor.users.findOne(userId);
+		delete user.services;
+
+		Meteor.users.remove({ _id: userId });
+
+		Log.record('user.admin.remove', [operatorId, userId],
+			{
+				operatorId,
+				reason,
+				user,
+				deletedCourses,
+				numberOfDeletedEvents,
+			});
 	},
 
 	/**
@@ -214,6 +295,9 @@ Meteor.methods({
 		return user.username;
 	},
 
+	/**
+	 * @param {string} locale
+	 */
 	'user.updateLocale'(locale) {
 		Meteor.users.update(Meteor.userId(), {
 			$set: { locale },

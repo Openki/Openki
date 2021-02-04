@@ -172,7 +172,7 @@ Template.profile.events({
 
 	'click .js-profile-delete-confirm-btn'(event, instance) {
 		instance.busy('deleting');
-		Meteor.call('user.remove', () => {
+		Meteor.call('user.self.remove', () => {
 			instance.busy(false);
 			Alert.success(mf('profile.deleted', 'Your account has been deleted'));
 		});

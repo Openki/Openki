@@ -79,6 +79,30 @@
 			{{/if}}
 		</div>
 		{{> usersCourselist profileData=this ownProfile=false}}
+
+		{{#if alterPrivileges}}
+			<h3 class="text-danger">{{mf 'profile.account.delete.header' 'Is this a SPAMER?'}}</h3>
+			{{#unless verifyUserDelete}}
+				{{> buttonDelete event="js-verify-user-delete-collapse"}}
+			{{/unless}}
+			{{#if verifyUserDelete}}
+			<div class="profile-delete-confirmation">
+				<p>{{mf 'profile.account.reallydelete' 'The user profile "{NAME}" will be permanently deleted. {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will be automatically removed as well. Are you sure you want to do this?' NAME=this.user.username COURSES=numberOfCoursesAffectedByDelete INTERESTED=numberOfInterestedAffectedByDelete EVENTS=numberOfFutureEventsAffectedByDelete}}</p>
+				<div class="form-group">
+					<textarea class='form-control js-reason'
+						placeholder="{{mf 'profile.account.reason.placeholder' 'Reason for deleting this user'}}"></textarea>
+				</div>
+				<div class="form-actions">
+					{{> buttonDeleteConfirm
+						event="js-verify-user-delete-confirm"
+						textIdle=(mf 'profile.account.delete.confirm.button' 'Delete user and all his traces')
+						textBusy=(mf 'profile.account.delete.confirm.button.busy' 'Deleting profile...')
+					}}
+					{{> buttonCancel event="js-verify-user-delete-collapse"}}
+				</div>
+			</div>
+			{{/if}}
+		{{/if}}
 	</div>
 </template>
 
