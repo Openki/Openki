@@ -206,11 +206,12 @@ Template.eventEditVenue.helpers({
 
 
 Template.eventEditVenue.events({
-	'click .js-location-search-btn'(event, instance) {
+	async 'click .js-location-search-btn'(event, instance) {
 		event.preventDefault();
 
 		instance.addressSearch.set(true);
 		const search = instance.$('.js-location-search-input').val();
+		/** @type {{[name: string]: any}} */
 		const nominatimQuery = {
 			format: 'json',
 			q: search,
@@ -230,17 +231,9 @@ Template.eventEditVenue.events({
 			nominatimQuery.bounded = 1;
 		}
 
-
-		HTTP.get('https://nominatim.openstreetmap.org', {
-			params: nominatimQuery,
-		}, (error, result) => {
-			if (error) {
-				Alert.serverError(error, '');
-				return;
-			}
-
-			const found = JSON.parse(result.content);
-
+		try {
+			const response = await fetch(`https://nominatim.openstreetmap.org?${new URLSearchParams(nominatimQuery)}`);
+			const found = await response.json();
 			markers.remove({ proposed: true });
 			if (found.length === 0) {
 				Alert.warning(mf(
@@ -258,7 +251,9 @@ Template.eventEditVenue.events({
 				};
 				instance.locationTracker.markers.insert(marker);
 			});
-		});
+		} catch (reason) {
+			Alert.serverError(reason, '');
+		}
 	},
 
 	'click .js-location-change'(event, instance) {

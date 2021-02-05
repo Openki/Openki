@@ -3,9 +3,9 @@ import Alerts from './alerts';
 
 const Alert = {
 	/**
-      * Create an error from String
-      * @param  {string} errorString error message
-      */
+	 * Create an error from String
+	 * @param  {string} errorString error message
+	 */
 	error(errorString) {
 		check(errorString, String);
 
@@ -19,12 +19,12 @@ const Alert = {
 	},
 
 	/**
-      * Add an error alert
-      * @param  {Error | string} errorOrMessage error object or message text
-      * @param  {string} [message] the message text
-      */
+	 * Add an error alert
+	 * @param  {Error | string} errorOrMessage error object or message text
+	 * @param  {string} [message] the message text
+	 */
 	serverError(errorOrMessage, message) {
-		if (!message) {
+		if (typeof message !== 'string') {
 			check(errorOrMessage, String);
 
 			const errorMessage = mf(
@@ -49,11 +49,11 @@ const Alert = {
 	},
 
 	/**
-      * Private method to add an alert message
-      * @param {string} type type of alert message
-      * @param {string} message the message text
-      * @param {number} timeout timeout for the alert to disappear
-      */
+	 * Private method to add an alert message
+	 * @param {string} type type of alert message
+	 * @param {string} message the message text
+	 * @param {number} timeout timeout for the alert to disappear
+	 */
 	_alert(type, message, timeout = 4000) {
 		check(type, String);
 		check(message, String);
@@ -65,9 +65,9 @@ const Alert = {
 
 ['success', 'warning'].forEach((type) => {
 	/**
-      * Add an alert of type XY, using the default options
-      * @param {string} message the message text
-      */
+	 * Add an alert of type XY, using the default options
+	 * @param {string} message the message text
+	 */
 	Alert[type] = function (message) {
 		check(message, String);
 		this._alert(type, message);
