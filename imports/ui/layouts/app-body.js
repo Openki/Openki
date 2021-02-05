@@ -1,6 +1,7 @@
 import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
 
 import RegionSelection from '/imports/utils/region-selection';
 import Introduction from '/imports/ui/lib/introduction';

@@ -2,6 +2,7 @@ import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
 
 import Events from '/imports/api/events/events';
 import UrlTools from '/imports/utils/url-tools';

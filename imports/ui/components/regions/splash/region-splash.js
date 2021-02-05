@@ -1,5 +1,6 @@
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
 
 import Alert from '/imports/api/alerts/alert';
 
