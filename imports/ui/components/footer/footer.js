@@ -1,5 +1,4 @@
 import { Template } from 'meteor/templating';
-import moment from 'moment';
 
 import Version from '/imports/api/version/version';
 

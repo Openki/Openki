@@ -3,8 +3,6 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
-import { $ } from 'meteor/jquery';
-import moment from 'moment';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import TemplateMixins from '/imports/ui/lib/template-mixins';

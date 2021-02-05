@@ -4,7 +4,6 @@ import StringTools from '/imports/utils/string-tools';
 import HtmlTools from '/imports/utils/html-tools';
 
 import ical from 'ical-generator';
-import moment from 'moment';
 
 function sendIcal(events, response) {
 	const calendar = ical({ name: 'Openki Calendar' });

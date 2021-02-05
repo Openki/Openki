@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
-import moment from 'moment';
 
 import Roles from '/imports/api/roles/roles';
 import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';

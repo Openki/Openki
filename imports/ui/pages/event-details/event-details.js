@@ -1,6 +1,4 @@
 import { _ } from 'meteor/underscore';
-import { $ } from 'meteor/jquery';
-import moment from 'moment';
 
 import Alert from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';

@@ -3,8 +3,6 @@ import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
 import { Match, check } from 'meteor/check';
 
-import moment from 'moment';
-
 import Notification from '/imports/notification/notification';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import HtmlTools from '/imports/utils/html-tools';

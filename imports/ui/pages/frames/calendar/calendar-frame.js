@@ -2,9 +2,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
 import { _ } from 'meteor/underscore';
-import moment from 'moment';
+
 
 import Events from '/imports/api/events/events';
 import Regions from '/imports/api/regions/regions';

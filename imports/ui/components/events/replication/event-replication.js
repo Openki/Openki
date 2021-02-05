@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import Events from '/imports/api/events/events';
 
 import LocalTime from '/imports/utils/local-time';
