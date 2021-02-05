@@ -1,3 +1,5 @@
+import { _ } from 'meteor/underscore';
+
 import '/imports/startup/both';
 import '/imports/startup/server';
 

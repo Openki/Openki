@@ -10,6 +10,6 @@ import { Mongo } from 'meteor/mongo';
  * @property {number} message.timeout  Integer
  */
 
-const Alerts = new Mongo.Collection(null);
+const Alerts = new Mongo.Collection(null); // Local collection for in-memory storage
 
 export default Alerts;

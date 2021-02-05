@@ -1,8 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
+import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
+import Regions from '/imports/api/regions/regions';
 import Log from '/imports/api/log/log';
 
 import HtmlTools from '/imports/utils/html-tools';

@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
 
 import IdTools from '/imports/utils/id-tools';
 
@@ -66,7 +67,7 @@ import IdTools from '/imports/utils/id-tools';
 
 export const User = function () { };
 
-export default Users = Meteor.users;
+const Users = Meteor.users;
 
 /** Get the current user
   *
@@ -141,3 +142,5 @@ User.prototype.privileged = function (role) {
 Meteor.users._transform = function (user) {
 	return _.extend(new User(), user);
 };
+
+export default Users;

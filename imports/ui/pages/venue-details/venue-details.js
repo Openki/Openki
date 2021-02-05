@@ -26,7 +26,7 @@ Template.venueDetails.onCreated(function () {
 	this.upcomingEventLimit = new ReactiveVar(12);
 	this.pastEventLimit = new ReactiveVar(3);
 
-	const markers = new Meteor.Collection(null);
+	const markers = new Meteor.Collection(null); // Local collection for in-memory storage
 	this.markers = markers;
 
 	this.setLocation = function (loc) {

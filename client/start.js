@@ -3,6 +3,9 @@ import '/imports/startup/client';
 
 import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
+import { _ } from 'meteor/underscore';
+import { $ } from 'meteor/jquery';
+import moment from 'moment';
 
 import Alert from '/imports/api/alerts/alert';
 import Languages from '/imports/api/languages/languages';
@@ -175,6 +178,9 @@ Accounts.onEmailVerificationLink((token) => {
 	});
 });
 
+/**
+ * Global singleton (a reactive store) that can be used for updates based on time
+ */
 minuteTime = new ReactiveVar();
 
 // Set up reactive date sources that can be used for updates based on time

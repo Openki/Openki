@@ -5,6 +5,7 @@ import { Template } from 'meteor/templating';
 
 import Alert from '/imports/api/alerts/alert';
 import Groups from '/imports/api/groups/groups';
+import Regions from '/imports/api/regions/regions';
 
 import Editable from '/imports/ui/lib/editable';
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';

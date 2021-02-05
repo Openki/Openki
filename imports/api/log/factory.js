@@ -145,7 +145,7 @@ const logFactory = {
 	},
 
 	fake: () => {
-		const log = new Meteor.Collection(null);
+		const log = new Meteor.Collection(null); // Local collection for in-memory storage
 		mixin(log, false, false);
 		return log;
 	},

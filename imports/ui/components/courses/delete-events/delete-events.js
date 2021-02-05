@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
+import moment from 'moment';
 
 import Alert from '/imports/api/alerts/alert';
 

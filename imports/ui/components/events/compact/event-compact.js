@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import moment from 'moment';
 
 import '/imports/ui/components/groups/list/group-list';
 import '/imports/ui/components/venues/link/venue-link';

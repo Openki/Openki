@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
+import moment from 'moment';
 
 import Events from '/imports/api/events/events';
 

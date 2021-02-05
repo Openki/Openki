@@ -26,7 +26,8 @@ import { Mongo } from 'meteor/mongo';
  *     }} [custom]
  */
 
-export default Regions = new Mongo.Collection('Regions');
+const Regions = new Mongo.Collection('Regions');
+
 if (Meteor.isServer) {
 	Regions._ensureIndex({ loc: '2dsphere' });
 }
@@ -41,3 +42,5 @@ Regions.currentRegion = function () {
 	}
 	return undefined;
 };
+
+export default Regions;

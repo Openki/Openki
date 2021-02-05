@@ -5,6 +5,7 @@ import { Template } from 'meteor/templating';
 import Analytics from '/imports/ui/lib/analytics';
 
 import Events from '/imports/api/events/events';
+import Regions from '/imports/api/regions/regions';
 
 import '/imports/ui/components/events/list/event-list';
 import '/imports/ui/components/loading/loading';
