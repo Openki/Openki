@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 import Courses, { Course } from './courses';
 
 import Alert from '/imports/api/alerts/alert';

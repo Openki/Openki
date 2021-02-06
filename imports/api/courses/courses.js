@@ -1,6 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
-import { check } from 'meteor/check';
+import { Match, check } from 'meteor/check';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import AsyncTools from '/imports/utils/async-tools';
@@ -11,6 +12,12 @@ import StringTools from '/imports/utils/string-tools';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 // ======== DB-Model: ========
+/**
+ * @typedef {Object} CourseMemberEntity
+ * @property {string} user user id
+ * @property {string[]} roles
+ * @property {string} comment
+ */
 /**
  * @typedef {Object} CourseEntity
  * @property {string} _id          ID
@@ -27,7 +34,7 @@ import { HasRoleUser } from '/imports/utils/course-role-utils';
  * @property {Date} time_created
  * @property {Date} time_lastedit
  * @property {string[]} roles [role-keys]
- * @property {{"user": string; "roles": string[]; "comment": string;}[]} members
+ * @property {CourseMemberEntity[]} members
  * @property {boolean} internal
  * @property {string[]} editors (calculated) List of user and group id allowed to edit the course,
  * calculated from members and groupOrganizers
@@ -91,6 +98,9 @@ export class Course {
 	}
 }
 
+/**
+ * @type {Mongo.Collection<CourseModel>}
+ */
 const Courses = new Mongo.Collection('Courses', {
 	transform(course) {
 		return _.extend(new Course(), course);

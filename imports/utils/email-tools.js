@@ -1,3 +1,5 @@
+import { check } from 'meteor/check';
+
 /**
   * Check a string if it is a valid email adress
   * @param {string} str the string to be checked

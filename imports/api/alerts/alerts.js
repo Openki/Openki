@@ -10,6 +10,9 @@ import { Mongo } from 'meteor/mongo';
  * @property {number} message.timeout  Integer
  */
 
+/**
+ * @type {Mongo.Collection<AlertEnity>}
+ */
 const Alerts = new Mongo.Collection(null); // Local collection for in-memory storage
 
 export default Alerts;

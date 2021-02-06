@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
 import HtmlTools from '/imports/utils/html-tools';
 
 import Groups from './groups';
@@ -38,7 +39,7 @@ Meteor.methods({
 		}
 
 		// User must be member of group to edit it
-		if (!isNew && !IsGroupMember(Meteor.userId(), group._id)) {
+		if (!isNew && !IsGroupMember(userId, group._id)) {
 			throw new Meteor.Error(401, 'Denied');
 		}
 

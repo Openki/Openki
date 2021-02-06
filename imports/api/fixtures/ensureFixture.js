@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import crypto from 'crypto';
 import Prng from './Prng';
 import Groups from '/imports/api/groups/groups';
