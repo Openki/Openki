@@ -1,12 +1,19 @@
+import { _ } from 'meteor/underscore';
+
 const UrlTools = {
+	/**
+	 * @param {{[name:string]:string|number|boolean}} params
+	 */
 	paramsToQueryString(params) {
 		const queryParams = _.map(params, (param, name) => `${encodeURIComponent(name)}=${encodeURIComponent(param)}`);
 
 		return queryParams.join('&');
 	},
 
-	// Get the value of a query parameter by name
-	// returns parameter value as string or undefined
+	/**
+	 * Get the value of a query parameter by name
+	 * @param {string} name
+	 */
 	queryParam(name) {
 		const params = document.location.search.substring(1).split('&');
 		for (let i = 0; i < params.length; i += 1) {

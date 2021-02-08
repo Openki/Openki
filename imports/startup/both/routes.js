@@ -756,9 +756,7 @@ Router.route('/profile/notifications/unsubscribe/:token', function () {
 
 	const query = {};
 	if (accepted) {
-		query.unsubscribed = '';
-
-		Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from notifications via e-mail');
+		query.unsubscribed = 'notifications';
 	} else {
 		query['unsubscribe-error'] = '';
 	}
@@ -780,9 +778,7 @@ Router.route('/profile/privatemessages/unsubscribe/:token', function () {
 
 	const query = {};
 	if (accepted) {
-		query.unsubscribed = '';
-
-		Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from private messages via e-mail');
+		query.unsubscribed = 'privatemessages';
 	} else {
 		query['unsubscribe-error'] = '';
 	}
