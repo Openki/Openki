@@ -7,6 +7,7 @@ import Roles from '/imports/api/roles/roles';
 import {
 	Subscribe, Unsubscribe, Message, processChange,
 } from '/imports/api/courses/subscription';
+import Users from '/imports/api/users/users';
 
 import Editable from '/imports/ui/lib/editable';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
@@ -166,7 +167,7 @@ Template.courseMember.helpers({
 
 Template.removeFromTeamDropdown.helpers({
 	isNotPriviledgedSelf() {
-		const notPriviledgedUser = !UserPrivilegeUtils.privileged(Meteor.userId(), 'admin');
+		const notPriviledgedUser = !UserPrivilegeUtils.privilegedTo('admin');
 		return this.member.user === Meteor.userId() && notPriviledgedUser;
 	},
 });

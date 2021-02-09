@@ -4,6 +4,8 @@ import { Template } from 'meteor/templating';
 
 import Alert from '/imports/api/alerts/alert';
 import { Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subscription';
+import Regions from '/imports/api/regions/regions';
+import Users from '/imports/api/users/users';
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 

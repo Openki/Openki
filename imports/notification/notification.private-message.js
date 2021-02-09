@@ -1,23 +1,28 @@
-import { Match } from 'meteor/check';
+import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 
 import Courses from '/imports/api/courses/courses';
 import Log from '/imports/api/log/log';
 import Users from '/imports/api/users/users';
+import Regions from '/imports/api/regions/regions';
 
 import HtmlTools from '/imports/utils/html-tools';
 import StringTools from '/imports/utils/string-tools';
+import UserPrivilegeUtils from '../utils/user-privilege-utils';
+
+/** @typedef {import('../api/users/users').UserModel} UserModel */
 
 const notificationPrivateMessage = {};
 
-/** Record the intent to send a private message
-  *
-  * @param      {ID} senderId - id of the user that sends the message
-  * @param      {ID} recipientId - id of the intended recipient
-  * @param  {String} message - the message to transmit
-  * @param    {Bool} revealSenderAddress - include email-address of sender in message
-  * @param    {Bool} sendCopyToSender - send a copy of the message to the author
-  * @param    {Bool} context - dictionary with context ID (course, venue, &c.)
+/**
+  * Record the intent to send a private message
+  * @param {string} senderId id of the user that sends the message
+  * @param {string} recipientId id of the intended recipient
+  * @param {string} message the message to transmit
+  * @param {boolean} revealSenderAddress include email-address of sender in message
+  * @param {boolean} sendCopyToSender send a copy of the message to the author
+  * @param {boolean} context dictionary with context ID (course, venue, &c.)
   */
 notificationPrivateMessage.record = function (
 	senderId,
@@ -77,7 +82,25 @@ notificationPrivateMessage.Model = function (entry) {
 	const targetRecipient = Meteor.users.findOne(body.targetRecipient);
 
 	return {
-		vars(userLocale, actualRecipient) {
+		/**
+		 * @param {UserModel} actualRecipient
+		 */
+		accepted(actualRecipient) {
+			if (!actualRecipient.allowPrivateMessages && !UserPrivilegeUtils.privileged(sender, 'admin')) {
+				throw new Error('User wishes to not receive private messages from users');
+			}
+
+			if (!actualRecipient.emails?.[0]?.address) {
+				throw new Error('Recipient has no email address registered');
+			}
+		},
+
+		/**
+		 * @param {string} userLocale
+		 * @param {UserModel} actualRecipient
+		 * @param {string} unsubToken
+		 */
+		vars(userLocale, actualRecipient, unsubToken) {
 			if (!sender) {
 				throw new Error('Sender does not exist (0.o)');
 			}
@@ -102,6 +125,7 @@ notificationPrivateMessage.Model = function (entry) {
 			siteName = siteName || Meteor.settings.public.siteName;
 
 			const vars = {
+				unsubLink: Router.url('profile.privatemessages.unsubscribe', { token: unsubToken }),
 				sender,
 				senderLink: Router.url('userprofile', sender, { query: 'campaign=privateMessage' }),
 				subject,

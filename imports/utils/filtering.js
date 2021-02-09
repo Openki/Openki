@@ -6,6 +6,9 @@ const Filtering = function (availablePredicates) {
 
 	self.clear = function () { predicates = {}; return this; };
 
+	/**
+	 * @param {string} name
+	 */
 	self.get = function (name) {
 		if (Tracker.active) {
 			dep.depend();
@@ -83,6 +86,9 @@ const Filtering = function (availablePredicates) {
 		return self;
 	};
 
+	/**
+	 * @param {string} name
+	 */
 	self.disable = function (name) {
 		delete predicates[name];
 		return self;
@@ -139,6 +145,11 @@ const Filtering = function (availablePredicates) {
 
 export default Filtering;
 
+/**
+ * @constructor
+ * @param {string} param
+ * @param {string} message
+ */
 FilteringReadError = function (param, message) {
 	this.param = param;
 	this.message = message;

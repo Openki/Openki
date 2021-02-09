@@ -2,7 +2,7 @@ import Regions from '/imports/api/regions/regions';
 import { Mongo } from 'meteor/mongo';
 
 const LocationTracker = function () {
-	const markers = new Mongo.Collection(null);
+	const markers = new Mongo.Collection(null); // Local collection for in-memory storage
 
 	return {
 		markers,

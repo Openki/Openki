@@ -6,13 +6,22 @@
 				{{mf 'login.frame.settings'}}
 			</h1>
 		</div>
-		{{#if unsubscribeSuccess}}
+		{{#if notificationsUnsubscribeSuccess}}
 			<div class="alert alert-success" role="alert">
 				<span class="fa-stack fa-lg">
 					<i class="fa fa-envelope-o fa-stack-1x"></i>
 					<i class="fa fa-ban fa-stack-2x"></i>
 				</span>
-				{{mf 'notifications.unsubscribeSuccess' 'You have successfully unsubscribed from notifications.'}}
+				{{mf 'notifications.unsubscribeSuccess' 'You have successfully unsubscribed from automated notifications.'}}
+			</div>
+		{{/if}}
+		{{#if privateMessagesUnsubscribeSuccess}}
+			<div class="alert alert-success" role="alert">
+				<span class="fa-stack fa-lg">
+					<i class="fa fa-envelope-o fa-stack-1x"></i>
+					<i class="fa fa-ban fa-stack-2x"></i>
+				</span>
+				{{mf 'privateMessages.unsubscribeSuccess' 'You have successfully unsubscribed from private messages from users.'}}
 			</div>
 		{{/if}}
 		{{#if unsubscribeError}}
@@ -21,7 +30,7 @@
 					<i class="fa fa-envelope-o fa-stack-1x"></i>
 					<i class="fa fa-ban fa-stack-2x"></i>
 				</span>
-				{{mf 'notifications.unsubscribeError' 'There has been an error with your unsubscription from notifications. Please Try again.'}}
+				{{mf 'notifications.unsubscribeError' 'There has been an error with your unsubscription. Please Try again.'}}
 			</div>
 		{{/if}}
 		{{#unless loggedIn}}
@@ -65,7 +74,18 @@
 										<label>
 											<input type="checkbox" class="js-notifications" {{notificationsChecked}}/>
 											<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
-											{{mf 'profile.toggle.notifications' 'Receive notifications via email'}}
+											{{mf 'profile.toggle.notifications' 'Receive automated notifications via email'}}
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="control-btn">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" class="js-allowPrivateMessages" {{allowPrivateMessagesChecked}}/>
+											<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
+											{{mf 'profile.toggle.allowPrivateMessages' 'Receive private messages from users via email'}}
 										</label>
 									</div>
 								</div>
@@ -114,10 +134,23 @@
 							<div class="details-info-group">
 								<div class="details-info-label">
 									<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
-									{{mf 'profile.notification.subscribe' 'Get notifications via email'}}
+									{{mf 'profile.notification.subscribe' 'Get automated notifications via email'}}
 								</div>
 								<div class="details-info-data">
 									{{#if user.notifications}}
+										{{mf '_option.on'}}
+									{{else}}
+										{{mf '_option.off'}}
+									{{/if}}
+								</div>
+							</div>
+							<div class="details-info-group">
+								<div class="details-info-label">
+									<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
+									{{mf 'profile.allowPrivateMessages.subscribe' 'Get private messages from users via email'}}
+								</div>
+								<div class="details-info-data">
+									{{#if user.allowPrivateMessages}}
 										{{mf '_option.on'}}
 									{{else}}
 										{{mf '_option.off'}}

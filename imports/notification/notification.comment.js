@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+import { _ } from 'meteor/underscore';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 import Courses from '/imports/api/courses/courses';
 import Regions from '/imports/api/regions/regions';
@@ -5,11 +8,13 @@ import Log from '/imports/api/log/log';
 
 import StringTools from '/imports/utils/string-tools';
 
+/** @typedef {import('../api/users/users').UserModel} UserModel */
+
 const notificationComment = {};
 
-/** Record the intent to send event notifications
-  *
-  * @param      {ID} commentID - ID for the CourseDiscussions collection
+/**
+  * Record the intent to send event notifications
+  * @param {string} commentId ID for the CourseDiscussions collection
   */
 notificationComment.record = function (commentId) {
 	check(commentId, String);
@@ -82,7 +87,25 @@ notificationComment.Model = function (entry) {
 	}
 
 	return {
-		vars(userLocale) {
+		/**
+		 * @param {UserModel} actualRecipient
+		 */
+		accepted(actualRecipient) {
+			if (actualRecipient.notifications === false) {
+				throw new Error('User wishes to not receive automated notifications');
+			}
+
+			if (!actualRecipient.emails?.[0]?.address) {
+				throw new Error('Recipient has no email address registered');
+			}
+		},
+
+		/**
+		 * @param {string} userLocale
+		 * @param {UserModel} actualRecipient
+		 * @param {string} unsubToken
+		 */
+		vars(userLocale, actualRecipient, unsubToken) {
 			if (!comment) {
 				throw new Error('Comment does not exist (0.o)');
 			}
@@ -114,6 +137,7 @@ notificationComment.Model = function (entry) {
 
 			return (
 				{
+					unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
 					course,
 					courseLink: Router.url('showCourse', course, { query: `select=${comment._id}&campaign=commentNotify` }),
 					subject,

@@ -20,6 +20,7 @@ window.addEventListener('error', (event) => {
 	reportToServer(event.error);
 });
 
+/** @type string[] */
 const buffer = [];
 const discriminatoryReporting = function (args) {
 	const msg = args[0];

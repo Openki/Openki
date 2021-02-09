@@ -1,8 +1,10 @@
+import { Meteor } from 'meteor/meteor';
+
 import Courses, { Course } from './courses';
 
 import Alert from '/imports/api/alerts/alert';
 import Events from '/imports/api/events/events';
-import { User } from '/imports/api/users/users';
+import Users, { User } from '/imports/api/users/users';
 import { check } from 'meteor/check';
 
 import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';
@@ -23,7 +25,7 @@ export const processChange = function (change, done) {
 
 const checkUser = function (obj) {
 	if (!(obj instanceof User)) {
-		throw Meteor.Error('Match failed', 'Expected User object');
+		throw new Meteor.Error('Match failed', 'Expected User object');
 	}
 };
 

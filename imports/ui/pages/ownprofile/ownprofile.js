@@ -25,18 +25,26 @@ Template.profile.onCreated(function () {
 	this.editing = new ReactiveVar(false);
 	this.changingPass = new ReactiveVar(false);
 	this.verifyDelete = new ReactiveVar(false);
+
+	this.notificationsUnsubscribeSuccess = () => Router.current().params.query.unsubscribed === 'notifications';
+	this.privateMessagesUnsubscribeSuccess = () => Router.current().params.query.unsubscribed === 'privatemessages';
+	this.unsubscribeError = () => Router.current().params.query['unsubscribe-error'] === '';
+
+	if (this.notificationsUnsubscribeSuccess()) {
+		Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from notifications via e-mail');
+	}
+	if (this.privateMessagesUnsubscribeSuccess()) {
+		Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from private messages via e-mail');
+	}
 });
 
 Template.profile.helpers({
 	editing() {
 		return Template.instance().editing.get();
 	},
+
 	changingPass() {
 		return Template.instance().changingPass.get();
-	},
-
-	sending() {
-		return Template.instance().sending.get();
 	},
 
 	verifyDelete() {
@@ -54,6 +62,13 @@ Template.profile.helpers({
 		return '';
 	},
 
+	allowPrivateMessagesChecked() {
+		if (this.user.allowPrivateMessages) {
+			return 'checked';
+		}
+		return '';
+	},
+
 	privacyChecked() {
 		if (this.user.privacy) {
 			return 'checked';
@@ -64,9 +79,11 @@ Template.profile.helpers({
 	isVenueEditor() {
 		return this.user.venues.count() > 0;
 	},
+
 	roles() {
 		return _.clone(Roles).reverse();
 	},
+
 	coursesByRole(role) {
 		const templateData = Template.instance().data;
 		const { involvedIn } = templateData;
@@ -80,14 +97,21 @@ Template.profile.helpers({
 		});
 		return coursesForRole;
 	},
+
 	roleMyList() {
 		return `roles.${this.type}.myList`;
 	},
-	unsubscribeSuccess() {
-		return Router.current().params.query.unsubscribed === '';
+
+	notificationsUnsubscribeSuccess() {
+		return Template.instance().notificationsUnsubscribeSuccess();
 	},
+
+	privateMessagesUnsubscribeSuccess() {
+		return Template.instance().privateMessagesUnsubscribeSuccess();
+	},
+
 	unsubscribeError() {
-		return Router.current().params.query['unsubscribe-error'] === '';
+		return Template.instance().unsubscribeError();
 	},
 });
 
@@ -165,7 +189,7 @@ Template.profile.events({
 
 	'click .js-profile-delete-confirm-btn'(event, instance) {
 		instance.busy('deleting');
-		Meteor.call('user.remove', () => {
+		Meteor.call('user.self.remove', () => {
 			instance.busy(false);
 			Alert.success(mf('profile.deleted', 'Your account has been deleted'));
 		});
@@ -179,6 +203,7 @@ Template.profile.events({
 			instance.$('.js-username').val(),
 			instance.$('.js-email').val(),
 			instance.$('.js-notifications').prop('checked'),
+			instance.$('.js-allowPrivateMessages').prop('checked'),
 			(err) => {
 				if (err) {
 					instance.errors.add(err.error);
@@ -186,7 +211,10 @@ Template.profile.events({
 					Alert.success(mf('profile.updated', 'Updated profile'));
 					instance.editing.set(false);
 					if (instance.data.user.notifications !== instance.$('.js-notifications').prop('checked') && !instance.$('.js-notifications').prop('checked')) {
-						Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from notifications via profile');
+						Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from automated notifications via profile');
+					}
+					if (instance.data.user.allowPrivateMessages !== instance.$('.js-allowPrivateMessages').prop('checked') && !instance.$('.js-allowPrivateMessages').prop('checked')) {
+						Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from private messages via profile');
 					}
 				}
 			});

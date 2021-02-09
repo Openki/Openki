@@ -5,18 +5,22 @@ import Log from '/imports/api/log/log';
 import Regions from '/imports/api/regions/regions';
 import Users from '/imports/api/users/users';
 
+/** @typedef {import('../api/users/users').UserModel} UserModel */
+
 const Profile = {};
 
-Profile.updateAcceptsMessages = function (user) {
-	const acceptsMessages = Boolean(user.emailAddress() && user.notifications);
+/**
+ * @param {UserModel} user
+ */
+Profile.updateAcceptsPrivateMessages = function (user) {
+	const acceptsPrivateMessages = Boolean(user.emailAddress() && user.allowPrivateMessages);
 
-	if (user.acceptsMessages !== acceptsMessages) {
+	if (user.acceptsPrivateMessages !== acceptsPrivateMessages) {
 		Users.update(user._id, {
-			$set: { acceptsMessages },
+			$set: { acceptsPrivateMessages },
 		});
 	}
 };
-
 
 Profile.Username = {};
 
@@ -84,25 +88,25 @@ Profile.Email.change = function (userId, email, reason) {
 
 Profile.Notifications = {};
 
-/** Update the receiveNotifications setting for a user
-  *
-  * @param {string} userId - update the setting for this user
-  * @param {boolean} enable - new state of the flag
-  * @param {string|undefined} relId    - related ID for the Log (optional)
-  * @param {string} reason
-  *
-  */
-Profile.Notifications.change = function (userId, enable, relId, reason) {
+/**
+ * Update the receive automated notifications setting for a user
+ * @param {string} userId update the setting for this user
+ * @param {boolean} enable new state of the flag
+ * @param {string|undefined} relatedId related ID for the Log (optional)
+ * @param {string} reason
+ *
+ */
+Profile.Notifications.change = function (userId, enable, relatedId, reason) {
 	check(userId, String);
 	check(enable, Boolean);
-	check(relId, Match.Optional(String));
+	check(relatedId, Match.Optional(String));
 	check(reason, String);
 
-	const rel = [userId];
-	if (relId) {
-		rel.push(relId);
+	const relatedIds = [userId];
+	if (relatedId) {
+		relatedIds.push(relatedId);
 	}
-	Log.record('Profile.Notifications', rel,
+	Log.record('Profile.Notifications', relatedIds,
 		{
 			userId,
 			enable,
@@ -114,11 +118,11 @@ Profile.Notifications.change = function (userId, enable, relId, reason) {
 	});
 };
 
-/** Handle unsubscribe token
-  *
-  * @param {string} token - the unsubscribe token passed by the user
-  * @return {boolean} whether the token was accepted
-  */
+/**
+ * Handle unsubscribe token
+ * @param {string} token the unsubscribe token passed by the user
+ * @return {boolean} whether the token was accepted
+ */
 Profile.Notifications.unsubscribe = function (token) {
 	check(token, String);
 
@@ -140,16 +144,72 @@ Profile.Notifications.unsubscribe = function (token) {
 };
 
 
+Profile.PrivateMessages = {};
+
+/**
+ * Update the receive private messages setting for a user
+ * @param {string} userId update the setting for this user
+ * @param {boolean} enable new state of the flag
+ * @param {string|undefined} relatedId related ID for the Log (optional)
+ * @param {string} reason
+ */
+Profile.PrivateMessages.change = function (userId, enable, relatedId, reason) {
+	check(userId, String);
+	check(enable, Boolean);
+	check(relatedId, Match.Optional(String));
+	check(reason, String);
+
+	const relatedIds = [userId];
+	if (relatedId) {
+		relatedIds.push(relatedId);
+	}
+	Log.record('Profile.PrivateMessages', relatedIds,
+		{
+			userId,
+			enable,
+			reason,
+		});
+
+	Meteor.users.update(userId, {
+		$set: { allowPrivateMessages: enable },
+	});
+};
+
+/**
+ * Handle unsubscribe from private messages token
+ * @param {string} token the unsubscribe token passed by the user
+ * @return {boolean} whether the token was accepted
+ */
+Profile.PrivateMessages.unsubscribe = function (token) {
+	check(token, String);
+
+	let accepted = false;
+
+	// Find the relevant private message result
+	Log.find({
+		rel: token,
+	}).forEach((entry) => {
+		// See whether it was indeed a secret token.
+		// This check is not redundant because public ID like courseID
+		// are also written into the rel-index and would be found if provided.
+		if (entry.body.unsubToken === token) {
+			Profile.PrivateMessages.change(entry.body.recipient, false, entry._id, 'unsubscribe token');
+			accepted = true;
+		}
+	});
+	return accepted;
+};
+
 Profile.Region = {};
 
-/** Update the selected region for a user
-  *
-  * @param {string} userId   - update region for this user
-  * @param {string} regionId - choose this region for this user
-  * @param {string} reason
-  *
-  * @return {boolean} whether the change was accepted
-  */
+/**
+ * Update the selected region for a user
+ * @param {string} userId update region for this user
+ * @param {string} regionId choose this region for this user
+ * @param {string} reason
+ *
+ * @return {boolean} whether the change was accepted
+ */
 Profile.Region.change = function (userId, regionId, reason) {
 	check(userId, String);
 	check(regionId, String);

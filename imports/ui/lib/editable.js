@@ -29,23 +29,40 @@ export default class Editable {
 		this.store = store;
 		this.placeholderText = placeholderText;
 		this.showControls = showControls;
+		/** Its text content before editing */
 		this.text = new ReactiveVar('');
+		/** Whether the field has been changed */
 		this.changed = new ReactiveVar(!showControls);
 		this.editingInstance = false;
 	}
 
+	/**
+	 * set the text that should be displayed in the field.
+	 * This can be called again when the source changes.
+	 * @param {string} newText
+	 */
 	setText(newText) {
 		this.text.set(newText);
 	}
 
+	/**
+	 * get the edited version of the text, returns false if the field was not changed
+	 * @returns {string|false}
+	 */
 	getEdited() {
 		return this.editingInstance?.getEdited() || false;
 	}
 
+	/**
+	 * gives the time in seconds how long the cursor was in the field. For statistics and tracking.
+	 */
 	getTotalFocusTimeInSeconds() {
 		return this.editingInstance?.getTotalFocusTimeInSeconds() || 0;
 	}
 
+	/**
+	 * ends editing mode such as when changes have been saved
+	 */
 	end() {
 		this.changed.set(false);
 	}

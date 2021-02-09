@@ -31,7 +31,6 @@ import '/imports/ui/components/price-policy/price-policy';
 import '/imports/ui/components/regions/tag/region-tag';
 
 import './event-edit.html';
-import moment from 'moment';
 
 Template.eventEdit.onCreated(function () {
 	const instance = this;
@@ -431,7 +430,7 @@ Template.eventEdit.events({
 								let role;
 								if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
 									role = 'team';
-								} else if (UserPrivilegeUtils.privileged(Meteor.user(), 'admin')) {
+								} else if (UserPrivilegeUtils.privilegedTo('admin')) {
 									role = 'admin';
 								} else {
 									role = 'unknown';

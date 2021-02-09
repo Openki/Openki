@@ -36,7 +36,7 @@ Template.stats.onCreated(function () {
 
 Template.stats.helpers({
 	isAdmin() {
-		return UserPrivilegeUtils.privileged(Meteor.user(), 'admin');
+		return UserPrivilegeUtils.privilegedTo('admin');
 	},
 	regionName() {
 		const currentRegion = Regions.findOne({ _id: Template.instance().region.get() });

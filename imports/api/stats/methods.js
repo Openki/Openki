@@ -10,7 +10,7 @@ Meteor.methods({
 	 * @param {string} regionId
 	 */
 	'stats.region'(regionId) {
-		if (UserPrivilegeUtils.privileged(Meteor.user(), 'admin')) {
+		if (UserPrivilegeUtils.privilegedTo('admin')) {
 			const regionFilter = regionId === 'all_regions' ? '' : regionId;
 			return Stats.getRegionStats(regionFilter);
 		}

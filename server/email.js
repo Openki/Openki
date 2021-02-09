@@ -3,12 +3,13 @@ import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
 import { Match, check } from 'meteor/check';
 
-import moment from 'moment';
-
 import Notification from '/imports/notification/notification';
+import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import HtmlTools from '/imports/utils/html-tools';
 
 import Version from '/imports/api/version/version';
+
+/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 if (Meteor.settings.siteEmail) {
 	Accounts.emailTemplates.from = Meteor.settings.siteEmail;
@@ -64,12 +65,13 @@ Meteor.methods({
 		check(options.courseId, Match.Optional(String));
 		check(options.eventId, Match.Optional(String));
 
+		/** @type {UserModel} */
 		const recipient = Meteor.users.findOne(userId);
 		if (!recipient) {
 			throw new Meteor.Error(404, 'no such user');
 		}
-		if (!recipient.acceptsMessages) {
-			throw new Meteor.Error(401, 'this user does not accept messages');
+		if (!recipient.acceptsPrivateMessages && !UserPrivilegeUtils.privilegedTo('admin')) {
+			throw new Meteor.Error(401, 'this user does not accept private messages from users');
 		}
 
 		const context = {};

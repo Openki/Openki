@@ -78,8 +78,8 @@ const mixin = function (log, isServer, printToLog) {
 		}
 	}
 
-	/** Record a new entry to the log
-	 *
+	/**
+	 * Record a new entry to the log
 	 * @param  {String} track   - type of log entry
 	 * @param  {String} rel     - related ID
 	 * @param  {Object} body    - log body depending on track
@@ -106,6 +106,10 @@ const mixin = function (log, isServer, printToLog) {
 		return new ResultLogger(id);
 	};
 
+	/**
+	 * @param {{ start?: Date; rel?: string[]; tr?: string[]; }} filter
+	 * @param {number} limit
+	 */
 	log.findFilter = function (filter, limit) {
 		check(filter,
 			{
@@ -141,7 +145,7 @@ const logFactory = {
 	},
 
 	fake: () => {
-		const log = new Meteor.Collection(null);
+		const log = new Meteor.Collection(null); // Local collection for in-memory storage
 		mixin(log, false, false);
 		return log;
 	},

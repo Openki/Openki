@@ -1,3 +1,5 @@
+import { _ } from 'meteor/underscore';
+
 const Predicates = {
 	string(param) {
 		return {

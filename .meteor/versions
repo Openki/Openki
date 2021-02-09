@@ -1,14 +1,14 @@
-accounts-base@1.7.1
+accounts-base@1.8.0
 accounts-facebook@1.3.2
 accounts-github@1.4.3
 accounts-google@1.3.3
 accounts-oauth@1.2.0
-accounts-password@1.6.3
+accounts-password@1.7.0
 allow-deny@1.1.0
 amplify@1.0.0
 archive:jquery-dotdotdot@1.6.15
-autoupdate@1.6.0
-babel-compiler@7.5.4
+autoupdate@1.7.0
+babel-compiler@7.6.0
 babel-runtime@1.5.0
 base64@1.0.12
 bevanhunt:leaflet@3.2.0
@@ -23,7 +23,7 @@ check@1.3.1
 coffeescript@1.0.17
 cosmos:browserify@0.10.0
 ddp@1.4.0
-ddp-client@2.3.3
+ddp-client@2.4.0
 ddp-common@1.4.0
 ddp-rate-limiter@1.0.9
 ddp-server@2.3.2
@@ -31,8 +31,8 @@ deps@1.0.12
 diff-sequence@1.1.1
 djedi:sanitize-html@1.11.3
 djedi:sanitize-html-client@1.11.3
-dynamic-import@0.5.4
-ecmascript@0.14.4
+dynamic-import@0.6.0
+ecmascript@0.15.0
 ecmascript-runtime@0.7.0
 ecmascript-runtime-client@0.11.0
 ecmascript-runtime-server@0.10.0
@@ -54,7 +54,7 @@ google-config-ui@1.0.1
 google-oauth@1.3.0
 html-tools@1.0.11
 htmljs@1.0.11
-http@1.4.2
+http@1.4.3
 id-map@1.1.0
 inter-process-messaging@0.1.1
 iron:controller@1.0.12
@@ -72,7 +72,7 @@ launch-screen@1.2.0
 livedata@1.0.18
 lmieulet:meteor-coverage@2.0.2
 localstorage@1.2.0
-logging@1.1.20
+logging@1.2.0
 lookback:tooltips@0.6.1
 markdown@1.0.14
 mdg:seo@3.2.2
@@ -89,7 +89,7 @@ minifier-js@2.6.0
 minimongo@1.6.1
 mobile-status-bar@1.1.0
 modern-browsers@0.1.5
-modules@0.15.0
+modules@0.16.0
 modules-runtime@0.12.0
 momentjs:moment@2.29.1
 mongo@1.10.1
@@ -112,6 +112,7 @@ promise@0.11.2
 raix:eventemitter@0.1.3
 random@1.2.0
 rate-limit@1.0.9
+react-fast-refresh@0.1.0
 reactive-dict@1.3.0
 reactive-var@1.0.11
 reload@1.3.1
@@ -144,7 +145,7 @@ spacebars@1.0.15
 spacebars-compiler@1.1.3
 srp@1.1.0
 standard-app-packages@1.0.9
-standard-minifier-css@1.7.1
+standard-minifier-css@1.7.2
 standard-minifier-js@2.6.0
 templating@1.3.2
 templating-compiler@1.3.3
@@ -155,5 +156,5 @@ ui@1.0.13
 underscore@1.0.10
 url@1.3.1
 wanglian:bootstrap3-datepicker@1.7.1
-webapp@1.9.1
-webapp-hashing@1.0.9
+webapp@1.10.0
+webapp-hashing@1.1.0

@@ -10,6 +10,8 @@ import notificationPrivateMessage from '/imports/notification/notification.priva
 
 import { logo } from '/imports/utils/email-tools';
 
+/** @typedef {import('../api/users/users').UserModel} UserModel */
+
 const Notification = {};
 
 Notification.Event = notificationEvent;
@@ -42,19 +44,14 @@ Notification.send = function (entry) {
 			let unsubToken = null;
 
 			try {
+				/** @type {UserModel|undefined} */
 				const user = Meteor.users.findOne(recipientId);
 
 				if (!user) {
 					throw new Error(`User not found for ID '${recipientId}'`);
 				}
 
-				if (user.notifications === false) {
-					throw new Error('User wishes to not receive notifications');
-				}
-
-				if (!user.emails || !user.emails[0] || !user.emails[0].address) {
-					throw new Error('Recipient has no email address registered');
-				}
+				model.accepted(user);
 
 				const email = user.emails[0];
 				const { address } = email;
@@ -66,13 +63,11 @@ Notification.send = function (entry) {
 				const subjectPrefix = `[${siteName}] `;
 
 				unsubToken = Random.secret();
-
-				const vars = model.vars(userLocale, user);
+				const vars = model.vars(userLocale, user, unsubToken);
 
 				const fromAddress = vars.fromAddress
 					|| Accounts.emailTemplates.from;
 
-				vars.unsubLink = Router.url('profile.unsubscribe', { token: unsubToken });
 				// For everything that is global use siteName from global settings, eg. unsubscribe
 				vars.siteName = siteName;
 				// For everything context specifig us customSiteName from the region, eg. courses
@@ -114,16 +109,16 @@ Notification.send = function (entry) {
 
 Notification.SendResult = {};
 
-/** Record the result of a notification delivery attempt
-  * @param  {object} note      - notification log-entry
-  * @param      {ID} unsubToken - token that can be used to unsubscribe from
-  *                               further notices
-  * @param {Boolean} sent      - whether the notification was sent
-  * @param      {ID} recipient - recipient user ID
-  * @param  {String} message   - generated message (or null if we didn't get
-  *                              that far)
-  * @param  {String} reason    - why this log entry was recorded
-  */
+/**
+ * Record the result of a notification delivery attempt
+* @param {object} note notification log-entry
+* @param {string | null} unsubToken token that can be used to unsubscribe from
+* further notices
+* @param {boolean} sent whether the notification was sent
+* @param {string} recipient recipient user ID
+* @param {string | null} message generated message (or null if we didn't get that far)
+* @param {string} reason why this log entry was recorded
+*/
 Notification.SendResult.record = function (note, unsubToken, sent, recipient, message, reason) {
 	check(sent, Boolean);
 	check(unsubToken, Match.Maybe(String));

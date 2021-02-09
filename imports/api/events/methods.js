@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
-import moment from 'moment';
 
 import Courses from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
@@ -30,9 +29,6 @@ import UpdateMethods from '/imports/utils/update-methods';
 const ReplicaSync = function (event, updateOptions) {
 	let affected = 0;
 
-	/**
-	 * @param {*} changes
-	 */
 	const apply = function (changes) {
 		const startMoment = moment(changes.start);
 		const endMoment = moment(changes.end);
@@ -87,7 +83,20 @@ const ReplicaSync = function (event, updateOptions) {
 Meteor.methods({
 	/**
 	 * @param {{
-	 * changes: any;
+	 * changes: {
+	 *  title: string;
+	 *  description: string;
+	 *  venue?: Object;
+	 *  room?: string;
+	 *  startLocal?: string;
+	 *  endLocal?: string;
+	 *  internal?: boolean;
+	 *  maxParticipants?: number;
+	 *  courseId?: string;
+	 *  region?: string;
+	 *  replicaOf?: string;
+	 *  groups?: string[];
+	 * };
 	 * updateReplicasInfos: boolean;
 	 * updateReplicasTime: boolean;
 	 * updateChangedReplicasTime: boolean;

@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 const AsyncTools = {};
 
 AsyncTools.checkUpdateOne = function (err, aff) {

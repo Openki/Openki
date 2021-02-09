@@ -5,8 +5,8 @@
 	"public": {
 		"siteName": "Hmmm",
 		"siteStage": "DEV",
-		"headerLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" },
-		"discussionLogo": { "src": "OpenkiLogo_quadratisch_2kanal_alpha.png", "alt": "Openki Logo" },
+		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" },
+		"discussionLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" },
 		"ogLogo": { "src": "openki_logo_2018.png"},
 		"mailLogo": "mails/openki.png",
 		"regionSelection": { "minNumber": 5 }

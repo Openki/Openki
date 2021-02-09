@@ -12,6 +12,7 @@ if (Meteor.isClient) {
 				'Seee',
 				'greg@openki.example',
 				false,
+				false,
 				(err) => {
 					assert.isObject(err);
 					done();

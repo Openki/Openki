@@ -55,8 +55,7 @@
 		<tr>
 			<td width="400" valign="top" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px 20px;">
 					<p style="margin: 1em 0;">
-						{{mf "notification.event.mail.personalMessage" "The Organizer left a message for you:"}}
-
+						{{mf "notification.event.mail.personalMessage" 'The Organizer "{USERNAME}" left a message for you:' USERNAME=creatorName LOCALE=locale }}
 					</p>
 			</td>
 		</tr>
@@ -69,6 +68,14 @@
 						</td>
 					</tr>
 				</table>
+			</td>
+		</tr>
+		{{else}}
+		<tr>
+			<td width="400" valign="top" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px 20px;">
+					<p style="margin: 1em 0;">
+						{{mf "notification.event.mail.creationMessage" 'The event has been created by "{USERNAME}".' USERNAME=creatorName LOCALE=locale }}
+					</p>
 			</td>
 		</tr>
 		{{/if}}
@@ -152,7 +159,7 @@
 					<tr>
 						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
 							<a href="{{unsubLink}}" style="color:#dddddd !important; text-decoration: underline;">
-								{{mf "notification.event.mail.unsubLink" "Unsubscribe from all Openki's notifications." SITENAME=siteName LOCALE=locale}}
+								{{mf "notification.event.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}
 							</a>
 							&nbsp;
 							<a href="{{urlFor 'profile' query='campaign=eventNotify'}}" style="color:#dddddd !important; text-decoration: underline;">

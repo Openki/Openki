@@ -4,6 +4,8 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
+import Regions from '/imports/api/regions/regions';
+
 import ScssVars from '/imports/ui/lib/scss-vars';
 
 import '/imports/ui/components/regions/selection/region-selection';

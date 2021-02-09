@@ -149,7 +149,7 @@ const TemplateMixins = {
 		});
 
 		template.onCreated(function () {
-			const messages = new Mongo.Collection(null);
+			const messages = new Mongo.Collection(null); // Local collection for in-memory storage
 			this.errors = {
 				messages,
 				present() {

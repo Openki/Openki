@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import crypto from 'crypto';
 import Prng from './Prng';
 import Groups from '/imports/api/groups/groups';
@@ -40,12 +41,13 @@ const ensure = {
 				return user;
 			}
 
-			const id = Accounts.createUser({
+			const id = Accounts.createUser(/** @type {UserEntity} */{
 				username: name,
 				email,
 				profile: { name },
 				notifications: true,
-				acceptsMessages: true,
+				allowPrivateMessages: true,
+				acceptsPrivateMessages: true,
 			});
 
 			const age = Math.floor(prng() * 100000000000);

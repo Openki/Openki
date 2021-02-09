@@ -4,13 +4,15 @@ import { Mongo } from 'meteor/mongo';
 import Filtering from '/imports/utils/filtering';
 
 // ======== DB-Model: ========
-// "_id"           -> ID
-// "name"          -> String
-// "short"         -> String
-// "claim"         -> String
-// "description"   -> String
-// "members"       -> List of userIds
-// ===========================
+/**
+ * @typedef {Object} GroupEntity
+ * @property {string} _id ID
+ * @property {string} name
+ * @property {string} short
+ * @property {string} claim
+ * @property {string} description
+ * @property {string[]} members List of userIds
+ */
 
 const Groups = new Mongo.Collection('Groups');
 
@@ -18,12 +20,14 @@ Groups.Filtering = () => Filtering(
 	{},
 );
 
-/* Find groups for given filters
- *
- * filter: dictionary with filter options
- *   own: Limit to groups where logged-in user is a member
- *   user: Limit to groups where given user ID is a member (client only)
- *
+/**
+ * Find groups for given filters
+ * @param {object} filter dictionary with filter options
+ * @param {boolean} [filter.own] Limit to groups where logged-in user is a member
+ * @param {string|false} [filter.user] Limit to groups where given user ID is a
+ * member (client only)
+ * @param {number} limit
+ * @param {number} skip
  */
 Groups.findFilter = function (filter, limit, skip, sort) {
 	const find = {};

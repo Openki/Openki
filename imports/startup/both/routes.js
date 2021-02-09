@@ -1,11 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
-import moment from 'moment';
+
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
 import Roles from '/imports/api/roles/roles';
 import Venues, { Venue } from '/imports/api/venues/venues'; // Use default and { named, ... } exports
+/** @typedef {import('/imports/api/venues/venues').VenueModel} VenueModel */
+/** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
 
 import Analytics from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
@@ -73,6 +75,9 @@ const makeFilterQuery = function (params) {
 	return query;
 };
 
+/**
+ * @param {CourseModel} course
+ */
 function loadroles(course) {
 	const userId = Meteor.userId();
 	return _.reduce(Roles, (goodroles, roletype) => {
@@ -362,6 +367,7 @@ Router.map(function () {
 					name: user.username,
 					privacy: user.privacy,
 					notifications: user.notifications,
+					allowPrivateMessages: user.allowPrivateMessages,
 					groups: Groups.findFilter({ own: true }),
 					venues: Venues.find({ editor: user._id }),
 				};
@@ -694,6 +700,7 @@ Router.map(function () {
 		data() {
 			const id = this.params._id;
 
+			/** @type {VenueModel} */
 			let venue;
 			const data = {};
 			if (id === 'create') {
@@ -742,16 +749,14 @@ Router.map(function () {
 	});
 });
 
-Router.route('/profile/unsubscribe/:token', function () {
+Router.route('/profile/notifications/unsubscribe/:token', function () {
 	const unsubToken = this.params.token;
 
 	const accepted = Profile.Notifications.unsubscribe(unsubToken);
 
 	const query = {};
 	if (accepted) {
-		query.unsubscribed = '';
-
-		Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from notifications via e-mail');
+		query.unsubscribed = 'notifications';
 	} else {
 		query['unsubscribe-error'] = '';
 	}
@@ -762,6 +767,28 @@ Router.route('/profile/unsubscribe/:token', function () {
 
 	this.response.end();
 }, {
-	name: 'profile.unsubscribe',
+	name: 'profile.notifications.unsubscribe',
+	where: 'server',
+});
+
+Router.route('/profile/privatemessages/unsubscribe/:token', function () {
+	const unsubToken = this.params.token;
+
+	const accepted = Profile.PrivateMessages.unsubscribe(unsubToken);
+
+	const query = {};
+	if (accepted) {
+		query.unsubscribed = 'privatemessages';
+	} else {
+		query['unsubscribe-error'] = '';
+	}
+
+	this.response.writeHead(302, {
+		Location: Router.url('profile', {}, { query }),
+	});
+
+	this.response.end();
+}, {
+	name: 'profile.privatemessages.unsubscribe',
 	where: 'server',
 });

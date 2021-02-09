@@ -14,12 +14,19 @@ Template.map.onCreated(function () {
 	this.fullscreen = new ReactiveVar(false);
 });
 
+/**
+ * @param {string} faClass
+ */
 const FaIcon = function (faClass) {
 	return function () {
 		return L.DomUtil.create('span', `fa fa-${faClass}`);
 	};
 };
 
+/**
+ * @param {string} opClass
+ * @param {string} icClass
+ */
 const FaCompIcon = function (opClass, icClass) {
 	return function () {
 		const cont = L.DomUtil.create('span', 'fa');

@@ -14,6 +14,9 @@ import { Mongo } from 'meteor/mongo';
  * @property {string}  [parentId]     ID_CourseDiscussions (optional)
  */
 
+/**
+ * @type {Mongo.Collection<CourseDiscussionEnity>}
+ */
 const CourseDiscussions = new Mongo.Collection('CourseDiscussions');
 
 /**

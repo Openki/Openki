@@ -1,4 +1,6 @@
 import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
+import { _ } from 'meteor/underscore';
 import HtmlTools from '/imports/utils/html-tools';
 
 import Groups from './groups';
@@ -6,6 +8,14 @@ import Groups from './groups';
 import IsGroupMember from '/imports/utils/is-group-member';
 
 Meteor.methods({
+	/**
+	 * @param {string} groupId
+	 * @param {{short?: string;
+	 * name?: string;
+	 * claim?: string;
+	 * description?: string;
+	 * logoUrl?: string;}} changes
+	 */
 	'group.save'(groupId, changes) {
 		check(groupId, String);
 		check(changes, {
@@ -38,7 +48,7 @@ Meteor.methods({
 		}
 
 		// User must be member of group to edit it
-		if (!isNew && !IsGroupMember(Meteor.userId(), group._id)) {
+		if (!isNew && !IsGroupMember(userId, group._id)) {
 			throw new Meteor.Error(401, 'Denied');
 		}
 
@@ -50,20 +60,22 @@ Meteor.methods({
 			}
 			updates.short = short.substring(0, 7);
 		}
-		if (Object.prototype.hasOwnProperty.call(changes, 'name')) {
+		if (changes.name !== undefined) {
 			updates.name = changes.name.substring(0, 50);
 		}
-		if (Object.prototype.hasOwnProperty.call(changes, 'claim')) {
+		if (changes.claim !== undefined) {
 			updates.claim = changes.claim.substring(0, 1000);
 		}
-		if (Object.prototype.hasOwnProperty.call(changes, 'description')) {
-			updates.description = changes.description.substring(0, 640 * 1024);
+		if (changes.description !== undefined) {
+			const description = changes.description.substring(0, 640 * 1024);
 			if (Meteor.isServer) {
-				updates.description = HtmlTools.saneHtml(updates.description);
+				updates.description = HtmlTools.saneHtml(description);
+			} else {
+				updates.description = description;
 			}
 		}
 
-		if (Object.prototype.hasOwnProperty.call(changes, 'logoUrl')) {
+		if (changes.logoUrl !== undefined) {
 			if (!changes.logoUrl.startsWith('https://')) {
 				throw new Meteor.Error('not https');
 			}
@@ -87,6 +99,11 @@ Meteor.methods({
 		return groupId;
 	},
 
+	/**
+	 * @param {string} userId
+	 * @param {string} groupId
+	 * @param {boolean} join
+	 */
 	'group.updateMembership'(userId, groupId, join) {
 		check(userId, String);
 		check(groupId, String);

@@ -1,17 +1,25 @@
+import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
+import { Router } from 'meteor/iron:router';
+import { _ } from 'meteor/underscore';
+
 import Courses from '/imports/api/courses/courses';
+import Regions from '/imports/api/regions/regions';
 import Log from '/imports/api/log/log';
 
 import HtmlTools from '/imports/utils/html-tools';
 import StringTools from '/imports/utils/string-tools';
 
+/** @typedef {import('../api/users/users').UserModel} UserModel */
+
 const notificationJoin = {};
 
-/** Record the intent to send join notifications
-  *
-  * @param      {ID} courseID         - ID for the CourseDiscussions collection
-  * @param      {ID} participantId - ID of the user that joined
-  * @param      {String} newRole      - new role of the participant
-  * @param      {String} message      - Optional message of the new participant
+/**
+  * Record the intent to send join notifications
+  * @param {string} courseId ID for the CourseDiscussions collection
+  * @param {string} participantId ID of the user that joined
+  * @param {string} newRole new role of the participant
+  * @param {string} [message] Optional message of the new participant
   */
 notificationJoin.record = function (courseId, participantId, newRole, message) {
 	check(courseId, String);
@@ -46,13 +54,42 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	Log.record('Notification.Send', [course._id, participant._id], body);
 };
 
+/** @param {UserModel} user */
+notificationJoin.accepted = function (user) {
+	if (user.notifications === false) {
+		throw new Error('User wishes to not receive automated notifications');
+	}
+
+	if (!user.emails || !user.emails[0] || !user.emails[0].address) {
+		throw new Error('Recipient has no email address registered');
+	}
+};
+
 notificationJoin.Model = function (entry) {
 	const { body } = entry;
 	const course = Courses.findOne(body.courseId);
 	const newParticipant = Meteor.users.findOne(body.participantId);
 
 	return {
-		vars(userLocale) {
+		/**
+		 * @param {UserModel} actualRecipient
+		 */
+		accepted(actualRecipient) {
+			if (actualRecipient.notifications === false) {
+				throw new Error('User wishes to not receive automated notifications');
+			}
+
+			if (!actualRecipient.emails?.[0]?.address) {
+				throw new Error('Recipient has no email address registered');
+			}
+		},
+
+		/**
+		 * @param {string} userLocale
+		 * @param {UserModel} actualRecipient
+		 * @param {string} unsubToken
+		 */
+		vars(userLocale, actualRecipient, unsubToken) {
 			if (!newParticipant) {
 				throw new Error('New participant does not exist (0.o)');
 			}
@@ -92,6 +129,7 @@ notificationJoin.Model = function (entry) {
 
 			return (
 				{
+					unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
 					course,
 					newParticipant,
 					courseLink: Router.url('showCourse', course, { query: 'campaign=joinNotify' }),

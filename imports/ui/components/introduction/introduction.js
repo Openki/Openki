@@ -35,6 +35,9 @@ Template.introduction.helpers({
 		return false;
 	},
 
+	/**
+	 * @param {string} triggerSize
+	 */
 	clearfixFor(triggerSize) {
 		const viewportWidth = Session.get('viewportWidth');
 		let screenSize = '';

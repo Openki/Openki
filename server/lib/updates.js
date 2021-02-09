@@ -2,12 +2,14 @@
 import update20201216MergeUserLocale from '../updates/2020.12.16 mergeUserLocale';
 import update20210106EnsureVenueSlugField from '../updates/2021.01.06 ensureVenueSlugField';
 import update20210112EnsureCourseInterestedField from '../updates/2021.01.12 ensureCourseInterestedField';
+import update20210128PrivateMessagesForAll from '../updates/2021.01.28 privateMessagesForAll';
 
 /** @type {{[name: string]: () => number }} */
 const UpdatesAvailable = {
 	'2020.12.16 mergeUserLocale': update20201216MergeUserLocale,
 	'2021.01.06 ensureVenueSlugField': update20210106EnsureVenueSlugField,
 	'2021.01.12 ensureCourseInterestedField': update20210112EnsureCourseInterestedField,
+	'2021.01.28 privateMessagesForAll': update20210128PrivateMessagesForAll,
 };
 
 const UpdatesApplied = new Meteor.Collection('UpdatesApplied');

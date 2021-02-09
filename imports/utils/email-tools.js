@@ -1,6 +1,8 @@
-/** Check a string if it is a valid email adress
-  *
-  * @param {String} the string to be checked
+import { check } from 'meteor/check';
+
+/**
+  * Check a string if it is a valid email adress
+  * @param {string} str the string to be checked
   */
 const IsEmail = function (str) {
 	check(str, String);
@@ -9,9 +11,9 @@ const IsEmail = function (str) {
 
 export default IsEmail;
 
-/** Logo that can be attached to mails
-  *
-  * path: a file path relative to private/
+/**
+  * Logo that can be attached to mails
+  * @param {string} path a file path relative to private/
   */
 export const logo = function (path) {
 	check(path, String);

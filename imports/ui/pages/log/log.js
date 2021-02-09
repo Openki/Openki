@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
@@ -65,7 +64,7 @@ Template.showLog.onCreated(function () {
 
 Template.showLog.helpers({
 	privileged() {
-		return UserPrivilegeUtils.privileged(Meteor.user(), 'admin');
+		return UserPrivilegeUtils.privilegedTo('admin');
 	},
 
 	date() {

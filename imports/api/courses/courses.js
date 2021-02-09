@@ -1,5 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
+import { Match, check } from 'meteor/check';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import AsyncTools from '/imports/utils/async-tools';
@@ -10,31 +12,41 @@ import StringTools from '/imports/utils/string-tools';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 // ======== DB-Model: ========
-// "_id"           -> ID
-// "name"          -> String
-// "categories"    -> [ID_categories]
-// "tags"          -> List of Strings  (not used)
-// "groups"        -> List ID_groups
-// groupOrganizers List of group ID that are allowed to edit the course
-// "description"   -> String
-// "slug"          -> String
-// "region"        -> ID_region
-// "date"          -> Date             (what for?)
-// "createdby"     -> ID_user
-// "time_created"  -> Date
-// "time_lastedit" -> Date
-// "roles"         -> [role-keys]
-// "members"       -> [{"user":ID_user,"roles":[role-keys]},"comment":string]
-// "internal"      -> Boolean
+/**
+ * @typedef {Object} CourseMemberEntity
+ * @property {string} user user id
+ * @property {string[]} roles
+ * @property {string} comment
+ */
+/**
+ * @typedef {Object} CourseEntity
+ * @property {string} _id          ID
+ * @property {string} name
+ * @property {string[]} categories ID_categories
+ * @property {string[]} tags       (not used)
+ * @property {string[]} groups     List ID_groups
+ * @property {string[]} groupOrganizers  List of group ID that are allowed to edit the course
+ * @property {string} description
+ * @property {string} slug
+ * @property {string} region ID_region
+ * @property {Date} date (what for?)
+ * @property {string} createdby ID_user
+ * @property {Date} time_created
+ * @property {Date} time_lastedit
+ * @property {string[]} roles [role-keys]
+ * @property {CourseMemberEntity[]} members
+ * @property {boolean} internal
+ * @property {string[]} editors (calculated) List of user and group id allowed to edit the course,
+ * calculated from members and groupOrganizers
+ * @property {number} futureEvents  (calculated) count of events still in the future for this course
+ * @property {object} nextEvent  (calculated) next upcoming event object, only includes the _id and
+ * start field
+ * @property {object} lastEvent  (calculated) most recent event object, only includes the _id and
+ * start field
+ * @property {number} interested (calculated)
+ */
 
-/** Calculated fields
-  *
-  * editors: List of user and group id allowed to edit the course, calculated from members and
-  *          groupOrganizers
-  * futureEvents: count of events still in the future for this course
-  * nextEvent: next upcoming event object, only includes the _id and start field
-  * lastEvent: most recent event object, only includes the _id and start field
-  */
+/** @typedef {Course & CourseEntity} CourseModel */
 
 export class Course {
 	constructor() {
@@ -45,7 +57,7 @@ export class Course {
 
 	/**
 	  * Check if the course is new (not yet saved).
-	  * @return {boolean}
+	  * @this {CourseModel}
 	  */
 	isNew() {
 		return !this._id;
@@ -53,8 +65,8 @@ export class Course {
 
 	/**
 	  * Check whether a user may edit the course.
+	  * @this {CourseModel}
 	  * @param {Object} user
-	  * @return {boolean}
 	  */
 	editableBy(user) {
 		if (!user) {
@@ -68,6 +80,7 @@ export class Course {
 
 	/**
 	  * Get list of members with specified role
+	  * @this {CourseModel}
 	  * @param {string} role like 'team'
 	  */
 	membersWithRole(role) {
@@ -75,11 +88,19 @@ export class Course {
 		return this.members.filter((member) => member.roles.indexOf(role) >= 0);
 	}
 
+	/**
+	 * @this {CourseModel}
+	 * @param {string} userId
+	 * @param {string} role
+	 */
 	userHasRole(userId, role) {
 		return HasRoleUser(this.members, role, userId);
 	}
 }
 
+/**
+ * @type {Mongo.Collection<CourseModel>}
+ */
 const Courses = new Mongo.Collection('Courses', {
 	transform(course) {
 		return _.extend(new Course(), course);
@@ -112,7 +133,7 @@ Courses.updateInterested = function (courseId) {
 			return;
 		}
 
-		Courses.update(course._id, {
+		Courses.rawCollection().update({ _id: course._id }, {
 			$set: {
 				interested: course.members?.length || 0,
 			},
