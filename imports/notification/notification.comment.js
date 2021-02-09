@@ -70,17 +70,6 @@ notificationComment.record = function (commentId) {
 	Log.record('Notification.Send', [course._id, comment._id], body);
 };
 
-/** @param {UserModel} user */
-notificationComment.accepted = function (user) {
-	if (user.notifications === false) {
-		throw new Error('User wishes to not receive automated notifications');
-	}
-
-	if (!user.emails || !user.emails[0] || !user.emails[0].address) {
-		throw new Error('Recipient has no email address registered');
-	}
-};
-
 notificationComment.Model = function (entry) {
 	const comment = CourseDiscussions.findOne(entry.body.commentId);
 	let course = false;
@@ -98,6 +87,24 @@ notificationComment.Model = function (entry) {
 	}
 
 	return {
+		/**
+		 * @param {UserModel} actualRecipient
+		 */
+		accepted(actualRecipient) {
+			if (actualRecipient.notifications === false) {
+				throw new Error('User wishes to not receive automated notifications');
+			}
+
+			if (!actualRecipient.emails?.[0]?.address) {
+				throw new Error('Recipient has no email address registered');
+			}
+		},
+
+		/**
+		 * @param {string} userLocale
+		 * @param {UserModel} actualRecipient
+		 * @param {string} unsubToken
+		 */
 		vars(userLocale, actualRecipient, unsubToken) {
 			if (!comment) {
 				throw new Error('Comment does not exist (0.o)');

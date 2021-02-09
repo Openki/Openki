@@ -89,6 +89,25 @@ notificationEvent.Model = function (entry) {
 	}
 
 	return {
+
+		/**
+		 * @param {UserModel} actualRecipient
+		 */
+		accepted(actualRecipient) {
+			if (actualRecipient.notifications === false) {
+				throw new Error('User wishes to not receive automated notifications');
+			}
+
+			if (!actualRecipient.emails?.[0]?.address) {
+				throw new Error('Recipient has no email address registered');
+			}
+		},
+
+		/**
+		 * @param {string} userLocale
+		 * @param {UserModel} actualRecipient
+		 * @param {string} unsubToken
+		 */
 		vars(userLocale, actualRecipient, unsubToken) {
 			if (!event) {
 				throw new Error('Event does not exist (0.o)');

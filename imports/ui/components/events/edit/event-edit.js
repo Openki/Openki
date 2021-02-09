@@ -430,7 +430,7 @@ Template.eventEdit.events({
 								let role;
 								if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
 									role = 'team';
-								} else if (UserPrivilegeUtils.privileged(Meteor.user(), 'admin')) {
+								} else if (UserPrivilegeUtils.privilegedTo('admin')) {
 									role = 'admin';
 								} else {
 									role = 'unknown';

@@ -9,6 +9,7 @@ import Regions from '/imports/api/regions/regions';
 
 import HtmlTools from '/imports/utils/html-tools';
 import StringTools from '/imports/utils/string-tools';
+import UserPrivilegeUtils from '../utils/user-privilege-utils';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -75,23 +76,30 @@ notificationPrivateMessage.record = function (
 	Log.record('Notification.Send', rel, body);
 };
 
-/** @param {UserModel} user */
-notificationPrivateMessage.accepted = function (user) {
-	if (user.allowPrivateMessages === false) {
-		throw new Error('User wishes to not receive private messages from users');
-	}
-
-	if (!user.emails || !user.emails[0] || !user.emails[0].address) {
-		throw new Error('Recipient has no email address registered');
-	}
-};
-
 notificationPrivateMessage.Model = function (entry) {
 	const { body } = entry;
 	const sender = Meteor.users.findOne(body.sender);
 	const targetRecipient = Meteor.users.findOne(body.targetRecipient);
 
 	return {
+		/**
+		 * @param {UserModel} actualRecipient
+		 */
+		accepted(actualRecipient) {
+			if (actualRecipient.allowPrivateMessages === false || UserPrivilegeUtils.privileged(sender, 'admin')) {
+				throw new Error('User wishes to not receive private messages from users');
+			}
+
+			if (!actualRecipient.emails?.[0]?.address) {
+				throw new Error('Recipient has no email address registered');
+			}
+		},
+
+		/**
+		 * @param {string} userLocale
+		 * @param {UserModel} actualRecipient
+		 * @param {string} unsubToken
+		 */
 		vars(userLocale, actualRecipient, unsubToken) {
 			if (!sender) {
 				throw new Error('Sender does not exist (0.o)');

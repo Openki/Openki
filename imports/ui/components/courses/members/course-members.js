@@ -167,7 +167,7 @@ Template.courseMember.helpers({
 
 Template.removeFromTeamDropdown.helpers({
 	isNotPriviledgedSelf() {
-		const notPriviledgedUser = !UserPrivilegeUtils.privileged(Meteor.userId(), 'admin');
+		const notPriviledgedUser = !UserPrivilegeUtils.privilegedTo('admin');
 		return this.member.user === Meteor.userId() && notPriviledgedUser;
 	},
 });

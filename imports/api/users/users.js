@@ -108,10 +108,7 @@ User.prototype.mayPromoteWith = function (group) {
   * @returns String with email address or Boolean false
   */
 User.prototype.emailAddress = function () {
-	return (this.emails
-		&& this.emails[0]
-		&& this.emails[0].address)
-		|| false;
+	return this.emails?.[0]?.address || false;
 };
 
 /** Get verified email address of user
@@ -120,7 +117,7 @@ User.prototype.emailAddress = function () {
   * @returns String with verified email address or Boolean false
   */
 User.prototype.verifiedEmailAddress = function () {
-	const emailRecord = this.emails && this.emails[0];
+	const emailRecord = this.emails?.[0];
 	return (emailRecord
 		&& emailRecord.verified
 		&& emailRecord.address)
@@ -132,8 +129,8 @@ User.prototype.verifiedEmailAddress = function () {
  * @param {string} role
  */
 User.prototype.privileged = function (role) {
-	return this.privileges
-		&& this.privileges.indexOf(role) > -1;
+	return (this.privileges
+		&& this.privileges.indexOf(role) > -1) || false;
 };
 
 /**

@@ -71,6 +71,24 @@ notificationJoin.Model = function (entry) {
 	const newParticipant = Meteor.users.findOne(body.participantId);
 
 	return {
+		/**
+		 * @param {UserModel} actualRecipient
+		 */
+		accepted(actualRecipient) {
+			if (actualRecipient.notifications === false) {
+				throw new Error('User wishes to not receive automated notifications');
+			}
+
+			if (!actualRecipient.emails?.[0]?.address) {
+				throw new Error('Recipient has no email address registered');
+			}
+		},
+
+		/**
+		 * @param {string} userLocale
+		 * @param {UserModel} actualRecipient
+		 * @param {string} unsubToken
+		 */
 		vars(userLocale, actualRecipient, unsubToken) {
 			if (!newParticipant) {
 				throw new Error('New participant does not exist (0.o)');

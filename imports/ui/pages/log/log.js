@@ -65,7 +65,7 @@ Template.showLog.onCreated(function () {
 
 Template.showLog.helpers({
 	privileged() {
-		return UserPrivilegeUtils.privileged(Meteor.user(), 'admin');
+		return UserPrivilegeUtils.privilegedTo('admin');
 	},
 
 	date() {

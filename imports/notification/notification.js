@@ -44,14 +44,14 @@ Notification.send = function (entry) {
 			let unsubToken = null;
 
 			try {
-				/** @type {UserModel} */
+				/** @type {UserModel|undefined} */
 				const user = Meteor.users.findOne(recipientId);
 
 				if (!user) {
 					throw new Error(`User not found for ID '${recipientId}'`);
 				}
 
-				Notification[entry.body.model].accepted(user);
+				model.accepted(user);
 
 				const email = user.emails[0];
 				const { address } = email;
