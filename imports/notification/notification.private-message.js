@@ -86,7 +86,7 @@ notificationPrivateMessage.Model = function (entry) {
 		 * @param {UserModel} actualRecipient
 		 */
 		accepted(actualRecipient) {
-			if (actualRecipient.allowPrivateMessages === false || UserPrivilegeUtils.privileged(sender, 'admin')) {
+			if (!actualRecipient.allowPrivateMessages && !UserPrivilegeUtils.privileged(sender, 'admin')) {
 				throw new Error('User wishes to not receive private messages from users');
 			}
 

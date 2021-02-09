@@ -70,7 +70,7 @@ Meteor.methods({
 		if (!recipient) {
 			throw new Meteor.Error(404, 'no such user');
 		}
-		if (!(recipient.acceptsPrivateMessages || UserPrivilegeUtils.privilegedTo('admin'))) {
+		if (!recipient.acceptsPrivateMessages && !UserPrivilegeUtils.privilegedTo('admin')) {
 			throw new Meteor.Error(401, 'this user does not accept private messages from users');
 		}
 
@@ -110,7 +110,7 @@ Meteor.methods({
 			const deployDate = moment(version.activation).format('lll');
 			const restart = moment(version.lastStart).format('lll');
 			versionString = `<br>The running version is [${Accounts.emailTemplates.siteName}] ${fullVersion}  @ commit ${commit
-			}<br>It was deployed on ${deployDate},`
+				}<br>It was deployed on ${deployDate},`
 				+ `<br>and last restarted on ${restart}.`;
 		}
 
