@@ -13,7 +13,8 @@
 </head>
 
 <body>
-	<table cellpadding="0" cellspacing="0" border="0" align="center">
+	<table cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f0f3f4"
+		   style="-webkit-box-shadow: 1px 3px 14px 7px #dfe7e8; -moz-box-shadow: 1px 3px 14px 7px #dfe7e8; box-shadow: 1px 3px 14px 7px #dfe7e8;">
 		<tr>
 			<td>
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
@@ -22,7 +23,7 @@
 							<a href="{{siteUrl}}">
 								<img src="{{logo.url}}" height="45" border="0"
 									 alt="{{customSiteName}} Logo"
-									 style="padding-bottom: 0px; outline:none; text-decoration:none; -ms-interpolation-mode: bicubic; border:none;">
+									 style="padding-bottom: 0px; outline:none; text-decoration:none; -ms-interpolation-mode: bicubic; border:none;" />
 							</a>
 						</td>
 						<td width="455"
@@ -79,16 +80,16 @@
 		<tr>
 			<td width="500" valign="top" bgcolor="#3f819e">
 				<table cellpadding="0" cellspacing="0" border="0" align="center"
-					   style="color:#fff; font-family: Source Sans Pro, sans-serif; font-size: 10px;">
+					   style="color:#dddddd; font-family: Source Sans Pro, sans-serif; font-size: 10px; text-align: center;">
 					<tr>
 						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
 							<a href="{{unsubLink}}"
-							   style="color:#fff !important; text-decoration: underline;">
+							   style="color:#dddddd !important; text-decoration: underline;">
 								{{mf "notification.privateMessage.mail.unsubLink" "Unsubscribe from all private messages from users." SITENAME=siteName LOCALE=locale}}
 							</a>
 							&nbsp;
 							<a href="{{urlFor 'profile' query='campaign=privateMessage'}}"
-							   style="color:#fff !important; text-decoration: underline;">
+							   style="color:#dddddd !important; text-decoration: underline;">
 								{{mf "notification.privateMessage.mail.profileLink" "Visit your profile" LOCALE=locale}}
 							</a>
 						</td>
