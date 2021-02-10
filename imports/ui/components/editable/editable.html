@@ -1,12 +1,14 @@
 <template name='editable'>
-		<div class="editable-wrap {{wrapAttrs}}">
-			<div class="editable js-editable {{editableAttrs}}">
-			</div>
-			<span class="fa fa-pencil editable-icon js-editable-edit"></span>
+	<div class="editable-wrap {{wrapAttrs}}">
+		<div class="editable js-editable {{editableAttrs}}">
 		</div>
-		{{#if showControls}}
-			{{> editableControls}}
-		{{/if}}
+		{{#unless showControls}}
+			<span class="fa fa-pencil editable-icon js-editable-edit"></span>
+		{{/unless}}
+	</div>
+	{{#if showControls}}
+		{{> editableControls}}
+	{{/if}}
 </template>
 
 <template name="editableTextarea">
