@@ -9,7 +9,7 @@ export default function update() {
 		/** @type {UserModel} */
 		const user = { ...orginalUser };
 		user.avatar = {};
-		user.avatar.color = Math.floor(Math.random() * (255 - 0 + 1));
+		user.avatar.color = Math.floor(Math.random() * 361);
 
 		updated += Meteor.users.update(user._id, user);
 	});

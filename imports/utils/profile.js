@@ -238,14 +238,14 @@ Profile.AvatarColor = {};
 /**
  * Update the user's color preference
  * @param {String} userId update color for this user
- * @param {Number} color rgb color hue (0 - 255)
+ * @param {Number} color hsl color hue (0 - 360)
  */
 Profile.AvatarColor.change = function (userId, color) {
 	check(userId, String);
 	check(color, Number);
 
-	// check if color is a valid rgb hue
-	const accepted = color >= 0 && color <= 255;
+	// check if color is a valid hsl hue
+	const accepted = color >= 0 && color <= 360;
 
 	Log.record('Avatar.Color', [userId],
 		{
