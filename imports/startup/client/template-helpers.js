@@ -120,11 +120,23 @@ const helpers = {
 		return false;
 	},
 
-	// Strip HTML markup
+	/**
+	 * Strip HTML markup
+	 * @param {string} html
+	 */
 	plain(html) {
-		const div = document.createElement('div');
-		div.innerHTML = html;
-		return div.textContent || div.innerText || '';
+		// Change the html code so that a minimal style will remain after stripping the html tags.
+		// eg. <p>Kloradf dadeq gsd.</p><p>Loradf dadeq gsd.</p> => Kloradf dadeq gsd. Loradf dadeq gsd.
+		html = html.replaceAll('<br />', '<br /> ')
+			.replaceAll('<p>', '<p> ')
+			.replaceAll('</p>', '</p> ')
+			.replaceAll('<h2>', '<h2> ')
+			.replaceAll('</h2>', '</h2> ')
+			.replaceAll('<h3>', '<h3> ')
+			.replaceAll('</h3>', '</h3> ');
+		// Source: https://stackoverflow.com/questions/822452/strip-html-from-text-javascript/47140708#47140708
+		const doc = new DOMParser().parseFromString(html, 'text/html');
+		return doc.body.textContent || '';
 	},
 
 	/** Compare activity to template business
@@ -132,8 +144,8 @@ const helpers = {
 	  *
 	  * Example: <button>{#if busy 'saving'}Saving...{else}Save now!{/if}</button>
 	  *
-	  * @param {String} [activity] compare to this activity
-	  * @returns {Bool} Whether business matches activity
+	  * @param {string} [activity] compare to this activity
+	  * @returns {boolean} Whether business matches activity
 	  */
 	busy(activity) {
 		const business = Template.instance().findBusiness();
@@ -155,6 +167,9 @@ const helpers = {
 		return Template.instance().state.get(state);
 	},
 
+	/**
+	 * @param {string} groupId
+	 */
 	groupLogo(groupId) {
 		const instance = Template.instance();
 		instance.subscribe('group', groupId);
@@ -168,10 +183,11 @@ const helpers = {
 		return '';
 	},
 
-	/** Return the instance for use in the template
-	  * This can be used to directly access instance methods without declaring
-		* helpers.
-		*/
+	/**
+	 * This can be used to directly access instance methods without declaring
+	 * helpers.
+	 * @returns The instance for use in the template
+	 */
 	instance() {
 		return Template.instance();
 	},
