@@ -51,10 +51,6 @@ Template.kioskEvent.helpers({
 	},
 });
 
-Template.kioskEvent.rendered = function () {
-	this.$('.kiosk-event').dotdotdot();
-};
-
 Template.kioskEventLocation.helpers({
 	showLocation() {
 		// The location is shown when we have a location name and the location is not used as a filter

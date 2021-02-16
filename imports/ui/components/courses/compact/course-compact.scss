@@ -61,7 +61,6 @@
 	@include td-make-xs-column(9);
 	@include td-padding-all(0, 0, 0, 15px);
 	background: $body-bg;
-
 }
 
 .has-upcoming-events > .course-compact-content {
@@ -73,6 +72,8 @@
 // ** Title
 //========================================================================================
 .course-compact-title {
+	@include ellipsis-multiline(2);
+
 	color: $gray-dark;
 	font-size: 20px;
 	line-height: 24px;
