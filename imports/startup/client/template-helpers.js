@@ -127,7 +127,7 @@ const helpers = {
 	plain(html) {
 		// Change the html code so that a minimal style will remain after stripping the html tags.
 		// eg. <p>Kloradf dadeq gsd.</p><p>Loradf dadeq gsd.</p> => Kloradf dadeq gsd. Loradf dadeq gsd.
-		html = html.replaceAll('<br />', '<br /> ')
+		const htmlPreparedForMinimalStyling = html.replaceAll('<br />', '<br /> ')
 			.replaceAll('<p>', '<p> ')
 			.replaceAll('</p>', '</p> ')
 			.replaceAll('<h2>', '<h2> ')
@@ -135,7 +135,7 @@ const helpers = {
 			.replaceAll('<h3>', '<h3> ')
 			.replaceAll('</h3>', '</h3> ');
 		// Source: https://stackoverflow.com/questions/822452/strip-html-from-text-javascript/47140708#47140708
-		const doc = new DOMParser().parseFromString(html, 'text/html');
+		const doc = new DOMParser().parseFromString(htmlPreparedForMinimalStyling, 'text/html');
 		return doc.body.textContent || '';
 	},
 
