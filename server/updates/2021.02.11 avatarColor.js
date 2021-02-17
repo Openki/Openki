@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
 
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
@@ -9,7 +10,7 @@ export default function update() {
 		/** @type {UserModel} */
 		const user = { ...orginalUser };
 		user.avatar = {};
-		user.avatar.color = Math.floor(Math.random() * 361);
+		user.avatar.color = _.random(360);
 
 		updated += Meteor.users.update(user._id, user);
 	});

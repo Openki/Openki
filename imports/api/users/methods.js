@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
+import { _ } from 'meteor/underscore';
 
 import Log from '/imports/api/log/log';
 import Groups from '/imports/api/groups/groups';
@@ -61,7 +62,7 @@ Meteor.methods({
 	 * @param {number} [newColor] hsl hue number, otherwise a random color is generated
 	 */
 	'user.avatarColorChange'(newColor) {
-		const color = newColor || Math.floor(Math.random() * 361);
+		const color = newColor || _.random(360);
 		Profile.AvatarColor.change(Meteor.userId(), color);
 	},
 

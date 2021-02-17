@@ -17,7 +17,7 @@ Template.avatar.helpers({
 		const user = Meteor.users.findOne(data.userId || Meteor.userId());
 		const color = user?.avatar?.color;
 
-		if (typeof color === 'undefined') {
+		if (color === undefined) {
 			return false;
 		}
 
