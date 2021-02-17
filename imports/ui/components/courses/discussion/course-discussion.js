@@ -10,6 +10,7 @@ import { HasRoleUser } from '/imports/utils/course-role-utils';
 import Editable from '/imports/ui/lib/editable';
 
 import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/avatar/avatar';
 
 import './course-discussion.html';
 
@@ -367,30 +368,4 @@ Template.postEdit.events({
 	change(event, instance) {
 		instance.anon.set(instance.$('.js-anon').prop('checked'));
 	},
-});
-
-Template.avatar.helpers({
-	color(userId) {
-		const user = Meteor.users.findOne(userId);
-		const color = user?.avatar?.color;
-
-		if (typeof color === 'undefined') {
-			return false;
-		}
-
-		return color;
-	},
-
-	avatarLogo() {
-		return Meteor.settings.public.avatarLogo;
-	},
-
-	discussionLogo() {
-		return Meteor.settings.public.discussionLogo?.src;
-	},
-
-	discussionAlt() {
-		return Meteor.settings.public.discussionLogo?.alt;
-	},
-
 });
