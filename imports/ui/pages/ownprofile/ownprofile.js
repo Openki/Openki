@@ -251,3 +251,29 @@ Template.profile.events({
 		}
 	},
 });
+
+Template.formAvatar.helpers({
+	color() {
+		const color = Meteor.user().avatar?.color;
+
+		if (typeof color === 'undefined') {
+			return false;
+		}
+
+		return color;
+	},
+
+	avatarLogo() {
+		return Meteor.settings.public.avatarLogo;
+	},
+});
+
+Template.formAvatar.events({
+	'input .js-change-avatar-color'(event, instance) {
+		// update ReactiveVar
+	},
+
+	'change .js-change-avatar-color'(event, instance) {
+		// save to db
+	},
+});

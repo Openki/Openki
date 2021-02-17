@@ -37,3 +37,15 @@
 	margin-left: 25%;
 	padding-left: 15px;
 }
+
+.form-avatar {
+	width: 200px;
+
+	&-image {
+		width: 100%;
+	}
+
+	&-input {
+		width: 100%;
+	}
+}

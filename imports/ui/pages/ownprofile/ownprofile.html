@@ -40,6 +40,7 @@
 				<span class="fa fa-user-circle-o fa-fw" aria-hidden="true"></span>
 				{{mf 'login.frame.profile' 'Visit my profile'}}
 			</a>
+			{{> formAvatar}}
 			<div class="page-component">
 				{{#if editing}}
 					<div class="details-form">
@@ -269,5 +270,13 @@
 			</div>
 			{{> usersCourselist profileData=this ownProfile=true}}
 		{{/unless}}
+	</div>
+</template>
+
+<template name="formAvatar">
+	<div class="form-avatar">
+		<img class="form-avatar-image" style="filter:hue-rotate({{color}}deg)" src="/logo/{{avatarLogo}}" alt="{{mf 'profile.avatar.alt' 'Avatar'}}" />
+		<input type="range" class="js-change-avatar-color" id="avatarColorRange">
+		<label for="avatarColorRange" class="sr-only">{{mf 'profile.avatar.rangeLabel' 'Change hair color'}}</label>
 	</div>
 </template>
