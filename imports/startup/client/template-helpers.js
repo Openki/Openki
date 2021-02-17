@@ -125,7 +125,7 @@ const helpers = {
 	 * @param {string} html
 	 */
 	plain(html) {
-		// Change the html code so that a minimal style will remain after stripping the html tags.
+		// Prevent words from sticking together
 		// eg. <p>Kloradf dadeq gsd.</p><p>Loradf dadeq gsd.</p> => Kloradf dadeq gsd. Loradf dadeq gsd.
 		const htmlPreparedForMinimalStyling = html.replaceAll('<br />', '<br /> ')
 			.replaceAll('<p>', '<p> ')

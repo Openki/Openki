@@ -198,17 +198,13 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 //========================================================================================
 .kiosk-event-title {
 	color: $gray-dark;
-
-	// Simulate a h3 to support ellipsis-multiline
-	font-size: $font-size-h3;
-	font-weight: $headings-font-weight;
-	line-height: $headings-line-height;
-
+	display: inline-block;
 	margin: 0;
 }
 
 // ** Description
 //========================================================================================
 .kiosk-event-description {
+	display: inline;
 	margin: 0;
 }

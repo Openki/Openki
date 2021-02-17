@@ -102,12 +102,7 @@
 //========================================================================================
 .event-compact-title {
 	color: $gray-dark;
-
-	// Simulate a h4 to support ellipsis-multiline
-	font-size: $font-size-h4;
-	font-weight: $headings-font-weight;
-	line-height: $headings-line-height;
-
+	display: inline-block;
 	margin: 0 0 5px;
 }
 
@@ -115,5 +110,6 @@
 //========================================================================================
 .event-compact-description {
 	color: $blue;
+	display: inline-block;
 	margin: 0;
 }
