@@ -219,7 +219,7 @@
 
 <template name="avatar">
 	{{#if color this}}
-		<img class="discussion-profile-icon" style="filter:hue-rotate({{color this}}deg)" src="/logo/{{avatarLogo}}" alt="{{discussionAlt}}" />
+		<img class="discussion-profile-icon" style="filter:hue-rotate(-{{color this}}deg)" src="/logo/{{avatarLogo}}" alt="{{discussionAlt}}" />
 	{{else}}
 		<img class="discussion-profile-icon" src="/logo/{{discussionLogo}}" alt="{{discussionAlt}}" />
 	{{/if}}

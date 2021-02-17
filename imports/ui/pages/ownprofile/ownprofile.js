@@ -252,15 +252,17 @@ Template.profile.events({
 	},
 });
 
+Template.formAvatar.onCreated(function () {
+	this.tempColor = new ReactiveVar(Meteor.user().avatar?.color || 0);
+});
+
+Template.formAvatar.onRendered(() => {
+	$('#avatarColorRange').val(Template.instance().tempColor.get());
+});
+
 Template.formAvatar.helpers({
 	color() {
-		const color = Meteor.user().avatar?.color;
-
-		if (typeof color === 'undefined') {
-			return false;
-		}
-
-		return color;
+		return Template.instance().tempColor.get();
 	},
 
 	avatarLogo() {
@@ -270,10 +272,21 @@ Template.formAvatar.helpers({
 
 Template.formAvatar.events({
 	'input .js-change-avatar-color'(event, instance) {
-		// update ReactiveVar
+		instance.tempColor.set(event.target.value);
 	},
 
 	'change .js-change-avatar-color'(event, instance) {
-		// save to db
+		const newColor = Number(instance.tempColor.get());
+
+		// only update the color if it has changed
+		if (Meteor.user().avatar?.color === newColor) {
+			return;
+		}
+
+		Meteor.call('user.avatarColorChange', newColor, (err) => {
+			if (!err) {
+				Alert.success(mf('profile.updated', 'Updated profile'));
+			}
+		});
 	},
 });

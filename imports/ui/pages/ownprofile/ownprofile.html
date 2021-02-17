@@ -275,8 +275,12 @@
 
 <template name="formAvatar">
 	<div class="form-avatar">
-		<img class="form-avatar-image" style="filter:hue-rotate({{color}}deg)" src="/logo/{{avatarLogo}}" alt="{{mf 'profile.avatar.alt' 'Avatar'}}" />
-		<input type="range" class="js-change-avatar-color" id="avatarColorRange">
-		<label for="avatarColorRange" class="sr-only">{{mf 'profile.avatar.rangeLabel' 'Change hair color'}}</label>
+		<img class="form-avatar-image" style="filter:hue-rotate(-{{color}}deg)" src="/logo/{{avatarLogo}}" alt="{{mf 'profile.avatar.alt' 'Avatar'}}" />
+
+		<div class="form-group">
+			<label class="sr-only" for="avatarColorRange">{{mf 'profile.avatar.inputLabel' 'Change hair color'}}</label>
+			<input type="range" min="0" max="360" class="form-avatar-input js-change-avatar-color"
+				id="avatarColorRange">
+		</div>
 	</div>
 </template>
