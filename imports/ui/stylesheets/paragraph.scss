@@ -1,0 +1,8 @@
+.fake-paragraph {
+	// Source: https://stackoverflow.com/questions/1409649/how-to-change-the-height-of-a-br/29674365#29674365
+	content: '';
+	display: block;
+	line-height: 133%;
+	margin-top: .35em;
+	vertical-align: top;
+}
