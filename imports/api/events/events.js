@@ -1,4 +1,5 @@
 import { Mongo } from 'meteor/mongo';
+import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
 

@@ -6,7 +6,6 @@ accounts-oauth@1.2.0
 accounts-password@1.7.0
 allow-deny@1.1.0
 amplify@1.0.0
-archive:jquery-dotdotdot@1.6.15
 autoupdate@1.7.0
 babel-compiler@7.6.0
 babel-runtime@1.5.0

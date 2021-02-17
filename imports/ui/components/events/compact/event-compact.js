@@ -32,7 +32,3 @@ Template.eventCompact.events({
 		instance.$('.event-compact').toggleClass('elevate-child');
 	},
 });
-
-Template.eventCompact.rendered = function () {
-	this.$('.event-compact').dotdotdot();
-};

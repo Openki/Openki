@@ -3,3 +3,10 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+@mixin ellipsis-multiline($lines) {
+	// Source: https://css-tricks.com/almanac/properties/l/line-clamp/
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: $lines;
+	display: -webkit-box;
+	overflow: hidden;
+}

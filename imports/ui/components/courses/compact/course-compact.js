@@ -178,6 +178,3 @@ Template.courseCompact.events({
 	},
 });
 
-Template.courseCompact.onRendered(function () {
-	this.$('.course-compact-title').dotdotdot();
-});

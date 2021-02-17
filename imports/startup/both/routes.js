@@ -191,6 +191,7 @@ Router.map(function () {
 				addTeamGroups: Predicates.ids,
 				neededRoles: Predicates.ids,
 				internal: Predicates.flag,
+				hidePricePolicy: Predicates.flag,
 			};
 			const params = Filtering(predicates).read(this.params.query).done().toQuery();
 

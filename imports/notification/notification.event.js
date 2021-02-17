@@ -54,17 +54,6 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	Log.record('Notification.Send', [course._id], body);
 };
 
-/** @param {UserModel} user */
-notificationEvent.accepted = function (user) {
-	if (user.notifications === false) {
-		throw new Error('User wishes to not receive automated notifications');
-	}
-
-	if (!user.emails || !user.emails[0] || !user.emails[0].address) {
-		throw new Error('Recipient has no email address registered');
-	}
-};
-
 notificationEvent.Model = function (entry) {
 	const event = Events.findOne(entry.body.eventId);
 
