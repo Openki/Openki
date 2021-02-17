@@ -212,17 +212,6 @@ mfPkg.syncAll({
       "mtime": 1481556932420,
       "revisionId": "TBr4i56rCd7Z4m8bg"
     },
-    "_notYetWorking": {
-      "_id": "FgRsXsQgQNzpehegq",
-      "key": "_notYetWorking",
-      "lang": "ar",
-      "text": "لا يشتغل الآن",
-      "ctime": 1481557032033,
-      "mtime": 1481557032033,
-      "revisionId": "YtJYyoX2eP4yNfWJv",
-      "removed": true,
-      "fuzzy": true
-    },
     "_option.off": {
       "_id": "otDcH886L6mcdJotP",
       "key": "_option.off",
@@ -903,17 +892,6 @@ mfPkg.syncAll({
       "removed": true,
       "fuzzy": true
     },
-    "course.details.repl_menu_btn": {
-      "_id": "xMgrdtDSzKXjzMEua",
-      "key": "course.details.repl_menu_btn",
-      "lang": "ar",
-      "text": "تكرار",
-      "ctime": 1481562546370,
-      "mtime": 1481562546370,
-      "revisionId": "2iF7TCMivN8FHGwhz",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussion.anon": {
       "_id": "5hx7f22378FRXdtZX",
       "key": "course.discussion.anon",
@@ -1013,17 +991,6 @@ mfPkg.syncAll({
       "mtime": 1481627293077,
       "revisionId": "6QHyvm2s9DKXFgqDN"
     },
-    "course.dtails.paticipants.title": {
-      "_id": "E4sTmijt36rosRneJ",
-      "key": "course.dtails.paticipants.title",
-      "lang": "ar",
-      "text": "{NUM, plural,\n\t\t\t\t\t=0 {المشاركين حتى الآن}\n\t\t\t\t\tone {1 مشارك}\n\t\t\t\t\tother {# مشاركين}\n\t\t\t\t}",
-      "ctime": 1465318166508,
-      "mtime": 1465318166508,
-      "revisionId": "PjbTvGARqrGttFjxe",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.edit.categories": {
       "_id": "iHKx2rcdQHjNm5ARg",
       "key": "course.edit.categories",
@@ -1104,17 +1071,6 @@ mfPkg.syncAll({
       "ctime": 1481627787182,
       "mtime": 1481627787182,
       "revisionId": "PkG4fnrbRyrm73q7W"
-    },
-    "course.event.detail.back": {
-      "_id": "aAfeijsTupremefPh",
-      "key": "course.event.detail.back",
-      "lang": "ar",
-      "text": "الرجوع الى الدرس",
-      "ctime": 1481627819497,
-      "mtime": 1481627819497,
-      "revisionId": "tw8vZ66tXTFY9uGy5",
-      "removed": true,
-      "fuzzy": true
     },
     "course.event.detail.goToCourse": {
       "_id": "jF5vd4mpSh6SbKFk3",
@@ -1379,28 +1335,6 @@ mfPkg.syncAll({
       "ctime": 1512398144939,
       "mtime": 1512398144939,
       "revisionId": "s78hkqYbKkBxhuSmw"
-    },
-    "course.roles.enrol": {
-      "_id": "EPemRHJrrNvCMarG4",
-      "key": "course.roles.enrol",
-      "lang": "ar",
-      "text": "ادرج اسمك",
-      "ctime": 1481645473601,
-      "mtime": 1481645473601,
-      "revisionId": "DekLzGZrS4HcwkmCF",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enrol_as": {
-      "_id": "t4La3DqHGkGYH3hG6",
-      "key": "course.roles.enrol_as",
-      "lang": "ar",
-      "text": "تسجيل كما",
-      "ctime": 1481645504368,
-      "mtime": 1481645504368,
-      "revisionId": "9RRtcNHJJvpgrZiyh",
-      "removed": true,
-      "fuzzy": true
     },
     "course.roles.firstSteps.title": {
       "_id": "KXoBMtHbaXyhtbgWk",
@@ -1833,17 +1767,6 @@ mfPkg.syncAll({
       "ctime": 1481731347563,
       "mtime": 1481731360429,
       "revisionId": "bBet2CuW2XBHmQuX4"
-    },
-    "frame.login_external_services": {
-      "_id": "WS9uzCwaxypk7ghEE",
-      "key": "frame.login_external_services",
-      "lang": "ar",
-      "text": "تسجبل الدخول عن طريق:",
-      "ctime": 1465596820061,
-      "mtime": 1465596820061,
-      "revisionId": "gLrDiiAQP62TxZq9g",
-      "removed": true,
-      "fuzzy": true
     },
     "frameCalendar.nothingOnThisDay": {
       "_id": "XcTstLmzsRjJ3ZdkK",
@@ -2516,17 +2439,6 @@ mfPkg.syncAll({
       "mtime": 1479158585425,
       "revisionId": "KuARdDnsTqjgr2p6f"
     },
-    "_notYetWorking": {
-      "_id": "ZFyoDGq227ZCEr6sg",
-      "key": "_notYetWorking",
-      "lang": "da",
-      "text": "virker ikke endnu",
-      "ctime": 1479158602249,
-      "mtime": 1479158602249,
-      "revisionId": "JK8EbgoRKy3Zc5aif",
-      "removed": true,
-      "fuzzy": true
-    },
     "_selection.pleaseSelect": {
       "_id": "wNJHZZzLrSPm7zaqq",
       "key": "_selection.pleaseSelect",
@@ -3182,17 +3094,6 @@ mfPkg.syncAll({
       "removed": true,
       "fuzzy": true
     },
-    "course.details.repl_menu_btn": {
-      "_id": "gFsgz5EnRoi73A4Sm",
-      "key": "course.details.repl_menu_btn",
-      "lang": "da",
-      "text": "Gentag",
-      "ctime": 1441284998549,
-      "mtime": 1441284998549,
-      "revisionId": "JLoJvkEc8scNAeKB2",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussion.anon": {
       "_id": "wNrjuA9mKMXwRzLmZ",
       "key": "course.discussion.anon",
@@ -3291,17 +3192,6 @@ mfPkg.syncAll({
       "ctime": 1441282541949,
       "mtime": 1441285239108,
       "revisionId": "W8Y62pLMEkej8dr8o"
-    },
-    "course.dtails.paticipants.title": {
-      "_id": "jcQgqjHg56mvrd9wr",
-      "key": "course.dtails.paticipants.title",
-      "lang": "da",
-      "text": "{NUM, plural,\n\t\t\t\t\t=0 {Ingen deltagere endnu}\n\t\t\t\t\tone {1 deltager}\n\t\t\t\t\tother {# deltagere}\n\t\t\t\t}",
-      "ctime": 1441287359038,
-      "mtime": 1479161774993,
-      "revisionId": "bvDr3CYTp32C7fkKr",
-      "removed": true,
-      "fuzzy": true
     },
     "course.edit.categories": {
       "_id": "8krFu8HWaAEQzk4mk",
@@ -3403,17 +3293,6 @@ mfPkg.syncAll({
       "ctime": 1441300873157,
       "mtime": 1479162235585,
       "revisionId": "666Te4hHThPhJXRPD"
-    },
-    "course.event.detail.back": {
-      "_id": "zuLvgp4zpHebmipzr",
-      "key": "course.event.detail.back",
-      "lang": "da",
-      "text": "Tilbage til kursus",
-      "ctime": 1441301043028,
-      "mtime": 1441301043028,
-      "revisionId": "ENZ6gzrFrpK9NSiSA",
-      "removed": true,
-      "fuzzy": true
     },
     "course.event.detail.goToCourse": {
       "_id": "NMGowTtFrNw7N7aiW",
@@ -3696,28 +3575,6 @@ mfPkg.syncAll({
       "ctime": 1479168402997,
       "mtime": 1479168420800,
       "revisionId": "MyJNERC7bz7BzWQtS",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enrol": {
-      "_id": "SmnfL6Gjdy2xjJBL7",
-      "key": "course.roles.enrol",
-      "lang": "da",
-      "text": "Tilmeld",
-      "ctime": 1441300462174,
-      "mtime": 1441300462174,
-      "revisionId": "Wd8AxihHvP2SNE9gE",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enrol_as": {
-      "_id": "bSjtso7pe3NZvBPGC",
-      "key": "course.roles.enrol_as",
-      "lang": "da",
-      "text": "Tilmeld som",
-      "ctime": 1441300289185,
-      "mtime": 1441300289185,
-      "revisionId": "sKvyfY4fXpnLJX4z4",
       "removed": true,
       "fuzzy": true
     },
@@ -4122,17 +3979,6 @@ mfPkg.syncAll({
       "ctime": 1441288626944,
       "mtime": 1441288626944,
       "revisionId": "buRuusHBC2NYRnxxH"
-    },
-    "frame.login_external_services": {
-      "_id": "j9QgrvkE77jzHWGP8",
-      "key": "frame.login_external_services",
-      "lang": "da",
-      "text": "Eller log ind med:",
-      "ctime": 1441298479511,
-      "mtime": 1441298479511,
-      "revisionId": "uKktZWsW5A9u6ZefH",
-      "removed": true,
-      "fuzzy": true
     },
     "kiosk.future": {
       "_id": "P4W2JPRj8nxv3pa3F",
@@ -5273,17 +5119,6 @@ mfPkg.syncAll({
       "mtime": 1481509240283,
       "revisionId": "EiCFLfeCBsogLZFZf"
     },
-    "_notYetWorking": {
-      "_id": "RKiLFXFSFrPk5Dkd8",
-      "key": "_notYetWorking",
-      "lang": "de",
-      "text": "das funktioniert noch nicht",
-      "ctime": 1473695627202,
-      "mtime": 1473695627202,
-      "revisionId": "Pgu9qaqppojhyfYsW",
-      "removed": true,
-      "fuzzy": true
-    },
     "_option.off": {
       "_id": "Cg77ZLp2kuYxjiuoe",
       "key": "_option.off",
@@ -6154,17 +5989,6 @@ mfPkg.syncAll({
       "removed": true,
       "fuzzy": true
     },
-    "course.details.repl_menu_btn": {
-      "_id": "WMJmt4faZXzC8XkBT",
-      "key": "course.details.repl_menu_btn",
-      "lang": "de",
-      "text": "Vervielfältigen ",
-      "ctime": 1434199678251,
-      "mtime": 1434199678251,
-      "revisionId": "4aAgBGZGCx9JqDgCm",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussion.anon": {
       "_id": "ZiSJiBur25vZCaYQu",
       "key": "course.discussion.anon",
@@ -6264,28 +6088,6 @@ mfPkg.syncAll({
       "mtime": 1595271975176,
       "revisionId": "YdTcBhXzCuwzeRqsh"
     },
-    "course.discussions.hideAnswers": {
-      "_id": "uKYFEnpDctEMf8KHJ",
-      "key": "course.discussions.hideAnswers",
-      "lang": "de",
-      "text": "Verberge Antworten",
-      "ctime": 1509998305383,
-      "mtime": 1509998305384,
-      "revisionId": "wkv64m6tq6vcpXWEz",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.discussions.showAllAnswers": {
-      "_id": "8grkXcAf8SrXpYiTD",
-      "key": "course.discussions.showAllAnswers",
-      "lang": "de",
-      "text": "Zeige alle {NUM} Antworten",
-      "ctime": 1509998336353,
-      "mtime": 1509998336353,
-      "revisionId": "PxKkzdsdawFmq9X8b",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussions.showAllComments": {
       "_id": "bxhNYDhmDAkWxanvS",
       "key": "course.discussions.showAllComments",
@@ -6321,17 +6123,6 @@ mfPkg.syncAll({
       "ctime": 1433160852023,
       "mtime": 1595272022555,
       "revisionId": "5R9mCcgmJAm3oxinY"
-    },
-    "course.dtails.paticipants.title": {
-      "_id": "m8zJLSYuE2Tk8RPrL",
-      "key": "course.dtails.paticipants.title",
-      "lang": "de",
-      "text": "{NUM, plural,\n\t\t\t\t\t=0 {Noch keine Teilnehmenden}\n\t\t\t\t\tone {1 Teilnehmer_in}\n\t\t\t\t\tother {# Teilnehmende}\n\t\t\t\t}",
-      "ctime": 1433160472951,
-      "mtime": 1477161279955,
-      "revisionId": "vQGWuE6B4H3r9fE32",
-      "removed": true,
-      "fuzzy": true
     },
     "course.edit.categories": {
       "_id": "qTzKMf5Nrw4E5Squb",
@@ -6458,17 +6249,6 @@ mfPkg.syncAll({
       "ctime": 1425257255041,
       "mtime": 1499817401736,
       "revisionId": "smYQoKCsrYrMWFe8h"
-    },
-    "course.event.detail.back": {
-      "_id": "vEw523ereS7E6arF2",
-      "key": "course.event.detail.back",
-      "lang": "de",
-      "text": "Zurück zum Kurs",
-      "ctime": 1425257065082,
-      "mtime": 1425257065082,
-      "revisionId": "t4KMLQ4SmmK9vknh6",
-      "removed": true,
-      "fuzzy": true
     },
     "course.event.detail.goToCourse": {
       "_id": "8iEpRtokBwqMf2uWF",
@@ -6932,37 +6712,6 @@ mfPkg.syncAll({
       "ctime": 1509999221244,
       "mtime": 1509999221244,
       "revisionId": "r2cs233Xub4QXW575"
-    },
-    "course.roles.enrol": {
-      "_id": "mTDYY5SvTTZT5jfYr",
-      "key": "course.roles.enrol",
-      "lang": "de",
-      "text": "anmelden",
-      "ctime": 1425257608796,
-      "mtime": 1425257608796,
-      "revisionId": "4iDoWtGXgcr9cTdy4",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enrol_as": {
-      "_id": "6RwFYzNetrqotKyfX",
-      "key": "course.roles.enrol_as",
-      "lang": "de",
-      "text": "anmelden als",
-      "ctime": 1425257492942,
-      "mtime": 1425257492942,
-      "revisionId": "eQQug94pNa4HvF6MT",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enroll": {
-      "_id": "buQNEQDjFXMcatS3B",
-      "key": "course.roles.enroll",
-      "lang": "de",
-      "text": "Anmelden",
-      "ctime": 1509999251122,
-      "mtime": 1509999251122,
-      "revisionId": "bdDpkeSRJ5KYmNQw9"
     },
     "course.roles.firstSteps.allMembersInformed": {
       "_id": "9vYKpy6pBJxoFTMpX",
@@ -8464,17 +8213,6 @@ mfPkg.syncAll({
       "ctime": 1448250669405,
       "mtime": 1518524464100,
       "revisionId": "RfXGhrgzutSpEukca"
-    },
-    "frame.login_external_services": {
-      "_id": "iSeQHJ2A8gfhw5nAT",
-      "key": "frame.login_external_services",
-      "lang": "de",
-      "text": "Oder logg dich ein mit:",
-      "ctime": 1425257781436,
-      "mtime": 1454512747666,
-      "revisionId": "yvSQ7XW7jnqZt2hCJ",
-      "removed": true,
-      "fuzzy": true
     },
     "frameCalendar.nothingOnThisDay": {
       "_id": "JFf6QLccTj98gaKP9",
@@ -13051,17 +12789,6 @@ mfPkg.syncAll({
       "mtime": 1605512770070,
       "revisionId": "5h2DwipBSxxPYiqW6"
     },
-    "course.details.repl_menu_btn": {
-      "_id": "ANbmaMmZy3zxRdkGy",
-      "key": "course.details.repl_menu_btn",
-      "lang": "de-ZH",
-      "text": "Widerholä",
-      "ctime": 1450205627300,
-      "mtime": 1450205627300,
-      "revisionId": "KfzRsvSc7WcaAwd37",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussion.anon": {
       "_id": "9M3MGDkRbPiZ76YzX",
       "key": "course.discussion.anon",
@@ -13162,17 +12889,6 @@ mfPkg.syncAll({
       "mtime": 1458820464865,
       "revisionId": "263xsWJhELkgDSryB"
     },
-    "course.discussions.hideAnswers": {
-      "_id": "iyk2z2Kobk4hwBskr",
-      "key": "course.discussions.hideAnswers",
-      "lang": "de-ZH",
-      "text": "Antworte usblände",
-      "ctime": 1520260600515,
-      "mtime": 1520260600515,
-      "revisionId": "fgoqv7sMrkMk7o8Nx",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussions.showAllComments": {
       "_id": "r6udTr2PqJYPoMPNJ",
       "key": "course.discussions.showAllComments",
@@ -13208,17 +12924,6 @@ mfPkg.syncAll({
       "ctime": 1458817848149,
       "mtime": 1458817848149,
       "revisionId": "duXcDNCkAGGzmbmxo"
-    },
-    "course.dtails.paticipants.title": {
-      "_id": "Q9FNQKda6i46WFGy2",
-      "key": "course.dtails.paticipants.title",
-      "lang": "de-ZH",
-      "text": "Teilnehmendi",
-      "ctime": 1449922396477,
-      "mtime": 1449922396477,
-      "revisionId": "5zKhDR547ZC89f94h",
-      "removed": true,
-      "fuzzy": true
     },
     "course.edit.categories": {
       "_id": "fftLyBYAp8avry6HR",
@@ -13348,17 +13053,6 @@ mfPkg.syncAll({
       "ctime": 1449923512311,
       "mtime": 1449923512311,
       "revisionId": "unX8Y498mg84cEBoE",
-      "fuzzy": true
-    },
-    "course.event.detail.back": {
-      "_id": "bA7tYwSqvY6PhWARu",
-      "key": "course.event.detail.back",
-      "lang": "de-ZH",
-      "text": "Zrug zum Kurs",
-      "ctime": 1458817076040,
-      "mtime": 1458817076040,
-      "revisionId": "XMgBut2G72v84JWe6",
-      "removed": true,
       "fuzzy": true
     },
     "course.event.edit.AddMessage": {
@@ -13700,28 +13394,6 @@ mfPkg.syncAll({
       "ctime": 1520322007863,
       "mtime": 1520322007863,
       "revisionId": "WXSDxPjW5tJWbjvwG"
-    },
-    "course.roles.enrol": {
-      "_id": "ZmqX257LeEgdh2Epc",
-      "key": "course.roles.enrol",
-      "lang": "de-ZH",
-      "text": "iischribä",
-      "ctime": 1458817912322,
-      "mtime": 1458817912322,
-      "revisionId": "QFm6J8YXA55skp6Jr",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enrol_as": {
-      "_id": "SEL4ygNhpyM8Qejjn",
-      "key": "course.roles.enrol_as",
-      "lang": "de-ZH",
-      "text": "iischribä als",
-      "ctime": 1458817918262,
-      "mtime": 1458817918262,
-      "revisionId": "zCF8o7kaQBqrr7aRC",
-      "removed": true,
-      "fuzzy": true
     },
     "course.roles.firstSteps.allMembersInformed": {
       "_id": "v5FFrtrq3D79WvSzM",
@@ -14450,17 +14122,6 @@ mfPkg.syncAll({
       "ctime": 1449923507390,
       "mtime": 1450175921774,
       "revisionId": "RyPQgPv3JfBSj77qD",
-      "fuzzy": true
-    },
-    "frame.login_external_services": {
-      "_id": "dZjLNPviiGwwHY5A5",
-      "key": "frame.login_external_services",
-      "lang": "de-ZH",
-      "text": "Oder mäld dich ah mit:",
-      "ctime": 1449923490323,
-      "mtime": 1450175882311,
-      "revisionId": "EHCQJjGH7XFHbNR4m",
-      "removed": true,
       "fuzzy": true
     },
     "frameCalendar.nothingOnThisDay": {
@@ -16345,17 +16006,6 @@ mfPkg.syncAll({
       "mtime": 1482691206160,
       "revisionId": "yrzffpo3QMf4uuRth"
     },
-    "_notYetWorking": {
-      "_id": "W3LCcSW8cM4QM8gLd",
-      "key": "_notYetWorking",
-      "lang": "el",
-      "text": "δεν έχει υλοποιηθεί",
-      "ctime": 1487876664602,
-      "mtime": 1487876664602,
-      "revisionId": "BnSKgCwuoB6oAe22z",
-      "removed": true,
-      "fuzzy": true
-    },
     "_selection.pleaseSelect": {
       "_id": "nC4t6wxaxvoHfJyi6",
       "key": "_selection.pleaseSelect",
@@ -17047,17 +16697,6 @@ mfPkg.syncAll({
       "removed": true,
       "fuzzy": true
     },
-    "course.details.repl_menu_btn": {
-      "_id": "u6eGvhfh5SMu5kgov",
-      "key": "course.details.repl_menu_btn",
-      "lang": "el",
-      "text": "Επανάληψη",
-      "ctime": 1448105874319,
-      "mtime": 1448105874319,
-      "revisionId": "FKKhLBEbL2DdNykxA",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussion.anon": {
       "_id": "jZcPucfDkbFHA8W4y",
       "key": "course.discussion.anon",
@@ -17148,17 +16787,6 @@ mfPkg.syncAll({
       "mtime": 1448106619344,
       "revisionId": "BfCyHsh2QCqRmpiJx"
     },
-    "course.discussions.hideAnswers": {
-      "_id": "TFfhyGDpPsSWkjGBj",
-      "key": "course.discussions.hideAnswers",
-      "lang": "el",
-      "text": "Απόκρυψη απαντήσεων",
-      "ctime": 1511281080627,
-      "mtime": 1511281080627,
-      "revisionId": "LMMGCgs8ocN8b5WhR",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.docs.noFiles": {
       "_id": "ECgXo7tufkNKwt8EZ",
       "key": "course.docs.noFiles",
@@ -17176,17 +16804,6 @@ mfPkg.syncAll({
       "ctime": 1448105333327,
       "mtime": 1448105333327,
       "revisionId": "nedon9NDvAFbpWTMz"
-    },
-    "course.dtails.paticipants.title": {
-      "_id": "A6Ni7grBkE4RZvMbj",
-      "key": "course.dtails.paticipants.title",
-      "lang": "el",
-      "text": "Συμμετέχοντες",
-      "ctime": 1448105491772,
-      "mtime": 1448105491772,
-      "revisionId": "FG4yYt94pFqNpTwZe",
-      "removed": true,
-      "fuzzy": true
     },
     "course.edit.categories": {
       "_id": "hJ3bG75qt5JpYe2ds",
@@ -17295,17 +16912,6 @@ mfPkg.syncAll({
       "ctime": 1448105818738,
       "mtime": 1482691444268,
       "revisionId": "5uQXvapfW3ZLeGdhw"
-    },
-    "course.event.detail.back": {
-      "_id": "u5EQPSFTL876ivsEb",
-      "key": "course.event.detail.back",
-      "lang": "el",
-      "text": "Πίσω στο μάθημα",
-      "ctime": 1448200351527,
-      "mtime": 1448200351527,
-      "revisionId": "mmE5pQtNcRn5JtEtj",
-      "removed": true,
-      "fuzzy": true
     },
     "course.event.detail.goToCourse": {
       "_id": "4WweuBQt5fB8bDBtm",
@@ -17661,37 +17267,6 @@ mfPkg.syncAll({
       "ctime": 1511281269949,
       "mtime": 1511281269949,
       "revisionId": "4s5reFDdaHMWRvDz4"
-    },
-    "course.roles.enrol": {
-      "_id": "zZ9gn3foWf7ptDTQP",
-      "key": "course.roles.enrol",
-      "lang": "el",
-      "text": "Συμμετοχή",
-      "ctime": 1448199833900,
-      "mtime": 1448199833900,
-      "revisionId": "MSzGgP8ia62CXt6uc",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enrol_as": {
-      "_id": "xscAuwc5RHoyuDo4r",
-      "key": "course.roles.enrol_as",
-      "lang": "el",
-      "text": "Συμμετοχή ως",
-      "ctime": 1448200480395,
-      "mtime": 1448200480395,
-      "revisionId": "wALDECWEPaMw3sog4",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enroll": {
-      "_id": "WR29akBpTn5xkP4uf",
-      "key": "course.roles.enroll",
-      "lang": "el",
-      "text": "Συμμετέχω",
-      "ctime": 1511281283749,
-      "mtime": 1511281283749,
-      "revisionId": "ukLjA2aanerZGN37X"
     },
     "course.roles.leave_message": {
       "_id": "AWGjSzH4bQoy9Tmu5",
@@ -18479,17 +18054,6 @@ mfPkg.syncAll({
       "ctime": 1448200333674,
       "mtime": 1488309428115,
       "revisionId": "LTRgp4ChugrjwjKn3"
-    },
-    "frame.login_external_services": {
-      "_id": "sA6Zx3ek27DcCEcMC",
-      "key": "frame.login_external_services",
-      "lang": "el",
-      "text": "Ή σύνδεση με:",
-      "ctime": 1448108262001,
-      "mtime": 1448108262001,
-      "revisionId": "tyJBaab2QQnaiBsYt",
-      "removed": true,
-      "fuzzy": true
     },
     "frameCalendar.nothingOnThisDay": {
       "_id": "Jc4NRBh56DLiA7xfY",
@@ -21002,18 +20566,6 @@ mfPkg.syncAll({
       "line": 101,
       "template": "mfFixedTranslations"
     },
-    "_notYetWorking": {
-      "_id": "xhybTc2mQgJRxBwDF",
-      "key": "_notYetWorking",
-      "lang": "en",
-      "text": "not working yet",
-      "mtime": 1559566065823,
-      "revisionId": "QcPQQYCiauAxNZBwB",
-      "file": "imports/ui/components/groups/settings/group-settings.html",
-      "line": 25,
-      "template": "groupSettings",
-      "removed": true
-    },
     "_option.off": {
       "_id": "wEjoks24ztBiz2CTm",
       "key": "_option.off",
@@ -22253,18 +21805,6 @@ mfPkg.syncAll({
       "template": "eventReplication",
       "removed": true
     },
-    "course.details.repl_menu_btn": {
-      "_id": "84ivkQJeZgTbYTByh",
-      "key": "course.details.repl_menu_btn",
-      "lang": "en",
-      "text": "Repeat",
-      "mtime": 1559566065823,
-      "revisionId": "A7JYdcEzaZNgmKY5z",
-      "file": "imports/ui/pages/event-details/event-details.html",
-      "line": 90,
-      "template": "eventPage",
-      "removed": true
-    },
     "course.discussion.anon": {
       "_id": "qQdmdNMNTqxxS6E4R",
       "key": "course.discussion.anon",
@@ -22386,32 +21926,6 @@ mfPkg.syncAll({
       "line": 75,
       "template": "discussion"
     },
-    "course.discussions.hideAnswers": {
-      "_id": "ubzMxCCmupMH3emsK",
-      "key": "course.discussions.hideAnswers",
-      "lang": "en",
-      "text": "Hide answers",
-      "ctime": null,
-      "mtime": 1523217571774,
-      "revisionId": "gXCroZX9EQo9Ggq2Z",
-      "file": "imports/ui/components/courses/discussion/course-discussion.html",
-      "line": 40,
-      "template": "discussion",
-      "removed": true
-    },
-    "course.discussions.showAllAnswers": {
-      "_id": "jib678ZzXZyS9qzNY",
-      "key": "course.discussions.showAllAnswers",
-      "lang": "en",
-      "text": "Show all {NUM} answers",
-      "ctime": null,
-      "mtime": 1523217571774,
-      "revisionId": "HY3ZhiNa9aRXdHqe2",
-      "file": "imports/ui/components/courses/discussion/course-discussion.html",
-      "line": 45,
-      "template": "discussion",
-      "removed": true
-    },
     "course.discussions.showAllComments": {
       "_id": "gnHhth6GzdqH9PcJv",
       "key": "course.discussions.showAllComments",
@@ -22456,18 +21970,6 @@ mfPkg.syncAll({
       "file": "imports/ui/components/courses/events/course-events.html",
       "line": 113,
       "template": "courseEvents"
-    },
-    "course.dtails.paticipants.title": {
-      "_id": "7oo3a6tbfz5Jz6xnQ",
-      "key": "course.dtails.paticipants.title",
-      "lang": "en",
-      "text": "{NUM, plural,\n\t\t\t\t\t=0 {No participants yet}\n\t\t\t\t\tone {1 Participant}\n\t\t\t\t\tother {# Participants}\n\t\t\t\t}",
-      "mtime": 1563210980830,
-      "revisionId": "xvAfwFtJAQ7u4tDyc",
-      "file": "imports/ui/components/courses/members/course-members.html",
-      "line": 5,
-      "template": "courseMembers",
-      "removed": true
     },
     "course.edit.categories": {
       "_id": "Fk3HNMstPLDmoxCwe",
@@ -22721,19 +22223,6 @@ mfPkg.syncAll({
       "file": "imports/ui/components/courses/edit/course-edit.html",
       "line": 183,
       "template": "courseEdit"
-    },
-    "course.event.detail.back": {
-      "_id": "PAQznF9mmuzdfMvJP",
-      "key": "course.event.detail.back",
-      "lang": "en",
-      "text": "Back to course",
-      "ctime": null,
-      "mtime": 1509027834524,
-      "revisionId": "TjocngDnxy4rMAYPn",
-      "file": "client/views/events/details/event.details.html",
-      "line": 26,
-      "template": "eventPage",
-      "removed": true
     },
     "course.event.detail.goToCourse": {
       "_id": "peiWJsuxE8oaPmWY7",
@@ -23316,58 +22805,6 @@ mfPkg.syncAll({
       "file": "imports/ui/pages/course-details/course-details.html",
       "line": 84,
       "template": "courseDetailsPage"
-    },
-    "course.roles.enrol": {
-      "_id": "8Num3CCK4MoPHALRg",
-      "key": "course.roles.enrol",
-      "lang": "en",
-      "text": "Enroll",
-      "ctime": null,
-      "mtime": 1502141512662,
-      "revisionId": "5MnwhttXiPsKM49Kg",
-      "file": "client/views/courses/roles/course.roles.html",
-      "line": 38,
-      "template": "courseRoles",
-      "removed": true
-    },
-    "course.roles.enrol_as": {
-      "_id": "efmA7KHAXLMMmCCSY",
-      "key": "course.roles.enrol_as",
-      "lang": "en",
-      "text": "Enroll as",
-      "ctime": null,
-      "mtime": 1508332626527,
-      "revisionId": "BjmTkRKjbchMAZota",
-      "file": "client/views/courses/roles/course.roles.html",
-      "line": 24,
-      "template": "courseRoles",
-      "removed": true
-    },
-    "course.roles.enroll": {
-      "_id": "JNyoccvNwNRg6KBcT",
-      "key": "course.roles.enroll",
-      "lang": "en",
-      "text": "Enroll",
-      "ctime": 1512996623977,
-      "mtime": 1512996737253,
-      "revisionId": "BxJaPZ9q8NYz6cSiE",
-      "file": "imports/ui/components/courses/roles/course-roles.html",
-      "line": 70,
-      "template": "courseRoles",
-      "removed": true
-    },
-    "course.roles.enroll.busy": {
-      "_id": "EM2cG5BDqtFubeEmE",
-      "key": "course.roles.enroll.busy",
-      "lang": "en",
-      "text": "Enrolling...",
-      "ctime": 1512996623977,
-      "mtime": 1512996737253,
-      "revisionId": "2G4Et2JHTKexZZ3eT",
-      "file": "imports/ui/components/courses/roles/course-roles.html",
-      "line": 67,
-      "template": "courseRoles",
-      "removed": true
     },
     "course.roles.firstSteps.allMembersInformed": {
       "_id": "ubnAeNdLENjFD4szk",
@@ -25783,19 +25220,6 @@ mfPkg.syncAll({
       "file": "imports/ui/components/account-tasks/account-tasks.html",
       "line": 52,
       "template": "accountTasks"
-    },
-    "frame.login_external_services": {
-      "_id": "eqAT4taJkrHqARWsm",
-      "key": "frame.login_external_services",
-      "lang": "en",
-      "text": "Or login with:",
-      "ctime": null,
-      "mtime": 1502141512662,
-      "revisionId": "BwDTNqQx3YSqn9FmH",
-      "file": "client/views/login/frame/login.frame.html",
-      "line": 63,
-      "template": "userFrame",
-      "removed": true
     },
     "frameCalendar.nothingOnThisDay": {
       "_id": "s5HhPQ8LxwsheEmxe",
@@ -32271,17 +31695,6 @@ mfPkg.syncAll({
       "mtime": 1452579484372,
       "revisionId": "HkTcfDsTKLkkR4ZgB"
     },
-    "course.details.repl_menu_btn": {
-      "_id": "ngs6raBKADm9TvrM5",
-      "key": "course.details.repl_menu_btn",
-      "lang": "es",
-      "text": "Repetir",
-      "ctime": 1452579540498,
-      "mtime": 1452579540498,
-      "revisionId": "978FCfCyHm3aMyLHq",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussion.anon": {
       "_id": "qanL2m3mSLPu3EwwH",
       "key": "course.discussion.anon",
@@ -32374,17 +31787,6 @@ mfPkg.syncAll({
       "ctime": 1452579398433,
       "mtime": 1452579398433,
       "revisionId": "5sznRoRrf6yThcppF",
-      "fuzzy": true
-    },
-    "course.event.detail.back": {
-      "_id": "taNadR5appJ5Z5Jkm",
-      "key": "course.event.detail.back",
-      "lang": "es",
-      "text": "Regresar al curso",
-      "ctime": 1452576834453,
-      "mtime": 1452576834453,
-      "revisionId": "qj2ygFzdmbvrtNbT8",
-      "removed": true,
       "fuzzy": true
     },
     "course.event.edit.add": {
@@ -32498,28 +31900,6 @@ mfPkg.syncAll({
       "ctime": 1452627398601,
       "mtime": 1452627398601,
       "revisionId": "u7644yiMofvg36iqg"
-    },
-    "course.roles.enrol": {
-      "_id": "SZnrSitnqziXqe9sh",
-      "key": "course.roles.enrol",
-      "lang": "es",
-      "text": "Inscribirse",
-      "ctime": 1450203583356,
-      "mtime": 1450203583356,
-      "revisionId": "tZc4sozNHR8gaphAt",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enrol_as": {
-      "_id": "bEeRK2yDtFrki2NiM",
-      "key": "course.roles.enrol_as",
-      "lang": "es",
-      "text": "Inscribirse como",
-      "ctime": 1452577275908,
-      "mtime": 1452577275908,
-      "revisionId": "mt3rRsfnGQPeAnZBj",
-      "removed": true,
-      "fuzzy": true
     },
     "course.roles.maketeam": {
       "_id": "Qpb5m5XYGcN26gzDF",
@@ -32842,17 +32222,6 @@ mfPkg.syncAll({
       "ctime": 1452577179615,
       "mtime": 1452577179616,
       "revisionId": "Zkn2RTk77qwN4byc6"
-    },
-    "frame.login_external_services": {
-      "_id": "H8wEah332C7865HrE",
-      "key": "frame.login_external_services",
-      "lang": "es",
-      "text": "O inicia la sesión con:",
-      "ctime": 1452578560715,
-      "mtime": 1452578560715,
-      "revisionId": "ADSyn6zzyyAqagRZy",
-      "removed": true,
-      "fuzzy": true
     },
     "frameCalendar.nothingOnThisDay": {
       "_id": "umaGkpkGjyDn44Hc6",
@@ -33758,17 +33127,6 @@ mfPkg.syncAll({
       "mtime": 1465567974299,
       "revisionId": "AjmyasBDNNZbB6XLr"
     },
-    "frame.login_external_services": {
-      "_id": "P4rMz8DzjhtEn493r",
-      "key": "frame.login_external_services",
-      "lang": "fa",
-      "text": "و یا ورود با:",
-      "ctime": 1465568012608,
-      "mtime": 1465568012608,
-      "revisionId": "ZyJ5gBNDhbAbHdwMy",
-      "removed": true,
-      "fuzzy": true
-    },
     "login.frame.settings": {
       "_id": "mcJsrkjJQ5cZSAPoi",
       "key": "login.frame.settings",
@@ -34110,17 +33468,6 @@ mfPkg.syncAll({
       "ctime": 1527456987663,
       "mtime": 1527456987663,
       "revisionId": "oAQHRz9gSSN8cLzsS"
-    },
-    "_notYetWorking": {
-      "_id": "a3iiSFy3Zy4rkTjFn",
-      "key": "_notYetWorking",
-      "lang": "fr",
-      "text": "ne fonctionne pas encore",
-      "ctime": 1527458202108,
-      "mtime": 1527458202108,
-      "revisionId": "QW4HrfkrJce8pBbxY",
-      "removed": true,
-      "fuzzy": true
     },
     "_option.off": {
       "_id": "xcqRnyuAyXtQc4FLy",
@@ -35060,17 +34407,6 @@ mfPkg.syncAll({
       "removed": true,
       "fuzzy": true
     },
-    "course.details.repl_menu_btn": {
-      "_id": "MhnWNKrmMr3GNqEpJ",
-      "key": "course.details.repl_menu_btn",
-      "lang": "fr",
-      "text": "Répéter",
-      "ctime": 1467892697088,
-      "mtime": 1467892697088,
-      "revisionId": "eKwGPzhxbbbNy397u",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussion.anon": {
       "_id": "7RYDtzJqhwboN2zZY",
       "key": "course.discussion.anon",
@@ -35367,17 +34703,6 @@ mfPkg.syncAll({
       "ctime": 1467932892198,
       "mtime": 1606833730387,
       "revisionId": "wkkhPW2Cd8zdsucib"
-    },
-    "course.event.detail.back": {
-      "_id": "D9nvjq6kQC843iE6Z",
-      "key": "course.event.detail.back",
-      "lang": "fr",
-      "text": "Retour au cours",
-      "ctime": 1465122152502,
-      "mtime": 1465122152502,
-      "revisionId": "HEjMh7cLb9ZJnYAh3",
-      "removed": true,
-      "fuzzy": true
     },
     "course.event.edit.AddMessage": {
       "_id": "Bqjik9bfmRjHfN9Xn",
@@ -35821,28 +35146,6 @@ mfPkg.syncAll({
       "ctime": 1606746236073,
       "mtime": 1606746236073,
       "revisionId": "Cnf3MyhHyqLy6HgFn"
-    },
-    "course.roles.enrol": {
-      "_id": "XSx4L5xuRZhBvJJrc",
-      "key": "course.roles.enrol",
-      "lang": "fr",
-      "text": "S'inscrire",
-      "ctime": 1467373663329,
-      "mtime": 1467373663329,
-      "revisionId": "MgErF3vcNhJG2dhgq",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enrol_as": {
-      "_id": "P9qvGPeh95BDaz9Mr",
-      "key": "course.roles.enrol_as",
-      "lang": "fr",
-      "text": "S'inscrire en tant que",
-      "ctime": 1467373674762,
-      "mtime": 1467373674762,
-      "revisionId": "8w9vhFcP52N4WiwHs",
-      "removed": true,
-      "fuzzy": true
     },
     "course.roles.firstSteps.allMembersInformed": {
       "_id": "EhxELdeLwxo8DAtkJ",
@@ -37563,17 +36866,6 @@ mfPkg.syncAll({
       "ctime": 1478902237882,
       "mtime": 1478902250400,
       "revisionId": "FuyMfuTkbABKqpEok"
-    },
-    "frame.login_external_services": {
-      "_id": "pXWaQufqf3AoK5Pc4",
-      "key": "frame.login_external_services",
-      "lang": "fr",
-      "text": "Ou s'identifier avec:",
-      "ctime": 1467892057812,
-      "mtime": 1467892057812,
-      "revisionId": "2MmRGczCsjxgar8kH",
-      "removed": true,
-      "fuzzy": true
     },
     "frameCalendar.nothingOnThisDay": {
       "_id": "yJLob5wsWTEp57xdL",
@@ -41824,28 +41116,6 @@ mfPkg.syncAll({
       "mtime": 1464023231862,
       "revisionId": "NW72dgoxBM6Dh2o3L"
     },
-    "course.roles.enrol": {
-      "_id": "XZHXB9BnrGe9XAq9g",
-      "key": "course.roles.enrol",
-      "lang": "hu",
-      "text": "Jelentkezz",
-      "ctime": 1464022839391,
-      "mtime": 1464022839391,
-      "revisionId": "dgGNA5TKnn8wewND3",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enrol_as": {
-      "_id": "4ZHvcqiMTXE8Bpo2z",
-      "key": "course.roles.enrol_as",
-      "lang": "hu",
-      "text": "Jelentkezz mint",
-      "ctime": 1464022830860,
-      "mtime": 1464022830860,
-      "revisionId": "FrB7JjtgEEgYBiHnM",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.roles.maketeam": {
       "_id": "9emWRDEQq3qP8amK3",
       "key": "course.roles.maketeam",
@@ -42662,17 +41932,6 @@ mfPkg.syncAll({
       "ctime": 1553259163106,
       "mtime": 1553259163106,
       "revisionId": "WGBoSNM6B26n24Xs4"
-    },
-    "_notYetWorking": {
-      "_id": "QMdJmYdXxH9eyhMER",
-      "key": "_notYetWorking",
-      "lang": "nl",
-      "text": "Dit werkt nog niet",
-      "ctime": 1553259210394,
-      "mtime": 1553259210394,
-      "revisionId": "PNeAcfraRyNTv6b92",
-      "removed": true,
-      "fuzzy": true
     },
     "_option.off": {
       "_id": "jLzo5F9rkJMgrn8YE",
@@ -43603,17 +42862,6 @@ mfPkg.syncAll({
       "mtime": 1505170504207,
       "revisionId": "QBYJBrnHQXuXx2xrt"
     },
-    "_notYetWorking": {
-      "_id": "o5GmvRzn6EMoQ9cCJ",
-      "key": "_notYetWorking",
-      "lang": "pt",
-      "text": "ainda não funciona",
-      "ctime": 1505168161175,
-      "mtime": 1505168161175,
-      "revisionId": "9vtQDrh2y7yxXKjG2",
-      "removed": true,
-      "fuzzy": true
-    },
     "_option.off": {
       "_id": "xn2zzR7hffDdwj3fg",
       "key": "_option.off",
@@ -44457,17 +43705,6 @@ mfPkg.syncAll({
       "removed": true,
       "fuzzy": true
     },
-    "course.details.repl_menu_btn": {
-      "_id": "Fvfmxox9SSyaRSgEv",
-      "key": "course.details.repl_menu_btn",
-      "lang": "pt",
-      "text": "Repetir",
-      "ctime": 1505170019378,
-      "mtime": 1505170019378,
-      "revisionId": "axTCH4ezAC8jN43M7",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussion.anon": {
       "_id": "4kyP6oZRgjzYpmBXW",
       "key": "course.discussion.anon",
@@ -44567,28 +43804,6 @@ mfPkg.syncAll({
       "mtime": 1505170242832,
       "revisionId": "gXYteAk8KKdNFymyT"
     },
-    "course.discussions.hideAnswers": {
-      "_id": "kp59FLns5awfhcvGc",
-      "key": "course.discussions.hideAnswers",
-      "lang": "pt",
-      "text": "Esconder respostas",
-      "ctime": 1505170267086,
-      "mtime": 1505170267086,
-      "revisionId": "zCjweKmEchdHKAXAn",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.discussions.showAllAnswers": {
-      "_id": "wCmfLgCm5w3CKbrTW",
-      "key": "course.discussions.showAllAnswers",
-      "lang": "pt",
-      "text": "Mostrar todas {NUM} respostas",
-      "ctime": 1505236835519,
-      "mtime": 1505236835519,
-      "revisionId": "6uzXC73XyHBB4uphu",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussions.showAllComments": {
       "_id": "fiqCQyxpTN9ZropFy",
       "key": "course.discussions.showAllComments",
@@ -44615,17 +43830,6 @@ mfPkg.syncAll({
       "ctime": 1505236922113,
       "mtime": 1505236922113,
       "revisionId": "WoCKQms84maGjRG2u"
-    },
-    "course.dtails.paticipants.title": {
-      "_id": "vHZkcFSPYQm6TQsJv",
-      "key": "course.dtails.paticipants.title",
-      "lang": "pt",
-      "text": "{NUM, plural,\n\t\t\t\t\t=0 {Nenhum@ participant@ ainda}\n\t\t\t\t\tum@ {1 Participant@}\n\t\t\t\t\toutr@ {# Participant@s}\n\t\t\t\t}",
-      "ctime": 1505236984932,
-      "mtime": 1505236984932,
-      "revisionId": "7qpYiounKwBiS5KPZ",
-      "removed": true,
-      "fuzzy": true
     },
     "course.edit.categories": {
       "_id": "g2jifBM8SHWyMBWju",
@@ -44743,17 +43947,6 @@ mfPkg.syncAll({
       "ctime": 1469372695900,
       "mtime": 1469372695900,
       "revisionId": "rFcQBJGabKnqGudWc",
-      "fuzzy": true
-    },
-    "course.event.detail.back": {
-      "_id": "QdfD5fwXTqhfnZur8",
-      "key": "course.event.detail.back",
-      "lang": "pt",
-      "text": "Regressar ao curso",
-      "ctime": 1469372706500,
-      "mtime": 1505237313090,
-      "revisionId": "79eeXqJBfrAyrP92Q",
-      "removed": true,
       "fuzzy": true
     },
     "course.event.detail.goToCourse": {
@@ -45201,26 +44394,6 @@ mfPkg.syncAll({
       "ctime": 1505238514248,
       "mtime": 1505238514248,
       "revisionId": "CFMFerhzx74RoCcBn"
-    },
-    "course.roles.enrol_as": {
-      "_id": "DQz5gJmyKdH3zeKE5",
-      "key": "course.roles.enrol_as",
-      "lang": "pt",
-      "text": "Inscreva-se como",
-      "ctime": 1505238566538,
-      "mtime": 1505238566538,
-      "revisionId": "v6DXWDDL7cMECrgod",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enroll": {
-      "_id": "cXmZiC4XLXGtPe7DY",
-      "key": "course.roles.enroll",
-      "lang": "pt",
-      "text": "Inscreva-se",
-      "ctime": 1505238573552,
-      "mtime": 1505238573552,
-      "revisionId": "CoiYMmskgJAziisL3"
     },
     "course.roles.firstSteps.allMembersInformed": {
       "_id": "cRbN4op9RzgRp99Er",
@@ -48845,17 +48018,6 @@ mfPkg.syncAll({
       "mtime": 1511209074828,
       "revisionId": "v5CLmt779NGpCya9b"
     },
-    "course.details.repl_menu_btn": {
-      "_id": "eh76xcCvhFnJwZddm",
-      "key": "course.details.repl_menu_btn",
-      "lang": "ru",
-      "text": "повторить",
-      "ctime": 1511209098267,
-      "mtime": 1511209098267,
-      "revisionId": "sGLKfFLJJuaAmxrpz",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussion.comment_answer": {
       "_id": "8hhHT7eDbetFQLcQZ",
       "key": "course.discussion.comment_answer",
@@ -49046,17 +48208,6 @@ mfPkg.syncAll({
       "ctime": 1522952712409,
       "mtime": 1522952712409,
       "revisionId": "9nXGs6LcqMHdwEkSi"
-    },
-    "_notYetWorking": {
-      "_id": "rQDoxGWgjrBpqH2i2",
-      "key": "_notYetWorking",
-      "lang": "sv",
-      "text": "fungerar inte än",
-      "ctime": 1523795913778,
-      "mtime": 1523795913778,
-      "revisionId": "7pSevnzkrQmc73dH6",
-      "removed": true,
-      "fuzzy": true
     },
     "_option.off": {
       "_id": "NH847bjNXLuRjTctL",
@@ -49886,17 +49037,6 @@ mfPkg.syncAll({
       "mtime": 1523796820435,
       "revisionId": "aMcNdmPdW8y8PRrMs"
     },
-    "course.details.repl_menu_btn": {
-      "_id": "a95ZwpZHpAGYBbxxY",
-      "key": "course.details.repl_menu_btn",
-      "lang": "sv",
-      "text": "Repetera",
-      "ctime": 1522927384153,
-      "mtime": 1522927384153,
-      "revisionId": "4RLiRCb8abe52GhKx",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussion.anon": {
       "_id": "NkKTkbyMRSoZPiggi",
       "key": "course.discussion.anon",
@@ -50032,17 +49172,6 @@ mfPkg.syncAll({
       "ctime": 1522932726115,
       "mtime": 1522932726115,
       "revisionId": "seBzW37x5jgkRdE68"
-    },
-    "course.dtails.paticipants.title": {
-      "_id": "PxG6F5hBW7hjLEuz9",
-      "key": "course.dtails.paticipants.title",
-      "lang": "sv",
-      "text": "{NUM, plural,\n\t\t\t\t\t=0 {Inga deltagare än}\n\t\t\t\t\ten {1 Deltagare}\n\t\t\t\t\tövriga {# Deltagare}\n\t\t\t\t}",
-      "ctime": 1523796921253,
-      "mtime": 1523796921253,
-      "revisionId": "feNibNjHcB7x6tHup",
-      "removed": true,
-      "fuzzy": true
     },
     "course.edit.categories": {
       "_id": "xfiabhFWCj42GmG39",
@@ -55026,17 +54155,6 @@ mfPkg.syncAll({
       "mtime": 1466505166992,
       "revisionId": "8whC5Esdk7pbu5GvD"
     },
-    "course.event.detail.back": {
-      "_id": "QnxYvFkNhSKQcA4gE",
-      "key": "course.event.detail.back",
-      "lang": "tr",
-      "text": "Kursa geri dön",
-      "ctime": 1466505250811,
-      "mtime": 1466505250811,
-      "revisionId": "LwaPq86mMrnkJiisL",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.event.edit.add": {
       "_id": "nJXBZDWLn7FpDctvR",
       "key": "course.event.edit.add",
@@ -55629,11 +54747,11 @@ mfPkg.syncAll({
       "revisionId": "oyRvZQDuQoCyxYMDd"
     }
   },
-  "zh_CN": {
+  "zh-CN": {
     "Please.login": {
       "_id": "iku6DMGzjWZt8cqSA",
       "key": "Please.login",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "请登录或注册",
       "ctime": 1483774984902,
       "mtime": 1483774984902,
@@ -55642,7 +54760,7 @@ mfPkg.syncAll({
     "Profile.translate_this_page": {
       "_id": "8Sce4xoFRyMRWxZYR",
       "key": "Profile.translate_this_page",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "帮助我们翻译这个页面",
       "ctime": 1483774997855,
       "mtime": 1483774997855,
@@ -55651,7 +54769,7 @@ mfPkg.syncAll({
     "_button.cancel": {
       "_id": "5etget2L6QvcSCtM8",
       "key": "_button.cancel",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "取消",
       "ctime": 1483775001818,
       "mtime": 1483775001818,
@@ -55660,7 +54778,7 @@ mfPkg.syncAll({
     "_button.delete": {
       "_id": "pX8S5pz7LgAaDScCK",
       "key": "_button.delete",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "删除",
       "ctime": 1483775005887,
       "mtime": 1483775005887,
@@ -55669,7 +54787,7 @@ mfPkg.syncAll({
     "_button.edit": {
       "_id": "ASbXMMxWGc6d8jn5e",
       "key": "_button.edit",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "编辑",
       "ctime": 1483775010143,
       "mtime": 1483775010143,
@@ -55678,7 +54796,7 @@ mfPkg.syncAll({
     "_button.save": {
       "_id": "RSYP2iTfv5vAJ2X7N",
       "key": "_button.save",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "保存",
       "ctime": 1483775017411,
       "mtime": 1483775017411,
@@ -55687,7 +54805,7 @@ mfPkg.syncAll({
     "_inputField.optional": {
       "_id": "RfGr74FqrrCBfaxTC",
       "key": "_inputField.optional",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "（可选）",
       "ctime": 1483775023610,
       "mtime": 1483775023610,
@@ -55696,7 +54814,7 @@ mfPkg.syncAll({
     "_inputField.password": {
       "_id": "YZthzr9nQBGKHA4Jz",
       "key": "_inputField.password",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "密码",
       "ctime": 1483775027041,
       "mtime": 1483775027041,
@@ -55705,7 +54823,7 @@ mfPkg.syncAll({
     "_message.added": {
       "_id": "FFaYJuNFaqqekjFrE",
       "key": "_message.added",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "已添加",
       "ctime": 1483775084018,
       "mtime": 1483775084018,
@@ -55714,7 +54832,7 @@ mfPkg.syncAll({
     "_message.removed": {
       "_id": "gpJyDmDYY3rimooJz",
       "key": "_message.removed",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "已移除",
       "ctime": 1483775089469,
       "mtime": 1483775089469,
@@ -55723,27 +54841,16 @@ mfPkg.syncAll({
     "_message.saved": {
       "_id": "f4FcP4gydRKMgqbTL",
       "key": "_message.saved",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "已保存",
       "ctime": 1483775095372,
       "mtime": 1483775095372,
       "revisionId": "QXFazaKJ3KJMjmcHn"
     },
-    "_notYetWorking": {
-      "_id": "XN3Gc67YHiTbpwPYv",
-      "key": "_notYetWorking",
-      "lang": "zh_CN",
-      "text": "尚无法工作",
-      "ctime": 1483775110790,
-      "mtime": 1483775110790,
-      "revisionId": "nNiC33CnSzFbmACTC",
-      "removed": true,
-      "fuzzy": true
-    },
     "_option.off": {
       "_id": "5r7kZgYQW5dxFDM5N",
       "key": "_option.off",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "关",
       "ctime": 1483775114324,
       "mtime": 1483775114324,
@@ -55752,7 +54859,7 @@ mfPkg.syncAll({
     "_option.on": {
       "_id": "KmQnFZqAYvHxSBjGW",
       "key": "_option.on",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "开",
       "ctime": 1483775116331,
       "mtime": 1483775116331,
@@ -55761,7 +54868,7 @@ mfPkg.syncAll({
     "_selection.pleaseSelect": {
       "_id": "dDK5KkRtbot5JyL3R",
       "key": "_selection.pleaseSelect",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "请选择",
       "ctime": 1483775121433,
       "mtime": 1483775121433,
@@ -55770,7 +54877,7 @@ mfPkg.syncAll({
     "_serverError": {
       "_id": "uCNLCF7jBycxvp6om",
       "key": "_serverError",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "服务器抛出了错误：「{MESSAGE} ({ERROR})」。对此我们很抱歉。",
       "ctime": 1483775168086,
       "mtime": 1483775168086,
@@ -55779,7 +54886,7 @@ mfPkg.syncAll({
     "backToLink.backTo": {
       "_id": "vWqq3pC2NfjsGmEwx",
       "key": "backToLink.backTo",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "回到",
       "ctime": 1483775174524,
       "mtime": 1483775174524,
@@ -55788,7 +54895,7 @@ mfPkg.syncAll({
     "calendar.next.month.long": {
       "_id": "9CAMSJYoRHPPhLLRZ",
       "key": "calendar.next.month.long",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "前往下个月",
       "ctime": 1483775192913,
       "mtime": 1483775192913,
@@ -55797,7 +54904,7 @@ mfPkg.syncAll({
     "calendar.next.month.short": {
       "_id": "LdNG27zyPkeWuPzys",
       "key": "calendar.next.month.short",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "下个月",
       "ctime": 1483775199339,
       "mtime": 1483775199339,
@@ -55806,7 +54913,7 @@ mfPkg.syncAll({
     "calendar.next.week.long": {
       "_id": "h9ydM2pnrzfw3aAZG",
       "key": "calendar.next.week.long",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "前往下星期",
       "ctime": 1483775212261,
       "mtime": 1483775212261,
@@ -55815,7 +54922,7 @@ mfPkg.syncAll({
     "calendar.next.week.short": {
       "_id": "6a78nbP2A9pvnC3Yu",
       "key": "calendar.next.week.short",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "下星期",
       "ctime": 1483775217200,
       "mtime": 1483775217200,
@@ -55824,7 +54931,7 @@ mfPkg.syncAll({
     "calendar.next.year.long": {
       "_id": "9gKNH6Tc9YByYfbZa",
       "key": "calendar.next.year.long",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "前往下一年",
       "ctime": 1483775231574,
       "mtime": 1483775231574,
@@ -55833,7 +54940,7 @@ mfPkg.syncAll({
     "calendar.next.year.short": {
       "_id": "akcxb2bxFY6Zbratm",
       "key": "calendar.next.year.short",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "下一年",
       "ctime": 1483775234551,
       "mtime": 1483775234551,
@@ -55842,7 +54949,7 @@ mfPkg.syncAll({
     "calendar.noCoursesThisDay": {
       "_id": "SjP3HohNMmasz9foY",
       "key": "calendar.noCoursesThisDay",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "这一天没有活动",
       "ctime": 1483775246285,
       "mtime": 1483775246285,
@@ -55851,7 +54958,7 @@ mfPkg.syncAll({
     "calendar.previous.month.long": {
       "_id": "6RkYD9Wd6jeZiXdEq",
       "key": "calendar.previous.month.long",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "前往上个月",
       "ctime": 1483775253353,
       "mtime": 1483775253353,
@@ -55860,7 +54967,7 @@ mfPkg.syncAll({
     "calendar.previous.month.short": {
       "_id": "pDLchgDbmM42Tbc7o",
       "key": "calendar.previous.month.short",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "上个月",
       "ctime": 1483775256703,
       "mtime": 1483775256703,
@@ -55869,7 +54976,7 @@ mfPkg.syncAll({
     "calendar.previous.week.long": {
       "_id": "vQwHAp82GkZpLEuEX",
       "key": "calendar.previous.week.long",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "前往上个星期",
       "ctime": 1483775267971,
       "mtime": 1483775267971,
@@ -55878,7 +54985,7 @@ mfPkg.syncAll({
     "calendar.previous.week.short": {
       "_id": "Aa4d575F8drctv5Zz",
       "key": "calendar.previous.week.short",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "上个星期",
       "ctime": 1483775277400,
       "mtime": 1483775277400,
@@ -55887,7 +54994,7 @@ mfPkg.syncAll({
     "calendar.previous.year.long": {
       "_id": "Sv3xZucdGeWuB97dY",
       "key": "calendar.previous.year.long",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "前往上一年",
       "ctime": 1483775289565,
       "mtime": 1483775289565,
@@ -55896,7 +55003,7 @@ mfPkg.syncAll({
     "calendar.previous.year.short": {
       "_id": "NG4wfMoKahqwuksNn",
       "key": "calendar.previous.year.short",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "上一年",
       "ctime": 1483775294015,
       "mtime": 1483775294015,
@@ -55905,7 +55012,7 @@ mfPkg.syncAll({
     "calendar.weekNumber": {
       "_id": "Dc5yDK3nYHSb2sm6d",
       "key": "calendar.weekNumber",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "周",
       "ctime": 1483775296827,
       "mtime": 1483775296827,
@@ -55914,7 +55021,7 @@ mfPkg.syncAll({
     "categories.no_categories": {
       "_id": "8EWfqnDtfxegDmJHc",
       "key": "categories.no_categories",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "找不到已定义的分类",
       "ctime": 1483775321233,
       "mtime": 1483775321233,
@@ -55923,7 +55030,7 @@ mfPkg.syncAll({
     "categories.show_courses": {
       "_id": "XdYwwMWGEKZMZTqP5",
       "key": "categories.show_courses",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "显示所有",
       "ctime": 1483775363852,
       "mtime": 1483775363852,
@@ -55932,7 +55039,7 @@ mfPkg.syncAll({
     "category.artistry": {
       "_id": "SzEWp6DsgjFGwNcTM",
       "key": "category.artistry",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "艺术",
       "ctime": 1483775374551,
       "mtime": 1483775374551,
@@ -55941,7 +55048,7 @@ mfPkg.syncAll({
     "category.biology": {
       "_id": "fobbsQm3vXZRdo3Qk",
       "key": "category.biology",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "生物学",
       "ctime": 1483775379727,
       "mtime": 1483775379727,
@@ -55950,7 +55057,7 @@ mfPkg.syncAll({
     "category.chemistry": {
       "_id": "fazY4rEaewvJx8pwP",
       "key": "category.chemistry",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "化学",
       "ctime": 1483775382752,
       "mtime": 1483775382752,
@@ -55959,7 +55066,7 @@ mfPkg.syncAll({
     "category.computer": {
       "_id": "95eXDeWYDB3kushTo",
       "key": "category.computer",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "计算机",
       "ctime": 1483775386255,
       "mtime": 1483775386255,
@@ -55968,7 +55075,7 @@ mfPkg.syncAll({
     "category.construction": {
       "_id": "LNXWXeYP2FMxToKXi",
       "key": "category.construction",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "建筑学",
       "ctime": 1483775402855,
       "mtime": 1483775402855,
@@ -55977,7 +55084,7 @@ mfPkg.syncAll({
     "category.cooking": {
       "_id": "xt5q5TpeXjay4FKXq",
       "key": "category.cooking",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "烹饪",
       "ctime": 1483775406845,
       "mtime": 1483775406845,
@@ -55986,7 +55093,7 @@ mfPkg.syncAll({
     "category.culture": {
       "_id": "7gRvZybRyzHq5AAaH",
       "key": "category.culture",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "文化",
       "ctime": 1483775409461,
       "mtime": 1483775409461,
@@ -55995,7 +55102,7 @@ mfPkg.syncAll({
     "category.dance": {
       "_id": "B2YsFahiiKF5RhidG",
       "key": "category.dance",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "舞蹈",
       "ctime": 1483775415708,
       "mtime": 1483775415708,
@@ -56004,7 +55111,7 @@ mfPkg.syncAll({
     "category.design": {
       "_id": "rJox3G4gsPeMH6mtR",
       "key": "category.design",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "设计",
       "ctime": 1483775418462,
       "mtime": 1483775418462,
@@ -56013,7 +55120,7 @@ mfPkg.syncAll({
     "category.electronics": {
       "_id": "3ghJLRMpkaDgHeXAv",
       "key": "category.electronics",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "电子 / 电力",
       "ctime": 1483775450724,
       "mtime": 1483775450724,
@@ -56022,7 +55129,7 @@ mfPkg.syncAll({
     "category.experimental": {
       "_id": "zARENcu3mqWsYaZAG",
       "key": "category.experimental",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "实验性",
       "ctime": 1483775466017,
       "mtime": 1483775466017,
@@ -56031,7 +55138,7 @@ mfPkg.syncAll({
     "category.fabric": {
       "_id": "TF2YtsKpJR26ZRQEP",
       "key": "category.fabric",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "合成材料 / 织物",
       "ctime": 1483775494895,
       "mtime": 1483775494895,
@@ -56040,7 +55147,7 @@ mfPkg.syncAll({
     "category.film": {
       "_id": "ZLkB5BzeNTNMnwnm9",
       "key": "category.film",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "电影",
       "ctime": 1483775502796,
       "mtime": 1483775502796,
@@ -56049,7 +55156,7 @@ mfPkg.syncAll({
     "category.fineart": {
       "_id": "tnhqKkBJjgrtycKAD",
       "key": "category.fineart",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "美术",
       "ctime": 1483775520642,
       "mtime": 1483775520642,
@@ -56058,7 +55165,7 @@ mfPkg.syncAll({
     "category.gardening": {
       "_id": "9pX9HDWje7eKJa4GL",
       "key": "category.gardening",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "园艺 / 农业",
       "ctime": 1483775531003,
       "mtime": 1483775531003,
@@ -56067,7 +55174,7 @@ mfPkg.syncAll({
     "category.geography": {
       "_id": "rMtE6jSC3JDLfQTYh",
       "key": "category.geography",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "地理",
       "ctime": 1483775534425,
       "mtime": 1483775534425,
@@ -56076,7 +55183,7 @@ mfPkg.syncAll({
     "category.handicraft": {
       "_id": "5KzhqWqo5siR3G9as",
       "key": "category.handicraft",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "手工艺",
       "ctime": 1483775541642,
       "mtime": 1483775541642,
@@ -56085,7 +55192,7 @@ mfPkg.syncAll({
     "category.history": {
       "_id": "Jvpyja48cjoBjW8hQ",
       "key": "category.history",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "历史",
       "ctime": 1483775544617,
       "mtime": 1483775544617,
@@ -56094,7 +55201,7 @@ mfPkg.syncAll({
     "category.humanities": {
       "_id": "dL37db7uW5YK8pF7k",
       "key": "category.humanities",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "美术与人文",
       "ctime": 1483775562908,
       "mtime": 1483775562908,
@@ -56103,7 +55210,7 @@ mfPkg.syncAll({
     "category.internet": {
       "_id": "HqgfBDkfzuFvsmJkr",
       "key": "category.internet",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "互联网",
       "ctime": 1483775566422,
       "mtime": 1483775566422,
@@ -56112,7 +55219,7 @@ mfPkg.syncAll({
     "category.languages": {
       "_id": "dTS6zk5dgqLosfdWQ",
       "key": "category.languages",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "语言",
       "ctime": 1483775573648,
       "mtime": 1483775573648,
@@ -56121,7 +55228,7 @@ mfPkg.syncAll({
     "category.lawbusiness": {
       "_id": "XoLoBSJoi59wi6Ygn",
       "key": "category.lawbusiness",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "商业研讨、经济与法律",
       "ctime": 1483775614155,
       "mtime": 1483775614155,
@@ -56130,7 +55237,7 @@ mfPkg.syncAll({
     "category.literature": {
       "_id": "7TKSyoaSMhmgrfGhc",
       "key": "category.literature",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "文学",
       "ctime": 1483775619582,
       "mtime": 1483775619582,
@@ -56139,7 +55246,7 @@ mfPkg.syncAll({
     "category.martialarts": {
       "_id": "jqm5xeNSL6jPHQwNX",
       "key": "category.martialarts",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "武术",
       "ctime": 1483775646315,
       "mtime": 1483775646315,
@@ -56148,7 +55255,7 @@ mfPkg.syncAll({
     "category.mathematics": {
       "_id": "m72apx43QcDtNfJpj",
       "key": "category.mathematics",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "数学",
       "ctime": 1483775650422,
       "mtime": 1483775650422,
@@ -56157,7 +55264,7 @@ mfPkg.syncAll({
     "category.medicine": {
       "_id": "uHtFtwM6yQBeiD3we",
       "key": "category.medicine",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "医学",
       "ctime": 1483775654076,
       "mtime": 1483775654076,
@@ -56166,7 +55273,7 @@ mfPkg.syncAll({
     "category.metalwood": {
       "_id": "cpRPePRZbckzd77b2",
       "key": "category.metalwood",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "金工 / 木工",
       "ctime": 1483775665718,
       "mtime": 1483775665718,
@@ -56175,7 +55282,7 @@ mfPkg.syncAll({
     "category.misc": {
       "_id": "Rn7qXd4B7FZDYPxjc",
       "key": "category.misc",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "杂项",
       "ctime": 1483775678965,
       "mtime": 1483775678965,
@@ -56184,7 +55291,7 @@ mfPkg.syncAll({
     "category.music": {
       "_id": "gHjrqbjDXffTYofLD",
       "key": "category.music",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "音乐",
       "ctime": 1483775685420,
       "mtime": 1483775685420,
@@ -56193,7 +55300,7 @@ mfPkg.syncAll({
     "category.operating": {
       "_id": "ggNLx5YJxYymEknB9",
       "key": "category.operating",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "软件操作",
       "ctime": 1483775692308,
       "mtime": 1483775692308,
@@ -56202,7 +55309,7 @@ mfPkg.syncAll({
     "category.philosophy": {
       "_id": "hvyqxPvpjxhyYc3YT",
       "key": "category.philosophy",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "哲学",
       "ctime": 1483775696947,
       "mtime": 1483775696947,
@@ -56211,7 +55318,7 @@ mfPkg.syncAll({
     "category.photography": {
       "_id": "pJjeSxsaCbhma7FZL",
       "key": "category.photography",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "摄影",
       "ctime": 1483775702363,
       "mtime": 1483775702363,
@@ -56220,7 +55327,7 @@ mfPkg.syncAll({
     "category.physics": {
       "_id": "uno3dDLMgq7L2oBX6",
       "key": "category.physics",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "物理",
       "ctime": 1483775705795,
       "mtime": 1483775705795,
@@ -56229,7 +55336,7 @@ mfPkg.syncAll({
     "category.politics": {
       "_id": "cLw6PL97D2KbBdmZr",
       "key": "category.politics",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "政治",
       "ctime": 1483775709235,
       "mtime": 1483775709235,
@@ -56238,7 +55345,7 @@ mfPkg.syncAll({
     "category.programming": {
       "_id": "e2ZzNBt4gpHsend2T",
       "key": "category.programming",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "编程",
       "ctime": 1483775713379,
       "mtime": 1483775713379,
@@ -56247,7 +55354,7 @@ mfPkg.syncAll({
     "category.sciences": {
       "_id": "BijyQF5jDnfpBwE3B",
       "key": "category.sciences",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "自然科学",
       "ctime": 1483775718154,
       "mtime": 1483775718154,
@@ -56256,7 +55363,7 @@ mfPkg.syncAll({
     "category.sociology": {
       "_id": "yv7Fz8hPdkfB3pTdR",
       "key": "category.sociology",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "社会学",
       "ctime": 1483775726562,
       "mtime": 1483775726562,
@@ -56265,7 +55372,7 @@ mfPkg.syncAll({
     "category.spiritual": {
       "_id": "aqC9Sh66XSRdS3WSu",
       "key": "category.spiritual",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "精神相关",
       "ctime": 1483775755867,
       "mtime": 1483775755867,
@@ -56274,7 +55381,7 @@ mfPkg.syncAll({
     "category.sports": {
       "_id": "6A27KognKY98Co6nJ",
       "key": "category.sports",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "运动",
       "ctime": 1483775781245,
       "mtime": 1483775781245,
@@ -56283,7 +55390,7 @@ mfPkg.syncAll({
     "category.subculture": {
       "_id": "jizvFC88hKqQWk4tz",
       "key": "category.subculture",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "亚文化",
       "ctime": 1483775786884,
       "mtime": 1483775786884,
@@ -56292,7 +55399,7 @@ mfPkg.syncAll({
     "category.teamsport": {
       "_id": "M524wELaxbcu7XHDD",
       "key": "category.teamsport",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "团体运动",
       "ctime": 1483775801937,
       "mtime": 1483775801937,
@@ -56301,7 +55408,7 @@ mfPkg.syncAll({
     "category.theatre": {
       "_id": "TDd7YSPhJLYiKc3Wf",
       "key": "category.theatre",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "剧院",
       "ctime": 1483775808133,
       "mtime": 1483775808133,
@@ -56310,7 +55417,7 @@ mfPkg.syncAll({
     "category.♥undefined♥": {
       "_id": "ynhsw7dPcjDqHSyKJ",
       "key": "category.♥undefined♥",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "♥未分类♥",
       "ctime": 1483775849051,
       "mtime": 1483775849051,
@@ -56319,7 +55426,7 @@ mfPkg.syncAll({
     "click_me": {
       "_id": "CKAPfGpNjZT5gYGuv",
       "key": "click_me",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "点击我",
       "ctime": 1483775869276,
       "mtime": 1483775869276,
@@ -56328,7 +55435,7 @@ mfPkg.syncAll({
     "comment.delete.confirm": {
       "_id": "iPWNLsYZ7MwmGMExE",
       "key": "comment.delete.confirm",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "真的要删除这个评论么？",
       "ctime": 1483775887696,
       "mtime": 1483775887696,
@@ -56338,7 +55445,7 @@ mfPkg.syncAll({
     "comment.delete.error": {
       "_id": "t7PdQJka85ySs6jJ4",
       "key": "comment.delete.error",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "无法完成删除操作。错误原因：{ERROR}",
       "ctime": 1483775911932,
       "mtime": 1483775911932,
@@ -56347,7 +55454,7 @@ mfPkg.syncAll({
     "comment.saving.error": {
       "_id": "nG5DpBQJBXck83Pe9",
       "key": "comment.saving.error",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "发布评论时出了点故障，很抱歉。我们遇到了这个错误：{ERROR}",
       "ctime": 1483775957038,
       "mtime": 1483775957038,
@@ -56356,7 +55463,7 @@ mfPkg.syncAll({
     "course.createEventInfo": {
       "_id": "voKwN3tmZQybBhJ6h",
       "key": "course.createEventInfo",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "如果你打算发布一个独立的、单次的、已经准备完善的活动，用这张表单。\n\t\t\t    不然请在这里创建或提议一个课程：",
       "ctime": 1483776158423,
       "mtime": 1483776158423,
@@ -56365,7 +55472,7 @@ mfPkg.syncAll({
     "course.description.placeholder": {
       "_id": "TGLqosndMQ736qZF5",
       "key": "course.description.placeholder",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "描述你的想法，这样更多人会更容易找到，并明白该期待什么。",
       "ctime": 1483776249428,
       "mtime": 1483776249428,
@@ -56374,7 +55481,7 @@ mfPkg.syncAll({
     "course.detail.remove": {
       "_id": "wrDfsPw6KGweJHELb",
       "key": "course.detail.remove",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "删除课程及其所有活动？",
       "ctime": 1483776267779,
       "mtime": 1483776267779,
@@ -56383,7 +55490,7 @@ mfPkg.syncAll({
     "course.details.hideReplicationMenu": {
       "_id": "9TKpJk9zvZdyeNNxr",
       "key": "course.details.hideReplicationMenu",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "取消重复",
       "ctime": 1483776293617,
       "mtime": 1483776293617,
@@ -56394,7 +55501,7 @@ mfPkg.syncAll({
     "course.details.proposalTag": {
       "_id": "fZanRysTdiaGehZML",
       "key": "course.details.proposalTag",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "提案",
       "ctime": 1483776305662,
       "mtime": 1483776305662,
@@ -56405,7 +55512,7 @@ mfPkg.syncAll({
     "course.details.repl_btn": {
       "_id": "BgYovMAASZm6zN4vb",
       "key": "course.details.repl_btn",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "创建{COUNT, plural,\n\t\t\t\t\t\t\t\t\tone {活动}\n\t\t\t\t\t\t\t\t\tother {#个活动}\n\t\t\t\t\t\t\t\t}",
       "ctime": 1483777722121,
       "mtime": 1483777722121,
@@ -56413,21 +55520,10 @@ mfPkg.syncAll({
       "removed": true,
       "fuzzy": true
     },
-    "course.details.repl_menu_btn": {
-      "_id": "cbGE9HJCFrFb3NBK2",
-      "key": "course.details.repl_menu_btn",
-      "lang": "zh_CN",
-      "text": "重复",
-      "ctime": 1483777728031,
-      "mtime": 1483777728031,
-      "revisionId": "ghLbeF3fZHzgp28LW",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.discussion.anon": {
       "_id": "bMJoLEjpNp7KDCpfo",
       "key": "course.discussion.anon",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "匿名评论",
       "ctime": 1483777736331,
       "mtime": 1483777736331,
@@ -56436,7 +55532,7 @@ mfPkg.syncAll({
     "course.discussion.comment_answer": {
       "_id": "jhKzvK5dBjtT2XbJp",
       "key": "course.discussion.comment_answer",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "回答",
       "ctime": 1483777741408,
       "mtime": 1483777741408,
@@ -56445,7 +55541,7 @@ mfPkg.syncAll({
     "course.discussion.comment_btn.answer": {
       "_id": "RHauW8bFgYmFxWfet",
       "key": "course.discussion.comment_btn.answer",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "回答！",
       "ctime": 1483777745478,
       "mtime": 1483777745478,
@@ -56454,7 +55550,7 @@ mfPkg.syncAll({
     "course.discussion.comment_btn.update": {
       "_id": "H8tSbtJ9yXbdJpjRT",
       "key": "course.discussion.comment_btn.update",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "更新我的评论！",
       "ctime": 1483777760025,
       "mtime": 1483777760025,
@@ -56463,7 +55559,7 @@ mfPkg.syncAll({
     "course.discussion.comment_btn.write": {
       "_id": "W3iMRtTiK4YnHHzjN",
       "key": "course.discussion.comment_btn.write",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "写下来！",
       "ctime": 1483777771075,
       "mtime": 1483777771075,
@@ -56472,7 +55568,7 @@ mfPkg.syncAll({
     "course.discussion.text_placeholder": {
       "_id": "DbzpjNDPXwernLS8v",
       "key": "course.discussion.text_placeholder",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "你的评论",
       "ctime": 1483777776703,
       "mtime": 1483777776703,
@@ -56481,7 +55577,7 @@ mfPkg.syncAll({
     "course.discussion.text_placeholder_answer": {
       "_id": "jDEnLda2SaGSxLzeB",
       "key": "course.discussion.text_placeholder_answer",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "你的回答",
       "ctime": 1483777782001,
       "mtime": 1483777782001,
@@ -56490,7 +55586,7 @@ mfPkg.syncAll({
     "course.discussion.title_placeholder": {
       "_id": "3hYpdMLxtptSPrAvx",
       "key": "course.discussion.title_placeholder",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "标题",
       "ctime": 1483777787971,
       "mtime": 1483777787971,
@@ -56499,7 +55595,7 @@ mfPkg.syncAll({
     "course.discussion.write_comment": {
       "_id": "vT9YSkkTezPingBTH",
       "key": "course.discussion.write_comment",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "写评论",
       "ctime": 1483777793054,
       "mtime": 1483777793054,
@@ -56508,7 +55604,7 @@ mfPkg.syncAll({
     "course.docs.noFiles": {
       "_id": "Jcx4g5C8bxAPbaMBS",
       "key": "course.docs.noFiles",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "这个课程没有附件。",
       "ctime": 1483777808294,
       "mtime": 1483777808294,
@@ -56517,27 +55613,16 @@ mfPkg.syncAll({
     "course.download_cal": {
       "_id": "pBceEw5h2f64sqSah",
       "key": "course.download_cal",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "将活动日程下载到我的日历",
       "ctime": 1483777826679,
       "mtime": 1483777826679,
       "revisionId": "8PXafkoPugyagrXxE"
     },
-    "course.dtails.paticipants.title": {
-      "_id": "XqgqJR3pjgoryaGqK",
-      "key": "course.dtails.paticipants.title",
-      "lang": "zh_CN",
-      "text": "{NUM, plural,\n\t\t\t\t\t=0 {尚无参与者}\n\t\t\t\t\tone {一个参与者}\n\t\t\t\t\tother {# 个参与者}\n\t\t\t\t}",
-      "ctime": 1483777868336,
-      "mtime": 1483777868336,
-      "revisionId": "7gcbiLwPLb3PqMc6H",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.edit.categories": {
       "_id": "xmxWY2mMb8xrqs4n5",
       "key": "course.edit.categories",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "分类",
       "ctime": 1483777875864,
       "mtime": 1483777875864,
@@ -56546,7 +55631,7 @@ mfPkg.syncAll({
     "course.edit.description": {
       "_id": "pbfwQYj2BNoXsDypL",
       "key": "course.edit.description",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "描述",
       "ctime": 1483777879768,
       "mtime": 1483777879768,
@@ -56555,7 +55640,7 @@ mfPkg.syncAll({
     "course.edit.edit_categories": {
       "_id": "v6b5mdcZARzidPadC",
       "key": "course.edit.edit_categories",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "编辑分类",
       "ctime": 1483777887407,
       "mtime": 1483777887407,
@@ -56564,7 +55649,7 @@ mfPkg.syncAll({
     "course.edit.edit_course": {
       "_id": "sdkxdaiPNMKiXhuas",
       "key": "course.edit.edit_course",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "编辑课程",
       "ctime": 1483777892452,
       "mtime": 1483777892452,
@@ -56573,7 +55658,7 @@ mfPkg.syncAll({
     "course.edit.intern": {
       "_id": "mN5HSfYufXLAWMzrq",
       "key": "course.edit.intern",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "不在首页显示",
       "ctime": 1483777902889,
       "mtime": 1483777902889,
@@ -56582,7 +55667,7 @@ mfPkg.syncAll({
     "course.edit.internDescription": {
       "_id": "nbg6yTYmNiiaudjFD",
       "key": "course.edit.internDescription",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "只在该课程相关的群组和场地页面显示该课程",
       "ctime": 1483777976621,
       "mtime": 1483777976621,
@@ -56592,7 +55677,7 @@ mfPkg.syncAll({
     "course.edit.needs.role": {
       "_id": "YksiSRfEcDtwANyJi",
       "key": "course.edit.needs.role",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "这个课程也许需要……",
       "ctime": 1483777994313,
       "mtime": 1483777994313,
@@ -56601,7 +55686,7 @@ mfPkg.syncAll({
     "course.edit.no.categories": {
       "_id": "ynT8hNDgDYwszHBAE",
       "key": "course.edit.no.categories",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "无分类",
       "ctime": 1483778009756,
       "mtime": 1483778009756,
@@ -56610,7 +55695,7 @@ mfPkg.syncAll({
     "course.edit.propose": {
       "_id": "NpSq5QadF2L2bBCiA",
       "key": "course.edit.propose",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "发起新的课程倡议",
       "ctime": 1483778027545,
       "mtime": 1483778027545,
@@ -56619,7 +55704,7 @@ mfPkg.syncAll({
     "course.edit.region": {
       "_id": "ud8mWwup8ALkWoHrk",
       "key": "course.edit.region",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "区域",
       "ctime": 1483778031934,
       "mtime": 1483778031934,
@@ -56628,27 +55713,16 @@ mfPkg.syncAll({
     "course.edit.title": {
       "_id": "fb4TLvcxs9v8vZL9B",
       "key": "course.edit.title",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "标题",
       "ctime": 1483778037106,
       "mtime": 1483778037106,
       "revisionId": "M6CXJHotQMWv8tmyC"
     },
-    "course.event.detail.back": {
-      "_id": "joBpkjNYPNDXv2j84",
-      "key": "course.event.detail.back",
-      "lang": "zh_CN",
-      "text": "回到课程",
-      "ctime": 1483778042549,
-      "mtime": 1483778042549,
-      "revisionId": "RTFq7BmcngELoft74",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.event.detail.goToCourse": {
       "_id": "CB9TzchjFQBKkggqh",
       "key": "course.event.detail.goToCourse",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "前往课程",
       "ctime": 1483778049620,
       "mtime": 1483778049620,
@@ -56659,7 +55733,7 @@ mfPkg.syncAll({
     "course.event.edit.add": {
       "_id": "RzvAAsPXQBLokHFKr",
       "key": "course.event.edit.add",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "添加活动",
       "ctime": 1483778054738,
       "mtime": 1483778054738,
@@ -56668,7 +55742,7 @@ mfPkg.syncAll({
     "course.event.edit.date_start": {
       "_id": "kLdyZMmtktGv3BCfk",
       "key": "course.event.edit.date_start",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "日期",
       "ctime": 1483778057752,
       "mtime": 1483778057752,
@@ -56677,7 +55751,7 @@ mfPkg.syncAll({
     "course.event.edit.desc": {
       "_id": "YppXKexvY52TGnyaa",
       "key": "course.event.edit.desc",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "描述",
       "ctime": 1483778060585,
       "mtime": 1483778060585,
@@ -56686,7 +55760,7 @@ mfPkg.syncAll({
     "course.event.edit.duration": {
       "_id": "rZSw3ZGQke3dz62Fo",
       "key": "course.event.edit.duration",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "时长（分钟）",
       "ctime": 1483778075026,
       "mtime": 1483778075026,
@@ -56695,7 +55769,7 @@ mfPkg.syncAll({
     "course.event.edit.edit": {
       "_id": "sjMrvpsyns9MqhKAv",
       "key": "course.event.edit.edit",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "编辑活动",
       "ctime": 1483778079488,
       "mtime": 1483778079488,
@@ -56704,7 +55778,7 @@ mfPkg.syncAll({
     "course.event.edit.location": {
       "_id": "ZoGB8SQhdoQryfwyB",
       "key": "course.event.edit.location",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "场所",
       "ctime": 1483778082568,
       "mtime": 1483778113033,
@@ -56713,7 +55787,7 @@ mfPkg.syncAll({
     "course.event.edit.room": {
       "_id": "3i7woMub4cdhSRzwS",
       "key": "course.event.edit.room",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "房间",
       "ctime": 1483778174427,
       "mtime": 1483778174427,
@@ -56722,7 +55796,7 @@ mfPkg.syncAll({
     "course.event.edit.swich_duration": {
       "_id": "zsxafiEbwwdCpizCE",
       "key": "course.event.edit.swich_duration",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "切换到时长",
       "ctime": 1483778186349,
       "mtime": 1483778186349,
@@ -56731,7 +55805,7 @@ mfPkg.syncAll({
     "course.event.edit.switch_time_end": {
       "_id": "5QwFyy6uHTH4R4ayu",
       "key": "course.event.edit.switch_time_end",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "切换到结束时间",
       "ctime": 1483778198352,
       "mtime": 1483778198352,
@@ -56740,7 +55814,7 @@ mfPkg.syncAll({
     "course.event.edit.time_end": {
       "_id": "FFzjCLKLzgzE2uqJT",
       "key": "course.event.edit.time_end",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "结束时间",
       "ctime": 1483778221729,
       "mtime": 1483778221729,
@@ -56749,7 +55823,7 @@ mfPkg.syncAll({
     "course.event.edit.time_start": {
       "_id": "eC7BLxWiNH56huLPb",
       "key": "course.event.edit.time_start",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "开始时间",
       "ctime": 1483778227427,
       "mtime": 1483778227427,
@@ -56758,7 +55832,7 @@ mfPkg.syncAll({
     "course.event.edit.title": {
       "_id": "BJnpRfTBJGD6XNEeY",
       "key": "course.event.edit.title",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "活动名称",
       "ctime": 1483778236752,
       "mtime": 1483778236752,
@@ -56767,7 +55841,7 @@ mfPkg.syncAll({
     "course.events.futureListLink": {
       "_id": "DYByLwmdWdTqwnddD",
       "key": "course.events.futureListLink",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "未来活动",
       "ctime": 1483778245054,
       "mtime": 1483778245054,
@@ -56776,7 +55850,7 @@ mfPkg.syncAll({
     "course.events.ongoinglist": {
       "_id": "Zogg4HekY9myNweT7",
       "key": "course.events.ongoinglist",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "正在进行的活动",
       "ctime": 1483778251722,
       "mtime": 1483778251722,
@@ -56785,7 +55859,7 @@ mfPkg.syncAll({
     "course.events.pastList": {
       "_id": "dS3Jd9xspdtueNSNW",
       "key": "course.events.pastList",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "已结束的活动",
       "ctime": 1483778258632,
       "mtime": 1483778258632,
@@ -56794,7 +55868,7 @@ mfPkg.syncAll({
     "course.events.pastListLink": {
       "_id": "ddSzoCPZ3hpoHyiB2",
       "key": "course.events.pastListLink",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "已结束的活动",
       "ctime": 1483778269003,
       "mtime": 1483778269003,
@@ -56803,7 +55877,7 @@ mfPkg.syncAll({
     "course.events.upcominglist": {
       "_id": "aMp49jAdJuqv5MpE6",
       "key": "course.events.upcominglist",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "即将到来的活动",
       "ctime": 1483778275174,
       "mtime": 1483778275174,
@@ -56812,7 +55886,7 @@ mfPkg.syncAll({
     "course.group.addOrgText": {
       "_id": "QDtPTML4ccccMLFcd",
       "key": "course.group.addOrgText",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "赋予编辑权限",
       "ctime": 1483778307281,
       "mtime": 1483778307281,
@@ -56821,7 +55895,7 @@ mfPkg.syncAll({
     "course.group.addText": {
       "_id": "B9FJsqDMWYGKg3xKX",
       "key": "course.group.addText",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "新增一个组",
       "ctime": 1483778318554,
       "mtime": 1483778318554,
@@ -56831,7 +55905,7 @@ mfPkg.syncAll({
     "course.group.confimOrgButton": {
       "_id": "wo5rWxEbw55dF6Qkx",
       "key": "course.group.confimOrgButton",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "赋予编辑权限",
       "ctime": 1483778328131,
       "mtime": 1483778328131,
@@ -56840,7 +55914,7 @@ mfPkg.syncAll({
     "course.group.confimRemoveOrgButton": {
       "_id": "mbvNoyE9Xjizj2Z7P",
       "key": "course.group.confimRemoveOrgButton",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "褫夺编辑权限",
       "ctime": 1483778349772,
       "mtime": 1483778349772,
@@ -56849,7 +55923,7 @@ mfPkg.syncAll({
     "course.group.confirmOrgNotes": {
       "_id": "GesueKg9M7AaKATJM",
       "key": "course.group.confirmOrgNotes",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "该组所有成员都将能编辑这个课程，以及为课程创建新的活动。",
       "ctime": 1483778427607,
       "mtime": 1483778427607,
@@ -56858,7 +55932,7 @@ mfPkg.syncAll({
     "course.group.confirmOrgText": {
       "_id": "bSYyiitp2DWKw3oNn",
       "key": "course.group.confirmOrgText",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "确定要赋予「{NAME}」群组编辑权限吗？",
       "ctime": 1483778491422,
       "mtime": 1483778775901,
@@ -56867,7 +55941,7 @@ mfPkg.syncAll({
     "course.group.confirmRemoveButton": {
       "_id": "SAYQ8w8tfzpHevW43",
       "key": "course.group.confirmRemoveButton",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "解职",
       "ctime": 1483778731959,
       "mtime": 1483778731959,
@@ -56876,7 +55950,7 @@ mfPkg.syncAll({
     "course.group.confirmRemoveOrgText": {
       "_id": "bBCj3TycfxNzDAvqw",
       "key": "course.group.confirmRemoveOrgText",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "确定要解除「{NAME}」群组的编辑权限吗？",
       "ctime": 1483778771641,
       "mtime": 1483778771641,
@@ -56885,7 +55959,7 @@ mfPkg.syncAll({
     "course.group.confirmRemoveText": {
       "_id": "bLYWTgustuMiY8jRC",
       "key": "course.group.confirmRemoveText",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "将「{NAME}」从筹办者列表中移除？",
       "ctime": 1483779407297,
       "mtime": 1483779407297,
@@ -56894,7 +55968,7 @@ mfPkg.syncAll({
     "course.group.remove": {
       "_id": "hu9DyQZXu696K35CD",
       "key": "course.group.remove",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "移除",
       "ctime": 1483779410702,
       "mtime": 1483779410702,
@@ -56903,7 +55977,7 @@ mfPkg.syncAll({
     "course.group.removeOrgText": {
       "_id": "7zCfapYGcJuN8aNWG",
       "key": "course.group.removeOrgText",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "解除编辑权限",
       "ctime": 1483779423495,
       "mtime": 1483779423495,
@@ -56912,7 +55986,7 @@ mfPkg.syncAll({
     "course.history.created_by": {
       "_id": "93oTB5xWCJBjKaHns",
       "key": "course.history.created_by",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "课程创建者：",
       "ctime": 1483779515786,
       "mtime": 1483779515786,
@@ -56921,7 +55995,7 @@ mfPkg.syncAll({
     "course.propose.EventInfo": {
       "_id": "gLQBYWqWja4xsfpjk",
       "key": "course.propose.EventInfo",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "如果你要发布一个独立活动，请使用这个表单：",
       "ctime": 1483779690553,
       "mtime": 1483779690553,
@@ -56929,32 +56003,10 @@ mfPkg.syncAll({
       "removed": true,
       "fuzzy": true
     },
-    "course.roles.enrol": {
-      "_id": "Am6SNw5E34enpsGSB",
-      "key": "course.roles.enrol",
-      "lang": "zh_CN",
-      "text": "参与",
-      "ctime": 1483779701695,
-      "mtime": 1483779701695,
-      "revisionId": "D4cMaNwJuvKupLCSd",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enrol_as": {
-      "_id": "pGERgab5dSryHknwq",
-      "key": "course.roles.enrol_as",
-      "lang": "zh_CN",
-      "text": "成为",
-      "ctime": 1483779735050,
-      "mtime": 1483779735050,
-      "revisionId": "sm6kPYuqkyQTZzzsF",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.roles.leave_message": {
       "_id": "HZDNsbBwzrQqw2hJb",
       "key": "course.roles.leave_message",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "在这里留下你的期望或其他附言：",
       "ctime": 1483779810243,
       "mtime": 1483779810243,
@@ -56964,7 +56016,7 @@ mfPkg.syncAll({
     "course.roles.maketeam": {
       "_id": "3KdXhnQvB8BqejfTG",
       "key": "course.roles.maketeam",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "组入团队",
       "ctime": 1483779824939,
       "mtime": 1483779824939,
@@ -56973,7 +56025,7 @@ mfPkg.syncAll({
     "course.roles.retract": {
       "_id": "Ax4Buz2oXFaMteBfx",
       "key": "course.roles.retract",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "退出团队",
       "ctime": 1483779830365,
       "mtime": 1483779830365,
@@ -56982,7 +56034,7 @@ mfPkg.syncAll({
     "course.subnav.descr": {
       "_id": "jGxjfwP4ZR3jbGXjq",
       "key": "course.subnav.descr",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "描述",
       "ctime": 1483779834926,
       "mtime": 1483779834926,
@@ -56991,7 +56043,7 @@ mfPkg.syncAll({
     "course.subnav.history": {
       "_id": "hf7yH66FszC488tSp",
       "key": "course.subnav.history",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "历史",
       "ctime": 1483779837337,
       "mtime": 1483779837337,
@@ -57000,7 +56052,7 @@ mfPkg.syncAll({
     "course.title.Discussion": {
       "_id": "G7vFPFqwcXHkFQYrf",
       "key": "course.title.Discussion",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "讨论",
       "ctime": 1483779840749,
       "mtime": 1483779840749,
@@ -57009,7 +56061,7 @@ mfPkg.syncAll({
     "course.title.Past events": {
       "_id": "Ymo9bHKfLAfA7WEYQ",
       "key": "course.title.Past events",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "过去的活动",
       "ctime": 1483779873385,
       "mtime": 1483779873385,
@@ -57018,7 +56070,7 @@ mfPkg.syncAll({
     "course.title.placeholder": {
       "_id": "fZDvKkExyWfRyuHzZ",
       "key": "course.title.placeholder",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "你在什么方面感兴趣？",
       "ctime": 1483779890703,
       "mtime": 1483779890703,
@@ -57027,7 +56079,7 @@ mfPkg.syncAll({
     "courses.none": {
       "_id": "NrgjKRfi7ktApEtbL",
       "key": "courses.none",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "没有找到符合条件的课程",
       "ctime": 1483779906301,
       "mtime": 1483779906301,
@@ -57036,7 +56088,7 @@ mfPkg.syncAll({
     "discussion.anonymous": {
       "_id": "Q4s8P4tuaptgN4sep",
       "key": "discussion.anonymous",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "匿名",
       "ctime": 1483779918018,
       "mtime": 1483779918018,
@@ -57045,7 +56097,7 @@ mfPkg.syncAll({
     "editable.add_text": {
       "_id": "Xkv3ot3umhfjvg8Mz",
       "key": "editable.add_text",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "添加一些文字",
       "ctime": 1483780101112,
       "mtime": 1483780101112,
@@ -57054,7 +56106,7 @@ mfPkg.syncAll({
     "editable.discard": {
       "_id": "aufGDBHrKs2GJ5vY6",
       "key": "editable.discard",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "舍弃修改",
       "ctime": 1483780109517,
       "mtime": 1483780109517,
@@ -57063,7 +56115,7 @@ mfPkg.syncAll({
     "editable.link.placeholder": {
       "_id": "9XFRCbBe8A4grdQsd",
       "key": "editable.link.placeholder",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "在这里贴链接",
       "ctime": 1483780117528,
       "mtime": 1483780117528,
@@ -57072,7 +56124,7 @@ mfPkg.syncAll({
     "editable.sorrychanged": {
       "_id": "Byxou4e9R5PREsduC",
       "key": "editable.sorrychanged",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "对不起，别人刚刚修改了这个。你的更改将被舍弃。",
       "ctime": 1483780157806,
       "mtime": 1483780157806,
@@ -57081,7 +56133,7 @@ mfPkg.syncAll({
     "editable.store": {
       "_id": "2QAF3nbrYsm9QhxCm",
       "key": "editable.store",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "存储修改",
       "ctime": 1483780167951,
       "mtime": 1483780167951,
@@ -57090,7 +56142,7 @@ mfPkg.syncAll({
     "email.verified": {
       "_id": "ho9MEZJwEAsKELnqu",
       "key": "email.verified",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "Email 已验证。",
       "ctime": 1483780177708,
       "mtime": 1483780177708,
@@ -57100,7 +56152,7 @@ mfPkg.syncAll({
     "event.description.placeholder": {
       "_id": "8jsZD32FZ9dHASP3B",
       "key": "event.description.placeholder",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "尽可能准确地描述你的活动。这将帮助人们做出准备，并让他们知道活动的大致内容。如难度层次、前置条件、具体活动、教授方法、应该携带的物品等。",
       "ctime": 1483780361309,
       "mtime": 1483780361309,
@@ -57109,7 +56161,7 @@ mfPkg.syncAll({
     "event.detail.download_cal": {
       "_id": "Y2jAmoomSxS4nGgt6",
       "key": "event.detail.download_cal",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "将本次活动存到我的日历里",
       "ctime": 1483780382568,
       "mtime": 1483780382568,
@@ -57118,7 +56170,7 @@ mfPkg.syncAll({
     "event.edit.addressSearch": {
       "_id": "dyvEPt8Tq8k5mmep5",
       "key": "event.edit.addressSearch",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "搜索",
       "ctime": 1483780386081,
       "mtime": 1483780386081,
@@ -57127,7 +56179,7 @@ mfPkg.syncAll({
     "event.edit.dateFormatWarning": {
       "_id": "Phsub7Dwb6FJWwPCq",
       "key": "event.edit.dateFormatWarning",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "日期必须采用「{EXAMPLEDATE}」的形式。",
       "ctime": 1483780425343,
       "mtime": 1483780425343,
@@ -57136,7 +56188,7 @@ mfPkg.syncAll({
     "event.edit.internal": {
       "_id": "q6SqTgRq8aeFJZtTA",
       "key": "event.edit.internal",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "不在首页显示",
       "ctime": 1483780461444,
       "mtime": 1483780461444,
@@ -57145,7 +56197,7 @@ mfPkg.syncAll({
     "event.edit.internal.description": {
       "_id": "PMabwyWb8DbmsiroS",
       "key": "event.edit.internal.description",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "只在该课程相关的群组和场地页面显示该课程",
       "ctime": 1483780601812,
       "mtime": 1483780601812,
@@ -57154,7 +56206,7 @@ mfPkg.syncAll({
     "event.edit.locationAddressPlaceholder": {
       "_id": "a3JoJENB6PG9W54SH",
       "key": "event.edit.locationAddressPlaceholder",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "地址",
       "ctime": 1483780606790,
       "mtime": 1483780606790,
@@ -57163,7 +56215,7 @@ mfPkg.syncAll({
     "event.edit.locationChange": {
       "_id": "FeygNtdyadewbLXXH",
       "key": "event.edit.locationChange",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "更改场地",
       "ctime": 1483780612177,
       "mtime": 1483780612177,
@@ -57172,7 +56224,7 @@ mfPkg.syncAll({
     "event.edit.locationNamePlaceholder": {
       "_id": "rgKzSwrgf6SHgLpGE",
       "key": "event.edit.locationNamePlaceholder",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "哪里？",
       "ctime": 1483780617446,
       "mtime": 1483780617446,
@@ -57181,7 +56233,7 @@ mfPkg.syncAll({
     "event.edit.locations.foundnone": {
       "_id": "Y4kPnRBBDsRwZckKG",
       "key": "event.edit.locations.foundnone",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "没有找到地点。",
       "ctime": 1483780630512,
       "mtime": 1483780630512,
@@ -57190,7 +56242,7 @@ mfPkg.syncAll({
     "event.edit.locations.previouslyUsed": {
       "_id": "z6zpJRgNsZHJZ3vvM",
       "key": "event.edit.locations.previouslyUsed",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "最近使用的地点：",
       "ctime": 1483780638680,
       "mtime": 1483780638680,
@@ -57199,7 +56251,7 @@ mfPkg.syncAll({
     "event.edit.locations.proposed": {
       "_id": "CY83s3FiQ4XwxWY3Z",
       "key": "event.edit.locations.proposed",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "符合条件的地点：",
       "ctime": 1483780646289,
       "mtime": 1483780651604,
@@ -57208,7 +56260,7 @@ mfPkg.syncAll({
     "event.edit.noResultsforAddress": {
       "_id": "6963Nko7JQcSMzGkF",
       "key": "event.edit.noResultsforAddress",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "没有找到地址为「{ADDRESS}」的结果",
       "ctime": 1483780687895,
       "mtime": 1483780687895,
@@ -57217,7 +56269,7 @@ mfPkg.syncAll({
     "event.edit.notifyEditEvent": {
       "_id": "2jkwyGdG5Kv6Hhfre",
       "key": "event.edit.notifyEditEvent",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "将你的修改通知给所有参与「{COURSE}」的成员。",
       "ctime": 1483780754920,
       "mtime": 1483780754920,
@@ -57226,7 +56278,7 @@ mfPkg.syncAll({
     "event.edit.notifyNewEvent": {
       "_id": "qx3mkHdT9w2SrNvRm",
       "key": "event.edit.notifyNewEvent",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "将你的修改通知给所有参与「{COURSE}」的成员。",
       "ctime": 1483780766308,
       "mtime": 1483780766308,
@@ -57235,7 +56287,7 @@ mfPkg.syncAll({
     "event.edit.plzProvideDescr": {
       "_id": "GT7qYHkkJz7Bfc9m9",
       "key": "event.edit.plzProvideDescr",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "请提供描述",
       "ctime": 1483780774699,
       "mtime": 1483780774699,
@@ -57244,7 +56296,7 @@ mfPkg.syncAll({
     "event.edit.plzProvideTitle": {
       "_id": "M5AkcncZteDS5D8MY",
       "key": "event.edit.plzProvideTitle",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "请提供标题",
       "ctime": 1483780785736,
       "mtime": 1483780785736,
@@ -57253,7 +56305,7 @@ mfPkg.syncAll({
     "event.edit.plzSelectRegion": {
       "_id": "9Srz73kzkkN6WiQJH",
       "key": "event.edit.plzSelectRegion",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "请选择区域",
       "ctime": 1483780797294,
       "mtime": 1483780797294,
@@ -57262,7 +56314,7 @@ mfPkg.syncAll({
     "event.edit.replicates.success": {
       "_id": "ihK73WwNtXepKSMEW",
       "key": "event.edit.replicates.success",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "「{TITLE}」的其他副本也已更新。",
       "ctime": 1483780840727,
       "mtime": 1483780840727,
@@ -57273,7 +56325,7 @@ mfPkg.syncAll({
     "event.edit.updateReplicas": {
       "_id": "ju4AJ54JzRvWbpjSa",
       "key": "event.edit.updateReplicas",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "更新{COUNT, plural,\n\t\t\t\t\t\t\t\t\tone {最迟的副本}\n\t\t\t\t\t\t\t\t\tother {最迟的 # 个副本}\n\t\t\t\t\t\t\t\t}",
       "ctime": 1483780897034,
       "mtime": 1483781056818,
@@ -57282,7 +56334,7 @@ mfPkg.syncAll({
     "event.edit.updateReplicas.times": {
       "_id": "eKCtvFpLjESwqPYgh",
       "key": "event.edit.updateReplicas.times",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "时间修改不会影响到{COUNT, plural,\n\t\t\t\t\t\t\t\t\t\tone {副本}\n\t\t\t\t\t\t\t\t\t\tother {副本}\n\t\t\t\t\t\t\t\t\t}.",
       "ctime": 1483781101992,
       "mtime": 1483781101992,
@@ -57293,18 +56345,18 @@ mfPkg.syncAll({
     "event.group.confirmOrgNotes": {
       "_id": "DwmSsFzFnLjopqB4h",
       "key": "event.group.confirmOrgNotes",
-      "lang": "zh_CN",
+      "lang": "zh-CN",
       "text": "该组所有成员都将能编辑这个活动。",
       "ctime": 1483781137617,
       "mtime": 1483781137617,
       "revisionId": "i7zNdcSniLpYdsXbD"
     }
   },
-  "zh_TW": {
+  "zh-TW": {
     "Profile.translate_this_page": {
       "_id": "v8tB9xuJtEsgcCoJ8",
       "key": "Profile.translate_this_page",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "幫我們翻譯此頁面",
       "ctime": 1425227373723,
       "mtime": 1425227373723,
@@ -57314,7 +56366,7 @@ mfPkg.syncAll({
     "categories.no_categories": {
       "_id": "BuHhJkvfGHCg4XmiJ",
       "key": "categories.no_categories",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "找不到類別！",
       "ctime": 1425227175718,
       "mtime": 1425227175718,
@@ -57323,7 +56375,7 @@ mfPkg.syncAll({
     "course.discussion.comment_answer": {
       "_id": "29sQqGkFERxLQqP6a",
       "key": "course.discussion.comment_answer",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "回覆",
       "ctime": 1425233665309,
       "mtime": 1425233665309,
@@ -57332,7 +56384,7 @@ mfPkg.syncAll({
     "course.discussion.comment_btn.answer": {
       "_id": "LaPQuCdJeAnuLuWuL",
       "key": "course.discussion.comment_btn.answer",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "回應！",
       "ctime": 1425233696028,
       "mtime": 1425233696028,
@@ -57341,7 +56393,7 @@ mfPkg.syncAll({
     "course.discussion.comment_btn.write": {
       "_id": "jktWLrEdYSCm7hn52",
       "key": "course.discussion.comment_btn.write",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "寫！",
       "ctime": 1425233699547,
       "mtime": 1425233699547,
@@ -57350,7 +56402,7 @@ mfPkg.syncAll({
     "course.discussion.write_comment": {
       "_id": "XFPJZhxZK9BCyKdA3",
       "key": "course.discussion.write_comment",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "留言",
       "ctime": 1425226795997,
       "mtime": 1425226795997,
@@ -57360,7 +56412,7 @@ mfPkg.syncAll({
     "course.edit.categories": {
       "_id": "e6yT65kyq27KmD9XH",
       "key": "course.edit.categories",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "類別",
       "ctime": 1425226714314,
       "mtime": 1425226714314,
@@ -57370,7 +56422,7 @@ mfPkg.syncAll({
     "course.edit.description": {
       "_id": "KAZ5MzYETfryFanfK",
       "key": "course.edit.description",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "簡介：",
       "ctime": 1425226706410,
       "mtime": 1425226706410,
@@ -57380,7 +56432,7 @@ mfPkg.syncAll({
     "course.edit.edit_categories": {
       "_id": "kKFWdCQBWWKPnEYb3",
       "key": "course.edit.edit_categories",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "編輯類別",
       "ctime": 1425226719963,
       "mtime": 1425226719963,
@@ -57390,7 +56442,7 @@ mfPkg.syncAll({
     "course.edit.edit_course": {
       "_id": "yqbZn2AmbAGjhqDPp",
       "key": "course.edit.edit_course",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "編輯課程",
       "ctime": 1425226680379,
       "mtime": 1425226680379,
@@ -57399,7 +56451,7 @@ mfPkg.syncAll({
     "course.edit.propose": {
       "_id": "iPxJTwhWEzNTtXBZA",
       "key": "course.edit.propose",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "提議新課程",
       "ctime": 1425226691102,
       "mtime": 1425226691102,
@@ -57408,7 +56460,7 @@ mfPkg.syncAll({
     "course.edit.region": {
       "_id": "jCxdha2jvg5zAME3M",
       "key": "course.edit.region",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "地區：",
       "ctime": 1425226761183,
       "mtime": 1425226761183,
@@ -57418,28 +56470,17 @@ mfPkg.syncAll({
     "course.edit.title": {
       "_id": "3GuFvwSzj3JyDG6BM",
       "key": "course.edit.title",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "名稱：",
       "ctime": 1425226702763,
       "mtime": 1425226702763,
       "revisionId": "GuzQtfkXmqRTMT2qW",
       "fuzzy": true
     },
-    "course.event.detail.back": {
-      "_id": "6s3uQXbG5wA4dp4sW",
-      "key": "course.event.detail.back",
-      "lang": "zh_TW",
-      "text": "回到課程",
-      "ctime": 1425226462519,
-      "mtime": 1425226462519,
-      "revisionId": "mfwzFLusmroNbxQXD",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.event.edit.add": {
       "_id": "vyXNeejYdAodGhu76",
       "key": "course.event.edit.add",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "新增活動",
       "ctime": 1425226500141,
       "mtime": 1425226500141,
@@ -57448,7 +56489,7 @@ mfPkg.syncAll({
     "course.event.edit.date_start": {
       "_id": "BbJwn9kmKk4atCBAp",
       "key": "course.event.edit.date_start",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "日期",
       "ctime": 1425226782829,
       "mtime": 1425226782829,
@@ -57457,7 +56498,7 @@ mfPkg.syncAll({
     "course.event.edit.desc": {
       "_id": "v5SgaG6hvhkzH8ihw",
       "key": "course.event.edit.desc",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "簡介：",
       "ctime": 1425226788599,
       "mtime": 1425226788599,
@@ -57467,7 +56508,7 @@ mfPkg.syncAll({
     "course.event.edit.duration": {
       "_id": "ygyB2y5JzAijDsRYK",
       "key": "course.event.edit.duration",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "時間長度(分鐘)",
       "ctime": 1425233578797,
       "mtime": 1425233578797,
@@ -57476,7 +56517,7 @@ mfPkg.syncAll({
     "course.event.edit.edit": {
       "_id": "NWarKCFg5MrSXarZn",
       "key": "course.event.edit.edit",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "編輯活動",
       "ctime": 1425226493907,
       "mtime": 1425226493907,
@@ -57485,7 +56526,7 @@ mfPkg.syncAll({
     "course.event.edit.location": {
       "_id": "s4suazun4ZB53iE3q",
       "key": "course.event.edit.location",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "地點：",
       "ctime": 1425233590277,
       "mtime": 1425233590277,
@@ -57495,7 +56536,7 @@ mfPkg.syncAll({
     "course.event.edit.room": {
       "_id": "6oAEicTNZHfMN5iGL",
       "key": "course.event.edit.room",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "房間：(備選)",
       "ctime": 1425233630432,
       "mtime": 1425233630432,
@@ -57505,7 +56546,7 @@ mfPkg.syncAll({
     "course.event.edit.swich_duration": {
       "_id": "8i3yR7tPXNip6MRoh",
       "key": "course.event.edit.swich_duration",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "轉至時間期度",
       "ctime": 1425233567085,
       "mtime": 1425233567085,
@@ -57514,7 +56555,7 @@ mfPkg.syncAll({
     "course.event.edit.switch_time_end": {
       "_id": "5CeTy6vLuXQKpNZd9",
       "key": "course.event.edit.switch_time_end",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "轉至結束時間",
       "ctime": 1425233585494,
       "mtime": 1425233585494,
@@ -57523,7 +56564,7 @@ mfPkg.syncAll({
     "course.event.edit.time_end": {
       "_id": "HiRDpidFa263mpTsJ",
       "key": "course.event.edit.time_end",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "結束時間",
       "ctime": 1425226511034,
       "mtime": 1425226511034,
@@ -57532,7 +56573,7 @@ mfPkg.syncAll({
     "course.event.edit.time_start": {
       "_id": "Dn5thxZryNJF6ZSKi",
       "key": "course.event.edit.time_start",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "開始時間",
       "ctime": 1425226505058,
       "mtime": 1425226505058,
@@ -57541,39 +56582,17 @@ mfPkg.syncAll({
     "course.event.edit.title": {
       "_id": "w5zqp3G3d7PsTSHE7",
       "key": "course.event.edit.title",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "活動名稱：",
       "ctime": 1425226517273,
       "mtime": 1425226517273,
       "revisionId": "sYFDDdxh5ZRnc7zvi",
       "fuzzy": true
     },
-    "course.roles.enrol": {
-      "_id": "L6sKXpJkphXohpMLC",
-      "key": "course.roles.enrol",
-      "lang": "zh_TW",
-      "text": "註冊",
-      "ctime": 1425227164273,
-      "mtime": 1425227164273,
-      "revisionId": "hm452rWGTYaPW2HAh",
-      "removed": true,
-      "fuzzy": true
-    },
-    "course.roles.enrol_as": {
-      "_id": "RYWJN6a9mj75mmcj8",
-      "key": "course.roles.enrol_as",
-      "lang": "zh_TW",
-      "text": "註冊為",
-      "ctime": 1425227047825,
-      "mtime": 1425227093638,
-      "revisionId": "ZMbBuXp3YLco5nGk9",
-      "removed": true,
-      "fuzzy": true
-    },
     "course.roles.leave_message": {
       "_id": "t5vu7DEkpyu44rnoi",
       "key": "course.roles.leave_message",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "請在此留言/期許/興趣：",
       "ctime": 1425227141690,
       "mtime": 1425227141690,
@@ -57583,7 +56602,7 @@ mfPkg.syncAll({
     "course.title.Discussion": {
       "_id": "GLFfYCSymmq8rZaTp",
       "key": "course.title.Discussion",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "討論",
       "ctime": 1425226675175,
       "mtime": 1425226675175,
@@ -57592,7 +56611,7 @@ mfPkg.syncAll({
     "course.title.Past events": {
       "_id": "zT7Fuk5yHmjcAdeqG",
       "key": "course.title.Past events",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "以前的活動",
       "ctime": 1425226590444,
       "mtime": 1425226590444,
@@ -57601,7 +56620,7 @@ mfPkg.syncAll({
     "courses.none": {
       "_id": "kgj7yJfphQmtvzWPJ",
       "key": "courses.none",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "沒有課程",
       "ctime": 1425226457156,
       "mtime": 1425226457156,
@@ -57610,7 +56629,7 @@ mfPkg.syncAll({
     "editable.add_text": {
       "_id": "t3d3WEopbPqE85Bdn",
       "key": "editable.add_text",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "新增文本",
       "ctime": 1425234058889,
       "mtime": 1425234069310,
@@ -57619,7 +56638,7 @@ mfPkg.syncAll({
     "editable.discard": {
       "_id": "MSSdukcKfopQ2pyTK",
       "key": "editable.discard",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "放棄變更",
       "ctime": 1425234141392,
       "mtime": 1425234141392,
@@ -57628,7 +56647,7 @@ mfPkg.syncAll({
     "editable.store": {
       "_id": "YwnW2aPoirqb278ZF",
       "key": "editable.store",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "變更儲存",
       "ctime": 1425234082892,
       "mtime": 1425234082892,
@@ -57637,7 +56656,7 @@ mfPkg.syncAll({
     "find.WhatLearn?": {
       "_id": "LCfuTdQzzDKKfGnyM",
       "key": "find.WhatLearn?",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "你想學什麼？",
       "ctime": 1425226316121,
       "mtime": 1425226316121,
@@ -57647,7 +56666,7 @@ mfPkg.syncAll({
     "find.search_go": {
       "_id": "yuXDn7jBc5tHqKNhg",
       "key": "find.search_go",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "走吧！",
       "ctime": 1425228597291,
       "mtime": 1425228597291,
@@ -57656,7 +56675,7 @@ mfPkg.syncAll({
     "find.search_placeholder": {
       "_id": "GpzmQs8WzbvBTAdNo",
       "key": "find.search_placeholder",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "Everything",
       "ctime": 1425228587483,
       "mtime": 1425228587483,
@@ -57665,27 +56684,16 @@ mfPkg.syncAll({
     "frame.login.username": {
       "_id": "HrF6PtfgzPwPegfGm",
       "key": "frame.login.username",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "使用者名稱",
       "ctime": 1425227526841,
       "mtime": 1425227526841,
       "revisionId": "aBESgbbqWjK2vegRh"
     },
-    "frame.login_external_services": {
-      "_id": "7qBcYdYgDDgHgvhyB",
-      "key": "frame.login_external_services",
-      "lang": "zh_TW",
-      "text": "登入：",
-      "ctime": 1425227575372,
-      "mtime": 1425227575372,
-      "revisionId": "ZwzwC2iRjukGxfZZB",
-      "removed": true,
-      "fuzzy": true
-    },
     "location.details.address": {
       "_id": "qkqn2wwKoZWkFBYMD",
       "key": "location.details.address",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "地址：",
       "ctime": 1425225794349,
       "mtime": 1425225794349,
@@ -57694,7 +56702,7 @@ mfPkg.syncAll({
     "location.details.created_by": {
       "_id": "qjH8kdsg9qXLh22wZ",
       "key": "location.details.created_by",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "創建人：",
       "ctime": 1425225760696,
       "mtime": 1425225760696,
@@ -57705,7 +56713,7 @@ mfPkg.syncAll({
     "location.details.has_projector": {
       "_id": "TbwDypLJy4fGp8Pe2",
       "key": "location.details.has_projector",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "有投影機！",
       "ctime": 1425225861456,
       "mtime": 1425225861456,
@@ -57714,7 +56722,7 @@ mfPkg.syncAll({
     "location.details.hosts_admin": {
       "_id": "MXJKqzvd3E4gtru3a",
       "key": "location.details.hosts_admin",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "主持人/管理人：",
       "ctime": 1425225781264,
       "mtime": 1425225781264,
@@ -57723,7 +56731,7 @@ mfPkg.syncAll({
     "location.details.how_go_there": {
       "_id": "2sssLLhkwvMYLBat2",
       "key": "location.details.how_go_there",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "怎麼去：",
       "ctime": 1425225813292,
       "mtime": 1425225822547,
@@ -57732,7 +56740,7 @@ mfPkg.syncAll({
     "location.details.last_edited": {
       "_id": "bTtD6x7u2gx6fNKEd",
       "key": "location.details.last_edited",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "最後一次編譯",
       "ctime": 1425225747683,
       "mtime": 1425225747683,
@@ -57743,7 +56751,7 @@ mfPkg.syncAll({
     "location.details.max_ppl": {
       "_id": "W4iMHRmFwtiqFbvGu",
       "key": "location.details.max_ppl",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "至多人數：",
       "ctime": 1425225828386,
       "mtime": 1425225828386,
@@ -57752,7 +56760,7 @@ mfPkg.syncAll({
     "location.details.max_workplaces": {
       "_id": "WWAT4gEaNcuiZ8RvB",
       "key": "location.details.max_workplaces",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "至多位置：",
       "ctime": 1425225848601,
       "mtime": 1425225848601,
@@ -57761,7 +56769,7 @@ mfPkg.syncAll({
     "location.details.online": {
       "_id": "wQ2N4YbEBgfbvi7ee",
       "key": "location.details.online",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "線上：",
       "ctime": 1425225790048,
       "mtime": 1425225790048,
@@ -57770,7 +56778,7 @@ mfPkg.syncAll({
     "location.details.specials": {
       "_id": "NxZnbuHzXECkZ46BZ",
       "key": "location.details.specials",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "特殊：",
       "ctime": 1425225866535,
       "mtime": 1425225866535,
@@ -57779,7 +56787,7 @@ mfPkg.syncAll({
     "location.details.time_created": {
       "_id": "zTQuztkHMAEz2rR2u",
       "key": "location.details.time_created",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "創建時間：",
       "ctime": 1425225728397,
       "mtime": 1425225728397,
@@ -57790,7 +56798,7 @@ mfPkg.syncAll({
     "location.edit.add_location": {
       "_id": "LXDWzD2Z8hscmeRHP",
       "key": "location.edit.add_location",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "新增地點",
       "ctime": 1425225917158,
       "mtime": 1425225917158,
@@ -57799,7 +56807,7 @@ mfPkg.syncAll({
     "location.edit.address": {
       "_id": "kK8dtYzWK3ZrZ5CJx",
       "key": "location.edit.address",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "地址：",
       "ctime": 1425225929378,
       "mtime": 1425225929378,
@@ -57808,7 +56816,7 @@ mfPkg.syncAll({
     "location.edit.desc": {
       "_id": "7kxPPdXuCBDoyjCig",
       "key": "location.edit.desc",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "簡介：",
       "ctime": 1425225925853,
       "mtime": 1425225925853,
@@ -57817,7 +56825,7 @@ mfPkg.syncAll({
     "location.edit.edit_location": {
       "_id": "h5NbLmhZyLFjpN86j",
       "key": "location.edit.edit_location",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "編修地點：",
       "ctime": 1425225906040,
       "mtime": 1425225906040,
@@ -57826,7 +56834,7 @@ mfPkg.syncAll({
     "location.edit.hosts_admins": {
       "_id": "j35LkGdGYubzmik7x",
       "key": "location.edit.hosts_admins",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "主持人/管理人",
       "ctime": 1425226029370,
       "mtime": 1425226029370,
@@ -57835,7 +56843,7 @@ mfPkg.syncAll({
     "location.edit.max_ppl": {
       "_id": "XSv2B6NsjLdEFXtDH",
       "key": "location.edit.max_ppl",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "至多人數",
       "ctime": 1425226286404,
       "mtime": 1425226286404,
@@ -57844,7 +56852,7 @@ mfPkg.syncAll({
     "location.edit.max_workplace": {
       "_id": "t2RsCw9myxAm4d2Zs",
       "key": "location.edit.max_workplace",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "至多位置",
       "ctime": 1425226294875,
       "mtime": 1425226294875,
@@ -57853,7 +56861,7 @@ mfPkg.syncAll({
     "location.edit.name": {
       "_id": "4z5rCXpcgRFwvGcgw",
       "key": "location.edit.name",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "名字：",
       "ctime": 1425225920339,
       "mtime": 1425225920339,
@@ -57862,7 +56870,7 @@ mfPkg.syncAll({
     "location.edit.no_usr_found": {
       "_id": "j575hQTSDxJcXWzym",
       "key": "location.edit.no_usr_found",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "查無此人",
       "ctime": 1425226269966,
       "mtime": 1425226269966,
@@ -57871,7 +56879,7 @@ mfPkg.syncAll({
     "location.edit.optional_info": {
       "_id": "npE4a4Ht2cQLtaeae",
       "key": "location.edit.optional_info",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "其他訊息",
       "ctime": 1425226278638,
       "mtime": 1425226278638,
@@ -57880,7 +56888,7 @@ mfPkg.syncAll({
     "location.edit.public_space": {
       "_id": "Q43CnTRrbw4xmRnxk",
       "key": "location.edit.public_space",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "公共空間(任何人都可主持)",
       "ctime": 1425226002182,
       "mtime": 1425226002182,
@@ -57889,7 +56897,7 @@ mfPkg.syncAll({
     "location.edit.region": {
       "_id": "35jGqMEvmGrwtDYyr",
       "key": "location.edit.region",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "地區：",
       "ctime": 1425226010717,
       "mtime": 1425226010717,
@@ -57898,7 +56906,7 @@ mfPkg.syncAll({
     "location.edit.route": {
       "_id": "uoLPnAMGrW3YwmSrM",
       "key": "location.edit.route",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "路線：",
       "ctime": 1425225933658,
       "mtime": 1425225933658,
@@ -57907,7 +56915,7 @@ mfPkg.syncAll({
     "location.edit.search_usr_add_host": {
       "_id": "D3ABgAzZ7iw8aCgvn",
       "key": "location.edit.search_usr_add_host",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "搜尋並新增使用者為主持人",
       "ctime": 1425226259670,
       "mtime": 1425226259670,
@@ -57916,7 +56924,7 @@ mfPkg.syncAll({
     "location.edit.visible_in_list": {
       "_id": "tNw5tPfNfjWw6yZda",
       "key": "location.edit.visible_in_list",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "能見清單(可與其它使用者連絡)",
       "ctime": 1425225957920,
       "mtime": 1425225957920,
@@ -57925,7 +56933,7 @@ mfPkg.syncAll({
     "locations.list.title": {
       "_id": "JMcW8n4BK4WMQcWcr",
       "key": "locations.list.title",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "房間數",
       "ctime": 1425226303632,
       "mtime": 1425226303632,
@@ -57934,7 +56942,7 @@ mfPkg.syncAll({
     "login.frame.profile": {
       "_id": "KNwJikL5x3LqhWJoD",
       "key": "login.frame.profile",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "參觀我的個人資料",
       "ctime": 1425225692294,
       "mtime": 1425225692294,
@@ -57943,7 +56951,7 @@ mfPkg.syncAll({
     "login.frame.settings": {
       "_id": "ZtzwvFQMJQ626CeYb",
       "key": "login.frame.settings",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "帳戶設定",
       "ctime": 1425225697765,
       "mtime": 1425225697765,
@@ -57952,7 +56960,7 @@ mfPkg.syncAll({
     "login.frame.welcome": {
       "_id": "CnPa2YNKQTY5QveGX",
       "key": "login.frame.welcome",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "歡迎{NAME}！",
       "ctime": 1425225658371,
       "mtime": 1425225658371,
@@ -57961,7 +56969,7 @@ mfPkg.syncAll({
     "login.login.submit": {
       "_id": "RxJ9vWZkZ5Hy9zY3r",
       "key": "login.login.submit",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "登入",
       "ctime": 1425225706301,
       "mtime": 1425225706301,
@@ -57970,7 +56978,7 @@ mfPkg.syncAll({
     "login.logout": {
       "_id": "KG4byHsuFS2JEC9pJ",
       "key": "login.logout",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "登出",
       "ctime": 1425225702213,
       "mtime": 1425225702213,
@@ -57979,7 +56987,7 @@ mfPkg.syncAll({
     "login.navig.unlogged": {
       "_id": "SN4nHPhamsKHZj6Qd",
       "key": "login.navig.unlogged",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "登入/申請",
       "ctime": 1425225639650,
       "mtime": 1425225639650,
@@ -57988,7 +56996,7 @@ mfPkg.syncAll({
     "login.register.submit": {
       "_id": "oXLGoHR9jQPcEyi3d",
       "key": "login.register.submit",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "創建帳戶",
       "ctime": 1425227548656,
       "mtime": 1425227548656,
@@ -57997,7 +57005,7 @@ mfPkg.syncAll({
     "menue.All regions": {
       "_id": "vC5rGCKs9DfDfHBFH",
       "key": "menue.All regions",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "所有地區",
       "ctime": 1425224891869,
       "mtime": 1425224891869,
@@ -58006,7 +57014,7 @@ mfPkg.syncAll({
     "menue.Calendar": {
       "_id": "pDNseTso3mQCmgMKY",
       "key": "menue.Calendar",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "日曆",
       "ctime": 1425224885950,
       "mtime": 1425224885950,
@@ -58015,7 +57023,7 @@ mfPkg.syncAll({
     "menue.Courses": {
       "_id": "KsfiLnr2GFKuATpnq",
       "key": "menue.Courses",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "課程",
       "ctime": 1425224588829,
       "mtime": 1425224588829,
@@ -58025,7 +57033,7 @@ mfPkg.syncAll({
     "menue.Create": {
       "_id": "vvPfmy72LZFT48jB8",
       "key": "menue.Create",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "創建",
       "ctime": 1425227353955,
       "mtime": 1425227353955,
@@ -58034,7 +57042,7 @@ mfPkg.syncAll({
     "menue.Testpage": {
       "_id": "9ztdPuRDPTS7XDijp",
       "key": "menue.Testpage",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "這是一個測試頁面\n.",
       "ctime": 1425224932215,
       "mtime": 1448041084477,
@@ -58043,7 +57051,7 @@ mfPkg.syncAll({
     "menue.Testpage2": {
       "_id": "xBXdaYLeE99AQLiiu",
       "key": "menue.Testpage2",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "所有資料將會定期清除",
       "ctime": 1425224968707,
       "mtime": 1425224968707,
@@ -58052,7 +57060,7 @@ mfPkg.syncAll({
     "profile.email": {
       "_id": "yrA7HY3AMKuBPTAye",
       "key": "profile.email",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "電郵：",
       "ctime": 1425225200584,
       "mtime": 1425225200584,
@@ -58062,7 +57070,7 @@ mfPkg.syncAll({
     "profile.input.username": {
       "_id": "STDs8XSatCSn6qLBb",
       "key": "profile.input.username",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "使用者名稱：",
       "ctime": 1425225095730,
       "mtime": 1425225095730,
@@ -58072,7 +57080,7 @@ mfPkg.syncAll({
     "profile.its_you": {
       "_id": "bt6NtXv69WWF5MXwD",
       "key": "profile.its_you",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "這是你！",
       "ctime": 1425225425268,
       "mtime": 1425225425268,
@@ -58081,7 +57089,7 @@ mfPkg.syncAll({
     "profile.mail.attachmail": {
       "_id": "kMruG4ik4z9Wvc3Fw",
       "key": "profile.mail.attachmail",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "附上我的電郵地址 ",
       "ctime": 1425225585664,
       "mtime": 1425225585664,
@@ -58091,7 +57099,7 @@ mfPkg.syncAll({
     "profile.mail.content": {
       "_id": "K6NpR684xDg5vq2W4",
       "key": "profile.mail.content",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "你的簡訊：",
       "ctime": 1425225566289,
       "mtime": 1425225566289,
@@ -58100,7 +57108,7 @@ mfPkg.syncAll({
     "profile.mail.copy": {
       "_id": "nybm2sDAdwzcQW4Ni",
       "key": "profile.mail.copy",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "寄複本給我",
       "ctime": 1425225600647,
       "mtime": 1425225600647,
@@ -58110,7 +57118,7 @@ mfPkg.syncAll({
     "profile.my_profile": {
       "_id": "5HNm8HQJGmKaj69Sn",
       "key": "profile.my_profile",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "個人資料",
       "ctime": 1425225049084,
       "mtime": 1425225049084,
@@ -58119,7 +57127,7 @@ mfPkg.syncAll({
     "profile.reallydelete": {
       "_id": "HSFNjmSLjCv6i7owb",
       "key": "profile.reallydelete",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "您將刪除個人帳號，請確認。這個動作無法回復，若需再次使用本網站，必須重新創建一個新帳號。",
       "ctime": 1425225327802,
       "mtime": 1425225354708,
@@ -58129,7 +57137,7 @@ mfPkg.syncAll({
     "profile.username": {
       "_id": "ajnjeuA33TRDcXxiG",
       "key": "profile.username",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "使用者名稱：",
       "ctime": 1425225197057,
       "mtime": 1425225197057,
@@ -58139,7 +57147,7 @@ mfPkg.syncAll({
     "profile.users_profile_page": {
       "_id": "mCu9t259cg7HF63em",
       "key": "profile.users_profile_page",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "{NAME}的個人頁面",
       "ctime": 1425225419127,
       "mtime": 1425225419127,
@@ -58149,7 +57157,7 @@ mfPkg.syncAll({
     "report.cancel": {
       "_id": "osLAMwkxjKdT8EKR3",
       "key": "report.cancel",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "沒差",
       "ctime": 1425234030601,
       "mtime": 1425234030601,
@@ -58158,7 +57166,7 @@ mfPkg.syncAll({
     "report.open": {
       "_id": "me8qdqvouiod5WYYS",
       "key": "report.open",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "回報問題",
       "ctime": 1425234040954,
       "mtime": 1425234040954,
@@ -58167,7 +57175,7 @@ mfPkg.syncAll({
     "report.placeholder": {
       "_id": "jHYfNkKKBRMsNRpbd",
       "key": "report.placeholder",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "我的氣墊船裝滿了鱔魚 (翻譯不好！)",
       "ctime": 1425234005766,
       "mtime": 1425234005766,
@@ -58176,7 +57184,7 @@ mfPkg.syncAll({
     "report.report": {
       "_id": "WGtR6Rd3pN4e3tZSL",
       "key": "report.report",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "寄出報告",
       "ctime": 1425234013947,
       "mtime": 1425234013947,
@@ -58185,7 +57193,7 @@ mfPkg.syncAll({
     "report.text": {
       "_id": "EzYTobfcoCWasY84s",
       "key": "report.text",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "請告訴我們哪出了錯。",
       "ctime": 1425233881709,
       "mtime": 1425233881709,
@@ -58194,7 +57202,7 @@ mfPkg.syncAll({
     "subscribemessage.saving.error": {
       "_id": "n7BbdNsfQgfZhHhHM",
       "key": "subscribemessage.saving.error",
-      "lang": "zh_TW",
+      "lang": "zh-TW",
       "text": "無法更改你的訊息。出現以下錯誤：{ERROR}",
       "ctime": 1425233754570,
       "mtime": 1425233754570,
