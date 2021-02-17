@@ -369,7 +369,21 @@ Template.postEdit.events({
 	},
 });
 
-Template.profileIcon.helpers({
+Template.avatar.helpers({
+	color(userId) {
+		const user = Meteor.users.findOne(userId);
+		const color = user?.avatar?.color;
+
+		if (typeof color === 'undefined') {
+			return false;
+		}
+
+		return color;
+	},
+
+	avatarLogo() {
+		return Meteor.settings.public.avatarLogo;
+	},
 
 	discussionLogo() {
 		return Meteor.settings.public.discussionLogo?.src;
