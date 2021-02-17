@@ -96,7 +96,9 @@
 					<label>{{mf 'course.edit.description' 'Description'}}</label>
 					{{> editableTextarea editableDescription}}
 				</div>
-				{{> pricePolicy dismissable=true wrap='form-group'}}
+				{{#if hasPricePolicy}}
+					{{> pricePolicy dismissable=true wrap='form-group'}}
+				{{/if}}
 				<div class="form-group">
 					<div class="form-group-element">
 						{{#if editingCategories}}

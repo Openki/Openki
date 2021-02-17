@@ -12104,11 +12104,11 @@ mfPkg.syncAll({
       "revisionId": "RMDBHZhwcEPAmWeKe"
     }
   },
-  "de_ZH": {
+  "de-ZH": {
     "Please.login": {
       "_id": "jTiYcbmm8SqM9SeML",
       "key": "Please.login",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte log dich i oder mach der än Account",
       "ctime": 1449923736655,
       "mtime": 1450176499652,
@@ -12117,7 +12117,7 @@ mfPkg.syncAll({
     "Profile.translate_this_page": {
       "_id": "ifCxTDYZT6J7anxGC",
       "key": "Profile.translate_this_page",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Hilf ois, diä Siite z übersetze!",
       "ctime": 1449922651854,
       "mtime": 1450175209646,
@@ -12126,7 +12126,7 @@ mfPkg.syncAll({
     "_button.cancel": {
       "_id": "5AazDWP7dvfQ2oGES",
       "key": "_button.cancel",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Abbräche",
       "ctime": 1520376553558,
       "mtime": 1520376553558,
@@ -12135,7 +12135,7 @@ mfPkg.syncAll({
     "_button.delete": {
       "_id": "Aunr4wh7Yzf3KgyMZ",
       "key": "_button.delete",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Lösche",
       "ctime": 1520260521881,
       "mtime": 1520260521881,
@@ -12144,7 +12144,7 @@ mfPkg.syncAll({
     "_button.edit": {
       "_id": "H4W3vnj74vJrwvWRx",
       "key": "_button.edit",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bearbeite",
       "ctime": 1520260490084,
       "mtime": 1520260490084,
@@ -12153,7 +12153,7 @@ mfPkg.syncAll({
     "_button.registering": {
       "_id": "ZSiyxLnfFfTWzBAYM",
       "key": "_button.registering",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Registrierä",
       "ctime": 1605278315927,
       "mtime": 1605278315927,
@@ -12162,7 +12162,7 @@ mfPkg.syncAll({
     "_button.save": {
       "_id": "YQRqhwgAZzZmhqCPZ",
       "key": "_button.save",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Speichere",
       "ctime": 1520260494971,
       "mtime": 1520260494971,
@@ -12171,7 +12171,7 @@ mfPkg.syncAll({
     "_button.saving": {
       "_id": "st2T5XYHqmNoMkYzp",
       "key": "_button.saving",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Am speichere...",
       "ctime": 1520260509972,
       "mtime": 1520260509972,
@@ -12180,7 +12180,7 @@ mfPkg.syncAll({
     "_inputField.optional": {
       "_id": "sS6oBKMDgR6BmZCiY",
       "key": "_inputField.optional",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "(freiwillig)",
       "ctime": 1520260539222,
       "mtime": 1520260539222,
@@ -12189,7 +12189,7 @@ mfPkg.syncAll({
     "_inputField.password": {
       "_id": "mjN8AtAJgCzk8PYBJ",
       "key": "_inputField.password",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Passwort",
       "ctime": 1520260544766,
       "mtime": 1520260544766,
@@ -12198,7 +12198,7 @@ mfPkg.syncAll({
     "_message.added": {
       "_id": "vsSC9272BTYq7d94E",
       "key": "_message.added",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "dezuä gfüägt",
       "ctime": 1605278641522,
       "mtime": 1605278641522,
@@ -12207,7 +12207,7 @@ mfPkg.syncAll({
     "_message.removed": {
       "_id": "DorEGPBEmK2Np9tL9",
       "key": "_message.removed",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "entfärnt",
       "ctime": 1605278651825,
       "mtime": 1605278651825,
@@ -12216,7 +12216,7 @@ mfPkg.syncAll({
     "_message.saved": {
       "_id": "EnXMg6BdmknQ7DWwf",
       "key": "_message.saved",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "gspeichäred",
       "ctime": 1605512436413,
       "mtime": 1605512436413,
@@ -12225,7 +12225,7 @@ mfPkg.syncAll({
     "_option.off": {
       "_id": "AMyKoe79HkkjaXaYP",
       "key": "_option.off",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "ab",
       "ctime": 1605278661306,
       "mtime": 1605278661306,
@@ -12234,7 +12234,7 @@ mfPkg.syncAll({
     "_option.on": {
       "_id": "Pnb3g5KsrZs8X8ASp",
       "key": "_option.on",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "ah",
       "ctime": 1605278664142,
       "mtime": 1605278664142,
@@ -12243,7 +12243,7 @@ mfPkg.syncAll({
     "_selection.pleaseSelect": {
       "_id": "6WMQZs7KyaR9hAktm",
       "key": "_selection.pleaseSelect",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte uswählä",
       "ctime": 1605278674439,
       "mtime": 1605278674439,
@@ -12252,7 +12252,7 @@ mfPkg.syncAll({
     "_serverError": {
       "_id": "Dn46sdEsjp2oq6mS4",
       "key": "_serverError",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ups, da hät öpis nöd funktioniert... Äntschuldigung",
       "ctime": 1605278698851,
       "mtime": 1605278698851,
@@ -12261,7 +12261,7 @@ mfPkg.syncAll({
     "adminPanel.backToDashboard": {
       "_id": "GN5PeiJn4fvwARs5T",
       "key": "adminPanel.backToDashboard",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gahn zrugg zum Täschbord",
       "ctime": 1605618979942,
       "mtime": 1605618979942,
@@ -12270,7 +12270,7 @@ mfPkg.syncAll({
     "adminPanel.pleaseLogin": {
       "_id": "TFmXK2LzoxXfdL7fs",
       "key": "adminPanel.pleaseLogin",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Nur für Administratorä",
       "ctime": 1605278718413,
       "mtime": 1605278718413,
@@ -12279,7 +12279,7 @@ mfPkg.syncAll({
     "backToKiosk": {
       "_id": "kzA65Kc7SjcEPE6Ri",
       "key": "backToKiosk",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "zrugg zude Übersicht",
       "ctime": 1605278733310,
       "mtime": 1605278733310,
@@ -12288,7 +12288,7 @@ mfPkg.syncAll({
     "backToLink.backTo": {
       "_id": "2fDepCXbj9SgcmaY9",
       "key": "backToLink.backTo",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zrugg zu",
       "ctime": 1605278737515,
       "mtime": 1605278737515,
@@ -12297,7 +12297,7 @@ mfPkg.syncAll({
     "calendar.next.month.long": {
       "_id": "rRLsJq9c35SxDkXd3",
       "key": "calendar.next.month.long",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gahn zum nägste Monet",
       "ctime": 1605278748298,
       "mtime": 1605278748298,
@@ -12306,7 +12306,7 @@ mfPkg.syncAll({
     "calendar.next.month.short": {
       "_id": "QcKwrXi2cSvxPXXRQ",
       "key": "calendar.next.month.short",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Nägst Monet",
       "ctime": 1605278757308,
       "mtime": 1605278757308,
@@ -12315,7 +12315,7 @@ mfPkg.syncAll({
     "calendar.next.week.long": {
       "_id": "XrNbHNfGW7MH9qa8t",
       "key": "calendar.next.week.long",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gahn zude nägste Wuche",
       "ctime": 1605278766410,
       "mtime": 1605278766410,
@@ -12324,7 +12324,7 @@ mfPkg.syncAll({
     "calendar.next.week.short": {
       "_id": "hMzuNdRYfo2wEtnyu",
       "key": "calendar.next.week.short",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "nägst Wuche",
       "ctime": 1605512469918,
       "mtime": 1605512469918,
@@ -12333,7 +12333,7 @@ mfPkg.syncAll({
     "calendar.next.year.long": {
       "_id": "aZHRKYmouthex6R9h",
       "key": "calendar.next.year.long",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gahn zum nägste Jahr",
       "ctime": 1605278779771,
       "mtime": 1605278779771,
@@ -12342,7 +12342,7 @@ mfPkg.syncAll({
     "calendar.next.year.short": {
       "_id": "7ZAoociygR5WqWMvL",
       "key": "calendar.next.year.short",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Nägst Jahr",
       "ctime": 1605278785665,
       "mtime": 1605278785665,
@@ -12351,7 +12351,7 @@ mfPkg.syncAll({
     "calendar.noCoursesThisDay": {
       "_id": "eLABD8MDbZMSZahZz",
       "key": "calendar.noCoursesThisDay",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "A dem Datum sind kei Kürs.",
       "ctime": 1458820072758,
       "mtime": 1458820072758,
@@ -12360,7 +12360,7 @@ mfPkg.syncAll({
     "calendar.previous.month.long": {
       "_id": "tNgv2MzEKNy5kMw4N",
       "key": "calendar.previous.month.long",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gahn zum letschte Monet",
       "ctime": 1605278803802,
       "mtime": 1605278803802,
@@ -12369,7 +12369,7 @@ mfPkg.syncAll({
     "calendar.previous.month.short": {
       "_id": "wugeRTbG6spNvQMLi",
       "key": "calendar.previous.month.short",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Letscht Monet",
       "ctime": 1605278817352,
       "mtime": 1605278817352,
@@ -12378,7 +12378,7 @@ mfPkg.syncAll({
     "calendar.previous.week.long": {
       "_id": "KeaZ8JMGYJRTduqmH",
       "key": "calendar.previous.week.long",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gahn zude letschte Wuche",
       "ctime": 1605278900164,
       "mtime": 1605278907744,
@@ -12387,7 +12387,7 @@ mfPkg.syncAll({
     "calendar.previous.week.short": {
       "_id": "WuRx9gACqWGLD7jP8",
       "key": "calendar.previous.week.short",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Letscht Wuche",
       "ctime": 1605278916223,
       "mtime": 1605278916223,
@@ -12396,7 +12396,7 @@ mfPkg.syncAll({
     "calendar.previous.year.long": {
       "_id": "cqeyxSyqQTNgq6g48",
       "key": "calendar.previous.year.long",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gahn zum letschte Jahr",
       "ctime": 1605278987950,
       "mtime": 1605278987950,
@@ -12405,7 +12405,7 @@ mfPkg.syncAll({
     "calendar.previous.year.short": {
       "_id": "4Gcj2hnkZmNLJuhKi",
       "key": "calendar.previous.year.short",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "s'Jahr vorher",
       "ctime": 1520260485058,
       "mtime": 1520260485058,
@@ -12414,7 +12414,7 @@ mfPkg.syncAll({
     "calendar.weekNumber": {
       "_id": "sPAEcrfCgJSFifJvp",
       "key": "calendar.weekNumber",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wuchä",
       "ctime": 1458820376410,
       "mtime": 1458820376410,
@@ -12423,7 +12423,7 @@ mfPkg.syncAll({
     "calendar.windowtitle": {
       "_id": "43KrRr2sgqgtSfHvi",
       "key": "calendar.windowtitle",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kaländer",
       "ctime": 1520322082784,
       "mtime": 1520322082784,
@@ -12432,7 +12432,7 @@ mfPkg.syncAll({
     "categories.no_categories": {
       "_id": "PRMziY5ZyknW2yFJR",
       "key": "categories.no_categories",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kei Kategorie definiert",
       "ctime": 1458818831461,
       "mtime": 1458818831461,
@@ -12441,7 +12441,7 @@ mfPkg.syncAll({
     "categories.show_courses": {
       "_id": "XbnGvRyiqwqFCPMGn",
       "key": "categories.show_courses",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zeig alli Kürs in",
       "ctime": 1458819735624,
       "mtime": 1458819735624,
@@ -12450,7 +12450,7 @@ mfPkg.syncAll({
     "category.artistry": {
       "_id": "48yyxxnfpHBXXgxKy",
       "key": "category.artistry",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Artistik",
       "ctime": 1449923557484,
       "mtime": 1450176037594,
@@ -12459,7 +12459,7 @@ mfPkg.syncAll({
     "category.biology": {
       "_id": "j6No6ZFwFENbHFjmB",
       "key": "category.biology",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Biologie",
       "ctime": 1449922390064,
       "mtime": 1449922390064,
@@ -12468,7 +12468,7 @@ mfPkg.syncAll({
     "category.chemistry": {
       "_id": "BzkZh8hfSxTPTd7qc",
       "key": "category.chemistry",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Chemie",
       "ctime": 1449923597680,
       "mtime": 1449923597680,
@@ -12477,7 +12477,7 @@ mfPkg.syncAll({
     "category.computer": {
       "_id": "hhR7sTDPGAqDCjzdB",
       "key": "category.computer",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kompi",
       "ctime": 1450266079985,
       "mtime": 1450266079985,
@@ -12486,7 +12486,7 @@ mfPkg.syncAll({
     "category.construction": {
       "_id": "MJG8pwbYpH3cbfZjJ",
       "key": "category.construction",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bau",
       "ctime": 1458817281033,
       "mtime": 1458817281033,
@@ -12495,7 +12495,7 @@ mfPkg.syncAll({
     "category.cooking": {
       "_id": "Jjqwp9ZwrGDmv83ey",
       "key": "category.cooking",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Chochä",
       "ctime": 1449922754187,
       "mtime": 1450175302148,
@@ -12504,7 +12504,7 @@ mfPkg.syncAll({
     "category.culture": {
       "_id": "ww2p2hCdKqQvsTnNB",
       "key": "category.culture",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kultur",
       "ctime": 1450265974290,
       "mtime": 1450265974290,
@@ -12513,7 +12513,7 @@ mfPkg.syncAll({
     "category.dance": {
       "_id": "3wLKaYetzPf6ZBdQu",
       "key": "category.dance",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Tanz",
       "ctime": 1450265967514,
       "mtime": 1450265967514,
@@ -12522,7 +12522,7 @@ mfPkg.syncAll({
     "category.design": {
       "_id": "kERp5Rkn2PmRNFHgP",
       "key": "category.design",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Disein",
       "ctime": 1449922087218,
       "mtime": 1450174522802,
@@ -12531,7 +12531,7 @@ mfPkg.syncAll({
     "category.ecology": {
       "_id": "qXCQBHDN4HARhzZSC",
       "key": "category.ecology",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ökologie",
       "ctime": 1605278998485,
       "mtime": 1605278998485,
@@ -12540,7 +12540,7 @@ mfPkg.syncAll({
     "category.education": {
       "_id": "AtRBhKz8H5wsY3sJc",
       "key": "category.education",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bildig",
       "ctime": 1605279010712,
       "mtime": 1605279010712,
@@ -12549,7 +12549,7 @@ mfPkg.syncAll({
     "category.electronics": {
       "_id": "LRfQ6Wa7uaw3nNjGd",
       "key": "category.electronics",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Elektronik / Schtrom",
       "ctime": 1449922750852,
       "mtime": 1449922750852,
@@ -12558,7 +12558,7 @@ mfPkg.syncAll({
     "category.experimental": {
       "_id": "h25J8xefBvuziyWi2",
       "key": "category.experimental",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Experimentell",
       "ctime": 1449923996976,
       "mtime": 1449923996976,
@@ -12567,7 +12567,7 @@ mfPkg.syncAll({
     "category.fabric": {
       "_id": "gTTpHQ2Ktz9fbRiux",
       "key": "category.fabric",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Künstlichi Materialiä / Stöff",
       "ctime": 1449923877785,
       "mtime": 1458820017500,
@@ -12576,7 +12576,7 @@ mfPkg.syncAll({
     "category.film": {
       "_id": "w8Ls8HGRAke6F3Zyi",
       "key": "category.film",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Film",
       "ctime": 1450265913495,
       "mtime": 1450265913495,
@@ -12585,7 +12585,7 @@ mfPkg.syncAll({
     "category.fineart": {
       "_id": "K8wCCBWWgDGMKZZAx",
       "key": "category.fineart",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kunscht",
       "ctime": 1449923276528,
       "mtime": 1450175747467,
@@ -12594,7 +12594,7 @@ mfPkg.syncAll({
     "category.gardening": {
       "_id": "gMJd896QSEfBQfMys",
       "key": "category.gardening",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gartä / Buurä",
       "ctime": 1450284088838,
       "mtime": 1450284088838,
@@ -12603,7 +12603,7 @@ mfPkg.syncAll({
     "category.geography": {
       "_id": "8MPmfZXDFf2R7iEBm",
       "key": "category.geography",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Geografie",
       "ctime": 1449923626149,
       "mtime": 1450176149586,
@@ -12612,7 +12612,7 @@ mfPkg.syncAll({
     "category.handicraft": {
       "_id": "rvqG4FxtvAv67XZqc",
       "key": "category.handicraft",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Handwärch",
       "ctime": 1449922629149,
       "mtime": 1450175192576,
@@ -12621,7 +12621,7 @@ mfPkg.syncAll({
     "category.history": {
       "_id": "vMYcagGcLo3LYjHeP",
       "key": "category.history",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gschicht",
       "ctime": 1449923415731,
       "mtime": 1449923415731,
@@ -12630,7 +12630,7 @@ mfPkg.syncAll({
     "category.humanities": {
       "_id": "irMMSBk8KkevEuck9",
       "key": "category.humanities",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kunst & Geisteswüsseschafte",
       "ctime": 1458817037996,
       "mtime": 1458817037996,
@@ -12639,7 +12639,7 @@ mfPkg.syncAll({
     "category.internet": {
       "_id": "e9FzkycfLkbMhWSZX",
       "key": "category.internet",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Internet",
       "ctime": 1449923385981,
       "mtime": 1450175788023,
@@ -12648,7 +12648,7 @@ mfPkg.syncAll({
     "category.languages": {
       "_id": "AMNkZMCJYaiaLDJ6N",
       "key": "category.languages",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Sprachä",
       "ctime": 1450265960466,
       "mtime": 1450265960466,
@@ -12657,7 +12657,7 @@ mfPkg.syncAll({
     "category.lawbusiness": {
       "_id": "efkKrssyq9Kht2Jak",
       "key": "category.lawbusiness",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wirtschaft und Rächt",
       "ctime": 1449922205282,
       "mtime": 1450174448824,
@@ -12666,7 +12666,7 @@ mfPkg.syncAll({
     "category.literature": {
       "_id": "xQirfqiyQyqcfCmN6",
       "key": "category.literature",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Literatur",
       "ctime": 1450174303079,
       "mtime": 1450174303079,
@@ -12675,7 +12675,7 @@ mfPkg.syncAll({
     "category.martialarts": {
       "_id": "WJ2g6oJ7ddnC9dwJN",
       "key": "category.martialarts",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kampfsport",
       "ctime": 1458818568057,
       "mtime": 1458818568057,
@@ -12684,7 +12684,7 @@ mfPkg.syncAll({
     "category.mathematics": {
       "_id": "hpMEN6tvx9BjaquFL",
       "key": "category.mathematics",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mati",
       "ctime": 1450266017050,
       "mtime": 1450266017050,
@@ -12693,7 +12693,7 @@ mfPkg.syncAll({
     "category.medicine": {
       "_id": "wtpvrGB5eGNqwSrCQ",
       "key": "category.medicine",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Medizin",
       "ctime": 1449923941098,
       "mtime": 1449923941098,
@@ -12702,7 +12702,7 @@ mfPkg.syncAll({
     "category.metalwood": {
       "_id": "ZCnn6EaCTticiubo2",
       "key": "category.metalwood",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Holz- / Metallarbet",
       "ctime": 1449923926678,
       "mtime": 1450176666049,
@@ -12711,7 +12711,7 @@ mfPkg.syncAll({
     "category.misc": {
       "_id": "zPeh27FpAw5RDNBCu",
       "key": "category.misc",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Chrüsimüsi",
       "ctime": 1520260473138,
       "mtime": 1520260473138,
@@ -12720,7 +12720,7 @@ mfPkg.syncAll({
     "category.music": {
       "_id": "Frb9MMjZkjiToEbj8",
       "key": "category.music",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Musig",
       "ctime": 1450205078652,
       "mtime": 1450205078652,
@@ -12729,7 +12729,7 @@ mfPkg.syncAll({
     "category.operating": {
       "_id": "ZWqpHuk4Kz9s9pYbC",
       "key": "category.operating",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Software bedienig",
       "ctime": 1450266156397,
       "mtime": 1450266156397,
@@ -12738,7 +12738,7 @@ mfPkg.syncAll({
     "category.philosophy": {
       "_id": "mrSN38aWeMSCQBcN4",
       "key": "category.philosophy",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Philosofie",
       "ctime": 1450224432050,
       "mtime": 1450224432050,
@@ -12747,7 +12747,7 @@ mfPkg.syncAll({
     "category.photography": {
       "_id": "xXRHPDZ6AirmNjwk6",
       "key": "category.photography",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Fötele",
       "ctime": 1520260455111,
       "mtime": 1520260455111,
@@ -12756,7 +12756,7 @@ mfPkg.syncAll({
     "category.physics": {
       "_id": "Dy4qaLCxHeyRmFcJC",
       "key": "category.physics",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Füsik",
       "ctime": 1449923214743,
       "mtime": 1450175576869,
@@ -12765,7 +12765,7 @@ mfPkg.syncAll({
     "category.politics": {
       "_id": "9XtS5twHPhxc7harF",
       "key": "category.politics",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Politik",
       "ctime": 1450265807672,
       "mtime": 1450265807672,
@@ -12774,7 +12774,7 @@ mfPkg.syncAll({
     "category.programming": {
       "_id": "FbQsWyHgkhxYjrf42",
       "key": "category.programming",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Programmierä",
       "ctime": 1450266029239,
       "mtime": 1450266029239,
@@ -12783,7 +12783,7 @@ mfPkg.syncAll({
     "category.sciences": {
       "_id": "MsvcoerEcCWesELFM",
       "key": "category.sciences",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Naturwüsseschaft",
       "ctime": 1450265898091,
       "mtime": 1450265898091,
@@ -12792,7 +12792,7 @@ mfPkg.syncAll({
     "category.sociology": {
       "_id": "tcovNqLgXS93uAZSF",
       "key": "category.sociology",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Soziologie",
       "ctime": 1450266044770,
       "mtime": 1450266044771,
@@ -12801,7 +12801,7 @@ mfPkg.syncAll({
     "category.spiritual": {
       "_id": "FfAEAn6Ch9YpEpHxi",
       "key": "category.spiritual",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Spiritualität",
       "ctime": 1458819913364,
       "mtime": 1458819913364,
@@ -12810,7 +12810,7 @@ mfPkg.syncAll({
     "category.sports": {
       "_id": "jdb3pPk3AhbPJJioS",
       "key": "category.sports",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Sport und Bewegig",
       "ctime": 1450265949861,
       "mtime": 1450265949861,
@@ -12819,7 +12819,7 @@ mfPkg.syncAll({
     "category.subculture": {
       "_id": "FrD9hD5he2P4MnQNi",
       "key": "category.subculture",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Subkultur",
       "ctime": 1449922235286,
       "mtime": 1450174614031,
@@ -12828,7 +12828,7 @@ mfPkg.syncAll({
     "category.teamsport": {
       "_id": "AdaqSh6a7h8Q5ibEc",
       "key": "category.teamsport",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gruppesport",
       "ctime": 1449924022197,
       "mtime": 1449924022197,
@@ -12837,7 +12837,7 @@ mfPkg.syncAll({
     "category.theatre": {
       "_id": "38uDoxrDzohAvx4Dj",
       "key": "category.theatre",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Theater",
       "ctime": 1450174287625,
       "mtime": 1450174287625,
@@ -12846,7 +12846,7 @@ mfPkg.syncAll({
     "category.♥undefined♥": {
       "_id": "nHf4ixgwGdyh6fLxT",
       "key": "category.♥undefined♥",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "undefiniert-♥",
       "ctime": 1458821018947,
       "mtime": 1458821018947,
@@ -12855,7 +12855,7 @@ mfPkg.syncAll({
     "click_me": {
       "_id": "FPetf6PQg7haA9Msc",
       "key": "click_me",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Klick mich",
       "ctime": 1458817151174,
       "mtime": 1458817151174,
@@ -12864,7 +12864,7 @@ mfPkg.syncAll({
     "comment.delete.confirm": {
       "_id": "tTkgXW2u3K6hXP8z2",
       "key": "comment.delete.confirm",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wetsch de Kommntar würkli lösche?",
       "ctime": 1458819305733,
       "mtime": 1458819305733,
@@ -12874,7 +12874,7 @@ mfPkg.syncAll({
     "comment.delete.error": {
       "_id": "PiMjWY43WJN63M4Q5",
       "key": "comment.delete.error",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "De Kommentar het nöd chönä glöscht werdä. Grund defür: {ERROR}",
       "ctime": 1458817340528,
       "mtime": 1458817340528,
@@ -12883,7 +12883,7 @@ mfPkg.syncAll({
     "comment.delete.header": {
       "_id": "wXAeWFbDJRXY4wMSX",
       "key": "comment.delete.header",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kommentar lösche",
       "ctime": 1520260404485,
       "mtime": 1520260404485,
@@ -12892,7 +12892,7 @@ mfPkg.syncAll({
     "comment.saving.error": {
       "_id": "GSLJw86ZCmx4DYaqz",
       "key": "comment.saving.error",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "S veröffentlichä vo dim Kommentar het leider nöd funkzioniert! Das dued ois leid. Mir hend de folgedi Fehler übercho: {ERROR}",
       "ctime": 1458819179008,
       "mtime": 1458819179008,
@@ -12901,7 +12901,7 @@ mfPkg.syncAll({
     "course.compact.interestedCount": {
       "_id": "AYXjJbhQF37d3J4r6",
       "key": "course.compact.interestedCount",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "{NUM, plural, =0 {Niemer isch} eini {Ei Person isch} anderi {# Personä sind}} interessiärt",
       "ctime": 1605619094129,
       "mtime": 1605619094129,
@@ -12910,7 +12910,7 @@ mfPkg.syncAll({
     "course.compact.interestedCountOwn": {
       "_id": "rJFMaoHZHEteTcqud",
       "key": "course.compact.interestedCountOwn",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Und du bisch eini/eine devo!",
       "ctime": 1520260443351,
       "mtime": 1520260443351,
@@ -12919,7 +12919,7 @@ mfPkg.syncAll({
     "course.compact.membersCount": {
       "_id": "hy449HeFx4N9zzdvs",
       "key": "course.compact.membersCount",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Has {NUM, plural, =0 {kei Teilnähmer} eine {ein Teilnähmer} anderi {# Teilnähmer}}",
       "ctime": 1605619133769,
       "mtime": 1605619133769,
@@ -12928,7 +12928,7 @@ mfPkg.syncAll({
     "course.compact.youAreInterested": {
       "_id": "PzgcZkaTJGpk9ZQhz",
       "key": "course.compact.youAreInterested",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du bisch interessiert",
       "ctime": 1605279029576,
       "mtime": 1605279029576,
@@ -12937,7 +12937,7 @@ mfPkg.syncAll({
     "course.createEventInfo": {
       "_id": "nu525WL4bWQ8QceQy",
       "key": "course.createEventInfo",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Benutz das Formular zum en eimalige, scho organisiertä Aalass z veröffentlichä. Susch mach en neue Vorschlag:",
       "ctime": 1458820311482,
       "mtime": 1458820311482,
@@ -12946,7 +12946,7 @@ mfPkg.syncAll({
     "course.delete.confirm.button": {
       "_id": "SipEDooAJy4MAyKFw",
       "key": "course.delete.confirm.button",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Lösch dä Kurs und all sini Verastaltigä",
       "ctime": 1605279061673,
       "mtime": 1605279061673,
@@ -12955,7 +12955,7 @@ mfPkg.syncAll({
     "course.delete.confirm.button.busy": {
       "_id": "67Gc7qqkTgwyoAApe",
       "key": "course.delete.confirm.button.busy",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Dä Kurs lösche...",
       "ctime": 1605279080889,
       "mtime": 1605279080889,
@@ -12964,7 +12964,7 @@ mfPkg.syncAll({
     "course.description.placeholder": {
       "_id": "4rmqqCJ9LoyYNeYtz",
       "key": "course.description.placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Beschrib dini idee so, das me lüüt dini idee finde chönd und au wüssed, was si erwartet.",
       "ctime": 1449922119594,
       "mtime": 1450174534704,
@@ -12973,7 +12973,7 @@ mfPkg.syncAll({
     "course.detail.remove": {
       "_id": "dvmh32PSoY5rhtHA5",
       "key": "course.detail.remove",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Alli Kürs und dene iri Events lösche?",
       "ctime": 1449922419839,
       "mtime": 1450174998615,
@@ -12982,7 +12982,7 @@ mfPkg.syncAll({
     "course.detail.remove.other.team": {
       "_id": "eNpH4bYHnQSjCE3Tk",
       "key": "course.detail.remove.other.team",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wötsch die Person würkli usem team use rüehre?",
       "ctime": 1605279099357,
       "mtime": 1605279099357,
@@ -12991,7 +12991,7 @@ mfPkg.syncAll({
     "course.detail.remove.yourself.team": {
       "_id": "EogtrW7ZaEHnaHDWd",
       "key": "course.detail.remove.yourself.team",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wetsch di sälber usem Team löschä? Nume es anders Teammitglied chan di wieder dezue tue",
       "ctime": 1605512544826,
       "mtime": 1605512552092,
@@ -13000,7 +13000,7 @@ mfPkg.syncAll({
     "course.details.eventsLoadingHeader": {
       "_id": "QwrFmJ8Qbq4tWsSp8",
       "key": "course.details.eventsLoadingHeader",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Verastaltige",
       "ctime": 1605279106429,
       "mtime": 1605279106429,
@@ -13009,7 +13009,7 @@ mfPkg.syncAll({
     "course.details.is-proposalTag": {
       "_id": "PMjmk2rJQ8yLsXTWJ",
       "key": "course.details.is-proposalTag",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Vorschlag",
       "ctime": 1605512560518,
       "mtime": 1605512560518,
@@ -13018,7 +13018,7 @@ mfPkg.syncAll({
     "course.details.members.title": {
       "_id": "X8CSHuiAaHA4Eg4cA",
       "key": "course.details.members.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "{NUM, plural,\n\t\t\t\t\t=0 {kei co-Lernendi bisher}\n\t\t\t\t\tone {1 Co-Lernendä}\n\t\t\t\t\tother {# Co-Lerndendi}\n\t\t\t\t}",
       "ctime": 1605619210495,
       "mtime": 1605619210495,
@@ -13027,7 +13027,7 @@ mfPkg.syncAll({
     "course.details.noEvents": {
       "_id": "XeNrKR26KzXYtfAyD",
       "key": "course.details.noEvents",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Dä Kurs hät kei Verastaltige",
       "ctime": 1605512573793,
       "mtime": 1605512573793,
@@ -13036,7 +13036,7 @@ mfPkg.syncAll({
     "course.details.removeTeam.others.header": {
       "_id": "hBX57mF9yYz5qoxFc",
       "key": "course.details.removeTeam.others.header",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Teammitglied entfärne",
       "ctime": 1605512753794,
       "mtime": 1605512753794,
@@ -13045,7 +13045,7 @@ mfPkg.syncAll({
     "course.details.removeTeam.self.header": {
       "_id": "fyx37affTRdZRotdd",
       "key": "course.details.removeTeam.self.header",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Entfärn dich sälber usem Team",
       "ctime": 1605512770070,
       "mtime": 1605512770070,
@@ -13054,7 +13054,7 @@ mfPkg.syncAll({
     "course.details.repl_menu_btn": {
       "_id": "ANbmaMmZy3zxRdkGy",
       "key": "course.details.repl_menu_btn",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Widerholä",
       "ctime": 1450205627300,
       "mtime": 1450205627300,
@@ -13065,7 +13065,7 @@ mfPkg.syncAll({
     "course.discussion.anon": {
       "_id": "9M3MGDkRbPiZ76YzX",
       "key": "course.discussion.anon",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Anonyme Kommentar",
       "ctime": 1449922517132,
       "mtime": 1449922517132,
@@ -13074,7 +13074,7 @@ mfPkg.syncAll({
     "course.discussion.comment_answer": {
       "_id": "2LwmphEj7how6gfpt",
       "key": "course.discussion.comment_answer",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Antwort",
       "ctime": 1449924036345,
       "mtime": 1449924036345,
@@ -13083,7 +13083,7 @@ mfPkg.syncAll({
     "course.discussion.comment_btn.answer": {
       "_id": "M9Q5AZjwdnb7qJQsw",
       "key": "course.discussion.comment_btn.answer",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Antwort!",
       "ctime": 1458817016741,
       "mtime": 1458817016741,
@@ -13092,7 +13092,7 @@ mfPkg.syncAll({
     "course.discussion.comment_btn.update": {
       "_id": "TZa77BLiBAdsrP3Lz",
       "key": "course.discussion.comment_btn.update",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte min Kommentar erneuere!",
       "ctime": 1458820240648,
       "mtime": 1458820240648,
@@ -13101,7 +13101,7 @@ mfPkg.syncAll({
     "course.discussion.comment_btn.write": {
       "_id": "Mh8DNyACESYaXX5Sp",
       "key": "course.discussion.comment_btn.write",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Schriib!",
       "ctime": 1449924074964,
       "mtime": 1449924074964,
@@ -13110,7 +13110,7 @@ mfPkg.syncAll({
     "course.discussion.deleteCommentButton": {
       "_id": "mTzmosetX4Rsquxwi",
       "key": "course.discussion.deleteCommentButton",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Lösche",
       "ctime": 1605512775186,
       "mtime": 1605512775187,
@@ -13119,7 +13119,7 @@ mfPkg.syncAll({
     "course.discussion.notifyAll": {
       "_id": "2qzDdR9PMdxbKeRi9",
       "key": "course.discussion.notifyAll",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Alli Teilnehmer benachrichtige",
       "ctime": 1520322202053,
       "mtime": 1520322202053,
@@ -13129,7 +13129,7 @@ mfPkg.syncAll({
     "course.discussion.text_placeholder": {
       "_id": "4475LvdsSubQXAypq",
       "key": "course.discussion.text_placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Din Kommentar",
       "ctime": 1458820664312,
       "mtime": 1458820664312,
@@ -13138,7 +13138,7 @@ mfPkg.syncAll({
     "course.discussion.text_placeholder_answer": {
       "_id": "xZAEKqDb8k6n8weX3",
       "key": "course.discussion.text_placeholder_answer",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Dini Antwort",
       "ctime": 1449923866829,
       "mtime": 1449923866830,
@@ -13147,7 +13147,7 @@ mfPkg.syncAll({
     "course.discussion.title_placeholder": {
       "_id": "npbfBxPRF5wEduQZY",
       "key": "course.discussion.title_placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Titel",
       "ctime": 1449923859218,
       "mtime": 1449923859218,
@@ -13156,7 +13156,7 @@ mfPkg.syncAll({
     "course.discussion.write_comment": {
       "_id": "D9GdJnC4E8dhTcijP",
       "key": "course.discussion.write_comment",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Schriib en Kommentar",
       "ctime": 1458820464865,
       "mtime": 1458820464865,
@@ -13165,7 +13165,7 @@ mfPkg.syncAll({
     "course.discussions.hideAnswers": {
       "_id": "iyk2z2Kobk4hwBskr",
       "key": "course.discussions.hideAnswers",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Antworte usblände",
       "ctime": 1520260600515,
       "mtime": 1520260600515,
@@ -13176,7 +13176,7 @@ mfPkg.syncAll({
     "course.discussions.showAllComments": {
       "_id": "r6udTr2PqJYPoMPNJ",
       "key": "course.discussions.showAllComments",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zeig alli {NUM} Kommentär",
       "ctime": 1605512800304,
       "mtime": 1605512800304,
@@ -13185,7 +13185,7 @@ mfPkg.syncAll({
     "course.discussions.showPreviousReplies": {
       "_id": "zS26BToPMhNuRHRv9",
       "key": "course.discussions.showPreviousReplies",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zeig alli vorherige Kommentär",
       "ctime": 1605512892188,
       "mtime": 1605512892188,
@@ -13194,7 +13194,7 @@ mfPkg.syncAll({
     "course.docs.noFiles": {
       "_id": "RYP7huawp6ySA6Afc",
       "key": "course.docs.noFiles",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Dä Kurs hät kei ahghänkti Dokumänt",
       "ctime": 1605512904693,
       "mtime": 1605512910308,
@@ -13203,7 +13203,7 @@ mfPkg.syncAll({
     "course.download_cal": {
       "_id": "ZedwLv5Kay9Mj6qsN",
       "key": "course.download_cal",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Lads abä i din Kaländer",
       "ctime": 1458817848149,
       "mtime": 1458817848149,
@@ -13212,7 +13212,7 @@ mfPkg.syncAll({
     "course.dtails.paticipants.title": {
       "_id": "Q9FNQKda6i46WFGy2",
       "key": "course.dtails.paticipants.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Teilnehmendi",
       "ctime": 1449922396477,
       "mtime": 1449922396477,
@@ -13223,7 +13223,7 @@ mfPkg.syncAll({
     "course.edit.categories": {
       "_id": "fftLyBYAp8avry6HR",
       "key": "course.edit.categories",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kategoriä:",
       "ctime": 1449923688888,
       "mtime": 1450176363829,
@@ -13233,7 +13233,7 @@ mfPkg.syncAll({
     "course.edit.description": {
       "_id": "cE7T9kTP8TsAh2Xh4",
       "key": "course.edit.description",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Beschriibig:",
       "ctime": 1449922907716,
       "mtime": 1449922907716,
@@ -13243,7 +13243,7 @@ mfPkg.syncAll({
     "course.edit.edit_categories": {
       "_id": "L57TrAWaytofZh2iR",
       "key": "course.edit.edit_categories",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "D'Kategoriä bearbeite:",
       "ctime": 1449923962061,
       "mtime": 1450176746476,
@@ -13253,7 +13253,7 @@ mfPkg.syncAll({
     "course.edit.edit_course": {
       "_id": "ok3rYY5nFjit7uJES",
       "key": "course.edit.edit_course",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kurs bearbeite",
       "ctime": 1449922348808,
       "mtime": 1449922348808,
@@ -13262,7 +13262,7 @@ mfPkg.syncAll({
     "course.edit.intern": {
       "_id": "6SKsjjwGRgWTerycv",
       "key": "course.edit.intern",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ufde Hauptsiitä verstecke",
       "ctime": 1605619239602,
       "mtime": 1605619239602,
@@ -13271,7 +13271,7 @@ mfPkg.syncAll({
     "course.edit.internDescription": {
       "_id": "AhZoTG8THG7CqJBnr",
       "key": "course.edit.internDescription",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Nume zeigä wänn'd uf Kurs-Gruppene luegsch",
       "ctime": 1605619285337,
       "mtime": 1605619285337,
@@ -13280,7 +13280,7 @@ mfPkg.syncAll({
     "course.edit.linkToCourse": {
       "_id": "SccE5dsQwKGFXGehc",
       "key": "course.edit.linkToCourse",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Klick das ah zum din neue Kurs \"{NAME}\" uf openki.net gseh.",
       "ctime": 1520321564341,
       "mtime": 1520321564341,
@@ -13289,7 +13289,7 @@ mfPkg.syncAll({
     "course.edit.needs.role": {
       "_id": "udWdwr3NegD7Mfro9",
       "key": "course.edit.needs.role",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "De Kurs chönti no bruuche...",
       "ctime": 1449923726340,
       "mtime": 1449923726340,
@@ -13298,7 +13298,7 @@ mfPkg.syncAll({
     "course.edit.no.categories": {
       "_id": "4A5MCRYhRaH3cfMoB",
       "key": "course.edit.no.categories",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kei Kategorie",
       "ctime": 1458818821462,
       "mtime": 1458818821462,
@@ -13307,7 +13307,7 @@ mfPkg.syncAll({
     "course.edit.propose": {
       "_id": "azKXJktCgew7WJsCJ",
       "key": "course.edit.propose",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Schlahn en noie Kurs vor",
       "ctime": 1449923496393,
       "mtime": 1449923496393,
@@ -13316,7 +13316,7 @@ mfPkg.syncAll({
     "course.edit.proposeInGroup": {
       "_id": "s27EQmXzvBXCNXeii",
       "key": "course.edit.proposeInGroup",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Schlahn en noie Kurs vor ide Gruppä {GROUP}",
       "ctime": 1605512954550,
       "mtime": 1605512954550,
@@ -13325,7 +13325,7 @@ mfPkg.syncAll({
     "course.edit.region": {
       "_id": "4tkH7NkxjAbTW68mf",
       "key": "course.edit.region",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Region",
       "ctime": 1520321883444,
       "mtime": 1520321883444,
@@ -13334,7 +13334,7 @@ mfPkg.syncAll({
     "course.edit.savedMessage": {
       "_id": "PJEfP5W92sMNdwyYR",
       "key": "course.edit.savedMessage",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Din Vorschlag isch gspeicheret worde!",
       "ctime": 1520322242313,
       "mtime": 1520322242313,
@@ -13343,7 +13343,7 @@ mfPkg.syncAll({
     "course.edit.title": {
       "_id": "SkfMmiXKyRiNLBvSy",
       "key": "course.edit.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Titel:",
       "ctime": 1449923512311,
       "mtime": 1449923512311,
@@ -13353,7 +13353,7 @@ mfPkg.syncAll({
     "course.event.detail.back": {
       "_id": "bA7tYwSqvY6PhWARu",
       "key": "course.event.detail.back",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zrug zum Kurs",
       "ctime": 1458817076040,
       "mtime": 1458817076040,
@@ -13364,7 +13364,7 @@ mfPkg.syncAll({
     "course.event.edit.AddMessage": {
       "_id": "YbCiHWnjdKMJBnvNE",
       "key": "course.event.edit.AddMessage",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Nachricht hinzuefüege",
       "ctime": 1605279128012,
       "mtime": 1605279128012,
@@ -13373,7 +13373,7 @@ mfPkg.syncAll({
     "course.event.edit.add": {
       "_id": "s5HEndQDx9fB2Sq7n",
       "key": "course.event.edit.add",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Aalass hinzuefüege",
       "ctime": 1458816862560,
       "mtime": 1458816862560,
@@ -13382,7 +13382,7 @@ mfPkg.syncAll({
     "course.event.edit.date_start": {
       "_id": "8odfvaEiL9Y9PTgAe",
       "key": "course.event.edit.date_start",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Datum",
       "ctime": 1458817529136,
       "mtime": 1458817529136,
@@ -13391,7 +13391,7 @@ mfPkg.syncAll({
     "course.event.edit.deleteEvents": {
       "_id": "WRDBvqTcuyoXSS3Yj",
       "key": "course.event.edit.deleteEvents",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Verastaltige lösche",
       "ctime": 1605279139416,
       "mtime": 1605279139416,
@@ -13400,7 +13400,7 @@ mfPkg.syncAll({
     "course.event.edit.desc": {
       "_id": "aE8soiAfdGdw6cerQ",
       "key": "course.event.edit.desc",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Beschriibig:",
       "ctime": 1458817737112,
       "mtime": 1458817737112,
@@ -13410,7 +13410,7 @@ mfPkg.syncAll({
     "course.event.edit.duration": {
       "_id": "XCn8fPWv3E36qCkHQ",
       "key": "course.event.edit.duration",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Längi (in Minutä)",
       "ctime": 1458817862010,
       "mtime": 1458817862010,
@@ -13419,7 +13419,7 @@ mfPkg.syncAll({
     "course.event.edit.edit": {
       "_id": "vFP3ExtEa9gsRQQEE",
       "key": "course.event.edit.edit",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Aalass bearbeite",
       "ctime": 1458817891258,
       "mtime": 1458817891258,
@@ -13428,7 +13428,7 @@ mfPkg.syncAll({
     "course.event.edit.location": {
       "_id": "GXCx6LmERHuZhj6No",
       "key": "course.event.edit.location",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Verahschtaltigsort",
       "ctime": 1450174422595,
       "mtime": 1450174422595,
@@ -13438,7 +13438,7 @@ mfPkg.syncAll({
     "course.event.edit.room": {
       "_id": "jZggNqHXGXKiXpRCM",
       "key": "course.event.edit.room",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ruum:",
       "ctime": 1458819560804,
       "mtime": 1458819560804,
@@ -13448,7 +13448,7 @@ mfPkg.syncAll({
     "course.event.edit.swich_duration": {
       "_id": "wGP5Sjxus8CcAdY9R",
       "key": "course.event.edit.swich_duration",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zur Längi wechlse",
       "ctime": 1458819996164,
       "mtime": 1458819996164,
@@ -13457,7 +13457,7 @@ mfPkg.syncAll({
     "course.event.edit.switch_time_end": {
       "_id": "agmoaJG3XqbgvcSF2",
       "key": "course.event.edit.switch_time_end",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "wechsle zu Änddatum",
       "ctime": 1449922315334,
       "mtime": 1450175636776,
@@ -13466,7 +13466,7 @@ mfPkg.syncAll({
     "course.event.edit.time_end": {
       "_id": "C7M9DgWuegJHnbfGx",
       "key": "course.event.edit.time_end",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Schlussziit",
       "ctime": 1458820121640,
       "mtime": 1458820121640,
@@ -13475,7 +13475,7 @@ mfPkg.syncAll({
     "course.event.edit.time_start": {
       "_id": "vd6vm7LADr68Hj7b2",
       "key": "course.event.edit.time_start",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Startziit",
       "ctime": 1458820127950,
       "mtime": 1458820127950,
@@ -13484,7 +13484,7 @@ mfPkg.syncAll({
     "course.event.edit.title": {
       "_id": "cSgvAefaQqFYR6qyL",
       "key": "course.event.edit.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Title vom Aalass:",
       "ctime": 1458817965326,
       "mtime": 1458817965326,
@@ -13494,7 +13494,7 @@ mfPkg.syncAll({
     "course.events.futureListLink": {
       "_id": "AzYWF9LyCZosDRZDB",
       "key": "course.events.futureListLink",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "chömendi Ahläss",
       "ctime": 1605279148879,
       "mtime": 1605279148879,
@@ -13503,7 +13503,7 @@ mfPkg.syncAll({
     "course.events.ongoinglist": {
       "_id": "LbNrNPzY8gTPXxd3C",
       "key": "course.events.ongoinglist",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gad laufendi Aaläss",
       "ctime": 1449923896673,
       "mtime": 1449923896673,
@@ -13512,7 +13512,7 @@ mfPkg.syncAll({
     "course.events.pastList": {
       "_id": "K4wRa88Mtu4e4Cdxi",
       "key": "course.events.pastList",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Verahstaltige bis jetzt",
       "ctime": 1520376468620,
       "mtime": 1520376468620,
@@ -13521,7 +13521,7 @@ mfPkg.syncAll({
     "course.events.pastListLink": {
       "_id": "soZ2okq3neLdoP7dp",
       "key": "course.events.pastListLink",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Vergangeni Aaläss",
       "ctime": 1449923390906,
       "mtime": 1449923390906,
@@ -13530,7 +13530,7 @@ mfPkg.syncAll({
     "course.events.showAllEvents": {
       "_id": "Fc6xDMtRrBdv7tiHm",
       "key": "course.events.showAllEvents",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zeig alli Veraschtaltige",
       "ctime": 1605512970748,
       "mtime": 1605512970748,
@@ -13539,7 +13539,7 @@ mfPkg.syncAll({
     "course.events.upcominglist": {
       "_id": "u9K6fszgwCJF3iadi",
       "key": "course.events.upcominglist",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zuekünftigi Aaläss",
       "ctime": 1449923834245,
       "mtime": 1449923834245,
@@ -13548,7 +13548,7 @@ mfPkg.syncAll({
     "course.group.addOrgText": {
       "_id": "365bfnNF2zcDtT8pj",
       "key": "course.group.addOrgText",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gib d Rächt zum bearbeite",
       "ctime": 1605619322369,
       "mtime": 1605619329400,
@@ -13557,7 +13557,7 @@ mfPkg.syncAll({
     "course.group.addText": {
       "_id": "rEQsrnvRB998uyTiB",
       "key": "course.group.addText",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "verlink ä Gruppä",
       "ctime": 1605619309865,
       "mtime": 1605619309865,
@@ -13566,7 +13566,7 @@ mfPkg.syncAll({
     "course.group.confimOrgButton": {
       "_id": "C9JL4Et5baypRky8e",
       "key": "course.group.confimOrgButton",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bearbeitigsrächt geh",
       "ctime": 1520376420318,
       "mtime": 1520376420318,
@@ -13575,7 +13575,7 @@ mfPkg.syncAll({
     "course.group.confimRemoveOrgButton": {
       "_id": "Lj6JvMAppRbxnafQK",
       "key": "course.group.confimRemoveOrgButton",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bearbeitigsrächt wegneh",
       "ctime": 1520376432503,
       "mtime": 1520376432503,
@@ -13584,7 +13584,7 @@ mfPkg.syncAll({
     "course.group.confirmOrgNotes": {
       "_id": "at7rjW2NKxbCBDFKY",
       "key": "course.group.confirmOrgNotes",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Alli Teilnähmer vode Gruppä chönd de Kurs bearbeite und noii Veraschtaltige erstelle.",
       "ctime": 1605619370060,
       "mtime": 1605619370060,
@@ -13593,7 +13593,7 @@ mfPkg.syncAll({
     "course.group.remove": {
       "_id": "QMoRjA44zzsXQz8Sc",
       "key": "course.group.remove",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Lösche",
       "ctime": 1520376438193,
       "mtime": 1520376438193,
@@ -13602,7 +13602,7 @@ mfPkg.syncAll({
     "course.group.removeOrgText": {
       "_id": "NLDPLqtMW6NcdDszZ",
       "key": "course.group.removeOrgText",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "D Bearbeitigsrächt wägneh",
       "ctime": 1605619466683,
       "mtime": 1605619466683,
@@ -13611,7 +13611,7 @@ mfPkg.syncAll({
     "course.history.created_by": {
       "_id": "J4HBytzrH65jzoKaJ",
       "key": "course.history.created_by",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "De Kurs isch erstellt worde vo:",
       "ctime": 1458817404461,
       "mtime": 1458817404461,
@@ -13620,7 +13620,7 @@ mfPkg.syncAll({
     "course.list.status_titles.has_team": {
       "_id": "po9huK6aH4RmDwMyM",
       "key": "course.list.status_titles.has_team",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Hät es Organisationsteam",
       "ctime": 1520321815700,
       "mtime": 1520321815700,
@@ -13629,7 +13629,7 @@ mfPkg.syncAll({
     "course.list.status_titles.needs_mentor": {
       "_id": "ckehHrms5ss9d9Fu2",
       "key": "course.list.status_titles.needs_mentor",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bruucht no en Mentor",
       "ctime": 1520321804927,
       "mtime": 1520321804927,
@@ -13638,7 +13638,7 @@ mfPkg.syncAll({
     "course.list.status_titles.needs_organizer": {
       "_id": "qnt3SogzKg7qoYihC",
       "key": "course.list.status_titles.needs_organizer",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bruucht no en Organisator",
       "ctime": 1520322231942,
       "mtime": 1520322231942,
@@ -13647,7 +13647,7 @@ mfPkg.syncAll({
     "course.list.status_titles.u_are_host": {
       "_id": "rEXiKpdhtMkJLsziu",
       "key": "course.list.status_titles.u_are_host",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du bisch de Gaschtgeber",
       "ctime": 1520321863251,
       "mtime": 1520321863251,
@@ -13656,7 +13656,7 @@ mfPkg.syncAll({
     "course.list.status_titles.u_are_mentor": {
       "_id": "vQHmrMrXBuwsCCmB6",
       "key": "course.list.status_titles.u_are_mentor",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du bisch Mentor",
       "ctime": 1520322216615,
       "mtime": 1520322216615,
@@ -13665,7 +13665,7 @@ mfPkg.syncAll({
     "course.list.status_titles.u_are_organizer": {
       "_id": "E9ns5Lj4MrX7uyqg3",
       "key": "course.list.status_titles.u_are_organizer",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du bisch Organisator/in",
       "ctime": 1520376479812,
       "mtime": 1520376479812,
@@ -13674,7 +13674,7 @@ mfPkg.syncAll({
     "course.members.showMoreParticipants": {
       "_id": "y7tj46H3rYfEbMuSZ",
       "key": "course.members.showMoreParticipants",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zeig meh Teilnehmer",
       "ctime": 1520376011539,
       "mtime": 1520376011539,
@@ -13684,7 +13684,7 @@ mfPkg.syncAll({
     "course.propose.EventInfo": {
       "_id": "CNrPqNMLHmpWJbFst",
       "key": "course.propose.EventInfo",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wänn du en eimaligä Aalass wetsch erstelle, dänn benutz doch bitte s folgendi Formular:",
       "ctime": 1458818451720,
       "mtime": 1458818451720,
@@ -13695,7 +13695,7 @@ mfPkg.syncAll({
     "course.reallydelete": {
       "_id": "RtXoPF7r9FQfchCnP",
       "key": "course.reallydelete",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte tuen bestätige dass du de Kurs lösche wotsch. Das cha mer nüme rückgängig mache.",
       "ctime": 1520322007863,
       "mtime": 1520322007863,
@@ -13704,7 +13704,7 @@ mfPkg.syncAll({
     "course.roles.enrol": {
       "_id": "ZmqX257LeEgdh2Epc",
       "key": "course.roles.enrol",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "iischribä",
       "ctime": 1458817912322,
       "mtime": 1458817912322,
@@ -13715,7 +13715,7 @@ mfPkg.syncAll({
     "course.roles.enrol_as": {
       "_id": "SEL4ygNhpyM8Qejjn",
       "key": "course.roles.enrol_as",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "iischribä als",
       "ctime": 1458817918262,
       "mtime": 1458817918262,
@@ -13726,7 +13726,7 @@ mfPkg.syncAll({
     "course.roles.firstSteps.allMembersInformed": {
       "_id": "v5FFrtrq3D79WvSzM",
       "key": "course.roles.firstSteps.allMembersInformed",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Alli, wo im Organisationsteam sind, wärded informiert.",
       "ctime": 1520322290355,
       "mtime": 1520322290355,
@@ -13735,7 +13735,7 @@ mfPkg.syncAll({
     "course.roles.firstSteps.ifQuestions": {
       "_id": "d7hxnxMWg5ixqD6sg",
       "key": "course.roles.firstSteps.ifQuestions",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wenn Frage zum Kurs hesch, schriib eifach en Kommentar!",
       "ctime": 1520322327670,
       "mtime": 1520322327670,
@@ -13745,7 +13745,7 @@ mfPkg.syncAll({
     "course.roles.firstSteps.informAboutVenue": {
       "_id": "RxFGHF3jtMdti9hYs",
       "key": "course.roles.firstSteps.informAboutVenue",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Falls nonig gmacht, verzehl bitte i dinere persönliche Nachricht meh über de Ort wo du Zuegang dezue hesch.",
       "ctime": 1520376176789,
       "mtime": 1520376176789,
@@ -13754,7 +13754,7 @@ mfPkg.syncAll({
     "course.roles.firstSteps.mentionExperience": {
       "_id": "yLJceJftboWcTiD7n",
       "key": "course.roles.firstSteps.mentionExperience",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Falls nonig gmacht, verzehl bitte i dinere persönliche Nachricht meh über dini Erfahrig i dem Bereich.",
       "ctime": 1520376203823,
       "mtime": 1520376203823,
@@ -13763,7 +13763,7 @@ mfPkg.syncAll({
     "course.roles.firstSteps.team": {
       "_id": "7yjcdrxdxdoznche2",
       "key": "course.roles.firstSteps.team",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wenn das nonig passiert isch, chasch ahfange, idem en Ort und wenn nötig ein oder mehreri Mentore suechsch und es Datum feschtleisch.",
       "ctime": 1520376361811,
       "mtime": 1520376361811,
@@ -13772,7 +13772,7 @@ mfPkg.syncAll({
     "course.roles.firstSteps.title": {
       "_id": "J3MFGgTi7c34eiCYo",
       "key": "course.roles.firstSteps.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Danke, dass em Kurs als {ROLE} biträte bisch!",
       "ctime": 1520322351744,
       "mtime": 1520322351744,
@@ -13781,7 +13781,7 @@ mfPkg.syncAll({
     "course.roles.firstSteps.youllGetNotified": {
       "_id": "Pz5dveHkJBA6qsEr3",
       "key": "course.roles.firstSteps.youllGetNotified",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du bechunnsch es Mail sobald es Datum feschtgleit isch.",
       "ctime": 1520322376611,
       "mtime": 1520322376611,
@@ -13790,7 +13790,7 @@ mfPkg.syncAll({
     "course.roles.join": {
       "_id": "4n6hDfZEwSJEi2dNE",
       "key": "course.roles.join",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bi dem Kurs mitmache",
       "ctime": 1520376029886,
       "mtime": 1520376029886,
@@ -13799,7 +13799,7 @@ mfPkg.syncAll({
     "course.roles.leave_message": {
       "_id": "HFJDrXK666hKse8jF",
       "key": "course.roles.leave_message",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Schriib e nachricht/en wunsch/es intereässe:",
       "ctime": 1449922231059,
       "mtime": 1450174483772,
@@ -13809,7 +13809,7 @@ mfPkg.syncAll({
     "course.roles.maketeam": {
       "_id": "WHSACpbSydHXPnrbW",
       "key": "course.roles.maketeam",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zum Team hinzuefüege",
       "ctime": 1458816896663,
       "mtime": 1458816896663,
@@ -13818,7 +13818,7 @@ mfPkg.syncAll({
     "course.roles.messageInfoHost": {
       "_id": "MXi8NipB4BnizEYSY",
       "key": "course.roles.messageInfoHost",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "(freiwilligi) Nachricht mit Informatione über de Verahstaltigsort",
       "ctime": 1520376393621,
       "mtime": 1520376393621,
@@ -13827,7 +13827,7 @@ mfPkg.syncAll({
     "course.roles.messageInfoParticipant": {
       "_id": "gGsaHFrmsqs3bnFg8",
       "key": "course.roles.messageInfoParticipant",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "(freiwilligi) Nachricht wie en Gruess, en Wunsch, oder es bsundrigs Interesse",
       "ctime": 1520376721956,
       "mtime": 1520376721956,
@@ -13836,7 +13836,7 @@ mfPkg.syncAll({
     "course.roles.retract": {
       "_id": "BjMA9X6NRAEcfCyM4",
       "key": "course.roles.retract",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Widerrüefe",
       "ctime": 1449923210899,
       "mtime": 1449923210899,
@@ -13845,7 +13845,7 @@ mfPkg.syncAll({
     "course.subnav.descr": {
       "_id": "FcbgbrFefToPKJbNC",
       "key": "course.subnav.descr",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Beschriibig",
       "ctime": 1449923930559,
       "mtime": 1449923930559,
@@ -13854,7 +13854,7 @@ mfPkg.syncAll({
     "course.subnav.history": {
       "_id": "5sNB6w7NDhZ8ahvJu",
       "key": "course.subnav.history",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Was isch gloffä",
       "ctime": 1450174255869,
       "mtime": 1450284289943,
@@ -13863,7 +13863,7 @@ mfPkg.syncAll({
     "course.title.Discussion": {
       "_id": "vpXJx9XrfkxCzTfD2",
       "key": "course.title.Discussion",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gschpröch",
       "ctime": 1449924056821,
       "mtime": 1450176924883,
@@ -13872,7 +13872,7 @@ mfPkg.syncAll({
     "course.title.Past events": {
       "_id": "ZGk6GfZeSjHEnSmdo",
       "key": "course.title.Past events",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Vergangeni Aaläss",
       "ctime": 1449923365082,
       "mtime": 1449923365082,
@@ -13881,7 +13881,7 @@ mfPkg.syncAll({
     "course.title.placeholder": {
       "_id": "NsKY37Swef4jWrxE8",
       "key": "course.title.placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Was wotsch lerne?",
       "ctime": 1449922874204,
       "mtime": 1449922874204,
@@ -13891,7 +13891,7 @@ mfPkg.syncAll({
     "course.windowtitle": {
       "_id": "Nb6i7RPyMiwMvf8RS",
       "key": "course.windowtitle",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kurs: {COURSE}",
       "ctime": 1520322384103,
       "mtime": 1520322384103,
@@ -13900,7 +13900,7 @@ mfPkg.syncAll({
     "courses.none": {
       "_id": "SY5Lco97qvuLJcCbi",
       "key": "courses.none",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kei Kürs gfundä",
       "ctime": 1458820849995,
       "mtime": 1458820849995,
@@ -13909,7 +13909,7 @@ mfPkg.syncAll({
     "editable.add_text": {
       "_id": "QMRi2YHqmHduxZXax",
       "key": "editable.add_text",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Text da hinzuefüege",
       "ctime": 1458816885626,
       "mtime": 1458816885626,
@@ -13918,7 +13918,7 @@ mfPkg.syncAll({
     "editable.discard": {
       "_id": "icrsNWAp9QgoT2XLm",
       "key": "editable.discard",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Änderigä verwerfe",
       "ctime": 1458817751658,
       "mtime": 1458817751658,
@@ -13927,7 +13927,7 @@ mfPkg.syncAll({
     "editable.link.placeholder": {
       "_id": "Y9JbC8eQzsgS6LuXc",
       "key": "editable.link.placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Link ifüege",
       "ctime": 1520376410058,
       "mtime": 1520376410058,
@@ -13936,7 +13936,7 @@ mfPkg.syncAll({
     "editable.sorrychanged": {
       "_id": "LGfFj2aEauTwt4rpE",
       "key": "editable.sorrychanged",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Tschuldigung, öpper andersch hät das gad gänderet. Dini Änderige sind verworfä wordä.",
       "ctime": 1458819854679,
       "mtime": 1458819854679,
@@ -13945,7 +13945,7 @@ mfPkg.syncAll({
     "editable.store": {
       "_id": "7t7NhRQ7ATdqKmSLz",
       "key": "editable.store",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Was wotsch lerne?",
       "ctime": 1450265558995,
       "mtime": 1450265558995,
@@ -13954,7 +13954,7 @@ mfPkg.syncAll({
     "email.verified": {
       "_id": "twjhb6qgDfivcGKNL",
       "key": "email.verified",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Email isch bestätigt",
       "ctime": 1458817903512,
       "mtime": 1458817903512,
@@ -13964,7 +13964,7 @@ mfPkg.syncAll({
     "event.delete.confirm.button": {
       "_id": "dtepaJj9M2C9r6ACd",
       "key": "event.delete.confirm.button",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "D'Verahstaltig lösche",
       "ctime": 1520322020403,
       "mtime": 1520322020403,
@@ -13973,7 +13973,7 @@ mfPkg.syncAll({
     "event.delete.confirm.button.busy": {
       "_id": "xcwDAZ2TvoBPoFvjG",
       "key": "event.delete.confirm.button.busy",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Löscht d'Verahstaltig...",
       "ctime": 1520322027571,
       "mtime": 1520322027571,
@@ -13982,7 +13982,7 @@ mfPkg.syncAll({
     "event.description.placeholder": {
       "_id": "ofDZdP3ZD6LhJNehs",
       "key": "event.description.placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Beschriib dini Verahstaltig so gnau wie möglich. Das hilft de Lüt z'wüsse wie sie sich vorbereite müend und was sie z'erwarte hend vo dem Treffe (z.B. Schwierigkeitsstufe, Vorussetzige, Aktivitäte, Unterrichtsmethode, was mitneh, etc.)",
       "ctime": 1520321979072,
       "mtime": 1520321979072,
@@ -13991,7 +13991,7 @@ mfPkg.syncAll({
     "event.detail.download_cal": {
       "_id": "chB3JvhW59awybJnK",
       "key": "event.detail.download_cal",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Lads abä i din Kaländer",
       "ctime": 1458817829873,
       "mtime": 1458817829873,
@@ -14000,7 +14000,7 @@ mfPkg.syncAll({
     "event.edit.additionalMessage": {
       "_id": "q2drgX6pM4iu4SX7f",
       "key": "event.edit.additionalMessage",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wenn grad guet z'wäg bisch, beschriib was d'Teilnehmer vo dem Kurs wüsse sötted.",
       "ctime": 1520322073468,
       "mtime": 1520322073468,
@@ -14009,7 +14009,7 @@ mfPkg.syncAll({
     "event.edit.addressSearch": {
       "_id": "CM89eaazocWesJsc4",
       "key": "event.edit.addressSearch",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Suächä",
       "ctime": 1458819661546,
       "mtime": 1458819661546,
@@ -14018,7 +14018,7 @@ mfPkg.syncAll({
     "event.edit.dateFormatWarning": {
       "_id": "6qNXKsKRtFqKEsZNA",
       "key": "event.edit.dateFormatWarning",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "s'Datum muess im Format {EXAMPLEDATE} si",
       "ctime": 1520376508878,
       "mtime": 1520376508878,
@@ -14027,7 +14027,7 @@ mfPkg.syncAll({
     "event.edit.locationAddressPlaceholder": {
       "_id": "Wrpayic98gWwWviFN",
       "key": "event.edit.locationAddressPlaceholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Adrässe",
       "ctime": 1458816929820,
       "mtime": 1458816929820,
@@ -14036,7 +14036,7 @@ mfPkg.syncAll({
     "event.edit.locationChange": {
       "_id": "7xmmmZdMvyhC8HvmF",
       "key": "event.edit.locationChange",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ort änderä",
       "ctime": 1458817116513,
       "mtime": 1458817116513,
@@ -14045,7 +14045,7 @@ mfPkg.syncAll({
     "event.edit.locationNamePlaceholder": {
       "_id": "k4QMyWgLLMsPSzLv7",
       "key": "event.edit.locationNamePlaceholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wo?",
       "ctime": 1458820445097,
       "mtime": 1458820445097,
@@ -14054,7 +14054,7 @@ mfPkg.syncAll({
     "event.edit.locations.foundnone": {
       "_id": "98asCQBjggXahmhxr",
       "key": "event.edit.locations.foundnone",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kein Ort gfundä.",
       "ctime": 1458818838047,
       "mtime": 1458818838047,
@@ -14063,7 +14063,7 @@ mfPkg.syncAll({
     "event.edit.locations.previouslyUsed": {
       "_id": "Hsa3v4LBKKS2mYppa",
       "key": "event.edit.locations.previouslyUsed",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Erst grad gwählti Ort:",
       "ctime": 1458819319768,
       "mtime": 1458819319768,
@@ -14072,7 +14072,7 @@ mfPkg.syncAll({
     "event.edit.locations.proposed": {
       "_id": "EtuDYqcx7MiHcdcXE",
       "key": "event.edit.locations.proposed",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gliichi Ort:",
       "ctime": 1458818582159,
       "mtime": 1458818582159,
@@ -14081,7 +14081,7 @@ mfPkg.syncAll({
     "event.edit.noResultsforAddress": {
       "_id": "ZaoF3rTQ4BFykFL8v",
       "key": "event.edit.noResultsforAddress",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kei Resultat gfundä fürd Adresse \"{ADDRESS}\"",
       "ctime": 1458818190383,
       "mtime": 1458818190383,
@@ -14090,7 +14090,7 @@ mfPkg.syncAll({
     "event.edit.replicates.success": {
       "_id": "fjTED6MHsof68iSdr",
       "key": "event.edit.replicates.success",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kopiä vo \"{TITLE}\" sind au gändered wordä.",
       "ctime": 1458819440667,
       "mtime": 1458819440667,
@@ -14101,7 +14101,7 @@ mfPkg.syncAll({
     "event.editVenue.contactHost": {
       "_id": "Aw79dTZ9Gc7TDkTez",
       "key": "event.editVenue.contactHost",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gaschtgäber kontaktiere",
       "ctime": 1520322398850,
       "mtime": 1520322398850,
@@ -14110,7 +14110,7 @@ mfPkg.syncAll({
     "event.editVenue.pleaseContactHost": {
       "_id": "fRaQFjkgSPFitfjDF",
       "key": "event.editVenue.pleaseContactHost",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte kontaktier de Gaschtgeber vo dem Verahstaltigsort zum weg de Verfüegbarkeit und wiitere Details luege.",
       "ctime": 1520322474243,
       "mtime": 1520322474243,
@@ -14119,7 +14119,7 @@ mfPkg.syncAll({
     "event.no_event": {
       "_id": "sctKhyNFniwRAFK3z",
       "key": "event.no_event",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Tschuldigung, mir händ de Aalass nöd chönä findä, er isch entweder glöscht wordä oder es hätten eifach nie gä.",
       "ctime": 1458819892533,
       "mtime": 1458819892533,
@@ -14128,7 +14128,7 @@ mfPkg.syncAll({
     "event.replicate.success": {
       "_id": "uu45eKEuJJvRXGu76",
       "key": "event.replicate.success",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kopiertä Aalass \"{TITLE}\" am {DATE}",
       "ctime": 1458817225569,
       "mtime": 1458817519011,
@@ -14139,7 +14139,7 @@ mfPkg.syncAll({
     "event.replication.freq.daily": {
       "_id": "twHTiJuowBBvmB978",
       "key": "event.replication.freq.daily",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "jedä tag",
       "ctime": 1450205691048,
       "mtime": 1450205691048,
@@ -14148,7 +14148,7 @@ mfPkg.syncAll({
     "event.replication.freq.once": {
       "_id": "vf6gpDbvxvMKqEWSX",
       "key": "event.replication.freq.once",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "eimal",
       "ctime": 1450205644334,
       "mtime": 1450205644334,
@@ -14157,7 +14157,7 @@ mfPkg.syncAll({
     "event.replication.interval.end": {
       "_id": "2ayi7WXguCekLyw7t",
       "key": "event.replication.interval.end",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Widerholigs Ändi",
       "ctime": 1450205724726,
       "mtime": 1450205724726,
@@ -14166,7 +14166,7 @@ mfPkg.syncAll({
     "event.replication.interval.start": {
       "_id": "tQXK32fs5jetZ3Me2",
       "key": "event.replication.interval.start",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wiederholigs Afang",
       "ctime": 1458818486209,
       "mtime": 1458818486209,
@@ -14175,7 +14175,7 @@ mfPkg.syncAll({
     "event.replication.repeat": {
       "_id": "PGRFTKQnA4xip7wck",
       "key": "event.replication.repeat",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Widerholä",
       "ctime": 1458819393388,
       "mtime": 1458819393388,
@@ -14184,7 +14184,7 @@ mfPkg.syncAll({
     "event.title.placeholder": {
       "_id": "GkWcbEWgygL3HPGEr",
       "key": "event.title.placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Schriib da en kuhlä Titel anä",
       "ctime": 1458819289473,
       "mtime": 1458819289473,
@@ -14193,7 +14193,7 @@ mfPkg.syncAll({
     "event.windowtitle.create": {
       "_id": "znL4PGszefqKSjT9j",
       "key": "event.windowtitle.create",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Erstell en Aalass",
       "ctime": 1449923935295,
       "mtime": 1449923935295,
@@ -14202,7 +14202,7 @@ mfPkg.syncAll({
     "filterCaptions.is-proposal": {
       "_id": "cYEuXdiyvHvuuHQcJ",
       "key": "filterCaptions.is-proposal",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Vorschlag",
       "ctime": 1520322616368,
       "mtime": 1520322616368,
@@ -14211,7 +14211,7 @@ mfPkg.syncAll({
     "find.WhatLearn?": {
       "_id": "5sFZ5NMMWHpfEAWex",
       "key": "find.WhatLearn?",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Was wotsch lerne?",
       "ctime": 1450265542008,
       "mtime": 1450265542008,
@@ -14221,7 +14221,7 @@ mfPkg.syncAll({
     "find.filter.categories": {
       "_id": "LzdH3s49knkmeBEej",
       "key": "find.filter.categories",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kategoriä",
       "ctime": 1449923218472,
       "mtime": 1450175591716,
@@ -14230,7 +14230,7 @@ mfPkg.syncAll({
     "find.filter.isActive": {
       "_id": "5Kd9NjcBTsjGp7rgK",
       "key": "find.filter.isActive",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "aktiv",
       "ctime": 1520322619754,
       "mtime": 1520322619754,
@@ -14239,7 +14239,7 @@ mfPkg.syncAll({
     "find.filter.removeCategory": {
       "_id": "6vRGotaiTzfuBAzem",
       "key": "find.filter.removeCategory",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kategorie {CATEGORYNAME} vom Filtär wegnäh",
       "ctime": 1458819350732,
       "mtime": 1458819350732,
@@ -14248,7 +14248,7 @@ mfPkg.syncAll({
     "find.hideFilters": {
       "_id": "c9M3CkN3iZAo45zf9",
       "key": "find.hideFilters",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Lösch t'Filter",
       "ctime": 1449923594864,
       "mtime": 1450176121962,
@@ -14258,7 +14258,7 @@ mfPkg.syncAll({
     "find.needsHost": {
       "_id": "r4GyjeSBEo3W3gkpM",
       "key": "find.needsHost",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Suecht no en Gaschgeber_in",
       "ctime": 1449922537646,
       "mtime": 1458818547213,
@@ -14267,7 +14267,7 @@ mfPkg.syncAll({
     "find.needsMentor": {
       "_id": "3A67o8mJ9pHeDsfbM",
       "key": "find.needsMentor",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Suecht no en Mentor_in",
       "ctime": 1458818543832,
       "mtime": 1458818543832,
@@ -14276,7 +14276,7 @@ mfPkg.syncAll({
     "find.propose_new_course?": {
       "_id": "WhdKtxfBi3y5kutDd",
       "key": "find.propose_new_course?",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wiso schlasch nöd en noie Kurs für {TERM} vor?",
       "ctime": 1449923249503,
       "mtime": 1449923249503,
@@ -14286,7 +14286,7 @@ mfPkg.syncAll({
     "find.search_filter.title": {
       "_id": "itPGJtCjTxjZABQuS",
       "key": "find.search_filter.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Filtere dini Suechi",
       "ctime": 1449923670017,
       "mtime": 1449923670017,
@@ -14295,7 +14295,7 @@ mfPkg.syncAll({
     "find.search_go": {
       "_id": "jCK9jcEEWdHdYExqF",
       "key": "find.search_go",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Los!",
       "ctime": 1449922637697,
       "mtime": 1449922637697,
@@ -14304,7 +14304,7 @@ mfPkg.syncAll({
     "find.search_placeholder": {
       "_id": "qWmgbgN9ygYAq3ty3",
       "key": "find.search_placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Alles",
       "ctime": 1449923071822,
       "mtime": 1449923071822,
@@ -14313,7 +14313,7 @@ mfPkg.syncAll({
     "find.showFilters": {
       "_id": "9DfNeSLeDNBAxQL3m",
       "key": "find.showFilters",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Filtär",
       "ctime": 1449922423344,
       "mtime": 1450175016603,
@@ -14324,7 +14324,7 @@ mfPkg.syncAll({
     "find.showMoreCourses": {
       "_id": "YjXT342GYJZ9mxCp5",
       "key": "find.showMoreCourses",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zeig meh Kürs",
       "ctime": 1520321837287,
       "mtime": 1520321837287,
@@ -14333,7 +14333,7 @@ mfPkg.syncAll({
     "find.windowtitle": {
       "_id": "pdCyoksngxzg4Mu6p",
       "key": "find.windowtitle",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Findä \"{SEARCH}\"",
       "ctime": 1458818156226,
       "mtime": 1458818156226,
@@ -14342,7 +14342,7 @@ mfPkg.syncAll({
     "footer.deployedAt": {
       "_id": "ZSqPSkFYkCBLDAbLe",
       "key": "footer.deployedAt",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Plaziert:",
       "ctime": 1458820791271,
       "mtime": 1458820791271,
@@ -14351,7 +14351,7 @@ mfPkg.syncAll({
     "footer.github": {
       "_id": "59HiCGAa8KsDS7ELK",
       "key": "footer.github",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "GitHub",
       "ctime": 1520322089923,
       "mtime": 1520322089923,
@@ -14362,7 +14362,7 @@ mfPkg.syncAll({
     "forgot": {
       "_id": "JaBzxi5qzP5pGjZzZ",
       "key": "forgot",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ou näi, han mis Passwort vergässä :(",
       "ctime": 1458818855718,
       "mtime": 1458818855718,
@@ -14371,7 +14371,7 @@ mfPkg.syncAll({
     "forgot.failedSending": {
       "_id": "oX6aJGq2GRMowL5Kg",
       "key": "forgot.failedSending",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mir hend nöd chöne es E-Mail a die Adresse schickä",
       "ctime": 1458820369180,
       "mtime": 1458820369180,
@@ -14380,7 +14380,7 @@ mfPkg.syncAll({
     "forgot.notValid": {
       "_id": "xarNe4fQnBicEnAJt",
       "key": "forgot.notValid",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte gib d'Adresse ii wo du dich demit agmäldet hesch.",
       "ctime": 1458819050713,
       "mtime": 1458819050713,
@@ -14389,7 +14389,7 @@ mfPkg.syncAll({
     "forgot.send": {
       "_id": "h873o8PhDgfvisqFG",
       "key": "forgot.send",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mis Passwort zruggsetze",
       "ctime": 1458819512883,
       "mtime": 1458819512883,
@@ -14398,7 +14398,7 @@ mfPkg.syncAll({
     "forgot.sent": {
       "_id": "BwRFYLh2vgZSPSqHL",
       "key": "forgot.sent",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mir hend dir es E-Mail gschickt mit wases ztue git",
       "ctime": 1458820974590,
       "mtime": 1458820974590,
@@ -14409,7 +14409,7 @@ mfPkg.syncAll({
     "forgot.title": {
       "_id": "xH6upCvPdCvpc3pJQ",
       "key": "forgot.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Passwort zruggsetzä",
       "ctime": 1458818895903,
       "mtime": 1458818895903,
@@ -14418,7 +14418,7 @@ mfPkg.syncAll({
     "frame.calendar.showMoreEvents": {
       "_id": "gc7nj5Ki9zeN8NaME",
       "key": "frame.calendar.showMoreEvents",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Meh Verahstaltige ahzeige",
       "ctime": 1520376076465,
       "mtime": 1520376076465,
@@ -14427,7 +14427,7 @@ mfPkg.syncAll({
     "frame.login.email": {
       "_id": "ecGmNFw6EHoho6T3C",
       "key": "frame.login.email",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "E-mail",
       "ctime": 1449923397159,
       "mtime": 1449923397159,
@@ -14436,7 +14436,7 @@ mfPkg.syncAll({
     "frame.login.username": {
       "_id": "BMzGdpELzWk4sMScf",
       "key": "frame.login.username",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Benutzername",
       "ctime": 1520376741134,
       "mtime": 1520376741134,
@@ -14445,7 +14445,7 @@ mfPkg.syncAll({
     "frame.login.usernameOrEmail": {
       "_id": "iCSRAAEaQ6r389WBv",
       "key": "frame.login.usernameOrEmail",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Benutzername oder E-mail",
       "ctime": 1449923507390,
       "mtime": 1450175921774,
@@ -14455,7 +14455,7 @@ mfPkg.syncAll({
     "frame.login_external_services": {
       "_id": "dZjLNPviiGwwHY5A5",
       "key": "frame.login_external_services",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Oder mäld dich ah mit:",
       "ctime": 1449923490323,
       "mtime": 1450175882311,
@@ -14466,7 +14466,7 @@ mfPkg.syncAll({
     "frameCalendar.nothingOnThisDay": {
       "_id": "2LvsHCd8xrjcn3dv7",
       "key": "frameCalendar.nothingOnThisDay",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Chilläx, hüt passiert erscht mal gar nüt.",
       "ctime": 1449922558355,
       "mtime": 1450175117796,
@@ -14475,7 +14475,7 @@ mfPkg.syncAll({
     "group.claim.placeholder": {
       "_id": "4GRZ5BvkihmGFy6aK",
       "key": "group.claim.placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "D'Chärnidee",
       "ctime": 1520321777594,
       "mtime": 1520321777594,
@@ -14484,7 +14484,7 @@ mfPkg.syncAll({
     "group.description.placeholder": {
       "_id": "KsYfmBv5RpKHNWn9p",
       "key": "group.description.placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Beschriib s'Zielpublikum, d'Intresse und d'Aktivitäte vo dinere Gruppe.",
       "ctime": 1520321756783,
       "mtime": 1520321756783,
@@ -14493,7 +14493,7 @@ mfPkg.syncAll({
     "group.missing": {
       "_id": "tEpSWtLe3DuuiYh3b",
       "key": "group.missing",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Die Gruppe exischtiert nöd",
       "ctime": 1520376455226,
       "mtime": 1520376455226,
@@ -14502,7 +14502,7 @@ mfPkg.syncAll({
     "group.name.placeholder": {
       "_id": "waGm2ozSmigQEP8Ek",
       "key": "group.name.placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Name vode Gruppe, Institution vom Verein oder Projekt",
       "ctime": 1520322612691,
       "mtime": 1520322612691,
@@ -14511,7 +14511,7 @@ mfPkg.syncAll({
     "group.saving.error": {
       "_id": "9uyzojxxBv3DaDEJz",
       "key": "group.saving.error",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Hobalätz, jetzt hät das ned klappet mitem Speichere vode Gruppe! Tschuldigung. Mir händ da sones Fehlerli gfunde: {ERROR} ",
       "ctime": 1520322546372,
       "mtime": 1520322546372,
@@ -14520,7 +14520,7 @@ mfPkg.syncAll({
     "group.settings.field.addMembers": {
       "_id": "xkpeBZTvPev2pdDNb",
       "key": "group.settings.field.addMembers",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Neus Mitglied id Gruppe ufneh",
       "ctime": 1520376630339,
       "mtime": 1520376630339,
@@ -14529,7 +14529,7 @@ mfPkg.syncAll({
     "group.settings.field.backgroundImg": {
       "_id": "dBijdz2hE5nHc86YM",
       "key": "group.settings.field.backgroundImg",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Hintergrundbild",
       "ctime": 1520376637255,
       "mtime": 1520376637255,
@@ -14540,7 +14540,7 @@ mfPkg.syncAll({
     "group.settings.field.logo": {
       "_id": "ooHB8e8QbbGXFEsAR",
       "key": "group.settings.field.logo",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Logo",
       "ctime": 1520376640502,
       "mtime": 1520376640502,
@@ -14549,7 +14549,7 @@ mfPkg.syncAll({
     "group.settings.removeFromGroup": {
       "_id": "YStYqeMgPaqkikrRw",
       "key": "group.settings.removeFromGroup",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mitglied useneh",
       "ctime": 1520376666341,
       "mtime": 1520376666341,
@@ -14558,7 +14558,7 @@ mfPkg.syncAll({
     "group.settings.title": {
       "_id": "7FGzb3vgMs8J7nmCd",
       "key": "group.settings.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Istellige",
       "ctime": 1520376681173,
       "mtime": 1520376681173,
@@ -14567,7 +14567,7 @@ mfPkg.syncAll({
     "group.settings.title.Members": {
       "_id": "Ay5bjJqx6na7kaZ3i",
       "key": "group.settings.title.Members",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mitglieder",
       "ctime": 1520376671363,
       "mtime": 1520376671363,
@@ -14576,7 +14576,7 @@ mfPkg.syncAll({
     "group.short.placeholder": {
       "_id": "NwhsirAzMN88ZCEQL",
       "key": "group.short.placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Abchürzig",
       "ctime": 1520321761943,
       "mtime": 1520321761943,
@@ -14585,7 +14585,7 @@ mfPkg.syncAll({
     "groupList.show_courses": {
       "_id": "AYkWcBGnT6MSrt9mc",
       "key": "groupList.show_courses",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zeig alli Kürs vo",
       "ctime": 1458819743018,
       "mtime": 1458819743018,
@@ -14594,7 +14594,7 @@ mfPkg.syncAll({
     "introduction.1_teachOrLearn": {
       "_id": "CXFjR3JSdXG3X26hm",
       "key": "introduction.1_teachOrLearn",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du wetsch öppis lerne, oder anderene öppis biibringä.",
       "ctime": 1458820651424,
       "mtime": 1458820651424,
@@ -14604,7 +14604,7 @@ mfPkg.syncAll({
     "introduction.2_searchNPropose": {
       "_id": "Lx8Qo5X7pLrfeQn2F",
       "key": "introduction.2_searchNPropose",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du suechsch obs de Kurs scho git. Wenn nöd, schlahsch en vor.",
       "ctime": 1458820633722,
       "mtime": 1458820633722,
@@ -14613,7 +14613,7 @@ mfPkg.syncAll({
     "introduction.3_enrole": {
       "_id": "hvXoBFkDiqGejaCZ9",
       "key": "introduction.3_enrole",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Jedä chan sich a dim Kurs amälde als Teilnehmer_in, Mentor_in oder Verastalter_in.",
       "ctime": 1458818043251,
       "mtime": 1458818043251,
@@ -14623,7 +14623,7 @@ mfPkg.syncAll({
     "introduction.4_schedule": {
       "_id": "QwPC6f5bWFtizhHMb",
       "key": "introduction.4_schedule",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wänn alli da sind wird es Datum bestummä.",
       "ctime": 1458820441640,
       "mtime": 1458820441640,
@@ -14633,7 +14633,7 @@ mfPkg.syncAll({
     "introduction.5_takePlace": {
       "_id": "J8tEpfojLL7ceWNjz",
       "key": "introduction.5_takePlace",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "De Kurs findät statt!",
       "ctime": 1458820031538,
       "mtime": 1458820031538,
@@ -14642,7 +14642,7 @@ mfPkg.syncAll({
     "introduction.Title": {
       "_id": "xdxFmzsjAd3SX5a94",
       "key": "introduction.Title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wie chan dir {SITENAME} helfe?",
       "ctime": 1458820420928,
       "mtime": 1458826679672,
@@ -14651,7 +14651,7 @@ mfPkg.syncAll({
     "introduction.close.title": {
       "_id": "iNvz5tmaAqvrmiTy3",
       "key": "introduction.close.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Iifüerig versteckä",
       "ctime": 1458818339148,
       "mtime": 1458818339149,
@@ -14661,7 +14661,7 @@ mfPkg.syncAll({
     "introduction.more": {
       "_id": "wiqJgSkQrj7o9fXqp",
       "key": "introduction.more",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Meh Informationä:",
       "ctime": 1458818650553,
       "mtime": 1458818650553,
@@ -14670,7 +14670,7 @@ mfPkg.syncAll({
     "introduction.toggle.hide": {
       "_id": "np2gYxe77EDKNzuMT",
       "key": "introduction.toggle.hide",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Verschteckä",
       "ctime": 1520376515481,
       "mtime": 1520376515481,
@@ -14679,7 +14679,7 @@ mfPkg.syncAll({
     "introduction.toggle.show": {
       "_id": "u28mA3zwuxt4SjgoH",
       "key": "introduction.toggle.show",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zeige",
       "ctime": 1520376520287,
       "mtime": 1520376520287,
@@ -14688,7 +14688,7 @@ mfPkg.syncAll({
     "kiosk.future": {
       "_id": "y39mDRQBAtb3fxXaY",
       "key": "kiosk.future",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zuekünftigi Veraastaltige:",
       "ctime": 1449922719512,
       "mtime": 1449922719512,
@@ -14697,7 +14697,7 @@ mfPkg.syncAll({
     "kiosk.noFutureEvents": {
       "_id": "Z229nxRvA2ofZEofM",
       "key": "kiosk.noFutureEvents",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Es git kei zuekünftigi Aaläss. Tja.",
       "ctime": 1449923569489,
       "mtime": 1450176081293,
@@ -14706,7 +14706,7 @@ mfPkg.syncAll({
     "kiosk.started": {
       "_id": "ZPB4rFq588nPzRNEE",
       "key": "kiosk.started",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ahgfange",
       "ctime": 1520321784587,
       "mtime": 1520321784587,
@@ -14715,7 +14715,7 @@ mfPkg.syncAll({
     "loading.loading": {
       "_id": "mqLuzjjtBbowokoDK",
       "key": "loading.loading",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "es ladt..",
       "ctime": 1450205607859,
       "mtime": 1450205607859,
@@ -14724,7 +14724,7 @@ mfPkg.syncAll({
     "location.details.address": {
       "_id": "xW9JgmdKuzDR9QJN5",
       "key": "location.details.address",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Adrässe:",
       "ctime": 1449923715311,
       "mtime": 1449923715311,
@@ -14733,7 +14733,7 @@ mfPkg.syncAll({
     "location.details.created_by": {
       "_id": "Kvg4Qnwv8aXz6nxsb",
       "key": "location.details.created_by",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Erschtellt vo:",
       "ctime": 1449922566294,
       "mtime": 1449922566294,
@@ -14744,7 +14744,7 @@ mfPkg.syncAll({
     "location.details.has_projector": {
       "_id": "ZeoTqSAxhke7o9e3F",
       "key": "location.details.has_projector",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Hät en Projektor!",
       "ctime": 1458818278797,
       "mtime": 1458818304539,
@@ -14753,7 +14753,7 @@ mfPkg.syncAll({
     "location.details.hosts_admin": {
       "_id": "4JoGXJw255fv7tgv3",
       "key": "location.details.hosts_admin",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gastgegeber/Admin:",
       "ctime": 1520321846321,
       "mtime": 1520321846321,
@@ -14762,7 +14762,7 @@ mfPkg.syncAll({
     "location.details.how_go_there": {
       "_id": "NyQtwRMXhGjdBSqgZ",
       "key": "location.details.how_go_there",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wie chuntmär det anä:",
       "ctime": 1458818364856,
       "mtime": 1458818364856,
@@ -14771,7 +14771,7 @@ mfPkg.syncAll({
     "location.details.last_edited": {
       "_id": "GydQyCrqAyDTNDTht",
       "key": "location.details.last_edited",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Z'letscht editiert:",
       "ctime": 1449923683078,
       "mtime": 1449923683078,
@@ -14782,7 +14782,7 @@ mfPkg.syncAll({
     "location.details.max_ppl": {
       "_id": "LwuTQPMnunxtkQNP7",
       "key": "location.details.max_ppl",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Maximali Aazahl Lüt:",
       "ctime": 1458818616198,
       "mtime": 1458818625200,
@@ -14791,7 +14791,7 @@ mfPkg.syncAll({
     "location.details.max_workplaces": {
       "_id": "4T6bLYyy4fxuAW7rf",
       "key": "location.details.max_workplaces",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Maximali Aazahl a Arbetsplätz:",
       "ctime": 1449923264517,
       "mtime": 1449923264517,
@@ -14800,7 +14800,7 @@ mfPkg.syncAll({
     "location.details.online": {
       "_id": "mB5DDEaJuaCvYsXFn",
       "key": "location.details.online",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Websiite:",
       "ctime": 1449922319477,
       "mtime": 1449922319477,
@@ -14809,7 +14809,7 @@ mfPkg.syncAll({
     "location.details.specials": {
       "_id": "YcaY2hmfdsd2qcMKz",
       "key": "location.details.specials",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Speziells:",
       "ctime": 1458819900781,
       "mtime": 1458819900781,
@@ -14818,7 +14818,7 @@ mfPkg.syncAll({
     "location.details.time_created": {
       "_id": "49drY3xr3AAuQkKzB",
       "key": "location.details.time_created",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ziit wos erstellt wordä isch:",
       "ctime": 1458820105468,
       "mtime": 1458820105468,
@@ -14829,7 +14829,7 @@ mfPkg.syncAll({
     "location.details.yourHost": {
       "_id": "7g8ZvsGvzsLAzGgeR",
       "key": "location.details.yourHost",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du bisch en Host da:",
       "ctime": 1458820475894,
       "mtime": 1458820475894,
@@ -14838,7 +14838,7 @@ mfPkg.syncAll({
     "location.edit.add_location": {
       "_id": "CRRd7ei66hAqxTngi",
       "key": "location.edit.add_location",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ort hinzuefüege",
       "ctime": 1458816878484,
       "mtime": 1458816878484,
@@ -14847,7 +14847,7 @@ mfPkg.syncAll({
     "location.edit.address": {
       "_id": "EFQQGEBjZvzyaqb3C",
       "key": "location.edit.address",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Adrässe:",
       "ctime": 1449923601283,
       "mtime": 1450176129622,
@@ -14856,7 +14856,7 @@ mfPkg.syncAll({
     "location.edit.desc": {
       "_id": "jpi4xonQwKBFLYNTT",
       "key": "location.edit.desc",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Beschr:",
       "ctime": 1449923938472,
       "mtime": 1449923938472,
@@ -14865,7 +14865,7 @@ mfPkg.syncAll({
     "location.edit.edit_location": {
       "_id": "iS8qajWrySXePwpGo",
       "key": "location.edit.edit_location",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ort bearbeite",
       "ctime": 1458817897100,
       "mtime": 1458817897100,
@@ -14874,7 +14874,7 @@ mfPkg.syncAll({
     "location.edit.max_ppl": {
       "_id": "HXx9ZpcSoHpy2emhG",
       "key": "location.edit.max_ppl",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Maximum a Lüt",
       "ctime": 1458818590958,
       "mtime": 1458818590958,
@@ -14883,7 +14883,7 @@ mfPkg.syncAll({
     "location.edit.max_workplace": {
       "_id": "W9AaAZTqL25gYEAX6",
       "key": "location.edit.max_workplace",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Maximum a Arbeitsplätz",
       "ctime": 1458818603711,
       "mtime": 1458818603711,
@@ -14892,7 +14892,7 @@ mfPkg.syncAll({
     "location.edit.name": {
       "_id": "udjtbRBmWorbs2pxw",
       "key": "location.edit.name",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Namä:",
       "ctime": 1449922665604,
       "mtime": 1450175226976,
@@ -14901,7 +14901,7 @@ mfPkg.syncAll({
     "location.edit.no_usr_found": {
       "_id": "fZkmXAGoBL7NPpnbC",
       "key": "location.edit.no_usr_found",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "kän Benutzername gfunde",
       "ctime": 1449923375932,
       "mtime": 1449923375932,
@@ -14910,7 +14910,7 @@ mfPkg.syncAll({
     "location.edit.optional_info": {
       "_id": "Wy5ZpgSudx8b9kRi3",
       "key": "location.edit.optional_info",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Freiwilligi Infos",
       "ctime": 1458818875305,
       "mtime": 1458818875305,
@@ -14919,7 +14919,7 @@ mfPkg.syncAll({
     "location.edit.public_space": {
       "_id": "dvQ3F5cFKTcmyK9X8",
       "key": "location.edit.public_space",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Öffentliche Ort (jede dörf da Gaschtgeber sii)",
       "ctime": 1449923854851,
       "mtime": 1449923854851,
@@ -14928,7 +14928,7 @@ mfPkg.syncAll({
     "location.edit.region": {
       "_id": "mEJJF5g8u6LN775Du",
       "key": "location.edit.region",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Region:",
       "ctime": 1449923991457,
       "mtime": 1449923991457,
@@ -14937,7 +14937,7 @@ mfPkg.syncAll({
     "location.edit.route": {
       "_id": "DfcBF7ug3erijtL39",
       "key": "location.edit.route",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wäg zum Ziel:",
       "ctime": 1458819566453,
       "mtime": 1458819566453,
@@ -14946,7 +14946,7 @@ mfPkg.syncAll({
     "location.edit.search_usr_add_host": {
       "_id": "a2JQN3Gm5hy8TDfoN",
       "key": "location.edit.search_usr_add_host",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Suächä vome Benutzernamä zum als Host zuezfüegä",
       "ctime": 1458819697501,
       "mtime": 1458819697501,
@@ -14955,7 +14955,7 @@ mfPkg.syncAll({
     "location.edit.visible_in_list": {
       "_id": "35ZkGR5Q7v55SZZzj",
       "key": "location.edit.visible_in_list",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Sichtbar i de Lischte (kontaktierbar für anderi Benutzer_inä)",
       "ctime": 1449922288080,
       "mtime": 1450174637969,
@@ -14964,7 +14964,7 @@ mfPkg.syncAll({
     "locations.list.title": {
       "_id": "BuJhfcqBMCtZFq4cZ",
       "key": "locations.list.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ört",
       "ctime": 1449923116112,
       "mtime": 1449923116112,
@@ -14973,7 +14973,7 @@ mfPkg.syncAll({
     "login.frame.profile": {
       "_id": "jJkQXr7t73nmMD9mi",
       "key": "login.frame.profile",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mis Profil aaluegä",
       "ctime": 1458820345432,
       "mtime": 1458820345432,
@@ -14982,7 +14982,7 @@ mfPkg.syncAll({
     "login.frame.settings": {
       "_id": "RjwqLWqdua5EWyaii",
       "key": "login.frame.settings",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Konto Istelligä",
       "ctime": 1458816807647,
       "mtime": 1458816815503,
@@ -14991,7 +14991,7 @@ mfPkg.syncAll({
     "login.frame.welcome": {
       "_id": "uP7n4o4xf2KF4nv6d",
       "key": "login.frame.welcome",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Willkomä {NAME}!",
       "ctime": 1458820402710,
       "mtime": 1458820402710,
@@ -15000,7 +15000,7 @@ mfPkg.syncAll({
     "login.login.submit": {
       "_id": "BYqtfB8BvxM7Yc7X6",
       "key": "login.login.submit",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ih-logä",
       "ctime": 1449923674021,
       "mtime": 1450176228286,
@@ -15009,7 +15009,7 @@ mfPkg.syncAll({
     "login.login.title": {
       "_id": "fFCZ5afJJcQ22PcBD",
       "key": "login.login.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Login",
       "ctime": 1520322624170,
       "mtime": 1520322624170,
@@ -15018,7 +15018,7 @@ mfPkg.syncAll({
     "login.login.warning": {
       "_id": "PCDqoHYwMeqqzBt5X",
       "key": "login.login.warning",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte gib din Benutzername oder d'Emailadresse und dis Passwort ii. ",
       "ctime": 1458819084695,
       "mtime": 1458819084695,
@@ -15029,7 +15029,7 @@ mfPkg.syncAll({
     "login.logout": {
       "_id": "yoqcCEcwCyZeAPoYz",
       "key": "login.logout",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Uuslogä",
       "ctime": 1449922334332,
       "mtime": 1450174723412,
@@ -15038,7 +15038,7 @@ mfPkg.syncAll({
     "login.navig.unlogged": {
       "_id": "jubBHbJwZxDeWzmCL",
       "key": "login.navig.unlogged",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ahmäldä",
       "ctime": 1450224596489,
       "mtime": 1450224596489,
@@ -15047,7 +15047,7 @@ mfPkg.syncAll({
     "login.password.no_password": {
       "_id": "qvZqhqLv5Yg2Sd2AQ",
       "key": "login.password.no_password",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte gib es Passwort ii zum dich regischtrierä.",
       "ctime": 1449923532925,
       "mtime": 1450176276714,
@@ -15056,7 +15056,7 @@ mfPkg.syncAll({
     "login.password.password_incorrect": {
       "_id": "uf9WWNnKS2qFkyYNw",
       "key": "login.password.password_incorrect",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Falsches Passwort",
       "ctime": 1449924081426,
       "mtime": 1449924081426,
@@ -15065,7 +15065,7 @@ mfPkg.syncAll({
     "login.recoverPwd.title": {
       "_id": "YA9jSv3pj86KwWNvi",
       "key": "login.recoverPwd.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Passwort wiederherstelle",
       "ctime": 1520321672980,
       "mtime": 1520321672980,
@@ -15074,7 +15074,7 @@ mfPkg.syncAll({
     "login.register.backToLogin": {
       "_id": "mHuAc3fAeY7SXnKC4",
       "key": "login.register.backToLogin",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zrugg zum Login",
       "ctime": 1520321633582,
       "mtime": 1520321633582,
@@ -15083,7 +15083,7 @@ mfPkg.syncAll({
     "login.register.submit": {
       "_id": "cQ5a6dRwQ2dJSWJjB",
       "key": "login.register.submit",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Erschtell es Konto",
       "ctime": 1449922155630,
       "mtime": 1450174607392,
@@ -15092,7 +15092,7 @@ mfPkg.syncAll({
     "login.username.usr_doesnt_exist": {
       "_id": "htRasPSFSRGwNg4Nx",
       "key": "login.username.usr_doesnt_exist",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Dä Benutzer exischtiert nöd.",
       "ctime": 1449924089792,
       "mtime": 1450176959116,
@@ -15101,7 +15101,7 @@ mfPkg.syncAll({
     "loginAction.enroll": {
       "_id": "trjAEA5XGFdWcSXba",
       "key": "loginAction.enroll",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "iilogge und iischriibe",
       "ctime": 1520322650013,
       "mtime": 1520322650013,
@@ -15110,7 +15110,7 @@ mfPkg.syncAll({
     "loginAction.saveCourse": {
       "_id": "5cpbPgzdvKpdHDvzt",
       "key": "loginAction.saveCourse",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "iilogge und Kurs speichere",
       "ctime": 1520322660605,
       "mtime": 1520322660605,
@@ -15119,7 +15119,7 @@ mfPkg.syncAll({
     "loginAction.saveEvent": {
       "_id": "cDPwDMLH224RS4AeQ",
       "key": "loginAction.saveEvent",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "iilogge und Verahstaltig speichere",
       "ctime": 1520322667334,
       "mtime": 1520322667334,
@@ -15128,7 +15128,7 @@ mfPkg.syncAll({
     "loginAction.saveGroup": {
       "_id": "MAFRbeRnWj6Pw9GHo",
       "key": "loginAction.saveGroup",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "iilogge und Gruppe speichere",
       "ctime": 1520322672355,
       "mtime": 1520322672355,
@@ -15137,7 +15137,7 @@ mfPkg.syncAll({
     "loginAction.saveVenue": {
       "_id": "52Jd6w5gBzBvb2MiJ",
       "key": "loginAction.saveVenue",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "iilogge und Verahstaltigsort speichere",
       "ctime": 1520322679379,
       "mtime": 1520322679379,
@@ -15146,7 +15146,7 @@ mfPkg.syncAll({
     "mail.contact.address": {
       "_id": "rkjPgfXGoyLQHFvag",
       "key": "mail.contact.address",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Iri email-adrässe isch {SENDERMAIL}",
       "ctime": 1449922508174,
       "mtime": 1449922508174,
@@ -15157,7 +15157,7 @@ mfPkg.syncAll({
     "main.about_link": {
       "_id": "z4pwC3q6gR3ppfeEN",
       "key": "main.about_link",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Infos",
       "ctime": 1458816763585,
       "mtime": 1458816763585,
@@ -15167,7 +15167,7 @@ mfPkg.syncAll({
     "main.faq_link": {
       "_id": "mayEMK3jkB4Pjcpbg",
       "key": "main.faq_link",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Viel gfrögti Frage",
       "ctime": 1458818119607,
       "mtime": 1458818119607,
@@ -15176,7 +15176,7 @@ mfPkg.syncAll({
     "main.github_link": {
       "_id": "pbcG3WAeNBuKZFCQW",
       "key": "main.github_link",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Code uf GitHub",
       "ctime": 1449923170011,
       "mtime": 1450175519030,
@@ -15187,7 +15187,7 @@ mfPkg.syncAll({
     "main.translate.pleaseLogin": {
       "_id": "5GynYXeFzBpdQmDdr",
       "key": "main.translate.pleaseLogin",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte ilogge zum Übersetzige bearbeite",
       "ctime": 1520376537528,
       "mtime": 1520376537528,
@@ -15196,7 +15196,7 @@ mfPkg.syncAll({
     "map.addMarker": {
       "_id": "vWYp3zdPpKEcLKr4M",
       "key": "map.addMarker",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Setz d'Markierig",
       "ctime": 1449923122646,
       "mtime": 1450175465927,
@@ -15205,7 +15205,7 @@ mfPkg.syncAll({
     "map.fullscreen": {
       "_id": "DSJjt8GNdx4Wrqn6f",
       "key": "map.fullscreen",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Grossi Karte",
       "ctime": 1458820735518,
       "mtime": 1458820735518,
@@ -15214,7 +15214,7 @@ mfPkg.syncAll({
     "map.fullscreenClose": {
       "_id": "rb8TTdFBKJfakSTje",
       "key": "map.fullscreenClose",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Schlüüssä",
       "ctime": 1458820763487,
       "mtime": 1458820763487,
@@ -15223,7 +15223,7 @@ mfPkg.syncAll({
     "map.removeMarker": {
       "_id": "k9dd6CH7WSb3Bbtxu",
       "key": "map.removeMarker",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "d'Markierig entfernä",
       "ctime": 1458820930683,
       "mtime": 1458820930683,
@@ -15232,7 +15232,7 @@ mfPkg.syncAll({
     "map.zoomInTitle": {
       "_id": "rfhMCr9KdP7gRopFw",
       "key": "map.zoomInTitle",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "vergrössere",
       "ctime": 1458820981733,
       "mtime": 1458820981733,
@@ -15241,7 +15241,7 @@ mfPkg.syncAll({
     "map.zoomOutTitle": {
       "_id": "84kMexWJrFxpgcNYG",
       "key": "map.zoomOutTitle",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "verchlinnere",
       "ctime": 1458820986916,
       "mtime": 1458820986916,
@@ -15250,7 +15250,7 @@ mfPkg.syncAll({
     "menue.All regions": {
       "_id": "oDj7XBqPvNbjjkZ3K",
       "key": "menue.All regions",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ali Regionä",
       "ctime": 1449923954481,
       "mtime": 1450176705182,
@@ -15259,7 +15259,7 @@ mfPkg.syncAll({
     "menue.Calendar": {
       "_id": "RkyfS8i7Hp8ghHu8c",
       "key": "menue.Calendar",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kaländer",
       "ctime": 1449923127065,
       "mtime": 1449923127065,
@@ -15268,7 +15268,7 @@ mfPkg.syncAll({
     "menue.Courses": {
       "_id": "ofz4W7SxbTpfkMPLX",
       "key": "menue.Courses",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kürs",
       "ctime": 1449922324278,
       "mtime": 1449922324278,
@@ -15278,7 +15278,7 @@ mfPkg.syncAll({
     "menue.Create": {
       "_id": "PhujjZi8M5PH52dgr",
       "key": "menue.Create",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Erstelle",
       "ctime": 1449923884493,
       "mtime": 1449923884493,
@@ -15287,7 +15287,7 @@ mfPkg.syncAll({
     "menue.Testpage": {
       "_id": "T64sN3nRLocKrApfc",
       "key": "menue.Testpage",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Das isch nur e Teschtsiitä",
       "ctime": 1450266106050,
       "mtime": 1450266106050,
@@ -15296,7 +15296,7 @@ mfPkg.syncAll({
     "menue.Testpage2": {
       "_id": "mAfGJxCznjG6tsJuf",
       "key": "menue.Testpage2",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ali Date werded regelmässig glöscht.",
       "ctime": 1450205072470,
       "mtime": 1450205072470,
@@ -15305,7 +15305,7 @@ mfPkg.syncAll({
     "message.close": {
       "_id": "WKTjHmMAeTWXDGk2w",
       "key": "message.close",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Nachricht wägmachä",
       "ctime": 1449923699959,
       "mtime": 1450176409556,
@@ -15314,7 +15314,7 @@ mfPkg.syncAll({
     "noUser_placeholder": {
       "_id": "ZGpx5uB8Kq77hgBnD",
       "key": "noUser_placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "öpper",
       "ctime": 1450205561159,
       "mtime": 1450205561159,
@@ -15323,7 +15323,7 @@ mfPkg.syncAll({
     "notFound.explanation": {
       "_id": "HKFqRErx7wMxCAYbK",
       "key": "notFound.explanation",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Die Siitä isch nöd vefüegbar. Vielleicht hets die au nie gä.",
       "ctime": 1458820097306,
       "mtime": 1458820097306,
@@ -15332,7 +15332,7 @@ mfPkg.syncAll({
     "notFound.goBack": {
       "_id": "byJ9zrG3xNBicGuQ8",
       "key": "notFound.goBack",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gahn zrugg",
       "ctime": 1449924041127,
       "mtime": 1449924041127,
@@ -15341,7 +15341,7 @@ mfPkg.syncAll({
     "notFound.title": {
       "_id": "xRnqYFiPAFzddvRya",
       "key": "notFound.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Siite nöd gfunde",
       "ctime": 1449924011787,
       "mtime": 1449924011787,
@@ -15350,7 +15350,7 @@ mfPkg.syncAll({
     "notFound.visitStartPage": {
       "_id": "jA5XrQffbKLe2oxy3",
       "key": "notFound.visitStartPage",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zrugg zude Start-Siitä",
       "ctime": 1458818207574,
       "mtime": 1458818207574,
@@ -15359,7 +15359,7 @@ mfPkg.syncAll({
     "passwordReset.label.confirm": {
       "_id": "ePRZ3uDKxpRRgP4L4",
       "key": "passwordReset.label.confirm",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bestätige",
       "ctime": 1458817253062,
       "mtime": 1458817253062,
@@ -15368,7 +15368,7 @@ mfPkg.syncAll({
     "pricePolicy.disclaimer": {
       "_id": "diCuwe4Thjdhmfx53",
       "key": "pricePolicy.disclaimer",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bildig sött für all zuegänglich si, drum erlaubt Openki nume Richtpriise.",
       "ctime": 1520322181597,
       "mtime": 1520322181597,
@@ -15377,7 +15377,7 @@ mfPkg.syncAll({
     "pricePolicy.dontShowAnymore": {
       "_id": "QNdzZgF4Hd2asixxP",
       "key": "pricePolicy.dontShowAnymore",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zeig das nüme.",
       "ctime": 1520322187634,
       "mtime": 1520322187634,
@@ -15386,7 +15386,7 @@ mfPkg.syncAll({
     "pricePolicy.moreAboutPricePolicy": {
       "_id": "H3bbTEMQdusSmXCbm",
       "key": "pricePolicy.moreAboutPricePolicy",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Lis eusi Priis-Richtlinie",
       "ctime": 1520322724908,
       "mtime": 1520322724908,
@@ -15395,7 +15395,7 @@ mfPkg.syncAll({
     "privilege.add.admin": {
       "_id": "RH9LT3ne2BBmo7FBf",
       "key": "privilege.add.admin",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Erteil Administrator-Privilegie",
       "ctime": 1449922661129,
       "mtime": 1449922661129,
@@ -15404,7 +15404,7 @@ mfPkg.syncAll({
     "privilege.addedAdmin": {
       "_id": "Gm648cRcBW4eER72Y",
       "key": "privilege.addedAdmin",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Admin-Privileg erteilt",
       "ctime": 1449924070086,
       "mtime": 1450176946146,
@@ -15413,7 +15413,7 @@ mfPkg.syncAll({
     "privilege.has.admin": {
       "_id": "6ZQXuPhCGY3PiCJPh",
       "key": "privilege.has.admin",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Administartore Rächt gwährt",
       "ctime": 1458816994755,
       "mtime": 1458816994755,
@@ -15422,7 +15422,7 @@ mfPkg.syncAll({
     "privilege.remove": {
       "_id": "uxF3PApCB8kx2tZXe",
       "key": "privilege.remove",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Privileg lösche",
       "ctime": 1458819387044,
       "mtime": 1458819387044,
@@ -15431,7 +15431,7 @@ mfPkg.syncAll({
     "privilege.removed": {
       "_id": "S2Pmy6yqS7oe5mbko",
       "key": "privilege.removed",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Privileg glöscht",
       "ctime": 1449922080604,
       "mtime": 1450174504057,
@@ -15440,7 +15440,7 @@ mfPkg.syncAll({
     "privileges.title": {
       "_id": "6zX8zkF3JiFvew7Qt",
       "key": "privileges.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Privilegiä",
       "ctime": 1449924046923,
       "mtime": 1450176844542,
@@ -15450,7 +15450,7 @@ mfPkg.syncAll({
     "profile.changePass": {
       "_id": "jv8cSmQ3Ycc2bRhr4",
       "key": "profile.changePass",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mis Passwort änderä",
       "ctime": 1450205108773,
       "mtime": 1450205108773,
@@ -15459,7 +15459,7 @@ mfPkg.syncAll({
     "profile.delete.confirm.button": {
       "_id": "7Hfkc6TaW8fTfM59n",
       "key": "profile.delete.confirm.button",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Lösch min Benutzer und alles wo zum Profil ghört",
       "ctime": 1458817579278,
       "mtime": 1458817579278,
@@ -15468,7 +15468,7 @@ mfPkg.syncAll({
     "profile.deleted": {
       "_id": "yuSWCPvBYAdCE3BeG",
       "key": "profile.deleted",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Unfähig, d Gruppe zum Kurs zuezfüege: {ERROR}",
       "ctime": 1449922859248,
       "mtime": 1450202764845,
@@ -15477,7 +15477,7 @@ mfPkg.syncAll({
     "profile.email": {
       "_id": "qp5hdxBaueiQr26nx",
       "key": "profile.email",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "E-mail:",
       "ctime": 1449923692735,
       "mtime": 1449923692735,
@@ -15487,7 +15487,7 @@ mfPkg.syncAll({
     "profile.group.draft": {
       "_id": "CxfNSShdQ2PYtq9EC",
       "key": "profile.group.draft",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Software bedienig",
       "ctime": 1450266274418,
       "mtime": 1450266274418,
@@ -15496,7 +15496,7 @@ mfPkg.syncAll({
     "profile.group.drafted": {
       "_id": "q6EKfYATTAMrbwYjh",
       "key": "profile.group.drafted",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zu de Gruppe \"{NAME}\" hinzuegfüegt",
       "ctime": 1449922260056,
       "mtime": 1450174666743,
@@ -15505,7 +15505,7 @@ mfPkg.syncAll({
     "profile.group.expel": {
       "_id": "Sv3cbM8x6KJPqJz93",
       "key": "profile.group.expel",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Usschlüsse",
       "ctime": 1458818076116,
       "mtime": 1458818076116,
@@ -15514,7 +15514,7 @@ mfPkg.syncAll({
     "profile.group.expelled": {
       "_id": "2GfmuJY9q89AKcpA7",
       "key": "profile.group.expelled",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Us de Gruppe {NAME} usgschlosse",
       "ctime": 1449923649215,
       "mtime": 1449923649215,
@@ -15523,7 +15523,7 @@ mfPkg.syncAll({
     "profile.group.member": {
       "_id": "TSDKaEsRKbSLTixap",
       "key": "profile.group.member",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mitglied vonre Gruppä",
       "ctime": 1458818634652,
       "mtime": 1458818634652,
@@ -15532,7 +15532,7 @@ mfPkg.syncAll({
     "profile.groupMembership": {
       "_id": "qYtzPdHvQfSc7PTZw",
       "key": "profile.groupMembership",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du bisch {NUM_GROUPS, plural,\n\t\t\t\t=0 {Nöd Mitglied vode Gruppe}\n\t\t\t\t=1 {Mitglied vode Gruppe:}\n\t\t\t\tother {Mitglied vo # Gruppe:}}",
       "ctime": 1458820600796,
       "mtime": 1458820600796,
@@ -15542,7 +15542,7 @@ mfPkg.syncAll({
     "profile.groups": {
       "_id": "9xZZCuwycbTDJNf3x",
       "key": "profile.groups",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mini Gruppä:",
       "ctime": 1458818657974,
       "mtime": 1458818657974,
@@ -15551,7 +15551,7 @@ mfPkg.syncAll({
     "profile.input.newPassword": {
       "_id": "qqCLGrc3Ppv8uYRoH",
       "key": "profile.input.newPassword",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Nois Passwort",
       "ctime": 1449923881619,
       "mtime": 1449923881619,
@@ -15560,7 +15560,7 @@ mfPkg.syncAll({
     "profile.input.oldPassword": {
       "_id": "RB4ZgJgRuLZsWw6dp",
       "key": "profile.input.oldPassword",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Dis jetztige Passwort",
       "ctime": 1449922358576,
       "mtime": 1449922358576,
@@ -15569,7 +15569,7 @@ mfPkg.syncAll({
     "profile.input.repeatPassword": {
       "_id": "XFqDWWnMETJmW4pTE",
       "key": "profile.input.repeatPassword",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "S neui Passwort widerholä",
       "ctime": 1458819407724,
       "mtime": 1458819407724,
@@ -15578,7 +15578,7 @@ mfPkg.syncAll({
     "profile.input.username": {
       "_id": "TaZvDXEvE9MeLhrdX",
       "key": "profile.input.username",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Benutzername:",
       "ctime": 1449923282418,
       "mtime": 1449923282418,
@@ -15588,7 +15588,7 @@ mfPkg.syncAll({
     "profile.its_you": {
       "_id": "5nk2MmYyJMegfSe6X",
       "key": "profile.its_you",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ey, das bisch du!",
       "ctime": 1450224614393,
       "mtime": 1450224614393,
@@ -15597,7 +15597,7 @@ mfPkg.syncAll({
     "profile.mail.attachmail": {
       "_id": "Jxt56hvKwhpqYgpS9",
       "key": "profile.mail.attachmail",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Email Adressä ahänke",
       "ctime": 1458817069826,
       "mtime": 1458817069826,
@@ -15606,7 +15606,7 @@ mfPkg.syncAll({
     "profile.mail.content": {
       "_id": "hANoRtrahBAPrEZGg",
       "key": "profile.mail.content",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Dini Nachricht:",
       "ctime": 1449923286291,
       "mtime": 1449923286291,
@@ -15615,7 +15615,7 @@ mfPkg.syncAll({
     "profile.mail.copy": {
       "_id": "RuZpYCm6cwoyz2sir",
       "key": "profile.mail.copy",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte schick mer e Kopie vo dere Nachricht",
       "ctime": 1449922575737,
       "mtime": 1450175130960,
@@ -15624,7 +15624,7 @@ mfPkg.syncAll({
     "profile.mail.longertext": {
       "_id": "mzhPZ4tF7n26NEdWi",
       "key": "profile.mail.longertext",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Chum scho... chli längere Tegscht bitte.",
       "ctime": 1450224551139,
       "mtime": 1450224551139,
@@ -15633,7 +15633,7 @@ mfPkg.syncAll({
     "profile.mail.placeholder": {
       "_id": "paMnxB5sNCFsoovg6",
       "key": "profile.mail.placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Sali {USER}! …",
       "ctime": 1449923196425,
       "mtime": 1449923196425,
@@ -15643,7 +15643,7 @@ mfPkg.syncAll({
     "profile.mail.sent": {
       "_id": "EqfBCrH7Lu2DWgoi8",
       "key": "profile.mail.sent",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Dini Nachricht isch versändet worde",
       "ctime": 1449922868911,
       "mtime": 1449922868911,
@@ -15652,7 +15652,7 @@ mfPkg.syncAll({
     "profile.mail.to_user": {
       "_id": "ZxERbBmoLJTTiJFE9",
       "key": "profile.mail.to_user",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Beschriibig:",
       "ctime": 1458817740064,
       "mtime": 1458817740064,
@@ -15661,7 +15661,7 @@ mfPkg.syncAll({
     "profile.my_profile": {
       "_id": "uLewFJx49wMsM6Z3A",
       "key": "profile.my_profile",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mis Profil",
       "ctime": 1449923705190,
       "mtime": 1450176418020,
@@ -15670,7 +15670,7 @@ mfPkg.syncAll({
     "profile.passwordChangedSuccess": {
       "_id": "AQMEQeDSvuqrC9xKo",
       "key": "profile.passwordChangedSuccess",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du häsch dis Passwort erfolgriich gänderet.",
       "ctime": 1449923546767,
       "mtime": 1450176007126,
@@ -15679,7 +15679,7 @@ mfPkg.syncAll({
     "profile.passwordMismatch": {
       "_id": "TJXP3W7FfPZEahTra",
       "key": "profile.passwordMismatch",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Sori, aber dini Passwörter stimmed nöd überii.",
       "ctime": 1449923153196,
       "mtime": 1450175485863,
@@ -15688,7 +15688,7 @@ mfPkg.syncAll({
     "profile.passwordShort": {
       "_id": "x6YsidyeKAvpzpfsy",
       "key": "profile.passwordShort",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Was lauft? Das passwort isch z'churz. Sory gäll.",
       "ctime": 1450224503991,
       "mtime": 1450224503991,
@@ -15698,7 +15698,7 @@ mfPkg.syncAll({
     "profile.preferenceslink": {
       "_id": "jXipgiaMrfQZHgGMN",
       "key": "profile.preferenceslink",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Klick da zum dini Ihschteligä z ändere.",
       "ctime": 1449922274824,
       "mtime": 1450174691270,
@@ -15707,7 +15707,7 @@ mfPkg.syncAll({
     "profile.reallydelete": {
       "_id": "K9Cv4pvTgPSiSPAga",
       "key": "profile.reallydelete",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte duen bestätige das du dis Profil lösche willsch. Das chan nöd rückgängig gmacht werde, du müsstisch denn en neus Profil erstelle wennd die Siitä wieder wetsch benutze.",
       "ctime": 1458819030327,
       "mtime": 1458819030327,
@@ -15716,7 +15716,7 @@ mfPkg.syncAll({
     "profile.settings.windowtitle": {
       "_id": "HWRXbF7sEMXT7nsGK",
       "key": "profile.settings.windowtitle",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mini Profil-Istellige - {USER}",
       "ctime": 1520322754934,
       "mtime": 1520322754934,
@@ -15725,7 +15725,7 @@ mfPkg.syncAll({
     "profile.updated": {
       "_id": "M8Ec4pn4yX8GXJ674",
       "key": "profile.updated",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte mis Profil erneuere",
       "ctime": 1458820250281,
       "mtime": 1458820250281,
@@ -15734,7 +15734,7 @@ mfPkg.syncAll({
     "profile.username": {
       "_id": "3CRyERzkdDDHcqi7e",
       "key": "profile.username",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Benutzername:",
       "ctime": 1449923380311,
       "mtime": 1449923380311,
@@ -15744,7 +15744,7 @@ mfPkg.syncAll({
     "profile.users_profile_page": {
       "_id": "wYZ4TD7siQwQNb9BY",
       "key": "profile.users_profile_page",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "{NAME}'s Profiil",
       "ctime": 1449923179475,
       "mtime": 1449923179475,
@@ -15753,7 +15753,7 @@ mfPkg.syncAll({
     "profile.verifymail": {
       "_id": "i7C7Q7brcrrHHYPya",
       "key": "profile.verifymail",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "E-Mail bestätigä",
       "ctime": 1458820322552,
       "mtime": 1458820322552,
@@ -15763,7 +15763,7 @@ mfPkg.syncAll({
     "region.greece.athens": {
       "_id": "mfM8DHFapfPe2WJy9",
       "key": "region.greece.athens",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Athen",
       "ctime": 1520322757763,
       "mtime": 1520322757763,
@@ -15772,7 +15772,7 @@ mfPkg.syncAll({
     "regionSplash.ok": {
       "_id": "aXdyPP4cWPHwKK5Ru",
       "key": "regionSplash.ok",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Los!",
       "ctime": 1520322763566,
       "mtime": 1520322763566,
@@ -15781,7 +15781,7 @@ mfPkg.syncAll({
     "regionTag.inRegion": {
       "_id": "sNo9BqLD68YonxthX",
       "key": "regionTag.inRegion",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "ide Region {REGION}",
       "ctime": 1520321877523,
       "mtime": 1520321877523,
@@ -15790,7 +15790,7 @@ mfPkg.syncAll({
     "regionsSplash.login": {
       "_id": "iwYg46MWhaz3YCtop",
       "key": "regionsSplash.login",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Log dich ih zum die usgwählti Region ahwende",
       "ctime": 1520376003661,
       "mtime": 1520376003661,
@@ -15799,7 +15799,7 @@ mfPkg.syncAll({
     "report.cancel": {
       "_id": "32T8X4yfoYPm9Pzsv",
       "key": "report.cancel",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Doch nöd",
       "ctime": 1450174333193,
       "mtime": 1450174333193,
@@ -15808,7 +15808,7 @@ mfPkg.syncAll({
     "report.confirm": {
       "_id": "7ReWWdNMGpvMXqcmF",
       "key": "report.confirm",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Din Bricht isch verschickt worde. En Mänsch wird versueche e passendi Lösig defür z finde.",
       "ctime": 1449922900955,
       "mtime": 1449922900955,
@@ -15817,7 +15817,7 @@ mfPkg.syncAll({
     "report.error": {
       "_id": "GKQsyezxGg8TuFnkb",
       "key": "report.error",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Din Bricht hät nöd chöne gschickt werdä. Wenn ich nöd nur e programmierti Antwort wär würs mir ez leid due für dich. ",
       "ctime": 1458820728477,
       "mtime": 1458820728477,
@@ -15826,7 +15826,7 @@ mfPkg.syncAll({
     "report.open": {
       "_id": "8nLxu86yHJnBAydbx",
       "key": "report.open",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Problem mäldä",
       "ctime": 1458819504914,
       "mtime": 1458819504914,
@@ -15835,7 +15835,7 @@ mfPkg.syncAll({
     "report.placeholder": {
       "_id": "YDbXWF7CSXMyqfKr5",
       "key": "report.placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Spannendi Sache chöntmer da aneschriibä.",
       "ctime": 1458818724297,
       "mtime": 1458818724297,
@@ -15844,7 +15844,7 @@ mfPkg.syncAll({
     "report.report": {
       "_id": "jAThjKWbgezxNgZCi",
       "key": "report.report",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Pricht absändä",
       "ctime": 1449922386030,
       "mtime": 1450174842376,
@@ -15853,7 +15853,7 @@ mfPkg.syncAll({
     "report.sending": {
       "_id": "kwi8qZmSyocgjF8gQ",
       "key": "report.sending",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "E Mäldig dezue wird verschickt..",
       "ctime": 1458819497963,
       "mtime": 1458819497963,
@@ -15862,7 +15862,7 @@ mfPkg.syncAll({
     "report.text": {
       "_id": "jEMYErn3oZYM8kcht",
       "key": "report.text",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bitte teil ois doch mit, was falsch lauft.",
       "ctime": 1449923658801,
       "mtime": 1450176171809,
@@ -15871,7 +15871,7 @@ mfPkg.syncAll({
     "resetPassword.confirm": {
       "_id": "Mh7quGDBcdPWEQa39",
       "key": "resetPassword.confirm",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mis Passwort setze",
       "ctime": 1458819728416,
       "mtime": 1458819728416,
@@ -15880,7 +15880,7 @@ mfPkg.syncAll({
     "resetPassword.confirmPasswordByTyping": {
       "_id": "FcZQvoHnx8Bgyv8oK",
       "key": "resetPassword.confirmPasswordByTyping",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Bestätige mit nomal iigäh",
       "ctime": 1458817267343,
       "mtime": 1458817267343,
@@ -15889,7 +15889,7 @@ mfPkg.syncAll({
     "resetPassword.confirmPasswordVisually": {
       "_id": "Yb4nMccrceM4nBbw3",
       "key": "resetPassword.confirmPasswordVisually",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Zeig was ich iigäh han",
       "ctime": 1458819751565,
       "mtime": 1458819751565,
@@ -15898,7 +15898,7 @@ mfPkg.syncAll({
     "resetPassword.message.passwordsNotSame": {
       "_id": "5kKbxwBLcPeEFvM8u",
       "key": "resetPassword.message.passwordsNotSame",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Die Passwörter sind ez nöd ganz glich",
       "ctime": 1458818927332,
       "mtime": 1458818927332,
@@ -15907,7 +15907,7 @@ mfPkg.syncAll({
     "resetPassword.message.passwordsSame": {
       "_id": "36TmgeqJwv5FL3nF8",
       "key": "resetPassword.message.passwordsSame",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Die Passwörter sind di Gliichä",
       "ctime": 1458818956891,
       "mtime": 1458818956891,
@@ -15916,7 +15916,7 @@ mfPkg.syncAll({
     "resetPassword.siteTitle": {
       "_id": "JrH4RgAp8sBWCEZzL",
       "key": "resetPassword.siteTitle",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Passwort zruggsetze",
       "ctime": 1458819524508,
       "mtime": 1458819524508,
@@ -15925,7 +15925,7 @@ mfPkg.syncAll({
     "resetPassword.successMessage": {
       "_id": "gtZMgDrs7pC6fgLrv",
       "key": "resetPassword.successMessage",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Setz dis Passworz zrugg",
       "ctime": 1458819546475,
       "mtime": 1458819546475,
@@ -15936,7 +15936,7 @@ mfPkg.syncAll({
     "resetPassword.title": {
       "_id": "eF2qhT5dL2wCHWiTa",
       "key": "resetPassword.title",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Setz dis Passworz zrugg",
       "ctime": 1458819543615,
       "mtime": 1458819543615,
@@ -15945,7 +15945,7 @@ mfPkg.syncAll({
     "roles.host.description": {
       "_id": "qJ5d5qmfxK8o3AXqm",
       "key": "roles.host.description",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "En Host wo en Ruum cha zur Verfüegig stelle",
       "ctime": 1458820750576,
       "mtime": 1458820750576,
@@ -15954,7 +15954,7 @@ mfPkg.syncAll({
     "roles.host.subscribe": {
       "_id": "EDowifGwFHyQ4bLjL",
       "key": "roles.host.subscribe",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ich han en Ort, zum de Aalass z mache",
       "ctime": 1449923751768,
       "mtime": 1450019834149,
@@ -15963,7 +15963,7 @@ mfPkg.syncAll({
     "roles.host.subscribed": {
       "_id": "jntbobvurBCyq2iPB",
       "key": "roles.host.subscribed",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du bisch als Host ufgfüert",
       "ctime": 1458820488985,
       "mtime": 1458820488985,
@@ -15972,7 +15972,7 @@ mfPkg.syncAll({
     "roles.interested.myList": {
       "_id": "QRNzNasrQine74bsk",
       "key": "roles.interested.myList",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ich bi intressiert a",
       "ctime": 1520321627571,
       "mtime": 1520321627571,
@@ -15981,7 +15981,7 @@ mfPkg.syncAll({
     "roles.interested.short": {
       "_id": "4kBNYjbAqbgLRQXqk",
       "key": "roles.interested.short",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "intressiert",
       "ctime": 1520321622268,
       "mtime": 1520321622268,
@@ -15990,7 +15990,7 @@ mfPkg.syncAll({
     "roles.interested.subscribe": {
       "_id": "kEfGKmZGFMLSkwKdz",
       "key": "roles.interested.subscribe",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ich bi intressiert",
       "ctime": 1520321617999,
       "mtime": 1520321617999,
@@ -15999,7 +15999,7 @@ mfPkg.syncAll({
     "roles.interested.subscribed": {
       "_id": "eFJoib3QaBdvDA38L",
       "key": "roles.interested.subscribed",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du bisch intressiert",
       "ctime": 1520321612952,
       "mtime": 1520321612953,
@@ -16008,7 +16008,7 @@ mfPkg.syncAll({
     "roles.interested.userList": {
       "_id": "zF94AKupX6bGznW8A",
       "key": "roles.interested.userList",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "De/d'{NAME} isch intressiert a",
       "ctime": 1520321605792,
       "mtime": 1520321605792,
@@ -16017,7 +16017,7 @@ mfPkg.syncAll({
     "roles.mentor.description": {
       "_id": "QBrpjYZaYq7XTJ8xo",
       "key": "roles.mentor.description",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "en Mentor",
       "ctime": 1449923988374,
       "mtime": 1449923988375,
@@ -16026,7 +16026,7 @@ mfPkg.syncAll({
     "roles.mentor.short": {
       "_id": "ymXEqxYeMqYZbLG8E",
       "key": "roles.mentor.short",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mentor",
       "ctime": 1449922327388,
       "mtime": 1450174713543,
@@ -16035,7 +16035,7 @@ mfPkg.syncAll({
     "roles.mentor.subscribe": {
       "_id": "ytKFWrzqDQSPjKkNW",
       "key": "roles.mentor.subscribe",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ich chönnt Mentor sii",
       "ctime": 1449922458953,
       "mtime": 1450175039738,
@@ -16044,7 +16044,7 @@ mfPkg.syncAll({
     "roles.mentor.subscribed": {
       "_id": "zrLh46D3jMvLW9eJq",
       "key": "roles.mentor.subscribed",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du bisch als Mentor ufgfüert",
       "ctime": 1458820495969,
       "mtime": 1458820495969,
@@ -16053,7 +16053,7 @@ mfPkg.syncAll({
     "roles.message.placeholder": {
       "_id": "WayKtqbPmDsHm6yut",
       "key": "roles.message.placeholder",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Mini Interässe...",
       "ctime": 1450205537418,
       "mtime": 1450205537418,
@@ -16062,7 +16062,7 @@ mfPkg.syncAll({
     "roles.participant.subscribe": {
       "_id": "npFeCjJGxQ6LZbTcJ",
       "key": "roles.participant.subscribe",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ich will teilnä",
       "ctime": 1449923904741,
       "mtime": 1450176640346,
@@ -16073,7 +16073,7 @@ mfPkg.syncAll({
     "roles.participant.subscribed": {
       "_id": "y2ow4rrbkxc5X9PT2",
       "key": "roles.participant.subscribed",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du hesch dich agmeldet",
       "ctime": 1458820523730,
       "mtime": 1458820523730,
@@ -16084,7 +16084,7 @@ mfPkg.syncAll({
     "roles.team.short": {
       "_id": "PkemuJk8zRDCuc9Mh",
       "key": "roles.team.short",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Team",
       "ctime": 1449924001576,
       "mtime": 1450176789676,
@@ -16093,7 +16093,7 @@ mfPkg.syncAll({
     "roles.team.subscribe": {
       "_id": "26u2RxkT5MATMRDxQ",
       "key": "roles.team.subscribe",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ich hilf z'organisiere",
       "ctime": 1449923080567,
       "mtime": 1449923080567,
@@ -16102,7 +16102,7 @@ mfPkg.syncAll({
     "roles.team.subscribed": {
       "_id": "xnMDQrGwnrFxoGNQH",
       "key": "roles.team.subscribed",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du bisch im Team",
       "ctime": 1450266064281,
       "mtime": 1450266064282,
@@ -16111,7 +16111,7 @@ mfPkg.syncAll({
     "sendEmail.copy.subject": {
       "_id": "KPPRXKfC3PXxb6jJo",
       "key": "sendEmail.copy.subject",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "E Kopie vo dinere Nachricht a {RECIPIENT}",
       "ctime": 1458817309911,
       "mtime": 1458817309911,
@@ -16122,7 +16122,7 @@ mfPkg.syncAll({
     "sendEmail.endMessage": {
       "_id": "SegXtiogsikvuLT7A",
       "key": "sendEmail.endMessage",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Ändi vo de Nachricht.",
       "ctime": 1449924053553,
       "mtime": 1450176849907,
@@ -16133,7 +16133,7 @@ mfPkg.syncAll({
     "sendEmail.footer": {
       "_id": "kg7kB9eqDzhBAZvL3",
       "key": "sendEmail.footer",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Wenn die Nachrichtä dich störed, bitte lases ois so schnell wie möglich wüssä {ADMINS}",
       "ctime": 1458818409910,
       "mtime": 1458818409910,
@@ -16144,7 +16144,7 @@ mfPkg.syncAll({
     "sendEmail.greeting": {
       "_id": "2GHYr4w8PdkHkM4Az",
       "key": "sendEmail.greeting",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Nachricht vodä_vom {SENDER} at_adä {RECIPIENT}:",
       "ctime": 1449922370534,
       "mtime": 1450174780615,
@@ -16155,7 +16155,7 @@ mfPkg.syncAll({
     "sendEmail.subject": {
       "_id": "7LLLtpbqy5KmD543S",
       "key": "sendEmail.subject",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Du häsch e Mitteilig vom_vode {SENDER} becho.",
       "ctime": 1449922139304,
       "mtime": 1450174591591,
@@ -16166,7 +16166,7 @@ mfPkg.syncAll({
     "status.connecting": {
       "_id": "kpJMBDf39bpZQgWZK",
       "key": "status.connecting",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Verbindet mitem Server",
       "ctime": 1520376544759,
       "mtime": 1520376544759,
@@ -16175,7 +16175,7 @@ mfPkg.syncAll({
     "status.notConnected": {
       "_id": "hy3ZEWDFotcMBooFa",
       "key": "status.notConnected",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Kei Verbindig zum Server",
       "ctime": 1520376550444,
       "mtime": 1520376550444,
@@ -16184,7 +16184,7 @@ mfPkg.syncAll({
     "subscribemessage.saving.error": {
       "_id": "jroDWDDCC4gC5KMiu",
       "key": "subscribemessage.saving.error",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Unfähig, dini Nachricht z verändere. Mir händ folgendi Fehlermäldig registriert: {ERROR}",
       "ctime": 1449923473900,
       "mtime": 1450175857555,
@@ -16193,7 +16193,7 @@ mfPkg.syncAll({
     "userprofile.groups.header": {
       "_id": "T5aKnEg3FtZdPYwii",
       "key": "userprofile.groups.header",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Gruppene",
       "ctime": 1458818265436,
       "mtime": 1458818265436,
@@ -16202,7 +16202,7 @@ mfPkg.syncAll({
     "userprofile.sendmail-btn": {
       "_id": "uXMgf4NLJY6Z9ZBro",
       "key": "userprofile.sendmail-btn",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "E-Mail schickä",
       "ctime": 1458819704531,
       "mtime": 1458819704531,
@@ -16211,7 +16211,7 @@ mfPkg.syncAll({
     "userprofile.sendmail-btn.busy": {
       "_id": "5WyZornRKjtJ2CuJM",
       "key": "userprofile.sendmail-btn.busy",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Schickt s'Mail...",
       "ctime": 1520322109311,
       "mtime": 1520322109311,
@@ -16220,7 +16220,7 @@ mfPkg.syncAll({
     "venue.map.windowtitle": {
       "_id": "WfMEHsmda2ihrXPeS",
       "key": "venue.map.windowtitle",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Charte vom Verahstaltigsort",
       "ctime": 1520322154672,
       "mtime": 1520322154672,
@@ -16229,7 +16229,7 @@ mfPkg.syncAll({
     "welcome": {
       "_id": "daySXjKNdX5qiuw2y",
       "key": "welcome",
-      "lang": "de_ZH",
+      "lang": "de-ZH",
       "text": "Willkomme zu Meteor!",
       "ctime": 1458820384630,
       "mtime": 1458820384630,

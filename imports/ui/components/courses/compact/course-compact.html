@@ -4,6 +4,10 @@
 			<a href="{{pathFor 'showCourse'}}">
 				<div class="course-compact {{courseState}} {{filterPreviewClasses}}">
 					<div class="course-compact-content">
+						{{#if internal}}
+							<span class="course-compact-internal"
+								data-tooltip="{{mf 'courseCompact.internal_course' 'Internal course'}}"></span>
+						{{/if}}
 						<div class="course-compact-title" title="{{name}}">{{name}}</div>
 						{{> courseCategories}}
 					</div>
@@ -46,31 +50,22 @@
 
 <template name="courseCompactRoles">
 	<div class="course-compact-roles">
-		<div
-			class="course-compact-role {{roleStateClass 'team'}}"
-			data-tooltip="{{roleStateTooltip 'team'}}"
-			href="#">
+		<div class="course-compact-role {{roleStateClass 'team'}}" data-tooltip="{{roleStateTooltip 'team'}}" href="#">
 			<i class="{{roleIcon 'team'}}" aria-hidden="true"></i>
 		</div>
 		{{#if requiresRole 'mentor'}}
-			<div
-				class="course-compact-role {{roleStateClass 'mentor'}}"
-				data-tooltip="{{roleStateTooltip 'mentor'}}"
+			<div class="course-compact-role {{roleStateClass 'mentor'}}" data-tooltip="{{roleStateTooltip 'mentor'}}"
 				href="#">
 				<i class="{{roleIcon 'mentor'}}" aria-hidden="true"></i>
 			</div>
 		{{/if}}
 		{{#if requiresRole 'host'}}
-			<div
-				class="course-compact-role {{roleStateClass 'host'}}"
-				data-tooltip="{{roleStateTooltip 'host'}}"
+			<div class="course-compact-role {{roleStateClass 'host'}}" data-tooltip="{{roleStateTooltip 'host'}}"
 				href="#">
 				<i class="{{roleIcon 'host'}}" aria-hidden="true"></i>
 			</div>
 		{{/if}}
-		<div
-			class="course-compact-role {{participantClass}}"
-			data-tooltip="{{participantTooltip}}">
+		<div class="course-compact-role {{participantClass}}" data-tooltip="{{participantTooltip}}">
 			<i class="{{roleIcon 'participant'}}" aria-hidden="true"></i>
 			{{members.length}}
 		</div>
