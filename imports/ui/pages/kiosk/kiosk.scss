@@ -198,13 +198,11 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 //========================================================================================
 .kiosk-event-title {
 	color: $gray-dark;
-	display: inline-block;
-	margin: 0;
+	display: inline;
 }
 
 // ** Description
 //========================================================================================
 .kiosk-event-description {
 	display: inline;
-	margin: 0;
 }
