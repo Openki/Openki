@@ -102,8 +102,15 @@
 //========================================================================================
 .event-compact-title {
 	color: $gray-dark;
+	display: inline;
+}
+
+.event-compact-title::after {
+	// Simulate margin: 0 0 5px;
+	content: '';
 	display: inline-block;
-	margin: 0 0 5px;
+	height: $font-size-h4 + 5px;
+	vertical-align: top;
 }
 
 // ** Description
@@ -111,5 +118,4 @@
 .event-compact-description {
 	color: $blue;
 	display: inline;
-	margin: 0;
 }

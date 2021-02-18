@@ -84,12 +84,12 @@
 // ** Internal indicator dot
 //========================================================================================
 .course-compact-internal {
+	background-color: red;
 	border-radius: 50%;
+	height: 5px;
+	left: 6px;
 	position: absolute;
 	top: 6px;
-	left: 6px;
-	background-color: red;
-	height: 5px;
 	width: 5px;
 }
 
