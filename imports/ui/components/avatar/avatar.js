@@ -64,7 +64,7 @@ Template.avatarForm.events({
 			return;
 		}
 
-		Meteor.call('user.avatarColorChange', newColor, (err) => {
+		Meteor.call('user.updateAvatarColor', newColor, (err) => {
 			if (!err) {
 				Alert.success(mf('profile.updated', 'Updated profile'));
 			}

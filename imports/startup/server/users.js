@@ -10,8 +10,8 @@ Meteor.startup(() => {
 	Accounts.onLogin(() => {
 		const user = Meteor.user();
 
-		if (user && typeof user.avatar?.color === 'undefined') {
-			Meteor.call('user.avatarColorChange');
+		if (user && user.avatar?.color === undefined) {
+			Meteor.call('user.updateAvatarColor');
 		}
 	});
 
