@@ -10,6 +10,7 @@ import TemplateMixins from '/imports/ui/lib/template-mixins';
 import Alert from '/imports/api/alerts/alert';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 import Analytics from '/imports/ui/lib/analytics';
+import Editable from '/imports/ui/lib/editable';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/groups/list/group-list';
@@ -37,6 +38,27 @@ Template.profile.onCreated(function () {
 	if (this.privateMessagesUnsubscribeSuccess()) {
 		Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from private messages via e-mail');
 	}
+
+	const instance = this;
+	instance.editableDescription = new Editable(
+		true,
+		(newDescription) => {
+			Meteor.call('user.updateDescription', newDescription, (err) => {
+				if (err) {
+					instance.errors.add(err.error);
+				} else {
+					Alert.success(mf('profile.updated', 'Updated profile'));
+				}
+			});
+		},
+		mf('profile.description.placeholder'),
+	);
+
+	this.autorun(() => {
+		const user = Meteor.users.findOne(Meteor.userId());
+
+		instance.editableDescription.setText(user.description);
+	});
 });
 
 Template.profile.helpers({
@@ -113,6 +135,10 @@ Template.profile.helpers({
 
 	unsubscribeError() {
 		return Template.instance().unsubscribeError();
+	},
+
+	editableDescription() {
+		return Template.instance().editableDescription;
 	},
 });
 

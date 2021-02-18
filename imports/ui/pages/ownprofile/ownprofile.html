@@ -36,12 +36,30 @@
 		{{#unless loggedIn}}
 			{{mf 'profile.not_logged_in' 'You are not logged in'}}
 		{{else}}
-			<a class="page-link" href="{{pathFor 'userprofile' _id=currentUser._id}}">
-				<span class="fa fa-user-circle-o fa-fw" aria-hidden="true"></span>
-				{{mf 'login.frame.profile' 'Visit my profile'}}
-			</a>
-			{{> avatarForm class="profile-info-avatar"}}
 			<div class="page-component">
+				<div class="profile-header">
+					<div class="profile-avatar">
+						{{> avatarForm }}
+					</div>
+
+					<div class="profile-header-info">
+						<h2 class="profile-title">
+							{{currentUser.username}}
+						</h2>
+
+						<p class="profile-description">
+							{{> editable editableDescription}}
+						</p>
+
+						<a class="btn btn-primary" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+							<span class="fa fa-user-circle-o fa-fw" aria-hidden="true"></span>
+							{{mf 'login.frame.profile' 'Public profile'}}
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="page-component page-component-seperated">
 				{{#if editing}}
 					<div class="details-form">
 						<form class="form-horizontal profile-info-edit">
@@ -50,10 +68,8 @@
 									{{mf 'profile.input.username' 'Username'}}
 								</label>
 								<div class="control-input">
-									<input class="form-control js-username"
-										id="editform_username"
-										type="text"
-										value="{{user.name}}"/>
+									<input class="form-control js-username" id="editform_username" type="text"
+										value="{{user.name}}" />
 								</div>
 								{{errorMessage 'username'}}
 							</div>
@@ -62,10 +78,8 @@
 									{{mf 'profile.email' 'E-Mail'}}
 								</label>
 								<div class="control-input">
-									<input class="form-control js-email"
-										id="editform_email"
-										type="text"
-										value="{{user.email}}"/>
+									<input class="form-control js-email" id="editform_email" type="text"
+										value="{{user.email}}" />
 								</div>
 								{{errorMessage 'email'}}
 							</div>
@@ -73,7 +87,7 @@
 								<div class="control-btn">
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" class="js-notifications" {{notificationsChecked}}/>
+											<input type="checkbox" class="js-notifications" {{notificationsChecked}} />
 											<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
 											{{mf 'profile.toggle.notifications' 'Receive automated notifications via email'}}
 										</label>
@@ -84,7 +98,8 @@
 								<div class="control-btn">
 									<div class="checkbox">
 										<label>
-											<input type="checkbox" class="js-allowPrivateMessages" {{allowPrivateMessagesChecked}}/>
+											<input type="checkbox" class="js-allowPrivateMessages"
+												{{allowPrivateMessagesChecked}} />
 											<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
 											{{mf 'profile.toggle.allowPrivateMessages' 'Receive private messages from users via email'}}
 										</label>
@@ -161,38 +176,41 @@
 						</div>
 					</div>
 					{{#if changingPass}}
-					<div class="details-form">
-						<form class="js-change-pwd form-horizontal">
-							<div class="form-group">
-								<label for="oldpassword" class="control-label">
-									{{mf 'profile.input.oldPassword' 'Your current password'}}
-								</label>
-								<div class="control-input">
-									<input type="password" class="js-old-pwd form-control" id="oldpassword" value=""/>
+						<div class="details-form">
+							<form class="js-change-pwd form-horizontal">
+								<div class="form-group">
+									<label for="oldpassword" class="control-label">
+										{{mf 'profile.input.oldPassword' 'Your current password'}}
+									</label>
+									<div class="control-input">
+										<input type="password" class="js-old-pwd form-control" id="oldpassword"
+											value="" />
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<label for="newpassword" class="control-label">
-									{{mf 'profile.input.newPassword' 'New password'}}
-								</label>
-								<div class="control-input">
-									<input type="password" class="js-new-pwd form-control" id="newpassword" value=""/>
+								<div class="form-group">
+									<label for="newpassword" class="control-label">
+										{{mf 'profile.input.newPassword' 'New password'}}
+									</label>
+									<div class="control-input">
+										<input type="password" class="js-new-pwd form-control" id="newpassword"
+											value="" />
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<label for="newpassword_confirm" class="control-label">
-									{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
-								</label>
-								<div class="control-input">
-									<input type="password" class="js-new-pwd-confirm form-control" id="newpassword_confirm" value=""/>
+								<div class="form-group">
+									<label for="newpassword_confirm" class="control-label">
+										{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
+									</label>
+									<div class="control-input">
+										<input type="password" class="js-new-pwd-confirm form-control"
+											id="newpassword_confirm" value="" />
+									</div>
 								</div>
-							</div>
-							<div class="form-actions">
-								{{> buttonSave}}
-								{{> buttonCancel event="js-change-pwd-cancel"}}
-							</div>
-						</form>
-					</div>
+								<div class="form-actions">
+									{{> buttonSave}}
+									{{> buttonCancel event="js-change-pwd-cancel"}}
+								</div>
+							</form>
+						</div>
 					{{/if}}
 					<div class="actions">
 						{{#unless changingPass}}
@@ -209,7 +227,8 @@
 				{{/if}}
 				{{#if expanded}}
 					<div class="profile-delete-confirmation">
-						<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}</p>
+						<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}
+						</p>
 						<div class="form-actions">
 							{{> buttonDeleteConfirm
 								event="js-profile-delete-confirm-btn"
@@ -231,10 +250,10 @@
 				<h3>{{mf 'profile.groups' 'My groups'}}</h3>
 				<h5>
 					{{#mf KEY='profile.groupMembership' NUM_GROUPS=groupCount}}
-					You are {NUM_GROUPS, plural,
-					=0 {not member of any group}
-					=1 {member of the group:}
-					other {member of # groups:}}
+						You are {NUM_GROUPS, plural,
+						=0 {not member of any group}
+						=1 {member of the group:}
+						other {member of # groups:}}
 					{{/mf}}
 				</h5>
 				<ul class="groups">
@@ -246,8 +265,7 @@
 						{{/with}}
 					{{/each}}
 				</ul>
-				<a class="btn btn-add"
-					href="{{pathFor 'groupDetails' _id='create'}}">
+				<a class="btn btn-add" href="{{pathFor 'groupDetails' _id='create'}}">
 					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 					{{mf 'profile.createNewGroup.button' 'Create a new group'}}
 				</a>

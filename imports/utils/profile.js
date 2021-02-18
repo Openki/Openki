@@ -261,4 +261,38 @@ Profile.AvatarColor.change = function (userId, color) {
 	return accepted;
 };
 
+Profile.Description = {};
+
+/**
+ * Update the user's description
+ * @param {String} userId update color for this user
+ * @param {Number} color hsl color hue (0 - 360)
+ */
+Profile.Description.change = function (userId, description) {
+	check(userId, String);
+	check(description, String);
+
+	let result; let
+		success;
+	try {
+		result = Meteor.users.update(userId, {
+			$set: { description },
+		});
+		success = result > 0;
+	} catch (e) {
+		result = e;
+		success = false;
+	}
+	Log.record('Profile.Description', [userId],
+		{
+			userId,
+			description,
+			success,
+			result,
+			cause: 'profile change',
+		});
+
+	return success;
+};
+
 export default Profile;

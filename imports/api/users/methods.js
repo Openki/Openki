@@ -58,12 +58,35 @@ Meteor.methods({
 	},
 
 	/**
-	 * Set user avatar color
+	 * Update user avatar color
 	 * @param {number} [newColor] hsl hue number, otherwise a random color is generated
 	 */
 	'user.updateAvatarColor'(newColor) {
 		const color = newColor || _.random(360);
 		Profile.AvatarColor.change(Meteor.userId(), color);
+	},
+
+	/**
+	 * Update user description
+	 * @param {string} description
+	 */
+	'user.updateDescription'(description) {
+		check(description, String);
+
+		/** @type {UserModel} */
+		const user = Meteor.user();
+		if (!user) {
+			return ApiError('plzLogin', 'Not logged-in');
+		}
+
+		const sane = StringTools.saneTitle(description).trim().substring(0, 200);
+
+		const result = Profile.Description.change(user._id, sane);
+		if (!result) {
+			return ApiError('nameError', 'Failed to update username');
+		}
+
+		return true;
 	},
 
 	/**

@@ -4,6 +4,7 @@ import update20210106EnsureVenueSlugField from '../updates/2021.01.06 ensureVenu
 import update20210112EnsureCourseInterestedField from '../updates/2021.01.12 ensureCourseInterestedField';
 import update20210128PrivateMessagesForAll from '../updates/2021.01.28 privateMessagesForAll';
 import update20210211AvatarColor from '../updates/2021.02.11 avatarColor';
+import update20210218UserDescription from '../updates/2021.02.18 userDescription';
 
 /** @type {{[name: string]: () => number }} */
 const UpdatesAvailable = {
@@ -12,6 +13,7 @@ const UpdatesAvailable = {
 	'2021.01.12 ensureCourseInterestedField': update20210112EnsureCourseInterestedField,
 	'2021.01.28 privateMessagesForAll': update20210128PrivateMessagesForAll,
 	'2021.02.11 avatarColor': update20210211AvatarColor,
+	'2021.02.18 userDescription': update20210218UserDescription,
 };
 
 const UpdatesApplied = new Meteor.Collection('UpdatesApplied');
