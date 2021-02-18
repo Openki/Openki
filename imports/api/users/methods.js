@@ -113,21 +113,11 @@ Meteor.methods({
 	},
 
 	/**
-	 * @param {string} username
-	 * @param {string} email
-	 * @param {boolean} allowAutomatedNotification
-	 * @param {boolean} allowPrivateMessages
+	 * Update automated notification flag
+	 * @param {boolean} allow
 	 */
-	'user.updateData'(username, email, allowAutomatedNotification, allowPrivateMessages) {
-		check(username, String);
-		check(email, String);
-		check(allowAutomatedNotification, Boolean);
-		check(allowPrivateMessages, Boolean);
-
-		// The error handling in this function is flawed in that we drop
-		// out on the first error instead of collecting them. So fields
-		// that are validated later will not be saved if an earlier field
-		// causes us to fail.
+	'user.updateAutomatedNotification'(allow) {
+		check(allow, Boolean);
 
 		/** @type {UserModel} */
 		const user = Meteor.user();
@@ -135,21 +125,28 @@ Meteor.methods({
 			return ApiError('plzLogin', 'Not logged-in');
 		}
 
-		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
-
-		const result = Profile.Username.change(user._id, saneUsername);
-		if (!result) {
-			return ApiError('nameError', 'Failed to update username');
+		if (user.notifications !== allow) {
+			Profile.Notifications.change(user._id, allow, undefined, 'profile change');
 		}
 
-		updateEmail(email, user);
+		return true;
+	},
 
-		if (user.notifications !== allowAutomatedNotification) {
-			Profile.Notifications.change(user._id, allowAutomatedNotification, undefined, 'profile change');
+	/**
+	 * Update private messages flag
+	 * @param {boolean} allow
+	 */
+	'user.updatePrivateMessages'(allow) {
+		check(allow, Boolean);
+
+		/** @type {UserModel} */
+		const user = Meteor.user();
+		if (!user) {
+			return ApiError('plzLogin', 'Not logged-in');
 		}
 
-		if (user.allowPrivateMessages !== allowPrivateMessages) {
-			Profile.PrivateMessages.change(user._id, allowPrivateMessages, undefined, 'profile change');
+		if (user.allowPrivateMessages !== allow) {
+			Profile.PrivateMessages.change(user._id, allow, undefined, 'profile change');
 		}
 
 		return true;
