@@ -94,6 +94,10 @@
 
 // ** Event
 //========================================================================================
+.kiosk-event {
+	overflow: hidden;
+}
+
 .kiosk-event-ongoing {
 	background-color: rgba($orange, .3);
 }
@@ -141,7 +145,6 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 	padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal;
 }
 
-
 .kiosk-event-ongoing > .kiosk-event-header {
 	background-color: $event-ongoing-header-bg;
 }
@@ -184,19 +187,22 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 // ** Body
 //========================================================================================
 .kiosk-event-body {
+	@include ellipsis-multiline(2);
+
 	border-top: $event-compact-seperator-height solid $body-bg;
-	padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal;
+	margin: 0 0 $kiosk-event-component-padding-vertical;
+	padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal 0;
 }
 
 // ** Title
 //========================================================================================
 .kiosk-event-title {
 	color: $gray-dark;
-	margin: 0;
+	display: inline;
 }
 
 // ** Description
 //========================================================================================
 .kiosk-event-description {
-	margin: 0;
+	display: inline;
 }

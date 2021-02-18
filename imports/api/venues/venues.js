@@ -1,10 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import { _ } from 'meteor/underscore';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import Filtering from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
 import StringTools from '/imports/utils/string-tools';
+
+/** @typedef {import('../users/users').UserModel} UserModel */
 
 // ======== DB-Model: ========
 /**
@@ -45,7 +48,7 @@ export const Venue = function () {
 
 /** Check whether a user may edit the venue.
   * @this {VenueModel}
-  * @param {object} user
+  * @param {UserModel} user
   * @return {boolean}
   */
 Venue.prototype.editableBy = function (user) {
@@ -58,6 +61,7 @@ Venue.prototype.editableBy = function (user) {
 		|| UserPrivilegeUtils.privileged(user, 'admin'); // Admins can edit all venues
 };
 
+/** @type Mongo.Collection<VenueEnity, VenueModel> */
 const Venues = new Mongo.Collection('Venues', {
 	transform(venue) {
 		return _.extend(new Venue(), venue);

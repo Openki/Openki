@@ -98,25 +98,25 @@ const Languages = {
 			english: 'Turkish',
 			visible: false,
 		},
-	zh_CN:
+	'zh-CN':
 		{
-			lg: 'zh_CN',
+			lg: 'zh-CN',
 			name: '中文',
 			short: '中文',
 			english: 'Simplified Chinese',
 			visible: false,
 		},
-	zh_TW:
+	'zh-TW':
 		{
-			lg: 'zh_TW',
+			lg: 'zh-TW',
 			name: '國語',
 			short: '國語',
 			english: 'Guóyǔ, Taiwanese',
 			visible: false,
 		},
-	de_ZH:
+	'de-ZH':
 		{
-			lg: 'de_ZH',
+			lg: 'de-ZH',
 			name: 'Züritüütsch',
 			short: 'zri-tü',
 			english: 'Zurich German',

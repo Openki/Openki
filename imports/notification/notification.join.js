@@ -54,17 +54,6 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	Log.record('Notification.Send', [course._id, participant._id], body);
 };
 
-/** @param {UserModel} user */
-notificationJoin.accepted = function (user) {
-	if (user.notifications === false) {
-		throw new Error('User wishes to not receive automated notifications');
-	}
-
-	if (!user.emails || !user.emails[0] || !user.emails[0].address) {
-		throw new Error('Recipient has no email address registered');
-	}
-};
-
 notificationJoin.Model = function (entry) {
 	const { body } = entry;
 	const course = Courses.findOne(body.courseId);

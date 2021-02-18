@@ -98,9 +98,7 @@ export class Course {
 	}
 }
 
-/**
- * @type {Mongo.Collection<CourseModel>}
- */
+/** @type {Mongo.Collection<CourseEntity, CourseModel>} */
 const Courses = new Mongo.Collection('Courses', {
 	transform(course) {
 		return _.extend(new Course(), course);

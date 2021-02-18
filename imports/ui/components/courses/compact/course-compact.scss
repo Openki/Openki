@@ -61,7 +61,6 @@
 	@include td-make-xs-column(9);
 	@include td-padding-all(0, 0, 0, 15px);
 	background: $body-bg;
-
 }
 
 .has-upcoming-events > .course-compact-content {
@@ -73,11 +72,25 @@
 // ** Title
 //========================================================================================
 .course-compact-title {
+	@include ellipsis-multiline(2);
+
 	color: $gray-dark;
 	font-size: 20px;
 	line-height: 24px;
 	margin: 9.5px 0;
 	max-height: 60px;
+}
+
+// ** Internal indicator dot
+//========================================================================================
+.course-compact-internal {
+	background-color: red;
+	border-radius: 50%;
+	height: 5px;
+	left: 6px;
+	position: absolute;
+	top: 6px;
+	width: 5px;
 }
 
 // ** Categories

@@ -1,3 +1,5 @@
+import { Router } from 'meteor/iron:router';
+
 import Events from '/imports/api/events/events';
 
 import StringTools from '/imports/utils/string-tools';

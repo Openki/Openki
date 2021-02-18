@@ -16,14 +16,15 @@ import UserPrivilegeUtils from '../utils/user-privilege-utils';
 const notificationPrivateMessage = {};
 
 /**
-  * Record the intent to send a private message
-  * @param {string} senderId id of the user that sends the message
-  * @param {string} recipientId id of the intended recipient
-  * @param {string} message the message to transmit
-  * @param {boolean} revealSenderAddress include email-address of sender in message
-  * @param {boolean} sendCopyToSender send a copy of the message to the author
-  * @param {boolean} context dictionary with context ID (course, venue, &c.)
-  */
+ * Record the intent to send a private message
+ * @param {string} senderId id of the user that sends the message
+ * @param {string} recipientId id of the intended recipient
+ * @param {string} message the message to transmit
+ * @param {boolean} revealSenderAddress include email-address of sender in message
+ * @param {boolean} sendCopyToSender send a copy of the message to the author
+ * @param {{course?: boolean, event?: boolean}} context dictionary with
+ * context ID (course, venue, &c.)
+ */
 notificationPrivateMessage.record = function (
 	senderId,
 	recipientId,
