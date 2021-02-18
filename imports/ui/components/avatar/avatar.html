@@ -1,10 +1,10 @@
 <template name="avatar">
-	<img class="avatar {{class}}" style="filter:hue-rotate(-{{color}}deg)" src="/logo/{{avatarLogo}}" alt="{{alt}}" />
+	<img class="avatar-image {{class}}" style="filter:hue-rotate(-{{color}}deg)" src="/logo/{{avatarLogo}}" alt="{{alt}}" />
 </template>
 
 <template name="avatarForm">
 	<div class="avatar-form">
-		{{> avatar color=color}}
+		{{> avatar color=color class="profile-avatar"}}
 
 		<div class="form-group">
 			<label class="sr-only" for="avatarColorRange">{{mf 'profile.avatar.inputLabel' 'Change hair color'}}</label>
