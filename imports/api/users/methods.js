@@ -90,6 +90,29 @@ Meteor.methods({
 	},
 
 	/**
+	 * Update username
+	 * @param {string} description
+	 */
+	'user.updateUsername'(username) {
+		check(username, String);
+
+		/** @type {UserModel} */
+		const user = Meteor.user();
+		if (!user) {
+			return ApiError('plzLogin', 'Not logged-in');
+		}
+
+		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
+
+		const result = Profile.Username.change(user._id, saneUsername);
+		if (!result) {
+			return ApiError('nameError', 'Failed to update username');
+		}
+
+		return true;
+	},
+
+	/**
 	 * @param {string} username
 	 * @param {string} email
 	 * @param {boolean} allowAutomatedNotification

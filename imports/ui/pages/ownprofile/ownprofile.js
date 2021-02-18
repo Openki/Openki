@@ -40,6 +40,20 @@ Template.profile.onCreated(function () {
 	}
 
 	const instance = this;
+
+	instance.editableName = new Editable(
+		true,
+		(newName) => {
+			Meteor.call('user.updateName', newName, (err) => {
+				if (err) {
+					instance.errors.add(err.error);
+				} else {
+					Alert.success(mf('profile.updated', 'Updated profile'));
+				}
+			});
+		},
+		mf('profile.name.placeholder'),
+	);
 	instance.editableDescription = new Editable(
 		true,
 		(newDescription) => {
@@ -57,6 +71,7 @@ Template.profile.onCreated(function () {
 	this.autorun(() => {
 		const user = Meteor.users.findOne(Meteor.userId());
 
+		instance.editableName.setText(user.username);
 		instance.editableDescription.setText(user.description);
 	});
 });
@@ -135,6 +150,10 @@ Template.profile.helpers({
 
 	unsubscribeError() {
 		return Template.instance().unsubscribeError();
+	},
+
+	editableName() {
+		return Template.instance().editableName;
 	},
 
 	editableDescription() {
