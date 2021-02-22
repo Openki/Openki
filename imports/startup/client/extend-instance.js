@@ -1,4 +1,4 @@
-/** 
+/**
  * Get the parent template instance. Source: http://stackoverflow.com/questions/27949407/how-to-get-the-parent-template-instance-of-the-current-template
  * @param {number} [levels=1] How many levels to go up. Default is 1
  * @returns {Blaze.TemplateInstance}
