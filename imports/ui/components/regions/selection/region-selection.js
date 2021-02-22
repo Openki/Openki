@@ -156,6 +156,10 @@ Template.regionSelection.helpers({
 		return Template.instance().regions();
 	},
 
+	aboutLink() {
+		return Meteor.settings.public.regionSelection?.aboutLink;
+	},
+
 });
 
 Template.regionSelection.events({

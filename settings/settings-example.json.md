@@ -12,7 +12,10 @@ This file descripts all configurations and customization options. Remove the com
 		"discussionLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The user image placeholder in the discussion section of a course 
 		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media 
 		"mailLogo": "mails/openki.png",
-		"regionSelection": { "minNumber": 5 }, // The minimum number of regions displayed in the Regions selection. Default: 5
+		"regionSelection": { 
+			"minNumber": 5, // The minimum number of regions displayed in the Regions selection. Default: 5
+			"aboutLink": "" // A link to a page that explains regions, if not set then none link is shown. 
+		},
 		"matomo": {
 			"url": "https://analytics.mydomain.com/", 
 			"site": 1 // Matomo id
