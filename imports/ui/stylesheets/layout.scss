@@ -12,14 +12,15 @@ body {
 
 #outer {
 	padding-top: $navbar-height;
-}
 
-#outer.test-warning {
-	padding-top: $navbar-height + 19px;
-}
+	&.test-warning {
+		padding-top: $navbar-height + 24px;
 
-#outer.test-warning .calendar-nav-container {
-	top: $navbar-height + 19px;
+		.alert-messages,
+		.calendar-nav-container {
+			top: $navbar-height + 24px;
+		}
+	}
 }
 
 .push {
@@ -28,9 +29,9 @@ body {
 
 #maincontent {
 	padding: 25px 0 50px;
-}
 
-#maincontent > *:first-child {
-	margin-top: 0;
-	padding-top: 0;
+	> *:first-child {
+		margin-top: 0;
+		padding-top: 0;
+	}
 }
