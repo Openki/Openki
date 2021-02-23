@@ -8,6 +8,7 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import HtmlTools from '/imports/utils/html-tools';
 
 import Version from '/imports/api/version/version';
+import { getReportEmails } from '/imports/utils/email-tools';
 
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
@@ -18,29 +19,6 @@ if (Meteor.settings.siteEmail) {
 if (Meteor.settings.public.siteName) {
 	Accounts.emailTemplates.siteName = Meteor.settings.public.siteName;
 }
-
-/**
- * provides sender and recipient email for report-email,defaults to
- * sender reporter@mail.openki.net and recipient admins@openki.net
- * if not set in configfile.
- *
- * @returns {{sender: string; recipient: string;}} - the desired sender and rcpt email
- */
-const getReportEmails = () => {
-	// preset, please override from configfile
-	const reportEmails = {
-		sender: 'reporter@mail.openki.net',
-		recipient: 'admins@openki.net',
-	};
-	if (Meteor.settings.reporter?.sender) {
-		reportEmails.sender = Meteor.settings.reporter.sender;
-	}
-	if (Meteor.settings.reporter?.recipient) {
-		reportEmails.recipient = Meteor.settings.reporter.recipient;
-	}
-	return reportEmails;
-};
-
 
 Meteor.methods({
 	sendVerificationEmail() {
