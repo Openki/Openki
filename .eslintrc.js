@@ -22,7 +22,6 @@ module.exports = {
 		moment: 'readonly',
 		msgfmt: 'readonly',
 		Prng: 'readonly',
-		Regions: 'writable',
 		robots: 'writable',
 		RouterAutoscroll: 'writable',
 		SharedArrayBuffer: 'readonly',
