@@ -1,4 +1,4 @@
-import IsEmail, { getReportEmails, logo } from '/imports/utils/email-tools';
+import IsEmail, { getReportEmails } from '/imports/utils/email-tools';
 
 Accounts.onCreateUser((options, originalUser) => {
 	const user = { ...originalUser };
