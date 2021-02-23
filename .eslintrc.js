@@ -26,7 +26,6 @@ module.exports = {
 		robots: 'writable',
 		RouterAutoscroll: 'writable',
 		SharedArrayBuffer: 'readonly',
-		ShowServerError: 'writable',
 		sitemaps: 'readonly',
 		SSR: 'writable',
 		Tooltips: 'writable',

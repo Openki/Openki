@@ -53,7 +53,7 @@ Template.sendMessage.events({
 					mf('profile.sendVerificationMailFailed', 'Failed to send verification mail'),
 				);
 			} else {
-				Alert.success(mf('profile.sentVerificationMail'));
+				Alert.success(mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }));
 			}
 		});
 	},

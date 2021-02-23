@@ -23,7 +23,7 @@ Template.verifyEmail.events({
 				instance.sending.set(false);
 				Alert.serverError(err, 'Failed to send verification mail');
 			} else {
-				Alert.success(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'));
+				Alert.success(mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }, 'Confirmation mail has been sent to your address: "{MAIL}".'));
 			}
 		});
 	},
