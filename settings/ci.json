@@ -6,7 +6,7 @@
 		"siteName": "Hmmm",
 		"siteStage": "DEV",
 		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" },
-		"avatarLogo": "openki-logo-web-avatar-2020.svg",
+		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" },
 		"ogLogo": { "src": "openki_logo_2018.png"},
 		"mailLogo": "mails/openki.png",
 		"regionSelection": { "minNumber": 5 }

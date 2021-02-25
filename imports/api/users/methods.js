@@ -62,7 +62,9 @@ Meteor.methods({
 	 * @param {number} [newColor] hsl hue number, otherwise a random color is generated
 	 */
 	'user.updateAvatarColor'(newColor) {
-		const color = newColor || _.random(360);
+		check(newColor, Match.Optional(Number));
+
+		const color = newColor ?? _.random(360);
 		Profile.AvatarColor.change(Meteor.userId(), color);
 	},
 

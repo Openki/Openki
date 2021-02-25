@@ -43,7 +43,7 @@ Template.profile.onCreated(function () {
 	instance.editableName = new Editable(
 		true,
 		(newName) => {
-			Meteor.call('user.updateName', newName, (err) => {
+			Meteor.call('user.updateUsername', newName, (err) => {
 				if (err) {
 					instance.errors.add(err.error);
 				} else {
@@ -68,7 +68,7 @@ Template.profile.onCreated(function () {
 	);
 
 	this.autorun(() => {
-		const user = Meteor.users.findOne(Meteor.userId());
+		const user = Meteor.user();
 
 		instance.editableName.setText(user.username);
 		instance.editableDescription.setText(user.description);

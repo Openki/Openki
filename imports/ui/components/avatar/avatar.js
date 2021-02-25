@@ -29,11 +29,11 @@ Template.avatar.helpers({
 	},
 
 	alt() {
-		return Template.currentData().alt || 'Profile Avatar';
+		return Meteor.settings.public.avatarLogo.alt;
 	},
 
 	avatarLogo() {
-		return Meteor.settings.public.avatarLogo;
+		return Meteor.settings.public.avatarLogo.src;
 	},
 });
 
