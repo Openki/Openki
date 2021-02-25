@@ -13,7 +13,7 @@ const Profile = {};
  * @param {UserModel} user
  */
 Profile.updateAcceptsPrivateMessages = function (user) {
-	const acceptsPrivateMessages = Boolean(user.emailAddress() && user.allowPrivateMessages);
+	const acceptsPrivateMessages = Boolean(user.hasEmail() && user.allowPrivateMessages);
 
 	if (user.acceptsPrivateMessages !== acceptsPrivateMessages) {
 		Users.update(user._id, {

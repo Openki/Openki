@@ -28,17 +28,11 @@ Template.sendMessage.onRendered(function () {
 
 Template.sendMessage.helpers({
 	hasEmail() {
-		const user = Meteor.user();
-		if (!user) {
-			return false;
-		}
-
-		const { emails } = user;
-		return emails && emails[0];
+		return Meteor.user()?.hasEmail() || false;
 	},
 
 	hasVerifiedEmail() {
-		return Meteor.user().emails[0].verified;
+		return Meteor.user()?.hasVerifiedEmail() || false;
 	},
 });
 

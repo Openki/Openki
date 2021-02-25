@@ -102,20 +102,34 @@ User.prototype.mayPromoteWith = function (group) {
 	return this.groups.indexOf(groupId) >= 0;
 };
 
-/** Get email address of user
- *
-  * @this {UserModel}
-  * @returns String with email address or Boolean false
-  */
+/**
+ * @this {UserModel}
+ */
+User.prototype.hasEmail = function () {
+	return !!this.emails?.[0]?.address;
+};
+
+/**
+ * @this {UserModel}
+ */
+User.prototype.hasVerifiedEmail = function () {
+	return !!this.emails?.[0]?.verified && !!this.emails?.[0]?.address;
+};
+
+/**
+ * Get email address of user
+ * @this {UserModel}
+ * @returns String with email address or Boolean false
+ */
 User.prototype.emailAddress = function () {
 	return this.emails?.[0]?.address || false;
 };
 
-/** Get verified email address of user
-  *
-  * @this {UserModel}
-  * @returns String with verified email address or Boolean false
-  */
+/**
+ * Get verified email address of user
+ * @this {UserModel}
+ * @returns String with verified email address or Boolean false
+ */
 User.prototype.verifiedEmailAddress = function () {
 	const emailRecord = this.emails?.[0];
 	return (emailRecord

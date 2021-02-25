@@ -54,8 +54,7 @@ Notification.send = function (entry) {
 
 				model.accepted(user);
 
-				const email = user.emails[0];
-				const { address } = email;
+				const address = user.emailAddress();
 
 				const { username } = user;
 				const userLocale = user.locale || 'en';

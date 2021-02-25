@@ -3,15 +3,15 @@ const EmailRequest = {
 	showEmailRequest: () => {
 		const user = Meteor.user();
 
-		return user && !user.emailAddress();
+		return user && !user.hasEmail();
 	},
 
 	showEmailValidation: () => {
 		const user = Meteor.user();
 
 		return user
-			&& user.emailAddress()
-			&& !user.verifiedEmailAddress()
+			&& user.hasEmail()
+			&& !user.hasVerifiedEmail()
 			&& moment().subtract(7, 'days').isAfter(user.createdAt);
 	},
 };
