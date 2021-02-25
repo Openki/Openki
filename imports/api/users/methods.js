@@ -155,10 +155,12 @@ Meteor.methods({
 	},
 
 	/**
+	 * Update email
 	 * @param {string} email
 	 */
 	'user.updateEmail'(email) {
 		check(email, String);
+
 		const user = Meteor.user();
 		if (!user) {
 			return ApiError('plzLogin', 'Not logged-in');

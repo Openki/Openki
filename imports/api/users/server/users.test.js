@@ -8,15 +8,10 @@ if (Meteor.isClient) {
 			Meteor.loginWithPassword('Seee', 'greg', (err) => done(err));
 		});
 		it('does not allow setting duplicate email', (done) => {
-			Meteor.call('user.updateData',
-				'Seee',
-				'greg@openki.example',
-				false,
-				false,
-				(err) => {
-					assert.isObject(err);
-					done();
-				});
+			Meteor.call('user.updateEmail', 'greg@openki.example', (err) => {
+				assert.isObject(err);
+				done();
+			});
 		});
 	});
 

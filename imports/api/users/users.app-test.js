@@ -55,23 +55,17 @@ if (Meteor.isClient) {
 					}
 				});
 			})).then(() => new Promise((resolve) => {
-				const user = Meteor.user();
-				Meteor.call('user.updateData',
-					newDummy,
-					user.emails[0].address,
-					user.notifications,
-					user.allowPrivateMessages,
-					(err) => {
-						if (err) {
-							assert.isNotOk(err, 'not expecting username-change errors');
-						}
+				Meteor.call('user.updateUsername', newDummy, (err) => {
+					if (err) {
+						assert.isNotOk(err, 'not expecting username-change errors');
+					}
 
-						Meteor.users.find({ username: newDummy }).observe({
-							added: () => {
-								resolve();
-							},
-						});
+					Meteor.users.find({ username: newDummy }).observe({
+						added: () => {
+							resolve();
+						},
 					});
+				});
 			})).then(() => {
 				// check if username has changed to the correct string
 				const user = Meteor.user();
