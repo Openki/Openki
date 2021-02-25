@@ -76,7 +76,7 @@ const Api = {
 			}
 
 			evr.groups = [];
-			const groups = ev.groups || [];
+			const groups = ev.allGroups || [];
 			groups.forEach((groupId) => {
 				const group = Groups.findOne(groupId);
 				if (group) {

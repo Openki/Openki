@@ -36,204 +36,88 @@
 		{{#unless loggedIn}}
 			{{mf 'profile.not_logged_in' 'You are not logged in'}}
 		{{else}}
-			<a class="page-link" href="{{pathFor 'userprofile' _id=currentUser._id}}">
-				<span class="fa fa-user-circle-o fa-fw" aria-hidden="true"></span>
-				{{mf 'login.frame.profile' 'Visit my profile'}}
-			</a>
 			<div class="page-component">
-				{{#if editing}}
-					<div class="details-form">
-						<form class="form-horizontal profile-info-edit">
-							<div class="form-group {{errorClass 'username'}}">
-								<label for="editform_username" class="control-label">
-									{{mf 'profile.input.username' 'Username'}}
-								</label>
-								<div class="control-input">
-									<input class="form-control js-username"
-										id="editform_username"
-										type="text"
-										value="{{user.name}}"/>
-								</div>
-								{{errorMessage 'username'}}
-							</div>
-							<div class="form-group {{errorClass 'email'}}">
-								<label for="editform_email" class="control-label">
-									{{mf 'profile.email' 'E-Mail'}}
-								</label>
-								<div class="control-input">
-									<input class="form-control js-email"
-										id="editform_email"
-										type="text"
-										value="{{user.email}}"/>
-								</div>
-								{{errorMessage 'email'}}
-							</div>
-							<div class="form-group">
-								<div class="control-btn">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" class="js-notifications" {{notificationsChecked}}/>
-											<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
-											{{mf 'profile.toggle.notifications' 'Receive automated notifications via email'}}
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="control-btn">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" class="js-allowPrivateMessages" {{allowPrivateMessagesChecked}}/>
-											<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
-											{{mf 'profile.toggle.allowPrivateMessages' 'Receive private messages from users via email'}}
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-actions">
-								{{> buttonSave}}
-								{{> buttonCancel event="js-profile-edit-cancel"}}
-							</div>
-						</form>
+				<div class="profile-header edit-profile-header">
+					<div class="profile-avatar">
+						{{> avatarForm }}
 					</div>
-				{{else}}
-					<div class="details-body profile-info">
-						<div class="details-content">
-							<div class="details-info-group">
-								<div class="details-info-label">
-									{{mf 'profile.username' 'Username'}}
-								</div>
-								<div class="details-info-data">
-									{{user.name}}
-								</div>
-							</div>
-							{{#if user.have_email}}
-								<div class="details-info-group">
-									<div class="details-info-label">
+
+					<div class="profile-header-info">
+						<h2 class="profile-title">
+							{{> editable editableName}}
+						</h2>
+
+						<p class="profile-description">
+							{{> editable editableDescription}}
+						</p>
+
+						<a class="btn btn-primary" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+							<span class="fa fa-user-circle-o fa-fw" aria-hidden="true"></span>
+							{{mf 'login.frame.profile' 'Public profile'}}
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="page-component page-component-seperated">
+				<h3>{{mf 'profile.email_settings' 'E-Mail settings'}}</h3>
+
+				<div class="row">
+					<div class="col-sm-6">
+						{{#if user.have_email}}
+							<form class="js-email-form">
+								<div class="form-group {{errorClass 'email'}}">
+									<label for="editform_email" class="sr-only">
 										{{mf 'profile.email' 'E-Mail'}}
+									</label>
+									<div class="edit-profile-email">
+										<input class="form-control js-email" id="editform_email" type="text"
+											value="{{user.email}}" />
+
+										{{> buttonSave}}
 									</div>
-									<div class="details-info-data">
-										{{user.email}}
-										<small class="mail-verified">
-											{{#if user.verified}}
-												<span class="fa fa-check-square" aria-hidden="true"></span>
-												{{mf 'profile.emailVerified' "verified"}}
-											{{/if}}
-										</small>
-									</div>
-								</div>
-								{{#unless user.verified}}
-									<div class="details-info-group">
-										<div class="details-info-label"></div>
-										<div class="details-info-data">
-											{{> verifyEmail}}
+									{{#unless user.verified}}
+										<div class="details-info-group">
+											<div class="details-info-data">
+												{{> verifyEmail}}
+											</div>
 										</div>
-									</div>
-								{{/unless}}
-							{{/if}}
-							<div class="details-info-group">
-								<div class="details-info-label">
+									{{/unless}}
+									{{errorMessage 'email'}}
+								</div>
+							</form>
+						{{/if}}
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<div class="checkbox edit-profile-checkbox">
+								<label>
+									<input type="checkbox" class="js-notifications" {{notificationsChecked}} />
 									<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
-									{{mf 'profile.notification.subscribe' 'Get automated notifications via email'}}
-								</div>
-								<div class="details-info-data">
-									{{#if user.notifications}}
-										{{mf '_option.on'}}
-									{{else}}
-										{{mf '_option.off'}}
-									{{/if}}
-								</div>
+									{{mf 'profile.toggle.notifications' 'Receive automated notifications via email'}}
+								</label>
 							</div>
-							<div class="details-info-group">
-								<div class="details-info-label">
+							<div class="checkbox edit-profile-checkbox">
+								<label>
+									<input type="checkbox" class="js-allowPrivateMessages"
+										{{allowPrivateMessagesChecked}} />
 									<span class="fa fa-asterisk fa-fw" aria-hidden="true"></span>
-									{{mf 'profile.allowPrivateMessages.subscribe' 'Get private messages from users via email'}}
-								</div>
-								<div class="details-info-data">
-									{{#if user.allowPrivateMessages}}
-										{{mf '_option.on'}}
-									{{else}}
-										{{mf '_option.off'}}
-									{{/if}}
-								</div>
+									{{mf 'profile.toggle.allowPrivateMessages' 'Receive private messages from users via email'}}
+								</label>
 							</div>
 						</div>
 					</div>
-					{{#if changingPass}}
-					<div class="details-form">
-						<form class="js-change-pwd form-horizontal">
-							<div class="form-group">
-								<label for="oldpassword" class="control-label">
-									{{mf 'profile.input.oldPassword' 'Your current password'}}
-								</label>
-								<div class="control-input">
-									<input type="password" class="js-old-pwd form-control" id="oldpassword" value=""/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="newpassword" class="control-label">
-									{{mf 'profile.input.newPassword' 'New password'}}
-								</label>
-								<div class="control-input">
-									<input type="password" class="js-new-pwd form-control" id="newpassword" value=""/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="newpassword_confirm" class="control-label">
-									{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
-								</label>
-								<div class="control-input">
-									<input type="password" class="js-new-pwd-confirm form-control" id="newpassword_confirm" value=""/>
-								</div>
-							</div>
-							<div class="form-actions">
-								{{> buttonSave}}
-								{{> buttonCancel event="js-change-pwd-cancel"}}
-							</div>
-						</form>
-					</div>
-					{{/if}}
-					<div class="actions">
-						{{#unless changingPass}}
-							<button type="button" class="btn btn-default js-change-pwd-btn">
-								<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
-								{{mf 'profile.changePass' 'Change my password'}}
-							</button>
-						{{/unless}}
-						{{> buttonEdit event="js-profile-info-edit"}}
-						{{#unless expanded}}
-							{{> buttonDelete event="js-expand"}}
-						{{/unless}}
-					</div>
-				{{/if}}
-				{{#if expanded}}
-					<div class="profile-delete-confirmation">
-						<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}</p>
-						<div class="form-actions">
-							{{> buttonDeleteConfirm
-								event="js-profile-delete-confirm-btn"
-								textIdle=(mf 'profile.delete.confirm.button' 'Delete my user and all its profile')
-								textBusy=(mf 'profile.delete.confirm.button.busy' 'Deleting profile...')
-							}}
-							{{> buttonCancel event="js-collapse"}}
-						</div>
-					</div>
-				{{/if}}
+				</div>
 			</div>
-			<div class="page-component">
-				<a class="btn btn-success translate-link" href="/translate">
-					<span class="fa fa-language fa-fw" aria-hidden="true"></span>
-					{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
-				</a>
-			</div>
+
 			<div class="page-component page-component-seperated profile-grouplist">
 				<h3>{{mf 'profile.groups' 'My groups'}}</h3>
 				<h5>
 					{{#mf KEY='profile.groupMembership' NUM_GROUPS=groupCount}}
-					You are {NUM_GROUPS, plural,
-					=0 {not member of any group}
-					=1 {member of the group:}
-					other {member of # groups:}}
+						You are {NUM_GROUPS, plural,
+						=0 {not member of any group}
+						=1 {member of the group:}
+						other {member of # groups:}}
 					{{/mf}}
 				</h5>
 				<ul class="groups">
@@ -245,8 +129,7 @@
 						{{/with}}
 					{{/each}}
 				</ul>
-				<a class="btn btn-add"
-					href="{{pathFor 'groupDetails' _id='create'}}">
+				<a class="btn btn-add" href="{{pathFor 'groupDetails' _id='create'}}">
 					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 					{{mf 'profile.createNewGroup.button' 'Create a new group'}}
 				</a>
@@ -267,7 +150,74 @@
 					{{mf 'profile.createNewVenue.button' 'Create a new venue'}}
 				</a>
 			</div>
-			{{> usersCourselist profileData=this ownProfile=true}}
+			<div class="page-component page-component-seperated">
+				<h3>{{mf 'profile.danger_zone' 'Danger zone'}}</h3>
+
+				<div class="edit-profile-password">
+					{{#unless changingPass}}
+						<button type="button" class="btn btn-default js-change-pwd-btn">
+							<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
+							{{mf 'profile.changePass' 'Change my password'}}
+						</button>
+					{{/unless}}
+					{{#if changingPass}}
+						<div class="details-form">
+							<form class="js-change-pwd form-horizontal">
+								<div class="form-group">
+									<label for="oldpassword" class="control-label">
+										{{mf 'profile.input.oldPassword' 'Your current password'}}
+									</label>
+									<div class="control-input">
+										<input type="password" class="js-old-pwd form-control" id="oldpassword"
+											value="" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="newpassword" class="control-label">
+										{{mf 'profile.input.newPassword' 'New password'}}
+									</label>
+									<div class="control-input">
+										<input type="password" class="js-new-pwd form-control" id="newpassword"
+											value="" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="newpassword_confirm" class="control-label">
+										{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
+									</label>
+									<div class="control-input">
+										<input type="password" class="js-new-pwd-confirm form-control"
+											id="newpassword_confirm" value="" />
+									</div>
+								</div>
+								<div class="form-actions">
+									{{> buttonSave}}
+									{{> buttonCancel event="js-change-pwd-cancel"}}
+								</div>
+							</form>
+						</div>
+					{{/if}}
+				</div>
+				<div class="edit-profile-delete">
+					{{#unless expanded}}
+						{{> buttonDelete event="js-expand"}}
+					{{/unless}}
+					{{#if expanded}}
+						<div class="edit-profile-delete-confirmation">
+							<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}
+							</p>
+							<div class="form-actions">
+								{{> buttonDeleteConfirm
+									event="js-profile-delete-confirm-btn"
+									textIdle=(mf 'profile.delete.confirm.button' 'Delete my user and all its profile')
+									textBusy=(mf 'profile.delete.confirm.button.busy' 'Deleting profile...')
+								}}
+								{{> buttonCancel event="js-collapse"}}
+							</div>
+						</div>
+					{{/if}}
+				</div>
+			</div>
 		{{/unless}}
 	</div>
 </template>

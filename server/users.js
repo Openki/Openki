@@ -1,4 +1,4 @@
-import IsEmail, { logo } from '/imports/utils/email-tools';
+import IsEmail, { getReportEmails } from '/imports/utils/email-tools';
 
 Accounts.onCreateUser((options, originalUser) => {
 	const user = { ...originalUser };
@@ -93,16 +93,18 @@ ${mf('verifyEmail.email.verification', "You can click this link to verify your e
 ${url}
 
 ${mf('verifyEmail.email.farewell', 'Sincerely')}
-${mf('verifyEmail.email.postscript', "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)", { SITE: Accounts.emailTemplates.siteName })}`;
+${mf('verifyEmail.email.postscript', "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)", { SITE: Accounts.emailTemplates.siteName })}
+
+${mf('verifyEmail.email.unexpected', "If you don't know why you got this email, ignore it or send us a notification to: {REPORTEMAIL}", { REPORTEMAIL: getReportEmails().recipient })}`;
 };
 
 Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 	return SSR.render('userVerifyEmailMail', {
 		siteName: Accounts.emailTemplates.siteName,
 		siteUrl: Meteor.absoluteUrl(),
-		logo: logo(Meteor.settings.public.mailLogo),
 		username: user.username,
 		url,
+		reportEmail: getReportEmails().recipient,
 	});
 };
 
@@ -123,15 +125,17 @@ ${mf('resetPassword.email.verification', 'You can click on this link to reset yo
 ${url}
 
 ${mf('resetPassword.email.farewell', 'Regards')}
-${mf('resetPassword.email.postscript', { SITE: Accounts.emailTemplates.siteName }, '{SITE} server at your service')}`;
+${mf('resetPassword.email.postscript', { SITE: Accounts.emailTemplates.siteName }, '{SITE} server at your service')}
+
+${mf('resetPassword.email.unexpected', "If you don't know why you got this email, ignore it or send us a notification to: {REPORTEMAIL}", { REPORTEMAIL: getReportEmails().recipient })}`;
 };
 
 Accounts.emailTemplates.resetPassword.html = function (user, url) {
 	return SSR.render('userResetPasswordMail', {
 		siteName: Accounts.emailTemplates.siteName,
 		siteUrl: Meteor.absoluteUrl(),
-		logo: logo(Meteor.settings.public.mailLogo),
 		username: user.username,
 		url,
+		reportEmail: getReportEmails().recipient,
 	});
 };

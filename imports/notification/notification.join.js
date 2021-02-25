@@ -68,7 +68,7 @@ notificationJoin.Model = function (entry) {
 				throw new Error('User wishes to not receive automated notifications');
 			}
 
-			if (!actualRecipient.emails?.[0]?.address) {
+			if (!actualRecipient.hasEmail()) {
 				throw new Error('Recipient has no email address registered');
 			}
 		},
