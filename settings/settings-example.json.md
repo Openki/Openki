@@ -9,7 +9,7 @@ This file descripts all configurations and customization options. Remove the com
 		"siteStage": "beta", // The text top left at the logo
 		"testWarning": true, // Shows a banner saying that this is only for testing
 		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The logo in the top right corner
-		"discussionLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The user image placeholder in the discussion section of a course 
+		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" }, // The default image used for avatars (color is changed using the CSS filter 'hue-rotate')
 		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media 
 		"mailLogo": "mails/openki.png",
 		"regionSelection": { 

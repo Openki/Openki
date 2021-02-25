@@ -12,6 +12,7 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list';
 import '/imports/ui/components/profiles/verify-email/verify-email';
+import '/imports/ui/components/avatar/avatar';
 
 import './userprofile.html';
 
@@ -65,6 +66,10 @@ Template.userprofile.helpers({
 	numberOfFutureEventsAffectedByDelete() {
 		return Template.instance().coursesCreatedBy()
 			.reduce((accumulator, currentValue) => accumulator + currentValue.futureEvents, 0);
+	},
+
+	userId() {
+		return this.user?._id || false;
 	},
 });
 
