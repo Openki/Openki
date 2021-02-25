@@ -31,7 +31,10 @@ export const getReportEmails = () => {
 		reportEmails.recipient = Meteor.settings.reporter.recipient;
 	}
 	return reportEmails;
-};
+export const getReportEmails = () => ({
+	sender: Meteor.settings.reporter?.sender || 'reporter@mail.openki.net',
+	recipient: Meteor.settings.reporter?.recipient || 'admins@openki.net'
+})
 
 /**
   * Logo that can be attached to mails
