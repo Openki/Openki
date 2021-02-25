@@ -53,6 +53,8 @@ import IdTools from '/imports/utils/id-tools';
  * @property {boolean} [allowPrivateMessages] True if the user wants private messages mails sent
  * to them from other users
  * @property {boolean} [hidePricePolicy]
+ * @property {string} [description]
+ * @property {number} [avatar.color]
  * @property {string[]} [badges] (calculated) union of user's id and group ids for permission
  * checking, calculated by updateBadges()
  * @property {string[]} [groups] (calculated) List of groups the user is a member of, calculated by
