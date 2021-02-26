@@ -88,6 +88,10 @@
 				{{> regionTag}}
 			{{/unless}}
 			<div class="details-content">
+				{{#if internal}}
+					<span class="details-internal"
+						data-tooltip="{{mf 'eventCompact.internal_event' 'Internal event'}}"></span>
+				{{/if}}
 				<h3>{{this.title}}</h3>
 				<div class="tag-group multiline">
 					{{> venueLink}}
