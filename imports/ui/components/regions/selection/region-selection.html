@@ -82,6 +82,15 @@
 				{{#each region in allRegions}}
 					{{> regionSelectionItem region}}
 				{{/each}}
+				{{#if aboutLink}}
+					<li class="divider" role="separator"></li>
+					<li>
+						<a href="{{aboutLink}}">
+							<i class="fa fa-info-circle" aria-hidden="true"></i>
+							{{mf 'regionSelection.aboutLink' 'About regions'}}
+						</a>
+					</li>
+				{{/if}}
 			{{else}}
 				{{#each region in mostActiveRegions}}
 					{{> regionSelectionItem region}}

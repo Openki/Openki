@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
+import { _ } from 'meteor/underscore';
 
 import Log from '/imports/api/log/log';
 import Groups from '/imports/api/groups/groups';
@@ -57,21 +58,45 @@ Meteor.methods({
 	},
 
 	/**
-	 * @param {string} username
-	 * @param {string} email
-	 * @param {boolean} allowAutomatedNotification
-	 * @param {boolean} allowPrivateMessages
+	 * Update user avatar color
+	 * @param {number} [newColor] hsl hue number, otherwise a random color is generated
 	 */
-	'user.updateData'(username, email, allowAutomatedNotification, allowPrivateMessages) {
-		check(username, String);
-		check(email, String);
-		check(allowAutomatedNotification, Boolean);
-		check(allowPrivateMessages, Boolean);
+	'user.updateAvatarColor'(newColor) {
+		check(newColor, Match.Optional(Number));
 
-		// The error handling in this function is flawed in that we drop
-		// out on the first error instead of collecting them. So fields
-		// that are validated later will not be saved if an earlier field
-		// causes us to fail.
+		const color = newColor ?? _.random(360);
+		Profile.AvatarColor.change(Meteor.userId(), color);
+	},
+
+	/**
+	 * Update user description
+	 * @param {string} description
+	 */
+	'user.updateDescription'(description) {
+		check(description, String);
+
+		/** @type {UserModel} */
+		const user = Meteor.user();
+		if (!user) {
+			return ApiError('plzLogin', 'Not logged-in');
+		}
+
+		const sane = StringTools.saneTitle(description).trim().substring(0, 200);
+
+		const result = Profile.Description.change(user._id, sane);
+		if (!result) {
+			return ApiError('nameError', 'Failed to update username');
+		}
+
+		return true;
+	},
+
+	/**
+	 * Update username
+	 * @param {string} description
+	 */
+	'user.updateUsername'(username) {
+		check(username, String);
 
 		/** @type {UserModel} */
 		const user = Meteor.user();
@@ -86,24 +111,56 @@ Meteor.methods({
 			return ApiError('nameError', 'Failed to update username');
 		}
 
-		updateEmail(email, user);
+		return true;
+	},
 
-		if (user.notifications !== allowAutomatedNotification) {
-			Profile.Notifications.change(user._id, allowAutomatedNotification, undefined, 'profile change');
+	/**
+	 * Update automated notification flag
+	 * @param {boolean} allow
+	 */
+	'user.updateAutomatedNotification'(allow) {
+		check(allow, Boolean);
+
+		/** @type {UserModel} */
+		const user = Meteor.user();
+		if (!user) {
+			return ApiError('plzLogin', 'Not logged-in');
 		}
 
-		if (user.allowPrivateMessages !== allowPrivateMessages) {
-			Profile.PrivateMessages.change(user._id, allowPrivateMessages, undefined, 'profile change');
+		if (user.notifications !== allow) {
+			Profile.Notifications.change(user._id, allow, undefined, 'profile change');
 		}
 
 		return true;
 	},
 
 	/**
+	 * Update private messages flag
+	 * @param {boolean} allow
+	 */
+	'user.updatePrivateMessages'(allow) {
+		check(allow, Boolean);
+
+		/** @type {UserModel} */
+		const user = Meteor.user();
+		if (!user) {
+			return ApiError('plzLogin', 'Not logged-in');
+		}
+
+		if (user.allowPrivateMessages !== allow) {
+			Profile.PrivateMessages.change(user._id, allow, undefined, 'profile change');
+		}
+
+		return true;
+	},
+
+	/**
+	 * Update email
 	 * @param {string} email
 	 */
 	'user.updateEmail'(email) {
 		check(email, String);
+
 		const user = Meteor.user();
 		if (!user) {
 			return ApiError('plzLogin', 'Not logged-in');

@@ -1,22 +1,35 @@
 <template name="userprofile">
 	<div class="container-sm">
 		<div class="page-component">
-			<h2>
-				{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}
-			</h2>
-			{{#if ownuser}}
-				<h4>
-					{{mf 'profile.its_you' "It's you!"}}&nbsp;
-				</h4>
-				<a class="page-link" href="/profile/">
-					<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
-					{{mf 'profile.preferenceslink' "Click here to change your preferences"}}
-				</a>
-			{{else}}
-				{{#if acceptsPrivateMessages}}
-					{{> sendMessage recipientId=user._id}}
-				{{/if}}
-			{{/if}}
+			<div class="profile-header">
+				<div class="profile-header-avatar">
+					{{> avatar userId=userId class="profile-avatar"}}
+				</div>
+
+				<div class="profile-header-info">
+					<h1 class="profile-title">
+						{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}
+						{{#if ownuser}}
+							({{mf 'profile.its_you' "It's you!"}})
+						{{/if}}
+					</h1>
+
+					<p class="profile-description">{{this.user.description}}</p>
+
+					{{#if ownuser}}
+						<a class="btn btn-primary" href="/profile/">
+							<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
+							{{mf 'profile.preferenceslink' "Account settings"}}
+						</a>
+					{{else}}
+						{{#if acceptsPrivateMessages}}
+							{{> sendMessage recipientId=user._id}}
+						{{/if}}
+					{{/if}}
+				</div>
+			</div>
+		</div>
+		<div class="page-component page-component-seperated">
 			{{#if showSettings}}
 				<div class="form-group">
 					{{#if showPrivileges}}
@@ -39,9 +52,9 @@
 									</li>
 								{{else}}
 									{{#if alterPrivileges}}
-											<button type="button" class="giveAdmin list-group-item">
-												{{mf 'privilege.add.admin' 'Grant administrator privileges'}}
-											</button>
+										<button type="button" class="giveAdmin list-group-item">
+											{{mf 'privilege.add.admin' 'Grant administrator privileges'}}
+										</button>
 									{{/if}}
 								{{/if}}
 							</div>
@@ -56,7 +69,7 @@
 							</label>
 							<div class="list-group">
 								{{#each inviteGroups}}
-										{{#if groupMember this ../user}}
+									{{#if groupMember this ../user}}
 										<li class="list-group-item list-group-item-success">
 											{{mf 'profile.group.member' 'Member of group '}}
 											<span class="group">{{name}}</span>
@@ -65,12 +78,12 @@
 												&times;
 											</button>
 										</li>
-										{{else}}
-											<button type="button" class="draftIntoGroup list-group-item">
-												{{mf 'profile.group.draft' 'Draft into group '}}
-												{{name}}
-											</button>
-										{{/if}}
+									{{else}}
+										<button type="button" class="draftIntoGroup list-group-item">
+											{{mf 'profile.group.draft' 'Draft into group '}}
+											{{name}}
+										</button>
+									{{/if}}
 								{{/each}}
 							</div>
 						</div>
@@ -86,21 +99,22 @@
 				{{> buttonDelete event="js-verify-user-delete-collapse"}}
 			{{/unless}}
 			{{#if verifyUserDelete}}
-			<div class="profile-delete-confirmation">
-				<p>{{mf 'profile.account.reallydelete' 'The user profile "{NAME}" will be permanently deleted. {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will be automatically removed as well. Are you sure you want to do this?' NAME=this.user.username COURSES=numberOfCoursesAffectedByDelete INTERESTED=numberOfInterestedAffectedByDelete EVENTS=numberOfFutureEventsAffectedByDelete}}</p>
-				<div class="form-group">
-					<textarea class='form-control js-reason'
-						placeholder="{{mf 'profile.account.reason.placeholder' 'Reason for deleting this user'}}"></textarea>
-				</div>
-				<div class="form-actions">
-					{{> buttonDeleteConfirm
+				<div class="profile-delete-confirmation">
+					<p>{{mf 'profile.account.reallydelete' 'The user profile "{NAME}" will be permanently deleted. {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will be automatically removed as well. Are you sure you want to do this?' NAME=this.user.username COURSES=numberOfCoursesAffectedByDelete INTERESTED=numberOfInterestedAffectedByDelete EVENTS=numberOfFutureEventsAffectedByDelete}}
+					</p>
+					<div class="form-group">
+						<textarea class='form-control js-reason'
+							placeholder="{{mf 'profile.account.reason.placeholder' 'Reason for deleting this user'}}"></textarea>
+					</div>
+					<div class="form-actions">
+						{{> buttonDeleteConfirm
 						event="js-verify-user-delete-confirm"
 						textIdle=(mf 'profile.account.delete.confirm.button' 'Delete user and all his traces')
 						textBusy=(mf 'profile.account.delete.confirm.button.busy' 'Deleting profile...')
 					}}
-					{{> buttonCancel event="js-verify-user-delete-collapse"}}
+						{{> buttonCancel event="js-verify-user-delete-collapse"}}
+					</div>
 				</div>
-			</div>
 			{{/if}}
 		{{/if}}
 	</div>
@@ -111,41 +125,35 @@
 		<form class="sendMail">
 			<div class="form-group">
 				<label>{{mf 'profile.mail.content' 'Your message:'}}</label>
-				<textarea class="form-control"
-					id="emailmessage"
-					placeholder="{{mf 'profile.mail.placeholder' USER=this.user.username}}"
-					rows="3"></textarea>
+				<textarea class="form-control" id="emailmessage"
+					placeholder="{{mf 'profile.mail.placeholder' USER=this.user.username}}" rows="3"></textarea>
 			</div>
-		{{#if hasEmail}}
-			{{#if hasVerifiedEmail}}
-				<div class="form-group">
-					<div class="btn-group" data-toggle="buttons">
-						<label class="btn btn-default">
-							<input class="js-receive-copy"
-								id="receiveCopy"
-								type="checkbox"/>
-							{{mf 'profile.mail.copy' 'Send me a copy of this message'}}
-							<span class="checkmark fa fa-check" aria-hidden="true" style="display:none"></span>
-						</label>
-						<label class="btn btn-default">
-							<input class="js-send-own-adress"
-								id="sendOwnAdress"
-								type="checkbox"/>
-							{{mf 'profile.mail.attachmail' 'Attach my e-mail address'}}
-							<span class="checkmark fa fa-check" aria-hidden="true" style="display:none"></span>
-						</label>
+			{{#if hasEmail}}
+				{{#if hasVerifiedEmail}}
+					<div class="form-group">
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-default">
+								<input class="js-receive-copy" id="receiveCopy" type="checkbox" />
+								{{mf 'profile.mail.copy' 'Send me a copy of this message'}}
+								<span class="checkmark fa fa-check" aria-hidden="true" style="display:none"></span>
+							</label>
+							<label class="btn btn-default">
+								<input class="js-send-own-adress" id="sendOwnAdress" type="checkbox" />
+								{{mf 'profile.mail.attachmail' 'Attach my e-mail address'}}
+								<span class="checkmark fa fa-check" aria-hidden="true" style="display:none"></span>
+							</label>
+						</div>
 					</div>
-				</div>
-			{{else}}
-				<div class="form-group">
-                    <p class="help-block">
-                        <i class="fa fa-info fa-fw" aria-hidden="true"></i>
-                        {{mf 'userprofile.infoForUnverifiedMail'}}
-                    </p>
-                    {{> verifyEmail}}
-				</div>
+				{{else}}
+					<div class="form-group">
+						<p class="help-block">
+							<i class="fa fa-info fa-fw" aria-hidden="true"></i>
+							{{mf 'userprofile.infoForUnverifiedMail'}}
+						</p>
+						{{> verifyEmail}}
+					</div>
+				{{/if}}
 			{{/if}}
-		{{/if}}
 			<div class="form-actions">
 				<button type="submit" class="btn btn-save" {{disabledIfBusy}}>
 					{{#if busy 'sending'}}

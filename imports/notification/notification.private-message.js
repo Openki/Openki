@@ -52,7 +52,7 @@ notificationPrivateMessage.record = function (
 			throw new Meteor.Error(404, 'Sender not found');
 		}
 
-		const senderAddress = sender.emailAddress();
+		const senderAddress = sender.hasEmail();
 		if (senderAddress) {
 			recipients.push(senderId);
 		} else {
@@ -91,7 +91,7 @@ notificationPrivateMessage.Model = function (entry) {
 				throw new Error('User wishes to not receive private messages from users');
 			}
 
-			if (!actualRecipient.emails?.[0]?.address) {
+			if (!actualRecipient.hasEmail()) {
 				throw new Error('Recipient has no email address registered');
 			}
 		},

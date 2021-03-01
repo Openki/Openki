@@ -358,7 +358,11 @@ Template.registerFrame.events({
 
 				Meteor.call('user.updateLocale', Session.get('locale'));
 
-				Analytics.trackEvent('Registers', 'Registers with password', Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
+				const user = Meteor.user();
+
+				Alert.success(mf('profile.sentVerificationMail', { MAIL: user.emails[0].address }, 'Verification mail has been sent to your address: "{MAIL}".'));
+
+				Analytics.trackEvent('Registers', 'Registers with password', Regions.findOne(user.profile.regionId)?.nameEn);
 			}
 		});
 	},

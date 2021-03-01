@@ -71,6 +71,7 @@
 	@include ellipsis-multiline(6);
 
 	padding: 5px;
+	position: relative;
 }
 
 // ** Header
@@ -118,4 +119,16 @@
 .event-compact-description {
 	color: $blue;
 	display: inline;
+}
+
+// ** Internal indicator dot
+//========================================================================================
+.event-compact-internal {
+	background-color:  #f00;
+	border-radius: 50%;
+	height: 3px;
+	left: 2px;
+	position: absolute;
+	top: 2px;
+	width: 3px;
 }

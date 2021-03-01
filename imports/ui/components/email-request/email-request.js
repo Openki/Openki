@@ -88,9 +88,9 @@ Template.emailValidationModal.events({
 		Meteor.call('sendVerificationEmail', (err) => {
 			instance.busy(false);
 			if (err) {
-				ShowServerError('Failed to send verification mail', err);
+				Alert.serverError(err, 'Failed to send verification mail');
 			} else {
-				Alert.success(mf('profile.sentVerificationMail'));
+				Alert.success(mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }));
 				$('.js-email-validation-modal').modal('hide');
 			}
 		});
