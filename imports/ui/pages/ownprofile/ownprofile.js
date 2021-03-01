@@ -51,7 +51,7 @@ Template.profile.onCreated(function () {
 				}
 			});
 		},
-		mf('profile.name.placeholder'),
+		mf('profile.name.placeholder', 'Username'),
 	);
 	instance.editableDescription = new Editable(
 		true,
@@ -64,7 +64,7 @@ Template.profile.onCreated(function () {
 				}
 			});
 		},
-		mf('profile.description.placeholder'),
+		mf('profile.description.placeholder', 'About me, my interests and skills. (What do you think about creating courses for those? 😉)'),
 	);
 
 	this.autorun(() => {

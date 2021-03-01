@@ -95,7 +95,7 @@ ${url}
 ${mf('verifyEmail.email.farewell', 'Sincerely')}
 ${mf('verifyEmail.email.postscript', "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)", { SITE: Accounts.emailTemplates.siteName })}
 
-${mf('verifyEmail.email.unexpected', "If you don't know why you got this email, ignore it or send us a notification to: {REPORTEMAIL}", { REPORTEMAIL: getReportEmails().recipient })}`;
+${mf('verifyEmail.email.unexpected', "If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}", { REPORTEMAIL: getReportEmails().recipient })}`;
 };
 
 Accounts.emailTemplates.verifyEmail.html = function (user, url) {
@@ -127,7 +127,7 @@ ${url}
 ${mf('resetPassword.email.farewell', 'Regards')}
 ${mf('resetPassword.email.postscript', { SITE: Accounts.emailTemplates.siteName }, '{SITE} server at your service')}
 
-${mf('resetPassword.email.unexpected', "If you don't know why you got this email, ignore it or send us a notification to: {REPORTEMAIL}", { REPORTEMAIL: getReportEmails().recipient })}`;
+${mf('resetPassword.email.unexpected', "If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}", { REPORTEMAIL: getReportEmails().recipient })}`;
 };
 
 Accounts.emailTemplates.resetPassword.html = function (user, url) {
