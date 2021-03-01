@@ -10,6 +10,10 @@
 				<div class="page-component">
 					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
 						<div class="details-header">
+							{{#if course.internal}}
+								<span class="details-internal"
+									data-tooltip="{{mf 'courseCompact.internal_course' 'Internal course'}}"></span>
+							{{/if}}
 							<div class="details-header-tags">
 								{{#if isProposal}}
 									<div class="proposal-tag">
