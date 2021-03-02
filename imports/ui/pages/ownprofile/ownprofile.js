@@ -64,7 +64,7 @@ Template.profile.onCreated(function () {
 				}
 			});
 		},
-		mf('profile.description.placeholder', 'About me, my interests and skills. (What do you think about creating courses for those? 😉)'),
+		mf('profile.description.placeholder', 'About me, my interests and skills. (How about the idea of creating courses fitting to your description? 😉)'),
 	);
 
 	this.autorun(() => {
