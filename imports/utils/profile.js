@@ -13,7 +13,7 @@ const Profile = {};
  * @param {UserModel} user
  */
 Profile.updateAcceptsPrivateMessages = function (user) {
-	const acceptsPrivateMessages = Boolean(user.emailAddress() && user.allowPrivateMessages);
+	const acceptsPrivateMessages = Boolean(user.hasEmail() && user.allowPrivateMessages);
 
 	if (user.acceptsPrivateMessages !== acceptsPrivateMessages) {
 		Users.update(user._id, {
@@ -21,6 +21,7 @@ Profile.updateAcceptsPrivateMessages = function (user) {
 		});
 	}
 };
+
 
 Profile.Username = {};
 
@@ -200,6 +201,7 @@ Profile.PrivateMessages.unsubscribe = function (token) {
 	return accepted;
 };
 
+
 Profile.Region = {};
 
 /**
@@ -231,6 +233,71 @@ Profile.Region.change = function (userId, regionId, reason) {
 	}
 
 	return accepted;
+};
+
+
+Profile.AvatarColor = {};
+
+/**
+ * Update the user's color preference
+ * @param {string} userId update color for this user
+ * @param {number} color hsl color hue (0 - 360)
+ */
+Profile.AvatarColor.change = function (userId, color) {
+	check(userId, String);
+	check(color, Number);
+
+	// check if color is a valid hsl hue
+	const accepted = color >= 0 && color <= 360;
+
+	Log.record('Avatar.Color', [userId],
+		{
+			userId,
+			color,
+			accepted,
+		});
+
+	if (accepted) {
+		Meteor.users.update(userId, { $set: { 'avatar.color': color } });
+	}
+
+	return accepted;
+};
+
+
+Profile.Description = {};
+
+/**
+ * Update the user's description
+ * @param {string} userId update color for this user
+ * @param {string} description user description
+ */
+Profile.Description.change = function (userId, description) {
+	check(userId, String);
+	check(description, String);
+
+	let result;
+	let success;
+
+	try {
+		result = Meteor.users.update(userId, {
+			$set: { description },
+		});
+		success = result > 0;
+	} catch (e) {
+		result = e;
+		success = false;
+	}
+	Log.record('Profile.Description', [userId],
+		{
+			userId,
+			description,
+			success,
+			result,
+			cause: 'profile change',
+		});
+
+	return success;
 };
 
 export default Profile;

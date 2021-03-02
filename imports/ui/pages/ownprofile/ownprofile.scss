@@ -1,18 +1,3 @@
-.profile-info {
-	$background-color: lighten($user-bg, 5%);
-
-	background-color: $background-color;
-	border: 1px solid darken($background-color, 3%);
-}
-
-.profile-delete-confirmation {
-	$background-color: lighten($brand-danger, 20%);
-
-	background-color: $background-color;
-	border: 1px solid darken($background-color, 20%);
-	padding: 15px 15px 0;
-}
-
 .translate-link {
 	@include btn-lg;
 }
@@ -33,7 +18,49 @@
 	color: $gray;
 }
 
-.profile-info-edit > .form-group > .warning-block {
-	margin-left: 25%;
-	padding-left: 15px;
+.edit-profile {
+	&-header {
+		@media (max-width: $screen-sm) {
+			display: block !important;
+		}
+
+		.profile-avatar {
+			@media (max-width: $screen-sm) {
+				width: 50% !important;
+			}
+		}
+
+		.avatar-image {
+			@media (max-width: $screen-sm) {
+				width: 100% !important;
+				margin: 0 !important;
+			}
+		}
+	}
+
+	&-password {
+		margin: 0 0 10px 0;
+	}
+
+	&-email {
+		display: flex;
+
+		input {
+			margin: 0 5px 0 0;
+		}
+	}
+
+	&-checkbox {
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+
+	&-delete-confirmation {
+		$background-color: lighten($brand-danger, 20%);
+
+		background-color: $background-color;
+		border: 1px solid darken($background-color, 20%);
+		padding: 15px 15px 0;
+	}
 }

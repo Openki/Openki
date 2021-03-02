@@ -24,7 +24,7 @@ Template.eventReplication.onCreated(function eventReplicationOnCreated() {
 	// Days are stored as difference from the original day
 	instance.calcDays = new ReactiveVar([]); // calculated from the dialog
 	instance.pickDays = new ReactiveVar([]); // picked in the calendar
-	instance.usingPicker = new ReactiveVar(true);
+	instance.usingPicker = new ReactiveVar(false);
 
 	instance.activeDays = () => (
 		instance.usingPicker.get()

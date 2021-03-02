@@ -209,18 +209,13 @@
 	<div class="discussion-thumb">
 		{{#if this}}
 			<a href="/user/{{this}}/{{username this}}">
-				<img class="discussion-profile-icon"
-					src="/logo/{{discussionLogo}}"
-					alt="{{discussionAlt}}"/>
+				{{> avatar class='discussion-profile-icon' userId=this}}
 			</a>
 		{{else}}
-			<img class="discussion-profile-icon"
-				src="/logo/{{discussionLogo}}"
-				alt="{{discussionAlt}}"/>
+			{{> avatar class='discussion-profile-icon' color=0}}
 		{{/if}}
 	</div>
 </template>
-
 
 <template name="removeCommentDropdown">
 	<span class="dropdown">

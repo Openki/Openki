@@ -3,9 +3,12 @@ import UserSearchPrefix from '/imports/utils/user-search-prefix';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 Meteor.publish('user', function (userId) {
+	// Public fields from users
 	const fields = {
 		username: 1,
+		description: 1,
 		acceptsPrivateMessages: 1,
+		'avatar.color': 1,
 	};
 
 	// Admins may see other's privileges

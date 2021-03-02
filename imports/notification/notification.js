@@ -2,6 +2,7 @@ import Log from '/imports/api/log/log';
 
 import { Email } from 'meteor/email';
 import { Random } from 'meteor/random';
+import { _ } from 'meteor/underscore';
 
 import notificationEvent from '/imports/notification/notification.event';
 import notificationComment from '/imports/notification/notification.comment';
@@ -19,10 +20,10 @@ Notification.Comment = notificationComment;
 Notification.Join = notificationJoin;
 Notification.PrivateMessage = notificationPrivateMessage;
 
-/** Handle event notification
-  *
-  * @param entry Notification.Event log entry to process
-  */
+/**
+ * Handle event notification
+ * @param entry Notification.Event log entry to process
+ */
 Notification.send = function (entry) {
 	// Find out for which recipients sending has already been attempted.
 	const concluded = {};
@@ -53,8 +54,7 @@ Notification.send = function (entry) {
 
 				model.accepted(user);
 
-				const email = user.emails[0];
-				const { address } = email;
+				const address = user.emailAddress();
 
 				const { username } = user;
 				const userLocale = user.locale || 'en';
@@ -111,14 +111,14 @@ Notification.SendResult = {};
 
 /**
  * Record the result of a notification delivery attempt
-* @param {object} note notification log-entry
-* @param {string | null} unsubToken token that can be used to unsubscribe from
-* further notices
-* @param {boolean} sent whether the notification was sent
-* @param {string} recipient recipient user ID
-* @param {string | null} message generated message (or null if we didn't get that far)
-* @param {string} reason why this log entry was recorded
-*/
+ * @param {object} note notification log-entry
+ * @param {string | null} unsubToken token that can be used to unsubscribe from
+ * further notices
+ * @param {boolean} sent whether the notification was sent
+ * @param {string} recipient recipient user ID
+ * @param {string | null} message generated message (or null if we didn't get that far)
+ * @param {string} reason why this log entry was recorded
+ */
 Notification.SendResult.record = function (note, unsubToken, sent, recipient, message, reason) {
 	check(sent, Boolean);
 	check(unsubToken, Match.Maybe(String));
