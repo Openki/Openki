@@ -226,7 +226,7 @@ Template.profile.events({
 		instance.collapse(); // Wait for server to log us out.
 	},
 
-	'submit .profile-email-form'(event, instance) {
+	'submit .js-email-form'(event, instance) {
 		event.preventDefault();
 
 		Meteor.call('user.updateEmail', instance.$('.js-email').val(), (err) => {
