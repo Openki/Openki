@@ -6,12 +6,24 @@ import Alert from '/imports/api/alerts/alert';
 
 import './avatar.html';
 
+Template.avatar.onCreated(function () {
+	const data = this.data;
+
+	if (data.color !== undefined) {
+		return;
+	}
+
+	if (data.userId !== undefined) {
+		this.subscribe('user', data.userId);
+	}
+});
+
 Template.avatar.helpers({
 	color() {
 		const data = Template.currentData();
 
 		// the form sets the color directly
-		if (data.color) return data.color;
+		if (data.color !== undefined) return data.color;
 
 		// otherwise get the color from a user
 		const user = Meteor.users.findOne(data.userId || Meteor.userId());
