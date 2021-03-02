@@ -18,7 +18,7 @@ Template.avatar.helpers({
 		const color = user?.avatar?.color;
 
 		if (color === undefined) {
-			return false;
+			return 0;
 		}
 
 		return color;
