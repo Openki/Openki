@@ -54,6 +54,7 @@ import IdTools from '/imports/utils/id-tools';
  * to them from other users
  * @property {boolean} [hidePricePolicy]
  * @property {string} [description]
+ * @property {object} [avatar]
  * @property {number} [avatar.color]
  * @property {string[]} [badges] (calculated) union of user's id and group ids for permission
  * checking, calculated by updateBadges()
