@@ -21,6 +21,7 @@ import { HasRoleUser } from '/imports/utils/course-role-utils';
 /**
  * @typedef {Object} CourseEntity
  * @property {string} _id          ID
+ * @property {string} [tenant]
  * @property {string} name
  * @property {string[]} categories ID_categories
  * @property {string[]} tags       (not used)
@@ -206,6 +207,8 @@ Courses.findFilter = function (filter, limit, sortParams) {
 	const order = sortParams || [];
 
 	const find = {};
+	find.tenant = { $in: Meteor.user()?.tenants || [] };
+
 	if (filter.region && filter.region !== 'all') {
 		find.region = filter.region;
 	}

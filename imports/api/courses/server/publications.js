@@ -1,14 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-
 import Courses from '../courses';
 
-Meteor.publish('courses', (region) => {
-	if (!region) {
-		return Courses.find();
-	}
-	return Courses.find({ region });
-});
-
-Meteor.publish('courseDetails', (id) => Courses.find({ _id: id }));
+Meteor.publish('courseDetails', (id) => Courses.find({ _id: id, tenant: { $in: Meteor.user()?.tenants || [] } }));
 
 Meteor.publish('Courses.findFilter', Courses.findFilter);
