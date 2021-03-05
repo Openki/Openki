@@ -7,7 +7,6 @@ import IdTools from '/imports/utils/id-tools';
 /**
  * @typedef {Object} UserEntity
  * @property {string} [_id] ID
- * @property {string[]} [tenants]
  * @property {Date} [createdAt]
  * @property {object} [services]
  * @property {object} [services.password]
