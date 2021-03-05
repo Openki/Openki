@@ -7,6 +7,7 @@ import IdTools from '/imports/utils/id-tools';
 /**
  * @typedef {Object} UserEntity
  * @property {string} [_id] ID
+ * @property {string[]} [tenants]
  * @property {Date} [createdAt]
  * @property {object} [services]
  * @property {object} [services.password]
@@ -72,12 +73,11 @@ export const User = function () { };
 
 const Users = Meteor.users;
 
-/** Get the current user
-  *
-  * If the user is not logged-in, a placeholder "anon" object is
-  * returned.
-  * @this {UserModel & {anon?: true}}
-  */
+/**
+ * Get the current user
+ * @return {UserModel | UserModel & {anon?: true}} User or if the user is not logged-in, a
+ * placeholder "anon" object is returned.
+ */
 Users.currentUser = function () {
 	const logged = Meteor.user();
 	if (logged) {
@@ -91,12 +91,13 @@ Users.currentUser = function () {
 	return anon;
 };
 
-/** Check whether the user may promote things with the given group.
-  * The user must be a member of the group to be allowed to promote things with it.
-  *
-  * @this {UserModel}
-  * @param {String|GroupEntity} group - The group to check, this may be an Id or a group object
-  */
+/**
+ * Check whether the user may promote things with the given group.
+ * The user must be a member of the group to be allowed to promote things with it.
+ *
+ * @this {UserModel}
+ * @param {string|GroupEntity} group The group to check, this may be an Id or a group object
+ */
 User.prototype.mayPromoteWith = function (group) {
 	const groupId = IdTools.extract(group);
 	if (!groupId || !this.groups) {

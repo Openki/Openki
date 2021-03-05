@@ -56,18 +56,18 @@ export class Course {
 	}
 
 	/**
-	  * Check if the course is new (not yet saved).
-	  * @this {CourseModel}
-	  */
+	 * Check if the course is new (not yet saved).
+	 * @this {CourseModel}
+	 */
 	isNew() {
 		return !this._id;
 	}
 
 	/**
-	  * Check whether a user may edit the course.
-	  * @this {CourseModel}
-	  * @param {Object} user
-	  */
+	 * Check whether a user may edit the course.
+	 * @this {CourseModel}
+	 * @param {Object} user
+	 */
 	editableBy(user) {
 		if (!user) {
 			return false;
@@ -79,10 +79,10 @@ export class Course {
 	}
 
 	/**
-	  * Get list of members with specified role
-	  * @this {CourseModel}
-	  * @param {string} role like 'team'
-	  */
+	 * Get list of members with specified role
+	 * @this {CourseModel}
+	 * @param {string} role like 'team'
+	 */
 	membersWithRole(role) {
 		check(role, String);
 		return this.members.filter((member) => member.roles.indexOf(role) >= 0);
