@@ -9989,45 +9989,45 @@ mfPkg.syncAll({
       "mtime": 1514071816134,
       "revisionId": "BSDWa2JAFKmCc7vKh"
     },
-    "roles.interested.myList": {
+    "roles.participant.myList": {
       "_id": "aZPNbupbMpmGc3SSf",
-      "key": "roles.interested.myList",
+      "key": "roles.participant.myList",
       "lang": "de",
       "text": "Ich bin interessiert an",
       "ctime": 1514071874029,
       "mtime": 1514071874029,
       "revisionId": "ejcNAr9WGkZM948hz"
     },
-    "roles.interested.short": {
+    "roles.participant.short": {
       "_id": "cRTq6u8zgpDsuf6sX",
-      "key": "roles.interested.short",
+      "key": "roles.participant.short",
       "lang": "de",
       "text": "interessiert",
       "ctime": 1514071864064,
       "mtime": 1514071864064,
       "revisionId": "visTeAtt4FvPEGtfc"
     },
-    "roles.interested.subscribe": {
+    "roles.participant.subscribe": {
       "_id": "sANGYzqG8rSR72nLk",
-      "key": "roles.interested.subscribe",
+      "key": "roles.participant.subscribe",
       "lang": "de",
       "text": "Interessiert mich",
       "ctime": 1514411459628,
       "mtime": 1514411459628,
       "revisionId": "8a5r79oL47Yzjgfk7"
     },
-    "roles.interested.subscribed": {
+    "roles.participant.subscribed": {
       "_id": "qtyFZrjvg7kYiaLPA",
-      "key": "roles.interested.subscribed",
+      "key": "roles.participant.subscribed",
       "lang": "de",
       "text": "Du bist interessiert",
       "ctime": 1514071840080,
       "mtime": 1514071840080,
       "revisionId": "iMiePiCkHLB4EyxFD"
     },
-    "roles.interested.userList": {
+    "roles.participant.userList": {
       "_id": "mWeQrStbrA7AmFFjR",
-      "key": "roles.interested.userList",
+      "key": "roles.participant.userList",
       "lang": "de",
       "text": "{NAME} ist interessiert an",
       "ctime": 1514071781164,
@@ -14599,45 +14599,45 @@ mfPkg.syncAll({
       "mtime": 1458820488985,
       "revisionId": "Tmc7CJgxoSj4m93Sk"
     },
-    "roles.interested.myList": {
+    "roles.participant.myList": {
       "_id": "SbHEuNwozrvyNA6mg",
-      "key": "roles.interested.myList",
+      "key": "roles.participant.myList",
       "lang": "de-ZH",
       "text": "Ich bi intressiert a",
       "ctime": 1520321627571,
       "mtime": 1520321627571,
       "revisionId": "YPnZum7hd6vHuYYK6"
     },
-    "roles.interested.short": {
+    "roles.participant.short": {
       "_id": "5u93isrNPSeBHJ4ea",
-      "key": "roles.interested.short",
+      "key": "roles.participant.short",
       "lang": "de-ZH",
       "text": "intressiert",
       "ctime": 1520321622268,
       "mtime": 1520321622268,
       "revisionId": "aiSCpKBwrrCXbRCbj"
     },
-    "roles.interested.subscribe": {
+    "roles.participant.subscribe": {
       "_id": "FNdfQZGt65fv2jNHf",
-      "key": "roles.interested.subscribe",
+      "key": "roles.participant.subscribe",
       "lang": "de-ZH",
       "text": "Ich bi intressiert",
       "ctime": 1520321617999,
       "mtime": 1520321617999,
       "revisionId": "fmG5WdB4ekfe7rC5z"
     },
-    "roles.interested.subscribed": {
+    "roles.participant.subscribed": {
       "_id": "s7BBsj6AxwXd57xTx",
-      "key": "roles.interested.subscribed",
+      "key": "roles.participant.subscribed",
       "lang": "de-ZH",
       "text": "Du bisch intressiert",
       "ctime": 1520321612952,
       "mtime": 1520321612953,
       "revisionId": "s5Yp5WHPjk8wsy2iy"
     },
-    "roles.interested.userList": {
+    "roles.participant.userList": {
       "_id": "dEz4mK8toTnuWGrLc",
-      "key": "roles.interested.userList",
+      "key": "roles.participant.userList",
       "lang": "de-ZH",
       "text": "De/d'{NAME} isch intressiert a",
       "ctime": 1520321605792,
@@ -18197,36 +18197,36 @@ mfPkg.syncAll({
       "mtime": 1482692168372,
       "revisionId": "cjZXsSgmC43mX6Kkv"
     },
-    "roles.interested.myList": {
+    "roles.participant.myList": {
       "_id": "6fk85hujgbnP5v6QZ",
-      "key": "roles.interested.myList",
+      "key": "roles.participant.myList",
       "lang": "el",
       "text": "Ενδιαφέρομαι για",
       "ctime": 1511281581638,
       "mtime": 1511281581638,
       "revisionId": "cvHkWxzDM2hpg7Cuf"
     },
-    "roles.interested.short": {
+    "roles.participant.short": {
       "_id": "sJcui72JhvNvrGh4T",
-      "key": "roles.interested.short",
+      "key": "roles.participant.short",
       "lang": "el",
       "text": "ενδιαφερόμενος",
       "ctime": 1511281588911,
       "mtime": 1511281588911,
       "revisionId": "MYghQACtNWDygQ2sg"
     },
-    "roles.interested.subscribe": {
+    "roles.participant.subscribe": {
       "_id": "oBRyWbHT2vGLSvvKv",
-      "key": "roles.interested.subscribe",
+      "key": "roles.participant.subscribe",
       "lang": "el",
       "text": "Ενδιαφέρομαι",
       "ctime": 1511281592504,
       "mtime": 1511281592504,
       "revisionId": "tNxH7u6Na88TsWnaG"
     },
-    "roles.interested.subscribed": {
+    "roles.participant.subscribed": {
       "_id": "8kxpwGGhLF8vdAtS4",
-      "key": "roles.interested.subscribed",
+      "key": "roles.participant.subscribed",
       "lang": "el",
       "text": "Ενδιαφέρεσαι",
       "ctime": 1511281599613,
@@ -26910,9 +26910,9 @@ mfPkg.syncAll({
       "line": 34,
       "template": "mfFixedTranslations"
     },
-    "roles.interested.myList": {
+    "roles.participant.myList": {
       "_id": "7SSLMRo7x2BLX3tKP",
-      "key": "roles.interested.myList",
+      "key": "roles.participant.myList",
       "lang": "en",
       "text": "I am interested in",
       "mtime": 1560179806794,
@@ -26921,9 +26921,9 @@ mfPkg.syncAll({
       "line": 17,
       "template": "mfFixedTranslations"
     },
-    "roles.interested.short": {
+    "roles.participant.short": {
       "_id": "XmeR8sjJ4p8hkprXv",
-      "key": "roles.interested.short",
+      "key": "roles.participant.short",
       "lang": "en",
       "text": "interested",
       "mtime": 1560179806794,
@@ -26932,9 +26932,9 @@ mfPkg.syncAll({
       "line": 14,
       "template": "mfFixedTranslations"
     },
-    "roles.interested.subscribe": {
+    "roles.participant.subscribe": {
       "_id": "i2rojj5CKFDENczo6",
-      "key": "roles.interested.subscribe",
+      "key": "roles.participant.subscribe",
       "lang": "en",
       "text": "I am interested",
       "mtime": 1560179806794,
@@ -26943,9 +26943,9 @@ mfPkg.syncAll({
       "line": 15,
       "template": "mfFixedTranslations"
     },
-    "roles.interested.subscribed": {
+    "roles.participant.subscribed": {
       "_id": "g58i3HwpYYZJ4QiRi",
-      "key": "roles.interested.subscribed",
+      "key": "roles.participant.subscribed",
       "lang": "en",
       "text": "You are interested",
       "mtime": 1560179806794,
@@ -26954,9 +26954,9 @@ mfPkg.syncAll({
       "line": 16,
       "template": "mfFixedTranslations"
     },
-    "roles.interested.userList": {
+    "roles.participant.userList": {
       "_id": "WwsWHAE9qPC6xNWuH",
-      "key": "roles.interested.userList",
+      "key": "roles.participant.userList",
       "lang": "en",
       "text": "{NAME} is interested in",
       "mtime": 1560179806794,
@@ -36529,27 +36529,27 @@ mfPkg.syncAll({
       "mtime": 1467376551276,
       "revisionId": "Q47ya532YseiKPJnZ"
     },
-    "roles.interested.subscribe": {
+    "roles.participant.subscribe": {
       "_id": "s76a5aA8hfKCAtDNc",
-      "key": "roles.interested.subscribe",
+      "key": "roles.participant.subscribe",
       "lang": "fr",
       "text": "Je suis intéressé.e",
       "ctime": 1541441753863,
       "mtime": 1550520689088,
       "revisionId": "erxyie89ZEuWN6bxx"
     },
-    "roles.interested.subscribed": {
+    "roles.participant.subscribed": {
       "_id": "S9wjNoupeQLJFm9tZ",
-      "key": "roles.interested.subscribed",
+      "key": "roles.participant.subscribed",
       "lang": "fr",
       "text": "Vous êtes intéressé.e",
       "ctime": 1606750910870,
       "mtime": 1606750910870,
       "revisionId": "BDTu6qjeMRr3yoHJA"
     },
-    "roles.interested.userList": {
+    "roles.participant.userList": {
       "_id": "v2ivcMJoHFxGLDeKQ",
-      "key": "roles.interested.userList",
+      "key": "roles.participant.userList",
       "lang": "fr",
       "text": "{NAME} intéressé.e à",
       "ctime": 1606750920472,
@@ -43459,45 +43459,45 @@ mfPkg.syncAll({
       "mtime": 1576118091681,
       "revisionId": "2qBa3MHSWAHwEvsTG"
     },
-    "roles.interested.myList": {
+    "roles.participant.myList": {
       "_id": "ArGrNmBt6fJAZY7dG",
-      "key": "roles.interested.myList",
+      "key": "roles.participant.myList",
       "lang": "pt",
       "text": "Eu sou interessado em",
       "ctime": 1576117062145,
       "mtime": 1576117062145,
       "revisionId": "gM5ibYGvDvouBjydY"
     },
-    "roles.interested.short": {
+    "roles.participant.short": {
       "_id": "PZE3ewBdqNiqiMmyd",
-      "key": "roles.interested.short",
+      "key": "roles.participant.short",
       "lang": "pt",
       "text": "interessado",
       "ctime": 1576117047522,
       "mtime": 1576117047522,
       "revisionId": "YPot7EsAEFRZ9Xekj"
     },
-    "roles.interested.subscribe": {
+    "roles.participant.subscribe": {
       "_id": "FNmZ4zQ3WkaeuQcdc",
-      "key": "roles.interested.subscribe",
+      "key": "roles.participant.subscribe",
       "lang": "pt",
       "text": "Eu estou interessado",
       "ctime": 1576117036487,
       "mtime": 1576946751312,
       "revisionId": "xxakiKBFQP6ixBkYh"
     },
-    "roles.interested.subscribed": {
+    "roles.participant.subscribed": {
       "_id": "eE9d2YY7txw3ZY9uT",
-      "key": "roles.interested.subscribed",
+      "key": "roles.participant.subscribed",
       "lang": "pt",
       "text": "Você está interessado",
       "ctime": 1576117021232,
       "mtime": 1576117021232,
       "revisionId": "iM8Lvs6CKaSATb6r5"
     },
-    "roles.interested.userList": {
+    "roles.participant.userList": {
       "_id": "GAuEgTmciz5ZPcXyy",
-      "key": "roles.interested.userList",
+      "key": "roles.participant.userList",
       "lang": "pt",
       "text": "{NAME} está interessado em",
       "ctime": 1576116998683,
@@ -49688,45 +49688,45 @@ mfPkg.syncAll({
       "mtime": 1524646986194,
       "revisionId": "f4ii98LMeKrBz2bX4"
     },
-    "roles.interested.myList": {
+    "roles.participant.myList": {
       "_id": "r8xJ4X5yLSst8tRyp",
-      "key": "roles.interested.myList",
+      "key": "roles.participant.myList",
       "lang": "sv",
       "text": "Jag är intresserad av ",
       "ctime": 1522934054318,
       "mtime": 1522934054318,
       "revisionId": "JqXQiMEHJSDmWZ8YH"
     },
-    "roles.interested.short": {
+    "roles.participant.short": {
       "_id": "ACb8zM4EhkuB7Takv",
-      "key": "roles.interested.short",
+      "key": "roles.participant.short",
       "lang": "sv",
       "text": "intresserad",
       "ctime": 1522934072679,
       "mtime": 1522934072679,
       "revisionId": "hor82t7oeZot9n65d"
     },
-    "roles.interested.subscribe": {
+    "roles.participant.subscribe": {
       "_id": "mqDJR3v4TXiT3RTeZ",
-      "key": "roles.interested.subscribe",
+      "key": "roles.participant.subscribe",
       "lang": "sv",
       "text": "Jag är intresserad ",
       "ctime": 1522926817222,
       "mtime": 1522926817222,
       "revisionId": "Y5MENPQsdHwRB6XzH"
     },
-    "roles.interested.subscribed": {
+    "roles.participant.subscribed": {
       "_id": "Ct7HS4MDqTXtSPnvz",
-      "key": "roles.interested.subscribed",
+      "key": "roles.participant.subscribed",
       "lang": "sv",
       "text": "Du är intresserad",
       "ctime": 1522926826518,
       "mtime": 1522926826518,
       "revisionId": "rBomRR4JDBADnQSoM"
     },
-    "roles.interested.userList": {
+    "roles.participant.userList": {
       "_id": "qQfhBAoQzLzurB4dN",
-      "key": "roles.interested.userList",
+      "key": "roles.participant.userList",
       "lang": "sv",
       "text": "{NAME} är intresserad av ",
       "ctime": 1522926848219,
