@@ -10,6 +10,7 @@ import Predicates from '/imports/utils/predicates';
 import StringTools from '/imports/utils/string-tools';
 
 import { HasRoleUser } from '/imports/utils/course-role-utils';
+import tenantDenormalizer from './tenantDenormalizer';
 
 // ======== DB-Model: ========
 /**
@@ -111,6 +112,16 @@ export class CoursesCollection extends Mongo.Collection {
 				return _.extend(new Course(), course);
 			},
 		});
+	}
+
+	/**
+	 * @param {CourseModel} course
+	 * @param {Function | undefined} [callback]
+	 */
+	insert(course, callback) {
+		const enrichedCourse = tenantDenormalizer.enrich(course);
+
+		return super.insert(enrichedCourse, callback);
 	}
 
 	static Filtering() {
@@ -218,6 +229,7 @@ export class CoursesCollection extends Mongo.Collection {
 		const order = sortParams || [];
 
 		const find = {};
+		find.tenant = { $in: Meteor.user()?.tenants || [] };
 
 		if (filter.region && filter.region !== 'all') {
 			find.region = filter.region;
