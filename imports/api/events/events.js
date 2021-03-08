@@ -52,35 +52,38 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 /** @typedef {OEvent & EventEntity} EventModel */
 
 // Event is a built-in, so we use a different name for this class
-export const OEvent = function () {
-	this.editors = [];
-};
-
-/**
- * @param {UserModel} user
- */
-OEvent.prototype.editableBy = function (user) {
-	if (!user) {
-		return false;
+export class OEvent {
+	constructor() {
+		/** @type {string[]} */
+		this.editors = [];
 	}
-	if (UserPrivilegeUtils.privileged(user, 'admin')) {
-		return true;
+
+	/**
+	 * @param {UserModel} user
+	*/
+	editableBy(user) {
+		if (!user) {
+			return false;
+		}
+		if (UserPrivilegeUtils.privileged(user, 'admin')) {
+			return true;
+		}
+		return _.intersection(user.badges, this.editors).length > 0;
 	}
-	return _.intersection(user.badges, this.editors).length > 0;
-};
 
-/**
- * @this {EventModel}
- * @param {EventModel} event
- */
-OEvent.prototype.sameTime = function (event) {
-	return ['startLocal', 'endLocal'].every((time) => {
-		const timeA = LocalTime.fromString(this[time]);
-		const timeB = LocalTime.fromString(event[time]);
+	/**
+     * @this {EventModel}
+     * @param {EventModel} event
+     */
+	sameTime(event) {
+		return ['startLocal', 'endLocal'].every((time) => {
+			const timeA = LocalTime.fromString(this[time]);
+			const timeB = LocalTime.fromString(event[time]);
 
-		return timeA.hour() === timeB.hour() && timeA.minute() === timeB.minute();
-	});
-};
+			return timeA.hour() === timeB.hour() && timeA.minute() === timeB.minute();
+		});
+	}
+}
 
 const Events = new Mongo.Collection('Events', {
 	transform(event) {
