@@ -218,7 +218,6 @@ export class CoursesCollection extends Mongo.Collection {
 		const order = sortParams || [];
 
 		const find = {};
-		find.tenant = { $in: Meteor.user()?.tenants || [] };
 
 		if (filter.region && filter.region !== 'all') {
 			find.region = filter.region;
