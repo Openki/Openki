@@ -26,6 +26,7 @@ import { Mongo } from 'meteor/mongo';
  *     }} [custom]
  */
 
+/** @type {Mongo.Collection<RegionEntity>} */
 const Regions = new Mongo.Collection('Regions');
 
 if (Meteor.isServer) {

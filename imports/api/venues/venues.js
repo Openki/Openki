@@ -40,26 +40,29 @@ import StringTools from '/imports/utils/string-tools';
  * @typedef {Venue & VenueEnity} VenueModel
  */
 
-/** Venue objects represent locations where events take place.
-  */
-export const Venue = function () {
-	this.facilities = {};
-};
-
-/** Check whether a user may edit the venue.
-  * @this {VenueModel}
-  * @param {UserModel} user
-  * @return {boolean}
-  */
-Venue.prototype.editableBy = function (user) {
-	if (!user) {
-		return false;
+/**
+ * Venue objects represent locations where events take place.
+ */
+export class Venue {
+	constructor() {
+		this.facilities = {};
 	}
-	const isNew = !this._id;
-	return isNew // Anybody may create a new location
-		|| user._id === this.editor
-		|| UserPrivilegeUtils.privileged(user, 'admin'); // Admins can edit all venues
-};
+
+	/**
+	 * Check whether a user may edit the venue.
+	 * @this {VenueModel}
+	 * @param {UserModel} user
+	 */
+	editableBy(user) {
+		if (!user) {
+			return false;
+		}
+		const isNew = !this._id;
+		return isNew // Anybody may create a new location
+			|| user._id === this.editor
+			|| UserPrivilegeUtils.privileged(user, 'admin'); // Admins can edit all venues
+	}
+}
 
 /** @type Mongo.Collection<VenueEnity, VenueModel> */
 const Venues = new Mongo.Collection('Venues', {
