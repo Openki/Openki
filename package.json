@@ -25,6 +25,9 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
+    "@types/meteor": "^1.4.67",
+    "@types/seedrandom": "^2.4.28",
+    
     "assertion-error": "^1.1.0",
     "chai": "^4.2.0",
     "chromedriver": "^77.0.0",
