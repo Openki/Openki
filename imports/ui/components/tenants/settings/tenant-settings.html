@@ -1,0 +1,63 @@
+<template name="tenantSettings">
+	<form>
+		{{#with tenant}}
+			<div class="details-form tenant-settings">
+				<div class="details-form-element">
+					<h3>
+						<span class="fa fa-group fa-fw" aria-hidden="true"></span>
+						{{mf 'tenant.settings.title.Members' 'Members'}}
+					</h3>
+					<div class="tag-group multiline">
+						{{#each members}}
+							<div class="tag tag-link tenant-member-tag">
+								<a href="{{pathFor 'userprofile' _id=this}}">
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+									{{username this}}
+								</a>
+							</div>
+							<div class="tag-btn tenant-member-tag-btn-remove addon">
+								<button
+									class="js-member-remove-btn"
+									title="{{mf 'tenant.settings.removeFromTenant' 'remove member'}}"
+									type="button">
+									<i class="fa fa-remove" aria-hidden="true"></i>
+								</button>
+							</div>
+						{{/each}}
+					</div>
+					<div class="form-group">
+						<label>{{mf 'tenant.settings.field.addMembers' 'Add a new member to your tenant'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+							</span>
+							<input class="js-search-users form-control"
+								id="AddTenantMember"
+								placeholder= "{{mf 'tenant.settings.field.addMember.placeholder' 'Type name of buddy'}}"
+								size="40"
+								type="text"/>
+						</div>
+					</div>
+					<div class="tag-group multiline">
+						{{#each foundUsers}}
+							<div class="tag tag-link tenant-member-tag">
+								<a href="{{pathFor 'userprofile' _id=this._id}}">
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+									{{username this._id}}
+								</a>
+							</div>
+							<div class="tag-btn tenant-member-tag-btn-add addon">
+								<button
+									class="js-member-add-btn"
+									title="{{mf 'tenant.settings.addMember' 'add as member'}}"
+									type="button">
+									<i class="fa fa-plus" aria-hidden="true"></i>
+								</button>
+							</div>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+		{{/with}}
+	</form>
+</template>

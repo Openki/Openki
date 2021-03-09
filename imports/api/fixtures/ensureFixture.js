@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import crypto from 'crypto';
 import Prng from './Prng';
 import Groups from '/imports/api/groups/groups';
+import Tenants from '/imports/api/tenants/tenants';
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 import StringTools from '/imports/utils/string-tools';
@@ -18,9 +19,29 @@ const ensure = {
 
 	/**
 	 * @param {string} name
-	 * @param {boolean} verified
 	 */
-	user(name, verified) {
+	tenant(name) {
+		/* eslint-disable-next-line no-constant-condition */
+		while (true) {
+			const teanant = Tenants.findOne({ name });
+			if (teanant) {
+				return teanant._id;
+			}
+
+			const id = Tenants.insert({
+				name,
+				members: [],
+			});
+			/* eslint-disable-next-line no-console */
+			console.log(`Added tenant: ${name} ${id}`);
+		}
+	},
+
+	/**
+	 * @param {string} name
+	 * @param {boolean} [verified=false]
+	 */
+	user(name, verified = false) {
 		const prng = Prng('ensureUser');
 
 		if (!name) {

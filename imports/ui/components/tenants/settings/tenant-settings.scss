@@ -1,0 +1,28 @@
+$tenant-member-bg: rgba($gray-light, .15);
+
+.tenant-member-tag {
+	@include tag(
+		$tenant-member-bg,
+		$text-color,
+		$tenant-member-bg,
+		$brand-primary
+	);
+}
+
+.tenant-member-tag-btn-remove {
+	@include tag-btn(
+		$tenant-member-bg,
+		$text-color,
+		$brand-danger,
+		darken($brand-danger, 30%)
+	);
+}
+
+.tenant-member-tag-btn-add {
+	@include tag-btn(
+		darken($tenant-member-bg, 10%),
+		$text-color,
+		$brand-success,
+		darken($brand-success, 45%)
+	);
+}
