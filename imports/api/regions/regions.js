@@ -40,7 +40,6 @@ export class RegionsCollection extends Mongo.Collection {
 
 	/**
 	 * Returns the region from the db based on the session setting.
-	 * @returns {RegionEntity | undefined}
 	 */
 	currentRegion() {
 		const regionId = Session.get('region');
