@@ -100,7 +100,9 @@ export class Course {
 	}
 }
 
-/** @type {Mongo.Collection<CourseEntity>} */
+/**
+ * @extends {Mongo.Collection<CourseEntity>}
+ */
 export class CoursesCollection extends Mongo.Collection {
 	constructor() {
 		super('Courses', {

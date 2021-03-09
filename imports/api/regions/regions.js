@@ -27,22 +27,29 @@ import { Mongo } from 'meteor/mongo';
  *     }} [custom]
  */
 
-/** @type {Mongo.Collection<RegionEntity>} */
-const Regions = new Mongo.Collection('Regions');
-
-if (Meteor.isServer) {
-	Regions._ensureIndex({ loc: '2dsphere' });
-}
-
 /**
- * Returns the region from the db based on the session setting.
- * @returns {RegionEntity | undefined}
+ * @extends {Mongo.Collection<RegionEntity>}
  */
-Regions.currentRegion = function () {
-	if (Session.get('region')) {
-		return Regions.findOne(Session.get('region'));
-	}
-	return undefined;
-};
+export class RegionsCollection extends Mongo.Collection {
+	constructor() {
+		super('Regions');
 
-export default Regions;
+		if (Meteor.isServer) {
+			this._ensureIndex({ loc: '2dsphere' });
+		}
+	}
+
+	/**
+	 * Returns the region from the db based on the session setting.
+	 */
+	currentRegion() {
+		const regionId = Session.get('region');
+
+		if (!regionId) {
+			return undefined;
+		}
+
+		return this.findOne(regionId);
+	}
+}
+export default new RegionsCollection();
