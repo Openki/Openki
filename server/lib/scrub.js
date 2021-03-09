@@ -3,7 +3,7 @@ export class ScrubRule {
 		return new ScrubRule(d.name, d.grace, d.select, d.remove, d.unset);
 	}
 
-	constructor(name, grace, select, remove, unset) {
+	constructor(name, grace, select, remove = false, unset = undefined) {
 		check(name, String);
 		this.name = name;
 
@@ -13,11 +13,11 @@ export class ScrubRule {
 		check(select, Object);
 		this.select = select;
 
-		check(remove, Match.Optional(Boolean));
-		this.remove = !!remove;
+		check(remove, Boolean);
+		this.remove = remove;
 
 		check(unset, Match.Optional([String]));
-		this.unset = unset || false;
+		this.unset = unset;
 	}
 
 	scrub(log, now) {
@@ -57,12 +57,11 @@ export class ScrubRule {
 			// where all the fields were already unset must not show
 			// up in the count of newly unset records.
 			const fieldSelects = [];
-			/* eslint-disable-next-line no-restricted-syntax */
-			for (const name of this.unset) {
+			this.unset.forEach((name) => {
 				const selector = `body.${name}`;
 				expr[selector] = '';
 				fieldSelects.push({ [selector]: { $exists: true } });
-			}
+			});
 			log.update(
 				{ $and: [select, { $or: fieldSelects }] },
 				{ $unset: expr },
@@ -85,9 +84,8 @@ export class Scrubber {
 	}
 
 	scrub(log, now) {
-		/* eslint-disable-next-line no-restricted-syntax */
-		for (const rule of this.rules) {
+		this.rules.forEach((rule) => {
 			rule.scrub(log, now);
-		}
+		});
 	}
 }
