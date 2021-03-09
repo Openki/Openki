@@ -3,6 +3,7 @@ import { check } from 'meteor/check';
 
 import Tenants from './tenants';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import userTenantDenormalizer from '../users/tenantDenormalizer';
 
 Meteor.methods({
 	/**
@@ -32,5 +33,7 @@ Meteor.methods({
 		}
 
 		Tenants.update(tenantId, update);
+
+		userTenantDenormalizer.afterUpdateMembership(user._id, tenantId, join);
 	},
 });
