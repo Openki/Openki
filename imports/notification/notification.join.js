@@ -94,18 +94,12 @@ notificationJoin.Model = function (entry) {
 			};
 			const subject = mf('notification.join.mail.subject', subjectvars, '{USER} joined {COURSE}: {ROLE}', userLocale);
 
-			const figures = [];
-			/* eslint-disable-next-line no-restricted-syntax */
-			for (const role of ['host', 'mentor', 'participant']) {
-				if (course.roles.includes(role)) {
-					figures.push(
-						{
-							role: StringTools.capitalize(mf(`roles.${role}.short`, {}, undefined, userLocale)),
-							count: course.membersWithRole(role).length,
-						},
-					);
-				}
-			}
+			const figures = ['host', 'mentor', 'participant']
+				.filter((role) => course.roles.includes(role))
+				.map((role) => ({
+					role: StringTools.capitalize(mf(`roles.${role}.short`, {}, undefined, userLocale)),
+					count: course.membersWithRole(role).length,
+				}));
 
 			let siteName;
 			let mailLogo;
