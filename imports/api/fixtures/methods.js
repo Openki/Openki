@@ -63,15 +63,14 @@ const sometimesAfter = function (date) {
 // This guard is here until we find a better solution.
 if (Meteor.settings.testdata) {
 	const regionsCreate = function () {
-		/* eslint-disable-next-line no-restricted-syntax */
-		for (const r of regions) {
+		regions.forEach((r) => {
 			const region = { ...r }; // clone
 			if (region.loc) {
 				const coordinates = region.loc.reverse(); // GeoJSON takes latitude first
 				region.loc = { type: 'Point', coordinates };
 			}
 			Regions.insert(region);
-		}
+		});
 
 		return `Inserted ${regions.length} region fixtures.`;
 	};
@@ -85,8 +84,7 @@ if (Meteor.settings.testdata) {
 	};
 
 	const groupsCreate = function () {
-		/* eslint-disable-next-line no-restricted-syntax */
-		for (const g of groups) {
+		groups.forEach((g) => {
 			const group = { ...g };
 			group.createdby = 'ServerScript_loadingTestgroups';
 
@@ -94,7 +92,7 @@ if (Meteor.settings.testdata) {
 			group._id = ensure.fixedId([group.name, group.description]);
 			group.members = _.map(group.members, (name) => ensure.user(name)._id);
 			Groups.insert(group);
-		}
+		});
 
 		return `Inserted ${groups.length} group fixtures.`;
 	};
@@ -105,47 +103,45 @@ if (Meteor.settings.testdata) {
 		// week but keep the weekday.
 		let dateOffset = 0;
 
-		/* eslint-disable-next-line no-restricted-syntax */
-		for (const e of events) {
-			const event = { ...e };
-			if (Events.findOne({ _id: event._id })) {
-				/* eslint-disable-next-line no-continue */
-				continue; // Don't create events that exist already
-			}
-			event.createdBy = ensure.user(event.createdby)._id;
-			event.groups = _.map(event.groups, ensure.group);
-			event.groupOrganizers = [];
+		events
+			// Don't create events that exist already
+			.filter((e) => !Events.findOne({ _id: e._id }))
+			.forEach((e) => {
+				const event = { ...e };
+				event.createdBy = ensure.user(event.createdby)._id;
+				event.groups = _.map(event.groups, ensure.group);
+				event.groupOrganizers = [];
 
-			// We place the first event in the series on the monday of this week
-			// and all later events relative to it.
-			if (dateOffset === 0) {
-				const weekstart = new Date();
-				weekstart.setHours(0);
-				weekstart.setMinutes(0);
-				weekstart.setSeconds(0);
-				weekstart.setDate(weekstart.getDate() - weekstart.getDay() + 1);
+				// We place the first event in the series on the monday of this week
+				// and all later events relative to it.
+				if (dateOffset === 0) {
+					const weekstart = new Date();
+					weekstart.setHours(0);
+					weekstart.setMinutes(0);
+					weekstart.setSeconds(0);
+					weekstart.setDate(weekstart.getDate() - weekstart.getDay() + 1);
 
-				const dayOfFirstEvent = new Date(event.start.$date);
-				dayOfFirstEvent.setHours(0);
-				dayOfFirstEvent.setMinutes(0);
-				dayOfFirstEvent.setSeconds(0);
-				dateOffset = weekstart.getTime() - dayOfFirstEvent.getTime();
-			}
+					const dayOfFirstEvent = new Date(event.start.$date);
+					dayOfFirstEvent.setHours(0);
+					dayOfFirstEvent.setMinutes(0);
+					dayOfFirstEvent.setSeconds(0);
+					dateOffset = weekstart.getTime() - dayOfFirstEvent.getTime();
+				}
 
-			event.venue = ensure.venue(event.venue, event.region);
-			event.internal = Boolean(event.internal);
+				event.venue = ensure.venue(event.venue, event.region);
+				event.internal = Boolean(event.internal);
 
 
-			const regionZone = LocalTime.zone(event.region);
+				const regionZone = LocalTime.zone(event.region);
 
-			event.startLocal = LocalTime.toString(new Date(event.start.$date + dateOffset));
-			event.start = regionZone.fromString(event.startLocal).toDate();
-			event.endLocal = new Date(event.end.$date + dateOffset);
-			event.end = regionZone.fromString(event.endLocal).toDate();
-			event.time_created = new Date(event.time_created.$date);
-			event.time_lastedit = new Date(event.time_lastedit.$date);
-			Events.insert(event);
-		}
+				event.startLocal = LocalTime.toString(new Date(event.start.$date + dateOffset));
+				event.start = regionZone.fromString(event.startLocal).toDate();
+				event.endLocal = new Date(event.end.$date + dateOffset);
+				event.end = regionZone.fromString(event.endLocal).toDate();
+				event.time_created = new Date(event.time_created.$date);
+				event.time_lastedit = new Date(event.time_lastedit.$date);
+				Events.insert(event);
+			});
 
 		return `Inserted ${events.length} event fixtures.`;
 	};
@@ -158,8 +154,7 @@ if (Meteor.settings.testdata) {
 			Regions.findOne('EZqQLGL4PtFCxCNrp'),
 		];
 
-		/* eslint-disable-next-line no-restricted-syntax */
-		for (const v of venues) {
+		venues.forEach((v) => {
 			const venueData = { ...v };
 			venueData.region = prng() > 0.85 ? testRegions[0] : testRegions[1];
 
@@ -170,7 +165,7 @@ if (Meteor.settings.testdata) {
 			venue.createdby = ensure.user(venue.createdby)._id;
 
 			Venues.update(venue._id, venue);
-		}
+		});
 
 		return `Inserted ${venues.length} venue fixtures.`;
 	};
@@ -178,13 +173,12 @@ if (Meteor.settings.testdata) {
 	const coursesCreate = function () {
 		const prng = Prng('createCourses');
 
-		/* eslint-disable-next-line no-restricted-syntax */
-		for (const c of courses) {
+		courses.forEach((c) => {
 			const course = { ...c };
-			/* eslint-disable-next-line no-restricted-syntax */
-			for (const member of course.members) {
+			course.members.forEach((member) => {
+				// eslint-disable-next-line no-param-reassign
 				member.user = ensure.user(member.user)._id;
-			}
+			});
 
 			course.createdby = ensure.user(course.createdby)._id;
 
@@ -216,7 +210,7 @@ if (Meteor.settings.testdata) {
 			course.interested = course.members.length;
 
 			Courses.insert(course);
-		}
+		});
 
 		return `Inserted ${courses.length} course fixtures.`;
 	};
