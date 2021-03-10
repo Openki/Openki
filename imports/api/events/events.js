@@ -86,15 +86,12 @@ export class OEvent {
 }
 
 /**
- * @extends {Mongo.Collection<EventModel>}
+ * @extends {Mongo.Collection<EventEntity, EventModel>}
  */
 export class EventsCollection extends Mongo.Collection {
 	constructor() {
 		super('Events', {
 
-			/**
-			 * @param {EventEntity} course
-			 */
 			transform(event) {
 				return _.extend(new OEvent(), event);
 			},
