@@ -99,14 +99,14 @@ export class Course {
 }
 
 /**
- * @extends {Mongo.Collection<CourseEntity>}
+ * @extends {Mongo.Collection<CourseModel>}
  */
 export class CoursesCollection extends Mongo.Collection {
 	constructor() {
 		super('Courses', {
 
 			/**
-			 * @param {CourseModel} course
+			 * @param {CourseEntity} course
 			 */
 			transform(course) {
 				return _.extend(new Course(), course);
@@ -115,7 +115,7 @@ export class CoursesCollection extends Mongo.Collection {
 	}
 
 	static Filtering() {
-		return Filtering(
+		return new Filtering(
 			{
 				region: Predicates.id,
 				search: Predicates.string,

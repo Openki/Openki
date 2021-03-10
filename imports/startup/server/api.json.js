@@ -1,5 +1,6 @@
 import Api from '/imports/Api';
 import FieldOrdering from '/imports/utils/field-ordering';
+import { FilteringReadError } from '/imports/utils/filtering';
 import SortSpec from '/imports/utils/sort-spec';
 
 WebApp.rawConnectHandlers.use('/api', (req, res, next) => {
@@ -7,9 +8,14 @@ WebApp.rawConnectHandlers.use('/api', (req, res, next) => {
 	return next();
 });
 
-const NoActionError = function (message) {
-	this.message = message;
-};
+class NoActionError {
+	/**
+	 * @param {string} message
+	 */
+	constructor(message) {
+		this.message = message;
+	}
+}
 
 const jSendResponder = function (res, process) {
 	try {

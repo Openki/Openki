@@ -91,7 +91,7 @@ const Events = new Mongo.Collection('Events', {
 	},
 });
 
-Events.Filtering = () => Filtering(
+Events.Filtering = () => new Filtering(
 	{
 		course: Predicates.id,
 		region: Predicates.id,
