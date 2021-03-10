@@ -1,13 +1,13 @@
 @mixin avatarInputThumb {
 	background: transparent;
-	cursor: pointer;
 	border-left: 10px solid transparent;
 	border-right: 10px solid transparent;
-	border-bottom: calc(2 * 10px * 0.866) solid black;
-	border-top: 0px solid transparent;
+	border-bottom: calc(2 * 10px * .866) solid #000;
+	border-top: 0 solid transparent;
 	border-radius: 0;
-	height: 0px;
-	width: 0px;
+	cursor: pointer;
+	height: 0;
+	width: 0;
 }
 
 @mixin avatarInputTrack {
