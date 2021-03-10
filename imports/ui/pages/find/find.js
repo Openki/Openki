@@ -7,7 +7,7 @@ import { $ } from 'meteor/jquery';
 import Alert from '/imports/api/alerts/alert';
 
 import Categories from '/imports/api/categories/categories';
-import Courses, { CoursesCollection } from '/imports/api/courses/courses';
+import Courses from '/imports/api/courses/courses';
 import CourseTemplate from '/imports/ui/lib/course-template';
 import FilterPreview from '/imports/ui/lib/filter-preview';
 import ScssVars from '/imports/ui/lib/scss-vars';
@@ -92,7 +92,7 @@ Template.find.onCreated(function () {
 	instance.courseLimit = new ReactiveVar(instance.courseBlockSize);
 	instance.coursesReady = new ReactiveVar(false); // Latch
 
-	const filter = CoursesCollection.Filtering();
+	const filter = Courses.Filtering();
 	instance.filter = filter;
 
 	// Read URL state

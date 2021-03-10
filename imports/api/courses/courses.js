@@ -10,6 +10,7 @@ import Predicates from '/imports/utils/predicates';
 import StringTools from '/imports/utils/string-tools';
 
 import { HasRoleUser } from '/imports/utils/course-role-utils';
+/** @typedef {import('imports/api/users/users').UserModel} UserModel */
 
 // ======== DB-Model: ========
 /**
@@ -50,8 +51,11 @@ import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 export class Course {
 	constructor() {
+		/** @type {CourseMemberEntity[]} */
 		this.members = [];
+		/** @type {string[]} */
 		this.roles = [];
+		/** @type {string[]} */
 		this.groupOrganizers = [];
 	}
 
@@ -66,7 +70,7 @@ export class Course {
 	/**
 	 * Check whether a user may edit the course.
 	 * @this {CourseModel}
-	 * @param {Object} user
+	 * @param {string | UserModel | null | undefined} user
 	 */
 	editableBy(user) {
 		if (!user) {
@@ -114,7 +118,8 @@ export class CoursesCollection extends Mongo.Collection {
 		});
 	}
 
-	static Filtering() {
+	// eslint-disable-next-line class-methods-use-this
+	Filtering() {
 		return new Filtering(
 			{
 				region: Predicates.id,
