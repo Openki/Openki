@@ -1,6 +1,28 @@
 import { _ } from 'meteor/underscore';
+import { FilteringReadError } from './filtering';
+
+/**
+ * @typedef {{
+    merge(other: ParamWrapper): ParamWrapper;
+    without(predicate: ParamWrapper): boolean;
+    get(): any;
+    param(): string;
+    query(): any;
+    equals(other: ParamWrapper): boolean;
+}} ParamWrapper
+ */
+
+
+/**
+ * @callback Predicate
+ * @param {string} param
+ * @returns {ParamWrapper | false}
+ */
 
 const Predicates = {
+	/**
+	 * @type Predicate
+	 */
 	string(param) {
 		return {
 			merge(other) { return other; },
@@ -11,13 +33,25 @@ const Predicates = {
 			equals(other) { return param === other.get(); },
 		};
 	},
+
+	/**
+	 * @type Predicate
+	 */
 	id(param) {
 		if (param === 'all') {
 			return false;
 		}
 		return Predicates.string(param);
 	},
+
+	/**
+	 * @type Predicate
+	 */
 	ids(param) {
+		/**
+		 * @param {string[]} ids
+		 * @returns {ParamWrapper | false}
+		 */
 		const make = function (ids) {
 			return {
 				merge(other) { return make(_.union(ids, other.get())); },
@@ -43,6 +77,10 @@ const Predicates = {
 		};
 		return make(_.uniq(param.split(',')));
 	},
+
+	/**
+	 * @type Predicate
+	 */
 	require(param) {
 		if (!param) {
 			return false;
@@ -56,6 +94,10 @@ const Predicates = {
 			equals() { return true; },
 		};
 	},
+
+	/**
+	 * @type Predicate
+	 */
 	flag(param) {
 		if (param === undefined) {
 			return false;
@@ -66,11 +108,15 @@ const Predicates = {
 			merge(other) { return other; },
 			without() { return false; },
 			get() { return state; },
-			param() { return state ? 1 : 0; },
+			param() { return state ? '1' : '0'; },
 			query() { return state; },
 			equals(other) { return other.get() === state; },
 		};
 	},
+
+	/**
+	 * @type Predicate
+	 */
 	date(param) {
 		if (!param) {
 			throw new FilteringReadError(param, 'Empty date');

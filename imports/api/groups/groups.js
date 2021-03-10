@@ -16,7 +16,7 @@ import Filtering from '/imports/utils/filtering';
 
 const Groups = new Mongo.Collection('Groups');
 
-Groups.Filtering = () => Filtering(
+Groups.Filtering = () => new Filtering(
 	{},
 );
 

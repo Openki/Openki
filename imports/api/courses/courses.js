@@ -10,6 +10,7 @@ import Predicates from '/imports/utils/predicates';
 import StringTools from '/imports/utils/string-tools';
 
 import { HasRoleUser } from '/imports/utils/course-role-utils';
+/** @typedef {import('imports/api/users/users').UserModel} UserModel */
 import tenantDenormalizer from './tenantDenormalizer';
 
 // ======== DB-Model: ========
@@ -52,8 +53,11 @@ import tenantDenormalizer from './tenantDenormalizer';
 
 export class Course {
 	constructor() {
+		/** @type {CourseMemberEntity[]} */
 		this.members = [];
+		/** @type {string[]} */
 		this.roles = [];
+		/** @type {string[]} */
 		this.groupOrganizers = [];
 	}
 
@@ -68,7 +72,7 @@ export class Course {
 	/**
 	 * Check whether a user may edit the course.
 	 * @this {CourseModel}
-	 * @param {Object} user
+	 * @param {string | UserModel | null | undefined} user
 	 */
 	editableBy(user) {
 		if (!user) {
@@ -101,14 +105,14 @@ export class Course {
 }
 
 /**
- * @extends {Mongo.Collection<CourseEntity>}
+ * @extends {Mongo.Collection<CourseModel>}
  */
 export class CoursesCollection extends Mongo.Collection {
 	constructor() {
 		super('Courses', {
 
 			/**
-			 * @param {CourseModel} course
+			 * @param {CourseEntity} course
 			 */
 			transform(course) {
 				return _.extend(new Course(), course);
@@ -126,8 +130,9 @@ export class CoursesCollection extends Mongo.Collection {
 		return super.insert(enrichedCourse, callback);
 	}
 
-	static Filtering() {
-		return Filtering(
+	// eslint-disable-next-line class-methods-use-this
+	Filtering() {
+		return new Filtering(
 			{
 				region: Predicates.id,
 				search: Predicates.string,

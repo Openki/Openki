@@ -194,7 +194,7 @@ Router.map(function () {
 				internal: Predicates.flag,
 				hidePricePolicy: Predicates.flag,
 			};
-			const params = Filtering(predicates).read(this.params.query).done().toQuery();
+			const params = new Filtering(predicates).read(this.params.query).done().toQuery();
 
 			if (params.addTeamGroups) {
 				// For security reasons only 5 groups are allowed

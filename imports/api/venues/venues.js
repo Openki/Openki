@@ -75,7 +75,7 @@ if (Meteor.isServer) {
 	Venues._ensureIndex({ loc: '2dsphere' });
 }
 
-Venues.Filtering = () => Filtering(
+Venues.Filtering = () => new Filtering(
 	{ region: Predicates.id },
 );
 
