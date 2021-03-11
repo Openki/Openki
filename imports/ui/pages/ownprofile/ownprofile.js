@@ -4,11 +4,9 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import Roles from '/imports/api/roles/roles';
 
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 import Alert from '/imports/api/alerts/alert';
-import { HasRoleUser } from '/imports/utils/course-role-utils';
 import Analytics from '/imports/ui/lib/analytics';
 import Editable from '/imports/ui/lib/editable';
 
@@ -25,7 +23,6 @@ TemplateMixins.Expandible(Template.profile);
 Template.profile.onCreated(function () {
 	this.busy(false);
 	this.changingPass = new ReactiveVar(false);
-	this.verifyDelete = new ReactiveVar(false);
 
 	this.notificationsUnsubscribeSuccess = () => Router.current().params.query.unsubscribed === 'notifications';
 	this.privateMessagesUnsubscribeSuccess = () => Router.current().params.query.unsubscribed === 'privatemessages';
@@ -80,10 +77,6 @@ Template.profile.helpers({
 		return Template.instance().changingPass.get();
 	},
 
-	verifyDelete() {
-		return Template.instance().verifyDelete.get();
-	},
-
 	groupCount() {
 		return this.user.groups.count();
 	},
@@ -104,28 +97,6 @@ Template.profile.helpers({
 
 	isVenueEditor() {
 		return this.user.venues.count() > 0;
-	},
-
-	roles() {
-		return _.clone(Roles).reverse();
-	},
-
-	coursesByRole(role) {
-		const templateData = Template.instance().data;
-		const { involvedIn } = templateData;
-		const userID = templateData.user._id;
-		const coursesForRole = [];
-
-		involvedIn.forEach((course) => {
-			if (HasRoleUser(course.members, role, userID)) {
-				coursesForRole.push(course);
-			}
-		});
-		return coursesForRole;
-	},
-
-	roleMyList() {
-		return `roles.${this.type}.myList`;
 	},
 
 	notificationsUnsubscribeSuccess() {

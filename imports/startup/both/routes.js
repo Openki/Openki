@@ -376,7 +376,6 @@ Router.map(function () {
 					verified: user.emails?.[0]?.verified || false,
 				};
 				data.user = userdata;
-				data.involvedIn = Courses.findFilter({ userInvolved: user._id });
 			}
 			return data;
 		},
