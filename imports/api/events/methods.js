@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
+import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
@@ -18,6 +19,7 @@ import HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
 import StringTools from '/imports/utils/string-tools';
 import UpdateMethods from '/imports/utils/update-methods';
+import tenantDenormalizer from './tenantDenormalizer';
 
 /**
  * @param {{
@@ -147,7 +149,7 @@ Meteor.methods({
 		if (!user) {
 			if (Meteor.isClient) {
 				PleaseLogin();
-				return;
+				return undefined;
 			}
 			throw new Meteor.Error(401, 'please log in');
 		}
@@ -294,7 +296,8 @@ Meteor.methods({
 		if (isNew) {
 			changes.createdBy = user._id;
 			changes.groupOrganizers = [];
-			eventId = Events.insert(changes);
+			const enrichtedChanges = tenantDenormalizer.enrich(changes, region);
+			eventId = Events.insert(enrichtedChanges);
 		} else {
 			Events.update(eventId, { $set: changes });
 
@@ -343,7 +346,6 @@ Meteor.methods({
 			}
 		}
 
-		/* eslint-disable-next-line consistent-return */
 		return eventId;
 	},
 

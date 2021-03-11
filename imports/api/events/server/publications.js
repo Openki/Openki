@@ -6,22 +6,22 @@ import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors'
 
 Meteor.publish('events', (region) => {
 	if (!region) {
-		return Events.find();
+		return Events.find({ tenant: { $in: Meteor.user()?.tenants || [] } });
 	}
-	return Events.find({ region });
+	return Events.find({ region, tenant: { $in: Meteor.user()?.tenants || [] } });
 });
 
 Meteor.publish('event', (eventId) => {
 	check(eventId, String);
-	return Events.find(eventId);
+	return Events.find({ _id: eventId, tenant: { $in: Meteor.user()?.tenants || [] } });
 });
 
 Meteor.publish('Events.findFilter', (filter, limit, skip, sort) => Events.findFilter(filter, limit, skip, sort));
 
-Meteor.publish('eventsForCourse', (courseId) => Events.find({ courseId }));
+Meteor.publish('eventsForCourse', (courseId) => Events.find({ courseId, tenant: { $in: Meteor.user()?.tenants || [] } }));
 
 Meteor.publish('affectedReplica', (eventId) => {
-	const event = Events.findOne(eventId);
+	const event = Events.findOne({ _id: eventId, tenant: { $in: Meteor.user()?.tenants || [] } });
 	if (!event) {
 		throw new Meteor.Error(400, `provided event id ${eventId} is invalid`);
 	}

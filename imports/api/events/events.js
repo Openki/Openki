@@ -16,6 +16,7 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 /**
  * @typedef {Object} EventEntity
  * @property {string} [_id] ID
+ * @property {string} [tenant] tenant ID
  * @property {string} [region] ID_region
  * @property {string} [title]
  * @property {string} [slug]
@@ -91,7 +92,6 @@ export class OEvent {
 export class EventsCollection extends Mongo.Collection {
 	constructor() {
 		super('Events', {
-
 			transform(event) {
 				return _.extend(new OEvent(), event);
 			},
@@ -220,6 +220,8 @@ export class EventsCollection extends Mongo.Collection {
 		}
 
 		options.skip = skip;
+
+		find.tenant = { $in: Meteor.user()?.tenants || [] };
 
 		if (filter.period) {
 			find.start = { $lt: filter.period[1] }; // Start date before end of period
