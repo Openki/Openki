@@ -70,8 +70,8 @@ Template.profile.onCreated(function () {
 	this.autorun(() => {
 		const user = Meteor.user();
 
-		instance.editableName.setText(user.username);
-		instance.editableDescription.setText(user.description);
+		instance.editableName.setText(user?.username || '');
+		instance.editableDescription.setText(user?.description || '');
 	});
 });
 
@@ -97,13 +97,6 @@ Template.profile.helpers({
 
 	allowPrivateMessagesChecked() {
 		if (this.user.allowPrivateMessages) {
-			return 'checked';
-		}
-		return '';
-	},
-
-	privacyChecked() {
-		if (this.user.privacy) {
 			return 'checked';
 		}
 		return '';

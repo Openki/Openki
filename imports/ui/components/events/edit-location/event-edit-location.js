@@ -8,6 +8,7 @@ import Alert from '/imports/api/alerts/alert';
 
 import LocationTracker from '/imports/ui/lib/location-tracker';
 import Venues from '/imports/api/venues/venues';
+/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import '/imports/ui/components/map/map';
 import '/imports/ui/components/venues/link/venue-link';
@@ -119,7 +120,7 @@ Template.eventEditVenue.onCreated(function () {
 			query.recent = true;
 		}
 		// We dont have recent events loaded on the client
-		const localQuery = _.extend(query, { recent: false });
+		const localQuery = _.extend({}, query, { recent: false });
 
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
@@ -134,6 +135,7 @@ Template.eventEditVenue.onCreated(function () {
 		});
 	});
 
+	/** @type {ReactiveVar<UserModel|false>} */
 	this.venueEditor = new ReactiveVar(false);
 	this.autorun(() => {
 		const venueEditor = this.location.get().editor;

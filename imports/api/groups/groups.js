@@ -35,12 +35,16 @@ export class GroupsCollection extends Mongo.Collection {
 	 * @param {boolean} [filter.own] Limit to groups where logged-in user is a member
 	 * @param {string|false} [filter.user] Limit to groups where given user ID is a
 	 * member (client only)
-	 * @param {number} limit
-	 * @param {number} skip
+	 * @param {number} [limit]
+	 * @param {number} [skip]
+	 * @param {*} [sort]
 	 */
-	findFilter(filter, limit, skip, sort) {
+	findFilter(filter, limit = 0, skip, sort) {
 		const find = {};
 
+		/**
+		 * @type {Mongo.Options<GroupEntity>}
+		 */
 		const options = { skip, sort };
 
 		if (limit > 0) {
@@ -49,17 +53,12 @@ export class GroupsCollection extends Mongo.Collection {
 
 		if (filter.own) {
 			const me = Meteor.userId();
-			if (!me) return []; // I don't exist? How could I be in a group?!
-
-			find.members = me;
-		}
-
-		// If the property is set but falsy, we don't return anything
-		if (Object.prototype.hasOwnProperty.call(filter, 'user')) {
-			if (!filter.user) {
+			if (!me) {
+				// User is not logged in...
 				return [];
 			}
-			find.members = filter.user;
+
+			find.members = me;
 		}
 
 		return this.find(find, options);

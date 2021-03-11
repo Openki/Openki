@@ -205,7 +205,7 @@ export class EventsCollection extends Mongo.Collection {
 	 * The events are sorted by start date (ascending, before-filter causes descending order)
 	 *
 	 */
-	findFilter(filter, limit, skip, sort) {
+	findFilter(filter, limit = 0, skip, sort) {
 		const find = {};
 		const and = [];
 
