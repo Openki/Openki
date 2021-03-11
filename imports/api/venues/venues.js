@@ -64,53 +64,61 @@ export class Venue {
 	}
 }
 
-/** @type Mongo.Collection<VenueEnity, VenueModel> */
-const Venues = new Mongo.Collection('Venues', {
-	transform(venue) {
-		return _.extend(new Venue(), venue);
-	},
-});
+/**
+ * @extends {Mongo.Collection<VenueEnity, VenueModel>}
+ */
+export class VenueCollection extends Mongo.Collection {
+	constructor() {
+		super('Venues', {
+			transform(venue) {
+				return _.extend(new Venue(), venue);
+			},
+		});
 
-if (Meteor.isServer) {
-	Venues._ensureIndex({ loc: '2dsphere' });
+		if (Meteor.isServer) {
+			this._ensureIndex({ loc: '2dsphere' });
+		}
+
+		this.facilityOptions = ['projector', 'screen', 'audio', 'blackboard', 'whiteboard',
+			'flipchart', 'wifi', 'kitchen', 'wheelchairs',
+		];
+	}
+
+	// eslint-disable-next-line class-methods-use-this
+	Filtering() {
+		return new Filtering(
+			{ region: Predicates.id },
+		);
+	}
+
+	/**
+	 * Find venues for given filters
+	 * @param {object} filter dictionary with filter options
+	 * @param {string} filter.search string of words to search for
+	 * @param {string} filter.region restrict to venues in that region
+	 * @param {number} limit how many to find
+	 * @param {number} skip
+	 * @param {*} sort
+	 */
+	findFilter(filter, limit, skip, sort) {
+		const find = {};
+		const options = { skip, sort };
+
+		if (limit > 0) {
+			options.limit = limit;
+		}
+
+		if (filter.region) {
+			find.region = filter.region;
+		}
+
+		if (filter.search) {
+			const searchTerms = filter.search.split(/\s+/);
+			find.$and = _.map(searchTerms, (searchTerm) => ({ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }));
+		}
+
+		return this.find(find, options);
+	}
 }
 
-Venues.Filtering = () => new Filtering(
-	{ region: Predicates.id },
-);
-
-
-Venues.facilityOptions = ['projector', 'screen', 'audio', 'blackboard', 'whiteboard',
-	'flipchart', 'wifi', 'kitchen', 'wheelchairs',
-];
-
-/**
- * Find venues for given filters
- * @param {object} filter dictionary with filter options
- * @param {string} filter.search string of words to search for
- * @param {string} filter.region restrict to venues in that region
- * @param {number} limit how many to find
- * @param {number} skip
- * @param {*} sort
- */
-Venues.findFilter = function (filter, limit, skip, sort) {
-	const find = {};
-	const options = { skip, sort };
-
-	if (limit > 0) {
-		options.limit = limit;
-	}
-
-	if (filter.region) {
-		find.region = filter.region;
-	}
-
-	if (filter.search) {
-		const searchTerms = filter.search.split(/\s+/);
-		find.$and = _.map(searchTerms, (searchTerm) => ({ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }));
-	}
-
-	return Venues.find(find, options);
-};
-
-export default Venues;
+export default new VenueCollection();
