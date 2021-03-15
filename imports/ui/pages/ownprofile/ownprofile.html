@@ -33,7 +33,7 @@
 				{{mf 'notifications.unsubscribeError' 'There has been an error with your unsubscription. Please Try again.'}}
 			</div>
 		{{/if}}
-		{{#unless loggedIn}}
+		{{#unless currentUser}}
 			{{mf 'profile.not_logged_in' 'You are not logged in'}}
 		{{else}}
 			<div class="page-component">
@@ -65,7 +65,7 @@
 
 				<div class="row">
 					<div class="col-sm-6">
-						{{#if user.have_email}}
+						{{#if user.email}}
 							<form class="js-email-form">
 								<div class="form-group {{errorClass 'email'}}">
 									<label for="editform_email" class="sr-only">
