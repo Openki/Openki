@@ -3,27 +3,34 @@
 // This formats the mocha test-result output
 // It's not used on the live-site, but I didn't
 // work out how to only include it in the dev-builds.
+// Based on readme but improved: https://github.com/meteortesting/meteor-mocha
 #mocha {
   background: $white;
   border-right: 2px solid $black;
   height: 100%;
   left: 0;
   margin: 0 !important;
-  min-width: 300px;
   opacity: .6;
   overflow: auto;
   padding: 5rem 1rem 1rem;
   position: fixed;
+  resize: horizontal;
   top: 0;
-  transition: .5s;
+  transition: opacity .5s;
+  width: 345px;
   z-index: 10000;
 
   &:hover {
     opacity: 1;
-    transition: .1s;
+    transition: opacity .1s;
   }
 
   #mocha-stats {
+    min-width: 300px;
     position: absolute;
+  }
+
+  #mocha-report {
+    min-width: 300px;
   }
 }
