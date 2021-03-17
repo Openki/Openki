@@ -52,7 +52,7 @@ export function elementsReady(test) {
  * @template T
  * @param {()=>T} assertion function that throws an AssertionError until its demands are met
  * @param {number} timeout after this many milliseconds, the AssertionError is passed on
- * @returns {()=>Promise<T>} Returns a promise that resolves with the last return value of 
+ * @returns {()=>Promise<T>} Returns a promise that resolves with the last return value of
  * assertion() once the assertion holds. The promise is
  * rejected when the assertion throws something which is not an AssertionError
  * or when the timeout runs out without the assertion coming through.
