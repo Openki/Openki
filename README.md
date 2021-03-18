@@ -77,6 +77,8 @@ Run tests with:
 
     meteor npm run app-test
 
+**Note:** Add `--grep <pattern>` at the end to only run tests that match the pattern. eg. `meteor npm run app-test --grep="Propose course via frame"`
+
 Run linters with these two commands:
 
     meteor npm run sass-lint

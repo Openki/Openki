@@ -47,16 +47,12 @@ if (Meteor.isClient) {
 				}))
 				.then(waitFor(() => {
 					assert(
-						jQuery('.course-role-enrolled').text().indexOf('mentor') >= 0,
+						jQuery('.course-role-enrolled button[name=mentor]').length >= 0,
 						'Listed as mentor in the created course',
 					);
 				}));
 		});
-	});
 
-	describe('Propose course via frame', function () {
-		this.timeout(30000);
-		const randomTitle = `PROPOSE${1000 + Math.floor(Math.random() * 9000)}`;
 		it('allows to add multiple groups', () => {
 			Router.go('/frame/propose?addTeamGroups=cc89c5e476,573edec5d6');
 

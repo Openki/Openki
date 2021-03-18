@@ -44,7 +44,7 @@ gadicohen:robots-txt
 shell-server@0.5.0
 ecmascript@0.15.0
 wanglian:bootstrap3-datepicker
-meteortesting:mocha
+meteortesting:mocha@2.0.1
 facebook-config-ui@1.0.2
 github-config-ui@1.0.1
 google-config-ui@1.0.1
