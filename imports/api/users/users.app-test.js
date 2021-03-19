@@ -48,7 +48,7 @@ if (Meteor.isClient) {
 					}
 				});
 			})
-				.then(login(oldDummy, 'hunter2'))
+				.then(() => login(oldDummy, 'hunter2'))
 				.then(() => new Promise((resolve) => {
 					Meteor.call('user.updateUsername', newDummy, (err) => {
 						if (err) {

@@ -13,26 +13,26 @@ if (Meteor.isClient) {
 		beforeEach((done) => {
 			Meteor.call('fixtures.create', done);
 		});
-		it('should list 8 courses for unauthenticated user (Testistan)', () => {
+		it('should list 8 courses for unauthenticated user (Testistan)', async () => {
 			Router.go('/');
 			Session.set('region', '9JyFCoKWkxnf8LWPh'); // Testistan
 
-			return waitForSubscriptions()
-				.then(waitFor(() => {
-					const titles = document.getElementsByClassName('course-compact-title');
-					assert.equal(titles.length, 8, 'expect to see test course titles');
-					return titles;
-				}, 6000))
-				.then((titles) => waitFor(() => {
-					assert.equal(titles[0].textContent, 'Sprachaustausch');
-					assert.equal(titles[1].textContent, 'Game Design mit Unity');
-					assert.equal(titles[2].textContent, 'Aikido');
-					assert.equal(titles[3].textContent, 'Open Lab');
-					assert.equal(titles[4].textContent, 'First-Aid Course');
-					assert.equal(titles[5].textContent, 'Ubuntu auf Mac (dual-Boot)');
-					assert.equal(titles[6].textContent, 'Velo Flicken');
-					assert.equal(titles[7].textContent, 'Meteor.js Workshop');
-				})());
+			await waitForSubscriptions();
+			const titles = await waitFor(() => {
+				const titles = document.getElementsByClassName('course-compact-title');
+				assert.equal(titles.length, 8, 'expect to see test course titles');
+				return titles;
+			}, 6000);
+			await waitFor(() => {
+				assert.equal(titles[0].textContent, 'Sprachaustausch');
+				assert.equal(titles[1].textContent, 'Game Design mit Unity');
+				assert.equal(titles[2].textContent, 'Aikido');
+				assert.equal(titles[3].textContent, 'Open Lab');
+				assert.equal(titles[4].textContent, 'First-Aid Course');
+				assert.equal(titles[5].textContent, 'Ubuntu auf Mac (dual-Boot)');
+				assert.equal(titles[6].textContent, 'Velo Flicken');
+				assert.equal(titles[7].textContent, 'Meteor.js Workshop');
+			});
 		});
 	});
 }

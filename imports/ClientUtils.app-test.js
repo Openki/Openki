@@ -2,6 +2,7 @@ import { DDP } from 'meteor/ddp-client';
 import { Meteor } from 'meteor/meteor';
 import { Promise } from 'meteor/promise';
 import AssertionError from 'assertion-error';
+import { promisify } from 'es6-promisify';
 
 /**
  * Returns a promise which resolves when all subscriptions are done.
@@ -17,6 +18,13 @@ export function waitForSubscriptions() {
 		}, 200);
 	});
 }
+
+/**
+ * Tracker.afterFlush runs code when all consequent of a tracker based change
+ * (such as a route change) have occured. This makes it a promise.
+ * Source: https://guide.meteor.com/testing.html#full-app-integration-test
+ */
+export const afterFlush = Tracker.afterFlush && promisify(Tracker.afterFlush);
 
 /**
  * Returns a promise which resolves if test returns anything but undefined.
@@ -46,38 +54,8 @@ export function elementsReady(test) {
 	});
 }
 
-/**
- * @param {string} user
- * @param {string} password
- * @return {()=>Promise<void>}
- */
-export function login(user, password) {
-	return () => new Promise((done, reject) => {
-		Meteor.loginWithPassword(user, password, (err) => {
-			if (err) {
-				reject(err);
-			} else {
-				done();
-			}
-		});
-	});
-}
-
-
-/**
- * @return {()=>Promise<void>}
- */
-export function logout() {
-	return () => new Promise((done, reject) => {
-		Meteor.logout((err) => {
-			if (err) {
-				reject(err);
-			} else {
-				done();
-			}
-		});
-	});
-}
+export const login = Meteor.loginWithPassword && promisify(Meteor.loginWithPassword);
+export const logout = Meteor.logout && promisify(Meteor.logout);
 
 
 /**
@@ -85,14 +63,14 @@ export function logout() {
  * @template T
  * @param {()=>T} assertion function that throws an AssertionError until its demands are met
  * @param {number} timeout after this many milliseconds, the AssertionError is passed on
- * @returns {()=>Promise<T>} Returns a promise that resolves with the last return value of
+ * @returns {Promise<T>} Returns a promise that resolves with the last return value of
  * assertion() once the assertion holds. The promise is
  * rejected when the assertion throws something which is not an AssertionError
  * or when the timeout runs out without the assertion coming through.
 
  */
 export function waitFor(assertion, timeout = 1000) {
-	return () => new Promise((resolve, reject) => {
+	return new Promise((resolve, reject) => {
 		const start = new Date().getTime();
 		/** @type {number|false} */
 		let timer = false;
