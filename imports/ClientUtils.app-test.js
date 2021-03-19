@@ -4,10 +4,10 @@ import { Promise } from 'meteor/promise';
 import AssertionError from 'assertion-error';
 
 /**
- * Returns a promise which resolves when all subscriptions are ready.
+ * Returns a promise which resolves when all subscriptions are done.
  * @returns {Promise<void>}
  */
-export function subscriptionsReady() {
+export function waitForSubscriptions() {
 	return new Promise((resolve) => {
 		const poll = Meteor.setInterval(() => {
 			if (DDP._allSubscriptionsReady()) {
@@ -43,6 +43,39 @@ export function elementsReady(test) {
 				childList: true, subtree: true, attributes: false, characterData: false,
 			});
 		}
+	});
+}
+
+/**
+ * @param {string} user
+ * @param {string} password
+ * @return {()=>Promise<void>}
+ */
+export function login(user, password) {
+	return () => new Promise((done, reject) => {
+		Meteor.loginWithPassword(user, password, (err) => {
+			if (err) {
+				reject(err);
+			} else {
+				done();
+			}
+		});
+	});
+}
+
+
+/**
+ * @return {()=>Promise<void>}
+ */
+export function logout() {
+	return () => new Promise((done, reject) => {
+		Meteor.logout((err) => {
+			if (err) {
+				reject(err);
+			} else {
+				done();
+			}
+		});
 	});
 }
 

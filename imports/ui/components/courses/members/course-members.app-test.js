@@ -3,7 +3,7 @@ import { Router } from 'meteor/iron:router';
 import { assert } from 'chai';
 import { jQuery } from 'meteor/jquery';
 
-import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test';
+import { login, waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 
 if (Meteor.isClient) {
 	describe('Subscribe to participant role', function () {
@@ -25,20 +25,12 @@ if (Meteor.isClient) {
 				const sel = jQuery(`.course-member-comment-body:contains('${comment}')`);
 				assert(sel.length > 0, 'User comment visible after joining');
 			};
-			return subscriptionsReady()
+			return waitForSubscriptions()
 				.then(waitFor(findJoinButton))
 				.then((button) => { button.click(); })
 			// Purposefully only logging in after having decided to participate
 			// We want to support this.
-				.then(() => new Promise((done, reject) => {
-					Meteor.loginWithPassword('Seee', 'greg', (err) => {
-						if (err) {
-							reject(err);
-						} else {
-							done();
-						}
-					});
-				}))
+				.then(login('Seee', 'greg'))
 				.then(waitFor(findCommentField))
 				.then((field) => {
 					field.text(comment);

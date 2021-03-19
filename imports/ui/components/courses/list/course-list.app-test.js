@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import { assert } from 'chai';
 
-import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test';
+import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 
 if (Meteor.isClient) {
 	describe('Frontpage', function () {
@@ -17,7 +17,7 @@ if (Meteor.isClient) {
 			Router.go('/');
 			Session.set('region', '9JyFCoKWkxnf8LWPh'); // Testistan
 
-			return subscriptionsReady()
+			return waitForSubscriptions()
 				.then(waitFor(() => {
 					const titles = document.getElementsByClassName('course-compact-title');
 					assert.equal(titles.length, 8, 'expect to see test course titles');

@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
+import { login } from '/imports/ClientUtils.app-test';
 
 
 const createDummy = function () {
@@ -46,31 +47,25 @@ if (Meteor.isClient) {
 						resolve();
 					}
 				});
-			}).then(() => new Promise((resolve, reject) => {
-				Meteor.loginWithPassword(oldDummy, 'hunter2', (err) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve();
-					}
-				});
-			})).then(() => new Promise((resolve) => {
-				Meteor.call('user.updateUsername', newDummy, (err) => {
-					if (err) {
-						assert.isNotOk(err, 'not expecting username-change errors');
-					}
+			})
+				.then(login(oldDummy, 'hunter2'))
+				.then(() => new Promise((resolve) => {
+					Meteor.call('user.updateUsername', newDummy, (err) => {
+						if (err) {
+							assert.isNotOk(err, 'not expecting username-change errors');
+						}
 
-					Meteor.users.find({ username: newDummy }).observe({
-						added: () => {
-							resolve();
-						},
+						Meteor.users.find({ username: newDummy }).observe({
+							added: () => {
+								resolve();
+							},
+						});
 					});
-				});
-			})).then(() => {
+				})).then(() => {
 				// check if username has changed to the correct string
-				const user = Meteor.user();
-				assert.strictEqual(newDummy, user.username, 'username was changed successfully');
-			}));
+					const user = Meteor.user();
+					assert.strictEqual(newDummy, user.username, 'username was changed successfully');
+				}));
 		});
 	});
 }

@@ -3,7 +3,7 @@ import { Router } from 'meteor/iron:router';
 import { assert } from 'chai';
 import { jQuery } from 'meteor/jquery';
 
-import { subscriptionsReady, waitFor } from '/imports/ClientUtils.app-test';
+import { login, waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 
 if (Meteor.isClient) {
 	describe('Propose course via frame', function () {
@@ -19,17 +19,9 @@ if (Meteor.isClient) {
 				);
 			};
 
-			return subscriptionsReady()
+			return waitForSubscriptions()
 				.then(waitFor(haveEditfield))
-				.then(() => new Promise((done, reject) => {
-					Meteor.loginWithPassword('Seee', 'greg', (err) => {
-						if (err) {
-							reject(err);
-						} else {
-							done();
-						}
-					});
-				}))
+				.then(login('Seee', 'greg'))
 				.then(() => {
 					jQuery('input[value=mentor]').click();
 					jQuery('.js-title').val(randomTitle);
@@ -63,7 +55,7 @@ if (Meteor.isClient) {
 				);
 			};
 
-			return subscriptionsReady()
+			return waitForSubscriptions()
 				.then(waitFor(haveEditfield))
 				.then(() => {
 					jQuery('input[value=mentor]').click();
