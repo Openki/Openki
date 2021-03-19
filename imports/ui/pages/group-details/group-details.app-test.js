@@ -3,9 +3,8 @@ import { Router } from 'meteor/iron:router';
 import { assert } from 'chai';
 import { jQuery } from 'meteor/jquery';
 
-import {
-	login, logout, waitForSubscriptions, waitFor,
-} from '/imports/ClientUtils.app-test';
+import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
+import MeteorAsync from '/imports/utils/promisify';
 
 if (Meteor.isClient) {
 	describe('Create course in group', function () {
@@ -32,7 +31,7 @@ if (Meteor.isClient) {
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 			await waitFor(findExpectedFormTitle);
-			await login('Seee', 'greg');
+			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
 
 			// Create the course
 			jQuery('.js-title').val(randomTitle);
@@ -59,8 +58,8 @@ if (Meteor.isClient) {
 			// See ticket #1331 group members can not edit all courses despite their
 			// group being in the orga-team.
 			// So we login as a member of "SKG" then check whether the edit button shows up.
-			await logout();
-			await login('Normalo', 'greg');
+			await MeteorAsync.logoutAsync();
+			await MeteorAsync.loginWithPasswordAsync('Normalo', 'greg');
 			await waitFor(() => {
 				assert(
 					jQuery('.js-course-edit').length > 0,
@@ -106,7 +105,7 @@ if (Meteor.isClient) {
 			await waitFor(haveEditfield);
 			await waitFor(findExpectedFormTitle);
 			await waitFor(haveNotInternalCheckbox);
-			await login('greg', 'greg');
+			await MeteorAsync.loginWithPasswordAsync('greg', 'greg');
 			await waitFor(haveInternalCheckbox);
 
 			// Create the course

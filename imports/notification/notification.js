@@ -3,6 +3,7 @@ import Log from '/imports/api/log/log';
 import { Email } from 'meteor/email';
 import { Random } from 'meteor/random';
 import { _ } from 'meteor/underscore';
+import { Accounts } from 'meteor/accounts-base';
 
 import notificationEvent from '/imports/notification/notification.event';
 import notificationComment from '/imports/notification/notification.comment';

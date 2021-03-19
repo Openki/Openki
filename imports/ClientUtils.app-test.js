@@ -54,10 +54,6 @@ export function elementsReady(test) {
 	});
 }
 
-export const login = Meteor.loginWithPassword && promisify(Meteor.loginWithPassword);
-export const logout = Meteor.logout && promisify(Meteor.logout);
-
-
 /**
  * Try an assertion on every DOM mutation
  * @template T

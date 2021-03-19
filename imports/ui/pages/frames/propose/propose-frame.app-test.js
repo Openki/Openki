@@ -3,7 +3,8 @@ import { Router } from 'meteor/iron:router';
 import { assert } from 'chai';
 import { jQuery } from 'meteor/jquery';
 
-import { login, waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
+import MeteorAsync from '/imports/utils/promisify';
+import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 
 if (Meteor.isClient) {
 	describe('Propose course via frame', function () {
@@ -22,7 +23,7 @@ if (Meteor.isClient) {
 
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
-			await login('Seee', 'greg');
+			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
 
 			jQuery('input[value=mentor]').click();
 			jQuery('.js-title').val(randomTitle);

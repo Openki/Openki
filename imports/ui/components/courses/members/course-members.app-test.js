@@ -1,9 +1,10 @@
 import { Meteor } from 'meteor/meteor';
+import MeteorAsync from '/imports/utils/promisify';
 import { Router } from 'meteor/iron:router';
 import { assert } from 'chai';
 import { jQuery } from 'meteor/jquery';
 
-import { login, waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
+import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 
 if (Meteor.isClient) {
 	describe('Subscribe to participant role', function () {
@@ -30,7 +31,7 @@ if (Meteor.isClient) {
 			button.click();
 			// Purposefully only logging in after having decided to participate
 			// We want to support this.
-			await login('Seee', 'greg');
+			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
 			const field = await waitFor(findCommentField);
 			field.text(comment);
 			jQuery('.js-role-subscribe-btn').click();

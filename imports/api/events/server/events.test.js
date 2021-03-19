@@ -2,31 +2,12 @@ import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
 
 import Events from '/imports/api/events/events';
-
-function promiseMeteorCall(...args) {
-	return new Promise((resolve, reject) => {
-		Meteor.call(...args, (err, result) => {
-			if (err) {
-				reject(err);
-			} else {
-				resolve(result);
-			}
-		});
-	});
-}
+import MeteorAsync from '/imports/utils/promisify';
 
 if (Meteor.isClient) {
 	describe('Event save', () => {
 		it('Stores an event', (done) => {
-			new Promise((resolve, reject) => {
-				Meteor.loginWithPassword('greg', 'greg', (err) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve();
-					}
-				});
-			}).then(() => {
+			MeteorAsync.loginWithPasswordAsync('greg', 'greg').then(() => {
 				const theFuture = new Date();
 				theFuture.setHours(1000);
 
@@ -44,7 +25,7 @@ if (Meteor.isClient) {
 					region: regionId,
 					internal: true,
 				};
-			}).then((event) => promiseMeteorCall('event.save', { eventId: '', changes: event }).then(
+			}).then((event) => Meteor.callAsync('event.save', { eventId: '', changes: event }).then(
 				(eventId) => ({ event, eventId }),
 			)).then(({ event, eventId }) => {
 				assert.isString(eventId, 'event.save returns an eventId string');
@@ -54,7 +35,7 @@ if (Meteor.isClient) {
 					const event = { ...originalEvent };
 					delete event.region;
 					event.title += ' No really';
-					return promiseMeteorCall('event.save', { eventId, changes: event });
+					return Meteor.callAsync('event.save', { eventId, changes: event });
 				})
 				.then(() => done(), done);
 		});
@@ -65,15 +46,7 @@ if (Meteor.isClient) {
 			const textWithNonPrintables = "See what's hidden in your string… or be​hind﻿";
 			const expectedText = "See what's hidden in your string… or behind";
 
-			return new Promise((resolve, reject) => {
-				Meteor.loginWithPassword('greg', 'greg', (err) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve();
-					}
-				});
-			}).then(() => {
+			return MeteorAsync.loginWithPasswordAsync('greg', 'greg').then(() => {
 				const theFuture = new Date();
 				theFuture.setHours(1000);
 
@@ -91,7 +64,7 @@ if (Meteor.isClient) {
 					region: regionId,
 				};
 
-				return promiseMeteorCall('saveEvent', { eventId: '', changes: event });
+				return Meteor.callAsync('saveEvent', { eventId: '', changes: event });
 			}).then((eventId) => new Promise((resolve) => {
 				Meteor.subscribe('event', eventId, () => {
 					resolve(Events.findOne(eventId));

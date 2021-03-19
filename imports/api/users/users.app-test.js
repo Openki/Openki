@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
-import { login } from '/imports/ClientUtils.app-test';
+import { Accounts } from 'meteor/accounts-base';
+import MeteorAsync from '/imports/utils/promisify';
 
 
 const createDummy = function () {
@@ -48,7 +49,7 @@ if (Meteor.isClient) {
 					}
 				});
 			})
-				.then(() => login(oldDummy, 'hunter2'))
+				.then(() => MeteorAsync.loginWithPasswordAsync(oldDummy, 'hunter2'))
 				.then(() => new Promise((resolve) => {
 					Meteor.call('user.updateUsername', newDummy, (err) => {
 						if (err) {
