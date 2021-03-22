@@ -1,5 +1,5 @@
 {
-	"testdata": 1,
+	"testdata": true,
 	"prng": "static",
 	"admins": ["greg", "FeeLing", "IvanZ"],
 	"public": {

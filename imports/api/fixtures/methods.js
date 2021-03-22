@@ -1,11 +1,10 @@
-import seedrandom from 'seedrandom';
 import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 import Events from '/imports/api/events/events';
 import ensure from './ensureFixture';
-import './Prng';
+import Prng from './Prng';
 import Groups from '/imports/api/groups/groups';
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
@@ -19,10 +18,6 @@ const events = require('./data/event.fixtures.js').default;
 const groups = require('./data/group.fixtures.js').default;
 const regions = require('./data/region.fixtures.js').default;
 const venues = require('./data/venue.fixtures.js').default;
-
-const Prng = function (staticseed) {
-	return seedrandom(Meteor.settings.prng === 'static' ? staticseed : undefined);
-};
 
 /**
  * Make a number that looks like a human chose it, favouring 2 and 5
@@ -257,6 +252,7 @@ if (Meteor.settings.testdata) {
 				let { description } = course;
 				if (!description) description = 'No description'; // :-(
 				const words = _.shuffle(description.split(' '));
+				event.tenant = course.tenant;
 				event.region = course.region;
 				event.groups = course.groups;
 				event.groupOrganizers = [];
