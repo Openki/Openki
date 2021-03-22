@@ -12,7 +12,6 @@ module.exports = {
 	],
 	globals: {
 		Atomics: 'readonly',
-		FilteringReadError: 'writable',
 		L: 'readonly',
 		Log: 'writable',
 		MediumEditor: 'readonly',
@@ -21,15 +20,12 @@ module.exports = {
 		minuteTime: 'writable',
 		moment: 'readonly',
 		msgfmt: 'readonly',
-		Prng: 'readonly',
 		robots: 'writable',
 		RouterAutoscroll: 'writable',
 		SharedArrayBuffer: 'readonly',
 		sitemaps: 'readonly',
 		SSR: 'writable',
 		Tooltips: 'writable',
-		Users: 'writable',
-		Venue: 'writable',
 		VERSION: 'writable',
 	},
 	parserOptions: {

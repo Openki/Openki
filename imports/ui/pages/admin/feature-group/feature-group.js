@@ -9,7 +9,7 @@ import Regions from '/imports/api/regions/regions';
 import './feature-group.html';
 
 Template.featureGroup.onCreated(function featureGroupOnCreated() {
-	this.subscribe('groupsFind', {});
+	this.subscribe('Groups.findFilter', {});
 	this.busy(false);
 });
 

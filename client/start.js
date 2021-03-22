@@ -4,6 +4,7 @@ import '/imports/startup/client';
 import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
 import { _ } from 'meteor/underscore';
+import { Accounts } from 'meteor/accounts-base';
 
 import Alert from '/imports/api/alerts/alert';
 import Languages from '/imports/api/languages/languages';

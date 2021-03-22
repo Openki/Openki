@@ -44,7 +44,7 @@ const mixin = function (log, isServer, printToLog) {
 		log._ensureIndex({ rel: 1 });
 	}
 
-	log.Filtering = () => Filtering(
+	log.Filtering = () => new Filtering(
 		{
 			start: Predicates.date,
 			rel: Predicates.ids,

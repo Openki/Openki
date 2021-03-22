@@ -54,6 +54,7 @@ import IdTools from '/imports/utils/id-tools';
  * to them from other users
  * @property {boolean} [hidePricePolicy]
  * @property {string} [description]
+ * @property {object} [avatar]
  * @property {number} [avatar.color]
  * @property {string[]} [badges] (calculated) union of user's id and group ids for permission
  * checking, calculated by updateBadges()
@@ -67,16 +68,82 @@ import IdTools from '/imports/utils/id-tools';
 
 /** @typedef {import('../groups/groups').GroupEntity} GroupEntity */
 
-export const User = function () { };
+export class User {
+	/**
+	 * Check whether the user may promote things with the given group.
+	 * The user must be a member of the group to be allowed to promote things with it.
+	 *
+	 * @this {UserModel}
+	 * @param {string|GroupEntity} group The group to check, this may be an Id or a group object
+	 */
+	mayPromoteWith(group) {
+		const groupId = IdTools.extract(group);
+		if (!groupId || !this.groups) {
+			return false;
+		}
+		return this.groups.indexOf(groupId) >= 0;
+	}
+
+	/**
+	 * @this {UserModel}
+	 */
+	hasEmail() {
+		return !!this.emails?.[0]?.address;
+	}
+
+	/**
+	 * @this {UserModel}
+	 */
+	hasVerifiedEmail() {
+		return !!this.emails?.[0]?.verified && !!this.emails?.[0]?.address;
+	}
+
+	/**
+	 * Get email address of user
+	 * @this {UserModel}
+	 * @returns String with email address or Boolean false
+	 */
+	emailAddress() {
+		return this.emails?.[0]?.address || false;
+	}
+
+	/**
+	 * Get verified email address of user
+	 * @this {UserModel}
+	 * @returns String with verified email address or Boolean false
+	 */
+	verifiedEmailAddress() {
+		const emailRecord = this.emails?.[0];
+		return (emailRecord
+			&& emailRecord.verified
+			&& emailRecord.address)
+			|| false;
+	}
+
+	/**
+	 * @this {UserModel}
+	 * @param {string} role
+	 */
+	privileged(role) {
+		return (this.privileges
+			&& this.privileges.indexOf(role) > -1) || false;
+	}
+}
 
 const Users = Meteor.users;
 
-/** Get the current user
-  *
-  * If the user is not logged-in, a placeholder "anon" object is
-  * returned.
-  * @this {UserModel & {anon?: true}}
-  */
+/**
+ * @param {UserEntity} user
+ */
+Meteor.users._transform = function (user) {
+	return _.extend(new User(), user);
+};
+
+/**
+ * Get the current user
+ * @return {UserModel | UserModel & {anon?: true}} User or if the user is not logged-in, a
+ * placeholder "anon" object is returned.
+ */
 Users.currentUser = function () {
 	const logged = Meteor.user();
 	if (logged) {
@@ -88,72 +155,6 @@ Users.currentUser = function () {
 	anon._id = 'anon';
 	anon.anon = true;
 	return anon;
-};
-
-/** Check whether the user may promote things with the given group.
-  * The user must be a member of the group to be allowed to promote things with it.
-  *
-  * @this {UserModel}
-  * @param {String|GroupEntity} group - The group to check, this may be an Id or a group object
-  */
-User.prototype.mayPromoteWith = function (group) {
-	const groupId = IdTools.extract(group);
-	if (!groupId || !this.groups) {
-		return false;
-	}
-	return this.groups.indexOf(groupId) >= 0;
-};
-
-/**
- * @this {UserModel}
- */
-User.prototype.hasEmail = function () {
-	return !!this.emails?.[0]?.address;
-};
-
-/**
- * @this {UserModel}
- */
-User.prototype.hasVerifiedEmail = function () {
-	return !!this.emails?.[0]?.verified && !!this.emails?.[0]?.address;
-};
-
-/**
- * Get email address of user
- * @this {UserModel}
- * @returns String with email address or Boolean false
- */
-User.prototype.emailAddress = function () {
-	return this.emails?.[0]?.address || false;
-};
-
-/**
- * Get verified email address of user
- * @this {UserModel}
- * @returns String with verified email address or Boolean false
- */
-User.prototype.verifiedEmailAddress = function () {
-	const emailRecord = this.emails?.[0];
-	return (emailRecord
-		&& emailRecord.verified
-		&& emailRecord.address)
-		|| false;
-};
-
-/**
- * @this {UserModel}
- * @param {string} role
- */
-User.prototype.privileged = function (role) {
-	return (this.privileges
-		&& this.privileges.indexOf(role) > -1) || false;
-};
-
-/**
- * @param {UserEntity} user
- */
-Meteor.users._transform = function (user) {
-	return _.extend(new User(), user);
 };
 
 export default Users;

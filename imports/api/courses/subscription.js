@@ -140,11 +140,8 @@ export class Subscribe extends Change {
 				const candidateRoles = ['participant', 'mentor', 'host'];
 
 				// In for a penny, in for a pound
-				/* eslint-disable-next-line no-restricted-syntax */
-				for (const role of candidateRoles) {
-					if (this.course.userHasRole(this.user._id, role)) {
-						return true;
-					}
+				if (candidateRoles.some((role) => this.course.userHasRole(this.user._id, role))) {
+					return true;
 				}
 			}
 			return false;

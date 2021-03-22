@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
+import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
@@ -8,6 +9,7 @@ import Roles from '/imports/api/roles/roles';
 import Venues, { Venue } from '/imports/api/venues/venues'; // Use default and { named, ... } exports
 /** @typedef {import('/imports/api/venues/venues').VenueModel} VenueModel */
 /** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
+/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import Analytics from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
@@ -193,7 +195,7 @@ Router.map(function () {
 				internal: Predicates.flag,
 				hidePricePolicy: Predicates.flag,
 			};
-			const params = Filtering(predicates).read(this.params.query).done().toQuery();
+			const params = new Filtering(predicates).read(this.params.query).done().toQuery();
 
 			if (params.addTeamGroups) {
 				// For security reasons only 5 groups are allowed
@@ -354,32 +356,26 @@ Router.map(function () {
 		path: 'profile',
 		waitOn() {
 			return [
-				Meteor.subscribe('groupsFind', { own: true }),
+				Meteor.subscribe('Groups.findFilter', { own: true }),
 				Meteor.subscribe('Venues.findFilter', { editor: Meteor.userId() }),
 			];
 		},
 		data() {
 			const data = {};
+			/** @type {UserModel | null} */
 			const user = Meteor.user();
-			data.loggedIn = Boolean(user);
-			if (data.loggedIn) {
+			if (user) {
 				const userdata = {
 					_id: user._id,
 					name: user.username,
-					privacy: user.privacy,
 					notifications: user.notifications,
 					allowPrivateMessages: user.allowPrivateMessages,
 					groups: Groups.findFilter({ own: true }),
-					venues: Venues.find({ editor: user._id }),
+					venues: Venues.findFilter({ editor: user._id }),
+					email: user.emails?.[0]?.address,
+					verified: user.emails?.[0]?.verified || false,
 				};
-				userdata.have_email = user.emails?.length > 0;
-				if (userdata.have_email) {
-					userdata.email = user.emails[0].address;
-					userdata.verified = Boolean(user.emails[0].verified);
-				}
-
 				data.user = userdata;
-				data.involvedIn = Courses.findFilter({ userInvolved: user._id });
 			}
 			return data;
 		},
@@ -651,7 +647,7 @@ Router.map(function () {
 		waitOn() {
 			return [
 				Meteor.subscribe('user', this.params._id),
-				Meteor.subscribe('groupsFind', { own: true }),
+				Meteor.subscribe('Groups.findFilter', { own: true }),
 			];
 		},
 		data() {
@@ -668,7 +664,7 @@ Router.map(function () {
 			}, {});
 
 			const alterPrivileges = UserPrivilegeUtils.privilegedTo('admin');
-			const showPrivileges = alterPrivileges || (user.privileges && user.privileges.length);
+			const showPrivileges = alterPrivileges || user.privileges?.length;
 
 			return {
 				user,
@@ -680,7 +676,7 @@ Router.map(function () {
 		},
 		onAfterAction() {
 			const user = Meteor.users.findOne({ _id: this.params._id });
-			if (!user) return; // wtf
+			if (!user) return;
 
 			const title = mf('profile.windowtitle', { USER: user.username }, 'Profile of {USER}');
 			Metatags.setCommonTags(title);

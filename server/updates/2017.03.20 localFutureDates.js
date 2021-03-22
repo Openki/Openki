@@ -58,7 +58,6 @@ UpdatesAvailable[updateName] = function () {
 					update: updateName,
 				},
 			);
-			// eslint-disable-next-line no-console
 			console.log(`Unable to update local time for event ${event._id}: ${e}`);
 		}
 	});

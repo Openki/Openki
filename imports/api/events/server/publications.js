@@ -16,7 +16,7 @@ Meteor.publish('event', (eventId) => {
 	return Events.find(eventId);
 });
 
-Meteor.publish('Events.findFilter', Events.findFilter);
+Meteor.publish('Events.findFilter', (filter, limit, skip, sort) => Events.findFilter(filter, limit, skip, sort));
 
 Meteor.publish('eventsForCourse', (courseId) => Events.find({ courseId }));
 
