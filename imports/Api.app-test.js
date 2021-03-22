@@ -83,106 +83,99 @@ if (Meteor.isClient) {
 					// in the past as order violation
 					starts.forEach(AssertAscending(new Date(), 'event are sorted next first when no order specified'));
 				});
-				it('sorts by start-date', () => {
+				it('sorts by start-date', async () => {
 					const events = Meteor.absoluteUrl('/api/0/json/events?after=now&sort=start');
-					return fetch(events).then((result) => {
-						assertGoodHeaders(result);
-						return result.json();
-					}).then((json) => {
-						const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr));
-						starts.forEach(AssertAscending(new Date(), 'ascending ordering of start-dates was requested'));
-					});
+
+					const result = await fetch(events);
+					assertGoodHeaders(result);
+					const json = await result.json();
+					const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr));
+					starts.forEach(AssertAscending(new Date(), 'ascending ordering of start-dates was requested'));
 				});
 
-				it('sorts by title, descending', () => {
+				it('sorts by title, descending', async () => {
 					const events = Meteor.absoluteUrl('/api/0/json/events?after=now&sort=-title');
-					return fetch(events).then((result) => {
-						assertGoodHeaders(result);
-						return result.json();
-					}).then((json) => {
-						const titles = _.pluck(json.data, 'title');
-						titles.reverse();
-						titles.forEach(AssertAscendingString('', 'descending ordering of titles was requested'));
-					});
+
+					const result = await fetch(events);
+					assertGoodHeaders(result);
+					const json = await result.json();
+					const titles = _.pluck(json.data, 'title');
+					titles.reverse();
+					titles.forEach(AssertAscendingString('', 'descending ordering of titles was requested'));
 				});
 			});
 
 			describe.skip('Filtering API ', () => {
-				it('finds events for group', () => {
+				it('finds events for group', async () => {
 					const groupId = '43df1efc02'; // "DIY-BE" group
 					const events = Meteor.absoluteUrl(`/api/0/json/events?group=${groupId}`);
-					return fetch(events).then((result) => {
-						assertGoodHeaders(result);
-						return result.json();
-					}).then((json) => {
-						const { data } = json;
-						assert.isNotEmpty(data);
-						data.forEach((event) => {
-							assert.include(event.groups, groupId, 'only events for selected group');
-						});
+					const result = await fetch(events);
+					assertGoodHeaders(result);
+					const json = await result.json();
+					const { data } = json;
+					assert.isNotEmpty(data);
+					data.forEach((event) => {
+						assert.include(event.groups, groupId, 'only events for selected group');
 					});
 				});
 			});
 
 			describe('Get events from the past', () => {
-				it('should return JSON response', () => {
+				it('should return JSON response', async () => {
 					const events = Meteor.absoluteUrl('/api/0/json/events?before=now');
-					return fetch(events).then((result) => {
-						assertGoodHeaders(result);
-						return result.json();
-					}).then((json) => {
-						const { data } = json;
-						assert.isNotEmpty(data);
+					const result = await fetch(events);
+					assertGoodHeaders(result);
+					const json = await result.json();
+					const { data } = json;
+					assert.isNotEmpty(data);
 
-						const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr));
+					const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr));
 
-						// Because we start at the current time, this test will also detect if events from the
-						// future as order violation
-						starts.forEach(AssertDescending(new Date(), 'when filtering for past dates events are sorted newest-first when no order is specified'));
-					});
+					// Because we start at the current time, this test will also detect if events from the
+					// future as order violation
+					starts.forEach(AssertDescending(new Date(), 'when filtering for past dates events are sorted newest-first when no order is specified'));
 				});
 			});
 		});
 
 		describe('VenueApi', () => {
 			describe('Get all venues', () => {
-				it('should return JSON response', () => {
+				it('should return JSON response', async () => {
 					const venues = Meteor.absoluteUrl('/api/0/json/venues');
-					return fetch(venues).then((result) => {
-						assertGoodHeaders(result);
-					});
+					const result = await fetch(venues);
+					assertGoodHeaders(result);
 				});
 			});
 
 			describe('region filtering', () => {
-				it('should only return a certain region', () => {
+				it('should only return a certain region', async () => {
 					const testistan = '9JyFCoKWkxnf8LWPh';
 					const venues = Meteor.absoluteUrl(`/api/0/json/venues?region=${testistan}`);
-					return fetch(venues)
-						.then((result) => result.json())
-						.then((json) => {
-							const { data } = json;
-							assert.isNotEmpty(data);
-							data.forEach((element) => {
-								assert.equal(element.region, testistan, 'region must be testistan');
-							});
-						});
+					const result = await fetch(venues);
+					const json = await result.json();
+					const { data } = json;
+					assert.isNotEmpty(data);
+					data.forEach((element) => {
+						assert.equal(element.region, testistan, 'region must be testistan');
+					});
 				});
 			});
 
 			// This test is skipped until it's fixed upstream
 			// See #1143
 			describe.skip('percent in query parameter', () => {
-				it('should return JSON response', () => {
+				it('should return JSON response', async () => {
 					const venues = Meteor.absoluteUrl('/api/0/json/venues?%');
-					return fetch(venues).then(assertGoodHeaders);
+					const result = await fetch(venues);
+					assertGoodHeaders(result);
 				});
 			});
 
 			describe('unicode query parameter', () => {
-				it('should return JSON response', () => {
+				it('should return JSON response', async () => {
 					const venues = Meteor.absoluteUrl('/api/0/json/venues?region=💩');
-					return fetch(venues).then(assertGoodHeaders);
+					const result = await fetch(venues);
+					assertGoodHeaders(result);
 				});
 			});
 		});
