@@ -20,7 +20,6 @@ module.exports = {
 		minuteTime: 'writable',
 		moment: 'readonly',
 		msgfmt: 'readonly',
-		Prng: 'readonly',
 		robots: 'writable',
 		RouterAutoscroll: 'writable',
 		SharedArrayBuffer: 'readonly',
