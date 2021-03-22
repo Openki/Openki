@@ -14,6 +14,7 @@ if (Meteor.isServer && Meteor.isDevelopment) {
 		fs.exists(dir, (exists) => {
 			if (exists) {
 				const triggerFile = extractsFile.replace(/~$/, '');
+				// eslint-disable-next-line no-shadow
 				fs.exists(triggerFile, (exists) => {
 					if (!exists) { fs.writeFile(triggerFile, `# Used by ${EXTRACTS_FILE}, do not delete.\n`, () => {}); }
 				});
