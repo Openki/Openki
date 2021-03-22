@@ -165,8 +165,7 @@ Meteor.methods({
 		if (!user) {
 			return ApiError('plzLogin', 'Not logged-in');
 		}
-		updateEmail(email, user);
-		return true;
+		return updateEmail(email, user);
 	},
 
 	'user.self.remove'() {

@@ -14,7 +14,6 @@
     "core-js": "^2.6.7",
     "events": "^1.1.1",
     "ical-generator": "^0.2.10",
-    "isomorphic-unfetch": "^2.1.1",
     "jquery": "^3.5.1",
     "meteor-node-stubs": "^1.0.1",
     "moment-timezone": "^0.5.25",
@@ -22,12 +21,13 @@
     "sanitize-html": "git+https://github.com/O-clock-Dev/sanitize-html-without-postcss.git#80c0d1addddbaf561feba012a058c24b532533c5",
     "seedrandom": "^2.4.4",
     "shariff": "^3.2.1",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "es6-promisify": "^6.1.1"
   },
   "devDependencies": {
     "assertion-error": "^1.1.0",
     "chai": "^4.2.0",
-    "chromedriver": "^77.0.0",
+    "chromedriver": "^89.0.0",
     "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-import-resolver-meteor": "^0.4.0",
@@ -37,9 +37,9 @@
   },
   "scripts": {
     "dev": "meteor --settings settings/dev.json",
-    "test": "TEST_BROWSER_DRIVER=chrome meteor test --settings settings/ci.json --once --driver-package meteortesting:mocha",
-    "app-test": "TEST_BROWSER_DRIVER=chrome meteor test --settings settings/ci.json --full-app --once --driver-package meteortesting:mocha",
-    "test-live": "TEST_WATCH=1 meteor test --settings settings/ci.json --full-app --driver-package meteortesting:mocha",
+    "test": "MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --once --driver-package meteortesting:mocha --settings settings/ci.json",
+    "app-test": "MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --full-app --once --driver-package meteortesting:mocha --settings settings/ci.json",
+    "test-live": "MOCHA_GREP=$npm_config_grep meteor test --full-app --driver-package meteortesting:mocha --settings settings/ci.json",
     "eslint": "eslint -- .",
     "sass-lint": "sass-lint --verbose"
   },

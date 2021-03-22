@@ -27,8 +27,6 @@ module.exports = {
 		sitemaps: 'readonly',
 		SSR: 'writable',
 		Tooltips: 'writable',
-		Users: 'writable',
-		Venue: 'writable',
 		VERSION: 'writable',
 	},
 	parserOptions: {

@@ -19,6 +19,7 @@ const ensure = {
 
 	/**
 	 * @param {string} name
+	 * @param {boolean} [verified]
 	 */
 	tenant(name) {
 		/* eslint-disable-next-line no-constant-condition */
