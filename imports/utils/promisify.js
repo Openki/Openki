@@ -17,12 +17,12 @@ export const MeteorAsync = {
 					}
 				});
 		})),
-
+	/** @type {(name: string, ...args: any[]) => Promise<Meteor.SubscriptionHandle>} */
 	subscribeAsync: Meteor.subscribe
 		&& ((/** @type {string} */ name, ...args) => new Promise((resolve, reject) => {
-			Meteor.subscribe(name, ...args, {
+			const handle = Meteor.subscribe(name, ...args, {
 				onReady: () => {
-					resolve();
+					resolve(handle);
 				},
 				onStop: (err) => {
 					if (err) {

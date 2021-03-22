@@ -67,7 +67,8 @@ if (Meteor.isClient) {
 
 			const eventId = await MeteorAsync.callAsync('event.save', { eventId: '', changes: newEvent });
 
-			await MeteorAsync.subscribeAsync('event', eventId);
+			const handle = await MeteorAsync.subscribeAsync('event', eventId);
+			handle.stop();
 
 			const event = Events.findOne(eventId);
 

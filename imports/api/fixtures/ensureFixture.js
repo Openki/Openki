@@ -18,7 +18,7 @@ const ensure = {
 
 	/**
 	 * @param {string} name
-	 * @param {boolean} verified
+	 * @param {boolean} [verified]
 	 */
 	user(name, verified) {
 		const prng = Prng('ensureUser');
