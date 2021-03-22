@@ -20,6 +20,7 @@ if (Meteor.isClient) {
 
 			await waitForSubscriptions();
 			const titles = await waitFor(() => {
+				// eslint-disable-next-line no-shadow
 				const titles = document.getElementsByClassName('course-compact-title');
 				assert.equal(titles.length, 8, 'expect to see test course titles');
 				return titles;
