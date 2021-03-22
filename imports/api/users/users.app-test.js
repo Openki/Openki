@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
 import { Accounts } from 'meteor/accounts-base';
-import MeteorAsync from '/imports/utils/promisify';
+import MeteorAsync, { AccountsAsync } from '/imports/utils/promisify';
 
 
 const createDummy = function () {
@@ -35,38 +35,32 @@ if (Meteor.isClient) {
 			this.timeout(30000);
 			const oldDummy = createDummy();
 			const newDummy = createDummy();
-			it('changes the username', () => new Promise((resolve, reject) => {
-				Accounts.createUser({
+			it('changes the username', async () => {
+				await AccountsAsync.createUserAsync({
 					username: oldDummy,
 					email: `${oldDummy}@openki.example`,
 					profile: { name: oldDummy },
 					password: 'hunter2',
-				}, (err) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve();
-					}
 				});
-			})
-				.then(() => MeteorAsync.loginWithPasswordAsync(oldDummy, 'hunter2'))
-				.then(() => new Promise((resolve) => {
-					Meteor.call('user.updateUsername', newDummy, (err) => {
-						if (err) {
-							assert.isNotOk(err, 'not expecting username-change errors');
-						}
+				MeteorAsync.loginWithPasswordAsync(oldDummy, 'hunter2')
+					.then(() => new Promise((resolve) => {
+						Meteor.call('user.updateUsername', newDummy, (err) => {
+							if (err) {
+								assert.isNotOk(err, 'not expecting username-change errors');
+							}
 
-						Meteor.users.find({ username: newDummy }).observe({
-							added: () => {
-								resolve();
-							},
+							Meteor.users.find({ username: newDummy }).observe({
+								added: () => {
+									resolve();
+								},
+							});
 						});
+					})).then(() => {
+						// check if username has changed to the correct string
+						const user = Meteor.user();
+						assert.strictEqual(newDummy, user.username, 'username was changed successfully');
 					});
-				})).then(() => {
-				// check if username has changed to the correct string
-					const user = Meteor.user();
-					assert.strictEqual(newDummy, user.username, 'username was changed successfully');
-				}));
+			});
 		});
 	});
 }

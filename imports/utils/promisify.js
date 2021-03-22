@@ -4,9 +4,33 @@ import { Meteor } from 'meteor/meteor';
 /**
  * This contains some async/Promise wrapper for existing meteor function,
  * so those can be used mit asnyc/await.
- * Note: Meteor.callAsync already exists but is not well documented.
 */
 export const MeteorAsync = {
+	callAsync: Meteor.call
+		&& ((/** @type {string} */ name, ...args) => new Promise((resolve, reject) => {
+			Meteor.call(name, ...args,
+				(err, res) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(res);
+					}
+				});
+		})),
+
+	subscribeAsync: Meteor.subscribe
+		&& ((/** @type {string} */ name, ...args) => new Promise((resolve, reject) => {
+			Meteor.subscribe(name, ...args, {
+				onReady: () => {
+					resolve();
+				},
+				onStop: (err) => {
+					if (err) {
+						reject(err);
+					}
+				},
+			});
+		})),
 	loginWithPasswordAsync: Meteor.loginWithPassword && promisify(Meteor.loginWithPassword),
 	logoutAsync: Meteor.logout && promisify(Meteor.logout),
 };

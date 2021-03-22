@@ -45,42 +45,43 @@ if (Meteor.isClient) {
 		this.timeout(6000);
 		describe('GroupApi', () => {
 			describe('Get all groups', () => {
-				it('should return JSON response', () => {
+				it('should return JSON response', async () => {
 					const groups = Meteor.absoluteUrl('/api/0/json/groups');
-					return fetch(groups).then(assertGoodHeaders);
+					const result = await fetch(groups);
+					assertGoodHeaders(result);
 				});
 			});
 		});
 		describe('EventApi', () => {
 			describe('Get all events', () => {
-				it('returns JSON response', () => {
+				it('returns JSON response', async () => {
 					const events = Meteor.absoluteUrl('/api/0/json/events');
-					return fetch(events).then((result) => {
-						assertGoodHeaders(result);
-						return result.json();
-					}).then((json) => {
-						const { data } = json;
-						assert.isNotEmpty(data);
-					});
+
+					const result = await fetch(events);
+					assertGoodHeaders(result);
+
+					const json = await result.json();
+					const { data } = json;
+					assert.isNotEmpty(data);
 				});
 			});
 
 			describe('Get events from the future', () => {
-				it('returns nonempty JSON response', () => {
+				it('returns nonempty JSON response', async () => {
 					const events = Meteor.absoluteUrl('/api/0/json/events?after=now');
-					return fetch(events).then((result) => {
-						assertGoodHeaders(result);
-						return result.json();
-					}).then((json) => {
-						const { data } = json;
-						assert.isNotEmpty(data);
 
-						const starts = _.pluck(data, 'start').map((datestr) => new Date(datestr));
+					const result = await fetch(events);
+					assertGoodHeaders(result);
 
-						// Because we start at the current time, this test will also detect events
-						// in the past as order violation
-						starts.forEach(AssertAscending(new Date(), 'event are sorted next first when no order specified'));
-					});
+					const json = await result.json();
+					const { data } = json;
+					assert.isNotEmpty(data);
+
+					const starts = _.pluck(data, 'start').map((datestr) => new Date(datestr));
+
+					// Because we start at the current time, this test will also detect events
+					// in the past as order violation
+					starts.forEach(AssertAscending(new Date(), 'event are sorted next first when no order specified'));
 				});
 				it('sorts by start-date', () => {
 					const events = Meteor.absoluteUrl('/api/0/json/events?after=now&sort=start');

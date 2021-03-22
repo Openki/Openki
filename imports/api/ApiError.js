@@ -1,7 +1,12 @@
-/** Throw an error on the server, just return it on the client
-  * This is useful for methods that get run on the client too to avoid
-  * the "Exception while simulating the effect " situation. */
-const ApiError = function (error, reason, details) {
+/**
+ * Throw an error on the server, just return it on the client
+ * This is useful for methods that get run on the client too to avoid
+ * the "Exception while simulating the effect " situation.
+ * @param {string} error
+ * @param {string} [reason]
+ * @param {string} [details]
+ */
+function ApiError(error, reason, details) {
 	const meteorError = new Meteor.Error(error, reason, details);
 
 	if (Meteor.isServer) {
@@ -9,6 +14,6 @@ const ApiError = function (error, reason, details) {
 	}
 
 	return meteorError;
-};
+}
 
 export default ApiError;

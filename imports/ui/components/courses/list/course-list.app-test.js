@@ -3,15 +3,16 @@ import { Router } from 'meteor/iron:router';
 import { assert } from 'chai';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 if (Meteor.isClient) {
 	describe('Frontpage', function () {
 		this.timeout(60000);
-		beforeEach((done) => {
-			Meteor.call('fixtures.clean', done);
+		beforeEach(async () => {
+			await MeteorAsync.callAsync('fixtures.clean');
 		});
-		beforeEach((done) => {
-			Meteor.call('fixtures.create', done);
+		beforeEach(async () => {
+			await MeteorAsync.callAsync('fixtures.create');
 		});
 		it('should list 8 courses for unauthenticated user (Testistan)', async () => {
 			Router.go('/');

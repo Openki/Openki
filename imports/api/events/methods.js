@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
+import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
