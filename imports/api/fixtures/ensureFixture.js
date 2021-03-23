@@ -18,7 +18,7 @@ const ensure = {
 
 	/**
 	 * @param {string} name
-	 * @param {boolean} verified
+	 * @param {boolean} [verified]
 	 */
 	user(name, verified) {
 		const prng = Prng('ensureUser');
@@ -47,16 +47,15 @@ const ensure = {
 				profile: { name },
 				notifications: true,
 				allowPrivateMessages: true,
-				acceptsPrivateMessages: true,
 			});
 
 			const age = Math.floor(prng() * 100000000000);
 			const time = new Date().getTime();
 			Meteor.users.update({ _id: id }, {
 				$set: {
-				// Every password is set to "greg".
-				// Hashing a password with bcrypt is expensive so we use the
-				// computed hash.
+					// Every password is set to "greg".
+					// Hashing a password with bcrypt is expensive so we use the
+					// computed hash.
 					services: { password: { bcrypt: '$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq' } },
 					createdAt: new Date(time - age),
 					lastLogin: new Date(time - age / 30),
