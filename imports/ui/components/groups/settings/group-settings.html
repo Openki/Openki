@@ -33,18 +33,14 @@
 					</h3>
 					<div class="tag-group multiline">
 						{{#each members}}
-							<div class="tag tag-link group-member-tag">
-								<a href="{{pathFor 'userprofile' _id=this}}">
-									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
-									{{username this}}
-								</a>
-							</div>
-							<div class="tag-btn group-member-tag-btn-remove addon">
+							<div class="tag tag-btn group-member-tag-btn-remove">
 								<button
 									class="js-member-remove-btn"
 									title="{{mf 'group.settings.removeFromGroup' 'remove member'}}"
 									type="button">
-									<i class="fa fa-remove" aria-hidden="true"></i>
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+									{{username this}}
+									<i class="fa fa-remove fa-fw" aria-hidden="true"></i>
 								</button>
 							</div>
 						{{/each}}
@@ -64,18 +60,14 @@
 					</div>
 					<div class="tag-group multiline">
 						{{#each foundUsers}}
-							<div class="tag tag-link group-member-tag">
-								<a href="{{pathFor 'userprofile' _id=this._id}}">
-									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
-									{{username this._id}}
-								</a>
-							</div>
-							<div class="tag-btn group-member-tag-btn-add addon">
+							<div class="tag tag-btn group-member-tag-btn-add">
 								<button
 									class="js-member-add-btn"
 									title="{{mf 'group.settings.addMember' 'add as member'}}"
 									type="button">
-									<i class="fa fa-plus" aria-hidden="true"></i>
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+									{{username this._id}}
+									<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
 								</button>
 							</div>
 						{{/each}}
