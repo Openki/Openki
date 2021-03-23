@@ -9,7 +9,13 @@
 		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" },
 		"ogLogo": { "src": "openki_logo_2018.png"},
 		"mailLogo": "mails/openki.png",
-		"regionSelection": { "minNumber": 5 }
+		"regionSelection": { "minNumber": 5 },
+		"categories": {
+			"misc":
+			[
+				"♥undefined♥"
+			]
+		}
 	},
 	"siteEmail": "HMMM@legit.example",
 	"startup": { "buildDbCacheAsync": false }
