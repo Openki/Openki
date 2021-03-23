@@ -29,7 +29,10 @@ const ensure = {
 				return teanant._id;
 			}
 
-			const id = Tenants.insert({
+			const id = ensure.fixedId([name]);
+
+			Tenants.insert({
+				_id: id,
 				name,
 				members: [],
 			});

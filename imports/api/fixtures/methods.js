@@ -58,8 +58,12 @@ const sometimesAfter = function (date) {
 // This guard is here until we find a better solution.
 if (Meteor.settings.testdata) {
 	const regionsCreate = function () {
+		const prng = Prng('createRegions');
 		regions.forEach((r) => {
-			const region = { ...r }; // clone
+			const region = {
+				...r,
+				tenant: prng() < 0.85 ? ensure.tenant('Hmmm') : ensure.tenant('Kopf'),
+			}; // clone
 			if (region.loc) {
 				const coordinates = region.loc.reverse(); // GeoJSON takes latitude first
 				region.loc = { type: 'Point', coordinates };
