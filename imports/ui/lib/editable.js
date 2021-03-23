@@ -15,7 +15,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 // For parent templates, the following methods are of interest:
 //    setText: set the text that should be displayed in the field. This can be
 //             called again when the source changes.
-//    getEdited: get the edited version of the text, returns false if the field
+//    getEdited: get the edited version of the text, returns undefined if the field
 //               was not changed
 //    getTotalFocusTimeInSeconds: gives the time in seconds how long the cursor
 //                                was in the field. For statistics and tracking.
@@ -47,11 +47,11 @@ export default class Editable {
 	}
 
 	/**
-	 * get the edited version of the text, returns false if the field was not changed
-	 * @returns {string|false}
+	 * get the edited version of the text, returns undefined if the field was not changed
+	 * @returns {string|undefined}
 	 */
 	getEdited() {
-		return this.editingInstance?.getEdited() || false;
+		return this.editingInstance?.getEdited();
 	}
 
 	/**

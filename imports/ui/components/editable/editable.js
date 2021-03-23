@@ -25,7 +25,7 @@ import './editable.html';
 
 		instance.getEdited = function () {
 			if (!instance.state || !instance.state.changed.get()) {
-				return false;
+				return undefined;
 			}
 			return instance.state.simple ? editable.text().trim() : editable.html().trim();
 		};

@@ -325,10 +325,7 @@ Template.courseEdit.events({
 			return;
 		}
 
-		const newDescription = instance.editableDescription.getEdited();
-		if (newDescription) {
-			changes.description = newDescription;
-		}
+		changes.description = instance.editableDescription.getEdited();
 
 		const course = instance.data;
 		const courseId = course._id || '';

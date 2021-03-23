@@ -357,10 +357,7 @@ Template.eventEdit.events({
 			return;
 		}
 
-		const newDescription = instance.data.editableDescription.getEdited();
-		if (newDescription) {
-			editevent.description = newDescription;
-		}
+		editevent.description = instance.data.editableDescription.getEdited();
 
 		if (!editevent.description) {
 			Alert.error(mf('event.edit.plzProvideDescr', 'Please provide a description'));
