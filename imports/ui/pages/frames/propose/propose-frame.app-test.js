@@ -29,15 +29,19 @@ if (Meteor.isClient) {
 			jQuery('.js-title').val(randomTitle);
 			jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
 			jQuery('.js-course-edit-save').click();
-			await waitFor(() => {
+
+			const link = await waitFor(() => {
 				const alertLink = jQuery('.alert a');
 				assert(
 					alertLink.text().indexOf(randomTitle) >= 0,
 					'A message that the course was created is shown',
 				);
-				// The link opens in a new window so we can't just click()
-				Router.go(alertLink.attr('href'));
+				return alertLink.attr('href');
 			});
+
+			// The link opens in a new window so we can't just click()
+			Router.go(link);
+
 			await waitFor(() => {
 				assert(
 					jQuery('.course-role-enrolled button[name=mentor]').length >= 0,
@@ -49,7 +53,6 @@ if (Meteor.isClient) {
 		it('allows to add multiple groups', async () => {
 			Router.go('/frame/propose?addTeamGroups=cc89c5e476,573edec5d6');
 
-
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 
@@ -58,20 +61,55 @@ if (Meteor.isClient) {
 			jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
 			jQuery('.js-course-edit-save').click();
 
-			await waitFor(() => {
+			const link = await waitFor(() => {
 				const alertLink = jQuery('.alert a');
 				assert(
 					alertLink.text().indexOf(randomTitle) >= 0,
 					'A message that the course was created is shown',
 				);
-				// The link opens in a new window so we can't just click()
-				Router.go(alertLink.attr('href'));
+				return alertLink.attr('href');
 			});
+
+			// The link opens in a new window so we can't just click()
+			Router.go(link);
 
 			await waitFor(() => {
 				assert(
 					jQuery('.group-cc89c5e476').length > 0 && jQuery('.group-573edec5d6').length > 0,
 					'Multiple groups added in the created course',
+				);
+			});
+		});
+
+		it('should allow to hide categories via url', async () => {
+			Router.go('/frame/propose');
+
+			await waitForSubscriptions();
+			await waitFor(haveEditfield);
+
+			assert(
+				jQuery('.js-category-checkbox').length > 0,
+				'Categories are usually present.',
+			);
+
+			Router.go('/frame/propose?hideCategories=1');
+
+			await waitForSubscriptions();
+			await waitFor(haveEditfield);
+
+			assert(
+				jQuery('.js-category-checkbox').length === 0,
+				'Param hides categories.',
+			);
+
+			jQuery('.js-title').val(randomTitle);
+			jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
+			jQuery('.js-course-edit-save').click();
+
+			await waitFor(() => {
+				assert(
+					jQuery('.alert a').text().indexOf(randomTitle) >= 0,
+					'A message that the course was created is shown',
 				);
 			});
 		});
