@@ -1,6 +1,7 @@
-import { Meteor } from 'meteor/meteor';
-import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
+import { _ } from 'meteor/underscore';
 
 import Courses, { Course } from './courses';
 import Events from '/imports/api/events/events';

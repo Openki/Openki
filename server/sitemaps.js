@@ -1,3 +1,6 @@
+import { sitemaps } from 'meteor/gadicohen:sitemaps';
+import { Router } from 'meteor/iron:router';
+
 import Courses from '/imports/api/courses/courses';
 
 // To compress all sitemap as gzip file

@@ -1,8 +1,9 @@
-import { Session } from 'meteor/session';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { Router } from 'meteor/iron:router';
-import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
+import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Session } from 'meteor/session';
+import { Template } from 'meteor/templating';
 
 import Alert from '/imports/api/alerts/alert';
 

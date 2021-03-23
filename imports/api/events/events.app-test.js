@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
 
 import Events from '/imports/api/events/events';
-import MeteorAsync from '/imports/utils/promisify';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 if (Meteor.isClient) {
 	describe('Event save', () => {
@@ -41,8 +41,7 @@ if (Meteor.isClient) {
 		it('Sanitizes event strings', async function () {
 			this.timeout(5000);
 
-			/* eslint-disable-next-line no-tabs */
-			const titleWithExcessiveWhitespace = ' 1  2     3	4      \n';
+			const titleWithExcessiveWhitespace = ' 1  2     3\t4      \n';
 			const expectedTitle = '1 2 3 4';
 			const textWithNonPrintables = "See what's hidden in your string… or behind﻿";
 			const expectedText = "See what's hidden in your string… or behind";

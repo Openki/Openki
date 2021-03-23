@@ -1,5 +1,6 @@
-import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
@@ -148,7 +149,7 @@ Meteor.methods({
 		if (!user) {
 			if (Meteor.isClient) {
 				PleaseLogin();
-				return;
+				return undefined;
 			}
 			throw new Meteor.Error(401, 'please log in');
 		}
@@ -344,7 +345,6 @@ Meteor.methods({
 			}
 		}
 
-		/* eslint-disable-next-line consistent-return */
 		return eventId;
 	},
 

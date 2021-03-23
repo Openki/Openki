@@ -1,6 +1,7 @@
-import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';

@@ -1,5 +1,6 @@
-import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
+import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
 
 import Regions from '../regions/regions';
 import Venues from './venues';

@@ -1,4 +1,5 @@
 import { check } from 'meteor/check';
+import { mf } from 'meteor/msgfmt:core';
 import Alerts from './alerts';
 
 const Alert = {

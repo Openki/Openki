@@ -1,3 +1,4 @@
+import { robots } from 'meteor/gadicohen:robots-txt';
 import { _ } from 'meteor/underscore';
 
 import '/imports/startup/both';

@@ -1,3 +1,5 @@
+import { Router } from 'meteor/iron:router';
+
 import Api from '/imports/Api';
 import FieldOrdering from '/imports/utils/field-ordering';
 import { FilteringReadError } from '/imports/utils/filtering';

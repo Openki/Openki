@@ -1,7 +1,8 @@
+import { $ } from 'meteor/jquery';
+import { mfPkg } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
 import { _ } from 'meteor/underscore';
 
 import Alert from '/imports/api/alerts/alert';

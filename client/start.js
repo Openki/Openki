@@ -1,10 +1,11 @@
 import '/imports/startup/both';
 import '/imports/startup/client';
 
+import { Accounts } from 'meteor/accounts-base';
 import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
+import { mf, mfPkg } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
-import { Accounts } from 'meteor/accounts-base';
 
 import Alert from '/imports/api/alerts/alert';
 import Languages from '/imports/api/languages/languages';
@@ -122,22 +123,22 @@ Meteor.startup(() => {
 		// I do not understand why setting language: moment.locale() does not
 		// work for the datepicker. But we want to use the momentjs settings
 		// anyway, so we might as well clobber the 'en' locale.
-		const mf = moment().localeData();
+		const locale = moment().localeData();
 
 		const monthsShort = function () {
-			if (typeof mf.monthsShort === 'function') {
-				return _.map(_.range(12), (month) => mf.monthsShort(moment().month(month), ''));
+			if (typeof locale.monthsShort === 'function') {
+				return _.map(_.range(12), (month) => locale.monthsShort(moment().month(month), ''));
 			}
-			return mf._monthsShort;
+			return locale._monthsShort;
 		};
 
 		$.fn.datepicker.dates.en = _.extend({}, $.fn.datepicker.dates.en, {
-			days: mf._weekdays,
-			daysShort: mf._weekdaysShort,
-			daysMin: mf._weekdaysMin,
-			months: mf._months || mf._monthsNominativeEl,
+			days: locale._weekdays,
+			daysShort: locale._weekdaysShort,
+			daysMin: locale._weekdaysMin,
+			months: locale._months || locale._monthsNominativeEl,
 			monthsShort: monthsShort(),
-			weekStart: mf._week.dow,
+			weekStart: locale._week.dow,
 		});
 	});
 });

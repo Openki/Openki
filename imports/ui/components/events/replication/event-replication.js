@@ -1,3 +1,5 @@
+import { mf } from 'meteor/msgfmt:core';
+
 import Events from '/imports/api/events/events';
 
 import LocalTime from '/imports/utils/local-time';

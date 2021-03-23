@@ -1,3 +1,4 @@
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 
