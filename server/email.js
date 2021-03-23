@@ -1,7 +1,8 @@
-import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { Email } from 'meteor/email';
 import { Match, check } from 'meteor/check';
+import { Email } from 'meteor/email';
+import { SSR } from 'meteor/meteorhacks:ssr';
+import { Meteor } from 'meteor/meteor';
 
 import Notification from '/imports/notification/notification';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';

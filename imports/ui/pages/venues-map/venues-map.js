@@ -1,3 +1,5 @@
+import { Router } from 'meteor/iron:router';
+
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 

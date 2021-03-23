@@ -1,3 +1,5 @@
+import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
 
 import Alert from '/imports/api/alerts/alert';

@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 const clientId = Random.id();
 
 /**
@@ -12,8 +14,7 @@ const reportToServer = function (error) {
 		clientId,
 		userAgent: window.navigator.userAgent,
 	};
-	Meteor.call('log.clientError', report, () => {
-	});
+	Meteor.call('log.clientError', report);
 };
 
 window.addEventListener('error', (event) => {
@@ -22,7 +23,7 @@ window.addEventListener('error', (event) => {
 
 /** @type string[] */
 const buffer = [];
-const discriminatoryReporting = function (args) {
+const discriminatoryReporting = function (/** @type {any[]} */ args) {
 	const msg = args[0];
 
 	// "Exception from Tracker recompute function:"
@@ -63,9 +64,7 @@ const discriminatoryReporting = function (args) {
 
 // wrap the Meteor debug function
 const meteorDebug = Meteor._debug;
-Meteor._debug = function (/* arguments */) {
-	/* eslint-disable-next-line prefer-rest-params */
-	meteorDebug.apply(this, arguments);
-	/* eslint-disable-next-line prefer-rest-params */
-	discriminatoryReporting(arguments);
+Meteor._debug = function (/** @type {any[]} */ ...args) {
+	meteorDebug.apply(this, args);
+	discriminatoryReporting(args);
 };

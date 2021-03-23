@@ -1,5 +1,5 @@
-
-
+import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';

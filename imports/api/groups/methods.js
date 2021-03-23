@@ -84,7 +84,7 @@ Meteor.methods({
 
 		// Don't update nothing
 		if (Object.getOwnPropertyNames(updates).length === 0) {
-			return;
+			return undefined;
 		}
 
 		if (isNew) {
@@ -95,7 +95,6 @@ Meteor.methods({
 			Groups.update(group._id, { $set: updates });
 		}
 
-		/* eslint-disable-next-line consistent-return */
 		return groupId;
 	},
 

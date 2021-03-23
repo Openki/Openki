@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
+import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
 
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 import Alert from '/imports/api/alerts/alert';

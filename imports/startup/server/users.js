@@ -1,3 +1,4 @@
+import { SSR } from 'meteor/meteorhacks:ssr';
 import { Meteor } from 'meteor/meteor';
 
 import Profile from '/imports/utils/profile';

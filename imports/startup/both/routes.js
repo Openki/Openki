@@ -1,4 +1,6 @@
+import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
 
@@ -195,6 +197,7 @@ Router.map(function () {
 				neededRoles: Predicates.ids,
 				internal: Predicates.flag,
 				hidePricePolicy: Predicates.flag,
+				hideCategories: Predicates.flag,
 			};
 			const params = new Filtering(predicates).read(this.params.query).done().toQuery();
 

@@ -1,3 +1,5 @@
+import { mf } from 'meteor/msgfmt:core';
+
 import Groups from '/imports/api/groups/groups';
 
 function subbedGroup(group) {

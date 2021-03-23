@@ -1,10 +1,10 @@
-import { Meteor } from 'meteor/meteor';
-import { Router } from 'meteor/iron:router';
 import { assert } from 'chai';
+import { Router } from 'meteor/iron:router';
 import { jQuery } from 'meteor/jquery';
+import { Meteor } from 'meteor/meteor';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
-import MeteorAsync from '/imports/utils/promisify';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 if (Meteor.isClient) {
 	describe('Create course in group', function () {

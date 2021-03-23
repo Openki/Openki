@@ -1,3 +1,4 @@
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 // Editable objects keep state of RTE fields

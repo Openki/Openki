@@ -1,6 +1,7 @@
+import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
 import Alert from '/imports/api/alerts/alert';
@@ -177,6 +178,10 @@ Template.courseEdit.helpers({
 		// For the proposal frame we hide the region selection when a region
 		// is set.
 		return !this._id && !(this.region && this.isFrame);
+	},
+
+	hideCategories() {
+		return this.isFrame && this.hideCategories;
 	},
 
 	regions() {
