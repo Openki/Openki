@@ -179,6 +179,10 @@ Template.courseEdit.helpers({
 		return !this._id && !(this.region && this.isFrame);
 	},
 
+	hideCategories() {
+		return this.isFrame && this.hideCategories;
+	},
+
 	regions() {
 		return Regions.find();
 	},

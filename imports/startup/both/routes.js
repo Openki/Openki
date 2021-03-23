@@ -194,6 +194,7 @@ Router.map(function () {
 				neededRoles: Predicates.ids,
 				internal: Predicates.flag,
 				hidePricePolicy: Predicates.flag,
+				hideCategories: Predicates.flag,
 			};
 			const params = new Filtering(predicates).read(this.params.query).done().toQuery();
 
