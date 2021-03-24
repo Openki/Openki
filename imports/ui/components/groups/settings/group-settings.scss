@@ -1,5 +1,14 @@
 $group-member-bg: rgba($gray-light, .15);
 
+.group-member-tag {
+	@include tag(
+		$group-member-bg,
+		$text-color,
+		$group-member-bg,
+		$brand-primary
+	);
+}
+
 .group-member-tag-btn-remove {
 	@include tag-btn(
 		$group-member-bg,
