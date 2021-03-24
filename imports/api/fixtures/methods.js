@@ -62,7 +62,7 @@ if (Meteor.settings.testdata) {
 		regions.forEach((r) => {
 			const region = {
 				...r,
-				tenant: prng() < 0.85 ? ensure.tenant('Hmmm') : ensure.tenant('Kopf'),
+				tenant: prng() > 0.30 ? ensure.tenant('Hmmm') : ensure.tenant('Kopf'),
 			}; // clone
 			if (region.loc) {
 				const coordinates = region.loc.reverse(); // GeoJSON takes latitude first
@@ -75,10 +75,10 @@ if (Meteor.settings.testdata) {
 	};
 
 	const usersCreate = function () {
-		ensure.user('greg', true);
-		ensure.user('Seee', true);
-		ensure.user('1u', true);
-		ensure.user('validated_mail', true);
+		ensure.user('greg', undefined, true);
+		ensure.user('Seee', undefined, true);
+		ensure.user('1u', undefined, true);
+		ensure.user('validated_mail', undefined, true);
 		return 'Inserted user fixtures.';
 	};
 
@@ -89,7 +89,7 @@ if (Meteor.settings.testdata) {
 
 			// Always use same id for same group to avoid broken urls while testing
 			group._id = ensure.fixedId([group.name, group.description]);
-			group.members = _.map(group.members, (name) => ensure.user(name)._id);
+			group.members = _.map(group.members, (name) => ensure.user(name, undefined)._id);
 			Groups.insert(group);
 		});
 
@@ -107,7 +107,7 @@ if (Meteor.settings.testdata) {
 			.filter((e) => !Events.findOne({ _id: e._id }))
 			.forEach((e) => {
 				const event = { ...e };
-				event.createdBy = ensure.user(event.createdby)._id;
+				event.createdBy = ensure.user(event.createdby, event.region)._id;
 				event.groups = _.map(event.groups, ensure.group);
 				event.groupOrganizers = [];
 
@@ -161,7 +161,7 @@ if (Meteor.settings.testdata) {
 
 			_.extend(venue, venueData);
 
-			venue.createdby = ensure.user(venue.createdby)._id;
+			venue.createdby = ensure.user(venue.createdby, venueData.region._id)._id;
 
 			Venues.update(venue._id, venue);
 		});
@@ -174,12 +174,6 @@ if (Meteor.settings.testdata) {
 
 		courses.forEach((c) => {
 			const course = { ...c };
-			course.members.forEach((member) => {
-				// eslint-disable-next-line no-param-reassign
-				member.user = ensure.user(member.user)._id;
-			});
-
-			course.createdby = ensure.user(course.createdby)._id;
 
 			course.slug = StringTools.slug(course.name);
 			course.internal = Boolean(course.internal);
@@ -199,6 +193,13 @@ if (Meteor.settings.testdata) {
 				/* place in random test region, Spilistan or Testistan */
 				course.region = prng() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp';
 			}
+
+			course.members.forEach((member) => {
+				// eslint-disable-next-line no-param-reassign
+				member.user = ensure.user(member.user, course.region)._id;
+			});
+
+			course.createdby = ensure.user(course.createdby, course.region)._id;
 
 			if (!course.groups) {
 				course.groups = [];
@@ -308,7 +309,7 @@ if (Meteor.settings.testdata) {
 
 				const { members } = course;
 				const randomMember = members[Math.floor(Math.random() * members.length)];
-				event.createdby = ensure.user(randomMember?.user || 'Serverscript')._id;
+				event.createdby = ensure.user(randomMember?.user || 'Serverscript', event.region)._id;
 				const age = Math.floor(prng() * 10000000000);
 				event.time_created = new Date(new Date().getTime() - age);
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25);

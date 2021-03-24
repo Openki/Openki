@@ -5,7 +5,7 @@ export default {
 	/**
      * @param {CourseModel} course
      */
-	enrich(course) {
+	beforeInsert(course) {
 		if (!course.region) {
 			throw new Error('Unexpected falsy: course.region');
 		}

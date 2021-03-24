@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
+import tenantDenormalizer from './tenantDenormalizer';
 
 import Courses from '/imports/api/courses/courses';
 
@@ -98,6 +99,15 @@ export class EventsCollection extends Mongo.Collection {
 		});
 	}
 
+	/**
+	 * @param {EventModel} event
+	 * @param {Function | undefined} [callback]
+	 */
+	insert(event, callback) {
+		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
+
+		return super.insert(enrichedEvent, callback);
+	}
 
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {

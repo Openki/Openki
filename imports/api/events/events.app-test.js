@@ -6,7 +6,7 @@ import { MeteorAsync } from '/imports/utils/promisify';
 
 if (Meteor.isClient) {
 	describe('Events', () => {
-		describe('Filter', () => {
+		describe('Find by filter', () => {
 			it('should a gast only show events from public tenants', async () => {
 
 			});

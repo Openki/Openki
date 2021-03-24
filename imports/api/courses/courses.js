@@ -125,7 +125,7 @@ export class CoursesCollection extends Mongo.Collection {
 	 * @param {Function | undefined} [callback]
 	 */
 	insert(course, callback) {
-		const enrichedCourse = tenantDenormalizer.enrich(course);
+		const enrichedCourse = tenantDenormalizer.beforeInsert(course);
 
 		return super.insert(enrichedCourse, callback);
 	}

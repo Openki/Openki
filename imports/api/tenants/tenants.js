@@ -11,4 +11,6 @@ import { Mongo } from 'meteor/mongo';
 /**
  * @type {Mongo.Collection<TenantEntity>}
  */
-export default new Mongo.Collection('Tenants');
+export const Tenants = new Mongo.Collection('Tenants');
+
+export default Tenants;

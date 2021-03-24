@@ -20,7 +20,6 @@ import HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
 import StringTools from '/imports/utils/string-tools';
 import UpdateMethods from '/imports/utils/update-methods';
-import tenantDenormalizer from './tenantDenormalizer';
 
 /**
  * @param {{
@@ -297,8 +296,7 @@ Meteor.methods({
 		if (isNew) {
 			changes.createdBy = user._id;
 			changes.groupOrganizers = [];
-			const enrichtedChanges = tenantDenormalizer.enrich(changes, region);
-			eventId = Events.insert(enrichtedChanges);
+			eventId = Events.insert(changes);
 		} else {
 			Events.update(eventId, { $set: changes });
 
