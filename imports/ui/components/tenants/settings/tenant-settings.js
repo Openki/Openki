@@ -1,11 +1,13 @@
-import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 
 import Alert from '/imports/api/alerts/alert';
 import Tenants from '/imports/api/tenants/tenants';
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons/buttons';
 
@@ -45,39 +47,38 @@ Template.tenantSettings.events({
 		instance.userSearch.set(instance.$('.js-search-users').val());
 	},
 
-	'click .js-member-add-btn'() {
+	async 'click .js-member-add-btn'() {
 		const memberId = this._id;
 		const tenantId = Router.current().params._id;
-		Meteor.call('tenant.updateMembership', memberId, tenantId, true, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Could not add member');
-			} else {
-				const memberName = Meteor.users.findOne(memberId).username;
-				const tenantName = Tenants.findOne(tenantId).name;
-				Alert.success(mf(
-					'tenantSettings.memberAdded',
-					{ MEMBER: memberName, TENANT: tenantName },
-					'"{MEMBER}" has been added as a member to the tenant "{TENANT}"',
-				));
-			}
-		});
+		try {
+			await MeteorAsync.callAsync('tenant.updateMembership', memberId, tenantId, true);
+			const memberName = Meteor.users.findOne(memberId)?.username;
+			const tenantName = Tenants.findOne(tenantId).name;
+			Alert.success(mf(
+				'tenantSettings.memberAdded',
+				{ MEMBER: memberName, TENANT: tenantName },
+				'"{MEMBER}" has been added as a member to the tenant "{TENANT}"',
+			));
+		} catch (err) {
+			Alert.serverError(err, 'Could not add member');
+		}
 	},
 
-	'click .js-member-remove-btn'() {
+	async 'click .js-member-remove-btn'() {
 		const memberId = `${this}`;
 		const tenantId = Router.current().params._id;
-		Meteor.call('tenant.updateMembership', memberId, tenantId, false, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Could not remove member');
-			} else {
-				const memberName = Meteor.users.findOne(memberId).username;
-				const tenantName = Tenants.findOne(tenantId).name;
-				Alert.success(mf(
-					'tenantSettings.memberRemoved',
-					{ MEMBER: memberName, TENANT: tenantName },
-					'"{MEMBER}" has been removed from to the tenant "{TENANT}"',
-				));
-			}
-		});
+		try {
+			await MeteorAsync.callAsync('tenant.updateMembership', memberId, tenantId, false);
+
+			const memberName = Meteor.users.findOne(memberId)?.username;
+			const tenantName = Tenants.findOne(tenantId).name;
+			Alert.success(mf(
+				'tenantSettings.memberRemoved',
+				{ MEMBER: memberName, TENANT: tenantName },
+				'"{MEMBER}" has been removed from to the tenant "{TENANT}"',
+			));
+		} catch (err) {
+			Alert.serverError(err, 'Could not remove member');
+		}
 	},
 });
