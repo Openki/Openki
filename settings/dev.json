@@ -8,6 +8,7 @@
 		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" },
 		"ogLogo": { "src": "openki_logo_2018.png"},
 		"mailLogo": "mails/openki.png",
+		"publicTenants": ["8410c099a7"],
 		"regionSelection": { 
 			"minNumber": 5, 
 			"aboutLink": "" 

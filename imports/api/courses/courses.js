@@ -225,11 +225,11 @@ export class CoursesCollection extends Mongo.Collection {
 	 * internal?: boolean;
 	 * search?: string;
 	 * needsRole?: ("host"|"mentor"|"team")[];
-	 * }} filter
+	 * }} [filter]
 	 * @param {number} [limit]
 	 * @param {any[]} [sortParams]
 	 */
-	findFilter(filter, limit, sortParams) {
+	findFilter(filter = {}, limit, sortParams) {
 		check(limit, Match.Optional(Number));
 		check(sortParams, Match.Optional([[Match.Any]]));
 
@@ -237,7 +237,7 @@ export class CoursesCollection extends Mongo.Collection {
 
 		const find = {};
 
-		find.tenant = { $in: Meteor.user()?.tenants || [] };
+		find.tenant = { $in: Meteor.user()?.visibleTenants() || [] };
 
 		if (filter.region && filter.region !== 'all') {
 			find.region = filter.region;
