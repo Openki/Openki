@@ -32,7 +32,7 @@ RegionSelection.init = function () {
 		}
 	});
 
-	Meteor.subscribe('regions', () => {
+	Meteor.subscribe('Regions', () => {
 		const selectors = [Session.get('region'),
 			UrlTools.queryParam('region'),
 			localStorage?.getItem('region'),

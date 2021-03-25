@@ -189,7 +189,7 @@ Router.map(function () {
 		path: '/frame/propose',
 		template: 'framePropose',
 		layoutTemplate: 'frameLayout',
-		waitOn: () => Meteor.subscribe('regions'),
+		waitOn: () => Meteor.subscribe('Regions'),
 		data() {
 			const predicates = {
 				region: Predicates.id,
