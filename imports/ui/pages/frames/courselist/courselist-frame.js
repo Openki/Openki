@@ -38,7 +38,7 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 		);
 	});
 
-	this.subscribe('regions');
+	this.subscribe('Regions');
 });
 
 Template.frameCourselist.helpers({
