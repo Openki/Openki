@@ -1,5 +1,14 @@
 $tenant-member-bg: rgba($gray-light, .15);
 
+.tenant-member-tag-profile {
+	@include tag(
+		$tenant-member-bg,
+		$text-color,
+		$tenant-member-bg,
+		$brand-primary
+	);
+}
+
 .tenant-member-tag-btn-remove {
 	@include tag-btn(
 		$tenant-member-bg,

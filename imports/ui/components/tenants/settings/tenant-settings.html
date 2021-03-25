@@ -13,10 +13,15 @@
 								<button class="js-member-remove-btn"
 										title="{{mf 'tenant.settings.removeFromTenant' 'remove member'}}"
 										type="button">
-									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
-									{{username this}}
 									<i class="fa fa-remove fa-fw" aria-hidden="true"></i>
+									{{username this}}
 								</button>
+							</div>
+							<div class="tag tag-link tenant-member-tag-profile addon">
+								<a href="{{pathFor 'userprofile' _id=this}}"
+								   title="{{mf 'tenant.settings.member.profile' 'Visit profile'}}">
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+								</a>
 							</div>
 						{{/each}}
 					</div>
@@ -37,10 +42,15 @@
 								<button class="js-member-add-btn"
 										title="{{mf 'tenant.settings.addMember' 'add as member'}}"
 										type="button">
-									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
-									{{username this._id}}
 									<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+									{{username this._id}}
 								</button>
+							</div>
+							<div class="tag tag-link tenant-member-tag-profile addon">
+								<a href="{{pathFor 'userprofile' _id=this._id}}"
+								   title="{{mf 'tenant.settings.member.profile'}}">
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+								</a>
 							</div>
 						{{/each}}
 					</div>
