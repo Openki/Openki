@@ -1,3 +1,4 @@
+import { Tooltips } from 'meteor/lookback:tooltips';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';

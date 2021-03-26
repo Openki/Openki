@@ -1,6 +1,10 @@
+import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
+import { Session } from 'meteor/session';
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
 
 import Alert from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';
@@ -36,7 +40,7 @@ import './event-details.html';
 
 /** Checks if there is enough data ro make a reasonable jsonLd
   *
-  * @param {Object} - the event data
+  * @param {Object} data the event data
   * @return {boolean}
   */
 const checkJsonLdMinReqs = (data) => Object.prototype.hasOwnProperty.call(data, 'title')

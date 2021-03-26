@@ -1,4 +1,6 @@
 import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 

@@ -1,5 +1,6 @@
 import { promisify } from 'es6-promisify';
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 
 /**
  * This contains some async/Promise wrapper for existing meteor function,

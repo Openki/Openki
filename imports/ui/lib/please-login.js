@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
+
 export default function PleaseLogin() {
 	if (Meteor.userId()) {
 		return false;

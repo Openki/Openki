@@ -1,6 +1,7 @@
 import { check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
 import { mf } from 'meteor/msgfmt:core';
 
 import Courses from '/imports/api/courses/courses';

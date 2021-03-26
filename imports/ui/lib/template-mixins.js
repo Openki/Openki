@@ -1,3 +1,10 @@
+import { Blaze } from 'meteor/blaze';
+import { Session } from 'meteor/session';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Random } from 'meteor/random';
+import { Mongo } from 'meteor/mongo';
+import { Template } from 'meteor/templating';
+
 import Alert from '/imports/api/alerts/alert';
 
 const TemplateMixins = {

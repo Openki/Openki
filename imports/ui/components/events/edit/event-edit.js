@@ -4,8 +4,10 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
+import { Tooltips } from 'meteor/lookback:tooltips';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';

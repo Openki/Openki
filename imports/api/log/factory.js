@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
+
 // Becase the mixin() function assigns properties
 // to the log object, we can't use the
 // no-param-reassign safeguard here.

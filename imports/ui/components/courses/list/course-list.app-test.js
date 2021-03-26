@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
+import { Session } from 'meteor/session';
 import { assert } from 'chai';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';

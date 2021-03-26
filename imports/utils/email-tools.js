@@ -1,4 +1,6 @@
+import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
+import { Random } from 'meteor/random';
 
 /**
  * Check a string if it is a valid email adress

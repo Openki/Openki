@@ -1,11 +1,16 @@
+import { Meteor } from 'meteor/meteor';
+import { ReactiveVar } from 'meteor/reactive-var';
+
 import '/imports/startup/both';
 import '/imports/startup/client';
 
 import { Accounts } from 'meteor/accounts-base';
-import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
 import { mf, mfPkg } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
+import { Tooltips } from 'meteor/lookback:tooltips';
+import { Session } from 'meteor/session';
+import { Tracker } from 'meteor/tracker';
 
 import Alert from '/imports/api/alerts/alert';
 import Languages from '/imports/api/languages/languages';

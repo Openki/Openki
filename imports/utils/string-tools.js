@@ -1,3 +1,6 @@
+import { Blaze } from 'meteor/blaze';
+import { check } from 'meteor/check';
+
 const StringTools = {};
 
 /** Truncate long strings, adding ellipsis char when the string was long

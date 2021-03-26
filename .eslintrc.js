@@ -13,12 +13,9 @@ module.exports = {
 	globals: {
 		L: 'readonly',
 		Log: 'writable',
-		MediumEditor: 'readonly',
 		minuteTime: 'writable',
 		moment: 'readonly',
 		msgfmt: 'readonly',
-		RouterAutoscroll: 'writable',
-		Tooltips: 'writable',
 		VERSION: 'writable',
 	},
 	parserOptions: {

@@ -20,7 +20,8 @@
     "seedrandom": "^2.4.4",
     "shariff": "^3.2.1",
     "url": "^0.11.0",
-    "es6-promisify": "^6.1.1"
+    "es6-promisify": "^6.1.1",
+    "medium-editor": "^5.23.3"
   },
   "devDependencies": {
     "assertion-error": "^1.1.0",

@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 /**
  * Throw an error on the server, just return it on the client
  * This is useful for methods that get run on the client too to avoid

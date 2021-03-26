@@ -1,3 +1,4 @@
+import { Accounts } from 'meteor/accounts-base';
 import Log from '/imports/api/log/log';
 
 // Record a login attempt in the log

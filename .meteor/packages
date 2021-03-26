@@ -3,17 +3,30 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
+# Server
+meteor-base@1.4.0             # Packages every Meteor app needs to have
+blaze-html-templates    # Compile .html files into Meteor Blaze views
+email@2.0.0
+iron:router
+meteorhacks:ssr
+shell-server@0.5.0              # Server-side component of the `meteor shell` command
+kadira:dochead
+session
+underscore
+
+# Accounts
 accounts-password@1.7.0
 accounts-base@1.8.0
-email@2.0.0
-standard-app-packages@1.0.9
-check@1.3.1
-iron:router
-reactive-var@1.0.11
-accounts-github@1.4.3
-service-configuration@1.0.11
-mediumeditor:mediumeditor
 accounts-facebook@1.3.2
+accounts-google@1.3.3
+accounts-github@1.4.3
+facebook-config-ui@1.0.2
+google-config-ui@1.0.1
+github-config-ui@1.0.1
+service-configuration@1.0.11
+
+# UI
+reactive-var@1.0.11             # Reactive variable for tracker
 rzymek:moment-locale-ar
 rzymek:moment-locale-de
 rzymek:moment-locale-es
@@ -27,34 +40,31 @@ rzymek:moment-locale-fa
 rzymek:moment-locale-el
 rzymek:moment-locale-tr
 rzymek:moment-locale-hu
+rzymek:moment-locale-pt
+rzymek:moment-locale-ko
 fortawesome:fontawesome
 msgfmt:core
 msgfmt:extract
 msgfmt:ui
-accounts-google@1.3.3
-msavin:mongol
 bevanhunt:leaflet
-es5-shim@4.8.0
-router-autoscroll
-meteorhacks:ssr
-standard-minifier-js@2.6.0
 fourseven:scss
 lookback:tooltips
-gadicohen:robots-txt
-shell-server@0.5.0
-ecmascript@0.15.0
 wanglian:bootstrap3-datepicker
-meteortesting:mocha@2.0.1
-facebook-config-ui@1.0.2
-github-config-ui@1.0.1
-google-config-ui@1.0.1
-dynamic-import@0.6.0
-kadira:dochead
-markdown@1.0.12
 simple:markdown-templating
-gadicohen:sitemaps
-standard-minifier-css@1.7.2
+
+# SEO
 mdg:seo
-rzymek:moment-locale-pt
-rzymek:moment-locale-ko
-fetch@0.1.1
+gadicohen:robots-txt
+gadicohen:sitemaps
+
+# Build
+es5-shim@4.8.0                  # ECMAScript 5 compatibility for older browsers
+ecmascript@0.15.0               # Enable ECMAScript2015+ syntax in app code
+standard-minifier-js@2.6.0      # JS minifier run for production mode
+standard-minifier-css@1.7.2     # CSS minifier run for production mode
+
+# DEV
+msavin:mongol
+
+# Test
+meteortesting:mocha@2.0.1       # A package for writing and running your meteor app and package tests with mocha

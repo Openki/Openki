@@ -1,7 +1,9 @@
+import { Tooltips } from 'meteor/lookback:tooltips';
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
+import { Tracker } from 'meteor/tracker';
 
 import Courses from '/imports/api/courses/courses';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
@@ -9,6 +11,7 @@ import Alert from '/imports/api/alerts/alert';
 import CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 import Editable from '/imports/ui/lib/editable';
+import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/avatar/avatar';

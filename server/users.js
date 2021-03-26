@@ -1,5 +1,8 @@
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { mf } from 'meteor/msgfmt:core';
+import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
+import { Accounts } from 'meteor/accounts-base';
 
 import IsEmail, { getReportEmails } from '/imports/utils/email-tools';
 

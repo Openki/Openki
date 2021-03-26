@@ -1,5 +1,6 @@
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 
 import Profile from '/imports/utils/profile';
 

@@ -1,10 +1,12 @@
 import Log from '/imports/api/log/log';
 
+import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Random } from 'meteor/random';
 import { _ } from 'meteor/underscore';
+import { Match, check } from 'meteor/check';
 
 import notificationEvent from '/imports/notification/notification.event';
 import notificationComment from '/imports/notification/notification.comment';

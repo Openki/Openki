@@ -1,4 +1,5 @@
 import sanitizeHtml from 'sanitize-html';
+import { check } from 'meteor/check';
 
 const HtmlTools = {};
 

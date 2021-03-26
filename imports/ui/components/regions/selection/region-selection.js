@@ -2,6 +2,7 @@ import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
 
 import Alert from '/imports/api/alerts/alert';
 import Regions from '/imports/api/regions/regions';

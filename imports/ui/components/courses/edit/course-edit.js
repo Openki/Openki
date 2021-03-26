@@ -3,6 +3,8 @@ import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
 
 import Alert from '/imports/api/alerts/alert';
 import Categories from '/imports/api/categories/categories';

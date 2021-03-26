@@ -1,3 +1,7 @@
+import { Accounts } from 'meteor/accounts-base';
+import { Session } from 'meteor/session';
+import { Meteor } from 'meteor/meteor';
+
 import Regions from '/imports/api/regions/regions';
 import Alert from '/imports/api/alerts/alert';
 

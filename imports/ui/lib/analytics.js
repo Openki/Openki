@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import { Match } from 'meteor/check';
+import check, { Match } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
-import { Promise } from 'meteor/promise';
+import { Tracker } from 'meteor/tracker';
 
 const Analytics = {};
 

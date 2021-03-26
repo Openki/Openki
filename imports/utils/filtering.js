@@ -1,4 +1,5 @@
 import { _ } from 'meteor/underscore';
+import { Tracker } from 'meteor/tracker';
 
 export class FilteringReadError {
 	/**
