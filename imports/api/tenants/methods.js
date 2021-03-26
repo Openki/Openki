@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
-import Tenants from './tenants';
+import { Tenants } from './tenants';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import userTenantDenormalizer from '../users/tenantDenormalizer';
 

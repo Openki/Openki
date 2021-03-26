@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import crypto from 'crypto';
 import Prng from './Prng';
 import Groups from '/imports/api/groups/groups';
-import Tenants from '/imports/api/tenants/tenants';
+import { Tenants } from '/imports/api/tenants/tenants';
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 import StringTools from '/imports/utils/string-tools';
