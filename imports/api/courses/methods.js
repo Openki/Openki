@@ -18,7 +18,7 @@ import AsyncTools from '/imports/utils/async-tools';
 import StringTools from '/imports/utils/string-tools';
 import HtmlTools from '/imports/utils/html-tools';
 
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 
 const registerMethod = function (method) {

@@ -12,7 +12,7 @@ import Venues from '/imports/api/venues/venues';
 
 import Notification from '/imports/notification/notification';
 
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
 import AsyncTools from '/imports/utils/async-tools';

@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 
 import Alert from '/imports/api/alerts/alert';
 
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import '../profiles/verify-email/verify-email';
 
