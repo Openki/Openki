@@ -7,7 +7,7 @@ import { mf } from 'meteor/msgfmt:core';
 
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 import Alert from '/imports/api/alerts/alert';
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 import Editable from '/imports/ui/lib/editable';
 
 import '/imports/ui/components/buttons/buttons';

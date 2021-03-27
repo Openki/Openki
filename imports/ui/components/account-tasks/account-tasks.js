@@ -14,7 +14,7 @@ import TemplateMixins from '/imports/ui/lib/template-mixins';
 import IsEmail from '/imports/utils/email-tools';
 
 import Regions from '/imports/api/regions/regions';
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import './account-tasks.html';
 

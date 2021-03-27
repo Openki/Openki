@@ -21,7 +21,7 @@ import TemplateMixins from '/imports/ui/lib/template-mixins';
 import IdTools from '/imports/utils/id-tools';
 import Metatags from '/imports/utils/metatags';
 
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';

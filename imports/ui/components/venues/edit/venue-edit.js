@@ -15,7 +15,7 @@ import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import Editable from '/imports/ui/lib/editable';
 import LocationTracker from '/imports/ui/lib/location-tracker';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';

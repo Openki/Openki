@@ -16,7 +16,7 @@ import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import { _ } from 'meteor/underscore';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import IdTools from '/imports/utils/id-tools';
 

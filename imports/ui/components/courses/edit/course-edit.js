@@ -18,7 +18,7 @@ import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
 import StringTools from '/imports/utils/string-tools';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
