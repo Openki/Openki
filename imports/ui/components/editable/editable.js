@@ -2,10 +2,6 @@ import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 
 import MediumEditor from 'medium-editor';
-// eslint-disable-next-line import/no-unresolved
-import 'medium-editor/dist/css/medium-editor';
-// eslint-disable-next-line import/no-unresolved
-import 'medium-editor/dist/css/themes/default';
 
 import '/imports/ui/components/buttons/buttons';
 
