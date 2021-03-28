@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-import Filtering from '/imports/utils/filtering';
+import { Filtering } from '/imports/utils/filtering';
 
 // ======== DB-Model: ========
 /**

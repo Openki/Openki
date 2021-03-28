@@ -5,9 +5,9 @@ import { _ } from 'meteor/underscore';
 import Events from '/imports/api/events/events';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import Filtering from '/imports/utils/filtering';
+import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 /** @typedef {import('../users/users').UserModel} UserModel */
 

@@ -14,12 +14,12 @@ import Venues, { Venue } from '/imports/api/venues/venues'; // Use default and {
 /** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import CourseTemplate from '/imports/ui/lib/course-template';
 import CssFromQuery from '/imports/ui/lib/css-from-query';
 
-import Filtering from '/imports/utils/filtering';
+import { Filtering } from '/imports/utils/filtering';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 import LocalTime from '/imports/utils/local-time';
 import Metatags from '/imports/utils/metatags';

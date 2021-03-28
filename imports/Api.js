@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';

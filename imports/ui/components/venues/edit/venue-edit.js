@@ -4,6 +4,8 @@ import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
+import { Meteor } from 'meteor/meteor';
 
 import Alert from '/imports/api/alerts/alert';
 import Regions from '/imports/api/regions/regions';
@@ -13,7 +15,7 @@ import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import Editable from '/imports/ui/lib/editable';
 import LocationTracker from '/imports/ui/lib/location-tracker';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';

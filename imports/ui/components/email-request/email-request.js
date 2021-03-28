@@ -1,5 +1,6 @@
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
 
 import Alert from '/imports/api/alerts/alert';
 

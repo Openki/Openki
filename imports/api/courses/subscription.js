@@ -5,7 +5,7 @@ import Courses, { Course } from './courses';
 import Alert from '/imports/api/alerts/alert';
 import Events from '/imports/api/events/events';
 import Users, { User } from '/imports/api/users/users';
-import { check } from 'meteor/check';
+import { Match, check } from 'meteor/check';
 
 import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';
 import Notification from '/imports/notification/notification';

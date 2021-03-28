@@ -1,3 +1,4 @@
+import { Tooltips } from 'meteor/lookback:tooltips';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
@@ -7,7 +8,7 @@ import { Template } from 'meteor/templating';
 import Alert from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';
 
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 

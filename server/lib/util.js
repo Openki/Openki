@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 /** Add a toJSON method if the object's prototype doesn't have one
   * @param {object} o
   */

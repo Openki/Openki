@@ -1,15 +1,15 @@
 import { robots } from 'meteor/gadicohen:robots-txt';
+import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 import '/imports/startup/both';
 import '/imports/startup/server';
 
-import AsyncTools from '/imports/utils/async-tools';
+import { AsyncTools } from '/imports/utils/async-tools';
 
 import Version from '/imports/api/version/version';
 
-import applyUpdates from '/server/lib/updates';
-
+import { applyUpdates } from '/server/lib/updates';
 
 function initializeDbCacheFields() {
 	// Resync location cache in events

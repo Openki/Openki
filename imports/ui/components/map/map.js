@@ -1,6 +1,9 @@
+import { ReactiveVar } from 'meteor/reactive-var';
+import { _ } from 'meteor/underscore';
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
+import { Tracker } from 'meteor/tracker';
 
 import './map.html';
 

@@ -4,13 +4,13 @@ import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import AsyncTools from '/imports/utils/async-tools';
-import Filtering from '/imports/utils/filtering';
+import { AsyncTools } from '/imports/utils/async-tools';
+import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 import { visibleTenants } from '/imports/utils/visible-tenants';
-
 import { HasRoleUser } from '/imports/utils/course-role-utils';
+
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
 import tenantDenormalizer from './tenantDenormalizer';
 

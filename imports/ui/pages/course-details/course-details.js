@@ -10,13 +10,13 @@ import Regions from '/imports/api/regions/regions';
 
 import Editable from '/imports/ui/lib/editable';
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 import ScssVars from '/imports/ui/lib/scss-vars';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import { _ } from 'meteor/underscore';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import IdTools from '/imports/utils/id-tools';
 

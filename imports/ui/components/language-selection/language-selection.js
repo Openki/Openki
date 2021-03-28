@@ -9,7 +9,7 @@ import Alert from '/imports/api/alerts/alert';
 import Languages from '/imports/api/languages/languages';
 
 import ScssVars from '/imports/ui/lib/scss-vars';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 import './language-selection.html';
 

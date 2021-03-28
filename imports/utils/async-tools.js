@@ -72,4 +72,4 @@ if (Meteor.isClient) {
 	};
 }
 
-export default AsyncTools;
+export { AsyncTools as default, AsyncTools };

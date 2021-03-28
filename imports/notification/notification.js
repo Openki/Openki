@@ -1,17 +1,19 @@
 import Log from '/imports/api/log/log';
 
+import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Random } from 'meteor/random';
 import { _ } from 'meteor/underscore';
+import { Match, check } from 'meteor/check';
 
 import notificationEvent from '/imports/notification/notification.event';
 import notificationComment from '/imports/notification/notification.comment';
 import notificationJoin from '/imports/notification/notification.join';
 import notificationPrivateMessage from '/imports/notification/notification.private-message';
 
-import { logo } from '/imports/utils/email-tools';
+import { Logo } from '/imports/utils/email-tools';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -77,7 +79,7 @@ Notification.send = function (entry) {
 				vars.siteUrl = vars.customSiteUrl || Meteor.absoluteUrl();
 				vars.locale = userLocale;
 				vars.username = username;
-				vars.logo = logo(vars.customMailLogo || Meteor.settings.public.mailLogo);
+				vars.logo = new Logo(vars.customMailLogo || Meteor.settings.public.mailLogo);
 
 				let message = SSR.render(model.template, vars);
 

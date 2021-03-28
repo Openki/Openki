@@ -4,11 +4,11 @@ import tenantDenormalizer from './tenantDenormalizer';
 
 import Courses from '/imports/api/courses/courses';
 
-import AsyncTools from '/imports/utils/async-tools';
-import Filtering from '/imports/utils/filtering';
+import { AsyncTools } from '/imports/utils/async-tools';
+import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
 import Predicates from '/imports/utils/predicates';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { visibleTenants } from '/imports/utils/visible-tenants';
 

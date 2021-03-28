@@ -1,4 +1,6 @@
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
 
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 

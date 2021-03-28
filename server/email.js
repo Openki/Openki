@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 
 import Notification from '/imports/notification/notification';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import HtmlTools from '/imports/utils/html-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
 
 import Version from '/imports/api/version/version';
 import { getReportEmails } from '/imports/utils/email-tools';
