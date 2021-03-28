@@ -6,7 +6,7 @@ import { Match, check } from 'meteor/check';
 // no-param-reassign safeguard here.
 /* eslint no-param-reassign: 0 */
 
-import Filtering from '/imports/utils/filtering';
+import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
 
 /** The Application Log records user and system decisions. It is intended to

@@ -3,12 +3,13 @@ import { check } from 'meteor/check';
 
 const HtmlTools = {};
 
-/** Turn plaintext into HTML by replacing HTML characters with their entities
-  * and newlines with break-tags.
-  *
-  * @param {string} text input text
-  * @return {string} HTMLized version of text
-  */
+/**
+ * Turn plaintext into HTML by replacing HTML characters with their entities
+ * and newlines with break-tags.
+ *
+ * @param {string} text input text
+ * @return {string} HTMLized version of text
+ */
 HtmlTools.plainToHtml = function (text) {
 	check(text, String);
 	return text
@@ -49,4 +50,4 @@ HtmlTools.textPlain = function (html) {
 	});
 };
 
-export default HtmlTools;
+export { HtmlTools as default, HtmlTools };

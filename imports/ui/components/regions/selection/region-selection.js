@@ -10,7 +10,7 @@ import Regions from '/imports/api/regions/regions';
 import FilterPreview from '/imports/ui/lib/filter-preview';
 
 import RegionSelection from '/imports/utils/region-selection';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 import './region-selection.html';
 

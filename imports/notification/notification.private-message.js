@@ -8,8 +8,8 @@ import Log from '/imports/api/log/log';
 import Users from '/imports/api/users/users';
 import Regions from '/imports/api/regions/regions';
 
-import HtmlTools from '/imports/utils/html-tools';
-import StringTools from '/imports/utils/string-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
+import { StringTools } from '/imports/utils/string-tools';
 import UserPrivilegeUtils from '../utils/user-privilege-utils';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */

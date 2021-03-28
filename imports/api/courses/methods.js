@@ -15,8 +15,8 @@ import {
 } from './subscription';
 
 import { AsyncTools } from '/imports/utils/async-tools';
-import StringTools from '/imports/utils/string-tools';
-import HtmlTools from '/imports/utils/html-tools';
+import { StringTools } from '/imports/utils/string-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 

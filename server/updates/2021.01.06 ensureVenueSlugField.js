@@ -1,5 +1,5 @@
 import Venues from '/imports/api/venues/venues';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 export default function update() {
 	let updated = 0;

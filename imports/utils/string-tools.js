@@ -3,13 +3,14 @@ import { check } from 'meteor/check';
 
 const StringTools = {};
 
-/** Truncate long strings, adding ellipsis char when the string was long
-  *
-  * @param {string} src the string to be truncated
-  * @param {number} max the maximum length of the string
-  * @param {string} ellipsis the string to add that signifies that src was truncated,
-  * preset "…", does not count towards max.
-  * @returns {string}
+/**
+ * Truncate long strings, adding ellipsis char when the string was long
+ *
+ * @param {string} src the string to be truncated
+ * @param {number} max the maximum length of the string
+ * @param {string} ellipsis the string to add that signifies that src was truncated,
+ * preset "…", does not count towards max.
+ * @returns {string}
   */
 StringTools.truncate = function (src, max, ellipsis = '…') {
 	check(src, String);
@@ -20,11 +21,12 @@ StringTools.truncate = function (src, max, ellipsis = '…') {
 	return src;
 };
 
-/** Capitalize first letter of String
-  *
-  * @param {string} input the string to be capitalized
-  * @return {string} the capitalized string
-  */
+/**
+ * Capitalize first letter of String
+ *
+ * @param {string} input the string to be capitalized
+ * @return {string} the capitalized string
+ */
 StringTools.capitalize = function (input) {
 	check(input, String);
 	return input.charAt(0).toUpperCase() + input.slice(1);
@@ -97,4 +99,4 @@ StringTools.saneText = function (unsaneText) {
 	return text.trim();
 };
 
-export default StringTools;
+export { StringTools as default, StringTools };

@@ -1,7 +1,10 @@
 import { _ } from 'meteor/underscore';
 import { Tracker } from 'meteor/tracker';
 
-export class FilteringReadError {
+/** @typedef {import('./predicates').Predicate} Predicate */
+/** @typedef {import('./predicates').ParamWrapper} ParamWrapper */
+
+class FilteringReadError {
 	/**
 	 * @param {string} name
 	 * @param {string} message
@@ -11,9 +14,6 @@ export class FilteringReadError {
 		this.message = message;
 	}
 }
-
-/** @typedef {import('./predicates').Predicate} Predicate */
-/** @typedef {import('./predicates').ParamWrapper} ParamWrapper */
 
 class Filtering {
 	/**
@@ -191,5 +191,4 @@ class Filtering {
 	}
 }
 
-export default Filtering;
-
+export { Filtering as default, Filtering, FilteringReadError };

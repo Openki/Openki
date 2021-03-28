@@ -10,9 +10,9 @@ import Groups from '/imports/api/groups/groups';
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 
-import HtmlTools from '/imports/utils/html-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 const courses = require('./data/course.fixtures.js').default;
 const events = require('./data/event.fixtures.js').default;

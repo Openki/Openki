@@ -7,7 +7,7 @@ import Roles from '/imports/api/roles/roles';
 
 import FilterPreview from '/imports/ui/lib/filter-preview';
 import ScssVars from '/imports/ui/lib/scss-vars';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 import '/imports/ui/components/courses/categories/course-categories';
 

@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
-import HtmlTools from '/imports/utils/html-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
 
 import Groups from './groups';
 

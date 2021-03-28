@@ -16,7 +16,7 @@ import Roles from '/imports/api/roles/roles';
 import Editable from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 import { Analytics } from '/imports/ui/lib/analytics';
 

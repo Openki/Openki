@@ -10,7 +10,7 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import Profile from '/imports/utils/profile';
 import ApiError from '/imports/api/ApiError';
 import IsEmail from '/imports/utils/email-tools';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 import { AsyncTools } from '/imports/utils/async-tools';
 import Courses from '../courses/courses';
 /** @typedef {import('/imports/api/courses/courses').Course} Course */

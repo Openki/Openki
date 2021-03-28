@@ -16,9 +16,9 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
 import { AsyncTools } from '/imports/utils/async-tools';
-import HtmlTools from '/imports/utils/html-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 import UpdateMethods from '/imports/utils/update-methods';
 
 /**
