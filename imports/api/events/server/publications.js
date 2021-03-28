@@ -3,28 +3,29 @@ import { Meteor } from 'meteor/meteor';
 import Events from '../events';
 
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
+import { visibleTenants } from '/imports/utils/visible-tenants';
 
 Meteor.publish('events', (region) => {
 	if (!region) {
-		return Events.find({ tenant: { $in: Meteor.user()?.visibleTenants() || [] } });
+		return Events.find({ tenant: { $in: visibleTenants() } });
 	}
-	return Events.find({ region, tenant: { $in: Meteor.user()?.visibleTenants() || [] } });
+	return Events.find({ region, tenant: { $in: visibleTenants() } });
 });
 
 Meteor.publish('event', (eventId) => {
 	check(eventId, String);
-	return Events.find({ _id: eventId, tenant: { $in: Meteor.user()?.visibleTenants() || [] } });
+	return Events.find({ _id: eventId, tenant: { $in: visibleTenants() } });
 });
 
 Meteor.publish('Events.findFilter', (filter, limit, skip, sort) => Events.findFilter(filter, limit, skip, sort));
 
-Meteor.publish('eventsForCourse', (courseId) => Events.find({ courseId, tenant: { $in: Meteor.user()?.visibleTenants() || [] } }));
+Meteor.publish('eventsForCourse', (courseId) => Events.find({ courseId, tenant: { $in: visibleTenants() } }));
 
 Meteor.publish('affectedReplica', (eventId) => {
 	const event = Events.findOne({
 		_id: eventId,
 		tenant: {
-			$in: Meteor.user()?.visibleTenants() || [],
+			$in: visibleTenants(),
 		},
 	});
 	if (!event) {

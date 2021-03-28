@@ -10,6 +10,7 @@ import LocalTime from '/imports/utils/local-time';
 import Predicates from '/imports/utils/predicates';
 import StringTools from '/imports/utils/string-tools';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { visibleTenants } from '/imports/utils/visible-tenants';
 
 /** @typedef {import("../users/users").UserModel} UserModel */
 
@@ -231,7 +232,7 @@ export class EventsCollection extends Mongo.Collection {
 
 		options.skip = skip;
 
-		find.tenant = { $in: Meteor.user()?.visibleTenants() || [] };
+		find.tenant = { $in: visibleTenants() };
 
 		if (filter.period) {
 			find.start = { $lt: filter.period[1] }; // Start date before end of period

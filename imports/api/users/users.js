@@ -129,14 +129,6 @@ export class User {
 		return (this.privileges
 			&& this.privileges.indexOf(role) > -1) || false;
 	}
-
-	/**
-	 * @this {UserModel}
-	 */
-	visibleTenants() {
-		const usersTenants = this.tenants || [];
-		return usersTenants.concat(Meteor.settings.public.publicTenants);
-	}
 }
 
 const Users = Meteor.users;
