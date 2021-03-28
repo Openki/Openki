@@ -1,17 +1,17 @@
 import { check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { _ } from 'meteor/underscore';
 import { mf } from 'meteor/msgfmt:core';
 
 import Courses from '/imports/api/courses/courses';
+/** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
 import Events from '/imports/api/events/events';
 import Log from '/imports/api/log/log';
 import Regions from '/imports/api/regions/regions';
+/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import LocalTime from '/imports/utils/local-time';
 
-/** @typedef {import('../api/users/users').UserModel} UserModel */
 
 const notificationEvent = {};
 
@@ -32,7 +32,8 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	// What do we do when we receive an event which is not attached to a course?
 	// For now when we don't have a course we just go through the motions but
 	// the recipient list will be empty.
-	let course = false;
+	/** @type {CourseModel | undefined} */
+	let course;
 	if (event.courseId) {
 		course = Courses.findOne(event.courseId);
 	}
@@ -47,13 +48,13 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	// delayed.
 	body.recipients = [];
 	if (course) {
-		body.recipients = _.pluck(course.members, 'user');
+		body.recipients = course.members.map((m) => m.user);
 		body.courseId = course._id;
 	}
 
 	body.model = 'Event';
 
-	Log.record('Notification.Send', [course._id], body);
+	Log.record('Notification.Send', [course?._id], body);
 };
 
 notificationEvent.Model = function (entry) {

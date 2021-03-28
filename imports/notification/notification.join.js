@@ -2,7 +2,6 @@ import { Match, check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
-import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
 import Regions from '/imports/api/regions/regions';
@@ -41,7 +40,7 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	const body = {};
 	body.courseId = course._id;
 	body.participantId = participant._id;
-	body.recipients = _.pluck(course.membersWithRole('team'), 'user');
+	body.recipients = course.membersWithRole('team').map((m) => m.user);
 
 	// Don't send to new member, they know
 	body.recipients = body.recipients.filter((r) => r !== participantId);

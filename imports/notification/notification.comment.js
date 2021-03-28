@@ -35,11 +35,11 @@ notificationComment.record = function (commentId) {
 	body.commentId = comment._id;
 
 	if (comment.notifyAll) {
-		body.recipients = _.pluck(course.members, 'user');
+		body.recipients = course.members.map((m) => m.user);
 	} else {
 		let recipients = [];
 
-		recipients = _.pluck(course.membersWithRole('team'), 'user');
+		recipients = course.membersWithRole('team').map((m) => m.user);
 
 		// All participants in the thread are notified.
 		const threadId = comment.parentId;
