@@ -3,7 +3,7 @@ import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
 
-import AsyncTools from '/imports/utils/async-tools';
+import { AsyncTools } from '/imports/utils/async-tools';
 import Filtering from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
 import Predicates from '/imports/utils/predicates';

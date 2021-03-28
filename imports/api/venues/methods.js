@@ -6,7 +6,7 @@ import Regions from '../regions/regions';
 import Venues from './venues';
 /** @typedef {import('./venues').VenueEnity} VenueEnity */
 
-import AsyncTools from '/imports/utils/async-tools';
+import { AsyncTools } from '/imports/utils/async-tools';
 import HtmlTools from '/imports/utils/html-tools';
 import StringTools from '/imports/utils/string-tools';
 

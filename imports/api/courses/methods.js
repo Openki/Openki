@@ -14,7 +14,7 @@ import {
 	Subscribe, Unsubscribe, Message, processChange,
 } from './subscription';
 
-import AsyncTools from '/imports/utils/async-tools';
+import { AsyncTools } from '/imports/utils/async-tools';
 import StringTools from '/imports/utils/string-tools';
 import HtmlTools from '/imports/utils/html-tools';
 
