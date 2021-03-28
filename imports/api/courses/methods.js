@@ -1,7 +1,6 @@
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
-import { _ } from 'meteor/underscore';
 
 import Courses, { Course } from './courses';
 import Events from '/imports/api/events/events';
@@ -109,7 +108,7 @@ Meteor.methods({
 		const set = {};
 
 		if (changes.roles) {
-			_.each(Roles, (roletype) => {
+			Roles.forEach((roletype) => {
 				const { type } = roletype;
 				const shouldHave = roletype.preset || (changes.roles && changes.roles[type]);
 				const have = course.roles.indexOf(type) !== -1;
@@ -166,16 +165,13 @@ Meteor.methods({
 		set.time_lastedit = new Date();
 		if (course.isNew()) {
 			// You can add newly created courses to any group
-			let testedGroups = [];
-			if (changes.groups) {
-				testedGroups = _.map(changes.groups, (groupId) => {
-					const group = Groups.findOne(groupId);
-					if (!group) {
-						throw new Meteor.Error(404, `no group with id ${groupId}`);
-					}
-					return group._id;
-				});
-			}
+			const testedGroups = changes.groups?.map((groupId) => {
+				const group = Groups.findOne(groupId);
+				if (!group) {
+					throw new Meteor.Error(404, `no group with id ${groupId}`);
+				}
+				return group._id;
+			}) || [];
 			set.groups = testedGroups;
 			set.groupOrganizers = testedGroups;
 

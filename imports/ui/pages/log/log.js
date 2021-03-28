@@ -103,7 +103,7 @@ Template.showLog.helpers({
 		const entries = Log.findFilter(filterQuery, instance.limit.get()).fetch();
 		let last = false;
 		const inter = [];
-		_.each(entries, (entry) => {
+		entries.forEach((entry) => {
 			const ts = moment(entry.ts);
 			if (last) {
 				const interval = moment.duration(last.diff(ts));

@@ -124,7 +124,7 @@ export class VenueCollection extends Mongo.Collection {
 
 		if (filter.search) {
 			const searchTerms = filter.search.split(/\s+/);
-			find.$and = _.map(searchTerms, (searchTerm) => ({ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }));
+			find.$and = searchTerms.map((searchTerm) => ({ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }));
 		}
 
 		if (filter.recent) {

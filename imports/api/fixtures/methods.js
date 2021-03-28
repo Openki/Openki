@@ -90,7 +90,7 @@ if (Meteor.settings.testdata) {
 
 			// Always use same id for same group to avoid broken urls while testing
 			group._id = ensure.fixedId([group.name, group.description]);
-			group.members = _.map(group.members, (name) => ensure.user(name, undefined)._id);
+			group.members = group.members?.map((name) => ensure.user(name, undefined)._id) || [];
 			Groups.insert(group);
 		});
 
@@ -109,7 +109,7 @@ if (Meteor.settings.testdata) {
 			.forEach((e) => {
 				const event = { ...e };
 				event.createdBy = ensure.user(event.createdby, event.region)._id;
-				event.groups = _.map(event.groups, ensure.group);
+				event.groups = event.groups.map(ensure.group);
 				event.groupOrganizers = [];
 
 				// We place the first event in the series on the monday of this week

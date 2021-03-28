@@ -5,7 +5,6 @@ import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Random } from 'meteor/random';
-import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
 import notificationEvent from '/imports/notification/notification.event';
@@ -43,7 +42,7 @@ Notification.send = function (entry) {
 
 	const model = Notification[entry.body.model].Model(entry);
 
-	_.each(entry.body.recipients, (recipientId) => {
+	entry.body.recipients.forEach((recipientId) => {
 		if (!concluded[recipientId]) {
 			let mail = null;
 			let unsubToken = null;

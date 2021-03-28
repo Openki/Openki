@@ -185,16 +185,13 @@ Meteor.methods({
 				throw new Meteor.Error(400, 'Event date not provided');
 			}
 
-			let testedGroups = [];
-			if (changes.groups) {
-				testedGroups = _.map(changes.groups, (groupId) => {
-					const group = Groups.findOne(groupId);
-					if (!group) {
-						throw new Meteor.Error(404, `no group with id ${groupId}`);
-					}
-					return group._id;
-				});
-			}
+			const testedGroups = changes.groups?.map((groupId) => {
+				const group = Groups.findOne(groupId);
+				if (!group) {
+					throw new Meteor.Error(404, `no group with id ${groupId}`);
+				}
+				return group._id;
+			}) || [];
 			changes.groups = testedGroups;
 
 			// Coerce faulty end dates
