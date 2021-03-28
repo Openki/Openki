@@ -18,4 +18,4 @@ function ApiError(error, reason, details) {
 	return meteorError;
 }
 
-export default ApiError;
+export { ApiError as default, ApiError };

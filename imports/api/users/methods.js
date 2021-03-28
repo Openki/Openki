@@ -8,8 +8,8 @@ import Groups from '/imports/api/groups/groups';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import Profile from '/imports/utils/profile';
-import ApiError from '/imports/api/ApiError';
-import IsEmail from '/imports/utils/email-tools';
+import { ApiError } from '/imports/api/ApiError';
+import { isEmail } from '/imports/utils/email-tools';
 import { StringTools } from '/imports/utils/string-tools';
 import { AsyncTools } from '/imports/utils/async-tools';
 import Courses from '../courses/courses';
@@ -35,7 +35,7 @@ const updateEmail = function (email, user) {
 		return ApiError('noEmail', 'Please enter a email.');
 	}
 
-	if (!IsEmail(newEmail)) {
+	if (!isEmail(newEmail)) {
 		return ApiError('emailNotValid', 'email invalid');
 	}
 

@@ -11,7 +11,7 @@ import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import ScssVars from '/imports/ui/lib/scss-vars';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
-import IsEmail from '/imports/utils/email-tools';
+import { isEmail } from '/imports/utils/email-tools';
 
 import Regions from '/imports/api/regions/regions';
 import { Analytics } from '/imports/ui/lib/analytics';
@@ -132,7 +132,7 @@ Template.loginFrame.events({
 		event.preventDefault();
 
 		const username = instance.$('.js-username').val();
-		if (IsEmail(username)) {
+		if (isEmail(username)) {
 			/* eslint-disable-next-line no-param-reassign */
 			instance.parentInstance().transferMail = username;
 		}
@@ -147,7 +147,7 @@ Template.loginFrame.events({
 
 		// Sometimes people register with their email address in the first field
 		// Move entered username over to email field if it contains a @
-		if (IsEmail(username)) {
+		if (isEmail(username)) {
 			email = username;
 			username = email.substr(0, email.indexOf('@'));
 		}
@@ -396,7 +396,7 @@ Template.forgotPwdFrame.helpers({
 Template.forgotPwdFrame.events({
 	'input, change, paste, keyup, mouseup'(event, instance) {
 		const email = instance.$('.js-reset-pw-email').val();
-		instance.emailIsValid.set(IsEmail(email));
+		instance.emailIsValid.set(isEmail(email));
 	},
 
 	submit(event, instance) {
