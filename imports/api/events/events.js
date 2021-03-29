@@ -180,7 +180,7 @@ export class EventsCollection extends Mongo.Collection {
 
 	/**
 	 * Find events for given filters
-	 * @param {object} filter dictionary with filter options
+	 * @param {object} [filter] dictionary with filter options
 	 * @param {string} [filter.search] string of words to search for
 	 * @param {[Date,Date]} [filter.period] include only events that overlap the given
 	 * period (list of start and end date)
@@ -205,7 +205,7 @@ export class EventsCollection extends Mongo.Collection {
 	 * The events are sorted by start date (ascending, before-filter causes descending order)
 	 *
 	 */
-	findFilter(filter, limit = 0, skip, sort) {
+	findFilter(filter = {}, limit = 0, skip, sort) {
 		const find = {};
 		const and = [];
 

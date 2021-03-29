@@ -213,11 +213,11 @@ export class CoursesCollection extends Mongo.Collection {
 	 * internal?: boolean;
 	 * search?: string;
 	 * needsRole?: ("host"|"mentor"|"team")[];
-	 * }} filter
+	 * }} [filter]
 	 * @param {number} [limit]
 	 * @param {any[]} [sortParams]
 	 */
-	findFilter(filter, limit, sortParams) {
+	findFilter(filter = {}, limit, sortParams) {
 		check(limit, Match.Optional(Number));
 		check(sortParams, Match.Optional([[Match.Any]]));
 

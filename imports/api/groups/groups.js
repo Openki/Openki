@@ -31,7 +31,7 @@ export class GroupsCollection extends Mongo.Collection {
 
 	/**
 	 * Find groups for given filters
-	 * @param {object} filter dictionary with filter options
+	 * @param {object} [filter] dictionary with filter options
 	 * @param {boolean} [filter.own] Limit to groups where logged-in user is a member
 	 * @param {string|false} [filter.user] Limit to groups where given user ID is a
 	 * member (client only)
@@ -39,7 +39,7 @@ export class GroupsCollection extends Mongo.Collection {
 	 * @param {number} [skip]
 	 * @param {*} [sort]
 	 */
-	findFilter(filter, limit = 0, skip, sort) {
+	findFilter(filter = {}, limit = 0, skip, sort) {
 		const find = {};
 
 		/**
