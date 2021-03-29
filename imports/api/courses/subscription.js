@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import Courses, { Course } from './courses';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import Events from '/imports/api/events/events';
 import { Users, User } from '/imports/api/users/users';
 import { Match, check } from 'meteor/check';

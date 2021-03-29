@@ -1,11 +1,9 @@
-import { _ } from 'meteor/underscore';
-
 const UrlTools = {
 	/**
 	 * @param {{[name:string]:string|number|boolean}} params
 	 */
 	paramsToQueryString(params) {
-		const queryParams = _.map(params, (param, name) => `${encodeURIComponent(name)}=${encodeURIComponent(param)}`);
+		const queryParams = Object.entries(params).map((nameValue) => `${encodeURIComponent(nameValue[0])}=${encodeURIComponent(nameValue[1])}`);
 
 		return queryParams.join('&');
 	},
@@ -26,4 +24,4 @@ const UrlTools = {
 	},
 };
 
-export default UrlTools;
+export { UrlTools as default, UrlTools };

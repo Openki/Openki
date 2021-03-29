@@ -5,8 +5,8 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import Events from '/imports/api/events/events';
-import Regions from '/imports/api/regions/regions';
-import Alert from '/imports/api/alerts/alert';
+import { Regions } from '/imports/api/regions/regions';
+import { Alert } from '/imports/api/alerts/alert';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/events/list/event-list';

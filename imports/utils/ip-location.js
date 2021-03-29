@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 
 const IpLocation = {};
 

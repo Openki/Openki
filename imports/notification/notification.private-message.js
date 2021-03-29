@@ -6,7 +6,7 @@ import { mf } from 'meteor/msgfmt:core';
 import Courses from '/imports/api/courses/courses';
 import Log from '/imports/api/log/log';
 import { Users } from '/imports/api/users/users';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 
 import { HtmlTools } from '/imports/utils/html-tools';
 import { StringTools } from '/imports/utils/string-tools';

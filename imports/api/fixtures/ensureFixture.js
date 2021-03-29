@@ -2,7 +2,7 @@ import { Accounts } from 'meteor/accounts-base';
 import crypto from 'crypto';
 import Prng from './Prng';
 import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
 import { StringTools } from '/imports/utils/string-tools';

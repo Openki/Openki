@@ -5,7 +5,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import ScssVars from '/imports/ui/lib/scss-vars';
@@ -13,7 +13,7 @@ import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import { isEmail } from '/imports/utils/email-tools';
 
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import './account-tasks.html';

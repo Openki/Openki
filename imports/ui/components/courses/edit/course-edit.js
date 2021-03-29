@@ -6,11 +6,11 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import Categories from '/imports/api/categories/categories';
 import Courses from '/imports/api/courses/courses';
 import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import Roles from '/imports/api/roles/roles';
 
 import Editable from '/imports/ui/lib/editable';

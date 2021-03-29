@@ -12,14 +12,14 @@ import { Tooltips } from 'meteor/lookback:tooltips';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import Languages from '/imports/api/languages/languages';
 
 import Introduction from '/imports/ui/lib/introduction';
 import UpdateViewport from '/imports/ui/lib/update-viewport';
 
 import RegionSelection from '/imports/utils/region-selection';
-import UrlTools from '/imports/utils/url-tools';
+import { UrlTools } from '/imports/utils/url-tools';
 
 import 'bootstrap-sass';
 

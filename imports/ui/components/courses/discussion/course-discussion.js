@@ -7,7 +7,7 @@ import { Tracker } from 'meteor/tracker';
 
 import Courses from '/imports/api/courses/courses';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 import Editable from '/imports/ui/lib/editable';

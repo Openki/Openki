@@ -4,9 +4,9 @@ import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import { Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subscription';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';

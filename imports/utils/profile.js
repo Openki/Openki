@@ -1,7 +1,7 @@
 import { Match, check } from 'meteor/check';
 
 import Log from '/imports/api/log/log';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
