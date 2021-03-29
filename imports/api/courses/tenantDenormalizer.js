@@ -1,4 +1,4 @@
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 // eslint-disable-next-line import/no-cycle
 import Courses from '/imports/api/courses/courses';
 /** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */

@@ -1,4 +1,4 @@
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 // eslint-disable-next-line import/no-cycle
 import Events from '/imports/api/events/events';
 /** @typedef {import('./events').EventEntity} EventEntity */
