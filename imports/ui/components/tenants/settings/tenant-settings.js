@@ -6,6 +6,7 @@ import { Template } from 'meteor/templating';
 
 import Alert from '/imports/api/alerts/alert';
 import { Tenants } from '/imports/api/tenants/tenants';
+import { Users } from '/imports/api/users/users';
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
 import { MeteorAsync } from '/imports/utils/promisify';
 
@@ -52,7 +53,7 @@ Template.tenantSettings.events({
 		const tenantId = Router.current().params._id;
 		try {
 			await MeteorAsync.callAsync('tenant.updateMembership', memberId, tenantId, true);
-			const memberName = Meteor.users.findOne(memberId)?.username;
+			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(mf(
 				'tenantSettings.memberAdded',
@@ -70,7 +71,7 @@ Template.tenantSettings.events({
 		try {
 			await MeteorAsync.callAsync('tenant.updateMembership', memberId, tenantId, false);
 
-			const memberName = Meteor.users.findOne(memberId)?.username;
+			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(mf(
 				'tenantSettings.memberRemoved',

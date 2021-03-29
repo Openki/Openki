@@ -11,6 +11,9 @@ import { Users } from '/imports/api/users/users';
 import { applyUpdates } from '/server/lib/updates';
 
 import { AsyncTools } from '/imports/utils/async-tools';
+import { tenantDenormalizer as coursesTenantDenormalizer } from '/imports/api/courses/tenantDenormalizer';
+import { tenantDenormalizer as eventsTenantDenormalizer } from '/imports/api/events/tenantDenormalizer';
+import { tenantsDenormalizer as usersTenantsDenormalizer } from '/imports/api/users/tenantsDenormalizer';
 
 function initializeDbCacheFields() {
 	// Resync location cache in events
@@ -21,6 +24,10 @@ function initializeDbCacheFields() {
 
 	// Update List of badges per user
 	Meteor.call('user.updateBadges', {}, AsyncTools.logErrors);
+
+	coursesTenantDenormalizer.onStartUp();
+	eventsTenantDenormalizer.onStartUp();
+	usersTenantsDenormalizer.onStartUp();
 
 	Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
 
@@ -106,7 +113,7 @@ Meteor.startup(() => {
 		}
 	});
 
-	/* Initialize cache-fields on startup */
+	/* Initialize cache-fields on startup (Also called calculated fields or denomalized data) */
 	if (Meteor.settings.startup?.buildDbCacheAsync) {
 		Meteor.setTimeout(() => {
 			initializeDbCacheFields();

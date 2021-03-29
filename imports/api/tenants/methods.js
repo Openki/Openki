@@ -2,8 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { Tenants } from './tenants';
+import { Users } from '/imports/api/users/users';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import userTenantDenormalizer from '../users/tenantDenormalizer';
+import usersTenantsDenormalizer from '../users/tenantsDenormalizer';
 
 Meteor.methods({
 	/**
@@ -20,7 +21,7 @@ Meteor.methods({
 			throw new Meteor.Error('Not permitted');
 		}
 
-		const user = Meteor.users.findOne(userId);
+		const user = Users.findOne(userId);
 		if (!user) {
 			throw new Meteor.Error(404, 'User not found');
 		}
@@ -34,6 +35,6 @@ Meteor.methods({
 
 		Tenants.update(tenantId, update);
 
-		userTenantDenormalizer.afterUpdateMembership(user._id, tenantId, join);
+		usersTenantsDenormalizer.afterTenantUpdateMembership(user._id, tenantId, join);
 	},
 });

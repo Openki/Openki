@@ -12,7 +12,8 @@ import { visibleTenants } from '/imports/utils/visible-tenants';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
-import tenantDenormalizer from './tenantDenormalizer';
+// eslint-disable-next-line import/no-cycle
+import { tenantDenormalizer } from './tenantDenormalizer';
 
 // ======== DB-Model: ========
 /**

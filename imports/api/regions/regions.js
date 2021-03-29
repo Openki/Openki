@@ -53,4 +53,5 @@ export class RegionsCollection extends Mongo.Collection {
 		return this.findOne(regionId);
 	}
 }
+
 export default new RegionsCollection();

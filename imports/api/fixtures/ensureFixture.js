@@ -57,7 +57,7 @@ const ensure = {
 			return;
 		}
 
-		Meteor.users.update(user._id, {
+		Users.update(user._id, {
 			$addToSet: { tenants: region.tenant },
 		});
 

@@ -3,6 +3,7 @@ import { Tenants } from '/imports/api/tenants/tenants';
 import Regions from '/imports/api/regions/regions';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
+import { Users } from '/imports/api/users/users';
 
 function update() {
 	let updated = 0;
@@ -32,10 +33,10 @@ function update() {
 		updated += Events.update(event._id, event);
 	});
 
-	Meteor.users.find().fetch().forEach((orginalUser) => {
+	Users.find().fetch().forEach((orginalUser) => {
 		const user = { ...orginalUser };
 		user.tenants = [];
-		updated += Meteor.users.update(user._id, user);
+		updated += Users.update(user._id, user);
 	});
 
 	return updated;
