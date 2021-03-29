@@ -5,7 +5,7 @@ import { mf } from 'meteor/msgfmt:core';
 
 import Courses from '/imports/api/courses/courses';
 import Log from '/imports/api/log/log';
-import Users from '/imports/api/users/users';
+import { Users } from '/imports/api/users/users';
 import Regions from '/imports/api/regions/regions';
 
 import { HtmlTools } from '/imports/utils/html-tools';
@@ -79,8 +79,8 @@ notificationPrivateMessage.record = function (
 
 notificationPrivateMessage.Model = function (entry) {
 	const { body } = entry;
-	const sender = Meteor.users.findOne(body.sender);
-	const targetRecipient = Meteor.users.findOne(body.targetRecipient);
+	const sender = Users.findOne(body.sender);
+	const targetRecipient = Users.findOne(body.targetRecipient);
 
 	return {
 		/**

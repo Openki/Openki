@@ -7,6 +7,7 @@ import { Template } from 'meteor/templating';
 
 import Alert from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';
+import { Users } from '/imports/api/users/users';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
@@ -189,7 +190,7 @@ Template.emailBox.events({
 		}
 
 		const recUserId = this.user._id;
-		let recUser = Meteor.users.findOne({ _id: recUserId });
+		let recUser = Users.findOne({ _id: recUserId });
 		if (recUser) {
 			if (recUser.username) {
 				recUser = recUser.username;

@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
+import { Users } from '/imports/api/users/users';
+
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
@@ -18,7 +20,7 @@ Meteor.publish('user', function (userId) {
 		fields.privileges = 1;
 	}
 
-	return Meteor.users.find(
+	return Users.find(
 		{ _id: userId },
 		{ fields },
 	);
@@ -28,7 +30,7 @@ Meteor.publish('user', function (userId) {
 // Always publish their own data for logged-in users
 // https://github.com/meteor/guide/issues/651
 Meteor.publish(null, function () {
-	return Meteor.users.find(this.userId);
+	return Users.find(this.userId);
 });
 
 Meteor.publish('userSearch', (search) => {

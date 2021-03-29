@@ -9,6 +9,7 @@ import Prng from './Prng';
 import Groups from '/imports/api/groups/groups';
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
+import { Users } from '/imports/api/users/users';
 
 import { HtmlTools } from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
@@ -109,7 +110,7 @@ if (Meteor.settings.testdata) {
 			.forEach((e) => {
 				const event = { ...e };
 				event.createdBy = ensure.user(event.createdby, event.region)._id;
-				event.groups = event.groups.map(ensure.group);
+				event.groups = event.groups?.map(ensure.group) || [];
 				event.groupOrganizers = [];
 
 				// We place the first event in the series on the monday of this week
@@ -327,7 +328,7 @@ if (Meteor.settings.testdata) {
 		const prng = Prng('createComments');
 		let count = 0;
 
-		const userCount = Meteor.users.find().count();
+		const userCount = Users.find().count();
 		Courses.find().forEach((course) => {
 			const createCount = Math.floor((prng() * 2) ** 4);
 			const courseMembers = course.members.length;
@@ -350,7 +351,7 @@ if (Meteor.settings.testdata) {
 				if (!courseMembers || prng() < 0.2) {
 					// Leave some anonymous comments
 					if (prng() < 0.7) {
-						commenter = Meteor.users.findOne({}, { skip: Math.floor(prng() * userCount) })._id;
+						commenter = Users.findOne({}, { skip: Math.floor(prng() * userCount) })._id;
 						comment.userId = commenter.user;
 					}
 				} else {

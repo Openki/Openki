@@ -4,7 +4,7 @@ import Courses, { Course } from './courses';
 
 import Alert from '/imports/api/alerts/alert';
 import Events from '/imports/api/events/events';
-import Users, { User } from '/imports/api/users/users';
+import { Users, User } from '/imports/api/users/users';
 import { Match, check } from 'meteor/check';
 
 import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';
@@ -80,7 +80,7 @@ export class Subscribe extends Change {
 	static read(body) {
 		check(body, Object);
 		return new this(Courses.findOne(body.courseId),
-			Meteor.users.findOne(body.userId),
+			Users.findOne(body.userId),
 			body.role,
 			body.comment);
 	}
@@ -308,7 +308,7 @@ export class Message extends Change {
 
 	static read(body) {
 		return new this(Courses.findOne(body.courseId),
-			Meteor.users.findOne(body.userId),
+			Users.findOne(body.userId),
 			body.message);
 	}
 

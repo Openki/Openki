@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import crypto from 'crypto';
 import Prng from './Prng';
@@ -6,6 +5,7 @@ import Groups from '/imports/api/groups/groups';
 import { Tenants } from '/imports/api/tenants/tenants';
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
+import { Users } from '/imports/api/users/users';
 import { StringTools } from '/imports/utils/string-tools';
 
 /** @typedef {import('../users/users').UserEntity} UserEntity */
@@ -87,7 +87,7 @@ const ensure = {
 		}
 		const email = `${name.split(' ').join('')}@openki.example`.toLowerCase();
 
-		let user = Meteor.users.findOne({ 'emails.address': email });
+		let user = Users.findOne({ 'emails.address': email });
 		if (user) {
 			if (region) {
 				ensure.userInTenant(user, region);
@@ -95,7 +95,7 @@ const ensure = {
 			return user;
 		}
 
-		user = Meteor.users.findOne({ username: name });
+		user = Users.findOne({ username: name });
 		if (user) {
 			if (region) {
 				ensure.userInTenant(user, region);
@@ -113,7 +113,7 @@ const ensure = {
 
 		const age = Math.floor(prng() * 100000000000);
 		const time = new Date().getTime();
-		Meteor.users.update({ _id: id }, {
+		Users.update({ _id: id }, {
 			$set: {
 				// Every password is set to "greg".
 				// Hashing a password with bcrypt is expensive so we use the
@@ -125,12 +125,12 @@ const ensure = {
 		});
 
 		if (verified) {
-			Meteor.users.update({ _id: id }, {
+			Users.update({ _id: id }, {
 				$set: { 'emails.0.verified': true },
 			});
 		}
 
-		user = Meteor.users.findOne(id);
+		user = Users.findOne(id);
 
 		if (!user) {
 			throw new Error('Unexpected undefined');

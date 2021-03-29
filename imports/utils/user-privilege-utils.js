@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
+import { Users } from '/imports/api/users/users';
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
 
 const UserPrivilegeUtils = {
@@ -14,7 +15,7 @@ const UserPrivilegeUtils = {
 		let user;
 		if (typeof userOrUserId === 'string' || userOrUserId instanceof String) {
 			// Load user object if ID was passed
-			user = Meteor.users.findOne({ _id: userOrUserId });
+			user = Users.findOne({ _id: userOrUserId });
 		} else {
 			user = userOrUserId;
 		}

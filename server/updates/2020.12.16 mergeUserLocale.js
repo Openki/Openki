@@ -1,4 +1,4 @@
-import Users from '/imports/api/users/users';
+import { Users } from '/imports/api/users/users';
 
 /**
  * merge the profile locale into the base locale

@@ -2,13 +2,13 @@ import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
-import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 import Alert from '/imports/api/alerts/alert';
 
 import LocationTracker from '/imports/ui/lib/location-tracker';
 import Venues from '/imports/api/venues/venues';
+import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import '/imports/ui/components/map/map';
@@ -142,7 +142,7 @@ Template.eventEditVenue.onCreated(function () {
 		const venueEditor = this.location.get().editor;
 		if (venueEditor) {
 			this.subscribe('user', venueEditor, () => {
-				this.venueEditor.set(Meteor.users.findOne(venueEditor));
+				this.venueEditor.set(Users.findOne(venueEditor));
 			});
 		}
 	});
