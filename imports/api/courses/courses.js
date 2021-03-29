@@ -298,7 +298,7 @@ export class CoursesCollection extends Mongo.Collection {
 
 		if (filter.search) {
 			const searchTerms = filter.search.split(/\s+/);
-			const searchQueries = _.map(searchTerms, (searchTerm) => ({
+			const searchQueries = searchTerms.map((searchTerm) => ({
 				$or: [
 					{ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
 					{ description: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
