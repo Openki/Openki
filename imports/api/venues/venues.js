@@ -95,7 +95,7 @@ export class VenueCollection extends Mongo.Collection {
 
 	/**
 	 * Find venues for given filters
-	 * @param {object} filter dictionary with filter options
+	 * @param {object} [filter] dictionary with filter options
 	 * @param {string} [filter.search] string of words to search for
 	 * @param {string} [filter.region] restrict to venues in that region
 	 * @param {string} [filter.editor]
@@ -104,7 +104,7 @@ export class VenueCollection extends Mongo.Collection {
 	 * @param {number} [skip]
 	 * @param {*} [sort]
 	 */
-	findFilter(filter, limit = 0, skip, sort) {
+	findFilter(filter = {}, limit = 0, skip, sort) {
 		const find = {};
 
 		/** @type {Mongo.Options<VenueEnity>} */
