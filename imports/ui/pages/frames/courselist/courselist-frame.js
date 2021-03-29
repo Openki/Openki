@@ -5,7 +5,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import Courses from '/imports/api/courses/courses';
 import Metatags from '/imports/utils/metatags';
 import CssFromQuery from '/imports/ui/lib/css-from-query';

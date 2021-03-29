@@ -2,11 +2,11 @@ import { Accounts } from 'meteor/accounts-base';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
-import Regions from '/imports/api/regions/regions';
-import Alert from '/imports/api/alerts/alert';
+import { Regions } from '/imports/api/regions/regions';
+import { Alert } from '/imports/api/alerts/alert';
 
 import IpLocation from '/imports/utils/ip-location';
-import UrlTools from '/imports/utils/url-tools';
+import { UrlTools } from '/imports/utils/url-tools';
 
 const RegionSelection = {};
 

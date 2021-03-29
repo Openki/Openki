@@ -6,7 +6,7 @@ import { _ } from 'meteor/underscore';
 
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 import Courses from '/imports/api/courses/courses';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 import Log from '/imports/api/log/log';
 

@@ -6,7 +6,7 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 
 import Categories from '/imports/api/categories/categories';
 import Courses from '/imports/api/courses/courses';
@@ -14,7 +14,7 @@ import CourseTemplate from '/imports/ui/lib/course-template';
 import FilterPreview from '/imports/ui/lib/filter-preview';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import ScssVars from '/imports/ui/lib/scss-vars';
-import UrlTools from '/imports/utils/url-tools';
+import { UrlTools } from '/imports/utils/url-tools';
 
 import '/imports/ui/components/courses/list/course-list';
 import '/imports/ui/components/courses/edit/course-edit';

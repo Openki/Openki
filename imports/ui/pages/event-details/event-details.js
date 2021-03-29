@@ -6,11 +6,11 @@ import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
 import LocationTracker from '/imports/ui/lib/location-tracker';

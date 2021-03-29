@@ -14,10 +14,10 @@ import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import Editable from '/imports/ui/lib/editable';
