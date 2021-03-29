@@ -1,6 +1,8 @@
 import { Tenants } from '../tenants/tenants';
 import { Users } from './users';
 
+// Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
+
 const tenantsDenormalizer = {
 	onStartUp() {
 		let updated = 0;

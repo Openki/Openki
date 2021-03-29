@@ -3,6 +3,8 @@ import Regions from '/imports/api/regions/regions';
 import Events from '/imports/api/events/events';
 /** @typedef {import('./events').EventEntity} EventEntity */
 
+// Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
+
 const tenantDenormalizer = {
 	onStartUp() {
 		let updated = 0;

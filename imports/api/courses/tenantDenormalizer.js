@@ -3,6 +3,8 @@ import Regions from '/imports/api/regions/regions';
 import Courses from '/imports/api/courses/courses';
 /** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
 
+// Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
+
 const tenantDenormalizer = {
 	onStartUp() {
 		let updated = 0;
