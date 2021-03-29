@@ -2,6 +2,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
+import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import './participant-contact.html';
@@ -45,8 +46,7 @@ Template.participantContact.helpers({
 	},
 
 	userAcceptsPrivateMessages() {
-		/** @type {UserModel} */
-		const user = Meteor.users.findOne(this.participant);
+		const user = Users.findOne(this.participant);
 		return user?.acceptsPrivateMessages;
 	},
 

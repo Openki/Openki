@@ -8,6 +8,7 @@ import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Log from '/imports/api/log/log';
 import Regions from '/imports/api/regions/regions';
+import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import LocalTime from '/imports/utils/local-time';
@@ -72,7 +73,7 @@ notificationEvent.Model = function (entry) {
 
 	let creator = false;
 	if (event?.createdBy) {
-		creator = Meteor.users.findOne(event.createdBy);
+		creator = Users.findOne(event.createdBy);
 	}
 
 	let creatorName = false;

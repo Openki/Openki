@@ -1,10 +1,10 @@
-import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import crypto from 'crypto';
 import Prng from './Prng';
 import Groups from '/imports/api/groups/groups';
 import Regions from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
+import { Users } from '/imports/api/users/users';
 import { StringTools } from '/imports/utils/string-tools';
 
 const ensure = {
@@ -32,12 +32,12 @@ const ensure = {
 
 		/* eslint-disable-next-line no-constant-condition */
 		while (true) {
-			let user = Meteor.users.findOne({ 'emails.address': email });
+			let user = Users.findOne({ 'emails.address': email });
 			if (user) {
 				return user;
 			}
 
-			user = Meteor.users.findOne({ username: name });
+			user = Users.findOne({ username: name });
 			if (user) {
 				return user;
 			}
@@ -52,7 +52,7 @@ const ensure = {
 
 			const age = Math.floor(prng() * 100000000000);
 			const time = new Date().getTime();
-			Meteor.users.update({ _id: id }, {
+			Users.update({ _id: id }, {
 				$set: {
 					// Every password is set to "greg".
 					// Hashing a password with bcrypt is expensive so we use the
@@ -64,7 +64,7 @@ const ensure = {
 			});
 
 			if (verified) {
-				Meteor.users.update({ _id: id }, {
+				Users.update({ _id: id }, {
 					$set: { 'emails.0.verified': true },
 				});
 			}

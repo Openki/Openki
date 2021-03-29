@@ -7,6 +7,8 @@ import { SSR } from 'meteor/meteorhacks:ssr';
 import { Random } from 'meteor/random';
 import { Match, check } from 'meteor/check';
 
+import { Users } from '/imports/api/users/users';
+
 import notificationEvent from '/imports/notification/notification.event';
 import notificationComment from '/imports/notification/notification.comment';
 import notificationJoin from '/imports/notification/notification.join';
@@ -49,7 +51,7 @@ Notification.send = function (entry) {
 
 			try {
 				/** @type {UserModel|undefined} */
-				const user = Meteor.users.findOne(recipientId);
+				const user = Users.findOne(recipientId);
 
 				if (!user) {
 					throw new Error(`User not found for ID '${recipientId}'`);

@@ -6,6 +6,8 @@ import { Template } from 'meteor/templating';
 
 import Alert from '/imports/api/alerts/alert';
 import Groups from '/imports/api/groups/groups';
+import { Users } from '/imports/api/users/users';
+
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
 import { MeteorAsync } from '/imports/utils/promisify';
 
@@ -80,7 +82,7 @@ Template.groupSettings.events({
 		const groupId = Router.current().params._id;
 		try {
 			await MeteorAsync.callAsync('group.updateMembership', memberId, groupId, true);
-			const memberName = Meteor.users.findOne(memberId)?.username;
+			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(mf(
 				'groupSettings.memberAdded',
@@ -97,7 +99,7 @@ Template.groupSettings.events({
 		const groupId = Router.current().params._id;
 		try {
 			await MeteorAsync.callAsync('group.updateMembership', memberId, groupId, false);
-			const memberName = Meteor.users.findOne(memberId)?.username;
+			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(mf(
 				'groupSettings.memberRemoved',
