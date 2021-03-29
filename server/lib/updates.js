@@ -6,6 +6,7 @@ import update20210112EnsureCourseInterestedField from '../updates/2021.01.12 ens
 import update20210128PrivateMessagesForAll from '../updates/2021.01.28 privateMessagesForAll';
 import update20210211AvatarColor from '../updates/2021.02.11 avatarColor';
 import update20210218UserDescription from '../updates/2021.02.18 userDescription';
+import update20210329EnrichTenant from '../updates/2021.03.29 enrichTenant';
 
 /** @type {{[name: string]: () => number }} */
 const UpdatesAvailable = {
@@ -15,6 +16,7 @@ const UpdatesAvailable = {
 	'2021.01.28 privateMessagesForAll': update20210128PrivateMessagesForAll,
 	'2021.02.11 avatarColor': update20210211AvatarColor,
 	'2021.02.18 userDescription': update20210218UserDescription,
+	'2021.03.29 enrichTenant': update20210329EnrichTenant,
 };
 
 const UpdatesApplied = new Mongo.Collection('UpdatesApplied');
