@@ -1,20 +1,25 @@
+import { Meteor } from 'meteor/meteor';
+import { ReactiveVar } from 'meteor/reactive-var';
+
 import '/imports/startup/both';
 import '/imports/startup/client';
 
 import { Accounts } from 'meteor/accounts-base';
-import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
 import { mf, mfPkg } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
+import { Tooltips } from 'meteor/lookback:tooltips';
+import { Session } from 'meteor/session';
+import { Tracker } from 'meteor/tracker';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import Languages from '/imports/api/languages/languages';
 
 import Introduction from '/imports/ui/lib/introduction';
 import UpdateViewport from '/imports/ui/lib/update-viewport';
 
 import RegionSelection from '/imports/utils/region-selection';
-import UrlTools from '/imports/utils/url-tools';
+import { UrlTools } from '/imports/utils/url-tools';
 
 import 'bootstrap-sass';
 
@@ -127,7 +132,7 @@ Meteor.startup(() => {
 
 		const monthsShort = function () {
 			if (typeof locale.monthsShort === 'function') {
-				return _.map(_.range(12), (month) => locale.monthsShort(moment().month(month), ''));
+				return _.range(12).map((month) => locale.monthsShort(moment().month(month), ''));
 			}
 			return locale._monthsShort;
 		};

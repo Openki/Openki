@@ -1,8 +1,12 @@
+import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
+import { Tracker } from 'meteor/tracker';
 
 import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
+import { Users } from '/imports/api/users/users';
 
 
 const helpers = {
@@ -209,7 +213,7 @@ const usernameFromId = (function () {
 	const pending = {};
 
 	// Update the cache if users are pushed to the collection
-	Meteor.users.find().observe({
+	Users.find().observe({
 		added(user) {
 			cache[user._id] = user.username;
 		},

@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { SSR } from 'meteor/meteorhacks:ssr';
 
 import Notification from '/imports/notification/notification';

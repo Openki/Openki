@@ -6,10 +6,11 @@ import { _ } from 'meteor/underscore';
 
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 import Courses from '/imports/api/courses/courses';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
+import { Users } from '/imports/api/users/users';
 import Log from '/imports/api/log/log';
 
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -35,11 +36,11 @@ notificationComment.record = function (commentId) {
 	body.commentId = comment._id;
 
 	if (comment.notifyAll) {
-		body.recipients = _.pluck(course.members, 'user');
+		body.recipients = course.members.map((m) => m.user);
 	} else {
 		let recipients = [];
 
-		recipients = _.pluck(course.membersWithRole('team'), 'user');
+		recipients = course.membersWithRole('team').map((m) => m.user);
 
 		// All participants in the thread are notified.
 		const threadId = comment.parentId;
@@ -82,7 +83,7 @@ notificationComment.Model = function (entry) {
 	if (comment) {
 		course = Courses.findOne(comment.courseId);
 		if (comment.userId) {
-			commenter = Meteor.users.findOne(comment.userId);
+			commenter = Users.findOne(comment.userId);
 		}
 		if (commenter) {
 			commenterName = commenter.username;

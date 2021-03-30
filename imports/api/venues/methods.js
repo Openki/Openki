@@ -2,13 +2,13 @@ import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-import Regions from '../regions/regions';
+import { Regions } from '../regions/regions';
 import Venues from './venues';
 /** @typedef {import('./venues').VenueEnity} VenueEnity */
 
-import AsyncTools from '/imports/utils/async-tools';
-import HtmlTools from '/imports/utils/html-tools';
-import StringTools from '/imports/utils/string-tools';
+import { AsyncTools } from '/imports/utils/async-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 Meteor.methods({
 	/**

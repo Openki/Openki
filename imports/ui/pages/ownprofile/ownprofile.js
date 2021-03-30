@@ -1,12 +1,13 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 
 import TemplateMixins from '/imports/ui/lib/template-mixins';
-import Alert from '/imports/api/alerts/alert';
-import Analytics from '/imports/ui/lib/analytics';
+import { Alert } from '/imports/api/alerts/alert';
+import { Analytics } from '/imports/ui/lib/analytics';
 import Editable from '/imports/ui/lib/editable';
 
 import '/imports/ui/components/buttons/buttons';

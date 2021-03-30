@@ -9,16 +9,17 @@ import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
 import Roles from '/imports/api/roles/roles';
 import Venues, { Venue } from '/imports/api/venues/venues'; // Use default and { named, ... } exports
+import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/venues/venues').VenueModel} VenueModel */
 /** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import CourseTemplate from '/imports/ui/lib/course-template';
 import CssFromQuery from '/imports/ui/lib/css-from-query';
 
-import Filtering from '/imports/utils/filtering';
+import { Filtering } from '/imports/utils/filtering';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 import LocalTime from '/imports/utils/local-time';
 import Metatags from '/imports/utils/metatags';
@@ -188,7 +189,7 @@ Router.map(function () {
 		path: '/frame/propose',
 		template: 'framePropose',
 		layoutTemplate: 'frameLayout',
-		waitOn: () => Meteor.subscribe('regions'),
+		waitOn: () => Meteor.subscribe('Regions'),
 		data() {
 			const predicates = {
 				region: Predicates.id,
@@ -654,7 +655,7 @@ Router.map(function () {
 			];
 		},
 		data() {
-			const user = Meteor.users.findOne({ _id: this.params._id });
+			const user = Users.findOne({ _id: this.params._id });
 			if (!user) {
 				return false; // not loaded?
 			}
@@ -678,7 +679,7 @@ Router.map(function () {
 			};
 		},
 		onAfterAction() {
-			const user = Meteor.users.findOne({ _id: this.params._id });
+			const user = Users.findOne({ _id: this.params._id });
 			if (!user) return;
 
 			const title = mf('profile.windowtitle', { USER: user.username }, 'Profile of {USER}');

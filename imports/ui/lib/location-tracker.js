@@ -1,4 +1,4 @@
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import { Mongo } from 'meteor/mongo';
 
 const LocationTracker = function () {

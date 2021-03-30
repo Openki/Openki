@@ -1,6 +1,8 @@
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 
+import MediumEditor from 'medium-editor';
+
 import '/imports/ui/components/buttons/buttons';
 
 import './editable.html';

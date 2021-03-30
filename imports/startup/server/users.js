@@ -1,5 +1,8 @@
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
+
+import { Users } from '/imports/api/users/users';
 
 import Profile from '/imports/utils/profile';
 
@@ -16,7 +19,7 @@ Meteor.startup(() => {
 		}
 	});
 
-	Meteor.users.find({}, { fields: { allowPrivateMessages: 1, emails: 1 } }).observe({
+	Users.find({}, { fields: { allowPrivateMessages: 1, emails: 1 } }).observe({
 		added: Profile.updateAcceptsPrivateMessages,
 		changed: Profile.updateAcceptsPrivateMessages,
 	});

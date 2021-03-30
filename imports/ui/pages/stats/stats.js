@@ -1,6 +1,9 @@
+import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
 
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 

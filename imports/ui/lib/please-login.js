@@ -1,4 +1,7 @@
-export default function PleaseLogin() {
+import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
+
+export function PleaseLogin() {
 	if (Meteor.userId()) {
 		return false;
 	}
@@ -6,3 +9,5 @@ export default function PleaseLogin() {
 	$('.js-account-tasks').modal('show');
 	return true;
 }
+
+export default PleaseLogin;

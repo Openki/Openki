@@ -1,3 +1,4 @@
+import { Blaze } from 'meteor/blaze';
 import { mf } from 'meteor/msgfmt:core';
 
 /** Define {{mf}} helper on the server */

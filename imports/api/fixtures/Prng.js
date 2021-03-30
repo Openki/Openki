@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import seedrandom from 'seedrandom';
 
 const Prng = function (staticseed) {

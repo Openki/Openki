@@ -4,9 +4,10 @@ import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
 
 import Events from '/imports/api/events/events';
-import UrlTools from '/imports/utils/url-tools';
+import { UrlTools } from '/imports/utils/url-tools';
 
 import '/imports/ui/components/events/list/event-list';
 import '/imports/ui/components/loading/loading';

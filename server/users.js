@@ -1,7 +1,10 @@
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { mf } from 'meteor/msgfmt:core';
+import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
+import { Accounts } from 'meteor/accounts-base';
 
-import IsEmail, { getReportEmails } from '/imports/utils/email-tools';
+import { isEmail, getReportEmails } from '/imports/utils/email-tools';
 
 Accounts.onCreateUser((options, originalUser) => {
 	const user = { ...originalUser };
@@ -71,7 +74,7 @@ Accounts.validateNewUser((user) => {
 	if (user.emails) {
 		const email = user.emails[0].address;
 
-		if (!IsEmail(email)) {
+		if (!isEmail(email)) {
 			throw new Meteor.Error(403, 'email invalid');
 		}
 	}

@@ -5,11 +5,11 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import Languages from '/imports/api/languages/languages';
 
 import ScssVars from '/imports/ui/lib/scss-vars';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 import './language-selection.html';
 
@@ -47,7 +47,7 @@ Template.languageSelection.helpers({
 	},
 
 	languages() {
-		const visibleLanguages = _.filter(Languages, (lg) => lg.visible);
+		const visibleLanguages = Object.values(Languages).filter((lg) => lg.visible);
 		const search = Template.instance().languageSearch.get().toLowerCase();
 		const results = [];
 

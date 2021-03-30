@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
-import HtmlTools from '/imports/utils/html-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
+import { Users } from '/imports/api/users/users';
 
 import Groups from './groups';
 
@@ -127,7 +128,7 @@ Meteor.methods({
 			throw new Meteor.Error('No permitted');
 		}
 
-		const user = Meteor.users.findOne({ _id: userId });
+		const user = Users.findOne({ _id: userId });
 		if (!user) {
 			throw new Meteor.Error(404, 'User not found');
 		}

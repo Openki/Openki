@@ -1,4 +1,4 @@
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import moment from 'moment-timezone';
 
 /** Serialize local time for mongo

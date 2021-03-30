@@ -1,3 +1,5 @@
+import { check } from 'meteor/check';
+
 import Groups from '/imports/api/groups/groups';
 
 /**

@@ -65,16 +65,6 @@ a:hover,
 	transition-duration: 0s;
 }
 
-.medium-editor-placeholder:hover {
-	cursor: text;
-}
-
-.medium-editor-placeholder::after {
-	font-style: normal;
-	position: relative;
-	white-space: normal;
-}
-
 .disabled label {
 	color: $gray-light;
 }

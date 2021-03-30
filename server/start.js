@@ -1,15 +1,16 @@
 import { robots } from 'meteor/gadicohen:robots-txt';
+import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 import '/imports/startup/both';
 import '/imports/startup/server';
 
-import AsyncTools from '/imports/utils/async-tools';
-
 import Version from '/imports/api/version/version';
+import { Users } from '/imports/api/users/users';
 
-import applyUpdates from '/server/lib/updates';
+import { applyUpdates } from '/server/lib/updates';
 
+import { AsyncTools } from '/imports/utils/async-tools';
 
 function initializeDbCacheFields() {
 	// Resync location cache in events
@@ -99,9 +100,9 @@ Meteor.startup(() => {
 	}
 
 	(Meteor.settings.admins || []).forEach((username) => {
-		const user = Meteor.users.findOne({ username });
+		const user = Users.findOne({ username });
 		if (user) {
-			Meteor.users.update({ _id: user._id }, { $addToSet: { privileges: 'admin' } });
+			Users.update({ _id: user._id }, { $addToSet: { privileges: 'admin' } });
 		}
 	});
 

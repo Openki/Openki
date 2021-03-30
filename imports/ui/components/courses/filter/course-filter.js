@@ -1,12 +1,13 @@
 import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
+import { _ } from 'meteor/underscore';
 
 import Roles from '/imports/api/roles/roles';
 
 import FilterPreview from '/imports/ui/lib/filter-preview';
 import ScssVars from '/imports/ui/lib/scss-vars';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 import '/imports/ui/components/courses/categories/course-categories';
 

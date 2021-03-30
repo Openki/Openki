@@ -5,10 +5,10 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
-import Alert from '/imports/api/alerts/alert';
+import { Regions } from '/imports/api/regions/regions';
+import { Alert } from '/imports/api/alerts/alert';
 
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 import Editable from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import IsGroupMember from '/imports/utils/is-group-member';

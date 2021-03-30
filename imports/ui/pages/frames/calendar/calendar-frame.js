@@ -7,9 +7,9 @@ import { _ } from 'meteor/underscore';
 
 
 import Events from '/imports/api/events/events';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/loading/loading';
 
