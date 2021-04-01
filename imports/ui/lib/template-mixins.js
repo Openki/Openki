@@ -130,9 +130,9 @@ const TemplateMixins = {
 	 * error whereas {{errorMessage}} will output a <span> with the error message.
 	 *
 	 * @param {*} template The template to extend
-	 * @param {*} mapping The mapping of error-keys to message objects
+	 * @param {*} [mapping] The mapping of error-keys to message objects
 	 */
-	FormfieldErrors(template, mapping) {
+	FormfieldErrors(template, mapping = undefined) {
 		template.helpers({
 			errorClass(field) {
 				if (Template.instance().errors.messages.findOne({ field })) {
@@ -146,7 +146,7 @@ const TemplateMixins = {
 					return false;
 				}
 
-				const text = mapping[message.key].text();
+				const text = (Template.instance().errorMapping || mapping)[message.key].text();
 				return Spacebars.SafeString(
 					`<span class="help-block warning-block">${
 						Blaze._escape(text)
@@ -163,7 +163,7 @@ const TemplateMixins = {
 					return Boolean(messages.findOne({}));
 				},
 				add(key) {
-					const message = mapping[key];
+					const message = (Template.instance().errorMapping || mapping)[key];
 					if (!message) {
 						Alert.error('Unmapped error');
 						return;

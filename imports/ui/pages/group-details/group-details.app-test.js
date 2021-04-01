@@ -1,4 +1,4 @@
-import { assert, expect } from 'chai';
+import { assert } from 'chai';
 import { Router } from 'meteor/iron:router';
 import { jQuery } from 'meteor/jquery';
 import { Meteor } from 'meteor/meteor';

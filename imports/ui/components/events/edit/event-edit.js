@@ -69,9 +69,7 @@ Template.eventEdit.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		false,
 		mf('event.description.placeholder', 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'),
-		false,
 	);
 
 	instance.autorun(() => {

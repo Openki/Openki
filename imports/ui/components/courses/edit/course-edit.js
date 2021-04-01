@@ -38,9 +38,7 @@ Template.courseEdit.onCreated(function () {
 
 	this.editableDescription = new Editable(
 		false,
-		false,
 		mf('course.description.placeholder', 'Describe your idea, so that more people will find it and that they`ll know what to expect.'),
-		false,
 	);
 
 	this.autorun(() => {
