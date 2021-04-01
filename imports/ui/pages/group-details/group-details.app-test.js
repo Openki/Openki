@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert, expect } from 'chai';
 import { Router } from 'meteor/iron:router';
 import { jQuery } from 'meteor/jquery';
 import { Meteor } from 'meteor/meteor';
@@ -8,6 +8,66 @@ import { MeteorAsync } from '/imports/utils/promisify';
 
 if (Meteor.isClient) {
 	describe('Groupe details', () => {
+		describe('Create', function () {
+			this.timeout(30000);
+
+			const haveEditfield = () => {
+				assert(
+					jQuery('.group-details-name [contenteditable=true]').length > 0,
+					'Group name edit field present',
+				);
+			};
+
+			it('should throw a error on create a group with only a name', async () => {
+				const randomTitle = `CREATE${1000 + Math.floor(Math.random() * 9000)}`;
+
+				Router.go('/group/create');
+
+				await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+
+				await waitForSubscriptions();
+				await waitFor(haveEditfield);
+
+				jQuery('.group-details-name [contenteditable=true]').html(randomTitle);
+				jQuery('.js-group-save').click();
+
+				await waitFor(() => {
+					assert(
+						jQuery('.alert.alert-danger').length > 0,
+						'A message error message is shown',
+					);
+				});
+			});
+
+			it('should allow to create a group with name, short, claim and description', async () => {
+				const randomTitle = `CREATE${1000 + Math.floor(Math.random() * 9000)}`;
+
+				Router.go('/group/create');
+
+				await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+
+				await waitForSubscriptions();
+				await waitFor(haveEditfield);
+
+				jQuery('.group-details-name [contenteditable=true]').html(randomTitle);
+				jQuery('.group-details-short [contenteditable=true]').html(`${randomTitle} short`);
+				jQuery('.group-details-claim [contenteditable=true]').html(`${randomTitle} claim`);
+				jQuery('.group-details-description [contenteditable=true]').html(`${randomTitle} description`);
+				jQuery('.js-group-save').click();
+
+				await waitFor(() => {
+					assert(
+						jQuery('.alert.alert-success').text().indexOf(randomTitle) >= 0,
+						'A message that the course was created is shown',
+					);
+					assert(
+						jQuery('.group-details-name').text().indexOf(randomTitle) >= 0,
+						'The title is visible',
+					);
+				});
+			});
+		});
+
 		describe('Edit course', function () {
 			this.timeout(30000);
 			it('should allow to save a course in the group', async () => {
@@ -133,19 +193,6 @@ if (Meteor.isClient) {
 						`The internal course should not be visible on the start page ${window.location}`,
 					);
 				}, 5000);
-			});
-		});
-	});
-
-	describe('Create course', () => {
-		describe('in group', function () {
-			this.timeout(30000);
-			const randomTitle = `TEST${1000 + Math.floor(Math.random() * 9000)}`;
-			it('saves course for group', async () => { });
-		});
-
-		describe('internal in group', () => {
-			it('saves course for group as internal', async () => {
 			});
 		});
 	});

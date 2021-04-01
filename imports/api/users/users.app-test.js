@@ -70,11 +70,16 @@ if (Meteor.isClient) {
 			});
 
 			it('does not allow setting duplicate email', async () => {
+				let hasFailed = false;
 				try {
 					await MeteorAsync.callAsync('user.updateEmail', 'greg@openki.example');
+					assert.fail();
 				} catch (err) {
-					assert.isOk(err);
+					if (err) {
+						hasFailed = true;
+					}
 				}
+				assert.isTrue(hasFailed, 'user.updateEmail throws on duplicate email');
 			});
 		});
 	});
