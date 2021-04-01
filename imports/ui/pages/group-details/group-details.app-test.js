@@ -33,7 +33,7 @@ if (Meteor.isClient) {
 
 				await waitFor(() => {
 					assert(
-						jQuery('.alert.alert-danger').length > 0,
+						jQuery('.has-error').length > 0,
 						'A message error message is shown',
 					);
 				});
