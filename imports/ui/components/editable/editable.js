@@ -43,7 +43,7 @@ import './editable.html';
 		let startGettingFocus;
 
 		instance.getEdited = function () {
-			if (!instance.state || !instance.state.changed.get() || !editable.text().trim()) {
+			if (!instance.state?.changed.get()) {
 				return undefined;
 			}
 			return instance.state.simple ? editable.text().trim() : editable.html().trim();
