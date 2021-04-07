@@ -170,7 +170,10 @@ Template.venueEdit.events({
 			return;
 		}
 
-		changes.description = instance.data.editableDescription.getEdited();
+		const newDescription = instance.data.editableDescription.getEdited();
+		if (newDescription) {
+			changes.description = newDescription;
+		}
 
 		if (changes.description?.trim().length === 0) {
 			Alert.error(

@@ -28,7 +28,7 @@ export default class Editable {
 	/**
 	 * @param {boolean} [simple]
 	 * @param {string} [placeholderText]
-	 * @param {{check: (text:string) => boolean, errorMessage: () => string}[]} [validations]
+	 * @param {{check: (text: string) => boolean, errorMessage: () => string}[]} [validations]
 	 * @param {(text: string)=>void} [store]
 	 */
 	constructor(simple = true, placeholderText = '', store = undefined, validations = []) {
