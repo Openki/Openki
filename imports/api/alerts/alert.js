@@ -1,10 +1,27 @@
 import { check } from 'meteor/check';
+import { mf } from 'meteor/msgfmt:core';
 import Alerts from './alerts';
 
 const Alert = {
 	/**
+	 * @param {string} message the message text
+	 */
+	success(message) {
+		check(message, String);
+		this._alert('success', message);
+	},
+
+	/**
+	 * @param {string} message the message text
+	 */
+	warning(message) {
+		check(message, String);
+		this._alert('warning', message);
+	},
+
+	/**
 	 * Create an error from String
-	 * @param  {string} errorString error message
+	 * @param {string} errorString error message
 	 */
 	error(errorString) {
 		check(errorString, String);
@@ -20,8 +37,8 @@ const Alert = {
 
 	/**
 	 * Add an error alert
-	 * @param  {Error | string} errorOrMessage error object or message text
-	 * @param  {string} [message] the message text
+	 * @param {Error | string} errorOrMessage error object or message text
+	 * @param {string} [message] the message text
 	 */
 	serverError(errorOrMessage, message) {
 		if (typeof message !== 'string') {
@@ -63,15 +80,4 @@ const Alert = {
 	},
 };
 
-['success', 'warning'].forEach((type) => {
-	/**
-	 * Add an alert of type XY, using the default options
-	 * @param {string} message the message text
-	 */
-	Alert[type] = function (message) {
-		check(message, String);
-		this._alert(type, message);
-	};
-});
-
-export default Alert;
+export { Alert as default, Alert };

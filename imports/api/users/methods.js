@@ -1,17 +1,19 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { Match, check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
 
 import Log from '/imports/api/log/log';
 import Groups from '/imports/api/groups/groups';
+import { Users } from '/imports/api/users/users';
+import Courses from '/imports/api/courses/courses';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import Profile from '/imports/utils/profile';
-import ApiError from '/imports/api/ApiError';
-import IsEmail from '/imports/utils/email-tools';
-import StringTools from '/imports/utils/string-tools';
-import AsyncTools from '/imports/utils/async-tools';
-import Courses from '../courses/courses';
+import { ApiError } from '/imports/api/ApiError';
+import { isEmail } from '/imports/utils/email-tools';
+import { StringTools } from '/imports/utils/string-tools';
+import { AsyncTools } from '/imports/utils/async-tools';
 /** @typedef {import('/imports/api/courses/courses').Course} Course */
 import Events from '../events/events';
 /** @typedef {import('./users').UserModel} UserModel */
@@ -34,7 +36,7 @@ const updateEmail = function (email, user) {
 		return ApiError('noEmail', 'Please enter a email.');
 	}
 
-	if (!IsEmail(newEmail)) {
+	if (!isEmail(newEmail)) {
 		return ApiError('emailNotValid', 'email invalid');
 	}
 
@@ -171,7 +173,7 @@ Meteor.methods({
 	'user.self.remove'() {
 		const user = Meteor.user();
 		if (user) {
-			Meteor.users.remove({ _id: user._id });
+			Users.remove({ _id: user._id });
 		}
 	},
 
@@ -234,10 +236,10 @@ Meteor.methods({
 		});
 
 		const operatorId = Meteor.userId();
-		const user = Meteor.users.findOne(userId);
+		const user = Users.findOne(userId);
 		delete user.services;
 
-		Meteor.users.remove({ _id: userId });
+		Users.remove({ _id: userId });
 
 		Log.record('user.admin.remove', [operatorId, userId],
 			{
@@ -256,11 +258,11 @@ Meteor.methods({
 	'user.addPrivilege'(userId, privilege) {
 		// At the moment, only admins may hand out privileges, so this is easy
 		if (UserPrivilegeUtils.privilegedTo('admin')) {
-			const user = Meteor.users.findOne({ _id: userId });
+			const user = Users.findOne({ _id: userId });
 			if (!user) {
 				throw new Meteor.Error(404, 'User not found');
 			}
-			Meteor.users.update(
+			Users.update(
 				{ _id: user._id },
 				{ $addToSet: { privileges: privilege } },
 				AsyncTools.checkUpdateOne,
@@ -273,7 +275,7 @@ Meteor.methods({
 	 * @param {string} privilege
 	 */
 	'user.removePrivilege'(userId, privilege) {
-		const user = Meteor.users.findOne({ _id: userId });
+		const user = Users.findOne({ _id: userId });
 		if (!user) {
 			throw new Meteor.Error(404, 'User not found');
 		}
@@ -281,7 +283,7 @@ Meteor.methods({
 		const operator = Meteor.user();
 
 		if (UserPrivilegeUtils.privileged(operator, 'admin') || operator._id === user._id) {
-			Meteor.users.update(
+			Users.update(
 				{ _id: user._id },
 				{ $pull: { privileges: privilege } },
 				AsyncTools.checkUpdateOne,
@@ -293,11 +295,11 @@ Meteor.methods({
 	 * Recalculate the groups and badges field
 	 */
 	'user.updateBadges'(selector) {
-		Meteor.users.find(selector).forEach((originalUser) => {
+		Users.find(selector).forEach((originalUser) => {
 			const userId = originalUser._id;
 
 			AsyncTools.untilClean((resolve, reject) => {
-				const user = Meteor.users.findOne(userId);
+				const user = Users.findOne(userId);
 
 				if (!user) {
 					resolve(true);
@@ -319,7 +321,7 @@ Meteor.methods({
 					},
 				};
 
-				Meteor.users.rawCollection().update({ _id: user._id },
+				Users.rawCollection().update({ _id: user._id },
 					update,
 					(err, result) => {
 						if (err) {
@@ -333,7 +335,7 @@ Meteor.methods({
 	},
 
 	'user.hidePricePolicy'(user) {
-		Meteor.users.update(
+		Users.update(
 			{ _id: user._id },
 			{ $set: { hidePricePolicy: true } },
 		);
@@ -344,7 +346,7 @@ Meteor.methods({
 	 */
 	'user.name'(userId) {
 		this.unblock();
-		const user = Meteor.users.findOne(userId, { fields: { username: 1 } });
+		const user = Users.findOne(userId, { fields: { username: 1 } });
 		if (!user) {
 			return false;
 		}
@@ -355,7 +357,7 @@ Meteor.methods({
 	 * @param {string} locale
 	 */
 	'user.updateLocale'(locale) {
-		Meteor.users.update(Meteor.userId(), {
+		Users.update(Meteor.userId(), {
 			$set: { locale },
 		});
 	},

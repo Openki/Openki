@@ -1,6 +1,10 @@
 export default class CssFromQuery {
+	/**
+	 * @param {{[param: string]: string}} query
+	 */
 	constructor(query) {
 		this.query = query;
+		/** @type {{ key: string; name: string; selector: string; }[]} */
 		this.customizableProperties = [];
 
 		// define a default set of customizable properties
@@ -16,11 +20,15 @@ export default class CssFromQuery {
 		]);
 	}
 
-	/** Add customizable properties
-	  *
-	  * @param  {Array} properties - the customizable properties to add
-	  * @return {CssFromQuery Object}
-	  */
+	/**
+	 * Add customizable properties
+	 * @param {[
+	 *  key: string,
+	 *  name: string,
+	 *  selector: string
+	 * ][]} properties the customizable properties to add
+	 * @return {CssFromQuery}
+	 */
 	addCustomizableProperties(properties) {
 		properties.forEach((property) => {
 			const [key, name, selector] = property;
@@ -30,6 +38,7 @@ export default class CssFromQuery {
 	}
 
 	getCssRules() {
+		/** @type {string[]} */
 		this.cssRules = [];
 		this.customizableProperties.forEach((property) => {
 			const queryValue = this.query[property.key];

@@ -1,4 +1,8 @@
-import Regions from '/imports/api/regions/regions';
+import { Router } from 'meteor/iron:router';
+import { Session } from 'meteor/session';
+import { Template } from 'meteor/templating';
+
+import { Regions } from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 
 import LocationTracker from '/imports/ui/lib/location-tracker';

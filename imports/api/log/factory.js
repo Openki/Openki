@@ -1,9 +1,12 @@
+import { Mongo } from 'meteor/mongo';
+import { Match, check } from 'meteor/check';
+
 // Becase the mixin() function assigns properties
 // to the log object, we can't use the
 // no-param-reassign safeguard here.
 /* eslint no-param-reassign: 0 */
 
-import Filtering from '/imports/utils/filtering';
+import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
 
 /** The Application Log records user and system decisions. It is intended to
@@ -80,9 +83,9 @@ const mixin = function (log, isServer, printToLog) {
 
 	/**
 	 * Record a new entry to the log
-	 * @param  {String} track   - type of log entry
-	 * @param  {String} rel     - related ID
-	 * @param  {Object} body    - log body depending on track
+	 * @param  {string} track type of log entry
+	 * @param  {string[]} rel related ID
+	 * @param  {Object} body log body depending on track
 	 */
 	log.record = function (track, rel, body) {
 		check(track, String);
@@ -131,21 +134,23 @@ const mixin = function (log, isServer, printToLog) {
 /**
  * The logFactory Knows how to create log collections.
  *
- * It can create two types:
- *
- * logFactory.mongo: A log backed by the mongo DB
- *
- * logFactory.fake: An in-memory log useful for tests
+ * It can create two types.
  */
 const logFactory = {
+	/**
+	 * A log backed by the mongo DB
+	 */
 	mongo: (mongo, isServer, printToLog) => {
 		const log = new mongo.Collection('Log');
 		mixin(log, isServer, printToLog);
 		return log;
 	},
 
+	/**
+	 * An in-memory log useful for tests
+	 */
 	fake: () => {
-		const log = new Meteor.Collection(null); // Local collection for in-memory storage
+		const log = new Mongo.Collection(null); // Local collection for in-memory storage
 		mixin(log, false, false);
 		return log;
 	},

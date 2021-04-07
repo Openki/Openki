@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
-import HtmlTools from '/imports/utils/html-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
+import { Users } from '/imports/api/users/users';
 
 import Groups from './groups';
 
@@ -84,7 +85,11 @@ Meteor.methods({
 
 		// Don't update nothing
 		if (Object.getOwnPropertyNames(updates).length === 0) {
-			return;
+			return undefined;
+		}
+
+		if (Object.values(updates).filter((u) => !u).length > 0) {
+			throw new Meteor.Error('The name, short, claim and description fields are mandatory.');
 		}
 
 		if (isNew) {
@@ -95,7 +100,6 @@ Meteor.methods({
 			Groups.update(group._id, { $set: updates });
 		}
 
-		/* eslint-disable-next-line consistent-return */
 		return groupId;
 	},
 
@@ -128,7 +132,7 @@ Meteor.methods({
 			throw new Meteor.Error('No permitted');
 		}
 
-		const user = Meteor.users.findOne({ _id: userId });
+		const user = Users.findOne({ _id: userId });
 		if (!user) {
 			throw new Meteor.Error(404, 'User not found');
 		}

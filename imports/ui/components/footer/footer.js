@@ -1,4 +1,6 @@
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
 
 import Version from '/imports/api/version/version';
 

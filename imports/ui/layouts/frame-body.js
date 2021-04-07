@@ -1,3 +1,5 @@
+import { Template } from 'meteor/templating';
+
 import '/imports/ui/components/alerts/alerts';
 
 import './frame-body.html';

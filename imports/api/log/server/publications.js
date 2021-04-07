@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 import Log from '../log';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 

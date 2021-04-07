@@ -1,15 +1,15 @@
-
-
-import { Meteor } from 'meteor/meteor';
-import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
+import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
-import Alert from '/imports/api/alerts/alert';
+import { Regions } from '/imports/api/regions/regions';
+import { Alert } from '/imports/api/alerts/alert';
 
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
+import TemplateMixins from '/imports/ui/lib/template-mixins';
 import Editable from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import IsGroupMember from '/imports/utils/is-group-member';
@@ -53,38 +53,46 @@ Template.groupDetails.onCreated(function () {
 
 	instance.editableName = new Editable(
 		true,
-		(newName) => {
-			Meteor.call('group.save', groupId, { name: newName }, handleSaving);
-		},
 		mf('group.name.placeholder', 'Name of your group, institution, community or program'),
-		showControls,
+		showControls ? (newName) => {
+			Meteor.call('group.save', groupId, { name: newName }, handleSaving);
+		} : undefined,
+		showControls ? [{
+			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
+		}] : undefined,
 	);
 
 	instance.editableShort = new Editable(
 		true,
-		(newShort) => {
-			Meteor.call('group.save', groupId, { short: newShort }, handleSaving);
-		},
 		mf('group.short.placeholder', 'Abbreviation'),
-		showControls,
+		showControls ? (newShort) => {
+			Meteor.call('group.save', groupId, { short: newShort }, handleSaving);
+		} : undefined,
+		showControls ? [{
+			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
+		}] : undefined,
 	);
 
 	instance.editableClaim = new Editable(
 		true,
-		(newClaim) => {
-			Meteor.call('group.save', groupId, { claim: newClaim }, handleSaving);
-		},
 		mf('group.claim.placeholder', 'The core idea'),
-		showControls,
+		showControls ? (newClaim) => {
+			Meteor.call('group.save', groupId, { claim: newClaim }, handleSaving);
+		} : undefined,
+		showControls ? [{
+			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
+		}] : undefined,
 	);
 
 	instance.editableDescription = new Editable(
 		false,
-		(newDescription) => {
-			Meteor.call('group.save', groupId, { description: newDescription }, handleSaving);
-		},
 		mf('group.description.placeholder', 'Describe the audience, the interests and activities of your group.'),
-		showControls,
+		showControls ? (newDescription) => {
+			Meteor.call('group.save', groupId, { description: newDescription }, handleSaving);
+		} : undefined,
+		showControls ? [{
+			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
+		}] : undefined,
 	);
 
 
@@ -152,6 +160,13 @@ Template.groupDetails.helpers({
 	},
 });
 
+TemplateMixins.FormfieldErrors(Template.groupDetails, {
+	emptyField: {
+		text: () => mf('group.details.error.allMandatory', 'All four fields are mandatory.'),
+		field: 'all',
+	},
+});
+
 Template.groupDetails.events({
 	'click .js-group-settings'(event, instance) {
 		if (PleaseLogin()) {
@@ -168,6 +183,16 @@ Template.groupDetails.events({
 			claim: instance.editableClaim.getEdited(),
 			description: instance.editableDescription.getEdited(),
 		};
+
+		instance.errors.reset();
+
+		if (Object.values(group).filter((u) => !u).length > 0) {
+			instance.errors.add('emptyField');
+		}
+
+		if (instance.errors.present()) {
+			return;
+		}
 
 		instance.busy('saving');
 		SaveAfterLogin(instance,

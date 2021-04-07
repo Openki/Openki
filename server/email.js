@@ -1,13 +1,15 @@
-import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { Email } from 'meteor/email';
 import { Match, check } from 'meteor/check';
+import { Email } from 'meteor/email';
+import { SSR } from 'meteor/meteorhacks:ssr';
+import { Meteor } from 'meteor/meteor';
+
+import Version from '/imports/api/version/version';
+import { Users } from '/imports/api/users/users';
 
 import Notification from '/imports/notification/notification';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import HtmlTools from '/imports/utils/html-tools';
-
-import Version from '/imports/api/version/version';
+import { HtmlTools } from '/imports/utils/html-tools';
 import { getReportEmails } from '/imports/utils/email-tools';
 
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
@@ -43,8 +45,7 @@ Meteor.methods({
 		check(options.courseId, Match.Optional(String));
 		check(options.eventId, Match.Optional(String));
 
-		/** @type {UserModel} */
-		const recipient = Meteor.users.findOne(userId);
+		const recipient = Users.findOne(userId);
 		if (!recipient) {
 			throw new Meteor.Error(404, 'no such user');
 		}
@@ -74,7 +75,7 @@ Meteor.methods({
 		let reporter = 'A fellow visitor';
 		const rootUrl = Meteor.absoluteUrl();
 		if (this.userId) {
-			const user = Meteor.users.findOne(this.userId);
+			const user = Users.findOne(this.userId);
 			if (user) {
 				reporter = `<a href='${rootUrl}user/${this.userId}'>${HtmlTools.plainToHtml(user.username)}</a>`;
 			}

@@ -3,11 +3,11 @@ import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
 
-import AsyncTools from '/imports/utils/async-tools';
-import Filtering from '/imports/utils/filtering';
+import { AsyncTools } from '/imports/utils/async-tools';
+import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
 import Predicates from '/imports/utils/predicates';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 /** @typedef {import("../users/users").UserModel} UserModel */
@@ -180,7 +180,7 @@ export class EventsCollection extends Mongo.Collection {
 
 	/**
 	 * Find events for given filters
-	 * @param {object} filter dictionary with filter options
+	 * @param {object} [filter] dictionary with filter options
 	 * @param {string} [filter.search] string of words to search for
 	 * @param {[Date,Date]} [filter.period] include only events that overlap the given
 	 * period (list of start and end date)
@@ -205,7 +205,7 @@ export class EventsCollection extends Mongo.Collection {
 	 * The events are sorted by start date (ascending, before-filter causes descending order)
 	 *
 	 */
-	findFilter(filter, limit = 0, skip, sort) {
+	findFilter(filter = {}, limit = 0, skip, sort) {
 		const find = {};
 		const and = [];
 

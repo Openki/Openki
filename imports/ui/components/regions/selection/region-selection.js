@@ -2,14 +2,15 @@ import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
 
-import Alert from '/imports/api/alerts/alert';
-import Regions from '/imports/api/regions/regions';
+import { Alert } from '/imports/api/alerts/alert';
+import { Regions } from '/imports/api/regions/regions';
 
 import FilterPreview from '/imports/ui/lib/filter-preview';
 
 import RegionSelection from '/imports/utils/region-selection';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 import './region-selection.html';
 

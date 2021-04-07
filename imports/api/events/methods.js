@@ -1,23 +1,24 @@
-import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
 import Events, { OEvent } from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 
 import Notification from '/imports/notification/notification';
 
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
-import AsyncTools from '/imports/utils/async-tools';
-import HtmlTools from '/imports/utils/html-tools';
+import { AsyncTools } from '/imports/utils/async-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 import UpdateMethods from '/imports/utils/update-methods';
 
 /**
@@ -148,7 +149,7 @@ Meteor.methods({
 		if (!user) {
 			if (Meteor.isClient) {
 				PleaseLogin();
-				return;
+				return undefined;
 			}
 			throw new Meteor.Error(401, 'please log in');
 		}
@@ -184,16 +185,13 @@ Meteor.methods({
 				throw new Meteor.Error(400, 'Event date not provided');
 			}
 
-			let testedGroups = [];
-			if (changes.groups) {
-				testedGroups = _.map(changes.groups, (groupId) => {
-					const group = Groups.findOne(groupId);
-					if (!group) {
-						throw new Meteor.Error(404, `no group with id ${groupId}`);
-					}
-					return group._id;
-				});
-			}
+			const testedGroups = changes.groups?.map((groupId) => {
+				const group = Groups.findOne(groupId);
+				if (!group) {
+					throw new Meteor.Error(404, `no group with id ${groupId}`);
+				}
+				return group._id;
+			}) || [];
 			changes.groups = testedGroups;
 
 			// Coerce faulty end dates
@@ -344,7 +342,6 @@ Meteor.methods({
 			}
 		}
 
-		/* eslint-disable-next-line consistent-return */
 		return eventId;
 	},
 

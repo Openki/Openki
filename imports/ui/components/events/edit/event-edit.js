@@ -4,16 +4,20 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
+import { Tooltips } from 'meteor/lookback:tooltips';
+import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import Editable from '/imports/ui/lib/editable';
@@ -21,7 +25,7 @@ import Editable from '/imports/ui/lib/editable';
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
 import LocalTime from '/imports/utils/local-time';
 
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/buttons/buttons';
@@ -65,9 +69,7 @@ Template.eventEdit.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		false,
 		mf('event.description.placeholder', 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'),
-		false,
 	);
 
 	instance.autorun(() => {

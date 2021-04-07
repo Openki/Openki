@@ -1,12 +1,15 @@
-import { Meteor } from 'meteor/meteor';
+import { Tooltips } from 'meteor/lookback:tooltips';
 import { Router } from 'meteor/iron:router';
-import { Template } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';
+import { Users } from '/imports/api/users/users';
 
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
@@ -187,7 +190,7 @@ Template.emailBox.events({
 		}
 
 		const recUserId = this.user._id;
-		let recUser = Meteor.users.findOne({ _id: recUserId });
+		let recUser = Users.findOne({ _id: recUserId });
 		if (recUser) {
 			if (recUser.username) {
 				recUser = recUser.username;

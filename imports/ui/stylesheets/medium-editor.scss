@@ -1,0 +1,14 @@
+@import '{}/node_modules/medium-editor/src/sass/medium-editor';
+@import '{}/node_modules/medium-editor/src/sass/themes/default';
+
+.medium-editor-placeholder:hover {
+	cursor: text;
+}
+
+.medium-editor-placeholder::after {
+	font-style: normal;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	white-space: normal;
+}

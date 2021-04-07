@@ -1,11 +1,11 @@
-import { Meteor } from 'meteor/meteor';
-import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 
 import Courses, { Course } from './courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import Roles from '/imports/api/roles/roles';
 import UpdateMethods from '/imports/utils/update-methods';
 
@@ -13,11 +13,11 @@ import {
 	Subscribe, Unsubscribe, Message, processChange,
 } from './subscription';
 
-import AsyncTools from '/imports/utils/async-tools';
-import StringTools from '/imports/utils/string-tools';
-import HtmlTools from '/imports/utils/html-tools';
+import { AsyncTools } from '/imports/utils/async-tools';
+import { StringTools } from '/imports/utils/string-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
 
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 
 const registerMethod = function (method) {
@@ -108,7 +108,7 @@ Meteor.methods({
 		const set = {};
 
 		if (changes.roles) {
-			_.each(Roles, (roletype) => {
+			Roles.forEach((roletype) => {
 				const { type } = roletype;
 				const shouldHave = roletype.preset || (changes.roles && changes.roles[type]);
 				const have = course.roles.indexOf(type) !== -1;
@@ -165,16 +165,13 @@ Meteor.methods({
 		set.time_lastedit = new Date();
 		if (course.isNew()) {
 			// You can add newly created courses to any group
-			let testedGroups = [];
-			if (changes.groups) {
-				testedGroups = _.map(changes.groups, (groupId) => {
-					const group = Groups.findOne(groupId);
-					if (!group) {
-						throw new Meteor.Error(404, `no group with id ${groupId}`);
-					}
-					return group._id;
-				});
-			}
+			const testedGroups = changes.groups?.map((groupId) => {
+				const group = Groups.findOne(groupId);
+				if (!group) {
+					throw new Meteor.Error(404, `no group with id ${groupId}`);
+				}
+				return group._id;
+			}) || [];
 			set.groups = testedGroups;
 			set.groupOrganizers = testedGroups;
 
