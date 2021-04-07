@@ -196,6 +196,8 @@ export class Subscribe extends Change {
 		// Update the modification date
 		Courses.update(this.course._id, { $set: { time_lastedit: new Date() } });
 
+		Courses.update(this.course._id, { $addToSet: { history: { dateTime: new Date(), type: 'userSubscribed', data: { user: this.user._id, role: this.role } } } });
+
 		// Send notifications
 		Notification.Join.record(this.course._id, this.user._id, this.role, this.comment);
 	}
@@ -299,9 +301,13 @@ export class Unsubscribe extends Change {
 		// Update member related calculated fields
 		Courses.updateInterested(this.course._id);
 		Courses.updateGroups(this.course._id);
+
+		// Update the modification date
+		Courses.update(this.course._id, { $set: { time_lastedit: new Date() } });
+
+		Courses.update(this.course._id, { $addToSet: { history: { dateTime: new Date(), type: 'userUnsubscribed', data: { user: this.user._id, role: this.role } } } });
 	}
 }
-
 
 export class Message extends Change {
 	static get method() { return 'Courses.Message'; }
