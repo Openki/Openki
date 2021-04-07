@@ -69,9 +69,7 @@ Template.eventEdit.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		false,
 		mf('event.description.placeholder', 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'),
-		false,
 	);
 
 	instance.autorun(() => {
@@ -359,10 +357,7 @@ Template.eventEdit.events({
 			return;
 		}
 
-		const newDescription = instance.data.editableDescription.getEdited();
-		if (newDescription) {
-			editevent.description = newDescription;
-		}
+		editevent.description = instance.data.editableDescription.getEdited();
 
 		if (!editevent.description) {
 			Alert.error(mf('event.edit.plzProvideDescr', 'Please provide a description'));

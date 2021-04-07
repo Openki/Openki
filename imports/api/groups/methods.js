@@ -88,6 +88,10 @@ Meteor.methods({
 			return undefined;
 		}
 
+		if (Object.values(updates).filter((u) => !u).length > 0) {
+			throw new Meteor.Error('The name, short, claim and description fields are mandatory.');
+		}
+
 		if (isNew) {
 			/* eslint-disable-next-line no-param-reassign */
 			groupId = Groups.insert(_.extend(group, updates));

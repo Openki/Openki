@@ -217,7 +217,7 @@ Template.postEdit.onCreated(function () {
 		? mf('course.discussion.text_placeholder_answer', 'Your answer')
 		: mf('course.discussion.text_placeholder', 'Your comment');
 
-	this.editableText = new Editable(false, false, placeholder, false);
+	this.editableText = new Editable(false, placeholder);
 
 	// UGLY: The event handler to save the comment is defined on the parent instance.
 	// (Because that's where the editing-state flag is.) To make the text available
@@ -323,12 +323,10 @@ Template.post.events({
 			}
 
 			comment.anon = instance.$('.js-anon').prop('checked');
-			comment.notifyAll = instance.$('.js-notify-all').prop('checked');
+			comment.notifyAll = instance.$('.js-notify-all').prop('checked') || false;
 		} else {
 			comment._id = instance.data._id;
 		}
-
-		comment.notifyAll = comment.notifyAll || false;
 
 		instance.editing.set(false);
 		instance.busy('saving');

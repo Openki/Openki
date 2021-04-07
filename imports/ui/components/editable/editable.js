@@ -1,5 +1,6 @@
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
+import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import MediumEditor from 'medium-editor';
 
@@ -15,7 +16,23 @@ import './editable.html';
 			throw new Error('Editable got empty data');
 		}
 		this.state = data.connect(this);
+
+		// Add error mapping for the FormfieldErrors
+		const errorMapping = {};
+		// eslint-disable-next-line no-restricted-syntax
+		for (const key in this.state.validations) {
+			if (Object.hasOwnProperty.call(this.state.validations, key)) {
+				const validation = this.state.validations[key];
+				errorMapping[key] = {
+					text: validation.errorMessage,
+					field: 'input',
+				};
+			}
+		}
+		this.errorMapping = errorMapping;
 	});
+
+	TemplateMixins.FormfieldErrors(template);
 
 	template.onRendered(function () {
 		const instance = this;
@@ -26,8 +43,8 @@ import './editable.html';
 		let startGettingFocus;
 
 		instance.getEdited = function () {
-			if (!instance.state || !instance.state.changed.get()) {
-				return false;
+			if (!instance.state || !instance.state.changed.get() || !editable.text().trim()) {
+				return undefined;
 			}
 			return instance.state.simple ? editable.text().trim() : editable.html().trim();
 		};
@@ -50,6 +67,8 @@ import './editable.html';
 			if (text) {
 				editable.removeClass('medium-editor-placeholder');
 			}
+
+			instance.errors.reset();
 		};
 
 		// Automatically replace contents when text changes
@@ -133,6 +152,22 @@ import './editable.html';
 
 		'click .js-editable-save'(event, instance) {
 			event.preventDefault();
+
+			// Check if input is invalid
+			instance.errors.reset();
+			// eslint-disable-next-line no-restricted-syntax
+			for (const key in instance.state.validations) {
+				if (Object.hasOwnProperty.call(instance.state.validations, key)) {
+					const validation = instance.state.validations[key];
+					if (!validation.check(instance.getEdited())) {
+						instance.errors.add(key);
+					}
+				}
+			}
+			if (instance.errors.present()) {
+				return;
+			}
+
 			instance.store();
 		},
 
