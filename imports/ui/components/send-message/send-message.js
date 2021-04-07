@@ -1,10 +1,11 @@
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import '../profiles/verify-email/verify-email';
 

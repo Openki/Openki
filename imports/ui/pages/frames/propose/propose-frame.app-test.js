@@ -1,9 +1,9 @@
-import { Meteor } from 'meteor/meteor';
-import { Router } from 'meteor/iron:router';
 import { assert } from 'chai';
 import { jQuery } from 'meteor/jquery';
+import { Router } from 'meteor/iron:router';
+import { Meteor } from 'meteor/meteor';
 
-import MeteorAsync from '/imports/utils/promisify';
+import { MeteorAsync } from '/imports/utils/promisify';
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 
 if (Meteor.isClient) {

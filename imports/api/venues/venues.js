@@ -5,9 +5,9 @@ import { _ } from 'meteor/underscore';
 import Events from '/imports/api/events/events';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import Filtering from '/imports/utils/filtering';
+import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 /** @typedef {import('../users/users').UserModel} UserModel */
 
@@ -95,7 +95,7 @@ export class VenueCollection extends Mongo.Collection {
 
 	/**
 	 * Find venues for given filters
-	 * @param {object} filter dictionary with filter options
+	 * @param {object} [filter] dictionary with filter options
 	 * @param {string} [filter.search] string of words to search for
 	 * @param {string} [filter.region] restrict to venues in that region
 	 * @param {string} [filter.editor]
@@ -104,7 +104,7 @@ export class VenueCollection extends Mongo.Collection {
 	 * @param {number} [skip]
 	 * @param {*} [sort]
 	 */
-	findFilter(filter, limit = 0, skip, sort) {
+	findFilter(filter = {}, limit = 0, skip, sort) {
 		const find = {};
 
 		/** @type {Mongo.Options<VenueEnity>} */
@@ -124,7 +124,7 @@ export class VenueCollection extends Mongo.Collection {
 
 		if (filter.search) {
 			const searchTerms = filter.search.split(/\s+/);
-			find.$and = _.map(searchTerms, (searchTerm) => ({ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }));
+			find.$and = searchTerms.map((searchTerm) => ({ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }));
 		}
 
 		if (filter.recent) {

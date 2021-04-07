@@ -1,13 +1,14 @@
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import Roles from '/imports/api/roles/roles';
 import {
 	Subscribe, Unsubscribe, Message, processChange,
 } from '/imports/api/courses/subscription';
-import Users from '/imports/api/users/users';
+import { Users } from '/imports/api/users/users';
 
 import Editable from '/imports/ui/lib/editable';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
@@ -84,13 +85,13 @@ Template.courseMember.onCreated(function () {
 
 	instance.editableMessage = new Editable(
 		true,
+		mf('roles.message.placeholder', 'My interests...'),
 		(newMessage) => {
 			const change = new Message(instance.data.course, Meteor.user(), newMessage);
 			processChange(change, () => {
 				Alert.success(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));
 			});
 		},
-		mf('roles.message.placeholder', 'My interests...'),
 	);
 
 	instance.autorun(() => {

@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
 import { Accounts } from 'meteor/accounts-base';
-import MeteorAsync, { AccountsAsync } from '/imports/utils/promisify';
+import { MeteorAsync, AccountsAsync } from '/imports/utils/promisify';
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
+import { Users } from '/imports/api/users/users';
 
 
 const createDummy = function () {
@@ -30,7 +31,7 @@ if (Meteor.isClient) {
 
 					// Rely on the test runner to declare the test failed when it
 					// never resolves. There is no assert(). Improvements welcome.
-					Meteor.users.find({ username: dummy, acceptsPrivateMessages: true }).observe({
+					Users.find({ username: dummy, acceptsPrivateMessages: true }).observe({
 						added: resolve,
 					});
 				});
@@ -55,7 +56,7 @@ if (Meteor.isClient) {
 								assert.isNotOk(err, 'not expecting username-change errors');
 							}
 
-							Meteor.users.find({ username: newDummy }).observe({
+							Users.find({ username: newDummy }).observe({
 								added: () => {
 									resolve();
 								},
@@ -69,11 +70,15 @@ if (Meteor.isClient) {
 			});
 
 			it('does not allow setting duplicate email', async () => {
+				let hasFailed = false;
 				try {
 					await MeteorAsync.callAsync('user.updateEmail', 'greg@openki.example');
 				} catch (err) {
-					assert.isOk(err);
+					if (err) {
+						hasFailed = true;
+					}
 				}
+				assert.isTrue(hasFailed, 'user.updateEmail throws on duplicate email');
 			});
 		});
 	});
@@ -88,7 +93,7 @@ if (Meteor.isClient) {
 			let added;
 
 			// This will track addition of users
-			const cursor = Meteor.users.find();
+			const cursor = Users.find();
 			cursor.observe({ added: () => { added = true; } });
 
 			// Reset the flag before starting the subscription

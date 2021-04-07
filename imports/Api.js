@@ -1,4 +1,5 @@
 import { Router } from 'meteor/iron:router';
+import { Users } from '/imports/api/users/users';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
@@ -47,7 +48,7 @@ const Api = {
 				room: ev.room,
 			};
 
-			const creator = Meteor.users.findOne(ev.createdBy);
+			const creator = Users.findOne(ev.createdBy);
 			if (creator) {
 				evr.createdBy = {
 					id: creator._id,

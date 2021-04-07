@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
@@ -6,12 +7,13 @@ import Events from '/imports/api/events/events';
 import ensure from './ensureFixture';
 import Prng from './Prng';
 import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
+import { Users } from '/imports/api/users/users';
 
-import HtmlTools from '/imports/utils/html-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 const courses = require('./data/course.fixtures.js').default;
 const events = require('./data/event.fixtures.js').default;
@@ -85,7 +87,7 @@ if (Meteor.settings.testdata) {
 
 			// Always use same id for same group to avoid broken urls while testing
 			group._id = ensure.fixedId([group.name, group.description]);
-			group.members = _.map(group.members, (name) => ensure.user(name)._id);
+			group.members = group.members?.map((name) => ensure.user(name)._id) || [];
 			Groups.insert(group);
 		});
 
@@ -104,7 +106,7 @@ if (Meteor.settings.testdata) {
 			.forEach((e) => {
 				const event = { ...e };
 				event.createdBy = ensure.user(event.createdby)._id;
-				event.groups = _.map(event.groups, ensure.group);
+				event.groups = event.groups?.map(ensure.group) || [];
 				event.groupOrganizers = [];
 
 				// We place the first event in the series on the monday of this week
@@ -321,7 +323,7 @@ if (Meteor.settings.testdata) {
 		const prng = Prng('createComments');
 		let count = 0;
 
-		const userCount = Meteor.users.find().count();
+		const userCount = Users.find().count();
 		Courses.find().forEach((course) => {
 			const createCount = Math.floor((prng() * 2) ** 4);
 			const courseMembers = course.members.length;
@@ -344,7 +346,7 @@ if (Meteor.settings.testdata) {
 				if (!courseMembers || prng() < 0.2) {
 					// Leave some anonymous comments
 					if (prng() < 0.7) {
-						commenter = Meteor.users.findOne({}, { skip: Math.floor(prng() * userCount) })._id;
+						commenter = Users.findOne({}, { skip: Math.floor(prng() * userCount) })._id;
 						comment.userId = commenter.user;
 					}
 				} else {

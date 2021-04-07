@@ -1,3 +1,5 @@
+import { Router } from 'meteor/iron:router';
+
 import Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/layouts';

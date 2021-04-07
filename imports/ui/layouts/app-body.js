@@ -2,11 +2,13 @@ import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
+import { Meteor } from 'meteor/meteor';
 
 import RegionSelection from '/imports/utils/region-selection';
 import Introduction from '/imports/ui/lib/introduction';
 import ScssVars from '/imports/ui/lib/scss-vars';
 import UpdateViewport from '/imports/ui/lib/update-viewport';
+import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/account-tasks/account-tasks';

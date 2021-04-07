@@ -1,8 +1,10 @@
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
+import { Users } from '/imports/api/users/users';
+import { Alert } from '/imports/api/alerts/alert';
 
 import './avatar.html';
 
@@ -26,7 +28,7 @@ Template.avatar.helpers({
 		if (data.color !== undefined) return data.color;
 
 		// otherwise get the color from a user
-		const user = Meteor.users.findOne(data.userId || Meteor.userId());
+		const user = Users.findOne(data.userId || Meteor.userId());
 		const color = user?.avatar?.color;
 
 		if (color === undefined) {

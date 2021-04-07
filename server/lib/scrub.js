@@ -1,3 +1,5 @@
+import { Match, check } from 'meteor/check';
+
 export class ScrubRule {
 	static read(d) {
 		return new ScrubRule(d.name, d.grace, d.select, d.remove, d.unset);

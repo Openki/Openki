@@ -49,7 +49,7 @@
 			</div>
 			{{#if hasContent}}
 				<div class="details-body group-details-body">
-					<div class="details-content group-details-content">
+					<div class="details-content group-details-content {{errorClass 'all'}}">
 						{{#if editableClaim}}
 							<div class="group-details-claim">
 								{{> editable editableClaim}}
@@ -69,7 +69,8 @@
 							<div class="group-details-description">
 								{{{group.description}}}
 							</div>
-						{{/if}}
+						{{/if}}						
+						{{errorMessage 'all'}}
 					</div>
 				</div>
 			{{/if}}

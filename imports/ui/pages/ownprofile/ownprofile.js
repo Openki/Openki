@@ -1,11 +1,13 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
+import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
 
 import TemplateMixins from '/imports/ui/lib/template-mixins';
-import Alert from '/imports/api/alerts/alert';
-import Analytics from '/imports/ui/lib/analytics';
+import { Alert } from '/imports/api/alerts/alert';
+import { Analytics } from '/imports/ui/lib/analytics';
 import Editable from '/imports/ui/lib/editable';
 
 import '/imports/ui/components/buttons/buttons';
@@ -37,6 +39,7 @@ Template.profile.onCreated(function () {
 
 	instance.editableName = new Editable(
 		true,
+		mf('profile.name.placeholder', 'Username'),
 		(newName) => {
 			Meteor.call('user.updateUsername', newName, (err) => {
 				if (err) {
@@ -46,10 +49,10 @@ Template.profile.onCreated(function () {
 				}
 			});
 		},
-		mf('profile.name.placeholder', 'Username'),
 	);
 	instance.editableDescription = new Editable(
 		true,
+		mf('profile.description.placeholder', 'About me, my interests and skills. (How about the idea of creating courses fitting to your description? 😉)'),
 		(newDescription) => {
 			Meteor.call('user.updateDescription', newDescription, (err) => {
 				if (err) {
@@ -59,7 +62,6 @@ Template.profile.onCreated(function () {
 				}
 			});
 		},
-		mf('profile.description.placeholder', 'About me, my interests and skills. (How about the idea of creating courses fitting to your description? 😉)'),
 	);
 
 	this.autorun(() => {

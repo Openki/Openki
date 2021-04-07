@@ -5,7 +5,8 @@ import { _ } from 'meteor/underscore';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
-import UrlTools from '/imports/utils/url-tools';
+import { UrlTools } from '/imports/utils/url-tools';
+import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import Log from '/imports/api/log/log';
 
@@ -102,7 +103,7 @@ Template.showLog.helpers({
 		const entries = Log.findFilter(filterQuery, instance.limit.get()).fetch();
 		let last = false;
 		const inter = [];
-		_.each(entries, (entry) => {
+		entries.forEach((entry) => {
 			const ts = moment(entry.ts);
 			if (last) {
 				const interval = moment.duration(last.diff(ts));

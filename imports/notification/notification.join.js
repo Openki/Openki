@@ -1,14 +1,15 @@
-import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
-import { _ } from 'meteor/underscore';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 
 import Courses from '/imports/api/courses/courses';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 import Log from '/imports/api/log/log';
+import { Users } from '/imports/api/users/users';
 
-import HtmlTools from '/imports/utils/html-tools';
-import StringTools from '/imports/utils/string-tools';
+import { HtmlTools } from '/imports/utils/html-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -32,7 +33,7 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 		throw new Meteor.Error(`No course entry for ${courseId}`);
 	}
 
-	const participant = Meteor.users.findOne(participantId);
+	const participant = Users.findOne(participantId);
 	if (!course) {
 		throw new Meteor.Error(`No user entry for ${participantId}`);
 	}
@@ -40,7 +41,7 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	const body = {};
 	body.courseId = course._id;
 	body.participantId = participant._id;
-	body.recipients = _.pluck(course.membersWithRole('team'), 'user');
+	body.recipients = course.membersWithRole('team').map((m) => m.user);
 
 	// Don't send to new member, they know
 	body.recipients = body.recipients.filter((r) => r !== participantId);
@@ -57,7 +58,7 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 notificationJoin.Model = function (entry) {
 	const { body } = entry;
 	const course = Courses.findOne(body.courseId);
-	const newParticipant = Meteor.users.findOne(body.participantId);
+	const newParticipant = Users.findOne(body.participantId);
 
 	return {
 		/**

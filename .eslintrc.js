@@ -11,21 +11,11 @@ module.exports = {
 		'airbnb-base',
 	],
 	globals: {
-		Atomics: 'readonly',
 		L: 'readonly',
 		Log: 'writable',
-		MediumEditor: 'readonly',
-		mf: 'writable',
-		mfPkg: 'readonly',
 		minuteTime: 'writable',
 		moment: 'readonly',
 		msgfmt: 'readonly',
-		robots: 'writable',
-		RouterAutoscroll: 'writable',
-		SharedArrayBuffer: 'readonly',
-		sitemaps: 'readonly',
-		SSR: 'writable',
-		Tooltips: 'writable',
 		VERSION: 'writable',
 	},
 	parserOptions: {
@@ -45,8 +35,6 @@ module.exports = {
 		// disabled rules
 		'func-names': [0],
 		'no-underscore-dangle': [0],
-		'import/no-named-as-default': [0],
-		'import/no-named-as-default-member': [0],
 		'max-classes-per-file': [0],
 	},
 	settings: {

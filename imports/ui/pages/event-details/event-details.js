@@ -1,21 +1,27 @@
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
+import { Session } from 'meteor/session';
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
 import LocationTracker from '/imports/ui/lib/location-tracker';
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import IdTools from '/imports/utils/id-tools';
 import Metatags from '/imports/utils/metatags';
 
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
@@ -34,7 +40,7 @@ import './event-details.html';
 
 /** Checks if there is enough data ro make a reasonable jsonLd
   *
-  * @param {Object} - the event data
+  * @param {Object} data the event data
   * @return {boolean}
   */
 const checkJsonLdMinReqs = (data) => Object.prototype.hasOwnProperty.call(data, 'title')

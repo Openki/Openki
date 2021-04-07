@@ -4,10 +4,10 @@ import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import AsyncTools from '/imports/utils/async-tools';
-import Filtering from '/imports/utils/filtering';
+import { AsyncTools } from '/imports/utils/async-tools';
+import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
-import StringTools from '/imports/utils/string-tools';
+import { StringTools } from '/imports/utils/string-tools';
 
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
@@ -213,11 +213,11 @@ export class CoursesCollection extends Mongo.Collection {
 	 * internal?: boolean;
 	 * search?: string;
 	 * needsRole?: ("host"|"mentor"|"team")[];
-	 * }} filter
+	 * }} [filter]
 	 * @param {number} [limit]
 	 * @param {any[]} [sortParams]
 	 */
-	findFilter(filter, limit, sortParams) {
+	findFilter(filter = {}, limit, sortParams) {
 		check(limit, Match.Optional(Number));
 		check(sortParams, Match.Optional([[Match.Any]]));
 
@@ -298,7 +298,7 @@ export class CoursesCollection extends Mongo.Collection {
 
 		if (filter.search) {
 			const searchTerms = filter.search.split(/\s+/);
-			const searchQueries = _.map(searchTerms, (searchTerm) => ({
+			const searchQueries = searchTerms.map((searchTerm) => ({
 				$or: [
 					{ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
 					{ description: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },

@@ -1,7 +1,9 @@
+import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 
 import './verify-email.html';
 

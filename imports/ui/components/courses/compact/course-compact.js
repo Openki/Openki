@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
@@ -27,20 +28,20 @@ Template.courseCompact.helpers({
 		const filterPreviewClasses = [];
 		const course = this;
 
-		const roles = _.map(Roles, (role) => role.type);
+		const roles = Roles.map((role) => role.type);
 
-		_.each(roles, (role) => {
+		roles.forEach((role) => {
 			const roleDisengaged = !HasRole(course.members, role);
 			if (course.roles.indexOf(role) >= 0 && roleDisengaged) {
 				filterPreviewClasses.push(`needs-role-${role}`);
 			}
 		});
 
-		_.each(course.categories, (category) => {
+		course.categories.forEach((category) => {
 			filterPreviewClasses.push(`category-${category}`);
 		});
 
-		_.each(course.groups, (group) => {
+		course.groups.forEach((group) => {
 			filterPreviewClasses.push(`group-${group}`);
 		});
 

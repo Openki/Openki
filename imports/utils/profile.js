@@ -1,9 +1,8 @@
-import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 
 import Log from '/imports/api/log/log';
-import Regions from '/imports/api/regions/regions';
-import Users from '/imports/api/users/users';
+import { Regions } from '/imports/api/regions/regions';
+import { Users } from '/imports/api/users/users';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -36,7 +35,7 @@ Profile.Username.change = function (userId, newName) {
 	let result; let
 		success;
 	try {
-		result = Meteor.users.update(userId, {
+		result = Users.update(userId, {
 			$set: { username: newName },
 		});
 		success = result > 0;
@@ -82,7 +81,7 @@ Profile.Email.change = function (userId, email, reason) {
 		newValue = [{ address: email, verified: false }];
 	}
 
-	Meteor.users.update(userId, {
+	Users.update(userId, {
 		$set: { emails: newValue },
 	});
 };
@@ -114,7 +113,7 @@ Profile.Notifications.change = function (userId, enable, relatedId, reason) {
 			reason,
 		});
 
-	Meteor.users.update(userId, {
+	Users.update(userId, {
 		$set: { notifications: enable },
 	});
 };
@@ -171,7 +170,7 @@ Profile.PrivateMessages.change = function (userId, enable, relatedId, reason) {
 			reason,
 		});
 
-	Meteor.users.update(userId, {
+	Users.update(userId, {
 		$set: { allowPrivateMessages: enable },
 	});
 };
@@ -229,7 +228,7 @@ Profile.Region.change = function (userId, regionId, reason) {
 		});
 
 	if (accepted) {
-		Meteor.users.update(userId, { $set: { 'profile.regionId': region._id } });
+		Users.update(userId, { $set: { 'profile.regionId': region._id } });
 	}
 
 	return accepted;
@@ -258,7 +257,7 @@ Profile.AvatarColor.change = function (userId, color) {
 		});
 
 	if (accepted) {
-		Meteor.users.update(userId, { $set: { 'avatar.color': color } });
+		Users.update(userId, { $set: { 'avatar.color': color } });
 	}
 
 	return accepted;
@@ -280,7 +279,7 @@ Profile.Description.change = function (userId, description) {
 	let success;
 
 	try {
-		result = Meteor.users.update(userId, {
+		result = Users.update(userId, {
 			$set: { description },
 		});
 		success = result > 0;

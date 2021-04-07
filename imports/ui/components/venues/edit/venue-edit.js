@@ -1,18 +1,21 @@
 
 
-import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
+import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
+import { Meteor } from 'meteor/meteor';
 
-import Alert from '/imports/api/alerts/alert';
-import Regions from '/imports/api/regions/regions';
+import { Alert } from '/imports/api/alerts/alert';
+import { Regions } from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import Editable from '/imports/ui/lib/editable';
 import LocationTracker from '/imports/ui/lib/location-tracker';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import Analytics from '/imports/ui/lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
@@ -82,9 +85,7 @@ Template.venueEdit.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		false,
 		mf('venue.edit.description.placeholder', 'Some words about this venue'),
-		false,
 	);
 
 	instance.autorun(() => {
@@ -169,10 +170,7 @@ Template.venueEdit.events({
 			return;
 		}
 
-		const newDescription = instance.data.editableDescription.getEdited();
-		if (newDescription) {
-			changes.description = newDescription;
-		}
+		changes.description = instance.data.editableDescription.getEdited();
 
 		if (changes.description?.trim().length === 0) {
 			Alert.error(

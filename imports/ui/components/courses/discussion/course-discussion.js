@@ -1,13 +1,17 @@
+import { Tooltips } from 'meteor/lookback:tooltips';
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
+import { Tracker } from 'meteor/tracker';
 
 import Courses from '/imports/api/courses/courses';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
-import Alert from '/imports/api/alerts/alert';
+import { Alert } from '/imports/api/alerts/alert';
 import CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 import Editable from '/imports/ui/lib/editable';
+import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/avatar/avatar';
@@ -213,7 +217,7 @@ Template.postEdit.onCreated(function () {
 		? mf('course.discussion.text_placeholder_answer', 'Your answer')
 		: mf('course.discussion.text_placeholder', 'Your comment');
 
-	this.editableText = new Editable(false, false, placeholder, false);
+	this.editableText = new Editable(false, placeholder);
 
 	// UGLY: The event handler to save the comment is defined on the parent instance.
 	// (Because that's where the editing-state flag is.) To make the text available
@@ -319,12 +323,10 @@ Template.post.events({
 			}
 
 			comment.anon = instance.$('.js-anon').prop('checked');
-			comment.notifyAll = instance.$('.js-notify-all').prop('checked');
+			comment.notifyAll = instance.$('.js-notify-all').prop('checked') || false;
 		} else {
 			comment._id = instance.data._id;
 		}
-
-		comment.notifyAll = comment.notifyAll || false;
 
 		instance.editing.set(false);
 		instance.busy('saving');

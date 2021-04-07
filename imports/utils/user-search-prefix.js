@@ -1,4 +1,6 @@
-import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+
+import { Users } from '/imports/api/users/users';
 
 /**
  * @param {string} prefix
@@ -16,5 +18,5 @@ export default function UserSearchPrefix(prefix, options = {}) {
 		delete customizedOptions.exclude;
 	}
 
-	return Meteor.users.find(query, customizedOptions);
+	return Users.find(query, customizedOptions);
 }

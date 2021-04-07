@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 
 import update20201216MergeUserLocale from '../updates/2020.12.16 mergeUserLocale';
 import update20210106EnsureVenueSlugField from '../updates/2021.01.06 ensureVenueSlugField';
@@ -16,7 +17,7 @@ const UpdatesAvailable = {
 	'2021.02.18 userDescription': update20210218UserDescription,
 };
 
-const UpdatesApplied = new Meteor.Collection('UpdatesApplied');
+const UpdatesApplied = new Mongo.Collection('UpdatesApplied');
 
 const applyUpdates = function () {
 	const skipInitial = UpdatesApplied.find().count() === 0;
@@ -46,4 +47,4 @@ const applyUpdates = function () {
 	});
 };
 
-export default applyUpdates;
+export { applyUpdates as default, applyUpdates };
