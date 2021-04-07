@@ -73,7 +73,6 @@ if (Meteor.isClient) {
 				let hasFailed = false;
 				try {
 					await MeteorAsync.callAsync('user.updateEmail', 'greg@openki.example');
-					assert.fail();
 				} catch (err) {
 					if (err) {
 						hasFailed = true;
