@@ -6,7 +6,7 @@ import Courses, { Course } from './courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
-import Roles from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 import UpdateMethods from '/imports/utils/update-methods';
 
 import {
@@ -108,9 +108,9 @@ Meteor.methods({
 		const set = {};
 
 		if (changes.roles) {
-			Roles.forEach((roletype) => {
-				const { type } = roletype;
-				const shouldHave = roletype.preset || (changes.roles && changes.roles[type]);
+			Roles.forEach((role) => {
+				const { type } = role;
+				const shouldHave = !!(role.preset || changes.roles?.[type]);
 				const have = course.roles.indexOf(type) !== -1;
 
 				if (have && !shouldHave) {

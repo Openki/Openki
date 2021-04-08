@@ -84,11 +84,11 @@ Meteor.methods({
 		}
 
 		// Don't update nothing
-		if (Object.getOwnPropertyNames(updates).length === 0) {
+		if (Object.keys(updates).length === 0) {
 			return undefined;
 		}
 
-		if (Object.values(updates).filter((u) => !u).length > 0) {
+		if (Object.values(updates).some((u) => !u)) {
 			throw new Meteor.Error('The name, short, claim and description fields are mandatory.');
 		}
 

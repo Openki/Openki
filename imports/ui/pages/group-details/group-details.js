@@ -186,7 +186,7 @@ Template.groupDetails.events({
 
 		instance.errors.reset();
 
-		if (Object.values(group).filter((u) => !u).length > 0) {
+		if (Object.values(group).some((u) => !u)) {
 			instance.errors.add('emptyField');
 		}
 
