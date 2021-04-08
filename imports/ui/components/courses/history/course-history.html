@@ -74,7 +74,12 @@
 	{{> profilelink removedBy}}
 </template>
 
-<template name="courseCreatedHistoryEntry">
+<template name="updatedHistoryEntry">
+	{{mf 'course.history.updated' 'Course {FIELDS} updated by' FIELDS=updatedFields}}
+	{{> profilelink updatedBy}}
+</template>
+
+<template name="createdHistoryEntry">
 	{{mf 'course.history.created_by' 'Course created by'}}
 	{{> profilelink createdby}}
 </template>

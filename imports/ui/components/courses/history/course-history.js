@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { mf } from 'meteor/msgfmt:core';
 
 import Events from '/imports/api/events/events';
 
@@ -28,11 +29,24 @@ Template.coursehistory.helpers({
 		) || []);
 
 		// and with the course creation
-		historyEntries.push({ dateTime: course.time_created, template: 'courseCreatedHistoryEntry', data: course });
+		historyEntries.push({ dateTime: course.time_created, template: 'createdHistoryEntry', data: course });
 
 		// and sort by date time desc
 		historyEntries.sort((a, b) => (b.dateTime?.getTime() || 0) - (a.dateTime?.getTime() || 0));
 
 		return historyEntries;
+	},
+});
+
+Template.updatedHistoryEntry.helpers({
+	updatedFields() {
+		const fields = [];
+		if (this.name) {
+			fields.push(mf('course.history.updatedName', 'name'));
+		}
+		if (this.description) {
+			fields.push(mf('course.history.updatedDescription', 'description'));
+		}
+		return fields.join(', ');
 	},
 });

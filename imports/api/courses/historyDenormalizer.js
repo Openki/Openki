@@ -1,5 +1,21 @@
 import { Courses } from './courses';
 
+
+/**
+ * @param {string} courseId
+ * @param {{name: boolean;description: boolean;}} changes
+ * @param {string} userId
+ */
+function afterUpdate(courseId, userId, changes) {
+	Courses.update(courseId, {
+		$addToSet: {
+			history: {
+				dateTime: new Date(), type: 'updated', data: { updatedBy: userId, ...changes },
+			},
+		},
+	});
+}
+
 /**
  * @param {string} courseId
  * @param {string} userId
@@ -69,5 +85,5 @@ function afterEventRemove(courseId, event) {
 }
 
 export {
-	afterSubscribe, afterUnsubscribe, afterEventInsert, afterEventRemove,
+	afterUpdate, afterSubscribe, afterUnsubscribe, afterEventInsert, afterEventRemove,
 };
