@@ -5,7 +5,7 @@ import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
-import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
+import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
 import Events, { OEvent } from '/imports/api/events/events';
 /** @typedef {import('/imports/api/events/events').EventEntity} EventEntity */
 import Groups from '/imports/api/groups/groups';
@@ -299,9 +299,12 @@ Meteor.methods({
 			eventId = Events.insert(changes);
 
 			if (changes.courseId) {
-				historyDenormalizer.afterEventInsert({
+				courseHistoryDenormalizer.afterEventInsert(changes.courseId, {
 					_id: eventId,
-					...changes,
+					title: changes.title,
+					slug: changes.slug,
+					startLocal: changes.startLocal,
+					createdBy: changes.createdBy,
 				});
 			}
 		} else {
@@ -376,6 +379,12 @@ Meteor.methods({
 		Events.remove(eventId);
 
 		if (event.courseId) {
+			courseHistoryDenormalizer.afterEventRemove(event.courseId, {
+				title: event.title,
+				startLocal: event.startLocal,
+				removedBy: user._id,
+			});
+
 			Meteor.call('course.updateNextEvent', event.courseId);
 		}
 		Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);

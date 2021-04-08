@@ -1,7 +1,5 @@
 import Courses from './courses';
 
-/** @typedef {import('../events/events').EventEntity} EventEntity */
-
 /**
  * @param {string} courseId
  * @param {string} userId
@@ -25,22 +23,51 @@ function afterSubscribe(courseId, userId, roleType) {
 function afterUnsubscribe(courseId, userId, roleType) {
 	Courses.update(courseId, {
 		$addToSet: {
-			history: { dateTime: new Date(), type: 'userUnsubscribed', data: { user: userId, role: roleType } },
+			history: {
+				dateTime: new Date(), type: 'userUnsubscribed', data: { user: userId, role: roleType },
+			},
 		},
 	});
 }
 
 /**
- * @param {EventEntity} event
+ * @param {string} courseId
+ * @param {{
+	_id: string;
+	title: string;
+	slug: string;
+	startLocal: string;
+	createdBy: string;
+}} event
  */
-function afterEventInsert(event) {
-	Courses.update(event.courseId, {
+function afterEventInsert(courseId, event) {
+	Courses.update(courseId, {
 		$addToSet: {
-			history: { dateTime: new Date(), type: 'eventInserted', data: event },
+			history: {
+				dateTime: new Date(), type: 'eventInserted', data: event,
+			},
 		},
 	});
 }
 
-export { afterSubscribe, afterUnsubscribe, afterEventInsert };
+/**
+ * @param {string} courseId
+ * @param {{
+	title: string;
+	startLocal: string;
+	createdBy: string;
+}} event
+ */
+function afterEventRemove(courseId, event) {
+	Courses.update(courseId, {
+		$addToSet: {
+			history: {
+				dateTime: new Date(), type: 'eventRemoved', data: event,
+			},
+		},
+	});
+}
 
-
+export {
+	afterSubscribe, afterUnsubscribe, afterEventInsert, afterEventRemove,
+};

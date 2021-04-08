@@ -64,6 +64,16 @@
 	{{> profilelink createdBy}}
 </template>
 
+<template name="eventRemovedHistoryEntry">
+	<span class="fa fa-calendar-o fa-fw"
+		  aria-hidden="true"></span>
+		{{weekdayFormat startLocal}}
+		{{calendarDayShort startLocal}}
+		{{this.title}}
+	{{mf 'course.history.eventRemoved' 'removed by'}}
+	{{> profilelink removedBy}}
+</template>
+
 <template name="courseCreatedHistoryEntry">
 	{{mf 'course.history.created_by' 'Course created by'}}
 	{{> profilelink createdby}}

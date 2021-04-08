@@ -37,6 +37,7 @@ import { HasRoleUser } from '/imports/utils/course-role-utils';
  * @property {string[]} roles [role-keys]
  * @property {CourseMemberEntity[]} members
  * @property {boolean} internal
+ * @property {{dateTime: Date; type: string; data: any;}} history
  * @property {string[]} editors (calculated) List of user and group id allowed to edit the course,
  * calculated from members and groupOrganizers
  * @property {number} futureEvents  (calculated) count of events still in the future for this course
