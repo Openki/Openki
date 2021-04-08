@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
 import Courses, { Course } from './courses';
+import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 
 import { Alert } from '/imports/api/alerts/alert';
 import Events from '/imports/api/events/events';
@@ -196,7 +197,7 @@ export class Subscribe extends Change {
 		// Update the modification date
 		Courses.update(this.course._id, { $set: { time_lastedit: new Date() } });
 
-		Courses.update(this.course._id, { $addToSet: { history: { dateTime: new Date(), type: 'userSubscribed', data: { user: this.user._id, role: this.role } } } });
+		historyDenormalizer.afterSubscribe(this.course._id, this.user._id, this.role);
 
 		// Send notifications
 		Notification.Join.record(this.course._id, this.user._id, this.role, this.comment);
@@ -305,7 +306,7 @@ export class Unsubscribe extends Change {
 		// Update the modification date
 		Courses.update(this.course._id, { $set: { time_lastedit: new Date() } });
 
-		Courses.update(this.course._id, { $addToSet: { history: { dateTime: new Date(), type: 'userUnsubscribed', data: { user: this.user._id, role: this.role } } } });
+		historyDenormalizer.afterUnsubscribe(this.course._id, this.user._id, this.role);
 	}
 }
 

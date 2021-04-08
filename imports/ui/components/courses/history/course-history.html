@@ -52,6 +52,18 @@
 	{{mf 'course.history.userUnsubscribed' 'retract {ROLE}' ROLE=(roleShort role)}}
 </template>
 
+<template name="eventInsertedHistoryEntry">
+	<span class="fa fa-calendar-o fa-fw"
+		  aria-hidden="true"></span>
+	<a href="{{pathFor 'showEvent'}}">
+		{{weekdayFormat startLocal}}
+		{{calendarDayShort startLocal}}
+		{{this.title}}
+	</a>
+	{{mf 'course.history.eventInserted' 'created by'}}
+	{{> profilelink createdBy}}
+</template>
+
 <template name="courseCreatedHistoryEntry">
 	{{mf 'course.history.created_by' 'Course created by'}}
 	{{> profilelink createdby}}
