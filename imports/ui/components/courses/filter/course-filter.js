@@ -1,9 +1,8 @@
 import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
 
-import Roles from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 
 import FilterPreview from '/imports/ui/lib/filter-preview';
 import ScssVars from '/imports/ui/lib/scss-vars';
@@ -116,7 +115,7 @@ Template.filter.events({
 
 	'mouseover .js-filter-caption, mouseout .js-filter-caption'(event, instance) {
 		const name = instance.$(event.currentTarget).data('filter-name');
-		const state = _.findWhere(instance.stateFilters, { name });
+		const state = instance.stateFilters.find((f) => f.name === name);
 
 		if (!instance.parentInstance().filter.get('state')) {
 			FilterPreview({
@@ -144,13 +143,10 @@ Template.additionalFilters.onCreated(function () {
 			name: 'host',
 			label: mf('find.needsHost', 'Looking for a host'),
 		},
-	].map((role) => {
+	].map(
 		// add icon from Roles collection to role object
-		/* eslint-disable-next-line no-param-reassign */
-		role.icon = _.findWhere(Roles, { type: role.name }).icon;
-
-		return role;
-	});
+		(role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon }),
+	);
 });
 
 Template.additionalFilters.onRendered(function () {

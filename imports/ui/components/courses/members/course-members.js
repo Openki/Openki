@@ -4,7 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import { Alert } from '/imports/api/alerts/alert';
-import Roles from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 import {
 	Subscribe, Unsubscribe, Message, processChange,
 } from '/imports/api/courses/subscription';

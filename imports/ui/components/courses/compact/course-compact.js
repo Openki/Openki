@@ -1,9 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
 
-import Roles from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';
 import '/imports/ui/components/courses/categories/course-categories';
 
@@ -66,7 +65,7 @@ Template.courseCompactEvent.helpers({
 		}
 		return false;
 	},
-	roleIcon: (type) => _.findWhere(Roles, { type }).icon,
+	roleIcon: (type) => Roles.find((r) => r.type === type)?.icon,
 });
 
 Template.courseCompactRoles.helpers({
@@ -166,7 +165,7 @@ Template.courseCompactRoles.helpers({
 		return roleStateTooltip;
 	},
 
-	roleIcon: (type) => _.findWhere(Roles, { type }).icon,
+	roleIcon: (type) => Roles.find((r) => r.type === type)?.icon,
 });
 
 Template.courseCompact.events({

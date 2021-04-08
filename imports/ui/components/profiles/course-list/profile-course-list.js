@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 import Courses from '/imports/api/courses/courses';
-import Roles from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 import { _ } from 'meteor/underscore';
 
 import ScssVars from '/imports/ui/lib/scss-vars';

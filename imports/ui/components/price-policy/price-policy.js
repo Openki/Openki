@@ -8,17 +8,19 @@ import './price-policy.html';
 
 Template.pricePolicy.helpers({
 	hidePricePolicy() {
-		const hideFlags = [
-			Session.get('hidePricePolicy'),
-			localStorage?.getItem('hidePricePolicy'),
-		];
-
-		const user = Meteor.user();
-		if (user) {
-			hideFlags.push(user.hidePricePolicy);
+		if (Session.get('hidePricePolicy')) {
+			return true;
 		}
 
-		return hideFlags.filter(Boolean).length > 0;
+		if (localStorage?.getItem('hidePricePolicy')) {
+			return true;
+		}
+
+		if (Meteor.user()?.hidePricePolicy) {
+			return true;
+		}
+
+		return false;
 	},
 });
 

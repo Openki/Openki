@@ -28,4 +28,4 @@ const Roles = [
 	},
 ];
 
-export default Roles;
+export { Roles as default, Roles };
