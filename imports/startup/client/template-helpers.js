@@ -7,6 +7,7 @@ import { Tracker } from 'meteor/tracker';
 import Groups from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
+import { Roles } from '/imports/api/roles/roles';
 
 
 const helpers = {
@@ -26,6 +27,28 @@ const helpers = {
 	categoryName() {
 		Session.get('locale'); // Reactive dependency
 		return mf(`category.${this}`);
+	},
+
+	/**
+	 * @param {string} type
+	 */
+	roleShort(type) {
+		if (!type) {
+			return '';
+		}
+
+		return mf(`roles.${type}.short`);
+	},
+
+	/**
+	 * @param {string} type
+	 */
+	roleIcon(type) {
+		if (!type) {
+			return '';
+		}
+
+		return Roles.find((r) => r.type === type)?.icon || '';
 	},
 
 	guideLink() {

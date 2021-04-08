@@ -58,7 +58,6 @@ Template.courseCompactEvent.helpers({
 		}
 		return false;
 	},
-	roleIcon: (type) => Roles.find((r) => r.type === type)?.icon,
 });
 
 Template.courseCompactRoles.helpers({
@@ -157,8 +156,6 @@ Template.courseCompactRoles.helpers({
 
 		return roleStateTooltip;
 	},
-
-	roleIcon: (type) => Roles.find((r) => r.type === type)?.icon,
 });
 
 Template.courseCompact.events({
