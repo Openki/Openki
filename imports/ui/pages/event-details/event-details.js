@@ -305,14 +305,6 @@ Template.eventDisplay.onRendered(function () {
 });
 
 Template.eventDisplay.helpers({
-	weekday(date) {
-		Session.get('timeLocale'); // it depends
-		if (date) {
-			return moment(date).format('dddd');
-		}
-		return false;
-	},
-
 	mayEdit() {
 		return this.editableBy(Meteor.user());
 	},
@@ -322,7 +314,6 @@ Template.eventDisplay.helpers({
 	hasVenue() {
 		return this.venue?.loc;
 	},
-
 	replicating() {
 		return Template.instance().replicating.get();
 	},

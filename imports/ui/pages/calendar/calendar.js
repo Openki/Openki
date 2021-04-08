@@ -105,7 +105,7 @@ Template.calendar.helpers({
 	},
 });
 
-Template.calendarDay.helpers({
+Template.calendarDayFormat.helpers({
 	hasEvents() {
 		const filterQuery = this.filter.toQuery();
 		filterQuery.period = [this.day.start.toDate(), this.day.end.toDate()];
@@ -118,10 +118,6 @@ Template.calendarDay.helpers({
 
 		return Events.findFilter(filterQuery);
 	},
-	calendarDay(day) {
-		Session.get('timeLocale');
-		return moment(day.toDate()).format('dddd, Do MMMM');
-	},
 	eventsReady() {
 		const instance = Template.instance();
 		return instance.parentInstance().eventSub.ready();
@@ -130,14 +126,6 @@ Template.calendarDay.helpers({
 
 
 Template.calendarNav.helpers({
-	weekNr(date) {
-		if (date) {
-			Session.get('timeLocale');
-			return moment(date).week();
-		}
-		return false;
-	},
-
 	endDateTo(date) {
 		return moment(date).add(6, 'days');
 	},

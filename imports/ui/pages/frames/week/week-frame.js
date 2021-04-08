@@ -60,11 +60,6 @@ Template.frameWeek.onCreated(function () {
 });
 
 Template.frameWeek.helpers({
-	calendarDay(day) {
-		Session.get('timeLocale');
-		return moment(day.toDate()).format('dddd, Do MMMM');
-	},
-
 	hasDayEvents() {
 		return this.dayEvents.count() > 0;
 	},

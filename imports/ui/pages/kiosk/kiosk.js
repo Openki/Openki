@@ -33,15 +33,6 @@ Template.kioskEvent.helpers({
 		return Template.instance().parentInstance().data.timePeriod;
 	},
 
-	timeFromNow(date) {
-		Session.get('fineTime');
-		Session.get('timeLocale'); // it depends
-		if (date) {
-			return moment(date).fromNow();
-		}
-		return false;
-	},
-
 	isOngoing() {
 		return Template.instance().parentInstance().data.timePeriod === 'ongoing';
 	},
