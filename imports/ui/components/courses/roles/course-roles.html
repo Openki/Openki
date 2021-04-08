@@ -23,7 +23,7 @@
 		</div>
 		{{#if showFirstSteps}}
 			<div class="course-role-first-steps">
-				<b>{{mf 'course.roles.firstSteps.title' 'Thanks for joining the course as {ROLE}!' ROLE=roletype.type}}</b>
+				<b>{{mf 'course.roles.firstSteps.title' 'Thanks for joining the course as {ROLE}!' ROLE=(roleShort roletype.type)}}</b>
 				<br>
 				{{#if roleIs 'participant'}}
 					{{#mf KEY='course.roles.firstSteps.youllGetNotified'}}
