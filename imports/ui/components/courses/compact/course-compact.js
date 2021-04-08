@@ -51,13 +51,6 @@ Template.courseCompact.helpers({
 });
 
 Template.courseCompactEvent.helpers({
-	dateFormat(date) {
-		if (date) {
-			return moment(date).format('l');
-		}
-		return false;
-	},
-
 	dateToRelativeString(date) {
 		if (date) {
 			const relative = moment().to(date);

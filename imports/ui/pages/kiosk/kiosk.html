@@ -74,7 +74,7 @@
 						{{#if isOngoing}}
 							{{mf 'kiosk.started' 'Started'}}
 						{{/if}}
-						{{timeFromNow start}}
+						{{fromNow start}}
 					</div>
 				{{/unless}}
 				<div class="kiosk-event-header">
@@ -84,12 +84,12 @@
 					<div class="kiosk-event-moment">
 						{{#if isUpcoming}}
 							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-							{{dateformat start}} <br>
+							{{dateFormat start}} <br>
 						{{/if}}
 						<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
-						{{timeformat start}}
+						{{timeFormat start}}
 						{{#unless isUpcoming}}
-							- {{timeformat end}}
+							- {{timeFormat end}}
 						{{/unless}}
 					</div>
 					{{#if isOngoing}}

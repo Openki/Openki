@@ -66,9 +66,18 @@ const helpers = {
 		}
 	},
 
-	dateformat(date) {
-		Session.get('timeLocale');
+	// Date & Time format helper
+	dateShort(date) {
 		if (date) {
+			Session.get('timeLocale');
+			return moment(date).format('l');
+		}
+		return false;
+	},
+
+	dateFormat(date) {
+		if (date) {
+			Session.get('timeLocale');
 			return moment(date).format('L');
 		}
 		return false;
@@ -82,17 +91,49 @@ const helpers = {
 		return false;
 	},
 
-	dateShort(date) {
+	dateTimeLong(date) {
 		if (date) {
 			Session.get('timeLocale');
-			return moment(date).format('l');
+			return moment(date).format('LLLL');
 		}
 		return false;
 	},
 
-	dateformat_mini_fullmonth(date) {
-		Session.get('timeLocale'); // it depends
+	timeFormat(date) {
 		if (date) {
+			Session.get('timeLocale');
+			return moment(date).format('LT');
+		}
+		return false;
+	},
+
+	fromNow(date) {
+		if (date) {
+			Session.get('timeLocale'); // it depends
+			return moment(date).fromNow();
+		}
+		return false;
+	},
+
+	weekdayFormat(date) {
+		if (date) {
+			Session.get('timeLocale'); // it depends
+			return moment(date).format('ddd');
+		}
+		return false;
+	},
+
+	weekNr(date) {
+		if (date) {
+			Session.get('timeLocale');
+			return moment(date).week();
+		}
+		return false;
+	},
+
+	calendarDayShort(date) {
+		if (date) {
+			Session.get('timeLocale'); // it depends
 			const m = moment(date);
 			const year = m.year() !== moment().year() ? ` ${m.format('YYYY')}` : '';
 			return moment(date).format('D. MMMM') + year;
@@ -100,27 +141,10 @@ const helpers = {
 		return false;
 	},
 
-	timeformat(date) {
-		Session.get('timeLocale');
+	calendarDayFormat(date) {
 		if (date) {
-			return moment(date).format('LT');
-		}
-		return false;
-	},
-
-	fromNow(date) {
-		Session.get('fineTime');
-		Session.get('timeLocale'); // it depends
-		if (date) {
-			return moment(date).fromNow();
-		}
-		return false;
-	},
-
-	weekdayShort(date) {
-		Session.get('timeLocale'); // it depends
-		if (date) {
-			return moment(date).format('ddd');
+			Session.get('timeLocale');
+			return moment(date).format('dddd, Do MMMM');
 		}
 		return false;
 	},
