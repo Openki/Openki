@@ -15,7 +15,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 // For parent templates, the following methods are of interest:
 //    setText: set the text that should be displayed in the field. This can be
 //             called again when the source changes.
-//    getEdited: get the edited version of the text, returns false if the field
+//    getEdited: get the edited version of the text, returns undefined if the field
 //               was not changed
 //    getTotalFocusTimeInSeconds: gives the time in seconds how long the cursor
 //                                was in the field. For statistics and tracking.
@@ -25,16 +25,24 @@ import { ReactiveVar } from 'meteor/reactive-var';
 // It is assumed that only one instance is using this interface at a time,
 
 export default class Editable {
-	constructor(simple, store, placeholderText, showControls = true) {
+	/**
+	 * @param {boolean} [simple]
+	 * @param {string} [placeholderText]
+	 * @param {{check: (text: string) => boolean, errorMessage: () => string}[]} [validations]
+	 * @param {(text: string)=>void} [store]
+	 */
+	constructor(simple = true, placeholderText = '', store = undefined, validations = []) {
 		this.simple = simple;
 		this.store = store;
 		this.placeholderText = placeholderText;
-		this.showControls = showControls;
+		this.showControls = !!store;
 		/** Its text content before editing */
 		this.text = new ReactiveVar('');
 		/** Whether the field has been changed */
-		this.changed = new ReactiveVar(!showControls);
-		this.editingInstance = false;
+		this.changed = new ReactiveVar(!store);
+		/** @type {Blaze.Template|undefined} */
+		this.editingInstance = undefined;
+		this.validations = validations;
 	}
 
 	/**
@@ -47,11 +55,11 @@ export default class Editable {
 	}
 
 	/**
-	 * get the edited version of the text, returns false if the field was not changed
-	 * @returns {string|false}
+	 * get the edited version of the text, returns undefined if the field was not changed
+	 * @returns {string|undefined}
 	 */
 	getEdited() {
-		return this.editingInstance?.getEdited() || false;
+		return this.editingInstance?.getEdited();
 	}
 
 	/**
@@ -68,6 +76,9 @@ export default class Editable {
 		this.changed.set(false);
 	}
 
+	/**
+	 * @param {Blaze.Template} instance
+	 */
 	connect(instance) {
 		this.editingInstance = instance;
 		return {
@@ -76,6 +87,7 @@ export default class Editable {
 			simple: this.simple,
 			placeholderText: this.placeholderText || mf('editable.add_text', 'Add text here'),
 			showControls: this.showControls,
+			validations: this.validations,
 			store: this.store,
 		};
 	}

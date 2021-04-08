@@ -8,7 +8,7 @@ import Courses from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
 import { Tenants } from '/imports/api/tenants/tenants';
-import Roles from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 import Venues, { Venue } from '/imports/api/venues/venues'; // Use default and { named, ... } exports
 import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/venues/venues').VenueModel} VenueModel */

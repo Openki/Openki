@@ -98,12 +98,6 @@ Template.eventReplication.helpers({
 		return moment(endDate).format('ddd');
 	},
 
-	localDate: (date) => moment(date).format('l'),
-
-	fullDate: (date) => moment(date).format('LLLL'),
-
-	weekDay: (date) => moment(date).format('ddd'),
-
 	affectedReplicaCount() {
 		Template.instance().subscribe('affectedReplica', this._id);
 		return Events.find(AffectedReplicaSelectors(this)).count();

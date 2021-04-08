@@ -55,7 +55,7 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 
 	body.model = 'Event';
 
-	Log.record('Notification.Send', [course?._id], body);
+	Log.record('Notification.Send', course ? [course._id] : [], body);
 };
 
 notificationEvent.Model = function (entry) {

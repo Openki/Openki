@@ -85,9 +85,7 @@ Template.venueEdit.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		false,
 		mf('venue.edit.description.placeholder', 'Some words about this venue'),
-		false,
 	);
 
 	instance.autorun(() => {

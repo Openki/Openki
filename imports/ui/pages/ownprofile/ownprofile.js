@@ -39,6 +39,7 @@ Template.profile.onCreated(function () {
 
 	instance.editableName = new Editable(
 		true,
+		mf('profile.name.placeholder', 'Username'),
 		(newName) => {
 			Meteor.call('user.updateUsername', newName, (err) => {
 				if (err) {
@@ -48,10 +49,10 @@ Template.profile.onCreated(function () {
 				}
 			});
 		},
-		mf('profile.name.placeholder', 'Username'),
 	);
 	instance.editableDescription = new Editable(
 		true,
+		mf('profile.description.placeholder', 'About me, my interests and skills. (How about the idea of creating courses fitting to your description? 😉)'),
 		(newDescription) => {
 			Meteor.call('user.updateDescription', newDescription, (err) => {
 				if (err) {
@@ -61,7 +62,6 @@ Template.profile.onCreated(function () {
 				}
 			});
 		},
-		mf('profile.description.placeholder', 'About me, my interests and skills. (How about the idea of creating courses fitting to your description? 😉)'),
 	);
 
 	this.autorun(() => {

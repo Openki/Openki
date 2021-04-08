@@ -3,7 +3,7 @@
 	<div class="container calendar-container">
 		<div class="page-component">
 			{{#each days}}
-				{{> calendarDay day=this filter=filter}}
+				{{> calendarDayFormat day=this filter=filter}}
 				<hr>
 			{{/each}}
 		</div>
@@ -29,9 +29,9 @@
 	</a>
 </template>
 
-<template name="calendarDay">
+<template name="calendarDayFormat">
 	<div class="js-calendar-date calendar-date">
-		{{calendarDay day.start}}
+		{{calendarDayFormat day.start}}
 	</div>
 	{{#if eventsReady}}
 		{{#unless hasEvents}}

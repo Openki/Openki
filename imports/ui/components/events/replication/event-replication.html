@@ -106,17 +106,17 @@
 					</label>
 					<div class="replica-event-captions">
 						{{#each replicaDates}}
-							<div class="event-caption" title="{{fullDate this}}">
+							<div class="event-caption" title="{{dateTimeLong this}}">
 								<div class="event-caption-header-wrap">
 									<div class="event-caption-header">
 										<span class="fa fa-map-pin"></span>
-										{{weekDay this}}
+										{{weekdayFormat this}}
 										<div class="event-caption-pseudoborder"></div>
 									</div>
 								</div>
 								<div class="event-caption-body-wrap">
 									<div class="event-caption-body">
-										{{localDate this}}
+										{{dateShort this}}
 									</div>
 								</div>
 							</div>
@@ -134,7 +134,7 @@
 							</div>
 							<div class="event-caption-body-wrap">
 								<div class="event-caption-body">
-									{{localDate this.start}}
+									{{dateShort this.start}}
 								</div>
 							</div>
 						</div>

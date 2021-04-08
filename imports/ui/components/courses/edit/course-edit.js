@@ -11,7 +11,7 @@ import Categories from '/imports/api/categories/categories';
 import Courses from '/imports/api/courses/courses';
 import Groups from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
-import Roles from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 
 import Editable from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
@@ -38,9 +38,7 @@ Template.courseEdit.onCreated(function () {
 
 	this.editableDescription = new Editable(
 		false,
-		false,
 		mf('course.description.placeholder', 'Describe your idea, so that more people will find it and that they`ll know what to expect.'),
-		false,
 	);
 
 	this.autorun(() => {

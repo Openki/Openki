@@ -47,6 +47,7 @@ Template.courseDetailsPage.onCreated(function () {
 
 	instance.editableName = new Editable(
 		true,
+		mf('course.title.placeholder'),
 		(newName) => {
 			Meteor.call('course.save', course._id, { name: newName }, (err) => {
 				if (err) {
@@ -63,11 +64,11 @@ Template.courseDetailsPage.onCreated(function () {
 				}
 			});
 		},
-		mf('course.title.placeholder'),
 	);
 
 	instance.editableDescription = new Editable(
 		false,
+		mf('course.description.placeholder'),
 		(newDescription) => {
 			Meteor.call('course.save', course._id, { description: newDescription }, (err) => {
 				if (err) {
@@ -84,7 +85,6 @@ Template.courseDetailsPage.onCreated(function () {
 				}
 			});
 		},
-		mf('course.description.placeholder'),
 	);
 
 	this.autorun(() => {
