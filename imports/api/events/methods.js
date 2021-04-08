@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
 
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
 import Events, { OEvent } from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';

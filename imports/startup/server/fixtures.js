@@ -3,7 +3,7 @@ import { Accounts } from 'meteor/accounts-base';
 
 import '/imports/api/fixtures/methods';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';

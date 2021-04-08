@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import { Roles } from '/imports/api/roles/roles';
 import { _ } from 'meteor/underscore';
 
