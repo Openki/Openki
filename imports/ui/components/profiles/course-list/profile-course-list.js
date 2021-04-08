@@ -55,9 +55,6 @@ Template.usersCourselist.helpers({
 		}
 		return false;
 	},
-	roleShort() {
-		return `roles.${this.type}.short`;
-	},
 	ready() {
 		return Template.instance().courseSub.ready();
 	},

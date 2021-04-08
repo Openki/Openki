@@ -127,8 +127,6 @@ Template.courseMember.helpers({
 		return this.member.roles.filter((role) => role !== 'participant');
 	},
 
-	roleShort() { return `roles.${this}.short`; },
-
 	maySubscribeToTeam() {
 		const change = Template.instance().subscribeToTeam();
 		return change?.validFor(Meteor.user());
