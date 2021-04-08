@@ -2,7 +2,6 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
-import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
