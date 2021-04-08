@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 import Events from '/imports/api/events/events';
 import ensure from './ensureFixture';

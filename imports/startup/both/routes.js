@@ -4,7 +4,7 @@ import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
 
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import Groups from '/imports/api/groups/groups';
 import { Roles } from '/imports/api/roles/roles';

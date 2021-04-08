@@ -50,7 +50,7 @@ import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 /** @typedef {Course & CourseEntity} CourseModel */
 
-export class Course {
+class Course {
 	constructor() {
 		/** @type {CourseMemberEntity[]} */
 		this.members = [];
@@ -106,7 +106,7 @@ export class Course {
 /**
  * @extends {Mongo.Collection<CourseEntity, CourseModel>}
  */
-export class CoursesCollection extends Mongo.Collection {
+class CoursesCollection extends Mongo.Collection {
 	constructor() {
 		super('Courses', {
 
@@ -313,4 +313,6 @@ export class CoursesCollection extends Mongo.Collection {
 	}
 }
 
-export default new CoursesCollection();
+const Courses = new CoursesCollection();
+
+export { Courses, Course, CoursesCollection };

@@ -3,7 +3,7 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import Log from '/imports/api/log/log';
 import { Users } from '/imports/api/users/users';
 import { Regions } from '/imports/api/regions/regions';

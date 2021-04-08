@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 import CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import Notification from '/imports/notification/notification';
