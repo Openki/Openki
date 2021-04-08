@@ -1,9 +1,6 @@
-import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
 
 import Events from '/imports/api/events/events';
-import Roles from '/imports/api/roles/roles';
 
 import '/imports/ui/components/profile-link/profile-link';
 
@@ -26,11 +23,7 @@ Template.coursehistory.helpers({
 			(e) => ({
 				dateTime: e.dateTime,
 				template: `${e.type}HistoryEntry`,
-				data: {
-					...e.data,
-					roleTitle: e.data.role ? mf(`roles.${e.data.role}.short`) : undefined,
-					roleIcon: e.data.role ? Roles.filter((r) => r.type === e.data.role)[0]?.icon : undefined,
-				},
+				data: e.data,
 			}),
 		) || []);
 

@@ -39,20 +39,20 @@
 </template>
 
 <template name="userSubscribedHistoryEntry">
-	<i class="{{roleIcon}} fa-fw"
+	<i class="{{roleIcon role}} fa-fw"
 	   aria-hidden="true"></i>
 	{{> profilelink user}}
-	{{mf 'course.history.userSubscribed' 'joined as {ROLE}' ROLE=roleTitle}}
+	{{mf 'course.history.userSubscribed' 'joined as {ROLE}' ROLE=(roleShort role)}}
 </template>
 
 <template name="userUnsubscribedHistoryEntry">
-	<i class="{{roleIcon}} fa-fw"
+	<i class="{{roleIcon role}} fa-fw"
 	   aria-hidden="true"></i>
 	{{> profilelink user}}
-	{{mf 'course.history.userUnsubscribed' 'retract {ROLE}' ROLE=roleTitle}}
+	{{mf 'course.history.userUnsubscribed' 'retract {ROLE}' ROLE=(roleShort role)}}
 </template>
 
 <template name="courseCreatedHistoryEntry">
-	{{mf 'course.history.created_by' 'Course created by:'}}
+	{{mf 'course.history.created_by' 'Course created by'}}
 	{{> profilelink createdby}}
 </template>
