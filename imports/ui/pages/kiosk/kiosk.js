@@ -2,7 +2,7 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import Groups from '/imports/api/groups/groups';
+import { Groups } from '/imports/api/groups/groups';
 import '/imports/ui/components/language-selection/language-selection';
 
 import './kiosk.html';

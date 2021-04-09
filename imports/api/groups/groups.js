@@ -17,7 +17,7 @@ import { Filtering } from '/imports/utils/filtering';
 /**
  * @extends {Mongo.Collection<GroupEntity>}
  */
-export class GroupsCollection extends Mongo.Collection {
+class GroupsCollection extends Mongo.Collection {
 	constructor() {
 		super('Groups');
 	}
@@ -65,4 +65,6 @@ export class GroupsCollection extends Mongo.Collection {
 	}
 }
 
-export default new GroupsCollection();
+const Groups = new GroupsCollection();
+
+export { Groups as default, Groups, GroupsCollection };
