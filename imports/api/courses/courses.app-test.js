@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
 
-import Courses from './courses';
+import { Courses } from './courses';
 
 if (Meteor.isClient) {
 	describe('Courses', () => {
