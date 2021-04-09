@@ -299,12 +299,11 @@ Meteor.methods({
 			eventId = Events.insert(changes);
 
 			if (changes.courseId) {
-				courseHistoryDenormalizer.afterEventInsert(changes.courseId, {
+				courseHistoryDenormalizer.afterEventInsert(changes.courseId, user._id, {
 					_id: eventId,
 					title: changes.title,
 					slug: changes.slug,
 					startLocal: changes.startLocal,
-					createdBy: changes.createdBy,
 				});
 			}
 		} else {
@@ -319,6 +318,16 @@ Meteor.methods({
 				const replicaSync = ReplicaSync(event, updateOptions);
 				replicaSync.apply(changes);
 				affectedReplicaCount = replicaSync.affected();
+			}
+
+			if (event.courseId) {
+				courseHistoryDenormalizer.afterEventUpdate(event.courseId, user._id, {
+					_id: eventId,
+					title: changes.title,
+					slug: changes.slug,
+					startLocal: changes.startLocal,
+					replicasUpdated: updateReplicasInfos || updateReplicasTime,
+				});
 			}
 		}
 
@@ -379,10 +388,9 @@ Meteor.methods({
 		Events.remove(eventId);
 
 		if (event.courseId) {
-			courseHistoryDenormalizer.afterEventRemove(event.courseId, {
+			courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
 				title: event.title,
 				startLocal: event.startLocal,
-				removedBy: user._id,
 			});
 
 			Meteor.call('course.updateNextEvent', event.courseId);

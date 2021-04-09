@@ -202,10 +202,7 @@ Meteor.methods({
 		} else {
 			Courses.update({ _id: courseId }, { $set: set }, AsyncTools.checkUpdateOne);
 
-			historyDenormalizer.afterUpdate(courseId, user._id, {
-				name: !!changes.name,
-				description: !!changes.description,
-			});
+			historyDenormalizer.afterUpdate(courseId, user._id);
 		}
 
 		if (changes.subs) {
