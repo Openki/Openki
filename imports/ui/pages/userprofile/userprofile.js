@@ -6,7 +6,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import { Alert } from '/imports/api/alerts/alert';
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import { Users } from '/imports/api/users/users';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';

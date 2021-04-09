@@ -3,7 +3,7 @@ import { _ } from 'meteor/underscore';
 // eslint-disable-next-line import/no-cycle
 import { tenantDenormalizer } from './tenantDenormalizer';
 
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 
 import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';

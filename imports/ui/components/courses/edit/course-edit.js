@@ -8,8 +8,8 @@ import { _ } from 'meteor/underscore';
 
 import { Alert } from '/imports/api/alerts/alert';
 import Categories from '/imports/api/categories/categories';
-import Courses from '/imports/api/courses/courses';
-import Groups from '/imports/api/groups/groups';
+import { Courses } from '/imports/api/courses/courses';
+import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Roles } from '/imports/api/roles/roles';
 

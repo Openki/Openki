@@ -1,4 +1,4 @@
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 
 export default function update() {
 	let updated = 0;

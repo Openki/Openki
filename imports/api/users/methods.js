@@ -4,9 +4,9 @@ import { Match, check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
 
 import Log from '/imports/api/log/log';
-import Groups from '/imports/api/groups/groups';
+import { Groups } from '/imports/api/groups/groups';
 import { Users } from '/imports/api/users/users';
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import Profile from '/imports/utils/profile';

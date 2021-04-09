@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
 import { assert } from 'chai';
 
-import Groups from '/imports/api/groups/groups';
+import { Groups } from '/imports/api/groups/groups';
 
 if (Meteor.isClient) {
 	describe('Group save', () => {
