@@ -11,9 +11,9 @@ import { Users } from '/imports/api/users/users';
 import { applyUpdates } from '/server/lib/updates';
 
 import { AsyncTools } from '/imports/utils/async-tools';
-import { tenantDenormalizer as coursesTenantDenormalizer } from '/imports/api/courses/tenantDenormalizer';
-import { tenantDenormalizer as eventsTenantDenormalizer } from '/imports/api/events/tenantDenormalizer';
-import { tenantsDenormalizer as usersTenantsDenormalizer } from '/imports/api/users/tenantsDenormalizer';
+import * as coursesTenantDenormalizer from '/imports/api/courses/tenantDenormalizer';
+import * as eventsTenantDenormalizer from '/imports/api/events/tenantDenormalizer';
+import * as usersTenantsDenormalizer from '/imports/api/users/tenantsDenormalizer';
 
 function initializeDbCacheFields() {
 	// Resync location cache in events

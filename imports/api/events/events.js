@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 // eslint-disable-next-line import/no-cycle
-import { tenantDenormalizer } from './tenantDenormalizer';
+import * as tenantDenormalizer from './tenantDenormalizer';
 
 import { Courses } from '/imports/api/courses/courses';
 

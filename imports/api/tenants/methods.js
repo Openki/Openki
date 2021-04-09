@@ -4,7 +4,7 @@ import { check } from 'meteor/check';
 import { Tenants } from './tenants';
 import { Users } from '/imports/api/users/users';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import usersTenantsDenormalizer from '../users/tenantsDenormalizer';
+import * as usersTenantsDenormalizer from '../users/tenantsDenormalizer';
 
 Meteor.methods({
 	/**

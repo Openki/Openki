@@ -13,7 +13,7 @@ import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
 // eslint-disable-next-line import/no-cycle
-import { tenantDenormalizer } from './tenantDenormalizer';
+import * as tenantDenormalizer from './tenantDenormalizer';
 
 // ======== DB-Model: ========
 /**
