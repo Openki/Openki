@@ -13,28 +13,30 @@ import '/imports/ui/components/courses/categories/course-categories';
 import './course-filter.html';
 
 Template.filter.onCreated(function () {
-	this.stateFilters = [
-		{
-			name: 'proposal',
-			cssClass: 'is-proposal',
-			label: mf('filterCaptions.is-proposal', 'Proposal'),
-			title: mf('filterCaptions.showProposal', 'Show all proposed courses'),
-		},
-		{
-			name: 'upcomingEvent',
-			cssClass: 'has-upcoming-events',
-			label: mf('filterCaptions.upcoming.label', 'Upcoming'),
-			title: mf('filterCaptions.upcoming.title', 'Show all courses with upcoming events'),
-		},
-		{
-			name: 'resting',
-			cssClass: 'has-past-events',
-			label: mf('filterCaptions.resting.label', 'Resting'),
-			title: mf('filterCaptions.resting.title', 'Courses with passed but without upcoming events'),
-		},
-	];
+	this.autorun(() => {
+		this.stateFilters = [
+			{
+				name: 'proposal',
+				cssClass: 'is-proposal',
+				label: mf('filterCaptions.is-proposal', 'Proposal'),
+				title: mf('filterCaptions.showProposal', 'Show all proposed courses'),
+			},
+			{
+				name: 'upcomingEvent',
+				cssClass: 'has-upcoming-events',
+				label: mf('filterCaptions.upcoming.label', 'Upcoming'),
+				title: mf('filterCaptions.upcoming.title', 'Show all courses with upcoming events'),
+			},
+			{
+				name: 'resting',
+				cssClass: 'has-past-events',
+				label: mf('filterCaptions.resting.label', 'Resting'),
+				title: mf('filterCaptions.resting.title', 'Courses with passed but without upcoming events'),
+			},
+		];
 
-	this.visibleFilters = ['state', 'needsRole', 'categories'];
+		this.visibleFilters = ['state', 'needsRole', 'categories'];
+	});
 });
 
 Template.filter.helpers({
