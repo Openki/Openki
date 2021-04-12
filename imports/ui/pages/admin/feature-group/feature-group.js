@@ -15,7 +15,6 @@ Template.featureGroup.onCreated(function featureGroupOnCreated() {
 
 Template.featureGroup.helpers({
 	groups: () => Groups.find({}, { sort: { name: 1 } }),
-	regionName: () => Regions.currentRegion().name,
 	featuredGroup() {
 		const groupId = Regions.currentRegion().featuredGroup;
 		return Groups.findOne(groupId);

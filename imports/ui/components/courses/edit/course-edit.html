@@ -158,7 +158,7 @@
 										</option>
 										{{#each region in regions}}
 											<option value='{{region._id}}'
-													selected="{{#if currentRegion region}}selected{{/if}}">
+													selected="{{#if isCurrentRegion region._id}}selected{{/if}}">
 												{{region.name}}
 											</option>
 										{{/each}}

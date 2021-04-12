@@ -15,8 +15,8 @@
 	<li>
 		<a class="navbar-link js-region-display">
 			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-			{{#if currentRegion}}
-				{{currentRegion.name}}
+			{{#if currentRegionName}}
+				{{currentRegionName}}
 			{{else}}
 				{{mf 'menue.All regions' 'All regions'}}
 			{{/if}}
@@ -72,7 +72,7 @@
 							{{allUpcomingEvents}}
 						</span>
 					</div>
-					{{#if isCurrentRegion}}
+					{{#if isCurrentRegion 'all'}}
 						<span class="checkmark fa fa-check"></span>
 					{{/if}}
 					{{mf 'menue.All regions' 'All regions'}}
@@ -124,7 +124,7 @@
 					{{futureEventCount}}
 				</span>
 			</div>
-			{{#if isCurrentRegion}}
+			{{#if isCurrentRegion _id}}
 				<span class="checkmark fa fa-check"></span>
 			{{/if}}
 			{{regionNameMarked}}

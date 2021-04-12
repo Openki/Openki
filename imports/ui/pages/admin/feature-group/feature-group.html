@@ -2,7 +2,7 @@
 	{{#if featuredGroup}}
 		<div class="admin-featured-group">
 			<div class="admin-featured-group-body">
-				{{#mf KEY='featureGroup.groupIsFeatured' GROUP=featuredGroup.name REGION=regionName}}
+				{{#mf KEY='featureGroup.groupIsFeatured' GROUP=featuredGroup.name REGION=currentRegionName}}
 					The group "{GROUP}" is featured for the region "{REGION}".
 				{{/mf}}
 			</div>
@@ -12,7 +12,7 @@
 					{{mf '_button.deleting'}}
 				{{else}}
 					<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
-					{{#mf KEY='featureGroup.deleteButton' REGION=regionName}}
+					{{#mf KEY='featureGroup.deleteButton' REGION=currentRegionName}}
 						Remove the featured group for "{REGION}"
 					{{/mf}}
 				{{/if}}
@@ -38,7 +38,7 @@
 					{{mf '_button.saving'}}
 				{{else}}
 					<i class="fa fa-fw fa-flag" aria-hidden="true"></i>
-					{{#mf KEY='featureGroup.saveButton' REGION=regionName}}
+					{{#mf KEY='featureGroup.saveButton' REGION=currentRegionName}}
 						Feature this group in the region "{REGION}"
 					{{/mf}}
 				{{/if}}
