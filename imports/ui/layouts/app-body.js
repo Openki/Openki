@@ -46,7 +46,7 @@ Template.layout.helpers({
 
 		return (
 			RegionSelection.regionDependentRoutes.indexOf(route.getName()) >= 0
-			&& Session.get('showRegionSplash')
+			&& Session.equals('showRegionSplash', true)
 		);
 	},
 
