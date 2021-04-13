@@ -2,7 +2,7 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import { UrlTools } from '/imports/utils/url-tools';
+import * as UrlTools from '/imports/utils/url-tools';
 
 import './kiosk-link.html';
 

@@ -7,7 +7,7 @@ import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import { Regions } from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 

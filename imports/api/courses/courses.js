@@ -7,7 +7,7 @@ import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
-import { StringTools } from '/imports/utils/string-tools';
+import * as StringTools from '/imports/utils/string-tools';
 
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
@@ -50,7 +50,7 @@ import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 /** @typedef {Course & CourseEntity} CourseModel */
 
-class Course {
+export class Course {
 	constructor() {
 		/** @type {CourseMemberEntity[]} */
 		this.members = [];
@@ -106,7 +106,7 @@ class Course {
 /**
  * @extends {Mongo.Collection<CourseEntity, CourseModel>}
  */
-class CoursesCollection extends Mongo.Collection {
+export class CoursesCollection extends Mongo.Collection {
 	constructor() {
 		super('Courses', {
 
@@ -313,6 +313,6 @@ class CoursesCollection extends Mongo.Collection {
 	}
 }
 
-const Courses = new CoursesCollection();
+export const Courses = new CoursesCollection();
 
-export { Courses, Course, CoursesCollection };
+export default Courses;

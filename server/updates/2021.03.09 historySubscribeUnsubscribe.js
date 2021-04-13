@@ -1,7 +1,7 @@
 
 import { Courses } from '/imports/api/courses/courses';
 
-function update() {
+export function update() {
 	let updated = 0;
 
 	Log.find({ tr: 'Courses.Subscribe' }).fetch().forEach((entry) => {
@@ -33,4 +33,4 @@ function update() {
 	return updated;
 }
 
-export { update as default, update };
+export default update;

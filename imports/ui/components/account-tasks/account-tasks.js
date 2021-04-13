@@ -5,7 +5,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import ScssVars from '/imports/ui/lib/scss-vars';

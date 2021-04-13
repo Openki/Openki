@@ -3,7 +3,7 @@ import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 
 import '/imports/ui/components/buttons/buttons';
 

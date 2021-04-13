@@ -4,15 +4,14 @@ import { Mongo } from 'meteor/mongo';
 /**
  * @typedef {Object} AlertEnity
  * @property {string} _id              ID
- * @property {object} message
- * @property {string} message.type
- * @property {string} message.message
- * @property {number} message.timeout  Integer
+ * @property {string} type
+ * @property {string} message
+ * @property {number} timeout  Integer
  */
 
 /**
  * @type {Mongo.Collection<AlertEnity>}
  */
-const Alerts = new Mongo.Collection(null); // Local collection for in-memory storage
+export const Alerts = new Mongo.Collection(null); // Local collection for in-memory storage
 
 export default Alerts;

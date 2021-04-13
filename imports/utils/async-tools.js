@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-const AsyncTools = {};
+export const AsyncTools = {};
 
 AsyncTools.checkUpdateOne = function (err, aff) {
 	if (err) {
@@ -72,4 +72,4 @@ if (Meteor.isClient) {
 	};
 }
 
-export { AsyncTools as default, AsyncTools };
+export default AsyncTools;

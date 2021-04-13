@@ -14,7 +14,7 @@ import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';

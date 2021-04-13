@@ -4,7 +4,7 @@ import { Courses } from './courses';
  * @param {string} courseId
  * @param {string} userId
  */
-function afterUpdate(courseId, userId) {
+export function afterUpdate(courseId, userId) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -19,7 +19,7 @@ function afterUpdate(courseId, userId) {
  * @param {string} userId
  * @param {string} roleType
  */
-function afterSubscribe(courseId, userId, roleType) {
+export function afterSubscribe(courseId, userId, roleType) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -34,7 +34,7 @@ function afterSubscribe(courseId, userId, roleType) {
  * @param {string} userId
  * @param {string} roleType
  */
-function afterUnsubscribe(courseId, userId, roleType) {
+export function afterUnsubscribe(courseId, userId, roleType) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -54,7 +54,7 @@ function afterUnsubscribe(courseId, userId, roleType) {
 	startLocal: string;
 }} event
  */
-function afterEventInsert(courseId, userId, event) {
+export function afterEventInsert(courseId, userId, event) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -75,7 +75,7 @@ function afterEventInsert(courseId, userId, event) {
  * replicasUpdated: boolean;
  * }} event
  */
-function afterEventUpdate(courseId, userId, event) {
+export function afterEventUpdate(courseId, userId, event) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -93,7 +93,7 @@ function afterEventUpdate(courseId, userId, event) {
 	startLocal: string;
 }} event
  */
-function afterEventRemove(courseId, userId, event) {
+export function afterEventRemove(courseId, userId, event) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -102,12 +102,3 @@ function afterEventRemove(courseId, userId, event) {
 		},
 	});
 }
-
-export {
-	afterUpdate,
-	afterSubscribe,
-	afterUnsubscribe,
-	afterEventInsert,
-	afterEventUpdate,
-	afterEventRemove,
-};

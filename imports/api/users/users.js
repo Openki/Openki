@@ -68,7 +68,7 @@ import IdTools from '/imports/utils/id-tools';
 
 /** @typedef {import('../groups/groups').GroupEntity} GroupEntity */
 
-class User {
+export class User {
 	/**
 	 * Check whether the user may promote things with the given group.
 	 * The user must be a member of the group to be allowed to promote things with it.
@@ -131,7 +131,7 @@ class User {
 }
 
 /** @type {Mongo.Collection<UserEntity, UserModel>} */
-const Users = Meteor.users;
+export const Users = Meteor.users;
 
 /**
  * @param {UserEntity} user
@@ -158,4 +158,4 @@ Users.currentUser = function () {
 	return anon;
 };
 
-export { Users as default, Users, User };
+export default Users;
