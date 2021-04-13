@@ -8,6 +8,7 @@ import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Roles } from '/imports/api/roles/roles';
 import UpdateMethods from '/imports/utils/update-methods';
+import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 
 import {
 	Subscribe, Unsubscribe, Message, processChange,
@@ -200,6 +201,8 @@ Meteor.methods({
 			Courses.updateGroups(courseId);
 		} else {
 			Courses.update({ _id: courseId }, { $set: set }, AsyncTools.checkUpdateOne);
+
+			historyDenormalizer.afterUpdate(courseId, user._id);
 		}
 
 		if (changes.subs) {
