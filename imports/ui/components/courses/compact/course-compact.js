@@ -1,9 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
 
-import Roles from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';
 import '/imports/ui/components/courses/categories/course-categories';
 
@@ -52,13 +51,6 @@ Template.courseCompact.helpers({
 });
 
 Template.courseCompactEvent.helpers({
-	dateFormat(date) {
-		if (date) {
-			return moment(date).format('l');
-		}
-		return false;
-	},
-
 	dateToRelativeString(date) {
 		if (date) {
 			const relative = moment().to(date);
@@ -66,7 +58,6 @@ Template.courseCompactEvent.helpers({
 		}
 		return false;
 	},
-	roleIcon: (type) => _.findWhere(Roles, { type }).icon,
 });
 
 Template.courseCompactRoles.helpers({
@@ -165,8 +156,6 @@ Template.courseCompactRoles.helpers({
 
 		return roleStateTooltip;
 	},
-
-	roleIcon: (type) => _.findWhere(Roles, { type }).icon,
 });
 
 Template.courseCompact.events({

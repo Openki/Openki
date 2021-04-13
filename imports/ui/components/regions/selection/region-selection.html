@@ -15,8 +15,8 @@
 	<li>
 		<a class="navbar-link js-region-display">
 			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-			{{#if currentRegion}}
-				{{currentRegion.name}}
+			{{#if currentRegionName}}
+				{{currentRegionName}}
 			{{else}}
 				{{mf 'menue.All regions' 'All regions'}}
 			{{/if}}
@@ -59,7 +59,7 @@
 				{{mf 'regionSelection.legend.region' 'Region'}}
 			</li>
 			<li>
-				<a class="js-region-link js-nav-dropdown-close" href="#">
+				<a href="#" class="js-region-link js-nav-dropdown-close" title="{{mf 'menue.All regions'}}">
 					<div class="dropdown-addon-right">
 						<span
 							class="badge badge-courses"
@@ -72,10 +72,10 @@
 							{{allUpcomingEvents}}
 						</span>
 					</div>
-					{{mf 'menue.All regions' 'All regions'}}
-					{{#if isCurrentRegion}}
+					{{#if isCurrentRegion 'all'}}
 						<span class="checkmark fa fa-check"></span>
 					{{/if}}
+					{{mf 'menue.All regions' 'All regions'}}
 				</a>
 			</li>
 			{{#if state 'showAllRegions'}}
@@ -124,10 +124,10 @@
 					{{futureEventCount}}
 				</span>
 			</div>
-			{{regionNameMarked}}
-			{{#if isCurrentRegion}}
+			{{#if isCurrentRegion _id}}
 				<span class="checkmark fa fa-check"></span>
 			{{/if}}
+			{{regionNameMarked}}
 		</a>
 	</li>
 </template>

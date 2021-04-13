@@ -37,6 +37,7 @@ import { HasRoleUser } from '/imports/utils/course-role-utils';
  * @property {string[]} roles [role-keys]
  * @property {CourseMemberEntity[]} members
  * @property {boolean} internal
+ * @property {{dateTime: Date; type: string; data: any;}} history
  * @property {string[]} editors (calculated) List of user and group id allowed to edit the course,
  * calculated from members and groupOrganizers
  * @property {number} futureEvents  (calculated) count of events still in the future for this course
@@ -49,7 +50,7 @@ import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 /** @typedef {Course & CourseEntity} CourseModel */
 
-export class Course {
+class Course {
 	constructor() {
 		/** @type {CourseMemberEntity[]} */
 		this.members = [];
@@ -105,7 +106,7 @@ export class Course {
 /**
  * @extends {Mongo.Collection<CourseEntity, CourseModel>}
  */
-export class CoursesCollection extends Mongo.Collection {
+class CoursesCollection extends Mongo.Collection {
 	constructor() {
 		super('Courses', {
 
@@ -312,4 +313,6 @@ export class CoursesCollection extends Mongo.Collection {
 	}
 }
 
-export default new CoursesCollection();
+const Courses = new CoursesCollection();
+
+export { Courses, Course, CoursesCollection };

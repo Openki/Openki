@@ -2,14 +2,13 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
-import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { Alert } from '/imports/api/alerts/alert';
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
-import Groups from '/imports/api/groups/groups';
+import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
@@ -305,14 +304,6 @@ Template.eventDisplay.onRendered(function () {
 });
 
 Template.eventDisplay.helpers({
-	weekday(date) {
-		Session.get('timeLocale'); // it depends
-		if (date) {
-			return moment(date).format('dddd');
-		}
-		return false;
-	},
-
 	mayEdit() {
 		return this.editableBy(Meteor.user());
 	},
@@ -322,7 +313,6 @@ Template.eventDisplay.helpers({
 	hasVenue() {
 		return this.venue?.loc;
 	},
-
 	replicating() {
 		return Template.instance().replicating.get();
 	},

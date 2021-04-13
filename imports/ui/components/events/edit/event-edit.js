@@ -15,7 +15,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import { Alert } from '/imports/api/alerts/alert';
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
@@ -278,11 +278,6 @@ Template.eventEdit.helpers({
 			return false;
 		}
 		return true;
-	},
-
-	currentRegion(region) {
-		const currentRegion = Session.get('region');
-		return currentRegion && region._id === currentRegion;
 	},
 
 	showVenueSelection() {

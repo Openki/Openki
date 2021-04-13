@@ -1,10 +1,10 @@
 import { Template } from 'meteor/templating';
-import Groups from '/imports/api/groups/groups';
+import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 
 import './featured-group.html';
 
-Template.featuredGroup.onCreated(function featuredGroupOnCreated() {
+Template.featuredGroup.onCreated(function () {
 	this.featuredGroupId = () => {
 		const region = Regions.currentRegion();
 		if (region?.featuredGroup) {
@@ -25,6 +25,4 @@ Template.featuredGroup.onCreated(function featuredGroupOnCreated() {
 
 Template.featuredGroup.helpers({
 	featuredGroup: () => Template.instance().featuredGroup(),
-
-	regionName: () => Regions.currentRegion().name,
 });

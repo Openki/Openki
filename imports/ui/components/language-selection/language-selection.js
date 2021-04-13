@@ -127,7 +127,7 @@ Template.languageSelection.events({
 
 	'focus .js-language-search'(event, instance) {
 		const viewportWidth = Session.get('viewportWidth');
-		const isRetina = Session.get('isRetina');
+		const isRetina = Session.equals('isRetina', true);
 		const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
 
 		if (screenMD && !isRetina) {

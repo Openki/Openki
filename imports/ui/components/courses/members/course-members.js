@@ -4,7 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import { Alert } from '/imports/api/alerts/alert';
-import Roles from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 import {
 	Subscribe, Unsubscribe, Message, processChange,
 } from '/imports/api/courses/subscription';
@@ -126,8 +126,6 @@ Template.courseMember.helpers({
 	memberRoles() {
 		return this.member.roles.filter((role) => role !== 'participant');
 	},
-
-	roleShort() { return `roles.${this}.short`; },
 
 	maySubscribeToTeam() {
 		const change = Template.instance().subscribeToTeam();

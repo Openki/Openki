@@ -3,8 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
+import { MeteorAsync } from '/imports/utils/promisify';
 
-import Groups from '/imports/api/groups/groups';
+import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Alert } from '/imports/api/alerts/alert';
 
@@ -19,6 +20,7 @@ import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/groups/settings/group-settings';
 
 import './group-details.html';
+import { Analytics } from '../../lib/analytics';
 
 Template.groupDetails.onCreated(function () {
 	const instance = this;
@@ -186,7 +188,7 @@ Template.groupDetails.events({
 
 		instance.errors.reset();
 
-		if (Object.values(group).filter((u) => !u).length > 0) {
+		if (Object.values(group).some((u) => !u)) {
 			instance.errors.add('emptyField');
 		}
 
@@ -198,31 +200,29 @@ Template.groupDetails.events({
 		SaveAfterLogin(instance,
 			mf('loginAction.saveGroup', 'Login and save group'),
 			mf('registerAction.saveGroup', 'Register and save group'),
-			() => {
-				Meteor.call('group.save', 'create', group, (err, groupId) => {
-					instance.busy(false);
-					if (err) {
-						Alert.serverError(
-							err,
-							mf(
-								'groupDetails.saveError',
-								{ GROUP: group.name },
-							),
-						);
-					} else {
-						instance.editableName.end();
-						instance.editableShort.end();
-						instance.editableClaim.end();
-						instance.editableDescription.end();
+			async () => {
+				try {
+					const groupId = await MeteorAsync.callAsync('group.save', 'create', group);
 
-						Alert.success(mf(
-							'groupDetails.groupCreated',
-							{ GROUP: group.name },
-							'The Group {GROUP} has been created!',
-						));
-						Router.go('groupDetails', { _id: groupId });
-					}
-				});
+					instance.editableName.end();
+					instance.editableShort.end();
+					instance.editableClaim.end();
+					instance.editableDescription.end();
+
+					Alert.success(mf(
+						'groupDetails.groupCreated',
+						{ GROUP: group.name },
+						'The Group {GROUP} has been created!',
+					));
+
+					Analytics.trackEvent('Group creations', 'Group creations');
+
+					Router.go('groupDetails', { _id: groupId });
+				} catch (err) {
+					Alert.serverError(err, mf('groupDetails.saveError', { GROUP: group.name }));
+				} finally {
+					instance.busy(false);
+				}
 			});
 	},
 

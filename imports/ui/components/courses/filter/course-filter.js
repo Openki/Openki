@@ -1,9 +1,8 @@
 import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
 
-import Roles from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 
 import FilterPreview from '/imports/ui/lib/filter-preview';
 import ScssVars from '/imports/ui/lib/scss-vars';
@@ -14,28 +13,30 @@ import '/imports/ui/components/courses/categories/course-categories';
 import './course-filter.html';
 
 Template.filter.onCreated(function () {
-	this.stateFilters = [
-		{
-			name: 'proposal',
-			cssClass: 'is-proposal',
-			label: mf('filterCaptions.is-proposal', 'Proposal'),
-			title: mf('filterCaptions.showProposal', 'Show all proposed courses'),
-		},
-		{
-			name: 'upcomingEvent',
-			cssClass: 'has-upcoming-events',
-			label: mf('filterCaptions.upcoming.label', 'Upcoming'),
-			title: mf('filterCaptions.upcoming.title', 'Show all courses with upcoming events'),
-		},
-		{
-			name: 'resting',
-			cssClass: 'has-past-events',
-			label: mf('filterCaptions.resting.label', 'Resting'),
-			title: mf('filterCaptions.resting.title', 'Courses with passed but without upcoming events'),
-		},
-	];
+	this.autorun(() => {
+		this.stateFilters = [
+			{
+				name: 'proposal',
+				cssClass: 'is-proposal',
+				label: mf('filterCaptions.is-proposal', 'Proposal'),
+				title: mf('filterCaptions.showProposal', 'Show all proposed courses'),
+			},
+			{
+				name: 'upcomingEvent',
+				cssClass: 'has-upcoming-events',
+				label: mf('filterCaptions.upcoming.label', 'Upcoming'),
+				title: mf('filterCaptions.upcoming.title', 'Show all courses with upcoming events'),
+			},
+			{
+				name: 'resting',
+				cssClass: 'has-past-events',
+				label: mf('filterCaptions.resting.label', 'Resting'),
+				title: mf('filterCaptions.resting.title', 'Courses with passed but without upcoming events'),
+			},
+		];
 
-	this.visibleFilters = ['state', 'needsRole', 'categories'];
+		this.visibleFilters = ['state', 'needsRole', 'categories'];
+	});
 });
 
 Template.filter.helpers({
@@ -116,7 +117,7 @@ Template.filter.events({
 
 	'mouseover .js-filter-caption, mouseout .js-filter-caption'(event, instance) {
 		const name = instance.$(event.currentTarget).data('filter-name');
-		const state = _.findWhere(instance.stateFilters, { name });
+		const state = instance.stateFilters.find((f) => f.name === name);
 
 		if (!instance.parentInstance().filter.get('state')) {
 			FilterPreview({
@@ -144,13 +145,10 @@ Template.additionalFilters.onCreated(function () {
 			name: 'host',
 			label: mf('find.needsHost', 'Looking for a host'),
 		},
-	].map((role) => {
+	].map(
 		// add icon from Roles collection to role object
-		/* eslint-disable-next-line no-param-reassign */
-		role.icon = _.findWhere(Roles, { type: role.name }).icon;
-
-		return role;
-	});
+		(role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon }),
+	);
 });
 
 Template.additionalFilters.onRendered(function () {

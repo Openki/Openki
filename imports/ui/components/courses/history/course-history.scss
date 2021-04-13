@@ -83,6 +83,7 @@
 }
 
 .coursehistory-event {
+	@include ellipsis;
 	@include td-make-xs-column(8);
 	height: 20px;
 	padding: 0;

@@ -6,7 +6,7 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import { Regions } from '/imports/api/regions/regions';
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import Metatags from '/imports/utils/metatags';
 import CssFromQuery from '/imports/ui/lib/css-from-query';
 
@@ -70,7 +70,7 @@ Template.frameCourselistCourse.onCreated(function frameCourselistCourseOnCreated
 });
 
 Template.frameCourselistCourse.helpers({
-	allRegions: () => Session.get('region') === 'all',
+	allRegions: () => Session.equals('region', 'all'),
 	regionOf: (course) => Regions.findOne(course.region).name,
 	expanded: () => Template.instance().expanded.get(),
 	toggleIndicatorIcon() {

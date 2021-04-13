@@ -3,7 +3,7 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 /** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
 import Events from '/imports/api/events/events';
 import Log from '/imports/api/log/log';
