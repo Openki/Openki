@@ -13,7 +13,7 @@ const Introduction = {
 		Session.set('ShowIntro', true);
 	},
 
-	shownIntro: () => Session.get('ShowIntro'),
+	shownIntro: () => Session.equals('ShowIntro', true),
 
 	openedIntro() {
 		const opened = Session.get('OpenedIntro');
@@ -21,8 +21,7 @@ const Introduction = {
 			return opened;
 		}
 
-		const { route } = Router.current();
-		const routeName = route?.getName();
+		const routeName = Router.current().route?.getName();
 		return routeName === 'home' || routeName === 'find';
 	},
 

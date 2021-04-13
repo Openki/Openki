@@ -4,7 +4,7 @@ import { _ } from 'meteor/underscore';
 import { HtmlTools } from '/imports/utils/html-tools';
 import { Users } from '/imports/api/users/users';
 
-import Groups from './groups';
+import { Groups } from './groups';
 
 import IsGroupMember from '/imports/utils/is-group-member';
 

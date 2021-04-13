@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import Groups from '/imports/api/groups/groups';
+import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 
 import './featured-group.html';
