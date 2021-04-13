@@ -3,13 +3,13 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import { Regions } from '/imports/api/regions/regions';
 import Log from '/imports/api/log/log';
 import { Users } from '/imports/api/users/users';
 
-import { HtmlTools } from '/imports/utils/html-tools';
-import { StringTools } from '/imports/utils/string-tools';
+import * as HtmlTools from '/imports/utils/html-tools';
+import * as StringTools from '/imports/utils/string-tools';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 

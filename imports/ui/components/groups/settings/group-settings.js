@@ -4,8 +4,8 @@ import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import { Alert } from '/imports/api/alerts/alert';
-import Groups from '/imports/api/groups/groups';
+import * as Alert from '/imports/api/alerts/alert';
+import { Groups } from '/imports/api/groups/groups';
 import { Users } from '/imports/api/users/users';
 
 import UserSearchPrefix from '/imports/utils/user-search-prefix';

@@ -4,13 +4,13 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import { Regions } from '/imports/api/regions/regions';
 
 import FilterPreview from '/imports/ui/lib/filter-preview';
 
 import RegionSelection from '/imports/utils/region-selection';
-import { StringTools } from '/imports/utils/string-tools';
+import * as StringTools from '/imports/utils/string-tools';
 
 import './region-selection.html';
 
@@ -18,12 +18,6 @@ Template.regionSelectionWrap.onCreated(function () {
 	this.subscribe('Regions');
 	this.state = new ReactiveDict();
 	this.state.setDefault('searchingRegions', false);
-});
-
-Template.regionDisplay.helpers({
-	currentRegion() {
-		return Regions.currentRegion();
-	},
 });
 
 Template.regionDisplay.events({
@@ -237,9 +231,5 @@ Template.regionSelectionItem.helpers({
 	regionNameMarked() {
 		const search = Template.instance().parentInstance().state.get('search');
 		return StringTools.markedName(search, this.name);
-	},
-
-	isCurrentRegion() {
-		return Session.equals('region', this._id || 'all');
 	},
 });

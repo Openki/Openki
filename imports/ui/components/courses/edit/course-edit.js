@@ -6,17 +6,17 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import Categories from '/imports/api/categories/categories';
-import Courses from '/imports/api/courses/courses';
-import Groups from '/imports/api/groups/groups';
+import { Courses } from '/imports/api/courses/courses';
+import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
-import Roles from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 
 import Editable from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
-import { StringTools } from '/imports/utils/string-tools';
+import * as StringTools from '/imports/utils/string-tools';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 import { Analytics } from '/imports/ui/lib/analytics';
 
@@ -182,15 +182,6 @@ Template.courseEdit.helpers({
 
 	hideCategories() {
 		return this.isFrame && this.hideCategories;
-	},
-
-	regions() {
-		return Regions.find();
-	},
-
-	currentRegion(region) {
-		const currentRegion = Session.get('region');
-		return currentRegion && region._id === currentRegion;
 	},
 
 	isInternal() {

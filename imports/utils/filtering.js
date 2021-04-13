@@ -4,7 +4,7 @@ import { Tracker } from 'meteor/tracker';
 /** @typedef {import('./predicates').Predicate} Predicate */
 /** @typedef {import('./predicates').ParamWrapper} ParamWrapper */
 
-class FilteringReadError {
+export class FilteringReadError {
 	/**
 	 * @param {string} name
 	 * @param {string} message
@@ -15,7 +15,7 @@ class FilteringReadError {
 	}
 }
 
-class Filtering {
+export class Filtering {
 	/**
 	 * @param {{[name:string]: Predicate}} availablePredicates
 	 */
@@ -191,4 +191,4 @@ class Filtering {
 	}
 }
 
-export { Filtering as default, Filtering, FilteringReadError };
+export default Filtering;

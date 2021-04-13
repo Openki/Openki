@@ -90,14 +90,14 @@
 					{{> profileLink userId}}
 					<span 
 						class="discussion-post-time"
-						title="{{dateformat time_created}}">
+						title="{{dateFormat time_created}}">
 						{{fromNow time_created}}
 					</span>
 					{{#if hasBeenEdited}}
 						-
 						<span 
 							class="comment-time-updated" 
-							title="{{dateformat time_updated}}">
+							title="{{dateFormat time_updated}}">
 							{{mf 'course.discussion.lastUpdate' 'Last update'}}:
 							{{fromNow time_updated}}
 						</span>

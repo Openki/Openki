@@ -7,7 +7,7 @@ import { Meteor } from 'meteor/meteor';
 import Events from '/imports/api/events/events';
 
 import LocalTime from '/imports/utils/local-time';
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
 
 import '/imports/ui/components/buttons/buttons';
@@ -97,12 +97,6 @@ Template.eventReplication.helpers({
 		const endDate = Template.instance().replicateEndDate.get();
 		return moment(endDate).format('ddd');
 	},
-
-	localDate: (date) => moment(date).format('l'),
-
-	fullDate: (date) => moment(date).format('LLLL'),
-
-	weekDay: (date) => moment(date).format('ddd'),
 
 	affectedReplicaCount() {
 		Template.instance().subscribe('affectedReplica', this._id);

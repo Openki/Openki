@@ -8,39 +8,18 @@
 
 	{{#each pastEventsList}}
 		<div class="timeline">
-			<div class="timeline-eventdate {{this._id}}"
-			     title="{{dateLong start}}">
-				{{fromNow start}}
+			<div class="timeline-eventdate" title="{{dateLong dateTime}}">
+				{{fromNow dateTime}}
 			</div>
 			<div class="timeline-eventline-container">
 				<div class="timeline-eventline"></div>
-				<div class="timeline-eventpoint {{this._id}}"></div>
+				<div class="timeline-eventpoint"></div>
 			</div>
 		</div>
 		<div class="coursehistory-event">
-			<span class="fa fa-calendar-o fa-fw" aria-hidden="true"></span>
-			<a href="{{pathFor 'showEvent'}}">
-				{{this.title}}
-			</a>
+			{{> Template.dynamic template=this.template data=this.data}}
 		</div>
 	{{/each}}
-
-	{{#with course}}
-		<div class="timeline">
-			<div class="timeline-eventdate {{this._id}}"
-			     title="{{dateLong time_created}}">
-				{{fromNow time_created}}
-			</div>
-			<div class="timeline-eventline-container">
-				<div class="timeline-eventline"></div>
-				<div class="timeline-eventpoint {{this._id}}"></div>
-			</div>
-		</div>
-		<div class="coursehistory-event">
-			{{mf 'course.history.created_by' 'Course created by:'}}
-			{{>profilelink createdby}}
-		</div>
-	{{/with}}
 
 	<div class="timeline-post">
 		<div class="timeline-end-container">
@@ -48,4 +27,68 @@
 		</div>
 		<div class="timeline-footer"></div>
 	</div>
+</template>
+
+<template name="eventHeldHistoryEntry">
+	<span class="fa fa-calendar-o fa-fw" aria-hidden="true"></span>
+	<a href="{{pathFor 'showEvent'}}">
+		{{this.title}}
+	</a>
+</template>
+
+<template name="userSubscribedHistoryEntry">
+	<i class="{{roleIcon role}} fa-fw" aria-hidden="true"></i>
+	{{> profilelink user}}
+	{{mf 'course.history.userSubscribed' 'joined as {ROLE}' ROLE=(roleShort role)}}
+</template>
+
+<template name="userUnsubscribedHistoryEntry">
+	<i class="{{roleIcon role}} fa-fw" aria-hidden="true"></i>
+	{{> profilelink user}}
+	{{mf 'course.history.userUnsubscribed' 'retract {ROLE}' ROLE=(roleShort role)}}
+</template>
+
+<template name="eventInsertedHistoryEntry">
+	<span class="fa fa-calendar-o fa-fw" aria-hidden="true"></span>
+	<a href="{{pathFor 'showEvent'}}">
+		{{weekdayFormat startLocal}}
+		{{calendarDayShort startLocal}}
+		{{this.title}}
+	</a>
+	{{mf 'course.history.eventInserted' 'created by'}}
+	{{> profilelink createdBy}}
+</template>
+
+<template name="eventUpdatedHistoryEntry">
+	<span class="fa fa-calendar-o fa-fw" aria-hidden="true"></span>
+	<a href="{{pathFor 'showEvent'}}">
+		{{weekdayFormat startLocal}}
+		{{calendarDayShort startLocal}}
+		{{this.title}}
+	</a>
+	{{#if replicasUpdated}}
+		{{mf 'course.history.eventAndRepeatsUpdated' 'and repeats updated by'}}
+	{{else}}
+		{{mf 'course.history.eventUpdated' 'updated by'}}
+	{{/if}}
+	{{> profilelink updatedBy}}
+</template>
+
+<template name="eventRemovedHistoryEntry">
+	<span class="fa fa-calendar-o fa-fw" aria-hidden="true"></span>
+	{{weekdayFormat startLocal}}
+	{{calendarDayShort startLocal}}
+	{{this.title}}
+	{{mf 'course.history.eventRemoved' 'removed by'}}
+	{{> profilelink removedBy}}
+</template>
+
+<template name="updatedHistoryEntry">
+	{{mf 'course.history.updated' 'Course updated by'}}
+	{{> profilelink updatedBy}}
+</template>
+
+<template name="createdHistoryEntry">
+	{{mf 'course.history.created_by' 'Course created by'}}
+	{{> profilelink createdby}}
 </template>

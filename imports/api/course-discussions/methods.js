@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 import CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import Notification from '/imports/notification/notification';
-import { StringTools } from '/imports/utils/string-tools';
-import { HtmlTools } from '/imports/utils/html-tools';
+import * as StringTools from '/imports/utils/string-tools';
+import * as HtmlTools from '/imports/utils/html-tools';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 /** @typedef {import('./course-discussions').CourseDiscussionEnity} CourseDiscussionEnity */

@@ -1,6 +1,5 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import Events from '/imports/api/events/events';
@@ -60,11 +59,6 @@ Template.frameWeek.onCreated(function () {
 });
 
 Template.frameWeek.helpers({
-	calendarDay(day) {
-		Session.get('timeLocale');
-		return moment(day.toDate()).format('dddd, Do MMMM');
-	},
-
 	hasDayEvents() {
 		return this.dayEvents.count() > 0;
 	},

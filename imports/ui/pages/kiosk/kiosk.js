@@ -2,7 +2,7 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import Groups from '/imports/api/groups/groups';
+import { Groups } from '/imports/api/groups/groups';
 import '/imports/ui/components/language-selection/language-selection';
 
 import './kiosk.html';
@@ -31,15 +31,6 @@ Template.kioskEvents.helpers({
 Template.kioskEvent.helpers({
 	timePeriod() {
 		return Template.instance().parentInstance().data.timePeriod;
-	},
-
-	timeFromNow(date) {
-		Session.get('fineTime');
-		Session.get('timeLocale'); // it depends
-		if (date) {
-			return moment(date).fromNow();
-		}
-		return false;
 	},
 
 	isOngoing() {

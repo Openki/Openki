@@ -2,8 +2,8 @@ import { Router } from 'meteor/iron:router';
 
 import Events from '/imports/api/events/events';
 
-import { StringTools } from '/imports/utils/string-tools';
-import { HtmlTools } from '/imports/utils/html-tools';
+import * as StringTools from '/imports/utils/string-tools';
+import * as HtmlTools from '/imports/utils/html-tools';
 
 import ical from 'ical-generator';
 

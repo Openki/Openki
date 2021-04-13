@@ -6,6 +6,7 @@ import update20210112EnsureCourseInterestedField from '../updates/2021.01.12 ens
 import update20210128PrivateMessagesForAll from '../updates/2021.01.28 privateMessagesForAll';
 import update20210211AvatarColor from '../updates/2021.02.11 avatarColor';
 import update20210218UserDescription from '../updates/2021.02.18 userDescription';
+import { update as update20210309HistorySubscribeUnsubscribe } from '../updates/2021.03.09 historySubscribeUnsubscribe';
 
 /** @type {{[name: string]: () => number }} */
 const UpdatesAvailable = {
@@ -15,11 +16,12 @@ const UpdatesAvailable = {
 	'2021.01.28 privateMessagesForAll': update20210128PrivateMessagesForAll,
 	'2021.02.11 avatarColor': update20210211AvatarColor,
 	'2021.02.18 userDescription': update20210218UserDescription,
+	'2021.03.09 historySubscribeUnsubscribe': update20210309HistorySubscribeUnsubscribe,
 };
 
 const UpdatesApplied = new Mongo.Collection('UpdatesApplied');
 
-const applyUpdates = function () {
+export function applyUpdates() {
 	const skipInitial = UpdatesApplied.find().count() === 0;
 
 	Object.keys(UpdatesAvailable).forEach((name) => {
@@ -45,6 +47,6 @@ const applyUpdates = function () {
 			UpdatesApplied.insert(entry);
 		}
 	});
-};
+}
 
-export { applyUpdates as default, applyUpdates };
+export default applyUpdates;

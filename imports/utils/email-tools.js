@@ -6,7 +6,7 @@ import { Random } from 'meteor/random';
  * Check a string if it is a valid email adress
  * @param {string} str the string to be checked
  */
-function isEmail(str) {
+export function isEmail(str) {
 	check(str, String);
 	return str.search(/^[^@\s]+@([^@.\s]+\.)+\w+$/g) === 0;
 }
@@ -18,7 +18,7 @@ function isEmail(str) {
  *
  * @returns the desired sender and rcpt email
  */
-function getReportEmails() {
+export function getReportEmails() {
 	return {
 		sender: Meteor.settings.reporter?.sender || 'reporter@mail.openki.net',
 		recipient: Meteor.settings.reporter?.recipient || 'admins@openki.net',
@@ -26,7 +26,7 @@ function getReportEmails() {
 }
 
 
-class Logo {
+export class Logo {
 	/**
 	 * Logo that can be attached to mails
 	 * @param {string} path a file path relative to private/
@@ -44,7 +44,4 @@ class Logo {
 	}
 }
 
-
-export {
-	isEmail as default, isEmail, getReportEmails, Logo,
-};
+export default isEmail;

@@ -4,7 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import { Users } from '/imports/api/users/users';
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 
 import './avatar.html';
 

@@ -5,11 +5,11 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import Languages from '/imports/api/languages/languages';
 
 import ScssVars from '/imports/ui/lib/scss-vars';
-import { StringTools } from '/imports/utils/string-tools';
+import * as StringTools from '/imports/utils/string-tools';
 
 import './language-selection.html';
 
@@ -127,7 +127,7 @@ Template.languageSelection.events({
 
 	'focus .js-language-search'(event, instance) {
 		const viewportWidth = Session.get('viewportWidth');
-		const isRetina = Session.get('isRetina');
+		const isRetina = Session.equals('isRetina', true);
 		const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
 
 		if (screenMD && !isRetina) {

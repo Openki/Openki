@@ -65,4 +65,6 @@ export class GroupsCollection extends Mongo.Collection {
 	}
 }
 
-export default new GroupsCollection();
+export const Groups = new GroupsCollection();
+
+export default Groups;
