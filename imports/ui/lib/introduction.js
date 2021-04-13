@@ -21,7 +21,7 @@ const Introduction = {
 			return opened;
 		}
 
-		const routeName = Router.current()?.getName();
+		const routeName = Router.current().route?.getName();
 		return routeName === 'home' || routeName === 'find';
 	},
 
