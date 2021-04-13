@@ -20,12 +20,6 @@ Template.regionSelectionWrap.onCreated(function () {
 	this.state.setDefault('searchingRegions', false);
 });
 
-Template.regionDisplay.helpers({
-	currentRegion() {
-		return Regions.currentRegion();
-	},
-});
-
 Template.regionDisplay.events({
 	'click .js-region-display'(event, instance) {
 		instance.parentInstance().state.set('searchingRegions', true);
@@ -237,9 +231,5 @@ Template.regionSelectionItem.helpers({
 	regionNameMarked() {
 		const search = Template.instance().parentInstance().state.get('search');
 		return StringTools.markedName(search, this.name);
-	},
-
-	isCurrentRegion() {
-		return Session.equals('region', this._id || 'all');
 	},
 });

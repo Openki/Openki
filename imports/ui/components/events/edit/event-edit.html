@@ -117,7 +117,7 @@
 								{{mf '_selection.pleaseSelect'}}
 							</option>
 							{{#each regions}}
-								<option selected="{{#if currentRegion this}}selected{{/if}}"
+								<option selected="{{#if isCurrentRegion _id}}selected{{/if}}"
 								        value='{{_id}}'>
 									{{name}}
 								</option>

@@ -280,11 +280,6 @@ Template.eventEdit.helpers({
 		return true;
 	},
 
-	currentRegion(region) {
-		const currentRegion = Session.get('region');
-		return currentRegion && region._id === currentRegion;
-	},
-
 	showVenueSelection() {
 		const selectedRegion = Template.instance().selectedRegion.get();
 		return selectedRegion && selectedRegion !== 'all';

@@ -184,15 +184,6 @@ Template.courseEdit.helpers({
 		return this.isFrame && this.hideCategories;
 	},
 
-	regions() {
-		return Regions.find();
-	},
-
-	currentRegion(region) {
-		const currentRegion = Session.get('region');
-		return currentRegion && region._id === currentRegion;
-	},
-
 	isInternal() {
 		return this.internal ? 'checked' : null;
 	},

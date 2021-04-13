@@ -45,9 +45,6 @@ Template.stats.helpers({
 		const currentRegion = Regions.findOne({ _id: Template.instance().region.get() });
 		return currentRegion?.name || '';
 	},
-	regions() {
-		return Regions.find();
-	},
 	regionStats() {
 		return Template.instance().stats.get();
 	},
