@@ -4,7 +4,7 @@
 import Log from '/imports/api/log/log';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 
-import { HtmlTools } from '/imports/utils/html-tools';
+import * as HtmlTools from '/imports/utils/html-tools';
 
 const updateName = '2018.02.12 richComments';
 

@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Courses, Course } from './courses';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import Events from '/imports/api/events/events';
 import { Users, User } from '/imports/api/users/users';
 import { Match, check } from 'meteor/check';

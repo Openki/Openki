@@ -4,7 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 
 import LocationTracker from '/imports/ui/lib/location-tracker';
 import Venues from '/imports/api/venues/venues';

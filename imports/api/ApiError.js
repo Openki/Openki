@@ -8,7 +8,7 @@ import { Meteor } from 'meteor/meteor';
  * @param {string} [reason]
  * @param {string} [details]
  */
-function ApiError(error, reason, details) {
+export function ApiError(error, reason, details) {
 	const meteorError = new Meteor.Error(error, reason, details);
 
 	if (Meteor.isServer) {
@@ -18,4 +18,4 @@ function ApiError(error, reason, details) {
 	return meteorError;
 }
 
-export { ApiError as default, ApiError };
+export default ApiError;

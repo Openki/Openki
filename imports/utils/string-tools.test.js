@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { StringTools } from '/imports/utils/string-tools';
+import * as StringTools from '/imports/utils/string-tools';
 
 // This should not be here
 msgfmt.init('en');

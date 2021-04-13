@@ -7,7 +7,7 @@ import { Meteor } from 'meteor/meteor';
 import Events from '/imports/api/events/events';
 
 import LocalTime from '/imports/utils/local-time';
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
 
 import '/imports/ui/components/buttons/buttons';

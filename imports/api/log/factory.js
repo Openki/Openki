@@ -136,7 +136,7 @@ const mixin = function (log, isServer, printToLog) {
  *
  * It can create two types.
  */
-const logFactory = {
+export const logFactory = {
 	/**
 	 * A log backed by the mongo DB
 	 */
@@ -156,4 +156,4 @@ const logFactory = {
 	},
 };
 
-export { logFactory as default, logFactory };
+export default logFactory;

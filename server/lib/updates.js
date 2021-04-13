@@ -21,7 +21,7 @@ const UpdatesAvailable = {
 
 const UpdatesApplied = new Mongo.Collection('UpdatesApplied');
 
-const applyUpdates = function () {
+export function applyUpdates() {
 	const skipInitial = UpdatesApplied.find().count() === 0;
 
 	Object.keys(UpdatesAvailable).forEach((name) => {
@@ -47,6 +47,6 @@ const applyUpdates = function () {
 			UpdatesApplied.insert(entry);
 		}
 	});
-};
+}
 
-export { applyUpdates as default, applyUpdates };
+export default applyUpdates;

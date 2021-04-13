@@ -1,8 +1,6 @@
 import { Blaze } from 'meteor/blaze';
 import { check } from 'meteor/check';
 
-const StringTools = {};
-
 /**
  * Truncate long strings, adding ellipsis char when the string was long
  *
@@ -12,14 +10,14 @@ const StringTools = {};
  * preset "…", does not count towards max.
  * @returns {string}
   */
-StringTools.truncate = function (src, max, ellipsis = '…') {
+export function truncate(src, max, ellipsis = '…') {
 	check(src, String);
 	check(max, Number);
 	if (src.length > max) {
 		return src.substring(0, max) + ellipsis;
 	}
 	return src;
-};
+}
 
 /**
  * Capitalize first letter of String
@@ -27,17 +25,17 @@ StringTools.truncate = function (src, max, ellipsis = '…') {
  * @param {string} input the string to be capitalized
  * @return {string} the capitalized string
  */
-StringTools.capitalize = function (input) {
+export function capitalize(input) {
 	check(input, String);
 	return input.charAt(0).toUpperCase() + input.slice(1);
-};
+}
 
 /**
  * @param {string} search
  * @param {string} name
  * @returns {string}
  */
-StringTools.markedName = (search, name) => {
+export function markedName(search, name) {
 	if (search === '') {
 		return name;
 	}
@@ -55,41 +53,30 @@ StringTools.markedName = (search, name) => {
 		marked = Blaze._escape(name);
 	}
 	return Spacebars.SafeString(marked);
-};
+}
 
 /**
  * @param {string} text
  */
-StringTools.slug = function (text) {
+export function slug(text) {
 	return text
 		.toLowerCase()
 		.replace(/[^\w ]+/g, '')
 		.replace(/ +/g, '-');
-};
+}
 
 /**
  * @param {string} string
  */
-StringTools.escapeRegex = function (string) {
+export function escapeRegex(string) {
 	return string.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
-};
-
-/**
- * Remove non-printable chars and linebreaks from string
- * All runs of whitespace are replaced with one space.
- * @param {string} unsaneText
- */
-StringTools.saneTitle = function (unsaneText) {
-	let text = unsaneText.replace(/[\n\r]/g, '');
-	text = text.replace(/\s+/g, ' ');
-	return StringTools.saneText(text);
-};
+}
 
 /**
  * Remove non-printable chars from string
  * @param {string} unsaneText
  */
-StringTools.saneText = function (unsaneText) {
+export function saneText(unsaneText) {
 	// Remove all ASCII control chars except the line feed.
 	/* eslint-disable-next-line no-control-regex */
 	const re = /[\0-\x09\x0B-\x1F\x7F]/g;
@@ -97,6 +84,15 @@ StringTools.saneText = function (unsaneText) {
 	const text = unsaneText.replace(re, '');
 
 	return text.trim();
-};
+}
 
-export { StringTools as default, StringTools };
+/**
+ * Remove non-printable chars and linebreaks from string
+ * All runs of whitespace are replaced with one space.
+ * @param {string} unsaneText
+ */
+export function saneTitle(unsaneText) {
+	let text = unsaneText.replace(/[\n\r]/g, '');
+	text = text.replace(/\s+/g, ' ');
+	return saneText(text);
+}

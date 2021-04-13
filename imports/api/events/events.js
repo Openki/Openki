@@ -7,7 +7,7 @@ import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
 import Predicates from '/imports/utils/predicates';
-import { StringTools } from '/imports/utils/string-tools';
+import * as StringTools from '/imports/utils/string-tools';
 import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 /** @typedef {import("../users/users").UserModel} UserModel */
