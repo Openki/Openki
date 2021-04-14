@@ -6,7 +6,7 @@ import { Users } from '/imports/api/users/users';
  * @param {string} prefix
  * @param {{ limit?: number; exclude?: string[]; fields?: any; }} [options]
  */
-export default function UserSearchPrefix(prefix, options = {}) {
+export function userSearchPrefix(prefix, options = {}) {
 	const prefixExp = `^${prefix.replace(/([.*+?^${}()|[\]/\\])/g, '\\$1')}`;
 	const query = { username: new RegExp(prefixExp, 'i') };
 
@@ -20,3 +20,5 @@ export default function UserSearchPrefix(prefix, options = {}) {
 
 	return Users.find(query, customizedOptions);
 }
+
+export default userSearchPrefix;

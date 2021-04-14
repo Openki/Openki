@@ -9,7 +9,7 @@ import Introduction from '/imports/ui/lib/introduction';
 import ScssVars from '/imports/ui/lib/scss-vars';
 import UpdateViewport from '/imports/ui/lib/update-viewport';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/account-tasks/account-tasks';
 import '/imports/ui/components/alerts/alerts';

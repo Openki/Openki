@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import Stats from '/imports/api/stats/stats';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 
 Meteor.methods({

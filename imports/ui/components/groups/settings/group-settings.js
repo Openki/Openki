@@ -8,7 +8,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
 import { Users } from '/imports/api/users/users';
 
-import UserSearchPrefix from '/imports/utils/user-search-prefix';
+import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons/buttons';
@@ -46,7 +46,7 @@ Template.groupSettings.helpers({
 		}
 
 		const group = Groups.findOne(Router.current().params._id);
-		return UserSearchPrefix(search, { exclude: group.members, limit: 30 });
+		return userSearchPrefix(search, { exclude: group.members, limit: 30 });
 	},
 
 	kioskEventURL() {

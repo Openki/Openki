@@ -8,7 +8,7 @@ import { Groups } from '/imports/api/groups/groups';
 import { Users } from '/imports/api/users/users';
 import { Courses } from '/imports/api/courses/courses';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import Profile from '/imports/utils/profile';
 import { ApiError } from '/imports/api/ApiError';
 import { isEmail } from '/imports/utils/email-tools';

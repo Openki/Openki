@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 
 import { Regions } from '/imports/api/regions/regions';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import './stats.html';
 

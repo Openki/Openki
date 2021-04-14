@@ -25,7 +25,7 @@ import LocalTime from '/imports/utils/local-time';
 import Metatags from '/imports/utils/metatags';
 import Predicates from '/imports/utils/predicates';
 import Profile from '/imports/utils/profile';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 function finderRoute(path) {
 	return {
