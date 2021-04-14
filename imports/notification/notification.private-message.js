@@ -10,7 +10,7 @@ import { Regions } from '/imports/api/regions/regions';
 
 import * as HtmlTools from '/imports/utils/html-tools';
 import * as StringTools from '/imports/utils/string-tools';
-import UserPrivilegeUtils from '../utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '../utils/user-privilege-utils';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 

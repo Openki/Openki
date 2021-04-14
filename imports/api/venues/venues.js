@@ -4,7 +4,7 @@ import { _ } from 'meteor/underscore';
 
 import Events from '/imports/api/events/events';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';

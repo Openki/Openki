@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import UserSearchPrefix from '/imports/utils/user-search-prefix';
+import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 
 import '/imports/ui/components/buttons/buttons';
 
@@ -32,7 +32,7 @@ Template.users.helpers({
 			return false;
 		}
 
-		return UserSearchPrefix(search, { limit: 30 });
+		return userSearchPrefix(search, { limit: 30 });
 	},
 });
 

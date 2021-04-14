@@ -26,7 +26,7 @@ import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors'
 import LocalTime from '/imports/utils/local-time';
 
 import { Analytics } from '/imports/ui/lib/analytics';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';

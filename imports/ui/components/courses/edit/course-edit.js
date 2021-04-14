@@ -68,7 +68,7 @@ Template.courseEdit.onCreated(function () {
 
 	if (this.data.isFrame) {
 		// When we're in the propose frame, show a simplified role selection
-		this.simpleRoleSelection = this.data.roles.includes('mentor');
+		this.simpleRoleSelection = !this.data.hideRoleSelection && this.data.roles.includes('mentor');
 		this.fullRoleSelection = false;
 
 		// Keep state of simple role selection
@@ -290,7 +290,7 @@ Template.courseEdit.events({
 		event.preventDefault();
 
 		const { data } = instance;
-		const hasTeamGroups = Boolean(data.teamGroups?.length);
+		const hasTeamGroups = !!(data.teamGroups?.length > 0);
 
 		let internal;
 		if (instance.showInternalCheckbox.get()) {
@@ -351,13 +351,20 @@ Template.courseEdit.events({
 		changes.subs = [];
 		changes.unsubs = [];
 
-		if (instance.simpleRoleSelection) {
+		if (data.isFrame) {
 			data.roles.forEach((role) => {
 				changes.roles[role] = true;
 			});
-			if (instance.simpleSelectedRole.get() === 'mentor') {
+
+			if (instance.simpleRoleSelection && instance.simpleSelectedRole.get() === 'mentor') {
 				changes.subs.push('mentor');
 			}
+
+			// Create unique, merged array
+			changes.subs = [...new Set([
+				...changes.subs,
+				...data.creatorsRoles,
+			])];
 		}
 
 		if (instance.fullRoleSelection) {
@@ -366,7 +373,7 @@ Template.courseEdit.events({
 			});
 			instance.$('.js-check-enroll').each(function () {
 				const role = this.name;
-				const subscribe = Boolean(this.checked);
+				const subscribe = !!this.checked;
 				if (subscribe) {
 					changes.subs.push(role);
 				} else {
