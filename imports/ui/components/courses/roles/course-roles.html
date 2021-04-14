@@ -13,17 +13,17 @@
 					type="button">
 					<i class="fa fa-info-circle" aria-hidden="true"></i>
 				</button>
-				<span class="{{roletype.icon}}"></span>&nbsp;
-				<span>{{#with roletype}}{{mf roleSubscribed}}{{/with}}</span>
+				<span class="{{role.icon}}"></span>&nbsp;
+				<span>{{roleSubscribed role.type}}</span>
 				<button type="button" class="js-role-unsubscribe-btn btn btn-cancel"
-					name="{{roletype.type}}">
+					name="{{role.type}}">
 					{{mf 'course.roles.retract' 'Retract'}}
 				</button>
 			</div>
 		</div>
 		{{#if showFirstSteps}}
 			<div class="course-role-first-steps">
-				<b>{{mf 'course.roles.firstSteps.title' 'Thanks for joining the course as {ROLE}!' ROLE=(roleShort roletype.type)}}</b>
+				<b>{{mf 'course.roles.firstSteps.title' 'Thanks for joining the course as {ROLE}!' ROLE=(roleShort role.type)}}</b>
 				<br>
 				{{#if roleIs 'participant'}}
 					{{#mf KEY='course.roles.firstSteps.youllGetNotified'}}
@@ -66,8 +66,8 @@
 		<div class="course-role{{#if enrolling}}-enroll{{/if}}">
 			{{#if enrolling}}
 				<div class="course-role-title-enroll">
-					<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
-					{{#with roletype}}{{mf roleSubscribe}}{{/with}}
+					<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
+					{{roleSubscribe role.type}}
 				</div>
 				<div class="course-role-enroll-options">
 					<div class="form-group">
@@ -105,10 +105,10 @@
 					</div>
 				</div>
 			{{else}}
-				{{#if maySubscribe roletype.type}}
+				{{#if maySubscribe role.type}}
 					<button type="button" class="btn btn-add course-page-btn js-role-enroll-btn" name="participant">
-						<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
-						{{#with roletype}}{{mf roleSubscribe}}{{/with}}
+						<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
+						{{roleSubscribe role.type}}
 					</button>
 				{{/if}}
 			{{/if}}

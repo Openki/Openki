@@ -11,7 +11,7 @@ import { Users } from '/imports/api/users/users';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list';
 import '/imports/ui/components/profiles/verify-email/verify-email';

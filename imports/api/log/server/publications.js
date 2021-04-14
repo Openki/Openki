@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
 import Log from '../log';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 Meteor.publish('log', function (filter, limit) {
 	// Non-admins get an empty list

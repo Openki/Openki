@@ -26,18 +26,18 @@ Template.courseRole.onCreated(function () {
 	// Build a subscribe change
 	this.subscribe = function (comment) {
 		const user = Users.currentUser();
-		return new Subscribe(this.data.course, user, this.data.roletype.type, comment);
+		return new Subscribe(this.data.course, user, this.data.role.type, comment);
 	};
 
 	// unsubscribe by email
 	// HACK this is not the right place to act on router actions
-	if (Router.current().params.query.unsubscribe === this.data.roletype.type) {
+	if (Router.current().params.query.unsubscribe === this.data.role.type) {
 		SaveAfterLogin(this,
 			mf('loginAction.unsubscribeFromCourse', 'Login and unsubscribe from Course'),
 			mf('registerAction.unsubscribeFromCourse', 'Register and unsubscribe from Course'),
 			() => {
 				const user = Meteor.user();
-				const change = new Unsubscribe(this.data.course, user, this.data.roletype.type);
+				const change = new Unsubscribe(this.data.course, user, this.data.role.type);
 				if (change.validFor(user)) {
 					processChange(change, () => {
 						Alert.success(mf('course.roles.unsubscribed', { NAME: this.data.course.name }, 'Unsubscribed from course {NAME}'));
@@ -50,20 +50,33 @@ Template.courseRole.onCreated(function () {
 });
 
 Template.courseRole.helpers({
-	showFirstSteps: () => Template.instance().showFirstSteps.get(),
-
-	enrolling() { return Template.instance().enrolling.get(); },
-
-	roleSubscribe() {
-		return `roles.${this.type}.subscribe`;
+	showFirstSteps() {
+		return Template.instance().showFirstSteps.get();
 	},
 
-	roleSubscribed() {
-		return `roles.${this.type}.subscribed`;
+	enrolling() {
+		return Template.instance().enrolling.get();
 	},
 
+	/**
+	 * @param {string} type
+	 */
+	roleSubscribe(type) {
+		return mf(`roles.${type}.subscribe`);
+	},
+
+	/**
+	 * @param {string} type
+	 */
+	roleSubscribed(type) {
+		return mf(`roles.${type}.subscribed`);
+	},
+
+	/**
+	 * @param {string} type
+	 */
 	roleIs(type) {
-		return this.roletype.type === type;
+		return this.role.type === type;
 	},
 
 	maySubscribe() {
@@ -93,7 +106,7 @@ Template.courseRole.events({
 					instance.busy(false);
 					instance.enrolling.set(false);
 
-					Analytics.trackEvent('Enrollments in courses', `Enrollments in courses as ${this.roletype.type}`, Regions.findOne(this.course.region)?.nameEn);
+					Analytics.trackEvent('Enrollments in courses', `Enrollments in courses as ${this.role.type}`, Regions.findOne(this.course.region)?.nameEn);
 				});
 			});
 	},
@@ -105,9 +118,9 @@ Template.courseRole.events({
 
 	'click .js-role-unsubscribe-btn'() {
 		RouterAutoscroll.cancelNext();
-		const change = new Unsubscribe(this.course, Meteor.user(), this.roletype.type);
+		const change = new Unsubscribe(this.course, Meteor.user(), this.role.type);
 		processChange(change, () => {
-			Analytics.trackEvent('Unsubscribes from courses', `Unsubscribes from courses as ${this.roletype.type}`, Regions.findOne(this.course.region)?.nameEn);
+			Analytics.trackEvent('Unsubscribes from courses', `Unsubscribes from courses as ${this.role.type}`, Regions.findOne(this.course.region)?.nameEn);
 		});
 		return false;
 	},

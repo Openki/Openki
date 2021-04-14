@@ -1,8 +1,13 @@
-export default class CssFromQuery {
+export class CssFromQuery {
 	/**
 	 * @param {{[param: string]: string}} query
+	 * @param {[
+	 *  key: string,
+	 *  name: string,
+	 *  selector: string
+	 * ][]} [properties] the customizable properties to add
 	 */
-	constructor(query) {
+	constructor(query, properties = []) {
 		this.query = query;
 		/** @type {{ key: string; name: string; selector: string; }[]} */
 		this.customizableProperties = [];
@@ -11,13 +16,10 @@ export default class CssFromQuery {
 		this.addCustomizableProperties([
 			['bgcolor', 'background-color', 'body'],
 			['color', 'color', 'body'],
-			['itembg', 'background-color', '.frame-list-item'],
-			['itemcolor', 'color', '.frame-list-item'],
-			['linkcolor', 'color', '.frame-list-item a'],
 			['fontsize', 'font-size', '*'],
-			['regionbg', 'background-color', '.frame-list-item-region'],
-			['regioncolor', 'color', '.frame-list-item-region'],
 		]);
+
+		this.addCustomizableProperties(properties);
 	}
 
 	/**
@@ -47,7 +49,7 @@ export default class CssFromQuery {
 				// hexify color values
 				if (property.name.indexOf('color') >= 0) {
 					if (queryValue.match(/^[0-9A-F]+$/i)) {
-						cssValue = `#${queryValue.substr(0, 6)}`;
+						cssValue = `#${queryValue.substr(0, 8)}`;
 					}
 				} else {
 					const intVal = parseInt(queryValue, 10);
@@ -66,3 +68,5 @@ export default class CssFromQuery {
 		return this.cssRules;
 	}
 }
+
+export default CssFromQuery;

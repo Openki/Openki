@@ -81,6 +81,37 @@ if (Meteor.isClient) {
 			});
 		});
 
+		it('allows to set creators role via url', async () => {
+			Router.go('/frame/propose?setCreatorsRoles=mentor');
+
+			await waitForSubscriptions();
+			await waitFor(haveEditfield);
+			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+
+			jQuery('.js-title').val(randomTitle);
+			jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
+			jQuery('.js-course-edit-save').click();
+
+			const link = await waitFor(() => {
+				const alertLink = jQuery('.alert a');
+				assert(
+					alertLink.text().indexOf(randomTitle) >= 0,
+					'A message that the course was created is shown',
+				);
+				return alertLink.attr('href');
+			});
+
+			// The link opens in a new window so we can't just click()
+			Router.go(link);
+
+			await waitFor(() => {
+				assert(
+					jQuery('.course-role-enrolled button[name=mentor]').length >= 0,
+					'Listed as mentor in the created course',
+				);
+			});
+		});
+
 		it('should allow to hide categories via url', async () => {
 			Router.go('/frame/propose');
 
