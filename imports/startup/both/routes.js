@@ -22,7 +22,7 @@ import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 import { Filtering } from '/imports/utils/filtering';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 import LocalTime from '/imports/utils/local-time';
-import Metatags from '/imports/utils/metatags';
+import * as Metatags from '/imports/utils/metatags';
 import Predicates from '/imports/utils/predicates';
 import Profile from '/imports/utils/profile';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';

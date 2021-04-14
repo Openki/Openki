@@ -18,7 +18,7 @@ import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import IdTools from '/imports/utils/id-tools';
-import Metatags from '/imports/utils/metatags';
+import * as Metatags from '/imports/utils/metatags';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
