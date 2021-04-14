@@ -14,7 +14,7 @@ commit=$(git rev-parse HEAD)
 commitShort=$(git rev-parse --short HEAD)
 timestamp=$(git log -1 --date=short --pretty=format:%cd)
 cat > server/version.js << EOF
-VERSION = {
+export VERSION = {
 	basic: '$ver',
 	complete: '$completeVer',
 	branch: '$branch',
@@ -22,4 +22,5 @@ VERSION = {
 	commitShort: '$commitShort',
 	commitDate: '$timestamp',
 };
+export default VERSION;
 EOF
