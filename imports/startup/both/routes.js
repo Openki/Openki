@@ -83,21 +83,16 @@ const makeFilterQuery = function (params) {
 /**
  * @param {CourseModel} course
  */
-function loadroles(course) {
+function loadRoles(course) {
 	const userId = Meteor.userId();
-	return _.reduce(Roles, (goodroles, roletype) => {
-		const role = roletype.type;
-		const sub = HasRoleUser(course.members, role, userId);
-		if (course.roles && course.roles.indexOf(role) !== -1) {
-			goodroles.push({
-				roletype,
-				role,
-				subscribed: Boolean(sub),
-				course,
-			});
-		}
-		return goodroles;
-	}, []);
+
+	return Roles
+		.filter((r) => course.roles?.includes(r.type))
+		.map((r) => ({
+			role: r,
+			subscribed: !!(userId && HasRoleUser(course.members, r.type, userId)),
+			course,
+		}));
 }
 
 if (Meteor.isClient) {
@@ -442,8 +437,8 @@ Router.map(function () {
 			const userId = Meteor.userId();
 			const member = getMember(course.members, userId);
 			const data = {
-				edit: Boolean(this.params.query.edit),
-				roles_details: loadroles(course),
+				edit: !!this.params.query.edit,
+				rolesDetails: loadRoles(course),
 				course,
 				member,
 				select: this.params.query.select,
