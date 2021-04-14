@@ -5,8 +5,6 @@ import { _ } from 'meteor/underscore';
 import '/imports/startup/both';
 import '/imports/startup/server';
 
-import { VERSION } from './version';
-
 import Version from '/imports/api/version/version';
 import { Users } from '/imports/api/users/users';
 

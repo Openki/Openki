@@ -16,6 +16,7 @@ module.exports = {
 		minuteTime: 'writable',
 		moment: 'readonly',
 		msgfmt: 'readonly',
+		VERSION: 'writable',
 	},
 	parserOptions: {
 		ecmaVersion: 2020,
