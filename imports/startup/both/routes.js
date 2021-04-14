@@ -17,7 +17,7 @@ import { Users } from '/imports/api/users/users';
 import { Analytics } from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import CourseTemplate from '/imports/ui/lib/course-template';
-import CssFromQuery from '/imports/ui/lib/css-from-query';
+import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 
 import { Filtering } from '/imports/utils/filtering';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
@@ -137,7 +137,13 @@ Router.map(function () {
 		template: 'frameCalendar',
 		layoutTemplate: 'frameLayout',
 		data() {
-			const cssRules = new CssFromQuery(this.params.query).getCssRules();
+			const cssRules = new CssFromQuery(this.params.query, [
+				['itembg', 'background-color', '.frame-list-item'],
+				['itemcolor', 'color', '.frame-list-item'],
+				['linkcolor', 'color', '.frame-list-item a'],
+				['regionbg', 'background-color', '.frame-list-item-region'],
+				['regioncolor', 'color', '.frame-list-item-region'],
+			]).getCssRules();
 			return { cssRules };
 		},
 		onAfterAction() {
@@ -149,6 +155,16 @@ Router.map(function () {
 		path: '/frame/courselist',
 		template: 'frameCourselist',
 		layoutTemplate: 'frameLayout',
+		data() {
+			const cssRules = new CssFromQuery(this.params.query, [
+				['itembg', 'background-color', '.frame-list-item'],
+				['itemcolor', 'color', '.frame-list-item'],
+				['linkcolor', 'color', '.frame-list-item a'],
+				['regionbg', 'background-color', '.frame-list-item-region'],
+				['regioncolor', 'color', '.frame-list-item-region'],
+			]).getCssRules();
+			return { cssRules };
+		},
 	});
 
 	this.route('frameEvents', {
