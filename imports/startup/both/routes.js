@@ -206,6 +206,7 @@ Router.map(function () {
 				region: Predicates.id,
 				addTeamGroups: Predicates.ids,
 				neededRoles: Predicates.ids,
+				setCreatorsRoles: Predicates.ids,
 				internal: Predicates.flag,
 				hidePricePolicy: Predicates.flag,
 				hideCategories: Predicates.flag,
@@ -221,10 +222,20 @@ Router.map(function () {
 			if (!params.neededRoles) {
 				params.neededRoles = ['mentor'];
 			}
+			if (params.setCreatorsRoles) {
+				params.hideRoleSelection = true;
+			} else {
+				params.setCreatorsRoles = [];
+			}
 			params.roles = ['mentor', 'host'].filter(
-				(role) => params.neededRoles.includes(role),
+				(role) => params.neededRoles.includes(role) || params.setCreatorsRoles.includes(role),
 			);
 			delete params.neededRoles;
+
+			params.creatorsRoles = ['mentor', 'host'].filter(
+				(role) => params.setCreatorsRoles.includes(role),
+			);
+			delete params.setCreatorsRoles;
 
 			params.isFrame = true;
 
