@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import { Tenants } from '/imports/api/tenants/tenants';
 import { Users } from '/imports/api/users/users';
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
