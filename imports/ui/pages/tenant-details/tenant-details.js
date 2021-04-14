@@ -6,7 +6,7 @@ import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/tenants/settings/tenant-settings';
 
 import './tenant-details.html';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 Template.tenantDetails.onCreated(function () {
 	const instance = this;
