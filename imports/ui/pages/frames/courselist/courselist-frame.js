@@ -8,7 +8,6 @@ import { Template } from 'meteor/templating';
 import { Regions } from '/imports/api/regions/regions';
 import { Courses } from '/imports/api/courses/courses';
 import Metatags from '/imports/utils/metatags';
-import CssFromQuery from '/imports/ui/lib/css-from-query';
 
 import '/imports/ui/components/loading/loading';
 
@@ -42,7 +41,6 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 });
 
 Template.frameCourselist.helpers({
-	cssRules: () => new CssFromQuery(Template.instance().query).getCssRules(),
 	ready: () => Template.instance().subscriptionsReady(),
 	courses: () => Courses.find({},
 		{
@@ -70,7 +68,7 @@ Template.frameCourselistCourse.onCreated(function frameCourselistCourseOnCreated
 });
 
 Template.frameCourselistCourse.helpers({
-	allRegions: () => Session.get('region') === 'all',
+	allRegions: () => Session.equals('region', 'all'),
 	regionOf: (course) => Regions.findOne(course.region).name,
 	expanded: () => Template.instance().expanded.get(),
 	toggleIndicatorIcon() {

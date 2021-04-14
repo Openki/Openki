@@ -7,7 +7,7 @@
  */
 
 /** @type {RoleEntity[]} */
-const Roles = [
+export const Roles = [
 	{
 		type: 'participant',
 		icon: 'fa fa-user',
@@ -28,4 +28,4 @@ const Roles = [
 	},
 ];
 
-export { Roles as default, Roles };
+export default Roles;

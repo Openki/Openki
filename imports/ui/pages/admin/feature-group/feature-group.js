@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 
@@ -15,7 +15,6 @@ Template.featureGroup.onCreated(function featureGroupOnCreated() {
 
 Template.featureGroup.helpers({
 	groups: () => Groups.find({}, { sort: { name: 1 } }),
-	regionName: () => Regions.currentRegion().name,
 	featuredGroup() {
 		const groupId = Regions.currentRegion().featuredGroup;
 		return Groups.findOne(groupId);

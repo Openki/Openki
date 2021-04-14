@@ -3,8 +3,8 @@ import { check } from 'meteor/check';
 
 import { Users } from '/imports/api/users/users';
 
-import UserSearchPrefix from '/imports/utils/user-search-prefix';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { userSearchPrefix } from '/imports/utils/user-search-prefix';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 Meteor.publish('user', function (userId) {
 	// Public fields from users
@@ -35,5 +35,5 @@ Meteor.publish(null, function () {
 
 Meteor.publish('userSearch', (search) => {
 	check(search, String);
-	return UserSearchPrefix(search, { fields: { username: 1 }, limit: 10 });
+	return userSearchPrefix(search, { fields: { username: 1 }, limit: 10 });
 });

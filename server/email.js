@@ -8,8 +8,8 @@ import Version from '/imports/api/version/version';
 import { Users } from '/imports/api/users/users';
 
 import Notification from '/imports/notification/notification';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { HtmlTools } from '/imports/utils/html-tools';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as HtmlTools from '/imports/utils/html-tools';
 import { getReportEmails } from '/imports/utils/email-tools';
 
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */

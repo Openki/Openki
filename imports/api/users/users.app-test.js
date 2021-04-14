@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
 import { Accounts } from 'meteor/accounts-base';
 import { MeteorAsync, AccountsAsync } from '/imports/utils/promisify';
-import UserSearchPrefix from '/imports/utils/user-search-prefix';
+import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import { Users } from '/imports/api/users/users';
 
 
@@ -110,7 +110,7 @@ if (Meteor.isClient) {
 			const sub = await MeteorAsync.subscribeAsync('userSearch', someUser);
 			sub.stop();
 
-			const cursor = UserSearchPrefix(someUser);
+			const cursor = userSearchPrefix(someUser);
 			assert(cursor.count() > 0);
 		});
 
@@ -118,7 +118,7 @@ if (Meteor.isClient) {
 			const sub = await MeteorAsync.subscribeAsync('userSearch', 'Chn');
 			sub.stop();
 
-			const cursor = UserSearchPrefix('Chnöde', {});
+			const cursor = userSearchPrefix('Chnöde', {});
 			assert(cursor.count() > 0);
 		});
 	});

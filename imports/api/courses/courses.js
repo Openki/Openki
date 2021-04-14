@@ -3,12 +3,13 @@ import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
-import { StringTools } from '/imports/utils/string-tools';
+import * as StringTools from '/imports/utils/string-tools';
 import { visibleTenants } from '/imports/utils/visible-tenants';
+
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
@@ -41,6 +42,7 @@ import * as tenantDenormalizer from './tenantDenormalizer';
  * @property {string[]} roles [role-keys]
  * @property {CourseMemberEntity[]} members
  * @property {boolean} internal
+ * @property {{dateTime: Date; type: string; data: any;}} history
  * @property {string[]} editors (calculated) List of user and group id allowed to edit the course,
  * calculated from members and groupOrganizers
  * @property {number} futureEvents  (calculated) count of events still in the future for this course
@@ -53,7 +55,7 @@ import * as tenantDenormalizer from './tenantDenormalizer';
 
 /** @typedef {Course & CourseEntity} CourseModel */
 
-class Course {
+export class Course {
 	constructor() {
 		/** @type {CourseMemberEntity[]} */
 		this.members = [];
@@ -109,7 +111,7 @@ class Course {
 /**
  * @extends {Mongo.Collection<CourseEntity, CourseModel>}
  */
-class CoursesCollection extends Mongo.Collection {
+export class CoursesCollection extends Mongo.Collection {
 	constructor() {
 		super('Courses', {
 
@@ -328,6 +330,6 @@ class CoursesCollection extends Mongo.Collection {
 	}
 }
 
-const Courses = new CoursesCollection();
+export const Courses = new CoursesCollection();
 
-export { Courses, Course, CoursesCollection };
+export default Courses;

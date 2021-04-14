@@ -8,14 +8,15 @@ import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Roles } from '/imports/api/roles/roles';
 import UpdateMethods from '/imports/utils/update-methods';
+import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 
 import {
 	Subscribe, Unsubscribe, Message, processChange,
 } from './subscription';
 
 import { AsyncTools } from '/imports/utils/async-tools';
-import { StringTools } from '/imports/utils/string-tools';
-import { HtmlTools } from '/imports/utils/html-tools';
+import * as StringTools from '/imports/utils/string-tools';
+import * as HtmlTools from '/imports/utils/html-tools';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
@@ -200,6 +201,8 @@ Meteor.methods({
 			Courses.updateGroups(courseId);
 		} else {
 			Courses.update({ _id: courseId }, { $set: set }, AsyncTools.checkUpdateOne);
+
+			historyDenormalizer.afterUpdate(courseId, user._id);
 		}
 
 		if (changes.subs) {

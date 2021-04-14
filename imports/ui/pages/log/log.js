@@ -3,9 +3,9 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
-import { UrlTools } from '/imports/utils/url-tools';
+import * as UrlTools from '/imports/utils/url-tools';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import Log from '/imports/api/log/log';

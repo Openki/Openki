@@ -8,7 +8,7 @@ import './price-policy.html';
 
 Template.pricePolicy.helpers({
 	hidePricePolicy() {
-		if (Session.get('hidePricePolicy')) {
+		if (Session.equals('hidePricePolicy', true)) {
 			return true;
 		}
 

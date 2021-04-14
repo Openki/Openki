@@ -104,7 +104,7 @@ Template.navbar.helpers({
 	},
 
 	toggleNavbarRight(LTRPos) {
-		const isRTL = Session.get('textDirectionality') === 'rtl';
+		const isRTL = Session.equals('textDirectionality', 'rtl');
 
 		if (LTRPos === 'left') {
 			return isRTL ? 'navbar-right' : '';

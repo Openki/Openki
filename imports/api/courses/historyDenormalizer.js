@@ -3,9 +3,23 @@ import { Courses } from './courses';
 /**
  * @param {string} courseId
  * @param {string} userId
+ */
+export function afterUpdate(courseId, userId) {
+	Courses.update(courseId, {
+		$addToSet: {
+			history: {
+				dateTime: new Date(), type: 'updated', data: { updatedBy: userId },
+			},
+		},
+	});
+}
+
+/**
+ * @param {string} courseId
+ * @param {string} userId
  * @param {string} roleType
  */
-function afterSubscribe(courseId, userId, roleType) {
+export function afterSubscribe(courseId, userId, roleType) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -20,7 +34,7 @@ function afterSubscribe(courseId, userId, roleType) {
  * @param {string} userId
  * @param {string} roleType
  */
-function afterUnsubscribe(courseId, userId, roleType) {
+export function afterUnsubscribe(courseId, userId, roleType) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -32,19 +46,19 @@ function afterUnsubscribe(courseId, userId, roleType) {
 
 /**
  * @param {string} courseId
+ * @param {string} userId
  * @param {{
 	_id: string;
 	title: string;
 	slug: string;
 	startLocal: string;
-	createdBy: string;
 }} event
  */
-function afterEventInsert(courseId, event) {
+export function afterEventInsert(courseId, userId, event) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
-				dateTime: new Date(), type: 'eventInserted', data: event,
+				dateTime: new Date(), type: 'eventInserted', data: { createdBy: userId, ...event },
 			},
 		},
 	});
@@ -52,22 +66,39 @@ function afterEventInsert(courseId, event) {
 
 /**
  * @param {string} courseId
+ * @param {string} userId
  * @param {{
-	title: string;
-	startLocal: string;
-	createdBy: string;
-}} event
+ * _id: string;
+ * title: string;
+ * slug: string;
+ * startLocal: string;
+ * replicasUpdated: boolean;
+ * }} event
  */
-function afterEventRemove(courseId, event) {
+export function afterEventUpdate(courseId, userId, event) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
-				dateTime: new Date(), type: 'eventRemoved', data: event,
+				dateTime: new Date(), type: 'eventUpdated', data: { updatedBy: userId, ...event },
 			},
 		},
 	});
 }
 
-export {
-	afterSubscribe, afterUnsubscribe, afterEventInsert, afterEventRemove,
-};
+/**
+ * @param {string} courseId
+ * @param {string} userId
+ * @param {{
+	title: string;
+	startLocal: string;
+}} event
+ */
+export function afterEventRemove(courseId, userId, event) {
+	Courses.update(courseId, {
+		$addToSet: {
+			history: {
+				dateTime: new Date(), type: 'eventRemoved', data: { removedBy: userId, ...event },
+			},
+		},
+	});
+}

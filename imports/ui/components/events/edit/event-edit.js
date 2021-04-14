@@ -14,7 +14,7 @@ import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
@@ -26,7 +26,7 @@ import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors'
 import LocalTime from '/imports/utils/local-time';
 
 import { Analytics } from '/imports/ui/lib/analytics';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
@@ -278,11 +278,6 @@ Template.eventEdit.helpers({
 			return false;
 		}
 		return true;
-	},
-
-	currentRegion(region) {
-		const currentRegion = Session.get('region');
-		return currentRegion && region._id === currentRegion;
 	},
 
 	showVenueSelection() {

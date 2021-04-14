@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import Alerts from '/imports/api/alerts/alerts';
+import { Alerts } from '/imports/api/alerts/alerts';
 
 import './alerts.html';
 

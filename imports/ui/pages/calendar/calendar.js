@@ -7,7 +7,7 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
 import Events from '/imports/api/events/events';
-import { UrlTools } from '/imports/utils/url-tools';
+import * as UrlTools from '/imports/utils/url-tools';
 
 import '/imports/ui/components/events/list/event-list';
 import '/imports/ui/components/loading/loading';
@@ -183,7 +183,7 @@ Template.calendarNavControl.events({
 
 Template.calendarNavControl.helpers({
 	arrow() {
-		let isRTL = Session.get('textDirectionality') === 'rtl';
+		let isRTL = Session.equals('textDirectionality', 'rtl');
 
 		if (this.direction === 'previous') {
 			isRTL = !isRTL;

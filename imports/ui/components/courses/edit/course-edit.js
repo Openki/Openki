@@ -6,7 +6,7 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import Categories from '/imports/api/categories/categories';
 import { Courses } from '/imports/api/courses/courses';
 import { Groups } from '/imports/api/groups/groups';
@@ -16,7 +16,7 @@ import { Roles } from '/imports/api/roles/roles';
 import Editable from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
-import { StringTools } from '/imports/utils/string-tools';
+import * as StringTools from '/imports/utils/string-tools';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
 import { Analytics } from '/imports/ui/lib/analytics';
 
@@ -68,7 +68,7 @@ Template.courseEdit.onCreated(function () {
 
 	if (this.data.isFrame) {
 		// When we're in the propose frame, show a simplified role selection
-		this.simpleRoleSelection = this.data.roles.includes('mentor');
+		this.simpleRoleSelection = !this.data.hideRoleSelection && this.data.roles.includes('mentor');
 		this.fullRoleSelection = false;
 
 		// Keep state of simple role selection
@@ -184,15 +184,6 @@ Template.courseEdit.helpers({
 		return this.isFrame && this.hideCategories;
 	},
 
-	regions() {
-		return Regions.find();
-	},
-
-	currentRegion(region) {
-		const currentRegion = Session.get('region');
-		return currentRegion && region._id === currentRegion;
-	},
-
 	isInternal() {
 		return this.internal ? 'checked' : null;
 	},
@@ -299,7 +290,7 @@ Template.courseEdit.events({
 		event.preventDefault();
 
 		const { data } = instance;
-		const hasTeamGroups = Boolean(data.teamGroups?.length);
+		const hasTeamGroups = !!(data.teamGroups?.length > 0);
 
 		let internal;
 		if (instance.showInternalCheckbox.get()) {
@@ -360,13 +351,20 @@ Template.courseEdit.events({
 		changes.subs = [];
 		changes.unsubs = [];
 
-		if (instance.simpleRoleSelection) {
+		if (data.isFrame) {
 			data.roles.forEach((role) => {
 				changes.roles[role] = true;
 			});
-			if (instance.simpleSelectedRole.get() === 'mentor') {
+
+			if (instance.simpleRoleSelection && instance.simpleSelectedRole.get() === 'mentor') {
 				changes.subs.push('mentor');
 			}
+
+			// Create unique, merged array
+			changes.subs = [...new Set([
+				...changes.subs,
+				...data.creatorsRoles,
+			])];
 		}
 
 		if (instance.fullRoleSelection) {
@@ -375,7 +373,7 @@ Template.courseEdit.events({
 			});
 			instance.$('.js-check-enroll').each(function () {
 				const role = this.name;
-				const subscribe = Boolean(this.checked);
+				const subscribe = !!this.checked;
 				if (subscribe) {
 					changes.subs.push(role);
 				} else {

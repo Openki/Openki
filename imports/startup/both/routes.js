@@ -18,7 +18,7 @@ import { Users } from '/imports/api/users/users';
 import { Analytics } from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import CourseTemplate from '/imports/ui/lib/course-template';
-import CssFromQuery from '/imports/ui/lib/css-from-query';
+import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 
 import { Filtering } from '/imports/utils/filtering';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
@@ -26,7 +26,7 @@ import LocalTime from '/imports/utils/local-time';
 import Metatags from '/imports/utils/metatags';
 import Predicates from '/imports/utils/predicates';
 import Profile from '/imports/utils/profile';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 function finderRoute(path) {
 	return {
@@ -84,21 +84,16 @@ const makeFilterQuery = function (params) {
 /**
  * @param {CourseModel} course
  */
-function loadroles(course) {
+function loadRoles(course) {
 	const userId = Meteor.userId();
-	return _.reduce(Roles, (goodroles, roletype) => {
-		const role = roletype.type;
-		const sub = HasRoleUser(course.members, role, userId);
-		if (course.roles && course.roles.indexOf(role) !== -1) {
-			goodroles.push({
-				roletype,
-				role,
-				subscribed: Boolean(sub),
-				course,
-			});
-		}
-		return goodroles;
-	}, []);
+
+	return Roles
+		.filter((r) => course.roles?.includes(r.type))
+		.map((r) => ({
+			role: r,
+			subscribed: !!(userId && HasRoleUser(course.members, r.type, userId)),
+			course,
+		}));
 }
 
 if (Meteor.isClient) {
@@ -143,7 +138,13 @@ Router.map(function () {
 		template: 'frameCalendar',
 		layoutTemplate: 'frameLayout',
 		data() {
-			const cssRules = new CssFromQuery(this.params.query).getCssRules();
+			const cssRules = new CssFromQuery(this.params.query, [
+				['itembg', 'background-color', '.frame-list-item'],
+				['itemcolor', 'color', '.frame-list-item'],
+				['linkcolor', 'color', '.frame-list-item a'],
+				['regionbg', 'background-color', '.frame-list-item-region'],
+				['regioncolor', 'color', '.frame-list-item-region'],
+			]).getCssRules();
 			return { cssRules };
 		},
 		onAfterAction() {
@@ -155,6 +156,16 @@ Router.map(function () {
 		path: '/frame/courselist',
 		template: 'frameCourselist',
 		layoutTemplate: 'frameLayout',
+		data() {
+			const cssRules = new CssFromQuery(this.params.query, [
+				['itembg', 'background-color', '.frame-list-item'],
+				['itemcolor', 'color', '.frame-list-item'],
+				['linkcolor', 'color', '.frame-list-item a'],
+				['regionbg', 'background-color', '.frame-list-item-region'],
+				['regioncolor', 'color', '.frame-list-item-region'],
+			]).getCssRules();
+			return { cssRules };
+		},
 	});
 
 	this.route('frameEvents', {
@@ -196,6 +207,7 @@ Router.map(function () {
 				region: Predicates.id,
 				addTeamGroups: Predicates.ids,
 				neededRoles: Predicates.ids,
+				setCreatorsRoles: Predicates.ids,
 				internal: Predicates.flag,
 				hidePricePolicy: Predicates.flag,
 				hideCategories: Predicates.flag,
@@ -211,10 +223,20 @@ Router.map(function () {
 			if (!params.neededRoles) {
 				params.neededRoles = ['mentor'];
 			}
+			if (params.setCreatorsRoles) {
+				params.hideRoleSelection = true;
+			} else {
+				params.setCreatorsRoles = [];
+			}
 			params.roles = ['mentor', 'host'].filter(
-				(role) => params.neededRoles.includes(role),
+				(role) => params.neededRoles.includes(role) || params.setCreatorsRoles.includes(role),
 			);
 			delete params.neededRoles;
+
+			params.creatorsRoles = ['mentor', 'host'].filter(
+				(role) => params.setCreatorsRoles.includes(role),
+			);
+			delete params.setCreatorsRoles;
 
 			params.isFrame = true;
 
@@ -443,8 +465,8 @@ Router.map(function () {
 			const userId = Meteor.userId();
 			const member = getMember(course.members, userId);
 			const data = {
-				edit: Boolean(this.params.query.edit),
-				roles_details: loadroles(course),
+				edit: !!this.params.query.edit,
+				rolesDetails: loadRoles(course),
 				course,
 				member,
 				select: this.params.query.select,

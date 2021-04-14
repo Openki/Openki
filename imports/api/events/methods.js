@@ -5,7 +5,9 @@ import { _ } from 'meteor/underscore';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
+import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
 import Events, { OEvent } from '/imports/api/events/events';
+/** @typedef {import('/imports/api/events/events').EventEntity} EventEntity */
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
@@ -16,9 +18,9 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
 import { AsyncTools } from '/imports/utils/async-tools';
-import { HtmlTools } from '/imports/utils/html-tools';
+import * as HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
-import { StringTools } from '/imports/utils/string-tools';
+import * as StringTools from '/imports/utils/string-tools';
 import UpdateMethods from '/imports/utils/update-methods';
 
 /**
@@ -158,6 +160,7 @@ Meteor.methods({
 
 		changes.time_lastedit = now;
 
+		/** @type {EventEntity | false} */
 		let event = false;
 		if (isNew) {
 			changes.time_created = now;
@@ -294,6 +297,15 @@ Meteor.methods({
 			changes.createdBy = user._id;
 			changes.groupOrganizers = [];
 			eventId = Events.insert(changes);
+
+			if (changes.courseId) {
+				courseHistoryDenormalizer.afterEventInsert(changes.courseId, user._id, {
+					_id: eventId,
+					title: changes.title,
+					slug: changes.slug,
+					startLocal: changes.startLocal,
+				});
+			}
 		} else {
 			Events.update(eventId, { $set: changes });
 
@@ -306,6 +318,16 @@ Meteor.methods({
 				const replicaSync = ReplicaSync(event, updateOptions);
 				replicaSync.apply(changes);
 				affectedReplicaCount = replicaSync.affected();
+			}
+
+			if (event.courseId) {
+				courseHistoryDenormalizer.afterEventUpdate(event.courseId, user._id, {
+					_id: eventId,
+					title: changes.title,
+					slug: changes.slug,
+					startLocal: changes.startLocal,
+					replicasUpdated: updateReplicasInfos || updateReplicasTime,
+				});
 			}
 		}
 
@@ -353,10 +375,12 @@ Meteor.methods({
 		if (!user) {
 			throw new Meteor.Error(401, 'please log in');
 		}
+
 		const event = Events.findOne(eventId);
 		if (!event) {
 			throw new Meteor.Error(404, 'No such event');
 		}
+
 		if (!event.editableBy(user)) {
 			throw new Meteor.Error(401, 'not permitted');
 		}
@@ -364,6 +388,11 @@ Meteor.methods({
 		Events.remove(eventId);
 
 		if (event.courseId) {
+			courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
+				title: event.title,
+				startLocal: event.startLocal,
+			});
+
 			Meteor.call('course.updateNextEvent', event.courseId);
 		}
 		Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);

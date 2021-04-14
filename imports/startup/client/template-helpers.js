@@ -51,6 +51,21 @@ const helpers = {
 		return Roles.find((r) => r.type === type)?.icon || '';
 	},
 
+	regions() {
+		return Regions.find();
+	},
+
+	currentRegionName() {
+		return Regions.currentRegion()?.name || '';
+	},
+
+	/**
+	 * @param {string} id Region ID
+	 */
+	isCurrentRegion(id) {
+		return id && Session.equals('region', id);
+	},
+
 	guideLink() {
 		if (Meteor.settings.public.courseGuideLink) {
 			return Meteor.settings.public.courseGuideLink;

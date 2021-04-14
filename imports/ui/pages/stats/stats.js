@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 
 import { Regions } from '/imports/api/regions/regions';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import './stats.html';
 
@@ -44,9 +44,6 @@ Template.stats.helpers({
 	regionName() {
 		const currentRegion = Regions.findOne({ _id: Template.instance().region.get() });
 		return currentRegion?.name || '';
-	},
-	regions() {
-		return Regions.find();
 	},
 	regionStats() {
 		return Template.instance().stats.get();

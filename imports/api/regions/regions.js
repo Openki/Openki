@@ -31,7 +31,7 @@ import { Mongo } from 'meteor/mongo';
 /**
  * @extends {Mongo.Collection<RegionEntity>}
  */
-class RegionsCollection extends Mongo.Collection {
+export class RegionsCollection extends Mongo.Collection {
 	constructor() {
 		super('Regions');
 
@@ -54,6 +54,6 @@ class RegionsCollection extends Mongo.Collection {
 	}
 }
 
-const Regions = new RegionsCollection();
+export const Regions = new RegionsCollection();
 
-export { Regions as default, Regions, RegionsCollection };
+export default Regions;

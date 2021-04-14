@@ -3,10 +3,10 @@ import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
 import { Regions } from '/imports/api/regions/regions';
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 
 import IpLocation from '/imports/utils/ip-location';
-import { UrlTools } from '/imports/utils/url-tools';
+import * as UrlTools from '/imports/utils/url-tools';
 
 const RegionSelection = {};
 

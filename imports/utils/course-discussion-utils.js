@@ -1,5 +1,5 @@
 import { HasRoleUser } from '/imports/utils/course-role-utils';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 const CourseDiscussionUtils = {
 	mayDeletePost(user, course, post) {

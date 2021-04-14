@@ -3,7 +3,7 @@ import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import { Alert } from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import { Roles } from '/imports/api/roles/roles';
 import {
 	Subscribe, Unsubscribe, Message, processChange,
@@ -12,7 +12,7 @@ import { Users } from '/imports/api/users/users';
 
 import Editable from '/imports/ui/lib/editable';
 import { HasRoleUser } from '/imports/utils/course-role-utils';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 
 import '/imports/ui/components/editable/editable';
