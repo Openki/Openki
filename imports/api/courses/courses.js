@@ -308,7 +308,15 @@ export class CoursesCollection extends Mongo.Collection {
 
 			find.$and = searchQueries;
 		}
-		const options = { limit, sort: order };
+		const options = {
+			limit,
+			sort: order,
+			// Load only data that is useful for list views.
+			fields: {
+				'members.comment': 0,
+				history: 0,
+			},
+		};
 		return this.find(find, options);
 	}
 }
