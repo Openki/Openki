@@ -17,7 +17,7 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
-import IdTools from '/imports/utils/id-tools';
+import * as IdTools from '/imports/utils/id-tools';
 import * as Metatags from '/imports/utils/metatags';
 
 import { Analytics } from '/imports/ui/lib/analytics';

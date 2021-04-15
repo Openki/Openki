@@ -11,7 +11,7 @@ import {
 import { Users } from '/imports/api/users/users';
 
 import Editable from '/imports/ui/lib/editable';
-import { HasRoleUser } from '/imports/utils/course-role-utils';
+import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 
@@ -34,7 +34,7 @@ Template.courseMembers.helpers({
 
 	canNotifyAll() {
 		const userId = Meteor.userId();
-		return userId && HasRoleUser(this.members, 'team', userId);
+		return userId && hasRoleUser(this.members, 'team', userId);
 	},
 
 	ownUserMember() {

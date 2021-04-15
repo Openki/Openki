@@ -8,7 +8,7 @@ import Events from '/imports/api/events/events';
 import { Users, User } from '/imports/api/users/users';
 import { Match, check } from 'meteor/check';
 
-import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';
+import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
 import Notification from '/imports/notification/notification';
 
 export const processChange = function (change, done) {
@@ -113,7 +113,7 @@ export class Subscribe extends Change {
 		}
 
 		// Do not allow subscribing when already subscribed
-		if (HasRoleUser(this.course.members, this.role, this.user._id)) {
+		if (hasRoleUser(this.course.members, this.role, this.user._id)) {
 			throw new ValidationError(`Already subscribed as ${this.role}`);
 		}
 	}
@@ -131,12 +131,12 @@ export class Subscribe extends Change {
 		// The team role is restricted
 		if (this.role === 'team') {
 			// If there are no team-members, anybody can join
-			if (!HasRole(this.course.members, 'team')) {
+			if (!hasRole(this.course.members, 'team')) {
 				return operator._id === this.user._id;
 			}
 
 			// Only members of the team can take-on other people
-			if (HasRoleUser(this.course.members, 'team', operator._id)) {
+			if (hasRoleUser(this.course.members, 'team', operator._id)) {
 				// Only participating users can be drafted
 				const candidateRoles = ['participant', 'mentor', 'host'];
 
@@ -227,14 +227,13 @@ export class Unsubscribe extends Change {
 	}
 
 	toString() {
-		return `${this.constructor.method
-		}(${this.role})`;
+		return `${this.constructor.method}(${this.role})`;
 	}
 
 	validate() {
 		// Do not allow unsubscribing when not subscribed
-		const hasRole = this.course.userHasRole(this.user._id, this.role);
-		if (!hasRole) {
+		const userHasRole = this.course.userHasRole(this.user._id, this.role);
+		if (!userHasRole) {
 			throw new ValidationError(`not subscribed with role ${this.role}`);
 		}
 	}

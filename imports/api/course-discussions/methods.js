@@ -3,11 +3,11 @@ import { Match, check } from 'meteor/check';
 
 import { Courses } from '/imports/api/courses/courses';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
-import CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
+import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import Notification from '/imports/notification/notification';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
-import { HasRoleUser } from '/imports/utils/course-role-utils';
+import { hasRoleUser } from '/imports/utils/course-role-utils';
 
 /** @typedef {import('./course-discussions').CourseDiscussionEnity} CourseDiscussionEnity */
 
@@ -62,7 +62,7 @@ Meteor.methods({
 		if (userId && !comment.anon) {
 			saneComment.userId = userId;
 			saneComment.notifyAll = comment.notifyAll
-							&& HasRoleUser(course.members, 'team', userId);
+							&& hasRoleUser(course.members, 'team', userId);
 		}
 
 		const now = new Date();

@@ -9,7 +9,7 @@ import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 
-import { HasRoleUser } from '/imports/utils/course-role-utils';
+import { hasRoleUser } from '/imports/utils/course-role-utils';
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
 
 // ======== DB-Model: ========
@@ -99,7 +99,7 @@ export class Course {
 	 * @param {string} role
 	 */
 	userHasRole(userId, role) {
-		return HasRoleUser(this.members, role, userId);
+		return hasRoleUser(this.members, role, userId);
 	}
 }
 

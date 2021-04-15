@@ -3,7 +3,7 @@ import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 
 import { Roles } from '/imports/api/roles/roles';
-import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';
+import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
 import '/imports/ui/components/courses/categories/course-categories';
 
 import './course-compact.html';
@@ -30,7 +30,7 @@ Template.courseCompact.helpers({
 		const roles = Roles.map((role) => role.type);
 
 		roles.forEach((role) => {
-			const roleDisengaged = !HasRole(course.members, role);
+			const roleDisengaged = !hasRole(course.members, role);
 			if (course.roles.indexOf(role) >= 0 && roleDisengaged) {
 				filterPreviewClasses.push(`needs-role-${role}`);
 			}
@@ -69,7 +69,7 @@ Template.courseCompactRoles.helpers({
 		let participantClass = 'course-compact-role-';
 
 		const { members } = this;
-		if (HasRoleUser(members, 'participant', Meteor.userId())) {
+		if (hasRoleUser(members, 'participant', Meteor.userId())) {
 			participantClass += 'occupied-by-user';
 		} else if (members.length) {
 			participantClass += 'occupied';
@@ -83,7 +83,7 @@ Template.courseCompactRoles.helpers({
 	participantTooltip() {
 		let tooltip;
 		const numMembers = this.members.length;
-		const isParticipant = HasRoleUser(this.members, 'participant', Meteor.userId());
+		const isParticipant = hasRoleUser(this.members, 'participant', Meteor.userId());
 
 		if (numMembers === 1 && isParticipant) {
 			tooltip = mf(
@@ -111,9 +111,9 @@ Template.courseCompactRoles.helpers({
 
 	roleStateClass(role) {
 		let roleStateClass = 'course-compact-role-';
-		if (!HasRole(this.members, role)) {
+		if (!hasRole(this.members, role)) {
 			roleStateClass += 'needed';
-		} else if (HasRoleUser(this.members, role, Meteor.userId())) {
+		} else if (hasRoleUser(this.members, role, Meteor.userId())) {
 			roleStateClass += 'occupied-by-user';
 		} else {
 			roleStateClass += 'occupied';
@@ -146,9 +146,9 @@ Template.courseCompactRoles.helpers({
 				},
 		};
 
-		if (!HasRole(this.members, role)) {
+		if (!hasRole(this.members, role)) {
 			roleStateTooltip = tooltips[role].needed;
-		} else if (HasRoleUser(this.members, role, Meteor.userId())) {
+		} else if (hasRoleUser(this.members, role, Meteor.userId())) {
 			roleStateTooltip = tooltips[role].occupiedByUser;
 		} else {
 			roleStateTooltip = tooltips[role].occupied;

@@ -17,7 +17,7 @@ import Editable from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
 import * as StringTools from '/imports/utils/string-tools';
-import { HasRoleUser } from '/imports/utils/course-role-utils';
+import { hasRoleUser } from '/imports/utils/course-role-utils';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
@@ -170,7 +170,7 @@ Template.courseEdit.helpers({
 
 	hasRole() {
 		const instance = Template.instance();
-		return instance.data?.members && HasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
+		return instance.data?.members && hasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
 	},
 
 	showRegionSelection() {
@@ -490,7 +490,7 @@ Template.courseEditRole.helpers({
 	},
 
 	hasRole() {
-		return this.members && HasRoleUser(this.members, this.role.type, Meteor.userId()) ? 'checked' : null;
+		return this.members && hasRoleUser(this.members, this.role.type, Meteor.userId()) ? 'checked' : null;
 	},
 });
 

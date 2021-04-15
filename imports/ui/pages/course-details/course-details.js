@@ -18,7 +18,7 @@ import { _ } from 'meteor/underscore';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import IdTools from '/imports/utils/id-tools';
+import * as IdTools from '/imports/utils/id-tools';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
