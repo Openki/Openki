@@ -59,6 +59,7 @@ Template.groupDetails.onCreated(function () {
 		showControls ? (newName) => {
 			Meteor.call('group.save', groupId, { name: newName }, handleSaving);
 		} : undefined,
+		undefined,
 		showControls ? [{
 			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
 		}] : undefined,
@@ -70,6 +71,7 @@ Template.groupDetails.onCreated(function () {
 		showControls ? (newShort) => {
 			Meteor.call('group.save', groupId, { short: newShort }, handleSaving);
 		} : undefined,
+		undefined,
 		showControls ? [{
 			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
 		}] : undefined,
@@ -81,6 +83,7 @@ Template.groupDetails.onCreated(function () {
 		showControls ? (newClaim) => {
 			Meteor.call('group.save', groupId, { claim: newClaim }, handleSaving);
 		} : undefined,
+		undefined,
 		showControls ? [{
 			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
 		}] : undefined,
@@ -92,6 +95,7 @@ Template.groupDetails.onCreated(function () {
 		showControls ? (newDescription) => {
 			Meteor.call('group.save', groupId, { description: newDescription }, handleSaving);
 		} : undefined,
+		undefined,
 		showControls ? [{
 			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
 		}] : undefined,

@@ -86,7 +86,7 @@ Template.courseMember.onCreated(function () {
 	instance.editableMessage = new Editable(
 		true,
 		mf('roles.message.placeholder', 'My interests...'),
-		(newMessage) => {
+		async (newMessage) => {
 			const change = new Message(instance.data.course, Meteor.user(), newMessage);
 			processChange(change, () => {
 				Alert.success(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));

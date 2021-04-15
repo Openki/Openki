@@ -48,7 +48,7 @@ Template.courseDetailsPage.onCreated(function () {
 	instance.editableName = new Editable(
 		true,
 		mf('course.title.placeholder'),
-		(newName) => {
+		async (newName) => {
 			Meteor.call('course.save', course._id, { name: newName }, (err) => {
 				if (err) {
 					Alert.serverError(
@@ -69,7 +69,7 @@ Template.courseDetailsPage.onCreated(function () {
 	instance.editableDescription = new Editable(
 		false,
 		mf('course.description.placeholder'),
-		(newDescription) => {
+		async	(newDescription) => {
 			Meteor.call('course.save', course._id, { description: newDescription }, (err) => {
 				if (err) {
 					Alert.serverError(

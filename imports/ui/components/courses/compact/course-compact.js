@@ -36,11 +36,11 @@ Template.courseCompact.helpers({
 			}
 		});
 
-		course.categories.forEach((category) => {
+		course.categories?.forEach((category) => {
 			filterPreviewClasses.push(`category-${category}`);
 		});
 
-		course.groups.forEach((group) => {
+		course.groups?.forEach((group) => {
 			filterPreviewClasses.push(`group-${group}`);
 		});
 
