@@ -12,7 +12,7 @@ import { Regions } from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
-import Editable from '/imports/ui/lib/editable';
+import { Editable } from '/imports/ui/lib/editable';
 import LocationTracker from '/imports/ui/lib/location-tracker';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import { Analytics } from '/imports/ui/lib/analytics';

@@ -10,7 +10,7 @@ import {
 } from '/imports/api/courses/subscription';
 import { Users } from '/imports/api/users/users';
 
-import Editable from '/imports/ui/lib/editable';
+import { Editable } from '/imports/ui/lib/editable';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 

@@ -146,7 +146,7 @@ const TemplateMixins = {
 					return false;
 				}
 
-				const text = (Template.instance().errorMapping || mapping)[message.key].text();
+				const text = (Template.instance()?.errorMapping || mapping)[message.key].text();
 				return Spacebars.SafeString(
 					`<span class="help-block warning-block">${
 						Blaze._escape(text)
@@ -163,7 +163,7 @@ const TemplateMixins = {
 					return Boolean(messages.findOne({}));
 				},
 				add(key) {
-					const message = (Template.instance().errorMapping || mapping)[key];
+					const message = (Template.instance()?.errorMapping || mapping)[key];
 					if (!message) {
 						Alert.error('Unmapped error');
 						return;

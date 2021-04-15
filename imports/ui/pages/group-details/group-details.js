@@ -11,7 +11,7 @@ import * as Alert from '/imports/api/alerts/alert';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
-import Editable from '/imports/ui/lib/editable';
+import { Editable } from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import IsGroupMember from '/imports/utils/is-group-member';
 

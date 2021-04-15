@@ -10,7 +10,7 @@ import CourseDiscussions from '/imports/api/course-discussions/course-discussion
 import * as Alert from '/imports/api/alerts/alert';
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
-import Editable from '/imports/ui/lib/editable';
+import { Editable } from '/imports/ui/lib/editable';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons/buttons';

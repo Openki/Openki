@@ -24,7 +24,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 // Instances of editable templates connect() to this to get their interface.
 // It is assumed that only one instance is using this interface at a time,
 
-export default class Editable {
+export class Editable {
 	/**
 	 * @param {boolean} [simple]
 	 * @param {string} [placeholderText]
@@ -92,3 +92,5 @@ export default class Editable {
 		};
 	}
 }
+
+export default Editable;
