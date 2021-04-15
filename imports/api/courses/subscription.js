@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { ValidationError } from 'meteor/mdg:validation-error';
 
 import { Courses, Course } from './courses';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
@@ -35,16 +36,6 @@ const checkCourse = function (obj) {
 		throw new Meteor.Error('Match failed', 'Expected Course object');
 	}
 };
-
-class ValidationError {
-	constructor(message) {
-		this.message = message;
-	}
-
-	toString() {
-		return this.message;
-	}
-}
 
 /** A change by a user
  *
@@ -109,12 +100,12 @@ export class Subscribe extends Change {
 
 	validate() {
 		if (!this.course.roles.includes(this.role)) {
-			throw new ValidationError(`No role ${this.role}`);
+			throw new ValidationError([], `No role ${this.role}`);
 		}
 
 		// Do not allow subscribing when already subscribed
 		if (hasRoleUser(this.course.members, this.role, this.user._id)) {
-			throw new ValidationError(`Already subscribed as ${this.role}`);
+			throw new ValidationError([], `Already subscribed as ${this.role}`);
 		}
 	}
 
@@ -234,7 +225,7 @@ export class Unsubscribe extends Change {
 		// Do not allow unsubscribing when not subscribed
 		const userHasRole = this.course.userHasRole(this.user._id, this.role);
 		if (!userHasRole) {
-			throw new ValidationError(`not subscribed with role ${this.role}`);
+			throw new ValidationError([], `not subscribed with role ${this.role}`);
 		}
 	}
 

@@ -62,14 +62,9 @@ Template.profile.onCreated(function () {
 	instance.editableDescription = new Editable(
 		true,
 		mf('profile.description.placeholder', 'About me, my interests and skills. (How about the idea of creating courses fitting to your description? 😉)'),
-		(newDescription) => {
-			Meteor.call('user.updateDescription', newDescription, (err) => {
-				if (err) {
-					instance.errors.add(err.error);
-				} else {
-					Alert.success(mf('profile.updated', 'Updated profile'));
-				}
-			});
+		async (newDescription) => {
+			await MeteorAsync.callAsync('user.updateDescription', newDescription);
+			Alert.success(mf('profile.updated', 'Updated profile'));
 		},
 	);
 
@@ -180,10 +175,15 @@ Template.profile.events({
 
 	'submit .js-email-form'(event, instance) {
 		event.preventDefault();
+		instance.errors.reset();
 
 		Meteor.call('user.updateEmail', instance.$('.js-email').val(), (err) => {
 			if (err) {
-				instance.errors.add(err.error);
+				if (err.error === 'validation-error') {
+					err.details.forEach((fieldError) => {
+						instance.errors.add(fieldError.type);
+					});
+				}
 			} else {
 				Alert.success(mf('profile.updated', 'Updated profile'));
 			}
