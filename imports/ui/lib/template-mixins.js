@@ -156,6 +156,7 @@ const TemplateMixins = {
 		});
 
 		template.onCreated(function () {
+			const instance = this;
 			const messages = new Mongo.Collection(null); // Local collection for in-memory storage
 			this.errors = {
 				messages,
@@ -163,7 +164,7 @@ const TemplateMixins = {
 					return Boolean(messages.findOne({}));
 				},
 				add(key) {
-					const message = (Template.instance()?.errorMapping || mapping)[key];
+					const message = (instance.errorMapping || mapping)[key];
 					if (!message) {
 						Alert.error('Unmapped error');
 						return;

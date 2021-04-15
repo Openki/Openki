@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Match, check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
+import { ValidationError } from 'meteor/mdg:validation-error';
 
 import Log from '/imports/api/log/log';
 import { Groups } from '/imports/api/groups/groups';
@@ -83,11 +84,11 @@ Meteor.methods({
 			return ApiError('plzLogin', 'Not logged-in');
 		}
 
-		const sane = StringTools.saneTitle(description).trim().substring(0, 200);
+		const sane = StringTools.saneTitle(description).trim().substring(0, 400);
 
 		const result = Profile.Description.change(user._id, sane);
 		if (!result) {
-			return ApiError('nameError', 'Failed to update username');
+			return ApiError('descriptionError', 'Failed to update description');
 		}
 
 		return true;
@@ -100,20 +101,30 @@ Meteor.methods({
 	'user.updateUsername'(username) {
 		check(username, String);
 
-		/** @type {UserModel} */
+		/** @type {UserModel | undefined} */
 		const user = Meteor.user();
 		if (!user) {
-			return ApiError('plzLogin', 'Not logged-in');
+			throw new ValidationError([{ name: 'username', type: 'plzLogin' }]);
 		}
 
-		const saneUsername = StringTools.saneTitle(username).trim().substring(0, 200);
+		const saneUsername = StringTools.saneTitle(username).replace(/\u2b50/g, '').trim().substring(0, 200);
+
+		if (saneUsername.length === 0) {
+			throw new ValidationError([{ name: 'username', type: 'noUserName' }]);
+		}
+
+		if (saneUsername === user.username) {
+			return;
+		}
+
+		if (Accounts.findUserByUsername(saneUsername)) {
+			throw new ValidationError([{ name: 'username', type: 'userExists' }]);
+		}
 
 		const result = Profile.Username.change(user._id, saneUsername);
 		if (!result) {
-			return ApiError('nameError', 'Failed to update username');
+			throw new ValidationError([{ name: 'username', type: 'nameError' }]);
 		}
-
-		return true;
 	},
 
 	/**

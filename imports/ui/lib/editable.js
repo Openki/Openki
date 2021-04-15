@@ -28,10 +28,11 @@ export class Editable {
 	/**
 	 * @param {boolean} [simple]
 	 * @param {string} [placeholderText]
+	 * @param {{type: string, message: () => string}[]} [serverValidationErrors]
 	 * @param {{check: (text: string) => boolean, errorMessage: () => string}[]} [validations]
-	 * @param {(text: string)=>void} [store]
+	 * @param {(text: string) => Promise<void>} [store]
 	 */
-	constructor(simple = true, placeholderText = '', store = undefined, validations = []) {
+	constructor(simple = true, placeholderText = '', store = undefined, serverValidationErrors = [], validations = []) {
 		this.simple = simple;
 		this.store = store;
 		this.placeholderText = placeholderText;
@@ -42,6 +43,7 @@ export class Editable {
 		this.changed = new ReactiveVar(!store);
 		/** @type {Blaze.Template|undefined} */
 		this.editingInstance = undefined;
+		this.serverValidationErrors = serverValidationErrors;
 		this.validations = validations;
 	}
 
@@ -87,6 +89,7 @@ export class Editable {
 			simple: this.simple,
 			placeholderText: this.placeholderText || mf('editable.add_text', 'Add text here'),
 			showControls: this.showControls,
+			serverValidationErrors: this.serverValidationErrors,
 			validations: this.validations,
 			store: this.store,
 		};

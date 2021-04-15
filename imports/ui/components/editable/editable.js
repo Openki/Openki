@@ -29,6 +29,13 @@ import './editable.html';
 				};
 			}
 		}
+		this.state.serverValidationErrors.forEach((e) => {
+			errorMapping[e.type] = {
+				text: e.message,
+				field: 'input',
+			};
+		});
+
 		this.errorMapping = errorMapping;
 	});
 
@@ -82,12 +89,21 @@ import './editable.html';
 			}
 		});
 
-		instance.store = function () {
-			instance.state.store(instance.getEdited());
-			instance.state.changed.set(false);
-			changedByUser = false;
-			startGettingFocus = undefined;
-			totalFocusTimeInSeconds = 0;
+		instance.store = async function () {
+			try {
+				await instance.state.store(instance.getEdited());
+
+				instance.state.changed.set(false);
+				changedByUser = false;
+				startGettingFocus = undefined;
+				totalFocusTimeInSeconds = 0;
+			} catch (err) {
+				if (err.error === 'validation-error') {
+					err.details.forEach((fieldError) => {
+						instance.errors.add(fieldError.type);
+					});
+				}
+			}
 		};
 
 		const options = {

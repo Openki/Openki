@@ -76,6 +76,7 @@ logging@1.2.0
 lookback:tooltips@0.6.1
 markdown@1.0.14
 mdg:seo@3.2.2
+mdg:validation-error@0.5.1
 meteor@1.9.3
 meteor-base@1.4.0
 meteor-platform@1.2.6
