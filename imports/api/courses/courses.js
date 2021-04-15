@@ -315,6 +315,12 @@ export class CoursesCollection extends Mongo.Collection {
 			fields: {
 				'members.comment': 0,
 				history: 0,
+				'nextEvent.editors': 0,
+				'nextEvent.facilities': 0,
+				'nextEvent.loc': 0,
+				'lastEvent.editors': 0,
+				'lastEvent.facilities': 0,
+				'lastEvent.loc': 0,
 			},
 		};
 		return this.find(find, options);
