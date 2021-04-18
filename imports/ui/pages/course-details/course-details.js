@@ -36,6 +36,7 @@ import '/imports/ui/components/sharing/sharing';
 import '/imports/ui/components/report/report';
 
 import './course-details.html';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function () {
@@ -48,42 +49,40 @@ Template.courseDetailsPage.onCreated(function () {
 	instance.editableName = new Editable(
 		true,
 		mf('course.title.placeholder'),
-		async (newName) => {
-			Meteor.call('course.save', course._id, { name: newName }, (err) => {
-				if (err) {
-					Alert.serverError(
-						err,
-						mf('course.save.error', 'Saving the course went wrong'),
-					);
-				} else {
-					Alert.success(mf(
-						'courseDetails.message.nameChanged',
-						{ NAME: newName },
-						'The name of this course has been changed to "{NAME}".',
-					));
-				}
-			});
+		{
+			onSave: async (newName) => {
+				await MeteorAsync.callAsync('course.save', course._id, { name: newName });
+			},
+			onSuccess: (newName) => {
+				Alert.success(mf(
+					'courseDetails.message.nameChanged',
+					{ NAME: newName },
+					'The name of this course has been changed to "{NAME}".',
+				));
+			},
+			onError: (err) => {
+				Alert.serverError(err, mf('course.save.error', 'Saving the course went wrong'));
+			},
 		},
 	);
 
 	instance.editableDescription = new Editable(
 		false,
 		mf('course.description.placeholder'),
-		async	(newDescription) => {
-			Meteor.call('course.save', course._id, { description: newDescription }, (err) => {
-				if (err) {
-					Alert.serverError(
-						err,
-						mf('course.save.error'),
-					);
-				} else {
-					Alert.success(mf(
-						'courseDetails.message.descriptionChanged',
-						{ NAME: course.name },
-						'The description of "{NAME}" has been changed.',
-					));
-				}
-			});
+		{
+			onSave: async (newDescription) => {
+				await MeteorAsync.callAsync('course.save', course._id, { description: newDescription });
+			},
+			onSuccess: () => {
+				Alert.success(mf(
+					'courseDetails.message.descriptionChanged',
+					{ NAME: course.name },
+					'The description of "{NAME}" has been changed.',
+				));
+			},
+			onError: (err) => {
+				Alert.serverError(err, mf('course.save.error'));
+			},
 		},
 	);
 

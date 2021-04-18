@@ -19,17 +19,15 @@ import './editable.html';
 
 		// Add error mapping for the FormfieldErrors
 		const errorMapping = {};
-		// eslint-disable-next-line no-restricted-syntax
-		for (const key in this.state.validations) {
-			if (Object.hasOwnProperty.call(this.state.validations, key)) {
-				const validation = this.state.validations[key];
-				errorMapping[key] = {
-					text: validation.errorMessage,
-					field: 'input',
-				};
-			}
-		}
-		this.state.serverValidationErrors.forEach((e) => {
+		const { clientValidations } = this.state.store;
+		Object.keys(clientValidations || {}).forEach((key) => {
+			const validation = clientValidations[key];
+			errorMapping[key] = {
+				text: validation.errorMessage,
+				field: 'input',
+			};
+		});
+		this.state.store?.serverValidationErrors?.forEach((e) => {
 			errorMapping[e.type] = {
 				text: e.message,
 				field: 'input',
@@ -90,18 +88,27 @@ import './editable.html';
 		});
 
 		instance.store = async function () {
+			const newText = instance.getEdited();
 			try {
-				await instance.state.store(instance.getEdited());
+				await instance.state.store.onSave(newText);
 
 				instance.state.changed.set(false);
 				changedByUser = false;
 				startGettingFocus = undefined;
 				totalFocusTimeInSeconds = 0;
+
+				if (instance.state.store.onSuccess) {
+					instance.state.store.onSuccess(newText);
+				}
 			} catch (err) {
 				if (err.error === 'validation-error') {
+					// Handle server validation errors
 					err.details.forEach((fieldError) => {
 						instance.errors.add(fieldError.type);
 					});
+				} else if (instance.state.store.onError) {
+					// Handle global error
+					instance.state.store.onError(err, newText);
 				}
 			}
 		};
@@ -171,15 +178,13 @@ import './editable.html';
 
 			// Check if input is invalid
 			instance.errors.reset();
-			// eslint-disable-next-line no-restricted-syntax
-			for (const key in instance.state.validations) {
-				if (Object.hasOwnProperty.call(instance.state.validations, key)) {
-					const validation = instance.state.validations[key];
-					if (!validation.check(instance.getEdited())) {
-						instance.errors.add(key);
-					}
+			const { clientValidations } = instance.state.store;
+			Object.keys(clientValidations || {}).forEach((key) => {
+				const validation = clientValidations[key];
+				if (!validation.check(instance.getEdited())) {
+					instance.errors.add(key);
 				}
-			}
+			});
 			if (instance.errors.present()) {
 				return;
 			}

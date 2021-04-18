@@ -8,22 +8,23 @@ import * as Alert from '/imports/api/alerts/alert';
 import Events from '/imports/api/events/events';
 import { Users, User } from '/imports/api/users/users';
 import { Match, check } from 'meteor/check';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
 import Notification from '/imports/notification/notification';
 
-export const processChange = function (change, done) {
-	Meteor.call(change.constructor.method, change.dict(), (err) => {
-		if (err) {
-			/* eslint-disable-next-line no-console */
-			console.log(err);
-			Alert.serverError(err, '');
-		}
-		if (done) {
-			done();
-		}
-	});
-};
+/**
+ * @param {Subscribe | Unsubscribe | Message} change
+ */
+export async function processChangeAsync(change) {
+	try {
+		await MeteorAsync.callAsync(change.constructor.method, change.dict());
+	} catch (err) {
+		/* eslint-disable-next-line no-console */
+		console.log(err);
+		Alert.serverError(err, '');
+	}
+}
 
 const checkUser = function (obj) {
 	if (!(obj instanceof User)) {

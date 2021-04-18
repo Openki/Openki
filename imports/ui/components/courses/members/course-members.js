@@ -6,7 +6,7 @@ import { Template } from 'meteor/templating';
 import * as Alert from '/imports/api/alerts/alert';
 import { Roles } from '/imports/api/roles/roles';
 import {
-	Subscribe, Unsubscribe, Message, processChange,
+	Subscribe, Unsubscribe, Message, processChangeAsync,
 } from '/imports/api/courses/subscription';
 import { Users } from '/imports/api/users/users';
 
@@ -86,11 +86,14 @@ Template.courseMember.onCreated(function () {
 	instance.editableMessage = new Editable(
 		true,
 		mf('roles.message.placeholder', 'My interests...'),
-		async (newMessage) => {
-			const change = new Message(instance.data.course, Meteor.user(), newMessage);
-			processChange(change, () => {
+		{
+			onSave: async (newMessage) => {
+				const change = new Message(instance.data.course, Meteor.user(), newMessage);
+				await processChangeAsync(change);
+			},
+			onSuccess: () => {
 				Alert.success(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));
-			});
+			},
 		},
 	);
 
@@ -174,10 +177,10 @@ Template.removeFromTeamDropdown.helpers({
 Template.courseMember.events({
 	'click .js-add-to-team-btn'(event, instance) {
 		event.preventDefault();
-		processChange(instance.subscribeToTeam());
+		processChangeAsync(instance.subscribeToTeam());
 	},
 	'click .js-remove-team'(event, instance) {
 		event.preventDefault();
-		processChange(instance.removeFromTeam());
+		processChangeAsync(instance.removeFromTeam());
 	},
 });

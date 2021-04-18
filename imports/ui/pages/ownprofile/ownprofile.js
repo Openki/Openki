@@ -41,30 +41,38 @@ Template.profile.onCreated(function () {
 	instance.editableName = new Editable(
 		true,
 		mf('profile.name.placeholder', 'Username'),
-		async (newName) => {
-			await MeteorAsync.callAsync('user.updateUsername', newName);
-			Alert.success(mf('profile.updated', 'Updated profile'));
-		},
-		[{
-			type: 'noUserName',
-			message: () => mf('warning.noUserName', 'Please enter a name for your user.'),
-		},
 		{
-			type: 'userExists',
-			message: () => mf('warning.userExists', 'This username already exists. Please choose another one.'),
+			serverValidationErrors: [{
+				type: 'noUserName',
+				message: () => mf('warning.noUserName', 'Please enter a name for your user.'),
+			},
+			{
+				type: 'userExists',
+				message: () => mf('warning.userExists', 'This username already exists. Please choose another one.'),
+			},
+			{
+				type: 'nameError',
+				message: () => mf('update.username.failed', 'Failed to update username.'),
+			}],
+			onSave: async (newName) => {
+				await MeteorAsync.callAsync('user.updateUsername', newName);
+			},
+			onSuccess: () => {
+				Alert.success(mf('profile.updated', 'Updated profile'));
+			},
 		},
-		{
-			type: 'nameError',
-			message: () => mf('update.username.failed', 'Failed to update username.'),
-		}],
 
 	);
 	instance.editableDescription = new Editable(
 		true,
 		mf('profile.description.placeholder', 'About me, my interests and skills. (How about the idea of creating courses fitting to your description? 😉)'),
-		async (newDescription) => {
-			await MeteorAsync.callAsync('user.updateDescription', newDescription);
-			Alert.success(mf('profile.updated', 'Updated profile'));
+		{
+			onSave: async (newDescription) => {
+				await MeteorAsync.callAsync('user.updateDescription', newDescription);
+			},
+			onSuccess: () => {
+				Alert.success(mf('profile.updated', 'Updated profile'));
+			},
 		},
 	);
 
