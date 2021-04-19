@@ -13,7 +13,7 @@ import Venues from '/imports/api/venues/venues';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { Editable } from '/imports/ui/lib/editable';
-import LocationTracker from '/imports/ui/lib/location-tracker';
+import { LocationTracker } from '/imports/ui/lib/location-tracker';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import { Analytics } from '/imports/ui/lib/analytics';
 
@@ -59,26 +59,25 @@ Template.venueEdit.onCreated(function () {
 	});
 
 	instance.locationTracker.markers.find().observe({
-		added(mark) {
-			if (mark.proposed) {
+		added(orginalLocation) {
+			if (orginalLocation.proposed) {
 				// The map widget does not reactively update markers when their
 				// flags change. So we remove the propsed marker it added and
 				// replace it by a main one. This is only a little weird.
 				instance.locationTracker.markers.remove({ proposed: true });
 
-				/* eslint-disable-next-line no-param-reassign */
-				mark.main = true;
-				/* eslint-disable-next-line no-param-reassign */
-				mark.draggable = true;
-				/* eslint-disable-next-line no-param-reassign */
-				delete mark.proposed;
-				instance.locationTracker.markers.insert(mark);
+				const location = {
+					...orginalLocation,
+					main: true,
+					draggable: true,
+				};
+				instance.locationTracker.markers.insert(location);
 			}
 		},
 
-		changed(mark) {
-			if (mark.remove) {
-				instance.locationTracker.markers.remove(mark._id);
+		changed(location) {
+			if (location.remove) {
+				instance.locationTracker.markers.remove(location._id);
 			}
 		},
 	});

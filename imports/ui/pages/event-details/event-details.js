@@ -12,7 +12,7 @@ import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
-import LocationTracker from '/imports/ui/lib/location-tracker';
+import { LocationTracker } from '/imports/ui/lib/location-tracker';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
