@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 
 import * as Alert from '/imports/api/alerts/alert';
 
-import EmailRequest from '/imports/ui/lib/email-request';
+import * as EmailRequest from '/imports/ui/lib/email-request';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import './email-request.html';

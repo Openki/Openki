@@ -13,7 +13,7 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 import { Editable } from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import IsGroupMember from '/imports/utils/is-group-member';
+import { isGroupMember } from '/imports/utils/is-group-member';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
@@ -106,7 +106,7 @@ Template.groupDetails.onCreated(function () {
 		const data = Template.currentData();
 		const currentGroup = Groups.findOne(groupId) || {};
 		const userId = Meteor.userId();
-		const mayEdit = data.isNew || (userId && IsGroupMember(userId, groupId));
+		const mayEdit = data.isNew || (userId && isGroupMember(userId, groupId));
 		instance.mayEdit.set(mayEdit);
 
 		instance.editableName.setText(currentGroup.name);
