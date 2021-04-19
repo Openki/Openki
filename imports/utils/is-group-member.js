@@ -12,7 +12,7 @@ export function isGroupMember(userId, groupId) {
 	return Groups.find({
 		_id: groupId,
 		members: userId,
-	}).count() > 0;
+	}, { limit: 1 }).count() > 0;
 }
 
 export default isGroupMember;

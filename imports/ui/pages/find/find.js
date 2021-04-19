@@ -251,9 +251,7 @@ Template.find.helpers({
 
 	hasResults() {
 		const filterQuery = Template.instance().filter.toQuery();
-		const results = Courses.findFilter(filterQuery, 1);
-
-		return results.count() > 0;
+		return Courses.findFilter(filterQuery, 1).count() > 0;
 	},
 
 	hasMore() {
