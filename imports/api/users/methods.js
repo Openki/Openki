@@ -178,7 +178,7 @@ Meteor.methods({
 		if (!user) {
 			throw new ValidationError([{ name: 'email', type: 'plzLogin' }], 'Not logged-in');
 		}
-		return updateEmail(email, user);
+		updateEmail(email, user);
 	},
 
 	'user.self.remove'() {
