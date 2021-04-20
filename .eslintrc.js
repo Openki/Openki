@@ -17,6 +17,7 @@ module.exports = {
 		moment: 'readonly',
 		msgfmt: 'readonly',
 		VERSION: 'writable',
+		ValidationError: 'readonly',
 	},
 	parserOptions: {
 		ecmaVersion: 2020,
