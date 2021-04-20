@@ -6,7 +6,7 @@ import { _ } from 'meteor/underscore';
 
 import * as Alert from '/imports/api/alerts/alert';
 
-import LocationTracker from '/imports/ui/lib/location-tracker';
+import { LocationTracker } from '/imports/ui/lib/location-tracker';
 import Venues from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */

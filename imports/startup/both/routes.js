@@ -21,9 +21,9 @@ import CourseTemplate from '/imports/ui/lib/course-template';
 import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 
 import { Filtering } from '/imports/utils/filtering';
-import { HasRoleUser } from '/imports/utils/course-role-utils';
+import { hasRoleUser } from '/imports/utils/course-role-utils';
 import LocalTime from '/imports/utils/local-time';
-import Metatags from '/imports/utils/metatags';
+import * as Metatags from '/imports/utils/metatags';
 import Predicates from '/imports/utils/predicates';
 import Profile from '/imports/utils/profile';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
@@ -91,7 +91,7 @@ function loadRoles(course) {
 		.filter((r) => course.roles?.includes(r.type))
 		.map((r) => ({
 			role: r,
-			subscribed: !!(userId && HasRoleUser(course.members, r.type, userId)),
+			subscribed: !!(userId && hasRoleUser(course.members, r.type, userId)),
 			course,
 		}));
 }

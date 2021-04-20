@@ -4,13 +4,17 @@ import { Mongo } from 'meteor/mongo';
 
 // ======== DB-Model: ========
 /**
+ * @typedef {Object} Geodata
+ * @property {'Point'} type
+ * @property {[long:number, lat:number]} coordinates (not lat-long !)
+ */
+/**
  * @typedef {Object} RegionEntity
  * @property {string} [_id] ID
  * @property {string} [tenant]
  * @property {string} [name] ID
  * @property {string} [nameEn] ID
- * @property {{ type: 'Point', coordinates: [number, number] }} [loc] Geodata {type: Point,
- * coordinates: [long, lat]}  (not lat-long !) (Optional)
+ * @property {Geodata} [loc] (Optional)
  * @property {string} [timeZone] ex: "UTC+01:00"
  * @property {number} [courseCount] Number of courses in that region, calculated field
  * (does not count internal courses)

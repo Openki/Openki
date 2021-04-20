@@ -6,7 +6,7 @@ import { Users } from '/imports/api/users/users';
 
 import { Groups } from './groups';
 
-import IsGroupMember from '/imports/utils/is-group-member';
+import { isGroupMember } from '/imports/utils/is-group-member';
 
 Meteor.methods({
 	/**
@@ -49,7 +49,7 @@ Meteor.methods({
 		}
 
 		// User must be member of group to edit it
-		if (!isNew && !IsGroupMember(userId, group._id)) {
+		if (!isNew && !isGroupMember(userId, group._id)) {
 			throw new Meteor.Error(401, 'Denied');
 		}
 

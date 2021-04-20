@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-import IdTools from '/imports/utils/id-tools';
+import * as IdTools from '/imports/utils/id-tools';
 
 // ======== DB-Model: ========
 /**

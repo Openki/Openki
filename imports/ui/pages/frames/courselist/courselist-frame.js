@@ -7,7 +7,7 @@ import { Template } from 'meteor/templating';
 
 import { Regions } from '/imports/api/regions/regions';
 import { Courses } from '/imports/api/courses/courses';
-import Metatags from '/imports/utils/metatags';
+import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/loading/loading';
 
