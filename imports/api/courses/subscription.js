@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { ValidationError } from 'meteor/mdg:validation-error';
 
 import { Courses, Course } from './courses';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';

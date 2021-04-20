@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Match, check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
+import { ValidationError } from 'meteor/mdg:validation-error';
 
 import Log from '/imports/api/log/log';
 import { Groups } from '/imports/api/groups/groups';
