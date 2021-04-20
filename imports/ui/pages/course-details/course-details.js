@@ -8,7 +8,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 
-import Editable from '/imports/ui/lib/editable';
+import { Editable } from '/imports/ui/lib/editable';
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import ScssVars from '/imports/ui/lib/scss-vars';
@@ -18,7 +18,7 @@ import { _ } from 'meteor/underscore';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import IdTools from '/imports/utils/id-tools';
+import * as IdTools from '/imports/utils/id-tools';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
@@ -36,6 +36,7 @@ import '/imports/ui/components/sharing/sharing';
 import '/imports/ui/components/report/report';
 
 import './course-details.html';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function () {
@@ -48,42 +49,40 @@ Template.courseDetailsPage.onCreated(function () {
 	instance.editableName = new Editable(
 		true,
 		mf('course.title.placeholder'),
-		(newName) => {
-			Meteor.call('course.save', course._id, { name: newName }, (err) => {
-				if (err) {
-					Alert.serverError(
-						err,
-						mf('course.save.error', 'Saving the course went wrong'),
-					);
-				} else {
-					Alert.success(mf(
-						'courseDetails.message.nameChanged',
-						{ NAME: newName },
-						'The name of this course has been changed to "{NAME}".',
-					));
-				}
-			});
+		{
+			onSave: async (newName) => {
+				await MeteorAsync.callAsync('course.save', course._id, { name: newName });
+			},
+			onSuccess: (newName) => {
+				Alert.success(mf(
+					'courseDetails.message.nameChanged',
+					{ NAME: newName },
+					'The name of this course has been changed to "{NAME}".',
+				));
+			},
+			onError: (err) => {
+				Alert.serverError(err, mf('course.save.error', 'Saving the course went wrong'));
+			},
 		},
 	);
 
 	instance.editableDescription = new Editable(
 		false,
 		mf('course.description.placeholder'),
-		(newDescription) => {
-			Meteor.call('course.save', course._id, { description: newDescription }, (err) => {
-				if (err) {
-					Alert.serverError(
-						err,
-						mf('course.save.error'),
-					);
-				} else {
-					Alert.success(mf(
-						'courseDetails.message.descriptionChanged',
-						{ NAME: course.name },
-						'The description of "{NAME}" has been changed.',
-					));
-				}
-			});
+		{
+			onSave: async (newDescription) => {
+				await MeteorAsync.callAsync('course.save', course._id, { description: newDescription });
+			},
+			onSuccess: () => {
+				Alert.success(mf(
+					'courseDetails.message.descriptionChanged',
+					{ NAME: course.name },
+					'The description of "{NAME}" has been changed.',
+				));
+			},
+			onError: (err) => {
+				Alert.serverError(err, mf('course.save.error'));
+			},
 		},
 	);
 

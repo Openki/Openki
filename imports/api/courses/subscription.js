@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { ValidationError } from 'meteor/mdg:validation-error';
 
 import { Courses, Course } from './courses';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
@@ -7,22 +8,23 @@ import * as Alert from '/imports/api/alerts/alert';
 import Events from '/imports/api/events/events';
 import { Users, User } from '/imports/api/users/users';
 import { Match, check } from 'meteor/check';
+import { MeteorAsync } from '/imports/utils/promisify';
 
-import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';
+import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
 import Notification from '/imports/notification/notification';
 
-export const processChange = function (change, done) {
-	Meteor.call(change.constructor.method, change.dict(), (err) => {
-		if (err) {
-			/* eslint-disable-next-line no-console */
-			console.log(err);
-			Alert.serverError(err, '');
-		}
-		if (done) {
-			done();
-		}
-	});
-};
+/**
+ * @param {Subscribe | Unsubscribe | Message} change
+ */
+export async function processChangeAsync(change) {
+	try {
+		await MeteorAsync.callAsync(change.constructor.method, change.dict());
+	} catch (err) {
+		/* eslint-disable-next-line no-console */
+		console.log(err);
+		Alert.serverError(err, '');
+	}
+}
 
 const checkUser = function (obj) {
 	if (!(obj instanceof User)) {
@@ -35,16 +37,6 @@ const checkCourse = function (obj) {
 		throw new Meteor.Error('Match failed', 'Expected Course object');
 	}
 };
-
-class ValidationError {
-	constructor(message) {
-		this.message = message;
-	}
-
-	toString() {
-		return this.message;
-	}
-}
 
 /** A change by a user
  *
@@ -109,12 +101,12 @@ export class Subscribe extends Change {
 
 	validate() {
 		if (!this.course.roles.includes(this.role)) {
-			throw new ValidationError(`No role ${this.role}`);
+			throw new ValidationError([], `No role ${this.role}`);
 		}
 
 		// Do not allow subscribing when already subscribed
-		if (HasRoleUser(this.course.members, this.role, this.user._id)) {
-			throw new ValidationError(`Already subscribed as ${this.role}`);
+		if (hasRoleUser(this.course.members, this.role, this.user._id)) {
+			throw new ValidationError([], `Already subscribed as ${this.role}`);
 		}
 	}
 
@@ -131,12 +123,12 @@ export class Subscribe extends Change {
 		// The team role is restricted
 		if (this.role === 'team') {
 			// If there are no team-members, anybody can join
-			if (!HasRole(this.course.members, 'team')) {
+			if (!hasRole(this.course.members, 'team')) {
 				return operator._id === this.user._id;
 			}
 
 			// Only members of the team can take-on other people
-			if (HasRoleUser(this.course.members, 'team', operator._id)) {
+			if (hasRoleUser(this.course.members, 'team', operator._id)) {
 				// Only participating users can be drafted
 				const candidateRoles = ['participant', 'mentor', 'host'];
 
@@ -227,15 +219,14 @@ export class Unsubscribe extends Change {
 	}
 
 	toString() {
-		return `${this.constructor.method
-		}(${this.role})`;
+		return `${this.constructor.method}(${this.role})`;
 	}
 
 	validate() {
 		// Do not allow unsubscribing when not subscribed
-		const hasRole = this.course.userHasRole(this.user._id, this.role);
-		if (!hasRole) {
-			throw new ValidationError(`not subscribed with role ${this.role}`);
+		const userHasRole = this.course.userHasRole(this.user._id, this.role);
+		if (!userHasRole) {
+			throw new ValidationError([], `not subscribed with role ${this.role}`);
 		}
 	}
 

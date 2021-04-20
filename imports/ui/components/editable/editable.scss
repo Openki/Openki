@@ -17,6 +17,10 @@
 
 .editable-wrap {
 	position: relative;
+
+	.help-block {
+		font-size: $font-size-base;
+	}
 }
 
 .editable {
@@ -32,8 +36,6 @@
 		background: $body-bg;
 	}
 }
-
-
 
 .editable-wrap-rich .editable {
 	min-height: 4ex;

@@ -32,8 +32,8 @@ Profile.Username.change = function (userId, newName) {
 	check(userId, String);
 	check(newName, String);
 
-	let result; let
-		success;
+	let result;
+	let success;
 	try {
 		result = Users.update(userId, {
 			$set: { username: newName },

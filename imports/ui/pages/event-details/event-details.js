@@ -12,13 +12,13 @@ import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
-import LocationTracker from '/imports/ui/lib/location-tracker';
+import { LocationTracker } from '/imports/ui/lib/location-tracker';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
-import IdTools from '/imports/utils/id-tools';
-import Metatags from '/imports/utils/metatags';
+import * as IdTools from '/imports/utils/id-tools';
+import * as Metatags from '/imports/utils/metatags';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 

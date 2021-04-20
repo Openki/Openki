@@ -24,16 +24,23 @@ import { ReactiveVar } from 'meteor/reactive-var';
 // Instances of editable templates connect() to this to get their interface.
 // It is assumed that only one instance is using this interface at a time,
 
-export default class Editable {
+export class Editable {
 	/**
 	 * @param {boolean} [simple]
 	 * @param {string} [placeholderText]
-	 * @param {{check: (text: string) => boolean, errorMessage: () => string}[]} [validations]
-	 * @param {(text: string)=>void} [store]
+	 * @param {object} [store]
+	 * @param {{
+	 *   check: (text: string) => boolean,
+	 *   errorMessage: () => string
+	 * }[]} [store.clientValidations]
+	 * @param {{type: string, message: () => string}[]} [store.serverValidationErrors]
+	 * @param {(text: string) => Promise<void>} store.onSave
+	 * @param {(text: string) => void} [store.onSuccess]
+	 * @param {(err: any, text: string) => void} [store.onError]
 	 */
-	constructor(simple = true, placeholderText = '', store = undefined, validations = []) {
+	constructor(simple = true, placeholderText = '', store = undefined) {
 		this.simple = simple;
-		this.store = store;
+		this.store = store || {};
 		this.placeholderText = placeholderText;
 		this.showControls = !!store;
 		/** Its text content before editing */
@@ -42,7 +49,6 @@ export default class Editable {
 		this.changed = new ReactiveVar(!store);
 		/** @type {Blaze.Template|undefined} */
 		this.editingInstance = undefined;
-		this.validations = validations;
 	}
 
 	/**
@@ -87,8 +93,9 @@ export default class Editable {
 			simple: this.simple,
 			placeholderText: this.placeholderText || mf('editable.add_text', 'Add text here'),
 			showControls: this.showControls,
-			validations: this.validations,
 			store: this.store,
 		};
 	}
 }
+
+export default Editable;

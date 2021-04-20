@@ -24,7 +24,7 @@ Template.courseEvents.onCreated(function () {
 	this.showModal = new ReactiveVar(false);
 
 	instance.haveEvents = function () {
-		return Events.findFilter({ course: courseId, start: minuteTime.get() }).count() > 0;
+		return Events.findFilter({ course: courseId, start: minuteTime.get() }, 1).count() > 0;
 	};
 
 	instance.haveMoreEvents = function () {

@@ -8,7 +8,8 @@ import { mf } from 'meteor/msgfmt:core';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Alert from '/imports/api/alerts/alert';
 import { Analytics } from '/imports/ui/lib/analytics';
-import Editable from '/imports/ui/lib/editable';
+import { Editable } from '/imports/ui/lib/editable';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/groups/list/group-list';
@@ -40,27 +41,38 @@ Template.profile.onCreated(function () {
 	instance.editableName = new Editable(
 		true,
 		mf('profile.name.placeholder', 'Username'),
-		(newName) => {
-			Meteor.call('user.updateUsername', newName, (err) => {
-				if (err) {
-					instance.errors.add(err.error);
-				} else {
-					Alert.success(mf('profile.updated', 'Updated profile'));
-				}
-			});
+		{
+			serverValidationErrors: [{
+				type: 'noUserName',
+				message: () => mf('warning.noUserName', 'Please enter a name for your user.'),
+			},
+			{
+				type: 'userExists',
+				message: () => mf('warning.userExists', 'This username already exists. Please choose another one.'),
+			},
+			{
+				type: 'nameError',
+				message: () => mf('update.username.failed', 'Failed to update username.'),
+			}],
+			onSave: async (newName) => {
+				await MeteorAsync.callAsync('user.updateUsername', newName);
+			},
+			onSuccess: () => {
+				Alert.success(mf('profile.updated', 'Updated profile'));
+			},
 		},
+
 	);
 	instance.editableDescription = new Editable(
 		true,
 		mf('profile.description.placeholder', 'About me, my interests and skills. (How about the idea of creating courses fitting to your description? 😉)'),
-		(newDescription) => {
-			Meteor.call('user.updateDescription', newDescription, (err) => {
-				if (err) {
-					instance.errors.add(err.error);
-				} else {
-					Alert.success(mf('profile.updated', 'Updated profile'));
-				}
-			});
+		{
+			onSave: async (newDescription) => {
+				await MeteorAsync.callAsync('user.updateDescription', newDescription);
+			},
+			onSuccess: () => {
+				Alert.success(mf('profile.updated', 'Updated profile'));
+			},
 		},
 	);
 
@@ -122,27 +134,6 @@ Template.profile.helpers({
 
 
 TemplateMixins.FormfieldErrors(Template.profile, {
-	noUserName: {
-		text: () => mf(
-			'warning.noUserName',
-			'Please enter a name for your user.',
-		),
-		field: 'username',
-	},
-	userExists: {
-		text: () => mf(
-			'warning.userExists',
-			'This username already exists. Please choose another one.',
-		),
-		field: 'username',
-	},
-	nameError: {
-		text: () => mf(
-			'update.username.failed',
-			'Failed to update username.',
-		),
-		field: 'username',
-	},
 	noEmail: {
 		text: () => mf(
 			'warning.noEmailProvided',
@@ -192,10 +183,15 @@ Template.profile.events({
 
 	'submit .js-email-form'(event, instance) {
 		event.preventDefault();
+		instance.errors.reset();
 
 		Meteor.call('user.updateEmail', instance.$('.js-email').val(), (err) => {
 			if (err) {
-				instance.errors.add(err.error);
+				if (err.error === 'validation-error') {
+					err.details.forEach((fieldError) => {
+						instance.errors.add(fieldError.type);
+					});
+				}
 			} else {
 				Alert.success(mf('profile.updated', 'Updated profile'));
 			}

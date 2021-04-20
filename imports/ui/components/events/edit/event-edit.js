@@ -20,7 +20,7 @@ import Events from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import Editable from '/imports/ui/lib/editable';
+import { Editable } from '/imports/ui/lib/editable';
 
 import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
 import LocalTime from '/imports/utils/local-time';
