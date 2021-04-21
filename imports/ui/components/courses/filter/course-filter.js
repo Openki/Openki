@@ -131,24 +131,25 @@ Template.filter.events({
 
 Template.additionalFilters.onCreated(function () {
 	this.findInstance = this.parentInstance(2);
-
-	this.roles = [
-		{
-			name: 'team',
-			label: mf('find.needsOrganizer', 'Looking for an organizer'),
-		},
-		{
-			name: 'mentor',
-			label: mf('find.needsMentor', 'Looking for a mentor'),
-		},
-		{
-			name: 'host',
-			label: mf('find.needsHost', 'Looking for a host'),
-		},
-	].map(
+	this.autorun(() => {
+		this.roles = [
+			{
+				name: 'team',
+				label: mf('find.needsOrganizer', 'Looking for an organizer'),
+			},
+			{
+				name: 'mentor',
+				label: mf('find.needsMentor', 'Looking for a mentor'),
+			},
+			{
+				name: 'host',
+				label: mf('find.needsHost', 'Looking for a host'),
+			},
+		].map(
 		// add icon from Roles collection to role object
-		(role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon }),
-	);
+			(role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon }),
+		);
+	});
 });
 
 Template.additionalFilters.onRendered(function () {
