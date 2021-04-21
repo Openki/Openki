@@ -123,14 +123,26 @@ export class Filtering {
 
 	/**
 	 * @param {string} name
-	 * @param {string} param
+	 * @param {string} [param]
 	 */
 	toggle(name, param) {
+		if (!param) {
+			// overload: toggle(name)
+			// eg. for flag and require
+			if (this.get(name)) {
+				this.disable(name);
+			} else {
+				this.add(name, '1');
+			}
+		} else
+		// overload: toggle(name, param)
+		// eg. for string and id
 		if (this.get(name)?.indexOf(param) >= 0) {
 			this.remove(name, param);
 		} else {
 			this.add(name, param);
 		}
+
 		return this;
 	}
 
