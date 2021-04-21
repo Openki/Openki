@@ -80,6 +80,7 @@ const courses = [{
 		{ user: 'IvanZ', roles: ['participant'] },
 		{ user: 'greg', roles: ['host'] },
 	],
+	archived: true,
 }, {
 	name: 'Elektronik',
 	categories: ['handicraft', 'electronics'],
@@ -548,6 +549,21 @@ const courses = [{
 			user: 'greg',
 		},
 	],
+}, {
+	name: 'Schreibmaschine schreiben',
+	tags: ['', ''],
+	groups: ['CCC-ZH'],
+	createdby: 'greg',
+	description: '<p>Eine Schreibmaschine ist ein moderne von Handangetriebenes Gerät, das dazu dient, Text mit Drucktypen zu schreiben und hauptsächlich auf Papier darzustellen.</p>',
+	roles: ['team', 'participant'],
+	members: [
+		{
+			comment: 'Ich möchte Neues kennen lernen',
+			roles: ['team', 'participant'],
+			user: 'greg',
+		},
+	],
+	archived: true,
 },
 
 
