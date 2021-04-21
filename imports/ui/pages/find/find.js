@@ -11,7 +11,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import Categories from '/imports/api/categories/categories';
 import { Courses } from '/imports/api/courses/courses';
 import CourseTemplate from '/imports/ui/lib/course-template';
-import FilterPreview from '/imports/ui/lib/filter-preview';
+import { FilterPreview } from '/imports/ui/lib/filter-preview';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import ScssVars from '/imports/ui/lib/scss-vars';
 import * as UrlTools from '/imports/utils/url-tools';
