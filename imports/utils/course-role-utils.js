@@ -10,7 +10,7 @@ export function hasRole(members, role) {
 	if (!members) {
 		return false;
 	}
-	return members.some((member) => member.roles.indexOf(role) !== -1);
+	return members.some((member) => member.roles.includes(role));
 }
 
 /**
@@ -21,13 +21,6 @@ export function hasRole(members, role) {
  * @return whether the user has this role
  */
 export function hasRoleUser(members, role, userId) {
-	/**
-	 * @param {CourseMemberEntity} member
-	 */
-	const matchRole = function (member) {
-		return member.user === userId
-			&& member.roles.indexOf(role) !== -1;
-	};
-
-	return members.some(matchRole);
+	return members.some((member) => member.user === userId
+	&& member.roles.includes(role));
 }
