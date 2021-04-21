@@ -114,6 +114,9 @@ Template.courseDetailsPage.helpers({ // more helpers in course.roles.js
 	isProposal() {
 		return !this.course.nextEvent && !this.course.lastEvent;
 	},
+	isArchived() {
+		return this.course.archived;
+	},
 	editableName() {
 		return Template.instance().editableName;
 	},
@@ -162,6 +165,50 @@ Template.courseDetailsPage.events({
 			}
 		});
 		Router.go('/');
+	},
+
+	async 'click .js-course-archive'(event, instance) {
+		if (PleaseLogin()) {
+			return;
+		}
+
+		const { course } = instance.data;
+		instance.busy('archive');
+		try {
+			await MeteorAsync.callAsync('course.archive', course._id);
+
+			Alert.success(mf(
+				'courseDetailsPage.message.courseHasBeenArchived',
+				{ COURSE: course.name },
+				'The course "{COURSE}" has been archived.',
+			));
+		} catch (err) {
+			Alert.serverError(err, 'Archive the course "{COURSE}" went wrong');
+		} finally {
+			instance.busy(false);
+		}
+	},
+
+	async 'click .js-course-unarchive'(event, instance) {
+		if (PleaseLogin()) {
+			return;
+		}
+
+		const { course } = instance.data;
+		instance.busy('unarchive');
+		try {
+			await MeteorAsync.callAsync('course.unarchive', course._id);
+
+			Alert.success(mf(
+				'courseDetailsPage.message.courseHasBeenUnarchived',
+				{ COURSE: course.name },
+				'The course "{COURSE}" has been unarchived.',
+			));
+		} catch (err) {
+			Alert.serverError(err, 'Unarchive the course "{COURSE}" went wrong');
+		} finally {
+			instance.busy(false);
+		}
 	},
 
 	'click .js-course-edit'(event, instance) {
