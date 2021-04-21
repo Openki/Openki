@@ -37,6 +37,7 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
  * @property {string[]} roles [role-keys]
  * @property {CourseMemberEntity[]} members
  * @property {boolean} internal
+ * @property {boolean} archived
  * @property {{dateTime: Date; type: string; data: any;}} history
  * @property {string[]} editors (calculated) List of user and group id allowed to edit the course,
  * calculated from members and groupOrganizers
@@ -130,10 +131,10 @@ export class CoursesCollection extends Mongo.Collection {
 				state: Predicates.string,
 				needsRole: Predicates.ids,
 				internal: Predicates.flag,
+				archived: Predicates.flag,
 			},
 		);
 	}
-
 
 	/**
 	 * Update the number of interested user
@@ -206,7 +207,8 @@ export class CoursesCollection extends Mongo.Collection {
 	}
 
 	/**
-	 * @param {{ region?: string;
+	 * @param {{
+	 * region?: string;
 	 * state?: "proposal" | "resting" | "upcomingEvent";
 	 * userInvolved?: string;
 	 * categories?: string[];
@@ -214,6 +216,7 @@ export class CoursesCollection extends Mongo.Collection {
 	 * internal?: boolean;
 	 * search?: string;
 	 * needsRole?: ("host"|"mentor"|"team")[];
+	 * archived?: boolean;
 	 * }} [filter]
 	 * @param {number} [limit]
 	 * @param {any[]} [sortParams]
@@ -225,6 +228,12 @@ export class CoursesCollection extends Mongo.Collection {
 		const order = sortParams || [];
 
 		const find = {};
+
+		if (!filter.archived) {
+			find.archived = { $ne: true }; // hide archived by default
+		} else {
+			find.archived = { $eq: true }; // only show archived
+		}
 
 		if (filter.region && filter.region !== 'all') {
 			find.region = filter.region;
