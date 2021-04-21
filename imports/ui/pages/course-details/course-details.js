@@ -99,14 +99,22 @@ Template.courseDetailsPage.helpers({ // more helpers in course.roles.js
 	mayEdit() {
 		return this.course?.editableBy(Meteor.user());
 	},
-	coursestate() {
-		if (this.nextEvent) {
-			return 'has-upcoming-events';
+	courseStateClasses() {
+		const classes = [];
+
+		if (this.course?.nextEvent) {
+			classes.push('has-upcoming-events');
+		} else if (this.course?.lastEvent) {
+			classes.push('has-past-events');
+		} else {
+			classes.push('is-proposal');
 		}
-		if (this.lastEvent) {
-			return 'has-past-events';
+
+		if (this.course?.archived) {
+			classes.push('is-archived');
 		}
-		return 'is-proposal';
+
+		return classes.join(' ');
 	},
 	mobileViewport() {
 		return Session.get('viewportWidth') <= ScssVars.screenMD;

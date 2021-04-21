@@ -7,7 +7,7 @@
 				</div>
 			{{else}}
 				<div class="page-component">
-					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
+					<div class="course-details {{courseStateClasses}}">
 						<div class="details-header">
 							{{#if course.internal}}
 								<span class="details-internal"

@@ -14,13 +14,22 @@ Template.courseCompact.helpers({
 		return !instance.eventSub || instance.eventSub.ready();
 	},
 
-	courseState() {
+	courseStateClasses() {
+		const classes = [];
+
 		if (this.nextEvent) {
-			return 'has-upcoming-events';
-		} if (this.lastEvent) {
-			return 'has-past-events';
+			classes.push('has-upcoming-events');
+		} else if (this.lastEvent) {
+			classes.push('has-past-events');
+		} else {
+			classes.push('is-proposal');
 		}
-		return 'is-proposal';
+
+		if (this.archived) {
+			classes.push('is-archived');
+		}
+
+		return classes.join(' ');
 	},
 
 	filterPreviewClasses() {
@@ -127,23 +136,23 @@ Template.courseCompactRoles.helpers({
 
 		const tooltips = {
 			team:
-				{
-					needed: mf('course.list.status_titles.needs_organizer', 'Needs an organizer'),
-					occupied: mf('course.list.status_titles.has_team', 'Has a organizer-team'),
-					occupiedByUser: mf('course.list.status_titles.u_are_organizer', 'You are organizer'),
-				},
+			{
+				needed: mf('course.list.status_titles.needs_organizer', 'Needs an organizer'),
+				occupied: mf('course.list.status_titles.has_team', 'Has a organizer-team'),
+				occupiedByUser: mf('course.list.status_titles.u_are_organizer', 'You are organizer'),
+			},
 			mentor:
-				{
-					needed: mf('course.list.status_titles.needs_mentor', 'Needs a mentor'),
-					occupied: mf('course.list.status_titles.has_mentor', 'Has a mentor'),
-					occupiedByUser: mf('course.list.status_titles.u_are_mentor', 'You are mentor'),
-				},
+			{
+				needed: mf('course.list.status_titles.needs_mentor', 'Needs a mentor'),
+				occupied: mf('course.list.status_titles.has_mentor', 'Has a mentor'),
+				occupiedByUser: mf('course.list.status_titles.u_are_mentor', 'You are mentor'),
+			},
 			host:
-				{
-					needed: mf('course.list.status_titles.needs_host', 'Needs a host'),
-					occupied: mf('course.list.status_titles.has_host', 'Has a host'),
-					occupiedByUser: mf('course.list.status_titles.u_are_host', 'You are host'),
-				},
+			{
+				needed: mf('course.list.status_titles.needs_host', 'Needs a host'),
+				occupied: mf('course.list.status_titles.has_host', 'Has a host'),
+				occupiedByUser: mf('course.list.status_titles.u_are_host', 'You are host'),
+			},
 		};
 
 		if (!hasRole(this.members, role)) {
