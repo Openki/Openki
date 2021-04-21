@@ -142,8 +142,13 @@ export class VenueCollection extends Mongo.Collection {
 
 			const recentEvents = Events.find(findRecent, findRecentOptions).fetch();
 
-			const recentLocations = _.uniq(recentEvents.map((event) => event.venue._id))
-				.slice(0, limit || 10);
+			const recentLocations = [...new Set(
+				recentEvents
+					.map((event) => event.venue?._id)
+					.filter((venueId) => venueId), // filter empty ids
+			)] // make unique with Set
+
+				.slice(0, limit || 10); // and limit it
 
 			find._id = { $in: recentLocations };
 		}
