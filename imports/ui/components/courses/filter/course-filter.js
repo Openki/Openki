@@ -35,7 +35,7 @@ Template.filter.onCreated(function () {
 			},
 		];
 
-		this.visibleFilters = ['state', 'needsRole', 'categories'];
+		this.visibleFilters = ['state', 'archived', 'needsRole', 'categories'];
 	});
 });
 
@@ -75,6 +75,17 @@ Template.filter.helpers({
 		classes.push(stateFilter.cssClass);
 
 		if (parentInstance.filter.get('state') === stateFilter.name) {
+			classes.push('active');
+		}
+
+		return classes.join(' ');
+	},
+
+	archivedFilterClasses() {
+		const classes = ['is-archived'];
+		const parentInstance = Template.instance().parentInstance();
+
+		if (parentInstance.filter.get('archived')) {
 			classes.push('active');
 		}
 
@@ -123,6 +134,26 @@ Template.filter.events({
 			FilterPreview({
 				property: 'state',
 				id: state.cssClass,
+				activate: event.type === 'mouseover',
+			});
+		}
+	},
+
+	'click .js-filter-caption-archived'(event, instance) {
+		const parentInstance = instance.parentInstance();
+
+		parentInstance.filter
+			.toggle('archived')
+			.done();
+
+		parentInstance.updateUrl();
+	},
+
+	'mouseover .js-filter-caption-archived, mouseout .js-filter-caption-archived'(event, instance) {
+		if (!instance.parentInstance().filter.get('archived')) {
+			FilterPreview({
+				property: 'is',
+				id: 'archived',
 				activate: event.type === 'mouseover',
 			});
 		}

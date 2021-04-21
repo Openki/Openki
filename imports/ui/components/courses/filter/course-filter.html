@@ -34,13 +34,30 @@
 									title="{{stateFilter.title}}">
 									<span class="filter-caption-text">
 										{{stateFilter.label}}
-										<i class="fa fa-check" aria-hidden="true"></i>
+										<i class="fa fa-check fa-fw" aria-hidden="true"></i>
 									</span>
 								</div>
 							</div>
 						</div>
 					{{/each}}
 				</div>
+				{{#if showingFilters}}
+					<div class="filter-course-state-captions">
+							<div class="filter-captions-column pull-right">
+								<div class="filter-caption-wrap">
+									<div
+										class="filter-caption js-filter-caption-archived {{archivedFilterClasses}}"
+										title="{{mf 'filterCaptions.archived.title' 'Show only courses that are archived'}}">
+										<span class="filter-caption-text">
+											{{mf 'filterCaptions.archived.label' 'Archived'}}
+											<i class="fa fa-times fa-fw" aria-hidden="true"></i>
+											<i class="fa fa-check fa-fw" aria-hidden="true"></i>
+										</span>
+									</div>
+								</div>
+							</div>
+					</div>
+				{{/if}}
 			</div>
 			{{#if showingFilters}}
 				{{> additionalFilters}}
