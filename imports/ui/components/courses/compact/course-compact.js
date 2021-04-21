@@ -40,7 +40,7 @@ Template.courseCompact.helpers({
 
 		roles.forEach((role) => {
 			const roleDisengaged = !hasRole(course.members, role);
-			if (course.roles.indexOf(role) >= 0 && roleDisengaged) {
+			if (course.roles.includes(role) && roleDisengaged) {
 				filterPreviewClasses.push(`needs-role-${role}`);
 			}
 		});
@@ -71,7 +71,7 @@ Template.courseCompactEvent.helpers({
 
 Template.courseCompactRoles.helpers({
 	requiresRole(role) {
-		return this.roles.indexOf(role) >= 0;
+		return this.roles.includes(role);
 	},
 
 	participantClass() {

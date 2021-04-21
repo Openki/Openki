@@ -137,7 +137,7 @@ export class Filtering {
 		} else
 		// overload: toggle(name, param)
 		// eg. for string and id
-		if (this.get(name)?.indexOf(param) >= 0) {
+		if (this.get(name)?.includes(param)) {
 			this.remove(name, param);
 		} else {
 			this.add(name, param);

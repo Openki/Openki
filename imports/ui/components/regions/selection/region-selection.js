@@ -82,7 +82,7 @@ Template.regionSelection.onCreated(function () {
 		// the homepage for those
 		if (changed) {
 			const routeName = Router.current().route.getName();
-			if (RegionSelection.regionDependentRoutes.indexOf(routeName) < 0) {
+			if (!RegionSelection.regionDependentRoutes.includes(routeName)) {
 				Router.go('/');
 			}
 		}

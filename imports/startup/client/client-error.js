@@ -24,23 +24,23 @@ window.addEventListener('error', (event) => {
 
 /** @type string[] */
 const buffer = [];
-const discriminatoryReporting = function (/** @type {any[]} */ args) {
+const discriminatoryReporting = function (/** @type {[msg: string, error?: Error ]} */ args) {
 	const msg = args[0];
 
 	// "Exception from Tracker recompute function:"
-	if (msg.indexOf('Exception from Tracker') === 0) {
+	if (msg.startsWith('Exception from Tracker')) {
 		// Boring, followed by "Error: ..."
 		return;
 	}
 
 	// "Error: No such function: ..."
-	if (msg.indexOf('Error:') === 0) {
+	if (msg.startsWith('Error:')) {
 		buffer.push(msg);
 		return;
 	}
 
 	// "Blaze.View.prototy..."
-	if (msg.indexOf('Blaze.') === 0) {
+	if (msg.startsWith('Blaze.')) {
 		// There's a template name in there right?
 		const templateNames = /Template\.[^_]\w+/g;
 		buffer.push(msg.match(templateNames).join(','));
@@ -65,7 +65,7 @@ const discriminatoryReporting = function (/** @type {any[]} */ args) {
 
 // wrap the Meteor debug function
 const meteorDebug = Meteor._debug;
-Meteor._debug = function (/** @type {any[]} */ ...args) {
+Meteor._debug = function (/** @type {[msg: string, error: Error ]} */ ...args) {
 	meteorDebug.apply(this, args);
 	discriminatoryReporting(args);
 };

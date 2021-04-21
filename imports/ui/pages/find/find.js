@@ -120,7 +120,7 @@ Template.find.onCreated(function () {
 	// When there are filters set, show the filtering pane
 	instance.autorun(() => {
 		Object.keys(filter.toParams()).forEach((name) => {
-			if (hiddenFilters.indexOf(name) > -1) {
+			if (hiddenFilters.includes(name)) {
 				instance.showingFilters.set(true);
 			}
 		});

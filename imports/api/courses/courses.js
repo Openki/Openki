@@ -91,12 +91,12 @@ export class Course {
 	 */
 	membersWithRole(role) {
 		check(role, String);
-		return this.members.filter((member) => member.roles.indexOf(role) >= 0);
+		return this.members.filter((member) => member.roles.includes(role));
 	}
 
 	/**
 	 * @this {CourseModel}
-	 * @param {string} userId
+	 * @param {string|undefined|null} userId
 	 * @param {string} role
 	 */
 	userHasRole(userId, role) {
@@ -181,7 +181,7 @@ export class CoursesCollection extends Mongo.Collection {
 			const editors = course.groupOrganizers.slice();
 
 			course.members.forEach((member) => {
-				if (member.roles.indexOf('team') >= 0) {
+				if (member.roles.includes('team')) {
 					editors.push(member.user);
 				}
 			});
@@ -266,17 +266,17 @@ export class CoursesCollection extends Mongo.Collection {
 
 		const { needsRole } = filter;
 		if (needsRole) {
-			if (needsRole.indexOf('host') >= 0) {
+			if (needsRole.includes('host')) {
 				missingRoles.push('host');
 				mustHaveRoles.push('host');
 			}
 
-			if (needsRole.indexOf('mentor') >= 0) {
+			if (needsRole.includes('mentor')) {
 				missingRoles.push('mentor');
 				mustHaveRoles.push('mentor');
 			}
 
-			if (needsRole.indexOf('team') >= 0) {
+			if (needsRole.includes('team')) {
 				missingRoles.push('team');
 				// All courses have the team role so we don't need to restrict to those having it
 			}

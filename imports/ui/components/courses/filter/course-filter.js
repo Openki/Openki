@@ -206,7 +206,7 @@ Template.additionalFilters.helpers({
 		const { findInstance } = Template.instance();
 		const needsRoleFilter = findInstance.filter.get('needsRole');
 
-		if (needsRoleFilter?.indexOf(role.name) >= 0) {
+		if (needsRoleFilter?.includes(role.name)) {
 			classes.push('active');
 		}
 

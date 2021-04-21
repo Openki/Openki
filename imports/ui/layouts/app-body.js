@@ -45,12 +45,12 @@ Template.layout.helpers({
 		}
 
 		return (
-			RegionSelection.regionDependentRoutes.indexOf(route.getName()) >= 0
+			RegionSelection.regionDependentRoutes.includes(route.getName())
 			&& Session.equals('showRegionSplash', true)
 		);
 	},
 
-	isAdminPage: () => Router.current().url.indexOf('admin') >= 0,
+	isAdminPage: () => Router.current().url.includes('admin'),
 
 	isAdmin: () => UserPrivilegeUtils.privilegedTo('admin'),
 

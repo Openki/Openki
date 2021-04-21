@@ -10,7 +10,7 @@ import { Users, User } from '/imports/api/users/users';
 import { Match, check } from 'meteor/check';
 import { MeteorAsync } from '/imports/utils/promisify';
 
-import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
+import { hasRole } from '/imports/utils/course-role-utils';
 import Notification from '/imports/notification/notification';
 
 /**
@@ -105,7 +105,7 @@ export class Subscribe extends Change {
 		}
 
 		// Do not allow subscribing when already subscribed
-		if (hasRoleUser(this.course.members, this.role, this.user._id)) {
+		if (this.course.userHasRole(this.user._id, this.role)) {
 			throw new ValidationError([], `Already subscribed as ${this.role}`);
 		}
 	}
@@ -128,7 +128,7 @@ export class Subscribe extends Change {
 			}
 
 			// Only members of the team can take-on other people
-			if (hasRoleUser(this.course.members, 'team', operator._id)) {
+			if (this.course.userHasRole(operator._id, 'team')) {
 				// Only participating users can be drafted
 				const candidateRoles = ['participant', 'mentor', 'host'];
 
