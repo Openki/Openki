@@ -60,7 +60,7 @@ Template.usersCourselist.helpers({
 	},
 	isInvolved() {
 		const userId = Template.instance().data.profileData.user._id;
-		return Courses.findFilter({ userInvolved: userId }).count() > 0;
+		return Courses.findFilter({ userInvolved: userId }, 1).count() > 0;
 	},
 });
 

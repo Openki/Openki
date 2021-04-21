@@ -110,7 +110,7 @@ Template.calendarDayFormat.helpers({
 		const filterQuery = this.filter.toQuery();
 		filterQuery.period = [this.day.start.toDate(), this.day.end.toDate()];
 
-		return Events.findFilter(filterQuery).count() > 0;
+		return Events.findFilter(filterQuery, 1).count() > 0;
 	},
 	events() {
 		const filterQuery = this.filter.toQuery();

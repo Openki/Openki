@@ -11,9 +11,9 @@ import * as Alert from '/imports/api/alerts/alert';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
-import Editable from '/imports/ui/lib/editable';
+import { Editable } from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import IsGroupMember from '/imports/utils/is-group-member';
+import { isGroupMember } from '/imports/utils/is-group-member';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
@@ -32,8 +32,18 @@ Template.groupDetails.onCreated(function () {
 	instance.mayEdit = new ReactiveVar(false);
 	instance.editingSettings = new ReactiveVar(false);
 
-	const handleSaving = function (err) {
-		if (err) {
+	const handleSaving = {
+		clientValidations: [{
+			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
+		}],
+		onSuccess: () => {
+			Alert.success(mf(
+				'groupDetails.changesSaved',
+				{ GROUP: group.name },
+				'Your changes to the group "{GROUP}" have been saved.',
+			));
+		},
+		onError: (err) => {
 			Alert.serverError(
 				err,
 				mf(
@@ -42,13 +52,7 @@ Template.groupDetails.onCreated(function () {
 					'Saving the group "{GROUP}" went wrong',
 				),
 			);
-		} else {
-			Alert.success(mf(
-				'groupDetails.changesSaved',
-				{ GROUP: group.name },
-				'Your changes to the group "{GROUP}" have been saved.',
-			));
-		}
+		},
 	};
 
 	const showControls = !this.data.isNew;
@@ -56,45 +60,45 @@ Template.groupDetails.onCreated(function () {
 	instance.editableName = new Editable(
 		true,
 		mf('group.name.placeholder', 'Name of your group, institution, community or program'),
-		showControls ? (newName) => {
-			Meteor.call('group.save', groupId, { name: newName }, handleSaving);
+		showControls ? {
+			...handleSaving,
+			onSave: async (newName) => {
+				await MeteorAsync.callAsync('group.save', groupId, { name: newName });
+			},
 		} : undefined,
-		showControls ? [{
-			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
-		}] : undefined,
 	);
 
 	instance.editableShort = new Editable(
 		true,
 		mf('group.short.placeholder', 'Abbreviation'),
-		showControls ? (newShort) => {
-			Meteor.call('group.save', groupId, { short: newShort }, handleSaving);
+		showControls ? {
+			...handleSaving,
+			onSave: async (newShort) => {
+				await MeteorAsync.callAsync('group.save', groupId, { short: newShort });
+			},
 		} : undefined,
-		showControls ? [{
-			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
-		}] : undefined,
 	);
 
 	instance.editableClaim = new Editable(
 		true,
 		mf('group.claim.placeholder', 'The core idea'),
-		showControls ? (newClaim) => {
-			Meteor.call('group.save', groupId, { claim: newClaim }, handleSaving);
+		showControls ? {
+			...handleSaving,
+			onSave: async (newClaim) => {
+				await MeteorAsync.callAsync('group.save', groupId, { claim: newClaim });
+			},
 		} : undefined,
-		showControls ? [{
-			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
-		}] : undefined,
 	);
 
 	instance.editableDescription = new Editable(
 		false,
 		mf('group.description.placeholder', 'Describe the audience, the interests and activities of your group.'),
-		showControls ? (newDescription) => {
-			Meteor.call('group.save', groupId, { description: newDescription }, handleSaving);
+		showControls ? {
+			...handleSaving,
+			onSave: async (newDescription) => {
+				await MeteorAsync.callAsync('group.save', groupId, { description: newDescription });
+			},
 		} : undefined,
-		showControls ? [{
-			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
-		}] : undefined,
 	);
 
 
@@ -102,7 +106,7 @@ Template.groupDetails.onCreated(function () {
 		const data = Template.currentData();
 		const currentGroup = Groups.findOne(groupId) || {};
 		const userId = Meteor.userId();
-		const mayEdit = data.isNew || (userId && IsGroupMember(userId, groupId));
+		const mayEdit = data.isNew || (userId && isGroupMember(userId, groupId));
 		instance.mayEdit.set(mayEdit);
 
 		instance.editableName.setText(currentGroup.name);

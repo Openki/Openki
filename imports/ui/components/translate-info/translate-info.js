@@ -1,7 +1,7 @@
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 
-import Metatags from '/imports/utils/metatags';
+import * as Metatags from '/imports/utils/metatags';
 
 import './translate-info.html';
 

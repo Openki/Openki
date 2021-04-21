@@ -1,8 +1,6 @@
 import { DocHead } from 'meteor/kadira:dochead';
 import { Meteor } from 'meteor/meteor';
 
-const Metatags = {};
-
 function getSiteTitlePrefix() {
 	return `${Meteor.settings.public.siteName}  - `;
 }
@@ -11,14 +9,14 @@ function getSiteDefaultImage() {
 	return Meteor.absoluteUrl(`logo/${Meteor.settings.public.ogLogo?.src || 'openki_logo_2018.png'}`);
 }
 
-Metatags.removeAll = function () {
+export function removeAll() {
 	DocHead.removeDocHeadAddedTags();
-};
+}
 
 /**
  * @param {string} title
  */
-Metatags.setCommonTags = function (title, description = '') {
+export function setCommonTags(title, description = '') {
 	document.title = getSiteTitlePrefix() + title;
 
 	DocHead.addMeta({ property: 'og:type', content: 'website' });
@@ -33,6 +31,4 @@ Metatags.setCommonTags = function (title, description = '') {
 		DocHead.addMeta({ property: 'og:description', content: description });
 		DocHead.addMeta({ name: 'twitter:description', content: description });
 	}
-};
-
-export default Metatags;
+}

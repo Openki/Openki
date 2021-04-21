@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 import { Regions } from '/imports/api/regions/regions';
 import Venues from '/imports/api/venues/venues';
 
-import LocationTracker from '/imports/ui/lib/location-tracker';
+import { LocationTracker } from '/imports/ui/lib/location-tracker';
 
 import '/imports/ui/components/map/map';
 

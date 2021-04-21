@@ -4,7 +4,7 @@ import { mf } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
 
 import { Courses } from '/imports/api/courses/courses';
-import { Subscribe, processChange } from '/imports/api/courses/subscription';
+import { Subscribe, processChangeAsync } from '/imports/api/courses/subscription';
 import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
 import Events, { OEvent } from '/imports/api/events/events';
 /** @typedef {import('/imports/api/events/events').EventEntity} EventEntity */
@@ -529,7 +529,7 @@ Meteor.methods({
 		const change = new Subscribe(course, user, 'participant');
 
 		if (change.validFor(user)) {
-			processChange(change);
+			processChangeAsync(change);
 		}
 	},
 	'event.removeParticipant'(eventId) {
