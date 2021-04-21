@@ -95,7 +95,7 @@ export class Course {
 
 	/**
 	 * @this {CourseModel}
-	 * @param {string} userId
+	 * @param {string|undefined|null} userId
 	 * @param {string} role
 	 */
 	userHasRole(userId, role) {

@@ -28,4 +28,3 @@ export function mayEditPost(user, post) {
 	}
 	return post.userId === user._id;
 }
-
