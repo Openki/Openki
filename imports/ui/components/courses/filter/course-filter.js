@@ -78,6 +78,11 @@ Template.filter.helpers({
 			classes.push('active');
 		}
 
+		if (parentInstance.filter.get('archived')) {
+			// make filter buttons yellow if only archived showed
+			classes.push('is-archived');
+		}
+
 		return classes.join(' ');
 	},
 
