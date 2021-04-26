@@ -1,6 +1,4 @@
 .meteor/
-.npm/
 node_modules/
-packages/
 server/mfAll.js
 server/mfAll.js~

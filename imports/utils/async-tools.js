@@ -44,6 +44,7 @@ if (Meteor.isServer) {
 				}
 				return tryClean(clean, tries - 1);
 			}
+			return undefined;
 		}, (reason) => {
 			/* eslint-disable-next-line no-console */
 			console.log(`Cleansing function failed: ${reason}`);

@@ -1,0 +1,8 @@
+{
+	"editorconfig": true,
+	"wrap-attributes": "aligned-multiple",
+	"wrap-line-length": 100,
+	"max-preserve-newlines": 1,
+	"end-with-newline": true,
+	"indent-with-tabs": true
+}
