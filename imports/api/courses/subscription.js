@@ -68,14 +68,18 @@ class Change {
 }
 
 export class Subscribe extends Change {
-	static get method() { return 'Courses.Subscribe'; }
+	static get method() {
+		return 'Courses.Subscribe';
+	}
 
 	static read(body) {
 		check(body, Object);
-		return new this(Courses.findOne(body.courseId),
+		return new this(
+			Courses.findOne(body.courseId),
 			Users.findOne(body.userId),
 			body.role,
-			body.comment);
+			body.comment,
+		);
 	}
 
 	constructor(course, user, role, comment) {
@@ -95,8 +99,7 @@ export class Subscribe extends Change {
 	}
 
 	toString() {
-		return `${this.constructor.method
-		}(${this.role})`;
+		return `${this.constructor.method}(${this.role})`;
 	}
 
 	validate() {
@@ -145,15 +148,13 @@ export class Subscribe extends Change {
 	}
 
 	dict() {
-		return (
-			{
-				change: 'subscribe',
-				courseId: this.course._id,
-				userId: this.user._id,
-				role: this.role,
-				comment: this.comment,
-			}
-		);
+		return {
+			change: 'subscribe',
+			courseId: this.course._id,
+			userId: this.user._id,
+			role: this.role,
+			comment: this.comment,
+		};
 	}
 
 	provide(rel, body) {
@@ -178,8 +179,10 @@ export class Subscribe extends Change {
 		);
 
 		if (this.comment) {
-			Courses.update({ _id: this.course._id, 'members.user': this.user._id },
-				{ $set: { 'members.$.comment': this.comment } });
+			Courses.update(
+				{ _id: this.course._id, 'members.user': this.user._id },
+				{ $set: { 'members.$.comment': this.comment } },
+			);
 		}
 
 		// Update member related calculated fields
@@ -197,12 +200,12 @@ export class Subscribe extends Change {
 }
 
 export class Unsubscribe extends Change {
-	static get method() { return 'Courses.Unsubscribe'; }
+	static get method() {
+		return 'Courses.Unsubscribe';
+	}
 
 	static read(body) {
-		return new this(Courses.findOne(body.courseId),
-			Users.findOne(body.userId),
-			body.role);
+		return new this(Courses.findOne(body.courseId), Users.findOne(body.userId), body.role);
 	}
 
 	constructor(course, user, role) {
@@ -252,14 +255,12 @@ export class Unsubscribe extends Change {
 	}
 
 	dict() {
-		return (
-			{
-				change: 'unsubscribe',
-				courseId: this.course._id,
-				userId: this.user._id,
-				role: this.role,
-			}
-		);
+		return {
+			change: 'unsubscribe',
+			courseId: this.course._id,
+			userId: this.user._id,
+			role: this.role,
+		};
 	}
 
 	provide(rel, body) {
@@ -279,16 +280,10 @@ export class Unsubscribe extends Change {
 				{ multi: true },
 			);
 		}
-		Courses.update(
-			{ _id: this.course._id, 'members.user': this.user._id },
-			update,
-		);
+		Courses.update({ _id: this.course._id, 'members.user': this.user._id }, update);
 
 		// Housekeeping: Remove members that have no role left
-		Courses.update(
-			{ _id: this.course._id },
-			{ $pull: { members: { roles: { $size: 0 } } } },
-		);
+		Courses.update({ _id: this.course._id }, { $pull: { members: { roles: { $size: 0 } } } });
 
 		// Update member related calculated fields
 		Courses.updateInterested(this.course._id);
@@ -302,12 +297,12 @@ export class Unsubscribe extends Change {
 }
 
 export class Message extends Change {
-	static get method() { return 'Courses.Message'; }
+	static get method() {
+		return 'Courses.Message';
+	}
 
 	static read(body) {
-		return new this(Courses.findOne(body.courseId),
-			Users.findOne(body.userId),
-			body.message);
+		return new this(Courses.findOne(body.courseId), Users.findOne(body.userId), body.message);
 	}
 
 	constructor(course, user, message) {
@@ -342,14 +337,12 @@ export class Message extends Change {
 	}
 
 	dict() {
-		return (
-			{
-				change: 'message',
-				courseId: this.course._id,
-				userId: this.user._id,
-				message: this.message,
-			}
-		);
+		return {
+			change: 'message',
+			courseId: this.course._id,
+			userId: this.user._id,
+			message: this.message,
+		};
 	}
 
 	provide(rel, body) {
