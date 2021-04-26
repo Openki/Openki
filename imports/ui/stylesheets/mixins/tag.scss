@@ -3,7 +3,7 @@
 	color: $color;
 	padding: 1px 4px;
 
-	& > a {
+	> a {
 		color: $color;
 	}
 
@@ -23,12 +23,13 @@
 }
 
 @mixin tag-btn($bg, $color, $bg-hover: darken($bg, 5%), $color-hover: $color) {
-	& > button {
+	> button {
 		background-color: $bg;
 		border: 0;
 		color: $color;
 		font-size: $font-size-base;
 
+		/* stylelint-disable selector-no-qualifying-type */
 		&:hover,
 		&:focus,
 		&.highlight {

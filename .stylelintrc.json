@@ -2,7 +2,6 @@
 	"extends": ["stylelint-config-sass-guidelines", "stylelint-prettier/recommended"],
 	"plugins": ["stylelint-prettier"],
 	"rules": {
-		"indentation": "tab",
-		"prettier/prettier": true
+		"prettier/prettier": [true, { "severity": "warning" }]
 	}
 }
