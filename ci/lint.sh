@@ -8,4 +8,4 @@ meteor node -v && meteor npm version
 
 meteor npm run sass-lint
 
-meteor npm run eslint
+meteor npm run es-lint
