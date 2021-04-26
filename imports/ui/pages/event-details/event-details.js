@@ -333,7 +333,7 @@ Template.eventDisplay.events({
 
 Template.eventGroupList.helpers({
 	isOrganizer() {
-		return Template.instance().data.editors.indexOf(IdTools.extract(this)) >= 0;
+		return Template.instance().data.editors.includes(IdTools.extract(this));
 	},
 	tools() {
 		const tools = [];

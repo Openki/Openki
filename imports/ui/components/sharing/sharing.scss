@@ -7,11 +7,10 @@
 	font-size: 1.2em;
 }
 
-// sass-lint:disable class-name-format
+/* stylelint-disable-next-line selector-class-pattern */
 .shariff .share_text {
 	display: none;
 }
-// sass-lint:enable class-name-format
 
 $shariff-link-padding: 5px;
 $shariff-button-margin-bottom: ($shariff-link-padding * 2) + 5px;

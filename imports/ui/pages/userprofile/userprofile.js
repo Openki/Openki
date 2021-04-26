@@ -44,7 +44,7 @@ Template.userprofile.helpers({
 	},
 
 	groupMember(group, user) {
-		return user && group?.members?.indexOf(user._id) >= 0;
+		return !!(user && group?.members?.includes(user._id));
 	},
 
 	showInviteGroups() {

@@ -5,7 +5,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
 
 /**
- * @param {UserModel|string|undefined|null} user
+ * @param {UserModel|undefined|null} user
  * @param {{ members: CourseMemberEntity[] }} course
  * @param {{ userId: string; }} post
  */
@@ -28,4 +28,3 @@ export function mayEditPost(user, post) {
 	}
 	return post.userId === user._id;
 }
-

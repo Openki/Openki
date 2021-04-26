@@ -8,7 +8,7 @@ IpLocation.detect = function (handler) {
 	// SPECIAL CASE
 	// When we're connected to localhost, it's likely a dev-setup.
 	const hostname = document.location?.hostname;
-	if (hostname === 'localhost' || hostname.indexOf('127.') === 0) {
+	if (hostname === 'localhost' || hostname.startsWith('127.')) {
 		const testistan = Regions.findOne('9JyFCoKWkxnf8LWPh');
 		if (testistan) {
 			handler(testistan, 'Using Testistan for localhost');

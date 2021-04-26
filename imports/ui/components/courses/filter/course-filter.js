@@ -4,7 +4,7 @@ import { Template } from 'meteor/templating';
 
 import { Roles } from '/imports/api/roles/roles';
 
-import FilterPreview from '/imports/ui/lib/filter-preview';
+import { FilterPreview } from '/imports/ui/lib/filter-preview';
 import ScssVars from '/imports/ui/lib/scss-vars';
 import * as StringTools from '/imports/utils/string-tools';
 
@@ -131,24 +131,25 @@ Template.filter.events({
 
 Template.additionalFilters.onCreated(function () {
 	this.findInstance = this.parentInstance(2);
-
-	this.roles = [
-		{
-			name: 'team',
-			label: mf('find.needsOrganizer', 'Looking for an organizer'),
-		},
-		{
-			name: 'mentor',
-			label: mf('find.needsMentor', 'Looking for a mentor'),
-		},
-		{
-			name: 'host',
-			label: mf('find.needsHost', 'Looking for a host'),
-		},
-	].map(
+	this.autorun(() => {
+		this.roles = [
+			{
+				name: 'team',
+				label: mf('find.needsOrganizer', 'Looking for an organizer'),
+			},
+			{
+				name: 'mentor',
+				label: mf('find.needsMentor', 'Looking for a mentor'),
+			},
+			{
+				name: 'host',
+				label: mf('find.needsHost', 'Looking for a host'),
+			},
+		].map(
 		// add icon from Roles collection to role object
-		(role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon }),
-	);
+			(role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon }),
+		);
+	});
 });
 
 Template.additionalFilters.onRendered(function () {
@@ -174,7 +175,7 @@ Template.additionalFilters.helpers({
 		const { findInstance } = Template.instance();
 		const needsRoleFilter = findInstance.filter.get('needsRole');
 
-		if (needsRoleFilter?.indexOf(role.name) >= 0) {
+		if (needsRoleFilter?.includes(role.name)) {
 			classes.push('active');
 		}
 

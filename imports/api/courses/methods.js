@@ -112,7 +112,7 @@ Meteor.methods({
 			Roles.forEach((role) => {
 				const { type } = role;
 				const shouldHave = !!(role.preset || changes.roles?.[type]);
-				const have = course.roles.indexOf(type) !== -1;
+				const have = course.roles.includes(type);
 
 				if (have && !shouldHave) {
 					Courses.update(

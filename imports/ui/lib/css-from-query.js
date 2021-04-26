@@ -47,7 +47,7 @@ export class CssFromQuery {
 			let cssValue;
 			if (typeof queryValue !== 'undefined') {
 				// hexify color values
-				if (property.name.indexOf('color') >= 0) {
+				if (property.name.includes('color')) {
 					if (queryValue.match(/^[0-9A-F]+$/i)) {
 						cssValue = `#${queryValue.substr(0, 8)}`;
 					}

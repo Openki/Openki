@@ -177,7 +177,7 @@ Template.courseDetailsPage.events({
 
 Template.courseGroupList.helpers({
 	isOrganizer() {
-		return Template.instance().data.groupOrganizers.indexOf(IdTools.extract(this)) >= 0;
+		return Template.instance().data.groupOrganizers.includes(IdTools.extract(this));
 	},
 	tools() {
 		const tools = [];
@@ -192,7 +192,7 @@ Template.courseGroupList.helpers({
 			});
 		}
 		if (user && course.editableBy(user)) {
-			const hasOrgRights = course.groupOrganizers.indexOf(groupId) > -1;
+			const hasOrgRights = course.groupOrganizers.includes(groupId);
 			tools.push({
 				toolTemplate: hasOrgRights
 					? Template.courseGroupRemoveOrganizer

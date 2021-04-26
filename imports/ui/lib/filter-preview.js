@@ -1,13 +1,14 @@
-/** Give a preview of a filter by highlighting the matching courses
-  *
-  * @param  {String} property - property to filter for (e.g. category, region)
-  * @param  {String} id       - id/name of the property
-  * @param {Boolean} activate - de-/activate the preview effect
-  * @param {Boolean} delayed  - delay the fade effect
-  * @param  {Object} instance - instance object for scoping
-  */
+/**
+ * Give a preview of a filter by highlighting the matching courses
+ * @param {object} options
+ * @param {string} options.property property to filter for (e.g. category, region)
+ * @param {string} options.id id/name of the property
+ * @param {boolean} options.activate de-/activate the preview effect
+ * @param {boolean} [options.delayed] delay the fade effect
+ * @param {object} [options.instance] instance object for scoping
+ */
 
-export default function FilterPreview(options) {
+export function FilterPreview(options) {
 	const instance = options.instance || false;
 	const course = instance ? instance.$('.course-compact') : $('.course-compact');
 	const { property } = options;
@@ -17,12 +18,10 @@ export default function FilterPreview(options) {
 
 	if (property === 'state') {
 		selector = options.id;
+	} else if (property === 'role') {
+		selector = `needs-${selector}`;
 	} else {
 		selector = `${property}-${options.id}`;
-	}
-
-	if (property === 'role') {
-		selector = `needs-${selector}`;
 	}
 
 	selector = `.${selector}`;
@@ -46,3 +45,5 @@ export default function FilterPreview(options) {
 		label.parent().toggleClass('highlight');
 	}
 }
+
+export default FilterPreview;

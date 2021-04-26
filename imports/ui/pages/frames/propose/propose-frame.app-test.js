@@ -33,7 +33,7 @@ if (Meteor.isClient) {
 			const link = await waitFor(() => {
 				const alertLink = jQuery('.alert a');
 				assert(
-					alertLink.text().indexOf(randomTitle) >= 0,
+					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
 				return alertLink.attr('href');
@@ -64,7 +64,7 @@ if (Meteor.isClient) {
 			const link = await waitFor(() => {
 				const alertLink = jQuery('.alert a');
 				assert(
-					alertLink.text().indexOf(randomTitle) >= 0,
+					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
 				return alertLink.attr('href');
@@ -95,7 +95,7 @@ if (Meteor.isClient) {
 			const link = await waitFor(() => {
 				const alertLink = jQuery('.alert a');
 				assert(
-					alertLink.text().indexOf(randomTitle) >= 0,
+					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
 				return alertLink.attr('href');
@@ -139,7 +139,7 @@ if (Meteor.isClient) {
 
 			await waitFor(() => {
 				assert(
-					jQuery('.alert a').text().indexOf(randomTitle) >= 0,
+					jQuery('.alert a').text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
 			});

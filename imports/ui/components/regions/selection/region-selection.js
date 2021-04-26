@@ -7,7 +7,7 @@ import { Meteor } from 'meteor/meteor';
 import * as Alert from '/imports/api/alerts/alert';
 import { Regions } from '/imports/api/regions/regions';
 
-import FilterPreview from '/imports/ui/lib/filter-preview';
+import { FilterPreview } from '/imports/ui/lib/filter-preview';
 
 import RegionSelection from '/imports/utils/region-selection';
 import * as StringTools from '/imports/utils/string-tools';
@@ -82,7 +82,7 @@ Template.regionSelection.onCreated(function () {
 		// the homepage for those
 		if (changed) {
 			const routeName = Router.current().route.getName();
-			if (RegionSelection.regionDependentRoutes.indexOf(routeName) < 0) {
+			if (!RegionSelection.regionDependentRoutes.includes(routeName)) {
 				Router.go('/');
 			}
 		}
