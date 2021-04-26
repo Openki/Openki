@@ -1,3 +1,5 @@
+/* stylelint-disable selector-max-compound-selectors */
+
 .navbar .navbar-nav > .open > .login-dropdown,
 .navbar .navbar-nav > .dropdown > .login-dropdown {
 	@media (min-width: $screen-sm) {
