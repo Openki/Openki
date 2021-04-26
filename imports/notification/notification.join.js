@@ -125,6 +125,8 @@ notificationJoin.Model = function (entry) {
 				memberCount: course.members.length,
 				roleTitle,
 				message: HtmlTools.plainToHtml(body.message),
+				// For Team members when a mentor joins, add a hint for possible collaboration or
+				// invite into team
 				appendCollaborationHint: body.newRole === 'mentor',
 				figures,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=joinNotify`,
