@@ -3,6 +3,7 @@ import { ValidationError } from 'meteor/mdg:validation-error';
 
 import { Courses, Course } from './courses';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
+import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 
 import * as Alert from '/imports/api/alerts/alert';
 import Events from '/imports/api/events/events';
@@ -189,9 +190,7 @@ export class Subscribe extends Change {
 		Courses.updateInterested(this.course._id);
 		Courses.updateGroups(this.course._id);
 
-		// Update the modification date
-		Courses.update(this.course._id, { $set: { time_lastedit: new Date() } });
-
+		timeLasteditDenormalizer.afterSubscribe(this.course._id);
 		historyDenormalizer.afterSubscribe(this.course._id, this.user._id, this.role);
 
 		// Send notifications
@@ -289,9 +288,7 @@ export class Unsubscribe extends Change {
 		Courses.updateInterested(this.course._id);
 		Courses.updateGroups(this.course._id);
 
-		// Update the modification date
-		Courses.update(this.course._id, { $set: { time_lastedit: new Date() } });
-
+		timeLasteditDenormalizer.afterUnsubscribe(this.course._id);
 		historyDenormalizer.afterUnsubscribe(this.course._id, this.user._id, this.role);
 	}
 }

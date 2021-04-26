@@ -6,6 +6,7 @@ import { _ } from 'meteor/underscore';
 import { Courses } from '/imports/api/courses/courses';
 import { Subscribe, processChangeAsync } from '/imports/api/courses/subscription';
 import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
+import * as courseTimeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 import Events, { OEvent } from '/imports/api/events/events';
 /** @typedef {import('/imports/api/events/events').EventEntity} EventEntity */
 import { Groups } from '/imports/api/groups/groups';
@@ -298,6 +299,7 @@ Meteor.methods({
 			eventId = Events.insert(changes);
 
 			if (changes.courseId) {
+				courseTimeLasteditDenormalizer.afterEventInsert(changes.courseId);
 				courseHistoryDenormalizer.afterEventInsert(changes.courseId, user._id, {
 					_id: eventId,
 					title: changes.title,

@@ -9,6 +9,7 @@ import { Regions } from '/imports/api/regions/regions';
 import { Roles } from '/imports/api/roles/roles';
 import UpdateMethods from '/imports/utils/update-methods';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
+import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 
 import { Subscribe, Unsubscribe, Message, processChangeAsync } from './subscription';
 
@@ -162,7 +163,6 @@ Meteor.methods({
 			set.internal = changes.internal;
 		}
 
-		set.time_lastedit = new Date();
 		if (course.isNew()) {
 			// You can add newly created courses to any group
 			const testedGroups =
@@ -193,15 +193,17 @@ Meteor.methods({
 			];
 			set.createdby = user._id;
 			set.time_created = new Date();
+			const enrichedSet = timeLasteditDenormalizer.beforeInsert(set);
 			/* eslint-disable-next-line no-param-reassign */
-			courseId = Courses.insert(set);
+			courseId = Courses.insert(enrichedSet);
 
 			// Init calculated fields
 			Meteor.call('course.updateNextEvent', courseId);
 			Courses.updateInterested(courseId);
 			Courses.updateGroups(courseId);
 		} else {
-			Courses.update({ _id: courseId }, { $set: set }, AsyncTools.checkUpdateOne);
+			const enrichedSet = timeLasteditDenormalizer.beforeUpdate(set);
+			Courses.update({ _id: courseId }, { $set: enrichedSet }, AsyncTools.checkUpdateOne);
 
 			historyDenormalizer.afterUpdate(courseId, user._id);
 		}
