@@ -1,5 +1,3 @@
-/* stylelint-disable selector-max-compound-selectors */
-
 .form-group {
 	@include clearfix;
 }
@@ -61,7 +59,7 @@
 
 .form-group > .radio:nth-child(2),
 .form-group > .checkbox:nth-child(2),
-.form-group-element > .radio:nth-child(2)
+.form-group-element > .radio:nth-child(2),
 .form-group-element > .checkbox:nth-child(2) {
 	margin-top: 0;
 }
