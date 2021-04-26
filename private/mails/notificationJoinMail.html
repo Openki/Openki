@@ -51,6 +51,11 @@
 						{{message}}
 					</p>
 				{{/if}}
+				{{#if appendCollaborationHint}}
+					<p style="margin: 1em 0;">
+						{{mf "notification.join.mail.collaborationHint" 'If you like them to collaborate feel free to contact them. If you like to give them the rights to edit the course, you can add them to the organisation team of your course by clicking on the bullhorn next to their name.' LOCALE=locale}}
+					</p>
+				{{/if}}
 				<p style="margin: 1em 0;">
 					{{#each figures}}
 						{{role}}: {{count}}<br />
