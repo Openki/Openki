@@ -28,11 +28,11 @@ module.exports = {
 		'prefer-destructuring': ['error', { object: false, array: false }],
 
 		// disabled rules
-		'func-names': [0],
-		'no-underscore-dangle': [0],
-		'max-classes-per-file': [0],
+		'func-names': 'off',
+		'no-underscore-dangle': 'off',
+		'max-classes-per-file': 'off',
 
-		'prettier/prettier': 'error',
+		'prettier/prettier': 'warn',
 	},
 	settings: {
 		'import/resolver': 'meteor',
