@@ -125,6 +125,7 @@ notificationJoin.Model = function (entry) {
 				memberCount: course.members.length,
 				roleTitle,
 				message: HtmlTools.plainToHtml(body.message),
+				appendCollaborationHint: body.newRole === 'mentor',
 				figures,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=joinNotify`,
 				customSiteName: siteName,
