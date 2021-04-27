@@ -90,7 +90,7 @@
 
 	&:hover a {
 		color: $gray-dark;
-
+		/* stylelint-disable-next-line max-nesting-depth */
 		&:hover {
 			text-decoration: underline;
 		}

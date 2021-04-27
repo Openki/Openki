@@ -128,7 +128,7 @@ Template.courseEdit.helpers({
 	availableSubcategories(category) {
 		// Hide if parent categories not selected
 		const selectedCategories = Template.instance().selectedCategories.get();
-		if (selectedCategories.indexOf(category) < 0) {
+		if (!selectedCategories.includes(category)) {
 			return [];
 		}
 
@@ -470,7 +470,7 @@ Template.courseEditRole.onRendered(function () {
 
 	if (selectedRoles) {
 		this.checked.set(
-			selectedRoles.indexOf(data.role.type) >= 0,
+			selectedRoles.includes(data.role.type),
 		);
 	}
 });

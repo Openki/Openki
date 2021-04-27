@@ -81,7 +81,7 @@ export class User {
 		if (!groupId || !this.groups) {
 			return false;
 		}
-		return this.groups.indexOf(groupId) >= 0;
+		return this.groups.includes(groupId);
 	}
 
 	/**
@@ -125,8 +125,7 @@ export class User {
 	 * @param {string} role
 	 */
 	privileged(role) {
-		return (this.privileges
-			&& this.privileges.indexOf(role) > -1) || false;
+		return !!this.privileges?.includes(role);
 	}
 }
 

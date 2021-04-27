@@ -33,8 +33,7 @@ Template.courseMembers.helpers({
 	},
 
 	canNotifyAll() {
-		const userId = Meteor.userId();
-		return userId && hasRoleUser(this.members, 'team', userId);
+		return hasRoleUser(this.members, 'team', Meteor.userId());
 	},
 
 	ownUserMember() {

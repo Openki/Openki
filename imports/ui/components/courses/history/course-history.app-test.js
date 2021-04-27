@@ -57,7 +57,7 @@ if (Meteor.isClient) {
 
 			await waitFor(() => {
 				assert(
-					jQuery('.loginButton').text().indexOf('Flumsi') >= 0,
+					jQuery('.loginButton').text().includes('Flumsi'),
 					'User Flumsi sould be logged in.',
 				);
 			});

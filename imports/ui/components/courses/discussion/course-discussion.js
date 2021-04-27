@@ -9,7 +9,6 @@ import { Courses } from '/imports/api/courses/courses';
 import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
 import * as Alert from '/imports/api/alerts/alert';
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
-import { hasRoleUser } from '/imports/utils/course-role-utils';
 import { Editable } from '/imports/ui/lib/editable';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
@@ -279,12 +278,8 @@ Template.postEdit.helpers({
 		}
 
 		const course = Courses.findOne(this.courseId);
-		if (!course) {
-			return false;
-		}
 
-		const userId = Meteor.userId();
-		return userId && hasRoleUser(course.members, 'team', userId);
+		return !!course?.userHasRole(Meteor.userId(), 'team');
 	},
 });
 
