@@ -16,12 +16,12 @@ import * as StringTools from '/imports/utils/string-tools';
 const notificationJoin = {};
 
 /**
-  * Record the intent to send join notifications
-  * @param {string} courseId ID for the CourseDiscussions collection
-  * @param {string} participantId ID of the user that joined
-  * @param {string} newRole new role of the participant
-  * @param {string} [message] Optional message of the new participant
-  */
+ * Record the intent to send join notifications
+ * @param {string} courseId ID for the CourseDiscussions collection
+ * @param {string} participantId ID of the user that joined
+ * @param {string} newRole new role of the participant
+ * @param {string} [message] Optional message of the new participant
+ */
 notificationJoin.record = function (courseId, participantId, newRole, message) {
 	check(courseId, String);
 	check(participantId, String);
@@ -76,10 +76,10 @@ notificationJoin.Model = function (entry) {
 
 		/**
 		 * @param {string} userLocale
-		 * @param {UserModel} actualRecipient
+		 * @param {UserModel} _actualRecipient
 		 * @param {string} unsubToken
 		 */
-		vars(userLocale, actualRecipient, unsubToken) {
+		vars(userLocale, _actualRecipient, unsubToken) {
 			if (!newParticipant) {
 				throw new Error('New participant does not exist (0.o)');
 			}
@@ -93,6 +93,8 @@ notificationJoin.Model = function (entry) {
 				USER: StringTools.truncate(newParticipant.username, 50),
 				ROLE: roleTitle,
 			};
+
+			// prettier-ignore
 			const subject = mf('notification.join.mail.subject', subjectvars, '{USER} joined {COURSE}: {ROLE}', userLocale);
 
 			const figures = ['host', 'mentor', 'participant']
@@ -111,22 +113,23 @@ notificationJoin.Model = function (entry) {
 			}
 			siteName = siteName || Meteor.settings.public.siteName;
 
-			return (
-				{
-					unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
-					course,
-					newParticipant,
-					courseLink: Router.url('showCourse', course, { query: 'campaign=joinNotify' }),
-					subject,
-					memberCount: course.members.length,
-					roleTitle,
-					message: HtmlTools.plainToHtml(body.message),
-					figures,
-					customSiteUrl: `${Meteor.absoluteUrl()}?campaign=joinNotify`,
-					customSiteName: siteName,
-					customMailLogo: mailLogo,
-				}
-			);
+			return {
+				unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
+				course,
+				newParticipant,
+				courseLink: Router.url('showCourse', course, { query: 'campaign=joinNotify' }),
+				subject,
+				memberCount: course.members.length,
+				roleTitle,
+				message: HtmlTools.plainToHtml(body.message),
+				// For Team members when a mentor joins, add a hint for possible collaboration or
+				// invite into team
+				appendCollaborationHint: body.newRole === 'mentor',
+				figures,
+				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=joinNotify`,
+				customSiteName: siteName,
+				customMailLogo: mailLogo,
+			};
 		},
 		template: 'notificationJoinMail',
 	};

@@ -9,17 +9,15 @@ import { Regions } from '/imports/api/regions/regions';
 import { Roles } from '/imports/api/roles/roles';
 import UpdateMethods from '/imports/utils/update-methods';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
+import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 
-import {
-	Subscribe, Unsubscribe, Message, processChangeAsync,
-} from './subscription';
+import { Subscribe, Unsubscribe, Message, processChangeAsync } from './subscription';
 
 import { AsyncTools } from '/imports/utils/async-tools';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
-
 
 const registerMethod = function (method) {
 	const apply = function (params) {
@@ -44,7 +42,11 @@ const registerMethod = function (method) {
 			change.apply();
 		} catch (message) {
 			result.error(message);
-			throw new Meteor.Error('error-applying', `Error applying change ${change}: ${message}`, message);
+			throw new Meteor.Error(
+				'error-applying',
+				`Error applying change ${change}: ${message}`,
+				message,
+			);
 		}
 		result.success();
 	};
@@ -112,22 +114,20 @@ Meteor.methods({
 			Roles.forEach((role) => {
 				const { type } = role;
 				const shouldHave = !!(role.preset || changes.roles?.[type]);
-				const have = course.roles.indexOf(type) !== -1;
+				const have = course.roles.includes(type);
 
 				if (have && !shouldHave) {
-					Courses.update(
-						{ _id: courseId },
-						{ $pull: { roles: type } },
-						AsyncTools.checkUpdateOne,
-					);
+					Courses.update({ _id: courseId }, { $pull: { roles: type } }, AsyncTools.checkUpdateOne);
 
 					// HACK
 					// due to a mongo limitation we can't { $pull { 'members.roles': type } }
 					// so we keep removing one by one until there are none left
-					while (Courses.update(
-						{ _id: courseId, 'members.roles': type },
-						{ $pull: { 'members.$.roles': type } },
-					));
+					while (
+						Courses.update(
+							{ _id: courseId, 'members.roles': type },
+							{ $pull: { 'members.$.roles': type } },
+						)
+					);
 				}
 				if (!have && shouldHave) {
 					if (course.isNew()) {
@@ -163,16 +163,16 @@ Meteor.methods({
 			set.internal = changes.internal;
 		}
 
-		set.time_lastedit = new Date();
 		if (course.isNew()) {
 			// You can add newly created courses to any group
-			const testedGroups = changes.groups?.map((groupId) => {
-				const group = Groups.findOne(groupId);
-				if (!group) {
-					throw new Meteor.Error(404, `no group with id ${groupId}`);
-				}
-				return group._id;
-			}) || [];
+			const testedGroups =
+				changes.groups?.map((groupId) => {
+					const group = Groups.findOne(groupId);
+					if (!group) {
+						throw new Meteor.Error(404, `no group with id ${groupId}`);
+					}
+					return group._id;
+				}) || [];
 			set.groups = testedGroups;
 			set.groupOrganizers = testedGroups;
 
@@ -184,23 +184,26 @@ Meteor.methods({
 			set.region = region._id;
 
 			/* When a course is created, the creator is automatically added as sole member of the team */
-			set.members = [{
-				user: user._id,
-				roles: ['participant', 'team'],
-				comment: mf('courses.creator.defaultMessage', '(has proposed this course)'),
-			},
+			set.members = [
+				{
+					user: user._id,
+					roles: ['participant', 'team'],
+					comment: mf('courses.creator.defaultMessage', '(has proposed this course)'),
+				},
 			];
 			set.createdby = user._id;
 			set.time_created = new Date();
+			const enrichedSet = timeLasteditDenormalizer.beforeInsert(set);
 			/* eslint-disable-next-line no-param-reassign */
-			courseId = Courses.insert(set);
+			courseId = Courses.insert(enrichedSet);
 
 			// Init calculated fields
 			Meteor.call('course.updateNextEvent', courseId);
 			Courses.updateInterested(courseId);
 			Courses.updateGroups(courseId);
 		} else {
-			Courses.update({ _id: courseId }, { $set: set }, AsyncTools.checkUpdateOne);
+			const enrichedSet = timeLasteditDenormalizer.beforeUpdate(set);
+			Courses.update({ _id: courseId }, { $set: enrichedSet }, AsyncTools.checkUpdateOne);
 
 			historyDenormalizer.afterUpdate(courseId, user._id);
 		}
@@ -247,16 +250,20 @@ Meteor.methods({
 	 */
 	'course.updateNextEvent'(selector) {
 		Courses.find(selector).forEach((course) => {
-			const futureEvents = Events.find(
-				{ courseId: course._id, start: { $gt: new Date() } },
-			).count();
+			const futureEvents = Events.find({
+				courseId: course._id,
+				start: { $gt: new Date() },
+			}).count();
 
 			const nextEvent = Events.findOne(
 				{ courseId: course._id, start: { $gt: new Date() } },
 				{
 					sort: { start: 1 },
 					fields: {
-						startLocal: 1, start: 1, _id: 1, venue: 1,
+						startLocal: 1,
+						start: 1,
+						_id: 1,
+						venue: 1,
 					},
 				},
 			);
@@ -266,7 +273,10 @@ Meteor.methods({
 				{
 					sort: { start: -1 },
 					fields: {
-						startLocal: 1, start: 1, _id: 1, venue: 1,
+						startLocal: 1,
+						start: 1,
+						_id: 1,
+						venue: 1,
 					},
 				},
 			);
@@ -290,7 +300,6 @@ Meteor.methods({
 	 */
 	'course.promote': UpdateMethods.Promote(Courses),
 
-
 	/**
 	 * Add or remove a group from the groupOrganizers list
 	 * @param {string} courseId - The course to update
@@ -299,7 +308,6 @@ Meteor.methods({
 	 *
 	 */
 	'course.editing': UpdateMethods.Editing(Courses),
-
 
 	/**
 	 * Recalculate the editors field

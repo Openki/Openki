@@ -57,11 +57,11 @@ if (Meteor.isClient) {
 
 				await waitFor(() => {
 					assert(
-						jQuery('.alert.alert-success').text().indexOf(randomTitle) >= 0,
+						jQuery('.alert.alert-success').text().includes(randomTitle),
 						'A message that the course was created is shown',
 					);
 					assert(
-						jQuery('.group-details-name').text().indexOf(randomTitle) >= 0,
+						jQuery('.group-details-name').text().includes(randomTitle),
 						'The title is visible',
 					);
 				});
@@ -189,7 +189,7 @@ if (Meteor.isClient) {
 
 				await waitFor(() => {
 					assert(
-						jQuery('body').text().indexOf(randomTitle) === -1,
+						!jQuery('body').text().includes(randomTitle),
 						`The internal course should not be visible on the start page ${window.location}`,
 					);
 				}, 5000);

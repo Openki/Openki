@@ -20,7 +20,6 @@ import CourseTemplate from '/imports/ui/lib/course-template';
 import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 
 import { Filtering } from '/imports/utils/filtering';
-import { hasRoleUser } from '/imports/utils/course-role-utils';
 import LocalTime from '/imports/utils/local-time';
 import * as Metatags from '/imports/utils/metatags';
 import Predicates from '/imports/utils/predicates';
@@ -84,13 +83,11 @@ const makeFilterQuery = function (params) {
  * @param {CourseModel} course
  */
 function loadRoles(course) {
-	const userId = Meteor.userId();
-
 	return Roles
 		.filter((r) => course.roles?.includes(r.type))
 		.map((r) => ({
 			role: r,
-			subscribed: !!(userId && hasRoleUser(course.members, r.type, userId)),
+			subscribed: course.userHasRole(Meteor.userId(), r.type),
 			course,
 		}));
 }

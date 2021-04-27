@@ -126,7 +126,7 @@ export class Filtering {
 	 * @param {string} param
 	 */
 	toggle(name, param) {
-		if (this.get(name)?.indexOf(param) >= 0) {
+		if (this.get(name)?.includes(param)) {
 			this.remove(name, param);
 		} else {
 			this.add(name, param);

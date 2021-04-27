@@ -13,15 +13,14 @@ import { Users } from '/imports/api/users/users';
 
 import LocalTime from '/imports/utils/local-time';
 
-
 const notificationEvent = {};
 
 /**
-  * Record the intent to send event notifications
-  * @param {string} eventId event id to announce
-  * @param {boolean} isNew whether the event is a new one
-  * @param {string} [additionalMessage] custom message
-  */
+ * Record the intent to send event notifications
+ * @param {string} eventId event id to announce
+ * @param {boolean} isNew whether the event is a new one
+ * @param {string} [additionalMessage] custom message
+ */
 notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	check(eventId, String);
 	check(isNew, Boolean);
@@ -82,7 +81,6 @@ notificationEvent.Model = function (entry) {
 	}
 
 	return {
-
 		/**
 		 * @param {UserModel} actualRecipient
 		 */
@@ -128,8 +126,10 @@ notificationEvent.Model = function (entry) {
 
 			let subject;
 			if (entry.new) {
+				// prettier-ignore
 				subject = mf('notification.event.mail.subject.new', subjectvars, 'On {DATE}: {TITLE}', userLocale);
 			} else {
+				// prettier-ignore
 				subject = mf('notification.event.mail.subject.changed', subjectvars, 'Fixed {DATE}: {TITLE}', userLocale);
 			}
 
@@ -142,32 +142,34 @@ notificationEvent.Model = function (entry) {
 			const siteName = region.custom?.siteName || Meteor.settings.public.siteName;
 			const mailLogo = region.custom?.mailLogo;
 
-			return (
-				{
-					unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
-					event,
-					course,
-					eventDate: startMoment.format('LL'),
-					eventStart: startMoment.format('LT'),
-					eventEnd: endMoment.format('LT'),
-					venueLine,
-					regionName: region.name,
-					timeZone: endMoment.format('z'), // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
-					eventLink: Router.url('showEvent', event, { query: 'campaign=eventNotify' }),
-					registerToEventLink: Router.url('showEvent', event, { query: 'action=register&campaign=eventNotify' }),
-					courseLink: Router.url('showCourse', course, { query: 'campaign=eventNotify' }),
-					unsubscribeFromCourseLink: Router.url('showCourse', course, { query: 'unsubscribe=participant&campaign=eventNotify' }),
-					calLink: Router.url('calEvent', event, { query: 'campaign=eventNotify' }),
-					new: entry.body.new,
-					subject,
-					additionalMessage: entry.body.additionalMessage,
-					creator,
-					creatorName,
-					customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
-					customSiteName: siteName,
-					customMailLogo: mailLogo,
-				}
-			);
+			return {
+				unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
+				event,
+				course,
+				eventDate: startMoment.format('LL'),
+				eventStart: startMoment.format('LT'),
+				eventEnd: endMoment.format('LT'),
+				venueLine,
+				regionName: region.name,
+				timeZone: endMoment.format('z'), // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
+				eventLink: Router.url('showEvent', event, { query: 'campaign=eventNotify' }),
+				registerToEventLink: Router.url('showEvent', event, {
+					query: 'action=register&campaign=eventNotify',
+				}),
+				courseLink: Router.url('showCourse', course, { query: 'campaign=eventNotify' }),
+				unsubscribeFromCourseLink: Router.url('showCourse', course, {
+					query: 'unsubscribe=participant&campaign=eventNotify',
+				}),
+				calLink: Router.url('calEvent', event, { query: 'campaign=eventNotify' }),
+				new: entry.body.new,
+				subject,
+				additionalMessage: entry.body.additionalMessage,
+				creator,
+				creatorName,
+				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
+				customSiteName: siteName,
+				customMailLogo: mailLogo,
+			};
 		},
 		template: 'notificationEventMail',
 	};

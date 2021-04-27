@@ -7,7 +7,6 @@ import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import Notification from '/imports/notification/notification';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
-import { hasRoleUser } from '/imports/utils/course-role-utils';
 
 /** @typedef {import('./course-discussions').CourseDiscussionEnity} CourseDiscussionEnity */
 
@@ -62,7 +61,7 @@ Meteor.methods({
 		if (userId && !comment.anon) {
 			saneComment.userId = userId;
 			saneComment.notifyAll = comment.notifyAll
-							&& hasRoleUser(course.members, 'team', userId);
+							&& course.userHasRole(userId, 'team');
 		}
 
 		const now = new Date();

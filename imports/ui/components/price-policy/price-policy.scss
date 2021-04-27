@@ -24,7 +24,7 @@ $price-policy-actions-grid-width: 15px;
 	@media (min-width: $screen-sm-min) {
 		display: inline-block;
 
-		& + .price-policy-action {
+		+ .price-policy-action {
 			margin-left: 5px;
 		}
 	}

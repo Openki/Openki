@@ -1,10 +1,12 @@
+/* stylelint-disable scss/at-mixin-pattern, max-nesting-depth, property-no-vendor-prefix */
+
 @mixin avatarInputThumb {
 	background: transparent;
-	border-left: 10px solid transparent;
-	border-right: 10px solid transparent;
 	border-bottom: calc(2 * 10px * .866) solid #000;
-	border-top: 0 solid transparent;
+	border-left: 10px solid transparent;
 	border-radius: 0;
+	border-right: 10px solid transparent;
+	border-top: 0 solid transparent;
 	cursor: pointer;
 	height: 0;
 	width: 0;
@@ -51,7 +53,7 @@
 		hsla(350, 100%, 80%, 1),
 		hsla(360, 100%, 80%, 1)
 	);
-	border-radius: 0px;
+	border-radius: 0;
 	height: 10px;
 	width: 100%;
 }
@@ -67,8 +69,8 @@
 		width: 100%;
 
 		&-input {
-			background: transparent;
 			-webkit-appearance: none;
+			background: transparent;
 			width: 100%;
 
 			&:not(:focus-visible) {
@@ -84,7 +86,7 @@
 			&::-moz-range-thumb {
 				@include avatarInputThumb;
 
-				padding: 10px 0 0 0;
+				padding: 10px 0 0;
 				transform: translateY(-5px);
 			}
 

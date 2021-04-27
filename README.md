@@ -82,9 +82,13 @@ Run tests with:
 Run linters with these two commands:
 
     meteor npm run sass-lint
-    meteor npm run eslint
+    meteor npm run es-lint
 
-**Note:** Add `-- --fix` at the end of eslint to automatically fix fixable problems `meteor npm run eslint -- --fix`
+Format files and automatically fix fixable problems with these commands:
+
+    meteor npm run sass-lint -- --fix
+    meteor npm run es-lint -- --fix
+    meteor npm run html-format
 
 ### Fixing weird errors
 
