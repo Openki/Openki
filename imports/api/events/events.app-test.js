@@ -26,7 +26,12 @@ if (Meteor.isClient) {
 
 				assert.isNotEmpty(eventsAsGast, 'shows events');
 
-				assert.isEmpty(eventsAsGast.filter((c) => c.tenant && !Meteor.settings.public.publicTenants.includes(c.tenant)), "don't show events from not public");
+				assert.isEmpty(
+					eventsAsGast.filter(
+						(c) => c.tenant && !Meteor.settings.public.publicTenants.includes(c.tenant),
+					),
+					"don't show events from not public",
+				);
 			});
 
 			it('should allow a logged in user to see events from his tenant', async function () {
@@ -41,10 +46,20 @@ if (Meteor.isClient) {
 
 				const eventsAsSchufien = Events.findFilter().fetch();
 
-				assert.includeMembers(eventsAsSchufien.map((c) => c._id), eventsAsGast.map((c) => c._id), 'shows public events as logged in user');
+				assert.includeMembers(
+					eventsAsSchufien.map((c) => c._id),
+					eventsAsGast.map((c) => c._id),
+					'shows public events as logged in user',
+				);
 
-				assert.isTrue(eventsAsSchufien.length > eventsAsGast.length, 'shows private events as logged in user');
-				assert.isNotEmpty(eventsAsSchufien.filter((c) => c.tenant && schufien.tenants.includes(c.tenant)), 'shows private events as logged in user');
+				assert.isTrue(
+					eventsAsSchufien.length > eventsAsGast.length,
+					'shows private events as logged in user',
+				);
+				assert.isNotEmpty(
+					eventsAsSchufien.filter((c) => c.tenant && schufien.tenants.includes(c.tenant)),
+					'shows private events as logged in user',
+				);
 			});
 		});
 	});

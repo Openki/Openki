@@ -3,6 +3,7 @@ import { assert } from 'chai';
 
 import Events from '/imports/api/events/events';
 import { MeteorAsync } from '/imports/utils/promisify';
+import { Courses } from '../courses/courses';
 
 if (Meteor.isClient) {
 	describe('Event', () => {
@@ -21,7 +22,8 @@ if (Meteor.isClient) {
 
 				const newEvent = {
 					title: 'Intentionally clever title for a generated test-event',
-					description: 'This space intentionally filled with bland verbiage. You are safe to ignore this. ',
+					description:
+						'This space intentionally filled with bland verbiage. You are safe to ignore this. ',
 					venue: { name: 'Undisclosed place where heavy testing takes place' },
 					startLocal: moment(theFuture).format('YYYY-MM-DD[T]HH:mm'),
 					endLocal: moment(evenLater).format('YYYY-MM-DD[T]HH:mm'),
@@ -29,7 +31,10 @@ if (Meteor.isClient) {
 					internal: true,
 				};
 
-				const eventId = await MeteorAsync.callAsync('event.save', { eventId: '', changes: newEvent });
+				const eventId = await MeteorAsync.callAsync('event.save', {
+					eventId: '',
+					changes: newEvent,
+				});
 
 				assert.isString(eventId, 'event.save returns an eventId string');
 
@@ -66,7 +71,10 @@ if (Meteor.isClient) {
 					region: regionId,
 				};
 
-				const eventId = await MeteorAsync.callAsync('event.save', { eventId: '', changes: newEvent });
+				const eventId = await MeteorAsync.callAsync('event.save', {
+					eventId: '',
+					changes: newEvent,
+				});
 
 				const handle = await MeteorAsync.subscribeAsync('event', eventId);
 				handle.stop();
@@ -75,6 +83,46 @@ if (Meteor.isClient) {
 
 				assert.equal(event.title, expectedTitle);
 				assert.equal(event.description, expectedText);
+			});
+
+			it('Updates time_lastedit from course', async function () {
+				this.timeout(5000);
+
+				await MeteorAsync.loginWithPasswordAsync('greg', 'greg');
+
+				const courseId = 'eb6aedecf9';
+
+				const handle = await MeteorAsync.subscribeAsync('courseDetails', courseId);
+				try {
+					const oldCourse = Courses.findOne(courseId);
+
+					const theFuture = new Date();
+					theFuture.setHours(1000);
+
+					const evenLater = new Date();
+					evenLater.setHours(1002);
+
+					const regionId = '9JyFCoKWkxnf8LWPh'; // Testistan
+
+					const newEvent = {
+						courseId,
+						title: 'Intentionally clever title for a generated test-event',
+						description: 'Nothing special here.',
+						venue: { name: 'Undisclosed place where heavy testing takes place' },
+						startLocal: moment(theFuture).format('YYYY-MM-DD[T]HH:mm'),
+						endLocal: moment(evenLater).format('YYYY-MM-DD[T]HH:mm'),
+						region: regionId,
+						internal: true,
+					};
+
+					await MeteorAsync.callAsync('event.save', { eventId: '', changes: newEvent });
+
+					const newCourse = Courses.findOne(courseId);
+
+					assert.isAbove(newCourse.time_lastedit.getTime(), oldCourse.time_lastedit.getTime());
+				} finally {
+					handle.stop();
+				}
 			});
 		});
 	});
