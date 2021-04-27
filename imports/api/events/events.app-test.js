@@ -20,7 +20,8 @@ if (Meteor.isClient) {
 
 			const newEvent = {
 				title: 'Intentionally clever title for a generated test-event',
-				description: 'This space intentionally filled with bland verbiage. You are safe to ignore this. ',
+				description:
+					'This space intentionally filled with bland verbiage. You are safe to ignore this. ',
 				venue: { name: 'Undisclosed place where heavy testing takes place' },
 				startLocal: moment(theFuture).format('YYYY-MM-DD[T]HH:mm'),
 				endLocal: moment(evenLater).format('YYYY-MM-DD[T]HH:mm'),

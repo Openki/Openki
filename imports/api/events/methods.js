@@ -43,23 +43,23 @@ const ReplicaSync = function (event, updateOptions) {
 		Events.find(AffectedReplicaSelectors(event)).forEach((replica) => {
 			const replicaChanges = updateOptions.infos ? { ...changes } : {};
 
-			const updateTime = timeIsValid && updateOptions.time
-				&& (replica.sameTime(event) || updateOptions.changedReplicas.time);
+			const updateTime =
+				timeIsValid &&
+				updateOptions.time &&
+				(replica.sameTime(event) || updateOptions.changedReplicas.time);
 
 			if (updateTime) {
 				const newStartMoment = moment(replica.start).set(startTime);
-				Object.assign(replicaChanges,
-					{
-						start: newStartMoment.toDate(),
-						end: newStartMoment.add(timeDelta).toDate(),
-					});
+				Object.assign(replicaChanges, {
+					start: newStartMoment.toDate(),
+					end: newStartMoment.add(timeDelta).toDate(),
+				});
 
 				const regionZone = LocalTime.zone(replica.region);
-				Object.assign(replicaChanges,
-					{
-						startLocal: regionZone.toString(replicaChanges.start),
-						endLocal: regionZone.toString(replicaChanges.end),
-					});
+				Object.assign(replicaChanges, {
+					startLocal: regionZone.toString(replicaChanges.start),
+					endLocal: regionZone.toString(replicaChanges.end),
+				});
 			} else {
 				delete replicaChanges.start;
 				delete replicaChanges.end;
@@ -76,12 +76,12 @@ const ReplicaSync = function (event, updateOptions) {
 		});
 	};
 
-	return (
-		{
-			affected() { return affected; },
-			apply,
-		}
-	);
+	return {
+		affected() {
+			return affected;
+		},
+		apply,
+	};
 };
 
 Meteor.methods({
@@ -118,10 +118,7 @@ Meteor.methods({
 			sendNotifications,
 		} = args;
 
-		let {
-			eventId,
-			comment,
-		} = args;
+		let { eventId, comment } = args;
 
 		check(eventId, String);
 
@@ -188,13 +185,14 @@ Meteor.methods({
 				throw new Meteor.Error(400, 'Event date not provided');
 			}
 
-			const testedGroups = changes.groups?.map((groupId) => {
-				const group = Groups.findOne(groupId);
-				if (!group) {
-					throw new Meteor.Error(404, `no group with id ${groupId}`);
-				}
-				return group._id;
-			}) || [];
+			const testedGroups =
+				changes.groups?.map((groupId) => {
+					const group = Groups.findOne(groupId);
+					if (!group) {
+						throw new Meteor.Error(404, `no group with id ${groupId}`);
+					}
+					return group._id;
+				}) || [];
 			changes.groups = testedGroups;
 
 			// Coerce faulty end dates
@@ -205,9 +203,11 @@ Meteor.methods({
 			changes.internal = Boolean(changes.internal);
 
 			// Synthesize event document because the code below relies on it
-			event = _.extend(
-				new OEvent(), { region: changes.region, courseId: changes.courseId, editors: [user._id] },
-			);
+			event = _.extend(new OEvent(), {
+				region: changes.region,
+				courseId: changes.courseId,
+				editors: [user._id],
+			});
 		} else {
 			event = Events.findOne(eventId);
 			if (!event) {
@@ -274,13 +274,12 @@ Meteor.methods({
 				if (numParticipantsRegistered > changes.maxParticipants) {
 					throw new Meteor.Error(
 						400,
-						`the minimal possible value is ${numParticipantsRegistered}, `
-						+ `because ${numParticipantsRegistered} users have already registered.`,
+						`the minimal possible value is ${numParticipantsRegistered}, ` +
+							`because ${numParticipantsRegistered} users have already registered.`,
 					);
 				}
 			}
 		}
-
 
 		if (Meteor.isServer) {
 			const sanitizedDescription = StringTools.saneText(changes.description);
@@ -367,7 +366,6 @@ Meteor.methods({
 		return eventId;
 	},
 
-
 	'event.remove'(eventId) {
 		check(eventId, String);
 
@@ -397,7 +395,6 @@ Meteor.methods({
 		}
 		Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);
 	},
-
 
 	/**
 	 * Update the venue field for all events matching the selector
@@ -450,15 +447,13 @@ Meteor.methods({
 					update = { $unset: { 'venue._id': 1 } };
 				}
 
-				Events.rawCollection().update({ _id: event._id },
-					update,
-					(err, result) => {
-						if (err) {
-							reject(err);
-						} else {
-							resolve(result.result.nModified === 0);
-						}
-					});
+				Events.rawCollection().update({ _id: event._id }, update, (err, result) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(result.result.nModified === 0);
+					}
+				});
 			}).catch((reason) => {
 				/* eslint-disable-next-line no-console */
 				console.log('Failed event.updateVenue: ', reason);
@@ -476,32 +471,30 @@ Meteor.methods({
 		});
 	},
 
-
 	/** Add or remove a group from the groups list
-	  *
-	  * @param {String} eventId - The event to update
-	  * @param {String} groupId - The group to add or remove
-	  * @param {Boolean} add - Whether to add or remove the group
-	  *
-	  */
+	 *
+	 * @param {String} eventId - The event to update
+	 * @param {String} groupId - The group to add or remove
+	 * @param {Boolean} add - Whether to add or remove the group
+	 *
+	 */
 	'event.promote': UpdateMethods.Promote(Events),
 
-
 	/** Add or remove a group from the groupOrganizers list
-	  *
-	  * @param {String} eventId - The event to update
-	  * @param {String} groupId - The group to add or remove
-	  * @param {Boolean} add - Whether to add or remove the group
-	  *
-	  */
+	 *
+	 * @param {String} eventId - The event to update
+	 * @param {String} groupId - The group to add or remove
+	 * @param {Boolean} add - Whether to add or remove the group
+	 *
+	 */
 	'event.editing': UpdateMethods.Editing(Events),
 
 	/** Add current user as event-participant
-	  *
-	  * the user is also signed up for the course.
-	  *
-	  * @param {String} eventId - The event to register for
-	  */
+	 *
+	 * the user is also signed up for the course.
+	 *
+	 * @param {String} eventId - The event to register for
+	 */
 	'event.addParticipant'(eventId) {
 		const user = Meteor.user();
 		if (!user) {
