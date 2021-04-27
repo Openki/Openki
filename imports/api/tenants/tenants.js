@@ -1,5 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+
 // ======== DB-Model: ========
 /**
  * @typedef {Object} TenantEntity
@@ -9,8 +11,25 @@ import { Mongo } from 'meteor/mongo';
  */
 
 /**
- * @type {Mongo.Collection<TenantEntity>}
+ * @extends {Mongo.Collection<TenantEntity>}
  */
-const Tenants = new Mongo.Collection('Tenants');
+export class TenantsCollection extends Mongo.Collection {
+	constructor() {
+		super('Tenants');
+	}
 
-export { Tenants as default, Tenants };
+	// eslint-disable-next-line class-methods-use-this
+	get publicFields() {
+		return {
+			_id: 1,
+			name: 1,
+			// Only admins can see all members. Note: Admin privileg is not something that is likely
+			// to happen and reactive changes are not needed.
+			members: UserPrivilegeUtils.privilegedTo('admin') ? 1 : undefined,
+		};
+	}
+}
+
+export const Tenants = new TenantsCollection();
+
+export default Tenants;
