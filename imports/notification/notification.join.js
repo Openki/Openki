@@ -93,12 +93,9 @@ notificationJoin.Model = function (entry) {
 				USER: StringTools.truncate(newParticipant.username, 50),
 				ROLE: roleTitle,
 			};
-			const subject = mf(
-				'notification.join.mail.subject',
-				subjectvars,
-				'{USER} joined {COURSE}: {ROLE}',
-				userLocale,
-			);
+
+			// prettier-ignore
+			const subject = mf('notification.join.mail.subject', subjectvars, '{USER} joined {COURSE}: {ROLE}', userLocale);
 
 			const figures = ['host', 'mentor', 'participant']
 				.filter((role) => course.roles.includes(role))

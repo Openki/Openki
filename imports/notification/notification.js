@@ -33,12 +33,10 @@ Notification.send = function (entry) {
 	// Find out for which recipients sending has already been attempted.
 	const concluded = {};
 
-	Log.find(
-		{
-			tr: 'Notification.SendResult',
-			rel: entry._id,
-		},
-	).forEach((result) => {
+	Log.find({
+		tr: 'Notification.SendResult',
+		rel: entry._id,
+	}).forEach((result) => {
 		concluded[result.body.recipient] = true;
 	});
 
@@ -70,8 +68,7 @@ Notification.send = function (entry) {
 				unsubToken = Random.secret();
 				const vars = model.vars(userLocale, user, unsubToken);
 
-				const fromAddress = vars.fromAddress
-					|| Accounts.emailTemplates.from;
+				const fromAddress = vars.fromAddress || Accounts.emailTemplates.from;
 
 				// For everything that is global use siteName from global settings, eg. unsubscribe
 				vars.siteName = siteName;
@@ -85,7 +82,8 @@ Notification.send = function (entry) {
 				let message = SSR.render(model.template, vars);
 
 				// Template can't handle DOCTYPE header, so we add the thing here.
-				const DOCTYPE = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+				const DOCTYPE =
+					'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 				message = DOCTYPE + message;
 
 				mail = {
@@ -110,7 +108,6 @@ Notification.send = function (entry) {
 		}
 	});
 };
-
 
 Notification.SendResult = {};
 
