@@ -20,15 +20,15 @@
 			<td>
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
 					<tr bgcolor="#3f819e">
-						<td width="45" valign="top" style="padding: 0px 10px 0px 20px;">
+						<td width="45" valign="top" style="padding: 0 10px 0 20px;">
 							<a href="{{siteUrl}}">
 								<img src="{{logo.url}}" height="45" border="0"
 									 alt="{{customSiteName}} Logo"
-									 style="padding-bottom: 0px; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none;" />
+									 style="border: 0; -ms-interpolation-mode: bicubic; outline: none; padding-bottom: 0; text-decoration: none;" />
 							</a>
 						</td>
 						<td width="455"
-							style="padding: 0px; font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter;">
+							style="font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter; padding: 0;">
 							<a href="{{siteUrl}}"
 							   style="color: #fff !important; text-decoration: none !important;">{{customSiteName}}</a>
 						</td>
@@ -38,7 +38,7 @@
 		</tr>
 		<tr>
 			<td width="400" valign="top"
-				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px 20px;">
+				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px;">
 				<span style="font-size: 16px; font-weight: bold;">
 					{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
 				</span>
@@ -61,7 +61,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="400" valign="top" style="padding: 0px 20px 0px 20px;">
+			<td width="400" valign="top" style="padding: 0 20px;">
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
 					<tr>
 						<td width="400" valign="top" bgcolor="#c1f2ae"
@@ -81,16 +81,16 @@
 		<tr>
 			<td width="500" valign="top" bgcolor="#3f819e">
 				<table cellpadding="0" cellspacing="0" border="0" align="center"
-					   style="color:#dddddd; font-family: Source Sans Pro, sans-serif; font-size: 10px; text-align: center;">
+					   style="color:#ddd; font-family: Source Sans Pro, sans-serif; font-size: 10px; text-align: center;">
 					<tr>
-						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
+						<td width="500" valign="top" style="padding: 0 15px 5px;">
 							<a href="{{unsubLink}}"
-							   style="color:#dddddd !important; text-decoration: underline;">
+							   style="color:#ddd !important; text-decoration: underline;">
 								{{mf "notification.privateMessage.mail.unsubLink" "Unsubscribe from all private messages from users." SITENAME=siteName LOCALE=locale}}
 							</a>
 							&nbsp;
 							<a href="{{urlFor 'profile' query='campaign=privateMessage'}}"
-							   style="color:#dddddd !important; text-decoration: underline;">
+							   style="color:#ddd !important; text-decoration: underline;">
 								{{mf "notification.privateMessage.mail.profileLink" "Visit your profile" LOCALE=locale}}
 							</a>
 						</td>
