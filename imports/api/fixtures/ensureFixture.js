@@ -24,9 +24,9 @@ const ensure = {
 	 * @param {string} name
 	 */
 	tenant(name) {
-		const teanant = Tenants.findOne({ name });
-		if (teanant) {
-			return teanant._id;
+		const tenant = Tenants.findOne({ name });
+		if (tenant) {
+			return tenant._id;
 		}
 
 		const id = ensure.fixedId([name]);
