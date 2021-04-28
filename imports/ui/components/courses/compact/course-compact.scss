@@ -19,7 +19,7 @@
 .course-compact {
 	height: 150px;
 	position: relative;
-	transition-duration: .1s;
+	transition-duration: 0.1s;
 	transition-property: #{'box-shadow opacity'};
 
 	&:hover {
@@ -46,12 +46,12 @@
 
 	&.filter-no-match,
 	&.filter-no-match-delayed {
-		transition-duration: .25s;
+		transition-duration: 0.25s;
 		transition-property: opacity;
 	}
 
 	&.filter-no-match-delayed {
-		transition-delay: .3s;
+		transition-delay: 0.3s;
 	}
 }
 
@@ -84,7 +84,7 @@
 // ** Internal indicator dot
 //========================================================================================
 .course-compact-internal {
-	background-color:  #f00;
+	background-color: #f00;
 	border-radius: 50%;
 	height: 5px;
 	left: 6px;

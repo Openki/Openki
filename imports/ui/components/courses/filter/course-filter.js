@@ -31,7 +31,10 @@ Template.filter.onCreated(function () {
 				name: 'resting',
 				cssClass: 'has-past-events',
 				label: mf('filterCaptions.resting.label', 'Resting'),
-				title: mf('filterCaptions.resting.title', 'Courses with passed but without upcoming events'),
+				title: mf(
+					'filterCaptions.resting.title',
+					'Courses with passed but without upcoming events',
+				),
 			},
 		];
 
@@ -108,9 +111,7 @@ Template.filter.events({
 		const parentInstance = instance.parentInstance();
 		const filterName = instance.$(event.currentTarget).data('filter-name');
 
-		parentInstance.filter
-			.toggle('state', filterName)
-			.done();
+		parentInstance.filter.toggle('state', filterName).done();
 
 		parentInstance.updateUrl();
 	},
@@ -146,7 +147,7 @@ Template.additionalFilters.onCreated(function () {
 				label: mf('find.needsHost', 'Looking for a host'),
 			},
 		].map(
-		// add icon from Roles collection to role object
+			// add icon from Roles collection to role object
 			(role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon }),
 		);
 	});
@@ -214,9 +215,7 @@ Template.additionalFilters.events({
 		const { findInstance } = instance;
 		const filterName = instance.$(e.currentTarget).data('filter-name');
 
-		findInstance.filter
-			.toggle('needsRole', filterName)
-			.done();
+		findInstance.filter.toggle('needsRole', filterName).done();
 
 		findInstance.updateUrl();
 	},
@@ -250,8 +249,7 @@ Template.additionalFilters.events({
 	'click .js-toggle-subcategories'(event, instance) {
 		event.stopPropagation();
 		instance.$(`.js-sub-category.${this}`).toggle();
-		instance.$(`.js-toggle-subcategories.${this} span`)
-			.toggleClass('fa-angle-down fa-angle-up');
+		instance.$(`.js-toggle-subcategories.${this} span`).toggleClass('fa-angle-down fa-angle-up');
 	},
 
 	'click .js-category-selection-label'(e, instance) {

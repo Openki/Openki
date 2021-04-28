@@ -29,7 +29,6 @@ export class Filtering {
 		this._dep = new Tracker.Dependency();
 	}
 
-
 	clear() {
 		this._predicates = {};
 		return this;
@@ -120,7 +119,6 @@ export class Filtering {
 		return this;
 	}
 
-
 	/**
 	 * @param {string} name
 	 * @param {string} param
@@ -150,8 +148,9 @@ export class Filtering {
 		const settlingNames = Object.keys(this._predicates);
 		const settledNames = Object.keys(settled);
 
-		let same = settlingNames.length === settledNames.length
-			&& _.intersection(settlingNames, settledNames).length === settlingNames.length;
+		let same =
+			settlingNames.length === settledNames.length &&
+			_.intersection(settlingNames, settledNames).length === settlingNames.length;
 
 		if (same) {
 			// Look closer

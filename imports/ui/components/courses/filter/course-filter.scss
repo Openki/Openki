@@ -113,9 +113,9 @@ $filter-course-state-captions-gutter: 10px;
 	display: table;
 	font-size: medium;
 	height: 100%;
-	opacity: .75;
+	opacity: 0.75;
 	text-align: center;
-	transition-duration: .15s;
+	transition-duration: 0.15s;
 	transition-property: #{'box-shadow opacity'};
 	width: 100%;
 
@@ -145,7 +145,7 @@ $filter-course-state-captions-gutter: 10px;
 	&:hover {
 		box-shadow: 0 0 4px rgba(67, 223, 37, 1);
 		opacity: 1;
-		transition-duration: .15s;
+		transition-duration: 0.15s;
 		transition-property: #{'box-shadow opacity'};
 	}
 

@@ -17,7 +17,8 @@ Template.courseCompact.helpers({
 	courseState() {
 		if (this.nextEvent) {
 			return 'has-upcoming-events';
-		} if (this.lastEvent) {
+		}
+		if (this.lastEvent) {
 			return 'has-past-events';
 		}
 		return 'is-proposal';
@@ -86,10 +87,7 @@ Template.courseCompactRoles.helpers({
 		const isParticipant = hasRoleUser(this.members, 'participant', Meteor.userId());
 
 		if (numMembers === 1 && isParticipant) {
-			tooltip = mf(
-				'course.compact.youAreInterested',
-				'You are interested',
-			);
+			tooltip = mf('course.compact.youAreInterested', 'You are interested');
 		} else {
 			tooltip = mf(
 				'course.compact.interestedCount',
@@ -99,10 +97,7 @@ Template.courseCompactRoles.helpers({
 
 			if (numMembers > 1 && isParticipant) {
 				tooltip += ' ';
-				tooltip += mf(
-					'course.compact.interestedCountOwn',
-					'and you are one of them',
-				);
+				tooltip += mf('course.compact.interestedCountOwn', 'and you are one of them');
 			}
 		}
 
@@ -126,24 +121,21 @@ Template.courseCompactRoles.helpers({
 		let roleStateTooltip;
 
 		const tooltips = {
-			team:
-				{
-					needed: mf('course.list.status_titles.needs_organizer', 'Needs an organizer'),
-					occupied: mf('course.list.status_titles.has_team', 'Has a organizer-team'),
-					occupiedByUser: mf('course.list.status_titles.u_are_organizer', 'You are organizer'),
-				},
-			mentor:
-				{
-					needed: mf('course.list.status_titles.needs_mentor', 'Needs a mentor'),
-					occupied: mf('course.list.status_titles.has_mentor', 'Has a mentor'),
-					occupiedByUser: mf('course.list.status_titles.u_are_mentor', 'You are mentor'),
-				},
-			host:
-				{
-					needed: mf('course.list.status_titles.needs_host', 'Needs a host'),
-					occupied: mf('course.list.status_titles.has_host', 'Has a host'),
-					occupiedByUser: mf('course.list.status_titles.u_are_host', 'You are host'),
-				},
+			team: {
+				needed: mf('course.list.status_titles.needs_organizer', 'Needs an organizer'),
+				occupied: mf('course.list.status_titles.has_team', 'Has a organizer-team'),
+				occupiedByUser: mf('course.list.status_titles.u_are_organizer', 'You are organizer'),
+			},
+			mentor: {
+				needed: mf('course.list.status_titles.needs_mentor', 'Needs a mentor'),
+				occupied: mf('course.list.status_titles.has_mentor', 'Has a mentor'),
+				occupiedByUser: mf('course.list.status_titles.u_are_mentor', 'You are mentor'),
+			},
+			host: {
+				needed: mf('course.list.status_titles.needs_host', 'Needs a host'),
+				occupied: mf('course.list.status_titles.has_host', 'Has a host'),
+				occupiedByUser: mf('course.list.status_titles.u_are_host', 'You are host'),
+			},
 		};
 
 		if (!hasRole(this.members, role)) {
@@ -167,4 +159,3 @@ Template.courseCompact.events({
 		instance.$('.course-compact').toggleClass('elevate-child');
 	},
 });
-
