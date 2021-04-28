@@ -11,7 +11,6 @@ import LocalTime from '/imports/utils/local-time';
 import Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { visibleTenants } from '/imports/utils/visible-tenants';
 
 /** @typedef {import("../users/users").UserModel} UserModel */
 
@@ -201,6 +200,7 @@ export class EventsCollection extends Mongo.Collection {
 	 * @param {string} [filter.room] only events in this room (string match)
 	 * @param {boolean} [filter.standalone] only events that are not attached to a course
 	 * @param {string} [filter.region] restrict to given region
+	 * @param {string[]} [filter.tenants] restrict to given tenants
 	 * @param {string[]} [filter.categories] list of category ID the event must be in
 	 * @param {string} [filter.group] the event must be in that group (ID)
 	 * @param {string[]} [filter.groups] the event must be in one of the group ID
@@ -227,8 +227,6 @@ export class EventsCollection extends Mongo.Collection {
 		}
 
 		options.skip = skip;
-
-		find.tenant = { $in: visibleTenants() };
 
 		if (filter.period) {
 			find.start = { $lt: filter.period[1] }; // Start date before end of period
@@ -269,6 +267,10 @@ export class EventsCollection extends Mongo.Collection {
 
 		if (filter.standalone) {
 			find.courseId = { $exists: false };
+		}
+
+		if (filter.tenants && filter.tenants.length > 0) {
+			find.tenant = { $in: filter.tenants };
 		}
 
 		if (filter.region) {

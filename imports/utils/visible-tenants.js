@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
 export function visibleTenants() {
+	/** @type {string[]} */
 	let usersTenants = [];
 
 	try {

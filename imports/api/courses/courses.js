@@ -8,7 +8,6 @@ import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
-import { visibleTenants } from '/imports/utils/visible-tenants';
 
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
@@ -223,7 +222,9 @@ export class CoursesCollection extends Mongo.Collection {
 	}
 
 	/**
-	 * @param {{ region?: string;
+	 * @param {{
+	 * tenants?: string[];
+	 * region?: string;
 	 * state?: "proposal" | "resting" | "upcomingEvent";
 	 * userInvolved?: string;
 	 * categories?: string[];
@@ -243,7 +244,9 @@ export class CoursesCollection extends Mongo.Collection {
 
 		const find = {};
 
-		find.tenant = { $in: visibleTenants() };
+		if (filter.tenants && filter.tenants.length > 0) {
+			find.tenant = { $in: filter.tenants };
+		}
 
 		if (filter.region && filter.region !== 'all') {
 			find.region = filter.region;

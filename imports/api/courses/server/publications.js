@@ -7,5 +7,5 @@ Meteor.publish('courseDetails', (id) =>
 );
 
 Meteor.publish('Courses.findFilter', (filter, limit, sortParams) =>
-	Courses.findFilter(filter, limit, sortParams),
+	Courses.findFilter({ ...filter, tenants: visibleTenants() }, limit, sortParams),
 );

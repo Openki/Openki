@@ -19,7 +19,7 @@ Meteor.publish('event', (eventId) => {
 });
 
 Meteor.publish('Events.findFilter', (filter, limit, skip, sort) =>
-	Events.findFilter(filter, limit, skip, sort),
+	Events.findFilter({ ...filter, tenants: visibleTenants() }, limit, skip, sort),
 );
 
 Meteor.publish('eventsForCourse', (courseId) =>
