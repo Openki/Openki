@@ -64,7 +64,7 @@ export class OEvent {
 
 	/**
 	 * @param {UserModel} user
-	*/
+	 */
 	editableBy(user) {
 		if (!user) {
 			return false;
@@ -113,23 +113,21 @@ export class EventsCollection extends Mongo.Collection {
 
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
-		return new Filtering(
-			{
-				course: Predicates.id,
-				region: Predicates.id,
-				search: Predicates.string,
-				categories: Predicates.ids,
-				group: Predicates.id,
-				groups: Predicates.ids,
-				venue: Predicates.string,
-				room: Predicates.string,
-				start: Predicates.date,
-				before: Predicates.date,
-				after: Predicates.date,
-				end: Predicates.date,
-				internal: Predicates.flag,
-			},
-		);
+		return new Filtering({
+			course: Predicates.id,
+			region: Predicates.id,
+			search: Predicates.string,
+			categories: Predicates.ids,
+			group: Predicates.id,
+			groups: Predicates.ids,
+			venue: Predicates.string,
+			room: Predicates.string,
+			start: Predicates.date,
+			before: Predicates.date,
+			after: Predicates.date,
+			end: Predicates.date,
+			internal: Predicates.flag,
+		});
 	}
 
 	/**
@@ -178,15 +176,13 @@ export class EventsCollection extends Mongo.Collection {
 				update.allGroups = _.union(event.groups, courseGroups);
 			}
 
-			this.rawCollection().update({ _id: event._id },
-				{ $set: update },
-				(err, result) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve(result.result.nModified === 0);
-					}
-				});
+			this.rawCollection().update({ _id: event._id }, { $set: update }, (err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result.result.nModified === 0);
+				}
+			});
 		});
 	}
 
@@ -223,7 +219,6 @@ export class EventsCollection extends Mongo.Collection {
 
 		const options = {};
 		options.sort = Array.isArray(sort) ? sort : [];
-
 
 		let startSortOrder = 'asc';
 

@@ -18,9 +18,13 @@ Meteor.publish('event', (eventId) => {
 	return Events.find({ _id: eventId, tenant: { $in: visibleTenants() } });
 });
 
-Meteor.publish('Events.findFilter', (filter, limit, skip, sort) => Events.findFilter(filter, limit, skip, sort));
+Meteor.publish('Events.findFilter', (filter, limit, skip, sort) =>
+	Events.findFilter(filter, limit, skip, sort),
+);
 
-Meteor.publish('eventsForCourse', (courseId) => Events.find({ courseId, tenant: { $in: visibleTenants() } }));
+Meteor.publish('eventsForCourse', (courseId) =>
+	Events.find({ courseId, tenant: { $in: visibleTenants() } }),
+);
 
 Meteor.publish('affectedReplica', (eventId) => {
 	const event = Events.findOne({

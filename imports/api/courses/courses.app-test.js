@@ -26,7 +26,12 @@ if (Meteor.isClient) {
 
 				assert.isNotEmpty(coursesAsGast, 'shows courses');
 
-				assert.isEmpty(coursesAsGast.filter((c) => c.tenant && !Meteor.settings.public.publicTenants.includes(c.tenant)), "don't show courses from not public");
+				assert.isEmpty(
+					coursesAsGast.filter(
+						(c) => c.tenant && !Meteor.settings.public.publicTenants.includes(c.tenant),
+					),
+					"don't show courses from not public",
+				);
 			});
 
 			it('should allow a logged in user to see courses from his tenant', async function () {
@@ -41,10 +46,20 @@ if (Meteor.isClient) {
 
 				const coursesAsSchufien = Courses.findFilter().fetch();
 
-				assert.includeMembers(coursesAsSchufien.map((c) => c._id), coursesAsGast.map((c) => c._id), 'shows public courses as logged in user');
+				assert.includeMembers(
+					coursesAsSchufien.map((c) => c._id),
+					coursesAsGast.map((c) => c._id),
+					'shows public courses as logged in user',
+				);
 
-				assert.isTrue(coursesAsSchufien.length > coursesAsGast.length, 'shows private courses as logged in user');
-				assert.isNotEmpty(coursesAsSchufien.filter((c) => c.tenant && schufien.tenants.includes(c.tenant)), 'shows private courses as logged in user');
+				assert.isTrue(
+					coursesAsSchufien.length > coursesAsGast.length,
+					'shows private courses as logged in user',
+				);
+				assert.isNotEmpty(
+					coursesAsSchufien.filter((c) => c.tenant && schufien.tenants.includes(c.tenant)),
+					'shows private courses as logged in user',
+				);
 			});
 		});
 	});

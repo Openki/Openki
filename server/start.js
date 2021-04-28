@@ -36,7 +36,7 @@ function initializeDbCacheFields() {
 	Meteor.call('course.updateNextEvent', {}, AsyncTools.logErrors);
 	Meteor.setInterval(
 		() => {
-		// Update nextEvent for courses where it expired
+			// Update nextEvent for courses where it expired
 			Meteor.call('course.updateNextEvent', { 'nextEvent.start': { $lt: new Date() } });
 
 			Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
@@ -49,9 +49,11 @@ Meteor.startup(() => {
 	applyUpdates();
 
 	const runningVersion = Version.findOne();
-	if (typeof VERSION !== 'undefined' && (
-		(!runningVersion || runningVersion.complete !== VERSION.complete)
-			|| (runningVersion.commit !== VERSION.commit))
+	if (
+		typeof VERSION !== 'undefined' &&
+		(!runningVersion ||
+			runningVersion.complete !== VERSION.complete ||
+			runningVersion.commit !== VERSION.commit)
 	) {
 		const newVersion = _.extend(VERSION, {
 			activation: new Date(),
@@ -70,8 +72,7 @@ Meteor.startup(() => {
 
 	const serviceConf = Meteor.settings.service;
 	if (serviceConf) {
-		if (serviceConf.google
-		) {
+		if (serviceConf.google) {
 			ServiceConfiguration.configurations.remove({
 				service: 'google',
 			});

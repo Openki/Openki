@@ -55,11 +55,13 @@ Template.tenantSettings.events({
 			await MeteorAsync.callAsync('tenant.updateMembership', memberId, tenantId, true);
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
-			Alert.success(mf(
-				'tenantSettings.memberAdded',
-				{ MEMBER: memberName, TENANT: tenantName },
-				'"{MEMBER}" has been added as a member to the tenant "{TENANT}"',
-			));
+			Alert.success(
+				mf(
+					'tenantSettings.memberAdded',
+					{ MEMBER: memberName, TENANT: tenantName },
+					'"{MEMBER}" has been added as a member to the tenant "{TENANT}"',
+				),
+			);
 		} catch (err) {
 			Alert.serverError(err, 'Could not add member');
 		}
@@ -73,11 +75,13 @@ Template.tenantSettings.events({
 
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
-			Alert.success(mf(
-				'tenantSettings.memberRemoved',
-				{ MEMBER: memberName, TENANT: tenantName },
-				'"{MEMBER}" has been removed from to the tenant "{TENANT}"',
-			));
+			Alert.success(
+				mf(
+					'tenantSettings.memberRemoved',
+					{ MEMBER: memberName, TENANT: tenantName },
+					'"{MEMBER}" has been removed from to the tenant "{TENANT}"',
+				),
+			);
 		} catch (err) {
 			Alert.serverError(err, 'Could not remove member');
 		}
