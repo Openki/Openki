@@ -1,4 +1,3 @@
-
 import '/imports/api/courses/server/publications';
 import '/imports/api/course-discussions/methods';
 import '/imports/api/course-discussions/server/publications';

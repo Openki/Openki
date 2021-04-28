@@ -4,7 +4,7 @@ import { Template } from 'meteor/templating';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
 import '/imports/ui/components/events/list/event-list';
@@ -28,9 +28,9 @@ Template.courseEvents.onCreated(function () {
 	};
 
 	instance.haveMoreEvents = function () {
-		return Events.findFilter(
-			{ course: courseId, start: minuteTime.get() },
-		).count() > maxEventsShown;
+		return (
+			Events.findFilter({ course: courseId, start: minuteTime.get() }).count() > maxEventsShown
+		);
 	};
 
 	instance.ongoingEvents = function () {
@@ -83,12 +83,10 @@ Template.courseEvents.helpers({
 	},
 
 	upcomingEvents() {
-		return Events.findFilter(
-			{
-				course: this.course._id,
-				after: minuteTime.get(),
-			},
-		);
+		return Events.findFilter({
+			course: this.course._id,
+			after: minuteTime.get(),
+		});
 	},
 });
 
@@ -121,7 +119,11 @@ Template.courseEvents.events({
 	},
 
 	'click .js-track-cal-download'(event, instance) {
-		Analytics.trackEvent('Events downloads', 'Events downloads via course details', Regions.findOne(instance.data.course.region)?.nameEn);
+		Analytics.trackEvent(
+			'Events downloads',
+			'Events downloads via course details',
+			Regions.findOne(instance.data.course.region)?.nameEn,
+		);
 	},
 });
 

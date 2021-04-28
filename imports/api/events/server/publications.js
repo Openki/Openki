@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
-import Events from '../events';
+import { Events } from '../events';
 
-import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
+import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 
 Meteor.publish('events', (region) => {
 	if (!region) {
@@ -17,7 +17,9 @@ Meteor.publish('event', (eventId) => {
 	return Events.find(eventId);
 });
 
-Meteor.publish('Events.findFilter', (filter, limit, skip, sort) => Events.findFilter(filter, limit, skip, sort));
+Meteor.publish('Events.findFilter', (filter, limit, skip, sort) =>
+	Events.findFilter(filter, limit, skip, sort),
+);
 
 Meteor.publish('eventsForCourse', (courseId) => Events.find({ courseId }));
 

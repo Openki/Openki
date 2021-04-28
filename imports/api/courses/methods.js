@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 
 import { Courses, Course } from './courses';
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Roles } from '/imports/api/roles/roles';

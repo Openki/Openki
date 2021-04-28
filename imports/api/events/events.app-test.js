@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import { MeteorAsync } from '/imports/utils/promisify';
 import { Courses } from '../courses/courses';
 
