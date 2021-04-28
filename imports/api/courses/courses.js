@@ -79,9 +79,11 @@ export class Course {
 			return false;
 		}
 		const isNew = !this._id;
-		return isNew // Anybody may create a new course
-			|| UserPrivilegeUtils.privileged(user, 'admin') // Admins can edit all courses
-			|| _.intersection(user.badges, this.editors).length > 0;
+		return (
+			isNew || // Anybody may create a new course
+			UserPrivilegeUtils.privileged(user, 'admin') || // Admins can edit all courses
+			_.intersection(user.badges, this.editors).length > 0
+		);
 	}
 
 	/**
@@ -110,7 +112,6 @@ export class Course {
 export class CoursesCollection extends Mongo.Collection {
 	constructor() {
 		super('Courses', {
-
 			/**
 			 * @param {CourseEntity} course
 			 */
@@ -122,18 +123,16 @@ export class CoursesCollection extends Mongo.Collection {
 
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
-		return new Filtering(
-			{
-				region: Predicates.id,
-				search: Predicates.string,
-				group: Predicates.string,
-				categories: Predicates.ids,
-				state: Predicates.string,
-				needsRole: Predicates.ids,
-				internal: Predicates.flag,
-				archived: Predicates.flag,
-			},
-		);
+		return new Filtering({
+			region: Predicates.id,
+			search: Predicates.string,
+			group: Predicates.string,
+			categories: Predicates.ids,
+			state: Predicates.string,
+			needsRole: Predicates.ids,
+			internal: Predicates.flag,
+			archived: Predicates.flag,
+		});
 	}
 
 	/**
@@ -150,17 +149,21 @@ export class CoursesCollection extends Mongo.Collection {
 				return;
 			}
 
-			this.rawCollection().update({ _id: course._id }, {
-				$set: {
-					interested: course.members?.length || 0,
+			this.rawCollection().update(
+				{ _id: course._id },
+				{
+					$set: {
+						interested: course.members?.length || 0,
+					},
 				},
-			}, (err, result) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(result.result.nModified === 0);
-				}
-			});
+				(err, result) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(result.result.nModified === 0);
+					}
+				},
+			);
 		});
 	}
 
@@ -188,22 +191,23 @@ export class CoursesCollection extends Mongo.Collection {
 
 			const update = { $set: { editors } };
 
-			this.rawCollection().update({ _id: course._id },
-				update,
-				(err, result) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve(result.result.nModified === 0);
-					}
-				});
-		}).then(() => {
-			// At some point we'll have to figure out a proper caching hierarchy
-			Meteor.call('event.updateGroups', { courseId });
-		}, (reason) => {
-			/* eslint-disable-next-line no-console */
-			console.log(`Failed updateGroups: ${reason}`);
-		});
+			this.rawCollection().update({ _id: course._id }, update, (err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result.result.nModified === 0);
+				}
+			});
+		}).then(
+			() => {
+				// At some point we'll have to figure out a proper caching hierarchy
+				Meteor.call('event.updateGroups', { courseId });
+			},
+			(reason) => {
+				/* eslint-disable-next-line no-console */
+				console.log(`Failed updateGroups: ${reason}`);
+			},
+		);
 	}
 
 	/**

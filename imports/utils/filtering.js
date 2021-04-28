@@ -29,7 +29,6 @@ export class Filtering {
 		this._dep = new Tracker.Dependency();
 	}
 
-
 	clear() {
 		this._predicates = {};
 		return this;
@@ -120,7 +119,6 @@ export class Filtering {
 		return this;
 	}
 
-
 	/**
 	 * @param {string} name
 	 * @param {string} [param]
@@ -134,10 +132,10 @@ export class Filtering {
 			} else {
 				this.add(name, '1');
 			}
-		} else
+		}
 		// overload: toggle(name, param)
 		// eg. for string and id
-		if (this.get(name)?.includes(param)) {
+		else if (this.get(name)?.includes(param)) {
 			this.remove(name, param);
 		} else {
 			this.add(name, param);
@@ -162,8 +160,9 @@ export class Filtering {
 		const settlingNames = Object.keys(this._predicates);
 		const settledNames = Object.keys(settled);
 
-		let same = settlingNames.length === settledNames.length
-			&& _.intersection(settlingNames, settledNames).length === settlingNames.length;
+		let same =
+			settlingNames.length === settledNames.length &&
+			_.intersection(settlingNames, settledNames).length === settlingNames.length;
 
 		if (same) {
 			// Look closer

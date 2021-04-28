@@ -107,7 +107,7 @@
 }
 
 .proposal-tag {
-	$background-color: rgba($blue-lighter, .75);
+	$background-color: rgba($blue-lighter, 0.75);
 
 	background-color: $background-color;
 	color: darken($background-color, 65%);
@@ -118,7 +118,7 @@
 // ** Internal indicator dot
 //========================================================================================
 .details-internal {
-	background-color:  #f00;
+	background-color: #f00;
 	border-radius: 50%;
 	height: 5px;
 	left: 6px;
@@ -215,7 +215,9 @@
 	}
 }
 
-$course-details-content-padding-horizontal: ($details-header-padding-horizontal + $course-border-width);
+$course-details-content-padding-horizontal: (
+	$details-header-padding-horizontal + $course-border-width
+);
 
 .is-proposal .course-details-content {
 	padding: 15px $course-details-content-padding-horizontal;

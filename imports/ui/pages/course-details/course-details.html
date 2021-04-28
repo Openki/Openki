@@ -92,7 +92,8 @@
 
 <template name="confirmDialog">
 	<div class="course-delete-confirmation">
-		<p>{{mf 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}</p>
+		<p>{{mf 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}
+		</p>
 		<div class="form-actions">
 			{{#unless hasArchiveButton}}
 				{{> buttonCourseArchive 
@@ -109,7 +110,6 @@
 		</div>
 	</div>
 </template>
-
 
 <template name="courseDetailsSubmenu">
 	<nav class="course-details-nav">
@@ -149,7 +149,6 @@
 	</div>
 </template>
 
-
 <template name="courseGroupList">
 	<div class="tag-group multiline">
 		{{#each groups}}
@@ -161,10 +160,8 @@
 			{{/if}}
 			{{#if tools}}
 				<div class="btn-group tag-btn group-tag-btn addon">
-					<button type="button" class="dropdown-toggle"
-						aria-expanded="false"
-						aria-haspopup="true"
-						data-toggle="dropdown">
+					<button type="button" class="dropdown-toggle" aria-expanded="false"
+							aria-haspopup="true" data-toggle="dropdown">
 						<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
 					</button>
 					<ul class="dropdown-menu dialog-dropdown">
@@ -185,14 +182,11 @@
 	</div>
 </template>
 
-
 <template name="courseGroupAdd">
 	{{#if groupsToAdd}}
 		<div class="btn-group tag-btn group-tag-btn">
-			<button type="button" class="dropdown-toggle"
-				aria-expanded="false"
-				aria-haspopup="true"
-				data-toggle="dropdown">
+			<button type="button" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true"
+					data-toggle="dropdown">
 				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 				<span>{{mf 'course.group.addText' 'link a group'}}</span>
 				<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
@@ -205,10 +199,7 @@
 				<li role="seperator" class="divider"></li>
 				{{#each groupsToAdd}}
 					<li>
-						<button
-							class="btn-link js-add-group"
-							type="button"
-							value="{{this}}">
+						<button class="btn-link js-add-group" type="button" value="{{this}}">
 							{{name}}
 						</button>
 					</li>
@@ -223,7 +214,6 @@
 		</div>
 	{{/if}}
 </template>
-
 
 <template name="courseGroupRemove">
 	{{#if expanded}}
@@ -242,7 +232,6 @@
 		</a>
 	{{/if}}
 </template>
-
 
 <template name="courseGroupMakeOrganizer">
 	{{#if expanded}}

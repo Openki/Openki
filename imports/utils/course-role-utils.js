@@ -27,6 +27,5 @@ export function hasRoleUser(members, role, userId) {
 	if (!userId) {
 		return false;
 	}
-	return members.some((member) => member.user === userId
-		&& member.roles.includes(role));
+	return members.some((member) => member.user === userId && member.roles.includes(role));
 }

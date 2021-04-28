@@ -16,10 +16,7 @@ if (Meteor.isClient) {
 
 				Router.go('/');
 				const haveEditfield = () => {
-					assert(
-						jQuery('.js-title').length > 0,
-						'New course edit field present',
-					);
+					assert(jQuery('.js-title').length > 0, 'New course edit field present');
 				};
 				await MeteorAsync.loginWithPasswordAsync('greg', 'greg');
 				await waitForSubscriptions();
