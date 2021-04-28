@@ -32,23 +32,27 @@ if (Meteor.isServer) {
 	const tryClean = function (clean, tries) {
 		return new Promise((resolve, reject) => {
 			clean(resolve, reject);
-		/* eslint-disable-next-line consistent-return */
-		}).then((cleaned) => {
-			if (!cleaned) {
-				if (tries < 1) {
-					// Ooops we ran out of tries.
-					// This either means the updates to the cached fields happen faster than
-					// we can cache them (then the cache updates would have to be throttled) or
-					// that the clean function is broken (much more likely).
-					throw new Error(`Giving up after trying to apply cleansing function ${maxTries} times: ${clean}`);
+		}).then(
+			(cleaned) => {
+				if (!cleaned) {
+					if (tries < 1) {
+						// Ooops we ran out of tries.
+						// This either means the updates to the cached fields happen faster than
+						// we can cache them (then the cache updates would have to be throttled) or
+						// that the clean function is broken (much more likely).
+						throw new Error(
+							`Giving up after trying to apply cleaning function ${maxTries} times: ${clean}`,
+						);
+					}
+					return tryClean(clean, tries - 1);
 				}
-				return tryClean(clean, tries - 1);
-			}
-			return undefined;
-		}, (reason) => {
-			/* eslint-disable-next-line no-console */
-			console.log(`Cleansing function failed: ${reason}`);
-		});
+				return undefined;
+			},
+			(reason) => {
+				/* eslint-disable-next-line no-console */
+				console.log(`Cleaning function failed: ${reason}`);
+			},
+		);
 	};
 
 	/**
