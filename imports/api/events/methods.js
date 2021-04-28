@@ -22,7 +22,7 @@ import { AsyncTools } from '/imports/utils/async-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
 import * as StringTools from '/imports/utils/string-tools';
-import UpdateMethods from '/imports/utils/update-methods';
+import * as UpdateMethods from '/imports/utils/update-methods';
 
 /**
  * @param {{
@@ -480,7 +480,7 @@ Meteor.methods({
 	 * @param {Boolean} add - Whether to add or remove the group
 	 *
 	 */
-	'event.promote': UpdateMethods.Promote(Events),
+	'event.promote': UpdateMethods.promote(Events),
 
 	/** Add or remove a group from the groupOrganizers list
 	 *
@@ -489,7 +489,7 @@ Meteor.methods({
 	 * @param {Boolean} add - Whether to add or remove the group
 	 *
 	 */
-	'event.editing': UpdateMethods.Editing(Events),
+	'event.editing': UpdateMethods.editing(Events),
 
 	/** Add current user as event-participant
 	 *
