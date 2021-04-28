@@ -5,7 +5,7 @@ import { Courses } from '/imports/api/courses/courses';
 import Events from '/imports/api/events/events';
 import { Users } from '/imports/api/users/users';
 
-function update() {
+export function update() {
 	let updated = 0;
 
 	const tenantId = Tenants.insert({
@@ -15,31 +15,12 @@ function update() {
 
 	updated += 1;
 
-	Regions.find().fetch().forEach((orginalRegion) => {
-		const region = { ...orginalRegion };
-		region.tenant = tenantId;
-		updated += Regions.update(region._id, region);
-	});
-
-	Courses.find().fetch().forEach((orginalCourse) => {
-		const course = { ...orginalCourse };
-		course.tenant = tenantId;
-		updated += Courses.update(course._id, course);
-	});
-
-	Events.find().fetch().forEach((orginalEvent) => {
-		const event = { ...orginalEvent };
-		event.tenant = tenantId;
-		updated += Events.update(event._id, event);
-	});
-
-	Users.find().fetch().forEach((orginalUser) => {
-		const user = { ...orginalUser };
-		user.tenants = [];
-		updated += Users.update(user._id, user);
-	});
+	updated += Regions.update({}, { $set: { tenant: tenantId } }, { multi: true });
+	updated += Courses.update({}, { $set: { tenant: tenantId } }, { multi: true });
+	updated += Events.update({}, { $set: { tenant: tenantId } }, { multi: true });
+	updated += Users.update({}, { $set: { tenants: [] } }, { multi: true });
 
 	return updated;
 }
 
-export { update as default, update };
+export default update;

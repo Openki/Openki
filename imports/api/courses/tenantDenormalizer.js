@@ -5,15 +5,16 @@ import { Courses } from '/imports/api/courses/courses';
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
 
-function onStartUp() {
+export function onStartUp() {
 	let updated = 0;
 
-	Regions.find({}, { fields: { _id: 1, tenant: 1 } })
-		.forEach((region) => {
-			updated += Courses.update({ region: region._id },
-				{ $set: { tenant: region.tenant } },
-				{ multi: true });
-		});
+	Regions.find({}, { fields: { _id: 1, tenant: 1 } }).forEach((region) => {
+		updated += Courses.update(
+			{ region: region._id },
+			{ $set: { tenant: region.tenant } },
+			{ multi: true },
+		);
+	});
 
 	/* eslint-disable-next-line no-console */
 	console.log(`courses.tenantDenormalizer.onStartUp: ${updated} affected courses`);
@@ -22,7 +23,7 @@ function onStartUp() {
 /**
  * @param {CourseModel} course
  */
-function beforeInsert(course) {
+ export function beforeInsert(course) {
 	if (!course.region) {
 		throw new Error('Unexpected falsy: course.region');
 	}
@@ -35,5 +36,3 @@ function beforeInsert(course) {
 
 	return { ...course, tenant: region.tenant };
 }
-
-export { onStartUp, beforeInsert };

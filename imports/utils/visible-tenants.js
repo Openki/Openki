@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-function visibleTenants() {
+export function visibleTenants() {
 	let usersTenants = [];
 
 	try {
@@ -9,10 +9,10 @@ function visibleTenants() {
 		// Attempt to recover gracefully by catching:
 		usersTenants = Meteor.user().tenants || [];
 
-	// eslint-disable-next-line no-empty
-	} catch (e) {}
+		// eslint-disable-next-line no-empty
+	} catch {}
 
 	return usersTenants.concat(Meteor.settings.public.publicTenants);
 }
 
-export { visibleTenants as default, visibleTenants };
+export default visibleTenants;

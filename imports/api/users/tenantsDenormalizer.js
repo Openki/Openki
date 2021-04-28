@@ -3,14 +3,13 @@ import { Users } from './users';
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
 
-function onStartUp() {
+export function onStartUp() {
 	let updated = 0;
 
 	const tenants = Tenants.find({}, { fields: { _id: 1, members: 1 } }).fetch();
 
 	Users.find({}, { fields: { _id: 1 } }).forEach((u) => {
-		const userTenants = tenants.filter((t) => t.members.includes(u._id))
-			.map((t) => t._id);
+		const userTenants = tenants.filter((t) => t.members.includes(u._id)).map((t) => t._id);
 
 		updated += Users.update(u._id, { $set: { tenants: userTenants } });
 	});
@@ -24,7 +23,7 @@ function onStartUp() {
  * @param {string} tenantId
  * @param {boolean} join
  */
-function afterTenantUpdateMembership(userId, tenantId, join) {
+export function afterTenantUpdateMembership(userId, tenantId, join) {
 	let update;
 	if (join) {
 		update = { $addToSet: { tenants: tenantId } };
@@ -34,5 +33,3 @@ function afterTenantUpdateMembership(userId, tenantId, join) {
 
 	Users.update(userId, update);
 }
-
-export { onStartUp, afterTenantUpdateMembership };
