@@ -80,8 +80,8 @@ export class Course {
 		}
 		const isNew = !this._id;
 		return (
-			isNew || // Anybody may create a new course
-			UserPrivilegeUtils.privileged(user, 'admin') || // Admins can edit all courses
+			isNew /* Anybody may create a new course */ ||
+			UserPrivilegeUtils.privileged(user, 'admin') /* Admins can edit all courses */ ||
 			_.intersection(user.badges, this.editors).length > 0
 		);
 	}

@@ -93,6 +93,7 @@ Template.courseDetailsPage.onCreated(function () {
 
 Template.courseDetailsPage.helpers({
 	// more helpers in course.roles.js
+
 	mayEdit() {
 		return this.course?.editableBy(Meteor.user());
 	},

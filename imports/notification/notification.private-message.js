@@ -87,7 +87,10 @@ notificationPrivateMessage.Model = function (entry) {
 		 * @param {UserModel} actualRecipient
 		 */
 		accepted(actualRecipient) {
-			if (!actualRecipient.allowPrivateMessages && !UserPrivilegeUtils.privileged(sender, 'admin')) {
+			if (
+				!actualRecipient.allowPrivateMessages &&
+				!UserPrivilegeUtils.privileged(sender, 'admin')
+			) {
 				throw new Error('User wishes to not receive private messages from users');
 			}
 
@@ -110,6 +113,7 @@ notificationPrivateMessage.Model = function (entry) {
 			}
 
 			const subjectvars = { SENDER: StringTools.truncate(sender.username, 10) };
+			// prettier-ignore
 			const subject = mf('notification.privateMessage.mail.subject', subjectvars, 'Private message from {SENDER}', userLocale);
 			const htmlizedMessage = HtmlTools.plainToHtml(entry.body.message);
 
@@ -154,7 +158,9 @@ notificationPrivateMessage.Model = function (entry) {
 					throw new Meteor.Error(404, 'course not found');
 				}
 				vars.courseName = course.name;
-				vars.courseLink = Router.url('showCourse', course);
+				vars.courseLink = Router.url('showCourse', course, {
+					query: 'campaign=privateMessage',
+				});
 			}
 
 			return vars;

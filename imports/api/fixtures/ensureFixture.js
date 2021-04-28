@@ -42,31 +42,41 @@ const ensure = {
 			return user;
 		}
 
-		const id = Accounts.createUser(/** @type {UserEntity} */{
-			username: name,
-			email,
-			profile: { name },
-			notifications: true,
-			allowPrivateMessages: true,
-		});
+		const id = Accounts.createUser(
+			/** @type {UserEntity} */ {
+				username: name,
+				email,
+				profile: { name },
+				notifications: true,
+				allowPrivateMessages: true,
+			},
+		);
 
 		const age = Math.floor(prng() * 100000000000);
 		const time = new Date().getTime();
-		Users.update({ _id: id }, {
-			$set: {
-				// Every password is set to "greg".
-				// Hashing a password with bcrypt is expensive so we use the
-				// computed hash.
-				services: { password: { bcrypt: '$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq' } },
-				createdAt: new Date(time - age),
-				lastLogin: new Date(time - age / 30),
+		Users.update(
+			{ _id: id },
+			{
+				$set: {
+					// Every password is set to "greg".
+					// Hashing a password with bcrypt is expensive so we use the
+					// computed hash.
+					services: {
+						password: { bcrypt: '$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq' },
+					},
+					createdAt: new Date(time - age),
+					lastLogin: new Date(time - age / 30),
+				},
 			},
-		});
+		);
 
 		if (verified) {
-			Users.update({ _id: id }, {
-				$set: { 'emails.0.verified': true },
-			});
+			Users.update(
+				{ _id: id },
+				{
+					$set: { 'emails.0.verified': true },
+				},
+			);
 		}
 
 		user = Users.findOne(id);
@@ -140,8 +150,8 @@ const ensure = {
 		venue.slug = StringTools.slug(venue.name);
 
 		const region = Regions.findOne(regionId);
-		const lat = region.loc.coordinates[1] + (prng() ** 2) * 0.02 * (prng() > 0.5 ? 1 : -1);
-		const lon = region.loc.coordinates[0] + (prng() ** 2) * 0.02 * (prng() > 0.5 ? 1 : -1);
+		const lat = region.loc.coordinates[1] + prng() ** 2 * 0.02 * (prng() > 0.5 ? 1 : -1);
+		const lon = region.loc.coordinates[0] + prng() ** 2 * 0.02 * (prng() > 0.5 ? 1 : -1);
 		venue.loc = { type: 'Point', coordinates: [lon, lat] };
 
 		venue._id = ensure.fixedId([venue.name, venue.region]);

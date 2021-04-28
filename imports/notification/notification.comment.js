@@ -17,9 +17,9 @@ import * as StringTools from '/imports/utils/string-tools';
 const notificationComment = {};
 
 /**
-  * Record the intent to send event notifications
-  * @param {string} commentId ID for the CourseDiscussions collection
-  */
+ * Record the intent to send event notifications
+ * @param {string} commentId ID for the CourseDiscussions collection
+ */
 notificationComment.record = function (commentId) {
 	check(commentId, String);
 	const comment = CourseDiscussions.findOne(commentId);
@@ -46,11 +46,7 @@ notificationComment.record = function (commentId) {
 		const threadId = comment.parentId;
 		if (threadId) {
 			const threadSelector = {
-				$or:
-					[
-						{ _id: threadId },
-						{ parentId: threadId },
-					],
+				$or: [{ _id: threadId }, { parentId: threadId }],
 			};
 
 			CourseDiscussions.find(threadSelector).forEach((threadComment) => {
@@ -125,8 +121,10 @@ notificationComment.Model = function (entry) {
 			let subject;
 			if (commenter) {
 				subjectvars.COMMENTER = StringTools.truncate(commenterName, 20);
+				// prettier-ignore
 				subject = mf('notification.comment.mail.subject', subjectvars, 'Comment on {COURSE} by {COMMENTER}: {TITLE}', userLocale);
 			} else {
+				// prettier-ignore
 				subject = mf('notification.comment.mail.subject.anon', subjectvars, 'Anonymous comment on {COURSE}: {TITLE}', userLocale);
 			}
 
@@ -139,21 +137,23 @@ notificationComment.Model = function (entry) {
 			}
 			siteName = siteName || Meteor.settings.public.siteName;
 
-			return (
-				{
-					unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
-					course,
-					courseLink: Router.url('showCourse', course, { query: `select=${comment._id}&campaign=commentNotify` }),
-					subject,
-					comment,
-					commenter,
-					commenterLink: `${Meteor.absoluteUrl(`user/${comment.userId}/${commenterName}`)}?campaign=commentNotify`,
-					commenterName,
-					customSiteUrl: `${Meteor.absoluteUrl()}?campaign=commentNotify`,
-					customSiteName: siteName,
-					customMailLogo: mailLogo,
-				}
-			);
+			return {
+				unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
+				course,
+				courseLink: Router.url('showCourse', course, {
+					query: `select=${comment._id}&campaign=commentNotify`,
+				}),
+				subject,
+				comment,
+				commenter,
+				commenterLink: `${Meteor.absoluteUrl(
+					`user/${comment.userId}/${commenterName}`,
+				)}?campaign=commentNotify`,
+				commenterName,
+				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=commentNotify`,
+				customSiteName: siteName,
+				customMailLogo: mailLogo,
+			};
 		},
 		template: 'notificationCommentMail',
 	};

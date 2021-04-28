@@ -4,7 +4,7 @@ import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 
@@ -80,7 +80,6 @@ Template.venueDetails.onCreated(function () {
 			after: now,
 		};
 
-
 		return Events.findFilter(filter, limit).fetch();
 	};
 
@@ -131,7 +130,6 @@ Template.venueDetails.onRendered(function () {
 		instance.setRegion(region);
 	});
 });
-
 
 Template.venueDetails.helpers({
 	editing() {
@@ -185,7 +183,6 @@ Template.venueDetails.helpers({
 		return query.length > limit;
 	},
 
-
 	pastEvents() {
 		const instance = Template.instance();
 		return instance.getPastEvents(instance.pastEventLimit.get());
@@ -199,7 +196,6 @@ Template.venueDetails.helpers({
 		return query.length > limit;
 	},
 });
-
 
 Template.venueDetails.events({
 	'click .js-venue-edit'(event, instance) {

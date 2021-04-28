@@ -3,7 +3,7 @@
 /*
 import LocalTime from '/imports/utils/local-time';
 import Log from '/imports/api/log/log';
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 
 const updateName = '2017.08.01 fixLocalDates';
 

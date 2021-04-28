@@ -1,7 +1,7 @@
 // Legacy: This file is no longer relevant, it is only used for documentation purposes.
 
 /*
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import Venues from '/imports/api/venues/venues';
 
 const UpdatesAvailable = [];

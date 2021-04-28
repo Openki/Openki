@@ -7,19 +7,13 @@
 	<style type="text/css">
 		table td {
 			border-collapse: collapse;
+
+			/* Handling long words and urls */
+			hyphens: auto;
+			overflow-wrap: break-word;
 			word-break: break-all;
-		}
-
-		/*Recommended embedded CSS for Outlook.com*/
-		.ExternalClass p,
-		.ExternalClass span,
-		.ExternalClass font,
-		.ExternalClass td {
-			line-height: 100%;
-		}
-
-		.ExternalClass {
-			width: 100%;
+			word-break: break-word;
+			word-wrap: break-word;
 		}
 
 	</style>
@@ -27,15 +21,17 @@
 
 <body>
 	<table cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f0f3f4"
-		   style="-webkit-box-shadow: 1px 3px 14px 7px #dfe7e8; -moz-box-shadow: 1px 3px 14px 7px #dfe7e8; box-shadow: 1px 3px 14px 7px #dfe7e8;">
+		   style="box-shadow: 1px 3px 14px 7px #dfe7e8;">
 		<tr>
 			<td>
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
 					<tr bgcolor="#3f819e">
 						<td width="500"
-							style="padding: 0 0 0 20px; font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter;">
+							style="font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter; padding: 0 0 0 20px;">
 							<a href="{{siteUrl}}"
-							   style="color: #fff !important; text-decoration: none !important;">{{siteName}}</a>
+							   style="color: #fff !important; text-decoration: none !important;">
+								{{siteName}}
+							</a>
 						</td>
 					</tr>
 				</table>
@@ -43,25 +39,24 @@
 		</tr>
 		<tr>
 			<td width="400" valign="top"
-				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px 20px;">
+				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px;">
 				<span style="font-size: 16px; font-weight: bold;">
 					{{mf "verifyEmail.email.gretting" "Hi {NAME}" NAME=username}}
 				</span>
 				<p style="margin: 1em 0;">
-					in
 					{{mf "verifyEmail.email.introduction" "We're happy that you are part of the {SITE} community." SITE=siteName}}
 				</p>
 			</td>
 		</tr>
 		<tr>
-			<td width="400" valign="top" style="padding: 0px 20px 0px 20px;">
+			<td width="400" valign="top" style="padding: 0 20px;">
 
 				<p style="padding-top: 2em;">
 					{{mf "verifyEmail.email.verification" "You can click this link to verify your email address. This helps us knowing you're a real person. :)"}}
 				</p>
-				<div style="text-align: center; padding: 2em 0;">
+				<div style="padding: 2em 0; text-align: center;">
 					<a class="button" href="{{url}}" bgcolor="#3f819e"
-					   style="display: inline-block; padding: 12px 18px; border-radius: 5px; color: white !important; font-size: 14px; background-color: #3f819e; text-decoration: none;">
+					   style="background-color: #3f819e; border-radius: 5px; color: #fff !important; display: inline-block; font-size: 14px; padding: 12px 18px; text-decoration: none;">
 						{{mf "verifyEmail.email.verifyButton" "Verify email address"}}
 					</a>
 				</div>
@@ -70,7 +65,7 @@
 		</tr>
 		<tr>
 			<td valign="top"
-				style="padding: 10px; font-family: Source Sans Pro, sans-serif; font-size: 12px;">
+				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 10px;">
 				{{mf "verifyEmail.email.farewell" "Sincerely"}}<br />
 				{{mf "verifyEmail.email.postscript" "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)" SITE=siteName}}
 			</td>
@@ -78,14 +73,12 @@
 		<tr>
 			<td width="500" valign="top" bgcolor="#3f819e">
 				<table cellpadding="0" cellspacing="0" border="0" align="center"
-					   style="color:#dddddd; font-family: Source Sans Pro, sans-serif; font-size: 10px; text-align: center;">
+					   style="color:#ddd; font-family: Source Sans Pro, sans-serif; font-size: 10px; text-align: center;">
 					<tr>
-						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
+						<td width="500" valign="top" style="padding: 0 15px 5px;">
 							{{mf "verifyEmail.email.unexpected" "If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}" REPORTEMAIL=reportEmail}}
 							<a href="{{urlFor 'profile'}}"
-							   style="color:#dddddd !important; text-decoration: underline;">
-								{{mf "verifyEmail.email.profileLink" "Visit your profile"}}
-							</a>
+							   style="color:#ddd !important; text-decoration: underline;">{{mf "verifyEmail.email.profileLink" "Visit your profile"}}</a>
 						</td>
 					</tr>
 				</table>
