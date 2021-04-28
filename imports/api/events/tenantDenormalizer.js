@@ -1,6 +1,6 @@
 import { Regions } from '/imports/api/regions/regions';
 // eslint-disable-next-line import/no-cycle
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 /** @typedef {import('./events').EventEntity} EventEntity */
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
