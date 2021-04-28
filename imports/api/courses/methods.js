@@ -7,7 +7,7 @@ import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Roles } from '/imports/api/roles/roles';
-import UpdateMethods from '/imports/utils/update-methods';
+import * as UpdateMethods from '/imports/utils/update-methods';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 
@@ -298,7 +298,7 @@ Meteor.methods({
 	 * @param {boolean} add - Whether to add or remove the group
 	 *
 	 */
-	'course.promote': UpdateMethods.Promote(Courses),
+	'course.promote': UpdateMethods.promote(Courses),
 
 	/**
 	 * Add or remove a group from the groupOrganizers list
@@ -307,7 +307,7 @@ Meteor.methods({
 	 * @param {boolean} add - Whether to add or remove the group
 	 *
 	 */
-	'course.editing': UpdateMethods.Editing(Courses),
+	'course.editing': UpdateMethods.editing(Courses),
 
 	/**
 	 * Recalculate the editors field
