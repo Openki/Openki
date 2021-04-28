@@ -5,7 +5,7 @@ import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
 
 import { Courses } from '/imports/api/courses/courses';
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Tenants } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';

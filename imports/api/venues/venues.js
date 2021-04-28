@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
@@ -60,9 +60,11 @@ export class Venue {
 			return false;
 		}
 		const isNew = !this._id;
-		return isNew // Anybody may create a new location
-			|| user._id === this.editor
-			|| UserPrivilegeUtils.privileged(user, 'admin'); // Admins can edit all venues
+		return (
+			isNew /* Anybody may create a new location */ ||
+			user._id === this.editor ||
+			UserPrivilegeUtils.privileged(user, 'admin') // Admins can edit all venues
+		);
 	}
 }
 
@@ -81,16 +83,22 @@ export class VenueCollection extends Mongo.Collection {
 			this._ensureIndex({ loc: '2dsphere' });
 		}
 
-		this.facilityOptions = ['projector', 'screen', 'audio', 'blackboard', 'whiteboard',
-			'flipchart', 'wifi', 'kitchen', 'wheelchairs',
+		this.facilityOptions = [
+			'projector',
+			'screen',
+			'audio',
+			'blackboard',
+			'whiteboard',
+			'flipchart',
+			'wifi',
+			'kitchen',
+			'wheelchairs',
 		];
 	}
 
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
-		return new Filtering(
-			{ region: Predicates.id },
-		);
+		return new Filtering({ region: Predicates.id });
 	}
 
 	/**
@@ -124,7 +132,9 @@ export class VenueCollection extends Mongo.Collection {
 
 		if (filter.search) {
 			const searchTerms = filter.search.split(/\s+/);
-			find.$and = searchTerms.map((searchTerm) => ({ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }));
+			find.$and = searchTerms.map((searchTerm) => ({
+				name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' },
+			}));
 		}
 
 		if (filter.recent) {
@@ -142,12 +152,13 @@ export class VenueCollection extends Mongo.Collection {
 
 			const recentEvents = Events.find(findRecent, findRecentOptions).fetch();
 
-			const recentLocations = [...new Set(
-				recentEvents
-					.map((event) => event.venue?._id)
-					.filter((venueId) => venueId), // filter empty ids
-			)] // make unique with Set
-
+			const recentLocations = [
+				...new Set(
+					recentEvents
+						.map((event) => event.venue?._id) // get ids
+						.filter((venueId) => venueId), // filter empty ids
+				),
+			] // make unique with Set
 				.slice(0, limit || 10); // and limit it
 
 			find._id = { $in: recentLocations };

@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
 
-import Events from './events';
+import { Events } from '/imports/api/events/events';
 
 if (Meteor.isClient) {
 	describe('Events', () => {

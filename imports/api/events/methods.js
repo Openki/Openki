@@ -17,7 +17,7 @@ import Notification from '/imports/notification/notification';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
-import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
+import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import { AsyncTools } from '/imports/utils/async-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';

@@ -322,4 +322,6 @@ export class EventsCollection extends Mongo.Collection {
 	}
 }
 
-export default new EventsCollection();
+export const Events = new EventsCollection();
+
+export default Events;

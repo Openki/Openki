@@ -2,7 +2,7 @@
 
 /*
 import { Courses } from '/imports/api/courses/courses';
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 
 const UpdatesAvailable = [];
 // Ensure no null groups in events

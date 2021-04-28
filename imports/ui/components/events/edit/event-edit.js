@@ -16,13 +16,13 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import { Editable } from '/imports/ui/lib/editable';
 
-import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
+import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import LocalTime from '/imports/utils/local-time';
 
 import { Analytics } from '/imports/ui/lib/analytics';
@@ -41,15 +41,13 @@ Template.eventEdit.onCreated(function () {
 	instance.busy(false);
 
 	this.state = new ReactiveDict();
-	this.state.setDefault(
-		{
-			updateReplicasInfos: false,
-			startDayChanged: false,
-			timeChanged: false,
-			updateReplicasTime: false,
-			updateChangedReplicasTime: false,
-		},
-	);
+	this.state.setDefault({
+		updateReplicasInfos: false,
+		startDayChanged: false,
+		timeChanged: false,
+		updateReplicasTime: false,
+		updateChangedReplicasTime: false,
+	});
 
 	const { courseId } = this.data;
 	if (courseId) {
@@ -69,7 +67,10 @@ Template.eventEdit.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		mf('event.description.placeholder', 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'),
+		mf(
+			'event.description.placeholder',
+			'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)',
+		),
 	);
 
 	instance.autorun(() => {
@@ -78,8 +79,10 @@ Template.eventEdit.onCreated(function () {
 		instance.editableDescription.setText(data.description);
 	});
 
-	/** Get current local time depending on selected region
-	  * Returned as faux-UTC moment-object. */
+	/**
+	 * Get current local time depending on selected region
+	 * @returns Returned as faux-UTC moment-object.
+	 */
 	instance.now = function () {
 		return LocalTime.nowFauxUTC(instance.selectedRegion.get());
 	};
@@ -93,7 +96,6 @@ const readDateTime = function (dateStr, timeStr) {
 	return moment.utc(`${dateStr} ${timeStr}`, 'L LT');
 };
 
-
 const getEventStartMoment = function (template) {
 	return readDateTime(
 		template.$('.js-event-start-date').val(),
@@ -101,13 +103,9 @@ const getEventStartMoment = function (template) {
 	);
 };
 
-
 const getEventEndMoment = function (template) {
 	const startMoment = getEventStartMoment(template);
-	let endMoment = readDateTime(
-		startMoment.format('L'),
-		template.$('.js-event-end-time').val(),
-	);
+	let endMoment = readDateTime(startMoment.format('L'), template.$('.js-event-end-time').val());
 
 	// If the end time is earlier than the start time, assume the event
 	// spans into the next day. This might result in some weird behavior
@@ -124,12 +122,10 @@ const getEventEndMoment = function (template) {
 	return endMoment;
 };
 
-
 const getEventDuration = function (template) {
 	const duration = parseInt(template.$('.js-event-duration').val(), 10);
 	return Math.max(0, duration);
 };
-
 
 /* Patch the end time and the duration when start, end or duration changes */
 function updateTimes(template, updateEnd) {
@@ -177,7 +173,6 @@ const validateMaxParticipants = (maxParticipants) => {
 	return intVal;
 };
 
-
 Template.eventEdit.onRendered(function () {
 	const instance = this;
 	updateTimes(instance, false);
@@ -210,9 +205,7 @@ Template.eventEdit.onRendered(function () {
 	});
 });
 
-
 Template.eventEdit.helpers({
-
 	hasParentCourse() {
 		return Boolean(this.courseId);
 	},
@@ -248,12 +241,9 @@ Template.eventEdit.helpers({
 	},
 
 	changedReplicas() {
-		return (
-			Events
-				.find(AffectedReplicaSelectors(this))
-				.fetch()
-				.filter((replica) => !replica.sameTime(this))
-		);
+		return Events.find(AffectedReplicaSelectors(this))
+			.fetch()
+			.filter((replica) => !replica.sameTime(this));
 	},
 
 	emphasizeClass() {
@@ -313,7 +303,6 @@ Template.eventEdit.helpers({
 	},
 });
 
-
 Template.eventEdit.events({
 	submit(event, instance) {
 		event.preventDefault();
@@ -372,9 +361,7 @@ Template.eventEdit.events({
 			} else {
 				editevent.region = instance.selectedRegion.get();
 				if (!editevent.region || editevent.region === 'all') {
-					Alert.error(
-						mf('event.edit.plzSelectRegion', 'Please select the region for this event'),
-					);
+					Alert.error(mf('event.edit.plzSelectRegion', 'Please select the region for this event'));
 					return;
 				}
 
@@ -389,17 +376,23 @@ Template.eventEdit.events({
 		}
 
 		const updateReplicasInfos = instance.state.get('updateReplicasInfos');
-		const updateReplicasTime = !instance.state.get('startDayChanged') && instance.state.get('timeChanged') && instance.state.get('updateReplicasTime');
-		const updateChangedReplicasTime = updateReplicasTime && instance.state.get('updateChangedReplicasTime');
+		const updateReplicasTime =
+			!instance.state.get('startDayChanged') &&
+			instance.state.get('timeChanged') &&
+			instance.state.get('updateReplicasTime');
+		const updateChangedReplicasTime =
+			updateReplicasTime && instance.state.get('updateChangedReplicasTime');
 		const sendNotifications = instance.$('.js-check-notify').is(':checked');
 		const addNotificationMessage = instance.$('.js-event-add-message').val();
 
 		instance.busy('saving');
-		SaveAfterLogin(instance,
+		SaveAfterLogin(
+			instance,
 			mf('loginAction.saveEvent', 'Login and save event'),
 			mf('registerAction.saveEvent', 'Register and save event'),
 			() => {
-				Meteor.call('event.save',
+				Meteor.call(
+					'event.save',
 					{
 						eventId,
 						updateReplicasInfos,
@@ -417,11 +410,13 @@ Template.eventEdit.events({
 						} else {
 							if (isNew) {
 								Router.go('showEvent', { _id: eventId });
-								Alert.success(mf(
-									'message.eventCreated',
-									{ TITLE: editevent.title },
-									'The event "{TITLE}" has been created!',
-								));
+								Alert.success(
+									mf(
+										'message.eventCreated',
+										{ TITLE: editevent.title },
+										'The event "{TITLE}" has been created!',
+									),
+								);
 
 								const course = Courses.findOne(editevent.courseId);
 								let role;
@@ -432,30 +427,43 @@ Template.eventEdit.events({
 								} else {
 									role = 'unknown';
 								}
-								Analytics.trackEvent('Event creations',
+								Analytics.trackEvent(
+									'Event creations',
 									`Event creations as ${role}`,
 									Regions.findOne(course.region)?.nameEn,
-									Math.round((new Date() - course.time_created)
-										/ 1000 / 60 / 60 / 24 /* Umrechnung in Tage */));
+									Math.round(
+										(new Date() - course.time_created) /
+											1000 /
+											60 /
+											60 /
+											24 /* Umrechnung in Tage */,
+									),
+								);
 							} else {
-								Alert.success(mf(
-									'message.eventChangesSaved',
-									{ TITLE: editevent.title },
-									'Your changes to the event "{TITLE}" have been saved.',
-								));
+								Alert.success(
+									mf(
+										'message.eventChangesSaved',
+										{ TITLE: editevent.title },
+										'Your changes to the event "{TITLE}" have been saved.',
+									),
+								);
 							}
 
 							if (updateReplicasInfos || updateReplicasTime) {
-								Alert.success(mf(
-									'eventEdit.replicatesUpdated',
-									{ TITLE: editevent.title },
-									'The replicas of "{TITLE}" have also been updated.',
-								));
+								Alert.success(
+									mf(
+										'eventEdit.replicatesUpdated',
+										{ TITLE: editevent.title },
+										'The replicas of "{TITLE}" have also been updated.',
+									),
+								);
 							}
 							instance.parent.editing.set(false);
 						}
-					});
-			});
+					},
+				);
+			},
+		);
 	},
 
 	'click .js-event-cancel'(event, instance) {
@@ -481,12 +489,18 @@ Template.eventEdit.events({
 		});
 	},
 
-	'change .js-event-duration, change .js-event-start-date, change .js-event-start-time'(event, instance) {
+	'change .js-event-duration, change .js-event-start-date, change .js-event-start-time'(
+		event,
+		instance,
+	) {
 		updateTimes(instance, true);
 		const newStart = getEventStartMoment(instance);
 		const newEnd = getEventEndMoment(instance);
 		instance.state.set({
-			timeChanged: !(newStart.isSame(moment.utc(this.startLocal), 'minute') && newEnd.isSame(moment.utc(this.endLocal), 'minute')),
+			timeChanged: !(
+				newStart.isSame(moment.utc(this.startLocal), 'minute') &&
+				newEnd.isSame(moment.utc(this.endLocal), 'minute')
+			),
 		});
 	},
 
@@ -495,7 +509,10 @@ Template.eventEdit.events({
 		const newStart = getEventStartMoment(instance);
 		const newEnd = getEventEndMoment(instance);
 		instance.state.set({
-			timeChanged: !(newStart.isSame(moment.utc(this.startLocal), 'minute') && newEnd.isSame(moment.utc(this.endLocal), 'minute')),
+			timeChanged: !(
+				newStart.isSame(moment.utc(this.startLocal), 'minute') &&
+				newEnd.isSame(moment.utc(this.endLocal), 'minute')
+			),
 		});
 	},
 

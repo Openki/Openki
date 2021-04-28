@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
-import Events from '../events';
+import { Events } from '../events';
 
-import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
+import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import { visibleTenants } from '/imports/utils/visible-tenants';
 
 Meteor.publish('events', (region) => {
