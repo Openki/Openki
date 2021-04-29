@@ -203,6 +203,7 @@ export class EventsCollection extends Mongo.Collection {
 		const find = {};
 		const and = [];
 
+		/** @type {Mongo.Options<EventEntity>} */
 		const options = {};
 		options.sort = Array.isArray(sort) ? sort : [];
 

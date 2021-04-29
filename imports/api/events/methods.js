@@ -25,6 +25,7 @@ import * as StringTools from '/imports/utils/string-tools';
 import * as UpdateMethods from '/imports/utils/update-methods';
 
 /**
+ * @param {EventEntity} event
  * @param {{
  *  infos: boolean;
  *  time: boolean;
