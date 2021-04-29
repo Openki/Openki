@@ -1,5 +1,3 @@
-
-
 import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -9,7 +7,7 @@ import { Meteor } from 'meteor/meteor';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Regions } from '/imports/api/regions/regions';
-import Venues from '/imports/api/venues/venues';
+import { Venues } from '/imports/api/venues/venues';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { Editable } from '/imports/ui/lib/editable';
@@ -110,8 +108,10 @@ Template.venueEdit.helpers({
 	},
 
 	showMapSelection() {
-		return Template.instance().regionSelectable.get()
-			|| Boolean(Template.instance().selectedRegion.get());
+		return (
+			Template.instance().regionSelectable.get() ||
+			Boolean(Template.instance().selectedRegion.get())
+		);
 	},
 
 	regionSelectable() {
@@ -163,9 +163,7 @@ Template.venueEdit.events({
 		};
 
 		if (!changes.name) {
-			Alert.error(
-				mf('venue.create.plsGiveVenueName', 'Please give your venue a name'),
-			);
+			Alert.error(mf('venue.create.plsGiveVenueName', 'Please give your venue a name'));
 			return;
 		}
 
@@ -190,9 +188,7 @@ Template.venueEdit.events({
 		if (instance.isNew) {
 			changes.region = instance.selectedRegion.get();
 			if (!changes.region) {
-				Alert.error(
-					mf('venue.create.plsSelectRegion', 'Please select a region'),
-				);
+				Alert.error(mf('venue.create.plsSelectRegion', 'Please select a region'));
 				return;
 			}
 		}
@@ -201,30 +197,36 @@ Template.venueEdit.events({
 		if (marker) {
 			changes.loc = marker.loc;
 		} else {
-			Alert.error(
-				mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'),
-			);
+			Alert.error(mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'));
 			return;
 		}
 
 		const venueId = this._id || '';
 		instance.busy('saving');
-		SaveAfterLogin(instance,
+		SaveAfterLogin(
+			instance,
 			mf('loginAction.saveVenue', 'Login and save venue'),
 			mf('registerAction.saveVenue', 'Register and save venue'),
 			() => {
 				Meteor.call('venue.save', venueId, changes, (err, res) => {
 					instance.busy(false);
 					if (err) {
-						Alert.serverError(
-							err,
-							mf('venue.saving.error', 'Saving the venue went wrong'),
-						);
+						Alert.serverError(err, mf('venue.saving.error', 'Saving the venue went wrong'));
 					} else {
-						Alert.success(mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'));
+						Alert.success(
+							mf(
+								'venue.saving.success',
+								{ NAME: changes.name },
+								'Saved changes to venue "{NAME}".',
+							),
+						);
 
 						if (instance.isNew) {
-							Analytics.trackEvent('Venue creations', 'Venue creations', Regions.findOne(changes.region)?.nameEn);
+							Analytics.trackEvent(
+								'Venue creations',
+								'Venue creations',
+								Regions.findOne(changes.region)?.nameEn,
+							);
 
 							Router.go('venueDetails', { _id: res });
 						} else {
@@ -232,14 +234,13 @@ Template.venueEdit.events({
 						}
 					}
 				});
-			});
+			},
+		);
 	},
-
 
 	'click .js-toggle-additional-info-btn'(event, instance) {
 		instance.showAdditionalInfo.set(!instance.showAdditionalInfo.get());
 	},
-
 
 	'click .js-edit-cancel'(event, instance) {
 		if (instance.isNew) {

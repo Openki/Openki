@@ -11,7 +11,7 @@ import { Events, OEvent } from '/imports/api/events/events';
 /** @typedef {import('/imports/api/events/events').EventEntity} EventEntity */
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
-import Venues from '/imports/api/venues/venues';
+import { Venues } from '/imports/api/venues/venues';
 
 import Notification from '/imports/notification/notification';
 

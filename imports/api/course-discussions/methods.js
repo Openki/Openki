@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 
 import { Courses } from '/imports/api/courses/courses';
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import Notification from '/imports/notification/notification';
 import * as StringTools from '/imports/utils/string-tools';
@@ -60,8 +60,7 @@ Meteor.methods({
 		const userId = Meteor.userId();
 		if (userId && !comment.anon) {
 			saneComment.userId = userId;
-			saneComment.notifyAll = comment.notifyAll
-							&& course.userHasRole(userId, 'team');
+			saneComment.notifyAll = comment.notifyAll && course.userHasRole(userId, 'team');
 		}
 
 		const now = new Date();
@@ -99,7 +98,6 @@ Meteor.methods({
 		return commentId;
 	},
 
-
 	/**
 	 * @param {{ _id: string; title: string; text: string; }} comment
 	 */
@@ -127,7 +125,6 @@ Meteor.methods({
 
 		CourseDiscussions.update(originalComment._id, { $set: update });
 	},
-
 
 	/**
 	 * @param {string} commentId

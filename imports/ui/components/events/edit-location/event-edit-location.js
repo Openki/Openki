@@ -7,7 +7,7 @@ import { _ } from 'meteor/underscore';
 import * as Alert from '/imports/api/alerts/alert';
 
 import { LocationTracker } from '/imports/ui/lib/location-tracker';
-import Venues from '/imports/api/venues/venues';
+import { Venues } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
@@ -24,9 +24,7 @@ Template.eventEditVenue.onCreated(function () {
 	instance.locationTracker = LocationTracker();
 	instance.location = instance.parent.selectedLocation;
 	instance.search = new ReactiveVar('');
-	instance.addressSearch = new ReactiveVar(
-		Boolean(instance.location.get().name),
-	);
+	instance.addressSearch = new ReactiveVar(Boolean(instance.location.get().name));
 
 	// unset: no location selected
 	// preset: one of the preset locations is referenced
@@ -148,9 +146,7 @@ Template.eventEditVenue.onCreated(function () {
 	});
 });
 
-
 Template.eventEditVenue.helpers({
-
 	location() {
 		return Template.instance().location.get();
 	},
@@ -200,13 +196,9 @@ Template.eventEditVenue.helpers({
 	},
 
 	searching() {
-		return Boolean(
-			Template.instance().location.get().name,
-		);
+		return !!Template.instance().location.get().name;
 	},
-
 });
-
 
 Template.eventEditVenue.events({
 	async 'click .js-location-search-btn'(event, instance) {
@@ -235,15 +227,19 @@ Template.eventEditVenue.events({
 		}
 
 		try {
-			const response = await fetch(`https://nominatim.openstreetmap.org?${new URLSearchParams(nominatimQuery)}`);
+			const response = await fetch(
+				`https://nominatim.openstreetmap.org?${new URLSearchParams(nominatimQuery)}`,
+			);
 			const found = await response.json();
 			markers.remove({ proposed: true });
 			if (found.length === 0) {
-				Alert.warning(mf(
-					'event.edit.noResultsforAddress',
-					{ ADDRESS: search },
-					'Found no results for address "{ADDRESS}"',
-				));
+				Alert.warning(
+					mf(
+						'event.edit.noResultsforAddress',
+						{ ADDRESS: search },
+						'Found no results for address "{ADDRESS}"',
+					),
+				);
 			}
 			_.each(found, (foundLocation) => {
 				const marker = {
@@ -292,5 +288,4 @@ Template.eventEditVenue.events({
 	'mouseleave .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
 	},
-
 });

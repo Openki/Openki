@@ -2,7 +2,7 @@
 
 /*
 import { Events } from '/imports/api/events/events';
-import Venues from '/imports/api/venues/venues';
+import { Venues } from '/imports/api/venues/venues';
 
 const UpdatesAvailable = [];
 

@@ -3,7 +3,7 @@ import { Users } from '/imports/api/users/users';
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
-import Venues from '/imports/api/venues/venues';
+import { Venues } from '/imports/api/venues/venues';
 
 const apiResponse = function (collection, formatter) {
 	return (filter, limit, skip, sort) => {
