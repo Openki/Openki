@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { ReactiveVar } from 'meteor/reactive-var';
 
 import '/imports/startup/both';
 import '/imports/startup/client';
@@ -178,24 +177,3 @@ Accounts.onEmailVerificationLink((token) => {
 		}
 	});
 });
-
-/**
- * Global singleton (a reactive store) that can be used for updates based on time
- */
-minuteTime = new ReactiveVar();
-
-// Set up reactive date sources that can be used for updates based on time
-function setTimes() {
-	const now = new Date();
-
-	now.setSeconds(0);
-	now.setMilliseconds(0);
-	const old = minuteTime.get();
-	if (!old || old.getTime() !== now.getTime()) {
-		minuteTime.set(now);
-	}
-}
-setTimes();
-
-// Update interval of five seconds is okay
-Meteor.setInterval(setTimes, 1000 * 5);

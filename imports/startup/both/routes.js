@@ -21,6 +21,7 @@ import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 
 import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
+import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Metatags from '/imports/utils/metatags';
 import Predicates from '/imports/utils/predicates';
 import Profile from '/imports/utils/profile';
@@ -63,7 +64,7 @@ const makeFilterQuery = function (params) {
 		start = moment(params.start);
 	}
 	if (!start || !start.isValid()) {
-		start = moment(minuteTime.get()).startOf('day');
+		start = moment(reactiveNow.get()).startOf('day');
 	}
 
 	let end;
@@ -172,7 +173,7 @@ Router.map(function () {
 			this.filter = Events.Filtering().read(this.params.query).done();
 
 			const filterParams = this.filter.toParams();
-			filterParams.after = minuteTime.get();
+			filterParams.after = reactiveNow.get();
 
 			const limit = parseInt(this.params.query.count, 10) || 6;
 
@@ -181,7 +182,7 @@ Router.map(function () {
 
 		data() {
 			const filterParams = this.filter.toParams();
-			filterParams.after = minuteTime.get();
+			filterParams.after = reactiveNow.get();
 
 			const limit = parseInt(this.params.query.count, 10) || 6;
 
@@ -301,7 +302,7 @@ Router.map(function () {
 		path: '/kiosk/events',
 		layoutTemplate: 'kioskLayout',
 		waitOn() {
-			const now = minuteTime.get(); // Time dependency so this will be reactively updated
+			const now = reactiveNow.get(); // Time dependency so this will be reactively updated
 
 			this.filter = Events.Filtering().read(this.params.query).done();
 			Session.set('kioskFilter', this.filter.toParams());
@@ -319,7 +320,7 @@ Router.map(function () {
 		},
 
 		data() {
-			const now = minuteTime.get();
+			const now = reactiveNow.get();
 			const tomorrow = new Date(now);
 			tomorrow.setHours(tomorrow.getHours() + 24);
 			tomorrow.setHours(0);
