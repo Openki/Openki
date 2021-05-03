@@ -33,7 +33,6 @@ Meteor.subscribe('version');
 // translation in the current locale
 mfPkg.loadLangs('en');
 
-
 // close any verification dialogs still open
 Router.onBeforeAction(function () {
 	Tooltips.hide();
@@ -45,7 +44,7 @@ Router.onBeforeAction(function () {
 
 // Try to guess a sensible language
 Meteor.startup(() => {
-	const useLocale = function (lang) {
+	const useLocale = function (/** @type {string | undefined} */ lang) {
 		if (!lang) {
 			return false;
 		}
@@ -175,10 +174,7 @@ Accounts.onEmailVerificationLink((token) => {
 		if (error) {
 			Alert.serverError(error, 'Address could not be verified');
 		} else {
-			Alert.success(mf(
-				'email.verified',
-				'Your e-mail has been verified.',
-			));
+			Alert.success(mf('email.verified', 'Your e-mail has been verified.'));
 		}
 	});
 });

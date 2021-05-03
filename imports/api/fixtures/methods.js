@@ -46,7 +46,7 @@ const sometimesAfter = function (date) {
 	const prng = Prng('sometimesAfter');
 
 	// Seconds between then and now
-	const spread = new Date(Math.abs(new Date().getTime() - date.getTime()));
+	const spread = new Date(Math.abs(new Date().getTime() - date.getTime())).getTime();
 
 	// Quadratic dropoff: Place new date closer to the original date statistically
 	const placement = prng();
