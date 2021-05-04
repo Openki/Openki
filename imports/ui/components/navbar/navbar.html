@@ -1,16 +1,13 @@
 <template name="navbar">
-	<nav class="navbar navbar-default navbar-fixed-top"
-		id="topnavbar"
-		role="navigation">
+	<nav class="navbar navbar-default navbar-fixed-top" id="topnavbar" role="navigation">
 		{{#if showTestWarning}}
 			{{> testWarningTicker}}
 		{{/if}}
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-container container-fluid">
 			<div class="navbar-header">
-				<button	type="button"	class="navbar-toggle collapsed"
-					data-toggle="collapse"
-					data-target="#bs-navbar-collapse-1">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+						data-target="#bs-navbar-collapse-1">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -19,19 +16,18 @@
 				<a class="navbar-brand js-toggle-introduction" href="/">
 					{{#if connecting}}
 						<span class="fa fa-circle-o-notch fa-spin fa-fw connecting"
-						      title="{{mf 'status.connecting' "Connecting to server"}}">
+							  title="{{mf 'status.connecting' 'Connecting to server'}}">
 						</span>
 						<span class="sr-only">{{mf 'status.connecting'}}</span>
 					{{/if}}
 					{{#if notConnected}}
 						<span class="fa fa-circle-o-notch fa-fw no-connection"
-						      title="{{mf 'status.notConnected' "No connection to server"}}">
+							  title="{{mf 'status.notConnected' 'No connection to server'}}">
 						</span>
 						<span class="sr-only">{{mf 'status.notConnected'}}</span>
 					{{/if}}
 					{{#if connected}}
-						<img src="/logo/{{headerLogo}}"
-						     alt="{{headerAlt}}">
+						<img src="/logo/{{headerLogo}}" alt="{{headerAlt}}">
 					{{/if}}
 					<span class="site-name">{{siteName}}</span>
 					<span class="site-stage">{{siteStage}}</span>
@@ -41,28 +37,28 @@
 				<ul class="nav navbar-nav {{toggleNavbarRight 'left'}}">
 					<li class="{{activeClass 'home'}} {{activeClass 'showCourse'}}">
 						<a href="{{pathFor 'home'}}"
-							 class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close"
-							 id="nav_courses">
-							 <span class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></span>
-							 {{mf 'menue.Courses' 'Find'}}
-							 <div class="nav-marker-caret"></div>
+						   class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close"
+						   id="nav_courses">
+							<span class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></span>
+							{{mf 'menue.Courses' 'Find'}}
+							<div class="nav-marker-caret"></div>
 						</a>
 					</li>
 					<li class="{{activeClass 'proposeCourse'}}">
 						<a href="{{pathFor 'proposeCourse'}}"
-							 class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} navbar-link js-nav-dropdown-close">
-							 <span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
-							 {{mf 'menue.Create' 'Create'}}
-							 <div class="nav-marker-caret"></div>
+						   class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} navbar-link js-nav-dropdown-close">
+							<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
+							{{mf 'menue.Create' 'Create'}}
+							<div class="nav-marker-caret"></div>
 						</a>
 					</li>
 					<li class="{{activeClass 'calendar'}}">
 						<a href="{{pathFor 'calendar'}}"
-							 class="{{activeClass 'calendar'}} navbar-link calendar-link js-nav-dropdown-close">
-							 <span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-							 {{mf 'menue.Calendar' 'Calendar'}}
-							 <div class="nav-marker-caret"></div>
-							 <div class="nav-marker-bar"></div>
+						   class="{{activeClass 'calendar'}} navbar-link calendar-link js-nav-dropdown-close">
+							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+							{{mf 'menue.Calendar' 'Calendar'}}
+							<div class="nav-marker-caret"></div>
+							<div class="nav-marker-bar"></div>
 						</a>
 					</li>
 				</ul>
@@ -84,21 +80,15 @@
 <template name='loginButton'>
 	{{#if loginServicesConfigured}}
 		{{#if currentUser}}
-			<a
-				class="loginButton dropdown-toggle navbar-link"
-				aria-expanded="false"
-				data-toggle="dropdown"
-				role="button">
+			<a class="loginButton dropdown-toggle navbar-link" aria-expanded="false"
+			   data-toggle="dropdown" role="button">
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 				{{currentUser.username}}
 				<div class="nav-marker-caret"></div>
 				<div class="nav-marker-bar"></div>
 			</a>
 		{{else}}
-			<a
-				class="js-open-login loginButton navbar-link"
-				id="openLogin"
-				role="button">
+			<a class="js-open-login loginButton navbar-link" id="openLogin" role="button">
 				<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
 				{{mf 'login.navig.unlogged' 'Login/Register'}}
 			</a>
@@ -118,7 +108,8 @@
 			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
 		</div>
 		<div class="form-group">
-			<a class="btn btn-default form-control" href="{{pathFor 'userprofile' _id=currentUser._id}}">
+			<a class="btn btn-default form-control"
+			   href="{{pathFor 'userprofile' _id=currentUser._id}}">
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 				{{mf 'login.frame.profile' 'Public profile'}}
 			</a>
@@ -139,15 +130,10 @@
 </template>
 
 <template name="testWarningTicker">
-	<marquee
-		bgcolor="#000"
-		direction="left"
-		scrollamount="5"
-		scrolldelay="1"
-		style="color:white;">
-			⚠ &nbsp; {{mf 'menue.Testpage' 'This is only a Testpage. '}} &nbsp; ⚠
-			<span style = "padding-left:10em"> </span>
-			☠ &nbsp; {{mf 'menue.Testpage2' 'All data will be erased regularly. '}} &nbsp; ☠
-			<span style = "padding-left:10em"> </span>
+	<marquee bgcolor="#000" direction="left" scrollamount="5" scrolldelay="1" style="color:white;">
+		⚠ &nbsp; {{mf 'menue.Testpage' 'This is only a Testpage. '}} &nbsp; ⚠
+		<span style="padding-left:10em"> </span>
+		☠ &nbsp; {{mf 'menue.Testpage2' 'All data will be erased regularly. '}} &nbsp; ☠
+		<span style="padding-left:10em"> </span>
 	</marquee>
 </template>
