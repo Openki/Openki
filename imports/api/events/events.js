@@ -14,6 +14,11 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 // ======== DB-Model: ========
 /**
+ * @typedef {Object} Geodata
+ * @property {'Point'} type
+ * @property {[long:number, lat:number]} coordinates (not lat-long !)
+ */
+/**
  * @typedef {Object} EventEntity
  * @property {string} [_id] ID
  * @property {string} [region] ID_region
@@ -26,7 +31,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
  * @property {string} [venue._id] Optional reference to a document in the Venues collection
  * If this is set, the fields name, loc, and address are synchronized
  * @property {string} [venue.name] Descriptive name for the venue
- * @property {string} [venue.loc] Event location in GeoJSON format
+ * @property {Geodata} [venue.loc] Event location in GeoJSON format
  * @property {string} [venue.address] Address string where the event will take place
  * @property {string} [room] (Where inside the building the event will take place)
  * @property {string} [createdBy] userId
