@@ -4,13 +4,14 @@ import { Random } from 'meteor/random';
 const clientId = Random.id();
 
 /**
- * @param {{name: string; message: string;}} error
+ * @param {{name: string; message: string; stack?: string;}} error
  */
 const reportToServer = function (error) {
 	const report = {
 		name: error.name,
 		message: error.message,
 		location: window.location.href,
+		stack: error.stack,
 		tsClient: new Date(),
 		clientId,
 		userAgent: window.navigator.userAgent,
@@ -24,7 +25,9 @@ window.addEventListener('error', (event) => {
 
 /** @type string[] */
 const buffer = [];
-const discriminatoryReporting = function (/** @type {[msg: string, error?: Error ]} */ args) {
+const discriminatoryReporting = function (
+	/** @type {[msg: string, error?: Error] | string[]} */ args,
+) {
 	const msg = args[0];
 
 	// "Exception from Tracker recompute function:"
@@ -44,12 +47,10 @@ const discriminatoryReporting = function (/** @type {[msg: string, error?: Error
 		// There's a template name in there right?
 		const templateNames = /Template\.[^_]\w+/g;
 		buffer.push(msg.match(templateNames).join(','));
-		reportToServer(
-			{
-				name: 'TemplateError',
-				message: buffer.join('; '),
-			},
-		);
+		reportToServer({
+			name: 'TemplateError',
+			message: buffer.join('; '),
+		});
 		return;
 	}
 
@@ -60,12 +61,12 @@ const discriminatoryReporting = function (/** @type {[msg: string, error?: Error
 	}
 
 	// Log all the things!
-	reportToServer({ name: 'Meteor._debug', message: args[0] });
+	reportToServer({ name: 'Meteor._debug', message: args.join(' ') });
 };
 
 // wrap the Meteor debug function
 const meteorDebug = Meteor._debug;
-Meteor._debug = function (/** @type {[msg: string, error: Error ]} */ ...args) {
+Meteor._debug = function (/** @type {[msg: string, error: Error ] | string[]} */ ...args) {
 	meteorDebug.apply(this, args);
 	discriminatoryReporting(args);
 };
