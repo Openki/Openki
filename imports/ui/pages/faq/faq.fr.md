@@ -106,7 +106,7 @@ De nombreux outils sont disponibles sur le web et vous pouvez pointer vers eux d
 
 * Créer son propre wiki : [https://www.wikispaces.com/content/classroom](https://www.wikispaces.com/content/classroom)
 * Rédiger des documents : [Etherpad](https://etherpad.wikimedia.org) ou [Hackpad](https://hackpad.com)
-* Vote ou sondage : [Framadate](https://framadate.org) ou [Dudle](https://dudle.inf.tu-dresden.de/) ou [Papillon](http://papilio.niadomo.net/create/)
+* Vote ou sondage : [Framadate](https://framadate.org) ou [Dudle](https://dudle.inf.tu-dresden.de/)
 * Décision et gouvernance en groupe : [https://loomio.org](https://loomio.org)
 * Partage de fichiers : [https://wetransfer.com/](https://wetransfer.com/)
 

@@ -21,7 +21,7 @@
 			}
 		},
 		"footerLinks":
-		[	{ "link": "http://about.openki.net/"
+		[	{ "link": "https://about.openki.net/"
 			, "key": "footer.aboutOpenki"
 			, "title_key": "navigation.footer.about.title"
 			}
