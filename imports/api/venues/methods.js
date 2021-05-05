@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 import { Regions } from '../regions/regions';
-import Venues from './venues';
+import { Venues } from './venues';
 /** @typedef {import('./venues').VenueEnity} VenueEnity */
 
 import { AsyncTools } from '/imports/utils/async-tools';
@@ -30,21 +30,20 @@ Meteor.methods({
 	 */
 	'venue.save'(venueId, changes) {
 		check(venueId, String);
-		check(changes,
-			{
-				name: Match.Optional(String),
-				description: Match.Optional(String),
-				region: Match.Optional(String),
-				loc: Match.Optional(Match.OneOf(null, { type: String, coordinates: [Number] })),
-				address: Match.Optional(String),
-				route: Match.Optional(String),
-				short: Match.Optional(String),
-				maxPeople: Match.Optional(Number),
-				maxWorkplaces: Match.Optional(Number),
-				facilities: Match.Optional([String]),
-				otherFacilities: Match.Optional(String),
-				website: Match.Optional(String),
-			});
+		check(changes, {
+			name: Match.Optional(String),
+			description: Match.Optional(String),
+			region: Match.Optional(String),
+			loc: Match.Optional(Match.OneOf(null, { type: String, coordinates: [Number] })),
+			address: Match.Optional(String),
+			route: Match.Optional(String),
+			short: Match.Optional(String),
+			maxPeople: Match.Optional(Number),
+			maxWorkplaces: Match.Optional(Number),
+			facilities: Match.Optional([String]),
+			otherFacilities: Match.Optional(String),
+			website: Match.Optional(String),
+		});
 
 		const user = Meteor.user();
 		if (!user) {
@@ -63,7 +62,6 @@ Meteor.methods({
 		/* Changes we want to perform */
 		/** @type {VenueEnity} */
 		const set = { updated: new Date() };
-
 
 		if (changes.description) {
 			set.description = HtmlTools.saneHtml(changes.description.trim().substring(0, 640 * 1024));
@@ -94,13 +92,17 @@ Meteor.methods({
 			set.maxWorkplaces = Math.min(1e10, Math.max(0, changes.maxWorkplaces));
 		}
 		if (changes.facilities !== undefined) {
-			set.facilities = _.reduce(changes.facilities, (originalFs, f) => {
-				const fs = { ...originalFs };
-				if (Venues.facilityOptions.includes(f)) {
-					fs[f] = true;
-				}
-				return fs;
-			}, {});
+			set.facilities = _.reduce(
+				changes.facilities,
+				(originalFs, f) => {
+					const fs = { ...originalFs };
+					if (Venues.facilityOptions.includes(f)) {
+						fs[f] = true;
+					}
+					return fs;
+				},
+				{},
+			);
 		}
 
 		if (changes.otherFacilities) {

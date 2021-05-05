@@ -2,7 +2,7 @@
 
 /*
 import Log from '/imports/api/log/log';
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 
 import * as HtmlTools from '/imports/utils/html-tools';
 

@@ -3,11 +3,11 @@ import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 
 import { Courses, Course } from './courses';
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Roles } from '/imports/api/roles/roles';
-import UpdateMethods from '/imports/utils/update-methods';
+import * as UpdateMethods from '/imports/utils/update-methods';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 
@@ -191,6 +191,7 @@ Meteor.methods({
 					comment: mf('courses.creator.defaultMessage', '(has proposed this course)'),
 				},
 			];
+			set.archived = false;
 			set.createdby = user._id;
 			set.time_created = new Date();
 			const enrichedSet = timeLasteditDenormalizer.beforeInsert(set);
@@ -228,6 +229,42 @@ Meteor.methods({
 		}
 
 		return courseId;
+	},
+
+	/**
+	 * @param {string} courseId
+	 */
+	'course.archive'(courseId) {
+		const course = Courses.findOne({ _id: courseId });
+		if (!course) {
+			throw new Meteor.Error(404, 'no such course');
+		}
+		if (!course.editableBy(Meteor.user())) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
+		Courses.update(course._id, {
+			$set: {
+				archived: true,
+			},
+		});
+	},
+
+	/**
+	 * @param {string} courseId
+	 */
+	'course.unarchive'(courseId) {
+		const course = Courses.findOne({ _id: courseId });
+		if (!course) {
+			throw new Meteor.Error(404, 'no such course');
+		}
+		if (!course.editableBy(Meteor.user())) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
+		Courses.update(course._id, {
+			$set: {
+				archived: false,
+			},
+		});
 	},
 
 	/**
@@ -298,7 +335,7 @@ Meteor.methods({
 	 * @param {boolean} add - Whether to add or remove the group
 	 *
 	 */
-	'course.promote': UpdateMethods.Promote(Courses),
+	'course.promote': UpdateMethods.promote(Courses),
 
 	/**
 	 * Add or remove a group from the groupOrganizers list
@@ -307,7 +344,7 @@ Meteor.methods({
 	 * @param {boolean} add - Whether to add or remove the group
 	 *
 	 */
-	'course.editing': UpdateMethods.Editing(Courses),
+	'course.editing': UpdateMethods.editing(Courses),
 
 	/**
 	 * Recalculate the editors field

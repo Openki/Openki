@@ -4,9 +4,11 @@ import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
+
+import { reactiveNow } from '/imports/utils/reactive-now';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/events/list/event-list';
@@ -56,7 +58,7 @@ Template.venueDetails.onCreated(function () {
 			// Add one to the limit so we know there is more to show
 			const limit = instance.upcomingEventLimit.get() + 1;
 
-			const now = minuteTime.get();
+			const now = reactiveNow.get();
 			const predicate = {
 				venue: instance.data.venue._id,
 				after: now,
@@ -74,12 +76,11 @@ Template.venueDetails.onCreated(function () {
 			return [];
 		}
 
-		const now = minuteTime.get();
+		const now = reactiveNow.get();
 		const filter = {
 			venue: instance.data.venue._id,
 			after: now,
 		};
-
 
 		return Events.findFilter(filter, limit).fetch();
 	};
@@ -89,7 +90,7 @@ Template.venueDetails.onCreated(function () {
 			// Add one to the limit so we know there is more to show
 			const limit = instance.pastEventLimit.get() + 1;
 
-			const now = minuteTime.get();
+			const now = reactiveNow.get();
 			const predicate = {
 				venue: instance.data.venue._id,
 				before: now,
@@ -107,7 +108,7 @@ Template.venueDetails.onCreated(function () {
 			return [];
 		}
 
-		const now = minuteTime.get();
+		const now = reactiveNow.get();
 		const filter = {
 			venue: instance.data.venue._id,
 			before: now,
@@ -131,7 +132,6 @@ Template.venueDetails.onRendered(function () {
 		instance.setRegion(region);
 	});
 });
-
 
 Template.venueDetails.helpers({
 	editing() {
@@ -185,7 +185,6 @@ Template.venueDetails.helpers({
 		return query.length > limit;
 	},
 
-
 	pastEvents() {
 		const instance = Template.instance();
 		return instance.getPastEvents(instance.pastEventLimit.get());
@@ -199,7 +198,6 @@ Template.venueDetails.helpers({
 		return query.length > limit;
 	},
 });
-
 
 Template.venueDetails.events({
 	'click .js-venue-edit'(event, instance) {

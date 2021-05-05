@@ -4,11 +4,11 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 
 import LocalTime from '/imports/utils/local-time';
 import * as Alert from '/imports/api/alerts/alert';
-import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
+import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 
 import '/imports/ui/components/buttons/buttons';
 
@@ -32,11 +32,8 @@ Template.eventReplication.onCreated(function eventReplicationOnCreated() {
 	instance.pickDays = new ReactiveVar([]); // picked in the calendar
 	instance.usingPicker = new ReactiveVar(false);
 
-	instance.activeDays = () => (
-		instance.usingPicker.get()
-			? instance.pickDays.get()
-			: instance.calcDays.get()
-	);
+	instance.activeDays = () =>
+		instance.usingPicker.get() ? instance.pickDays.get() : instance.calcDays.get();
 
 	const { data } = instance;
 	instance.replicateStartDate = new ReactiveVar(replicaStartDate(data.start));
@@ -107,7 +104,9 @@ Template.eventReplication.helpers({
 
 	replicaDates() {
 		const start = moment(this.start);
-		return Template.instance().activeDays().map((days) => moment(start).add(days, 'days'));
+		return Template.instance()
+			.activeDays()
+			.map((days) => moment(start).add(days, 'days'));
 	},
 });
 
@@ -153,8 +152,7 @@ const getEventFrequency = (instance) => {
 		const daysFromOriginal = repStart.diff(originDay, 'days');
 		if (daysFromOriginal !== 0 && repStart.isAfter(now)) {
 			days.push(daysFromOriginal);
-			if (frequency === 'once'
-				|| days.length >= repLimit) {
+			if (frequency === 'once' || days.length >= repLimit) {
 				break;
 			}
 		}
@@ -164,7 +162,6 @@ const getEventFrequency = (instance) => {
 
 	return days;
 };
-
 
 Template.eventReplication.events({
 	'changeDate .js-replicate-datepick'(event, instance) {
@@ -217,11 +214,14 @@ Template.eventReplication.events({
 			Meteor.call('event.save', args, (error) => {
 				responses += 1;
 				if (error) {
-					Alert.serverError(error, mf(
-						'eventReplication.errWithReason',
-						{ START: moment(replicaEvent.startLocal).format('llll') },
-						'Creating the copy on "{START}" failed.',
-					));
+					Alert.serverError(
+						error,
+						mf(
+							'eventReplication.errWithReason',
+							{ START: moment(replicaEvent.startLocal).format('llll') },
+							'Creating the copy on "{START}" failed.',
+						),
+					);
 				} else {
 					removed += 1;
 				}
@@ -229,15 +229,17 @@ Template.eventReplication.events({
 				if (responses === replicaDays.length) {
 					instance.busy(false);
 					if (removed) {
-						Alert.success(mf(
-							'event.replicate.successCondensed',
-							{
-								TITLE: instance.data.title,
-								NUM: removed,
-								DATE: moment(replicaEvent.startLocal).format('llll'),
-							},
-							'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}',
-						));
+						Alert.success(
+							mf(
+								'event.replicate.successCondensed',
+								{
+									TITLE: instance.data.title,
+									NUM: removed,
+									DATE: moment(replicaEvent.startLocal).format('llll'),
+								},
+								'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}',
+							),
+						);
 					}
 					if (removed === responses) {
 						const parentInstance = instance.parentInstance();

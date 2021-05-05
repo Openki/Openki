@@ -6,7 +6,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import * as UrlTools from '/imports/utils/url-tools';
 
 import '/imports/ui/components/events/list/event-list';
@@ -124,7 +124,6 @@ Template.calendarDayFormat.helpers({
 	},
 });
 
-
 Template.calendarNav.helpers({
 	endDateTo(date) {
 		return moment(date).add(6, 'days');
@@ -219,6 +218,10 @@ Template.calendarAddEvent.onRendered(function () {
 		eventCaption.toggleClass('placeholder', removeClass);
 	}
 
-	eventCaption.on('mouseover mouseout', (e) => { toggleCaptionClass(e); });
-	instance.$('.event-caption-add-text').on('mouseover mouseout', (e) => { toggleCaptionClass(e); });
+	eventCaption.on('mouseover mouseout', (e) => {
+		toggleCaptionClass(e);
+	});
+	instance.$('.event-caption-add-text').on('mouseover mouseout', (e) => {
+		toggleCaptionClass(e);
+	});
 });

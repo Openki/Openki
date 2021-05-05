@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { ReactiveVar } from 'meteor/reactive-var';
 
 import '/imports/startup/both';
 import '/imports/startup/client';
@@ -33,7 +32,6 @@ Meteor.subscribe('version');
 // translation in the current locale
 mfPkg.loadLangs('en');
 
-
 // close any verification dialogs still open
 Router.onBeforeAction(function () {
 	Tooltips.hide();
@@ -45,7 +43,7 @@ Router.onBeforeAction(function () {
 
 // Try to guess a sensible language
 Meteor.startup(() => {
-	const useLocale = function (lang) {
+	const useLocale = function (/** @type {string | undefined} */ lang) {
 		if (!lang) {
 			return false;
 		}
@@ -175,31 +173,7 @@ Accounts.onEmailVerificationLink((token) => {
 		if (error) {
 			Alert.serverError(error, 'Address could not be verified');
 		} else {
-			Alert.success(mf(
-				'email.verified',
-				'Your e-mail has been verified.',
-			));
+			Alert.success(mf('email.verified', 'Your e-mail has been verified.'));
 		}
 	});
 });
-
-/**
- * Global singleton (a reactive store) that can be used for updates based on time
- */
-minuteTime = new ReactiveVar();
-
-// Set up reactive date sources that can be used for updates based on time
-function setTimes() {
-	const now = new Date();
-
-	now.setSeconds(0);
-	now.setMilliseconds(0);
-	const old = minuteTime.get();
-	if (!old || old.getTime() !== now.getTime()) {
-		minuteTime.set(now);
-	}
-}
-setTimes();
-
-// Update interval of five seconds is okay
-Meteor.setInterval(setTimes, 1000 * 5);

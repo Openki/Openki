@@ -7,6 +7,7 @@ import * as IdTools from '/imports/utils/id-tools';
 /**
  * @typedef {Object} UserEntity
  * @property {string} [_id] ID
+ * @property {string[]} [tenants]
  * @property {Date} [createdAt]
  * @property {object} [services]
  * @property {object} [services.password]
@@ -114,10 +115,7 @@ export class User {
 	 */
 	verifiedEmailAddress() {
 		const emailRecord = this.emails?.[0];
-		return (emailRecord
-			&& emailRecord.verified
-			&& emailRecord.address)
-			|| false;
+		return (emailRecord && emailRecord.verified && emailRecord.address) || false;
 	}
 
 	/**

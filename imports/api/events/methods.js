@@ -7,24 +7,25 @@ import { Courses } from '/imports/api/courses/courses';
 import { Subscribe, processChangeAsync } from '/imports/api/courses/subscription';
 import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as courseTimeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
-import Events, { OEvent } from '/imports/api/events/events';
+import { Events, OEvent } from '/imports/api/events/events';
 /** @typedef {import('/imports/api/events/events').EventEntity} EventEntity */
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
-import Venues from '/imports/api/venues/venues';
+import { Venues } from '/imports/api/venues/venues';
 
 import Notification from '/imports/notification/notification';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
-import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
+import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import { AsyncTools } from '/imports/utils/async-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
 import * as StringTools from '/imports/utils/string-tools';
-import UpdateMethods from '/imports/utils/update-methods';
+import * as UpdateMethods from '/imports/utils/update-methods';
 
 /**
+ * @param {EventEntity} event
  * @param {{
  *  infos: boolean;
  *  time: boolean;
@@ -480,7 +481,7 @@ Meteor.methods({
 	 * @param {Boolean} add - Whether to add or remove the group
 	 *
 	 */
-	'event.promote': UpdateMethods.Promote(Events),
+	'event.promote': UpdateMethods.promote(Events),
 
 	/** Add or remove a group from the groupOrganizers list
 	 *
@@ -489,7 +490,7 @@ Meteor.methods({
 	 * @param {Boolean} add - Whether to add or remove the group
 	 *
 	 */
-	'event.editing': UpdateMethods.Editing(Events),
+	'event.editing': UpdateMethods.editing(Events),
 
 	/** Add current user as event-participant
 	 *

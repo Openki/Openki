@@ -10,19 +10,19 @@
 }
 
 .proposed-courses {
-    border: 1px solid $brand-primary;
-    max-height: 200px;
-    overflow: auto;
-    width: 100%;
+	border: 1px solid $brand-primary;
+	max-height: 200px;
+	overflow: auto;
+	width: 100%;
 }
 
 .proposed-courses > .dropdown-header {
-    margin-top: 8.5px;
-    text-align: left;
+	margin-top: 8.5px;
+	text-align: left;
 }
 
 .proposed-courses > .dropdown-header > .fa {
-    margin-right: 7px;
+	margin-right: 7px;
 }
 
 .course-edit-roles {

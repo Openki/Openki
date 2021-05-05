@@ -1,3 +1,4 @@
+/* prettier-ignore */
 /* stylelint-disable */
 
 // *** Variables ***
@@ -18,6 +19,10 @@ $shadow-sm-blur:                                 4px;
 // ** Footer
 //========================================================================================
 $footer-height:                                  50px;
+
+// ** Tenant
+//========================================================================================
+$tenant-bg:                                       $green-alternative;
 
 // ** Group
 //========================================================================================
@@ -68,6 +73,7 @@ $course-border-color:                            $blue-lighter;
 $has-upcoming-events-bg:                         $blue-lighter;
 $proposal-border-style:                          dashed;
 $has-past-events-border-style:                   solid;
+$archived-color:                                 #f5ecc6;
 
 $course-compact-next-event-bg:                   $green;
 $course-compact-next-event-color:                $gray-dark;

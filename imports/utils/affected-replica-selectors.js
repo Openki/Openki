@@ -1,4 +1,11 @@
-const AffectedReplicaSelectors = function (event) {
+/**
+ * @typedef {import("../api/events/events").EventModel} EventModel
+ */
+
+/**
+ * @param {EventModel} event
+ */
+export function AffectedReplicaSelectors(event) {
 	// If the event itself is not in the DB, we don't expect it to have replicas
 	if (!event._id) return { _id: -1 }; // Finds nothing
 
@@ -15,15 +22,12 @@ const AffectedReplicaSelectors = function (event) {
 	};
 
 	if (event.replicaOf) {
-		selector.$or = [
-			{ replicaOf: event.replicaOf },
-			{ _id: event.replicaOf },
-		];
+		selector.$or = [{ replicaOf: event.replicaOf }, { _id: event.replicaOf }];
 	} else {
 		selector.replicaOf = event._id;
 	}
 
 	return selector;
-};
+}
 
 export default AffectedReplicaSelectors;

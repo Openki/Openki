@@ -11,6 +11,9 @@ import { Users } from '/imports/api/users/users';
 import { applyUpdates } from '/server/lib/updates';
 
 import { AsyncTools } from '/imports/utils/async-tools';
+import * as coursesTenantDenormalizer from '/imports/api/courses/tenantDenormalizer';
+import * as eventsTenantDenormalizer from '/imports/api/events/tenantDenormalizer';
+import * as usersTenantsDenormalizer from '/imports/api/users/tenantsDenormalizer';
 
 function initializeDbCacheFields() {
 	// Resync location cache in events
@@ -22,6 +25,10 @@ function initializeDbCacheFields() {
 	// Update List of badges per user
 	Meteor.call('user.updateBadges', {}, AsyncTools.logErrors);
 
+	coursesTenantDenormalizer.onStartUp();
+	eventsTenantDenormalizer.onStartUp();
+	usersTenantsDenormalizer.onStartUp();
+
 	Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
 
 	// Keep the nextEvent entry updated
@@ -29,7 +36,7 @@ function initializeDbCacheFields() {
 	Meteor.call('course.updateNextEvent', {}, AsyncTools.logErrors);
 	Meteor.setInterval(
 		() => {
-		// Update nextEvent for courses where it expired
+			// Update nextEvent for courses where it expired
 			Meteor.call('course.updateNextEvent', { 'nextEvent.start': { $lt: new Date() } });
 
 			Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
@@ -42,9 +49,11 @@ Meteor.startup(() => {
 	applyUpdates();
 
 	const runningVersion = Version.findOne();
-	if (typeof VERSION !== 'undefined' && (
-		(!runningVersion || runningVersion.complete !== VERSION.complete)
-			|| (runningVersion.commit !== VERSION.commit))
+	if (
+		typeof VERSION !== 'undefined' &&
+		(!runningVersion ||
+			runningVersion.complete !== VERSION.complete ||
+			runningVersion.commit !== VERSION.commit)
 	) {
 		const newVersion = _.extend(VERSION, {
 			activation: new Date(),
@@ -63,8 +72,7 @@ Meteor.startup(() => {
 
 	const serviceConf = Meteor.settings.service;
 	if (serviceConf) {
-		if (serviceConf.google
-		) {
+		if (serviceConf.google) {
 			ServiceConfiguration.configurations.remove({
 				service: 'google',
 			});
@@ -106,7 +114,7 @@ Meteor.startup(() => {
 		}
 	});
 
-	/* Initialize cache-fields on startup */
+	/* Initialize cache-fields on startup (Also called calculated fields or denomalized data) */
 	if (Meteor.settings.startup?.buildDbCacheAsync) {
 		Meteor.setTimeout(() => {
 			initializeDbCacheFields();

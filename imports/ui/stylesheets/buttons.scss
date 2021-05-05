@@ -3,7 +3,7 @@
 // == Buttons
 // --------------------------------------------------
 .btn {
-	transition: border-color .15s ease-in-out;
+	transition: border-color 0.15s ease-in-out;
 }
 
 .btn-group:not(.group-tag-btn) {
@@ -13,29 +13,35 @@
 }
 
 .btn-primary:focus {
-	box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(56, 130, 156, .6);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(56, 130, 156, 0.6);
 }
 
 .btn-default.active {
-	@include gradient-vertical(darken($btn-default-bg, $btn-hover-level-start), darken($btn-default-bg, $btn-hover-level-end));
+	@include gradient-vertical(
+		darken($btn-default-bg, $btn-hover-level-start),
+		darken($btn-default-bg, $btn-hover-level-end)
+	);
 }
 
 // Apply gradient backgrounds for all btn-variants
 $btn-background-colors: (
-  default:                                       $btn-default-bg,
-  primary:                                       $btn-primary-bg,
-  success:                                       $btn-success-bg,
-  warning:                                       $btn-warning-bg,
-  danger:                                        $btn-danger-bg
+	default: $btn-default-bg,
+	primary: $btn-primary-bg,
+	success: $btn-success-bg,
+	warning: $btn-warning-bg,
+	danger: $btn-danger-bg,
 );
 
 @each $variant, $bg-color in $btn-background-colors {
 	.btn-#{$variant} {
 		@include gradient-vertical($bg-color, darken($bg-color, $btn-level-end));
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
 		&:hover {
-			@include gradient-vertical(darken($bg-color, $btn-hover-level-start), darken($bg-color, $btn-hover-level-end));
+			@include gradient-vertical(
+				darken($bg-color, $btn-hover-level-start),
+				darken($bg-color, $btn-hover-level-end)
+			);
 		}
 	}
 }
@@ -55,6 +61,16 @@ $btn-background-colors: (
 
 .btn-warning {
 	@extend .btn-warning;
+}
+
+.btn-archive {
+	@include gradient-vertical($btn-default-bg, darken($btn-default-bg, $btn-level-end));
+	border: 1px solid $btn-default-border;
+
+	&:hover {
+		@include gradient-vertical($btn-warning-bg, darken($btn-warning-bg, $btn-level-end));
+		border: 1px solid $btn-warning-border;
+	}
 }
 
 .btn-cancel,
@@ -113,5 +129,5 @@ $btn-background-colors: (
 .btn-link.disabled {
 	color: $link-color;
 	cursor: default;
-	opacity: .3;
+	opacity: 0.3;
 }

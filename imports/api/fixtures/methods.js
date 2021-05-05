@@ -2,13 +2,13 @@ import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 import { Courses } from '/imports/api/courses/courses';
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
-import Events from '/imports/api/events/events';
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
+import { Events } from '/imports/api/events/events';
 import ensure from './ensureFixture';
 import Prng from './Prng';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
-import Venues from '/imports/api/venues/venues';
+import { Venues } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
 
 import * as HtmlTools from '/imports/utils/html-tools';
@@ -28,9 +28,10 @@ const venues = require('./data/venue.fixtures.js').default;
  */
 const humandistrib = function (prng) {
 	const factors = [0, 0, 1, 2, 2, 3, 5, 5];
-	return factors[Math.floor(Math.random() * factors.length)]
-		* (prng() > 0.7 ? humandistrib(prng) : 1)
-		+ (prng() > 0.5 ? humandistrib(prng) : 0);
+	return (
+		factors[Math.floor(Math.random() * factors.length)] * (prng() > 0.7 ? humandistrib(prng) : 1) +
+		(prng() > 0.5 ? humandistrib(prng) : 0)
+	);
 };
 
 /**
@@ -45,7 +46,7 @@ const sometimesAfter = function (date) {
 	const prng = Prng('sometimesAfter');
 
 	// Seconds between then and now
-	const spread = new Date(Math.abs(new Date().getTime() - date.getTime()));
+	const spread = new Date(Math.abs(new Date().getTime() - date.getTime())).getTime();
 
 	// Quadratic dropoff: Place new date closer to the original date statistically
 	const placement = prng();
@@ -54,14 +55,17 @@ const sometimesAfter = function (date) {
 	return new Date(date.getTime() + spread * squaredPlacement);
 };
 
-
 // Unfortunately we can't make this a debugOnly package because the integration
 // tests use the data too, and they run with the --production flag.
 // This guard is here until we find a better solution.
 if (Meteor.settings.testdata) {
 	const regionsCreate = function () {
+		const prng = Prng('createRegions');
 		regions.forEach((r) => {
-			const region = { ...r }; // clone
+			const region = {
+				...r,
+				tenant: prng() > 0.30 ? ensure.tenant('Hmmm') : ensure.tenant('Kopf'),
+			}; // clone
 			if (region.loc) {
 				const coordinates = region.loc.reverse(); // GeoJSON takes latitude first
 				region.loc = { type: 'Point', coordinates };
@@ -73,10 +77,10 @@ if (Meteor.settings.testdata) {
 	};
 
 	const usersCreate = function () {
-		ensure.user('greg', true);
-		ensure.user('Seee', true);
-		ensure.user('1u', true);
-		ensure.user('validated_mail', true);
+		ensure.user('greg', undefined, true);
+		ensure.user('Seee', undefined, true);
+		ensure.user('1u', undefined, true);
+		ensure.user('validated_mail', undefined, true);
 		return 'Inserted user fixtures.';
 	};
 
@@ -87,7 +91,7 @@ if (Meteor.settings.testdata) {
 
 			// Always use same id for same group to avoid broken urls while testing
 			group._id = ensure.fixedId([group.name, group.description]);
-			group.members = group.members?.map((name) => ensure.user(name)._id) || [];
+			group.members = group.members?.map((name) => ensure.user(name, undefined)._id) || [];
 			Groups.insert(group);
 		});
 
@@ -105,7 +109,7 @@ if (Meteor.settings.testdata) {
 			.filter((e) => !Events.findOne({ _id: e._id }))
 			.forEach((e) => {
 				const event = { ...e };
-				event.createdBy = ensure.user(event.createdby)._id;
+				event.createdBy = ensure.user(event.createdby, event.region)._id;
 				event.groups = event.groups?.map(ensure.group) || [];
 				event.groupOrganizers = [];
 
@@ -127,7 +131,6 @@ if (Meteor.settings.testdata) {
 
 				event.venue = ensure.venue(event.venue, event.region);
 				event.internal = Boolean(event.internal);
-
 
 				const regionZone = LocalTime.zone(event.region);
 
@@ -159,7 +162,7 @@ if (Meteor.settings.testdata) {
 
 			_.extend(venue, venueData);
 
-			venue.createdby = ensure.user(venue.createdby)._id;
+			venue.createdby = ensure.user(venue.createdby, venueData.region._id)._id;
 
 			Venues.update(venue._id, venue);
 		});
@@ -172,21 +175,14 @@ if (Meteor.settings.testdata) {
 
 		courses.forEach((c) => {
 			const course = { ...c };
-			course.members.forEach((member) => {
-				// eslint-disable-next-line no-param-reassign
-				member.user = ensure.user(member.user)._id;
-			});
-
-			course.createdby = ensure.user(course.createdby)._id;
 
 			course.slug = StringTools.slug(course.name);
 			course.internal = Boolean(course.internal);
 
 			course._id = ensure.fixedId([course.name, course.description]);
 
-			course.date = prng() > 0.50
-				? new Date(new Date().getTime() + ((prng() - 0.25) * 8000000000))
-				: false;
+			course.date =
+				prng() > 0.5 ? new Date(new Date().getTime() + (prng() - 0.25) * 8000000000) : false;
 			const age = Math.floor(prng() * 80000000000);
 			course.time_created = new Date(new Date().getTime() - age);
 			course.time_lastedit = new Date(new Date().getTime() - age * 0.25);
@@ -197,6 +193,13 @@ if (Meteor.settings.testdata) {
 				/* place in random test region, Spilistan or Testistan */
 				course.region = prng() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp';
 			}
+
+			course.members.forEach((member) => {
+				// eslint-disable-next-line no-param-reassign
+				member.user = ensure.user(member.user, course.region)._id;
+			});
+
+			course.createdby = ensure.user(course.createdby, course.region)._id;
 
 			if (!course.groups) {
 				course.groups = [];
@@ -212,12 +215,12 @@ if (Meteor.settings.testdata) {
 		return `Inserted ${courses.length} course fixtures.`;
 	};
 
-
-	/** Generate events for each course
-	  *
-	  * For each course, zero or more events are generated. Some will be in
-	  * the past, some in the future.
-	  */
+	/**
+	 * Generate events for each course
+	 *
+	 * For each course, zero or more events are generated. Some will be in
+	 * the past, some in the future.
+	 */
 	const eventsGenerate = function () {
 		const prng = Prng('eventsGenerate');
 		let count = 0;
@@ -271,7 +274,9 @@ if (Meteor.settings.testdata) {
 				event.courseId = course._id;
 				event._id = ensure.fixedId([course._id, `${n}`]);
 				event.title = `${course.name} ${_.sample(words)}`;
-				event.description = HtmlTools.saneHtml(words.slice(0, 10 + Math.floor(prng() * 30)).join(' '));
+				event.description = HtmlTools.saneHtml(
+					words.slice(0, 10 + Math.floor(prng() * 30)).join(' '),
+				);
 				event.groups = course.groups;
 
 				let relativeDate = prng() - 0.7; // put 70% in the past, linear distribution
@@ -306,7 +311,7 @@ if (Meteor.settings.testdata) {
 
 				const { members } = course;
 				const randomMember = members[Math.floor(Math.random() * members.length)];
-				event.createdby = ensure.user(randomMember?.user || 'Serverscript')._id;
+				event.createdby = ensure.user(randomMember?.user || 'Serverscript', event.region)._id;
 				const age = Math.floor(prng() * 10000000000);
 				event.time_created = new Date(new Date().getTime() - age);
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25);
@@ -335,12 +340,13 @@ if (Meteor.settings.testdata) {
 				const comment = {};
 				comment.courseId = course._id;
 				comment.title = _.sample(words, 1 + Math.floor(prng() * 3)).join(' ');
-				comment.text = HtmlTools.saneHtml(_.sample(words, 5).join(' ') + _.sample(words, Math.floor(prng() * 30)).join(' '));
+				comment.text = HtmlTools.saneHtml(
+					_.sample(words, 5).join(' ') + _.sample(words, Math.floor(prng() * 30)).join(' '),
+				);
 
 				comment.time_created = sometimesAfter(course.time_created);
-				comment.time_updated = prng() < 0.9
-					? comment.time_created
-					: sometimesAfter(comment.time_created);
+				comment.time_updated =
+					prng() < 0.9 ? comment.time_created : sometimesAfter(comment.time_created);
 
 				let commenter;
 				if (!courseMembers || prng() < 0.2) {

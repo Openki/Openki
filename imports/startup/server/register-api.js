@@ -1,4 +1,3 @@
-
 import '/imports/api/courses/server/publications';
 import '/imports/api/course-discussions/methods';
 import '/imports/api/course-discussions/server/publications';
@@ -11,6 +10,8 @@ import '/imports/api/log/server/publications';
 import '/imports/api/regions/methods';
 import '/imports/api/regions/server/publications';
 import '/imports/api/stats/methods';
+import '/imports/api/tenants/methods';
+import '/imports/api/tenants/server/publications';
 import '/imports/api/users/users';
 import '/imports/api/users/methods';
 import '/imports/api/users/server/publications';

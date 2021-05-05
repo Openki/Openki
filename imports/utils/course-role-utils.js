@@ -10,6 +10,9 @@ export function hasRole(members, role) {
 	if (!members) {
 		return false;
 	}
+	if (!role) {
+		return false;
+	}
 	return members.some((member) => member.roles.includes(role));
 }
 
@@ -24,6 +27,5 @@ export function hasRoleUser(members, role, userId) {
 	if (!userId) {
 		return false;
 	}
-	return members.some((member) => member.user === userId
-		&& member.roles.includes(role));
+	return members.some((member) => member.user === userId && member.roles.includes(role));
 }

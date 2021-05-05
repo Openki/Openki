@@ -1,5 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
+// eslint-disable-next-line import/no-cycle
+import * as tenantDenormalizer from './tenantDenormalizer';
 
 import { Courses } from '/imports/api/courses/courses';
 
@@ -14,8 +16,14 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 // ======== DB-Model: ========
 /**
+ * @typedef {Object} Geodata
+ * @property {'Point'} type
+ * @property {[long:number, lat:number]} coordinates (not lat-long !)
+ */
+/**
  * @typedef {Object} EventEntity
  * @property {string} [_id] ID
+ * @property {string} [tenant] tenant ID
  * @property {string} [region] ID_region
  * @property {string} [title]
  * @property {string} [slug]
@@ -26,7 +34,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
  * @property {string} [venue._id] Optional reference to a document in the Venues collection
  * If this is set, the fields name, loc, and address are synchronized
  * @property {string} [venue.name] Descriptive name for the venue
- * @property {string} [venue.loc] Event location in GeoJSON format
+ * @property {Geodata} [venue.loc] Event location in GeoJSON format
  * @property {string} [venue.address] Address string where the event will take place
  * @property {string} [room] (Where inside the building the event will take place)
  * @property {string} [createdBy] userId
@@ -60,7 +68,7 @@ export class OEvent {
 
 	/**
 	 * @param {UserModel} user
-	*/
+	 */
 	editableBy(user) {
 		if (!user) {
 			return false;
@@ -91,33 +99,39 @@ export class OEvent {
 export class EventsCollection extends Mongo.Collection {
 	constructor() {
 		super('Events', {
-
 			transform(event) {
 				return _.extend(new OEvent(), event);
 			},
 		});
 	}
 
+	/**
+	 * @param {EventModel} event
+	 * @param {Function | undefined} [callback]
+	 */
+	insert(event, callback) {
+		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
+
+		return super.insert(enrichedEvent, callback);
+	}
 
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
-		return new Filtering(
-			{
-				course: Predicates.id,
-				region: Predicates.id,
-				search: Predicates.string,
-				categories: Predicates.ids,
-				group: Predicates.id,
-				groups: Predicates.ids,
-				venue: Predicates.string,
-				room: Predicates.string,
-				start: Predicates.date,
-				before: Predicates.date,
-				after: Predicates.date,
-				end: Predicates.date,
-				internal: Predicates.flag,
-			},
-		);
+		return new Filtering({
+			course: Predicates.id,
+			region: Predicates.id,
+			search: Predicates.string,
+			categories: Predicates.ids,
+			group: Predicates.id,
+			groups: Predicates.ids,
+			venue: Predicates.string,
+			room: Predicates.string,
+			start: Predicates.date,
+			before: Predicates.date,
+			after: Predicates.date,
+			end: Predicates.date,
+			internal: Predicates.flag,
+		});
 	}
 
 	/**
@@ -166,15 +180,13 @@ export class EventsCollection extends Mongo.Collection {
 				update.allGroups = _.union(event.groups, courseGroups);
 			}
 
-			this.rawCollection().update({ _id: event._id },
-				{ $set: update },
-				(err, result) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve(result.result.nModified === 0);
-					}
-				});
+			this.rawCollection().update({ _id: event._id }, { $set: update }, (err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result.result.nModified === 0);
+				}
+			});
 		});
 	}
 
@@ -193,6 +205,7 @@ export class EventsCollection extends Mongo.Collection {
 	 * @param {string} [filter.room] only events in this room (string match)
 	 * @param {boolean} [filter.standalone] only events that are not attached to a course
 	 * @param {string} [filter.region] restrict to given region
+	 * @param {string[]} [filter.tenants] restrict to given tenants
 	 * @param {string[]} [filter.categories] list of category ID the event must be in
 	 * @param {string} [filter.group] the event must be in that group (ID)
 	 * @param {string[]} [filter.groups] the event must be in one of the group ID
@@ -209,9 +222,9 @@ export class EventsCollection extends Mongo.Collection {
 		const find = {};
 		const and = [];
 
+		/** @type {Mongo.Options<EventEntity>} */
 		const options = {};
 		options.sort = Array.isArray(sort) ? sort : [];
-
 
 		let startSortOrder = 'asc';
 
@@ -260,6 +273,10 @@ export class EventsCollection extends Mongo.Collection {
 
 		if (filter.standalone) {
 			find.courseId = { $exists: false };
+		}
+
+		if (filter.tenants && filter.tenants.length > 0) {
+			find.tenant = { $in: filter.tenants };
 		}
 
 		if (filter.region) {
@@ -313,4 +330,6 @@ export class EventsCollection extends Mongo.Collection {
 	}
 }
 
-export default new EventsCollection();
+export const Events = new EventsCollection();
+
+export default Events;

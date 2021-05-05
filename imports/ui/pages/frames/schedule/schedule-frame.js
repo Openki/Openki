@@ -3,9 +3,10 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 
 import LocalTime from '/imports/utils/local-time';
+import { reactiveNow } from '/imports/utils/reactive-now';
 
 import './schedule-frame.html';
 
@@ -29,25 +30,29 @@ Template.frameSchedule.onCreated(function () {
 			scheduleStart = moment(query.start);
 		}
 		if (!scheduleStart || !scheduleStart.isValid()) {
-			scheduleStart = moment(minuteTime.get()).startOf('week');
+			scheduleStart = moment(reactiveNow.get()).startOf('week');
 		}
 		instance.scheduleStart.set(scheduleStart);
 
-
 		const rawSeps = (query.sep || '').split(',');
-		const seps = [...new Set(rawSeps.filter((rawSep) => rawSep.length) // get rid of 0-length
-			.map((rawSep) => { // standardize format
-				if (rawSep.length < 3) {
-					return parseInt(`${rawSep}00`, 10);
-				}
-				return parseInt(rawSep, 10);
-			})
-			.filter((hm) => !Number.isNaN(hm)) // filter NaN's
-			.map((hm) => { // convert to minutes
-				const h = Math.floor(hm / 100);
-				const m = hm % 100;
-				return h * 60 + m;
-			}))];
+		const seps = [
+			...new Set(
+				rawSeps
+					.filter((rawSep) => rawSep.length) // get rid of 0-length
+					.map((rawSep) => {
+						if (rawSep.length < 3) {
+							return parseInt(`${rawSep}00`, 10);
+						}
+						return parseInt(rawSep, 10);
+					}) // standardize format
+					.filter((hm) => !Number.isNaN(hm)) // filter NaN's
+					.map((hm) => {
+						const h = Math.floor(hm / 100);
+						const m = hm % 100;
+						return h * 60 + m;
+					}) /* convert to minutes */,
+			),
+		];
 		instance.separators.set(seps);
 
 		const readInterval = parseInt(query.interval, 10);
@@ -59,23 +64,22 @@ Template.frameSchedule.onCreated(function () {
 			instance.interval.set(60);
 		}
 
-
 		filter.clear().read(query);
 		filter.add('after', scheduleStart);
 		filter.add('end', moment(scheduleStart).add(4, 'week'));
 		filter.done();
 	});
 
-
 	this.autorun(() => {
 		instance.subscribe('Events.findFilter', filter.toQuery(), 500);
 	});
 
-
 	instance.days = new ReactiveVar([]);
 	instance.intervals = new ReactiveVar([]);
 	instance.slots = new ReactiveVar({});
-	instance.kindMap = function () { return 0; };
+	instance.kindMap = function () {
+		return 0;
+	};
 
 	this.autorun(() => {
 		const scheduleStart = moment(filter.get('after'));
@@ -105,7 +109,6 @@ Template.frameSchedule.onCreated(function () {
 				repKey += event._id;
 			}
 
-
 			if (repetitionCount[repKey] >= 1) {
 				repetitionCount[repKey] += 1;
 			} else {
@@ -126,17 +129,20 @@ Template.frameSchedule.onCreated(function () {
 			}
 		});
 
-
 		// Because we need to find the closest separator later on we create a
 		// reversed copy which is easier to search.
 		const separators = instance.separators.get().slice().reverse();
 
 		// List of intervals where events or separators are placed
-		const intervals = _.reduce(separators, (rIntervals, separator) => {
-			/* eslint-disable-next-line no-param-reassign */
-			rIntervals[separator] = separator;
-			return rIntervals;
-		}, {});
+		const intervals = _.reduce(
+			separators,
+			(rIntervals, separator) => {
+				/* eslint-disable-next-line no-param-reassign */
+				rIntervals[separator] = separator;
+				return rIntervals;
+			},
+			{},
+		);
 
 		// List of days where events where found
 		const days = {};
@@ -171,7 +177,6 @@ Template.frameSchedule.onCreated(function () {
 			const mins = Math.max(intervalStart, closestSeparator || 0);
 			intervals[mins] = mins;
 
-
 			if (!slots[mins]) {
 				slots[mins] = {};
 			}
@@ -188,7 +193,9 @@ Template.frameSchedule.onCreated(function () {
 			kinds[kindId] += 1;
 		});
 
-		const numCmp = function (a, b) { return a - b; };
+		const numCmp = function (a, b) {
+			return a - b;
+		};
 		instance.days.set(_.values(days).sort(numCmp));
 		instance.intervals.set(_.values(intervals).sort(numCmp));
 
@@ -212,11 +219,9 @@ Template.frameSchedule.onCreated(function () {
 					// output hopefully looks more stable through the weekdays
 					// with events occurring every weekday listed first in
 					// each slot
-					return `${100 + event.start.getHours()
-					}-${100 + event.start.getMinutes()
-					}-${dayslotKindRank
-					}-${countRank
-					}-${event.title}`;
+					return `${100 + event.start.getHours()}-${
+						100 + event.start.getMinutes()
+					}-${dayslotKindRank}-${countRank}-${event.title}`;
 				});
 			});
 		});
@@ -233,7 +238,9 @@ Template.frameSchedule.helpers({
 	days() {
 		const instance = Template.instance();
 		const scheduleStart = instance.scheduleStart.get();
-		return _.map(instance.days.get(), (day) => moment(scheduleStart).add(day, 'days').format('dddd'));
+		return _.map(instance.days.get(), (day) =>
+			moment(scheduleStart).add(day, 'days').format('dddd'),
+		);
 	},
 
 	intervals() {
@@ -258,8 +265,9 @@ Template.frameSchedule.helpers({
 		const event = this;
 		const startTime = moment(LocalTime.fromString(event.startLocal));
 		startTime.locale(intervalStart.locale());
-		const isSame = startTime.hours() === intervalStart.hours()
-				&& startTime.minutes() === intervalStart.minutes();
+		const isSame =
+			startTime.hours() === intervalStart.hours() &&
+			startTime.minutes() === intervalStart.minutes();
 		return isSame ? false : startTime.format('LT');
 	},
 
