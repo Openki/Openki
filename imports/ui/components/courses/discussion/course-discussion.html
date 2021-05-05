@@ -80,16 +80,22 @@
 			<div class="discussion-post-content">
 				<div class="discussion-post-header">
 					{{> profileLink userId}}
-					<span class="discussion-post-time" title="{{dateFormat time_created}}">
-						{{fromNow time_created}}
-					</span>
-					{{#if hasBeenEdited}}
-						-
-						<span class="comment-time-updated" title="{{dateFormat time_updated}}">
-							{{mf 'course.discussion.lastUpdate' 'Last update'}}:
-							{{fromNow time_updated}}
+					<span class="discussion-post-header-sub">
+						<span data-tooltip="{{dateFormat time_created}}">
+							{{fromNow time_created}}
 						</span>
-					{{/if}}
+						{{#if notifyAll}}
+							<i class="fa fa-bell" aria-hidden="true"
+							   data-tooltip="{{mf 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
+						{{/if}}
+						{{#if hasBeenEdited}}
+							-
+							{{mf 'course.discussion.lastUpdate' 'Last update'}}:
+							<span data-tooltip="{{dateFormat time_updated}}">
+								{{fromNow time_updated}}
+							</span>
+						{{/if}}
+					</span>
 					<span class="discussion-buttons">
 						{{#if mayEdit}}
 							<button type="button" class="js-discussion-edit discussion-edit-btn"
@@ -126,18 +132,24 @@
 					{{else}}
 						<strong>{{mf 'discussion.anonymous' 'Anonymous'}}</strong>
 					{{/if}}
-					<span class="discussion-post-time">
-						{{#unless new}}
-							{{fromNow time_created}}
-						{{/unless}}
-					</span>
-					{{#if hasBeenEdited}}
-						-
-						<span class="comment-time-updated">
-							{{mf 'course.discussion.lastUpdate' 'Last update'}}:
-							{{fromNow time_updated}}
+					{{#unless new}}
+						<span class="discussion-post-header-sub">
+							<span data-tooltip="{{dateFormat time_created}}">
+								{{fromNow time_created}}
+							</span>
+							{{#if notifyAll}}
+								<i class="fa fa-bell" aria-hidden="true"
+								   data-tooltip="{{mf 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
+							{{/if}}
+							{{#if hasBeenEdited}}
+								-
+								{{mf 'course.discussion.lastUpdate' 'Last update'}}:
+								<span data-tooltip="{{dateFormat time_updated}}">
+									{{fromNow time_updated}}
+								</span>
+							{{/if}}
 						</span>
-					{{/if}}
+					{{/unless}}
 				</div>
 				<div class="discussion-edit-body">
 					<div class="form-group">

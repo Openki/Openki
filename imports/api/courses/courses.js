@@ -11,6 +11,8 @@ import * as StringTools from '/imports/utils/string-tools';
 
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
+// eslint-disable-next-line import/no-cycle
+import * as tenantDenormalizer from './tenantDenormalizer';
 
 // ======== DB-Model: ========
 /**
@@ -22,6 +24,7 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
 /**
  * @typedef {Object} CourseEntity
  * @property {string} _id          ID
+ * @property {string} [tenant]
  * @property {string} name
  * @property {string[]} categories ID_categories
  * @property {string[]} tags       (not used)
@@ -121,6 +124,16 @@ export class CoursesCollection extends Mongo.Collection {
 		});
 	}
 
+	/**
+	 * @param {CourseModel} course
+	 * @param {Function | undefined} [callback]
+	 */
+	insert(course, callback) {
+		const enrichedCourse = tenantDenormalizer.beforeInsert(course);
+
+		return super.insert(enrichedCourse, callback);
+	}
+
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
 		return new Filtering({
@@ -212,6 +225,7 @@ export class CoursesCollection extends Mongo.Collection {
 
 	/**
 	 * @param {{
+	 * tenants?: string[];
 	 * region?: string;
 	 * state?: "proposal" | "resting" | "upcomingEvent";
 	 * userInvolved?: string;
@@ -237,6 +251,9 @@ export class CoursesCollection extends Mongo.Collection {
 			find.archived = { $ne: true }; // hide archived by default
 		} else {
 			find.archived = { $eq: true }; // only show archived
+			
+		if (filter.tenants && filter.tenants.length > 0) {
+			find.tenant = { $in: filter.tenants };
 		}
 
 		if (filter.region && filter.region !== 'all') {

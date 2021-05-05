@@ -61,6 +61,8 @@ Accounts.onCreateUser((options, originalUser) => {
 		user.emails = [{ address: providedEmail, verified }];
 	}
 
+	user.tenants = [];
+
 	user.groups = [];
 	user.badges = [user._id];
 

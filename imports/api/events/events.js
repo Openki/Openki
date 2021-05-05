@@ -1,5 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
+// eslint-disable-next-line import/no-cycle
+import * as tenantDenormalizer from './tenantDenormalizer';
 
 import { Courses } from '/imports/api/courses/courses';
 
@@ -21,6 +23,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 /**
  * @typedef {Object} EventEntity
  * @property {string} [_id] ID
+ * @property {string} [tenant] tenant ID
  * @property {string} [region] ID_region
  * @property {string} [title]
  * @property {string} [slug]
@@ -100,6 +103,16 @@ export class EventsCollection extends Mongo.Collection {
 				return _.extend(new OEvent(), event);
 			},
 		});
+	}
+
+	/**
+	 * @param {EventModel} event
+	 * @param {Function | undefined} [callback]
+	 */
+	insert(event, callback) {
+		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
+
+		return super.insert(enrichedEvent, callback);
 	}
 
 	// eslint-disable-next-line class-methods-use-this
@@ -192,6 +205,7 @@ export class EventsCollection extends Mongo.Collection {
 	 * @param {string} [filter.room] only events in this room (string match)
 	 * @param {boolean} [filter.standalone] only events that are not attached to a course
 	 * @param {string} [filter.region] restrict to given region
+	 * @param {string[]} [filter.tenants] restrict to given tenants
 	 * @param {string[]} [filter.categories] list of category ID the event must be in
 	 * @param {string} [filter.group] the event must be in that group (ID)
 	 * @param {string[]} [filter.groups] the event must be in one of the group ID
@@ -259,6 +273,10 @@ export class EventsCollection extends Mongo.Collection {
 
 		if (filter.standalone) {
 			find.courseId = { $exists: false };
+		}
+
+		if (filter.tenants && filter.tenants.length > 0) {
+			find.tenant = { $in: filter.tenants };
 		}
 
 		if (filter.region) {
