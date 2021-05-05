@@ -42,10 +42,10 @@
     "stylelint-prettier": "^1.2.0"
   },
   "scripts": {
-    "dev": "meteor --settings settings/dev.json",
-    "test": "MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --once --driver-package meteortesting:mocha --settings settings/ci.json",
-    "app-test": "MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --full-app --once --driver-package meteortesting:mocha --settings settings/ci.json",
-    "test-live": "MOCHA_GREP=$npm_config_grep meteor test --full-app --driver-package meteortesting:mocha --settings settings/ci.json",
+    "dev": "meteor --inspect --settings settings/dev.json",
+    "test": "MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
+    "app-test": "MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --full-app --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
+    "test-live": "MOCHA_GREP=$npm_config_grep meteor test --full-app --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
     "es-lint": "eslint .",
     "sass-lint": "stylelint '**/*.scss'",
     "html-format": "html-beautify '{client,imports,private,public,server}/**/*.html' -r",
