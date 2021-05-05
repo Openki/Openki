@@ -84,7 +84,7 @@
 }
 
 .is-archived > .details-header {
-	border-color: $archived-border-color;
+	border-color: $archived-color;
 }
 
 // ** Tags
@@ -186,7 +186,7 @@
 }
 
 .is-archived .course-details-nav {
-	border-color: $archived-border-color;
+	border-color: $archived-color;
 }
 
 // ** Content

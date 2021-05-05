@@ -16,6 +16,11 @@
 
 // ** Compact
 //========================================================================================
+
+.alert-archived {
+	@include alert-variant($archived-color, darken($archived-color, 5%), darken($archived-color, 60%));
+}
+
 .course-compact {
 	border-color: $course-border-color;
 	border-style: solid;
@@ -42,7 +47,7 @@
 	}
 
 	&.is-archived {
-		border-color: $archived-border-color;
+		border-color: $archived-color;
 	}
 
 	&.filter-no-match,

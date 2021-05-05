@@ -1,12 +1,15 @@
 <template name="courseDetailsPage">
 	<div class="container">
 		<div class="course-page-column-left">
-			{{#if edit}}
-				<div class="page-component">
+			<div class="page-component">
+				{{#if isArchived}}
+					<div class="alert alert-archived text-center" role="alert">
+						<strong>{{mf 'course.archive.alert' 'This course is archived and not active anymore.'}}</strong>
+					</div>
+				{{/if}}
+				{{#if edit}}
 					{{> courseEdit course}}
-				</div>
-			{{else}}
-				<div class="page-component">
+				{{else}}
 					<div class="course-details {{courseStateClasses}}">
 						<div class="details-header">
 							{{#if course.internal}}
@@ -65,8 +68,8 @@
 						{{> confirmDialog hasArchiveButton=isArchived}}
 					{{/if}}
 					{{> courseRoles rolesDetails}}
-				</div>
-			{{/if}}
+				{{/if}}
+			</div>
 			{{#if mobileViewport}}
 				{{> courseEvents}}
 			{{else}}
