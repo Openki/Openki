@@ -251,7 +251,8 @@ export class CoursesCollection extends Mongo.Collection {
 			find.archived = { $ne: true }; // hide archived by default
 		} else {
 			find.archived = { $eq: true }; // only show archived
-			
+		}
+
 		if (filter.tenants && filter.tenants.length > 0) {
 			find.tenant = { $in: filter.tenants };
 		}
