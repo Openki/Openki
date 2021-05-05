@@ -7,6 +7,7 @@ import { _ } from 'meteor/underscore';
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
+import { Tenants } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
 import { Venues, Venue } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
@@ -543,6 +544,28 @@ Router.map(function () {
 	this.route('stats', {
 		path: 'stats',
 		template: 'stats',
+	});
+
+	this.route('tenantDetails', {
+		path: 'tenant/:_id/:short?',
+		waitOn() {
+			return [Meteor.subscribe('tenant', this.params._id)];
+		},
+		data() {
+			const tenant = Tenants.findOne({ _id: this.params._id });
+
+			if (!tenant) {
+				return false;
+			}
+
+			return { tenant };
+		},
+		onAfterAction() {
+			const tenant = Tenants.findOne({ _id: this.params._id });
+			if (tenant) {
+				Metatags.setCommonTags(tenant.name);
+			}
+		},
 	});
 
 	this.route('timetable', {
