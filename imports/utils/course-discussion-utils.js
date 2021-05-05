@@ -19,7 +19,7 @@ export function mayDeletePost(user, course, post) {
 }
 
 /**
- * @param {{ _id: string; } | undefined} user
+ * @param {{ _id: string; } | undefined | null} user
  * @param {{ userId: string; }} post
  */
 export function mayEditPost(user, post) {

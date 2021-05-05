@@ -15,7 +15,7 @@ import { isEmail } from '/imports/utils/email-tools';
 import * as StringTools from '/imports/utils/string-tools';
 import { AsyncTools } from '/imports/utils/async-tools';
 /** @typedef {import('/imports/api/courses/courses').Course} Course */
-import Events from '../events/events';
+import { Events } from '../events/events';
 /** @typedef {import('./users').UserModel} UserModel */
 
 /**
@@ -106,12 +106,16 @@ Meteor.methods({
 			throw new ValidationError([{ name: 'username', type: 'plzLogin' }], 'Not logged-in');
 		}
 
-		const saneUsername = StringTools.saneTitle(username).replace(/\u2b50/g, '').trim()
+		const saneUsername = StringTools.saneTitle(username)
+			.replace(/\u2b50/g, '')
+			.trim()
 			.substring(0, 200);
 
 		if (saneUsername.length === 0) {
-			throw new ValidationError([{ name: 'username', type: 'noUserName' }],
-				'username cannot be empty');
+			throw new ValidationError(
+				[{ name: 'username', type: 'noUserName' }],
+				'username cannot be empty',
+			);
 		}
 
 		if (saneUsername === user.username) {
@@ -119,14 +123,18 @@ Meteor.methods({
 		}
 
 		if (Accounts.findUserByUsername(saneUsername)) {
-			throw new ValidationError([{ name: 'username', type: 'userExists' }],
-				'username is already taken');
+			throw new ValidationError(
+				[{ name: 'username', type: 'userExists' }],
+				'username is already taken',
+			);
 		}
 
 		const result = Profile.Username.change(user._id, saneUsername);
 		if (!result) {
-			throw new ValidationError([{ name: 'username', type: 'nameError' }],
-				'Failed to update username');
+			throw new ValidationError(
+				[{ name: 'username', type: 'nameError' }],
+				'Failed to update username',
+			);
 		}
 	},
 
@@ -140,8 +148,7 @@ Meteor.methods({
 		/** @type {UserModel} */
 		const user = Meteor.user();
 		if (!user) {
-			throw new ValidationError([{ name: 'notifications', type: 'plzLogin' }],
-				'Not logged-in');
+			throw new ValidationError([{ name: 'notifications', type: 'plzLogin' }], 'Not logged-in');
 		}
 
 		if (user.notifications !== allow) {
@@ -159,7 +166,10 @@ Meteor.methods({
 		/** @type {UserModel} */
 		const user = Meteor.user();
 		if (!user) {
-			throw new ValidationError([{ name: 'allowPrivateMessages', type: 'plzLogin' }], 'Not logged-in');
+			throw new ValidationError(
+				[{ name: 'allowPrivateMessages', type: 'plzLogin' }],
+				'Not logged-in',
+			);
 		}
 
 		if (user.allowPrivateMessages !== allow) {
@@ -198,9 +208,12 @@ Meteor.methods({
 	'user.admin.remove'(userId, reason, options) {
 		check(userId, String);
 		check(reason, String);
-		check(options, Match.Optional({
-			courses: Match.Optional(Boolean),
-		}));
+		check(
+			options,
+			Match.Optional({
+				courses: Match.Optional(Boolean),
+			}),
+		);
 
 		if (!UserPrivilegeUtils.privilegedTo('admin')) return;
 
@@ -209,7 +222,8 @@ Meteor.methods({
 		let numberOfDeletedEvents = 0;
 		if (options?.courses) {
 			// Remove courses created by this user
-			Courses.find({ createdby: userId }).fetch()
+			Courses.find({ createdby: userId })
+				.fetch()
 				.forEach((course) => {
 					deletedCourses.push(course);
 					numberOfDeletedEvents += Events.remove({ courseId: course._id });
@@ -221,25 +235,11 @@ Meteor.methods({
 		// Updated courses and events he is involted
 		const courses = Courses.find({ 'members.user': userId }).fetch();
 		courses.forEach((course) => {
-			Events.update(
-				{ courseId: course._id },
-				{ $pull: { editors: userId } },
-				{ multi: true },
-			);
-			Events.update(
-				{ courseId: course._id },
-				{ $pull: { participants: userId } },
-				{ multi: true },
-			);
+			Events.update({ courseId: course._id }, { $pull: { editors: userId } }, { multi: true });
+			Events.update({ courseId: course._id }, { $pull: { participants: userId } }, { multi: true });
 
-			Courses.update(
-				{ _id: course._id },
-				{ $pull: { members: { user: userId } } },
-			);
-			Courses.update(
-				{ _id: course._id },
-				{ $pull: { editors: userId } },
-			);
+			Courses.update({ _id: course._id }, { $pull: { members: { user: userId } } });
+			Courses.update({ _id: course._id }, { $pull: { editors: userId } });
 
 			// Update member related calculated fields
 			Courses.updateInterested(course._id);
@@ -252,14 +252,13 @@ Meteor.methods({
 
 		Users.remove({ _id: userId });
 
-		Log.record('user.admin.remove', [operatorId, userId],
-			{
-				operatorId,
-				reason,
-				user,
-				deletedCourses,
-				numberOfDeletedEvents,
-			});
+		Log.record('user.admin.remove', [operatorId, userId], {
+			operatorId,
+			reason,
+			user,
+			deletedCourses,
+			numberOfDeletedEvents,
+		});
 	},
 
 	/**
@@ -332,24 +331,19 @@ Meteor.methods({
 					},
 				};
 
-				Users.rawCollection().update({ _id: user._id },
-					update,
-					(err, result) => {
-						if (err) {
-							reject(err);
-						} else {
-							resolve(result.result.nModified === 0);
-						}
-					});
+				Users.rawCollection().update({ _id: user._id }, update, (err, result) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(result.result.nModified === 0);
+					}
+				});
 			});
 		});
 	},
 
 	'user.hidePricePolicy'(user) {
-		Users.update(
-			{ _id: user._id },
-			{ $set: { hidePricePolicy: true } },
-		);
+		Users.update({ _id: user._id }, { $set: { hidePricePolicy: true } });
 	},
 
 	/**

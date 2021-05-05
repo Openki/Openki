@@ -29,8 +29,8 @@
 }
 
 .changed-replicas {
-	opacity: .4;
-	transition: opacity .15s;
+	opacity: 0.4;
+	transition: opacity 0.15s;
 
 	&.is-emphasized {
 		opacity: 1;

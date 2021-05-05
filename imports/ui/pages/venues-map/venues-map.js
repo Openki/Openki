@@ -3,7 +3,7 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import { Regions } from '/imports/api/regions/regions';
-import Venues from '/imports/api/venues/venues';
+import { Venues } from '/imports/api/venues/venues';
 
 import { LocationTracker } from '/imports/ui/lib/location-tracker';
 
@@ -48,9 +48,7 @@ Template.venueMap.onCreated(function () {
 	});
 });
 
-
 Template.venueMap.helpers({
-
 	venues() {
 		return Template.instance().locationTracker.markers.find();
 	},
@@ -77,9 +75,7 @@ Template.venueMap.helpers({
 	},
 });
 
-
 Template.venueMap.events({
-
 	'click .js-location-candidate'() {
 		Router.go('venueDetails', this);
 	},
@@ -92,5 +88,4 @@ Template.venueMap.events({
 	'mouseleave .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
 	},
-
 });

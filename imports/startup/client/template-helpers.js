@@ -9,7 +9,6 @@ import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 import { Roles } from '/imports/api/roles/roles';
 
-
 const helpers = {
 	siteName() {
 		const currentRegion = Regions.currentRegion();
@@ -73,18 +72,22 @@ const helpers = {
 
 		const locale = Session.get('locale');
 		// default fallback language
-		let guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
+		let guideLink =
+			'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
 
 		switch (locale) {
-		case 'de':
-			guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf';
-			break;
-		case 'en':
-			guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
-			break;
-		default:
-			guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
-			break;
+			case 'de':
+				guideLink =
+					'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf';
+				break;
+			case 'en':
+				guideLink =
+					'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
+				break;
+			default:
+				guideLink =
+					'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
+				break;
 		}
 		return guideLink;
 	},
@@ -194,7 +197,8 @@ const helpers = {
 	plain(html) {
 		// Prevent words from sticking together
 		// eg. <p>Kloradf dadeq gsd.</p><p>Loradf dadeq gsd.</p> => Kloradf dadeq gsd. Loradf dadeq gsd.
-		const htmlPreparedForMinimalStyling = html.replaceAll('<br />', '<br /> ')
+		const htmlPreparedForMinimalStyling = html
+			.replaceAll('<br />', '<br /> ')
 			.replaceAll('<p>', '<p> ')
 			.replaceAll('</p>', '</p> ')
 			.replaceAll('<h2>', '<h2> ')
@@ -206,25 +210,27 @@ const helpers = {
 		return doc.body.textContent || '';
 	},
 
-	/** Compare activity to template business
-	  * This can be used to show a busy state while the template is working.
-	  *
-	  * Example: <button>{#if busy 'saving'}Saving...{else}Save now!{/if}</button>
-	  *
-	  * @param {string} [activity] compare to this activity
-	  * @returns {boolean} Whether business matches activity
-	  */
+	/**
+	 * Compare activity to template business
+	 * This can be used to show a busy state while the template is working.
+	 *
+	 * Example: <button>{#if busy 'saving'}Saving...{else}Save now!{/if}</button>
+	 *
+	 * @param {string} [activity] compare to this activity
+	 * @returns {boolean} Whether business matches activity
+	 */
 	busy(activity) {
 		const business = Template.instance().findBusiness();
 		return business.get() === activity;
 	},
 
-	/** Disable buttons while there is business to do.
-	  *
-	  * Example <button {disableIfBusy}>I will be disabled when there is business.</button>
-	  *
-	  * @return {String} 'disabled' if the template is currently busy, empty string otherwise.
-	  */
+	/**
+	 * Disable buttons while there is business to do.
+	 *
+	 * Example <button {disableIfBusy}>I will be disabled when there is business.</button>
+	 *
+	 * @return {String} 'disabled' if the template is currently busy, empty string otherwise.
+	 */
 	disabledIfBusy() {
 		const business = Template.instance().findBusiness();
 		return business.get() ? 'disabled' : '';
@@ -242,12 +248,8 @@ const helpers = {
 		instance.subscribe('group', groupId);
 
 		const group = Groups.findOne({ _id: groupId });
-		if (group) {
-			if (group.logoUrl) {
-				return group.logoUrl;
-			} return '';
-		}
-		return '';
+
+		return group?.logoUrl || '';
 	},
 
 	/**
@@ -337,6 +339,6 @@ const usernameFromId = (function () {
 		}
 		return `userId: ${userId}`;
 	};
-}());
+})();
 
 Template.registerHelper('username', usernameFromId);

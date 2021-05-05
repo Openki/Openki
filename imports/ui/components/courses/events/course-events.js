@@ -4,8 +4,10 @@ import { Template } from 'meteor/templating';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
+
+import { reactiveNow } from '/imports/utils/reactive-now';
 
 import '/imports/ui/components/events/list/event-list';
 import '/imports/ui/components/loading/loading';
@@ -24,23 +26,23 @@ Template.courseEvents.onCreated(function () {
 	this.showModal = new ReactiveVar(false);
 
 	instance.haveEvents = function () {
-		return Events.findFilter({ course: courseId, start: minuteTime.get() }, 1).count() > 0;
+		return Events.findFilter({ course: courseId, start: reactiveNow.get() }, 1).count() > 0;
 	};
 
 	instance.haveMoreEvents = function () {
-		return Events.findFilter(
-			{ course: courseId, start: minuteTime.get() },
-		).count() > maxEventsShown;
+		return (
+			Events.findFilter({ course: courseId, start: reactiveNow.get() }).count() > maxEventsShown
+		);
 	};
 
 	instance.ongoingEvents = function () {
-		return Events.findFilter({ course: courseId, ongoing: minuteTime.get() });
+		return Events.findFilter({ course: courseId, ongoing: reactiveNow.get() });
 	};
 
 	instance.futureEvents = function () {
 		const limit = instance.showAllEvents.get() ? 0 : maxEventsShown;
 
-		return Events.findFilter({ course: courseId, after: minuteTime.get() }, limit);
+		return Events.findFilter({ course: courseId, after: reactiveNow.get() }, limit);
 	};
 });
 
@@ -83,12 +85,10 @@ Template.courseEvents.helpers({
 	},
 
 	upcomingEvents() {
-		return Events.findFilter(
-			{
-				course: this.course._id,
-				after: minuteTime.get(),
-			},
-		);
+		return Events.findFilter({
+			course: this.course._id,
+			after: reactiveNow.get(),
+		});
 	},
 });
 
@@ -121,7 +121,11 @@ Template.courseEvents.events({
 	},
 
 	'click .js-track-cal-download'(event, instance) {
-		Analytics.trackEvent('Events downloads', 'Events downloads via course details', Regions.findOne(instance.data.course.region)?.nameEn);
+		Analytics.trackEvent(
+			'Events downloads',
+			'Events downloads via course details',
+			Regions.findOne(instance.data.course.region)?.nameEn,
+		);
 	},
 });
 

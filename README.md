@@ -63,10 +63,10 @@ In the interest of having a open and welcoming environment for everyone, we agre
 - [Download](https://gitlab.com/Openki/Openki/-/archive/master/Openki-master.zip) and unzip or `https://gitlab.com/Openki/Openki.git` Openki into `/some/path`.
 - `cd /some/path/Openki`
 - `meteor npm install`
-- Run `meteor npm run dev`
+- Run `meteor npm run dev` (We support server side debugging. For help, see: https://nodejs.org/en/docs/inspector)
 - Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
 
-- There are other actions, for example `meteor npm run js-lint`.
+- There are other actions, for example `meteor npm run es-lint`.
 
 
 ### Running the tests
@@ -89,6 +89,8 @@ Format files and automatically fix fixable problems with these commands:
     meteor npm run sass-lint -- --fix
     meteor npm run es-lint -- --fix
     meteor npm run html-format
+
+**Note:** We use eslint with prettier for *.js files, stylelint with prettier for *.scss files and beautify for *.html. You can install their extensions in your IDE to automatically execute the formation when saving. 
 
 ### Fixing weird errors
 

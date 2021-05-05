@@ -2,8 +2,9 @@ import { Accounts } from 'meteor/accounts-base';
 import crypto from 'crypto';
 import Prng from './Prng';
 import { Groups } from '/imports/api/groups/groups';
+import { Tenants } from '/imports/api/tenants/tenants';
 import { Regions } from '/imports/api/regions/regions';
-import Venues from '/imports/api/venues/venues';
+import { Venues } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
 import * as StringTools from '/imports/utils/string-tools';
 
@@ -21,9 +22,63 @@ const ensure = {
 
 	/**
 	 * @param {string} name
+	 */
+	tenant(name) {
+		const tenant = Tenants.findOne({ name });
+		if (tenant) {
+			return tenant._id;
+		}
+
+		const id = ensure.fixedId([name]);
+
+		Tenants.insert({
+			_id: id,
+			name,
+			members: [],
+		});
+		/* eslint-disable-next-line no-console */
+		console.log(`Added tenant: ${name} ${id}`);
+
+		return id;
+	},
+
+	/**
+	 * @param {UserEntity} user
+	 * @param {string} regionId
+	 */
+	userInTenant(user, regionId) {
+		const region = Regions.findOne(regionId);
+
+		if (!region || !region.tenant) {
+			return;
+		}
+
+		if (user.tenants?.includes(region.tenant)) {
+			return;
+		}
+
+		Users.update(user._id, {
+			$addToSet: { tenants: region.tenant },
+		});
+
+
+		const tenant = Tenants.findOne(region.tenant);
+
+		if (tenant?.members?.includes(user._id)) {
+			return;
+		}
+
+		Tenants.update(tenant._id, {
+			$addToSet: { members: user._id },
+		});
+	},
+
+	/**
+	 * @param {string} name
+	 * @param {string} [region]
 	 * @param {boolean} [verified=false]
 	 */
-	user(name, verified = false) {
+	user(name, region, verified = false) {
 		const prng = Prng('ensureUser');
 
 		if (!name) {
@@ -34,39 +89,55 @@ const ensure = {
 
 		let user = Users.findOne({ 'emails.address': email });
 		if (user) {
+			if (region) {
+				ensure.userInTenant(user, region);
+			}
 			return user;
 		}
 
 		user = Users.findOne({ username: name });
 		if (user) {
+			if (region) {
+				ensure.userInTenant(user, region);
+			}
 			return user;
 		}
 
-		const id = Accounts.createUser(/** @type {UserEntity} */{
-			username: name,
-			email,
-			profile: { name },
-			notifications: true,
-			allowPrivateMessages: true,
-		});
+		const id = Accounts.createUser(
+			/** @type {UserEntity} */ {
+				username: name,
+				email,
+				profile: { name },
+				notifications: true,
+				allowPrivateMessages: true,
+			},
+		);
 
 		const age = Math.floor(prng() * 100000000000);
 		const time = new Date().getTime();
-		Users.update({ _id: id }, {
-			$set: {
-				// Every password is set to "greg".
-				// Hashing a password with bcrypt is expensive so we use the
-				// computed hash.
-				services: { password: { bcrypt: '$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq' } },
-				createdAt: new Date(time - age),
-				lastLogin: new Date(time - age / 30),
+		Users.update(
+			{ _id: id },
+			{
+				$set: {
+					// Every password is set to "greg".
+					// Hashing a password with bcrypt is expensive so we use the
+					// computed hash.
+					services: {
+						password: { bcrypt: '$2a$10$pMiVQDN4hfJNUk6ToyFXQugg2vJnsMTd0c.E0hrRoqYqnq70mi4Jq' },
+					},
+					createdAt: new Date(time - age),
+					lastLogin: new Date(time - age / 30),
+				},
 			},
-		});
+		);
 
 		if (verified) {
-			Users.update({ _id: id }, {
-				$set: { 'emails.0.verified': true },
-			});
+			Users.update(
+				{ _id: id },
+				{
+					$set: { 'emails.0.verified': true },
+				},
+			);
 		}
 
 		user = Users.findOne(id);
@@ -75,6 +146,9 @@ const ensure = {
 			throw new Error('Unexpected undefined');
 		}
 
+		if (region) {
+			ensure.userInTenant(user, region);
+		}
 		return user;
 	},
 
@@ -140,8 +214,8 @@ const ensure = {
 		venue.slug = StringTools.slug(venue.name);
 
 		const region = Regions.findOne(regionId);
-		const lat = region.loc.coordinates[1] + (prng() ** 2) * 0.02 * (prng() > 0.5 ? 1 : -1);
-		const lon = region.loc.coordinates[0] + (prng() ** 2) * 0.02 * (prng() > 0.5 ? 1 : -1);
+		const lat = region.loc.coordinates[1] + prng() ** 2 * 0.02 * (prng() > 0.5 ? 1 : -1);
+		const lon = region.loc.coordinates[0] + prng() ** 2 * 0.02 * (prng() > 0.5 ? 1 : -1);
 		venue.loc = { type: 'Point', coordinates: [lon, lat] };
 
 		venue._id = ensure.fixedId([venue.name, venue.region]);

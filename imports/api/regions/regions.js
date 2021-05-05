@@ -11,6 +11,7 @@ import { Mongo } from 'meteor/mongo';
 /**
  * @typedef {Object} RegionEntity
  * @property {string} [_id] ID
+ * @property {string} [tenant]
  * @property {string} [name] ID
  * @property {string} [nameEn] ID
  * @property {Geodata} [loc] (Optional)

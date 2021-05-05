@@ -11,6 +11,8 @@ import * as StringTools from '/imports/utils/string-tools';
 
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
+// eslint-disable-next-line import/no-cycle
+import * as tenantDenormalizer from './tenantDenormalizer';
 
 // ======== DB-Model: ========
 /**
@@ -22,6 +24,7 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
 /**
  * @typedef {Object} CourseEntity
  * @property {string} _id          ID
+ * @property {string} [tenant]
  * @property {string} name
  * @property {string[]} categories ID_categories
  * @property {string[]} tags       (not used)
@@ -37,6 +40,7 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
  * @property {string[]} roles [role-keys]
  * @property {CourseMemberEntity[]} members
  * @property {boolean} internal
+ * @property {boolean} archived
  * @property {{dateTime: Date; type: string; data: any;}} history
  * @property {string[]} editors (calculated) List of user and group id allowed to edit the course,
  * calculated from members and groupOrganizers
@@ -78,9 +82,11 @@ export class Course {
 			return false;
 		}
 		const isNew = !this._id;
-		return isNew // Anybody may create a new course
-			|| UserPrivilegeUtils.privileged(user, 'admin') // Admins can edit all courses
-			|| _.intersection(user.badges, this.editors).length > 0;
+		return (
+			isNew /* Anybody may create a new course */ ||
+			UserPrivilegeUtils.privileged(user, 'admin') /* Admins can edit all courses */ ||
+			_.intersection(user.badges, this.editors).length > 0
+		);
 	}
 
 	/**
@@ -109,7 +115,6 @@ export class Course {
 export class CoursesCollection extends Mongo.Collection {
 	constructor() {
 		super('Courses', {
-
 			/**
 			 * @param {CourseEntity} course
 			 */
@@ -119,21 +124,29 @@ export class CoursesCollection extends Mongo.Collection {
 		});
 	}
 
-	// eslint-disable-next-line class-methods-use-this
-	Filtering() {
-		return new Filtering(
-			{
-				region: Predicates.id,
-				search: Predicates.string,
-				group: Predicates.string,
-				categories: Predicates.ids,
-				state: Predicates.string,
-				needsRole: Predicates.ids,
-				internal: Predicates.flag,
-			},
-		);
+	/**
+	 * @param {CourseModel} course
+	 * @param {Function | undefined} [callback]
+	 */
+	insert(course, callback) {
+		const enrichedCourse = tenantDenormalizer.beforeInsert(course);
+
+		return super.insert(enrichedCourse, callback);
 	}
 
+	// eslint-disable-next-line class-methods-use-this
+	Filtering() {
+		return new Filtering({
+			region: Predicates.id,
+			search: Predicates.string,
+			group: Predicates.string,
+			categories: Predicates.ids,
+			state: Predicates.string,
+			needsRole: Predicates.ids,
+			internal: Predicates.flag,
+			archived: Predicates.flag,
+		});
+	}
 
 	/**
 	 * Update the number of interested user
@@ -149,17 +162,21 @@ export class CoursesCollection extends Mongo.Collection {
 				return;
 			}
 
-			this.rawCollection().update({ _id: course._id }, {
-				$set: {
-					interested: course.members?.length || 0,
+			this.rawCollection().update(
+				{ _id: course._id },
+				{
+					$set: {
+						interested: course.members?.length || 0,
+					},
 				},
-			}, (err, result) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(result.result.nModified === 0);
-				}
-			});
+				(err, result) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(result.result.nModified === 0);
+					}
+				},
+			);
 		});
 	}
 
@@ -187,26 +204,29 @@ export class CoursesCollection extends Mongo.Collection {
 
 			const update = { $set: { editors } };
 
-			this.rawCollection().update({ _id: course._id },
-				update,
-				(err, result) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve(result.result.nModified === 0);
-					}
-				});
-		}).then(() => {
-			// At some point we'll have to figure out a proper caching hierarchy
-			Meteor.call('event.updateGroups', { courseId });
-		}, (reason) => {
-			/* eslint-disable-next-line no-console */
-			console.log(`Failed updateGroups: ${reason}`);
-		});
+			this.rawCollection().update({ _id: course._id }, update, (err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result.result.nModified === 0);
+				}
+			});
+		}).then(
+			() => {
+				// At some point we'll have to figure out a proper caching hierarchy
+				Meteor.call('event.updateGroups', { courseId });
+			},
+			(reason) => {
+				/* eslint-disable-next-line no-console */
+				console.log(`Failed updateGroups: ${reason}`);
+			},
+		);
 	}
 
 	/**
-	 * @param {{ region?: string;
+	 * @param {{
+	 * tenants?: string[];
+	 * region?: string;
 	 * state?: "proposal" | "resting" | "upcomingEvent";
 	 * userInvolved?: string;
 	 * categories?: string[];
@@ -214,6 +234,7 @@ export class CoursesCollection extends Mongo.Collection {
 	 * internal?: boolean;
 	 * search?: string;
 	 * needsRole?: ("host"|"mentor"|"team")[];
+	 * archived?: boolean;
 	 * }} [filter]
 	 * @param {number} [limit]
 	 * @param {any[]} [sortParams]
@@ -225,6 +246,16 @@ export class CoursesCollection extends Mongo.Collection {
 		const order = sortParams || [];
 
 		const find = {};
+
+		if (!filter.archived) {
+			find.archived = { $ne: true }; // hide archived by default
+		} else {
+			find.archived = { $eq: true }; // only show archived
+		}
+
+		if (filter.tenants && filter.tenants.length > 0) {
+			find.tenant = { $in: filter.tenants };
+		}
 
 		if (filter.region && filter.region !== 'all') {
 			find.region = filter.region;
@@ -308,6 +339,7 @@ export class CoursesCollection extends Mongo.Collection {
 
 			find.$and = searchQueries;
 		}
+		/** @type {Mongo.Options<CourseEntity>} */
 		const options = {
 			limit,
 			sort: order,

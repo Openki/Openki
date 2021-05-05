@@ -17,9 +17,7 @@
 			</div>
 		{{/each}}
 		{{#if limited}}
-			<button
-				class="btn btn-add course-page-btn js-show-all-posts"
-				type="button">
+			<button class="btn btn-add course-page-btn js-show-all-posts" type="button">
 				<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
 				{{#mf KEY='course.discussions.showAllComments' NUM=count}}
 					Show all {NUM} comments
@@ -36,9 +34,7 @@
 		{{> postShow}}
 	{{/if}}
 	{{#if notAllResponsesShown}}
-		<button
-			class="btn-link toggle-all-responses js-show-previous-replies"
-			type="button">
+		<button class="btn-link toggle-all-responses js-show-previous-replies" type="button">
 			<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
 			{{mf 'course.discussions.showPreviousReplies' 'Show all previous answers'}}
 		</button>
@@ -55,10 +51,8 @@
 	{{#if new}}
 		{{#if parentId}}
 			<div class="discussion-reply">
-				<button 
-					type="button" 
-					class="js-discussion-edit btn btn-add discussion-reply-btn"
-					{{disabledIfBusy}}>
+				<button type="button" class="js-discussion-edit btn btn-add discussion-reply-btn"
+						{{disabledIfBusy}}>
 					{{#if busy 'saving'}}
 						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 						{{mf '_button.saving'}}
@@ -69,10 +63,8 @@
 				</button>
 			</div>
 		{{else}}
-			<button 
-				type="button" 
-				class="btn btn-add course-page-btn js-discussion-edit"
-				{{disabledIfBusy}}>
+			<button type="button" class="btn btn-add course-page-btn js-discussion-edit"
+					{{disabledIfBusy}}>
 				{{#if busy 'saving'}}
 					<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 					{{mf '_button.saving' 'Saving...'}}
@@ -88,20 +80,22 @@
 			<div class="discussion-post-content">
 				<div class="discussion-post-header">
 					{{> profileLink userId}}
-					<span 
-						class="discussion-post-time"
-						title="{{dateFormat time_created}}">
-						{{fromNow time_created}}
-					</span>
-					{{#if hasBeenEdited}}
-						-
-						<span 
-							class="comment-time-updated" 
-							title="{{dateFormat time_updated}}">
-							{{mf 'course.discussion.lastUpdate' 'Last update'}}:
-							{{fromNow time_updated}}
+					<span class="discussion-post-header-sub">
+						<span data-tooltip="{{dateFormat time_created}}">
+							{{fromNow time_created}}
 						</span>
-					{{/if}}
+						{{#if notifyAll}}
+							<i class="fa fa-bell" aria-hidden="true"
+							   data-tooltip="{{mf 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
+						{{/if}}
+						{{#if hasBeenEdited}}
+							-
+							{{mf 'course.discussion.lastUpdate' 'Last update'}}:
+							<span data-tooltip="{{dateFormat time_updated}}">
+								{{fromNow time_updated}}
+							</span>
+						{{/if}}
+					</span>
 					<span class="discussion-buttons">
 						{{#if mayEdit}}
 							<button type="button" class="js-discussion-edit discussion-edit-btn"
@@ -138,26 +132,30 @@
 					{{else}}
 						<strong>{{mf 'discussion.anonymous' 'Anonymous'}}</strong>
 					{{/if}}
-					<span class="discussion-post-time">
-						{{#unless new}}
-							{{fromNow time_created}}
-						{{/unless}}
-					</span>
-					{{#if hasBeenEdited}}
-						-
-						<span class="comment-time-updated">
-							{{mf 'course.discussion.lastUpdate' 'Last update'}}:
-							{{fromNow time_updated}}
+					{{#unless new}}
+						<span class="discussion-post-header-sub">
+							<span data-tooltip="{{dateFormat time_created}}">
+								{{fromNow time_created}}
+							</span>
+							{{#if notifyAll}}
+								<i class="fa fa-bell" aria-hidden="true"
+								   data-tooltip="{{mf 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
+							{{/if}}
+							{{#if hasBeenEdited}}
+								-
+								{{mf 'course.discussion.lastUpdate' 'Last update'}}:
+								<span data-tooltip="{{dateFormat time_updated}}">
+									{{fromNow time_updated}}
+								</span>
+							{{/if}}
 						</span>
-					{{/if}}
+					{{/unless}}
 				</div>
 				<div class="discussion-edit-body">
 					<div class="form-group">
-						<input 
-							class="js-post-title discussion-edit-title form-control"
-							type="text"
-							placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}} {{mf '_inputField.optional'}}"
-							value="{{title}}" />
+						<input class="js-post-title discussion-edit-title form-control" type="text"
+							   placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}} {{mf '_inputField.optional'}}"
+							   value="{{title}}" />
 					</div>
 					<div class="form-group js-post-text">
 						{{> editableTextarea editableText}}
@@ -166,10 +164,8 @@
 						{{#if canNotifyAll}}
 							<div class="checkbox">
 								<label class="">
-									<input 
-										class='js-notify-all'
-										type='checkbox'
-										{{notifyAllChecked}}>
+									<input class='js-notify-all' type='checkbox'
+										   {{notifyAllChecked}}>
 									<i class="fa fa-bell" aria-hidden="true"></i>
 									{{mf 'course.discussion.notifyAll' 'Notify all co-learners'}}
 								</label>
@@ -177,22 +173,16 @@
 						{{/if}}
 						<div class="checkbox">
 							<label class="discussion-toggle-anonymous">
-								<input 
-									class='toggleAnonymous js-anon'
-									type='checkbox'
-									{{anonChecked}}
-									{{anonDisabled}} />
+								<input class='toggleAnonymous js-anon' type='checkbox'
+									   {{anonChecked}} {{anonDisabled}} />
 								<i class="fa fa-user-secret" aria-hidden="true"></i>
 								{{mf 'course.discussion.anon' 'Anonymous comment'}}
 							</label>
 						</div>
 					{{/if}}
 					<div class="form-actions">
-						<button 
-							type="submit" 
-							class="btn btn-save discussion-save-btn"
-							{{disabledIfBusy}} 
-							{{enableWhenValid}}>
+						<button type="submit" class="btn btn-save discussion-save-btn"
+								{{disabledIfBusy}} {{enableWhenValid}}>
 							<span class="fa fa-send fa-fw" aria-hidden="true"></span>
 							{{#if new}}
 								{{#if parentId}}
@@ -238,13 +228,8 @@
 
 <template name="removeCommentDropdown">
 	<span class="dropdown">
-		<button 
-			type="button" 
-			class="discussion-delete-btn dropdown-toggle"
-			aria-expanded="false"
-			aria-haspopup="true"
-			data-toggle="dropdown"
-			data-tooltip="{{mf '_button.delete'}}">
+		<button type="button" class="discussion-delete-btn dropdown-toggle" aria-expanded="false"
+				aria-haspopup="true" data-toggle="dropdown" data-tooltip="{{mf '_button.delete'}}">
 			<span class="fa fa-remove" aria-hidden="true"></span>
 		</button>
 		<ul class="dropdown-menu dialog-dropdown right">

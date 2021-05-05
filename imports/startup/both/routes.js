@@ -5,10 +5,11 @@ import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
 
 import { Courses } from '/imports/api/courses/courses';
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
+import { Tenants } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
-import Venues, { Venue } from '/imports/api/venues/venues'; // Use default and { named, ... } exports
+import { Venues, Venue } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/venues/venues').VenueModel} VenueModel */
 /** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
@@ -21,6 +22,7 @@ import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 
 import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
+import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Metatags from '/imports/utils/metatags';
 import Predicates from '/imports/utils/predicates';
 import Profile from '/imports/utils/profile';
@@ -63,7 +65,7 @@ const makeFilterQuery = function (params) {
 		start = moment(params.start);
 	}
 	if (!start || !start.isValid()) {
-		start = moment(minuteTime.get()).startOf('day');
+		start = moment(reactiveNow.get()).startOf('day');
 	}
 
 	let end;
@@ -83,13 +85,11 @@ const makeFilterQuery = function (params) {
  * @param {CourseModel} course
  */
 function loadRoles(course) {
-	return Roles
-		.filter((r) => course.roles?.includes(r.type))
-		.map((r) => ({
-			role: r,
-			subscribed: course.userHasRole(Meteor.userId(), r.type),
-			course,
-		}));
+	return Roles.filter((r) => course.roles?.includes(r.type)).map((r) => ({
+		role: r,
+		subscribed: course.userHasRole(Meteor.userId(), r.type),
+		course,
+	}));
 }
 
 if (Meteor.isClient) {
@@ -106,7 +106,9 @@ Router.map(function () {
 	this.route('calendar', {
 		path: 'calendar',
 		template: 'calendar',
-		data() { return this.params; },
+		data() {
+			return this.params;
+		},
 		onAfterAction() {
 			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
 		},
@@ -172,7 +174,7 @@ Router.map(function () {
 			this.filter = Events.Filtering().read(this.params.query).done();
 
 			const filterParams = this.filter.toParams();
-			filterParams.after = minuteTime.get();
+			filterParams.after = reactiveNow.get();
 
 			const limit = parseInt(this.params.query.count, 10) || 6;
 
@@ -181,7 +183,7 @@ Router.map(function () {
 
 		data() {
 			const filterParams = this.filter.toParams();
-			filterParams.after = minuteTime.get();
+			filterParams.after = reactiveNow.get();
 
 			const limit = parseInt(this.params.query.count, 10) || 6;
 
@@ -229,8 +231,8 @@ Router.map(function () {
 			);
 			delete params.neededRoles;
 
-			params.creatorsRoles = ['mentor', 'host'].filter(
-				(role) => params.setCreatorsRoles.includes(role),
+			params.creatorsRoles = ['mentor', 'host'].filter((role) =>
+				params.setCreatorsRoles.includes(role),
 			);
 			delete params.setCreatorsRoles;
 
@@ -239,9 +241,7 @@ Router.map(function () {
 			return params;
 		},
 		onAfterAction() {
-			Metatags.setCommonTags(
-				mf('course.propose.windowtitle', 'Propose new course'),
-			);
+			Metatags.setCommonTags(mf('course.propose.windowtitle', 'Propose new course'));
 		},
 	});
 
@@ -262,9 +262,7 @@ Router.map(function () {
 	this.route('groupDetails', {
 		path: 'group/:_id/:short?',
 		waitOn() {
-			return [
-				Meteor.subscribe('group', this.params._id),
-			];
+			return [Meteor.subscribe('group', this.params._id)];
 		},
 		data() {
 			let group;
@@ -285,7 +283,10 @@ Router.map(function () {
 			});
 
 			return {
-				courseQuery, group, isNew, showCourses: !isNew,
+				courseQuery,
+				group,
+				isNew,
+				showCourses: !isNew,
 			};
 		},
 		onAfterAction() {
@@ -302,7 +303,7 @@ Router.map(function () {
 		path: '/kiosk/events',
 		layoutTemplate: 'kioskLayout',
 		waitOn() {
-			const now = minuteTime.get(); // Time dependency so this will be reactively updated
+			const now = reactiveNow.get(); // Time dependency so this will be reactively updated
 
 			this.filter = Events.Filtering().read(this.params.query).done();
 			Session.set('kioskFilter', this.filter.toParams());
@@ -320,7 +321,7 @@ Router.map(function () {
 		},
 
 		data() {
-			const now = minuteTime.get();
+			const now = reactiveNow.get();
 			const tomorrow = new Date(now);
 			tomorrow.setHours(tomorrow.getHours() + 24);
 			tomorrow.setHours(0);
@@ -365,7 +366,8 @@ Router.map(function () {
 		},
 	});
 
-	this.route('pages', { // /////// static /////////
+	this.route('pages', {
+		// /////// static /////////
 		path: 'page/:page_name',
 		action() {
 			this.render(this.params.page_name);
@@ -405,7 +407,11 @@ Router.map(function () {
 		onAfterAction() {
 			const user = Meteor.user();
 			if (user) {
-				const title = mf('profile.settings.windowtitle', { USER: user.username }, 'My Profile Settings - {USER}');
+				const title = mf(
+					'profile.settings.windowtitle',
+					{ USER: user.username },
+					'My Profile Settings - {USER}',
+				);
 				Metatags.setCommonTags(title);
 			}
 		},
@@ -473,7 +479,9 @@ Router.map(function () {
 			const data = this.data();
 			if (data) {
 				const { course } = data;
-				Metatags.setCommonTags(mf('course.windowtitle', { COURSE: course.name }, 'Course: {COURSE}'));
+				Metatags.setCommonTags(
+					mf('course.windowtitle', { COURSE: course.name }, 'Course: {COURSE}'),
+				);
 			}
 		},
 	});
@@ -482,9 +490,7 @@ Router.map(function () {
 		path: 'course/:_id/:slug/History',
 		// template: 'coursehistory',
 		waitOn() {
-			return [
-				Meteor.subscribe('courseDetails', this.params._id),
-			];
+			return [Meteor.subscribe('courseDetails', this.params._id)];
 		},
 		data() {
 			const course = Courses.findOne({ _id: this.params._id });
@@ -499,9 +505,7 @@ Router.map(function () {
 		template: 'eventPage',
 		notFoundTemplate: 'eventNotFound',
 		waitOn() {
-			const subs = [
-				Meteor.subscribe('event', this.params._id),
-			];
+			const subs = [Meteor.subscribe('event', this.params._id)];
 			const { courseId } = this.params.query;
 			if (courseId) {
 				subs.push(Meteor.subscribe('courseDetails', courseId));
@@ -542,11 +546,37 @@ Router.map(function () {
 		template: 'stats',
 	});
 
+	this.route('tenantDetails', {
+		path: 'tenant/:_id/:short?',
+		waitOn() {
+			return [Meteor.subscribe('tenant', this.params._id)];
+		},
+		data() {
+			const tenant = Tenants.findOne({ _id: this.params._id });
+
+			if (!tenant) {
+				return false;
+			}
+
+			return { tenant };
+		},
+		onAfterAction() {
+			const tenant = Tenants.findOne({ _id: this.params._id });
+			if (tenant) {
+				Metatags.setCommonTags(tenant.name);
+			}
+		},
+	});
+
 	this.route('timetable', {
 		path: '/kiosk/timetable',
 		layoutTemplate: 'timetableLayout',
 		waitOn() {
-			return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params && this.params.query), 200);
+			return Meteor.subscribe(
+				'Events.findFilter',
+				makeFilterQuery(this.params && this.params.query),
+				200,
+			);
 		},
 		data() {
 			const query = makeFilterQuery(this.params.query);
@@ -585,16 +615,27 @@ Router.map(function () {
 				const day = cursor.day();
 				days[`${month}${day}`] = {
 					moment: moment(cursor).startOf('day'),
-					relStart: Math.max(-0.1, (moment(cursor).startOf('day').toDate().getTime() - timestampStart) / span),
-					relEnd: Math.max(-0.1, (timestampEnd - moment(cursor).startOf('day').add(1, 'day').toDate()
-						.getTime()) / span),
+					relStart: Math.max(
+						-0.1,
+						(moment(cursor).startOf('day').toDate().getTime() - timestampStart) / span,
+					),
+					relEnd: Math.max(
+						-0.1,
+						(timestampEnd - moment(cursor).startOf('day').add(1, 'day').toDate().getTime()) / span,
+					),
 				};
 				const hour = cursor.hour();
 				hours[`${month}${day}${hour}`] = {
 					moment: moment(cursor).startOf('hour'),
-					relStart: Math.max(-0.1, (moment(cursor).startOf('hour').toDate().getTime() - timestampStart) / span),
-					relEnd: Math.max(-0.1, (timestampEnd - moment(cursor).startOf('hour').add(1, 'hour').toDate()
-						.getTime()) / span),
+					relStart: Math.max(
+						-0.1,
+						(moment(cursor).startOf('hour').toDate().getTime() - timestampStart) / span,
+					),
+					relEnd: Math.max(
+						-0.1,
+						(timestampEnd - moment(cursor).startOf('hour').add(1, 'hour').toDate().getTime()) /
+							span,
+					),
 				};
 				cursor.add(1, 'hour');
 			} while (cursor.isBefore(end));
@@ -680,11 +721,15 @@ Router.map(function () {
 			}
 
 			// What privileges the user has
-			const privileges = _.reduce(['admin'], (originalPs, p) => {
-				const ps = { ...originalPs };
-				ps[p] = UserPrivilegeUtils.privileged(user, p);
-				return ps;
-			}, {});
+			const privileges = _.reduce(
+				['admin'],
+				(originalPs, p) => {
+					const ps = { ...originalPs };
+					ps[p] = UserPrivilegeUtils.privileged(user, p);
+					return ps;
+				},
+				{},
+			);
 
 			const alterPrivileges = UserPrivilegeUtils.privilegedTo('admin');
 			const showPrivileges = alterPrivileges || user.privileges?.length;
@@ -712,9 +757,7 @@ Router.map(function () {
 		 * @this {{params: {_id: string; slug?:string;}}}
 		 */
 		waitOn() {
-			return [
-				Meteor.subscribe('venueDetails', this.params._id),
-			];
+			return [Meteor.subscribe('venueDetails', this.params._id)];
 		},
 
 		data() {
@@ -769,46 +812,54 @@ Router.map(function () {
 	});
 });
 
-Router.route('/profile/notifications/unsubscribe/:token', function () {
-	const unsubToken = this.params.token;
+Router.route(
+	'/profile/notifications/unsubscribe/:token',
+	function () {
+		const unsubToken = this.params.token;
 
-	const accepted = Profile.Notifications.unsubscribe(unsubToken);
+		const accepted = Profile.Notifications.unsubscribe(unsubToken);
 
-	const query = {};
-	if (accepted) {
-		query.unsubscribed = 'notifications';
-	} else {
-		query['unsubscribe-error'] = '';
-	}
+		const query = {};
+		if (accepted) {
+			query.unsubscribed = 'notifications';
+		} else {
+			query['unsubscribe-error'] = '';
+		}
 
-	this.response.writeHead(302, {
-		Location: Router.url('profile', {}, { query }),
-	});
+		this.response.writeHead(302, {
+			Location: Router.url('profile', {}, { query }),
+		});
 
-	this.response.end();
-}, {
-	name: 'profile.notifications.unsubscribe',
-	where: 'server',
-});
+		this.response.end();
+	},
+	{
+		name: 'profile.notifications.unsubscribe',
+		where: 'server',
+	},
+);
 
-Router.route('/profile/privatemessages/unsubscribe/:token', function () {
-	const unsubToken = this.params.token;
+Router.route(
+	'/profile/privatemessages/unsubscribe/:token',
+	function () {
+		const unsubToken = this.params.token;
 
-	const accepted = Profile.PrivateMessages.unsubscribe(unsubToken);
+		const accepted = Profile.PrivateMessages.unsubscribe(unsubToken);
 
-	const query = {};
-	if (accepted) {
-		query.unsubscribed = 'privatemessages';
-	} else {
-		query['unsubscribe-error'] = '';
-	}
+		const query = {};
+		if (accepted) {
+			query.unsubscribed = 'privatemessages';
+		} else {
+			query['unsubscribe-error'] = '';
+		}
 
-	this.response.writeHead(302, {
-		Location: Router.url('profile', {}, { query }),
-	});
+		this.response.writeHead(302, {
+			Location: Router.url('profile', {}, { query }),
+		});
 
-	this.response.end();
-}, {
-	name: 'profile.privatemessages.unsubscribe',
-	where: 'server',
-});
+		this.response.end();
+	},
+	{
+		name: 'profile.privatemessages.unsubscribe',
+		where: 'server',
+	},
+);

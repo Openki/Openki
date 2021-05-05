@@ -5,8 +5,7 @@ import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { _ } from 'meteor/underscore';
 
-
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
 import { Analytics } from '/imports/ui/lib/analytics';
@@ -65,9 +64,7 @@ Template.frameCalendar.helpers({
 
 	moreEvents() {
 		const limit = Template.instance().limit.get();
-		const eventsCount = Events
-			.find({}, { limit: limit + 1 })
-			.count();
+		const eventsCount = Events.find({}, { limit: limit + 1 }).count();
 
 		return eventsCount > limit;
 	},
@@ -106,6 +103,10 @@ Template.frameCalendarEvent.events({
 	},
 
 	'click .js-track-cal-download'() {
-		Analytics.trackEvent('Events downloads', 'Event downloads via calendar frame', Regions.findOne(this.region)?.nameEn);
+		Analytics.trackEvent(
+			'Events downloads',
+			'Event downloads via calendar frame',
+			Regions.findOne(this.region)?.nameEn,
+		);
 	},
 });

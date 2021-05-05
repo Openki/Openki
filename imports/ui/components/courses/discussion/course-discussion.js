@@ -6,7 +6,7 @@ import { Template } from 'meteor/templating';
 import { Tracker } from 'meteor/tracker';
 
 import { Courses } from '/imports/api/courses/courses';
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 import * as Alert from '/imports/api/alerts/alert';
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import { Editable } from '/imports/ui/lib/editable';
@@ -55,8 +55,7 @@ Template.discussion.helpers({
 			{
 				sort: { time_updated: -1 },
 			},
-		)
-			.fetch();
+		).fetch();
 
 		const count = posts.length;
 		instance.count.set(count);
@@ -111,7 +110,6 @@ Template.post.onCreated(function () {
 	this.limit = new ReactiveVar(2);
 });
 
-
 Template.post.helpers({
 	editing() {
 		return Template.instance().editing.get();
@@ -125,12 +123,10 @@ Template.post.helpers({
 			return false;
 		}
 
-		const replies = CourseDiscussions
-			.find(
-				{ parentId: this._id },
-				{ sort: { time_created: 1 } },
-			)
-			.fetch();
+		const replies = CourseDiscussions.find(
+			{ parentId: this._id },
+			{ sort: { time_created: 1 } },
+		).fetch();
 
 		const limit = instance.limit.get();
 		return limit ? replies.slice(-limit) : replies;
@@ -143,12 +139,7 @@ Template.post.helpers({
 		}
 
 		const limit = instance.limit.get();
-		const count = CourseDiscussions
-			.find(
-				{ parentId: this._id },
-				{ limit: limit + 1 },
-			)
-			.count();
+		const count = CourseDiscussions.find({ parentId: this._id }, { limit: limit + 1 }).count();
 
 		return limit && count > limit;
 	},
@@ -180,7 +171,6 @@ Template.post.events({
 		instance.limit.set(0);
 	},
 });
-
 
 Template.postShow.helpers({
 	postClasses() {
@@ -227,7 +217,6 @@ Template.postEdit.onCreated(function () {
 		this.editableText.setText(Template.currentData().text);
 	});
 });
-
 
 Template.postEdit.helpers({
 	editableText: () => Template.instance().editableText,

@@ -6,7 +6,7 @@ import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 
 import * as Alert from '/imports/api/alerts/alert';
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 import { Users, User } from '/imports/api/users/users';
 import { Match, check } from 'meteor/check';
 import { MeteorAsync } from '/imports/utils/promisify';

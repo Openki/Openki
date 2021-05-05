@@ -11,7 +11,6 @@ module.exports = {
 	globals: {
 		L: 'readonly',
 		Log: 'writable',
-		minuteTime: 'writable',
 		moment: 'readonly',
 		msgfmt: 'readonly',
 		VERSION: 'writable',

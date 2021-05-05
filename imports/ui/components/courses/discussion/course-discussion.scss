@@ -36,7 +36,7 @@ $discussion-thumb-width: 50;
 
 $discussion-post-bg: $blue-lighter;
 
-.discussion-post-content  {
+.discussion-post-content {
 	border-color: darken($discussion-post-bg, 10%);
 	word-break: break-all;
 }
@@ -50,8 +50,6 @@ $discussion-post-bg: $blue-lighter;
 .discussion-edit-body {
 	padding: 10px ($grid-gutter-width / 2) 0;
 }
-
-
 
 .discussion-post {
 	background: $discussion-post-bg;
@@ -97,7 +95,7 @@ $discussion-post-bg: $blue-lighter;
 	}
 }
 
-.discussion-post-time {
+.discussion-post-header-sub {
 	color: $gray-light;
 	cursor: default;
 }
@@ -133,11 +131,11 @@ $discussion-post-bg: $blue-lighter;
 
 .discussion-post,
 .discussion-comment {
-	transition: opacity .15s;
+	transition: opacity 0.15s;
 
 	&.is-saving {
-		opacity: .6;
-		transition: opacity .15s;
+		opacity: 0.6;
+		transition: opacity 0.15s;
 	}
 }
 

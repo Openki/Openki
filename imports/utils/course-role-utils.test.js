@@ -7,7 +7,8 @@ import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
 msgfmt.init('en');
 
 describe('Role check', () => {
-	const members = [{ user: 'user1', roles: ['role1', 'role1000'] },
+	const members = [
+		{ user: 'user1', roles: ['role1', 'role1000'] },
 		{ user: 'user2', roles: ['role2', 'role1000'] },
 		{ user: 'user3', roles: ['role3'] },
 		{ user: 'nobody', roles: [] },

@@ -1,0 +1,18 @@
+<template name="tenantDetails">
+	<div class="container">
+		<div class="page-component tenant-details">
+			<div class="tenant-details-titlebar">
+				{{mf 'tenant.details.tenant' 'Tenant'}}
+			</div>
+			<div class="details-header tenant-details-header">
+				<div class="tenant-details-name">
+					{{tenant.name}}
+				</div>
+			</div>
+
+			{{#if editingSettings}}
+				{{> tenantSettings}}
+			{{/if}}
+		</div>
+	</div>
+</template>

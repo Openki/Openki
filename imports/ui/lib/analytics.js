@@ -5,6 +5,7 @@ import { Tracker } from 'meteor/tracker';
 
 export const Analytics = {};
 
+/** @type {false | JQuery.jqXHR<any>} */
 let loading;
 
 let tracker;
@@ -60,12 +61,14 @@ Analytics.load = function () {
 				});
 			}
 
-			loading.done(() => {
-				check(window.AnalyticsTracker, MatomoPattern);
-				resolve(window.AnalyticsTracker);
-			}).fail((jqxhr, settings, exception) => {
-				reject(exception);
-			});
+			loading
+				.done(() => {
+					check(window.AnalyticsTracker, MatomoPattern);
+					resolve(window.AnalyticsTracker);
+				})
+				.fail((_jqxhr, _settings, exception) => {
+					reject(exception);
+				});
 		});
 	}
 
@@ -115,8 +118,13 @@ Analytics.trackEvent = function (category, action, name, value) {
 			tracker.trackEvent(category, action, name, value);
 		});
 	} else {
+		// For debugging
 		// eslint-disable-next-line no-console
-		console.info(`Analytics.Event: {category: ${category}, action: ${action}${name ? `, name: ${name}` : ''}${value ? `, value: ${value}` : ''}}`);
+		console.info(
+			`Analytics.Event: {category: ${category}, action: ${action}${name ? `, name: ${name}` : ''}${
+				value ? `, value: ${value}` : ''
+			}}`,
+		);
 	}
 };
 

@@ -38,7 +38,10 @@ Template.courseEdit.onCreated(function () {
 
 	this.editableDescription = new Editable(
 		false,
-		mf('course.description.placeholder', 'Describe your idea, so that more people will find it and that they`ll know what to expect.'),
+		mf(
+			'course.description.placeholder',
+			'Describe your idea, so that more people will find it and that they`ll know what to expect.',
+		),
 	);
 
 	this.autorun(() => {
@@ -170,7 +173,9 @@ Template.courseEdit.helpers({
 
 	hasRole() {
 		const instance = Template.instance();
-		return instance.data?.members && hasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
+		return instance.data?.members && hasRoleUser(instance.data.members, this.type, Meteor.userId())
+			? 'checked'
+			: null;
 	},
 
 	showRegionSelection() {
@@ -203,7 +208,7 @@ Template.courseEdit.helpers({
 		const filterQuery = filter.toQuery();
 		const results = Courses.findFilter(filterQuery, 1);
 
-		return (results.count() === 0) && search;
+		return results.count() === 0 && search;
 	},
 
 	courseSearch() {
@@ -274,12 +279,9 @@ Template.courseEdit.helpers({
 	},
 });
 
-
 Template.courseEdit.events({
 	'change input[name=role]'(event, instance) {
-		instance.simpleSelectedRole.set(
-			instance.$('input[name=role]:checked').val(),
-		);
+		instance.simpleSelectedRole.set(instance.$('input[name=role]:checked').val());
 	},
 
 	'click .close'(event, instance) {
@@ -361,10 +363,7 @@ Template.courseEdit.events({
 			}
 
 			// Create unique, merged array
-			changes.subs = [...new Set([
-				...changes.subs,
-				...data.creatorsRoles,
-			])];
+			changes.subs = [...new Set([...changes.subs, ...data.creatorsRoles])];
 		}
 
 		if (instance.fullRoleSelection) {
@@ -383,7 +382,8 @@ Template.courseEdit.events({
 		}
 
 		instance.busy('saving');
-		SaveAfterLogin(instance,
+		SaveAfterLogin(
+			instance,
 			mf('loginAction.saveCourse', 'Login and save course'),
 			mf('registerAction.saveCourse', 'Register and save course'),
 			() => {
@@ -397,33 +397,46 @@ Template.courseEdit.events({
 						instance.showSavedMessage.set(true);
 						instance.resetFields();
 
-						Analytics.trackEvent('Course creations',
-							`Course creations as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`,
+						Analytics.trackEvent(
+							'Course creations',
+							`Course creations as ${
+								changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'
+							}`,
 							Regions.findOne(changes.region)?.nameEn,
-							instance.editableDescription.getTotalFocusTimeInSeconds());
+							instance.editableDescription.getTotalFocusTimeInSeconds(),
+						);
 					} else {
 						if (isNew) {
-							Alert.success(mf(
-								'message.courseCreated',
-								{ NAME: changes.name },
-								'The course "{NAME}" has been created!',
-							));
-							Analytics.trackEvent('Course creations',
-								`Course creations as ${changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'}`,
+							Alert.success(
+								mf(
+									'message.courseCreated',
+									{ NAME: changes.name },
+									'The course "{NAME}" has been created!',
+								),
+							);
+							Analytics.trackEvent(
+								'Course creations',
+								`Course creations as ${
+									changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'
+								}`,
 								Regions.findOne(changes.region)?.nameEn,
-								instance.editableDescription.getTotalFocusTimeInSeconds());
+								instance.editableDescription.getTotalFocusTimeInSeconds(),
+							);
 						} else {
-							Alert.success(mf(
-								'message.courseChangesSaved',
-								{ NAME: changes.name },
-								'Your changes to the course "{NAME}" have been saved.',
-							));
+							Alert.success(
+								mf(
+									'message.courseChangesSaved',
+									{ NAME: changes.name },
+									'Your changes to the course "{NAME}" have been saved.',
+								),
+							);
 						}
 
 						Router.go('showCourse', { _id: courseId });
 					}
 				});
-			});
+			},
+		);
 	},
 
 	'click .js-course-edit-cancel'(event, instance) {
@@ -469,9 +482,7 @@ Template.courseEditRole.onRendered(function () {
 	const selectedRoles = data.selected;
 
 	if (selectedRoles) {
-		this.checked.set(
-			selectedRoles.includes(data.role.type),
-		);
+		this.checked.set(selectedRoles.includes(data.role.type));
 	}
 });
 
@@ -490,7 +501,9 @@ Template.courseEditRole.helpers({
 	},
 
 	hasRole() {
-		return this.members && hasRoleUser(this.members, this.role.type, Meteor.userId()) ? 'checked' : null;
+		return this.members && hasRoleUser(this.members, this.role.type, Meteor.userId())
+			? 'checked'
+			: null;
 	},
 });
 
@@ -508,7 +521,10 @@ Template.courseTitle.onCreated(function () {
 
 	this.autorun(() => {
 		if (this.dropdownVisible()) {
-			this.subscribe('Courses.findFilter', { search: this.proposedSearch.get(), region: Session.get('region') });
+			this.subscribe('Courses.findFilter', {
+				search: this.proposedSearch.get(),
+				region: Session.get('region'),
+			});
 			if (!this.$('.dropdown').hasClass('open')) {
 				this.$('.dropdown-toggle').dropdown('toggle');
 			}
@@ -546,7 +562,6 @@ Template.courseTitle.events({
 	'input .js-title': _.debounce((event, instance) => {
 		instance.proposedSearch.set(event.target.value);
 	}, 220),
-
 
 	'focus .js-title'(event, instance) {
 		instance.focused.set(true);

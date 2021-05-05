@@ -16,20 +16,22 @@
 
 // ** Compact
 //========================================================================================
+
+.alert-archived {
+	@include alert-variant($archived-color, darken($archived-color, 5%), darken($archived-color, 60%));
+}
+
 .course-compact {
+	border-color: $course-border-color;
+	border-style: solid;
+	border-width: $course-border-width;
 	height: 150px;
 	position: relative;
-	transition-duration: .1s;
+	transition-duration: 0.1s;
 	transition-property: #{'box-shadow opacity'};
 
 	&:hover {
 		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-	}
-
-	&.is-proposal,
-	&.has-past-events {
-		border-color: $course-border-color;
-		border-width: $course-border-width;
 	}
 
 	&.is-proposal {
@@ -44,14 +46,18 @@
 		background: $has-upcoming-events-bg;
 	}
 
+	&.is-archived {
+		border-color: $archived-color;
+	}
+
 	&.filter-no-match,
 	&.filter-no-match-delayed {
-		transition-duration: .25s;
+		transition-duration: 0.25s;
 		transition-property: opacity;
 	}
 
 	&.filter-no-match-delayed {
-		transition-delay: .3s;
+		transition-delay: 0.3s;
 	}
 }
 
@@ -84,7 +90,7 @@
 // ** Internal indicator dot
 //========================================================================================
 .course-compact-internal {
-	background-color:  #f00;
+	background-color: #f00;
 	border-radius: 50%;
 	height: 5px;
 	left: 6px;
@@ -105,12 +111,14 @@
 //========================================================================================
 .course-compact-next-event {
 	@include td-make-xs-column(4.5);
+	@include td-pos(right, -7px);
 	background: $course-compact-next-event-bg;
 	color: $course-compact-next-event-color;
 	max-height: 150px;
 	padding: 5px;
 	position: relative;
 	text-align: center;
+	top: -7px;
 }
 
 .course-compact-next-event-component {
@@ -158,13 +166,7 @@
 	position: absolute;
 }
 
-.course-compact.is-proposal > .course-groups,
-.course-compact.has-past-events > .course-groups {
+.course-compact > .course-groups {
 	@include td-pos(right, $course-border-width);
 	bottom: $course-border-width;
-}
-
-.course-compact.has-upcoming-events > .course-groups {
-	@include td-pos(right, $course-border-width * 2);
-	bottom: $course-border-width * 2;
 }

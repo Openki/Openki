@@ -1,120 +1,66 @@
-import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
-
-import Events from '/imports/api/events/events';
+import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
-import { Courses } from '../courses/courses';
+
+import { Events } from '/imports/api/events/events';
 
 if (Meteor.isClient) {
-	describe('Event save', () => {
-		it('Stores an event', async function () {
-			this.timeout(5000);
+	describe('Events', () => {
+		describe('Find by filter', () => {
+			before(async function () {
+				this.timeout(8000);
 
-			await MeteorAsync.loginWithPasswordAsync('greg', 'greg');
-			const theFuture = new Date();
-			theFuture.setHours(1000);
+				// A previous test might have logged us in.
+				if (Meteor.userId()) {
+					await MeteorAsync.logoutAsync();
+				}
+				Session.set('region', 'all');
 
-			const evenLater = new Date();
-			evenLater.setHours(1002);
+				await MeteorAsync.subscribeAsync('Events.findFilter');
+			});
 
-			const regionId = '9JyFCoKWkxnf8LWPh'; // Testistan
+			it('should a gast only show events from public tenants', async function () {
+				this.timeout(6000);
 
-			const newEvent = {
-				title: 'Intentionally clever title for a generated test-event',
-				description:
-					'This space intentionally filled with bland verbiage. You are safe to ignore this. ',
-				venue: { name: 'Undisclosed place where heavy testing takes place' },
-				startLocal: moment(theFuture).format('YYYY-MM-DD[T]HH:mm'),
-				endLocal: moment(evenLater).format('YYYY-MM-DD[T]HH:mm'),
-				region: regionId,
-				internal: true,
-			};
+				const eventsAsGast = Events.findFilter().fetch();
 
-			const eventId = await MeteorAsync.callAsync('event.save', { eventId: '', changes: newEvent });
+				assert.isNotEmpty(eventsAsGast, 'shows events');
 
-			assert.isString(eventId, 'event.save returns an eventId string');
+				assert.isEmpty(
+					eventsAsGast.filter(
+						(c) => c.tenant && !Meteor.settings.public.publicTenants.includes(c.tenant),
+					),
+					"don't show events from not public",
+				);
+			});
 
-			const event = { ...newEvent };
-			delete event.region;
-			event.title += ' No really';
-			await MeteorAsync.callAsync('event.save', { eventId, changes: event });
-		});
+			it('should allow a logged in user to see events from his tenant', async function () {
+				this.timeout(6000);
 
-		it('Sanitizes event strings', async function () {
-			this.timeout(5000);
+				const eventsAsGast = Events.findFilter().fetch();
 
-			const titleWithExcessiveWhitespace = ' 1  2     3\t4      \n';
-			const expectedTitle = '1 2 3 4';
-			const textWithNonPrintables = "See what's hidden in your string… or behind﻿";
-			const expectedText = "See what's hidden in your string… or behind";
+				await MeteorAsync.loginWithPasswordAsync('Schufien', 'greg');
+				const schufien = Meteor.user();
 
-			await MeteorAsync.loginWithPasswordAsync('greg', 'greg');
-			const theFuture = new Date();
-			theFuture.setHours(1000);
+				assert.ok(schufien);
 
-			const evenLater = new Date();
-			evenLater.setHours(1002);
+				const eventsAsSchufien = Events.findFilter().fetch();
 
-			const regionId = '9JyFCoKWkxnf8LWPh'; // Testistan
+				assert.includeMembers(
+					eventsAsSchufien.map((c) => c._id),
+					eventsAsGast.map((c) => c._id),
+					'shows public events as logged in user',
+				);
 
-			const newEvent = {
-				title: titleWithExcessiveWhitespace,
-				description: textWithNonPrintables,
-				venue: { name: 'Undisclosed place where heavy testing takes place' },
-				startLocal: moment(theFuture).format('YYYY-MM-DD[T]HH:mm'),
-				endLocal: moment(evenLater).format('YYYY-MM-DD[T]HH:mm'),
-				region: regionId,
-			};
-
-			const eventId = await MeteorAsync.callAsync('event.save', { eventId: '', changes: newEvent });
-
-			const handle = await MeteorAsync.subscribeAsync('event', eventId);
-			handle.stop();
-
-			const event = Events.findOne(eventId);
-
-			assert.equal(event.title, expectedTitle);
-			assert.equal(event.description, expectedText);
-		});
-
-		it('Updates time_lastedit from course', async function () {
-			this.timeout(5000);
-
-			await MeteorAsync.loginWithPasswordAsync('greg', 'greg');
-
-			const courseId = 'eb6aedecf9';
-
-			const handle = await MeteorAsync.subscribeAsync('courseDetails', courseId);
-			try {
-				const oldCourse = Courses.findOne(courseId);
-
-				const theFuture = new Date();
-				theFuture.setHours(1000);
-
-				const evenLater = new Date();
-				evenLater.setHours(1002);
-
-				const regionId = '9JyFCoKWkxnf8LWPh'; // Testistan
-
-				const newEvent = {
-					courseId,
-					title: 'Intentionally clever title for a generated test-event',
-					description: 'Nothing special here.',
-					venue: { name: 'Undisclosed place where heavy testing takes place' },
-					startLocal: moment(theFuture).format('YYYY-MM-DD[T]HH:mm'),
-					endLocal: moment(evenLater).format('YYYY-MM-DD[T]HH:mm'),
-					region: regionId,
-					internal: true,
-				};
-
-				await MeteorAsync.callAsync('event.save', { eventId: '', changes: newEvent });
-
-				const newCourse = Courses.findOne(courseId);
-
-				assert.isAbove(newCourse.time_lastedit.getTime(), oldCourse.time_lastedit.getTime());
-			} finally {
-				handle.stop();
-			}
+				assert.isTrue(
+					eventsAsSchufien.length > eventsAsGast.length,
+					'shows private events as logged in user',
+				);
+				assert.isNotEmpty(
+					eventsAsSchufien.filter((c) => c.tenant && schufien.tenants.includes(c.tenant)),
+					'shows private events as logged in user',
+				);
+			});
 		});
 	});
 }
