@@ -6,6 +6,7 @@ import { Template } from 'meteor/templating';
 import { Events } from '/imports/api/events/events';
 
 import LocalTime from '/imports/utils/local-time';
+import { reactiveNow } from '/imports/utils/reactive-now';
 
 import './schedule-frame.html';
 
@@ -29,7 +30,7 @@ Template.frameSchedule.onCreated(function () {
 			scheduleStart = moment(query.start);
 		}
 		if (!scheduleStart || !scheduleStart.isValid()) {
-			scheduleStart = moment(minuteTime.get()).startOf('week');
+			scheduleStart = moment(reactiveNow.get()).startOf('week');
 		}
 		instance.scheduleStart.set(scheduleStart);
 

@@ -8,6 +8,8 @@ import { Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 
+import { reactiveNow } from '/imports/utils/reactive-now';
+
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/events/list/event-list';
 import '/imports/ui/components/map/map';
@@ -56,7 +58,7 @@ Template.venueDetails.onCreated(function () {
 			// Add one to the limit so we know there is more to show
 			const limit = instance.upcomingEventLimit.get() + 1;
 
-			const now = minuteTime.get();
+			const now = reactiveNow.get();
 			const predicate = {
 				venue: instance.data.venue._id,
 				after: now,
@@ -74,7 +76,7 @@ Template.venueDetails.onCreated(function () {
 			return [];
 		}
 
-		const now = minuteTime.get();
+		const now = reactiveNow.get();
 		const filter = {
 			venue: instance.data.venue._id,
 			after: now,
@@ -88,7 +90,7 @@ Template.venueDetails.onCreated(function () {
 			// Add one to the limit so we know there is more to show
 			const limit = instance.pastEventLimit.get() + 1;
 
-			const now = minuteTime.get();
+			const now = reactiveNow.get();
 			const predicate = {
 				venue: instance.data.venue._id,
 				before: now,
@@ -106,7 +108,7 @@ Template.venueDetails.onCreated(function () {
 			return [];
 		}
 
-		const now = minuteTime.get();
+		const now = reactiveNow.get();
 		const filter = {
 			venue: instance.data.venue._id,
 			before: now,

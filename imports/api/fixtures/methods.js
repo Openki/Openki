@@ -2,13 +2,13 @@ import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 import { Courses } from '/imports/api/courses/courses';
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 import { Events } from '/imports/api/events/events';
 import ensure from './ensureFixture';
 import Prng from './Prng';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
-import Venues from '/imports/api/venues/venues';
+import { Venues } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
 
 import * as HtmlTools from '/imports/utils/html-tools';
@@ -46,7 +46,7 @@ const sometimesAfter = function (date) {
 	const prng = Prng('sometimesAfter');
 
 	// Seconds between then and now
-	const spread = new Date(Math.abs(new Date().getTime() - date.getTime()));
+	const spread = new Date(Math.abs(new Date().getTime() - date.getTime())).getTime();
 
 	// Quadratic dropoff: Place new date closer to the original date statistically
 	const placement = prng();

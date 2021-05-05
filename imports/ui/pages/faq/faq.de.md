@@ -122,7 +122,7 @@ Viele Tools sind schon auf dem Web frei verfügbar und mensch kann sie auf Openk
 
 * Eigenes Wiki erstellen: [https://www.wikispaces.com/content/classroom](https://www.wikispaces.com/content/classroom)
 * Texte zusammen schreiben: [Etherpad](https://etherpad.wikimedia.org) oder [Hackpad](https://hackpad.com)
-* Einfache Abstimmungen: [Dudle](https://dudle.inf.tu-dresden.de/) oder [Papillon](http://papilio.niadomo.net/create/)
+* Einfache Abstimmungen: [Dudle](https://dudle.inf.tu-dresden.de/) oder [Framadate](https://framadate.org)
 * Kompliziertere Entscheidungen in einer Gruppe: [https://loomio.org](https://loomio.org)
 * Files hochladen: [https://wetransfer.com/](https://wetransfer.com/)
 ## Mentoring

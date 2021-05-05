@@ -168,4 +168,6 @@ export class VenueCollection extends Mongo.Collection {
 	}
 }
 
-export default new VenueCollection();
+export const Venues = new VenueCollection();
+
+export default Venues;

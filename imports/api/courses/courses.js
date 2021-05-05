@@ -321,6 +321,7 @@ export class CoursesCollection extends Mongo.Collection {
 
 			find.$and = searchQueries;
 		}
+		/** @type {Mongo.Options<CourseEntity>} */
 		const options = {
 			limit,
 			sort: order,

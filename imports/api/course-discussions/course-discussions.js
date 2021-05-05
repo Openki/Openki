@@ -15,15 +15,21 @@ import { Mongo } from 'meteor/mongo';
  */
 
 /**
- * @type {Mongo.Collection<CourseDiscussionEnity>}
+ * @extends {Mongo.Collection<CourseDiscussionEnity>}
  */
-const CourseDiscussions = new Mongo.Collection('CourseDiscussions');
+export class CourseDiscussionsCollection extends Mongo.Collection {
+	constructor() {
+		super('CourseDiscussions');
+	}
 
-/**
- * @param {string} text
- */
-CourseDiscussions.validComment = function (text) {
-	return text.trim().length > 0;
-};
+	/**
+	 * @param {string} text
+	 */
+	// eslint-disable-next-line class-methods-use-this
+	validComment(text) {
+		return text.trim().length > 0;
+	}
+}
+export const CourseDiscussions = new CourseDiscussionsCollection();
 
 export default CourseDiscussions;

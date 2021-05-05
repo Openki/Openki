@@ -4,6 +4,8 @@ import { Template } from 'meteor/templating';
 
 import { Events } from '/imports/api/events/events';
 
+import { reactiveNow } from '/imports/utils/reactive-now';
+
 import '/imports/ui/components/events/list/event-list';
 import '/imports/ui/components/loading/loading';
 
@@ -15,7 +17,7 @@ Template.frameWeek.onCreated(function () {
 	instance.weekdays = new ReactiveVar([]);
 
 	this.autorun(() => {
-		minuteTime.get();
+		reactiveNow.get();
 		instance.startOfWeek.set(moment().startOf('week'));
 	});
 

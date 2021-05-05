@@ -2,6 +2,8 @@ import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
+import { pricePolicyEnabled } from '/imports/utils/pricePolicyEnabled';
+
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import './price-policy.html';
@@ -36,18 +38,8 @@ Template.pricePolicyContent.helpers({
 		return classes.join(' ');
 	},
 
-	/**
-	 * Checks if price-policy is enabled for this instance.
-	 * Its only disabled if you set the pricePolicyEnabled-var
-	 * explicitly to false.
-	 */
 	pricePolicyEnabled() {
-		const pricePolicyEnabled = Meteor.settings.public.pricePolicyEnabled;
-		if (pricePolicyEnabled === false) {
-			return false;
-		}
-		// price policy setting is not set, is ambiguos, or is set explicitly to true.
-		return true;
+		return pricePolicyEnabled();
 	},
 
 	pricePolicyLink() {
