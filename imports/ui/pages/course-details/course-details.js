@@ -97,20 +97,31 @@ Template.courseDetailsPage.helpers({
 	mayEdit() {
 		return this.course?.editableBy(Meteor.user());
 	},
-	coursestate() {
-		if (this.nextEvent) {
-			return 'has-upcoming-events';
+	courseStateClasses() {
+		const classes = [];
+
+		if (this.course?.nextEvent) {
+			classes.push('has-upcoming-events');
+		} else if (this.course?.lastEvent) {
+			classes.push('has-past-events');
+		} else {
+			classes.push('is-proposal');
 		}
-		if (this.lastEvent) {
-			return 'has-past-events';
+
+		if (this.course?.archived) {
+			classes.push('is-archived');
 		}
-		return 'is-proposal';
+
+		return classes.join(' ');
 	},
 	mobileViewport() {
 		return Session.get('viewportWidth') <= ScssVars.screenMD;
 	},
 	isProposal() {
 		return !this.course.nextEvent && !this.course.lastEvent;
+	},
+	isArchived() {
+		return this.course.archived;
 	},
 	editableName() {
 		return Template.instance().editableName;
@@ -163,6 +174,54 @@ Template.courseDetailsPage.events({
 			}
 		});
 		Router.go('/');
+	},
+
+	async 'click .js-course-archive'(event, instance) {
+		if (PleaseLogin()) {
+			return;
+		}
+
+		const { course } = instance.data;
+		instance.busy('archive');
+		try {
+			await MeteorAsync.callAsync('course.archive', course._id);
+
+			Alert.success(
+				mf(
+					'courseDetailsPage.message.courseHasBeenArchived',
+					{ COURSE: course.name },
+					'The course "{COURSE}" has been archived.',
+				),
+			);
+		} catch (err) {
+			Alert.serverError(err, 'Archive the course "{COURSE}" went wrong');
+		} finally {
+			instance.busy(false);
+		}
+	},
+
+	async 'click .js-course-unarchive'(event, instance) {
+		if (PleaseLogin()) {
+			return;
+		}
+
+		const { course } = instance.data;
+		instance.busy('unarchive');
+		try {
+			await MeteorAsync.callAsync('course.unarchive', course._id);
+
+			Alert.success(
+				mf(
+					'courseDetailsPage.message.courseHasBeenUnarchived',
+					{ COURSE: course.name },
+					'The course "{COURSE}" has been unarchived.',
+				),
+			);
+		} catch (err) {
+			Alert.serverError(err, 'Unarchive the course "{COURSE}" went wrong');
+		} finally {
+			instance.busy(false);
+		}
 	},
 
 	'click .js-course-edit'(event, instance) {

@@ -191,6 +191,7 @@ Meteor.methods({
 					comment: mf('courses.creator.defaultMessage', '(has proposed this course)'),
 				},
 			];
+			set.archived = false;
 			set.createdby = user._id;
 			set.time_created = new Date();
 			const enrichedSet = timeLasteditDenormalizer.beforeInsert(set);
@@ -228,6 +229,42 @@ Meteor.methods({
 		}
 
 		return courseId;
+	},
+
+	/**
+	 * @param {string} courseId
+	 */
+	'course.archive'(courseId) {
+		const course = Courses.findOne({ _id: courseId });
+		if (!course) {
+			throw new Meteor.Error(404, 'no such course');
+		}
+		if (!course.editableBy(Meteor.user())) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
+		Courses.update(course._id, {
+			$set: {
+				archived: true,
+			},
+		});
+	},
+
+	/**
+	 * @param {string} courseId
+	 */
+	'course.unarchive'(courseId) {
+		const course = Courses.findOne({ _id: courseId });
+		if (!course) {
+			throw new Meteor.Error(404, 'no such course');
+		}
+		if (!course.editableBy(Meteor.user())) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
+		Courses.update(course._id, {
+			$set: {
+				archived: false,
+			},
+		});
 	},
 
 	/**

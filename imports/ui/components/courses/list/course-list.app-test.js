@@ -15,7 +15,7 @@ if (Meteor.isClient) {
 		beforeEach(async () => {
 			await MeteorAsync.callAsync('fixtures.create');
 		});
-		it('should list 8 courses for unauthenticated user (Testistan)', async () => {
+		it('should list 7 courses for unauthenticated user (Testistan)', async () => {
 			Router.go('/');
 			Session.set('region', '9JyFCoKWkxnf8LWPh'); // Testistan
 
@@ -23,7 +23,7 @@ if (Meteor.isClient) {
 			const titles = await waitFor(() => {
 				// eslint-disable-next-line no-shadow
 				const titles = document.getElementsByClassName('course-compact-title');
-				assert.equal(titles.length, 8, 'expect to see test course titles');
+				assert.equal(titles.length, 7, 'expect to see test course titles');
 				return titles;
 			}, 6000);
 			await waitFor(() => {
@@ -31,10 +31,9 @@ if (Meteor.isClient) {
 				assert.equal(titles[1].textContent, 'Game Design mit Unity');
 				assert.equal(titles[2].textContent, 'Aikido');
 				assert.equal(titles[3].textContent, 'Open Lab');
-				assert.equal(titles[4].textContent, 'First-Aid Course');
-				assert.equal(titles[5].textContent, 'Ubuntu auf Mac (dual-Boot)');
-				assert.equal(titles[6].textContent, 'Velo Flicken');
-				assert.equal(titles[7].textContent, 'Meteor.js Workshop');
+				assert.equal(titles[4].textContent, 'Ubuntu auf Mac (dual-Boot)');
+				assert.equal(titles[5].textContent, 'Velo Flicken');
+				assert.equal(titles[6].textContent, 'Meteor.js Workshop');
 			});
 		});
 	});

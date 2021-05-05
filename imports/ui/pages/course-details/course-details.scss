@@ -64,9 +64,10 @@
 
 // ** Header
 //========================================================================================
-.is-proposal > .details-header,
-.has-past-events > .details-header {
+.details-header,
+.details-header {
 	border-color: $course-border-color;
+	border-style: solid;
 	border-width: $course-border-width $course-border-width 0;
 }
 
@@ -80,6 +81,10 @@
 
 .has-upcoming-events > .details-header {
 	background: $has-upcoming-events-bg;
+}
+
+.is-archived > .details-header {
+	border-color: $archived-color;
 }
 
 // ** Tags
@@ -162,13 +167,10 @@
 // ** Navigation
 //========================================================================================
 .course-details-nav {
-	padding: 0 $details-header-padding-horizontal;
-}
-
-.is-proposal .course-details-nav,
-.has-past-events .course-details-nav {
 	border-color: $course-border-color;
+	border-style: solid;
 	border-width: 0 $course-border-width;
+	padding: 0 $details-header-padding-horizontal;
 }
 
 .is-proposal .course-details-nav {
@@ -181,6 +183,10 @@
 
 .has-upcoming-events .course-details-nav {
 	background: $has-upcoming-events-bg;
+}
+
+.is-archived .course-details-nav {
+	border-color: $archived-color;
 }
 
 // ** Content
