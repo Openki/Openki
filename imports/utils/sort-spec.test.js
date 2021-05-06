@@ -15,7 +15,10 @@ describe('Sort specification parsing', () => {
 	});
 
 	it('reads two sort classifiers', () => {
-		const expected = [['name', 'asc'], ['age', 'asc']];
+		const expected = [
+			['name', 'asc'],
+			['age', 'asc'],
+		];
 		assert.deepEqual(SortSpec.fromString('name,age').spec(), expected);
 	});
 
@@ -25,7 +28,10 @@ describe('Sort specification parsing', () => {
 	});
 
 	it('reads second descending sign', () => {
-		const expected = [['name', 'asc'], ['age', 'desc']];
+		const expected = [
+			['name', 'asc'],
+			['age', 'desc'],
+		];
 		assert.deepEqual(SortSpec.fromString('name,-age').spec(), expected);
 	});
 

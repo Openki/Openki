@@ -9,7 +9,6 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import './stats.html';
 
-
 const getRegionFromQuery = () => {
 	const region = Router.current().params.query.region;
 	if (region) {
@@ -18,13 +17,11 @@ const getRegionFromQuery = () => {
 	return 'all_regions';
 };
 
-
 Template.stats.onCreated(function () {
 	this.subscribe('Regions');
 	this.regionName = new ReactiveVar(false);
 	this.region = new ReactiveVar(getRegionFromQuery());
 	this.stats = new ReactiveVar(false);
-
 
 	this.autorun(() => {
 		this.stats.set(false);
@@ -35,7 +32,6 @@ Template.stats.onCreated(function () {
 		});
 	});
 });
-
 
 Template.stats.helpers({
 	isAdmin() {
@@ -49,8 +45,10 @@ Template.stats.helpers({
 		return Template.instance().stats.get();
 	},
 	selectedRegion() {
-		if (!Object.prototype.hasOwnProperty.call(this, '_id')
-		&& Template.instance().region.get() === 'all_regions') {
+		if (
+			!Object.prototype.hasOwnProperty.call(this, '_id') &&
+			Template.instance().region.get() === 'all_regions'
+		) {
 			return 'selected';
 		}
 		return this._id === Template.instance().region.get() ? 'selected' : '';

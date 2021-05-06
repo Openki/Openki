@@ -1,4 +1,3 @@
-
 import { check } from 'meteor/check';
 
 // SortSpec interface
@@ -25,12 +24,17 @@ const SortSpec = (spec) => {
 SortSpec.fromString = function (spec) {
 	check(spec, String);
 
-	return SortSpec(spec.split(',').filter(Boolean).map((field) => {
-		if (field.startsWith('-')) {
-			return [field.slice(1), 'desc'];
-		}
-		return [field, 'asc'];
-	}));
+	return SortSpec(
+		spec
+			.split(',')
+			.filter(Boolean)
+			.map((field) => {
+				if (field.startsWith('-')) {
+					return [field.slice(1), 'desc'];
+				}
+				return [field, 'asc'];
+			}),
+	);
 };
 
 /**

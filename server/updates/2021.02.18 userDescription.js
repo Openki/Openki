@@ -4,12 +4,14 @@ import { Users } from '/imports/api/users/users';
 export default function update() {
 	let updated = 0;
 
-	Users.find({}).fetch().forEach((orginalUser) => {
-		const user = { ...orginalUser };
-		user.description = '';
+	Users.find({})
+		.fetch()
+		.forEach((orginalUser) => {
+			const user = { ...orginalUser };
+			user.description = '';
 
-		updated += Users.update(user._id, user);
-	});
+			updated += Users.update(user._id, user);
+		});
 
 	return updated;
 }

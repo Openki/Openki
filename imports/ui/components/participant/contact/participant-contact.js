@@ -28,7 +28,6 @@ Template.participantContact.onRendered(function () {
 });
 
 Template.participantContact.helpers({
-
 	hideModal() {
 		const instance = Template.instance();
 		return () => {

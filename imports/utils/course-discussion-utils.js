@@ -13,9 +13,11 @@ export function mayDeletePost(user, course, post) {
 	if (!user) {
 		return false;
 	}
-	return UserPrivilegeUtils.privileged(user, 'admin') // is admin
-		|| hasRoleUser(course.members, 'team', user._id) // is in team of course
-		|| (post.userId === user._id); // is creator
+	return (
+		UserPrivilegeUtils.privileged(user, 'admin') /* is admin */ ||
+		hasRoleUser(course.members, 'team', user._id) /* is in team of course */ ||
+		post.userId === user._id // is creator
+	);
 }
 
 /**

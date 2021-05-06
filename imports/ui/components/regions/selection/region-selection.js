@@ -28,12 +28,10 @@ Template.regionDisplay.events({
 
 Template.regionSelection.onCreated(function () {
 	this.state = new ReactiveDict();
-	this.state.setDefault(
-		{
-			showAllRegions: false,
-			search: '',
-		},
-	);
+	this.state.setDefault({
+		showAllRegions: false,
+		search: '',
+	});
 
 	this.autorun(() => {
 		const search = this.state.get('search');
@@ -106,20 +104,24 @@ Template.regionSelection.onRendered(function () {
 		}
 	});
 
-	this.parentInstance().$('.dropdown').on('hide.bs.dropdown', () => {
-		this.close();
-	});
+	this.parentInstance()
+		.$('.dropdown')
+		.on('hide.bs.dropdown', () => {
+			this.close();
+		});
 });
 
 Template.regionSelection.helpers({
-
-
 	allCourses() {
-		return Regions.find().fetch().reduce((acc, region) => acc + region.courseCount, 0);
+		return Regions.find()
+			.fetch()
+			.reduce((acc, region) => acc + region.courseCount, 0);
 	},
 
 	allUpcomingEvents() {
-		return Regions.find().fetch().reduce((acc, region) => acc + region.futureEventCount, 0);
+		return Regions.find()
+			.fetch()
+			.reduce((acc, region) => acc + region.futureEventCount, 0);
 	},
 
 	mostActiveRegions() {
@@ -143,8 +145,10 @@ Template.regionSelection.helpers({
 
 		const numberOfRegions = Template.instance().regions().count();
 
-		return numberOfRegions > minNumber
-		&& numberOfRegions > Template.instance().regions({ active: true }).count();
+		return (
+			numberOfRegions > minNumber &&
+			numberOfRegions > Template.instance().regions({ active: true }).count()
+		);
 	},
 
 	allRegions() {
@@ -154,7 +158,6 @@ Template.regionSelection.helpers({
 	aboutLink() {
 		return Meteor.settings.public.regionSelection?.aboutLink;
 	},
-
 });
 
 Template.regionSelection.events({
@@ -224,7 +227,6 @@ Template.regionSelection.events({
 	'hide.bs.dropdown'(event, instance) {
 		instance.$('.dropdown > .control-arrow').removeClass('fa-angle-up').addClass('fa-angle-down');
 	},
-
 });
 
 Template.regionSelectionItem.helpers({

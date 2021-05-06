@@ -28,4 +28,3 @@ export function privilegedTo(privilege) {
 	const user = Meteor.user();
 	return privileged(user, privilege);
 }
-

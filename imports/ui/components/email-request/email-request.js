@@ -29,10 +29,7 @@ TemplateMixins.FormfieldErrors(Template.emailRequestModal, {
 		field: 'email',
 	},
 	'email invalid': {
-		text: () => mf(
-			'register.warning.emailNotValid',
-			'Your email seems to have an error.',
-		),
+		text: () => mf('register.warning.emailNotValid', 'Your email seems to have an error.'),
 		field: 'email',
 	},
 	emailExists: {
@@ -92,7 +89,9 @@ Template.emailValidationModal.events({
 			if (err) {
 				Alert.serverError(err, 'Failed to send verification mail');
 			} else {
-				Alert.success(mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }));
+				Alert.success(
+					mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }),
+				);
 				$('.js-email-validation-modal').modal('hide');
 			}
 		});

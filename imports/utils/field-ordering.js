@@ -1,4 +1,3 @@
-
 // FieldOrdering interface
 //
 //
@@ -51,19 +50,18 @@ const swap = (f) => (a, b) => f(b, a);
 const FieldOrdering = function (sortSpec) {
 	// Build chain of compare functions that refer to the next field
 	// if the current field values are equal.
-	const ordering = () => sortSpec.spec().reduceRight((chain, [field, order]) => {
-		const fieldComp = FieldComp(field);
-		const directedComp = order === 'asc' ? fieldComp : swap(fieldComp);
-		return (a, b) => directedComp(a, b) || chain(a, b);
-	}, equal);
+	const ordering = () =>
+		sortSpec.spec().reduceRight((chain, [field, order]) => {
+			const fieldComp = FieldComp(field);
+			const directedComp = order === 'asc' ? fieldComp : swap(fieldComp);
+			return (a, b) => directedComp(a, b) || chain(a, b);
+		}, equal);
 	const copy = (list) => Array.prototype.slice.call(list);
 
-	return (
-		{
-			ordering,
-			sorted: (list) => copy(list).sort(ordering()),
-		}
-	);
+	return {
+		ordering,
+		sorted: (list) => copy(list).sort(ordering()),
+	};
 };
 
 export default FieldOrdering;

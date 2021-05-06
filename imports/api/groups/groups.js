@@ -24,9 +24,7 @@ export class GroupsCollection extends Mongo.Collection {
 
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
-		return new Filtering(
-			{},
-		);
+		return new Filtering({});
 	}
 
 	/**

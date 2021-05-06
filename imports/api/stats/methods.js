@@ -4,7 +4,6 @@ import Stats from '/imports/api/stats/stats';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-
 Meteor.methods({
 	/**
 	 * @param {string} regionId

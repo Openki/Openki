@@ -12,13 +12,7 @@ Template.sharing.onRendered(function () {
 		this.shariff = new Shariff(this.find('.shariff'), {
 			lang: Session.get('locale'),
 			mailUrl: 'mailto:',
-			services: [
-				'twitter',
-				'facebook',
-				'telegram',
-				'whatsapp',
-				'mail',
-			],
+			services: ['twitter', 'facebook', 'telegram', 'whatsapp', 'mail'],
 		});
 
 		this.$('.fab, .fas').addClass('fa fa-fw');
@@ -26,13 +20,14 @@ Template.sharing.onRendered(function () {
 });
 
 Template.sharing.events({
-
 	'click .shariff a'(event) {
 		// this reads out which social button it is, e.g. facebook, twitter
-		const source = $(event.currentTarget).parent().attr('class').replace('shariff-button', '')
+		const source = $(event.currentTarget)
+			.parent()
+			.attr('class')
+			.replace('shariff-button', '')
 			.trim();
 
 		Analytics.trackEvent('social', `${source} clicked`);
 	},
-
 });

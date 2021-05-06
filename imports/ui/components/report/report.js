@@ -13,7 +13,6 @@ Template.report.onCreated(function reportOnCreated() {
 	this.state = new ReactiveVar('');
 });
 Template.report.helpers({
-
 	reporting: () => Template.instance().state.get() === 'reporting',
 	sending: () => Template.instance().state.get() === 'sending',
 });
@@ -39,12 +38,14 @@ Template.report.events({
 			instance.$('.js-report-message').val(),
 			(err) => {
 				if (err) {
-					Alert.serverError(
-						err,
-						mf('report.notSent', 'Your report could not be sent'),
-					);
+					Alert.serverError(err, mf('report.notSent', 'Your report could not be sent'));
 				} else {
-					Alert.success(mf('report.confirm', 'Your report was sent. A human will try to find an appropriate solution.'));
+					Alert.success(
+						mf(
+							'report.confirm',
+							'Your report was sent. A human will try to find an appropriate solution.',
+						),
+					);
 				}
 				instance.state.set('');
 			},

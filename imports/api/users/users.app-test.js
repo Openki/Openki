@@ -5,7 +5,6 @@ import { MeteorAsync, AccountsAsync } from '/imports/utils/promisify';
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import { Users } from '/imports/api/users/users';
 
-
 const createDummy = function () {
 	return `test${Date.now()}${Math.random(1000000)}`;
 };
@@ -19,23 +18,27 @@ if (Meteor.isClient) {
 		});
 
 		describe('User creation', () => {
-			it('updates the acceptsMessage flag', () => new Promise((resolve) => {
-				const dummy = createDummy();
-				Accounts.createUser({
-					username: dummy,
-					email: `${dummy}@openki.example`,
-					profile: { name: dummy },
-					password: 'hunter2',
-				}, (error) => {
-					assert.isNotOk(error, 'not expecting creation errors');
+			it('updates the acceptsMessage flag', () =>
+				new Promise((resolve) => {
+					const dummy = createDummy();
+					Accounts.createUser(
+						{
+							username: dummy,
+							email: `${dummy}@openki.example`,
+							profile: { name: dummy },
+							password: 'hunter2',
+						},
+						(error) => {
+							assert.isNotOk(error, 'not expecting creation errors');
 
-					// Rely on the test runner to declare the test failed when it
-					// never resolves. There is no assert(). Improvements welcome.
-					Users.find({ username: dummy, acceptsPrivateMessages: true }).observe({
-						added: resolve,
-					});
-				});
-			}));
+							// Rely on the test runner to declare the test failed when it
+							// never resolves. There is no assert(). Improvements welcome.
+							Users.find({ username: dummy, acceptsPrivateMessages: true }).observe({
+								added: resolve,
+							});
+						},
+					);
+				}));
 		});
 
 		describe('User modification', function () {
@@ -50,19 +53,23 @@ if (Meteor.isClient) {
 					password: 'hunter2',
 				});
 				MeteorAsync.loginWithPasswordAsync(oldDummy, 'hunter2')
-					.then(() => new Promise((resolve) => {
-						Meteor.call('user.updateUsername', newDummy, (err) => {
-							if (err) {
-								assert.isNotOk(err, 'not expecting username-change errors');
-							}
+					.then(
+						() =>
+							new Promise((resolve) => {
+								Meteor.call('user.updateUsername', newDummy, (err) => {
+									if (err) {
+										assert.isNotOk(err, 'not expecting username-change errors');
+									}
 
-							Users.find({ username: newDummy }).observe({
-								added: () => {
-									resolve();
-								},
-							});
-						});
-					})).then(() => {
+									Users.find({ username: newDummy }).observe({
+										added: () => {
+											resolve();
+										},
+									});
+								});
+							}),
+					)
+					.then(() => {
 						// check if username has changed to the correct string
 						const user = Meteor.user();
 						assert.strictEqual(newDummy, user.username, 'username was changed successfully');
@@ -94,7 +101,11 @@ if (Meteor.isClient) {
 
 			// This will track addition of users
 			const cursor = Users.find();
-			cursor.observe({ added: () => { added = true; } });
+			cursor.observe({
+				added: () => {
+					added = true;
+				},
+			});
 
 			// Reset the flag before starting the subscription
 			added = false;

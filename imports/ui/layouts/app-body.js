@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 
 import RegionSelection from '/imports/utils/region-selection';
 import Introduction from '/imports/ui/lib/introduction';
-import ScssVars from '/imports/ui/lib/scss-vars';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
 import UpdateViewport from '/imports/ui/lib/update-viewport';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
@@ -45,8 +45,8 @@ Template.layout.helpers({
 		}
 
 		return (
-			RegionSelection.regionDependentRoutes.includes(route.getName())
-			&& Session.equals('showRegionSplash', true)
+			RegionSelection.regionDependentRoutes.includes(route.getName()) &&
+			Session.equals('showRegionSplash', true)
 		);
 	},
 
@@ -71,7 +71,9 @@ Template.layout.events({
 });
 
 Template.layout.rendered = function () {
-	$(window).resize(() => { UpdateViewport(); });
+	$(window).resize(() => {
+		UpdateViewport();
+	});
 	Session.set('isRetina', window.devicePixelRatio === 2);
 };
 

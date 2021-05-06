@@ -13,7 +13,7 @@ import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 
 import * as Alert from '/imports/api/alerts/alert';
-import Languages from '/imports/api/languages/languages';
+import { Languages } from '/imports/api/languages/languages';
 
 import Introduction from '/imports/ui/lib/introduction';
 import UpdateViewport from '/imports/ui/lib/update-viewport';

@@ -49,7 +49,10 @@ export function elementsReady(test) {
 			});
 
 			observer.observe(document.body, {
-				childList: true, subtree: true, attributes: false, characterData: false,
+				childList: true,
+				subtree: true,
+				attributes: false,
+				characterData: false,
 			});
 		}
 	});
@@ -109,7 +112,10 @@ export function waitFor(assertion, timeout = 1000) {
 		observer = new MutationObserver(tryIt);
 
 		observer.observe(document.body, {
-			childList: true, subtree: true, attributes: true, characterData: true,
+			childList: true,
+			subtree: true,
+			attributes: true,
+			characterData: true,
 		});
 	});
 }
