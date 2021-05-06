@@ -43,15 +43,14 @@
 <template name="loginFrame">
 	<form>
 		<div class="login">
-			<div class="form-group {{errorClass 'username'}}" >
+			<div class="form-group {{errorClass 'username'}}">
 				<div class="input-group">
 					<span class="input-group-addon">
 						<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 					</span>
 					<input class="form-control js-username"
-					       placeholder={{mf 'frame.login.usernameOrEmail' 'Username or Email'}}
-					       type="text"
-					/>
+						   placeholder={{mf 'frame.login.usernameOrEmail' 'Username or Email'}}
+						   type="text" />
 				</div>
 				{{errorMessage 'username'}}
 			</div>
@@ -61,9 +60,7 @@
 						<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
 					</span>
 					<input class="form-control js-password"
-					       placeholder="{{mf '_inputField.password'}}"
-					       type="password"
-					/>
+						   placeholder="{{mf '_inputField.password'}}" type="password" />
 				</div>
 				{{errorMessage 'password'}}
 			</div>
@@ -74,7 +71,8 @@
 				</button>
 			</div>
 			<div class="form-group">
-				<button type="submit" class='btn btn-default js-login form-control' {{disabledIfBusy}}>
+				<button type="submit" class='btn btn-default js-login form-control'
+						{{disabledIfBusy}}>
 					{{#if busy 'logging-in'}}
 						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 						{{mf 'login.login.submit.busy' 'Logging in...'}}
@@ -91,13 +89,11 @@
 			<hr>
 			<div class="form-group">
 				{{#each service in OAuthServices}}
-					<button
-						class="btn btn-{{service.key}} form-control js-oauth-btn"
-					    data-service="{{service.serviceName}}"
-					    type="button"
-						{{disabledIfBusy}}>
+					<button class="btn btn-{{service.key}} form-control js-oauth-btn"
+							data-service="{{service.serviceName}}" type="button" {{disabledIfBusy}}>
 						{{#if busy service.serviceName}}
-							<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+							<span class="fa fa-circle-o-notch fa-spin fa-fw"
+								  aria-hidden="true"></span>
 							{{mf 'login.OAuth.busy' 'Logging in with '}}
 						{{else}}
 							<span class="fa fa-{{service.key}} fa-fw" aria-hidden="true"></span>
@@ -109,9 +105,7 @@
 			</div>
 			<hr>
 			<div class="form-group">
-				<button
-						class="btn btn-add form-control js-register-open"
-						type="button">
+				<button class="btn btn-add form-control js-register-open" type="button">
 					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 					{{mf 'login.register.submit' 'Create account'}}
 				</button>
@@ -127,10 +121,8 @@
 				<span class="input-group-addon">
 					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 				</span>
-				<input class="form-control js-username"
-				       type="text"
-				       placeholder={{mf 'frame.login.username' 'Username'}}
-				/>
+				<input class="form-control js-username" type="text"
+					   placeholder={{mf 'frame.login.username' 'Username'}} />
 			</div>
 			{{errorMessage 'username'}}
 		</div>
@@ -139,10 +131,8 @@
 				<span class="input-group-addon">
 					<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
 				</span>
-				<input class="form-control js-password"
-				       placeholder="{{mf '_inputField.password'}}"
-				       type="password"
-				/>
+				<input class="form-control js-password" placeholder="{{mf '_inputField.password'}}"
+					   type="password" />
 			</div>
 			{{errorMessage 'password'}}
 		</div>
@@ -152,15 +142,12 @@
 					<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
 				</span>
 				<input class="form-control js-email"
-				       placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
-				       type="email"
-				/>
+					   placeholder="{{mf 'frame.login.email' 'E-Mail'}}" type="email" />
 			</div>
 			{{errorMessage 'email'}}
 		</div>
 		<div class="form-group">
 			<span class="help-block register-mail-disclaimer">
-				<!-- <span class="fa fa-info-circle fa-fw" aria-hidden="true"></span> -->
 				{{#mf KEY='login.frame.register.mailDisclaimer'}}
 					Providing an e-mail address allows other users to contact you
 					and is needed to recover your password in case you forget it.
@@ -184,9 +171,7 @@
 		</div>
 		<hr>
 		<div class="form-group">
-			<button
-				class="js-back-to-login btn btn-default form-control"
-				type="button">
+			<button class="js-back-to-login btn btn-default form-control" type="button">
 				<i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>
 				{{mf 'login.register.backToLogin' 'Go back to login'}}
 			</button>
@@ -196,48 +181,44 @@
 
 <template name="forgotPwdFrame">
 	<form class="js-reset-pw">
-	<div class="forgot_login">
-		<p>
-			{{mf 'forgot.explanation' "We can send you a mail that allows you to reset your password. This is only possible if you've provided us with a mail address"}}
-		</p>
-		<div class="form-group">
-			<div class="input-group">
-				<span class="input-group-addon">
-					<span class="fa fa-envelope"></span>
-				</span>
-				<input class="form-control js-reset-pw-email"
-				       aria-describedby="forgotPwdMailHelp"
-				       placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
-				       type="email"
-				/>
-			</div>
-			{{#if noValidEmail}}
-				<span id="forgotPwdMailHelp" class="help-block">
-					{{mf 'forgot.notValid' "Please enter the address you signed up with."}}
-				</span>
-			{{/if}}
-		</div>
-		<div class="form-group">
-			<button
-				class="btn btn-save js-reset-pwd-btn form-control"
-			    disabled="{{#if noValidEmail}}disabled{{/if}}"
-			    type="submit"
-				{{disabledIfBusy}}>
-				{{#if busy 'requesting-pw-reset'}}
-					<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-					{{mf 'forgot.send.busy' 'Resetting password...'}}
-				{{else}}
-					<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
-					{{mf 'forgot.send' 'Reset my password'}}
+		<div class="forgot_login">
+			<p>
+				{{mf 'forgot.explanation' "We can send you a mail that allows you to reset your password. This is only possible if you've provided us with a mail address"}}
+			</p>
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="fa fa-envelope"></span>
+					</span>
+					<input class="form-control js-reset-pw-email"
+						   aria-describedby="forgotPwdMailHelp"
+						   placeholder="{{mf 'frame.login.email' 'E-Mail'}}" type="email" />
+				</div>
+				{{#if noValidEmail}}
+					<span id="forgotPwdMailHelp" class="help-block">
+						{{mf 'forgot.notValid' "Please enter the address you signed up with."}}
+					</span>
 				{{/if}}
-			</button>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-save js-reset-pwd-btn form-control"
+						disabled="{{#if noValidEmail}}disabled{{/if}}" type="submit"
+						{{disabledIfBusy}}>
+					{{#if busy 'requesting-pw-reset'}}
+						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+						{{mf 'forgot.send.busy' 'Resetting password...'}}
+					{{else}}
+						<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
+						{{mf 'forgot.send' 'Reset my password'}}
+					{{/if}}
+				</button>
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-cancel js-reset-pwd-close-btn form-control">
+					<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+					{{mf '_button.cancel'}}
+				</button>
+			</div>
 		</div>
-		<div class="form-group">
-			<button type="button" class="btn btn-cancel js-reset-pwd-close-btn form-control">
-				<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-				{{mf '_button.cancel'}}
-			</button>
-		</div>
-	</div>
 	</form>
 </template>

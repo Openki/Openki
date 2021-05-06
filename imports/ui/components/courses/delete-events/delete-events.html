@@ -1,6 +1,7 @@
 <template name="deleteCourseEvents">
 	<div class="event-caption-wrap">
-		<button class="btn-link js-show-events-delete-modal" title="{{mf 'course.event.edit.deleteEvents' 'Delete events'}}">
+		<button class="btn-link js-show-events-delete-modal"
+				title="{{mf 'course.event.edit.deleteEvents' 'Delete events'}}">
 			<div class="event-caption placeholder event-caption-action event-caption-delete">
 				<div class="event-caption-header-wrap">
 					<div class="event-caption-header">
@@ -49,7 +50,8 @@
 								<ul class="list-group selected-events">
 									{{#each event in selectedEvents}}
 										<li class="list-group-item list-group-item-danger">
-											<span class="close js-deselect-event" data-event-id="{{event._id}}">
+											<span class="close js-deselect-event"
+												  data-event-id="{{event._id}}">
 												&times;
 											</span>
 											{{> deleteEventsEvent event}}
@@ -57,9 +59,11 @@
 									{{/each}}
 								</ul>
 								<div class="delete-events-actions">
-									<button type="button" class="btn btn-danger js-delete-events" {{disabledIfBusy}}>
+									<button type="button" class="btn btn-danger js-delete-events"
+											{{disabledIfBusy}}>
 										{{#if busy 'deleting'}}
-											<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+											<span class="fa fa-circle-o-notch fa-spin fa-fw"
+												  aria-hidden="true"></span>
 											{{#mf KEY='deleteEventsModal.deletingEvents' NUM=numSelectedEvents}}
 												Deleting {NUM, plural,
 													one {event}
@@ -75,7 +79,8 @@
 											{{/mf}}
 										{{/if}}
 									</button>
-									<button type="button" class="btn btn-default js-cancel" {{disabledIfBusy}}>
+									<button type="button" class="btn btn-default js-cancel"
+											{{disabledIfBusy}}>
 										{{mf '_button.cancel'}}
 									</button>
 								</div>
@@ -86,18 +91,16 @@
 							{{#each upcomingEvents}}
 								<div class="checkbox">
 									<label>
-										<input
-											type="checkbox"
-											checked="{{isSelected}}"
-											{{disabledIfBusy}}
-										/>
+										<input type="checkbox" checked="{{isSelected}}"
+											   {{disabledIfBusy}} />
 										{{> deleteEventsEvent this}}
 									</label>
 								</div>
 							{{/each}}
 						</div>
 						<div class="delete-events-actions">
-							<button class="btn btn-danger js-show-delete-confirm" {{disabledIfNoEventsSelected}}>
+							<button class="btn btn-danger js-show-delete-confirm"
+									{{disabledIfNoEventsSelected}}>
 								{{#mf KEY='deleteEventsModal.deleteEvents' NUM=numSelectedEvents}}
 									Delete {NUM, plural,
 										=0 {event}

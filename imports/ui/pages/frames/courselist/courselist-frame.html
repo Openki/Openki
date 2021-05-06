@@ -1,8 +1,11 @@
 <template name="frameCourselist">
 	<style type="text/css">
+		/* beautify ignore:start */
 		{{#each cssRule in cssRules}}
 			{{cssRule}}
 		{{/each}}
+		/* beautify ignore:end */
+
 	</style>
 
 	{{#each course in courses}}
@@ -13,9 +16,7 @@
 	{{/unless}}
 	{{#if moreCourses}}
 		<div class="show-more">
-			<button
-				class="js-show-more-courses btn btn-default"
-				type="button">
+			<button class="js-show-more-courses btn btn-default" type="button">
 				{{mf 'frame.courselist.showMore' 'Show more courses'}}
 			</button>
 		</div>
@@ -28,7 +29,8 @@
 			<span class="frame-list-item-toggle-indicator">
 				<i class="fa fa-{{toggleIndicatorIcon}}"></i>
 			</span>
-			<span class="frame-list-item-interested" title="{{mf 'frame.courseList.interestedPersons' 'Interested persons'}}">
+			<span class="frame-list-item-interested"
+				  title="{{mf 'frame.courseList.interestedPersons' 'Interested persons'}}">
 				<i class="fa fa-fw fa-user"></i>
 				{{interestedPersons}}
 			</span>

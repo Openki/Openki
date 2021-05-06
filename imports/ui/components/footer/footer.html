@@ -1,9 +1,9 @@
 <template name="footer">
 	<footer class="footer">
 		{{#each links}}
-		<a class="footer-link" href="{{link}}" title="{{title}}">
-			{{text}}
-		</a>
+			<a class="footer-link" href="{{link}}" title="{{title}}">
+				{{text}}
+			</a>
 		{{/each}}
 		<span title="{{fullInfo}}" class="footer-deployed-version">
 			{{version}} {{commit}}

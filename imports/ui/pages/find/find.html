@@ -14,11 +14,9 @@
 		<div class="find-header-search">
 			<div class="js-search-field">
 				<div class="input-group">
-					<input class="js-search-input form-control"
-						type="text"
-						id="find"
-						value="{{search}}"
-						placeholder="{{mf 'find.search_placeholder' 'Everything'}}"/>
+					<input class="js-search-input form-control" type="text" id="find"
+						   value="{{search}}"
+						   placeholder="{{mf 'find.search_placeholder' 'Everything'}}" />
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-success js-find-btn">
 							{{mf 'find.search_go' 'Go!'}}
@@ -38,7 +36,6 @@
 					{{> courseCompact result}}
 				{{/each}}
 			</div>
-
 
 			{{#unless ready}}
 				{{> loadingPage}}
@@ -63,7 +60,8 @@
 						<div class="btn-group">
 							{{#if filteredRegion}}
 								<button type="button" class="btn btn-default js-all-regions-btn">
-									<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+									<span class="fa fa-dot-circle-o fa-fw"
+										  aria-hidden="true"></span>
 									{{mf 'find.searchAllRegions' 'Search in all regions'}}
 								</button>
 							{{/if}}
