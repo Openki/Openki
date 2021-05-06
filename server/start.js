@@ -1,5 +1,6 @@
 import { robots } from 'meteor/gadicohen:robots-txt';
 import { Meteor } from 'meteor/meteor';
+import { ServiceConfiguration } from 'meteor/service-configuration';
 import { _ } from 'meteor/underscore';
 
 import '/imports/startup/both';
