@@ -7,9 +7,7 @@ import { Scrubber, ScrubRule } from '/server/lib/scrub';
 msgfmt.init('en');
 
 describe('The Log-Scrubber', () => {
-	const scrubAfterOneDay = new Scrubber([
-		new ScrubRule('test', 1, { tr: 'test' }, true, []),
-	]);
+	const scrubAfterOneDay = new Scrubber([new ScrubRule('test', 1, { tr: 'test' }, true, [])]);
 
 	it('deletes record after grace period', () => {
 		const log = logFactory.fake();
@@ -43,13 +41,11 @@ describe('The Log-Scrubber', () => {
 		const log = logFactory.fake();
 		log.record('test', [], { a: 'a', b: 'b' });
 
-		const scrubber = new Scrubber([
-			new ScrubRule('test', 1, { tr: 'test' }, false, ['a']),
-		]);
+		const scrubber = new Scrubber([new ScrubRule('test', 1, { tr: 'test' }, false, ['a'])]);
 
 		const cursor = log.find({ tr: 'test' });
 		const handle = cursor.observeChanges({
-			changed: (id, doc) => {
+			changed: (_id, doc) => {
 				handle.stop(); // cleanup
 				try {
 					assert.equal(doc.body.a, undefined);

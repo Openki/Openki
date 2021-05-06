@@ -9,51 +9,51 @@ import { Match, check } from 'meteor/check';
 import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
 
-/** The Application Log records user and system decisions. It is intended to
-  * become the single source of truth within the application.
-  *
-  * The log is helpful in reconstructing the state of the app when things
-  * went wrong. when wrong values were recorded, these log entries are not
-  * changed, but new ones with the corrected values written.
-  * It is important that log entries are not changed once written. Only in these
-  * instances should we consider it:
-  *  - An update needs to rename the track names or add relation ID
-  *  - An update needs to update the body of a track
-  *  - When we really want to.
-  * So Changes should only happen while the service is down and we boot into a
-  * new world.
-  *
-  * There are four fields to every log-entry:
-  *    tr (track String)
-  *       This separates log entries into classes.
-  *       Entries on the same track are expected to have a similarily
-  *       structured body, but this structure may change over time.
-  *
-  *   rel (list of relation ID)
-  *       List of lookup ID strings. These are used to select log-entries in
-  *       queries.
-  *
-  *    ts (timestamp Date)
-  *       The time the log entry was recorded.
-  *
-  *  body (Object)
-  *       Contents of the log entry. These are not indexed and depend on the
-  *       track.
-  */
-const mixin = function (log, isServer, printToLog) {
+/**
+ * The Application Log records user and system decisions. It is intended to
+ * become the single source of truth within the application.
+ *
+ * The log is helpful in reconstructing the state of the app when things
+ * went wrong. when wrong values were recorded, these log entries are not
+ * changed, but new ones with the corrected values written.
+ * It is important that log entries are not changed once written. Only in these
+ * instances should we consider it:
+ *  - An update needs to rename the track names or add relation ID
+ *  - An update needs to update the body of a track
+ *  - When we really want to.
+ * So Changes should only happen while the service is down and we boot into a
+ * new world.
+ *
+ * There are four fields to every log-entry:
+ *    tr (track String)
+ *       This separates log entries into classes.
+ *       Entries on the same track are expected to have a similarily
+ *       structured body, but this structure may change over time.
+ *
+ *   rel (list of relation ID)
+ *       List of lookup ID strings. These are used to select log-entries in
+ *       queries.
+ *
+ *    ts (timestamp Date)
+ *       The time the log entry was recorded.
+ *
+ *  body (Object)
+ *       Contents of the log entry. These are not indexed and depend on the
+ *       track.
+ */
+function mixin(log, isServer, printToLog) {
 	if (isServer) {
 		log._ensureIndex({ tr: 1 });
 		log._ensureIndex({ ts: 1 });
 		log._ensureIndex({ rel: 1 });
 	}
 
-	log.Filtering = () => new Filtering(
-		{
+	log.Filtering = () =>
+		new Filtering({
 			start: Predicates.date,
 			rel: Predicates.ids,
 			tr: Predicates.ids,
-		},
-	);
+		});
 
 	class ResultLogger {
 		constructor(id) {
@@ -114,12 +114,11 @@ const mixin = function (log, isServer, printToLog) {
 	 * @param {number} limit
 	 */
 	log.findFilter = function (filter, limit) {
-		check(filter,
-			{
-				start: Match.Optional(Date),
-				rel: Match.Optional([String]),
-				tr: Match.Optional([String]),
-			});
+		check(filter, {
+			start: Match.Optional(Date),
+			rel: Match.Optional([String]),
+			tr: Match.Optional([String]),
+		});
 		check(limit, Number);
 
 		const query = {};
@@ -129,7 +128,7 @@ const mixin = function (log, isServer, printToLog) {
 
 		return log.find(query, { sort: { ts: -1 }, limit });
 	};
-};
+}
 
 /**
  * The logFactory Knows how to create log collections.
