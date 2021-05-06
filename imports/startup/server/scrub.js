@@ -1,17 +1,15 @@
 import { Meteor } from 'meteor/meteor';
 import schedule from 'node-schedule';
+import moment from 'moment';
 
 import Log from '/imports/api/log/log';
 import { Scrubber } from '/server/lib/scrub';
-
 
 Meteor.startup(() => {
 	const scrubSettings = Meteor.settings.scrub;
 	if (scrubSettings) {
 		const scrubber = Scrubber.read(scrubSettings);
-		const scrubCall = Meteor.bindEnvironment(
-			() => scrubber.scrub(Log, moment()),
-		);
+		const scrubCall = Meteor.bindEnvironment(() => scrubber.scrub(Log, moment()));
 
 		// Run scrubber at midnight
 		const daily = new schedule.RecurrenceRule();

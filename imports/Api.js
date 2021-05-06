@@ -1,4 +1,5 @@
 import { Router } from 'meteor/iron:router';
+import moment from 'moment';
 import { Users } from '/imports/api/users/users';
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';

@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
+import moment from 'moment';
 
 import { Roles } from '/imports/api/roles/roles';
 import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';

@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
+import moment from 'moment';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
@@ -60,6 +61,7 @@ const makeFilterQuery = function (params) {
 
 	const query = filter.toQuery();
 
+	/** @type {moment.Moment | undefined} */
 	let start;
 	if (params.start) {
 		start = moment(params.start);
@@ -68,6 +70,7 @@ const makeFilterQuery = function (params) {
 		start = moment(reactiveNow.get()).startOf('day');
 	}
 
+	/** @type {moment.Moment | undefined} */
 	let end;
 	if (params.end) {
 		end = moment(params.end);

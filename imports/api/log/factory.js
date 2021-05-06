@@ -40,6 +40,10 @@ import Predicates from '/imports/utils/predicates';
  *  body (Object)
  *       Contents of the log entry. These are not indexed and depend on the
  *       track.
+ *
+ * @param {Mongo.Collection<any, any>} log
+ * @param {boolean} isServer
+ * @param {boolean} printToLog
  */
 function mixin(log, isServer, printToLog) {
 	if (isServer) {

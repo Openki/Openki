@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 
 import '/imports/startup/both';
 import '/imports/startup/client';
@@ -43,11 +44,12 @@ Router.onBeforeAction(function () {
 
 // Try to guess a sensible language
 Meteor.startup(() => {
-	const useLocale = function (/** @type {string | undefined} */ lang) {
+	const useLocale = function (/** @type {string | undefined | null} */ lang) {
 		if (!lang) {
 			return false;
 		}
 
+		/** @type {false | string} */
 		let locale = false;
 		if (Languages[lang]) {
 			locale = lang;
@@ -167,7 +169,7 @@ Accounts.onLogin(() => {
 	}
 });
 
-Accounts.onEmailVerificationLink((token) => {
+Accounts.onEmailVerificationLink((/** @type {string} */ token) => {
 	Router.go('profile');
 	Accounts.verifyEmail(token, (error) => {
 		if (error) {
