@@ -51,35 +51,34 @@
 	color: $black;
 	margin: 2px;
 	padding: 5px;
-	transition-duration: .1s;
+	transition-duration: 0.1s;
 	transition-property: #{'box-shadow transform'};
 
-
 	&:hover {
-		box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 		transform: scale(1.2, 1.2);
-		transition-duration: .3s;
+		transition-duration: 0.3s;
 		transition-property: #{'box-shadow transform'};
 	}
 }
 
 $schedule-event-types: (
-	1:  rgb(192, 218, 33),
-	2:  rgb(238, 228, 92),
-	3:  rgb(196, 80, 43),
-	4:  rgb(92, 174, 241),
-	5:  rgb(146, 106, 246),
-	6:  rgb(121, 250, 242),
-	7:  rgb(237, 135, 237),
-	8:  rgb(122, 242, 120),
-	9:  rgb(247, 162, 83),
+	1: rgb(192, 218, 33),
+	2: rgb(238, 228, 92),
+	3: rgb(196, 80, 43),
+	4: rgb(92, 174, 241),
+	5: rgb(146, 106, 246),
+	6: rgb(121, 250, 242),
+	7: rgb(237, 135, 237),
+	8: rgb(122, 242, 120),
+	9: rgb(247, 162, 83),
 	10: rgb(151, 167, 244),
 	11: rgb(85, 143, 85),
 	12: rgb(185, 91, 98),
 	13: rgb(152, 117, 74),
 	14: rgb(105, 149, 168),
 	15: rgb(118, 177, 165),
-	other: rgb(114, 140, 86)
+	other: rgb(114, 140, 86),
 );
 
 @each $i, $background-color in $schedule-event-types {

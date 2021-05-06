@@ -25,7 +25,7 @@ $header-bg: darken($blue-lighter, 5%);
 	cursor: pointer;
 	padding: 15px;
 	position: relative;
-	transition: background-color .15s;
+	transition: background-color 0.15s;
 
 	&.highlight {
 		background-color: darken($header-bg, 2%);
@@ -60,7 +60,7 @@ $header-bg: darken($blue-lighter, 5%);
 	border-width: 0 5px 5px;
 
 	@media (min-width: $screen-xs-min) {
-		background-color: rgba($green, .35);
+		background-color: rgba($green, 0.35);
 		padding: 15px;
 	}
 }

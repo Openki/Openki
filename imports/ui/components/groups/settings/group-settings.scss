@@ -1,21 +1,11 @@
-$group-member-bg: rgba($gray-light, .15);
+$group-member-bg: rgba($gray-light, 0.15);
 
 .group-member-tag-profile {
-	@include tag(
-		$group-member-bg,
-		$text-color,
-		$group-member-bg,
-		$brand-primary
-	);
+	@include tag($group-member-bg, $text-color, $group-member-bg, $brand-primary);
 }
 
 .group-member-tag-btn-remove {
-	@include tag-btn(
-		$group-member-bg,
-		$text-color,
-		$brand-danger,
-		darken($brand-danger, 30%)
-	);
+	@include tag-btn($group-member-bg, $text-color, $brand-danger, darken($brand-danger, 30%));
 }
 
 .group-member-tag-btn-add {
