@@ -116,10 +116,7 @@
 				<h3>{{mf 'profile.groups' 'My groups'}}</h3>
 				<h5>
 					{{#mf KEY='profile.groupMembership' NUM_GROUPS=groupCount}}
-						You are {NUM_GROUPS, plural,
-						=0 {not member of any group}
-						=1 {member of the group:}
-						other {member of # groups:}}
+						You are {NUM_GROUPS, plural, =0 {not member of any group} =1 {member of the group:} other {member of # groups:}}
 					{{/mf}}
 				</h5>
 				<ul class="groups">

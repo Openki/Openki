@@ -90,10 +90,7 @@
 				{{#if replicaDateCount}}
 					<label>
 						{{#mf KEY='event.replication.createText' COUNT=replicaDateCount}}
-							Create {COUNT, plural,
-							one {a copy on this date}
-							other {# copies on this dates}
-							}
+							Create {COUNT, plural, one {a copy on this date} other {# copies on this dates}}
 						{{/mf}}
 					</label>
 					<div class="replica-event-captions">
