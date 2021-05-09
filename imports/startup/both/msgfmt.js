@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { msgfmt } from 'meteor/msgfmt:core';
 
 import fs from 'fs';
 import path from 'path';

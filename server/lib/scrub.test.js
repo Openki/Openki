@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 import moment from 'moment';
+import { msgfmt } from 'meteor/msgfmt:core';
 
 import { logFactory } from '/imports/api/log/factory';
 import { Scrubber, ScrubRule } from '/server/lib/scrub';

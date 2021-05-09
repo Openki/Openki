@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { msgfmt } from 'meteor/msgfmt:core';
 import { isEmail } from './email-tools';
 
 // This should not be here

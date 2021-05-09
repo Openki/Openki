@@ -6,7 +6,7 @@ import '/imports/startup/client';
 
 import { Accounts } from 'meteor/accounts-base';
 import { Router } from 'meteor/iron:router';
-import { mf, mfPkg } from 'meteor/msgfmt:core';
+import { mf, mfPkg, msgfmt } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
 import { Tooltips } from 'meteor/lookback:tooltips';
 import { Session } from 'meteor/session';

@@ -1,4 +1,5 @@
 import { assert } from 'chai';
+import { msgfmt } from 'meteor/msgfmt:core';
 import FieldOrdering from '/imports/utils/field-ordering';
 import SortSpec from '/imports/utils/sort-spec';
 
