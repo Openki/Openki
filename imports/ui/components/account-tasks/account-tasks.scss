@@ -68,9 +68,9 @@
 }
 
 $external-servies: (
-  google: #4285f4,
-  facebook: #3b5998,
-  github: #333
+	google: #4285f4,
+	facebook: #3b5998,
+	github: #333,
 );
 
 @each $service, $color in $external-servies {
@@ -84,13 +84,12 @@ $external-servies: (
 }
 
 .register-mail-disclaimer {
-	background-color: rgba($brand-warning, .25);
+	background-color: rgba($brand-warning, 0.25);
 	border: 1px solid $brand-warning;
 	border-radius: 4px;
 	margin-top: 7.5px;
 	padding: 10px;
 }
-
 
 .forgot-pwd-mail-info {
 	display: inline-block;

@@ -3,6 +3,7 @@ import { Match, check } from 'meteor/check';
 import { Email } from 'meteor/email';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 
 import Version from '/imports/api/version/version';
 import { Users } from '/imports/api/users/users';
@@ -77,7 +78,9 @@ Meteor.methods({
 		if (this.userId) {
 			const user = Users.findOne(this.userId);
 			if (user) {
-				reporter = `<a href='${rootUrl}user/${this.userId}'>${HtmlTools.plainToHtml(user.username)}</a>`;
+				reporter = `<a href='${rootUrl}user/${this.userId}'>${HtmlTools.plainToHtml(
+					user.username,
+				)}</a>`;
 			}
 		}
 		moment.locale('en');
@@ -88,9 +91,10 @@ Meteor.methods({
 			const commit = version.commitShort;
 			const deployDate = moment(version.activation).format('lll');
 			const restart = moment(version.lastStart).format('lll');
-			versionString = `<br>The running version is [${Accounts.emailTemplates.siteName}] ${fullVersion}  @ commit ${commit
-			}<br>It was deployed on ${deployDate},`
-				+ `<br>and last restarted on ${restart}.`;
+			versionString =
+				`<br>The running version is [${Accounts.emailTemplates.siteName}] ${fullVersion}  @ commit ${commit}` +
+				`<br>It was deployed on ${deployDate},` +
+				`<br>and last restarted on ${restart}.`;
 		}
 
 		SSR.compileTemplate('messageReport', Assets.getText('messages/report.html'));
@@ -111,5 +115,4 @@ Meteor.methods({
 			}),
 		});
 	},
-
 });

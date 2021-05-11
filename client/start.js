@@ -1,18 +1,19 @@
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 
 import '/imports/startup/both';
 import '/imports/startup/client';
 
 import { Accounts } from 'meteor/accounts-base';
 import { Router } from 'meteor/iron:router';
-import { mf, mfPkg } from 'meteor/msgfmt:core';
+import { mf, mfPkg, msgfmt } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
 import { Tooltips } from 'meteor/lookback:tooltips';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 
 import * as Alert from '/imports/api/alerts/alert';
-import Languages from '/imports/api/languages/languages';
+import { Languages } from '/imports/api/languages/languages';
 
 import Introduction from '/imports/ui/lib/introduction';
 import UpdateViewport from '/imports/ui/lib/update-viewport';
@@ -43,11 +44,12 @@ Router.onBeforeAction(function () {
 
 // Try to guess a sensible language
 Meteor.startup(() => {
-	const useLocale = function (/** @type {string | undefined} */ lang) {
+	const useLocale = function (/** @type {string | undefined | null} */ lang) {
 		if (!lang) {
 			return false;
 		}
 
+		/** @type {false | string} */
 		let locale = false;
 		if (Languages[lang]) {
 			locale = lang;
@@ -167,7 +169,7 @@ Accounts.onLogin(() => {
 	}
 });
 
-Accounts.onEmailVerificationLink((token) => {
+Accounts.onEmailVerificationLink((/** @type {string} */ token) => {
 	Router.go('profile');
 	Accounts.verifyEmail(token, (error) => {
 		if (error) {

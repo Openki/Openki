@@ -1,30 +1,31 @@
 import { Regions } from '/imports/api/regions/regions';
 import moment from 'moment-timezone';
 
-/** Serialize local time for mongo
-  *
-  * References to future local time are stored as ISO 8601 date strings
-  * with no seconds and no timezone offset.
-  *
-  * Example string as stored in the DB:
-  *
-  * "2016-06-07T09:30"
-  *
-  * This means some points in time (e.g. when DST ends) will be impossible
-  * to express unambiguously. This is acceptable as we don't have the UI to
-  * handle these either.
-  *
-  * Rationale for the use of this format:
-  * Mongo has no concept of localized dates. All date objects are stored in UTC.
-  * This poses a problem when we try to pin an event to a future local time in a
-  * timezone.
-  *
-  * Due to frequent changes in timezones, if we store the date as UTC it might
-  * acquire an offset at some point in the future when local time changes
-  * relative to UTC. We would have to correct the time in concert with
-  * everybody else (our libraries and the timezone info of the browsers of our
-  * users). This is infeasible. Thus future dates must be stored as local time.
-  */
+/**
+ * Serialize local time for mongo
+ *
+ * References to future local time are stored as ISO 8601 date strings
+ * with no seconds and no timezone offset.
+ *
+ * Example string as stored in the DB:
+ *
+ * "2016-06-07T09:30"
+ *
+ * This means some points in time (e.g. when DST ends) will be impossible
+ * to express unambiguously. This is acceptable as we don't have the UI to
+ * handle these either.
+ *
+ * Rationale for the use of this format:
+ * Mongo has no concept of localized dates. All date objects are stored in UTC.
+ * This poses a problem when we try to pin an event to a future local time in a
+ * timezone.
+ *
+ * Due to frequent changes in timezones, if we store the date as UTC it might
+ * acquire an offset at some point in the future when local time changes
+ * relative to UTC. We would have to correct the time in concert with
+ * everybody else (our libraries and the timezone info of the browsers of our
+ * users). This is infeasible. Thus future dates must be stored as local time.
+ */
 
 const LocalTime = {};
 
@@ -41,18 +42,23 @@ LocalTime.zone = function (regionId) {
 
 	return {
 		/** @param {string} date */
-		fromString(date) { return moment.tz(date, tz); },
+		fromString(date) {
+			return moment.tz(date, tz);
+		},
 		/** @param {Date} date */
-		toString(date) { return moment.tz(date, tz).format('YYYY-MM-DD[T]HH:mm'); },
+		toString(date) {
+			return moment.tz(date, tz).format('YYYY-MM-DD[T]HH:mm');
+		},
 		/** @param {Date} date */
-		at(date) { return moment.tz(date, tz); },
+		at(date) {
+			return moment.tz(date, tz);
+		},
 	};
 };
 
-
 /**
  * Turn a moment object into a local date string without time offset
- * @param {Date} date
+ * @param {Date | moment.Moment} date
  */
 LocalTime.toString = function (date) {
 	return moment(date).format('YYYY-MM-DD[T]HH:mm');

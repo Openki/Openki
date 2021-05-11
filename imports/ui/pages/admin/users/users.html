@@ -9,16 +9,17 @@
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 			</span>
 			<input class="js-search-users form-control"
-				placeholder="{{mf 'users.field.find.placeholder' 'Type name of user'}}" size="40" type="text" />
+				   placeholder="{{mf 'users.field.find.placeholder' 'Type name of user'}}" size="40"
+				   type="text" />
 		</div>
 	</div>
 
 	<div class="list-group">
 		{{#each foundUsers}}
-		<a href="{{pathFor 'userprofile' _id=this._id}}" class="list-group-item">
-			<i class="fa fa-user fa-fw" aria-hidden="true"></i>
-			{{username this._id}}
-		</a>
+			<a href="{{pathFor 'userprofile' _id=this._id}}" class="list-group-item">
+				<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+				{{username this._id}}
+			</a>
 		{{/each}}
 	</div>
 </template>

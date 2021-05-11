@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
+import moment from 'moment';
 
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
@@ -26,13 +27,11 @@ Template.deleteEventsModal.onCreated(function () {
 	this.busy(false);
 
 	this.state = new ReactiveDict();
-	this.state.setDefault(
-		{
-			selectedEvents: [],
-			allEventsSelected: false,
-			showDeleteConfirm: false,
-		},
-	);
+	this.state.setDefault({
+		selectedEvents: [],
+		allEventsSelected: false,
+		showDeleteConfirm: false,
+	});
 
 	// set allEventsSelected to true if all events are selected
 	this.autorun(() => {
@@ -61,7 +60,9 @@ Template.deleteEventsModal.helpers({
 	},
 
 	isSelected() {
-		return Template.instance().state.get('selectedEvents').find((e) => e._id === this._id);
+		return Template.instance()
+			.state.get('selectedEvents')
+			.find((e) => e._id === this._id);
 	},
 
 	numSelectedEvents() {
@@ -110,7 +111,10 @@ Template.deleteEventsModal.events({
 	'click .js-deselect-event'(e, instance) {
 		const eventId = instance.$(e.target).data('event-id');
 		const selectedEvents = instance.state.get('selectedEvents');
-		instance.state.set('selectedEvents', selectedEvents.filter((event) => event._id !== eventId));
+		instance.state.set(
+			'selectedEvents',
+			selectedEvents.filter((event) => event._id !== eventId),
+		);
 	},
 
 	'click .js-delete-events'(e, instance) {
@@ -123,11 +127,14 @@ Template.deleteEventsModal.events({
 			Meteor.call('event.remove', event._id, (err) => {
 				responses += 1;
 				if (err) {
-					Alert.serverError(err, mf(
-						'deleteEventsModal.errWithReason',
-						{ TITLE: event.title, START: moment(event.startLocal).format('llll') },
-						'Deleting the event "{TITLE} ({START})" failed.',
-					));
+					Alert.serverError(
+						err,
+						mf(
+							'deleteEventsModal.errWithReason',
+							{ TITLE: event.title, START: moment(event.startLocal).format('llll') },
+							'Deleting the event "{TITLE} ({START})" failed.',
+						),
+					);
 				} else {
 					removed += 1;
 				}
@@ -136,13 +143,20 @@ Template.deleteEventsModal.events({
 					instance.busy(false);
 					instance.state.set('showDeleteConfirm', false);
 					if (removed) {
-						Alert.success(mf(
-							'deleteEventsModal.sucess',
-							{ NUM: removed },
-							'{NUM, plural, one {Event was} other {# events were}} successfully deleted.',
-						));
+						Alert.success(
+							mf(
+								'deleteEventsModal.sucess',
+								{ NUM: removed },
+								'{NUM, plural, one {Event was} other {# events were}} successfully deleted.',
+							),
+						);
 
-						Analytics.trackEvent('Events deletions', 'Events deletions as team', Regions.findOne(event.region)?.nameEn, removed);
+						Analytics.trackEvent(
+							'Events deletions',
+							'Events deletions as team',
+							Regions.findOne(event.region)?.nameEn,
+							removed,
+						);
 					}
 					if (removed === responses) {
 						instance.state.set('selectedEvents', []);

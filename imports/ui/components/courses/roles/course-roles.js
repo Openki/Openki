@@ -32,7 +32,8 @@ Template.courseRole.onCreated(function () {
 	// unsubscribe by email
 	// HACK this is not the right place to act on router actions
 	if (Router.current().params.query.unsubscribe === this.data.role.type) {
-		SaveAfterLogin(this,
+		SaveAfterLogin(
+			this,
 			mf('loginAction.unsubscribeFromCourse', 'Login and unsubscribe from Course'),
 			mf('registerAction.unsubscribeFromCourse', 'Register and unsubscribe from Course'),
 			async () => {
@@ -40,11 +41,18 @@ Template.courseRole.onCreated(function () {
 				const change = new Unsubscribe(this.data.course, user, this.data.role.type);
 				if (change.validFor(user)) {
 					await processChangeAsync(change);
-					Alert.success(mf('course.roles.unsubscribed', { NAME: this.data.course.name }, 'Unsubscribed from course {NAME}'));
+					Alert.success(
+						mf(
+							'course.roles.unsubscribed',
+							{ NAME: this.data.course.name },
+							'Unsubscribed from course {NAME}',
+						),
+					);
 				} else {
 					Alert.error(`${change} not valid for ${user}`);
 				}
-			});
+			},
+		);
 	}
 });
 
@@ -95,7 +103,8 @@ Template.courseRole.events({
 		RouterAutoscroll.cancelNext();
 		const comment = instance.$('.js-comment').val().trim();
 		instance.busy('enrolling');
-		SaveAfterLogin(instance,
+		SaveAfterLogin(
+			instance,
 			mf('loginAction.enroll', 'Login and enroll'),
 			mf('registerAction.enroll', 'Register and enroll'),
 			async () => {
@@ -105,10 +114,13 @@ Template.courseRole.events({
 				instance.busy(false);
 				instance.enrolling.set(false);
 
-				Analytics.trackEvent('Enrollments in courses',
+				Analytics.trackEvent(
+					'Enrollments in courses',
 					`Enrollments in courses as ${this.role.type}`,
-					Regions.findOne(this.course.region)?.nameEn);
-			});
+					Regions.findOne(this.course.region)?.nameEn,
+				);
+			},
+		);
 	},
 
 	'click .js-role-enroll-cancel'(e, template) {
@@ -120,9 +132,11 @@ Template.courseRole.events({
 		RouterAutoscroll.cancelNext();
 		const change = new Unsubscribe(this.course, Meteor.user(), this.role.type);
 		await processChangeAsync(change);
-		Analytics.trackEvent('Unsubscribes from courses',
+		Analytics.trackEvent(
+			'Unsubscribes from courses',
 			`Unsubscribes from courses as ${this.role.type}`,
-			Regions.findOne(this.course.region)?.nameEn);
+			Regions.findOne(this.course.region)?.nameEn,
+		);
 		return false;
 	},
 

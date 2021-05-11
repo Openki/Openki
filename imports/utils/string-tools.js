@@ -9,7 +9,7 @@ import { check } from 'meteor/check';
  * @param {string} ellipsis the string to add that signifies that src was truncated,
  * preset "…", does not count towards max.
  * @returns {string}
-  */
+ */
 export function truncate(src, max, ellipsis = '…') {
 	check(src, String);
 	check(max, Number);
@@ -46,9 +46,7 @@ export function markedName(search, name) {
 	if (match) {
 		const term = match[0];
 		const parts = name.split(term);
-		marked = parts
-			.map(Blaze._escape)
-			.join(`<strong>${Blaze._escape(term)}</strong>`);
+		marked = parts.map(Blaze._escape).join(`<strong>${Blaze._escape(term)}</strong>`);
 	} else {
 		marked = Blaze._escape(name);
 	}

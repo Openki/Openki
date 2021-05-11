@@ -5,6 +5,7 @@ import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 
 import { Events } from '/imports/api/events/events';
 import * as UrlTools from '/imports/utils/url-tools';

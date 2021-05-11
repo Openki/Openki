@@ -3,6 +3,7 @@ import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 
 import { Events } from '/imports/api/events/events';
 
@@ -214,11 +215,12 @@ Template.eventReplication.events({
 			Meteor.call('event.save', args, (error) => {
 				responses += 1;
 				if (error) {
+					const start = moment(replicaEvent.startLocal).format('llll');
 					Alert.serverError(
 						error,
 						mf(
 							'eventReplication.errWithReason',
-							{ START: moment(replicaEvent.startLocal).format('llll') },
+							{ START: start },
 							'Creating the copy on "{START}" failed.',
 						),
 					);
@@ -229,13 +231,14 @@ Template.eventReplication.events({
 				if (responses === replicaDays.length) {
 					instance.busy(false);
 					if (removed) {
+						const start = moment(replicaEvent.startLocal).format('llll');
 						Alert.success(
 							mf(
 								'event.replicate.successCondensed',
 								{
 									TITLE: instance.data.title,
 									NUM: removed,
-									DATE: moment(replicaEvent.startLocal).format('llll'),
+									DATE: start,
 								},
 								'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}',
 							),

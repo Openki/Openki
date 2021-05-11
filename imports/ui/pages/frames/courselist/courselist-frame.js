@@ -22,19 +22,11 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 	this.limit = new ReactiveVar(parseInt(this.query.count, 10) || 5);
 
 	this.autorun(() => {
-		const filter = Courses
-			.Filtering()
-			.read(this.query)
-			.done();
+		const filter = Courses.Filtering().read(this.query).done();
 
 		const sorting = this.sort ? SortSpec.fromString(this.sort) : SortSpec.unordered();
 
-		this.subscribe(
-			'Courses.findFilter',
-			filter.toParams(),
-			this.limit.get() + 1,
-			sorting.spec(),
-		);
+		this.subscribe('Courses.findFilter', filter.toParams(), this.limit.get() + 1, sorting.spec());
 	});
 
 	this.subscribe('Regions');
@@ -42,15 +34,16 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 
 Template.frameCourselist.helpers({
 	ready: () => Template.instance().subscriptionsReady(),
-	courses: () => Courses.find({},
-		{
-			limit: Template.instance().limit.get(),
-		}),
+	courses: () =>
+		Courses.find(
+			{},
+			{
+				limit: Template.instance().limit.get(),
+			},
+		),
 	moreCourses() {
 		const limit = Template.instance().limit.get();
-		const courseCount = Courses
-			.find({}, { limit: limit + 1 })
-			.count();
+		const courseCount = Courses.find({}, { limit: limit + 1 }).count();
 
 		return courseCount > limit;
 	},

@@ -25,7 +25,6 @@ export function getReportEmails() {
 	};
 }
 
-
 export class Logo {
 	/**
 	 * Logo that can be attached to mails

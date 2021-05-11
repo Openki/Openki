@@ -33,7 +33,6 @@ Template.eventParticipants.helpers({
 		const participantsDisplayLimit = Template.instance().participantsDisplayLimit.get();
 		return participantsDisplayLimit && this.participants.length > participantsDisplayLimit;
 	},
-
 });
 
 Template.eventParticipants.events({

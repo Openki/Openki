@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 import { Roles } from '/imports/api/roles/roles';
 
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
-import ScssVars from '/imports/ui/lib/scss-vars';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as StringTools from '/imports/utils/string-tools';
 
 import '/imports/ui/components/courses/categories/course-categories';

@@ -23,7 +23,7 @@ export function onStartUp() {
 /**
  * @param {CourseModel} course
  */
- export function beforeInsert(course) {
+export function beforeInsert(course) {
 	if (!course.region) {
 		throw new Error('Unexpected falsy: course.region');
 	}

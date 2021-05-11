@@ -1,6 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
+import moment from 'moment';
 
 import { Groups } from '/imports/api/groups/groups';
 import '/imports/ui/components/language-selection/language-selection';
@@ -45,7 +46,6 @@ Template.kioskEvent.helpers({
 Template.kioskEventLocation.helpers({
 	showLocation() {
 		// The location is shown when we have a location name and the location is not used as a filter
-		return this.location?.name
-			&& !Router.current().params.query.location;
+		return this.location?.name && !Router.current().params.query.location;
 	},
 });

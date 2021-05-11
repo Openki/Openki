@@ -3,6 +3,7 @@ import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
+import moment from 'moment';
 
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';

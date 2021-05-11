@@ -36,8 +36,8 @@
 				{{else}}
 					<div class="input-group event-edit-location-searchbar">
 						<input type="text" class="form-control js-location-search-input"
-							placeholder="{{mf 'event.edit.locationNamePlaceholder' 'Where?'}}"
-							value="{{location.name}}"/>
+							   placeholder="{{mf 'event.edit.locationNamePlaceholder' 'Where?'}}"
+							   value="{{location.name}}" />
 						<span class="input-group-btn">
 							<button type="submit" class="btn btn-go js-location-search-btn">
 								<span class="fa fa-search fa-fw" aria-hidden="true"></span>
@@ -47,9 +47,8 @@
 					</div>
 					{{#if searching}}
 						<input type="text" class="form-control js-location-address-search"
-							placeholder="{{mf 'event.edit.locationAddressPlaceholder' 'Address'}}"
-							size="40"
-							value="{{location.address}}"/>
+							   placeholder="{{mf 'event.edit.locationAddressPlaceholder' 'Address'}}"
+							   size="40" value="{{location.address}}" />
 					{{/if}}
 					{{#if haveLocationCandidates}}
 						{{#if searching}}
@@ -59,7 +58,8 @@
 						{{/if}}
 						<ul class="event-edit-location-candidates">
 							{{#each locationCandidates}}
-								<li class='event-edit-location-candidate js-location-candidate {{hoverClass}}'>
+								<li
+									class='event-edit-location-candidate js-location-candidate {{hoverClass}}'>
 									{{name}}
 									<div class="address">{{address}}</div>
 								</li>
@@ -69,9 +69,8 @@
 						{{mf 'event.edit.locations.foundnone' 'No locations found.'}}
 					{{/if}}
 					<a class="btn btn-{{#if haveLocationCandidates}}default{{else}}add{{/if}} event-edit-location-create-venue"
-					   href="{{pathFor 'venueDetails' _id='create'}}"
-					   target="_blank">
-					   {{mf 'profile.createNewVenue.button'}}
+					   href="{{pathFor 'venueDetails' _id='create'}}" target="_blank">
+						{{mf 'profile.createNewVenue.button'}}
 					</a>
 				{{/if}}
 			</div>

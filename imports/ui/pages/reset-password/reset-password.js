@@ -29,15 +29,14 @@ Template.resetPassword.onCreated(function () {
 			const passwordConfirm = $('.js-confirm-pwd-reset').val();
 			instance.passwordSame.set(password.length > 0 && password === passwordConfirm);
 			instance.passwordNotSame.set(
-				passwordConfirm
-				&& password.length <= passwordConfirm.length
-				&& password !== passwordConfirm,
+				passwordConfirm &&
+					password.length <= passwordConfirm.length &&
+					password !== passwordConfirm,
 			);
 			instance.passwordValid.set(password.length > 0 && password === passwordConfirm);
 		}
 	};
 });
-
 
 Template.resetPassword.helpers({
 	showPassword() {
@@ -85,10 +84,7 @@ Template.resetPassword.events({
 		Accounts.resetPassword(token, password, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.serverError(
-					err,
-					mf('resetPassword.passwordResetError', 'Unable to reset password'),
-				);
+				Alert.serverError(err, mf('resetPassword.passwordResetError', 'Unable to reset password'));
 			} else {
 				Alert.success(mf('resetPassword.passwordReset.', 'Your password has been reset.'));
 				Router.go('profile');

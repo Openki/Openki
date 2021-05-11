@@ -1,6 +1,7 @@
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 
 import Version from '/imports/api/version/version';
 
@@ -20,7 +21,12 @@ Template.footer.helpers({
 	},
 	fullInfo() {
 		const version = Version.findOne();
-		return version && `${version.complete} on "${version.branch}" from ${version.commitDate} - restarted: ${moment(version.lastStart).format('lll')}`;
+		return (
+			version &&
+			`${version.complete} on "${version.branch}" from ${version.commitDate} - restarted: ${moment(
+				version.lastStart,
+			).format('lll')}`
+		);
 	},
 	commit() {
 		const version = Version.findOne();

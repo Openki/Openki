@@ -6,14 +6,16 @@ import { Template } from 'meteor/templating';
 import * as Alert from '/imports/api/alerts/alert';
 import { Roles } from '/imports/api/roles/roles';
 import {
-	Subscribe, Unsubscribe, Message, processChangeAsync,
+	Subscribe,
+	Unsubscribe,
+	Message,
+	processChangeAsync,
 } from '/imports/api/courses/subscription';
 import { Users } from '/imports/api/users/users';
 
 import { Editable } from '/imports/ui/lib/editable';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-
 
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/participant/contact/participant-contact';
@@ -56,9 +58,7 @@ Template.courseMembers.helpers({
 			members.splice(userArrayPosition, 1); // remove
 			members.splice(0, 0, currentMember); // readd
 		}
-		return (
-			members.slice(0, Template.instance().membersDisplayLimit.get())
-		);
+		return members.slice(0, Template.instance().membersDisplayLimit.get());
 	},
 
 	limited() {
@@ -115,7 +115,6 @@ Template.courseMember.onCreated(function () {
 		return new Unsubscribe(this.data.course, user, 'team');
 	};
 });
-
 
 Template.courseMember.helpers({
 	ownUserMemberClass() {

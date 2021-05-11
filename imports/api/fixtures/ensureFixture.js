@@ -61,7 +61,6 @@ const ensure = {
 			$addToSet: { tenants: region.tenant },
 		});
 
-
 		const tenant = Tenants.findOne(region.tenant);
 
 		if (tenant?.members?.includes(user._id)) {

@@ -9,7 +9,7 @@ blaze-html-templates          # Compile .html files into Meteor Blaze views
 email@2.0.0
 iron:router
 meteorhacks:ssr
-shell-server              # Server-side component of the `meteor shell` command
+shell-server                  # Server-side component of the `meteor shell` command
 kadira:dochead
 session@1.2.0
 underscore@1.0.10
@@ -29,21 +29,6 @@ service-configuration@1.0.11
 
 # UI
 reactive-var@1.0.11             # Reactive variable for tracker
-rzymek:moment-locale-ar
-rzymek:moment-locale-de
-rzymek:moment-locale-es
-rzymek:moment-locale-fr
-rzymek:moment-locale-it
-rzymek:moment-locale-zh-cn
-rzymek:moment-locale-zh-tw
-rzymek:moment-locale-da
-rzymek:moment-locale-ja
-rzymek:moment-locale-fa
-rzymek:moment-locale-el
-rzymek:moment-locale-tr
-rzymek:moment-locale-hu
-rzymek:moment-locale-pt
-rzymek:moment-locale-ko
 fortawesome:fontawesome
 msgfmt:core
 msgfmt:extract

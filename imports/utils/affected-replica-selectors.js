@@ -1,9 +1,9 @@
 /**
- * @typedef {import("../api/events/events").EventModel} EventModel
+ * @typedef {import("../api/events/events").EventEntity} EventEntity
  */
 
 /**
- * @param {EventModel} event
+ * @param {EventEntity} event
  */
 export function AffectedReplicaSelectors(event) {
 	// If the event itself is not in the DB, we don't expect it to have replicas
@@ -16,6 +16,7 @@ export function AffectedReplicaSelectors(event) {
 		futureDate = new Date();
 	}
 
+	/** @type {Mongo.Selector<EventEntity>} */
 	const selector = {
 		_id: { $ne: event._id }, // so the event is not considered to be its own replica
 		start: { $gte: futureDate },

@@ -21,7 +21,6 @@ Profile.updateAcceptsPrivateMessages = function (user) {
 	}
 };
 
-
 Profile.Username = {};
 
 /**
@@ -43,18 +42,16 @@ Profile.Username.change = function (userId, newName) {
 		result = e;
 		success = false;
 	}
-	Log.record('Profile.Username', [userId],
-		{
-			userId,
-			name: newName,
-			success,
-			result,
-			cause: 'profile change',
-		});
+	Log.record('Profile.Username', [userId], {
+		userId,
+		name: newName,
+		success,
+		result,
+		cause: 'profile change',
+	});
 
 	return success;
 };
-
 
 Profile.Email = {};
 
@@ -68,12 +65,11 @@ Profile.Email.change = function (userId, email, reason) {
 	check(email, Match.Optional(String));
 	check(reason, String);
 
-	Log.record('Profile.Email', [userId],
-		{
-			userId,
-			email,
-			reason,
-		});
+	Log.record('Profile.Email', [userId], {
+		userId,
+		email,
+		reason,
+	});
 
 	/** @type {{ address: string; verified: boolean; }[]} */
 	let newValue = [];
@@ -106,12 +102,11 @@ Profile.Notifications.change = function (userId, enable, relatedId, reason) {
 	if (relatedId) {
 		relatedIds.push(relatedId);
 	}
-	Log.record('Profile.Notifications', relatedIds,
-		{
-			userId,
-			enable,
-			reason,
-		});
+	Log.record('Profile.Notifications', relatedIds, {
+		userId,
+		enable,
+		reason,
+	});
 
 	Users.update(userId, {
 		$set: { notifications: enable },
@@ -143,7 +138,6 @@ Profile.Notifications.unsubscribe = function (token) {
 	return accepted;
 };
 
-
 Profile.PrivateMessages = {};
 
 /**
@@ -163,12 +157,11 @@ Profile.PrivateMessages.change = function (userId, enable, relatedId, reason) {
 	if (relatedId) {
 		relatedIds.push(relatedId);
 	}
-	Log.record('Profile.PrivateMessages', relatedIds,
-		{
-			userId,
-			enable,
-			reason,
-		});
+	Log.record('Profile.PrivateMessages', relatedIds, {
+		userId,
+		enable,
+		reason,
+	});
 
 	Users.update(userId, {
 		$set: { allowPrivateMessages: enable },
@@ -200,7 +193,6 @@ Profile.PrivateMessages.unsubscribe = function (token) {
 	return accepted;
 };
 
-
 Profile.Region = {};
 
 /**
@@ -219,13 +211,12 @@ Profile.Region.change = function (userId, regionId, reason) {
 	const region = Regions.findOne(regionId);
 	const accepted = Boolean(region);
 
-	Log.record('Profile.Region', [userId, regionId],
-		{
-			userId,
-			regionId,
-			accepted,
-			reason,
-		});
+	Log.record('Profile.Region', [userId, regionId], {
+		userId,
+		regionId,
+		accepted,
+		reason,
+	});
 
 	if (accepted) {
 		Users.update(userId, { $set: { 'profile.regionId': region._id } });
@@ -233,7 +224,6 @@ Profile.Region.change = function (userId, regionId, reason) {
 
 	return accepted;
 };
-
 
 Profile.AvatarColor = {};
 
@@ -249,12 +239,11 @@ Profile.AvatarColor.change = function (userId, color) {
 	// check if color is a valid hsl hue
 	const accepted = color >= 0 && color <= 360;
 
-	Log.record('Avatar.Color', [userId],
-		{
-			userId,
-			color,
-			accepted,
-		});
+	Log.record('Avatar.Color', [userId], {
+		userId,
+		color,
+		accepted,
+	});
 
 	if (accepted) {
 		Users.update(userId, { $set: { 'avatar.color': color } });
@@ -262,7 +251,6 @@ Profile.AvatarColor.change = function (userId, color) {
 
 	return accepted;
 };
-
 
 Profile.Description = {};
 
@@ -287,14 +275,13 @@ Profile.Description.change = function (userId, description) {
 		result = e;
 		success = false;
 	}
-	Log.record('Profile.Description', [userId],
-		{
-			userId,
-			description,
-			success,
-			result,
-			cause: 'profile change',
-		});
+	Log.record('Profile.Description', [userId], {
+		userId,
+		description,
+		success,
+		result,
+		cause: 'profile change',
+	});
 
 	return success;
 };
