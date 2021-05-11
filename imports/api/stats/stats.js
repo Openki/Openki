@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';

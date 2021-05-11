@@ -16,11 +16,11 @@ $group-label-color: $blue;
 	padding: 10px;
 
 	&.add {
-		background-color: rgba($brand-success, .35);
+		background-color: rgba($brand-success, 0.35);
 	}
 
 	&.danger {
-		background-color: rgba($brand-danger, .2);
+		background-color: rgba($brand-danger, 0.2);
 	}
 }
 

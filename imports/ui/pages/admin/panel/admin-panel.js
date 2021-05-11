@@ -20,6 +20,5 @@ Template.adminPanel.helpers({
 			icon: 'fa-user',
 			route: 'users',
 		},
-	]
-	,
+	],
 });

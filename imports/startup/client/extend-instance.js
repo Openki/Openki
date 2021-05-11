@@ -18,16 +18,16 @@ Blaze.TemplateInstance.prototype.parentInstance = function (levels = 1) {
 	}
 };
 
-
-/** Set the business of the template instance
-  *
-  * This method will set up the 'business' variable on the template instance.
-  * It needs to be called in onCreated() so the other methods will find the
-  * var. Usually it will be this.busy(false) bout it could also be
-  * this.busy('loading') for example.
-  *
-  * @param {String} [activity] The new business
-  */
+/**
+ * Set the business of the template instance
+ *
+ * This method will set up the 'business' variable on the template instance.
+ * It needs to be called in onCreated() so the other methods will find the
+ * var. Usually it will be this.busy(false) bout it could also be
+ * this.busy('loading') for example.
+ *
+ * @param {String} [activity] The new business
+ */
 Blaze.TemplateInstance.prototype.busy = function (activity) {
 	if (!this.business) {
 		this.business = new ReactiveVar(activity);
@@ -36,9 +36,9 @@ Blaze.TemplateInstance.prototype.busy = function (activity) {
 	}
 };
 
-
-/** Find business state var in this or parent template instance
-  */
+/**
+ * Find business state var in this or parent template instance
+ */
 Blaze.TemplateInstance.prototype.findBusiness = function () {
 	if (this.business) return this.business; // Short-circuit common case
 

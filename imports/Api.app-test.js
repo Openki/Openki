@@ -34,7 +34,9 @@ const AssertAscendingString = function (base, message) {
 		const lowerNext = next.toLowerCase();
 		const side = current.localeCompare(lowerNext);
 		if (side > 0) {
-			throw new AssertionError(`${message}. But the string '${current}' orders after '${lowerNext}'`);
+			throw new AssertionError(
+				`${message}. But the string '${current}' orders after '${lowerNext}'`,
+			);
 		}
 		current = lowerNext;
 	};
@@ -81,7 +83,9 @@ if (Meteor.isClient) {
 
 					// Because we start at the current time, this test will also detect events
 					// in the past as order violation
-					starts.forEach(AssertAscending(new Date(), 'event are sorted next first when no order specified'));
+					starts.forEach(
+						AssertAscending(new Date(), 'event are sorted next first when no order specified'),
+					);
 				});
 				it('sorts by start-date', async () => {
 					const events = Meteor.absoluteUrl('/api/0/json/events?after=now&sort=start');
@@ -90,7 +94,9 @@ if (Meteor.isClient) {
 					assertGoodHeaders(result);
 					const json = await result.json();
 					const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr));
-					starts.forEach(AssertAscending(new Date(), 'ascending ordering of start-dates was requested'));
+					starts.forEach(
+						AssertAscending(new Date(), 'ascending ordering of start-dates was requested'),
+					);
 				});
 
 				it('sorts by title, descending', async () => {
@@ -133,7 +139,12 @@ if (Meteor.isClient) {
 
 					// Because we start at the current time, this test will also detect if events from the
 					// future as order violation
-					starts.forEach(AssertDescending(new Date(), 'when filtering for past dates events are sorted newest-first when no order is specified'));
+					starts.forEach(
+						AssertDescending(
+							new Date(),
+							'when filtering for past dates events are sorted newest-first when no order is specified',
+						),
+					);
 				});
 			});
 		});

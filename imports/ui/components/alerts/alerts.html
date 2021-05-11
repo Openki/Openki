@@ -10,10 +10,8 @@
 <template name="alert">
 	<div class="alert alert-{{contextualClass}} alert-dismissible alert-message" role="alert">
 		{{message}}
-		<button
-			aria-label="{{mf 'message.close' 'Close message'}}"
-			class="close js-remove-alert"
-			type="button">
+		<button aria-label="{{mf 'message.close' 'Close message'}}" class="close js-remove-alert"
+				type="button">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>

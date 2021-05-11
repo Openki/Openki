@@ -30,7 +30,6 @@ let backToPosition;
 // Saved positions will survive a hot code push
 const scrollPositions = new ReactiveDict('okgrow-router-autoscroll');
 
-
 function saveScrollPosition() {
 	scrollPositions.set(window.location.href, scrollTop());
 }

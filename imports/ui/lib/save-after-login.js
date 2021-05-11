@@ -12,19 +12,20 @@ export default function SaveAfterLogin(instance, loginAction, registerAction, af
 	let openedLogin = false;
 
 	instance.autorun((computation) => {
-		// if the user is loggged in stop the computation and call the save function
 		if (Meteor.user()) {
+			// if the user is loggged in stop the computation and call the save function
+
 			computation.stop();
 			afterLogin();
-
-		// also stop the computation but don't save if the user closes the login
-		// window without logging in
 		} else if (Session.equals('pleaseLogin', false) && openedLogin) {
+			// also stop the computation but don't save if the user closes the login
+			// window without logging in
+
 			computation.stop();
 			instance.busy(false);
-
-		// if the user is not logged in open up the login window
 		} else {
+			// if the user is not logged in open up the login window
+
 			Session.set('loginAction', loginAction);
 			Session.set('registerAction', registerAction);
 			Session.set('pleaseLogin', true);

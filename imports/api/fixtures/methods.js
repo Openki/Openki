@@ -64,7 +64,7 @@ if (Meteor.settings.testdata) {
 		regions.forEach((r) => {
 			const region = {
 				...r,
-				tenant: prng() > 0.30 ? ensure.tenant('Hmmm') : ensure.tenant('Kopf'),
+				tenant: prng() > 0.3 ? ensure.tenant('Hmmm') : ensure.tenant('Kopf'),
 			}; // clone
 			if (region.loc) {
 				const coordinates = region.loc.reverse(); // GeoJSON takes latitude first

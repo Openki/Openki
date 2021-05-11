@@ -30,9 +30,7 @@ const jSendResponder = function (res, process) {
 		res.end(JSON.stringify(body, null, '\t'));
 	} catch (e) {
 		const body = {};
-		if (e instanceof FilteringReadError
-		|| e instanceof NoActionError
-		) {
+		if (e instanceof FilteringReadError || e instanceof NoActionError) {
 			res.statusCode = 400;
 			body.status = 'fail';
 			body.data = {};

@@ -9,27 +9,27 @@ import * as Alert from '/imports/api/alerts/alert';
 
 const TemplateMixins = {
 	/** Setup expand/collaps logic for a template
-	*
-	* @param {Object} template instance
-	*
-	* This mixin extends the given template with an `expanded` helper and
-	* two click handlers `js-expand` and `js-close`. Only one expandible template
-	* can be open at a time, so don't nest them.
-	*
-	* Example:
-	* <template name="pushIt">
-	*   <div>
-	*     {{#if expanded}}
-	*       All this content hiding here.
-	*       Now close it again!
-	*       <button type="button" class="js-collapse">CLOSE IT!</button>
-	*     {{else}}
-	*       Press the button!
-	*       <button type="button" class="js-expand">OPEN IT!</button>
-	*     {{/if}}
-	*   </div>
-	* </template>
-	*/
+	 *
+	 * @param {Object} template instance
+	 *
+	 * This mixin extends the given template with an `expanded` helper and
+	 * two click handlers `js-expand` and `js-close`. Only one expandible template
+	 * can be open at a time, so don't nest them.
+	 *
+	 * Example:
+	 * <template name="pushIt">
+	 *   <div>
+	 *     {{#if expanded}}
+	 *       All this content hiding here.
+	 *       Now close it again!
+	 *       <button type="button" class="js-collapse">CLOSE IT!</button>
+	 *     {{else}}
+	 *       Press the button!
+	 *       <button type="button" class="js-expand">OPEN IT!</button>
+	 *     {{/if}}
+	 *   </div>
+	 * </template>
+	 */
 	Expandible(template) {
 		template.onCreated(function () {
 			const expander = Random.id(); // Token to keep track of which Expandible is open
@@ -148,9 +148,7 @@ const TemplateMixins = {
 
 				const text = (Template.instance()?.errorMapping || mapping)[message.key].text();
 				return Spacebars.SafeString(
-					`<span class="help-block warning-block">${
-						Blaze._escape(text)
-					}</span>`,
+					`<span class="help-block warning-block">${Blaze._escape(text)}</span>`,
 				);
 			},
 		});

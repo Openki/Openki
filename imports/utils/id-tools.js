@@ -7,5 +7,4 @@ export function extract(thing) {
 	return thing._id || `${thing}`;
 }
 
-
 export default extract;

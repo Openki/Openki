@@ -4,7 +4,7 @@ import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { Meteor } from 'meteor/meteor';
 
-import ScssVars from '/imports/ui/lib/scss-vars';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
 
 import './faq.de.md';
 import './faq.en.md';

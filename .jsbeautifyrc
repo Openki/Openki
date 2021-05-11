@@ -1,5 +1,10 @@
 {
 	"editorconfig": true,
+	"content_unformatted": [
+		"pre",
+		"textarea",
+		"mf"
+	],
 	"wrap-attributes": "aligned-multiple",
 	"wrap-line-length": 100,
 	"max-preserve-newlines": 1,

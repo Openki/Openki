@@ -18,7 +18,7 @@
 .timetable-day {
 	border: solid;
 	border-color: #ddd;
-	border-width: 3px 0 0 .5px;
+	border-width: 3px 0 0 0.5px;
 	height: 2em;
 	margin-bottom: 2px;
 	position: absolute;
@@ -28,7 +28,7 @@
 .timetable-hour {
 	border: solid;
 	border-color: #ddd;
-	border-width: 3px 0 0 .5px;
+	border-width: 3px 0 0 0.5px;
 	height: 10000px;
 	padding-left: 5px;
 	position: absolute;
@@ -71,7 +71,7 @@
 
 .timetable-event {
 	color: $black;
-	margin: .1em;
+	margin: 0.1em;
 	position: absolute;
 
 	&:hover {

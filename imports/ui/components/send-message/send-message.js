@@ -14,13 +14,11 @@ import './send-message.html';
 Template.sendMessage.onCreated(function () {
 	this.busy(false);
 	this.state = new ReactiveDict();
-	this.state.setDefault(
-		{
-			revealAddress: false,
-			sendCopy: false,
-			verificationMailSent: false,
-		},
-	);
+	this.state.setDefault({
+		revealAddress: false,
+		sendCopy: false,
+		verificationMailSent: false,
+	});
 });
 
 Template.sendMessage.onRendered(function () {
@@ -48,7 +46,9 @@ Template.sendMessage.events({
 					mf('profile.sendVerificationMailFailed', 'Failed to send verification mail'),
 				);
 			} else {
-				Alert.success(mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }));
+				Alert.success(
+					mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }),
+				);
 			}
 		});
 	},
@@ -92,10 +92,7 @@ Template.sendMessage.events({
 		Meteor.call('sendEmail', data.recipientId, message, options, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.serverError(
-					err,
-					mf('profile.mail.sendFailed', 'Your message was not sent'),
-				);
+				Alert.serverError(err, mf('profile.mail.sendFailed', 'Your message was not sent'));
 			} else {
 				Alert.success(mf('profile.mail.sent', 'Your message was sent'));
 				instance.$('.js-email-message').val('');

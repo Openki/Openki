@@ -59,9 +59,7 @@ export class CssFromQuery {
 				}
 
 				if (cssValue) {
-					this.cssRules.push(
-						`${property.selector} { ${property.name}: ${cssValue}; }`,
-					);
+					this.cssRules.push(`${property.selector} { ${property.name}: ${cssValue}; }`);
 				}
 			}
 		});

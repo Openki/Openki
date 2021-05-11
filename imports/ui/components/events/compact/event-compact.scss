@@ -54,7 +54,7 @@
 	height: $event-compact-height;
 	overflow: hidden;
 	position: relative;
-	transition: box-shadow .15s;
+	transition: box-shadow 0.15s;
 
 	&:hover {
 		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
@@ -124,7 +124,7 @@
 // ** Internal indicator dot
 //========================================================================================
 .event-compact-internal {
-	background-color:  #f00;
+	background-color: #f00;
 	border-radius: 50%;
 	height: 3px;
 	left: 2px;

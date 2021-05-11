@@ -9,12 +9,8 @@
 <template name="languageSelection">
 	<li class="navbar-form navbar-form-selection dropdown">
 		<span class="fa fa-language fa-fw" aria-hidden="true"></span>
-		<input type="text" class="form-control js-language-search"
-			value="{{setLanguage.name}}">
-		<span class="dropdown-toggle"
-			data-toggle="dropdown"
-			role="button"
-			aria-expanded="false">
+		<input type="text" class="form-control js-language-search" value="{{setLanguage.name}}">
+		<span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 		</span>
 		<ul class="dropdown-menu" role="menu">
 			{{#if languages}}
@@ -26,7 +22,8 @@
 				</li>
 				{{#each languages}}
 					<li>
-						<a href="#" class="js-language-link js-nav-dropdown-close" title="{{english}}">
+						<a href="#" class="js-language-link js-nav-dropdown-close"
+						   title="{{english}}">
 							<span class="language-translated {{translated.rating}}">
 								{{translated.percent}}
 							</span>

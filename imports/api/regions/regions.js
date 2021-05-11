@@ -15,7 +15,7 @@ import { Mongo } from 'meteor/mongo';
  * @property {string} [name] ID
  * @property {string} [nameEn] ID
  * @property {Geodata} [loc] (Optional)
- * @property {string} [timeZone] ex: "UTC+01:00"
+ * @property {string} [tz] ex: "UTC+01:00"
  * @property {number} [courseCount] Number of courses in that region, calculated field
  * (does not count internal courses)
  * @property {number} [futureEventCount] Number of future events in that region, calculated field

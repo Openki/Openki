@@ -32,9 +32,8 @@
 									<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
 								</span>
 								<input class="form-control js-email"
-								       placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
-								       type="email"
-								/>
+									   placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
+									   type="email" />
 							</div>
 							{{errorMessage 'email'}}
 						</div>
@@ -75,9 +74,11 @@
 						</p>
 					</span>
 					<div class="form-group">
-						<button class="js-send-validation-email btn btn-add form-control" {{disabledIfBusy}}>
+						<button class="js-send-validation-email btn btn-add form-control"
+								{{disabledIfBusy}}>
 							{{#if busy 'sending'}}
-								<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+								<span class="fa fa-circle-o-notch fa-spin fa-fw"
+									  aria-hidden="true"></span>
 								{{mf 'send.validation.submit.busy' 'Sending...'}}
 							{{else}}
 								<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>

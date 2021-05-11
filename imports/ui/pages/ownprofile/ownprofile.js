@@ -25,47 +25,56 @@ Template.profile.onCreated(function () {
 	this.busy(false);
 	this.changingPass = new ReactiveVar(false);
 
-	this.notificationsUnsubscribeSuccess = () => Router.current().params.query.unsubscribed === 'notifications';
-	this.privateMessagesUnsubscribeSuccess = () => Router.current().params.query.unsubscribed === 'privatemessages';
+	this.notificationsUnsubscribeSuccess = () =>
+		Router.current().params.query.unsubscribed === 'notifications';
+	this.privateMessagesUnsubscribeSuccess = () =>
+		Router.current().params.query.unsubscribed === 'privatemessages';
 	this.unsubscribeError = () => Router.current().params.query['unsubscribe-error'] === '';
 
 	if (this.notificationsUnsubscribeSuccess()) {
-		Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from notifications via e-mail');
+		Analytics.trackEvent(
+			'Unsubscribes from notifications',
+			'Unsubscribes from notifications via e-mail',
+		);
 	}
 	if (this.privateMessagesUnsubscribeSuccess()) {
-		Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from private messages via e-mail');
+		Analytics.trackEvent(
+			'Unsubscribes from notifications',
+			'Unsubscribes from private messages via e-mail',
+		);
 	}
 
 	const instance = this;
 
-	instance.editableName = new Editable(
-		true,
-		mf('profile.name.placeholder', 'Username'),
-		{
-			serverValidationErrors: [{
+	instance.editableName = new Editable(true, mf('profile.name.placeholder', 'Username'), {
+		serverValidationErrors: [
+			{
 				type: 'noUserName',
 				message: () => mf('warning.noUserName', 'Please enter a name for your user.'),
 			},
 			{
 				type: 'userExists',
-				message: () => mf('warning.userExists', 'This username already exists. Please choose another one.'),
+				message: () =>
+					mf('warning.userExists', 'This username already exists. Please choose another one.'),
 			},
 			{
 				type: 'nameError',
 				message: () => mf('update.username.failed', 'Failed to update username.'),
-			}],
-			onSave: async (newName) => {
-				await MeteorAsync.callAsync('user.updateUsername', newName);
 			},
-			onSuccess: () => {
-				Alert.success(mf('profile.updated', 'Updated profile'));
-			},
+		],
+		onSave: async (newName) => {
+			await MeteorAsync.callAsync('user.updateUsername', newName);
 		},
-
-	);
+		onSuccess: () => {
+			Alert.success(mf('profile.updated', 'Updated profile'));
+		},
+	});
 	instance.editableDescription = new Editable(
 		true,
-		mf('profile.description.placeholder', 'About me, my interests and skills. (How about the idea of creating courses fitting to your description? 😉)'),
+		mf(
+			'profile.description.placeholder',
+			'About me, my interests and skills. (How about the idea of creating courses fitting to your description? 😉)',
+		),
 		{
 			onSave: async (newDescription) => {
 				await MeteorAsync.callAsync('user.updateDescription', newDescription);
@@ -132,31 +141,20 @@ Template.profile.helpers({
 	},
 });
 
-
 TemplateMixins.FormfieldErrors(Template.profile, {
 	noEmail: {
-		text: () => mf(
-			'warning.noEmailProvided',
-			'Please enter a email.',
-		),
+		text: () => mf('warning.noEmailProvided', 'Please enter a email.'),
 		field: 'email',
 	},
 	emailNotValid: {
-		text: () => mf(
-			'warning.emailNotValid',
-			'Your email seems to have an error.',
-		),
+		text: () => mf('warning.emailNotValid', 'Your email seems to have an error.'),
 		field: 'email',
 	},
 	emailExists: {
-		text: () => mf(
-			'warning.emailExists',
-			'This email is already taken.',
-		),
+		text: () => mf('warning.emailExists', 'This email is already taken.'),
 		field: 'email',
 	},
 });
-
 
 Template.profile.events({
 	'click .js-change-pwd-btn'(event, instance) {
@@ -206,7 +204,11 @@ Template.profile.events({
 				instance.errors.add(err.error);
 			} else {
 				Alert.success(mf('profile.updated', 'Updated profile'));
-				if (!allow) Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from automated notifications via profile');
+				if (!allow)
+					Analytics.trackEvent(
+						'Unsubscribes from notifications',
+						'Unsubscribes from automated notifications via profile',
+					);
 			}
 		});
 	},
@@ -219,7 +221,11 @@ Template.profile.events({
 				instance.errors.add(err.error);
 			} else {
 				Alert.success(mf('profile.updated', 'Updated profile'));
-				if (!allow) Analytics.trackEvent('Unsubscribes from notifications', 'Unsubscribes from private messages via profile');
+				if (!allow)
+					Analytics.trackEvent(
+						'Unsubscribes from notifications',
+						'Unsubscribes from private messages via profile',
+					);
 			}
 		});
 	},
@@ -242,13 +248,12 @@ Template.profile.events({
 				if (err) {
 					Alert.serverError(
 						err,
-						mf(
-							'profile.passwordChangeError',
-							'Failed to change your password',
-						),
+						mf('profile.passwordChangeError', 'Failed to change your password'),
 					);
 				} else {
-					Alert.success(mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'));
+					Alert.success(
+						mf('profile.passwordChangedSuccess', 'You have changed your password successfully.'),
+					);
 					instance.changingPass.set(false);
 				}
 			});

@@ -4,6 +4,7 @@ import { mf } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import moment from 'moment';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';

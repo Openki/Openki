@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { msgfmt } from 'meteor/msgfmt:core';
 
 import fs from 'fs';
 import path from 'path';
@@ -17,7 +18,9 @@ if (Meteor.isServer && Meteor.isDevelopment) {
 				const triggerFile = extractsFile.replace(/~$/, '');
 				// eslint-disable-next-line no-shadow
 				fs.exists(triggerFile, (exists) => {
-					if (!exists) { fs.writeFile(triggerFile, `# Used by ${EXTRACTS_FILE}, do not delete.\n`, () => {}); }
+					if (!exists) {
+						fs.writeFile(triggerFile, `# Used by ${EXTRACTS_FILE}, do not delete.\n`, () => {});
+					}
 				});
 			} else {
 				fs.mkdir(dir, (err) => {

@@ -63,11 +63,13 @@ Template.userprofile.helpers({
 		return Template.instance().coursesCreatedBy().length;
 	},
 	numberOfInterestedAffectedByDelete() {
-		return Template.instance().coursesCreatedBy()
+		return Template.instance()
+			.coursesCreatedBy()
 			.reduce((accumulator, currentValue) => accumulator + currentValue.interested, 0);
 	},
 	numberOfFutureEventsAffectedByDelete() {
-		return Template.instance().coursesCreatedBy()
+		return Template.instance()
+			.coursesCreatedBy()
 			.reduce((accumulator, currentValue) => accumulator + currentValue.futureEvents, 0);
 	},
 
@@ -75,7 +77,6 @@ Template.userprofile.helpers({
 		return this.user?._id || false;
 	},
 });
-
 
 Template.userprofile.events({
 	'click button.giveAdmin'() {
@@ -174,7 +175,6 @@ Template.emailBox.helpers({
 });
 
 Template.emailBox.events({
-
 	'change .js-send-own-adress'(event, instance) {
 		instance.$('.js-send-own-adress + .checkmark').toggle();
 	},
@@ -207,21 +207,14 @@ Template.emailBox.events({
 		}
 
 		template.busy('sending');
-		Meteor.call(
-			'sendEmail',
-			this.user._id,
-			message,
-			revealAddress,
-			receiveCopy,
-			(err) => {
-				template.busy(false);
-				if (err) {
-					Alert.serverError(err, '');
-				} else {
-					Alert.success(mf('profile.mail.sent', 'Your message was sent'));
-					template.$('#emailmessage').val('');
-				}
-			},
-		);
+		Meteor.call('sendEmail', this.user._id, message, revealAddress, receiveCopy, (err) => {
+			template.busy(false);
+			if (err) {
+				Alert.serverError(err, '');
+			} else {
+				Alert.success(mf('profile.mail.sent', 'Your message was sent'));
+				template.$('#emailmessage').val('');
+			}
+		});
 	},
 });
