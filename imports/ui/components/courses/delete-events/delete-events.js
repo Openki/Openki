@@ -127,11 +127,12 @@ Template.deleteEventsModal.events({
 			Meteor.call('event.remove', event._id, (err) => {
 				responses += 1;
 				if (err) {
+					const start = moment(event.startLocal).format('llll');
 					Alert.serverError(
 						err,
 						mf(
 							'deleteEventsModal.errWithReason',
-							{ TITLE: event.title, START: moment(event.startLocal).format('llll') },
+							{ TITLE: event.title, START: start },
 							'Deleting the event "{TITLE} ({START})" failed.',
 						),
 					);
