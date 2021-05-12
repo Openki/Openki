@@ -6,6 +6,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import * as Alert from '/imports/api/alerts/alert';
 
 import '/imports/ui/components/buttons/buttons';
+import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import './report.html';
 
@@ -15,6 +16,17 @@ Template.report.onCreated(function reportOnCreated() {
 Template.report.helpers({
 	reporting: () => Template.instance().state.get() === 'reporting',
 	sending: () => Template.instance().state.get() === 'sending',
+});
+
+TemplateMixins.FormfieldErrors(Template.report, {
+	reportMessage: {
+		text: () =>
+			mf(
+				'report.warning.tooShort',
+				'The report message is too short! Please write more than 5 characters.',
+			),
+		field: 'reportMessage',
+	},
 });
 
 Template.report.events({
@@ -30,12 +42,23 @@ Template.report.events({
 
 	'click .js-report-send'(event, instance) {
 		event.preventDefault();
+		instance.errors.reset();
+
+		const message = instance.$('.js-report-message').val();
+		if (!message || message.length <= 5) {
+			instance.errors.add('reportMessage');
+		}
+
+		if (instance.errors.present()) {
+			return;
+		}
+
 		Meteor.call(
 			'report',
 			document.title,
 			window.location.href,
 			navigator.userAgent,
-			instance.$('.js-report-message').val(),
+			message,
 			(err) => {
 				if (err) {
 					Alert.serverError(err, mf('report.notSent', 'Your report could not be sent'));
