@@ -8,6 +8,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
  * @property {string} _id ID
  * @property {string} name
  * @property {string[]} members List of userIds
+ * @property {string[]} admins List of tenant admins
  */
 
 /**
@@ -23,9 +24,10 @@ export class TenantsCollection extends Mongo.Collection {
 		return {
 			_id: 1,
 			name: 1,
-			// Only admins can see all members. Note: Admin privileg is not something that is likely
-			// to happen and reactive changes are not needed.
-			members: UserPrivilegeUtils.privilegedTo('admin') ? 1 : undefined,
+			members: 1,
+			// Only admins can see all tenant admins. Note: Admin privileg is not something that is 
+			// likely to happen and reactive changes are not needed.
+			admins: UserPrivilegeUtils.privilegedTo('admin') ? 1 : undefined,
 		};
 	}
 }
