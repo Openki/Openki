@@ -49,8 +49,16 @@ Template.usersCourselist.helpers({
 		return `roles.${this.type}.userList`;
 	},
 
+	roleUserListPast() {
+		return `roles.${this.type}.userList.past`;
+	},
+
 	roleMyList() {
 		return `roles.${this.type}.myList`;
+	},
+
+	roleMyListPast() {
+		return `roles.${this.type}.myList.past`;
 	},
 
 	getName() {
@@ -66,6 +74,9 @@ Template.usersCourselist.helpers({
 	isInvolved() {
 		const userId = Template.instance().data.profileData.user._id;
 		return Courses.findFilter({ userInvolved: userId }, 1).count() > 0;
+	},
+	showArchived(role) {
+		return role.type === 'team';
 	},
 });
 

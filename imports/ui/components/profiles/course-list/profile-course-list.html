@@ -38,6 +38,25 @@
 						{{> courseList coursesByRole role.type false}}
 					{{/if}}
 				{{/each}}
+				{{#each role in roles}}
+					{{#if showArchived role}}
+						{{#if coursesByRoleCount role.type true}}
+						{{#with role}}
+							<h3 id="{{role.type}}_archived">
+								<div class="badge">
+									<span class="{{icon}} fa-fw" aria-hidden="true"></span>
+								</div>
+								{{#if ../ownProfile}}
+									{{mf roleMyListPast}}
+								{{else}}
+									{{#mf KEY=roleUserListPast NAME=getName}}{{/mf}}
+								{{/if}}
+							</h3>
+						{{/with}}
+						{{> courseList coursesByRole role.type true}}
+						{{/if}}
+					{{/if}}
+				{{/each}}
 			{{else}}
 				{{> loadingPage}}
 			{{/if}}
