@@ -44,6 +44,7 @@ const discriminatoryReporting = function (args) {
 				message: buffer.join('; '),
 			},
 		);
+		buffer.length = 0;
 		return;
 	}
 
