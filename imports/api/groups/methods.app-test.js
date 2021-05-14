@@ -12,7 +12,7 @@ if (Meteor.isClient) {
 			const randomName = `TEST${1000 + Math.floor(Math.random() * 9000)}`;
 			const editRandomName = `TEST${1000 + Math.floor(Math.random() * 9000)}`;
 
-			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 			const newGroup = {
 				name: randomName,
@@ -21,13 +21,13 @@ if (Meteor.isClient) {
 				description: `${randomName} description`,
 			};
 
-			const groupId = await MeteorAsync.callAsync('group.save', 'create', newGroup);
+			const groupId = await MeteorAsync.call('group.save', 'create', newGroup);
 
 			assert.isString(groupId, 'group.save returns an groupId string');
 
-			await MeteorAsync.callAsync('group.save', groupId, { name: editRandomName });
+			await MeteorAsync.call('group.save', groupId, { name: editRandomName });
 
-			const handle = await MeteorAsync.subscribeAsync('group', groupId);
+			const handle = await MeteorAsync.subscribe('group', groupId);
 			handle.stop();
 
 			const group = Groups.findOne(groupId);
@@ -40,7 +40,7 @@ if (Meteor.isClient) {
 
 			const randomName = `TEST${1000 + Math.floor(Math.random() * 9000)}`;
 
-			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 			const newGroup = {
 				name: randomName,
@@ -49,13 +49,13 @@ if (Meteor.isClient) {
 				description: `${randomName} description`,
 			};
 
-			const groupId = await MeteorAsync.callAsync('group.save', 'create', newGroup);
+			const groupId = await MeteorAsync.call('group.save', 'create', newGroup);
 
 			assert.isString(groupId, 'group.save returns an groupId string');
 
 			let hasFailed = false;
 			try {
-				await MeteorAsync.callAsync('group.save', groupId, { name: '' });
+				await MeteorAsync.call('group.save', groupId, { name: '' });
 			} catch (err) {
 				if (err) {
 					hasFailed = true;

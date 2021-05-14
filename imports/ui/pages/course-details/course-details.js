@@ -49,7 +49,7 @@ Template.courseDetailsPage.onCreated(function () {
 
 	instance.editableName = new Editable(true, mf('course.title.placeholder'), {
 		onSave: async (newName) => {
-			await MeteorAsync.callAsync('course.save', course._id, { name: newName });
+			await MeteorAsync.call('course.save', course._id, { name: newName });
 		},
 		onSuccess: (newName) => {
 			Alert.success(
@@ -67,7 +67,7 @@ Template.courseDetailsPage.onCreated(function () {
 
 	instance.editableDescription = new Editable(false, mf('course.description.placeholder'), {
 		onSave: async (newDescription) => {
-			await MeteorAsync.callAsync('course.save', course._id, { description: newDescription });
+			await MeteorAsync.call('course.save', course._id, { description: newDescription });
 		},
 		onSuccess: () => {
 			Alert.success(

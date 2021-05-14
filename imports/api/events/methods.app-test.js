@@ -12,7 +12,7 @@ if (Meteor.isClient) {
 			it('Stores an event', async function () {
 				this.timeout(5000);
 
-				await MeteorAsync.loginWithPasswordAsync('greg', 'greg');
+				await MeteorAsync.loginWithPassword('greg', 'greg');
 				const theFuture = new Date();
 				theFuture.setHours(1000);
 
@@ -32,7 +32,7 @@ if (Meteor.isClient) {
 					internal: true,
 				};
 
-				const eventId = await MeteorAsync.callAsync('event.save', {
+				const eventId = await MeteorAsync.call('event.save', {
 					eventId: '',
 					changes: newEvent,
 				});
@@ -42,7 +42,7 @@ if (Meteor.isClient) {
 				const event = { ...newEvent };
 				delete event.region;
 				event.title += ' No really';
-				await MeteorAsync.callAsync('event.save', { eventId, changes: event });
+				await MeteorAsync.call('event.save', { eventId, changes: event });
 			});
 
 			it('Sanitizes event strings', async function () {
@@ -54,7 +54,7 @@ if (Meteor.isClient) {
 				const textWithNonPrintables = "See what's hidden in your string… or behind﻿";
 				const expectedText = "See what's hidden in your string… or behind";
 
-				await MeteorAsync.loginWithPasswordAsync('greg', 'greg');
+				await MeteorAsync.loginWithPassword('greg', 'greg');
 				const theFuture = new Date();
 				theFuture.setHours(1000);
 
@@ -72,12 +72,12 @@ if (Meteor.isClient) {
 					region: regionId,
 				};
 
-				const eventId = await MeteorAsync.callAsync('event.save', {
+				const eventId = await MeteorAsync.call('event.save', {
 					eventId: '',
 					changes: newEvent,
 				});
 
-				const handle = await MeteorAsync.subscribeAsync('event', eventId);
+				const handle = await MeteorAsync.subscribe('event', eventId);
 				handle.stop();
 
 				const event = Events.findOne(eventId);
@@ -89,11 +89,11 @@ if (Meteor.isClient) {
 			it('Updates time_lastedit from course', async function () {
 				this.timeout(5000);
 
-				await MeteorAsync.loginWithPasswordAsync('greg', 'greg');
+				await MeteorAsync.loginWithPassword('greg', 'greg');
 
 				const courseId = 'eb6aedecf9';
 
-				const handle = await MeteorAsync.subscribeAsync('courseDetails', courseId);
+				const handle = await MeteorAsync.subscribe('courseDetails', courseId);
 				try {
 					const oldCourse = Courses.findOne(courseId);
 
@@ -116,7 +116,7 @@ if (Meteor.isClient) {
 						internal: true,
 					};
 
-					await MeteorAsync.callAsync('event.save', { eventId: '', changes: newEvent });
+					await MeteorAsync.call('event.save', { eventId: '', changes: newEvent });
 
 					const newCourse = Courses.findOne(courseId);
 

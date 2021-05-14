@@ -52,7 +52,7 @@ Template.tenantSettings.events({
 		const memberId = this._id;
 		const tenantId = Router.current().params._id;
 		try {
-			await MeteorAsync.callAsync('tenant.updateMembership', memberId, tenantId, true);
+			await MeteorAsync.call('tenant.updateMembership', memberId, tenantId, true);
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
@@ -71,7 +71,7 @@ Template.tenantSettings.events({
 		const memberId = `${this}`;
 		const tenantId = Router.current().params._id;
 		try {
-			await MeteorAsync.callAsync('tenant.updateMembership', memberId, tenantId, false);
+			await MeteorAsync.call('tenant.updateMembership', memberId, tenantId, false);
 
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;

@@ -81,7 +81,7 @@ Template.groupSettings.events({
 		const memberId = this._id;
 		const groupId = Router.current().params._id;
 		try {
-			await MeteorAsync.callAsync('group.updateMembership', memberId, groupId, true);
+			await MeteorAsync.call('group.updateMembership', memberId, groupId, true);
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
@@ -100,7 +100,7 @@ Template.groupSettings.events({
 		const memberId = `${this}`;
 		const groupId = Router.current().params._id;
 		try {
-			await MeteorAsync.callAsync('group.updateMembership', memberId, groupId, false);
+			await MeteorAsync.call('group.updateMembership', memberId, groupId, false);
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
@@ -143,7 +143,7 @@ Template.groupSettings.events({
 
 		const groupId = instance.data.group._id;
 		try {
-			await MeteorAsync.callAsync('group.save', groupId, changes);
+			await MeteorAsync.call('group.save', groupId, changes);
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
 				mf(

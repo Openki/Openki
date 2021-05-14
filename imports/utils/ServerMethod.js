@@ -22,7 +22,7 @@ export function ServerMethod(name, run) {
 		},
 	});
 
-	return (/** @type {T} */ ...args) => MeteorAsync.callAsync(name, ...args);
+	return (/** @type {T} */ ...args) => MeteorAsync.call(name, ...args);
 }
 
 export default ServerMethod;

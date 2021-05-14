@@ -63,7 +63,7 @@ Template.profile.onCreated(function () {
 			},
 		],
 		onSave: async (newName) => {
-			await MeteorAsync.callAsync('user.updateUsername', newName);
+			await MeteorAsync.call('user.updateUsername', newName);
 		},
 		onSuccess: () => {
 			Alert.success(mf('profile.updated', 'Updated profile'));
@@ -77,7 +77,7 @@ Template.profile.onCreated(function () {
 		),
 		{
 			onSave: async (newDescription) => {
-				await MeteorAsync.callAsync('user.updateDescription', newDescription);
+				await MeteorAsync.call('user.updateDescription', newDescription);
 			},
 			onSuccess: () => {
 				Alert.success(mf('profile.updated', 'Updated profile'));

@@ -20,7 +20,7 @@ if (Meteor.isClient) {
 
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
-			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 			jQuery('input[value=mentor]').click();
 			jQuery('.js-title').val(randomTitle);
@@ -83,7 +83,7 @@ if (Meteor.isClient) {
 
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
-			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 			jQuery('.js-title').val(randomTitle);
 			jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan

@@ -10,7 +10,7 @@ if (Meteor.isClient) {
 			//   "Uncaught Error: Error, too many requests. Please slow down.
 			//   You must wait 10 seconds before trying again. [too-many-requests]"
 			if (!Meteor.userId()) {
-				await MeteorAsync.loginWithPasswordAsync('FeeLing', 'greg');
+				await MeteorAsync.loginWithPassword('FeeLing', 'greg');
 			}
 
 			const venue = {
@@ -19,12 +19,12 @@ if (Meteor.isClient) {
 				region: '9JyFCoKWkxnf8LWPh', // Testistan
 			};
 
-			const venueId = await MeteorAsync.callAsync('venue.save', '', venue);
+			const venueId = await MeteorAsync.call('venue.save', '', venue);
 			assert.isString(venueId, 'got an event ID');
 
 			// Try saving it again with a change
 			venue.name += '!';
-			await MeteorAsync.callAsync('venue.save', venueId, venue);
+			await MeteorAsync.call('venue.save', venueId, venue);
 		});
 	});
 }

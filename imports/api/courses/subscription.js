@@ -19,7 +19,7 @@ import Notification from '/imports/notification/notification';
  */
 export async function processChangeAsync(change) {
 	try {
-		await MeteorAsync.callAsync(change.constructor.method, change.dict());
+		await MeteorAsync.call(change.constructor.method, change.dict());
 	} catch (err) {
 		/* eslint-disable-next-line no-console */
 		console.log(err);

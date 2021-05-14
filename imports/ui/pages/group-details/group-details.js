@@ -69,7 +69,7 @@ Template.groupDetails.onCreated(function () {
 			? {
 					...handleSaving,
 					onSave: async (newName) => {
-						await MeteorAsync.callAsync('group.save', groupId, { name: newName });
+						await MeteorAsync.call('group.save', groupId, { name: newName });
 					},
 			  }
 			: undefined,
@@ -82,7 +82,7 @@ Template.groupDetails.onCreated(function () {
 			? {
 					...handleSaving,
 					onSave: async (newShort) => {
-						await MeteorAsync.callAsync('group.save', groupId, { short: newShort });
+						await MeteorAsync.call('group.save', groupId, { short: newShort });
 					},
 			  }
 			: undefined,
@@ -95,7 +95,7 @@ Template.groupDetails.onCreated(function () {
 			? {
 					...handleSaving,
 					onSave: async (newClaim) => {
-						await MeteorAsync.callAsync('group.save', groupId, { claim: newClaim });
+						await MeteorAsync.call('group.save', groupId, { claim: newClaim });
 					},
 			  }
 			: undefined,
@@ -111,7 +111,7 @@ Template.groupDetails.onCreated(function () {
 			? {
 					...handleSaving,
 					onSave: async (newDescription) => {
-						await MeteorAsync.callAsync('group.save', groupId, { description: newDescription });
+						await MeteorAsync.call('group.save', groupId, { description: newDescription });
 					},
 			  }
 			: undefined,
@@ -222,7 +222,7 @@ Template.groupDetails.events({
 			mf('registerAction.saveGroup', 'Register and save group'),
 			async () => {
 				try {
-					const groupId = await MeteorAsync.callAsync('group.save', 'create', group);
+					const groupId = await MeteorAsync.call('group.save', 'create', group);
 
 					instance.editableName.end();
 					instance.editableShort.end();
