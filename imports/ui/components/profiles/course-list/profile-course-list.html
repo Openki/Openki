@@ -40,7 +40,7 @@
 					{{/if}}
 				{{/each}}
 				{{#each role in roles}}
-					{{#if showArchived role ownProfile}}
+					{{#if showArchived role}}
 						{{#if coursesByRoleCount role.type true}}
 						<!-- Todo remove #with and make helper function pure functions using the role -->
 						{{#with role}}
