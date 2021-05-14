@@ -39,6 +39,7 @@ if (Meteor.isClient) {
 
 				assert.isString(eventId, 'event.save returns an eventId string');
 
+				//  Todo: What does this test actually?
 				const event = { ...newEvent };
 				delete event.region;
 				event.title += ' No really';

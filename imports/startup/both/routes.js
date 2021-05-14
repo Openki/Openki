@@ -165,7 +165,8 @@ Router.map(function () {
 				['regionbg', 'background-color', '.frame-list-item-region'],
 				['regioncolor', 'color', '.frame-list-item-region'],
 			]).getCssRules();
-			return { cssRules };
+			const hideInterested = parseInt(this.params.query.hideInterested, 10) || 0;
+			return { cssRules, hideInterested };
 		},
 	});
 
