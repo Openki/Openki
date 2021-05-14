@@ -14,6 +14,7 @@ import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDeno
 import { Subscribe, Unsubscribe, Message, processChangeAsync } from './subscription';
 
 import { AsyncTools } from '/imports/utils/async-tools';
+import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 
@@ -234,42 +235,6 @@ Meteor.methods({
 	/**
 	 * @param {string} courseId
 	 */
-	'course.archive'(courseId) {
-		const course = Courses.findOne({ _id: courseId });
-		if (!course) {
-			throw new Meteor.Error(404, 'no such course');
-		}
-		if (!course.editableBy(Meteor.user())) {
-			throw new Meteor.Error(401, 'edit not permitted');
-		}
-		Courses.update(course._id, {
-			$set: {
-				archived: true,
-			},
-		});
-	},
-
-	/**
-	 * @param {string} courseId
-	 */
-	'course.unarchive'(courseId) {
-		const course = Courses.findOne({ _id: courseId });
-		if (!course) {
-			throw new Meteor.Error(404, 'no such course');
-		}
-		if (!course.editableBy(Meteor.user())) {
-			throw new Meteor.Error(401, 'edit not permitted');
-		}
-		Courses.update(course._id, {
-			$set: {
-				archived: false,
-			},
-		});
-	},
-
-	/**
-	 * @param {string} courseId
-	 */
 	'course.remove'(courseId) {
 		const course = Courses.findOne({ _id: courseId });
 		if (!course) {
@@ -355,3 +320,45 @@ Meteor.methods({
 		});
 	},
 });
+
+export const archive = ServerMethod(
+	'course.archive',
+	/**
+	 * @param {string} courseId
+	 */
+	(courseId) => {
+		const course = Courses.findOne({ _id: courseId });
+		if (!course) {
+			throw new Meteor.Error(404, 'no such course');
+		}
+		if (!course.editableBy(Meteor.user())) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
+		return Courses.update(course._id, {
+			$set: {
+				archived: true,
+			},
+		});
+	},
+);
+
+export const unarchive = ServerMethod(
+	'course.unarchive',
+	/**
+	 * @param {string} courseId
+	 */
+	(courseId) => {
+		const course = Courses.findOne({ _id: courseId });
+		if (!course) {
+			throw new Meteor.Error(404, 'no such course');
+		}
+		if (!course.editableBy(Meteor.user())) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
+		Courses.update(course._id, {
+			$set: {
+				archived: false,
+			},
+		});
+	},
+);

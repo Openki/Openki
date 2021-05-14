@@ -7,6 +7,7 @@ import { Template } from 'meteor/templating';
 import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
+import * as CoursesMethods from '/imports/api/courses/methods';
 
 import { Editable } from '/imports/ui/lib/editable';
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
@@ -16,6 +17,7 @@ import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import { _ } from 'meteor/underscore';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { MeteorAsync } from '/imports/utils/promisify';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import * as IdTools from '/imports/utils/id-tools';
@@ -36,7 +38,6 @@ import '/imports/ui/components/sharing/sharing';
 import '/imports/ui/components/report/report';
 
 import './course-details.html';
-import { MeteorAsync } from '/imports/utils/promisify';
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function () {
@@ -184,7 +185,7 @@ Template.courseDetailsPage.events({
 		const { course } = instance.data;
 		instance.busy('archive');
 		try {
-			await MeteorAsync.callAsync('course.archive', course._id);
+			await CoursesMethods.archive(course._id);
 
 			Alert.success(
 				mf(
@@ -208,7 +209,7 @@ Template.courseDetailsPage.events({
 		const { course } = instance.data;
 		instance.busy('unarchive');
 		try {
-			await MeteorAsync.callAsync('course.unarchive', course._id);
+			await CoursesMethods.unarchive(course._id);
 
 			Alert.success(
 				mf(
