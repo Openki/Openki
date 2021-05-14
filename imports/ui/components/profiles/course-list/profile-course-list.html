@@ -23,6 +23,7 @@
 				</div>
 				{{#each role in roles}}
 					{{#if coursesByRoleCount role.type false}}
+					<!-- Todo remove #with and make helper function pure functions using the role -->
 						{{#with role}}
 							<h3 id="{{role.type}}">
 								<div class="badge">
@@ -39,8 +40,9 @@
 					{{/if}}
 				{{/each}}
 				{{#each role in roles}}
-					{{#if showArchived role}}
+					{{#if showArchived role ownProfile}}
 						{{#if coursesByRoleCount role.type true}}
+						<!-- Todo remove #with and make helper function pure functions using the role -->
 						{{#with role}}
 							<h3 id="{{role.type}}_archived">
 								<div class="badge is-archived">

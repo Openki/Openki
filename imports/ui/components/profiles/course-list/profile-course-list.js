@@ -76,7 +76,8 @@ Template.usersCourselist.helpers({
 		return Courses.findFilter({ userInvolved: userId, archivedDisabled: true }, 1).count() > 0;
 	},
 	showArchived(role, ownProfile) {
-		return ownProfile ? role.type === 'team': false;
+		if (ownProfile) return false;
+		return role.type === 'team';
 	},
 });
 
