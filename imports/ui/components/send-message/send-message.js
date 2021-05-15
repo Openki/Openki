@@ -1,10 +1,11 @@
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import '../profiles/verify-email/verify-email';
 
@@ -13,13 +14,11 @@ import './send-message.html';
 Template.sendMessage.onCreated(function () {
 	this.busy(false);
 	this.state = new ReactiveDict();
-	this.state.setDefault(
-		{
-			revealAddress: false,
-			sendCopy: false,
-			verificationMailSent: false,
-		},
-	);
+	this.state.setDefault({
+		revealAddress: false,
+		sendCopy: false,
+		verificationMailSent: false,
+	});
 });
 
 Template.sendMessage.onRendered(function () {
@@ -28,17 +27,11 @@ Template.sendMessage.onRendered(function () {
 
 Template.sendMessage.helpers({
 	hasEmail() {
-		const user = Meteor.user();
-		if (!user) {
-			return false;
-		}
-
-		const { emails } = user;
-		return emails && emails[0];
+		return Meteor.user()?.hasEmail() || false;
 	},
 
 	hasVerifiedEmail() {
-		return Meteor.user().emails[0].verified;
+		return Meteor.user()?.hasVerifiedEmail() || false;
 	},
 });
 
@@ -53,7 +46,9 @@ Template.sendMessage.events({
 					mf('profile.sendVerificationMailFailed', 'Failed to send verification mail'),
 				);
 			} else {
-				Alert.success(mf('profile.sentVerificationMail'));
+				Alert.success(
+					mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }),
+				);
 			}
 		});
 	},
@@ -97,10 +92,7 @@ Template.sendMessage.events({
 		Meteor.call('sendEmail', data.recipientId, message, options, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.serverError(
-					err,
-					mf('profile.mail.sendFailed', 'Your message was not sent'),
-				);
+				Alert.serverError(err, mf('profile.mail.sendFailed', 'Your message was not sent'));
 			} else {
 				Alert.success(mf('profile.mail.sent', 'Your message was sent'));
 				instance.$('.js-email-message').val('');

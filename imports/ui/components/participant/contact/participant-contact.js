@@ -1,10 +1,14 @@
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+
+import { Users } from '/imports/api/users/users';
+/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import './participant-contact.html';
 
 Template.participantContact.onCreated(function () {
 	this.userSub = Meteor.subscribe('user', this.data.participant);
-
 
 	this.state = new ReactiveDict();
 
@@ -24,7 +28,6 @@ Template.participantContact.onRendered(function () {
 });
 
 Template.participantContact.helpers({
-
 	hideModal() {
 		const instance = Template.instance();
 		return () => {
@@ -41,9 +44,9 @@ Template.participantContact.helpers({
 		return userId !== this.participant;
 	},
 
-	userAcceptsMessages() {
-		const user = Meteor.users.findOne(this.participant);
-		return user && user.acceptsMessages;
+	userAcceptsPrivateMessages() {
+		const user = Users.findOne(this.participant);
+		return user?.acceptsPrivateMessages;
 	},
 
 	userSubReady() {

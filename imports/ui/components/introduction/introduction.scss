@@ -1,3 +1,5 @@
+/* stylelint-disable selector-max-id, selector-max-compound-selectors */
+
 .introduction {
 	$background-color: lighten($gray-lightest, 5%);
 
@@ -22,11 +24,9 @@
 	margin-top: 60px;
 }
 
-// sass-lint:disable no-ids
 .calendar-introduction + #maincontent > .container {
 	padding-top: 0;
 }
-// sass-lint:enable no-ids
 
 .js-introduction-close-btn {
 	@include td-pos(right, 13px);
@@ -91,7 +91,7 @@
 	text-align: center;
 
 	&::after {
-		@include opacity(.5);
+		@include opacity(0.5);
 		@include td-pos(right, 0);
 		color: lighten($gray-light, 15%);
 		content: '';
@@ -146,6 +146,6 @@
 }
 
 .introduction-steps > li > h2 > .fa {
-	@include opacity(.6);
+	@include opacity(0.6);
 	color: $blue;
 }

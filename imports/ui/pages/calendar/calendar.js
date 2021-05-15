@@ -1,11 +1,14 @@
+import { Router } from 'meteor/iron:router';
+import { $ } from 'meteor/jquery';
+import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
+import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 
-import Events from '/imports/api/events/events';
-import UrlTools from '/imports/utils/url-tools';
+import { Events } from '/imports/api/events/events';
+import * as UrlTools from '/imports/utils/url-tools';
 
 import '/imports/ui/components/events/list/event-list';
 import '/imports/ui/components/loading/loading';
@@ -103,12 +106,12 @@ Template.calendar.helpers({
 	},
 });
 
-Template.calendarDay.helpers({
+Template.calendarDayFormat.helpers({
 	hasEvents() {
 		const filterQuery = this.filter.toQuery();
 		filterQuery.period = [this.day.start.toDate(), this.day.end.toDate()];
 
-		return Events.findFilter(filterQuery).count() > 0;
+		return Events.findFilter(filterQuery, 1).count() > 0;
 	},
 	events() {
 		const filterQuery = this.filter.toQuery();
@@ -116,26 +119,13 @@ Template.calendarDay.helpers({
 
 		return Events.findFilter(filterQuery);
 	},
-	calendarDay(day) {
-		Session.get('timeLocale');
-		return moment(day.toDate()).format('dddd, Do MMMM');
-	},
 	eventsReady() {
 		const instance = Template.instance();
 		return instance.parentInstance().eventSub.ready();
 	},
 });
 
-
 Template.calendarNav.helpers({
-	weekNr(date) {
-		if (date) {
-			Session.get('timeLocale');
-			return moment(date).week();
-		}
-		return false;
-	},
-
 	endDateTo(date) {
 		return moment(date).add(6, 'days');
 	},
@@ -193,7 +183,7 @@ Template.calendarNavControl.events({
 
 Template.calendarNavControl.helpers({
 	arrow() {
-		let isRTL = Session.get('textDirectionality') === 'rtl';
+		let isRTL = Session.equals('textDirectionality', 'rtl');
 
 		if (this.direction === 'previous') {
 			isRTL = !isRTL;
@@ -229,6 +219,10 @@ Template.calendarAddEvent.onRendered(function () {
 		eventCaption.toggleClass('placeholder', removeClass);
 	}
 
-	eventCaption.on('mouseover mouseout', (e) => { toggleCaptionClass(e); });
-	instance.$('.event-caption-add-text').on('mouseover mouseout', (e) => { toggleCaptionClass(e); });
+	eventCaption.on('mouseover mouseout', (e) => {
+		toggleCaptionClass(e);
+	});
+	instance.$('.event-caption-add-text').on('mouseover mouseout', (e) => {
+		toggleCaptionClass(e);
+	});
 });

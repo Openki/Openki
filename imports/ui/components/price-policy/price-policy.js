@@ -2,23 +2,27 @@ import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
-import Analytics from '/imports/ui/lib/analytics';
+import { pricePolicyEnabled } from '/imports/utils/pricePolicyEnabled';
+
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import './price-policy.html';
 
 Template.pricePolicy.helpers({
 	hidePricePolicy() {
-		const hideFlags = [
-			Session.get('hidePricePolicy'),
-			localStorage.getItem('hidePricePolicy'),
-		];
-
-		const user = Meteor.user();
-		if (user) {
-			hideFlags.push(user.hidePricePolicy);
+		if (Session.equals('hidePricePolicy', true)) {
+			return true;
 		}
 
-		return hideFlags.filter(Boolean).length > 0;
+		if (localStorage?.getItem('hidePricePolicy')) {
+			return true;
+		}
+
+		if (Meteor.user()?.hidePricePolicy) {
+			return true;
+		}
+
+		return false;
 	},
 });
 
@@ -34,18 +38,8 @@ Template.pricePolicyContent.helpers({
 		return classes.join(' ');
 	},
 
-	/**
-	 * Checks if price-policy is enabled for this instance.
-	 * Its only disabled if you set the pricePolicyEnabled-var
-	 * explicitly to false.
-	 */
 	pricePolicyEnabled() {
-		const pricePolicyEnabled = Meteor.settings.public.pricePolicyEnabled;
-		if (pricePolicyEnabled === false) {
-			return false;
-		}
-		// price policy setting is not set, is ambiguos, or is set explicitly to true.
-		return true;
+		return pricePolicyEnabled();
 	},
 
 	pricePolicyLink() {
@@ -77,8 +71,6 @@ Template.pricePolicyContent.events({
 			Meteor.call('user.hidePricePolicy', user);
 		}
 
-		Analytics.trytrack((tracker) => {
-			tracker.trackEvent('price', 'hide policy');
-		});
+		Analytics.trackEvent('price', 'hide policy');
 	},
 });

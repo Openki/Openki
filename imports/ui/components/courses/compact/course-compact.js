@@ -1,9 +1,10 @@
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
+import moment from 'moment';
 
-import Roles from '/imports/api/roles/roles';
-import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';
+import { Roles } from '/imports/api/roles/roles';
+import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
 import '/imports/ui/components/courses/categories/course-categories';
 
 import './course-compact.html';
@@ -14,33 +15,42 @@ Template.courseCompact.helpers({
 		return !instance.eventSub || instance.eventSub.ready();
 	},
 
-	courseState() {
+	courseStateClasses() {
+		const classes = [];
+
 		if (this.nextEvent) {
-			return 'has-upcoming-events';
-		} if (this.lastEvent) {
-			return 'has-past-events';
+			classes.push('has-upcoming-events');
+		} else if (this.lastEvent) {
+			classes.push('has-past-events');
+		} else {
+			classes.push('is-proposal');
 		}
-		return 'is-proposal';
+
+		if (this.archived) {
+			classes.push('is-archived');
+		}
+
+		return classes.join(' ');
 	},
 
 	filterPreviewClasses() {
 		const filterPreviewClasses = [];
 		const course = this;
 
-		const roles = _.map(Roles, role => role.type);
+		const roles = Roles.map((role) => role.type);
 
-		_.each(roles, (role) => {
-			const roleDisengaged = !HasRole(course.members, role);
-			if (course.roles.indexOf(role) >= 0 && roleDisengaged) {
+		roles.forEach((role) => {
+			const roleDisengaged = !hasRole(course.members, role);
+			if (course.roles.includes(role) && roleDisengaged) {
 				filterPreviewClasses.push(`needs-role-${role}`);
 			}
 		});
 
-		_.each(course.categories, (category) => {
+		course.categories?.forEach((category) => {
 			filterPreviewClasses.push(`category-${category}`);
 		});
 
-		_.each(course.groups, (group) => {
+		course.groups?.forEach((group) => {
 			filterPreviewClasses.push(`group-${group}`);
 		});
 
@@ -51,13 +61,6 @@ Template.courseCompact.helpers({
 });
 
 Template.courseCompactEvent.helpers({
-	dateFormat(date) {
-		if (date) {
-			return moment(date).format('l');
-		}
-		return false;
-	},
-
 	dateToRelativeString(date) {
 		if (date) {
 			const relative = moment().to(date);
@@ -65,19 +68,18 @@ Template.courseCompactEvent.helpers({
 		}
 		return false;
 	},
-	roleIcon: type => _.findWhere(Roles, { type }).icon,
 });
 
 Template.courseCompactRoles.helpers({
 	requiresRole(role) {
-		return this.roles.indexOf(role) >= 0;
+		return this.roles.includes(role);
 	},
 
 	participantClass() {
 		let participantClass = 'course-compact-role-';
 
 		const { members } = this;
-		if (HasRoleUser(members, 'participant', Meteor.userId())) {
+		if (hasRoleUser(members, 'participant', Meteor.userId())) {
 			participantClass += 'occupied-by-user';
 		} else if (members.length) {
 			participantClass += 'occupied';
@@ -91,13 +93,10 @@ Template.courseCompactRoles.helpers({
 	participantTooltip() {
 		let tooltip;
 		const numMembers = this.members.length;
-		const isParticipant = HasRoleUser(this.members, 'participant', Meteor.userId());
+		const isParticipant = hasRoleUser(this.members, 'participant', Meteor.userId());
 
 		if (numMembers === 1 && isParticipant) {
-			tooltip = mf(
-				'course.compact.youAreInterested',
-				'You are interested',
-			);
+			tooltip = mf('course.compact.youAreInterested', 'You are interested');
 		} else {
 			tooltip = mf(
 				'course.compact.interestedCount',
@@ -107,10 +106,7 @@ Template.courseCompactRoles.helpers({
 
 			if (numMembers > 1 && isParticipant) {
 				tooltip += ' ';
-				tooltip += mf(
-					'course.compact.interestedCountOwn',
-					'and you are one of them',
-				);
+				tooltip += mf('course.compact.interestedCountOwn', 'and you are one of them');
 			}
 		}
 
@@ -119,9 +115,9 @@ Template.courseCompactRoles.helpers({
 
 	roleStateClass(role) {
 		let roleStateClass = 'course-compact-role-';
-		if (!HasRole(this.members, role)) {
+		if (!hasRole(this.members, role)) {
 			roleStateClass += 'needed';
-		} else if (HasRoleUser(this.members, role, Meteor.userId())) {
+		} else if (hasRoleUser(this.members, role, Meteor.userId())) {
 			roleStateClass += 'occupied-by-user';
 		} else {
 			roleStateClass += 'occupied';
@@ -134,29 +130,26 @@ Template.courseCompactRoles.helpers({
 		let roleStateTooltip;
 
 		const tooltips = {
-			team:
-				{
-					needed: mf('course.list.status_titles.needs_organizer', 'Needs an organizer'),
-					occupied: mf('course.list.status_titles.has_team', 'Has a organizer-team'),
-					occupiedByUser: mf('course.list.status_titles.u_are_organizer', 'You are organizer'),
-				},
-			mentor:
-				{
-					needed: mf('course.list.status_titles.needs_mentor', 'Needs a mentor'),
-					occupied: mf('course.list.status_titles.has_mentor', 'Has a mentor'),
-					occupiedByUser: mf('course.list.status_titles.u_are_mentor', 'You are mentor'),
-				},
-			host:
-				{
-					needed: mf('course.list.status_titles.needs_host', 'Needs a host'),
-					occupied: mf('course.list.status_titles.has_host', 'Has a host'),
-					occupiedByUser: mf('course.list.status_titles.u_are_host', 'You are host'),
-				},
+			team: {
+				needed: mf('course.list.status_titles.needs_organizer', 'Needs an organizer'),
+				occupied: mf('course.list.status_titles.has_team', 'Has a organizer-team'),
+				occupiedByUser: mf('course.list.status_titles.u_are_organizer', 'You are organizer'),
+			},
+			mentor: {
+				needed: mf('course.list.status_titles.needs_mentor', 'Needs a mentor'),
+				occupied: mf('course.list.status_titles.has_mentor', 'Has a mentor'),
+				occupiedByUser: mf('course.list.status_titles.u_are_mentor', 'You are mentor'),
+			},
+			host: {
+				needed: mf('course.list.status_titles.needs_host', 'Needs a host'),
+				occupied: mf('course.list.status_titles.has_host', 'Has a host'),
+				occupiedByUser: mf('course.list.status_titles.u_are_host', 'You are host'),
+			},
 		};
 
-		if (!HasRole(this.members, role)) {
+		if (!hasRole(this.members, role)) {
 			roleStateTooltip = tooltips[role].needed;
-		} else if (HasRoleUser(this.members, role, Meteor.userId())) {
+		} else if (hasRoleUser(this.members, role, Meteor.userId())) {
 			roleStateTooltip = tooltips[role].occupiedByUser;
 		} else {
 			roleStateTooltip = tooltips[role].occupied;
@@ -164,8 +157,6 @@ Template.courseCompactRoles.helpers({
 
 		return roleStateTooltip;
 	},
-
-	roleIcon: type => _.findWhere(Roles, { type }).icon,
 });
 
 Template.courseCompact.events({
@@ -176,8 +167,4 @@ Template.courseCompact.events({
 	'mouseover .js-category-label, mouseout .js-category-label'(e, instance) {
 		instance.$('.course-compact').toggleClass('elevate-child');
 	},
-});
-
-Template.courseCompact.onRendered(function () {
-	this.$('.course-compact-title').dotdotdot();
 });

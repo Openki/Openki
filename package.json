@@ -7,42 +7,50 @@
     "test": "tests"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.2",
-    "babel-runtime": "^6.26.0",
-    "bcrypt": "^3.0.8",
+    "@babel/runtime": "^7.13.10",
+    "bcrypt": "^5.0.0",
     "bootstrap-sass": "^3.4.1",
-    "bson": "^0.5.6",
-    "core-js": "^2.6.7",
+    "es6-promisify": "^6.1.1",
     "events": "^1.1.1",
     "ical-generator": "^0.2.10",
-    "isomorphic-unfetch": "^2.1.1",
     "jquery": "^3.5.1",
-    "meteor-node-stubs": "^1.0.0",
+    "medium-editor": "^5.23.3",
+    "meteor-node-stubs": "^1.0.3",
+    "moment": "^2.29.1",
     "moment-timezone": "^0.5.25",
     "node-schedule": "^1.3.2",
-    "sanitize-html": "git+https://github.com/O-clock-Dev/sanitize-html-without-postcss.git#80c0d1addddbaf561feba012a058c24b532533c5",
+    "sanitize-html": "^2.3.3",
     "seedrandom": "^2.4.4",
-    "shariff": "^1.26.2",
+    "shariff": "^3.2.1",
     "url": "^0.11.0"
   },
   "devDependencies": {
     "assertion-error": "^1.1.0",
-    "chai": "^4.2.0",
-    "chromedriver": "^77.0.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.2.0",
+    "chai": "^4.3.4",
+    "chromedriver": "^89.0.0",
+    "eslint": "^7.24.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.2.0",
     "eslint-import-resolver-meteor": "^0.4.0",
-    "eslint-plugin-import": "^2.18.2",
-    "sass-lint": "^1.13.1",
-    "selenium-webdriver": "^3.6.0"
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "js-beautify": "^1.13.13",
+    "prettier": "^2.2.1",
+    "selenium-webdriver": "^3.6.0",
+    "stylelint": "^13.12.0",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-sass-guidelines": "^8.0.0",
+    "stylelint-prettier": "^1.2.0"
   },
   "scripts": {
-    "dev": "meteor --settings settings/dev.json",
-    "test": "TEST_BROWSER_DRIVER=chrome meteor test --settings settings/ci.json --once --driver-package meteortesting:mocha",
-    "app-test": "TEST_BROWSER_DRIVER=chrome meteor test --settings settings/ci.json --full-app --once --driver-package meteortesting:mocha",
-    "test-live": "TEST_WATCH=1 meteor test --settings settings/ci.json --full-app --driver-package meteortesting:mocha",
-    "eslint": "eslint -- .",
-    "sass-lint": "sass-lint --verbose"
+    "dev": "meteor --inspect --settings settings/dev.json",
+    "test": "MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
+    "app-test": "MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --full-app --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
+    "test-live": "MOCHA_GREP=$npm_config_grep meteor test --full-app --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
+    "es-lint": "eslint .",
+    "sass-lint": "stylelint '**/*.scss'",
+    "html-format": "html-beautify '{client,imports,private,public,server}/**/*.html' -r",
+    "reset": "meteor reset && rm server/extracts.msgfmt~"
   },
   "repository": {
     "type": "git",
@@ -59,5 +67,5 @@
   "bugs": {
     "url": "https://gitlab.com/Openki/Openki/issues"
   },
-  "homepage": "http://about.openki.net"
+  "homepage": "https://about.openki.net"
 }

@@ -1,5 +1,8 @@
-import Events from '/imports/api/events/events';
-import Venues from '/imports/api/venues/venues';
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
+import { Events } from '/imports/api/events/events';
+import { Venues } from '/imports/api/venues/venues';
 
 const UpdatesAvailable = [];
 
@@ -17,7 +20,7 @@ UpdatesAvailable['2016.08.23 renameVenues'] = function () {
 	let modified = 0;
 
 	Events.find({ location: { $exists: true } }).forEach((originalEvent) => {
-		const event = Object.assign({}, originalEvent);
+		const event = { ...originalEvent };
 		event.venue = event.location;
 		delete event.location;
 		modified += Events.update(event._id, event);
@@ -25,3 +28,4 @@ UpdatesAvailable['2016.08.23 renameVenues'] = function () {
 
 	return copied + modified;
 };
+*/

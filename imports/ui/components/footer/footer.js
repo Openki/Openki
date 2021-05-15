@@ -1,4 +1,7 @@
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 
 import Version from '/imports/api/version/version';
 
@@ -6,7 +9,7 @@ import './footer.html';
 
 Template.footer.helpers({
 	links() {
-		return Meteor.settings.public.footerLinks.map(linkSpec => ({
+		return (Meteor.settings.public.footerLinks || []).map((linkSpec) => ({
 			link: linkSpec.link,
 			text: linkSpec.key ? mf(linkSpec.key) : linkSpec.text,
 			title: linkSpec.title_key ? mf(linkSpec.title_key) : '',
@@ -18,18 +21,23 @@ Template.footer.helpers({
 	},
 	fullInfo() {
 		const version = Version.findOne();
-		return version && `${version.complete} on "${version.branch}" from ${version.commitDate} - restarted: ${moment(version.lastStart).format('lll')}`;
+		return (
+			version &&
+			`${version.complete} on "${version.branch}" from ${version.commitDate} - restarted: ${moment(
+				version.lastStart,
+			).format('lll')}`
+		);
 	},
 	commit() {
 		const version = Version.findOne();
-		return version && version.commitShort;
+		return version?.commitShort;
 	},
 	deployed() {
 		const version = Version.findOne();
-		return version && version.activation;
+		return version?.activation;
 	},
 	restart() {
 		const version = Version.findOne();
-		return version && version.lastStart;
+		return version?.lastStart;
 	},
 });

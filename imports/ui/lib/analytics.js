@@ -1,10 +1,11 @@
 import $ from 'jquery';
-import { Match } from 'meteor/check';
+import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
-import { Promise } from 'meteor/promise';
+import { Tracker } from 'meteor/tracker';
 
-const Analytics = {};
+export const Analytics = {};
 
+/** @type {false | JQuery.jqXHR<any>} */
 let loading;
 
 let tracker;
@@ -52,7 +53,7 @@ Analytics.load = function () {
 			if (!loading) {
 				// Use $.ajax with cache instead of $.loadScript().
 				loading = $.ajax({
-					url: config.url + (config.jsPath || 'js/'),
+					url: `${config.url}${config.jsPath || 'js/'}`,
 					cache: true,
 					dataType: 'script',
 				}).always(() => {
@@ -60,12 +61,14 @@ Analytics.load = function () {
 				});
 			}
 
-			loading.done(() => {
-				check(window.AnalyticsTracker, MatomoPattern);
-				resolve(window.AnalyticsTracker);
-			}).fail((jqxhr, settings, exception) => {
-				reject(exception);
-			});
+			loading
+				.done(() => {
+					check(window.AnalyticsTracker, MatomoPattern);
+					resolve(window.AnalyticsTracker);
+				})
+				.fail((_jqxhr, _settings, exception) => {
+					reject(exception);
+				});
 		});
 	}
 
@@ -80,7 +83,7 @@ Analytics.tracker = function () {
 		check(Meteor.settings.public.matomo, SettingsPattern);
 		if (!tracker) {
 			const config = Meteor.settings.public.matomo;
-			tracker = matomo.getTracker(config.url + (config.phpPath || 'js/'), config.site);
+			tracker = matomo.getTracker(`${config.url}${config.phpPath || 'js/'}`, config.site);
 		}
 		return tracker;
 	});
@@ -101,6 +104,29 @@ Analytics.trytrack = function (callback) {
 		});
 	}
 };
+/**
+ * Track a event in matomo or log to console.
+ * @param {string} category
+ * @param {string} action
+ * @param {string} [name]
+ * @param {number} [value]
+ */
+Analytics.trackEvent = function (category, action, name, value) {
+	if (Analytics.isConfigured()) {
+		// eslint-disable-next-line no-shadow
+		Analytics.trytrack((tracker) => {
+			tracker.trackEvent(category, action, name, value);
+		});
+	} else {
+		// For debugging
+		// eslint-disable-next-line no-console
+		console.info(
+			`Analytics.Event: {category: ${category}, action: ${action}${name ? `, name: ${name}` : ''}${
+				value ? `, value: ${value}` : ''
+			}}`,
+		);
+	}
+};
 
 /**
  * Installs action-hooks on the router.
@@ -111,7 +137,7 @@ Analytics.installRouterActions = function (router) {
 	router.onBeforeAction(function () {
 		if (Analytics.hasTracker()) {
 			/* eslint-disable-next-line no-shadow */
-			Analytics.trytrack(tracker => tracker.deleteCustomVariables());
+			Analytics.trytrack((tracker) => tracker.deleteCustomVariables());
 			started = new Date();
 		}
 		this.next();

@@ -1,13 +1,16 @@
 <template name="frameCalendar">
 	<style type="text/css">
+		/* beautify ignore:start */
 		{{#each cssRule in cssRules}}
 			{{cssRule}}
 		{{/each}}
+		/* beautify ignore:end */
 		.no-events {
 			font-size: 45px;
 			margin-top: 20px;
 			text-align: center;
 		}
+
 	</style>
 	{{#if days}}
 		{{#each day in days}}
@@ -21,9 +24,7 @@
 		{{/unless}}
 		{{#if moreEvents}}
 			<div class="show-more">
-				<button
-					class="btn btn-default js-show-more-events"
-					type="button">
+				<button class="btn btn-default js-show-more-events" type="button">
 					{{mf 'frame.calendar.showMoreEvents' 'Show more events'}}
 				</button>
 			</div>
@@ -42,7 +43,7 @@
 				<i class="fa fa-{{toggleIndicatorIcon}}"></i>
 			</span>
 			<span class="frame-list-item-time">
-				{{timeformat start}}
+				{{timeFormat start}}
 			</span>
 			{{title}}
 			{{#if allRegions}}
@@ -56,8 +57,7 @@
 						{{mf 'frame.eventsList.when' 'When:'}}
 					</div>
 					<div class="frame-list-item-content">
-						{{timeformat start}}
-						 - {{timeformat end}}
+						{{timeFormat start}} - {{timeFormat end}}
 					</div>
 				</div>
 				<div class="frame-list-item-property">
@@ -66,15 +66,14 @@
 					</div>
 					<div class="frame-list-item-content">
 						{{#if venue._id}}
-							<a href="{{pathFor 'venueDetails' _id=venue._id}}"
-							   target="_blank">
+							<a href="{{pathFor 'venueDetails' _id=venue._id}}" target="_blank">
 								{{venue.name}}
 							</a>
 						{{else}}
 							{{venue.name}}
 						{{/if}}
 						{{#if room}}
-							 - {{room}}
+							- {{room}}
 						{{/if}}
 					</div>
 				</div>
@@ -90,7 +89,8 @@
 					<a class="btn" href="{{pathFor 'showEvent'}}" target="_blank">
 						{{mf 'frame.calendar.moreAboutThisEvent' 'More about this event on openki.net'}}
 					</a>
-					<a href="{{pathFor 'calEvent' this}}" class="btn js-download">
+					<a href="{{pathFor 'calEvent' this}}"
+					   class="btn js-download js-track-cal-download">
 						<i class="fa fa-download fa-fw" aria-hidden="true"></i>
 						{{mf 'frame.calendar.download' 'Download'}}
 					</a>

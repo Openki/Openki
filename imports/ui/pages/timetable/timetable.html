@@ -6,46 +6,53 @@
 	<div class="container-fluid timetable">
 		<div class="timetable-header">
 			<div class="timetable-days">
-			{{#each days}}
-				<div class="timetable-day" style={{position}}>
-					{{showDay moment}}
-				</div>
-			{{/each}}
+				{{#each days}}
+					<div class="timetable-day" style="{{position}}">
+						{{showDay moment}}
+					</div>
+				{{/each}}
 			</div>
 			<div class="timetable-hours">
 				{{#each hours}}
-					<div class="timetable-hour" style={{position}}>
+					<div class="timetable-hour" style="{{position}}">
 						{{showHour moment}}
 					</div>
 				{{/each}}
 			</div>
 		</div>
 		{{#each this.grouped}}
-			<div class="timetable-row">
-				<div class="timetable-location">
-					<a href="{{pathFor 'venueDetails' data=location}}">
-						<span class="fa fa-home fa-fw" aria-hidden="true"></span>
-						{{venue.name}}
-					</a>
-				</div>
-				{{#each rows}}
-					<div class="timetable-row-section">
-						{{#each this}}
-							<!-- keep layout, but make link not clickable -->
-							<div class="timetable-event" style={{position}}>
-								<div class="timetable-event-title">
-									{{this.title}}
-								</div>
-								<div class="timetable-event-time">
-									<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
-									{{timeformat start}} - {{timeformat end}}
-								</div>
-								<div class="timetable-event-description">{{{description}}}</div>
-							</div>
-						{{/each}}
+			{{#each perRoom}}
+				<div class=" timetable-row {{#if isRoomRow room @index}}timetable-row--room{{/if}}">
+					<div class="timetable-location">
+						<a href="{{pathFor 'venueDetails' data=location}}">
+							<span class="fa fa-home fa-fw" aria-hidden="true"></span>
+							{{venue.name}}
+							{{#if room}}
+								<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
+								{{ room }}
+							{{/if}}
+						</a>
 					</div>
-				{{/each}}
-			</div>
+					{{#each rows}}
+						<div class="timetable-row-section">
+							{{#each this}}
+								<div class="timetable-event" style={{position}}>
+									<div class="timetable-event-title">
+										{{this.title}}
+									</div>
+									<div class="timetable-event-time">
+										<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+										{{timeFormat start}} - {{timeFormat end}}
+									</div>
+									<div class="timetable-event-description">
+										{{{description}}}
+									</div>
+								</div>
+							{{/each}}
+						</div>
+					{{/each}}
+				</div>
+			{{/each}}
 		{{/each}}
 	</div>
 </template>

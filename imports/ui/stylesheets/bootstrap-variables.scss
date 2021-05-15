@@ -52,14 +52,14 @@ $font-family-base: $font-family-sans-serif !default;
 
 $font-size-base: 14px !default;
 $font-size-large: ceil($font-size-base * 1.25) !default;
-$font-size-small: ceil($font-size-base * .85) !default;
+$font-size-small: ceil($font-size-base * 0.85) !default;
 
 $font-size-h1: floor($font-size-base * 2.6) !default;
 $font-size-h2: floor($font-size-base * 2.15) !default;
 $font-size-h3: ceil($font-size-base * 1.7) !default;
 $font-size-h4: ceil($font-size-base * 1.25) !default;
 $font-size-h5: $font-size-base !default;
-$font-size-h6: ceil($font-size-base * .85) !default;
+$font-size-h6: ceil($font-size-base * 0.85) !default;
 
 //** Unit-less `line-height` for use in components like buttons.
 $line-height-base: 1.42857 !default;
@@ -561,7 +561,7 @@ $popover-bg: $white !default;
 $popover-max-width: 276px !default;
 
 //** Popover border color
-$popover-border-color: rgba(0, 0, 0, .2) !default;
+$popover-border-color: rgba(0, 0, 0, 0.2) !default;
 
 //** Popover fallback border color
 $popover-fallback-border-color: #ccc !default;
@@ -629,7 +629,7 @@ $modal-title-line-height: $line-height-base !default;
 $modal-content-bg: $white !default;
 
 //** Modal content border color
-$modal-content-border-color: rgba(0, 0, 0, .2) !default;
+$modal-content-border-color: rgba(0, 0, 0, 0.2) !default;
 
 //** Modal content border color **for IE8**
 $modal-content-fallback-border-color: #999 !default;
@@ -638,7 +638,7 @@ $modal-content-fallback-border-color: #999 !default;
 $modal-backdrop-bg: $black !default;
 
 //** Modal backdrop opacity
-$modal-backdrop-opacity: .5 !default;
+$modal-backdrop-opacity: 0.5 !default;
 
 //** Modal header border color
 $modal-header-border-color: #e5e5e5 !default;
@@ -853,11 +853,11 @@ $breadcrumb-separator: '/' !default;
 //
 //##
 
-$carousel-text-shadow: 0 1px 2px rgba(0, 0, 0, .6) !default;
+$carousel-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !default;
 
 $carousel-control-color: $white !default;
 $carousel-control-width: 15% !default;
-$carousel-control-opacity: .5 !default;
+$carousel-control-opacity: 0.5 !default;
 $carousel-control-font-size: 20px !default;
 
 $carousel-indicator-active-bg: $white !default;

@@ -1,6 +1,9 @@
-/** Add a toJSON method if the object's prototype doesn't have one
-  * @param object o
-  */
+import { Meteor } from 'meteor/meteor';
+
+/**
+ * Add a toJSON method if the object's prototype doesn't have one
+ * @param {object} o
+ */
 function extendPrototypeToJSON(o) {
 	// http://stackoverflow.com/a/18391400/2652567
 	if (!('toJSON' in o.prototype)) {

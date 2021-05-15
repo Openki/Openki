@@ -1,7 +1,9 @@
+import { ReactiveVar } from 'meteor/reactive-var';
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 
 import './verify-email.html';
 
@@ -23,7 +25,13 @@ Template.verifyEmail.events({
 				instance.sending.set(false);
 				Alert.serverError(err, 'Failed to send verification mail');
 			} else {
-				Alert.success(mf('profile.sentVerificationMail', 'A verification mail is on its way to your address.'));
+				Alert.success(
+					mf(
+						'profile.sentVerificationMail',
+						{ MAIL: Meteor.user().emails[0].address },
+						'Verification mail has been sent to your address: "{MAIL}".',
+					),
+				);
 			}
 		});
 	},

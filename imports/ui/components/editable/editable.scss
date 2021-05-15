@@ -9,7 +9,7 @@
 		&:focus,
 		&.editable-changed {
 			border: 1px solid $brand-primary;
-			box-shadow: 7px 7px 7px rgba(0, 0, 0, .3);
+			box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
 			padding: 7px;
 		}
 	}
@@ -17,6 +17,10 @@
 
 .editable-wrap {
 	position: relative;
+
+	.help-block {
+		font-size: $font-size-base;
+	}
 }
 
 .editable {
@@ -32,8 +36,6 @@
 		background: $body-bg;
 	}
 }
-
-
 
 .editable-wrap-rich .editable {
 	min-height: 4ex;
@@ -51,7 +53,7 @@
 .editable-icon {
 	color: $gray-light;
 	cursor: default;
-	padding: .2em;
+	padding: 0.2em;
 	transition: color $default-transition-time;
 
 	&:hover {

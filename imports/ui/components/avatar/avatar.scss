@@ -1,0 +1,103 @@
+/* stylelint-disable scss/at-mixin-pattern, max-nesting-depth, property-no-vendor-prefix */
+
+@mixin avatarInputThumb {
+	background: transparent;
+	border-bottom: calc(2 * 10px * 0.866) solid #000;
+	border-left: 10px solid transparent;
+	border-radius: 0;
+	border-right: 10px solid transparent;
+	border-top: 0 solid transparent;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+
+@mixin avatarInputTrack {
+	background: linear-gradient(
+		to left,
+		hsla(0, 100%, 80%, 1),
+		hsla(10, 100%, 80%, 1),
+		hsla(20, 100%, 80%, 1),
+		hsla(30, 100%, 80%, 1),
+		hsla(40, 100%, 80%, 1),
+		hsla(50, 100%, 80%, 1),
+		hsla(60, 100%, 80%, 1),
+		hsla(70, 100%, 80%, 1),
+		hsla(80, 100%, 80%, 1),
+		hsla(90, 100%, 80%, 1),
+		hsla(100, 100%, 80%, 1),
+		hsla(110, 100%, 80%, 1),
+		hsla(120, 100%, 80%, 1),
+		hsla(130, 100%, 80%, 1),
+		hsla(140, 100%, 80%, 1),
+		hsla(150, 100%, 80%, 1),
+		hsla(160, 100%, 80%, 1),
+		hsla(170, 100%, 80%, 1),
+		hsla(180, 100%, 80%, 1),
+		hsla(190, 100%, 80%, 1),
+		hsla(200, 100%, 80%, 1),
+		hsla(210, 100%, 80%, 1),
+		hsla(220, 100%, 80%, 1),
+		hsla(230, 100%, 80%, 1),
+		hsla(240, 100%, 80%, 1),
+		hsla(250, 100%, 80%, 1),
+		hsla(260, 100%, 80%, 1),
+		hsla(270, 100%, 80%, 1),
+		hsla(280, 100%, 80%, 1),
+		hsla(290, 100%, 80%, 1),
+		hsla(300, 100%, 80%, 1),
+		hsla(310, 100%, 80%, 1),
+		hsla(320, 100%, 80%, 1),
+		hsla(330, 100%, 80%, 1),
+		hsla(340, 100%, 80%, 1),
+		hsla(350, 100%, 80%, 1),
+		hsla(360, 100%, 80%, 1)
+	);
+	border-radius: 0;
+	height: 10px;
+	width: 100%;
+}
+
+.avatar {
+	max-width: 100%;
+
+	&-image {
+		flex-shrink: 0;
+	}
+
+	&-form {
+		width: 100%;
+
+		&-input {
+			-webkit-appearance: none;
+			background: transparent;
+			width: 100%;
+
+			&:not(:focus-visible) {
+				outline: none;
+			}
+
+			&::-webkit-slider-thumb {
+				@include avatarInputThumb;
+
+				-webkit-appearance: none;
+			}
+
+			&::-moz-range-thumb {
+				@include avatarInputThumb;
+
+				padding: 10px 0 0;
+				transform: translateY(-5px);
+			}
+
+			&::-webkit-slider-runnable-track {
+				@include avatarInputTrack;
+			}
+
+			&::-moz-range-track {
+				@include avatarInputTrack;
+				transform: translateY(-5px);
+			}
+		}
+	}
+}

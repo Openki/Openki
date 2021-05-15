@@ -26,6 +26,8 @@
 
 @import 'footer/footer';
 
+@import 'kiosk-link/kiosk-link';
+
 @import 'groups/list/group-list';
 @import 'groups/settings/group-settings';
 
@@ -53,7 +55,11 @@
 
 @import 'sharing/sharing';
 
+@import 'tenants/settings/tenant-settings';
+
 @import 'translate-info/translate-info';
 
 @import 'venues/link/venue-link';
 @import 'venues/edit/venue-edit';
+
+@import 'avatar/avatar';

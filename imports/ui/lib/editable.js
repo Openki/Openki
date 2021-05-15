@@ -1,3 +1,4 @@
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 // Editable objects keep state of RTE fields
@@ -14,39 +15,76 @@ import { ReactiveVar } from 'meteor/reactive-var';
 // For parent templates, the following methods are of interest:
 //    setText: set the text that should be displayed in the field. This can be
 //             called again when the source changes.
-//    getEdited: get the edited version of the text, returns false if the field
+//    getEdited: get the edited version of the text, returns undefined if the field
 //               was not changed
+//    getTotalFocusTimeInSeconds: gives the time in seconds how long the cursor
+//                                was in the field. For statistics and tracking.
 //    end: ends editing mode such as when changes have been saved
 //
 // Instances of editable templates connect() to this to get their interface.
 // It is assumed that only one instance is using this interface at a time,
 
-export default class Editable {
-	constructor(simple, store, placeholderText, showControls = true) {
+export class Editable {
+	/**
+	 * @param {boolean} [simple]
+	 * @param {string} [placeholderText]
+	 * @param {object} [store]
+	 * @param {{
+	 *   check: (text: string) => boolean,
+	 *   errorMessage: () => string
+	 * }[]} [store.clientValidations]
+	 * @param {{type: string, message: () => string}[]} [store.serverValidationErrors]
+	 * @param {(text: string) => Promise<void>} store.onSave
+	 * @param {(text: string) => void} [store.onSuccess]
+	 * @param {(err: any, text: string) => void} [store.onError]
+	 */
+	constructor(simple = true, placeholderText = '', store = undefined) {
 		this.simple = simple;
-		this.store = store;
+		this.store = store || {};
 		this.placeholderText = placeholderText;
-		this.showControls = showControls;
+		this.showControls = !!store;
+		/** Its text content before editing */
 		this.text = new ReactiveVar('');
-		this.changed = new ReactiveVar(!showControls);
-		this.editingInstance = false;
+		/** Whether the field has been changed */
+		this.changed = new ReactiveVar(!store);
+		/** @type {Blaze.Template|undefined} */
+		this.editingInstance = undefined;
 	}
 
+	/**
+	 * set the text that should be displayed in the field.
+	 * This can be called again when the source changes.
+	 * @param {string} newText
+	 */
 	setText(newText) {
 		this.text.set(newText);
 	}
 
+	/**
+	 * get the edited version of the text, returns undefined if the field was not changed
+	 * @returns {string|undefined}
+	 */
 	getEdited() {
-		if (this.editingInstance) {
-			return this.editingInstance.getEdited();
-		}
-		return false;
+		return this.editingInstance?.getEdited();
 	}
 
+	/**
+	 * gives the time in seconds how long the cursor was in the field. For statistics and tracking.
+	 */
+	getTotalFocusTimeInSeconds() {
+		return this.editingInstance?.getTotalFocusTimeInSeconds() || 0;
+	}
+
+	/**
+	 * ends editing mode such as when changes have been saved
+	 */
 	end() {
 		this.changed.set(false);
 	}
 
+	/**
+	 * @param {Blaze.Template} instance
+	 */
 	connect(instance) {
 		this.editingInstance = instance;
 		return {
@@ -59,3 +97,5 @@ export default class Editable {
 		};
 	}
 }
+
+export default Editable;

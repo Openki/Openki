@@ -5,13 +5,13 @@
 				<div class="event-compact-header">
 					{{#if withDate}}
 						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-						{{weekdayShort startLocal}}
-						{{dateformat_mini_fullmonth startLocal}}
+						{{weekdayFormat startLocal}}
+						{{calendarDayShort startLocal}}
 						<br>
 					{{/if}}
 					<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
 					<span class="event-compact-time">
-						{{timeformat startLocal}} - {{timeformat endLocal}}
+						{{timeFormat startLocal}} - {{timeFormat endLocal}}
 					</span>
 					<br>
 					<div class="tag-group">
@@ -19,9 +19,14 @@
 					</div>
 				</div>
 				<div class="event-compact-body">
+					{{#if internal}}
+						<span class="event-compact-internal"
+							  data-tooltip="{{mf 'eventCompact.internal_event' 'Internal event'}}"></span>
+					{{/if}}
 					<h4 class="event-compact-title">
 						{{plain title}}
 					</h4>
+					<br />
 					<p class="event-compact-description">
 						{{plain description}}
 					</p>

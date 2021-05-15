@@ -1,15 +1,20 @@
-import { Session } from 'meteor/session';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { Router } from 'meteor/iron:router';
-import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
+import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Session } from 'meteor/session';
+import { Template } from 'meteor/templating';
+import { _ } from 'meteor/underscore';
+
+import * as Alert from '/imports/api/alerts/alert';
 
 import Categories from '/imports/api/categories/categories';
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 import CourseTemplate from '/imports/ui/lib/course-template';
-import FilterPreview from '/imports/ui/lib/filter-preview';
-import ScssVars from '/imports/ui/lib/scss-vars';
-import UrlTools from '/imports/utils/url-tools';
+import { FilterPreview } from '/imports/ui/lib/filter-preview';
+import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
+import * as UrlTools from '/imports/utils/url-tools';
 
 import '/imports/ui/components/courses/list/course-list';
 import '/imports/ui/components/courses/edit/course-edit';
@@ -97,10 +102,7 @@ Template.find.onCreated(function () {
 	instance.autorun(() => {
 		const query = Template.currentData();
 
-		filter
-			.clear()
-			.read(query)
-			.done();
+		filter.clear().read(query).done();
 
 		if (query.coursesAmount) {
 			const coursesAmount = parseInt(query.coursesAmount, 10);
@@ -115,7 +117,7 @@ Template.find.onCreated(function () {
 	// When there are filters set, show the filtering pane
 	instance.autorun(() => {
 		Object.keys(filter.toParams()).forEach((name) => {
-			if (hiddenFilters.indexOf(name) > -1) {
+			if (hiddenFilters.includes(name)) {
 				instance.showingFilters.set(true);
 			}
 		});
@@ -141,12 +143,10 @@ Template.find.events({
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 
-
 	// Update the URI when the search-field was changed an loses focus
 	'change .js-search-field'(event, instance) {
 		instance.updateUrl();
 	},
-
 
 	'click .js-find-btn'(event, instance) {
 		event.preventDefault();
@@ -202,13 +202,18 @@ Template.find.events({
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			filters.forEach(filter => instance.filter.disable(filter));
+			filters.forEach((filter) => instance.filter.disable(filter));
 			instance.filter.done();
 			instance.updateUrl();
 		}
 	},
 
 	'click .js-all-regions-btn'() {
+		try {
+			localStorage.setItem('region', 'all');
+		} catch (e) {
+			Alert.error(e);
+		}
 		Session.set('region', 'all');
 	},
 
@@ -241,9 +246,7 @@ Template.find.helpers({
 
 	hasResults() {
 		const filterQuery = Template.instance().filter.toQuery();
-		const results = Courses.findFilter(filterQuery, 1);
-
-		return results.count() > 0;
+		return Courses.findFilter(filterQuery, 1).count() > 0;
 	},
 
 	hasMore() {
@@ -276,14 +279,14 @@ Template.find.helpers({
 
 	activeFilters() {
 		const activeFilters = Template.instance().filter;
-		return _.any(hiddenFilters, filter => Boolean(activeFilters.get(filter)));
+		return hiddenFilters.some((filter) => !!activeFilters.get(filter));
 	},
 
 	searchIsLimited() {
 		const activeFilters = Template.instance().filter;
 		const relevantFilters = hiddenFilters.slice(); // clone
 		relevantFilters.push('region');
-		return _.any(relevantFilters, filter => Boolean(activeFilters.get(filter)));
+		return relevantFilters.some((filter) => !!activeFilters.get(filter));
 	},
 
 	isMobile() {

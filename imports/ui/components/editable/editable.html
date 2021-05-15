@@ -1,17 +1,21 @@
 <template name='editable'>
-		<div class="editable-wrap {{wrapAttrs}}">
-			<div class="editable js-editable {{editableAttrs}}">
-			</div>
+	<div class="editable-wrap {{wrapAttrs}} {{errorClass 'input'}}">
+		<div class="editable js-editable {{editableAttrs}}"></div>
+		{{#unless showControls}}
 			<span class="fa fa-pencil editable-icon js-editable-edit"></span>
-		</div>
-		{{#if showControls}}
-			{{> editableControls}}
-		{{/if}}
+		{{/unless}}
+		{{errorMessage 'input'}}
+	</div>
+	{{#if showControls}}
+		{{> editableControls}}
+	{{/if}}
 </template>
 
 <template name="editableTextarea">
-	<div class="js-editable {{editableAttrs}} form-control editable-textarea">
+	<div
+		 class="js-editable {{editableAttrs}} form-control editable-textarea {{errorClass 'input'}}">
 	</div>
+	{{errorMessage 'input'}}
 </template>
 
 <template name='editableControls'>

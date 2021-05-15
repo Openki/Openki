@@ -1,20 +1,30 @@
 import { Meteor } from 'meteor/meteor';
 
-const UserPrivilegeUtils = {
-	privileged(user, role) {
+import { Users } from '/imports/api/users/users';
+/** @typedef {import('imports/api/users/users').UserModel} UserModel */
+
+/**
+ * @param {UserModel|string|undefined|null} userOrUserId
+ * @param {string} role
+ * @returns {boolean}
+ */
+export function privileged(userOrUserId, role) {
+	/** @type {UserModel|undefined|null} */
+	let user;
+	if (typeof userOrUserId === 'string' || userOrUserId instanceof String) {
 		// Load user object if ID was passed
-		let userObject = user;
-		if (typeof user === 'string' || user instanceof String) {
-			userObject = Meteor.users.findOne({ _id: user });
-		}
+		user = Users.findOne({ _id: userOrUserId });
+	} else {
+		user = userOrUserId;
+	}
 
-		return userObject && userObject.privileged(role);
-	},
+	return user?.privileged(role) || false;
+}
 
-	privilegedTo(privilege) {
-		const user = Meteor.user();
-		return this.privileged(user, privilege);
-	},
-};
-
-export default UserPrivilegeUtils;
+/**
+ * @param {string} privilege
+ */
+export function privilegedTo(privilege) {
+	const user = Meteor.user();
+	return privileged(user, privilege);
+}

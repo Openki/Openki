@@ -1,5 +1,9 @@
+import { ReactiveVar } from 'meteor/reactive-var';
+import { _ } from 'meteor/underscore';
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
+import { Tracker } from 'meteor/tracker';
 
 import './map.html';
 
@@ -14,12 +18,19 @@ Template.map.onCreated(function () {
 	this.fullscreen = new ReactiveVar(false);
 });
 
+/**
+ * @param {string} faClass
+ */
 const FaIcon = function (faClass) {
 	return function () {
 		return L.DomUtil.create('span', `fa fa-${faClass}`);
 	};
 };
 
+/**
+ * @param {string} opClass
+ * @param {string} icClass
+ */
 const FaCompIcon = function (opClass, icClass) {
 	return function () {
 		const cont = L.DomUtil.create('span', 'fa');
@@ -69,7 +80,6 @@ Template.map.onRendered(function () {
 
 	const map = L.map(instance.find('.map'), options).setView(L.latLng(0, 0), 1);
 
-
 	// Add tiles depending on language
 	let tiles = null;
 	const tileLayers = {
@@ -77,13 +87,14 @@ Template.map.onRendered(function () {
 		fr() {
 			return L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
 				maxZoom: 19,
-				attribution: '&copy; Openstreetmap France | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+				attribution:
+					'&copy; Openstreetmap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			});
 		},
 		default() {
 			return L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				maxZoom: 19,
-				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			});
 		},
 	};
@@ -99,7 +110,6 @@ Template.map.onRendered(function () {
 		tiles = tileF();
 		tiles.addTo(map);
 	});
-
 
 	// Depending on view state, different controls are shown
 	const zoomControl = L.control.zoom({
@@ -210,7 +220,8 @@ Template.map.onRendered(function () {
 
 	// This must be one of the ugliest pieces of code I've written ever
 	const mainIcon = L.divIcon({
-		html: '<span class="fa fa-map-marker" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
+		html:
+			'<span class="fa fa-map-marker" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
 	});
 
 	// Tracked so that observe() will be stopped when the template is destroyed
@@ -315,10 +326,7 @@ Template.map.onRendered(function () {
 	};
 
 	instance.removeMarker = function () {
-		instance.data.markers.update(
-			{ main: true },
-			{ $set: { remove: true } },
-		);
+		instance.data.markers.update({ main: true }, { $set: { remove: true } });
 	};
 });
 
@@ -344,10 +352,9 @@ Template.map.helpers({
 
 	fullscreenControl() {
 		const instance = Template.instance();
-		return !instance.data.mini && !Template.instance().fullscreen.get();
+		return !instance.data.mini && !instance.fullscreen.get();
 	},
 });
-
 
 Template.map.events({
 	click(event, instance) {

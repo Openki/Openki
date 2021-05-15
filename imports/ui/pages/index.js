@@ -1,5 +1,6 @@
 import './admin/panel/admin-panel';
 import './admin/feature-group/feature-group';
+import './admin/users/users';
 import './calendar/calendar';
 import './course-create/course-create';
 import './course-details/course-details';
@@ -19,6 +20,7 @@ import './not-found/not-found';
 import './ownprofile/ownprofile';
 import './reset-password/reset-password';
 import './stats/stats';
+import './tenant-details/tenant-details';
 import './timetable/timetable';
 import './userprofile/userprofile';
 import './venue-details/venue-details';

@@ -1,6 +1,9 @@
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
 import LocalTime from '/imports/utils/local-time';
 import Log from '/imports/api/log/log';
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 
 const updateName = '2017.08.01 fixLocalDates';
 
@@ -27,10 +30,10 @@ UpdatesAvailable[updateName] = function () {
 				error: e,
 				update: updateName,
 			});
-			/* eslint-disable-next-line no-console */
 			console.log(`Unable to update local time for event ${event._id}: ${e}`);
 		}
 	});
 
 	return count;
 };
+*/

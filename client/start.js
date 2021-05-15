@@ -1,14 +1,25 @@
+import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
+
 import '/imports/startup/both';
 import '/imports/startup/client';
 
-import Alert from '/imports/api/alerts/alert';
-import Languages from '/imports/api/languages/languages';
+import { Accounts } from 'meteor/accounts-base';
+import { Router } from 'meteor/iron:router';
+import { mf, mfPkg, msgfmt } from 'meteor/msgfmt:core';
+import { _ } from 'meteor/underscore';
+import { Tooltips } from 'meteor/lookback:tooltips';
+import { Session } from 'meteor/session';
+import { Tracker } from 'meteor/tracker';
+
+import * as Alert from '/imports/api/alerts/alert';
+import { Languages } from '/imports/api/languages/languages';
 
 import Introduction from '/imports/ui/lib/introduction';
 import UpdateViewport from '/imports/ui/lib/update-viewport';
 
 import RegionSelection from '/imports/utils/region-selection';
-import UrlTools from '/imports/utils/url-tools';
+import * as UrlTools from '/imports/utils/url-tools';
 
 import 'bootstrap-sass';
 
@@ -22,7 +33,6 @@ Meteor.subscribe('version');
 // translation in the current locale
 mfPkg.loadLangs('en');
 
-
 // close any verification dialogs still open
 Router.onBeforeAction(function () {
 	Tooltips.hide();
@@ -34,11 +44,12 @@ Router.onBeforeAction(function () {
 
 // Try to guess a sensible language
 Meteor.startup(() => {
-	const useLocale = function (lang) {
+	const useLocale = function (/** @type {string | undefined | null} */ lang) {
 		if (!lang) {
 			return false;
 		}
 
+		/** @type {false | string} */
 		let locale = false;
 		if (Languages[lang]) {
 			locale = lang;
@@ -50,6 +61,11 @@ Meteor.startup(() => {
 			}
 		}
 		if (locale) {
+			try {
+				localStorage.setItem('locale', locale);
+			} catch (e) {
+				Alert.error(e);
+			}
 			Session.set('locale', locale);
 			return true;
 		}
@@ -60,7 +76,7 @@ Meteor.startup(() => {
 	if (useLocale(UrlTools.queryParam('lg'))) {
 		return;
 	}
-	if (useLocale(localStorage.getItem('locale'))) {
+	if (useLocale(localStorage?.getItem('locale'))) {
 		return;
 	}
 
@@ -87,6 +103,7 @@ Meteor.startup(() => {
 	Tracker.autorun(() => {
 		const desiredLocale = Session.get('locale');
 
+		// messageformat set the locale value in the db user
 		mfPkg.setLocale(desiredLocale);
 
 		// Logic taken from mfpkg:core to get text directionality
@@ -111,22 +128,22 @@ Meteor.startup(() => {
 		// I do not understand why setting language: moment.locale() does not
 		// work for the datepicker. But we want to use the momentjs settings
 		// anyway, so we might as well clobber the 'en' locale.
-		const mf = moment().localeData();
+		const locale = moment().localeData();
 
 		const monthsShort = function () {
-			if (typeof mf.monthsShort === 'function') {
-				return _.map(_.range(12), month => mf.monthsShort(moment().month(month), ''));
+			if (typeof locale.monthsShort === 'function') {
+				return _.range(12).map((month) => locale.monthsShort(moment().month(month), ''));
 			}
-			return mf._monthsShort;
+			return locale._monthsShort;
 		};
 
 		$.fn.datepicker.dates.en = _.extend({}, $.fn.datepicker.dates.en, {
-			days: mf._weekdays,
-			daysShort: mf._weekdaysShort,
-			daysMin: mf._weekdaysMin,
-			months: mf._months || mf._monthsNominativeEl,
+			days: locale._weekdays,
+			daysShort: locale._weekdaysShort,
+			daysMin: locale._weekdaysMin,
+			months: locale._months || locale._monthsNominativeEl,
 			monthsShort: monthsShort(),
-			weekStart: mf._week.dow,
+			weekStart: locale._week.dow,
 		});
 	});
 });
@@ -140,41 +157,25 @@ Accounts.onLogin(() => {
 	const user = Meteor.user();
 
 	if (user) {
-		const locale = user.profile.locale;
+		const locale = user.locale;
 		if (locale) {
+			try {
+				localStorage.setItem('locale', locale);
+			} catch (e) {
+				Alert.error(e);
+			}
 			Session.set('locale', locale);
 		}
 	}
 });
 
-Accounts.onEmailVerificationLink((token) => {
+Accounts.onEmailVerificationLink((/** @type {string} */ token) => {
 	Router.go('profile');
 	Accounts.verifyEmail(token, (error) => {
 		if (error) {
 			Alert.serverError(error, 'Address could not be verified');
 		} else {
-			Alert.success(mf(
-				'email.verified',
-				'Your e-mail has been verified.',
-			));
+			Alert.success(mf('email.verified', 'Your e-mail has been verified.'));
 		}
 	});
 });
-
-minuteTime = new ReactiveVar();
-
-// Set up reactive date sources that can be used for updates based on time
-function setTimes() {
-	const now = new Date();
-
-	now.setSeconds(0);
-	now.setMilliseconds(0);
-	const old = minuteTime.get();
-	if (!old || old.getTime() !== now.getTime()) {
-		minuteTime.set(now);
-	}
-}
-setTimes();
-
-// Update interval of five seconds is okay
-Meteor.setInterval(setTimes, 1000 * 5);

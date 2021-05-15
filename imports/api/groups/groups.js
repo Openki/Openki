@@ -1,55 +1,68 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-import Filtering from '/imports/utils/filtering';
+import { Filtering } from '/imports/utils/filtering';
 
 // ======== DB-Model: ========
-// "_id"           -> ID
-// "name"          -> String
-// "short"         -> String
-// "claim"         -> String
-// "description"   -> String
-// "members"       -> List of userIds
-// ===========================
-
-const Groups = new Mongo.Collection('Groups');
-
-Groups.Filtering = () => Filtering(
-	{},
-);
-
-/* Find groups for given filters
- *
- * filter: dictionary with filter options
- *   own: Limit to groups where logged-in user is a member
- *   user: Limit to groups where given user ID is a member (client only)
- *
+/**
+ * @typedef {Object} GroupEntity
+ * @property {string} _id ID
+ * @property {string} name
+ * @property {string} short
+ * @property {string} claim
+ * @property {string} description
+ * @property {string[]} members List of userIds
  */
-Groups.findFilter = function (filter, limit, skip, sort) {
-	const find = {};
 
-	const options = { skip, sort };
-
-	if (limit > 0) {
-		options.limit = limit;
+/**
+ * @extends {Mongo.Collection<GroupEntity>}
+ */
+export class GroupsCollection extends Mongo.Collection {
+	constructor() {
+		super('Groups');
 	}
 
-	if (filter.own) {
-		const me = Meteor.userId();
-		if (!me) return []; // I don't exist? How could I be in a group?!
-
-		find.members = me;
+	// eslint-disable-next-line class-methods-use-this
+	Filtering() {
+		return new Filtering({});
 	}
 
-	// If the property is set but falsy, we don't return anything
-	if (Object.prototype.hasOwnProperty.call(filter, 'user')) {
-		if (!filter.user) {
-			return [];
+	/**
+	 * Find groups for given filters
+	 * @param {object} [filter] dictionary with filter options
+	 * @param {boolean} [filter.own] Limit to groups where logged-in user is a member
+	 * @param {string|false} [filter.user] Limit to groups where given user ID is a
+	 * member (client only)
+	 * @param {number} [limit]
+	 * @param {number} [skip]
+	 * @param {*} [sort]
+	 */
+	findFilter(filter = {}, limit = 0, skip, sort) {
+		const find = {};
+
+		/**
+		 * @type {Mongo.Options<GroupEntity>}
+		 */
+		const options = { skip, sort };
+
+		if (limit > 0) {
+			options.limit = limit;
 		}
-		find.members = filter.user;
-	}
 
-	return Groups.find(find, options);
-};
+		if (filter.own) {
+			const me = Meteor.userId();
+			if (!me) {
+				// User is not logged in...
+				return [];
+			}
+
+			find.members = me;
+		}
+
+		return this.find(find, options);
+	}
+}
+
+export const Groups = new GroupsCollection();
 
 export default Groups;

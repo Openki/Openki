@@ -1,28 +1,35 @@
-import Alert from '/imports/api/alerts/alert';
+import { Blaze } from 'meteor/blaze';
+import { Session } from 'meteor/session';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Random } from 'meteor/random';
+import { Mongo } from 'meteor/mongo';
+import { Template } from 'meteor/templating';
+
+import * as Alert from '/imports/api/alerts/alert';
 
 const TemplateMixins = {
 	/** Setup expand/collaps logic for a template
-	*
-	* @param {Object} template instance
-	*
-	* This mixin extends the given template with an `expanded` helper and
-	* two click handlers `js-expand` and `js-close`. Only one expandible template
-	* can be open at a time, so don't nest them.
-	*
-	* Example:
-	* <template name="pushIt">
-	*   <div>
-	*     {{#if expanded}}
-	*       All this content hiding here.
-	*       Now close it again!
-	*       <button type="button" class="js-collapse">CLOSE IT!</button>
-	*     {{else}}
-	*       Press the button!
-	*       <button type="button" class="js-expand">OPEN IT!</button>
-	*     {{/if}}
-	*   </div>
-	* </template>
-	*/
+	 *
+	 * @param {Object} template instance
+	 *
+	 * This mixin extends the given template with an `expanded` helper and
+	 * two click handlers `js-expand` and `js-close`. Only one expandible template
+	 * can be open at a time, so don't nest them.
+	 *
+	 * Example:
+	 * <template name="pushIt">
+	 *   <div>
+	 *     {{#if expanded}}
+	 *       All this content hiding here.
+	 *       Now close it again!
+	 *       <button type="button" class="js-collapse">CLOSE IT!</button>
+	 *     {{else}}
+	 *       Press the button!
+	 *       <button type="button" class="js-expand">OPEN IT!</button>
+	 *     {{/if}}
+	 *   </div>
+	 * </template>
+	 */
 	Expandible(template) {
 		template.onCreated(function () {
 			const expander = Random.id(); // Token to keep track of which Expandible is open
@@ -123,9 +130,9 @@ const TemplateMixins = {
 	 * error whereas {{errorMessage}} will output a <span> with the error message.
 	 *
 	 * @param {*} template The template to extend
-	 * @param {*} mapping The mapping of error-keys to message objects
+	 * @param {*} [mapping] The mapping of error-keys to message objects
 	 */
-	FormfieldErrors(template, mapping) {
+	FormfieldErrors(template, mapping = undefined) {
 		template.helpers({
 			errorClass(field) {
 				if (Template.instance().errors.messages.findOne({ field })) {
@@ -139,24 +146,23 @@ const TemplateMixins = {
 					return false;
 				}
 
-				const text = mapping[message.key].text();
+				const text = (Template.instance()?.errorMapping || mapping)[message.key].text();
 				return Spacebars.SafeString(
-					`<span class="help-block warning-block">${
-						Blaze._escape(text)
-					}</span>`,
+					`<span class="help-block warning-block">${Blaze._escape(text)}</span>`,
 				);
 			},
 		});
 
 		template.onCreated(function () {
-			const messages = new Mongo.Collection(null);
+			const instance = this;
+			const messages = new Mongo.Collection(null); // Local collection for in-memory storage
 			this.errors = {
 				messages,
 				present() {
 					return Boolean(messages.findOne({}));
 				},
 				add(key) {
-					const message = mapping[key];
+					const message = (instance.errorMapping || mapping)[key];
 					if (!message) {
 						Alert.error('Unmapped error');
 						return;

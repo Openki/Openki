@@ -30,12 +30,13 @@
 							{{/if}}
 							{{#if editor}}
 								<p>
-									<span class="venue-property-title">{{mf 'location.details.hosts' 'Hosts:'}}</span>
-									<ul class='hosts'>
-										<li>
-											{{>profilelink editor}}
-										</li>
-									</ul>
+									<span
+										  class="venue-property-title">{{mf 'location.details.hosts' 'Hosts:'}}</span>
+								<ul class='hosts'>
+									<li>
+										{{>profilelink editor}}
+									</li>
+								</ul>
 								</p>
 							{{/if}}
 							{{#if contact.web}}
@@ -84,11 +85,11 @@
 									<span class="venue-property-title">
 										{{mf 'venue.details.availableInfrastructure' 'Available infrastructure:'}}
 									</span>
-									<ul>
-										{{#each facilityNames}}
-											<li>{{this}}</li>
-										{{/each}}
-									</ul>
+								<ul>
+									{{#each facilityNames}}
+										<li>{{this}}</li>
+									{{/each}}
+								</ul>
 								</p>
 							{{/if}}
 							{{#if otherFacilities}}
@@ -116,36 +117,26 @@
 				</div>
 			{{/with}}
 		{{/if}}
-		{{#if events}}
+		{{#if upcomingEvents}}
 			<div class="page-component">
 				<h2>{{mf 'venue.details.upcomingEvents' "Upcoming events at this venue: "}}</h2>
-				{{> eventList dataEvents=events withDate=true}}
-				{{#if eventsLimited}}
+				{{> eventList dataEvents=upcomingEvents withDate=true}}
+				{{#if hasMoreUpcomingEvents}}
 					<div class="clearfix"></div>
-					<button type="button" class="btn btn-add js-show-more-events">
-						{{#mf KEY='venue.details.showMoreEvents' NUM=unloadedEvents}}
-							Show {NUM, plural,
-								one {one more event}
-								other {# more events}
-							}
-						{{/mf}}
+					<button type="button" class="btn btn-add js-show-more-upcoming-events">
+						{{mf 'venue.details.showMoreUpcomingEvents' "Show more events"}}
 					</button>
 				{{/if}}
 			</div>
 		{{/if}}
 		{{#if pastEvents}}
 			<div class="page-component">
-				<h2>Past events:</h2>
+				<h2>{{mf 'venue.details.pastEvents' "Past events: "}}</h2>
 				{{> eventList dataEvents=pastEvents withDate=true}}
-				{{#if pastEventsLimited}}
+				{{#if hasMorePastEvents}}
 					<div class="clearfix"></div>
 					<button type="button" class="btn btn-add js-show-more-past-events">
-						{{#mf KEY='venue.details.showMorePastEvents' NUM=unloadedPastEvents}}
-							Show {NUM, plural,
-								one {one more event}
-								other {# more events}
-							}
-						{{/mf}}
+						{{mf 'venue.details.showMorePastEvents' "Show more events"}}
 					</button>
 				{{/if}}
 			</div>
@@ -155,7 +146,8 @@
 
 <template name="venueDeleteConfirmDialog">
 	<div class="venue-delete-confirmation">
-		<p>{{mf 'venue.reallydelete' 'Please confirm that you would like to delete this venue. This cannot be undone.'}}</p>
+		<p>{{mf 'venue.reallydelete' 'Please confirm that you would like to delete this venue. This cannot be undone.'}}
+		</p>
 		<div class="form-actions">
 			{{> buttonDeleteConfirm
 				event="js-venue-delete-confirm"

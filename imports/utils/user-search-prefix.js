@@ -1,6 +1,12 @@
-import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 
-export default function UserSearchPrefix(prefix, options) {
+import { Users } from '/imports/api/users/users';
+
+/**
+ * @param {string} prefix
+ * @param {{ limit?: number; exclude?: string[]; fields?: any; }} [options]
+ */
+export function userSearchPrefix(prefix, options = {}) {
 	const prefixExp = `^${prefix.replace(/([.*+?^${}()|[\]/\\])/g, '\\$1')}`;
 	const query = { username: new RegExp(prefixExp, 'i') };
 
@@ -12,5 +18,7 @@ export default function UserSearchPrefix(prefix, options) {
 		delete customizedOptions.exclude;
 	}
 
-	return Meteor.users.find(query, customizedOptions);
+	return Users.find(query, customizedOptions);
 }
+
+export default userSearchPrefix;

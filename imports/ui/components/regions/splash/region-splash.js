@@ -2,7 +2,7 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import Alert from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 
 import '/imports/ui/components/regions/selection/region-selection';
 

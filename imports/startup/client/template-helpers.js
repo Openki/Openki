@@ -1,12 +1,26 @@
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
-import Groups from '/imports/api/groups/groups';
+import { Session } from 'meteor/session';
+import { Tracker } from 'meteor/tracker';
+import moment from 'moment';
 
+import { Groups } from '/imports/api/groups/groups';
+import { Regions } from '/imports/api/regions/regions';
+import { Users } from '/imports/api/users/users';
+import { Roles } from '/imports/api/roles/roles';
 
 const helpers = {
 	siteName() {
-		if (Meteor.settings.public && Meteor.settings.public.siteName) {
+		const currentRegion = Regions.currentRegion();
+		if (currentRegion?.custom?.siteName) {
+			return currentRegion.custom.siteName;
+		}
+
+		if (Meteor.settings.public.siteName) {
 			return Meteor.settings.public.siteName;
 		}
+
 		return 'Hmmm';
 	},
 
@@ -15,25 +29,66 @@ const helpers = {
 		return mf(`category.${this}`);
 	},
 
+	/**
+	 * @param {string} type
+	 */
+	roleShort(type) {
+		if (!type) {
+			return '';
+		}
+
+		return mf(`roles.${type}.short`);
+	},
+
+	/**
+	 * @param {string} type
+	 */
+	roleIcon(type) {
+		if (!type) {
+			return '';
+		}
+
+		return Roles.find((r) => r.type === type)?.icon || '';
+	},
+
+	regions() {
+		return Regions.find();
+	},
+
+	currentRegionName() {
+		return Regions.currentRegion()?.name || '';
+	},
+
+	/**
+	 * @param {string} id Region ID
+	 */
+	isCurrentRegion(id) {
+		return id && Session.equals('region', id);
+	},
+
 	guideLink() {
-		if (typeof Meteor.settings.public.courseGuideLink === 'string' && Meteor.settings.public.courseGuideLink !== '') {
+		if (Meteor.settings.public.courseGuideLink) {
 			return Meteor.settings.public.courseGuideLink;
 		}
 
 		const locale = Session.get('locale');
 		// default fallback language
-		let guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
+		let guideLink =
+			'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
 
 		switch (locale) {
-		case 'de':
-			guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf';
-			break;
-		case 'en':
-			guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
-			break;
-		default:
-			guideLink = 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
-			break;
+			case 'de':
+				guideLink =
+					'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf';
+				break;
+			case 'en':
+				guideLink =
+					'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
+				break;
+			default:
+				guideLink =
+					'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
+				break;
 		}
 		return guideLink;
 	},
@@ -53,9 +108,18 @@ const helpers = {
 		}
 	},
 
-	dateformat(date) {
-		Session.get('timeLocale');
+	// Date & Time format helper
+	dateShort(date) {
 		if (date) {
+			Session.get('timeLocale');
+			return moment(date).format('l');
+		}
+		return false;
+	},
+
+	dateFormat(date) {
+		if (date) {
+			Session.get('timeLocale');
 			return moment(date).format('L');
 		}
 		return false;
@@ -69,17 +133,49 @@ const helpers = {
 		return false;
 	},
 
-	dateShort(date) {
+	dateTimeLong(date) {
 		if (date) {
 			Session.get('timeLocale');
-			return moment(date).format('l');
+			return moment(date).format('LLLL');
 		}
 		return false;
 	},
 
-	dateformat_mini_fullmonth(date) {
-		Session.get('timeLocale'); // it depends
+	timeFormat(date) {
 		if (date) {
+			Session.get('timeLocale');
+			return moment(date).format('LT');
+		}
+		return false;
+	},
+
+	fromNow(date) {
+		if (date) {
+			Session.get('timeLocale'); // it depends
+			return moment(date).fromNow();
+		}
+		return false;
+	},
+
+	weekdayFormat(date) {
+		if (date) {
+			Session.get('timeLocale'); // it depends
+			return moment(date).format('ddd');
+		}
+		return false;
+	},
+
+	weekNr(date) {
+		if (date) {
+			Session.get('timeLocale');
+			return moment(date).week();
+		}
+		return false;
+	},
+
+	calendarDayShort(date) {
+		if (date) {
+			Session.get('timeLocale'); // it depends
 			const m = moment(date);
 			const year = m.year() !== moment().year() ? ` ${m.format('YYYY')}` : '';
 			return moment(date).format('D. MMMM') + year;
@@ -87,57 +183,55 @@ const helpers = {
 		return false;
 	},
 
-	timeformat(date) {
-		Session.get('timeLocale');
+	calendarDayFormat(date) {
 		if (date) {
-			return moment(date).format('LT');
+			Session.get('timeLocale');
+			return moment(date).format('dddd, Do MMMM');
 		}
 		return false;
 	},
 
-	fromNow(date) {
-		Session.get('fineTime');
-		Session.get('timeLocale'); // it depends
-		if (date) {
-			return moment(date).fromNow();
-		}
-		return false;
-	},
-
-	weekdayShort(date) {
-		Session.get('timeLocale'); // it depends
-		if (date) {
-			return moment(date).format('ddd');
-		}
-		return false;
-	},
-
-	// Strip HTML markup
+	/**
+	 * Strip HTML markup
+	 * @param {string} html
+	 */
 	plain(html) {
-		const div = document.createElement('div');
-		div.innerHTML = html;
-		return div.textContent || div.innerText || '';
+		// Prevent words from sticking together
+		// eg. <p>Kloradf dadeq gsd.</p><p>Loradf dadeq gsd.</p> => Kloradf dadeq gsd. Loradf dadeq gsd.
+		const htmlPreparedForMinimalStyling = html
+			.replaceAll('<br />', '<br /> ')
+			.replaceAll('<p>', '<p> ')
+			.replaceAll('</p>', '</p> ')
+			.replaceAll('<h2>', '<h2> ')
+			.replaceAll('</h2>', '</h2> ')
+			.replaceAll('<h3>', '<h3> ')
+			.replaceAll('</h3>', '</h3> ');
+		// Source: https://stackoverflow.com/questions/822452/strip-html-from-text-javascript/47140708#47140708
+		const doc = new DOMParser().parseFromString(htmlPreparedForMinimalStyling, 'text/html');
+		return doc.body.textContent || '';
 	},
 
-	/** Compare activity to template business
-	  * This can be used to show a busy state while the template is working.
-	  *
-	  * Example: <button>{#if busy 'saving'}Saving...{else}Save now!{/if}</button>
-	  *
-	  * @param {String} [activity] compare to this activity
-	  * @returns {Bool} Whether business matches activity
-	  */
+	/**
+	 * Compare activity to template business
+	 * This can be used to show a busy state while the template is working.
+	 *
+	 * Example: <button>{#if busy 'saving'}Saving...{else}Save now!{/if}</button>
+	 *
+	 * @param {string} [activity] compare to this activity
+	 * @returns {boolean} Whether business matches activity
+	 */
 	busy(activity) {
 		const business = Template.instance().findBusiness();
 		return business.get() === activity;
 	},
 
-	/** Disable buttons while there is business to do.
-	  *
-	  * Example <button {disableIfBusy}>I will be disabled when there is business.</button>
-	  *
-	  * @return {String} 'disabled' if the template is currently busy, empty string otherwise.
-	  */
+	/**
+	 * Disable buttons while there is business to do.
+	 *
+	 * Example <button {disableIfBusy}>I will be disabled when there is business.</button>
+	 *
+	 * @return {String} 'disabled' if the template is currently busy, empty string otherwise.
+	 */
 	disabledIfBusy() {
 		const business = Template.instance().findBusiness();
 		return business.get() ? 'disabled' : '';
@@ -147,29 +241,29 @@ const helpers = {
 		return Template.instance().state.get(state);
 	},
 
+	/**
+	 * @param {string} groupId
+	 */
 	groupLogo(groupId) {
 		const instance = Template.instance();
 		instance.subscribe('group', groupId);
 
 		const group = Groups.findOne({ _id: groupId });
-		if (group) {
-			if (group.logoUrl) {
-				return group.logoUrl;
-			} return '';
-		}
-		return '';
+
+		return group?.logoUrl || '';
 	},
 
-	/** Return the instance for use in the template
-	  * This can be used to directly access instance methods without declaring
-		* helpers.
-		*/
+	/**
+	 * This can be used to directly access instance methods without declaring
+	 * helpers.
+	 * @returns The instance for use in the template
+	 */
 	instance() {
 		return Template.instance();
 	},
 };
 
-Object.keys(helpers).forEach(name => Template.registerHelper(name, helpers[name]));
+Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[name]));
 
 /* Get a username from ID
  */
@@ -184,7 +278,7 @@ const usernameFromId = (function () {
 	const pending = {};
 
 	// Update the cache if users are pushed to the collection
-	Meteor.users.find().observe({
+	Users.find().observe({
 		added(user) {
 			cache[user._id] = user.username;
 		},
@@ -246,6 +340,6 @@ const usernameFromId = (function () {
 		}
 		return `userId: ${userId}`;
 	};
-}());
+})();
 
 Template.registerHelper('username', usernameFromId);

@@ -1,4 +1,7 @@
-import Events from '/imports/api/events/events';
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
+import { Events } from '/imports/api/events/events';
 
 const UpdatesAvailable = [];
 
@@ -8,7 +11,7 @@ const UpdatesAvailable = [];
 // day
 UpdatesAvailable.renameEventFields = function () {
 	Events.find({}).fetch().forEach((originalEvent) => {
-		const event = Object.assign({}, originalEvent);
+		const event = { ...originalEvent };
 		if (event.startdate) {
 			event.start = event.startdate;
 			delete event.startdate;
@@ -24,3 +27,4 @@ UpdatesAvailable.renameEventFields = function () {
 		Events.update(event._id, event);
 	});
 };
+*/

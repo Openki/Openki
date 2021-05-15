@@ -1,4 +1,3 @@
-
 // FieldOrdering interface
 //
 //
@@ -35,7 +34,7 @@ const genComp = function (a, b) {
 	return 0;
 };
 
-const FieldComp = field => (a, b) => {
+const FieldComp = (field) => (a, b) => {
 	check(a, Object);
 	check(b, Object);
 	return genComp(a[field], b[field]);
@@ -46,24 +45,23 @@ const equal = () => 0;
 
 // Invert the order of arguments of a comparison function
 // For our purposes it turns 'ascending' into 'descending'.
-const swap = f => (a, b) => f(b, a);
+const swap = (f) => (a, b) => f(b, a);
 
 const FieldOrdering = function (sortSpec) {
 	// Build chain of compare functions that refer to the next field
 	// if the current field values are equal.
-	const ordering = () => sortSpec.spec().reduceRight((chain, [field, order]) => {
-		const fieldComp = FieldComp(field);
-		const directedComp = order === 'asc' ? fieldComp : swap(fieldComp);
-		return (a, b) => directedComp(a, b) || chain(a, b);
-	}, equal);
-	const copy = list => Array.prototype.slice.call(list);
+	const ordering = () =>
+		sortSpec.spec().reduceRight((chain, [field, order]) => {
+			const fieldComp = FieldComp(field);
+			const directedComp = order === 'asc' ? fieldComp : swap(fieldComp);
+			return (a, b) => directedComp(a, b) || chain(a, b);
+		}, equal);
+	const copy = (list) => Array.prototype.slice.call(list);
 
-	return (
-		{
-			ordering,
-			sorted: list => copy(list).sort(ordering()),
-		}
-	);
+	return {
+		ordering,
+		sorted: (list) => copy(list).sort(ordering()),
+	};
 };
 
 export default FieldOrdering;

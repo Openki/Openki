@@ -5,7 +5,8 @@
 				{{#if filter.group}}
 					<a href="/find?group={{filter.group}}">
 						{{#if groupLogo filter.group}}
-							<img src="{{groupLogo filter.group}}" class="kiosk-logo kiosk-logo-group">
+							<img src="{{groupLogo filter.group}}"
+								 class="kiosk-logo kiosk-logo-group" />
 						{{/if}}
 						{{groupShort filter.group}}
 					</a>
@@ -14,7 +15,7 @@
 						<a href="/venue/{{filter.location}}">{{filter.location}}</a>
 					{{else}}
 						<a href="{{pathFor 'home'}}">
-							<img src="/logo/openki.png" class="kiosk-logo kiosk-logo-openki">
+							<img src="/logo/{{headerLogo}}" alt="{{headerAlt}}" class="kiosk-logo kiosk-logo-openki">
 							Openki
 						</a>
 					{{/if}}
@@ -30,14 +31,16 @@
 		</div>
 		{{#if ongoing.count}}
 			<div class="page-component">
-				<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event:} other {# ongoing events:} }' NUM=ongoing.count}}</h3>
+				<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event:} other {# ongoing events:} }' NUM=ongoing.count}}
+				</h3>
 				{{> kioskEventList dataEvents=ongoing timePeriod="ongoing"}}
 			</div>
 		{{/if}}
 
 		{{#if today.count}}
 			<div class="page-component page-component-seperated">
-				<h3>{{mf 'kiosk.today' '{NUM, plural, one {One event} other {# events} } later today:' NUM=today.count}}</h3>
+				<h3>{{mf 'kiosk.today' '{NUM, plural, one {One event} other {# events} } later today:' NUM=today.count}}
+				</h3>
 				{{> kioskEventList dataEvents=today timePeriod="today"}}
 			</div>
 		{{/if}}
@@ -71,7 +74,7 @@
 						{{#if isOngoing}}
 							{{mf 'kiosk.started' 'Started'}}
 						{{/if}}
-						{{timeFromNow start}}
+						{{fromNow start}}
 					</div>
 				{{/unless}}
 				<div class="kiosk-event-header">
@@ -81,12 +84,12 @@
 					<div class="kiosk-event-moment">
 						{{#if isUpcoming}}
 							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-							{{dateformat start}} <br>
+							{{dateFormat start}} <br>
 						{{/if}}
 						<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
-						{{timeformat start}}
+						{{timeFormat start}}
 						{{#unless isUpcoming}}
-							- {{timeformat end}}
+							- {{timeFormat end}}
 						{{/unless}}
 					</div>
 					{{#if isOngoing}}
@@ -98,6 +101,7 @@
 						{{plain this.title}}
 					</h3>
 					{{#unless isOngoing}}
+						<br />
 						<p class="kiosk-event-description">
 							{{plain description}}
 						</p>

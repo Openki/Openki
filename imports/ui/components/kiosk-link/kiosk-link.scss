@@ -21,7 +21,7 @@
 }
 
 .js-remove-back-to-kiosk {
-	@include opacity(.4);
+	@include opacity(0.4);
 	@include td-pos(right, 0);
 	background: none;
 	border: 0;

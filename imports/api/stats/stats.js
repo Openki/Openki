@@ -1,8 +1,12 @@
-import Courses from '/imports/api/courses/courses';
-import Events from '/imports/api/events/events';
-import Groups from '/imports/api/groups/groups';
+import moment from 'moment';
 
+import { Courses } from '/imports/api/courses/courses';
+import { Events } from '/imports/api/events/events';
+import { Groups } from '/imports/api/groups/groups';
 
+/**
+ * @param {string} regionId
+ */
 const getCourses = (regionId) => {
 	const filter = {};
 	if (regionId && regionId !== 'all_regions') {
@@ -85,7 +89,7 @@ const getGroupStats = (region, group) => {
 
 	const groupRow = Groups.findOne({ _id: group }, { fields: { name: 1, _id: 0 } });
 
-	const groupName = groupRow ? groupRow.name : 'ungrouped';
+	const groupName = groupRow?.name || 'ungrouped';
 
 	const courseFilter = {
 		groups: groupFilter,
@@ -111,23 +115,16 @@ const getGroupStats = (region, group) => {
 	};
 };
 
-
 const Stats = {
 	getRegionStats(regionFilter) {
-		const groupIds = getGroupIds(
-			getCourses(regionFilter),
-		);
+		const groupIds = getGroupIds(getCourses(regionFilter));
 		const stats = { detail: [] };
 
 		groupIds.forEach((groupId) => {
-			stats.detail.push(
-				getGroupStats(regionFilter, groupId),
-			);
+			stats.detail.push(getGroupStats(regionFilter, groupId));
 		});
 		// courses without groups
-		stats.detail.push(
-			getGroupStats(regionFilter),
-		);
+		stats.detail.push(getGroupStats(regionFilter));
 		stats.detail.sort((a, b) => b.numCourses - a.numCourses);
 		stats.total = getGroupStatsTotal(stats);
 		return stats;

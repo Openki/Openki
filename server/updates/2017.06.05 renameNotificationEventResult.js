@@ -1,3 +1,6 @@
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
 const UpdatesAvailable = [];
 
 UpdatesAvailable['2017.06.05 renameNotificationEventResult'] = function () {
@@ -11,3 +14,4 @@ UpdatesAvailable['2017.06.05 renameNotificationEventResult'] = function () {
 	});
 	return updSend + updResult;
 };
+*/

@@ -1,18 +1,26 @@
-import Courses from '/imports/api/courses/courses';
-import Events from '/imports/api/events/events';
+import { check } from 'meteor/check';
+import { Router } from 'meteor/iron:router';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
+
+import { Courses } from '/imports/api/courses/courses';
+/** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
+import { Events } from '/imports/api/events/events';
 import Log from '/imports/api/log/log';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
+import { Users } from '/imports/api/users/users';
+/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import LocalTime from '/imports/utils/local-time';
 
 const notificationEvent = {};
 
-/** Record the intent to send event notifications
-  *
-  * @param      {ID} eventID   - event to announce
-  * @param {Boolean} isNew     - whether the event is a new one
-  * @param {String}  additionalMessage - custom message
-  */
+/**
+ * Record the intent to send event notifications
+ * @param {string} eventId event id to announce
+ * @param {boolean} isNew whether the event is a new one
+ * @param {string} [additionalMessage] custom message
+ */
 notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	check(eventId, String);
 	check(isNew, Boolean);
@@ -24,7 +32,8 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	// What do we do when we receive an event which is not attached to a course?
 	// For now when we don't have a course we just go through the motions but
 	// the recipient list will be empty.
-	let course = false;
+	/** @type {CourseModel | undefined} */
+	let course;
 	if (event.courseId) {
 		course = Courses.findOne(event.courseId);
 	}
@@ -39,29 +48,58 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	// delayed.
 	body.recipients = [];
 	if (course) {
-		body.recipients = _.pluck(course.members, 'user');
+		body.recipients = course.members.map((m) => m.user);
 		body.courseId = course._id;
 	}
 
 	body.model = 'Event';
 
-	Log.record('Notification.Send', [course._id], body);
+	Log.record('Notification.Send', course ? [course._id] : [], body);
 };
 
 notificationEvent.Model = function (entry) {
 	const event = Events.findOne(entry.body.eventId);
+
 	let course = false;
-	if (event && event.courseId) {
+	if (event?.courseId) {
 		course = Courses.findOne(event.courseId);
 	}
 
 	let region = false;
-	if (event && event.region) {
+	if (event?.region) {
 		region = Regions.findOne(event.region);
 	}
 
+	let creator = false;
+	if (event?.createdBy) {
+		creator = Users.findOne(event.createdBy);
+	}
+
+	let creatorName = false;
+	if (creator) {
+		creatorName = creator.username;
+	}
+
 	return {
-		vars(userLocale) {
+		/**
+		 * @param {UserModel} actualRecipient
+		 */
+		accepted(actualRecipient) {
+			if (actualRecipient.notifications === false) {
+				throw new Error('User wishes to not receive automated notifications');
+			}
+
+			if (!actualRecipient.hasEmail()) {
+				throw new Error('Recipient has no email address registered');
+			}
+		},
+
+		/**
+		 * @param {string} userLocale
+		 * @param {UserModel} actualRecipient
+		 * @param {string} unsubToken
+		 */
+		vars(userLocale, actualRecipient, unsubToken) {
 			if (!event) {
 				throw new Error('Event does not exist (0.o)');
 			}
@@ -88,8 +126,10 @@ notificationEvent.Model = function (entry) {
 
 			let subject;
 			if (entry.new) {
+				// prettier-ignore
 				subject = mf('notification.event.mail.subject.new', subjectvars, 'On {DATE}: {TITLE}', userLocale);
 			} else {
+				// prettier-ignore
 				subject = mf('notification.event.mail.subject.changed', subjectvars, 'Fixed {DATE}: {TITLE}', userLocale);
 			}
 
@@ -99,24 +139,37 @@ notificationEvent.Model = function (entry) {
 				venueLine = [venue.name, venue.address].filter(Boolean).join(', ');
 			}
 
-			return (
-				{
-					event,
-					course,
-					eventDate: startMoment.format('LL'),
-					eventStart: startMoment.format('LT'),
-					eventEnd: endMoment.format('LT'),
-					venueLine,
-					regionName: region.name,
-					timeZone: endMoment.format('z'), // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
-					eventLink: Router.url('showEvent', event),
-					courseLink: Router.url('showCourse', course),
-					calLink: Router.url('calEvent', event),
-					new: entry.body.new,
-					subject,
-					additionalMessage: entry.body.additionalMessage,
-				}
-			);
+			const siteName = region.custom?.siteName || Meteor.settings.public.siteName;
+			const mailLogo = region.custom?.mailLogo;
+
+			return {
+				unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
+				event,
+				course,
+				eventDate: startMoment.format('LL'),
+				eventStart: startMoment.format('LT'),
+				eventEnd: endMoment.format('LT'),
+				venueLine,
+				regionName: region.name,
+				timeZone: endMoment.format('z'), // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
+				eventLink: Router.url('showEvent', event, { query: 'campaign=eventNotify' }),
+				registerToEventLink: Router.url('showEvent', event, {
+					query: 'action=register&campaign=eventNotify',
+				}),
+				courseLink: Router.url('showCourse', course, { query: 'campaign=eventNotify' }),
+				unsubscribeFromCourseLink: Router.url('showCourse', course, {
+					query: 'unsubscribe=participant&campaign=eventNotify',
+				}),
+				calLink: Router.url('calEvent', event, { query: 'campaign=eventNotify' }),
+				new: entry.body.new,
+				subject,
+				additionalMessage: entry.body.additionalMessage,
+				creator,
+				creatorName,
+				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
+				customSiteName: siteName,
+				customMailLogo: mailLogo,
+			};
 		},
 		template: 'notificationEventMail',
 	};

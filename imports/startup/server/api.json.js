@@ -1,5 +1,8 @@
+import { Router } from 'meteor/iron:router';
+
 import Api from '/imports/Api';
 import FieldOrdering from '/imports/utils/field-ordering';
+import { FilteringReadError } from '/imports/utils/filtering';
 import SortSpec from '/imports/utils/sort-spec';
 
 WebApp.rawConnectHandlers.use('/api', (req, res, next) => {
@@ -7,9 +10,14 @@ WebApp.rawConnectHandlers.use('/api', (req, res, next) => {
 	return next();
 });
 
-const NoActionError = function (message) {
-	this.message = message;
-};
+class NoActionError {
+	/**
+	 * @param {string} message
+	 */
+	constructor(message) {
+		this.message = message;
+	}
+}
 
 const jSendResponder = function (res, process) {
 	try {
@@ -22,9 +30,7 @@ const jSendResponder = function (res, process) {
 		res.end(JSON.stringify(body, null, '\t'));
 	} catch (e) {
 		const body = {};
-		if (e instanceof FilteringReadError
-		|| e instanceof NoActionError
-		) {
+		if (e instanceof FilteringReadError || e instanceof NoActionError) {
 			res.statusCode = 400;
 			body.status = 'fail';
 			body.data = {};
@@ -59,7 +65,7 @@ Router.route('api.0.json', {
 			const sortStr = query.sort;
 			const sorting = sortStr ? SortSpec.fromString(sortStr) : SortSpec.unordered();
 
-			const filter = Object.assign({}, query);
+			const filter = { ...query };
 			delete filter.sort;
 			delete filter.limit;
 			delete filter.skip;

@@ -1,3 +1,5 @@
+/* stylelint-disable at-rule-name-space-after */
+
 .frame-list {
 	height: 100%;
 	overflow-x: hidden;
@@ -28,7 +30,7 @@
 
 	&:hover,
 	&.active {
-		background-color: rgba(0, 0, 0, .03);
+		background-color: rgba(0, 0, 0, 0.03);
 	}
 }
 
@@ -36,7 +38,7 @@
 .frame-list-item-interested {
 	@include td-float(right);
 	font-size: small;
-	opacity: .6;
+	opacity: 0.6;
 }
 
 .frame-list-item-interested {
@@ -49,7 +51,7 @@
 }
 
 .frame-list-item-region {
-	font-size: .8em;
+	font-size: 0.8em;
 	margin-left: 5px;
 }
 
@@ -105,7 +107,7 @@
 .frame-list-item-links > a {
 	display: block;
 
-	@media(min-width: $screen-xxs) {
+	@media (min-width: $screen-xxs) {
 		display: inline-block;
 	}
 }

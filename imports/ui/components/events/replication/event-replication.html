@@ -12,7 +12,8 @@
 						</li>
 						<li role="presentation">
 							<a href="#datepicker" data-toggle="tab">
-								<span class="fa fa-calendar-check-o fa-fw" aria-hidden="true"></span>
+								<span class="fa fa-calendar-check-o fa-fw"
+									  aria-hidden="true"></span>
 								{{mf 'event.replication.changeToPicker' 'Pick dates'}}
 							</a>
 						</li>
@@ -31,10 +32,8 @@
 								<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text"
-							       class="form-control js-replicate-date js-update-replicas"
-							       id="replicateStart"
-							       size="8"
-							       value="{{replicaStart}}">
+								   class="form-control js-replicate-date js-update-replicas"
+								   id="replicateStart" size="8" value="{{replicaStart}}">
 							<span class="replica-date-weekday">{{replicateStartDay}}</span>
 						</div>
 						<label for="replicateEnd">
@@ -45,10 +44,8 @@
 								<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text"
-							       class="form-control js-replicate-date js-update-replicas"
-							       id="replicateEnd"
-							       size="8"
-							       value="{{replicaEnd}}">
+								   class="form-control js-replicate-date js-update-replicas"
+								   id="replicateEnd" size="8" value="{{replicaEnd}}">
 							<span class="replica-date-weekday">{{replicateEndDay}}</span>
 						</div>
 						<label for="replicateFrequency">
@@ -57,37 +54,32 @@
 						<div class="radio">
 							<label>
 								<input type="radio"
-								       class="js-replicate-frequency js-update-replicas"
-								       name="replicateFrequency"
-								       value="once">
+									   class="js-replicate-frequency js-update-replicas"
+									   name="replicateFrequency" value="once">
 								{{mf 'event.replication.freq.once' 'once'}}
 							</label>
 						</div>
 						<div class="radio">
 							<label>
 								<input type="radio"
-								       class="js-replicate-frequency js-update-replicas"
-								       name="replicateFrequency"
-								       value="daily">
+									   class="js-replicate-frequency js-update-replicas"
+									   name="replicateFrequency" value="daily">
 								{{mf 'event.replication.freq.daily' 'every day'}}
 							</label>
 						</div>
 						<div class="radio">
 							<label>
 								<input type="radio"
-								       class="js-replicate-frequency js-update-replicas"
-								       name="replicateFrequency"
-								       value="weekly"
-									   checked>
+									   class="js-replicate-frequency js-update-replicas"
+									   name="replicateFrequency" value="weekly" checked>
 								{{mf'event.replication.freq.weekly' 'once a week'}}
 							</label>
 						</div>
 						<div class="radio">
 							<label>
 								<input type="radio"
-								       class="js-replicate-frequency js-update-replicas"
-								       name="replicateFrequency"
-								       value="biWeekly">
+									   class="js-replicate-frequency js-update-replicas"
+									   name="replicateFrequency" value="biWeekly">
 								{{mf'event.replication.freq.biWeekly' 'every 2 weeks'}}
 							</label>
 						</div>
@@ -98,25 +90,22 @@
 				{{#if replicaDateCount}}
 					<label>
 						{{#mf KEY='event.replication.createText' COUNT=replicaDateCount}}
-							Create {COUNT, plural,
-								one {a copy on this date}
-								other {# copies on this dates}
-							}
+							Create {COUNT, plural, one {a copy on this date} other {# copies on this dates}}
 						{{/mf}}
 					</label>
 					<div class="replica-event-captions">
 						{{#each replicaDates}}
-							<div class="event-caption" title="{{fullDate this}}">
+							<div class="event-caption" title="{{dateTimeLong this}}">
 								<div class="event-caption-header-wrap">
 									<div class="event-caption-header">
 										<span class="fa fa-map-pin"></span>
-										{{weekDay this}}
+										{{weekdayFormat this}}
 										<div class="event-caption-pseudoborder"></div>
 									</div>
 								</div>
 								<div class="event-caption-body-wrap">
 									<div class="event-caption-body">
-										{{localDate this}}
+										{{dateShort this}}
 									</div>
 								</div>
 							</div>
@@ -134,7 +123,7 @@
 							</div>
 							<div class="event-caption-body-wrap">
 								<div class="event-caption-body">
-									{{localDate this.start}}
+									{{dateShort this.start}}
 								</div>
 							</div>
 						</div>

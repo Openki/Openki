@@ -1,3 +1,5 @@
+/* stylelint-disable scss/at-extend-no-missing-placeholder */
+
 .group-details .editable {
 	background-color: none;
 }
@@ -38,6 +40,7 @@
 .group-details-name,
 .group-details-short {
 	display: inline-block;
+	vertical-align: top;
 }
 
 .group-details-body {

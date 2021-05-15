@@ -1,9 +1,11 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
+import moment from 'moment';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
+
+import { reactiveNow } from '/imports/utils/reactive-now';
 
 import '/imports/ui/components/events/list/event-list';
 import '/imports/ui/components/loading/loading';
@@ -16,14 +18,12 @@ Template.frameWeek.onCreated(function () {
 	instance.weekdays = new ReactiveVar([]);
 
 	this.autorun(() => {
-		minuteTime.get();
+		reactiveNow.get();
 		instance.startOfWeek.set(moment().startOf('week'));
 	});
 
 	this.autorun(() => {
-		const filter = Events.Filtering()
-			.read(Router.current().params.query)
-			.done();
+		const filter = Events.Filtering().read(Router.current().params.query).done();
 
 		const filterParams = filter.toParams();
 		const startOfWeek = instance.startOfWeek.get();
@@ -34,9 +34,7 @@ Template.frameWeek.onCreated(function () {
 	});
 
 	this.autorun(() => {
-		const filter = Events.Filtering()
-			.read(Router.current().params.query)
-			.done();
+		const filter = Events.Filtering().read(Router.current().params.query).done();
 
 		const start = instance.startOfWeek.get();
 		const end = moment(start).add(1, 'week');
@@ -60,11 +58,6 @@ Template.frameWeek.onCreated(function () {
 });
 
 Template.frameWeek.helpers({
-	calendarDay(day) {
-		Session.get('timeLocale');
-		return moment(day.toDate()).format('dddd, Do MMMM');
-	},
-
 	hasDayEvents() {
 		return this.dayEvents.count() > 0;
 	},

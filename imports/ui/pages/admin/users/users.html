@@ -1,0 +1,25 @@
+<template name="users">
+	<h3>
+		{{mf 'users.title' 'Users'}}
+	</h3>
+	<div class="form-group">
+		<label>{{mf 'users.field.find.label' 'Find a user'}}</label>
+		<div class="input-group">
+			<span class="input-group-addon">
+				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+			</span>
+			<input class="js-search-users form-control"
+				   placeholder="{{mf 'users.field.find.placeholder' 'Type name of user'}}" size="40"
+				   type="text" />
+		</div>
+	</div>
+
+	<div class="list-group">
+		{{#each foundUsers}}
+			<a href="{{pathFor 'userprofile' _id=this._id}}" class="list-group-item">
+				<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+				{{username this._id}}
+			</a>
+		{{/each}}
+	</div>
+</template>

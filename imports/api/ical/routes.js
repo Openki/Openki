@@ -1,7 +1,10 @@
-import Events from '/imports/api/events/events';
+import { Router } from 'meteor/iron:router';
+import moment from 'moment';
 
-import StringTools from '/imports/utils/string-tools';
-import HtmlTools from '/imports/utils/html-tools';
+import { Events } from '/imports/api/events/events';
+
+import * as StringTools from '/imports/utils/string-tools';
+import * as HtmlTools from '/imports/utils/html-tools';
 
 import ical from 'ical-generator';
 
@@ -27,7 +30,10 @@ function sendIcal(events, response) {
 
 		const twoLines = /<(p|div|h[0-9])>/g;
 		const oneLine = /<(ul|ol|li|br ?\/?)>/g;
-		const lineDescription = dbevent.description.replace(twoLines, '\n\n').replace(oneLine, '\n').trim();
+		const lineDescription = dbevent.description
+			.replace(twoLines, '\n\n')
+			.replace(oneLine, '\n')
+			.trim();
 		const plainDescription = HtmlTools.textPlain(lineDescription);
 		calendar.addEvent({
 			uid: dbevent._id,
@@ -68,10 +74,7 @@ Router.map(function () {
 			const filter = Events.Filtering();
 			const query = this.params.query || {};
 
-			filter
-				.add('start', moment())
-				.read(query)
-				.done();
+			filter.add('start', moment()).read(query).done();
 
 			sendIcal(Events.findFilter(filter.toQuery()), this.response);
 		},

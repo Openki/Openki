@@ -1,12 +1,14 @@
-import Regions from '/imports/api/regions/regions';
+import { Meteor } from 'meteor/meteor';
+
+import { Regions } from '/imports/api/regions/regions';
 
 const IpLocation = {};
 
 IpLocation.detect = function (handler) {
 	// SPECIAL CASE
 	// When we're connected to localhost, it's likely a dev-setup.
-	const hostname = document.location && document.location.hostname;
-	if (hostname === 'localhost' || hostname.indexOf('127.') === 0) {
+	const hostname = document.location?.hostname;
+	if (hostname === 'localhost' || hostname.startsWith('127.')) {
 		const testistan = Regions.findOne('9JyFCoKWkxnf8LWPh');
 		if (testistan) {
 			handler(testistan, 'Using Testistan for localhost');
@@ -23,31 +25,35 @@ IpLocation.detect = function (handler) {
 	}
 
 	// Pull location-data from ipinfo.io
-	jQuery.get('https://ipinfo.io/geo', (location) => {
-		if (!location.region) {
-			handler(false, 'IP location not accurate enough');
-			return;
-		}
+	jQuery.get(
+		'https://ipinfo.io/geo',
+		(location) => {
+			if (!location.region) {
+				handler(false, 'IP location not accurate enough');
+				return;
+			}
 
-		const maxDistance = 200000; // meters
+			const maxDistance = 200000; // meters
 
-		const latlon = location.loc.split(',');
-		const region = Regions.findOne({
-			loc: {
-				$near: {
-					$geometry: { type: 'Point', coordinates: [latlon[1], latlon[0]] },
-					$maxDistance: maxDistance,
+			const latlon = location.loc.split(',');
+			const region = Regions.findOne({
+				loc: {
+					$near: {
+						$geometry: { type: 'Point', coordinates: [latlon[1], latlon[0]] },
+						$maxDistance: maxDistance,
+					},
 				},
-			},
-		});
+			});
 
-		if (region) {
-			handler(region, `Found region ${region.name}`);
-			return;
-		}
+			if (region) {
+				handler(region, `Found region ${region.name}`);
+				return;
+			}
 
-		handler(region, `No region found within ${maxDistance / 1000} km.`);
-	}, 'jsonp');
+			handler(region, `No region found within ${maxDistance / 1000} km.`);
+		},
+		'jsonp',
+	);
 };
 
 export default IpLocation;

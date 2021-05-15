@@ -52,8 +52,9 @@
 .event-compact {
 	background: $event-body-bg;
 	height: $event-compact-height;
+	overflow: hidden;
 	position: relative;
-	transition: box-shadow .15s;
+	transition: box-shadow 0.15s;
 
 	&:hover {
 		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
@@ -67,7 +68,10 @@
 // ** Body
 //========================================================================================
 .event-compact-body {
+	@include ellipsis-multiline(6);
+
 	padding: 5px;
+	position: relative;
 }
 
 // ** Header
@@ -99,12 +103,32 @@
 //========================================================================================
 .event-compact-title {
 	color: $gray-dark;
-	margin: 0 0 5px;
+	display: inline;
+}
+
+.event-compact-title::after {
+	// Simulate margin: 0 0 5px;
+	content: '';
+	display: inline-block;
+	height: $font-size-h4 + 5px;
+	vertical-align: top;
 }
 
 // ** Description
 //========================================================================================
 .event-compact-description {
 	color: $blue;
-	margin: 0;
+	display: inline;
+}
+
+// ** Internal indicator dot
+//========================================================================================
+.event-compact-internal {
+	background-color: #f00;
+	border-radius: 50%;
+	height: 3px;
+	left: 2px;
+	position: absolute;
+	top: 2px;
+	width: 3px;
 }

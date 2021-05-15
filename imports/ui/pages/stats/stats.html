@@ -5,11 +5,11 @@
 		{{else}}
 			{{#if regionStats}}
 				<h1>
-				{{#if regionName}}
-					{{mf 'region.list.titleForRegion' 'Overview {REGION}' REGION=regionName}}
-				{{else}}
-					{{mf 'region.list.title' 'Regions'}}
-				{{/if}}
+					{{#if regionName}}
+						{{mf 'region.list.titleForRegion' 'Overview {REGION}' REGION=regionName}}
+					{{else}}
+						{{mf 'region.list.title' 'Regions'}}
+					{{/if}}
 				</h1>
 				<div>
 					<select class="js-stats-region-selector">
@@ -27,7 +27,8 @@
 								<th>{{mf 'region.stats.group' 'group'}}</th>
 								<th colspan="2">{{mf 'region.stats.courses' 'courses'}}</th>
 								<th colspan="2">{{mf 'region.stats.events' 'events'}}</th>
-								<th>{{mf 'region.stats.usersParticipating' 'users participating'}}</th>
+								<th>{{mf 'region.stats.usersParticipating' 'users participating'}}
+								</th>
 							</tr>
 							<tr>
 								<th>&nbsp;</th>
@@ -41,7 +42,10 @@
 						<tbody>
 							<tr class="js-stats-row">
 								<td>{{mf 'region.stats.total' 'total'}}</td>
-								<td class="number" title="some users participate in multiple events">{{regionStats.total.numCourses}}</td>
+								<td class="number"
+									title="some users participate in multiple events">
+									{{regionStats.total.numCourses}}
+								</td>
 								<td class="number">{{regionStats.total.activeCourses}}</td>
 								<td class="number">{{regionStats.total.passedEvents}}</td>
 								<td class="number">{{regionStats.total.futureEvents}}</td>
@@ -53,7 +57,7 @@
 										{{#if group}}
 											{{ groupName }}
 										{{else}}
-											{{mf 'region.stats.ungrouped' groupName}}
+											{{mf 'region.stats.ungrouped' "Ungrouped"}}
 										{{/if}}
 									</td>
 									<td class="number">{{this.numCourses}}</td>

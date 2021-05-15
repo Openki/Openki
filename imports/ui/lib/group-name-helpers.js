@@ -1,4 +1,7 @@
-import Groups from '/imports/api/groups/groups';
+import { mf } from 'meteor/msgfmt:core';
+import { Meteor } from 'meteor/meteor';
+
+import { Groups } from '/imports/api/groups/groups';
 
 function subbedGroup(group) {
 	// Strings can't be context objects to Blaze templates so they get turned

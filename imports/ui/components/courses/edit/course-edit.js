@@ -1,21 +1,24 @@
+import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
 
-import Alert from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 import Categories from '/imports/api/categories/categories';
-import Courses from '/imports/api/courses/courses';
-import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
-import Roles from '/imports/api/roles/roles';
+import { Courses } from '/imports/api/courses/courses';
+import { Groups } from '/imports/api/groups/groups';
+import { Regions } from '/imports/api/regions/regions';
+import { Roles } from '/imports/api/roles/roles';
 
-import Editable from '/imports/ui/lib/editable';
+import { Editable } from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
-import StringTools from '/imports/utils/string-tools';
-import { HasRoleUser } from '/imports/utils/course-role-utils';
-
+import * as StringTools from '/imports/utils/string-tools';
+import { hasRoleUser } from '/imports/utils/course-role-utils';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
@@ -31,45 +34,60 @@ Template.courseEdit.onCreated(function () {
 	// Show category selection right away for new courses
 	const editingCategories = !this.data || !this.data._id;
 	this.editingCategories = new ReactiveVar(editingCategories);
-	this.selectedCategories = new ReactiveVar((this.data && this.data.categories) || []);
+	this.selectedCategories = new ReactiveVar(this.data?.categories || []);
 
 	this.editableDescription = new Editable(
 		false,
-		false,
-		mf('course.description.placeholder', 'Describe your idea, so that more people will find it and that they`ll know what to expect.'),
-		false,
+		mf(
+			'course.description.placeholder',
+			'Describe your idea, so that more people will find it and that they`ll know what to expect.',
+		),
 	);
 
 	this.autorun(() => {
 		this.editableDescription.setText(Template.currentData().description);
 	});
 
-	if (this.data.group) {
-		this.subscribe('group', this.data.group);
+	if (!this.data.isFrame) {
+		if (this.data.group) this.subscribe('group', this.data.group);
+	} else if (this.data.teamGroups) {
+		this.data.teamGroups.forEach((g) => {
+			this.subscribe('group', g);
+		});
 	}
+
+	this.showInternalCheckbox = new ReactiveVar(false);
+	this.autorun(() => {
+		let internalOption = false;
+		const user = Meteor.user();
+		if (!this.data.isFrame && this.data.group && user?.groups) {
+			// show only if user is in the given group
+			internalOption = user.groups.includes(this.data.group);
+		}
+		this.showInternalCheckbox.set(internalOption);
+	});
 
 	this.fullRoleSelection = true;
 
 	if (this.data.isFrame) {
 		// When we're in the propose frame, show a simplified role selection
-		this.simpleRoleSelection = this.data.roles.includes('mentor');
+		this.simpleRoleSelection = !this.data.hideRoleSelection && this.data.roles.includes('mentor');
 		this.fullRoleSelection = false;
 
 		// Keep state of simple role selection
 		this.simpleSelectedRole = new ReactiveVar('participant');
 
-		this.savedCourse = new ReactiveVar(false);
 		this.savedCourseId = new ReactiveVar(false);
 		this.showSavedMessage = new ReactiveVar(false);
 
 		this.autorun(() => {
 			const courseId = this.savedCourseId.get();
 			if (courseId) {
-				this.subscribe('courseDetails', courseId, () => {
-					this.savedCourse.set(Courses.findOne(courseId));
-				});
+				this.subscribe('courseDetails', courseId);
 			}
 		});
+
+		this.getSavedCourse = () => Courses.findOne(this.savedCourseId.get());
 
 		this.resetFields = () => {
 			this.$('.js-title').val('');
@@ -113,7 +131,7 @@ Template.courseEdit.helpers({
 	availableSubcategories(category) {
 		// Hide if parent categories not selected
 		const selectedCategories = Template.instance().selectedCategories.get();
-		if (selectedCategories.indexOf(category) < 0) {
+		if (!selectedCategories.includes(category)) {
 			return [];
 		}
 
@@ -155,7 +173,9 @@ Template.courseEdit.helpers({
 
 	hasRole() {
 		const instance = Template.instance();
-		return instance.data && instance.data.members && HasRoleUser(instance.data.members, this.type, Meteor.userId()) ? 'checked' : null;
+		return instance.data?.members && hasRoleUser(instance.data.members, this.type, Meteor.userId())
+			? 'checked'
+			: null;
 	},
 
 	showRegionSelection() {
@@ -165,13 +185,8 @@ Template.courseEdit.helpers({
 		return !this._id && !(this.region && this.isFrame);
 	},
 
-	regions() {
-		return Regions.find();
-	},
-
-	currentRegion(region) {
-		const currentRegion = Session.get('region');
-		return currentRegion && region._id === currentRegion;
+	hideCategories() {
+		return this.isFrame && this.hideCategories;
 	},
 
 	isInternal() {
@@ -193,7 +208,7 @@ Template.courseEdit.helpers({
 		const filterQuery = filter.toQuery();
 		const results = Courses.findFilter(filterQuery, 1);
 
-		return (results.count() === 0) && search;
+		return results.count() === 0 && search;
 	},
 
 	courseSearch() {
@@ -219,16 +234,7 @@ Template.courseEdit.helpers({
 	},
 
 	showInternalCheckbox() {
-		const user = Meteor.user();
-
-		if (this.isFrame) {
-			return false;
-		}
-		if (user && user.groups) {
-			return user.groups.length > 0;
-		}
-
-		return false;
+		return Template.instance().showInternalCheckbox.get();
 	},
 
 	showSavedMessage() {
@@ -240,7 +246,7 @@ Template.courseEdit.helpers({
 
 	savedCourseLink() {
 		if (this.isFrame) {
-			const course = Template.instance().savedCourse.get();
+			const course = Template.instance().getSavedCourse();
 			if (course) {
 				return Router.url('showCourse', course);
 			}
@@ -250,7 +256,7 @@ Template.courseEdit.helpers({
 
 	savedCourseName() {
 		if (this.isFrame) {
-			const course = Template.instance().savedCourse.get();
+			const course = Template.instance().getSavedCourse();
 			if (course) {
 				return course.name;
 			}
@@ -267,14 +273,15 @@ Template.courseEdit.helpers({
 
 		return classes.join(' ');
 	},
-});
 
+	hasPricePolicy() {
+		return !Template.instance().data.hidePricePolicy;
+	},
+});
 
 Template.courseEdit.events({
 	'change input[name=role]'(event, instance) {
-		instance.simpleSelectedRole.set(
-			instance.$('input[name=role]:checked').val(),
-		);
+		instance.simpleSelectedRole.set(instance.$('input[name=role]:checked').val());
 	},
 
 	'click .close'(event, instance) {
@@ -284,11 +291,21 @@ Template.courseEdit.events({
 	'submit form, click .js-course-edit-save'(event, instance) {
 		event.preventDefault();
 
-		// for frame: if a group id is given, check for the internal flag in the
-		// url query
-		const internal = instance.data.group
-			? instance.data.internal || false
-			: instance.$('.js-check-internal').is(':checked');
+		const { data } = instance;
+		const hasTeamGroups = !!(data.teamGroups?.length > 0);
+
+		let internal;
+		if (instance.showInternalCheckbox.get()) {
+			// Usually an "internal" checkbox is displayed so that the users of a group can choose
+			// whether the course is internal or not.
+			internal = instance.$('.js-check-internal').is(':checked');
+		} else if (data.isFrame && hasTeamGroups) {
+			// When in a frame for a group, the `internal` query-param can be set to control whether
+			// the group wants the entered courses to be internal.
+			internal = data.internal;
+		}
+		// Default is not internal
+		internal = internal || false;
 
 		const changes = {
 			internal,
@@ -307,10 +324,9 @@ Template.courseEdit.events({
 		}
 
 		const course = instance.data;
-		const courseId = course._id ? course._id : '';
+		const courseId = course._id || '';
 		const isNew = courseId === '';
 		if (isNew) {
-			const { data } = instance;
 			if (data.isFrame && data.region) {
 				// The region was preset for the frame
 				changes.region = data.region;
@@ -323,8 +339,12 @@ Template.courseEdit.events({
 			}
 
 			const groups = [];
-			if (data.group) {
-				groups.push(data.group);
+			if (!data.isFrame) {
+				if (data.group) {
+					groups.push(data.group);
+				}
+			} else if (hasTeamGroups) {
+				groups.push(...data.teamGroups);
 			}
 			changes.groups = groups;
 		}
@@ -333,13 +353,17 @@ Template.courseEdit.events({
 		changes.subs = [];
 		changes.unsubs = [];
 
-		if (instance.simpleRoleSelection) {
-			instance.data.roles.forEach((role) => {
+		if (data.isFrame) {
+			data.roles.forEach((role) => {
 				changes.roles[role] = true;
 			});
-			if (instance.simpleSelectedRole.get() === 'mentor') {
+
+			if (instance.simpleRoleSelection && instance.simpleSelectedRole.get() === 'mentor') {
 				changes.subs.push('mentor');
 			}
+
+			// Create unique, merged array
+			changes.subs = [...new Set([...changes.subs, ...data.creatorsRoles])];
 		}
 
 		if (instance.fullRoleSelection) {
@@ -348,7 +372,7 @@ Template.courseEdit.events({
 			});
 			instance.$('.js-check-enroll').each(function () {
 				const role = this.name;
-				const subscribe = Boolean(this.checked);
+				const subscribe = !!this.checked;
 				if (subscribe) {
 					changes.subs.push(role);
 				} else {
@@ -358,35 +382,61 @@ Template.courseEdit.events({
 		}
 
 		instance.busy('saving');
-		SaveAfterLogin(instance, mf('loginAction.saveCourse', 'Login and save course'), () => {
-			/* eslint-disable-next-line no-shadow */
-			Meteor.call('course.save', courseId, changes, (err, courseId) => {
-				instance.busy(false);
-				if (err) {
-					Alert.serverError(err, 'Saving the course went wrong');
-				} else if (instance.data.isFrame) {
-					instance.savedCourseId.set(courseId);
-					instance.showSavedMessage.set(true);
-					instance.resetFields();
-				} else {
-					if (isNew) {
-						Alert.success(mf(
-							'message.courseCreated',
-							{ NAME: changes.name },
-							'The course "{NAME}" has been created!',
-						));
-					} else {
-						Alert.success(mf(
-							'message.courseChangesSaved',
-							{ NAME: changes.name },
-							'Your changes to the course "{NAME}" have been saved.',
-						));
-					}
+		SaveAfterLogin(
+			instance,
+			mf('loginAction.saveCourse', 'Login and save course'),
+			mf('registerAction.saveCourse', 'Register and save course'),
+			() => {
+				/* eslint-disable-next-line no-shadow */
+				Meteor.call('course.save', courseId, changes, (err, courseId) => {
+					instance.busy(false);
+					if (err) {
+						Alert.serverError(err, 'Saving the course went wrong');
+					} else if (instance.data.isFrame) {
+						instance.savedCourseId.set(courseId);
+						instance.showSavedMessage.set(true);
+						instance.resetFields();
 
-					Router.go('showCourse', { _id: courseId });
-				}
-			});
-		});
+						Analytics.trackEvent(
+							'Course creations',
+							`Course creations as ${
+								changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'
+							}`,
+							Regions.findOne(changes.region)?.nameEn,
+							instance.editableDescription.getTotalFocusTimeInSeconds(),
+						);
+					} else {
+						if (isNew) {
+							Alert.success(
+								mf(
+									'message.courseCreated',
+									{ NAME: changes.name },
+									'The course "{NAME}" has been created!',
+								),
+							);
+							Analytics.trackEvent(
+								'Course creations',
+								`Course creations as ${
+									changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'
+								}`,
+								Regions.findOne(changes.region)?.nameEn,
+								instance.editableDescription.getTotalFocusTimeInSeconds(),
+							);
+						} else {
+							Alert.success(
+								mf(
+									'message.courseChangesSaved',
+									{ NAME: changes.name },
+									'Your changes to the course "{NAME}" have been saved.',
+								),
+							);
+						}
+
+						Router.go('showCourse', { _id: courseId });
+					}
+				});
+			},
+		);
 	},
 
 	'click .js-course-edit-cancel'(event, instance) {
@@ -432,9 +482,7 @@ Template.courseEditRole.onRendered(function () {
 	const selectedRoles = data.selected;
 
 	if (selectedRoles) {
-		this.checked.set(
-			selectedRoles.indexOf(data.role.type) >= 0,
-		);
+		this.checked.set(selectedRoles.includes(data.role.type));
 	}
 });
 
@@ -453,7 +501,9 @@ Template.courseEditRole.helpers({
 	},
 
 	hasRole() {
-		return this.members && HasRoleUser(this.members, this.role.type, Meteor.userId()) ? 'checked' : null;
+		return this.members && hasRoleUser(this.members, this.role.type, Meteor.userId())
+			? 'checked'
+			: null;
 	},
 });
 
@@ -471,7 +521,10 @@ Template.courseTitle.onCreated(function () {
 
 	this.autorun(() => {
 		if (this.dropdownVisible()) {
-			this.subscribe('Courses.findFilter', { search: this.proposedSearch.get(), region: Session.get('region') });
+			this.subscribe('Courses.findFilter', {
+				search: this.proposedSearch.get(),
+				region: Session.get('region'),
+			});
 			if (!this.$('.dropdown').hasClass('open')) {
 				this.$('.dropdown-toggle').dropdown('toggle');
 			}
@@ -509,7 +562,6 @@ Template.courseTitle.events({
 	'input .js-title': _.debounce((event, instance) => {
 		instance.proposedSearch.set(event.target.value);
 	}, 220),
-
 
 	'focus .js-title'(event, instance) {
 		instance.focused.set(true);

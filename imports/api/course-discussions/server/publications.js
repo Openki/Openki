@@ -1,4 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 
-Meteor.publish('discussion', courseId => CourseDiscussions.find({ courseId }));
+Meteor.publish(
+	'discussion',
+	/** @param {string} courseId */ (courseId) => CourseDiscussions.find({ courseId }),
+);

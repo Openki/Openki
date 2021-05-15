@@ -1,4 +1,5 @@
 import { assert } from 'chai';
+import { msgfmt } from 'meteor/msgfmt:core';
 import FieldOrdering from '/imports/utils/field-ordering';
 import SortSpec from '/imports/utils/sort-spec';
 
@@ -14,7 +15,12 @@ describe('Ordering by object fields ', () => {
 	const indiscriminate = FieldOrdering(SortSpec.unordered()).ordering();
 	const byA = FieldOrdering(SortSpec([['a', 'asc']])).ordering();
 	const byADesc = FieldOrdering(SortSpec([['a', 'desc']])).ordering();
-	const byAThenB = FieldOrdering(SortSpec([['a', 'asc'], ['b', 'asc']])).ordering();
+	const byAThenB = FieldOrdering(
+		SortSpec([
+			['a', 'asc'],
+			['b', 'asc'],
+		]),
+	).ordering();
 	const byB = FieldOrdering(SortSpec([['b', 'asc']])).ordering();
 	const byBDesc = FieldOrdering(SortSpec([['b', 'desc']])).ordering();
 

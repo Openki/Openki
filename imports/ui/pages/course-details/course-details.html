@@ -1,19 +1,26 @@
-
 <template name="courseDetailsPage">
 	<div class="container">
 		<div class="course-page-column-left">
-			{{#if edit}}
-				<div class="page-component">
+			<div class="page-component">
+				{{#if isArchived}}
+					<div class="alert alert-archived text-center" role="alert">
+						<strong>{{mf 'course.archive.alert' 'This course is archived and not active anymore.'}}</strong>
+					</div>
+				{{/if}}
+				{{#if edit}}
 					{{> courseEdit course}}
-				</div>
-			{{else}}
-				<div class="page-component">
-					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
+				{{else}}
+					<div class="course-details {{courseStateClasses}}">
 						<div class="details-header">
+							{{#if course.internal}}
+								<span class="details-internal"
+									  data-tooltip="{{mf 'courseCompact.internal_course' 'Internal course'}}"></span>
+							{{/if}}
 							<div class="details-header-tags">
 								{{#if isProposal}}
 									<div class="proposal-tag">
-										<span class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></span>
+										<span class="fa fa-lightbulb-o fa-fw"
+											  aria-hidden="true"></span>
 										{{mf 'course.details.is-proposalTag' 'Proposal'}}
 									</div>
 								{{/if}}
@@ -41,21 +48,28 @@
 					</div>
 					{{> sharing}}
 					{{#if mayEdit}}
-						{{#with course}}
-							<div class="actions">
-								{{> buttonEdit event="js-course-edit"}}
-								{{#unless expanded}}
-									{{> buttonDelete event="js-expand"}}
+						<div class="actions">
+							{{> buttonEdit event="js-course-edit"}}
+							{{#if isArchived}}
+								{{> buttonCourseUnarchive}}
+							{{/if}}
+							{{#unless expanded}}
+								{{#unless isArchived}}
+									{{> buttonCourseArchive 
+										buttonClass="btn-archive"
+										textIdle=(mf 'course.archive.archiveButton.archive' 'Archive')
+									}}
 								{{/unless}}
-							</div>
-						{{/with}}
+								{{> buttonDelete event="js-expand"}}
+							{{/unless}}
+						</div>
 					{{/if}}
 					{{#if expanded}}
-						{{> confirmDialog}}
+						{{> confirmDialog hasArchiveButton=isArchived}}
 					{{/if}}
-					{{> courseRoles roles_details}}
-				</div>
-			{{/if}}
+					{{> courseRoles rolesDetails}}
+				{{/if}}
+			</div>
 			{{#if mobileViewport}}
 				{{> courseEvents}}
 			{{else}}
@@ -81,8 +95,15 @@
 
 <template name="confirmDialog">
 	<div class="course-delete-confirmation">
-		<p>{{mf 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}</p>
+		<p>{{mf 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}
+		</p>
 		<div class="form-actions">
+			{{#unless hasArchiveButton}}
+				{{> buttonCourseArchive 
+					buttonClass="btn-warning"
+					textIdle=(mf 'course.delete.confirm.archiveButton' 'Rather archive')
+				}}
+			{{/unless}}
 			{{> buttonDeleteConfirm
 				event="js-delete-course-confirm"
 				textIdle=(mf 'course.delete.confirm.button' 'Delete this course and its events.')
@@ -92,7 +113,6 @@
 		</div>
 	</div>
 </template>
-
 
 <template name="courseDetailsSubmenu">
 	<nav class="course-details-nav">
@@ -132,7 +152,6 @@
 	</div>
 </template>
 
-
 <template name="courseGroupList">
 	<div class="tag-group multiline">
 		{{#each groups}}
@@ -144,10 +163,8 @@
 			{{/if}}
 			{{#if tools}}
 				<div class="btn-group tag-btn group-tag-btn addon">
-					<button type="button" class="dropdown-toggle"
-						aria-expanded="false"
-						aria-haspopup="true"
-						data-toggle="dropdown">
+					<button type="button" class="dropdown-toggle" aria-expanded="false"
+							aria-haspopup="true" data-toggle="dropdown">
 						<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
 					</button>
 					<ul class="dropdown-menu dialog-dropdown">
@@ -168,14 +185,11 @@
 	</div>
 </template>
 
-
 <template name="courseGroupAdd">
 	{{#if groupsToAdd}}
 		<div class="btn-group tag-btn group-tag-btn">
-			<button type="button" class="dropdown-toggle"
-				aria-expanded="false"
-				aria-haspopup="true"
-				data-toggle="dropdown">
+			<button type="button" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true"
+					data-toggle="dropdown">
 				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 				<span>{{mf 'course.group.addText' 'link a group'}}</span>
 				<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
@@ -188,10 +202,7 @@
 				<li role="seperator" class="divider"></li>
 				{{#each groupsToAdd}}
 					<li>
-						<button
-							class="btn-link js-add-group"
-							type="button"
-							value="{{this}}">
+						<button class="btn-link js-add-group" type="button" value="{{this}}">
 							{{name}}
 						</button>
 					</li>
@@ -206,7 +217,6 @@
 		</div>
 	{{/if}}
 </template>
-
 
 <template name="courseGroupRemove">
 	{{#if expanded}}
@@ -225,7 +235,6 @@
 		</a>
 	{{/if}}
 </template>
-
 
 <template name="courseGroupMakeOrganizer">
 	{{#if expanded}}
@@ -262,4 +271,28 @@
 			{{mf 'course.group.removeOrgText' "Remove editing rights"}}
 		</a>
 	{{/if}}
+</template>
+
+<template name="buttonCourseArchive">
+	<button type="submit" class="btn {{buttonClass}} js-course-archive" {{disabledIfBusy}}>
+		{{#if busy 'archive'}}
+			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			{{mf 'course.archive.archiveButton.archiving' 'Archiving...'}}
+		{{else}}
+			<span class="fa fa-archive fa-fw" aria-hidden="true"></span>
+			{{textIdle}}
+		{{/if}}
+	</button>
+</template>
+
+<template name="buttonCourseUnarchive">
+	<button type="submit" class="btn btn-go js-course-unarchive" {{disabledIfBusy}}>
+		{{#if busy 'unarchive'}}
+			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			{{mf 'course.archive.unarchiveButton.unarchiving' 'Unarchiving...'}}
+		{{else}}
+			<span class="fa fa-upload fa-fw" aria-hidden="true"></span>
+			{{mf 'course.archive.unarchiveButton' 'Unarchive'}}
+		{{/if}}
+	</button>
 </template>

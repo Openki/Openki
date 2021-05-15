@@ -1,8 +1,9 @@
 import { Template } from 'meteor/templating';
-import Courses from '/imports/api/courses/courses';
-import Roles from '/imports/api/roles/roles';
+import { Courses } from '/imports/api/courses/courses';
+import { Roles } from '/imports/api/roles/roles';
+import { _ } from 'meteor/underscore';
 
-import ScssVars from '/imports/ui/lib/scss-vars';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
 
 import '/imports/ui/components/courses/list/course-list';
 import '/imports/ui/components/loading/loading';
@@ -54,15 +55,12 @@ Template.usersCourselist.helpers({
 		}
 		return false;
 	},
-	roleShort() {
-		return `roles.${this.type}.short`;
-	},
 	ready() {
 		return Template.instance().courseSub.ready();
 	},
 	isInvolved() {
 		const userId = Template.instance().data.profileData.user._id;
-		return Courses.findFilter({ userInvolved: userId }).count() > 0;
+		return Courses.findFilter({ userInvolved: userId }, 1).count() > 0;
 	},
 });
 

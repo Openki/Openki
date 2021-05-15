@@ -8,22 +8,20 @@
 	{{#if subscribed}}
 		<div class="course-role-enrolled">
 			<div class="course-role-title">
-				<button
-					class="close js-toggle-first-steps"
-					type="button">
+				<button class="close js-toggle-first-steps" type="button">
 					<i class="fa fa-info-circle" aria-hidden="true"></i>
 				</button>
-				<span class="{{roletype.icon}}"></span>&nbsp;
-				<span>{{#with roletype}}{{mf roleSubscribed}}{{/with}}</span>
+				<span class="{{role.icon}}"></span>&nbsp;
+				<span>{{roleSubscribed role.type}}</span>
 				<button type="button" class="js-role-unsubscribe-btn btn btn-cancel"
-					name="{{roletype.type}}">
+						name="{{role.type}}">
 					{{mf 'course.roles.retract' 'Retract'}}
 				</button>
 			</div>
 		</div>
 		{{#if showFirstSteps}}
 			<div class="course-role-first-steps">
-				<b>{{mf 'course.roles.firstSteps.title' 'Thanks for joining the course as {ROLE}!' ROLE=roletype.type}}</b>
+				<b>{{mf 'course.roles.firstSteps.title' 'Thanks for joining the course as {ROLE}!' ROLE=(roleShort role.type)}}</b>
 				<br>
 				{{#if roleIs 'participant'}}
 					{{#mf KEY='course.roles.firstSteps.youllGetNotified'}}
@@ -66,8 +64,8 @@
 		<div class="course-role{{#if enrolling}}-enroll{{/if}}">
 			{{#if enrolling}}
 				<div class="course-role-title-enroll">
-					<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
-					{{#with roletype}}{{mf roleSubscribe}}{{/with}}
+					<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
+					{{roleSubscribe role.type}}
 				</div>
 				<div class="course-role-enroll-options">
 					<div class="form-group">
@@ -75,26 +73,28 @@
 							{{mf 'course.roles.leave_message' 'You can leave a message to appear next to your name:'}}
 						</label>
 						{{#if roleIs 'participant'}}
-							<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfoParticipant' 'an (optional) message like a greeting, wish, or interest'}}
-							>{{../../member.comment}}</textarea>
+							<textarea class='form-control js-comment'
+									  placeholder={{mf 'course.roles.messageInfoParticipant' 'an (optional) message like a greeting, wish, or interest'}}>{{../../member.comment}}</textarea>
 						{{/if}}
 						{{#if roleIs 'host'}}
-							<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfoHost' 'an (optional) message including information about the venue'}}
-							>{{../../member.comment}}</textarea>
+							<textarea class='form-control js-comment'
+									  placeholder={{mf 'course.roles.messageInfoHost' 'an (optional) message including information about the venue'}}>{{../../member.comment}}</textarea>
 						{{/if}}
 						{{#if roleIs 'mentor'}}
-							<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfoMentor' 'an (optional) message including information about your experience on the topic'}}
-							>{{../../member.comment}}</textarea>
+							<textarea class='form-control js-comment'
+									  placeholder={{mf 'course.roles.messageInfoMentor' 'an (optional) message including information about your experience on the topic'}}>{{../../member.comment}}</textarea>
 						{{/if}}
 						{{#if roleIs 'team'}}
-							<textarea class='form-control js-comment' placeholder={{mf 'course.roles.messageInfoMentor'}}
-							>{{../../member.comment}}</textarea>
+							<textarea class='form-control js-comment'
+									  placeholder={{mf 'course.roles.messageInfoMentor'}}>{{../../member.comment}}</textarea>
 						{{/if}}
 					</div>
 					<div class="form-actions">
-						<button type="button" class="btn btn-save js-role-subscribe-btn" {{disabledIfBusy}}>
+						<button type="button" class="btn btn-save js-role-subscribe-btn"
+								{{disabledIfBusy}}>
 							{{#if busy 'enrolling'}}
-								<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
+								<i class="fa fa-circle-o-notch fa-spin fa-fw"
+								   aria-hidden="true"></i>
 								{{mf 'course.roles.join.busy' 'Joining course...'}}
 							{{else}}
 								<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
@@ -105,10 +105,11 @@
 					</div>
 				</div>
 			{{else}}
-				{{#if maySubscribe roletype.type}}
-					<button type="button" class="btn btn-add course-page-btn js-role-enroll-btn" name="participant">
-						<span class="{{roletype.icon}} fa-fw" aria-hidden="true"></span>
-						{{#with roletype}}{{mf roleSubscribe}}{{/with}}
+				{{#if maySubscribe role.type}}
+					<button type="button" class="btn btn-add course-page-btn js-role-enroll-btn"
+							name="participant">
+						<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
+						{{roleSubscribe role.type}}
 					</button>
 				{{/if}}
 			{{/if}}

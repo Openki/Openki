@@ -1,14 +1,18 @@
 import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
 
-import Courses from '/imports/api/courses/courses';
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
-
-import CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
+import { Courses } from '/imports/api/courses/courses';
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
+import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import Notification from '/imports/notification/notification';
-import StringTools from '/imports/utils/string-tools';
-import HtmlTools from '/imports/utils/html-tools';
-import { HasRoleUser } from '/imports/utils/course-role-utils';
+import * as StringTools from '/imports/utils/string-tools';
+import * as HtmlTools from '/imports/utils/html-tools';
 
+/** @typedef {import('./course-discussions').CourseDiscussionEnity} CourseDiscussionEnity */
+
+/**
+ * @param {{ title: string; text: string; }} comment
+ */
 const sanitizeComment = (comment) => {
 	const saneTitle = StringTools.saneTitle(comment.title).substr(0, 200).trim();
 
@@ -21,6 +25,15 @@ const sanitizeComment = (comment) => {
 };
 
 Meteor.methods({
+	/**
+	 * @param {object} comment
+	 * @param {string} comment.courseId
+	 * @param {string} [comment.parentId]
+	 * @param {string} comment.title
+	 * @param {string} comment.text
+	 * @param {boolean} comment.anon
+	 * @param {boolean} [comment.notifyAll]
+	 */
 	'courseDiscussion.postComment'(comment) {
 		check(comment, {
 			courseId: String,
@@ -31,6 +44,7 @@ Meteor.methods({
 			notifyAll: Match.Optional(Boolean),
 		});
 
+		/** @type {CourseDiscussionEnity & {saving?: boolean}} */
 		const saneComment = sanitizeComment(comment);
 
 		if (!CourseDiscussions.validComment(saneComment.text)) {
@@ -46,8 +60,7 @@ Meteor.methods({
 		const userId = Meteor.userId();
 		if (userId && !comment.anon) {
 			saneComment.userId = userId;
-			saneComment.notifyAll = comment.notifyAll
-							&& HasRoleUser(course.members, 'team', userId);
+			saneComment.notifyAll = comment.notifyAll && course.userHasRole(userId, 'team');
 		}
 
 		const now = new Date();
@@ -85,7 +98,9 @@ Meteor.methods({
 		return commentId;
 	},
 
-
+	/**
+	 * @param {{ _id: string; title: string; text: string; }} comment
+	 */
 	'courseDiscussion.editComment'(comment) {
 		check(comment, {
 			_id: String,
@@ -93,6 +108,7 @@ Meteor.methods({
 			text: String,
 		});
 
+		/** @type {CourseDiscussionEnity} */
 		const update = sanitizeComment(comment);
 
 		const originalComment = CourseDiscussions.findOne(comment._id);
@@ -110,7 +126,9 @@ Meteor.methods({
 		CourseDiscussions.update(originalComment._id, { $set: update });
 	},
 
-
+	/**
+	 * @param {string} commentId
+	 */
 	'courseDiscussion.deleteComment'(commentId) {
 		check(commentId, String);
 

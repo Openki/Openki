@@ -4,18 +4,30 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
+import { Tooltips } from 'meteor/lookback:tooltips';
+import { Router } from 'meteor/iron:router';
+import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
+import { mf } from 'meteor/msgfmt:core';
+import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { ReactiveVar } from 'meteor/reactive-var';
+import moment from 'moment';
 
-import Alert from '/imports/api/alerts/alert';
-import Courses from '/imports/api/courses/courses';
-import Events from '/imports/api/events/events';
-import Regions from '/imports/api/regions/regions';
+import * as Alert from '/imports/api/alerts/alert';
+import { Courses } from '/imports/api/courses/courses';
+import { Events } from '/imports/api/events/events';
+import { Regions } from '/imports/api/regions/regions';
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import Editable from '/imports/ui/lib/editable';
+import { Editable } from '/imports/ui/lib/editable';
 
-import AffectedReplicaSelectors from '/imports/utils/affected-replica-selectors';
+import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import LocalTime from '/imports/utils/local-time';
+
+import { Analytics } from '/imports/ui/lib/analytics';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
@@ -30,13 +42,13 @@ Template.eventEdit.onCreated(function () {
 	instance.busy(false);
 
 	this.state = new ReactiveDict();
-	this.state.setDefault(
-		{
-			updateReplicas: false,
-			updateChangedReplicas: false,
-			startDayChanged: false,
-		},
-	);
+	this.state.setDefault({
+		updateReplicasInfos: false,
+		startDayChanged: false,
+		timeChanged: false,
+		updateReplicasTime: false,
+		updateChangedReplicasTime: false,
+	});
 
 	const { courseId } = this.data;
 	if (courseId) {
@@ -56,9 +68,10 @@ Template.eventEdit.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		false,
-		mf('event.description.placeholder', 'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)'),
-		false,
+		mf(
+			'event.description.placeholder',
+			'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)',
+		),
 	);
 
 	instance.autorun(() => {
@@ -67,18 +80,22 @@ Template.eventEdit.onCreated(function () {
 		instance.editableDescription.setText(data.description);
 	});
 
-	/** Get current local time depending on selected region
-	  * Returned as faux-UTC moment-object. */
+	/**
+	 * Get current local time depending on selected region
+	 * @returns Returned as faux-UTC moment-object.
+	 */
 	instance.now = function () {
 		return LocalTime.nowFauxUTC(instance.selectedRegion.get());
 	};
 });
 
-
+/**
+ * @param {string} dateStr
+ * @param {string} timeStr
+ */
 const readDateTime = function (dateStr, timeStr) {
 	return moment.utc(`${dateStr} ${timeStr}`, 'L LT');
 };
-
 
 const getEventStartMoment = function (template) {
 	return readDateTime(
@@ -87,13 +104,9 @@ const getEventStartMoment = function (template) {
 	);
 };
 
-
 const getEventEndMoment = function (template) {
 	const startMoment = getEventStartMoment(template);
-	let endMoment = readDateTime(
-		startMoment.format('L'),
-		template.$('.js-event-end-time').val(),
-	);
+	let endMoment = readDateTime(startMoment.format('L'), template.$('.js-event-end-time').val());
 
 	// If the end time is earlier than the start time, assume the event
 	// spans into the next day. This might result in some weird behavior
@@ -110,12 +123,10 @@ const getEventEndMoment = function (template) {
 	return endMoment;
 };
 
-
 const getEventDuration = function (template) {
 	const duration = parseInt(template.$('.js-event-duration').val(), 10);
 	return Math.max(0, duration);
 };
-
 
 /* Patch the end time and the duration when start, end or duration changes */
 function updateTimes(template, updateEnd) {
@@ -146,7 +157,7 @@ function updateTimes(template, updateEnd) {
 
 /**
  * validates input for maxParticipants
- * @param {String} - the user-input
+ * @param {String} maxParticipants - the user-input
  * @return - an integer if the input passed validation.
  */
 const validateMaxParticipants = (maxParticipants) => {
@@ -162,7 +173,6 @@ const validateMaxParticipants = (maxParticipants) => {
 	}
 	return intVal;
 };
-
 
 Template.eventEdit.onRendered(function () {
 	const instance = this;
@@ -196,9 +206,7 @@ Template.eventEdit.onRendered(function () {
 	});
 });
 
-
 Template.eventEdit.helpers({
-
 	hasParentCourse() {
 		return Boolean(this.courseId);
 	},
@@ -229,21 +237,25 @@ Template.eventEdit.helpers({
 		return Template.instance().state.get('startDayChanged');
 	},
 
+	timeChanged() {
+		return Template.instance().state.get('timeChanged');
+	},
+
 	changedReplicas() {
-		return (
-			Events
-				.find(AffectedReplicaSelectors(this))
-				.fetch()
-				.filter(replica => !replica.sameTime(this))
-		);
+		return Events.find(AffectedReplicaSelectors(this))
+			.fetch()
+			.filter((replica) => !replica.sameTime(this));
 	},
 
 	emphasizeClass() {
-		return Template.instance().state.get('updateReplicas') && 'is-emphasized';
+		if (Template.instance().state.get('updateReplicasTime')) {
+			return 'is-emphasized';
+		}
+		return '';
 	},
 
-	updateChangedReplicas() {
-		return Template.instance().state.get('updateChangedReplicas');
+	updateChangedReplicasTime() {
+		return Template.instance().state.get('updateChangedReplicasTime');
 	},
 
 	regions() {
@@ -257,11 +269,6 @@ Template.eventEdit.helpers({
 			return false;
 		}
 		return true;
-	},
-
-	currentRegion(region) {
-		const currentRegion = Session.get('region');
-		return currentRegion && region._id === currentRegion;
 	},
 
 	showVenueSelection() {
@@ -296,7 +303,6 @@ Template.eventEdit.helpers({
 		return Template.instance().notifyChecked.get();
 	},
 });
-
 
 Template.eventEdit.events({
 	submit(event, instance) {
@@ -346,7 +352,7 @@ Template.eventEdit.events({
 			return;
 		}
 
-		const eventId = this._id ? this._id : '';
+		const eventId = this._id || '';
 		const isNew = eventId === '';
 		if (isNew) {
 			if (this.courseId) {
@@ -356,9 +362,7 @@ Template.eventEdit.events({
 			} else {
 				editevent.region = instance.selectedRegion.get();
 				if (!editevent.region || editevent.region === 'all') {
-					Alert.error(
-						mf('event.edit.plzSelectRegion', 'Please select the region for this event'),
-					);
+					Alert.error(mf('event.edit.plzSelectRegion', 'Please select the region for this event'));
 					return;
 				}
 
@@ -372,54 +376,95 @@ Template.eventEdit.events({
 			}
 		}
 
-		const updateReplicas = instance.state.get('updateReplicas');
-		const updateChangedReplicas = instance.state.get('updateChangedReplicas');
+		const updateReplicasInfos = instance.state.get('updateReplicasInfos');
+		const updateReplicasTime =
+			!instance.state.get('startDayChanged') &&
+			instance.state.get('timeChanged') &&
+			instance.state.get('updateReplicasTime');
+		const updateChangedReplicasTime =
+			updateReplicasTime && instance.state.get('updateChangedReplicasTime');
 		const sendNotifications = instance.$('.js-check-notify').is(':checked');
 		const addNotificationMessage = instance.$('.js-event-add-message').val();
 
 		instance.busy('saving');
-		SaveAfterLogin(instance, mf('loginAction.saveEvent', 'Login and save event'), () => {
-			Meteor.call('event.save',
-				{
-					eventId,
-					updateReplicas,
-					updateChangedReplicas,
-					sendNotifications,
-					changes: editevent,
-					comment: addNotificationMessage,
-				},
-				/* eslint-disable-next-line no-shadow */
-				(err, eventId) => {
-					instance.busy(false);
-					if (err) {
-						Alert.serverError(err, 'Saving the event went wrong');
-					} else {
-						if (isNew) {
-							Router.go('showEvent', { _id: eventId });
-							Alert.success(mf(
-								'message.eventCreated',
-								{ TITLE: editevent.title },
-								'The event "{TITLE}" has been created!',
-							));
+		SaveAfterLogin(
+			instance,
+			mf('loginAction.saveEvent', 'Login and save event'),
+			mf('registerAction.saveEvent', 'Register and save event'),
+			() => {
+				Meteor.call(
+					'event.save',
+					{
+						eventId,
+						updateReplicasInfos,
+						updateReplicasTime,
+						updateChangedReplicasTime,
+						sendNotifications,
+						changes: editevent,
+						comment: addNotificationMessage,
+					},
+					/* eslint-disable-next-line no-shadow */
+					(err, eventId) => {
+						instance.busy(false);
+						if (err) {
+							Alert.serverError(err, 'Saving the event went wrong');
 						} else {
-							Alert.success(mf(
-								'message.eventChangesSaved',
-								{ TITLE: editevent.title },
-								'Your changes to the event "{TITLE}" have been saved.',
-							));
-						}
+							if (isNew) {
+								Router.go('showEvent', { _id: eventId });
+								Alert.success(
+									mf(
+										'message.eventCreated',
+										{ TITLE: editevent.title },
+										'The event "{TITLE}" has been created!',
+									),
+								);
 
-						if (updateReplicas) {
-							Alert.success(mf(
-								'eventEdit.replicatesUpdated',
-								{ TITLE: editevent.title },
-								'The replicas of "{TITLE}" have also been updated.',
-							));
+								const course = Courses.findOne(editevent.courseId);
+								let role;
+								if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
+									role = 'team';
+								} else if (UserPrivilegeUtils.privilegedTo('admin')) {
+									role = 'admin';
+								} else {
+									role = 'unknown';
+								}
+								Analytics.trackEvent(
+									'Event creations',
+									`Event creations as ${role}`,
+									Regions.findOne(course.region)?.nameEn,
+									Math.round(
+										(new Date() - course.time_created) /
+											1000 /
+											60 /
+											60 /
+											24 /* Umrechnung in Tage */,
+									),
+								);
+							} else {
+								Alert.success(
+									mf(
+										'message.eventChangesSaved',
+										{ TITLE: editevent.title },
+										'Your changes to the event "{TITLE}" have been saved.',
+									),
+								);
+							}
+
+							if (updateReplicasInfos || updateReplicasTime) {
+								Alert.success(
+									mf(
+										'eventEdit.replicatesUpdated',
+										{ TITLE: editevent.title },
+										'The replicas of "{TITLE}" have also been updated.',
+									),
+								);
+							}
+							instance.parent.editing.set(false);
 						}
-						instance.parent.editing.set(false);
-					}
-				});
-		});
+					},
+				);
+			},
+		);
 	},
 
 	'click .js-event-cancel'(event, instance) {
@@ -445,23 +490,46 @@ Template.eventEdit.events({
 		});
 	},
 
-	'change .js-event-duration, change .js-event-start-date, change .js-event-start-time'(event, template) {
-		updateTimes(template, true);
+	'change .js-event-duration, change .js-event-start-date, change .js-event-start-time'(
+		event,
+		instance,
+	) {
+		updateTimes(instance, true);
+		const newStart = getEventStartMoment(instance);
+		const newEnd = getEventEndMoment(instance);
+		instance.state.set({
+			timeChanged: !(
+				newStart.isSame(moment.utc(this.startLocal), 'minute') &&
+				newEnd.isSame(moment.utc(this.endLocal), 'minute')
+			),
+		});
 	},
 
-	'change .js-event-end-time'(event, template) {
-		updateTimes(template, false);
+	'change .js-event-end-time'(event, instance) {
+		updateTimes(instance, false);
+		const newStart = getEventStartMoment(instance);
+		const newEnd = getEventEndMoment(instance);
+		instance.state.set({
+			timeChanged: !(
+				newStart.isSame(moment.utc(this.startLocal), 'minute') &&
+				newEnd.isSame(moment.utc(this.endLocal), 'minute')
+			),
+		});
 	},
 
 	'change .js-select-region'(event, instance) {
 		instance.selectedRegion.set(instance.$('.js-select-region').val());
 	},
 
-	'change .js-update-replicas'(event, instance) {
-		instance.state.set('updateReplicas', event.target.checked);
+	'change .js-update-replicas-infos'(event, instance) {
+		instance.state.set('updateReplicasInfos', event.target.checked);
 	},
 
-	'change .js-update-changed-replicas'(event, instance) {
-		instance.state.set('updateChangedReplicas', event.target.checked);
+	'change .js-update-replicas-time'(event, instance) {
+		instance.state.set('updateReplicasTime', event.target.checked);
+	},
+
+	'change .js-update-changed-replicas-time'(event, instance) {
+		instance.state.set('updateChangedReplicasTime', event.target.checked);
 	},
 });

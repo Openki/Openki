@@ -1,11 +1,14 @@
-import Events from '/imports/api/events/events';
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
+import { Events } from '/imports/api/events/events';
 
 const UpdatesAvailable = [];
 
 // The location field becomes an object
 UpdatesAvailable.renameLocationName = function () {
 	Events.find({}).fetch().forEach((originalEvent) => {
-		const event = Object.assign({}, originalEvent);
+		const event = { ...originalEvent };
 		if (typeof event.location === 'string') {
 			event.location = { name: event.location };
 
@@ -13,3 +16,4 @@ UpdatesAvailable.renameLocationName = function () {
 		}
 	});
 };
+*/

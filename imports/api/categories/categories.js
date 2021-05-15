@@ -1,4 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+
 // TODO check that Meteor.settings.categories exists
-const Categories = Object.assign({}, Meteor.settings.public.categories);
+const Categories = { ...Meteor.settings.public.categories };
 
 export default Categories;

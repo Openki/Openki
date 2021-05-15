@@ -1,11 +1,22 @@
 import { Meteor } from 'meteor/meteor';
-import HtmlTools from '/imports/utils/html-tools';
+import { Match, check } from 'meteor/check';
+import { _ } from 'meteor/underscore';
+import * as HtmlTools from '/imports/utils/html-tools';
+import { Users } from '/imports/api/users/users';
 
-import Groups from './groups';
+import { Groups } from './groups';
 
-import IsGroupMember from '/imports/utils/is-group-member';
+import { isGroupMember } from '/imports/utils/is-group-member';
 
 Meteor.methods({
+	/**
+	 * @param {string} groupId
+	 * @param {{short?: string;
+	 * name?: string;
+	 * claim?: string;
+	 * description?: string;
+	 * logoUrl?: string;}} changes
+	 */
 	'group.save'(groupId, changes) {
 		check(groupId, String);
 		check(changes, {
@@ -38,7 +49,7 @@ Meteor.methods({
 		}
 
 		// User must be member of group to edit it
-		if (!isNew && !IsGroupMember(Meteor.userId(), group._id)) {
+		if (!isNew && !isGroupMember(userId, group._id)) {
 			throw new Meteor.Error(401, 'Denied');
 		}
 
@@ -50,20 +61,22 @@ Meteor.methods({
 			}
 			updates.short = short.substring(0, 7);
 		}
-		if (Object.prototype.hasOwnProperty.call(changes, 'name')) {
+		if (changes.name !== undefined) {
 			updates.name = changes.name.substring(0, 50);
 		}
-		if (Object.prototype.hasOwnProperty.call(changes, 'claim')) {
+		if (changes.claim !== undefined) {
 			updates.claim = changes.claim.substring(0, 1000);
 		}
-		if (Object.prototype.hasOwnProperty.call(changes, 'description')) {
-			updates.description = changes.description.substring(0, 640 * 1024);
+		if (changes.description !== undefined) {
+			const description = changes.description.substring(0, 640 * 1024);
 			if (Meteor.isServer) {
-				updates.description = HtmlTools.saneHtml(updates.description);
+				updates.description = HtmlTools.saneHtml(description);
+			} else {
+				updates.description = description;
 			}
 		}
 
-		if (Object.prototype.hasOwnProperty.call(changes, 'logoUrl')) {
+		if (changes.logoUrl !== undefined) {
 			if (!changes.logoUrl.startsWith('https://')) {
 				throw new Meteor.Error('not https');
 			}
@@ -71,8 +84,12 @@ Meteor.methods({
 		}
 
 		// Don't update nothing
-		if (Object.getOwnPropertyNames(updates).length === 0) {
-			return;
+		if (Object.keys(updates).length === 0) {
+			return undefined;
+		}
+
+		if (Object.values(updates).some((u) => !u)) {
+			throw new Meteor.Error('The name, short, claim and description fields are mandatory.');
 		}
 
 		if (isNew) {
@@ -83,10 +100,14 @@ Meteor.methods({
 			Groups.update(group._id, { $set: updates });
 		}
 
-		/* eslint-disable-next-line consistent-return */
 		return groupId;
 	},
 
+	/**
+	 * @param {string} userId
+	 * @param {string} groupId
+	 * @param {boolean} join
+	 */
 	'group.updateMembership'(userId, groupId, join) {
 		check(userId, String);
 		check(groupId, String);
@@ -111,7 +132,7 @@ Meteor.methods({
 			throw new Meteor.Error('No permitted');
 		}
 
-		const user = Meteor.users.findOne({ _id: userId });
+		const user = Users.findOne({ _id: userId });
 		if (!user) {
 			throw new Meteor.Error(404, 'User not found');
 		}

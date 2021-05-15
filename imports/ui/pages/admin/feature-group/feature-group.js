@@ -2,22 +2,21 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
-import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
+import * as Alert from '/imports/api/alerts/alert';
+import { Groups } from '/imports/api/groups/groups';
+import { Regions } from '/imports/api/regions/regions';
 
 import './feature-group.html';
 
 Template.featureGroup.onCreated(function featureGroupOnCreated() {
-	this.subscribe('groupsFind', {});
+	this.subscribe('Groups.findFilter', {});
 	this.busy(false);
 });
 
 Template.featureGroup.helpers({
 	groups: () => Groups.find({}, { sort: { name: 1 } }),
-	regionName: () => Regions.findOne(Session.get('region')).name,
 	featuredGroup() {
-		const groupId = Regions.findOne(Session.get('region')).featuredGroup;
+		const groupId = Regions.currentRegion().featuredGroup;
 		return Groups.findOne(groupId);
 	},
 });

@@ -3,11 +3,7 @@
 		<h4>
 			<span class="fa fa-users fa-fw" aria-hidden="true"></span>
 			{{#mf KEY='event.details.paticipants.title' NUM=howManyEnrolled}}
-				{NUM, plural,
-					=0 {No participants yet}
-					one {1 Participant}
-					other {# Participants}
-				}
+				{NUM, plural, =0 {No participants yet} one {1 Participant} other {# Participants}}
 			{{/mf}}
 		</h4>
 	</div>

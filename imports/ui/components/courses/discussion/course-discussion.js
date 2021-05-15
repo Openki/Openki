@@ -1,15 +1,20 @@
+import { Tooltips } from 'meteor/lookback:tooltips';
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
+import { Tracker } from 'meteor/tracker';
+import moment from 'moment';
 
-import Courses from '/imports/api/courses/courses';
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
-import Alert from '/imports/api/alerts/alert';
-import CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
-import { HasRoleUser } from '/imports/utils/course-role-utils';
-import Editable from '/imports/ui/lib/editable';
+import { Courses } from '/imports/api/courses/courses';
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
+import * as Alert from '/imports/api/alerts/alert';
+import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
+import { Editable } from '/imports/ui/lib/editable';
+import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/avatar/avatar';
 
 import './course-discussion.html';
 
@@ -51,8 +56,7 @@ Template.discussion.helpers({
 			{
 				sort: { time_updated: -1 },
 			},
-		)
-			.fetch();
+		).fetch();
 
 		const count = posts.length;
 		instance.count.set(count);
@@ -107,7 +111,6 @@ Template.post.onCreated(function () {
 	this.limit = new ReactiveVar(2);
 });
 
-
 Template.post.helpers({
 	editing() {
 		return Template.instance().editing.get();
@@ -121,15 +124,13 @@ Template.post.helpers({
 			return false;
 		}
 
-		const replies = CourseDiscussions
-			.find(
-				{ parentId: this._id },
-				{ sort: { time_created: 1 } },
-			)
-			.fetch();
+		const replies = CourseDiscussions.find(
+			{ parentId: this._id },
+			{ sort: { time_created: 1 } },
+		).fetch();
 
 		const limit = instance.limit.get();
-		return limit ? replies.slice(-(limit)) : replies;
+		return limit ? replies.slice(-limit) : replies;
 	},
 
 	notAllResponsesShown() {
@@ -139,12 +140,7 @@ Template.post.helpers({
 		}
 
 		const limit = instance.limit.get();
-		const count = CourseDiscussions
-			.find(
-				{ parentId: this._id },
-				{ limit: limit + 1 },
-			)
-			.count();
+		const count = CourseDiscussions.find({ parentId: this._id }, { limit: limit + 1 }).count();
 
 		return limit && count > limit;
 	},
@@ -176,7 +172,6 @@ Template.post.events({
 		instance.limit.set(0);
 	},
 });
-
 
 Template.postShow.helpers({
 	postClasses() {
@@ -212,7 +207,7 @@ Template.postEdit.onCreated(function () {
 		? mf('course.discussion.text_placeholder_answer', 'Your answer')
 		: mf('course.discussion.text_placeholder', 'Your comment');
 
-	this.editableText = new Editable(false, false, placeholder, false);
+	this.editableText = new Editable(false, placeholder);
 
 	// UGLY: The event handler to save the comment is defined on the parent instance.
 	// (Because that's where the editing-state flag is.) To make the text available
@@ -223,7 +218,6 @@ Template.postEdit.onCreated(function () {
 		this.editableText.setText(Template.currentData().text);
 	});
 });
-
 
 Template.postEdit.helpers({
 	editableText: () => Template.instance().editableText,
@@ -274,12 +268,8 @@ Template.postEdit.helpers({
 		}
 
 		const course = Courses.findOne(this.courseId);
-		if (!course) {
-			return false;
-		}
 
-		const userId = Meteor.userId();
-		return userId && HasRoleUser(course.members, 'team', userId);
+		return !!course?.userHasRole(Meteor.userId(), 'team');
 	},
 });
 
@@ -318,7 +308,7 @@ Template.post.events({
 			}
 
 			comment.anon = instance.$('.js-anon').prop('checked');
-			comment.notifyAll = instance.$('.js-notify-all').prop('checked');
+			comment.notifyAll = instance.$('.js-notify-all').prop('checked') || false;
 		} else {
 			comment._id = instance.data._id;
 		}
@@ -365,16 +355,4 @@ Template.postEdit.events({
 	change(event, instance) {
 		instance.anon.set(instance.$('.js-anon').prop('checked'));
 	},
-});
-
-Template.profileIcon.helpers({
-
-	discussionLogo() {
-		return Meteor.settings.public.discussionLogo.src;
-	},
-
-	discussionAlt() {
-		return Meteor.settings.public.discussionLogo.alt;
-	},
-
 });

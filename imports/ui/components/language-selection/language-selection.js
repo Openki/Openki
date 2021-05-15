@@ -1,15 +1,15 @@
-import { Meteor } from 'meteor/meteor';
+import { $ } from 'meteor/jquery';
+import { mfPkg } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
 import { _ } from 'meteor/underscore';
 
-import Alert from '/imports/api/alerts/alert';
-import Languages from '/imports/api/languages/languages';
+import * as Alert from '/imports/api/alerts/alert';
+import { Languages } from '/imports/api/languages/languages';
 
-import ScssVars from '/imports/ui/lib/scss-vars';
-import StringTools from '/imports/utils/string-tools';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
+import * as StringTools from '/imports/utils/string-tools';
 
 import './language-selection.html';
 
@@ -47,7 +47,7 @@ Template.languageSelection.helpers({
 	},
 
 	languages() {
-		const visibleLanguages = _.filter(Languages, lg => lg.visible);
+		const visibleLanguages = Object.values(Languages).filter((lg) => lg.visible);
 		const search = Template.instance().languageSearch.get().toLowerCase();
 		const results = [];
 
@@ -77,13 +77,13 @@ Template.languageSelection.helpers({
 		const getTransPercent = () => {
 			const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
 			if (mfStats) {
-				const langStats = mfStats.langs.find(stats => stats.lang === this.lg);
+				const langStats = mfStats.langs.find((stats) => stats.lang === this.lg);
 				return langStats.transPercent;
 			}
 			return false;
 		};
 
-		const percent = (this.lg === mfPkg.native) ? 100 : getTransPercent();
+		const percent = this.lg === mfPkg.native ? 100 : getTransPercent();
 		const rating = percent >= 75 && 'well-translated';
 
 		return { percent, rating };
@@ -110,11 +110,9 @@ Template.languageSelection.events({
 		} catch (e) {
 			Alert.error(e);
 		}
-
+		// The db user update happens in the client/start.js in Tracker.autorun(() => { ... by
+		// messageformat
 		Session.set('locale', lg);
-		if (Meteor.user()) {
-			Meteor.call('user.updateLocale', lg);
-		}
 
 		instance.parentInstance().searchingLanguages.set(false);
 	},
@@ -129,7 +127,7 @@ Template.languageSelection.events({
 
 	'focus .js-language-search'(event, instance) {
 		const viewportWidth = Session.get('viewportWidth');
-		const isRetina = Session.get('isRetina');
+		const isRetina = Session.equals('isRetina', true);
 		const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
 
 		if (screenMD && !isRetina) {
@@ -146,16 +144,19 @@ Template.languageSelection.onRendered(function () {
 
 	instance.$('.js-language-search').select();
 
-	instance.parentInstance().$('.dropdown').on('hide.bs.dropdown', () => {
-		const viewportWidth = Session.get('viewportWidth');
-		const isRetina = Session.get('isRetina');
-		const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
+	instance
+		.parentInstance()
+		.$('.dropdown')
+		.on('hide.bs.dropdown', () => {
+			const viewportWidth = Session.get('viewportWidth');
+			const isRetina = Session.get('isRetina');
+			const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
 
-		if (screenMD && !isRetina) {
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo('slow', 1);
-		}
+			if (screenMD && !isRetina) {
+				$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
+				$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo('slow', 1);
+			}
 
-		instance.parentInstance().searchingLanguages.set(false);
-	});
+			instance.parentInstance().searchingLanguages.set(false);
+		});
 });

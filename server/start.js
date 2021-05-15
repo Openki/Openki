@@ -1,19 +1,60 @@
+import { robots } from 'meteor/gadicohen:robots-txt';
+import { Meteor } from 'meteor/meteor';
+import { ServiceConfiguration } from 'meteor/service-configuration';
+import { _ } from 'meteor/underscore';
+
 import '/imports/startup/both';
 import '/imports/startup/server';
 
-import AsyncTools from '/imports/utils/async-tools';
-
 import Version from '/imports/api/version/version';
+import { Users } from '/imports/api/users/users';
 
-import applyUpdates from '/server/lib/updates';
+import { applyUpdates } from '/server/lib/updates';
+
+import { AsyncTools } from '/imports/utils/async-tools';
+import * as coursesTenantDenormalizer from '/imports/api/courses/tenantDenormalizer';
+import * as eventsTenantDenormalizer from '/imports/api/events/tenantDenormalizer';
+import * as usersTenantsDenormalizer from '/imports/api/users/tenantsDenormalizer';
+
+function initializeDbCacheFields() {
+	// Resync location cache in events
+	Meteor.call('event.updateVenue', {}, AsyncTools.logErrors);
+
+	// Update list of organizers per course
+	Meteor.call('course.updateGroups', {}, AsyncTools.logErrors);
+
+	// Update List of badges per user
+	Meteor.call('user.updateBadges', {}, AsyncTools.logErrors);
+
+	coursesTenantDenormalizer.onStartUp();
+	eventsTenantDenormalizer.onStartUp();
+	usersTenantsDenormalizer.onStartUp();
+
+	Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
+
+	// Keep the nextEvent entry updated
+	// On startup do a full scan to catch stragglers
+	Meteor.call('course.updateNextEvent', {}, AsyncTools.logErrors);
+	Meteor.setInterval(
+		() => {
+			// Update nextEvent for courses where it expired
+			Meteor.call('course.updateNextEvent', { 'nextEvent.start': { $lt: new Date() } });
+
+			Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
+		},
+		60 * 1000, // Check every minute
+	);
+}
 
 Meteor.startup(() => {
 	applyUpdates();
 
 	const runningVersion = Version.findOne();
-	if (typeof VERSION !== 'undefined' && (
-		(!runningVersion || runningVersion.complete !== VERSION.complete)
-			|| (runningVersion.commit !== VERSION.commit))
+	if (
+		typeof VERSION !== 'undefined' &&
+		(!runningVersion ||
+			runningVersion.complete !== VERSION.complete ||
+			runningVersion.commit !== VERSION.commit)
 	) {
 		const newVersion = _.extend(VERSION, {
 			activation: new Date(),
@@ -32,8 +73,7 @@ Meteor.startup(() => {
 
 	const serviceConf = Meteor.settings.service;
 	if (serviceConf) {
-		if (serviceConf.google
-		) {
+		if (serviceConf.google) {
 			ServiceConfiguration.configurations.remove({
 				service: 'google',
 			});
@@ -69,35 +109,18 @@ Meteor.startup(() => {
 	}
 
 	(Meteor.settings.admins || []).forEach((username) => {
-		const user = Meteor.users.findOne({ username });
+		const user = Users.findOne({ username });
 		if (user) {
-			Meteor.users.update({ _id: user._id }, { $addToSet: { privileges: 'admin' } });
+			Users.update({ _id: user._id }, { $addToSet: { privileges: 'admin' } });
 		}
 	});
 
-	/* Initialize cache-fields on startup */
-
-	// Resync location cache in events
-	Meteor.call('event.updateVenue', {}, AsyncTools.logErrors);
-
-	// Update list of organizers per course
-	Meteor.call('course.updateGroups', {}, AsyncTools.logErrors);
-
-	// Update List of badges per user
-	Meteor.call('user.updateBadges', {}, AsyncTools.logErrors);
-
-	Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
-
-	// Keep the nextEvent entry updated
-	// On startup do a full scan to catch stragglers
-	Meteor.call('course.updateNextEvent', {}, AsyncTools.logErrors);
-	Meteor.setInterval(
-		() => {
-			// Update nextEvent for courses where it expired
-			Meteor.call('course.updateNextEvent', { 'nextEvent.start': { $lt: new Date() } });
-
-			Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
-		},
-		60 * 1000, // Check every minute
-	);
+	/* Initialize cache-fields on startup (Also called calculated fields or denomalized data) */
+	if (Meteor.settings.startup?.buildDbCacheAsync) {
+		Meteor.setTimeout(() => {
+			initializeDbCacheFields();
+		}, 0);
+	} else {
+		initializeDbCacheFields();
+	}
 });

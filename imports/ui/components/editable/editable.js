@@ -1,4 +1,8 @@
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
+import TemplateMixins from '/imports/ui/lib/template-mixins';
+
+import MediumEditor from 'medium-editor';
 
 import '/imports/ui/components/buttons/buttons';
 
@@ -12,19 +16,46 @@ import './editable.html';
 			throw new Error('Editable got empty data');
 		}
 		this.state = data.connect(this);
+
+		// Add error mapping for the FormfieldErrors
+		const errorMapping = {};
+		const { clientValidations } = this.state.store;
+		Object.keys(clientValidations || {}).forEach((key) => {
+			const validation = clientValidations[key];
+			errorMapping[key] = {
+				text: validation.errorMessage,
+				field: 'input',
+			};
+		});
+		this.state.store?.serverValidationErrors?.forEach((e) => {
+			errorMapping[e.type] = {
+				text: e.message,
+				field: 'input',
+			};
+		});
+
+		this.errorMapping = errorMapping;
 	});
+
+	TemplateMixins.FormfieldErrors(template);
 
 	template.onRendered(function () {
 		const instance = this;
 		const editable = this.$('.js-editable');
 		let initialized = false;
 		let changedByUser = false;
+		let totalFocusTimeInSeconds = 0;
+		let startGettingFocus;
 
 		instance.getEdited = function () {
-			if (!instance.state || !instance.state.changed.get()) {
-				return false;
+			if (!instance.state?.changed.get()) {
+				return undefined;
 			}
 			return instance.state.simple ? editable.text().trim() : editable.html().trim();
+		};
+
+		instance.getTotalFocusTimeInSeconds = function () {
+			return totalFocusTimeInSeconds;
 		};
 
 		instance.reset = function () {
@@ -41,6 +72,8 @@ import './editable.html';
 			if (text) {
 				editable.removeClass('medium-editor-placeholder');
 			}
+
+			instance.errors.reset();
 		};
 
 		// Automatically replace contents when text changes
@@ -54,10 +87,30 @@ import './editable.html';
 			}
 		});
 
-		instance.store = function () {
-			instance.state.store(instance.getEdited());
-			instance.state.changed.set(false);
-			changedByUser = false;
+		instance.store = async function () {
+			const newText = instance.getEdited();
+			try {
+				await instance.state.store.onSave(newText);
+
+				instance.state.changed.set(false);
+				changedByUser = false;
+				startGettingFocus = undefined;
+				totalFocusTimeInSeconds = 0;
+
+				if (instance.state.store.onSuccess) {
+					instance.state.store.onSuccess(newText);
+				}
+			} catch (err) {
+				if (err.error === 'validation-error') {
+					// Handle server validation errors
+					err.details.forEach((fieldError) => {
+						instance.errors.add(fieldError.type);
+					});
+				} else if (instance.state.store.onError) {
+					// Handle global error
+					instance.state.store.onError(err, newText);
+				}
+			}
 		};
 
 		const options = {
@@ -84,6 +137,13 @@ import './editable.html';
 		editable.on('input', () => {
 			changedByUser = true;
 			instance.state.changed.set(true);
+		});
+
+		editable.on('focus', () => {
+			startGettingFocus = Date.now();
+		});
+		editable.on('blur', () => {
+			totalFocusTimeInSeconds += Math.round((Date.now() - startGettingFocus) / 1000);
 		});
 	});
 
@@ -115,6 +175,20 @@ import './editable.html';
 
 		'click .js-editable-save'(event, instance) {
 			event.preventDefault();
+
+			// Check if input is invalid
+			instance.errors.reset();
+			const { clientValidations } = instance.state.store;
+			Object.keys(clientValidations || {}).forEach((key) => {
+				const validation = clientValidations[key];
+				if (!validation.check(instance.getEdited())) {
+					instance.errors.add(key);
+				}
+			});
+			if (instance.errors.present()) {
+				return;
+			}
+
 			instance.store();
 		},
 

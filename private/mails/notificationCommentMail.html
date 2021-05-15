@@ -1,39 +1,53 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>{{subject}}</title>
 	<style type="text/css">
-		table td {border-collapse: collapse;}
+		table td {
+			border-collapse: collapse;
+			/* Handling long words and urls */
+			hyphens: auto;
+			overflow-wrap: break-word;
+			word-break: break-all;
+			word-break: break-word;
+			word-wrap: break-word;
+		}
+
 	</style>
 </head>
+
 <body>
-	<table cellpadding="0" cellspacing="0" border="0" align="center">
+	<table cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f0f3f4"
+		   style="box-shadow: 1px 3px 14px 7px #dfe7e8;">
 		<tr>
 			<td>
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
-						<tr bgcolor="#3f819e">
-							<td width="45" valign="top" style="padding: 0px 10px 0px 20px;">
-								<a href="{{siteUrl}}">
-								<img src="{{logo.url}}"
-									width="45"
-									height="45"
-									border="0"
-									alt="{{siteName}} Logo"
-									style="padding-bottom: 0px; outline:none; text-decoration:none; -ms-interpolation-mode: bicubic; border:none;">
-								</a>
-								</td>
-							<td width="455" style="padding: 0px; font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter;">
-								<a href="{{siteUrl}}" style="color: #fff !important; text-decoration: none !important;">{{siteName}}</a>
-							</td>
-						</tr>
+					<tr bgcolor="#3f819e">
+						<td width="45" valign="top" style="padding: 0 10px 0 20px;">
+							<a href="{{siteUrl}}">
+								<img src="{{logo.url}}" height="45" border="0"
+									 alt="{{customSiteName}} Logo"
+									 style="border: 0; display: block; outline: none; text-decoration: none;" />
+							</a>
+						</td>
+						<td width="455"
+							style="font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter; padding: 0;">
+							<a href="{{siteUrl}}"
+							   style="color: #fff !important; text-decoration: none !important;">
+								{{customSiteName}}
+							</a>
+						</td>
+					</tr>
 				</table>
 			</td>
 		</tr>
 		<tr>
-			<td width="400" valign="top" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px 20px;">
+			<td width="400" valign="top"
+				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px;">
 				<span style="font-size: 16px; font-weight: bold;">
-						{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
+					{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
 				</span>
 				<p style="margin: 1em 0;">
 					{{#if commenter}}
@@ -45,10 +59,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="400" valign="top" style="padding: 0px 20px 0px 20px;">
+			<td width="400" valign="top" style="padding: 0 20px;">
 				<table cellpadding="0" cellspacing="0" border="0" align="center">
 					<tr>
-						<td width="400" valign="top" bgcolor="#c1f2ae" style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 6px;">
+						<td width="400" valign="top" bgcolor="#c1f2ae"
+							style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 6px;">
 							<div style="font-size: 16px; font-weight: bold;">
 								{{comment.title}}
 							</div>
@@ -59,32 +74,34 @@
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" style="padding: 10px; font-family: Source Sans Pro, sans-serif; font-size: 12px;">
-				<a href="{{courseLink}}">{{mf "notification.comment.mail.linktext" '➜ See comment on {SITENAME}' SITENAME=siteName LOCALE=locale}}</a>
+			<td valign="top"
+				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 10px;">
+				<a
+				   href="{{courseLink}}">{{mf "notification.comment.mail.linktext" '➜ See comment on {SITENAME}' SITENAME=customSiteName LOCALE=locale}}</a>
 
 				{{#if commenter}}
-				    <br/>
-					<a href="{{commenterLink}}">{{mf "notification.comment.mail.commenterlink" '➜ See profile from {USERNAME}' USERNAME=commenterName LOCALE=locale}}</a>
+					<br />
+					<a
+					   href="{{commenterLink}}">{{mf "notification.comment.mail.commenterlink" '➜ See profile from {USERNAME}' USERNAME=commenterName LOCALE=locale}}</a>
 				{{/if}}
 			</td>
 		</tr>
 		<tr>
 			<td width="500" valign="top" bgcolor="#3f819e">
-				<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#fff; font-family: Source Sans Pro, sans-serif; font-size: 10px;">
+				<table cellpadding="0" cellspacing="0" border="0" align="center"
+					   style="color:#ddd; font-family: Source Sans Pro, sans-serif; font-size: 10px; text-align: center;">
 					<tr>
-						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
+						<td width="500" valign="top" style="padding: 5px 15px 0;">
 							{{mf "notification.comment.mail.recpnote" "You receive this message because you're on the team of this course." LOCALE=locale}}
 						</td>
 					</tr>
 					<tr>
-						<td width="500" valign="top" style="padding: 0px 15px 5px 15px;">
-							<a href="{{unsubLink}}" style="color:#fff !important; text-decoration: underline;">
-								{{mf "notification.event.mail.unsubLink" LOCALE=locale}}
-							</a>
+						<td width="500" valign="top" style="padding: 0 15px 5px;">
+							<a href="{{unsubLink}}"
+							   style="color:#ddd !important; text-decoration: underline;">{{mf "notification.comment.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}</a>
 							&nbsp;
-							<a href="{{urlFor 'profile'}}" style="color:#fff !important; text-decoration: underline;">
-								{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}
-							</a>
+							<a href="{{urlFor 'profile' query='campaign=commentNotify'}}"
+							   style="color:#ddd !important; text-decoration: underline;">{{mf "notification.comment.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
 						</td>
 					</tr>
 				</table>
@@ -92,4 +109,5 @@
 		</tr>
 	</table>
 </body>
+
 </html>

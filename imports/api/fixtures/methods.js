@@ -1,17 +1,19 @@
-import seedrandom from 'seedrandom';
+import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
 
-import Courses from '/imports/api/courses/courses';
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
-import Events from '/imports/api/events/events';
+import { Courses } from '/imports/api/courses/courses';
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
+import { Events } from '/imports/api/events/events';
 import ensure from './ensureFixture';
-import './Prng';
-import Groups from '/imports/api/groups/groups';
-import Regions from '/imports/api/regions/regions';
-import Venues from '/imports/api/venues/venues';
+import Prng from './Prng';
+import { Groups } from '/imports/api/groups/groups';
+import { Regions } from '/imports/api/regions/regions';
+import { Venues } from '/imports/api/venues/venues';
+import { Users } from '/imports/api/users/users';
 
-import HtmlTools from '/imports/utils/html-tools';
+import * as HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
-import StringTools from '/imports/utils/string-tools';
+import * as StringTools from '/imports/utils/string-tools';
 
 const courses = require('./data/course.fixtures.js').default;
 const events = require('./data/event.fixtures.js').default;
@@ -19,28 +21,32 @@ const groups = require('./data/group.fixtures.js').default;
 const regions = require('./data/region.fixtures.js').default;
 const venues = require('./data/venue.fixtures.js').default;
 
-const Prng = function (staticseed) {
-	return seedrandom(Meteor.settings.prng === 'static' ? staticseed : undefined);
-};
-
-// Make a number that looks like a human chose it, favouring 2 and 5
+/**
+ * Make a number that looks like a human chose it, favouring 2 and 5
+ * @param {Prng} prng
+ * @returns {number}
+ */
 const humandistrib = function (prng) {
 	const factors = [0, 0, 1, 2, 2, 3, 5, 5];
-	return factors[Math.floor(Math.random() * factors.length)]
-		* (prng() > 0.7 ? humandistrib(prng) : 1)
-		+ (prng() > 0.5 ? humandistrib(prng) : 0);
+	return (
+		factors[Math.floor(Math.random() * factors.length)] * (prng() > 0.7 ? humandistrib(prng) : 1) +
+		(prng() > 0.5 ? humandistrib(prng) : 0)
+	);
 };
 
-// Select a date that is after the given date
-// For past dates a date between the original date and the present is chosen,
-// dates closer to the original date preferred.
-// For future dates, a date between the original date and double the time between now and then
-// is chosen.
+/**
+ * Select a date that is after the given date
+ * For past dates a date between the original date and the present is chosen,
+ * dates closer to the original date preferred.
+ * For future dates, a date between the original date and double the time between now and then
+ * is chosen.
+ * @param {Date} date
+ */
 const sometimesAfter = function (date) {
 	const prng = Prng('sometimesAfter');
 
 	// Seconds between then and now
-	const spread = new Date(Math.abs(new Date().getTime() - date.getTime()));
+	const spread = new Date(Math.abs(new Date().getTime() - date.getTime())).getTime();
 
 	// Quadratic dropoff: Place new date closer to the original date statistically
 	const placement = prng();
@@ -49,44 +55,45 @@ const sometimesAfter = function (date) {
 	return new Date(date.getTime() + spread * squaredPlacement);
 };
 
-
 // Unfortunately we can't make this a debugOnly package because the integration
 // tests use the data too, and they run with the --production flag.
 // This guard is here until we find a better solution.
 if (Meteor.settings.testdata) {
 	const regionsCreate = function () {
-		/* eslint-disable-next-line no-restricted-syntax */
-		for (const r of regions) {
-			const region = Object.assign({}, r); // clone
+		const prng = Prng('createRegions');
+		regions.forEach((r) => {
+			const region = {
+				...r,
+				tenant: prng() > 0.3 ? ensure.tenant('Hmmm') : ensure.tenant('Kopf'),
+			}; // clone
 			if (region.loc) {
 				const coordinates = region.loc.reverse(); // GeoJSON takes latitude first
 				region.loc = { type: 'Point', coordinates };
 			}
 			Regions.insert(region);
-		}
+		});
 
 		return `Inserted ${regions.length} region fixtures.`;
 	};
 
 	const usersCreate = function () {
-		ensure.user('greg', true);
-		ensure.user('Seee', true);
-		ensure.user('1u', true);
-		ensure.user('validated_mail', true);
+		ensure.user('greg', undefined, true);
+		ensure.user('Seee', undefined, true);
+		ensure.user('1u', undefined, true);
+		ensure.user('validated_mail', undefined, true);
 		return 'Inserted user fixtures.';
 	};
 
 	const groupsCreate = function () {
-		/* eslint-disable-next-line no-restricted-syntax */
-		for (const g of groups) {
-			const group = Object.assign({}, g);
+		groups.forEach((g) => {
+			const group = { ...g };
 			group.createdby = 'ServerScript_loadingTestgroups';
 
 			// Always use same id for same group to avoid broken urls while testing
 			group._id = ensure.fixedId([group.name, group.description]);
-			group.members = _.map(group.members, name => ensure.user(name)._id);
+			group.members = group.members?.map((name) => ensure.user(name, undefined)._id) || [];
 			Groups.insert(group);
-		}
+		});
 
 		return `Inserted ${groups.length} group fixtures.`;
 	};
@@ -97,47 +104,44 @@ if (Meteor.settings.testdata) {
 		// week but keep the weekday.
 		let dateOffset = 0;
 
-		/* eslint-disable-next-line no-restricted-syntax */
-		for (const e of events) {
-			const event = Object.assign({}, e);
-			if (Events.findOne({ _id: event._id })) {
-				/* eslint-disable-next-line no-continue */
-				continue; // Don't create events that exist already
-			}
-			event.createdBy = ensure.user(event.createdby)._id;
-			event.groups = _.map(event.groups, ensure.group);
-			event.groupOrganizers = [];
+		events
+			// Don't create events that exist already
+			.filter((e) => !Events.findOne({ _id: e._id }))
+			.forEach((e) => {
+				const event = { ...e };
+				event.createdBy = ensure.user(event.createdby, event.region)._id;
+				event.groups = event.groups?.map(ensure.group) || [];
+				event.groupOrganizers = [];
 
-			// We place the first event in the series on the monday of this week
-			// and all later events relative to it.
-			if (dateOffset === 0) {
-				const weekstart = new Date();
-				weekstart.setHours(0);
-				weekstart.setMinutes(0);
-				weekstart.setSeconds(0);
-				weekstart.setDate(weekstart.getDate() - weekstart.getDay() + 1);
+				// We place the first event in the series on the monday of this week
+				// and all later events relative to it.
+				if (dateOffset === 0) {
+					const weekstart = new Date();
+					weekstart.setHours(0);
+					weekstart.setMinutes(0);
+					weekstart.setSeconds(0);
+					weekstart.setDate(weekstart.getDate() - weekstart.getDay() + 1);
 
-				const dayOfFirstEvent = new Date(event.start.$date);
-				dayOfFirstEvent.setHours(0);
-				dayOfFirstEvent.setMinutes(0);
-				dayOfFirstEvent.setSeconds(0);
-				dateOffset = weekstart.getTime() - dayOfFirstEvent.getTime();
-			}
+					const dayOfFirstEvent = new Date(event.start.$date);
+					dayOfFirstEvent.setHours(0);
+					dayOfFirstEvent.setMinutes(0);
+					dayOfFirstEvent.setSeconds(0);
+					dateOffset = weekstart.getTime() - dayOfFirstEvent.getTime();
+				}
 
-			event.venue = ensure.venue(event.venue, event.region);
-			event.internal = Boolean(event.internal);
+				event.venue = ensure.venue(event.venue, event.region);
+				event.internal = Boolean(event.internal);
 
+				const regionZone = LocalTime.zone(event.region);
 
-			const regionZone = LocalTime.zone(event.region);
-
-			event.startLocal = LocalTime.toString(new Date(event.start.$date + dateOffset));
-			event.start = regionZone.fromString(event.startLocal).toDate();
-			event.endLocal = new Date(event.end.$date + dateOffset);
-			event.end = regionZone.fromString(event.endLocal).toDate();
-			event.time_created = new Date(event.time_created.$date);
-			event.time_lastedit = new Date(event.time_lastedit.$date);
-			Events.insert(event);
-		}
+				event.startLocal = LocalTime.toString(new Date(event.start.$date + dateOffset));
+				event.start = regionZone.fromString(event.startLocal).toDate();
+				event.endLocal = new Date(event.end.$date + dateOffset);
+				event.end = regionZone.fromString(event.endLocal).toDate();
+				event.time_created = new Date(event.time_created.$date);
+				event.time_lastedit = new Date(event.time_lastedit.$date);
+				Events.insert(event);
+			});
 
 		return `Inserted ${events.length} event fixtures.`;
 	};
@@ -150,19 +154,18 @@ if (Meteor.settings.testdata) {
 			Regions.findOne('EZqQLGL4PtFCxCNrp'),
 		];
 
-		/* eslint-disable-next-line no-restricted-syntax */
-		for (const v of venues) {
-			const venueData = Object.assign({}, v);
+		venues.forEach((v) => {
+			const venueData = { ...v };
 			venueData.region = prng() > 0.85 ? testRegions[0] : testRegions[1];
 
 			const venue = ensure.venue(venueData.name, venueData.region._id);
 
 			_.extend(venue, venueData);
 
-			venue.createdby = ensure.user(venue.createdby)._id;
+			venue.createdby = ensure.user(venue.createdby, venueData.region._id)._id;
 
 			Venues.update(venue._id, venue);
-		}
+		});
 
 		return `Inserted ${venues.length} venue fixtures.`;
 	};
@@ -170,24 +173,16 @@ if (Meteor.settings.testdata) {
 	const coursesCreate = function () {
 		const prng = Prng('createCourses');
 
-		/* eslint-disable-next-line no-restricted-syntax */
-		for (const c of courses) {
-			const course = Object.assign({}, c);
-			/* eslint-disable-next-line no-restricted-syntax */
-			for (const member of course.members) {
-				member.user = ensure.user(member.user)._id;
-			}
-
-			course.createdby = ensure.user(course.createdby)._id;
+		courses.forEach((c) => {
+			const course = { ...c };
 
 			course.slug = StringTools.slug(course.name);
 			course.internal = Boolean(course.internal);
 
 			course._id = ensure.fixedId([course.name, course.description]);
 
-			course.date = prng() > 0.50
-				? new Date(new Date().getTime() + ((prng() - 0.25) * 8000000000))
-				: false;
+			course.date =
+				prng() > 0.5 ? new Date(new Date().getTime() + (prng() - 0.25) * 8000000000) : false;
 			const age = Math.floor(prng() * 80000000000);
 			course.time_created = new Date(new Date().getTime() - age);
 			course.time_lastedit = new Date(new Date().getTime() - age * 0.25);
@@ -199,23 +194,33 @@ if (Meteor.settings.testdata) {
 				course.region = prng() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp';
 			}
 
+			course.members.forEach((member) => {
+				// eslint-disable-next-line no-param-reassign
+				member.user = ensure.user(member.user, course.region)._id;
+			});
+
+			course.createdby = ensure.user(course.createdby, course.region)._id;
+
 			if (!course.groups) {
 				course.groups = [];
 			}
 			course.groups = course.groups.map(ensure.group);
 			course.groupOrganizers = [];
+
+			course.interested = course.members.length;
+
 			Courses.insert(course);
-		}
+		});
 
 		return `Inserted ${courses.length} course fixtures.`;
 	};
 
-
-	/** Generate events for each course
-	  *
-	  * For each course, zero or more events are generated. Some will be in
-	  * the past, some in the future.
-	  */
+	/**
+	 * Generate events for each course
+	 *
+	 * For each course, zero or more events are generated. Some will be in
+	 * the past, some in the future.
+	 */
 	const eventsGenerate = function () {
 		const prng = Prng('eventsGenerate');
 		let count = 0;
@@ -252,6 +257,7 @@ if (Meteor.settings.testdata) {
 				let { description } = course;
 				if (!description) description = 'No description'; // :-(
 				const words = _.shuffle(description.split(' '));
+				event.tenant = course.tenant;
 				event.region = course.region;
 				event.groups = course.groups;
 				event.groupOrganizers = [];
@@ -268,7 +274,9 @@ if (Meteor.settings.testdata) {
 				event.courseId = course._id;
 				event._id = ensure.fixedId([course._id, `${n}`]);
 				event.title = `${course.name} ${_.sample(words)}`;
-				event.description = HtmlTools.saneHtml(words.slice(0, 10 + Math.floor(prng() * 30)).join(' '));
+				event.description = HtmlTools.saneHtml(
+					words.slice(0, 10 + Math.floor(prng() * 30)).join(' '),
+				);
 				event.groups = course.groups;
 
 				let relativeDate = prng() - 0.7; // put 70% in the past, linear distribution
@@ -289,7 +297,7 @@ if (Meteor.settings.testdata) {
 
 				// Quarter hours should be most common
 				if (prng() > 0.05) {
-					date.setMinutes(Math.floor((date.getMinutes()) / 15) * 15);
+					date.setMinutes(Math.floor(date.getMinutes() / 15) * 15);
 				}
 
 				const regionZone = LocalTime.zone(event.region);
@@ -303,7 +311,7 @@ if (Meteor.settings.testdata) {
 
 				const { members } = course;
 				const randomMember = members[Math.floor(Math.random() * members.length)];
-				event.createdby = ensure.user((randomMember && randomMember.user) || 'Serverscript')._id;
+				event.createdby = ensure.user(randomMember?.user || 'Serverscript', event.region)._id;
 				const age = Math.floor(prng() * 10000000000);
 				event.time_created = new Date(new Date().getTime() - age);
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25);
@@ -320,7 +328,7 @@ if (Meteor.settings.testdata) {
 		const prng = Prng('createComments');
 		let count = 0;
 
-		const userCount = Meteor.users.find().count();
+		const userCount = Users.find().count();
 		Courses.find().forEach((course) => {
 			const createCount = Math.floor((prng() * 2) ** 4);
 			const courseMembers = course.members.length;
@@ -332,18 +340,19 @@ if (Meteor.settings.testdata) {
 				const comment = {};
 				comment.courseId = course._id;
 				comment.title = _.sample(words, 1 + Math.floor(prng() * 3)).join(' ');
-				comment.text = HtmlTools.saneHtml(_.sample(words, 5).join(' ') + _.sample(words, Math.floor(prng() * 30)).join(' '));
+				comment.text = HtmlTools.saneHtml(
+					_.sample(words, 5).join(' ') + _.sample(words, Math.floor(prng() * 30)).join(' '),
+				);
 
 				comment.time_created = sometimesAfter(course.time_created);
-				comment.time_updated = (prng() < 0.9)
-					? comment.time_created
-					: sometimesAfter(comment.time_created);
+				comment.time_updated =
+					prng() < 0.9 ? comment.time_created : sometimesAfter(comment.time_created);
 
 				let commenter;
 				if (!courseMembers || prng() < 0.2) {
 					// Leave some anonymous comments
 					if (prng() < 0.7) {
-						commenter = Meteor.users.findOne({}, { skip: Math.floor(prng() * userCount) })._id;
+						commenter = Users.findOne({}, { skip: Math.floor(prng() * userCount) })._id;
 						comment.userId = commenter.user;
 					}
 				} else {

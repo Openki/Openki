@@ -1,11 +1,11 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 
-import Alert from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 
 const Introduction = {
 	init() {
-		Session.set('ShowIntro', localStorage.getItem('intro') !== 'done');
+		Session.set('ShowIntro', localStorage?.getItem('intro') !== 'done');
 		Session.set('OpenedIntro', undefined);
 	},
 
@@ -13,7 +13,7 @@ const Introduction = {
 		Session.set('ShowIntro', true);
 	},
 
-	shownIntro: () => Session.get('ShowIntro'),
+	shownIntro: () => Session.equals('ShowIntro', true),
 
 	openedIntro() {
 		const opened = Session.get('OpenedIntro');
@@ -21,8 +21,7 @@ const Introduction = {
 			return opened;
 		}
 
-		const { route } = Router.current();
-		const routeName = route && route.getName();
+		const routeName = Router.current().route?.getName();
 		return routeName === 'home' || routeName === 'find';
 	},
 

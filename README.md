@@ -63,10 +63,10 @@ In the interest of having a open and welcoming environment for everyone, we agre
 - [Download](https://gitlab.com/Openki/Openki/-/archive/master/Openki-master.zip) and unzip or `https://gitlab.com/Openki/Openki.git` Openki into `/some/path`.
 - `cd /some/path/Openki`
 - `meteor npm install`
-- Run `meteor npm run dev`
+- Run `meteor npm run dev` (We support server side debugging. For help, see: https://nodejs.org/en/docs/inspector)
 - Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
 
-- There are other actions, for example `meteor npm run js-lint`.
+- There are other actions, for example `meteor npm run es-lint`.
 
 
 ### Running the tests
@@ -77,10 +77,20 @@ Run tests with:
 
     meteor npm run app-test
 
+**Note:** Add `--grep=<pattern>` at the end to only run tests that match the pattern. eg. `meteor npm run app-test --grep="Propose course via frame"`
+
 Run linters with these two commands:
 
     meteor npm run sass-lint
-    meteor npm run eslint
+    meteor npm run es-lint
+
+Format files and automatically fix fixable problems with these commands:
+
+    meteor npm run sass-lint -- --fix
+    meteor npm run es-lint -- --fix
+    meteor npm run html-format
+
+**Note:** We use eslint with prettier for *.js files, stylelint with prettier for *.scss files and beautify for *.html. You can install their extensions in your IDE to automatically execute the formation when saving. 
 
 ### Fixing weird errors
 
@@ -88,11 +98,29 @@ In case you get weird errors when starting (eg. error 14) try this command:
 
     meteor reset
 
+#### [ERR_INVALID_CALLBACK]: Callback must be a function. Received undefined
+In case you get this error when starting. Create a empty file `server/extracts.msgfmt`.
+
+```
+fs.js:145 
+  throw new ERR_INVALID_CALLBACK(cb);
+  ^
+ 
+TypeError [ERR_INVALID_CALLBACK] [ERR_INVALID_CALLBACK]: Callback must be a function. Received undefined
+    at maybeCallback (fs.js:145:9)
+    at Object.writeFile (fs.js:1332:14)
+    at packages/msgfmt_extract.js:267:14
+    at suppressedCallback (fs.js:215:5)
+    at FSReqCallback.oncomplete (fs.js:156:23) {
+  code: 'ERR_INVALID_CALLBACK'
+}
+```
+
+See: https://gitlab.com/Openki/Openki/-/issues/1414
+
 ### Documentation
 - The technical documentation is here on GitLab in the :book: [Wiki](https://gitlab.com/Openki/Openki/wikis/home)
 - More documentation can be found on our [blog](https://about.openki.net/?page_id=1043)
 
 ### License
-- AGPL – GNU Affero General Public License (for the sourcecode)
-- For all course contents and descriptions (if not differently indicated): Creative Commons BY-SA
-- For all testing-events descriptions (server/data/testing.events.js): Creative Commons BY-NC-SA
+- AGPL – GNU Affero General Public License 3.0

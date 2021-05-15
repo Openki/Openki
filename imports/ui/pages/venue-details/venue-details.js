@@ -1,8 +1,14 @@
+import { Router } from 'meteor/iron:router';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
 
+import { Events } from '/imports/api/events/events';
+import { Regions } from '/imports/api/regions/regions';
+import * as Alert from '/imports/api/alerts/alert';
 
-import Events from '/imports/api/events/events';
-import Regions from '/imports/api/regions/regions';
-import Alert from '/imports/api/alerts/alert';
+import { reactiveNow } from '/imports/utils/reactive-now';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/events/list/event-list';
@@ -20,13 +26,11 @@ Template.venueDetails.onCreated(function () {
 	this.editing = new ReactiveVar(isNew);
 	this.verifyDeleteVenue = new ReactiveVar(false);
 
-	this.increaseBy = 10;
-	this.maxEvents = new ReactiveVar(12);
-	this.maxPastEvents = new ReactiveVar(3);
-	this.eventsCount = new ReactiveVar();
-	this.pastEventsCount = new ReactiveVar();
+	this.eventLoadingBlockSize = 9;
+	this.upcomingEventLimit = new ReactiveVar(12);
+	this.pastEventLimit = new ReactiveVar(3);
 
-	const markers = new Meteor.Collection(null);
+	const markers = new Meteor.Collection(null); // Local collection for in-memory storage
 	this.markers = markers;
 
 	this.setLocation = function (loc) {
@@ -41,7 +45,7 @@ Template.venueDetails.onCreated(function () {
 
 	this.setRegion = function (region) {
 		markers.remove({ center: true });
-		if (region && region.loc) {
+		if (region?.loc) {
 			markers.insert({
 				loc: region.loc,
 				center: true,
@@ -51,57 +55,66 @@ Template.venueDetails.onCreated(function () {
 
 	this.autorun(() => {
 		if (!isNew) {
-			instance.subscribe('Events.findFilter', { venue: instance.data.venue._id });
+			// Add one to the limit so we know there is more to show
+			const limit = instance.upcomingEventLimit.get() + 1;
+
+			const now = reactiveNow.get();
+			const predicate = {
+				venue: instance.data.venue._id,
+				after: now,
+			};
+
+			instance.subscribe('Events.findFilter', predicate, limit);
 		}
 	});
 
-	this.getEvents = function (past) {
+	/**
+	 * @param {number} limit
+	 */
+	this.getUpcomingEvents = (limit) => {
 		if (isNew) {
-			return false;
+			return [];
 		}
 
-		let limit; let
-			count;
-		const predicate = { venue: this.data.venue._id };
-		const now = minuteTime.get();
+		const now = reactiveNow.get();
+		const filter = {
+			venue: instance.data.venue._id,
+			after: now,
+		};
 
-		if (past) {
-			predicate.before = now;
-			limit = instance.maxPastEvents.get();
-			count = instance.pastEventsCount;
-		} else {
-			predicate.after = now;
-			limit = instance.maxEvents.get();
-			count = instance.eventsCount;
-		}
-
-		let events = Events.findFilter(predicate).fetch();
-		count.set(events.length);
-		if (limit) {
-			events = events.slice(0, limit);
-		}
-
-		return events;
+		return Events.findFilter(filter, limit).fetch();
 	};
 
-	this.unloadedEvents = function (past) {
-		let limit; let
-			count;
+	this.autorun(() => {
+		if (!isNew) {
+			// Add one to the limit so we know there is more to show
+			const limit = instance.pastEventLimit.get() + 1;
 
-		if (past) {
-			limit = instance.maxPastEvents.get();
-			count = instance.pastEventsCount.get();
-		} else {
-			limit = instance.maxEvents.get();
-			count = instance.eventsCount.get();
+			const now = reactiveNow.get();
+			const predicate = {
+				venue: instance.data.venue._id,
+				before: now,
+			};
+
+			instance.subscribe('Events.findFilter', predicate, limit);
+		}
+	});
+
+	/**
+	 * @param {number} limit
+	 */
+	this.getPastEvents = (limit) => {
+		if (isNew) {
+			return [];
 		}
 
-		let unloaded = count - limit;
+		const now = reactiveNow.get();
+		const filter = {
+			venue: instance.data.venue._id,
+			before: now,
+		};
 
-		const { increaseBy } = instance;
-		unloaded = (unloaded > increaseBy) ? increaseBy : unloaded;
-
-		return unloaded;
+		return Events.findFilter(filter, limit).fetch();
 	};
 });
 
@@ -120,7 +133,6 @@ Template.venueDetails.onRendered(function () {
 	});
 });
 
-
 Template.venueDetails.helpers({
 	editing() {
 		return Template.instance().editing.get();
@@ -135,7 +147,7 @@ Template.venueDetails.helpers({
 	},
 
 	coords() {
-		if (this.loc && this.loc.coordinates) {
+		if (this.loc?.coordinates) {
 			const fmt = function (coord) {
 				if (coord < 0) {
 					return `-${coord.toPrecision(6)}`;
@@ -160,33 +172,32 @@ Template.venueDetails.helpers({
 		return Template.instance().verifyDeleteVenue.get();
 	},
 
-	events() {
-		return Template.instance().getEvents();
-	},
-
-	eventsLimited() {
+	upcomingEvents() {
 		const instance = Template.instance();
-		return instance.eventsCount.get() > instance.maxEvents.get();
+		return instance.getUpcomingEvents(instance.upcomingEventLimit.get());
 	},
 
-	unloadedEvents() {
-		return Template.instance().unloadedEvents();
+	hasMoreUpcomingEvents() {
+		const instance = Template.instance();
+
+		const limit = instance.upcomingEventLimit.get();
+		const query = instance.getUpcomingEvents(limit + 1);
+		return query.length > limit;
 	},
 
 	pastEvents() {
-		return Template.instance().getEvents(true);
-	},
-
-	pastEventsLimited() {
 		const instance = Template.instance();
-		return instance.pastEventsCount.get() > instance.maxPastEvents.get();
+		return instance.getPastEvents(instance.pastEventLimit.get());
 	},
 
-	unloadedPastEvents() {
-		return Template.instance().unloadedEvents(true);
+	hasMorePastEvents() {
+		const instance = Template.instance();
+
+		const limit = instance.pastEventLimit.get();
+		const query = instance.getPastEvents(limit + 1);
+		return query.length > limit;
 	},
 });
-
 
 Template.venueDetails.events({
 	'click .js-venue-edit'(event, instance) {
@@ -216,13 +227,13 @@ Template.venueDetails.events({
 		});
 	},
 
-	'click .js-show-more-events'(e, instance) {
-		const limit = instance.maxEvents;
-		limit.set(limit.get() + instance.increaseBy);
+	'click .js-show-more-upcoming-events'(e, instance) {
+		const limit = instance.upcomingEventLimit;
+		limit.set(limit.get() + instance.eventLoadingBlockSize);
 	},
 
 	'click .js-show-more-past-events'(e, instance) {
-		const limit = instance.maxPastEvents;
-		limit.set(limit.get() + instance.increaseBy);
+		const limit = instance.pastEventLimit;
+		limit.set(limit.get() + instance.eventLoadingBlockSize);
 	},
 });

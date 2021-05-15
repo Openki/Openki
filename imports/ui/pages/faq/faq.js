@@ -2,8 +2,9 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
+import { Meteor } from 'meteor/meteor';
 
-import ScssVars from '/imports/ui/lib/scss-vars';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
 
 import './faq.de.md';
 import './faq.en.md';
@@ -52,7 +53,7 @@ Template.FAQ.onRendered(function () {
 Template.FAQ.helpers({
 	localizedFAQ() {
 		const templatePrefix = 'FAQ_';
-		const templateNotFound = locale => !Template[templatePrefix + locale];
+		const templateNotFound = (locale) => !Template[templatePrefix + locale];
 
 		// if the FAQ  doesn't exist with the specific locale fall back to the
 		// more general one

@@ -1,31 +1,50 @@
+import { Tooltips } from 'meteor/lookback:tooltips';
+import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
+import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
-import Roles from '/imports/api/roles/roles';
+import * as Alert from '/imports/api/alerts/alert';
+import { Courses } from '/imports/api/courses/courses';
+import { Users } from '/imports/api/users/users';
 
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
-import { HasRoleUser } from '/imports/utils/course-role-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list';
 import '/imports/ui/components/profiles/verify-email/verify-email';
+import '/imports/ui/components/avatar/avatar';
 
 import './userprofile.html';
 
+Template.userprofile.onCreated(function () {
+	this.busy(false);
+	const userId = Template.instance().data.user._id;
+
+	this.verifyUserDelete = new ReactiveVar(false);
+
+	this.courseSub = this.subscribe('Courses.findFilter', { createdby: userId });
+	this.coursesCreatedBy = function () {
+		return Courses.find({ createdby: userId }).fetch();
+	};
+});
+
 Template.userprofile.helpers({
-	// whether userprofile is for the logged-in user
+	/**
+	 * whether userprofile is for the logged-in user
+	 */
 	ownuser() {
-		return this.user && this.user._id === Meteor.userId();
+		return this.user?._id === Meteor.userId();
 	},
 
-	acceptsMessages() {
-		return this.user
-			&& this.user.acceptsMessages;
+	acceptsPrivateMessages() {
+		return this.user?.acceptsPrivateMessages || UserPrivilegeUtils.privilegedTo('admin');
 	},
 
 	groupMember(group, user) {
-		return user && group && group.members && group.members.indexOf(user._id) >= 0;
+		return !!(user && group?.members?.includes(user._id));
 	},
 
 	showInviteGroups() {
@@ -37,30 +56,27 @@ Template.userprofile.helpers({
 		const showInviteGroups = this.inviteGroups.count && this.inviteGroups.count() > 0;
 		return showPrivileges || showInviteGroups;
 	},
-	roles() {
-		return _.clone(Roles).reverse();
+	verifyUserDelete() {
+		return Template.instance().verifyUserDelete.get();
 	},
-	coursesByRole(role) {
-		const templateData = Template.instance().data;
-		const { involvedIn } = templateData;
-		const userID = templateData.user._id;
-		const coursesForRole = [];
+	numberOfCoursesAffectedByDelete() {
+		return Template.instance().coursesCreatedBy().length;
+	},
+	numberOfInterestedAffectedByDelete() {
+		return Template.instance()
+			.coursesCreatedBy()
+			.reduce((accumulator, currentValue) => accumulator + currentValue.interested, 0);
+	},
+	numberOfFutureEventsAffectedByDelete() {
+		return Template.instance()
+			.coursesCreatedBy()
+			.reduce((accumulator, currentValue) => accumulator + currentValue.futureEvents, 0);
+	},
 
-		involvedIn.forEach((course) => {
-			if (HasRoleUser(course.members, role, userID)) {
-				coursesForRole.push(course);
-			}
-		});
-		return coursesForRole;
-	},
-	roleUserList() {
-		return `roles.${this.type}.userList`;
-	},
-	getName() {
-		return Template.instance().data.user.username;
+	userId() {
+		return this.user?._id || false;
 	},
 });
-
 
 Template.userprofile.events({
 	'click button.giveAdmin'() {
@@ -110,50 +126,55 @@ Template.userprofile.events({
 			}
 		});
 	},
+
+	'click .js-verify-user-delete-collapse'() {
+		const instance = Template.instance();
+		instance.verifyUserDelete.set(!instance.verifyUserDelete.get());
+	},
+
+	'click .js-verify-user-delete-confirm'(event, instance) {
+		if (PleaseLogin()) {
+			return;
+		}
+
+		instance.busy('deleting');
+
+		const reason = instance.$('.js-reason').val();
+
+		if (reason.length < 4) {
+			Alert.error(mf('profile.admin.remove.reason.longertext', 'longer text please'));
+			instance.busy(false);
+			return;
+		}
+
+		const userId = Template.parentData().user._id;
+		Meteor.call('user.admin.remove', userId, reason, { courses: true }, () => {
+			instance.busy(false);
+			Alert.success(mf('profile.account.deleted', 'The account has been deleted'));
+			Router.go('users');
+		});
+	},
 });
 
 Template.emailBox.onCreated(function () {
-	this.verificationMailSent = new ReactiveVar(false);
 	this.busy(false);
 });
 
-Template.emailBox.onRendered(function emailBoxOnRendered() {
+Template.emailBox.onRendered(function () {
 	this.$('#emailmessage').select();
 });
 
 Template.emailBox.helpers({
 	hasEmail() {
-		const user = Meteor.user();
-		if (!user) {
-			return false;
-		}
-
-		const { emails } = user;
-		return emails && emails[0];
+		return Meteor.user()?.hasEmail() || false;
 	},
 
 	hasVerifiedEmail() {
-		return Meteor.user().emails[0].verified;
-	},
-
-	verificationMailSent() {
-		return Template.instance().verificationMailSent.get();
+		return Meteor.user()?.hasVerifiedEmail() || false;
 	},
 });
 
 Template.emailBox.events({
-	'click .js-verify-mail'(e, instance) {
-		instance.verificationMailSent.set(true);
-		Meteor.call('sendVerificationEmail', (err) => {
-			if (err) {
-				instance.verificationMailSent.set(false);
-				Alert.serverError(err, 'Failed to send verification mail');
-			} else {
-				Alert.success(mf('profile.sentVerificationMail'));
-			}
-		});
-	},
-
 	'change .js-send-own-adress'(event, instance) {
 		instance.$('.js-send-own-adress + .checkmark').toggle();
 	},
@@ -169,7 +190,7 @@ Template.emailBox.events({
 		}
 
 		const recUserId = this.user._id;
-		let recUser = Meteor.users.findOne({ _id: recUserId });
+		let recUser = Users.findOne({ _id: recUserId });
 		if (recUser) {
 			if (recUser.username) {
 				recUser = recUser.username;
@@ -186,21 +207,14 @@ Template.emailBox.events({
 		}
 
 		template.busy('sending');
-		Meteor.call(
-			'sendEmail',
-			this.user._id,
-			message,
-			revealAddress,
-			receiveCopy,
-			(err) => {
-				template.busy(false);
-				if (err) {
-					Alert.serverError(err, '');
-				} else {
-					Alert.success(mf('profile.mail.sent', 'Your message was sent'));
-					template.$('#emailmessage').val('');
-				}
-			},
-		);
+		Meteor.call('sendEmail', this.user._id, message, revealAddress, receiveCopy, (err) => {
+			template.busy(false);
+			if (err) {
+				Alert.serverError(err, '');
+			} else {
+				Alert.success(mf('profile.mail.sent', 'Your message was sent'));
+				template.$('#emailmessage').val('');
+			}
+		});
 	},
 });

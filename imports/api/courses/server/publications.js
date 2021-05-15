@@ -1,14 +1,11 @@
 import { Meteor } from 'meteor/meteor';
+import { Courses } from '../courses';
+import { visibleTenants } from '/imports/utils/visible-tenants';
 
-import Courses from '../courses';
+Meteor.publish('courseDetails', (id) =>
+	Courses.find({ _id: id, tenant: { $in: visibleTenants() } }),
+);
 
-Meteor.publish('courses', (region) => {
-	if (!region) {
-		return Courses.find();
-	}
-	return Courses.find({ region });
-});
-
-Meteor.publish('courseDetails', id => Courses.find({ _id: id }));
-
-Meteor.publish('Courses.findFilter', Courses.findFilter);
+Meteor.publish('Courses.findFilter', (filter, limit, sortParams) =>
+	Courses.findFilter({ ...filter, tenants: visibleTenants() }, limit, sortParams),
+);

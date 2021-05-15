@@ -1,6 +1,7 @@
 <template name="deleteCourseEvents">
 	<div class="event-caption-wrap">
-		<button class="btn-link js-show-events-delete-modal" title="{{mf 'course.event.edit.deleteEvents' 'Delete events'}}">
+		<button class="btn-link js-show-events-delete-modal"
+				title="{{mf 'course.event.edit.deleteEvents' 'Delete events'}}">
 			<div class="event-caption placeholder event-caption-action event-caption-delete">
 				<div class="event-caption-header-wrap">
 					<div class="event-caption-header">
@@ -40,16 +41,13 @@
 							</div>
 							<div class="panel-body">
 								{{#mf KEY='deleteEventsModal.reallyDelete' NUM=numSelectedEvents}}
-									Do you really want to delete
-									{NUM, plural,
-										one {this event}
-										other {these # events}
-									}?
+									Do you really want to delete {NUM, plural, one {this event} other {these # events}}?
 								{{/mf}}
 								<ul class="list-group selected-events">
 									{{#each event in selectedEvents}}
 										<li class="list-group-item list-group-item-danger">
-											<span class="close js-deselect-event" data-event-id="{{event._id}}">
+											<span class="close js-deselect-event"
+												  data-event-id="{{event._id}}">
 												&times;
 											</span>
 											{{> deleteEventsEvent event}}
@@ -57,25 +55,22 @@
 									{{/each}}
 								</ul>
 								<div class="delete-events-actions">
-									<button type="button" class="btn btn-danger js-delete-events" {{disabledIfBusy}}>
+									<button type="button" class="btn btn-danger js-delete-events"
+											{{disabledIfBusy}}>
 										{{#if busy 'deleting'}}
-											<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+											<span class="fa fa-circle-o-notch fa-spin fa-fw"
+												  aria-hidden="true"></span>
 											{{#mf KEY='deleteEventsModal.deletingEvents' NUM=numSelectedEvents}}
-												Deleting {NUM, plural,
-													one {event}
-													other {events}
-												}...
+												Deleting {NUM, plural, one {event} other {events}}...
 											{{/mf}}
 										{{else}}
 											{{#mf KEY='deleteEventsModal.confirmDeleteEvents' NUM=numSelectedEvents}}
-												Delete {NUM, plural,
-													one {event}
-													other {events}
-												}
+												Delete {NUM, plural, one {event} other {events}}
 											{{/mf}}
 										{{/if}}
 									</button>
-									<button type="button" class="btn btn-default js-cancel" {{disabledIfBusy}}>
+									<button type="button" class="btn btn-default js-cancel"
+											{{disabledIfBusy}}>
 										{{mf '_button.cancel'}}
 									</button>
 								</div>
@@ -86,24 +81,18 @@
 							{{#each upcomingEvents}}
 								<div class="checkbox">
 									<label>
-										<input
-											type="checkbox"
-											checked="{{isSelected}}"
-											{{disabledIfBusy}}
-										/>
+										<input type="checkbox" checked="{{isSelected}}"
+											   {{disabledIfBusy}} />
 										{{> deleteEventsEvent this}}
 									</label>
 								</div>
 							{{/each}}
 						</div>
 						<div class="delete-events-actions">
-							<button class="btn btn-danger js-show-delete-confirm" {{disabledIfNoEventsSelected}}>
+							<button class="btn btn-danger js-show-delete-confirm"
+									{{disabledIfNoEventsSelected}}>
 								{{#mf KEY='deleteEventsModal.deleteEvents' NUM=numSelectedEvents}}
-									Delete {NUM, plural,
-										=0 {event}
-										one {event}
-										other {# events}
-									}
+									Delete {NUM, plural, =0 {event} one {event} other {# events}}
 								{{/mf}}
 							</button>
 							<button class="btn btn-default js-toggle-all">
@@ -128,14 +117,14 @@
 	<div class="delete-events-details">
 		<span class="delete-events-details-component">
 			<i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
-			{{weekdayShort start}}
-			{{dateformat start}}
+			{{weekdayFormat start}}
+			{{dateFormat start}}
 		</span>
 		<span class="delete-events-details-component">
 			<i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
-			{{timeformat start}}
+			{{timeFormat start}}
 			-
-			{{timeformat end}}
+			{{timeFormat end}}
 		</span>
 	</div>
 </template>

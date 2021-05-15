@@ -1,8 +1,10 @@
-import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
+import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
+import { Accounts } from 'meteor/accounts-base';
 
-import Alert from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 
 import '/imports/ui/components/buttons/buttons';
 
@@ -27,15 +29,14 @@ Template.resetPassword.onCreated(function () {
 			const passwordConfirm = $('.js-confirm-pwd-reset').val();
 			instance.passwordSame.set(password.length > 0 && password === passwordConfirm);
 			instance.passwordNotSame.set(
-				passwordConfirm
-				&& password.length <= passwordConfirm.length
-				&& password !== passwordConfirm,
+				passwordConfirm &&
+					password.length <= passwordConfirm.length &&
+					password !== passwordConfirm,
 			);
 			instance.passwordValid.set(password.length > 0 && password === passwordConfirm);
 		}
 	};
 });
-
 
 Template.resetPassword.helpers({
 	showPassword() {
@@ -83,10 +84,7 @@ Template.resetPassword.events({
 		Accounts.resetPassword(token, password, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.serverError(
-					err,
-					mf('resetPassword.passwordResetError', 'Unable to reset password'),
-				);
+				Alert.serverError(err, mf('resetPassword.passwordResetError', 'Unable to reset password'));
 			} else {
 				Alert.success(mf('resetPassword.passwordReset.', 'Your password has been reset.'));
 				Router.go('profile');

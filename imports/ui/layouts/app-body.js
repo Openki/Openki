@@ -2,12 +2,14 @@ import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
+import { Meteor } from 'meteor/meteor';
 
 import RegionSelection from '/imports/utils/region-selection';
 import Introduction from '/imports/ui/lib/introduction';
-import ScssVars from '/imports/ui/lib/scss-vars';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
 import UpdateViewport from '/imports/ui/lib/update-viewport';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/account-tasks/account-tasks';
 import '/imports/ui/components/alerts/alerts';
@@ -24,12 +26,12 @@ import './app-body.html';
 
 Template.layout.helpers({
 	testWarning() {
-		return Meteor.settings && Meteor.settings.public && Meteor.settings.public.testWarning;
+		return Meteor.settings.public.testWarning;
 	},
 
 	translate() {
 		const { route } = Router.current();
-		return route && route.getName() === 'mfTrans';
+		return route?.getName() === 'mfTrans';
 	},
 
 	mayTranslate() {
@@ -43,12 +45,12 @@ Template.layout.helpers({
 		}
 
 		return (
-			RegionSelection.regionDependentRoutes.indexOf(route.getName()) >= 0
-			&& Session.get('showRegionSplash')
+			RegionSelection.regionDependentRoutes.includes(route.getName()) &&
+			Session.equals('showRegionSplash', true)
 		);
 	},
 
-	isAdminPage: () => Router.current().url.indexOf('admin') >= 0,
+	isAdminPage: () => Router.current().url.includes('admin'),
 
 	isAdmin: () => UserPrivilegeUtils.privilegedTo('admin'),
 
@@ -62,15 +64,17 @@ Template.layout.events({
 	// Clicks on the logo toggle the intro blurb, but only when already on home
 	'click .js-toggle-introduction'() {
 		const { route } = Router.current();
-		if (route && route.options.template === 'findWrap') {
+		if (route?.options.template === 'findWrap') {
 			Introduction.showIntro();
 		}
 	},
 });
 
 Template.layout.rendered = function () {
-	$(window).resize(() => { UpdateViewport(); });
-	Session.set('isRetina', (window.devicePixelRatio === 2));
+	$(window).resize(() => {
+		UpdateViewport();
+	});
+	Session.set('isRetina', window.devicePixelRatio === 2);
 };
 
 /* Workaround to prevent iron-router from messing with server-side downloads

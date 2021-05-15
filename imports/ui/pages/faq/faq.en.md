@@ -107,7 +107,7 @@ Many tools are already available on the web freely and humans can link them to O
 
 * Create your own wiki: [https://www.wikispaces.com/content/classroom](https://www.wikispaces.com/content/classroom)
 * Compose texts: [Etherpad](https://etherpad.wikimedia.org) or [Hackpad](https://hackpad.com)
-* Simple voting: [Dudle](https://dudle.inf.tu-dresden.de/) or [Papillon](http://papilio.niadomo.net/create/) or [Framadate](https://framadate.org)
+* Simple voting: [Dudle](https://dudle.inf.tu-dresden.de/) or [Framadate](https://framadate.org)
 * More complex choices in a group: [https://loomio.org](https://loomio.org)
 * Upload files: [https://wetransfer.com/](https://wetransfer.com/) or self-host a [NextCloud](https://nextcloud.com) instance.
 
@@ -172,7 +172,7 @@ It is part of our long-term vision to make Openki an open platform that allows p
 
 Today we only create new regions at the Openki.net platform upon requests from individuals that show a certain level of commitment to activate an Openki community in their region and make sure it is functioning properly (not extensive spam or abuses take place) and according to Openki's core values.
 
-For this, we have recently established an e-mail list, [region-admins@lists.openki.net](http://lists.lists.openki.net/mailman/listinfo/region-admins), with all “region admins” to exchange ideas and ways to resolve common issues.
+For this, we have recently established an e-mail list, [region-admins@lists.openki.net](https://lists.lists.openki.net/mailman/listinfo/region-admins), with all “region admins” to exchange ideas and ways to resolve common issues.
 
 We are also working to implement a special region admin functionality in the platform, which will allow region administrators to delete or edit region courses, block misbehaving users, give administrator rights to other people from the same region, etc.
 

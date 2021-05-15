@@ -1,34 +1,33 @@
-// http://stackoverflow.com/questions/27949407/how-to-get-the-parent-template-instance-of-the-current-template
-/** Get the parent template instance
-  * @param {Number} [levels] How many levels to go up. Default is 1
-  * @returns {Blaze.TemplateInstance}
-  */
+import { Blaze } from 'meteor/blaze';
+import { ReactiveVar } from 'meteor/reactive-var';
+
+/**
+ * Get the parent template instance. Source: http://stackoverflow.com/questions/27949407/how-to-get-the-parent-template-instance-of-the-current-template
+ * @param {number} [levels=1] How many levels to go up. Default is 1
+ * @returns {Blaze.TemplateInstance}
+ */
 /* eslint-disable-next-line consistent-return */
-Blaze.TemplateInstance.prototype.parentInstance = function (levels) {
+Blaze.TemplateInstance.prototype.parentInstance = function (levels = 1) {
 	let { view } = this;
-	if (typeof levels === 'undefined') {
-		/* eslint-disable-next-line no-param-reassign */
-		levels = 1;
-	}
 	while (view) {
 		/* eslint-disable-next-line no-param-reassign, no-plusplus */
-		if (view.name.substring(0, 9) === 'Template.' && !(levels--)) {
+		if (view.name.substring(0, 9) === 'Template.' && !levels--) {
 			return view.templateInstance();
 		}
 		view = view.parentView;
 	}
 };
 
-
-/** Set the business of the template instance
-  *
-  * This method will set up the 'business' variable on the template instance.
-  * It needs to be called in onCreated() so the other methods will find the
-  * var. Usually it will be this.busy(false) bout it could also be
-  * this.busy('loading') for example.
-  *
-  * @param {String} [activity] The new business
-  */
+/**
+ * Set the business of the template instance
+ *
+ * This method will set up the 'business' variable on the template instance.
+ * It needs to be called in onCreated() so the other methods will find the
+ * var. Usually it will be this.busy(false) bout it could also be
+ * this.busy('loading') for example.
+ *
+ * @param {String} [activity] The new business
+ */
 Blaze.TemplateInstance.prototype.busy = function (activity) {
 	if (!this.business) {
 		this.business = new ReactiveVar(activity);
@@ -37,9 +36,9 @@ Blaze.TemplateInstance.prototype.busy = function (activity) {
 	}
 };
 
-
-/** Find business state var in this or parent template instance
-  */
+/**
+ * Find business state var in this or parent template instance
+ */
 Blaze.TemplateInstance.prototype.findBusiness = function () {
 	if (this.business) return this.business; // Short-circuit common case
 

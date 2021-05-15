@@ -1,17 +1,21 @@
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
-import Roles from '/imports/api/roles/roles';
+import * as Alert from '/imports/api/alerts/alert';
+import { Roles } from '/imports/api/roles/roles';
 import {
-	Subscribe, Unsubscribe, Message, processChange,
+	Subscribe,
+	Unsubscribe,
+	Message,
+	processChangeAsync,
 } from '/imports/api/courses/subscription';
+import { Users } from '/imports/api/users/users';
 
-import Editable from '/imports/ui/lib/editable';
-import { HasRoleUser } from '/imports/utils/course-role-utils';
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-
+import { Editable } from '/imports/ui/lib/editable';
+import { hasRoleUser } from '/imports/utils/course-role-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/participant/contact/participant-contact';
@@ -31,33 +35,30 @@ Template.courseMembers.helpers({
 	},
 
 	canNotifyAll() {
-		const userId = Meteor.userId();
-		return userId && HasRoleUser(this.members, 'team', userId);
+		return hasRoleUser(this.members, 'team', Meteor.userId());
 	},
 
 	ownUserMember() {
-		return this.members.find(member => member.user === Meteor.userId());
+		return this.members.find((member) => member.user === Meteor.userId());
 	},
 
 	sortedMembers() {
 		const { members } = this;
 		members.sort((a, b) => {
-			const aRoles = a.roles.filter(role => role !== 'participant');
-			const bRoles = b.roles.filter(role => role !== 'participant');
+			const aRoles = a.roles.filter((role) => role !== 'participant');
+			const bRoles = b.roles.filter((role) => role !== 'participant');
 			return bRoles.length - aRoles.length;
 		});
 		// check if logged-in user is in members and if so put him on top
 		const userId = Meteor.userId();
-		if (userId && members.some(member => member.user === userId)) {
-			const userArrayPosition = members.findIndex(member => member.user === userId);
+		if (userId && members.some((member) => member.user === userId)) {
+			const userArrayPosition = members.findIndex((member) => member.user === userId);
 			const currentMember = members[userArrayPosition];
 			// remove current user form array and readd him at index 0
 			members.splice(userArrayPosition, 1); // remove
 			members.splice(0, 0, currentMember); // readd
 		}
-		return (
-			members.slice(0, Template.instance().membersDisplayLimit.get())
-		);
+		return members.slice(0, Template.instance().membersDisplayLimit.get());
 	},
 
 	limited() {
@@ -83,13 +84,16 @@ Template.courseMember.onCreated(function () {
 
 	instance.editableMessage = new Editable(
 		true,
-		((newMessage) => {
-			const change = new Message(instance.data.course, Meteor.user(), newMessage);
-			processChange(change, () => {
-				Alert.success(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));
-			});
-		}),
 		mf('roles.message.placeholder', 'My interests...'),
+		{
+			onSave: async (newMessage) => {
+				const change = new Message(instance.data.course, Meteor.user(), newMessage);
+				await processChangeAsync(change);
+			},
+			onSuccess: () => {
+				Alert.success(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));
+			},
+		},
 	);
 
 	instance.autorun(() => {
@@ -99,19 +103,18 @@ Template.courseMember.onCreated(function () {
 
 	instance.subscribeToTeam = function () {
 		const user = Users.findOne(this.data.member.user);
-		if (!user) return false; // Probably not loaded yet
+		if (!user) return undefined; // Probably not loaded yet
 
 		return new Subscribe(this.data.course, user, 'team');
 	};
 
 	instance.removeFromTeam = function () {
 		const user = Users.findOne(this.data.member.user);
-		if (!user) return false; // Probably not loaded yet
+		if (!user) return undefined; // Probably not loaded yet
 
 		return new Unsubscribe(this.data.course, user, 'team');
 	};
 });
-
 
 Template.courseMember.helpers({
 	ownUserMemberClass() {
@@ -122,19 +125,20 @@ Template.courseMember.helpers({
 	},
 
 	memberRoles() {
-		return this.member.roles.filter(role => role !== 'participant');
+		return this.member.roles.filter((role) => role !== 'participant');
 	},
-
-	roleShort() { return `roles.${this}.short`; },
 
 	maySubscribeToTeam() {
 		const change = Template.instance().subscribeToTeam();
-		return change && change.validFor(Meteor.user());
+		return change?.validFor(Meteor.user());
 	},
 
+	/**
+	 * @param {string} roletype
+	 */
 	rolelistIcon(roletype) {
 		if (roletype !== 'participant') {
-			return Roles.find(role => role.type === roletype).icon;
+			return Roles.find((role) => role.type === roletype)?.icon || '';
 		}
 		return '';
 	},
@@ -144,6 +148,9 @@ Template.courseMember.helpers({
 		return mayChangeComment && Template.instance().editableMessage;
 	},
 
+	/**
+	 * @param {string} label
+	 */
 	mayUnsubscribeFromTeam(label) {
 		if (label !== 'team') {
 			return false;
@@ -160,18 +167,18 @@ Template.courseMember.helpers({
 
 Template.removeFromTeamDropdown.helpers({
 	isNotPriviledgedSelf() {
-		const notPriviledgedUser = !UserPrivilegeUtils.privileged(Meteor.userId(), 'admin');
-		return (this.member.user === Meteor.userId() && notPriviledgedUser);
+		const notPriviledgedUser = !UserPrivilegeUtils.privilegedTo('admin');
+		return this.member.user === Meteor.userId() && notPriviledgedUser;
 	},
 });
 
 Template.courseMember.events({
 	'click .js-add-to-team-btn'(event, instance) {
 		event.preventDefault();
-		processChange(instance.subscribeToTeam());
+		processChangeAsync(instance.subscribeToTeam());
 	},
 	'click .js-remove-team'(event, instance) {
 		event.preventDefault();
-		processChange(instance.removeFromTeam());
+		processChangeAsync(instance.removeFromTeam());
 	},
 });

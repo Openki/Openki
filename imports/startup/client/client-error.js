@@ -1,40 +1,49 @@
+import { Meteor } from 'meteor/meteor';
+import { Random } from 'meteor/random';
+
 const clientId = Random.id();
 
+/**
+ * @param {{name: string; message: string; stack?: string;}} error
+ */
 const reportToServer = function (error) {
 	const report = {
 		name: error.name,
 		message: error.message,
 		location: window.location.href,
+		stack: error.stack,
 		tsClient: new Date(),
 		clientId,
 		userAgent: window.navigator.userAgent,
 	};
-	Meteor.call('log.clientError', report, () => {
-	});
+	Meteor.call('log.clientError', report);
 };
 
 window.addEventListener('error', (event) => {
 	reportToServer(event.error);
 });
 
+/** @type string[] */
 const buffer = [];
-const discriminatoryReporting = function (args) {
+const discriminatoryReporting = function (
+	/** @type {[msg: string, error?: Error] | string[]} */ args,
+) {
 	const msg = args[0];
 
 	// "Exception from Tracker recompute function:"
-	if (msg.indexOf('Exception from Tracker') === 0) {
+	if (msg.startsWith('Exception from Tracker')) {
 		// Boring, followed by "Error: ..."
 		return;
 	}
 
 	// "Error: No such function: ..."
-	if (msg.indexOf('Error:') === 0) {
+	if (msg.startsWith('Error:')) {
 		buffer.push(msg);
 		return;
 	}
 
 	// "Blaze.View.prototy..."
-	if (msg.indexOf('Blaze.') === 0) {
+	if (msg.startsWith('Blaze.')) {
 		// There's a template name in there right?
 		const templateNames = /Template\.[^_]\w+/g;
 		buffer.push(msg.match(templateNames).join(','));
@@ -55,14 +64,12 @@ const discriminatoryReporting = function (args) {
 	}
 
 	// Log all the things!
-	reportToServer({ name: 'Meteor._debug', message: args[0] });
+	reportToServer({ name: 'Meteor._debug', message: args.join(' ') });
 };
 
 // wrap the Meteor debug function
 const meteorDebug = Meteor._debug;
-Meteor._debug = function (/* arguments */) {
-	/* eslint-disable-next-line prefer-rest-params */
-	meteorDebug.apply(this, arguments);
-	/* eslint-disable-next-line prefer-rest-params */
-	discriminatoryReporting(arguments);
+Meteor._debug = function (/** @type {[msg: string, error: Error ] | string[]} */ ...args) {
+	meteorDebug.apply(this, args);
+	discriminatoryReporting(args);
 };

@@ -1,18 +1,27 @@
-import Courses from '/imports/api/courses/courses';
-import Log from '/imports/api/log/log';
+import { Match, check } from 'meteor/check';
+import { Router } from 'meteor/iron:router';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 
-import HtmlTools from '/imports/utils/html-tools';
-import StringTools from '/imports/utils/string-tools';
+import { Courses } from '/imports/api/courses/courses';
+import { Regions } from '/imports/api/regions/regions';
+import Log from '/imports/api/log/log';
+import { Users } from '/imports/api/users/users';
+
+import * as HtmlTools from '/imports/utils/html-tools';
+import * as StringTools from '/imports/utils/string-tools';
+
+/** @typedef {import('../api/users/users').UserModel} UserModel */
 
 const notificationJoin = {};
 
-/** Record the intent to send join notifications
-  *
-  * @param      {ID} courseID         - ID for the CourseDiscussions collection
-  * @param      {ID} participantId - ID of the user that joined
-  * @param      {String} newRole      - new role of the participant
-  * @param      {String} message      - Optional message of the new participant
-  */
+/**
+ * Record the intent to send join notifications
+ * @param {string} courseId ID for the CourseDiscussions collection
+ * @param {string} participantId ID of the user that joined
+ * @param {string} newRole new role of the participant
+ * @param {string} [message] Optional message of the new participant
+ */
 notificationJoin.record = function (courseId, participantId, newRole, message) {
 	check(courseId, String);
 	check(participantId, String);
@@ -24,7 +33,7 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 		throw new Meteor.Error(`No course entry for ${courseId}`);
 	}
 
-	const participant = Meteor.users.findOne(participantId);
+	const participant = Users.findOne(participantId);
 	if (!course) {
 		throw new Meteor.Error(`No user entry for ${participantId}`);
 	}
@@ -32,10 +41,10 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	const body = {};
 	body.courseId = course._id;
 	body.participantId = participant._id;
-	body.recipients = _.pluck(course.membersWithRole('team'), 'user');
+	body.recipients = course.membersWithRole('team').map((m) => m.user);
 
 	// Don't send to new member, they know
-	body.recipients = body.recipients.filter(r => r !== participantId);
+	body.recipients = body.recipients.filter((r) => r !== participantId);
 
 	body.newRole = newRole;
 
@@ -49,10 +58,28 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 notificationJoin.Model = function (entry) {
 	const { body } = entry;
 	const course = Courses.findOne(body.courseId);
-	const newParticipant = Meteor.users.findOne(body.participantId);
+	const newParticipant = Users.findOne(body.participantId);
 
 	return {
-		vars(userLocale) {
+		/**
+		 * @param {UserModel} actualRecipient
+		 */
+		accepted(actualRecipient) {
+			if (actualRecipient.notifications === false) {
+				throw new Error('User wishes to not receive automated notifications');
+			}
+
+			if (!actualRecipient.hasEmail()) {
+				throw new Error('Recipient has no email address registered');
+			}
+		},
+
+		/**
+		 * @param {string} userLocale
+		 * @param {UserModel} _actualRecipient
+		 * @param {string} unsubToken
+		 */
+		vars(userLocale, _actualRecipient, unsubToken) {
 			if (!newParticipant) {
 				throw new Error('New participant does not exist (0.o)');
 			}
@@ -66,33 +93,43 @@ notificationJoin.Model = function (entry) {
 				USER: StringTools.truncate(newParticipant.username, 50),
 				ROLE: roleTitle,
 			};
+
+			// prettier-ignore
 			const subject = mf('notification.join.mail.subject', subjectvars, '{USER} joined {COURSE}: {ROLE}', userLocale);
 
-			const figures = [];
-			/* eslint-disable-next-line no-restricted-syntax */
-			for (const role of ['host', 'mentor', 'participant']) {
-				if (course.roles.includes(role)) {
-					figures.push(
-						{
-							role: StringTools.capitalize(mf(`roles.${role}.short`, {}, undefined, userLocale)),
-							count: course.membersWithRole(role).length,
-						},
-					);
-				}
-			}
+			const figures = ['host', 'mentor', 'participant']
+				.filter((role) => course.roles.includes(role))
+				.map((role) => ({
+					role: StringTools.capitalize(mf(`roles.${role}.short`, {}, undefined, userLocale)),
+					count: course.membersWithRole(role).length,
+				}));
 
-			return (
-				{
-					course,
-					newParticipant,
-					courseLink: Router.url('showCourse', course),
-					subject,
-					memberCount: course.members.length,
-					roleTitle,
-					message: HtmlTools.plainToHtml(body.message),
-					figures,
-				}
-			);
+			let siteName;
+			let mailLogo;
+			if (course.region) {
+				const region = Regions.findOne(course.region);
+				siteName = region?.custom?.siteName;
+				mailLogo = region?.custom?.mailLogo;
+			}
+			siteName = siteName || Meteor.settings.public.siteName;
+
+			return {
+				unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
+				course,
+				newParticipant,
+				courseLink: Router.url('showCourse', course, { query: 'campaign=joinNotify' }),
+				subject,
+				memberCount: course.members.length,
+				roleTitle,
+				message: HtmlTools.plainToHtml(body.message),
+				// For Team members when a mentor joins, add a hint for possible collaboration or
+				// invite into team
+				appendCollaborationHint: body.newRole === 'mentor',
+				figures,
+				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=joinNotify`,
+				customSiteName: siteName,
+				customMailLogo: mailLogo,
+			};
 		},
 		template: 'notificationJoinMail',
 	};

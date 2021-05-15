@@ -1,19 +1,19 @@
-const EmailRequest = {
+import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 
-	showEmailRequest: () => {
-		const user = Meteor.user();
+export function showEmailRequest() {
+	const user = Meteor.user();
 
-		return user && !user.emailAddress();
-	},
+	return user && !user.hasEmail();
+}
 
-	showEmailValidation: () => {
-		const user = Meteor.user();
+export function showEmailValidation() {
+	const user = Meteor.user();
 
-		return user
-			&& user.emailAddress()
-			&& !user.verifiedEmailAddress()
-			&& moment().subtract(7, 'days').isAfter(user.createdAt);
-	},
-};
-
-export default EmailRequest;
+	return (
+		user &&
+		user.hasEmail() &&
+		!user.hasVerifiedEmail() &&
+		moment().subtract(7, 'days').isAfter(user.createdAt)
+	);
+}

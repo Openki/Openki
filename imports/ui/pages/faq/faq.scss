@@ -1,3 +1,4 @@
+/* stylelint-disable max-nesting-depth, selector-no-qualifying-type */
 .faq {
 	h2 {
 		color: $brand-primary;
@@ -13,7 +14,7 @@
 		cursor: pointer;
 		font-size: 1.2em;
 		padding-bottom: 5px;
-		transition: border-color .15s;
+		transition: border-color 0.15s;
 
 		&:hover,
 		&.active {

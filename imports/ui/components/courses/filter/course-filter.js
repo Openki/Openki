@@ -1,39 +1,45 @@
+import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import Roles from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 
-import FilterPreview from '/imports/ui/lib/filter-preview';
-import ScssVars from '/imports/ui/lib/scss-vars';
-import StringTools from '/imports/utils/string-tools';
+import { FilterPreview } from '/imports/ui/lib/filter-preview';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
+import * as StringTools from '/imports/utils/string-tools';
 
 import '/imports/ui/components/courses/categories/course-categories';
 
 import './course-filter.html';
 
 Template.filter.onCreated(function () {
-	this.stateFilters = [
-		{
-			name: 'proposal',
-			cssClass: 'is-proposal',
-			label: mf('filterCaptions.is-proposal', 'Proposal'),
-			title: mf('filterCaptions.showProposal', 'Show all proposed courses'),
-		},
-		{
-			name: 'upcomingEvent',
-			cssClass: 'has-upcoming-events',
-			label: mf('filterCaptions.upcoming.label', 'Upcoming'),
-			title: mf('filterCaptions.upcoming.title', 'Show all courses with upcoming events'),
-		},
-		{
-			name: 'resting',
-			cssClass: 'has-past-events',
-			label: mf('filterCaptions.resting.label', 'Resting'),
-			title: mf('filterCaptions.resting.title', 'Courses with passed but without upcoming events'),
-		},
-	];
+	this.autorun(() => {
+		this.stateFilters = [
+			{
+				name: 'proposal',
+				cssClass: 'is-proposal',
+				label: mf('filterCaptions.is-proposal', 'Proposal'),
+				title: mf('filterCaptions.showProposal', 'Show all proposed courses'),
+			},
+			{
+				name: 'upcomingEvent',
+				cssClass: 'has-upcoming-events',
+				label: mf('filterCaptions.upcoming.label', 'Upcoming'),
+				title: mf('filterCaptions.upcoming.title', 'Show all courses with upcoming events'),
+			},
+			{
+				name: 'resting',
+				cssClass: 'has-past-events',
+				label: mf('filterCaptions.resting.label', 'Resting'),
+				title: mf(
+					'filterCaptions.resting.title',
+					'Courses with passed but without upcoming events',
+				),
+			},
+		];
 
-	this.visibleFilters = ['state', 'needsRole', 'categories'];
+		this.visibleFilters = ['state', 'archived', 'needsRole', 'categories'];
+	});
 });
 
 Template.filter.helpers({
@@ -75,6 +81,22 @@ Template.filter.helpers({
 			classes.push('active');
 		}
 
+		if (parentInstance.filter.get('archived')) {
+			// make filter buttons yellow if only archived showed
+			classes.push('is-archived');
+		}
+
+		return classes.join(' ');
+	},
+
+	archivedFilterClasses() {
+		const classes = ['is-archived'];
+		const parentInstance = Template.instance().parentInstance();
+
+		if (parentInstance.filter.get('archived')) {
+			classes.push('active');
+		}
+
 		return classes.join(' ');
 	},
 
@@ -105,16 +127,14 @@ Template.filter.events({
 		const parentInstance = instance.parentInstance();
 		const filterName = instance.$(event.currentTarget).data('filter-name');
 
-		parentInstance.filter
-			.toggle('state', filterName)
-			.done();
+		parentInstance.filter.toggle('state', filterName).done();
 
 		parentInstance.updateUrl();
 	},
 
 	'mouseover .js-filter-caption, mouseout .js-filter-caption'(event, instance) {
 		const name = instance.$(event.currentTarget).data('filter-name');
-		const state = _.findWhere(instance.stateFilters, { name });
+		const state = instance.stateFilters.find((f) => f.name === name);
 
 		if (!instance.parentInstance().filter.get('state')) {
 			FilterPreview({
@@ -124,30 +144,46 @@ Template.filter.events({
 			});
 		}
 	},
+
+	'click .js-filter-caption-archived'(event, instance) {
+		const parentInstance = instance.parentInstance();
+
+		parentInstance.filter.toggle('archived').done();
+
+		parentInstance.updateUrl();
+	},
+
+	'mouseover .js-filter-caption-archived, mouseout .js-filter-caption-archived'(event, instance) {
+		if (!instance.parentInstance().filter.get('archived')) {
+			FilterPreview({
+				property: 'is',
+				id: 'archived',
+				activate: event.type === 'mouseover',
+			});
+		}
+	},
 });
 
 Template.additionalFilters.onCreated(function () {
 	this.findInstance = this.parentInstance(2);
-
-	this.roles = [
-		{
-			name: 'team',
-			label: mf('find.needsOrganizer', 'Looking for an organizer'),
-		},
-		{
-			name: 'mentor',
-			label: mf('find.needsMentor', 'Looking for a mentor'),
-		},
-		{
-			name: 'host',
-			label: mf('find.needsHost', 'Looking for a host'),
-		},
-	].map((role) => {
-		// add icon from Roles collection to role object
-		/* eslint-disable-next-line no-param-reassign */
-		role.icon = _.findWhere(Roles, { type: role.name }).icon;
-
-		return role;
+	this.autorun(() => {
+		this.roles = [
+			{
+				name: 'team',
+				label: mf('find.needsOrganizer', 'Looking for an organizer'),
+			},
+			{
+				name: 'mentor',
+				label: mf('find.needsMentor', 'Looking for a mentor'),
+			},
+			{
+				name: 'host',
+				label: mf('find.needsHost', 'Looking for a host'),
+			},
+		].map(
+			// add icon from Roles collection to role object
+			(role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon }),
+		);
 	});
 });
 
@@ -174,7 +210,7 @@ Template.additionalFilters.helpers({
 		const { findInstance } = Template.instance();
 		const needsRoleFilter = findInstance.filter.get('needsRole');
 
-		if (needsRoleFilter && needsRoleFilter.indexOf(role.name) >= 0) {
+		if (needsRoleFilter?.includes(role.name)) {
 			classes.push('active');
 		}
 
@@ -213,9 +249,7 @@ Template.additionalFilters.events({
 		const { findInstance } = instance;
 		const filterName = instance.$(e.currentTarget).data('filter-name');
 
-		findInstance.filter
-			.toggle('needsRole', filterName)
-			.done();
+		findInstance.filter.toggle('needsRole', filterName).done();
 
 		findInstance.updateUrl();
 	},
@@ -249,8 +283,7 @@ Template.additionalFilters.events({
 	'click .js-toggle-subcategories'(event, instance) {
 		event.stopPropagation();
 		instance.$(`.js-sub-category.${this}`).toggle();
-		instance.$(`.js-toggle-subcategories.${this} span`)
-			.toggleClass('fa-angle-down fa-angle-up');
+		instance.$(`.js-toggle-subcategories.${this} span`).toggleClass('fa-angle-down fa-angle-up');
 	},
 
 	'click .js-category-selection-label'(e, instance) {

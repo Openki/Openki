@@ -1,26 +1,36 @@
-export default class CssFromQuery {
-	constructor(query) {
+export class CssFromQuery {
+	/**
+	 * @param {{[param: string]: string}} query
+	 * @param {[
+	 *  key: string,
+	 *  name: string,
+	 *  selector: string
+	 * ][]} [properties] the customizable properties to add
+	 */
+	constructor(query, properties = []) {
 		this.query = query;
+		/** @type {{ key: string; name: string; selector: string; }[]} */
 		this.customizableProperties = [];
 
 		// define a default set of customizable properties
 		this.addCustomizableProperties([
 			['bgcolor', 'background-color', 'body'],
 			['color', 'color', 'body'],
-			['itembg', 'background-color', '.frame-list-item'],
-			['itemcolor', 'color', '.frame-list-item'],
-			['linkcolor', 'color', '.frame-list-item a'],
 			['fontsize', 'font-size', '*'],
-			['regionbg', 'background-color', '.frame-list-item-region'],
-			['regioncolor', 'color', '.frame-list-item-region'],
 		]);
+
+		this.addCustomizableProperties(properties);
 	}
 
-	/** Add customizable properties
-	  *
-	  * @param  {Array} properties - the customizable properties to add
-	  * @return {CssFromQuery Object}
-	  */
+	/**
+	 * Add customizable properties
+	 * @param {[
+	 *  key: string,
+	 *  name: string,
+	 *  selector: string
+	 * ][]} properties the customizable properties to add
+	 * @return {CssFromQuery}
+	 */
 	addCustomizableProperties(properties) {
 		properties.forEach((property) => {
 			const [key, name, selector] = property;
@@ -30,15 +40,16 @@ export default class CssFromQuery {
 	}
 
 	getCssRules() {
+		/** @type {string[]} */
 		this.cssRules = [];
 		this.customizableProperties.forEach((property) => {
 			const queryValue = this.query[property.key];
 			let cssValue;
 			if (typeof queryValue !== 'undefined') {
 				// hexify color values
-				if (property.name.indexOf('color') >= 0) {
+				if (property.name.includes('color')) {
 					if (queryValue.match(/^[0-9A-F]+$/i)) {
-						cssValue = `#${queryValue.substr(0, 6)}`;
+						cssValue = `#${queryValue.substr(0, 8)}`;
 					}
 				} else {
 					const intVal = parseInt(queryValue, 10);
@@ -48,12 +59,12 @@ export default class CssFromQuery {
 				}
 
 				if (cssValue) {
-					this.cssRules.push(
-						`${property.selector} { ${property.name}: ${cssValue}; }`,
-					);
+					this.cssRules.push(`${property.selector} { ${property.name}: ${cssValue}; }`);
 				}
 			}
 		});
 		return this.cssRules;
 	}
 }
+
+export default CssFromQuery;

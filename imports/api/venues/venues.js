@@ -1,94 +1,173 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import { _ } from 'meteor/underscore';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import Filtering from '/imports/utils/filtering';
+import { Events } from '/imports/api/events/events';
+
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
-import StringTools from '/imports/utils/string-tools';
+import * as StringTools from '/imports/utils/string-tools';
 
-// _id          ID
-// editor       user ID
-// name         String
-// description  String (HTML)
-// region       region ID
-// loc          GeoJSON coordinates
-// address      String
-// route        String
+/** @typedef {import('../users/users').UserModel} UserModel */
 
-// Additional information
-// short            String
-// maxPeople        Int
-// maxWorkplaces    Int
-// facilities       {facility-key: Boolean}
-// otherFacilities  String
-// website          URL
+// ======== DB-Model: ========
+/**
+ * @typedef  {Object} VenueEnity
+ * @property {string} [_id]             ID
+ * @property {string} [editor]          user ID
+ * @property {string} [name]
+ * @property {string} [slug]
+ * @property {string} [description]     HTML
+ * @property {string|null} [region]          ID
+ * @property {{ type: 'Point', coordinates: [number, number] }} [loc] GeoJSON coordinates
+ * (Longitude, Latitude)
+ * @property {string} [address]
+ * @property {string} [route]
+ *
+ * Additional information
+ * @property {string} [short]           ID
+ * @property {number} [maxPeople]       Int
+ * @property {number} [maxWorkplaces]   Int
+ * @property {{[key: string]: string}} [facilities] For keys see: Venues.facilityOptions
+ * @property {string} [otherFacilities]
+ * @property {string} [website]         URL
+ *
+ * @property {string} [createdby]
+ * @property {Date}   [created]
+ * @property {Date}   [updated]
+ */
 
-/** Venue objects represent locations where events take place.
-  */
-export const Venue = function () { //  export was missing added by miri
-	this.facilities = {};
-};
+/**
+ * @typedef {Venue & VenueEnity} VenueModel
+ */
 
-/** Check whether a user may edit the venue.
-  *
-  * @param {Object} venue
-  * @return {Boolean}
-  */
-Venue.prototype.editableBy = function (user) {
-	if (!user) {
-		return false;
+/**
+ * Venue objects represent locations where events take place.
+ */
+export class Venue {
+	constructor() {
+		this.facilities = {};
 	}
-	const isNew = !this._id;
-	return isNew // Anybody may create a new location
-		|| user._id === this.editor
-		|| UserPrivilegeUtils.privileged(user, 'admin'); // Admins can edit all venues
-};
 
-const Venues = new Mongo.Collection('Venues', {
-	transform(venue) {
-		return _.extend(new Venue(), venue);
-	},
-});
-
-if (Meteor.isServer) {
-	Venues._ensureIndex({ loc: '2dsphere' });
+	/**
+	 * Check whether a user may edit the venue.
+	 * @this {VenueModel}
+	 * @param {UserModel} user
+	 */
+	editableBy(user) {
+		if (!user) {
+			return false;
+		}
+		const isNew = !this._id;
+		return (
+			isNew /* Anybody may create a new location */ ||
+			user._id === this.editor ||
+			UserPrivilegeUtils.privileged(user, 'admin') // Admins can edit all venues
+		);
+	}
 }
 
-Venues.Filtering = () => Filtering(
-	{ region: Predicates.id },
-);
-
-
-Venues.facilityOptions = ['projector', 'screen', 'audio', 'blackboard', 'whiteboard',
-	'flipchart', 'wifi', 'kitchen', 'wheelchairs',
-];
-
-/* Find venues for given filters
- *
- * filter: dictionary with filter options
- *   search: string of words to search for
- *   region: restrict to venues in that region
- * limit: how many to find
- *
+/**
+ * @extends {Mongo.Collection<VenueEnity, VenueModel>}
  */
-Venues.findFilter = function (filter, limit, skip, sort) {
-	const find = {};
-	const options = { skip, sort };
+export class VenueCollection extends Mongo.Collection {
+	constructor() {
+		super('Venues', {
+			transform(venue) {
+				return _.extend(new Venue(), venue);
+			},
+		});
 
-	if (limit > 0) {
-		options.limit = limit;
+		if (Meteor.isServer) {
+			this._ensureIndex({ loc: '2dsphere' });
+		}
+
+		this.facilityOptions = [
+			'projector',
+			'screen',
+			'audio',
+			'blackboard',
+			'whiteboard',
+			'flipchart',
+			'wifi',
+			'kitchen',
+			'wheelchairs',
+		];
 	}
 
-	if (filter.region) {
-		find.region = filter.region;
+	// eslint-disable-next-line class-methods-use-this
+	Filtering() {
+		return new Filtering({ region: Predicates.id });
 	}
 
-	if (filter.search) {
-		const searchTerms = filter.search.split(/\s+/);
-		find.$and = _.map(searchTerms, searchTerm => ({ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } }));
-	}
+	/**
+	 * Find venues for given filters
+	 * @param {object} [filter] dictionary with filter options
+	 * @param {string} [filter.search] string of words to search for
+	 * @param {string} [filter.region] restrict to venues in that region
+	 * @param {string} [filter.editor]
+	 * @param {boolean} [filter.recent]
+	 * @param {number} [limit] how many to find
+	 * @param {number} [skip]
+	 * @param {*} [sort]
+	 */
+	findFilter(filter = {}, limit = 0, skip, sort) {
+		const find = {};
 
-	return Venues.find(find, options);
-};
+		/** @type {Mongo.Options<VenueEnity>} */
+		const options = { skip, sort };
+
+		if (limit > 0) {
+			options.limit = limit;
+		}
+
+		if (filter.editor) {
+			find.editor = filter.editor;
+		}
+
+		if (filter.region) {
+			find.region = filter.region;
+		}
+
+		if (filter.search) {
+			const searchTerms = filter.search.split(/\s+/);
+			find.$and = searchTerms.map((searchTerm) => ({
+				name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' },
+			}));
+		}
+
+		if (filter.recent) {
+			const findRecent = {
+				'venue._id': { $exists: true },
+			};
+			if (filter.region) {
+				findRecent.region = filter.region;
+			}
+			const findRecentOptions = {
+				sort: { time_lastedit: -1 },
+				limit: (limit || 10) * 1.5, // Get more so after distinct/uniq we reach the limit
+				fields: { 'venue._id': 1 },
+			};
+
+			const recentEvents = Events.find(findRecent, findRecentOptions).fetch();
+
+			const recentLocations = [
+				...new Set(
+					recentEvents
+						.map((event) => event.venue?._id) // get ids
+						.filter((venueId) => venueId), // filter empty ids
+				),
+			] // make unique with Set
+				.slice(0, limit || 10); // and limit it
+
+			find._id = { $in: recentLocations };
+		}
+
+		return this.find(find, options);
+	}
+}
+
+export const Venues = new VenueCollection();
 
 export default Venues;

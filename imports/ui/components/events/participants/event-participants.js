@@ -14,7 +14,7 @@ Template.eventParticipants.onCreated(function () {
 
 Template.eventParticipants.helpers({
 	howManyEnrolled() {
-		return (this.participants && this.participants.length) || 0;
+		return this.participants?.length || 0;
 	},
 
 	sortedParticipants() {
@@ -33,7 +33,6 @@ Template.eventParticipants.helpers({
 		const participantsDisplayLimit = Template.instance().participantsDisplayLimit.get();
 		return participantsDisplayLimit && this.participants.length > participantsDisplayLimit;
 	},
-
 });
 
 Template.eventParticipants.events({

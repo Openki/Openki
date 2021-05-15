@@ -1,4 +1,7 @@
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
+
+/*
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 
 const UpdatesAvailable = [];
 
@@ -6,7 +9,7 @@ const UpdatesAvailable = [];
 UpdatesAvailable.renameDiscussionFields = function () {
 	const AllPosts = CourseDiscussions.find({});
 	AllPosts.fetch().forEach((originalPost) => {
-		const post = Object.assign({}, originalPost);
+		const post = { ...originalPost };
 		post.courseId = post.course_ID;
 		delete post.course_ID;
 
@@ -22,3 +25,4 @@ UpdatesAvailable.renameDiscussionFields = function () {
 	});
 	return AllPosts.count();
 };
+*/

@@ -3,7 +3,7 @@
 	<div class="container calendar-container">
 		<div class="page-component">
 			{{#each days}}
-				{{> calendarDay day=this filter=filter}}
+				{{> calendarDayFormat day=this filter=filter}}
 				<hr>
 			{{/each}}
 		</div>
@@ -29,9 +29,9 @@
 	</a>
 </template>
 
-<template name="calendarDay">
+<template name="calendarDayFormat">
 	<div class="js-calendar-date calendar-date">
-		{{calendarDay day.start}}
+		{{calendarDayFormat day.start}}
 	</div>
 	{{#if eventsReady}}
 		{{#unless hasEvents}}
@@ -58,7 +58,8 @@
 				</div>
 				<div class="calendar-nav-date">
 					<span class="hidden-xs">{{dateLong date}} - {{dateLong (endDateTo date)}}</span>
-					<span class="visible-xs">{{dateShort date}} - {{dateShort (endDateTo date)}}</span>
+					<span class="visible-xs">{{dateShort date}} -
+						{{dateShort (endDateTo date)}}</span>
 				</div>
 			</div>
 			{{> calendarNavControl direction='next'}}
@@ -69,15 +70,11 @@
 <template name="calendarNavControl">
 	<div class="calendar-nav-control">
 		<div class="btn-group">
-			<button type="button"
-					class="btn btn-default js-change-date">
+			<button type="button" class="btn btn-default js-change-date">
 				{{arrow}} <span class="hidden-xs">{{mfString direction currentUnit 'short'}}</span>
 			</button>
-			<button type="button"
-					class="btn btn-default dropdown-toggle"
-					aria-expanded="false"
-					aria-haspopup="true"
-					data-toggle="dropdown">
+			<button type="button" class="btn btn-default dropdown-toggle" aria-expanded="false"
+					aria-haspopup="true" data-toggle="dropdown">
 				<span class="fa fa-list-ul fa-fw" aria-hidden="true"></span>
 			</button>
 			<ul class="dropdown-menu">

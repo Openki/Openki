@@ -3,11 +3,7 @@
 		<h4>
 			<span class="fa fa-users fa-fw" aria-hidden="true"></span>
 			{{#mf KEY='course.details.members.title' NUM=howManyEnrolled}}
-				{NUM, plural,
-					=0 {No co-learners yet}
-					one {1 Co-learner}
-					other {# Co-learners}
-				}
+				{NUM, plural, =0 {No co-learners yet} one {1 Co-learner} other {# Co-learners}}
 			{{/mf}}
 			{{#if canNotifyAll}}
 				<i class="fa fa-envelope contact-members js-contact-members"></i>
@@ -45,7 +41,7 @@
 						<div class='course-member-role pull-right'>
 							<span class="course-member-role-text">
 								<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
-								<span class="role-short">{{mf roleShort}}</span>
+								<span class="role-short">{{roleShort this}}</span>
 							</span>
 							{{#with ..}}
 								{{#if mayUnsubscribeFromTeam ..}}

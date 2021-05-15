@@ -1,7 +1,10 @@
-import Log from '/imports/api/log/log';
-import CourseDiscussions from '/imports/api/course-discussions/course-discussions';
+// Legacy: This file is no longer relevant, it is only used for documentation purposes.
 
-import HtmlTools from '/imports/utils/html-tools';
+/*
+import Log from '/imports/api/log/log';
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
+
+import * as HtmlTools from '/imports/utils/html-tools';
 
 const updateName = '2018.02.12 richComments';
 
@@ -31,3 +34,4 @@ UpdatesAvailable[updateName] = function () {
 
 	return count;
 };
+*/

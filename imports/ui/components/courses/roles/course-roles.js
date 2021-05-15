@@ -1,11 +1,18 @@
+import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
-import { Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subscription';
+import * as Alert from '/imports/api/alerts/alert';
+import { Subscribe, Unsubscribe, processChangeAsync } from '/imports/api/courses/subscription';
+import { Regions } from '/imports/api/regions/regions';
+import { Users } from '/imports/api/users/users';
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 
@@ -19,49 +26,64 @@ Template.courseRole.onCreated(function () {
 	// Build a subscribe change
 	this.subscribe = function (comment) {
 		const user = Users.currentUser();
-		return new Subscribe(this.data.course, user, this.data.roletype.type, comment);
+		return new Subscribe(this.data.course, user, this.data.role.type, comment);
 	};
 
 	// unsubscribe by email
 	// HACK this is not the right place to act on router actions
-	if (Router.current().params.query.unsubscribe === this.data.roletype.type) {
-		SaveAfterLogin(this, mf('loginAction.unsubscribeFromCourse', 'Login and unsubscribe from Course'), () => {
-			const user = Meteor.user();
-			const change = new Unsubscribe(this.data.course, user, this.data.roletype.type);
-			if (change.validFor(user)) {
-				processChange(change, () => {
-					Alert.success(mf('course.roles.unsubscribed', { NAME: this.data.course.name }, 'Unsubscribed from course {NAME}'));
-				});
-			} else {
-				Alert.error(`${change} not valid for ${user}`);
-			}
-		});
+	if (Router.current().params.query.unsubscribe === this.data.role.type) {
+		SaveAfterLogin(
+			this,
+			mf('loginAction.unsubscribeFromCourse', 'Login and unsubscribe from Course'),
+			mf('registerAction.unsubscribeFromCourse', 'Register and unsubscribe from Course'),
+			async () => {
+				const user = Meteor.user();
+				const change = new Unsubscribe(this.data.course, user, this.data.role.type);
+				if (change.validFor(user)) {
+					await processChangeAsync(change);
+					Alert.success(
+						mf(
+							'course.roles.unsubscribed',
+							{ NAME: this.data.course.name },
+							'Unsubscribed from course {NAME}',
+						),
+					);
+				} else {
+					Alert.error(`${change} not valid for ${user}`);
+				}
+			},
+		);
 	}
 });
 
 Template.courseRole.helpers({
-	showFirstSteps: () => Template.instance().showFirstSteps.get(),
-
-	enrolling() { return Template.instance().enrolling.get(); },
-
-	roleSubscribe() {
-		const role = this.type;
-		if (role === 'participant') {
-			return 'roles.interested.subscribe';
-		}
-		return `roles.${role}.subscribe`;
+	showFirstSteps() {
+		return Template.instance().showFirstSteps.get();
 	},
 
-	roleSubscribed() {
-		const role = this.type;
-		if (role === 'participant') {
-			return 'roles.interested.subscribe';
-		}
-		return `roles.${role}.subscribed`;
+	enrolling() {
+		return Template.instance().enrolling.get();
 	},
 
+	/**
+	 * @param {string} type
+	 */
+	roleSubscribe(type) {
+		return mf(`roles.${type}.subscribe`);
+	},
+
+	/**
+	 * @param {string} type
+	 */
+	roleSubscribed(type) {
+		return mf(`roles.${type}.subscribed`);
+	},
+
+	/**
+	 * @param {string} type
+	 */
 	roleIs(type) {
-		return this.roletype.type === type;
+		return this.role.type === type;
 	},
 
 	maySubscribe() {
@@ -81,14 +103,24 @@ Template.courseRole.events({
 		RouterAutoscroll.cancelNext();
 		const comment = instance.$('.js-comment').val().trim();
 		instance.busy('enrolling');
-		SaveAfterLogin(instance, mf('loginAction.enroll', 'Login and enroll'), () => {
-			processChange(instance.subscribe(comment), () => {
+		SaveAfterLogin(
+			instance,
+			mf('loginAction.enroll', 'Login and enroll'),
+			mf('registerAction.enroll', 'Register and enroll'),
+			async () => {
+				await processChangeAsync(instance.subscribe(comment));
 				RouterAutoscroll.cancelNext();
 				instance.showFirstSteps.set(true);
 				instance.busy(false);
 				instance.enrolling.set(false);
-			});
-		});
+
+				Analytics.trackEvent(
+					'Enrollments in courses',
+					`Enrollments in courses as ${this.role.type}`,
+					Regions.findOne(this.course.region)?.nameEn,
+				);
+			},
+		);
 	},
 
 	'click .js-role-enroll-cancel'(e, template) {
@@ -96,10 +128,15 @@ Template.courseRole.events({
 		return false;
 	},
 
-	'click .js-role-unsubscribe-btn'() {
+	async 'click .js-role-unsubscribe-btn'() {
 		RouterAutoscroll.cancelNext();
-		const change = new Unsubscribe(this.course, Meteor.user(), this.roletype.type);
-		processChange(change);
+		const change = new Unsubscribe(this.course, Meteor.user(), this.role.type);
+		await processChangeAsync(change);
+		Analytics.trackEvent(
+			'Unsubscribes from courses',
+			`Unsubscribes from courses as ${this.role.type}`,
+			Regions.findOne(this.course.region)?.nameEn,
+		);
 		return false;
 	},
 

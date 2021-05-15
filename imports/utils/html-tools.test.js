@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import HtmlTools from '/imports/utils/html-tools';
+import * as HtmlTools from '/imports/utils/html-tools';
 import sanitizeHtml from 'sanitize-html';
 
 describe('Converting Text to HTML', () => {

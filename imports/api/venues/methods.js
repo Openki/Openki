@@ -1,30 +1,49 @@
+import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
 
-import Regions from '../regions/regions';
-import Venues from './venues';
+import { Regions } from '../regions/regions';
+import { Venues } from './venues';
+/** @typedef {import('./venues').VenueEnity} VenueEnity */
 
-import AsyncTools from '/imports/utils/async-tools';
-import HtmlTools from '/imports/utils/html-tools';
-import StringTools from '/imports/utils/string-tools';
+import { AsyncTools } from '/imports/utils/async-tools';
+import * as HtmlTools from '/imports/utils/html-tools';
+import * as StringTools from '/imports/utils/string-tools';
 
 Meteor.methods({
+	/**
+	 * @param {string} venueId
+	 * @param {{
+				name?: string;
+				description?: string;
+				region?: string;
+				loc?: { type: 'Point', coordinates: [number, number] };
+				address?: string;
+				route?: string;
+				short?: string;
+				maxPeople?: number;
+				maxWorkplaces?: number;
+				facilities?: string[];
+				otherFacilities?: string;
+				website?: string;
+			}} changes
+	 */
 	'venue.save'(venueId, changes) {
 		check(venueId, String);
-		check(changes,
-			{
-				name: Match.Optional(String),
-				description: Match.Optional(String),
-				region: Match.Optional(String),
-				loc: Match.Optional(Match.OneOf(null, { type: String, coordinates: [Number] })),
-				address: Match.Optional(String),
-				route: Match.Optional(String),
-				short: Match.Optional(String),
-				maxPeople: Match.Optional(Number),
-				maxWorkplaces: Match.Optional(Number),
-				facilities: Match.Optional([String]),
-				otherFacilities: Match.Optional(String),
-				website: Match.Optional(String),
-			});
+		check(changes, {
+			name: Match.Optional(String),
+			description: Match.Optional(String),
+			region: Match.Optional(String),
+			loc: Match.Optional(Match.OneOf(null, { type: String, coordinates: [Number] })),
+			address: Match.Optional(String),
+			route: Match.Optional(String),
+			short: Match.Optional(String),
+			maxPeople: Match.Optional(Number),
+			maxWorkplaces: Match.Optional(Number),
+			facilities: Match.Optional([String]),
+			otherFacilities: Match.Optional(String),
+			website: Match.Optional(String),
+		});
 
 		const user = Meteor.user();
 		if (!user) {
@@ -41,8 +60,8 @@ Meteor.methods({
 		}
 
 		/* Changes we want to perform */
+		/** @type {VenueEnity} */
 		const set = { updated: new Date() };
-
 
 		if (changes.description) {
 			set.description = HtmlTools.saneHtml(changes.description.trim().substring(0, 640 * 1024));
@@ -73,13 +92,17 @@ Meteor.methods({
 			set.maxWorkplaces = Math.min(1e10, Math.max(0, changes.maxWorkplaces));
 		}
 		if (changes.facilities !== undefined) {
-			set.facilities = _.reduce(changes.facilities, (originalFs, f) => {
-				const fs = Object.assign({}, originalFs);
-				if (Venues.facilityOptions.indexOf(f) >= 0) {
-					fs[f] = true;
-				}
-				return fs;
-			}, {});
+			set.facilities = _.reduce(
+				changes.facilities,
+				(originalFs, f) => {
+					const fs = { ...originalFs };
+					if (Venues.facilityOptions.includes(f)) {
+						fs[f] = true;
+					}
+					return fs;
+				},
+				{},
+			);
 		}
 
 		if (changes.otherFacilities) {
@@ -112,6 +135,9 @@ Meteor.methods({
 		return venueId;
 	},
 
+	/**
+	 * @param {string} venueId
+	 */
 	'venue.remove'(venueId) {
 		check(venueId, String);
 		const venue = Venues.findOne(venueId);

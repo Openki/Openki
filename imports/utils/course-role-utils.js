@@ -1,26 +1,31 @@
-/** @summary Determine whether there is a member with the given role
-  * @param members list of members
-  * @param role role key
-  * @return true if there is a member with the given role, and false otherwise.
-  */
-export function HasRole(members, role) {
+/** @typedef {import("../api/courses/courses").CourseMemberEntity} CourseMemberEntity */
+
+/**
+ * Determine whether there is a member with the given role
+ * @param {CourseMemberEntity[] | undefined} members list of members
+ * @param {string|undefined} role role key
+ * @return true if there is a member with the given role, and false otherwise.
+ */
+export function hasRole(members, role) {
 	if (!members) {
 		return false;
 	}
-	return members.some(member => member.roles.indexOf(role) !== -1);
+	if (!role) {
+		return false;
+	}
+	return members.some((member) => member.roles.includes(role));
 }
 
-/** @summary Determine whether a given user has a given role in a members list
-  * @param members list of members
-  * @param role role key
-  * @param userId user ID to check
-  * @return whether the user has this role
-  */
-export function HasRoleUser(members, role, userId) {
-	const matchRole = function (member) {
-		return member.user === userId
-			&& member.roles.indexOf(role) !== -1;
-	};
-
-	return members.some(matchRole);
+/**
+ * Determine whether a given user has a given role in a members list
+ * @param {CourseMemberEntity[]} members list of members
+ * @param {string} role role key
+ * @param {string|undefined|null} userId user ID to check
+ * @return whether the user has this role
+ */
+export function hasRoleUser(members, role, userId) {
+	if (!userId) {
+		return false;
+	}
+	return members.some((member) => member.user === userId && member.roles.includes(role));
 }

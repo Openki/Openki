@@ -1,18 +1,24 @@
-import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import Alert from '/imports/api/alerts/alert';
-import Groups from '/imports/api/groups/groups';
+import * as Alert from '/imports/api/alerts/alert';
+import { Groups } from '/imports/api/groups/groups';
+import { Regions } from '/imports/api/regions/regions';
 
-import Editable from '/imports/ui/lib/editable';
+import { Editable } from '/imports/ui/lib/editable';
 import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
-import PleaseLogin from '/imports/ui/lib/please-login';
-import ScssVars from '/imports/ui/lib/scss-vars';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
-import IdTools from '/imports/utils/id-tools';
+import { _ } from 'meteor/underscore';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { Analytics } from '/imports/ui/lib/analytics';
+
+import * as IdTools from '/imports/utils/id-tools';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
@@ -30,6 +36,7 @@ import '/imports/ui/components/sharing/sharing';
 import '/imports/ui/components/report/report';
 
 import './course-details.html';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function () {
@@ -39,47 +46,41 @@ Template.courseDetailsPage.onCreated(function () {
 
 	const { course } = instance.data;
 
-	instance.editableName = new Editable(
-		true,
-		((newName) => {
-			Meteor.call('course.save', course._id, { name: newName }, (err) => {
-				if (err) {
-					Alert.serverError(
-						err,
-						mf('course.save.error', 'Saving the course went wrong'),
-					);
-				} else {
-					Alert.success(mf(
-						'courseDetails.message.nameChanged',
-						{ NAME: newName },
-						'The name of this course has been changed to "{NAME}".',
-					));
-				}
-			});
-		}),
-		mf('course.title.placeholder'),
-	);
+	instance.editableName = new Editable(true, mf('course.title.placeholder'), {
+		onSave: async (newName) => {
+			await MeteorAsync.callAsync('course.save', course._id, { name: newName });
+		},
+		onSuccess: (newName) => {
+			Alert.success(
+				mf(
+					'courseDetails.message.nameChanged',
+					{ NAME: newName },
+					'The name of this course has been changed to "{NAME}".',
+				),
+			);
+		},
+		onError: (err) => {
+			Alert.serverError(err, mf('course.save.error', 'Saving the course went wrong'));
+		},
+	});
 
-	instance.editableDescription = new Editable(
-		false,
-		((newDescription) => {
-			Meteor.call('course.save', course._id, { description: newDescription }, (err) => {
-				if (err) {
-					Alert.serverError(
-						err,
-						mf('course.save.error'),
-					);
-				} else {
-					Alert.success(mf(
-						'courseDetails.message.descriptionChanged',
-						{ NAME: course.name },
-						'The description of "{NAME}" has been changed.',
-					));
-				}
-			});
-		}),
-		mf('course.description.placeholder'),
-	);
+	instance.editableDescription = new Editable(false, mf('course.description.placeholder'), {
+		onSave: async (newDescription) => {
+			await MeteorAsync.callAsync('course.save', course._id, { description: newDescription });
+		},
+		onSuccess: () => {
+			Alert.success(
+				mf(
+					'courseDetails.message.descriptionChanged',
+					{ NAME: course.name },
+					'The description of "{NAME}" has been changed.',
+				),
+			);
+		},
+		onError: (err) => {
+			Alert.serverError(err, mf('course.save.error'));
+		},
+	});
 
 	this.autorun(() => {
 		const data = Template.currentData();
@@ -90,24 +91,37 @@ Template.courseDetailsPage.onCreated(function () {
 	});
 });
 
-Template.courseDetailsPage.helpers({ // more helpers in course.roles.js
+Template.courseDetailsPage.helpers({
+	// more helpers in course.roles.js
+
 	mayEdit() {
-		return this.course && this.course.editableBy(Meteor.user());
+		return this.course?.editableBy(Meteor.user());
 	},
-	coursestate() {
-		if (this.nextEvent) {
-			return 'has-upcoming-events';
+	courseStateClasses() {
+		const classes = [];
+
+		if (this.course?.nextEvent) {
+			classes.push('has-upcoming-events');
+		} else if (this.course?.lastEvent) {
+			classes.push('has-past-events');
+		} else {
+			classes.push('is-proposal');
 		}
-		if (this.lastEvent) {
-			return 'has-past-events';
+
+		if (this.course?.archived) {
+			classes.push('is-archived');
 		}
-		return 'is-proposal';
+
+		return classes.join(' ');
 	},
 	mobileViewport() {
 		return Session.get('viewportWidth') <= ScssVars.screenMD;
 	},
 	isProposal() {
 		return !this.course.nextEvent && !this.course.lastEvent;
+	},
+	isArchived() {
+		return this.course.archived;
 	},
 	editableName() {
 		return Template.instance().editableName;
@@ -119,7 +133,7 @@ Template.courseDetailsPage.helpers({ // more helpers in course.roles.js
 
 Template.courseDetailsDescription.helpers({
 	mayEdit() {
-		return this.course && this.course.editableBy(Meteor.user());
+		return this.course?.editableBy(Meteor.user());
 	},
 });
 
@@ -134,19 +148,80 @@ Template.courseDetailsPage.events({
 		Meteor.call('course.remove', course._id, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.serverError(
-					err,
-					'Removing the course "{COURSE}" went wrong',
-				);
+				Alert.serverError(err, 'Removing the course "{COURSE}" went wrong');
 			} else {
-				Alert.success(mf(
-					'courseDetailsPage.message.courseHasBeenDeleted',
-					{ COURSE: course.name },
-					'The course "{COURSE}" has been deleted.',
-				));
+				Alert.success(
+					mf(
+						'courseDetailsPage.message.courseHasBeenDeleted',
+						{ COURSE: course.name },
+						'The course "{COURSE}" has been deleted.',
+					),
+				);
+
+				let role;
+				if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
+					role = 'team';
+				} else if (UserPrivilegeUtils.privilegedTo('admin')) {
+					role = 'admin';
+				} else {
+					role = 'unknown';
+				}
+				Analytics.trackEvent(
+					'Course deletions',
+					`Course deletions as ${role}`,
+					Regions.findOne(course.region)?.nameEn,
+				);
 			}
 		});
 		Router.go('/');
+	},
+
+	async 'click .js-course-archive'(event, instance) {
+		if (PleaseLogin()) {
+			return;
+		}
+
+		const { course } = instance.data;
+		instance.busy('archive');
+		try {
+			await MeteorAsync.callAsync('course.archive', course._id);
+
+			Alert.success(
+				mf(
+					'courseDetailsPage.message.courseHasBeenArchived',
+					{ COURSE: course.name },
+					'The course "{COURSE}" has been archived.',
+				),
+			);
+		} catch (err) {
+			Alert.serverError(err, 'Archive the course "{COURSE}" went wrong');
+		} finally {
+			instance.busy(false);
+		}
+	},
+
+	async 'click .js-course-unarchive'(event, instance) {
+		if (PleaseLogin()) {
+			return;
+		}
+
+		const { course } = instance.data;
+		instance.busy('unarchive');
+		try {
+			await MeteorAsync.callAsync('course.unarchive', course._id);
+
+			Alert.success(
+				mf(
+					'courseDetailsPage.message.courseHasBeenUnarchived',
+					{ COURSE: course.name },
+					'The course "{COURSE}" has been unarchived.',
+				),
+			);
+		} catch (err) {
+			Alert.serverError(err, 'Unarchive the course "{COURSE}" went wrong');
+		} finally {
+			instance.busy(false);
+		}
 	},
 
 	'click .js-course-edit'(event, instance) {
@@ -162,14 +237,14 @@ Template.courseDetailsPage.events({
 
 Template.courseGroupList.helpers({
 	isOrganizer() {
-		return Template.instance().data.groupOrganizers.indexOf(IdTools.extract(this)) >= 0;
+		return Template.instance().data.groupOrganizers.includes(IdTools.extract(this));
 	},
 	tools() {
 		const tools = [];
 		const user = Meteor.user();
 		const groupId = String(this);
 		const course = Template.parentData();
-		if ((user && user.mayPromoteWith(groupId)) || course.editableBy(user)) {
+		if (user?.mayPromoteWith(groupId) || course.editableBy(user)) {
 			tools.push({
 				toolTemplate: Template.courseGroupRemove,
 				groupId,
@@ -177,7 +252,7 @@ Template.courseGroupList.helpers({
 			});
 		}
 		if (user && course.editableBy(user)) {
-			const hasOrgRights = course.groupOrganizers.indexOf(groupId) > -1;
+			const hasOrgRights = course.groupOrganizers.includes(groupId);
 			tools.push({
 				toolTemplate: hasOrgRights
 					? Template.courseGroupRemoveOrganizer
@@ -190,7 +265,6 @@ Template.courseGroupList.helpers({
 	},
 });
 
-
 TemplateMixins.Expandible(Template.courseGroupAdd);
 Template.courseGroupAdd.helpers(GroupNameHelpers);
 Template.courseGroupAdd.helpers({
@@ -200,30 +274,27 @@ Template.courseGroupAdd.helpers({
 	},
 });
 
-
 Template.courseGroupAdd.events({
 	'click .js-add-group'(event, instance) {
 		const course = instance.data;
 		const groupId = event.currentTarget.value;
 		Meteor.call('course.promote', course._id, groupId, true, (err) => {
 			if (err) {
-				Alert.serverError(
-					err,
-					'Failed to add group',
-				);
+				Alert.serverError(err, 'Failed to add group');
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				Alert.success(mf(
-					'courseGroupAdd.groupAdded',
-					{ GROUP: groupName, COURSE: course.name },
-					'The group "{GROUP}" has been added to promote the course "{COURSE}".',
-				));
+				Alert.success(
+					mf(
+						'courseGroupAdd.groupAdded',
+						{ GROUP: groupName, COURSE: course.name },
+						'The group "{GROUP}" has been added to promote the course "{COURSE}".',
+					),
+				);
 				instance.collapse();
 			}
 		});
 	},
 });
-
 
 TemplateMixins.Expandible(Template.courseGroupRemove);
 Template.courseGroupRemove.helpers(GroupNameHelpers);
@@ -233,23 +304,21 @@ Template.courseGroupRemove.events({
 		const { groupId } = instance.data;
 		Meteor.call('course.promote', course._id, groupId, false, (err) => {
 			if (err) {
-				Alert.serverError(
-					err,
-					'Failed to remove group',
-				);
+				Alert.serverError(err, 'Failed to remove group');
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				Alert.success(mf(
-					'courseGroupAdd.groupRemoved',
-					{ GROUP: groupName, COURSE: course.name },
-					'The group "{GROUP}" has been removed from the course "{COURSE}".',
-				));
+				Alert.success(
+					mf(
+						'courseGroupAdd.groupRemoved',
+						{ GROUP: groupName, COURSE: course.name },
+						'The group "{GROUP}" has been removed from the course "{COURSE}".',
+					),
+				);
 				instance.collapse();
 			}
 		});
 	},
 });
-
 
 TemplateMixins.Expandible(Template.courseGroupMakeOrganizer);
 Template.courseGroupMakeOrganizer.helpers(GroupNameHelpers);
@@ -259,23 +328,21 @@ Template.courseGroupMakeOrganizer.events({
 		const { groupId } = instance.data;
 		Meteor.call('course.editing', course._id, groupId, true, (err) => {
 			if (err) {
-				Alert.serverError(
-					err,
-					'Failed to give group editing rights',
-				);
+				Alert.serverError(err, 'Failed to give group editing rights');
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				Alert.success(mf(
-					'courseGroupAdd.membersCanEditCourse',
-					{ GROUP: groupName, COURSE: course.name },
-					'Members of the group "{GROUP}" can now edit the course "{COURSE}".',
-				));
+				Alert.success(
+					mf(
+						'courseGroupAdd.membersCanEditCourse',
+						{ GROUP: groupName, COURSE: course.name },
+						'Members of the group "{GROUP}" can now edit the course "{COURSE}".',
+					),
+				);
 				instance.collapse();
 			}
 		});
 	},
 });
-
 
 TemplateMixins.Expandible(Template.courseGroupRemoveOrganizer);
 Template.courseGroupRemoveOrganizer.helpers(GroupNameHelpers);
@@ -285,17 +352,16 @@ Template.courseGroupRemoveOrganizer.events({
 		const { groupId } = instance.data;
 		Meteor.call('course.editing', course._id, groupId, false, (err) => {
 			if (err) {
-				Alert.serverError(
-					err,
-					'Failed to remove organizer status',
-				);
+				Alert.serverError(err, 'Failed to remove organizer status');
 			} else {
 				const groupName = Groups.findOne(groupId).name;
-				Alert.success(mf(
-					'courseGroupAdd.membersCanNoLongerEditCourse',
-					{ GROUP: groupName, COURSE: course.name },
-					'Members of the group "{GROUP}" can no longer edit the course "{COURSE}".',
-				));
+				Alert.success(
+					mf(
+						'courseGroupAdd.membersCanNoLongerEditCourse',
+						{ GROUP: groupName, COURSE: course.name },
+						'Members of the group "{GROUP}" can no longer edit the course "{COURSE}".',
+					),
+				);
 				instance.collapse();
 			}
 		});

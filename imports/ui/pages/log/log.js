@@ -1,12 +1,13 @@
-import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
+import moment from 'moment';
 
-import UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
-import UrlTools from '/imports/utils/url-tools';
+import * as UrlTools from '/imports/utils/url-tools';
+import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import Log from '/imports/api/log/log';
 
@@ -42,10 +43,7 @@ Template.showLog.onCreated(function () {
 	// Read URL state
 	instance.autorun(() => {
 		const query = Template.currentData();
-		filter
-			.clear()
-			.read(query)
-			.done();
+		filter.clear().read(query).done();
 	});
 
 	// Update whenever filter changes
@@ -62,15 +60,14 @@ Template.showLog.onCreated(function () {
 	});
 });
 
-
 Template.showLog.helpers({
 	privileged() {
-		return UserPrivilegeUtils.privileged(Meteor.user(), 'admin');
+		return UserPrivilegeUtils.privilegedTo('admin');
 	},
 
 	date() {
 		const start = Template.instance().filter.get('start');
-		return (start && start.toISOString()) || '';
+		return start?.toISOString() || '';
 	},
 
 	relFilter() {
@@ -103,7 +100,7 @@ Template.showLog.helpers({
 		const entries = Log.findFilter(filterQuery, instance.limit.get()).fetch();
 		let last = false;
 		const inter = [];
-		_.each(entries, (entry) => {
+		entries.forEach((entry) => {
 			const ts = moment(entry.ts);
 			if (last) {
 				const interval = moment.duration(last.diff(ts));
@@ -117,20 +114,18 @@ Template.showLog.helpers({
 		return inter;
 	},
 
-
 	loading() {
 		return !Template.instance().ready.get();
 	},
 });
 
-
 Template.showLog.events({
 	// Update the URI when the search-field was changed an loses focus
-	'change .js-update-url'(event, instance) {
+	'change .js-update-url'(_event, instance) {
 		instance.updateUrl();
 	},
 
-	'keyup .js-tr-input': _.debounce((event, instance) => {
+	'keyup .js-tr-input': _.debounce((_event, instance) => {
 		const { filter } = instance;
 		filter.disable('tr');
 
@@ -142,7 +137,7 @@ Template.showLog.events({
 		filter.done();
 	}, 200),
 
-	'keyup .js-date-input': _.debounce((event, instance) => {
+	'keyup .js-date-input': _.debounce((_event, instance) => {
 		const { filter } = instance;
 		const dateStr = $('.js-date-input').val().trim();
 		if (dateStr === '') {
@@ -152,7 +147,7 @@ Template.showLog.events({
 		}
 	}, 200),
 
-	'keyup .js-rel-input': _.debounce((event, instance) => {
+	'keyup .js-rel-input': _.debounce((_event, instance) => {
 		const { filter } = instance;
 		filter.disable('rel');
 
@@ -192,30 +187,28 @@ Template.showLog.events({
 		}
 	},
 
-	'click .js-more'(event, instance) {
+	'click .js-more'(_event, instance) {
 		const { limit } = instance;
 		limit.set(limit.get() + 100);
 	},
 });
 
 TemplateMixins.MultiExpandible(Template.showLogEntry);
-Template.showLogEntry.helpers(
-	{
-		date() {
-			const { date } = Template.instance().filter.toParams();
-			return (date && date.toISOString()) || '';
-		},
-		shortId(id) {
-			return id.substr(0, 8);
-		},
-		isodate(date) {
-			return moment(date).toISOString();
-		},
-		jsonBody() {
-			return JSON.stringify(this.body, null, '   ');
-		},
-		jsonFull() {
-			return JSON.stringify(this, null, '   ');
-		},
+Template.showLogEntry.helpers({
+	date() {
+		const { date } = Template.instance().filter.toParams();
+		return date?.toISOString() || '';
 	},
-);
+	shortId(id) {
+		return id.substr(0, 8);
+	},
+	isodate(date) {
+		return moment(date).toISOString();
+	},
+	jsonBody() {
+		return JSON.stringify(this.body, null, '   ');
+	},
+	jsonFull() {
+		return JSON.stringify(this, null, '   ');
+	},
+});

@@ -4,9 +4,12 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { _ } from 'meteor/underscore';
+import moment from 'moment';
 
-import Events from '/imports/api/events/events';
-import Regions from '/imports/api/regions/regions';
+import { Events } from '/imports/api/events/events';
+import { Regions } from '/imports/api/regions/regions';
+
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/loading/loading';
 
@@ -19,22 +22,38 @@ Template.frameCalendar.onCreated(function frameCalendarOnCreated() {
 	const { query } = Router.current().params;
 	this.limit = new ReactiveVar(parseInt(query.count, 10) || 200);
 
+	let startDate = moment();
+	if (query.start) {
+		startDate = moment(query.start);
+	}
+	/** @type {moment.Moment} */
+	let endDate;
+	if (query.end) {
+		endDate = moment(query.end).add(1, 'day');
+	}
+
 	this.autorun(() => {
-		const filter = Events.Filtering().read(query).done();
-		const filterParams = filter.toParams();
-		filterParams.after = new Date();
+		const filter = Events.Filtering().read(query);
+		if (startDate && startDate.isValid()) {
+			filter.add('after', startDate);
+		}
+		if (endDate && endDate.isValid()) {
+			filter.add('end', endDate);
+		}
+
+		filter.done();
+
+		const filterQuery = filter.toQuery();
 		const limit = this.limit.get();
 
-		this.subscribe('Events.findFilter', filterParams, limit + 1);
+		this.subscribe('Events.findFilter', filterQuery, limit + 1);
 
 		const events = Events.find({}, { sort: { start: 1 }, limit }).fetch();
-		const groupedEvents = _.groupBy(events, event => moment(event.start).format('LL'));
+		const groupedEvents = _.groupBy(events, (event) => moment(event.start).format('LL'));
 
 		this.groupedEvents.set(groupedEvents);
 		this.days.set(Object.keys(groupedEvents));
 	});
-
-	this.allRegions = Session.equals('region', 'all');
 });
 
 Template.frameCalendar.helpers({
@@ -42,13 +61,11 @@ Template.frameCalendar.helpers({
 
 	days: () => Template.instance().days.get(),
 
-	eventsOn: day => Template.instance().groupedEvents.get()[day],
+	eventsOn: (day) => Template.instance().groupedEvents.get()[day],
 
 	moreEvents() {
 		const limit = Template.instance().limit.get();
-		const eventsCount = Events
-			.find({}, { limit: limit + 1 })
-			.count();
+		const eventsCount = Events.find({}, { limit: limit + 1 }).count();
 
 		return eventsCount > limit;
 	},
@@ -66,7 +83,7 @@ Template.frameCalendarEvent.onCreated(function frameCalendarEventOnCreated() {
 });
 
 Template.frameCalendarEvent.helpers({
-	allRegions: () => Template.instance().parentInstance().allRegions,
+	allRegions: () => Session.equals('region', 'all'),
 
 	regionName() {
 		return Regions.findOne(this.region).name;
@@ -84,5 +101,13 @@ Template.frameCalendarEvent.events({
 		$(event.currentTarget).toggleClass('active');
 		instance.$('.frame-list-item-time').toggle();
 		instance.expanded.set(!instance.expanded.get());
+	},
+
+	'click .js-track-cal-download'() {
+		Analytics.trackEvent(
+			'Events downloads',
+			'Event downloads via calendar frame',
+			Regions.findOne(this.region)?.nameEn,
+		);
 	},
 });

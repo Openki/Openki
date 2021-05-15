@@ -1,6 +1,6 @@
-// sass-lint:disable no-qualifying-elements
+/* stylelint-disable selector-no-qualifying-type, max-nesting-depth */
 
-$dropdown-transition-time: .3s;
+$dropdown-transition-time: 0.3s;
 
 .dropdown-menu {
 	border: 0;
@@ -8,11 +8,12 @@ $dropdown-transition-time: .3s;
 	min-width: 0;
 }
 
+.dropdown-menu > li > a,
 .dropdown-menu > li > .btn-link {
 	@include td-text-align(left);
+	@include ellipsis;
 	color: $dropdown-link-color;
 	padding: 3px 20px;
-	white-space: nowrap;
 	width: 100%;
 
 	&:hover {
@@ -54,10 +55,15 @@ $dropdown-transition-time: .3s;
 	font-size: 20px;
 }
 
+.dropdown-menu > li .checkmark {
+	@include td-padding(left, 0);
+	@include td-margin(left, -16.8px);
+}
+
 .dropdown-addon-right {
 	@include clearfix;
 	@include td-float(right);
-	@include td-padding(left, 30px);
+	@include td-padding(left, 4px);
 	display: inline-block;
 }
 

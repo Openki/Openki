@@ -1,22 +1,26 @@
-
-
-import { Meteor } from 'meteor/meteor';
-import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
+import { Meteor } from 'meteor/meteor';
+import { mf } from 'meteor/msgfmt:core';
+import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
+import { MeteorAsync } from '/imports/utils/promisify';
 
-import Groups from '/imports/api/groups/groups';
-import PleaseLogin from '/imports/ui/lib/please-login';
-import Editable from '/imports/ui/lib/editable';
+import { Groups } from '/imports/api/groups/groups';
+import { Regions } from '/imports/api/regions/regions';
+import * as Alert from '/imports/api/alerts/alert';
+
+import { PleaseLogin } from '/imports/ui/lib/please-login';
+import TemplateMixins from '/imports/ui/lib/template-mixins';
+import { Editable } from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import Alert from '/imports/api/alerts/alert';
-import IsGroupMember from '/imports/utils/is-group-member';
+import { isGroupMember } from '/imports/utils/is-group-member';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/groups/settings/group-settings';
 
 import './group-details.html';
+import { Analytics } from '../../lib/analytics';
 
 Template.groupDetails.onCreated(function () {
 	const instance = this;
@@ -28,8 +32,23 @@ Template.groupDetails.onCreated(function () {
 	instance.mayEdit = new ReactiveVar(false);
 	instance.editingSettings = new ReactiveVar(false);
 
-	const handleSaving = function (err) {
-		if (err) {
+	const handleSaving = {
+		clientValidations: [
+			{
+				check: (text) => !!text,
+				errorMessage: () => mf('group.details.error.allMandatory'),
+			},
+		],
+		onSuccess: () => {
+			Alert.success(
+				mf(
+					'groupDetails.changesSaved',
+					{ GROUP: group.name },
+					'Your changes to the group "{GROUP}" have been saved.',
+				),
+			);
+		},
+		onError: (err) => {
 			Alert.serverError(
 				err,
 				mf(
@@ -38,59 +57,71 @@ Template.groupDetails.onCreated(function () {
 					'Saving the group "{GROUP}" went wrong',
 				),
 			);
-		} else {
-			Alert.success(mf(
-				'groupDetails.changesSaved',
-				{ GROUP: group.name },
-				'Your changes to the group "{GROUP}" have been saved.',
-			));
-		}
+		},
 	};
 
 	const showControls = !this.data.isNew;
 
 	instance.editableName = new Editable(
 		true,
-		((newName) => {
-			Meteor.call('group.save', groupId, { name: newName }, handleSaving);
-		}),
 		mf('group.name.placeholder', 'Name of your group, institution, community or program'),
-		showControls,
+		showControls
+			? {
+					...handleSaving,
+					onSave: async (newName) => {
+						await MeteorAsync.callAsync('group.save', groupId, { name: newName });
+					},
+			  }
+			: undefined,
 	);
 
 	instance.editableShort = new Editable(
 		true,
-		((newShort) => {
-			Meteor.call('group.save', groupId, { short: newShort }, handleSaving);
-		}),
 		mf('group.short.placeholder', 'Abbreviation'),
-		showControls,
+		showControls
+			? {
+					...handleSaving,
+					onSave: async (newShort) => {
+						await MeteorAsync.callAsync('group.save', groupId, { short: newShort });
+					},
+			  }
+			: undefined,
 	);
 
 	instance.editableClaim = new Editable(
 		true,
-		((newClaim) => {
-			Meteor.call('group.save', groupId, { claim: newClaim }, handleSaving);
-		}),
 		mf('group.claim.placeholder', 'The core idea'),
-		showControls,
+		showControls
+			? {
+					...handleSaving,
+					onSave: async (newClaim) => {
+						await MeteorAsync.callAsync('group.save', groupId, { claim: newClaim });
+					},
+			  }
+			: undefined,
 	);
 
 	instance.editableDescription = new Editable(
 		false,
-		((newDescription) => {
-			Meteor.call('group.save', groupId, { description: newDescription }, handleSaving);
-		}),
-		mf('group.description.placeholder', 'Describe the audience, the interests and activities of your group.'),
-		showControls,
+		mf(
+			'group.description.placeholder',
+			'Describe the audience, the interests and activities of your group.',
+		),
+		showControls
+			? {
+					...handleSaving,
+					onSave: async (newDescription) => {
+						await MeteorAsync.callAsync('group.save', groupId, { description: newDescription });
+					},
+			  }
+			: undefined,
 	);
-
 
 	instance.autorun(() => {
 		const data = Template.currentData();
 		const currentGroup = Groups.findOne(groupId) || {};
 		const userId = Meteor.userId();
-		const mayEdit = data.isNew || (userId && IsGroupMember(userId, groupId));
+		const mayEdit = data.isNew || (userId && isGroupMember(userId, groupId));
 		instance.mayEdit.set(mayEdit);
 
 		instance.editableName.setText(currentGroup.name);
@@ -102,8 +133,8 @@ Template.groupDetails.onCreated(function () {
 
 Template.groupDetails.helpers({
 	isFeatured() {
-		const region = Regions.findOne(Session.get('region'));
-		return region && region.featuredGroup === this.group._id;
+		const region = Regions.currentRegion();
+		return region?.featuredGroup === this.group._id;
 	},
 
 	headerClasses() {
@@ -146,7 +177,14 @@ Template.groupDetails.helpers({
 	},
 	editingSettings() {
 		const instance = Template.instance();
-		return instance.mayEdit.get() && Template.instance().editingSettings.get();
+		return instance.mayEdit.get() && instance.editingSettings.get();
+	},
+});
+
+TemplateMixins.FormfieldErrors(Template.groupDetails, {
+	emptyField: {
+		text: () => mf('group.details.error.allMandatory', 'All four fields are mandatory.'),
+		field: 'all',
 	},
 });
 
@@ -167,33 +205,48 @@ Template.groupDetails.events({
 			description: instance.editableDescription.getEdited(),
 		};
 
+		instance.errors.reset();
+
+		if (Object.values(group).some((u) => !u)) {
+			instance.errors.add('emptyField');
+		}
+
+		if (instance.errors.present()) {
+			return;
+		}
+
 		instance.busy('saving');
-		SaveAfterLogin(instance, mf('loginAction.saveGroup', 'Login and save group'), () => {
-			Meteor.call('group.save', 'create', group, (err, groupId) => {
-				instance.busy(false);
-				if (err) {
-					Alert.serverError(
-						err,
-						mf(
-							'groupDetails.saveError',
-							{ GROUP: group.name },
-						),
-					);
-				} else {
+		SaveAfterLogin(
+			instance,
+			mf('loginAction.saveGroup', 'Login and save group'),
+			mf('registerAction.saveGroup', 'Register and save group'),
+			async () => {
+				try {
+					const groupId = await MeteorAsync.callAsync('group.save', 'create', group);
+
 					instance.editableName.end();
 					instance.editableShort.end();
 					instance.editableClaim.end();
 					instance.editableDescription.end();
 
-					Alert.success(mf(
-						'groupDetails.groupCreated',
-						{ GROUP: group.name },
-						'The Group {GROUP} has been created!',
-					));
+					Alert.success(
+						mf(
+							'groupDetails.groupCreated',
+							{ GROUP: group.name },
+							'The Group {GROUP} has been created!',
+						),
+					);
+
+					Analytics.trackEvent('Group creations', 'Group creations');
+
 					Router.go('groupDetails', { _id: groupId });
+				} catch (err) {
+					Alert.serverError(err, mf('groupDetails.saveError', { GROUP: group.name }));
+				} finally {
+					instance.busy(false);
 				}
-			});
-		});
+			},
+		);
 	},
 
 	'click .js-group-cancel'() {

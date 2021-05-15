@@ -1,4 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import Regions from '/imports/api/regions/regions';
+import { Regions } from '/imports/api/regions/regions';
 
-Meteor.publish('regions', () => Regions.find());
+import { visibleTenants } from '/imports/utils/visible-tenants';
+
+Meteor.publish('Regions', () => Regions.find({ tenant: { $in: visibleTenants() } }));

@@ -1,29 +1,35 @@
-import Courses, { Course } from './courses';
+import { Meteor } from 'meteor/meteor';
+import { ValidationError } from 'meteor/mdg:validation-error';
 
-import Alert from '/imports/api/alerts/alert';
-import Events from '/imports/api/events/events';
-import { User } from '/imports/api/users/users';
-import { check } from 'meteor/check';
+import { Courses, Course } from './courses';
+import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
+import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 
-import { HasRole, HasRoleUser } from '/imports/utils/course-role-utils';
+import * as Alert from '/imports/api/alerts/alert';
+import { Events } from '/imports/api/events/events';
+import { Users, User } from '/imports/api/users/users';
+import { Match, check } from 'meteor/check';
+import { MeteorAsync } from '/imports/utils/promisify';
+
+import { hasRole } from '/imports/utils/course-role-utils';
 import Notification from '/imports/notification/notification';
 
-export const processChange = function (change, done) {
-	Meteor.call(change.constructor.method, change.dict(), (err) => {
-		if (err) {
-			/* eslint-disable-next-line no-console */
-			console.log(err);
-			Alert.serverError(err, '');
-		}
-		if (done) {
-			done();
-		}
-	});
-};
+/**
+ * @param {Subscribe | Unsubscribe | Message} change
+ */
+export async function processChangeAsync(change) {
+	try {
+		await MeteorAsync.callAsync(change.constructor.method, change.dict());
+	} catch (err) {
+		/* eslint-disable-next-line no-console */
+		console.log(err);
+		Alert.serverError(err, '');
+	}
+}
 
 const checkUser = function (obj) {
 	if (!(obj instanceof User)) {
-		throw Meteor.Error('Match failed', 'Expected User object');
+		throw new Meteor.Error('Match failed', 'Expected User object');
 	}
 };
 
@@ -32,16 +38,6 @@ const checkCourse = function (obj) {
 		throw new Meteor.Error('Match failed', 'Expected Course object');
 	}
 };
-
-class ValidationError {
-	constructor(message) {
-		this.message = message;
-	}
-
-	toString() {
-		return this.message;
-	}
-}
 
 /** A change by a user
  *
@@ -73,14 +69,18 @@ class Change {
 }
 
 export class Subscribe extends Change {
-	static get method() { return 'Courses.Subscribe'; }
+	static get method() {
+		return 'Courses.Subscribe';
+	}
 
 	static read(body) {
 		check(body, Object);
-		return new this(Courses.findOne(body.courseId),
-			Meteor.users.findOne(body.userId),
+		return new this(
+			Courses.findOne(body.courseId),
+			Users.findOne(body.userId),
 			body.role,
-			body.comment);
+			body.comment,
+		);
 	}
 
 	constructor(course, user, role, comment) {
@@ -100,18 +100,17 @@ export class Subscribe extends Change {
 	}
 
 	toString() {
-		return `${this.constructor.method
-		}(${this.role})`;
+		return `${this.constructor.method}(${this.role})`;
 	}
 
 	validate() {
 		if (!this.course.roles.includes(this.role)) {
-			throw new ValidationError(`No role ${this.role}`);
+			throw new ValidationError([], `No role ${this.role}`);
 		}
 
 		// Do not allow subscribing when already subscribed
-		if (HasRoleUser(this.course.members, this.role, this.user._id)) {
-			throw new ValidationError(`Already subscribed as ${this.role}`);
+		if (this.course.userHasRole(this.user._id, this.role)) {
+			throw new ValidationError([], `Already subscribed as ${this.role}`);
 		}
 	}
 
@@ -128,21 +127,18 @@ export class Subscribe extends Change {
 		// The team role is restricted
 		if (this.role === 'team') {
 			// If there are no team-members, anybody can join
-			if (!HasRole(this.course.members, 'team')) {
+			if (!hasRole(this.course.members, 'team')) {
 				return operator._id === this.user._id;
 			}
 
 			// Only members of the team can take-on other people
-			if (HasRoleUser(this.course.members, 'team', operator._id)) {
+			if (this.course.userHasRole(operator._id, 'team')) {
 				// Only participating users can be drafted
 				const candidateRoles = ['participant', 'mentor', 'host'];
 
 				// In for a penny, in for a pound
-				/* eslint-disable-next-line no-restricted-syntax */
-				for (const role of candidateRoles) {
-					if (this.course.userHasRole(this.user._id, role)) {
-						return true;
-					}
+				if (candidateRoles.some((role) => this.course.userHasRole(this.user._id, role))) {
+					return true;
 				}
 			}
 			return false;
@@ -153,15 +149,13 @@ export class Subscribe extends Change {
 	}
 
 	dict() {
-		return (
-			{
-				change: 'subscribe',
-				courseId: this.course._id,
-				userId: this.user._id,
-				role: this.role,
-				comment: this.comment,
-			}
-		);
+		return {
+			change: 'subscribe',
+			courseId: this.course._id,
+			userId: this.user._id,
+			role: this.role,
+			comment: this.comment,
+		};
 	}
 
 	provide(rel, body) {
@@ -186,15 +180,18 @@ export class Subscribe extends Change {
 		);
 
 		if (this.comment) {
-			Courses.update({ _id: this.course._id, 'members.user': this.user._id },
-				{ $set: { 'members.$.comment': this.comment } });
+			Courses.update(
+				{ _id: this.course._id, 'members.user': this.user._id },
+				{ $set: { 'members.$.comment': this.comment } },
+			);
 		}
 
-		// Updated calculated fields
+		// Update member related calculated fields
+		Courses.updateInterested(this.course._id);
 		Courses.updateGroups(this.course._id);
 
-		// Update the modification date
-		Courses.update(this.course._id, { $set: { time_lastedit: new Date() } });
+		timeLasteditDenormalizer.afterSubscribe(this.course._id);
+		historyDenormalizer.afterSubscribe(this.course._id, this.user._id, this.role);
 
 		// Send notifications
 		Notification.Join.record(this.course._id, this.user._id, this.role, this.comment);
@@ -202,12 +199,12 @@ export class Subscribe extends Change {
 }
 
 export class Unsubscribe extends Change {
-	static get method() { return 'Courses.Unsubscribe'; }
+	static get method() {
+		return 'Courses.Unsubscribe';
+	}
 
 	static read(body) {
-		return new this(Courses.findOne(body.courseId),
-			Users.findOne(body.userId),
-			body.role);
+		return new this(Courses.findOne(body.courseId), Users.findOne(body.userId), body.role);
 	}
 
 	constructor(course, user, role) {
@@ -224,15 +221,14 @@ export class Unsubscribe extends Change {
 	}
 
 	toString() {
-		return `${this.constructor.method
-		}(${this.role})`;
+		return `${this.constructor.method}(${this.role})`;
 	}
 
 	validate() {
 		// Do not allow unsubscribing when not subscribed
-		const hasRole = this.course.userHasRole(this.user._id, this.role);
-		if (!hasRole) {
-			throw new ValidationError(`not subscribed with role ${this.role}`);
+		const userHasRole = this.course.userHasRole(this.user._id, this.role);
+		if (!userHasRole) {
+			throw new ValidationError([], `not subscribed with role ${this.role}`);
 		}
 	}
 
@@ -258,14 +254,12 @@ export class Unsubscribe extends Change {
 	}
 
 	dict() {
-		return (
-			{
-				change: 'unsubscribe',
-				courseId: this.course._id,
-				userId: this.user._id,
-				role: this.role,
-			}
-		);
+		return {
+			change: 'unsubscribe',
+			courseId: this.course._id,
+			userId: this.user._id,
+			role: this.role,
+		};
 	}
 
 	provide(rel, body) {
@@ -285,29 +279,27 @@ export class Unsubscribe extends Change {
 				{ multi: true },
 			);
 		}
-		Courses.update(
-			{ _id: this.course._id, 'members.user': this.user._id },
-			update,
-		);
+		Courses.update({ _id: this.course._id, 'members.user': this.user._id }, update);
 
 		// Housekeeping: Remove members that have no role left
-		Courses.update(
-			{ _id: this.course._id },
-			{ $pull: { members: { roles: { $size: 0 } } } },
-		);
+		Courses.update({ _id: this.course._id }, { $pull: { members: { roles: { $size: 0 } } } });
 
+		// Update member related calculated fields
+		Courses.updateInterested(this.course._id);
 		Courses.updateGroups(this.course._id);
+
+		timeLasteditDenormalizer.afterUnsubscribe(this.course._id);
+		historyDenormalizer.afterUnsubscribe(this.course._id, this.user._id, this.role);
 	}
 }
 
-
 export class Message extends Change {
-	static get method() { return 'Courses.Message'; }
+	static get method() {
+		return 'Courses.Message';
+	}
 
 	static read(body) {
-		return new this(Courses.findOne(body.courseId),
-			Meteor.users.findOne(body.userId),
-			body.message);
+		return new this(Courses.findOne(body.courseId), Users.findOne(body.userId), body.message);
 	}
 
 	constructor(course, user, message) {
@@ -342,14 +334,12 @@ export class Message extends Change {
 	}
 
 	dict() {
-		return (
-			{
-				change: 'message',
-				courseId: this.course._id,
-				userId: this.user._id,
-				message: this.message,
-			}
-		);
+		return {
+			change: 'message',
+			courseId: this.course._id,
+			userId: this.user._id,
+			message: this.message,
+		};
 	}
 
 	provide(rel, body) {

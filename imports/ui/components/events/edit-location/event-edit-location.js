@@ -1,13 +1,15 @@
-
-
+import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import Alert from '/imports/api/alerts/alert';
+import * as Alert from '/imports/api/alerts/alert';
 
-import LocationTracker from '/imports/ui/lib/location-tracker';
-import Venues from '/imports/api/venues/venues';
+import { LocationTracker } from '/imports/ui/lib/location-tracker';
+import { Venues } from '/imports/api/venues/venues';
+import { Users } from '/imports/api/users/users';
+/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import '/imports/ui/components/map/map';
 import '/imports/ui/components/venues/link/venue-link';
@@ -22,9 +24,7 @@ Template.eventEditVenue.onCreated(function () {
 	instance.locationTracker = LocationTracker();
 	instance.location = instance.parent.selectedLocation;
 	instance.search = new ReactiveVar('');
-	instance.addressSearch = new ReactiveVar(
-		Boolean(instance.location.get().name),
-	);
+	instance.addressSearch = new ReactiveVar(Boolean(instance.location.get().name));
 
 	// unset: no location selected
 	// preset: one of the preset locations is referenced
@@ -119,12 +119,12 @@ Template.eventEditVenue.onCreated(function () {
 			query.recent = true;
 		}
 		// We dont have recent events loaded on the client
-		const localQuery = _.extend(query, { recent: false });
+		const localQuery = _.extend({}, query, { recent: false });
 
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
 			added(originalLocation) {
-				const location = Object.assign({}, originalLocation);
+				const location = { ...originalLocation };
 				location.proposed = true;
 				location.presetName = location.name;
 				location.presetAddress = location.address;
@@ -134,20 +134,19 @@ Template.eventEditVenue.onCreated(function () {
 		});
 	});
 
+	/** @type {ReactiveVar<UserModel|false>} */
 	this.venueEditor = new ReactiveVar(false);
 	this.autorun(() => {
 		const venueEditor = this.location.get().editor;
 		if (venueEditor) {
 			this.subscribe('user', venueEditor, () => {
-				this.venueEditor.set(Meteor.users.findOne(venueEditor));
+				this.venueEditor.set(Users.findOne(venueEditor));
 			});
 		}
 	});
 });
 
-
 Template.eventEditVenue.helpers({
-
 	location() {
 		return Template.instance().location.get();
 	},
@@ -197,20 +196,17 @@ Template.eventEditVenue.helpers({
 	},
 
 	searching() {
-		return Boolean(
-			Template.instance().location.get().name,
-		);
+		return !!Template.instance().location.get().name;
 	},
-
 });
 
-
 Template.eventEditVenue.events({
-	'click .js-location-search-btn'(event, instance) {
+	async 'click .js-location-search-btn'(event, instance) {
 		event.preventDefault();
 
 		instance.addressSearch.set(true);
 		const search = instance.$('.js-location-search-input').val();
+		/** @type {{[name: string]: any}} */
 		const nominatimQuery = {
 			format: 'json',
 			q: search,
@@ -220,7 +216,7 @@ Template.eventEditVenue.events({
 		const { markers } = instance.locationTracker;
 
 		const region = markers.findOne({ center: true });
-		if (region && region.loc) {
+		if (region?.loc) {
 			nominatimQuery.viewbox = [
 				region.loc.coordinates[0] - 0.1,
 				region.loc.coordinates[1] + 0.1,
@@ -230,24 +226,20 @@ Template.eventEditVenue.events({
 			nominatimQuery.bounded = 1;
 		}
 
-
-		HTTP.get('https://nominatim.openstreetmap.org', {
-			params: nominatimQuery,
-		}, (error, result) => {
-			if (error) {
-				Alert.serverError(error, '');
-				return;
-			}
-
-			const found = JSON.parse(result.content);
-
+		try {
+			const response = await fetch(
+				`https://nominatim.openstreetmap.org?${new URLSearchParams(nominatimQuery)}`,
+			);
+			const found = await response.json();
 			markers.remove({ proposed: true });
 			if (found.length === 0) {
-				Alert.warning(mf(
-					'event.edit.noResultsforAddress',
-					{ ADDRESS: search },
-					'Found no results for address "{ADDRESS}"',
-				));
+				Alert.warning(
+					mf(
+						'event.edit.noResultsforAddress',
+						{ ADDRESS: search },
+						'Found no results for address "{ADDRESS}"',
+					),
+				);
 			}
 			_.each(found, (foundLocation) => {
 				const marker = {
@@ -258,7 +250,9 @@ Template.eventEditVenue.events({
 				};
 				instance.locationTracker.markers.insert(marker);
 			});
-		});
+		} catch (reason) {
+			Alert.serverError(reason, '');
+		}
 	},
 
 	'click .js-location-change'(event, instance) {
@@ -272,12 +266,12 @@ Template.eventEditVenue.events({
 	},
 
 	'keyup .js-location-search-input'(event, instance) {
-		instance.addressSearch.set(false);
-		instance.search.set(event.target.value);
-
 		const updLocation = instance.location.get();
 		updLocation.name = event.target.value;
 		instance.location.set(updLocation);
+
+		instance.addressSearch.set(false);
+		instance.search.set(event.target.value);
 	},
 
 	'keyup .js-location-address-search'(event, instance) {
@@ -294,5 +288,4 @@ Template.eventEditVenue.events({
 	'mouseleave .js-location-candidate'(event, instance) {
 		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
 	},
-
 });
