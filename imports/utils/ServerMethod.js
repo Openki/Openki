@@ -17,8 +17,8 @@ import { MeteorAsync } from './promisify';
  */
 export function ServerMethod(name, run) {
 	Meteor.methods({
-		[name](args) {
-			return run.call(this, args);
+		[name](...args) {
+			return run.call(this, ...args);
 		},
 	});
 
