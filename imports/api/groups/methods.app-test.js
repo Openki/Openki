@@ -3,6 +3,7 @@ import { MeteorAsync } from '/imports/utils/promisify';
 import { assert } from 'chai';
 
 import { Groups } from '/imports/api/groups/groups';
+import * as GroupsMethods from '/imports/api/groups/methods';
 
 if (Meteor.isClient) {
 	describe('Group save', () => {
@@ -21,11 +22,11 @@ if (Meteor.isClient) {
 				description: `${randomName} description`,
 			};
 
-			const groupId = await MeteorAsync.call('group.save', 'create', newGroup);
+			const groupId = await GroupsMethods.save('create', newGroup);
 
 			assert.isString(groupId, 'group.save returns an groupId string');
 
-			await MeteorAsync.call('group.save', groupId, { name: editRandomName });
+			await GroupsMethods.save(groupId, { name: editRandomName });
 
 			const handle = await MeteorAsync.subscribe('group', groupId);
 			handle.stop();
@@ -49,13 +50,13 @@ if (Meteor.isClient) {
 				description: `${randomName} description`,
 			};
 
-			const groupId = await MeteorAsync.call('group.save', 'create', newGroup);
+			const groupId = await GroupsMethods.save('create', newGroup);
 
 			assert.isString(groupId, 'group.save returns an groupId string');
 
 			let hasFailed = false;
 			try {
-				await MeteorAsync.call('group.save', groupId, { name: '' });
+				await GroupsMethods.save(groupId, { name: '' });
 			} catch (err) {
 				if (err) {
 					hasFailed = true;

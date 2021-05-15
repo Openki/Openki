@@ -8,6 +8,7 @@ import { Template } from 'meteor/templating';
 import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';
 import { Users } from '/imports/api/users/users';
+import * as GroupsMethods from '/imports/api/groups/methods';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
@@ -100,31 +101,33 @@ Template.userprofile.events({
 		});
 	},
 
-	'click button.draftIntoGroup'() {
+	async 'click button.draftIntoGroup'() {
 		const groupId = this._id;
 		const { name } = this;
 		const userId = Template.parentData().user._id;
-		Meteor.call('group.updateMembership', userId, groupId, true, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Unable to draft user into group');
-			} else {
-				Alert.success(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'));
-			}
-		});
+
+		try {
+			await GroupsMethods.updateMembership(userId, groupId, true);
+
+			Alert.success(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'));
+		} catch (err) {
+			Alert.serverError(err, 'Unable to draft user into group');
+		}
 	},
 
-	'click .js-group-expel-btn'() {
+	async 'click .js-group-expel-btn'() {
 		Tooltips.hide();
 		const groupId = this._id;
 		const { name } = this;
 		const userId = Template.parentData().user._id;
-		Meteor.call('group.updateMembership', userId, groupId, false, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Unable to expel user from group');
-			} else {
-				Alert.success(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'));
-			}
-		});
+
+		try {
+			await GroupsMethods.updateMembership(userId, groupId, false);
+
+			Alert.success(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'));
+		} catch (err) {
+			Alert.serverError(err, 'Unable to expel user from group');
+		}
 	},
 
 	'click .js-verify-user-delete-collapse'() {

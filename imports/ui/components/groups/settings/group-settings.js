@@ -6,6 +6,7 @@ import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
+import * as GroupsMethods from '/imports/api/groups/methods';
 import { Users } from '/imports/api/users/users';
 
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
@@ -100,7 +101,7 @@ Template.groupSettings.events({
 		const memberId = `${this}`;
 		const groupId = Router.current().params._id;
 		try {
-			await MeteorAsync.call('group.updateMembership', memberId, groupId, false);
+			await GroupsMethods.updateMembership(memberId, groupId, false);
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
@@ -143,7 +144,7 @@ Template.groupSettings.events({
 
 		const groupId = instance.data.group._id;
 		try {
-			await MeteorAsync.call('group.save', groupId, changes);
+			await GroupsMethods.save(groupId, changes);
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
 				mf(
