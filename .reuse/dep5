@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Openki
+Upstream-Contact: Verein KOPF <admins@openki.net>
+Source: https://gitlab.com/Openki/Openki
+
+Files: *
+Copyright: 2021 Verein KOPF <admins@openki.net>
+License: AGPL-3.0-only
