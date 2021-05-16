@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
 import { MeteorAsync } from '/imports/utils/promisify';
+import * as VenuesMethods from '/imports/api/venues/methods';
 
 if (Meteor.isClient) {
 	describe('Venue save', () => {
@@ -19,12 +20,12 @@ if (Meteor.isClient) {
 				region: '9JyFCoKWkxnf8LWPh', // Testistan
 			};
 
-			const venueId = await MeteorAsync.call('venue.save', '', venue);
+			const venueId = await VenuesMethods.save('', venue);
 			assert.isString(venueId, 'got an event ID');
 
 			// Try saving it again with a change
 			venue.name += '!';
-			await MeteorAsync.call('venue.save', venueId, venue);
+			await VenuesMethods.save(venueId, venue);
 		});
 	});
 }
