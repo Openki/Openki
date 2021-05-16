@@ -6,9 +6,9 @@ import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Tenants } from '/imports/api/tenants/tenants';
+import * as TenantsMethods from '/imports/api/tenants/methods';
 import { Users } from '/imports/api/users/users';
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
-import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons/buttons';
 
@@ -52,7 +52,7 @@ Template.tenantSettings.events({
 		const memberId = this._id;
 		const tenantId = Router.current().params._id;
 		try {
-			await MeteorAsync.call('tenant.updateMembership', memberId, tenantId, true);
+			await TenantsMethods.updateMembership(memberId, tenantId, true);
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
@@ -71,7 +71,7 @@ Template.tenantSettings.events({
 		const memberId = `${this}`;
 		const tenantId = Router.current().params._id;
 		try {
-			await MeteorAsync.call('tenant.updateMembership', memberId, tenantId, false);
+			await TenantsMethods.updateMembership(memberId, tenantId, false);
 
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;

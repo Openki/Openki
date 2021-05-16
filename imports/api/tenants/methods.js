@@ -5,14 +5,16 @@ import { Tenants } from './tenants';
 import { Users } from '/imports/api/users/users';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as usersTenantsDenormalizer from '../users/tenantsDenormalizer';
+import { ServerMethod } from '/imports/utils/ServerMethod';
 
-Meteor.methods({
+export const updateMembership = ServerMethod(
+	'tenant.updateMembership',
 	/**
 	 * @param {string} userId
 	 * @param {string} tenantId
 	 * @param {boolean} join
 	 */
-	'tenant.updateMembership'(userId, tenantId, join) {
+	(userId, tenantId, join) => {
 		check(userId, String);
 		check(tenantId, String);
 		check(join, Boolean);
@@ -37,4 +39,6 @@ Meteor.methods({
 
 		usersTenantsDenormalizer.afterTenantUpdateMembership(user._id, tenantId, join);
 	},
-});
+);
+
+export default updateMembership;
