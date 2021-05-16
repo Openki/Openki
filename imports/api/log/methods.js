@@ -3,8 +3,22 @@ import { Match, check } from 'meteor/check';
 
 import Log from './log';
 
-Meteor.methods({
-	'log.clientError'(originalReport) {
+import { ServerMethod } from '/imports/utils/ServerMethod';
+
+export const clientError = ServerMethod(
+	'log.clientError',
+	/**
+	 * @param {{
+		name: string;
+		message: string;
+		location: string;
+		stack: string | undefined;
+		tsClient: Date;
+		clientId: string;
+		userAgent: string;
+	 }} originalReport 
+	 */
+	function (originalReport) {
 		const report = { ...originalReport };
 		check(report, {
 			name: String,
@@ -25,4 +39,6 @@ Meteor.methods({
 		}
 		Log.record('clientError', rel, report);
 	},
-});
+);
+
+export default clientError;
