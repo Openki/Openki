@@ -7,7 +7,6 @@ import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';
-import { Users } from '/imports/api/users/users';
 import * as GroupsMethods from '/imports/api/groups/methods';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
@@ -155,69 +154,6 @@ Template.userprofile.events({
 			instance.busy(false);
 			Alert.success(mf('profile.account.deleted', 'The account has been deleted'));
 			Router.go('users');
-		});
-	},
-});
-
-Template.emailBox.onCreated(function () {
-	this.busy(false);
-});
-
-Template.emailBox.onRendered(function () {
-	this.$('#emailmessage').select();
-});
-
-Template.emailBox.helpers({
-	hasEmail() {
-		return Meteor.user()?.hasEmail() || false;
-	},
-
-	hasVerifiedEmail() {
-		return Meteor.user()?.hasVerifiedEmail() || false;
-	},
-});
-
-Template.emailBox.events({
-	'change .js-send-own-adress'(event, instance) {
-		instance.$('.js-send-own-adress + .checkmark').toggle();
-	},
-
-	'change .js-receive-copy'(event, instance) {
-		instance.$('.js-receive-copy + .checkmark').toggle();
-	},
-
-	'submit form.sendMail'(event, template) {
-		event.preventDefault();
-		if (PleaseLogin()) {
-			return;
-		}
-
-		const recUserId = this.user._id;
-		let recUser = Users.findOne({ _id: recUserId });
-		if (recUser) {
-			if (recUser.username) {
-				recUser = recUser.username;
-			}
-		}
-
-		const message = template.$('#emailmessage').val();
-		const revealAddress = template.$('#sendOwnAdress').is(':checked');
-		const receiveCopy = template.$('#receiveCopy').is(':checked');
-
-		if (message.length < '2') {
-			Alert.serverError(mf('profile.mail.longertext', 'longer text please'));
-			return;
-		}
-
-		template.busy('sending');
-		Meteor.call('sendEmail', this.user._id, message, revealAddress, receiveCopy, (err) => {
-			template.busy(false);
-			if (err) {
-				Alert.serverError(err, '');
-			} else {
-				Alert.success(mf('profile.mail.sent', 'Your message was sent'));
-				template.$('#emailmessage').val('');
-			}
 		});
 	},
 });

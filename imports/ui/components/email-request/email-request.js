@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
 import * as Alert from '/imports/api/alerts/alert';
+import * as emailMethods from '/imports/api/emails/methods';
 
 import * as EmailRequest from '/imports/ui/lib/email-request';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
@@ -81,19 +82,18 @@ Template.emailValidationModal.onRendered(function () {
 });
 
 Template.emailValidationModal.events({
-	'click .js-send-validation-email'(event, instance) {
-		instance.busy('sending');
+	async 'click .js-send-validation-email'(event, instance) {
 		event.preventDefault();
-		Meteor.call('sendVerificationEmail', (err) => {
+		instance.busy('sending');
+		try {
+			await emailMethods.sendVerificationEmail();
+
+			Alert.success(mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }));
+			$('.js-email-validation-modal').modal('hide');
+		} catch (err) {
+			Alert.serverError(err, 'Failed to send verification mail');
+		} finally {
 			instance.busy(false);
-			if (err) {
-				Alert.serverError(err, 'Failed to send verification mail');
-			} else {
-				Alert.success(
-					mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }),
-				);
-				$('.js-email-validation-modal').modal('hide');
-			}
-		});
+		}
 	},
 });
