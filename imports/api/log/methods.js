@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Match, check } from 'meteor/check';
+import { check } from 'meteor/check';
 
 import Log from './log';
 
@@ -12,7 +12,7 @@ export const clientError = ServerMethod(
 		name: string;
 		message: string;
 		location: string;
-		stack: string | undefined;
+		stack: string;
 		tsClient: Date;
 		clientId: string;
 		userAgent: string;
@@ -24,14 +24,14 @@ export const clientError = ServerMethod(
 			name: String,
 			message: String,
 			location: String,
-			stack: Match.Optional(String),
+			stack: String,
 			tsClient: Date,
 			clientId: String,
 			userAgent: String,
 		});
-		report.connectionId = this.connection.id;
+		report.connectionId = this.connection?.id;
 
-		const rel = [report.name, report.connectionId, report.clientId];
+		const rel = [report.name, report.connectionId, report.clientId].filter((id) => !!id);
 		const userId = Meteor.userId();
 		if (userId) {
 			report.userId = userId;

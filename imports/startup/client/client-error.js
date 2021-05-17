@@ -13,7 +13,7 @@ const reportToServer = function (error) {
 		name: error.name,
 		message: error.message,
 		location: window.location.href,
-		stack: error.stack,
+		stack: error.stack || '',
 		tsClient: new Date(),
 		clientId,
 		userAgent: window.navigator.userAgent,
