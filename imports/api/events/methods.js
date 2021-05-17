@@ -24,6 +24,7 @@ import * as HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UpdateMethods from '/imports/utils/update-methods';
+import { ServerMethod } from '/imports/utils/ServerMethod';
 
 /**
  * @param {EventEntity} event
@@ -31,7 +32,7 @@ import * as UpdateMethods from '/imports/utils/update-methods';
  *  infos: boolean;
  *  time: boolean;
  *  changedReplicas: { time: boolean; };
- * }} updateOptions - What should be updated
+ * }} updateOptions What should be updated
  */
 const ReplicaSync = function (event, updateOptions) {
 	let affected = 0;
@@ -475,24 +476,6 @@ Meteor.methods({
 		});
 	},
 
-	/** Add or remove a group from the groups list
-	 *
-	 * @param {String} eventId - The event to update
-	 * @param {String} groupId - The group to add or remove
-	 * @param {Boolean} add - Whether to add or remove the group
-	 *
-	 */
-	'event.promote': UpdateMethods.promote(Events),
-
-	/** Add or remove a group from the groupOrganizers list
-	 *
-	 * @param {String} eventId - The event to update
-	 * @param {String} groupId - The group to add or remove
-	 * @param {Boolean} add - Whether to add or remove the group
-	 *
-	 */
-	'event.editing': UpdateMethods.editing(Events),
-
 	/** Add current user as event-participant
 	 *
 	 * the user is also signed up for the course.
@@ -547,3 +530,23 @@ Meteor.methods({
 		Events.update({ _id: eventId }, { $pull: { participants: Meteor.userId() } });
 	},
 });
+
+/**
+ * Add or remove a group from the groups list
+ *
+ * @param {string} eventId The event to update
+ * @param {string} groupId The group to add or remove
+ * @param {boolean} add Whether to add or remove the group
+ *
+ */
+export const promote = ServerMethod('event.promote', UpdateMethods.promote(Events));
+
+/**
+ * Add or remove a group from the groupOrganizers list
+ *
+ * @param {string} eventId The event to update
+ * @param {string} groupId The group to add or remove
+ * @param {boolean} add Whether to add or remove the group
+ *
+ */
+export const editing = ServerMethod('event.editing', UpdateMethods.editing(Events));
