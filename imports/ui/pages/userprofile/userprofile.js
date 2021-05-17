@@ -8,6 +8,7 @@ import { Template } from 'meteor/templating';
 import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';
 import * as GroupsMethods from '/imports/api/groups/methods';
+import * as usersMethods from '/imports/api/users/methods';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
@@ -79,25 +80,25 @@ Template.userprofile.helpers({
 });
 
 Template.userprofile.events({
-	'click button.giveAdmin'() {
-		Meteor.call('user.addPrivilege', this.user._id, 'admin', (err) => {
-			if (err) {
-				Alert.serverError(err, 'Unable to add privilege');
-			} else {
-				Alert.success(mf('privilege.addedAdmin', 'Granted admin privilege'));
-			}
-		});
+	async 'click button.giveAdmin'() {
+		try {
+			await usersMethods.addPrivilege(this.user._id, 'admin');
+
+			Alert.success(mf('privilege.addedAdmin', 'Granted admin privilege'));
+		} catch (err) {
+			Alert.serverError(err, 'Unable to add privilege');
+		}
 	},
 
-	'click .js-remove-privilege-btn'(event, template) {
+	async 'click .js-remove-privilege-btn'(event, template) {
 		const priv = template.$(event.target).data('priv');
-		Meteor.call('user.removePrivilege', this.user._id, priv, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Unable to remove privilege');
-			} else {
-				Alert.success(mf('privilege.removed', 'Removed privilege'));
-			}
-		});
+		try {
+			await usersMethods.removePrivilege(this.user._id, priv);
+
+			Alert.success(mf('privilege.removed', 'Removed privilege'));
+		} catch (err) {
+			Alert.serverError(err, 'Unable to remove privilege');
+		}
 	},
 
 	async 'click button.draftIntoGroup'() {
@@ -150,10 +151,13 @@ Template.userprofile.events({
 		}
 
 		const userId = Template.parentData().user._id;
-		Meteor.call('user.admin.remove', userId, reason, { courses: true }, () => {
-			instance.busy(false);
+
+		try {
 			Alert.success(mf('profile.account.deleted', 'The account has been deleted'));
 			Router.go('users');
-		});
+		} finally {
+			instance.busy(false);
+		}
+		usersMethods.adminRemove(userId, reason, { courses: true });
 	},
 });

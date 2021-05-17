@@ -13,6 +13,7 @@ import { ScssVars } from '/imports/ui/lib/scss-vars';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import { isEmail } from '/imports/utils/email-tools';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import { Regions } from '/imports/api/regions/regions';
 import { Analytics } from '/imports/ui/lib/analytics';
@@ -147,7 +148,7 @@ Template.loginFrame.events({
 		instance.parentInstance().accountTask.set('register');
 	},
 
-	'submit form, click .js-login'(event, instance) {
+	async 'submit form, click .js-login'(event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 
@@ -163,26 +164,27 @@ Template.loginFrame.events({
 		const password = instance.$('.js-password').val();
 
 		instance.busy('logging-in');
-		Meteor.loginWithPassword(user, password, (err) => {
-			instance.busy(false);
-			if (err) {
-				instance.errors.add(err.reason);
-			} else {
-				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
-					$('#bs-navbar-collapse-1').collapse('hide');
-				}
-				$('.js-account-tasks').modal('hide');
+		try {
+			await MeteorAsync.loginWithPassword(user, password);
 
-				const regionId = CleanedRegion(Session.get('region'));
-				if (regionId) {
-					usersMethods.regionChange(regionId);
-				}
-
-				Meteor.call('user.updateLocale', Session.get('locale'));
-
-				Analytics.trackEvent('Logins', 'Logins with password', Regions.findOne(regionId)?.nameEn);
+			if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
+				$('#bs-navbar-collapse-1').collapse('hide');
 			}
-		});
+			$('.js-account-tasks').modal('hide');
+
+			const regionId = CleanedRegion(Session.get('region'));
+			if (regionId) {
+				usersMethods.regionChange(regionId);
+			}
+
+			usersMethods.updateLocale(Session.get('locale'));
+
+			Analytics.trackEvent('Logins', 'Logins with password', Regions.findOne(regionId)?.nameEn);
+		} catch (err) {
+			instance.errors.add(err.reason);
+		} finally {
+			instance.busy(false);
+		}
 	},
 
 	'click .js-oauth-btn'(event, instance) {
@@ -211,7 +213,7 @@ Template.loginFrame.events({
 					usersMethods.regionChange(regionId);
 				}
 
-				Meteor.call('user.updateLocale', Session.get('locale'));
+				usersMethods.updateLocale(Session.get('locale'));
 
 				Analytics.trackEvent(
 					'Logins',
@@ -340,7 +342,7 @@ Template.registerFrame.events({
 						usersMethods.regionChange(regionId);
 					}
 
-					Meteor.call('user.updateLocale', Session.get('locale'));
+					usersMethods.updateLocale(Session.get('locale'));
 
 					const user = Meteor.user();
 

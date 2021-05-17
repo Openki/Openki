@@ -219,16 +219,15 @@ export const updateEmail = ServerMethod(
 	},
 );
 
-export const selfRemove = Server
+export const selfRemove = ServerMethod('user.self.remove', () => {
+	const user = Meteor.user();
+	if (user) {
+		Users.remove({ _id: user._id });
+	}
+});
 
-Meteor.methods({
-	'user.self.remove'() {
-		const user = Meteor.user();
-		if (user) {
-			Users.remove({ _id: user._id });
-		}
-	},
-
+export const adminRemove = ServerMethod(
+	'user.admin.remove',
 	/**
 	 * @param {string} userId
 	 * @param {string} reason
@@ -236,7 +235,7 @@ Meteor.methods({
 	 * @param {boolean} [options.courses] On true the courses (and events) created by the user
 	 * will also be deleted
 	 */
-	'user.admin.remove'(userId, reason, options) {
+	(userId, reason, options) => {
 		check(userId, String);
 		check(reason, String);
 		check(
@@ -291,12 +290,15 @@ Meteor.methods({
 			numberOfDeletedEvents,
 		});
 	},
+);
 
+export const addPrivilege = ServerMethod(
+	'user.addPrivilege',
 	/**
 	 * @param {string} userId
 	 * @param {string} privilege
 	 */
-	'user.addPrivilege'(userId, privilege) {
+	(userId, privilege) => {
 		// At the moment, only admins may hand out privileges, so this is easy
 		if (UserPrivilegeUtils.privilegedTo('admin')) {
 			const user = Users.findOne({ _id: userId });
@@ -310,12 +312,15 @@ Meteor.methods({
 			);
 		}
 	},
+);
 
+export const removePrivilege = ServerMethod(
+	'user.removePrivilege',
 	/**
 	 * @param {string} userId
 	 * @param {string} privilege
 	 */
-	'user.removePrivilege'(userId, privilege) {
+	(userId, privilege) => {
 		const user = Users.findOne({ _id: userId });
 		if (!user) {
 			throw new Meteor.Error(404, 'User not found');
@@ -331,7 +336,40 @@ Meteor.methods({
 			);
 		}
 	},
+);
 
+export const hidePricePolicy = ServerMethod('user.hidePricePolicy', () => {
+	Users.update(Meteor.userId(), { $set: { hidePricePolicy: true } });
+});
+
+export const name = ServerMethod(
+	'user.name',
+	/**
+	 * @param {string} userId
+	 */
+	function (userId) {
+		this.unblock();
+		const user = Users.findOne(userId, { fields: { username: 1 } });
+		if (!user) {
+			return false;
+		}
+		return user.username;
+	},
+);
+
+export const updateLocale = ServerMethod(
+	'user.updateLocale',
+	/**
+	 * @param {string} locale
+	 */
+	(locale) => {
+		Users.update(Meteor.userId(), {
+			$set: { locale },
+		});
+	},
+);
+
+Meteor.methods({
 	/**
 	 * Recalculate the groups and badges field
 	 */
@@ -370,31 +408,6 @@ Meteor.methods({
 					}
 				});
 			});
-		});
-	},
-
-	'user.hidePricePolicy'(user) {
-		Users.update({ _id: user._id }, { $set: { hidePricePolicy: true } });
-	},
-
-	/**
-	 * @param {string} userId
-	 */
-	'user.name'(userId) {
-		this.unblock();
-		const user = Users.findOne(userId, { fields: { username: 1 } });
-		if (!user) {
-			return false;
-		}
-		return user.username;
-	},
-
-	/**
-	 * @param {string} locale
-	 */
-	'user.updateLocale'(locale) {
-		Users.update(Meteor.userId(), {
-			$set: { locale },
 		});
 	},
 });

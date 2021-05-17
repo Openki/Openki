@@ -170,13 +170,17 @@ Template.profile.events({
 		instance.changingPass.set(false);
 	},
 
-	'click .js-profile-delete-confirm-btn'(event, instance) {
+	async 'click .js-profile-delete-confirm-btn'(event, instance) {
 		instance.busy('deleting');
-		Meteor.call('user.self.remove', () => {
-			instance.busy(false);
-			Alert.success(mf('profile.deleted', 'Your account has been deleted'));
-		});
+
 		instance.collapse(); // Wait for server to log us out.
+		try {
+			await usersMethods.selfRemove();
+
+			Alert.success(mf('profile.deleted', 'Your account has been deleted'));
+		} finally {
+			instance.busy(false);
+		}
 	},
 
 	async 'submit .js-email-form'(event, instance) {

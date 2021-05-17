@@ -8,6 +8,7 @@ import moment from 'moment';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
+import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
 
 const helpers = {
@@ -265,16 +266,20 @@ const helpers = {
 
 Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[name]));
 
-/* Get a username from ID
+/**
+ * Get a username from ID
  */
 const usernameFromId = (function () {
 	// We cache the username lookups
 	// To prevent unlimited cache-growth, after a enough lookups we
 	// build a new cache from the old
 	const cacheLimit = 1000;
+	/** @type {{[id: string]: string}} */
 	let cache = {};
+	/** @type {{[id: string]: string}} */
 	let previousCache = {};
 	let lookups = 0;
+	/** @type {{[id: string]: Tracker.Dependency}} */
 	const pending = {};
 
 	// Update the cache if users are pushed to the collection
@@ -287,7 +292,7 @@ const usernameFromId = (function () {
 		},
 	});
 
-	return function (userId) {
+	return function (/** @type {string} */ userId) {
 		if (!userId) {
 			return mf('noUser_placeholder', 'someone');
 		}
@@ -323,15 +328,17 @@ const usernameFromId = (function () {
 					lookups = 0;
 				}
 
-				Meteor.call('user.name', userId, (err, user) => {
-					if (err) {
+				usersMethods
+					.name(userId)
+					.then((user) => {
+						cache[userId] = user || '?!';
+						pending[userId].changed();
+						delete pending[userId];
+					})
+					.catch((err) => {
 						/* eslint-disable-next-line no-console */
 						console.warn(err);
-					}
-					cache[userId] = user || '?!';
-					pending[userId].changed();
-					delete pending[userId];
-				});
+					});
 			}
 		}
 
