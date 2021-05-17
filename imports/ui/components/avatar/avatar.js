@@ -4,6 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import { Users } from '/imports/api/users/users';
+import * as usersMethods from '/imports/api/users/methods';
 import * as Alert from '/imports/api/alerts/alert';
 
 import './avatar.html';
@@ -70,7 +71,7 @@ Template.avatarForm.events({
 		instance.tempColor.set(event.target.value);
 	},
 
-	'change .js-change-avatar-color'(event, instance) {
+	async 'change .js-change-avatar-color'(event, instance) {
 		const newColor = Number(instance.tempColor.get());
 
 		// only update the color if it has changed
@@ -78,10 +79,8 @@ Template.avatarForm.events({
 			return;
 		}
 
-		Meteor.call('user.updateAvatarColor', newColor, (err) => {
-			if (!err) {
-				Alert.success(mf('profile.updated', 'Updated profile'));
-			}
-		});
+		await usersMethods.updateAvatarColor(newColor);
+
+		Alert.success(mf('profile.updated', 'Updated profile'));
 	},
 });

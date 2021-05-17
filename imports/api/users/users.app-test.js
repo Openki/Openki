@@ -4,6 +4,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { MeteorAsync, AccountsAsync } from '/imports/utils/promisify';
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import { Users } from '/imports/api/users/users';
+import * as usersMethods from '/imports/api/users/methods';
 
 const createDummy = function () {
 	return `test${Date.now()}${Math.random(1000000)}`;
@@ -79,7 +80,7 @@ if (Meteor.isClient) {
 			it('does not allow setting duplicate email', async () => {
 				let hasFailed = false;
 				try {
-					await MeteorAsync.call('user.updateEmail', 'greg@openki.example');
+					await usersMethods.updateEmail('greg@openki.example');
 				} catch (err) {
 					if (err) {
 						hasFailed = true;

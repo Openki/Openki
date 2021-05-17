@@ -16,64 +16,47 @@ import * as StringTools from '/imports/utils/string-tools';
 import { AsyncTools } from '/imports/utils/async-tools';
 /** @typedef {import('/imports/api/courses/courses').Course} Course */
 import { Events } from '../events/events';
+import { ServerMethod } from '/imports/utils/ServerMethod';
 /** @typedef {import('./users').UserModel} UserModel */
 
 /**
- * @param {string} email
- * @param {UserModel} user
+ * Set user region
  */
-const updateEmail = function (email, user) {
-	const newEmail = email.trim() || false;
-	const oldEmail = user.emailAddress();
-
-	// for users with email not yet set, we dont want to force them
-	// to enter a email when they change other profile settings.
-	if (newEmail === oldEmail) {
-		return;
-	}
-
-	if (!newEmail) {
-		throw new ValidationError([{ name: 'email', type: 'noEmail' }], 'Please enter a email.');
-	}
-
-	if (!isEmail(newEmail)) {
-		throw new ValidationError([{ name: 'email', type: 'emailNotValid' }], 'email invalid');
-	}
-
-	// Don't allow using an address somebody else uses
-	const existingUser = Accounts.findUserByEmail(newEmail);
-	if (existingUser) {
-		throw new ValidationError([{ name: 'email', type: 'emailExists' }], 'Email already exists.');
-	}
-
-	Profile.Email.change(user._id, newEmail, 'profile change');
-};
-
-Meteor.methods({
+export const regionChange = ServerMethod(
+	'user.regionChange',
 	/**
-	 * Set user region
 	 * @param {string} newRegion
 	 */
-	'user.regionChange'(newRegion) {
+	(newRegion) => {
 		Profile.Region.change(Meteor.userId(), newRegion, 'client call');
 	},
+);
 
+/**
+ * Update user avatar color
+ */
+export const updateAvatarColor = ServerMethod(
+	'user.updateAvatarColor',
 	/**
-	 * Update user avatar color
 	 * @param {number} [newColor] hsl hue number, otherwise a random color is generated
 	 */
-	'user.updateAvatarColor'(newColor) {
+	(newColor) => {
 		check(newColor, Match.Optional(Number));
 
 		const color = newColor ?? _.random(360);
 		Profile.AvatarColor.change(Meteor.userId(), color);
 	},
+);
 
+/**
+ * Update user description
+ */
+export const updateDescription = ServerMethod(
+	'user.updateDescription',
 	/**
-	 * Update user description
 	 * @param {string} description
 	 */
-	'user.updateDescription'(description) {
+	(description) => {
 		check(description, String);
 
 		/** @type {UserModel} */
@@ -92,12 +75,17 @@ Meteor.methods({
 			);
 		}
 	},
+);
 
+/**
+ * Update username
+ */
+export const updateUsername = ServerMethod(
+	'user.updateUsername',
 	/**
-	 * Update username
 	 * @param {string} description
 	 */
-	'user.updateUsername'(username) {
+	(username) => {
 		check(username, String);
 
 		/** @type {UserModel | undefined} */
@@ -137,12 +125,17 @@ Meteor.methods({
 			);
 		}
 	},
+);
 
+/**
+ * Update automated notification flag
+ */
+export const updateAutomatedNotification = ServerMethod(
+	'user.updateAutomatedNotification',
 	/**
-	 * Update automated notification flag
 	 * @param {boolean} allow
 	 */
-	'user.updateAutomatedNotification'(allow) {
+	(allow) => {
 		check(allow, Boolean);
 
 		/** @type {UserModel} */
@@ -155,12 +148,17 @@ Meteor.methods({
 			Profile.Notifications.change(user._id, allow, undefined, 'profile change');
 		}
 	},
+);
 
+/**
+ * Update private messages flag
+ */
+export const updatePrivateMessages = ServerMethod(
+	'user.updatePrivateMessages',
 	/**
-	 * Update private messages flag
 	 * @param {boolean} allow
 	 */
-	'user.updatePrivateMessages'(allow) {
+	(allow) => {
 		check(allow, Boolean);
 
 		/** @type {UserModel} */
@@ -176,21 +174,54 @@ Meteor.methods({
 			Profile.PrivateMessages.change(user._id, allow, undefined, 'profile change');
 		}
 	},
+);
 
+/**
+ * Update email
+ */
+export const updateEmail = ServerMethod(
+	'user.updateEmail',
 	/**
-	 * Update email
 	 * @param {string} email
 	 */
-	'user.updateEmail'(email) {
+	(email) => {
 		check(email, String);
 
 		const user = Meteor.user();
 		if (!user) {
 			throw new ValidationError([{ name: 'email', type: 'plzLogin' }], 'Not logged-in');
 		}
-		updateEmail(email, user);
-	},
 
+		const newEmail = email.trim() || false;
+		const oldEmail = user.emailAddress();
+
+		// for users with email not yet set, we dont want to force them
+		// to enter a email when they change other profile settings.
+		if (newEmail === oldEmail) {
+			return;
+		}
+
+		if (!newEmail) {
+			throw new ValidationError([{ name: 'email', type: 'noEmail' }], 'Please enter a email.');
+		}
+
+		if (!isEmail(newEmail)) {
+			throw new ValidationError([{ name: 'email', type: 'emailNotValid' }], 'email invalid');
+		}
+
+		// Don't allow using an address somebody else uses
+		const existingUser = Accounts.findUserByEmail(newEmail);
+		if (existingUser) {
+			throw new ValidationError([{ name: 'email', type: 'emailExists' }], 'Email already exists.');
+		}
+
+		Profile.Email.change(user._id, newEmail, 'profile change');
+	},
+);
+
+export const selfRemove = Server
+
+Meteor.methods({
 	'user.self.remove'() {
 		const user = Meteor.user();
 		if (user) {

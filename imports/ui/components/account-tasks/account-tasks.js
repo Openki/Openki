@@ -6,6 +6,7 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
+import * as usersMethods from '/imports/api/users/methods';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
@@ -174,7 +175,7 @@ Template.loginFrame.events({
 
 				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
-					Meteor.call('user.regionChange', regionId);
+					usersMethods.regionChange(regionId);
 				}
 
 				Meteor.call('user.updateLocale', Session.get('locale'));
@@ -207,7 +208,7 @@ Template.loginFrame.events({
 
 				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
-					Meteor.call('user.regionChange', regionId);
+					usersMethods.regionChange(regionId);
 				}
 
 				Meteor.call('user.updateLocale', Session.get('locale'));
@@ -336,7 +337,7 @@ Template.registerFrame.events({
 
 					const regionId = CleanedRegion(Session.get('region'));
 					if (regionId) {
-						Meteor.call('user.regionChange', regionId);
+						usersMethods.regionChange(regionId);
 					}
 
 					Meteor.call('user.updateLocale', Session.get('locale'));

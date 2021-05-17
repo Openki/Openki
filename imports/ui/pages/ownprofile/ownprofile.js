@@ -7,9 +7,9 @@ import { mf } from 'meteor/msgfmt:core';
 
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Alert from '/imports/api/alerts/alert';
+import * as usersMethods from '/imports/api/users/methods';
 import { Analytics } from '/imports/ui/lib/analytics';
 import { Editable } from '/imports/ui/lib/editable';
-import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/groups/list/group-list';
@@ -63,7 +63,7 @@ Template.profile.onCreated(function () {
 			},
 		],
 		onSave: async (newName) => {
-			await MeteorAsync.call('user.updateUsername', newName);
+			usersMethods.updateUsername(newName);
 		},
 		onSuccess: () => {
 			Alert.success(mf('profile.updated', 'Updated profile'));
@@ -77,7 +77,7 @@ Template.profile.onCreated(function () {
 		),
 		{
 			onSave: async (newDescription) => {
-				await MeteorAsync.call('user.updateDescription', newDescription);
+				await usersMethods.updateDescription(newDescription);
 			},
 			onSuccess: () => {
 				Alert.success(mf('profile.updated', 'Updated profile'));
@@ -179,55 +179,54 @@ Template.profile.events({
 		instance.collapse(); // Wait for server to log us out.
 	},
 
-	'submit .js-email-form'(event, instance) {
+	async 'submit .js-email-form'(event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 
-		Meteor.call('user.updateEmail', instance.$('.js-email').val(), (err) => {
-			if (err) {
-				if (err.error === 'validation-error') {
-					err.details.forEach((fieldError) => {
-						instance.errors.add(fieldError.type);
-					});
-				}
-			} else {
-				Alert.success(mf('profile.updated', 'Updated profile'));
+		try {
+			await usersMethods.updateEmail(instance.$('.js-email').val());
+			Alert.success(mf('profile.updated', 'Updated profile'));
+		} catch (err) {
+			if (err.error === 'validation-error') {
+				err.details.forEach((fieldError) => {
+					instance.errors.add(fieldError.type);
+				});
 			}
-		});
+		}
 	},
 
-	'change .js-notifications'(event, instance) {
+	async 'change .js-notifications'(event, instance) {
 		const allow = instance.$('.js-notifications').prop('checked');
 
-		Meteor.call('user.updateAutomatedNotification', allow, (err) => {
-			if (err) {
-				instance.errors.add(err.error);
-			} else {
-				Alert.success(mf('profile.updated', 'Updated profile'));
-				if (!allow)
-					Analytics.trackEvent(
-						'Unsubscribes from notifications',
-						'Unsubscribes from automated notifications via profile',
-					);
-			}
-		});
+		try {
+			await usersMethods.updateAutomatedNotification(allow);
+
+			Alert.success(mf('profile.updated', 'Updated profile'));
+			if (!allow)
+				Analytics.trackEvent(
+					'Unsubscribes from notifications',
+					'Unsubscribes from automated notifications via profile',
+				);
+		} catch (err) {
+			instance.errors.add(err.error);
+		}
 	},
 
-	'change .js-allowPrivateMessages'(event, instance) {
+	async 'change .js-allowPrivateMessages'(event, instance) {
 		const allow = instance.$('.js-allowPrivateMessages').prop('checked');
 
-		Meteor.call('user.updatePrivateMessages', allow, (err) => {
-			if (err) {
-				instance.errors.add(err.error);
-			} else {
-				Alert.success(mf('profile.updated', 'Updated profile'));
-				if (!allow)
-					Analytics.trackEvent(
-						'Unsubscribes from notifications',
-						'Unsubscribes from private messages via profile',
-					);
-			}
-		});
+		try {
+			await usersMethods.updatePrivateMessages(allow);
+
+			Alert.success(mf('profile.updated', 'Updated profile'));
+			if (!allow)
+				Analytics.trackEvent(
+					'Unsubscribes from notifications',
+					'Unsubscribes from private messages via profile',
+				);
+		} catch (err) {
+			instance.errors.add(err.error);
+		}
 	},
 
 	'submit .js-change-pwd'(event, instance) {

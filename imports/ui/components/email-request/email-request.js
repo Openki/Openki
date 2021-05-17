@@ -40,7 +40,7 @@ TemplateMixins.FormfieldErrors(Template.emailRequestModal, {
 });
 
 Template.emailRequestModal.events({
-	'click .js-save-email'(event, instance) {
+	async 'click .js-save-email'(event, instance) {
 		event.preventDefault();
 
 		instance.errors.reset();
@@ -55,15 +55,14 @@ Template.emailRequestModal.events({
 		}
 
 		instance.busy('saving');
-		Meteor.call('user.updateEmail', email, (err) => {
-			instance.busy(false);
-			if (err) {
-				instance.errors.add(err.reason);
-			} else {
-				Alert.success(mf('profile.updated', 'Updated profile'));
-				instance.$('.js-email-request-modal').modal('hide');
-			}
-		});
+		try {
+			await usersMethods.updateEmail(email);
+
+			Alert.success(mf('profile.updated', 'Updated profile'));
+			instance.$('.js-email-request-modal').modal('hide');
+		} catch (err) {
+			instance.errors.add(err.reason);
+		}
 	},
 });
 
