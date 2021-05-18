@@ -6,6 +6,6 @@ Meteor.publish('courseDetails', (id) =>
 	Courses.find({ _id: id, tenant: { $in: visibleTenants() } }),
 );
 
-Meteor.publish('Courses.findFilter', (filter, limit, sortParams) =>
-	Courses.findFilter({ ...filter, tenants: visibleTenants() }, limit, sortParams),
+Meteor.publish('Courses.findFilter', (filter, limit, skip, sortParams) =>
+	Courses.findFilter({ ...filter, tenants: visibleTenants() }, limit, skip, sortParams),
 );
