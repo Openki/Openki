@@ -5,7 +5,7 @@ import { _ } from 'meteor/underscore';
 import moment from 'moment';
 
 import { Courses } from '/imports/api/courses/courses';
-import { Subscribe, processChangeAsync } from '/imports/api/courses/subscription';
+import { Subscribe, processChange } from '/imports/api/courses/subscription';
 import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as courseTimeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 import { Events, OEvent } from '/imports/api/events/events';
@@ -466,7 +466,7 @@ export const addParticipant = ServerMethod(
 		const change = new Subscribe(course, user, 'participant');
 
 		if (change.validFor(user)) {
-			processChangeAsync(change);
+			processChange(change);
 		}
 	},
 );

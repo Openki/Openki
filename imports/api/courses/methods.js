@@ -11,7 +11,7 @@ import * as UpdateMethods from '/imports/utils/update-methods';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 
-import { Subscribe, Unsubscribe, Message, processChangeAsync } from './subscription';
+import { Subscribe, Unsubscribe, Message, processChange } from './subscription';
 
 import { AsyncTools } from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
@@ -215,7 +215,7 @@ Meteor.methods({
 			changes.subs.forEach((role) => {
 				const change = new Subscribe(changedCourse, user, role);
 				if (change.validFor(user)) {
-					processChangeAsync(change);
+					processChange(change);
 				}
 			});
 		}
@@ -224,7 +224,7 @@ Meteor.methods({
 			changes.unsubs.forEach((role) => {
 				const change = new Unsubscribe(changedCourse, user, role);
 				if (change.validFor(user)) {
-					processChangeAsync(change);
+					processChange(change);
 				}
 			});
 		}
