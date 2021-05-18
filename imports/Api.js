@@ -6,11 +6,14 @@ import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Venues } from '/imports/api/venues/venues';
 import { Regions } from './api/regions/regions';
+import { visibleTenants } from './utils/visible-tenants';
 
 const apiResponse = function (collection, formatter) {
 	return (filter, limit, skip, sort) => {
 		const query = collection.Filtering().readAndValidate(filter).done().toQuery();
-		return collection.findFilter(query, limit, skip, sort).map(formatter);
+		return collection
+			.findFilter({ ...query, tenants: visibleTenants() }, limit, skip, sort)
+			.map(formatter);
 	};
 };
 
