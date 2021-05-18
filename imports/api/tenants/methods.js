@@ -3,7 +3,6 @@ import { check } from 'meteor/check';
 
 import { Tenants } from './tenants';
 import { Users } from '/imports/api/users/users';
-import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as usersTenantsDenormalizer from '../users/tenantsDenormalizer';
 
 Meteor.methods({
@@ -17,11 +16,27 @@ Meteor.methods({
 		check(tenantId, String);
 		check(join, Boolean);
 
-		if (!UserPrivilegeUtils.privilegedTo('admin')) {
+		const senderId = Meteor.userId();
+		if (!senderId) {
 			throw new Meteor.Error('Not permitted');
 		}
 
-		const user = Users.findOne(userId);
+		// Only current tenant admins may draft other people into it
+		// We build a selector that only finds the tenant if the sender is a
+		// member of it.
+		const sel = {
+			_id: tenantId,
+			admins: senderId,
+		};
+
+		// This check is not strictly necessary when the update uses the same
+		// selector. It generates an error message though, whereas the update is
+		// blind to that.
+		if (!Tenants.findOne(sel)) {
+			throw new Meteor.Error('No permitted');
+		}
+
+		const user = Users.findOne({ _id: userId });
 		if (!user) {
 			throw new Meteor.Error(404, 'User not found');
 		}
