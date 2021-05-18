@@ -47,10 +47,13 @@ const discriminatoryReporting = function (
 		// There's a template name in there right?
 		const templateNames = /Template\.[^_]\w+/g;
 		buffer.push(msg.match(templateNames).join(','));
-		reportToServer({
-			name: 'TemplateError',
-			message: buffer.join('; '),
-		});
+		reportToServer(
+			{
+				name: 'TemplateError',
+				message: buffer.join('; '),
+			},
+		);
+		buffer.length = 0;
 		return;
 	}
 
