@@ -17,7 +17,6 @@ import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import { _ } from 'meteor/underscore';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { MeteorAsync } from '/imports/utils/promisify';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import * as IdTools from '/imports/utils/id-tools';
@@ -49,7 +48,7 @@ Template.courseDetailsPage.onCreated(function () {
 
 	instance.editableName = new Editable(true, mf('course.title.placeholder'), {
 		onSave: async (newName) => {
-			await MeteorAsync.call('course.save', course._id, { name: newName });
+			await CoursesMethods.save(course._id, { name: newName });
 		},
 		onSuccess: (newName) => {
 			Alert.success(
@@ -67,7 +66,7 @@ Template.courseDetailsPage.onCreated(function () {
 
 	instance.editableDescription = new Editable(false, mf('course.description.placeholder'), {
 		onSave: async (newDescription) => {
-			await MeteorAsync.call('course.save', course._id, { description: newDescription });
+			await CoursesMethods.save(course._id, { description: newDescription });
 		},
 		onSuccess: () => {
 			Alert.success(
@@ -139,42 +138,46 @@ Template.courseDetailsDescription.helpers({
 });
 
 Template.courseDetailsPage.events({
-	'click .js-delete-course-confirm'(event, instance) {
+	async 'click .js-delete-course-confirm'(event, instance) {
 		if (PleaseLogin()) {
 			return;
 		}
 
 		const { course } = instance.data;
 		instance.busy('deleting');
-		Meteor.call('course.remove', course._id, (err) => {
-			instance.busy(false);
-			if (err) {
-				Alert.serverError(err, 'Removing the course "{COURSE}" went wrong');
-			} else {
-				Alert.success(
-					mf(
-						'courseDetailsPage.message.courseHasBeenDeleted',
-						{ COURSE: course.name },
-						'The course "{COURSE}" has been deleted.',
-					),
-				);
 
-				let role;
-				if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
-					role = 'team';
-				} else if (UserPrivilegeUtils.privilegedTo('admin')) {
-					role = 'admin';
-				} else {
-					role = 'unknown';
-				}
-				Analytics.trackEvent(
-					'Course deletions',
-					`Course deletions as ${role}`,
-					Regions.findOne(course.region)?.nameEn,
-				);
+		try {
+			await CoursesMethods.remove(course._id);
+
+			Alert.success(
+				mf(
+					'courseDetailsPage.message.courseHasBeenDeleted',
+					{ COURSE: course.name },
+					'The course "{COURSE}" has been deleted.',
+				),
+			);
+
+			let role;
+			if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
+				role = 'team';
+			} else if (UserPrivilegeUtils.privilegedTo('admin')) {
+				role = 'admin';
+			} else {
+				role = 'unknown';
 			}
-		});
-		Router.go('/');
+
+			Analytics.trackEvent(
+				'Course deletions',
+				`Course deletions as ${role}`,
+				Regions.findOne(course.region)?.nameEn,
+			);
+
+			Router.go('/');
+		} catch (err) {
+			Alert.serverError(err, 'Removing the course "{COURSE}" went wrong');
+		} finally {
+			instance.busy(false);
+		}
 	},
 
 	async 'click .js-course-archive'(event, instance) {
@@ -276,24 +279,25 @@ Template.courseGroupAdd.helpers({
 });
 
 Template.courseGroupAdd.events({
-	'click .js-add-group'(event, instance) {
+	async 'click .js-add-group'(event, instance) {
 		const course = instance.data;
 		const groupId = event.currentTarget.value;
-		Meteor.call('course.promote', course._id, groupId, true, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Failed to add group');
-			} else {
-				const groupName = Groups.findOne(groupId).name;
-				Alert.success(
-					mf(
-						'courseGroupAdd.groupAdded',
-						{ GROUP: groupName, COURSE: course.name },
-						'The group "{GROUP}" has been added to promote the course "{COURSE}".',
-					),
-				);
-				instance.collapse();
-			}
-		});
+
+		try {
+			await CoursesMethods.promote(course._id, groupId, true);
+
+			const groupName = Groups.findOne(groupId).name;
+			Alert.success(
+				mf(
+					'courseGroupAdd.groupAdded',
+					{ GROUP: groupName, COURSE: course.name },
+					'The group "{GROUP}" has been added to promote the course "{COURSE}".',
+				),
+			);
+			instance.collapse();
+		} catch (err) {
+			Alert.serverError(err, 'Failed to add group');
+		}
 	},
 });
 
@@ -303,68 +307,71 @@ Template.courseGroupRemove.events({
 	'click .js-remove'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('course.promote', course._id, groupId, false, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Failed to remove group');
-			} else {
-				const groupName = Groups.findOne(groupId).name;
-				Alert.success(
-					mf(
-						'courseGroupAdd.groupRemoved',
-						{ GROUP: groupName, COURSE: course.name },
-						'The group "{GROUP}" has been removed from the course "{COURSE}".',
-					),
-				);
-				instance.collapse();
-			}
-		});
+
+		try {
+			CoursesMethods.promote(course._id, groupId, false);
+
+			const groupName = Groups.findOne(groupId).name;
+			Alert.success(
+				mf(
+					'courseGroupAdd.groupRemoved',
+					{ GROUP: groupName, COURSE: course.name },
+					'The group "{GROUP}" has been removed from the course "{COURSE}".',
+				),
+			);
+			instance.collapse();
+		} catch (err) {
+			Alert.serverError(err, 'Failed to remove group');
+		}
 	},
 });
 
 TemplateMixins.Expandible(Template.courseGroupMakeOrganizer);
 Template.courseGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.courseGroupMakeOrganizer.events({
-	'click .js-makeOrganizer'(event, instance) {
+	async 'click .js-makeOrganizer'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('course.editing', course._id, groupId, true, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Failed to give group editing rights');
-			} else {
-				const groupName = Groups.findOne(groupId).name;
-				Alert.success(
-					mf(
-						'courseGroupAdd.membersCanEditCourse',
-						{ GROUP: groupName, COURSE: course.name },
-						'Members of the group "{GROUP}" can now edit the course "{COURSE}".',
-					),
-				);
-				instance.collapse();
-			}
-		});
+
+		try {
+			await CoursesMethods.editing(course._id, groupId, true);
+
+			const groupName = Groups.findOne(groupId).name;
+			Alert.success(
+				mf(
+					'courseGroupAdd.membersCanEditCourse',
+					{ GROUP: groupName, COURSE: course.name },
+					'Members of the group "{GROUP}" can now edit the course "{COURSE}".',
+				),
+			);
+			instance.collapse();
+		} catch (err) {
+			Alert.serverError(err, 'Failed to give group editing rights');
+		}
 	},
 });
 
 TemplateMixins.Expandible(Template.courseGroupRemoveOrganizer);
 Template.courseGroupRemoveOrganizer.helpers(GroupNameHelpers);
 Template.courseGroupRemoveOrganizer.events({
-	'click .js-removeOrganizer'(event, instance) {
+	async 'click .js-removeOrganizer'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('course.editing', course._id, groupId, false, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Failed to remove organizer status');
-			} else {
-				const groupName = Groups.findOne(groupId).name;
-				Alert.success(
-					mf(
-						'courseGroupAdd.membersCanNoLongerEditCourse',
-						{ GROUP: groupName, COURSE: course.name },
-						'Members of the group "{GROUP}" can no longer edit the course "{COURSE}".',
-					),
-				);
-				instance.collapse();
-			}
-		});
+
+		try {
+			await CoursesMethods.editing(course._id, groupId, false);
+
+			const groupName = Groups.findOne(groupId).name;
+			Alert.success(
+				mf(
+					'courseGroupAdd.membersCanNoLongerEditCourse',
+					{ GROUP: groupName, COURSE: course.name },
+					'Members of the group "{GROUP}" can no longer edit the course "{COURSE}".',
+				),
+			);
+			instance.collapse();
+		} catch (err) {
+			Alert.serverError(err, 'Failed to remove organizer status');
+		}
 	},
 });

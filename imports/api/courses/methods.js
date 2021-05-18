@@ -75,11 +75,23 @@ registerMethod(Subscribe);
 registerMethod(Unsubscribe);
 registerMethod(Message);
 
-Meteor.methods({
+export const save = ServerMethod(
+	'course.save',
 	/**
 	 * @param {string} courseId
+	 * @param {{
+				description?: string ;
+				categories?: string[];
+				name?: string ;
+				region?: string;
+				roles?: {[type: string]: boolean};
+				subs?: string[];
+				unsubs?: string[];
+				groups?: string[];
+				internal?: boolean;
+			}} changes
 	 */
-	'course.save'(courseId, changes) {
+	(courseId, changes) => {
 		check(courseId, String);
 		check(changes, {
 			description: Match.Optional(String),
@@ -231,11 +243,14 @@ Meteor.methods({
 
 		return courseId;
 	},
+);
 
+export const remove = ServerMethod(
+	'course.remove',
 	/**
 	 * @param {string} courseId
 	 */
-	'course.remove'(courseId) {
+	(courseId) => {
 		const course = Courses.findOne({ _id: courseId });
 		if (!course) {
 			throw new Meteor.Error(404, 'no such course');
@@ -246,7 +261,69 @@ Meteor.methods({
 		Events.remove({ courseId });
 		Courses.remove(courseId);
 	},
+);
 
+/**
+ * Add or remove a group from the groups list
+ * @param {string} courseId The course to update
+ * @param {string} groupId The group to add or remove
+ * @param {boolean} add Whether to add or remove the group
+ *
+ */
+export const promote = ServerMethod('course.promote', UpdateMethods.promote(Courses));
+
+/**
+ * Add or remove a group from the groupOrganizers list
+ * @param {string} courseId The course to update
+ * @param {string} groupId The group to add or remove
+ * @param {boolean} add Whether to add or remove the group
+ *
+ */
+export const editing = ServerMethod('course.editing', UpdateMethods.editing(Courses));
+
+export const archive = ServerMethod(
+	'course.archive',
+	/**
+	 * @param {string} courseId
+	 */
+	(courseId) => {
+		const course = Courses.findOne({ _id: courseId });
+		if (!course) {
+			throw new Meteor.Error(404, 'no such course');
+		}
+		if (!course.editableBy(Meteor.user())) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
+		return Courses.update(course._id, {
+			$set: {
+				archived: true,
+			},
+		});
+	},
+);
+
+export const unarchive = ServerMethod(
+	'course.unarchive',
+	/**
+	 * @param {string} courseId
+	 */
+	(courseId) => {
+		const course = Courses.findOne({ _id: courseId });
+		if (!course) {
+			throw new Meteor.Error(404, 'no such course');
+		}
+		if (!course.editableBy(Meteor.user())) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
+		Courses.update(course._id, {
+			$set: {
+				archived: false,
+			},
+		});
+	},
+);
+
+Meteor.methods({
 	/**
 	 * Update the nextEvent field for the courses matching the selector
 	 */
@@ -294,24 +371,6 @@ Meteor.methods({
 	},
 
 	/**
-	 * Add or remove a group from the groups list
-	 * @param {string} courseId - The course to update
-	 * @param {string} groupId - The group to add or remove
-	 * @param {boolean} add - Whether to add or remove the group
-	 *
-	 */
-	'course.promote': UpdateMethods.promote(Courses),
-
-	/**
-	 * Add or remove a group from the groupOrganizers list
-	 * @param {string} courseId - The course to update
-	 * @param {string} groupId - The group to add or remove
-	 * @param {boolean} add - Whether to add or remove the group
-	 *
-	 */
-	'course.editing': UpdateMethods.editing(Courses),
-
-	/**
 	 * Recalculate the editors field
 	 */
 	'course.updateGroups'(selector) {
@@ -320,45 +379,3 @@ Meteor.methods({
 		});
 	},
 });
-
-export const archive = ServerMethod(
-	'course.archive',
-	/**
-	 * @param {string} courseId
-	 */
-	(courseId) => {
-		const course = Courses.findOne({ _id: courseId });
-		if (!course) {
-			throw new Meteor.Error(404, 'no such course');
-		}
-		if (!course.editableBy(Meteor.user())) {
-			throw new Meteor.Error(401, 'edit not permitted');
-		}
-		return Courses.update(course._id, {
-			$set: {
-				archived: true,
-			},
-		});
-	},
-);
-
-export const unarchive = ServerMethod(
-	'course.unarchive',
-	/**
-	 * @param {string} courseId
-	 */
-	(courseId) => {
-		const course = Courses.findOne({ _id: courseId });
-		if (!course) {
-			throw new Meteor.Error(404, 'no such course');
-		}
-		if (!course.editableBy(Meteor.user())) {
-			throw new Meteor.Error(401, 'edit not permitted');
-		}
-		Courses.update(course._id, {
-			$set: {
-				archived: false,
-			},
-		});
-	},
-);
