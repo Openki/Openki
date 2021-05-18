@@ -304,12 +304,12 @@ Template.courseGroupAdd.events({
 TemplateMixins.Expandible(Template.courseGroupRemove);
 Template.courseGroupRemove.helpers(GroupNameHelpers);
 Template.courseGroupRemove.events({
-	'click .js-remove'(event, instance) {
+	async 'click .js-remove'(event, instance) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
 
 		try {
-			CoursesMethods.promote(course._id, groupId, false);
+			await CoursesMethods.promote(course._id, groupId, false);
 
 			const groupName = Groups.findOne(groupId).name;
 			Alert.success(
