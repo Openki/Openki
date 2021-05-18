@@ -88,7 +88,8 @@ const ReplicaSync = function (event, updateOptions) {
 	};
 };
 
-Meteor.methods({
+export const save = ServerMethod(
+	'event.save',
 	/**
 	 * @param {{
 	 * changes: {
@@ -105,15 +106,15 @@ Meteor.methods({
 	 *  replicaOf?: string;
 	 *  groups?: string[];
 	 * };
-	 * updateReplicasInfos: boolean;
-	 * updateReplicasTime: boolean;
-	 * updateChangedReplicasTime: boolean;
-	 * sendNotifications: boolean;
+	 * updateReplicasInfos?: boolean;
+	 * updateReplicasTime?: boolean;
+	 * updateChangedReplicasTime?: boolean;
+	 * sendNotifications?: boolean;
 	 * eventId: string;
-	 * comment: string | null;
+	 * comment?: string | null;
 	 * }} args
 	 */
-	'event.save'(args) {
+	(args) => {
 		const {
 			changes,
 			updateReplicasInfos,
@@ -370,8 +371,14 @@ Meteor.methods({
 
 		return eventId;
 	},
+);
 
-	'event.remove'(eventId) {
+export const remove = ServerMethod(
+	'event.remove',
+	/**
+	 * @param {string} eventId
+	 */
+	(eventId) => {
 		check(eventId, String);
 
 		const user = Meteor.user();
@@ -400,7 +407,95 @@ Meteor.methods({
 		}
 		Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);
 	},
+);
 
+/**
+ * Add or remove a group from the groups list
+ *
+ * @param {string} eventId The event to update
+ * @param {string} groupId The group to add or remove
+ * @param {boolean} add Whether to add or remove the group
+ *
+ */
+export const promote = ServerMethod('event.promote', UpdateMethods.promote(Events));
+
+/**
+ * Add or remove a group from the groupOrganizers list
+ *
+ * @param {string} eventId The event to update
+ * @param {string} groupId The group to add or remove
+ * @param {boolean} add Whether to add or remove the group
+ *
+ */
+export const editing = ServerMethod('event.editing', UpdateMethods.editing(Events));
+
+/**
+ * Add current user as event-participant
+ *
+ * the user is also signed up for the course.
+ */
+export const addParticipant = ServerMethod(
+	'event.addParticipant',
+	/**
+	 * @param {string} eventId The event to register for
+	 */
+	(eventId) => {
+		const user = Meteor.user();
+		if (!user) {
+			throw new Meteor.Error(401, 'please log in');
+		}
+
+		const event = Events.findOne(eventId);
+		// ignore broken eventIds
+		if (!event) {
+			return;
+		}
+
+		// dont allow participant-mutations if event has passed
+		if (moment().isAfter(event.end)) {
+			throw new Meteor.Error(401, 'cannot register, event has already passed');
+		}
+
+		Events.update({ _id: eventId }, { $addToSet: { participants: user._id } });
+		// if you cant load course its probably because the event doesnt have one
+		const course = Courses.findOne(event.courseId);
+		if (!course) {
+			return;
+		}
+
+		const change = new Subscribe(course, user, 'participant');
+
+		if (change.validFor(user)) {
+			processChangeAsync(change);
+		}
+	},
+);
+
+export const removeParticipant = ServerMethod(
+	'event.removeParticipant',
+	/**
+	 * @param {string} eventId
+	 */
+	(eventId) => {
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(401, 'please log in');
+		}
+
+		const event = Events.findOne(eventId);
+		// ignore broken eventIds
+		if (!event) {
+			return;
+		}
+		// dont allow participant-mutations if event has passed
+		if (moment().isAfter(event.end)) {
+			throw new Meteor.Error(401, 'cannot unregister, event has already passed');
+		}
+
+		Events.update({ _id: eventId }, { $pull: { participants: Meteor.userId() } });
+	},
+);
+
+Meteor.methods({
 	/**
 	 * Update the venue field for all events matching the selector
 	 */
@@ -475,78 +570,4 @@ Meteor.methods({
 			Events.updateGroups(event._id);
 		});
 	},
-
-	/** Add current user as event-participant
-	 *
-	 * the user is also signed up for the course.
-	 *
-	 * @param {String} eventId - The event to register for
-	 */
-	'event.addParticipant'(eventId) {
-		const user = Meteor.user();
-		if (!user) {
-			throw new Meteor.Error(401, 'please log in');
-		}
-
-		const event = Events.findOne(eventId);
-		// ignore broken eventIds
-		if (!event) {
-			return;
-		}
-
-		// dont allow participant-mutations if event has passed
-		if (moment().isAfter(event.end)) {
-			throw new Meteor.Error(401, 'cannot register, event has already passed');
-		}
-
-		Events.update({ _id: eventId }, { $addToSet: { participants: user._id } });
-		// if you cant load course its probably because the event doesnt have one
-		const course = Courses.findOne(event.courseId);
-		if (!course) {
-			return;
-		}
-
-		const change = new Subscribe(course, user, 'participant');
-
-		if (change.validFor(user)) {
-			processChangeAsync(change);
-		}
-	},
-	'event.removeParticipant'(eventId) {
-		if (!Meteor.user()) {
-			throw new Meteor.Error(401, 'please log in');
-		}
-
-		const event = Events.findOne(eventId);
-		// ignore broken eventIds
-		if (!event) {
-			return;
-		}
-		// dont allow participant-mutations if event has passed
-		if (moment().isAfter(event.end)) {
-			throw new Meteor.Error(401, 'cannot unregister, event has already passed');
-		}
-
-		Events.update({ _id: eventId }, { $pull: { participants: Meteor.userId() } });
-	},
 });
-
-/**
- * Add or remove a group from the groups list
- *
- * @param {string} eventId The event to update
- * @param {string} groupId The group to add or remove
- * @param {boolean} add Whether to add or remove the group
- *
- */
-export const promote = ServerMethod('event.promote', UpdateMethods.promote(Events));
-
-/**
- * Add or remove a group from the groupOrganizers list
- *
- * @param {string} eventId The event to update
- * @param {string} groupId The group to add or remove
- * @param {boolean} add Whether to add or remove the group
- *
- */
-export const editing = ServerMethod('event.editing', UpdateMethods.editing(Events));

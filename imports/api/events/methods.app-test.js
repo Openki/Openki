@@ -3,6 +3,7 @@ import { assert } from 'chai';
 import moment from 'moment';
 
 import { Events } from '/imports/api/events/events';
+import * as EventsMethods from '/imports/api/events/methods';
 import { MeteorAsync } from '/imports/utils/promisify';
 import { Courses } from '../courses/courses';
 
@@ -32,7 +33,7 @@ if (Meteor.isClient) {
 					internal: true,
 				};
 
-				const eventId = await MeteorAsync.call('event.save', {
+				const eventId = await EventsMethods.save({
 					eventId: '',
 					changes: newEvent,
 				});
@@ -42,7 +43,7 @@ if (Meteor.isClient) {
 				const event = { ...newEvent };
 				delete event.region;
 				event.title += ' No really';
-				await MeteorAsync.call('event.save', { eventId, changes: event });
+				await EventsMethods.save({ eventId, changes: event });
 			});
 
 			it('Sanitizes event strings', async function () {
@@ -72,7 +73,7 @@ if (Meteor.isClient) {
 					region: regionId,
 				};
 
-				const eventId = await MeteorAsync.call('event.save', {
+				const eventId = await EventsMethods.save({
 					eventId: '',
 					changes: newEvent,
 				});
@@ -116,7 +117,10 @@ if (Meteor.isClient) {
 						internal: true,
 					};
 
-					await MeteorAsync.call('event.save', { eventId: '', changes: newEvent });
+					await EventsMethods.save({
+						eventId: '',
+						changes: newEvent,
+					});
 
 					const newCourse = Courses.findOne(courseId);
 

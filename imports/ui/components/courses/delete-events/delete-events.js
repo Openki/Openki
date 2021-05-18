@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
@@ -10,6 +9,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import './delete-events.html';
+import * as EventsMethods from '/imports/api/events/methods';
 
 Template.deleteCourseEvents.events({
 	'mouseover/mouseout .js-show-events-delete-modal'(event, instance) {
@@ -124,9 +124,11 @@ Template.deleteEventsModal.events({
 		let removed = 0;
 		let responses = 0;
 		events.forEach((event) => {
-			Meteor.call('event.remove', event._id, (err) => {
-				responses += 1;
-				if (err) {
+			EventsMethods.remove(event._id)
+				.then(() => {
+					removed += 1;
+				})
+				.catch((err) => {
 					const start = moment(event.startLocal).format('llll');
 					Alert.serverError(
 						err,
@@ -136,35 +138,34 @@ Template.deleteEventsModal.events({
 							'Deleting the event "{TITLE} ({START})" failed.',
 						),
 					);
-				} else {
-					removed += 1;
-				}
+				})
+				.finally(() => {
+					responses += 1;
+					if (responses === events.length) {
+						instance.busy(false);
+						instance.state.set('showDeleteConfirm', false);
+						if (removed) {
+							Alert.success(
+								mf(
+									'deleteEventsModal.sucess',
+									{ NUM: removed },
+									'{NUM, plural, one {Event was} other {# events were}} successfully deleted.',
+								),
+							);
 
-				if (responses === events.length) {
-					instance.busy(false);
-					instance.state.set('showDeleteConfirm', false);
-					if (removed) {
-						Alert.success(
-							mf(
-								'deleteEventsModal.sucess',
-								{ NUM: removed },
-								'{NUM, plural, one {Event was} other {# events were}} successfully deleted.',
-							),
-						);
-
-						Analytics.trackEvent(
-							'Events deletions',
-							'Events deletions as team',
-							Regions.findOne(event.region)?.nameEn,
-							removed,
-						);
+							Analytics.trackEvent(
+								'Events deletions',
+								'Events deletions as team',
+								Regions.findOne(event.region)?.nameEn,
+								removed,
+							);
+						}
+						if (removed === responses) {
+							instance.state.set('selectedEvents', []);
+							instance.$('.js-delete-events-modal').modal('hide');
+						}
 					}
-					if (removed === responses) {
-						instance.state.set('selectedEvents', []);
-						instance.$('.js-delete-events-modal').modal('hide');
-					}
-				}
-			});
+				});
 		});
 	},
 

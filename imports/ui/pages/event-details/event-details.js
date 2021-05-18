@@ -75,20 +75,21 @@ Template.event.onCreated(function () {
 			this,
 			mf('loginAction.enrollEvent', 'Login and enroll for event'),
 			mf('registerAction.enrollEvent', 'Login and enroll for event'),
-			() => {
+			async () => {
 				this.busy('registering');
-				Meteor.call('event.addParticipant', event._id, (err) => {
+				try {
+					await EventsMethods.addParticipant(event._id);
+
+					Analytics.trackEvent(
+						'RSVPs',
+						'RSVPs as participant',
+						Regions.findOne(event.region)?.nameEn,
+					);
+				} catch (err) {
+					Alert.serverError(err, '');
+				} finally {
 					this.busy(false);
-					if (err) {
-						Alert.serverError(err, '');
-					} else {
-						Analytics.trackEvent(
-							'RSVPs',
-							'RSVPs as participant',
-							Regions.findOne(event.region)?.nameEn,
-						);
-					}
-				});
+				}
 			},
 		);
 	};
@@ -145,38 +146,36 @@ Template.event.events({
 		Router.go('showCourse', { _id: this.courseId });
 	},
 
-	'click .js-event-delete-confirm'(event, instance) {
+	async 'click .js-event-delete-confirm'(event, instance) {
 		const oEvent = instance.data;
 		const { title, region } = oEvent;
 		const course = oEvent.courseId;
 		instance.busy('deleting');
-		Meteor.call('event.remove', oEvent._id, (err) => {
-			instance.busy(false);
-			if (err) {
-				Alert.serverError(err, 'Could not remove event');
-			} else {
-				Alert.success(
-					mf(
-						'eventDetails.eventRemoved',
-						{ TITLE: title },
-						'The event "{TITLE}" has been deleted.',
-					),
-				);
 
-				Analytics.trackEvent(
-					'Event deletions',
-					'Event deletions as team',
-					Regions.findOne(region)?.nameEn,
-				);
-
-				if (course) {
-					Router.go('showCourse', { _id: course });
-				} else {
-					Router.go('/');
-				}
-			}
-		});
 		Template.instance().editing.set(false);
+		try {
+			await EventsMethods.remove(oEvent._id);
+
+			Alert.success(
+				mf('eventDetails.eventRemoved', { TITLE: title }, 'The event "{TITLE}" has been deleted.'),
+			);
+
+			Analytics.trackEvent(
+				'Event deletions',
+				'Event deletions as team',
+				Regions.findOne(region)?.nameEn,
+			);
+
+			if (course) {
+				Router.go('showCourse', { _id: course });
+			} else {
+				Router.go('/');
+			}
+		} catch (err) {
+			Alert.serverError(err, 'Could not remove event');
+		} finally {
+			instance.busy(false);
+		}
 	},
 
 	'click .js-event-edit'(event, instance) {
@@ -190,20 +189,22 @@ Template.event.events({
 		instance.addParticipant();
 	},
 
-	'click .js-unregister-event'(event, instance) {
+	async 'click .js-unregister-event'(event, instance) {
 		instance.busy('unregistering');
-		Meteor.call('event.removeParticipant', instance.data._id, (err) => {
+
+		try {
+			await EventsMethods.removeParticipant(instance.data._id);
+
+			Analytics.trackEvent(
+				'Unsubscribes RSVPs',
+				'Unsubscribes RSVPs as participant',
+				Regions.findOne(instance.data.region)?.nameEn,
+			);
+		} catch (err) {
+			Alert.serverError(err, 'could not remove participant');
+		} finally {
 			instance.busy(false);
-			if (err) {
-				Alert.serverError(err, 'could not remove participant');
-			} else {
-				Analytics.trackEvent(
-					'Unsubscribes RSVPs',
-					'Unsubscribes RSVPs as participant',
-					Regions.findOne(instance.data.region)?.nameEn,
-				);
-			}
-		});
+		}
 	},
 });
 
