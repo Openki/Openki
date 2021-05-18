@@ -377,6 +377,7 @@ Template.eventGroupRemoveOrganizer.events({
 		try {
 			await EventsMethods.editing(event._id, groupId, false);
 
+			const groupName = Groups.findOne(groupId).name;
 			Alert.success(
 				mf(
 					'eventGroupAdd.membersCanNoLongerEditEvent',

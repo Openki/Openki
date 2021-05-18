@@ -2,7 +2,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
-import * as StatsMethods from 'imports/api/stats/methods';
+import * as StatsMethods from '/imports/api/stats/methods';
 import { Regions } from '/imports/api/regions/regions';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';

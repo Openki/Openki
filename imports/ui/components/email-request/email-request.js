@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
 import * as Alert from '/imports/api/alerts/alert';
+import * as usersMethods from '/imports/api/users/methods';
 import * as emailMethods from '/imports/api/emails/methods';
 
 import * as EmailRequest from '/imports/ui/lib/email-request';
