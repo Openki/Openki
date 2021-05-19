@@ -276,7 +276,7 @@ export const archive = ServerMethod(
 		if (!course.editableBy(Meteor.user())) {
 			throw new Meteor.Error(401, 'edit not permitted');
 		}
-		return Courses.update(course._id, {
+		Courses.update(course._id, {
 			$set: {
 				archived: true,
 			},
