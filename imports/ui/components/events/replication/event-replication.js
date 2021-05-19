@@ -2,10 +2,10 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 
 import { Events } from '/imports/api/events/events';
+import * as EventsMethods from '/imports/api/events/methods';
 
 import LocalTime from '/imports/utils/local-time';
 import * as Alert from '/imports/api/alerts/alert';
@@ -212,9 +212,12 @@ Template.eventReplication.events({
 			// To create a new event, pass an empty Id
 			const eventId = '';
 			const args = { eventId, changes: replicaEvent };
-			Meteor.call('event.save', args, (error) => {
-				responses += 1;
-				if (error) {
+
+			EventsMethods.save(args)
+				.then(() => {
+					removed += 1;
+				})
+				.catch((error) => {
 					const start = moment(replicaEvent.startLocal).format('llll');
 					Alert.serverError(
 						error,
@@ -224,33 +227,32 @@ Template.eventReplication.events({
 							'Creating the copy on "{START}" failed.',
 						),
 					);
-				} else {
-					removed += 1;
-				}
-
-				if (responses === replicaDays.length) {
-					instance.busy(false);
-					if (removed) {
-						const start = moment(replicaEvent.startLocal).format('llll');
-						Alert.success(
-							mf(
-								'event.replicate.successCondensed',
-								{
-									TITLE: instance.data.title,
-									NUM: removed,
-									DATE: start,
-								},
-								'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}',
-							),
-						);
+				})
+				.finally(() => {
+					responses += 1;
+					if (responses === replicaDays.length) {
+						instance.busy(false);
+						if (removed) {
+							const start = moment(replicaEvent.startLocal).format('llll');
+							Alert.success(
+								mf(
+									'event.replicate.successCondensed',
+									{
+										TITLE: instance.data.title,
+										NUM: removed,
+										DATE: start,
+									},
+									'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}',
+								),
+							);
+						}
+						if (removed === responses) {
+							const parentInstance = instance.parentInstance();
+							parentInstance.replicating.set(false);
+							parentInstance.collapse();
+						}
 					}
-					if (removed === responses) {
-						const parentInstance = instance.parentInstance();
-						parentInstance.replicating.set(false);
-						parentInstance.collapse();
-					}
-				}
-			});
+				});
 		});
 	},
 

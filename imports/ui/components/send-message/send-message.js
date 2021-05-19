@@ -4,6 +4,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
+import * as emailMethods from '/imports/api/emails/methods';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
@@ -36,21 +37,20 @@ Template.sendMessage.helpers({
 });
 
 Template.sendMessage.events({
-	'click .js-verify-mail'(event, instance) {
+	async 'click .js-verify-mail'(event, instance) {
 		instance.state.set('verificationMailSent', true);
-		Meteor.call('sendVerificationEmail', (err) => {
-			if (err) {
-				instance.state.set('verificationMailSent', false);
-				Alert.serverError(
-					err,
-					mf('profile.sendVerificationMailFailed', 'Failed to send verification mail'),
-				);
-			} else {
-				Alert.success(
-					mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }),
-				);
-			}
-		});
+
+		try {
+			await emailMethods.sendVerificationEmail();
+
+			Alert.success(mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }));
+		} catch (err) {
+			instance.state.set('verificationMailSent', false);
+			Alert.serverError(
+				err,
+				mf('profile.sendVerificationMailFailed', 'Failed to send verification mail'),
+			);
+		}
 	},
 
 	'change input[type="checkbox"]'(event, instance) {
@@ -58,7 +58,7 @@ Template.sendMessage.events({
 		instance.state.set(target.attr('name'), target.prop('checked'));
 	},
 
-	'submit .js-send-message'(event, instance) {
+	async 'submit .js-send-message'(event, instance) {
 		event.preventDefault();
 		instance.busy('sending');
 
@@ -89,17 +89,17 @@ Template.sendMessage.events({
 			options.eventId = data.eventId;
 		}
 
-		Meteor.call('sendEmail', data.recipientId, message, options, (err) => {
-			instance.busy(false);
-			if (err) {
-				Alert.serverError(err, mf('profile.mail.sendFailed', 'Your message was not sent'));
-			} else {
-				Alert.success(mf('profile.mail.sent', 'Your message was sent'));
-				instance.$('.js-email-message').val('');
-				if (data.onDone) {
-					data.onDone();
-				}
+		try {
+			await emailMethods.sendEmail(data.recipientId, message, options);
+			Alert.success(mf('profile.mail.sent', 'Your message was sent'));
+			instance.$('.js-email-message').val('');
+			if (data.onDone) {
+				data.onDone();
 			}
-		});
+		} catch (err) {
+			Alert.serverError(err, mf('profile.mail.sendFailed', 'Your message was not sent'));
+		} finally {
+			instance.busy(false);
+		}
 	},
 });

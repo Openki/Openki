@@ -7,6 +7,7 @@ import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import Notification from '/imports/notification/notification';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
+import { ServerMethod } from '/imports/utils/ServerMethod';
 
 /** @typedef {import('./course-discussions').CourseDiscussionEnity} CourseDiscussionEnity */
 
@@ -24,7 +25,8 @@ const sanitizeComment = (comment) => {
 	return { title: saneTitle, text: saneHtml };
 };
 
-Meteor.methods({
+export const postComment = ServerMethod(
+	'courseDiscussion.postComment',
 	/**
 	 * @param {object} comment
 	 * @param {string} comment.courseId
@@ -34,7 +36,7 @@ Meteor.methods({
 	 * @param {boolean} comment.anon
 	 * @param {boolean} [comment.notifyAll]
 	 */
-	'courseDiscussion.postComment'(comment) {
+	function (comment) {
 		check(comment, {
 			courseId: String,
 			parentId: Match.Optional(String),
@@ -97,11 +99,14 @@ Meteor.methods({
 
 		return commentId;
 	},
+);
 
+export const editComment = ServerMethod(
+	'courseDiscussion.editComment',
 	/**
 	 * @param {{ _id: string; title: string; text: string; }} comment
 	 */
-	'courseDiscussion.editComment'(comment) {
+	(comment) => {
 		check(comment, {
 			_id: String,
 			title: String,
@@ -125,11 +130,14 @@ Meteor.methods({
 
 		CourseDiscussions.update(originalComment._id, { $set: update });
 	},
+);
 
+export const deleteComment = ServerMethod(
+	'courseDiscussion.deleteComment',
 	/**
 	 * @param {string} commentId
 	 */
-	'courseDiscussion.deleteComment'(commentId) {
+	(commentId) => {
 		check(commentId, String);
 
 		const user = Meteor.user();
@@ -155,4 +163,4 @@ Meteor.methods({
 		CourseDiscussions.remove({ _id: comment._id });
 		CourseDiscussions.remove({ parentId: comment._id });
 	},
-});
+);

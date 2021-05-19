@@ -3,9 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
-import { MeteorAsync } from '/imports/utils/promisify';
 
 import { Groups } from '/imports/api/groups/groups';
+import * as GroupsMethods from '/imports/api/groups/methods';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 
@@ -69,7 +69,7 @@ Template.groupDetails.onCreated(function () {
 			? {
 					...handleSaving,
 					onSave: async (newName) => {
-						await MeteorAsync.callAsync('group.save', groupId, { name: newName });
+						await GroupsMethods.save(groupId, { name: newName });
 					},
 			  }
 			: undefined,
@@ -82,7 +82,7 @@ Template.groupDetails.onCreated(function () {
 			? {
 					...handleSaving,
 					onSave: async (newShort) => {
-						await MeteorAsync.callAsync('group.save', groupId, { short: newShort });
+						await GroupsMethods.save(groupId, { short: newShort });
 					},
 			  }
 			: undefined,
@@ -95,7 +95,7 @@ Template.groupDetails.onCreated(function () {
 			? {
 					...handleSaving,
 					onSave: async (newClaim) => {
-						await MeteorAsync.callAsync('group.save', groupId, { claim: newClaim });
+						await GroupsMethods.save(groupId, { claim: newClaim });
 					},
 			  }
 			: undefined,
@@ -111,7 +111,7 @@ Template.groupDetails.onCreated(function () {
 			? {
 					...handleSaving,
 					onSave: async (newDescription) => {
-						await MeteorAsync.callAsync('group.save', groupId, { description: newDescription });
+						await GroupsMethods.save(groupId, { description: newDescription });
 					},
 			  }
 			: undefined,
@@ -222,7 +222,7 @@ Template.groupDetails.events({
 			mf('registerAction.saveGroup', 'Register and save group'),
 			async () => {
 				try {
-					const groupId = await MeteorAsync.callAsync('group.save', 'create', group);
+					const groupId = await GroupsMethods.save('create', group);
 
 					instance.editableName.end();
 					instance.editableShort.end();

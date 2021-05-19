@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Regions } from '/imports/api/regions/regions';
+import * as usersMethods from '/imports/api/users/methods';
 
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 
@@ -72,7 +73,7 @@ Template.regionSelection.onCreated(function () {
 		}
 		Session.set('region', regionId);
 		if (regionId !== 'all' && Meteor.userId()) {
-			Meteor.call('user.regionChange', regionId);
+			usersMethods.regionChange(regionId);
 		}
 
 		// When the region changes, we want the content of the page to update

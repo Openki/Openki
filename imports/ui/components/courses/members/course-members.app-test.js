@@ -32,7 +32,7 @@ if (Meteor.isClient) {
 			button.click();
 			// Purposefully only logging in after having decided to participate
 			// We want to support this.
-			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+			await MeteorAsync.loginWithPassword('Seee', 'greg');
 			const field = await waitFor(findCommentField);
 			field.text(comment);
 			jQuery('.js-role-subscribe-btn').click();

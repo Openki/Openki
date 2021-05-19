@@ -1,9 +1,9 @@
-import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import * as Alert from '/imports/api/alerts/alert';
+import * as emailMethods from '/imports/api/emails/methods';
 
 import '/imports/ui/components/buttons/buttons';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
@@ -40,7 +40,7 @@ Template.report.events({
 		instance.state.set('');
 	},
 
-	'click .js-report-send'(event, instance) {
+	async 'click .js-report-send'(event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 
@@ -53,26 +53,19 @@ Template.report.events({
 			return;
 		}
 
-		Meteor.call(
-			'report',
-			document.title,
-			window.location.href,
-			navigator.userAgent,
-			message,
-			(err) => {
-				if (err) {
-					Alert.serverError(err, mf('report.notSent', 'Your report could not be sent'));
-				} else {
-					Alert.success(
-						mf(
-							'report.confirm',
-							'Your report was sent. A human will try to find an appropriate solution.',
-						),
-					);
-				}
-				instance.state.set('');
-			},
-		);
 		instance.state.set('sending');
+		try {
+			await emailMethods.report(document.title, window.location.href, navigator.userAgent, message);
+			Alert.success(
+				mf(
+					'report.confirm',
+					'Your report was sent. A human will try to find an appropriate solution.',
+				),
+			);
+		} catch (err) {
+			Alert.serverError(err, mf('report.notSent', 'Your report could not be sent'));
+		} finally {
+			instance.state.set('');
+		}
 	},
 });

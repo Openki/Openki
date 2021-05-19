@@ -3,12 +3,14 @@ import { Match, check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
 import * as HtmlTools from '/imports/utils/html-tools';
 import { Users } from '/imports/api/users/users';
+import { ServerMethod } from '/imports/utils/ServerMethod';
 
 import { Groups } from './groups';
 
 import { isGroupMember } from '/imports/utils/is-group-member';
 
-Meteor.methods({
+export const save = ServerMethod(
+	'group.save',
 	/**
 	 * @param {string} groupId
 	 * @param {{short?: string;
@@ -17,7 +19,7 @@ Meteor.methods({
 	 * description?: string;
 	 * logoUrl?: string;}} changes
 	 */
-	'group.save'(groupId, changes) {
+	(groupId, changes) => {
 		check(groupId, String);
 		check(changes, {
 			short: Match.Optional(String),
@@ -102,13 +104,16 @@ Meteor.methods({
 
 		return groupId;
 	},
+);
 
+export const updateMembership = ServerMethod(
+	'group.updateMembership',
 	/**
 	 * @param {string} userId
 	 * @param {string} groupId
 	 * @param {boolean} join
 	 */
-	'group.updateMembership'(userId, groupId, join) {
+	(userId, groupId, join) => {
 		check(userId, String);
 		check(groupId, String);
 
@@ -153,4 +158,4 @@ Meteor.methods({
 			Meteor.call('user.updateBadges', user._id);
 		}
 	},
-});
+);

@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random';
 
+import * as LogMethods from '/imports/api/log/methods';
+
 const clientId = Random.id();
 
 /**
@@ -11,12 +13,12 @@ const reportToServer = function (error) {
 		name: error.name,
 		message: error.message,
 		location: window.location.href,
-		stack: error.stack,
+		stack: error.stack || '',
 		tsClient: new Date(),
 		clientId,
 		userAgent: window.navigator.userAgent,
 	};
-	Meteor.call('log.clientError', report);
+	LogMethods.clientError(report);
 };
 
 window.addEventListener('error', (event) => {

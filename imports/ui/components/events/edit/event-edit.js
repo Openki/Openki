@@ -18,6 +18,7 @@ import moment from 'moment';
 import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
+import * as EventsMethods from '/imports/api/events/methods';
 import { Regions } from '/imports/api/regions/regions';
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
@@ -352,7 +353,7 @@ Template.eventEdit.events({
 			return;
 		}
 
-		const eventId = this._id || '';
+		let eventId = this._id || '';
 		const isNew = eventId === '';
 		if (isNew) {
 			if (this.courseId) {
@@ -391,10 +392,9 @@ Template.eventEdit.events({
 			instance,
 			mf('loginAction.saveEvent', 'Login and save event'),
 			mf('registerAction.saveEvent', 'Register and save event'),
-			() => {
-				Meteor.call(
-					'event.save',
-					{
+			async () => {
+				try {
+					eventId = await EventsMethods.save({
 						eventId,
 						updateReplicasInfos,
 						updateReplicasTime,
@@ -402,67 +402,60 @@ Template.eventEdit.events({
 						sendNotifications,
 						changes: editevent,
 						comment: addNotificationMessage,
-					},
-					/* eslint-disable-next-line no-shadow */
-					(err, eventId) => {
-						instance.busy(false);
-						if (err) {
-							Alert.serverError(err, 'Saving the event went wrong');
+					});
+
+					if (isNew) {
+						Router.go('showEvent', { _id: eventId });
+						Alert.success(
+							mf(
+								'message.eventCreated',
+								{ TITLE: editevent.title },
+								'The event "{TITLE}" has been created!',
+							),
+						);
+
+						const course = Courses.findOne(editevent.courseId);
+						let role;
+						if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
+							role = 'team';
+						} else if (UserPrivilegeUtils.privilegedTo('admin')) {
+							role = 'admin';
 						} else {
-							if (isNew) {
-								Router.go('showEvent', { _id: eventId });
-								Alert.success(
-									mf(
-										'message.eventCreated',
-										{ TITLE: editevent.title },
-										'The event "{TITLE}" has been created!',
-									),
-								);
-
-								const course = Courses.findOne(editevent.courseId);
-								let role;
-								if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
-									role = 'team';
-								} else if (UserPrivilegeUtils.privilegedTo('admin')) {
-									role = 'admin';
-								} else {
-									role = 'unknown';
-								}
-								Analytics.trackEvent(
-									'Event creations',
-									`Event creations as ${role}`,
-									Regions.findOne(course.region)?.nameEn,
-									Math.round(
-										(new Date() - course.time_created) /
-											1000 /
-											60 /
-											60 /
-											24 /* Umrechnung in Tage */,
-									),
-								);
-							} else {
-								Alert.success(
-									mf(
-										'message.eventChangesSaved',
-										{ TITLE: editevent.title },
-										'Your changes to the event "{TITLE}" have been saved.',
-									),
-								);
-							}
-
-							if (updateReplicasInfos || updateReplicasTime) {
-								Alert.success(
-									mf(
-										'eventEdit.replicatesUpdated',
-										{ TITLE: editevent.title },
-										'The replicas of "{TITLE}" have also been updated.',
-									),
-								);
-							}
-							instance.parent.editing.set(false);
+							role = 'unknown';
 						}
-					},
-				);
+						Analytics.trackEvent(
+							'Event creations',
+							`Event creations as ${role}`,
+							Regions.findOne(course.region)?.nameEn,
+							Math.round(
+								(new Date() - course.time_created) / 1000 / 60 / 60 / 24 /* Umrechnung in Tage */,
+							),
+						);
+					} else {
+						Alert.success(
+							mf(
+								'message.eventChangesSaved',
+								{ TITLE: editevent.title },
+								'Your changes to the event "{TITLE}" have been saved.',
+							),
+						);
+					}
+
+					if (updateReplicasInfos || updateReplicasTime) {
+						Alert.success(
+							mf(
+								'eventEdit.replicatesUpdated',
+								{ TITLE: editevent.title },
+								'The replicas of "{TITLE}" have also been updated.',
+							),
+						);
+					}
+					instance.parent.editing.set(false);
+				} catch (err) {
+					Alert.serverError(err, 'Saving the event went wrong');
+				} finally {
+					instance.busy(false);
+				}
 			},
 		);
 	},

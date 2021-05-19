@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
 import { Users } from '/imports/api/users/users';
+import * as usersMethods from '/imports/api/users/methods';
 
 import Profile from '/imports/utils/profile';
 
@@ -15,7 +16,7 @@ Meteor.startup(() => {
 		const user = Meteor.user();
 
 		if (user && user.avatar?.color === undefined) {
-			Meteor.call('user.updateAvatarColor');
+			usersMethods.updateAvatarColor();
 		}
 	});
 

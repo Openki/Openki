@@ -18,7 +18,7 @@ if (Meteor.isClient) {
 				const haveEditfield = () => {
 					assert(jQuery('.js-title').length > 0, 'New course edit field present');
 				};
-				await MeteorAsync.loginWithPasswordAsync('greg', 'greg');
+				await MeteorAsync.loginWithPassword('greg', 'greg');
 				await waitForSubscriptions();
 				await waitFor(haveEditfield);
 

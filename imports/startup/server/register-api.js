@@ -1,6 +1,8 @@
+import '/imports/api/courses/methods';
 import '/imports/api/courses/server/publications';
 import '/imports/api/course-discussions/methods';
 import '/imports/api/course-discussions/server/publications';
+import '/imports/api/emails/methods';
 import '/imports/api/events/methods';
 import '/imports/api/events/server/publications';
 import '/imports/api/groups/methods';
