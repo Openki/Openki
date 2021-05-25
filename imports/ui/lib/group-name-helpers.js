@@ -1,5 +1,5 @@
 import { mf } from 'meteor/msgfmt:core';
-import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
 
 import { Groups } from '/imports/api/groups/groups';
 
@@ -7,7 +7,7 @@ function subbedGroup(group) {
 	// Strings can't be context objects to Blaze templates so they get turned
 	// into a String-like. Here we coerce it back if it isn't a string.
 	const groupId = `${group}`;
-	Meteor.subscribe('group', groupId);
+	Template.instance().subscribe('group', groupId);
 	return Groups.findOne(groupId);
 }
 

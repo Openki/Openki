@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
@@ -18,7 +17,7 @@ Template.users.onCreated(function () {
 	instance.autorun(() => {
 		const search = instance.userSearch.get();
 		if (search.length > 0) {
-			Meteor.subscribe('userSearch', search);
+			instance.subscribe('userSearch', search);
 		}
 	});
 });

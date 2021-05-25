@@ -24,7 +24,7 @@ Template.tenantSettings.onCreated(function () {
 	instance.autorun(() => {
 		const search = instance.userSearch.get();
 		if (search.length > 0) {
-			Meteor.subscribe('userSearch', search);
+			instance.subscribe('userSearch', search);
 		}
 	});
 });
