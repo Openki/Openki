@@ -1,6 +1,5 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
-import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 
