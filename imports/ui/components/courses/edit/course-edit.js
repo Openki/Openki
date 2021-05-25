@@ -9,6 +9,7 @@ import { _ } from 'meteor/underscore';
 import * as Alert from '/imports/api/alerts/alert';
 import Categories from '/imports/api/categories/categories';
 import { Courses } from '/imports/api/courses/courses';
+import * as CoursesMethods from '/imports/api/courses/methods';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Roles } from '/imports/api/roles/roles';
@@ -324,7 +325,7 @@ Template.courseEdit.events({
 		}
 
 		const course = instance.data;
-		const courseId = course._id || '';
+		let courseId = course._id || '';
 		const isNew = courseId === '';
 		if (isNew) {
 			if (data.isFrame && data.region) {
@@ -386,13 +387,11 @@ Template.courseEdit.events({
 			instance,
 			mf('loginAction.saveCourse', 'Login and save course'),
 			mf('registerAction.saveCourse', 'Register and save course'),
-			() => {
-				/* eslint-disable-next-line no-shadow */
-				Meteor.call('course.save', courseId, changes, (err, courseId) => {
-					instance.busy(false);
-					if (err) {
-						Alert.serverError(err, 'Saving the course went wrong');
-					} else if (instance.data.isFrame) {
+			async () => {
+				try {
+					courseId = await CoursesMethods.save(courseId, changes);
+
+					if (instance.data.isFrame) {
 						instance.savedCourseId.set(courseId);
 						instance.showSavedMessage.set(true);
 						instance.resetFields();
@@ -434,7 +433,11 @@ Template.courseEdit.events({
 
 						Router.go('showCourse', { _id: courseId });
 					}
-				});
+				} catch (err) {
+					Alert.serverError(err, 'Saving the course went wrong');
+				} finally {
+					instance.busy(false);
+				}
 			},
 		);
 	},
@@ -538,7 +541,7 @@ Template.courseTitle.helpers({
 		const search = instance.proposedSearch.get();
 		const region = Session.get('region');
 		if (instance.dropdownVisible()) {
-			return Courses.findFilter({ search, region }, 20, [['name', 1]]);
+			return Courses.findFilter({ search, region }, 20, undefined, [['name', 1]]);
 		}
 		return [];
 	},

@@ -10,10 +10,10 @@ if (Meteor.isClient) {
 	describe('Frontpage', function () {
 		this.timeout(60000);
 		beforeEach(async () => {
-			await MeteorAsync.callAsync('fixtures.clean');
+			await MeteorAsync.call('fixtures.clean');
 		});
 		beforeEach(async () => {
-			await MeteorAsync.callAsync('fixtures.create');
+			await MeteorAsync.call('fixtures.create');
 		});
 		it('should list 7 courses for unauthenticated user (Testistan)', async () => {
 			Router.go('/');

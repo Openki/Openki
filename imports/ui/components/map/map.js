@@ -225,7 +225,7 @@ Template.map.onRendered(function () {
 	});
 
 	// Tracked so that observe() will be stopped when the template is destroyed
-	Tracker.autorun(() => {
+	instance.autorun(() => {
 		const { markers } = instance.data;
 
 		const addMarker = function (mark) {

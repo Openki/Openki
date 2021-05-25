@@ -4,6 +4,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { MeteorAsync, AccountsAsync } from '/imports/utils/promisify';
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import { Users } from '/imports/api/users/users';
+import * as usersMethods from '/imports/api/users/methods';
 
 const createDummy = function () {
 	return `test${Date.now()}${Math.random(1000000)}`;
@@ -14,7 +15,7 @@ if (Meteor.isClient) {
 		this.timeout(30000);
 
 		it('accepts login', async () => {
-			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+			await MeteorAsync.loginWithPassword('Seee', 'greg');
 		});
 
 		describe('User creation', () => {
@@ -46,13 +47,13 @@ if (Meteor.isClient) {
 			const oldDummy = createDummy();
 			const newDummy = createDummy();
 			it('changes the username', async () => {
-				await AccountsAsync.createUserAsync({
+				await AccountsAsync.createUser({
 					username: oldDummy,
 					email: `${oldDummy}@openki.example`,
 					profile: { name: oldDummy },
 					password: 'hunter2',
 				});
-				MeteorAsync.loginWithPasswordAsync(oldDummy, 'hunter2')
+				MeteorAsync.loginWithPassword(oldDummy, 'hunter2')
 					.then(
 						() =>
 							new Promise((resolve) => {
@@ -79,7 +80,7 @@ if (Meteor.isClient) {
 			it('does not allow setting duplicate email', async () => {
 				let hasFailed = false;
 				try {
-					await MeteorAsync.callAsync('user.updateEmail', 'greg@openki.example');
+					await usersMethods.updateEmail('greg@openki.example');
 				} catch (err) {
 					if (err) {
 						hasFailed = true;
@@ -110,7 +111,7 @@ if (Meteor.isClient) {
 			// Reset the flag before starting the subscription
 			added = false;
 
-			const sub = await MeteorAsync.subscribeAsync('userSearch', 'SOMEUSERTHATDOESNOTEXIST');
+			const sub = await MeteorAsync.subscribe('userSearch', 'SOMEUSERTHATDOESNOTEXIST');
 			sub.stop();
 			assert.isFalse(added);
 		});
@@ -118,7 +119,7 @@ if (Meteor.isClient) {
 		it('finds some user', async () => {
 			const someUser = 'gregen';
 
-			const sub = await MeteorAsync.subscribeAsync('userSearch', someUser);
+			const sub = await MeteorAsync.subscribe('userSearch', someUser);
 			sub.stop();
 
 			const cursor = userSearchPrefix(someUser);
@@ -126,7 +127,7 @@ if (Meteor.isClient) {
 		});
 
 		it('finds Chnöde when searching for "Chn"', async () => {
-			const sub = await MeteorAsync.subscribeAsync('userSearch', 'Chn');
+			const sub = await MeteorAsync.subscribe('userSearch', 'Chn');
 			sub.stop();
 
 			const cursor = userSearchPrefix('Chnöde', {});

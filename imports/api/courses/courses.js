@@ -237,10 +237,12 @@ export class CoursesCollection extends Mongo.Collection {
 	 * archived?: boolean;
 	 * }} [filter]
 	 * @param {number} [limit]
+	 * @param {number} [skip]
 	 * @param {any[]} [sortParams]
 	 */
-	findFilter(filter = {}, limit, sortParams) {
+	findFilter(filter = {}, limit, skip, sortParams) {
 		check(limit, Match.Optional(Number));
+		check(skip, Match.Optional(Number));
 		check(sortParams, Match.Optional([[Match.Any]]));
 
 		const order = sortParams || [];
@@ -342,6 +344,7 @@ export class CoursesCollection extends Mongo.Collection {
 		/** @type {Mongo.Options<CourseEntity>} */
 		const options = {
 			limit,
+			skip,
 			sort: order,
 			// Load only data that is useful for list views.
 			fields: {

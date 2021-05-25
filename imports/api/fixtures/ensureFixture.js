@@ -22,10 +22,29 @@ const ensure = {
 
 	/**
 	 * @param {string} name
+	 * @param {string | undefined} [adminId]
 	 */
-	tenant(name) {
+	tenant(name, adminId) {
 		const tenant = Tenants.findOne({ name });
 		if (tenant) {
+			if (adminId) {
+				if (tenant?.admins?.includes(adminId)) {
+					return tenant._id;
+				}
+
+				Tenants.update(tenant._id, {
+					$addToSet: { admins: adminId },
+				});
+
+				if (tenant?.members?.includes(adminId)) {
+					return tenant._id;
+				}
+
+				Tenants.update(tenant._id, {
+					$addToSet: { members: adminId },
+				});
+			}
+
 			return tenant._id;
 		}
 
@@ -34,7 +53,8 @@ const ensure = {
 		Tenants.insert({
 			_id: id,
 			name,
-			members: [],
+			members: adminId ? [adminId] : [],
+			admins: adminId ? [adminId] : [],
 		});
 		/* eslint-disable-next-line no-console */
 		console.log(`Added tenant: ${name} ${id}`);

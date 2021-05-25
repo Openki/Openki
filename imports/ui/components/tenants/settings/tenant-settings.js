@@ -1,14 +1,13 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
-import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Tenants } from '/imports/api/tenants/tenants';
+import * as TenantsMethods from '/imports/api/tenants/methods';
 import { Users } from '/imports/api/users/users';
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
-import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons/buttons';
 
@@ -24,7 +23,7 @@ Template.tenantSettings.onCreated(function () {
 	instance.autorun(() => {
 		const search = instance.userSearch.get();
 		if (search.length > 0) {
-			Meteor.subscribe('userSearch', search);
+			instance.subscribe('userSearch', search);
 		}
 	});
 });
@@ -52,7 +51,7 @@ Template.tenantSettings.events({
 		const memberId = this._id;
 		const tenantId = Router.current().params._id;
 		try {
-			await MeteorAsync.callAsync('tenant.updateMembership', memberId, tenantId, true);
+			await TenantsMethods.updateMembership(memberId, tenantId, true);
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
@@ -71,7 +70,7 @@ Template.tenantSettings.events({
 		const memberId = `${this}`;
 		const tenantId = Router.current().params._id;
 		try {
-			await MeteorAsync.callAsync('tenant.updateMembership', memberId, tenantId, false);
+			await TenantsMethods.updateMembership(memberId, tenantId, false);
 
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;

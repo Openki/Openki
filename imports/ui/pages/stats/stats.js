@@ -1,8 +1,8 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
-import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
+import * as StatsMethods from '/imports/api/stats/methods';
 import { Regions } from '/imports/api/regions/regions';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
@@ -23,13 +23,10 @@ Template.stats.onCreated(function () {
 	this.region = new ReactiveVar(getRegionFromQuery());
 	this.stats = new ReactiveVar(false);
 
-	this.autorun(() => {
+	this.autorun(async () => {
 		this.stats.set(false);
-		Meteor.call('stats.region', this.region.get(), (err, stats) => {
-			if (!err) {
-				this.stats.set(stats);
-			}
-		});
+		const stats = await StatsMethods.region(this.region.get());
+		this.stats.set(stats);
 	});
 });
 

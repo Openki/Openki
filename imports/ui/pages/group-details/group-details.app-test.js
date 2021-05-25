@@ -23,7 +23,7 @@ if (Meteor.isClient) {
 
 				Router.go('/group/create');
 
-				await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+				await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 				await waitForSubscriptions();
 				await waitFor(haveEditfield);
@@ -41,7 +41,7 @@ if (Meteor.isClient) {
 
 				Router.go('/group/create');
 
-				await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+				await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 				await waitForSubscriptions();
 				await waitFor(haveEditfield);
@@ -86,7 +86,7 @@ if (Meteor.isClient) {
 				await waitForSubscriptions();
 				await waitFor(haveEditfield);
 				await waitFor(findExpectedFormTitle);
-				await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+				await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 				// Create the course
 				jQuery('.js-title').val(randomTitle);
@@ -112,8 +112,8 @@ if (Meteor.isClient) {
 				// See ticket #1331 group members can not edit all courses despite their
 				// group being in the orga-team.
 				// So we login as a member of "SKG" then check whether the edit button shows up.
-				await MeteorAsync.logoutAsync();
-				await MeteorAsync.loginWithPasswordAsync('Normalo', 'greg');
+				await MeteorAsync.logout();
+				await MeteorAsync.loginWithPassword('Normalo', 'greg');
 				await waitFor(() => {
 					assert(jQuery('.js-course-edit').length > 0, 'User from group can edit course');
 				});
@@ -142,7 +142,7 @@ if (Meteor.isClient) {
 				await waitFor(haveEditfield);
 				await waitFor(findExpectedFormTitle);
 				await waitFor(haveNotInternalCheckbox);
-				await MeteorAsync.loginWithPasswordAsync('greg', 'greg');
+				await MeteorAsync.loginWithPassword('greg', 'greg');
 				await waitFor(haveInternalCheckbox);
 
 				// Create the course

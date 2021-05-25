@@ -8,7 +8,7 @@ import { Accounts } from 'meteor/accounts-base';
  */
 export const MeteorAsync = {
 	/** @type {(name: string, ...args: any[]) => Promise<any>} */
-	callAsync:
+	call:
 		// On the server there should be a callAsync: https://docs.meteor.com/changelog.html#v14420170407
 		Meteor.callAsync
 			? Meteor.callAsync
@@ -24,7 +24,7 @@ export const MeteorAsync = {
 						});
 					})),
 	/** @type {(name: string, ...args: any[]) => Promise<Meteor.SubscriptionHandle>} */
-	subscribeAsync:
+	subscribe:
 		Meteor.subscribe &&
 		((/** @type {string} */ name, ...args) =>
 			new Promise((resolve, reject) => {
@@ -39,8 +39,8 @@ export const MeteorAsync = {
 					},
 				});
 			})),
-	loginWithPasswordAsync: Meteor.loginWithPassword && promisify(Meteor.loginWithPassword),
-	logoutAsync: Meteor.logout && promisify(Meteor.logout),
+	loginWithPassword: Meteor.loginWithPassword && promisify(Meteor.loginWithPassword),
+	logout: Meteor.logout && promisify(Meteor.logout),
 };
 
 /**
@@ -48,7 +48,7 @@ export const MeteorAsync = {
  * so those can be used mit asnyc/await.
  */
 export const AccountsAsync = {
-	createUserAsync: Accounts.createUser && promisify(Accounts.createUser),
+	createUser: Accounts.createUser && promisify(Accounts.createUser),
 };
 
 export default MeteorAsync;

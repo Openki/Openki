@@ -1,10 +1,10 @@
-import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
+import * as RegionsMethods from '/imports/api/regions/methods';
 
 import './feature-group.html';
 
@@ -22,30 +22,31 @@ Template.featureGroup.helpers({
 });
 
 Template.featureGroup.events({
-	'submit .js-feature-group'(event, instance) {
+	async 'submit .js-feature-group'(event, instance) {
 		event.preventDefault();
 
 		const regionId = Session.get('region');
 		const groupId = instance.$('#groupToBeFeatured').val();
 
 		instance.busy('saving');
-		Meteor.call('region.featureGroup', regionId, groupId, (err) => {
-			if (err) {
-				Alert.serverError(err, '');
-			} else {
-				instance.busy(false);
-			}
-		});
+
+		try {
+			await RegionsMethods.featureGroup(regionId, groupId);
+		} catch (err) {
+			Alert.serverError(err, '');
+		} finally {
+			instance.busy(false);
+		}
 	},
 
-	'click .js-unset-featured-group'(event, instance) {
+	async 'click .js-unset-featured-group'(event, instance) {
 		instance.busy('deleting');
-		Meteor.call('region.unsetFeaturedGroup', Session.get('region'), (err) => {
-			if (err) {
-				Alert.serverError(err, '');
-			} else {
-				instance.busy(false);
-			}
-		});
+		try {
+			await RegionsMethods.unsetFeaturedGroup(Session.get('region'));
+		} catch (err) {
+			Alert.serverError(err, '');
+		} finally {
+			instance.busy(false);
+		}
 	},
 });
