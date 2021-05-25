@@ -3,6 +3,7 @@ import { MeteorAsync } from '/imports/utils/promisify';
 import { assert } from 'chai';
 
 import { Tenants } from './tenants';
+import * as TenantsMethods from './methods';
 import { Users } from '../users/users';
 
 if (Meteor.isClient) {
@@ -13,19 +14,19 @@ if (Meteor.isClient) {
 
 				const tenantId = '03396e52b5'; // Kopf
 
-				(await MeteorAsync.subscribeAsync('userSearch', 'Regula')).stop(); // load user from server
+				(await MeteorAsync.subscribe('userSearch', 'Regula')).stop(); // load user from server
 				const userId = Users.findOne({ username: 'Regula' })._id;
 
-				await MeteorAsync.loginWithPasswordAsync('Kopf', 'greg');
+				await MeteorAsync.loginWithPassword('Kopf', 'greg');
 
-				(await MeteorAsync.subscribeAsync('tenant', tenantId)).stop(); // load tenant from server
+				(await MeteorAsync.subscribe('tenant', tenantId)).stop(); // load tenant from server
 				let tenant = Tenants.findOne(tenantId);
 
 				assert.notInclude(tenant.members, userId);
 
-				await MeteorAsync.callAsync('tenant.updateMembership', userId, tenantId, true);
+				await TenantsMethods.updateMembership(userId, tenantId, true);
 
-				(await MeteorAsync.subscribeAsync('tenant', tenantId)).stop(); // reload tenant from server
+				(await MeteorAsync.subscribe('tenant', tenantId)).stop(); // reload tenant from server
 				tenant = Tenants.findOne(tenantId);
 
 				assert.include(tenant.members, userId);
@@ -36,19 +37,19 @@ if (Meteor.isClient) {
 
 				const tenantId = '03396e52b5'; // Kopf
 
-				(await MeteorAsync.subscribeAsync('userSearch', 'Regula')).stop(); // load user from server
+				(await MeteorAsync.subscribe('userSearch', 'Regula')).stop(); // load user from server
 				const userId = Users.findOne({ username: 'Regula' })._id;
 
-				await MeteorAsync.loginWithPasswordAsync('Kopf', 'greg');
+				await MeteorAsync.loginWithPassword('Kopf', 'greg');
 
-				(await MeteorAsync.subscribeAsync('tenant', tenantId)).stop(); // load tenant from server
+				(await MeteorAsync.subscribe('tenant', tenantId)).stop(); // load tenant from server
 				let tenant = Tenants.findOne(tenantId);
 
 				assert.include(tenant.members, userId);
 
-				await MeteorAsync.callAsync('tenant.updateMembership', userId, tenantId, false);
+				await TenantsMethods.updateMembership(userId, tenantId, false);
 
-				(await MeteorAsync.subscribeAsync('tenant', tenantId)).stop(); // reload tenant from server
+				(await MeteorAsync.subscribe('tenant', tenantId)).stop(); // reload tenant from server
 				tenant = Tenants.findOne(tenantId);
 
 				assert.notInclude(tenant.members, userId);
@@ -59,21 +60,21 @@ if (Meteor.isClient) {
 
 				const tenantId = '03396e52b5'; // Kopf
 
-				(await MeteorAsync.subscribeAsync('userSearch', 'Regula')).stop(); // load user from server
+				(await MeteorAsync.subscribe('userSearch', 'Regula')).stop(); // load user from server
 				const userId = Users.findOne({ username: 'Regula' })._id;
 
-				await MeteorAsync.loginWithPasswordAsync('Kopf', 'greg');
+				await MeteorAsync.loginWithPassword('Kopf', 'greg');
 
-				(await MeteorAsync.subscribeAsync('tenant', tenantId)).stop(); // load tenant from server
+				(await MeteorAsync.subscribe('tenant', tenantId)).stop(); // load tenant from server
 				const tenant = Tenants.findOne(tenantId);
 
 				assert.notInclude(tenant.members, userId);
 
-				await MeteorAsync.loginWithPasswordAsync('Normalo', 'greg');
+				await MeteorAsync.loginWithPassword('Normalo', 'greg');
 
 				let hasFailed = false;
 				try {
-					await MeteorAsync.callAsync('tenant.updateMembership', userId, tenantId, true);
+					await TenantsMethods.updateMembership(userId, tenantId, true);
 				} catch (err) {
 					if (err) {
 						hasFailed = true;
