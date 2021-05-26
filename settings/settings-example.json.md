@@ -8,7 +8,8 @@ This file descripts all configurations and customization options. Remove the com
 		"siteName": "Openki-clone", 
 		"siteStage": "beta", // The text top left at the logo
 		"testWarning": true, // Shows a banner saying that this is only for testing
-		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The logo in the top right corner
+		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner
+		"headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner from the /kiosk/events/ page
 		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" }, // The default image used for avatars (color is changed using the CSS filter 'hue-rotate')
 		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media 
 		"mailLogo": "mails/openki.png",
