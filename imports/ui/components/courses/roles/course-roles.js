@@ -5,7 +5,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
-import { Subscribe, Unsubscribe, processChangeAsync } from '/imports/api/courses/subscription';
+import { Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subscription';
 import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 
@@ -40,7 +40,7 @@ Template.courseRole.onCreated(function () {
 				const user = Meteor.user();
 				const change = new Unsubscribe(this.data.course, user, this.data.role.type);
 				if (change.validFor(user)) {
-					await processChangeAsync(change);
+					await processChange(change);
 					Alert.success(
 						mf(
 							'course.roles.unsubscribed',
@@ -108,7 +108,7 @@ Template.courseRole.events({
 			mf('loginAction.enroll', 'Login and enroll'),
 			mf('registerAction.enroll', 'Register and enroll'),
 			async () => {
-				await processChangeAsync(instance.subscribe(comment));
+				await processChange(instance.subscribe(comment));
 				RouterAutoscroll.cancelNext();
 				instance.showFirstSteps.set(true);
 				instance.busy(false);
@@ -128,16 +128,17 @@ Template.courseRole.events({
 		return false;
 	},
 
-	async 'click .js-role-unsubscribe-btn'() {
+	async 'click .js-role-unsubscribe-btn'(event) {
+		event.preventDefault();
 		RouterAutoscroll.cancelNext();
 		const change = new Unsubscribe(this.course, Meteor.user(), this.role.type);
-		await processChangeAsync(change);
+		await processChange(change);
+		RouterAutoscroll.cancelNext();
 		Analytics.trackEvent(
 			'Unsubscribes from courses',
 			`Unsubscribes from courses as ${this.role.type}`,
 			Regions.findOne(this.course.region)?.nameEn,
 		);
-		return false;
 	},
 
 	'click .js-toggle-first-steps'(event, instance) {

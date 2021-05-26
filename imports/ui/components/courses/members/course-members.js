@@ -5,12 +5,7 @@ import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Roles } from '/imports/api/roles/roles';
-import {
-	Subscribe,
-	Unsubscribe,
-	Message,
-	processChangeAsync,
-} from '/imports/api/courses/subscription';
+import { Subscribe, Unsubscribe, Message, processChange } from '/imports/api/courses/subscription';
 import { Users } from '/imports/api/users/users';
 
 import { Editable } from '/imports/ui/lib/editable';
@@ -88,7 +83,7 @@ Template.courseMember.onCreated(function () {
 		{
 			onSave: async (newMessage) => {
 				const change = new Message(instance.data.course, Meteor.user(), newMessage);
-				await processChangeAsync(change);
+				await processChange(change);
 			},
 			onSuccess: () => {
 				Alert.success(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));
@@ -175,10 +170,10 @@ Template.removeFromTeamDropdown.helpers({
 Template.courseMember.events({
 	'click .js-add-to-team-btn'(event, instance) {
 		event.preventDefault();
-		processChangeAsync(instance.subscribeToTeam());
+		processChange(instance.subscribeToTeam());
 	},
 	'click .js-remove-team'(event, instance) {
 		event.preventDefault();
-		processChangeAsync(instance.removeFromTeam());
+		processChange(instance.removeFromTeam());
 	},
 });

@@ -26,7 +26,13 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 
 		const sorting = this.sort ? SortSpec.fromString(this.sort) : SortSpec.unordered();
 
-		this.subscribe('Courses.findFilter', filter.toParams(), this.limit.get() + 1, sorting.spec());
+		this.subscribe(
+			'Courses.findFilter',
+			filter.toParams(),
+			this.limit.get() + 1,
+			undefined,
+			sorting.spec(),
+		);
 	});
 
 	this.subscribe('Regions');

@@ -9,12 +9,16 @@ import { Groups } from '/imports/api/groups/groups';
 
 /**
  * Create an update method for the groups field
- * @param {Object} collection The collection the changes will be applied to when the
+ * @template T
+ * @param {Mongo.Collection<T>} collection The collection the changes will be applied to when the
  * method is called
- * @return {function} A function that can be used as meteor method
  */
 export function promote(collection) {
-	return function (docId, groupId, enable) {
+	return function (
+		/** @type {string} */ docId,
+		/** @type {string} */ groupId,
+		/** @type {boolean} */ enable,
+	) {
 		check(docId, String);
 		check(groupId, String);
 		check(enable, Boolean);
@@ -62,12 +66,17 @@ export function promote(collection) {
 
 /**
  * Create an update method for the groupOrganizers field
- * @param {Object} collection the collection the changes will be applied to when the
+ * @template T
+ * @param {Mongo.Collection<T>} collection the collection the changes will be applied to when the
  * method is called
- * @return {function} A function that can be used as meteor method
+ * @return A function that can be used as meteor method
  */
 export function editing(collection) {
-	return function (docId, groupId, enable) {
+	return function (
+		/** @type {string} */ docId,
+		/** @type {string} */ groupId,
+		/** @type {boolean} */ enable,
+	) {
 		check(docId, String);
 		check(groupId, String);
 		check(enable, Boolean);

@@ -12,11 +12,11 @@ if (Meteor.isClient) {
 
 				// A previous test might have logged us in.
 				if (Meteor.userId()) {
-					await MeteorAsync.logoutAsync();
+					await MeteorAsync.logout();
 				}
 				Session.set('region', 'all');
 
-				await MeteorAsync.subscribeAsync('Events.findFilter');
+				await MeteorAsync.subscribe('Events.findFilter');
 			});
 
 			it('should a gast only show events from public tenants', async function () {
@@ -39,7 +39,7 @@ if (Meteor.isClient) {
 
 				const eventsAsGast = Events.findFilter().fetch();
 
-				await MeteorAsync.loginWithPasswordAsync('Schufien', 'greg');
+				await MeteorAsync.loginWithPassword('Schufien', 'greg');
 				const schufien = Meteor.user();
 
 				assert.ok(schufien);

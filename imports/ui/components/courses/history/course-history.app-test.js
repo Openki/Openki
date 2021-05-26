@@ -20,7 +20,7 @@ if (Meteor.isClient) {
 
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
-			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 			// Create the course
 			jQuery('.js-title').val(randomTitle);
@@ -48,9 +48,9 @@ if (Meteor.isClient) {
 
 		// Bases on the previous test
 		it('should show a entry for user subscribe', async () => {
-			await MeteorAsync.logoutAsync();
+			await MeteorAsync.logout();
 
-			await MeteorAsync.loginWithPasswordAsync('Flumsi', 'greg');
+			await MeteorAsync.loginWithPassword('Flumsi', 'greg');
 
 			await waitFor(() => {
 				assert(jQuery('.loginButton').text().includes('Flumsi'), 'User Flumsi sould be logged in.');

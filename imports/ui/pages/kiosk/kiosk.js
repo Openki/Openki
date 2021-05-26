@@ -1,8 +1,10 @@
+import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import moment from 'moment';
 
+import { Regions } from '/imports/api/regions/regions';
 import { Groups } from '/imports/api/groups/groups';
 import '/imports/ui/components/language-selection/language-selection';
 
@@ -26,6 +28,28 @@ Template.kioskEvents.helpers({
 	showDate() {
 		Session.get('seconds');
 		return moment().format('LL');
+	},
+	headerLogo() {
+		const currentRegion = Regions.currentRegion();
+		if (currentRegion?.custom?.headerLogoKiosk?.src) {
+			return currentRegion.custom.headerLogoKiosk.src;
+		}
+
+		if (Meteor.settings.public.headerLogoKiosk?.src) {
+			return Meteor.settings.public.headerLogoKiosk.src;
+		}
+		return '';
+	},
+	headerAlt() {
+		const currentRegion = Regions.currentRegion();
+		if (currentRegion?.custom?.headerLogoKiosk?.alt) {
+			return currentRegion.custom.headerLogoKiosk.alt;
+		}
+
+		if (Meteor.settings.public.headerLogoKiosk?.alt) {
+			return Meteor.settings.public.headerLogoKiosk.alt;
+		}
+		return '';
 	},
 });
 

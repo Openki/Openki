@@ -123,6 +123,4 @@ See: https://gitlab.com/Openki/Openki/-/issues/1414
 - More documentation can be found on our [blog](https://about.openki.net/?page_id=1043)
 
 ### License
-- AGPL – GNU Affero General Public License (for the sourcecode)
-- For all course contents and descriptions (if not differently indicated): Creative Commons BY-SA
-- For all testing-events descriptions (server/data/testing.events.js): Creative Commons BY-NC-SA
+- AGPL – GNU Affero General Public License 3.0

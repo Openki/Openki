@@ -3,11 +3,11 @@ import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
-import { Meteor } from 'meteor/meteor';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
+import * as VenuesMethods from '/imports/api/venues/methods';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { Editable } from '/imports/ui/lib/editable';
@@ -207,33 +207,30 @@ Template.venueEdit.events({
 			instance,
 			mf('loginAction.saveVenue', 'Login and save venue'),
 			mf('registerAction.saveVenue', 'Register and save venue'),
-			() => {
-				Meteor.call('venue.save', venueId, changes, (err, res) => {
-					instance.busy(false);
-					if (err) {
-						Alert.serverError(err, mf('venue.saving.error', 'Saving the venue went wrong'));
-					} else {
-						Alert.success(
-							mf(
-								'venue.saving.success',
-								{ NAME: changes.name },
-								'Saved changes to venue "{NAME}".',
-							),
+			async () => {
+				try {
+					const res = await VenuesMethods.save(venueId, changes);
+
+					Alert.success(
+						mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'),
+					);
+
+					if (instance.isNew) {
+						Analytics.trackEvent(
+							'Venue creations',
+							'Venue creations',
+							Regions.findOne(changes.region)?.nameEn,
 						);
 
-						if (instance.isNew) {
-							Analytics.trackEvent(
-								'Venue creations',
-								'Venue creations',
-								Regions.findOne(changes.region)?.nameEn,
-							);
-
-							Router.go('venueDetails', { _id: res });
-						} else {
-							instance.parentInstance().editing.set(false);
-						}
+						Router.go('venueDetails', { _id: res });
+					} else {
+						instance.parentInstance().editing.set(false);
 					}
-				});
+				} catch (err) {
+					Alert.serverError(err, mf('venue.saving.error', 'Saving the venue went wrong'));
+				} finally {
+					instance.busy(false);
+				}
 			},
 		);
 	},

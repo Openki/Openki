@@ -1,6 +1,5 @@
 import './ical';
 import './msgfmt';
-import './register-api';
 import './routes';
 
 // import locale file(s)

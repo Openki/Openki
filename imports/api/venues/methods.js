@@ -8,9 +8,11 @@ import { Venues } from './venues';
 
 import { AsyncTools } from '/imports/utils/async-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
+import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
 
-Meteor.methods({
+export const save = ServerMethod(
+	'venue.save',
 	/**
 	 * @param {string} venueId
 	 * @param {{
@@ -28,7 +30,7 @@ Meteor.methods({
 				website?: string;
 			}} changes
 	 */
-	'venue.save'(venueId, changes) {
+	(venueId, changes) => {
 		check(venueId, String);
 		check(changes, {
 			name: Match.Optional(String),
@@ -134,12 +136,16 @@ Meteor.methods({
 
 		return venueId;
 	},
+);
 
+export const remove = ServerMethod(
+	'venue.remove',
 	/**
 	 * @param {string} venueId
 	 */
-	'venue.remove'(venueId) {
+	(venueId) => {
 		check(venueId, String);
+
 		const venue = Venues.findOne(venueId);
 		if (!venue) {
 			throw new Meteor.Error(404, 'No such venue');
@@ -151,4 +157,4 @@ Meteor.methods({
 
 		return Venues.remove(venueId);
 	},
-});
+);

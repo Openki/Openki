@@ -15,8 +15,11 @@
 						<a href="/venue/{{filter.location}}">{{filter.location}}</a>
 					{{else}}
 						<a href="{{pathFor 'home'}}">
-							<img src="/logo/openki.png" class="kiosk-logo kiosk-logo-openki">
-							Openki
+							{{#if headerLogo}}
+								<img src="/logo/{{headerLogo}}" alt="{{headerAlt}}"
+									 class="kiosk-logo kiosk-logo-openki">
+							{{/if}}
+							{{siteName}}
 						</a>
 					{{/if}}
 				{{/if}}

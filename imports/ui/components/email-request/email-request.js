@@ -3,6 +3,8 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
 import * as Alert from '/imports/api/alerts/alert';
+import * as usersMethods from '/imports/api/users/methods';
+import * as emailMethods from '/imports/api/emails/methods';
 
 import * as EmailRequest from '/imports/ui/lib/email-request';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
@@ -39,7 +41,7 @@ TemplateMixins.FormfieldErrors(Template.emailRequestModal, {
 });
 
 Template.emailRequestModal.events({
-	'click .js-save-email'(event, instance) {
+	async 'click .js-save-email'(event, instance) {
 		event.preventDefault();
 
 		instance.errors.reset();
@@ -54,15 +56,14 @@ Template.emailRequestModal.events({
 		}
 
 		instance.busy('saving');
-		Meteor.call('user.updateEmail', email, (err) => {
-			instance.busy(false);
-			if (err) {
-				instance.errors.add(err.reason);
-			} else {
-				Alert.success(mf('profile.updated', 'Updated profile'));
-				instance.$('.js-email-request-modal').modal('hide');
-			}
-		});
+		try {
+			await usersMethods.updateEmail(email);
+
+			Alert.success(mf('profile.updated', 'Updated profile'));
+			instance.$('.js-email-request-modal').modal('hide');
+		} catch (err) {
+			instance.errors.add(err.reason);
+		}
 	},
 });
 
@@ -81,19 +82,18 @@ Template.emailValidationModal.onRendered(function () {
 });
 
 Template.emailValidationModal.events({
-	'click .js-send-validation-email'(event, instance) {
-		instance.busy('sending');
+	async 'click .js-send-validation-email'(event, instance) {
 		event.preventDefault();
-		Meteor.call('sendVerificationEmail', (err) => {
+		instance.busy('sending');
+		try {
+			await emailMethods.sendVerificationEmail();
+
+			Alert.success(mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }));
+			$('.js-email-validation-modal').modal('hide');
+		} catch (err) {
+			Alert.serverError(err, 'Failed to send verification mail');
+		} finally {
 			instance.busy(false);
-			if (err) {
-				Alert.serverError(err, 'Failed to send verification mail');
-			} else {
-				Alert.success(
-					mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }),
-				);
-				$('.js-email-validation-modal').modal('hide');
-			}
-		});
+		}
 	},
 });

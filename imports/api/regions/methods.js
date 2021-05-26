@@ -2,6 +2,28 @@ import { Meteor } from 'meteor/meteor';
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Regions } from './regions';
+import { ServerMethod } from '/imports/utils/ServerMethod';
+
+export const featureGroup = ServerMethod(
+	'region.featureGroup',
+	/**
+	 * @param {string} regionId
+	 * @param {string} groupId
+	 */
+	(regionId, groupId) => {
+		Regions.update(regionId, { $set: { featuredGroup: groupId } });
+	},
+);
+
+export const unsetFeaturedGroup = ServerMethod(
+	'region.unsetFeaturedGroup',
+	/**
+	 * @param {string} regionId
+	 */
+	(regionId) => {
+		Regions.update(regionId, { $set: { featuredGroup: false } });
+	},
+);
 
 Meteor.methods({
 	'region.updateCounters'(selector) {
@@ -18,13 +40,5 @@ Meteor.methods({
 
 			Regions.update(regionId, { $set: { courseCount, futureEventCount } });
 		});
-	},
-
-	'region.featureGroup'(regionId, groupId) {
-		Regions.update(regionId, { $set: { featuredGroup: groupId } });
-	},
-
-	'region.unsetFeaturedGroup'(regionId) {
-		Regions.update(regionId, { $set: { featuredGroup: false } });
 	},
 });

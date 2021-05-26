@@ -116,8 +116,32 @@ const getGroupStats = (region, group) => {
 };
 
 const Stats = {
+	/**
+	 * @param {string} regionFilter
+	 */
 	getRegionStats(regionFilter) {
 		const groupIds = getGroupIds(getCourses(regionFilter));
+		/**
+		 * @type {{
+		 *  detail: {
+				group: any;
+				groupName: string;
+				numCourses: number;
+				activeCourses: number;
+				passedEvents: number;
+				futureEvents: number;
+				usersParticipating: number;
+			}[];
+		 *  total: {
+				group: string;
+				numCourses: number;
+				activeCourses: number;
+				passedEvents: number;
+				futureEvents: number;
+				usersParticipating: number;
+			};
+		 * }}
+		 */
 		const stats = { detail: [] };
 
 		groupIds.forEach((groupId) => {
