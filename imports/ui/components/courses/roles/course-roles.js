@@ -128,16 +128,17 @@ Template.courseRole.events({
 		return false;
 	},
 
-	async 'click .js-role-unsubscribe-btn'() {
+	async 'click .js-role-unsubscribe-btn'(event) {
+		event.preventDefault();
 		RouterAutoscroll.cancelNext();
 		const change = new Unsubscribe(this.course, Meteor.user(), this.role.type);
 		await processChange(change);
+		RouterAutoscroll.cancelNext();
 		Analytics.trackEvent(
 			'Unsubscribes from courses',
 			`Unsubscribes from courses as ${this.role.type}`,
 			Regions.findOne(this.course.region)?.nameEn,
 		);
-		return false;
 	},
 
 	'click .js-toggle-first-steps'(event, instance) {

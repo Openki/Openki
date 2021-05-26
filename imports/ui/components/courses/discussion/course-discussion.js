@@ -290,6 +290,7 @@ Template.post.events({
 
 	async submit(event, instance) {
 		event.stopImmediatePropagation();
+		event.preventDefault();
 
 		const comment = { title: instance.$('.js-post-title').val() };
 
@@ -322,8 +323,6 @@ Template.post.events({
 		} finally {
 			instance.busy(false);
 		}
-
-		return false;
 	},
 
 	'click .js-discussion-cancel'() {
