@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import { mf, msgfmt } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
@@ -26,12 +26,16 @@ const helpers = {
 	},
 
 	categoryName() {
-		const locale = Session.get('locale'); // Reactive dependency
-		// This is for debugging purpose, see Issues #1511 I can reproduce this on my local machine. 
-		// If you see this and the issue is closed you can remove this line.
+		// This is for debugging purpose, see Issues #1511 I can reproduce this on my local machine.
+		// If you see this and the issue is closed you can cleanup this lines.
+		const loading = msgfmt.loading();
+		const locale = msgfmt.locale();
+		const sessionLocale = Session.get('locale'); // Reactive dependency
 		// eslint-disable-next-line no-console
 		console.info(
-			`Debug: locale: ${locale}, category: ${this}, Translation: ${mf(`category.${this}`)}`,
+			`Debug: locale: ${locale}, sessionLocale:${sessionLocale} category: ${this}, translation: ${mf(
+				`category.${this}`,
+			)}, loading: ${loading}`,
 		);
 		return mf(`category.${this}`);
 	},
