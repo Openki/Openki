@@ -26,13 +26,7 @@ const helpers = {
 	},
 
 	categoryName() {
-		const locale = Session.get('locale'); // Reactive dependency
-		// This is for debugging purpose, see Issues #1511 I can reproduce this on my local machine. 
-		// If you see this and the issue is closed you can remove this line.
-		// eslint-disable-next-line no-console
-		console.info(
-			`Debug: locale: ${locale}, category: ${this}, Translation: ${mf(`category.${this}`)}`,
-		);
+		Session.get('locale'); // Reactive dependency
 		return mf(`category.${this}`);
 	},
 
