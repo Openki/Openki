@@ -25,19 +25,12 @@ const helpers = {
 		return 'Hmmm';
 	},
 
-	categoryName() {
-		// This is for debugging purpose, see Issues #1511 I can reproduce this on my local machine.
-		// If you see this and the issue is closed you can cleanup this lines.
-		const loading = msgfmt.loading();
-		const locale = msgfmt.locale();
-		const sessionLocale = Session.get('locale'); // Reactive dependency
-		// eslint-disable-next-line no-console
-		console.info(
-			`Debug: locale: ${locale}, sessionLocale:${sessionLocale} category: ${this}, translation: ${mf(
-				`category.${this}`,
-			)}, loading: ${loading}`,
-		);
-		return mf(`category.${this}`);
+	/**
+	 * @param {string} name
+	 */
+	categoryName(name) {
+		Session.get('locale'); // Reactive dependency
+		return mf(`category.${name}`);
 	},
 
 	/**

@@ -6,6 +6,7 @@ import { msgfmt } from 'meteor/msgfmt:core';
 
 // See: https://github.com/gadicc/meteor-messageformat/#optional-settings
 // Attention! The default options described in the readme are not the same as those set in the code.
+msgfmt.waitOnLoaded = true; // waitOnLoaded must be set manually
 msgfmt.init('en', {
 	// Send translations for all languages or current language (Default: 'all')
 	sendPolicy: 'current',
