@@ -203,13 +203,13 @@ const helpers = {
 		// Prevent words from sticking together
 		// eg. <p>Kloradf dadeq gsd.</p><p>Loradf dadeq gsd.</p> => Kloradf dadeq gsd. Loradf dadeq gsd.
 		const htmlPreparedForMinimalStyling = html
-			.replaceAll('<br />', '<br /> ')
-			.replaceAll('<p>', '<p> ')
-			.replaceAll('</p>', '</p> ')
-			.replaceAll('<h2>', '<h2> ')
-			.replaceAll('</h2>', '</h2> ')
-			.replaceAll('<h3>', '<h3> ')
-			.replaceAll('</h3>', '</h3> ');
+			.replace(/<br \/>/g, '<br /> ')
+			.replace(/<p>/g, '<p> ')
+			.replace(/<\/p>/g, '</p> ')
+			.replace(/<h2>/g, '<h2> ')
+			.replace(/<\/h2>/g, '</h2> ')
+			.replace(/<h3>/g, '<h3> ')
+			.replace(/<\/h3>/g, '</h3> ');
 		// Source: https://stackoverflow.com/questions/822452/strip-html-from-text-javascript/47140708#47140708
 		const doc = new DOMParser().parseFromString(htmlPreparedForMinimalStyling, 'text/html');
 		return doc.body.textContent || '';
