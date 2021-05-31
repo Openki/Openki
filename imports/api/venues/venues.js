@@ -80,6 +80,7 @@ export class VenueCollection extends Mongo.Collection {
 		});
 
 		if (Meteor.isServer) {
+			this._ensureIndex({ region: 1 });
 			this._ensureIndex({ loc: '2dsphere' });
 		}
 

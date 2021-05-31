@@ -20,6 +20,10 @@ import { Filtering } from '/imports/utils/filtering';
 export class GroupsCollection extends Mongo.Collection {
 	constructor() {
 		super('Groups');
+
+		if (Meteor.isServer) {
+			this._ensureIndex({ tenant: 1, members: 1 });
+		}
 	}
 
 	// eslint-disable-next-line class-methods-use-this

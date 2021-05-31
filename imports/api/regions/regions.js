@@ -40,6 +40,7 @@ export class RegionsCollection extends Mongo.Collection {
 		super('Regions');
 
 		if (Meteor.isServer) {
+			this._ensureIndex({ members: 1 });
 			this._ensureIndex({ loc: '2dsphere' });
 		}
 	}
