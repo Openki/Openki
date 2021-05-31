@@ -1,4 +1,5 @@
-import { mf } from 'meteor/msgfmt:core';
+import { mf, msgfmt } from 'meteor/msgfmt:core';
+import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
@@ -9,6 +10,11 @@ import './footer.html';
 
 Template.footer.helpers({
 	links() {
+		// Depend on locale and a composite mf string so we update reactively when locale changes
+		// and msgfmt finish loading translations
+		msgfmt.loading();
+		Session.get('locale');
+
 		return (Meteor.settings.public.footerLinks || []).map((linkSpec) => ({
 			link: linkSpec.link,
 			text: linkSpec.key ? mf(linkSpec.key) : linkSpec.text,

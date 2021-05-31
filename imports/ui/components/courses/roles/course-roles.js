@@ -1,6 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import { mf, msgfmt } from 'meteor/msgfmt:core';
+import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
@@ -69,6 +70,11 @@ Template.courseRole.helpers({
 	 * @param {string} type
 	 */
 	roleSubscribe(type) {
+		// Depend on locale and a composite mf string so we update reactively when locale changes
+		// and msgfmt finish loading translations
+		msgfmt.loading();
+		Session.get('locale');
+
 		return mf(`roles.${type}.subscribe`);
 	},
 
@@ -76,6 +82,11 @@ Template.courseRole.helpers({
 	 * @param {string} type
 	 */
 	roleSubscribed(type) {
+		// Depend on locale and a composite mf string so we update reactively when locale changes
+		// and msgfmt finish loading translations
+		msgfmt.loading();
+		Session.get('locale');
+
 		return mf(`roles.${type}.subscribed`);
 	},
 
