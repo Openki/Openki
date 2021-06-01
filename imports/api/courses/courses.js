@@ -244,14 +244,23 @@ export class CoursesCollection extends Mongo.Collection {
 	 * @param {number} [skip]
 	 * @param {any[]} [sortParams]
 	 */
-	findFilter(filter = {}, limit, skip, sortParams) {
-		check(limit, Match.Optional(Number));
-		check(skip, Match.Optional(Number));
-		check(sortParams, Match.Optional([[Match.Any]]));
-
-		const order = sortParams || [];
+	findFilter(filter = {}, limit = 0, skip = 0, sortParams) {
+		check(limit, Match.Maybe(Number));
+		check(skip, Match.Maybe(Number));
+		check(sortParams, Match.Maybe([[Match.Any]]));
 
 		const find = {};
+		/** @type {Mongo.Options<CourseEntity>} */
+		const options = {};
+		const order = sortParams || [];
+
+		if (limit > 0) {
+			options.limit = limit;
+		}
+
+		if (skip > 0) {
+			options.skip = skip;
+		}
 
 		if (!filter.archived) {
 			find.archived = { $ne: true }; // hide archived by default
@@ -345,23 +354,21 @@ export class CoursesCollection extends Mongo.Collection {
 
 			find.$and = searchQueries;
 		}
-		/** @type {Mongo.Options<CourseEntity>} */
-		const options = {
-			limit,
-			skip,
-			sort: order,
-			// Load only data that is useful for list views.
-			fields: {
-				'members.comment': 0,
-				history: 0,
-				'nextEvent.editors': 0,
-				'nextEvent.facilities': 0,
-				'nextEvent.loc': 0,
-				'lastEvent.editors': 0,
-				'lastEvent.facilities': 0,
-				'lastEvent.loc': 0,
-			},
+		
+		options.sort = order;
+
+		// Load only data that is useful for list views.
+		options.fields = {
+			'members.comment': 0,
+			history: 0,
+			'nextEvent.editors': 0,
+			'nextEvent.facilities': 0,
+			'nextEvent.loc': 0,
+			'lastEvent.editors': 0,
+			'lastEvent.facilities': 0,
+			'lastEvent.loc': 0,
 		};
+
 		return this.find(find, options);
 	}
 }
