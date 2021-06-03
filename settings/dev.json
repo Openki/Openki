@@ -27,7 +27,7 @@
 			, "key": "footer.aboutOpenki"
 			, "title_key": "navigation.footer.about.title"
 			}
-		,	{ "link": "/info/FAQ"
+		,	{ "link": "/info/faq"
 			, "key": "main.faq_link"
 			, "title_key": "navigation.footer.faq.title"
 			}
@@ -36,7 +36,7 @@
 			, "title_key": "navigation.footer.codeOnGitLab"
 			}
 		],
-		"faqLink": "/info/FAQ",
+		"faqLink": "/info/faq",
 		"courseGuideLink": null,
 		"aboutLink": "https://about.openki.net",
 		"categories": {"sports":

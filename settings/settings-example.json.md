@@ -36,7 +36,7 @@ This file descripts all configurations and customization options. Remove the com
 				"title_key": "navigation.footer.about.title"
 			},
 			{
-				"link": "/FAQ",
+				"link": "/info/faq",
 				"key": "main.faq_link",
 				"title_key": "navigation.footer.faq.title"
 			},
@@ -46,7 +46,7 @@ This file descripts all configurations and customization options. Remove the com
 				"title_key": "navigation.footer.codeOnGitLab"
 			}
 		],
-		"faqLink": "/FAQ",
+		"faqLink": "/info/faq",
 		"courseGuideLink": null,
 		"aboutLink": "https://about.openki.net",
 		"categories": { // Categories for courses, main and/or sub categories
