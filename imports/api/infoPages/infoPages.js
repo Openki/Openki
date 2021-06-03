@@ -4,7 +4,7 @@ import { Mongo } from 'meteor/mongo';
 // ======== DB-Model: ========
 /**
  * @typedef {Object} InfoPagesEntity
- * @property {string} slug URL-path of the page
+ * @property {string} slug URL-path of the page /info/:slug
  * @property {string} locale eg. en, de, de-ZH
  * @property {number} accuracy Helps to find the most exact language. eg. de-ZH: 3, de: 2, en: 1
  * @property {string} title title of the page, shown in the browser's title bar or in the page's tab
