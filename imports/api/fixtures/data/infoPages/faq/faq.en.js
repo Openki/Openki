@@ -1,6 +1,4 @@
-{{#template name="FAQ_en"}}
-
-## General
+export const body = `## General
 
 ### What is Openki?
 
@@ -184,7 +182,6 @@ For now, region admins cannot be contacted directly. Please send an e-mail reque
 ## Technical
 
 ### Where can I find answers to technical questions?
-Detailed technical documentation can be found in our [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home).
+Detailed technical documentation can be found in our [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home).`;
 
-
-{{/template}}
+export default body;
