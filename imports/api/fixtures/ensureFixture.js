@@ -2,6 +2,7 @@ import { Accounts } from 'meteor/accounts-base';
 import crypto from 'crypto';
 import Prng from './Prng';
 import { Groups } from '/imports/api/groups/groups';
+import { Tenants } from '/imports/api/tenants/tenants';
 import { Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
@@ -21,9 +22,82 @@ const ensure = {
 
 	/**
 	 * @param {string} name
+	 * @param {string | undefined} [adminId]
+	 */
+	tenant(name, adminId) {
+		const tenant = Tenants.findOne({ name });
+		if (tenant) {
+			if (adminId) {
+				if (tenant?.admins?.includes(adminId)) {
+					return tenant._id;
+				}
+
+				Tenants.update(tenant._id, {
+					$addToSet: { admins: adminId },
+				});
+
+				if (tenant?.members?.includes(adminId)) {
+					return tenant._id;
+				}
+
+				Tenants.update(tenant._id, {
+					$addToSet: { members: adminId },
+				});
+			}
+
+			return tenant._id;
+		}
+
+		const id = ensure.fixedId([name]);
+
+		Tenants.insert({
+			_id: id,
+			name,
+			members: adminId ? [adminId] : [],
+			admins: adminId ? [adminId] : [],
+		});
+		/* eslint-disable-next-line no-console */
+		console.log(`Added tenant: ${name} ${id}`);
+
+		return id;
+	},
+
+	/**
+	 * @param {UserEntity} user
+	 * @param {string} regionId
+	 */
+	userInTenant(user, regionId) {
+		const region = Regions.findOne(regionId);
+
+		if (!region || !region.tenant) {
+			return;
+		}
+
+		if (user.tenants?.includes(region.tenant)) {
+			return;
+		}
+
+		Users.update(user._id, {
+			$addToSet: { tenants: region.tenant },
+		});
+
+		const tenant = Tenants.findOne(region.tenant);
+
+		if (tenant?.members?.includes(user._id)) {
+			return;
+		}
+
+		Tenants.update(tenant._id, {
+			$addToSet: { members: user._id },
+		});
+	},
+
+	/**
+	 * @param {string} name
+	 * @param {string} [region]
 	 * @param {boolean} [verified=false]
 	 */
-	user(name, verified = false) {
+	user(name, region, verified = false) {
 		const prng = Prng('ensureUser');
 
 		if (!name) {
@@ -34,11 +108,17 @@ const ensure = {
 
 		let user = Users.findOne({ 'emails.address': email });
 		if (user) {
+			if (region) {
+				ensure.userInTenant(user, region);
+			}
 			return user;
 		}
 
 		user = Users.findOne({ username: name });
 		if (user) {
+			if (region) {
+				ensure.userInTenant(user, region);
+			}
 			return user;
 		}
 
@@ -85,6 +165,9 @@ const ensure = {
 			throw new Error('Unexpected undefined');
 		}
 
+		if (region) {
+			ensure.userInTenant(user, region);
+		}
 		return user;
 	},
 

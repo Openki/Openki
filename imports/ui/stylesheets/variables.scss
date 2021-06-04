@@ -20,6 +20,10 @@ $shadow-sm-blur:                                 4px;
 //========================================================================================
 $footer-height:                                  50px;
 
+// ** Tenant
+//========================================================================================
+$tenant-bg:                                       $green-alternative;
+
 // ** Group
 //========================================================================================
 $group-bg:                                       $green-alternative;
@@ -69,6 +73,7 @@ $course-border-color:                            $blue-lighter;
 $has-upcoming-events-bg:                         $blue-lighter;
 $proposal-border-style:                          dashed;
 $has-past-events-border-style:                   solid;
+$archived-color:                                 #f5ecc6;
 
 $course-compact-next-event-bg:                   $green;
 $course-compact-next-event-color:                $gray-dark;
@@ -91,7 +96,7 @@ $kiosk-wrap-padding-vertical:                    $kiosk-wrap-padding-horizontal;
 
 // ** Screen breakpoints
 //========================================================================================
-$screen-xxs:                                     380px; // -> scssVariables.js
+$screen-xxs:                                     360px; // -> scssVariables.js
 $screen-xsm:                                     550px;
 
 // ** Default values

@@ -15,8 +15,11 @@
 						<a href="/venue/{{filter.location}}">{{filter.location}}</a>
 					{{else}}
 						<a href="{{pathFor 'home'}}">
-							<img src="/logo/openki.png" class="kiosk-logo kiosk-logo-openki">
-							Openki
+							{{#if headerLogo}}
+								<img src="/logo/{{headerLogo}}" alt="{{headerAlt}}"
+									 class="kiosk-logo kiosk-logo-openki">
+							{{/if}}
+							{{siteName}}
 						</a>
 					{{/if}}
 				{{/if}}
@@ -98,7 +101,7 @@
 				</div>
 				<div class="kiosk-event-body">
 					<h3 class="kiosk-event-title">
-						{{plain this.title}}
+						{{plain title}}
 					</h3>
 					{{#unless isOngoing}}
 						<br />

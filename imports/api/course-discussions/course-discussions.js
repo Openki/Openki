@@ -20,6 +20,10 @@ import { Mongo } from 'meteor/mongo';
 export class CourseDiscussionsCollection extends Mongo.Collection {
 	constructor() {
 		super('CourseDiscussions');
+
+		if (Meteor.isServer) {
+			this._ensureIndex({ courseId: 1 });
+		}
 	}
 
 	/**

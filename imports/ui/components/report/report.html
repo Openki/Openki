@@ -5,10 +5,12 @@
 	{{#if reporting}}
 		<div class="report">
 			<form>
-				<div class="form-group">
-					<label for="reportMessage">{{mf 'report.text' 'Please tell us what is wrong.'}}</label>
+				<div class="form-group {{errorClass 'reportMessage'}}">
+					<label
+						   for="reportMessage">{{mf 'report.text' 'Please tell us what is wrong.'}}</label>
 					<textarea class="js-report-message form-control" id="reportMessage" rows="3"
-						placeholder="{{mf 'report.placeholder' 'My hovercraft is full of eels.'}}"></textarea>
+							  placeholder="{{mf 'report.placeholder' 'My hovercraft is full of eels.'}}"></textarea>
+					{{errorMessage 'reportMessage'}}
 				</div>
 				<div class="form-actions">
 					<button type="button" class='btn btn-save js-report-send'>

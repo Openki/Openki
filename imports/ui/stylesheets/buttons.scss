@@ -63,6 +63,16 @@ $btn-background-colors: (
 	@extend .btn-warning;
 }
 
+.btn-archive {
+	@include gradient-vertical($btn-default-bg, darken($btn-default-bg, $btn-level-end));
+	border: 1px solid $btn-default-border;
+
+	&:hover {
+		@include gradient-vertical($btn-warning-bg, darken($btn-warning-bg, $btn-level-end));
+		border: 1px solid $btn-warning-border;
+	}
+}
+
 .btn-cancel,
 .btn-delete,
 .btn-remove {

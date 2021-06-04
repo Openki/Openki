@@ -11,6 +11,8 @@ import * as StringTools from '/imports/utils/string-tools';
 
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
+// eslint-disable-next-line import/no-cycle
+import * as tenantDenormalizer from './tenantDenormalizer';
 
 // ======== DB-Model: ========
 /**
@@ -22,6 +24,7 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
 /**
  * @typedef {Object} CourseEntity
  * @property {string} _id          ID
+ * @property {string} [tenant]
  * @property {string} name
  * @property {string[]} categories ID_categories
  * @property {string[]} tags       (not used)
@@ -37,6 +40,7 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
  * @property {string[]} roles [role-keys]
  * @property {CourseMemberEntity[]} members
  * @property {boolean} internal
+ * @property {boolean} archived
  * @property {{dateTime: Date; type: string; data: any;}} history
  * @property {string[]} editors (calculated) List of user and group id allowed to edit the course,
  * calculated from members and groupOrganizers
@@ -118,6 +122,20 @@ export class CoursesCollection extends Mongo.Collection {
 				return _.extend(new Course(), course);
 			},
 		});
+
+		if (Meteor.isServer) {
+			this._ensureIndex({ tenant: 1, archived: 1, region: 1, time_lastedit: 1, groups: 1 });
+		}
+	}
+
+	/**
+	 * @param {CourseModel} course
+	 * @param {Function | undefined} [callback]
+	 */
+	insert(course, callback) {
+		const enrichedCourse = tenantDenormalizer.beforeInsert(course);
+
+		return super.insert(enrichedCourse, callback);
 	}
 
 	// eslint-disable-next-line class-methods-use-this
@@ -130,6 +148,7 @@ export class CoursesCollection extends Mongo.Collection {
 			state: Predicates.string,
 			needsRole: Predicates.ids,
 			internal: Predicates.flag,
+			archived: Predicates.flag,
 		});
 	}
 
@@ -209,7 +228,9 @@ export class CoursesCollection extends Mongo.Collection {
 	}
 
 	/**
-	 * @param {{ region?: string;
+	 * @param {{
+	 * tenants?: string[];
+	 * region?: string;
 	 * state?: "proposal" | "resting" | "upcomingEvent";
 	 * userInvolved?: string;
 	 * categories?: string[];
@@ -217,17 +238,39 @@ export class CoursesCollection extends Mongo.Collection {
 	 * internal?: boolean;
 	 * search?: string;
 	 * needsRole?: ("host"|"mentor"|"team")[];
+	 * archived?: boolean;
 	 * }} [filter]
 	 * @param {number} [limit]
+	 * @param {number} [skip]
 	 * @param {any[]} [sortParams]
 	 */
-	findFilter(filter = {}, limit, sortParams) {
-		check(limit, Match.Optional(Number));
-		check(sortParams, Match.Optional([[Match.Any]]));
-
-		const order = sortParams || [];
+	findFilter(filter = {}, limit = 0, skip = 0, sortParams) {
+		check(limit, Match.Maybe(Number));
+		check(skip, Match.Maybe(Number));
+		check(sortParams, Match.Maybe([[Match.Any]]));
 
 		const find = {};
+		/** @type {Mongo.Options<CourseEntity>} */
+		const options = {};
+		const order = sortParams || [];
+
+		if (limit > 0) {
+			options.limit = limit;
+		}
+
+		if (skip > 0) {
+			options.skip = skip;
+		}
+
+		if (!filter.archived) {
+			find.archived = { $ne: true }; // hide archived by default
+		} else {
+			find.archived = { $eq: true }; // only show archived
+		}
+
+		if (filter.tenants && filter.tenants.length > 0) {
+			find.tenant = { $in: filter.tenants };
+		}
 
 		if (filter.region && filter.region !== 'all') {
 			find.region = filter.region;
@@ -311,22 +354,21 @@ export class CoursesCollection extends Mongo.Collection {
 
 			find.$and = searchQueries;
 		}
-		/** @type {Mongo.Options<CourseEntity>} */
-		const options = {
-			limit,
-			sort: order,
-			// Load only data that is useful for list views.
-			fields: {
-				'members.comment': 0,
-				history: 0,
-				'nextEvent.editors': 0,
-				'nextEvent.facilities': 0,
-				'nextEvent.loc': 0,
-				'lastEvent.editors': 0,
-				'lastEvent.facilities': 0,
-				'lastEvent.loc': 0,
-			},
+		
+		options.sort = order;
+
+		// Load only data that is useful for list views.
+		options.fields = {
+			'members.comment': 0,
+			history: 0,
+			'nextEvent.editors': 0,
+			'nextEvent.facilities': 0,
+			'nextEvent.loc': 0,
+			'lastEvent.editors': 0,
+			'lastEvent.facilities': 0,
+			'lastEvent.loc': 0,
 		};
+
 		return this.find(find, options);
 	}
 }

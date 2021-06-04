@@ -13,7 +13,7 @@ import { Courses } from '/imports/api/courses/courses';
 import CourseTemplate from '/imports/ui/lib/course-template';
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
-import ScssVars from '/imports/ui/lib/scss-vars';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as UrlTools from '/imports/utils/url-tools';
 
 import '/imports/ui/components/courses/list/course-list';
@@ -102,10 +102,7 @@ Template.find.onCreated(function () {
 	instance.autorun(() => {
 		const query = Template.currentData();
 
-		filter
-			.clear()
-			.read(query)
-			.done();
+		filter.clear().read(query).done();
 
 		if (query.coursesAmount) {
 			const coursesAmount = parseInt(query.coursesAmount, 10);
@@ -146,12 +143,10 @@ Template.find.events({
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 
-
 	// Update the URI when the search-field was changed an loses focus
 	'change .js-search-field'(event, instance) {
 		instance.updateUrl();
 	},
-
 
 	'click .js-find-btn'(event, instance) {
 		event.preventDefault();

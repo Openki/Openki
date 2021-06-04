@@ -7,7 +7,8 @@ import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';
-import { Users } from '/imports/api/users/users';
+import * as GroupsMethods from '/imports/api/groups/methods';
+import * as usersMethods from '/imports/api/users/methods';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
@@ -63,11 +64,13 @@ Template.userprofile.helpers({
 		return Template.instance().coursesCreatedBy().length;
 	},
 	numberOfInterestedAffectedByDelete() {
-		return Template.instance().coursesCreatedBy()
+		return Template.instance()
+			.coursesCreatedBy()
 			.reduce((accumulator, currentValue) => accumulator + currentValue.interested, 0);
 	},
 	numberOfFutureEventsAffectedByDelete() {
-		return Template.instance().coursesCreatedBy()
+		return Template.instance()
+			.coursesCreatedBy()
 			.reduce((accumulator, currentValue) => accumulator + currentValue.futureEvents, 0);
 	},
 
@@ -76,54 +79,55 @@ Template.userprofile.helpers({
 	},
 });
 
-
 Template.userprofile.events({
-	'click button.giveAdmin'() {
-		Meteor.call('user.addPrivilege', this.user._id, 'admin', (err) => {
-			if (err) {
-				Alert.serverError(err, 'Unable to add privilege');
-			} else {
-				Alert.success(mf('privilege.addedAdmin', 'Granted admin privilege'));
-			}
-		});
+	async 'click button.giveAdmin'() {
+		try {
+			await usersMethods.addPrivilege(this.user._id, 'admin');
+
+			Alert.success(mf('privilege.addedAdmin', 'Granted admin privilege'));
+		} catch (err) {
+			Alert.serverError(err, 'Unable to add privilege');
+		}
 	},
 
-	'click .js-remove-privilege-btn'(event, template) {
+	async 'click .js-remove-privilege-btn'(event, template) {
 		const priv = template.$(event.target).data('priv');
-		Meteor.call('user.removePrivilege', this.user._id, priv, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Unable to remove privilege');
-			} else {
-				Alert.success(mf('privilege.removed', 'Removed privilege'));
-			}
-		});
+		try {
+			await usersMethods.removePrivilege(this.user._id, priv);
+
+			Alert.success(mf('privilege.removed', 'Removed privilege'));
+		} catch (err) {
+			Alert.serverError(err, 'Unable to remove privilege');
+		}
 	},
 
-	'click button.draftIntoGroup'() {
+	async 'click button.draftIntoGroup'() {
 		const groupId = this._id;
 		const { name } = this;
 		const userId = Template.parentData().user._id;
-		Meteor.call('group.updateMembership', userId, groupId, true, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Unable to draft user into group');
-			} else {
-				Alert.success(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'));
-			}
-		});
+
+		try {
+			await GroupsMethods.updateMembership(userId, groupId, true);
+
+			Alert.success(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'));
+		} catch (err) {
+			Alert.serverError(err, 'Unable to draft user into group');
+		}
 	},
 
-	'click .js-group-expel-btn'() {
+	async 'click .js-group-expel-btn'() {
 		Tooltips.hide();
 		const groupId = this._id;
 		const { name } = this;
 		const userId = Template.parentData().user._id;
-		Meteor.call('group.updateMembership', userId, groupId, false, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Unable to expel user from group');
-			} else {
-				Alert.success(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'));
-			}
-		});
+
+		try {
+			await GroupsMethods.updateMembership(userId, groupId, false);
+
+			Alert.success(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'));
+		} catch (err) {
+			Alert.serverError(err, 'Unable to expel user from group');
+		}
 	},
 
 	'click .js-verify-user-delete-collapse'() {
@@ -147,81 +151,13 @@ Template.userprofile.events({
 		}
 
 		const userId = Template.parentData().user._id;
-		Meteor.call('user.admin.remove', userId, reason, { courses: true }, () => {
-			instance.busy(false);
+
+		try {
 			Alert.success(mf('profile.account.deleted', 'The account has been deleted'));
 			Router.go('users');
-		});
-	},
-});
-
-Template.emailBox.onCreated(function () {
-	this.busy(false);
-});
-
-Template.emailBox.onRendered(function () {
-	this.$('#emailmessage').select();
-});
-
-Template.emailBox.helpers({
-	hasEmail() {
-		return Meteor.user()?.hasEmail() || false;
-	},
-
-	hasVerifiedEmail() {
-		return Meteor.user()?.hasVerifiedEmail() || false;
-	},
-});
-
-Template.emailBox.events({
-
-	'change .js-send-own-adress'(event, instance) {
-		instance.$('.js-send-own-adress + .checkmark').toggle();
-	},
-
-	'change .js-receive-copy'(event, instance) {
-		instance.$('.js-receive-copy + .checkmark').toggle();
-	},
-
-	'submit form.sendMail'(event, template) {
-		event.preventDefault();
-		if (PleaseLogin()) {
-			return;
+		} finally {
+			instance.busy(false);
 		}
-
-		const recUserId = this.user._id;
-		let recUser = Users.findOne({ _id: recUserId });
-		if (recUser) {
-			if (recUser.username) {
-				recUser = recUser.username;
-			}
-		}
-
-		const message = template.$('#emailmessage').val();
-		const revealAddress = template.$('#sendOwnAdress').is(':checked');
-		const receiveCopy = template.$('#receiveCopy').is(':checked');
-
-		if (message.length < '2') {
-			Alert.serverError(mf('profile.mail.longertext', 'longer text please'));
-			return;
-		}
-
-		template.busy('sending');
-		Meteor.call(
-			'sendEmail',
-			this.user._id,
-			message,
-			revealAddress,
-			receiveCopy,
-			(err) => {
-				template.busy(false);
-				if (err) {
-					Alert.serverError(err, '');
-				} else {
-					Alert.success(mf('profile.mail.sent', 'Your message was sent'));
-					template.$('#emailmessage').val('');
-				}
-			},
-		);
+		usersMethods.adminRemove(userId, reason, { courses: true });
 	},
 });

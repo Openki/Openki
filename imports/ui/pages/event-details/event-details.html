@@ -5,7 +5,10 @@
 </template>
 
 <template name="eventNotFound">
-	<h4>{{mf "event.no_event" "Sorry, we couldn't find this event, it must have been deleted or it never existed in the first place."}}</h4>
+	<div class="container">
+		<h4>{{mf "event.no_event" "Sorry, we couldn't find this event, maybe you need to login or it has been deleted or never existed in the first place."}}
+		</h4>
+	</div>
 </template>
 
 <template name="event">
@@ -75,13 +78,13 @@
 <template name="eventDisplay">
 	<div class="page-component">
 		<div class="details-header event-details-header">
-				<span class="day">{{weekdayFormat startLocal}}</span><br>
-				<span class="date">
-					<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-					{{calendarDayShort startLocal}}
-				</span>
-				<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
-				{{timeFormat startLocal}} - {{timeFormat endLocal}}
+			<span class="day">{{weekdayFormat startLocal}}</span><br>
+			<span class="date">
+				<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+				{{calendarDayShort startLocal}}
+			</span>
+			<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+			{{timeFormat startLocal}} - {{timeFormat endLocal}}
 		</div>
 		<div class="details-body event-details-body">
 			{{#unless courseId}}
@@ -90,7 +93,7 @@
 			<div class="details-content">
 				{{#if internal}}
 					<span class="details-internal"
-						data-tooltip="{{mf 'eventCompact.internal_event' 'Internal event'}}"></span>
+						  data-tooltip="{{mf 'eventCompact.internal_event' 'Internal event'}}"></span>
 				{{/if}}
 				<h3>{{this.title}}</h3>
 				<div class="tag-group multiline">
@@ -131,10 +134,9 @@
 							<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 							{{mf 'event.details.repl_menu_btn' 'Repeat'}}
 						</button>
-						<a
-							class="btn btn-edit js-download js-track-cal-download"
-							href="{{pathFor 'calEvent' this}}"
-							title="{{mf 'event.detail.download_cal' 'Download event to my calendar'}}">
+						<a class="btn btn-edit js-download js-track-cal-download"
+						   href="{{pathFor 'calEvent' this}}"
+						   title="{{mf 'event.detail.download_cal' 'Download event to my calendar'}}">
 							<i class="fa fa-download fa-fw" aria-hidden="true"></i>
 							{{mf 'event.details.download' 'Download'}}
 						</a>
@@ -146,7 +148,6 @@
 	</div>
 </template>
 
-
 <!-- COPYPASTA WARNING
     Below are slightly modified templates from course.details.html.
     Where possible, the original translation keys have been kept.
@@ -157,7 +158,8 @@
 -->
 <template name="eventDeleteConfirmDialog">
 	<div class="event-delete-confirmation">
-		<p>{{mf 'event.reallydelete' 'Please confirm that you would like to delete this event. This cannot be undone.'}}</p>
+		<p>{{mf 'event.reallydelete' 'Please confirm that you would like to delete this event. This cannot be undone.'}}
+		</p>
 		<div class="form-actions">
 			{{> buttonDeleteConfirm
 				event="js-event-delete-confirm"
@@ -180,10 +182,8 @@
 			{{/if}}
 			{{#if tools}}
 				<div class="btn-group tag-btn group-tag-btn addon">
-					<button type="button" class="dropdown-toggle"
-						aria-expanded="false"
-						aria-haspopup="true"
-						data-toggle="dropdown">
+					<button type="button" class="dropdown-toggle" aria-expanded="false"
+							aria-haspopup="true" data-toggle="dropdown">
 						<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
 					</button>
 					<ul class="dropdown-menu dialog-dropdown">
@@ -203,14 +203,11 @@
 	</div>
 </template>
 
-
 <template name="eventGroupAdd">
 	{{#if groupsToAdd}}
 		<div class="btn-group tag-btn group-tag-btn">
-			<button type="button" class="dropdown-toggle"
-				aria-expanded="false"
-				aria-haspopup="true"
-				data-toggle="dropdown">
+			<button type="button" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true"
+					data-toggle="dropdown">
 				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 				<span>{{mf 'event.group.addText' 'link a group'}}</span>
 				<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
@@ -223,10 +220,7 @@
 				<li role="seperator" class="divider"></li>
 				{{#each groupsToAdd}}
 					<li>
-						<button
-							class="btn-link js-add-group"
-							type="button"
-							value="{{this}}">
+						<button class="btn-link js-add-group" type="button" value="{{this}}">
 							{{name}}
 						</button>
 					</li>
@@ -241,7 +235,6 @@
 		</div>
 	{{/if}}
 </template>
-
 
 <template name="eventGroupRemove">
 	{{#if expanded}}
@@ -261,7 +254,6 @@
 	{{/if}}
 </template>
 
-
 <template name="eventGroupMakeOrganizer">
 	{{#if expanded}}
 		<div class="group-tool-dialog add">
@@ -280,7 +272,6 @@
 		</a>
 	{{/if}}
 </template>
-
 
 <template name="eventGroupRemoveOrganizer">
 	{{#if expanded}}
@@ -313,11 +304,7 @@
 </template>
 
 <template name="buttonRegistrationClosed">
-	<button
-		type="button"
-		class="btn btn-warning btn-event {{event}}"
-		{{disabledIfBusy}}
-	>
+	<button type="button" class="btn btn-warning btn-event {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'registering'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{mf '_button.addingYouToWaitingQueue' 'Adding you to waiting queue...'}}

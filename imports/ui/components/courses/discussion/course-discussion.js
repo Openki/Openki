@@ -4,9 +4,11 @@ import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { Tracker } from 'meteor/tracker';
+import moment from 'moment';
 
 import { Courses } from '/imports/api/courses/courses';
 import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
+import * as CourseDiscussionsMethods from '/imports/api/course-discussions/methods';
 import * as Alert from '/imports/api/alerts/alert';
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import { Editable } from '/imports/ui/lib/editable';
@@ -286,8 +288,9 @@ Template.post.events({
 		instance.editing.set(true);
 	},
 
-	submit(event, instance) {
+	async submit(event, instance) {
 		event.stopImmediatePropagation();
+		event.preventDefault();
 
 		const comment = { title: instance.$('.js-post-title').val() };
 
@@ -296,48 +299,46 @@ Template.post.events({
 			comment.text = editedText;
 		}
 
-		let method = 'courseDiscussion.editComment';
-		if (instance.data.new) {
-			method = 'courseDiscussion.postComment';
-
-			comment.courseId = instance.data.courseId;
-
-			if (instance.data.parentId) {
-				comment.parentId = instance.data.parentId;
-			}
-
-			comment.anon = instance.$('.js-anon').prop('checked');
-			comment.notifyAll = instance.$('.js-notify-all').prop('checked') || false;
-		} else {
-			comment._id = instance.data._id;
-		}
-
 		instance.editing.set(false);
 		instance.busy('saving');
-		Meteor.call(method, comment, (err) => {
-			instance.busy(false);
-			if (err) {
-				Alert.serverError(err, 'Posting your comment went wrong');
-			}
-		});
 
-		return false;
+		try {
+			if (instance.data.new) {
+				comment.courseId = instance.data.courseId;
+
+				if (instance.data.parentId) {
+					comment.parentId = instance.data.parentId;
+				}
+
+				comment.anon = instance.$('.js-anon').prop('checked');
+				comment.notifyAll = instance.$('.js-notify-all').prop('checked') || false;
+
+				await CourseDiscussionsMethods.postComment(comment);
+			} else {
+				comment._id = instance.data._id;
+				await CourseDiscussionsMethods.editComment(comment);
+			}
+		} catch (err) {
+			Alert.serverError(err, 'Posting your comment went wrong');
+		} finally {
+			instance.busy(false);
+		}
 	},
 
 	'click .js-discussion-cancel'() {
 		Template.instance().editing.set(false);
 	},
 
-	'click button.js-delete-comment'(event) {
+	async 'click button.js-delete-comment'(event) {
 		Tooltips.hide();
 		event.stopImmediatePropagation();
-		Meteor.call('courseDiscussion.deleteComment', this._id, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Could not delete comment');
-			} else {
-				Alert.success(mf('discussionPost.deleted', 'Comment has been deleted.'));
-			}
-		});
+
+		try {
+			await CourseDiscussionsMethods.deleteComment(this._id);
+			Alert.success(mf('discussionPost.deleted', 'Comment has been deleted.'));
+		} catch (err) {
+			Alert.serverError(err, 'Could not delete comment');
+		}
 	},
 });
 

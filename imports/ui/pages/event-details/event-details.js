@@ -4,10 +4,12 @@ import { mf } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import moment from 'moment';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
+import * as EventsMethods from '/imports/api/events/methods';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 
@@ -73,20 +75,21 @@ Template.event.onCreated(function () {
 			this,
 			mf('loginAction.enrollEvent', 'Login and enroll for event'),
 			mf('registerAction.enrollEvent', 'Login and enroll for event'),
-			() => {
+			async () => {
 				this.busy('registering');
-				Meteor.call('event.addParticipant', event._id, (err) => {
+				try {
+					await EventsMethods.addParticipant(event._id);
+
+					Analytics.trackEvent(
+						'RSVPs',
+						'RSVPs as participant',
+						Regions.findOne(event.region)?.nameEn,
+					);
+				} catch (err) {
+					Alert.serverError(err, '');
+				} finally {
 					this.busy(false);
-					if (err) {
-						Alert.serverError(err, '');
-					} else {
-						Analytics.trackEvent(
-							'RSVPs',
-							'RSVPs as participant',
-							Regions.findOne(event.region)?.nameEn,
-						);
-					}
-				});
+				}
 			},
 		);
 	};
@@ -143,38 +146,36 @@ Template.event.events({
 		Router.go('showCourse', { _id: this.courseId });
 	},
 
-	'click .js-event-delete-confirm'(event, instance) {
+	async 'click .js-event-delete-confirm'(event, instance) {
 		const oEvent = instance.data;
 		const { title, region } = oEvent;
 		const course = oEvent.courseId;
 		instance.busy('deleting');
-		Meteor.call('event.remove', oEvent._id, (err) => {
-			instance.busy(false);
-			if (err) {
-				Alert.serverError(err, 'Could not remove event');
-			} else {
-				Alert.success(
-					mf(
-						'eventDetails.eventRemoved',
-						{ TITLE: title },
-						'The event "{TITLE}" has been deleted.',
-					),
-				);
 
-				Analytics.trackEvent(
-					'Event deletions',
-					'Event deletions as team',
-					Regions.findOne(region)?.nameEn,
-				);
-
-				if (course) {
-					Router.go('showCourse', { _id: course });
-				} else {
-					Router.go('/');
-				}
-			}
-		});
 		Template.instance().editing.set(false);
+		try {
+			await EventsMethods.remove(oEvent._id);
+
+			Alert.success(
+				mf('eventDetails.eventRemoved', { TITLE: title }, 'The event "{TITLE}" has been deleted.'),
+			);
+
+			Analytics.trackEvent(
+				'Event deletions',
+				'Event deletions as team',
+				Regions.findOne(region)?.nameEn,
+			);
+
+			if (course) {
+				Router.go('showCourse', { _id: course });
+			} else {
+				Router.go('/');
+			}
+		} catch (err) {
+			Alert.serverError(err, 'Could not remove event');
+		} finally {
+			instance.busy(false);
+		}
 	},
 
 	'click .js-event-edit'(event, instance) {
@@ -188,20 +189,22 @@ Template.event.events({
 		instance.addParticipant();
 	},
 
-	'click .js-unregister-event'(event, instance) {
+	async 'click .js-unregister-event'(event, instance) {
 		instance.busy('unregistering');
-		Meteor.call('event.removeParticipant', instance.data._id, (err) => {
+
+		try {
+			await EventsMethods.removeParticipant(instance.data._id);
+
+			Analytics.trackEvent(
+				'Unsubscribes RSVPs',
+				'Unsubscribes RSVPs as participant',
+				Regions.findOne(instance.data.region)?.nameEn,
+			);
+		} catch (err) {
+			Alert.serverError(err, 'could not remove participant');
+		} finally {
 			instance.busy(false);
-			if (err) {
-				Alert.serverError(err, 'could not remove participant');
-			} else {
-				Analytics.trackEvent(
-					'Unsubscribes RSVPs',
-					'Unsubscribes RSVPs as participant',
-					Regions.findOne(instance.data.region)?.nameEn,
-				);
-			}
-		});
+		}
 	},
 });
 
@@ -292,95 +295,99 @@ Template.eventGroupAdd.helpers({
 });
 
 Template.eventGroupAdd.events({
-	'click .js-add-group'(e, instance) {
+	async 'click .js-add-group'(e, instance) {
 		const event = instance.data;
 		const groupId = e.currentTarget.value;
-		Meteor.call('event.promote', event._id, groupId, true, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Failed to add group');
-			} else {
-				const groupName = Groups.findOne(groupId).name;
-				Alert.success(
-					mf(
-						'eventGroupAdd.groupAdded',
-						{ GROUP: groupName, EVENT: event.title },
-						'The group "{GROUP}" has been added to promote the event "{EVENT}".',
-					),
-				);
-				instance.collapse();
-			}
-		});
+
+		try {
+			await EventsMethods.promote(event._id, groupId, true);
+
+			const groupName = Groups.findOne(groupId).name;
+			Alert.success(
+				mf(
+					'eventGroupAdd.groupAdded',
+					{ GROUP: groupName, EVENT: event.title },
+					'The group "{GROUP}" has been added to promote the event "{EVENT}".',
+				),
+			);
+			instance.collapse();
+		} catch (err) {
+			Alert.serverError(err, 'Failed to add group');
+		}
 	},
 });
 
 TemplateMixins.Expandible(Template.eventGroupRemove);
 Template.eventGroupRemove.helpers(GroupNameHelpers);
 Template.eventGroupRemove.events({
-	'click .js-remove'(e, instance) {
+	async 'click .js-remove'(e, instance) {
 		const { event } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('event.promote', event._id, groupId, false, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Failed to remove group');
-			} else {
-				const groupName = Groups.findOne(groupId).name;
-				Alert.success(
-					mf(
-						'eventGroupAdd.groupRemoved',
-						{ GROUP: groupName, EVENT: event.title },
-						'The group "{GROUP}" has been removed from the event "{EVENT}".',
-					),
-				);
-				instance.collapse();
-			}
-		});
+
+		try {
+			await EventsMethods.promote(event._id, groupId, false);
+
+			const groupName = Groups.findOne(groupId).name;
+			Alert.success(
+				mf(
+					'eventGroupAdd.groupRemoved',
+					{ GROUP: groupName, EVENT: event.title },
+					'The group "{GROUP}" has been removed from the event "{EVENT}".',
+				),
+			);
+			instance.collapse();
+		} catch (err) {
+			Alert.serverError(err, 'Failed to remove group');
+		}
 	},
 });
 
 TemplateMixins.Expandible(Template.eventGroupMakeOrganizer);
 Template.eventGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupMakeOrganizer.events({
-	'click .js-makeOrganizer'(e, instance) {
+	async 'click .js-makeOrganizer'(e, instance) {
 		const { event } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('event.editing', event._id, groupId, true, (err) => {
-			if (err) {
-				Alert.serverError(err, 'Failed to give group editing rights');
-			} else {
-				const groupName = Groups.findOne(groupId).name;
-				Alert.success(
-					mf(
-						'eventGroupAdd.membersCanEditEvent',
-						{ GROUP: groupName, EVENT: event.title },
-						'Members of the group "{GROUP}" can now edit the event "{EVENT}".',
-					),
-				);
-				instance.collapse();
-			}
-		});
+
+		try {
+			await EventsMethods.editing(event._id, groupId, true);
+
+			const groupName = Groups.findOne(groupId).name;
+			Alert.success(
+				mf(
+					'eventGroupAdd.membersCanEditEvent',
+					{ GROUP: groupName, EVENT: event.title },
+					'Members of the group "{GROUP}" can now edit the event "{EVENT}".',
+				),
+			);
+			instance.collapse();
+		} catch (err) {
+			Alert.serverError(err, 'Failed to give group editing rights');
+		}
 	},
 });
 
 TemplateMixins.Expandible(Template.eventGroupRemoveOrganizer);
 Template.eventGroupRemoveOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupRemoveOrganizer.events({
-	'click .js-removeOrganizer'(e, instance) {
+	async 'click .js-removeOrganizer'(e, instance) {
 		const { event } = instance.data;
 		const { groupId } = instance.data;
-		Meteor.call('event.editing', event._id, groupId, false, (err) => {
+
+		try {
+			await EventsMethods.editing(event._id, groupId, false);
+
 			const groupName = Groups.findOne(groupId).name;
-			if (err) {
-				Alert.serverError(err, 'Failed to remove organizer status');
-			} else {
-				Alert.success(
-					mf(
-						'eventGroupAdd.membersCanNoLongerEditEvent',
-						{ GROUP: groupName, EVENT: event.title },
-						'Members of the group "{GROUP}" can no longer edit the event "{EVENT}".',
-					),
-				);
-				instance.collapse();
-			}
-		});
+			Alert.success(
+				mf(
+					'eventGroupAdd.membersCanNoLongerEditEvent',
+					{ GROUP: groupName, EVENT: event.title },
+					'Members of the group "{GROUP}" can no longer edit the event "{EVENT}".',
+				),
+			);
+			instance.collapse();
+		} catch (err) {
+			Alert.serverError(err, 'Failed to remove organizer status');
+		}
 	},
 });

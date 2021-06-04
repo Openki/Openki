@@ -7,7 +7,7 @@
 
 .navbar-collapse {
 	@media (max-width: $grid-float-breakpoint) {
-		box-shadow: 0 5px 5px rgba(0, 0, 0, .3);
+		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
 	}
 }
 
@@ -53,7 +53,7 @@
 }
 
 .navbar-brand:hover {
-	text-shadow: rgba(0, 0, 0, .25) 1px 1px 1px;
+	text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
 }
 
 .navbar-brand:hover > .site-name,
@@ -68,7 +68,7 @@
 	transition-property: #{'background-color, box-shadow, text-shadow'};
 
 	&:hover {
-		text-shadow: rgba(0, 0, 0, .25) 1px 1px 1px;
+		text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
 	}
 
 	@media (max-width: $grid-float-breakpoint) {
@@ -90,7 +90,7 @@
 
 .nav-marker-caret {
 	border: 5px solid;
-	border-color:	transparent transparent $body-bg;
+	border-color: transparent transparent $body-bg;
 	bottom: 0;
 	box-shadow: 0 5px 5px -5px $white;
 	height: 0;
@@ -130,7 +130,7 @@
 
 	@media (max-width: $grid-float-breakpoint) {
 		background-color: $dropdown-bg;
-		box-shadow: 0 0 5px rgba(0, 0, 0, .3) inset;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3) inset;
 		padding: 0;
 	}
 }
@@ -152,7 +152,7 @@
 .navbar .navbar-nav > .open > .navbar-link:hover,
 .navbar .navbar-nav > .open > .navbar-link:focus {
 	background-color: lighten($navbar-default-bg, 10%);
-	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .navbar .navbar-nav > .open > .navbar-link > .nav-marker-caret {
@@ -167,7 +167,7 @@
 }
 
 .navbar-covering {
-	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .navbar-covering .nav-marker-caret {
@@ -178,7 +178,7 @@
 .navbar-covering .navbar-nav > li > .navbar-link-active:hover,
 .navbar-covering .navbar-nav > li > .navbar-link-active:focus {
 	background-color: lighten($navbar-default-bg, 10%);
-	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .navbar-form-selection {

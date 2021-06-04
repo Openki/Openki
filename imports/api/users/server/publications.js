@@ -20,12 +20,8 @@ Meteor.publish('user', function (userId) {
 		fields.privileges = 1;
 	}
 
-	return Users.find(
-		{ _id: userId },
-		{ fields },
-	);
+	return Users.find({ _id: userId }, { fields });
 });
-
 
 // Always publish their own data for logged-in users
 // https://github.com/meteor/guide/issues/651

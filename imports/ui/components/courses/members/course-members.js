@@ -5,15 +5,12 @@ import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Roles } from '/imports/api/roles/roles';
-import {
-	Subscribe, Unsubscribe, Message, processChangeAsync,
-} from '/imports/api/courses/subscription';
+import { Subscribe, Unsubscribe, Message, processChange } from '/imports/api/courses/subscription';
 import { Users } from '/imports/api/users/users';
 
 import { Editable } from '/imports/ui/lib/editable';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-
 
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/participant/contact/participant-contact';
@@ -56,9 +53,7 @@ Template.courseMembers.helpers({
 			members.splice(userArrayPosition, 1); // remove
 			members.splice(0, 0, currentMember); // readd
 		}
-		return (
-			members.slice(0, Template.instance().membersDisplayLimit.get())
-		);
+		return members.slice(0, Template.instance().membersDisplayLimit.get());
 	},
 
 	limited() {
@@ -88,7 +83,7 @@ Template.courseMember.onCreated(function () {
 		{
 			onSave: async (newMessage) => {
 				const change = new Message(instance.data.course, Meteor.user(), newMessage);
-				await processChangeAsync(change);
+				await processChange(change);
 			},
 			onSuccess: () => {
 				Alert.success(mf('courseMember.messageChanged', 'Your enroll-message has been changed.'));
@@ -115,7 +110,6 @@ Template.courseMember.onCreated(function () {
 		return new Unsubscribe(this.data.course, user, 'team');
 	};
 });
-
 
 Template.courseMember.helpers({
 	ownUserMemberClass() {
@@ -176,10 +170,10 @@ Template.removeFromTeamDropdown.helpers({
 Template.courseMember.events({
 	'click .js-add-to-team-btn'(event, instance) {
 		event.preventDefault();
-		processChangeAsync(instance.subscribeToTeam());
+		processChange(instance.subscribeToTeam());
 	},
 	'click .js-remove-team'(event, instance) {
 		event.preventDefault();
-		processChangeAsync(instance.removeFromTeam());
+		processChange(instance.removeFromTeam());
 	},
 });

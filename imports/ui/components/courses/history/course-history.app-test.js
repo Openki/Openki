@@ -13,17 +13,14 @@ if (Meteor.isClient) {
 
 		it('should show a entry for course create', async () => {
 			const haveEditfield = () => {
-				assert(
-					jQuery('.js-title').length > 0,
-					'New course edit field present',
-				);
+				assert(jQuery('.js-title').length > 0, 'New course edit field present');
 			};
 
 			Router.go('/');
 
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
-			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 			// Create the course
 			jQuery('.js-title').val(randomTitle);
@@ -39,11 +36,11 @@ if (Meteor.isClient) {
 				);
 			});
 
-
 			const lastNumberOfHistoryEntries = 0;
 			await waitFor(() => {
 				assert.isAbove(
-					jQuery('.coursehistory-event').length, lastNumberOfHistoryEntries,
+					jQuery('.coursehistory-event').length,
+					lastNumberOfHistoryEntries,
 					'A history entry should be presend for course created.',
 				);
 			});
@@ -51,15 +48,12 @@ if (Meteor.isClient) {
 
 		// Bases on the previous test
 		it('should show a entry for user subscribe', async () => {
-			await MeteorAsync.logoutAsync();
+			await MeteorAsync.logout();
 
-			await MeteorAsync.loginWithPasswordAsync('Flumsi', 'greg');
+			await MeteorAsync.loginWithPassword('Flumsi', 'greg');
 
 			await waitFor(() => {
-				assert(
-					jQuery('.loginButton').text().includes('Flumsi'),
-					'User Flumsi sould be logged in.',
-				);
+				assert(jQuery('.loginButton').text().includes('Flumsi'), 'User Flumsi sould be logged in.');
 			});
 
 			const lastNumberOfHistoryEntries = jQuery('.coursehistory-event').length;
@@ -69,10 +63,10 @@ if (Meteor.isClient) {
 			await waitForSubscriptions();
 			jQuery('.js-role-subscribe-btn:first').click();
 
-
 			await waitFor(() => {
 				assert.isAbove(
-					jQuery('.coursehistory-event').length, lastNumberOfHistoryEntries,
+					jQuery('.coursehistory-event').length,
+					lastNumberOfHistoryEntries,
 					'A history entry should be presend for user subscribe.',
 				);
 			});

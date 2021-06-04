@@ -7,26 +7,21 @@
 			<div class="group-details-titlebar">
 				{{mf 'group.details.group' 'Group'}}
 				{{#if isFeatured}}
-					<i
-						alt={{mf 'group.details.isFeatured' 'This group is featured'}}
-						aria-hidden="true"
-						class="fa fa-fw fa-star"></i>
+					<i alt={{mf 'group.details.isFeatured' 'This group is featured'}}
+					   aria-hidden="true" class="fa fa-fw fa-star"></i>
 				{{/if}}
-				<span
-					class="titlebar-btn js-group-remove-filter"
-					data-tooltip="{{mf group.page.removeFilter 'See all courses'}}">
+				<span class="titlebar-btn js-group-remove-filter"
+					  data-tooltip="{{mf group.page.removeFilter 'See all courses'}}">
 					<i class="fa fa-remove" aria-hidden="true"></i>
 				</span>
 				{{#if mayEdit}}
-					<span
-						class="titlebar-btn js-group-settings"
-						data-tooltip="{{mf 'group.settings.title'}}">
+					<span class="titlebar-btn js-group-settings"
+						  data-tooltip="{{mf 'group.settings.title'}}">
 						<i class="fa fa-cog" aria-hidden="true"></i>
 					</span>
 				{{/if}}
 			</div>
-			<div
-				class="details-header group-details-header {{headerClasses}}">
+			<div class="details-header group-details-header {{headerClasses}}">
 				{{#if groupLogo group._id}}
 					<div class="group-details-logo">
 						<img src="{{groupLogo group._id}}">
@@ -69,7 +64,7 @@
 							<div class="group-details-description">
 								{{{group.description}}}
 							</div>
-						{{/if}}						
+						{{/if}}
 						{{errorMessage 'all'}}
 					</div>
 				</div>

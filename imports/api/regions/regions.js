@@ -11,10 +11,11 @@ import { Mongo } from 'meteor/mongo';
 /**
  * @typedef {Object} RegionEntity
  * @property {string} [_id] ID
+ * @property {string} [tenant]
  * @property {string} [name] ID
  * @property {string} [nameEn] ID
  * @property {Geodata} [loc] (Optional)
- * @property {string} [timeZone] ex: "UTC+01:00"
+ * @property {string} [tz] ex: "UTC+01:00"
  * @property {number} [courseCount] Number of courses in that region, calculated field
  * (does not count internal courses)
  * @property {number} [futureEventCount] Number of future events in that region, calculated field
@@ -39,6 +40,7 @@ export class RegionsCollection extends Mongo.Collection {
 		super('Regions');
 
 		if (Meteor.isServer) {
+			this._ensureIndex({ members: 1 });
 			this._ensureIndex({ loc: '2dsphere' });
 		}
 	}

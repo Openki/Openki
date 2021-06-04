@@ -3,9 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
-import { MeteorAsync } from '/imports/utils/promisify';
 
 import { Groups } from '/imports/api/groups/groups';
+import * as GroupsMethods from '/imports/api/groups/methods';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 
@@ -33,15 +33,20 @@ Template.groupDetails.onCreated(function () {
 	instance.editingSettings = new ReactiveVar(false);
 
 	const handleSaving = {
-		clientValidations: [{
-			check: (text) => !!text, errorMessage: () => mf('group.details.error.allMandatory'),
-		}],
+		clientValidations: [
+			{
+				check: (text) => !!text,
+				errorMessage: () => mf('group.details.error.allMandatory'),
+			},
+		],
 		onSuccess: () => {
-			Alert.success(mf(
-				'groupDetails.changesSaved',
-				{ GROUP: group.name },
-				'Your changes to the group "{GROUP}" have been saved.',
-			));
+			Alert.success(
+				mf(
+					'groupDetails.changesSaved',
+					{ GROUP: group.name },
+					'Your changes to the group "{GROUP}" have been saved.',
+				),
+			);
 		},
 		onError: (err) => {
 			Alert.serverError(
@@ -60,47 +65,57 @@ Template.groupDetails.onCreated(function () {
 	instance.editableName = new Editable(
 		true,
 		mf('group.name.placeholder', 'Name of your group, institution, community or program'),
-		showControls ? {
-			...handleSaving,
-			onSave: async (newName) => {
-				await MeteorAsync.callAsync('group.save', groupId, { name: newName });
-			},
-		} : undefined,
+		showControls
+			? {
+					...handleSaving,
+					onSave: async (newName) => {
+						await GroupsMethods.save(groupId, { name: newName });
+					},
+			  }
+			: undefined,
 	);
 
 	instance.editableShort = new Editable(
 		true,
 		mf('group.short.placeholder', 'Abbreviation'),
-		showControls ? {
-			...handleSaving,
-			onSave: async (newShort) => {
-				await MeteorAsync.callAsync('group.save', groupId, { short: newShort });
-			},
-		} : undefined,
+		showControls
+			? {
+					...handleSaving,
+					onSave: async (newShort) => {
+						await GroupsMethods.save(groupId, { short: newShort });
+					},
+			  }
+			: undefined,
 	);
 
 	instance.editableClaim = new Editable(
 		true,
 		mf('group.claim.placeholder', 'The core idea'),
-		showControls ? {
-			...handleSaving,
-			onSave: async (newClaim) => {
-				await MeteorAsync.callAsync('group.save', groupId, { claim: newClaim });
-			},
-		} : undefined,
+		showControls
+			? {
+					...handleSaving,
+					onSave: async (newClaim) => {
+						await GroupsMethods.save(groupId, { claim: newClaim });
+					},
+			  }
+			: undefined,
 	);
 
 	instance.editableDescription = new Editable(
 		false,
-		mf('group.description.placeholder', 'Describe the audience, the interests and activities of your group.'),
-		showControls ? {
-			...handleSaving,
-			onSave: async (newDescription) => {
-				await MeteorAsync.callAsync('group.save', groupId, { description: newDescription });
-			},
-		} : undefined,
+		mf(
+			'group.description.placeholder',
+			'Describe the audience, the interests and activities of your group.',
+		),
+		showControls
+			? {
+					...handleSaving,
+					onSave: async (newDescription) => {
+						await GroupsMethods.save(groupId, { description: newDescription });
+					},
+			  }
+			: undefined,
 	);
-
 
 	instance.autorun(() => {
 		const data = Template.currentData();
@@ -201,23 +216,26 @@ Template.groupDetails.events({
 		}
 
 		instance.busy('saving');
-		SaveAfterLogin(instance,
+		SaveAfterLogin(
+			instance,
 			mf('loginAction.saveGroup', 'Login and save group'),
 			mf('registerAction.saveGroup', 'Register and save group'),
 			async () => {
 				try {
-					const groupId = await MeteorAsync.callAsync('group.save', 'create', group);
+					const groupId = await GroupsMethods.save('create', group);
 
 					instance.editableName.end();
 					instance.editableShort.end();
 					instance.editableClaim.end();
 					instance.editableDescription.end();
 
-					Alert.success(mf(
-						'groupDetails.groupCreated',
-						{ GROUP: group.name },
-						'The Group {GROUP} has been created!',
-					));
+					Alert.success(
+						mf(
+							'groupDetails.groupCreated',
+							{ GROUP: group.name },
+							'The Group {GROUP} has been created!',
+						),
+					);
 
 					Analytics.trackEvent('Group creations', 'Group creations');
 
@@ -227,7 +245,8 @@ Template.groupDetails.events({
 				} finally {
 					instance.busy(false);
 				}
-			});
+			},
+		);
 	},
 
 	'click .js-group-cancel'() {

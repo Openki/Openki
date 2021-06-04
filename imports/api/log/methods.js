@@ -1,23 +1,37 @@
 import { Meteor } from 'meteor/meteor';
-import { Match, check } from 'meteor/check';
+import { check } from 'meteor/check';
 
 import Log from './log';
 
-Meteor.methods({
-	'log.clientError'(originalReport) {
+import { ServerMethod } from '/imports/utils/ServerMethod';
+
+export const clientError = ServerMethod(
+	'log.clientError',
+	/**
+	 * @param {{
+		name: string;
+		message: string;
+		location: string;
+		stack: string;
+		tsClient: Date;
+		clientId: string;
+		userAgent: string;
+	 }} originalReport 
+	 */
+	function (originalReport) {
 		const report = { ...originalReport };
 		check(report, {
 			name: String,
 			message: String,
 			location: String,
-			stack: Match.Optional(String),
+			stack: String,
 			tsClient: Date,
 			clientId: String,
 			userAgent: String,
 		});
-		report.connectionId = this.connection.id;
+		report.connectionId = this.connection?.id;
 
-		const rel = [report.name, report.connectionId, report.clientId];
+		const rel = [report.name, report.connectionId, report.clientId].filter((id) => !!id);
 		const userId = Meteor.userId();
 		if (userId) {
 			report.userId = userId;
@@ -25,4 +39,6 @@ Meteor.methods({
 		}
 		Log.record('clientError', rel, report);
 	},
-});
+);
+
+export default clientError;

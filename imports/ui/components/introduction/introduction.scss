@@ -91,7 +91,7 @@
 	text-align: center;
 
 	&::after {
-		@include opacity(.5);
+		@include opacity(0.5);
 		@include td-pos(right, 0);
 		color: lighten($gray-light, 15%);
 		content: '';
@@ -146,6 +146,6 @@
 }
 
 .introduction-steps > li > h2 > .fa {
-	@include opacity(.6);
+	@include opacity(0.6);
 	color: $blue;
 }

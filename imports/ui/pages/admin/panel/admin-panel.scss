@@ -12,13 +12,13 @@
 	border-radius: 4px;
 	padding: 30px 15px;
 	text-align: center;
-	transition-duration: .15s;
+	transition-duration: 0.15s;
 	transition-property: #{'background-color border-color'};
 
 	&:hover {
 		background-color: lighten($gray-lightest, 3%);
 		cursor: pointer;
-		transition-duration: .15s;
+		transition-duration: 0.15s;
 		transition-property: #{'background-color border-color'};
 	}
 }

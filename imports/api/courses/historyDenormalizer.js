@@ -8,7 +8,9 @@ export function afterUpdate(courseId, userId) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
-				dateTime: new Date(), type: 'updated', data: { updatedBy: userId },
+				dateTime: new Date(),
+				type: 'updated',
+				data: { updatedBy: userId },
 			},
 		},
 	});
@@ -23,7 +25,9 @@ export function afterSubscribe(courseId, userId, roleType) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
-				dateTime: new Date(), type: 'userSubscribed', data: { user: userId, role: roleType },
+				dateTime: new Date(),
+				type: 'userSubscribed',
+				data: { user: userId, role: roleType },
 			},
 		},
 	});
@@ -38,7 +42,9 @@ export function afterUnsubscribe(courseId, userId, roleType) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
-				dateTime: new Date(), type: 'userUnsubscribed', data: { user: userId, role: roleType },
+				dateTime: new Date(),
+				type: 'userUnsubscribed',
+				data: { user: userId, role: roleType },
 			},
 		},
 	});
@@ -58,7 +64,9 @@ export function afterEventInsert(courseId, userId, event) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
-				dateTime: new Date(), type: 'eventInserted', data: { createdBy: userId, ...event },
+				dateTime: new Date(),
+				type: 'eventInserted',
+				data: { createdBy: userId, ...event },
 			},
 		},
 	});
@@ -79,7 +87,9 @@ export function afterEventUpdate(courseId, userId, event) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
-				dateTime: new Date(), type: 'eventUpdated', data: { updatedBy: userId, ...event },
+				dateTime: new Date(),
+				type: 'eventUpdated',
+				data: { updatedBy: userId, ...event },
 			},
 		},
 	});
@@ -97,7 +107,9 @@ export function afterEventRemove(courseId, userId, event) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
-				dateTime: new Date(), type: 'eventRemoved', data: { removedBy: userId, ...event },
+				dateTime: new Date(),
+				type: 'eventRemoved',
+				data: { removedBy: userId, ...event },
 			},
 		},
 	});

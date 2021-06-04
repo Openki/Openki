@@ -10,14 +10,17 @@ import * as UrlTools from '/imports/utils/url-tools';
 
 const RegionSelection = {};
 
-/** List of routes that show different results when the region changes.
-  */
+/**
+ * List of routes that show different results when the region changes.
+ */
 RegionSelection.regionDependentRoutes = ['home', 'find', 'calendar', 'venueMap', 'groupDetails'];
 
-/** Subscribe to list of regions and configure the regions
-  * This checks client storage for a region setting. When there is no previously
-  * selected region, we ask the server to do geolocation. If that fails too,
-  * we just set the region to 'all regions'. */
+/**
+ * Subscribe to list of regions and configure the regions
+ * This checks client storage for a region setting. When there is no previously
+ * selected region, we ask the server to do geolocation. If that fails too,
+ * we just set the region to 'all regions'.
+ */
 RegionSelection.init = function () {
 	// We assume the initial onLogin() callback comes before the regions' ready.
 	// We have no guarantee for this however!
@@ -37,7 +40,8 @@ RegionSelection.init = function () {
 	});
 
 	Meteor.subscribe('Regions', () => {
-		const selectors = [Session.get('region'),
+		const selectors = [
+			Session.get('region'),
 			UrlTools.queryParam('region'),
 			localStorage?.getItem('region'),
 		].filter(Boolean);

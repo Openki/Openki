@@ -1,13 +1,16 @@
 <template name="courseDetailsPage">
 	<div class="container">
 		<div class="course-page-column-left">
-			{{#if edit}}
-				<div class="page-component">
+			<div class="page-component">
+				{{#if isArchived}}
+					<div class="alert alert-archived text-center" role="alert">
+						<strong>{{mf 'course.archive.alert' 'This course is archived and not active anymore.'}}</strong>
+					</div>
+				{{/if}}
+				{{#if edit}}
 					{{> courseEdit course}}
-				</div>
-			{{else}}
-				<div class="page-component">
-					<div class="course-details {{#with course}}{{coursestate}}{{/with}}">
+				{{else}}
+					<div class="course-details {{courseStateClasses}}">
 						<div class="details-header">
 							{{#if course.internal}}
 								<span class="details-internal"
@@ -45,21 +48,28 @@
 					</div>
 					{{> sharing}}
 					{{#if mayEdit}}
-						{{#with course}}
-							<div class="actions">
-								{{> buttonEdit event="js-course-edit"}}
-								{{#unless expanded}}
-									{{> buttonDelete event="js-expand"}}
+						<div class="actions">
+							{{> buttonEdit event="js-course-edit"}}
+							{{#if isArchived}}
+								{{> buttonCourseUnarchive}}
+							{{/if}}
+							{{#unless expanded}}
+								{{#unless isArchived}}
+									{{> buttonCourseArchive 
+										buttonClass="btn-archive"
+										textIdle=(mf 'course.archive.archiveButton.archive' 'Archive')
+									}}
 								{{/unless}}
-							</div>
-						{{/with}}
+								{{> buttonDelete event="js-expand"}}
+							{{/unless}}
+						</div>
 					{{/if}}
 					{{#if expanded}}
-						{{> confirmDialog}}
+						{{> confirmDialog hasArchiveButton=isArchived}}
 					{{/if}}
 					{{> courseRoles rolesDetails}}
-				</div>
-			{{/if}}
+				{{/if}}
+			</div>
 			{{#if mobileViewport}}
 				{{> courseEvents}}
 			{{else}}
@@ -88,6 +98,12 @@
 		<p>{{mf 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}
 		</p>
 		<div class="form-actions">
+			{{#unless hasArchiveButton}}
+				{{> buttonCourseArchive 
+					buttonClass="btn-warning"
+					textIdle=(mf 'course.delete.confirm.archiveButton' 'Rather archive')
+				}}
+			{{/unless}}
 			{{> buttonDeleteConfirm
 				event="js-delete-course-confirm"
 				textIdle=(mf 'course.delete.confirm.button' 'Delete this course and its events.')
@@ -255,4 +271,28 @@
 			{{mf 'course.group.removeOrgText' "Remove editing rights"}}
 		</a>
 	{{/if}}
+</template>
+
+<template name="buttonCourseArchive">
+	<button type="submit" class="btn {{buttonClass}} js-course-archive" {{disabledIfBusy}}>
+		{{#if busy 'archive'}}
+			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			{{mf 'course.archive.archiveButton.archiving' 'Archiving...'}}
+		{{else}}
+			<span class="fa fa-archive fa-fw" aria-hidden="true"></span>
+			{{textIdle}}
+		{{/if}}
+	</button>
+</template>
+
+<template name="buttonCourseUnarchive">
+	<button type="submit" class="btn btn-go js-course-unarchive" {{disabledIfBusy}}>
+		{{#if busy 'unarchive'}}
+			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			{{mf 'course.archive.unarchiveButton.unarchiving' 'Unarchiving...'}}
+		{{else}}
+			<span class="fa fa-upload fa-fw" aria-hidden="true"></span>
+			{{mf 'course.archive.unarchiveButton' 'Unarchive'}}
+		{{/if}}
+	</button>
 </template>

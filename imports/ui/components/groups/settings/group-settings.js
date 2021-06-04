@@ -6,6 +6,7 @@ import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
+import * as GroupsMethods from '/imports/api/groups/methods';
 import { Users } from '/imports/api/users/users';
 
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
@@ -81,14 +82,16 @@ Template.groupSettings.events({
 		const memberId = this._id;
 		const groupId = Router.current().params._id;
 		try {
-			await MeteorAsync.callAsync('group.updateMembership', memberId, groupId, true);
+			await MeteorAsync.call('group.updateMembership', memberId, groupId, true);
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
-			Alert.success(mf(
-				'groupSettings.memberAdded',
-				{ MEMBER: memberName, GROUP: groupName },
-				'"{MEMBER}" has been added as a member to the group "{GROUP}"',
-			));
+			Alert.success(
+				mf(
+					'groupSettings.memberAdded',
+					{ MEMBER: memberName, GROUP: groupName },
+					'"{MEMBER}" has been added as a member to the group "{GROUP}"',
+				),
+			);
 		} catch (err) {
 			Alert.serverError(err, 'Could not add member');
 		}
@@ -98,14 +101,16 @@ Template.groupSettings.events({
 		const memberId = `${this}`;
 		const groupId = Router.current().params._id;
 		try {
-			await MeteorAsync.callAsync('group.updateMembership', memberId, groupId, false);
+			await GroupsMethods.updateMembership(memberId, groupId, false);
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
-			Alert.success(mf(
-				'groupSettings.memberRemoved',
-				{ MEMBER: memberName, GROUP: groupName },
-				'"{MEMBER}" has been removed from to the group "{GROUP}"',
-			));
+			Alert.success(
+				mf(
+					'groupSettings.memberRemoved',
+					{ MEMBER: memberName, GROUP: groupName },
+					'"{MEMBER}" has been removed from to the group "{GROUP}"',
+				),
+			);
 		} catch (err) {
 			Alert.serverError(err, 'Could not remove member');
 		}
@@ -139,13 +144,15 @@ Template.groupSettings.events({
 
 		const groupId = instance.data.group._id;
 		try {
-			await MeteorAsync.callAsync('group.save', groupId, changes);
+			await GroupsMethods.save(groupId, changes);
 			const groupName = Groups.findOne(groupId)?.name;
-			Alert.success(mf(
-				'groupSettings.groupChangesSaved',
-				{ GROUP: groupName },
-				'Your changes to the settings of the group "{GROUP}" have been saved.',
-			));
+			Alert.success(
+				mf(
+					'groupSettings.groupChangesSaved',
+					{ GROUP: groupName },
+					'Your changes to the settings of the group "{GROUP}" have been saved.',
+				),
+			);
 			parentInstance.editingSettings.set(false);
 		} catch (err) {
 			Alert.serverError(err, 'Could not save settings');

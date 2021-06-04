@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
@@ -114,8 +116,32 @@ const getGroupStats = (region, group) => {
 };
 
 const Stats = {
+	/**
+	 * @param {string} regionFilter
+	 */
 	getRegionStats(regionFilter) {
 		const groupIds = getGroupIds(getCourses(regionFilter));
+		/**
+		 * @type {{
+		 *  detail: {
+				group: any;
+				groupName: string;
+				numCourses: number;
+				activeCourses: number;
+				passedEvents: number;
+				futureEvents: number;
+				usersParticipating: number;
+			}[];
+		 *  total: {
+				group: string;
+				numCourses: number;
+				activeCourses: number;
+				passedEvents: number;
+				futureEvents: number;
+				usersParticipating: number;
+			};
+		 * }}
+		 */
 		const stats = { detail: [] };
 
 		groupIds.forEach((groupId) => {

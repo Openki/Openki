@@ -3,7 +3,7 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import Introduction from '/imports/ui/lib/introduction';
-import ScssVars from '/imports/ui/lib/scss-vars';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
 
 import '/imports/ui/components/price-policy/price-policy';
 

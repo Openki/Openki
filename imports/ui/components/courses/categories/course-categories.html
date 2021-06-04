@@ -1,16 +1,15 @@
 <template name="categoryLabel">
 	<div class="tag category-tag">
-		{{categoryName}}
+		{{categoryName this}}
 	</div>
 </template>
 
 <template name="categoryLabelLinked">
 	<div class="tag tag-link category-tag">
-		<a
-			class='js-category-label category-{{this}}'
-			data-tooltip="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName}}"
-			href="/find?categories={{this}}">
-			{{categoryName}}
+		<a class='js-category-label category-{{this}}'
+		   data-tooltip="{{mf 'categories.show_courses' 'Show all courses in'}} {{categoryName this}}"
+		   href="/find?categories={{this}}">
+			{{categoryName this}}
 		</a>
 	</div>
 </template>

@@ -15,7 +15,8 @@ if (Meteor.isClient) {
 	describe('Login', function () {
 		this.timeout(30000);
 		it('should work with good credentials', (done) => {
-			Meteor.call('login',
+			Meteor.call(
+				'login',
 				{
 					user: { username: 'greg' },
 					password: gregsDigestedPassword,
@@ -26,11 +27,13 @@ if (Meteor.isClient) {
 					}
 					expect(response.token).to.be.a('string');
 					return done();
-				});
+				},
+			);
 		});
 
 		it('should fail with bad username', (done) => {
-			Meteor.call('login',
+			Meteor.call(
+				'login',
 				{
 					user: { username: 'bogus username' },
 					password: gregsDigestedPassword,
@@ -39,11 +42,13 @@ if (Meteor.isClient) {
 					expect(err).to.be.an('object');
 					expect(err.error).to.equal(403);
 					done();
-				});
+				},
+			);
 		});
 
 		it('should fail with bad password', (done) => {
-			Meteor.call('login',
+			Meteor.call(
+				'login',
 				{
 					user: { username: 'greg' },
 					password: invalidDigestedPassword,
@@ -52,7 +57,8 @@ if (Meteor.isClient) {
 					expect(err).to.be.an('object');
 					expect(err.error).to.equal(403);
 					done();
-				});
+				},
+			);
 		});
 	});
 }

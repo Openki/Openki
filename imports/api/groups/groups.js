@@ -20,13 +20,15 @@ import { Filtering } from '/imports/utils/filtering';
 export class GroupsCollection extends Mongo.Collection {
 	constructor() {
 		super('Groups');
+
+		if (Meteor.isServer) {
+			this._ensureIndex({ tenant: 1, members: 1 });
+		}
 	}
 
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
-		return new Filtering(
-			{},
-		);
+		return new Filtering({});
 	}
 
 	/**
@@ -39,16 +41,20 @@ export class GroupsCollection extends Mongo.Collection {
 	 * @param {number} [skip]
 	 * @param {*} [sort]
 	 */
-	findFilter(filter = {}, limit = 0, skip, sort) {
+	findFilter(filter = {}, limit = 0, skip = 0, sort) {
 		const find = {};
 
 		/**
 		 * @type {Mongo.Options<GroupEntity>}
 		 */
-		const options = { skip, sort };
+		const options = { sort };
 
 		if (limit > 0) {
 			options.limit = limit;
+		}
+
+		if (skip > 0) {
+			options.skip = skip;
 		}
 
 		if (filter.own) {

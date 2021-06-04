@@ -1,11 +1,11 @@
-import { mf } from 'meteor/msgfmt:core';
+import { mf, msgfmt } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import { Roles } from '/imports/api/roles/roles';
 
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
-import ScssVars from '/imports/ui/lib/scss-vars';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as StringTools from '/imports/utils/string-tools';
 
 import '/imports/ui/components/courses/categories/course-categories';
@@ -14,6 +14,11 @@ import './course-filter.html';
 
 Template.filter.onCreated(function () {
 	this.autorun(() => {
+		// Depend on locale and a composite mf string so we update reactively when locale changes
+		// and msgfmt finish loading translations
+		msgfmt.loading();
+		Session.get('locale');
+
 		this.stateFilters = [
 			{
 				name: 'proposal',
@@ -38,7 +43,7 @@ Template.filter.onCreated(function () {
 			},
 		];
 
-		this.visibleFilters = ['state', 'needsRole', 'categories'];
+		this.visibleFilters = ['state', 'archived', 'needsRole', 'categories'];
 	});
 });
 
@@ -78,6 +83,22 @@ Template.filter.helpers({
 		classes.push(stateFilter.cssClass);
 
 		if (parentInstance.filter.get('state') === stateFilter.name) {
+			classes.push('active');
+		}
+
+		if (parentInstance.filter.get('archived')) {
+			// make filter buttons yellow if only archived showed
+			classes.push('is-archived');
+		}
+
+		return classes.join(' ');
+	},
+
+	archivedFilterClasses() {
+		const classes = ['is-archived'];
+		const parentInstance = Template.instance().parentInstance();
+
+		if (parentInstance.filter.get('archived')) {
 			classes.push('active');
 		}
 
@@ -124,6 +145,24 @@ Template.filter.events({
 			FilterPreview({
 				property: 'state',
 				id: state.cssClass,
+				activate: event.type === 'mouseover',
+			});
+		}
+	},
+
+	'click .js-filter-caption-archived'(event, instance) {
+		const parentInstance = instance.parentInstance();
+
+		parentInstance.filter.toggle('archived').done();
+
+		parentInstance.updateUrl();
+	},
+
+	'mouseover .js-filter-caption-archived, mouseout .js-filter-caption-archived'(event, instance) {
+		if (!instance.parentInstance().filter.get('archived')) {
+			FilterPreview({
+				property: 'is',
+				id: 'archived',
 				activate: event.type === 'mouseover',
 			});
 		}
@@ -199,7 +238,11 @@ Template.additionalFilters.helpers({
 	},
 
 	categoryNameMarked() {
-		Session.get('locale'); // Reactive dependency
+		// Depend on locale and a composite mf string so we update reactively when locale changes
+		// and msgfmt finish loading translations
+		msgfmt.loading();
+		Session.get('locale');
+
 		const search = Template.instance().findInstance.categorySearch.get();
 
 		return StringTools.markedName(search, mf(`category.${this}`));

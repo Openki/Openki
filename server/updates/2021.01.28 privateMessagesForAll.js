@@ -5,12 +5,14 @@ import { Users } from '/imports/api/users/users';
 export default function update() {
 	let updated = 0;
 
-	Users.find({ }).fetch().forEach((orginalUser) => {
-		const user = { ...orginalUser };
-		user.allowPrivateMessages = true;
-		delete user.acceptsMessages;
-		updated += Users.update(user._id, user);
-	});
+	Users.find({})
+		.fetch()
+		.forEach((orginalUser) => {
+			const user = { ...orginalUser };
+			user.allowPrivateMessages = true;
+			delete user.acceptsMessages;
+			updated += Users.update(user._id, user);
+		});
 
 	return updated;
 }

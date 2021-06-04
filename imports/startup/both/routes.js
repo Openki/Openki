@@ -1,12 +1,14 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import { mf, msgfmt } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
+import moment from 'moment';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
+import { Tenants } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
 import { Venues, Venue } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
@@ -44,6 +46,8 @@ function finderRoute(path) {
 			});
 		},
 		onAfterAction() {
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			const { search } = this.params.query;
 			if (search) {
 				Metatags.setCommonTags(mf('find.windowtitle', { SEARCH: search }, 'Find "{SEARCH}"'));
@@ -59,6 +63,7 @@ const makeFilterQuery = function (params) {
 
 	const query = filter.toQuery();
 
+	/** @type {moment.Moment | undefined} */
 	let start;
 	if (params.start) {
 		start = moment(params.start);
@@ -67,6 +72,7 @@ const makeFilterQuery = function (params) {
 		start = moment(reactiveNow.get()).startOf('day');
 	}
 
+	/** @type {moment.Moment | undefined} */
 	let end;
 	if (params.end) {
 		end = moment(params.end);
@@ -109,6 +115,8 @@ Router.map(function () {
 			return this.params;
 		},
 		onAfterAction() {
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
 		},
 	});
@@ -145,6 +153,8 @@ Router.map(function () {
 			return { cssRules };
 		},
 		onAfterAction() {
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
 		},
 	});
@@ -190,6 +200,8 @@ Router.map(function () {
 		},
 
 		onAfterAction() {
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			Metatags.setCommonTags(mf('event.list.windowtitle', 'Events'));
 		},
 	});
@@ -240,6 +252,8 @@ Router.map(function () {
 			return params;
 		},
 		onAfterAction() {
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			Metatags.setCommonTags(mf('course.propose.windowtitle', 'Propose new course'));
 		},
 	});
@@ -254,6 +268,8 @@ Router.map(function () {
 		template: 'frameWeek',
 		layoutTemplate: 'frameWeek',
 		onAfterAction() {
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
 		},
 	});
@@ -347,6 +363,9 @@ Router.map(function () {
 			this.timer = Meteor.setInterval(() => {
 				Session.set('seconds', new Date());
 			}, 1000);
+
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			Metatags.setCommonTags(mf('event.list.windowtitle', 'Events'));
 		},
 		unload() {
@@ -361,6 +380,8 @@ Router.map(function () {
 			return this.params.query;
 		},
 		onAfterAction() {
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			Metatags.setCommonTags(mf('log.list.windowtitle', 'Log'));
 		},
 	});
@@ -372,6 +393,8 @@ Router.map(function () {
 			this.render(this.params.page_name);
 		},
 		onAfterAction() {
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			Metatags.setCommonTags(this.params.page_name);
 		},
 	});
@@ -405,14 +428,18 @@ Router.map(function () {
 		},
 		onAfterAction() {
 			const user = Meteor.user();
-			if (user) {
-				const title = mf(
-					'profile.settings.windowtitle',
-					{ USER: user.username },
-					'My Profile Settings - {USER}',
-				);
-				Metatags.setCommonTags(title);
+			if (!user) {
+				return;
 			}
+
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
+			const title = mf(
+				'profile.settings.windowtitle',
+				{ USER: user.username },
+				'My Profile Settings - {USER}',
+			);
+			Metatags.setCommonTags(title);
 		},
 	});
 
@@ -420,6 +447,8 @@ Router.map(function () {
 		path: 'courses/propose',
 		template: 'proposeCourse',
 		onAfterAction() {
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			Metatags.setCommonTags(mf('course.propose.windowtitle', 'Propose new course'));
 		},
 		data: CourseTemplate,
@@ -431,6 +460,8 @@ Router.map(function () {
 			return this.params.token;
 		},
 		onAfterAction() {
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			document.title = mf('resetPassword.siteTitle', 'Reset password');
 		},
 	});
@@ -476,12 +507,14 @@ Router.map(function () {
 		},
 		onAfterAction() {
 			const data = this.data();
-			if (data) {
-				const { course } = data;
-				Metatags.setCommonTags(
-					mf('course.windowtitle', { COURSE: course.name }, 'Course: {COURSE}'),
-				);
+			if (!data) {
+				return;
 			}
+
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
+			const { course } = data;
+			Metatags.setCommonTags(mf('course.windowtitle', { COURSE: course.name }, 'Course: {COURSE}'));
 		},
 	});
 
@@ -543,6 +576,30 @@ Router.map(function () {
 	this.route('stats', {
 		path: 'stats',
 		template: 'stats',
+	});
+
+	this.route('tenantDetails', {
+		path: 'tenant/:_id/:short?',
+		waitOn() {
+			return [Meteor.subscribe('tenant', this.params._id)];
+		},
+		data() {
+			const tenant = Tenants.findOne({ _id: this.params._id });
+
+			if (!tenant) {
+				return false;
+			}
+
+			return { tenant };
+		},
+		onAfterAction() {
+			const tenant = Tenants.findOne({ _id: this.params._id });
+			if (tenant) {
+				msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
+				Metatags.setCommonTags(tenant.name);
+			}
+		},
 	});
 
 	this.route('timetable', {
@@ -723,6 +780,8 @@ Router.map(function () {
 			const user = Users.findOne({ _id: this.params._id });
 			if (!user) return;
 
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			const title = mf('profile.windowtitle', { USER: user.username }, 'Profile of {USER}');
 			Metatags.setCommonTags(title);
 		},
@@ -771,6 +830,8 @@ Router.map(function () {
 			if (venue._id) {
 				title = venue.name;
 			} else {
+				msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 				title = mf('venue.edit.siteTitle.create', 'Create Venue');
 			}
 			Metatags.setCommonTags(title);
@@ -784,6 +845,8 @@ Router.map(function () {
 			return Meteor.subscribe('venues', CleanedRegion(Session.get('region')));
 		},
 		onAfterAction() {
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
 			Metatags.setCommonTags(mf('venue.map.windowtitle', 'Venues map'));
 		},
 	});

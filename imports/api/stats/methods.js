@@ -1,19 +1,20 @@
-import { Meteor } from 'meteor/meteor';
-
 import Stats from '/imports/api/stats/stats';
+import { ServerMethod } from '/imports/utils/ServerMethod';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-
-Meteor.methods({
+export const region = ServerMethod(
+	'stats.region',
 	/**
 	 * @param {string} regionId
 	 */
-	'stats.region'(regionId) {
+	(regionId) => {
 		if (UserPrivilegeUtils.privilegedTo('admin')) {
 			const regionFilter = regionId === 'all_regions' ? '' : regionId;
 			return Stats.getRegionStats(regionFilter);
 		}
 		return {};
 	},
-});
+);
+
+export default region;

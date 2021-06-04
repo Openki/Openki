@@ -1,4 +1,5 @@
 import { Router } from 'meteor/iron:router';
+import moment from 'moment';
 
 import { Events } from '/imports/api/events/events';
 

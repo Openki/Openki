@@ -11,15 +11,16 @@ import * as UpdateMethods from '/imports/utils/update-methods';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 
-import { Subscribe, Unsubscribe, Message, processChangeAsync } from './subscription';
+import { Subscribe, Unsubscribe, Message, processChange } from './subscription';
 
 import { AsyncTools } from '/imports/utils/async-tools';
+import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
-const registerMethod = function (method) {
+function registerMethod(method) {
 	const apply = function (params) {
 		const change = method.read(params);
 		try {
@@ -52,12 +53,12 @@ const registerMethod = function (method) {
 	};
 
 	Meteor.methods({ [method.method]: apply });
-};
+}
 
 /**
  * @param {string} courseId
  */
-const loadCourse = (courseId) => {
+function loadCourse(courseId) {
 	// new!
 	if (courseId === '') {
 		return new Course();
@@ -68,17 +69,29 @@ const loadCourse = (courseId) => {
 		throw new Meteor.Error(404, 'Course not found');
 	}
 	return course;
-};
+}
 
 registerMethod(Subscribe);
 registerMethod(Unsubscribe);
 registerMethod(Message);
 
-Meteor.methods({
+export const save = ServerMethod(
+	'course.save',
 	/**
 	 * @param {string} courseId
+	 * @param {{
+				description?: string ;
+				categories?: string[];
+				name?: string ;
+				region?: string;
+				roles?: {[type: string]: boolean};
+				subs?: string[];
+				unsubs?: string[];
+				groups?: string[];
+				internal?: boolean;
+			}} changes
 	 */
-	'course.save'(courseId, changes) {
+	(courseId, changes) => {
 		check(courseId, String);
 		check(changes, {
 			description: Match.Optional(String),
@@ -191,6 +204,7 @@ Meteor.methods({
 					comment: mf('courses.creator.defaultMessage', '(has proposed this course)'),
 				},
 			];
+			set.archived = false;
 			set.createdby = user._id;
 			set.time_created = new Date();
 			const enrichedSet = timeLasteditDenormalizer.beforeInsert(set);
@@ -213,7 +227,7 @@ Meteor.methods({
 			changes.subs.forEach((role) => {
 				const change = new Subscribe(changedCourse, user, role);
 				if (change.validFor(user)) {
-					processChangeAsync(change);
+					processChange(change);
 				}
 			});
 		}
@@ -222,18 +236,81 @@ Meteor.methods({
 			changes.unsubs.forEach((role) => {
 				const change = new Unsubscribe(changedCourse, user, role);
 				if (change.validFor(user)) {
-					processChangeAsync(change);
+					processChange(change);
 				}
 			});
 		}
 
 		return courseId;
 	},
+);
 
+/**
+ * Add or remove a group from the groups list
+ * @param {string} courseId The course to update
+ * @param {string} groupId The group to add or remove
+ * @param {boolean} add Whether to add or remove the group
+ *
+ */
+export const promote = ServerMethod('course.promote', UpdateMethods.promote(Courses));
+
+/**
+ * Add or remove a group from the groupOrganizers list
+ * @param {string} courseId The course to update
+ * @param {string} groupId The group to add or remove
+ * @param {boolean} add Whether to add or remove the group
+ *
+ */
+export const editing = ServerMethod('course.editing', UpdateMethods.editing(Courses));
+
+export const archive = ServerMethod(
+	'course.archive',
 	/**
 	 * @param {string} courseId
 	 */
-	'course.remove'(courseId) {
+	(courseId) => {
+		const course = Courses.findOne({ _id: courseId });
+		if (!course) {
+			throw new Meteor.Error(404, 'no such course');
+		}
+		if (!course.editableBy(Meteor.user())) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
+		Courses.update(course._id, {
+			$set: {
+				archived: true,
+			},
+		});
+	},
+);
+
+export const unarchive = ServerMethod(
+	'course.unarchive',
+	/**
+	 * @param {string} courseId
+	 */
+	(courseId) => {
+		const course = Courses.findOne({ _id: courseId });
+		if (!course) {
+			throw new Meteor.Error(404, 'no such course');
+		}
+		if (!course.editableBy(Meteor.user())) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
+		Courses.update(course._id, {
+			$set: {
+				archived: false,
+			},
+		});
+	},
+);
+
+export const remove = ServerMethod(
+	'course.remove',
+	/**
+	 * @param {string} courseId
+	 */
+	(courseId) => {
 		const course = Courses.findOne({ _id: courseId });
 		if (!course) {
 			throw new Meteor.Error(404, 'no such course');
@@ -244,7 +321,9 @@ Meteor.methods({
 		Events.remove({ courseId });
 		Courses.remove(courseId);
 	},
+);
 
+Meteor.methods({
 	/**
 	 * Update the nextEvent field for the courses matching the selector
 	 */
@@ -290,24 +369,6 @@ Meteor.methods({
 			});
 		});
 	},
-
-	/**
-	 * Add or remove a group from the groups list
-	 * @param {string} courseId - The course to update
-	 * @param {string} groupId - The group to add or remove
-	 * @param {boolean} add - Whether to add or remove the group
-	 *
-	 */
-	'course.promote': UpdateMethods.promote(Courses),
-
-	/**
-	 * Add or remove a group from the groupOrganizers list
-	 * @param {string} courseId - The course to update
-	 * @param {string} groupId - The group to add or remove
-	 * @param {boolean} add - Whether to add or remove the group
-	 *
-	 */
-	'course.editing': UpdateMethods.editing(Courses),
 
 	/**
 	 * Recalculate the editors field

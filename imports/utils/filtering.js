@@ -121,14 +121,26 @@ export class Filtering {
 
 	/**
 	 * @param {string} name
-	 * @param {string} param
+	 * @param {string} [param]
 	 */
 	toggle(name, param) {
-		if (this.get(name)?.includes(param)) {
+		if (!param) {
+			// overload: toggle(name)
+			// eg. for flag and require
+			if (this.get(name)) {
+				this.disable(name);
+			} else {
+				this.add(name, '1');
+			}
+		}
+		// overload: toggle(name, param)
+		// eg. for string and id
+		else if (this.get(name)?.includes(param)) {
 			this.remove(name, param);
 		} else {
 			this.add(name, param);
 		}
+
 		return this;
 	}
 

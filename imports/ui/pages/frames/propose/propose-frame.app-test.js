@@ -12,10 +12,7 @@ if (Meteor.isClient) {
 		const randomTitle = `PROPOSE${1000 + Math.floor(Math.random() * 9000)}`;
 
 		const haveEditfield = () => {
-			assert(
-				jQuery('.js-title').length > 0,
-				'New course edit field present',
-			);
+			assert(jQuery('.js-title').length > 0, 'New course edit field present');
 		};
 
 		it('allows to select mentor role', async () => {
@@ -23,7 +20,7 @@ if (Meteor.isClient) {
 
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
-			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 			jQuery('input[value=mentor]').click();
 			jQuery('.js-title').val(randomTitle);
@@ -86,7 +83,7 @@ if (Meteor.isClient) {
 
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
-			await MeteorAsync.loginWithPasswordAsync('Seee', 'greg');
+			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 			jQuery('.js-title').val(randomTitle);
 			jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
@@ -118,20 +115,14 @@ if (Meteor.isClient) {
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 
-			assert(
-				jQuery('.js-category-checkbox').length > 0,
-				'Categories are usually present.',
-			);
+			assert(jQuery('.js-category-checkbox').length > 0, 'Categories are usually present.');
 
 			Router.go('/frame/propose?hideCategories=1');
 
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 
-			assert(
-				jQuery('.js-category-checkbox').length === 0,
-				'Param hides categories.',
-			);
+			assert(jQuery('.js-category-checkbox').length === 0, 'Param hides categories.');
 
 			jQuery('.js-title').val(randomTitle);
 			jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan

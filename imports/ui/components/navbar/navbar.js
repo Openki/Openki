@@ -7,7 +7,7 @@ import { $ } from 'meteor/jquery';
 
 import { Regions } from '/imports/api/regions/regions';
 
-import ScssVars from '/imports/ui/lib/scss-vars';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
 
 import '/imports/ui/components/regions/selection/region-selection';
 import '/imports/ui/components/language-selection/language-selection';
@@ -130,9 +130,7 @@ Template.navbar.events({
 				const scrollTo = $(event.currentTarget);
 
 				container.animate({
-					scrollTop: scrollTo.offset().top
-						- container.offset().top
-						+ container.scrollTop(),
+					scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop(),
 				});
 			} else {
 				container.scrollTop(0);
@@ -164,5 +162,7 @@ Template.ownUserFrame.events({
 		}
 	},
 
-	'click .btn'() { $('.collapse').collapse('hide'); },
+	'click .btn'() {
+		$('.collapse').collapse('hide');
+	},
 });

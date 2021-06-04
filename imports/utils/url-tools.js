@@ -1,9 +1,10 @@
-
 /**
  * @param {{[name:string]:string|number|boolean}} params
  */
 export function paramsToQueryString(params) {
-	const queryParams = Object.entries(params).map((nameValue) => `${encodeURIComponent(nameValue[0])}=${encodeURIComponent(nameValue[1])}`);
+	const queryParams = Object.entries(params).map(
+		(nameValue) => `${encodeURIComponent(nameValue[0])}=${encodeURIComponent(nameValue[1])}`,
+	);
 
 	return queryParams.join('&');
 }
@@ -22,4 +23,3 @@ export function queryParam(name) {
 	}
 	return undefined;
 }
-

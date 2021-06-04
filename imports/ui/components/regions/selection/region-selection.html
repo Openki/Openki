@@ -27,48 +27,38 @@
 <template name="regionSelection">
 	<form class="js-region-search-form">
 		<div class="dropdown">
-			<input
-				class="form-control js-region-search"
-				type="text"
-				value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}"
-			>
+			<input class="form-control js-region-search" type="text"
+				   value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}">
 			<span class="control-arrow fa fa-angle-down fa-fw"></span>
 		</div>
 
-		<input type="submit" style="display: none"/>
-		<span
-			aria-expanded="false"
-			class="dropdown-toggle"
-			data-toggle="dropdown"
-			role="button">
+		<input type="submit" style="display: none" />
+		<span aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown" role="button">
 		</span>
 		<ul class="dropdown-menu" role="menu">
 			<li class="dropdown-header dropdown-legend">
 				<div class="dropdown-addon-right">
-					<span
-						class="badge badge-courses"
-						title="{{mf 'regionSelection.legend.numCoursesTitle' 'Number of courses'}}">
+					<span class="badge badge-courses"
+						  title="{{mf 'regionSelection.legend.numCoursesTitle' 'Number of courses'}}">
 						# <i class="fa fa-circle"></i>
 					</span>
-					<span
-						class="badge badge-events"
-						title="{{mf 'regionSelection.legend.numEventsTitle' 'Number of upcoming events'}}">
+					<span class="badge badge-events"
+						  title="{{mf 'regionSelection.legend.numEventsTitle' 'Number of upcoming events'}}">
 						# <i class="fa fa-calendar"></i>
 					</span>
 				</div>
 				{{mf 'regionSelection.legend.region' 'Region'}}
 			</li>
 			<li>
-				<a href="#" class="js-region-link js-nav-dropdown-close" title="{{mf 'menue.All regions'}}">
+				<a href="#" class="js-region-link js-nav-dropdown-close"
+				   title="{{mf 'menue.All regions'}}">
 					<div class="dropdown-addon-right">
-						<span
-							class="badge badge-courses"
-							title="{{mf 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
+						<span class="badge badge-courses"
+							  title="{{mf 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
 							{{allCourses}}
 						</span>
-						<span
-							class="badge badge-events"
-							title="{{mf 'regions.allUpcomingEvents.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
+						<span class="badge badge-events"
+							  title="{{mf 'regions.allUpcomingEvents.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
 							{{allUpcomingEvents}}
 						</span>
 					</div>
@@ -110,17 +100,15 @@
 </template>
 
 <template name="regionSelectionItem">
-	<li>
+	<li class={{private}}>
 		<a href="#" class="js-region-link js-nav-dropdown-close" title="{{nameEn}}">
 			<div class="dropdown-addon-right">
-				<span
-					class="badge badge-courses"
-					title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
+				<span class="badge badge-courses"
+					  title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
 					{{courseCount}}
 				</span>
-				<span
-					class="badge badge-events"
-					title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
+				<span class="badge badge-events"
+					  title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
 					{{futureEventCount}}
 				</span>
 			</div>

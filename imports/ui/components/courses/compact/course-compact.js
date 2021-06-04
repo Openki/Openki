@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
+import moment from 'moment';
 
 import { Roles } from '/imports/api/roles/roles';
 import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
@@ -14,14 +15,22 @@ Template.courseCompact.helpers({
 		return !instance.eventSub || instance.eventSub.ready();
 	},
 
-	courseState() {
+	courseStateClasses() {
+		const classes = [];
+
 		if (this.nextEvent) {
-			return 'has-upcoming-events';
+			classes.push('has-upcoming-events');
+		} else if (this.lastEvent) {
+			classes.push('has-past-events');
+		} else {
+			classes.push('is-proposal');
 		}
-		if (this.lastEvent) {
-			return 'has-past-events';
+
+		if (this.archived) {
+			classes.push('is-archived');
 		}
-		return 'is-proposal';
+
+		return classes.join(' ');
 	},
 
 	filterPreviewClasses() {

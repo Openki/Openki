@@ -1,14 +1,19 @@
 import { Router } from 'meteor/iron:router';
+import moment from 'moment';
 import { Users } from '/imports/api/users/users';
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Venues } from '/imports/api/venues/venues';
+import { Regions } from './api/regions/regions';
+import { visibleTenants } from './utils/visible-tenants';
 
 const apiResponse = function (collection, formatter) {
 	return (filter, limit, skip, sort) => {
 		const query = collection.Filtering().readAndValidate(filter).done().toQuery();
-		return collection.findFilter(query, limit, skip, sort).map(formatter);
+		return collection
+			.findFilter({ ...query, tenants: visibleTenants() }, limit, skip, sort)
+			.map(formatter);
 	};
 };
 
@@ -88,6 +93,48 @@ const Api = {
 		});
 
 		return evr;
+	}),
+	courses: apiResponse(Courses, (orginalCourse) => {
+		const course = {
+			id: orginalCourse._id,
+			name: orginalCourse.name,
+			description: orginalCourse.description,
+			link: Router.url('showCourse', orginalCourse),
+			internal: orginalCourse.internal,
+			interested: orginalCourse.interested,
+		};
+
+		const region = Regions.findOne(orginalCourse.region);
+		if (region) {
+			course.region = {
+				id: region._id,
+				name: region.name,
+			};
+		}
+
+		const creator = Users.findOne(orginalCourse.createdBy);
+		if (creator) {
+			course.createdBy = {
+				id: creator._id,
+				name: creator.username,
+			};
+		}
+
+		course.groups = [];
+		const groups = orginalCourse.groups || [];
+		groups.forEach((groupId) => {
+			const group = Groups.findOne(groupId);
+			if (group) {
+				course.groups.push({
+					id: group._id,
+					name: group.name,
+					short: group.short,
+					link: Router.url('groupDetails', group),
+				});
+			}
+		});
+
+		return course;
 	}),
 };
 

@@ -5,7 +5,7 @@
 //========================================================================================
 .calendar-nav-container {
 	@include td-make-xs-column(12);
-	background-color: rgba($calendar-nav-bg, .97);
+	background-color: rgba($calendar-nav-bg, 0.97);
 	display: none;
 	margin-bottom: 10px;
 	padding: 0 10px;
@@ -18,7 +18,7 @@
 }
 
 .calendar-nav-container-covering {
-	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 // ** Navigation
@@ -79,7 +79,7 @@
 	border-color: $blue;
 	border-style: solid;
 	border-width: 10px 0 0;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 	font-size: large;
 	text-align: center;
 

@@ -6,12 +6,14 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
+import * as usersMethods from '/imports/api/users/methods';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
-import ScssVars from '/imports/ui/lib/scss-vars';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import { isEmail } from '/imports/utils/email-tools';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import { Regions } from '/imports/api/regions/regions';
 import { Analytics } from '/imports/ui/lib/analytics';
@@ -62,13 +64,11 @@ Template.loginFrame.onCreated(function () {
 	const oAuthServices = [];
 	const login = Meteor.settings.public.feature?.login;
 	if (login?.google) {
-		oAuthServices.push(
-			{
-				key: 'google',
-				name: 'Google',
-				serviceName: 'Google',
-			},
-		);
+		oAuthServices.push({
+			key: 'google',
+			name: 'Google',
+			serviceName: 'Google',
+		});
 	}
 	if (login?.facebook) {
 		oAuthServices.push({
@@ -98,31 +98,19 @@ Template.loginFrame.onRendered(function () {
 
 TemplateMixins.FormfieldErrors(Template.loginFrame, {
 	noUsername: {
-		text: () => mf(
-			'login.warning.noUserName',
-			'Please enter your username or email to log in.',
-		),
+		text: () => mf('login.warning.noUserName', 'Please enter your username or email to log in.'),
 		field: 'username',
 	},
 	'Incorrect password': {
-		text: () => mf(
-			'login.password.password_incorrect',
-			'Incorrect password',
-		),
+		text: () => mf('login.password.password_incorrect', 'Incorrect password'),
 		field: 'password',
 	},
 	'User not found': {
-		text: () => mf(
-			'login.username.usr_doesnt_exist',
-			'This user does not exist.',
-		),
+		text: () => mf('login.username.usr_doesnt_exist', 'This user does not exist.'),
 		field: 'username',
 	},
 	'User has no password set': {
-		text: () => mf(
-			'login.username.no_password_set',
-			'Please login below with Google/Facebook.',
-		),
+		text: () => mf('login.username.no_password_set', 'Please login below with Google/Facebook.'),
 		field: 'username',
 	},
 });
@@ -160,7 +148,7 @@ Template.loginFrame.events({
 		instance.parentInstance().accountTask.set('register');
 	},
 
-	'submit form, click .js-login'(event, instance) {
+	async 'submit form, click .js-login'(event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 
@@ -176,26 +164,27 @@ Template.loginFrame.events({
 		const password = instance.$('.js-password').val();
 
 		instance.busy('logging-in');
-		Meteor.loginWithPassword(user, password, (err) => {
-			instance.busy(false);
-			if (err) {
-				instance.errors.add(err.reason);
-			} else {
-				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
-					$('#bs-navbar-collapse-1').collapse('hide');
-				}
-				$('.js-account-tasks').modal('hide');
+		try {
+			await MeteorAsync.loginWithPassword(user, password);
 
-				const regionId = CleanedRegion(Session.get('region'));
-				if (regionId) {
-					Meteor.call('user.regionChange', regionId);
-				}
-
-				Meteor.call('user.updateLocale', Session.get('locale'));
-
-				Analytics.trackEvent('Logins', 'Logins with password', Regions.findOne(regionId)?.nameEn);
+			if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
+				$('#bs-navbar-collapse-1').collapse('hide');
 			}
-		});
+			$('.js-account-tasks').modal('hide');
+
+			const regionId = CleanedRegion(Session.get('region'));
+			if (regionId) {
+				usersMethods.regionChange(regionId);
+			}
+
+			usersMethods.updateLocale(Session.get('locale'));
+
+			Analytics.trackEvent('Logins', 'Logins with password', Regions.findOne(regionId)?.nameEn);
+		} catch (err) {
+			instance.errors.add(err.reason);
+		} finally {
+			instance.busy(false);
+		}
 	},
 
 	'click .js-oauth-btn'(event, instance) {
@@ -204,16 +193,12 @@ Template.loginFrame.events({
 		const { service } = event.currentTarget.dataset;
 		const loginMethod = `loginWith${service}`;
 		if (!Meteor[loginMethod]) {
-			Alert.serverError(
-				new Error(`don't have ${loginMethod}`),
-				'',
-			);
+			Alert.serverError(new Error(`don't have ${loginMethod}`), '');
 			return;
 		}
 
 		instance.busy(service);
-		Meteor[loginMethod]({
-		}, (err) => {
+		Meteor[loginMethod]({}, (err) => {
 			instance.busy(false);
 			if (err) {
 				Alert.serverError(err, '');
@@ -225,12 +210,16 @@ Template.loginFrame.events({
 
 				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
-					Meteor.call('user.regionChange', regionId);
+					usersMethods.regionChange(regionId);
 				}
 
-				Meteor.call('user.updateLocale', Session.get('locale'));
+				usersMethods.updateLocale(Session.get('locale'));
 
-				Analytics.trackEvent('Logins', `Logins with ${service}`, Regions.findOne(Meteor.user().profile.regionId)?.nameEn);
+				Analytics.trackEvent(
+					'Logins',
+					`Logins with ${service}`,
+					Regions.findOne(Meteor.user().profile.regionId)?.nameEn,
+				);
 			}
 		});
 	},
@@ -276,31 +265,21 @@ Template.registerFrame.helpers({
 
 TemplateMixins.FormfieldErrors(Template.registerFrame, {
 	noUsername: {
-		text: () => mf(
-			'register.warning.noUserName',
-			'Please enter a name for your new user.',
-		),
+		text: () => mf('register.warning.noUserName', 'Please enter a name for your new user.'),
 		field: 'username',
 	},
 	'Username already exists.': {
-		text: () => mf(
-			'register.warning.userExists',
-			'This username already exists. Please choose another one.',
-		),
+		text: () =>
+			mf('register.warning.userExists', 'This username already exists. Please choose another one.'),
 		field: 'username',
 	},
 	noPassword: {
-		text: () => mf(
-			'register.warning.noPasswordProvided',
-			'Please enter a password to register.',
-		),
+		text: () => mf('register.warning.noPasswordProvided', 'Please enter a password to register.'),
 		field: 'password',
 	},
 	noEmail: {
-		text: () => mf(
-			'register.warning.noEmailProvided',
-			'Please enter an email-address to register.',
-		),
+		text: () =>
+			mf('register.warning.noEmailProvided', 'Please enter an email-address to register.'),
 		field: 'email',
 	},
 	'email invalid': {
@@ -308,10 +287,11 @@ TemplateMixins.FormfieldErrors(Template.registerFrame, {
 		field: 'email',
 	},
 	'Email already exists.': {
-		text: () => mf(
-			'register.warning.emailExists',
-			'This email already exists. Have you tried resetting your password?',
-		),
+		text: () =>
+			mf(
+				'register.warning.emailExists',
+				'This email already exists. Have you tried resetting your password?',
+			),
 		field: 'email',
 	},
 });
@@ -341,32 +321,47 @@ Template.registerFrame.events({
 		}
 
 		instance.busy('registering');
-		Accounts.createUser({
-			username, password, email,
-		}, (err) => {
-			instance.busy(false);
-			if (err) {
-				instance.errors.add(err.reason);
-			} else {
-				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
-					$('#bs-navbar-collapse-1').collapse('hide');
+		Accounts.createUser(
+			{
+				username,
+				password,
+				email,
+			},
+			(err) => {
+				instance.busy(false);
+				if (err) {
+					instance.errors.add(err.reason);
+				} else {
+					if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
+						$('#bs-navbar-collapse-1').collapse('hide');
+					}
+					$('.js-account-tasks').modal('hide');
+
+					const regionId = CleanedRegion(Session.get('region'));
+					if (regionId) {
+						usersMethods.regionChange(regionId);
+					}
+
+					usersMethods.updateLocale(Session.get('locale'));
+
+					const user = Meteor.user();
+
+					Alert.success(
+						mf(
+							'profile.sentVerificationMail',
+							{ MAIL: user.emails[0].address },
+							'Verification mail has been sent to your address: "{MAIL}".',
+						),
+					);
+
+					Analytics.trackEvent(
+						'Registers',
+						'Registers with password',
+						Regions.findOne(user.profile.regionId)?.nameEn,
+					);
 				}
-				$('.js-account-tasks').modal('hide');
-
-				const regionId = CleanedRegion(Session.get('region'));
-				if (regionId) {
-					Meteor.call('user.regionChange', regionId);
-				}
-
-				Meteor.call('user.updateLocale', Session.get('locale'));
-
-				const user = Meteor.user();
-
-				Alert.success(mf('profile.sentVerificationMail', { MAIL: user.emails[0].address }, 'Verification mail has been sent to your address: "{MAIL}".'));
-
-				Analytics.trackEvent('Registers', 'Registers with password', Regions.findOne(user.profile.regionId)?.nameEn);
-			}
-		});
+			},
+		);
 	},
 
 	'click .js-back-to-login'(event, instance) {
@@ -402,20 +397,25 @@ Template.forgotPwdFrame.events({
 	submit(event, instance) {
 		event.preventDefault();
 		instance.busy('requesting-pw-reset');
-		Accounts.forgotPassword({
-			email: instance.$('.js-reset-pw-email').val(),
-		}, (err) => {
-			instance.busy(false);
-			if (err) {
-				Alert.serverError(err, 'We were unable to send a mail to this address');
-			} else {
-				Alert.success(mf(
-					'forgotPassword.emailSent',
-					'An e-mail with further instructions on how to reset your password has been sent to you.',
-				));
-				instance.parentInstance().accountTask.set('login');
-			}
-		});
+		Accounts.forgotPassword(
+			{
+				email: instance.$('.js-reset-pw-email').val(),
+			},
+			(err) => {
+				instance.busy(false);
+				if (err) {
+					Alert.serverError(err, 'We were unable to send a mail to this address');
+				} else {
+					Alert.success(
+						mf(
+							'forgotPassword.emailSent',
+							'An e-mail with further instructions on how to reset your password has been sent to you.',
+						),
+					);
+					instance.parentInstance().accountTask.set('login');
+				}
+			},
+		);
 	},
 
 	'click .js-reset-pwd-close-btn'(event, instance) {

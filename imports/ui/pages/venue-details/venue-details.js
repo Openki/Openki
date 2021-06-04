@@ -7,6 +7,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
+import * as VenuesMethods from '/imports/api/venues/methods';
 
 import { reactiveNow } from '/imports/utils/reactive-now';
 
@@ -213,18 +214,19 @@ Template.venueDetails.events({
 		Template.instance().verifyDeleteVenue.set(false);
 	},
 
-	'click .js-venue-delete-confirm'(event, instance) {
+	async 'click .js-venue-delete-confirm'(event, instance) {
 		const { venue } = instance.data;
 		instance.busy('deleting');
-		Meteor.call('venue.remove', venue._id, (err) => {
+		try {
+			await VenuesMethods.remove(venue._id);
+
+			Alert.success(mf('venue.removed', { NAME: venue.name }, 'Removed venue "{NAME}".'));
+			Router.go('profile');
+		} catch (err) {
+			Alert.serverError(err, 'Deleting the venue went wrong');
+		} finally {
 			instance.busy(false);
-			if (err) {
-				Alert.serverError(err, 'Deleting the venue went wrong');
-			} else {
-				Alert.success(mf('venue.removed', { NAME: venue.name }, 'Removed venue "{NAME}".'));
-				Router.go('profile');
-			}
-		});
+		}
 	},
 
 	'click .js-show-more-upcoming-events'(e, instance) {
