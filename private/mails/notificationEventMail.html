@@ -1,193 +1,120 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>{{subject}}</title>
-	<style type="text/css">
-		table td {
-			border-collapse: collapse;
-			/* Handling long words and urls */
-			hyphens: auto;
-			overflow-wrap: break-word;
-			word-break: break-all;
-			word-break: break-word;
-			word-wrap: break-word;
-		}
-
-	</style>
-</head>
-
-<body>
-	<table cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f0f3f4"
-		   style="box-shadow: 1px 3px 14px 7px #dfe7e8;">
-		<tr>
-			<td>
-				<table cellpadding="0" cellspacing="0" border="0" align="center">
-					<tr bgcolor="#3f819e">
-						<td width="45" valign="top" style="padding: 0 10px 0 20px;">
-							<a href="{{siteUrl}}">
-								<img src="{{logo.url}}" height="45" border="0"
-									 alt="{{customSiteName}} Logo"
-									 style="border: 0; display: block; outline: none; text-decoration: none;" />
-							</a>
-						</td>
-						<td width="455"
-							style="font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter; padding: 0;">
-							<a href="{{siteUrl}}"
-							   style="color: #fff !important; text-decoration: none !important;">
-								{{customSiteName}}
-							</a>
+{{#mailBase subject=subject}}
+	<tr>
+		<td>
+			<span class="title">
+				{{mf "notification.event.mail.greeting" "Hi {USERNAME}" USERNAME=username LOCALE=locale}}
+			</span>
+			<p>
+				{{#if new}}
+					{{mf 'notification.event.mail.new' 'A new event was just published for course "{COURSE}":' COURSE=course.name LOCALE=locale}}
+				{{else}}
+					{{mf 'notification.event.mail.changed' 'The following event for course "{COURSE}" changed:' COURSE=course.name LOCALE=locale}}
+				{{/if}}
+				<br />
+				<a href="{{courseLink}}"><i class="fa fa-external-link"></i>
+					{{mf 'event.details.viewCourse' 'view course' LOCALE=locale}}</a>
+			</p>
+			{{#if additionalMessage}}
+				<p>
+					{{mf "notification.event.mail.personalMessage" 'The Organizer "{USERNAME}" left a message for you:' USERNAME=creatorName LOCALE=locale}}
+				</p>
+				<table class="comment-box">
+					<tr>
+						<td>
+							{{additionalMessage}}
 						</td>
 					</tr>
 				</table>
-			</td>
-		</tr>
-		<tr>
-			<td width="400" valign="top"
-				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px;">
-				<span style="font-size: 16px; font-weight: bold;">
-					{{mf "notification.event.mail.greeting" "Hi {USERNAME}" USERNAME=username LOCALE=locale}}
-				</span>
-				<p style="margin: 1em 0;">
-					{{#if new}}
-						{{mf 'notification.event.mail.new' 'A new event was just published for course "{COURSE}":' COURSE=course.name LOCALE=locale}}
-					{{else}}
-						{{mf 'notification.event.mail.changed' 'The following event for course "{COURSE}" changed:' COURSE=course.name LOCALE=locale}}
-					{{/if}}
-					<br />
-					<a href="{{courseLink}}"><i class="fa fa-external-link"></i>
-						{{mf 'event.details.viewCourse' 'view course' LOCALE=locale}}</a>
+			{{else}}
+				<p>
+					{{mf "notification.event.mail.creationMessage" 'The event has been created by "{USERNAME}".' USERNAME=creatorName LOCALE=locale}}
 				</p>
-			</td>
-		</tr>
-		{{#if additionalMessage}}
-			<tr>
-				<td width="400" valign="top"
-					style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px;">
-					<p style="margin: 1em 0;">
-						{{mf "notification.event.mail.personalMessage" 'The Organizer "{USERNAME}" left a message for you:' USERNAME=creatorName LOCALE=locale}}
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td width="400" valign="top" style="padding: 0 20px 20px;">
-					<table cellpadding="0" cellspacing="0" border="0" align="center">
-						<tr>
-							<td colspan="2" width="400" valign="top" bgcolor="#dddddd"
-								style="color: #333; font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 15px;">
-								{{additionalMessage}}
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		{{else}}
-			<tr>
-				<td width="400" valign="top"
-					style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px;">
-					<p style="margin: 1em 0;">
-						{{mf "notification.event.mail.creationMessage" 'The event has been created by "{USERNAME}".' USERNAME=creatorName LOCALE=locale}}
-					</p>
-				</td>
-			</tr>
-		{{/if}}
-		<tr>
-			<td width="400" valign="top" style="padding: 0 20px;">
-				<table cellpadding="0" cellspacing="0" border="0" align="center">
-					<tr>
-						<td width="400" valign="top" bgcolor="#c1f2ae"
-							style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 15px;">
-							<div style="float: right;">
-								<a href="{{eventLink}}"><i class="fa fa-calendar"></i>
-									{{mf 'notification.event.viewEvent' 'view event' LOCALE=locale}}</a>
-							</div>
-							<a href="{{eventLink}}"
-							   style="color: #333 !important; text-decoration: none !important;">
-								{{eventDate}}
-								<br />
-								{{eventStart}}
-								{{#if eventEnd}}
-									- {{eventEnd}}
-								{{/if}}
-								{{#if venueLine}}
-									<br />
-									{{venueLine}}
-								{{/if}}
-							</a>
-						</td>
-					</tr>
-					<tr>
-						<td width="400" valign="top" height="2px" style="font-size: 2px;">
-						</td>
-					</tr>
-					<tr>
-						<td width="400" valign="top" bgcolor="#d9eaf2"
-							style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 15px;">
-							<p style="font-size: 14px; font-weight: bold;">
-								{{event.title}}
-							</p>
-							<p style="font-weight: bold;">
-								{{mf "notification.event.mail.titleDescription" "Description" LOCALE=locale}}
-							</p>
-							<p>
-								{{{event.description}}}
-							</p>
-						</td>
-					</tr>
-					<tr>
-						<td width="350" valign="top"
-							style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 5px; text-align:right;">
-							<a href="{{calLink}}"
-							   style="color: #00f !important; text-decoration: none !important;">
-								{{mf "notification.event.mail.linkCalendar" "Add this event to my calendar" LOCALE=locale}}
-							</a>
+			{{/if}}
+			<table>
+				<tr>
+					<td bgcolor="#c1f2ae" style="padding: 15px;">
+						<div style="float: right;">
+							<a href="{{eventLink}}"><i class="fa fa-calendar"></i>
+								{{mf 'notification.event.viewEvent' 'view event' LOCALE=locale}}</a>
+						</div>
+						<a href="{{eventLink}}"
+						   style="color: #333 !important; text-decoration: none !important;">
+							{{eventDate}}
 							<br />
-						</td>
-					</tr>
-				</table>
-				<p style="padding-top: 2em;">
-					{{mf "notification.event.mail.informRegisterEvent" "Let us know if you participate in this event:" LOCALE=locale}}
-				</p>
-				<div style="padding: 2em 0; text-align: center;">
-					<a class="button" href="{{registerToEventLink}}" bgcolor="#3f819e"
-					   style="background-color: #3f819e; border-radius: 5px; color: #fff !important; display: inline-block; font-size: 14px; padding: 12px 18px; text-decoration: none;">
-						{{mf "notification.event.mail.registerEvent" "Yes, i take part!" LOCALE=locale}}
-					</a>
-				</div>
-				<p style="padding-top: 2em;">
-					{{mf "notification.event.mail.notinterested" "Not interested anymore?" LOCALE=locale}}
-				</p>
-				<div style="padding: 2em 0; text-align: center;">
-					<a class="button" href="{{unsubscribeFromCourseLink}}" bgcolor="#3f819e"
-					   style="background-color: #3f819e; border-radius: 5px; color: #fff !important; display: inline-block; font-size: 14px; padding: 12px 18px; text-decoration: none;">
-						{{mf "notification.event.mail.unsubscribe" "Unsubscribe from course." LOCALE=locale}}
-					</a>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td width="500" valign="top" bgcolor="#3f819e">
-				<table cellpadding="0" cellspacing="0" border="0" align="center"
-					   style="color:#ddd; font-family: Source Sans Pro, sans-serif; font-size: 10px; text-align: center;">
-					<tr>
-						<td width="500" valign="top" style="padding: 5px 15px 0;">
-							{{mf 'notification.event.mail.notice' 'You receive this mail because you are involved in the course "{COURSE}".' COURSE=course.name LOCALE=locale}}
-						</td>
-					</tr>
-					<tr>
-						<td width="500" valign="top" style="padding: 0 15px 5px;">
-							<a href="{{unsubLink}}"
-							   style="color:#ddd !important; text-decoration: underline;">{{mf "notification.event.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}</a>
-							&nbsp;
-							<a href="{{urlFor 'profile' query='campaign=eventNotify'}}"
-							   style="color:#ddd !important; text-decoration: underline;">{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-</body>
-
-</html>
+							{{eventStart}}
+							{{#if eventEnd}}
+								- {{eventEnd}}
+							{{/if}}
+							{{#if venueLine}}
+								<br />
+								{{venueLine}}
+							{{/if}}
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td height="2px" style="font-size: 2px;">
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#d9eaf2" style="padding: 15px;">
+						<p style="font-size: 14px; font-weight: bold;">
+							{{event.title}}
+						</p>
+						<p style="font-weight: bold;">
+							{{mf "notification.event.mail.titleDescription" "Description" LOCALE=locale}}
+						</p>
+						<p>
+							{{{event.description}}}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="350" style="padding: 5px; text-align:right;">
+						<a href="{{calLink}}"
+						   style="color: #00f !important; text-decoration: none !important;">
+							{{mf "notification.event.mail.linkCalendar" "Add this event to my calendar" LOCALE=locale}}
+						</a>
+						<br />
+					</td>
+				</tr>
+			</table>
+			<p class="lead">
+				{{mf "notification.event.mail.informRegisterEvent" "Let us know if you participate in this event:" LOCALE=locale}}
+			</p>
+			<p class="text-center">
+				<a class="button" href="{{registerToEventLink}}">
+					{{mf "notification.event.mail.registerEvent" "Yes, i take part!" LOCALE=locale}}
+				</a>
+			</p>
+			<p class="lead">
+				{{mf "notification.event.mail.notinterested" "Not interested anymore?" LOCALE=locale}}
+			</p>
+			<p class="text-center">
+				<a class="button" href="{{unsubscribeFromCourseLink}}">
+					{{mf "notification.event.mail.unsubscribe" "Unsubscribe from course." LOCALE=locale}}
+				</a>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="footer">
+				<tr>
+					<td>
+						{{mf 'notification.event.mail.notice' 'You receive this mail because you are involved in the course "{COURSE}".' COURSE=course.name LOCALE=locale}}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a
+						   href="{{unsubLink}}">{{mf "notification.event.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}</a>
+						&nbsp;
+						<a
+						   href="{{urlFor 'profile' query='campaign=eventNotify'}}">{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{{/mailBase}}

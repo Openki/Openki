@@ -1,0 +1,177 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>{{subject}}</title>
+	<style type="text/css">
+		/* Add some styling for emails. For best practice we compile it inline with juice(...).  */
+
+		body {
+			background-color: #f0f3f4;
+		}
+
+		.container {
+			background-color: #fff;
+			box-shadow: 1px 3px 14px 7px #dfe7e8;
+		}
+
+		.container>td {
+			padding: 0 20px;
+			width: 400px;
+		}
+
+		.container>td:nth-child(2) {
+			padding-top: 10px;
+		}
+
+		.container>td:nth-last-child(2) {
+			padding-bottom: 10px;
+		}
+
+		.header tr {
+			background-color: #3f819e;
+		}
+
+		.logo-wrapper {
+			padding: 0 10px 0 20px;
+			vertical-align: top;
+			width: 45px;
+		}
+
+		.logo {
+			border: 0;
+			display: block;
+			height: 45px;
+			outline: none;
+			text-decoration: none;
+		}
+
+		.site-name-wrapper {
+			font-size: 22px;
+			font-weight: lighter;
+			padding: 0;
+			width: 455px;
+		}
+
+		.site-name {
+			color: #fff !important;
+			text-decoration: none !important;
+			vertical-align: middle;
+		}
+
+		.title {
+			font-size: 16px;
+			font-weight: bold;
+		}
+
+		p,
+		.p {
+			margin: 1em 0;
+		}
+
+		.lead {
+			font-size: 14px;
+		}
+
+		.text-center {
+			text-align: center;
+		}
+
+
+		.comment-box td {
+			background-color: #ddd;
+			color: #333;
+			padding: 15px;
+		}
+
+		.comment-box .title {
+			font-size: 14px;
+		}
+
+		table {
+			border: 0;
+			border-spacing: 0;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		td {
+			font-family: Source Sans Pro, sans-serif;
+			font-size: 12px;
+			vertical-align: top;
+		}
+
+		td {
+			border-collapse: collapse;
+			/* Handling long words and urls */
+			hyphens: auto;
+			overflow-wrap: break-word;
+			word-break: break-all;
+			word-break: break-word;
+			word-wrap: break-word;
+		}
+
+		.button {
+			background-color: #3f819e;
+			border-radius: 5px;
+			color: #fff !important;
+			display: inline-block;
+			font-size: 14px;
+			padding: 12px 18px;
+			text-decoration: none;
+		}
+
+		.footer {
+			border-top: solid 1px #3f819e;
+			color: #ddd;
+			font-size: 10px;
+			text-align: center;
+			width: 500px;
+		}
+
+		.footer td {
+			padding: 0 15px;
+		}
+
+		.footer tr:first-child td {
+			padding-top: 5px;
+		}
+
+		.footer tr:last-child td {
+			padding-bottom: 5px;
+		}
+
+		.footer a {
+			color: #ddd !important;
+			text-decoration: underline;
+		}
+
+	</style>
+</head>
+
+<body>
+	<table class="container">
+		<tr>
+			<td>
+				<table class="header">
+					<tr>
+						<td class="logo-wrapper">
+							<a href="{{site.url}}">
+								<img class="logo" src="{{site.logo}}" alt="{{site.name}} Logo" />
+							</a>
+						</td>
+						<td class="site-name-wrapper">
+							<a href="{{site.url}}">
+								{{site.name}}
+							</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		{{> Template.contentBlock}}
+	</table>
+</body>
+
+</html>

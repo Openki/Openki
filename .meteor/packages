@@ -6,6 +6,7 @@
 # Server
 meteor-base@1.4.0             # Packages every Meteor app needs to have
 blaze-html-templates          # Compile .html files into Meteor Blaze views
+base64
 email@2.0.0
 iron:router
 meteorhacks:ssr

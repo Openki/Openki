@@ -1,10 +1,12 @@
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { mf } from 'meteor/msgfmt:core';
 import { Meteor } from 'meteor/meteor';
+import { Base64 } from 'meteor/base64';
 import { _ } from 'meteor/underscore';
 import { Accounts } from 'meteor/accounts-base';
 
 import { isEmail, getReportEmails } from '/imports/utils/email-tools';
+import juice from 'juice';
 
 Accounts.onCreateUser((options, originalUser) => {
 	const user = { ...originalUser };
@@ -124,13 +126,21 @@ ${mf(
 };
 
 Accounts.emailTemplates.verifyEmail.html = function (user, url) {
-	return SSR.render('userVerifyEmailMail', {
-		siteName: Accounts.emailTemplates.siteName,
-		siteUrl: Meteor.absoluteUrl(),
-		username: user.username,
-		url,
-		reportEmail: getReportEmails().recipient,
-	});
+	const binaryLogo = Assets.getBinary(Meteor.settings.public.mailLogo);
+	return juice(
+		SSR.render('userVerifyEmailMail', {
+			subject: Accounts.emailTemplates.verifyEmail.subject(user),
+			siteName: Accounts.emailTemplates.siteName,
+			site: {
+				url: Meteor.absoluteUrl(),
+				logo: `data:image/png;base64,${Base64.encode(binaryLogo)}`,
+				name: Accounts.emailTemplates.siteName,
+			},
+			username: user.username,
+			url,
+			reportEmail: getReportEmails().recipient,
+		}),
+	);
 };
 
 Accounts.emailTemplates.resetPassword.subject = function () {
@@ -175,11 +185,19 @@ ${mf(
 };
 
 Accounts.emailTemplates.resetPassword.html = function (user, url) {
-	return SSR.render('userResetPasswordMail', {
-		siteName: Accounts.emailTemplates.siteName,
-		siteUrl: Meteor.absoluteUrl(),
-		username: user.username,
-		url,
-		reportEmail: getReportEmails().recipient,
-	});
+	const binaryLogo = Assets.getBinary(Meteor.settings.public.mailLogo);
+	return juice(
+		SSR.render('userResetPasswordMail', {
+			subject: Accounts.emailTemplates.resetPassword.subject(user),
+			siteName: Accounts.emailTemplates.siteName,
+			site: {
+				url: Meteor.absoluteUrl(),
+				logo: `data:image/png;base64,${Base64.encode(binaryLogo)}`,
+				name: Accounts.emailTemplates.siteName,
+			},
+			username: user.username,
+			url,
+			reportEmail: getReportEmails().recipient,
+		}),
+	);
 };

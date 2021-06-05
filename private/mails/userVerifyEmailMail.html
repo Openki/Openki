@@ -1,89 +1,37 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>{{subject}}</title>
-	<style type="text/css">
-		table td {
-			border-collapse: collapse;
-			/* Handling long words and urls */
-			hyphens: auto;
-			overflow-wrap: break-word;
-			word-break: break-all;
-			word-break: break-word;
-			word-wrap: break-word;
-		}
-
-	</style>
-</head>
-
-<body>
-	<table cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f0f3f4"
-		   style="box-shadow: 1px 3px 14px 7px #dfe7e8;">
-		<tr>
-			<td>
-				<table cellpadding="0" cellspacing="0" border="0" align="center">
-					<tr bgcolor="#3f819e">
-						<td width="500"
-							style="font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter; padding: 0 0 0 20px;">
-							<a href="{{siteUrl}}"
-							   style="color: #fff !important; text-decoration: none !important;">
-								{{siteName}}
-							</a>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td width="400" valign="top"
-				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px;">
-				<span style="font-size: 16px; font-weight: bold;">
-					{{mf "verifyEmail.email.gretting" "Hi {NAME}" NAME=username}}
-				</span>
-				<p style="margin: 1em 0;">
-					{{mf "verifyEmail.email.introduction" "We're happy that you are part of the {SITE} community." SITE=siteName}}
-				</p>
-			</td>
-		</tr>
-		<tr>
-			<td width="400" valign="top" style="padding: 0 20px;">
-
-				<p style="padding-top: 2em;">
-					{{mf "verifyEmail.email.verification" "You can click this link to verify your email address. This helps us knowing you're a real person. :)"}}
-				</p>
-				<div style="padding: 2em 0; text-align: center;">
-					<a class="button" href="{{url}}" bgcolor="#3f819e"
-					   style="background-color: #3f819e; border-radius: 5px; color: #fff !important; display: inline-block; font-size: 14px; padding: 12px 18px; text-decoration: none;">
-						{{mf "verifyEmail.email.verifyButton" "Verify email address"}}
-					</a>
-				</div>
-
-			</td>
-		</tr>
-		<tr>
-			<td valign="top"
-				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 10px;">
+{{#mailBase subject=subject site=site}}
+	<tr>
+		<td>
+			<span class="title">
+				{{mf "verifyEmail.email.gretting" "Hi {NAME}" NAME=username}}
+			</span>
+			<p>
+				{{mf "verifyEmail.email.introduction" "We're happy that you are part of the {SITE} community." SITE=siteName}}
+			</p>
+			<p class="lead">
+				{{mf "verifyEmail.email.verification" "You can click this link to verify your email address. This helps us knowing you're a real person. :)"}}
+			</p>
+			<p class="text-center">
+				<a class="button" href="{{url}}">
+					{{mf "verifyEmail.email.verifyButton" "Verify email address"}}
+				</a>
+			</div>
+			<p>
 				{{mf "verifyEmail.email.farewell" "Sincerely"}}<br />
 				{{mf "verifyEmail.email.postscript" "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)" SITE=siteName}}
-			</td>
-		</tr>
-		<tr>
-			<td width="500" valign="top" bgcolor="#3f819e">
-				<table cellpadding="0" cellspacing="0" border="0" align="center"
-					   style="color:#ddd; font-family: Source Sans Pro, sans-serif; font-size: 10px; text-align: center;">
-					<tr>
-						<td width="500" valign="top" style="padding: 0 15px 5px;">
-							{{mf "verifyEmail.email.unexpected" "If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}" REPORTEMAIL=reportEmail}}
-							<a href="{{urlFor 'profile'}}"
-							   style="color:#ddd !important; text-decoration: underline;">{{mf "verifyEmail.email.profileLink" "Visit your profile"}}</a>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-</body>
-
-</html>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="footer">
+				<tr>
+					<td>
+						{{mf "verifyEmail.email.unexpected" "If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}" REPORTEMAIL=reportEmail}}
+						<a
+						   href="{{urlFor 'profile'}}">{{mf "verifyEmail.email.profileLink" "Visit your profile"}}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{{/mailBase}}

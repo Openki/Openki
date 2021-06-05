@@ -1,113 +1,57 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>{{subject}}</title>
-	<style type="text/css">
-		table td {
-			border-collapse: collapse;
-			/* Handling long words and urls */
-			hyphens: auto;
-			overflow-wrap: break-word;
-			word-break: break-all;
-			word-break: break-word;
-			word-wrap: break-word;
-		}
-
-	</style>
-</head>
-
-<body>
-	<table cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f0f3f4"
-		   style="box-shadow: 1px 3px 14px 7px #dfe7e8;">
-		<tr>
-			<td>
-				<table cellpadding="0" cellspacing="0" border="0" align="center">
-					<tr bgcolor="#3f819e">
-						<td width="45" valign="top" style="padding: 0 10px 0 20px;">
-							<a href="{{siteUrl}}">
-								<img src="{{logo.url}}" height="45" border="0"
-									 alt="{{customSiteName}} Logo"
-									 style="border: 0; display: block; outline: none; text-decoration: none;" />
-							</a>
-						</td>
-						<td width="455"
-							style="font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter; padding: 0;">
-							<a href="{{siteUrl}}"
-							   style="color: #fff !important; text-decoration: none !important;">
-								{{customSiteName}}
-							</a>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td width="400" valign="top"
-				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px;">
-				<span style="font-size: 16px; font-weight: bold;">
-					{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
-				</span>
-				<p style="margin: 1em 0;">
-					{{#if commenter}}
-						{{mf "notification.comment.mail.intro" 'There was a comment by "{USERNAME}" on course "{COURSE}":' USERNAME=commenterName COURSE=course.name LOCALE=locale}}
-					{{else}}
-						{{mf "notification.comment.mail.intro.anon" 'There was an anonymous comment on "{COURSE}":' COURSE=course.name LOCALE=locale}}
-					{{/if}}
-				</p>
-			</td>
-		</tr>
-		<tr>
-			<td width="400" valign="top" style="padding: 0 20px;">
-				<table cellpadding="0" cellspacing="0" border="0" align="center">
-					<tr>
-						<td width="400" valign="top" bgcolor="#c1f2ae"
-							style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 6px;">
-							<div style="font-size: 16px; font-weight: bold;">
-								{{comment.title}}
-							</div>
+{{#mailBase subject=subject}}
+	<tr>
+		<td>
+			<span class="title">
+				{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
+			</span>
+			<p>
+				{{#if commenter}}
+					{{mf "notification.comment.mail.intro" 'There was a comment by "{USERNAME}" on course "{COURSE}":' USERNAME=commenterName COURSE=course.name LOCALE=locale}}
+				{{else}}
+					{{mf "notification.comment.mail.intro.anon" 'There was an anonymous comment on "{COURSE}":' COURSE=course.name LOCALE=locale}}
+				{{/if}}
+			</p>
+			<table class="comment-box">
+				<tr>
+					<td>
+						<span class="title">
+							{{comment.title}}
+						</span>
+						<p>
 							{{{comment.text}}}
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top"
-				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 10px;">
+						</p>
+					</td>
+				</tr>
+			</table>
+			<p>
 				<a
 				   href="{{courseLink}}">{{mf "notification.comment.mail.linktext" '➜ See comment on {SITENAME}' SITENAME=customSiteName LOCALE=locale}}</a>
-
 				{{#if commenter}}
 					<br />
 					<a
 					   href="{{commenterLink}}">{{mf "notification.comment.mail.commenterlink" '➜ See profile from {USERNAME}' USERNAME=commenterName LOCALE=locale}}</a>
 				{{/if}}
-			</td>
-		</tr>
-		<tr>
-			<td width="500" valign="top" bgcolor="#3f819e">
-				<table cellpadding="0" cellspacing="0" border="0" align="center"
-					   style="color:#ddd; font-family: Source Sans Pro, sans-serif; font-size: 10px; text-align: center;">
-					<tr>
-						<td width="500" valign="top" style="padding: 5px 15px 0;">
-							{{mf "notification.comment.mail.recpnote" "You receive this message because you're on the team of this course." LOCALE=locale}}
-						</td>
-					</tr>
-					<tr>
-						<td width="500" valign="top" style="padding: 0 15px 5px;">
-							<a href="{{unsubLink}}"
-							   style="color:#ddd !important; text-decoration: underline;">{{mf "notification.comment.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}</a>
-							&nbsp;
-							<a href="{{urlFor 'profile' query='campaign=commentNotify'}}"
-							   style="color:#ddd !important; text-decoration: underline;">{{mf "notification.comment.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-</body>
-
-</html>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="footer">
+				<tr>
+					<td>
+						{{mf "notification.comment.mail.recpnote" "You receive this message because you're on the team of this course." LOCALE=locale}}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a
+						   href="{{unsubLink}}">{{mf "notification.comment.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}</a>
+						&nbsp;
+						<a
+						   href="{{urlFor 'profile' query='campaign=commentNotify'}}">{{mf "notification.comment.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{{/mailBase}}

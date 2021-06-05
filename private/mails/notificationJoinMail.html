@@ -1,103 +1,52 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>{{subject}}</title>
-	<style type="text/css">
-		table td {
-			border-collapse: collapse;
-			/* Handling long words and urls */
-			hyphens: auto;
-			overflow-wrap: break-word;
-			word-break: break-all;
-			word-break: break-word;
-			word-wrap: break-word;
-		}
-
-	</style>
-</head>
-
-<body>
-	<table cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#f0f3f4"
-		   style="box-shadow: 1px 3px 14px 7px #dfe7e8;">
-		<tr>
-			<td>
-				<table cellpadding="0" cellspacing="0" border="0" align="center">
-					<tr bgcolor="#3f819e">
-						<td width="45" valign="top" style="padding: 0 10px 0 20px;">
-							<a href="{{siteUrl}}">
-								<img src="{{logo.url}}" height="45" border="0"
-									 alt="{{customSiteName}} Logo"
-									 style="border: 0; display: block; outline: none; text-decoration: none;" />
-							</a>
-						</td>
-						<td width="455"
-							style="font-family: Source Sans Pro, sans-serif; font-size: 22px; font-weight: lighter; padding: 0;">
-							<a href="{{siteUrl}}"
-							   style="color: #fff !important; text-decoration: none !important;">
-								{{customSiteName}}
-							</a>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td width="400" valign="top"
-				style="font-family: Source Sans Pro, sans-serif; font-size: 12px; padding: 20px 20px 10px">
-				<span style="font-size: 16px; font-weight: bold;">
-					{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
-				</span>
-				<p style="margin: 1em 0;">
-					{{mf "notification.join.mail.intro" '"{USERNAME}" just joined course "{COURSE}" as: {ROLE}.' USERNAME=newParticipant.username COURSE=course.name ROLE=roleTitle LOCALE=locale}}
+{{#mailBase subject=subject}}
+	<tr>
+		<td>
+			<span class="title">
+				{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
+			</span>
+			<p>
+				{{mf "notification.join.mail.intro" '"{USERNAME}" just joined course "{COURSE}" as: {ROLE}.' USERNAME=newParticipant.username COURSE=course.name ROLE=roleTitle LOCALE=locale}}
+			</p>
+			{{#if message}}
+				<p>
+					{{mf "notification.join.mail.message" 'They left this message: ' LOCALE=locale}}
+					{{message}}
 				</p>
-				{{#if message}}
-					<p style="margin: 1em 0;">
-						{{mf "notification.join.mail.message" 'They left this message: ' LOCALE=locale}}
-						{{message}}
-					</p>
-				{{/if}}
-				{{#if appendCollaborationHint}}
-					<p style="margin: 1em 0;">
-						{{mf "notification.join.mail.collaborationHint" 'If you like them to collaborate feel free to contact them. If you like to give them the rights to edit the course, you can add them to the organisation team of your course by clicking on the bullhorn next to their name.' LOCALE=locale}}
-					</p>
-				{{/if}}
-				<p style="margin: 1em 0;">
-					{{#each figures}}
-						{{role}}: {{count}}<br />
-					{{/each}}
+			{{/if}}
+			{{#if appendCollaborationHint}}
+				<p>
+					{{mf "notification.join.mail.collaborationHint" 'If you like them to collaborate feel free to contact them. If you like to give them the rights to edit the course, you can add them to the organisation team of your course by clicking on the bullhorn next to their name.' LOCALE=locale}}
 				</p>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" style="padding: 10px;">
+			{{/if}}
+			<p>
+				{{#each figures}}
+					{{role}}: {{count}}<br />
+				{{/each}}
+			</p>
+			<p>
 				<a
 				   href="{{courseLink}}">{{mf "notification.join.mail.linktext" '➜ View course' LOCALE=locale}}</a>
-			</td>
-		</tr>
-		<tr>
-			<td width="500" valign="top" bgcolor="#3f819e">
-				<table cellpadding="0" cellspacing="0" border="0" align="center"
-					   style="color:#ddd; font-family: Source Sans Pro, sans-serif; font-size: 10px; text-align: center;">
-					<tr>
-						<td width="500" valign="top" style="padding: 5px 15px 0">
-							{{mf "notification.join.mail.recpnote" "You receive this message because you're on the team of this course." LOCALE=locale}}
-						</td>
-					</tr>
-					<tr>
-						<td width="500" valign="top" style="padding: 0 15px 5px;">
-							<a href="{{unsubLink}}"
-							   style="color:#ddd !important; text-decoration: underline;">{{mf "notification.join.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}</a>
-							&nbsp;
-							<a href="{{urlFor 'profile' query='campaign=joinNotify'}}"
-							   style="color:#ddd !important; text-decoration: underline;">{{mf "notification.join.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-</body>
-
-</html>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="footer">
+				<tr>
+					<td>
+						{{mf "notification.join.mail.recpnote" "You receive this message because you're on the team of this course." LOCALE=locale}}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a
+						   href="{{unsubLink}}">{{mf "notification.join.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}</a>
+						&nbsp;
+						<a
+						   href="{{urlFor 'profile' query='campaign=joinNotify'}}">{{mf "notification.join.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{{/mailBase}}
