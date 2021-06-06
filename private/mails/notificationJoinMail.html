@@ -10,8 +10,14 @@
 			{{#if message}}
 				<p>
 					{{mf "notification.join.mail.message" 'They left this message: ' LOCALE=locale}}
-					{{message}}
 				</p>
+				<table class="comment-box">
+					<tr>
+						<td>
+							{{message}}
+						</td>
+					</tr>
+				</table>
 			{{/if}}
 			{{#if appendCollaborationHint}}
 				<p>

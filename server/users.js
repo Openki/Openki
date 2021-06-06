@@ -93,7 +93,7 @@ Accounts.config({
 Accounts.emailTemplates.verifyEmail.subject = function (user) {
 	return mf(
 		'verifyEmail.subject',
-		{ SITE: Accounts.emailTemplates.siteName, NAME: user.name },
+		{ SITE: Accounts.emailTemplates.siteName, NAME: user.username },
 		'[{SITE}] Welcome to the {SITE} community, {NAME}',
 	);
 };
