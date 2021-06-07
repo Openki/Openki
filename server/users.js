@@ -147,7 +147,7 @@ Accounts.emailTemplates.resetPassword.subject = function () {
 	return mf(
 		'resetPassword.subject',
 		{ SITE: Accounts.emailTemplates.siteName },
-		'Reset your password on {SITE}',
+		'[{SITE}] Reset your password on {SITE}',
 	);
 };
 
