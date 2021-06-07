@@ -382,6 +382,17 @@ Router.map(function () {
 		},
 	});
 
+	this.route('pages', {
+		// /////// static /////////
+		path: 'page/:page_name',
+		action() {
+			this.render(this.params.page_name);
+		},
+		onAfterAction() {
+			Metatags.setCommonTags(this.params.page_name);
+		},
+	});
+
 	this.route('info', {
 		path: 'info/:page_slug',
 		template: 'infoPage',
