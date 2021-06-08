@@ -354,7 +354,7 @@ export class CoursesCollection extends Mongo.Collection {
 
 			find.$and = searchQueries;
 		}
-		
+
 		options.sort = order;
 
 		// Load only data that is useful for list views.
