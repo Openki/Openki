@@ -73,8 +73,8 @@ Template.frameCourselistCourse.helpers({
 	toggleIndicatorIcon() {
 		return Template.instance().expanded.get() ? 'angle-up' : 'angle-down';
 	},
-	interestedPersons() {
-		return this.members.length;
+	interestedPersons(course) {
+		return course.members.length;
 	},
 });
 
