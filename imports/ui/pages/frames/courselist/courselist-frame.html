@@ -9,7 +9,7 @@
 	</style>
 
 	{{#each course in courses}}
-		{{> frameCourselistCourse course}}
+		{{> frameCourselistCourse course hideInterested}}
 	{{/each}}
 	{{#unless ready}}
 		{{> loadingRow}}
@@ -29,11 +29,13 @@
 			<span class="frame-list-item-toggle-indicator">
 				<i class="fa fa-{{toggleIndicatorIcon}}"></i>
 			</span>
+			{{#unless ../hideInterested}}
 			<span class="frame-list-item-interested"
 				  title="{{mf 'frame.courseList.interestedPersons' 'Interested persons'}}">
 				<i class="fa fa-fw fa-user"></i>
 				{{interestedPersons}}
 			</span>
+			{{/unless}}
 			{{name}}
 			{{#if allRegions}}
 				<span class="badge frame-list-item-region">
