@@ -14,8 +14,12 @@ Template.usersCourselist.onCreated(function () {
 	const instance = this;
 	const id = instance.data.profileData.user._id;
 
-	instance.courseSub = instance.subscribe('Courses.findFilter', { userInvolved: id });
-	instance.coursesByRole = function (role) {
+	instance.courseSub = instance.subscribe('Courses.findFilter', {
+		userInvolved: id,
+		archivedDisabled: true,
+	});
+
+	instance.coursesByRole = function (role, archived) {
 		return Courses.find({
 			members: {
 				$elemMatch: {
@@ -23,6 +27,7 @@ Template.usersCourselist.onCreated(function () {
 					roles: role,
 				},
 			},
+			archived: archived ? { $eq: true } : { $ne: true },
 		});
 	};
 });
@@ -32,20 +37,28 @@ Template.usersCourselist.helpers({
 		return _.clone(Roles).reverse();
 	},
 
-	coursesByRoleCount(role) {
-		return Template.instance().coursesByRole(role).count();
+	coursesByRoleCount(role, archived) {
+		return Template.instance().coursesByRole(role, archived).count();
 	},
 
-	coursesByRole(role) {
-		return Template.instance().coursesByRole(role);
+	coursesByRole(role, archived) {
+		return Template.instance().coursesByRole(role, archived);
 	},
 
 	roleUserList() {
 		return `roles.${this.type}.userList`;
 	},
 
+	roleUserListPast() {
+		return `roles.${this.type}.userList.past`;
+	},
+
 	roleMyList() {
 		return `roles.${this.type}.myList`;
+	},
+
+	roleMyListPast() {
+		return `roles.${this.type}.myList.past`;
 	},
 
 	getName() {
@@ -60,7 +73,10 @@ Template.usersCourselist.helpers({
 	},
 	isInvolved() {
 		const userId = Template.instance().data.profileData.user._id;
-		return Courses.findFilter({ userInvolved: userId }, 1).count() > 0;
+		return Courses.findFilter({ userInvolved: userId, archivedDisabled: true }, 1).count() > 0;
+	},
+	showArchived(role) {
+		return role.type === 'team';
 	},
 });
 
