@@ -1,12 +1,12 @@
 import Log from '/imports/api/log/log';
 
 import { Meteor } from 'meteor/meteor';
-import { Base64 } from 'meteor/base64';
 import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Random } from 'meteor/random';
 import { Match, check } from 'meteor/check';
+import juice from 'juice';
 
 import { Users } from '/imports/api/users/users';
 
@@ -15,7 +15,7 @@ import notificationComment from '/imports/notification/notification.comment';
 import notificationJoin from '/imports/notification/notification.join';
 import notificationPrivateMessage from '/imports/notification/notification.private-message';
 
-import juice from 'juice';
+import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -71,15 +71,13 @@ Notification.send = function (entry) {
 
 				const fromAddress = vars.fromAddress || Accounts.emailTemplates.from;
 
-				const binaryLogo = Assets.getBinary(vars.customMailLogo || Meteor.settings.public.mailLogo);
-
 				// For everything that is global use siteName from global settings, eg. unsubscribe
 				vars.siteName = siteName;
 				// For everything context specifig us customSiteName from the region, eg. courses
 				vars.customSiteName = vars.customSiteName || vars.siteName;
 				vars.site = {
 					url: vars.customSiteUrl || Meteor.absoluteUrl(),
-					logo: `data:image/png;base64,${Base64.encode(binaryLogo)}`,
+					logo: base64PngImageData(vars.customMailLogo || Meteor.settings.public.mailLogo),
 					name: vars.customSiteName || vars.siteName,
 				};
 				vars.locale = userLocale;

@@ -1,12 +1,12 @@
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { mf } from 'meteor/msgfmt:core';
 import { Meteor } from 'meteor/meteor';
-import { Base64 } from 'meteor/base64';
 import { _ } from 'meteor/underscore';
 import { Accounts } from 'meteor/accounts-base';
+import juice from 'juice';
 
 import { isEmail, getReportEmails } from '/imports/utils/email-tools';
-import juice from 'juice';
+import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 
 Accounts.onCreateUser((options, originalUser) => {
 	const user = { ...originalUser };
@@ -126,14 +126,13 @@ ${mf(
 };
 
 Accounts.emailTemplates.verifyEmail.html = function (user, url) {
-	const binaryLogo = Assets.getBinary(Meteor.settings.public.mailLogo);
 	return juice(
 		SSR.render('userVerifyEmailMail', {
 			subject: Accounts.emailTemplates.verifyEmail.subject(user),
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: `data:image/png;base64,${Base64.encode(binaryLogo)}`,
+				logo: base64PngImageData(Meteor.settings.public.mailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
 			username: user.username,
@@ -185,14 +184,13 @@ ${mf(
 };
 
 Accounts.emailTemplates.resetPassword.html = function (user, url) {
-	const binaryLogo = Assets.getBinary(Meteor.settings.public.mailLogo);
 	return juice(
 		SSR.render('userResetPasswordMail', {
 			subject: Accounts.emailTemplates.resetPassword.subject(user),
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: `data:image/png;base64,${Base64.encode(binaryLogo)}`,
+				logo: base64PngImageData(Meteor.settings.public.mailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
 			username: user.username,

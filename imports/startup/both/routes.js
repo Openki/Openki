@@ -393,8 +393,6 @@ Router.map(function () {
 			this.render(this.params.page_name);
 		},
 		onAfterAction() {
-			msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
 			Metatags.setCommonTags(this.params.page_name);
 		},
 	});
@@ -595,8 +593,6 @@ Router.map(function () {
 		onAfterAction() {
 			const tenant = Tenants.findOne({ _id: this.params._id });
 			if (tenant) {
-				msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
 				Metatags.setCommonTags(tenant.name);
 			}
 		},
