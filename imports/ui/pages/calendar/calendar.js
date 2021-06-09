@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { $ } from 'meteor/jquery';
-import { mf } from 'meteor/msgfmt:core';
+import { mf, msgfmt } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
@@ -101,7 +101,6 @@ Template.calendar.helpers({
 		return Template.instance().filter;
 	},
 	startDate() {
-		Session.get('timeLocale');
 		return moment(Template.instance().filter.get('start'));
 	},
 });
@@ -196,6 +195,11 @@ Template.calendarNavControl.helpers({
 	},
 
 	mfString(direction, unit, length) {
+		// Depend on locale and a composite mf string so we update reactively when locale changes
+		// and msgfmt finish loading translations
+		msgfmt.loading();
+		Session.get('locale');
+
 		return mf(`calendar.${direction}.${unit}.${length}`);
 	},
 

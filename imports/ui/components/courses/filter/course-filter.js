@@ -1,4 +1,4 @@
-import { mf } from 'meteor/msgfmt:core';
+import { mf, msgfmt } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
@@ -14,6 +14,11 @@ import './course-filter.html';
 
 Template.filter.onCreated(function () {
 	this.autorun(() => {
+		// Depend on locale and a composite mf string so we update reactively when locale changes
+		// and msgfmt finish loading translations
+		msgfmt.loading();
+		Session.get('locale');
+
 		this.stateFilters = [
 			{
 				name: 'proposal',
@@ -233,7 +238,11 @@ Template.additionalFilters.helpers({
 	},
 
 	categoryNameMarked() {
-		Session.get('locale'); // Reactive dependency
+		// Depend on locale and a composite mf string so we update reactively when locale changes
+		// and msgfmt finish loading translations
+		msgfmt.loading();
+		Session.get('locale');
+
 		const search = Template.instance().findInstance.categorySearch.get();
 
 		return StringTools.markedName(search, mf(`category.${this}`));

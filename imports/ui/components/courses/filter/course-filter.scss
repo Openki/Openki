@@ -123,7 +123,6 @@ $filter-course-state-captions-gutter: 10px;
 	border-color: $course-border-color;
 	border-style: solid;
 	border-width: 5px;
-	display: table;
 	font-size: medium;
 	height: 100%;
 	opacity: 0.75;
@@ -162,8 +161,9 @@ $filter-course-state-captions-gutter: 10px;
 }
 
 .filter-caption-text {
-	display: table-cell;
-	vertical-align: middle;
+	@include ellipsis;
+	display: block;
+	line-height: 40px;
 }
 
 .filter-course-roles {

@@ -15,12 +15,12 @@ if (Meteor.isClient) {
 					await MeteorAsync.logout();
 				}
 				Session.set('region', 'all');
-
-				await MeteorAsync.subscribe('Courses.findFilter');
 			});
 
 			it('should a gast only show courses from public tenants', async function () {
 				this.timeout(6000);
+
+				await MeteorAsync.subscribe('Courses.findFilter');
 
 				const coursesAsGast = Courses.findFilter().fetch();
 
@@ -36,6 +36,8 @@ if (Meteor.isClient) {
 
 			it('should allow a logged in user to see courses from his tenant', async function () {
 				this.timeout(6000);
+
+				await MeteorAsync.subscribe('Courses.findFilter');
 
 				const coursesAsGast = Courses.findFilter().fetch();
 
@@ -60,6 +62,14 @@ if (Meteor.isClient) {
 					coursesAsSchufien.filter((c) => c.tenant && schufien.tenants.includes(c.tenant)),
 					'shows private courses as logged in user',
 				);
+			});
+
+			it('should allow to be called with empty params', async function () {
+				this.timeout(6000);
+
+				await MeteorAsync.subscribe('Courses.findFilter', {}, undefined, undefined, []);
+
+				Courses.findFilter({}, undefined, undefined, []).fetch();
 			});
 		});
 	});

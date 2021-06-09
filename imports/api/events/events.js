@@ -103,6 +103,13 @@ export class EventsCollection extends Mongo.Collection {
 				return _.extend(new OEvent(), event);
 			},
 		});
+
+		if (Meteor.isServer) {
+			this._ensureIndex({ tenant: 1, region: 1, start: 1 });
+			this._ensureIndex({ tenant: 1, region: 1, end: 1 });
+			this._ensureIndex({ tenant: 1, region: 1, 'venue._id': 1 });
+			this._ensureIndex({ tenant: 1, region: 1, allGroups: 1 });
+		}
 	}
 
 	/**
@@ -218,7 +225,7 @@ export class EventsCollection extends Mongo.Collection {
 	 * The events are sorted by start date (ascending, before-filter causes descending order)
 	 *
 	 */
-	findFilter(filter = {}, limit = 0, skip, sort) {
+	findFilter(filter = {}, limit = 0, skip = 0, sort) {
 		const find = {};
 		const and = [];
 
@@ -232,7 +239,9 @@ export class EventsCollection extends Mongo.Collection {
 			options.limit = limit;
 		}
 
-		options.skip = skip;
+		if (skip > 0) {
+			options.skip = skip;
+		}
 
 		if (filter.period) {
 			find.start = { $lt: filter.period[1] }; // Start date before end of period

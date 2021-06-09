@@ -80,6 +80,7 @@ export class VenueCollection extends Mongo.Collection {
 		});
 
 		if (Meteor.isServer) {
+			this._ensureIndex({ region: 1 });
 			this._ensureIndex({ loc: '2dsphere' });
 		}
 
@@ -112,14 +113,18 @@ export class VenueCollection extends Mongo.Collection {
 	 * @param {number} [skip]
 	 * @param {*} [sort]
 	 */
-	findFilter(filter = {}, limit = 0, skip, sort) {
+	findFilter(filter = {}, limit = 0, skip = 0, sort) {
 		const find = {};
 
 		/** @type {Mongo.Options<VenueEnity>} */
-		const options = { skip, sort };
+		const options = { sort };
 
 		if (limit > 0) {
 			options.limit = limit;
+		}
+
+		if (skip > 0) {
+			options.skip = skip;
 		}
 
 		if (filter.editor) {

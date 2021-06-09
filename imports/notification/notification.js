@@ -6,6 +6,7 @@ import { Email } from 'meteor/email';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Random } from 'meteor/random';
 import { Match, check } from 'meteor/check';
+import juice from 'juice';
 
 import { Users } from '/imports/api/users/users';
 
@@ -14,7 +15,7 @@ import notificationComment from '/imports/notification/notification.comment';
 import notificationJoin from '/imports/notification/notification.join';
 import notificationPrivateMessage from '/imports/notification/notification.private-message';
 
-import { Logo } from '/imports/utils/email-tools';
+import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -74,11 +75,13 @@ Notification.send = function (entry) {
 				vars.siteName = siteName;
 				// For everything context specifig us customSiteName from the region, eg. courses
 				vars.customSiteName = vars.customSiteName || vars.siteName;
-				vars.siteUrl = vars.customSiteUrl || Meteor.absoluteUrl();
+				vars.site = {
+					url: vars.customSiteUrl || Meteor.absoluteUrl(),
+					logo: base64PngImageData(vars.customMailLogo || Meteor.settings.public.mailLogo),
+					name: vars.customSiteName || vars.siteName,
+				};
 				vars.locale = userLocale;
 				vars.username = username;
-				vars.logo = new Logo(vars.customMailLogo || Meteor.settings.public.mailLogo);
-
 				let message = SSR.render(model.template, vars);
 
 				// Template can't handle DOCTYPE header, so we add the thing here.
@@ -91,8 +94,7 @@ Notification.send = function (entry) {
 					sender: Accounts.emailTemplates.from,
 					to: address,
 					subject: subjectPrefix + vars.subject,
-					html: message,
-					attachments: [vars.logo.attachement],
+					html: juice(message),
 				};
 
 				Email.send(mail);

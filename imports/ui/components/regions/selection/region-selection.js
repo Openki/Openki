@@ -235,4 +235,7 @@ Template.regionSelectionItem.helpers({
 		const search = Template.instance().parentInstance().state.get('search');
 		return StringTools.markedName(search, this.name);
 	},
+	private() {
+		return !Meteor.settings.public.publicTenants.includes(this.tenant) ? 'region-link-private' : '';
+	},
 });

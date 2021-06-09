@@ -5,6 +5,7 @@ import Notification from '/imports/notification/notification';
 
 // Watch the Log for event notifications
 Meteor.startup(() => {
+	SSR.compileTemplate('mailBase', Assets.getText('mails/mailBase.html'));
 	SSR.compileTemplate('notificationEventMail', Assets.getText('mails/notificationEventMail.html'));
 	SSR.compileTemplate(
 		'notificationCommentMail',

@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import { mf, msgfmt } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
@@ -10,6 +10,18 @@ import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
+
+/**
+ * Converts the input to a moment that the locale is set to timeLocale.
+ *
+ * Note: This is necessary because the global call moment.locale() only applies to new objects. For
+ * existing moments we have to set it manually.
+ * Calling Session.get('timeLocale') also makes the helper reactive.
+ * @param {moment.MomentInput} date
+ */
+function toMomentWithTimeLocale(date) {
+	return moment(date).locale(Session.get('timeLocale'));
+}
 
 const helpers = {
 	siteName() {
@@ -25,9 +37,16 @@ const helpers = {
 		return 'Hmmm';
 	},
 
-	categoryName() {
-		Session.get('locale'); // Reactive dependency
-		return mf(`category.${this}`);
+	/**
+	 * @param {string} name
+	 */
+	categoryName(name) {
+		// Depend on locale and a composite mf string so we update reactively when locale changes
+		// and msgfmt finish loading translations
+		msgfmt.loading();
+		Session.get('locale');
+
+		return mf(`category.${name}`);
 	},
 
 	/**
@@ -37,6 +56,11 @@ const helpers = {
 		if (!type) {
 			return '';
 		}
+
+		// Depend on locale and a composite mf string so we update reactively when locale changes
+		// and msgfmt finish loading translations
+		msgfmt.loading();
+		Session.get('locale');
 
 		return mf(`roles.${type}.short`);
 	},
@@ -73,6 +97,7 @@ const helpers = {
 		}
 
 		const locale = Session.get('locale');
+
 		// default fallback language
 		let guideLink =
 			'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
@@ -111,85 +136,76 @@ const helpers = {
 
 	// Date & Time format helper
 	dateShort(date) {
-		if (date) {
-			Session.get('timeLocale');
-			return moment(date).format('l');
+		if (!date) {
+			return false;
 		}
-		return false;
+		return toMomentWithTimeLocale(date).format('l');
 	},
 
 	dateFormat(date) {
-		if (date) {
-			Session.get('timeLocale');
-			return moment(date).format('L');
+		if (!date) {
+			return false;
 		}
-		return false;
+		return toMomentWithTimeLocale(date).format('L');
 	},
 
 	dateLong(date) {
-		if (date) {
-			Session.get('timeLocale');
-			return moment(date).format('LL');
+		if (!date) {
+			return false;
 		}
-		return false;
+		return toMomentWithTimeLocale(date).format('LL');
 	},
 
 	dateTimeLong(date) {
-		if (date) {
-			Session.get('timeLocale');
-			return moment(date).format('LLLL');
+		if (!date) {
+			return false;
 		}
-		return false;
+		return toMomentWithTimeLocale(date).format('LLLL');
 	},
 
 	timeFormat(date) {
-		if (date) {
-			Session.get('timeLocale');
-			return moment(date).format('LT');
+		if (!date) {
+			return false;
 		}
-		return false;
+		return toMomentWithTimeLocale(date).format('LT');
 	},
 
 	fromNow(date) {
-		if (date) {
-			Session.get('timeLocale'); // it depends
-			return moment(date).fromNow();
+		if (!date) {
+			return false;
 		}
-		return false;
+		return toMomentWithTimeLocale(date).fromNow();
 	},
 
 	weekdayFormat(date) {
-		if (date) {
-			Session.get('timeLocale'); // it depends
-			return moment(date).format('ddd');
+		if (!date) {
+			return false;
 		}
-		return false;
+		return toMomentWithTimeLocale(date).format('ddd');
 	},
 
 	weekNr(date) {
-		if (date) {
-			Session.get('timeLocale');
-			return moment(date).week();
+		if (!date) {
+			return false;
 		}
-		return false;
+		return toMomentWithTimeLocale(date).week();
 	},
 
 	calendarDayShort(date) {
-		if (date) {
-			Session.get('timeLocale'); // it depends
-			const m = moment(date);
-			const year = m.year() !== moment().year() ? ` ${m.format('YYYY')}` : '';
-			return moment(date).format('D. MMMM') + year;
+		if (!date) {
+			return false;
 		}
-		return false;
+
+		const momentForYear = toMomentWithTimeLocale(date);
+		const year = momentForYear.year() !== moment().year() ? ` ${momentForYear.format('YYYY')}` : '';
+		return toMomentWithTimeLocale(date).format('D. MMMM') + year;
 	},
 
 	calendarDayFormat(date) {
-		if (date) {
-			Session.get('timeLocale');
-			return moment(date).format('dddd, Do MMMM');
+		if (!date) {
+			return false;
 		}
-		return false;
+		return toMomentWithTimeLocale(date).format('dddd, Do MMMM');
 	},
 
 	/**
@@ -200,13 +216,13 @@ const helpers = {
 		// Prevent words from sticking together
 		// eg. <p>Kloradf dadeq gsd.</p><p>Loradf dadeq gsd.</p> => Kloradf dadeq gsd. Loradf dadeq gsd.
 		const htmlPreparedForMinimalStyling = html
-			.replaceAll('<br />', '<br /> ')
-			.replaceAll('<p>', '<p> ')
-			.replaceAll('</p>', '</p> ')
-			.replaceAll('<h2>', '<h2> ')
-			.replaceAll('</h2>', '</h2> ')
-			.replaceAll('<h3>', '<h3> ')
-			.replaceAll('</h3>', '</h3> ');
+			.replace(/<br \/>/g, '<br /> ')
+			.replace(/<p>/g, '<p> ')
+			.replace(/<\/p>/g, '</p> ')
+			.replace(/<h2>/g, '<h2> ')
+			.replace(/<\/h2>/g, '</h2> ')
+			.replace(/<h3>/g, '<h3> ')
+			.replace(/<\/h3>/g, '</h3> ');
 		// Source: https://stackoverflow.com/questions/822452/strip-html-from-text-javascript/47140708#47140708
 		const doc = new DOMParser().parseFromString(htmlPreparedForMinimalStyling, 'text/html');
 		return doc.body.textContent || '';
