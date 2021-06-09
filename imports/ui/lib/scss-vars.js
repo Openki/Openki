@@ -1,7 +1,7 @@
 export const ScssVars = {
 	// == Media Query Breakpoints
 	// $screen-xxs
-	screenXXS: 380, // defined at client/styles/_variables.scss L84
+	screenXXS: 360, // defined at client/styles/_variables.scss L84
 
 	// $screen-xs
 	screenXS: 480, // defined at client/styles/_bootstrap-variables.scss L302

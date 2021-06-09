@@ -6,6 +6,7 @@
 # Server
 meteor-base@1.4.0             # Packages every Meteor app needs to have
 blaze-html-templates          # Compile .html files into Meteor Blaze views
+base64
 email@2.0.0
 iron:router
 meteorhacks:ssr
@@ -17,11 +18,11 @@ mdg:validation-error
 dynamic-import
 
 # Accounts
-accounts-password@1.7.0
-accounts-base@1.9.0
-accounts-facebook@1.3.2
-accounts-google@1.3.3
-accounts-github@1.4.3
+accounts-password
+accounts-base
+accounts-facebook
+accounts-google
+accounts-github
 facebook-config-ui
 google-config-ui
 github-config-ui

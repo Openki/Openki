@@ -3,9 +3,7 @@
 		<div class="container {{#if isInCalendar}}calendar-introduction{{/if}}">
 			<div class="introduction">
 				<h3>
-					{{#mf KEY='introduction.Title' SITENAME=siteName}}
-						What does {SITENAME} do for you?
-					{{/mf}}
+					{{mf 'introduction.Title' 'What does {SITENAME} do for you?' SITENAME=siteName}}
 					{{#if openedIntro}}
 						<button type="button"
 								class="btn btn-default js-introduction-toggle-btn introduction-hide-btn">

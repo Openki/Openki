@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { Random } from 'meteor/random';
 
 /**
  * Check a string if it is a valid email adress
@@ -24,23 +23,3 @@ export function getReportEmails() {
 		recipient: Meteor.settings.reporter?.recipient || 'admins@openki.net',
 	};
 }
-
-export class Logo {
-	/**
-	 * Logo that can be attached to mails
-	 * @param {string} path a file path relative to private/
-	 */
-	constructor(path) {
-		check(path, String);
-		const cid = Random.id();
-		this.url = `cid:${cid}`;
-		this.attachement = {
-			cid,
-			path: Assets.absoluteFilePath(path),
-			filename: false,
-		};
-		return this;
-	}
-}
-
-export default isEmail;

@@ -1,6 +1,7 @@
 import Log from '/imports/api/log/log';
 
 import { Meteor } from 'meteor/meteor';
+import { Base64 } from 'meteor/base64';
 import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
 import { SSR } from 'meteor/meteorhacks:ssr';
@@ -14,7 +15,7 @@ import notificationComment from '/imports/notification/notification.comment';
 import notificationJoin from '/imports/notification/notification.join';
 import notificationPrivateMessage from '/imports/notification/notification.private-message';
 
-import { Logo } from '/imports/utils/email-tools';
+import juice from 'juice';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -70,15 +71,19 @@ Notification.send = function (entry) {
 
 				const fromAddress = vars.fromAddress || Accounts.emailTemplates.from;
 
+				const binaryLogo = Assets.getBinary(vars.customMailLogo || Meteor.settings.public.mailLogo);
+
 				// For everything that is global use siteName from global settings, eg. unsubscribe
 				vars.siteName = siteName;
 				// For everything context specifig us customSiteName from the region, eg. courses
 				vars.customSiteName = vars.customSiteName || vars.siteName;
-				vars.siteUrl = vars.customSiteUrl || Meteor.absoluteUrl();
+				vars.site = {
+					url: vars.customSiteUrl || Meteor.absoluteUrl(),
+					logo: `data:image/png;base64,${Base64.encode(binaryLogo)}`,
+					name: vars.customSiteName || vars.siteName,
+				};
 				vars.locale = userLocale;
 				vars.username = username;
-				vars.logo = new Logo(vars.customMailLogo || Meteor.settings.public.mailLogo);
-
 				let message = SSR.render(model.template, vars);
 
 				// Template can't handle DOCTYPE header, so we add the thing here.
@@ -91,8 +96,7 @@ Notification.send = function (entry) {
 					sender: Accounts.emailTemplates.from,
 					to: address,
 					subject: subjectPrefix + vars.subject,
-					html: message,
-					attachments: [vars.logo.attachement],
+					html: juice(message),
 				};
 
 				Email.send(mail);

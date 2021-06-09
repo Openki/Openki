@@ -220,8 +220,7 @@ Template.map.onRendered(function () {
 
 	// This must be one of the ugliest pieces of code I've written ever
 	const mainIcon = L.divIcon({
-		html:
-			'<span class="fa fa-map-marker" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
+		html: '<span class="fa fa-map-marker" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
 	});
 
 	// Tracked so that observe() will be stopped when the template is destroyed

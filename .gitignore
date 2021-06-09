@@ -11,6 +11,8 @@ codekit-config.json
 
 dump/
 
+.temp
+
 .npm
 
 settings.json
