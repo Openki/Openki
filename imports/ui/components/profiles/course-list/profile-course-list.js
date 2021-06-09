@@ -16,7 +16,11 @@ Template.usersCourselist.onCreated(function () {
 
 	instance.courseSub = instance.subscribe('Courses.findFilter', {
 		userInvolved: id,
-		archivedDisabled: true,
+		archived: false,
+	});
+	instance.courseSub = instance.subscribe('Courses.findFilter', {
+		userInvolved: id,
+		archived: true,
 	});
 
 	instance.coursesByRole = function (role, archived) {
@@ -73,7 +77,10 @@ Template.usersCourselist.helpers({
 	},
 	isInvolved() {
 		const userId = Template.instance().data.profileData.user._id;
-		return Courses.findFilter({ userInvolved: userId, archivedDisabled: true }, 1).count() > 0;
+		return (
+			Courses.findFilter({ userInvolved: userId, archived: false }, 1).count() > 0 ||
+			Courses.findFilter({ userInvolved: userId, archived: true }, 1).count() > 0
+		);
 	},
 	showArchived(role) {
 		return role.type === 'team';

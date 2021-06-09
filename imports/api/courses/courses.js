@@ -262,12 +262,10 @@ export class CoursesCollection extends Mongo.Collection {
 			options.skip = skip;
 		}
 
-		if (!filter.archivedDisabled) {
-			if (!filter.archived) {
-				find.archived = { $ne: true }; // hide archived by default
-			} else {
-				find.archived = { $eq: true }; // only show archived
-			}
+		if (!filter.archived) {
+			find.archived = { $ne: true }; // hide archived by default
+		} else {
+			find.archived = { $eq: true }; // only show archived
 		}
 
 		if (filter.tenants && filter.tenants.length > 0) {
