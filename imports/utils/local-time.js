@@ -70,9 +70,18 @@ LocalTime.toString = function (date) {
  * Note that the returned date will be faux UTC.
  *
  * @param {string} dateStr
+ * @param {string} [timeStr]
  */
-LocalTime.fromString = function (dateStr) {
+LocalTime.fromString = function (dateStr, timeStr) {
+	if (timeStr) {
+		return moment.utc(`${dateStr} ${timeStr}`, 'L LT');
+	}
+
 	return moment.utc(dateStr);
+};
+
+LocalTime.now = function () {
+	return moment.utc().add(moment().utcOffset(), 'minutes');
 };
 
 LocalTime.toGlobal = function (time, regionId) {
