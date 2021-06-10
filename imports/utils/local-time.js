@@ -75,10 +75,6 @@ LocalTime.fromString = function (dateStr) {
 	return moment.utc(dateStr);
 };
 
-LocalTime.now = function () {
-	return moment().add(moment().utcOffset(), 'minutes');
-};
-
 LocalTime.toGlobal = function (time, regionId) {
 	const region = Regions.findOne(regionId);
 	if (!region) {
