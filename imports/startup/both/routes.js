@@ -547,7 +547,7 @@ Router.map(function () {
 			let event;
 			const create = this.params._id === 'create';
 			if (create) {
-				const propose = LocalTime.now().add(1, 'week').startOf('hour');
+				const propose = moment().startOf('hour');
 				event = {
 					new: true,
 					startLocal: LocalTime.toString(propose),

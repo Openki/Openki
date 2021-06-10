@@ -80,14 +80,6 @@ Template.eventEdit.onCreated(function () {
 		data.editableDescription = instance.editableDescription;
 		instance.editableDescription.setText(data.description);
 	});
-
-	/**
-	 * Get current local time depending on selected region
-	 * @returns Returned as faux-UTC moment-object.
-	 */
-	instance.now = function () {
-		return LocalTime.nowFauxUTC(instance.selectedRegion.get());
-	};
 });
 
 /**
