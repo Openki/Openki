@@ -5,7 +5,7 @@ import './calendar/calendar';
 import './course-create/course-create';
 import './course-details/course-details';
 import './event-details/event-details';
-import './faq/faq';
+import './info/info';
 import './find/find';
 import './frames/calendar/calendar-frame';
 import './frames/courselist/courselist-frame';

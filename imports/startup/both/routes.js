@@ -8,6 +8,7 @@ import moment from 'moment';
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
+import { InfoPages } from '/imports/api/infoPages/infoPages';
 import { Tenants } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
 import { Venues, Venue } from '/imports/api/venues/venues';
@@ -119,11 +120,6 @@ Router.map(function () {
 
 			Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
 		},
-	});
-
-	this.route('FAQ', {
-		path: '/FAQ',
-		template: 'FAQ',
 	});
 
 	this.route('featureGroup', {
@@ -395,6 +391,30 @@ Router.map(function () {
 		},
 		onAfterAction() {
 			Metatags.setCommonTags(this.params.page_name);
+		},
+	});
+
+	this.route('info', {
+		path: 'info/:page_slug',
+		template: 'infoPage',
+		waitOn() {
+			return [Meteor.subscribe('infoPage', this.params.page_slug, Session.get('locale'))];
+		},
+		data() {
+			const page = InfoPages.findOne({ slug: this.params.page_slug });
+			if (!page) {
+				return false;
+			}
+
+			return {
+				page,
+			};
+		},
+		onAfterAction() {
+			const page = InfoPages.findOne({ slug: this.params.page_slug });
+			if (page) {
+				Metatags.setCommonTags(page.title);
+			}
 		},
 	});
 

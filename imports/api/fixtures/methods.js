@@ -10,6 +10,8 @@ import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
+import { InfoPages } from '../infoPages/infoPages';
+import { infoPages } from './data/infoPages/infoPages';
 
 import * as HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
@@ -84,6 +86,13 @@ if (Meteor.settings.testdata) {
 		ensure.user('1u', undefined, true);
 		ensure.user('validated_mail', undefined, true);
 		return 'Inserted user fixtures.';
+	};
+
+	const infoPagesCreate = function () {
+		infoPages.forEach((p) => {
+			InfoPages.insert(p);
+		});
+		return 'Inserted info pages fixtures.';
 	};
 
 	const groupsCreate = function () {
@@ -380,6 +389,7 @@ if (Meteor.settings.testdata) {
 		},
 
 		'fixtures.create'() {
+			infoPagesCreate();
 			if (Regions.find().count() === 0) {
 				regionsCreate();
 			}
@@ -389,7 +399,7 @@ if (Meteor.settings.testdata) {
 			coursesCreate();
 			eventsGenerate();
 		},
-
+		'fixtures.infoPages.create': infoPagesCreate,
 		'fixtures.users.create': usersCreate,
 		'fixtures.regions.create': regionsCreate,
 		'fixtures.groups.create': groupsCreate,
