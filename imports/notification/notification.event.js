@@ -165,6 +165,9 @@ notificationEvent.Model = function (entry) {
 				subject,
 				additionalMessage: entry.body.additionalMessage,
 				creator,
+				creatorLink: `${Meteor.absoluteUrl(
+					`user/${event.createdBy}/${creatorName}`,
+				)}?campaign=eventNotify`,
 				creatorName,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
 				customSiteName: siteName,

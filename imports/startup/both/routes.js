@@ -167,7 +167,8 @@ Router.map(function () {
 				['regionbg', 'background-color', '.frame-list-item-region'],
 				['regioncolor', 'color', '.frame-list-item-region'],
 			]).getCssRules();
-			return { cssRules };
+			const hideInterested = parseInt(this.params.query.hideInterested, 10) || 0;
+			return { cssRules, hideInterested };
 		},
 	});
 
@@ -566,7 +567,7 @@ Router.map(function () {
 			let event;
 			const create = this.params._id === 'create';
 			if (create) {
-				const propose = LocalTime.now().add(1, 'week').startOf('hour');
+				const propose = LocalTime.now().startOf('hour');
 				event = {
 					new: true,
 					startLocal: LocalTime.toString(propose),
@@ -613,8 +614,6 @@ Router.map(function () {
 		onAfterAction() {
 			const tenant = Tenants.findOne({ _id: this.params._id });
 			if (tenant) {
-				msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
 				Metatags.setCommonTags(tenant.name);
 			}
 		},
