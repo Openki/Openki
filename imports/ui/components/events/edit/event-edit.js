@@ -82,16 +82,8 @@ Template.eventEdit.onCreated(function () {
 	});
 });
 
-/**
- * @param {string} dateStr
- * @param {string} timeStr
- */
-const readDateTime = function (dateStr, timeStr) {
-	return moment.utc(`${dateStr} ${timeStr}`, 'L LT');
-};
-
 const getEventStartMoment = function (template) {
-	return readDateTime(
+	return LocalTime.fromString(
 		template.$('.js-event-start-date').val(),
 		template.$('.js-event-start-time').val(),
 	);
@@ -99,7 +91,10 @@ const getEventStartMoment = function (template) {
 
 const getEventEndMoment = function (template) {
 	const startMoment = getEventStartMoment(template);
-	let endMoment = readDateTime(startMoment.format('L'), template.$('.js-event-end-time').val());
+	let endMoment = LocalTime.fromString(
+		startMoment.format('L'),
+		template.$('.js-event-end-time').val(),
+	);
 
 	// If the end time is earlier than the start time, assume the event
 	// spans into the next day. This might result in some weird behavior
@@ -107,7 +102,7 @@ const getEventEndMoment = function (template) {
 	// Well maybe you shouldn't schedule your events to start or end
 	// in these politically fucked hours.
 	if (endMoment.diff(startMoment) < 0) {
-		endMoment = readDateTime(
+		endMoment = LocalTime.fromString(
 			startMoment.add(1, 'day').format('L'),
 			template.$('.js-event-end-time').val(),
 		);
@@ -304,7 +299,7 @@ Template.eventEdit.events({
 		const start = getEventStartMoment(instance);
 		if (!start.isValid()) {
 			const exampleDate = moment().format('L');
-			Alert.serverError(
+			Alert.error(
 				mf(
 					'event.edit.dateFormatWarning',
 					{ EXAMPLEDATE: exampleDate },
@@ -348,6 +343,16 @@ Template.eventEdit.events({
 		let eventId = this._id || '';
 		const isNew = eventId === '';
 		if (isNew) {
+			if (start.isBefore(LocalTime.now())) {
+				Alert.error(
+					mf(
+						'event.edit.startInPast',
+						'The event starts in the past. Have you selected a start date and time?',
+					),
+				);
+				return;
+			}
+
 			if (this.courseId) {
 				const course = Courses.findOne(this.courseId);
 				editevent.region = course.region;
