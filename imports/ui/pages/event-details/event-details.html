@@ -15,9 +15,17 @@
 	<div class="event-wrapper-main">
 		{{#if course}}
 			<div class="event-course-header">
-				<h2>
-					{{course.name}}
-				</h2>
+				{{#if editing}}
+					{{#if _id}}
+						<h2>{{mf 'event.details.edit.edit' 'Edit event'}}</h2>
+					{{else}}
+						<h2>{{mf 'event.details.edit.add' 'Create an event'}}</h2>
+					{{/if}}
+				{{else}}
+					<h2>
+						{{course.name}}
+					</h2>
+				{{/if}}
 				<a href="{{pathFor 'showCourse' _id=courseId}}" class="event-course-header-link">
 					<i class="fa fa-external-link"></i>
 					{{mf 'event.details.viewCourse' 'view course'}}
