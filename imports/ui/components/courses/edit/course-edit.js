@@ -59,13 +59,12 @@ Template.courseEdit.onCreated(function () {
 
 	this.showInternalCheckbox = new ReactiveVar(false);
 	this.autorun(() => {
-		let internalOption = false;
-		const user = Meteor.user();
-		if (!this.data.isFrame && this.data.group && user?.groups) {
-			// show only if user is in the given group
-			internalOption = user.groups.includes(this.data.group);
-		}
-		this.showInternalCheckbox.set(internalOption);
+		this.showInternalCheckbox.set(
+			// Visible in group detail page (for creation)
+			(!this.data.isFrame && this.data.group) ||
+				// and visible on edit
+				this.data.groups?.length > 0,
+		);
 	});
 
 	this.fullRoleSelection = true;
