@@ -70,33 +70,18 @@ LocalTime.toString = function (date) {
  * Note that the returned date will be faux UTC.
  *
  * @param {string} dateStr
+ * @param {string} [timeStr]
  */
-LocalTime.fromString = function (dateStr) {
+LocalTime.fromString = function (dateStr, timeStr) {
+	if (timeStr) {
+		return moment.utc(`${dateStr} ${timeStr}`, 'L LT');
+	}
+
 	return moment.utc(dateStr);
 };
 
 LocalTime.now = function () {
-	return moment().add(moment().utcOffset(), 'minutes');
-};
-
-LocalTime.toGlobal = function (time, regionId) {
-	const region = Regions.findOne(regionId);
-	if (!region) {
-		throw new Error('Unable to load region');
-	}
-	const { tz } = region;
-
-	return moment.tz(moment(time).format('YYYY-MM-DD[T]HH:mm'), tz);
-};
-
-LocalTime.fromDate = function (time, regionId) {
-	const region = Regions.findOne(regionId);
-	if (!region) {
-		throw new Error('Unable to load region');
-	}
-	const { tz } = region;
-
-	return moment(time).tz(time, tz).format('YYYY-MM-DD[T]HH:mm');
+	return moment.utc().add(moment().utcOffset(), 'minutes');
 };
 
 export default LocalTime;

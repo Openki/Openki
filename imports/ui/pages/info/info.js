@@ -1,21 +1,17 @@
 import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { Meteor } from 'meteor/meteor';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 
-import './faq.de.md';
-import './faq.en.md';
-import './faq.fr.md';
-import './faq.html';
+import './info.html';
 
-Template.FAQ.onCreated(function () {
+Template.infoPage.onCreated(function () {
 	this.headerTag = 'h3';
 	this.contentTags = 'p, ul';
 
-	this.scrollTo = (id) => {
+	this.scrollTo = (/** @type {string} */ id) => {
 		const idSelector = `#${decodeURIComponent(id)}`;
 		const targetTitle = this.$(idSelector);
 		if (targetTitle.length) {
@@ -27,7 +23,7 @@ Template.FAQ.onCreated(function () {
 	};
 });
 
-Template.FAQ.onRendered(function () {
+Template.infoPage.onRendered(function () {
 	// in order to create nice IDs for the questions also for non-english
 	// alphabets we make our own ones
 	this.$(this.headerTag).each(function () {
@@ -50,28 +46,7 @@ Template.FAQ.onRendered(function () {
 	}
 });
 
-Template.FAQ.helpers({
-	localizedFAQ() {
-		const templatePrefix = 'FAQ_';
-		const templateNotFound = (locale) => !Template[templatePrefix + locale];
-
-		// if the FAQ  doesn't exist with the specific locale fall back to the
-		// more general one
-		let locale = Session.get('locale');
-		if (templateNotFound(locale)) {
-			locale = locale.slice(0, 2);
-		}
-
-		// if this still doesn't work, use english locale
-		if (templateNotFound(locale)) {
-			locale = 'en';
-		}
-
-		return templatePrefix + locale;
-	},
-});
-
-Template.FAQ.events({
+Template.infoPage.events({
 	'click h3'(event, instance) {
 		const title = $(event.currentTarget);
 		title.nextUntil(instance.headerTag, instance.contentTags).toggle();

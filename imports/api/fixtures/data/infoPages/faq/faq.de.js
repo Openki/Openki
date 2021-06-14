@@ -1,5 +1,4 @@
-{{#template name="FAQ_de"}}
-## Allgemein
+export const body = `## Allgemein
 
 ### Was ist Openki?
 Openki ist eine offene Bildungsplattform. Auf ihr können Kurse vorgeschlagen, diskutiert, entwickelt, organisiert und ausgeschrieben werden. Der Fokus liegt dabei auf der Förderung von Selbstorganisation, dem Zusammenbringen von Menschen, Gruppierungen und Initiativen und gewährleistet einen hürdefreien Austausch von Erfahrung und Wissen. Die Kurse sind für alle zugänglich, unabhängig von der finanziellen Situation. Die Organisation dahinter ist Non-profit und OpenSource.
@@ -32,7 +31,7 @@ Falls du bei der Übersetzung von Openki helfen möchtest, findest du hier die b
 <!-- ### Gibt es ähnliche Projekte wie Openki? TODO VERGLICHS-TABELLE EINFÜGEN? -->
 
 ### Wer administriert die Webseite Openki.net?
-Die Administration und der technische Unterhalt (Unklarheiten der Benutzer\*innen klären, aufräumen, Probleme erkennen und lösen, Verbesserungen vornehmen und vieles mehr) wird von einem Admin-Kollektiv durchgeführt. Für die verschiedenen Regionen, in denen Openki aktiv ist, soll es bald lokale Admin-Kollektive geben.
+Die Administration und der technische Unterhalt (Unklarheiten der Benutzer*innen klären, aufräumen, Probleme erkennen und lösen, Verbesserungen vornehmen und vieles mehr) wird von einem Admin-Kollektiv durchgeführt. Für die verschiedenen Regionen, in denen Openki aktiv ist, soll es bald lokale Admin-Kollektive geben.
 
 
 
@@ -40,17 +39,17 @@ Die Administration und der technische Unterhalt (Unklarheiten der Benutzer\*inne
 ## Die Rollen auf Openki
 
 ### Was ist ein Openki-Kurs?
-Ein Openki-Kurs ist nicht nur eine Lehrveranstaltung im klassischen Sinne, sondern beinhaltet auch die Diskussion der Teilnehmenden über seinen Inhalt und Ziele, sowie das Finden von Mentor\*innen oder Veranstaltungsdaten. Wie ein Schiff können alle Teilnehmenden den Kurs steuern und das Ziel kontinuierlich mitbestimmen und ändern. Die Sparte von möglichen Kursen reicht von Vorträgen, Frontalunterricht über Workshops, Diskussions- und Arbeitsgruppen bis zum Lesezirkel.
+Ein Openki-Kurs ist nicht nur eine Lehrveranstaltung im klassischen Sinne, sondern beinhaltet auch die Diskussion der Teilnehmenden über seinen Inhalt und Ziele, sowie das Finden von Mentor*innen oder Veranstaltungsdaten. Wie ein Schiff können alle Teilnehmenden den Kurs steuern und das Ziel kontinuierlich mitbestimmen und ändern. Die Sparte von möglichen Kursen reicht von Vorträgen, Frontalunterricht über Workshops, Diskussions- und Arbeitsgruppen bis zum Lesezirkel.
 
-Ein Openki-Kurs beginnt als "Vorschlag": Jemand bringt ein Kursthema ein - eine Idee, einen Wunsch, eine Frage. Andere Leute können am Kurs "teilnehmen", das heisst ihm beitreten und mitdiskutieren. Es meldet sich ein\*e Mentor\*in und man findet ein Veranstaltungsort.
+Ein Openki-Kurs beginnt als "Vorschlag": Jemand bringt ein Kursthema ein - eine Idee, einen Wunsch, eine Frage. Andere Leute können am Kurs "teilnehmen", das heisst ihm beitreten und mitdiskutieren. Es meldet sich ein*e Mentor*in und man findet ein Veranstaltungsort.
 Sobald ein Kurs eine geplante Veranstaltung hat, "findet er statt".
 Ein Kurs kann einmalig oder wiederholend sein, auf anderen Kursen aufbauen oder für sich alleine stehen.
 
-### Was ist ein\*e Teilnehmer\*in?
-Ein\*e Teilnehmer\*in ist jede Person, die an einem Kurs teilnimmt. Zusätzlich zum Teilnehmer\*innen-Sein können Teilnehmer\*innen die Funktion als Mentor\*in, Host und Organisator\*in übernehmen.
+### Was ist ein*e Teilnehmer*in?
+Ein*e Teilnehmer*in ist jede Person, die an einem Kurs teilnimmt. Zusätzlich zum Teilnehmer*innen-Sein können Teilnehmer*innen die Funktion als Mentor*in, Host und Organisator*in übernehmen.
 
-### Was ist eine Mentor\*In?
-Mentor\*innen haben im Kursthema einen Wissens- und/oder Erfahrungsvorsprung und leiten die Teilnehmenden durch den Kurs. Sie sind in der Regel zuständig für die inhaltliche Vor- und Nachbereitung eines Kurses.
+### Was ist eine Mentor*In?
+Mentor*innen haben im Kursthema einen Wissens- und/oder Erfahrungsvorsprung und leiten die Teilnehmenden durch den Kurs. Sie sind in der Regel zuständig für die inhaltliche Vor- und Nachbereitung eines Kurses.
 
 _"Im Unterschied zum Coach ist der Mentor üblicherweise nicht eigens für diese Tätigkeit ausgebildet, sondern verfügt lediglich über einen Erfahrungs- und/oder Wissensvorsprung."_ (aus [Wikipedia](https://de.wikipedia.org/wiki/Mentoring))
 
@@ -59,7 +58,7 @@ Das O-Team eines spezifischen Kurses hat die Berechtigung diesen Kurs auf Openki
 Sobald eine Person einen Kurs auf Openki vorschlägt, wird sie automatisch zur ersten Person des O-Teams. Sie ist befähigt, beliebig weitere Personen ins O-Team des Kurses aufzunehmen.
 
 ### Was ist ein Host?
-Ein "Host" ist die Person, die sich um den Ort kümmert, wo ein Kurs stattfinden soll: Sie besitzt Zugang zum Veranstaltungsraum, klärt im Voraus die Verfügbarkeit ab, ist Kontaktperson zu den Besitzer\*innen / Hausabwart\*innen / etc. und ist dafür verantwortlich, dass die jeweiligen Hausrichtlinien kommuniziert und eingehalten werden.
+Ein "Host" ist die Person, die sich um den Ort kümmert, wo ein Kurs stattfinden soll: Sie besitzt Zugang zum Veranstaltungsraum, klärt im Voraus die Verfügbarkeit ab, ist Kontaktperson zu den Besitzer*innen / Hausabwart*innen / etc. und ist dafür verantwortlich, dass die jeweiligen Hausrichtlinien kommuniziert und eingehalten werden.
 
 ### Was sind Gruppen?
 Gruppen sind bereits bestehende Organisationen, Communities usw., welche Openki dazu verwenden, ihre Kurse zu organisieren. Mehr dazu siehe im Abschnit ["Gruppen"](#Gruppen) unten.
@@ -86,10 +85,10 @@ Zu allen - von Kochen über Nuklearphysik und Modern Dance bis hin zu Rainer Mar
 <!-- TODO Siehe Grundwerte -->
 
 ### Dürfen Kurse etwas kosten?
-Ja, aber alle Preise verstehen sich als Richtpreise. Als gewünschte Spende sozusagen. Das heisst, jede\*r darf mehr oder auch weniger geben als vorgeschlagen, und genauso teilnehmen. Nur die Selbstkosten (Material, Raum, Anfahrtswege...) eines Kurses können fix sein.
+Ja, aber alle Preise verstehen sich als Richtpreise. Als gewünschte Spende sozusagen. Das heisst, jede*r darf mehr oder auch weniger geben als vorgeschlagen, und genauso teilnehmen. Nur die Selbstkosten (Material, Raum, Anfahrtswege...) eines Kurses können fix sein.
 
 ### Ich will einen Kurs hosten, habe aber keinen Raum...
-Auf Openki gibt es je nach Region eine kurze oder lange Liste mit benutzbaren Räumen. Alle können ihre Räume - von Fabrikhalle über Wohnzimmer bis Garten - ausschreiben, damit sie als Kursorte gefunden werden können. Wie du Kontakt mit den für den Raum Verantwortlichen aufnimmst ist von Raum zu Raum unterschiedlich. Am einfachsten schreibst du ein\*e Benutzer\*in an, die den Raum ausgeschrieben oder schon gehostet hat.
+Auf Openki gibt es je nach Region eine kurze oder lange Liste mit benutzbaren Räumen. Alle können ihre Räume - von Fabrikhalle über Wohnzimmer bis Garten - ausschreiben, damit sie als Kursorte gefunden werden können. Wie du Kontakt mit den für den Raum Verantwortlichen aufnimmst ist von Raum zu Raum unterschiedlich. Am einfachsten schreibst du ein*e Benutzer*in an, die den Raum ausgeschrieben oder schon gehostet hat.
 
 ### Wann wird ein Kurs ausgeschrieben?
 Sobald jemand einen Kurs vorschlägt, wird dieser als "Vorschlag" ausgeschrieben und erscheint mit einem gestrichelten Rahmen in der Kursübersicht.
@@ -100,7 +99,7 @@ Damit der Kurs aber im Kalender erscheint, muss jemand aus dem O-Team eine Veran
 
 <!--
 ### Ist es möglich, fertige Veranstaltungen auszuschreiben, ohne den Kurs zuerst vorzuschlagen?
-Ja. Ein Mentor\*in, der/die genau weiss wo und wann er/sie was lehren/vermitteln will, kann einen Kurs ohne vorangehende Diskussion ausschreiben. Er/Sie ist dann z.B. als Organisator\*in, Host und Mentor\*in des Kurses eingetragen. Ist es eine einmalige Veranstaltung tust du das über das Formular [Event erstellen](https://openki.net/event/create).-->
+Ja. Ein Mentor*in, der/die genau weiss wo und wann er/sie was lehren/vermitteln will, kann einen Kurs ohne vorangehende Diskussion ausschreiben. Er/Sie ist dann z.B. als Organisator*in, Host und Mentor*in des Kurses eingetragen. Ist es eine einmalige Veranstaltung tust du das über das Formular [Event erstellen](https://openki.net/event/create).-->
 
 ### Wie verbindlich ist die Anmeldung für einen Kurs?
 Die Verbindlichkeit einer Kurs-Anmeldung hängt vom Kurs ab und wird im Kursbeschrieb kommuniziert.
@@ -115,7 +114,7 @@ Zum Sammeln der Kursmaterialien und zur Dokumentation des Kurses gibt es momenta
 Normalerweie finden Kurse in der Sprache statt, in der sie ausgeschrieben werden. Mehrsprachige Kurse werden mehrsprachig ausgeschrieben.
 
 ### Wieso finde ich in der Kursübersicht zahlreiche Kurse, welche bereits vergangen sind?
-Die Idee dahinter ist, dass ein Kurs nie wirklich zu Ende ist; Eine Idee oder ein Thema kann auch in Zukunft aktuell bleiben. So können Benutzer\*innen einen Kurs jederzeit weiterentwickeln oder auf die Dokumentation dessen zurückgreifen. Die aktuell stattfindenden Kurse ("Events") findest du im [Kalender](https://openki.net/calendar).
+Die Idee dahinter ist, dass ein Kurs nie wirklich zu Ende ist; Eine Idee oder ein Thema kann auch in Zukunft aktuell bleiben. So können Benutzer*innen einen Kurs jederzeit weiterentwickeln oder auf die Dokumentation dessen zurückgreifen. Die aktuell stattfindenden Kurse ("Events") findest du im [Kalender](https://openki.net/calendar).
 
 ### Ich brauche für die Organisation meines Kurses unbedingt noch dieses / jenes Tool!
 Viele Tools sind schon auf dem Web frei verfügbar und mensch kann sie auf Openki einfach per link verknüpfen. Einige Beispiele:
@@ -127,19 +126,19 @@ Viele Tools sind schon auf dem Web frei verfügbar und mensch kann sie auf Openk
 * Files hochladen: [https://wetransfer.com/](https://wetransfer.com/)
 ## Mentoring
 
-### Was ist ein\*e Mentor\*in?
-siehe ["Was ist ein\*e Mentor\*in?"](#was-ist-eine-mentorin)
+### Was ist ein*e Mentor*in?
+siehe ["Was ist ein*e Mentor*in?"](#was-ist-eine-mentorin)
 
 ### Wer kann mentorieren?
-Alle Benutzer\*innen können sich für Kurse als Mentor\*innen melden.
+Alle Benutzer*innen können sich für Kurse als Mentor*innen melden.
 
-### Braucht es eine\*n Mentor\*in?
-Nein. Es gibt auch Kurse, wobei alle Teilnehmenden zusammen Wissen erarbeiten ohne eine\*n bestimmte\*n Mentor\*in zu benötigen.
+### Braucht es eine*n Mentor*in?
+Nein. Es gibt auch Kurse, wobei alle Teilnehmenden zusammen Wissen erarbeiten ohne eine*n bestimmte*n Mentor*in zu benötigen.
 
-### Wie weiss ich, ob ein\*e Mentor\*in seriös ist?
+### Wie weiss ich, ob ein*e Mentor*in seriös ist?
 Wenn du unsicher bist, kontaktiere die Person im Vorfeld. Handle nach gesundem Menschenverstand. In Zukunft wird es ein Bewertungstool geben, später vielleicht auch so was wie ein Trust-Network.
 
-### Weshalb kann ich als Mentor\*in keinen fixen Preis verlangen?
+### Weshalb kann ich als Mentor*in keinen fixen Preis verlangen?
 Wir sind der Meinung, dass Bildung (und somit auch die Veranstaltungen auf Openki) für Alle zugänglich sein soll – unabhängig von deinem Kontostand und Einkommen.
 
 
@@ -172,7 +171,7 @@ Ja! Die verschiedenen Ansichten zum Einbinden für eure Gruppe findet ihr unter 
 <!-- TODO Verantwortung bei den Teilehmenden... -->
 
 ### Wie wird der Missbrauch von Openki verhindert? z.B Diskriminierung, Rassismus etc.
-Diskriminierende Inhalte zu erkennen und anzusprechen ist Aufgabe aller Benutzer\*innen; allfälliges Monitoring übernimmt die Administration. Es muss Transparenz bezüglich zensierter Inhalte herrschen.
+Diskriminierende Inhalte zu erkennen und anzusprechen ist Aufgabe aller Benutzer*innen; allfälliges Monitoring übernimmt die Administration. Es muss Transparenz bezüglich zensierter Inhalte herrschen.
 
 ### Wie weiss ich ob ich in Gefahr bin, wenn ich an einem Kurs teilnehme?
 Wenn du unsicher bist, kontaktiere die Person im Vorfeld. Handle nach gesundem Menschenverstand. Solltest du dich unsicher fühlen, gehe nicht alleine hin. In Zukunft wird es ein Feedback-Tool geben, später vielleicht auch ein Form von Trust-Network.
@@ -180,7 +179,7 @@ Wenn du unsicher bist, kontaktiere die Person im Vorfeld. Handle nach gesundem M
 ### Wie steht Openki zu Datenschutz?
 Openki ist sehr darauf bedacht, verschiedensten Privatsphäre-Ansprüchen gerecht zu werden. Dazu gehören moderne Verschlüsselungstechniken ebenso wie personalisierte Datenschutzeinstellugen.
 
-Openki verkauft keine Benutzer\*innendaten an Unternehmen, wir verfolgen dein Verhalten nicht und wir lassen auch keine anderen Firmen dein Verhalten und Interessen verfolgen. Aus diesem Grund benutzen wir beispielsweise die Share Buttons von [Shariff](https://www.heise.de/ct/artikel/Shariff-Social-Media-Buttons-mit-Datenschutz-2467514.html).
+Openki verkauft keine Benutzer*innendaten an Unternehmen, wir verfolgen dein Verhalten nicht und wir lassen auch keine anderen Firmen dein Verhalten und Interessen verfolgen. Aus diesem Grund benutzen wir beispielsweise die Share Buttons von [Shariff](https://www.heise.de/ct/artikel/Shariff-Social-Media-Buttons-mit-Datenschutz-2467514.html).
 
 ### Wie sicher ist die Openki webpage?
 Openki.net ist standardmässig SSL verschlüsselt. Dies ist die gleiche Technologie, die dein Onlinebanking nutzt. Aber deine Anmeldungen an Kursen sind zum Beispiel für andere Nutzende sichtbar. Wähle daher nicht deinen echten Namen, wenn das vermeiden möchtest.
@@ -191,6 +190,5 @@ Openki.net ist standardmässig SSL verschlüsselt. Dies ist die gleiche Technolo
 ## Technisches
 
 ### Wo gibts Antworten auf technische Fragen?
-Die technische Dokumentation ist in unserem [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home) zu finden.
-
-{{/template}}
+Die technische Dokumentation ist in unserem [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home) zu finden.`;
+export default body;

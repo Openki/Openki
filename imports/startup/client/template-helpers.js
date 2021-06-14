@@ -120,7 +120,7 @@ const helpers = {
 	},
 
 	faqLink() {
-		return Meteor.settings.public.faqLink || '/FAQ';
+		return Meteor.settings.public.faqLink || '/info/faq';
 	},
 
 	aboutLink() {

@@ -8,6 +8,7 @@ import moment from 'moment';
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
+import { InfoPages } from '/imports/api/infoPages/infoPages';
 import { Tenants } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
 import { Venues, Venue } from '/imports/api/venues/venues';
@@ -121,11 +122,6 @@ Router.map(function () {
 		},
 	});
 
-	this.route('FAQ', {
-		path: '/FAQ',
-		template: 'FAQ',
-	});
-
 	this.route('featureGroup', {
 		path: 'admin/feature-group',
 		template: 'featureGroup',
@@ -171,7 +167,8 @@ Router.map(function () {
 				['regionbg', 'background-color', '.frame-list-item-region'],
 				['regioncolor', 'color', '.frame-list-item-region'],
 			]).getCssRules();
-			return { cssRules };
+			const hideInterested = parseInt(this.params.query.hideInterested, 10) || 0;
+			return { cssRules, hideInterested };
 		},
 	});
 
@@ -397,6 +394,30 @@ Router.map(function () {
 		},
 	});
 
+	this.route('info', {
+		path: 'info/:page_slug',
+		template: 'infoPage',
+		waitOn() {
+			return [Meteor.subscribe('infoPage', this.params.page_slug, Session.get('locale'))];
+		},
+		data() {
+			const page = InfoPages.findOne({ slug: this.params.page_slug });
+			if (!page) {
+				return false;
+			}
+
+			return {
+				page,
+			};
+		},
+		onAfterAction() {
+			const page = InfoPages.findOne({ slug: this.params.page_slug });
+			if (page) {
+				Metatags.setCommonTags(page.title);
+			}
+		},
+	});
+
 	this.route('profile', {
 		path: 'profile',
 		waitOn() {
@@ -546,7 +567,7 @@ Router.map(function () {
 			let event;
 			const create = this.params._id === 'create';
 			if (create) {
-				const propose = LocalTime.now().add(1, 'week').startOf('hour');
+				const propose = LocalTime.now().startOf('hour');
 				event = {
 					new: true,
 					startLocal: LocalTime.toString(propose),

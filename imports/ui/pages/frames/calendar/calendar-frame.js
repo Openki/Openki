@@ -15,12 +15,15 @@ import '/imports/ui/components/loading/loading';
 
 import './calendar-frame.html';
 
-Template.frameCalendar.onCreated(function frameCalendarOnCreated() {
-	this.groupedEvents = new ReactiveVar([]);
-	this.days = new ReactiveVar([]);
+Template.frameCalendar.onCreated(function () {
+	const instance = this;
+
+	instance.groupedEvents = new ReactiveVar([]);
+	instance.days = new ReactiveVar([]);
+	instance.pageReady = new ReactiveVar(false);
 
 	const { query } = Router.current().params;
-	this.limit = new ReactiveVar(parseInt(query.count, 10) || 200);
+	instance.limit = new ReactiveVar(parseInt(query.count, 10) || 200);
 
 	let startDate = moment();
 	if (query.start) {
@@ -32,7 +35,7 @@ Template.frameCalendar.onCreated(function frameCalendarOnCreated() {
 		endDate = moment(query.end).add(1, 'day');
 	}
 
-	this.autorun(() => {
+	instance.autorun(() => {
 		const filter = Events.Filtering().read(query);
 		if (startDate && startDate.isValid()) {
 			filter.add('after', startDate);
@@ -44,19 +47,27 @@ Template.frameCalendar.onCreated(function frameCalendarOnCreated() {
 		filter.done();
 
 		const filterQuery = filter.toQuery();
-		const limit = this.limit.get();
+		const limit = instance.limit.get();
 
-		this.subscribe('Events.findFilter', filterQuery, limit + 1);
+		instance.subscribe('Events.findFilter', filterQuery, limit + 1, {
+			onReady: () => {
+				if (!instance.pageReady.get()) {
+					instance.pageReady.set(true);
+				}
+			},
+		});
 
 		const events = Events.find({}, { sort: { start: 1 }, limit }).fetch();
 		const groupedEvents = _.groupBy(events, (event) => moment(event.start).format('LL'));
 
-		this.groupedEvents.set(groupedEvents);
-		this.days.set(Object.keys(groupedEvents));
+		instance.groupedEvents.set(groupedEvents);
+		instance.days.set(Object.keys(groupedEvents));
 	});
 });
 
 Template.frameCalendar.helpers({
+	pageReady: () => Template.instance().pageReady.get(),
+
 	ready: () => Template.instance().subscriptionsReady(),
 
 	days: () => Template.instance().days.get(),

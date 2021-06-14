@@ -1,5 +1,5 @@
 /* stylelint-disable max-nesting-depth, selector-no-qualifying-type */
-.faq {
+.info-page {
 	h2 {
 		color: $brand-primary;
 	}
@@ -24,7 +24,14 @@
 
 	p,
 	ul {
-		display: none;
 		font-size: 1.05em;
+	}
+
+	h2,
+	h3 {
+		~ p,
+		~ ul {
+			display: none;
+		}
 	}
 }

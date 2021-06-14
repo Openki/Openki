@@ -33,7 +33,6 @@ export const save = ServerMethod(
 		if (!userId) {
 			throw new Meteor.Error(401, 'please log-in');
 		}
-
 		const isNew = groupId === 'create';
 
 		// Load group from DB

@@ -9,6 +9,7 @@ import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
+import { InfoPages } from '/imports/api/infoPages/infoPages';
 
 if (Meteor.settings.testdata) {
 	const logResult = function (error, result) {
@@ -31,6 +32,7 @@ if (Meteor.settings.testdata) {
 		// Remove the rate-limiting to allow the tests repeated logins
 		Accounts.removeDefaultRateLimit();
 
+		ifCollectionEmpty(InfoPages, ['fixtures.infoPages.create']);
 		ifCollectionEmpty(Users, ['fixtures.users.create']);
 		ifCollectionEmpty(Regions, ['fixtures.regions.create']);
 		ifCollectionEmpty(Groups, ['fixtures.groups.create']);

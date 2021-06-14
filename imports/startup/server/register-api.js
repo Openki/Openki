@@ -7,6 +7,7 @@ import '/imports/api/events/methods';
 import '/imports/api/events/server/publications';
 import '/imports/api/groups/methods';
 import '/imports/api/groups/server/publications';
+import '/imports/api/infoPages/server/publications';
 import '/imports/api/log/methods';
 import '/imports/api/log/server/publications';
 import '/imports/api/regions/methods';
