@@ -1,6 +1,7 @@
 import './admin/panel/admin-panel';
 import './admin/feature-group/feature-group';
 import './admin/users/users';
+import './admin/tenants/tenants';
 import './calendar/calendar';
 import './course-create/course-create';
 import './course-details/course-details';

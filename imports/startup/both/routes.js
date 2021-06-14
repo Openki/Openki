@@ -132,6 +132,19 @@ Router.map(function () {
 		template: 'users',
 	});
 
+	this.route('tenants', {
+		path: 'admin/tenants',
+		template: 'tenants',
+		waitOn() {
+			return Meteor.subscribe('tenants');
+		},
+		onAfterAction() {
+			msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
+			Metatags.setCommonTags(mf('tenants.windowtitle', 'Tenants'));
+		},
+	});
+
 	this.route('find', finderRoute('/find'));
 
 	this.route('frameCalendar', {
