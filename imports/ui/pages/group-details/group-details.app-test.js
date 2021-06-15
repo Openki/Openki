@@ -7,7 +7,7 @@ import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 import { MeteorAsync } from '/imports/utils/promisify';
 
 if (Meteor.isClient) {
-	describe('Groupe details', () => {
+	describe('Group details', () => {
 		describe('Create', function () {
 			this.timeout(30000);
 
@@ -132,16 +132,12 @@ if (Meteor.isClient) {
 					const actualTitle = jQuery('form h2').text();
 					assert.match(actualTitle, expectedTitle, 'Form title must mention group');
 				};
-				const haveNotInternalCheckbox = () => {
-					assert(jQuery('.js-check-internal').length === 0, 'Internal checkbox is not present');
-				};
 				const haveInternalCheckbox = () => {
 					assert(jQuery('.js-check-internal').length > 0, 'Internal checkbox present');
 				};
 				await waitForSubscriptions();
 				await waitFor(haveEditfield);
 				await waitFor(findExpectedFormTitle);
-				await waitFor(haveNotInternalCheckbox);
 				await MeteorAsync.loginWithPassword('greg', 'greg');
 				await waitFor(haveInternalCheckbox);
 
