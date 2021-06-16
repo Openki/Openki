@@ -142,12 +142,16 @@
 }
 
 .navbar-link-active.calendar-link > .nav-marker-caret {
-	border-bottom-color: $calendar-nav-bg;
+	@media (min-width: $grid-float-breakpoint) {
+		border-bottom-color: $calendar-nav-bg;
+	}
 }
 
 .navbar-link-active.calendar-link.navbar-link-covering > .nav-marker-bar {
-	background-color: $calendar-nav-bg;
-	opacity: 1;
+	@media (min-width: $grid-float-breakpoint) {
+		background-color: $calendar-nav-bg;
+		opacity: 1;
+	}
 }
 
 .navbar .navbar-nav:first-child,
@@ -183,7 +187,10 @@
 .navbar .navbar-nav > .open > .navbar-link:hover,
 .navbar .navbar-nav > .open > .navbar-link:focus {
 	background-color: lighten($navbar-default-bg, 10%);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+	@media (min-width: $grid-float-breakpoint) {
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	}
 }
 
 .navbar .navbar-nav > .open > .navbar-link > .nav-marker-caret {
@@ -191,8 +198,9 @@
 }
 
 .navbar .navbar-nav > .open > .navbar-link > .nav-marker-bar {
+	background-color: $dropdown-bg;
+
 	@media (min-width: $grid-float-breakpoint) {
-		background-color: $dropdown-bg;
 		opacity: 1;
 	}
 }
@@ -208,8 +216,10 @@
 .navbar-covering .navbar-link-active,
 .navbar-covering .navbar-nav > li > .navbar-link-active:hover,
 .navbar-covering .navbar-nav > li > .navbar-link-active:focus {
-	background-color: lighten($navbar-default-bg, 10%);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	@media (min-width: $grid-float-breakpoint) {
+		background-color: lighten($navbar-default-bg, 10%);
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	}
 }
 
 .navbar-form-selection {
