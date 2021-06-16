@@ -7,7 +7,7 @@ import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 import { MeteorAsync } from '/imports/utils/promisify';
 
 if (Meteor.isClient) {
-	describe('Groupe details', () => {
+	describe('Group details', () => {
 		describe('Create', function () {
 			this.timeout(30000);
 
@@ -141,7 +141,7 @@ if (Meteor.isClient) {
 				await waitForSubscriptions();
 				await waitFor(haveEditfield);
 				await waitFor(findExpectedFormTitle);
-				await waitFor(haveNotInternalCheckbox);
+				await waitFor(haveNotInternalCheckbox); // on creation the internal checkbox should not be present for none group members
 				await MeteorAsync.loginWithPassword('greg', 'greg');
 				await waitFor(haveInternalCheckbox);
 

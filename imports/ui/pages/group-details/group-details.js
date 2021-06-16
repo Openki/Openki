@@ -177,7 +177,7 @@ Template.groupDetails.helpers({
 	},
 	editingSettings() {
 		const instance = Template.instance();
-		return instance.mayEdit.get() && instance.editingSettings.get();
+		return instance.mayEdit.get() && !this.isNew && instance.editingSettings.get();
 	},
 });
 
