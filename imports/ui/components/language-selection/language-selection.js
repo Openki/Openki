@@ -50,7 +50,7 @@ Template.languageSelection.onCreated(function () {
 Template.languageSelection.helpers({
 	inNavbarClasses() {
 		if (this.inNavbar) {
-			return 'navbar-form navbar-form-selection col-6-sm-auto';
+			return 'col-6-sm-auto';
 		}
 		return '';
 	},

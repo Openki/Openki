@@ -24,7 +24,7 @@ Template.regionSelectionWrap.onCreated(function () {
 Template.regionSelectionWrap.helpers({
 	inNavbarClasses() {
 		if (this.inNavbar) {
-			return 'navbar-form navbar-form-selection dropdown col-6-sm-auto';
+			return 'col-6-sm-auto';
 		}
 		return '';
 	},

@@ -1,7 +1,7 @@
 <template name="regionSelectionWrap">
 	{{#if Template.subscriptionsReady}}
 		{{#if state 'searchingRegions'}}
-			<li class="{{inNavbarClasses}} dropdown">
+			<li class="navbar-form navbar-form-selection dropdown {{inNavbarClasses}}">
 				<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 				{{> regionSelection}}
 			</li>
