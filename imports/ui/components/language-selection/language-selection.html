@@ -1,13 +1,13 @@
 <template name="languageSelectionWrap">
 	{{#if searchingLanguages}}
-		{{> languageSelection}}
+		{{> languageSelection inNavbar=inNavbar}}
 	{{else}}
-		{{> languageDisplay}}
+		{{> languageDisplay inNavbar=inNavbar}}
 	{{/if}}
 </template>
 
 <template name="languageSelection">
-	<li class="navbar-form navbar-form-selection dropdown">
+	<li class="dropdown {{inNavbarClasses}}">
 		<span class="fa fa-language fa-fw" aria-hidden="true"></span>
 		<input type="text" class="form-control js-language-search" value="{{setLanguage.name}}">
 		<span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -53,7 +53,7 @@
 </template>
 
 <template name="languageDisplay">
-	<li>
+	<li class="{{inNavbarClasses}}">
 		<a class="navbar-link js-language-display">
 			<span class="fa fa-language fa-fw" aria-hidden="true"></span>
 			{{setLanguage.short}}

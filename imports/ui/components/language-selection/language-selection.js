@@ -26,6 +26,12 @@ Template.languageSelectionWrap.helpers({
 });
 
 Template.languageDisplay.helpers({
+	inNavbarClasses() {
+		if (this.inNavbar) {
+			return 'col-6-sm-auto';
+		}
+		return '';
+	},
 	setLanguage() {
 		return Languages[Session.get('locale')];
 	},
@@ -42,6 +48,13 @@ Template.languageSelection.onCreated(function () {
 });
 
 Template.languageSelection.helpers({
+	inNavbarClasses() {
+		if (this.inNavbar) {
+			return 'navbar-form navbar-form-selection col-6-sm-auto';
+		}
+		return '';
+	},
+
 	setLanguage() {
 		return Languages[Session.get('locale')];
 	},

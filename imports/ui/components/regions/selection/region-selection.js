@@ -21,6 +21,24 @@ Template.regionSelectionWrap.onCreated(function () {
 	this.state.setDefault('searchingRegions', false);
 });
 
+Template.regionSelectionWrap.helpers({
+	inNavbarClasses() {
+		if (this.inNavbar) {
+			return 'navbar-form navbar-form-selection dropdown col-6-sm-auto';
+		}
+		return '';
+	},
+});
+
+Template.regionDisplay.helpers({
+	inNavbarClasses() {
+		if (this.inNavbar) {
+			return 'col-6-sm-auto';
+		}
+		return '';
+	},
+});
+
 Template.regionDisplay.events({
 	'click .js-region-display'(event, instance) {
 		instance.parentInstance().state.set('searchingRegions', true);
