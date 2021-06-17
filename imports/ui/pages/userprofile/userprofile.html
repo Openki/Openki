@@ -17,7 +17,7 @@
 					<p class="profile-description">{{this.user.description}}</p>
 
 					{{#if ownuser}}
-						<a class="btn btn-primary" href="/profile/">
+						<a class="btn btn-primary" href="{{pathFor 'profile'}}">
 							<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
 							{{mf 'profile.preferenceslink' "Account settings"}}
 						</a>
