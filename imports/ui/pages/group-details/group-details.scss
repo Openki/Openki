@@ -36,6 +36,13 @@
 	width: 50px;
 }
 
+.group-details-name,
+.group-details-short,
+.group-details-claim,
+.group-details-description {
+	@include editable-form-control;
+}
+
 .group-details-logo,
 .group-details-name,
 .group-details-short {
