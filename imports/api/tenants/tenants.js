@@ -1,7 +1,5 @@
 import { Mongo } from 'meteor/mongo';
 
-import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-
 // ======== DB-Model: ========
 /**
  * @typedef {Object} TenantEntity
@@ -25,9 +23,6 @@ export class TenantsCollection extends Mongo.Collection {
 			_id: 1,
 			name: 1,
 			members: 1,
-			// Only admins can see all tenant admins. Note: Admin privileg is not something that is
-			// likely to happen and reactive changes are not needed.
-			admins: UserPrivilegeUtils.privilegedTo('admin') ? 1 : undefined,
 		};
 	}
 }

@@ -1,5 +1,6 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
+import { isTenantAdmin } from '/imports/utils/is-tenant-admin';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
@@ -16,7 +17,9 @@ Template.tenantDetails.onCreated(function () {
 	instance.editingSettings = new ReactiveVar(false);
 
 	instance.autorun(() => {
-		const editingSettings = UserPrivilegeUtils.privilegedTo('admin');
+		const editingSettings =
+			UserPrivilegeUtils.privilegedTo('admin') ||
+			isTenantAdmin(Meteor.userId(), instance.data.tenant._id);
 		instance.editingSettings.set(editingSettings);
 	});
 });

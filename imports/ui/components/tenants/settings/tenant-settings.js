@@ -18,10 +18,17 @@ Template.tenantSettings.onCreated(function () {
 
 	instance.busy(false);
 
-	instance.userSearch = new ReactiveVar('');
-
+	instance.memberSearch = new ReactiveVar('');
 	instance.autorun(() => {
-		const search = instance.userSearch.get();
+		const search = instance.memberSearch.get();
+		if (search.length > 0) {
+			instance.subscribe('userSearch', search);
+		}
+	});
+
+	instance.adminSearch = new ReactiveVar('');
+	instance.autorun(() => {
+		const search = instance.adminSearch.get();
 		if (search.length > 0) {
 			instance.subscribe('userSearch', search);
 		}
@@ -29,10 +36,10 @@ Template.tenantSettings.onCreated(function () {
 });
 
 Template.tenantSettings.helpers({
-	foundUsers() {
+	foundMembers() {
 		const instance = Template.instance();
 
-		const search = instance.userSearch.get();
+		const search = instance.memberSearch.get();
 		if (search === '') {
 			return false;
 		}
@@ -40,11 +47,22 @@ Template.tenantSettings.helpers({
 		const tenant = Tenants.findOne(Router.current().params._id);
 		return UserSearchPrefix(search, { exclude: tenant.members, limit: 30 });
 	},
+	foundAdmins() {
+		const instance = Template.instance();
+
+		const search = instance.adminSearch.get();
+		if (search === '') {
+			return false;
+		}
+
+		const tenant = Tenants.findOne(Router.current().params._id);
+		return UserSearchPrefix(search, { exclude: tenant.admins, limit: 30 });
+	},
 });
 
 Template.tenantSettings.events({
-	'keyup .js-search-users'(event, instance) {
-		instance.userSearch.set(instance.$('.js-search-users').val());
+	'keyup .js-search-members'(event, instance) {
+		instance.memberSearch.set(instance.$('.js-search-members').val());
 	},
 
 	async 'click .js-member-add-btn'() {
@@ -83,6 +101,49 @@ Template.tenantSettings.events({
 			);
 		} catch (err) {
 			Alert.serverError(err, 'Could not remove member');
+		}
+	},
+
+	'keyup .js-search-admins'(event, instance) {
+		instance.adminSearch.set(instance.$('.js-search-admins').val());
+	},
+
+	async 'click .js-admin-add-btn'() {
+		const adminId = this._id;
+		const tenantId = Router.current().params._id;
+		try {
+			await TenantsMethods.updateAdminship(adminId, tenantId, true);
+			const adminName = Users.findOne(adminId)?.username;
+			const tenantName = Tenants.findOne(tenantId).name;
+			Alert.success(
+				mf(
+					'tenantSettings.adminAdded',
+					{ ADMIN: adminName, TENANT: tenantName },
+					'"{ADMIN}" has been added as an admin to the tenant "{TENANT}"',
+				),
+			);
+		} catch (err) {
+			Alert.serverError(err, 'Could not add admin');
+		}
+	},
+
+	async 'click .js-admin-remove-btn'() {
+		const adminId = `${this}`;
+		const tenantId = Router.current().params._id;
+		try {
+			await TenantsMethods.updateAdminship(adminId, tenantId, false);
+
+			const adminName = Users.findOne(adminId)?.username;
+			const tenantName = Tenants.findOne(tenantId).name;
+			Alert.success(
+				mf(
+					'tenantSettings.adminRemoved',
+					{ ADMIN: adminName, TENANT: tenantName },
+					'"{ADMIN}" has been removed as an admin from to the tenant "{TENANT}"',
+				),
+			);
+		} catch (err) {
+			Alert.serverError(err, 'Could not remove admin');
 		}
 	},
 });

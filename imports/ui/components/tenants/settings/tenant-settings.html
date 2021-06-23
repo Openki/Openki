@@ -31,13 +31,13 @@
 							<span class="input-group-addon">
 								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 							</span>
-							<input class="js-search-users form-control" id="AddTenantMember"
+							<input class="js-search-members form-control" id="AddTenantMember"
 								   placeholder="{{mf 'tenant.settings.field.addMember.placeholder' 'Type name of buddy'}}"
 								   size="40" type="text" />
 						</div>
 					</div>
 					<div class="tag-group multiline">
-						{{#each foundUsers}}
+						{{#each foundMembers}}
 							<div class="tag tag-btn tenant-member-tag-btn-add">
 								<button class="js-member-add-btn"
 										title="{{mf 'tenant.settings.addMember' 'add as member'}}"
@@ -49,6 +49,59 @@
 							<div class="tag tag-link tenant-member-tag-profile addon">
 								<a href="{{pathFor 'userprofile' _id=this._id}}"
 								   title="{{mf 'tenant.settings.member.profile'}}">
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+								</a>
+							</div>
+						{{/each}}
+					</div>
+				</div>
+				<div class="details-form-element">
+					<h3>
+						<span class="fa fa-group fa-fw" aria-hidden="true"></span>
+						{{mf 'tenant.settings.title.admin' 'Admins'}}
+					</h3>
+					<div class="tag-group multiline">
+						{{#each admins}}
+							<div class="tag tag-btn tenant-admin-tag-btn-remove">
+								<button class="js-admin-remove-btn"
+										title="{{mf 'tenant.settings.removeFromTenant' 'remove admin'}}"
+										type="button">
+									<i class="fa fa-remove fa-fw" aria-hidden="true"></i>
+									{{username this}}
+								</button>
+							</div>
+							<div class="tag tag-link tenant-admin-tag-profile addon">
+								<a href="{{pathFor 'userprofile' _id=this}}"
+								   title="{{mf 'tenant.settings.admin.profile' 'Visit profile'}}">
+									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+								</a>
+							</div>
+						{{/each}}
+					</div>
+					<div class="form-group">
+						<label>{{mf 'tenant.settings.field.addAdmins' 'Add a new admin to your tenant'}}</label>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+							</span>
+							<input class="js-search-admins form-control" id="AddTenantAdmin"
+								   placeholder="{{mf 'tenant.settings.field.addAdmin.placeholder' 'Type name of buddy'}}"
+								   size="40" type="text" />
+						</div>
+					</div>
+					<div class="tag-group multiline">
+						{{#each foundAdmins}}
+							<div class="tag tag-btn tenant-admin-tag-btn-add">
+								<button class="js-admin-add-btn"
+										title="{{mf 'tenant.settings.addAdmin' 'add as admin'}}"
+										type="button">
+									<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+									{{username this._id}}
+								</button>
+							</div>
+							<div class="tag tag-link tenant-admin-tag-profile addon">
+								<a href="{{pathFor 'userprofile' _id=this._id}}"
+								   title="{{mf 'tenant.settings.admin.profile'}}">
 									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
 								</a>
 							</div>
