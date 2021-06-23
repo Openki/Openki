@@ -68,6 +68,7 @@ Template.venueEdit.onCreated(function () {
 					...orginalLocation,
 					main: true,
 					draggable: true,
+					proposed: undefined,
 				};
 				instance.locationTracker.markers.insert(location);
 			}
