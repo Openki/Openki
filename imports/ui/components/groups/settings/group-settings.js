@@ -38,7 +38,7 @@ Template.groupSettings.onCreated(function () {
 });
 
 Template.groupSettings.helpers({
-	foundUsers() {
+	foundUsers(group) {
 		const instance = Template.instance();
 
 		const search = instance.userSearch.get();
@@ -46,35 +46,34 @@ Template.groupSettings.helpers({
 			return false;
 		}
 
-		const group = Groups.findOne(Router.current().params._id);
 		return userSearchPrefix(search, { exclude: group.members, limit: 30 });
 	},
 
-	kioskEventURL() {
-		return Router.routes.kioskEvents.url({}, { query: { group: this._id } });
+	kioskEventURL(group) {
+		return Router.routes.kioskEvents.url({}, { query: { group: group._id } });
 	},
-	timetableURL() {
-		return Router.routes.timetable.url({}, { query: { group: this._id } });
+	timetableURL(group) {
+		return Router.routes.timetable.url({}, { query: { group: group._id } });
 	},
-	scheduleURL() {
-		return Router.routes.frameSchedule.url({}, { query: { group: this._id } });
+	scheduleURL(group) {
+		return Router.routes.frameSchedule.url({}, { query: { group: group._id } });
 	},
-	frameEventsURL() {
-		return Router.routes.frameEvents.url({}, { query: { group: this._id } });
+	frameEventsURL(group) {
+		return Router.routes.frameEvents.url({}, { query: { group: group._id } });
 	},
-	frameWeekURL() {
-		return Router.routes.frameWeek.url({}, { query: { group: this._id } });
+	frameWeekURL(group) {
+		return Router.routes.frameWeek.url({}, { query: { group: group._id } });
 	},
-	frameCalendarURL() {
-		return Router.routes.frameCalendar.url({}, { query: { group: this._id } });
+	frameCalendarURL(group) {
+		return Router.routes.frameCalendar.url({}, { query: { group: group._id } });
 	},
-	frameListURL() {
-		return Router.routes.frameCourselist.url({}, { query: { group: this._id } });
+	frameListURL(group) {
+		return Router.routes.frameCourselist.url({}, { query: { group: group._id } });
 	},
 });
 
 Template.groupSettings.events({
-	'keyup .js-search-users'(event, instance) {
+	'keyup .js-search-users'(_event, instance) {
 		instance.userSearch.set(instance.$('.js-search-users').val());
 	},
 
@@ -116,7 +115,7 @@ Template.groupSettings.events({
 		}
 	},
 
-	'input .js-logo-url'(event, instance) {
+	'input .js-logo-url'(_event, instance) {
 		const elem = instance.$('.js-logo-url');
 		if (elem.val().includes('://')) {
 			elem.val(elem.val().split('://')[1], 1);
@@ -161,7 +160,7 @@ Template.groupSettings.events({
 		}
 	},
 
-	'click .js-group-edit-cancel'(event, instance) {
+	'click .js-group-edit-cancel'(_event, instance) {
 		instance.parentInstance().editingSettings.set(false);
 	},
 });
