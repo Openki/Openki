@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { Mongo } from 'meteor/mongo';
+import Predicates from '/imports/utils/predicates';
+import { Filtering } from '/imports/utils/filtering';
 
 // ======== DB-Model: ========
 /**
@@ -40,7 +42,7 @@ export class RegionsCollection extends Mongo.Collection {
 		super('Regions');
 
 		if (Meteor.isServer) {
-			this._ensureIndex({ members: 1 });
+			this._ensureIndex({ tenant: 1 });
 			this._ensureIndex({ loc: '2dsphere' });
 		}
 	}
@@ -56,6 +58,40 @@ export class RegionsCollection extends Mongo.Collection {
 		}
 
 		return this.findOne(regionId);
+	}
+
+	// eslint-disable-next-line class-methods-use-this
+	Filtering() {
+		return new Filtering({ tenant: Predicates.id });
+	}
+
+	/**
+	 * Find regions for given filters
+	 * @param {object} [filter] dictionary with filter options
+	 * @param {string} [filter.tenant] restrict to regions in that tenant
+	 * @param {number} [limit] how many to find
+	 * @param {number} [skip]
+	 * @param {*} [sort]
+	 */
+	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+		const selector = {};
+
+		/** @type {Mongo.Options<RegionEntity>} */
+		const options = { sort };
+
+		if (limit > 0) {
+			options.limit = limit;
+		}
+
+		if (skip > 0) {
+			options.skip = skip;
+		}
+
+		if (filter.tenant) {
+			selector.tenant = filter.tenant;
+		}
+
+		return this.find(selector, options);
 	}
 }
 

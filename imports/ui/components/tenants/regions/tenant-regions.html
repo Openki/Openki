@@ -1,0 +1,20 @@
+<template name="tenantRegions">
+	<h3>
+		{{mf 'tenant.details.regions.title' 'Regions'}}
+	</h3>
+	<div class="row row-no-gutters responsive-table-head">
+		<div class="col-sm-4">{{mf 'tenant.details.regions.name' 'Name'}}</div>
+		<div class="col-sm-4">{{mf 'tenant.details.regions.numberOfCourses' 'Number of courses'}}</div>
+		<div class="col-sm-4">{{mf 'tenant.details.regions.numberOfUpcomingEvents' 'Number of upcoming events'}}</div>
+	</div>
+	{{#each region in regions tenant._id}}
+		<div class="row row-no-gutters responsive-table-row">
+			<div class="col-xs-6 responsive-table-head">{{mf 'tenant.details.regions.name'}}</div>
+			<div class="col-xs-6 col-sm-4">{{region.name}}</div>
+			<div class="col-xs-6 responsive-table-head">{{mf 'tenant.details.regions.numberOfCourses'}}</div>
+			<div class="col-xs-6 col-sm-4">{{region.courseCount}}</div>
+			<div class="col-xs-6 responsive-table-head">{{mf 'tenant.details.regions.numberOfUpcomingEvents'}}</div>
+			<div class="col-xs-6 col-sm-4">{{region.futureEventCount}}</div>
+		</div>
+	{{/each}}
+</template>

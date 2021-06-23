@@ -5,6 +5,7 @@ import { isTenantAdmin } from '/imports/utils/is-tenant-admin';
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/tenants/settings/tenant-settings';
+import '/imports/ui/components/tenants/regions/tenant-regions';
 
 import './tenant-details.html';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
