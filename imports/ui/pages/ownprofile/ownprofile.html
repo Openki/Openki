@@ -111,6 +111,27 @@
 					</div>
 				</div>
 			</div>
+			{{#if tenantCount}}
+				<div class="page-component page-component-seperated profile-tenant-list">
+					<h3>{{mf 'profile.tenants' 'My tenants'}}</h3>
+					<h5>
+						{{#mf KEY='profile.tenantMembership' NUM_TENANTS=tenantCount}}
+						You are {NUM_TENANTS, plural, =0 {not admin of any tenant} =1 {admin of the tenant:} other {admin of # tenants:}}
+						{{/mf}}
+					</h5>
+					<ul class="tenants">
+						{{#each tenant in user.tenants}}
+							<li>
+								<div class="tag tag-link tenant-tag">
+									<a href="{{pathFor 'tenantDetails' _id=tenant._id}}">
+										{{tenant.name}}
+									</a>
+								</div>
+							</li>
+						{{/each}}
+					</ul>
+				</div>
+			{{/if}}
 
 			<div class="page-component page-component-seperated profile-grouplist">
 				<h3>{{mf 'profile.groups' 'My groups'}}</h3>

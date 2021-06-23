@@ -422,6 +422,7 @@ Router.map(function () {
 		path: 'profile',
 		waitOn() {
 			return [
+				Meteor.subscribe('Tenants.findFilter', { adminOf: true }),
 				Meteor.subscribe('Groups.findFilter', { own: true }),
 				Meteor.subscribe('Venues.findFilter', { editor: Meteor.userId() }),
 			];
@@ -436,6 +437,7 @@ Router.map(function () {
 					name: user.username,
 					notifications: user.notifications,
 					allowPrivateMessages: user.allowPrivateMessages,
+					tenants: Tenants.findFilter({ adminOf: true }),
 					groups: Groups.findFilter({ own: true }),
 					venues: Venues.findFilter({ editor: user._id }),
 					email: user.emails?.[0]?.address,

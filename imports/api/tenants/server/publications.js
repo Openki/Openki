@@ -23,3 +23,18 @@ Meteor.publish('tenant', (tenantId) => {
 		{ fields: { ...Tenants.publicFields, admins: showAdminsFields } },
 	);
 });
+
+Meteor.publish('Tenants.findFilter', (find, limit, skip, sort) =>
+	Tenants.findFilter(
+		{
+			...find,
+			$or: [
+				{ members: Meteor.userId() }, // only members or
+				{ admins: Meteor.userId() }, // admins of a tenant can see the tenant
+			],
+		},
+		limit,
+		skip,
+		sort,
+	),
+);

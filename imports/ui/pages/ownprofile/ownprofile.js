@@ -102,6 +102,10 @@ Template.profile.helpers({
 		return this.user.groups.count();
 	},
 
+	tenantCount() {
+		return this.user.tenants.count();
+	},
+
 	notificationsChecked() {
 		if (this.user.notifications) {
 			return 'checked';
