@@ -138,7 +138,7 @@ notificationComment.Model = function (entry) {
 			siteName = siteName || Meteor.settings.public.siteName;
 
 			return {
-				unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
+				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				course,
 				courseLink: Router.url('showCourse', course, {
 					query: `select=${comment._id}&campaign=commentNotify`,
