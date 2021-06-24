@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { SSR } from 'meteor/meteorhacks:ssr';
 
+import { Log } from '/imports/api/log/log';
 import Notification from '/imports/notification/notification';
 
 // Watch the Log for event notifications
