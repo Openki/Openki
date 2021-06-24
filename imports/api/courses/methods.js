@@ -10,6 +10,7 @@ import { Roles } from '/imports/api/roles/roles';
 import * as UpdateMethods from '/imports/utils/update-methods';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
+import { Log } from '/imports/api/log/log';
 
 import { Subscribe, Unsubscribe, Message, processChange } from './subscription';
 

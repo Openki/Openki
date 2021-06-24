@@ -6,7 +6,7 @@ import { mf } from 'meteor/msgfmt:core';
 import { Courses } from '/imports/api/courses/courses';
 /** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
 import { Events } from '/imports/api/events/events';
-import Log from '/imports/api/log/log';
+import { Log } from '/imports/api/log/log';
 import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
