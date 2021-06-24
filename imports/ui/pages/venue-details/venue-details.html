@@ -24,7 +24,8 @@
 								<div class="details-map">
 									{{> map markers=markers}}
 									<div class="coordinates">
-										{{coords}}
+										{{mf 'venueDetails.coordinates' 'Coordinates:'}}
+										{{locationDisplay this.loc}}
 									</div>
 								</div>
 							{{/if}}
