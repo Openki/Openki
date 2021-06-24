@@ -10,7 +10,7 @@
 	{{#each region in regions tenant._id}}
 		<div class="row row-no-gutters responsive-table-row">
 			<div class="col-xs-6 responsive-table-head">{{mf 'tenant.details.regions.name'}}</div>
-			<div class="col-xs-6 col-sm-4">{{region.name}}</div>
+			<div class="col-xs-6 col-sm-4"><a href="{{pathFor 'regionDetails' _id=region._id}}">{{region.name}}</a></div>
 			<div class="col-xs-6 responsive-table-head">{{mf 'tenant.details.regions.numberOfCourses'}}</div>
 			<div class="col-xs-6 col-sm-4">{{region.courseCount}}</div>
 			<div class="col-xs-6 responsive-table-head">{{mf 'tenant.details.regions.numberOfUpcomingEvents'}}</div>

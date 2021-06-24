@@ -8,6 +8,7 @@ import moment from 'moment';
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
+import { Regions } from '/imports/api/regions/regions';
 import { InfoPages } from '/imports/api/infoPages/infoPages';
 import { Tenants } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
@@ -601,9 +602,15 @@ Router.map(function () {
 
 	this.route('tenantDetails', {
 		path: 'tenant/:_id/:short?',
+		/**
+		 * @this {{params: {_id: string; slug?: string;}}}
+		 */
 		waitOn() {
 			return [Meteor.subscribe('tenant', this.params._id)];
 		},
+		/**
+		 * @this {{params: {_id: string; slug?: string;}}}
+		 */
 		data() {
 			const tenant = Tenants.findOne({ _id: this.params._id });
 
@@ -613,6 +620,9 @@ Router.map(function () {
 
 			return { tenant };
 		},
+		/**
+		 * @this {{params: {_id: string; slug?: string;}}}
+		 */
 		onAfterAction() {
 			const tenant = Tenants.findOne({ _id: this.params._id });
 			if (tenant) {
@@ -803,6 +813,40 @@ Router.map(function () {
 
 			const title = mf('profile.windowtitle', { USER: user.username }, 'Profile of {USER}');
 			Metatags.setCommonTags(title);
+		},
+	});
+
+	this.route('regionDetails', {
+		path: 'region/:_id/:slug?',
+		/**
+		 * @this {{params: {_id: string; slug?: string;}}}
+		 */
+		waitOn() {
+			return [Meteor.subscribe('regionDetails', this.params._id)];
+		},
+		/**
+		 * @this {{params: {_id: string; slug?: string;}}}
+		 */
+		data() {
+			const region = Regions.findOne(this.params._id);
+
+			if (!region) {
+				return false; // Not found
+			}
+
+			return { region };
+		},
+		/**
+		 * @this {{params: {_id: string; slug?: string;}}}
+		 */
+		onAfterAction() {
+			const region = this.data()?.region;
+
+			if (!region) {
+				return;
+			}
+
+			Metatags.setCommonTags(region.name);
 		},
 	});
 
