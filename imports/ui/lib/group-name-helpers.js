@@ -11,7 +11,7 @@ function subbedGroup(group) {
 	return Groups.findOne(groupId);
 }
 
-const GroupNameHelpers = {
+export const GroupNameHelpers = {
 	short() {
 		if (!this) {
 			return false;

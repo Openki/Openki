@@ -120,12 +120,8 @@
 					{{/mf}}
 				</h5>
 				<ul class="groups">
-					{{#each user.groups}}
-						{{#with this._id}}
-							<li>
-								{{> groupNameFull}}
-							</li>
-						{{/with}}
+					{{#each group in user.groups}}
+						<li>{{> groupNameFull group._id}}</li>
 					{{/each}}
 				</ul>
 				<a class="btn btn-add" href="{{pathFor 'groupDetails' _id='create'}}">
@@ -137,8 +133,8 @@
 				<h3>{{mf 'profile.venues' 'My venues:'}}</h3>
 				{{#if isVenueEditor}}
 					<ul class="list-unstyled">
-						{{#each user.venues}}
-							<li>{{> venueLink venue=this}}</li>
+						{{#each venue in user.venues}}
+							<li>{{> venueLink venue=venue}}</li>
 						{{/each}}
 					</ul>
 				{{else}}
