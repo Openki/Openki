@@ -130,7 +130,7 @@ notificationPrivateMessage.Model = function (entry) {
 			siteName = siteName || Meteor.settings.public.siteName;
 
 			const vars = {
-				unsubLink: Router.url('profile.privatemessages.unsubscribe', { token: unsubToken }),
+				unsubLink: Router.url('profilePrivateMessagesUnsubscribe', { token: unsubToken }),
 				sender,
 				senderLink: Router.url('userprofile', sender, { query: 'campaign=privateMessage' }),
 				subject,

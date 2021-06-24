@@ -143,7 +143,7 @@ notificationEvent.Model = function (entry) {
 			const mailLogo = region.custom?.mailLogo;
 
 			return {
-				unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
+				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				event,
 				course,
 				eventDate: startMoment.format('LL'),

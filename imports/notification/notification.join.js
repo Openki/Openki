@@ -114,7 +114,7 @@ notificationJoin.Model = function (entry) {
 			siteName = siteName || Meteor.settings.public.siteName;
 
 			return {
-				unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
+				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				course,
 				newParticipant,
 				courseLink: Router.url('showCourse', course, { query: 'campaign=joinNotify' }),
