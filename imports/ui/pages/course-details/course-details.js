@@ -10,7 +10,7 @@ import { Regions } from '/imports/api/regions/regions';
 import * as CoursesMethods from '/imports/api/courses/methods';
 
 import { Editable } from '/imports/ui/lib/editable';
-import GroupNameHelpers from '/imports/ui/lib/group-name-helpers';
+import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
