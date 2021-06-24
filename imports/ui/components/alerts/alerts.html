@@ -1,7 +1,7 @@
 <template name="alerts">
 	<div class="alert-messages">
-		{{#each alerts}}
-			{{> alert}}
+		{{#each a in alerts}}
+			{{> alert a}}
 		{{/each}}
 	</div>
 	<div class="alert-messages-spacer"></div>
