@@ -1,5 +1,3 @@
-import Log from '/imports/api/log/log';
-
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
@@ -8,6 +6,7 @@ import { Random } from 'meteor/random';
 import { Match, check } from 'meteor/check';
 import juice from 'juice';
 
+import { Log } from '/imports/api/log/log';
 import { Users } from '/imports/api/users/users';
 
 import notificationEvent from '/imports/notification/notification.event';

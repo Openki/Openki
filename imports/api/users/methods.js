@@ -4,7 +4,7 @@ import { Match, check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
 import { ValidationError } from 'meteor/mdg:validation-error';
 
-import Log from '/imports/api/log/log';
+import { Log } from '/imports/api/log/log';
 import { Groups } from '/imports/api/groups/groups';
 import { Users } from '/imports/api/users/users';
 import { Courses } from '/imports/api/courses/courses';
