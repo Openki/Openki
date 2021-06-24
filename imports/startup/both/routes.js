@@ -728,14 +728,14 @@ Router.route('timetable', {
 
 		// Transform the "rows" objects to arrays and sort the room rows by
 		// the room name, so "null" (meaning no room) comes first.
-		const grouped = _.toArray(perVenue).map((venueData) => {
-			const perRoom = _.toArray(venueData.perRoom).sort();
+		const grouped = Object.values(perVenue).map((venueData) => {
+			const perRoom = Object.values(venueData.perRoom).sort();
 			return { ...venueData, perRoom };
 		});
 
 		return {
-			days: _.toArray(days),
-			hours: _.toArray(hours),
+			days: Object.values(days),
+			hours: Object.values(hours),
 			grouped,
 		};
 	},
