@@ -1,8 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { Mongo } from 'meteor/mongo';
+import { _ } from 'meteor/underscore';
+
+/** @typedef {import('../users/users').UserModel} UserModel */
+
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import Predicates from '/imports/utils/predicates';
 import { Filtering } from '/imports/utils/filtering';
+import { isTenantAdmin } from '/imports/utils/is-tenant-admin';
 
 // ======== DB-Model: ========
 /**
@@ -16,6 +22,7 @@ import { Filtering } from '/imports/utils/filtering';
  * @property {string} [tenant]
  * @property {string} [name] ID
  * @property {string} [nameEn] ID
+ * @property {string} [slug]
  * @property {Geodata} [loc] (Optional)
  * @property {string} [tz] ex: "UTC+01:00"
  * @property {number} [courseCount] Number of courses in that region, calculated field
@@ -32,14 +39,47 @@ import { Filtering } from '/imports/utils/filtering';
  *       },
  *       mailLogo: string,
  *     }} [custom]
+ *
+ * @property {string} [createdby]
+ * @property {Date}   [created]
+ * @property {Date}   [updated]
  */
 
 /**
- * @extends {Mongo.Collection<RegionEntity>}
+ * @typedef {Region & RegionEntity} RegionModel
+ */
+
+export class Region {
+	/**
+	 * Check whether a user may edit the region.
+	 * @this {RegionModel}
+	 * @param {UserModel | undefined} user
+	 */
+	editableBy(user) {
+		if (!user) {
+			return false;
+		}
+		if (!this.tenant) {
+			return false;
+		}
+
+		return (
+			UserPrivilegeUtils.privileged(user, 'admin') /* Admins can edit all regions */ ||
+			isTenantAdmin(user._id, this.tenant) /* or admins of a tenant */
+		);
+	}
+}
+
+/**
+ * @extends {Mongo.Collection<RegionEntity, RegionModel>}
  */
 export class RegionsCollection extends Mongo.Collection {
 	constructor() {
-		super('Regions');
+		super('Regions', {
+			transform(region) {
+				return _.extend(new Region(), region);
+			},
+		});
 
 		if (Meteor.isServer) {
 			this._ensureIndex({ tenant: 1 });
