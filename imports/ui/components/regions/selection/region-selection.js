@@ -21,8 +21,8 @@ Template.regionSelectionWrap.onCreated(function () {
 	this.state.setDefault('searchingRegions', false);
 });
 
-Template.regionDisplay.events({
-	'click .js-region-display'(event, instance) {
+Template.regionSelectionDisplay.events({
+	'click .js-region-selection-display'(event, instance) {
 		instance.parentInstance().state.set('searchingRegions', true);
 	},
 });

@@ -1,36 +1,5 @@
 <template name="regionDetails">
 	<div class="container-sm">
-		<div class="page-component">
-			<div class="details-header region-details-header">
-				<h3>
-					{{region.name}}
-					{{#if region.nameEn}}
-						<small>{{region.nameEn}}</small>
-					{{/if}}
-				</h3>
-			</div>
-
-			<div class="details-body region-details-body">
-				<div class="details-content">
-					{{#if region.loc}}
-						<div class="details-map">
-							{{> map markers=markers}}
-							<div class="coordinates">
-								{{mf 'regionDetails.coordinates' 'Coordinates:'}}
-								{{locationDisplay region.loc}}
-							</div>
-						</div>
-					{{/if}}
-					{{#if region.tz}}
-						<p>
-							<span class="region-property-title">
-								{{mf 'regionDetails.timezone' 'Timezone:'}}
-							</span>
-							{{region.tz}}
-						</p>
-					{{/if}}
-				</div>
-			</div>
-		</div>
+		{{> regionDisplay}}
 	</div>
 </template>
