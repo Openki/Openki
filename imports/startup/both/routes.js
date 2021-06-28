@@ -4,11 +4,13 @@ import { mf, msgfmt } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
+import momentTz from 'moment-timezone';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
-import { Regions } from '/imports/api/regions/regions';
+import { Region, Regions } from '/imports/api/regions/regions';
+/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
 import { InfoPages } from '/imports/api/infoPages/infoPages';
 import { Tenants } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
@@ -796,6 +798,27 @@ Router.route('userprofile', {
 		msgfmt.loading(); // Rerun after msgfmt has loaded translation
 
 		const title = mf('profile.windowtitle', { USER: user.username }, 'Profile of {USER}');
+		Metatags.setCommonTags(title);
+	},
+});
+
+Router.route('regionCreate', {
+	path: 'region/create',
+	template: 'regionDetails',
+	data() {
+		/** @type RegionModel */
+		const region = new Region();
+		region.tenant = this.params.query.tenant;
+		region.tz = momentTz.tz.guess();
+		return {
+			isNew: true,
+			region,
+		};
+	},
+	onAfterAction() {
+		msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
+		const title = mf('region.edit.siteTitle.create', 'Create region');
 		Metatags.setCommonTags(title);
 	},
 });

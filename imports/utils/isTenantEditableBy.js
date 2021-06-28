@@ -14,7 +14,7 @@ export function isTenantEditableBy(tenantId, userId) {
 
 	return (
 		UserPrivilegeUtils.privileged(userId, 'admin') /* Admins can edit all tenants */ ||
-		isTenantAdmin(userId, this.tenant) /* or admins of a tenant */
+		isTenantAdmin(userId, tenantId) /* or admins of a tenant */
 	);
 }
 

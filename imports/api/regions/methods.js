@@ -1,4 +1,6 @@
 import { Meteor } from 'meteor/meteor';
+import { check, Match } from 'meteor/check';
+
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Regions } from './regions';
@@ -16,7 +18,6 @@ export const create = ServerMethod(
 	 * @param {{
 	 * 			tenant: string;
 				name: string;
-				nameEn: string;
 				loc: { type: 'Point', coordinates: [number, number] };
 				tz: string;
 			}} changes
@@ -25,7 +26,6 @@ export const create = ServerMethod(
 		check(changes, {
 			tenant: String,
 			name: String,
-			nameEn: String,
 			loc: { type: String, coordinates: [Number] },
 			tz: String,
 		});
@@ -35,7 +35,7 @@ export const create = ServerMethod(
 			throw new Meteor.Error(401, 'please log in');
 		}
 
-		if (isTenantEditableBy(changes.tenant, user._id)) {
+		if (!isTenantEditableBy(changes.tenant, user._id)) {
 			throw new Meteor.Error(401, 'not permitted');
 		}
 
@@ -49,9 +49,8 @@ export const create = ServerMethod(
 		set.tenant = changes.tenant;
 
 		set.name = changes.name.trim().substring(0, 40);
-
-		set.nameEn = changes.nameEn.trim().substring(0, 40);
-		set.slug = StringTools.slug(set.nameEn);
+		set.nameEn = set.name;
+		set.slug = StringTools.slug(set.name);
 
 		set.loc = changes.loc;
 		set.loc.type = 'Point';
