@@ -2,7 +2,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
+import $ from 'jquery';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
 

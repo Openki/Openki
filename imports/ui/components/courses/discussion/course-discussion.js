@@ -276,7 +276,7 @@ Template.postEdit.helpers({
 
 Template.post.events({
 	'notifyAll .js-discussion-edit'(event, instance) {
-		instance.$('.js-discussion-edit').click();
+		instance.$('.js-discussion-edit').trigger('click');
 		instance.parentInstance().notifyAll.set(true);
 		window.location.hash = '#discussion';
 		RouterAutoscroll.scheduleScroll();
@@ -342,8 +342,8 @@ Template.post.events({
 	},
 });
 
-Template.postEdit.onRendered(function postEditOnRendered() {
-	this.$('.discussion-edit-title').select();
+Template.postEdit.onRendered(function () {
+	this.$('.discussion-edit-title').trigger('select');
 });
 
 Template.postEdit.events({
