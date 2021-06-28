@@ -11,6 +11,8 @@ import { _ } from 'meteor/underscore';
 import { Tooltips } from 'meteor/lookback:tooltips';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
+import $ from 'jquery';
+import 'bootstrap-datepicker';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Languages } from '/imports/api/languages/languages';

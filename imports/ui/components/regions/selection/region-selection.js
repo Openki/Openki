@@ -101,7 +101,7 @@ Template.regionSelection.onCreated(function () {
 Template.regionSelection.onRendered(function () {
 	Meteor.defer(function () {
 		if (!this.data || !this.data.isSplash) {
-			this.$('.js-region-search').select();
+			this.$('.js-region-search').trigger('select');
 		}
 	});
 
@@ -212,7 +212,7 @@ Template.regionSelection.events({
 		instance.state.set('showAllRegions', true);
 		/* eslint-disable-next-line no-param-reassign */
 		instance.focusFromShowAllRegions = true;
-		instance.$('.js-region-search').select();
+		instance.$('.js-region-search').trigger('select');
 		return false; // prevent dropdown default behavior for this specific <li>
 	},
 

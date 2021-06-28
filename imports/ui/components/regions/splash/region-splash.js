@@ -1,6 +1,6 @@
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
+import $ from 'jquery';
 
 import * as Alert from '/imports/api/alerts/alert';
 
@@ -29,7 +29,7 @@ Template.regionSplash.events({
 	},
 
 	'click .js-region-search'(event, instance) {
-		instance.$(event.currentTarget).select();
+		instance.$(event.currentTarget).trigger('select');
 	},
 
 	'click .js-confirm-region'(event, instance) {

@@ -45,7 +45,7 @@ Template.accountTasks.events({
 	},
 
 	'shown.bs.modal .js-account-tasks'(event, instance) {
-		instance.$('input').first().select();
+		instance.$('input').first().trigger('select');
 	},
 
 	'hide.bs.modal .js-account-tasks'(event, instance) {
@@ -93,7 +93,7 @@ Template.loginFrame.onRendered(function () {
 		this.$('.js-username').val(transferMail);
 	}
 
-	this.$('input').first().select();
+	this.$('input').first().trigger('select');
 });
 
 TemplateMixins.FormfieldErrors(Template.loginFrame, {
@@ -254,7 +254,7 @@ Template.registerFrame.onRendered(function () {
 		this.$('.js-email').val(transferMail);
 	}
 
-	this.$('input').first().select();
+	this.$('input').first().trigger('select');
 });
 
 Template.registerFrame.helpers({
@@ -381,7 +381,7 @@ Template.forgotPwdFrame.onRendered(function () {
 		this.emailIsValid.set(true);
 	}
 
-	this.$('input').first().select();
+	this.$('input').first().trigger('select');
 });
 
 Template.forgotPwdFrame.helpers({

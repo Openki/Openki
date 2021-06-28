@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { jQuery } from 'meteor/jquery';
+import $ from 'jquery';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 
@@ -13,7 +13,7 @@ if (Meteor.isClient) {
 
 		it('should show a entry for course create', async () => {
 			const haveEditfield = () => {
-				assert(jQuery('.js-title').length > 0, 'New course edit field present');
+				assert($('.js-title').length > 0, 'New course edit field present');
 			};
 
 			Router.go('/');
@@ -23,15 +23,15 @@ if (Meteor.isClient) {
 			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 			// Create the course
-			jQuery('.js-title').val(randomTitle);
-			jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			jQuery('.js-course-edit-save').click();
+			$('.js-title').val(randomTitle);
+			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
+			$('.js-course-edit-save').trigger('click');
 
 			// We should be redirected to the created course
 
 			await waitFor(() => {
 				assert(
-					jQuery('.course-details').length > 0,
+					$('.course-details').length > 0,
 					`Details of the new course ${randomTitle} are shown`,
 				);
 			});
@@ -39,7 +39,7 @@ if (Meteor.isClient) {
 			const lastNumberOfHistoryEntries = 0;
 			await waitFor(() => {
 				assert.isAbove(
-					jQuery('.coursehistory-event').length,
+					$('.coursehistory-event').length,
 					lastNumberOfHistoryEntries,
 					'A history entry should be presend for course created.',
 				);
@@ -53,19 +53,19 @@ if (Meteor.isClient) {
 			await MeteorAsync.loginWithPassword('Flumsi', 'greg');
 
 			await waitFor(() => {
-				assert(jQuery('.loginButton').text().includes('Flumsi'), 'User Flumsi sould be logged in.');
+				assert($('.loginButton').text().includes('Flumsi'), 'User Flumsi sould be logged in.');
 			});
 
-			const lastNumberOfHistoryEntries = jQuery('.coursehistory-event').length;
+			const lastNumberOfHistoryEntries = $('.coursehistory-event').length;
 
 			// Subscribe as user "Flumsi" to course
-			jQuery('.js-role-enroll-btn:first').click();
+			$('.js-role-enroll-btn:first').trigger('click');
 			await waitForSubscriptions();
-			jQuery('.js-role-subscribe-btn:first').click();
+			$('.js-role-subscribe-btn:first').trigger('click');
 
 			await waitFor(() => {
 				assert.isAbove(
-					jQuery('.coursehistory-event').length,
+					$('.coursehistory-event').length,
 					lastNumberOfHistoryEntries,
 					'A history entry should be presend for user subscribe.',
 				);
