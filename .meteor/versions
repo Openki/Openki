@@ -7,7 +7,7 @@ accounts-password@1.7.1
 allow-deny@1.1.0
 amplify@1.0.0
 autoupdate@1.7.0
-babel-compiler@7.6.1
+babel-compiler@7.6.2
 babel-runtime@1.5.0
 base64@1.0.12
 bevanhunt:leaflet@3.2.0
@@ -103,11 +103,11 @@ msgfmt:core@2.0.0-preview.24
 msgfmt:extract@2.0.2
 msgfmt:ui@2.2.0
 nicolaslopezj:router-layer@0.1.0
-npm-bcrypt@0.9.3
+npm-bcrypt@0.9.4
 npm-mongo@3.9.0
 oauth@1.3.2
 oauth2@1.3.0
-observe-sequence@1.0.16
+observe-sequence@1.0.18
 ordered-dict@1.1.0
 promise@0.11.2
 raix:eventemitter@0.1.3
