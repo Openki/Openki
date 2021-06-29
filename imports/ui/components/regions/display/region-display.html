@@ -8,7 +8,7 @@
 			<div class="details-content">
 				{{#if region.loc}}
 					<div class="details-map">
-						{{> map markers=markers}}
+						{{> map markers=markers maxZoom=16}}
 						<div class="coordinates">
 							{{mf 'regionDetails.coordinates' 'Coordinates:'}}
 							{{locationDisplay region.loc}}

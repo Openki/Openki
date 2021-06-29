@@ -11,8 +11,7 @@ import './map.html';
  *
  * Expected data
  * markers: A cursor of geojson documents
- *
- * */
+ */
 
 Template.map.onCreated(function () {
 	this.fullscreen = new ReactiveVar(false);
@@ -67,6 +66,7 @@ const OpenkiControl = L.Control.extend({
 
 Template.map.onRendered(function () {
 	const instance = this;
+	const maxZoom = instance.data.maxZoom || 19;
 
 	const layers = {};
 	const centers = {};
@@ -86,14 +86,14 @@ Template.map.onRendered(function () {
 		// unfortunately for 'de' the tile.openstreetmap.de server does not support SSL
 		fr() {
 			return L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-				maxZoom: 19,
+				maxZoom,
 				attribution:
 					'&copy; Openstreetmap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			});
 		},
 		default() {
 			return L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				maxZoom: 19,
+				maxZoom,
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			});
 		},
@@ -198,7 +198,7 @@ Template.map.onRendered(function () {
 			count += 1;
 		});
 
-		let maxZoom = 16;
+		let zoom = maxZoom - 3; // Zoom out a little to give the user a better overview.
 
 		// Use center markers when there are no other markers
 		if (count < 1) {
@@ -207,12 +207,12 @@ Template.map.onRendered(function () {
 				count += 1;
 			});
 			if (count === 1) {
-				maxZoom = 13;
+				zoom = maxZoom - 6;
 			}
 		}
 
 		if (bounds.isValid()) {
-			map.fitBounds(bounds, { padding: [20, 20], maxZoom });
+			map.fitBounds(bounds, { padding: [20, 20], maxZoom: zoom });
 		}
 	}, 100);
 
