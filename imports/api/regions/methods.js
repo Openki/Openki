@@ -44,6 +44,8 @@ export const create = ServerMethod(
 			createdby: user._id,
 			created: new Date(),
 			updated: new Date(),
+			courseCount: 0,
+			futureEventCount: 0,
 		};
 
 		set.tenant = changes.tenant;
@@ -172,11 +174,16 @@ export const unsetFeaturedGroup = ServerMethod(
 
 Meteor.methods({
 	'region.updateCounters'(selector) {
+		// this denormalization is called every minutes for all regions in the server/start.js file, this ensures consistency.
 		Regions.find(selector).forEach((region) => {
 			// We don't use AsyncTools.untilClean() here because consistency doesn't matter
 			const regionId = region._id;
 
-			const courseCount = Courses.find({ region: regionId, internal: false }).count();
+			const courseCount = Courses.find({
+				region: regionId,
+				internal: false,
+				archived: false,
+			}).count();
 			const futureEventCount = Events.find({
 				region: regionId,
 				internal: false,

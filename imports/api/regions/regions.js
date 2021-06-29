@@ -26,9 +26,9 @@ import { isTenantAdmin } from '/imports/utils/is-tenant-admin';
  * @property {Geodata} [loc] (Optional)
  * @property {string} [tz] ex: "UTC+01:00"
  * @property {number} [courseCount] Number of courses in that region, calculated field
- * (does not count internal courses)
+ * (does not count internal or archived courses)
  * @property {number} [futureEventCount] Number of future events in that region, calculated field
- * (does not count internal courses)
+ * (does not count internal events)
  * @property {string} [featuredGroup] ID of featured group
  * @property {{
  *       siteName: string,
