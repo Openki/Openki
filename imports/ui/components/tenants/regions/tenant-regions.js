@@ -13,7 +13,17 @@ Template.tenantRegions.onCreated(function () {
 });
 
 Template.tenantRegions.helpers({
+	/**
+	 * @param {string} tenantId
+	 */
 	regions(tenantId) {
 		return Regions.findFilter({ tenant: tenantId });
+	},
+
+	/**
+	 * @param {string} tenantId
+	 */
+	addRegionQuery(tenantId) {
+		return `tenant=${tenantId}`;
 	},
 });
