@@ -9,14 +9,16 @@
 					{{tenant.name}}
 				</div>
 			</div>
-
-			{{#if editingSettings}}
-				{{> tenantSettings}}
-			{{/if}}
-
-			<div class="details-addition">
+			<div class="details-form tenant-settings">
 				{{> tenantRegions tenant=tenant}}
 			</div>
+
+			{{#if editingSettings}}
+				<div class="details-addition clearfix">
+					{{> tenantSettings}}
+				</div>
+			{{/if}}
+
 		</div>
 	</div>
 </template>
