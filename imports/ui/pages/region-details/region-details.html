@@ -1,9 +1,11 @@
 <template name="regionDetails">
 	<div class="container-sm">
 		{{#if isNew}}
-			{{> regionEdit region=region}}
+			{{> regionEdit createArgs}}
+		{{else if editing}}
+			{{> regionEdit editArgs}}
 		{{else}}
-			{{> regionDisplay region=region}}
+			{{> regionDisplay displayArgs}}
 		{{/if}}
 	</div>
 </template>

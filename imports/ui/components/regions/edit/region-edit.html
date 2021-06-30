@@ -1,12 +1,12 @@
 <template name="regionEdit">
 	<div class="edit-page region-edit">
-		<h2>{{mf 'region.edit.titleCreate' 'Create new region'}}</h2>
+		<h2>{{title}}</h2>
 		<form>
 			<div class="form-group">
 				<label>{{mf 'region.edit.name' 'Name:'}}</label>
 				<input type="text" class="form-control js-name"
 					   placeholder="{{mf 'region.edit.namePlaceholder' 'Full name of region'}}"
-					   value="{{name}}">
+					   value="{{region.name}}">
 			</div>
 			<div class="form-group">
 				<div class="form-group-element">

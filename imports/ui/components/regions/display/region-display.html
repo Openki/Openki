@@ -25,5 +25,10 @@
 				{{/if}}
 			</div>
 		</div>
+		{{#if mayEdit}}
+			<div class="actions">
+				{{> buttonEdit event="js-region-edit"}}
+			</div>
+		{{/if}}
 	</div>
 </template>

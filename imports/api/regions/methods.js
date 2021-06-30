@@ -2,8 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
 
 import { Courses } from '/imports/api/courses/courses';
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 import { Events } from '/imports/api/events/events';
 import { Regions } from './regions';
+import { Venues } from '/imports/api//venues/venues';
 
 /** @typedef {import('./regions').RegionEntity} RegionEntity */
 
@@ -69,7 +71,6 @@ export const update = ServerMethod(
 	 * @param {string} regionId
 	 * @param {{
 				name?: string;
-				nameEn?: string;
 				loc?: { type: 'Point', coordinates: [number, number] };
 				tz?: string;
 			}} changes
@@ -78,7 +79,6 @@ export const update = ServerMethod(
 		check(regionId, String);
 		check(changes, {
 			name: Match.Optional(String),
-			nameEn: Match.Optional(String),
 			loc: Match.Optional({ type: String, coordinates: [Number] }),
 			tz: Match.Optional(String),
 		});
@@ -93,7 +93,7 @@ export const update = ServerMethod(
 			throw new Meteor.Error(404, 'region not found');
 		}
 
-		if (isTenantEditableBy(region.tenant, user._id)) {
+		if (!isTenantEditableBy(region.tenant, user._id)) {
 			throw new Meteor.Error(401, 'not permitted');
 		}
 
@@ -104,12 +104,10 @@ export const update = ServerMethod(
 
 		if (changes.name) {
 			set.name = changes.name.trim().substring(0, 40);
+			set.nameEn = set.name;
+			set.slug = StringTools.slug(set.name);
 		}
 
-		if (changes.nameEn) {
-			set.nameEn = changes.nameEn.trim().substring(0, 40);
-			set.slug = StringTools.slug(set.nameEn);
-		}
 		if (changes.loc) {
 			set.loc = changes.loc;
 			set.loc.type = 'Point';
@@ -143,11 +141,25 @@ export const remove = ServerMethod(
 			throw new Meteor.Error(404, 'region not found');
 		}
 
-		if (isTenantEditableBy(region.tenant, user._id)) {
+		if (!isTenantEditableBy(region.tenant, user._id)) {
 			throw new Meteor.Error(401, 'not permitted');
 		}
 
-		return Regions.remove(regionId);
+		if (Courses.find({ region: regionId }).count() > 20) {
+			throw new Meteor.Error(
+				401,
+				'Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.',
+			);
+		}
+
+		Events.remove({ region: regionId });
+		// CourseDiscussionEntity do not currently have a region.
+		Courses.find({ region: regionId }).forEach((c) => {
+			CourseDiscussions.remove({ courseId: c._id });
+		});
+		Courses.remove({ region: regionId });
+		Venues.remove({ region: regionId });
+		Regions.remove(regionId);
 	},
 );
 
