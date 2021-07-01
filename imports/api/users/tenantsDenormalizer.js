@@ -11,7 +11,7 @@ export function onStartUp() {
 	Users.find({}, { fields: { _id: 1 } }).forEach((u) => {
 		const userTenants = tenants
 			.filter((t) => t.members.includes(u._id) || t.admins.includes(u._id))
-			.map((t) => t._id);
+			.map((t) => ({ _id: t._id, privileges: t.admins.includes(u._id) ? ['admin'] : [] }));
 
 		updated += Users.update(u._id, { $set: { tenants: userTenants } });
 	});
@@ -25,7 +25,7 @@ export function onStartUp() {
  * @param {string} tenantId
  */
 export function afterTenantAddMember(userId, tenantId) {
-	Users.update(userId, { $addToSet: { tenants: tenantId } });
+	Users.update(userId, { $addToSet: { tenants: { _id: tenantId } } });
 }
 
 /**
@@ -33,7 +33,7 @@ export function afterTenantAddMember(userId, tenantId) {
  * @param {string} tenantId
  */
 export function afterTenantRemoveMember(userId, tenantId) {
-	Users.update(userId, { $pull: { tenants: tenantId } });
+	Users.update(userId, { $pull: { tenants: { _id: tenantId } } });
 }
 
 /**
@@ -41,5 +41,16 @@ export function afterTenantRemoveMember(userId, tenantId) {
  * @param {string} tenantId
  */
 export function afterTenantAddAdmin(userId, tenantId) {
-	Users.update(userId, { $addToSet: { tenants: tenantId } });
+	Users.update(userId, { $addToSet: { tenants: { _id: tenantId, privileges: ['admin'] } } });
+}
+
+/**
+ * @param {string} userId
+ * @param {string} tenantId
+ */
+export function afterTenantRemoveAdmin(userId, tenantId) {
+	Users.update(
+		{ _id: userId, 'tenants._id': tenantId },
+		{ $pull: { 'tenants.$.privileges': 'admin' } },
+	);
 }

@@ -7,7 +7,7 @@ import * as IdTools from '/imports/utils/id-tools';
 /**
  * @typedef {Object} UserEntity
  * @property {string} [_id] ID
- * @property {string[]} [tenants]
+ * @property {{_id: string; privileges: string[]}[]} [tenants]
  * @property {Date} [createdAt]
  * @property {object} [services]
  * @property {object} [services.password]

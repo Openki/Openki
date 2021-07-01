@@ -96,5 +96,7 @@ export const removeAdmin = ServerMethod(
 		membershipMutationPreconditionCheck(userId, tenantId);
 
 		Tenants.update(tenantId, { $pull: { admins: userId } });
+
+		usersTenantsDenormalizer.afterTenantRemoveAdmin(userId, tenantId);
 	},
 );
