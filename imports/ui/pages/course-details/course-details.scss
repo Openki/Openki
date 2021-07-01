@@ -90,9 +90,9 @@
 //========================================================================================
 .details-header-tags {
 	@include td-pos(right, -$course-border-width);
+	max-width: 120px;
 	position: absolute;
 	top: -$course-border-width;
-	max-width: 120px;
 }
 
 .details-header-tags > div {
