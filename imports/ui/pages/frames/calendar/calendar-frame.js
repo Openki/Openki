@@ -101,10 +101,6 @@ Template.frameCalendarEvent.helpers({
 	},
 
 	expanded: () => Template.instance().expanded.get(),
-
-	toggleIndicatorIcon() {
-		return Template.instance().expanded.get() ? 'minus' : 'plus';
-	},
 });
 
 Template.frameCalendarEvent.events({
