@@ -2,7 +2,7 @@
 		<div class="details-form-element">
 			<h3>
 				<span class="fa fa-group fa-fw" aria-hidden="true"></span>
-				{{mf 'tenant.settings.title.Members' 'Members'}}
+				{{mf 'tenant.settings.title.Members' 'Members'}} ({{tenant.members.length}})
 			</h3>
 			<div class="tag-group multiline">
 				{{#each tenant.members}}
@@ -55,7 +55,7 @@
 		<div class="details-form-element">
 			<h3>
 				<span class="fa fa-group fa-fw" aria-hidden="true"></span>
-				{{mf 'tenant.settings.title.admin' 'Admins'}}
+				{{mf 'tenant.settings.title.admin' 'Admins'}} ({{tenant.admins.length}})
 			</h3>
 			<div class="tag-group multiline">
 				{{#each tenant.admins}}

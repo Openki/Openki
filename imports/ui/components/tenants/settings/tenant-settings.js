@@ -5,8 +5,11 @@ import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Tenants } from '/imports/api/tenants/tenants';
-import * as TenantsMethods from '/imports/api/tenants/methods';
 import { Users } from '/imports/api/users/users';
+
+import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+
+import * as TenantsMethods from '/imports/api/tenants/methods';
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
 
 import '/imports/ui/components/buttons/buttons';
@@ -66,6 +69,8 @@ Template.tenantSettings.events({
 	},
 
 	async 'click .js-member-add-btn'() {
+		RouterAutoscroll.cancelNext();
+
 		const memberId = this._id;
 		const tenantId = Router.current().params._id;
 		try {
@@ -85,6 +90,8 @@ Template.tenantSettings.events({
 	},
 
 	async 'click .js-member-remove-btn'() {
+		RouterAutoscroll.cancelNext();
+
 		const memberId = `${this}`;
 		const tenantId = Router.current().params._id;
 		try {
@@ -109,6 +116,8 @@ Template.tenantSettings.events({
 	},
 
 	async 'click .js-admin-add-btn'() {
+		RouterAutoscroll.cancelNext();
+
 		const adminId = this._id;
 		const tenantId = Router.current().params._id;
 		try {
@@ -128,6 +137,8 @@ Template.tenantSettings.events({
 	},
 
 	async 'click .js-admin-remove-btn'() {
+		RouterAutoscroll.cancelNext();
+
 		const adminId = `${this}`;
 		const tenantId = Router.current().params._id;
 		try {
