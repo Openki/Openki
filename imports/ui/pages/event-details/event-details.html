@@ -119,7 +119,7 @@
 				<p class="event-details-description">
 					{{#if hasVenue}}
 						<div class="details-map">
-							{{>map markers=eventMarkers}}
+							{{> map markers=eventMarkers}}
 						</div>
 					{{/if}}
 					{{{description}}}
@@ -129,7 +129,7 @@
 			{{> sharing}}
 		</div>
 		{{#if replicating}}
-			{{>eventReplication}}
+			{{> eventReplication}}
 		{{/if}}
 		{{#if mayEdit}}
 			{{#if expanded}}
@@ -234,7 +234,7 @@
 					</li>
 				{{/each}}
 				<li class="dialog-dropdown-btn">
-					<a href="/group/create" class="btn btn-add">
+					<a href="{{pathFor 'groupDetails' _id='create'}}" class="btn btn-add">
 						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 						{{mf 'profile.createNewGroup.button'}}
 					</a>

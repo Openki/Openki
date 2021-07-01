@@ -157,7 +157,7 @@ Template.courseRole.events({
 	},
 
 	'click .js-first-steps-comment'() {
-		$('.course-page-btn.js-discussion-edit').click();
+		$('.course-page-btn.js-discussion-edit').trigger('click');
 		window.location.hash = '#discussion';
 		RouterAutoscroll.scheduleScroll();
 	},

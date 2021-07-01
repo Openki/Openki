@@ -23,7 +23,7 @@ Template.sendMessage.onCreated(function () {
 });
 
 Template.sendMessage.onRendered(function () {
-	this.$('.js-email-message').select();
+	this.$('.js-email-message').trigger('select');
 });
 
 Template.sendMessage.helpers({

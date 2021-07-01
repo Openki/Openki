@@ -204,7 +204,7 @@
 
 <template name="profileLink">
 	{{#if this}}
-		<a class="profilelink" href="/user/{{this}}/{{username this}}">
+		<a class="profilelink" href="{{pathFor 'userprofile' _id=this username=(username this)}}">
 			{{username this}}
 		</a>
 	{{else}}
@@ -217,7 +217,7 @@
 <template name="profileIcon">
 	<div class="discussion-thumb">
 		{{#if this}}
-			<a href="/user/{{this}}/{{username this}}">
+			<a href="{{pathFor 'userprofile' _id=this username=(username this)}}">
 				{{> avatar class='discussion-profile-icon' userId=this}}
 			</a>
 		{{else}}

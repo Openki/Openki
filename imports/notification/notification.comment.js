@@ -8,7 +8,7 @@ import { CourseDiscussions } from '/imports/api/course-discussions/course-discus
 import { Courses } from '/imports/api/courses/courses';
 import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
-import Log from '/imports/api/log/log';
+import { Log } from '/imports/api/log/log';
 
 import * as StringTools from '/imports/utils/string-tools';
 
@@ -138,7 +138,7 @@ notificationComment.Model = function (entry) {
 			siteName = siteName || Meteor.settings.public.siteName;
 
 			return {
-				unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
+				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				course,
 				courseLink: Router.url('showCourse', course, {
 					query: `select=${comment._id}&campaign=commentNotify`,

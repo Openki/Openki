@@ -1,4 +1,4 @@
-import { $ } from 'meteor/jquery';
+import $ from 'jquery';
 import { mfPkg } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
@@ -119,7 +119,7 @@ Template.languageSelection.events({
 
 	'keyup .js-language-search'(event, instance) {
 		if (event.which === 13) {
-			instance.$('.js-language-link').first().click();
+			instance.$('.js-language-link').first().trigger('click');
 		} else {
 			updateLanguageSearch(instance);
 		}
@@ -142,7 +142,7 @@ Template.languageSelection.events({
 Template.languageSelection.onRendered(function () {
 	const instance = this;
 
-	instance.$('.js-language-search').select();
+	instance.$('.js-language-search').trigger('select');
 
 	instance
 		.parentInstance()

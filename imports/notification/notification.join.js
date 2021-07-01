@@ -5,7 +5,7 @@ import { mf } from 'meteor/msgfmt:core';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Regions } from '/imports/api/regions/regions';
-import Log from '/imports/api/log/log';
+import { Log } from '/imports/api/log/log';
 import { Users } from '/imports/api/users/users';
 
 import * as HtmlTools from '/imports/utils/html-tools';
@@ -114,7 +114,7 @@ notificationJoin.Model = function (entry) {
 			siteName = siteName || Meteor.settings.public.siteName;
 
 			return {
-				unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
+				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				course,
 				newParticipant,
 				courseLink: Router.url('showCourse', course, { query: 'campaign=joinNotify' }),

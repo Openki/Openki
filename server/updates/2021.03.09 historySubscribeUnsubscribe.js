@@ -1,4 +1,5 @@
 import { Courses } from '/imports/api/courses/courses';
+import { Log } from '/imports/api/log/log';
 
 export function update() {
 	let updated = 0;

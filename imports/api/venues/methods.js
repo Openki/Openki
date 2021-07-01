@@ -59,6 +59,10 @@ export const save = ServerMethod(
 			if (!venue) {
 				throw new Meteor.Error(404, 'Venue not found');
 			}
+
+			if (!venue.editableBy(Meteor.user())) {
+				throw new Meteor.Error(401, 'Please log in');
+			}
 		}
 
 		/* Changes we want to perform */

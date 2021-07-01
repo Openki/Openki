@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { Router } from 'meteor/iron:router';
-import { jQuery } from 'meteor/jquery';
+import $ from 'jquery';
 import { Meteor } from 'meteor/meteor';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
@@ -13,7 +13,7 @@ if (Meteor.isClient) {
 
 			const haveEditfield = () => {
 				assert(
-					jQuery('.group-details-name [contenteditable=true]').length > 0,
+					$('.group-details-name [contenteditable=true]').length > 0,
 					'Group name edit field present',
 				);
 			};
@@ -28,11 +28,11 @@ if (Meteor.isClient) {
 				await waitForSubscriptions();
 				await waitFor(haveEditfield);
 
-				jQuery('.group-details-name [contenteditable=true]').html(randomTitle);
-				jQuery('.js-group-save').click();
+				$('.group-details-name [contenteditable=true]').html(randomTitle);
+				$('.js-group-save').trigger('click');
 
 				await waitFor(() => {
-					assert(jQuery('.has-error').length > 0, 'A message error message is shown');
+					assert($('.has-error').length > 0, 'A message error message is shown');
 				});
 			});
 
@@ -46,23 +46,18 @@ if (Meteor.isClient) {
 				await waitForSubscriptions();
 				await waitFor(haveEditfield);
 
-				jQuery('.group-details-name [contenteditable=true]').html(randomTitle);
-				jQuery('.group-details-short [contenteditable=true]').html(`${randomTitle} short`);
-				jQuery('.group-details-claim [contenteditable=true]').html(`${randomTitle} claim`);
-				jQuery('.group-details-description [contenteditable=true]').html(
-					`${randomTitle} description`,
-				);
-				jQuery('.js-group-save').click();
+				$('.group-details-name [contenteditable=true]').html(randomTitle);
+				$('.group-details-short [contenteditable=true]').html(`${randomTitle} short`);
+				$('.group-details-claim [contenteditable=true]').html(`${randomTitle} claim`);
+				$('.group-details-description [contenteditable=true]').html(`${randomTitle} description`);
+				$('.js-group-save').trigger('click');
 
 				await waitFor(() => {
 					assert(
-						jQuery('.alert.alert-success').text().includes(randomTitle),
+						$('.alert.alert-success').text().includes(randomTitle),
 						'A message that the course was created is shown',
 					);
-					assert(
-						jQuery('.group-details-name').text().includes(randomTitle),
-						'The title is visible',
-					);
+					assert($('.group-details-name').text().includes(randomTitle), 'The title is visible');
 				});
 			});
 		});
@@ -74,12 +69,12 @@ if (Meteor.isClient) {
 
 				Router.go('/group/fd3a8d98d4');
 				const haveEditfield = () => {
-					assert(jQuery('.js-title').length > 0, 'New course edit field present');
+					assert($('.js-title').length > 0, 'New course edit field present');
 				};
 				const findExpectedFormTitle = () => {
 					// assert group name is mentioned in course creation form title
 					const expectedTitle = /Kommunikationsguerilla/;
-					const actualTitle = jQuery('form h2').text();
+					const actualTitle = $('form h2').text();
 					assert.match(actualTitle, expectedTitle, 'Form title must mention group');
 				};
 
@@ -89,19 +84,19 @@ if (Meteor.isClient) {
 				await MeteorAsync.loginWithPassword('Seee', 'greg');
 
 				// Create the course
-				jQuery('.js-title').val(randomTitle);
-				jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-				jQuery('.js-course-edit-save').click();
+				$('.js-title').val(randomTitle);
+				$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
+				$('.js-course-edit-save').trigger('click');
 
 				// We should be redirected to the created course
 
 				await waitFor(() => {
 					assert(
-						jQuery('.course-details').length > 0,
+						$('.course-details').length > 0,
 						`Details of the new course ${randomTitle} are shown`,
 					);
 					assert.match(
-						jQuery('.js-group-label').text(),
+						$('.js-group-label').text(),
 						/SKG/,
 						'The course is in the group it was created in',
 					);
@@ -115,7 +110,7 @@ if (Meteor.isClient) {
 				await MeteorAsync.logout();
 				await MeteorAsync.loginWithPassword('Normalo', 'greg');
 				await waitFor(() => {
-					assert(jQuery('.js-course-edit').length > 0, 'User from group can edit course');
+					assert($('.js-course-edit').length > 0, 'User from group can edit course');
 				});
 			});
 
@@ -124,19 +119,19 @@ if (Meteor.isClient) {
 
 				Router.go('/group/b0f1a82d36');
 				const haveEditfield = () => {
-					assert(jQuery('.js-title').length > 0, 'New course edit field present');
+					assert($('.js-title').length > 0, 'New course edit field present');
 				};
 				const findExpectedFormTitle = () => {
 					// assert group name is mentioned in course creation form title
 					const expectedTitle = /Autonome Schule Zürich/;
-					const actualTitle = jQuery('form h2').text();
+					const actualTitle = $('form h2').text();
 					assert.match(actualTitle, expectedTitle, 'Form title must mention group');
 				};
 				const haveNotInternalCheckbox = () => {
-					assert(jQuery('.js-check-internal').length === 0, 'Internal checkbox is not present');
+					assert($('.js-check-internal').length === 0, 'Internal checkbox is not present');
 				};
 				const haveInternalCheckbox = () => {
-					assert(jQuery('.js-check-internal').length > 0, 'Internal checkbox present');
+					assert($('.js-check-internal').length > 0, 'Internal checkbox present');
 				};
 				await waitForSubscriptions();
 				await waitFor(haveEditfield);
@@ -146,20 +141,20 @@ if (Meteor.isClient) {
 				await waitFor(haveInternalCheckbox);
 
 				// Create the course
-				jQuery('.js-title').val(randomTitle);
-				jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-				jQuery('.js-check-internal').prop('checked', true);
-				jQuery('.js-course-edit-save').click();
+				$('.js-title').val(randomTitle);
+				$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
+				$('.js-check-internal').prop('checked', true);
+				$('.js-course-edit-save').trigger('click');
 
 				// We should be redirected to the created course
 
 				await waitFor(() => {
 					assert(
-						jQuery('.course-details').length > 0,
+						$('.course-details').length > 0,
 						`Details of the new course ${randomTitle} are shown`,
 					);
 					assert.match(
-						jQuery('.js-group-label').text(),
+						$('.js-group-label').text(),
 						/ASZ/,
 						'The course is in the group it was created in',
 					);
@@ -169,7 +164,7 @@ if (Meteor.isClient) {
 
 				await waitFor(() => {
 					assert(
-						!jQuery('body').text().includes(randomTitle),
+						!$('body').text().includes(randomTitle),
 						`The internal course should not be visible on the start page ${window.location}`,
 					);
 				}, 5000);

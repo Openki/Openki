@@ -3,11 +3,43 @@
 .navbar {
 	border: 0;
 	transition: box-shadow $default-transition-time;
+
+	@media (max-width: $grid-float-breakpoint) {
+		.dropdown {
+			width: 100%;
+		}
+
+		.dropdown-legend {
+			color: $black;
+		}
+
+		.dropdown-menu > li > a,
+		.dropdown-menu > li > .btn-link {
+			color: $white;
+		}
+	}
 }
 
 .navbar-collapse {
 	@media (max-width: $grid-float-breakpoint) {
 		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+		padding-bottom: 10px;
+
+		/* Fix: Removes small bar on opening/closing */
+		&[aria-expanded='false'] {
+			display: none;
+		}
+		&[aria-expanded='true'] {
+			height: auto !important;
+		}
+	}
+}
+
+.navbar-collapse,
+.navbar-form {
+	@media (max-width: $grid-float-breakpoint) {
+		border: 0;
+		box-shadow: none;
 	}
 }
 
@@ -129,16 +161,13 @@
 	}
 
 	@media (max-width: $grid-float-breakpoint) {
-		background-color: $dropdown-bg;
-		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3) inset;
 		padding: 0;
 	}
 }
 
 .navbar .navbar-nav > .open > .dropdown-menu > li > a {
 	@media (max-width: $grid-float-breakpoint) {
-		border-bottom: 1px solid darken($dropdown-bg, 10%);
-		color: $dropdown-link-color;
+		color: $white;
 	}
 }
 
@@ -218,12 +247,20 @@
 	@include td-float(right);
 	color: $gray-light;
 
+	@media (max-width: $grid-float-breakpoint) {
+		color: $gray-lighter;
+	}
+
 	&::after {
 		content: '%';
 	}
 
 	&.well-translated {
 		color: $green-darker;
+
+		@media (max-width: $grid-float-breakpoint) {
+			color: $green;
+		}
 	}
 }
 
