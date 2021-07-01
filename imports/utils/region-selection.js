@@ -106,6 +106,7 @@ RegionSelection.init = function () {
 				return;
 			}
 		} catch (err) {
+			// eslint-disable-next-line no-console
 			console.log(`Region autodetection error: ${err}`);
 		}
 

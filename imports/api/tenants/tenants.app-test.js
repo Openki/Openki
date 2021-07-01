@@ -80,10 +80,7 @@ if (Meteor.isClient) {
 						hasFailed = true;
 					}
 				}
-				assert.isTrue(
-					hasFailed,
-					'tenant.addMember throws an error on for none tenant admins',
-				);
+				assert.isTrue(hasFailed, 'tenant.addMember throws an error on for none tenant admins');
 			});
 		});
 	});

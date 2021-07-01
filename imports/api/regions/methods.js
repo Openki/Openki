@@ -6,7 +6,7 @@ import { CourseDiscussions } from '/imports/api/course-discussions/course-discus
 import { Events } from '/imports/api/events/events';
 import { Regions } from './regions';
 import { Venues } from '/imports/api//venues/venues';
-import { Tenants } from '../tenants/tenants';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 /** @typedef {import('./regions').RegionEntity} RegionEntity */
 
@@ -37,12 +37,10 @@ export const create = ServerMethod(
 			throw new Meteor.Error(401, 'please log in');
 		}
 
-		const tenant = Tenants.findOne(changes.tenant);
-		if (!tenant) {
-			throw new Meteor.Error(404, 'tenant not found');
-		}
-
-		if (!tenant.editableBy(user)) {
+		if (
+			!UserPrivilegeUtils.privileged(user, 'admin') /* Admins can add regions */ &&
+			!user.isTenantAdmin(changes.tenant) /* or admins of a tenant */
+		) {
 			throw new Meteor.Error(401, 'not permitted');
 		}
 

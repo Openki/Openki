@@ -1,4 +1,5 @@
 import { check } from 'meteor/check';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 
@@ -11,9 +12,9 @@ import './region-details.html';
 
 Template.regionDetails.onCreated(function () {
 	const instance = this;
-	const { region, isNew } = instance.data;
 
-	this.autorun(() => {
+	instance.autorun(() => {
+		const { isNew, region } = Template.currentData();
 		check(region.tenant, String);
 
 		if (!isNew) {
@@ -21,12 +22,15 @@ Template.regionDetails.onCreated(function () {
 		}
 	});
 
-	this.editing = new ReactiveVar(isNew);
+	instance.state = new ReactiveDict();
+	instance.state.setDefault({
+		editing: false,
+	});
 });
 
 Template.regionDetails.helpers({
 	editing() {
-		return Template.instance().editing.get();
+		return Template.instance().state.get('editing');
 	},
 
 	createArgs() {
@@ -53,10 +57,10 @@ Template.regionDetails.helpers({
 			title: mf('region.edit.titleEdit', 'Edit region'),
 			async onSave(changes) {
 				await RegionsMethods.update(region._id, changes);
-				instance.editing.set(false);
+				instance.state.set('editing', false);
 			},
 			onCancel() {
-				instance.editing.set(false);
+				instance.state.set('editing', false);
 			},
 		};
 	},
@@ -67,7 +71,7 @@ Template.regionDetails.helpers({
 		return {
 			region,
 			onEdit() {
-				instance.editing.set(true);
+				instance.state.set('editing', true);
 			},
 		};
 	},
