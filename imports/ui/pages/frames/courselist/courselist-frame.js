@@ -70,9 +70,6 @@ Template.frameCourselistCourse.helpers({
 	allRegions: () => Session.equals('region', 'all'),
 	regionOf: (course) => Regions.findOne(course.region).name,
 	expanded: () => Template.instance().expanded.get(),
-	toggleIndicatorIcon() {
-		return Template.instance().expanded.get() ? 'angle-up' : 'angle-down';
-	},
 	interestedPersons(course) {
 		return course.members.length;
 	},

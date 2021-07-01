@@ -73,7 +73,7 @@ Template.profile.onCreated(function () {
 		true,
 		mf(
 			'profile.description.placeholder',
-			'About me, my interests and skills. (How about the idea of creating courses fitting to your description? 😉)',
+			'About you. Let the community know what your interests are.',
 		),
 		{
 			onSave: async (newDescription) => {

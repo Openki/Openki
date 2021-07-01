@@ -6,6 +6,7 @@ import { Courses, Course } from './courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
+import { CourseDiscussions } from '../course-discussions/course-discussions';
 import { Roles } from '/imports/api/roles/roles';
 import * as UpdateMethods from '/imports/utils/update-methods';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
@@ -320,6 +321,7 @@ export const remove = ServerMethod(
 			throw new Meteor.Error(401, 'edit not permitted');
 		}
 		Events.remove({ courseId });
+		CourseDiscussions.remove({ courseId });
 		Courses.remove(courseId);
 	},
 );
