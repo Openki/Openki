@@ -141,8 +141,6 @@ Router.route('users', {
 	path: 'admin/users',
 });
 
-Router.route('find', finderRoute('/find'));
-
 Router.route('frameCalendar', {
 	path: '/frame/calendar',
 	layoutTemplate: 'frameLayout',
