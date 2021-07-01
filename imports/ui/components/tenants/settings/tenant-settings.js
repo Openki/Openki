@@ -39,6 +39,10 @@ Template.tenantSettings.onCreated(function () {
 });
 
 Template.tenantSettings.helpers({
+	members() {
+		const tenant = Tenants.findOne(Router.current().params._id);
+		return tenant.members.filter((m) => !tenant?.admins?.includes(m));
+	},
 	foundMembers() {
 		const instance = Template.instance();
 

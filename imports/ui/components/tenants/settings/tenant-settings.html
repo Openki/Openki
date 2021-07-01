@@ -2,10 +2,10 @@
 		<div class="details-form-element">
 			<h3>
 				<span class="fa fa-group fa-fw" aria-hidden="true"></span>
-				{{mf 'tenant.settings.title.Members' 'Members'}} ({{tenant.members.length}})
+				{{mf 'tenant.settings.title.Members' 'Members'}} ({{members.length}})
 			</h3>
 			<div class="tag-group multiline">
-				{{#each tenant.members}}
+				{{#each members}}
 					<div class="tag tag-btn tenant-member-tag-btn-remove">
 						<button class="js-member-remove-btn"
 								title="{{mf 'tenant.settings.removeFromTenant' 'remove member'}}"
