@@ -125,6 +125,14 @@ export class User {
 	privileged(role) {
 		return !!this.privileges?.includes(role);
 	}
+
+	/**
+	 * @this {UserModel}
+	 * @param {string} tenantId
+	 */
+	isTenantAdmin(tenantId) {
+		return this.tenants?.some((t) => t._id === tenantId && t.privileges.includes('admin')) || false;
+	}
 }
 
 /** @type {Mongo.Collection<UserEntity, UserModel>} */

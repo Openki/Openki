@@ -1,4 +1,10 @@
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import { _ } from 'meteor/underscore';
+
+/** @typedef {import('../users/users').UserModel} UserModel */
+
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
 
 // ======== DB-Model: ========
@@ -11,11 +17,37 @@ import { Filtering } from '/imports/utils/filtering';
  */
 
 /**
- * @extends {Mongo.Collection<TenantEntity>}
+ * @typedef {Tenant & TenantEntity} TenantModel
+ */
+
+export class Tenant {
+	/**
+	 * Check whether a user may edit the tenant.
+	 * @this {TenantModel}
+	 * @param {UserModel | undefined} user
+	 */
+	editableBy(user) {
+		if (!user) {
+			return false;
+		}
+
+		return (
+			UserPrivilegeUtils.privileged(user, 'admin') /* Admins can edit all regions */ ||
+			user.isTenantAdmin(this._id) /* or admins of a tenant */
+		);
+	}
+}
+
+/**
+ * @extends {Mongo.Collection<TenantEntity, TenantModel>}
  */
 export class TenantsCollection extends Mongo.Collection {
 	constructor() {
-		super('Tenants');
+		super('Tenants', {
+			transform(tenant) {
+				return _.extend(new Tenant(), tenant);
+			},
+		});
 	}
 
 	// eslint-disable-next-line class-methods-use-this

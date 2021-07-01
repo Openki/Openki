@@ -6,7 +6,6 @@ import { locationFormat } from '/imports/utils/location-format';
 import '/imports/ui/components/map/map';
 
 import './region-display.html';
-//import { isTenantEditableBy } from '/imports/utils/isTenantEditableBy';
 
 Template.regionDisplay.onCreated(function () {
 	const instance = this;
@@ -36,15 +35,17 @@ Template.regionDisplay.onRendered(function () {
 	instance.busy(false);
 
 	instance.autorun(() => {
-		const data = Template.currentData();
+		const { region } = Template.currentData();
 
-		instance.setLocation(data.region.loc);
+		instance.setLocation(region.loc);
 	});
 });
 
 Template.regionDisplay.helpers({
 	mayEdit() {
-		return true; // isTenantEditableBy(Template.instance().data.region.tenant, Meteor.user()._id);
+		const { region } = Template.currentData();
+
+		return region.editableBy(Meteor.user());
 	},
 
 	markers() {

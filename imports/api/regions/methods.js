@@ -6,13 +6,13 @@ import { CourseDiscussions } from '/imports/api/course-discussions/course-discus
 import { Events } from '/imports/api/events/events';
 import { Regions } from './regions';
 import { Venues } from '/imports/api//venues/venues';
+import { Tenants } from '../tenants/tenants';
 
 /** @typedef {import('./regions').RegionEntity} RegionEntity */
 
 import { AsyncTools } from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
-import { isTenantEditableBy } from '/imports/utils/isTenantEditableBy';
 
 export const create = ServerMethod(
 	'region.create',
@@ -37,7 +37,12 @@ export const create = ServerMethod(
 			throw new Meteor.Error(401, 'please log in');
 		}
 
-		if (!isTenantEditableBy(changes.tenant, user._id)) {
+		const tenant = Tenants.findOne(changes.tenant);
+		if (!tenant) {
+			throw new Meteor.Error(404, 'tenant not found');
+		}
+
+		if (!tenant.editableBy(user)) {
 			throw new Meteor.Error(401, 'not permitted');
 		}
 
@@ -93,7 +98,7 @@ export const update = ServerMethod(
 			throw new Meteor.Error(404, 'region not found');
 		}
 
-		if (!isTenantEditableBy(region.tenant, user._id)) {
+		if (!region.editableBy(user)) {
 			throw new Meteor.Error(401, 'not permitted');
 		}
 
@@ -141,7 +146,7 @@ export const remove = ServerMethod(
 			throw new Meteor.Error(404, 'region not found');
 		}
 
-		if (!isTenantEditableBy(region.tenant, user._id)) {
+		if (!region.editableBy(user)) {
 			throw new Meteor.Error(401, 'not permitted');
 		}
 

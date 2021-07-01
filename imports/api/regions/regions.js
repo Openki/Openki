@@ -8,7 +8,6 @@ import { _ } from 'meteor/underscore';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import Predicates from '/imports/utils/predicates';
 import { Filtering } from '/imports/utils/filtering';
-import { isTenantAdmin } from '/imports/utils/is-tenant-admin';
 
 // ======== DB-Model: ========
 /**
@@ -65,7 +64,7 @@ export class Region {
 
 		return (
 			UserPrivilegeUtils.privileged(user, 'admin') /* Admins can edit all regions */ ||
-			isTenantAdmin(user._id, this.tenant) /* or admins of a tenant */
+			user.isTenantAdmin(this.tenant) /* or admins of a tenant */
 		);
 	}
 }

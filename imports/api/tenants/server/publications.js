@@ -2,13 +2,12 @@ import { Meteor } from 'meteor/meteor';
 
 import { Tenants } from '/imports/api/tenants/tenants';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { isTenantAdmin } from '/imports/utils/is-tenant-admin';
 
 Meteor.publish('tenant', (tenantId) => {
 	// Only admins can see all tenant admins. Note: Admin privileg is not something that is
 	// likely to happen and reactive changes are not needed.
 	const showAdminsFields =
-		UserPrivilegeUtils.privilegedTo('admin') || isTenantAdmin(Meteor.userId(), tenantId)
+		UserPrivilegeUtils.privilegedTo('admin') || Meteor.user().isTenantAdmin(tenantId)
 			? 1
 			: undefined;
 
