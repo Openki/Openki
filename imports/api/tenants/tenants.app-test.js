@@ -24,7 +24,7 @@ if (Meteor.isClient) {
 
 				assert.notInclude(tenant.members, userId);
 
-				await TenantsMethods.updateMembership(userId, tenantId, true);
+				await TenantsMethods.addMember(userId, tenantId);
 
 				(await MeteorAsync.subscribe('tenant', tenantId)).stop(); // reload tenant from server
 				tenant = Tenants.findOne(tenantId);
@@ -47,7 +47,7 @@ if (Meteor.isClient) {
 
 				assert.include(tenant.members, userId);
 
-				await TenantsMethods.updateMembership(userId, tenantId, false);
+				await TenantsMethods.removeMember(userId, tenantId);
 
 				(await MeteorAsync.subscribe('tenant', tenantId)).stop(); // reload tenant from server
 				tenant = Tenants.findOne(tenantId);
@@ -74,7 +74,7 @@ if (Meteor.isClient) {
 
 				let hasFailed = false;
 				try {
-					await TenantsMethods.updateMembership(userId, tenantId, true);
+					await TenantsMethods.addMember(userId, tenantId);
 				} catch (err) {
 					if (err) {
 						hasFailed = true;
@@ -82,7 +82,7 @@ if (Meteor.isClient) {
 				}
 				assert.isTrue(
 					hasFailed,
-					'tenant.updateMembership throws an error on for none tenant admins',
+					'tenant.addMember throws an error on for none tenant admins',
 				);
 			});
 		});

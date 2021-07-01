@@ -69,7 +69,7 @@ Template.tenantSettings.events({
 		const memberId = this._id;
 		const tenantId = Router.current().params._id;
 		try {
-			await TenantsMethods.updateMembership(memberId, tenantId, true);
+			await TenantsMethods.addMember(memberId, tenantId);
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
@@ -88,7 +88,7 @@ Template.tenantSettings.events({
 		const memberId = `${this}`;
 		const tenantId = Router.current().params._id;
 		try {
-			await TenantsMethods.updateMembership(memberId, tenantId, false);
+			await TenantsMethods.removeMember(memberId, tenantId);
 
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
@@ -112,7 +112,7 @@ Template.tenantSettings.events({
 		const adminId = this._id;
 		const tenantId = Router.current().params._id;
 		try {
-			await TenantsMethods.updateAdminship(adminId, tenantId, true);
+			await TenantsMethods.addAdmin(adminId, tenantId);
 			const adminName = Users.findOne(adminId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
@@ -131,7 +131,7 @@ Template.tenantSettings.events({
 		const adminId = `${this}`;
 		const tenantId = Router.current().params._id;
 		try {
-			await TenantsMethods.updateAdminship(adminId, tenantId, false);
+			await TenantsMethods.removeAdmin(adminId, tenantId);
 
 			const adminName = Users.findOne(adminId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;

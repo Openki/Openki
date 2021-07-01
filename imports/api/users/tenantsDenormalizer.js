@@ -23,41 +23,23 @@ export function onStartUp() {
 /**
  * @param {string} userId
  * @param {string} tenantId
- * @param {boolean} join
  */
-export function afterTenantUpdateMembership(userId, tenantId, join) {
-	if (Tenants.findOne(tenantId).admins.includes(userId)) {
-		// is user also in the admin list then no update is needed
-		return;
-	}
-
-	let update;
-	if (join) {
-		update = { $addToSet: { tenants: tenantId } };
-	} else {
-		update = { $pull: { tenants: tenantId } };
-	}
-
-	Users.update(userId, update);
+export function afterTenantAddMember(userId, tenantId) {
+	Users.update(userId, { $addToSet: { tenants: tenantId } });
 }
 
 /**
  * @param {string} userId
  * @param {string} tenantId
- * @param {boolean} join
  */
-export function afterTenantUpdateAdminship(userId, tenantId, join) {
-	if (Tenants.findOne(tenantId)?.members.includes(userId)) {
-		// is user also in the member list then no update is needed
-		return;
-	}
+export function afterTenantRemoveMember(userId, tenantId) {
+	Users.update(userId, { $pull: { tenants: tenantId } });
+}
 
-	let update;
-	if (join) {
-		update = { $addToSet: { tenants: tenantId } };
-	} else {
-		update = { $pull: { tenants: tenantId } };
-	}
-
-	Users.update(userId, update);
+/**
+ * @param {string} userId
+ * @param {string} tenantId
+ */
+export function afterTenantAddAdmin(userId, tenantId) {
+	Users.update(userId, { $addToSet: { tenants: tenantId } });
 }

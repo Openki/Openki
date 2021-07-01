@@ -7,102 +7,94 @@ import { Users } from '/imports/api/users/users';
 import * as usersTenantsDenormalizer from '../users/tenantsDenormalizer';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 
-export const updateMembership = ServerMethod(
-	'tenant.updateMembership',
+/**
+ * @param {string} userId
+ * @param {string} tenantId
+ */
+function membershipMutationPreconditionCheck(userId, tenantId) {
+	check(userId, String);
+	check(tenantId, String);
+
+	const senderId = Meteor.userId();
+	if (!senderId) {
+		throw new Meteor.Error(401, 'Not permitted');
+	}
+
+	const tenant = Tenants.findOne(tenantId);
+	if (!tenant) {
+		throw new Meteor.Error(401, 'Not permitted');
+	}
+
+	// Only current tenant admins (or instance admins) may draft other people into it
+	if (!tenant.admins.includes(senderId) && !UserPrivilegeUtils.privilegedTo('admin')) {
+		throw new Meteor.Error(401, 'Not permitted');
+	}
+
+	if (Users.find(userId, { limit: 1 }).count() === 0) {
+		throw new Meteor.Error(404, 'User not found');
+	}
+
+	return tenant;
+}
+
+export const addMember = ServerMethod(
+	'tenant.addMember',
 	/**
 	 * @param {string} userId
 	 * @param {string} tenantId
-	 * @param {boolean} join
 	 */
-	(userId, tenantId, join) => {
-		check(userId, String);
-		check(tenantId, String);
-		check(join, Boolean);
+	(userId, tenantId) => {
+		membershipMutationPreconditionCheck(userId, tenantId);
 
-		const senderId = Meteor.userId();
-		if (!senderId) {
-			throw new Meteor.Error('Not permitted');
-		}
+		Tenants.update(tenantId, { $addToSet: { members: userId } });
 
-		// Only current tenant admins (or instance admins) may draft other people into it
-		// We build a selector that only finds the tenant if the sender is a
-		// member of it.
-		const sel = {
-			_id: tenantId,
-			admins: !UserPrivilegeUtils.privilegedTo('admin') ? senderId : undefined,
-		};
-
-		// This check is not strictly necessary when the update uses the same
-		// selector. It generates an error message though, whereas the update is
-		// blind to that.
-		if (!Tenants.findOne(sel)) {
-			throw new Meteor.Error('No permitted');
-		}
-
-		const user = Users.findOne({ _id: userId });
-		if (!user) {
-			throw new Meteor.Error(404, 'User not found');
-		}
-
-		let update;
-		if (join) {
-			update = { $addToSet: { members: user._id } };
-		} else {
-			update = { $pull: { members: user._id } };
-		}
-
-		Tenants.update(tenantId, update);
-
-		usersTenantsDenormalizer.afterTenantUpdateMembership(user._id, tenantId, join);
+		usersTenantsDenormalizer.afterTenantAddMember(userId, tenantId);
 	},
 );
 
-export const updateAdminship = ServerMethod(
-	'tenant.updateAdminship',
+export const removeMember = ServerMethod(
+	'tenant.removeMember',
 	/**
 	 * @param {string} userId
 	 * @param {string} tenantId
-	 * @param {boolean} join
 	 */
-	(userId, tenantId, join) => {
-		check(userId, String);
-		check(tenantId, String);
-		check(join, Boolean);
+	(userId, tenantId) => {
+		const tenant = membershipMutationPreconditionCheck(userId, tenantId);
 
-		const senderId = Meteor.userId();
-		if (!senderId) {
-			throw new Meteor.Error('Not permitted');
+		if (tenant.admins.includes(userId)) {
+			throw new Meteor.Error(401, 'Not permitted, delete the member from the admin list first');
 		}
 
-		// Only current tenant admins (or instance admins) may draft other people into it
-		// We build a selector that only finds the tenant if the sender is a
-		// member of it.
-		const sel = {
-			_id: tenantId,
-			admins: !UserPrivilegeUtils.privilegedTo('admin') ? senderId : undefined,
-		};
+		Tenants.update(tenantId, { $pull: { members: userId } });
 
-		// This check is not strictly necessary when the update uses the same
-		// selector. It generates an error message though, whereas the update is
-		// blind to that.
-		if (!Tenants.findOne(sel)) {
-			throw new Meteor.Error('No permitted');
-		}
+		usersTenantsDenormalizer.afterTenantRemoveMember(userId, tenantId);
+	},
+);
 
-		const user = Users.findOne({ _id: userId });
-		if (!user) {
-			throw new Meteor.Error(404, 'User not found');
-		}
+export const addAdmin = ServerMethod(
+	'tenant.addAdmin',
+	/**
+	 * @param {string} userId
+	 * @param {string} tenantId
+	 */
+	(userId, tenantId) => {
+		membershipMutationPreconditionCheck(userId, tenantId);
 
-		let update;
-		if (join) {
-			update = { $addToSet: { admins: user._id } };
-		} else {
-			update = { $pull: { admins: user._id } };
-		}
+		Tenants.update(tenantId, { $addToSet: { admins: userId, members: userId } });
 
-		Tenants.update(tenantId, update);
+		usersTenantsDenormalizer.afterTenantAddAdmin(userId, tenantId);
+	},
+);
 
-		usersTenantsDenormalizer.afterTenantUpdateAdminship(user._id, tenantId, join);
+export const removeAdmin = ServerMethod(
+	'tenant.removeAdmin',
+	/**
+	 * @param {string} userId
+	 * @param {string} tenantId
+	 */
+	(userId, tenantId) => {
+		membershipMutationPreconditionCheck(userId, tenantId);
+
+		Tenants.update(tenantId, { $pull: { admins: userId } });
 	},
 );
