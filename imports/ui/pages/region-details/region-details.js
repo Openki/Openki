@@ -73,6 +73,10 @@ Template.regionDetails.helpers({
 			onEdit() {
 				instance.state.set('editing', true);
 			},
+			async onDelete() {
+				await RegionsMethods.remove(region._id);
+				Router.go('tenantDetails', { _id: region.tenant });
+			},
 		};
 	},
 });

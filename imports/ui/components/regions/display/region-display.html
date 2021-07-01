@@ -28,7 +28,28 @@
 		{{#if mayEdit}}
 			<div class="actions">
 				{{> buttonEdit event="js-region-edit"}}
+				{{#unless verifyDelete}}
+					{{> buttonDelete event="js-region-delete"}}
+				{{/unless}}
 			</div>
+			{{#if verifyDelete}}
+				{{> regionDeleteConfirmDialog}}
+			{{/if}}
 		{{/if}}
+	</div>
+</template>
+
+<template name="regionDeleteConfirmDialog">
+	<div class="region-delete-confirmation">
+		<p>{{mf 'region.reallydelete' 'Please confirm that you would like to delete this region with all courses, events and venues. This cannot be undone.'}}
+		</p>
+		<div class="form-actions">
+			{{> buttonDeleteConfirm
+				event="js-region-delete-confirm"
+				textIdle=(mf 'region.detail.remove' 'Remove this region')
+				textBusy=(mf 'region.detail.remove.busy' 'Deleting region...')
+			}}
+			{{> buttonCancel event="js-region-delete-cancel"}}
+		</div>
 	</div>
 </template>

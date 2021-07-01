@@ -196,12 +196,12 @@ Meteor.methods({
 
 			const courseCount = Courses.find({
 				region: regionId,
-				internal: false,
-				archived: false,
+				internal: { $ne: true },
+				archived: { $ne: true },
 			}).count();
 			const futureEventCount = Events.find({
 				region: regionId,
-				internal: false,
+				internal: { $ne: true },
 				start: { $gte: new Date() },
 			}).count();
 

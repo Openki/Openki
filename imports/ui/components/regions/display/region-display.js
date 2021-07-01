@@ -1,5 +1,9 @@
 import { Mongo } from 'meteor/mongo';
+import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict';
+
+import * as Alert from '/imports/api/alerts/alert';
 
 import { locationFormat } from '/imports/utils/location-format';
 
@@ -9,7 +13,12 @@ import './region-display.html';
 
 Template.regionDisplay.onCreated(function () {
 	const instance = this;
-	instance.busy();
+	instance.busy(true);
+
+	instance.state = new ReactiveDict();
+	instance.state.setDefault({
+		verifyDelete: false,
+	});
 
 	const markers = new Mongo.Collection(null); // Local collection for in-memory storage
 	instance.markers = markers;
@@ -48,6 +57,10 @@ Template.regionDisplay.helpers({
 		return region.editableBy(Meteor.user());
 	},
 
+	verifyDelete() {
+		return Template.instance().state.get('verifyDelete');
+	},
+
 	markers() {
 		return Template.instance().markers;
 	},
@@ -61,6 +74,29 @@ Template.regionDisplay.helpers({
 
 Template.regionDisplay.events({
 	'click .js-region-edit'(_event, instance) {
+		instance.state.set('verifyDelete', false);
 		instance.data.onEdit();
+	},
+
+	'click .js-region-delete'(_event, instance) {
+		instance.state.set('verifyDelete', true);
+	},
+
+	'click .js-region-delete-cancel'(_event, instance) {
+		instance.state.set('verifyDelete', false);
+	},
+
+	async 'click .js-region-delete-confirm'(_event, instance) {
+		const { region } = instance.data;
+		instance.busy('deleting');
+		try {
+			await instance.data.onDelete();
+
+			Alert.success(mf('region.removed', { NAME: region.name }, 'Removed region "{NAME}".'));
+		} catch (err) {
+			Alert.serverError(err, mf('region.deleting.error', 'Deleting the region went wrong'));
+		} finally {
+			instance.busy(false);
+		}
 	},
 });
