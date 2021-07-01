@@ -24,6 +24,14 @@ export function onStartUp() {
  * @param {string} userId
  * @param {string} tenantId
  */
+export function afterTenantCreate(userId, tenantId) {
+	Users.update(userId, { $addToSet: { tenants: { _id: tenantId, privileges: ['admin'] } } });
+}
+
+/**
+ * @param {string} userId
+ * @param {string} tenantId
+ */
 export function afterTenantAddMember(userId, tenantId) {
 	Users.update(userId, { $addToSet: { tenants: { _id: tenantId } } });
 }

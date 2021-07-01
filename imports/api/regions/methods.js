@@ -5,11 +5,10 @@ import { Courses } from '/imports/api/courses/courses';
 import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 import { Events } from '/imports/api/events/events';
 import { Regions } from './regions';
-import { Venues } from '/imports/api//venues/venues';
-import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-
 /** @typedef {import('./regions').RegionEntity} RegionEntity */
+import { Venues } from '/imports/api/venues/venues';
 
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { AsyncTools } from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';

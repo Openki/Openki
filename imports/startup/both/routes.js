@@ -11,8 +11,9 @@ import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Region, Regions } from '/imports/api/regions/regions';
 /** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
+/** @typedef {import('/imports/api/tenants/tenants').TenantModel} TenantModel */
 import { InfoPages } from '/imports/api/infoPages/infoPages';
-import { Tenants } from '/imports/api/tenants/tenants';
+import { Tenant, Tenants } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
 import { Venues, Venue } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
@@ -585,6 +586,27 @@ Router.route('showEvent', {
 
 Router.route('stats', {
 	path: 'stats',
+});
+
+Router.route('tenantCreate', {
+	path: 'tenant/create',
+	data() {
+		/** @type TenantModel */
+		const tenant = new Tenant();
+		/** @type RegionModel */
+		const region = new Region();
+		region.tz = momentTz.tz.guess();
+		return {
+			tenant,
+			region,
+		};
+	},
+	onAfterAction() {
+		msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
+		const title = mf('tenant.edit.siteTitle.create', 'Create private region');
+		Metatags.setCommonTags(title);
+	},
 });
 
 Router.route('tenantDetails', {

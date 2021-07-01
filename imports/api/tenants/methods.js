@@ -3,9 +3,42 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { check } from 'meteor/check';
 
 import { Tenants } from './tenants';
+/** @typedef {import('./tenants').TenantEntity} TenantEntity */
 import { Users } from '/imports/api/users/users';
 import * as usersTenantsDenormalizer from '../users/tenantsDenormalizer';
 import { ServerMethod } from '/imports/utils/ServerMethod';
+
+export const create = ServerMethod(
+	'tenant.create',
+	/**
+	 * @param {{
+				name: string;
+			}} changes
+	 */
+	(changes) => {
+		check(changes, {
+			name: String,
+		});
+
+		const user = Meteor.user();
+		if (!user) {
+			throw new Meteor.Error(401, 'please log in');
+		}
+
+		/** @type {TenantEntity} */
+		const set = {
+			name: changes.name.trim().substring(0, 40),
+			members: [user._id],
+			admins: [user._id],
+		};
+
+		const tenantId = Tenants.insert(set);
+
+		usersTenantsDenormalizer.afterTenantCreate(user._id, tenantId);
+
+		return tenantId;
+	},
+);
 
 /**
  * @param {string} userId

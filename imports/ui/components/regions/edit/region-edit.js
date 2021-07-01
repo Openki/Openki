@@ -17,61 +17,11 @@ Template.regionEdit.onCreated(function () {
 	instance.busy(false);
 
 	instance.locationTracker = LocationTracker();
-	instance.locationTracker.setLocation(instance.data.region, true);
-
-	instance.locationTracker.markers.find().observe({
-		added(orginalLocation) {
-			if (orginalLocation.proposed) {
-				// The map widget does not reactively update markers when their
-				// flags change. So we remove the propsed marker it added and
-				// replace it by a main one. This is only a little weird.
-				instance.locationTracker.markers.remove({ proposed: true });
-
-				const location = {
-					...orginalLocation,
-					main: true,
-					draggable: true,
-					proposed: undefined,
-				};
-				instance.locationTracker.markers.insert(location);
-			}
-		},
-
-		changed(location) {
-			if (location.remove) {
-				instance.locationTracker.markers.remove(location._id);
-			}
-		},
-	});
 });
 
 Template.regionEdit.helpers({
-	regionMarkers() {
-		return Template.instance().locationTracker.markers;
-	},
-
-	timezones() {
-		return moment.tz.names();
-	},
-
-	isCurrentTimezone(timezone) {
-		return Template.instance().data.region.tz === timezone;
-	},
-
-	allowPlacing() {
-		const { locationTracker } = Template.instance();
-
-		// We return a function so the reactive dependency on locationState is
-		// established from within the map template which will call it.
-		return () =>
-			// We only allow placing if we don't have a selected location yet
-			!locationTracker.markers.findOne({ main: true });
-	},
-
-	allowRemoving() {
-		const { locationTracker } = Template.instance();
-
-		return () => locationTracker.markers.findOne({ main: true });
+	locationTracker() {
+		return Template.instance().locationTracker;
 	},
 });
 
@@ -89,9 +39,9 @@ Template.regionEdit.events({
 			return;
 		}
 
-		const marker = instance.locationTracker.markers.findOne({ main: true });
-		if (marker) {
-			changes.loc = marker.loc;
+		const loc = instance.locationTracker.getLocation();
+		if (loc) {
+			changes.loc = loc;
 		} else {
 			Alert.error(mf('region.create.plsSelectPointOnMap', 'Please select a point on the map'));
 			return;
@@ -124,5 +74,69 @@ Template.regionEdit.events({
 
 	'click .js-edit-cancel'(_event, instance) {
 		instance.data.onCancel(); // from the parent component
+	},
+});
+
+Template.regionEditFields.onCreated(function () {
+	const instance = this;
+	instance.busy(false);
+
+	const { locationTracker, region } = instance.data;
+
+	locationTracker.setLocation(region, true);
+
+	locationTracker.markers.find().observe({
+		added(orginalLocation) {
+			if (orginalLocation.proposed) {
+				// The map widget does not reactively update markers when their
+				// flags change. So we remove the propsed marker it added and
+				// replace it by a main one. This is only a little weird.
+				locationTracker.markers.remove({ proposed: true });
+
+				const location = {
+					...orginalLocation,
+					main: true,
+					draggable: true,
+					proposed: undefined,
+				};
+				locationTracker.markers.insert(location);
+			}
+		},
+
+		changed(location) {
+			if (location.remove) {
+				locationTracker.markers.remove(location._id);
+			}
+		},
+	});
+});
+
+Template.regionEditFields.helpers({
+	regionMarkers() {
+		return Template.instance().data.locationTracker.markers;
+	},
+
+	timezones() {
+		return moment.tz.names();
+	},
+
+	isCurrentTimezone(timezone) {
+		return Template.instance().data.region.tz === timezone;
+	},
+
+	allowPlacing() {
+		const { locationTracker } = Template.instance().data;
+
+		// We return a function so the reactive dependency on locationState is
+		// established from within the map template which will call it.
+		return () =>
+			// We only allow placing if we don't have a selected location yet
+			!locationTracker.getLocation();
+	},
+
+	allowRemoving() {
+		const { locationTracker } = Template.instance().data;
+
+		return () => locationTracker.getLocation();
 	},
 });

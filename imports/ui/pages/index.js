@@ -20,6 +20,7 @@ import './not-found/not-found';
 import './ownprofile/ownprofile';
 import './reset-password/reset-password';
 import './stats/stats';
+import './tenant-create/tenant-create';
 import './tenant-details/tenant-details';
 import './timetable/timetable';
 import './userprofile/userprofile';

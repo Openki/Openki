@@ -44,6 +44,11 @@ export const LocationTracker = function () {
 				});
 			}
 		},
+
+		getLocation() {
+			return markers.findOne({ main: true })?.loc;
+		},
+
 		/**
 		 * @param {string} regionId
 		 */
