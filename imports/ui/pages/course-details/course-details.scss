@@ -92,6 +92,7 @@
 	@include td-pos(right, -$course-border-width);
 	position: absolute;
 	top: -$course-border-width;
+	max-width: 120px;
 }
 
 .details-header-tags > div {
@@ -126,7 +127,7 @@
 	@include editable-popout;
 	font-size: 30px;
 	margin-bottom: 10px;
-	margin-right: 90px;
+	margin-right: 100px;
 }
 
 .course-details-title > .editable {
