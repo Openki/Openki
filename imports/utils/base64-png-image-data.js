@@ -1,5 +1,8 @@
 import { Base64 } from 'meteor/base64';
 
+/**
+ * @param {string} path
+ */
 export function base64PngImageData(path) {
 	const binaryImage = Assets.getBinary(path);
 
