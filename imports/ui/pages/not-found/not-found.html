@@ -9,9 +9,15 @@
 			<h3>
 				{{mf 'notFound.explanation' "This page is not available. Maybe it never existed."}}
 			</h3>
-			<h4>
-				{{mf 'notFound.login' "If it's privat content try:"}} {{> loginButton}}
-			</h4>
+			{{#unless currentUser}}
+				<h4 class="gap-md">
+					{{mf 'notFound.login' "If it's privat content try:"}}
+				</h4>
+				<button class="js-open-login btn btn-default">
+					<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
+					{{mf 'login.unlogged' 'Login'}}
+				</button>
+			{{/unless}}
 		</div>
 		<div class="page-component page-component-seperated">
 			<ul class="page-not-found-links">

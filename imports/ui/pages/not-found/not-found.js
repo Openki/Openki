@@ -16,6 +16,9 @@ Template.notFound.helpers({
 });
 
 Template.notFound.events({
+	'click .js-open-login'() {
+		$('.js-account-tasks').modal('show');
+	},
 	'click .js-go-back'() {
 		window.history.back();
 	},
