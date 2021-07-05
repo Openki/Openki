@@ -2,6 +2,10 @@ import { Meteor } from 'meteor/meteor';
 
 export const AsyncTools = {};
 
+/**
+ * @param {any} err
+ * @param {number} aff
+ */
 AsyncTools.checkUpdateOne = function (err, aff) {
 	if (err) {
 		throw err;
@@ -13,6 +17,8 @@ AsyncTools.checkUpdateOne = function (err, aff) {
 
 /**
  * Simple async callback receiver that logs errors
+ * @param {{ stack: any; }} err
+ * @param {any} ret
  */
 AsyncTools.logErrors = function (err, ret) {
 	if (err) {

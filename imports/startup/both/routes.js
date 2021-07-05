@@ -126,11 +126,24 @@ Router.route('featureGroup', {
 	path: 'admin/feature-group',
 });
 
-Router.route('users', {
-	path: 'admin/users',
+Router.route('tenants', {
+	path: 'admin/tenants',
+	template: 'tenants',
+	waitOn() {
+		return Meteor.subscribe('Tenants.findFilter');
+	},
+	onAfterAction() {
+		msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
+		Metatags.setCommonTags(mf('tenants.windowtitle', 'Tenants'));
+	},
 });
 
 Router.route('find', finderRoute('/find'));
+
+Router.route('users', {
+	path: 'admin/users',
+});
 
 Router.route('frameCalendar', {
 	path: '/frame/calendar',

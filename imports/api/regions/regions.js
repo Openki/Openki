@@ -17,18 +17,17 @@ import { Filtering } from '/imports/utils/filtering';
  */
 /**
  * @typedef {Object} RegionEntity
- * @property {string} [_id] ID
- * @property {string} [tenant]
- * @property {string} [name] ID
- * @property {string} [nameEn] ID
- * @property {string} [slug]
+ * @property {string} _id ID
+ * @property {string} tenant
+ * @property {string} name ID
+ * @property {string} nameEn ID
  * @property {Geodata} [loc] (Optional)
- * @property {string} [tz] ex: "UTC+01:00"
- * @property {number} [courseCount] Number of courses in that region, calculated field
+ * @property {string} tz ex: "UTC+01:00"
+ * @property {number} courseCount Number of courses in that region, calculated field
  * (does not count internal or archived courses)
- * @property {number} [futureEventCount] Number of future events in that region, calculated field
- * (does not count internal events)
- * @property {string} [featuredGroup] ID of featured group
+ * @property {number} futureEventCount Number of future events in that region, calculated field
+ * (does not count internal courses)
+ * @property {string} featuredGroup ID of featured group
  * @property {{
  *       siteName: string,
  *       siteStage: string,

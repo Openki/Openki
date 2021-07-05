@@ -46,7 +46,7 @@ RegionSelection.init = function () {
 			localStorage?.getItem('region'),
 		].filter(Boolean);
 
-		const useAsRegion = function (regionId) {
+		const useAsRegion = function (/** @type {string} */ regionId) {
 			if (!regionId) {
 				return false;
 			}

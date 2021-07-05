@@ -1,0 +1,14 @@
+<template name="tenants">
+	<h3>
+		{{mf 'tenants.title' 'Tenants'}}
+	</h3>
+
+	<div class="list-tenant">
+		{{#each tenant in tenants}}
+			<a href="{{pathFor 'tenantDetails' data=tenant}}" class="list-group-item">
+				<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+				{{tenant.name}}
+			</a>
+		{{/each}}
+	</div>
+</template>

@@ -20,5 +20,15 @@ Template.adminPanel.helpers({
 			icon: 'fa-user',
 			route: 'users',
 		},
+		{
+			name: mf('adminPanel.tasks.venues', 'Venues'),
+			icon: 'fa-home',
+			route: 'venueMap',
+		},
+		{
+			name: mf('adminPanel.tasks.tenants', 'Tenants'),
+			icon: 'fa-sitemap',
+			route: 'tenants',
+		},
 	],
 });
