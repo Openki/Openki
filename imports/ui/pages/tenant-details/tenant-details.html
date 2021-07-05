@@ -9,10 +9,16 @@
 					{{tenant.name}}
 				</div>
 			</div>
+			<div class="details-form tenant-settings">
+				{{> tenantRegions tenant=tenant}}
+			</div>
 
 			{{#if editingSettings}}
-				{{> tenantSettings}}
+				<div class="details-addition clearfix">
+					{{> tenantSettings}}
+				</div>
 			{{/if}}
+
 		</div>
 	</div>
 </template>

@@ -4,12 +4,16 @@ import { mf, msgfmt } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
+import momentTz from 'moment-timezone';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
+import { Region, Regions } from '/imports/api/regions/regions';
+/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
+/** @typedef {import('/imports/api/tenants/tenants').TenantModel} TenantModel */
 import { InfoPages } from '/imports/api/infoPages/infoPages';
-import { Tenants } from '/imports/api/tenants/tenants';
+import { Tenant, Tenants } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
 import { Venues, Venue } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
@@ -126,7 +130,7 @@ Router.route('tenants', {
 	path: 'admin/tenants',
 	template: 'tenants',
 	waitOn() {
-		return Meteor.subscribe('tenants');
+		return Meteor.subscribe('Tenants.findFilter');
 	},
 	onAfterAction() {
 		msgfmt.loading(); // Rerun after msgfmt has loaded translation
@@ -422,6 +426,7 @@ Router.route('profile', {
 	path: 'profile',
 	waitOn() {
 		return [
+			Meteor.subscribe('Tenants.findFilter', { adminOf: true }),
 			Meteor.subscribe('Groups.findFilter', { own: true }),
 			Meteor.subscribe('Venues.findFilter', { editor: Meteor.userId() }),
 		];
@@ -436,6 +441,7 @@ Router.route('profile', {
 				name: user.username,
 				notifications: user.notifications,
 				allowPrivateMessages: user.allowPrivateMessages,
+				tenants: Tenants.findFilter({ adminOf: true }),
 				groups: Groups.findFilter({ own: true }),
 				venues: Venues.findFilter({ editor: user._id }),
 				email: user.emails?.[0]?.address,
@@ -595,11 +601,38 @@ Router.route('stats', {
 	path: 'stats',
 });
 
+Router.route('tenantCreate', {
+	path: 'tenant/create',
+	data() {
+		/** @type TenantModel */
+		const tenant = new Tenant();
+		/** @type RegionModel */
+		const region = new Region();
+		region.tz = momentTz.tz.guess();
+		return {
+			tenant,
+			region,
+		};
+	},
+	onAfterAction() {
+		msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
+		const title = mf('tenant.edit.siteTitle.create', 'Create private region');
+		Metatags.setCommonTags(title);
+	},
+});
+
 Router.route('tenantDetails', {
 	path: 'tenant/:_id/:short?',
+	/**
+	 * @this {{params: {_id: string; slug?: string;}}}
+	 */
 	waitOn() {
 		return [Meteor.subscribe('tenant', this.params._id)];
 	},
+	/**
+	 * @this {{params: {_id: string; slug?: string;}}}
+	 */
 	data() {
 		const tenant = Tenants.findOne({ _id: this.params._id });
 
@@ -609,6 +642,9 @@ Router.route('tenantDetails', {
 
 		return { tenant };
 	},
+	/**
+	 * @this {{params: {_id: string; slug?: string;}}}
+	 */
 	onAfterAction() {
 		const tenant = Tenants.findOne({ _id: this.params._id });
 		if (tenant) {
@@ -798,6 +834,61 @@ Router.route('userprofile', {
 
 		const title = mf('profile.windowtitle', { USER: user.username }, 'Profile of {USER}');
 		Metatags.setCommonTags(title);
+	},
+});
+
+Router.route('regionCreate', {
+	path: 'region/create',
+	template: 'regionDetails',
+	data() {
+		/** @type RegionModel */
+		const region = new Region();
+		region.tenant = this.params.query.tenant;
+		region.tz = momentTz.tz.guess();
+		return {
+			isNew: true,
+			region,
+		};
+	},
+	onAfterAction() {
+		msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
+		const title = mf('region.edit.siteTitle.create', 'Create region');
+		Metatags.setCommonTags(title);
+	},
+});
+
+Router.route('regionDetails', {
+	path: 'region/:_id/:slug?',
+	/**
+	 * @this {{params: {_id: string; slug?: string;}}}
+	 */
+	waitOn() {
+		return [Meteor.subscribe('regionDetails', this.params._id)];
+	},
+	/**
+	 * @this {{params: {_id: string; slug?: string;}}}
+	 */
+	data() {
+		const region = Regions.findOne(this.params._id);
+
+		if (!region) {
+			return false; // Not found
+		}
+
+		return { region };
+	},
+	/**
+	 * @this {{params: {_id: string; slug?: string;}}}
+	 */
+	onAfterAction() {
+		const region = this.data()?.region;
+
+		if (!region) {
+			return;
+		}
+
+		Metatags.setCommonTags(region.name);
 	},
 });
 

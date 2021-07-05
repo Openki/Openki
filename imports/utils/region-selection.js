@@ -5,7 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 
-import IpLocation from '/imports/utils/ip-location';
+import * as UserLocation from '/imports/utils/userLocation';
 import * as UrlTools from '/imports/utils/url-tools';
 
 const RegionSelection = {};
@@ -39,7 +39,7 @@ RegionSelection.init = function () {
 		}
 	});
 
-	Meteor.subscribe('Regions', () => {
+	Meteor.subscribe('Regions', async () => {
 		const selectors = [
 			Session.get('region'),
 			UrlTools.queryParam('region'),
@@ -97,19 +97,21 @@ RegionSelection.init = function () {
 		// If no region has been selected previously, we show the splash-screen.
 		Session.set('showRegionSplash', selectors.length < 1);
 
-		// Ask geolocation server to place us so the splash-screen has our best
-		// guess selected.
-		IpLocation.detect((region, reason) => {
-			/* eslint-disable-next-line no-console */
-			console.log(`Region autodetection: ${reason}`);
+		try {
+			// Ask geolocation server to place us so the splash-screen has our best
+			// guess selected.
+			const region = await UserLocation.detect();
 			if (region) {
 				useAsRegion(region._id);
 				return;
 			}
+		} catch (err) {
+			// eslint-disable-next-line no-console
+			console.log(`Region autodetection error: ${err}`);
+		}
 
-			// Give up
-			useAsRegion('all');
-		});
+		// Give up
+		useAsRegion('all');
 	});
 };
 

@@ -7,7 +7,7 @@ import * as IdTools from '/imports/utils/id-tools';
 /**
  * @typedef {Object} UserEntity
  * @property {string} [_id] ID
- * @property {string[]} [tenants]
+ * @property {{_id: string; privileges: string[]}[]} [tenants]
  * @property {Date} [createdAt]
  * @property {object} [services]
  * @property {object} [services.password]
@@ -124,6 +124,14 @@ export class User {
 	 */
 	privileged(role) {
 		return !!this.privileges?.includes(role);
+	}
+
+	/**
+	 * @this {UserModel}
+	 * @param {string} tenantId
+	 */
+	isTenantAdmin(tenantId) {
+		return this.tenants?.some((t) => t._id === tenantId && t.privileges.includes('admin')) || false;
 	}
 }
 
