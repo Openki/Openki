@@ -58,7 +58,7 @@ Template.tenantCreate.events({
 			changes.loc = loc;
 		} else {
 			Alert.error(
-				mf('tenant.region.create.plsSelectPointOnMap', 'Please select a point on the map'),
+				mf('tenant.region.create.plsSelectPointOnMap', 'Please add a marker on the map by clicking on the "+" sign.'),
 			);
 			return;
 		}

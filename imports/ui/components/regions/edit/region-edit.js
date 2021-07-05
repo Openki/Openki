@@ -43,7 +43,7 @@ Template.regionEdit.events({
 		if (loc) {
 			changes.loc = loc;
 		} else {
-			Alert.error(mf('region.create.plsSelectPointOnMap', 'Please select a point on the map'));
+			Alert.error(mf('region.create.plsSelectPointOnMap', 'Please add a marker on the map by clicking on the "+" sign.'));
 			return;
 		}
 
