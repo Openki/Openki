@@ -8,6 +8,7 @@ import * as RegionsMethods from '/imports/api/regions/methods';
 
 import { LocationTracker } from '../../lib/location-tracker';
 import SaveAfterLogin from '../../lib/save-after-login';
+import { Analytics } from '../../lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
@@ -73,9 +74,12 @@ Template.tenantCreate.events({
 					await RegionsMethods.create({ tenant: tenantId, ...changes });
 
 					Router.go('tenantDetails', { _id: tenantId });
+
 					Alert.success(
 						mf('privateRegion.saving.success', { NAME: changes.name }, 'Created region "{NAME}".'),
 					);
+
+					Analytics.trackEvent('Tenant creations', 'Tenant with region creations');
 				} catch (err) {
 					Alert.serverError(
 						err,

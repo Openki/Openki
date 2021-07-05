@@ -5,6 +5,8 @@ import { mf } from 'meteor/msgfmt:core';
 
 import * as RegionsMethods from '/imports/api/regions/methods';
 
+import { Analytics } from '../../lib/analytics';
+
 import '/imports/ui/components/regions/display/region-display';
 import '/imports/ui/components/regions/edit/region-edit';
 
@@ -41,7 +43,10 @@ Template.regionDetails.helpers({
 			title: mf('region.edit.titleCreate', 'Create new region'),
 			async onSave(changes) {
 				const regionId = await RegionsMethods.create({ tenant: region.tenant, ...changes });
+
 				Router.go('regionDetails', { _id: regionId });
+
+				Analytics.trackEvent('Region creations', 'Region creations');
 			},
 			onCancel() {
 				Router.go('tenantDetails', { _id: region.tenant });
