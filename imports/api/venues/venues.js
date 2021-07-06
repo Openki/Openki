@@ -30,8 +30,8 @@ import * as StringTools from '/imports/utils/string-tools';
  * @property {number} maxPeople       Int
  * @property {number} maxWorkplaces   Int
  * @property {{[key: string]: string}} facilities For keys see: Venues.facilityOptions
- * @property {string} otherFacilities
- * @property {string} website         URL
+ * @property {string} [otherFacilities]
+ * @property {string} [website]         URL
  *
  * @property {string} createdby
  * @property {Date}   created
