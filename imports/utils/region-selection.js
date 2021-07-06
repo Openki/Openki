@@ -5,7 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 
-import * as UserLocation from '/imports/utils/userLocation';
+import * as UserLocation from '/imports/utils/user-location';
 import * as UrlTools from '/imports/utils/url-tools';
 
 const RegionSelection = {};
