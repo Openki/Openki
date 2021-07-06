@@ -1,10 +1,11 @@
 <template name="notFound">
 	<div class="container page-not-found">
 		<div class="page-component">
-			<h1>
-				<span class="fa fa-flash fa-fw" aria-hidden="true"></span>
-				{{mf 'notFound.title' "Page not found"}}
-				<span class="fa fa-flash fa-fw" aria-hidden="true"></span>
+			<!-- No line between flash and text, but inside the text.-->
+			<h1 style="white-space: nowrap;">
+				<span class="fa fa-flash fa-fw" aria-hidden="true"></span>&nbsp;<span
+					  style="white-space: normal;">{{mf 'notFound.title' "Page not found"}}</span>&nbsp;<span
+					  class="fa fa-flash fa-fw" aria-hidden="true"></span>
 			</h1>
 			<h3>
 				{{mf 'notFound.explanation' "This page is not available. Maybe it never existed."}}
@@ -13,10 +14,11 @@
 				<h4 class="gap-md">
 					{{mf 'notFound.login' "If it's privat content try:"}}
 				</h4>
-				<button class="js-open-login btn btn-default">
+				<button class="js-open-login btn btn-success">
 					<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
 					{{mf 'login.unlogged' 'Login'}}
-				</button>
+				</button><br>
+				<br>
 			{{/unless}}
 		</div>
 		<div class="page-component page-component-seperated">
