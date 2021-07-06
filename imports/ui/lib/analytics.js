@@ -16,7 +16,7 @@ const SettingsPattern = Match.ObjectIncluding({
 });
 
 const MatomoPattern = Match.ObjectIncluding({
-	getTracker: Match.Where($.isFunction),
+	getTracker: Match.Where((f) => typeof f === 'function'),
 });
 
 /**

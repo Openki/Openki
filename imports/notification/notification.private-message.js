@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 
 import { Courses } from '/imports/api/courses/courses';
-import Log from '/imports/api/log/log';
+import { Log } from '/imports/api/log/log';
 import { Users } from '/imports/api/users/users';
 import { Regions } from '/imports/api/regions/regions';
 
@@ -130,7 +130,7 @@ notificationPrivateMessage.Model = function (entry) {
 			siteName = siteName || Meteor.settings.public.siteName;
 
 			const vars = {
-				unsubLink: Router.url('profile.privatemessages.unsubscribe', { token: unsubToken }),
+				unsubLink: Router.url('profilePrivateMessagesUnsubscribe', { token: unsubToken }),
 				sender,
 				senderLink: Router.url('userprofile', sender, { query: 'campaign=privateMessage' }),
 				subject,

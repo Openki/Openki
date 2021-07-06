@@ -14,12 +14,15 @@
 // FieldOrdering(spec) creates an ordering from a SortSpec
 
 import { check } from 'meteor/check';
-
-// A general comparison function that uses localeCompare() when comparing
-// strings. In an ideal world we would ask the objects for comparable values
-// from the fields we want to compare. And we would know their type so we needn't
-// guess the appropriate comparison function.
-const genComp = function (a, b) {
+/**
+ * A general comparison function that uses localeCompare() when comparing
+ * strings. In an ideal world we would ask the objects for comparable values
+ * from the fields we want to compare. And we would know their type so we needn't
+ * guess the appropriate comparison function.
+ * @param {string} a
+ * @param {string} b
+ */
+function genComp(a, b) {
 	if (typeof a === 'string' && typeof b === 'string') {
 		// At the moment we don't provide a way to choose the locale :-(
 		// So it will be sorted under whatever locale the server is running.
@@ -32,13 +35,15 @@ const genComp = function (a, b) {
 		return 1;
 	}
 	return 0;
-};
+}
 
-const FieldComp = (field) => (a, b) => {
-	check(a, Object);
-	check(b, Object);
-	return genComp(a[field], b[field]);
-};
+const FieldComp =
+	(/** @type {string} */ field) =>
+	(/** @type {{ [x: string]: string; }} */ a, /** @type {{ [x: string]: string; }} */ b) => {
+		check(a, Object);
+		check(b, Object);
+		return genComp(a[field], b[field]);
+	};
 
 // This is the base case when we run out of fields to compare
 const equal = () => 0;

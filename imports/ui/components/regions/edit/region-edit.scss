@@ -1,0 +1,10 @@
+.region-edit {
+	background-color: lighten($region-bg, 10%);
+	border: 4px solid $region-bg;
+	padding: 15px 20px;
+}
+
+.region-edit .map-box {
+	height: 300px;
+	width: 100%;
+}

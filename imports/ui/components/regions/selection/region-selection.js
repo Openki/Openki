@@ -21,8 +21,8 @@ Template.regionSelectionWrap.onCreated(function () {
 	this.state.setDefault('searchingRegions', false);
 });
 
-Template.regionDisplay.events({
-	'click .js-region-display'(event, instance) {
+Template.regionSelectionDisplay.events({
+	'click .js-region-selection-display'(event, instance) {
 		instance.parentInstance().state.set('searchingRegions', true);
 	},
 });
@@ -80,7 +80,7 @@ Template.regionSelection.onCreated(function () {
 		// Many pages do not change when the region changed, so we go to
 		// the homepage for those
 		if (changed) {
-			const routeName = Router.current().route.getName();
+			const routeName = Router.current().route?.getName();
 			if (!RegionSelection.regionDependentRoutes.includes(routeName)) {
 				Router.go('/');
 			}
@@ -101,7 +101,7 @@ Template.regionSelection.onCreated(function () {
 Template.regionSelection.onRendered(function () {
 	Meteor.defer(function () {
 		if (!this.data || !this.data.isSplash) {
-			this.$('.js-region-search').select();
+			this.$('.js-region-search').trigger('select');
 		}
 	});
 
@@ -212,7 +212,7 @@ Template.regionSelection.events({
 		instance.state.set('showAllRegions', true);
 		/* eslint-disable-next-line no-param-reassign */
 		instance.focusFromShowAllRegions = true;
-		instance.$('.js-region-search').select();
+		instance.$('.js-region-search').trigger('select');
 		return false; // prevent dropdown default behavior for this specific <li>
 	},
 

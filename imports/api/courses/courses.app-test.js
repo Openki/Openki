@@ -59,7 +59,9 @@ if (Meteor.isClient) {
 					'shows private courses as logged in user',
 				);
 				assert.isNotEmpty(
-					coursesAsSchufien.filter((c) => c.tenant && schufien.tenants.includes(c.tenant)),
+					coursesAsSchufien.filter(
+						(c) => c.tenant && schufien.tenants.some((t) => t._id === c.tenant),
+					),
 					'shows private courses as logged in user',
 				);
 			});

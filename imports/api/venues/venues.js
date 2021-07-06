@@ -14,28 +14,28 @@ import * as StringTools from '/imports/utils/string-tools';
 // ======== DB-Model: ========
 /**
  * @typedef  {Object} VenueEnity
- * @property {string} [_id]             ID
- * @property {string} [editor]          user ID
- * @property {string} [name]
- * @property {string} [slug]
- * @property {string} [description]     HTML
- * @property {string|null} [region]          ID
+ * @property {string} _id             ID
+ * @property {string} editor          user ID
+ * @property {string} name
+ * @property {string} slug
+ * @property {string} description     HTML
+ * @property {string|null} region     ID
  * @property {{ type: 'Point', coordinates: [number, number] }} [loc] GeoJSON coordinates
  * (Longitude, Latitude)
- * @property {string} [address]
- * @property {string} [route]
+ * @property {string} address
+ * @property {string} route
  *
  * Additional information
- * @property {string} [short]           ID
- * @property {number} [maxPeople]       Int
- * @property {number} [maxWorkplaces]   Int
- * @property {{[key: string]: string}} [facilities] For keys see: Venues.facilityOptions
+ * @property {string} short           ID
+ * @property {number} maxPeople       Int
+ * @property {number} maxWorkplaces   Int
+ * @property {{[key: string]: string}} facilities For keys see: Venues.facilityOptions
  * @property {string} [otherFacilities]
  * @property {string} [website]         URL
  *
- * @property {string} [createdby]
- * @property {Date}   [created]
- * @property {Date}   [updated]
+ * @property {string} createdby
+ * @property {Date}   created
+ * @property {Date}   updated
  */
 
 /**

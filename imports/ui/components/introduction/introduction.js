@@ -29,10 +29,7 @@ Template.introduction.helpers({
 
 	isInCalendar() {
 		const currentRoute = Router.current().route;
-		if (currentRoute) {
-			return currentRoute.getName() === 'calendar';
-		}
-		return false;
+		return currentRoute?.getName() === 'calendar';
 	},
 
 	/**

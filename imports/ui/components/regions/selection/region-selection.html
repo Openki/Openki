@@ -6,14 +6,14 @@
 				{{> regionSelection}}
 			</li>
 		{{else}}
-			{{> regionDisplay}}
+			{{> regionSelectionDisplay}}
 		{{/if}}
 	{{/if}}
 </template>
 
-<template name="regionDisplay">
+<template name="regionSelectionDisplay">
 	<li>
-		<a class="navbar-link js-region-display">
+		<a class="navbar-link js-region-selection-display">
 			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 			{{#if currentRegionName}}
 				{{currentRegionName}}

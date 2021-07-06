@@ -10,7 +10,6 @@ module.exports = {
 	extends: ['airbnb-base', 'prettier'],
 	globals: {
 		L: 'readonly',
-		Log: 'writable',
 		VERSION: 'writable',
 	},
 	parserOptions: {

@@ -17,8 +17,8 @@
 <template name="courseCategories">
 	{{#if categories.length}}
 		<div class="tag-group multiline course-categories">
-			{{#each categories}}
-				{{> categoryLabelLinked}}
+			{{#each category in categories}}
+				{{> categoryLabelLinked category}}
 			{{/each}}
 		</div>
 	{{/if}}

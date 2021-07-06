@@ -1,102 +1,105 @@
 <template name="groupSettings">
 	<form>
-		{{#with group}}
-			<div class="details-form group-settings">
-				<div class="details-form-element settings">
-					<h3>
-						<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
-						{{mf 'group.settings.title' 'Settings'}}
-					</h3>
-					<div class="form-group">
-						<label>{{mf 'group.settings.field.logo' 'Logo'}}</label>
-						<div class="input-group">
-							<span class="input-group-addon">
-								<span class="fa fa-rebel fa-fw" aria-hidden="true"></span>
-								<span class="input-group-addon-label">https://</span>
-							</span>
-							<input class="js-logo-url form-control" id="setLogo"
-								   placeholder="{{mf 'group.settings.field.logo.placeholder' 'Link to your Icon (png or jpg)'}}"
-								   value="{{logoUrl}}" />
-						</div>
-					</div>
-					<div class="form-actions">
-						{{> buttonSave event="js-group-edit-save" saving=saving}}
-						{{> buttonCancel event="js-group-edit-cancel"}}
-					</div>
-				</div>
-
-				<div class="details-form-element">
-					<h3>
-						<span class="fa fa-group fa-fw" aria-hidden="true"></span>
-						{{mf 'group.settings.title.Members' 'Members'}}
-					</h3>
-					<div class="tag-group multiline">
-						{{#each members}}
-							<div class="tag tag-btn group-member-tag-btn-remove ">
-								<button class="js-member-remove-btn"
-										title="{{mf 'group.settings.removeFromGroup' 'remove member'}}"
-										type="button">
-									<i class="fa fa-remove fa-fw" aria-hidden="true"></i>
-									{{username this}}
-								</button>
-							</div>
-							<div class="tag tag-link group-member-tag-profile addon">
-								<a href="{{pathFor 'userprofile' _id=this}}"
-								   title="{{mf 'group.settings.member.profile' 'Visit profile'}}">
-									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
-								</a>
-							</div>
-						{{/each}}
-					</div>
-					<div class="form-group">
-						<label>{{mf 'group.settings.field.addMembers' 'Add a new member to your group'}}</label>
-						<div class="input-group">
-							<span class="input-group-addon">
-								<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-							</span>
-							<input class="js-search-users form-control" id="AddGroupMember"
-								   placeholder="{{mf 'group.settings.field.addMember.placeholder' 'Type name of buddy'}}"
-								   size="40" type="text" />
-						</div>
-					</div>
-					<div class="tag-group multiline">
-						{{#each foundUsers}}
-							<div class="tag tag-btn group-member-tag-btn-add ">
-								<button class="js-member-add-btn"
-										title="{{mf 'group.settings.addMember' 'add as member'}}"
-										type="button">
-									<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
-									{{username this._id}}
-								</button>
-							</div>
-							<div class="tag tag-link group-member-tag-profile addon">
-								<a href="{{pathFor 'userprofile' _id=this._id}}"
-								   title="{{mf 'group.settings.member.profile'}}">
-									<i class="fa fa-user fa-fw" aria-hidden="true"></i>
-								</a>
-							</div>
-						{{/each}}
-					</div>
-				</div>
-			</div>
-			<div class="details-addition">
+		<div class="details-form group-settings">
+			<div class="details-form-element settings">
 				<h3>
-					<span class="fa fa-link fa-fw" aria-hidden="true"></span>
-					{{mf 'group.linksCollection.title' '{NAME}-views' NAME=siteName}}
+					<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
+					{{mf 'group.settings.title' 'Settings'}}
 				</h3>
-				<ul class="group-links">
-					<li>Infoscreen-Link: <a href="{{kioskEventURL}}">{{kioskEventURL}}</a></li>
-					<li>Timetable-Link: <a href="{{timetableURL}}">{{timetableURL}}</a></li>
-					<li>Schedule-Link: <a href="{{scheduleURL}}">{{scheduleURL}}</a></li>
-					<li>iframe-Eventboxes-Link: <a href="{{frameEventsURL}}">{{frameEventsURL}}</a>
-					</li>
-					<li>iframe-weekly-calendar-Link: <a href="{{frameWeekURL}}">{{frameWeekURL}}</a>
-					</li>
-					<li>iframe-calendar-Link: <a
-						   href="{{frameCalendarURL}}">{{frameCalendarURL}}</a></li>
-					<li>iframe-List-Link: <a href="{{frameListURL}}">{{frameListURL}}</a></li>
-				</ul>
+				<div class="form-group">
+					<label>{{mf 'group.settings.field.logo' 'Logo'}}</label>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="fa fa-rebel fa-fw" aria-hidden="true"></span>
+							<span class="input-group-addon-label">https://</span>
+						</span>
+						<input class="js-logo-url form-control" id="setLogo"
+							   placeholder="{{mf 'group.settings.field.logo.placeholder' 'Link to your Icon (png or jpg)'}}"
+							   value="{{group.logoUrl}}" />
+					</div>
+				</div>
+				<div class="form-actions">
+					{{> buttonSave event="js-group-edit-save" saving=saving}}
+					{{> buttonCancel event="js-group-edit-cancel"}}
+				</div>
 			</div>
-		{{/with}}
+
+			<div class="details-form-element">
+				<h3>
+					<span class="fa fa-group fa-fw" aria-hidden="true"></span>
+					{{mf 'group.settings.title.Members' 'Members'}}
+				</h3>
+				<div class="tag-group multiline">
+					{{#each group.members}}
+						<div class="tag tag-btn group-member-tag-btn-remove ">
+							<button class="js-member-remove-btn"
+									title="{{mf 'group.settings.removeFromGroup' 'remove member'}}"
+									type="button">
+								<i class="fa fa-remove fa-fw" aria-hidden="true"></i>
+								{{username this}}
+							</button>
+						</div>
+						<div class="tag tag-link group-member-tag-profile addon">
+							<a href="{{pathFor 'userprofile' _id=this}}"
+							   title="{{mf 'group.settings.member.profile' 'Visit profile'}}">
+								<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+							</a>
+						</div>
+					{{/each}}
+				</div>
+				<div class="form-group">
+					<label>{{mf 'group.settings.field.addMembers' 'Add a new member to your group'}}</label>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+						</span>
+						<input class="js-search-users form-control" id="AddGroupMember"
+							   placeholder="{{mf 'group.settings.field.addMember.placeholder' 'Type name of buddy'}}"
+							   size="40" type="text" />
+					</div>
+				</div>
+				<div class="tag-group multiline">
+					{{#each foundUsers group}}
+						<div class="tag tag-btn group-member-tag-btn-add ">
+							<button class="js-member-add-btn"
+									title="{{mf 'group.settings.addMember' 'add as member'}}"
+									type="button">
+								<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+								{{username this._id}}
+							</button>
+						</div>
+						<div class="tag tag-link group-member-tag-profile addon">
+							<a href="{{pathFor 'userprofile' _id=this._id}}"
+							   title="{{mf 'group.settings.member.profile'}}">
+								<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+							</a>
+						</div>
+					{{/each}}
+				</div>
+			</div>
+		</div>
+		<div class="details-addition">
+			<h3>
+				<span class="fa fa-link fa-fw" aria-hidden="true"></span>
+				{{mf 'group.linksCollection.title' '{NAME}-views' NAME=siteName}}
+			</h3>
+			<ul class="group-links">
+				<li>Infoscreen-Link: <a href="{{kioskEventURL group}}">{{kioskEventURL group}}</a>
+				</li>
+				<li>Timetable-Link: <a href="{{timetableURL group}}">{{timetableURL group}}</a></li>
+				<li>Schedule-Link: <a href="{{scheduleURL group}}">{{scheduleURL group}}</a></li>
+				<li>iframe-Eventboxes-Link: <a
+					   href="{{frameEventsURL group}}">{{frameEventsURL group}}</a>
+				</li>
+				<li>iframe-weekly-calendar-Link: <a
+					   href="{{frameWeekURL group}}">{{frameWeekURL group}}</a>
+				</li>
+				<li>iframe-calendar-Link: <a
+					   href="{{frameCalendarURL group=group}}">{{frameCalendarURL group=group}}</a>
+				</li>
+				<li>iframe-List-Link: <a
+					   href="{{frameListURL group=group}}">{{frameListURL group=group}}</a></li>
+			</ul>
+		</div>
 	</form>
 </template>

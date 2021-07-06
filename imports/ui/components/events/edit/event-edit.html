@@ -9,7 +9,8 @@
 					{{#mf KEY='course.createEventInfo'}}
 						Use this form if you want to publish a singular, one-off, allready organised event. Otherwise create or propose a course here:
 					{{/mf}}
-					<a href="/courses/propose">{{mf 'menue.ProposeCourse' 'Propose a course'}}</a>
+					<a
+					   href="{{pathFor 'proposeCourse'}}">{{mf 'menue.ProposeCourse' 'Propose a course'}}</a>
 				{{/if}}
 			{{/unless}}
 
@@ -109,7 +110,7 @@
 				{{/if}}
 
 				{{#if showVenueSelection}}
-					{{>eventEditVenue}}
+					{{> eventEditVenue}}
 					<div class="form-group">
 						<label>
 							{{mf 'course.event.edit.room' 'Room'}}

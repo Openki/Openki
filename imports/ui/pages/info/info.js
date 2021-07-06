@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
+import $ from 'jquery';
 import { Meteor } from 'meteor/meteor';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';

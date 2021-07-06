@@ -59,12 +59,19 @@ Template.courseEdit.onCreated(function () {
 
 	this.showInternalCheckbox = new ReactiveVar(false);
 	this.autorun(() => {
-		let internalOption = false;
+		let internalOption;
+
 		const user = Meteor.user();
 		if (!this.data.isFrame && this.data.group && user?.groups) {
-			// show only if user is in the given group
+			// Visible in group detail page (for creation) if user is in group
 			internalOption = user.groups.includes(this.data.group);
+		} else {
+			// and visible on edit if course is in a group
+			// For devs: This behaviour is not consistent. But we want the creation to be as simple
+			// as possible.
+			internalOption = this.data.groups?.length > 0;
 		}
+
 		this.showInternalCheckbox.set(internalOption);
 	});
 

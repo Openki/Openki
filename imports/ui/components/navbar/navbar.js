@@ -3,7 +3,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
+import $ from 'jquery';
 
 import { Regions } from '/imports/api/regions/regions';
 
@@ -22,7 +22,7 @@ Template.navbar.onRendered(function () {
 	// if not collapsed give the navbar and active menu item a
 	// class for when not at top
 	if (viewportWidth > gridFloatBreakpoint) {
-		$(window).scroll(() => {
+		$(window).on('scroll', () => {
 			const navbar = instance.$('.navbar');
 			const activeNavLink = instance.$('.navbar-link-active');
 			const notAtTop = $(window).scrollTop() > 5;
@@ -156,7 +156,7 @@ Template.ownUserFrame.events({
 		event.preventDefault();
 		Meteor.logout();
 
-		const routeName = Router.current().route.getName();
+		const routeName = Router.current().route?.getName();
 		if (routeName === 'profile') {
 			Router.go('userprofile', Meteor.user());
 		}

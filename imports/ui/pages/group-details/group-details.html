@@ -14,12 +14,14 @@
 					  data-tooltip="{{mf group.page.removeFilter 'See all courses'}}">
 					<i class="fa fa-remove" aria-hidden="true"></i>
 				</span>
-				{{#if mayEdit}}
-					<span class="titlebar-btn js-group-settings"
-						  data-tooltip="{{mf 'group.settings.title'}}">
-						<i class="fa fa-cog" aria-hidden="true"></i>
-					</span>
-				{{/if}}
+				{{#unless isNew}}
+					{{#if mayEdit}}
+						<span class="titlebar-btn js-group-settings"
+							  data-tooltip="{{mf 'group.settings.title'}}">
+							<i class="fa fa-cog" aria-hidden="true"></i>
+						</span>
+					{{/if}}
+				{{/unless}}
 			</div>
 			<div class="details-header group-details-header {{headerClasses}}">
 				{{#if groupLogo group._id}}
@@ -29,7 +31,7 @@
 				{{/if}}
 				<div class="group-details-name">
 					{{#if editableName}}
-						{{>editable editableName}}
+						{{> editable editableName}}
 					{{else}}
 						{{group.name}}
 					{{/if}}

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import schedule from 'node-schedule';
 import moment from 'moment';
 
-import Log from '/imports/api/log/log';
+import { Log } from '/imports/api/log/log';
 import { Scrubber } from '/server/lib/scrub';
 
 Meteor.startup(() => {

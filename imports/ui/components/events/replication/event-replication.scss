@@ -15,15 +15,6 @@
 	margin-top: 0;
 }
 
-.datepicker-inline {
-	border-radius: 0;
-	width: 100%;
-}
-
-.datepicker table {
-	width: 100%;
-}
-
 .replica-date-weekday {
 	@include td-padding(right, $padding-base-horizontal);
 	@include td-pos(right, 0);

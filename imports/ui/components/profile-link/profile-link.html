@@ -1,5 +1,5 @@
 <template name="profilelink">
-	<a class="profilelink" href="/user/{{this}}/{{username this}}">
+	<a class="profilelink" href="{{pathFor 'userprofile' _id=this username=(username this)}}">
 		{{username this}}
 	</a>
 </template>
