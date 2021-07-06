@@ -156,7 +156,7 @@ Template.ownUserFrame.events({
 		event.preventDefault();
 		Meteor.logout();
 
-		const routeName = Router.current().route.getName();
+		const routeName = Router.current().route?.getName();
 		if (routeName === 'profile') {
 			Router.go('userprofile', Meteor.user());
 		}

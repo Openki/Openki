@@ -80,7 +80,7 @@ Template.regionSelection.onCreated(function () {
 		// Many pages do not change when the region changed, so we go to
 		// the homepage for those
 		if (changed) {
-			const routeName = Router.current().route.getName();
+			const routeName = Router.current().route?.getName();
 			if (!RegionSelection.regionDependentRoutes.includes(routeName)) {
 				Router.go('/');
 			}
