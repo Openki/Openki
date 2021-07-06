@@ -30,21 +30,21 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
  * @property {string} description
  * @property {string} startLocal String of local date when event starts
  * @property {string} endLocal String of local date when event ends
- * @property {object} venue
- * @property {string} venue._id Optional reference to a document in the Venues collection
+ * @property {object} [venue]
+ * @property {string} [venue._id] Optional reference to a document in the Venues collection
  * If this is set, the fields name, loc, and address are synchronized
- * @property {string} venue.name Descriptive name for the venue
- * @property {Geodata} venue.loc Event location in GeoJSON format
- * @property {string} venue.address Address string where the event will take place
+ * @property {string} [venue.name] Descriptive name for the venue
+ * @property {Geodata} [venue.loc] Event location in GeoJSON format
+ * @property {string} [venue.address] Address string where the event will take place
  * @property {string} room (Where inside the building the event will take place)
  * @property {string} createdBy userId
  * @property {Date} time_created
  * @property {Date} time_lastedit
- * @property {string} courseId course._id of parent course, optional
+ * @property {string} [courseId] course._id of parent course, optional
  * @property {boolean} internal (Events are only displayed when group or venue-filter is active)
  * @property {string[]} groups list of group._id that promote this event
  * @property {string[]} groupOrganizers list of group._id that are allowed to edit the course
- * @property {string} replicaOf ID of the replication parent, only cloned events have this
+ * @property {string} [replicaOf] ID of the replication parent, only cloned events have this
  * @property {number} maxParticipants maximum participants of event
  * @property {string[]} courseGroups (calculated) list of group._id inherited from course (if
  * courseId is set)
