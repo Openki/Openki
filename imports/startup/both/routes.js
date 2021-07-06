@@ -135,7 +135,7 @@ Router.route('tenants', {
 	onAfterAction() {
 		msgfmt.loading(); // Rerun after msgfmt has loaded translation
 
-		Metatags.setCommonTags(mf('tenants.windowtitle', 'Tenants'));
+		Metatags.setCommonTags(mf('tenants.windowtitle', 'Organizations'));
 	},
 });
 

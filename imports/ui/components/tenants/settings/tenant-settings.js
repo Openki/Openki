@@ -85,7 +85,7 @@ Template.tenantSettings.events({
 				mf(
 					'tenantSettings.memberAdded',
 					{ MEMBER: memberName, TENANT: tenantName },
-					'"{MEMBER}" has been added as a member to the tenant "{TENANT}"',
+					'"{MEMBER}" has been added as a member to the organization "{TENANT}"',
 				),
 			);
 		} catch (err) {
@@ -107,7 +107,7 @@ Template.tenantSettings.events({
 				mf(
 					'tenantSettings.memberRemoved',
 					{ MEMBER: memberName, TENANT: tenantName },
-					'"{MEMBER}" has been removed from to the tenant "{TENANT}"',
+					'"{MEMBER}" has been removed from to the organization "{TENANT}"',
 				),
 			);
 		} catch (err) {
@@ -132,7 +132,7 @@ Template.tenantSettings.events({
 				mf(
 					'tenantSettings.adminAdded',
 					{ ADMIN: adminName, TENANT: tenantName },
-					'"{ADMIN}" has been added as an admin to the tenant "{TENANT}"',
+					'"{ADMIN}" has been added as an admin to the organization "{TENANT}"',
 				),
 			);
 		} catch (err) {
@@ -154,7 +154,7 @@ Template.tenantSettings.events({
 				mf(
 					'tenantSettings.adminRemoved',
 					{ ADMIN: adminName, TENANT: tenantName },
-					'"{ADMIN}" has been removed as an admin from to the tenant "{TENANT}"',
+					'"{ADMIN}" has been removed as an admin from to the organization "{TENANT}"',
 				),
 			);
 		} catch (err) {

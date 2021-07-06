@@ -111,10 +111,10 @@
 			</div>
 			{{#if tenantCount}}
 				<div class="page-component page-component-seperated profile-tenant-list">
-					<h3>{{mf 'profile.tenants' 'My tenants'}}</h3>
+					<h3>{{mf 'profile.tenants' 'My organizations'}}</h3>
 					<h5>
 						{{#mf KEY='profile.tenantMembership' NUM_TENANTS=tenantCount}}
-						You are {NUM_TENANTS, plural, =0 {not admin of any tenant} =1 {admin of the tenant:} other {admin of # tenants:}}
+						You are {NUM_TENANTS, plural, =0 {not admin of any organization} =1 {admin of the organization:} other {admin of # organizations:}}
 						{{/mf}}
 					</h5>
 					<ul class="tenants">
