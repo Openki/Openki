@@ -59,14 +59,6 @@
 	margin: 15px 0;
 }
 
-.js-oauth-btn {
-	font-weight: bold;
-}
-
-.js-oauth-btn + .js-oauth-btn {
-	margin-top: 10px;
-}
-
 $external-servies: (
 	google: #4285f4,
 	facebook: #3b5998,
@@ -76,6 +68,7 @@ $external-servies: (
 @each $service, $color in $external-servies {
 	.btn-#{$service} {
 		@include button-variant($white, $color, darken($color, 5%));
+		font-weight: bold;
 
 		&[disabled] {
 			background-color: $color;

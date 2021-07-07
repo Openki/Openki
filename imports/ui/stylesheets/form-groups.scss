@@ -98,3 +98,15 @@
 .input-group-addon-label {
 	margin-left: 3px;
 }
+
+.form-group-btn-with-addon {
+	display: table;
+}
+
+.form-group-btn-addon {
+	display: table-cell;
+	width: 1%;
+	> .fa {
+		padding: 10px 0 10px 10px;
+	}
+}
