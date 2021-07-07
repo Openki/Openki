@@ -42,16 +42,18 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
  * @property {Date} time_lastedit
  * @property {string} [courseId] course._id of parent course, optional
  * @property {boolean} internal (Events are only displayed when group or venue-filter is active)
- * @property {string[]} groups list of group._id that promote this event
+ * @property {string[]} groups list of group._id that promote this event ("promote groups").
  * @property {string[]} groupOrganizers list of group._id that are allowed to edit the course
+ * ("team groups", based on the ui design: Every "team group" promotes the event and is part of
+ * the groups list).
  * @property {string} [replicaOf] ID of the replication parent, only cloned events have this
  * @property {number} maxParticipants maximum participants of event
  * @property {string[]} courseGroups (calculated) list of group._id inherited from course (if
- * courseId is set)
+ * courseId is set) ("promote groups" from course)
  * @property {string[]} allGroups (calculated) all groups that promote this course, both
- * inherited from course and set on the event itself
+ * inherited from course and set on the event itself ("promote groups" from event and course)
  * @property {string[]} editors (calculated) list of user and group _id that are allowed to
- * edit the event
+ * edit the event, calculated from the groupOranizers from the event and the editors from the course
  * @property {Date} start (calculated) date object calculated from startLocal field. Use this
  * for ordering between events.
  * @property {Date} end (calculated) date object calculated from endLocal field.
