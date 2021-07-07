@@ -16,13 +16,12 @@
 					{{/if}}
 					<div class="featured-group-body-content">
 						<div class="featured-group-name">
-							{{featuredGroup.name}}
-							({{featuredGroup.short}})
+							{{featuredGroup.name}} ({{featuredGroup.short}})
 						</div>
 						<div class="featured-group-links">
 							<a href="{{pathFor 'groupDetails' _id=featuredGroup._id}}">
-								{{#mf KEY='featuredGroup.coursesOnOpenki' GROUP=featuredGroup.name}}
-									Check out the courses of {GROUP} on Openki!
+								{{#mf KEY='featuredGroup.coursesOnOpenki' GROUP=featuredGroup.name SITENAME=siteName}}
+									Check out the courses of {GROUP} on {SITENAME}!
 								{{/mf}}
 							</a>
 						</div>
