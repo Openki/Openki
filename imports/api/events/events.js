@@ -133,7 +133,8 @@ export class EventsCollection extends Mongo.Collection {
 			categories: Predicates.ids,
 			group: Predicates.id,
 			groups: Predicates.ids,
-			venue: Predicates.string,
+			venue: Predicates.id,
+			venues: Predicates.ids,
 			room: Predicates.string,
 			start: Predicates.date,
 			before: Predicates.date,
@@ -211,6 +212,7 @@ export class EventsCollection extends Mongo.Collection {
 	 * @param {Date} [filter.end] only events that started before this date
 	 * @param {Date} [filter.after] only events starting after this date
 	 * @param {string} [filter.venue] only events at this venue (ID)
+	 * @param {string[]} [filter.venues] only events at this venues (IDs)
 	 * @param {string} [filter.room] only events in this room (string match)
 	 * @param {boolean} [filter.standalone] only events that are not attached to a course
 	 * @param {string} [filter.region] restrict to given region
@@ -274,8 +276,17 @@ export class EventsCollection extends Mongo.Collection {
 			}
 		}
 
+		let inVenues = [];
 		if (filter.venue) {
-			find['venue._id'] = filter.venue;
+			inVenues.push(filter.venue);
+		}
+
+		if (filter.venues) {
+			inVenues = inVenues.concat(filter.venues);
+		}
+
+		if (inVenues.length > 0) {
+			find['venue._id'] = { $in: inVenues };
 		}
 
 		if (filter.room) {
