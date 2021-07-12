@@ -8,10 +8,12 @@ import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Log } from '/imports/api/log/log';
 import { Regions } from '/imports/api/regions/regions';
+/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
 import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import LocalTime from '/imports/utils/local-time';
+import { getSiteName } from '../utils/getSiteName';
 
 const notificationEvent = {};
 
@@ -65,7 +67,8 @@ notificationEvent.Model = function (entry) {
 		course = Courses.findOne(event.courseId);
 	}
 
-	let region = false;
+	/** @type {RegionModel | undefined}  */
+	let region;
 	if (event?.region) {
 		region = Regions.findOne(event.region);
 	}
@@ -139,7 +142,7 @@ notificationEvent.Model = function (entry) {
 				venueLine = [venue.name, venue.address].filter(Boolean).join(', ');
 			}
 
-			const siteName = region.custom?.siteName || Meteor.settings.public.siteName;
+			const siteName = getSiteName(region);
 			const mailLogo = region.custom?.mailLogo;
 
 			return {

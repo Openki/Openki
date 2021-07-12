@@ -7,10 +7,12 @@ import { _ } from 'meteor/underscore';
 import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 import { Courses } from '/imports/api/courses/courses';
 import { Regions } from '/imports/api/regions/regions';
+/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
 import { Users } from '/imports/api/users/users';
 import { Log } from '/imports/api/log/log';
 
 import * as StringTools from '/imports/utils/string-tools';
+import { getSiteName } from '/imports/utils/getSiteName';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -128,14 +130,13 @@ notificationComment.Model = function (entry) {
 				subject = mf('notification.comment.mail.subject.anon', subjectvars, 'Anonymous comment on {COURSE}: {TITLE}', userLocale);
 			}
 
-			let siteName;
-			let mailLogo;
+			/** @type {RegionModel | undefined}  */
+			let region;
 			if (course.region) {
-				const region = Regions.findOne(course.region);
-				siteName = region?.custom?.siteName;
-				mailLogo = region?.custom?.mailLogo;
+				region = Regions.findOne(course.region);
 			}
-			siteName = siteName || Meteor.settings.public.siteName;
+			const mailLogo = region?.custom?.mailLogo;
+			const siteName = getSiteName(region);
 
 			return {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
