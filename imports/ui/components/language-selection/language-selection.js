@@ -110,7 +110,7 @@ Template.languageSelection.events({
 		} catch (e) {
 			Alert.error(e);
 		}
-		// The db user update happens in the client/start.js in Tracker.autorun(() => { ... by
+		// The db user update happens in the client/main.js in Tracker.autorun(() => { ... by
 		// messageformat
 		Session.set('locale', lg);
 
