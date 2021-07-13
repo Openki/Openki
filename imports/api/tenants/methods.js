@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { check } from 'meteor/check';
 
 import { Tenants } from './tenants';
@@ -11,9 +10,7 @@ import { ServerMethod } from '/imports/utils/ServerMethod';
 export const create = ServerMethod(
 	'tenant.create',
 	/**
-	 * @param {{
-				name: string;
-			}} changes
+	 * @param {Pick<TenantEntity, 'name'>} changes
 	 */
 	(changes) => {
 		check(changes, {
@@ -25,7 +22,7 @@ export const create = ServerMethod(
 			throw new Meteor.Error(401, 'please log in');
 		}
 
-		/** @type {TenantEntity} */
+		/** @type {Pick<TenantEntity, 'name' | 'members' | 'admins'>} */
 		const set = {
 			name: changes.name.trim().substring(0, 40),
 			members: [user._id],
@@ -59,7 +56,7 @@ function membershipMutationPreconditionCheck(userId, tenantId) {
 	}
 
 	// Only current tenant admins (or instance admins) may draft other people into it
-	if (!tenant.admins.includes(senderId) && !UserPrivilegeUtils.privilegedTo('admin')) {
+	if (!tenant.editableBy(Meteor.user())) {
 		throw new Meteor.Error(401, 'Not permitted');
 	}
 
