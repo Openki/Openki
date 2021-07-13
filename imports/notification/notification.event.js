@@ -143,7 +143,7 @@ notificationEvent.Model = function (entry) {
 			}
 
 			const siteName = getSiteName(region);
-			const mailLogo = region.custom?.mailLogo;
+			const emailLogo = region.custom?.emailLogo;
 
 			return {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
@@ -174,10 +174,10 @@ notificationEvent.Model = function (entry) {
 				creatorName,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
 				customSiteName: siteName,
-				customMailLogo: mailLogo,
+				customEmailLogo: emailLogo,
 			};
 		},
-		template: 'notificationEventMail',
+		template: 'notificationEventEmail',
 	};
 };
 

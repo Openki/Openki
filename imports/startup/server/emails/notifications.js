@@ -6,16 +6,15 @@ import Notification from '/imports/notification/notification';
 
 // Watch the Log for event notifications
 Meteor.startup(() => {
-	SSR.compileTemplate('mailBase', Assets.getText('mails/mailBase.html'));
-	SSR.compileTemplate('notificationEventMail', Assets.getText('mails/notificationEventMail.html'));
+	SSR.compileTemplate('notificationEventEmail', Assets.getText('emails/notifications/event.html'));
 	SSR.compileTemplate(
-		'notificationCommentMail',
-		Assets.getText('mails/notificationCommentMail.html'),
+		'notificationCommentEmail',
+		Assets.getText('emails/notifications/comment.html'),
 	);
-	SSR.compileTemplate('notificationJoinMail', Assets.getText('mails/notificationJoinMail.html'));
+	SSR.compileTemplate('notificationJoinEmail', Assets.getText('emails/notifications/join.html'));
 	SSR.compileTemplate(
-		'notificationPrivateMessageMail',
-		Assets.getText('mails/notificationPrivateMessageMail.html'),
+		'notificationPrivateMessageEmail',
+		Assets.getText('emails/notifications/privateMessage.html'),
 	);
 
 	// To avoid sending stale notifications, only consider records added in the

@@ -4,6 +4,7 @@ import { Email } from 'meteor/email';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
+import juice from 'juice';
 
 import Version from '/imports/api/version/version';
 import { Users } from '/imports/api/users/users';
@@ -13,6 +14,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as HtmlTools from '/imports/utils/html-tools';
 import { getReportEmails } from '/imports/utils/email-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
+import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
@@ -67,40 +69,67 @@ export const sendEmail = ServerMethod(
 	},
 );
 
-export const report = ServerMethod('report', (subject, location, userAgent, reportMessage) => {
-	let reporter = 'A fellow visitor';
-	const rootUrl = Meteor.absoluteUrl();
-	const user = Meteor.user();
-	if (user) {
-		reporter = `<a href='${rootUrl}user/${user._id}'>${HtmlTools.plainToHtml(user.username)}</a>`;
-	}
-	moment.locale('en');
-	const version = Version.findOne();
-	let versionString = '';
-	if (version) {
-		const fullVersion = version.basic + (version.branch !== 'master' ? ` ${version.branch}` : '');
-		const commit = version.commitShort;
-		const deployDate = moment(version.activation).format('lll');
-		const restart = moment(version.lastStart).format('lll');
-		versionString =
-			`<br>The running version is [${Accounts.emailTemplates.siteName}] ${fullVersion}  @ commit ${commit}` +
-			`<br>It was deployed on ${deployDate},` +
-			`<br>and last restarted on ${restart}.`;
-	}
+export const report = ServerMethod(
+	'report',
+	(title, location, userAgent, reportMessage) => {
+		let reporter = 'A fellow visitor';
+		const rootUrl = Meteor.absoluteUrl();
+		const user = Meteor.user();
+		if (user) {
+			reporter = `<a href='${rootUrl}user/${user._id}'>${HtmlTools.plainToHtml(user.username)}</a>`;
+		}
+		moment.locale('en');
 
-	const reportEmail = getReportEmails();
-	Email.send({
-		from: reportEmail.sender,
-		to: reportEmail.recipient,
-		subject: `Report: ${subject}`,
-		html: SSR.render('messageReport', {
+		const { siteName } = Accounts.emailTemplates;
+
+		const version = Version.findOne();
+		let versionString = '';
+		if (version) {
+			const fullVersion = version.basic + (version.branch !== 'master' ? ` ${version.branch}` : '');
+			const commit = version.commitShort;
+			const deployDate = moment(version.activation).format('lll');
+			const restart = moment(version.lastStart).format('lll');
+			versionString =
+				`<br>The running version is [${siteName}] ${fullVersion}  @ commit ${commit}` +
+				`<br>It was deployed on ${deployDate},` +
+				`<br>and last restarted on ${restart}.`;
+		}
+
+		const subjectPrefix = `[${siteName}] `;
+
+		const subject = `Report: ${title}`;
+
+		const reportEmail = getReportEmails();
+
+		let message = SSR.render('reportEmail', {
 			reporter,
 			location,
 			subject,
+			title,
+			site: {
+				url: Meteor.absoluteUrl(),
+				logo: base64PngImageData(Meteor.settings.public.emailLogo),
+				name: siteName,
+			},
 			report: reportMessage,
 			versionString,
 			timeNow: new Date(),
 			userAgent,
-		}),
-	});
-});
+		});
+
+		// Template can't handle DOCTYPE header, so we add the thing here.
+		const DOCTYPE =
+			'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+		message = DOCTYPE + message;
+
+		const email = {
+			from: reportEmail.sender,
+			to: reportEmail.recipient,
+			subject: subjectPrefix + subject,
+			html: juice(message),
+		};
+
+		Email.send(email);
+	},
+	{ serverOnly: true },
+);

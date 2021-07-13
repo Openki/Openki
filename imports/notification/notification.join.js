@@ -111,7 +111,7 @@ notificationJoin.Model = function (entry) {
 			if (course.region) {
 				region = Regions.findOne(course.region);
 			}
-			const mailLogo = region?.custom?.mailLogo;
+			const emailLogo = region?.custom?.emailLogo;
 			const siteName = getSiteName(region);
 
 			return {
@@ -129,10 +129,10 @@ notificationJoin.Model = function (entry) {
 				figures,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=joinNotify`,
 				customSiteName: siteName,
-				customMailLogo: mailLogo,
+				customEmailLogo: emailLogo,
 			};
 		},
-		template: 'notificationJoinMail',
+		template: 'notificationJoinEmail',
 	};
 };
 

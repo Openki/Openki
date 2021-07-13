@@ -35,7 +35,7 @@ import { Filtering } from '/imports/utils/filtering';
  *             src: string,
  *             alt: string,
  *       },
- *       mailLogo: string,
+ *       emailLogo: string,
  *     }} [custom]
  *
  * @property {string} [createdby]

@@ -128,7 +128,7 @@ notificationPrivateMessage.Model = function (entry) {
 				region = Regions.findOne(actualRecipient.profile?.regionId);
 			}
 
-			const mailLogo = region?.custom?.mailLogo;
+			const emailLogo = region?.custom?.emailLogo;
 			const siteName = getSiteName(region);
 
 			const vars = {
@@ -141,7 +141,7 @@ notificationPrivateMessage.Model = function (entry) {
 				recipientName: targetRecipient.username,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=privateMessage`,
 				customSiteName: siteName,
-				customMailLogo: mailLogo,
+				customEmailLogo: emailLogo,
 			};
 
 			if (!senderCopy && body.revealSenderAddress) {
@@ -167,7 +167,7 @@ notificationPrivateMessage.Model = function (entry) {
 
 			return vars;
 		},
-		template: 'notificationPrivateMessageMail',
+		template: 'notificationPrivateMessageEmail',
 	};
 };
 

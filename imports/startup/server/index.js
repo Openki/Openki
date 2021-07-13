@@ -10,11 +10,9 @@ import './sitemaps';
 
 import './admins';
 import './api.json';
-import './email';
+import './emails';
 import './fixtures';
-import './notifications';
 import './login';
-import './users';
 import './useraccounts-configuration';
 import './version';
 import './scrub';

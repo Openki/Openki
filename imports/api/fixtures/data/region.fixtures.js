@@ -67,7 +67,7 @@ const regions = [
 				src: 'sveb_logo.png',
 				alt: 'Online Logo',
 			},
-			mailLogo: 'mails/sveb.png',
+			emailLogo: 'emails/sveb.png',
 		},
 	},
 ];
