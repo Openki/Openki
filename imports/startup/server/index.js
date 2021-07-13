@@ -1,4 +1,4 @@
-import './lib/util';
+import './lib/extendPrototypeToJSON';
 import './lib/ssr';
 
 import './register-api';
