@@ -72,8 +72,8 @@ Meteor.startup(() => {
 		if (locale) {
 			try {
 				localStorage.setItem('locale', locale);
-			} catch (e) {
-				Alert.error(e);
+			} catch {
+				// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 			}
 			Session.set('locale', locale);
 			return true;
@@ -170,8 +170,8 @@ Accounts.onLogin(() => {
 		if (locale) {
 			try {
 				localStorage.setItem('locale', locale);
-			} catch (e) {
-				Alert.error(e);
+			} catch {
+				// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 			}
 			Session.set('locale', locale);
 		}

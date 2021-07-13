@@ -37,8 +37,8 @@ const Introduction = {
 		Session.set('ShowIntro', false);
 		try {
 			localStorage.setItem('intro', 'done');
-		} catch (e) {
-			Alert.serverError(e, '');
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 		}
 	},
 };

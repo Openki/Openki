@@ -68,8 +68,8 @@ Template.regionSelection.onCreated(function () {
 
 		try {
 			localStorage.setItem('region', regionId); // to survive page reload
-		} catch (e) {
-			Alert.error(e);
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 		}
 		Session.set('region', regionId);
 		if (regionId !== 'all' && Meteor.userId()) {

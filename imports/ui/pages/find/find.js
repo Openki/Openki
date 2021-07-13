@@ -211,8 +211,8 @@ Template.find.events({
 	'click .js-all-regions-btn'() {
 		try {
 			localStorage.setItem('region', 'all');
-		} catch (e) {
-			Alert.error(e);
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 		}
 		Session.set('region', 'all');
 	},

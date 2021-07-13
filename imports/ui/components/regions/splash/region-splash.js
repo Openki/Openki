@@ -17,10 +17,9 @@ Template.regionSplash.events({
 		const regionId = Session.get('region') || 'all';
 		try {
 			localStorage.setItem('region', regionId); // to survive page reload
-		} catch (e) {
-			Alert.error(e);
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 		}
-
 		Session.set('showRegionSplash', false);
 	},
 

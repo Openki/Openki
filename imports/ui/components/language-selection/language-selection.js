@@ -107,8 +107,8 @@ Template.languageSelection.events({
 
 		try {
 			localStorage.setItem('locale', lg);
-		} catch (e) {
-			Alert.error(e);
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 		}
 		// The db user update happens in the client/main.js in Tracker.autorun(() => { ... by
 		// messageformat

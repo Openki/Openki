@@ -5,8 +5,61 @@ import { _ } from 'meteor/underscore';
 import { Accounts } from 'meteor/accounts-base';
 import juice from 'juice';
 
+import * as usersMethods from '/imports/api/users/methods';
+
 import { isEmail, getReportEmails } from '/imports/utils/email-tools';
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
+
+Meteor.startup(() => {
+	const serviceConf = Meteor.settings.service;
+	if (serviceConf) {
+		if (serviceConf.google) {
+			ServiceConfiguration.configurations.remove({
+				service: 'google',
+			});
+			ServiceConfiguration.configurations.insert({
+				service: 'google',
+				loginStyle: 'popup',
+				clientId: serviceConf.google.clientId,
+				secret: serviceConf.google.secret,
+			});
+		}
+		if (serviceConf.facebook) {
+			ServiceConfiguration.configurations.remove({
+				service: 'facebook',
+			});
+			ServiceConfiguration.configurations.insert({
+				service: 'facebook',
+				loginStyle: 'popup',
+				appId: serviceConf.facebook.appId,
+				secret: serviceConf.facebook.secret,
+			});
+		}
+		if (serviceConf.github) {
+			ServiceConfiguration.configurations.remove({
+				service: 'github',
+			});
+			ServiceConfiguration.configurations.insert({
+				service: 'github',
+				loginStyle: 'popup',
+				clientId: serviceConf.github.clientId,
+				secret: serviceConf.github.secret,
+			});
+		}
+	}
+});
+
+Accounts.validateNewUser((user) => {
+	if (user.emails) {
+		const email = user.emails[0].address;
+
+		if (!isEmail(email)) {
+			throw new Meteor.Error(403, 'email invalid');
+		}
+	}
+
+	return true;
+});
 
 Accounts.onCreateUser((options, originalUser) => {
 	const user = { ...originalUser };
@@ -74,16 +127,13 @@ Accounts.onCreateUser((options, originalUser) => {
 	return user;
 });
 
-Accounts.validateNewUser((user) => {
-	if (user.emails) {
-		const email = user.emails[0].address;
+Accounts.onLogin(() => {
+	const user = Meteor.user();
 
-		if (!isEmail(email)) {
-			throw new Meteor.Error(403, 'email invalid');
-		}
+	// generate a avatar color for every new user
+	if (user && user.avatar?.color === undefined) {
+		usersMethods.updateAvatarColor();
 	}
-
-	return true;
 });
 
 Accounts.config({
