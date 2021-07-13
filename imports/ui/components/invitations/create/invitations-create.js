@@ -5,11 +5,12 @@ import { mf } from 'meteor/msgfmt:core';
 import * as InvitationsMethods from '/imports/api/invitations/methods';
 import * as Alert from '/imports/api/alerts/alert';
 
-import './tenant-settings-invitations.html';
 import { isEmail } from '/imports/utils/email-tools';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
 
-Template.tenantSettingsInvitations.onCreated(function () {
+import './invitations-create.html';
+
+Template.invitationsCreate.onCreated(function () {
 	const instance = this;
 	instance.busy('notReady');
 
@@ -52,7 +53,7 @@ Template.tenantSettingsInvitations.onCreated(function () {
 	instance.getEmails = () => instance.getLines().filter((e) => isEmail(e));
 });
 
-TemplateMixins.FormfieldErrors(Template.tenantSettingsInvitations, {
+TemplateMixins.FormfieldErrors(Template.invitationsCreate, {
 	notValid: {
 		text: () =>
 			mf(
@@ -63,7 +64,7 @@ TemplateMixins.FormfieldErrors(Template.tenantSettingsInvitations, {
 	},
 });
 
-Template.tenantSettingsInvitations.events({
+Template.invitationsCreate.events({
 	'keyup .js-invitations-emails, change .js-invitations-emails'(event, instance) {
 		if (instance.getLines() && (!instance.state.get('tried') || instance.checkList())) {
 			instance.busy(false);
