@@ -26,6 +26,11 @@
 	@media (max-width: $screen-xs-max) {
 		border: 2px solid #ddd;
 		margin-bottom: 10px;
+
+		[class*='col-']::after {
+			content: '';
+			display: inline-block;
+		}
 	}
 
 	[class*='col-'] {

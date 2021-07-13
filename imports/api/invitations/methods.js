@@ -46,7 +46,21 @@ export const createMany = ServerMethod('invitation.createMany', (tenantId, email
 				}),
 		)
 		.forEach((i) => {
-			Invitations.insert(i);
+			// Update or insert
+			Invitations.upsert(
+				{
+					// Selector
+					tenant: i.tenant,
+					to: i.to,
+				},
+				{
+					// Modifier
+					$set: i,
+					$unset: { acceptedBy: 1 },
+				},
+			);
+
+			
 		});
 });
 

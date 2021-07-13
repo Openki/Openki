@@ -1,11 +1,8 @@
 <template name="invitations">
 	<h3>
 		<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
-		{{mf 'tenant.settings.title.invitations' 'Invitations'}} ({{invitations.length}})
+		{{mf 'tenant.settings.title.invitations' 'Invitations'}}
 	</h3>
-	<div class="tag-group multiline">
-		{{#each invitation in invitations}}
-		{{/each}}
-	</div>
+	{{> invitationsList tenant=tenant}}
 	{{> invitationsCreate tenant=tenant}}
 </template>
