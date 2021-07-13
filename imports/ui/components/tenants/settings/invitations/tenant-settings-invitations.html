@@ -1,0 +1,21 @@
+<template name="tenantSettingsInvitations">
+	<h3>
+		<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
+		{{mf 'tenant.settings.title.invitations' 'Invitations'}} ({{invitations.length}})
+	</h3>
+	<div class="tag-group multiline">
+		{{#each invitation in invitations}}
+		{{/each}}
+	</div>
+	<form class="js-create-invitations">
+		<div class="form-group {{errorClass 'invitations-emails'}}">
+			<label>{{mf 'tenant.settings.field.createInvitations' 'Create invitations'}}</label>
+			<textarea class="js-invitations-emails form-control"
+					  rows="5"
+					  placeholder="{{mf 'tenant.settings.field.createInvitations.placeholder' 'Add a list of e-mail addresses. One per line.'}}"></textarea>
+			{{errorMessage 'invitations-emails'}}
+		</div>
+		<button type="submit" class="btn btn-add"
+				{{disabledIfBusy}}>{{mf 'tenant.settings.button.createInvitations' 'Create'}}</button>
+	</form>
+</template>
