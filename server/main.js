@@ -1,3 +1,10 @@
+/*
+ * This is the main entry point for the server side. It imports all code for the server.
+ * The other files in the `/server` folder are also loaded without being referenced with `import`.
+ * See more about the file structure and loading in the meteor guide:
+ * https://guide.meteor.com/structure.html#javascript-structure
+ */
+
 import { robots } from 'meteor/gadicohen:robots-txt';
 import { Meteor } from 'meteor/meteor';
 import { ServiceConfiguration } from 'meteor/service-configuration';
@@ -9,7 +16,6 @@ import { applyUpdates } from '/imports/startup/server/lib/updates';
 
 import Version from '/imports/api/version/version';
 import { Users } from '/imports/api/users/users';
-
 
 import { AsyncTools } from '/imports/utils/async-tools';
 import * as coursesTenantDenormalizer from '/imports/api/courses/tenantDenormalizer';
