@@ -2,8 +2,6 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import $ from 'jquery';
 
-import * as Alert from '/imports/api/alerts/alert';
-
 import '/imports/ui/components/regions/selection/region-selection';
 
 import './region-splash.html';

@@ -5,7 +5,6 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import * as Alert from '/imports/api/alerts/alert';
 import { Languages } from '/imports/api/languages/languages';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';

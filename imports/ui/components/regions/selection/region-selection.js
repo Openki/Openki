@@ -4,7 +4,6 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
-import * as Alert from '/imports/api/alerts/alert';
 import { Regions } from '/imports/api/regions/regions';
 import * as usersMethods from '/imports/api/users/methods';
 

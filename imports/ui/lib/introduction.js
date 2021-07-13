@@ -1,8 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 
-import * as Alert from '/imports/api/alerts/alert';
-
 const Introduction = {
 	init() {
 		Session.set('ShowIntro', localStorage?.getItem('intro') !== 'done');

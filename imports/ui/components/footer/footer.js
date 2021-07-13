@@ -11,6 +11,10 @@ import { getSiteName } from '/imports/utils/getSiteName';
 
 import './footer.html';
 
+Template.footer.onCreated(function () {
+	this.subscribe('version');
+});
+
 Template.footer.helpers({
 	links() {
 		// Depend on locale and a composite mf string so we update reactively when locale changes

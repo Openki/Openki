@@ -6,8 +6,6 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import * as Alert from '/imports/api/alerts/alert';
-
 import Categories from '/imports/api/categories/categories';
 import { Courses } from '/imports/api/courses/courses';
 import CourseTemplate from '/imports/ui/lib/course-template';
