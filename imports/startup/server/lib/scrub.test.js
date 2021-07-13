@@ -3,7 +3,7 @@ import moment from 'moment';
 import { msgfmt } from 'meteor/msgfmt:core';
 
 import { logFactory } from '/imports/api/log/factory';
-import { Scrubber, ScrubRule } from '/server/lib/scrub';
+import { Scrubber, ScrubRule } from '/imports/startup/server/lib/scrub';
 
 // This should not be here
 msgfmt.init('en');

@@ -5,11 +5,11 @@ import { _ } from 'meteor/underscore';
 
 import '/imports/startup/both';
 import '/imports/startup/server';
+import { applyUpdates } from '/imports/startup/server/lib/updates';
 
 import Version from '/imports/api/version/version';
 import { Users } from '/imports/api/users/users';
 
-import { applyUpdates } from '/server/lib/updates';
 
 import { AsyncTools } from '/imports/utils/async-tools';
 import * as coursesTenantDenormalizer from '/imports/api/courses/tenantDenormalizer';
