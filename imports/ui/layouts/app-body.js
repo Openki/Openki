@@ -71,6 +71,7 @@ Template.layout.events({
 });
 
 Template.layout.rendered = function () {
+	UpdateViewport();
 	$(window).on('resize', () => {
 		UpdateViewport();
 	});

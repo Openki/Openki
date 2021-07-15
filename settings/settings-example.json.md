@@ -1,24 +1,25 @@
-This file descripts all configurations and customization options. Remove the comment at the end of the line to make it work. 
+This file descripts all configurations and customization options. Remove the comment at the end of the line to make it work.
+
 ```
 {
 	"admins": ["greg"], // User Administrator Accounts
 	"prng": "", // Use the "static" value to define that a static seed should be used for test data
 	"testdata": true, // Generates test data, is not needed for the productive system
 	"public": {
-		"siteName": "Openki-clone", 
+		"siteName": "Openki-clone",
 		"siteStage": "beta", // The text top left at the logo
 		"testWarning": true, // Shows a banner saying that this is only for testing
 		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner
 		"headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner from the /kiosk/events/ page
 		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" }, // The default image used for avatars (color is changed using the CSS filter 'hue-rotate')
-		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media 
-		"mailLogo": "mails/openki.png",
-		"regionSelection": { 
+		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media
+		"emailLogo": "emails/openki.png",
+		"regionSelection": {
 			"minNumber": 5, // The minimum number of regions displayed in the Regions selection. Default: 5
-			"aboutLink": "" // A link to a page that explains regions, if not set then none link is shown. 
+			"aboutLink": "" // A link to a page that explains regions, if not set then none link is shown.
 		},
 		"matomo": {
-			"url": "https://analytics.mydomain.com/", 
+			"url": "https://analytics.mydomain.com/",
 			"site": 1 // Matomo id
 		},
 		"pricePolicyEnabled": true, // by true, show only indicative prices (DE: Richtpreise)
@@ -94,7 +95,7 @@ This file descripts all configurations and customization options. Remove the com
 		, { "name": "drop resume-logins",  "comment": "Resume-Logins are not very interesting"
 		  , "grace": 7, "select": { "tr": "Login.Success", "body": {"type": "resume"}}, "remove": true // "remove": true means: The whole entry is removed
 		  }
-		  
+
 		, { "name": "scrub logins", "comment": "We want to remember user logins but not the details"
 		  , "grace": 8, "select": { "tr": "Login.Success"}, "unset": [ "connection", "username" ] // "unset": [ "field1", "field2", ... ] means: Individual fields are removed
 		  }

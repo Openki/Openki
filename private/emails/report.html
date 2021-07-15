@@ -1,0 +1,42 @@
+{{#emailBase subject=subject site=site}}
+	<tr>
+		<td>
+			<span class="title">
+				Hi
+			</span>
+			<p>
+				User {{{reporter}}} reports a problem on the page <a
+				   href='{{location}}'>"{{title}}"</a>
+			</p>
+			<p class="gap-md">
+				Their report:
+			</p>
+			<table class="comment-box">
+				<tr>
+					<td>
+						<p>
+							{{report}}
+						</p>
+					</td>
+				</tr>
+			</table>
+			<p>
+				See you! bye.
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="footer">
+				<tr>
+					<td>
+						{{{versionString}}}<br>
+						Now it's {{timeNow}}.<br>
+						User Agent:
+						<code>{{userAgent}}</code>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{{/emailBase}}

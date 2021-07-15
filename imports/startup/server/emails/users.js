@@ -1,93 +1,22 @@
 import { SSR } from 'meteor/meteorhacks:ssr';
-import { mf } from 'meteor/msgfmt:core';
 import { Meteor } from 'meteor/meteor';
-import { _ } from 'meteor/underscore';
+import { mf } from 'meteor/msgfmt:core';
 import { Accounts } from 'meteor/accounts-base';
 import juice from 'juice';
 
-import { isEmail, getReportEmails } from '/imports/utils/email-tools';
+import { getReportEmails } from '/imports/utils/email-tools';
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 
-Accounts.onCreateUser((options, originalUser) => {
-	const user = { ...originalUser };
-	if (options.profile) {
-		user.profile = options.profile;
-	} else {
-		user.profile = {};
-	}
-	// Collect info where a username could possibly be found
-	let nameProviders = [user, user.profile];
-	if (user.services) {
-		nameProviders = nameProviders.concat(_.toArray(user.services));
-	}
+if (Meteor.settings.siteEmail) {
+	Accounts.emailTemplates.from = Meteor.settings.siteEmail;
+}
 
-	// Try to glean a username
-	let name = false;
-	let username = false;
-	let provider = false;
-	/* eslint-disable-next-line no-cond-assign */
-	while ((provider = nameProviders.pop()) !== undefined) {
-		if (!name && provider.name) {
-			name = provider.name;
-		}
-		if (!username && provider.username) {
-			username = provider.username;
-		}
-	}
-
-	// We're not picky and try assigning a name no questions asked
-	user.username = username || name;
-	user.profile.name = name || username;
-
-	if (!user.privileges) {
-		user.privileges = [];
-	}
-
-	// Read email-address if provided
-	let providedEmail = false;
-	let verified = true; // Assume verified unless there is a flag that says it's not
-	const services = user.services;
-	if (services) {
-		['facebook', 'google', 'github'].forEach((loginProvider) => {
-			const provided = services[loginProvider];
-			if (provided?.email) {
-				providedEmail = provided.email;
-				if (typeof provided.verified_email === 'boolean') {
-					verified = provided.verified_email;
-				}
-			}
-		});
-	}
-
-	if (providedEmail) {
-		user.emails = [{ address: providedEmail, verified }];
-	}
-
-	user.tenants = [];
-
-	user.groups = [];
-	user.badges = [user._id];
-
-	user.notifications = true;
-	user.allowPrivateMessages = true;
-
-	return user;
-});
-
-Accounts.validateNewUser((user) => {
-	if (user.emails) {
-		const email = user.emails[0].address;
-
-		if (!isEmail(email)) {
-			throw new Meteor.Error(403, 'email invalid');
-		}
-	}
-
-	return true;
-});
-
-Accounts.config({
-	sendVerificationEmail: true,
+if (Meteor.settings.public.siteName) {
+	Accounts.emailTemplates.siteName = Meteor.settings.public.siteName;
+}
+Meteor.startup(() => {
+	SSR.compileTemplate('userVerifyEmail', Assets.getText('emails/users/verify.html'));
+	SSR.compileTemplate('userResetPasswordEmail', Assets.getText('emails/users/resetPassword.html'));
 });
 
 Accounts.emailTemplates.verifyEmail.subject = function (user) {
@@ -127,12 +56,12 @@ ${mf(
 
 Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 	return juice(
-		SSR.render('userVerifyEmailMail', {
+		SSR.render('userVerifyEmail', {
 			subject: Accounts.emailTemplates.verifyEmail.subject(user),
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: base64PngImageData(Meteor.settings.public.mailLogo),
+				logo: base64PngImageData(Meteor.settings.public.emailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
 			username: user.username,
@@ -185,12 +114,12 @@ ${mf(
 
 Accounts.emailTemplates.resetPassword.html = function (user, url) {
 	return juice(
-		SSR.render('userResetPasswordMail', {
+		SSR.render('userResetPasswordEmail', {
 			subject: Accounts.emailTemplates.resetPassword.subject(user),
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: base64PngImageData(Meteor.settings.public.mailLogo),
+				logo: base64PngImageData(Meteor.settings.public.emailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
 			username: user.username,

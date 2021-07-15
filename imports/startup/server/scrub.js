@@ -3,7 +3,7 @@ import schedule from 'node-schedule';
 import moment from 'moment';
 
 import { Log } from '/imports/api/log/log';
-import { Scrubber } from '/server/lib/scrub';
+import { Scrubber } from '/imports/startup/server/lib/scrub';
 
 Meteor.startup(() => {
 	const scrubSettings = Meteor.settings.scrub;

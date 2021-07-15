@@ -1,34 +1,31 @@
 import './client-error';
 import './extend-instance';
+import './locale';
 import './templates';
+import './dark-mode';
 import './template-helpers';
 import './translations.html';
+import './useraccounts-configuration';
 
-if (
-	window.location.search.includes('upcoming') &&
-	window.location.search.includes('computer') &&
-	window.location.search.includes('experimental') &&
-	window.location.search.length === 55
-) {
-	const style = document.createElement('style');
+import { Meteor } from 'meteor/meteor';
 
-	// add CSS styles for dark mode
-	style.innerHTML = `
-		html,
-		body,
-		#wrap {
-			background-color: #fff;
-		}
+import { Router } from 'meteor/iron:router';
+import { Tooltips } from 'meteor/lookback:tooltips';
+import { Session } from 'meteor/session';
 
-		html {
-			filter: invert(100%) hue-rotate(180deg);
-		}
+import Introduction from '/imports/ui/lib/introduction';
+import RegionSelection from '/imports/utils/region-selection';
 
-		html img,
-		html input[type="image"] {
-			filter: invert(100%) hue-rotate(-180deg);
-		}
-`;
+import 'bootstrap-sass';
 
-	document.head.appendChild(style);
-}
+// close any verification dialogs still open
+Router.onBeforeAction(function () {
+	Tooltips.hide();
+
+	Session.set('verify', false);
+
+	this.next();
+});
+
+Meteor.startup(RegionSelection.init);
+Meteor.startup(Introduction.init);

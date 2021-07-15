@@ -1,48 +1,23 @@
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 
-import '/imports/startup/both';
-import '/imports/startup/client';
-
 import { Accounts } from 'meteor/accounts-base';
-import { Router } from 'meteor/iron:router';
-import { mf, mfPkg, msgfmt } from 'meteor/msgfmt:core';
+import { mfPkg, msgfmt } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
-import { Tooltips } from 'meteor/lookback:tooltips';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 import $ from 'jquery';
 import 'bootstrap-datepicker';
 
-import * as Alert from '/imports/api/alerts/alert';
 import { Languages } from '/imports/api/languages/languages';
 
-import Introduction from '/imports/ui/lib/introduction';
-import UpdateViewport from '/imports/ui/lib/update-viewport';
-
-import RegionSelection from '/imports/utils/region-selection';
 import * as UrlTools from '/imports/utils/url-tools';
-
-import 'bootstrap-sass';
-
-// //////////// db-subscriptions:
-
-Meteor.subscribe('version');
 
 // Always load english translation
 // For dynamically constructed translation strings there is no default
 // translation and meteor would show the translation key if there is no
 // translation in the current locale
 mfPkg.loadLangs('en');
-
-// close any verification dialogs still open
-Router.onBeforeAction(function () {
-	Tooltips.hide();
-
-	Session.set('verify', false);
-
-	this.next();
-});
 
 // Try to guess a sensible language
 Meteor.startup(() => {
@@ -65,8 +40,8 @@ Meteor.startup(() => {
 		if (locale) {
 			try {
 				localStorage.setItem('locale', locale);
-			} catch (e) {
-				Alert.error(e);
+			} catch {
+				// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 			}
 			Session.set('locale', locale);
 			return true;
@@ -150,11 +125,6 @@ Meteor.startup(() => {
 	});
 });
 
-Meteor.startup(RegionSelection.init);
-Meteor.startup(Introduction.init);
-
-Meteor.startup(UpdateViewport);
-
 Accounts.onLogin(() => {
 	const user = Meteor.user();
 
@@ -163,21 +133,10 @@ Accounts.onLogin(() => {
 		if (locale) {
 			try {
 				localStorage.setItem('locale', locale);
-			} catch (e) {
-				Alert.error(e);
+			} catch {
+				// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 			}
 			Session.set('locale', locale);
 		}
 	}
-});
-
-Accounts.onEmailVerificationLink((/** @type {string} */ token) => {
-	Router.go('profile');
-	Accounts.verifyEmail(token, (error) => {
-		if (error) {
-			Alert.serverError(error, 'Address could not be verified');
-		} else {
-			Alert.success(mf('email.verified', 'Your e-mail has been verified.'));
-		}
-	});
 });

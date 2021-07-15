@@ -135,7 +135,7 @@ notificationComment.Model = function (entry) {
 			if (course.region) {
 				region = Regions.findOne(course.region);
 			}
-			const mailLogo = region?.custom?.mailLogo;
+			const emailLogo = region?.custom?.emailLogo;
 			const siteName = getSiteName(region);
 
 			return {
@@ -153,10 +153,10 @@ notificationComment.Model = function (entry) {
 				commenterName,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=commentNotify`,
 				customSiteName: siteName,
-				customMailLogo: mailLogo,
+				customEmailLogo: emailLogo,
 			};
 		},
-		template: 'notificationCommentMail',
+		template: 'notificationCommentEmail',
 	};
 };
 
