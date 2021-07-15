@@ -6,10 +6,11 @@ import { Router } from 'meteor/iron:router';
 import { Invitations } from '/imports/api/invitations/invitations';
 import { Tenants } from '/imports/api/tenants/tenants';
 import { Users } from '/imports/api/users/users';
+import { Log } from '/imports/api/log/log';
 
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { getReportEmails } from '/imports/utils/email-tools';
-import { Log } from '/imports/api/log/log';
+import { getAboutLink } from '/imports/utils/getAboutLink';
 
 /**
  * @param {import('/imports/api/invitations/invitations').InvitationEntity} invitation
@@ -45,10 +46,10 @@ function sendInvitation(invitation) {
 		tenant,
 		inviter,
 		recipient,
-		inviterLink: Router.url('userprofile', inviter, { query: 'campaign=invitationEmail' }),
 		invitationLink: Router.url('invitation', invitation, {
 			query: `tenant=${invitation.tenant}&campaign=invitationEmail`,
 		}),
+		moreLink: getAboutLink(),
 		reportEmail: getReportEmails().recipient,
 		locale,
 	});

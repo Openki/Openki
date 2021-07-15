@@ -5,16 +5,17 @@
 				{{mf "invitation.email.greeting" 'Hi {USERNAME}' USERNAME=recipient.username LOCALE=locale}}
 			</span>
 			<p>
-				{{mf "invitation.email.intro" 'You have been invited by {INVITER} to join {TENANT}.' INVITER=inviter.username TENANT=tenant.name LOCALE=locale}}
+				{{mf "invitation.email.intro" 'You have been invited by {INVITER} to join "{TENANT}" on {SITENAME}.' INVITER=inviter.username TENANT=tenant.name SITENAME=site.name LOCALE=locale}}
 			</p>
 			<p class="text-center">
 				<a class="button" href="{{invitationLink}}">
-					{{mf "invitation.email.join" "I want to join." LOCALE=locale}}
+					{{mf "invitation.email.join" "I want to join" LOCALE=locale}}
 				</a>
 			</p>
-			<p>
-				<a
-				   href="{{inviterLink}}">{{mf "invitation.email.seeProfile" '➜ See profile of "{INVITER}"' INVITER=inviter.username LOCALE=locale}}</a>
+			<p class="gap-lg text-muted">
+				{{mf "invitation.email.about" '{SITENAME} is an open education platform. Courses can be proposed, discussed, developed, organized and published.' SITENAME=site.name LOCALE=locale}}
+				<a href="{{moreLink}}">
+					{{mf "invitation.email.more" 'Find out more' LOCALE=locale}}</a>
 			</p>
 		</td>
 	</tr>
