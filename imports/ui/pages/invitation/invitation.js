@@ -7,6 +7,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
 import './invitation.html';
+import RegionSelection from '/imports/utils/region-selection';
 
 Template.invitation.events({
 	async 'click .js-join'(event, instance) {
@@ -23,6 +24,8 @@ Template.invitation.events({
 						instance.data.invitation.tenant,
 						instance.data.invitation.token,
 					);
+
+					RegionSelection.subscribe(); // Reload regions
 
 					Router.go('/');
 
