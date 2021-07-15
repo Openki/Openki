@@ -74,7 +74,7 @@ livedata@1.0.18
 localstorage@1.2.0
 logging@1.2.0
 lookback:tooltips@0.6.1
-markdown@1.0.14
+markdown@2.0.0
 mdg:seo@3.2.2
 mdg:validation-error@0.5.1
 meteor@1.9.3
@@ -83,11 +83,11 @@ meteor-platform@1.2.6
 meteorhacks:inject-initial@1.0.5
 meteorhacks:ssr@2.2.0
 meteortesting:browser-tests@1.3.4
-meteortesting:mocha@2.0.1
+meteortesting:mocha@2.0.2
 meteortesting:mocha-core@8.1.2
 meteortoys:toykit@10.0.0
 minifier-css@1.5.4
-minifier-js@2.6.0
+minifier-js@2.6.1
 minimongo@1.6.2
 mobile-status-bar@1.1.0
 modern-browsers@0.1.5
@@ -107,7 +107,7 @@ npm-bcrypt@0.9.4
 npm-mongo@3.9.0
 oauth@1.3.2
 oauth2@1.3.0
-observe-sequence@1.0.18
+observe-sequence@1.0.19
 ordered-dict@1.1.0
 promise@0.11.2
 raix:eventemitter@0.1.3
@@ -127,8 +127,8 @@ socket-stream-client@0.3.3
 spacebars@1.2.0
 spacebars-compiler@1.3.0
 srp@1.1.0
-standard-minifier-css@1.7.2
-standard-minifier-js@2.6.0
+standard-minifier-css@1.7.3
+standard-minifier-js@2.6.1
 templating@1.4.1
 templating-compiler@1.4.1
 templating-runtime@1.5.0
