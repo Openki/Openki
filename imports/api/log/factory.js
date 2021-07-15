@@ -9,6 +9,16 @@ import { Match, check } from 'meteor/check';
 import { Filtering } from '/imports/utils/filtering';
 import Predicates from '/imports/utils/predicates';
 
+/** 
+ * @typedef {{
+    tr: string;
+    ts: Date;
+    rel: string[];
+    body: any;
+    res: any[];
+}} LogEntity
+ */
+
 /**
  * The Application Log records user and system decisions. It is intended to
  * become the single source of truth within the application.
