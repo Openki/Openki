@@ -59,9 +59,15 @@ export const createMany = ServerMethod('invitation.createMany', (tenantId, email
 					$unset: { acceptedBy: 1 },
 				},
 			);
-
-			
 		});
+});
+
+export const remove = ServerMethod('invitation.remove', (tenantId, invitationId) => {
+	check(invitationId, String);
+
+	tenantMutationPreconditionCheck(tenantId);
+
+	Invitations.remove({ _id: invitationId, tenant: tenantId });
 });
 
 export default createMany;

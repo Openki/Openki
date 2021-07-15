@@ -1,7 +1,7 @@
 <template name="invitationsList">
 
 	<div class="row row-no-gutters responsive-table-head">
-		<div class="col-sm-4">{{mf 'invitations.list.to' 'To'}}</div>
+		<div class="col-sm-3">{{mf 'invitations.list.to' 'To'}}</div>
 
 		<div class="col-sm-2">{{mf 'invitations.list.status' 'Status'}}
 		</div>
@@ -9,24 +9,42 @@
 		<div class="col-sm-3">{{mf 'invitations.list.acceptedBy' 'Accepted by'}}
 		</div>
 
-		<div class="col-sm-3">{{mf 'invitations.list.createdAt' 'Created At'}}
+		<div class="col-sm-2">{{mf 'invitations.list.createdAt' 'Created At'}}
+		</div>
+
+		<div class="col-sm-2">{{mf 'invitations.list.remove' 'Remove'}}
 		</div>
 	</div>
 	{{#each invitation in invitations tenant._id}}
 		<div class="row row-no-gutters responsive-table-row">
 
 			<div class="col-xs-6 responsive-table-head">{{mf 'invitations.list.to'}}</div>
-			<div class="col-xs-6 col-sm-4">{{invitation.to}}</div>
+			<div class="col-xs-6 col-sm-3">{{invitation.to}}</div>
 
 			<div class="col-xs-6 responsive-table-head">{{mf 'invitations.list.status'}}</div>
 			<div class="col-xs-6 col-sm-2">{{status invitation.status}}</div>
 
 			<div class="col-xs-6 responsive-table-head">{{mf 'invitations.list.acceptedBy'}}</div>
-			<div class="col-xs-6 col-sm-3">{{> profileLink invitation.acceptedBy}}</div>
+			<div class="col-xs-6 col-sm-3">
+				{{#if invitation.acceptedBy}}
+					{{> profileLink invitation.acceptedBy}}
+				{{else}}
+					-
+				{{/if}}
+			</div>
 
 			<div class="col-xs-6 responsive-table-head">{{mf 'invitations.list.createdAt'}}</div>
-			<div class="col-xs-6 col-sm-3">{{dateFormat invitation.createdAt}}
+			<div class="col-xs-6 col-sm-2">{{dateFormat invitation.createdAt}}
 				{{timeFormat invitation.createdAt}}</div>
+
+			<div class="col-xs-6 responsive-table-head">{{mf 'invitations.list.remove'}}</div>
+			<div class="col-xs-6 col-sm-2">
+				{{#with invitation}}
+					<button type="button" class="btn btn-delete text-danger js-remove">
+						<span class="fa fa-trash" aria-hidden="true"></span>
+					</button>
+				{{/with}}
+			</div>
 
 		</div>
 	{{/each}}
