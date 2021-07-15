@@ -1,3 +1,4 @@
+import './fixtures';
 import './db-updates';
 import './update-db-cache';
 
@@ -11,7 +12,6 @@ import './sitemaps';
 import './admins';
 import './api.json';
 import './emails';
-import './fixtures';
 import './login';
 import './useraccounts-configuration';
 import './version';
