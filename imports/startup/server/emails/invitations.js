@@ -46,6 +46,9 @@ function sendInvitation(invitation) {
 		inviter,
 		recipient,
 		inviterLink: Router.url('userprofile', inviter, { query: 'campaign=invitationEmail' }),
+		invitationLink: Router.url('invitation', invitation, {
+			query: `tenant=${invitation.tenant}&campaign=invitationEmail`,
+		}),
 		reportEmail: getReportEmails().recipient,
 		locale,
 	});

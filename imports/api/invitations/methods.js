@@ -7,6 +7,7 @@ import { Invitations } from './invitations';
 import { Tenants } from '../tenants/tenants';
 /** @typedef {import('../tenants/tenants').TenantEntity} TenantEntity */
 import { ServerMethod } from '/imports/utils/ServerMethod';
+import * as usersTenantsDenormalizer from '../users/tenantsDenormalizer';
 
 /**
  * @param {string} tenantId
@@ -70,4 +71,23 @@ export const remove = ServerMethod('invitation.remove', (tenantId, invitationId)
 	Invitations.remove({ _id: invitationId, tenant: tenantId });
 });
 
-export default createMany;
+export const join = ServerMethod('invitation.join', (tenantId, token) => {
+	check(tenantId, String);
+	check(token, String);
+
+	const invitation = Invitations.findOne({ tenant: tenantId, token });
+	if (!invitation || invitation.status === 'used') {
+		throw new Meteor.Error(401, 'Not permitted');
+	}
+
+	const userId = Meteor.userId();
+	if (!userId) {
+		throw new Meteor.Error(401, 'please log in');
+	}
+
+	Tenants.update(tenantId, { $addToSet: { members: userId } });
+
+	Invitations.update(invitation._id, { $set: { status: 'used', acceptedBy: userId } });
+
+	usersTenantsDenormalizer.afterInvitationJoin(userId, tenantId);
+});
