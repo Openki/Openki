@@ -22,7 +22,7 @@ Template.invitationsList.helpers({
 	},
 
 	/**
-	 * @param {'created' | 'send' | 'used'} status
+	 * @param {'created' | 'send' | 'used' | 'failed' } status
 	 */
 	status(status) {
 		switch (status) {
@@ -32,6 +32,8 @@ Template.invitationsList.helpers({
 				return mf('invitations.status.send', 'Send');
 			case 'used':
 				return mf('invitations.status.used', 'Used');
+			case 'failed':
+				return mf('invitations.status.failed', 'failed');
 
 			default:
 				return status;

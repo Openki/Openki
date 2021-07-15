@@ -1,0 +1,33 @@
+{{#emailBase subject=subject site=site}}
+	<tr>
+		<td>
+			<span class="title">
+				{{mf "invitation.email.greeting" 'Hi {USERNAME}' USERNAME=recipient.username LOCALE=locale}}
+			</span>
+			<p>
+				{{mf "invitation.email.intro" 'You have been invited by {INVITER} to join {TENANT}.' INVITER=inviter.username TENANT=tenant.name LOCALE=locale}}
+			</p>
+			<p class="text-center">
+				<a class="button" href="{{joinLink}}">
+					{{mf "invitation.email.join" "I want to join." LOCALE=locale}}
+				</a>
+			</p>
+			<p>
+				<a
+				   href="{{inviterLink}}">{{mf "invitation.email.seeProfile" '➜ See profile of "{INVITER}"' INVITER=inviter.username LOCALE=locale}}</a>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="footer">
+				<tr>
+					<td>
+						{{mf "invitation.email.unexpected" "If you don't know why you got this email, ignore it or send us a notification to:"}}
+						<a href="mailto:{{reportEmail}}">{{reportEmail}}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{{/emailBase}}
