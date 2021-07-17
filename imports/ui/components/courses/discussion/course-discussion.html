@@ -2,7 +2,7 @@
 	<div class="page-component discussion" id="discussion">
 		<div class="course-page-component-header">
 			<h4>
-				<span class="fa fa-comments fa-fw" aria-hidden="true"></span>
+				<span class="fa fa-comments fa-fw" aria-hidden="true"></span>&nbsp;
 				{{mf 'course.title.Discussion' 'Discussion'}}
 			</h4>
 		</div>
@@ -66,10 +66,10 @@
 			<button type="button" class="btn btn-add course-page-btn js-discussion-edit"
 					{{disabledIfBusy}}>
 				{{#if busy 'saving'}}
-					<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+					<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>&nbsp;
 					{{mf '_button.saving' 'Saving...'}}
 				{{else}}
-					<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
+					<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>&nbsp;
 					{{mf 'course.discussion.write_comment' 'Write a comment'}}
 				{{/if}}
 			</button>
