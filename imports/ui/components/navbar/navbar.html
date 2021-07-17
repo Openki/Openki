@@ -34,7 +34,7 @@
 				</a>
 			</div>
 			<div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
-				<ul class="nav navbar-nav {{toggleNavbarRight 'left'}} row-sm-auto row-no-gutters">
+				<ul class="nav navbar-nav {{toggleNavbarRight 'left'}} row-sm-auto row-no-gutters text-center">
 					<li class="{{activeClass 'home'}} {{activeClass 'showCourse'}} col-4-sm-auto">
 						<a href="{{pathFor 'home'}}"
 						   class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close"
@@ -63,11 +63,11 @@
 					</li>
 				</ul>
 				<div class="{{toggleNavbarRight}}">
-					<ul class="nav navbar-nav row-sm-auto row-no-gutters">
+					<ul class="nav navbar-nav row-sm-auto row-no-gutters text-center">
 						{{> regionSelectionWrap inNavbar=true}}
 						{{> languageSelectionWrap inNavbar=true}}
 					</ul>
-					<ul class="nav navbar-nav">
+					<ul class="nav navbar-nav text-center">
 						<li class="dropdown login-link">
 							{{> loginButton}}
 							<div class="dropdown-menu login-dropdown">
@@ -88,8 +88,6 @@
 			   data-toggle="dropdown" role="button">
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 				{{currentUser.username}}
-				<div class="nav-marker-caret"></div>
-				<div class="nav-marker-bar"></div>
 			</a>
 		{{else}}
 			<a class="js-open-login loginButton navbar-link" id="openLogin" role="button">

@@ -139,15 +139,6 @@ Template.languageSelection.events({
 	},
 
 	'focus .js-language-search'(event, instance) {
-		const viewportWidth = Session.get('viewportWidth');
-		const isRetina = Session.equals('isRetina', true);
-		const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
-
-		if (screenMD && !isRetina) {
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo('slow', 0);
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
-		}
-
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 });

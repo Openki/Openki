@@ -18,8 +18,8 @@
 
 .navbar-collapse {
 	@media (max-width: $grid-float-breakpoint) {
+		border-top: 1px solid $navbar-default-border;
 		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
-		padding-bottom: 10px;
 
 		/* Fix: Removes small bar on opening/closing */
 		&[aria-expanded='false'] {
@@ -31,7 +31,11 @@
 	}
 }
 
-.navbar-collapse,
+.navbar-fixed-top .navbar-collapse,
+.navbar-fixed-bottom .navbar-collapse {
+	max-height: 386px;
+}
+
 .navbar-form {
 	@media (max-width: $grid-float-breakpoint) {
 		border: 0;
@@ -225,10 +229,10 @@
 .navbar-form-selection {
 	font-size: large;
 	margin: 0;
-	padding: 0;
+	padding: 8.5px 0;
 
-	@media (min-width: $grid-float-breakpoint) {
-		padding: 8.5px 0;
+	@media (max-width: $grid-float-breakpoint) {
+		padding: 8.5px 8.5px 0 !important;
 	}
 }
 
