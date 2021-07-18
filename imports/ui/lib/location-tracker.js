@@ -2,19 +2,22 @@ import { Regions } from '/imports/api/regions/regions';
 import { Mongo } from 'meteor/mongo';
 /** @typedef {import('/imports/api/regions/regions').Geodata} Geodata */
 
+/**
+ * @typedef {Object} MarkerEntity
+ * @property {string} _id
+ * @property {Geodata} loc
+ * @property {boolean} [main]
+ * @property {boolean} [draggable]
+ * @property {boolean} [center] Marks that have the center flage set are not displayed but used for anchoring the map
+ * @property {boolean} [proposed]
+ * @property {boolean} [selected]
+ * @property {boolean} [hover]
+ * @property {string} [presetAddress]
+ * @property {string} [name]
+ */
+
 export const LocationTracker = function () {
-	/** @type {Mongo.Collection<{
-	 				_id: string
-					loc: Geodata;
-					main?: boolean;
-					draggable?: boolean;
-					center?: boolean;
-					proposed?: boolean;
-					selected?: boolean;
-					hover?: boolean;
-					presetAddress?: string;
-					name?: string;
-				}>} */
+	/** @type {Mongo.Collection<MarkerEntity>} */
 	const markers = new Mongo.Collection(null); // Local collection for in-memory storage
 
 	return {
@@ -41,6 +44,11 @@ export const LocationTracker = function () {
 				});
 			}
 		},
+
+		getLocation() {
+			return markers.findOne({ main: true })?.loc;
+		},
+
 		/**
 		 * @param {string} regionId
 		 */

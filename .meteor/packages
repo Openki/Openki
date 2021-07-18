@@ -31,15 +31,13 @@ service-configuration@1.0.11
 # UI
 reactive-var@1.0.11             # Reactive variable for tracker
 fortawesome:fontawesome
-msgfmt:core
-msgfmt:extract
+msgfmt:core@2.0.0-preview.24
+msgfmt:extract@2.0.2
 msgfmt:ui
 bevanhunt:leaflet
 fourseven:scss
 lookback:tooltips
-wanglian:bootstrap3-datepicker
 markdown
-jquery
 
 # SEO
 mdg:seo

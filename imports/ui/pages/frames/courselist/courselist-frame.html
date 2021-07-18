@@ -27,14 +27,14 @@
 	<div class="frame-list-item">
 		<h4 class="frame-list-item-header js-toggle-course-details">
 			<span class="frame-list-item-toggle-indicator">
-				<i class="fa fa-{{toggleIndicatorIcon}}"></i>
+				<i class="fa fa-angle-down"></i>
 			</span>
 			{{#unless hideInterested}}
-			<span class="frame-list-item-interested"
-				  title="{{mf 'frame.courseList.interestedPersons' 'Interested persons'}}">
-				<i class="fa fa-fw fa-user"></i>
-				{{interestedPersons course}}
-			</span>
+				<span class="frame-list-item-interested"
+					  title="{{mf 'frame.courseList.interestedPersons' 'Interested persons'}}">
+					<i class="fa fa-fw fa-user"></i>
+					{{interestedPersons course}}
+				</span>
 			{{/unless}}
 			{{course.name}}
 			{{#if allRegions}}
@@ -54,8 +54,8 @@
 					</div>
 				</div>
 				<div class="frame-list-item-links">
-					<a class="btn" href="{{pathFor 'showCourse'}}" target="_blank">
-						{{mf 'frame.courseList.moreAboutThisCourse' 'More about this course on openki.net'}}
+					<a class="btn" href="{{pathFor 'showCourse' data=course}}" target="_blank">
+						{{mf 'frame.courseList.moreAboutThisCourse' 'More about this course on {SITENAME}' SITENAME=siteName}}
 					</a>
 				</div>
 			</div>

@@ -1,8 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 
-import * as Alert from '/imports/api/alerts/alert';
-
 const Introduction = {
 	init() {
 		Session.set('ShowIntro', localStorage?.getItem('intro') !== 'done');
@@ -37,8 +35,8 @@ const Introduction = {
 		Session.set('ShowIntro', false);
 		try {
 			localStorage.setItem('intro', 'done');
-		} catch (e) {
-			Alert.serverError(e, '');
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 		}
 	},
 };

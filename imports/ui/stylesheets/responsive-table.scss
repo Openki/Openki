@@ -1,0 +1,37 @@
+.responsive-table-head {
+	display: none;
+	font-weight: bold;
+
+	@media (min-width: $screen-sm-min) {
+		display: block;
+	}
+
+	&[class*='col-'] {
+		display: block;
+
+		@media (min-width: $screen-sm-min) {
+			display: none;
+		}
+	}
+
+	[class*='col-'] {
+		@media (min-width: $screen-sm-min) {
+			border-bottom: 2px solid #ddd;
+		}
+		padding: 8px;
+	}
+}
+
+.responsive-table-row {
+	@media (max-width: $screen-xs-max) {
+		border: 2px solid #ddd;
+		margin-bottom: 10px;
+	}
+
+	[class*='col-'] {
+		@media (min-width: $screen-sm-min) {
+			border-top: 2px solid #ddd;
+		}
+		padding: 8px;
+	}
+}

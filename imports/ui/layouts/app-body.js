@@ -1,7 +1,7 @@
 import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
+import $ from 'jquery';
 import { Meteor } from 'meteor/meteor';
 
 import RegionSelection from '/imports/utils/region-selection';
@@ -71,7 +71,8 @@ Template.layout.events({
 });
 
 Template.layout.rendered = function () {
-	$(window).resize(() => {
+	UpdateViewport();
+	$(window).on('resize', () => {
 		UpdateViewport();
 	});
 	Session.set('isRetina', window.devicePixelRatio === 2);

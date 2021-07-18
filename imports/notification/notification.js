@@ -1,5 +1,3 @@
-import Log from '/imports/api/log/log';
-
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
@@ -8,6 +6,7 @@ import { Random } from 'meteor/random';
 import { Match, check } from 'meteor/check';
 import juice from 'juice';
 
+import { Log } from '/imports/api/log/log';
 import { Users } from '/imports/api/users/users';
 
 import notificationEvent from '/imports/notification/notification.event';
@@ -77,7 +76,7 @@ Notification.send = function (entry) {
 				vars.customSiteName = vars.customSiteName || vars.siteName;
 				vars.site = {
 					url: vars.customSiteUrl || Meteor.absoluteUrl(),
-					logo: base64PngImageData(vars.customMailLogo || Meteor.settings.public.mailLogo),
+					logo: base64PngImageData(vars.customEmailLogo || Meteor.settings.public.emailLogo),
 					name: vars.customSiteName || vars.siteName,
 				};
 				vars.locale = userLocale;
@@ -91,7 +90,6 @@ Notification.send = function (entry) {
 
 				mail = {
 					from: fromAddress,
-					sender: Accounts.emailTemplates.from,
 					to: address,
 					subject: subjectPrefix + vars.subject,
 					html: juice(message),

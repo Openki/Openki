@@ -28,8 +28,10 @@ import * as tenantDenormalizer from './tenantDenormalizer';
  * @property {string} name
  * @property {string[]} categories ID_categories
  * @property {string[]} tags       (not used)
- * @property {string[]} groups     List ID_groups
+ * @property {string[]} groups     List ID_groups ("promote groups")
  * @property {string[]} groupOrganizers  List of group ID that are allowed to edit the course
+ * ("team groups", based on the ui design: Every "team group" promotes the course and is part of
+ * the groups list)
  * @property {string} description
  * @property {string} slug
  * @property {string} region ID_region

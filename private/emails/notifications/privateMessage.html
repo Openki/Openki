@@ -1,0 +1,53 @@
+{{#emailBase subject=subject site=site}}
+	<tr>
+		<td>
+			{{#if senderCopy}}
+				<p>
+					{{mf "notification.privateMessage.mail.copyintro" 'This is a copy of your message that was sent to "{RECIPIENT}"' RECIPIENT=recipientName LOCALE=locale}}
+				</p>
+			{{/if}}
+			<span class="title">
+				{{mf "notification.event.mail.greeting" USERNAME=recipientName LOCALE=locale}}
+			</span>
+			<p>
+				{{mf "notification.privateMessage.mail.intro" 'You got a private message from:' LOCALE=locale}}
+				<a href="{{senderLink}}">{{sender.username}}</a>
+				{{#if fromAddress}}
+					<a href="mailto:{{fromAddress}}">{{fromAddress}}</a>
+				{{/if}}
+			</p>
+			{{#if courseLink}}
+				<p>
+					{{mf"notification.privateMessage.mail.fromCourse" 'This message was sent from course:' LOCALE=locale}}
+					<a href="{{courseLink}}">{{courseName}}</a>
+				</p>
+			{{/if}}
+			<table class="comment-box">
+				<tr>
+					<td>
+						{{{message}}}
+					</td>
+				</tr>
+			</table>
+			<p>
+				<a
+				   href="{{senderLink}}">{{mf "notification.privateMessage.mail.linktext" '➜ See profile of "{SENDER}"' SENDER=sender.username LOCALE=locale}}</a>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="footer">
+				<tr>
+					<td>
+						<a
+						   href="{{unsubLink}}">{{mf "notification.privateMessage.mail.unsubLink" "Unsubscribe from all private messages from users." SITENAME=siteName LOCALE=locale}}</a>
+						&nbsp;
+						<a
+						   href="{{urlFor 'profile' query='campaign=privateMessage'}}">{{mf "notification.privateMessage.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{{/emailBase}}

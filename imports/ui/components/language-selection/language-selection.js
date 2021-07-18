@@ -1,11 +1,10 @@
-import { $ } from 'meteor/jquery';
+import $ from 'jquery';
 import { mfPkg } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import * as Alert from '/imports/api/alerts/alert';
 import { Languages } from '/imports/api/languages/languages';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';
@@ -120,10 +119,10 @@ Template.languageSelection.events({
 
 		try {
 			localStorage.setItem('locale', lg);
-		} catch (e) {
-			Alert.error(e);
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 		}
-		// The db user update happens in the client/start.js in Tracker.autorun(() => { ... by
+		// The db user update happens in the client/main.js in Tracker.autorun(() => { ... by
 		// messageformat
 		Session.set('locale', lg);
 
@@ -132,7 +131,7 @@ Template.languageSelection.events({
 
 	'keyup .js-language-search'(event, instance) {
 		if (event.which === 13) {
-			instance.$('.js-language-link').first().click();
+			instance.$('.js-language-link').first().trigger('click');
 		} else {
 			updateLanguageSearch(instance);
 		}
@@ -146,7 +145,7 @@ Template.languageSelection.events({
 Template.languageSelection.onRendered(function () {
 	const instance = this;
 
-	instance.$('.js-language-search').select();
+	instance.$('.js-language-search').trigger('select');
 
 	instance
 		.parentInstance()

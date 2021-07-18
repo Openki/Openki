@@ -4,7 +4,6 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
-import * as Alert from '/imports/api/alerts/alert';
 import { Regions } from '/imports/api/regions/regions';
 import * as usersMethods from '/imports/api/users/methods';
 
@@ -30,7 +29,7 @@ Template.regionSelectionWrap.helpers({
 	},
 });
 
-Template.regionDisplay.helpers({
+Template.regionSelectionDisplay.helpers({
 	inNavbarClasses() {
 		if (this.inNavbar) {
 			return 'col-6-sm-auto';
@@ -39,8 +38,8 @@ Template.regionDisplay.helpers({
 	},
 });
 
-Template.regionDisplay.events({
-	'click .js-region-display'(event, instance) {
+Template.regionSelectionDisplay.events({
+	'click .js-region-selection-display'(_event, instance) {
 		instance.parentInstance().state.set('searchingRegions', true);
 	},
 });
@@ -86,8 +85,8 @@ Template.regionSelection.onCreated(function () {
 
 		try {
 			localStorage.setItem('region', regionId); // to survive page reload
-		} catch (e) {
-			Alert.error(e);
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 		}
 		Session.set('region', regionId);
 		if (regionId !== 'all' && Meteor.userId()) {
@@ -98,7 +97,7 @@ Template.regionSelection.onCreated(function () {
 		// Many pages do not change when the region changed, so we go to
 		// the homepage for those
 		if (changed) {
-			const routeName = Router.current().route.getName();
+			const routeName = Router.current().route?.getName();
 			if (!RegionSelection.regionDependentRoutes.includes(routeName)) {
 				Router.go('/');
 			}
@@ -119,7 +118,7 @@ Template.regionSelection.onCreated(function () {
 Template.regionSelection.onRendered(function () {
 	Meteor.defer(function () {
 		if (!this.data || !this.data.isSplash) {
-			this.$('.js-region-search').select();
+			this.$('.js-region-search').trigger('select');
 		}
 	});
 
@@ -230,7 +229,7 @@ Template.regionSelection.events({
 		instance.state.set('showAllRegions', true);
 		/* eslint-disable-next-line no-param-reassign */
 		instance.focusFromShowAllRegions = true;
-		instance.$('.js-region-search').select();
+		instance.$('.js-region-search').trigger('select');
 		return false; // prevent dropdown default behavior for this specific <li>
 	},
 

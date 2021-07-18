@@ -57,7 +57,9 @@ if (Meteor.isClient) {
 					'shows private events as logged in user',
 				);
 				assert.isNotEmpty(
-					eventsAsSchufien.filter((c) => c.tenant && schufien.tenants.includes(c.tenant)),
+					eventsAsSchufien.filter(
+						(c) => c.tenant && schufien.tenants.some((t) => t._id === c.tenant),
+					),
 					'shows private events as logged in user',
 				);
 			});

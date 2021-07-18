@@ -11,6 +11,18 @@
 	margin-bottom: 10px;
 }
 
+.profile-tenant-list .tenants {
+	@include list-unstyled;
+}
+
+.profile-tenant-list .tenants li {
+	margin-bottom: 10px;
+}
+
+.tenant-tag {
+	@include tag($tenant-bg, $tenant-label-color);
+}
+
 .mail-verified {
 	@include td-margin(left, 10px);
 }

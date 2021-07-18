@@ -3,9 +3,8 @@ import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
 import { Regions } from '/imports/api/regions/regions';
-import * as Alert from '/imports/api/alerts/alert';
 
-import IpLocation from '/imports/utils/ip-location';
+import * as UserLocation from '/imports/utils/user-location';
 import * as UrlTools from '/imports/utils/url-tools';
 
 const RegionSelection = {};
@@ -31,22 +30,22 @@ RegionSelection.init = function () {
 			if (regionId) {
 				try {
 					localStorage.setItem('region', regionId);
-				} catch (e) {
-					Alert.error(e);
+				} catch {
+					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 				}
 				Session.set('region', regionId);
 			}
 		}
 	});
 
-	Meteor.subscribe('Regions', () => {
+	Meteor.subscribe('Regions', async () => {
 		const selectors = [
 			Session.get('region'),
 			UrlTools.queryParam('region'),
 			localStorage?.getItem('region'),
 		].filter(Boolean);
 
-		const useAsRegion = function (regionId) {
+		const useAsRegion = function (/** @type {string} */ regionId) {
 			if (!regionId) {
 				return false;
 			}
@@ -55,8 +54,8 @@ RegionSelection.init = function () {
 			if (regionId === 'all') {
 				try {
 					localStorage.setItem('region', regionId);
-				} catch (e) {
-					Alert.error(e);
+				} catch {
+					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 				}
 				Session.set('region', regionId);
 				return true;
@@ -66,8 +65,8 @@ RegionSelection.init = function () {
 			if (Regions.findOne({ _id: regionId })) {
 				try {
 					localStorage.setItem('region', regionId);
-				} catch (e) {
-					Alert.error(e);
+				} catch {
+					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 				}
 				Session.set('region', regionId);
 				return true;
@@ -78,8 +77,8 @@ RegionSelection.init = function () {
 			if (region) {
 				try {
 					localStorage.setItem('region', region._id);
-				} catch (e) {
-					Alert.error(e);
+				} catch {
+					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 				}
 				Session.set('region', region._id);
 				return true;
@@ -97,19 +96,21 @@ RegionSelection.init = function () {
 		// If no region has been selected previously, we show the splash-screen.
 		Session.set('showRegionSplash', selectors.length < 1);
 
-		// Ask geolocation server to place us so the splash-screen has our best
-		// guess selected.
-		IpLocation.detect((region, reason) => {
-			/* eslint-disable-next-line no-console */
-			console.log(`Region autodetection: ${reason}`);
+		try {
+			// Ask geolocation server to place us so the splash-screen has our best
+			// guess selected.
+			const region = await UserLocation.detect();
 			if (region) {
 				useAsRegion(region._id);
 				return;
 			}
+		} catch (err) {
+			// eslint-disable-next-line no-console
+			console.log(`Region autodetection error: ${err}`);
+		}
 
-			// Give up
-			useAsRegion('all');
-		});
+		// Give up
+		useAsRegion('all');
 	});
 };
 

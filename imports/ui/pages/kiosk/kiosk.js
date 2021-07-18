@@ -6,11 +6,15 @@ import moment from 'moment';
 
 import { Regions } from '/imports/api/regions/regions';
 import { Groups } from '/imports/api/groups/groups';
+import { Venues } from '/imports/api/venues/venues';
 import '/imports/ui/components/language-selection/language-selection';
 
 import './kiosk.html';
 
 Template.kioskEvents.helpers({
+	/**
+	 * @param {string} groupId
+	 */
 	groupShort(groupId) {
 		const instance = Template.instance();
 		instance.subscribe('group', groupId);
@@ -18,6 +22,19 @@ Template.kioskEvents.helpers({
 		const group = Groups.findOne({ _id: groupId });
 		if (group) {
 			return group.short;
+		}
+		return '';
+	},
+	/**
+	 * @param {string} venueId
+	 */
+	venueName(venueId) {
+		const instance = Template.instance();
+		instance.subscribe('venueDetails', venueId);
+
+		const venue = Venues.findOne({ _id: venueId });
+		if (venue) {
+			return venue.name;
 		}
 		return '';
 	},

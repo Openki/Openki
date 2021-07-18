@@ -13,14 +13,16 @@ import { MeteorAsync } from './promisify';
  * @template R
  * @param {string} name
  * @param {(this: Meteor.MethodThisType, ...args: T) => R} run
+ * @param {{serverOnly: boolean;}} [options]
  * @returns {(...args: T) => Promise<R>}
  */
-export function ServerMethod(name, run) {
-	Meteor.methods({
-		[name](...args) {
-			return run.call(this, ...args);
-		},
-	});
+export function ServerMethod(name, run, options) {
+	if (!(options?.serverOnly === true && Meteor.isClient))
+		Meteor.methods({
+			[name](...args) {
+				return run.call(this, ...args);
+			},
+		});
 
 	return (/** @type {T} */ ...args) => MeteorAsync.call(name, ...args);
 }

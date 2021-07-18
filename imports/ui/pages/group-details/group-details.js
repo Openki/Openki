@@ -14,13 +14,13 @@ import TemplateMixins from '/imports/ui/lib/template-mixins';
 import { Editable } from '/imports/ui/lib/editable';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import { isGroupMember } from '/imports/utils/is-group-member';
+import { Analytics } from '../../lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/groups/settings/group-settings';
 
 import './group-details.html';
-import { Analytics } from '../../lib/analytics';
 
 Template.groupDetails.onCreated(function () {
 	const instance = this;

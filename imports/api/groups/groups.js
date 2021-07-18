@@ -22,7 +22,7 @@ export class GroupsCollection extends Mongo.Collection {
 		super('Groups');
 
 		if (Meteor.isServer) {
-			this._ensureIndex({ tenant: 1, members: 1 });
+			this._ensureIndex({ members: 1 });
 		}
 	}
 

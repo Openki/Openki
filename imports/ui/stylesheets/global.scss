@@ -21,14 +21,6 @@
 	}
 }
 
-.datepicker {
-	z-index: $zindex-navbar-fixed + 1;
-}
-
-.datepicker-dropdown.datepicker-orient-top::after {
-	border-top-color: $dropdown-bg;
-}
-
 .leaflet-top {
 	z-index: auto;
 }

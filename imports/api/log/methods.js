@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
-import Log from './log';
+import { Log } from '/imports/api/log/log';
 
 import { ServerMethod } from '/imports/utils/ServerMethod';
 

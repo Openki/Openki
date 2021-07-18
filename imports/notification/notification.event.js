@@ -6,12 +6,14 @@ import { mf } from 'meteor/msgfmt:core';
 import { Courses } from '/imports/api/courses/courses';
 /** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
 import { Events } from '/imports/api/events/events';
-import Log from '/imports/api/log/log';
+import { Log } from '/imports/api/log/log';
 import { Regions } from '/imports/api/regions/regions';
+/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
 import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import LocalTime from '/imports/utils/local-time';
+import { getSiteName } from '../utils/getSiteName';
 
 const notificationEvent = {};
 
@@ -65,7 +67,8 @@ notificationEvent.Model = function (entry) {
 		course = Courses.findOne(event.courseId);
 	}
 
-	let region = false;
+	/** @type {RegionModel | undefined}  */
+	let region;
 	if (event?.region) {
 		region = Regions.findOne(event.region);
 	}
@@ -139,11 +142,11 @@ notificationEvent.Model = function (entry) {
 				venueLine = [venue.name, venue.address].filter(Boolean).join(', ');
 			}
 
-			const siteName = region.custom?.siteName || Meteor.settings.public.siteName;
-			const mailLogo = region.custom?.mailLogo;
+			const siteName = getSiteName(region);
+			const emailLogo = region.custom?.emailLogo;
 
 			return {
-				unsubLink: Router.url('profile.notifications.unsubscribe', { token: unsubToken }),
+				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				event,
 				course,
 				eventDate: startMoment.format('LL'),
@@ -171,10 +174,10 @@ notificationEvent.Model = function (entry) {
 				creatorName,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
 				customSiteName: siteName,
-				customMailLogo: mailLogo,
+				customEmailLogo: emailLogo,
 			};
 		},
-		template: 'notificationEventMail',
+		template: 'notificationEventEmail',
 	};
 };
 

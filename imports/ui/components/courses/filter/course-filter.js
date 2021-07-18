@@ -201,7 +201,7 @@ Template.additionalFilters.onRendered(function () {
 	});
 
 	catSelect.on('shown.bs.dropdown', () => {
-		instance.$('.js-search-categories').select();
+		instance.$('.js-search-categories').trigger('select');
 	});
 });
 

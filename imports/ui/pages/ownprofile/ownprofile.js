@@ -73,7 +73,7 @@ Template.profile.onCreated(function () {
 		true,
 		mf(
 			'profile.description.placeholder',
-			'About me, my interests and skills. (How about the idea of creating courses fitting to your description? 😉)',
+			'About you. Let the community know what your interests are.',
 		),
 		{
 			onSave: async (newDescription) => {
@@ -100,6 +100,10 @@ Template.profile.helpers({
 
 	groupCount() {
 		return this.user.groups.count();
+	},
+
+	tenantCount() {
+		return this.user.tenants.count();
 	},
 
 	notificationsChecked() {

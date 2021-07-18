@@ -1,0 +1,18 @@
+@import '{}/node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3';
+
+.datepicker {
+	z-index: $zindex-navbar-fixed + 1;
+}
+
+.datepicker-dropdown.datepicker-orient-top::after {
+	border-top-color: $dropdown-bg;
+}
+
+.datepicker-inline {
+	border-radius: 0;
+	width: 100%;
+}
+
+.datepicker table {
+	width: 100%;
+}
