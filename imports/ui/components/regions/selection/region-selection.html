@@ -1,18 +1,19 @@
 <template name="regionSelectionWrap">
 	{{#if Template.subscriptionsReady}}
 		{{#if state 'searchingRegions'}}
-			<li class="navbar-form navbar-form-selection dropdown">
+			<li class="navbar-form navbar-form-selection dropdown {{inNavbarClasses}}">
 				<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 				{{> regionSelection}}
 			</li>
 		{{else}}
-			{{> regionSelectionDisplay}}
+			{{> regionSelectionDisplay inNavbar=inNavbar}}
+
 		{{/if}}
 	{{/if}}
 </template>
 
 <template name="regionSelectionDisplay">
-	<li>
+	<li class="{{inNavbarClasses}}">
 		<a class="navbar-link js-region-selection-display">
 			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 			{{#if currentRegionName}}
