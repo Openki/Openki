@@ -8,17 +8,17 @@
 	@include clearfix;
 	background-color: darken($group-bg, 20%);
 	font-size: x-large;
-	padding-top: 0;
+	padding: 0 10px 10px;
 
-	&.has-logo,
-	&.is-editable {
+	&.has-logo {
+		padding-left: 23px;
 		padding-top: 10px;
 	}
 }
 
 .group-details-titlebar {
 	background-color: darken($group-bg, 20%);
-	padding: 10px 15px 0;
+	padding: 15px 15px 0 23px;
 }
 
 .titlebar-btn {
@@ -43,11 +43,42 @@
 	@include editable-form-control;
 }
 
+.group-details-name,
+.group-details-short,
+.group-details-claim,
+.group-details-description {
+	padding: 8px 13px;
+
+	.editable {
+		margin: -8px 0 -8px -13px;
+	}
+}
+
+.group-details-name {
+	padding-right: 0;
+
+	.editable {
+		margin-right: 0;
+	}
+}
+
+.group-details-short {
+	padding-left: 0;
+
+	.editable {
+		margin-left: 0;
+	}
+}
+
 .group-details-logo,
 .group-details-name,
 .group-details-short {
 	display: inline-block;
 	vertical-align: top;
+}
+
+.group-details-content {
+	padding: 10px;
 }
 
 .group-details-body {
@@ -60,16 +91,12 @@
 
 .group-details-description {
 	height: auto;
-
-	&.is-editable {
-		min-height: 100px;
-	}
 }
 
-.group-details-description > p {
+.group-details-description p {
 	margin: 0;
 }
 
 .group-details-claim + .group-details-description {
-	margin-top: 10px;
+	margin-top: 4px;
 }

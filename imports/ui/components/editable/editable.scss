@@ -47,14 +47,14 @@
 .editable {
 	outline: none;
 
-	// empty textfield has defined height
-	&::before {
-		content: '\200b'; // zero-width-space
-	}
-
 	&:focus,
 	&.editable-changed {
 		background: $body-bg;
+	}
+
+	&:focus + .editable-icon,
+	&.editable-changed + .editable-icon {
+		display: none;
 	}
 }
 
