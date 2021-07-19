@@ -12,6 +12,7 @@ import CourseTemplate from '/imports/ui/lib/course-template';
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
+import * as Viewport from '/imports/ui/lib/viewport';
 import * as UrlTools from '/imports/utils/url-tools';
 
 import '/imports/ui/components/courses/list/course-list';
@@ -288,6 +289,6 @@ Template.find.helpers({
 	},
 
 	isMobile() {
-		return Session.get('viewportWidth') <= ScssVars.screenXS;
+		return Viewport.get().width <= ScssVars.screenXS;
 	},
 });

@@ -139,6 +139,12 @@
 	width: 0;
 }
 
+.navbar-link-active {
+	@media (max-width: $grid-float-breakpoint) {
+		background-color: lighten($navbar-default-bg, 10%);
+	}
+}
+
 .navbar-link-active .nav-marker-caret {
 	@media (min-width: $grid-float-breakpoint) {
 		opacity: 1;
