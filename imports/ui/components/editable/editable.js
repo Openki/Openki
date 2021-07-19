@@ -165,13 +165,6 @@ import './editable.html';
 	});
 
 	template.events({
-		'blur .js-editable'(event, instance) {
-			instance.$('.js-editable-edit').show();
-		},
-
-		'focus .js-editable'(event, instance) {
-			instance.$('.js-editable-edit').hide();
-		},
 
 		'click .js-editable-save'(event, instance) {
 			event.preventDefault();
