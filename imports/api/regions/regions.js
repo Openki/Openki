@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
+import { Match, check } from 'meteor/check';
 
 /** @typedef {import('../users/users').UserModel} UserModel */
 

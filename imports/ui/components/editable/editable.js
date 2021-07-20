@@ -165,7 +165,6 @@ import './editable.html';
 	});
 
 	template.events({
-
 		'click .js-editable-save'(event, instance) {
 			event.preventDefault();
 

@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
+import { Match, check } from 'meteor/check';
 
 import { Events } from '/imports/api/events/events';
 

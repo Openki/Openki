@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
+import { Match, check } from 'meteor/check';
 
 /** @typedef {import('../users/users').UserModel} UserModel */
 
@@ -76,7 +77,7 @@ export class TenantsCollection extends Mongo.Collection {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
 		check(sort, Match.Maybe([[String]]));
-		
+
 		/** @type {Mongo.Selector<TenantEntity> } */
 		const find = {};
 		/** @type {Mongo.Options<TenantEntity>} */

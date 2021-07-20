@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import { Match, check } from 'meteor/check';
 
 import { Filtering } from '/imports/utils/filtering';
 
