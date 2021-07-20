@@ -110,10 +110,15 @@ export class VenueCollection extends Mongo.Collection {
 	 * @param {string} [filter.editor]
 	 * @param {boolean} [filter.recent]
 	 * @param {number} [limit] how many to find
-	 * @param {number} [skip]
-	 * @param {*} [sort]
+	 * @param {number} [skip] skip this many before returning results
+	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
 	 */
 	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+		check(limit, Match.Maybe(Number));
+		check(skip, Match.Maybe(Number));
+		check(sort, Match.Maybe([[String]]));
+
+		/** @type {Mongo.Selector<VenueEnity> } */
 		const find = {};
 
 		/** @type {Mongo.Options<VenueEnity>} */

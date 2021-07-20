@@ -68,16 +68,18 @@ export class TenantsCollection extends Mongo.Collection {
 	 * Find groups for given filters
 	 * @param {object} [filter] dictionary with filter options
 	 * @param {boolean} [filter.adminOf] Limit to tenants where logged-in user is a admin
-	 * @param {number} [limit]
-	 * @param {number} [skip]
-	 * @param {*} [sort]
+	 * @param {number} [limit] how many to find
+	 * @param {number} [skip] skip this many before returning results
+	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
 	 */
 	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+		check(limit, Match.Maybe(Number));
+		check(skip, Match.Maybe(Number));
+		check(sort, Match.Maybe([[String]]));
+		
+		/** @type {Mongo.Selector<TenantEntity> } */
 		const find = {};
-
-		/**
-		 * @type {Mongo.Options<TenantEntity>}
-		 */
+		/** @type {Mongo.Options<TenantEntity>} */
 		const options = { sort };
 
 		if (limit > 0) {

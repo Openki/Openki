@@ -108,10 +108,15 @@ export class RegionsCollection extends Mongo.Collection {
 	 * @param {object} [filter] dictionary with filter options
 	 * @param {string} [filter.tenant] restrict to regions in that tenant
 	 * @param {number} [limit] how many to find
-	 * @param {number} [skip]
-	 * @param {*} [sort]
+	 * @param {number} [skip] skip this many before returning results
+	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
 	 */
 	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+		check(limit, Match.Maybe(Number));
+		check(skip, Match.Maybe(Number));
+		check(sort, Match.Maybe([[String]]));
+
+		/** @type {Mongo.Selector<RegionEntity> } */
 		const selector = {};
 
 		/** @type {Mongo.Options<RegionEntity>} */

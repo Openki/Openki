@@ -224,12 +224,17 @@ export class EventsCollection extends Mongo.Collection {
 	 * @param {boolean} [filter.internal] only events that are internal (if true) or public (if false)
 	 * @param {number} [limit] how many to find
 	 * @param {number} [skip] skip this many before returning results
-	 * @param {any[]} [sort] list of fields to sort by
+	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
 	 *
 	 * The events are sorted by start date (ascending, before-filter causes descending order)
 	 *
 	 */
 	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+		check(limit, Match.Maybe(Number));
+		check(skip, Match.Maybe(Number));
+		check(sort, Match.Maybe([[String]]));
+
+		/** @type {Mongo.Selector<EventEntity> } */
 		const find = {};
 		const and = [];
 
