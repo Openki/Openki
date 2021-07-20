@@ -7,7 +7,7 @@ import { Meteor } from 'meteor/meteor';
 import RegionSelection from '/imports/utils/region-selection';
 import Introduction from '/imports/ui/lib/introduction';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
-import UpdateViewport from '/imports/ui/lib/update-viewport';
+import * as Viewport from '/imports/ui/lib/viewport';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
@@ -70,12 +70,13 @@ Template.layout.events({
 	},
 });
 
-Template.layout.rendered = function () {
+Template.layout.onRendered(() => {
+	Viewport.update();
 	$(window).on('resize', () => {
-		UpdateViewport();
+		Viewport.update();
 	});
 	Session.set('isRetina', window.devicePixelRatio === 2);
-};
+});
 
 /* Workaround to prevent iron-router from messing with server-side downloads
  *

@@ -188,7 +188,7 @@ export const unsetFeaturedGroup = ServerMethod(
 
 Meteor.methods({
 	'region.updateCounters'(selector) {
-		// this denormalization is called every minutes for all regions in the server/start.js file, this ensures consistency.
+		// this denormalization is called every minutes for all regions in the server/main.js file, this ensures consistency.
 		Regions.find(selector).forEach((region) => {
 			// We don't use AsyncTools.untilClean() here because consistency doesn't matter
 			const regionId = region._id;

@@ -28,8 +28,10 @@ import * as tenantDenormalizer from './tenantDenormalizer';
  * @property {string} name
  * @property {string[]} categories ID_categories
  * @property {string[]} tags       (not used)
- * @property {string[]} groups     List ID_groups
+ * @property {string[]} groups     List ID_groups ("promote groups")
  * @property {string[]} groupOrganizers  List of group ID that are allowed to edit the course
+ * ("team groups", based on the ui design: Every "team group" promotes the course and is part of
+ * the groups list)
  * @property {string} description
  * @property {string} slug
  * @property {string} region ID_region
@@ -240,19 +242,20 @@ export class CoursesCollection extends Mongo.Collection {
 	 * needsRole?: ("host"|"mentor"|"team")[];
 	 * archived?: boolean;
 	 * }} [filter]
-	 * @param {number} [limit]
-	 * @param {number} [skip]
-	 * @param {any[]} [sortParams]
+	 * @param {number} [limit] how many to find
+	 * @param {number} [skip] skip this many before returning results
+	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
 	 */
-	findFilter(filter = {}, limit = 0, skip = 0, sortParams) {
+	findFilter(filter = {}, limit = 0, skip = 0, sort) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
-		check(sortParams, Match.Maybe([[Match.Any]]));
+		check(sort, Match.Maybe([[String]]));
 
+		/** @type {Mongo.Selector<CourseEntity> } */
 		const find = {};
 		/** @type {Mongo.Options<CourseEntity>} */
 		const options = {};
-		const order = sortParams || [];
+		const order = sort || [];
 
 		if (limit > 0) {
 			options.limit = limit;

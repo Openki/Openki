@@ -11,7 +11,7 @@
 				<button class="close js-toggle-first-steps" type="button">
 					<i class="fa fa-info-circle" aria-hidden="true"></i>
 				</button>
-				<span class="{{role.icon}}"></span>&nbsp;
+				<span class="{{role.icon}} fa-fw"></span>&nbsp;
 				<span>{{roleSubscribed role.type}}</span>
 				<button type="button" class="js-role-unsubscribe-btn btn btn-cancel"
 						name="{{role.type}}">
@@ -64,7 +64,7 @@
 		<div class="course-role{{#if enrolling}}-enroll{{/if}}">
 			{{#if enrolling}}
 				<div class="course-role-title-enroll">
-					<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
+					<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>&nbsp;
 					{{roleSubscribe role.type}}
 				</div>
 				<div class="course-role-enroll-options">
@@ -108,7 +108,7 @@
 				{{#if maySubscribe role.type}}
 					<button type="button" class="btn btn-add course-page-btn js-role-enroll-btn"
 							name="participant">
-						<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
+						<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>&nbsp;
 						{{roleSubscribe role.type}}
 					</button>
 				{{/if}}
@@ -125,8 +125,7 @@
 			Further information
 		{{/mf}}&colon;&nbsp;
 		<a href="{{guideLink}}" target='_blank'>
-			{{#mf KEY='course.roles.firstSteps.guideLink'}}
-				Openki-course-guide
-			{{/mf}}</a>
+			{{mf 'course.roles.firstSteps.guideLink' 'How to organize my first {SITENAME} course?' SITENAME=siteName}}
+		</a>
 	</span>
 </template>

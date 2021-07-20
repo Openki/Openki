@@ -12,12 +12,14 @@
 	{{#if pricePolicyEnabled}}
 		<div class="price-policy {{cssClasses}}">
 			<div class="price-policy-content">
-				<div class="icon-text">
-					<div class="icon-text-icon">
-						<i class="fa fa-info fa-fw" aria-hidden="true"></i>
-					</div>
-					<div class="icon-text-text">
-						{{mf 'pricePolicy.disclaimer' "Education should be open to everyone, that's why Openki only allows suggested/orientation prices."}}
+				<div class="price-policy-infos">
+					<div class="icon-text">
+						<div class="icon-text-icon">
+							<i class="fa fa-info fa-fw" aria-hidden="true"></i>
+						</div>
+						<div class="icon-text-text">
+							{{mf 'pricePolicy.disclaimer' "Education should be open to everyone, that's why {SITENAME} only allows suggested/orientation prices." SITENAME=siteName}}
+						</div>
 					</div>
 				</div>
 				<div class="price-policy-actions">

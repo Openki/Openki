@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
+import { Match, check } from 'meteor/check';
 // eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from './tenantDenormalizer';
 
@@ -42,16 +43,18 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
  * @property {Date} time_lastedit
  * @property {string} [courseId] course._id of parent course, optional
  * @property {boolean} internal (Events are only displayed when group or venue-filter is active)
- * @property {string[]} groups list of group._id that promote this event
+ * @property {string[]} groups list of group._id that promote this event ("promote groups").
  * @property {string[]} groupOrganizers list of group._id that are allowed to edit the course
+ * ("team groups", based on the ui design: Every "team group" promotes the event and is part of
+ * the groups list).
  * @property {string} [replicaOf] ID of the replication parent, only cloned events have this
  * @property {number} maxParticipants maximum participants of event
  * @property {string[]} courseGroups (calculated) list of group._id inherited from course (if
- * courseId is set)
+ * courseId is set) ("promote groups" from course)
  * @property {string[]} allGroups (calculated) all groups that promote this course, both
- * inherited from course and set on the event itself
+ * inherited from course and set on the event itself ("promote groups" from event and course)
  * @property {string[]} editors (calculated) list of user and group _id that are allowed to
- * edit the event
+ * edit the event, calculated from the groupOranizers from the event and the editors from the course
  * @property {Date} start (calculated) date object calculated from startLocal field. Use this
  * for ordering between events.
  * @property {Date} end (calculated) date object calculated from endLocal field.
@@ -131,7 +134,8 @@ export class EventsCollection extends Mongo.Collection {
 			categories: Predicates.ids,
 			group: Predicates.id,
 			groups: Predicates.ids,
-			venue: Predicates.string,
+			venue: Predicates.id,
+			venues: Predicates.ids,
 			room: Predicates.string,
 			start: Predicates.date,
 			before: Predicates.date,
@@ -209,6 +213,7 @@ export class EventsCollection extends Mongo.Collection {
 	 * @param {Date} [filter.end] only events that started before this date
 	 * @param {Date} [filter.after] only events starting after this date
 	 * @param {string} [filter.venue] only events at this venue (ID)
+	 * @param {string[]} [filter.venues] only events at this venues (IDs)
 	 * @param {string} [filter.room] only events in this room (string match)
 	 * @param {boolean} [filter.standalone] only events that are not attached to a course
 	 * @param {string} [filter.region] restrict to given region
@@ -220,12 +225,17 @@ export class EventsCollection extends Mongo.Collection {
 	 * @param {boolean} [filter.internal] only events that are internal (if true) or public (if false)
 	 * @param {number} [limit] how many to find
 	 * @param {number} [skip] skip this many before returning results
-	 * @param {any[]} [sort] list of fields to sort by
+	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
 	 *
 	 * The events are sorted by start date (ascending, before-filter causes descending order)
 	 *
 	 */
 	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+		check(limit, Match.Maybe(Number));
+		check(skip, Match.Maybe(Number));
+		check(sort, Match.Maybe([[String]]));
+
+		/** @type {Mongo.Selector<EventEntity> } */
 		const find = {};
 		const and = [];
 
@@ -272,8 +282,17 @@ export class EventsCollection extends Mongo.Collection {
 			}
 		}
 
+		let inVenues = [];
 		if (filter.venue) {
-			find['venue._id'] = filter.venue;
+			inVenues.push(filter.venue);
+		}
+
+		if (filter.venues) {
+			inVenues = inVenues.concat(filter.venues);
+		}
+
+		if (inVenues.length > 0) {
+			find['venue._id'] = { $in: inVenues };
 		}
 
 		if (filter.room) {

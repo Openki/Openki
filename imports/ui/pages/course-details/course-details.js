@@ -1,7 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
-import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
@@ -14,6 +13,7 @@ import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import TemplateMixins from '/imports/ui/lib/template-mixins';
+import * as Viewport from '/imports/ui/lib/viewport';
 
 import { _ } from 'meteor/underscore';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
@@ -115,7 +115,7 @@ Template.courseDetailsPage.helpers({
 		return classes.join(' ');
 	},
 	mobileViewport() {
-		return Session.get('viewportWidth') <= ScssVars.screenMD;
+		return Viewport.get().width <= ScssVars.screenMD;
 	},
 	isProposal() {
 		return !this.course.nextEvent && !this.course.lastEvent;

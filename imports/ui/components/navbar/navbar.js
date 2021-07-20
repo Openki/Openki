@@ -8,6 +8,7 @@ import $ from 'jquery';
 import { Regions } from '/imports/api/regions/regions';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';
+import * as Viewport from '/imports/ui/lib/viewport';
 
 import '/imports/ui/components/regions/selection/region-selection';
 import '/imports/ui/components/language-selection/language-selection';
@@ -16,12 +17,11 @@ import './navbar.html';
 
 Template.navbar.onRendered(function () {
 	const instance = this;
-	const viewportWidth = Session.get('viewportWidth');
 	const { gridFloatBreakpoint } = ScssVars;
 
 	// if not collapsed give the navbar and active menu item a
 	// class for when not at top
-	if (viewportWidth > gridFloatBreakpoint) {
+	if (Viewport.get().width > gridFloatBreakpoint) {
 		$(window).on('scroll', () => {
 			const navbar = instance.$('.navbar');
 			const activeNavLink = instance.$('.navbar-link-active');
@@ -119,10 +119,9 @@ Template.navbar.events({
 	},
 
 	'show.bs.dropdown, hide.bs.dropdown .dropdown'(event, instance) {
-		const viewportWidth = Session.get('viewportWidth');
 		const { gridFloatBreakpoint } = ScssVars;
 
-		if (viewportWidth <= gridFloatBreakpoint) {
+		if (Viewport.get().width <= gridFloatBreakpoint) {
 			const container = instance.$('#bs-navbar-collapse-1');
 
 			// make menu item scroll up when opening the dropdown menu

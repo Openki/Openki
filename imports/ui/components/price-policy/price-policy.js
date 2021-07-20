@@ -15,7 +15,7 @@ Template.pricePolicy.helpers({
 			return true;
 		}
 
-		if (localStorage?.getItem('hidePricePolicy')) {
+		if (localStorage?.getItem('hidePricePolicy') === 'true') {
 			return true;
 		}
 
@@ -64,7 +64,11 @@ Template.pricePolicyContent.helpers({
 Template.pricePolicyContent.events({
 	'click .js-hide-price-policy'() {
 		Session.set('hidePricePolicy', true);
-		localStorage.setItem('hidePricePolicy', true);
+		try {
+			localStorage.setItem('hidePricePolicy', 'true'); // Note: At July 2021, only string values were allowed.
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+		}
 
 		// if logged in, hide the policy permanently for this user
 		if (Meteor.userId()) {

@@ -3,7 +3,6 @@ import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
 import { Regions } from '/imports/api/regions/regions';
-import * as Alert from '/imports/api/alerts/alert';
 
 import * as UserLocation from '/imports/utils/user-location';
 import * as UrlTools from '/imports/utils/url-tools';
@@ -31,14 +30,18 @@ RegionSelection.init = function () {
 			if (regionId) {
 				try {
 					localStorage.setItem('region', regionId);
-				} catch (e) {
-					Alert.error(e);
+				} catch {
+					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 				}
 				Session.set('region', regionId);
 			}
 		}
 	});
 
+	RegionSelection.subscribe();
+};
+
+RegionSelection.subscribe = function () {
 	Meteor.subscribe('Regions', async () => {
 		const selectors = [
 			Session.get('region'),
@@ -55,8 +58,8 @@ RegionSelection.init = function () {
 			if (regionId === 'all') {
 				try {
 					localStorage.setItem('region', regionId);
-				} catch (e) {
-					Alert.error(e);
+				} catch {
+					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 				}
 				Session.set('region', regionId);
 				return true;
@@ -66,8 +69,8 @@ RegionSelection.init = function () {
 			if (Regions.findOne({ _id: regionId })) {
 				try {
 					localStorage.setItem('region', regionId);
-				} catch (e) {
-					Alert.error(e);
+				} catch {
+					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 				}
 				Session.set('region', regionId);
 				return true;
@@ -78,8 +81,8 @@ RegionSelection.init = function () {
 			if (region) {
 				try {
 					localStorage.setItem('region', region._id);
-				} catch (e) {
-					Alert.error(e);
+				} catch {
+					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 				}
 				Session.set('region', region._id);
 				return true;

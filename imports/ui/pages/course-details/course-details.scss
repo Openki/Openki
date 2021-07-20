@@ -59,6 +59,7 @@
 	@include btn-lg;
 	@include td-text-align(left);
 	margin-top: $course-details-seperator-height;
+	padding: 10px 12px;
 	width: 100%;
 }
 

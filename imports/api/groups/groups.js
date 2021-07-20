@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import { Match, check } from 'meteor/check';
 
 import { Filtering } from '/imports/utils/filtering';
 
@@ -37,16 +38,18 @@ export class GroupsCollection extends Mongo.Collection {
 	 * @param {boolean} [filter.own] Limit to groups where logged-in user is a member
 	 * @param {string|false} [filter.user] Limit to groups where given user ID is a
 	 * member (client only)
-	 * @param {number} [limit]
-	 * @param {number} [skip]
-	 * @param {*} [sort]
+	 * @param {number} [limit] how many to find
+	 * @param {number} [skip] skip this many before returning results
+	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
 	 */
 	findFilter(filter = {}, limit = 0, skip = 0, sort) {
-		const find = {};
+		check(limit, Match.Maybe(Number));
+		check(skip, Match.Maybe(Number));
+		check(sort, Match.Maybe([[String]]));
 
-		/**
-		 * @type {Mongo.Options<GroupEntity>}
-		 */
+		/** @type {Mongo.Selector<GroupEntity> } */
+		const find = {};
+		/** @type {Mongo.Options<GroupEntity>} */
 		const options = { sort };
 
 		if (limit > 0) {

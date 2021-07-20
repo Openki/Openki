@@ -24,9 +24,10 @@
 									<i class="fa fa-info fa-fw" aria-hidden="true"></i>
 								</div>
 								<div class="icon-text-text">
-									{{mf 'course.propose.CourseInfo' 'Start your own Openki course here. Whether as a mentor or participant, you decide what and how you want to learn. More information here:'}}
-									<a href="{{guideLink}}"
-									   target='_blank'>{{mf 'course.propose.guideLink' 'Openki-course-guide'}}</a>,
+									{{mf 'course.propose.CourseInfo' 'Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More information here:' SITENAME=siteName}}
+									<a href="{{guideLink}}" target='_blank'>
+										{{mf 'course.propose.guideLink' 'How to organize my first {SITENAME} course?' SITENAME=siteName}}
+									</a>,
 									<a href="{{faqLink}}" target="_blank">FAQ</a>
 								</div>
 							</div>
@@ -49,8 +50,8 @@
 								{{mf 'course.edit.savedMessage' 'Your proposal has been saved!'}}
 							</h4>
 							<a class="alert-link" href="{{savedCourseLink}}" target="_blank">
-								{{#mf KEY='course.edit.linkToCourse' NAME=savedCourseName}}
-									Click here to see your new course "{NAME}" on openki.net
+								{{#mf KEY='course.edit.linkToCourse' NAME=savedCourseName SITENAME=siteName}}
+									Click here to see your new course "{NAME}" on {SITENAME}
 								{{/mf}}
 							</a>
 						</div>

@@ -26,7 +26,7 @@ Template.adminPanel.helpers({
 			route: 'venueMap',
 		},
 		{
-			name: mf('adminPanel.tasks.tenants', 'Tenants'),
+			name: mf('adminPanel.tasks.tenants', 'Organizations'),
 			icon: 'fa-sitemap',
 			route: 'tenants',
 		},

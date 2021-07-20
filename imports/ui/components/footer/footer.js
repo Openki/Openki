@@ -5,8 +5,15 @@ import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 
 import Version from '/imports/api/version/version';
+import { Regions } from '/imports/api/regions/regions';
+
+import { getSiteName } from '/imports/utils/getSiteName';
 
 import './footer.html';
+
+Template.footer.onCreated(function () {
+	this.subscribe('version');
+});
 
 Template.footer.helpers({
 	links() {
@@ -15,10 +22,12 @@ Template.footer.helpers({
 		msgfmt.loading();
 		Session.get('locale');
 
+		const siteName = getSiteName(Regions.currentRegion());
+
 		return (Meteor.settings.public.footerLinks || []).map((linkSpec) => ({
 			link: linkSpec.link,
-			text: linkSpec.key ? mf(linkSpec.key) : linkSpec.text,
-			title: linkSpec.title_key ? mf(linkSpec.title_key) : '',
+			text: linkSpec.key ? mf(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
+			title: linkSpec.title_key ? mf(linkSpec.title_key, { SITENAME: siteName }) : '',
 		}));
 	},
 	version() {

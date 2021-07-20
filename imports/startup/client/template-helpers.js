@@ -10,6 +10,8 @@ import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
+import { getSiteName } from '/imports/utils/getSiteName';
+import { getAboutLink } from '/imports/utils/getAboutLink';
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -25,16 +27,7 @@ function toMomentWithTimeLocale(date) {
 
 const helpers = {
 	siteName() {
-		const currentRegion = Regions.currentRegion();
-		if (currentRegion?.custom?.siteName) {
-			return currentRegion.custom.siteName;
-		}
-
-		if (Meteor.settings.public.siteName) {
-			return Meteor.settings.public.siteName;
-		}
-
-		return 'Hmmm';
+		return getSiteName(Regions.currentRegion());
 	},
 
 	/**
@@ -124,7 +117,7 @@ const helpers = {
 	},
 
 	aboutLink() {
-		return Meteor.settings.public.aboutLink || 'https://about.openki.net';
+		return getAboutLink();
 	},
 
 	log(context) {
