@@ -13,7 +13,10 @@
 		"publicTenants": ["8410c099a7"],
 		"regionSelection": { "minNumber": 5 },
 		"categories": {
-			"misc": ["♥undefined♥"]
+			"misc":
+			[
+				"♥undefined♥"
+			]
 		}
 	},
 	"siteEmail": "HMMM@legit.example",

@@ -22,28 +22,57 @@
 				"github": true
 			}
 		},
-		"footerLinks": [
-			{
-				"link": "https://about.openki.net/",
-				"key": "footer.aboutOpenki",
-				"title_key": "navigation.footer.about.title"
-			},
-			{ "link": "/info/faq", "key": "main.faq_link", "title_key": "navigation.footer.faq.title" },
-			{
-				"link": "https://gitlab.com/Openki/Openki/",
-				"text": "GitLab",
-				"title_key": "navigation.footer.codeOnGitLab"
+		"footerLinks":
+		[	{ "link": "https://about.openki.net/"
+			, "key": "footer.aboutOpenki"
+			, "title_key": "navigation.footer.about.title"
+			}
+		,	{ "link": "/info/faq"
+			, "key": "main.faq_link"
+			, "title_key": "navigation.footer.faq.title"
+			}
+		,	{ "link": "https://gitlab.com/Openki/Openki/"
+			, "text": "GitLab"
+			, "title_key": "navigation.footer.codeOnGitLab"
 			}
 		],
 		"faqLink": "/info/faq",
 		"courseGuideLink": null,
 		"aboutLink": "https://about.openki.net",
-		"categories": {
-			"sports": ["martialarts", "teamsport", "artistry"],
-			"handicraft": ["metalwood", "electronics", "fabric", "gardening", "construction"],
-			"sciences": ["geography", "physics", "medicine", "mathematics", "chemistry", "biology"],
-			"humanities": ["languages", "history", "sociology", "politics", "philosophy", "lawbusiness"],
-			"culture": [
+		"categories": {"sports":
+			[
+				"martialarts",
+				"teamsport",
+				"artistry"
+			],
+		"handicraft":
+			[
+				"metalwood",
+				"electronics",
+				"fabric",
+				"gardening",
+				"construction"
+			],
+		"sciences":
+			[
+				"geography",
+				"physics",
+				"medicine",
+				"mathematics",
+				"chemistry",
+				"biology"
+			],
+		"humanities":
+			[
+				"languages",
+				"history",
+				"sociology",
+				"politics",
+				"philosophy",
+				"lawbusiness"
+			],
+		"culture":
+			[
 				"literature",
 				"theatre",
 				"music",
@@ -55,8 +84,20 @@
 				"cooking",
 				"subculture"
 			],
-			"computer": ["internet", "programming", "operating"],
-			"misc": ["♥undefined♥", "experimental", "spiritual", "education", "ecology"]
+		"computer":
+			[
+				"internet",
+				"programming",
+				"operating"
+			],
+		"misc":
+			[
+				"♥undefined♥",
+				"experimental",
+				"spiritual",
+				"education",
+				"ecology"
+			]
 		}
 	},
 	"siteEmail": "HMMM@legit.example",
