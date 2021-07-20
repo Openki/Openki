@@ -80,6 +80,11 @@ Meteor.startup(() => {
 	Tracker.autorun(() => {
 		const desiredLocale = Session.get('locale');
 
+		if (!desiredLocale) {
+			// if nothing set we wait for a change
+			return;
+		}
+
 		// messageformat set the locale value in the db user
 		mfPkg.setLocale(desiredLocale);
 
