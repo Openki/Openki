@@ -77,7 +77,7 @@ function handleInvitation(invitation) {
 		'Invitation.Send',
 		[invitation.createdBy, invitation.tenant],
 		invitation,
-	);
+	); // For traceability
 	try {
 		sendInvitation(invitation);
 

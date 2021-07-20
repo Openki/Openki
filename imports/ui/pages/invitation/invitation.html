@@ -3,7 +3,7 @@
 		<div class="jumbotron">
 			<h1>{{mf 'invitation.join.welcome' "Welcome to {SITENAME}!" SITENAME=siteName}}</h1>
 			<p>
-				{{mf 'invitation.join.text' "Become part of the organisation {TENANT} and propose, discuss, develop, organise and publish courses with {INVITER} and other people in the organisation {TENANT}." TENANT=tenant.name INVITER=(username invitation.createdBy)}}
+				{{mf 'invitation.join.text' "Become part of the organisation {TENANT} and propose, discuss, develop, organise and publish courses with {INVITER} and other amazing people in the organisation {TENANT}." TENANT=tenant.name INVITER=(username invitation.createdBy)}}
 			</p>
 			<button class="btn btn-lg btn-save js-join" {{disabledIfBusy}}>
 				{{mf "invitation.join" "Join {TENANT}" TENANT=tenant.name}}

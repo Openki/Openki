@@ -76,7 +76,7 @@ export const join = ServerMethod('invitation.join', (tenantId, token) => {
 	check(token, String);
 
 	const invitation = Invitations.findOne({ tenant: tenantId, token });
-	if (!invitation || invitation.status === 'used') {
+	if (!invitation || invitation.status === 'accepted') {
 		throw new Meteor.Error(401, 'Not permitted');
 	}
 
@@ -87,7 +87,7 @@ export const join = ServerMethod('invitation.join', (tenantId, token) => {
 
 	Tenants.update(tenantId, { $addToSet: { members: userId } });
 
-	Invitations.update(invitation._id, { $set: { status: 'used', acceptedBy: userId } });
+	Invitations.update(invitation._id, { $set: { status: 'accepted', acceptedBy: userId } });
 
 	usersTenantsDenormalizer.afterInvitationJoin(userId, tenantId);
 });

@@ -8,8 +8,8 @@ import { Mongo } from 'meteor/mongo';
  * @property {string} tenant tenant id
  * @property {string} to
  * @property {string} token
- * @property {'created' | 'send' | 'used' | 'failed' } status
- * @property {string} [acceptedBy] The user who has accepted the invitation. (by state 'used')
+ * @property {'created' | 'send' | 'accepted' | 'failed' } status
+ * @property {string} [acceptedBy] The user who has accepted the invitation. (by state 'accepted')
  * @property {Date} createdAt
  * @property {string} createdBy user id
  */
