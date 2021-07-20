@@ -14,7 +14,7 @@ Meteor.publish('invitation', function (tenantId, token) {
 	return [invitation, Tenants.find(tenantId)];
 });
 
-Meteor.publish('invitations.find', function (filter) {
+Meteor.publish('invitations.findFilter', function (filter, limit, skip, sortParams) {
 	const tenantId = filter.tenant;
 
 	const user = Meteor.user();
@@ -24,5 +24,10 @@ Meteor.publish('invitations.find', function (filter) {
 		return undefined;
 	}
 
-	return Invitations.find({ tenant: tenantId });
+	return Invitations.findFilter(
+		{ tenant: tenantId, status: filter.status },
+		limit,
+		skip,
+		sortParams,
+	);
 });

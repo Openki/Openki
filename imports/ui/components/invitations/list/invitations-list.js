@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
 import { mf } from 'meteor/msgfmt:core';
+import { ReactiveDict } from 'meteor/reactive-dict';
+import $ from 'jquery';
 
 import { Invitations } from '/imports/api/invitations/invitations';
 import * as InvitationsMethods from '/imports/api/invitations/methods';
@@ -10,8 +12,18 @@ import './invitations-list.html';
 Template.invitationsList.onCreated(function () {
 	const instance = this;
 	const { tenant } = instance.data;
+
+	instance.state = new ReactiveDict(undefined, {
+		showAccepted: false,
+	});
 	instance.autorun(() => {
-		instance.subscribe('invitations.find', { tenant: tenant._id });
+		const status = ['created', 'send', 'failed'];
+
+		if (instance.state.get('showAccepted')) {
+			status.push('accepted');
+		}
+
+		instance.subscribe('invitations.findFilter', { tenant: tenant._id, status });
 	});
 });
 
@@ -20,7 +32,15 @@ Template.invitationsList.helpers({
 	 * @param {string} tenantId
 	 */
 	invitations(tenantId) {
-		return Invitations.find({ tenant: tenantId });
+		const instance = Template.instance();
+
+		const status = ['created', 'send', 'failed'];
+
+		if (instance.state.get('showAccepted')) {
+			status.push('accepted');
+		}
+
+		return Invitations.findFilter({ tenant: tenantId, status });
 	},
 
 	/**
@@ -44,6 +64,10 @@ Template.invitationsList.helpers({
 });
 
 Template.invitationsList.events({
+	'change .js-showAccepted'(event, instance) {
+		instance.state.set('showAccepted', $(event.currentTarget).prop('checked'));
+	},
+
 	async 'click .js-remove'(event, instance) {
 		event.preventDefault();
 
