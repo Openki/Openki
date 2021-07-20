@@ -42,20 +42,20 @@ export class InvitationsCollection extends Mongo.Collection {
 	 * tenant?: string;
 	 * status?: ('created' | 'send' | 'accepted' | 'failed')[] ;
 	 * }} [filter]
-	 * @param {number} [limit]
-	 * @param {number} [skip]
-	 * @param {[keyof InvitationEntity, 'asc' | 'desc'][]} [sortParams]
+	 * @param {number} [limit] how many to find
+	 * @param {number} [skip] skip this many before returning results
+	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
 	 */
-	findFilter(filter = {}, limit = 0, skip = 0, sortParams) {
+	findFilter(filter = {}, limit = 0, skip = 0, sort) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
-		check(sortParams, Match.Maybe([[String]]));
+		check(sort, Match.Maybe([[String]]));
 
 		/** @type {Mongo.Selector<InvitationEntity>} */
 		const find = {};
 		/** @type {Mongo.Options<InvitationEntity>} */
 		const options = {};
-		const order = sortParams || [];
+		const order = sort || [];
 
 		if (limit > 0) {
 			options.limit = limit;
