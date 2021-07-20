@@ -11,6 +11,7 @@ import { Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
 import { getSiteName } from '/imports/utils/getSiteName';
+import { getAboutLink } from '/imports/utils/getAboutLink';
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -116,7 +117,7 @@ const helpers = {
 	},
 
 	aboutLink() {
-		return Meteor.settings.public.aboutLink || 'https://about.openki.net';
+		return getAboutLink();
 	},
 
 	log(context) {

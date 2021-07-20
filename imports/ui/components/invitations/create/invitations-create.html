@@ -1,0 +1,12 @@
+<template name="invitationsCreate">
+	<form class="js-create-invitations">
+		<div class="form-group {{errorClass 'invitations-emails'}}">
+			<label>{{mf 'invitations.create.field.emails' 'Invite to the organisation'}}</label>
+			<textarea class="js-invitations-emails form-control" rows="5"
+					  placeholder="{{mf 'invitations.create.field.emails.placeholder' 'Add a list of e-mail addresses. One per line.'}}"></textarea>
+			{{errorMessage 'invitations-emails'}}
+		</div>
+		<button type="submit" class="btn btn-add"
+				{{disabledIfBusy}}>{{mf 'invitations.create.button.text' 'Send invitation'}}</button>
+	</form>
+</template>

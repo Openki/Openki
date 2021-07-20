@@ -131,7 +131,9 @@ export class User {
 	 * @param {string} tenantId
 	 */
 	isTenantAdmin(tenantId) {
-		return this.tenants?.some((t) => t._id === tenantId && t.privileges.includes('admin')) || false;
+		return (
+			this.tenants?.some((t) => t._id === tenantId && t.privileges?.includes('admin')) || false
+		);
 	}
 }
 

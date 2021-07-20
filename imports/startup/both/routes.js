@@ -33,6 +33,7 @@ import * as Metatags from '/imports/utils/metatags';
 import Predicates from '/imports/utils/predicates';
 import Profile from '/imports/utils/profile';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { Invitations } from '/imports/api/invitations/invitations';
 
 function finderRoute(path) {
 	return {
@@ -653,15 +654,52 @@ Router.route('tenantDetails', {
 	},
 });
 
+Router.route('invitation', {
+	path: 'invitation/:token',
+	/**
+	 * @this {{params: {token: string; query: { tenant: string; }}}}
+	 */
+	waitOn() {
+		return [Meteor.subscribe('invitation', this.params?.query?.tenant, this.params?.token)];
+	},
+	/**
+	 * @this {{params: {token: string; query: { tenant: string; }}}}
+	 */
+	data() {
+		const tenant = Tenants.findOne({ _id: this.params?.query?.tenant });
+		if (!tenant) {
+			return false;
+		}
+
+		const invitation = Invitations.findOne({
+			tenant: this.params?.query?.tenant,
+			token: this.params?.token,
+		});
+		if (!invitation) {
+			return false;
+		}
+
+		return { tenant, invitation };
+	},
+	/**
+	 * @this {{params: {token: string; query: { tenant: string; }}}}
+	 */
+	onAfterAction() {
+		msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
+		const tenant = Tenants.findOne({ _id: this.params.query.tenant });
+		if (tenant) {
+			const title = mf('invitation.show.siteTitle', 'Join {TENANT}', { TENANT: tenant.name });
+			Metatags.setCommonTags(title);
+		}
+	},
+});
+
 Router.route('timetable', {
 	path: '/kiosk/timetable',
 	layoutTemplate: 'timetableLayout',
 	waitOn() {
-		return Meteor.subscribe(
-			'Events.findFilter',
-			makeFilterQuery(this.params && this.params.query),
-			200,
-		);
+		return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params?.query), 200);
 	},
 	data() {
 		const query = makeFilterQuery(this.params.query);

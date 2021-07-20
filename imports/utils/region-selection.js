@@ -38,6 +38,10 @@ RegionSelection.init = function () {
 		}
 	});
 
+	RegionSelection.subscribe();
+};
+
+RegionSelection.subscribe = function () {
 	Meteor.subscribe('Regions', async () => {
 		const selectors = [
 			Session.get('region'),
