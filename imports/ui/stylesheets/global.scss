@@ -42,7 +42,9 @@ select:hover {
 }
 
 a:hover,
-.btn-link:hover {
+.btn-link:hover,
+a:focus,
+.btn-link:focus {
 	text-decoration: none;
 }
 
