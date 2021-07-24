@@ -1,10 +1,10 @@
 <template name="discussion">
 	<div class="page-component discussion" id="discussion">
 		<div class="course-page-component-header">
-			<h4>
+			<h5>
 				<span class="fa fa-comments fa-fw" aria-hidden="true"></span>&nbsp;
 				{{mf 'course.title.Discussion' 'Discussion'}}
-			</h4>
+			</h5>
 		</div>
 		{{#if ready}}
 			{{> post newPost}}
@@ -111,9 +111,9 @@
 				</div>
 				<div class="discussion-post-body">
 					{{#if this.title}}
-						<h4 class="discussion-post-title">
+						<h5 class="discussion-post-title">
 							{{this.title}}
-						</h4>
+						</h5>
 					{{/if}}
 					<p>{{{text}}}</p>
 				</div>

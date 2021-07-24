@@ -68,7 +68,7 @@
 // ** Body
 //========================================================================================
 .event-compact-body {
-	@include ellipsis-multiline(5);
+	@include ellipsis-multiline(6);
 
 	padding: 5px;
 	position: relative;

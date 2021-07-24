@@ -1,11 +1,11 @@
 <template name="eventParticipants">
 	<div class="event-page-component-header">
-		<h4>
+		<h5>
 			<span class="fa fa-users fa-fw" aria-hidden="true"></span>&nbsp;
 			{{#mf KEY='event.details.paticipants.title' NUM=howManyEnrolled}}
 				{NUM, plural, =0 {No participants yet} one {1 Participant} other {# Participants}}
 			{{/mf}}
-		</h4>
+		</h5>
 	</div>
 	{{#if participants}}
 		<div class="event-participants">
