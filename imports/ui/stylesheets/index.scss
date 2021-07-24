@@ -1,8 +1,8 @@
-@import 'fonts';
-@import 'base-colors';
+@import 'variables/index';
+
 @import 'bootstrap';
-@import 'variables';
-@import 'mixins/index';
+
+@import 'fonts';
 
 @import 'bootstrap-datepicker';
 
