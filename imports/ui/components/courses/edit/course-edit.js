@@ -548,7 +548,7 @@ Template.courseTitle.helpers({
 		const search = instance.proposedSearch.get();
 		const region = Session.get('region');
 		if (instance.dropdownVisible()) {
-			return Courses.findFilter({ search, region }, 20, undefined, [['name', 1]]);
+			return Courses.findFilter({ search, region }, 20, undefined, [['name', 'asc']]);
 		}
 		return [];
 	},
