@@ -1,11 +1,11 @@
 <template name="invitationsList">
 	<div class="gap-md"></div>
 
-	<div class="checkbox">
-		<label>
-			<input class="js-showAccepted" type="checkbox">
-			{{mf 'invitations.list.showAccepted' 'Show accepted invitations'}}
-		</label>
+	<div class="form-check">
+		<input class="form-check-input js-showAccepted" type="checkbox" value=""
+			   id="invitationsListShowAcceptedCheck">
+		<label class="form-check-label"
+			   for="invitationsListShowAcceptedCheck">{{mf 'invitations.list.showAccepted' 'Show accepted invitations'}}</label>
 	</div>
 
 	<div class="row row-no-gutters responsive-table-head">

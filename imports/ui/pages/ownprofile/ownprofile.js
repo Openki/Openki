@@ -5,11 +5,12 @@ import { Template } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 
-import TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Alert from '/imports/api/alerts/alert';
 import * as usersMethods from '/imports/api/users/methods';
+import TemplateMixins from '/imports/ui/lib/template-mixins';
 import { Analytics } from '/imports/ui/lib/analytics';
 import { Editable } from '/imports/ui/lib/editable';
+import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/groups/list/group-list';
@@ -204,6 +205,8 @@ Template.profile.events({
 	},
 
 	async 'change .js-notifications'(event, instance) {
+		RouterAutoscroll.cancelNext();
+
 		const allow = instance.$('.js-notifications').prop('checked');
 
 		try {
@@ -221,6 +224,8 @@ Template.profile.events({
 	},
 
 	async 'change .js-allowPrivateMessages'(event, instance) {
+		RouterAutoscroll.cancelNext();
+
 		const allow = instance.$('.js-allowPrivateMessages').prop('checked');
 
 		try {

@@ -20,7 +20,7 @@
 				{{/if}}
 				<div class="form-group">
 					<label>{{mf 'course.event.edit.title' 'Event title'}}</label>
-					<input type="text" class="js-event-title form-control input-lg" name="_"
+					<input type="text" class="js-event-title form-control form-control-lg" name="_"
 						   placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
 						   size="30" value="{{this.title}}">
 				</div>
@@ -28,7 +28,7 @@
 					<div class="form-group-element">
 						<label>{{mf 'course.event.edit.date_start' 'Date'}}</label>
 						<div class="input-group">
-							<span class="input-group-addon">
+							<span class="input-group-text">
 								<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text" class="form-control js-event-start-date"
@@ -38,7 +38,7 @@
 					<div class="form-group-element">
 						<label>{{mf 'course.event.edit.time_start' 'Time start'}}</label>
 						<div class="input-group">
-							<span class="input-group-addon">
+							<span class="input-group-text">
 								<span class="fa fa-hourglass-start fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text" class="js-event-start-time form-control" size="5"
@@ -54,7 +54,7 @@
 							</button>
 						</label>
 						<div class="input-group" style="display:none">
-							<span class="input-group-addon">
+							<span class="input-group-text">
 								<span class="fa fa-hourglass-end fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="number" class="js-event-duration form-control"
@@ -68,7 +68,7 @@
 							</button>
 						</label>
 						<div class="input-group">
-							<span class="input-group-addon">
+							<span class="input-group-text">
 								<span class="fa fa-hourglass-end fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text" class="js-event-end-time form-control" size="5"
@@ -89,7 +89,7 @@
 					<div class="form-group">
 						<label>{{mf 'course.edit.region' 'Region'}}</label>
 						<div class="input-group">
-							<div class="input-group-addon">
+							<div class="input-group-text">
 								<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 							</div>
 							<select class="js-select-region form-control" name='region'>
@@ -117,7 +117,7 @@
 							<small> {{mf '_inputField.optional'}}</small>
 						</label>
 						<div class="input-group" id="editform_room" name="editform_room">
-							<span class="input-group-addon">
+							<span class="input-group-text">
 								<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text" class="js-event-room form-control" size="40"
@@ -130,7 +130,7 @@
 							<small> {{mf '_inputField.optional'}}</small>
 						</label>
 						<div class="input-group col-sm-2">
-							<span class="input-group-addon">
+							<span class="input-group-text">
 								<span class="fa fa-users fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text" class="js-event-max-participants form-control"
@@ -140,11 +140,12 @@
 				{{/if}}
 
 				<div class="form-group">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" class="js-check-event-internal" {{isInternal}}>
+					<div class="form-check">
+						<input class="form-check-input js-check-event-internal" type="checkbox"
+							   value="" id="eventEditInternalCheck" {{isInternal}}>
+						<label class="form-check-label" for="eventEditInternalCheck">
 							{{mf 'event.edit.internal' 'Hide on front page'}}
-							<span class="help-block internal-disclaimer">
+							<span class="form-text internal-disclaimer">
 								{{#mf KEY='event.edit.internal.description'}}
 									Show this event only on group and venue pages
 								{{/mf}}
@@ -152,20 +153,24 @@
 						</label>
 					</div>
 					{{#if affectedReplicaCount}}
-						<div class="checkbox">
-							<label>
-								<input class="js-update-replicas-infos" type="checkbox"
-									   name="updateReplicasInfo">
+						<div class="form-check">
+							<input class="form-check-input js-update-replicas-infos" type="checkbox"
+								   name="updateReplicasInfo" value=""
+								   id="eventEditUpdateReplicasInfoCheck">
+							<label class="form-check-label" for="eventEditUpdateReplicasInfoCheck">
 								{{#mf KEY='event.edit.updateReplicasInfo' COUNT=affectedReplicaCount}}
 									Update {COUNT, plural, one {info from later copy} other {infos from # later copies as well}}
 								{{/mf}}
 							</label>
 						</div>
 						{{#if timeChanged}}
-							<div class="checkbox {{disabledIfDayChanged}}">
-								<label>
-									<input class="js-update-replicas-time" type="checkbox"
-										   name="updateReplicasTime" {{disabledIfDayChanged}}>
+							<div class="form-check {{disabledIfDayChanged}}">
+								<input class="form-check-input js-update-replicas-time"
+									   type="checkbox" name="updateReplicasTime" value=""
+									   id="eventEditUpdateReplicasTimeCheck"
+									   {{disabledIfDayChanged}}>
+								<label class="form-check-label"
+									   for="eventEditUpdateReplicasTimeCheck">
 									{{#mf KEY='event.edit.updateReplicasTime' COUNT=affectedReplicaCount}}
 										Update time from {COUNT, plural, one {copy} other {copies}}
 									{{/mf}}
@@ -187,7 +192,7 @@
 											{{#mf KEY='event.edit.changedReplicas.heading' NUM=changedReplicas.length}}
 												Found {NUM, plural, one {one copy which varies} other {# copies which vary}} in time
 											{{/mf}}
-									</div>
+										</div>
 									<div class="panel-body">
 										{{#unless updateChangedReplicas}}
 											<span class="update-changed-replicas-help">
@@ -211,16 +216,16 @@
 												</li>
 											{{/each}}
 										</ul>
-										<div class="checkbox">
-											<label>
-												<input class="js-update-changed-replicas-time" 
-													type="checkbox"
-													name="updateChangedReplicasTime">
+										<div class="form-check">
+											<input class="form-check-input js-update-changed-replicas-time" 
+											type="checkbox"
+											name="updateChangedReplicasTime" value="" id="eventEditUpdateChangedReplicasTimeCheck">
+											<label class="form-check-label" for="eventEditUpdateChangedReplicasTimeCheck">
 												{{#mf KEY='event.edit.updateChangedReplicasTime' NUM=changedReplicas.length}}
 												      Overwrite {NUM, plural, one {this events} other {these events}} time too
 												{{/mf}}
 											</label>
-											</div>
+										</div>
 									</div>
 								</div>
 							{{/if}}
@@ -228,20 +233,22 @@
 					{{/if}}
 				{{/if}}
 				{{#if courseId}}
-					<div class="checkbox">
-						<label>
-							{{#if new}}
-								<input type="checkbox" class="js-check-notify" checked>
+					<div class="form-check">
+						{{#if new}}
+							<input class="form-check-input js-check-notify" type="checkbox" value="" id="eventEditCheckNotifyCheck" checked>
+							<label class="form-check-label" for="eventEditCheckNotifyCheck">
 								{{#mf KEY='event.edit.notifyNewEvent' COURSE=course.name}}
 									Notify all members of the course "{COURSE}" about this event.
 								{{/mf}}
-							{{else}}
-								<input type="checkbox" class="js-check-notify">
+							</label>
+						{{else}}
+							<input class="form-check-input js-check-notify" type="checkbox" value="" id="eventEditCheckNotifyCheck">
+							<label class="form-check-label" for="eventEditCheckNotifyCheck">
 								{{#mf KEY='event.edit.notifyEditEvent' COURSE=course.name}}
 									Notify all members of the course "{COURSE}" about the changes you made.
 								{{/mf}}
-							{{/if}}
-						</label>
+							</label>
+						{{/if}}
 					</div>
 				{{/if}}
 				{{#if notifyChecked}}
@@ -250,7 +257,7 @@
 						<small> {{mf '_inputField.optional'}}</small>
 					</label>
 					<div class="input-group" id="editform_message" name="editform_message">
-						<span class="input-group-addon">
+						<span class="input-group-text">
 							<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
 						</span>
 						<textarea rows="3"

@@ -163,19 +163,20 @@
 					</div>
 					{{#if new}}
 						{{#if canNotifyAll}}
-							<div class="checkbox">
-								<label class="">
-									<input class='js-notify-all' type='checkbox'
-										   {{notifyAllChecked}}>
+							<div class="form-check">
+								<input class="form-check-input js-notify-all" type='checkbox'
+									   {{notifyAllChecked}} value="" id="canNotifyAllCheck">
+								<label class="form-check-label" for="canNotifyAllCheck">
 									<i class="fa fa-bell" aria-hidden="true"></i>
 									{{mf 'course.discussion.notifyAll' 'Notify all co-learners'}}
 								</label>
 							</div>
 						{{/if}}
-						<div class="checkbox">
-							<label class="discussion-toggle-anonymous">
-								<input class='toggleAnonymous js-anon' type='checkbox'
-									   {{anonChecked}} {{anonDisabled}} />
+						<div class="form-check">
+							<input class='form-check-input toggleAnonymous js-anon' type='checkbox'
+								   {{anonChecked}} {{anonDisabled}} id="anonymousCheck" />
+							<label class="form-check-label discussion-toggle-anonymous"
+								   for="anonymousCheck">
 								<i class="fa fa-user-secret" aria-hidden="true"></i>
 								{{mf 'course.discussion.anon' 'Anonymous comment'}}
 							</label>

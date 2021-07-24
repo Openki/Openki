@@ -22,7 +22,7 @@
 						<div class="form-group-element">
 							<label>{{mf 'venue.edit.region' 'Region:'}}</label>
 							<div class="input-group">
-								<span class="input-group-addon">
+								<span class="input-group-text">
 									<span class="fa fa-dot-circle-o fa-fw"
 										  aria-hidden="true"></span>
 								</span>
@@ -48,7 +48,7 @@
 			<div class="form-group">
 				<label>{{mf 'venue.details.address' 'Address:'}}</label>
 				<div class="input-group">
-					<span class="input-group-addon">
+					<span class="input-group-text">
 						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
 					</span>
 					<input class="form-control js-address"
@@ -61,7 +61,7 @@
 			<div class="form-group">
 				<label>{{mf 'venue.details.route'}}</label>
 				<div class="input-group">
-					<span class="input-group-addon">
+					<span class="input-group-text">
 						<span class="fa fa-map-signs"></span>
 					</span>
 					<textarea class="form-control js-route" id="editform-address"
@@ -99,7 +99,7 @@
 		<div class="form-group">
 			<label>{{mf 'venue.edit.shortName' 'Abbreviation:'}}</label>
 			<div class="input-group">
-				<span class="input-group-addon">
+				<span class="input-group-text">
 					<span class="fa fa-hashtag fa-fw" aria-hidden="true"></span>
 				</span>
 				<input class="form-control js-short"
@@ -126,58 +126,58 @@
 		<div class="form-group">
 			<div class="form-group-element">
 				<label>{{mf 'venue.edit.infra' 'Infrastructure:'}}</label>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" {{facilitiesCheck 'projector'}}>
-						<span>{{mf 'venue.edit.projector' 'Projector'}}</span>
+				<div class="form-check">
+					<input {{facilitiesCheck 'projector'}} id="venueEditProjectorCheck">
+					<label class="form-check-label" for="venueEditProjectorCheck">
+						{{mf 'venue.edit.projector' 'Projector'}}
 					</label>
 				</div>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" {{facilitiesCheck 'screen'}}>
-						<span>{{mf 'venue.edit.screen' 'Screen'}}</span>
+				<div class="form-check">
+					<input {{facilitiesCheck 'screen'}} id="venueEditScreenCheck">
+					<label class="form-check-label" for="venueEditScreenCheck">
+						{{mf 'venue.edit.screen' 'Screen'}}
 					</label>
 				</div>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" {{facilitiesCheck 'audio'}}>
-						<span>{{mf 'venue.edit.audioSystem' 'Audio System'}}</span>
+				<div class="form-check">
+					<input {{facilitiesCheck 'audio'}} id="venueEditAudioCheck">
+					<label class="form-check-label" for="venueEditAudioCheck">
+						{{mf 'venue.edit.audioSystem' 'Audio System'}}
 					</label>
 				</div>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" {{facilitiesCheck 'blackboard'}}>
-						<span>{{mf 'venue.edit.blackboard' 'Blackboard'}}</span>
+				<div class="form-check">
+					<input {{facilitiesCheck 'blackboard'}} id="venueEditBlackboardCheck">
+					<label class="form-check-label" for="venueEditBlackboardCheck">
+						{{mf 'venue.edit.blackboard' 'Blackboard'}}
 					</label>
 				</div>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" {{facilitiesCheck 'whiteboard'}}>
-						<span>{{mf 'venue.edit.whiteboard' 'Whiteboard'}}</span>
+				<div class="form-check">
+					<input {{facilitiesCheck 'whiteboard'}} id="venueEditWhiteboardCheck">
+					<label class="form-check-label" for="venueEditWhiteboardCheck">
+						{{mf 'venue.edit.whiteboard' 'Whiteboard'}}
 					</label>
 				</div>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" {{facilitiesCheck 'flipchart'}}>
-						<span>{{mf 'venue.edit.flipchart' 'Flipchart'}}</span>
+				<div class="form-check">
+					<input {{facilitiesCheck 'flipchart'}} id="venueEditFlipchartCheck">
+					<label class="form-check-label" for="venueEditFlipchartCheck">
+						{{mf 'venue.edit.flipchart' 'Flipchart'}}
 					</label>
 				</div>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" {{facilitiesCheck 'wifi'}}>
-						<span>{{mf 'venue.edit.wifi' 'Wifi'}}</span>
+				<div class="form-check">
+					<input {{facilitiesCheck 'wifi'}} id="venueEditWifiCheck">
+					<label class="form-check-label" for="venueEditWifiCheck">
+						{{mf 'venue.edit.wifi' 'Wifi'}}
 					</label>
 				</div>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" {{facilitiesCheck 'kitchen'}}>
-						<span>{{mf 'venue.edit.kitchen' 'Kitchen'}}</span>
+				<div class="form-check">
+					<input {{facilitiesCheck 'kitchen'}} id="venueEditKitchenCheck">
+					<label class="form-check-label" for="venueEditKitchenCheck">
+						{{mf 'venue.edit.kitchen' 'Kitchen'}}
 					</label>
 				</div>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" {{facilitiesCheck 'wheelchairs'}}>
-						<span>{{mf 'venue.edit.suitableForWheelchairs' 'Suitable for wheelchairs'}}</span>
+				<div class="form-check">
+					<input {{facilitiesCheck 'wheelchairs'}} id="venueEditWheelchairsCheck">
+					<label class="form-check-label" for="venueEditWheelchairsCheck">
+						{{mf 'venue.edit.suitableForWheelchairs' 'Suitable for wheelchairs'}}
 					</label>
 				</div>
 			</div>
@@ -189,7 +189,7 @@
 		<div class="form-group">
 			<label>{{mf 'venue.edit.website' 'Website:'}}</label>
 			<div class="input-group">
-				<span class="input-group-addon">
+				<span class="input-group-text">
 					<span class="fa fa-globe fa-fw" aria-hidden="true"></span>
 				</span>
 				<input type="text" class="form-control js-website" value="{{website}}">

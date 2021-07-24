@@ -80,12 +80,12 @@
 					{{else}}
 						<div class="delete-events-list">
 							{{#each upcomingEvents}}
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" checked="{{isSelected}}"
-											   {{disabledIfBusy}} />
-										{{> deleteEventsEvent this}}
-									</label>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value=""
+										   id="deleteEventsListCheck" checked="{{isSelected}}"
+										   {{disabledIfBusy}} />
+									<label class="form-check-label"
+										   for="deleteEventsListCheck">{{> deleteEventsEvent this}}</label>
 								</div>
 							{{/each}}
 						</div>

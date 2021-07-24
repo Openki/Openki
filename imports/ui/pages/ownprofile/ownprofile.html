@@ -91,17 +91,18 @@
 					</div>
 					<div class="col-sm-6">
 						<div class="form-group">
-							<div class="checkbox edit-profile-checkbox">
-								<label>
-									<input type="checkbox" class="js-notifications"
-										   {{notificationsChecked}} />
+							<div class="form-check form-switch">
+								<input class="form-check-input js-notifications" type="checkbox"
+									   value="" id="notificationsCheck" {{notificationsChecked}} />
+								<label class="form-check-label" for="notificationsCheck">
 									{{mf 'profile.toggle.notifications' 'Receive automated notifications via email'}}
 								</label>
 							</div>
-							<div class="checkbox edit-profile-checkbox">
-								<label>
-									<input type="checkbox" class="js-allowPrivateMessages"
-										   {{allowPrivateMessagesChecked}} />
+							<div class="form-check form-switch">
+								<input class="form-check-input js-allowPrivateMessages"
+									   type="checkbox" value="" id="allowPrivateMessagesCheck"
+									   {{allowPrivateMessagesChecked}} />
+								<label class="form-check-label" for="allowPrivateMessagesCheck">
 									{{mf 'profile.toggle.allowPrivateMessages' 'Receive private messages from users via email'}}
 								</label>
 							</div>
@@ -178,7 +179,8 @@
 						<div class="border border-success text-primary p-3">
 							<form class="js-change-pwd">
 								<div class="row mb-2">
-									<label for="oldpassword" class="col-sm-4 col-form-label text-end">
+									<label for="oldpassword"
+										   class="col-sm-4 col-form-label text-end">
 										{{mf 'profile.input.oldPassword' 'Your current password'}}
 									</label>
 									<div class="col-sm-8">
@@ -187,7 +189,8 @@
 									</div>
 								</div>
 								<div class="row mb-2">
-									<label for="newpassword" class="col-sm-4 col-form-label text-end">
+									<label for="newpassword"
+										   class="col-sm-4 col-form-label text-end">
 										{{mf 'profile.input.newPassword' 'New password'}}
 									</label>
 									<div class="col-sm-8">

@@ -41,16 +41,17 @@
 					{{#if showSavedMessage}}
 						<div id="courseSavedMessage"
 							 class="alert alert-success alert-dismissable fade in">
-									<h5>
-										<i class="fa fa-check" aria-hidden="true"></i>
-										{{mf 'course.edit.savedMessage' 'Your proposal has been saved!'}}
-									</h5>
-									<a class="alert-link" href="{{savedCourseLink}}" target="_blank">
-										{{#mf KEY='course.edit.linkToCourse' NAME=savedCourseName SITENAME=siteName}}
+							<h5>
+								<i class="fa fa-check" aria-hidden="true"></i>
+								{{mf 'course.edit.savedMessage' 'Your proposal has been saved!'}}
+							</h5>
+							<a class="alert-link" href="{{savedCourseLink}}" target="_blank">
+								{{#mf KEY='course.edit.linkToCourse' NAME=savedCourseName SITENAME=siteName}}
 										Click here to see your new course "{NAME}" on {SITENAME}
-										{{/mf}}
-									</a>
-									<button type="button" class="btn-close js-close" data-bs-dismiss="alert" aria-label="Close"></button>
+								{{/mf}}
+							</a>
+							<button type="button" class="btn-close js-close" data-bs-dismiss="alert"
+									aria-label="Close"></button>
 						</div>
 					{{/if}}
 					{{#if simpleRoleSelection}}
@@ -94,11 +95,13 @@
 								{{#if editingCategories}}
 									<label>{{mf 'course.edit.edit_categories' 'Edit Categories'}}</label>
 									{{#each availableCategories}}
-										<div class="checkbox">
-											<label class="{{isChecked}}">
-												<input class='js-category-checkbox cat_{{this}}'
-													   name='{{this}}' type='checkbox' value="1"
-													   {{checkCategory}} />
+										<div class="form-check mt-2">
+											<input class='form-check-input js-category-checkbox cat_{{this}}'
+												   name='{{this}}' type='checkbox' value="1"
+												   id="courseEditCategory{{this}}"
+												   {{checkCategory}} />
+											<label class="form-check-label {{isChecked}}"
+												   for="courseEditCategory{{this}}">
 												{{> categoryLabel}}
 												{{#if hasSubcategories this}}
 													<i
@@ -107,11 +110,13 @@
 											</label>
 										</div>
 										{{#each availableSubcategories this}}
-											<div class="checkbox checkbox-sub">
-												<label class="{{isChecked}}">
-													<input class='js-category-checkbox cat_{{this}}'
-														   name='{{this}}' type='checkbox' value="1"
-														   {{checkCategory}} />
+											<div class="form-check ms-4">
+												<input class="form-check-input js-category-checkbox cat_{{this}}"
+													   name='{{this}}' type='checkbox' value="1"
+													   id="courseEditSubCategory{{this}}"
+													   {{checkCategory}} />
+												<label class="form-check-label {{isChecked}}"
+													   for="courseEditSubCategory{{this}}">
 													{{> categoryLabel}}
 												</label>
 											</div>
@@ -145,7 +150,7 @@
 							<div class="form-group-element">
 								<label>{{mf 'course.edit.region' 'Region'}}</label>
 								<div class="input-group">
-									<div class="input-group-addon">
+									<div class="input-group-text">
 										<span class="fa fa-dot-circle-o fa-fw"
 											  aria-hidden="true"></span>
 									</div>
@@ -170,10 +175,10 @@
 					{{#if showInternalCheckbox}}
 						<div class="form-group">
 							<label>{{mf 'course.edit.intern' 'Hide on front page'}}</label>
-							<div class="checkbox">
-								<label>
-									<input class="js-check-internal" type="checkbox"
-										   {{isInternal}} />
+							<div class="form-check">
+								<input class="form-check-input js-check-internal" type="checkbox"
+									   value="" id="internalCheckbox" {{isInternal}} />
+								<label class="form-check-label" for="internalCheckbox">
 									{{mf 'course.edit.internDescription' "Only show when looking at a group's courses"}}
 								</label>
 							</div>
@@ -193,19 +198,19 @@
 </template>
 
 <template name="courseEditRole">
-	<div class="checkbox">
-		<label class="{{role.type}}">
-			<input class='js-check-role {{role.type}}' name='{{role.type}}' type="checkbox"
-				   {{checkRole}} />
+	<div class="form-check">
+		<input class='form-check-input js-check-role {{role.type}}' name='{{role.type}}'
+			   type="checkbox" value="" id="courseEditRole{{role.type}}Check" {{checkRole}} />
+		<label class="form-check-label {{role.type}}" for="courseEditRole{{role.type}}Check">
 			<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
 			{{mf roleDescription}}
 		</label>
 	</div>
 	{{#if checkRole}}
-		<div class="checkbox checkbox-sub">
-			<label>
-				<input class='js-check-enroll {{role.type}}' name='{{role.type}}' type="checkbox"
-					   {{hasRole}} />
+		<div class="form-check ms-4">
+			<input class='form-check-input js-check-enroll {{role.type}}' name='{{role.type}}'
+				   type="checkbox" id="courseEditRole{{role.type}}EnrollCheck" {{hasRole}} />
+			<label class="form-check-label" for="courseEditRole{{role.type}}EnrollCheck">
 				{{mf roleSubscription}}
 			</label>
 		</div>
