@@ -5,11 +5,6 @@
 			{{cssRule}}
 		{{/each}}
 		/* beautify ignore:end */
-		.no-events {
-			font-size: 45px;
-			margin-top: 20px;
-			text-align: center;
-		}
 
 	</style>
 	{{#if pageReady}}
@@ -31,9 +26,7 @@
 				</div>
 			{{/if}}
 		{{else}}
-			<div class="no-events">
-				<p>{{mf 'frame.calendar.noEvents' 'No events planned'}}</p>
-			</div>
+			<h2 class="mt-5 text-center">{{mf 'frame.calendar.noEvents' 'No events planned'}}</h2>
 		{{/if}}
 	{{else}}
 		{{> loadingPage}}
