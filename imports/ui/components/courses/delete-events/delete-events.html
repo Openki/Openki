@@ -25,11 +25,12 @@
 		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">
+					<h5 class="modal-title">
 						<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
 						{{mf 'deleteEventsModal.title' 'Delete course events'}}
-					</h4>
-					<span class="close" data-bs-dismiss="modal">&times;</span>
+					</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					{{#if state 'showDeleteConfirm'}}
@@ -46,10 +47,10 @@
 								<ul class="list-group selected-events">
 									{{#each event in selectedEvents}}
 										<li class="list-group-item list-group-item-danger">
-											<span class="close js-deselect-event"
-												  data-event-id="{{event._id}}">
-												&times;
-											</span>
+											<button type="button"
+													class="btn-close js-deselect-event float-end"
+													data-event-id="{{event._id}}"
+													aria-label="Close"></button>
 											{{> deleteEventsEvent event}}
 										</li>
 									{{/each}}

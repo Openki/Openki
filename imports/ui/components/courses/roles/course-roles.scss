@@ -10,9 +10,13 @@
 	padding: 8px 13px;
 }
 
-.course-role-title .close {
+.course-role-title .toggle-first-steps {
 	font-size: medium;
 	line-height: 2;
+
+	&:focus {
+		outline: none;
+	}
 }
 
 .course-role-title {

@@ -49,10 +49,10 @@ $dropdown-transition-time: 0.3s;
 .dropdown-header {
 	font-size: $font-size-base;
 	text-align: center;
-}
 
-.dropdown-header > .close {
-	font-size: 20px;
+	.btn-close {
+		@extend .pull-right;
+	}
 }
 
 .dropdown-menu > li .checkmark {
