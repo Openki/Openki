@@ -16,7 +16,7 @@ import { Session } from 'meteor/session';
 import Introduction from '/imports/ui/lib/introduction';
 import RegionSelection from '/imports/utils/region-selection';
 
-import 'bootstrap-sass';
+import './bootstrap';
 
 // close any verification dialogs still open
 Router.onBeforeAction(function () {

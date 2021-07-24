@@ -2,8 +2,6 @@
 // This allows use to override the default values of those variables before
 // we import Bootstrap's source Sass files.
 
-$enable-negative-margins: true;
-
 // Include functions first (so we can manipulate colors, SVGs, calc, etc)
 @import '{}/node_modules/bootstrap/scss/functions'; // Required
 
@@ -27,6 +25,10 @@ $tooltip-bg: $blue;
 $tooltip-opacity: 1;
 
 $hr-color: $blue-lighter;
+
+// Modals
+
+$modal-sm: 400px;
 
 // Remainder of required Bootstrap stylesheets
 @import '{}/node_modules/bootstrap/scss/variables'; // Required

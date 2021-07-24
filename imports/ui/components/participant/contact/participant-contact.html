@@ -24,8 +24,8 @@
 								{{#mf KEY='participantContactModal.writeMessageTo' USER=(username participant)}}
 									Write a message to {USER}
 								{{/mf}}
-								<span class="close" data-dismiss="modal">&times;</span>
 							</h4>
+							<span class="close" data-bs-dismiss="modal">&times;</span>
 						</div>
 						<div class="modal-body">
 							{{> sendMessage recipientId=participant courseId=course._id eventId=event._id onDone=hideModal}}
