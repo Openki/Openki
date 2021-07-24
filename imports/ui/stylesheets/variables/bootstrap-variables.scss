@@ -9,7 +9,19 @@ $enable-negative-margins: true;
 
 // Default variable overrides
 
+// Typography
+//
+// Font, line-height, and color for body text, headings, and mo
+
 $font-family-sans-serif: 'Source Sans Pro', sans-serif !default;
+
+// Links
+//
+// Style anchor elements.
+
+$link-decoration: none;
+
+// Tooltips
 
 $tooltip-bg: $blue;
 $tooltip-opacity: 1;
