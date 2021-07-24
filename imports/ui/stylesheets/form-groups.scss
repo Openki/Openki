@@ -82,19 +82,6 @@
 	font-weight: normal;
 }
 
-.control-label {
-	@include td-make-sm-column(3);
-}
-
 .control-input {
 	@include td-make-sm-column(9);
-}
-
-.control-btn {
-	@include td-make-sm-column(9);
-	@include td-make-sm-column-offset(3);
-}
-
-.input-group-addon-label {
-	margin-left: 3px;
 }

@@ -6,19 +6,18 @@
 					<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
 					{{mf 'group.settings.title' 'Settings'}}
 				</h3>
-				<div class="form-group">
-					<label>{{mf 'group.settings.field.logo' 'Logo'}}</label>
+				<div class="mb-3">
+					<label class="form-label">{{mf 'group.settings.field.logo' 'Logo'}}</label>
 					<div class="input-group">
-						<span class="input-group-addon">
-							<span class="fa fa-rebel fa-fw" aria-hidden="true"></span>
-							<span class="input-group-addon-label">https://</span>
+						<span class="input-group-text">
+							<span class="fa fa-rebel fa-fw me-1" aria-hidden="true"></span> https://
 						</span>
 						<input class="js-logo-url form-control" id="setLogo"
 							   placeholder="{{mf 'group.settings.field.logo.placeholder' 'Link to your Icon (png or jpg)'}}"
 							   value="{{group.logoUrl}}" />
 					</div>
 				</div>
-				<div class="form-actions">
+				<div class="d-flex gap-2 justify-content-end">
 					{{> buttonSave event="js-group-edit-save" saving=saving}}
 					{{> buttonCancel event="js-group-edit-cancel"}}
 				</div>
