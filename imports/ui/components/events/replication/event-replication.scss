@@ -11,9 +11,6 @@
 	margin-top: 10px;
 }
 
-.replica-tab-content label + .radio {
-	margin-top: 0;
-}
 
 .replica-date-weekday {
 	@include td-padding(right, $padding-base-horizontal);

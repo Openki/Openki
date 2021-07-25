@@ -51,35 +51,35 @@
 						<label for="replicateFrequency">
 							{{mf 'event.replication.repeat' 'Repeat'}}
 						</label>
-						<div class="radio">
-							<label>
-								<input type="radio"
-									   class="js-replicate-frequency js-update-replicas"
-									   name="replicateFrequency" value="once">
+						<div class="form-check">
+							<input class="form-check-input js-replicate-frequency js-update-replicas"
+								   type="radio" name="replicateFrequency"
+								   id="replicateFrequencyOnce"  value="once">
+							<label class="form-check-label" for="replicateFrequencyOnce">
 								{{mf 'event.replication.freq.once' 'once'}}
 							</label>
 						</div>
-						<div class="radio">
-							<label>
-								<input type="radio"
-									   class="js-replicate-frequency js-update-replicas"
-									   name="replicateFrequency" value="daily">
+						<div class="form-check">
+							<input class="form-check-input js-replicate-frequency js-update-replicas"
+								   type="radio" name="replicateFrequency"
+								   id="replicateFrequencyDaily" value="daily">
+							<label class="form-check-label" for="replicateFrequencyDaily">
 								{{mf 'event.replication.freq.daily' 'every day'}}
 							</label>
 						</div>
-						<div class="radio">
-							<label>
-								<input type="radio"
-									   class="js-replicate-frequency js-update-replicas"
-									   name="replicateFrequency" value="weekly" checked>
+						<div class="form-check">
+							<input class="form-check-input js-replicate-frequency js-update-replicas"
+								   type="radio" name="replicateFrequency"
+								   id="replicateFrequencyWeekly" value="weekly" checked>
+							<label class="form-check-label" for="replicateFrequencyWeekly">
 								{{mf'event.replication.freq.weekly' 'once a week'}}
 							</label>
 						</div>
-						<div class="radio">
-							<label>
-								<input type="radio"
-									   class="js-replicate-frequency js-update-replicas"
-									   name="replicateFrequency" value="biWeekly">
+						<div class="form-check">
+							<input class="form-check-input js-replicate-frequency js-update-replicas"
+								   type="radio" name="replicateFrequency"
+								   id="replicateFrequencyBiWeekly" value="biWeekly">
+							<label class="form-check-label" for="replicateFrequencyBiWeekly">
 								{{mf'event.replication.freq.biWeekly' 'every 2 weeks'}}
 							</label>
 						</div>

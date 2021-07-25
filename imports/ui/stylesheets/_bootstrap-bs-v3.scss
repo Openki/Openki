@@ -55,25 +55,6 @@ $bootstrap-sass-asset-helper: false;
 			width: 100%;
 		}
 
-		// Remove default margin on radios/checkboxes that were used for stacking, and
-		// then undo the floating of radios and checkboxes to match.
-		.radio,
-		.checkbox {
-			display: inline-block;
-			margin-top: 0;
-			margin-bottom: 0;
-			vertical-align: middle;
-
-			label {
-				padding-left: 0;
-			}
-		}
-		.radio input[type='radio'],
-		.checkbox input[type='checkbox'] {
-			position: relative;
-			margin-left: 0;
-		}
-
 		// Re-override the feedback icon.
 		.has-feedback .form-control-feedback {
 			top: 0;
