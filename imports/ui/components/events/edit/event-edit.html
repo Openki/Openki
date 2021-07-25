@@ -19,14 +19,15 @@
 					{{> regionTag}}
 				{{/if}}
 				<div class="form-group">
-					<label>{{mf 'course.event.edit.title' 'Event title'}}</label>
+					<label class="form-label">{{mf 'course.event.edit.title' 'Event title'}}</label>
 					<input type="text" class="js-event-title form-control form-control-lg" name="_"
 						   placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
 						   size="30" value="{{this.title}}">
 				</div>
 				<div class="form-group">
 					<div class="form-group-element">
-						<label>{{mf 'course.event.edit.date_start' 'Date'}}</label>
+						<label
+							   class="form-label">{{mf 'course.event.edit.date_start' 'Date'}}</label>
 						<div class="input-group">
 							<span class="input-group-text">
 								<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
@@ -36,7 +37,8 @@
 						</div>
 					</div>
 					<div class="form-group-element">
-						<label>{{mf 'course.event.edit.time_start' 'Time start'}}</label>
+						<label
+							   class="form-label">{{mf 'course.event.edit.time_start' 'Time start'}}</label>
 						<div class="input-group">
 							<span class="input-group-text">
 								<span class="fa fa-hourglass-start fa-fw" aria-hidden="true"></span>
@@ -60,7 +62,7 @@
 							<input type="number" class="js-event-duration form-control"
 								   id="editEventDuration" value="" size="5" {{disableForPast}}>
 						</div>
-						<label>
+						<label class="form-label">
 							{{mf 'course.event.edit.time_end' 'Time end'}}
 							<button type="button" class="js-toggle-duration btn-icon"
 									data-tooltip="{{mf 'course.event.edit.swich_duration' 'Switch to duration'}}">
@@ -80,14 +82,14 @@
 			</div>
 			<div class="edit-page-body event-edit-body">
 				<div class="form-group">
-					<label>{{mf 'course.event.edit.desc' 'Description'}}</label>
+					<label class="form-label">{{mf 'course.event.edit.desc' 'Description'}}</label>
 					{{> editableTextarea editableDescription}}
 				</div>
 				{{> pricePolicy dismissable=true wrap='form-group'}}
 
 				{{#if showRegionSelection}}
 					<div class="form-group">
-						<label>{{mf 'course.edit.region' 'Region'}}</label>
+						<label class="form-label">{{mf 'course.edit.region' 'Region'}}</label>
 						<div class="input-group">
 							<div class="input-group-text">
 								<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
@@ -112,7 +114,7 @@
 				{{#if showVenueSelection}}
 					{{> eventEditVenue}}
 					<div class="form-group">
-						<label>
+						<label class="form-label">
 							{{mf 'course.event.edit.room' 'Room'}}
 							<small> {{mf '_inputField.optional'}}</small>
 						</label>
@@ -125,7 +127,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label>
+						<label class="form-label">
 							{{mf 'course.event.edit.maxParticipants' 'maximal number of participants'}}
 							<small> {{mf '_inputField.optional'}}</small>
 						</label>
@@ -145,7 +147,7 @@
 							   value="" id="eventEditInternalCheck" {{isInternal}}>
 						<label class="form-check-label" for="eventEditInternalCheck">
 							{{mf 'event.edit.internal' 'Hide on front page'}}
-							<span class="form-text internal-disclaimer">
+							<span class="form-text d-block">
 								{{#mf KEY='event.edit.internal.description'}}
 									Show this event only on group and venue pages
 								{{/mf}}
@@ -153,7 +155,7 @@
 						</label>
 					</div>
 					{{#if affectedReplicaCount}}
-						<div class="form-check">
+						<div class="form-check mt-2">
 							<input class="form-check-input js-update-replicas-infos" type="checkbox"
 								   name="updateReplicasInfo" value=""
 								   id="eventEditUpdateReplicasInfoCheck">
@@ -252,7 +254,7 @@
 					</div>
 				{{/if}}
 				{{#if notifyChecked}}
-					<label>
+					<label class="form-label">
 						{{mf 'course.event.edit.AddMessage' 'Add message'}}
 						<small> {{mf '_inputField.optional'}}</small>
 					</label>

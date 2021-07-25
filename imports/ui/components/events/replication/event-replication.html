@@ -24,7 +24,7 @@
 						<div class="js-replicate-datepick"></div>
 					</div>
 					<div class="tab-pane form-group active" id="frequency">
-						<label for="replicateStart">
+						<label class="form-label" for="replicateStart">
 							{{mf 'event.replication.interval.start' 'Interval Start'}}
 						</label>
 						<div class="input-group">
@@ -36,7 +36,7 @@
 								   id="replicateStart" size="8" value="{{replicaStart}}">
 							<span class="replica-date-weekday">{{replicateStartDay}}</span>
 						</div>
-						<label for="replicateEnd">
+						<label class="form-label" for="replicateEnd">
 							{{mf 'event.replication.interval.end' 'Interval End'}}
 						</label>
 						<div class="input-group">
@@ -48,13 +48,13 @@
 								   id="replicateEnd" size="8" value="{{replicaEnd}}">
 							<span class="replica-date-weekday">{{replicateEndDay}}</span>
 						</div>
-						<label for="replicateFrequency">
+						<label class="form-label" for="replicateFrequency">
 							{{mf 'event.replication.repeat' 'Repeat'}}
 						</label>
 						<div class="form-check">
 							<input class="form-check-input js-replicate-frequency js-update-replicas"
 								   type="radio" name="replicateFrequency"
-								   id="replicateFrequencyOnce"  value="once">
+								   id="replicateFrequencyOnce" value="once">
 							<label class="form-check-label" for="replicateFrequencyOnce">
 								{{mf 'event.replication.freq.once' 'once'}}
 							</label>
@@ -88,7 +88,7 @@
 			</div>
 			<div class="form-group-element">
 				{{#if replicaDateCount}}
-					<label>
+					<label class="form-label">
 						{{#mf KEY='event.replication.createText' COUNT=replicaDateCount}}
 							Create {COUNT, plural, one {a copy on this date} other {# copies on this dates}}
 						{{/mf}}
@@ -112,7 +112,7 @@
 						{{/each}}
 					</div>
 				{{else}}
-					<label>{{mf 'event.replication.noDates' 'No date(s) selected'}}</label>
+					<label class="form-label">{{mf 'event.replication.noDates' 'No date(s) selected'}}</label>
 					<div class="replica-event-captions">
 						<div class="event-caption placeholder">
 							<div class="event-caption-header-wrap">

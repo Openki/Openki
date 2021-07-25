@@ -14,20 +14,21 @@
 
 <template name="regionEditFields">
 	<div class="form-group">
-		<label>{{mf 'region.edit.name' 'Name:'}}</label>
+		<label class="form-label">{{mf 'region.edit.name' 'Name:'}}</label>
 		<input type="text" class="form-control js-name"
 			   placeholder="{{mf 'region.edit.namePlaceholder' 'Full name of region'}}"
 			   value="{{region.name}}">
 	</div>
 	<div class="form-group">
 		<div class="form-group-element">
-			<label>{{mf 'region.edit.map' 'Please add the center of the region by klicking + (on the right inside the map)'}}</label>
+			<label
+				   class="form-label">{{mf 'region.edit.map' 'Please add the center of the region by klicking + (on the right inside the map)'}}</label>
 			{{> map markers=regionMarkers maxZoom=16 allowPlacing=allowPlacing allowRemoving=allowRemoving}}
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label>{{mf 'region.edit.timezone' 'Timezone:'}}</label>
+		<label class="form-label">{{mf 'region.edit.timezone' 'Timezone:'}}</label>
 		<select class="form-control js-timezone" name='region'>
 			<option value='' disabled selected="{{#unless region.timezone}}selected{{/unless}}"
 					class="select-placeholder">

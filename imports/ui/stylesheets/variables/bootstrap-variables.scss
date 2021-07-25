@@ -19,6 +19,10 @@ $font-family-sans-serif: 'Source Sans Pro', sans-serif !default;
 
 $link-decoration: none;
 
+// Forms
+
+$form-label-color: shade-color($blue, 20%);
+
 // Tooltips
 
 $tooltip-bg: $blue;

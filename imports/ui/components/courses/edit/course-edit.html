@@ -56,7 +56,7 @@
 					{{/if}}
 					{{#if simpleRoleSelection}}
 						<div class="form-group">
-							<label
+							<label class="form-label"
 								   id="learnOrTeachTitle">{{mf 'course.edit.learnOrTeach' 'Learn or teach?'}}</label>
 							<div class="btn-group-toggle clearfix course-edit-roles" role="group"
 								 aria-labelledby="learnOrTeachTitle">
@@ -83,7 +83,8 @@
 					{{/if}}
 					{{> courseTitle}}
 					<div class="form-group">
-						<label>{{mf 'course.edit.description' 'Description'}}</label>
+						<label
+							   class="form-label">{{mf 'course.edit.description' 'Description'}}</label>
 						{{> editableTextarea editableDescription}}
 					</div>
 					{{#if hasPricePolicy}}
@@ -93,7 +94,8 @@
 						{{#unless hideCategories}}
 							<div class="form-group-element">
 								{{#if editingCategories}}
-									<label>{{mf 'course.edit.edit_categories' 'Edit Categories'}}</label>
+									<label
+										   class="form-label">{{mf 'course.edit.edit_categories' 'Edit Categories'}}</label>
 									{{#each availableCategories}}
 										<div class="form-check mt-2">
 											<input class='form-check-input js-category-checkbox cat_{{this}}'
@@ -123,7 +125,8 @@
 										{{/each}}
 									{{/each}}
 								{{else}}
-									<label>{{mf 'course.edit.categories' 'Categories'}}</label>
+									<label
+										   class="form-label">{{mf 'course.edit.categories' 'Categories'}}</label>
 									{{#if categories}}
 										{{> courseCategories}}
 									{{/if}}
@@ -140,7 +143,8 @@
 						{{/unless}}
 						{{#if fullRoleSelection}}
 							<div class="form-group-element">
-								<label>{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
+								<label
+									   class="form-label">{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
 								{{#each availableRoles}}
 									{{> courseEditRole selected=../roles role=this members=../members}}
 								{{/each}}
@@ -148,7 +152,8 @@
 						{{/if}}
 						{{#if showRegionSelection}}
 							<div class="form-group-element">
-								<label>{{mf 'course.edit.region' 'Region'}}</label>
+								<label
+									   class="form-label">{{mf 'course.edit.region' 'Region'}}</label>
 								<div class="input-group">
 									<div class="input-group-text">
 										<span class="fa fa-dot-circle-o fa-fw"
@@ -174,7 +179,8 @@
 
 					{{#if showInternalCheckbox}}
 						<div class="form-group">
-							<label>{{mf 'course.edit.intern' 'Hide on front page'}}</label>
+							<label
+								   class="form-label">{{mf 'course.edit.intern' 'Hide on front page'}}</label>
 							<div class="form-check">
 								<input class="form-check-input js-check-internal" type="checkbox"
 									   value="" id="internalCheckbox" {{isInternal}} />
@@ -219,7 +225,7 @@
 
 <template name="courseTitle">
 	<div class="form-group js-proposed-search">
-		<label>{{mf 'course.edit.title' 'Title'}}</label>
+		<label class="form-label">{{mf 'course.edit.title' 'Title'}}</label>
 		<div class="dropdown">
 			<input class="form-control form-control-lg js-title dropdown-toggle" id="editform_name"
 				   placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"

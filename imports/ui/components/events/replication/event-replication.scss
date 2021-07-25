@@ -7,10 +7,6 @@
 	margin-bottom: 0;
 }
 
-.replica-tab-content .input-group + label {
-	margin-top: 10px;
-}
-
 
 .replica-date-weekday {
 	@include td-padding(right, $padding-base-horizontal);

@@ -155,15 +155,6 @@
 	margin-bottom: $form-group-margin-bottom;
 }
 
-.details-info-label {
-	@include td-make-sm-column(3);
-	font-weight: bold;
-
-	@media (min-width: $screen-sm) {
-		@include td-text-align(right);
-		padding-top: 7px;
-	}
-}
 
 .details-info-data {
 	@include td-make-sm-column(9);
