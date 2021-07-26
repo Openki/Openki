@@ -17,9 +17,9 @@
 				{{> editableTextarea editableDescription}}
 			</div>
 			{{#if showMapSelection}}
-				<div class="row mb-3">
+				<div class="row gap-3 mb-3">
 					{{#if regionSelectable}}
-						<div class="col">
+						<div class="col-md">
 							<label class="form-label">{{mf 'venue.edit.region' 'Region:'}}</label>
 							<div class="input-group">
 								<span class="input-group-text">
@@ -37,7 +37,7 @@
 						</div>
 					{{/if}}
 					{{#if regionSelected}}
-						<div class="col">
+						<div class="col-md">
 							<label
 								   class="form-label">{{mf 'venue.edit.map' 'Please add Location by klicking + (on the right inside the map)'}}</label>
 							{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
@@ -109,15 +109,15 @@
 					   value="{{short}}">
 			</div>
 		</div>
-		<div class="row mb-3">
-			<div class="col">
+		<div class="row gap-3 mb-3">
+			<div class="col-md">
 				<label class="form-label">
 					{{mf 'venue.edit.max_ppl' 'Max. People'}}
 				</label>
 				<input type="number" class="form-control js-maxPeople" size="4"
 					   value="{{maxPeople}}">
 			</div>
-			<div class="col">
+			<div class="col-md">
 				<label class="form-label">
 					{{mf 'venue.edit.max_workplace' 'Max. Workplaces'}}
 				</label>
@@ -125,8 +125,8 @@
 					   value="{{maxWorkplaces}}">
 			</div>
 		</div>
-		<div class="row mb-3">
-			<div class="col">
+		<div class="row gap-3 mb-3">
+			<div class="col-md">
 				<label class="form-label">{{mf 'venue.edit.infra' 'Infrastructure:'}}</label>
 				<div class="form-check">
 					<input {{facilitiesCheck 'projector'}} id="venueEditProjectorCheck">
@@ -183,7 +183,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col">
+			<div class="col-md">
 				<label
 					   class="form-label">{{mf 'venue.edit.additionalEquipment' 'Additional equipment:'}}</label>
 				<textarea class="form-control js-otherFacilities">{{otherFacilities}}</textarea>

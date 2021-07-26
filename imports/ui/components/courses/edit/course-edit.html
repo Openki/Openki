@@ -90,9 +90,9 @@
 					{{#if hasPricePolicy}}
 						{{> pricePolicy dismissable=true wrap='mb-3'}}
 					{{/if}}
-					<div class="row">
+					<div class="row gap-3">
 						{{#unless hideCategories}}
-							<div class="col">
+							<div class="col-md">
 								{{#if editingCategories}}
 									<label
 										   class="form-label mb-0">{{mf 'course.edit.edit_categories' 'Edit Categories'}}</label>
@@ -141,7 +141,7 @@
 							</div>
 						{{/unless}}
 						{{#if fullRoleSelection}}
-							<div class="col">
+							<div class="col-md">
 								<label
 									   class="form-label">{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
 								{{#each availableRoles}}
@@ -150,7 +150,7 @@
 							</div>
 						{{/if}}
 						{{#if showRegionSelection}}
-							<div class="col">
+							<div class="col-md">
 								<label
 									   class="form-label">{{mf 'course.edit.region' 'Region'}}</label>
 								<div class="input-group">
