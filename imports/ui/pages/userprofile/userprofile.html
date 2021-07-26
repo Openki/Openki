@@ -34,10 +34,10 @@
 				<div class="mb-3">
 					{{#if showPrivileges}}
 						<div class="form-group-element">
-							<h4>
+							<h3>
 								<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
 								{{mf 'privileges.title' 'Edit Privileges'}}
-							</h4>
+							</h3>
 							<div class="list-group">
 								{{#if privileges.admin}}
 									<li class="list-group-item list-group-item-success">
@@ -64,10 +64,10 @@
 
 					{{#if showInviteGroups}}
 						<div class="form-group-element">
-							<h4>
+							<h3>
 								<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
 								{{mf 'userprofile.groups.header' 'Edit groups'}}
-							</h4>
+							</h3>
 							<div class="list-group">
 								{{#each inviteGroups}}
 									{{#if groupMember this ../user}}
