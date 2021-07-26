@@ -29,10 +29,6 @@
 	padding-top: 10px;
 }
 
-.account-tasks .help-block {
-	margin-bottom: 0;
-}
-
 .forgot-pwd-btn-container {
 	@include td-text-align(right);
 }
@@ -87,6 +83,8 @@ $external-servies: (
 	background-color: rgba($brand-warning, 0.25);
 	border: 1px solid $brand-warning;
 	border-radius: 4px;
+	color: $text-muted;
+	display: block;
 	margin-top: 7.5px;
 	padding: 10px;
 }

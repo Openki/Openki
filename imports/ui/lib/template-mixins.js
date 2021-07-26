@@ -148,7 +148,7 @@ const TemplateMixins = {
 
 				const text = (Template.instance()?.errorMapping || mapping)[message.key].text();
 				return Spacebars.SafeString(
-					`<span class="help-block warning-block">${Blaze._escape(text)}</span>`,
+					`<span class="form-text text-danger">${Blaze._escape(text)}</span>`,
 				);
 			},
 		});
