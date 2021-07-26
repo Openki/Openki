@@ -44,10 +44,9 @@
 										{{mf 'privilege.has.admin' 'Administrator privileges granted'}}
 										{{#if alterPrivileges}}
 											<button type="button"
-													class="js-remove-privilege-btn close"
+													class="js-remove-privilege-btn btn-close float-end"
 													data-tooltip="{{mf 'privilege.remove' 'Remove privilege'}}"
 													data-priv="admin">
-												&times;
 											</button>
 										{{/if}}
 									</li>
@@ -74,9 +73,9 @@
 										<li class="list-group-item list-group-item-success">
 											{{mf 'profile.group.member' 'Member of group '}}
 											<span class="group">{{name}}</span>
-											<button type="button" class="js-group-expel-btn close"
+											<button type="button"
+													class="js-group-expel-btn btn-close float-end"
 													data-tooltip="{{mf 'profile.group.expel' 'Expel from group {GROUPNAME}' GROUPNAME=this.name}}">
-												&times;
 											</button>
 										</li>
 									{{else}}
