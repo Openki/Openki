@@ -1,0 +1,10 @@
+
+
+.has-error {
+	.form-control {
+		border-color: $danger;
+	}
+	.form-text {
+		color: $danger;
+	}
+}
