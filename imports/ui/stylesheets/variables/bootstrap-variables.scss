@@ -50,9 +50,4 @@ $modal-sm: 400px;
 //
 // Define the maximum width of `.container` for different screen sizes.
 
-$container-max-widths: map-merge(
-	$container-max-widths,
-	(
-		xxxl: 1600px,
-	)
-);
+$container-max-widths: map-remove($container-max-widths, xxl);
