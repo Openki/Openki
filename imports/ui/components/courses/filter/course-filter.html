@@ -1,7 +1,7 @@
 <template name="filter">
 	<div class="filter {{filterClasses}}">
 		{{#if showingFilters}}
-			<h5 class="filter-heading">
+			<h4 class="filter-heading">
 				<i class="fa fa-filter fa-fw" aria-hidden="true"></i>
 				{{mf 'find.search_filter.title' 'Filter search'}}
 				<span class="filter-active-tag">
@@ -15,13 +15,13 @@
 						</span>
 					</button>
 				</div>
-			</h5>
+			</h4>
 		{{/if}}
 		<div class="filter-components">
 			<div class="filter-component filter-course-states">
-				<h5 class="filter-component-header">
+				<h4 class="filter-component-header">
 					{{mf 'find.filter.courseStates' 'Course states'}}
-				</h5>
+				</h4>
 				<div class="filter-course-state-captions">
 					{{#each stateFilter in stateFilters}}
 						<div class="filter-captions-column">
@@ -73,9 +73,9 @@
 <template name="additionalFilters">
 	<div class="clearfix visible-xs-block visible-sm-block"></div>
 	<div aria-label="filter-course-roles" class="filter-component filter-course-roles" role="group">
-		<h5 class="filter-component-header">
+		<h4 class="filter-component-header">
 			{{mf 'find.filter.courseRoles' 'Course roles'}}
-		</h5>
+		</h4>
 		{{#each role in roles}}
 			<button class="filter-course-role js-filter-course-role {{roleClasses role}}"
 					data-filter-name="{{role.name}}" type="button">
@@ -90,9 +90,9 @@
 	</div>
 	<div class="clearfix visible-xs-block"></div>
 	<div class="filter-component filter-course-categories">
-		<h5 class="filter-component-header">
+		<h4 class="filter-component-header">
 			{{mf 'find.filter.categories' 'Categories'}}
-		</h5>
+		</h4>
 		{{#unless isMobile}}
 			{{#if categories}}
 				<ul class="filter-selected-categories">

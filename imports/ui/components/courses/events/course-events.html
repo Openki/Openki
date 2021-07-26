@@ -6,11 +6,11 @@
 					<div class="course-events js-scrollable-container">
 						{{#if havePastEvents}}
 							<div class="course-page-component-header">
-								<h5>
+								<h4>
 									<span class="fa fa-calendar fa-fw"
 										  aria-hidden="true"></span>&nbsp;
 									{{mf 'course.events.pastList' 'Previous events'}}
-								</h5>
+								</h4>
 								{{#if haveFutureEvents}}
 									<a href="#future_events" class="link">
 										<span class="fa fa-arrow-down"></span>
@@ -24,11 +24,11 @@
 						{{/if}}
 						{{#if haveOngoingEvents}}
 							<div class="course-page-component-header">
-								<h5>
+								<h4>
 									<span class="fa fa-calendar fa-fw"
 										  aria-hidden="true"></span>&nbsp;
 									{{mf 'course.events.ongoinglist' 'Ongoing events'}}
-								</h5>
+								</h4>
 								{{#if havePastEvents}}
 									<a href="#past_events" class="past-events-link">
 										<span class="fa fa-arrow-up"></span>
@@ -42,11 +42,11 @@
 						{{/if}}
 						{{#if haveFutureEvents}}
 							<div class="course-page-component-header">
-								<h5>
+								<h4>
 									<span class="fa fa-calendar fa-fw"
 										  aria-hidden="true"></span>&nbsp;
 									{{mf 'course.events.upcominglist' 'Upcoming events'}}
-								</h5>
+								</h4>
 								{{#if havePastEvents}}
 									<a href="#past_events" class="past-events-link">
 										<span class="fa fa-arrow-up"></span>
@@ -75,20 +75,20 @@
 		{{else}}
 			<div class="page-component">
 				<div class="course-page-component-header">
-					<h5>
+					<h4>
 						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>&nbsp;
 						{{mf 'course.details.noEvents' 'This course has no events'}}
-					</h5>
+					</h4>
 				</div>
 			</div>
 		{{/if}}
 	{{else}}
 		<div class="page-component">
 			<div class="course-page-component-header">
-				<h5>
+				<h4>
 					<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>&nbsp;
 					{{mf 'course.details.eventsLoadingHeader' 'Events'}}
-				</h5>
+				</h4>
 			</div>
 			{{> loadingRow}}
 		</div>

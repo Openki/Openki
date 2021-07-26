@@ -1,6 +1,6 @@
 <template name="courseMembers">
 	<div class="course-page-component-header">
-		<h5>
+		<h4>
 			<span class="fa fa-users fa-fw" aria-hidden="true"></span>&nbsp;
 			{{#mf KEY='course.details.members.title' NUM=howManyEnrolled}}
 				{NUM, plural, =0 {No co-learners yet} one {1 Co-learner} other {# Co-learners}}
@@ -8,7 +8,7 @@
 			{{#if canNotifyAll}}
 				<i class="fa fa-envelope contact-members js-contact-members"></i>
 			{{/if}}
-		</h5>
+		</h4>
 	</div>
 	{{#if members}}
 		<div class="course-members">
