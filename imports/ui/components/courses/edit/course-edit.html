@@ -90,12 +90,12 @@
 					{{#if hasPricePolicy}}
 						{{> pricePolicy dismissable=true wrap='mb-3'}}
 					{{/if}}
-					<div class="mb-3">
+					<div class="row">
 						{{#unless hideCategories}}
-							<div class="form-group-element">
+							<div class="col">
 								{{#if editingCategories}}
 									<label
-										   class="form-label">{{mf 'course.edit.edit_categories' 'Edit Categories'}}</label>
+										   class="form-label mb-0">{{mf 'course.edit.edit_categories' 'Edit Categories'}}</label>
 									{{#each availableCategories}}
 										<div class="form-check mt-2">
 											<input class='form-check-input js-category-checkbox cat_{{this}}'
@@ -139,10 +139,9 @@
 									</button>
 								{{/if}}
 							</div>
-
 						{{/unless}}
 						{{#if fullRoleSelection}}
-							<div class="form-group-element">
+							<div class="col">
 								<label
 									   class="form-label">{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
 								{{#each availableRoles}}
@@ -151,7 +150,7 @@
 							</div>
 						{{/if}}
 						{{#if showRegionSelection}}
-							<div class="form-group-element">
+							<div class="col">
 								<label
 									   class="form-label">{{mf 'course.edit.region' 'Region'}}</label>
 								<div class="input-group">

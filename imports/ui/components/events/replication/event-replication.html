@@ -1,7 +1,7 @@
 <template name="eventReplication">
 	<div class="details-form event-replicate">
-		<div class="mb-3">
-			<div class="form-group-element">
+		<div class="row">
+			<div class="col">
 				<nav>
 					<ul class="nav nav-tabs replica-nav-tabs">
 						<li role="presentation" class="active">
@@ -86,7 +86,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-group-element">
+			<div class="col">
 				{{#if replicaDateCount}}
 					<label class="form-label">
 						{{#mf KEY='event.replication.createText' COUNT=replicaDateCount}}

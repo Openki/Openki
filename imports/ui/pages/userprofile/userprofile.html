@@ -31,9 +31,9 @@
 		</div>
 		{{#if showSettings}}
 			<div class="page-component page-component-seperated">
-				<div class="mb-3">
+				<div class="row mb-3">
 					{{#if showPrivileges}}
-						<div class="form-group-element">
+						<div class="col">
 							<h3>
 								<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
 								{{mf 'privileges.title' 'Edit Privileges'}}
@@ -62,7 +62,7 @@
 					{{/if}}
 
 					{{#if showInviteGroups}}
-						<div class="form-group-element">
+						<div class="col">
 							<h3>
 								<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
 								{{mf 'userprofile.groups.header' 'Edit groups'}}

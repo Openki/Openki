@@ -466,7 +466,7 @@ Template.eventEdit.events({
 
 	'click .js-toggle-duration'() {
 		Tooltips.hide();
-		$('.time-end > *').toggle();
+		$('.js-time-end > *').toggle();
 	},
 
 	'click .js-check-notify'(event, instance) {

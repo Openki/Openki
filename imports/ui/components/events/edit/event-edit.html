@@ -24,8 +24,8 @@
 						   placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
 						   size="30" value="{{this.title}}">
 				</div>
-				<div class="mb-3">
-					<div class="form-group-element">
+				<div class="row">
+					<div class="col">
 						<label
 							   class="form-label">{{mf 'course.event.edit.date_start' 'Date'}}</label>
 						<div class="input-group">
@@ -36,7 +36,7 @@
 								   value="{{localDate startLocal}}" {{disableForPast}}>
 						</div>
 					</div>
-					<div class="form-group-element">
+					<div class="col">
 						<label
 							   class="form-label">{{mf 'course.event.edit.time_start' 'Time start'}}</label>
 						<div class="input-group">
@@ -47,7 +47,7 @@
 								   value="{{timeFormat startLocal}}" {{disableForPast}}>
 						</div>
 					</div>
-					<div class="form-group-element time-end">
+					<div class="col js-time-end">
 						<label style="display:none">
 							{{mf 'course.event.edit.duration' 'Duration (in minutes)'}}
 							<button type="button" class="js-toggle-duration btn-icon"
