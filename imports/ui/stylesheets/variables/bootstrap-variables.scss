@@ -11,6 +11,10 @@
 //
 // Font, line-height, and color for body text, headings, and mo
 
+// $font-size-root affects the value of `rem`, which is used for as well font sizes, paddings, and
+// margins. For compatibility reasons we use "14px", many views were made at a time when we used
+// bootstrap version 3, "14px" corresponds to the value at that time.
+$font-size-root: 14px;
 $font-family-sans-serif: 'Source Sans Pro', sans-serif !default;
 
 // Links
