@@ -1,7 +1,3 @@
-.form-group {
-	@include clearfix;
-}
-
 .form-group-element:nth-child(1):nth-last-child(1) {
 	@media (min-width: $screen-sm) {
 		@include td-make-sm-column(12);
@@ -46,9 +42,4 @@
 	@media (max-width: $screen-sm) {
 		margin-top: $form-group-margin-bottom;
 	}
-}
-
-.form-group > .list-group,
-.form-group-element > .list-group {
-	margin-bottom: 0;
 }

@@ -55,7 +55,7 @@
 						</div>
 					{{/if}}
 					{{#if simpleRoleSelection}}
-						<div class="form-group">
+						<div class="mb-3">
 							<label class="form-label"
 								   id="learnOrTeachTitle">{{mf 'course.edit.learnOrTeach' 'Learn or teach?'}}</label>
 							<div class="btn-group-toggle clearfix course-edit-roles" role="group"
@@ -82,15 +82,15 @@
 						</div>
 					{{/if}}
 					{{> courseTitle}}
-					<div class="form-group">
+					<div class="mb-3">
 						<label
 							   class="form-label">{{mf 'course.edit.description' 'Description'}}</label>
 						{{> editableTextarea editableDescription}}
 					</div>
 					{{#if hasPricePolicy}}
-						{{> pricePolicy dismissable=true wrap='form-group'}}
+						{{> pricePolicy dismissable=true wrap='mb-3'}}
 					{{/if}}
-					<div class="form-group">
+					<div class="mb-3">
 						{{#unless hideCategories}}
 							<div class="form-group-element">
 								{{#if editingCategories}}
@@ -178,7 +178,7 @@
 					</div>
 
 					{{#if showInternalCheckbox}}
-						<div class="form-group">
+						<div class="mb-3">
 							<label
 								   class="form-label">{{mf 'course.edit.intern' 'Hide on front page'}}</label>
 							<div class="form-check">
@@ -224,7 +224,7 @@
 </template>
 
 <template name="courseTitle">
-	<div class="form-group js-proposed-search">
+	<div class="mb-3 js-proposed-search">
 		<label class="form-label">{{mf 'course.edit.title' 'Title'}}</label>
 		<div class="dropdown">
 			<input class="form-control form-control-lg js-title dropdown-toggle" id="editform_name"

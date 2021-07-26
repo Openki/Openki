@@ -13,7 +13,8 @@
 						<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i>
 						{{mf 'emailrequest.title' 'Add email'}}
 					</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<form>
@@ -26,7 +27,7 @@
 						<p>
 							{{mf 'emailrequest.text.para2' 'Providing an email-address ensures that you stay informed when you join a course and it allows the mentor / other users to send you a direct message. It is easy to unsubscribe from such notifications and your user data will stay protected and is never traded!'}}
 						</p>
-						<div class="form-group {{errorClass 'email'}}">
+						<div class="mb-3 {{errorClass 'email'}}">
 							<div class="input-group">
 								<span class="input-group-text">
 									<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
@@ -37,7 +38,7 @@
 							</div>
 							{{errorMessage 'email'}}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{> buttonSave event="js-save-email form-control"}}
 						</div>
 					</form>
@@ -73,7 +74,7 @@
 							{{mf 'validate.email.text.para1' 'We’ve noticed that you did not validate your e-mail address yet.'}}
 						</p>
 					</span>
-					<div class="form-group">
+					<div class="mb-3">
 						<button class="js-send-validation-email btn btn-add form-control"
 								{{disabledIfBusy}}>
 							{{#if busy 'sending'}}

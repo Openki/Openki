@@ -67,7 +67,7 @@
 					<div class="col-sm-6">
 						{{#if user.email}}
 							<form class="js-email-form">
-								<div class="form-group {{errorClass 'email'}}">
+								<div class="mb-3 {{errorClass 'email'}}">
 									<label for="editform_email" class="sr-only">
 										{{mf 'profile.email' 'E-Mail'}}
 									</label>
@@ -90,7 +90,7 @@
 						{{/if}}
 					</div>
 					<div class="col-sm-6">
-						<div class="form-group">
+						<div class="mb-3">
 							<div class="form-check form-switch">
 								<input class="form-check-input js-notifications" type="checkbox"
 									   value="" id="notificationsCheck" {{notificationsChecked}} />

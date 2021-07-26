@@ -3,11 +3,6 @@
 	padding: 15px;
 }
 
-.replica-tab-content .form-group {
-	margin-bottom: 0;
-}
-
-
 .replica-date-weekday {
 	@include td-padding(right, $padding-base-horizontal);
 	@include td-pos(right, 0);

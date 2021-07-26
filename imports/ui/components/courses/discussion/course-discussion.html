@@ -153,12 +153,12 @@
 					{{/unless}}
 				</div>
 				<div class="discussion-edit-body">
-					<div class="form-group">
+					<div class="mb-3">
 						<input class="js-post-title discussion-edit-title form-control" type="text"
 							   placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}} {{mf '_inputField.optional'}}"
 							   value="{{title}}" />
 					</div>
-					<div class="form-group js-post-text">
+					<div class="mb-3 js-post-text">
 						{{> editableTextarea editableText}}
 					</div>
 					{{#if new}}

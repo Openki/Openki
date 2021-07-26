@@ -18,13 +18,13 @@
 				{{#if showRegionTag}}
 					{{> regionTag}}
 				{{/if}}
-				<div class="form-group">
+				<div class="mb-3">
 					<label class="form-label">{{mf 'course.event.edit.title' 'Event title'}}</label>
 					<input type="text" class="js-event-title form-control form-control-lg" name="_"
 						   placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
 						   size="30" value="{{this.title}}">
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					<div class="form-group-element">
 						<label
 							   class="form-label">{{mf 'course.event.edit.date_start' 'Date'}}</label>
@@ -81,14 +81,14 @@
 				</div>
 			</div>
 			<div class="edit-page-body event-edit-body">
-				<div class="form-group">
+				<div class="mb-3">
 					<label class="form-label">{{mf 'course.event.edit.desc' 'Description'}}</label>
 					{{> editableTextarea editableDescription}}
 				</div>
-				{{> pricePolicy dismissable=true wrap='form-group'}}
+				{{> pricePolicy dismissable=true wrap='mb-3'}}
 
 				{{#if showRegionSelection}}
-					<div class="form-group">
+					<div class="mb-3">
 						<label class="form-label">{{mf 'course.edit.region' 'Region'}}</label>
 						<div class="input-group">
 							<div class="input-group-text">
@@ -113,7 +113,7 @@
 
 				{{#if showVenueSelection}}
 					{{> eventEditVenue}}
-					<div class="form-group">
+					<div class="mb-3">
 						<label class="form-label">
 							{{mf 'course.event.edit.room' 'Room'}}
 							<small> {{mf '_inputField.optional'}}</small>
@@ -126,7 +126,7 @@
 								   value="{{room}}">
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<label class="form-label">
 							{{mf 'course.event.edit.maxParticipants' 'maximal number of participants'}}
 							<small> {{mf '_inputField.optional'}}</small>
@@ -141,7 +141,7 @@
 					</div>
 				{{/if}}
 
-				<div class="form-group">
+				<div class="mb-3">
 					<div class="form-check">
 						<input class="form-check-input js-check-event-internal" type="checkbox"
 							   value="" id="eventEditInternalCheck" {{isInternal}}>

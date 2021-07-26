@@ -6,18 +6,18 @@
 			<h2>{{mf 'venue.edit.titleCreate' 'Create new venue'}}</h2>
 		{{/if}}
 		<form>
-			<div class="form-group">
+			<div class="mb-3">
 				<label class="form-label">{{mf 'venue.edit.name' 'Name:'}}</label>
 				<input type="text" class="form-control js-name"
 					   placeholder="{{mf 'venue.edit.namePlaceholder' 'Full name of venue'}}"
 					   size="60" value="{{name}}">
 			</div>
-			<div class="form-group">
+			<div class="mb-3">
 				<label class="form-label">{{mf 'venue.edit.description' 'Description:'}}</label>
 				{{> editableTextarea editableDescription}}
 			</div>
 			{{#if showMapSelection}}
-				<div class="form-group">
+				<div class="mb-3">
 					{{#if regionSelectable}}
 						<div class="form-group-element">
 							<label class="form-label">{{mf 'venue.edit.region' 'Region:'}}</label>
@@ -46,7 +46,7 @@
 				</div>
 			{{/if}}
 
-			<div class="form-group">
+			<div class="mb-3">
 				<label class="form-label">{{mf 'venue.details.address' 'Address:'}}</label>
 				<div class="input-group">
 					<span class="input-group-text">
@@ -59,7 +59,7 @@
 				</div>
 			</div>
 
-			<div class="form-group">
+			<div class="mb-3">
 				<label class="form-label">{{mf 'venue.details.route'}}</label>
 				<div class="input-group">
 					<span class="input-group-text">
@@ -70,7 +70,7 @@
 							  value={{route}}></textarea>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="mb-3">
 				<label
 					   class="form-label">{{mf 'venue.edit.additionalInfo' 'Additional Info: (optional, but you will help others find the venue)'}}</label>
 				{{#if showAdditionalInfo}}
@@ -98,7 +98,7 @@
 
 <template name="venueEditAdditionalInfo">
 	<div class="venue-edit-additional-info">
-		<div class="form-group">
+		<div class="mb-3">
 			<label class="form-label">{{mf 'venue.edit.shortName' 'Abbreviation:'}}</label>
 			<div class="input-group">
 				<span class="input-group-text">
@@ -109,7 +109,7 @@
 					   value="{{short}}">
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="mb-3">
 			<div class="form-group-element">
 				<label class="form-label">
 					{{mf 'venue.edit.max_ppl' 'Max. People'}}
@@ -125,7 +125,7 @@
 					   value="{{maxWorkplaces}}">
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="mb-3">
 			<div class="form-group-element">
 				<label class="form-label">{{mf 'venue.edit.infra' 'Infrastructure:'}}</label>
 				<div class="form-check">
@@ -189,7 +189,7 @@
 				<textarea class="form-control js-otherFacilities">{{otherFacilities}}</textarea>
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="mb-3">
 			<label class="form-label">{{mf 'venue.edit.website' 'Website:'}}</label>
 			<div class="input-group">
 				<span class="input-group-text">

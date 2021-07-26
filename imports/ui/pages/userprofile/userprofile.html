@@ -31,7 +31,7 @@
 		</div>
 		{{#if showSettings}}
 			<div class="page-component page-component-seperated">
-				<div class="form-group">
+				<div class="mb-3">
 					{{#if showPrivileges}}
 						<div class="form-group-element">
 							<h4>
@@ -104,7 +104,7 @@
 				<div class="profile-delete-confirmation">
 					<p>{{mf 'profile.account.reallydelete' 'The user profile "{NAME}" will be permanently deleted. {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will be automatically removed as well. Are you sure you want to do this?' NAME=this.user.username COURSES=numberOfCoursesAffectedByDelete INTERESTED=numberOfInterestedAffectedByDelete EVENTS=numberOfFutureEventsAffectedByDelete}}
 					</p>
-					<div class="form-group">
+					<div class="mb-3">
 						<textarea class='form-control js-reason'
 								  placeholder="{{mf 'profile.account.reason.placeholder' 'Reason for deleting this user'}}"></textarea>
 					</div>

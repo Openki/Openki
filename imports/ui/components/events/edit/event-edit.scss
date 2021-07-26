@@ -9,10 +9,6 @@
 	}
 }
 
-.event-edit-header > .form-group:last-of-type {
-	margin-bottom: 0;
-}
-
 .event-edit-body {
 	@media (min-width: $screen-xs) {
 		border-color: $event-body-bg;
