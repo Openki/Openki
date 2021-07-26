@@ -147,9 +147,7 @@ const TemplateMixins = {
 				}
 
 				const text = (Template.instance()?.errorMapping || mapping)[message.key].text();
-				return Spacebars.SafeString(
-					`<span class="form-text">${Blaze._escape(text)}</span>`,
-				);
+				return Spacebars.SafeString(`<span class="form-text">${Blaze._escape(text)}</span>`);
 			},
 		});
 
