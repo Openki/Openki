@@ -12,75 +12,78 @@
 </template>
 
 <template name="event">
-	<div class="event-wrapper-main">
-		{{#if course}}
-			<div class="event-course-header">
-				{{#if editing}}
-					{{#if _id}}
-						<h2>{{mf 'event.details.edit.edit' 'Edit event'}}</h2>
-					{{else}}
-						<h2>{{mf 'event.details.edit.add' 'Create an event'}}</h2>
-					{{/if}}
-				{{else}}
+	<div class="row">
+		<div class="col-lg-8">
+			{{#if course}}
+				<div class="event-course-header">
 					<h2>
-						{{course.name}}
-					</h2>
-				{{/if}}
-				<a href="{{pathFor 'showCourse' _id=courseId}}" class="event-course-header-link">
-					<i class="fa fa-external-link"></i>
-					{{mf 'event.details.viewCourse' 'view course'}}
-				</a>
-				{{> courseCategories course}}
-				{{> regionTag}}
-			</div>
-		{{/if}}
-		<div class="event">
-			{{#if editing}}
-				{{> eventEdit}}
-			{{else}}
-				{{> eventDisplay}}
-			{{/if}}
-		</div>
-		<div class="page-component">
-			{{> report}}
-		</div>
-	</div>
-	{{#unless editing}}
-		<div class="event-wrapper-aside">
-			{{#if isFuture}}
-				<div class="page-component">
-					<div class="event-page-component-header">
-						<h4>
-							{{mf 'event.details.registration' 'Registration'}}
-						</h4>
-					</div>
-				</div>
-				<div class="page-component">
-					<b>
-						{{#unless userRegisteredForEvent}}
-							{{mf 'event.details.i-participate-no' 'Let us know that you are participating in this event. Your registration is binding.'}}
+						{{#if editing}}
+							{{#if _id}}
+								{{mf 'event.details.edit.edit' 'Edit event'}}
+							{{else}}
+								{{mf 'event.details.edit.add' 'Create an event'}}
+							{{/if}}
 						{{else}}
-							{{mf 'event.details.i-participate-yes' 'You are now registered. Your registration is binding.'}}
-						{{/unless}}
-					</b>
-				</div>
-				<div class="page-component">
-					{{#unless userRegisteredForEvent}}
-						{{#if acceptsParticipants}}
-							{{> buttonRegister event="js-register-event"}}
-						{{else}}
-							{{> buttonRegistrationClosed}}
+							{{course.name}}
 						{{/if}}
-					{{else}}
-						{{> buttonUnregister event="js-unregister-event"}}
-					{{/unless}}
+					</h2>
+					<a href="{{pathFor 'showCourse' _id=courseId}}"
+					   class="event-course-header-link">
+						<i class="fa fa-external-link"></i>
+						{{mf 'event.details.viewCourse' 'view course'}}
+					</a>
+					{{> courseCategories course}}
+					{{> regionTag}}
 				</div>
 			{{/if}}
+			<div class="event">
+				{{#if editing}}
+					{{> eventEdit}}
+				{{else}}
+					{{> eventDisplay}}
+				{{/if}}
+			</div>
 			<div class="page-component">
-				{{> eventParticipants}}
+				{{> report}}
 			</div>
 		</div>
-	{{/unless}}
+		{{#unless editing}}
+			<div class="col-lg-4">
+				{{#if isFuture}}
+					<div class="page-component">
+						<div class="event-page-component-header">
+							<h4>
+								{{mf 'event.details.registration' 'Registration'}}
+							</h4>
+						</div>
+					</div>
+					<div class="page-component">
+						<b>
+							{{#unless userRegisteredForEvent}}
+								{{mf 'event.details.i-participate-no' 'Let us know that you are participating in this event. Your registration is binding.'}}
+							{{else}}
+								{{mf 'event.details.i-participate-yes' 'You are now registered. Your registration is binding.'}}
+							{{/unless}}
+						</b>
+					</div>
+					<div class="page-component">
+						{{#unless userRegisteredForEvent}}
+							{{#if acceptsParticipants}}
+								{{> buttonRegister event="js-register-event"}}
+							{{else}}
+								{{> buttonRegistrationClosed}}
+							{{/if}}
+						{{else}}
+							{{> buttonUnregister event="js-unregister-event"}}
+						{{/unless}}
+					</div>
+				{{/if}}
+				<div class="page-component">
+					{{> eventParticipants}}
+				</div>
+			</div>
+		{{/unless}}
+	</div>
 </template>
 
 <template name="eventDisplay">

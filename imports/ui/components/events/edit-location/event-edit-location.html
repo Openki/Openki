@@ -2,13 +2,15 @@
 	<div class="mb-3">
 		<label class="form-label">
 			{{mf 'course.event.edit.location' 'Venue'}}
-			<small> {{mf '_inputField.optional'}}</small>
+			<small>{{mf '_inputField.optional'}}</small>
 		</label>
-		<div class="event-edit-location-info">
-			{{mf 'event.edit.location.info' 'You can search the venues, choose from the recently used, click on the map, or create a new venue.'}}
-		</div>
-		<div class="event-edit-location">
-			<div class="event-edit-location-search">
+		<p>
+			<em class="text-muted">
+				{{mf 'event.edit.location.info' 'You can search the venues, choose from the recently used, click on the map, or create a new venue.'}}
+			</em>
+		</p>
+		<div class="row">
+			<div class="col">
 				{{#if locationIsPreset}}
 					<div class="event-edit-location-selected">
 						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
@@ -74,7 +76,7 @@
 					</a>
 				{{/if}}
 			</div>
-			<div class="event-edit-location-map">
+			<div class="col event-edit-location-map">
 				{{> map markers=eventMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
 			</div>
 		</div>
