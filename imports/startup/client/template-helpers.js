@@ -12,6 +12,7 @@ import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
 import { getSiteName } from '/imports/utils/getSiteName';
 import { getAboutLink } from '/imports/utils/getAboutLink';
+import { getFaqLink } from '/imports/utils/getFaqLink';
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -113,7 +114,7 @@ const helpers = {
 	},
 
 	faqLink() {
-		return Meteor.settings.public.faqLink || '/info/faq';
+		return getFaqLink();
 	},
 
 	aboutLink() {

@@ -4,6 +4,7 @@ import { Meteor } from 'meteor/meteor';
 
 import * as usersMethods from '/imports/api/users/methods';
 import { pricePolicyEnabled } from '/imports/utils/pricePolicyEnabled';
+import { getFaqLink } from '/imports/utils/getFaqLink';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
@@ -44,7 +45,7 @@ Template.pricePolicyContent.helpers({
 	},
 
 	pricePolicyLink() {
-		const link = '/FAQ';
+		const link = getFaqLink();
 		let locale = Session.get('locale');
 		const localizedTitles = new Map()
 			.set('de', 'dürfen-kurse-etwas-kosten')
