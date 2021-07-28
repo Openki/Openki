@@ -88,20 +88,19 @@
 				</button>
 			</div>
 			<hr>
-				{{#each service in OAuthServices}}
-					<button class="btn btn-{{service.key}} form-control js-oauth-btn my-2"
-							data-service="{{service.serviceName}}" type="button" {{disabledIfBusy}}>
-						{{#if busy service.serviceName}}
-							<span class="fa fa-circle-o-notch fa-spin fa-fw"
-								  aria-hidden="true"></span>
-							{{mf 'login.OAuth.busy' 'Logging in with '}}
-						{{else}}
-							<span class="fa fa-{{service.key}} fa-fw" aria-hidden="true"></span>
-							{{mf 'login.OAuth.loginWith' 'Login with '}}
-						{{/if}}
-						{{service.name}}
-					</button>
-				{{/each}}
+			{{#each service in OAuthServices}}
+				<button class="btn btn-{{service.key}} form-control js-oauth-btn my-2"
+						data-service="{{service.serviceName}}" type="button" {{disabledIfBusy}}>
+					{{#if busy service.serviceName}}
+						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+						{{mf 'login.OAuth.busy' 'Logging in with '}}
+					{{else}}
+						<span class="fa fa-{{service.key}} fa-fw" aria-hidden="true"></span>
+						{{mf 'login.OAuth.loginWith' 'Login with '}}
+					{{/if}}
+					{{service.name}}
+				</button>
+			{{/each}}
 			<hr>
 			<div class="mb-3">
 				<button class="btn btn-add form-control js-register-open" type="button">
