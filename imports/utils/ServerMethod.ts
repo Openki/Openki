@@ -9,22 +9,18 @@ import { MeteorAsync } from './promisify';
  *
  * Inspired by the Advanced Method Boilerplate in the Meteor Guide.
  * https://guide.meteor.com/methods.html#advanced-boilerplate
- * @template {any[]} T
- * @template R
- * @param {string} name
- * @param {(this: Meteor.MethodThisType, ...args: T) => R} run
- * @param {{serverOnly: boolean;}} [options]
- * @returns {(...args: T) => Promise<R>}
  */
-export function ServerMethod(name, run, options) {
-	if (!(options?.serverOnly === true && Meteor.isClient))
-		Meteor.methods({
-			[name](...args) {
-				return run.call(this, ...args);
-			},
-		});
+export function ServerMethod<T extends any[], R>(
+	name: string,
+	run: (this: Meteor.MethodThisType, ...args: T) => R,
+) {
+	Meteor.methods({
+		[name](...args) {
+			return run.call(this, ...args);
+		},
+	});
 
-	return (/** @type {T} */ ...args) => MeteorAsync.call(name, ...args);
+	return ((...args: T) => MeteorAsync.call(name, ...args)) as (...args: T) => Promise<R>;
 }
 
 export default ServerMethod;
