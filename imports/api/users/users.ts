@@ -5,6 +5,8 @@ import * as IdTools from '/imports/utils/id-tools';
 
 import { GroupEntity } from '../groups/groups';
 
+export type Role = 'admin';
+
 export interface UserEntity extends Meteor.User {
 	/** ID */
 	_id: string;
@@ -76,7 +78,7 @@ export interface UserEntity extends Meteor.User {
 		regionId: string;
 	};
 	/** [admin] */
-	privileges: "admin"[];
+	privileges: Role[];
 	lastLogin: Date;
 	/** This value is managed by the messageformat package */
 	locale: string;
@@ -145,7 +147,7 @@ export class User {
 		return (emailRecord && emailRecord.verified && emailRecord.address) || false;
 	}
 
-	privileged(this: UserModel, role: string) {
+	privileged(this: UserModel, role: Role) {
 		return !!this.privileges?.includes(role);
 	}
 

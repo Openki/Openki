@@ -4,9 +4,8 @@ import { check } from 'meteor/check';
 
 /**
  * builds a SortSpec from a given mongo sort-specifier
- * @param {string[][]} spec
  */
-const SortSpec = (spec) => {
+export const SortSpec = (spec: [string, 'asc' | 'desc'][]) => {
 	check(spec, [[String]]);
 	return {
 		/**
@@ -19,9 +18,8 @@ const SortSpec = (spec) => {
 
 /**
  * reads a string of the form "name,-age"
- * @param {string} spec
  */
-SortSpec.fromString = function (spec) {
+SortSpec.fromString = function (spec: string) {
 	check(spec, String);
 
 	return SortSpec(

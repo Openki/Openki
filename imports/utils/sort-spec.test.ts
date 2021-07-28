@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { msgfmt } from 'meteor/msgfmt:core';
-import SortSpec from '/imports/utils/sort-spec';
+import { SortSpec } from '/imports/utils/sort-spec';
 
 // This should not be here
 msgfmt.init('en');
@@ -44,7 +44,7 @@ describe('Sort specification parsing', () => {
 	it('rejects invalid sort specification', () => {
 		// Unfortunately the check only catches the most glaring errors.
 		// We only check for those. Better than nothing.
-		assert.throws(() => SortSpec(['name']), Error);
-		assert.throws(() => SortSpec([[], 'name']), Error);
+		assert.throws(() => SortSpec(['name'] as any), Error);
+		assert.throws(() => SortSpec([[], 'name'] as any), Error);
 	});
 });
