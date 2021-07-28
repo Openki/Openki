@@ -1,0 +1,43 @@
+{
+	"compilerOptions": {
+		/* Basic Options */
+		"target": "es2018",
+		"module": "esNext",
+		"lib": ["esnext", "dom"],
+		"allowJs": true,
+		"checkJs": true,
+		"jsx": "preserve",
+		"incremental": true,
+		"noEmit": true,
+		/* Strict Type-Checking Options */
+		"alwaysStrict": true, // Parse in strict mode and emit "use strict" for each source file.
+		// If you have wrong casing in referenced files e.g. the filename is Global.ts and you have a /// <reference path="global.ts" /> to reference this file, then this can cause to unexpected errors. Visite: http://stackoverflow.com/questions/36628612/typescript-transpiler-casing-issue
+		"forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file.
+		// "allowUnreachableCode": false, // Do not report errors on unreachable code. (Default: False)
+		// "allowUnusedLabels": false, // Do not report errors on unused labels. (Default: False)
+		"noFallthroughCasesInSwitch": true, // Report errors for fall through cases in switch statement.
+		"noImplicitReturns": true, // Report error when not all code paths in function return a value.
+		"noStrictGenericChecks": false, // Disable strict checking of generic signatures in function types.
+		"noUnusedParameters": true, // Report errors on unused parameters.
+		"noUnusedLocals": true, // Report errors on unused locals.
+		"suppressExcessPropertyErrors": false, // Suppress excess property checks for object literals.
+		"suppressImplicitAnyIndexErrors": false, // Suppress --noImplicitAny errors for indexing objects lacking index signatures.
+		"noImplicitAny": true, // Raise error on expressions and declarations with an implied "any" type.
+		"noImplicitThis": true, // Raise error on this expressions with an implied "any" type.
+		"strictPropertyInitialization": true, // Enusre non-undefined class properties are initialized in the constructor.
+		"strictFunctionTypes": true, // Disable bivariant parameter checking for function types.
+		"strictNullChecks": true, // The null and undefined values are not in the domain of every type and are only assignable to themselves and any.
+		/* Module Resolution Options */
+		"baseUrl": ".",
+		"paths": {
+			/* Support absolute /imports/* with a leading '/' */
+			"/*": ["*"]
+		},
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"preserveSymlinks": true
+	},
+	"include": ["./", "./node_modules/@types", "./types"],
+	"exclude": ["./.meteor/", "./packages/", "./node_modules/@types/node/ts3.6/" /* Fix a error, assert defined at two places.*/]
+}

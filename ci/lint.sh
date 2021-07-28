@@ -9,3 +9,5 @@ meteor node -v && meteor npm version
 meteor npm run sass-lint
 
 meteor npm run es-lint
+
+meteor npm run type-check
