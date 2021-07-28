@@ -1,15 +1,17 @@
-// ======== DB-Model: ========
-/**
- * @typedef {Object} LanguageEntity
- * @property {string} lg             ISO 639-1 code
- * @property {string} name           Full name
- * @property {string} short          Abbreviation
- * @property {string} english        English full name
- * @property {boolean} visible
- */
+/** DB-Model */
+interface LanguageEntity {
+	/** ISO 639-1 code */
+	lg: string;
+	/** Full name */
+	name: string;
+	/** Abbreviation */
+	short: string;
+	/** English full name */
+	english: string;
+	visible: boolean;
+}
 
-/** @type {{[abbreviation:string]: LanguageEntity}} */
-export const Languages = {
+export const Languages: { [abbreviation: string]: LanguageEntity } = {
 	ar: {
 		lg: 'ar',
 		name: 'العربية',
