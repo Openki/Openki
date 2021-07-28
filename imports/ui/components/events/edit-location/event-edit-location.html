@@ -40,12 +40,10 @@
 						<input type="text" class="form-control js-location-search-input"
 							   placeholder="{{mf 'event.edit.locationNamePlaceholder' 'Where?'}}"
 							   value="{{location.name}}" />
-						<span class="input-group-btn">
-							<button type="submit" class="btn btn-go js-location-search-btn">
-								<span class="fa fa-search fa-fw" aria-hidden="true"></span>
-								{{mf 'event.edit.addressSearch' "Search"}}
-							</button>
-						</span>
+						<button type="submit" class="btn btn-go js-location-search-btn">
+							<span class="fa fa-search fa-fw" aria-hidden="true"></span>
+							{{mf 'event.edit.addressSearch' "Search"}}
+						</button>
 					</div>
 					{{#if searching}}
 						<input type="text" class="form-control js-location-address-search"
