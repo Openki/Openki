@@ -7,15 +7,14 @@ import { Accounts } from 'meteor/accounts-base';
  * so those can be used mit asnyc/await.
  */
 export const MeteorAsync = {
-	/** @type {(name: string, ...args: any[]) => Promise<any>} */
 	call:
 		// On the server there should be a callAsync: https://docs.meteor.com/changelog.html#v14420170407
 		Meteor.callAsync
 			? Meteor.callAsync
 			: Meteor.call &&
-			  ((/** @type {string} */ name, ...args) =>
+			  ((name: string, ...args: any[]) =>
 					new Promise((resolve, reject) => {
-						Meteor.call(name, ...args, (err, res) => {
+						Meteor.call(name, ...args, (err: any, res: any) => {
 							if (err) {
 								reject(err);
 							} else {
@@ -23,24 +22,29 @@ export const MeteorAsync = {
 							}
 						});
 					})),
-	/** @type {(name: string, ...args: any[]) => Promise<Meteor.SubscriptionHandle>} */
-	subscribe:
-		Meteor.subscribe &&
-		((/** @type {string} */ name, ...args) =>
-			new Promise((resolve, reject) => {
-				const handle = Meteor.subscribe(name, ...args, {
-					onReady: () => {
-						resolve(handle);
-					},
-					onStop: (err) => {
-						if (err) {
-							reject(err);
-						}
-					},
-				});
-			})),
-	loginWithPassword: Meteor.loginWithPassword && promisify(Meteor.loginWithPassword),
-	logout: Meteor.logout && promisify(Meteor.logout),
+
+	subscribe: Meteor.subscribe
+		? (name: string, ...args: any[]) =>
+				new Promise<Meteor.SubscriptionHandle>((resolve, reject) => {
+					const handle = Meteor.subscribe(name, ...args, {
+						onReady: () => {
+							resolve(handle);
+						},
+						onStop: (err: any) => {
+							if (err) {
+								reject(err);
+							}
+						},
+					});
+				})
+		: undefined,
+	loginWithPassword:
+		Meteor.loginWithPassword &&
+		(promisify(Meteor.loginWithPassword) as (
+			user: string | { email: string } | { username: string } | { id: string },
+			password: string,
+		) => Promise<void>),
+	logout: Meteor.logout && promisify<void>(Meteor.logout),
 };
 
 /**

@@ -21,10 +21,9 @@ if (Meteor.isClient) {
 
 			await waitForSubscriptions();
 			const titles = await waitFor(() => {
-				// eslint-disable-next-line no-shadow
-				const titles = document.getElementsByClassName('course-compact-title');
-				assert.equal(titles.length, 7, 'expect to see test course titles');
-				return titles;
+				const t = document.getElementsByClassName('course-compact-title');
+				assert.equal(t.length, 7, 'expect to see test course titles');
+				return t;
 			}, 6000);
 			await waitFor(() => {
 				assert.equal(titles[0].textContent, 'Sprachaustausch');

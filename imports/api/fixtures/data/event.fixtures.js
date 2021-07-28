@@ -1,4 +1,4 @@
-const events = [
+export const events = [
 	{
 		title: 'DER MÜLL EINER HOCHSCHULE',
 		description:
