@@ -1,24 +1,21 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { Match, check } from 'meteor/check';
 
 import { Filtering } from '/imports/utils/filtering';
 
-// ======== DB-Model: ========
-/**
- * @typedef {Object} GroupEntity
- * @property {string} _id ID
- * @property {string} name
- * @property {string} short
- * @property {string} claim
- * @property {string} description
- * @property {string[]} members List of userIds
- */
+/** DB-Model */
+export interface GroupEntity {
+	/** ID */
+	_id: string;
+	name: string;
+	short: string;
+	claim: string;
+	description: string;
+	/** List of userIds */
+	members: string[];
+}
 
-/**
- * @extends {Mongo.Collection<GroupEntity>}
- */
-export class GroupsCollection extends Mongo.Collection {
+export class GroupsCollection extends Mongo.Collection<GroupEntity> {
 	constructor() {
 		super('Groups');
 
@@ -34,23 +31,27 @@ export class GroupsCollection extends Mongo.Collection {
 
 	/**
 	 * Find groups for given filters
-	 * @param {object} [filter] dictionary with filter options
-	 * @param {boolean} [filter.own] Limit to groups where logged-in user is a member
-	 * @param {string|false} [filter.user] Limit to groups where given user ID is a
-	 * member (client only)
-	 * @param {number} [limit] how many to find
-	 * @param {number} [skip] skip this many before returning results
-	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
+	 * @param filter dictionary with filter options
+	 * @param limit how many to find
+	 * @param skip skip this many before returning results
+	 * @param sort list of fields to sort by
 	 */
-	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+	findFilter(
+		filter: {
+			/** Limit to groups where logged-in user is a member */
+			own?: boolean;
+		} = {},
+		limit = 0,
+		skip = 0,
+		sort?: [string, 'asc' | 'desc'][],
+	) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
 		check(sort, Match.Maybe([[String]]));
 
-		/** @type {Mongo.Selector<GroupEntity> } */
-		const find = {};
-		/** @type {Mongo.Options<GroupEntity>} */
-		const options = { sort };
+		const find: Mongo.Selector<GroupEntity> = {};
+
+		const options: Mongo.Options<GroupEntity> = { sort };
 
 		if (limit > 0) {
 			options.limit = limit;
