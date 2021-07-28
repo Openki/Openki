@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { check, Match } from 'meteor/check';
+import { Match, check } from 'meteor/check';
 
 import { Courses } from '/imports/api/courses/courses';
 import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
