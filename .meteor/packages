@@ -52,6 +52,7 @@ standard-minifier-css           # CSS minifier run for production mode
 
 # DEV
 msavin:mongol
+typescript
 
 # Test
 meteortesting:mocha@2.0.1       # A package for writing and running your meteor app and package tests with mocha
