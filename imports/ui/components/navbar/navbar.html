@@ -36,7 +36,8 @@
 			<div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
 				<ul
 					class="nav navbar-nav {{toggleNavbarRight 'left'}} row-sm-auto row-no-gutters px-1 text-center">
-					<li class="{{activeClass 'home'}} {{activeClass 'showCourse'}} col-4-sm-auto p-0">
+					<li
+						class="{{activeClass 'home'}} {{activeClass 'showCourse'}} col-4-sm-auto p-0">
 						<a href="{{pathFor 'home'}}"
 						   class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close"
 						   id="nav_courses">
@@ -111,20 +112,20 @@
 			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
 		</div>
 		<div class="mb-3">
-			<a class="btn btn-default form-control"
+			<a class="btn btn-secondary form-control"
 			   href="{{pathFor 'userprofile' _id=currentUser._id}}">
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 				{{mf 'login.frame.profile' 'Public profile'}}
 			</a>
 		</div>
 		<div class="mb-3">
-			<a class="btn btn-default form-control" href="{{pathFor 'profile'}}">
+			<a class="btn btn-secondary form-control" href="{{pathFor 'profile'}}">
 				<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
 				{{mf 'login.frame.settings' 'Account settings'}}
 			</a>
 		</div>
 		<div class="mb-3">
-			<button type="button" class="btn btn-default js-logout form-control">
+			<button type="button" class="btn btn-secondary js-logout form-control">
 				<span class="fa fa-sign-out fa-fw" aria-hidden="true"></span>
 				{{mf 'login.logout' 'Logout'}}
 			</button>

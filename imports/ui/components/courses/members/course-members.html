@@ -38,7 +38,7 @@
 			<div class="course-member-roles">
 				{{#if memberRoles.length}}
 					{{#each memberRoles}}
-						<div class='course-member-role pull-right'>
+						<div class='course-member-role float-end'>
 							<span class="course-member-role-text">
 								<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
 								<span class="role-short">{{roleShort this}}</span>
@@ -52,10 +52,10 @@
 					{{/each}}
 				{{/if}}
 				{{#if maySubscribeToTeam}}
-					<button type="button" class="btn btn-add js-add-to-team-btn pull-right"
+					<button type="button" class="btn btn-sm btn-add float-end js-add-to-team-btn"
 						data-tooltip="{{mf 'course.roles.maketeam' 'Add to team'}}"
 						data-tooltip-direction="e">
-						<span class="fa fa-plus add-to-team-btn-plus {{member.user}}"></span>
+						<span class="fa fa-plus {{member.user}}"></span>
 						<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
 					</button>
 				{{/if}}

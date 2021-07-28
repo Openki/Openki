@@ -123,7 +123,6 @@ $discussion-post-bg: $blue-lighter;
 	@include td-padding(left, $discussion-thumb-width * 2 * 1px);
 }
 
-.discussion-post + .toggle-all-responses,
 .discussion-post + .discussion-reply,
 .discussion-comment + .discussion-reply {
 	margin-top: 10px;

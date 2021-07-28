@@ -3,11 +3,12 @@
 		<div class="participant-contact">
 			{{#if userSubReady}}
 				{{#if userAcceptsPrivateMessages}}
-					<button class="btn-link js-show-participant-contact-modal" type="button">
+					<button class="btn btn-link p-0 js-show-participant-contact-modal"
+							type="button">
 						<i class="fa fa-envelope"></i>
 					</button>
 				{{else}}
-					<button class="btn-link disabled" type="button" disabled>
+					<button class="btn btn-link p-0 disabled" type="button" disabled>
 						<i class="fa fa-envelope"
 						   title="{{mf 'user.acceptsPrivateMessages.false' 'User does not accept private messages from users'}}"></i>
 					</button>

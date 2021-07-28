@@ -2,10 +2,16 @@
 // This allows use to override the default values of those variables before
 // we import Bootstrap's source Sass files.
 
+// Bootstrap Options
+
+$enable-gradients: true;
+
 // Include functions first (so we can manipulate colors, SVGs, calc, etc)
 @import '{}/node_modules/bootstrap/scss/functions'; // Required
 
 // Default variable overrides
+
+$secondary: #f0f0f0;
 
 // Typography
 //

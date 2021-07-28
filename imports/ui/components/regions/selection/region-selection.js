@@ -23,7 +23,7 @@ Template.regionSelectionWrap.onCreated(function () {
 Template.regionSelectionWrap.helpers({
 	inNavbarClasses() {
 		if (this.inNavbar) {
-			return 'col-6-sm-auto p-0';
+			return 'col-6-sm-auto px-0';
 		}
 		return '';
 	},
@@ -32,7 +32,7 @@ Template.regionSelectionWrap.helpers({
 Template.regionSelectionDisplay.helpers({
 	inNavbarClasses() {
 		if (this.inNavbar) {
-			return 'col-6-sm-auto p-0';
+			return 'col-6-sm-auto px-0';
 		}
 		return '';
 	},

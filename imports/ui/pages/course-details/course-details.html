@@ -164,7 +164,7 @@
 				</div>
 			{{/if}}
 			{{#if tools}}
-				<div class="btn-group tag-btn group-tag-btn addon">
+				<div class="btn-group tag-btn group-tag-btn addon align-top">
 					<button type="button" class="dropdown-toggle" aria-expanded="false"
 							aria-haspopup="true" data-toggle="dropdown">
 						<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
@@ -189,7 +189,7 @@
 
 <template name="courseGroupAdd">
 	{{#if groupsToAdd}}
-		<div class="btn-group tag-btn group-tag-btn">
+		<div class="btn-group tag-btn group-tag-btn align-top">
 			<button type="button" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true"
 					data-toggle="dropdown">
 				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
@@ -204,7 +204,7 @@
 				<li role="seperator" class="divider"></li>
 				{{#each groupsToAdd}}
 					<li>
-						<button class="btn-link js-add-group" type="button" value="{{this}}">
+						<button class="btn btn-link js-add-group" type="button" value="{{this}}">
 							{{name}}
 						</button>
 					</li>

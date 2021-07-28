@@ -33,11 +33,11 @@ select:hover {
 	cursor: not-allowed;
 }
 
-
 a:hover,
 .btn-link:hover,
 a:focus,
 .btn-link:focus {
+	box-shadow: none !important;
 	text-decoration: none;
 }
 

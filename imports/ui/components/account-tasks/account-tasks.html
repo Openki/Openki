@@ -65,14 +65,14 @@
 				</div>
 				{{errorMessage 'password'}}
 			</div>
-			<div class="mb-3 forgot-pwd-btn-container">
-				<button type="button" class="btn btn-link js-forgot-pwd-btn">
+			<div class="mb-3 text-end">
+				<button type="button" class="btn btn-link p-0 js-forgot-pwd-btn">
 					<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
 					{{mf 'forgot' "I forgot my password"}}
 				</button>
 			</div>
 			<div class="mb-3">
-				<button type="submit" class='btn btn-default js-login form-control'
+				<button type="submit" class='btn btn-secondary js-login form-control'
 						{{disabledIfBusy}}>
 					{{#if busy 'logging-in'}}
 						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
@@ -88,9 +88,8 @@
 				</button>
 			</div>
 			<hr>
-			<div class="mb-3">
 				{{#each service in OAuthServices}}
-					<button class="btn btn-{{service.key}} form-control js-oauth-btn"
+					<button class="btn btn-{{service.key}} form-control js-oauth-btn my-2"
 							data-service="{{service.serviceName}}" type="button" {{disabledIfBusy}}>
 						{{#if busy service.serviceName}}
 							<span class="fa fa-circle-o-notch fa-spin fa-fw"
@@ -103,7 +102,6 @@
 						{{service.name}}
 					</button>
 				{{/each}}
-			</div>
 			<hr>
 			<div class="mb-3">
 				<button class="btn btn-add form-control js-register-open" type="button">
@@ -171,7 +169,7 @@
 		</div>
 		<hr>
 		<div class="mb-3">
-			<button class="js-back-to-login btn btn-default form-control" type="button">
+			<button class="js-back-to-login btn btn-secondary form-control" type="button">
 				<i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>
 				{{mf 'login.register.backToLogin' 'Go back to login'}}
 			</button>
