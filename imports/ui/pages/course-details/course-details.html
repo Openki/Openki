@@ -1,93 +1,95 @@
 <template name="courseDetailsPage">
 	<div class="container">
-		<div class="course-page-column-left">
-			<div class="page-component">
-				{{#if isArchived}}
-					<div class="alert alert-archived text-center" role="alert">
-						<strong>{{mf 'course.archive.alert' 'This course is archived and not active anymore.'}}</strong>
-					</div>
-				{{/if}}
-				{{#if edit}}
-					{{> courseEdit course}}
-				{{else}}
-					<div class="course-details {{courseStateClasses}}">
-						<div class="details-header">
-							{{#if course.internal}}
-								<span class="details-internal"
-									  data-tooltip="{{mf 'courseCompact.internal_course' 'Internal course'}}"></span>
-							{{/if}}
-							<div class="details-header-tags">
-								{{#if isProposal}}
-									<div class="proposal-tag">
-										<span class="fa fa-lightbulb-o fa-fw"
-											  aria-hidden="true"></span>
-										{{mf 'course.details.is-proposalTag' 'Proposal'}}
-									</div>
+		<div class="row course-page">
+			<div class="col-lg-8">
+				<div class="page-component">
+					{{#if isArchived}}
+						<div class="alert alert-archived text-center" role="alert">
+							<strong>{{mf 'course.archive.alert' 'This course is archived and not active anymore.'}}</strong>
+						</div>
+					{{/if}}
+					{{#if edit}}
+						{{> courseEdit course}}
+					{{else}}
+						<div class="course-details {{courseStateClasses}}">
+							<div class="details-header">
+								{{#if course.internal}}
+									<span class="details-internal"
+										  data-tooltip="{{mf 'courseCompact.internal_course' 'Internal course'}}"></span>
 								{{/if}}
+								<div class="details-header-tags">
+									{{#if isProposal}}
+										<div class="proposal-tag">
+											<span class="fa fa-lightbulb-o fa-fw"
+												  aria-hidden="true"></span>
+											{{mf 'course.details.is-proposalTag' 'Proposal'}}
+										</div>
+									{{/if}}
+									{{#with course}}
+										{{> regionTag}}
+									{{/with}}
+								</div>
+								<div class="course-details-title">
+									{{#if mayEdit}}
+										{{> editable editableName}}
+									{{else}}
+										<h2>{{course.name}}</h2>
+									{{/if}}
+								</div>
 								{{#with course}}
-									{{> regionTag}}
+									{{#if categories}}
+										<div class="course-details-categories">
+											{{> courseCategories}}
+										</div>
+									{{/if}}
+									{{> courseGroupList}}
 								{{/with}}
 							</div>
-							<div class="course-details-title">
-								{{#if mayEdit}}
-									{{> editable editableName}}
-								{{else}}
-									<h2>{{course.name}}</h2>
-								{{/if}}
-							</div>
-							{{#with course}}
-								{{#if categories}}
-									<div class="course-details-categories">
-										{{> courseCategories}}
-									</div>
-								{{/if}}
-								{{> courseGroupList}}
-							{{/with}}
+							{{> courseDetailsSubmenu editableDescription=editableDescription course=course}}
 						</div>
-						{{> courseDetailsSubmenu editableDescription=editableDescription course=course}}
-					</div>
-					{{> sharing}}
-					{{#if mayEdit}}
-						<div class="actions">
-							{{> buttonEdit event="js-course-edit"}}
-							{{#if isArchived}}
-								{{> buttonCourseUnarchive}}
-							{{/if}}
-							{{#unless expanded}}
-								{{#unless isArchived}}
-									{{> buttonCourseArchive 
+						{{> sharing}}
+						{{#if mayEdit}}
+							<div class="actions">
+								{{> buttonEdit event="js-course-edit"}}
+								{{#if isArchived}}
+									{{> buttonCourseUnarchive}}
+								{{/if}}
+								{{#unless expanded}}
+									{{#unless isArchived}}
+										{{> buttonCourseArchive 
 										buttonClass="btn-archive"
 										textIdle=(mf 'course.archive.archiveButton.archive' 'Archive')
 									}}
+									{{/unless}}
+									{{> buttonDelete event="js-expand"}}
 								{{/unless}}
-								{{> buttonDelete event="js-expand"}}
-							{{/unless}}
-						</div>
+							</div>
+						{{/if}}
+						{{#if expanded}}
+							{{> confirmDialog hasArchiveButton=isArchived}}
+						{{/if}}
+						{{> courseRoles rolesDetails}}
 					{{/if}}
-					{{#if expanded}}
-						{{> confirmDialog hasArchiveButton=isArchived}}
-					{{/if}}
-					{{> courseRoles rolesDetails}}
+				</div>
+				{{#if mobileViewport}}
+					{{> courseEvents}}
+				{{else}}
+					{{> discussion courseId=course._id select=select}}
 				{{/if}}
 			</div>
-			{{#if mobileViewport}}
-				{{> courseEvents}}
-			{{else}}
-				{{> discussion courseId=course._id select=select}}
-			{{/if}}
-		</div>
-		<div class="course-page-column-right">
-			{{#unless mobileViewport}}
-				{{> courseEvents}}
-			{{/unless}}
-			<div class="page-component">
-				{{> courseMembers course}}
-			</div>
-			{{#if mobileViewport}}
-				{{> discussion courseId=course._id select=select}}
-			{{/if}}
-			<div class="page-component">
-				{{> report}}
+			<div class="col-lg-4">
+				{{#unless mobileViewport}}
+					{{> courseEvents}}
+				{{/unless}}
+				<div class="page-component">
+					{{> courseMembers course}}
+				</div>
+				{{#if mobileViewport}}
+					{{> discussion courseId=course._id select=select}}
+				{{/if}}
+				<div class="page-component">
+					{{> report}}
+				</div>
 			</div>
 		</div>
 	</div>
