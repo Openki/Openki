@@ -1,8 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
+import { RegionModel } from '/imports/api/regions/regions';
 
-/** @param {RegionModel} [region] */
-export function getSiteName(region) {
+export function getSiteName(region: RegionModel): string {
 	if (region?.custom?.siteName) {
 		return region.custom.siteName;
 	}

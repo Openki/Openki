@@ -1,10 +1,12 @@
 /**
  * Return its _id field if thing is an object, else return the thing itself.
- * @param {string | { _id: string; }} thing
- * @returns {string}
  */
-export function extract(thing) {
-	return thing._id || `${thing}`;
+export function extract(thing: { _id: string } | string) {
+	if (typeof thing === 'object') {
+		return thing._id || `${thing}`;
+	}
+
+	return `${thing}`;
 }
 
 export default extract;
