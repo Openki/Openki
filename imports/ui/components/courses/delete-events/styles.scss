@@ -1,12 +1,14 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .course-event-tasks {
 	position: relative;
 }
 
 .delete-events-details {
-	color: $gray;
+	color: $gray-700;
 
 	&:hover {
-		color: $gray;
+		color: $gray-700;
 	}
 }
 

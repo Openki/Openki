@@ -52,7 +52,8 @@
 									</li>
 								{{else}}
 									{{#if alterPrivileges}}
-										<button type="button" class="giveAdmin list-group-item">
+										<button type="button"
+												class="giveAdmin list-group-item-action list-group-item-secondary">
 											{{mf 'privilege.add.admin' 'Grant administrator privileges'}}
 										</button>
 									{{/if}}
@@ -80,7 +81,7 @@
 										</li>
 									{{else}}
 										<button type="button"
-												class="draftIntoGroup list-group-item">
+												class="draftIntoGroup list-group-item list-group-item-action list-group-item-secondary">
 											{{mf 'profile.group.draft' 'Draft into group '}}
 											{{name}}
 										</button>

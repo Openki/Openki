@@ -16,7 +16,7 @@
 
 	<div class="list-group">
 		{{#each foundUsers}}
-			<a href="{{pathFor 'userprofile' _id=this._id}}" class="list-group-item">
+			<a href="{{pathFor 'userprofile' _id=this._id}}" class="list-group-item list-group-item-action">
 				<i class="fa fa-user fa-fw" aria-hidden="true"></i>
 				{{username this._id}}
 			</a>
