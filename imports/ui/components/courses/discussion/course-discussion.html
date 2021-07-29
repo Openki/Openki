@@ -17,7 +17,7 @@
 			</div>
 		{{/each}}
 		{{#if limited}}
-			<button class="btn btn-add course-page-btn js-show-all-posts" type="button">
+			<button class="btn btn-lg btn-add course-page-btn js-show-all-posts" type="button">
 				<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
 				{{#mf KEY='course.discussions.showAllComments' NUM=count}}
 					Show all {NUM} comments
@@ -64,7 +64,7 @@
 				</button>
 			</div>
 		{{else}}
-			<button type="button" class="btn btn-add course-page-btn js-discussion-edit"
+			<button type="button" class="btn btn-lg btn-add course-page-btn js-discussion-edit"
 					{{disabledIfBusy}}>
 				{{#if busy 'saving'}}
 					<span class="fa fa-circle-o-notch fa-spin fa-fw"

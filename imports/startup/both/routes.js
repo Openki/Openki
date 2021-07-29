@@ -530,9 +530,9 @@ Router.route('showCourse', {
 		};
 		return data;
 	},
-	async onBeforeAction() {
+	async action() {
 		await import('/imports/ui/pages/course-details');
-		this.next();
+		this.render();
 	},
 	onAfterAction() {
 		const data = this.data();

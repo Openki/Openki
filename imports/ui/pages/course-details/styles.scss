@@ -1,3 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 // *** Course details ***
 //=======================
 
@@ -19,17 +21,16 @@
 // ** Course buttons
 //========================================================================================
 .course-delete-confirmation {
-	$background-color: lighten($brand-danger, 20%);
+	$background-color: tint-color($danger, 20%);
 
 	background-color: $background-color;
-	border: 1px solid darken($background-color, 20%);
+	border: 1px solid shade-color($background-color, 20%);
 	padding: 15px 15px 0;
 }
 
 // ** Component buttons
 //========================================================================================
 .course-page-btn {
-	@include btn-lg;
 	@include td-text-align(left);
 	margin-top: $course-details-seperator-height;
 	padding: 10px 12px;
@@ -78,7 +79,7 @@
 	$background-color: rgba($blue-lighter, 0.75);
 
 	background-color: $background-color;
-	color: darken($background-color, 65%);
+	color: shade-color($background-color, 65%);
 	margin-bottom: 1px;
 	padding: 8px;
 }
@@ -161,7 +162,7 @@
 //========================================================================================
 .course-details-content {
 	border-bottom-width: 0;
-	border-color: darken($tab-content-bg, 5%);
+	border-color: shade-color($tab-content-bg, 5%);
 	position: relative;
 
 	&::before,
@@ -217,7 +218,7 @@ $course-details-content-padding-horizontal: (
 //========================================================================================
 .course-page .shariff-wrapper {
 	background-color: $tab-content-bg;
-	border-color: darken($tab-content-bg, 5%);
+	border-color: shade-color($tab-content-bg, 5%);
 	border-style: solid;
 	border-width: 0 1px 1px;
 }

@@ -40,7 +40,7 @@ import './template.html';
 import './styles.scss';
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
-Template.courseDetailsPage.onCreated(function () {
+Template.courseDetailsPage.onCreated(function (this: any) {
 	const instance = this;
 
 	instance.busy(false);
@@ -125,10 +125,10 @@ Template.courseDetailsPage.helpers({
 		return this.course.archived;
 	},
 	editableName() {
-		return Template.instance().editableName;
+		return (Template.instance() as any).editableName;
 	},
 	editableDescription() {
-		return Template.instance().editableDescription;
+		return (Template.instance() as any).editableDescription;
 	},
 });
 
@@ -139,7 +139,7 @@ Template.courseDetailsDescription.helpers({
 });
 
 Template.courseDetailsPage.events({
-	async 'click .js-delete-course-confirm'(event, instance) {
+	async 'click .js-delete-course-confirm'(_event: any, instance: any) {
 		if (PleaseLogin()) {
 			return;
 		}
@@ -159,7 +159,7 @@ Template.courseDetailsPage.events({
 			);
 
 			let role;
-			if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
+			if (_.intersection(Meteor.user()?.badges || [], course.editors).length > 0) {
 				role = 'team';
 			} else if (UserPrivilegeUtils.privilegedTo('admin')) {
 				role = 'admin';
@@ -181,7 +181,7 @@ Template.courseDetailsPage.events({
 		}
 	},
 
-	async 'click .js-course-archive'(event, instance) {
+	async 'click .js-course-archive'(_event: any, instance: any) {
 		if (PleaseLogin()) {
 			return;
 		}
@@ -205,7 +205,7 @@ Template.courseDetailsPage.events({
 		}
 	},
 
-	async 'click .js-course-unarchive'(event, instance) {
+	async 'click .js-course-unarchive'(_event: any, instance: any) {
 		if (PleaseLogin()) {
 			return;
 		}
@@ -229,7 +229,7 @@ Template.courseDetailsPage.events({
 		}
 	},
 
-	'click .js-course-edit'(event, instance) {
+	'click .js-course-edit'(_event: any, instance: any) {
 		instance.collapse();
 		if (PleaseLogin()) {
 			return;
@@ -248,7 +248,7 @@ Template.courseGroupList.helpers({
 		const tools = [];
 		const user = Meteor.user();
 		const groupId = String(this);
-		const course = Template.parentData();
+		const course = (Template as any).parentData();
 		if (user?.mayPromoteWith(groupId) || course.editableBy(user)) {
 			tools.push({
 				toolTemplate: Template.courseGroupRemove,
@@ -280,14 +280,14 @@ Template.courseGroupAdd.helpers({
 });
 
 Template.courseGroupAdd.events({
-	async 'click .js-add-group'(event, instance) {
+	async 'click .js-add-group'(event: any, instance: any) {
 		const course = instance.data;
 		const groupId = event.currentTarget.value;
 
 		try {
 			await CoursesMethods.promote(course._id, groupId, true);
 
-			const groupName = Groups.findOne(groupId).name;
+			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
 				mf(
 					'courseGroupAdd.groupAdded',
@@ -305,14 +305,14 @@ Template.courseGroupAdd.events({
 TemplateMixins.Expandible(Template.courseGroupRemove);
 Template.courseGroupRemove.helpers(GroupNameHelpers);
 Template.courseGroupRemove.events({
-	async 'click .js-remove'(event, instance) {
+	async 'click .js-remove'(_event: any, instance: any) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
 
 		try {
 			await CoursesMethods.promote(course._id, groupId, false);
 
-			const groupName = Groups.findOne(groupId).name;
+			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
 				mf(
 					'courseGroupAdd.groupRemoved',
@@ -330,14 +330,14 @@ Template.courseGroupRemove.events({
 TemplateMixins.Expandible(Template.courseGroupMakeOrganizer);
 Template.courseGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.courseGroupMakeOrganizer.events({
-	async 'click .js-makeOrganizer'(event, instance) {
+	async 'click .js-makeOrganizer'(_event: any, instance: any) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
 
 		try {
 			await CoursesMethods.editing(course._id, groupId, true);
 
-			const groupName = Groups.findOne(groupId).name;
+			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
 				mf(
 					'courseGroupAdd.membersCanEditCourse',
@@ -355,14 +355,14 @@ Template.courseGroupMakeOrganizer.events({
 TemplateMixins.Expandible(Template.courseGroupRemoveOrganizer);
 Template.courseGroupRemoveOrganizer.helpers(GroupNameHelpers);
 Template.courseGroupRemoveOrganizer.events({
-	async 'click .js-removeOrganizer'(event, instance) {
+	async 'click .js-removeOrganizer'(_event: any, instance: any) {
 		const { course } = instance.data;
 		const { groupId } = instance.data;
 
 		try {
 			await CoursesMethods.editing(course._id, groupId, false);
 
-			const groupName = Groups.findOne(groupId).name;
+			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
 				mf(
 					'courseGroupAdd.membersCanNoLongerEditCourse',

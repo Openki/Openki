@@ -1,0 +1,29 @@
+/* prettier-ignore */
+/* stylelint-disable */
+
+// ** Tabs
+//========================================================================================
+$tab-content-bg: tint-color($blue-lighter, 5%);
+$tab-content-border-width: 1px;
+
+// ** Detail pages
+//========================================================================================
+$details-header-padding-horizontal:              15px;
+
+// ** Courses
+//========================================================================================
+$course-border-width:                            7px;
+$course-border-color:                            $blue-lighter;
+$has-upcoming-events-bg:                         $blue-lighter;
+$proposal-border-style:                          dashed;
+$has-past-events-border-style:                   solid;
+$archived-color:                                 #f5ecc6;
+
+$course-compact-next-event-bg:                   $green;
+$course-compact-next-event-color:                $gray-800;
+
+$course-page-component-bg:                       $blue-lighter;
+$course-details-seperator-height:                3px;
+
+$course-member-comment-border-color:             shade-color($blue-lighter, 40%);
+
