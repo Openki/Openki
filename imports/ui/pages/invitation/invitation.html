@@ -1,13 +1,19 @@
 <template name="invitation">
 	<div class="container">
-		<div class="jumbotron">
-			<h1>{{mf 'invitation.join.welcome' "Welcome to {SITENAME}!" SITENAME=siteName}}</h1>
-			<p>
-				{{mf 'invitation.join.text' "Become part of the organisation {TENANT} and propose, discuss, develop, organise and publish courses with {INVITER} and other amazing people in the organisation {TENANT}." TENANT=tenant.name INVITER=(username invitation.createdBy)}}
-			</p>
-			<button class="btn btn-lg btn-save js-join" {{disabledIfBusy}}>
-				{{mf "invitation.join" "Join {TENANT}" TENANT=tenant.name}}
-			</button>
+
+		<div class="p-2 p-md-5 bg-light rounded-3">
+			<div class="container-fluid py-2 py-md-5">
+				<h1 class="display-5">
+					{{mf 'invitation.join.welcome' "Welcome to {SITENAME}!" SITENAME=siteName}}
+				</h1>
+				<p class="fs-4">
+					{{mf 'invitation.join.text' "Become part of the organisation {TENANT} and propose, discuss, develop, organise and publish courses with {INVITER} and other amazing people in the organisation {TENANT}." TENANT=tenant.name INVITER=(username invitation.createdBy)}}
+				</p>
+				<button class="btn btn-lg btn-save js-join" {{disabledIfBusy}}>
+					{{mf "invitation.join" "Join {TENANT}" TENANT=tenant.name}}
+				</button>
+			</div>
 		</div>
+
 	</div>
 </template>

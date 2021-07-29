@@ -10,16 +10,16 @@
 					<i alt={{mf 'group.details.isFeatured' 'This group is featured'}}
 					   aria-hidden="true" class="fa fa-fw fa-star"></i>
 				{{/if}}
-				<span class="titlebar-btn js-group-remove-filter"
-					  data-tooltip="{{mf group.page.removeFilter 'See all courses'}}">
-					<i class="fa fa-remove" aria-hidden="true"></i>
-				</span>
+				<button class="btn btn-link float-end ms-2 js-group-remove-filter"
+						data-tooltip="{{mf group.page.removeFilter 'See all courses'}}">
+					<i class="fa fa-remove fa-lg" aria-hidden="true"></i>
+				</button>
 				{{#unless isNew}}
 					{{#if mayEdit}}
-						<span class="titlebar-btn js-group-settings"
-							  data-tooltip="{{mf 'group.settings.title'}}">
-							<i class="fa fa-cog" aria-hidden="true"></i>
-						</span>
+						<button class="btn btn-link float-end ms-2 js-group-settings"
+								data-tooltip="{{mf 'group.settings.title'}}">
+							<i class="fa fa-cog fa-lg" aria-hidden="true"></i>
+						</button>
 					{{/if}}
 				{{/unless}}
 			</div>

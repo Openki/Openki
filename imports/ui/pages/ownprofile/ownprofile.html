@@ -1,5 +1,5 @@
 <template name="profile">
-	<div class="container-sm">
+	<div class="container mw-md">
 		<div class="page-component">
 			<h1>
 				<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
@@ -67,7 +67,7 @@
 					<div class="col-sm-6">
 						{{#if user.email}}
 							<form class="js-email-form">
-								<div class="form-group {{errorClass 'email'}}">
+								<div class="mb-3 {{errorClass 'email'}}">
 									<label for="editform_email" class="sr-only">
 										{{mf 'profile.email' 'E-Mail'}}
 									</label>
@@ -90,18 +90,19 @@
 						{{/if}}
 					</div>
 					<div class="col-sm-6">
-						<div class="form-group">
-							<div class="checkbox edit-profile-checkbox">
-								<label>
-									<input type="checkbox" class="js-notifications"
-										   {{notificationsChecked}} />
+						<div class="mb-3">
+							<div class="form-check form-switch">
+								<input class="form-check-input js-notifications" type="checkbox"
+									   value="" id="notificationsCheck" {{notificationsChecked}} />
+								<label class="form-check-label" for="notificationsCheck">
 									{{mf 'profile.toggle.notifications' 'Receive automated notifications via email'}}
 								</label>
 							</div>
-							<div class="checkbox edit-profile-checkbox">
-								<label>
-									<input type="checkbox" class="js-allowPrivateMessages"
-										   {{allowPrivateMessagesChecked}} />
+							<div class="form-check form-switch">
+								<input class="form-check-input js-allowPrivateMessages"
+									   type="checkbox" value="" id="allowPrivateMessagesCheck"
+									   {{allowPrivateMessagesChecked}} />
+								<label class="form-check-label" for="allowPrivateMessagesCheck">
 									{{mf 'profile.toggle.allowPrivateMessages' 'Receive private messages from users via email'}}
 								</label>
 							</div>
@@ -169,43 +170,46 @@
 
 				<div class="edit-profile-password">
 					{{#unless changingPass}}
-						<button type="button" class="btn btn-default js-change-pwd-btn">
+						<button type="button" class="btn btn-secondary js-change-pwd-btn">
 							<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
 							{{mf 'profile.changePass' 'Change my password'}}
 						</button>
 					{{/unless}}
 					{{#if changingPass}}
-						<div class="details-form">
-							<form class="js-change-pwd form-horizontal">
-								<div class="form-group">
-									<label for="oldpassword" class="control-label">
+						<div class="border border-success text-primary p-3">
+							<form class="js-change-pwd">
+								<div class="row mb-2">
+									<label for="oldpassword"
+										   class="col-sm-4 col-form-label text-end">
 										{{mf 'profile.input.oldPassword' 'Your current password'}}
 									</label>
-									<div class="control-input">
+									<div class="col-sm-8">
 										<input type="password" class="js-old-pwd form-control"
 											   id="oldpassword" value="" />
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="newpassword" class="control-label">
+								<div class="row mb-2">
+									<label for="newpassword"
+										   class="col-sm-4 col-form-label text-end">
 										{{mf 'profile.input.newPassword' 'New password'}}
 									</label>
-									<div class="control-input">
+									<div class="col-sm-8">
 										<input type="password" class="js-new-pwd form-control"
 											   id="newpassword" value="" />
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="newpassword_confirm" class="control-label">
+								<div class="row mb-2">
+									<label for="newpassword_confirm"
+										   class="col-sm-4 col-form-label text-end">
 										{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
 									</label>
-									<div class="control-input">
+									<div class="col-sm-8">
 										<input type="password"
 											   class="js-new-pwd-confirm form-control"
 											   id="newpassword_confirm" value="" />
 									</div>
 								</div>
-								<div class="form-actions">
+								<div class="d-flex gap-2 justify-content-end">
 									{{> buttonSave}}
 									{{> buttonCancel event="js-change-pwd-cancel"}}
 								</div>

@@ -4,7 +4,6 @@ import './admin/users/users';
 import './admin/tenants/tenants';
 import './calendar/calendar';
 import './course-create/course-create';
-import './course-details/course-details';
 import './event-details/event-details';
 import './info/info';
 import './invitation/invitation';

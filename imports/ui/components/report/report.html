@@ -5,8 +5,8 @@
 	{{#if reporting}}
 		<div class="report">
 			<form>
-				<div class="form-group {{errorClass 'reportMessage'}}">
-					<label
+				<div class="mb-3 {{errorClass 'reportMessage'}}">
+					<label class="form-label"
 						   for="reportMessage">{{mf 'report.text' 'Please tell us what is wrong.'}}</label>
 					<textarea class="js-report-message form-control" id="reportMessage" rows="3"
 							  placeholder="{{mf 'report.placeholder' 'My hovercraft is full of eels.'}}"></textarea>
@@ -22,7 +22,7 @@
 			</form>
 		</div>
 	{{else}}
-		<button type="button" class="btn btn-default js-report">
+		<button type="button" class="btn btn-secondary js-report">
 			<span class="fa fa-warning"></span>
 			{{mf 'report.open' 'Report problem'}}
 		</button>

@@ -1,48 +1,10 @@
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
 
-// == Buttons
-// --------------------------------------------------
-.btn {
-	transition: border-color 0.15s ease-in-out;
-}
+.btn-secondary {
+	border-color: tint-color($blue, 65%);
 
-.btn-group:not(.group-tag-btn) {
-	@media (max-width: $screen-xs) {
-		width: 100%;
-	}
-}
-
-.btn-primary:focus {
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(56, 130, 156, 0.6);
-}
-
-.btn-default.active {
-	@include gradient-vertical(
-		darken($btn-default-bg, $btn-hover-level-start),
-		darken($btn-default-bg, $btn-hover-level-end)
-	);
-}
-
-// Apply gradient backgrounds for all btn-variants
-$btn-background-colors: (
-	default: $btn-default-bg,
-	primary: $btn-primary-bg,
-	success: $btn-success-bg,
-	warning: $btn-warning-bg,
-	danger: $btn-danger-bg,
-);
-
-@each $variant, $bg-color in $btn-background-colors {
-	.btn-#{$variant} {
-		@include gradient-vertical($bg-color, darken($bg-color, $btn-level-end));
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-
-		&:hover {
-			@include gradient-vertical(
-				darken($bg-color, $btn-hover-level-start),
-				darken($bg-color, $btn-hover-level-end)
-			);
-		}
+	&:hover {
+		border-color: tint-color($blue, 65%);
 	}
 }
 
@@ -56,78 +18,44 @@ $btn-background-colors: (
 }
 
 .btn-edit {
-	@extend .btn-default;
-}
-
-.btn-warning {
-	@extend .btn-warning;
+	@extend .btn-secondary;
 }
 
 .btn-archive {
-	@include gradient-vertical($btn-default-bg, darken($btn-default-bg, $btn-level-end));
-	border: 1px solid $btn-default-border;
+	@extend .btn-secondary;
 
 	&:hover {
-		@include gradient-vertical($btn-warning-bg, darken($btn-warning-bg, $btn-level-end));
-		border: 1px solid $btn-warning-border;
+		@extend .btn-warning:hover;
+		border-color: $warning;
 	}
 }
 
 .btn-cancel,
 .btn-delete,
 .btn-remove {
-	@include gradient-vertical($btn-default-bg, darken($btn-default-bg, $btn-level-end));
-	border: 1px solid $btn-default-border;
+	@extend .btn-secondary;
 
 	&:hover {
-		@include gradient-vertical($btn-danger-bg, darken($btn-danger-bg, $btn-level-end));
-		border: 1px solid $btn-danger-border;
+		@extend .btn-danger:hover;
+		border-color: $danger;
+		color: $black !important;
 	}
 }
 
-.btn-sm {
-	@media (max-width: $screen-xs) {
-		@include btn-base;
+$external-servies: (
+	google: #4285f4,
+	facebook: #3b5998,
+	github: #333,
+);
+
+@each $color, $value in $external-servies {
+	.btn-#{$color} {
+		@include button-variant($value, $value, $white);
+		font-weight: bold;
+
+		&[disabled] {
+			background-color: $color;
+			color: $white;
+		}
 	}
-}
-
-.btn-huge {
-	@include btn-lg;
-}
-
-.remove-btn {
-	background-color: transparent;
-	border: 0;
-	color: $gray-light;
-	padding: 0;
-
-	&:hover {
-		color: $gray-dark;
-		cursor: pointer;
-	}
-}
-
-.btn-icon {
-	@include td-margin(left, 5px);
-	background: none;
-	border: 0;
-	cursor: pointer;
-	font-size: $font-size-small;
-	padding: 0;
-}
-
-.btn-inline {
-	@include td-margin(left, 5px);
-}
-
-.btn-link {
-	border: 0;
-	margin: 0;
-	padding: 0;
-}
-
-.btn-link.disabled {
-	color: $link-color;
-	cursor: default;
-	opacity: 0.3;
 }

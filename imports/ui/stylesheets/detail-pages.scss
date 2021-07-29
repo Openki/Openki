@@ -20,10 +20,6 @@
 	padding: 0;
 }
 
-.page-component > .form-group:last-child {
-	margin-bottom: 0;
-}
-
 .page-component-seperated {
 	border-top: 1px solid $blue-lighter;
 	padding-top: $form-group-margin-bottom;
@@ -107,10 +103,6 @@
 	margin-bottom: 0;
 }
 
-.details-form + .form-group {
-	margin-top: $form-group-margin-bottom;
-}
-
 .details-form-element:nth-child(1):nth-last-child(2),
 .details-form-element:nth-child(2):nth-last-child(1) {
 	@include td-make-sm-column(6);
@@ -153,16 +145,6 @@
 .details-info-group {
 	@include make-row;
 	margin-bottom: $form-group-margin-bottom;
-}
-
-.details-info-label {
-	@include td-make-sm-column(3);
-	font-weight: bold;
-
-	@media (min-width: $screen-sm) {
-		@include td-text-align(right);
-		padding-top: 7px;
-	}
 }
 
 .details-info-data {

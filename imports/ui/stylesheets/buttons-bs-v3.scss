@@ -1,0 +1,49 @@
+/* stylelint-disable scss/at-extend-no-missing-placeholder */
+
+// == Buttons
+// --------------------------------------------------
+.btn {
+	transition: border-color 0.15s ease-in-out;
+}
+
+.btn-group:not(.group-tag-btn) {
+	@media (max-width: $screen-xs) {
+		width: 100%;
+	}
+}
+
+.btn-primary:focus {
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(56, 130, 156, 0.6);
+}
+
+.btn-secondary.active {
+	@include gradient-vertical(
+		darken($btn-default-bg, $btn-hover-level-start),
+		darken($btn-default-bg, $btn-hover-level-end)
+	);
+}
+
+.remove-btn {
+	background-color: transparent;
+	border: 0;
+	color: $gray-light;
+	padding: 0;
+
+	&:hover {
+		color: $gray-dark;
+		cursor: pointer;
+	}
+}
+
+.btn-icon {
+	@include td-margin(left, 5px);
+	background: none;
+	border: 0;
+	cursor: pointer;
+	font-size: $font-size-small;
+	padding: 0;
+}
+
+.btn-inline {
+	@include td-margin(left, 5px);
+}

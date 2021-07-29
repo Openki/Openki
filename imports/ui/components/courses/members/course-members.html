@@ -17,7 +17,7 @@
 			{{/each}}
 			{{#if limited}}
 				<button
-					class="btn btn-add course-page-btn js-show-more-members"
+					class="btn btn-lg btn-add course-page-btn js-show-more-members"
 					type="button">
 					<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
 					{{#mf KEY='course.members.showMoreParticipants'}}
@@ -38,7 +38,7 @@
 			<div class="course-member-roles">
 				{{#if memberRoles.length}}
 					{{#each memberRoles}}
-						<div class='course-member-role pull-right'>
+						<div class='course-member-role float-end'>
 							<span class="course-member-role-text">
 								<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
 								<span class="role-short">{{roleShort this}}</span>
@@ -52,10 +52,10 @@
 					{{/each}}
 				{{/if}}
 				{{#if maySubscribeToTeam}}
-					<button type="button" class="btn btn-add js-add-to-team-btn pull-right"
+					<button type="button" class="btn btn-sm btn-add float-end js-add-to-team-btn"
 						data-tooltip="{{mf 'course.roles.maketeam' 'Add to team'}}"
 						data-tooltip-direction="e">
-						<span class="fa fa-plus add-to-team-btn-plus {{member.user}}"></span>
+						<span class="fa fa-plus {{member.user}}"></span>
 						<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
 					</button>
 				{{/if}}
@@ -81,14 +81,12 @@
 
 <template name="removeFromTeamDropdown">
 	<span class="dropdown">
-		<button type="button" class="btn btn-remove remove-team-btn dropdown-toggle"
+		<button type="button" class="btn btn-sm btn-close btn-close-white dropdown-toggle"
 			aria-expanded="false"
 			aria-haspopup="true"
 			data-toggle="dropdown"
 			data-tooltip="{{mf 'course.roles.removeTeam' 'Remove from team'}}"
-			data-tooltip-direction="e">
-			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-		</button>
+			data-tooltip-direction="e"></button>
 		<ul class="dropdown-menu dialog-dropdown right">
 			<li class="dropdown-header">
 				{{#if isNotPriviledgedSelf}}
@@ -96,7 +94,7 @@
 				{{else}}
 					{{mf 'course.details.removeTeam.others.header' 'Remove member from team'}}
 				{{/if}}
-				<button class="close">&times;</button>
+				<button type="button" class="btn-close"></button>
 			</li>
 			<li role="separator" class="divider"></li>
 			<li class="dialog-dropdown-text">

@@ -2,10 +2,10 @@
 	<h3>
 		{{mf 'users.title' 'Users'}}
 	</h3>
-	<div class="form-group">
-		<label>{{mf 'users.field.find.label' 'Find a user'}}</label>
+	<div class="mb-3">
+		<label class="form-label">{{mf 'users.field.find.label' 'Find a user'}}</label>
 		<div class="input-group">
-			<span class="input-group-addon">
+			<span class="input-group-text">
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 			</span>
 			<input class="js-search-users form-control"
@@ -16,7 +16,7 @@
 
 	<div class="list-group">
 		{{#each foundUsers}}
-			<a href="{{pathFor 'userprofile' _id=this._id}}" class="list-group-item">
+			<a href="{{pathFor 'userprofile' _id=this._id}}" class="list-group-item list-group-item-action">
 				<i class="fa fa-user fa-fw" aria-hidden="true"></i>
 				{{username this._id}}
 			</a>

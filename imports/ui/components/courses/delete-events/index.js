@@ -5,11 +5,12 @@ import moment from 'moment';
 
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
+import * as EventsMethods from '/imports/api/events/methods';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import './delete-events.html';
-import * as EventsMethods from '/imports/api/events/methods';
+import './template.html';
+import './styles.scss';
 
 Template.deleteCourseEvents.events({
 	'mouseover/mouseout .js-show-events-delete-modal'(event, instance) {

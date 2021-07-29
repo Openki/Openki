@@ -10,6 +10,7 @@
     "@babel/runtime": "^7.14.6",
     "bcrypt": "^5.0.1",
     "bootstrap-datepicker": "^1.9.0",
+    "bootstrap": "^5.0.2",
     "bootstrap-sass": "^3.4.1",
     "es6-promisify": "^7.0.0",
     "events": "^1.1.1",
@@ -21,6 +22,7 @@
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
     "node-schedule": "^2.0.0",
+    "@popperjs/core": "^2.9.2",
     "sanitize-html": "^2.4.0",
     "seedrandom": "^3.0.5",
     "shariff": "^3.2.1",
@@ -41,6 +43,7 @@
     "@types/seedrandom": "^2.4.28",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
+    "autoprefixer": "^10.3.1",
     "assertion-error": "^1.1.0",
     "chai": "^4.3.4",
     "chromedriver": "^90.0.1",
@@ -49,6 +52,8 @@
     "eslint-import-resolver-meteor": "^0.4.0",
     "eslint-plugin-prettier": "^3.4.0",
     "js-beautify": "^1.14.0",
+    "postcss": "^8.3.6",
+    "postcss-load-config": "^3.1.0",
     "prettier": "^2.3.2",
     "selenium-webdriver": "^3.6.0",
     "stylelint": "^13.13.1",
@@ -56,6 +61,15 @@
     "stylelint-config-sass-guidelines": "^8.0.0",
     "stylelint-prettier": "^1.2.0",
     "typescript": "^4.3.5"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {
+        "browsers": [
+          "last 2 versions"
+        ]
+      }
+    }
   },
   "scripts": {
     "dev": "npx tsc --checkJs false && meteor --inspect --settings settings/dev.json",

@@ -292,7 +292,7 @@ Template.courseEdit.events({
 		instance.simpleSelectedRole.set(instance.$('input[name=role]:checked').val());
 	},
 
-	'click .close'(event, instance) {
+	'click .js-close'(event, instance) {
 		instance.showSavedMessage.set(false);
 	},
 
