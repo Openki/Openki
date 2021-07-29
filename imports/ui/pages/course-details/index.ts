@@ -36,7 +36,8 @@ import '/imports/ui/components/regions/tag/region-tag';
 import '/imports/ui/components/sharing/sharing';
 import '/imports/ui/components/report/report';
 
-import './course-details.html';
+import './template.html';
+import './styles.scss';
 
 TemplateMixins.Expandible(Template.courseDetailsPage);
 Template.courseDetailsPage.onCreated(function () {

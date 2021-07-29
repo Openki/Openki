@@ -530,6 +530,10 @@ Router.route('showCourse', {
 		};
 		return data;
 	},
+	async onBeforeAction() {
+		await import('/imports/ui/pages/course-details');
+		this.next();
+	},
 	onAfterAction() {
 		const data = this.data();
 		if (!data) {
