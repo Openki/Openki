@@ -83,7 +83,13 @@ Template.map.onRendered(function () {
 	// Add tiles depending on language
 	let tiles = null;
 	const tileLayers = {
-		// unfortunately for 'de' the tile.openstreetmap.de server does not support SSL
+		de() {
+			return L.tileLayer('//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
+				maxZoom,
+				attribution:
+					'&copy; Openstreetmap Deutschland | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+			});
+		},
 		fr() {
 			return L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
 				maxZoom,
