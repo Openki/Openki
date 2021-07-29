@@ -2,11 +2,7 @@ import { check } from 'meteor/check';
 
 import { Groups } from '/imports/api/groups/groups';
 
-/**
- * @param {string} userId
- * @param {string} groupId
- */
-export function isGroupMember(userId, groupId) {
+export function isGroupMember(userId: string, groupId: string) {
 	check(userId, String);
 	check(groupId, String);
 	return (

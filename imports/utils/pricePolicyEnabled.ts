@@ -1,8 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 
-/** @typedef {import('/imports/api/events/events').EventModel} EventModel */
-/** @typedef {import('/imports/api/events/events').Geodata} Geodata */
-
 /**
  * Checks if price-policy is enabled for this instance.
  * Its only disabled if you set the pricePolicyEnabled-var

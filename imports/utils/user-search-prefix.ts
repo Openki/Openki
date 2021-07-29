@@ -2,13 +2,12 @@ import { check } from 'meteor/check';
 
 import { Users } from '/imports/api/users/users';
 
-/**
- * @param {string} prefix
- * @param {{ limit?: number; exclude?: string[]; fields?: any; }} [options]
- */
-export function userSearchPrefix(prefix, options = {}) {
+export function userSearchPrefix(
+	prefix: string,
+	options: { limit?: number; exclude?: string[]; fields?: any } = {},
+) {
 	const prefixExp = `^${prefix.replace(/([.*+?^${}()|[\]/\\])/g, '\\$1')}`;
-	const query = { username: new RegExp(prefixExp, 'i') };
+	const query: Mongo.Selector<Meteor.User> = { username: new RegExp(prefixExp, 'i') };
 
 	const customizedOptions = options;
 	const { exclude } = options;

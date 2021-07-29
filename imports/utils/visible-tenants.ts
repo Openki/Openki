@@ -1,8 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
 export function visibleTenants() {
-	/** @type {string[]} */
-	let usersTenants;
+	let usersTenants: string[];
 
 	try {
 		// Source: https://forums.meteor.com/t/error-meteor-userid-can-only-be-invoked-in-method-calls-or-publications-in-collection-extends/44650/2
