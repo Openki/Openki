@@ -98,23 +98,24 @@ RegionSelection.subscribe = function () {
 		}
 
 		// If no region has been selected previously, we show the splash-screen.
-		Session.set('showRegionSplash', selectors.length < 1);
 
 		try {
 			// Ask geolocation server to place us so the splash-screen has our best
 			// guess selected.
 			const region = await UserLocation.detect();
+
 			if (region) {
 				useAsRegion(region._id);
-				return;
+			} else {
+				// Give up
+				useAsRegion('all');
 			}
+
+			Session.set('showRegionSplash', selectors.length < 1);
 		} catch (err) {
 			// eslint-disable-next-line no-console
 			console.log(`Region autodetection error: ${err}`);
 		}
-
-		// Give up
-		useAsRegion('all');
 	});
 };
 
