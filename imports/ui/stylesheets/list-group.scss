@@ -1,9 +1,9 @@
 /* stylelint-disable selector-no-qualifying-type */
 
 .list-group-item-secondary {
-	border-color: tint-color($blue, 80%);
+	border-color: tint-color($blue, 65%);
 
 	&:hover {
-		border-color: tint-color($blue, 80%);
+		border-color: tint-color($blue, 65%);
 	}
 }
