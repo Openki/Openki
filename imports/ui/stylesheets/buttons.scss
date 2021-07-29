@@ -52,5 +52,10 @@ $external-servies: (
 	.btn-#{$color} {
 		@include button-variant($value, $value, $white);
 		font-weight: bold;
+
+		&[disabled] {
+			background-color: $color;
+			color: $white;
+		}
 	}
 }
