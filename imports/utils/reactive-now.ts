@@ -12,7 +12,6 @@ function getNowWithoutSeconds() {
 /**
  * A reactive store that can be used for updates based on time. It contains just full minutes. It
  * changed all minutes (with an accuracy of +-5 seconds).
- * @type {ReactiveVar<Date>}
  */
 export const reactiveNow = new ReactiveVar(getNowWithoutSeconds());
 

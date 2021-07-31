@@ -1,17 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 
-import { Users } from '/imports/api/users/users';
-/** @typedef {import('imports/api/users/users').UserModel} UserModel */
+import { Role, UserModel, Users } from '/imports/api/users/users';
 
-/**
- * @param {UserModel|string|undefined|null} userOrUserId
- * @param {string} role
- * @returns {boolean}
- */
-export function privileged(userOrUserId, role) {
-	/** @type {UserModel|undefined|null} */
+export function privileged(userOrUserId: UserModel | string | undefined | null, role: Role) {
 	let user;
-	if (typeof userOrUserId === 'string' || userOrUserId instanceof String) {
+	if (typeof userOrUserId === 'string') {
 		// Load user object if ID was passed
 		user = Users.findOne({ _id: userOrUserId });
 	} else {
@@ -21,10 +14,7 @@ export function privileged(userOrUserId, role) {
 	return user?.privileged(role) || false;
 }
 
-/**
- * @param {string} privilege
- */
-export function privilegedTo(privilege) {
+export function privilegedTo(privilege: Role) {
 	const user = Meteor.user();
 	return privileged(user, privilege);
 }

@@ -14,7 +14,7 @@ import { Tooltips } from 'meteor/lookback:tooltips';
 import { Session } from 'meteor/session';
 
 import Introduction from '/imports/ui/lib/introduction';
-import RegionSelection from '/imports/utils/region-selection';
+import * as RegionSelection from '/imports/utils/region-selection';
 
 import './bootstrap';
 

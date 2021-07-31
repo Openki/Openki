@@ -1,18 +1,13 @@
 import { mf } from 'meteor/msgfmt:core';
 
-/**
- * @param {number} coordinate
- */
-function coordinateToString(coordinate) {
+function coordinateToString(coordinate: number) {
 	if (coordinate < 0) {
 		return `-${coordinate.toPrecision(6)}`;
 	}
 	return `+${coordinate.toPrecision(6)}`;
 }
-/**
- * @param {{coordinates:[number,number]}} location
- */
-export function locationFormat(location) {
+
+export function locationFormat(location: { coordinates: [number, number] }) {
 	if (!location?.coordinates) {
 		return undefined;
 	}

@@ -7,41 +7,12 @@ import { Regions } from '/imports/api/regions/regions';
 import * as UserLocation from '/imports/utils/user-location';
 import * as UrlTools from '/imports/utils/url-tools';
 
-const RegionSelection = {};
-
 /**
  * List of routes that show different results when the region changes.
  */
-RegionSelection.regionDependentRoutes = ['home', 'find', 'calendar', 'venueMap', 'groupDetails'];
+export const regionDependentRoutes = ['home', 'find', 'calendar', 'venueMap', 'groupDetails'];
 
-/**
- * Subscribe to list of regions and configure the regions
- * This checks client storage for a region setting. When there is no previously
- * selected region, we ask the server to do geolocation. If that fails too,
- * we just set the region to 'all regions'.
- */
-RegionSelection.init = function () {
-	// We assume the initial onLogin() callback comes before the regions' ready.
-	// We have no guarantee for this however!
-	Accounts.onLogin(() => {
-		const user = Meteor.user();
-		if (user) {
-			const { regionId } = user.profile;
-			if (regionId) {
-				try {
-					localStorage.setItem('region', regionId);
-				} catch {
-					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-				}
-				Session.set('region', regionId);
-			}
-		}
-	});
-
-	RegionSelection.subscribe();
-};
-
-RegionSelection.subscribe = function () {
+export function subscribe() {
 	Meteor.subscribe('Regions', async () => {
 		const selectors = [
 			Session.get('region'),
@@ -49,7 +20,7 @@ RegionSelection.subscribe = function () {
 			localStorage?.getItem('region'),
 		].filter(Boolean);
 
-		const useAsRegion = function (/** @type {string} */ regionId) {
+		const useAsRegion = function (regionId: string) {
 			if (!regionId) {
 				return false;
 			}
@@ -117,6 +88,31 @@ RegionSelection.subscribe = function () {
 			console.log(`Region autodetection error: ${err}`);
 		}
 	});
-};
+}
 
-export default RegionSelection;
+/**
+ * Subscribe to list of regions and configure the regions
+ * This checks client storage for a region setting. When there is no previously
+ * selected region, we ask the server to do geolocation. If that fails too,
+ * we just set the region to 'all regions'.
+ */
+export function init() {
+	// We assume the initial onLogin() callback comes before the regions' ready.
+	// We have no guarantee for this however!
+	Accounts.onLogin(() => {
+		const user = Meteor.user();
+		if (user) {
+			const { regionId } = user.profile;
+			if (regionId) {
+				try {
+					localStorage.setItem('region', regionId);
+				} catch {
+					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+				}
+				Session.set('region', regionId);
+			}
+		}
+	});
+
+	subscribe();
+}

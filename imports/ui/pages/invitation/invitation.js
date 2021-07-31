@@ -7,7 +7,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
 import './invitation.html';
-import RegionSelection from '/imports/utils/region-selection';
+import * as RegionSelection from '/imports/utils/region-selection';
 
 Template.invitation.events({
 	async 'click .js-join'(event, instance) {

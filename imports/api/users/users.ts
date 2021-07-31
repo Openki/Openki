@@ -158,19 +158,19 @@ export class User {
 	}
 }
 
-/** @type {Mongo.Collection<UserEntity, UserModel>} */
-export const Users = Meteor.users;
+export const Users = Meteor.users as Mongo.Collection<UserEntity, UserModel> & {
+	/**
+	 * Get the current user
+	 * @return User or if the user is not logged-in, a placeholder "anon" object is returned.
+	 */
+	currentUser(): UserModel | (UserModel & { anon?: true });
+};
 
 (Users as any)._transform = function (user: UserEntity) {
 	return _.extend(new User(), user);
 };
 
-/**
- * Get the current user
- * @return {UserModel | UserModel & {anon?: true}} User or if the user is not logged-in, a
- * placeholder "anon" object is returned.
- */
-(Users as any).currentUser = function () {
+Users.currentUser = function () {
 	const logged = Meteor.user();
 	if (logged) {
 		return logged;

@@ -1,16 +1,16 @@
 import { Blaze } from 'meteor/blaze';
+import { Spacebars } from 'meteor/spacebars';
 import { check } from 'meteor/check';
 
 /**
  * Truncate long strings, adding ellipsis char when the string was long
  *
- * @param {string} src the string to be truncated
- * @param {number} max the maximum length of the string
- * @param {string} ellipsis the string to add that signifies that src was truncated,
+ * @param src the string to be truncated
+ * @param max the maximum length of the string
+ * @param ellipsis the string to add that signifies that src was truncated,
  * preset "…", does not count towards max.
- * @returns {string}
  */
-export function truncate(src, max, ellipsis = '…') {
+export function truncate(src: string, max: number, ellipsis = '…') {
 	check(src, String);
 	check(max, Number);
 	if (src.length > max) {
@@ -22,20 +22,15 @@ export function truncate(src, max, ellipsis = '…') {
 /**
  * Capitalize first letter of String
  *
- * @param {string} input the string to be capitalized
- * @return {string} the capitalized string
+ * @param input the string to be capitalized
+ * @return the capitalized string
  */
-export function capitalize(input) {
+export function capitalize(input: string) {
 	check(input, String);
 	return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
-/**
- * @param {string} search
- * @param {string} name
- * @returns {string}
- */
-export function markedName(search, name) {
+export function markedName(search: string, name: string) {
 	if (search === '') {
 		return name;
 	}
@@ -46,35 +41,30 @@ export function markedName(search, name) {
 	if (match) {
 		const term = match[0];
 		const parts = name.split(term);
-		marked = parts.map(Blaze._escape).join(`<strong>${Blaze._escape(term)}</strong>`);
+		marked = parts
+			.map((Blaze as any)._escape)
+			.join(`<strong>${(Blaze as any)._escape(term)}</strong>`);
 	} else {
-		marked = Blaze._escape(name);
+		marked = (Blaze as any)._escape(name);
 	}
 	return Spacebars.SafeString(marked);
 }
 
-/**
- * @param {string} text
- */
-export function slug(text) {
+export function slug(text: string) {
 	return text
 		.toLowerCase()
 		.replace(/[^\w ]+/g, '')
 		.replace(/ +/g, '-');
 }
 
-/**
- * @param {string} string
- */
-export function escapeRegex(string) {
+export function escapeRegex(string: string) {
 	return string.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
 }
 
 /**
  * Remove non-printable chars from string
- * @param {string} unsaneText
  */
-export function saneText(unsaneText) {
+export function saneText(unsaneText: string) {
 	// Remove all ASCII control chars except the line feed.
 	/* eslint-disable-next-line no-control-regex */
 	const re = /[\0-\x09\x0B-\x1F\x7F]/g;
@@ -87,9 +77,8 @@ export function saneText(unsaneText) {
 /**
  * Remove non-printable chars and linebreaks from string
  * All runs of whitespace are replaced with one space.
- * @param {string} unsaneText
  */
-export function saneTitle(unsaneText) {
+export function saneTitle(unsaneText: string) {
 	let text = unsaneText.replace(/[\n\r]/g, '');
 	text = text.replace(/\s+/g, ' ');
 	return saneText(text);
