@@ -4,7 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 /**
  * Get the parent template instance. Source: http://stackoverflow.com/questions/27949407/how-to-get-the-parent-template-instance-of-the-current-template
  * @param {number} [levels=1] How many levels to go up. Default is 1
- * @returns {Blaze.TemplateInstance}
+ * @returns {Blaze.TemplateInstance | undefined}
  */
 /* eslint-disable-next-line consistent-return */
 Blaze.TemplateInstance.prototype.parentInstance = function (levels = 1) {
@@ -16,6 +16,7 @@ Blaze.TemplateInstance.prototype.parentInstance = function (levels = 1) {
 		}
 		view = view.parentView;
 	}
+	return undefined;
 };
 
 /**
