@@ -6,7 +6,7 @@ import { Match, check } from 'meteor/check';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
-import Predicates from '/imports/utils/predicates';
+import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 
 import { hasRoleUser } from '/imports/utils/course-role-utils';

@@ -7,7 +7,7 @@ import { Events } from '/imports/api/events/events';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
-import Predicates from '/imports/utils/predicates';
+import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 
 /** @typedef {import('../users/users').UserModel} UserModel */

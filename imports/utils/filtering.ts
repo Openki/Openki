@@ -1,94 +1,74 @@
 import { _ } from 'meteor/underscore';
 import { Tracker } from 'meteor/tracker';
-
-/** @typedef {import('./predicates').Predicate} Predicate */
-/** @typedef {import('./predicates').ParamWrapper} ParamWrapper */
+import { ParamWrapper, Predicate } from './predicates';
 
 export class FilteringReadError {
-	/**
-	 * @param {string} name
-	 * @param {string} message
-	 */
-	constructor(name, message) {
-		this.name = name;
-		this.message = message;
-	}
+	// eslint-disable-next-line no-useless-constructor
+	constructor(public name: string, public message: string) {}
 }
 
-export class Filtering {
-	/**
-	 * @param {{[name:string]: Predicate}} availablePredicates
-	 */
-	constructor(availablePredicates) {
-		this._availablePredicates = availablePredicates;
+export class Filtering<T extends { [name: string]: Predicate<any> }> {
+	private _predicates: { [name in keyof T]+?: ReturnType<T[name]> } = {};
 
-		/** @type {{[name:string]:ParamWrapper;}} */
-		this._predicates = {};
-		/** @type {{[name:string]:ParamWrapper;}} */
-		this._settledPredicates = {};
-		this._dep = new Tracker.Dependency();
-	}
+	private _settledPredicates: { [name in keyof T]+?: ReturnType<T[name]> } = {};
+
+	private _dep = new Tracker.Dependency();
+
+	// eslint-disable-next-line no-useless-constructor
+	constructor(private _availablePredicates: T) {}
 
 	clear() {
 		this._predicates = {};
 		return this;
 	}
 
-	/**
-	 * @param {string} name
-	 */
-	get(name) {
+	get(name: keyof T) {
 		if (Tracker.active) {
 			this._dep.depend();
 		}
-		if (!this._settledPredicates[name]) {
+
+		const predicate = this._settledPredicates[name];
+		if (!predicate) {
 			return undefined;
 		}
-		return this._settledPredicates[name].get();
+		return predicate.get();
 	}
 
-	/**
-	 * @param {string} name
-	 * @param {string} param
-	 */
-	add(name, param) {
+	add(name: keyof T, param: string) {
 		try {
 			if (!this._availablePredicates[name]) {
-				throw new FilteringReadError(param, `No predicate ${name}`);
+				throw new FilteringReadError('', `No predicate ${name}`);
 			}
 			const toAdd = this._availablePredicates[name](param);
-			if (toAdd === undefined) {
+			if (!toAdd) {
 				return false; // Filter construction failed, leave as-is
 			}
 
-			if (this._predicates[name]) {
-				this._predicates[name] = this._predicates[name].merge(toAdd);
+			const predicate = this._predicates[name];
+
+			if (predicate) {
+				this._predicates[name] = predicate.merge(toAdd) as any;
 			} else {
-				this._predicates[name] = toAdd;
+				this._predicates[name] = toAdd as any;
 			}
-			if (!this._predicates[name]) {
+			if (!predicate) {
 				delete this._predicates[name];
 			}
 			return this;
 		} catch (e) {
 			if (e instanceof FilteringReadError) {
-				e.name = name;
+				e.name = name as string;
 			}
 			throw e;
 		}
 	}
 
-	/**
-	 * @param {{ [name: string]: string; }} list
-	 */
-	read(list) {
+	read(list: { [name in keyof T]: string }) {
 		Object.keys(list).forEach((name) => {
 			try {
 				this.add(name, list[name]);
 			} catch (e) {
-				if (e instanceof FilteringReadError) {
-					// ignored
-				} else {
+				if (!(e instanceof FilteringReadError)) {
 					throw e;
 				}
 			}
@@ -96,37 +76,41 @@ export class Filtering {
 		return this;
 	}
 
-	/**
-	 * @param {{ [name: string]: string; }} list
-	 */
-	readAndValidate(list) {
+	readAndValidate(list: { [name in keyof T]: string }) {
 		Object.keys(list).forEach((name) => this.add(name, list[name]));
 		return this;
 	}
 
-	/**
-	 * @param {string} name
-	 * @param {string} param
-	 */
-	remove(name, param) {
-		const toRemove = this._availablePredicates[name](param);
-		if (this._predicates[name]) {
-			this._predicates[name] = this._predicates[name].without(toRemove);
+	remove(name: keyof T, param: string) {
+		try {
+			if (!this._availablePredicates[name]) {
+				throw new FilteringReadError('', `No predicate ${name}`);
+			}
+			const toRemove = this._availablePredicates[name](param);
+
+			const predicate = this._predicates[name];
+			if (predicate) {
+				(this._predicates[name] as any) = predicate.without(toRemove as any);
+			}
+			if (!this._predicates[name]) {
+				delete this._predicates[name];
+			}
+			return this;
+		} catch (e) {
+			if (e instanceof FilteringReadError) {
+				e.name = name as string;
+			}
+			throw e;
 		}
-		if (!this._predicates[name]) {
-			delete this._predicates[name];
-		}
-		return this;
 	}
 
-	/**
-	 * @param {string} name
-	 * @param {string} [param]
-	 */
-	toggle(name, param) {
+	/** eg. for flag and require */
+	toggle(name: keyof T): Filtering<T>;
+
+	/** eg. for string and id */
+	toggle(name: keyof T, param?: string) {
 		if (!param) {
 			// overload: toggle(name)
-			// eg. for flag and require
 			if (this.get(name)) {
 				this.disable(name);
 			} else {
@@ -134,7 +118,6 @@ export class Filtering {
 			}
 		}
 		// overload: toggle(name, param)
-		// eg. for string and id
 		else if (this.get(name)?.includes(param)) {
 			this.remove(name, param);
 		} else {
@@ -144,10 +127,7 @@ export class Filtering {
 		return this;
 	}
 
-	/**
-	 * @param {string} name
-	 */
-	disable(name) {
+	disable(name: keyof T) {
 		delete this._predicates[name];
 		return this;
 	}
@@ -167,7 +147,7 @@ export class Filtering {
 		if (same) {
 			// Look closer
 			Object.keys(this._predicates).every((name) => {
-				same = this._predicates[name].equals(settled[name]);
+				same = (this._predicates[name] as any).equals(settled[name]);
 				return same;
 			});
 		}
@@ -181,10 +161,9 @@ export class Filtering {
 		if (Tracker.active) {
 			this._dep.depend();
 		}
-		/** @type {{[name:string]:string;}} */
-		const params = {};
+		const params: { [name in keyof T]+?: string } = {};
 		Object.keys(this._settledPredicates).forEach((name) => {
-			params[name] = this._settledPredicates[name].param();
+			params[name as keyof T] = (this._settledPredicates[name] as any).param();
 		});
 		return params;
 	}
@@ -193,10 +172,11 @@ export class Filtering {
 		if (Tracker.active) {
 			this._dep.depend();
 		}
-		/** @type {{[name:string]:any;}} */
-		const query = {};
+		const query: {
+			[name in keyof T]+?: ReturnType<Extract<ReturnType<T[name]>, ParamWrapper>['query']>;
+		} = {};
 		Object.keys(this._settledPredicates).forEach((name) => {
-			query[name] = this._settledPredicates[name].query();
+			query[name as keyof T] = (this._settledPredicates[name] as any).query();
 		});
 		return query;
 	}

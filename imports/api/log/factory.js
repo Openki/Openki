@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { Match, check } from 'meteor/check';
 import { Filtering } from '/imports/utils/filtering';
-import Predicates from '/imports/utils/predicates';
+import * as Predicates from '/imports/utils/predicates';
 
 // ======== DB-Model: ========
 /**

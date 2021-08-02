@@ -7,7 +7,7 @@ import { Match, check } from 'meteor/check';
 /** @typedef {import('../users/users').UserModel} UserModel */
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import Predicates from '/imports/utils/predicates';
+import * as Predicates from '/imports/utils/predicates';
 import { Filtering } from '/imports/utils/filtering';
 
 // ======== DB-Model: ========

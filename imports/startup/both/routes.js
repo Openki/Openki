@@ -30,7 +30,7 @@ import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Metatags from '/imports/utils/metatags';
-import Predicates from '/imports/utils/predicates';
+import * as Predicates from '/imports/utils/predicates';
 import Profile from '/imports/utils/profile';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Invitations } from '/imports/api/invitations/invitations';
