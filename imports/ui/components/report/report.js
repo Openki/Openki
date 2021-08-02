@@ -6,7 +6,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import * as emailMethods from '/imports/api/emails/methods';
 
 import '/imports/ui/components/buttons/buttons';
-import TemplateMixins from '/imports/ui/lib/template-mixins';
+import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import './report.html';
 

@@ -17,7 +17,7 @@ import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
 import { LocationTracker } from '/imports/ui/lib/location-tracker';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
-import TemplateMixins from '/imports/ui/lib/template-mixins';
+import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import * as IdTools from '/imports/utils/id-tools';
 import * as Metatags from '/imports/utils/metatags';

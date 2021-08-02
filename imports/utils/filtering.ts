@@ -104,7 +104,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 		}
 	}
 
-	/** eg. for flag and require */
+	/** eg. for flag */
 	toggle(name: keyof T): Filtering<T>;
 
 	/** eg. for string and id */

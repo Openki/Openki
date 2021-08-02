@@ -6,7 +6,7 @@ import * as InvitationsMethods from '/imports/api/invitations/methods';
 import * as Alert from '/imports/api/alerts/alert';
 
 import { isEmail } from '/imports/utils/email-tools';
-import TemplateMixins from '/imports/ui/lib/template-mixins';
+import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import './invitations-create.html';
 

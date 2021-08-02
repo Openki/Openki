@@ -1,6 +1,6 @@
 import { mf } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
-import TemplateMixins from '/imports/ui/lib/template-mixins';
+import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import MediumEditor from 'medium-editor';
 

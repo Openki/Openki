@@ -12,7 +12,7 @@ import { Editable } from '/imports/ui/lib/editable';
 import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
-import TemplateMixins from '/imports/ui/lib/template-mixins';
+import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Viewport from '/imports/ui/lib/viewport';
 
 import { _ } from 'meteor/underscore';

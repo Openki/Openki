@@ -1,5 +1,5 @@
 declare module 'meteor/msgfmt:core' {
-	const mf: any;
+	const mf: (key: string, params?: any, message?: any, locale?: any) => string;
 	const mfPkg: any;
 	const msgfmt: any;
 }

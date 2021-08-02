@@ -77,32 +77,6 @@ export const ids: Predicate<string[]> = function (param) {
 	return make(_.uniq(param.split(',')));
 };
 
-export const require: Predicate<true> = function (param) {
-	if (!param) {
-		return undefined;
-	}
-	return {
-		merge(other) {
-			return other;
-		},
-		without() {
-			return undefined;
-		},
-		get() {
-			return true;
-		},
-		param() {
-			return '1';
-		},
-		query() {
-			return true;
-		},
-		equals() {
-			return true;
-		},
-	};
-};
-
 export const flag: Predicate<boolean> = function (param) {
 	if (param === undefined) {
 		return undefined;
