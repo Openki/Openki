@@ -1,13 +1,15 @@
 import { Meteor } from 'meteor/meteor';
+import { Blaze } from 'meteor/blaze';
 import { Accounts } from 'meteor/accounts-base';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
+import { ValidationError } from 'meteor/mdg:validation-error';
 
 import * as Alert from '/imports/api/alerts/alert';
 import * as usersMethods from '/imports/api/users/methods';
-import TemplateMixins from '/imports/ui/lib/template-mixins';
+import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import { Analytics } from '/imports/ui/lib/analytics';
 import { Editable } from '/imports/ui/lib/editable';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
@@ -19,33 +21,63 @@ import '/imports/ui/components/profiles/verify-email/verify-email';
 import '/imports/ui/components/venues/link/venue-link';
 import '/imports/ui/components/avatar/avatar';
 
-import './ownprofile.html';
+import './template.html';
+import './styles.scss';
 
-TemplateMixins.Expandible(Template.profile);
-Template.profile.onCreated(function () {
-	this.busy(false);
-	this.changingPass = new ReactiveVar(false);
+const template = Template.profilePage as Blaze.Template;
 
-	this.notificationsUnsubscribeSuccess = () =>
+TemplateMixins.Expandible(template);
+
+TemplateMixins.FormfieldErrors(template, {
+	noEmail: {
+		text: () => mf('warning.noEmailProvided', 'Please enter a email.'),
+		field: 'email',
+	},
+	emailNotValid: {
+		text: () => mf('warning.emailNotValid', 'Your email seems to have an error.'),
+		field: 'email',
+	},
+	emailExists: {
+		text: () => mf('warning.emailExists', 'This email is already taken.'),
+		field: 'email',
+	},
+});
+
+type ProfileTemplateInstance = Blaze.TemplateInstance &
+	TemplateMixins.ExpandibleTemplateInstance &
+	TemplateMixins.FormfieldErrorsTemplateInstance & {
+		changingPass: ReactiveVar<boolean>;
+		notificationsUnsubscribeSuccess: () => boolean;
+		privateMessagesUnsubscribeSuccess: () => boolean;
+		unsubscribeError: () => boolean;
+		editableName: Editable;
+		editableDescription: Editable;
+	};
+
+template.onCreated(function () {
+	const instance = this as ProfileTemplateInstance;
+
+	instance.busy(false);
+	instance.changingPass = new ReactiveVar(false);
+
+	instance.notificationsUnsubscribeSuccess = () =>
 		Router.current().params.query.unsubscribed === 'notifications';
-	this.privateMessagesUnsubscribeSuccess = () =>
+	instance.privateMessagesUnsubscribeSuccess = () =>
 		Router.current().params.query.unsubscribed === 'privatemessages';
-	this.unsubscribeError = () => Router.current().params.query['unsubscribe-error'] === '';
+	instance.unsubscribeError = () => Router.current().params.query['unsubscribe-error'] === '';
 
-	if (this.notificationsUnsubscribeSuccess()) {
+	if (instance.notificationsUnsubscribeSuccess()) {
 		Analytics.trackEvent(
 			'Unsubscribes from notifications',
 			'Unsubscribes from notifications via e-mail',
 		);
 	}
-	if (this.privateMessagesUnsubscribeSuccess()) {
+	if (instance.privateMessagesUnsubscribeSuccess()) {
 		Analytics.trackEvent(
 			'Unsubscribes from notifications',
 			'Unsubscribes from private messages via e-mail',
 		);
 	}
-
-	const instance = this;
 
 	instance.editableName = new Editable(true, mf('profile.name.placeholder', 'Username'), {
 		serverValidationErrors: [
@@ -94,88 +126,79 @@ Template.profile.onCreated(function () {
 	});
 });
 
-Template.profile.helpers({
+template.helpers({
 	changingPass() {
-		return Template.instance().changingPass.get();
+		const instance = Template.instance() as ProfileTemplateInstance;
+		return instance.changingPass.get();
 	},
 
 	groupCount() {
-		return this.user.groups.count();
+		return Template.instance().data.user.groups.count();
 	},
 
 	tenantCount() {
-		return this.user.tenants.count();
+		return Template.instance().data.user.tenants.count();
 	},
 
 	notificationsChecked() {
-		if (this.user.notifications) {
+		if (Template.instance().data.user.notifications) {
 			return 'checked';
 		}
 		return '';
 	},
 
 	allowPrivateMessagesChecked() {
-		if (this.user.allowPrivateMessages) {
+		if (Template.instance().data.user.allowPrivateMessages) {
 			return 'checked';
 		}
 		return '';
 	},
 
 	isVenueEditor() {
-		return this.user.venues.count() > 0;
+		return Template.instance().data.user.venues.count() > 0;
 	},
 
 	notificationsUnsubscribeSuccess() {
-		return Template.instance().notificationsUnsubscribeSuccess();
+		const instance = Template.instance() as ProfileTemplateInstance;
+		return instance.notificationsUnsubscribeSuccess();
 	},
 
 	privateMessagesUnsubscribeSuccess() {
-		return Template.instance().privateMessagesUnsubscribeSuccess();
+		const instance = Template.instance() as ProfileTemplateInstance;
+		return instance.privateMessagesUnsubscribeSuccess();
 	},
 
 	unsubscribeError() {
-		return Template.instance().unsubscribeError();
+		const instance = Template.instance() as ProfileTemplateInstance;
+		return instance.unsubscribeError();
 	},
 
 	editableName() {
-		return Template.instance().editableName;
+		const instance = Template.instance() as ProfileTemplateInstance;
+		return instance.editableName;
 	},
 
 	editableDescription() {
-		return Template.instance().editableDescription;
+		const instance = Template.instance() as ProfileTemplateInstance;
+		return instance.editableDescription;
 	},
 });
 
-TemplateMixins.FormfieldErrors(Template.profile, {
-	noEmail: {
-		text: () => mf('warning.noEmailProvided', 'Please enter a email.'),
-		field: 'email',
-	},
-	emailNotValid: {
-		text: () => mf('warning.emailNotValid', 'Your email seems to have an error.'),
-		field: 'email',
-	},
-	emailExists: {
-		text: () => mf('warning.emailExists', 'This email is already taken.'),
-		field: 'email',
-	},
-});
-
-Template.profile.events({
-	'click .js-change-pwd-btn'(event, instance) {
+template.events({
+	'click .js-change-pwd-btn'(_event: any, instance: ProfileTemplateInstance) {
 		instance.changingPass.set(true);
 		instance.collapse();
 	},
 
-	'click .js-change-pwd-cancel'(event, instance) {
+	'click .js-change-pwd-cancel'(_event: any, instance: ProfileTemplateInstance) {
 		instance.changingPass.set(false);
 	},
 
-	'click .js-expand'(event, instance) {
+	'click .js-expand'(_event: any, instance: ProfileTemplateInstance) {
 		instance.changingPass.set(false);
 	},
 
-	async 'click .js-profile-delete-confirm-btn'(event, instance) {
+	async 'click .js-profile-delete-confirm-btn'(_event: any, instance: ProfileTemplateInstance) {
 		instance.busy('deleting');
 
 		instance.collapse(); // Wait for server to log us out.
@@ -188,7 +211,7 @@ Template.profile.events({
 		}
 	},
 
-	async 'submit .js-email-form'(event, instance) {
+	async 'submit .js-email-form'(event: any, instance: ProfileTemplateInstance) {
 		event.preventDefault();
 		instance.errors.reset();
 
@@ -196,15 +219,15 @@ Template.profile.events({
 			await usersMethods.updateEmail(instance.$('.js-email').val());
 			Alert.success(mf('profile.updated', 'Updated profile'));
 		} catch (err) {
-			if (err.error === 'validation-error') {
-				err.details.forEach((fieldError) => {
+			if (ValidationError.is(err)) {
+				(err.details as any).forEach((fieldError: any) => {
 					instance.errors.add(fieldError.type);
 				});
 			}
 		}
 	},
 
-	async 'change .js-notifications'(event, instance) {
+	async 'change .js-notifications'(_event: any, instance: ProfileTemplateInstance) {
 		RouterAutoscroll.cancelNext();
 
 		const allow = instance.$('.js-notifications').prop('checked');
@@ -223,7 +246,7 @@ Template.profile.events({
 		}
 	},
 
-	async 'change .js-allowPrivateMessages'(event, instance) {
+	async 'change .js-allowPrivateMessages'(_event: any, instance: ProfileTemplateInstance) {
 		RouterAutoscroll.cancelNext();
 
 		const allow = instance.$('.js-allowPrivateMessages').prop('checked');
@@ -242,12 +265,12 @@ Template.profile.events({
 		}
 	},
 
-	'submit .js-change-pwd'(event, instance) {
+	'submit .js-change-pwd'(event: any, instance: ProfileTemplateInstance) {
 		event.preventDefault();
-		const old = document.querySelector('.js-old-pwd').value;
-		const pass = document.querySelector('.js-new-pwd').value;
+		const old = (instance.find('.js-old-pwd') as HTMLInputElement).value;
+		const pass = (instance.find('.js-new-pwd') as HTMLInputElement).value;
 		if (pass !== '') {
-			if (pass !== document.querySelector('.js-new-pwd-confirm').value) {
+			if (pass !== (instance.find('.js-new-pwd-confirm') as HTMLInputElement).value) {
 				Alert.warning(mf('profile.passwordMismatch', "Sorry, Your new passwords don't match"));
 				return;
 			}

@@ -425,6 +425,7 @@ Router.route('info', {
 
 Router.route('profile', {
 	path: 'profile',
+	template: 'profilePage',
 	waitOn() {
 		return [
 			Meteor.subscribe('Tenants.findFilter', { adminOf: true }),
@@ -451,6 +452,10 @@ Router.route('profile', {
 			data.user = userdata;
 		}
 		return data;
+	},
+	async action() {
+		await import('/imports/ui/pages/profile');
+		this.render();
 	},
 	onAfterAction() {
 		const user = Meteor.user();

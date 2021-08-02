@@ -142,19 +142,6 @@
 	margin-bottom: 0;
 }
 
-.details-info-group {
-	@include make-row;
-	margin-bottom: $form-group-margin-bottom;
-}
-
-.details-info-data {
-	@include td-make-sm-column(9);
-
-	@media (min-width: $screen-sm) {
-		padding-top: 7px;
-	}
-}
-
 .details-info-btn {
 	@include td-make-sm-column(9);
 	@include td-make-sm-column-offset(3);

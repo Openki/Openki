@@ -1,13 +1,13 @@
 <template name="userprofile">
 	<div class="container mw-md">
 		<div class="page-component">
-			<div class="profile-header">
-				<div class="profile-header-avatar">
+			<div class="row g-3">
+				<div class="col-3">
 					{{> avatar userId=userId class="profile-avatar"}}
 				</div>
 
-				<div class="profile-header-info">
-					<h1 class="profile-title">
+				<div class="col-9">
+					<h1 class="mt-4">
 						{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}
 						{{#if ownuser}}
 							({{mf 'profile.its_you' "It's you!"}})
