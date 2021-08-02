@@ -1,7 +1,7 @@
 // Groups are groups, organisations, institutions, virtual or real instituts, departments or
 // bodies...
 
-const groups = [
+export const groups = [
 	{
 		name: 'Dynamo',
 		short: 'Dyn',

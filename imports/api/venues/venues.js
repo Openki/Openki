@@ -1,12 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
+import { Match, check } from 'meteor/check';
 
 import { Events } from '/imports/api/events/events';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
-import Predicates from '/imports/utils/predicates';
+import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 
 /** @typedef {import('../users/users').UserModel} UserModel */
@@ -110,10 +111,15 @@ export class VenueCollection extends Mongo.Collection {
 	 * @param {string} [filter.editor]
 	 * @param {boolean} [filter.recent]
 	 * @param {number} [limit] how many to find
-	 * @param {number} [skip]
-	 * @param {*} [sort]
+	 * @param {number} [skip] skip this many before returning results
+	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
 	 */
 	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+		check(limit, Match.Maybe(Number));
+		check(skip, Match.Maybe(Number));
+		check(sort, Match.Maybe([[String]]));
+
+		/** @type {Mongo.Selector<VenueEnity> } */
 		const find = {};
 
 		/** @type {Mongo.Options<VenueEnity>} */

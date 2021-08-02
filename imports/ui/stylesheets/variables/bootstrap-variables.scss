@@ -1,0 +1,74 @@
+// Nearly all variables in Bootstrap are written with the `!default` flag.
+// This allows use to override the default values of those variables before
+// we import Bootstrap's source Sass files.
+
+// Bootstrap Options
+
+$enable-gradients: true;
+
+// Include functions first (so we can manipulate colors, SVGs, calc, etc)
+@import '{}/node_modules/bootstrap/scss/functions'; // Required
+
+// Default variable overrides
+
+$secondary: #f0f0f0;
+
+// Typography
+//
+// Font, line-height, and color for body text, headings, and mo
+
+// $font-size-root affects the value of `rem`, which is used for as well font sizes, paddings, and
+// margins. For compatibility reasons we use "14px", many views were made at a time when we used
+// bootstrap version 3, "14px" corresponds to the value at that time.
+$font-size-root: 14px;
+$font-family-sans-serif: 'Source Sans Pro', sans-serif !default;
+
+// Links
+//
+// Style anchor elements.
+
+$link-decoration: none;
+
+// Forms
+
+$form-label-color: shade-color($blue, 20%);
+
+// Tooltips
+
+$tooltip-bg: $blue;
+$tooltip-opacity: 1;
+
+$hr-color: $blue-lighter;
+
+// Modals
+
+$modal-sm: 400px;
+
+// Remainder of required Bootstrap stylesheets
+@import '{}/node_modules/bootstrap/scss/variables'; // Required
+@import '{}/node_modules/bootstrap/scss/mixins'; // Required
+
+@import '{}/node_modules/bootstrap/scss/utilities'; // Optional
+
+// Modify Bootstrap maps
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+$container-max-widths: map-remove($container-max-widths, xxl);
+
+// Add grid-breakpoints to max-width utilites: mw-sm, mw-md, ...
+
+$utilities: map-merge(
+	$utilities,
+	(
+		'max-width':
+			map-merge(
+				map-get($utilities, 'max-width'),
+				(
+					values: map-merge(map-get(map-get($utilities, 'max-width'), 'values'), $grid-breakpoints),
+				)
+			),
+	)
+);

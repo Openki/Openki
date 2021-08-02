@@ -5,11 +5,13 @@ import { mf } from 'meteor/msgfmt:core';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Regions } from '/imports/api/regions/regions';
+/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
 import { Log } from '/imports/api/log/log';
 import { Users } from '/imports/api/users/users';
 
 import * as HtmlTools from '/imports/utils/html-tools';
 import * as StringTools from '/imports/utils/string-tools';
+import { getSiteName } from '../utils/getSiteName';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -104,14 +106,13 @@ notificationJoin.Model = function (entry) {
 					count: course.membersWithRole(role).length,
 				}));
 
-			let siteName;
-			let mailLogo;
+			/** @type {RegionModel | undefined}  */
+			let region;
 			if (course.region) {
-				const region = Regions.findOne(course.region);
-				siteName = region?.custom?.siteName;
-				mailLogo = region?.custom?.mailLogo;
+				region = Regions.findOne(course.region);
 			}
-			siteName = siteName || Meteor.settings.public.siteName;
+			const emailLogo = region?.custom?.emailLogo;
+			const siteName = getSiteName(region);
 
 			return {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
@@ -128,10 +129,10 @@ notificationJoin.Model = function (entry) {
 				figures,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=joinNotify`,
 				customSiteName: siteName,
-				customMailLogo: mailLogo,
+				customEmailLogo: emailLogo,
 			};
 		},
-		template: 'notificationJoinMail',
+		template: 'notificationJoinEmail',
 	};
 };
 

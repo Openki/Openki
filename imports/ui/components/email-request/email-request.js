@@ -7,7 +7,7 @@ import * as usersMethods from '/imports/api/users/methods';
 import * as emailMethods from '/imports/api/emails/methods';
 
 import * as EmailRequest from '/imports/ui/lib/email-request';
-import TemplateMixins from '/imports/ui/lib/template-mixins';
+import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import './email-request.html';
 

@@ -79,6 +79,7 @@ if (Meteor.isServer) {
 if (Meteor.isClient) {
 	// On the client clean() is not run and the returned promise doesn't resolve.
 	AsyncTools.untilClean = function () {
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		return new Promise(() => {}); /* promise that doesn't resolve */
 	};
 }

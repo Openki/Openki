@@ -12,12 +12,14 @@
 	{{#if pricePolicyEnabled}}
 		<div class="price-policy {{cssClasses}}">
 			<div class="price-policy-content">
-				<div class="icon-text">
-					<div class="icon-text-icon">
-						<i class="fa fa-info fa-fw" aria-hidden="true"></i>
-					</div>
-					<div class="icon-text-text">
-						{{mf 'pricePolicy.disclaimer' "Education should be open to everyone, that's why Openki only allows suggested/orientation prices."}}
+				<div class="price-policy-infos">
+					<div class="icon-text">
+						<div class="icon-text-icon">
+							<i class="fa fa-info fa-fw" aria-hidden="true"></i>
+						</div>
+						<div class="icon-text-text">
+							{{mf 'pricePolicy.disclaimer' "Education should be open to everyone, that's why {SITENAME} only allows suggested/orientation prices." SITENAME=siteName}}
+						</div>
 					</div>
 				</div>
 				<div class="price-policy-actions">
@@ -35,7 +37,7 @@
 					</div>
 					{{#if dismissable}}
 						<div class="price-policy-action">
-							<button type="button" class="js-hide-price-policy btn-link">
+							<a class="js-hide-price-policy" href="#">
 								<div class="icon-text">
 									<div class="icon-text-icon">
 										<i class="fa fa-fw fa-ban" aria-hidden="true"></i>
@@ -44,7 +46,7 @@
 										{{mf 'pricePolicy.dontShowAnymore' "Don't show this anymore"}}
 									</div>
 								</div>
-							</button>
+							</a>
 						</div>
 					{{/if}}
 				</div>

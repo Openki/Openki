@@ -33,16 +33,11 @@ select:hover {
 	cursor: not-allowed;
 }
 
-.input-group input:focus {
-	z-index: 3;
-}
-
-.input-lg {
-	border-radius: 4px;
-}
-
 a:hover,
-.btn-link:hover {
+.btn-link:hover,
+a:focus,
+.btn-link:focus {
+	box-shadow: none !important;
 	text-decoration: none;
 }
 
@@ -55,8 +50,4 @@ a:hover,
 .collapsing,
 .fade {
 	transition: none;
-}
-
-.disabled label {
-	color: $gray-light;
 }

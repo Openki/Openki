@@ -6,7 +6,8 @@ import { Regions } from '/imports/api/regions/regions';
  * Pull location-data from ipinfo.io
  */
 export async function getLocation() {
-	const location = await fetch('https://ipinfo.io/geo');
+	const response = await fetch('https://ipinfo.io/geo');
+	const location = await response.json();
 
 	if (!location.region) {
 		throw new Error('IP location not accurate enough');

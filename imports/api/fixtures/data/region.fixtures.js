@@ -1,4 +1,4 @@
-const regions = [
+export const regions = [
 	{
 		_id: '9JyFCoKWkxnf8LWPh',
 		name: 'Testistan',
@@ -67,7 +67,7 @@ const regions = [
 				src: 'sveb_logo.png',
 				alt: 'Online Logo',
 			},
-			mailLogo: 'mails/sveb.png',
+			emailLogo: 'emails/sveb.png',
 		},
 	},
 ];

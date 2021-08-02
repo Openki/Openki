@@ -30,9 +30,10 @@ import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Metatags from '/imports/utils/metatags';
-import Predicates from '/imports/utils/predicates';
+import * as Predicates from '/imports/utils/predicates';
 import Profile from '/imports/utils/profile';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { Invitations } from '/imports/api/invitations/invitations';
 
 function finderRoute(path) {
 	return {
@@ -424,6 +425,7 @@ Router.route('info', {
 
 Router.route('profile', {
 	path: 'profile',
+	template: 'profilePage',
 	waitOn() {
 		return [
 			Meteor.subscribe('Tenants.findFilter', { adminOf: true }),
@@ -450,6 +452,10 @@ Router.route('profile', {
 			data.user = userdata;
 		}
 		return data;
+	},
+	async action() {
+		await import('/imports/ui/pages/profile');
+		this.render();
 	},
 	onAfterAction() {
 		const user = Meteor.user();
@@ -528,6 +534,10 @@ Router.route('showCourse', {
 			select: this.params.query.select,
 		};
 		return data;
+	},
+	async action() {
+		await import('/imports/ui/pages/course-details');
+		this.render();
 	},
 	onAfterAction() {
 		const data = this.data();
@@ -653,15 +663,52 @@ Router.route('tenantDetails', {
 	},
 });
 
+Router.route('invitation', {
+	path: 'invitation/:token',
+	/**
+	 * @this {{params: {token: string; query: { tenant: string; }}}}
+	 */
+	waitOn() {
+		return [Meteor.subscribe('invitation', this.params?.query?.tenant, this.params?.token)];
+	},
+	/**
+	 * @this {{params: {token: string; query: { tenant: string; }}}}
+	 */
+	data() {
+		const tenant = Tenants.findOne({ _id: this.params?.query?.tenant });
+		if (!tenant) {
+			return false;
+		}
+
+		const invitation = Invitations.findOne({
+			tenant: this.params?.query?.tenant,
+			token: this.params?.token,
+		});
+		if (!invitation) {
+			return false;
+		}
+
+		return { tenant, invitation };
+	},
+	/**
+	 * @this {{params: {token: string; query: { tenant: string; }}}}
+	 */
+	onAfterAction() {
+		msgfmt.loading(); // Rerun after msgfmt has loaded translation
+
+		const tenant = Tenants.findOne({ _id: this.params.query.tenant });
+		if (tenant) {
+			const title = mf('invitation.show.siteTitle', 'Join {TENANT}', { TENANT: tenant.name });
+			Metatags.setCommonTags(title);
+		}
+	},
+});
+
 Router.route('timetable', {
 	path: '/kiosk/timetable',
 	layoutTemplate: 'timetableLayout',
 	waitOn() {
-		return Meteor.subscribe(
-			'Events.findFilter',
-			makeFilterQuery(this.params && this.params.query),
-			200,
-		);
+		return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params?.query), 200);
 	},
 	data() {
 		const query = makeFilterQuery(this.params.query);

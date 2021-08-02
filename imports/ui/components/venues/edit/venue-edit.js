@@ -255,7 +255,7 @@ Template.venueEdit.events({
 
 Template.venueEditAdditionalInfo.helpers({
 	facilitiesCheck(name) {
-		const attrs = { class: `js-${name}` };
+		const attrs = { class: `form-check-input js-${name}`, type: 'checkbox', value: '' };
 		if (this.facilities[name]) {
 			attrs.checked = 'checked';
 		}

@@ -62,3 +62,11 @@ export function afterTenantRemoveAdmin(userId, tenantId) {
 		{ $pull: { 'tenants.$.privileges': 'admin' } },
 	);
 }
+
+/**
+ * @param {string} userId
+ * @param {string} tenantId
+ */
+export function afterInvitationJoin(userId, tenantId) {
+	Users.update(userId, { $addToSet: { tenants: { _id: tenantId } } });
+}

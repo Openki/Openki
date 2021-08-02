@@ -4,13 +4,12 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
-import * as Alert from '/imports/api/alerts/alert';
 import { Regions } from '/imports/api/regions/regions';
 import * as usersMethods from '/imports/api/users/methods';
 
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 
-import RegionSelection from '/imports/utils/region-selection';
+import * as RegionSelection from '/imports/utils/region-selection';
 import * as StringTools from '/imports/utils/string-tools';
 
 import './region-selection.html';
@@ -21,8 +20,26 @@ Template.regionSelectionWrap.onCreated(function () {
 	this.state.setDefault('searchingRegions', false);
 });
 
+Template.regionSelectionWrap.helpers({
+	inNavbarClasses() {
+		if (this.inNavbar) {
+			return 'col-6-sm-auto px-0';
+		}
+		return '';
+	},
+});
+
+Template.regionSelectionDisplay.helpers({
+	inNavbarClasses() {
+		if (this.inNavbar) {
+			return 'col-6-sm-auto px-0';
+		}
+		return '';
+	},
+});
+
 Template.regionSelectionDisplay.events({
-	'click .js-region-selection-display'(event, instance) {
+	'click .js-region-selection-display'(_event, instance) {
 		instance.parentInstance().state.set('searchingRegions', true);
 	},
 });
@@ -68,8 +85,8 @@ Template.regionSelection.onCreated(function () {
 
 		try {
 			localStorage.setItem('region', regionId); // to survive page reload
-		} catch (e) {
-			Alert.error(e);
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 		}
 		Session.set('region', regionId);
 		if (regionId !== 'all' && Meteor.userId()) {

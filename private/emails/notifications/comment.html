@@ -1,0 +1,57 @@
+{{#emailBase subject=subject site=site}}
+	<tr>
+		<td>
+			<span class="title">
+				{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
+			</span>
+			<p>
+				{{#if commenter}}
+					{{mf "notification.comment.mail.intro" 'There was a comment by "{USERNAME}" on course "{COURSE}":' USERNAME=commenterName COURSE=course.name LOCALE=locale}}
+				{{else}}
+					{{mf "notification.comment.mail.intro.anon" 'There was an anonymous comment on "{COURSE}":' COURSE=course.name LOCALE=locale}}
+				{{/if}}
+			</p>
+			<table class="comment-box">
+				<tr>
+					<td>
+						<span class="title">
+							{{comment.title}}
+						</span>
+						<p>
+							{{{comment.text}}}
+						</p>
+					</td>
+				</tr>
+			</table>
+			<p>
+				<a
+				   href="{{courseLink}}">{{mf "notification.comment.mail.linktext" '➜ See comment on {SITENAME}' SITENAME=customSiteName LOCALE=locale}}</a>
+				{{#if commenter}}
+					<br />
+					<a
+					   href="{{commenterLink}}">{{mf "notification.comment.mail.commenterlink" '➜ See profile from {USERNAME}' USERNAME=commenterName LOCALE=locale}}</a>
+				{{/if}}
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="footer">
+				<tr>
+					<td>
+						{{mf "notification.comment.mail.recpnote" "You receive this message because you're on the team of this course." LOCALE=locale}}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a
+						   href="{{unsubLink}}">{{mf "notification.comment.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}</a>
+						&nbsp;
+						<a
+						   href="{{urlFor 'profile' query='campaign=commentNotify'}}">{{mf "notification.comment.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{{/emailBase}}

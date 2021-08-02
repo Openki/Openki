@@ -16,7 +16,7 @@
 	{{/unless}}
 	{{#if moreCourses}}
 		<div class="show-more">
-			<button class="js-show-more-courses btn btn-default" type="button">
+			<button class="js-show-more-courses btn btn-secondary" type="button">
 				{{mf 'frame.courselist.showMore' 'Show more courses'}}
 			</button>
 		</div>
@@ -38,7 +38,7 @@
 			{{/unless}}
 			{{course.name}}
 			{{#if allRegions}}
-				<span class="badge frame-list-item-region">
+				<span class="badge bg-secondary frame-list-item-region">
 					{{regionOf course}}
 				</span>
 			{{/if}}
@@ -55,7 +55,7 @@
 				</div>
 				<div class="frame-list-item-links">
 					<a class="btn" href="{{pathFor 'showCourse' data=course}}" target="_blank">
-						{{mf 'frame.courseList.moreAboutThisCourse' 'More about this course on openki.net'}}
+						{{mf 'frame.courseList.moreAboutThisCourse' 'More about this course on {SITENAME}' SITENAME=siteName}}
 					</a>
 				</div>
 			</div>

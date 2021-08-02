@@ -1,10 +1,11 @@
 <template name="tenantCreate">
-	<div class="container-sm">
+	<div class="container mw-md">
 		<div class="edit-page region-edit">
 			<h2>{{mf 'tenant.create.title' 'Create your private region'}}</h2>
 			<form>
-				<div class="form-group">
-					<label>{{mf 'tenant.edit.name' 'Name of your organisation:'}}</label>
+				<div class="mb-3">
+					<label
+						   class="form-label">{{mf 'tenant.edit.name' 'Name of your organisation:'}}</label>
 					<input type="text" class="form-control js-tenant-name"
 						   placeholder="{{mf 'tenant.edit.namePlaceholder' 'Full name of your organisation'}}">
 				</div>

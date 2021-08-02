@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
+import { Match, check } from 'meteor/check';
 // eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from './tenantDenormalizer';
 
@@ -8,7 +9,7 @@ import { Courses } from '/imports/api/courses/courses';
 import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
-import Predicates from '/imports/utils/predicates';
+import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
@@ -133,7 +134,8 @@ export class EventsCollection extends Mongo.Collection {
 			categories: Predicates.ids,
 			group: Predicates.id,
 			groups: Predicates.ids,
-			venue: Predicates.string,
+			venue: Predicates.id,
+			venues: Predicates.ids,
 			room: Predicates.string,
 			start: Predicates.date,
 			before: Predicates.date,
@@ -211,6 +213,7 @@ export class EventsCollection extends Mongo.Collection {
 	 * @param {Date} [filter.end] only events that started before this date
 	 * @param {Date} [filter.after] only events starting after this date
 	 * @param {string} [filter.venue] only events at this venue (ID)
+	 * @param {string[]} [filter.venues] only events at this venues (IDs)
 	 * @param {string} [filter.room] only events in this room (string match)
 	 * @param {boolean} [filter.standalone] only events that are not attached to a course
 	 * @param {string} [filter.region] restrict to given region
@@ -222,12 +225,17 @@ export class EventsCollection extends Mongo.Collection {
 	 * @param {boolean} [filter.internal] only events that are internal (if true) or public (if false)
 	 * @param {number} [limit] how many to find
 	 * @param {number} [skip] skip this many before returning results
-	 * @param {any[]} [sort] list of fields to sort by
+	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
 	 *
 	 * The events are sorted by start date (ascending, before-filter causes descending order)
 	 *
 	 */
 	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+		check(limit, Match.Maybe(Number));
+		check(skip, Match.Maybe(Number));
+		check(sort, Match.Maybe([[String]]));
+
+		/** @type {Mongo.Selector<EventEntity> } */
 		const find = {};
 		const and = [];
 
@@ -274,8 +282,17 @@ export class EventsCollection extends Mongo.Collection {
 			}
 		}
 
+		let inVenues = [];
 		if (filter.venue) {
-			find['venue._id'] = filter.venue;
+			inVenues.push(filter.venue);
+		}
+
+		if (filter.venues) {
+			inVenues = inVenues.concat(filter.venues);
+		}
+
+		if (inVenues.length > 0) {
+			find['venue._id'] = { $in: inVenues };
 		}
 
 		if (filter.room) {

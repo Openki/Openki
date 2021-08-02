@@ -1,15 +1,78 @@
 import { Mongo } from 'meteor/mongo';
 import { Match, check } from 'meteor/check';
-
-// Becase the mixin() function assigns properties
-// to the log object, we can't use the
-// no-param-reassign safeguard here.
-/* eslint no-param-reassign: 0 */
-
 import { Filtering } from '/imports/utils/filtering';
-import Predicates from '/imports/utils/predicates';
+import * as Predicates from '/imports/utils/predicates';
+
+// ======== DB-Model: ========
+/**
+ * @typedef {object} Resolution
+ * @property {Date} ts timestamp
+ * @property {boolean} success
+ * @property {string} [message]
+ */
+/**
+ * @typedef {object} LogEntity
+ * @property {string} _id ID
+ * @property {string} tr This separates log entries into classes.
+ *       Entries on the same track are expected to have a similarily
+ *       structured body, but this structure may change over time.
+ * @property {Date} ts (timestamp)
+ *       The time the log entry was recorded.
+ * @property {string[]} rel (list of relation ID)
+ *       List of lookup ID strings. These are used to select log-entries in
+ *       queries.
+ * @property {any} body Contents of the log entry. These are not indexed and depend on the
+ *       track.
+ * @property {Resolution[]} res
+ */
+
+class ResultLogger {
+	/**
+	 * @param {string} id
+	 * @param {LogCollection} log
+	 * @param {boolean} printToLog
+	 */
+	constructor(id, log, printToLog) {
+		this.id = id;
+		this.log = log;
+		this.printToLog = printToLog;
+	}
+
+	/**
+	 * @param {string} [message]
+	 */
+	success(message) {
+		this.record(true, message);
+	}
+
+	/**
+	 * @param {any} error
+	 */
+	error(error) {
+		const message = JSON.parse(JSON.stringify(error));
+		this.record(false, message);
+	}
+
+	/**
+	 * @param {boolean} success
+	 * @param {string} [message]
+	 */
+	record(success, message) {
+		/** @type {Resolution} */
+		const resolution = { ts: new Date(), success };
+		if (message) resolution.message = message;
+
+		if (this.printToLog) {
+			/* eslint-disable-next-line no-console */
+			console.log({ id: this.id, resolution });
+		}
+		this.log.update(this.id, { $push: { res: resolution } });
+	}
+}
 
 /**
+ * @extends {Mongo.Collection<LogEntity>}
+ *
  * The Application Log records user and system decisions. It is intended to
  * become the single source of truth within the application.
  *
@@ -23,66 +86,32 @@ import Predicates from '/imports/utils/predicates';
  *  - When we really want to.
  * So Changes should only happen while the service is down and we boot into a
  * new world.
- *
- * There are four fields to every log-entry:
- *    tr (track String)
- *       This separates log entries into classes.
- *       Entries on the same track are expected to have a similarily
- *       structured body, but this structure may change over time.
- *
- *   rel (list of relation ID)
- *       List of lookup ID strings. These are used to select log-entries in
- *       queries.
- *
- *    ts (timestamp Date)
- *       The time the log entry was recorded.
- *
- *  body (Object)
- *       Contents of the log entry. These are not indexed and depend on the
- *       track.
- *
- * @param {Mongo.Collection<any, any>} log
- * @param {boolean} isServer
- * @param {boolean} printToLog
  */
-function mixin(log, isServer, printToLog) {
-	if (isServer) {
-		log._ensureIndex({ tr: 1 });
-		log._ensureIndex({ ts: 1 });
-		log._ensureIndex({ rel: 1 });
+export class LogCollection extends Mongo.Collection {
+	/**
+	 * @param {string|null} name
+	 * @param {boolean} isServer
+	 * @param {boolean} printToLog
+	 */
+	constructor(name, isServer, printToLog) {
+		super(name);
+
+		if (isServer) {
+			this._ensureIndex({ tr: 1 });
+			this._ensureIndex({ ts: 1 });
+			this._ensureIndex({ rel: 1 });
+		}
+
+		this.printToLog = printToLog;
 	}
 
-	log.Filtering = () =>
-		new Filtering({
+	// eslint-disable-next-line class-methods-use-this
+	Filtering() {
+		return new Filtering({
 			start: Predicates.date,
 			rel: Predicates.ids,
 			tr: Predicates.ids,
 		});
-
-	class ResultLogger {
-		constructor(id) {
-			this.id = id;
-		}
-
-		success(message) {
-			this.record(true, message);
-		}
-
-		error(error) {
-			const message = JSON.parse(JSON.stringify(error));
-			this.record(false, message);
-		}
-
-		record(success, message) {
-			const resolution = { ts: new Date(), success };
-			if (message) resolution.message = message;
-
-			if (printToLog) {
-				/* eslint-disable-next-line no-console */
-				console.log({ id: this.id, resolution });
-			}
-			log.update(this.id, { $push: { res: resolution } });
-		}
 	}
 
 	/**
@@ -91,7 +120,7 @@ function mixin(log, isServer, printToLog) {
 	 * @param  {string[]} rel related ID
 	 * @param  {Object} body log body depending on track
 	 */
-	log.record = function (track, rel, body) {
+	record(track, rel, body) {
 		check(track, String);
 		check(rel, [String]);
 		check(body, Object);
@@ -103,21 +132,21 @@ function mixin(log, isServer, printToLog) {
 			res: [],
 		};
 
-		const id = log.insert(entry);
+		const id = this.insert(entry);
 
-		if (printToLog) {
+		if (this.printToLog) {
 			/* eslint-disable-next-line no-console */
 			console.log(entry);
 		}
 
-		return new ResultLogger(id);
-	};
+		return new ResultLogger(id, this, this.printToLog);
+	}
 
 	/**
 	 * @param {{ start?: Date; rel?: string[]; tr?: string[]; }} filter
 	 * @param {number} limit
 	 */
-	log.findFilter = function (filter, limit) {
+	findFilter(filter, limit) {
 		check(filter, {
 			start: Match.Optional(Date),
 			rel: Match.Optional([String]),
@@ -130,8 +159,8 @@ function mixin(log, isServer, printToLog) {
 		if (filter.rel) query.$or = [{ _id: { $in: filter.rel } }, { rel: { $in: filter.rel } }];
 		if (filter.tr) query.tr = { $in: filter.tr };
 
-		return log.find(query, { sort: { ts: -1 }, limit });
-	};
+		return this.find(query, { sort: { ts: -1 }, limit });
+	}
 }
 
 /**
@@ -143,20 +172,15 @@ export const logFactory = {
 	/**
 	 * A log backed by the mongo DB
 	 */
-	mongo: (mongo, isServer, printToLog) => {
-		const log = new mongo.Collection('Log');
-		mixin(log, isServer, printToLog);
-		return log;
-	},
+	mongo: (/** @type {boolean} */ isServer, /** @type {boolean} */ printToLog) =>
+		new LogCollection('Log', isServer, printToLog),
 
 	/**
 	 * An in-memory log useful for tests
 	 */
-	fake: () => {
-		const log = new Mongo.Collection(null); // Local collection for in-memory storage
-		mixin(log, false, false);
-		return log;
-	},
+	fake: () =>
+		// Local collection for in-memory storage
+		new LogCollection(null, false, false),
 };
 
 export default logFactory;

@@ -34,8 +34,10 @@
 				</a>
 			</div>
 			<div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
-				<ul class="nav navbar-nav {{toggleNavbarRight 'left'}}">
-					<li class="{{activeClass 'home'}} {{activeClass 'showCourse'}}">
+				<ul
+					class="nav navbar-nav {{toggleNavbarRight 'left'}} row-sm-auto row-no-gutters px-1 text-center">
+					<li
+						class="{{activeClass 'home'}} {{activeClass 'showCourse'}} col-4-sm-auto p-0">
 						<a href="{{pathFor 'home'}}"
 						   class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close"
 						   id="nav_courses">
@@ -44,7 +46,7 @@
 							<div class="nav-marker-caret"></div>
 						</a>
 					</li>
-					<li class="{{activeClass 'proposeCourse'}}">
+					<li class="{{activeClass 'proposeCourse'}} col-4-sm-auto p-0">
 						<a href="{{pathFor 'proposeCourse'}}"
 						   class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} navbar-link js-nav-dropdown-close">
 							<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
@@ -52,7 +54,7 @@
 							<div class="nav-marker-caret"></div>
 						</a>
 					</li>
-					<li class="{{activeClass 'calendar'}}">
+					<li class="{{activeClass 'calendar'}} col-4-sm-auto p-0">
 						<a href="{{pathFor 'calendar'}}"
 						   class="{{activeClass 'calendar'}} navbar-link calendar-link js-nav-dropdown-close">
 							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
@@ -62,16 +64,20 @@
 						</a>
 					</li>
 				</ul>
-				<ul class="nav navbar-nav {{toggleNavbarRight}}">
-					{{> regionSelectionWrap}}
-					{{> languageSelectionWrap}}
-					<li class="dropdown login-link">
-						{{> loginButton}}
-						<div class="dropdown-menu login-dropdown">
-							{{> userFrame}}
-						</div>
-					</li>
-				</ul>
+				<div class="{{toggleNavbarRight}}">
+					<ul class="nav navbar-nav row-sm-auto row-no-gutters px-1 text-center">
+						{{> regionSelectionWrap inNavbar=true}}
+						{{> languageSelectionWrap inNavbar=true}}
+					</ul>
+					<ul class="nav navbar-nav text-center">
+						<li class="dropdown login-link">
+							{{> loginButton}}
+							<div class="dropdown-menu login-dropdown">
+								{{> userFrame}}
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</nav>
@@ -84,8 +90,6 @@
 			   data-toggle="dropdown" role="button">
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 				{{currentUser.username}}
-				<div class="nav-marker-caret"></div>
-				<div class="nav-marker-bar"></div>
 			</a>
 		{{else}}
 			<a class="js-open-login loginButton navbar-link" id="openLogin" role="button">
@@ -104,24 +108,24 @@
 
 <template name="ownUserFrame">
 	<div class="ownuser-frame">
-		<div class="form-group ownuser-frame-welcome">
+		<div class="mb-3 ownuser-frame-welcome">
 			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
 		</div>
-		<div class="form-group">
-			<a class="btn btn-default form-control"
+		<div class="mb-3">
+			<a class="btn btn-secondary form-control"
 			   href="{{pathFor 'userprofile' _id=currentUser._id}}">
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 				{{mf 'login.frame.profile' 'Public profile'}}
 			</a>
 		</div>
-		<div class="form-group">
-			<a class="btn btn-default form-control" href="{{pathFor 'profile'}}">
+		<div class="mb-3">
+			<a class="btn btn-secondary form-control" href="{{pathFor 'profile'}}">
 				<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
 				{{mf 'login.frame.settings' 'Account settings'}}
 			</a>
 		</div>
-		<div class="form-group">
-			<button type="button" class="btn btn-default js-logout form-control">
+		<div class="mb-3">
+			<button type="button" class="btn btn-secondary js-logout form-control">
 				<span class="fa fa-sign-out fa-fw" aria-hidden="true"></span>
 				{{mf 'login.logout' 'Logout'}}
 			</button>

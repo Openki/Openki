@@ -11,7 +11,7 @@
 				{{mf 'notFound.explanation' "This page is not available. Maybe it never existed."}}
 			</h3>
 			{{#unless currentUser}}
-				<h4 class="gap-md">
+				<h4 class="mt-5">
 					{{mf 'notFound.login' "If it's privat content try:"}}
 				</h4>
 				<button class="js-open-login btn btn-success">
@@ -24,10 +24,10 @@
 		<div class="page-component page-component-seperated">
 			<ul class="page-not-found-links">
 				<li>
-					<button class="btn-link js-go-back">
+					<a class="js-go-back" href="#">
 						{{backArrow}}
 						{{mf 'notFound.goBack' "Go back"}}
-					</button>
+					</a>
 				</li>
 				<li>
 					<a href="{{pathFor 'home'}}">

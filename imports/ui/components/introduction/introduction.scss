@@ -28,29 +28,27 @@
 	padding-top: 0;
 }
 
+.introduction-show-btn,
+.introduction-hide-btn {
+	&::before {
+		font-family: FontAwesome;
+		margin-right: 3px;
+	}
+}
+
+.introduction-show-btn::before {
+	content: '\f106';
+}
+
+.introduction-hide-btn::before {
+	content: '\f107';
+}
+
 .js-introduction-close-btn {
 	@include td-pos(right, 13px);
 	font-size: large;
 	position: absolute;
-	top: 13px;
-}
-
-.introduction-show-btn,
-.introduction-hide-btn {
-	@include btn-sm;
-	@include td-margin(left, 10px);
-
-	&::after {
-		font-family: FontAwesome;
-	}
-}
-
-.introduction-show-btn::after {
-	content: '\f107';
-}
-
-.introduction-hide-btn::after {
-	content: '\f106';
+	top: 10px;
 }
 
 .introduction-content {
@@ -148,4 +146,20 @@
 .introduction-steps > li > h2 > .fa {
 	@include opacity(0.6);
 	color: $blue;
+}
+
+@media (min-width: $screen-sm-min) {
+	.introduction .price-policy-infos,
+	.introduction .price-policy-actions {
+		display: inline-block;
+	}
+	.introduction .price-policy-actions .icon-text-icon {
+		display: none;
+	}
+}
+
+.introduction .price-policy-action {
+	@media (max-width: $screen-xs-max) {
+		@include td-make-xs-column(12, 15px);
+	}
 }

@@ -10,7 +10,8 @@ import * as usersMethods from '/imports/api/users/methods';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
-import TemplateMixins from '/imports/ui/lib/template-mixins';
+import * as TemplateMixins from '/imports/ui/lib/template-mixins';
+import * as Viewport from '/imports/ui/lib/viewport';
 
 import { isEmail } from '/imports/utils/email-tools';
 import { MeteorAsync } from '/imports/utils/promisify';
@@ -167,7 +168,7 @@ Template.loginFrame.events({
 		try {
 			await MeteorAsync.loginWithPassword(user, password);
 
-			if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
+			if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
 				$('#bs-navbar-collapse-1').collapse('hide');
 			}
 			$('.js-account-tasks').modal('hide');
@@ -203,7 +204,7 @@ Template.loginFrame.events({
 			if (err) {
 				Alert.serverError(err, '');
 			} else {
-				if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
+				if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
 				$('.js-account-tasks').modal('hide');
@@ -332,7 +333,7 @@ Template.registerFrame.events({
 				if (err) {
 					instance.errors.add(err.reason);
 				} else {
-					if (Session.get('viewportWidth') <= ScssVars.gridFloatBreakpoint) {
+					if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
 						$('#bs-navbar-collapse-1').collapse('hide');
 					}
 					$('.js-account-tasks').modal('hide');
