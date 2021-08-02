@@ -10,7 +10,7 @@ import * as Alert from '/imports/api/alerts/alert';
 const TemplateMixins = {
 	/** Setup expand/collaps logic for a template
 	 *
-	 * @param {Object} template instance
+	 * @param {TemplateInstance} template instance
 	 *
 	 * This mixin extends the given template with an `expanded` helper and
 	 * two click handlers `js-expand` and `js-close`. Only one expandible template
