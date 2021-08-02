@@ -18,7 +18,7 @@ import './group-details/group-details';
 import './kiosk/kiosk';
 import './log/log';
 import './not-found/not-found';
-import './ownprofile/ownprofile';
+import './profile';
 import './reset-password/reset-password';
 import './stats/stats';
 import './tenant-create/tenant-create';
