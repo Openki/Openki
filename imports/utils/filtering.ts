@@ -51,7 +51,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 			} else {
 				this._predicates[name] = toAdd as any;
 			}
-			if (!predicate) {
+			if (!this._predicates[name]) {
 				delete this._predicates[name];
 			}
 			return this;
