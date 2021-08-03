@@ -7,10 +7,7 @@ import { Courses } from '/imports/api/courses/courses';
 sitemaps.config('gzip', true);
 
 sitemaps.add('/sitemap.xml', () => {
-	/**
-	 * @type {{ page: string; lastmod: Date; }[]}
-	 */
-	const out = [];
+	const out: { page: string; lastmod: Date }[] = [];
 	const courses = Courses.find({}, { sort: { time_lastedit: -1 }, limit: 2000 });
 
 	courses.forEach((course) => {

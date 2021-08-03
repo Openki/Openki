@@ -4,7 +4,7 @@ import { mf } from 'meteor/msgfmt:core';
 
 import * as Alert from '/imports/api/alerts/alert';
 
-Accounts.onEmailVerificationLink((/** @type {string} */ token) => {
+Accounts.onEmailVerificationLink((token: string) => {
 	Router.go('profile');
 	Accounts.verifyEmail(token, (error) => {
 		if (error) {

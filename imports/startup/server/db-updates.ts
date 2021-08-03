@@ -15,8 +15,7 @@ import { update as update20210309HistorySubscribeUnsubscribe } from './updates/2
 import { update as update20210421EnsureCourseArchivedField } from './updates/2021.04.21 ensureCourseArchivedField';
 import { update as update20210513ensureTenantAdminsField } from './updates/2021.05.13 ensureTenantAdminsField';
 
-/** @type {{[name: string]: () => number }} */
-const UpdatesAvailable = {
+const UpdatesAvailable: { [name: string]: () => number } = {
 	'2020.12.16 mergeUserLocale': update20201216MergeUserLocale,
 	'2021.01.06 ensureVenueSlugField': update20210106EnsureVenueSlugField,
 	'2021.01.12 ensureCourseInterestedField': update20210112EnsureCourseInterestedField,
@@ -29,15 +28,21 @@ const UpdatesAvailable = {
 	'2021.05.13 ensureTenantAdminsField': update20210513ensureTenantAdminsField,
 };
 
-const UpdatesApplied = new Mongo.Collection('UpdatesApplied');
+interface UpdatesAppliedEntity {
+	name: string;
+	affected: number;
+	run: Date;
+	applied?: Date;
+}
+
+const UpdatesApplied = new Mongo.Collection<UpdatesAppliedEntity>('UpdatesApplied');
 
 Meteor.startup(() => {
 	const skipInitial = UpdatesApplied.find().count() === 0;
 
 	Object.keys(UpdatesAvailable).forEach((name) => {
 		if (UpdatesApplied.find({ name }).count() === 0) {
-			/** @type {{name: string; affected: number; run: Date, applied?: Date}} */
-			const entry = {
+			const entry: UpdatesAppliedEntity = {
 				name,
 				affected: 0,
 				run: new Date(),
