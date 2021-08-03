@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { Blaze } from 'meteor/blaze';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { mf } from 'meteor/msgfmt:core';
 
@@ -8,14 +9,36 @@ import * as Alert from '/imports/api/alerts/alert';
 import { isEmail } from '/imports/utils/email-tools';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
-import './invitations-create.html';
+import './template.html';
 
-Template.invitationsCreate.onCreated(function () {
-	const instance = this;
+const template = Template.invitationsCreate as Blaze.Template;
+
+TemplateMixins.FormfieldErrors(template, {
+	notValid: {
+		text: () =>
+			mf(
+				'tenant.settings.invitations.error.notValid',
+				'Some of the e-mail addresses are not valid.',
+			),
+		field: 'invitations-emails',
+	},
+});
+
+type InvitationsCreateTemplateInstance = Blaze.TemplateInstance &
+	TemplateMixins.FormfieldErrorsTemplateInstance & {
+		state: ReactiveDict<{ tried: boolean }>;
+		reset(): void;
+		getLines(): string[];
+		normalizeList(): void;
+		checkList(): boolean;
+		getEmails(): string[];
+	};
+
+template.onCreated(function () {
+	const instance = this as InvitationsCreateTemplateInstance;
 	instance.busy('notReady');
 
-	instance.state = new ReactiveDict();
-	instance.state.setDefault({
+	instance.state = new ReactiveDict(undefined, {
 		tried: false,
 	});
 
@@ -26,8 +49,7 @@ Template.invitationsCreate.onCreated(function () {
 	};
 
 	instance.getLines = () => {
-		/** @type {string} */
-		const emails = instance.$('.js-invitations-emails').val();
+		const emails = instance.$('.js-invitations-emails').val() as string;
 
 		return emails.split(/[\s;,|]+/g).filter((l) => l);
 	};
@@ -53,29 +75,21 @@ Template.invitationsCreate.onCreated(function () {
 	instance.getEmails = () => instance.getLines().filter((e) => isEmail(e));
 });
 
-TemplateMixins.FormfieldErrors(Template.invitationsCreate, {
-	notValid: {
-		text: () =>
-			mf(
-				'tenant.settings.invitations.error.notValid',
-				'Some of the e-mail addresses are not valid.',
-			),
-		field: 'invitations-emails',
-	},
-});
-
-Template.invitationsCreate.events({
-	'keyup .js-invitations-emails, change .js-invitations-emails'(event, instance) {
+template.events({
+	'keyup .js-invitations-emails, change .js-invitations-emails'(
+		_event: any,
+		instance: InvitationsCreateTemplateInstance,
+	) {
 		if (instance.getLines() && (!instance.state.get('tried') || instance.checkList())) {
 			instance.busy(false);
 		} else {
 			instance.busy('notReady');
 		}
 	},
-	'focusout .js-invitations-emails'(event, instance) {
+	'focusout .js-invitations-emails'(_event: any, instance: InvitationsCreateTemplateInstance) {
 		instance.normalizeList();
 	},
-	async 'submit .js-create-invitations'(event, instance) {
+	async 'submit .js-create-invitations'(event: any, instance: InvitationsCreateTemplateInstance) {
 		event.preventDefault();
 
 		instance.state.set('tried', true);
