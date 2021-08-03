@@ -24,7 +24,7 @@
 		</div>
 		<div class="mb-3">
 			<label
-				   class="form-label">{{mf 'tenant.settings.field.addMembers' 'Add a new member to your organization'}}</label>
+				   class="form-label">{{mf 'tenant.settings.field.addMembers' 'Add existing {SITENAME} members to your organisation {TENANTNAME}.' SITENAME=siteName TENANTNAME=tenantName}}</label>
 			<div class="input-group">
 				<span class="input-group-text">
 					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
@@ -80,7 +80,7 @@
 		</div>
 		<div class="mb-3">
 			<label
-				   class="form-label">{{mf 'tenant.settings.field.addAdmins' 'Add a new admin to your organization'}}</label>
+				   class="form-label">{{mf 'tenant.settings.field.addAdmins' 'Add an existing {SITENAME} user as a new admin to your organization {TENANTNAME}.' SITENAME=siteName TENANTNAME=tenantName}}</label>
 			<div class="input-group">
 				<span class="input-group-text">
 					<span class="fa fa-user fa-fw" aria-hidden="true"></span>

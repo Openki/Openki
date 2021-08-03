@@ -40,6 +40,10 @@ Template.tenantSettings.onCreated(function () {
 });
 
 Template.tenantSettings.helpers({
+	tenantName() {
+		const tenant = Tenants.findOne(Router.current().params._id);
+		return tenant?.name;
+	},
 	members() {
 		const tenant = Tenants.findOne(Router.current().params._id);
 		return tenant.members.filter((m) => !tenant?.admins?.includes(m));

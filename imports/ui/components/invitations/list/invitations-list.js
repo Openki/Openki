@@ -28,10 +28,12 @@ Template.invitationsList.onCreated(function () {
 });
 
 Template.invitationsList.helpers({
-	/**
-	 * @param {string} tenantId
-	 */
-	invitations(tenantId) {
+	hasInvitations() {
+		const instance = Template.instance();
+		return Invitations.findFilter({ tenant: instance.data.tenant._id }, 1).count() > 0;
+	},
+
+	invitations() {
 		const instance = Template.instance();
 
 		const status = ['created', 'send', 'failed'];
@@ -40,7 +42,7 @@ Template.invitationsList.helpers({
 			status.push('accepted');
 		}
 
-		return Invitations.findFilter({ tenant: tenantId, status });
+		return Invitations.findFilter({ tenant: instance.data.tenant._id, status });
 	},
 
 	/**
