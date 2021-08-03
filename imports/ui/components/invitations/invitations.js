@@ -1,3 +1,3 @@
 import './list/invitations-list';
-import './create/invitations-create';
+import './create';
 import './invitations.html';
