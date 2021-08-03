@@ -89,17 +89,34 @@
 			</div>
 			<hr>
 			{{#each service in OAuthServices}}
-				<button class="btn btn-{{service.key}} form-control js-oauth-btn my-2"
-						data-service="{{service.serviceName}}" type="button" {{disabledIfBusy}}>
-					{{#if busy service.serviceName}}
-						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-						{{mf 'login.OAuth.busy' 'Logging in with '}}
-					{{else}}
-						<span class="fa fa-{{service.key}} fa-fw" aria-hidden="true"></span>
-						{{mf 'login.OAuth.loginWith' 'Login with '}}
-					{{/if}}
-					{{service.name}}
-				</button>
+				<div class="row g-2 align-items-center">
+					<div class="col">
+						<button class="btn btn-{{service.key}} form-control js-oauth-btn my-2"
+								data-service="{{service.serviceName}}" type="button"
+								{{disabledIfBusy}}>
+							{{#if busy service.serviceName}}
+								<span class="fa fa-circle-o-notch fa-spin fa-fw"
+									  aria-hidden="true"></span>
+								{{mf 'login.OAuth.busy' 'Logging in with '}}
+							{{else}}
+								<span class="fa fa-{{service.key}} fa-fw" aria-hidden="true"></span>
+								{{mf 'login.OAuth.loginWith' 'Login with '}}
+							{{/if}}
+							{{service.name}}
+						</button>
+					</div>
+					<div class="col-auto">
+						<a class="text-muted" data-bs-toggle="collapse" href="#{{service.key}}-info" role="button"
+						   aria-expanded="false" aria-controls="{{service.key}}-info">
+							<i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+						</a>
+					</div>
+				</div>
+				<div class="collapse" id="{{service.key}}-info">
+					<div class="text-muted">
+						{{mf 'login.OAuth.info' '{SITENAME} is getting your user-information (username, email, ...) from that service. They will not have any access to data or information about your activity here except that the fact you logged in.' SITENAME=siteName}}
+					</div>
+				</div>
 			{{/each}}
 			<hr>
 			<div class="mb-3">

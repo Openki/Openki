@@ -41,7 +41,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 			}
 			const toAdd = this._availablePredicates[name](param);
 			if (!toAdd) {
-				return false; // Filter construction failed, leave as-is
+				return this; // Filter construction failed, leave as-is
 			}
 
 			const predicate = this._predicates[name];
@@ -51,7 +51,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 			} else {
 				this._predicates[name] = toAdd as any;
 			}
-			if (!predicate) {
+			if (!this._predicates[name]) {
 				delete this._predicates[name];
 			}
 			return this;
