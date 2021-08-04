@@ -3,15 +3,10 @@ import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Random } from 'meteor/random';
 import { Mongo } from 'meteor/mongo';
-import { Template } from 'meteor/templating';
+import { TemplateStaticTyped } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Spacebars } from 'meteor/spacebars';
-
-export interface ExpandibleTemplateInstance {
-	_expander: string;
-	collapse: () => void;
-}
 
 /** Setup expand/collaps logic for a template
  *
@@ -33,12 +28,23 @@ export interface ExpandibleTemplateInstance {
  *   </div>
  * </template>
  */
-export function Expandible(template: Blaze.Template) {
+export function Expandible<D, N extends string, T extends Record<string, unknown>>(
+	TemplateBase: TemplateStaticTyped<D, N, T>,
+	templateName: N,
+) {
+	const Template = TemplateBase as TemplateStaticTyped<
+		D,
+		N,
+		T & { _expander: string; collapse: () => void }
+	>;
+
+	const template = Template[templateName];
+
 	template.onCreated(function () {
-		const instance = this as unknown as ExpandibleTemplateInstance;
+		const instance = this;
 		const expander = Random.id(); // Token to keep track of which Expandible is open
 		instance._expander = expander; // Read by event handlers
-		instance.collapse = function () {
+		instance.collapse = () => {
 			if (Session.equals('verify', expander)) {
 				Session.set('verify', false);
 			}
@@ -46,12 +52,12 @@ export function Expandible(template: Blaze.Template) {
 	});
 	template.helpers({
 		expanded() {
-			const instance = Template.instance() as unknown as ExpandibleTemplateInstance;
+			const instance = Template.instance();
 			return Session.equals('verify', instance._expander);
 		},
 	});
 	template.events({
-		'click .js-expand'(event: any, instance: ExpandibleTemplateInstance) {
+		'click .js-expand'(event, instance) {
 			event.stopPropagation();
 			Session.set('verify', instance._expander);
 		},
@@ -59,14 +65,27 @@ export function Expandible(template: Blaze.Template) {
 			Session.set('verify', false);
 		},
 	});
+
+	return Template;
 }
 
-export interface MultiExpandibleTemplateInstance {
+export interface MultiExpandibleTemplateProps {
 	expanded: ReactiveVar<boolean>;
 }
 
 /** Like Expandible but multiple expandibles can be open at the same time. */
-export function MultiExpandible(template: Blaze.Template) {
+export function MultiExpandible<D, N extends string, T extends Record<string, unknown>>(
+	TemplateBase: TemplateStaticTyped<D, N, T>,
+	templateName: N,
+) {
+	const Template = TemplateBase as TemplateStaticTyped<
+		D,
+		N,
+		T & { expanded: ReactiveVar<boolean> }
+	>;
+
+	const template = Template[templateName];
+
 	let dx = -1000;
 	let dy = -1000;
 	const nomove = function (e: any) {
@@ -74,12 +93,12 @@ export function MultiExpandible(template: Blaze.Template) {
 	};
 
 	template.onCreated(function () {
-		const instance = this as unknown as MultiExpandibleTemplateInstance;
+		const instance = this as unknown as MultiExpandibleTemplateProps;
 		instance.expanded = new ReactiveVar(false);
 	});
 	template.helpers({
 		expanded() {
-			const instance = Template.instance() as unknown as MultiExpandibleTemplateInstance;
+			const instance = Template.instance() as unknown as MultiExpandibleTemplateProps;
 			return instance.expanded.get();
 		},
 	});
@@ -88,12 +107,12 @@ export function MultiExpandible(template: Blaze.Template) {
 			dx = event.screenX;
 			dy = event.screenY;
 		},
-		'mouseup .js-expand'(event: any, instance: MultiExpandibleTemplateInstance) {
+		'mouseup .js-expand'(event: any, instance: MultiExpandibleTemplateProps) {
 			if (nomove(event)) {
 				instance.expanded.set(true);
 			}
 		},
-		'mouseup .js-collapse'(event: any, instance: MultiExpandibleTemplateInstance) {
+		'mouseup .js-collapse'(event: any, instance: MultiExpandibleTemplateProps) {
 			if (nomove(event)) {
 				instance.expanded.set(false);
 			}
@@ -105,16 +124,6 @@ export function MultiExpandible(template: Blaze.Template) {
 
 export interface FormfieldErrorsMapping {
 	[name: string]: { text: () => string; field: string };
-}
-
-export interface FormfieldErrorsTemplateInstance {
-	errorMapping: FormfieldErrorsMapping;
-	errors: {
-		messages: Mongo.Collection<{ key: string; field: string }>;
-		present(): boolean;
-		add(key: string): void;
-		reset(): void;
-	};
 }
 
 /** Manage errors for a form template
@@ -159,9 +168,29 @@ export interface FormfieldErrorsTemplateInstance {
  * @param template The template to extend
  * @param mapping The mapping of error-keys to message objects
  */
-export function FormfieldErrors(template: Blaze.Template, mapping?: FormfieldErrorsMapping) {
+export function FormfieldErrors<D, N extends string, T extends Record<string, unknown>>(
+	TemplateBase: TemplateStaticTyped<D, N, T>,
+	templateName: N,
+	mapping?: FormfieldErrorsMapping,
+) {
+	const Template = TemplateBase as TemplateStaticTyped<
+		D,
+		N,
+		T & {
+			errorMapping: FormfieldErrorsMapping;
+			errors: {
+				messages: Mongo.Collection<{ key: string; field: string }>;
+				present(): boolean;
+				add(key: string): void;
+				reset(): void;
+			};
+		}
+	>;
+
+	const template = Template[templateName];
+
 	template.onCreated(function () {
-		const instance = this as unknown as FormfieldErrorsTemplateInstance;
+		const instance = this;
 		const messages = new Mongo.Collection<{ key: string; field: string }>(null); // Local collection for in-memory storage
 		instance.errors = {
 			messages,
@@ -185,14 +214,13 @@ export function FormfieldErrors(template: Blaze.Template, mapping?: FormfieldErr
 
 	template.helpers({
 		errorClass(field: string) {
-			const instance = Template.instance() as unknown as FormfieldErrorsTemplateInstance;
-			if (instance.errors.messages.findOne({ field })) {
+			if (Template.instance().errors.messages.findOne({ field })) {
 				return 'has-error';
 			}
 			return false;
 		},
 		errorMessage(field: string) {
-			const instance = Template.instance() as unknown as FormfieldErrorsTemplateInstance;
+			const instance = Template.instance();
 			const message = instance.errors.messages.findOne({ field });
 			if (!message) {
 				return false;
@@ -202,4 +230,6 @@ export function FormfieldErrors(template: Blaze.Template, mapping?: FormfieldErr
 			return Spacebars.SafeString(`<span class="form-text">${(Blaze as any)._escape(text)}</span>`);
 		},
 	});
+
+	return Template;
 }

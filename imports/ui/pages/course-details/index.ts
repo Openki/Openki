@@ -39,7 +39,7 @@ import '/imports/ui/components/report/report';
 import './template.html';
 import './styles.scss';
 
-TemplateMixins.Expandible(Template.courseDetailsPage);
+TemplateMixins.Expandible(Template as any, 'courseDetailsPage');
 Template.courseDetailsPage.onCreated(function (this: any) {
 	const instance = this;
 
@@ -129,12 +129,6 @@ Template.courseDetailsPage.helpers({
 	},
 	editableDescription() {
 		return (Template.instance() as any).editableDescription;
-	},
-});
-
-Template.courseDetailsDescription.helpers({
-	mayEdit() {
-		return this.course?.editableBy(Meteor.user());
 	},
 });
 
@@ -240,6 +234,12 @@ Template.courseDetailsPage.events({
 	},
 });
 
+Template.courseDetailsDescription.helpers({
+	mayEdit() {
+		return this.course?.editableBy(Meteor.user());
+	},
+});
+
 Template.courseGroupList.helpers({
 	isOrganizer() {
 		return Template.instance().data.groupOrganizers.includes(IdTools.extract(this));
@@ -270,7 +270,7 @@ Template.courseGroupList.helpers({
 	},
 });
 
-TemplateMixins.Expandible(Template.courseGroupAdd);
+TemplateMixins.Expandible(Template as any, 'courseGroupAdd');
 Template.courseGroupAdd.helpers(GroupNameHelpers);
 Template.courseGroupAdd.helpers({
 	groupsToAdd() {
@@ -302,7 +302,7 @@ Template.courseGroupAdd.events({
 	},
 });
 
-TemplateMixins.Expandible(Template.courseGroupRemove);
+TemplateMixins.Expandible(Template as any, 'courseGroupRemove');
 Template.courseGroupRemove.helpers(GroupNameHelpers);
 Template.courseGroupRemove.events({
 	async 'click .js-remove'(_event: any, instance: any) {
@@ -327,7 +327,7 @@ Template.courseGroupRemove.events({
 	},
 });
 
-TemplateMixins.Expandible(Template.courseGroupMakeOrganizer);
+TemplateMixins.Expandible(Template as any, 'courseGroupMakeOrganizer');
 Template.courseGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.courseGroupMakeOrganizer.events({
 	async 'click .js-makeOrganizer'(_event: any, instance: any) {
@@ -352,7 +352,7 @@ Template.courseGroupMakeOrganizer.events({
 	},
 });
 
-TemplateMixins.Expandible(Template.courseGroupRemoveOrganizer);
+TemplateMixins.Expandible(Template as any, 'courseGroupRemoveOrganizer');
 Template.courseGroupRemoveOrganizer.helpers(GroupNameHelpers);
 Template.courseGroupRemoveOrganizer.events({
 	async 'click .js-removeOrganizer'(_event: any, instance: any) {

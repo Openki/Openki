@@ -2,6 +2,7 @@ import { Blaze } from 'meteor/blaze';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 Blaze.TemplateInstance.prototype.parentInstance = function (
+	this: any,
 	levels = 1,
 ): Blaze.TemplateInstance | undefined {
 	let { view } = this;
@@ -15,7 +16,10 @@ Blaze.TemplateInstance.prototype.parentInstance = function (
 	return undefined;
 };
 
-Blaze.TemplateInstance.prototype.busy = function (activity: string | boolean | undefined) {
+Blaze.TemplateInstance.prototype.busy = function (
+	this: any,
+	activity: string | boolean | undefined,
+) {
 	if (!this.business) {
 		this.business = new ReactiveVar(activity);
 	} else {
@@ -23,7 +27,7 @@ Blaze.TemplateInstance.prototype.busy = function (activity: string | boolean | u
 	}
 };
 
-Blaze.TemplateInstance.prototype.findBusiness = function () {
+Blaze.TemplateInstance.prototype.findBusiness = function (this: any) {
 	if (this.business) return this.business; // Short-circuit common case
 
 	let businessInstance = this;

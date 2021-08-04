@@ -1,19 +1,30 @@
-import { Template } from 'meteor/templating';
-import { Blaze } from 'meteor/blaze';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { mf } from 'meteor/msgfmt:core';
 
 import * as InvitationsMethods from '/imports/api/invitations/methods';
 import * as Alert from '/imports/api/alerts/alert';
+import { TenantEntity } from '/imports/api/tenants/tenants';
 
 import { isEmail } from '/imports/utils/email-tools';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import './template.html';
 
-const template = Template.invitationsCreate as Blaze.Template;
+const TemplateBase = TemplateAny as TemplateStaticTyped<
+	{ tenant: TenantEntity },
+	'invitationsCreate',
+	{
+		state: ReactiveDict<{ tried: boolean }>;
+		reset(): void;
+		getLines(): string[];
+		normalizeList(): void;
+		checkList(): boolean;
+		getEmails(): string[];
+	}
+>;
 
-TemplateMixins.FormfieldErrors(template, {
+const Template = TemplateMixins.FormfieldErrors(TemplateBase, 'invitationsCreate', {
 	notValid: {
 		text: () =>
 			mf(
@@ -24,18 +35,10 @@ TemplateMixins.FormfieldErrors(template, {
 	},
 });
 
-type InvitationsCreateTemplateInstance = Blaze.TemplateInstance &
-	TemplateMixins.FormfieldErrorsTemplateInstance & {
-		state: ReactiveDict<{ tried: boolean }>;
-		reset(): void;
-		getLines(): string[];
-		normalizeList(): void;
-		checkList(): boolean;
-		getEmails(): string[];
-	};
+const template = Template.invitationsCreate;
 
 template.onCreated(function () {
-	const instance = this as InvitationsCreateTemplateInstance;
+	const instance = this;
 	instance.busy('notReady');
 
 	instance.state = new ReactiveDict(undefined, {
@@ -76,20 +79,17 @@ template.onCreated(function () {
 });
 
 template.events({
-	'keyup .js-invitations-emails, change .js-invitations-emails'(
-		_event: any,
-		instance: InvitationsCreateTemplateInstance,
-	) {
+	'keyup .js-invitations-emails, change .js-invitations-emails'(_event, instance) {
 		if (instance.getLines() && (!instance.state.get('tried') || instance.checkList())) {
 			instance.busy(false);
 		} else {
 			instance.busy('notReady');
 		}
 	},
-	'focusout .js-invitations-emails'(_event: any, instance: InvitationsCreateTemplateInstance) {
+	'focusout .js-invitations-emails'(_event, instance) {
 		instance.normalizeList();
 	},
-	async 'submit .js-create-invitations'(event: any, instance: InvitationsCreateTemplateInstance) {
+	async 'submit .js-create-invitations'(event, instance) {
 		event.preventDefault();
 
 		instance.state.set('tried', true);

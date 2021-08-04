@@ -434,6 +434,7 @@ Router.route('profile', {
 		];
 	},
 	data() {
+		/** @type {import('/imports/ui/pages/profile').ProfilePageData} */
 		const data = {};
 		/** @type {UserModel | null} */
 		const user = Meteor.user();

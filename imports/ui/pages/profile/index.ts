@@ -1,8 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import { Blaze } from 'meteor/blaze';
 import { Accounts } from 'meteor/accounts-base';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 import { ValidationError } from 'meteor/mdg:validation-error';
@@ -23,12 +22,42 @@ import '/imports/ui/components/avatar/avatar';
 
 import './template.html';
 import './styles.scss';
+import { VenueEntity, VenueModel } from '/imports/api/venues/venues';
+import { TenantEntity, TenantModel } from '/imports/api/tenants/tenants';
+import { GroupEntity } from '/imports/api/groups/groups';
 
-const template = Template.profilePage as Blaze.Template;
+export interface ProfilePageData {
+	user: {
+		_id: string;
+		name: string;
+		notifications: boolean;
+		allowPrivateMessages: boolean;
+		tenants: Mongo.Cursor<TenantEntity, TenantModel>;
+		groups: Mongo.Cursor<GroupEntity>;
+		venues: Mongo.Cursor<VenueEntity, VenueModel>;
+		email: string;
+		verified: boolean;
+	};
+}
 
-TemplateMixins.Expandible(template);
+const TemplateBase = TemplateAny as TemplateStaticTyped<
+	ProfilePageData,
+	'profilePage',
+	{
+		changingPass: ReactiveVar<boolean>;
+		notificationsUnsubscribeSuccess: () => boolean;
+		privateMessagesUnsubscribeSuccess: () => boolean;
+		unsubscribeError: () => boolean;
+		editableName: Editable;
+		editableDescription: Editable;
+	}
+>;
 
-TemplateMixins.FormfieldErrors(template, {
+// Add Expandible an FormfieldError Handling to the profilePage Template
+
+const TemplateExtended = TemplateMixins.Expandible(TemplateBase, 'profilePage');
+
+const Template = TemplateMixins.FormfieldErrors(TemplateExtended, 'profilePage', {
 	noEmail: {
 		text: () => mf('warning.noEmailProvided', 'Please enter a email.'),
 		field: 'email',
@@ -43,19 +72,10 @@ TemplateMixins.FormfieldErrors(template, {
 	},
 });
 
-type ProfileTemplateInstance = Blaze.TemplateInstance &
-	TemplateMixins.ExpandibleTemplateInstance &
-	TemplateMixins.FormfieldErrorsTemplateInstance & {
-		changingPass: ReactiveVar<boolean>;
-		notificationsUnsubscribeSuccess: () => boolean;
-		privateMessagesUnsubscribeSuccess: () => boolean;
-		unsubscribeError: () => boolean;
-		editableName: Editable;
-		editableDescription: Editable;
-	};
+const template = Template.profilePage;
 
 template.onCreated(function () {
-	const instance = this as ProfileTemplateInstance;
+	const instance = this;
 
 	instance.busy(false);
 	instance.changingPass = new ReactiveVar(false);
@@ -128,8 +148,7 @@ template.onCreated(function () {
 
 template.helpers({
 	changingPass() {
-		const instance = Template.instance() as ProfileTemplateInstance;
-		return instance.changingPass.get();
+		return Template.instance().changingPass.get();
 	},
 
 	groupCount() {
@@ -159,46 +178,41 @@ template.helpers({
 	},
 
 	notificationsUnsubscribeSuccess() {
-		const instance = Template.instance() as ProfileTemplateInstance;
-		return instance.notificationsUnsubscribeSuccess();
+		return Template.instance().notificationsUnsubscribeSuccess();
 	},
 
 	privateMessagesUnsubscribeSuccess() {
-		const instance = Template.instance() as ProfileTemplateInstance;
-		return instance.privateMessagesUnsubscribeSuccess();
+		return Template.instance().privateMessagesUnsubscribeSuccess();
 	},
 
 	unsubscribeError() {
-		const instance = Template.instance() as ProfileTemplateInstance;
-		return instance.unsubscribeError();
+		return Template.instance().unsubscribeError();
 	},
 
 	editableName() {
-		const instance = Template.instance() as ProfileTemplateInstance;
-		return instance.editableName;
+		return Template.instance().editableName;
 	},
 
 	editableDescription() {
-		const instance = Template.instance() as ProfileTemplateInstance;
-		return instance.editableDescription;
+		return Template.instance().editableDescription;
 	},
 });
 
 template.events({
-	'click .js-change-pwd-btn'(_event: any, instance: ProfileTemplateInstance) {
+	'click .js-change-pwd-btn'(_event, instance) {
 		instance.changingPass.set(true);
 		instance.collapse();
 	},
 
-	'click .js-change-pwd-cancel'(_event: any, instance: ProfileTemplateInstance) {
+	'click .js-change-pwd-cancel'(_event, instance) {
 		instance.changingPass.set(false);
 	},
 
-	'click .js-expand'(_event: any, instance: ProfileTemplateInstance) {
+	'click .js-expand'(_event, instance) {
 		instance.changingPass.set(false);
 	},
 
-	async 'click .js-profile-delete-confirm-btn'(_event: any, instance: ProfileTemplateInstance) {
+	async 'click .js-profile-delete-confirm-btn'(_event, instance) {
 		instance.busy('deleting');
 
 		instance.collapse(); // Wait for server to log us out.
@@ -211,12 +225,12 @@ template.events({
 		}
 	},
 
-	async 'submit .js-email-form'(event: any, instance: ProfileTemplateInstance) {
+	async 'submit .js-email-form'(event, instance) {
 		event.preventDefault();
 		instance.errors.reset();
 
 		try {
-			await usersMethods.updateEmail(instance.$('.js-email').val());
+			await usersMethods.updateEmail(instance.$('.js-email').val() as string);
 			Alert.success(mf('profile.updated', 'Updated profile'));
 		} catch (err) {
 			if (ValidationError.is(err)) {
@@ -227,7 +241,7 @@ template.events({
 		}
 	},
 
-	async 'change .js-notifications'(_event: any, instance: ProfileTemplateInstance) {
+	async 'change .js-notifications'(_event, instance) {
 		RouterAutoscroll.cancelNext();
 
 		const allow = instance.$('.js-notifications').prop('checked');
@@ -246,7 +260,7 @@ template.events({
 		}
 	},
 
-	async 'change .js-allowPrivateMessages'(_event: any, instance: ProfileTemplateInstance) {
+	async 'change .js-allowPrivateMessages'(_event, instance) {
 		RouterAutoscroll.cancelNext();
 
 		const allow = instance.$('.js-allowPrivateMessages').prop('checked');
@@ -265,7 +279,7 @@ template.events({
 		}
 	},
 
-	'submit .js-change-pwd'(event: any, instance: ProfileTemplateInstance) {
+	'submit .js-change-pwd'(event, instance) {
 		event.preventDefault();
 		const old = (instance.find('.js-old-pwd') as HTMLInputElement).value;
 		const pass = (instance.find('.js-new-pwd') as HTMLInputElement).value;

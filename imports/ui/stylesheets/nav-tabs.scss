@@ -8,14 +8,12 @@
 	}
 }
 
-
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover,
 .nav-tabs > .active > a:focus {
 	background-color: $tab-content-bg;
 	border-top: 3px solid $blue-light;
 }
-
 
 .tab-content {
 	background-color: $tab-content-bg;

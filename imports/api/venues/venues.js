@@ -14,7 +14,7 @@ import * as StringTools from '/imports/utils/string-tools';
 
 // ======== DB-Model: ========
 /**
- * @typedef  {Object} VenueEnity
+ * @typedef  {Object} VenueEntity
  * @property {string} _id             ID
  * @property {string} editor          user ID
  * @property {string} name
@@ -40,7 +40,7 @@ import * as StringTools from '/imports/utils/string-tools';
  */
 
 /**
- * @typedef {Venue & VenueEnity} VenueModel
+ * @typedef {Venue & VenueEntity} VenueModel
  */
 
 /**
@@ -70,7 +70,7 @@ export class Venue {
 }
 
 /**
- * @extends {Mongo.Collection<VenueEnity, VenueModel>}
+ * @extends {Mongo.Collection<VenueEntity, VenueModel>}
  */
 export class VenueCollection extends Mongo.Collection {
 	constructor() {
@@ -119,10 +119,10 @@ export class VenueCollection extends Mongo.Collection {
 		check(skip, Match.Maybe(Number));
 		check(sort, Match.Maybe([[String]]));
 
-		/** @type {Mongo.Selector<VenueEnity> } */
+		/** @type {Mongo.Selector<VenueEntity> } */
 		const find = {};
 
-		/** @type {Mongo.Options<VenueEnity>} */
+		/** @type {Mongo.Options<VenueEntity>} */
 		const options = { sort };
 
 		if (limit > 0) {
