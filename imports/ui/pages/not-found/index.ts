@@ -1,12 +1,21 @@
 import { Session } from 'meteor/session';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Spacebars } from 'meteor/spacebars';
 
 import '/imports/ui/components/report/report';
 
 import './template.html';
+import './styles.scss';
 
-Template.notFound.helpers({
+const Template = TemplateAny as TemplateStaticTyped<
+	Record<string, unknown>,
+	'notFound',
+	Record<string, unknown>
+>;
+
+const template = Template.notFound;
+
+template.helpers({
 	backArrow() {
 		const isRTL = Session.equals('textDirectionality', 'rtl');
 		const direction = isRTL ? 'right' : 'left';
@@ -16,10 +25,7 @@ Template.notFound.helpers({
 	},
 });
 
-Template.notFound.events({
-	'click .js-open-login'() {
-		$('.js-account-tasks').modal('show');
-	},
+template.events({
 	'click .js-go-back'() {
 		window.history.back();
 	},

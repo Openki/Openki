@@ -19,12 +19,12 @@ import '/imports/ui/components/profiles/course-list/profile-course-list';
 import '/imports/ui/components/profiles/verify-email';
 import '/imports/ui/components/venues/link/venue-link';
 import '/imports/ui/components/avatar/avatar';
-
-import './template.html';
-import './styles.scss';
 import { VenueEntity, VenueModel } from '/imports/api/venues/venues';
 import { TenantEntity, TenantModel } from '/imports/api/tenants/tenants';
 import { GroupEntity } from '/imports/api/groups/groups';
+
+import './template.html';
+import './styles.scss';
 
 export interface ProfilePageData {
 	user: {
