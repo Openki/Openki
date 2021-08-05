@@ -6,7 +6,7 @@ import { Template } from 'meteor/templating';
 import * as Alert from '/imports/api/alerts/alert';
 import * as emailMethods from '/imports/api/emails/methods';
 
-import './verify-email.html';
+import './template.html';
 
 Template.verifyEmail.onCreated(function () {
 	this.sending = new ReactiveVar(false);
