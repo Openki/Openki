@@ -50,6 +50,14 @@ This file descripts all configurations and customization options. Remove the com
 		"faqLink": "/info/faq", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"courseGuideLink": "...", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"aboutLink": "https://about.openki.net", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+		"contribution": // Contribution to openki 
+		    { "icon": "fa fa-heart"
+			, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"] // forbidden chars in username
+			, "link": // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+				{ "en": "https://about.openki.net/en/ueber-uns/spenden/"
+				, "de": "https://about.openki.net/ueber-uns/spenden/"
+				}
+			},
 		"categories": { // Categories for courses, main and/or sub categories
 			"sports":
 				[

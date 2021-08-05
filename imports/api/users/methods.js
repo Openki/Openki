@@ -17,6 +17,7 @@ import { AsyncTools } from '/imports/utils/async-tools';
 /** @typedef {import('/imports/api/courses/courses').Course} Course */
 import { Events } from '../events/events';
 import { ServerMethod } from '/imports/utils/ServerMethod';
+import PublicSettings from '/imports/utils/PublicSettings';
 /** @typedef {import('./users').UserModel} UserModel */
 
 /**
@@ -94,10 +95,12 @@ export const updateUsername = ServerMethod(
 			throw new ValidationError([{ name: 'username', type: 'plzLogin' }], 'Not logged-in');
 		}
 
-		const saneUsername = StringTools.saneTitle(username)
-			.replace(/\u2b50/g, '')
-			.trim()
-			.substring(0, 200);
+		let saneUsername = StringTools.saneTitle(username);
+
+		(PublicSettings.contribution?.forbiddenChars || []).forEach((c) => {
+			saneUsername = saneUsername.replace(RegExp(c, 'g'), '');
+		});
+		saneUsername = saneUsername.trim().substring(0, 200);
 
 		if (saneUsername.length === 0) {
 			throw new ValidationError(
@@ -349,11 +352,11 @@ export const name = ServerMethod(
 	 */
 	function (userId) {
 		this.unblock();
-		const user = Users.findOne(userId, { fields: { username: 1 } });
+		const user = Users.findOne(userId, { fields: { username: 1, contribution: 1 } });
 		if (!user) {
 			return false;
 		}
-		return user.username;
+		return user;
 	},
 );
 

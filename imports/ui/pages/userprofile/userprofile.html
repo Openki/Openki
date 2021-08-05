@@ -11,6 +11,8 @@
 						{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}
 						{{#if ownuser}}
 							({{mf 'profile.its_you' "It's you!"}})
+						{{else}}
+							{{{contribution this.user._id}}}
 						{{/if}}
 					</h1>
 

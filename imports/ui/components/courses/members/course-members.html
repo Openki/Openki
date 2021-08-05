@@ -34,6 +34,7 @@
 	<div class="course-member {{ownUserMemberClass}}">
 		<div class="clearfix">
 			{{> profilelink member.user}}
+			{{{contribution member.user}}}
 			{{> participantContact participant=member.user course=course}}
 			<div class="course-member-roles">
 				{{#if memberRoles.length}}
