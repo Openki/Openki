@@ -1,8 +1,9 @@
 import { DocHead } from 'meteor/kadira:dochead';
 import { Meteor } from 'meteor/meteor';
+import PublicSettings from './PublicSettings';
 
 function getSiteTitlePrefix() {
-	return `${Meteor.settings.public.siteName}  - `;
+	return `${PublicSettings.siteName}  - `;
 }
 
 function getSiteDefaultImage() {
@@ -13,10 +14,7 @@ export function removeAll() {
 	DocHead.removeDocHeadAddedTags();
 }
 
-/**
- * @param {string} title
- */
-export function setCommonTags(title, description = '') {
+export function setCommonTags(title: string, description = '') {
 	document.title = getSiteTitlePrefix() + title;
 
 	DocHead.addMeta({ property: 'og:type', content: 'website' });
