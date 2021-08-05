@@ -13,9 +13,22 @@ import { MeteorAsync } from './promisify';
 export function ServerMethod<T extends any[], R>(
 	name: string,
 	run: (this: Meteor.MethodThisType, ...args: T) => R,
+	options: {
+		/**
+		 * When a Method is called, it usually runs twice—once on the client to simulate the result
+		 * for Optimistic UI, and again on the server to make the actual change to the database.
+		 * Some methods can not simulated on the client (for example, if you didn’t load some data
+		 * on the client that the Method needs to do the simulation properly). With
+		 * `{ simulation: false }` you can disable simulation in this case. Default is `true`
+		 */
+		simulation: boolean;
+	} = { simulation: true },
 ) {
 	Meteor.methods({
 		[name](...args) {
+			if (!options.simulation) {
+				return undefined;
+			}
 			return run.call(this, ...args);
 		},
 	});

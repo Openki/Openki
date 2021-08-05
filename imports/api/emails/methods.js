@@ -18,9 +18,13 @@ import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
-export const sendVerificationEmail = ServerMethod('sendVerificationEmail', () => {
-	Accounts.sendVerificationEmail(Meteor.userId());
-});
+export const sendVerificationEmail = ServerMethod(
+	'sendVerificationEmail',
+	() => {
+		Accounts.sendVerificationEmail(Meteor.userId());
+	},
+	{ simulation: false },
+);
 
 export const sendEmail = ServerMethod(
 	'sendEmail',
