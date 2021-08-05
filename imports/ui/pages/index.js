@@ -23,7 +23,6 @@ import './stats/stats';
 import './tenant-create/tenant-create';
 import './tenant-details/tenant-details';
 import './timetable/timetable';
-import './userprofile/userprofile';
 import './region-details/region-details';
 import './venue-details/venue-details';
 import './venues-map/venues-map';

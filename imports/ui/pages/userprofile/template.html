@@ -1,9 +1,9 @@
-<template name="userprofile">
+<template name="userprofilePage">
 	<div class="container mw-md">
 		<div class="page-component">
 			<div class="row g-3">
 				<div class="col-3">
-					{{> avatar userId=userId class="profile-avatar"}}
+					{{> avatar userId=user._id class="profile-avatar"}}
 				</div>
 
 				<div class="col-9">
@@ -99,11 +99,10 @@
 
 		{{#if alterPrivileges}}
 			<h3 class="text-danger">{{mf 'profile.account.delete.header' 'Is this a SPAMER?'}}</h3>
-			{{#unless verifyUserDelete}}
+			{{#unless (state 'verifyUserDelete')}}
 				{{> buttonDelete event="js-verify-user-delete-collapse"}}
-			{{/unless}}
-			{{#if verifyUserDelete}}
-				<div class="profile-delete-confirmation">
+			{{else}}
+				<div class="border border-danger text-danger p-3">
 					<p>{{mf 'profile.account.reallydelete' 'The user profile "{NAME}" will be permanently deleted. {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will be automatically removed as well. Are you sure you want to do this?' NAME=this.user.username COURSES=numberOfCoursesAffectedByDelete INTERESTED=numberOfInterestedAffectedByDelete EVENTS=numberOfFutureEventsAffectedByDelete}}
 					</p>
 					<div class="mb-3">
@@ -119,7 +118,7 @@
 						{{> buttonCancel event="js-verify-user-delete-collapse"}}
 					</div>
 				</div>
-			{{/if}}
+			{{/unless}}
 		{{/if}}
 	</div>
 </template>
