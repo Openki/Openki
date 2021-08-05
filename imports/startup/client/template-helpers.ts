@@ -13,6 +13,7 @@ import { Roles } from '/imports/api/roles/roles';
 import { getSiteName } from '/imports/utils/getSiteName';
 import { getAboutLink } from '/imports/utils/getAboutLink';
 import { getFaqLink } from '/imports/utils/getFaqLink';
+import { ReactiveDict } from 'meteor/reactive-dict';
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -20,21 +21,18 @@ import { getFaqLink } from '/imports/utils/getFaqLink';
  * Note: This is necessary because the global call moment.locale() only applies to new objects. For
  * existing moments we have to set it manually.
  * Calling Session.get('timeLocale') also makes the helper reactive.
- * @param {moment.MomentInput} date
  */
-function toMomentWithTimeLocale(date) {
+function toMomentWithTimeLocale(date: moment.MomentInput) {
 	return moment(date).locale(Session.get('timeLocale'));
 }
 
-const helpers = {
+// eslint-disable-next-line @typescript-eslint/ban-types
+const helpers: { [name: string]: Function } = {
 	siteName() {
 		return getSiteName(Regions.currentRegion());
 	},
 
-	/**
-	 * @param {string} name
-	 */
-	categoryName(name) {
+	categoryName(name: string) {
 		// Depend on locale and a composite mf string so we update reactively when locale changes
 		// and msgfmt finish loading translations
 		msgfmt.loading();
@@ -43,10 +41,7 @@ const helpers = {
 		return mf(`category.${name}`);
 	},
 
-	/**
-	 * @param {string} type
-	 */
-	roleShort(type) {
+	roleShort(type: string) {
 		if (!type) {
 			return '';
 		}
@@ -59,10 +54,7 @@ const helpers = {
 		return mf(`roles.${type}.short`);
 	},
 
-	/**
-	 * @param {string} type
-	 */
-	roleIcon(type) {
+	roleIcon(type: string) {
 		if (!type) {
 			return '';
 		}
@@ -79,9 +71,9 @@ const helpers = {
 	},
 
 	/**
-	 * @param {string} id Region ID
+	 * @param id Region ID
 	 */
-	isCurrentRegion(id) {
+	isCurrentRegion(id: string) {
 		return id && Session.equals('region', id);
 	},
 
@@ -121,7 +113,7 @@ const helpers = {
 		return getAboutLink();
 	},
 
-	log(context) {
+	log(context: any) {
 		if (window.console) {
 			/* eslint-disable-next-line no-console */
 			console.log(arguments.length > 0 ? context : this);
@@ -129,63 +121,63 @@ const helpers = {
 	},
 
 	// Date & Time format helper
-	dateShort(date) {
+	dateShort(date: moment.MomentInput) {
 		if (!date) {
 			return false;
 		}
 		return toMomentWithTimeLocale(date).format('l');
 	},
 
-	dateFormat(date) {
+	dateFormat(date: moment.MomentInput) {
 		if (!date) {
 			return false;
 		}
 		return toMomentWithTimeLocale(date).format('L');
 	},
 
-	dateLong(date) {
+	dateLong(date: moment.MomentInput) {
 		if (!date) {
 			return false;
 		}
 		return toMomentWithTimeLocale(date).format('LL');
 	},
 
-	dateTimeLong(date) {
+	dateTimeLong(date: moment.MomentInput) {
 		if (!date) {
 			return false;
 		}
 		return toMomentWithTimeLocale(date).format('LLLL');
 	},
 
-	timeFormat(date) {
+	timeFormat(date: moment.MomentInput) {
 		if (!date) {
 			return false;
 		}
 		return toMomentWithTimeLocale(date).format('LT');
 	},
 
-	fromNow(date) {
+	fromNow(date: moment.MomentInput) {
 		if (!date) {
 			return false;
 		}
 		return toMomentWithTimeLocale(date).fromNow();
 	},
 
-	weekdayFormat(date) {
+	weekdayFormat(date: moment.MomentInput) {
 		if (!date) {
 			return false;
 		}
 		return toMomentWithTimeLocale(date).format('ddd');
 	},
 
-	weekNr(date) {
+	weekNr(date: moment.MomentInput) {
 		if (!date) {
 			return false;
 		}
 		return toMomentWithTimeLocale(date).week();
 	},
 
-	calendarDayShort(date) {
+	calendarDayShort(date: moment.MomentInput) {
 		if (!date) {
 			return false;
 		}
@@ -195,7 +187,7 @@ const helpers = {
 		return toMomentWithTimeLocale(date).format('D. MMMM') + year;
 	},
 
-	calendarDayFormat(date) {
+	calendarDayFormat(date: moment.MomentInput) {
 		if (!date) {
 			return false;
 		}
@@ -204,9 +196,8 @@ const helpers = {
 
 	/**
 	 * Strip HTML markup
-	 * @param {string} html
 	 */
-	plain(html) {
+	plain(html: string) {
 		// Prevent words from sticking together
 		// eg. <p>Kloradf dadeq gsd.</p><p>Loradf dadeq gsd.</p> => Kloradf dadeq gsd. Loradf dadeq gsd.
 		const htmlPreparedForMinimalStyling = html
@@ -228,10 +219,10 @@ const helpers = {
 	 *
 	 * Example: <button>{#if busy 'saving'}Saving...{else}Save now!{/if}</button>
 	 *
-	 * @param {string} [activity] compare to this activity
-	 * @returns {boolean} Whether business matches activity
+	 * @param activity compare to this activity
+	 * @returns Whether business matches activity
 	 */
-	busy(activity) {
+	busy(activity?: string | boolean) {
 		const business = Template.instance().findBusiness();
 		return business.get() === activity;
 	},
@@ -241,23 +232,28 @@ const helpers = {
 	 *
 	 * Example <button {disableIfBusy}>I will be disabled when there is business.</button>
 	 *
-	 * @return {String} 'disabled' if the template is currently busy, empty string otherwise.
+	 * @return 'disabled' if the template is currently busy, empty string otherwise.
 	 */
 	disabledIfBusy() {
 		const business = Template.instance().findBusiness();
 		return business.get() ? 'disabled' : '';
 	},
 
-	state(state) {
-		return Template.instance().state.get(state);
+	state(key: string) {
+		const state = (Template.instance() as any).state as ReactiveDict | undefined;
+
+		if (!(state instanceof ReactiveDict)) {
+			throw new Error('state is not a ReactiveDict');
+		}
+
+		return state.get(key);
 	},
 
 	/**
 	 * @param {string} groupId
 	 */
-	groupLogo(groupId) {
-		const instance = Template.instance();
-		instance.subscribe('group', groupId);
+	groupLogo(groupId: string) {
+		Template.instance().subscribe('group', groupId);
 
 		const group = Groups.findOne({ _id: groupId });
 
@@ -284,13 +280,10 @@ const usernameFromId = (function () {
 	// To prevent unlimited cache-growth, after a enough lookups we
 	// build a new cache from the old
 	const cacheLimit = 1000;
-	/** @type {{[id: string]: string}} */
-	let cache = {};
-	/** @type {{[id: string]: string}} */
-	let previousCache = {};
+	let cache: { [id: string]: string } = {};
+	let previousCache: { [id: string]: string } = {};
 	let lookups = 0;
-	/** @type {{[id: string]: Tracker.Dependency}} */
-	const pending = {};
+	const pending: { [id: string]: Tracker.Dependency } = {};
 
 	// Update the cache if users are pushed to the collection
 	Users.find().observe({
@@ -302,7 +295,7 @@ const usernameFromId = (function () {
 		},
 	});
 
-	return function (/** @type {string} */ userId) {
+	return function (userId: string) {
 		if (!userId) {
 			return mf('noUser_placeholder', 'someone');
 		}

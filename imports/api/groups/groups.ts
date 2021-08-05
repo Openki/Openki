@@ -12,6 +12,7 @@ export interface GroupEntity {
 	short: string;
 	claim: string;
 	description: string;
+	logoUrl?: string;
 	/** List of userIds */
 	members: string[];
 }
