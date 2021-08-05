@@ -1,14 +1,19 @@
 /**
  * Give a preview of a filter by highlighting the matching courses
- * @param {object} options
- * @param {string} options.property property to filter for (e.g. category, region)
- * @param {string} options.id id/name of the property
- * @param {boolean} options.activate de-/activate the preview effect
- * @param {boolean} [options.delayed] delay the fade effect
- * @param {object} [options.instance] instance object for scoping
  */
 
-export function FilterPreview(options) {
+export function FilterPreview(options: {
+	/** property to filter for (e.g. category, region) */
+	property: string;
+	/** id/name of the property */
+	id: string;
+	/** de-/activate the preview effect */
+	activate: boolean;
+	/** delay the fade effect */
+	delayed?: boolean;
+	/** instance object for scoping */
+	instance?: any;
+}) {
 	const instance = options.instance || false;
 	const course = instance ? instance.$('.course-compact') : $('.course-compact');
 	const { property } = options;
