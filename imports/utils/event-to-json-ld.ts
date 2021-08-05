@@ -1,23 +1,22 @@
 import { Meteor } from 'meteor/meteor';
-
-/** @typedef {import('/imports/api/events/events').EventModel} EventModel */
-/** @typedef {import('/imports/api/events/events').Geodata} Geodata */
+import { EventModel, Geodata } from '../api/events/events';
 
 import { pricePolicyEnabled } from './pricePolicyEnabled';
+import { PublicSettings } from './PublicSettings';
 
 /**
  * Checks if there is enough data ro make a reasonable jsonLd
- * @param {EventModel} data the event data
+ * @param data the event data
  */
-function checkJsonLdMinReqs(data) {
+function checkJsonLdMinReqs(data: EventModel) {
 	return !!(data.title && data.startLocal && data.endLocal && data.venue);
 }
 
 /**
- * @param {Geodata|undefined} data the geo data
+ * @param data the geo data
  * @return jsonLd geo part
  */
-function addGeoToJsonLd(data) {
+function addGeoToJsonLd(data: Geodata | undefined) {
 	if (data?.coordinates?.length === 2) {
 		return {
 			'@type': 'GeoCoordinates',
@@ -61,29 +60,29 @@ function addPerformerToJsonLd() {
 /**
  * Creates the jsonLd
  *
- * @param {EventModel} data - the event data
+ * @param data - the event data
  * @return jsonLd
  */
-function createJsonLd(data) {
+function createJsonLd(data: EventModel) {
 	return {
 		'@context': 'https://schema.org',
 		'@type': 'Event',
 		name: data.title,
 		startDate: data.startLocal,
 		endDate: data.endLocal,
-		location: {
-			'@type': 'Place',
-			address: {
-				'@type': 'PostalAddress',
-				addressLocality: data.venue.name,
-			},
-			name: data.venue.name,
-			geo: addGeoToJsonLd(data.venue.loc),
-		},
+		location: data.venue
+			? {
+					'@type': 'Place',
+					address: {
+						'@type': 'PostalAddress',
+						addressLocality: data.venue.name,
+					},
+					name: data.venue.name,
+					geo: addGeoToJsonLd(data.venue.loc),
+			  }
+			: undefined,
 		description: data.description || data.title,
-		image: Meteor.absoluteUrl(
-			`logo/${Meteor.settings.public.ogLogo?.src || 'openki_logo_2018.png'}`,
-		),
+		image: Meteor.absoluteUrl(`logo/${PublicSettings.ogLogo.src}`),
 		offers: addOffersToJsonLd(),
 		performer: addPerformerToJsonLd(),
 	};
@@ -92,9 +91,9 @@ function createJsonLd(data) {
 /**
  * Adds a jsonLd to the eventDetails html-template
  *
- * @param {EventModel} data the event data
+ * @param data the event data
  */
-export function appendAsJsonLdToBody(data) {
+export function appendAsJsonLdToBody(data: EventModel) {
 	if (checkJsonLdMinReqs(data)) {
 		$(document).ready(() => {
 			const jsonLdTag = document.createElement('script');

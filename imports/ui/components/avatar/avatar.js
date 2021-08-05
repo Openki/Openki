@@ -7,6 +7,8 @@ import { Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
 import * as Alert from '/imports/api/alerts/alert';
 
+import PublicSettings from '/imports/utils/PublicSettings';
+
 import './avatar.html';
 
 Template.avatar.onCreated(function () {
@@ -44,11 +46,11 @@ Template.avatar.helpers({
 	},
 
 	alt() {
-		return Meteor.settings.public.avatarLogo.alt;
+		return PublicSettings.avatarLogo.alt;
 	},
 
 	avatarLogo() {
-		return Meteor.settings.public.avatarLogo.src;
+		return PublicSettings.avatarLogo.src;
 	},
 });
 

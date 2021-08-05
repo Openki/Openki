@@ -1,8 +1,15 @@
 import { check, Match } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 
+// See settings-example.json.md for full documentation
+
 const defaults = {
 	siteName: 'Hmmm',
+	siteStage: '',
+	headerLogo: { src: '', alt: '' },
+	headerLogoKiosk: { src: '', alt: '' },
+	avatarLogo: { src: '', alt: '' },
+	ogLogo: { src: 'openki_logo_2018.png' },
 	faqLink: '/info/faq',
 	courseGuideLink: {
 		en: 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf',
@@ -25,6 +32,12 @@ check(
 	publicSettings,
 	Match.ObjectIncluding({
 		siteName: String,
+		siteStage: String,
+		headerLogo: { src: String, alt: String },
+		headerLogoKiosk: { src: String, alt: String },
+		avatarLogo: { src: String, alt: String },
+		ogLogo: { src: String },
+		emailLogo: String,
 		faqLink: LocalisedValue,
 		courseGuideLink: LocalisedValue,
 		aboutLink: LocalisedValue,

@@ -9,6 +9,7 @@ import { Regions } from '/imports/api/regions/regions';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
+import PublicSettings from '/imports/utils/PublicSettings';
 
 import '/imports/ui/components/regions/selection/region-selection';
 import '/imports/ui/components/language-selection/language-selection';
@@ -58,10 +59,7 @@ Template.navbar.helpers({
 			return currentRegion.custom.headerLogo.src;
 		}
 
-		if (Meteor.settings.public.headerLogo?.src) {
-			return Meteor.settings.public.headerLogo.src;
-		}
-		return '';
+		return PublicSettings.headerLogo.src;
 	},
 
 	headerAlt() {
@@ -70,10 +68,7 @@ Template.navbar.helpers({
 			return currentRegion.custom.headerLogo.alt;
 		}
 
-		if (Meteor.settings.public.headerLogo?.alt) {
-			return Meteor.settings.public.headerLogo.alt;
-		}
-		return '';
+		return PublicSettings.headerLogo.alt;
 	},
 
 	notConnected() {
@@ -86,10 +81,7 @@ Template.navbar.helpers({
 			return currentRegion.custom.siteStage;
 		}
 
-		if (Meteor.settings.public.siteStage) {
-			return Meteor.settings.public.siteStage;
-		}
-		return '';
+		return PublicSettings.siteStage;
 	},
 
 	activeClass(linkRoute, id) {

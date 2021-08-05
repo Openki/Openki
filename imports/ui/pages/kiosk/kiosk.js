@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
@@ -7,6 +6,9 @@ import moment from 'moment';
 import { Regions } from '/imports/api/regions/regions';
 import { Groups } from '/imports/api/groups/groups';
 import { Venues } from '/imports/api/venues/venues';
+
+import PublicSettings from '/imports/utils/PublicSettings';
+
 import '/imports/ui/components/language-selection/language-selection';
 
 import './kiosk.html';
@@ -52,10 +54,7 @@ Template.kioskEvents.helpers({
 			return currentRegion.custom.headerLogoKiosk.src;
 		}
 
-		if (Meteor.settings.public.headerLogoKiosk?.src) {
-			return Meteor.settings.public.headerLogoKiosk.src;
-		}
-		return '';
+		return PublicSettings.headerLogoKiosk.src;
 	},
 	headerAlt() {
 		const currentRegion = Regions.currentRegion();
@@ -63,10 +62,7 @@ Template.kioskEvents.helpers({
 			return currentRegion.custom.headerLogoKiosk.alt;
 		}
 
-		if (Meteor.settings.public.headerLogoKiosk?.alt) {
-			return Meteor.settings.public.headerLogoKiosk.alt;
-		}
-		return '';
+		return PublicSettings.headerLogoKiosk.alt;
 	},
 });
 
