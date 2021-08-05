@@ -47,9 +47,9 @@ This file descripts all configurations and customization options. Remove the com
 				"title_key": "navigation.footer.codeOnGitLab"
 			}
 		],
-		"faqLink": "/info/faq",
-		"courseGuideLink": null,
-		"aboutLink": "https://about.openki.net",
+		"faqLink": "/info/faq", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+		"courseGuideLink": "...", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+		"aboutLink": "https://about.openki.net", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"categories": { // Categories for courses, main and/or sub categories
 			"sports":
 				[

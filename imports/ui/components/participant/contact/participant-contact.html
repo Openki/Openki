@@ -5,11 +5,11 @@
 				{{#if userAcceptsPrivateMessages}}
 					<button class="btn btn-link p-0 js-show-participant-contact-modal"
 							type="button">
-						<i class="fa fa-envelope"></i>
+						<i class="fa fa-envelope fa-fw"></i>
 					</button>
 				{{else}}
 					<button class="btn btn-link p-0 disabled" type="button" disabled>
-						<i class="fa fa-envelope"
+						<i class="fa fa-envelope fa-fw"
 						   title="{{mf 'user.acceptsPrivateMessages.false' 'User does not accept private messages from users'}}"></i>
 					</button>
 				{{/if}}
@@ -21,7 +21,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<h4 class="modal-title">
-								<i class="fa fa-fw fa-paper-plane" aria-hidden="true"></i>
+								<i class="fa fa-paper-plane fa-fw" aria-hidden="true"></i>
 								{{#mf KEY='participantContactModal.writeMessageTo' USER=(username participant)}}
 									Write a message to {USER}
 								{{/mf}}

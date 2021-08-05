@@ -63,7 +63,6 @@ $discussion-post-bg: $blue-lighter;
 
 .discussion-post-header .profilelink,
 .discussion-post-header .username {
-	@include td-padding(right, 5px);
 	font-weight: bold;
 }
 

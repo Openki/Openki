@@ -11,8 +11,8 @@ import { Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
 import { getSiteName } from '/imports/utils/getSiteName';
-import { getAboutLink } from '/imports/utils/getAboutLink';
-import { getFaqLink } from '/imports/utils/getFaqLink';
+import { PublicSettings } from '/imports/utils/PublicSettings';
+import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 /**
@@ -78,39 +78,15 @@ const helpers: { [name: string]: Function } = {
 	},
 
 	guideLink() {
-		if (Meteor.settings.public.courseGuideLink) {
-			return Meteor.settings.public.courseGuideLink;
-		}
-
-		const locale = Session.get('locale');
-
-		// default fallback language
-		let guideLink =
-			'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
-
-		switch (locale) {
-			case 'de':
-				guideLink =
-					'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf';
-				break;
-			case 'en':
-				guideLink =
-					'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
-				break;
-			default:
-				guideLink =
-					'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf';
-				break;
-		}
-		return guideLink;
+		return getLocalisedValue(PublicSettings.courseGuideLink);
 	},
 
 	faqLink() {
-		return getFaqLink();
+		return getLocalisedValue(PublicSettings.faqLink);
 	},
 
 	aboutLink() {
-		return getAboutLink();
+		return getLocalisedValue(PublicSettings.aboutLink);
 	},
 
 	log(context: any) {

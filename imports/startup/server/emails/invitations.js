@@ -10,7 +10,8 @@ import { Log } from '/imports/api/log/log';
 
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { getReportEmails } from '/imports/utils/email-tools';
-import { getAboutLink } from '/imports/utils/getAboutLink';
+import { PublicSettings } from '/imports/utils/PublicSettings';
+import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 
 /**
  * @param {import('/imports/api/invitations/invitations').InvitationEntity} invitation
@@ -49,7 +50,7 @@ function sendInvitation(invitation) {
 		invitationLink: Router.url('invitation', invitation, {
 			query: `tenant=${invitation.tenant}&campaign=invitationEmail`,
 		}),
-		moreLink: getAboutLink(),
+		moreLink: getLocalisedValue(PublicSettings.aboutLink, locale),
 		reportEmail: getReportEmails().recipient,
 		locale,
 	});
