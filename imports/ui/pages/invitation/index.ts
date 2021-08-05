@@ -4,10 +4,11 @@ import { Router } from 'meteor/iron:router';
 
 import * as InvitationsMethods from '/imports/api/invitations/methods';
 import * as Alert from '/imports/api/alerts/alert';
-import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 
-import './invitation.html';
+import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import * as RegionSelection from '/imports/utils/region-selection';
+
+import './template.html';
 
 Template.invitation.events({
 	async 'click .js-join'(event, instance) {

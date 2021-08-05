@@ -666,6 +666,7 @@ Router.route('tenantDetails', {
 
 Router.route('invitation', {
 	path: 'invitation/:token',
+	template: 'invitationPage',
 	/**
 	 * @this {{params: {token: string; query: { tenant: string; }}}}
 	 */
@@ -690,6 +691,10 @@ Router.route('invitation', {
 		}
 
 		return { tenant, invitation };
+	},
+	async action() {
+		await import('/imports/ui/pages/invitation');
+		this.render();
 	},
 	/**
 	 * @this {{params: {token: string; query: { tenant: string; }}}}
