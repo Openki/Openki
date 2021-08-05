@@ -1,16 +1,29 @@
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { mf } from 'meteor/msgfmt:core';
 import { Router } from 'meteor/iron:router';
 
-import * as InvitationsMethods from '/imports/api/invitations/methods';
 import * as Alert from '/imports/api/alerts/alert';
+import { InvitationEntity } from '/imports/api/invitations/invitations';
+import * as InvitationsMethods from '/imports/api/invitations/methods';
+import { TenantModel } from '/imports/api/tenants/tenants';
 
 import SaveAfterLogin from '/imports/ui/lib/save-after-login';
 import * as RegionSelection from '/imports/utils/region-selection';
 
 import './template.html';
 
-Template.invitation.events({
+const Template = TemplateAny as TemplateStaticTyped<
+	{
+		tenant: TenantModel;
+		invitation: InvitationEntity;
+	},
+	'invitation',
+	Record<string, unknown>
+>;
+
+const template = Template.invitation;
+
+template.events({
 	async 'click .js-join'(event, instance) {
 		event.preventDefault();
 
@@ -26,7 +39,7 @@ Template.invitation.events({
 						instance.data.invitation.token,
 					);
 
-					RegionSelection.subscribe(); // Reload regions
+					RegionSelection.subscribe(); // Reload regions to load regions from tenant
 
 					Router.go('/');
 
