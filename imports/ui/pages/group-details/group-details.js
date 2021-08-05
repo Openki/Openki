@@ -181,7 +181,7 @@ Template.groupDetails.helpers({
 	},
 });
 
-TemplateMixins.FormfieldErrors(Template.groupDetails, {
+TemplateMixins.FormfieldErrors(Template,'groupDetails', {
 	emptyField: {
 		text: () => mf('group.details.error.allMandatory', 'All four fields are mandatory.'),
 		field: 'all',

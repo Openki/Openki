@@ -139,7 +139,7 @@ export interface FormfieldErrorsMapping {
  *        text: () => "We don't like your username around here.",
  *        field: "username" }
  *   };
- *   TemplateMixins.FormfieldErrors(Template.malcontentLogin, mapping);
+ *   TemplateMixins.FormfieldErrors(Template, 'malcontentLogin', mapping);
  *```
  * Note how `text` is a function so that you can pass in an mf() call
  * that will only be evaluated once needed. (Not for performance but

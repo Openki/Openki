@@ -25,7 +25,7 @@ Template.emailRequestModal.onRendered(function () {
 	this.$('.js-email-request-modal').modal('show');
 });
 
-TemplateMixins.FormfieldErrors(Template.emailRequestModal, {
+TemplateMixins.FormfieldErrors(Template, 'emailRequestModal', {
 	noEmail: {
 		text: () => mf('register.warning.noEmailProvided'),
 		field: 'email',

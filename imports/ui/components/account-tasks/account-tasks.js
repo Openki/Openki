@@ -97,7 +97,7 @@ Template.loginFrame.onRendered(function () {
 	this.$('input').first().trigger('select');
 });
 
-TemplateMixins.FormfieldErrors(Template.loginFrame, {
+TemplateMixins.FormfieldErrors(Template, 'loginFrame', {
 	noUsername: {
 		text: () => mf('login.warning.noUserName', 'Please enter your username or email to log in.'),
 		field: 'username',
@@ -264,7 +264,7 @@ Template.registerFrame.helpers({
 	registerAction: () => Session.get('registerAction'),
 });
 
-TemplateMixins.FormfieldErrors(Template.registerFrame, {
+TemplateMixins.FormfieldErrors(Template, 'registerFrame', {
 	noUsername: {
 		text: () => mf('register.warning.noUserName', 'Please enter a name for your new user.'),
 		field: 'username',

@@ -8,7 +8,8 @@ import '/imports/ui/components/buttons/buttons';
 
 import './editable.html';
 
-[Template.editable, Template.editableTextarea].forEach((template) => {
+['editable', 'editableTextarea'].forEach((templateName) => {
+	const template = Template[templateName];
 	template.onCreated(function () {
 		// This reeks
 		const data = Template.currentData();
@@ -37,7 +38,7 @@ import './editable.html';
 		this.errorMapping = errorMapping;
 	});
 
-	TemplateMixins.FormfieldErrors(template);
+	TemplateMixins.FormfieldErrors(Template, templateName);
 
 	template.onRendered(function () {
 		const instance = this;

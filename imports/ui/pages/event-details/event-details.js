@@ -208,7 +208,7 @@ Template.event.events({
 	},
 });
 
-TemplateMixins.Expandible(Template.eventDisplay);
+TemplateMixins.Expandible(Template, 'eventDisplay');
 Template.eventDisplay.onCreated(function () {
 	this.locationTracker = LocationTracker();
 	this.replicating = new ReactiveVar(false);
@@ -285,7 +285,7 @@ Template.eventGroupList.helpers({
 	},
 });
 
-TemplateMixins.Expandible(Template.eventGroupAdd);
+TemplateMixins.Expandible(Template,'eventGroupAdd');
 Template.eventGroupAdd.helpers(GroupNameHelpers);
 Template.eventGroupAdd.helpers({
 	groupsToAdd() {
@@ -317,7 +317,7 @@ Template.eventGroupAdd.events({
 	},
 });
 
-TemplateMixins.Expandible(Template.eventGroupRemove);
+TemplateMixins.Expandible(Template,'eventGroupRemove');
 Template.eventGroupRemove.helpers(GroupNameHelpers);
 Template.eventGroupRemove.events({
 	async 'click .js-remove'(e, instance) {
@@ -342,7 +342,7 @@ Template.eventGroupRemove.events({
 	},
 });
 
-TemplateMixins.Expandible(Template.eventGroupMakeOrganizer);
+TemplateMixins.Expandible(Template,'eventGroupMakeOrganizer');
 Template.eventGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupMakeOrganizer.events({
 	async 'click .js-makeOrganizer'(e, instance) {
@@ -367,7 +367,7 @@ Template.eventGroupMakeOrganizer.events({
 	},
 });
 
-TemplateMixins.Expandible(Template.eventGroupRemoveOrganizer);
+TemplateMixins.Expandible(Template,'eventGroupRemoveOrganizer');
 Template.eventGroupRemoveOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupRemoveOrganizer.events({
 	async 'click .js-removeOrganizer'(e, instance) {
