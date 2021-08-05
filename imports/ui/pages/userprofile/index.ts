@@ -18,9 +18,9 @@ import '/imports/ui/components/profiles/course-list/profile-course-list';
 import '/imports/ui/components/profiles/verify-email/verify-email';
 import '/imports/ui/components/avatar/avatar';
 
-import './userprofile.html';
+import './template.html';
 
-Template.userprofile.onCreated(function () {
+Template.userprofilePage.onCreated(function () {
 	this.busy(false);
 	const userId = Template.instance().data.user._id;
 
@@ -32,7 +32,7 @@ Template.userprofile.onCreated(function () {
 	};
 });
 
-Template.userprofile.helpers({
+Template.userprofilePage.helpers({
 	/**
 	 * whether userprofile is for the logged-in user
 	 */
@@ -79,7 +79,7 @@ Template.userprofile.helpers({
 	},
 });
 
-Template.userprofile.events({
+Template.userprofilePage.events({
 	async 'click button.giveAdmin'() {
 		try {
 			await usersMethods.addPrivilege(this.user._id, 'admin');

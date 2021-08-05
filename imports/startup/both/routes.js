@@ -840,6 +840,7 @@ Router.route('timetable', {
 
 Router.route('userprofile', {
 	path: 'user/:_id/:username?',
+	template: 'userprofilePage',
 	waitOn() {
 		return [
 			Meteor.subscribe('user', this.params._id),
@@ -873,6 +874,10 @@ Router.route('userprofile', {
 			inviteGroups: Groups.findFilter({ own: true }),
 			showPrivileges,
 		};
+	},
+	async action() {
+		await import('/imports/ui/pages/userprofile');
+		this.render();
 	},
 	onAfterAction() {
 		const user = Users.findOne({ _id: this.params._id });
