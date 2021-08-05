@@ -7,7 +7,7 @@ import * as TenantsMethods from '/imports/api/tenants/methods';
 import * as RegionsMethods from '/imports/api/regions/methods';
 
 import { LocationTracker } from '../../lib/location-tracker';
-import SaveAfterLogin from '../../lib/save-after-login';
+import { SaveAfterLogin } from '../../lib/save-after-login';
 import { Analytics } from '../../lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';

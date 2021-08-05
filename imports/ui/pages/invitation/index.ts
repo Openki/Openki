@@ -7,7 +7,7 @@ import { InvitationEntity } from '/imports/api/invitations/invitations';
 import * as InvitationsMethods from '/imports/api/invitations/methods';
 import { TenantModel } from '/imports/api/tenants/tenants';
 
-import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import * as RegionSelection from '/imports/utils/region-selection';
 
 import './template.html';

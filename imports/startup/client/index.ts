@@ -13,7 +13,7 @@ import { Router } from 'meteor/iron:router';
 import { Tooltips } from 'meteor/lookback:tooltips';
 import { Session } from 'meteor/session';
 
-import Introduction from '/imports/ui/lib/introduction';
+import { Introduction } from '/imports/ui/lib/introduction';
 import * as RegionSelection from '/imports/utils/region-selection';
 
 import './bootstrap';
