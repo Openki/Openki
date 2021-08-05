@@ -12,7 +12,10 @@
 						{{#if ownuser}}
 							({{mf 'profile.its_you' "It's you!"}})
 						{{else}}
-							{{{contribution this.user._id}}}
+							{{contribution this.user._id}}
+							{{#if alterPrivileges}}
+							
+							{{/if}}
 						{{/if}}
 					</h1>
 

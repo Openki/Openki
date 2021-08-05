@@ -2,6 +2,7 @@ import { mf, msgfmt } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
+import { Spacebars } from 'meteor/spacebars';
 import moment from 'moment';
 
 import { Groups } from '/imports/api/groups/groups';
@@ -360,8 +361,14 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 			return '';
 		}
 
-		return `<a href="${getLocalisedValue(
-			contribution.link,
-		)}" data-tooltip="${mf('user.hasContributed', { USERNAME: cachedUser.username, SITENAME: getSiteName(Regions.currentRegion()) }, '{USERNAME} supported {SITENAME} with a donation. Click on the icon if you want to become a contributer as well.')}"><i class="${contribution.icon}" aria-hidden="true"></i></a>`;
+		return Spacebars.SafeString(
+			`<a href="${getLocalisedValue(contribution.link)}" data-tooltip="${(Blaze as any)._escape(
+				mf(
+					'user.hasContributed',
+					{ USERNAME: cachedUser.username, SITENAME: getSiteName(Regions.currentRegion()) },
+					'{USERNAME} supported {SITENAME} with a donation. Click on the icon if you want to become a contributer as well.',
+				),
+			)}"><i class="${contribution.icon}" aria-hidden="true"></i></a>`,
+		);
 	});
 }
