@@ -220,6 +220,7 @@ export const updateEmail = ServerMethod(
 
 		Profile.Email.change(user._id, newEmail, 'profile change');
 	},
+	{ simulation: false },
 );
 
 export const selfRemove = ServerMethod('user.self.remove', () => {
