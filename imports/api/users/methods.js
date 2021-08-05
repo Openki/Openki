@@ -342,6 +342,46 @@ export const removePrivilege = ServerMethod(
 	},
 );
 
+export const setHasContributed = ServerMethod('user.setHasContributed', (userId) => {
+	const operator = Meteor.user();
+
+	if (!UserPrivilegeUtils.privileged(operator, 'admin')) {
+		return;
+	}
+
+	const user = Users.findOne({ _id: userId });
+	if (!user) {
+		throw new Meteor.Error(404, 'User not found');
+	}
+
+	Users.update({ _id: user._id }, { $set: { contribution: new Date() } });
+
+	Log.record('user.hasContributed.set', [operator?._id, userId], {
+		operatorId: operator?._id,
+		userId,
+	});
+});
+
+export const unsetHasContributed = ServerMethod('user.unsetHasContributed', (userId) => {
+	const operator = Meteor.user();
+
+	if (!UserPrivilegeUtils.privileged(operator, 'admin')) {
+		return;
+	}
+
+	const user = Users.findOne({ _id: userId });
+	if (!user) {
+		throw new Meteor.Error(404, 'User not found');
+	}
+
+	Users.update({ _id: user._id }, { $unset: { contribution: '' } });
+
+	Log.record('user.hasContributed.unset', [operator?._id, userId], {
+		operatorId: operator?._id,
+		userId,
+	});
+});
+
 export const hidePricePolicy = ServerMethod('user.hidePricePolicy', () => {
 	Users.update(Meteor.userId(), { $set: { hidePricePolicy: true } });
 });

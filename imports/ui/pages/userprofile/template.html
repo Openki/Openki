@@ -14,7 +14,18 @@
 						{{else}}
 							{{contribution this.user._id}}
 							{{#if alterPrivileges}}
-							
+								{{#unless hasContributed}}
+									<button type="button"
+											class="btn btn-primary js-has-contributed">
+										<i class="{{contributedIcon}}" aria-hidden="true"></i>
+										{{mf 'profile.setHasContributed.button' 'User has contributed'}}
+									</button>
+								{{else}}
+									<button type="button"
+											class="btn btn-secondary js-unset-has-contributed">
+										{{mf 'profile.unsetHasContributed.button' 'Unset user has contributed'}}
+									</button>
+								{{/unless}}
 							{{/if}}
 						{{/if}}
 					</h1>
@@ -58,7 +69,7 @@
 								{{else}}
 									{{#if alterPrivileges}}
 										<button type="button"
-												class="giveAdmin list-group-item-action list-group-item-secondary">
+												class="js-give-admin list-group-item-action list-group-item-secondary">
 											{{mf 'privilege.add.admin' 'Grant administrator privileges'}}
 										</button>
 									{{/if}}
@@ -86,7 +97,7 @@
 										</li>
 									{{else}}
 										<button type="button"
-												class="draftIntoGroup list-group-item list-group-item-action list-group-item-secondary">
+												class="js-draft-into-group list-group-item list-group-item-action list-group-item-secondary">
 											{{mf 'profile.group.draft' 'Draft into group '}}
 											{{name}}
 										</button>

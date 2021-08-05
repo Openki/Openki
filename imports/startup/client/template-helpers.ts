@@ -15,6 +15,7 @@ import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { UserEntity } from '/imports/api/fixtures/ensureFixture';
+import { checkContribution } from '../../utils/checkContribution';
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -352,12 +353,7 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 			return '';
 		}
 
-		if (
-			!(
-				cachedUser.contribution &&
-				moment(cachedUser.contribution).isBefore(moment().subtract(1, 'year'))
-			)
-		) {
+		if (!checkContribution(cachedUser.contribution)) {
 			return '';
 		}
 
@@ -372,3 +368,5 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 		);
 	});
 }
+
+

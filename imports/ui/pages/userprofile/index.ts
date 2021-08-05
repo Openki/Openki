@@ -15,15 +15,18 @@ import * as usersMethods from '/imports/api/users/methods';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { PublicSettings } from '/imports/utils/PublicSettings';
+import { checkContribution } from '/imports/utils/checkContribution';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list';
 import '/imports/ui/components/profiles/verify-email';
 import '/imports/ui/components/avatar/avatar';
+import '/imports/ui/components/send-message/send-message';
 
 import './template.html';
 
 interface UserProfilePageData {
-	user: UserModel;
+	user?: UserModel;
 	alterPrivileges: boolean;
 	privileges: string[];
 	inviteGroups: Mongo.Cursor<GroupEntity>;
@@ -40,7 +43,7 @@ const template = Template.userprofilePage;
 
 template.onCreated(function () {
 	this.busy(false);
-	const userId = Template.instance().data.user._id;
+	const userId = Template.instance().data.user?._id;
 
 	this.state = new ReactiveDict(undefined, { verifyUserDelete: false });
 
@@ -55,12 +58,21 @@ template.helpers({
 	 * whether userprofile is for the logged-in user
 	 */
 	ownuser() {
-		return Template.currentData().user._id === Meteor.userId();
+		return Template.currentData().user?._id === Meteor.userId();
+	},
+
+	hasContributed() {
+		return checkContribution(Template.currentData().user?.contribution);
+	},
+
+	contributedIcon() {
+		return PublicSettings.contribution?.icon;
 	},
 
 	acceptsPrivateMessages() {
 		return (
-			Template.currentData().user.acceptsPrivateMessages || UserPrivilegeUtils.privilegedTo('admin')
+			Template.currentData().user?.acceptsPrivateMessages ||
+			UserPrivilegeUtils.privilegedTo('admin')
 		);
 	},
 
@@ -93,28 +105,54 @@ template.helpers({
 });
 
 template.events({
-	async 'click button.giveAdmin'() {
+	async 'click .js-has-contributed'() {
 		try {
-			await usersMethods.addPrivilege(Template.currentData().user._id, 'admin');
+			await usersMethods.setHasContributed(Template.currentData().user?._id);
+
+			Alert.success(mf('profile.setHasContributed.alert', 'User has contributed'));
+		} catch (err) {
+			Alert.serverError(
+				err,
+				mf('profile.setHasContributed.error', 'Unable to set user has contributed.'),
+			);
+		}
+	},
+
+	async 'click .js-unset-has-contributed'() {
+		try {
+			await usersMethods.unsetHasContributed(Template.currentData().user?._id);
+
+			Alert.success(mf('profile.unsetHasContributed.alert', 'Unset user has contributed'));
+		} catch (err) {
+			Alert.serverError(
+				err,
+				mf('profile.unsetHasContributed.error', 'Unable to unset user has contributed.'),
+			);
+		}
+	},
+
+	async 'click .js-give-admin'() {
+		try {
+			await usersMethods.addPrivilege(Template.currentData().user?._id, 'admin');
 
 			Alert.success(mf('privilege.addedAdmin', 'Granted admin privilege'));
 		} catch (err) {
-			Alert.serverError(err, 'Unable to add privilege');
+			Alert.serverError(err, mf('privilege.addedAdmin.error', 'Unable to add privilege'));
 		}
 	},
 
 	async 'click .js-remove-privilege-btn'(event, instance) {
 		const priv = instance.$(event.target as any).data('priv');
 		try {
-			await usersMethods.removePrivilege(Template.currentData().user._id, priv);
+			await usersMethods.removePrivilege(Template.currentData().user?._id, priv);
 
 			Alert.success(mf('privilege.removed', 'Removed privilege'));
 		} catch (err) {
-			Alert.serverError(err, 'Unable to remove privilege');
+			Alert.serverError(err, mf('privilege.removed.error', 'Unable to remove privilege'));
 		}
 	},
 
-	async 'click button.draftIntoGroup'(this: GroupEntity) {
+	async 'click .js-draft-into-group'(this: GroupEntity) {
 		const groupId = this._id;
 		const { name } = this;
 		const userId = Template.parentData().user._id;
@@ -124,7 +162,7 @@ template.events({
 
 			Alert.success(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'));
 		} catch (err) {
-			Alert.serverError(err, 'Unable to draft user into group');
+			Alert.serverError(err, mf('profile.group.drafted.error', 'Unable to draft user into group'));
 		}
 	},
 
@@ -139,7 +177,7 @@ template.events({
 
 			Alert.success(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'));
 		} catch (err) {
-			Alert.serverError(err, 'Unable to expel user from group');
+			Alert.serverError(err, mf('profile.group.expelled.error', 'Unable to expel user from group'));
 		}
 	},
 
