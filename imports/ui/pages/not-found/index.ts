@@ -1,9 +1,10 @@
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
+import { Spacebars } from 'meteor/spacebars';
 
 import '/imports/ui/components/report/report';
 
-import './not-found.html';
+import './template.html';
 
 Template.notFound.helpers({
 	backArrow() {
