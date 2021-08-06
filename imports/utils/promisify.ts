@@ -23,8 +23,10 @@ export const MeteorAsync = {
 						});
 					})),
 
-	subscribe: Meteor.subscribe
-		? (name: string, ...args: any[]) =>
+	subscribe:
+		Meteor.subscribe &&
+		(function () {
+			return (name: string, ...args: any[]) =>
 				new Promise<Meteor.SubscriptionHandle>((resolve, reject) => {
 					const handle = Meteor.subscribe(name, ...args, {
 						onReady: () => {
@@ -36,8 +38,8 @@ export const MeteorAsync = {
 							}
 						},
 					});
-				})
-		: undefined,
+				});
+		})(),
 	loginWithPassword:
 		Meteor.loginWithPassword &&
 		(promisify(Meteor.loginWithPassword) as (

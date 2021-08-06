@@ -85,6 +85,11 @@ Template.courseDetailsPage.onCreated(function (this: any) {
 
 	this.autorun(() => {
 		const data = Template.currentData();
+
+		if (!data.course) {
+			return;
+		}
+
 		const { name: courseName, description: courseDescription } = data.course;
 
 		instance.editableName.setText(courseName);

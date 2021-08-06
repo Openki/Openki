@@ -26,7 +26,7 @@ export function ServerMethod<T extends any[], R>(
 ) {
 	Meteor.methods({
 		[name](...args) {
-			if (!options.simulation) {
+			if (Meteor.isClient && !options.simulation) {
 				return undefined;
 			}
 			return run.call(this, ...args);

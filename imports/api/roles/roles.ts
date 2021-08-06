@@ -1,13 +1,14 @@
-// ======== DB-Model: ========
-/**
- * @typedef {Object} RoleEntity
- * @property {string}  type               (name of role)
- * @property {string}  icon               ex: "fa fa-bullhorn"
- * @property {boolean} [preset]          For always-on roles
- */
+/** DB-Model */
+interface RoleEntity {
+	/** (name of role) */
+	type: string;
+	/** ex: "fa fa-bullhorn" */
+	icon: string;
+	/** For always-on roles */
+	preset?: boolean;
+}
 
-/** @type {RoleEntity[]} */
-export const Roles = [
+export const Roles: RoleEntity[] = [
 	{
 		type: 'participant',
 		icon: 'fa fa-user',

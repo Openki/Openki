@@ -8,7 +8,7 @@ import * as usersMethods from '/imports/api/users/methods';
 import { updateUsername } from '/imports/api/users/methods';
 
 const createDummy = function () {
-	return `test${Date.now()}${Math.random(1000000)}`;
+	return `test${Date.now()}${Math.random()}`;
 };
 
 if (Meteor.isClient) {
@@ -57,7 +57,7 @@ if (Meteor.isClient) {
 				MeteorAsync.loginWithPassword(oldDummy, 'hunter2')
 					.then(
 						() =>
-							new Promise((resolve) => {
+							new Promise<void>((resolve) => {
 								updateUsername(newDummy)
 									.then(() => {
 										Users.find({ username: newDummy }).observe({
@@ -74,7 +74,7 @@ if (Meteor.isClient) {
 					.then(() => {
 						// check if username has changed to the correct string
 						const user = Meteor.user();
-						assert.strictEqual(newDummy, user.username, 'username was changed successfully');
+						assert.strictEqual(newDummy, user?.username, 'username was changed successfully');
 					});
 			});
 
@@ -98,8 +98,7 @@ if (Meteor.isClient) {
 			// for a non-existing user? I'm going to watch the Users
 			// collection for additions between the subscription for a
 			// non-existing user and the conclusion of this subscription.
-			/** @type {boolean} */
-			let added;
+			let added: boolean;
 
 			// This will track addition of users
 			const cursor = Users.find();
