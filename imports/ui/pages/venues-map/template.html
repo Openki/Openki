@@ -1,4 +1,4 @@
-<template name="venueMap">
+<template name="venuesMapPage">
 
 	<div class="container-fluid">
 		<h1>
@@ -8,13 +8,13 @@
 				{{mf 'venues.list.title' 'Venues'}}
 			{{/if}}
 		</h1>
-		<div class="venue-map-location">
-			<div class="venue-map-location-search">
+		<div class="venues-map-location">
+			<div class="venues-map-location-search">
 				{{#if haveVenues}}
-					<ul class="venue-map-location-candidates">
+					<ul class="venues-map-location-candidates">
 						{{#each venues}}
 							<li
-								class='venue-map-location-candidate js-location-candidate {{hoverClass}}'>
+								class='venues-map-location-candidate js-location-candidate {{hoverClass}}'>
 								{{name}}
 								<div class="address">{{address}}</div>
 							</li>
@@ -26,7 +26,7 @@
 				<a class="btn btn-secondary"
 				   href="{{pathFor 'venueDetails' _id='create'}}">{{mf 'profile.createNewVenue.button'}}</a>
 			</div>
-			<div class="venue-map-location-map ">
+			<div class="venues-map-location-map ">
 				{{> map markers=venueMarkers}}
 			</div>
 		</div>

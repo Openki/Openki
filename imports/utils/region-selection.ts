@@ -10,7 +10,7 @@ import * as UrlTools from '/imports/utils/url-tools';
 /**
  * List of routes that show different results when the region changes.
  */
-export const regionDependentRoutes = ['home', 'find', 'calendar', 'venueMap', 'groupDetails'];
+export const regionDependentRoutes = ['home', 'find', 'calendar', 'venuesMap', 'groupDetails'];
 
 export function subscribe() {
 	Meteor.subscribe('Regions', async () => {

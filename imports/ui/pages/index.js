@@ -24,4 +24,3 @@ import './tenant-details/tenant-details';
 import './timetable/timetable';
 import './region-details/region-details';
 import './venue-details/venue-details';
-import './venues-map/venues-map';

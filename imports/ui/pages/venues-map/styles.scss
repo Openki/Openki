@@ -1,11 +1,13 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 // *** venue location map ***
 //============================
 
-.venue-map-location {
+.venues-map-location {
 	@include make-row;
 }
 
-.venue-map-location-search {
+.venues-map-location-search {
 	@include td-make-sm-column(2);
 	text-align: center;
 
@@ -14,26 +16,26 @@
 	}
 }
 
-.venue-map-location-selected {
+.venues-map-location-selected {
 	display: inline-block;
 	padding-bottom: 5px;
 }
 
-.venue-map-location-selected > .fa {
+.venues-map-location-selected > .fa {
 	color: $green-darker;
 }
 
-.venue-map-location-searchbar {
+.venues-map-location-searchbar {
 	padding-bottom: 5px;
 }
 
-.venue-map-location-candidates {
+.venues-map-location-candidates {
 	@include list-unstyled;
 	@include td-text-align(left);
 	margin-bottom: 10px;
 }
 
-.venue-map-location-candidate {
+.venues-map-location-candidate {
 	$background-color: darken($blue-lighter, 5%);
 
 	@include td-padding(left, 5px);
@@ -51,15 +53,15 @@
 	}
 }
 
-.venue-map-location-candidate > .address {
+.venues-map-location-candidate > .address {
 	font-size: 11px;
 }
 
-.venue-map-location-map {
+.venues-map-location-map {
 	@include td-make-sm-column(10);
 }
 
-.venue-map-location-map > .map-box {
+.venues-map-location-map > .map-box {
 	height: 600px;
 	width: 100%;
 }

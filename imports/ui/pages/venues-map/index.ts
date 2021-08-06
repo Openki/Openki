@@ -9,9 +9,10 @@ import { LocationTracker } from '/imports/ui/lib/location-tracker';
 
 import '/imports/ui/components/map/map';
 
-import './venues-map.html';
+import './template.html';
+import './styles.scss';
 
-Template.venueMap.onCreated(function () {
+Template.venuesMapPage.onCreated(function () {
 	const instance = this;
 
 	instance.filter = Venues.Filtering();
@@ -48,7 +49,7 @@ Template.venueMap.onCreated(function () {
 	});
 });
 
-Template.venueMap.helpers({
+Template.venuesMapPage.helpers({
 	venues() {
 		return Template.instance().locationTracker.markers.find();
 	},
@@ -75,7 +76,7 @@ Template.venueMap.helpers({
 	},
 });
 
-Template.venueMap.events({
+Template.venuesMapPage.events({
 	'click .js-location-candidate'() {
 		Router.go('venueDetails', this);
 	},

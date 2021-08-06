@@ -1001,10 +1001,15 @@ Router.route('venueDetails', {
 	},
 });
 
-Router.route('venueMap', {
+Router.route('venuesMap', {
 	path: 'venues',
+	template: 'venuesMapPage',
 	waitOn() {
 		return Meteor.subscribe('venues', CleanedRegion(Session.get('region')));
+	},
+	async action() {
+		await import('/imports/ui/pages/venues-map');
+		this.render();
 	},
 	onAfterAction() {
 		msgfmt.loading(); // Rerun after msgfmt has loaded translation
