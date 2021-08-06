@@ -1,17 +1,13 @@
 export class CssFromQuery {
-	/**
-	 * @param {{[param: string]: string}} query
-	 * @param {[
-	 *  key: string,
-	 *  name: string,
-	 *  selector: string
-	 * ][]} [properties] the customizable properties to add
-	 */
-	constructor(query, properties = []) {
-		this.query = query;
-		/** @type {{ key: string; name: string; selector: string; }[]} */
-		this.customizableProperties = [];
+	public customizableProperties: { key: string; name: string; selector: string }[] = [];
 
+	/**
+	 * @param properties the customizable properties to add
+	 */
+	constructor(
+		public query: { [param: string]: string },
+		properties: [key: string, name: string, selector: string][] = [],
+	) {
 		// define a default set of customizable properties
 		this.addCustomizableProperties([
 			['bgcolor', 'background-color', 'body'],
@@ -24,14 +20,9 @@ export class CssFromQuery {
 
 	/**
 	 * Add customizable properties
-	 * @param {[
-	 *  key: string,
-	 *  name: string,
-	 *  selector: string
-	 * ][]} properties the customizable properties to add
-	 * @return {CssFromQuery}
+	 * @param  properties the customizable properties to add
 	 */
-	addCustomizableProperties(properties) {
+	addCustomizableProperties(properties: [key: string, name: string, selector: string][]) {
 		properties.forEach((property) => {
 			const [key, name, selector] = property;
 			this.customizableProperties.push({ key, name, selector });
@@ -40,8 +31,7 @@ export class CssFromQuery {
 	}
 
 	getCssRules() {
-		/** @type {string[]} */
-		this.cssRules = [];
+		const cssRules: string[] = [];
 		this.customizableProperties.forEach((property) => {
 			const queryValue = this.query[property.key];
 			let cssValue;
@@ -59,11 +49,11 @@ export class CssFromQuery {
 				}
 
 				if (cssValue) {
-					this.cssRules.push(`${property.selector} { ${property.name}: ${cssValue}; }`);
+					cssRules.push(`${property.selector} { ${property.name}: ${cssValue}; }`);
 				}
 			}
 		});
-		return this.cssRules;
+		return cssRules;
 	}
 }
 
