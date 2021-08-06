@@ -610,6 +610,11 @@ Router.route('showEvent', {
 
 Router.route('stats', {
 	path: 'stats',
+	template: 'statsPage',
+	async action() {
+		await import('/imports/ui/pages/stats');
+		this.render();
+	},
 });
 
 Router.route('tenantCreate', {
