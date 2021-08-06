@@ -1,23 +1,35 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import * as StatsMethods from '/imports/api/stats/methods';
 import { Regions } from '/imports/api/regions/regions';
+import { Stats } from '/imports/api/stats/stats';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-import './stats.html';
+import './template.html';
+import './styles.scss';
 
-const getRegionFromQuery = () => {
-	const region = Router.current().params.query.region;
-	if (region) {
-		return region;
+const Template = TemplateAny as TemplateStaticTyped<
+	Record<string, unknown>,
+	'statsPage',
+	{
+		regionName: ReactiveVar<string | false>;
+		region: ReactiveVar<string>;
+		stats: ReactiveVar<Stats | false>;
 	}
-	return 'all_regions';
-};
+>;
 
-Template.stats.onCreated(function () {
+const template = Template.statsPage;
+
+template.onCreated(function () {
+	function getRegionFromQuery() {
+		const region: string = Router.current().params.query.region || Session.get('region');
+
+		return region || 'all';
+	}
+
 	this.subscribe('Regions');
 	this.regionName = new ReactiveVar(false);
 	this.region = new ReactiveVar(getRegionFromQuery());
@@ -30,7 +42,7 @@ Template.stats.onCreated(function () {
 	});
 });
 
-Template.stats.helpers({
+template.helpers({
 	isAdmin() {
 		return UserPrivilegeUtils.privilegedTo('admin');
 	},
@@ -41,19 +53,13 @@ Template.stats.helpers({
 	regionStats() {
 		return Template.instance().stats.get();
 	},
-	selectedRegion() {
-		if (
-			!Object.prototype.hasOwnProperty.call(this, '_id') &&
-			Template.instance().region.get() === 'all_regions'
-		) {
-			return 'selected';
-		}
-		return this._id === Template.instance().region.get() ? 'selected' : '';
+	selectedRegion(region = 'all') {
+		return region === Template.instance().region.get() ? 'selected' : '';
 	},
 });
 
-Template.stats.events({
+template.events({
 	'change .js-stats-region-selector'(event, instance) {
-		instance.region.set(event.target.value);
+		instance.region.set((event.target as HTMLSelectElement).value);
 	},
 });

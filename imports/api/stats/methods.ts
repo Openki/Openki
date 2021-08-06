@@ -1,14 +1,14 @@
-import Stats from '/imports/api/stats/stats';
+import { getRegionStats, Stats } from '/imports/api/stats/stats';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 export const region = ServerMethod('stats.region', (regionId: string) => {
 	if (UserPrivilegeUtils.privilegedTo('admin')) {
-		const regionFilter = regionId === 'all_regions' ? '' : regionId;
-		return Stats.getRegionStats(regionFilter);
+		const regionFilter = regionId === 'all' ? '' : regionId;
+		return getRegionStats(regionFilter);
 	}
-	return {};
+	return {} as Stats;
 });
 
 export default region;

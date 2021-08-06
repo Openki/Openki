@@ -4,7 +4,7 @@ import { CourseEntity, CourseModel, Courses } from '/imports/api/courses/courses
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 
-interface Stats {
+export interface Stats {
 	detail: {
 		group: string | undefined;
 		groupName: string;
@@ -26,7 +26,7 @@ interface Stats {
 
 function getCourses(regionId: string) {
 	const filter: Mongo.Selector<CourseEntity> = {};
-	if (regionId && regionId !== 'all_regions') {
+	if (regionId && regionId !== 'all') {
 		filter.region = regionId;
 	}
 	return Courses.find(filter);
@@ -101,10 +101,10 @@ function getActiveCoursesStats(courses: Mongo.Cursor<CourseEntity, CourseModel>)
 function getGroupStats(region: string, group?: string | undefined) {
 	let groupFilter: string | RegExp | Mongo.FieldExpression<string> | undefined = group;
 	if (!groupFilter) {
-		groupFilter = { $eq: '' };
+		groupFilter = { $eq: [] } as any;
 	}
 
-	const groupRow = Groups.findOne({ _id: group }, { fields: { name: 1, _id: 0 } });
+	const groupRow = Groups.findOne({ _id: group }, { fields: { name: 1 } });
 
 	const groupName = groupRow?.name || 'ungrouped';
 
@@ -132,20 +132,18 @@ function getGroupStats(region: string, group?: string | undefined) {
 	};
 }
 
-const Stats = {
-	getRegionStats(regionFilter: string) {
-		const groupIds = getGroupIds(getCourses(regionFilter));
-		const stats: Stats = { detail: [], total: [] as any };
+export function getRegionStats(regionFilter: string) {
+	const groupIds = getGroupIds(getCourses(regionFilter));
+	const stats: Stats = { detail: [], total: [] as any };
 
-		groupIds.forEach((groupId) => {
-			stats.detail.push(getGroupStats(regionFilter, groupId));
-		});
-		// courses without groups
-		stats.detail.push(getGroupStats(regionFilter));
-		stats.detail.sort((a, b) => b.numCourses - a.numCourses);
-		stats.total = getGroupStatsTotal(stats);
-		return stats;
-	},
-};
+	groupIds.forEach((groupId) => {
+		stats.detail.push(getGroupStats(regionFilter, groupId));
+	});
+	// courses without groups
+	stats.detail.push(getGroupStats(regionFilter));
+	stats.detail.sort((a, b) => b.numCourses - a.numCourses);
+	stats.total = getGroupStatsTotal(stats);
+	return stats;
+}
 
-export default Stats;
+export default getRegionStats;

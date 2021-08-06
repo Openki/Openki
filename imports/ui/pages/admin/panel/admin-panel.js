@@ -26,6 +26,11 @@ Template.adminPanel.helpers({
 			route: 'venuesMap',
 		},
 		{
+			name: mf('adminPanel.tasks.stats', 'Statistics'),
+			icon: 'fa fa-line-chart',
+			route: 'stats',
+		},
+		{
 			name: mf('adminPanel.tasks.tenants', 'Organizations'),
 			icon: 'fa-sitemap',
 			route: 'tenants',
