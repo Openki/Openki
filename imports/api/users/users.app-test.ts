@@ -5,6 +5,7 @@ import { MeteorAsync, AccountsAsync } from '/imports/utils/promisify';
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import { Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
+import { updateUsername } from '/imports/api/users/methods';
 
 const createDummy = function () {
 	return `test${Date.now()}${Math.random(1000000)}`;
@@ -57,17 +58,17 @@ if (Meteor.isClient) {
 					.then(
 						() =>
 							new Promise((resolve) => {
-								Meteor.call('user.updateUsername', newDummy, (err) => {
-									if (err) {
+								updateUsername(newDummy)
+									.then(() => {
+										Users.find({ username: newDummy }).observe({
+											added: () => {
+												resolve();
+											},
+										});
+									})
+									.catch((err) => {
 										assert.isNotOk(err, 'not expecting username-change errors');
-									}
-
-									Users.find({ username: newDummy }).observe({
-										added: () => {
-											resolve();
-										},
 									});
-								});
 							}),
 					)
 					.then(() => {
