@@ -1,69 +1,57 @@
-import { Regions } from '/imports/api/regions/regions';
+import { Geodata, Regions } from '/imports/api/regions/regions';
 import { Mongo } from 'meteor/mongo';
-/** @typedef {import('/imports/api/regions/regions').Geodata} Geodata */
 
-/**
- * @typedef {Object} MarkerEntity
- * @property {string} _id
- * @property {Geodata} loc
- * @property {boolean} [main]
- * @property {boolean} [draggable]
- * @property {boolean} [center] Marks that have the center flage set are not displayed but used for anchoring the map
- * @property {boolean} [proposed]
- * @property {boolean} [selected]
- * @property {boolean} [hover]
- * @property {string} [presetAddress]
- * @property {string} [name]
- */
+interface MarkerEntity {
+	_id: string;
+	loc: Geodata;
+	main?: boolean;
+	draggable?: boolean;
+	/** Marks that have the center flage set are not displayed but used for anchoring the map */
+	center?: boolean;
+	proposed?: boolean;
+	selected?: boolean;
+	hover?: boolean;
+	presetAddress?: string;
+	name?: string;
+}
 
-export const LocationTracker = function () {
-	/** @type {Mongo.Collection<MarkerEntity>} */
-	const markers = new Mongo.Collection(null); // Local collection for in-memory storage
+export class LocationTracker {
+	/** Local collection for in-memory storage */
+	public markers = new Mongo.Collection<MarkerEntity>(null);
 
-	return {
-		markers,
-		/**
-		 * @param {{ loc: Geodata; }} location
-		 * @param {boolean} [draggable]
-		 * @param {boolean} [soft]
-		 */
-		setLocation(location, draggable, soft) {
-			if (soft) {
-				const marker = markers.findOne({ main: true });
-				if (marker && location?.loc) {
-					markers.update({ _id: marker._id }, { $set: { loc: location.loc, draggable } });
-					return;
-				}
+	setLocation(location: { loc: Geodata }, draggable?: boolean, soft?: boolean) {
+		if (soft) {
+			const marker = this.markers.findOne({ main: true });
+			if (marker && location?.loc) {
+				this.markers.update({ _id: marker._id }, { $set: { loc: location.loc, draggable } });
+				return;
 			}
-			markers.remove({ main: true });
-			if (location?.loc) {
-				markers.insert({
-					loc: location.loc,
-					main: true,
-					draggable,
-				});
-			}
-		},
+		}
+		this.markers.remove({ main: true });
+		if (location?.loc) {
+			this.markers.insert({
+				loc: location.loc,
+				main: true,
+				draggable,
+			});
+		}
+	}
 
-		getLocation() {
-			return markers.findOne({ main: true })?.loc;
-		},
+	getLocation() {
+		return this.markers.findOne({ main: true })?.loc;
+	}
 
-		/**
-		 * @param {string} regionId
-		 */
-		setRegion(regionId) {
-			const region = Regions.findOne(regionId);
+	setRegion(regionId: string) {
+		const region = Regions.findOne(regionId);
 
-			markers.remove({ center: true });
-			if (region?.loc) {
-				markers.insert({
-					loc: region.loc,
-					center: true,
-				});
-			}
-		},
-	};
-};
+		this.markers.remove({ center: true });
+		if (region?.loc) {
+			this.markers.insert({
+				loc: region.loc,
+				center: true,
+			});
+		}
+	}
+}
 
 export default LocationTracker;

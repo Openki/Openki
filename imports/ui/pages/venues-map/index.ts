@@ -1,18 +1,33 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
 
 import { LocationTracker } from '/imports/ui/lib/location-tracker';
+import { Filtering } from '/imports/utils/filtering';
+import { Predicate } from '/imports/utils/predicates';
 
 import '/imports/ui/components/map/map';
 
 import './template.html';
 import './styles.scss';
 
-Template.venuesMapPage.onCreated(function () {
+const Template = TemplateAny as TemplateStaticTyped<
+	Record<string, unknown>,
+	'venuesMapPage',
+	{
+		filter: Filtering<{
+			region: Predicate<string, string, string>;
+		}>;
+		locationTracker: LocationTracker;
+	}
+>;
+
+const template = Template.venuesMapPage;
+
+template.onCreated(function () {
 	const instance = this;
 
 	instance.filter = Venues.Filtering();
@@ -23,7 +38,7 @@ Template.venuesMapPage.onCreated(function () {
 		instance.filter.done();
 	});
 
-	instance.locationTracker = LocationTracker();
+	instance.locationTracker = new LocationTracker();
 
 	instance.autorun(() => {
 		const regionId = Session.get('region');
@@ -49,7 +64,7 @@ Template.venuesMapPage.onCreated(function () {
 	});
 });
 
-Template.venuesMapPage.helpers({
+template.helpers({
 	venues() {
 		return Template.instance().locationTracker.markers.find();
 	},
@@ -76,17 +91,17 @@ Template.venuesMapPage.helpers({
 	},
 });
 
-Template.venuesMapPage.events({
+template.events({
 	'click .js-location-candidate'() {
 		Router.go('venueDetails', this);
 	},
 
-	'mouseenter .js-location-candidate'(event, instance) {
+	'mouseenter .js-location-candidate'(_event, instance) {
 		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
 		instance.locationTracker.markers.update(this._id, { $set: { hover: true } });
 	},
 
-	'mouseleave .js-location-candidate'(event, instance) {
+	'mouseleave .js-location-candidate'(_event, instance) {
 		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
 	},
 });

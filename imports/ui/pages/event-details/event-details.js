@@ -210,7 +210,7 @@ Template.event.events({
 
 TemplateMixins.Expandible(Template, 'eventDisplay');
 Template.eventDisplay.onCreated(function () {
-	this.locationTracker = LocationTracker();
+	this.locationTracker = new LocationTracker();
 	this.replicating = new ReactiveVar(false);
 });
 

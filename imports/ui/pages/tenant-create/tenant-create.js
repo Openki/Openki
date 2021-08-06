@@ -23,7 +23,7 @@ Template.tenantCreate.onCreated(function () {
 	const instance = this;
 	instance.busy(false);
 
-	instance.locationTracker = LocationTracker();
+	instance.locationTracker = new LocationTracker();
 });
 
 Template.tenantCreate.helpers({

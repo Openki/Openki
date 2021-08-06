@@ -29,7 +29,7 @@ Template.venueEdit.onCreated(function () {
 	instance.showAdditionalInfo = new ReactiveVar(false);
 	instance.isNew = !this.data._id;
 
-	instance.locationTracker = LocationTracker();
+	instance.locationTracker = new LocationTracker();
 	instance.locationTracker.setLocation(this.data, true);
 
 	instance.selectedRegion = new ReactiveVar();

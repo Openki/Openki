@@ -16,7 +16,7 @@ Template.regionEdit.onCreated(function () {
 	const instance = this;
 	instance.busy(false);
 
-	instance.locationTracker = LocationTracker();
+	instance.locationTracker = new LocationTracker();
 });
 
 Template.regionEdit.helpers({

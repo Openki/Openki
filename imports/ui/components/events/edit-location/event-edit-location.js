@@ -21,7 +21,7 @@ Template.eventEditVenue.onCreated(function () {
 	// Something, somewhere, must have gone terribly wrong (for this line to exist)
 	instance.parent = instance.parentInstance();
 
-	instance.locationTracker = LocationTracker();
+	instance.locationTracker = new LocationTracker();
 	instance.location = instance.parent.selectedLocation;
 	instance.search = new ReactiveVar('');
 	instance.addressSearch = new ReactiveVar(Boolean(instance.location.get().name));
