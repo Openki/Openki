@@ -41,7 +41,7 @@ function sendInvitation(invitation) {
 		subject,
 		site: {
 			url: Meteor.absoluteUrl(),
-			logo: base64PngImageData(Meteor.settings.public.emailLogo),
+			logo: base64PngImageData(PublicSettings.emailLogo),
 			name: siteName,
 		},
 		tenant,

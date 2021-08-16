@@ -1,5 +1,6 @@
 <template name="accountTasks">
-	<div class="modal account-tasks js-account-tasks" tabindex="-1" role="dialog">
+	<div class="modal account-tasks js-account-tasks" id="accountTaskModal" tabindex="-1"
+		 role="dialog">
 		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -106,8 +107,8 @@
 						</button>
 					</div>
 					<div class="col-auto">
-						<a class="text-muted" data-bs-toggle="collapse" href="#{{service.key}}-info" role="button"
-						   aria-expanded="false" aria-controls="{{service.key}}-info">
+						<a class="text-muted" data-bs-toggle="collapse" href="#{{service.key}}-info"
+						   role="button" aria-expanded="false" aria-controls="{{service.key}}-info">
 							<i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
 						</a>
 					</div>

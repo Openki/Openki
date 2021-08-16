@@ -1,7 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 
-const Introduction = {
+export const Introduction = {
 	init() {
 		Session.set('ShowIntro', localStorage?.getItem('intro') !== 'done');
 		Session.set('OpenedIntro', undefined);

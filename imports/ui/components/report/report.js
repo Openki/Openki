@@ -18,7 +18,7 @@ Template.report.helpers({
 	sending: () => Template.instance().state.get() === 'sending',
 });
 
-TemplateMixins.FormfieldErrors(Template,'report', {
+TemplateMixins.FormfieldErrors(Template, 'report', {
 	reportMessage: {
 		text: () =>
 			mf(

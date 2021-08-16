@@ -610,6 +610,11 @@ Router.route('showEvent', {
 
 Router.route('stats', {
 	path: 'stats',
+	template: 'statsPage',
+	async action() {
+		await import('/imports/ui/pages/stats');
+		this.render();
+	},
 });
 
 Router.route('tenantCreate', {
@@ -666,6 +671,7 @@ Router.route('tenantDetails', {
 
 Router.route('invitation', {
 	path: 'invitation/:token',
+	template: 'invitationPage',
 	/**
 	 * @this {{params: {token: string; query: { tenant: string; }}}}
 	 */
@@ -690,6 +696,10 @@ Router.route('invitation', {
 		}
 
 		return { tenant, invitation };
+	},
+	async action() {
+		await import('/imports/ui/pages/invitation');
+		this.render();
 	},
 	/**
 	 * @this {{params: {token: string; query: { tenant: string; }}}}
@@ -996,10 +1006,15 @@ Router.route('venueDetails', {
 	},
 });
 
-Router.route('venueMap', {
+Router.route('venuesMap', {
 	path: 'venues',
+	template: 'venuesMapPage',
 	waitOn() {
 		return Meteor.subscribe('venues', CleanedRegion(Session.get('region')));
+	},
+	async action() {
+		await import('/imports/ui/pages/venues-map');
+		this.render();
 	},
 	onAfterAction() {
 		msgfmt.loading(); // Rerun after msgfmt has loaded translation

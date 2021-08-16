@@ -128,6 +128,7 @@ export const updateUsername = ServerMethod(
 			);
 		}
 	},
+	{ simulation: false },
 );
 
 /**

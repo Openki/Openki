@@ -5,7 +5,7 @@ import $ from 'jquery';
 import { Meteor } from 'meteor/meteor';
 
 import * as RegionSelection from '/imports/utils/region-selection';
-import Introduction from '/imports/ui/lib/introduction';
+import { Introduction } from '/imports/ui/lib/introduction';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';

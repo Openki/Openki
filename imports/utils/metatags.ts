@@ -1,22 +1,20 @@
 import { DocHead } from 'meteor/kadira:dochead';
 import { Meteor } from 'meteor/meteor';
+import PublicSettings from './PublicSettings';
 
 function getSiteTitlePrefix() {
-	return `${Meteor.settings.public.siteName}  - `;
+	return `${PublicSettings.siteName}  - `;
 }
 
 function getSiteDefaultImage() {
-	return Meteor.absoluteUrl(`logo/${Meteor.settings.public.ogLogo?.src || 'openki_logo_2018.png'}`);
+	return Meteor.absoluteUrl(`logo/${PublicSettings.ogLogo.src}`);
 }
 
 export function removeAll() {
 	DocHead.removeDocHeadAddedTags();
 }
 
-/**
- * @param {string} title
- */
-export function setCommonTags(title, description = '') {
+export function setCommonTags(title: string, description = '') {
 	document.title = getSiteTitlePrefix() + title;
 
 	DocHead.addMeta({ property: 'og:type', content: 'website' });

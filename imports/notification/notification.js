@@ -15,6 +15,7 @@ import notificationJoin from '/imports/notification/notification.join';
 import notificationPrivateMessage from '/imports/notification/notification.private-message';
 
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
+import { PublicSettings } from '../utils/PublicSettings';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -76,7 +77,7 @@ Notification.send = function (entry) {
 				vars.customSiteName = vars.customSiteName || vars.siteName;
 				vars.site = {
 					url: vars.customSiteUrl || Meteor.absoluteUrl(),
-					logo: base64PngImageData(vars.customEmailLogo || Meteor.settings.public.emailLogo),
+					logo: base64PngImageData(vars.customEmailLogo || PublicSettings.emailLogo),
 					name: vars.customSiteName || vars.siteName,
 				};
 				vars.locale = userLocale;

@@ -6,14 +6,14 @@ import juice from 'juice';
 
 import { getReportEmails } from '/imports/utils/email-tools';
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
+import PublicSettings from '/imports/utils/PublicSettings';
 
 if (Meteor.settings.siteEmail) {
 	Accounts.emailTemplates.from = Meteor.settings.siteEmail;
 }
 
-if (Meteor.settings.public.siteName) {
-	Accounts.emailTemplates.siteName = Meteor.settings.public.siteName;
-}
+Accounts.emailTemplates.siteName = PublicSettings.siteName;
+
 Meteor.startup(() => {
 	SSR.compileTemplate('userVerifyEmail', Assets.getText('emails/users/verify.html'));
 	SSR.compileTemplate('userResetPasswordEmail', Assets.getText('emails/users/resetPassword.html'));
@@ -61,7 +61,7 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: base64PngImageData(Meteor.settings.public.emailLogo),
+				logo: base64PngImageData(PublicSettings.emailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
 			username: user.username,
@@ -119,7 +119,7 @@ Accounts.emailTemplates.resetPassword.html = function (user, url) {
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: base64PngImageData(Meteor.settings.public.emailLogo),
+				logo: base64PngImageData(PublicSettings.emailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
 			username: user.username,

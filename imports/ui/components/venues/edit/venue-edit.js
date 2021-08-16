@@ -12,7 +12,7 @@ import * as VenuesMethods from '/imports/api/venues/methods';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { Editable } from '/imports/ui/lib/editable';
 import { LocationTracker } from '/imports/ui/lib/location-tracker';
-import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
@@ -29,7 +29,7 @@ Template.venueEdit.onCreated(function () {
 	instance.showAdditionalInfo = new ReactiveVar(false);
 	instance.isNew = !this.data._id;
 
-	instance.locationTracker = LocationTracker();
+	instance.locationTracker = new LocationTracker();
 	instance.locationTracker.setLocation(this.data, true);
 
 	instance.selectedRegion = new ReactiveVar();

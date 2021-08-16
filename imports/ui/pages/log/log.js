@@ -193,7 +193,7 @@ Template.showLog.events({
 	},
 });
 
-TemplateMixins.MultiExpandible(Template,'showLogEntry');
+TemplateMixins.MultiExpandible(Template, 'showLogEntry');
 Template.showLogEntry.helpers({
 	date() {
 		const { date } = Template.instance().filter.toParams();

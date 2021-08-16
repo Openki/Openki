@@ -1,14 +1,20 @@
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
+import { Blaze } from 'meteor/blaze';
 
 /**
  * Handle saving and logging in
- * @param {object} instance - the template instance
- * @param {string} loginAction - Text that is shown to user in the login window
- * @param {string} registerAction - Text that is shown to user in the register window
- * @param {() => void} afterLogin - the save method
+ * @param instance the template instance
+ * @param loginAction Text that is shown to user in the login window
+ * @param registerAction Text that is shown to user in the register window
+ * @param afterLogin the save method
  */
-export default function SaveAfterLogin(instance, loginAction, registerAction, afterLogin) {
+export function SaveAfterLogin(
+	instance: Blaze.TemplateInstance,
+	loginAction: string,
+	registerAction: string,
+	afterLogin: () => void,
+) {
 	let openedLogin = false;
 
 	instance.autorun((computation) => {
@@ -33,3 +39,5 @@ export default function SaveAfterLogin(instance, loginAction, registerAction, af
 		}
 	});
 }
+
+export default SaveAfterLogin;

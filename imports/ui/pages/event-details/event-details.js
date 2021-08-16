@@ -16,7 +16,7 @@ import { Regions } from '/imports/api/regions/regions';
 import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
 import { LocationTracker } from '/imports/ui/lib/location-tracker';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
-import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import * as IdTools from '/imports/utils/id-tools';
@@ -210,7 +210,7 @@ Template.event.events({
 
 TemplateMixins.Expandible(Template, 'eventDisplay');
 Template.eventDisplay.onCreated(function () {
-	this.locationTracker = LocationTracker();
+	this.locationTracker = new LocationTracker();
 	this.replicating = new ReactiveVar(false);
 });
 
@@ -285,7 +285,7 @@ Template.eventGroupList.helpers({
 	},
 });
 
-TemplateMixins.Expandible(Template,'eventGroupAdd');
+TemplateMixins.Expandible(Template, 'eventGroupAdd');
 Template.eventGroupAdd.helpers(GroupNameHelpers);
 Template.eventGroupAdd.helpers({
 	groupsToAdd() {
@@ -317,7 +317,7 @@ Template.eventGroupAdd.events({
 	},
 });
 
-TemplateMixins.Expandible(Template,'eventGroupRemove');
+TemplateMixins.Expandible(Template, 'eventGroupRemove');
 Template.eventGroupRemove.helpers(GroupNameHelpers);
 Template.eventGroupRemove.events({
 	async 'click .js-remove'(e, instance) {
@@ -342,7 +342,7 @@ Template.eventGroupRemove.events({
 	},
 });
 
-TemplateMixins.Expandible(Template,'eventGroupMakeOrganizer');
+TemplateMixins.Expandible(Template, 'eventGroupMakeOrganizer');
 Template.eventGroupMakeOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupMakeOrganizer.events({
 	async 'click .js-makeOrganizer'(e, instance) {
@@ -367,7 +367,7 @@ Template.eventGroupMakeOrganizer.events({
 	},
 });
 
-TemplateMixins.Expandible(Template,'eventGroupRemoveOrganizer');
+TemplateMixins.Expandible(Template, 'eventGroupRemoveOrganizer');
 Template.eventGroupRemoveOrganizer.helpers(GroupNameHelpers);
 Template.eventGroupRemoveOrganizer.events({
 	async 'click .js-removeOrganizer'(e, instance) {

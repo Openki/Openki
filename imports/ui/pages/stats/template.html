@@ -1,4 +1,4 @@
-<template name="stats">
+<template name="statsPage">
 	<div class="container-fluid">
 		{{#unless isAdmin}}
 			<h1>PLZ login as admin!</h1>
@@ -13,9 +13,10 @@
 				</h1>
 				<div>
 					<select class="js-stats-region-selector">
-						<option value="all_regions" {{selectedRegion}}>All regions</option>
-						{{#each regions}}
-							<option value="{{_id}}" {{selectedRegion}}>{{name}}</option>
+						<option value="all" {{selectedRegion}}>All regions</option>
+						{{#each region in regions}}
+							<option value="{{region._id}}" {{selectedRegion region._id}}>{{region.name}}
+							</option>
 						{{/each}}
 					</select>
 				</div>
@@ -51,20 +52,20 @@
 								<td class="number">{{regionStats.total.futureEvents}}</td>
 								<td class="number">{{regionStats.total.usersParticipating}}</td>
 							</tr>
-							{{#each regionStats.detail}}
+							{{#each detail in regionStats.detail}}
 								<tr class="js-stats-row">
 									<td>
-										{{#if group}}
-											{{ groupName }}
+										{{#if detail.group}}
+											{{ detail.groupName }}
 										{{else}}
 											{{mf 'region.stats.ungrouped' "Ungrouped"}}
 										{{/if}}
 									</td>
-									<td class="number">{{this.numCourses}}</td>
-									<td class="number">{{this.activeCourses}}</td>
-									<td class="number">{{this.passedEvents}}</td>
-									<td class="number">{{this.futureEvents}}</td>
-									<td class="number">{{this.usersParticipating}}</td>
+									<td class="number">{{detail.numCourses}}</td>
+									<td class="number">{{detail.activeCourses}}</td>
+									<td class="number">{{detail.passedEvents}}</td>
+									<td class="number">{{detail.futureEvents}}</td>
+									<td class="number">{{detail.usersParticipating}}</td>
 								</tr>
 							{{/each}}
 						</tbody>

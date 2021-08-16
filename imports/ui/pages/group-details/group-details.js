@@ -12,7 +12,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import { Editable } from '/imports/ui/lib/editable';
-import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import { isGroupMember } from '/imports/utils/is-group-member';
 import { Analytics } from '../../lib/analytics';
 
@@ -181,7 +181,7 @@ Template.groupDetails.helpers({
 	},
 });
 
-TemplateMixins.FormfieldErrors(Template,'groupDetails', {
+TemplateMixins.FormfieldErrors(Template, 'groupDetails', {
 	emptyField: {
 		text: () => mf('group.details.error.allMandatory', 'All four fields are mandatory.'),
 		field: 'all',
