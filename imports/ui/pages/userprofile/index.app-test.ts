@@ -23,7 +23,7 @@ if (Meteor.isClient) {
 			};
 
 			(await MeteorAsync.subscribe('userSearch', 'Sandro')).stop(); // load user from server
-			const userId = Users.findOne({ username: 'Sandro' })._id;
+			const userId = Users.findOne({ username: 'Sandro' })?._id;
 			Router.go('userprofile', { _id: userId, username: 'Sandro' });
 
 			await waitForSubscriptions();
@@ -52,7 +52,7 @@ if (Meteor.isClient) {
 			}
 
 			(await MeteorAsync.subscribe('userSearch', 'Sandro')).stop(); // load user from server
-			const userId = Users.findOne({ username: 'Sandro' })._id;
+			const userId = Users.findOne({ username: 'Sandro' })?._id;
 			Router.go('userprofile', { _id: userId, username: 'Sandro' });
 
 			await waitForSubscriptions();
@@ -90,7 +90,7 @@ if (Meteor.isClient) {
 			}
 
 			(await MeteorAsync.subscribe('userSearch', 'Sandro')).stop(); // load user from server
-			const userId = Users.findOne({ username: 'Sandro' })._id;
+			const userId = Users.findOne({ username: 'Sandro' })?._id;
 			Router.go('userprofile', { _id: userId, username: 'Sandro' });
 
 			await waitForSubscriptions();
