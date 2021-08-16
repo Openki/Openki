@@ -368,5 +368,3 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 		);
 	});
 }
-
-

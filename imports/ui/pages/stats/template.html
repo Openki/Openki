@@ -15,7 +15,8 @@
 					<select class="js-stats-region-selector">
 						<option value="all" {{selectedRegion}}>All regions</option>
 						{{#each region in regions}}
-							<option value="{{region._id}}" {{selectedRegion region._id}}>{{region.name}}
+							<option value="{{region._id}}" {{selectedRegion region._id}}>
+								{{region.name}}
 							</option>
 						{{/each}}
 					</select>

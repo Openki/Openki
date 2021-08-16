@@ -26,7 +26,7 @@ import '/imports/ui/components/send-message/send-message';
 import './template.html';
 
 interface UserProfilePageData {
-	user?: UserModel;
+	user: UserModel;
 	alterPrivileges: boolean;
 	privileges: string[];
 	inviteGroups: Mongo.Cursor<GroupEntity>;
@@ -43,7 +43,7 @@ const template = Template.userprofilePage;
 
 template.onCreated(function () {
 	this.busy(false);
-	const userId = Template.instance().data.user?._id;
+	const userId = Template.instance().data.user._id;
 
 	this.state = new ReactiveDict(undefined, { verifyUserDelete: false });
 
@@ -58,11 +58,11 @@ template.helpers({
 	 * whether userprofile is for the logged-in user
 	 */
 	ownuser() {
-		return Template.currentData().user?._id === Meteor.userId();
+		return Template.currentData().user._id === Meteor.userId();
 	},
 
 	hasContributed() {
-		return checkContribution(Template.currentData().user?.contribution);
+		return checkContribution(Template.currentData().user.contribution);
 	},
 
 	contributedIcon() {
@@ -71,8 +71,7 @@ template.helpers({
 
 	acceptsPrivateMessages() {
 		return (
-			Template.currentData().user?.acceptsPrivateMessages ||
-			UserPrivilegeUtils.privilegedTo('admin')
+			Template.currentData().user.acceptsPrivateMessages || UserPrivilegeUtils.privilegedTo('admin')
 		);
 	},
 
@@ -107,7 +106,7 @@ template.helpers({
 template.events({
 	async 'click .js-has-contributed'() {
 		try {
-			await usersMethods.setHasContributed(Template.currentData().user?._id);
+			await usersMethods.setHasContributed(Template.currentData().user._id);
 
 			Alert.success(mf('profile.setHasContributed.alert', 'User has contributed'));
 		} catch (err) {
@@ -120,7 +119,7 @@ template.events({
 
 	async 'click .js-unset-has-contributed'() {
 		try {
-			await usersMethods.unsetHasContributed(Template.currentData().user?._id);
+			await usersMethods.unsetHasContributed(Template.currentData().user._id);
 
 			Alert.success(mf('profile.unsetHasContributed.alert', 'Unset user has contributed'));
 		} catch (err) {
@@ -133,7 +132,7 @@ template.events({
 
 	async 'click .js-give-admin'() {
 		try {
-			await usersMethods.addPrivilege(Template.currentData().user?._id, 'admin');
+			await usersMethods.addPrivilege(Template.currentData().user._id, 'admin');
 
 			Alert.success(mf('privilege.addedAdmin', 'Granted admin privilege'));
 		} catch (err) {
@@ -144,7 +143,7 @@ template.events({
 	async 'click .js-remove-privilege-btn'(event, instance) {
 		const priv = instance.$(event.target as any).data('priv');
 		try {
-			await usersMethods.removePrivilege(Template.currentData().user?._id, priv);
+			await usersMethods.removePrivilege(Template.currentData().user._id, priv);
 
 			Alert.success(mf('privilege.removed', 'Removed privilege'));
 		} catch (err) {

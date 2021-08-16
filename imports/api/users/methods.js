@@ -304,18 +304,23 @@ export const addPrivilege = ServerMethod(
 	 * @param {string} privilege
 	 */
 	(userId, privilege) => {
-		// At the moment, only admins may hand out privileges, so this is easy
-		if (UserPrivilegeUtils.privilegedTo('admin')) {
-			const user = Users.findOne({ _id: userId });
-			if (!user) {
-				throw new Meteor.Error(404, 'User not found');
-			}
-			Users.update(
-				{ _id: user._id },
-				{ $addToSet: { privileges: privilege } },
-				AsyncTools.checkUpdateOne,
-			);
+		check(userId, String);
+		check(privilege, String);
+
+		if (!UserPrivilegeUtils.privilegedTo('admin')) {
+			// At the moment, only admins may hand out privileges, so this is easy
+			return;
 		}
+
+		const user = Users.findOne({ _id: userId });
+		if (!user) {
+			throw new Meteor.Error(404, 'User not found');
+		}
+		Users.update(
+			{ _id: user._id },
+			{ $addToSet: { privileges: privilege } },
+			AsyncTools.checkUpdateOne,
+		);
 	},
 );
 
@@ -326,6 +331,9 @@ export const removePrivilege = ServerMethod(
 	 * @param {string} privilege
 	 */
 	(userId, privilege) => {
+		check(userId, String);
+		check(privilege, String);
+
 		const user = Users.findOne({ _id: userId });
 		if (!user) {
 			throw new Meteor.Error(404, 'User not found');
@@ -333,13 +341,15 @@ export const removePrivilege = ServerMethod(
 
 		const operator = Meteor.user();
 
-		if (UserPrivilegeUtils.privileged(operator, 'admin') || operator._id === user._id) {
-			Users.update(
-				{ _id: user._id },
-				{ $pull: { privileges: privilege } },
-				AsyncTools.checkUpdateOne,
-			);
+		if (!UserPrivilegeUtils.privileged(operator, 'admin') && operator?._id !== user._id) {
+			return;
 		}
+
+		Users.update(
+			{ _id: user._id },
+			{ $pull: { privileges: privilege } },
+			AsyncTools.checkUpdateOne,
+		);
 	},
 );
 
