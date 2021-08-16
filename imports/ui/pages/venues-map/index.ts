@@ -83,11 +83,7 @@ template.helpers({
 
 	regionName() {
 		const regionId = Template.instance().filter.get('region');
-		const regionObj = Regions.findOne(regionId);
-		if (regionObj) {
-			return regionObj.name;
-		}
-		return false;
+		return Regions.findOne(regionId)?.name || false;
 	},
 });
 
