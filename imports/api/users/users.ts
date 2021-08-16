@@ -82,7 +82,7 @@ export interface UserEntity extends Meteor.User {
 
 	/**
 	 * Has openki donated/supported. The Date is when an admin clicked the button in the user
-	 * profile. The contribution is
+	 * profile. It shows a icon next to the user if the date is not older then a year.
 	 */
 	contribution?: Date;
 
