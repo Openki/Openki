@@ -39,9 +39,7 @@ if (Meteor.isClient) {
 			};
 			const contributionIconIsPresent = () => {
 				assert(
-					$(
-						'a[data-tooltip="Sandro supported Hmmm with a donation. Click on the icon if you want to become a contributer as well."] i.fa.fa-heart',
-					).length > 0,
+					$('a[data-tooltip^="Sandro supported Hmmm with a donation."] i.fa.fa-heart').length > 0,
 					'Icon is present',
 				);
 			};
@@ -77,9 +75,7 @@ if (Meteor.isClient) {
 			};
 			const contributionIconIsNotPresent = () => {
 				assert(
-					$(
-						'a[data-tooltip="Sandro supported Hmmm with a donation. Click on the icon if you want to become a contributer as well."] i.fa.fa-heart',
-					).length === 0,
+					$('a[data-tooltip^="Sandro supported Hmmm with a donation."] i.fa.fa-heart').length === 0,
 					'Icon is not present',
 				);
 			};
