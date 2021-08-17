@@ -1,9 +1,9 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .region-tag {
 	@include td-pos(right, 0);
 	background-color: rgba($blue, 0.75);
 	border-bottom-left-radius: 3px;
-	color: $white;
-	padding: 8px;
 	position: absolute;
 	top: 0;
 }

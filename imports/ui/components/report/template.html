@@ -3,7 +3,7 @@
 		{{mf 'report.sending' 'Report is being sent…'}}
 	{{/if}}
 	{{#if reporting}}
-		<div class="report">
+		<div class="report p-3">
 			<form>
 				<div class="mb-3 {{errorClass 'reportMessage'}}">
 					<label class="form-label"
@@ -12,7 +12,7 @@
 							  placeholder="{{mf 'report.placeholder' 'My hovercraft is full of eels.'}}"></textarea>
 					{{errorMessage 'reportMessage'}}
 				</div>
-				<div class="form-actions">
+				<div class="d-flex gap-2 justify-content-end">
 					<button type="button" class='btn btn-save js-report-send'>
 						<i class="fa fa-send fa-fw" aria-hidden="true"></i>
 						{{mf 'report.report' 'Send report'}}
