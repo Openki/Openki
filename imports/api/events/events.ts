@@ -4,7 +4,9 @@ import { Match, check } from 'meteor/check';
 // eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from './tenantDenormalizer';
 
+import { Geodata } from '/imports/api/regions/regions';
 import { Courses } from '/imports/api/courses/courses';
+import { UserModel } from '../users/users';
 
 import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
@@ -12,71 +14,92 @@ import LocalTime from '/imports/utils/local-time';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-
-/** @typedef {import("../users/users").UserModel} UserModel */
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
 // ======== DB-Model: ========
-/**
- * @typedef {Object} Geodata
- * @property {'Point'} type
- * @property {[long:number, lat:number]} coordinates (not lat-long !)
- */
-/**
- * @typedef {Object} EventEntity
- * @property {string} _id ID
- * @property {string} tenant tenant ID
- * @property {string} region ID_region
- * @property {string} title
- * @property {string} slug
- * @property {string} description
- * @property {string} startLocal String of local date when event starts
- * @property {string} endLocal String of local date when event ends
- * @property {object} [venue]
- * @property {string} [venue._id] Optional reference to a document in the Venues collection
- * If this is set, the fields name, loc, and address are synchronized
- * @property {string} [venue.name] Descriptive name for the venue
- * @property {Geodata} [venue.loc] Event location in GeoJSON format
- * @property {string} [venue.address] Address string where the event will take place
- * @property {string} room (Where inside the building the event will take place)
- * @property {string} createdBy userId
- * @property {Date} time_created
- * @property {Date} time_lastedit
- * @property {string} [courseId] course._id of parent course, optional
- * @property {boolean} internal (Events are only displayed when group or venue-filter is active)
- * @property {string[]} groups list of group._id that promote this event ("promote groups").
- * @property {string[]} groupOrganizers list of group._id that are allowed to edit the course
- * ("team groups", based on the ui design: Every "team group" promotes the event and is part of
- * the groups list).
- * @property {string} [replicaOf] ID of the replication parent, only cloned events have this
- * @property {number} maxParticipants maximum participants of event
- * @property {string[]} courseGroups (calculated) list of group._id inherited from course (if
- * courseId is set) ("promote groups" from course)
- * @property {string[]} allGroups (calculated) all groups that promote this course, both
- * inherited from course and set on the event itself ("promote groups" from event and course)
- * @property {string[]} editors (calculated) list of user and group _id that are allowed to
- * edit the event, calculated from the groupOranizers from the event and the editors from the course
- * @property {Date} start (calculated) date object calculated from startLocal field. Use this
- * for ordering between events.
- * @property {Date} end (calculated) date object calculated from endLocal field.
- */
 
-/** @typedef {OEvent & EventEntity} EventModel */
+interface EventEntity {
+	/** ID */
+	_id: string;
+	/** tenant ID */
+	tenant: string;
+	/** ID_region */
+	region: string;
+	title: string;
+	slug: string;
+	description: string;
+	/** String of local date when event starts */
+	startLocal: string;
+	/** String of local date when event ends */
+	endLocal: string;
+	venue?: {
+		/**
+		 * Optional reference to a document in the Venues collection. If this is set, the fields
+		 * name, loc, and address are synchronized
+		 */
+		_id?: string;
+		/** Descriptive name for the venue */
+		name?: string;
+		/** Event location in GeoJSON format */
+		loc?: Geodata;
+		/** Address string where the event will take place */
+		address?: string;
+	};
+	/** (Where inside the building the event will take place) */
+	room: string;
+	/** userId */
+	createdBy: string;
+	time_created: Date;
+	time_lastedit: Date;
+	/** course._id of parent course, optional */
+	courseId?: string;
+	/** (Events are only displayed when group or venue-filter is active) */
+	internal: boolean;
+	/** list of group._id that promote this event ("promote groups"). */
+	groups: string[];
+	/**
+	 * list of group._id that are allowed to edit the course ("team groups", based on the ui design:
+	 * Every "team group" promotes the event and is part of the groups list). */
+	groupOrganizers: string[];
+	/** ID of the replication parent, only cloned events have this */
+	replicaOf?: string;
+	/** maximum participants of event */
+	maxParticipants: number;
+	/**
+	 * (calculated) list of group._id inherited from course (if courseId is set) ("promote groups"
+	 * from course)
+	 */
+	courseGroups: string[];
+	/**
+	 * (calculated) all groups that promote this course, both inherited from course and set on the
+	 * event itself ("promote groups" from event and course)
+	 */
+	allGroups: string[];
+	/**
+	 * (calculated) list of user and group _id that are allowed to edit the event, calculated from
+	 * the groupOranizers from the event and the editors from the course
+	 */
+	editors: string[];
+	/**
+	 * (calculated) date object calculated from startLocal field. Use this for ordering between
+	 * events.
+	 */
+	start: Date;
+	/** (calculated) date object calculated from endLocal field. */
+	end: Date;
+}
+
+export type EventModel = OEvent & EventEntity;
 
 // Event is a built-in, so we use a different name for this class
 export class OEvent {
-	constructor() {
-		/** @type {string[]} */
-		this.editors = [];
-	}
+	editors: string[] = [];
 
-	isPrivate(this: RegionModel) {
+	isPrivate(this: EventModel) {
 		return !PublicSettings.publicTenants.includes(this.tenant);
 	}
 
-	/**
-	 * @param {UserModel} user
-	 */
-	editableBy(user) {
+	editableBy(this: EventModel, user: UserModel) {
 		if (!user) {
 			return false;
 		}
@@ -86,24 +109,57 @@ export class OEvent {
 		return _.intersection(user.badges, this.editors).length > 0;
 	}
 
-	/**
-	 * @this {EventModel}
-	 * @param {EventModel} event
-	 */
-	sameTime(event) {
+	sameTime(this: EventModel, event: EventModel) {
 		return ['startLocal', 'endLocal'].every((time) => {
-			const timeA = LocalTime.fromString(this[time]);
-			const timeB = LocalTime.fromString(event[time]);
+			const timeA = LocalTime.fromString((this as any)[time]);
+			const timeB = LocalTime.fromString((event as any)[time]);
 
 			return timeA.hour() === timeB.hour() && timeA.minute() === timeB.minute();
 		});
 	}
 }
 
-/**
- * @extends {Mongo.Collection<EventEntity, EventModel>}
- */
-export class EventsCollection extends Mongo.Collection {
+export interface FindFilter {
+	/** string of words to search for */
+	search?: string;
+	/** include only events that overlap the given
+	 * period (list of start and end date) */
+	period?: [Date, Date];
+	/** only events that end after this date */
+	start?: Date;
+	/** only events that ended before this date */
+	before?: Date;
+	/** only events that are ongoing during this date */
+	ongoing?: Date;
+	/** only events that started before this date */
+	end?: Date;
+	/**  only events starting after this date */
+	after?: Date;
+	/** only events at this venue (ID) */
+	venue?: string;
+	/** only events at this venues (IDs) */
+	venues?: string[];
+	/** only events in this room (string match) */
+	room?: string;
+	/** only events that are not attached to a course */
+	standalone?: boolean;
+	/** restrict to given region */
+	region?: string;
+	/** restrict to given tenants */
+	tenants?: string[];
+	/** list of category ID the event must be in */
+	categories?: string[];
+	/** the event must be in that group (ID) */
+	group?: string;
+	/** the event must be in one of the group ID */
+	groups?: string[];
+	/** only events for this course (ID) */
+	course?: string;
+	/** only events that are internal (if true) or public (if false) */
+	internal?: boolean;
+}
+
+export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> {
 	constructor() {
 		super('Events', {
 			transform(event) {
@@ -123,7 +179,7 @@ export class EventsCollection extends Mongo.Collection {
 	 * @param {EventModel} event
 	 * @param {Function | undefined} [callback]
 	 */
-	insert(event, callback) {
+	insert(event: EventModel, callback: Function | undefined) {
 		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
 
 		return super.insert(enrichedEvent, callback);
@@ -153,7 +209,7 @@ export class EventsCollection extends Mongo.Collection {
 	 * Recalculate the group-related fields of an event
 	 * @param {string} eventId the event to update
 	 */
-	updateGroups(eventId) {
+	updateGroups(eventId: string) {
 		AsyncTools.untilClean((resolve, reject) => {
 			const event = this.findOne(eventId);
 
@@ -168,7 +224,7 @@ export class EventsCollection extends Mongo.Collection {
 
 			// If an event has a parent course, it inherits all groups and all editors from it.
 			/** @type {string[]} */
-			let courseGroups = [];
+			let courseGroups: string[] = [];
 			if (event.courseId) {
 				const course = Courses.findOne(event.courseId);
 				if (!course) {
@@ -181,7 +237,7 @@ export class EventsCollection extends Mongo.Collection {
 				editors.push(event.createdBy);
 			}
 
-			const update = {
+			const update: Partial<EventEntity> = {
 				editors,
 			};
 
@@ -207,44 +263,22 @@ export class EventsCollection extends Mongo.Collection {
 
 	/**
 	 * Find events for given filters
-	 * @param {object} [filter] dictionary with filter options
-	 * @param {string} [filter.search] string of words to search for
-	 * @param {[Date,Date]} [filter.period] include only events that overlap the given
-	 * period (list of start and end date)
-	 * @param {Date} [filter.start] only events that end after this date
-	 * @param {Date} [filter.before] only events that ended before this date
-	 * @param {Date} [filter.ongoing] only events that are ongoing during this date
-	 * @param {Date} [filter.end] only events that started before this date
-	 * @param {Date} [filter.after] only events starting after this date
-	 * @param {string} [filter.venue] only events at this venue (ID)
-	 * @param {string[]} [filter.venues] only events at this venues (IDs)
-	 * @param {string} [filter.room] only events in this room (string match)
-	 * @param {boolean} [filter.standalone] only events that are not attached to a course
-	 * @param {string} [filter.region] restrict to given region
-	 * @param {string[]} [filter.tenants] restrict to given tenants
-	 * @param {string[]} [filter.categories] list of category ID the event must be in
-	 * @param {string} [filter.group] the event must be in that group (ID)
-	 * @param {string[]} [filter.groups] the event must be in one of the group ID
-	 * @param {string} [filter.course] only events for this course (ID)
-	 * @param {boolean} [filter.internal] only events that are internal (if true) or public (if false)
-	 * @param {number} [limit] how many to find
-	 * @param {number} [skip] skip this many before returning results
-	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
+	 * @param filter dictionary with filter options
+	 * @param limit how many to find
+	 * @param skip skip this many before returning results
+	 * @param sort list of fields to sort by
 	 *
 	 * The events are sorted by start date (ascending, before-filter causes descending order)
-	 *
 	 */
-	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: [string, 'asc' | 'desc'][]) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
 		check(sort, Match.Maybe([[String]]));
 
-		/** @type {Mongo.Selector<EventEntity> } */
-		const find = {};
+		const find: Mongo.Selector<EventEntity> = {};
 		const and = [];
 
-		/** @type {Mongo.Options<EventEntity>} */
-		const options = {};
+		const options: Mongo.Options<EventEntity> = {};
 		options.sort = Array.isArray(sort) ? sort : [];
 
 		let startSortOrder = 'asc';
@@ -356,7 +390,7 @@ export class EventsCollection extends Mongo.Collection {
 			find.$and = and;
 		}
 
-		options.sort.push(['start', startSortOrder]);
+		(options.sort as string[][]).push(['start', startSortOrder]);
 
 		return this.find(find, options);
 	}

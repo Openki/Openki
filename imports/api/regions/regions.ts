@@ -4,61 +4,65 @@ import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
-/** @typedef {import('../users/users').UserModel} UserModel */
+import { UserModel } from '/imports/api/users/users';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as Predicates from '/imports/utils/predicates';
 import { Filtering } from '/imports/utils/filtering';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
-// ======== DB-Model: ========
-/**
- * @typedef {Object} Geodata
- * @property {'Point'} type
- * @property {[long:number, lat:number]} coordinates (not lat-long !)
- */
-/**
- * @typedef {Object} RegionEntity
- * @property {string} _id ID
- * @property {string} tenant
- * @property {string} name ID
- * @property {string} nameEn ID
- * @property {Geodata} [loc] (Optional)
- * @property {string} tz ex: "UTC+01:00"
- * @property {number} courseCount Number of courses in that region, calculated field
- * (does not count internal or archived courses)
- * @property {number} futureEventCount Number of future events in that region, calculated field
- * (does not count internal courses)
- * @property {string} featuredGroup ID of featured group
- * @property {{
- *       siteName: string,
- *       siteStage: string,
- *       headerLogo: {
- *             src: string,
- *             alt: string,
- *       },
- *       emailLogo: string,
- *     }} [custom]
- *
- * @property {string} [createdby]
- * @property {Date}   [created]
- * @property {Date}   [updated]
- */
+export interface Geodata {
+	type: 'Point';
+	/** (not lat-long !) */
+	coordinates: [long: number, lat: number];
+}
 
-/**
- * @typedef {Region & RegionEntity} RegionModel
- */
+export interface RegionEntity {
+	/** ID */
+	_id: string;
+	tenant: string;
+	name: string;
+	nameEn: string;
+	loc?: Geodata;
+	/** ex: "UTC+01:00" */
+	tz: string;
+	/**
+	 * Number of courses in that region, calculated field (does not count internal or archived
+	 * courses)
+	 */
+	courseCount: number;
+	/**
+	 * Number of future events in that region, calculated field (does not count internal courses)
+	 */
+	futureEventCount: number;
+	/** ID of featured group */
+	featuredGroup: string;
+	custom?: {
+		siteName: string;
+		siteStage: string;
+		headerLogo: {
+			src: string;
+			alt: string;
+		};
+		emailLogo: string;
+	};
+	createdby?: string;
+	created?: Date;
+	updated?: Date;
+}
+
+export type RegionModel = Region & RegionEntity;
 
 export class Region {
+	isPrivate(this: RegionModel) {
+		return !PublicSettings.publicTenants.includes(this.tenant);
+	}
+
 	/**
 	 * Check whether a user may edit the region.
-	 * @this {RegionModel}
-	 * @param {UserModel | undefined} user
 	 */
-	editableBy(user) {
+	editableBy(this: RegionModel, user?: UserModel) {
 		if (!user) {
-			return false;
-		}
-		if (!this.tenant) {
 			return false;
 		}
 
@@ -69,10 +73,7 @@ export class Region {
 	}
 }
 
-/**
- * @extends {Mongo.Collection<RegionEntity, RegionModel>}
- */
-export class RegionsCollection extends Mongo.Collection {
+export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionModel> {
 	constructor() {
 		super('Regions', {
 			transform(region) {
@@ -106,22 +107,24 @@ export class RegionsCollection extends Mongo.Collection {
 
 	/**
 	 * Find regions for given filters
-	 * @param {object} [filter] dictionary with filter options
-	 * @param {string} [filter.tenant] restrict to regions in that tenant
-	 * @param {number} [limit] how many to find
-	 * @param {number} [skip] skip this many before returning results
-	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
+	 * @param filter dictionary with filter options
+	 * @param limit how many to find
+	 * @param skip skip this many before returning results
+	 * @param sort list of fields to sort by
 	 */
-	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+	findFilter(
+		filter: { /** restrict to regions in that tenant */ tenant?: string } = {},
+		limit = 0,
+		skip = 0,
+		sort: [string, 'asc' | 'desc'][],
+	) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
 		check(sort, Match.Maybe([[String]]));
 
-		/** @type {Mongo.Selector<RegionEntity> } */
-		const selector = {};
+		const selector: Mongo.Selector<RegionEntity> = {};
 
-		/** @type {Mongo.Options<RegionEntity>} */
-		const options = { sort };
+		const options: Mongo.Options<RegionEntity> = { sort };
 
 		if (limit > 0) {
 			options.limit = limit;
