@@ -2,6 +2,7 @@ import { mf, msgfmt } from 'meteor/msgfmt:core';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
+import { Spacebars } from 'meteor/spacebars';
 import moment from 'moment';
 
 import { Groups } from '/imports/api/groups/groups';
@@ -13,6 +14,8 @@ import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { UserEntity } from '/imports/api/fixtures/ensureFixture';
+import { checkContribution } from '../../utils/checkContribution';
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -248,33 +251,29 @@ const helpers: { [name: string]: Function } = {
 Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[name]));
 
 /**
- * Get a username from ID
+ * Register username and contribution helper. Cache the user data.
  */
-const usernameFromId = (function () {
+{
 	// We cache the username lookups
 	// To prevent unlimited cache-growth, after a enough lookups we
 	// build a new cache from the old
 	const cacheLimit = 1000;
-	let cache: { [id: string]: string } = {};
-	let previousCache: { [id: string]: string } = {};
+	let cache: { [id: string]: Pick<UserEntity, 'username' | 'contribution'> } = {};
+	let previousCache: typeof cache = {};
 	let lookups = 0;
 	const pending: { [id: string]: Tracker.Dependency } = {};
 
 	// Update the cache if users are pushed to the collection
-	Users.find().observe({
+	Users.find({}, { fields: { _id: 1, username: 1, contribution: 1 } }).observe({
 		added(user) {
-			cache[user._id] = user.username;
+			cache[user._id] = user;
 		},
 		changed(user) {
-			cache[user._id] = user.username;
+			cache[user._id] = user;
 		},
 	});
 
-	return function (userId: string) {
-		if (!userId) {
-			return mf('noUser_placeholder', 'someone');
-		}
-
+	const getCachedUser = (userId: string) => {
 		// Consult cache
 		let cachedUser = cache[userId];
 		if (cachedUser === undefined) {
@@ -289,7 +288,7 @@ const usernameFromId = (function () {
 
 		if (cachedUser === undefined) {
 			// Substitute until the name (or its absence) is loaded
-			cachedUser = '◌';
+			cachedUser = { username: '◌' };
 
 			if (pending[userId]) {
 				pending[userId].depend();
@@ -309,7 +308,7 @@ const usernameFromId = (function () {
 				usersMethods
 					.name(userId)
 					.then((user) => {
-						cache[userId] = user || '?!';
+						cache[userId] = user || { username: '?!' };
 						pending[userId].changed();
 						delete pending[userId];
 					})
@@ -320,11 +319,56 @@ const usernameFromId = (function () {
 			}
 		}
 
-		if (cachedUser) {
-			return cachedUser;
-		}
-		return `userId: ${userId}`;
+		return cachedUser;
 	};
-})();
 
-Template.registerHelper('username', usernameFromId);
+	Template.registerHelper('username', function (userId: string) {
+		if (!userId) {
+			return mf('noUser_placeholder', 'someone');
+		}
+
+		const cachedUser = getCachedUser(userId);
+
+		if (!cachedUser) {
+			return `userId: ${userId}`;
+		}
+
+		return cachedUser.username;
+	});
+
+	Template.registerHelper('contribution', function (userId: string) {
+		if (!userId) {
+			return '';
+		}
+
+		const contribution = PublicSettings.contribution;
+
+		if (!contribution) {
+			return '';
+		}
+
+		const cachedUser = getCachedUser(userId);
+
+		if (!cachedUser) {
+			return '';
+		}
+
+		if (!checkContribution(cachedUser.contribution)) {
+			return '';
+		}
+
+		return Spacebars.SafeString(
+			`<a href="${getLocalisedValue(contribution.link)}" data-tooltip="${(Blaze as any)._escape(
+				mf(
+					'user.hasContributed',
+					{
+						USERNAME: cachedUser.username,
+						SITENAME: getSiteName(Regions.currentRegion()),
+						ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
+					},
+					'{USERNAME} supported {SITENAME} with a donation. Click on the {ICON} for more information how to contribute.',
+				),
+			)}"><sup><i class="${contribution.icon}" aria-hidden="true"></i></sup></a>`,
+		);
+	});
+}

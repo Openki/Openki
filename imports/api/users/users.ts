@@ -79,6 +79,13 @@ export interface UserEntity extends Meteor.User {
 	};
 	/** [admin] */
 	privileges: Role[];
+
+	/**
+	 * Has openki donated/supported. The Date is when an admin clicked the button in the user
+	 * profile. It shows a icon next to the user if the date is not older then a year.
+	 */
+	contribution?: Date;
+
 	lastLogin: Date;
 	/** This value is managed by the messageformat package */
 	locale: string;

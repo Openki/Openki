@@ -41,6 +41,11 @@ check(
 		faqLink: LocalisedValue,
 		courseGuideLink: LocalisedValue,
 		aboutLink: LocalisedValue,
+		contribution: Match.Maybe({
+			icon: String,
+			forbiddenChars: [String] as unknown as Match.Matcher<string[]>,
+			link: LocalisedValue,
+		}),
 	}),
 );
 

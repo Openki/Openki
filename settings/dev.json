@@ -38,6 +38,14 @@
 		],
 		"faqLink": "/info/faq",
 		"aboutLink": "https://about.openki.net",
+		"contribution": 
+		    { "icon": "fa fa-heart"
+			, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"]
+			, "link": 
+				{ "en": "https://about.openki.net/en/ueber-uns/spenden/"
+				, "de": "https://about.openki.net/ueber-uns/spenden/"
+				}
+			},
 		"categories": {"sports":
 			[
 				"martialarts",
