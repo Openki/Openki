@@ -1,1 +1,2 @@
-import './loading.html';
+import './template.html';
+import './styles.scss';
