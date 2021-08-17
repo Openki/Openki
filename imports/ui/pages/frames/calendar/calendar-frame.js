@@ -11,7 +11,7 @@ import { Regions } from '/imports/api/regions/regions';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import '/imports/ui/components/loading/loading';
+import '/imports/ui/components/loading';
 
 import './calendar-frame.html';
 

@@ -8,7 +8,7 @@ import { Events } from '/imports/api/events/events';
 import { reactiveNow } from '/imports/utils/reactive-now';
 
 import '/imports/ui/components/events/list/event-list';
-import '/imports/ui/components/loading/loading';
+import '/imports/ui/components/loading';
 
 import './week-frame.html';
 

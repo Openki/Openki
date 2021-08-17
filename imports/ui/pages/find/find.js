@@ -18,7 +18,7 @@ import * as UrlTools from '/imports/utils/url-tools';
 import '/imports/ui/components/courses/list/course-list';
 import '/imports/ui/components/courses/edit/course-edit';
 import '/imports/ui/components/courses/filter/course-filter';
-import '/imports/ui/components/loading/loading';
+import '/imports/ui/components/loading';
 
 import './find.html';
 
