@@ -361,10 +361,14 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 			`<a href="${getLocalisedValue(contribution.link)}" data-tooltip="${(Blaze as any)._escape(
 				mf(
 					'user.hasContributed',
-					{ USERNAME: cachedUser.username, SITENAME: getSiteName(Regions.currentRegion()) },
-					'{USERNAME} supported {SITENAME} with a donation. Click on the icon if you want to become a contributer as well.',
+					{
+						USERNAME: cachedUser.username,
+						SITENAME: getSiteName(Regions.currentRegion()),
+						ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
+					},
+					'{USERNAME} supported {SITENAME} with a donation. Click on the {ICON} for more information how to contribute.',
 				),
-			)}"><i class="${contribution.icon}" aria-hidden="true"></i></a>`,
+			)}"><sup><i class="${contribution.icon}" aria-hidden="true"></i></sup></a>`,
 		);
 	});
 }
