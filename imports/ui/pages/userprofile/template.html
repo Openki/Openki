@@ -14,18 +14,20 @@
 						{{else}}
 							{{contribution this.user._id}}
 							{{#if alterPrivileges}}
-								{{#unless hasContributed}}
-									<button type="button"
-											class="btn btn-primary js-has-contributed">
-										<i class="{{contributedIcon}}" aria-hidden="true"></i>
-										{{mf 'profile.setHasContributed.button' 'User has contributed'}}
-									</button>
-								{{else}}
-									<button type="button"
-											class="btn btn-secondary js-unset-has-contributed">
-										{{mf 'profile.unsetHasContributed.button' 'Unset user has contributed'}}
-									</button>
-								{{/unless}}
+								{{#if contributionFeature}}
+									{{#unless hasContributed}}
+										<button type="button"
+												class="btn btn-primary js-has-contributed">
+											<i class="{{contributedIcon}}" aria-hidden="true"></i>
+											{{mf 'profile.setHasContributed.button' 'User has contributed'}}
+										</button>
+									{{else}}
+										<button type="button"
+												class="btn btn-secondary js-unset-has-contributed">
+											{{mf 'profile.unsetHasContributed.button' 'Unset user has contributed'}}
+										</button>
+									{{/unless}}
+								{{/if}}
 							{{/if}}
 						{{/if}}
 					</h1>

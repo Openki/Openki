@@ -50,7 +50,7 @@ This file descripts all configurations and customization options. Remove the com
 		"faqLink": "/info/faq", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"courseGuideLink": "...", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"aboutLink": "https://about.openki.net", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-		"contribution": // Contribution to openki 
+		"contribution": // Contribution to the plattform, a admin can set in the userprofile that a user has contributed. This shows a icon next to the username. Remove this setting to disable this feature. 
 		    { "icon": "fa fa-heart"
 			, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"] // forbidden chars in username
 			, "link": // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
