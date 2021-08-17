@@ -53,7 +53,7 @@
 
 						<a class="btn btn-primary"
 						   href="{{pathFor 'userprofile' _id=currentUser._id}}">
-							<span class="fa fa-user-circle-o fa-fw" aria-hidden="true"></span>
+							<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 							{{mf 'login.frame.profile' 'Public profile'}}
 						</a>
 					</div>
@@ -138,7 +138,6 @@
 					{{/each}}
 				</ul>
 				<a class="btn btn-add" href="{{pathFor 'groupDetails' _id='create'}}">
-					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 					{{mf 'profile.createNewGroup.button' 'Create a new group'}}
 				</a>
 			</div>
@@ -154,7 +153,6 @@
 					<p>{{mf 'userprofile.noOwnVenues' "You're not editor of any venue."}}</p>
 				{{/if}}
 				<a class="btn btn-add" href="{{pathFor 'venueDetails' _id='create'}}">
-					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 					{{mf 'profile.createNewVenue.button' 'Create a new venue'}}
 				</a>
 			</div>
@@ -164,7 +162,6 @@
 				<div class="mb-3">
 					{{#unless changingPass}}
 						<button type="button" class="btn btn-secondary js-change-pwd-btn">
-							<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
 							{{mf 'profile.changePass' 'Change my password'}}
 						</button>
 					{{/unless}}

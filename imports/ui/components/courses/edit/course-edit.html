@@ -131,10 +131,11 @@
 										{{> courseCategories}}
 									{{/if}}
 									{{#unless categories}}
-										{{mf 'course.edit.no.categories' 'No categories'}}
+										<div>
+											{{mf 'course.edit.no.categories' 'No categories'}}
+										</div>
 									{{/unless}}
 									<button type="button" class="btn btn-edit js-edit-categories">
-										<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
 										{{mf 'course.edit.edit_categories'}}
 									</button>
 								{{/if}}

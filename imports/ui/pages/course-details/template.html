@@ -211,7 +211,6 @@
 				{{/each}}
 				<li class="dialog-dropdown-btn">
 					<a href="{{pathFor 'groupDetails' _id='create'}}" class="btn btn-add">
-						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 						{{mf 'profile.createNewGroup.button'}}
 					</a>
 				</li>
@@ -231,10 +230,9 @@
 			</button>
 		</div>
 	{{else}}
-		<a href="#" class="js-expand btn btn-remove">
-			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+		<button type="button" class="js-expand btn btn-remove">
 			{{mf 'course.group.remove' 'Remove'}}
-		</a>
+		</button>
 	{{/if}}
 </template>
 
@@ -281,7 +279,6 @@
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{mf 'course.archive.archiveButton.archiving' 'Archiving...'}}
 		{{else}}
-			<span class="fa fa-archive fa-fw" aria-hidden="true"></span>
 			{{textIdle}}
 		{{/if}}
 	</button>
@@ -293,7 +290,6 @@
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{mf 'course.archive.unarchiveButton.unarchiving' 'Unarchiving...'}}
 		{{else}}
-			<span class="fa fa-upload fa-fw" aria-hidden="true"></span>
 			{{mf 'course.archive.unarchiveButton' 'Unarchive'}}
 		{{/if}}
 	</button>
