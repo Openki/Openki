@@ -10,6 +10,7 @@ import * as usersMethods from '/imports/api/users/methods';
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 
 import * as RegionSelection from '/imports/utils/region-selection';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 import * as StringTools from '/imports/utils/string-tools';
 
 import './region-selection.html';
@@ -253,6 +254,6 @@ Template.regionSelectionItem.helpers({
 		return StringTools.markedName(search, this.name);
 	},
 	private() {
-		return !Meteor.settings.public.publicTenants.includes(this.tenant) ? 'region-link-private' : '';
+		return !this.isPrivate() ? 'region-link-private' : '';
 	},
 });

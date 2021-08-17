@@ -73,6 +73,10 @@ export class Course {
 	isNew() {
 		return !this._id;
 	}
+	
+	isPrivate(this: RegionModel) {
+		return !PublicSettings.publicTenants.includes(this.tenant);
+	}
 
 	/**
 	 * Check whether a user may edit the course.

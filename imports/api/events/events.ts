@@ -69,6 +69,10 @@ export class OEvent {
 		this.editors = [];
 	}
 
+	isPrivate(this: RegionModel) {
+		return !PublicSettings.publicTenants.includes(this.tenant);
+	}
+
 	/**
 	 * @param {UserModel} user
 	 */

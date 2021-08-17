@@ -4,6 +4,8 @@ import { MeteorAsync } from '/imports/utils/promisify';
 
 import { Events } from '/imports/api/events/events';
 
+import { PublicSettings } from '/imports/utils/PublicSettings';
+
 if (Meteor.isClient) {
 	describe('Events', () => {
 		describe('Find by filter', () => {
@@ -28,7 +30,7 @@ if (Meteor.isClient) {
 
 				assert.isEmpty(
 					eventsAsGast.filter(
-						(c) => c.tenant && !Meteor.settings.public.publicTenants.includes(c.tenant),
+						(c) => c.tenant && !PublicSettings.publicTenants.includes(c.tenant),
 					),
 					"don't show events from not public",
 				);

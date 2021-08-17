@@ -4,6 +4,8 @@ import { MeteorAsync } from '/imports/utils/promisify';
 
 import { Courses } from './courses';
 
+import { PublicSettings } from '/imports/utils/PublicSettings';
+
 if (Meteor.isClient) {
 	describe('Courses', () => {
 		describe('Find by filter', () => {
@@ -28,7 +30,7 @@ if (Meteor.isClient) {
 
 				assert.isEmpty(
 					coursesAsGast.filter(
-						(c) => c.tenant && !Meteor.settings.public.publicTenants.includes(c.tenant),
+						(c) => c.tenant && !PublicSettings.publicTenants.includes(c.tenant),
 					),
 					"don't show courses from not public",
 				);

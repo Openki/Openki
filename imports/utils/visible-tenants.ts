@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { PublicSettings } from './PublicSettings';
 
 export function visibleTenants() {
 	let usersTenants: string[];
@@ -12,7 +13,7 @@ export function visibleTenants() {
 		usersTenants = [];
 	}
 
-	return usersTenants.concat(Meteor.settings.public.publicTenants);
+	return usersTenants.concat(PublicSettings.publicTenants);
 }
 
 export default visibleTenants;

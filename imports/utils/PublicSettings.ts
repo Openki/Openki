@@ -10,6 +10,7 @@ const defaults = {
 	headerLogoKiosk: { src: '', alt: '' },
 	avatarLogo: { src: '', alt: '' },
 	ogLogo: { src: 'openki_logo_2018.png' },
+	publicTenants: [],
 	faqLink: '/info/faq',
 	courseGuideLink: {
 		en: 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf',
@@ -38,6 +39,7 @@ check(
 		avatarLogo: { src: String, alt: String },
 		ogLogo: { src: String },
 		emailLogo: String,
+		publicTenants: [String],
 		faqLink: LocalisedValue,
 		courseGuideLink: LocalisedValue,
 		aboutLink: LocalisedValue,
