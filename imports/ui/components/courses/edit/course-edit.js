@@ -25,7 +25,7 @@ import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/price-policy/price-policy';
-import '/imports/ui/components/regions/tag/region-tag';
+import '/imports/ui/components/regions/tag';
 
 import './course-edit.html';
 

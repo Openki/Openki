@@ -32,9 +32,9 @@ import '/imports/ui/components/events/participants/event-participants';
 import '/imports/ui/components/events/replication/event-replication';
 import '/imports/ui/components/groups/list/group-list';
 import '/imports/ui/components/price-policy/price-policy';
-import '/imports/ui/components/regions/tag/region-tag';
+import '/imports/ui/components/regions/tag';
 import '/imports/ui/components/sharing/sharing';
-import '/imports/ui/components/report/report';
+import '/imports/ui/components/report';
 import '/imports/ui/components/venues/link/venue-link';
 
 import './event-details.html';

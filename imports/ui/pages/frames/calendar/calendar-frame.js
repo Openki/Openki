@@ -97,7 +97,7 @@ Template.frameCalendarEvent.helpers({
 	allRegions: () => Session.equals('region', 'all'),
 
 	regionName() {
-		return Regions.findOne(this.region).name;
+		return Regions.findOne(this.region)?.name;
 	},
 
 	expanded: () => Template.instance().expanded.get(),

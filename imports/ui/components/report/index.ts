@@ -1,5 +1,5 @@
 import { mf } from 'meteor/msgfmt:core';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import * as Alert from '/imports/api/alerts/alert';
@@ -8,17 +8,18 @@ import * as emailMethods from '/imports/api/emails/methods';
 import '/imports/ui/components/buttons/buttons';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
-import './report.html';
+import './template.html';
+import './styles.scss';
 
-Template.report.onCreated(function reportOnCreated() {
-	this.state = new ReactiveVar('');
-});
-Template.report.helpers({
-	reporting: () => Template.instance().state.get() === 'reporting',
-	sending: () => Template.instance().state.get() === 'sending',
-});
+const TemplateBase = TemplateAny as TemplateStaticTyped<
+	Record<string, unknown>,
+	'report',
+	{
+		state: ReactiveVar<string>;
+	}
+>;
 
-TemplateMixins.FormfieldErrors(Template, 'report', {
+const Template = TemplateMixins.FormfieldErrors(TemplateBase, 'report', {
 	reportMessage: {
 		text: () =>
 			mf(
@@ -29,7 +30,18 @@ TemplateMixins.FormfieldErrors(Template, 'report', {
 	},
 });
 
-Template.report.events({
+const template = Template.report;
+
+template.onCreated(function () {
+	this.state = new ReactiveVar('');
+});
+
+template.helpers({
+	reporting: () => Template.instance().state.get() === 'reporting',
+	sending: () => Template.instance().state.get() === 'sending',
+});
+
+template.events({
 	'click .js-report'(event, instance) {
 		event.preventDefault();
 		instance.state.set('reporting');
@@ -44,7 +56,7 @@ Template.report.events({
 		event.preventDefault();
 		instance.errors.reset();
 
-		const message = instance.$('.js-report-message').val();
+		const message = instance.$('.js-report-message').val() as string;
 		if (!message || message.length <= 5) {
 			instance.errors.add('reportMessage');
 		}
