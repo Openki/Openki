@@ -254,6 +254,6 @@ Template.regionSelectionItem.helpers({
 		return StringTools.markedName(search, this.name);
 	},
 	private() {
-		return !this.isPrivate() ? 'region-link-private' : '';
+		return this.isPrivate() ? 'region-link-private' : '';
 	},
 });

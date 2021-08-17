@@ -16,14 +16,14 @@ import * as tenantDenormalizer from './tenantDenormalizer';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { UserModel } from '../users/users';
 
-interface CourseMemberEntity {
+export interface CourseMemberEntity {
 	user: string;
 	roles: string[];
 	comment: string;
 }
 
 /** DB-Model */
-interface CourseEntity {
+export interface CourseEntity {
 	_id: string;
 	tenant: string;
 	name: string;
@@ -245,7 +245,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 		} = {},
 		limit: number = 0,
 		skip: number = 0,
-		sort: [string, 'asc' | 'desc'][],
+		sort?: [string, 'asc' | 'desc'][],
 	) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));

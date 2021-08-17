@@ -88,7 +88,9 @@
 						{{> editableTextarea editableDescription}}
 					</div>
 					{{#if hasPricePolicy}}
-						{{> pricePolicy dismissable=true wrap='mb-3'}}
+						{{#unless isPrivate}}
+							{{> pricePolicy dismissable=true wrap='mb-3'}}
+						{{/unless}}
 					{{/if}}
 					<div class="row gap-3 mb-3">
 						{{#unless hideCategories}}

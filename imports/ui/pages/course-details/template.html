@@ -47,7 +47,9 @@
 							</div>
 							{{> courseDetailsSubmenu editableDescription=editableDescription course=course}}
 						</div>
-						{{> sharing}}
+						{{#unless course.isPrivate}}
+							{{> sharing}}
+						{{/unless}}
 						{{#if mayEdit}}
 							<div class="actions">
 								{{> buttonEdit event="js-course-edit"}}
@@ -140,7 +142,9 @@
 		<div class="tab-pane course-history" id="history">
 			{{> coursehistory}}
 		</div>
-		{{> pricePolicy dismissable=true wrap='course-details-price-policy'}}
+		{{#unless course.isPrivate}}
+			{{> pricePolicy dismissable=true wrap='course-details-price-policy'}}
+		{{/unless}}
 	</div>
 </template>
 

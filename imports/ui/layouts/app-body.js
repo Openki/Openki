@@ -4,6 +4,8 @@ import { Template } from 'meteor/templating';
 import $ from 'jquery';
 import { Meteor } from 'meteor/meteor';
 
+import { Regions } from '/imports/api/regions/regions';
+
 import * as RegionSelection from '/imports/utils/region-selection';
 import { Introduction } from '/imports/ui/lib/introduction';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
@@ -48,6 +50,10 @@ Template.layout.helpers({
 			RegionSelection.regionDependentRoutes.includes(route.getName()) &&
 			Session.equals('showRegionSplash', true)
 		);
+	},
+
+	hasPricePolicy() {
+		return !Regions.currentRegion()?.isPrivate();
 	},
 
 	isAdminPage: () => Router.current().url.includes('admin'),

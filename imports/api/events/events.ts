@@ -16,9 +16,8 @@ import * as StringTools from '/imports/utils/string-tools';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
-// ======== DB-Model: ========
-
-interface EventEntity {
+/** DB-Model */
+export interface EventEntity {
 	/** ID */
 	_id: string;
 	/** tenant ID */

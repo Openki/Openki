@@ -85,7 +85,9 @@
 					<label class="form-label">{{mf 'course.event.edit.desc' 'Description'}}</label>
 					{{> editableTextarea editableDescription}}
 				</div>
-				{{> pricePolicy dismissable=true wrap='mb-3'}}
+				{{#unless isPrivate}}
+					{{> pricePolicy dismissable=true wrap='mb-3'}}
+				{{/unless}}
 
 				{{#if showRegionSelection}}
 					<div class="mb-3">

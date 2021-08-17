@@ -128,8 +128,10 @@
 					{{{description}}}
 				</p>
 			</div>
-			{{> pricePolicy dismissable=true wrap='event-details-price-policy'}}
-			{{> sharing}}
+			{{#unless isPrivate}}
+				{{> pricePolicy dismissable=true wrap='event-details-price-policy'}}
+				{{> sharing}}
+			{{/unless}}
 		</div>
 		{{#if replicating}}
 			{{> eventReplication}}

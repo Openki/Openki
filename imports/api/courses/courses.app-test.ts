@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
 
 import { Courses } from './courses';
+import { UserModel } from '../users/users';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
@@ -44,7 +45,7 @@ if (Meteor.isClient) {
 				const coursesAsGast = Courses.findFilter().fetch();
 
 				await MeteorAsync.loginWithPassword('Schufien', 'greg');
-				const schufien = Meteor.user();
+				const schufien = Meteor.user() as UserModel;
 
 				assert.ok(schufien);
 
