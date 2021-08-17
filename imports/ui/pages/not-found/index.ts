@@ -2,7 +2,7 @@ import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Spacebars } from 'meteor/spacebars';
 
-import '/imports/ui/components/report/report';
+import '/imports/ui/components/report';
 
 import './template.html';
 import './styles.scss';

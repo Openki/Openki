@@ -8,7 +8,8 @@ import * as emailMethods from '/imports/api/emails/methods';
 import '/imports/ui/components/buttons/buttons';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
-import './report.html';
+import './template.html';
+import './styles.scss';
 
 Template.report.onCreated(function reportOnCreated() {
 	this.state = new ReactiveVar('');

@@ -34,7 +34,7 @@ import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/events/edit-location/event-edit-location';
 import '/imports/ui/components/price-policy/price-policy';
-import '/imports/ui/components/regions/tag/region-tag';
+import '/imports/ui/components/regions/tag';
 
 import './event-edit.html';
 
