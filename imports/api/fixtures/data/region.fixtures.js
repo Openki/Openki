@@ -1,4 +1,4 @@
-const regions = [
+export const regions = [
 	{
 		_id: '9JyFCoKWkxnf8LWPh',
 		name: 'Testistan',

@@ -1,0 +1,9 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.page-not-found-report {
+	max-width: 500px;
+}
+
+.page-not-found-report .report {
+	@include td-text-align(left);
+}

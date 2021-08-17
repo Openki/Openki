@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { Log } from '/imports/api/log/log';
 
-import TemplateMixins from '/imports/ui/lib/template-mixins';
+import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as UrlTools from '/imports/utils/url-tools';
@@ -193,7 +193,7 @@ Template.showLog.events({
 	},
 });
 
-TemplateMixins.MultiExpandible(Template.showLogEntry);
+TemplateMixins.MultiExpandible(Template, 'showLogEntry');
 Template.showLogEntry.helpers({
 	date() {
 		const { date } = Template.instance().filter.toParams();

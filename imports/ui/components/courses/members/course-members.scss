@@ -63,22 +63,6 @@
 	padding: 2px 6px;
 }
 
-.remove-team-btn {
-	background: $blue;
-	border: 0;
-	color: $white;
-	margin: -2px;
-	padding: 2px;
-	vertical-align: baseline;
-
-	&:hover,
-	&:focus {
-		background: darken($blue, 10%);
-		border: 0;
-		color: $white;
-	}
-}
-
 .course-member-comment {
 	@include clearfix;
 	padding-top: 10px;

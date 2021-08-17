@@ -28,7 +28,7 @@ Template.languageSelectionWrap.helpers({
 Template.languageDisplay.helpers({
 	inNavbarClasses() {
 		if (this.inNavbar) {
-			return 'col-6-sm-auto';
+			return 'col-6-sm-auto px-0';
 		}
 		return '';
 	},
@@ -50,7 +50,7 @@ Template.languageSelection.onCreated(function () {
 Template.languageSelection.helpers({
 	inNavbarClasses() {
 		if (this.inNavbar) {
-			return 'col-6-sm-auto';
+			return 'col-6-sm-auto px-0';
 		}
 		return '';
 	},

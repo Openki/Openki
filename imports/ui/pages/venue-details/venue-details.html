@@ -1,5 +1,5 @@
 <template name="venueDetails">
-	<div class="container-sm">
+	<div class="container mw-md">
 		{{#if editing}}
 			{{> venueEdit venue}}
 		{{else}}
@@ -36,6 +36,7 @@
 								<ul class='hosts'>
 									<li>
 										{{> profilelink editor}}
+										{{contribution editor}}
 									</li>
 								</ul>
 								</p>

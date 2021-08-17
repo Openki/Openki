@@ -1,4 +1,4 @@
-const venues = [
+export const venues = [
 	{
 		name: 'Kasama',
 		region: 'J6GDhEEvdmdSMzPPF',

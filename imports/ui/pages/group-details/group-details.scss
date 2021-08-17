@@ -21,15 +21,6 @@
 	padding: 15px 15px 0 23px;
 }
 
-.titlebar-btn {
-	@extend .close;
-	font-size: 18px;
-
-	& + & {
-		margin-right: 5px;
-	}
-}
-
 .group-details-logo > img {
 	@include td-margin(right, 5px);
 	vertical-align: middle;

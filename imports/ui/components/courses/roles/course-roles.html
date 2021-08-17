@@ -8,14 +8,15 @@
 	{{#if subscribed}}
 		<div class="course-role-enrolled">
 			<div class="course-role-title">
-				<button class="close js-toggle-first-steps" type="button">
-					<i class="fa fa-info-circle" aria-hidden="true"></i>
-				</button>
 				<span class="{{role.icon}} fa-fw"></span>&nbsp;
 				<span>{{roleSubscribed role.type}}</span>
 				<button type="button" class="js-role-unsubscribe-btn btn btn-cancel"
 						name="{{role.type}}">
 					{{mf 'course.roles.retract' 'Retract'}}
+				</button>
+				<button type="button"
+						class="toggle-first-steps js-toggle-first-steps btn btn-link float-end">
+					<i class="fa fa-info-circle" aria-hidden="true"></i>
 				</button>
 			</div>
 		</div>
@@ -54,7 +55,7 @@
 					All members of the organization-team will be informed.
 				{{/mf}}
 				<br>
-				<button class="js-first-steps-comment btn btn-link" type="button">
+				<button class="js-first-steps-comment btn btn-link p-0" type="button">
 					<i class="fa fa-fw fa-pencil" aria-hidden="true"></i>
 					{{mf 'course.discussion.write_comment'}}
 				</button>
@@ -68,8 +69,8 @@
 					{{roleSubscribe role.type}}
 				</div>
 				<div class="course-role-enroll-options">
-					<div class="form-group">
-						<label>
+					<div class="mb-3">
+						<label class="form-label">
 							{{mf 'course.roles.leave_message' 'You can leave a message to appear next to your name:'}}
 						</label>
 						{{#if roleIs 'participant'}}
@@ -106,7 +107,8 @@
 				</div>
 			{{else}}
 				{{#if maySubscribe role.type}}
-					<button type="button" class="btn btn-add course-page-btn js-role-enroll-btn"
+					<button type="button"
+							class="btn btn-lg btn-add text-start course-page-btn js-role-enroll-btn"
 							name="participant">
 						<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>&nbsp;
 						{{roleSubscribe role.type}}

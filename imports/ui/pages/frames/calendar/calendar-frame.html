@@ -5,11 +5,6 @@
 			{{cssRule}}
 		{{/each}}
 		/* beautify ignore:end */
-		.no-events {
-			font-size: 45px;
-			margin-top: 20px;
-			text-align: center;
-		}
 
 	</style>
 	{{#if pageReady}}
@@ -25,15 +20,13 @@
 			{{/unless}}
 			{{#if moreEvents}}
 				<div class="show-more">
-					<button class="btn btn-default js-show-more-events" type="button">
+					<button class="btn btn-secondary js-show-more-events" type="button">
 						{{mf 'frame.calendar.showMoreEvents' 'Show more events'}}
 					</button>
 				</div>
 			{{/if}}
 		{{else}}
-			<div class="no-events">
-				<p>{{mf 'frame.calendar.noEvents' 'No events planned'}}</p>
-			</div>
+			<h2 class="mt-5 text-center">{{mf 'frame.calendar.noEvents' 'No events planned'}}</h2>
 		{{/if}}
 	{{else}}
 		{{> loadingPage}}
@@ -51,7 +44,7 @@
 			</span>
 			{{title}}
 			{{#if allRegions}}
-				<span class="badge frame-list-item-region">{{regionName}}</span>
+				<span class="badge bg-secondary frame-list-item-region">{{regionName}}</span>
 			{{/if}}
 		</h4>
 		{{#if expanded}}

@@ -12,6 +12,14 @@
 		"emailLogo": "emails/openki.png",
 		"publicTenants": ["8410c099a7"],
 		"regionSelection": { "minNumber": 5 },
+		"contribution": 
+		    { "icon": "fa fa-heart"
+			, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"]
+			, "link": 
+				{ "en": "https://about.openki.net/en/ueber-uns/spenden/"
+				, "de": "https://about.openki.net/ueber-uns/spenden/"
+				}
+			},
 		"categories": {
 			"misc":
 			[

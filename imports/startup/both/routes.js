@@ -30,7 +30,7 @@ import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Metatags from '/imports/utils/metatags';
-import Predicates from '/imports/utils/predicates';
+import * as Predicates from '/imports/utils/predicates';
 import Profile from '/imports/utils/profile';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Invitations } from '/imports/api/invitations/invitations';
@@ -425,6 +425,7 @@ Router.route('info', {
 
 Router.route('profile', {
 	path: 'profile',
+	template: 'profilePage',
 	waitOn() {
 		return [
 			Meteor.subscribe('Tenants.findFilter', { adminOf: true }),
@@ -433,6 +434,7 @@ Router.route('profile', {
 		];
 	},
 	data() {
+		/** @type {import('/imports/ui/pages/profile').ProfilePageData} */
 		const data = {};
 		/** @type {UserModel | null} */
 		const user = Meteor.user();
@@ -451,6 +453,10 @@ Router.route('profile', {
 			data.user = userdata;
 		}
 		return data;
+	},
+	async action() {
+		await import('/imports/ui/pages/profile');
+		this.render();
 	},
 	onAfterAction() {
 		const user = Meteor.user();
@@ -530,6 +536,10 @@ Router.route('showCourse', {
 		};
 		return data;
 	},
+	async action() {
+		await import('/imports/ui/pages/course-details');
+		this.render();
+	},
 	onAfterAction() {
 		const data = this.data();
 		if (!data) {
@@ -600,6 +610,11 @@ Router.route('showEvent', {
 
 Router.route('stats', {
 	path: 'stats',
+	template: 'statsPage',
+	async action() {
+		await import('/imports/ui/pages/stats');
+		this.render();
+	},
 });
 
 Router.route('tenantCreate', {
@@ -656,6 +671,7 @@ Router.route('tenantDetails', {
 
 Router.route('invitation', {
 	path: 'invitation/:token',
+	template: 'invitationPage',
 	/**
 	 * @this {{params: {token: string; query: { tenant: string; }}}}
 	 */
@@ -680,6 +696,10 @@ Router.route('invitation', {
 		}
 
 		return { tenant, invitation };
+	},
+	async action() {
+		await import('/imports/ui/pages/invitation');
+		this.render();
 	},
 	/**
 	 * @this {{params: {token: string; query: { tenant: string; }}}}
@@ -830,6 +850,7 @@ Router.route('timetable', {
 
 Router.route('userprofile', {
 	path: 'user/:_id/:username?',
+	template: 'userprofilePage',
 	waitOn() {
 		return [
 			Meteor.subscribe('user', this.params._id),
@@ -863,6 +884,10 @@ Router.route('userprofile', {
 			inviteGroups: Groups.findFilter({ own: true }),
 			showPrivileges,
 		};
+	},
+	async action() {
+		await import('/imports/ui/pages/userprofile');
+		this.render();
 	},
 	onAfterAction() {
 		const user = Users.findOne({ _id: this.params._id });
@@ -981,10 +1006,15 @@ Router.route('venueDetails', {
 	},
 });
 
-Router.route('venueMap', {
+Router.route('venuesMap', {
 	path: 'venues',
+	template: 'venuesMapPage',
 	waitOn() {
 		return Meteor.subscribe('venues', CleanedRegion(Session.get('region')));
+	},
+	async action() {
+		await import('/imports/ui/pages/venues-map');
+		this.render();
 	},
 	onAfterAction() {
 		msgfmt.loading(); // Rerun after msgfmt has loaded translation

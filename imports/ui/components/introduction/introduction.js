@@ -1,7 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 
-import Introduction from '/imports/ui/lib/introduction';
+import { Introduction } from '/imports/ui/lib/introduction';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
 

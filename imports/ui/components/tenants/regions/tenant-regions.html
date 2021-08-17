@@ -2,27 +2,27 @@
 	<h3>
 		{{mf 'tenant.details.regions.title' 'Regions'}}
 	</h3>
-	<div class="row row-no-gutters responsive-table-head">
-		<div class="col-sm-4">{{mf 'tenant.details.regions.name' 'Name'}}</div>
-		<div class="col-sm-4">{{mf 'tenant.details.regions.numberOfCourses' 'Number of courses'}}
+	<div class="row responsive-table-head">
+		<div class="col-md-4">{{mf 'tenant.details.regions.name' 'Name'}}</div>
+		<div class="col-md-4">{{mf 'tenant.details.regions.numberOfCourses' 'Number of courses'}}
 		</div>
-		<div class="col-sm-4">
+		<div class="col-md-4">
 			{{mf 'tenant.details.regions.numberOfUpcomingEvents' 'Number of upcoming events'}}
 		</div>
 	</div>
 	{{#each region in regions tenant._id}}
-		<div class="row row-no-gutters responsive-table-row">
-			<div class="col-xs-6 responsive-table-head">{{mf 'tenant.details.regions.name'}}</div>
-			<div class="col-xs-6 col-sm-4"><a
+		<div class="row responsive-table-row">
+			<div class="col-6 responsive-table-head">{{mf 'tenant.details.regions.name'}}</div>
+			<div class="col-6 col-md-4"><a
 				   href="{{pathFor 'regionDetails' _id=region._id}}">{{region.name}}</a></div>
-			<div class="col-xs-6 responsive-table-head">
+			<div class="col-6 responsive-table-head">
 				{{mf 'tenant.details.regions.numberOfCourses'}}
 			</div>
-			<div class="col-xs-6 col-sm-4">{{region.courseCount}}</div>
-			<div class="col-xs-6 responsive-table-head">
+			<div class="col-6 col-md-4">{{region.courseCount}}</div>
+			<div class="col-6 responsive-table-head">
 				{{mf 'tenant.details.regions.numberOfUpcomingEvents'}}
 			</div>
-			<div class="col-xs-6 col-sm-4">{{region.futureEventCount}}</div>
+			<div class="col-6 col-md-4">{{region.futureEventCount}}</div>
 		</div>
 	{{/each}}
 	<a class="btn btn-add" href="{{pathFor 'regionCreate' query=(addRegionQuery tenant._id)}}">

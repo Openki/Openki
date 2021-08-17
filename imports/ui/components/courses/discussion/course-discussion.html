@@ -17,7 +17,7 @@
 			</div>
 		{{/each}}
 		{{#if limited}}
-			<button class="btn btn-add course-page-btn js-show-all-posts" type="button">
+			<button class="btn btn-lg btn-add course-page-btn js-show-all-posts" type="button">
 				<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
 				{{#mf KEY='course.discussions.showAllComments' NUM=count}}
 					Show all {NUM} comments
@@ -34,7 +34,8 @@
 		{{> postShow}}
 	{{/if}}
 	{{#if notAllResponsesShown}}
-		<button class="btn-link toggle-all-responses js-show-previous-replies" type="button">
+		<button class="mt-3 btn btn-link p-0 toggle-all-responses js-show-previous-replies"
+				type="button">
 			<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
 			{{mf 'course.discussions.showPreviousReplies' 'Show all previous answers'}}
 		</button>
@@ -63,7 +64,7 @@
 				</button>
 			</div>
 		{{else}}
-			<button type="button" class="btn btn-add course-page-btn js-discussion-edit"
+			<button type="button" class="btn btn-lg btn-add course-page-btn js-discussion-edit"
 					{{disabledIfBusy}}>
 				{{#if busy 'saving'}}
 					<span class="fa fa-circle-o-notch fa-spin fa-fw"
@@ -153,29 +154,30 @@
 					{{/unless}}
 				</div>
 				<div class="discussion-edit-body">
-					<div class="form-group">
+					<div class="mb-3">
 						<input class="js-post-title discussion-edit-title form-control" type="text"
 							   placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}} {{mf '_inputField.optional'}}"
 							   value="{{title}}" />
 					</div>
-					<div class="form-group js-post-text">
+					<div class="mb-3 js-post-text">
 						{{> editableTextarea editableText}}
 					</div>
 					{{#if new}}
 						{{#if canNotifyAll}}
-							<div class="checkbox">
-								<label class="">
-									<input class='js-notify-all' type='checkbox'
-										   {{notifyAllChecked}}>
+							<div class="form-check">
+								<input class="form-check-input js-notify-all" type='checkbox'
+									   {{notifyAllChecked}} value="" id="canNotifyAllCheck">
+								<label class="form-check-label" for="canNotifyAllCheck">
 									<i class="fa fa-bell" aria-hidden="true"></i>
 									{{mf 'course.discussion.notifyAll' 'Notify all co-learners'}}
 								</label>
 							</div>
 						{{/if}}
-						<div class="checkbox">
-							<label class="discussion-toggle-anonymous">
-								<input class='toggleAnonymous js-anon' type='checkbox'
-									   {{anonChecked}} {{anonDisabled}} />
+						<div class="form-check">
+							<input class='form-check-input toggleAnonymous js-anon' type='checkbox'
+								   {{anonChecked}} {{anonDisabled}} id="anonymousCheck" />
+							<label class="form-check-label discussion-toggle-anonymous"
+								   for="anonymousCheck">
 								<i class="fa fa-user-secret" aria-hidden="true"></i>
 								{{mf 'course.discussion.anon' 'Anonymous comment'}}
 							</label>
@@ -208,6 +210,7 @@
 		<a class="profilelink" href="{{pathFor 'userprofile' _id=this username=(username this)}}">
 			{{username this}}
 		</a>
+		{{contribution this}}
 	{{else}}
 		<span class="username">
 			Anonymous
@@ -236,7 +239,7 @@
 		<ul class="dropdown-menu dialog-dropdown right">
 			<li class="dropdown-header">
 				{{mf 'comment.delete.header' 'Delete comment'}}
-				<button class="close">&times;</button>
+				<button type="button" class="btn-close"></button>
 			</li>
 			<li class="divider" role="seperator"></li>
 			<li class="dialog-dropdown-text">

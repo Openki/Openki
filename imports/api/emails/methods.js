@@ -15,12 +15,17 @@ import * as HtmlTools from '/imports/utils/html-tools';
 import { getReportEmails } from '/imports/utils/email-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
+import PublicSettings from '/imports/utils/PublicSettings';
 
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
-export const sendVerificationEmail = ServerMethod('sendVerificationEmail', () => {
-	Accounts.sendVerificationEmail(Meteor.userId());
-});
+export const sendVerificationEmail = ServerMethod(
+	'sendVerificationEmail',
+	() => {
+		Accounts.sendVerificationEmail(Meteor.userId());
+	},
+	{ simulation: false },
+);
 
 export const sendEmail = ServerMethod(
 	'sendEmail',
@@ -108,7 +113,7 @@ export const report = ServerMethod(
 			title,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: base64PngImageData(Meteor.settings.public.emailLogo),
+				logo: base64PngImageData(PublicSettings.emailLogo),
 				name: siteName,
 			},
 			report: reportMessage,

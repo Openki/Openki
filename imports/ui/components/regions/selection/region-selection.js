@@ -9,7 +9,7 @@ import * as usersMethods from '/imports/api/users/methods';
 
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 
-import RegionSelection from '/imports/utils/region-selection';
+import * as RegionSelection from '/imports/utils/region-selection';
 import * as StringTools from '/imports/utils/string-tools';
 
 import './region-selection.html';
@@ -23,7 +23,7 @@ Template.regionSelectionWrap.onCreated(function () {
 Template.regionSelectionWrap.helpers({
 	inNavbarClasses() {
 		if (this.inNavbar) {
-			return 'col-6-sm-auto';
+			return 'col-6-sm-auto px-0';
 		}
 		return '';
 	},
@@ -32,7 +32,7 @@ Template.regionSelectionWrap.helpers({
 Template.regionSelectionDisplay.helpers({
 	inNavbarClasses() {
 		if (this.inNavbar) {
-			return 'col-6-sm-auto';
+			return 'col-6-sm-auto px-0';
 		}
 		return '';
 	},

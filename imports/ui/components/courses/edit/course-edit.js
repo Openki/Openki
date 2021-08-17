@@ -15,7 +15,7 @@ import { Regions } from '/imports/api/regions/regions';
 import { Roles } from '/imports/api/roles/roles';
 
 import { Editable } from '/imports/ui/lib/editable';
-import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 
 import * as StringTools from '/imports/utils/string-tools';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
@@ -25,7 +25,7 @@ import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/price-policy/price-policy';
-import '/imports/ui/components/regions/tag/region-tag';
+import '/imports/ui/components/regions/tag';
 
 import './course-edit.html';
 
@@ -292,7 +292,7 @@ Template.courseEdit.events({
 		instance.simpleSelectedRole.set(instance.$('input[name=role]:checked').val());
 	},
 
-	'click .close'(event, instance) {
+	'click .js-close'(event, instance) {
 		instance.showSavedMessage.set(false);
 	},
 
@@ -548,7 +548,7 @@ Template.courseTitle.helpers({
 		const search = instance.proposedSearch.get();
 		const region = Session.get('region');
 		if (instance.dropdownVisible()) {
-			return Courses.findFilter({ search, region }, 20, undefined, [['name', 1]]);
+			return Courses.findFilter({ search, region }, 20, undefined, [['name', 'asc']]);
 		}
 		return [];
 	},

@@ -29,7 +29,8 @@
 
 <template name="eventParticipant">
 	<div class="event-participant {{ownUserParticipantClass}}">
-		{{> profileLink participant}}
+		{{> profileLink participant}} 
+		{{contribution participant}}
 		{{> participantContact participant=participant event=event}}
 	</div>
 </template>

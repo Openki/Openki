@@ -10,7 +10,7 @@ import { Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subs
 import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 
-import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import { Analytics } from '/imports/ui/lib/analytics';

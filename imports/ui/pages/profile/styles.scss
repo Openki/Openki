@@ -1,0 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.tenant-tag {
+	@include tag($tenant-bg, $tenant-label-color);
+}

@@ -4,7 +4,7 @@ import { _ } from 'meteor/underscore';
 
 import { Regions } from '../regions/regions';
 import { Venues } from './venues';
-/** @typedef {import('./venues').VenueEnity} VenueEnity */
+/** @typedef {import('./venues').VenueEntity} VenueEntity */
 
 import { AsyncTools } from '/imports/utils/async-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
@@ -66,7 +66,7 @@ export const save = ServerMethod(
 		}
 
 		/* Changes we want to perform */
-		/** @type {VenueEnity} */
+		/** @type {VenueEntity} */
 		const set = { updated: new Date() };
 
 		if (changes.description) {

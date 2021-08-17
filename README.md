@@ -79,18 +79,19 @@ Run tests with:
 
 **Note:** Add `--grep=<pattern>` at the end to only run tests that match the pattern. eg. `meteor npm run app-test --grep="Propose course via frame"`
 
-Run linters with these two commands:
+Run linters and type check with these commands:
 
-    meteor npm run sass-lint
+    meteor npm run type-check
     meteor npm run es-lint
+    meteor npm run sass-lint
 
 Format files and automatically fix fixable problems with these commands:
 
-    meteor npm run sass-lint -- --fix
     meteor npm run es-lint -- --fix
+    meteor npm run sass-lint -- --fix
     meteor npm run html-format
 
-**Note:** We use eslint with prettier for *.js files, stylelint with prettier for *.scss files and beautify for *.html. You can install their extensions in your IDE to automatically execute the formation when saving. 
+**Note:** We use typescript and eslint with prettier for *.js files, stylelint with prettier for *.scss files and beautify for *.html. You can install their extensions in your IDE to automatically execute the formation when saving. 
 
 ### Fixing weird errors
 

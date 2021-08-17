@@ -17,11 +17,11 @@ import * as HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
 import * as StringTools from '/imports/utils/string-tools';
 
-const courses = require('./data/course.fixtures').default;
-const events = require('./data/event.fixtures').default;
-const groups = require('./data/group.fixtures').default;
-const regions = require('./data/region.fixtures').default;
-const venues = require('./data/venue.fixtures').default;
+import { courses } from './data/course.fixtures';
+import { events } from './data/event.fixtures';
+import { groups } from './data/group.fixtures';
+import { regions } from './data/region.fixtures';
+import { venues } from './data/venue.fixtures';
 
 /**
  * Make a number that looks like a human chose it, favouring 2 and 5

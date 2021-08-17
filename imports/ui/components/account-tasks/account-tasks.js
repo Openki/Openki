@@ -10,7 +10,7 @@ import * as usersMethods from '/imports/api/users/methods';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
-import TemplateMixins from '/imports/ui/lib/template-mixins';
+import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Viewport from '/imports/ui/lib/viewport';
 
 import { isEmail } from '/imports/utils/email-tools';
@@ -97,7 +97,7 @@ Template.loginFrame.onRendered(function () {
 	this.$('input').first().trigger('select');
 });
 
-TemplateMixins.FormfieldErrors(Template.loginFrame, {
+TemplateMixins.FormfieldErrors(Template, 'loginFrame', {
 	noUsername: {
 		text: () => mf('login.warning.noUserName', 'Please enter your username or email to log in.'),
 		field: 'username',
@@ -264,7 +264,7 @@ Template.registerFrame.helpers({
 	registerAction: () => Session.get('registerAction'),
 });
 
-TemplateMixins.FormfieldErrors(Template.registerFrame, {
+TemplateMixins.FormfieldErrors(Template, 'registerFrame', {
 	noUsername: {
 		text: () => mf('register.warning.noUserName', 'Please enter a name for your new user.'),
 		field: 'username',

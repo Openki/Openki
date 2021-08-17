@@ -23,7 +23,12 @@ Template.adminPanel.helpers({
 		{
 			name: mf('adminPanel.tasks.venues', 'Venues'),
 			icon: 'fa-home',
-			route: 'venueMap',
+			route: 'venuesMap',
+		},
+		{
+			name: mf('adminPanel.tasks.stats', 'Statistics'),
+			icon: 'fa fa-line-chart',
+			route: 'stats',
 		},
 		{
 			name: mf('adminPanel.tasks.tenants', 'Organizations'),

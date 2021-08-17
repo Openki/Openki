@@ -11,7 +11,7 @@ import { reactiveNow } from '/imports/utils/reactive-now';
 
 import '/imports/ui/components/events/list/event-list';
 import '/imports/ui/components/loading/loading';
-import '../delete-events/delete-events';
+import '../delete-events';
 
 import './course-events.html';
 

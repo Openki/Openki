@@ -1,15 +1,16 @@
 .responsive-table-head {
 	display: none;
 	font-weight: bold;
+	margin: 0;
 
-	@media (min-width: $screen-sm-min) {
-		display: block;
+	@media (min-width: map-get($grid-breakpoints, 'md')) {
+		display: flex;
 	}
 
 	&[class*='col-'] {
 		display: block;
 
-		@media (min-width: $screen-sm-min) {
+		@media (min-width: map-get($grid-breakpoints, 'md')) {
 			display: none;
 		}
 	}
@@ -19,14 +20,15 @@
 	}
 
 	+ .responsive-table-row [class*='col-'] {
-		@media (min-width: $screen-sm-min) {
+		@media (min-width: map-get($grid-breakpoints, 'md')) {
 			border-top: 3px solid #ddd;
 		}
 	}
 }
 
 .responsive-table-row {
-	@media (max-width: $screen-xs-max) {
+	margin: 0;
+	@media (max-width: map-get($grid-breakpoints, 'md') - 1px) {
 		border: 2px solid #ddd;
 		margin-bottom: 10px;
 
@@ -37,7 +39,7 @@
 	}
 
 	[class*='col-'] {
-		@media (min-width: $screen-sm-min) {
+		@media (min-width: map-get($grid-breakpoints, 'md')) {
 			border-top: 2px solid #ddd;
 		}
 		padding: 8px;
