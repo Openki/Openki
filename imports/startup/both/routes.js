@@ -309,6 +309,10 @@ Router.route('groupDetails', {
 			showCourses: !isNew,
 		};
 	},
+	async action() {
+		await import('/imports/ui/pages/group-details');
+		this.render();
+	},
 	onAfterAction() {
 		const group = Groups.findOne({ _id: this.params._id });
 		if (group) {

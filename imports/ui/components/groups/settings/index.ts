@@ -2,10 +2,10 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
-import { Groups } from '/imports/api/groups/groups';
+import { GroupEntity, Groups } from '/imports/api/groups/groups';
 import * as GroupsMethods from '/imports/api/groups/methods';
 import { Users } from '/imports/api/users/users';
 
@@ -14,9 +14,20 @@ import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons/buttons';
 
-import './group-settings.html';
+import './template.html';
+import './styles.scss';
 
-Template.groupSettings.onCreated(function () {
+const Template = TemplateAny as TemplateStaticTyped<
+	{
+		group: GroupEntity | (Partial<GroupEntity> & { _id: 'create' });
+	},
+	'groupSettings',
+	{ userSearch: ReactiveVar<string> }
+>;
+
+const template = Template.groupSettings;
+
+template.onCreated(function () {
 	const instance = this;
 
 	// strip https:// from logoUrl because its already labeled as prefix
@@ -37,8 +48,8 @@ Template.groupSettings.onCreated(function () {
 	});
 });
 
-Template.groupSettings.helpers({
-	foundUsers(group) {
+template.helpers({
+	foundUsers(group: GroupEntity) {
 		const instance = Template.instance();
 
 		const search = instance.userSearch.get();
@@ -49,32 +60,32 @@ Template.groupSettings.helpers({
 		return userSearchPrefix(search, { exclude: group.members, limit: 30 });
 	},
 
-	kioskEventURL(group) {
+	kioskEventURL(group: GroupEntity) {
 		return Router.routes.kioskEvents.url({}, { query: { group: group._id } });
 	},
-	timetableURL(group) {
+	timetableURL(group: GroupEntity) {
 		return Router.routes.timetable.url({}, { query: { group: group._id } });
 	},
-	scheduleURL(group) {
+	scheduleURL(group: GroupEntity) {
 		return Router.routes.frameSchedule.url({}, { query: { group: group._id } });
 	},
-	frameEventsURL(group) {
+	frameEventsURL(group: GroupEntity) {
 		return Router.routes.frameEvents.url({}, { query: { group: group._id } });
 	},
-	frameWeekURL(group) {
+	frameWeekURL(group: GroupEntity) {
 		return Router.routes.frameWeek.url({}, { query: { group: group._id } });
 	},
-	frameCalendarURL(group) {
+	frameCalendarURL(group: GroupEntity) {
 		return Router.routes.frameCalendar.url({}, { query: { group: group._id } });
 	},
-	frameListURL(group) {
+	frameListURL(group: GroupEntity) {
 		return Router.routes.frameCourselist.url({}, { query: { group: group._id } });
 	},
 });
 
-Template.groupSettings.events({
+template.events({
 	'keyup .js-search-users'(_event, instance) {
-		instance.userSearch.set(instance.$('.js-search-users').val());
+		instance.userSearch.set(instance.$('.js-search-users').val() as string);
 	},
 
 	async 'click .js-member-add-btn'() {
@@ -117,17 +128,18 @@ Template.groupSettings.events({
 
 	'input .js-logo-url'(_event, instance) {
 		const elem = instance.$('.js-logo-url');
-		if (elem.val().includes('://')) {
-			elem.val(elem.val().split('://')[1], 1);
+		const value = elem.val() as string;
+		if (value.includes('://')) {
+			elem.val(value.split('://')[1]);
 		}
 	},
 
 	async 'click .js-group-edit-save'(event, instance) {
 		event.preventDefault();
 
-		const parentInstance = instance.parentInstance(); // Not available in callback
+		const parentInstance = instance.parentInstance() as any; // Not available in callback
 
-		let url = instance.$('.js-logo-url').val().trim();
+		let url = (instance.$('.js-logo-url').val() as string).trim();
 
 		// strip protocol if needed
 		if (url.includes('://')) {
@@ -161,6 +173,6 @@ Template.groupSettings.events({
 	},
 
 	'click .js-group-edit-cancel'(_event, instance) {
-		instance.parentInstance().editingSettings.set(false);
+		(instance.parentInstance() as any).editingSettings.set(false);
 	},
 });

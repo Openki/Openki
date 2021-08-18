@@ -1,4 +1,4 @@
-import { CourseMemberEntity } from "../api/courses/courses";
+import { CourseMemberEntity } from '/imports/api/courses/courses';
 
 /**
  * Determine whether there is a member with the given role
