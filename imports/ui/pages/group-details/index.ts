@@ -22,7 +22,7 @@ import '/imports/ui/components/groups/settings/group-settings';
 
 import './group-details.html';
 
-Template.groupDetails.onCreated(function () {
+Template.groupDetailsPage.onCreated(function () {
 	const instance = this;
 
 	instance.busy(false);
@@ -131,7 +131,7 @@ Template.groupDetails.onCreated(function () {
 	});
 });
 
-Template.groupDetails.helpers({
+Template.groupDetailsPage.helpers({
 	isFeatured() {
 		const region = Regions.currentRegion();
 		return region?.featuredGroup === this.group._id;
@@ -188,7 +188,7 @@ TemplateMixins.FormfieldErrors(Template, 'groupDetails', {
 	},
 });
 
-Template.groupDetails.events({
+Template.groupDetailsPage.events({
 	'click .js-group-settings'(event, instance) {
 		if (PleaseLogin()) {
 			return false;

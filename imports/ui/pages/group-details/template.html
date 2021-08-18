@@ -1,10 +1,10 @@
-<template name="groupDetails">
+<template name="groupDetailsPage">
 	<div class="container">
 		{{#if isNew}}
 			<h2>{{mf 'group.details.titleNew' "Create new group"}}</h2>
 		{{/if}}
 		<div class="page-component group-details">
-			<div class="group-details-titlebar">
+			<div class="group-details-titlebar clearfix">
 				{{mf 'group.details.group' 'Group'}}
 				{{#if isFeatured}}
 					<i alt={{mf 'group.details.isFeatured' 'This group is featured'}}

@@ -280,6 +280,7 @@ Router.route('frameWeek', {
 
 Router.route('groupDetails', {
 	path: 'group/:_id/:short?',
+	template: 'groupDetailsPage',
 	waitOn() {
 		return [Meteor.subscribe('group', this.params._id)];
 	},
