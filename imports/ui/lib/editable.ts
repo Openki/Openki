@@ -24,16 +24,16 @@ import { ReactiveVar } from 'meteor/reactive-var';
 // Instances of editable templates connect() to this to get their interface.
 // It is assumed that only one instance is using this interface at a time,
 
+/** @typedef {{check: (text: string) => boolean, errorMessage: () => string}[]} ClientValidations */
+/** @typedef {{type: string, message: () => string}[]} ServerValidationErrors */
+
 export class Editable {
 	/**
 	 * @param {boolean} [simple]
 	 * @param {string} [placeholderText]
 	 * @param {object} [store]
-	 * @param {{
-	 *   check: (text: string) => boolean,
-	 *   errorMessage: () => string
-	 * }[]} [store.clientValidations]
-	 * @param {{type: string, message: () => string}[]} [store.serverValidationErrors]
+	 * @param {ClientValidations} [store.clientValidations]
+	 * @param {ServerValidationErrors} [store.serverValidationErrors]
 	 * @param {(text: string) => Promise<void>} store.onSave
 	 * @param {(text: string) => void} [store.onSuccess]
 	 * @param {(err: any, text: string) => void} [store.onError]
