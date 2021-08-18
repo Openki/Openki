@@ -10,7 +10,11 @@
 					{{mf 'invitation.join.text' "Become part of the organisation {TENANT} and propose, discuss, develop, organise and publish courses with {INVITER} and other amazing people in the organisation {TENANT}." TENANT=tenant.name INVITER=(username invitation.createdBy)}}
 				</p>
 				<button class="btn btn-lg btn-save js-join" {{disabledIfBusy}}>
-					{{mf "invitation.join" "Join {TENANT}" TENANT=tenant.name}}
+					{{#unless currentUser}}
+						{{mf "invitation.join.newUser" "Join {TENANT}" TENANT=tenant.name}}
+					{{else}}
+						{{mf "invitation.join.existingUser" "Join {TENANT} with user {USER}" TENANT=tenant.name USER=currentUser.username}}
+					{{/unless}}
 				</button>
 			</div>
 		</div>
