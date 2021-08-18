@@ -10,7 +10,6 @@ import * as usersMethods from '/imports/api/users/methods';
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 
 import * as RegionSelection from '/imports/utils/region-selection';
-import { PublicSettings } from '/imports/utils/PublicSettings';
 import * as StringTools from '/imports/utils/string-tools';
 
 import './region-selection.html';

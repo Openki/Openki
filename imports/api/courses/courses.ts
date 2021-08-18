@@ -15,6 +15,7 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as tenantDenormalizer from './tenantDenormalizer';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { UserModel } from '../users/users';
+import { EventEntity } from '../events/tenantDenormalizer';
 
 export interface CourseMemberEntity {
 	user: string;
@@ -46,7 +47,9 @@ export interface CourseEntity {
 	date: Date;
 	/** ID_user */
 	createdby: string;
+	// eslint-disable-next-line camelcase
 	time_created: Date;
+	// eslint-disable-next-line camelcase
 	time_lastedit: Date;
 	/** [role-keys] */
 	roles: string[];
@@ -66,9 +69,9 @@ export interface CourseEntity {
 	/** (calculated) count of events still in the future for this course */
 	futureEvents: number;
 	/** (calculated) next upcoming event object, only includes the _id and start field */
-	nextEvent: object;
+	nextEvent: EventEntity | null;
 	/** (calculated) most recent event object, only includes the _id and start field */
-	lastEvent: object;
+	lastEvent: EventEntity | null;
 	/** (calculated) */
 	interested: number;
 }
@@ -77,7 +80,9 @@ export type CourseModel = Course & CourseEntity;
 
 export class Course {
 	members: CourseMemberEntity[] = [];
+
 	roles: string[] = [];
+
 	groupOrganizers: string[] = [];
 
 	/**
@@ -132,7 +137,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 		}
 	}
 
-	insert(course: CourseModel, callback?: Function) {
+	insert(course: CourseModel, callback?: (err: any | undefined, id?: string) => void) {
 		const enrichedCourse = tenantDenormalizer.beforeInsert(course);
 
 		return super.insert(enrichedCourse, callback);
@@ -243,8 +248,8 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 			needsRole?: ('host' | 'mentor' | 'team')[];
 			archived?: boolean;
 		} = {},
-		limit: number = 0,
-		skip: number = 0,
+		limit = 0,
+		skip = 0,
 		sort?: [string, 'asc' | 'desc'][],
 	) {
 		check(limit, Match.Maybe(Number));

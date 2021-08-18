@@ -48,7 +48,9 @@ export interface EventEntity {
 	room: string;
 	/** userId */
 	createdBy: string;
+	// eslint-disable-next-line camelcase
 	time_created: Date;
+	// eslint-disable-next-line camelcase
 	time_lastedit: Date;
 	/** course._id of parent course, optional */
 	courseId?: string;
@@ -174,11 +176,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		}
 	}
 
-	/**
-	 * @param {EventModel} event
-	 * @param {Function | undefined} [callback]
-	 */
-	insert(event: EventModel, callback: Function | undefined) {
+	insert(event: EventModel, callback?: (err: any | undefined, _id?: string) => void) {
 		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
 
 		return super.insert(enrichedEvent, callback);

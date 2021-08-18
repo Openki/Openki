@@ -30,9 +30,7 @@ if (Meteor.isClient) {
 				assert.isNotEmpty(coursesAsGast, 'shows courses');
 
 				assert.isEmpty(
-					coursesAsGast.filter(
-						(c) => c.tenant && !PublicSettings.publicTenants.includes(c.tenant),
-					),
+					coursesAsGast.filter((c) => c.tenant && !PublicSettings.publicTenants.includes(c.tenant)),
 					"don't show courses from not public",
 				);
 			});
