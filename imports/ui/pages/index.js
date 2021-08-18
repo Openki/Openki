@@ -13,7 +13,6 @@ import './frames/events/events-frame';
 import './frames/propose/propose-frame';
 import './frames/schedule/schedule-frame';
 import './frames/week/week-frame';
-import './group-details';
 import './kiosk/kiosk';
 import './log/log';
 import './not-found';
