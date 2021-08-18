@@ -7,12 +7,13 @@ import * as RegionsMethods from '/imports/api/regions/methods';
 
 import { Analytics } from '../../lib/analytics';
 
-import '/imports/ui/components/regions/display/region-display';
-import '/imports/ui/components/regions/edit/region-edit';
+import '/imports/ui/components/regions/display';
+import '/imports/ui/components/regions/edit';
 
-import './region-details.html';
+import './template.html';
+import './styles.scss';
 
-Template.regionDetails.onCreated(function () {
+Template.regionDetailsPage.onCreated(function () {
 	const instance = this;
 
 	instance.autorun(() => {
@@ -30,7 +31,7 @@ Template.regionDetails.onCreated(function () {
 	});
 });
 
-Template.regionDetails.helpers({
+Template.regionDetailsPage.helpers({
 	editing() {
 		return Template.instance().state.get('editing');
 	},

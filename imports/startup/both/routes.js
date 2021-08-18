@@ -907,7 +907,7 @@ Router.route('userprofile', {
 
 Router.route('regionCreate', {
 	path: 'region/create',
-	template: 'regionDetails',
+	template: 'regionDetailsPage',
 	data() {
 		/** @type RegionModel */
 		const region = new Region();
@@ -917,6 +917,10 @@ Router.route('regionCreate', {
 			isNew: true,
 			region,
 		};
+	},
+	async action() {
+		await import('/imports/ui/pages/region-details');
+		this.render();
 	},
 	onAfterAction() {
 		msgfmt.loading(); // Rerun after msgfmt has loaded translation
@@ -928,6 +932,7 @@ Router.route('regionCreate', {
 
 Router.route('regionDetails', {
 	path: 'region/:_id/:slug?',
+	template: 'regionDetailsPage',
 	/**
 	 * @this {{params: {_id: string; slug?: string;}}}
 	 */
@@ -945,6 +950,10 @@ Router.route('regionDetails', {
 		}
 
 		return { region };
+	},
+	async action() {
+		await import('/imports/ui/pages/region-details');
+		this.render();
 	},
 	/**
 	 * @this {{params: {_id: string; slug?: string;}}}

@@ -10,7 +10,8 @@ import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/map/map';
 
-import './region-edit.html';
+import './template.html';
+import './styles.scss';
 
 Template.regionEdit.onCreated(function () {
 	const instance = this;

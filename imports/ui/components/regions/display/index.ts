@@ -9,7 +9,8 @@ import { locationFormat } from '/imports/utils/location-format';
 
 import '/imports/ui/components/map/map';
 
-import './region-display.html';
+import './template.html';
+import './styles.scss';
 
 Template.regionDisplay.onCreated(function () {
 	const instance = this;
