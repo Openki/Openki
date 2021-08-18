@@ -60,8 +60,6 @@
 							<div class="show-more-courses">
 								{{#if haveMoreEvents}}
 									<button type="button" class="btn btn-add js-show-all-events">
-										<span class="fa fa-plus fa-fw"
-											  aria-hidden="true"></span>&nbsp;
 										{{mf 'course.events.showAllEvents' 'Show all events'}}
 									</button>
 								{{/if}}
@@ -111,7 +109,6 @@
 			<div class="page-component">
 				{{#with course}}
 					<a class="js-track-cal-download" href="{{pathFor 'calCourse'}}" target="_blank">
-						<span class="fa fa-arrow-down fa-fw" aria-hidden="true"></span>
 						{{mf 'course.download_cal' 'Download events to my calendar'}}
 					</a>
 				{{/with}}

@@ -26,7 +26,7 @@
 									Please contact the host of this venue to check for availability and other details:
 								{{/mf}}
 								<a href="{{hostProfileLink}}" target="_blank">
-									<i class="fa fa-send" aria-hidden="true"></i>
+									<span class="fa fa-send fa-fw" aria-hidden="true"></span>
 									{{mf 'event.editVenue.contactHost' 'Contact host'}}
 								</a>
 							</div>
@@ -41,7 +41,6 @@
 							   placeholder="{{mf 'event.edit.locationNamePlaceholder' 'Where?'}}"
 							   value="{{location.name}}" />
 						<button type="submit" class="btn btn-go js-location-search-btn">
-							<span class="fa fa-search fa-fw" aria-hidden="true"></span>
 							{{mf 'event.edit.addressSearch' "Search"}}
 						</button>
 					</div>
@@ -66,7 +65,9 @@
 							{{/each}}
 						</ul>
 					{{else}}
-						{{mf 'event.edit.locations.foundnone' 'No locations found.'}}
+						<div>
+							{{mf 'event.edit.locations.foundnone' 'No locations found.'}}
+						</div>
 					{{/if}}
 					<a class="btn btn-{{#if haveLocationCandidates}}default{{else}}add{{/if}} event-edit-location-create-venue"
 					   href="{{pathFor 'venueDetails' _id='create'}}" target="_blank">

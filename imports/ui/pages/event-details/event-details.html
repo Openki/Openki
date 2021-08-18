@@ -128,8 +128,10 @@
 					{{{description}}}
 				</p>
 			</div>
-			{{> pricePolicy dismissable=true wrap='event-details-price-policy'}}
-			{{> sharing}}
+			{{#unless isPrivate}}
+				{{> pricePolicy dismissable=true wrap='event-details-price-policy'}}
+				{{> sharing}}
+			{{/unless}}
 		</div>
 		{{#if replicating}}
 			{{> eventReplication}}
@@ -142,13 +144,11 @@
 					<div class="actions">
 						{{> buttonEdit event="js-event-edit"}}
 						<button type="button" class="btn btn-edit js-show-replication">
-							<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 							{{mf 'event.details.repl_menu_btn' 'Repeat'}}
 						</button>
 						<a class="btn btn-edit js-download js-track-cal-download"
 						   href="{{pathFor 'calEvent' this}}"
 						   title="{{mf 'event.detail.download_cal' 'Download event to my calendar'}}">
-							<i class="fa fa-download fa-fw" aria-hidden="true"></i>
 							{{mf 'event.details.download' 'Download'}}
 						</a>
 						{{> buttonDelete event="js-expand"}}
@@ -238,7 +238,6 @@
 				{{/each}}
 				<li class="dialog-dropdown-btn">
 					<a href="{{pathFor 'groupDetails' _id='create'}}" class="btn btn-add">
-						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 						{{mf 'profile.createNewGroup.button'}}
 					</a>
 				</li>
@@ -308,7 +307,6 @@
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{mf '_button.registering' 'Registering...'}}
 		{{else}}
-			<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 			{{mf 'event.details.register' 'Register'}}
 		{{/if}}
 	</button>
@@ -320,7 +318,6 @@
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{mf '_button.addingYouToWaitingQueue' 'Adding you to waiting queue...'}}
 		{{else}}
-			<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 			{{mf 'event.details.isFullyBooked' 'Event is fully booked'}}
 		{{/if}}
 	</button>
@@ -332,7 +329,6 @@
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{mf '_button.unregistering' 'Unregistering...'}}
 		{{else}}
-			<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 			{{mf 'event.details.unregister' 'Withdraw my registration'}}
 		{{/if}}
 	</button>

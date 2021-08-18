@@ -9,7 +9,7 @@ import { Regions } from '/imports/api/regions/regions';
 import { Courses } from '/imports/api/courses/courses';
 import * as Metatags from '/imports/utils/metatags';
 
-import '/imports/ui/components/loading/loading';
+import '/imports/ui/components/loading';
 
 import './courselist-frame.html';
 import SortSpec from '/imports/utils/sort-spec';

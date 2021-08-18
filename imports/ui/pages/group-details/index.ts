@@ -2,27 +2,55 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
-import { Groups } from '/imports/api/groups/groups';
+import { GroupEntity, Groups } from '/imports/api/groups/groups';
 import * as GroupsMethods from '/imports/api/groups/methods';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
-import { Editable } from '/imports/ui/lib/editable';
+import { Store, Editable } from '/imports/ui/lib/editable';
 import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import { isGroupMember } from '/imports/utils/is-group-member';
 import { Analytics } from '../../lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
-import '/imports/ui/components/groups/settings/group-settings';
+import '/imports/ui/components/groups/settings';
 
-import './group-details.html';
+import './template.html';
+import './styles.scss';
 
-Template.groupDetails.onCreated(function () {
+const TemplateBase = TemplateAny as TemplateStaticTyped<
+	{
+		courseQuery: any;
+		group: GroupEntity | (Partial<GroupEntity> & { _id: 'create' });
+		isNew: boolean;
+		showCourses: boolean;
+	},
+	'groupDetailsPage',
+	{
+		mayEdit: ReactiveVar<boolean>;
+		editingSettings: ReactiveVar<boolean>;
+		editableName: Editable;
+		editableShort: Editable;
+		editableClaim: Editable;
+		editableDescription: Editable;
+	}
+>;
+
+const Template = TemplateMixins.FormfieldErrors(TemplateBase, 'groupDetailsPage', {
+	emptyField: {
+		text: () => mf('group.details.error.allMandatory', 'All four fields are mandatory.'),
+		field: 'all',
+	},
+});
+
+const template = Template.groupDetailsPage;
+
+template.onCreated(function () {
 	const instance = this;
 
 	instance.busy(false);
@@ -32,7 +60,7 @@ Template.groupDetails.onCreated(function () {
 	instance.mayEdit = new ReactiveVar(false);
 	instance.editingSettings = new ReactiveVar(false);
 
-	const handleSaving = {
+	const handleSaving: Store = {
 		clientValidations: [
 			{
 				check: (text) => !!text,
@@ -43,7 +71,7 @@ Template.groupDetails.onCreated(function () {
 			Alert.success(
 				mf(
 					'groupDetails.changesSaved',
-					{ GROUP: group.name },
+					{ GROUP: group?.name },
 					'Your changes to the group "{GROUP}" have been saved.',
 				),
 			);
@@ -53,7 +81,7 @@ Template.groupDetails.onCreated(function () {
 				err,
 				mf(
 					'groupDetails.saveError',
-					{ GROUP: group.name },
+					{ GROUP: group?.name },
 					'Saving the group "{GROUP}" went wrong',
 				),
 			);
@@ -119,27 +147,27 @@ Template.groupDetails.onCreated(function () {
 
 	instance.autorun(() => {
 		const data = Template.currentData();
-		const currentGroup = Groups.findOne(groupId) || {};
+		const currentGroup = Groups.findOne(groupId) || ({} as Partial<GroupEntity>);
 		const userId = Meteor.userId();
-		const mayEdit = data.isNew || (userId && isGroupMember(userId, groupId));
+		const mayEdit = data.isNew || !!(userId && isGroupMember(userId, groupId));
 		instance.mayEdit.set(mayEdit);
 
-		instance.editableName.setText(currentGroup.name);
-		instance.editableShort.setText(currentGroup.short);
-		instance.editableClaim.setText(currentGroup.claim);
-		instance.editableDescription.setText(currentGroup.description);
+		instance.editableName.setText(currentGroup.name || '');
+		instance.editableShort.setText(currentGroup.short || '');
+		instance.editableClaim.setText(currentGroup.claim || '');
+		instance.editableDescription.setText(currentGroup.description || '');
 	});
 });
 
-Template.groupDetails.helpers({
+template.helpers({
 	isFeatured() {
 		const region = Regions.currentRegion();
-		return region?.featuredGroup === this.group._id;
+		return region?.featuredGroup === Template.instance().data.group._id;
 	},
 
 	headerClasses() {
 		const classes = [];
-		if (this.group.logo) {
+		if (Template.instance().data.group.logoUrl) {
 			classes.push('has-logo');
 		}
 		if (Template.instance().mayEdit.get()) {
@@ -156,8 +184,7 @@ Template.groupDetails.helpers({
 		return instance.mayEdit.get() && instance.editableShort;
 	},
 	hasContent() {
-		const { group } = this;
-		const { isNew } = this;
+		const { group, isNew } = Template.instance().data;
 		if (isNew) {
 			return true;
 		}
@@ -181,15 +208,8 @@ Template.groupDetails.helpers({
 	},
 });
 
-TemplateMixins.FormfieldErrors(Template, 'groupDetails', {
-	emptyField: {
-		text: () => mf('group.details.error.allMandatory', 'All four fields are mandatory.'),
-		field: 'all',
-	},
-});
-
-Template.groupDetails.events({
-	'click .js-group-settings'(event, instance) {
+template.events({
+	'click .js-group-settings'(_event, instance) {
 		if (PleaseLogin()) {
 			return false;
 		}
@@ -197,7 +217,7 @@ Template.groupDetails.events({
 		return true;
 	},
 
-	'click .js-group-save'(event, instance) {
+	'click .js-group-save'(_event, instance) {
 		const group = {
 			name: instance.editableName.getEdited(),
 			short: instance.editableShort.getEdited(),

@@ -2,17 +2,20 @@
 
 import { expect } from 'chai';
 import { msgfmt } from 'meteor/msgfmt:core';
+
+import { CourseMemberEntity } from '/imports/api/courses/courses';
+
 import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
 
 // This should not be here
 msgfmt.init('en');
 
 describe('Role check', () => {
-	const members = [
-		{ user: 'user1', roles: ['role1', 'role1000'] },
-		{ user: 'user2', roles: ['role2', 'role1000'] },
-		{ user: 'user3', roles: ['role3'] },
-		{ user: 'nobody', roles: [] },
+	const members: CourseMemberEntity[] = [
+		{ user: 'user1', roles: ['role1', 'role1000'], comment: '' },
+		{ user: 'user2', roles: ['role2', 'role1000'], comment: '' },
+		{ user: 'user3', roles: ['role3'], comment: '' },
+		{ user: 'nobody', roles: [], comment: '' },
 	];
 
 	it('should see roles that exist', () => {

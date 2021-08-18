@@ -1,12 +1,12 @@
-/** @typedef {import("../api/courses/courses").CourseMemberEntity} CourseMemberEntity */
+import { CourseMemberEntity } from '/imports/api/courses/courses';
 
 /**
  * Determine whether there is a member with the given role
- * @param {CourseMemberEntity[] | undefined} members list of members
- * @param {string|undefined} role role key
+ * @param  members list of members
+ * @param role role key
  * @return true if there is a member with the given role, and false otherwise.
  */
-export function hasRole(members, role) {
+export function hasRole(members: CourseMemberEntity[] | undefined, role: string | undefined) {
 	if (!members) {
 		return false;
 	}
@@ -18,12 +18,16 @@ export function hasRole(members, role) {
 
 /**
  * Determine whether a given user has a given role in a members list
- * @param {CourseMemberEntity[]} members list of members
- * @param {string} role role key
- * @param {string|undefined|null} userId user ID to check
+ * @param  members list of members
+ * @param role role key
+ * @param userId user ID to check
  * @return whether the user has this role
  */
-export function hasRoleUser(members, role, userId) {
+export function hasRoleUser(
+	members: CourseMemberEntity[],
+	role: string,
+	userId: string | undefined | null,
+) {
 	if (!userId) {
 		return false;
 	}

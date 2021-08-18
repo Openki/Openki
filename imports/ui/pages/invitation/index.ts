@@ -17,11 +17,11 @@ const Template = TemplateAny as TemplateStaticTyped<
 		tenant: TenantModel;
 		invitation: InvitationEntity;
 	},
-	'invitation',
+	'invitationPage',
 	Record<string, unknown>
 >;
 
-const template = Template.invitation;
+const template = Template.invitationPage;
 
 template.events({
 	async 'click .js-join'(event, instance) {

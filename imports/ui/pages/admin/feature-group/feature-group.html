@@ -11,7 +11,6 @@
 					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
 					{{mf '_button.deleting'}}
 				{{else}}
-					<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
 					{{#mf KEY='featureGroup.deleteButton' REGION=currentRegionName}}
 						Remove the featured group for "{REGION}"
 					{{/mf}}
@@ -22,7 +21,7 @@
 	<h3>{{mf 'featureGroup.featureGroup' 'Feature group'}}</h3>
 	<form class="js-feature-group">
 		<div class="mb-3">
-			<select id="groupToBeFeatured" class="form-control">
+			<select id="groupToBeFeatured" class="form-select">
 				<option value='' disabled selected class="select-placeholder">
 					{{mf '_selection.pleaseSelect'}}
 				</option>
@@ -37,7 +36,6 @@
 					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
 					{{mf '_button.saving'}}
 				{{else}}
-					<i class="fa fa-fw fa-flag" aria-hidden="true"></i>
 					{{#mf KEY='featureGroup.saveButton' REGION=currentRegionName}}
 						Feature this group in the region "{REGION}"
 					{{/mf}}

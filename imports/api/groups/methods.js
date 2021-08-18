@@ -26,7 +26,6 @@ export const save = ServerMethod(
 			name: Match.Optional(String),
 			claim: Match.Optional(String),
 			description: Match.Optional(String),
-			logoUrl: Match.Optional(String),
 		});
 
 		const userId = Meteor.userId();
@@ -77,13 +76,6 @@ export const save = ServerMethod(
 			}
 		}
 
-		if (changes.logoUrl !== undefined) {
-			if (!changes.logoUrl.startsWith('https://')) {
-				throw new Meteor.Error('not https');
-			}
-			updates.logoUrl = changes.logoUrl.substring(0, 1000);
-		}
-
 		// Don't update nothing
 		if (Object.keys(updates).length === 0) {
 			return undefined;
@@ -100,6 +92,53 @@ export const save = ServerMethod(
 		} else {
 			Groups.update(group._id, { $set: updates });
 		}
+
+		return groupId;
+	},
+);
+
+export const updateLogo = ServerMethod(
+	'group.update.logo',
+	/**
+	 * @param {string} groupId
+	 * @param {string} logoUrl
+	 */
+	(groupId, logoUrl) => {
+		check(groupId, String);
+		check(logoUrl, Match.Maybe(String));
+
+		const userId = Meteor.userId();
+		if (!userId) {
+			throw new Meteor.Error(401, 'please log-in');
+		}
+
+		// Load group from DB
+		const group = Groups.findOne(groupId);
+		if (!group) {
+			throw new Meteor.Error(404, 'Group not found');
+		}
+
+		// User must be member of group to edit it
+		if (!isGroupMember(userId, group._id)) {
+			throw new Meteor.Error(401, 'Denied');
+		}
+
+		const update = { logoUrl: '' };
+
+		if (logoUrl) {
+			let url = logoUrl.trim();
+
+			// strip protocol if needed
+			if (url.includes('://')) {
+				url = url.split('://')[1];
+			}
+
+			url = `https://${url}`;
+
+			update.logoUrl = url.substring(0, 1000);
+		}
+
+		Groups.update(group._id, { $set: update });
 
 		return groupId;
 	},

@@ -50,11 +50,56 @@ export function markedName(search: string, name: string) {
 	return Spacebars.SafeString(marked);
 }
 
+/**
+ * Create a URL friendly version from the string. Source: https://stackoverflow.com/questions/37809/how-do-i-generate-a-friendly-url-in-c
+ */
 export function slug(text: string) {
-	return text
-		.toLowerCase()
-		.replace(/[^\w ]+/g, '')
-		.replace(/ +/g, '-');
+	return (
+		text
+			// make it all lower case
+			.toLowerCase()
+
+			// https://meta.stackexchange.com/questions/7435/non-us-ascii-characters-dropped-from-full-profile-url/7696#7696
+			.replace(/[ä]/g, 'ae')
+			.replace(/[àåáâãåą]/g, 'a')
+			.replace(/[èéêëę]/g, 'e')
+			.replace(/[ìíîïı]/g, 'i')
+			.replace(/[ö]/g, 'oe')
+			.replace(/[òóôõøőð]/g, 'o')
+			.replace(/[ü]/g, 'ue')
+			.replace(/[ùúûŭů]/g, 'u')
+			.replace(/[çćčĉ]/g, 'c')
+			.replace(/[żźž]/g, 'z')
+			.replace(/[śşšŝ]/g, 's')
+			.replace(/[ñń]/g, 'n')
+			.replace(/[ýÿ]/g, 'y')
+			.replace(/[ğĝ]/g, 'g')
+			.replace(/[ř]/g, 'r')
+			.replace(/[ł]/g, 'l')
+			.replace(/[đ]/g, 'd')
+			.replace(/[ß]/g, 'ss')
+			.replace(/[Þ]/g, 'th')
+			.replace(/[ĥ]/g, 'h')
+			.replace(/[ĵ]/g, 'j')
+
+			// remove anything that is not letters, numbers, dash, or space
+			.replace(/[^a-z0-9-\s]/g, '')
+
+			// replace spaces
+			.replace(/\s+/g, '-')
+
+			// collapse dashes
+			.replace(/-+/g, '-')
+
+			// trim excessive dashes at the beginning
+			.replace(/^-/g, '')
+
+			// if it's too long, clip it
+			.substring(0, 80)
+
+			// remove trailing dashes
+			.replace(/-$/g, '')
+	);
 }
 
 export function escapeRegex(string: string) {

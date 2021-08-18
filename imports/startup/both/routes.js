@@ -280,6 +280,7 @@ Router.route('frameWeek', {
 
 Router.route('groupDetails', {
 	path: 'group/:_id/:short?',
+	template: 'groupDetailsPage',
 	waitOn() {
 		return [Meteor.subscribe('group', this.params._id)];
 	},
@@ -307,6 +308,10 @@ Router.route('groupDetails', {
 			isNew,
 			showCourses: !isNew,
 		};
+	},
+	async action() {
+		await import('/imports/ui/pages/group-details');
+		this.render();
 	},
 	onAfterAction() {
 		const group = Groups.findOne({ _id: this.params._id });

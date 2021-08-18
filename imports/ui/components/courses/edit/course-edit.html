@@ -88,7 +88,9 @@
 						{{> editableTextarea editableDescription}}
 					</div>
 					{{#if hasPricePolicy}}
-						{{> pricePolicy dismissable=true wrap='mb-3'}}
+						{{#unless isPrivate}}
+							{{> pricePolicy dismissable=true wrap='mb-3'}}
+						{{/unless}}
 					{{/if}}
 					<div class="row gap-3 mb-3">
 						{{#unless hideCategories}}
@@ -131,10 +133,11 @@
 										{{> courseCategories}}
 									{{/if}}
 									{{#unless categories}}
-										{{mf 'course.edit.no.categories' 'No categories'}}
+										<div>
+											{{mf 'course.edit.no.categories' 'No categories'}}
+										</div>
 									{{/unless}}
 									<button type="button" class="btn btn-edit js-edit-categories">
-										<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
 										{{mf 'course.edit.edit_categories'}}
 									</button>
 								{{/if}}
@@ -158,7 +161,7 @@
 										<span class="fa fa-dot-circle-o fa-fw"
 											  aria-hidden="true"></span>
 									</div>
-									<select class="js-select-region form-control" name='region'>
+									<select class="js-select-region form-select" name='region'>
 										<option value='' disabled
 												selected="{{#if isCurrentRegion 'all'}}selected{{/if}}"
 												class="select-placeholder">

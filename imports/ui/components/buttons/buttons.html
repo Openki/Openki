@@ -4,7 +4,6 @@
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{mf '_button.saving' 'Saving...'}}
 		{{else}}
-			<span class="fa fa-download fa-fw" aria-hidden="true"></span>
 			{{mf '_button.save'}}
 		{{/if}}
 	</button>
@@ -12,14 +11,12 @@
 
 <template name="buttonCancel">
 	<button type="button" class="btn btn-cancel text-nowrap {{event}}" {{disabledIfBusy}}>
-		<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 		{{mf '_button.cancel'}}
 	</button>
 </template>
 
 <template name="buttonEdit">
 	<button type="button" class="btn btn-edit text-nowrap {{event}}" {{disabledIfBusy}}>
-		<span class="fa fa-edit fa-fw" aria-hidden="true"></span>
 		{{mf '_button.edit'}}
 	</button>
 </template>
@@ -27,7 +24,6 @@
 <template name="buttonDelete">
 	<button type="button" class="btn btn-delete text-nowrap text-danger {{event}}"
 			{{disabledIfBusy}}>
-		<span class="fa fa-trash fa-fw" aria-hidden="true"></span>
 		{{mf '_button.delete'}}
 	</button>
 </template>
@@ -38,7 +34,6 @@
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{textBusy}}
 		{{else}}
-			<span class="fa fa-warning fa-fw" aria-hidden="true"></span>
 			{{textIdle}}
 		{{/if}}
 	</button>

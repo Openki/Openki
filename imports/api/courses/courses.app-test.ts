@@ -3,6 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
 
 import { Courses } from './courses';
+import { UserModel } from '../users/users';
+
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
 if (Meteor.isClient) {
 	describe('Courses', () => {
@@ -27,9 +30,7 @@ if (Meteor.isClient) {
 				assert.isNotEmpty(coursesAsGast, 'shows courses');
 
 				assert.isEmpty(
-					coursesAsGast.filter(
-						(c) => c.tenant && !Meteor.settings.public.publicTenants.includes(c.tenant),
-					),
+					coursesAsGast.filter((c) => c.tenant && !PublicSettings.publicTenants.includes(c.tenant)),
 					"don't show courses from not public",
 				);
 			});
@@ -42,7 +43,7 @@ if (Meteor.isClient) {
 				const coursesAsGast = Courses.findFilter().fetch();
 
 				await MeteorAsync.loginWithPassword('Schufien', 'greg');
-				const schufien = Meteor.user();
+				const schufien = Meteor.user() as UserModel;
 
 				assert.ok(schufien);
 

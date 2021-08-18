@@ -13,79 +13,98 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
 /** @typedef {import('imports/api/users/users').UserModel} UserModel */
 // eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from './tenantDenormalizer';
+import { PublicSettings } from '/imports/utils/PublicSettings';
+import { UserModel } from '../users/users';
+import { EventEntity } from '../events/tenantDenormalizer';
 
-// ======== DB-Model: ========
-/**
- * @typedef {Object} CourseMemberEntity
- * @property {string} user user id
- * @property {string[]} roles
- * @property {string} comment
- */
-/**
- * @typedef {Object} CourseEntity
- * @property {string} _id          ID
- * @property {string} [tenant]
- * @property {string} name
- * @property {string[]} categories ID_categories
- * @property {string[]} tags       (not used)
- * @property {string[]} groups     List ID_groups ("promote groups")
- * @property {string[]} groupOrganizers  List of group ID that are allowed to edit the course
- * ("team groups", based on the ui design: Every "team group" promotes the course and is part of
- * the groups list)
- * @property {string} description
- * @property {string} slug
- * @property {string} region ID_region
- * @property {Date} date (what for?)
- * @property {string} createdby ID_user
- * @property {Date} time_created
- * @property {Date} time_lastedit
- * @property {string[]} roles [role-keys]
- * @property {CourseMemberEntity[]} members
- * @property {boolean} internal
- * @property {boolean} archived
- * @property {{dateTime: Date; type: string; data: any;}} history
- * @property {string[]} editors (calculated) List of user and group id allowed to edit the course,
- * calculated from members and groupOrganizers
- * @property {number} futureEvents  (calculated) count of events still in the future for this course
- * @property {object} nextEvent  (calculated) next upcoming event object, only includes the _id and
- * start field
- * @property {object} lastEvent  (calculated) most recent event object, only includes the _id and
- * start field
- * @property {number} interested (calculated)
- */
+export interface CourseMemberEntity {
+	user: string;
+	roles: string[];
+	comment: string;
+}
 
-/** @typedef {Course & CourseEntity} CourseModel */
+/** DB-Model */
+export interface CourseEntity {
+	_id: string;
+	tenant: string;
+	name: string;
+	/** ID categories */
+	categories: string[];
+	/** (not used) */
+	tags: string[];
+	/** List ID_groups ("promote groups") */
+	groups: string[];
+	/**
+	 * List of group ID that are allowed to edit the course ("team groups", based on the ui design:
+	 * Every "team group" promotes the course and is part of the groups list)
+	 */
+	groupOrganizers: string[];
+	description: string;
+	slug: string;
+	/** ID_region */
+	region: string;
+	/** (what for?) */
+	date: Date;
+	/** ID_user */
+	createdby: string;
+	// eslint-disable-next-line camelcase
+	time_created: Date;
+	// eslint-disable-next-line camelcase
+	time_lastedit: Date;
+	/** [role-keys] */
+	roles: string[];
+	members: CourseMemberEntity[];
+	internal: boolean;
+	archived: boolean;
+	history: {
+		dateTime: Date;
+		type: string;
+		data: any;
+	};
+	/**
+	 * (calculated) List of user and group id allowed to edit the course, calculated from members
+	 * and groupOrganizers
+	 */
+	editors: string[];
+	/** (calculated) count of events still in the future for this course */
+	futureEvents: number;
+	/** (calculated) next upcoming event object, only includes the _id and start field */
+	nextEvent: EventEntity | null;
+	/** (calculated) most recent event object, only includes the _id and start field */
+	lastEvent: EventEntity | null;
+	/** (calculated) */
+	interested: number;
+}
+
+export type CourseModel = Course & CourseEntity;
 
 export class Course {
-	constructor() {
-		/** @type {CourseMemberEntity[]} */
-		this.members = [];
-		/** @type {string[]} */
-		this.roles = [];
-		/** @type {string[]} */
-		this.groupOrganizers = [];
-	}
+	members: CourseMemberEntity[] = [];
+
+	roles: string[] = [];
+
+	groupOrganizers: string[] = [];
 
 	/**
 	 * Check if the course is new (not yet saved).
-	 * @this {CourseModel}
 	 */
-	isNew() {
+	isNew(this: CourseModel) {
 		return !this._id;
+	}
+
+	isPrivate(this: CourseModel) {
+		return !PublicSettings.publicTenants.includes(this.tenant);
 	}
 
 	/**
 	 * Check whether a user may edit the course.
-	 * @this {CourseModel}
-	 * @param {string | UserModel | null | undefined} user
 	 */
-	editableBy(user) {
+	editableBy(this: CourseModel, user: UserModel | null | undefined) {
 		if (!user) {
 			return false;
 		}
-		const isNew = !this._id;
 		return (
-			isNew /* Anybody may create a new course */ ||
+			this.isNew() /* Anybody may create a new course */ ||
 			UserPrivilegeUtils.privileged(user, 'admin') /* Admins can edit all courses */ ||
 			_.intersection(user.badges, this.editors).length > 0
 		);
@@ -93,34 +112,22 @@ export class Course {
 
 	/**
 	 * Get list of members with specified role
-	 * @this {CourseModel}
-	 * @param {string} role like 'team'
+	 * @param role like 'team'
 	 */
-	membersWithRole(role) {
+	membersWithRole(this: CourseModel, role: string) {
 		check(role, String);
 		return this.members.filter((member) => member.roles.includes(role));
 	}
 
-	/**
-	 * @this {CourseModel}
-	 * @param {string|undefined|null} userId
-	 * @param {string} role
-	 */
-	userHasRole(userId, role) {
+	userHasRole(this: CourseModel, userId: string | undefined | null, role: string) {
 		return hasRoleUser(this.members, role, userId);
 	}
 }
 
-/**
- * @extends {Mongo.Collection<CourseEntity, CourseModel>}
- */
-export class CoursesCollection extends Mongo.Collection {
+export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseModel> {
 	constructor() {
 		super('Courses', {
-			/**
-			 * @param {CourseEntity} course
-			 */
-			transform(course) {
+			transform(course: CourseEntity) {
 				return _.extend(new Course(), course);
 			},
 		});
@@ -130,11 +137,7 @@ export class CoursesCollection extends Mongo.Collection {
 		}
 	}
 
-	/**
-	 * @param {CourseModel} course
-	 * @param {Function | undefined} [callback]
-	 */
-	insert(course, callback) {
+	insert(course: CourseModel, callback?: (err: any | undefined, id?: string) => void) {
 		const enrichedCourse = tenantDenormalizer.beforeInsert(course);
 
 		return super.insert(enrichedCourse, callback);
@@ -156,9 +159,8 @@ export class CoursesCollection extends Mongo.Collection {
 
 	/**
 	 * Update the number of interested user
-	 * @param {string} courseId
 	 */
-	updateInterested(courseId) {
+	updateInterested(courseId: string) {
 		AsyncTools.untilClean((resolve, reject) => {
 			const course = this.findOne(courseId);
 
@@ -188,9 +190,8 @@ export class CoursesCollection extends Mongo.Collection {
 
 	/**
 	 * Update list of editors
-	 * @param {string} courseId
 	 */
-	updateGroups(courseId) {
+	updateGroups(courseId: string) {
 		AsyncTools.untilClean((resolve, reject) => {
 			const course = this.findOne(courseId);
 
@@ -230,31 +231,33 @@ export class CoursesCollection extends Mongo.Collection {
 	}
 
 	/**
-	 * @param {{
-	 * tenants?: string[];
-	 * region?: string;
-	 * state?: "proposal" | "resting" | "upcomingEvent";
-	 * userInvolved?: string;
-	 * categories?: string[];
-	 * group?: string;
-	 * internal?: boolean;
-	 * search?: string;
-	 * needsRole?: ("host"|"mentor"|"team")[];
-	 * archived?: boolean;
-	 * }} [filter]
-	 * @param {number} [limit] how many to find
-	 * @param {number} [skip] skip this many before returning results
-	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
+	 * @param limit how many to find
+	 * @param skip skip this many before returning results
+	 * @param sort list of fields to sort by
 	 */
-	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+	findFilter(
+		filter: {
+			tenants?: string[];
+			region?: string;
+			state?: 'proposal' | 'resting' | 'upcomingEvent';
+			userInvolved?: string;
+			categories?: string[];
+			group?: string;
+			internal?: boolean;
+			search?: string;
+			needsRole?: ('host' | 'mentor' | 'team')[];
+			archived?: boolean;
+		} = {},
+		limit = 0,
+		skip = 0,
+		sort?: [string, 'asc' | 'desc'][],
+	) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
 		check(sort, Match.Maybe([[String]]));
 
-		/** @type {Mongo.Selector<CourseEntity> } */
-		const find = {};
-		/** @type {Mongo.Options<CourseEntity>} */
-		const options = {};
+		const find: Mongo.Selector<CourseEntity> = {};
+		const options: Mongo.Options<CourseEntity> = {};
 		const order = sort || [];
 
 		if (limit > 0) {

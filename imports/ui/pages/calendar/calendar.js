@@ -11,7 +11,7 @@ import { Events } from '/imports/api/events/events';
 import * as UrlTools from '/imports/utils/url-tools';
 
 import '/imports/ui/components/events/list/event-list';
-import '/imports/ui/components/loading/loading';
+import '/imports/ui/components/loading';
 
 import './calendar.html';
 
