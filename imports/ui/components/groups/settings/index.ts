@@ -139,27 +139,17 @@ template.events({
 
 		const parentInstance = instance.parentInstance() as any; // Not available in callback
 
-		let url = (instance.$('.js-logo-url').val() as string).trim();
-
-		// strip protocol if needed
-		if (url.includes('://')) {
-			url = url.split('://')[1];
-		}
-
-		url = `https://${url}`;
+		const url = instance.$('.js-logo-url').val() as string;
 
 		instance.busy('saving');
-		const changes = {
-			logoUrl: url,
-		};
 
 		const groupId = instance.data.group._id;
 		try {
-			await GroupsMethods.save(groupId, changes);
+			await GroupsMethods.updateLogo(groupId, url);
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
 				mf(
-					'groupSettings.groupChangesSaved',
+					'groupSettings.group.logo.updated',
 					{ GROUP: groupName },
 					'Your changes to the settings of the group "{GROUP}" have been saved.',
 				),
