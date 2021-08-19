@@ -23,6 +23,8 @@ export interface RegionEntity {
 	tenant: string;
 	name: string;
 	nameEn: string;
+
+	slug: string;
 	loc?: Geodata;
 	/** ex: "UTC+01:00" */
 	tz: string;

@@ -1,45 +1,63 @@
 import { Mongo } from 'meteor/mongo';
 import { mf } from 'meteor/msgfmt:core';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 import * as Alert from '/imports/api/alerts/alert';
+import { RegionModel } from '/imports/api/regions/regions';
+import { UserModel } from '/imports/api/users/users';
 
 import { locationFormat } from '/imports/utils/location-format';
 
 import '/imports/ui/components/map/map';
 
-import './template.html';
-import './styles.scss';
+export interface Data {
+	region: RegionModel;
+	onEdit: () => void;
+	onDelete: () => Promise<void>;
+}
 
-Template.regionDisplay.onCreated(function () {
+export interface LocEntity {
+	coordinates: [number, number];
+}
+export interface MarkerEntity {
+	loc: LocEntity;
+	main: boolean;
+}
+
+const Template = TemplateAny as TemplateStaticTyped<
+	Data,
+	'regionDisplay',
+	{
+		state: ReactiveDict<{ verifyDelete: boolean }>;
+		markers: Mongo.Collection<MarkerEntity>;
+		setLocation: (loc?: LocEntity) => void;
+	}
+>;
+
+const template = Template.regionDisplay;
+
+template.onCreated(function () {
 	const instance = this;
 	instance.busy(true);
 
-	instance.state = new ReactiveDict();
-	instance.state.setDefault({
+	instance.state = new ReactiveDict(undefined, {
 		verifyDelete: false,
 	});
 
-	const markers = new Mongo.Collection(null); // Local collection for in-memory storage
+	const markers = new Mongo.Collection<MarkerEntity>(null); // Local collection for in-memory storage
 	instance.markers = markers;
 
-	/**
-	 * @param {{ coordinates: [number, number]; }} loc
-	 */
 	this.setLocation = (loc) => {
 		markers.remove({ main: true });
 		if (!loc) {
 			return;
 		}
-		markers.insert({
-			loc,
-			main: true,
-		});
+		markers.insert({ loc, main: true });
 	};
 });
 
-Template.regionDisplay.onRendered(function () {
+template.onRendered(function () {
 	const instance = this;
 
 	instance.busy(false);
@@ -51,11 +69,11 @@ Template.regionDisplay.onRendered(function () {
 	});
 });
 
-Template.regionDisplay.helpers({
+template.helpers({
 	mayEdit() {
 		const { region } = Template.currentData();
 
-		return region.editableBy(Meteor.user());
+		return region.editableBy(Meteor.user() as UserModel);
 	},
 
 	verifyDelete() {
@@ -65,15 +83,13 @@ Template.regionDisplay.helpers({
 	markers() {
 		return Template.instance().markers;
 	},
-	/**
-	 * @param {{ coordinates: [number, number]; }} loc
-	 */
-	locationDisplay(loc) {
+
+	locationDisplay(loc: LocEntity) {
 		return locationFormat(loc);
 	},
 });
 
-Template.regionDisplay.events({
+template.events({
 	'click .js-region-edit'(_event, instance) {
 		instance.state.set('verifyDelete', false);
 		instance.data.onEdit();

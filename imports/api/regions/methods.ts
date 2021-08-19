@@ -4,7 +4,7 @@ import { Match, check } from 'meteor/check';
 import { Courses } from '/imports/api/courses/courses';
 import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 import { Events } from '/imports/api/events/events';
-import { Regions } from './regions';
+import { RegionEntity, Regions } from './regions';
 /** @typedef {import('./regions').RegionEntity} RegionEntity */
 import { Venues } from '/imports/api/venues/venues';
 
@@ -13,17 +13,17 @@ import { AsyncTools } from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
 
+export interface CreateFields {
+	tenant: string;
+	name: string;
+	loc: { type: 'Point'; coordinates: [number, number] };
+	tz: string;
+}
+
 export const create = ServerMethod(
 	'region.create',
-	/**
-	 * @param {{
-	 * 			tenant: string;
-				name: string;
-				loc: { type: 'Point', coordinates: [number, number] };
-				tz: string;
-			}} changes
-	 */
-	(changes) => {
+
+	(changes: CreateFields) => {
 		check(changes, {
 			tenant: String,
 			name: String,
@@ -43,16 +43,14 @@ export const create = ServerMethod(
 			throw new Meteor.Error(401, 'not permitted');
 		}
 
-		/** @type {RegionEntity} */
 		const set = {
+			tenant: changes.tenant,
+			courseCount: 0,
+			futureEventCount: 0,
 			createdby: user._id,
 			created: new Date(),
 			updated: new Date(),
-			courseCount: 0,
-			futureEventCount: 0,
-		};
-
-		set.tenant = changes.tenant;
+		} as Mongo.OptionalId<RegionEntity>;
 
 		set.name = changes.name.trim().substring(0, 40);
 		set.nameEn = set.name;
@@ -67,124 +65,108 @@ export const create = ServerMethod(
 	},
 );
 
-export const update = ServerMethod(
-	'region.update',
-	/**
-	 * @param {string} regionId
-	 * @param {{
-				name?: string;
-				loc?: { type: 'Point', coordinates: [number, number] };
-				tz?: string;
-			}} changes
-	 */
-	(regionId, changes) => {
-		check(regionId, String);
-		check(changes, {
-			name: Match.Optional(String),
-			loc: Match.Optional({ type: String, coordinates: [Number] }),
-			tz: Match.Optional(String),
-		});
+export interface UpdateFields {
+	name?: string;
+	loc?: { type: 'Point'; coordinates: [number, number] };
+	tz?: string;
+}
 
-		const user = Meteor.user();
-		if (!user) {
-			throw new Meteor.Error(401, 'please log in');
-		}
+export const update = ServerMethod('region.update', (regionId: string, changes: UpdateFields) => {
+	check(regionId, String);
+	check(changes, {
+		name: Match.Maybe(String),
+		loc: Match.Maybe({ type: String, coordinates: [Number] }),
+		tz: Match.Maybe(String),
+	});
 
-		const region = Regions.findOne(regionId);
-		if (!region) {
-			throw new Meteor.Error(404, 'region not found');
-		}
+	const user = Meteor.user();
+	if (!user) {
+		throw new Meteor.Error(401, 'please log in');
+	}
 
-		if (!region.editableBy(user)) {
-			throw new Meteor.Error(401, 'not permitted');
-		}
+	const region = Regions.findOne(regionId);
+	if (!region) {
+		throw new Meteor.Error(404, 'region not found');
+	}
 
-		/* Changes we want to perform */
+	if (!region.editableBy(user)) {
+		throw new Meteor.Error(401, 'not permitted');
+	}
 
-		/** @type {RegionEntity} */
-		const set = { updated: new Date() };
+	/* Changes we want to perform */
 
-		if (changes.name) {
-			set.name = changes.name.trim().substring(0, 40);
-			set.nameEn = set.name;
-			set.slug = StringTools.slug(set.name);
-		}
+	const set = { updated: new Date() } as Partial<RegionEntity>;
 
-		if (changes.loc) {
-			set.loc = changes.loc;
-			set.loc.type = 'Point';
-		}
+	if (changes.name) {
+		set.name = changes.name.trim().substring(0, 40);
+		set.nameEn = set.name;
+		set.slug = StringTools.slug(set.name);
+	}
 
-		if (changes.tz) {
-			set.tz = changes.tz.trim().substring(0, 40);
-		}
+	if (changes.loc) {
+		const loc = changes.loc;
+		loc.type = 'Point';
+		set.loc = loc;
+	}
 
-		Regions.update({ _id: regionId }, { $set: set }, AsyncTools.checkUpdateOne);
+	if (changes.tz) {
+		set.tz = changes.tz.trim().substring(0, 40);
+	}
 
-		return regionId;
-	},
-);
+	Regions.update({ _id: regionId }, { $set: set }, undefined, AsyncTools.checkUpdateOne);
 
-export const remove = ServerMethod(
-	'region.remove',
-	/**
-	 * @param {string} regionId
-	 */
-	(regionId) => {
-		check(regionId, String);
+	return regionId;
+});
 
-		const user = Meteor.user();
-		if (!user) {
-			throw new Meteor.Error(401, 'please log in');
-		}
+export const remove = ServerMethod('region.remove', (regionId: string) => {
+	check(regionId, String);
 
-		const region = Regions.findOne(regionId);
-		if (!region) {
-			throw new Meteor.Error(404, 'region not found');
-		}
+	const user = Meteor.user();
+	if (!user) {
+		throw new Meteor.Error(401, 'please log in');
+	}
 
-		if (!region.editableBy(user)) {
-			throw new Meteor.Error(401, 'not permitted');
-		}
+	const region = Regions.findOne(regionId);
+	if (!region) {
+		throw new Meteor.Error(404, 'region not found');
+	}
 
-		if (Courses.find({ region: regionId }).count() > 20) {
-			throw new Meteor.Error(
-				401,
-				'Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.',
-			);
-		}
+	if (!region.editableBy(user)) {
+		throw new Meteor.Error(401, 'not permitted');
+	}
 
-		Events.remove({ region: regionId });
-		// CourseDiscussionEntity do not currently have a region.
-		Courses.find({ region: regionId }).forEach((c) => {
-			CourseDiscussions.remove({ courseId: c._id });
-		});
-		Courses.remove({ region: regionId });
-		Venues.remove({ region: regionId });
-		Regions.remove(regionId);
-	},
-);
+	if (Courses.find({ region: regionId }).count() > 20) {
+		throw new Meteor.Error(
+			401,
+			'Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.',
+		);
+	}
+
+	Events.remove({ region: regionId });
+	// CourseDiscussionEntity do not currently have a region.
+	Courses.find({ region: regionId }).forEach((c) => {
+		CourseDiscussions.remove({ courseId: c._id });
+	});
+	Courses.remove({ region: regionId });
+	Venues.remove({ region: regionId });
+	Regions.remove(regionId);
+});
 
 export const featureGroup = ServerMethod(
 	'region.featureGroup',
-	/**
-	 * @param {string} regionId
-	 * @param {string} groupId
-	 */
-	(regionId, groupId) => {
+	(regionId: string, groupId: string) => {
+		check(regionId, String);
+		check(groupId, String);
+
 		Regions.update(regionId, { $set: { featuredGroup: groupId } });
 	},
 );
 
-export const unsetFeaturedGroup = ServerMethod(
-	'region.unsetFeaturedGroup',
-	/**
-	 * @param {string} regionId
-	 */
-	(regionId) => {
-		Regions.update(regionId, { $set: { featuredGroup: false } });
-	},
-);
+export const unsetFeaturedGroup = ServerMethod('region.unsetFeaturedGroup', (regionId: string) => {
+	check(regionId, String);
+
+	Regions.update(regionId, { $set: { featuredGroup: undefined } });
+});
 
 Meteor.methods({
 	'region.updateCounters'(selector) {

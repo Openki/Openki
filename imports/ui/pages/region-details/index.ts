@@ -2,18 +2,31 @@ import { check } from 'meteor/check';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
+import { RegionModel } from '/imports/api/regions/regions';
 import * as RegionsMethods from '/imports/api/regions/methods';
 
 import { Analytics } from '../../lib/analytics';
 
-import '/imports/ui/components/regions/display';
-import '/imports/ui/components/regions/edit';
+import { Data as DisplayData } from '/imports/ui/components/regions/display';
+import { Data as EditData } from '/imports/ui/components/regions/edit';
 
 import './template.html';
 import './styles.scss';
 
-Template.regionDetailsPage.onCreated(function () {
+const Template = TemplateAny as TemplateStaticTyped<
+	{
+		isNew: boolean;
+		region: RegionModel;
+	},
+	'regionDetailsPage',
+	{ state: ReactiveDict<{ editing: boolean }> }
+>;
+
+const template = Template.regionDetailsPage;
+
+template.onCreated(function () {
 	const instance = this;
 
 	instance.autorun(() => {
@@ -25,13 +38,10 @@ Template.regionDetailsPage.onCreated(function () {
 		}
 	});
 
-	instance.state = new ReactiveDict();
-	instance.state.setDefault({
-		editing: false,
-	});
+	instance.state = new ReactiveDict(undefined, { editing: false });
 });
 
-Template.regionDetailsPage.helpers({
+template.helpers({
 	editing() {
 		return Template.instance().state.get('editing');
 	},
@@ -52,7 +62,7 @@ Template.regionDetailsPage.helpers({
 			onCancel() {
 				Router.go('tenantDetails', { _id: region.tenant });
 			},
-		};
+		} as EditData;
 	},
 
 	editArgs() {
@@ -68,7 +78,7 @@ Template.regionDetailsPage.helpers({
 			onCancel() {
 				instance.state.set('editing', false);
 			},
-		};
+		} as EditData;
 	},
 
 	displayArgs() {
@@ -83,6 +93,6 @@ Template.regionDetailsPage.helpers({
 				await RegionsMethods.remove(region._id);
 				Router.go('tenantDetails', { _id: region.tenant });
 			},
-		};
+		} as DisplayData;
 	},
 });
