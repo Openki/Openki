@@ -137,7 +137,10 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 		}
 	}
 
-	insert(course: CourseModel, callback?: (err: any | undefined, id?: string) => void) {
+	insert(
+		course: Mongo.OptionalId<CourseEntity>,
+		callback?: (err: any | undefined, id?: string) => void,
+	) {
 		const enrichedCourse = tenantDenormalizer.beforeInsert(course);
 
 		return super.insert(enrichedCourse, callback);

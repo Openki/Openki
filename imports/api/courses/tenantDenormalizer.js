@@ -1,7 +1,7 @@
 import { Regions } from '/imports/api/regions/regions';
 // eslint-disable-next-line import/no-cycle
 import { Courses } from '/imports/api/courses/courses';
-/** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
+/** @typedef {import('/imports/api/courses/courses').CourseEntity} CourseEntity */
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
 
@@ -21,7 +21,7 @@ export function onStartUp() {
 }
 
 /**
- * @param {CourseModel} course
+ * @param {Mongo.OptionalId<CourseEntity>} course
  */
 export function beforeInsert(course) {
 	if (!course.region) {
