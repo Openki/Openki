@@ -8,7 +8,7 @@ import { Alerts } from './alerts';
  * @param message the message text
  * @param timeout timeout for the alert to disappear
  */
-function _alert(type: string, message: string, timeout: number = 4000) {
+function _alert(type: string, message: string, timeout = 4000) {
 	check(type, String);
 	check(message, String);
 	check(timeout, Number);
