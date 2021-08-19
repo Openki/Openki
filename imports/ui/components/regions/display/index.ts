@@ -11,6 +11,9 @@ import { locationFormat } from '/imports/utils/location-format';
 
 import '/imports/ui/components/map/map';
 
+import './template.html';
+import './styles.scss';
+
 export interface Data {
 	region: RegionModel;
 	onEdit: () => void;

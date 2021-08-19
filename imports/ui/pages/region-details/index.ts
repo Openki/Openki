@@ -13,7 +13,6 @@ import { Data as DisplayData } from '/imports/ui/components/regions/display';
 import { Data as EditData } from '/imports/ui/components/regions/edit';
 
 import './template.html';
-import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	{

@@ -14,8 +14,8 @@ import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/map/map';
 
-import '/imports/ui/components/regions/display/region-display';
-import '/imports/ui/components/regions/edit/region-edit';
+import '/imports/ui/components/regions/display';
+import '/imports/ui/components/regions/edit';
 
 import './tenant-create.html';
 

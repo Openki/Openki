@@ -32,6 +32,11 @@ $course-member-comment-border-color:             shade-color($blue-lighter, 40%)
 $group-bg:                                       $green-alternative;
 $group-label-color: 							 $blue;
 
+// ** Region
+//========================================================================================
+$region-bg:                                       desaturate($green, 40%);
+$region-color:                                    $red-darkest;
+
 // ** Tenant
 //========================================================================================
 $tenant-bg:                                       $green-alternative;

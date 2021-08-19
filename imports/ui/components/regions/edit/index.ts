@@ -16,6 +16,8 @@ import './template.html';
 import './styles.scss';
 
 export interface Data {
+	region: RegionEntity;
+	title: string;
 	onSave: (changes: OnSaveFields) => Promise<void>;
 	onCancel: () => void;
 }
