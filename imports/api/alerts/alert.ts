@@ -4,11 +4,11 @@ import { Alerts } from './alerts';
 
 /**
  * Private method to add an alert message
- * @param {string} type type of alert message
- * @param {string} message the message text
- * @param {number} timeout timeout for the alert to disappear
+ * @param type type of alert message
+ * @param message the message text
+ * @param timeout timeout for the alert to disappear
  */
-function _alert(type, message, timeout = 4000) {
+function _alert(type: string, message: string, timeout: number = 4000) {
 	check(type, String);
 	check(message, String);
 	check(timeout, Number);
@@ -17,26 +17,26 @@ function _alert(type, message, timeout = 4000) {
 }
 
 /**
- * @param {string} message the message text
+ * @param message the message text
  */
-export function success(message) {
+export function success(message: string) {
 	check(message, String);
 	_alert('success', message);
 }
 
 /**
- * @param {string} message the message text
+ * @param message the message text
  */
-export function warning(message) {
+export function warning(message: string) {
 	check(message, String);
 	_alert('warning', message);
 }
 
 /**
  * Create an error from String
- * @param {string} errorString error message
+ * @param errorString error message
  */
-export function error(errorString) {
+export function error(errorString: string) {
 	check(errorString, String);
 
 	const errorMessage = mf(
@@ -50,10 +50,10 @@ export function error(errorString) {
 
 /**
  * Add an error alert
- * @param {Error | string} errorOrMessage error object or message text
- * @param {string} [message] the message text
+ * @param errorOrMessage error object or message text
+ * @param message the message text
  */
-export function serverError(errorOrMessage, message) {
+export function serverError(errorOrMessage: Error | string, message?: string) {
 	if (typeof message !== 'string') {
 		check(errorOrMessage, String);
 
