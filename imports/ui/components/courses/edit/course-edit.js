@@ -283,7 +283,32 @@ Template.courseEdit.helpers({
 	},
 
 	hasPricePolicy() {
-		return !Template.instance().data.hidePricePolicy;
+		const { hidePricePolicy } = Template.instance().data;
+		const data = Template.instance().data;
+
+		if (hidePricePolicy) {
+			return false;
+		}
+
+		if (data && data.isNew && !data.isNew) {
+			return !data.isPrivate();
+		}
+
+		let regionId;
+		if (data.isFrame && data.region) {
+			// The region was preset for the frame
+			regionId = data.region;
+		} /*else {
+			regionId = Template.instance().$('.js-select-region').val();
+		}*/
+
+		const region = Regions.findOne(regionId);
+
+		if (region) {
+			return !region.isPrivate();
+		}
+
+		return !Regions.currentRegion()?.isPrivate();
 	},
 });
 
