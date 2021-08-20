@@ -737,6 +737,7 @@ Router.route('invitation', {
 
 Router.route('timetable', {
 	path: '/kiosk/timetable',
+	template: 'timetablePage',
 	layoutTemplate: 'timetableLayout',
 	waitOn() {
 		return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params?.query), 200);
@@ -744,7 +745,13 @@ Router.route('timetable', {
 	data() {
 		const query = makeFilterQuery(this.params.query);
 
+		/**
+		 * @type {moment.MomentInput}
+		 */
 		let start;
+		/**
+		 * @type {moment.MomentInput}
+		 */
 		let end;
 
 		const events = Events.findFilter(query, 200).fetch();
@@ -770,7 +777,13 @@ Router.route('timetable', {
 		const timestampEnd = end.toDate().getTime();
 
 		const span = timestampEnd - timestampStart;
+		/**
+		 * @type {{ [day: string]: {moment: moment.Moment, relStart:number, relEnd:number}; } }
+		 */
 		const days = {};
+		/**
+		 * @type {{ [hour: string]: {moment: moment.Moment, relStart:number, relEnd:number}; } }
+		 */
 		const hours = {};
 		const cursor = moment(start);
 		do {
@@ -802,6 +815,9 @@ Router.route('timetable', {
 			cursor.add(1, 'hour');
 		} while (cursor.isBefore(end));
 
+		/**
+		 * @type {{[venue:string]: {venue: VenueModel, perRoom: {[room:string]:{room:string,venue:VenueModel,rows:(import('/imports/api/events/events').EventEntity & {relStart: number, relEnd: number})[]}}}}}
+		 */
 		const perVenue = {};
 		const useVenue = function (venue, room) {
 			const id = venue._id || `#${venue.name}`;
@@ -865,6 +881,10 @@ Router.route('timetable', {
 			hours: Object.values(hours),
 			grouped,
 		};
+	},
+	async action() {
+		await import('/imports/ui/pages/timetable');
+		this.render();
 	},
 });
 

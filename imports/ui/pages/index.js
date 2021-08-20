@@ -16,5 +16,4 @@ import './kiosk/kiosk';
 import './log/log';
 import './not-found';
 import './reset-password/reset-password';
-import './timetable/timetable';
 import './venue-details/venue-details';
