@@ -29,9 +29,9 @@ export interface Data {
 	}[];
 }
 
-const Template = TemplateAny as TemplateStaticTyped<Data, 'templateName', Record<string, never>>;
+const Template = TemplateAny as TemplateStaticTyped<Data, 'timetablePage', Record<string, never>>;
 
-const template = Template.templateName;
+const template = Template.timetablePage;
 
 template.helpers({
 	isRoomRow(room: string, index: number) {

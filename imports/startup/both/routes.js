@@ -738,7 +738,7 @@ Router.route('invitation', {
 Router.route('timetable', {
 	path: '/kiosk/timetable',
 	template: 'timetablePage',
-	layoutTemplate: 'timetableLayout',
+	layoutTemplate: 'kioskLayout',
 	waitOn() {
 		return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params?.query), 200);
 	},
