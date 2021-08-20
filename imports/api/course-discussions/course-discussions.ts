@@ -1,23 +1,26 @@
 import { Mongo } from 'meteor/mongo';
 
-// ======== DB-Model: ========
-/**
- * @typedef {Object} CourseDiscussionEnity
- * @property {string}  _id          ID
- * @property {string}  title
- * @property {string}  text
- * @property {string}  [userId]       ID_users undefined if anon comment
- * @property {string}  courseId     ID_Courses
- * @property {boolean} [notifyAll]
- * @property {Date}    time_created
- * @property {Date}    time_updated
- * @property {string}  [parentId]     ID_CourseDiscussions (optional)
- */
+/** DB-Model */
 
-/**
- * @extends {Mongo.Collection<CourseDiscussionEnity>}
- */
-export class CourseDiscussionsCollection extends Mongo.Collection {
+export interface CourseDiscussionEnity {
+	/** ID */
+	_id: string;
+	title: string;
+	text: string;
+	/** ID_users undefined if anon comment */
+	userId?: string;
+	/** ID_Courses */
+	courseId: string;
+	notifyAll?: boolean;
+	// eslint-disable-next-line camelcase
+	time_created: Date;
+	// eslint-disable-next-line camelcase
+	time_updated: Date;
+	/** ID_CourseDiscussions (optional) */
+	parentId?: string;
+}
+
+export class CourseDiscussionsCollection extends Mongo.Collection<CourseDiscussionEnity> {
 	constructor() {
 		super('CourseDiscussions');
 
@@ -26,11 +29,8 @@ export class CourseDiscussionsCollection extends Mongo.Collection {
 		}
 	}
 
-	/**
-	 * @param {string} text
-	 */
 	// eslint-disable-next-line class-methods-use-this
-	validComment(text) {
+	validComment(text: string) {
 		return text.trim().length > 0;
 	}
 }

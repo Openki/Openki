@@ -2,19 +2,17 @@ import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 
 import { Courses } from '/imports/api/courses/courses';
-import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
+import {
+	CourseDiscussionEnity,
+	CourseDiscussions,
+} from '/imports/api/course-discussions/course-discussions';
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import Notification from '/imports/notification/notification';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 
-/** @typedef {import('./course-discussions').CourseDiscussionEnity} CourseDiscussionEnity */
-
-/**
- * @param {{ title: string; text: string; }} comment
- */
-const sanitizeComment = (comment) => {
+const sanitizeComment = (comment: { title: string; text: string }) => {
 	const saneTitle = StringTools.saneTitle(comment.title).substr(0, 200).trim();
 
 	// String-truncating HTML may leave a broken tag at the end
@@ -25,18 +23,19 @@ const sanitizeComment = (comment) => {
 	return { title: saneTitle, text: saneHtml };
 };
 
+interface PostCommentFields {
+	courseId: string;
+	parentId?: string;
+	title: string;
+	text: string;
+	anon: boolean;
+	notifyAll?: boolean;
+}
+
 export const postComment = ServerMethod(
 	'courseDiscussion.postComment',
-	/**
-	 * @param {object} comment
-	 * @param {string} comment.courseId
-	 * @param {string} [comment.parentId]
-	 * @param {string} comment.title
-	 * @param {string} comment.text
-	 * @param {boolean} comment.anon
-	 * @param {boolean} [comment.notifyAll]
-	 */
-	function (comment) {
+
+	function (comment: PostCommentFields) {
 		check(comment, {
 			courseId: String,
 			parentId: Match.Optional(String),
@@ -46,8 +45,7 @@ export const postComment = ServerMethod(
 			notifyAll: Match.Optional(Boolean),
 		});
 
-		/** @type {CourseDiscussionEnity & {saving?: boolean}} */
-		const saneComment = sanitizeComment(comment);
+		const saneComment = sanitizeComment(comment) as CourseDiscussionEnity & { saving?: boolean };
 
 		if (!CourseDiscussions.validComment(saneComment.text)) {
 			throw new Meteor.Error(400, 'Invalid comment');
@@ -103,18 +101,14 @@ export const postComment = ServerMethod(
 
 export const editComment = ServerMethod(
 	'courseDiscussion.editComment',
-	/**
-	 * @param {{ _id: string; title: string; text: string; }} comment
-	 */
-	(comment) => {
+	(comment: { _id: string; title: string; text: string }) => {
 		check(comment, {
 			_id: String,
 			title: String,
 			text: String,
 		});
 
-		/** @type {CourseDiscussionEnity} */
-		const update = sanitizeComment(comment);
+		const update = sanitizeComment(comment) as CourseDiscussionEnity;
 
 		const originalComment = CourseDiscussions.findOne(comment._id);
 		if (!originalComment) {
@@ -132,35 +126,29 @@ export const editComment = ServerMethod(
 	},
 );
 
-export const deleteComment = ServerMethod(
-	'courseDiscussion.deleteComment',
-	/**
-	 * @param {string} commentId
-	 */
-	(commentId) => {
-		check(commentId, String);
+export const deleteComment = ServerMethod('courseDiscussion.deleteComment', (commentId: string) => {
+	check(commentId, String);
 
-		const user = Meteor.user();
-		if (!user) {
-			throw new Meteor.Error(401, 'please log in');
-		}
+	const user = Meteor.user();
+	if (!user) {
+		throw new Meteor.Error(401, 'please log in');
+	}
 
-		const comment = CourseDiscussions.findOne(commentId);
-		if (!comment) {
-			throw new Meteor.Error(404, 'no such comment');
-		}
+	const comment = CourseDiscussions.findOne(commentId);
+	if (!comment) {
+		throw new Meteor.Error(404, 'no such comment');
+	}
 
-		const course = Courses.findOne(comment.courseId);
+	const course = Courses.findOne(comment.courseId);
 
-		if (!course) {
-			throw new Meteor.Error(401, 'delete not permitted');
-		}
+	if (!course) {
+		throw new Meteor.Error(401, 'delete not permitted');
+	}
 
-		if (!CourseDiscussionUtils.mayDeletePost(user, course, comment)) {
-			throw new Meteor.Error(401, 'delete not permitted');
-		}
+	if (!CourseDiscussionUtils.mayDeletePost(user, course, comment)) {
+		throw new Meteor.Error(401, 'delete not permitted');
+	}
 
-		CourseDiscussions.remove({ _id: comment._id });
-		CourseDiscussions.remove({ parentId: comment._id });
-	},
-);
+	CourseDiscussions.remove({ _id: comment._id });
+	CourseDiscussions.remove({ parentId: comment._id });
+});

@@ -1,15 +1,13 @@
+import { CourseMemberEntity } from '../api/courses/courses';
+import { UserModel } from '../api/users/users';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-/** @typedef {import("imports/api/courses/courses").CourseMemberEntity} CourseMemberEntity */
-/** @typedef {import('imports/api/users/users').UserModel} UserModel */
-
-/**
- * @param {UserModel|undefined|null} user
- * @param {{ members: CourseMemberEntity[] }} course
- * @param {{ userId?: string; }} post
- */
-export function mayDeletePost(user, course, post) {
+export function mayDeletePost(
+	user: UserModel | undefined | null,
+	course: { members: CourseMemberEntity[] },
+	post: { userId?: string },
+) {
 	if (!user || !post.userId) {
 		return false;
 	}
@@ -20,11 +18,7 @@ export function mayDeletePost(user, course, post) {
 	);
 }
 
-/**
- * @param {{ _id: string } | undefined | null} user
- * @param {{ userId?: string }} post
- */
-export function mayEditPost(user, post) {
+export function mayEditPost(user: { _id: string } | undefined | null, post: { userId?: string }) {
 	if (!user || !post.userId) {
 		return false;
 	}
