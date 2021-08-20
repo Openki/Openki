@@ -7,10 +7,10 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 /**
  * @param {UserModel|undefined|null} user
  * @param {{ members: CourseMemberEntity[] }} course
- * @param {{ userId: string; }} post
+ * @param {{ userId?: string; }} post
  */
 export function mayDeletePost(user, course, post) {
-	if (!user) {
+	if (!user || !post.userId) {
 		return false;
 	}
 	return (
@@ -21,11 +21,11 @@ export function mayDeletePost(user, course, post) {
 }
 
 /**
- * @param {{ _id: string; } | undefined | null} user
- * @param {{ userId: string; }} post
+ * @param {{ _id: string } | undefined | null} user
+ * @param {{ userId?: string }} post
  */
 export function mayEditPost(user, post) {
-	if (!user) {
+	if (!user || !post.userId) {
 		return false;
 	}
 	return post.userId === user._id;
