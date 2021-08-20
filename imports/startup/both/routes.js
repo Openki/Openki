@@ -214,6 +214,7 @@ Router.route('frameEvents', {
 
 Router.route('framePropose', {
 	path: '/frame/propose',
+	template: 'frameProposePage',
 	layoutTemplate: 'frameLayout',
 	waitOn: () => Meteor.subscribe('Regions'),
 	data() {
@@ -255,6 +256,10 @@ Router.route('framePropose', {
 		params.isFrame = true;
 
 		return params;
+	},
+	async action() {
+		await import('/imports/ui/pages/frames/propose');
+		this.render();
 	},
 	onAfterAction() {
 		msgfmt.loading(); // Rerun after msgfmt has loaded translation
