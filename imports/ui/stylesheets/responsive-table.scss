@@ -39,9 +39,9 @@
 	}
 
 	[class*='col-'] {
+		padding: 8px;
 		@include media-breakpoint-up(md) {
 			border-top: 2px solid #ddd;
 		}
-		padding: 8px;
 	}
 }

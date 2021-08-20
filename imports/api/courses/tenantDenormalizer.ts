@@ -1,7 +1,6 @@
 import { Regions } from '/imports/api/regions/regions';
 // eslint-disable-next-line import/no-cycle
-import { Courses } from '/imports/api/courses/courses';
-/** @typedef {import('/imports/api/courses/courses').CourseEntity} CourseEntity */
+import { CourseEntity, Courses } from '/imports/api/courses/courses';
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
 
@@ -20,10 +19,7 @@ export function onStartUp() {
 	console.log(`courses.tenantDenormalizer.onStartUp: ${updated} affected courses`);
 }
 
-/**
- * @param {Mongo.OptionalId<CourseEntity>} course
- */
-export function beforeInsert(course) {
+export function beforeInsert(course: Mongo.OptionalId<CourseEntity>) {
 	if (!course.region) {
 		throw new Error('Unexpected falsy: course.region');
 	}

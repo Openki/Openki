@@ -53,7 +53,6 @@
 
 .timetable-location {
 	@include td-pos(left, -1em);
-	@include td-text-align(left);
 	max-height: 100%;
 	overflow: hidden;
 	padding: 0 1em;
@@ -82,7 +81,7 @@
 }
 
 .timetable-event-title {
-	background-color: $brand-success;
+	background-color: $success;
 	font-size: 28px;
 	height: 43px;
 	line-height: 1.2em;

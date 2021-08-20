@@ -23,7 +23,7 @@
 		{{#each this.grouped}}
 			{{#each perRoom}}
 				<div class=" timetable-row {{#if isRoomRow room @index}}timetable-row--room{{/if}}">
-					<div class="timetable-location">
+					<div class="timetable-location text-start">
 						<a href="{{pathFor 'venueDetails' data=location}}">
 							<span class="fa fa-home fa-fw" aria-hidden="true"></span>
 							{{venue.name}}

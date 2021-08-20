@@ -21,7 +21,7 @@ if (Meteor.isClient) {
 					user: { username: 'greg' },
 					password: gregsDigestedPassword,
 				},
-				(err, response) => {
+				(err: any, response: { token: string }) => {
 					if (err) {
 						return done(err);
 					}
@@ -38,7 +38,7 @@ if (Meteor.isClient) {
 					user: { username: 'bogus username' },
 					password: gregsDigestedPassword,
 				},
-				(err) => {
+				(err: any) => {
 					expect(err).to.be.an('object');
 					expect(err.error).to.equal(403);
 					done();
@@ -53,7 +53,7 @@ if (Meteor.isClient) {
 					user: { username: 'greg' },
 					password: invalidDigestedPassword,
 				},
-				(err) => {
+				(err: any) => {
 					expect(err).to.be.an('object');
 					expect(err.error).to.equal(403);
 					done();

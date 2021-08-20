@@ -1,18 +1,49 @@
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import moment from 'moment';
 
-import './timetable.html';
+import { EventModel } from '/imports/api/events/events';
+import { VenueModel } from '/imports/api/venues/venues';
 
-Template.timetable.helpers({
-	isRoomRow(room, index) {
+import './template.html';
+import './styles.scss';
+
+export interface RelStartEnd {
+	relStart: number;
+	relEnd: number;
+}
+
+export interface Data {
+	days: ({
+		moment: moment.Moment;
+	} & RelStartEnd)[];
+	hours: ({
+		moment: moment.Moment;
+	} & RelStartEnd)[];
+	grouped: {
+		perRoom: {
+			room: string;
+			venue: VenueModel;
+			rows: (EventModel & RelStartEnd)[];
+		}[];
+		venue: VenueModel;
+	}[];
+}
+
+const Template = TemplateAny as TemplateStaticTyped<Data, 'templateName', Record<string, never>>;
+
+const template = Template.templateName;
+
+template.helpers({
+	isRoomRow(room: string, index: number) {
 		return room && index !== 0;
 	},
-	position() {
+	position(this: RelStartEnd) {
 		return `left: ${this.relStart * 100}%; right: ${this.relEnd * 100}%;`;
 	},
-	showDay(moment) {
-		return moment.format('dddd, LL');
+	showDay(m: moment.Moment) {
+		return m.format('dddd, LL');
 	},
-	showHour(moment) {
-		return moment.format('H');
+	showHour(m: moment.Moment) {
+		return m.format('H');
 	},
 });
