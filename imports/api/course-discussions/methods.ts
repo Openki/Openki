@@ -34,7 +34,6 @@ interface PostCommentFields {
 
 export const postComment = ServerMethod(
 	'courseDiscussion.postComment',
-
 	function (comment: PostCommentFields) {
 		check(comment, {
 			courseId: String,

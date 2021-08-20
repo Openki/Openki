@@ -1,10 +1,6 @@
 import { Courses } from './courses';
 
-/**
- * @param {string} courseId
- * @param {string} userId
- */
-export function afterUpdate(courseId, userId) {
+export function afterUpdate(courseId: string, userId: string) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -16,12 +12,7 @@ export function afterUpdate(courseId, userId) {
 	});
 }
 
-/**
- * @param {string} courseId
- * @param {string} userId
- * @param {string} roleType
- */
-export function afterSubscribe(courseId, userId, roleType) {
+export function afterSubscribe(courseId: string, userId: string, roleType: string) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -33,12 +24,7 @@ export function afterSubscribe(courseId, userId, roleType) {
 	});
 }
 
-/**
- * @param {string} courseId
- * @param {string} userId
- * @param {string} roleType
- */
-export function afterUnsubscribe(courseId, userId, roleType) {
+export function afterUnsubscribe(courseId: string, userId: string, roleType: string) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -50,17 +36,16 @@ export function afterUnsubscribe(courseId, userId, roleType) {
 	});
 }
 
-/**
- * @param {string} courseId
- * @param {string} userId
- * @param {{
-	_id: string;
-	title: string;
-	slug: string;
-	startLocal: string;
-}} event
- */
-export function afterEventInsert(courseId, userId, event) {
+export function afterEventInsert(
+	courseId: string,
+	userId: string,
+	event: {
+		_id: string;
+		title: string;
+		slug: string;
+		startLocal: string;
+	},
+) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -72,18 +57,17 @@ export function afterEventInsert(courseId, userId, event) {
 	});
 }
 
-/**
- * @param {string} courseId
- * @param {string} userId
- * @param {{
- * _id: string;
- * title: string;
- * slug: string;
- * startLocal: string;
- * replicasUpdated: boolean;
- * }} event
- */
-export function afterEventUpdate(courseId, userId, event) {
+export function afterEventUpdate(
+	courseId: string,
+	userId: string,
+	event: {
+		_id: string;
+		title: string;
+		slug: string;
+		startLocal: string;
+		replicasUpdated: boolean;
+	},
+) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
@@ -95,15 +79,14 @@ export function afterEventUpdate(courseId, userId, event) {
 	});
 }
 
-/**
- * @param {string} courseId
- * @param {string} userId
- * @param {{
-	title: string;
-	startLocal: string;
-}} event
- */
-export function afterEventRemove(courseId, userId, event) {
+export function afterEventRemove(
+	courseId: string,
+	userId: string,
+	event: {
+		title: string;
+		startLocal: string;
+	},
+) {
 	Courses.update(courseId, {
 		$addToSet: {
 			history: {
