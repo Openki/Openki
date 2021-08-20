@@ -1,8 +1,10 @@
 import { mf } from 'meteor/msgfmt:core';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
 
 import * as Alert from '/imports/api/alerts/alert';
+import { TenantModel } from '/imports/api/tenants/tenants';
+import { RegionModel } from '/imports/api/regions/regions';
 import * as TenantsMethods from '/imports/api/tenants/methods';
 import * as RegionsMethods from '/imports/api/regions/methods';
 
@@ -17,26 +19,42 @@ import '/imports/ui/components/map/map';
 import '/imports/ui/components/regions/display';
 import '/imports/ui/components/regions/edit';
 
-import './tenant-create.html';
+import './template.html';
+import './styles.scss';
 
-Template.tenantCreate.onCreated(function () {
+export interface Data {
+	tenant: TenantModel;
+	retion: RegionModel;
+}
+
+const Template = TemplateAny as TemplateStaticTyped<
+	Data,
+	'tenantCreatePage',
+	{
+		locationTracker: LocationTracker;
+	}
+>;
+
+const template = Template.tenantCreatePage;
+
+template.onCreated(function () {
 	const instance = this;
 	instance.busy(false);
 
 	instance.locationTracker = new LocationTracker();
 });
 
-Template.tenantCreate.helpers({
+template.helpers({
 	locationTracker() {
 		return Template.instance().locationTracker;
 	},
 });
 
-Template.tenantCreate.events({
+template.events({
 	submit(event, instance) {
 		event.preventDefault();
 
-		const tenantName = instance.$('.js-tenant-name').val();
+		const tenantName = instance.$('.js-tenant-name').val() as string;
 
 		if (!tenantName) {
 			Alert.error(mf('tenant.create.plsGiveName', 'Please give a organisation name'));
@@ -44,9 +62,9 @@ Template.tenantCreate.events({
 		}
 
 		const changes = {
-			name: instance.$('.js-name').val(),
-			tz: instance.$('.js-timezone').val(),
-		};
+			name: instance.$('.js-name').val() as string,
+			tz: instance.$('.js-timezone').val() as string,
+		} as Omit<RegionsMethods.CreateFields, 'tenant'>;
 
 		if (!changes.name) {
 			Alert.error(mf('tenant.region.create.plsGiveName', 'Please give your region a name'));
