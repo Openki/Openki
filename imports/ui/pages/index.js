@@ -12,7 +12,6 @@ import './frames/courselist/courselist-frame';
 import './frames/events/events-frame';
 import './frames/schedule/schedule-frame';
 import './frames/week/week-frame';
-import './kiosk/kiosk';
 import './log/log';
 import './not-found';
 import './reset-password/reset-password';

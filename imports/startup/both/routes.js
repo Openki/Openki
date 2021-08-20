@@ -330,6 +330,7 @@ Router.route('home', finderRoute('/'));
 
 Router.route('kioskEvents', {
 	path: '/kiosk/events',
+	template: 'kioskEventsPage',
 	layoutTemplate: 'kioskLayout',
 	waitOn() {
 		const now = reactiveNow.get(); // Time dependency so this will be reactively updated
@@ -372,6 +373,10 @@ Router.route('kioskEvents', {
 			ongoing: Events.findFilter(queryNow),
 			filter: filterParams,
 		};
+	},
+	async action() {
+		await import('/imports/ui/pages/kiosk/events');
+		this.render();
 	},
 	onAfterAction() {
 		this.timer = Meteor.setInterval(() => {
@@ -737,7 +742,7 @@ Router.route('invitation', {
 
 Router.route('timetable', {
 	path: '/kiosk/timetable',
-	template: 'timetablePage',
+	template: 'kioskTimetablePage',
 	layoutTemplate: 'kioskLayout',
 	waitOn() {
 		return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params?.query), 200);
@@ -883,7 +888,7 @@ Router.route('timetable', {
 		};
 	},
 	async action() {
-		await import('/imports/ui/pages/timetable');
+		await import('/imports/ui/pages/kiosk/timetable');
 		this.render();
 	},
 });

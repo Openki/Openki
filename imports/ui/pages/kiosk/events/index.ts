@@ -13,7 +13,7 @@ import '/imports/ui/components/language-selection/language-selection';
 
 import './kiosk.html';
 
-Template.kioskEvents.helpers({
+Template.kioskEventsPage.helpers({
 	/**
 	 * @param {string} groupId
 	 */
