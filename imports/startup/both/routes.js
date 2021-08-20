@@ -629,6 +629,7 @@ Router.route('stats', {
 
 Router.route('tenantCreate', {
 	path: 'tenant/create',
+	template: 'tenantCreatePage',
 	data() {
 		/** @type TenantModel */
 		const tenant = new Tenant();
@@ -640,6 +641,10 @@ Router.route('tenantCreate', {
 			region,
 		};
 	},
+	async action() {
+		await import('/imports/ui/pages/tenant-create');
+		this.render();
+	},
 	onAfterAction() {
 		msgfmt.loading(); // Rerun after msgfmt has loaded translation
 
@@ -650,6 +655,7 @@ Router.route('tenantCreate', {
 
 Router.route('tenantDetails', {
 	path: 'tenant/:_id/:short?',
+	template: 'tenantDetailsPage',
 	/**
 	 * @this {{params: {_id: string; slug?: string;}}}
 	 */
@@ -667,6 +673,10 @@ Router.route('tenantDetails', {
 		}
 
 		return { tenant };
+	},
+	async action() {
+		await import('/imports/ui/pages/tenant-details');
+		this.render();
 	},
 	/**
 	 * @this {{params: {_id: string; slug?: string;}}}
