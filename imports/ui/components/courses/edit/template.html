@@ -54,26 +54,25 @@
 									aria-label="Close"></button>
 						</div>
 					{{/if}}
-					{{#if simpleRoleSelection}}
+					{{#if (state 'simpleRoleSelection')}}
 						<div class="mb-3">
 							<label class="form-label"
 								   id="learnOrTeachTitle">{{mf 'course.edit.learnOrTeach' 'Learn or teach?'}}</label>
-							<div class="btn-group-toggle clearfix course-edit-roles" role="group"
+							<div class="btn-group-toggle row" role="group"
 								 aria-labelledby="learnOrTeachTitle">
-								<div class="course-edit-role">
+								<div class="col d-grid">
 									<label
-										   class="btn btn-lg {{simpleRoleActiveClass 'participant'}} course-edit-role-btn">
-										<input class="course-edit-role-radio" type="radio"
-											   name="role" value="participant" checked>
+										   class="btn btn-lg {{simpleRoleActiveClass 'participant'}}">
+										<input class="d-none" type="radio" name="role"
+											   value="participant" checked>
 										<i class="fa fa-user fa-lg fa-fw"></i>
 										{{mf 'course.edit.iWantToLearn' 'I want to learn'}}
 									</label>
 								</div>
-								<div class="course-edit-role">
-									<label
-										   class="btn btn-lg {{simpleRoleActiveClass 'mentor'}} course-edit-role-btn">
-										<input class="course-edit-role-radio" type="radio"
-											   name="role" value="mentor">
+								<div class="col d-grid">
+									<label class="btn btn-lg {{simpleRoleActiveClass 'mentor'}}">
+										<input class="d-none" type="radio" name="role"
+											   value="mentor">
 										<i class="fa fa-graduation-cap fa-lg fa-fw"></i>
 										{{mf 'course.edit.iCanTeach' 'I can teach'}}
 									</label>
@@ -88,12 +87,12 @@
 						{{> editableTextarea editableDescription}}
 					</div>
 					{{#if hasPricePolicy}}
-							{{> pricePolicy dismissable=true wrap='mb-3'}}
+						{{> pricePolicy dismissable=true wrap='mb-3'}}
 					{{/if}}
 					<div class="row gap-3 mb-3">
 						{{#unless hideCategories}}
 							<div class="col-md">
-								{{#if editingCategories}}
+								{{#if (state 'editingCategories')}}
 									<label
 										   class="form-label mb-0">{{mf 'course.edit.edit_categories' 'Edit Categories'}}</label>
 									{{#each availableCategories}}
@@ -141,12 +140,12 @@
 								{{/if}}
 							</div>
 						{{/unless}}
-						{{#if fullRoleSelection}}
+						{{#if (state 'fullRoleSelection')}}
 							<div class="col-md">
 								<label
 									   class="form-label">{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
-								{{#each availableRoles}}
-									{{> courseEditRole selected=../roles role=this members=../members}}
+								{{#each role in availableRoles}}
+									{{> courseEditRole selected=roles role=role members=members}}
 								{{/each}}
 							</div>
 						{{/if}}

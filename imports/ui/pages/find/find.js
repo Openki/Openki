@@ -16,7 +16,7 @@ import * as Viewport from '/imports/ui/lib/viewport';
 import * as UrlTools from '/imports/utils/url-tools';
 
 import '/imports/ui/components/courses/list/course-list';
-import '/imports/ui/components/courses/edit/course-edit';
+import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/filter/course-filter';
 import '/imports/ui/components/loading';
 

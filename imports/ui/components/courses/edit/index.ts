@@ -2,6 +2,7 @@ import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
@@ -47,15 +48,17 @@ export type Data = {
 		Data,
 		'courseEdit',
 		{
-			editingCategories: ReactiveVar<boolean>;
-			selectedCategories: ReactiveVar<string[]>;
 			editableDescription: Editable;
-			showInternalCheckbox: ReactiveVar<boolean>;
-			fullRoleSelection: boolean;
-			simpleRoleSelection: boolean;
-			simpleSelectedRole: ReactiveVar<string>;
+			state: ReactiveDict<{
+				editingCategories: boolean;
+				selectedCategories: string[];
+				fullRoleSelection: boolean;
+				simpleRoleSelection: boolean;
+				simpleSelectedRole: string;
+			}>;
 			savedCourseId: ReactiveVar<string | undefined>;
 			showSavedMessage: ReactiveVar<boolean>;
+			showInternalCheckbox: () => boolean;
 			getSavedCourse: () => CourseModel | undefined;
 			resetFields: () => void;
 		}
@@ -64,14 +67,11 @@ export type Data = {
 	const template = Template.courseEdit;
 
 	template.onCreated(function () {
-		this.busy(false);
+		const instance = this;
 
-		// Show category selection right away for new courses
-		const editingCategories = !this.data || !this.data._id;
-		this.editingCategories = new ReactiveVar(editingCategories);
-		this.selectedCategories = new ReactiveVar(this.data?.categories || []);
+		instance.busy(false);
 
-		this.editableDescription = new Editable(
+		instance.editableDescription = new Editable(
 			false,
 			mf(
 				'course.description.placeholder',
@@ -79,87 +79,90 @@ export type Data = {
 			),
 		);
 
-		this.autorun(() => {
-			this.editableDescription.setText(Template.currentData().description || '');
+		instance.state = new ReactiveDict();
+		instance.state.setDefault({
+			editingCategories: false,
+			selectedCategories: [],
+			fullRoleSelection: true,
+			// For iframes: On true shows a simple role selection like: [I want to learn] [I can teach]
+			simpleRoleSelection: false,
+			// For iframes: Keep state of simple role selection
+			simpleSelectedRole: 'participant',
 		});
 
-		if (!this.data.isFrame) {
-			if (this.data.group) this.subscribe('group', this.data.group);
-		} else if (this.data.teamGroups) {
-			this.data.teamGroups.forEach((g) => {
-				this.subscribe('group', g);
-			});
-		}
+		instance.savedCourseId = new ReactiveVar(undefined);
+		instance.showSavedMessage = new ReactiveVar(false);
 
-		this.showInternalCheckbox = new ReactiveVar(false);
-		this.autorun(() => {
-			let internalOption;
+		instance.autorun(() => {
+			const data = Template.currentData();
 
-			const user = Meteor.user();
-			if (!this.data.isFrame && this.data.group && user?.groups) {
-				// Visible in group detail page (for creation) if user is in group
-				internalOption = user.groups.includes(this.data.group);
-			} else {
-				// and visible on edit if course is in a group
-				// For devs: This behaviour is not consistent. But we want the creation to be as simple
-				// as possible.
-				internalOption = (this.data.groups?.length || 0) > 0;
+			instance.editableDescription.setText(data.description || '');
+
+			// Show category selection right away for new courses
+			instance.state.set('editingCategories', !data._id);
+			instance.state.set('selectedCategories', data.categories);
+
+			if (!data.isFrame) {
+				if (data.group) {
+					instance.subscribe('group', data.group);
+				}
+			} else if (data.teamGroups) {
+				data.teamGroups.forEach((g) => {
+					instance.subscribe('group', g);
+				});
 			}
 
-			this.showInternalCheckbox.set(internalOption);
-		});
+			if (data.isFrame) {
+				// When we're in the propose frame, show a simplified role selection
+				instance.state.set(
+					'simpleRoleSelection',
+					!this.data.hideRoleSelection && this.data.roles.includes('mentor'),
+				);
+				instance.state.set('fullRoleSelection', false);
 
-		this.fullRoleSelection = true;
-
-		if (this.data.isFrame) {
-			// When we're in the propose frame, show a simplified role selection
-			this.simpleRoleSelection = !this.data.hideRoleSelection && this.data.roles.includes('mentor');
-			this.fullRoleSelection = false;
-
-			// Keep state of simple role selection
-			this.simpleSelectedRole = new ReactiveVar('participant');
-
-			this.savedCourseId = new ReactiveVar(undefined);
-			this.showSavedMessage = new ReactiveVar(false);
-
-			this.autorun(() => {
 				const courseId = this.savedCourseId.get();
 				if (courseId) {
 					this.subscribe('courseDetails', courseId);
 				}
-			});
+			}
+		});
 
-			this.getSavedCourse = () => Courses.findOne(this.savedCourseId.get());
+		instance.showInternalCheckbox = () => {
+			const data = Template.currentData();
 
-			this.resetFields = () => {
-				this.$('.js-title').val('');
-				this.$('.editable-textarea').html('');
-				this.selectedCategories.set([]);
-				this.simpleSelectedRole.set('participant');
-			};
-		}
+			let internalOption;
+
+			const user = Meteor.user();
+			if (!data.isFrame && data.group && user?.groups) {
+				// Visible in group detail page (for creation) if user is in group
+				internalOption = user.groups.includes(data.group);
+			} else {
+				// and visible on edit if course is in a group
+				// For devs: This behaviour is not consistent. But we want the creation to be as simple
+				// as possible.
+				internalOption = (data.groups?.length || 0) > 0;
+			}
+			return internalOption;
+		};
+
+		instance.getSavedCourse = () => Courses.findOne(instance.savedCourseId.get());
+
+		instance.resetFields = () => {
+			instance.$('.js-title').val('');
+			instance.$('.editable-textarea').html('');
+			instance.state.set('selectedCategories', []);
+			instance.state.set('simpleSelectedRole', 'participant');
+		};
 	});
 
 	template.helpers({
-		simpleRoleSelection() {
-			return Template.instance().simpleRoleSelection;
-		},
-
-		fullRoleSelection() {
-			return Template.instance().fullRoleSelection;
-		},
-
 		simpleRoleActiveClass(role: string) {
 			// HACK using btn-add and btn-edit to show activation state
 			// It would be better to introduce own classes for this task.
-			if (Template.instance().simpleSelectedRole.get() === role) {
+			if (Template.instance().state.equals('simpleSelectedRole', role)) {
 				return 'btn-add active';
 			}
 			return 'btn-edit';
-		},
-
-		query() {
-			return Session.get('search');
 		},
 
 		availableCategories() {
@@ -172,16 +175,12 @@ export type Data = {
 
 		availableSubcategories(category: string) {
 			// Hide if parent categories not selected
-			const selectedCategories = Template.instance().selectedCategories.get();
-			if (!selectedCategories.includes(category)) {
+			const selectedCategories = Template.instance().state.get('selectedCategories');
+			if (!selectedCategories?.includes(category)) {
 				return [];
 			}
 
 			return Categories[category];
-		},
-
-		editingCategories() {
-			return Template.instance().editingCategories.get();
 		},
 
 		availableRoles() {
@@ -204,13 +203,13 @@ export type Data = {
 		},
 
 		isChecked() {
-			const selectedCategories = Template.instance().selectedCategories.get();
-			return selectedCategories.includes(`${this}`) ? 'checkbox-checked' : '';
+			const selectedCategories = Template.instance().state.get('selectedCategories');
+			return selectedCategories?.includes(`${this}`) ? 'checkbox-checked' : '';
 		},
 
 		checkCategory() {
-			const selectedCategories = Template.instance().selectedCategories.get();
-			return selectedCategories.includes(`${this}`) ? 'checked' : '';
+			const selectedCategories = Template.instance().state.get('selectedCategories');
+			return selectedCategories?.includes(`${this}`) ? 'checked' : '';
 		},
 
 		showRegionSelection() {
@@ -269,18 +268,18 @@ export type Data = {
 		},
 
 		showInternalCheckbox() {
-			return Template.instance().showInternalCheckbox.get();
+			return Template.instance().showInternalCheckbox();
 		},
 
 		showSavedMessage() {
-			if (this.isFrame) {
+			if (Template.currentData().isFrame) {
 				return Template.instance().showSavedMessage.get();
 			}
 			return false;
 		},
 
 		savedCourseLink() {
-			if (this.isFrame) {
+			if (Template.currentData().isFrame) {
 				const course = Template.instance().getSavedCourse();
 				if (course) {
 					return Router.url('showCourse', course);
@@ -290,7 +289,7 @@ export type Data = {
 		},
 
 		savedCourseName() {
-			if (this.isFrame) {
+			if (Template.currentData().isFrame) {
 				const course = Template.instance().getSavedCourse();
 				if (course) {
 					return course.name;
@@ -302,7 +301,7 @@ export type Data = {
 		editBodyClasses() {
 			const classes = [];
 
-			if (Template.instance().data.isFrame) {
+			if (Template.currentData().isFrame) {
 				classes.push('is-frame');
 			}
 
@@ -323,18 +322,12 @@ export type Data = {
 				}
 			}
 
-			let regionId;
 			if (data.isFrame && data.region) {
 				// The region was preset for the frame
-				regionId = data.region;
-			} /* else {
-			regionId = Template.instance().$('.js-select-region').val();
-		} */
-
-			const region = Regions.findOne(regionId);
-
-			if (region) {
-				return !region.isPrivate();
+				const region = Regions.findOne(data.region);
+				if (region) {
+					return !region.isPrivate();
+				}
 			}
 
 			return !Regions.currentRegion()?.isPrivate();
@@ -343,7 +336,10 @@ export type Data = {
 
 	template.events({
 		'change input[name=role]'(_event, instance) {
-			instance.simpleSelectedRole.set(instance.$('input[name=role]:checked').val() as string);
+			instance.state.set(
+				'simpleSelectedRole',
+				instance.$('input[name=role]:checked').val() as string,
+			);
 		},
 
 		'click .js-close'(_event, instance) {
@@ -353,11 +349,11 @@ export type Data = {
 		'submit form, click .js-course-edit-save'(event, instance) {
 			event.preventDefault();
 
-			const { data } = instance;
+			const data = Template.currentData();
 			const hasTeamGroups = !!(data.teamGroups?.length > 0);
 
 			let internal;
-			if (instance.showInternalCheckbox.get()) {
+			if (instance.showInternalCheckbox()) {
 				// Usually an "internal" checkbox is displayed so that the users of a group can choose
 				// whether the course is internal or not.
 				internal = instance.$('.js-check-internal').is(':checked');
@@ -372,7 +368,7 @@ export type Data = {
 			const changes = {
 				internal,
 				name: StringTools.saneTitle(instance.$('.js-title').val() as string),
-				categories: instance.selectedCategories.get(),
+				categories: instance.state.get('selectedCategories'),
 			} as Required<CoursesMethods.SaveFields>;
 
 			if (changes.name.length === 0) {
@@ -385,8 +381,7 @@ export type Data = {
 				changes.description = newDescription;
 			}
 
-			const course = instance.data;
-			let courseId = course._id || '';
+			let courseId = data._id || '';
 			const isNew = courseId === '';
 			if (isNew) {
 				if (data.isFrame && data.region) {
@@ -420,7 +415,10 @@ export type Data = {
 					changes.roles[role] = true;
 				});
 
-				if (instance.simpleRoleSelection && instance.simpleSelectedRole.get() === 'mentor') {
+				if (
+					instance.state.equals('simpleRoleSelection', true) &&
+					instance.state.equals('simpleSelectedRole', 'mentor')
+				) {
 					changes.subs.push('mentor');
 				}
 
@@ -428,7 +426,7 @@ export type Data = {
 				changes.subs = [...new Set([...changes.subs, ...data.creatorsRoles])];
 			}
 
-			if (instance.fullRoleSelection) {
+			if (instance.state.equals('fullRoleSelection', true)) {
 				instance.$('.js-check-role').each(function () {
 					const inputElement = this as HTMLInputElement;
 					changes.roles[inputElement.name] = inputElement.checked;
@@ -516,12 +514,12 @@ export type Data = {
 		},
 
 		'click .js-edit-categories'() {
-			Template.instance().editingCategories.set(true);
+			Template.instance().state.set('editingCategories', true);
 		},
 
 		'change .js-category-checkbox'(_event, instance) {
 			const catKey = `${this}`;
-			let selectedCategories = instance.selectedCategories.get();
+			let selectedCategories = instance.state.get('selectedCategories') || [];
 			const checked = instance.$(`input.cat_${catKey}`).prop('checked');
 			if (checked) {
 				selectedCategories.push(catKey);
@@ -535,7 +533,7 @@ export type Data = {
 				}
 			}
 
-			instance.selectedCategories.set(selectedCategories);
+			instance.state.set('selectedCategories', selectedCategories);
 		},
 	});
 }

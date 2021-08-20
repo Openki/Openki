@@ -24,7 +24,7 @@ import * as IdTools from '/imports/utils/id-tools';
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
 import '/imports/ui/components/courses/discussion/course-discussion';
-import '/imports/ui/components/courses/edit/course-edit';
+import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/events/course-events';
 import '/imports/ui/components/courses/history/course-history';
 import '/imports/ui/components/courses/members/course-members';

@@ -1,16 +1,18 @@
-.course-edit-body {
-	&.is-frame {
-		margin-top: 0;
-	}
+@import '{}/imports/ui/stylesheets/variables/index';
 
-	@media (min-width: $screen-xs) {
+.course-edit-body {
+	@include media-breakpoint-up(sm) {
 		border-color: $course-border-color;
 		border-style: $proposal-border-style;
+	}
+
+	&.is-frame {
+		margin-top: 0;
 	}
 }
 
 .proposed-courses {
-	border: 1px solid $brand-primary;
+	border: 1px solid $primary;
 	max-height: 200px;
 	overflow: auto;
 	width: 100%;
@@ -23,20 +25,4 @@
 
 .proposed-courses > .dropdown-header > .fa {
 	margin-right: 7px;
-}
-
-.course-edit-roles {
-	@include make-row;
-}
-
-.course-edit-role {
-	@include td-make-xs-column(6);
-}
-
-.course-edit-role-btn {
-	width: 100%;
-}
-
-.course-edit-role-radio {
-	display: none;
 }
