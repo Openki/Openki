@@ -17,45 +17,54 @@ import { ServerMethod } from '/imports/utils/ServerMethod';
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import PublicSettings from '/imports/utils/PublicSettings';
 
-/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
-
 export const sendVerificationEmail = ServerMethod(
 	'sendVerificationEmail',
 	() => {
-		Accounts.sendVerificationEmail(Meteor.userId());
+		const userId = Meteor.userId();
+		if (!userId) {
+			throw new Meteor.Error(401, 'please log in');
+		}
+
+		Accounts.sendVerificationEmail(userId);
 	},
 	{ simulation: false },
 );
 
 export const sendEmail = ServerMethod(
 	'sendEmail',
-	/**
-	 * @param {string} userId
-	 * @param {string} message
-	 * @param {{
-	 * revealAddress: boolean;
-	 * sendCopy: boolean;
-	 * courseId?: string;
-	 * eventId?: string;
-	 * }} options
-	 */
-	(userId, message, options) => {
+	(
+		userId: string,
+		message: string,
+		options: {
+			revealAddress: boolean;
+			sendCopy: boolean;
+			courseId?: string;
+			eventId?: string;
+		},
+	) => {
 		check(userId, String);
 		check(message, String);
-		check(options.revealAddress, Boolean);
-		check(options.sendCopy, Boolean);
-		check(options.courseId, Match.Optional(String));
-		check(options.eventId, Match.Optional(String));
+		check(options, {
+			revealAddress: Boolean,
+			sendCopy: Boolean,
+			courseId: Match.Optional(String),
+			eventId: Match.Optional(String),
+		});
+
+		const operator = Meteor.user();
+		if (!operator) {
+			throw new Meteor.Error(401, 'please log in');
+		}
 
 		const recipient = Users.findOne(userId);
 		if (!recipient) {
 			throw new Meteor.Error(404, 'no such user');
 		}
-		if (!recipient.acceptsPrivateMessages && !UserPrivilegeUtils.privilegedTo('admin')) {
+		if (!recipient.acceptsPrivateMessages && !UserPrivilegeUtils.privileged(operator, 'admin')) {
 			throw new Meteor.Error(401, 'this user does not accept private messages from users');
 		}
 
-		const context = {};
+		const context: { course?: string; event?: string } = {};
 		if (options.courseId) {
 			context.course = options.courseId;
 		}
@@ -64,7 +73,7 @@ export const sendEmail = ServerMethod(
 		}
 
 		Notification.PrivateMessage.record(
-			Meteor.userId(),
+			operator._id,
 			recipient._id,
 			message,
 			options.revealAddress,
@@ -136,5 +145,5 @@ export const report = ServerMethod(
 
 		Email.send(email);
 	},
-	{ serverOnly: true },
+	{ simulation: true },
 );
