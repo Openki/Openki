@@ -2,7 +2,7 @@ import { EventEntity } from '../api/events/events';
 
 export function AffectedReplicaSelectors(event: EventEntity) {
 	// If the event itself is not in the DB, we don't expect it to have replicas
-	if (!event._id) return { _id: -1 }; // Finds nothing
+	if (!event._id) return { _id: "" }; // Finds nothing
 
 	// Only replicas future from the edited event are updated
 	// replicas in the past are never updated
