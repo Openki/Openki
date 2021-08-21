@@ -88,6 +88,8 @@ import './template.html';
 				instance.$('.js-email-request-modal').modal('hide');
 			} catch (err) {
 				instance.errors.add(err.reason);
+			} finally {
+				instance.busy(false);
 			}
 		},
 	});

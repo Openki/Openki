@@ -26,14 +26,14 @@ if (Meteor.isClient) {
 
 			assert.isString(groupId, 'group.save returns an groupId string');
 
-			await GroupsMethods.save(groupId, { name: editRandomName });
+			await GroupsMethods.save(groupId as string, { name: editRandomName });
 
 			const handle = await MeteorAsync.subscribe('group', groupId);
 			handle.stop();
 
 			const group = Groups.findOne(groupId);
 
-			assert.equal(group.name, editRandomName);
+			assert.equal(group?.name, editRandomName);
 		});
 
 		it('does not allow setting a empty group name', async function () {
@@ -56,7 +56,7 @@ if (Meteor.isClient) {
 
 			let hasFailed = false;
 			try {
-				await GroupsMethods.save(groupId, { name: '' });
+				await GroupsMethods.save(groupId as string, { name: '' });
 			} catch (err) {
 				if (err) {
 					hasFailed = true;

@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Events } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { MeteorAsync } from '/imports/utils/promisify';
-import { Courses } from '../courses/courses';
+import { CourseModel, Courses } from '../courses/courses';
 
 if (Meteor.isClient) {
 	describe('Event', () => {
@@ -33,14 +33,14 @@ if (Meteor.isClient) {
 					internal: true,
 				};
 
-				const eventId = await EventsMethods.save({
+				const eventId = (await EventsMethods.save({
 					eventId: '',
 					changes: newEvent,
-				});
+				})) as string;
 
 				assert.isString(eventId, 'event.save returns an eventId string');
 
-				const event = { ...newEvent };
+				const event: any = { ...newEvent };
 				delete event.region;
 				event.title += ' No really';
 				await EventsMethods.save({ eventId, changes: event });
@@ -83,8 +83,8 @@ if (Meteor.isClient) {
 
 				const event = Events.findOne(eventId);
 
-				assert.equal(event.title, expectedTitle);
-				assert.equal(event.description, expectedText);
+				assert.equal(event?.title, expectedTitle);
+				assert.equal(event?.description, expectedText);
 			});
 
 			it('Updates time_lastedit from course', async function () {
@@ -124,7 +124,10 @@ if (Meteor.isClient) {
 
 					const newCourse = Courses.findOne(courseId);
 
-					assert.isAbove(newCourse.time_lastedit.getTime(), oldCourse.time_lastedit.getTime());
+					assert.isAbove(
+						(newCourse as CourseModel).time_lastedit.getTime(),
+						(oldCourse as CourseModel).time_lastedit.getTime(),
+					);
 				} finally {
 					handle.stop();
 				}

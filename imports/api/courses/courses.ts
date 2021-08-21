@@ -3,19 +3,18 @@ import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
+import { UserModel } from '../users/users';
+import { EventEntity } from '../events/events';
+// eslint-disable-next-line import/no-cycle
+import * as tenantDenormalizer from './tenantDenormalizer';
+
+import { hasRoleUser } from '/imports/utils/course-role-utils';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
-
-import { hasRoleUser } from '/imports/utils/course-role-utils';
-/** @typedef {import('imports/api/users/users').UserModel} UserModel */
-// eslint-disable-next-line import/no-cycle
-import * as tenantDenormalizer from './tenantDenormalizer';
-import { PublicSettings } from '/imports/utils/PublicSettings';
-import { UserModel } from '../users/users';
-import { EventEntity } from '../events/tenantDenormalizer';
 
 export interface CourseMemberEntity {
 	user: string;
