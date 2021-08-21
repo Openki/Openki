@@ -5,21 +5,22 @@ import * as HtmlTools from '/imports/utils/html-tools';
 import { Users } from '/imports/api/users/users';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 
-import { Groups } from './groups';
+import { GroupEntity, Groups } from './groups';
 
 import { isGroupMember } from '/imports/utils/is-group-member';
 
 export const save = ServerMethod(
 	'group.save',
-	/**
-	 * @param {string} groupId
-	 * @param {{short?: string;
-	 * name?: string;
-	 * claim?: string;
-	 * description?: string;
-	 * logoUrl?: string;}} changes
-	 */
-	(groupId, changes) => {
+	(
+		groupId: string,
+		changes: {
+			short?: string;
+			name?: string;
+			claim?: string;
+			description?: string;
+			logoUrl?: string;
+		},
+	) => {
 		check(groupId, String);
 		check(changes, {
 			short: Match.Optional(String),
@@ -49,11 +50,11 @@ export const save = ServerMethod(
 		}
 
 		// User must be member of group to edit it
-		if (!isNew && !isGroupMember(userId, group._id)) {
+		if (!isNew && !isGroupMember(userId, group._id as string)) {
 			throw new Meteor.Error(401, 'Denied');
 		}
 
-		const updates = {};
+		const updates = {} as  Mongo.OptionalId<GroupEntity>;
 		if (changes.short !== undefined) {
 			let short = changes.short.trim();
 			if (short.length === 0) {
@@ -90,7 +91,7 @@ export const save = ServerMethod(
 			groupId = Groups.insert(_.extend(group, updates));
 			Meteor.call('user.updateBadges', userId);
 		} else {
-			Groups.update(group._id, { $set: updates });
+			Groups.update(group._id as string, { $set: updates });
 		}
 
 		return groupId;
@@ -103,7 +104,7 @@ export const updateLogo = ServerMethod(
 	 * @param {string} groupId
 	 * @param {string} logoUrl
 	 */
-	(groupId, logoUrl) => {
+	(groupId: string, logoUrl: string) => {
 		check(groupId, String);
 		check(logoUrl, Match.Maybe(String));
 
@@ -151,7 +152,7 @@ export const updateMembership = ServerMethod(
 	 * @param {string} groupId
 	 * @param {boolean} join
 	 */
-	(userId, groupId, join) => {
+	(userId: string, groupId: string, join: boolean) => {
 		check(userId, String);
 		check(groupId, String);
 
