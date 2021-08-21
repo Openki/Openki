@@ -1,7 +1,6 @@
 import { Regions } from '/imports/api/regions/regions';
 // eslint-disable-next-line import/no-cycle
-import { Events } from '/imports/api/events/events';
-/** @typedef {import('./events').EventEntity} EventEntity */
+import { EventEntity, Events } from '/imports/api/events/events';
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
 
@@ -20,10 +19,7 @@ export function onStartUp() {
 	console.log(`events.tenantDenormalizer.onStartUp: ${updated} affected events`);
 }
 
-/**
- * @param {EventEntity} event
- */
-export function beforeInsert(event) {
+export function beforeInsert(event: EventEntity) {
 	if (!event.region) {
 		throw new Error('Unexpected falsy: event.region');
 	}
