@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment';
 
 import { Regions } from '/imports/api/regions/regions';
@@ -11,78 +11,100 @@ import PublicSettings from '/imports/utils/PublicSettings';
 
 import '/imports/ui/components/language-selection/language-selection';
 
-import './kiosk.html';
+import './template.html';
+import './styles.scss';
 
-Template.kioskEventsPage.helpers({
-	/**
-	 * @param {string} groupId
-	 */
-	groupShort(groupId) {
-		const instance = Template.instance();
-		instance.subscribe('group', groupId);
+{
+	const Template = TemplateAny as TemplateStaticTyped<
+		Record<string, unknown>,
+		'kioskEventsPage',
+		Record<string, never>
+	>;
 
-		const group = Groups.findOne({ _id: groupId });
-		if (group) {
-			return group.short;
-		}
-		return '';
-	},
-	/**
-	 * @param {string} venueId
-	 */
-	venueName(venueId) {
-		const instance = Template.instance();
-		instance.subscribe('venueDetails', venueId);
+	const template = Template.kioskEventsPage;
 
-		const venue = Venues.findOne({ _id: venueId });
-		if (venue) {
-			return venue.name;
-		}
-		return '';
-	},
-	showTime() {
-		Session.get('seconds');
-		return moment().format('LTS');
-	},
-	showDate() {
-		Session.get('seconds');
-		return moment().format('LL');
-	},
-	headerLogo() {
-		const currentRegion = Regions.currentRegion();
-		if (currentRegion?.custom?.headerLogoKiosk?.src) {
-			return currentRegion.custom.headerLogoKiosk.src;
-		}
+	template.helpers({
+		groupShort(groupId: string) {
+			const instance = Template.instance();
+			instance.subscribe('group', groupId);
 
-		return PublicSettings.headerLogoKiosk.src;
-	},
-	headerAlt() {
-		const currentRegion = Regions.currentRegion();
-		if (currentRegion?.custom?.headerLogoKiosk?.alt) {
-			return currentRegion.custom.headerLogoKiosk.alt;
-		}
+			const group = Groups.findOne({ _id: groupId });
+			if (group) {
+				return group.short;
+			}
+			return '';
+		},
+		venueName(venueId: string) {
+			const instance = Template.instance();
+			instance.subscribe('venueDetails', venueId);
 
-		return PublicSettings.headerLogoKiosk.alt;
-	},
-});
+			const venue = Venues.findOne({ _id: venueId });
+			if (venue) {
+				return venue.name;
+			}
+			return '';
+		},
+		showTime() {
+			Session.get('seconds');
+			return moment().format('LTS');
+		},
+		showDate() {
+			Session.get('seconds');
+			return moment().format('LL');
+		},
+		headerLogo() {
+			const currentRegion = Regions.currentRegion();
+			if (currentRegion?.custom?.headerLogoKiosk?.src) {
+				return currentRegion.custom.headerLogoKiosk.src;
+			}
 
-Template.kioskEvent.helpers({
-	timePeriod() {
-		return Template.instance().parentInstance().data.timePeriod;
-	},
+			return PublicSettings.headerLogoKiosk.src;
+		},
+		headerAlt() {
+			const currentRegion = Regions.currentRegion();
+			if (currentRegion?.custom?.headerLogoKiosk?.alt) {
+				return currentRegion.custom.headerLogoKiosk.alt;
+			}
 
-	isOngoing() {
-		return Template.instance().parentInstance().data.timePeriod === 'ongoing';
-	},
+			return PublicSettings.headerLogoKiosk.alt;
+		},
+	});
+}
 
-	isUpcoming() {
-		return Template.instance().parentInstance().data.timePeriod === 'upcoming';
-	},
-});
+{
+	const Template = TemplateAny as TemplateStaticTyped<
+		Record<string, unknown>,
+		'kioskEvent',
+		Record<string, never>
+	>;
 
-Template.kioskEventLocation.helpers({
-	showLocation() {
-		// The location is shown when we have a location name and the location is not used as a filter
-		return this.location?.name && !Router.current().params.query.location;
-	},
-});
+	const template = Template.kioskEvent;
+	template.helpers({
+		timePeriod() {
+			return (Template.instance().parentInstance() as any).data.timePeriod;
+		},
+
+		isOngoing() {
+			return (Template.instance().parentInstance() as any).timePeriod === 'ongoing';
+		},
+
+		isUpcoming() {
+			return (Template.instance().parentInstance() as any).timePeriod === 'upcoming';
+		},
+	});
+}
+
+{
+	const Template = TemplateAny as TemplateStaticTyped<
+		Record<string, unknown>,
+		'kioskEventLocation',
+		Record<string, never>
+	>;
+	const template = Template.kioskEventLocation;
+	template.helpers({
+		showLocation() {
+			// The location is shown when we have a location name and the location is not used as a filter
+			return this.location?.name && !Router.current().params.query.location;
+		},
+	});
+}

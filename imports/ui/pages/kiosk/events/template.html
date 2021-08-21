@@ -61,15 +61,15 @@
 </template>
 
 <template name="kioskEventList">
-	<div class="kiosk-event-list">
-		{{#each dataEvents}}
-			{{> kioskEvent}}
+	<div class="kiosk-event-list row g-3">
+		{{#each event in dataEvents}}
+			{{> kioskEvent event}}
 		{{/each}}
 	</div>
 </template>
 
 <template name="kioskEvent">
-	<div class="kiosk-event-wrap-{{timePeriod}}">
+	<div class="kiosk-event-wrap-{{timePeriod}} col-6 col-lg-3 col-xl-2">
 		<a href="{{pathFor 'showEvent'}}">
 			<div class="kiosk-event kiosk-event-{{timePeriod}}">
 				{{#unless isUpcoming}}
@@ -81,7 +81,7 @@
 						{{fromNow start}}
 					</div>
 				{{/unless}}
-				<div class="kiosk-event-header">
+				<div class="kiosk-event-header clearfix">
 					{{#unless isOngoing}}
 						{{> kioskEventLocation}}
 					{{/unless}}

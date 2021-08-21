@@ -27,7 +27,7 @@
 .kiosk-heading {
 	@include td-margin-all(0, 15px, 0, 0);
 	display: inline-block;
-	font-size: $font-size-h1;
+	font-size: $h1-font-size;
 	line-height: $line-height-base;
 	padding-bottom: 15px;
 }
@@ -60,39 +60,18 @@
 }
 
 .kiosk-moment-time {
-	font-size: $font-size-h2;
+	font-size: $h2-font-size;
 }
 
 .kiosk-moment-date {
 	@include td-margin(left, 5px);
-	font-size: $font-size-h4;
+	font-size: $h4-font-size;
 }
 
-.kiosk-event-list {
-	@include clearfix;
-	margin: ($kiosk-wrap-padding-vertical * -1) ($kiosk-wrap-padding-horizontal * -1);
-	width: auto;
-}
+
 
 // *** Kiosk event ***
 //====================
-
-// ** Wrap
-//========================================================================================
-.kiosk-event-wrap-ongoing {
-	@include td-make-xs-column(6);
-	@include td-make-sm-column(4);
-	@include td-make-md-column(2);
-	padding: $kiosk-wrap-padding-vertical $kiosk-wrap-padding-horizontal;
-}
-
-.kiosk-event-wrap-today,
-.kiosk-event-wrap-upcoming {
-	@include td-make-xs-column(6);
-	@include td-make-md-column(3);
-	@include td-make-lg-column(2.4);
-	padding: $kiosk-wrap-padding-vertical $kiosk-wrap-padding-horizontal;
-}
 
 // ** Event
 //========================================================================================
@@ -142,7 +121,7 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 
 .kiosk-event-header {
 	@include clearfix;
-	color: $gray-dark;
+	color: $gray-800;
 	font-size: medium;
 	padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal;
 }
@@ -199,7 +178,7 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 // ** Title
 //========================================================================================
 .kiosk-event-title {
-	color: $gray-dark;
+	color: $gray-800;
 	display: inline;
 }
 

@@ -40,13 +40,17 @@ export interface RegionEntity {
 	/** ID of featured group */
 	featuredGroup: string;
 	custom?: {
-		siteName: string;
-		siteStage: string;
-		headerLogo: {
+		siteName?: string;
+		siteStage?: string;
+		headerLogo?: {
 			src: string;
 			alt: string;
 		};
-		emailLogo: string;
+		headerLogoKiosk?: {
+			src: string;
+			alt: string;
+		};
+		emailLogo?: string;
 	};
 	createdby?: string;
 	created?: Date;
