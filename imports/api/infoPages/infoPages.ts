@@ -1,15 +1,19 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-// ======== DB-Model: ========
-/**
- * @typedef {Object} InfoPagesEntity
- * @property {string} slug URL-path of the page /info/:slug
- * @property {string} locale eg. en, de, de-ZH
- * @property {number} accuracy Helps to find the most exact language. eg. de-ZH: 3, de: 2, en: 1
- * @property {string} title title of the page, shown in the browser's title bar or in the page's tab
- * @property {string} body the content of the page, its supports markdown
- */
+/** DB-Model */
+interface InfoPagesEntity {
+	/** URL-path of the page /info/:slug */
+	slug: string;
+	/** eg. en, de, de-ZH */
+	locale: string;
+	/** Helps to find the most exact language. eg. de-ZH: 3, de: 2, en: 1 */
+	accuracy: number;
+	/** title of the page, shown in the browser's title bar or in the page's tab */
+	title: string;
+	/** the content of the page, its supports markdown */
+	body: string;
+}
 
 /*
 Example
@@ -25,10 +29,7 @@ Openki ist eine offene Bildungsplattform.`
 })
  */
 
-/**
- * @extends {Mongo.Collection<InfoPagesEntity>}
- */
-export class InfoPagesCollection extends Mongo.Collection {
+export class InfoPagesCollection extends Mongo.Collection<InfoPagesEntity> {
 	constructor() {
 		super('InfoPages');
 
