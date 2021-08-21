@@ -1,99 +1,94 @@
 import { mf } from 'meteor/msgfmt:core';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 
 import * as Alert from '/imports/api/alerts/alert';
 import * as usersMethods from '/imports/api/users/methods';
-import * as emailMethods from '/imports/api/emails/methods';
 
-import * as EmailRequest from '/imports/ui/lib/email-request';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
-import './email-request.html';
+import './template.html';
 
-Template.emailRequest.helpers({
-	showEmailRequest() {
-		return EmailRequest.showEmailRequest();
-	},
-});
+{
+	const Template = TemplateAny as TemplateStaticTyped<
+		Record<string, unknown>,
+		'emailRequest',
+		Record<string, never>
+	>;
 
-Template.emailRequestModal.onCreated(function () {
-	this.busy(false);
-});
+	const template = Template.emailRequest;
 
-Template.emailRequestModal.onRendered(function () {
-	this.$('.js-email-request-modal').modal('show');
-});
+	template.helpers({
+		showEmailRequest() {
+			const user = Meteor.user();
 
-TemplateMixins.FormfieldErrors(Template, 'emailRequestModal', {
-	noEmail: {
-		text: () => mf('register.warning.noEmailProvided'),
-		field: 'email',
-	},
-	'email invalid': {
-		text: () => mf('register.warning.emailNotValid', 'Your email seems to have an error.'),
-		field: 'email',
-	},
-	emailExists: {
-		text: () => mf('register.warning.emailExists'),
-		field: 'email',
-	},
-});
+			return (
+				user &&
+				user.hasEmail() &&
+				!user.hasVerifiedEmail() &&
+				moment().subtract(7, 'days').isAfter(user.createdAt)
+			);
+		},
+	});
+}
 
-Template.emailRequestModal.events({
-	async 'click .js-save-email'(event, instance) {
-		event.preventDefault();
+{
+	const TemplateBase = TemplateAny as TemplateStaticTyped<
+		Record<string, unknown>,
+		'emailRequestModal',
+		Record<string, never>
+	>;
 
-		instance.errors.reset();
+	const Template = TemplateMixins.FormfieldErrors(TemplateBase, 'emailRequestModal', {
+		noEmail: {
+			text: () => mf('register.warning.noEmailProvided'),
+			field: 'email',
+		},
+		'email invalid': {
+			text: () => mf('register.warning.emailNotValid', 'Your email seems to have an error.'),
+			field: 'email',
+		},
+		emailExists: {
+			text: () => mf('register.warning.emailExists'),
+			field: 'email',
+		},
+	});
 
-		const email = instance.$('.js-email').val().trim();
-		if (!email) {
-			instance.errors.add('noEmail');
-		}
+	const template = Template.emailRequestModal;
 
-		if (instance.errors.present()) {
-			return;
-		}
+	template.onCreated(function () {
+		this.busy(false);
+	});
 
-		instance.busy('saving');
-		try {
-			await usersMethods.updateEmail(email);
+	template.onRendered(function () {
+		this.$('.js-email-request-modal').modal('show');
+	});
 
-			Alert.success(mf('profile.updated', 'Updated profile'));
-			instance.$('.js-email-request-modal').modal('hide');
-		} catch (err) {
-			instance.errors.add(err.reason);
-		}
-	},
-});
+	template.events({
+		async 'click .js-save-email'(event, instance) {
+			event.preventDefault();
 
-Template.emailValidation.helpers({
-	showEmailValidation() {
-		return EmailRequest.showEmailValidation();
-	},
-});
+			instance.errors.reset();
 
-Template.emailValidationModal.onCreated(function () {
-	this.busy(false);
-});
+			const email = (instance.$('.js-email').val() as string).trim();
+			if (!email) {
+				instance.errors.add('noEmail');
+			}
 
-Template.emailValidationModal.onRendered(function () {
-	this.$('.js-email-validation-modal').modal('show');
-});
+			if (instance.errors.present()) {
+				return;
+			}
 
-Template.emailValidationModal.events({
-	async 'click .js-send-validation-email'(event, instance) {
-		event.preventDefault();
-		instance.busy('sending');
-		try {
-			await emailMethods.sendVerificationEmail();
+			instance.busy('saving');
+			try {
+				await usersMethods.updateEmail(email);
 
-			Alert.success(mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }));
-			$('.js-email-validation-modal').modal('hide');
-		} catch (err) {
-			Alert.serverError(err, 'Failed to send verification mail');
-		} finally {
-			instance.busy(false);
-		}
-	},
-});
+				Alert.success(mf('profile.updated', 'Updated profile'));
+				instance.$('.js-email-request-modal').modal('hide');
+			} catch (err) {
+				instance.errors.add(err.reason);
+			}
+		},
+	});
+}

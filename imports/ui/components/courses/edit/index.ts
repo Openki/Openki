@@ -613,7 +613,7 @@ export type Data = {
 					region: Session.get('region'),
 				});
 				if (!this.$('.dropdown').hasClass('open')) {
-					(this.$('.dropdown-toggle') as any).dropdown('toggle');
+					this.$('.dropdown-toggle').dropdown('toggle');
 				}
 			}
 		});
@@ -634,7 +634,7 @@ export type Data = {
 	template.events({
 		'keydown .js-title'(event, instance) {
 			if ((event as any).keyCode === 9) {
-				(instance.$('.dropdown-toggle') as any).dropdown('toggle');
+				instance.$('.dropdown-toggle').dropdown('toggle');
 				instance.focused.set(false);
 			}
 		},
@@ -662,7 +662,7 @@ export type Data = {
 
 		'keydown .js-dropdown-entry'(event, instance) {
 			if ((event as any).keyCode === 9 && !(event as any).shiftKey) {
-				(instance.$('.dropdown-toggle') as any).dropdown('toggle');
+				instance.$('.dropdown-toggle').dropdown('toggle');
 			}
 		},
 	});
