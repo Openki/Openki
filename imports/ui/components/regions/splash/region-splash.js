@@ -12,12 +12,6 @@ Template.regionSplash.onRendered(function regionSplashOnRendered() {
 
 Template.regionSplash.events({
 	'hidden.bs.modal .js-region-splash'() {
-		const regionId = Session.get('region') || 'all';
-		try {
-			localStorage.setItem('region', regionId); // to survive page reload
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
 		Session.set('showRegionSplash', false);
 	},
 

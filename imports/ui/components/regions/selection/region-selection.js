@@ -5,7 +5,6 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
 import { Regions } from '/imports/api/regions/regions';
-import * as usersMethods from '/imports/api/users/methods';
 
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 
@@ -83,15 +82,7 @@ Template.regionSelection.onCreated(function () {
 	this.changeRegion = (regionId) => {
 		const changed = !Session.equals('region', regionId);
 
-		try {
-			localStorage.setItem('region', regionId); // to survive page reload
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
-		Session.set('region', regionId);
-		if (regionId !== 'all' && Meteor.userId()) {
-			usersMethods.regionChange(regionId);
-		}
+		RegionSelection.change(regionId);
 
 		// When the region changes, we want the content of the page to update
 		// Many pages do not change when the region changed, so we go to

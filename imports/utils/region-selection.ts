@@ -3,6 +3,7 @@ import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
 import { Regions } from '/imports/api/regions/regions';
+import * as usersMethods from '/imports/api/users/methods';
 
 import * as UserLocation from '/imports/utils/user-location';
 import * as UrlTools from '/imports/utils/url-tools';
@@ -12,7 +13,10 @@ import * as UrlTools from '/imports/utils/url-tools';
  */
 export const regionDependentRoutes = ['home', 'find', 'calendar', 'venuesMap', 'groupDetails'];
 
-export function subscribe() {
+/**
+ * @param confirmAutodectionByUser On true: Let the user approve the automatic region selection/detection.
+ */
+export function subscribe(confirmAutodectionByUser = true) {
 	Meteor.subscribe('Regions', async () => {
 		const selectors = [
 			Session.get('region'),
@@ -64,7 +68,7 @@ export function subscribe() {
 		};
 
 		// If any of these regions are usable we stop here
-		if (selectors.some(useAsRegion)) {
+		if (selectors.some((s) => useAsRegion(s))) {
 			return;
 		}
 
@@ -82,7 +86,9 @@ export function subscribe() {
 				useAsRegion('all');
 			}
 
-			Session.set('showRegionSplash', selectors.length < 1);
+			if (confirmAutodectionByUser) {
+				Session.set('showRegionSplash', true);
+			}
 		} catch (err) {
 			// eslint-disable-next-line no-console
 			console.log(`Region autodetection error: ${err}`);
@@ -115,4 +121,16 @@ export function init() {
 	});
 
 	subscribe();
+}
+
+export function change(regionId: string) {
+	try {
+		localStorage.setItem('region', regionId); // to survive page reload
+	} catch {
+		// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+	}
+	Session.set('region', regionId);
+	if (regionId !== 'all' && Meteor.userId()) {
+		usersMethods.regionChange(regionId);
+	}
 }
