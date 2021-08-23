@@ -11,8 +11,7 @@ import './map.html';
  *
  * Expected data
  * markers: A cursor of geojson documents
- *
- * */
+ */
 
 Template.map.onCreated(function () {
 	this.fullscreen = new ReactiveVar(false);
@@ -67,6 +66,7 @@ const OpenkiControl = L.Control.extend({
 
 Template.map.onRendered(function () {
 	const instance = this;
+	const maxZoom = instance.data.maxZoom || 19;
 
 	const layers = {};
 	const centers = {};
@@ -83,17 +83,23 @@ Template.map.onRendered(function () {
 	// Add tiles depending on language
 	let tiles = null;
 	const tileLayers = {
-		// unfortunately for 'de' the tile.openstreetmap.de server does not support SSL
+		de() {
+			return L.tileLayer('//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
+				maxZoom,
+				attribution:
+					'&copy; Openstreetmap Deutschland | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+			});
+		},
 		fr() {
 			return L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-				maxZoom: 19,
+				maxZoom,
 				attribution:
 					'&copy; Openstreetmap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			});
 		},
 		default() {
 			return L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				maxZoom: 19,
+				maxZoom,
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			});
 		},
@@ -198,7 +204,7 @@ Template.map.onRendered(function () {
 			count += 1;
 		});
 
-		let maxZoom = 16;
+		let zoom = maxZoom - 3; // Zoom out a little to give the user a better overview.
 
 		// Use center markers when there are no other markers
 		if (count < 1) {
@@ -207,12 +213,12 @@ Template.map.onRendered(function () {
 				count += 1;
 			});
 			if (count === 1) {
-				maxZoom = 13;
+				zoom = maxZoom - 6;
 			}
 		}
 
 		if (bounds.isValid()) {
-			map.fitBounds(bounds, { padding: [20, 20], maxZoom });
+			map.fitBounds(bounds, { padding: [20, 20], maxZoom: zoom });
 		}
 	}, 100);
 
@@ -234,23 +240,22 @@ Template.map.onRendered(function () {
 			} else {
 				const marker = L.geoJson(mark.loc, {
 					pointToLayer(feature, latlng) {
-						/* eslint-disable-next-line no-shadow */
-						let marker;
+						let m;
 						if (mark.proposed) {
-							marker = L.circleMarker(latlng, geojsonProposedMarkerOptions);
+							m = L.circleMarker(latlng, geojsonProposedMarkerOptions);
 						} else {
-							marker = L.marker(latlng, {
+							m = L.marker(latlng, {
 								icon: mainIcon,
 								draggable: mark.draggable,
 							});
 						}
 						// When the marker is clicked, mark it as 'selected' in the collection,
 						// and deselect all others.
-						marker.on('click', () => {
+						m.on('click', () => {
 							markers.update({}, { $set: { selected: false } });
 							markers.update(mark._id, { $set: { selected: true } });
 						});
-						marker.on('dragend', (event) => {
+						m.on('dragend', (event) => {
 							const latLng = event.target.getLatLng();
 							const loc = {
 								type: 'Point',
@@ -259,14 +264,14 @@ Template.map.onRendered(function () {
 							map.panTo(latLng);
 							markers.update(mark._id, { $set: { loc } });
 						});
-						marker.on('mouseover', () => {
+						m.on('mouseover', () => {
 							markers.update({}, { $set: { hover: false } }, { multi: true });
 							markers.update(mark._id, { $set: { hover: true } });
 						});
-						marker.on('mouseout', () => {
+						m.on('mouseout', () => {
 							markers.update({}, { $set: { hover: false } }, { multi: true });
 						});
-						return marker;
+						return m;
 					},
 				});
 				layers[mark._id] = marker;

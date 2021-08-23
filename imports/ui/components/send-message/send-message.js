@@ -8,7 +8,7 @@ import * as emailMethods from '/imports/api/emails/methods';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
-import '../profiles/verify-email/verify-email';
+import '../profiles/verify-email';
 
 import './send-message.html';
 
@@ -23,7 +23,7 @@ Template.sendMessage.onCreated(function () {
 });
 
 Template.sendMessage.onRendered(function () {
-	this.$('.js-email-message').select();
+	this.$('.js-email-message').trigger('select');
 });
 
 Template.sendMessage.helpers({

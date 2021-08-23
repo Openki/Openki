@@ -9,7 +9,8 @@
 					{{#mf KEY='course.createEventInfo'}}
 						Use this form if you want to publish a singular, one-off, allready organised event. Otherwise create or propose a course here:
 					{{/mf}}
-					<a href="/courses/propose">{{mf 'menue.ProposeCourse' 'Propose a course'}}</a>
+					<a
+					   href="{{pathFor 'proposeCourse'}}">{{mf 'menue.ProposeCourse' 'Propose a course'}}</a>
 				{{/if}}
 			{{/unless}}
 
@@ -17,34 +18,36 @@
 				{{#if showRegionTag}}
 					{{> regionTag}}
 				{{/if}}
-				<div class="form-group">
-					<label>{{mf 'course.event.edit.title' 'Event title'}}</label>
-					<input type="text" class="js-event-title form-control input-lg" name="_"
+				<div class="mb-3">
+					<label class="form-label">{{mf 'course.event.edit.title' 'Event title'}}</label>
+					<input type="text" class="js-event-title form-control form-control-lg" name="_"
 						   placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
 						   size="30" value="{{this.title}}">
 				</div>
-				<div class="form-group">
-					<div class="form-group-element">
-						<label>{{mf 'course.event.edit.date_start' 'Date'}}</label>
+				<div class="row gap-3">
+					<div class="col-md">
+						<label
+							   class="form-label">{{mf 'course.event.edit.date_start' 'Date'}}</label>
 						<div class="input-group">
-							<span class="input-group-addon">
+							<span class="input-group-text">
 								<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text" class="form-control js-event-start-date"
 								   value="{{localDate startLocal}}" {{disableForPast}}>
 						</div>
 					</div>
-					<div class="form-group-element">
-						<label>{{mf 'course.event.edit.time_start' 'Time start'}}</label>
+					<div class="col-md">
+						<label
+							   class="form-label">{{mf 'course.event.edit.time_start' 'Time start'}}</label>
 						<div class="input-group">
-							<span class="input-group-addon">
+							<span class="input-group-text">
 								<span class="fa fa-hourglass-start fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text" class="js-event-start-time form-control" size="5"
 								   value="{{timeFormat startLocal}}" {{disableForPast}}>
 						</div>
 					</div>
-					<div class="form-group-element time-end">
+					<div class="col-md js-time-end">
 						<label style="display:none">
 							{{mf 'course.event.edit.duration' 'Duration (in minutes)'}}
 							<button type="button" class="js-toggle-duration btn-icon"
@@ -53,13 +56,13 @@
 							</button>
 						</label>
 						<div class="input-group" style="display:none">
-							<span class="input-group-addon">
+							<span class="input-group-text">
 								<span class="fa fa-hourglass-end fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="number" class="js-event-duration form-control"
 								   id="editEventDuration" value="" size="5" {{disableForPast}}>
 						</div>
-						<label>
+						<label class="form-label">
 							{{mf 'course.event.edit.time_end' 'Time end'}}
 							<button type="button" class="js-toggle-duration btn-icon"
 									data-tooltip="{{mf 'course.event.edit.swich_duration' 'Switch to duration'}}">
@@ -67,7 +70,7 @@
 							</button>
 						</label>
 						<div class="input-group">
-							<span class="input-group-addon">
+							<span class="input-group-text">
 								<span class="fa fa-hourglass-end fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text" class="js-event-end-time form-control" size="5"
@@ -78,20 +81,22 @@
 				</div>
 			</div>
 			<div class="edit-page-body event-edit-body">
-				<div class="form-group">
-					<label>{{mf 'course.event.edit.desc' 'Description'}}</label>
+				<div class="mb-3">
+					<label class="form-label">{{mf 'course.event.edit.desc' 'Description'}}</label>
 					{{> editableTextarea editableDescription}}
 				</div>
-				{{> pricePolicy dismissable=true wrap='form-group'}}
+				{{#unless isPrivate}}
+					{{> pricePolicy dismissable=true wrap='mb-3'}}
+				{{/unless}}
 
 				{{#if showRegionSelection}}
-					<div class="form-group">
-						<label>{{mf 'course.edit.region' 'Region'}}</label>
+					<div class="mb-3">
+						<label class="form-label">{{mf 'course.edit.region' 'Region'}}</label>
 						<div class="input-group">
-							<div class="input-group-addon">
+							<div class="input-group-text">
 								<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 							</div>
-							<select class="js-select-region form-control" name='region'>
+							<select class="js-select-region form-select" name='region'>
 								<option class="select-placeholder" disabled
 										selected="{{#if isCurrentRegion 'all'}}selected{{/if}}"
 										value=''>
@@ -109,27 +114,27 @@
 				{{/if}}
 
 				{{#if showVenueSelection}}
-					{{>eventEditVenue}}
-					<div class="form-group">
-						<label>
+					{{> eventEditVenue}}
+					<div class="mb-3">
+						<label class="form-label">
 							{{mf 'course.event.edit.room' 'Room'}}
 							<small> {{mf '_inputField.optional'}}</small>
 						</label>
 						<div class="input-group" id="editform_room" name="editform_room">
-							<span class="input-group-addon">
+							<span class="input-group-text">
 								<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text" class="js-event-room form-control" size="40"
 								   value="{{room}}">
 						</div>
 					</div>
-					<div class="form-group">
-						<label>
+					<div class="mb-3">
+						<label class="form-label">
 							{{mf 'course.event.edit.maxParticipants' 'maximal number of participants'}}
 							<small> {{mf '_inputField.optional'}}</small>
 						</label>
-						<div class="input-group col-sm-2">
-							<span class="input-group-addon">
+						<div class="input-group">
+							<span class="input-group-text">
 								<span class="fa fa-users fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text" class="js-event-max-participants form-control"
@@ -138,12 +143,13 @@
 					</div>
 				{{/if}}
 
-				<div class="form-group">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" class="js-check-event-internal" {{isInternal}}>
+				<div class="mb-3">
+					<div class="form-check">
+						<input class="form-check-input js-check-event-internal" type="checkbox"
+							   value="" id="eventEditInternalCheck" {{isInternal}}>
+						<label class="form-check-label" for="eventEditInternalCheck">
 							{{mf 'event.edit.internal' 'Hide on front page'}}
-							<span class="help-block internal-disclaimer">
+							<span class="form-text d-block">
 								{{#mf KEY='event.edit.internal.description'}}
 									Show this event only on group and venue pages
 								{{/mf}}
@@ -151,20 +157,24 @@
 						</label>
 					</div>
 					{{#if affectedReplicaCount}}
-						<div class="checkbox">
-							<label>
-								<input class="js-update-replicas-infos" type="checkbox"
-									   name="updateReplicasInfo">
+						<div class="form-check mt-2">
+							<input class="form-check-input js-update-replicas-infos" type="checkbox"
+								   name="updateReplicasInfo" value=""
+								   id="eventEditUpdateReplicasInfoCheck">
+							<label class="form-check-label" for="eventEditUpdateReplicasInfoCheck">
 								{{#mf KEY='event.edit.updateReplicasInfo' COUNT=affectedReplicaCount}}
 									Update {COUNT, plural, one {info from later copy} other {infos from # later copies as well}}
 								{{/mf}}
 							</label>
 						</div>
 						{{#if timeChanged}}
-							<div class="checkbox {{disabledIfDayChanged}}">
-								<label>
-									<input class="js-update-replicas-time" type="checkbox"
-										   name="updateReplicasTime" {{disabledIfDayChanged}}>
+							<div class="form-check {{disabledIfDayChanged}}">
+								<input class="form-check-input js-update-replicas-time"
+									   type="checkbox" name="updateReplicasTime" value=""
+									   id="eventEditUpdateReplicasTimeCheck"
+									   {{disabledIfDayChanged}}>
+								<label class="form-check-label"
+									   for="eventEditUpdateReplicasTimeCheck">
 									{{#mf KEY='event.edit.updateReplicasTime' COUNT=affectedReplicaCount}}
 										Update time from {COUNT, plural, one {copy} other {copies}}
 									{{/mf}}
@@ -186,7 +196,7 @@
 											{{#mf KEY='event.edit.changedReplicas.heading' NUM=changedReplicas.length}}
 												Found {NUM, plural, one {one copy which varies} other {# copies which vary}} in time
 											{{/mf}}
-									</div>
+										</div>
 									<div class="panel-body">
 										{{#unless updateChangedReplicas}}
 											<span class="update-changed-replicas-help">
@@ -210,16 +220,16 @@
 												</li>
 											{{/each}}
 										</ul>
-										<div class="checkbox">
-											<label>
-												<input class="js-update-changed-replicas-time" 
-													type="checkbox"
-													name="updateChangedReplicasTime">
+										<div class="form-check">
+											<input class="form-check-input js-update-changed-replicas-time" 
+											type="checkbox"
+											name="updateChangedReplicasTime" value="" id="eventEditUpdateChangedReplicasTimeCheck">
+											<label class="form-check-label" for="eventEditUpdateChangedReplicasTimeCheck">
 												{{#mf KEY='event.edit.updateChangedReplicasTime' NUM=changedReplicas.length}}
 												      Overwrite {NUM, plural, one {this events} other {these events}} time too
 												{{/mf}}
 											</label>
-											</div>
+										</div>
 									</div>
 								</div>
 							{{/if}}
@@ -227,29 +237,31 @@
 					{{/if}}
 				{{/if}}
 				{{#if courseId}}
-					<div class="checkbox">
-						<label>
-							{{#if new}}
-								<input type="checkbox" class="js-check-notify" checked>
+					<div class="form-check">
+						{{#if new}}
+							<input class="form-check-input js-check-notify" type="checkbox" value="" id="eventEditCheckNotifyCheck" checked>
+							<label class="form-check-label" for="eventEditCheckNotifyCheck">
 								{{#mf KEY='event.edit.notifyNewEvent' COURSE=course.name}}
 									Notify all members of the course "{COURSE}" about this event.
 								{{/mf}}
-							{{else}}
-								<input type="checkbox" class="js-check-notify">
+							</label>
+						{{else}}
+							<input class="form-check-input js-check-notify" type="checkbox" value="" id="eventEditCheckNotifyCheck">
+							<label class="form-check-label" for="eventEditCheckNotifyCheck">
 								{{#mf KEY='event.edit.notifyEditEvent' COURSE=course.name}}
 									Notify all members of the course "{COURSE}" about the changes you made.
 								{{/mf}}
-							{{/if}}
-						</label>
+							</label>
+						{{/if}}
 					</div>
 				{{/if}}
 				{{#if notifyChecked}}
-					<label>
+					<label class="form-label">
 						{{mf 'course.event.edit.AddMessage' 'Add message'}}
 						<small> {{mf '_inputField.optional'}}</small>
 					</label>
 					<div class="input-group" id="editform_message" name="editform_message">
-						<span class="input-group-addon">
+						<span class="input-group-text">
 							<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
 						</span>
 						<textarea rows="3"

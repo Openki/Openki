@@ -7,17 +7,17 @@ module.exports = {
 		mocha: true,
 		node: true,
 	},
-	extends: ['airbnb-base', 'prettier'],
+	extends: ['airbnb-base-typescript-prettier'],
 	globals: {
 		L: 'readonly',
-		Log: 'writable',
 		VERSION: 'writable',
 	},
+	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 12,
 		sourceType: 'module',
 	},
-	plugins: ['prettier'],
+	plugins: ['@typescript-eslint', 'prettier'],
 	rules: {
 		'import/no-absolute-path': ['error', { esmodule: false }],
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
@@ -28,7 +28,14 @@ module.exports = {
 		'func-names': 'off',
 		'no-underscore-dangle': 'off',
 		'max-classes-per-file': 'off',
+		'@typescript-eslint/explicit-function-return-type': 'off',
+		'@typescript-eslint/explicit-module-boundary-types': 'off',
+		// Fix some problem with js files imports ts file
+		'import/no-unresolved': 'off',
+		'import/extensions': 'off',
+		'import/named': 'off',
 
+		'@typescript-eslint/no-this-alias': 'warn',
 		'prettier/prettier': 'warn',
 	},
 	settings: {

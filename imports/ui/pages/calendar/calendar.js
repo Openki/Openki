@@ -1,5 +1,5 @@
 import { Router } from 'meteor/iron:router';
-import { $ } from 'meteor/jquery';
+import $ from 'jquery';
 import { mf, msgfmt } from 'meteor/msgfmt:core';
 import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -11,7 +11,7 @@ import { Events } from '/imports/api/events/events';
 import * as UrlTools from '/imports/utils/url-tools';
 
 import '/imports/ui/components/events/list/event-list';
-import '/imports/ui/components/loading/loading';
+import '/imports/ui/components/loading';
 
 import './calendar.html';
 
@@ -138,7 +138,7 @@ Template.calendarNav.onRendered(function () {
 	const navContainer = this.$('.calendar-nav-container');
 	navContainer.slideDown();
 
-	$(window).scroll(() => {
+	$(window).on('scroll', () => {
 		const isCovering = navContainer.hasClass('calendar-nav-container-covering');
 		const atTop = $(window).scrollTop() < 5;
 

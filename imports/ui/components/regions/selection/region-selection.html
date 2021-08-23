@@ -1,19 +1,20 @@
 <template name="regionSelectionWrap">
 	{{#if Template.subscriptionsReady}}
 		{{#if state 'searchingRegions'}}
-			<li class="navbar-form navbar-form-selection dropdown">
+			<li class="navbar-form navbar-form-selection dropdown {{inNavbarClasses}}">
 				<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 				{{> regionSelection}}
 			</li>
 		{{else}}
-			{{> regionDisplay}}
+			{{> regionSelectionDisplay inNavbar=inNavbar}}
+
 		{{/if}}
 	{{/if}}
 </template>
 
-<template name="regionDisplay">
-	<li>
-		<a class="navbar-link js-region-display">
+<template name="regionSelectionDisplay">
+	<li class="{{inNavbarClasses}}">
+		<a class="navbar-link js-region-selection-display">
 			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
 			{{#if currentRegionName}}
 				{{currentRegionName}}
@@ -38,11 +39,11 @@
 		<ul class="dropdown-menu" role="menu">
 			<li class="dropdown-header dropdown-legend">
 				<div class="dropdown-addon-right">
-					<span class="badge badge-courses"
+					<span class="badge bg-primary rounded-pill"
 						  title="{{mf 'regionSelection.legend.numCoursesTitle' 'Number of courses'}}">
 						# <i class="fa fa-circle"></i>
 					</span>
-					<span class="badge badge-events"
+					<span class="badge bg-success text-dark rounded-pill"
 						  title="{{mf 'regionSelection.legend.numEventsTitle' 'Number of upcoming events'}}">
 						# <i class="fa fa-calendar"></i>
 					</span>
@@ -53,11 +54,11 @@
 				<a href="#" class="js-region-link js-nav-dropdown-close"
 				   title="{{mf 'menue.All regions'}}">
 					<div class="dropdown-addon-right">
-						<span class="badge badge-courses"
+						<span class="badge bg-primary rounded-pill"
 							  title="{{mf 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
 							{{allCourses}}
 						</span>
-						<span class="badge badge-events"
+						<span class="badge bg-success text-dark rounded-pill"
 							  title="{{mf 'regions.allUpcomingEvents.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
 							{{allUpcomingEvents}}
 						</span>
@@ -88,8 +89,7 @@
 				{{#if hasMoreRegions}}
 					<li class="divider" role="separator"></li>
 					<li>
-						<button class="btn-link js-show-all-regions" type="button">
-							<i class="fa fa-fw fa-list" aria-hidden="true"></i>
+						<button class="btn btn-link js-show-all-regions" type="button">
 							{{mf 'regionSelection.showAll' 'Show all regions'}}
 						</button>
 					</li>
@@ -103,11 +103,11 @@
 	<li class={{private}}>
 		<a href="#" class="js-region-link js-nav-dropdown-close" title="{{nameEn}}">
 			<div class="dropdown-addon-right">
-				<span class="badge badge-courses"
+				<span class="badge bg-primary rounded-pill"
 					  title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
 					{{courseCount}}
 				</span>
-				<span class="badge badge-events"
+				<span class="badge bg-success text-dark rounded-pill"
 					  title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
 					{{futureEventCount}}
 				</span>

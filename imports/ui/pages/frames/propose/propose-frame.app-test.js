@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { jQuery } from 'meteor/jquery';
+import $ from 'jquery';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 
@@ -12,7 +12,7 @@ if (Meteor.isClient) {
 		const randomTitle = `PROPOSE${1000 + Math.floor(Math.random() * 9000)}`;
 
 		const haveEditfield = () => {
-			assert(jQuery('.js-title').length > 0, 'New course edit field present');
+			assert($('.js-title').length > 0, 'New course edit field present');
 		};
 
 		it('allows to select mentor role', async () => {
@@ -22,13 +22,13 @@ if (Meteor.isClient) {
 			await waitFor(haveEditfield);
 			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
-			jQuery('input[value=mentor]').click();
-			jQuery('.js-title').val(randomTitle);
-			jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			jQuery('.js-course-edit-save').click();
+			$('input[value=mentor]').trigger('click');
+			$('.js-title').val(randomTitle);
+			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
+			$('.js-course-edit-save').trigger('click');
 
 			const link = await waitFor(() => {
-				const alertLink = jQuery('.alert a');
+				const alertLink = $('.alert a');
 				assert(
 					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
@@ -36,12 +36,12 @@ if (Meteor.isClient) {
 				return alertLink.attr('href');
 			});
 
-			// The link opens in a new window so we can't just click()
+			// The link opens in a new window so we can't just trigger('click')
 			Router.go(link);
 
 			await waitFor(() => {
 				assert(
-					jQuery('.course-role-enrolled button[name=mentor]').length >= 0,
+					$('.course-role-enrolled button[name=mentor]').length >= 0,
 					'Listed as mentor in the created course',
 				);
 			});
@@ -53,13 +53,13 @@ if (Meteor.isClient) {
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 
-			jQuery('input[value=mentor]').click();
-			jQuery('.js-title').val(randomTitle);
-			jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			jQuery('.js-course-edit-save').click();
+			$('input[value=mentor]').trigger('click');
+			$('.js-title').val(randomTitle);
+			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
+			$('.js-course-edit-save').trigger('click');
 
 			const link = await waitFor(() => {
-				const alertLink = jQuery('.alert a');
+				const alertLink = $('.alert a');
 				assert(
 					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
@@ -67,12 +67,12 @@ if (Meteor.isClient) {
 				return alertLink.attr('href');
 			});
 
-			// The link opens in a new window so we can't just click()
+			// The link opens in a new window so we can't just trigger('click')
 			Router.go(link);
 
 			await waitFor(() => {
 				assert(
-					jQuery('.group-cc89c5e476').length > 0 && jQuery('.group-573edec5d6').length > 0,
+					$('.group-cc89c5e476').length > 0 && $('.group-573edec5d6').length > 0,
 					'Multiple groups added in the created course',
 				);
 			});
@@ -85,12 +85,12 @@ if (Meteor.isClient) {
 			await waitFor(haveEditfield);
 			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
-			jQuery('.js-title').val(randomTitle);
-			jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			jQuery('.js-course-edit-save').click();
+			$('.js-title').val(randomTitle);
+			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
+			$('.js-course-edit-save').trigger('click');
 
 			const link = await waitFor(() => {
-				const alertLink = jQuery('.alert a');
+				const alertLink = $('.alert a');
 				assert(
 					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
@@ -98,12 +98,12 @@ if (Meteor.isClient) {
 				return alertLink.attr('href');
 			});
 
-			// The link opens in a new window so we can't just click()
+			// The link opens in a new window so we can't just trigger('click')
 			Router.go(link);
 
 			await waitFor(() => {
 				assert(
-					jQuery('.course-role-enrolled button[name=mentor]').length >= 0,
+					$('.course-role-enrolled button[name=mentor]').length >= 0,
 					'Listed as mentor in the created course',
 				);
 			});
@@ -115,22 +115,22 @@ if (Meteor.isClient) {
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 
-			assert(jQuery('.js-category-checkbox').length > 0, 'Categories are usually present.');
+			assert($('.js-category-checkbox').length > 0, 'Categories are usually present.');
 
 			Router.go('/frame/propose?hideCategories=1');
 
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 
-			assert(jQuery('.js-category-checkbox').length === 0, 'Param hides categories.');
+			assert($('.js-category-checkbox').length === 0, 'Param hides categories.');
 
-			jQuery('.js-title').val(randomTitle);
-			jQuery('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			jQuery('.js-course-edit-save').click();
+			$('.js-title').val(randomTitle);
+			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
+			$('.js-course-edit-save').trigger('click');
 
 			await waitFor(() => {
 				assert(
-					jQuery('.alert a').text().includes(randomTitle),
+					$('.alert a').text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
 			});

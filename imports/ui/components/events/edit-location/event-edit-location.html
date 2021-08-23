@@ -1,14 +1,16 @@
 <template name="eventEditVenue">
-	<div class="form-group">
-		<label>
+	<div class="mb-3">
+		<label class="form-label">
 			{{mf 'course.event.edit.location' 'Venue'}}
-			<small> {{mf '_inputField.optional'}}</small>
+			<small>{{mf '_inputField.optional'}}</small>
 		</label>
-		<div class="event-edit-location-info">
-			{{mf 'event.edit.location.info' 'You can search the venues, choose from the recently used, click on the map, or create a new venue.'}}
-		</div>
-		<div class="event-edit-location">
-			<div class="event-edit-location-search">
+		<p>
+			<em class="text-muted">
+				{{mf 'event.edit.location.info' 'You can search the venues, choose from the recently used, click on the map, or create a new venue.'}}
+			</em>
+		</p>
+		<div class="row">
+			<div class="col">
 				{{#if locationIsPreset}}
 					<div class="event-edit-location-selected">
 						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
@@ -24,7 +26,7 @@
 									Please contact the host of this venue to check for availability and other details:
 								{{/mf}}
 								<a href="{{hostProfileLink}}" target="_blank">
-									<i class="fa fa-send" aria-hidden="true"></i>
+									<span class="fa fa-send fa-fw" aria-hidden="true"></span>
 									{{mf 'event.editVenue.contactHost' 'Contact host'}}
 								</a>
 							</div>
@@ -38,12 +40,9 @@
 						<input type="text" class="form-control js-location-search-input"
 							   placeholder="{{mf 'event.edit.locationNamePlaceholder' 'Where?'}}"
 							   value="{{location.name}}" />
-						<span class="input-group-btn">
-							<button type="submit" class="btn btn-go js-location-search-btn">
-								<span class="fa fa-search fa-fw" aria-hidden="true"></span>
-								{{mf 'event.edit.addressSearch' "Search"}}
-							</button>
-						</span>
+						<button type="submit" class="btn btn-go js-location-search-btn">
+							{{mf 'event.edit.addressSearch' "Search"}}
+						</button>
 					</div>
 					{{#if searching}}
 						<input type="text" class="form-control js-location-address-search"
@@ -66,7 +65,9 @@
 							{{/each}}
 						</ul>
 					{{else}}
-						{{mf 'event.edit.locations.foundnone' 'No locations found.'}}
+						<div>
+							{{mf 'event.edit.locations.foundnone' 'No locations found.'}}
+						</div>
 					{{/if}}
 					<a class="btn btn-{{#if haveLocationCandidates}}default{{else}}add{{/if}} event-edit-location-create-venue"
 					   href="{{pathFor 'venueDetails' _id='create'}}" target="_blank">
@@ -74,7 +75,7 @@
 					</a>
 				{{/if}}
 			</div>
-			<div class="event-edit-location-map">
+			<div class="col event-edit-location-map">
 				{{> map markers=eventMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
 			</div>
 		</div>

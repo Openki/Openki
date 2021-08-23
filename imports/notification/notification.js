@@ -1,5 +1,3 @@
-import Log from '/imports/api/log/log';
-
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Email } from 'meteor/email';
@@ -8,6 +6,7 @@ import { Random } from 'meteor/random';
 import { Match, check } from 'meteor/check';
 import juice from 'juice';
 
+import { Log } from '/imports/api/log/log';
 import { Users } from '/imports/api/users/users';
 
 import notificationEvent from '/imports/notification/notification.event';
@@ -16,6 +15,7 @@ import notificationJoin from '/imports/notification/notification.join';
 import notificationPrivateMessage from '/imports/notification/notification.private-message';
 
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
+import { PublicSettings } from '../utils/PublicSettings';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -75,9 +75,10 @@ Notification.send = function (entry) {
 				vars.siteName = siteName;
 				// For everything context specifig us customSiteName from the region, eg. courses
 				vars.customSiteName = vars.customSiteName || vars.siteName;
+				const emailLogo = vars.customEmailLogo || PublicSettings.emailLogo;
 				vars.site = {
 					url: vars.customSiteUrl || Meteor.absoluteUrl(),
-					logo: base64PngImageData(vars.customMailLogo || Meteor.settings.public.mailLogo),
+					logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
 					name: vars.customSiteName || vars.siteName,
 				};
 				vars.locale = userLocale;
@@ -91,7 +92,6 @@ Notification.send = function (entry) {
 
 				mail = {
 					from: fromAddress,
-					sender: Accounts.emailTemplates.from,
 					to: address,
 					subject: subjectPrefix + vars.subject,
 					html: juice(message),

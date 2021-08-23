@@ -2,17 +2,23 @@
 	<div class="container">
 		<div class="page-component tenant-details">
 			<div class="tenant-details-titlebar">
-				{{mf 'tenant.details.tenant' 'Tenant'}}
+				{{mf 'tenant.details.tenant' 'Organization'}}
 			</div>
 			<div class="details-header tenant-details-header">
 				<div class="tenant-details-name">
 					{{tenant.name}}
 				</div>
 			</div>
+			<div class="details-form tenant-settings">
+				{{> tenantRegions tenant=tenant}}
+			</div>
 
 			{{#if editingSettings}}
-				{{> tenantSettings}}
+				<div class="details-addition clearfix">
+					{{> tenantSettings tenant=tenant}}
+				</div>
 			{{/if}}
+
 		</div>
 	</div>
 </template>

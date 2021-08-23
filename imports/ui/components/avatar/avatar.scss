@@ -62,7 +62,7 @@
 	max-width: 100%;
 
 	&-image {
-		flex-shrink: 0;
+		display: block;
 	}
 
 	&-form {
@@ -71,6 +71,7 @@
 		&-input {
 			-webkit-appearance: none;
 			background: transparent;
+			display: block;
 			width: 100%;
 
 			&:not(:focus-visible) {

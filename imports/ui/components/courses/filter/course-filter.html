@@ -8,8 +8,7 @@
 					{{mf 'find.filter.isActive' 'active'}}
 				</span>
 				<div class="filter-captions-header-buttons">
-					<button class="js-toggle-filters btn-link" type="button">
-						<i class="fa fa-remove" aria-hidden="true"></i>
+					<button class="js-toggle-filters btn btn-lg btn-link p-0" type="button">
 						<span class="filter-remove-btn-text">
 							{{mf 'find.hideFilters' 'Remove all filters'}}
 						</span>
@@ -40,7 +39,7 @@
 				</div>
 				{{#if showingFilters}}
 					<div class="filter-course-state-captions">
-						<div class="filter-captions-column pull-right">
+						<div class="filter-captions-column float-end">
 							<div class="filter-caption-wrap">
 								<div class="filter-caption js-filter-caption-archived {{archivedFilterClasses}}"
 									 title="{{mf 'filterCaptions.archived.title' 'Show only courses that are archived'}}">
@@ -61,8 +60,7 @@
 		</div>
 		{{#unless showingFilters}}
 			<div class="filter-actions">
-				<button class="js-toggle-filters btn-link" type="button">
-					<i class="fa fa-plus" aria-hidden="true"></i>
+				<button class="js-toggle-filters btn btn-link p-0" type="button">
 					{{mf 'filter.showAllFilters' 'Show all filters'}}
 				</button>
 			</div>
@@ -71,7 +69,6 @@
 </template>
 
 <template name="additionalFilters">
-	<div class="clearfix visible-xs-block visible-sm-block"></div>
 	<div aria-label="filter-course-roles" class="filter-component filter-course-roles" role="group">
 		<h4 class="filter-component-header">
 			{{mf 'find.filter.courseRoles' 'Course roles'}}
@@ -84,11 +81,9 @@
 				</span>
 				{{role.label}}
 				<i class="fa fa-check" aria-hidden="true"></i>
-
 			</button>
 		{{/each}}
 	</div>
-	<div class="clearfix visible-xs-block"></div>
 	<div class="filter-component filter-course-categories">
 		<h4 class="filter-component-header">
 			{{mf 'find.filter.categories' 'Categories'}}

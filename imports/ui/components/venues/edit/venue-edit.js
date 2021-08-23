@@ -12,7 +12,7 @@ import * as VenuesMethods from '/imports/api/venues/methods';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { Editable } from '/imports/ui/lib/editable';
 import { LocationTracker } from '/imports/ui/lib/location-tracker';
-import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons/buttons';
@@ -29,7 +29,7 @@ Template.venueEdit.onCreated(function () {
 	instance.showAdditionalInfo = new ReactiveVar(false);
 	instance.isNew = !this.data._id;
 
-	instance.locationTracker = LocationTracker();
+	instance.locationTracker = new LocationTracker();
 	instance.locationTracker.setLocation(this.data, true);
 
 	instance.selectedRegion = new ReactiveVar();
@@ -68,6 +68,7 @@ Template.venueEdit.onCreated(function () {
 					...orginalLocation,
 					main: true,
 					draggable: true,
+					proposed: undefined,
 				};
 				instance.locationTracker.markers.insert(location);
 			}
@@ -133,7 +134,7 @@ Template.venueEdit.helpers({
 		// established from within the map template which will call it.
 		return function () {
 			// We only allow placing if we don't have a selected location yet
-			return !locationTracker.markers.findOne({ main: true });
+			return !locationTracker.getLocation();
 		};
 	},
 
@@ -141,7 +142,7 @@ Template.venueEdit.helpers({
 		const { locationTracker } = Template.instance();
 
 		return function () {
-			return locationTracker.markers.findOne({ main: true });
+			return locationTracker.getLocation();
 		};
 	},
 });
@@ -193,9 +194,9 @@ Template.venueEdit.events({
 			}
 		}
 
-		const marker = instance.locationTracker.markers.findOne({ main: true });
-		if (marker) {
-			changes.loc = marker.loc;
+		const loc = instance.locationTracker.getLocation();
+		if (loc) {
+			changes.loc = loc;
 		} else {
 			Alert.error(mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'));
 			return;
@@ -254,7 +255,7 @@ Template.venueEdit.events({
 
 Template.venueEditAdditionalInfo.helpers({
 	facilitiesCheck(name) {
-		const attrs = { class: `js-${name}` };
+		const attrs = { class: `form-check-input js-${name}`, type: 'checkbox', value: '' };
 		if (this.facilities[name]) {
 			attrs.checked = 'checked';
 		}

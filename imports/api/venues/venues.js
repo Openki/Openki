@@ -1,45 +1,46 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
+import { Match, check } from 'meteor/check';
 
 import { Events } from '/imports/api/events/events';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
-import Predicates from '/imports/utils/predicates';
+import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 
 /** @typedef {import('../users/users').UserModel} UserModel */
 
 // ======== DB-Model: ========
 /**
- * @typedef  {Object} VenueEnity
- * @property {string} [_id]             ID
- * @property {string} [editor]          user ID
- * @property {string} [name]
- * @property {string} [slug]
- * @property {string} [description]     HTML
- * @property {string|null} [region]          ID
+ * @typedef  {Object} VenueEntity
+ * @property {string} _id             ID
+ * @property {string} editor          user ID
+ * @property {string} name
+ * @property {string} slug
+ * @property {string} description     HTML
+ * @property {string|null} region     ID
  * @property {{ type: 'Point', coordinates: [number, number] }} [loc] GeoJSON coordinates
  * (Longitude, Latitude)
- * @property {string} [address]
- * @property {string} [route]
+ * @property {string} address
+ * @property {string} route
  *
  * Additional information
- * @property {string} [short]           ID
- * @property {number} [maxPeople]       Int
- * @property {number} [maxWorkplaces]   Int
- * @property {{[key: string]: string}} [facilities] For keys see: Venues.facilityOptions
+ * @property {string} short           ID
+ * @property {number} maxPeople       Int
+ * @property {number} maxWorkplaces   Int
+ * @property {{[key: string]: string}} facilities For keys see: Venues.facilityOptions
  * @property {string} [otherFacilities]
  * @property {string} [website]         URL
  *
- * @property {string} [createdby]
- * @property {Date}   [created]
- * @property {Date}   [updated]
+ * @property {string} createdby
+ * @property {Date}   created
+ * @property {Date}   updated
  */
 
 /**
- * @typedef {Venue & VenueEnity} VenueModel
+ * @typedef {Venue & VenueEntity} VenueModel
  */
 
 /**
@@ -69,7 +70,7 @@ export class Venue {
 }
 
 /**
- * @extends {Mongo.Collection<VenueEnity, VenueModel>}
+ * @extends {Mongo.Collection<VenueEntity, VenueModel>}
  */
 export class VenueCollection extends Mongo.Collection {
 	constructor() {
@@ -110,13 +111,18 @@ export class VenueCollection extends Mongo.Collection {
 	 * @param {string} [filter.editor]
 	 * @param {boolean} [filter.recent]
 	 * @param {number} [limit] how many to find
-	 * @param {number} [skip]
-	 * @param {*} [sort]
+	 * @param {number} [skip] skip this many before returning results
+	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
 	 */
 	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+		check(limit, Match.Maybe(Number));
+		check(skip, Match.Maybe(Number));
+		check(sort, Match.Maybe([[String]]));
+
+		/** @type {Mongo.Selector<VenueEntity> } */
 		const find = {};
 
-		/** @type {Mongo.Options<VenueEnity>} */
+		/** @type {Mongo.Options<VenueEntity>} */
 		const options = { sort };
 
 		if (limit > 0) {

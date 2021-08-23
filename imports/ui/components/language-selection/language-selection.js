@@ -1,15 +1,15 @@
-import { $ } from 'meteor/jquery';
+import $ from 'jquery';
 import { mfPkg } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import * as Alert from '/imports/api/alerts/alert';
 import { Languages } from '/imports/api/languages/languages';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as StringTools from '/imports/utils/string-tools';
+import * as Viewport from '/imports/ui/lib/viewport';
 
 import './language-selection.html';
 
@@ -26,6 +26,12 @@ Template.languageSelectionWrap.helpers({
 });
 
 Template.languageDisplay.helpers({
+	inNavbarClasses() {
+		if (this.inNavbar) {
+			return 'col-6-sm-auto px-0';
+		}
+		return '';
+	},
 	setLanguage() {
 		return Languages[Session.get('locale')];
 	},
@@ -42,6 +48,13 @@ Template.languageSelection.onCreated(function () {
 });
 
 Template.languageSelection.helpers({
+	inNavbarClasses() {
+		if (this.inNavbar) {
+			return 'col-6-sm-auto px-0';
+		}
+		return '';
+	},
+
 	setLanguage() {
 		return Languages[Session.get('locale')];
 	},
@@ -107,10 +120,10 @@ Template.languageSelection.events({
 
 		try {
 			localStorage.setItem('locale', lg);
-		} catch (e) {
-			Alert.error(e);
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 		}
-		// The db user update happens in the client/start.js in Tracker.autorun(() => { ... by
+		// The db user update happens in the client/main.js in Tracker.autorun(() => { ... by
 		// messageformat
 		Session.set('locale', lg);
 
@@ -119,22 +132,13 @@ Template.languageSelection.events({
 
 	'keyup .js-language-search'(event, instance) {
 		if (event.which === 13) {
-			instance.$('.js-language-link').first().click();
+			instance.$('.js-language-link').first().trigger('click');
 		} else {
 			updateLanguageSearch(instance);
 		}
 	},
 
 	'focus .js-language-search'(event, instance) {
-		const viewportWidth = Session.get('viewportWidth');
-		const isRetina = Session.equals('isRetina', true);
-		const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
-
-		if (screenMD && !isRetina) {
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo('slow', 0);
-			$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').hide();
-		}
-
 		instance.$('.dropdown-toggle').dropdown('toggle');
 	},
 });
@@ -142,13 +146,13 @@ Template.languageSelection.events({
 Template.languageSelection.onRendered(function () {
 	const instance = this;
 
-	instance.$('.js-language-search').select();
+	instance.$('.js-language-search').trigger('select');
 
 	instance
 		.parentInstance()
 		.$('.dropdown')
 		.on('hide.bs.dropdown', () => {
-			const viewportWidth = Session.get('viewportWidth');
+			const viewportWidth = Viewport.get().width;
 			const isRetina = Session.get('isRetina');
 			const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
 

@@ -3,7 +3,7 @@
 		<div class="page-component">
 			<div class="kiosk-heading">
 				{{#if filter.group}}
-					<a href="/find?group={{filter.group}}">
+					<a href="{{pathFor 'groupDetails' _id=filter.group}}">
 						{{#if groupLogo filter.group}}
 							<img src="{{groupLogo filter.group}}"
 								 class="kiosk-logo kiosk-logo-group" />
@@ -11,12 +11,13 @@
 						{{groupShort filter.group}}
 					</a>
 				{{else}}
-					{{#if filter.location}}
-						<a href="/venue/{{filter.location}}">{{filter.location}}</a>
+					{{#if filter.venue}}
+						<a
+						   href="{{pathFor 'venueDetails' _id=filter.venue}}">{{venueName filter.venue}}</a>
 					{{else}}
 						<a href="{{pathFor 'home'}}">
 							{{#if headerLogo}}
-								<img src="/logo/{{headerLogo}}" alt="{{headerAlt}}"
+								<img src="{{headerLogo}}" alt="{{headerAlt}}"
 									 class="kiosk-logo kiosk-logo-openki">
 							{{/if}}
 							{{siteName}}

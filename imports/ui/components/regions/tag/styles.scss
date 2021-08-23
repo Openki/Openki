@@ -1,0 +1,14 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.region-tag {
+	@include td-pos(right, 0);
+	background-color: rgba($blue, 0.75);
+	border-bottom-left-radius: 3px;
+	position: absolute;
+	top: 0;
+}
+
+.rtl .region-tag {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 3px;
+}

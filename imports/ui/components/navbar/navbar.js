@@ -3,11 +3,13 @@ import { Accounts } from 'meteor/accounts-base';
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
+import $ from 'jquery';
 
 import { Regions } from '/imports/api/regions/regions';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';
+import * as Viewport from '/imports/ui/lib/viewport';
+import PublicSettings from '/imports/utils/PublicSettings';
 
 import '/imports/ui/components/regions/selection/region-selection';
 import '/imports/ui/components/language-selection/language-selection';
@@ -16,13 +18,12 @@ import './navbar.html';
 
 Template.navbar.onRendered(function () {
 	const instance = this;
-	const viewportWidth = Session.get('viewportWidth');
 	const { gridFloatBreakpoint } = ScssVars;
 
 	// if not collapsed give the navbar and active menu item a
 	// class for when not at top
-	if (viewportWidth > gridFloatBreakpoint) {
-		$(window).scroll(() => {
+	if (Viewport.get().width > gridFloatBreakpoint) {
+		$(window).on('scroll', () => {
 			const navbar = instance.$('.navbar');
 			const activeNavLink = instance.$('.navbar-link-active');
 			const notAtTop = $(window).scrollTop() > 5;
@@ -53,15 +54,20 @@ Template.navbar.helpers({
 	},
 
 	headerLogo() {
+		let headerLogo;
+
 		const currentRegion = Regions.currentRegion();
 		if (currentRegion?.custom?.headerLogo?.src) {
-			return currentRegion.custom.headerLogo.src;
+			headerLogo = currentRegion.custom.headerLogo.src;
 		}
 
-		if (Meteor.settings.public.headerLogo?.src) {
-			return Meteor.settings.public.headerLogo.src;
+		headerLogo = PublicSettings.headerLogo.src;
+
+		if (headerLogo.startsWith('data:image/')) {
+			return headerLogo;
 		}
-		return '';
+
+		return `/logo/${headerLogo}`;
 	},
 
 	headerAlt() {
@@ -70,10 +76,7 @@ Template.navbar.helpers({
 			return currentRegion.custom.headerLogo.alt;
 		}
 
-		if (Meteor.settings.public.headerLogo?.alt) {
-			return Meteor.settings.public.headerLogo.alt;
-		}
-		return '';
+		return PublicSettings.headerLogo.alt;
 	},
 
 	notConnected() {
@@ -86,10 +89,7 @@ Template.navbar.helpers({
 			return currentRegion.custom.siteStage;
 		}
 
-		if (Meteor.settings.public.siteStage) {
-			return Meteor.settings.public.siteStage;
-		}
-		return '';
+		return PublicSettings.siteStage;
 	},
 
 	activeClass(linkRoute, id) {
@@ -119,10 +119,9 @@ Template.navbar.events({
 	},
 
 	'show.bs.dropdown, hide.bs.dropdown .dropdown'(event, instance) {
-		const viewportWidth = Session.get('viewportWidth');
 		const { gridFloatBreakpoint } = ScssVars;
 
-		if (viewportWidth <= gridFloatBreakpoint) {
+		if (Viewport.get().width <= gridFloatBreakpoint) {
 			const container = instance.$('#bs-navbar-collapse-1');
 
 			// make menu item scroll up when opening the dropdown menu
@@ -156,7 +155,7 @@ Template.ownUserFrame.events({
 		event.preventDefault();
 		Meteor.logout();
 
-		const routeName = Router.current().route.getName();
+		const routeName = Router.current().route?.getName();
 		if (routeName === 'profile') {
 			Router.go('userprofile', Meteor.user());
 		}

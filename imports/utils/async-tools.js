@@ -2,6 +2,10 @@ import { Meteor } from 'meteor/meteor';
 
 export const AsyncTools = {};
 
+/**
+ * @param {any} err
+ * @param {number} aff
+ */
 AsyncTools.checkUpdateOne = function (err, aff) {
 	if (err) {
 		throw err;
@@ -13,6 +17,8 @@ AsyncTools.checkUpdateOne = function (err, aff) {
 
 /**
  * Simple async callback receiver that logs errors
+ * @param {{ stack: any; }} err
+ * @param {any} ret
  */
 AsyncTools.logErrors = function (err, ret) {
 	if (err) {
@@ -73,6 +79,7 @@ if (Meteor.isServer) {
 if (Meteor.isClient) {
 	// On the client clean() is not run and the returned promise doesn't resolve.
 	AsyncTools.untilClean = function () {
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		return new Promise(() => {}); /* promise that doesn't resolve */
 	};
 }

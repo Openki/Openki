@@ -1,6 +1,6 @@
 import { Match, check } from 'meteor/check';
 
-import Log from '/imports/api/log/log';
+import { Log } from '/imports/api/log/log';
 import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 

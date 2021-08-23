@@ -22,4 +22,5 @@ node_modules/
 server/extracts.msgfmt*
 
 .vscode/
-tsconfig.json
+
+tsconfig.tsbuildinfo

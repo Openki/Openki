@@ -4,7 +4,7 @@ import { _ } from 'meteor/underscore';
 
 import { Regions } from '../regions/regions';
 import { Venues } from './venues';
-/** @typedef {import('./venues').VenueEnity} VenueEnity */
+/** @typedef {import('./venues').VenueEntity} VenueEntity */
 
 import { AsyncTools } from '/imports/utils/async-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
@@ -59,10 +59,14 @@ export const save = ServerMethod(
 			if (!venue) {
 				throw new Meteor.Error(404, 'Venue not found');
 			}
+
+			if (!venue.editableBy(Meteor.user())) {
+				throw new Meteor.Error(401, 'Please log in');
+			}
 		}
 
 		/* Changes we want to perform */
-		/** @type {VenueEnity} */
+		/** @type {VenueEntity} */
 		const set = { updated: new Date() };
 
 		if (changes.description) {

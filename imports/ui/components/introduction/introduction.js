@@ -1,9 +1,9 @@
 import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
-import Introduction from '/imports/ui/lib/introduction';
+import { Introduction } from '/imports/ui/lib/introduction';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
+import * as Viewport from '/imports/ui/lib/viewport';
 
 import '/imports/ui/components/price-policy/price-policy';
 
@@ -11,9 +11,8 @@ import './introduction.html';
 
 Template.introduction.onRendered(() => {
 	// use $screen-xxs (from scss) to compare with the width of window
-	const viewportWidth = Session.get('viewportWidth');
 	const { screenXXS } = ScssVars;
-	if (viewportWidth < screenXXS) {
+	if (Viewport.get().width < screenXXS) {
 		Introduction.closeIntro();
 	}
 });
@@ -29,17 +28,14 @@ Template.introduction.helpers({
 
 	isInCalendar() {
 		const currentRoute = Router.current().route;
-		if (currentRoute) {
-			return currentRoute.getName() === 'calendar';
-		}
-		return false;
+		return currentRoute?.getName() === 'calendar';
 	},
 
 	/**
 	 * @param {string} triggerSize
 	 */
 	clearfixFor(triggerSize) {
-		const viewportWidth = Session.get('viewportWidth');
+		const viewportWidth = Viewport.get().width;
 		let screenSize = '';
 
 		if (viewportWidth < ScssVars.screenMD && viewportWidth > ScssVars.screenSM) {

@@ -1,7 +1,7 @@
 <template name="alerts">
 	<div class="alert-messages">
-		{{#each alerts}}
-			{{> alert}}
+		{{#each a in alerts}}
+			{{> alert a}}
 		{{/each}}
 	</div>
 	<div class="alert-messages-spacer"></div>
@@ -10,9 +10,7 @@
 <template name="alert">
 	<div class="alert alert-{{contextualClass}} alert-dismissible alert-message" role="alert">
 		{{message}}
-		<button aria-label="{{mf 'message.close' 'Close message'}}" class="close js-remove-alert"
-				type="button">
-			<span aria-hidden="true">&times;</span>
-		</button>
+		<button type="button" class="btn-close js-remove-alert"
+				aria-label="{{mf 'message.close' 'Close message'}}"></button>
 	</div>
 </template>

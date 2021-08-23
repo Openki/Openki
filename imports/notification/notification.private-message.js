@@ -4,13 +4,15 @@ import { Meteor } from 'meteor/meteor';
 import { mf } from 'meteor/msgfmt:core';
 
 import { Courses } from '/imports/api/courses/courses';
-import Log from '/imports/api/log/log';
+import { Log } from '/imports/api/log/log';
 import { Users } from '/imports/api/users/users';
 import { Regions } from '/imports/api/regions/regions';
+/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
 
 import * as HtmlTools from '/imports/utils/html-tools';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UserPrivilegeUtils from '../utils/user-privilege-utils';
+import { getSiteName } from '../utils/getSiteName';
 
 /** @typedef {import('../api/users/users').UserModel} UserModel */
 
@@ -120,17 +122,17 @@ notificationPrivateMessage.Model = function (entry) {
 			// Find out whether this is the copy sent to the sender.
 			const senderCopy = sender._id === actualRecipient._id;
 
-			let siteName;
-			let mailLogo;
+			/** @type {RegionModel | undefined}  */
+			let region;
 			if (actualRecipient.profile?.regionId) {
-				const region = Regions.findOne(actualRecipient.profile?.regionId);
-				siteName = region?.custom?.siteName;
-				mailLogo = region?.custom?.mailLogo;
+				region = Regions.findOne(actualRecipient.profile?.regionId);
 			}
-			siteName = siteName || Meteor.settings.public.siteName;
+
+			const emailLogo = region?.custom?.emailLogo;
+			const siteName = getSiteName(region);
 
 			const vars = {
-				unsubLink: Router.url('profile.privatemessages.unsubscribe', { token: unsubToken }),
+				unsubLink: Router.url('profilePrivateMessagesUnsubscribe', { token: unsubToken }),
 				sender,
 				senderLink: Router.url('userprofile', sender, { query: 'campaign=privateMessage' }),
 				subject,
@@ -139,7 +141,7 @@ notificationPrivateMessage.Model = function (entry) {
 				recipientName: targetRecipient.username,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=privateMessage`,
 				customSiteName: siteName,
-				customMailLogo: mailLogo,
+				customEmailLogo: emailLogo,
 			};
 
 			if (!senderCopy && body.revealSenderAddress) {
@@ -165,7 +167,7 @@ notificationPrivateMessage.Model = function (entry) {
 
 			return vars;
 		},
-		template: 'notificationPrivateMessageMail',
+		template: 'notificationPrivateMessageEmail',
 	};
 };
 

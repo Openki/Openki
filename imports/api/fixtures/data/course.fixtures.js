@@ -1,6 +1,6 @@
 /* eslint max-len: 0 */
 
-const courses = [
+export const courses = [
 	{
 		name: 'Meditation & Yoga/Qi-Gong',
 		categories: ['sports', 'spiritual'],

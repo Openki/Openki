@@ -3,14 +3,13 @@
 		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
 					<h4 class="modal-title">
 						{{#mf KEY='regionsSplash.welcome' SITE=siteName}}
 							Welcome to {SITE}!
 						{{/mf}}
 					</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<h4 class="regions-splash-header">
@@ -24,8 +23,7 @@
 						</button>
 					</div>
 					<div class="regions-splash-login">
-						<button class="js-login-for-region btn-link" type="button">
-							<i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>
+						<button class="js-login-for-region btn btn-link" type="button">
 							{{mf 'regionsSplash.login' 'Log in to use your last selected region'}}
 						</button>
 					</div>

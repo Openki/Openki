@@ -2,7 +2,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
+import $ from 'jquery';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
 
@@ -11,7 +11,7 @@ import { Regions } from '/imports/api/regions/regions';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import '/imports/ui/components/loading/loading';
+import '/imports/ui/components/loading';
 
 import './calendar-frame.html';
 
@@ -97,14 +97,10 @@ Template.frameCalendarEvent.helpers({
 	allRegions: () => Session.equals('region', 'all'),
 
 	regionName() {
-		return Regions.findOne(this.region).name;
+		return Regions.findOne(this.region)?.name;
 	},
 
 	expanded: () => Template.instance().expanded.get(),
-
-	toggleIndicatorIcon() {
-		return Template.instance().expanded.get() ? 'minus' : 'plus';
-	},
 });
 
 Template.frameCalendarEvent.events({

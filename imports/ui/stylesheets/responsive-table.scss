@@ -1,0 +1,47 @@
+.responsive-table-head {
+	display: none;
+	font-weight: bold;
+	margin: 0;
+
+	@media (min-width: map-get($grid-breakpoints, 'md')) {
+		display: flex;
+	}
+
+	&[class*='col-'] {
+		display: block;
+
+		@media (min-width: map-get($grid-breakpoints, 'md')) {
+			display: none;
+		}
+	}
+
+	[class*='col-'] {
+		padding: 8px;
+	}
+
+	+ .responsive-table-row [class*='col-'] {
+		@media (min-width: map-get($grid-breakpoints, 'md')) {
+			border-top: 3px solid #ddd;
+		}
+	}
+}
+
+.responsive-table-row {
+	margin: 0;
+	@media (max-width: map-get($grid-breakpoints, 'md') - 1px) {
+		border: 2px solid #ddd;
+		margin-bottom: 10px;
+
+		[class*='col-']::after {
+			content: '';
+			display: inline-block;
+		}
+	}
+
+	[class*='col-'] {
+		@media (min-width: map-get($grid-breakpoints, 'md')) {
+			border-top: 2px solid #ddd;
+		}
+		padding: 8px;
+	}
+}

@@ -10,6 +10,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import * as VenuesMethods from '/imports/api/venues/methods';
 
 import { reactiveNow } from '/imports/utils/reactive-now';
+import { locationFormat } from '/imports/utils/location-format';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/events/list/event-list';
@@ -147,22 +148,11 @@ Template.venueDetails.helpers({
 		return Template.instance().markers;
 	},
 
-	coords() {
-		if (this.loc?.coordinates) {
-			const fmt = function (coord) {
-				if (coord < 0) {
-					return `-${coord.toPrecision(6)}`;
-				}
-				return `+${coord.toPrecision(6)}`;
-			};
-			const coords = {
-				LAT: fmt(this.loc.coordinates[1]),
-				LON: fmt(this.loc.coordinates[0]),
-			};
-
-			return mf('venueDetails.coordinates', coords, 'Coordinates: {LAT} {LON}');
-		}
-		return false;
+	/**
+	 * @param {{ coordinates: [number, number]; }} loc
+	 */
+	locationDisplay(loc) {
+		return locationFormat(loc);
 	},
 
 	facilityNames() {

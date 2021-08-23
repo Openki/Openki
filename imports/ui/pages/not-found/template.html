@@ -1,0 +1,44 @@
+<template name="notFound">
+	<div class="container text-center">
+		<div class="page-component">
+			{{! No line between flash and text, but inside the text. }}
+			<h1 style="white-space: nowrap;">
+				<span class="fa fa-flash fa-fw text-warning" aria-hidden="true"></span>&nbsp;<span
+					  style="white-space: normal;">{{mf 'notFound.title' "Page not found"}}</span>&nbsp;<span
+					  class="fa fa-flash fa-fw text-warning" aria-hidden="true"></span>
+			</h1>
+			<h3>
+				{{mf 'notFound.explanation' "This page is not available. Maybe it never existed."}}
+			</h3>
+			{{#unless currentUser}}
+				<h4 class="mt-5">
+					{{mf 'notFound.login' "If it's privat content try:"}}
+				</h4>
+				<button class="btn btn-success" data-bs-toggle="modal"
+						data-bs-target="#accountTaskModal">
+					{{mf 'login.unlogged' 'Login'}}
+				</button><br>
+				<br>
+			{{/unless}}
+		</div>
+		<div class="page-component page-component-seperated">
+			<ul class="list-inline fs-5">
+				<li class="list-inline-item">
+					<a class="js-go-back" href="#">
+						{{backArrow}}
+						{{mf 'notFound.goBack' "Go back"}}
+					</a>
+				</li>
+				<li class="list-inline-item">
+					<a href="{{pathFor 'home'}}">
+						<span class="fa fa-home fa-fw" aria-hidden="true"></span>
+						{{mf 'notFound.visitStartPage' "Go to the start page"}}
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="page-not-found-report mx-auto">
+			{{> report}}
+		</div>
+	</div>
+</template>

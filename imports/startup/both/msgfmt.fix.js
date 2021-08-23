@@ -13,12 +13,12 @@ const EXTRACTS_FILE = 'server/extracts.msgfmt~';
  */
 function createExtractsFile(extractsFile) {
 	const dir = path.dirname(extractsFile);
-	fs.exists(dir, (exists) => {
-		if (exists) {
+	fs.exists(dir, (dirExists) => {
+		if (dirExists) {
 			const triggerFile = extractsFile.replace(/~$/, '');
-			// eslint-disable-next-line no-shadow
-			fs.exists(triggerFile, (exists) => {
-				if (!exists) {
+			fs.exists(triggerFile, (fileExists) => {
+				if (!fileExists) {
+					// eslint-disable-next-line @typescript-eslint/no-empty-function
 					fs.writeFile(triggerFile, `# Used by ${EXTRACTS_FILE}, do not delete.\n`, () => {});
 				}
 			});

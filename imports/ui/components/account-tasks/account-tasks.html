@@ -1,5 +1,6 @@
 <template name="accountTasks">
-	<div class="modal account-tasks js-account-tasks" tabindex="-1" role="dialog">
+	<div class="modal account-tasks js-account-tasks" id="accountTaskModal" tabindex="-1"
+		 role="dialog">
 		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -21,8 +22,9 @@
 							<i class="fa fa-unlock-alt fa-fw" aria-hidden="true"></i>
 							{{mf 'login.recoverPwd.title' 'Recover Password'}}
 						{{/if}}
-						<span class="close" data-dismiss="modal">&times;</span>
 					</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					{{#if activeAccountTask 'register'}}
@@ -43,9 +45,9 @@
 <template name="loginFrame">
 	<form>
 		<div class="login">
-			<div class="form-group {{errorClass 'username'}}">
+			<div class="mb-3 {{errorClass 'username'}}">
 				<div class="input-group">
-					<span class="input-group-addon">
+					<span class="input-group-text">
 						<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 					</span>
 					<input class="form-control js-username"
@@ -54,9 +56,9 @@
 				</div>
 				{{errorMessage 'username'}}
 			</div>
-			<div class="form-group {{errorClass 'password'}}">
+			<div class="mb-3 {{errorClass 'password'}}">
 				<div class="input-group">
-					<span class="input-group-addon">
+					<span class="input-group-text">
 						<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
 					</span>
 					<input class="form-control js-password"
@@ -64,20 +66,19 @@
 				</div>
 				{{errorMessage 'password'}}
 			</div>
-			<div class="form-group forgot-pwd-btn-container">
-				<button type="button" class="btn btn-link js-forgot-pwd-btn">
+			<div class="mb-3 text-end">
+				<button type="button" class="btn btn-link p-0 js-forgot-pwd-btn">
 					<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
 					{{mf 'forgot' "I forgot my password"}}
 				</button>
 			</div>
-			<div class="form-group">
-				<button type="submit" class='btn btn-default js-login form-control'
+			<div class="mb-3">
+				<button type="submit" class='btn btn-secondary js-login form-control'
 						{{disabledIfBusy}}>
 					{{#if busy 'logging-in'}}
 						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 						{{mf 'login.login.submit.busy' 'Logging in...'}}
 					{{else}}
-						<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
 						{{#if pleaseLogin}}
 							{{loginAction}}
 						{{else}}
@@ -87,26 +88,39 @@
 				</button>
 			</div>
 			<hr>
-			<div class="form-group">
-				{{#each service in OAuthServices}}
-					<button class="btn btn-{{service.key}} form-control js-oauth-btn"
-							data-service="{{service.serviceName}}" type="button" {{disabledIfBusy}}>
-						{{#if busy service.serviceName}}
-							<span class="fa fa-circle-o-notch fa-spin fa-fw"
-								  aria-hidden="true"></span>
-							{{mf 'login.OAuth.busy' 'Logging in with '}}
-						{{else}}
-							<span class="fa fa-{{service.key}} fa-fw" aria-hidden="true"></span>
-							{{mf 'login.OAuth.loginWith' 'Login with '}}
-						{{/if}}
-						{{service.name}}
-					</button>
-				{{/each}}
-			</div>
+			{{#each service in OAuthServices}}
+				<div class="row g-2 align-items-center">
+					<div class="col">
+						<button class="btn btn-{{service.key}} form-control js-oauth-btn my-2"
+								data-service="{{service.serviceName}}" type="button"
+								{{disabledIfBusy}}>
+							{{#if busy service.serviceName}}
+								<span class="fa fa-circle-o-notch fa-spin fa-fw"
+									  aria-hidden="true"></span>
+								{{mf 'login.OAuth.busy' 'Logging in with '}}
+							{{else}}
+								<span class="fa fa-{{service.key}} fa-fw" aria-hidden="true"></span>
+								{{mf 'login.OAuth.loginWith' 'Login with '}}
+							{{/if}}
+							{{service.name}}
+						</button>
+					</div>
+					<div class="col-auto">
+						<a class="text-muted" data-bs-toggle="collapse" href="#{{service.key}}-info"
+						   role="button" aria-expanded="false" aria-controls="{{service.key}}-info">
+							<i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+						</a>
+					</div>
+				</div>
+				<div class="collapse" id="{{service.key}}-info">
+					<div class="text-muted">
+						{{mf 'login.OAuth.info' '{SITENAME} is getting your user-information (username, email, ...) from that service. They will not have any access to data or information about your activity here except that the fact you logged in.' SITENAME=siteName}}
+					</div>
+				</div>
+			{{/each}}
 			<hr>
-			<div class="form-group">
+			<div class="mb-3">
 				<button class="btn btn-add form-control js-register-open" type="button">
-					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 					{{mf 'login.register.submit' 'Create account'}}
 				</button>
 			</div>
@@ -116,9 +130,9 @@
 
 <template name="registerFrame">
 	<form>
-		<div class="form-group {{errorClass 'username'}}">
+		<div class="mb-3 {{errorClass 'username'}}">
 			<div class="input-group">
-				<span class="input-group-addon">
+				<span class="input-group-text">
 					<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 				</span>
 				<input class="form-control js-username" type="text"
@@ -126,9 +140,9 @@
 			</div>
 			{{errorMessage 'username'}}
 		</div>
-		<div class="form-group {{errorClass 'password'}}">
+		<div class="mb-3 {{errorClass 'password'}}">
 			<div class="input-group">
-				<span class="input-group-addon">
+				<span class="input-group-text">
 					<span class="fa fa-lock fa-fw" aria-hidden="true"></span>
 				</span>
 				<input class="form-control js-password" placeholder="{{mf '_inputField.password'}}"
@@ -136,9 +150,9 @@
 			</div>
 			{{errorMessage 'password'}}
 		</div>
-		<div class="form-group {{errorClass 'email'}}">
+		<div class="mb-3 {{errorClass 'email'}}">
 			<div class="input-group">
-				<span class="input-group-addon">
+				<span class="input-group-text">
 					<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
 				</span>
 				<input class="form-control js-email"
@@ -146,20 +160,19 @@
 			</div>
 			{{errorMessage 'email'}}
 		</div>
-		<div class="form-group">
-			<span class="help-block register-mail-disclaimer">
+		<div class="mb-3">
+			<span class="register-mail-disclaimer">
 				{{#mf KEY='login.frame.register.mailDisclaimer'}}
 					Providing an e-mail address allows other users to contact you and is needed to recover your password in case you forget it.
 				{{/mf}}
 			</span>
 		</div>
-		<div class="form-group">
+		<div class="mb-3">
 			<button type="submit" class="btn btn-add form-control js-register" {{disabledIfBusy}}>
 				{{#if busy 'registering'}}
 					<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 					{{mf 'login.register.submit.busy' 'Registering...'}}
 				{{else}}
-					<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 					{{#if pleaseLogin}}
 						{{registerAction}}
 					{{else}}
@@ -169,9 +182,8 @@
 			</button>
 		</div>
 		<hr>
-		<div class="form-group">
-			<button class="js-back-to-login btn btn-default form-control" type="button">
-				<i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>
+		<div class="mb-3">
+			<button class="js-back-to-login btn btn-secondary form-control" type="button">
 				{{mf 'login.register.backToLogin' 'Go back to login'}}
 			</button>
 		</div>
@@ -184,9 +196,9 @@
 			<p>
 				{{mf 'forgot.explanation' "We can send you a mail that allows you to reset your password. This is only possible if you've provided us with a mail address"}}
 			</p>
-			<div class="form-group">
+			<div class="mb-3">
 				<div class="input-group">
-					<span class="input-group-addon">
+					<span class="input-group-text">
 						<span class="fa fa-envelope"></span>
 					</span>
 					<input class="form-control js-reset-pw-email"
@@ -194,12 +206,12 @@
 						   placeholder="{{mf 'frame.login.email' 'E-Mail'}}" type="email" />
 				</div>
 				{{#if noValidEmail}}
-					<span id="forgotPwdMailHelp" class="help-block">
+					<span id="forgotPwdMailHelp" class="form-text">
 						{{mf 'forgot.notValid' "Please enter the address you signed up with."}}
 					</span>
 				{{/if}}
 			</div>
-			<div class="form-group">
+			<div class="mb-3">
 				<button class="btn btn-save js-reset-pwd-btn form-control"
 						disabled="{{#if noValidEmail}}disabled{{/if}}" type="submit"
 						{{disabledIfBusy}}>
@@ -207,14 +219,12 @@
 						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 						{{mf 'forgot.send.busy' 'Resetting password...'}}
 					{{else}}
-						<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
 						{{mf 'forgot.send' 'Reset my password'}}
 					{{/if}}
 				</button>
 			</div>
-			<div class="form-group">
+			<div class="mb-3">
 				<button type="button" class="btn btn-cancel js-reset-pwd-close-btn form-control">
-					<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 					{{mf '_button.cancel'}}
 				</button>
 			</div>

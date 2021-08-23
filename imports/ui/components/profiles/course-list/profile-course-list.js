@@ -6,7 +6,7 @@ import { _ } from 'meteor/underscore';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 
 import '/imports/ui/components/courses/list/course-list';
-import '/imports/ui/components/loading/loading';
+import '/imports/ui/components/loading';
 
 import './profile-course-list.html';
 

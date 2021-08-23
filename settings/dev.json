@@ -7,12 +7,12 @@
 		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" },
 		"headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" },
 		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" },
-		"ogLogo": { "src": "openki_logo_2018.png"},
-		"mailLogo": "mails/openki.png",
+		"ogLogo": { "src": "openki_logo_2018.png" },
+		"emailLogo": "emails/openki.png",
 		"publicTenants": ["8410c099a7"],
-		"regionSelection": { 
-			"minNumber": 5, 
-			"aboutLink": "" 
+		"regionSelection": {
+			"minNumber": 5,
+			"aboutLink": ""
 		},
 		"pricePolicyEnabled": true,
 		"feature": {
@@ -37,8 +37,15 @@
 			}
 		],
 		"faqLink": "/info/faq",
-		"courseGuideLink": null,
 		"aboutLink": "https://about.openki.net",
+		"contribution": 
+		    { "icon": "fa fa-heart"
+			, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"]
+			, "link": 
+				{ "en": "https://about.openki.net/en/ueber-uns/spenden/"
+				, "de": "https://about.openki.net/ueber-uns/spenden/"
+				}
+			},
 		"categories": {"sports":
 			[
 				"martialarts",
@@ -100,9 +107,9 @@
 			]
 		}
 	},
-	"siteEmail": "HMMM@legit.example", 
-	"reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"},
-	"robots": false, 
+	"siteEmail": "HMMM@legit.example",
+	"reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net" },
+	"robots": false,
 	"printLog": true,
 	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" },
 	"startup": { "buildDbCacheAsync": true }

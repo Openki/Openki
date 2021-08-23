@@ -12,6 +12,7 @@ Meteor.publish('user', function (userId) {
 		username: 1,
 		description: 1,
 		acceptsPrivateMessages: 1,
+		contribution: 1,
 		'avatar.color': 1,
 	};
 

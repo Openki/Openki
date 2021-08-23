@@ -4,6 +4,8 @@ import { Meteor } from 'meteor/meteor';
 
 import * as usersMethods from '/imports/api/users/methods';
 import { pricePolicyEnabled } from '/imports/utils/pricePolicyEnabled';
+import PublicSettings from '/imports/utils/PublicSettings';
+import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
@@ -15,7 +17,7 @@ Template.pricePolicy.helpers({
 			return true;
 		}
 
-		if (localStorage?.getItem('hidePricePolicy')) {
+		if (localStorage?.getItem('hidePricePolicy') === 'true') {
 			return true;
 		}
 
@@ -44,7 +46,7 @@ Template.pricePolicyContent.helpers({
 	},
 
 	pricePolicyLink() {
-		const link = '/FAQ';
+		const link = getLocalisedValue(PublicSettings.faqLink);
 		let locale = Session.get('locale');
 		const localizedTitles = new Map()
 			.set('de', 'dürfen-kurse-etwas-kosten')
@@ -64,7 +66,11 @@ Template.pricePolicyContent.helpers({
 Template.pricePolicyContent.events({
 	'click .js-hide-price-policy'() {
 		Session.set('hidePricePolicy', true);
-		localStorage.setItem('hidePricePolicy', true);
+		try {
+			localStorage.setItem('hidePricePolicy', 'true'); // Note: At July 2021, only string values were allowed.
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+		}
 
 		// if logged in, hide the policy permanently for this user
 		if (Meteor.userId()) {

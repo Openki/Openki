@@ -12,21 +12,12 @@
 }
 
 .profilelink {
-	@include td-padding(right, 5px);
 	color: $gray-dark;
 
 	&:hover {
 		color: $brand-primary;
 		text-decoration: none;
 	}
-}
-
-.datepicker {
-	z-index: $zindex-navbar-fixed + 1;
-}
-
-.datepicker-dropdown.datepicker-orient-top::after {
-	border-top-color: $dropdown-bg;
 }
 
 .leaflet-top {
@@ -41,16 +32,11 @@ select:hover {
 	cursor: not-allowed;
 }
 
-.input-group input:focus {
-	z-index: 3;
-}
-
-.input-lg {
-	border-radius: 4px;
-}
-
 a:hover,
-.btn-link:hover {
+.btn-link:hover,
+a:focus,
+.btn-link:focus {
+	box-shadow: none !important;
 	text-decoration: none;
 }
 
@@ -62,9 +48,5 @@ a:hover,
 
 .collapsing,
 .fade {
-	transition-duration: 0s;
-}
-
-.disabled label {
-	color: $gray-light;
+	transition: none;
 }

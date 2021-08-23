@@ -1,0 +1,58 @@
+{{#emailBase subject=subject site=site}}
+	<tr>
+		<td>
+			<span class="title">
+				{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
+			</span>
+			<p>
+				{{mf "notification.join.mail.intro" '"{USERNAME}" just joined course "{COURSE}" as: {ROLE}.' USERNAME=newParticipant.username COURSE=course.name ROLE=roleTitle LOCALE=locale}}
+			</p>
+			{{#if message}}
+				<p>
+					{{mf "notification.join.mail.message" 'They left this message: ' LOCALE=locale}}
+				</p>
+				<table class="comment-box">
+					<tr>
+						<td>
+							{{message}}
+						</td>
+					</tr>
+				</table>
+			{{/if}}
+			{{#if appendCollaborationHint}}
+				<p>
+					{{mf "notification.join.mail.collaborationHint" 'If you like them to collaborate feel free to contact them. If you like to give them the rights to edit the course, you can add them to the organisation team of your course by clicking on the bullhorn next to their name.' LOCALE=locale}}
+				</p>
+			{{/if}}
+			<p>
+				{{#each figures}}
+					{{role}}: {{count}}<br />
+				{{/each}}
+			</p>
+			<p>
+				<a
+				   href="{{courseLink}}">{{mf "notification.join.mail.linktext" '➜ View course' LOCALE=locale}}</a>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="footer">
+				<tr>
+					<td>
+						{{mf "notification.join.mail.recpnote" "You receive this message because you're on the team of this course." LOCALE=locale}}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a
+						   href="{{unsubLink}}">{{mf "notification.join.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}</a>
+						&nbsp;
+						<a
+						   href="{{urlFor 'profile' query='campaign=joinNotify'}}">{{mf "notification.join.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{{/emailBase}}

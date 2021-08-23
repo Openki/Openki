@@ -3,11 +3,43 @@
 .navbar {
 	border: 0;
 	transition: box-shadow $default-transition-time;
+
+	@media (max-width: $grid-float-breakpoint) {
+		.dropdown-legend {
+			color: $black;
+		}
+
+		.dropdown-menu > li > a,
+		.dropdown-menu > li > .btn-link {
+			color: $white;
+		}
+	}
 }
 
 .navbar-collapse {
 	@media (max-width: $grid-float-breakpoint) {
+		border-top: 1px solid $navbar-default-border;
 		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+
+		/* Fix: Removes small bar on opening/closing */
+		&[aria-expanded='false'] {
+			display: none;
+		}
+		&[aria-expanded='true'] {
+			height: auto !important;
+		}
+	}
+}
+
+.navbar-fixed-top .navbar-collapse,
+.navbar-fixed-bottom .navbar-collapse {
+	max-height: 386px;
+}
+
+.navbar-form {
+	@media (max-width: $grid-float-breakpoint) {
+		border: 0;
+		box-shadow: none;
 	}
 }
 
@@ -76,6 +108,12 @@
 	}
 }
 
+.nav > li > a {
+	@media (max-width: $grid-float-breakpoint) {
+		padding: 15px 7px 14px;
+	}
+}
+
 .nav-marker-bar {
 	background-color: transparent;
 	bottom: -6px;
@@ -101,6 +139,12 @@
 	width: 0;
 }
 
+.navbar-link-active {
+	@media (max-width: $grid-float-breakpoint) {
+		background-color: lighten($navbar-default-bg, 10%);
+	}
+}
+
 .navbar-link-active .nav-marker-caret {
 	@media (min-width: $grid-float-breakpoint) {
 		opacity: 1;
@@ -108,12 +152,16 @@
 }
 
 .navbar-link-active.calendar-link > .nav-marker-caret {
-	border-bottom-color: $calendar-nav-bg;
+	@media (min-width: $grid-float-breakpoint) {
+		border-bottom-color: $calendar-nav-bg;
+	}
 }
 
 .navbar-link-active.calendar-link.navbar-link-covering > .nav-marker-bar {
-	background-color: $calendar-nav-bg;
-	opacity: 1;
+	@media (min-width: $grid-float-breakpoint) {
+		background-color: $calendar-nav-bg;
+		opacity: 1;
+	}
 }
 
 .navbar .navbar-nav:first-child,
@@ -129,16 +177,13 @@
 	}
 
 	@media (max-width: $grid-float-breakpoint) {
-		background-color: $dropdown-bg;
-		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3) inset;
 		padding: 0;
 	}
 }
 
 .navbar .navbar-nav > .open > .dropdown-menu > li > a {
 	@media (max-width: $grid-float-breakpoint) {
-		border-bottom: 1px solid darken($dropdown-bg, 10%);
-		color: $dropdown-link-color;
+		color: $white;
 	}
 }
 
@@ -152,7 +197,10 @@
 .navbar .navbar-nav > .open > .navbar-link:hover,
 .navbar .navbar-nav > .open > .navbar-link:focus {
 	background-color: lighten($navbar-default-bg, 10%);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+	@media (min-width: $grid-float-breakpoint) {
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	}
 }
 
 .navbar .navbar-nav > .open > .navbar-link > .nav-marker-caret {
@@ -160,8 +208,9 @@
 }
 
 .navbar .navbar-nav > .open > .navbar-link > .nav-marker-bar {
+	background-color: $dropdown-bg;
+
 	@media (min-width: $grid-float-breakpoint) {
-		background-color: $dropdown-bg;
 		opacity: 1;
 	}
 }
@@ -177,17 +226,19 @@
 .navbar-covering .navbar-link-active,
 .navbar-covering .navbar-nav > li > .navbar-link-active:hover,
 .navbar-covering .navbar-nav > li > .navbar-link-active:focus {
-	background-color: lighten($navbar-default-bg, 10%);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	@media (min-width: $grid-float-breakpoint) {
+		background-color: lighten($navbar-default-bg, 10%);
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	}
 }
 
 .navbar-form-selection {
 	font-size: large;
 	margin: 0;
-	padding: 0;
+	padding: 8.5px 0;
 
-	@media (min-width: $grid-float-breakpoint) {
-		padding: 8.5px 0;
+	@media (max-width: $grid-float-breakpoint) {
+		padding: 8.5px 8.5px 0 !important;
 	}
 }
 
@@ -218,12 +269,20 @@
 	@include td-float(right);
 	color: $gray-light;
 
+	@media (max-width: $grid-float-breakpoint) {
+		color: $gray-lighter;
+	}
+
 	&::after {
 		content: '%';
 	}
 
 	&.well-translated {
 		color: $green-darker;
+
+		@media (max-width: $grid-float-breakpoint) {
+			color: $green;
+		}
 	}
 }
 

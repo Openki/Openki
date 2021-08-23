@@ -1,23 +1,23 @@
 <template name="sendMessage">
 	<form class="js-send-message">
-		<div class="form-group">
+		<div class="mb-3">
 			<textarea class="form-control send-message-textarea js-email-message"
 					  placeholder="{{mf 'profile.mail.placeholder' 'Hi {USER}! I wanted to tell you...' USER=(username recipientId)}}"></textarea>
 		</div>
 		{{#if hasEmail}}
 			{{#if hasVerifiedEmail}}
-				<div class="checkbox">
-					<label>
-						<input checked="{{state 'sendCopy'}}" name="sendCopy" type="checkbox">
-						{{mf 'profile.mail.copy' 'Send me a copy of this message'}}
-					</label>
+				<div class="form-check">
+					<input class="form-check-input" checked="{{state 'sendCopy'}}" name="sendCopy"
+						   type="checkbox" value="" id="sendMessageSendCopyCheck">
+					<label class="form-check-label"
+						   for="sendMessageSendCopyCheck">{{mf 'profile.mail.copy' 'Send me a copy of this message'}}</label>
 				</div>
-				<div class="checkbox">
-					<label>
-						<input checked="{{state 'revealAddress'}}" name="revealAddress"
-							   type="checkbox">
-						{{mf 'profile.mail.attachmail' 'Attach my e-mail address'}}
-					</label>
+				<div class="form-check">
+					<input class="form-check-input" checked="{{state 'revealAddress'}}"
+						   name="revealAddress" type="checkbox" value=""
+						   id="sendMessageRevealAddressCheck">
+					<label class="form-check-label"
+						   for="sendMessageRevealAddressCheck">{{mf 'profile.mail.attachmail' 'Attach my e-mail address'}}</label>
 				</div>
 			{{else}}
 				<div class="panel panel-warning">

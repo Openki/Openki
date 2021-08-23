@@ -21,7 +21,7 @@ import { Events } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { Regions } from '/imports/api/regions/regions';
 
-import SaveAfterLogin from '/imports/ui/lib/save-after-login';
+import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import { Editable } from '/imports/ui/lib/editable';
 
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
@@ -34,7 +34,7 @@ import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/events/edit-location/event-edit-location';
 import '/imports/ui/components/price-policy/price-policy';
-import '/imports/ui/components/regions/tag/region-tag';
+import '/imports/ui/components/regions/tag';
 
 import './event-edit.html';
 
@@ -466,7 +466,7 @@ Template.eventEdit.events({
 
 	'click .js-toggle-duration'() {
 		Tooltips.hide();
-		$('.time-end > *').toggle();
+		$('.js-time-end > *').toggle();
 	},
 
 	'click .js-check-notify'(event, instance) {

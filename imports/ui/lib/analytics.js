@@ -16,7 +16,7 @@ const SettingsPattern = Match.ObjectIncluding({
 });
 
 const MatomoPattern = Match.ObjectIncluding({
-	getTracker: Match.Where($.isFunction),
+	getTracker: Match.Where((f) => typeof f === 'function'),
 });
 
 /**
@@ -113,9 +113,8 @@ Analytics.trytrack = function (callback) {
  */
 Analytics.trackEvent = function (category, action, name, value) {
 	if (Analytics.isConfigured()) {
-		// eslint-disable-next-line no-shadow
-		Analytics.trytrack((tracker) => {
-			tracker.trackEvent(category, action, name, value);
+		Analytics.trytrack((t) => {
+			t.trackEvent(category, action, name, value);
 		});
 	} else {
 		// For debugging
@@ -136,8 +135,7 @@ Analytics.installRouterActions = function (router) {
 
 	router.onBeforeAction(function () {
 		if (Analytics.hasTracker()) {
-			/* eslint-disable-next-line no-shadow */
-			Analytics.trytrack((tracker) => tracker.deleteCustomVariables());
+			Analytics.trytrack((t) => t.deleteCustomVariables());
 			started = new Date();
 		}
 		this.next();
@@ -147,16 +145,15 @@ Analytics.installRouterActions = function (router) {
 		// Router.onAfterAction sometimes fires more than once on each page run.
 		// https://github.com/iron-meteor/iron-router/issues/1031
 		if (Tracker.currentComputation.firstRun) {
-			/* eslint-disable-next-line no-shadow */
-			Analytics.trytrack((tracker) => {
+			Analytics.trytrack((t) => {
 				if (started) {
-					tracker.setGenerationTimeMs(new Date() - started);
+					t.setGenerationTimeMs(new Date() - started);
 					started = null;
 				}
-				tracker.enableLinkTracking();
-				tracker.setDocumentTitle(document.title);
-				tracker.setCustomUrl(window.location.href);
-				tracker.trackPageView();
+				t.enableLinkTracking();
+				t.setDocumentTitle(document.title);
+				t.setCustomUrl(window.location.href);
+				t.trackPageView();
 			});
 		}
 	});

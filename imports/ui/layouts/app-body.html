@@ -12,7 +12,7 @@
 
 			{{> alerts}}
 
-			{{> introduction}}
+			{{> introduction hasPricePolicy=hasPricePolicy}}
 
 			{{> emailRequest}}
 
@@ -30,7 +30,7 @@
 						{{/if}}
 					</div>
 				{{else if isAdminPage}}
-					<div class="container-sm">
+					<div class="container mw-md">
 						<h1>{{mf 'adminPanel.heading' 'Admin panel'}}</h1>
 						{{#if isAdmin}}
 							{{#if isNotAdminPanel}}

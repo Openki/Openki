@@ -1,4 +1,4 @@
-import { $ } from 'meteor/jquery';
+import $ from 'jquery';
 import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -9,7 +9,7 @@ import { Regions } from '/imports/api/regions/regions';
 import { Courses } from '/imports/api/courses/courses';
 import * as Metatags from '/imports/utils/metatags';
 
-import '/imports/ui/components/loading/loading';
+import '/imports/ui/components/loading';
 
 import './courselist-frame.html';
 import SortSpec from '/imports/utils/sort-spec';
@@ -70,9 +70,6 @@ Template.frameCourselistCourse.helpers({
 	allRegions: () => Session.equals('region', 'all'),
 	regionOf: (course) => Regions.findOne(course.region).name,
 	expanded: () => Template.instance().expanded.get(),
-	toggleIndicatorIcon() {
-		return Template.instance().expanded.get() ? 'angle-up' : 'angle-down';
-	},
 	interestedPersons(course) {
 		return course.members.length;
 	},

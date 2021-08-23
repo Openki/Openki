@@ -2,3 +2,5 @@
 node_modules/
 server/mfAll.js
 server/mfAll.js~
+
+.eslintrc.js

@@ -6,6 +6,7 @@ import { Roles } from '/imports/api/roles/roles';
 
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
+import * as Viewport from '/imports/ui/lib/viewport';
 import * as StringTools from '/imports/utils/string-tools';
 
 import '/imports/ui/components/courses/categories/course-categories';
@@ -201,7 +202,7 @@ Template.additionalFilters.onRendered(function () {
 	});
 
 	catSelect.on('shown.bs.dropdown', () => {
-		instance.$('.js-search-categories').select();
+		instance.$('.js-search-categories').trigger('select');
 	});
 });
 
@@ -249,7 +250,7 @@ Template.additionalFilters.helpers({
 	},
 
 	isMobile() {
-		return Session.get('viewportWidth') <= ScssVars.screenXS;
+		return Viewport.get().width <= ScssVars.screenXS;
 	},
 });
 

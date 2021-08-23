@@ -17,11 +17,9 @@
 					<input class="js-search-input form-control" type="text" id="find"
 						   value="{{search}}"
 						   placeholder="{{mf 'find.search_placeholder' 'Everything'}}" />
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-success js-find-btn">
-							{{mf 'find.search_go' 'Go!'}}
-						</button>
-					</span>
+					<button type="button" class="btn btn-success js-find-btn">
+						{{mf 'find.search_go' 'Go!'}}
+					</button>
 				</div>
 			</div>
 		</div>
@@ -44,7 +42,6 @@
 			{{#if hasMore}}
 				<div class="show-more-courses">
 					<button type="button" class="btn btn-success js-more-courses">
-						<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 						{{mf 'find.showMoreCourses' 'Show more courses'}}
 					</button>
 				</div>
@@ -59,7 +56,7 @@
 					{{#if searchIsLimited}}
 						<div class="btn-group">
 							{{#if filteredRegion}}
-								<button type="button" class="btn btn-default js-all-regions-btn">
+								<button type="button" class="btn btn-secondary js-all-regions-btn">
 									<span class="fa fa-dot-circle-o fa-fw"
 										  aria-hidden="true"></span>
 									{{mf 'find.searchAllRegions' 'Search in all regions'}}
@@ -67,7 +64,6 @@
 							{{/if}}
 							{{#if activeFilters}}
 								<button type="button" class="btn btn-cancel js-toggle-filter">
-									<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
 									{{mf 'find.hideFilters'}}
 								</button>
 							{{/if}}
@@ -80,7 +76,7 @@
 		{{/if}}
 	</div>
 	<div class="page-component">
-		<div class="container-sm">
+		<div class="container mw-md">
 			{{> courseEdit newCourse}}
 		</div>
 	</div>

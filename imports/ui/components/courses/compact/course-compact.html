@@ -17,8 +17,8 @@
 						{{> courseCompactRoles}}
 					{{/if}}
 					<div class="tag-group course-groups">
-						{{#each groups}}
-							{{> groupName}}
+						{{#each group in groups}}
+							{{> groupName group}}
 						{{/each}}
 					</div>
 				</div>

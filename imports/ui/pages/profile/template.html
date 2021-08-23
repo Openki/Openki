@@ -1,0 +1,231 @@
+<template name="profilePage">
+	<div class="container mw-md">
+		<div class="page-component">
+			<h1>
+				<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
+				{{mf 'login.frame.settings'}}
+			</h1>
+		</div>
+		{{#if notificationsUnsubscribeSuccess}}
+			<div class="alert alert-success" role="alert">
+				<span class="fa-stack fa-lg">
+					<i class="fa fa-envelope-o fa-stack-1x"></i>
+					<i class="fa fa-ban fa-stack-2x"></i>
+				</span>
+				{{mf 'notifications.unsubscribeSuccess' 'You have successfully unsubscribed from automated notifications.'}}
+			</div>
+		{{/if}}
+		{{#if privateMessagesUnsubscribeSuccess}}
+			<div class="alert alert-success" role="alert">
+				<span class="fa-stack fa-lg">
+					<i class="fa fa-envelope-o fa-stack-1x"></i>
+					<i class="fa fa-ban fa-stack-2x"></i>
+				</span>
+				{{mf 'privateMessages.unsubscribeSuccess' 'You have successfully unsubscribed from private messages from users.'}}
+			</div>
+		{{/if}}
+		{{#if unsubscribeError}}
+			<div class="alert alert-danger" role="alert">
+				<span class="fa-stack fa-lg">
+					<i class="fa fa-envelope-o fa-stack-1x"></i>
+					<i class="fa fa-ban fa-stack-2x"></i>
+				</span>
+				{{mf 'notifications.unsubscribeError' 'There has been an error with your unsubscription. Please Try again.'}}
+			</div>
+		{{/if}}
+		{{#unless currentUser}}
+			{{mf 'profile.not_logged_in' 'You are not logged in'}}
+		{{else}}
+			<div class="page-component">
+				<div class="row g-3">
+					<div class="col-6 col-sm-3">
+						{{> avatarForm }}
+					</div>
+
+					<div class="col-sm-9">
+						<h2 class="mt-4">
+							{{> editable editableName}}
+						</h2>
+
+						<p>
+							{{> editable editableDescription}}
+						</p>
+
+						<a class="btn btn-primary"
+						   href="{{pathFor 'userprofile' _id=currentUser._id}}">
+							<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+							{{mf 'login.frame.profile' 'Public profile'}}
+						</a>
+					</div>
+				</div>
+			</div>
+
+			{{#if user.email}}
+				<div class="page-component page-component-seperated">
+					<h3>{{mf 'profile.email_settings' 'E-Mail settings'}}</h3>
+					<div class="row g-4 mb-2">
+						<div class="col-sm-6">
+							<form class="row g-2 mb-2 js-email-form">
+								<div class="col {{errorClass 'email'}}">
+									<label for="editform_email" class="sr-only">
+										{{mf 'profile.email' 'E-Mail'}}
+									</label>
+
+									<input class="form-control js-email" id="editform_email"
+										   type="text" value="{{user.email}}" />
+									{{errorMessage 'email'}}
+								</div>
+								<div class="col-auto">
+									{{> buttonSave}}
+								</div>
+							</form>
+							{{#unless user.verified}}
+								{{> verifyEmail}}
+							{{/unless}}
+						</div>
+						<div class="col-sm-6">
+							<div class="form-check form-switch mb-2">
+								<input class="form-check-input js-notifications" type="checkbox"
+									   value="" id="notificationsCheck" {{notificationsChecked}} />
+								<label class="form-check-label" for="notificationsCheck">
+									{{mf 'profile.toggle.notifications' 'Receive automated notifications via email'}}
+								</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input js-allowPrivateMessages"
+									   type="checkbox" value="" id="allowPrivateMessagesCheck"
+									   {{allowPrivateMessagesChecked}} />
+								<label class="form-check-label" for="allowPrivateMessagesCheck">
+									{{mf 'profile.toggle.allowPrivateMessages' 'Receive private messages from users via email'}}
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			{{/if}}
+			{{#if tenantCount}}
+				<div class="page-component page-component-seperated">
+					<h3>{{mf 'profile.tenants' 'My organizations'}}</h3>
+					<h5>
+						{{#mf KEY='profile.tenantMembership' NUM_TENANTS=tenantCount}}
+						You are {NUM_TENANTS, plural, =0 {not admin of any organization} =1 {admin of the organization:} other {admin of # organizations:}}
+						{{/mf}}
+					</h5>
+					<ul class="list-unstyled">
+						{{#each tenant in user.tenants}}
+							<li class="mb-3">
+								<div class="tag tag-link tenant-tag">
+									<a href="{{pathFor 'tenantDetails' _id=tenant._id}}">
+										{{tenant.name}}
+									</a>
+								</div>
+							</li>
+						{{/each}}
+					</ul>
+				</div>
+			{{/if}}
+
+			<div class="page-component page-component-seperated">
+				<h3>{{mf 'profile.groups' 'My groups'}}</h3>
+				<h5>
+					{{#mf KEY='profile.groupMembership' NUM_GROUPS=groupCount}}
+						You are {NUM_GROUPS, plural, =0 {not member of any group} =1 {member of the group:} other {member of # groups:}}
+					{{/mf}}
+				</h5>
+				<ul class="list-unstyled">
+					{{#each group in user.groups}}
+						<li class="mb-3">{{> groupNameFull group._id}}</li>
+					{{/each}}
+				</ul>
+				<a class="btn btn-add" href="{{pathFor 'groupDetails' _id='create'}}">
+					{{mf 'profile.createNewGroup.button' 'Create a new group'}}
+				</a>
+			</div>
+			<div class="page-component page-component-seperated profile-venues-list">
+				<h3>{{mf 'profile.venues' 'My venues:'}}</h3>
+				{{#if isVenueEditor}}
+					<ul class="list-unstyled">
+						{{#each venue in user.venues}}
+							<li class="mb-3">{{> venueLink venue=venue}}</li>
+						{{/each}}
+					</ul>
+				{{else}}
+					<p>{{mf 'userprofile.noOwnVenues' "You're not editor of any venue."}}</p>
+				{{/if}}
+				<a class="btn btn-add" href="{{pathFor 'venueDetails' _id='create'}}">
+					{{mf 'profile.createNewVenue.button' 'Create a new venue'}}
+				</a>
+			</div>
+			<div class="page-component page-component-seperated">
+				<h3>{{mf 'profile.danger_zone' 'Danger zone'}}</h3>
+
+				<div class="mb-3">
+					{{#unless changingPass}}
+						<button type="button" class="btn btn-secondary js-change-pwd-btn">
+							{{mf 'profile.changePass' 'Change my password'}}
+						</button>
+					{{/unless}}
+					{{#if changingPass}}
+						<div class="border border-success text-primary p-3">
+							<form class="js-change-pwd">
+								<div class="row mb-2">
+									<label for="oldpassword"
+										   class="col-sm-4 col-form-label text-end">
+										{{mf 'profile.input.oldPassword' 'Your current password'}}
+									</label>
+									<div class="col-sm-8">
+										<input type="password" class="js-old-pwd form-control"
+											   id="oldpassword" value="" />
+									</div>
+								</div>
+								<div class="row mb-2">
+									<label for="newpassword"
+										   class="col-sm-4 col-form-label text-end">
+										{{mf 'profile.input.newPassword' 'New password'}}
+									</label>
+									<div class="col-sm-8">
+										<input type="password" class="js-new-pwd form-control"
+											   id="newpassword" value="" />
+									</div>
+								</div>
+								<div class="row mb-2">
+									<label for="newpassword_confirm"
+										   class="col-sm-4 col-form-label text-end">
+										{{mf 'profile.input.repeatPassword' 'Repeat new password'}}
+									</label>
+									<div class="col-sm-8">
+										<input type="password"
+											   class="js-new-pwd-confirm form-control"
+											   id="newpassword_confirm" value="" />
+									</div>
+								</div>
+								<div class="d-flex gap-2 justify-content-end">
+									{{> buttonSave}}
+									{{> buttonCancel event="js-change-pwd-cancel"}}
+								</div>
+							</form>
+						</div>
+					{{/if}}
+				</div>
+				<div>
+					{{#unless expanded}}
+						{{> buttonDelete event="js-expand"}}
+					{{else}}
+						<div class="border border-danger text-danger p-3">
+							<p>{{mf 'profile.reallydelete' 'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.'}}
+							</p>
+							<div class="d-flex gap-2 justify-content-end">
+								{{> buttonDeleteConfirm
+									event="js-profile-delete-confirm-btn"
+									textIdle=(mf 'profile.delete.confirm.button' 'Delete my user and all its profile')
+									textBusy=(mf 'profile.delete.confirm.button.busy' 'Deleting profile...')
+								}}
+								{{> buttonCancel event="js-collapse"}}
+							</div>
+						</div>
+					{{/unless}}
+				</div>
+			</div>
+		{{/unless}}
+	</div>
+</template>
