@@ -38,14 +38,14 @@
 
 <template name="userSubscribedHistoryEntry">
 	<i class="{{roleIcon role}} fa-fw" aria-hidden="true"></i>
-	{{> profilelink user}}
+	{{> profileLink user}}
 	{{contribution user}}
 	{{mf 'course.history.userSubscribed' 'joined as {ROLE}' ROLE=(roleShort role)}}
 </template>
 
 <template name="userUnsubscribedHistoryEntry">
 	<i class="{{roleIcon role}} fa-fw" aria-hidden="true"></i>
-	{{> profilelink user}}
+	{{> profileLink user}}
 	{{contribution user}}
 	{{mf 'course.history.userUnsubscribed' 'retract {ROLE}' ROLE=(roleShort role)}}
 </template>
@@ -58,7 +58,7 @@
 		{{this.title}}
 	</a>
 	{{mf 'course.history.eventInserted' 'created by'}}
-	{{> profilelink createdBy}}
+	{{> profileLink createdBy}}
 	{{contribution createdBy}}
 </template>
 
@@ -74,7 +74,7 @@
 	{{else}}
 		{{mf 'course.history.eventUpdated' 'updated by'}}
 	{{/if}}
-	{{> profilelink updatedBy}}
+	{{> profileLink updatedBy}}
 	{{contribution updatedBy}}
 </template>
 
@@ -84,18 +84,18 @@
 	{{calendarDayShort startLocal}}
 	{{this.title}}
 	{{mf 'course.history.eventRemoved' 'removed by'}}
-	{{> profilelink removedBy}}
+	{{> profileLink removedBy}}
 	{{contribution removedBy}}
 </template>
 
 <template name="updatedHistoryEntry">
 	{{mf 'course.history.updated' 'Course updated by'}}
-	{{> profilelink updatedBy}}
+	{{> profileLink updatedBy}}
 	{{contribution updatedBy}}
 </template>
 
 <template name="createdHistoryEntry">
 	{{mf 'course.history.created_by' 'Course created by'}}
-	{{> profilelink createdby}}
+	{{> profileLink createdby}}
 	{{contribution createdby}}
 </template>

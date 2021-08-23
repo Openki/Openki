@@ -2,13 +2,14 @@ import $ from 'jquery';
 import { Router } from 'meteor/iron:router';
 import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
 import Categories from '/imports/api/categories/categories';
 import { Courses } from '/imports/api/courses/courses';
+
 import CourseTemplate from '/imports/ui/lib/course-template';
+import * as RegionSelection from '/imports/utils/region-selection';
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
@@ -208,12 +209,7 @@ Template.find.events({
 	},
 
 	'click .js-all-regions-btn'() {
-		try {
-			localStorage.setItem('region', 'all');
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
-		Session.set('region', 'all');
+		RegionSelection.change('all');
 	},
 
 	'click .js-more-courses'(event, instance) {

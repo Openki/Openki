@@ -52,14 +52,28 @@ import './styles.scss';
 			Session.get('seconds');
 			return moment().format('LL');
 		},
+
 		headerLogo() {
+			let headerLogo;
+
 			const currentRegion = Regions.currentRegion();
 			if (currentRegion?.custom?.headerLogoKiosk?.src) {
-				return currentRegion.custom.headerLogoKiosk.src;
+				headerLogo = currentRegion.custom.headerLogoKiosk.src;
 			}
 
-			return PublicSettings.headerLogoKiosk.src;
+			headerLogo = headerLogo || PublicSettings.headerLogoKiosk.src;
+
+			if (!headerLogo) {
+				return '';
+			}
+
+			if (headerLogo.startsWith('data:image/')) {
+				return headerLogo;
+			}
+
+			return `/logo/${headerLogo}`;
 		},
+
 		headerAlt() {
 			const currentRegion = Regions.currentRegion();
 			if (currentRegion?.custom?.headerLogoKiosk?.alt) {

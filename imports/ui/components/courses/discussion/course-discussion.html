@@ -76,10 +76,10 @@
 		{{/if}}
 	{{else}}
 		<div {{postClasses}} id="comment{{_id}}">
-			{{> profileIcon userId}}
+			{{> discussionProfileIcon userId}}
 			<div class="discussion-post-content">
 				<div class="discussion-post-header">
-					{{> profileLink userId}}
+					{{> discussionProfileLink userId}}
 					<span class="discussion-post-header-sub">
 						<span data-tooltip="{{dateFormat time_created}}">
 							{{fromNow time_created}}
@@ -123,12 +123,12 @@
 
 <template name="postEdit">
 	<div class='{{postClass}} {{#if new}}{{#unless parentId}}discussion-post-new{{/unless}}{{/if}}'>
-		{{> profileIcon userId}}
+		{{> discussionProfileIcon userId}}
 		<div class="discussion-edit-content">
 			<form>
 				<div class="discussion-edit-header">
 					{{#if showUserId}}
-						{{> profileLink userId}}
+						{{> discussionProfileLink userId}}
 					{{else}}
 						<strong>{{mf 'discussion.anonymous' 'Anonymous'}}</strong>
 					{{/if}}
@@ -203,11 +203,9 @@
 	</div>
 </template>
 
-<template name="profileLink">
+<template name="discussionProfileLink">
 	{{#if this}}
-		<a class="profilelink" href="{{pathFor 'userprofile' _id=this username=(username this)}}">
-			{{username this}}
-		</a>
+		{{> profileLink}}
 		{{contribution this}}
 	{{else}}
 		<span class="username">
@@ -216,7 +214,7 @@
 	{{/if}}
 </template>
 
-<template name="profileIcon">
+<template name="discussionProfileIcon">
 	<div class="discussion-thumb">
 		{{#if this}}
 			<a href="{{pathFor 'userprofile' _id=this username=(username this)}}">
