@@ -57,7 +57,7 @@ Template.kioskEvents.helpers({
 			headerLogo = currentRegion.custom.headerLogoKiosk.src;
 		}
 
-		headerLogo = PublicSettings.headerLogoKiosk.src;
+		headerLogo = headerLogo || PublicSettings.headerLogoKiosk.src;
 
 		if (!headerLogo) {
 			return '';

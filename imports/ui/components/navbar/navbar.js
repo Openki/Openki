@@ -59,9 +59,9 @@ Template.navbar.helpers({
 		const currentRegion = Regions.currentRegion();
 		if (currentRegion?.custom?.headerLogo?.src) {
 			headerLogo = currentRegion.custom.headerLogo.src;
+		} else {
+			headerLogo = PublicSettings.headerLogo.src;
 		}
-
-		headerLogo = PublicSettings.headerLogo.src;
 
 		if (headerLogo.startsWith('data:image/')) {
 			return headerLogo;
