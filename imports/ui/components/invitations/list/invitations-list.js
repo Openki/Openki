@@ -19,18 +19,13 @@ Template.invitationsList.onCreated(function () {
 		showAccepted: false,
 	});
 	instance.autorun(() => {
-		const status = ['created', 'send', 'failed'];
 
-		if (instance.state.get('showAccepted')) {
-			status.push('accepted');
-		}
-
-		instance.subscribe('invitations.findFilter', { tenant: tenant._id, status });
+		instance.subscribe('invitations.findFilter', { tenant: tenant._id });
 	});
 });
 
 Template.invitationsList.helpers({
-	hasInvitations() {
+	hasSomeInvitations() {
 		const instance = Template.instance();
 		return Invitations.findFilter({ tenant: instance.data.tenant._id }, 1).count() > 0;
 	},
