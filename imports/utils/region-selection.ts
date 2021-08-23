@@ -13,6 +13,49 @@ import * as UrlTools from '/imports/utils/url-tools';
  */
 export const regionDependentRoutes = ['home', 'find', 'calendar', 'venuesMap', 'groupDetails'];
 
+function useAsRegion(regionId: string) {
+	if (!regionId) {
+		return false;
+	}
+
+	// Special case 'all'
+	if (regionId === 'all') {
+		try {
+			localStorage.setItem('region', regionId);
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+		}
+		Session.set('region', regionId);
+		return true;
+	}
+
+	// Normal case region ID
+	if (Regions.findOne({ _id: regionId })) {
+		try {
+			localStorage.setItem('region', regionId);
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+		}
+		Session.set('region', regionId);
+		return true;
+	}
+
+	// Special case by name so you can do ?region=Spilistan
+	const region = Regions.findOne({ name: regionId });
+	if (region) {
+		try {
+			localStorage.setItem('region', region._id);
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+		}
+		Session.set('region', region._id);
+		return true;
+	}
+
+	// Ignore invalid region ID
+	return false;
+}
+
 /**
  * @param confirmAutodectionByUser On true: Let the user approve the automatic region selection/detection.
  */
@@ -23,49 +66,6 @@ export function subscribe(confirmAutodectionByUser = true) {
 			UrlTools.queryParam('region'),
 			localStorage?.getItem('region'),
 		].filter(Boolean);
-
-		const useAsRegion = function (regionId: string) {
-			if (!regionId) {
-				return false;
-			}
-
-			// Special case 'all'
-			if (regionId === 'all') {
-				try {
-					localStorage.setItem('region', regionId);
-				} catch {
-					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-				}
-				Session.set('region', regionId);
-				return true;
-			}
-
-			// Normal case region ID
-			if (Regions.findOne({ _id: regionId })) {
-				try {
-					localStorage.setItem('region', regionId);
-				} catch {
-					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-				}
-				Session.set('region', regionId);
-				return true;
-			}
-
-			// Special case by name so you can do ?region=Spilistan
-			const region = Regions.findOne({ name: regionId });
-			if (region) {
-				try {
-					localStorage.setItem('region', region._id);
-				} catch {
-					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-				}
-				Session.set('region', region._id);
-				return true;
-			}
-
-			// Ignore invalid region ID
-			return false;
-		};
 
 		// If any of these regions are usable we stop here
 		if (selectors.some((s) => useAsRegion(s))) {
