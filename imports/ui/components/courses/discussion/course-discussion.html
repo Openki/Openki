@@ -230,8 +230,9 @@
 
 <template name="removeCommentDropdown">
 	<span class="dropdown">
-		<button type="button" class="discussion-delete-btn dropdown-toggle" aria-expanded="false"
-				aria-haspopup="true" data-toggle="dropdown" data-tooltip="{{mf '_button.delete'}}">
+		<button type="button" class="discussion-delete-btn" aria-expanded="false"
+				aria-haspopup="true" data-bs-toggle="dropdown"
+				data-tooltip="{{mf '_button.delete'}}">
 			<span class="fa fa-remove" aria-hidden="true"></span>
 		</button>
 		<ul class="dropdown-menu dialog-dropdown right">
@@ -239,7 +240,9 @@
 				{{mf 'comment.delete.header' 'Delete comment'}}
 				<button type="button" class="btn-close"></button>
 			</li>
-			<li class="divider" role="seperator"></li>
+			<li>
+				<hr class="dropdown-divider">
+			</li>
 			<li class="dialog-dropdown-text">
 				{{mf 'comment.delete.confirm' 'Do you really want to delete this comment?'}}
 			</li>

@@ -170,15 +170,16 @@
 			{{#if tools}}
 				<div class="btn-group tag-btn group-tag-btn addon align-top">
 					<button type="button" class="dropdown-toggle" aria-expanded="false"
-							aria-haspopup="true" data-toggle="dropdown">
-						<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
+							aria-haspopup="true" data-bs-toggle="dropdown">
 					</button>
 					<ul class="dropdown-menu dialog-dropdown">
 						<li class="dropdown-header">
 							{{mf 'grouplist.editgroup.header' 'Edit group'}}
 							<button type="button" class="btn-close"></button>
 						</li>
-						<li role="seperator" class="divider"></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
 						{{#each tools}}
 							<li class="dialog-dropdown-btn">{{> toolTemplate}}</li>
 						{{/each}}
@@ -195,17 +196,18 @@
 	{{#if groupsToAdd}}
 		<div class="btn-group tag-btn group-tag-btn align-top">
 			<button type="button" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true"
-					data-toggle="dropdown">
+					data-bs-toggle="dropdown">
 				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
 				<span>{{mf 'course.group.addText' 'link a group'}}</span>
-				<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
 			</button>
 			<ul class="dropdown-menu dialog-dropdown">
 				<li class="dropdown-header">
 					{{mf 'grouplist.addgroups.header' 'Add group'}}
 					<button type="button" class="btn-close"></button>
 				</li>
-				<li role="seperator" class="divider"></li>
+				<li>
+					<hr class="dropdown-divider">
+				</li>
 				{{#each groupsToAdd}}
 					<li>
 						<button class="btn btn-link js-add-group" type="button" value="{{this}}">

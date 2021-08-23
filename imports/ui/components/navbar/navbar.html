@@ -72,7 +72,7 @@
 					<ul class="nav navbar-nav text-center">
 						<li class="dropdown login-link">
 							{{> loginButton}}
-							<div class="dropdown-menu login-dropdown">
+							<div class="dropdown-menu dropdown-menu-end login-dropdown">
 								{{> userFrame}}
 							</div>
 						</li>
@@ -86,8 +86,8 @@
 <template name='loginButton'>
 	{{#if loginServicesConfigured}}
 		{{#if currentUser}}
-			<a class="loginButton dropdown-toggle navbar-link" aria-expanded="false"
-			   data-toggle="dropdown" role="button">
+			<a class="loginButton navbar-link" aria-expanded="false"
+			   data-bs-toggle="dropdown" role="button">
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 				{{currentUser.username}}
 			</a>

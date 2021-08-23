@@ -5,7 +5,7 @@
 // import 'bootstrap-sass/assets/javascripts/bootstrap/button';
 // import 'bootstrap-sass/assets/javascripts/bootstrap/carousel';
 // import 'bootstrap-sass/assets/javascripts/bootstrap/collapse';
-import 'bootstrap-sass/assets/javascripts/bootstrap/dropdown';
+// import 'bootstrap-sass/assets/javascripts/bootstrap/dropdown';
 // import 'bootstrap-sass/assets/javascripts/bootstrap/modal';
 // import 'bootstrap-sass/assets/javascripts/bootstrap/scrollspy';
 import 'bootstrap-sass/assets/javascripts/bootstrap/tab';
@@ -19,7 +19,7 @@ import 'bootstrap/js/dist/alert';
 import 'bootstrap/js/dist/button';
 // import 'bootstrap/js/dist/carousel';
 import 'bootstrap/js/dist/collapse';
-// import 'bootstrap/js/dist/dropdown';
+import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/js/dist/modal';
 // import 'bootstrap/js/dist/popover';
 // import 'bootstrap/js/dist/scrollspy';

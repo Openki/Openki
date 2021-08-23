@@ -51,7 +51,8 @@ $dropdown-transition-time: 0.3s;
 	text-align: center;
 
 	.btn-close {
-		@extend .pull-right;
+		@include td-float(right);
+		@include td-margin(left, -20px);
 	}
 }
 

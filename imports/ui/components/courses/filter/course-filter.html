@@ -96,26 +96,25 @@
 							{{> categoryLabel}}
 							<button type="button"
 									class="remove-btn js-remove-category-btn fa fa-remove"
-									data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
+									data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=(categoryName this)}}">
 							</button>
 						</li>
 					{{/each}}
 				</ul>
 			{{/if}}
 		{{/unless}}
-		<div class="dropdown filter-categories-select">
+		<div class="input-group input-group-outline filter-categories-select">
 			<input class="js-search-categories form-control"
 				   placeholder="{{mf 'find.searchCategories.placeholder' 'Choose categories'}}"
 				   type="text">
-			<button aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown"
-					type="button">
-				<span class="caret"></span>
+			<button aria-expanded="false" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+					type="button" data-bs-reference="parent">
 			</button>
 			<ul class="dropdown-menu filter-categories-dropdown" role="menu">
 				{{#if availableCategories}}
 					{{#each availableCategories}}
 						<li class="{{this}}">
-							<a class="js-category-selection-label {{#if availableSubcategories this}}drodown-item-main{{/if}}"
+							<a class="js-category-selection-label {{#if availableSubcategories this}}drodown-item-main{{/if}} dropdown-item"
 							   href="#">
 								{{categoryNameMarked}}
 								{{#if availableSubcategories this}}
@@ -128,7 +127,7 @@
 						</li>
 						{{#each availableSubcategories this}}
 							<li class="js-sub-category {{..}}">
-								<a class="js-category-selection-label" href="#">
+								<a class="js-category-selection-label dropdown-item" href="#">
 									{{categoryNameMarked}}
 								</a>
 							</li>
@@ -147,9 +146,9 @@
 				<ul class="filter-selected-categories">
 					{{#each categories}}
 						<li>
-							<a class="js-category-label" href="#">{{categoryName}}</a>
+							<a class="js-category-label" href="#">{{categoryName this}}</a>
 							<button class="remove-btn js-remove-category-btn fa fa-remove"
-									data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}"
+									data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=(categoryName this)}}"
 									type="button">
 							</button>
 						</li>

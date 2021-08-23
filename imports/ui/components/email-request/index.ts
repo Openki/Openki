@@ -1,7 +1,6 @@
 import { mf } from 'meteor/msgfmt:core';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
-import moment from 'moment';
 
 import * as Alert from '/imports/api/alerts/alert';
 import * as usersMethods from '/imports/api/users/methods';
@@ -22,13 +21,7 @@ import './template.html';
 	template.helpers({
 		showEmailRequest() {
 			const user = Meteor.user();
-
-			return (
-				user &&
-				user.hasEmail() &&
-				!user.hasVerifiedEmail() &&
-				moment().subtract(7, 'days').isAfter(user.createdAt)
-			);
+			return user && !user.hasEmail();
 		},
 	});
 }
