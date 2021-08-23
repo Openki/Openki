@@ -18,7 +18,7 @@ export async function getLocation() {
 	return { type: 'Point', coordinates: [latlon[1], latlon[0]] };
 }
 
-export async function detect() {
+export async function detect(tenant?: string) {
 	// SPECIAL CASE
 	// When we're connected to localhost, it's likely a dev-setup.
 	const hostname = document.location?.hostname;
@@ -38,17 +38,23 @@ export async function detect() {
 
 	const maxDistance = 200000; // meters
 
-	const region = Regions.findOne({
-		loc: {
-			$near: {
-				$geometry: location,
-				$maxDistance: maxDistance,
-			},
-		},
-	});
+	const region = Regions.findOne(
+		tenant
+			? {
+					tenant,
+					loc: { $near: { $geometry: location, $maxDistance: maxDistance } },
+			  }
+			: {
+					loc: { $near: { $geometry: location, $maxDistance: maxDistance } },
+			  },
+	);
 
 	if (!region) {
-		throw new Error(`No region found within ${maxDistance / 1000} km.`);
+		if (tenant) {
+			throw new Error(`No region found within ${maxDistance / 1000} km for tenant ${tenant}`);
+		} else {
+			throw new Error(`No region found within ${maxDistance / 1000} km.`);
+		}
 	}
 
 	return region;

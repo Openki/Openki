@@ -29,7 +29,7 @@
 	<form class="js-region-search-form">
 		<div class="dropdown">
 			<input class="form-control js-region-search" type="text"
-				   value="{{#if region}}{{region.name}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}">
+				   value="{{#if currentRegionName}}{{currentRegionName}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}">
 			<span class="control-arrow fa fa-angle-down fa-fw"></span>
 		</div>
 
