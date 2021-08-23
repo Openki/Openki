@@ -75,9 +75,10 @@ Notification.send = function (entry) {
 				vars.siteName = siteName;
 				// For everything context specifig us customSiteName from the region, eg. courses
 				vars.customSiteName = vars.customSiteName || vars.siteName;
+				const emailLogo = vars.customEmailLogo || PublicSettings.emailLogo;
 				vars.site = {
 					url: vars.customSiteUrl || Meteor.absoluteUrl(),
-					logo: base64PngImageData(vars.customEmailLogo || PublicSettings.emailLogo),
+					logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
 					name: vars.customSiteName || vars.siteName,
 				};
 				vars.locale = userLocale;

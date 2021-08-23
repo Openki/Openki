@@ -54,12 +54,20 @@ Template.navbar.helpers({
 	},
 
 	headerLogo() {
+		let headerLogo;
+
 		const currentRegion = Regions.currentRegion();
 		if (currentRegion?.custom?.headerLogo?.src) {
-			return currentRegion.custom.headerLogo.src;
+			headerLogo = currentRegion.custom.headerLogo.src;
 		}
 
-		return PublicSettings.headerLogo.src;
+		headerLogo = PublicSettings.headerLogo.src;
+
+		if (headerLogo.startsWith('data:image/')) {
+			return headerLogo;
+		}
+
+		return `/logo/${headerLogo}`;
 	},
 
 	headerAlt() {
