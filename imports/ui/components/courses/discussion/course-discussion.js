@@ -16,6 +16,7 @@ import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/avatar/avatar';
+import '/imports/ui/components/profile-link/profile-link';
 
 import './course-discussion.html';
 

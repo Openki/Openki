@@ -7,6 +7,8 @@ import { Invitations } from '/imports/api/invitations/invitations';
 import * as InvitationsMethods from '/imports/api/invitations/methods';
 import * as Alert from '/imports/api/alerts/alert';
 
+import '/imports/ui/components/profile-link/profile-link';
+
 import './invitations-list.html';
 
 Template.invitationsList.onCreated(function () {
