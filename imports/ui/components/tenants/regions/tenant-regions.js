@@ -26,4 +26,9 @@ Template.tenantRegions.helpers({
 	addRegionQuery(tenantId) {
 		return `tenant=${tenantId}`;
 	},
+
+	showAddRegion() {
+		const { tenant } = Template.instance().data;
+		return tenant.editableBy(Meteor.user());
+	},
 });

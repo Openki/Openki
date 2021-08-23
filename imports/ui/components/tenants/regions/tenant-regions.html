@@ -25,7 +25,9 @@
 			<div class="col-6 col-md-4">{{region.futureEventCount}}</div>
 		</div>
 	{{/each}}
-	<a class="btn btn-add" href="{{pathFor 'regionCreate' query=(addRegionQuery tenant._id)}}">
-		{{mf 'tenant.details.regions.createNew.button' 'Create a new region'}}
-	</a>
+	{{#if showAddRegion}}
+		<a class="btn btn-add" href="{{pathFor 'regionCreate' query=(addRegionQuery tenant._id)}}">
+			{{mf 'tenant.details.regions.createNew.button' 'Create a new region'}}
+		</a>
+	{{/if}}
 </template>
