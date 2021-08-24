@@ -1122,3 +1122,15 @@ Router.route('profilePrivateMessagesUnsubscribe', {
 	},
 	where: 'server',
 });
+
+Router.route('upload', {
+	action() {
+		// this.request.pipe()
+		debugger;
+
+		this.response.writeHead(200);
+
+		this.response.end();
+	},
+	where: 'server',
+});

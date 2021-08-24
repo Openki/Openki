@@ -13,6 +13,7 @@ import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/file-upload';
 
 import './template.html';
 import './styles.scss';
