@@ -1,0 +1,22 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.region-details-header {
+	background-color: $region-bg;
+	color: $region-color;
+}
+
+.region-details-body {
+	background-color: $blue-lighter;
+}
+
+.region-property-title {
+	font-weight: bold;
+}
+
+.region-delete-confirmation {
+	$background-color: lighten($danger, 20%);
+
+	background-color: $background-color;
+	border: 1px solid darken($background-color, 20%);
+	padding: 15px 15px 0;
+}

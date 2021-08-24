@@ -1,0 +1,97 @@
+import { check } from 'meteor/check';
+import { ReactiveDict } from 'meteor/reactive-dict';
+import { Router } from 'meteor/iron:router';
+import { mf } from 'meteor/msgfmt:core';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+
+import { RegionModel } from '/imports/api/regions/regions';
+import * as RegionsMethods from '/imports/api/regions/methods';
+
+import { Analytics } from '../../lib/analytics';
+
+import { Data as DisplayData } from '/imports/ui/components/regions/display';
+import { Data as EditData } from '/imports/ui/components/regions/edit';
+
+import './template.html';
+
+const Template = TemplateAny as TemplateStaticTyped<
+	{
+		isNew: boolean;
+		region: RegionModel;
+	},
+	'regionDetailsPage',
+	{ state: ReactiveDict<{ editing: boolean }> }
+>;
+
+const template = Template.regionDetailsPage;
+
+template.onCreated(function () {
+	const instance = this;
+
+	instance.autorun(() => {
+		const { isNew, region } = Template.currentData();
+		check(region.tenant, String);
+
+		if (!isNew) {
+			check(region._id, String);
+		}
+	});
+
+	instance.state = new ReactiveDict(undefined, { editing: false });
+});
+
+template.helpers({
+	editing() {
+		return Template.instance().state.get('editing');
+	},
+
+	createArgs() {
+		const instance = Template.instance();
+		const { region } = instance.data;
+		return {
+			region,
+			title: mf('region.edit.titleCreate', 'Create new region'),
+			async onSave(changes) {
+				const regionId = await RegionsMethods.create({ tenant: region.tenant, ...changes });
+
+				Router.go('regionDetails', { _id: regionId });
+
+				Analytics.trackEvent('Region creations', 'Region creations');
+			},
+			onCancel() {
+				Router.go('tenantDetails', { _id: region.tenant });
+			},
+		} as EditData;
+	},
+
+	editArgs() {
+		const instance = Template.instance();
+		const { region } = instance.data;
+		return {
+			region,
+			title: mf('region.edit.titleEdit', 'Edit region'),
+			async onSave(changes) {
+				await RegionsMethods.update(region._id, changes);
+				instance.state.set('editing', false);
+			},
+			onCancel() {
+				instance.state.set('editing', false);
+			},
+		} as EditData;
+	},
+
+	displayArgs() {
+		const instance = Template.instance();
+		const { region } = instance.data;
+		return {
+			region,
+			onEdit() {
+				instance.state.set('editing', true);
+			},
+			async onDelete() {
+				await RegionsMethods.remove(region._id);
+				Router.go('tenantDetails', { _id: region.tenant });
+			},
+		} as DisplayData;
+	},
+});

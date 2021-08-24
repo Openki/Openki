@@ -33,12 +33,12 @@
 								<p>
 									<span
 										  class="venue-property-title">{{mf 'location.details.hosts' 'Hosts:'}}</span>
-									<ul class='hosts'>
-										<li>
-											{{> profileLink editor}}
-											{{contribution editor}}
-										</li>
-									</ul>
+								<ul class='hosts'>
+									<li>
+										{{> profileLink editor}}
+										{{contribution editor}}
+									</li>
+								</ul>
 								</p>
 							{{/if}}
 							{{#if contact.web}}
@@ -87,11 +87,11 @@
 									<span class="venue-property-title">
 										{{mf 'venue.details.availableInfrastructure' 'Available infrastructure:'}}
 									</span>
-									<ul>
-										{{#each facilityNames}}
-											<li>{{this}}</li>
-										{{/each}}
-									</ul>
+								<ul>
+									{{#each facilityNames}}
+										<li>{{this}}</li>
+									{{/each}}
+								</ul>
 								</p>
 							{{/if}}
 							{{#if otherFacilities}}

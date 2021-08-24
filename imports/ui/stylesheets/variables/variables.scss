@@ -6,9 +6,33 @@
 $tab-content-bg: tint-color($blue-lighter, 5%);
 $tab-content-border-width: 1px;
 
+// ** Box shadow
+//========================================================================================
+$default-shadow:                                 rgba($gray-600, .4);
+
+$shadow-lg-offset-x:                             2px;
+$shadow-lg-offset-y:                             5px;
+$shadow-lg-blur:                                 8px;
+
+$shadow-sm-offset-x:                             1px;
+$shadow-sm-offset-y:                             2px;
+$shadow-sm-blur:                                 4px;
+
 // ** Detail pages
 //========================================================================================
 $details-header-padding-horizontal:              15px;
+
+// ** Events
+//========================================================================================
+$event-body-bg:                                  $blue-lighter;
+$event-header-bg:                                $green;
+
+$event-compact-height:                           200px;
+$event-compact-seperator-height:                 3px;
+
+$event-compact-with-date-height:                 220px;
+
+$event-page-component-bg:                        $blue-lighter;
 
 // ** Courses
 //========================================================================================
@@ -32,7 +56,17 @@ $course-member-comment-border-color:             shade-color($blue-lighter, 40%)
 $group-bg:                                       $green-alternative;
 $group-label-color: 							 $blue;
 
+// ** Region
+//========================================================================================
+$region-bg:                                       desaturate($green, 40%);
+$region-color:                                    $red-darkest;
+
 // ** Tenant
 //========================================================================================
 $tenant-bg:                                       $green-alternative;
 $tenant-label-color: 							  $blue;
+
+// ** Kiosk
+//========================================================================================
+$kiosk-wrap-padding-horizontal:                  $grid-gutter-width / 4;
+$kiosk-wrap-padding-vertical:                    $kiosk-wrap-padding-horizontal;

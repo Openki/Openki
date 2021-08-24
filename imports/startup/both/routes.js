@@ -214,6 +214,7 @@ Router.route('frameEvents', {
 
 Router.route('framePropose', {
 	path: '/frame/propose',
+	template: 'frameProposePage',
 	layoutTemplate: 'frameLayout',
 	waitOn: () => Meteor.subscribe('Regions'),
 	data() {
@@ -255,6 +256,10 @@ Router.route('framePropose', {
 		params.isFrame = true;
 
 		return params;
+	},
+	async action() {
+		await import('/imports/ui/pages/frames/propose');
+		this.render();
 	},
 	onAfterAction() {
 		msgfmt.loading(); // Rerun after msgfmt has loaded translation
@@ -325,6 +330,7 @@ Router.route('home', finderRoute('/'));
 
 Router.route('kioskEvents', {
 	path: '/kiosk/events',
+	template: 'kioskEventsPage',
 	layoutTemplate: 'kioskLayout',
 	waitOn() {
 		const now = reactiveNow.get(); // Time dependency so this will be reactively updated
@@ -367,6 +373,10 @@ Router.route('kioskEvents', {
 			ongoing: Events.findFilter(queryNow),
 			filter: filterParams,
 		};
+	},
+	async action() {
+		await import('/imports/ui/pages/kiosk/events');
+		this.render();
 	},
 	onAfterAction() {
 		this.timer = Meteor.setInterval(() => {
@@ -624,6 +634,7 @@ Router.route('stats', {
 
 Router.route('tenantCreate', {
 	path: 'tenant/create',
+	template: 'tenantCreatePage',
 	data() {
 		/** @type TenantModel */
 		const tenant = new Tenant();
@@ -635,6 +646,10 @@ Router.route('tenantCreate', {
 			region,
 		};
 	},
+	async action() {
+		await import('/imports/ui/pages/tenant-create');
+		this.render();
+	},
 	onAfterAction() {
 		msgfmt.loading(); // Rerun after msgfmt has loaded translation
 
@@ -645,6 +660,7 @@ Router.route('tenantCreate', {
 
 Router.route('tenantDetails', {
 	path: 'tenant/:_id/:short?',
+	template: 'tenantDetailsPage',
 	/**
 	 * @this {{params: {_id: string; slug?: string;}}}
 	 */
@@ -662,6 +678,10 @@ Router.route('tenantDetails', {
 		}
 
 		return { tenant };
+	},
+	async action() {
+		await import('/imports/ui/pages/tenant-details');
+		this.render();
 	},
 	/**
 	 * @this {{params: {_id: string; slug?: string;}}}
@@ -722,14 +742,21 @@ Router.route('invitation', {
 
 Router.route('timetable', {
 	path: '/kiosk/timetable',
-	layoutTemplate: 'timetableLayout',
+	template: 'kioskTimetablePage',
+	layoutTemplate: 'kioskLayout',
 	waitOn() {
 		return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params?.query), 200);
 	},
 	data() {
 		const query = makeFilterQuery(this.params.query);
 
+		/**
+		 * @type {moment.MomentInput}
+		 */
 		let start;
+		/**
+		 * @type {moment.MomentInput}
+		 */
 		let end;
 
 		const events = Events.findFilter(query, 200).fetch();
@@ -755,7 +782,13 @@ Router.route('timetable', {
 		const timestampEnd = end.toDate().getTime();
 
 		const span = timestampEnd - timestampStart;
+		/**
+		 * @type {{ [day: string]: {moment: moment.Moment, relStart:number, relEnd:number}; } }
+		 */
 		const days = {};
+		/**
+		 * @type {{ [hour: string]: {moment: moment.Moment, relStart:number, relEnd:number}; } }
+		 */
 		const hours = {};
 		const cursor = moment(start);
 		do {
@@ -787,6 +820,9 @@ Router.route('timetable', {
 			cursor.add(1, 'hour');
 		} while (cursor.isBefore(end));
 
+		/**
+		 * @type {{[venue:string]: {venue: VenueModel, perRoom: {[room:string]:{room:string,venue:VenueModel,rows:(import('/imports/api/events/events').EventEntity & {relStart: number, relEnd: number})[]}}}}}
+		 */
 		const perVenue = {};
 		const useVenue = function (venue, room) {
 			const id = venue._id || `#${venue.name}`;
@@ -851,6 +887,10 @@ Router.route('timetable', {
 			grouped,
 		};
 	},
+	async action() {
+		await import('/imports/ui/pages/kiosk/timetable');
+		this.render();
+	},
 });
 
 Router.route('userprofile', {
@@ -907,7 +947,7 @@ Router.route('userprofile', {
 
 Router.route('regionCreate', {
 	path: 'region/create',
-	template: 'regionDetails',
+	template: 'regionDetailsPage',
 	data() {
 		/** @type RegionModel */
 		const region = new Region();
@@ -917,6 +957,10 @@ Router.route('regionCreate', {
 			isNew: true,
 			region,
 		};
+	},
+	async action() {
+		await import('/imports/ui/pages/region-details');
+		this.render();
 	},
 	onAfterAction() {
 		msgfmt.loading(); // Rerun after msgfmt has loaded translation
@@ -928,6 +972,7 @@ Router.route('regionCreate', {
 
 Router.route('regionDetails', {
 	path: 'region/:_id/:slug?',
+	template: 'regionDetailsPage',
 	/**
 	 * @this {{params: {_id: string; slug?: string;}}}
 	 */
@@ -945,6 +990,10 @@ Router.route('regionDetails', {
 		}
 
 		return { region };
+	},
+	async action() {
+		await import('/imports/ui/pages/region-details');
+		this.render();
 	},
 	/**
 	 * @this {{params: {_id: string; slug?: string;}}}

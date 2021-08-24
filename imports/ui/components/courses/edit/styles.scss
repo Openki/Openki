@@ -1,0 +1,28 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.course-edit-body {
+	@include media-breakpoint-up(sm) {
+		border-color: $course-border-color;
+		border-style: $proposal-border-style;
+	}
+
+	&.is-frame {
+		margin-top: 0;
+	}
+}
+
+.proposed-courses {
+	border: 1px solid $primary;
+	max-height: 200px;
+	overflow: auto;
+	width: 100%;
+}
+
+.proposed-courses > .dropdown-header {
+	margin-top: 8.5px;
+	text-align: left;
+}
+
+.proposed-courses > .dropdown-header > .fa {
+	margin-right: 7px;
+}

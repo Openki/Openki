@@ -3,14 +3,14 @@
 	font-weight: bold;
 	margin: 0;
 
-	@media (min-width: map-get($grid-breakpoints, 'md')) {
+	@include media-breakpoint-up(md) {
 		display: flex;
 	}
 
 	&[class*='col-'] {
 		display: block;
 
-		@media (min-width: map-get($grid-breakpoints, 'md')) {
+		@include media-breakpoint-up(md) {
 			display: none;
 		}
 	}
@@ -20,7 +20,7 @@
 	}
 
 	+ .responsive-table-row [class*='col-'] {
-		@media (min-width: map-get($grid-breakpoints, 'md')) {
+		@include media-breakpoint-up(md) {
 			border-top: 3px solid #ddd;
 		}
 	}
@@ -28,7 +28,7 @@
 
 .responsive-table-row {
 	margin: 0;
-	@media (max-width: map-get($grid-breakpoints, 'md') - 1px) {
+	@include media-breakpoint-down(md) {
 		border: 2px solid #ddd;
 		margin-bottom: 10px;
 
@@ -39,9 +39,9 @@
 	}
 
 	[class*='col-'] {
-		@media (min-width: map-get($grid-breakpoints, 'md')) {
+		padding: 8px;
+		@include media-breakpoint-up(md) {
 			border-top: 2px solid #ddd;
 		}
-		padding: 8px;
 	}
 }

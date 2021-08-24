@@ -1,0 +1,249 @@
+<template name="courseEdit">
+	{{#if Template.subscriptionsReady}}
+		<div class="edit-page">
+			<form autocomplete="off">
+				{{#if proposeFromQuery}}
+					<h2>{{mf 'find.propose_new_course?' 'Why not propose a new course for "{TERM}"?' TERM=(courseSearch)}}
+					</h2>
+				{{else}}
+					{{#if _id}}
+						<h2>{{mf 'course.edit.edit_course' 'Edit course'}}</h2>
+					{{else}}
+						{{#unless isFrame}}
+							<h2>
+								{{#if newCourseGroupName}}
+									{{#mf KEY='course.edit.proposeInGroup' GROUP=newCourseGroupName}}
+										Propose new course in group {GROUP}
+									{{/mf}}
+								{{else}}
+									{{mf 'course.edit.propose' 'Propose new course'}}
+								{{/if}}
+							</h2>
+							<div class="icon-text">
+								<div class="icon-text-icon">
+									<i class="fa fa-info fa-fw" aria-hidden="true"></i>
+								</div>
+								<div class="icon-text-text">
+									{{mf 'course.propose.CourseInfo' 'Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More information here:' SITENAME=siteName}}
+									<a href="{{guideLink}}" target='_blank'>
+										{{mf 'course.propose.guideLink' 'How to organize my first {SITENAME} course?' SITENAME=siteName}}
+									</a>,
+									<a href="{{faqLink}}" target="_blank">FAQ</a>
+								</div>
+							</div>
+						{{/unless}}
+					{{/if}}
+				{{/if}}
+				<div class="edit-page-body course-edit-body {{editBodyClasses}}">
+					{{#if _id}}
+						{{> regionTag}}
+					{{/if}}
+					{{#if showSavedMessage}}
+						<div id="courseSavedMessage"
+							 class="alert alert-success alert-dismissable fade in">
+							<h4>
+								<i class="fa fa-check" aria-hidden="true"></i>
+								{{mf 'course.edit.savedMessage' 'Your proposal has been saved!'}}
+							</h4>
+							<a class="alert-link" href="{{savedCourseLink}}" target="_blank">
+								{{#mf KEY='course.edit.linkToCourse' NAME=savedCourseName SITENAME=siteName}}
+										Click here to see your new course "{NAME}" on {SITENAME}
+								{{/mf}}
+							</a>
+							<button type="button" class="btn-close js-close" data-bs-dismiss="alert"
+									aria-label="Close"></button>
+						</div>
+					{{/if}}
+					{{#if (state 'simpleRoleSelection')}}
+						<div class="mb-3">
+							<label class="form-label"
+								   id="learnOrTeachTitle">{{mf 'course.edit.learnOrTeach' 'Learn or teach?'}}</label>
+							<div class="btn-group-toggle row" role="group"
+								 aria-labelledby="learnOrTeachTitle">
+								<div class="col d-grid">
+									<label
+										   class="btn btn-lg {{simpleRoleActiveClass 'participant'}}">
+										<input class="d-none" type="radio" name="role"
+											   value="participant" checked>
+										<i class="fa fa-user fa-lg fa-fw"></i>
+										{{mf 'course.edit.iWantToLearn' 'I want to learn'}}
+									</label>
+								</div>
+								<div class="col d-grid">
+									<label class="btn btn-lg {{simpleRoleActiveClass 'mentor'}}">
+										<input class="d-none" type="radio" name="role"
+											   value="mentor">
+										<i class="fa fa-graduation-cap fa-lg fa-fw"></i>
+										{{mf 'course.edit.iCanTeach' 'I can teach'}}
+									</label>
+								</div>
+							</div>
+						</div>
+					{{/if}}
+					{{> courseTitle}}
+					<div class="mb-3">
+						<label
+							   class="form-label">{{mf 'course.edit.description' 'Description'}}</label>
+						{{> editableTextarea editableDescription}}
+					</div>
+					{{#if hasPricePolicy}}
+						{{> pricePolicy dismissable=true wrap='mb-3'}}
+					{{/if}}
+					<div class="row gap-3 mb-3">
+						{{#unless hideCategories}}
+							<div class="col-md">
+								{{#if (state 'editingCategories')}}
+									<label
+										   class="form-label mb-0">{{mf 'course.edit.edit_categories' 'Edit Categories'}}</label>
+									{{#each availableCategories}}
+										<div class="form-check mt-2">
+											<input class='form-check-input js-category-checkbox cat_{{this}}'
+												   name='{{this}}' type='checkbox' value="1"
+												   id="courseEditCategory{{this}}"
+												   {{checkCategory}} />
+											<label class="form-check-label {{isChecked}}"
+												   for="courseEditCategory{{this}}">
+												{{> categoryLabel}}
+												{{#if hasSubcategories this}}
+													<i
+													   class="fa fa-angle-down fa-fw {{isChecked}}"></i>
+												{{/if}}
+											</label>
+										</div>
+										{{#each availableSubcategories this}}
+											<div class="form-check ms-4">
+												<input class="form-check-input js-category-checkbox cat_{{this}}"
+													   name='{{this}}' type='checkbox' value="1"
+													   id="courseEditSubCategory{{this}}"
+													   {{checkCategory}} />
+												<label class="form-check-label {{isChecked}}"
+													   for="courseEditSubCategory{{this}}">
+													{{> categoryLabel}}
+												</label>
+											</div>
+										{{/each}}
+									{{/each}}
+								{{else}}
+									<label
+										   class="form-label">{{mf 'course.edit.categories' 'Categories'}}</label>
+									{{#if categories}}
+										{{> courseCategories}}
+									{{/if}}
+									{{#unless categories}}
+										<div>
+											{{mf 'course.edit.no.categories' 'No categories'}}
+										</div>
+									{{/unless}}
+									<button type="button" class="btn btn-edit js-edit-categories">
+										{{mf 'course.edit.edit_categories'}}
+									</button>
+								{{/if}}
+							</div>
+						{{/unless}}
+						{{#if (state 'fullRoleSelection')}}
+							<div class="col-md">
+								<label
+									   class="form-label">{{mf 'course.edit.needs.role' 'This course might need...'}}</label>
+								{{#each role in availableRoles}}
+									{{> courseEditRole selected=roles role=role members=members}}
+								{{/each}}
+							</div>
+						{{/if}}
+						{{#if showRegionSelection}}
+							<div class="col-md">
+								<label
+									   class="form-label">{{mf 'course.edit.region' 'Region'}}</label>
+								<div class="input-group">
+									<div class="input-group-text">
+										<span class="fa fa-dot-circle-o fa-fw"
+											  aria-hidden="true"></span>
+									</div>
+									<select class="js-select-region form-select" name='region'>
+										<option value='' disabled
+												selected="{{#if isCurrentRegion 'all'}}selected{{/if}}"
+												class="select-placeholder">
+											{{mf '_selection.pleaseSelect'}}
+										</option>
+										{{#each region in regions}}
+											<option value='{{region._id}}'
+													selected="{{#if isCurrentRegion region._id}}selected{{/if}}">
+												{{region.name}}
+											</option>
+										{{/each}}
+									</select>
+								</div>
+							</div>
+						{{/if}}
+					</div>
+
+					{{#if showInternalCheckbox}}
+						<div class="mb-3">
+							<label
+								   class="form-label">{{mf 'course.edit.intern' 'Hide on front page'}}</label>
+							<div class="form-check">
+								<input class="form-check-input js-check-internal" type="checkbox"
+									   value="" id="internalCheckbox" {{isInternal}} />
+								<label class="form-check-label" for="internalCheckbox">
+									{{mf 'course.edit.internDescription' "Only show when looking at a group's courses"}}
+								</label>
+							</div>
+						</div>
+					{{/if}}
+
+					<div class="form-actions">
+						{{> buttonSave event="js-course-edit-save" saving=saving}}
+						{{#unless isFrame}}
+							{{> buttonCancel event="js-course-edit-cancel"}}
+						{{/unless}}
+					</div>
+				</div>
+			</form>
+		</div>
+	{{/if}}
+</template>
+
+<template name="courseEditRole">
+	<div class="form-check">
+		<input class='form-check-input js-check-role {{role.type}}' name='{{role.type}}'
+			   type="checkbox" value="" id="courseEditRole{{role.type}}Check" {{checkRole}} />
+		<label class="form-check-label {{role.type}}" for="courseEditRole{{role.type}}Check">
+			<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
+			{{mf roleDescription}}
+		</label>
+	</div>
+	{{#if checkRole}}
+		<div class="form-check ms-4">
+			<input class='form-check-input js-check-enroll {{role.type}}' name='{{role.type}}'
+				   type="checkbox" id="courseEditRole{{role.type}}EnrollCheck" {{hasRole}} />
+			<label class="form-check-label" for="courseEditRole{{role.type}}EnrollCheck">
+				{{mf roleSubscription}}
+			</label>
+		</div>
+	{{/if}}
+</template>
+
+<template name="courseTitle">
+	<div class="mb-3 js-proposed-search">
+		<label class="form-label">{{mf 'course.edit.title' 'Title'}}</label>
+		<div class="dropdown">
+			<input class="form-control form-control-lg js-title dropdown-toggle" id="editform_name"
+				   placeholder="{{mf 'course.title.placeholder' 'What are you interested in?'}}"
+				   size="40" type="text" data-toggle="dropdown" value="{{name}}" />
+			{{#if proposedCourses.count}}
+				<ul class="dropdown-menu proposed-courses js-proposed-courses" role="menu"
+					aria-labelledby="editform_name">
+					<li class="dropdown-header">
+						<i class="fa fa-info" aria-hidden="true"></i>
+						{{mf 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
+					</li>
+					<li role="separator" class="divider"></li>
+					{{#each proposedCourses}}
+						<li class="dropdown-entry js-dropdown-entry" role="presentation"><a
+							   href="{{pathFor 'showCourse'}}" role="menuitem"
+							   tabindex="-1">{{name}}</a></li>
+					{{/each}}
+				</ul>
+			{{/if}}
+		</div>
+	</div>
+</template>

@@ -23,6 +23,8 @@ export interface RegionEntity {
 	tenant: string;
 	name: string;
 	nameEn: string;
+
+	slug: string;
 	loc?: Geodata;
 	/** ex: "UTC+01:00" */
 	tz: string;
@@ -38,13 +40,17 @@ export interface RegionEntity {
 	/** ID of featured group */
 	featuredGroup: string;
 	custom?: {
-		siteName: string;
-		siteStage: string;
-		headerLogo: {
+		siteName?: string;
+		siteStage?: string;
+		headerLogo?: {
 			src: string;
 			alt: string;
 		};
-		emailLogo: string;
+		headerLogoKiosk?: {
+			src: string;
+			alt: string;
+		};
+		emailLogo?: string;
 	};
 	createdby?: string;
 	created?: Date;

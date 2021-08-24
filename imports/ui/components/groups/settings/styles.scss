@@ -11,10 +11,5 @@ $group-member-bg: rgba($gray-600, 0.15);
 }
 
 .group-member-tag-btn-add {
-	@include tag-btn(
-		darken($group-member-bg, 10%),
-		$body-color,
-		$success,
-		darken($success, 45%)
-	);
+	@include tag-btn(darken($group-member-bg, 10%), $body-color, $success, darken($success, 45%));
 }

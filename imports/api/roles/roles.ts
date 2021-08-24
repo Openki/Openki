@@ -1,5 +1,5 @@
 /** DB-Model */
-interface RoleEntity {
+export interface RoleEntity {
 	/** (name of role) */
 	type: string;
 	/** ex: "fa fa-bullhorn" */

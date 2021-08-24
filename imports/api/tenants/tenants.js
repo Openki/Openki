@@ -25,7 +25,7 @@ export class Tenant {
 	/**
 	 * Check whether a user may edit the tenant.
 	 * @this {TenantModel}
-	 * @param {UserModel | undefined} user
+	 * @param {UserModel | undefined | null} user
 	 */
 	editableBy(user) {
 		if (!user) {

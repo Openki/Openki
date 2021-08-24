@@ -52,6 +52,11 @@ $modal-sm: 400px;
 
 // Modify Bootstrap maps
 
+$custom-grid-breakpoints: (
+	'sm': 480px,
+);
+$grid-breakpoints: map-merge($grid-breakpoints, $custom-grid-breakpoints);
+
 // Grid containers
 //
 // Define the maximum width of `.container` for different screen sizes.

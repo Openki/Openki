@@ -12,6 +12,14 @@
 	@extend .btn-primary;
 }
 
+.btn-primary,
+.btn-go {
+	color: $white;
+	&:hover {
+		color: $white;
+	}
+}
+
 .btn-add,
 .btn-save {
 	@extend .btn-success;

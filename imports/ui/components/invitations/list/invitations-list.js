@@ -19,7 +19,6 @@ Template.invitationsList.onCreated(function () {
 		showAccepted: false,
 	});
 	instance.autorun(() => {
-
 		instance.subscribe('invitations.findFilter', { tenant: tenant._id });
 	});
 });

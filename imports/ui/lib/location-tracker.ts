@@ -13,13 +13,14 @@ interface MarkerEntity {
 	hover?: boolean;
 	presetAddress?: string;
 	name?: string;
+	remove?: boolean;
 }
 
 export class LocationTracker {
 	/** Local collection for in-memory storage */
 	public markers = new Mongo.Collection<MarkerEntity>(null);
 
-	setLocation(location: { loc: Geodata }, draggable?: boolean, soft?: boolean) {
+	setLocation(location: { loc?: Geodata }, draggable?: boolean, soft?: boolean) {
 		if (soft) {
 			const marker = this.markers.findOne({ main: true });
 			if (marker && location?.loc) {

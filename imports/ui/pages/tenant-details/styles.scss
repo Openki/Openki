@@ -1,0 +1,16 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.tenant-details-titlebar {
+	background-color: darken($tenant-bg, 20%);
+	padding: 10px 15px 0;
+}
+
+.tenant-details-header {
+	background-color: darken($tenant-bg, 20%);
+	font-size: x-large;
+	padding-top: 0;
+}
+
+.tenant-details-name {
+	display: inline-block;
+}

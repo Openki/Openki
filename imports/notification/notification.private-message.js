@@ -25,7 +25,7 @@ const notificationPrivateMessage = {};
  * @param {string} message the message to transmit
  * @param {boolean} revealSenderAddress include email-address of sender in message
  * @param {boolean} sendCopyToSender send a copy of the message to the author
- * @param {{course?: boolean, event?: boolean}} context dictionary with
+ * @param {{course?: string, event?: string}} context dictionary with
  * context ID (course, venue, &c.)
  */
 notificationPrivateMessage.record = function (
@@ -64,7 +64,7 @@ notificationPrivateMessage.record = function (
 
 	const contextRel = Object.values(context);
 
-	const rel = [senderId, recipientId, ...contextRel];
+	const rel = [senderId, recipientId, ...contextRel].filter((id) => id);
 
 	const body = {
 		message,
