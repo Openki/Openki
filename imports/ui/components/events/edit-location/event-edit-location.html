@@ -69,7 +69,7 @@
 							{{mf 'event.edit.locations.foundnone' 'No locations found.'}}
 						</div>
 					{{/if}}
-					<a class="btn btn-{{#if haveLocationCandidates}}default{{else}}add{{/if}} event-edit-location-create-venue"
+					<a class="btn {{#if haveLocationCandidates}}btn-secondary{{else}}btn-add{{/if}} event-edit-location-create-venue"
 					   href="{{pathFor 'venueDetails' _id='create'}}" target="_blank">
 						{{mf 'profile.createNewVenue.button'}}
 					</a>
