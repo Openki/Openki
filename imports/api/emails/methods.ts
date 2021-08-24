@@ -145,5 +145,5 @@ export const report = ServerMethod(
 
 		Email.send(email);
 	},
-	{ simulation: true },
+	{ simulation: false },
 );
