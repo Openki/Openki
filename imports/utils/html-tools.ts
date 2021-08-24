@@ -5,10 +5,10 @@ import { check } from 'meteor/check';
  * Turn plaintext into HTML by replacing HTML characters with their entities
  * and newlines with break-tags.
  *
- * @param {string} text input text
- * @return {string} HTMLized version of text
+ * @param text input text
+ * @return HTMLized version of text
  */
-export function plainToHtml(text) {
+export function plainToHtml(text: string) {
 	check(text, String);
 	return text
 		.replace(/&/g, '&amp;')
@@ -23,11 +23,7 @@ export function plainToHtml(text) {
 		);
 }
 
-/**
- * @param {string} unsaneHtml
- * @return {string}
- */
-export function saneHtml(unsaneHtml) {
+export function saneHtml(unsaneHtml: string): string {
 	// The rel=nofollow is added so that our service is less attractive to forum spam
 	const options = {
 		allowedTags: ['br', 'p', 'b', 'i', 'u', 'a', 'h3', 'h4', 'blockquote', 'ul', 'ol', 'li'],
@@ -40,11 +36,7 @@ export function saneHtml(unsaneHtml) {
 	return sanitizeHtml(unsaneHtml, options);
 }
 
-/**
- * @param {string} html
- * @return {string}
- */
-export function textPlain(html) {
+export function textPlain(html: string): string {
 	return sanitizeHtml(html, {
 		allowedTags: [],
 		allowedAttributes: {},
