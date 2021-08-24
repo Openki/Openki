@@ -9,11 +9,11 @@ This file descripts all configurations and customization options. Remove the com
 		"siteName": "Openki-clone",
 		"siteStage": "beta", // The text top left at the logo
 		"testWarning": true, // Shows a banner saying that this is only for testing
-		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner
-		"headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner from the /kiosk/events/ page
+		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner. Can be a logo from the /public/logo/* folder or a base64 encoded string.
+		"headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the /public/logo/* folder or a base64 encoded string.
 		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" }, // The default image used for avatars (color is changed using the CSS filter 'hue-rotate')
 		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media
-		"emailLogo": "emails/openki.png",
+		"emailLogo": "emails/openki.png", // Can be a logo from the /private/* folder or a base64 encoded string.
 		"regionSelection": {
 			"minNumber": 5, // The minimum number of regions displayed in the Regions selection. Default: 5
 			"aboutLink": "" // A link to a page that explains regions, if not set then none link is shown.
