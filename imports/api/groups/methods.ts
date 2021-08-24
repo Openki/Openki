@@ -54,7 +54,7 @@ export const save = ServerMethod(
 			throw new Meteor.Error(401, 'Denied');
 		}
 
-		const updates = {} as  Mongo.OptionalId<GroupEntity>;
+		const updates = {} as Mongo.OptionalId<GroupEntity>;
 		if (changes.short !== undefined) {
 			let short = changes.short.trim();
 			if (short.length === 0) {
