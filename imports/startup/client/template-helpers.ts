@@ -227,6 +227,16 @@ const helpers: { [name: string]: Function } = {
 		return state.get(key);
 	},
 
+	stateEquals(key: string, value: any) {
+		const state = (Template.instance() as any).state as ReactiveDict | undefined;
+
+		if (!(state instanceof ReactiveDict)) {
+			throw new Error('state is not a ReactiveDict');
+		}
+
+		return state.equals(key, value);
+	},
+
 	/**
 	 * @param {string} groupId
 	 */

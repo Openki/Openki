@@ -3,8 +3,7 @@ import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
 import * as usersMethods from '/imports/api/users/methods';
-import { pricePolicyEnabled } from '/imports/utils/pricePolicyEnabled';
-import PublicSettings from '/imports/utils/PublicSettings';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 
 import { Analytics } from '/imports/ui/lib/analytics';
@@ -42,7 +41,7 @@ Template.pricePolicyContent.helpers({
 	},
 
 	pricePolicyEnabled() {
-		return pricePolicyEnabled();
+		return PublicSettings.pricePolicyEnabled;
 	},
 
 	pricePolicyLink() {

@@ -1,6 +1,6 @@
 import { DocHead } from 'meteor/kadira:dochead';
 import { Meteor } from 'meteor/meteor';
-import PublicSettings from './PublicSettings';
+import { PublicSettings } from './PublicSettings';
 
 function getSiteTitlePrefix() {
 	return `${PublicSettings.siteName}  - `;

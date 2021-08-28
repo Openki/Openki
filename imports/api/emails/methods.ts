@@ -12,10 +12,10 @@ import { Users } from '/imports/api/users/users';
 import Notification from '/imports/notification/notification';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as HtmlTools from '/imports/utils/html-tools';
-import { getReportEmails } from '/imports/utils/email-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
-import PublicSettings from '/imports/utils/PublicSettings';
+import { PublicSettings } from '/imports/utils/PublicSettings';
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 export const sendVerificationEmail = ServerMethod(
 	'sendVerificationEmail',
@@ -113,7 +113,7 @@ export const report = ServerMethod(
 
 		const subject = `Report: ${title}`;
 
-		const reportEmail = getReportEmails();
+		const reportEmail = PrivateSettings.reporter;
 
 		let message = SSR.render('reportEmail', {
 			reporter,

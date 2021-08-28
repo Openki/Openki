@@ -7,7 +7,7 @@ import { Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
 import * as Alert from '/imports/api/alerts/alert';
 
-import PublicSettings from '/imports/utils/PublicSettings';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
 import './avatar.html';
 

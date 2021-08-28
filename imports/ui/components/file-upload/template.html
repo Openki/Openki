@@ -1,18 +1,31 @@
 <template name="fileUpload">
 	<form enctype="multipart/form-data" novalidate
-		  class="box {{#if (state 'isAdvancedUpload')}}has-advanced-upload{{/if}} {{#if (state 'isDragover')}}is-dragover{{/if}}">
-		<div class="box__input">
-			<div><i class="fa fa-picture-o fa-5x" aria-hidden="true"></i></div>
-			<input type="file" accept="image/*" name="files[]" id="file" class="box__file"
-				   data-multiple-caption="{count} files selected" multiple />
-			<label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it
-					here</span>.</label>
-			<button type="submit" class="box__button">Upload</button>
-		</div>
-		<div class="box__drop">Drop it like it's hot!</div>
-		<div class="box__uploading">Uploading&hellip;</div>
-		<div class="box__success">Done! <a class="box__restart" role="button">Change</a></div>
-		<div class="box__error">Error! <span></span>. <a class="box__restart" role="button">Try
-				again!</a></div>
+		  class="text-center file-upload{{#if (state 'supportsDragndrop')}} supports-dragndrop{{/if}}{{#if (state 'dragover')}} is-dragover{{/if}}">
+		<input type="file" accept="{{accept}}" class="d-none" id="file" />
+		<label for="file">
+			<div class="mb-1"><i class="fa fa-file-o fa-5x" aria-hidden="true"></i></div>
+			{{#if (state 'dragover')}}
+				<div class="file-upload-drop">Drop it like it's hot!</div>
+			{{else}}
+				{{#if (stateEquals 'progress' 'start')}}
+					<strong>Choose a file</strong>
+					{{#if (state 'supportsDragndrop')}}
+						<span class="file-upload-dragndrop">or drag it here</span>
+					{{/if}}
+				{{/if}}
+				{{#if (stateEquals 'progress' 'uploading')}}
+					<div class="file-upload-uploading">Uploading...</div>
+				{{/if}}
+				{{#if (stateEquals 'progress' 'ready')}}
+					{{fileName}}
+				{{/if}}
+			{{/if}}
+		</label>
 	</form>
+	{{#if (stateEquals 'progress' 'ready')}}
+		<div class='file-upload-controls'>
+			{{> buttonSave event="js-file-upload-upload"}}
+			{{> buttonCancel event="js-file-upload-cancel"}}
+		</div>
+	{{/if}}
 </template>

@@ -1,27 +1,31 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 import './template.html';
 import './styles.scss';
 
 // feature detection for drag&drop upload
-const allowsAdvancedUpload = (function () {
+const supportsDragndrop = (function () {
 	const div = document.createElement('div');
-	return (
-		('draggable' in div || ('ondragstart' in div && 'ondrop' in div)) &&
-		'FormData' in window &&
-		'FileReader' in window
-	);
+	return 'draggable' in div || ('ondragstart' in div && 'ondrop' in div);
 })();
 
 const Template = TemplateAny as TemplateStaticTyped<
-	{},
+	{
+		accept: string;
+		action: string;
+		onUploaded: () => void;
+		onCancel: () => void;
+		onError: () => void;
+	},
 	'fileUpload',
 	{
+		droppedFile: ReactiveVar<File | undefined>;
 		state: ReactiveDict<{
-			isAdvancedUpload: boolean;
-			isDragover: boolean;
-			droppedFile: File;
+			supportsDragndrop: boolean;
+			progress: 'start' | 'ready' | 'uploading' | 'done' | 'error';
+			dragover: boolean;
 		}>;
 	}
 >;
@@ -31,123 +35,86 @@ const template = Template.fileUpload;
 template.onCreated(function () {
 	const instance = this;
 
+	instance.droppedFile = new ReactiveVar(undefined);
 	instance.state = new ReactiveDict();
-	instance.state.setDefault({ isAdvancedUpload: allowsAdvancedUpload, isDragover: false });
+	instance.state.setDefault({
+		supportsDragndrop,
+		progress: 'start',
+		dragover: false,
+	});
 });
 
-template.helpers({});
+template.helpers({
+	fileName: () => {
+		return Template.instance().droppedFile.get()?.name;
+	},
+});
 
 template.events({
-	'change input[type="file"]'(event, instance) {
-		instance.state.set('droppedFile', (event.target as any).files[0]);
-
-		// automatically submit the form on file select
-		instance.$('form').trigger('submit');
-	},
-
-	'drop form'(event, instance) {
-		instance.state.set(
-			'droppedFile',
-			((event as any).originalEvent.dataTransfer as DataTransfer).files[0],
-		);
-
-		instance.$('form').trigger('submit');
-	},
-
-	'submit form'(event, instance) {
-		const file = instance.state.get('droppedFile');
-		if (!file) {
-			throw new Error('Unexpected: None file selected');
-		}
-
-		const form = event.currentTarget as HTMLFormElement;
-
-		// ajax file upload for modern browsers
-		event.preventDefault();
-
-		// gathering the form data
-		const ajaxData = new FormData(form);
-		ajaxData.append('file', file);
-
-		// ajax request
-		const ajax = new XMLHttpRequest();
-		ajax.open('post', 'upload', true);
-
-		ajax.onload = function () {
-			form.classList.remove('is-uploading');
-			if (ajax.status >= 200 && ajax.status < 400) {
-				const data = JSON.parse(ajax.responseText);
-				form.classList.add(data.success === true ? 'is-success' : 'is-error');
-			//	if (!data.success) errorMsg.textContent = data.error;
-			} else alert('Error. Please, contact the webmaster!');
-		};
-
-		ajax.onerror = function () {
-			form.classList.remove('is-uploading');
-			alert('Error. Please, try again!');
-		};
-
-		ajax.send(ajaxData);
-
-		return true;
-	},
-
-	'click box__restart'(event, instance) {
-		// restart the form if has a state of error/success
-		event.preventDefault();
-		(event?.currentTarget as HTMLElement).classList.remove('is-error', 'is-success');
-		instance.$('input[type="file"]').trigger('click');
-	},
-
 	'drag/dragstart/dragend/dragover/dragenter/dragleave/drop form'(event) {
 		// preventing the unwanted behaviours
 		event.preventDefault();
 		event.stopPropagation();
 	},
+
 	'dragover/dragenter form'(_event, instance) {
-		instance.state.set('isDragover', true);
+		instance.state.set('dragover', true);
 	},
+
 	'dragleave/dragend/drop form'(_event, instance) {
-		instance.state.set('isDragover', false);
+		instance.state.set('dragover', false);
+	},
+
+	'change input[type="file"]'(event, instance) {
+		instance.droppedFile.set((event.target as any).files[0]);
+
+		instance.state.set('progress', 'ready');
+	},
+
+	'drop form'(event, instance) {
+		instance.droppedFile.set(((event as any).originalEvent.dataTransfer as DataTransfer).files[0]);
+
+		instance.state.set('progress', 'ready');
+	},
+
+	'click .js-file-upload-upload'(event, instance) {
+		event.preventDefault();
+
+		const file = instance.droppedFile.get();
+		if (!file) {
+			throw new Error(`Unexpected undefined: file`);
+		}
+
+		instance.state.set('progress', 'uploading');
+
+		// gathering the form data
+		const ajaxData = new FormData();
+		ajaxData.append('file', file);
+
+		// ajax request
+		const ajax = new XMLHttpRequest();
+		ajax.open('post', Template.currentData().action, true);
+
+		ajax.onload = function () {
+			if (ajax.status >= 200 && ajax.status < 400) {
+				instance.state.set('progress', 'done');
+				Template.currentData().onUploaded();
+			} else {
+				instance.state.set('progress', 'error');
+				Template.currentData().onError();
+			}
+		};
+
+		ajax.onerror = function () {
+			instance.state.set('progress', 'error');
+			Template.currentData().onError();
+		};
+
+		ajax.send(ajaxData);
+	},
+
+	'click .js-file-upload-cancel'(event) {
+		event.preventDefault();
+		Template.currentData().onCancel();
 	},
 });
-
-// const label = instance.querySelector('label');
-// if (!label) {
-// 	throw new Error('Label does not exists');
-// }
-
-// const errorMsg = instance.querySelector('.box__error span');
-// if (!errorMsg) {
-// 	throw new Error('.box__error span does not exists');
-// }
-// const restart = instance.querySelectorAll('.box__restart');
-// let droppedFiles: FileList;
-
-// // drag&drop files if the feature is available
-// if (isAdvancedUpload) {
-// 	instance.classList.add('has-advanced-upload'); // letting the CSS part to know drag&drop is supported by the browser
-
-// 	['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(
-// 		function (event) {
-// 			instance.addEventListener(event, function (e) {
-// 				// preventing the unwanted behaviours
-// 				e.preventDefault();
-// 				e.stopPropagation();
-// 			});
-// 		},
-// 	);
-// 	['dragover', 'dragenter'].forEach(function (event) {
-// 		instance.addEventListener(event, function () {
-// 			instance.classList.add('is-dragover');
-// 		});
-// 	});
-// 	['dragleave', 'dragend', 'drop'].forEach(function (event) {
-// 		instance.addEventListener(event, function () {
-// 			instance.classList.remove('is-dragover');
-// 		});
-// 	});
-
-// }
-
-// }

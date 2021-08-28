@@ -9,9 +9,9 @@ import { Users } from '/imports/api/users/users';
 import { Log } from '/imports/api/log/log';
 
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
-import { getReportEmails } from '/imports/utils/email-tools';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 /**
  * @param {import('/imports/api/invitations/invitations').InvitationEntity} invitation
@@ -51,7 +51,7 @@ function sendInvitation(invitation) {
 			query: `tenant=${invitation.tenant}&campaign=invitationEmail`,
 		}),
 		moreLink: getLocalisedValue(PublicSettings.aboutLink, locale),
-		reportEmail: getReportEmails().recipient,
+		reportEmail: PrivateSettings.reporter.recipient,
 		locale,
 	});
 

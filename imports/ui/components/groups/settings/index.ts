@@ -61,6 +61,10 @@ template.helpers({
 		return userSearchPrefix(search, { exclude: group.members, limit: 30 });
 	},
 
+	logoAction() {
+		return `/group/${Template.currentData().group._id}/logo`;
+	},
+
 	kioskEventURL(group: GroupEntity) {
 		return Router.routes.kioskEvents.url({}, { query: { group: group._id } });
 	},

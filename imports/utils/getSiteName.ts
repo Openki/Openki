@@ -1,4 +1,4 @@
-import PublicSettings from './PublicSettings';
+import { PublicSettings } from './PublicSettings';
 import { RegionModel } from '/imports/api/regions/regions';
 
 export function getSiteName(region?: RegionModel): string {

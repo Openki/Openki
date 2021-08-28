@@ -3,7 +3,7 @@ This file descripts all configurations and customization options. Remove the com
 ```
 {
 	"admins": ["greg"], // User Administrator Accounts
-	"prng": "", // Use the "static" value to define that a static seed should be used for test data
+	"prng": "", // Pseudo-Random Number Generator, use the "static" value to define that a static seed should be used for test data
 	"testdata": true, // Generates test data, is not needed for the productive system
 	"public": {
 		"siteName": "Openki-clone",
@@ -22,7 +22,7 @@ This file descripts all configurations and customization options. Remove the com
 			"url": "https://analytics.mydomain.com/",
 			"site": 1 // Matomo id
 		},
-		"pricePolicyEnabled": true, // by true, show only indicative prices (DE: Richtpreise)
+		"pricePolicyEnabled": true, // by true, show only indicative prices (DE: Richtpreise), default is true
 		"feature": {
 			"login": { // toggle visibility of login services
 				"google": true,
@@ -92,6 +92,14 @@ This file descripts all configurations and customization options. Remove the com
 			"clientId": "01234-xyz123.apps.googleusercontent.com",
 			"secret": "XYz_123"
 		}
+	},
+	"s3": { // file storage
+		"region": "nine-cz42",
+		"bucketEndpoint": "https://984b.objectstorage.nineapis.ch/bucket-name",
+		"bucketName": "bucket-name",
+		"accessKeyId": "abcd1234",
+		"secretAccessKey": "123abcd",
+		"publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name"
 	},
 	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }, // That web pages are pre-rendered for webcrawlers on the server side so that no client code has to be executed
 	"startup": { "buildDbCacheAsync": true }, // Build the cache in the db async or sync. For larger databases it takes a long time until all fields are updated, during this time the startup is blocked. The users cannot use the website. Because in a normal startup the database already has these fields, this task can also be done async.

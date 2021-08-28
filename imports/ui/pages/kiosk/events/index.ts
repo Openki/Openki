@@ -7,7 +7,7 @@ import { Regions } from '/imports/api/regions/regions';
 import { Groups } from '/imports/api/groups/groups';
 import { Venues } from '/imports/api/venues/venues';
 
-import PublicSettings from '/imports/utils/PublicSettings';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
 import '/imports/ui/components/language-selection/language-selection';
 

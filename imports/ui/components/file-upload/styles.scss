@@ -1,101 +1,32 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
-.box {
+.file-upload {
 	background-color: $blue-lighter;
 	font-size: 1.25rem;
-	padding: 100px 20px;
+	padding: 60px 20px;
 	position: relative;
 }
-.box.has-advanced-upload {
+.file-upload.supports-dragndrop {
 	outline: 2px dashed #92b0b3;
 	outline-offset: -10px;
 
 	transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
 }
-.box.is-dragover {
+.file-upload.is-dragover {
 	background-color: $white;
 	outline-color: $blue-lighter;
 	outline-offset: -20px;
-
-	.box__drop {
-		display: block;
-	}
 }
 
-.box__dragndrop,
-.box__icon {
-	display: none;
-}
-.box.has-advanced-upload .box__dragndrop {
-	display: inline;
-}
-.box.has-advanced-upload .box__icon {
-	display: block;
-	fill: #92b0b3;
-	height: 80px;
-	margin-bottom: 40px;
-	width: 100%;
+.file-upload-drop {
+	font-weight: bold;
 }
 
-.box.is-dragover .box__input,
-.box.is-uploading .box__input,
-.box.is-success .box__input,
-.box.is-error .box__input {
-	visibility: hidden;
-}
-
-.box__drop,
-.box__uploading,
-.box__success,
-.box__error {
-	display: none;
-}
-.box.is-uploading .box__uploading,
-.box.is-success .box__success,
-.box.is-error .box__error {
-	display: block;
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 50%;
-
-	transform: translateY(-50%);
-}
-.box__uploading {
+.file-upload-uploading {
 	font-style: italic;
 }
-.box__success {
-	animation: appear-from-inside 0.25s ease-in-out;
-}
-@keyframes appear-from-inside {
-	from {
-		transform: translateY(-50%) scale(0);
-	}
-	75% {
-		transform: translateY(-50%) scale(1.1);
-	}
-	to {
-		transform: translateY(-50%) scale(1);
-	}
-}
 
-.box__restart {
-	font-weight: 700;
-}
-.box__restart:focus,
-.box__restart:hover {
-	color: #39bfd3;
-}
-
-.box__file {
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	width: 0.1px;
-	z-index: -1;
-}
-.box__file + label {
+.file-upload label {
 	cursor: pointer;
 	display: inline-block;
 	max-width: 80%;
@@ -103,26 +34,14 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.box__file + label:hover strong,
-.box__file:focus + label strong,
-.box__file.has-focus + label strong {
-	color: #39bfd3;
-}
-.box__file:focus + label,
-.box__file.has-focus + label {
-	outline: 1px dotted #000;
-	outline: -webkit-focus-ring-color auto 5px;
+
+.file-upload label:hover strong {
+	color: $blue;
 }
 
-.box__button {
-	background-color: #39bfd3;
-	color: #e5edf1;
-	display: none;
-	font-weight: 700;
-	margin: 40px auto 0;
-	padding: 8px 16px;
-}
-.box__button:hover,
-.box__button:focus {
-	background-color: #0f3c4b;
+.file-upload-controls {
+	margin-left: 10px;
+	margin-top: 7px;
+	position: absolute;
+	z-index: 1069;
 }
