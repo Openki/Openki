@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { Match, check } from 'meteor/check';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 // ======== DB-Model: ========
 /**
@@ -30,12 +31,10 @@ class ResultLogger {
 	/**
 	 * @param {string} id
 	 * @param {LogCollection} log
-	 * @param {boolean} printToLog
 	 */
-	constructor(id, log, printToLog) {
+	constructor(id, log) {
 		this.id = id;
 		this.log = log;
-		this.printToLog = printToLog;
 	}
 
 	/**
@@ -62,10 +61,11 @@ class ResultLogger {
 		const resolution = { ts: new Date(), success };
 		if (message) resolution.message = message;
 
-		if (this.printToLog) {
+		if (Meteor.isServer && PrivateSettings.printLog) {
 			/* eslint-disable-next-line no-console */
 			console.log({ id: this.id, resolution });
 		}
+
 		this.log.update(this.id, { $push: { res: resolution } });
 	}
 }
@@ -90,19 +90,15 @@ class ResultLogger {
 export class LogCollection extends Mongo.Collection {
 	/**
 	 * @param {string|null} name
-	 * @param {boolean} isServer
-	 * @param {boolean} printToLog
 	 */
-	constructor(name, isServer, printToLog) {
+	constructor(name) {
 		super(name);
 
-		if (isServer) {
+		if (Meteor.isServer) {
 			this._ensureIndex({ tr: 1 });
 			this._ensureIndex({ ts: 1 });
 			this._ensureIndex({ rel: 1 });
 		}
-
-		this.printToLog = printToLog;
 	}
 
 	// eslint-disable-next-line class-methods-use-this
@@ -134,12 +130,12 @@ export class LogCollection extends Mongo.Collection {
 
 		const id = this.insert(entry);
 
-		if (this.printToLog) {
+		if (Meteor.isServer && PrivateSettings.printLog) {
 			/* eslint-disable-next-line no-console */
 			console.log(entry);
 		}
 
-		return new ResultLogger(id, this, this.printToLog);
+		return new ResultLogger(id, this);
 	}
 
 	/**
@@ -172,15 +168,14 @@ export const logFactory = {
 	/**
 	 * A log backed by the mongo DB
 	 */
-	mongo: (/** @type {boolean} */ isServer, /** @type {boolean} */ printToLog) =>
-		new LogCollection('Log', isServer, printToLog),
+	persistent: () => new LogCollection('Log'),
 
 	/**
 	 * An in-memory log useful for tests
 	 */
-	fake: () =>
+	temporary: () =>
 		// Local collection for in-memory storage
-		new LogCollection(null, false, false),
+		new LogCollection(null),
 };
 
 export default logFactory;
