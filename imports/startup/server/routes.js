@@ -1,9 +1,9 @@
 import { Router } from 'meteor/iron:router';
 
 import { Groups } from '/imports/api/groups/groups';
+import * as GroupsMethods from '/imports/api/groups/methods';
 
 import * as FileStorage from '/imports/utils/FileStorage';
-import { isGroupMember } from '/imports/utils/is-group-member';
 import Profile from '/imports/utils/profile';
 
 // Server only routes
@@ -60,32 +60,29 @@ Router.route('groupLogo', {
 		return [Meteor.subscribe('group', this.params._id)];
 	},
 	async action() {
-		const userId = Meteor.userId();
-		if (!userId) {
-			throw new Meteor.Error(401, 'please log-in');
-		}
+		const groupId = this.params._id;
 
-		// Load group from DB
-		const group = Groups.findOne(this.params._id);
+		const group = Groups.findOne(groupId);
 		if (!group) {
 			throw new Meteor.Error(404, 'Group not found');
 		}
 
-		// User must be member of group to edit it
-		if (!isGroupMember(userId, group._id)) {
-			throw new Meteor.Error(401, 'Denied');
+		// Upload logo
+		const result = await FileStorage.upload('groups/logos/', this.request.files[0]);
+
+		try {
+			// Update group
+			await GroupsMethods.updateLogo(groupId, result.fullFileName);
+		} catch (ex) {
+			// Something went wrong. Delete uploaded file.
+			await FileStorage.remove(result.fullFileName);
+			throw ex;
 		}
 
+		// Everything is good. Remove old file.
 		if (group.logoUrl && !group.logoUrl.startsWith('https://')) {
 			FileStorage.remove(group.logoUrl);
 		}
-
-		const result = await FileStorage.upload('groups/logos/', this.request.files[0]);
-
-		const update = { logoUrl: result.fullFileName };
-
-		Groups.update(group._id, { $set: update });
-
 		this.response.writeHead(200);
 	},
 	where: 'server',
