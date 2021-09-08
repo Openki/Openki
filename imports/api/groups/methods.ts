@@ -8,6 +8,7 @@ import { ServerMethod } from '/imports/utils/ServerMethod';
 import { GroupEntity, Groups } from './groups';
 
 import { isGroupMember } from '/imports/utils/is-group-member';
+import * as FileStorage from '/imports/utils/FileStorage';
 
 export const save = ServerMethod(
 	'group.save',
@@ -100,13 +101,8 @@ export const save = ServerMethod(
 
 export const updateLogo = ServerMethod(
 	'group.update.logo',
-	/**
-	 * @param {string} groupId
-	 * @param {string} logoUrl
-	 */
-	(groupId: string, logoUrl: string) => {
+	async (groupId: string, file: FileStorage.UploadFile) => {
 		check(groupId, String);
-		check(logoUrl, Match.Maybe(String));
 
 		const userId = Meteor.userId();
 		if (!userId) {
@@ -123,35 +119,24 @@ export const updateLogo = ServerMethod(
 		if (!isGroupMember(userId, group._id)) {
 			throw new Meteor.Error(401, 'Denied');
 		}
-
-		const update = { logoUrl: '' };
-
-		if (logoUrl) {
-			let url = logoUrl.trim();
-
-			// strip protocol if needed
-			if (url.includes('://')) {
-				url = url.split('://')[1];
-			}
-
-			url = `https://${url}`;
-
-			update.logoUrl = url.substring(0, 1000);
+	
+		if (group.logoUrl && !group.logoUrl.startsWith('https://')) {
+			FileStorage.remove(group.logoUrl);
 		}
+
+		const result = await FileStorage.upload('groups/logos/', file);
+
+		const update = { logoUrl: result.fullFileName };
 
 		Groups.update(group._id, { $set: update });
 
 		return groupId;
 	},
+	{ simulation: false },
 );
 
 export const updateMembership = ServerMethod(
 	'group.updateMembership',
-	/**
-	 * @param {string} userId
-	 * @param {string} groupId
-	 * @param {boolean} join
-	 */
 	(userId: string, groupId: string, join: boolean) => {
 		check(userId, String);
 		check(groupId, String);

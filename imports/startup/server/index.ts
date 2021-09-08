@@ -11,7 +11,6 @@ import './register-api';
 import './robots';
 import './sitemaps';
 import './api.json';
-import './processPostFormData';
 
 import './emails';
 import './login';

@@ -53,37 +53,3 @@ Router.route('profilePrivateMessagesUnsubscribe', {
 	},
 	where: 'server',
 });
-
-Router.route('groupLogo', {
-	path: '/group/:_id/logo',
-	waitOn() {
-		return [Meteor.subscribe('group', this.params._id)];
-	},
-	async action() {
-		const groupId = this.params._id;
-
-		const group = Groups.findOne(groupId);
-		if (!group) {
-			throw new Meteor.Error(404, 'Group not found');
-		}
-
-		// Upload logo
-		const result = await FileStorage.upload('groups/logos/', this.request.files[0]);
-
-		try {
-			// Update group
-			await GroupsMethods.updateLogo(groupId, result.fullFileName);
-		} catch (ex) {
-			// Something went wrong. Delete uploaded file.
-			await FileStorage.remove(result.fullFileName);
-			throw ex;
-		}
-
-		// Everything is good. Remove old file.
-		if (group.logoUrl && !group.logoUrl.startsWith('https://')) {
-			FileStorage.remove(group.logoUrl);
-		}
-		this.response.writeHead(200);
-	},
-	where: 'server',
-});

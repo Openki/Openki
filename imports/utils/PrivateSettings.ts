@@ -44,7 +44,6 @@ if (Meteor.isServer) {
 				bucketName: String,
 				accessKeyId: String,
 				secretAccessKey: String,
-				publicUrlBase: String,
 			},
 			startup: { buildDbCacheAsync: Boolean },
 		}),

@@ -4,6 +4,7 @@ import mime from 'mime-types';
 import { Mongo } from 'meteor/mongo';
 
 import { PrivateSettings } from './PrivateSettings';
+import { PublicSettings } from './PublicSettings';
 
 function getBucket() {
 	return PrivateSettings.s3.bucketName;
@@ -19,18 +20,18 @@ function createS3Client() {
 	});
 }
 
-export interface File {
+export interface UploadFile {
 	name: string;
-	content: Buffer;
 	mimeType: string;
-	encoding: string;
+	/** As BinaryString */
+	content: string;
 }
 
 export function generatePublicUrl(fullFileName: string) {
-	return path.join(PrivateSettings.s3.publicUrlBase, fullFileName);
+	return path.join(PublicSettings.s3.publicUrlBase, fullFileName);
 }
 
-export function upload(directoryName: string, file: File) {
+export function upload(directoryName: string, file: UploadFile) {
 	const fullKey = path.join(
 		directoryName,
 		`${new Mongo.ObjectID().toHexString()}.${mime.extension(file.mimeType)}`,
@@ -42,9 +43,8 @@ export function upload(directoryName: string, file: File) {
 		Bucket: getBucket(),
 		Key: fullKey,
 		ContentType: file.mimeType,
-		ContentEncoding: file.encoding,
 		ACL: 'public-read',
-		Body: file.content,
+		Body: Buffer.from(file.content, 'binary'),
 		Metadata: { originalName: file.name },
 	};
 

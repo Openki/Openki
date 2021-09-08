@@ -11,26 +11,35 @@ const supportsDragndrop = (function () {
 	return 'draggable' in div || ('ondragstart' in div && 'ondrop' in div);
 })();
 
+export interface UploadFile {
+	lastModified: Date;
+	name: string;
+	size: number;
+	mimeType: string;
+	/** As BinaryString */
+	content: string;
+}
+
+export interface Data {
+	accept: string;
+	onUpload: (file: UploadFile) => void;
+	onCancel: () => void;
+}
+
 const Template = TemplateAny as TemplateStaticTyped<
-	{
-		accept: string;
-		action: string;
-		onUploaded: () => void;
-		onCancel: () => void;
-		onError: () => void;
-	},
+	Data,
 	'fileUpload',
 	{
 		droppedFile: ReactiveVar<File | undefined>;
 		state: ReactiveDict<{
 			supportsDragndrop: boolean;
-			progress: 'start' | 'ready' | 'uploading' | 'done' | 'error';
+			progress: 'start' | 'ready' | 'uploading' | 'done';
 			dragover: boolean;
 		}>;
 	}
 >;
 
-const template = Template.fileUpload;
+export const template = Template.fileUpload;
 
 template.onCreated(function () {
 	const instance = this;
@@ -80,37 +89,27 @@ template.events({
 	'click .js-file-upload-upload'(event, instance) {
 		event.preventDefault();
 
-		const file = instance.droppedFile.get();
-		if (!file) {
+		const droppedFile = instance.droppedFile.get();
+		if (!droppedFile) {
 			throw new Error(`Unexpected undefined: file`);
 		}
 
 		instance.state.set('progress', 'uploading');
 
-		// gathering the form data
-		const ajaxData = new FormData();
-		ajaxData.append('file', file);
+		const reader = new FileReader();
 
-		// ajax request
-		const ajax = new XMLHttpRequest();
-		ajax.open('post', Template.currentData().action, true);
-
-		ajax.onload = function () {
-			if (ajax.status >= 200 && ajax.status < 400) {
-				instance.state.set('progress', 'done');
-				Template.currentData().onUploaded();
-			} else {
-				instance.state.set('progress', 'error');
-				Template.currentData().onError();
-			}
+		reader.onload = () => {
+			instance.data.onUpload({
+				lastModified: new Date(droppedFile.lastModified),
+				name: droppedFile.name,
+				size: droppedFile.size,
+				mimeType: droppedFile.type,
+				content: reader.result as string,
+			});
+			instance.state.set('progress', 'done');
 		};
 
-		ajax.onerror = function () {
-			instance.state.set('progress', 'error');
-			Template.currentData().onError();
-		};
-
-		ajax.send(ajaxData);
+		reader.readAsBinaryString(droppedFile);
 	},
 
 	'click .js-file-upload-cancel'(event) {

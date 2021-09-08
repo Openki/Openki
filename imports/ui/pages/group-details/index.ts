@@ -4,7 +4,7 @@ import { mf } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
-import { GroupEntity, Groups } from '/imports/api/groups/groups';
+import { GroupModel, Groups } from '/imports/api/groups/groups';
 import * as GroupsMethods from '/imports/api/groups/methods';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
@@ -26,7 +26,7 @@ import './styles.scss';
 const TemplateBase = TemplateAny as TemplateStaticTyped<
 	{
 		courseQuery: any;
-		group: GroupEntity | (Partial<GroupEntity> & { _id: 'create' });
+		group: GroupModel | (Partial<GroupModel> & { _id: 'create' });
 		isNew: boolean;
 		showCourses: boolean;
 	},
@@ -147,7 +147,7 @@ template.onCreated(function () {
 
 	instance.autorun(() => {
 		const data = Template.currentData();
-		const currentGroup = Groups.findOne(groupId) || ({} as Partial<GroupEntity>);
+		const currentGroup = Groups.findOne(groupId) || ({} as Partial<GroupModel>);
 		const userId = Meteor.userId();
 		const mayEdit = data.isNew || !!(userId && isGroupMember(userId, groupId));
 		instance.mayEdit.set(mayEdit);

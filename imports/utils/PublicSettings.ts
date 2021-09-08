@@ -45,6 +45,9 @@ check(
 			forbiddenChars: StringArray,
 			link: LocalisedValue,
 		}),
+		s3: {
+			publicUrlBase: String,
+		},
 	}),
 );
 

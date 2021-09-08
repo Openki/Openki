@@ -14,6 +14,7 @@ import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons/buttons';
 import '/imports/ui/components/file-upload';
+import type { UploadFile } from '/imports/ui/components/file-upload';
 
 import './template.html';
 import './styles.scss';
@@ -30,12 +31,6 @@ const template = Template.groupSettings;
 
 template.onCreated(function () {
 	const instance = this;
-
-	// strip https:// from logoUrl because its already labeled as prefix
-	const { logoUrl } = instance.data.group;
-	if (logoUrl?.startsWith('https://')) {
-		instance.data.group.logoUrl = logoUrl.replace('https://', '');
-	}
 
 	instance.busy(false);
 
@@ -61,8 +56,15 @@ template.helpers({
 		return userSearchPrefix(search, { exclude: group.members, limit: 30 });
 	},
 
-	logoAction() {
-		return `/group/${Template.currentData().group._id}/logo`;
+	logoFileUploadArgs() {
+		const instance = Template.instance();
+		return {
+			accept: 'image/*',
+			async onUpload(file: UploadFile) {
+				await GroupsMethods.updateLogo(instance.data.group._id, file);
+			},
+			onCancel() {},
+		};
 	},
 
 	kioskEventURL(group: GroupEntity) {

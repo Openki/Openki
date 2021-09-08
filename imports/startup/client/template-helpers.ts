@@ -245,7 +245,7 @@ const helpers: { [name: string]: Function } = {
 
 		const group = Groups.findOne({ _id: groupId });
 
-		return group?.logoUrl || '';
+		return group?.publicLogoUrl();
 	},
 
 	/**
