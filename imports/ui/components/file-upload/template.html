@@ -5,16 +5,19 @@
 		<label for="file">
 			<div class="mb-1"><i class="fa fa-file-o fa-5x" aria-hidden="true"></i></div>
 			{{#if (state 'dragover')}}
-				<div class="file-upload-drop">Drop it like it's hot!</div>
+				<div class="file-upload-drop">{{mf 'fileUpload.drop.text' "Drop it like it's hot!"}}
+				</div>
 			{{else}}
 				{{#if (stateEquals 'progress' 'start')}}
-					<strong>Choose a file</strong>
+					<strong>{{mf 'fileUpload.choose.text' 'Choose a file'}}</strong>
 					{{#if (state 'supportsDragndrop')}}
-						<span class="file-upload-dragndrop">or drag it here</span>
+						<span
+							  class="file-upload-dragndrop">{{mf 'fileUpload.drag.text' 'or drag it here'}}</span>
 					{{/if}}
 				{{/if}}
 				{{#if (stateEquals 'progress' 'uploading')}}
-					<div class="file-upload-uploading">Uploading...</div>
+					<div class="file-upload-uploading">
+						{{mf 'fileUpload.uploading.text' 'Uploading...'}}</div>
 				{{/if}}
 				{{#if (stateEquals 'progress' 'ready')}}
 					{{fileName}}
