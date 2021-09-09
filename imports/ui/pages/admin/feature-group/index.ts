@@ -1,32 +1,48 @@
 import { Session } from 'meteor/session';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import * as RegionsMethods from '/imports/api/regions/methods';
 
-import './feature-group.html';
+import './template.html';
+import './styles.scss';
 
-Template.featureGroup.onCreated(function featureGroupOnCreated() {
+const Template = TemplateAny as TemplateStaticTyped<
+	Record<string, unknown>,
+	'adminFeatureGroupPage',
+	Record<string, never>
+>;
+
+const template = Template.adminFeatureGroupPage;
+
+template.onCreated(function () {
 	this.subscribe('Groups.findFilter', {});
 	this.busy(false);
 });
 
-Template.featureGroup.helpers({
+template.helpers({
 	groups: () => Groups.find({}, { sort: { name: 1 } }),
 	featuredGroup() {
-		const groupId = Regions.currentRegion().featuredGroup;
+		const groupId = Regions.currentRegion()?.featuredGroup;
+		if (!groupId) {
+			return undefined;
+		}
 		return Groups.findOne(groupId);
 	},
 });
 
-Template.featureGroup.events({
+template.events({
 	async 'submit .js-feature-group'(event, instance) {
 		event.preventDefault();
 
 		const regionId = Session.get('region');
-		const groupId = instance.$('#groupToBeFeatured').val();
+		if (!regionId) {
+			return;
+		}
+
+		const groupId = instance.$('#groupToBeFeatured').val() as string;
 
 		instance.busy('saving');
 
@@ -40,9 +56,17 @@ Template.featureGroup.events({
 	},
 
 	async 'click .js-unset-featured-group'(event, instance) {
+		event.preventDefault();
+
+		const regionId = Session.get('region');
+		if (!regionId) {
+			return;
+		}
+
 		instance.busy('deleting');
+
 		try {
-			await RegionsMethods.unsetFeaturedGroup(Session.get('region'));
+			await RegionsMethods.unsetFeaturedGroup(regionId);
 		} catch (err) {
 			Alert.serverError(err, '');
 		} finally {

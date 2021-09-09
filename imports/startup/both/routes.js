@@ -124,6 +124,11 @@ Router.route('calendar', {
 
 Router.route('featureGroup', {
 	path: 'admin/feature-group',
+	template: 'adminFeatureGroupPage',
+	async action() {
+		await import('/imports/ui/pages/admin/feature-group');
+		this.render();
+	},
 });
 
 Router.route('tenants', {
