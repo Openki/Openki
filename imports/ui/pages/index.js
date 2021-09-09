@@ -1,5 +1,5 @@
 import './admin/panel/admin-panel';
-import './admin/feature-group/feature-group';
+import './admin/feature-group';
 import './admin/users/users';
 import './admin/tenants/tenants';
 import './calendar/calendar';

@@ -1,28 +1,43 @@
-import { Template } from 'meteor/templating';
-import { Groups } from '/imports/api/groups/groups';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Groups, GroupModel } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 
-import './featured-group.html';
+import './template.html';
+import './styles.scss';
 
-Template.featuredGroup.onCreated(function () {
+const Template = TemplateAny as TemplateStaticTyped<
+	Record<string, unknown>,
+	'featuredGroup',
+	{ featuredGroupId: () => string | undefined; featuredGroup: () => GroupModel | undefined }
+>;
+
+const template = Template.featuredGroup;
+
+template.onCreated(function () {
 	this.featuredGroupId = () => {
 		const region = Regions.currentRegion();
-		if (region?.featuredGroup) {
-			return region.featuredGroup;
+		if (!region?.featuredGroup) {
+			return undefined;
 		}
-		return false;
+		return region.featuredGroup;
 	};
 
-	this.featuredGroup = () => Groups.findOne(this.featuredGroupId());
+	this.featuredGroup = () => {
+		const groupId = this.featuredGroupId();
+		if (!groupId) {
+			return undefined;
+		}
+		return Groups.findOne(groupId);
+	};
 
 	this.autorun(() => {
-		const gid = this.featuredGroupId();
-		if (gid) {
-			this.subscribe('group', gid);
+		const groupId = this.featuredGroupId();
+		if (groupId) {
+			this.subscribe('group', groupId);
 		}
 	});
 });
 
-Template.featuredGroup.helpers({
+template.helpers({
 	featuredGroup: () => Template.instance().featuredGroup(),
 });

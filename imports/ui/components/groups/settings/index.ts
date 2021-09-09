@@ -61,7 +61,27 @@ template.helpers({
 		return {
 			accept: 'image/*',
 			async onUpload(file: UploadFile) {
-				await GroupsMethods.updateLogo(instance.data.group._id, file);
+				const parentInstance = instance.parentInstance() as any; // Not available in callback
+
+				instance.busy('saving');
+
+				const groupId = instance.data.group._id;
+				try {
+					await GroupsMethods.updateLogo(groupId, file);
+					const groupName = Groups.findOne(groupId)?.name;
+					Alert.success(
+						mf(
+							'groupSettings.group.logo.updated',
+							{ GROUP: groupName },
+							'Your changes to the settings of the group "{GROUP}" have been saved.',
+						),
+					);
+					parentInstance.editingSettings.set(false);
+				} catch (err) {
+					Alert.serverError(err, 'Could not save settings');
+				} finally {
+					instance.busy(false);
+				}
 			},
 			onCancel() {},
 		};
@@ -130,42 +150,6 @@ template.events({
 			);
 		} catch (err) {
 			Alert.serverError(err, 'Could not remove member');
-		}
-	},
-
-	'input .js-logo-url'(_event, instance) {
-		const elem = instance.$('.js-logo-url');
-		const value = elem.val() as string;
-		if (value.includes('://')) {
-			elem.val(value.split('://')[1]);
-		}
-	},
-
-	async 'click .js-group-edit-save'(event, instance) {
-		event.preventDefault();
-
-		const parentInstance = instance.parentInstance() as any; // Not available in callback
-
-		const url = instance.$('.js-logo-url').val() as string;
-
-		instance.busy('saving');
-
-		const groupId = instance.data.group._id;
-		try {
-			await GroupsMethods.updateLogo(groupId, url);
-			const groupName = Groups.findOne(groupId)?.name;
-			Alert.success(
-				mf(
-					'groupSettings.group.logo.updated',
-					{ GROUP: groupName },
-					'Your changes to the settings of the group "{GROUP}" have been saved.',
-				),
-			);
-			parentInstance.editingSettings.set(false);
-		} catch (err) {
-			Alert.serverError(err, 'Could not save settings');
-		} finally {
-			instance.busy(false);
 		}
 	},
 
