@@ -5,7 +5,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
-import { GroupEntity, Groups } from '/imports/api/groups/groups';
+import { GroupModel, GroupEntity, Groups } from '/imports/api/groups/groups';
 import * as GroupsMethods from '/imports/api/groups/methods';
 import { Users } from '/imports/api/users/users';
 
@@ -13,15 +13,15 @@ import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons/buttons';
-import '/imports/ui/components/file-upload';
-import type { UploadFile } from '/imports/ui/components/file-upload';
+import '/imports/ui/components/editable-image';
+import type { UploadImage, Data as EditableImageData } from '/imports/ui/components/editable-image';
 
 import './template.html';
 import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	{
-		group: GroupEntity | (Partial<GroupEntity> & { _id: 'create' });
+		group: GroupModel | (Partial<GroupEntity> & { _id: 'create' });
 	},
 	'groupSettings',
 	{ userSearch: ReactiveVar<string> }
@@ -56,11 +56,12 @@ template.helpers({
 		return userSearchPrefix(search, { exclude: group.members, limit: 30 });
 	},
 
-	logoFileUploadArgs() {
+	logoFileUploadArgs(): EditableImageData {
 		const instance = Template.instance();
 		return {
-			accept: 'image/*',
-			async onUpload(file: UploadFile) {
+			thumbnail: (instance.data.group as any)?.publicLogoUrl?.(),
+			maxSize: 100,
+			async onUpload(file: UploadImage) {
 				const parentInstance = instance.parentInstance() as any; // Not available in callback
 
 				instance.busy('saving');
@@ -83,7 +84,6 @@ template.helpers({
 					instance.busy(false);
 				}
 			},
-			onCancel() {},
 		};
 	},
 

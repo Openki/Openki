@@ -1,0 +1,47 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.editable-image {
+	background-color: $blue-lighter;
+	font-size: 1.25rem;
+	padding: 50px 20px;
+	position: relative;
+}
+.editable-image.supports-dragndrop {
+	outline: 2px dashed #92b0b3;
+	outline-offset: -10px;
+
+	transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
+}
+.editable-image.is-dragover {
+	background-color: $white;
+	outline-color: $blue-lighter;
+	outline-offset: -20px;
+}
+
+.editable-image-drop {
+	font-weight: bold;
+}
+
+.editable-image-uploading {
+	font-style: italic;
+}
+
+.editable-image label {
+	cursor: pointer;
+	display: inline-block;
+	max-width: 80%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.editable-image label:hover strong {
+	color: $blue;
+}
+
+.editable-image-controls {
+	margin-left: 10px;
+	margin-top: 7px;
+	position: absolute;
+	z-index: 1069;
+}
