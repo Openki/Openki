@@ -2,46 +2,35 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { Tenants } from './tenants';
-/** @typedef {import('./tenants').TenantEntity} TenantEntity */
 import { Users } from '/imports/api/users/users';
 import * as usersTenantsDenormalizer from '../users/tenantsDenormalizer';
 import { ServerMethod } from '/imports/utils/ServerMethod';
+import { TenantEntity } from '../invitations/methods';
 
-export const create = ServerMethod(
-	'tenant.create',
-	/**
-	 * @param {Pick<TenantEntity, 'name'>} changes
-	 */
-	(changes) => {
-		check(changes, {
-			name: String,
-		});
+export const create = ServerMethod('tenant.create', (changes: Pick<TenantEntity, 'name'>) => {
+	check(changes, {
+		name: String,
+	});
 
-		const user = Meteor.user();
-		if (!user) {
-			throw new Meteor.Error(401, 'please log in');
-		}
+	const user = Meteor.user();
+	if (!user) {
+		throw new Meteor.Error(401, 'please log in');
+	}
 
-		/** @type {Pick<TenantEntity, 'name' | 'members' | 'admins'>} */
-		const set = {
-			name: changes.name.trim().substring(0, 40),
-			members: [user._id],
-			admins: [user._id],
-		};
+	const set: Pick<TenantEntity, 'name' | 'members' | 'admins'> = {
+		name: changes.name.trim().substring(0, 40),
+		members: [user._id],
+		admins: [user._id],
+	};
 
-		const tenantId = Tenants.insert(set);
+	const tenantId = Tenants.insert(set);
 
-		usersTenantsDenormalizer.afterTenantCreate(user._id, tenantId);
+	usersTenantsDenormalizer.afterTenantCreate(user._id, tenantId);
 
-		return tenantId;
-	},
-);
+	return tenantId;
+});
 
-/**
- * @param {string} userId
- * @param {string} tenantId
- */
-function membershipMutationPreconditionCheck(userId, tenantId) {
+function membershipMutationPreconditionCheck(userId: string, tenantId: string) {
 	check(userId, String);
 	check(tenantId, String);
 
@@ -67,28 +56,17 @@ function membershipMutationPreconditionCheck(userId, tenantId) {
 	return tenant;
 }
 
-export const addMember = ServerMethod(
-	'tenant.addMember',
-	/**
-	 * @param {string} userId
-	 * @param {string} tenantId
-	 */
-	(userId, tenantId) => {
-		membershipMutationPreconditionCheck(userId, tenantId);
+export const addMember = ServerMethod('tenant.addMember', (userId: string, tenantId: string) => {
+	membershipMutationPreconditionCheck(userId, tenantId);
 
-		Tenants.update(tenantId, { $addToSet: { members: userId } });
+	Tenants.update(tenantId, { $addToSet: { members: userId } });
 
-		usersTenantsDenormalizer.afterTenantAddMember(userId, tenantId);
-	},
-);
+	usersTenantsDenormalizer.afterTenantAddMember(userId, tenantId);
+});
 
 export const removeMember = ServerMethod(
 	'tenant.removeMember',
-	/**
-	 * @param {string} userId
-	 * @param {string} tenantId
-	 */
-	(userId, tenantId) => {
+	(userId: string, tenantId: string) => {
 		const tenant = membershipMutationPreconditionCheck(userId, tenantId);
 
 		if (tenant.admins.includes(userId)) {
@@ -101,28 +79,17 @@ export const removeMember = ServerMethod(
 	},
 );
 
-export const addAdmin = ServerMethod(
-	'tenant.addAdmin',
-	/**
-	 * @param {string} userId
-	 * @param {string} tenantId
-	 */
-	(userId, tenantId) => {
-		membershipMutationPreconditionCheck(userId, tenantId);
+export const addAdmin = ServerMethod('tenant.addAdmin', (userId: string, tenantId: string) => {
+	membershipMutationPreconditionCheck(userId, tenantId);
 
-		Tenants.update(tenantId, { $addToSet: { admins: userId, members: userId } });
+	Tenants.update(tenantId, { $addToSet: { admins: userId, members: userId } });
 
-		usersTenantsDenormalizer.afterTenantAddAdmin(userId, tenantId);
-	},
-);
+	usersTenantsDenormalizer.afterTenantAddAdmin(userId, tenantId);
+});
 
 export const removeAdmin = ServerMethod(
 	'tenant.removeAdmin',
-	/**
-	 * @param {string} userId
-	 * @param {string} tenantId
-	 */
-	(userId, tenantId) => {
+	(userId: string, tenantId: string) => {
 		membershipMutationPreconditionCheck(userId, tenantId);
 
 		Tenants.update(tenantId, { $pull: { admins: userId } });
