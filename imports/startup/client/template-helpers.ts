@@ -5,7 +5,6 @@ import { Tracker } from 'meteor/tracker';
 import { Spacebars } from 'meteor/spacebars';
 import moment from 'moment';
 
-import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
@@ -235,17 +234,6 @@ const helpers: { [name: string]: Function } = {
 		}
 
 		return state.equals(key, value);
-	},
-
-	/**
-	 * @param {string} groupId
-	 */
-	groupLogo(groupId: string) {
-		Template.instance().subscribe('group', groupId);
-
-		const group = Groups.findOne({ _id: groupId });
-
-		return group?.publicLogoUrl();
 	},
 
 	/**
