@@ -105,6 +105,9 @@
 				"education",
 				"ecology"
 			]
+		},
+		"s3": {
+			"publicUrlBase": "https://cz42.objectstorage.nineapis.ch/v1/AUTH_cda71cf5c64a4609b0ff99ffc399666f/bucket-openkitest"
 		}
 	},
 	"siteEmail": "HMMM@legit.example",
@@ -116,8 +119,7 @@
 		"bucketEndpoint": "https://cz42.objectstorage.nineapis.ch/bucket-openkitest",
 		"bucketName": "bucket-openkitest",
 		"accessKeyId": "ce3d4a03ab704cf0912092c1de53c222",
-		"secretAccessKey": "47eb64d858604ba69269986b10581708",
-		"publicUrlBase": "https://cz42.objectstorage.nineapis.ch/v1/AUTH_cda71cf5c64a4609b0ff99ffc399666f/bucket-openkitest"
+		"secretAccessKey": "47eb64d858604ba69269986b10581708"
 	},
 	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" },
 	"startup": { "buildDbCacheAsync": true }

@@ -73,6 +73,9 @@ This file descripts all configurations and customization options. Remove the com
 					"subcategoryname1",
 					"subcategoryname2"
 				],
+		},
+		"s3": { // file storage
+			"publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name"
 		}
 	},
 	"siteEmail": "" // Sender e-mail address in mails
@@ -98,8 +101,7 @@ This file descripts all configurations and customization options. Remove the com
 		"bucketEndpoint": "https://984b.objectstorage.nineapis.ch/bucket-name",
 		"bucketName": "bucket-name",
 		"accessKeyId": "abcd1234",
-		"secretAccessKey": "123abcd",
-		"publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name"
+		"secretAccessKey": "123abcd"
 	},
 	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }, // That web pages are pre-rendered for webcrawlers on the server side so that no client code has to be executed
 	"startup": { "buildDbCacheAsync": true }, // Build the cache in the db async or sync. For larger databases it takes a long time until all fields are updated, during this time the startup is blocked. The users cannot use the website. Because in a normal startup the database already has these fields, this task can also be done async.
