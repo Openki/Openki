@@ -115,6 +115,12 @@ Template.regionSelection.onRendered(function () {
 });
 
 Template.regionSelection.helpers({
+	inNavbarClasses() {
+		if (this.inNavbar) {
+			return 'col-6-sm-auto px-0';
+		}
+		return '';
+	},
 	allCourses() {
 		return Regions.find()
 			.fetch()
@@ -188,14 +194,14 @@ Template.regionSelection.events({
 		const search = String(instance.$('.js-region-search').val()).trim();
 		if (!instance.state.equals('search', search)) {
 			instance.state.set({ search });
-			instance.regionSearchHasFocus = true;
+			instance.searchHasFocus = true;
 			instance.$('.dropdown-toggle').dropdown('show');
 		}
 	},
 
 	'submit .js-region-search-form'(event, instance) {
 		event.preventDefault();
-		instance.regionSearchHasFocus = false;
+		instance.searchHasFocus = false;
 		instance.$('.js-region-search').trigger('focusout');
 		instance.$('.dropdown-toggle').dropdown('hide');
 		if (!instance.state.equals('search', '')) {
@@ -213,7 +219,7 @@ Template.regionSelection.events({
 	},
 
 	'focusin/focusout .js-region-search'(event, instance) {
-		instance.regionSearchHasFocus = event.type === 'focusin';
+		instance.searchHasFocus = event.type === 'focusin';
 	},
 
 	'click .js-show-all-regions'(event, instance) {
@@ -222,7 +228,7 @@ Template.regionSelection.events({
 	},
 
 	'show.bs.dropdown'(event, instance) {
-		if (!instance.regionSearchHasFocus) {
+		if (!instance.searchHasFocus) {
 			Meteor.defer(() => {
 				instance.$('.js-region-search').trigger('select');
 			});
@@ -230,7 +236,7 @@ Template.regionSelection.events({
 	},
 
 	'hide.bs.dropdown'(event, instance) {
-		if (!instance.regionSearchHasFocus) {
+		if (!instance.searchHasFocus) {
 			instance.close();
 			return true;
 		}

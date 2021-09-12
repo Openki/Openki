@@ -292,3 +292,9 @@
 .js-language-link:hover .language-translated {
 	color: $white;
 }
+
+.login-link .dropdown-menu {
+	@media (max-width: $grid-float-breakpoint) {
+		position: initial;
+	}
+}

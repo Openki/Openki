@@ -42,6 +42,15 @@ Template.languageDisplay.events({
 
 Template.languageSelection.onCreated(function () {
 	this.languageSearch = new ReactiveVar('');
+
+	// create a function to toggle displaying the regionSelection
+	// only if it is placed inside a wrap
+	this.close = () => {
+		const searchingLanguages = this.parentInstance().searchingLanguages;
+		if (searchingLanguages.get()) {
+			searchingLanguages.set(false);
+		}
+	};
 });
 
 Template.languageSelection.helpers({
@@ -107,12 +116,20 @@ Template.languageSelection.helpers({
 const updateLanguageSearch = _.debounce((instance) => {
 	let search = instance.$('.js-language-search').val();
 	search = String(search).trim();
-	instance.languageSearch.set(search);
+	if (!(instance.languageSearch.get() === search)) {
+		instance.languageSearch.set(search);
+		instance.$('.dropdown-toggle').dropdown('show');
+	}
 }, 100);
 
 Template.languageSelection.events({
 	'click .js-language-link'(event, instance) {
 		event.preventDefault();
+
+		instance.searchHasFocus = false;
+		instance.$('.js-region-search').trigger('focusout');
+		instance.$('.dropdown-toggle').dropdown('hide');
+
 		const { lg } = this;
 
 		try {
@@ -126,17 +143,39 @@ Template.languageSelection.events({
 
 		instance.parentInstance().searchingLanguages.set(false);
 	},
-
 	'keyup .js-language-search'(event, instance) {
-		if (event.which === 13) {
-			instance.$('.js-language-link').first().trigger('click');
-		} else {
-			updateLanguageSearch(instance);
-		}
+		instance.searchHasFocus = true;
+		updateLanguageSearch(instance);
+	},
+
+	'submit .js-language-selection-form'(event, instance) {
+		event.preventDefault();
+		instance.$('.js-language-link').first().trigger('click');
 	},
 
 	'focus .js-language-search'(event, instance) {
-		instance.$('.dropdown-toggle').dropdown('toggle');
+		instance.$('.dropdown-toggle').dropdown('show');
+	},
+
+	'focusin/focusout .js-language-search'(event, instance) {
+		instance.searchHasFocus = event.type === 'focusin';
+	},
+
+	'show.bs.dropdown'(event, instance) {
+		if (!instance.searchHasFocus) {
+			Meteor.defer(() => {
+				instance.$('.js-language-search').trigger('select');
+			});
+		}
+	},
+
+	'hide.bs.dropdown'(event, instance) {
+		if (!instance.searchHasFocus) {
+			instance.close();
+			return true;
+		}
+
+		return false;
 	},
 });
 

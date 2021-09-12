@@ -7,16 +7,17 @@
 </template>
 
 <template name="languageSelection">
-	<li class="{{inNavbarClasses}}">
-		<form class="d-flex">
-			<div class="input-group input-group-sm input-group-outline m-2">
+	<li class="language-selection {{inNavbarClasses}}">
+		<form class="d-flex js-language-selection-form">
+			<div class="input-group input-group-sm input-group-outline p-2">
 				<span class="input-group-text"><span class="fa fa-language fa-fw"
 						  aria-hidden="true"></span></span>
 				<input type="text" class="form-control js-language-search"
 					   value="{{setLanguage.name}}">
+				<input class="d-none" type="submit">
 				<button class="btn dropdown-toggle" data-bs-toggle="dropdown" role="button"
-						aria-expanded="false"></button>
-				<ul class="dropdown-menu dropdown-menu-end" role="menu">
+						aria-expanded="false" tabindex="-1"></button>
+				<ul class="dropdown-menu dropdown-menu-end mx-2" role="menu">
 					{{#if languages}}
 						<li class="dropdown-header dropdown-legend">
 							<span class="dropdown-addon-right">

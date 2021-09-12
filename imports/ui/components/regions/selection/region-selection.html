@@ -4,28 +4,14 @@
 			{{> regionSelection inNavbar=inNavbar}}
 		{{else}}
 			{{> regionSelectionDisplay inNavbar=inNavbar}}
-
 		{{/if}}
 	{{/if}}
 </template>
 
-<template name="regionSelectionDisplay">
-	<li class="{{inNavbarClasses}}">
-		<a class="navbar-link js-region-selection-display">
-			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-			{{#if currentRegionName}}
-				{{currentRegionName}}
-			{{else}}
-				{{mf 'menue.All regions' 'All regions'}}
-			{{/if}}
-		</a>
-	</li>
-</template>
-
 <template name="regionSelection">
-	<li class="{{inNavbarClasses}}">
+	<li class="region-selection {{inNavbarClasses}}">
 		<form class="d-flex js-region-search-form" tabindex="0">
-			<div class="input-group input-group-sm input-group-outline m-2">
+			<div class="input-group input-group-sm input-group-outline p-2">
 				<span class="input-group-text"><span class="fa fa-dot-circle-o fa-fw"
 						  aria-hidden="true"></span></span>
 				<input class="form-control js-region-search" type="text"
@@ -33,7 +19,7 @@
 				<input class="d-none" type="submit">
 				<button class="btn dropdown-toggle" data-bs-toggle="dropdown" role="button"
 						aria-expanded="false" tabindex="-1"></button>
-				<ul class="dropdown-menu dropdown-menu-end" role="menu">
+				<ul class="dropdown-menu dropdown-menu-end mx-2" role="menu">
 					<li class="dropdown-header dropdown-legend">
 						<div class="dropdown-addon-right">
 							<span class="badge bg-primary rounded-pill"
@@ -119,6 +105,19 @@
 				<span class="checkmark fa fa-check"></span>
 			{{/if}}
 			{{regionNameMarked}}
+		</a>
+	</li>
+</template>
+
+<template name="regionSelectionDisplay">
+	<li class="{{inNavbarClasses}}">
+		<a class="navbar-link js-region-selection-display">
+			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+			{{#if currentRegionName}}
+				{{currentRegionName}}
+			{{else}}
+				{{mf 'menue.All regions' 'All regions'}}
+			{{/if}}
 		</a>
 	</li>
 </template>
