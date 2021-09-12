@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
+import { TenantEntity } from '../../invitations/methods';
 
 import { Tenants } from '/imports/api/tenants/tenants';
-/** @typedef {import('/imports/api/tenants/tenants').TenantEntity} TenantEntity */
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 Meteor.publish('tenant', function (tenantId) {
@@ -12,8 +12,7 @@ Meteor.publish('tenant', function (tenantId) {
 		return undefined;
 	}
 
-	/** @type {Mongo.Selector<TenantEntity> } */
-	const filter = { _id: tenantId };
+	const filter: Mongo.Selector<TenantEntity> = { _id: tenantId };
 
 	// Only members of a tenant or admins can see a tenant
 	if (!UserPrivilegeUtils.privileged(user, 'admin')) {
@@ -23,7 +22,7 @@ Meteor.publish('tenant', function (tenantId) {
 	// Only admins can see all tenant admins. Note: Admin privileg is not something that is
 	// likely to happen and reactive changes are not needed.
 	const showAdminsFields =
-		UserPrivilegeUtils.privileged(user, 'admin') || user.isTenantAdmin(tenantId) ? 1 : undefined;
+		UserPrivilegeUtils.privileged(user, 'admin') || user.isTenantAdmin(tenantId) ? 1 : 0;
 
 	return Tenants.find(filter, { fields: { ...Tenants.publicFields, admins: showAdminsFields } });
 });

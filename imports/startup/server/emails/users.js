@@ -4,12 +4,12 @@ import { mf } from 'meteor/msgfmt:core';
 import { Accounts } from 'meteor/accounts-base';
 import juice from 'juice';
 
-import { getReportEmails } from '/imports/utils/email-tools';
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
-import PublicSettings from '/imports/utils/PublicSettings';
+import { PublicSettings } from '/imports/utils/PublicSettings';
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
-if (Meteor.settings.siteEmail) {
-	Accounts.emailTemplates.from = Meteor.settings.siteEmail;
+if (PrivateSettings.siteEmail) {
+	Accounts.emailTemplates.from = PrivateSettings.siteEmail;
 }
 
 Accounts.emailTemplates.siteName = PublicSettings.siteName;
@@ -50,7 +50,7 @@ ${mf(
 ${mf(
 	'verifyEmail.email.unexpected',
 	"If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}",
-	{ REPORTEMAIL: getReportEmails().recipient },
+	{ REPORTEMAIL: PrivateSettings.reporter.recipient },
 )}`;
 };
 
@@ -66,7 +66,7 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 			},
 			username: user.username,
 			url,
-			reportEmail: getReportEmails().recipient,
+			reportEmail: PrivateSettings.reporter.recipient,
 		}),
 	);
 };
@@ -108,7 +108,7 @@ ${mf(
 ${mf(
 	'resetPassword.email.unexpected',
 	"If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}",
-	{ REPORTEMAIL: getReportEmails().recipient },
+	{ REPORTEMAIL: PrivateSettings.reporter.recipient },
 )}`;
 };
 
@@ -124,7 +124,7 @@ Accounts.emailTemplates.resetPassword.html = function (user, url) {
 			},
 			username: user.username,
 			url,
-			reportEmail: getReportEmails().recipient,
+			reportEmail: PrivateSettings.reporter.recipient,
 		}),
 	);
 };

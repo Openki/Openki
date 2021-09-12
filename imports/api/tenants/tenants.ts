@@ -3,31 +3,29 @@ import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
-/** @typedef {import('../users/users').UserModel} UserModel */
-
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
+import { UserModel } from '../users/users';
 
-// ======== DB-Model: ========
-/**
- * @typedef {Object} TenantEntity
- * @property {string} _id ID
- * @property {string} name
- * @property {string[]} members List of userIds
- * @property {string[]} admins List of tenant admins
- */
+/** DB-Model */
 
-/**
- * @typedef {Tenant & TenantEntity} TenantModel
- */
+export interface TenantEntity {
+	/** ID */
+	_id: string;
+	name: string;
+	/** List of userIds */
+	members: string[];
+	/** List of tenant admins */
+	admins: string[];
+}
+
+export type TenantModel = Tenant & TenantEntity;
 
 export class Tenant {
 	/**
 	 * Check whether a user may edit the tenant.
-	 * @this {TenantModel}
-	 * @param {UserModel | undefined | null} user
 	 */
-	editableBy(user) {
+	editableBy(this: TenantModel, user: UserModel | undefined | null) {
 		if (!user) {
 			return false;
 		}
@@ -39,10 +37,7 @@ export class Tenant {
 	}
 }
 
-/**
- * @extends {Mongo.Collection<TenantEntity, TenantModel>}
- */
-export class TenantsCollection extends Mongo.Collection {
+export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantModel> {
 	constructor() {
 		super('Tenants', {
 			transform(tenant) {
@@ -67,21 +62,26 @@ export class TenantsCollection extends Mongo.Collection {
 
 	/**
 	 * Find groups for given filters
-	 * @param {object} [filter] dictionary with filter options
-	 * @param {boolean} [filter.adminOf] Limit to tenants where logged-in user is a admin
-	 * @param {number} [limit] how many to find
-	 * @param {number} [skip] skip this many before returning results
-	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
+	 * @param filter dictionary with filter options
+	 * @param limit how many to find
+	 * @param skip skip this many before returning results
+	 * @param sort list of fields to sort by
 	 */
-	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+	findFilter(
+		filter: {
+			/** Limit to tenants where logged-in user is a admin */
+			adminOf?: boolean;
+		} = {},
+		limit = 0,
+		skip = 0,
+		sort: [string, 'asc' | 'desc'][],
+	) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
 		check(sort, Match.Maybe([[String]]));
 
-		/** @type {Mongo.Selector<TenantEntity> } */
-		const find = {};
-		/** @type {Mongo.Options<TenantEntity>} */
-		const options = { sort };
+		const find: Mongo.Selector<TenantEntity> = {};
+		const options: Mongo.Options<TenantEntity> = { sort };
 
 		if (limit > 0) {
 			options.limit = limit;

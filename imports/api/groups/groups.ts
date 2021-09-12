@@ -1,8 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { Match, check } from 'meteor/check';
+import { _ } from 'meteor/underscore';
 
 import { Filtering } from '/imports/utils/filtering';
+import * as FileStorage from '/imports/utils/FileStorage';
 
 /** DB-Model */
 export interface GroupEntity {
@@ -16,10 +18,25 @@ export interface GroupEntity {
 	/** List of userIds */
 	members: string[];
 }
+export type GroupModel = Group & GroupEntity;
 
-export class GroupsCollection extends Mongo.Collection<GroupEntity> {
+export class Group {
+	publicLogoUrl(this: GroupModel) {
+		if (!this.logoUrl) {
+			return '';
+		}
+
+		return FileStorage.generatePublicUrl(this.logoUrl);
+	}
+}
+
+export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> {
 	constructor() {
-		super('Groups');
+		super('Groups', {
+			transform(tenant) {
+				return _.extend(new Group(), tenant);
+			},
+		});
 
 		if (Meteor.isServer) {
 			this._ensureIndex({ members: 1 });

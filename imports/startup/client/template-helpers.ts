@@ -5,7 +5,6 @@ import { Tracker } from 'meteor/tracker';
 import { Spacebars } from 'meteor/spacebars';
 import moment from 'moment';
 
-import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
@@ -227,15 +226,14 @@ const helpers: { [name: string]: Function } = {
 		return state.get(key);
 	},
 
-	/**
-	 * @param {string} groupId
-	 */
-	groupLogo(groupId: string) {
-		Template.instance().subscribe('group', groupId);
+	stateEquals(key: string, value: any) {
+		const state = (Template.instance() as any).state as ReactiveDict | undefined;
 
-		const group = Groups.findOne({ _id: groupId });
+		if (!(state instanceof ReactiveDict)) {
+			throw new Error('state is not a ReactiveDict');
+		}
 
-		return group?.logoUrl || '';
+		return state.equals(key, value);
 	},
 
 	/**

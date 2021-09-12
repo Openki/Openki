@@ -17,7 +17,7 @@ import { AsyncTools } from '/imports/utils/async-tools';
 /** @typedef {import('/imports/api/courses/courses').Course} Course */
 import { Events } from '../events/events';
 import { ServerMethod } from '/imports/utils/ServerMethod';
-import PublicSettings from '/imports/utils/PublicSettings';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 /** @typedef {import('./users').UserModel} UserModel */
 
 /**

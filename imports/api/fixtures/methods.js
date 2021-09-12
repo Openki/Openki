@@ -16,6 +16,7 @@ import { infoPages } from './data/infoPages/infoPages';
 import * as HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
 import * as StringTools from '/imports/utils/string-tools';
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 import { courses } from './data/course.fixtures';
 import { events } from './data/event.fixtures';
@@ -60,7 +61,7 @@ const sometimesAfter = function (date) {
 // Unfortunately we can't make this a debugOnly package because the integration
 // tests use the data too, and they run with the --production flag.
 // This guard is here until we find a better solution.
-if (Meteor.settings.testdata) {
+if (PrivateSettings.testdata) {
 	const regionsCreate = function () {
 		const userKopf = ensure.user('Kopf', undefined, true)._id;
 

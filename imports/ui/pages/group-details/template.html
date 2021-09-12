@@ -24,9 +24,9 @@
 				{{/unless}}
 			</div>
 			<div class="details-header group-details-header clearfix {{headerClasses}}">
-				{{#if groupLogo group._id}}
+				{{#if group.publicLogoUrl}}
 					<div class="group-details-logo">
-						<img src="{{groupLogo group._id}}">
+						<img src="{{group.publicLogoUrl}}">
 					</div>
 				{{/if}}
 				<div class="group-details-name">

@@ -31,7 +31,6 @@ import LocalTime from '/imports/utils/local-time';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Metatags from '/imports/utils/metatags';
 import * as Predicates from '/imports/utils/predicates';
-import Profile from '/imports/utils/profile';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Invitations } from '/imports/api/invitations/invitations';
 
@@ -125,6 +124,11 @@ Router.route('calendar', {
 
 Router.route('featureGroup', {
 	path: 'admin/feature-group',
+	template: 'adminFeatureGroupPage',
+	async action() {
+		await import('/imports/ui/pages/admin/feature-group');
+		this.render();
+	},
 });
 
 Router.route('tenants', {
@@ -1075,50 +1079,4 @@ Router.route('venuesMap', {
 
 		Metatags.setCommonTags(mf('venue.map.windowtitle', 'Venues map'));
 	},
-});
-
-Router.route('profileNotificationsUnsubscribe', {
-	path: '/profile/notifications/unsubscribe/:token',
-	action() {
-		const unsubToken = this.params.token;
-
-		const accepted = Profile.Notifications.unsubscribe(unsubToken);
-
-		const query = {};
-		if (accepted) {
-			query.unsubscribed = 'notifications';
-		} else {
-			query['unsubscribe-error'] = '';
-		}
-
-		this.response.writeHead(302, {
-			Location: Router.url('profile', {}, { query }),
-		});
-
-		this.response.end();
-	},
-	where: 'server',
-});
-
-Router.route('profilePrivateMessagesUnsubscribe', {
-	path: '/profile/privatemessages/unsubscribe/:token',
-	action() {
-		const unsubToken = this.params.token;
-
-		const accepted = Profile.PrivateMessages.unsubscribe(unsubToken);
-
-		const query = {};
-		if (accepted) {
-			query.unsubscribed = 'privatemessages';
-		} else {
-			query['unsubscribe-error'] = '';
-		}
-
-		this.response.writeHead(302, {
-			Location: Router.url('profile', {}, { query }),
-		});
-
-		this.response.end();
-	},
-	where: 'server',
 });

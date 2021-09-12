@@ -12,7 +12,7 @@ describe('The Log-Scrubber', () => {
 	const scrubAfterOneDay = new Scrubber([new ScrubRule('test', 1, { tr: 'test' }, true, [])]);
 
 	it('deletes record after grace period', () => {
-		const log = logFactory.fake();
+		const log = logFactory.temporary();
 		log.record('test', [], {});
 
 		scrubAfterOneDay.scrub(log, moment().add(2, 'days'));
@@ -21,7 +21,7 @@ describe('The Log-Scrubber', () => {
 	});
 
 	it('deletes multiple records after grace period', () => {
-		const log = logFactory.fake();
+		const log = logFactory.temporary();
 		log.record('test', [], {});
 		log.record('test', [], {});
 
@@ -31,7 +31,7 @@ describe('The Log-Scrubber', () => {
 	});
 
 	it('keeps record during grace period', () => {
-		const log = logFactory.fake();
+		const log = logFactory.temporary();
 		log.record('test', [], {});
 
 		scrubAfterOneDay.scrub(log, moment().add(1, 'day'));
@@ -40,7 +40,7 @@ describe('The Log-Scrubber', () => {
 	});
 
 	it('unsets only specified field', (done) => {
-		const log = logFactory.fake();
+		const log = logFactory.temporary();
 		log.record('test', [], { a: 'a', b: 'b' });
 
 		const scrubber = new Scrubber([new ScrubRule('test', 1, { tr: 'test' }, false, ['a'])]);
