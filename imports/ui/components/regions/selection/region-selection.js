@@ -185,6 +185,7 @@ Template.regionSelection.events({
 		const search = String(instance.$('.js-region-search').val()).trim();
 		if (!instance.state.equals('search', search)) {
 			instance.state.set({ search });
+			// eslint-disable-next-line no-param-reassign
 			instance.searchHasFocus = true;
 			instance.$('.dropdown-toggle').dropdown('show');
 		}
@@ -192,6 +193,7 @@ Template.regionSelection.events({
 
 	'submit .js-region-search-form'(event, instance) {
 		event.preventDefault();
+		// eslint-disable-next-line no-param-reassign
 		instance.searchHasFocus = false;
 		instance.$('.js-region-search').trigger('focusout');
 		instance.$('.dropdown-toggle').dropdown('hide');
@@ -210,6 +212,7 @@ Template.regionSelection.events({
 	},
 
 	'focusin/focusout .js-region-search'(event, instance) {
+		// eslint-disable-next-line no-param-reassign
 		instance.searchHasFocus = event.type === 'focusin';
 	},
 

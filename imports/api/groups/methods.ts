@@ -119,7 +119,7 @@ export const updateLogo = ServerMethod(
 		if (!isGroupMember(userId, group._id)) {
 			throw new Meteor.Error(401, 'Denied');
 		}
-	
+
 		if (group.logoUrl && !group.logoUrl.startsWith('https://')) {
 			FileStorage.remove(group.logoUrl);
 		}

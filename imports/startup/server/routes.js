@@ -1,9 +1,5 @@
 import { Router } from 'meteor/iron:router';
 
-import { Groups } from '/imports/api/groups/groups';
-import * as GroupsMethods from '/imports/api/groups/methods';
-
-import * as FileStorage from '/imports/utils/FileStorage';
 import Profile from '/imports/utils/profile';
 
 // Server only routes

@@ -126,6 +126,7 @@ Template.languageSelection.events({
 	'click .js-language-link'(event, instance) {
 		event.preventDefault();
 
+		// eslint-disable-next-line no-param-reassign
 		instance.searchHasFocus = false;
 		instance.$('.js-region-search').trigger('focusout');
 		instance.$('.dropdown-toggle').dropdown('hide');
@@ -144,6 +145,7 @@ Template.languageSelection.events({
 		instance.parentInstance().searchingLanguages.set(false);
 	},
 	'keyup .js-language-search'(event, instance) {
+		// eslint-disable-next-line no-param-reassign
 		instance.searchHasFocus = true;
 		updateLanguageSearch(instance);
 	},
@@ -158,6 +160,7 @@ Template.languageSelection.events({
 	},
 
 	'focusin/focusout .js-language-search'(event, instance) {
+		// eslint-disable-next-line no-param-reassign
 		instance.searchHasFocus = event.type === 'focusin';
 	},
 
