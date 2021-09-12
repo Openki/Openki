@@ -6,7 +6,7 @@ import '/imports/ui/components/regions/selection/region-selection';
 
 import './region-splash.html';
 
-Template.regionSplash.onRendered(function regionSplashOnRendered() {
+Template.regionSplash.onRendered(function () {
 	this.$('.js-region-splash').modal('show');
 });
 

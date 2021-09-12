@@ -9,51 +9,6 @@
 	color: desaturate(darken($background-color, 40%), 50%);
 }
 
-.navbar-form-selection .dropdown {
-	display: inline-block;
-}
-
-.navbar-form-selection .dropdown {
-	@media (max-width: $grid-float-breakpoint) {
-		display: block !important;
-	}
-}
-
-.navbar-form .form-control {
-	@media (max-width: $grid-float-breakpoint) {
-		display: block;
-		width: 100%;
-	}
-}
-
-.navbar .js-region-search-form {
-	@media (max-width: $grid-float-breakpoint) {
-		display: block;
-	}
-}
-
-.js-region-search-form > .dropdown {
-	position: relative;
-}
-
-.js-region-search-form > .dropdown > .control-arrow {
-	color: #aaa;
-	position: absolute;
-	right: 3px;
-}
-
-.control-arrow:hover {
-	cursor: pointer;
-}
-
-.js-region-search-form > .dropdown > .control-arrow.fa-angle-down {
-	top: 10px;
-}
-
-.js-region-search-form > .dropdown > .control-arrow.fa-angle-up {
-	top: 9px;
-}
-
 .region-link-private {
 	background-color: #c2c3;
 }

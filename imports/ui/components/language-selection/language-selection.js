@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import { mfPkg } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
@@ -7,9 +6,7 @@ import { _ } from 'meteor/underscore';
 
 import { Languages } from '/imports/api/languages/languages';
 
-import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as StringTools from '/imports/utils/string-tools';
-import * as Viewport from '/imports/ui/lib/viewport';
 
 import './language-selection.html';
 
@@ -148,19 +145,7 @@ Template.languageSelection.onRendered(function () {
 
 	instance.$('.js-language-search').trigger('select');
 
-	instance
-		.parentInstance()
-		.$('.dropdown')
-		.on('hide.bs.dropdown', () => {
-			const viewportWidth = Viewport.get().width;
-			const isRetina = Session.get('isRetina');
-			const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
-
-			if (screenMD && !isRetina) {
-				$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
-				$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo('slow', 1);
-			}
-
-			instance.parentInstance().searchingLanguages.set(false);
-		});
+	instance.$('.dropdown').on('hide.bs.dropdown', () => {
+		instance.parentInstance().searchingLanguages.set(false);
+	});
 });
