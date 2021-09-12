@@ -81,10 +81,10 @@
 
 <template name="removeFromTeamDropdown">
 	<span class="dropdown">
-		<button type="button" class="btn btn-sm btn-close btn-close-white dropdown-toggle"
+		<button type="button" class="btn btn-sm btn-close btn-close-white"
 			aria-expanded="false"
 			aria-haspopup="true"
-			data-toggle="dropdown"
+			data-bs-toggle="dropdown"
 			data-tooltip="{{mf 'course.roles.removeTeam' 'Remove from team'}}"
 			data-tooltip-direction="e"></button>
 		<ul class="dropdown-menu dialog-dropdown right">
@@ -96,7 +96,9 @@
 				{{/if}}
 				<button type="button" class="btn-close"></button>
 			</li>
-			<li role="separator" class="divider"></li>
+			<li>
+				<hr class="dropdown-divider">
+			</li>
 			<li class="dialog-dropdown-text">
 				{{#if isNotPriviledgedSelf}}
 					{{mf 'course.detail.remove.yourself.team' 'Remove yourself from the team? Only another member can add you back.'}}

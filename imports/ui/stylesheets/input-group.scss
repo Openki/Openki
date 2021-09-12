@@ -1,0 +1,30 @@
+/* stylelint-disable scss/max-nesting-depth */
+
+.input-group-outline {
+	> .input-group-text {
+		background: $white;
+	}
+
+	> .btn.dropdown-toggle {
+		background: $white;
+		border-color: $input-border-color;
+		display: block !important;
+		opacity: 1 !important;
+	}
+
+	> .input-group-text,
+	> .form-control,
+	> .btn.dropdown-toggle {
+		border-left: 0;
+		border-right: 0;
+	}
+
+	> .input-group-text:first-child,
+	> .form-control:first-child {
+		border-left: 1px solid $input-border-color;
+	}
+
+	> .btn.dropdown-toggle {
+		border-right: 1px solid $input-border-color;
+	}
+}

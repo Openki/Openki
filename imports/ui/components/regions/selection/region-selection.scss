@@ -9,49 +9,15 @@
 	color: desaturate(darken($background-color, 40%), 50%);
 }
 
-.navbar-form-selection .dropdown {
-	display: inline-block;
-}
-
-.navbar-form-selection .dropdown {
+.region-selection .dropdown-menu {
 	@media (max-width: $grid-float-breakpoint) {
-		display: block !important;
+		background: none;
+		border: 0;
+		box-shadow: none;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		position: initial;
 	}
-}
-
-.navbar-form .form-control {
-	@media (max-width: $grid-float-breakpoint) {
-		display: block;
-		width: 100%;
-	}
-}
-
-.navbar .js-region-search-form {
-	@media (max-width: $grid-float-breakpoint) {
-		display: block;
-	}
-}
-
-.js-region-search-form > .dropdown {
-	position: relative;
-}
-
-.js-region-search-form > .dropdown > .control-arrow {
-	color: #aaa;
-	position: absolute;
-	right: 3px;
-}
-
-.control-arrow:hover {
-	cursor: pointer;
-}
-
-.js-region-search-form > .dropdown > .control-arrow.fa-angle-down {
-	top: 10px;
-}
-
-.js-region-search-form > .dropdown > .control-arrow.fa-angle-up {
-	top: 9px;
 }
 
 .region-link-private {

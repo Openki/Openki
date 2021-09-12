@@ -19,15 +19,6 @@ Template.regionSelectionWrap.onCreated(function () {
 	this.state.setDefault('searchingRegions', false);
 });
 
-Template.regionSelectionWrap.helpers({
-	inNavbarClasses() {
-		if (this.inNavbar) {
-			return 'col-6-sm-auto px-0';
-		}
-		return '';
-	},
-});
-
 Template.regionSelectionDisplay.helpers({
 	inNavbarClasses() {
 		if (this.inNavbar) {
@@ -107,20 +98,20 @@ Template.regionSelection.onCreated(function () {
 });
 
 Template.regionSelection.onRendered(function () {
-	Meteor.defer(function () {
+	Meteor.defer(() => {
 		if (!this.data || !this.data.isSplash) {
 			this.$('.js-region-search').trigger('select');
 		}
 	});
-
-	this.parentInstance()
-		.$('.dropdown')
-		.on('hide.bs.dropdown', () => {
-			this.close();
-		});
 });
 
 Template.regionSelection.helpers({
+	inNavbarClasses() {
+		if (this.inNavbar) {
+			return 'col-6-sm-auto px-0';
+		}
+		return '';
+	},
 	allCourses() {
 		return Regions.find()
 			.fetch()
@@ -174,6 +165,9 @@ Template.regionSelection.events({
 		event.preventDefault();
 		const regionId = this._id || 'all';
 		instance.changeRegion(regionId.toString());
+
+		instance.$('.dropdown-toggle').dropdown('hide');
+		return false;
 	},
 
 	'mouseover/mouseout/focusin/focusout .js-region-link'(event) {
@@ -187,17 +181,21 @@ Template.regionSelection.events({
 		}
 	},
 
-	'keyup .js-region-search'(event, instance) {
+	'keyup .js-region-search'(_event, instance) {
 		const search = String(instance.$('.js-region-search').val()).trim();
-		instance.state.set({ search });
+		if (!instance.state.equals('search', search)) {
+			instance.state.set({ search });
+			instance.searchHasFocus = true;
+			instance.$('.dropdown-toggle').dropdown('show');
+		}
 	},
 
 	'submit .js-region-search-form'(event, instance) {
 		event.preventDefault();
-		instance.$('.dropdown-toggle').dropdown('toggle');
-		if (instance.state.get('search') === '') {
-			instance.close();
-		} else {
+		instance.searchHasFocus = false;
+		instance.$('.js-region-search').trigger('focusout');
+		instance.$('.dropdown-toggle').dropdown('hide');
+		if (!instance.state.equals('search', '')) {
 			const selectedRegion = instance.regions().fetch()[0];
 			if (selectedRegion) {
 				instance.changeRegion(selectedRegion._id);
@@ -208,33 +206,33 @@ Template.regionSelection.events({
 	},
 
 	'focus .js-region-search'(event, instance) {
-		if (instance.focusFromShowAllRegions) {
-			/* eslint-disable-next-line no-param-reassign */
-			instance.focusFromShowAllRegions = false;
-			return;
-		}
-		instance.$('.dropdown-toggle').dropdown('toggle');
+		instance.$('.dropdown-toggle').dropdown('show');
+	},
+
+	'focusin/focusout .js-region-search'(event, instance) {
+		instance.searchHasFocus = event.type === 'focusin';
 	},
 
 	'click .js-show-all-regions'(event, instance) {
 		instance.state.set('showAllRegions', true);
-		/* eslint-disable-next-line no-param-reassign */
-		instance.focusFromShowAllRegions = true;
 		instance.$('.js-region-search').trigger('select');
-		return false; // prevent dropdown default behavior for this specific <li>
-	},
-
-	'click .control-arrow.fa-angle-down'(event, instance) {
-		instance.$('.dropdown-toggle').dropdown('toggle');
-		event.stopPropagation();
 	},
 
 	'show.bs.dropdown'(event, instance) {
-		instance.$('.dropdown > .control-arrow').removeClass('fa-angle-down').addClass('fa-angle-up');
+		if (!instance.searchHasFocus) {
+			Meteor.defer(() => {
+				instance.$('.js-region-search').trigger('select');
+			});
+		}
 	},
 
 	'hide.bs.dropdown'(event, instance) {
-		instance.$('.dropdown > .control-arrow').removeClass('fa-angle-up').addClass('fa-angle-down');
+		if (!instance.searchHasFocus) {
+			instance.close();
+			return true;
+		}
+
+		return false;
 	},
 });
 

@@ -75,14 +75,14 @@
 				{{arrow}} <span
 					  class="d-none d-md-inline-block">{{mfString direction currentUnit 'short'}}</span>
 			</button>
-			<button type="button" class="btn btn-secondary dropdown-toggle" aria-expanded="false"
-					aria-haspopup="true" data-toggle="dropdown">
+			<button type="button" class="btn btn-secondary" aria-expanded="false"
+					aria-haspopup="true" data-bs-toggle="dropdown" data-bs-reference="parent">
 				<span class="fa fa-list-ul fa-fw" aria-hidden="true"></span>
 			</button>
 			<ul class="dropdown-menu">
 				{{#each navUnits}}
 					<li>
-						<a class="js-change-unit" href="#">
+						<a class="dropdown-item js-change-unit" href="#">
 							{{mfString ../direction this 'long'}}
 						</a>
 					</li>

@@ -195,7 +195,10 @@
 
 .navbar .navbar-nav > .open > .navbar-link,
 .navbar .navbar-nav > .open > .navbar-link:hover,
-.navbar .navbar-nav > .open > .navbar-link:focus {
+.navbar .navbar-nav > .open > .navbar-link:focus,
+.navbar .navbar-nav .show.navbar-link,
+.navbar .navbar-nav .show.navbar-link:hover,
+.navbar .navbar-nav .show.navbar-link:focus {
 	background-color: lighten($navbar-default-bg, 10%);
 
 	@media (min-width: $grid-float-breakpoint) {
@@ -288,4 +291,10 @@
 
 .js-language-link:hover .language-translated {
 	color: $white;
+}
+
+.login-link .dropdown-menu {
+	@media (max-width: $grid-float-breakpoint) {
+		position: initial;
+	}
 }
