@@ -61,7 +61,7 @@ const sometimesAfter = function (date) {
 // Unfortunately we can't make this a debugOnly package because the integration
 // tests use the data too, and they run with the --production flag.
 // This guard is here until we find a better solution.
-if (PrivateSettings.testdata) {
+if (Meteor.isServer && PrivateSettings.testdata) {
 	const regionsCreate = function () {
 		const userKopf = ensure.user('Kopf', undefined, true)._id;
 

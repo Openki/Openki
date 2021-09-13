@@ -1,5 +1,3 @@
-import { Meteor as UserLocation } from 'meteor/meteor';
-
 import { Regions } from '/imports/api/regions/regions';
 
 /**
@@ -26,12 +24,6 @@ export async function detect(tenant?: string) {
 		// eslint-disable-next-line no-console
 		console.info('Region autodetection: Using Testistan for localhost');
 		return Regions.findOne('9JyFCoKWkxnf8LWPh');
-	}
-
-	if (UserLocation.settings.testdata) {
-		// eslint-disable-next-line no-console
-		console.info('Region autodetection: Deployed with testdata, using Spilistan region');
-		return Regions.findOne('EZqQLGL4PtFCxCNrp');
 	}
 
 	const location = await getLocation();

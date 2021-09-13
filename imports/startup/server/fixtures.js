@@ -13,7 +13,7 @@ import { InfoPages } from '/imports/api/infoPages/infoPages';
 
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
-if (PrivateSettings.testdata) {
+if (Meteor.isServer && PrivateSettings.testdata) {
 	const logResult = function (error, result) {
 		if (error) {
 			throw error;
