@@ -25,25 +25,25 @@
 						{{#if mayTranslate}}
 							{{> yield}}
 						{{else}}
-							<h3>{{mf "main.translate.pleaseLogin" "Please log-in to edit translations"}}
+							<h3>{{i18n "main.translate.pleaseLogin" "Please log-in to edit translations"}}
 							</h3>
 						{{/if}}
 					</div>
 				{{else if isAdminPage}}
 					<div class="container mw-md">
-						<h1>{{mf 'adminPanel.heading' 'Admin panel'}}</h1>
+						<h1>{{i18n 'adminPanel.heading' 'Admin panel'}}</h1>
 						{{#if isAdmin}}
 							{{#if isNotAdminPanel}}
 								<a href="{{pathFor 'adminPanel'}}" class="admin-back-to-dashboard">
 									<i class="fa fa-chevron-left"></i>
-									{{mf 'adminPanel.backToDashboard' 'Go back to dashboard'}}
+									{{i18n 'adminPanel.backToDashboard' 'Go back to dashboard'}}
 								</a>
 							{{/if}}
 							<div class="admin-active-task">
 								{{> yield}}
 							</div>
 						{{else}}
-							{{mf 'adminPanel.pleaseLogin' 'Only for administrators'}}
+							{{i18n 'adminPanel.pleaseLogin' 'Only for administrators'}}
 						{{/if}}
 					</div>
 				{{else}}

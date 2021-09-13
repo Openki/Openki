@@ -8,7 +8,7 @@ import { Tooltips } from 'meteor/lookback:tooltips';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
@@ -69,7 +69,7 @@ Template.eventEdit.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		mf(
+		i18next.t(
 			'event.description.placeholder',
 			'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)',
 		),
@@ -152,11 +152,11 @@ const validateMaxParticipants = (maxParticipants) => {
 	const intVal = parseInt(maxParticipants, 10);
 	/* eslint-disable-next-line eqeqeq */
 	if (intVal != maxParticipants) {
-		Alert.error(mf('event.edit.mustBeInteger', 'Number must be integer'));
+		Alert.error(i18next.t('event.edit.mustBeInteger', 'Number must be integer'));
 		return false;
 	}
 	if (intVal < 0) {
-		Alert.error(mf('event.edit.mustBePositive', 'Number must be positive'));
+		Alert.error(i18next.t('event.edit.mustBePositive', 'Number must be positive'));
 		return false;
 	}
 	return intVal;
@@ -300,11 +300,9 @@ Template.eventEdit.events({
 		if (!start.isValid()) {
 			const exampleDate = moment().format('L');
 			Alert.error(
-				mf(
-					'event.edit.dateFormatWarning',
-					{ EXAMPLEDATE: exampleDate },
-					'Date format must be of the form {EXAMPLEDATE}',
-				),
+				i18next.t('event.edit.dateFormatWarning', 'Date format must be of the form {EXAMPLEDATE}', {
+					EXAMPLEDATE: exampleDate,
+				}),
 			);
 			return;
 		}
@@ -326,7 +324,7 @@ Template.eventEdit.events({
 		}
 
 		if (editevent.title.length === 0) {
-			Alert.error(mf('event.edit.plzProvideTitle', 'Please provide a title'));
+			Alert.error(i18next.t('event.edit.plzProvideTitle', 'Please provide a title'));
 			return;
 		}
 
@@ -336,7 +334,7 @@ Template.eventEdit.events({
 		}
 
 		if (!editevent.description) {
-			Alert.error(mf('event.edit.plzProvideDescr', 'Please provide a description'));
+			Alert.error(i18next.t('event.edit.plzProvideDescr', 'Please provide a description'));
 			return;
 		}
 
@@ -345,7 +343,7 @@ Template.eventEdit.events({
 		if (isNew) {
 			if (start.isBefore(LocalTime.now())) {
 				Alert.error(
-					mf(
+					i18next.t(
 						'event.edit.startInPast',
 						'The event starts in the past. Have you selected a start date and time?',
 					),
@@ -360,7 +358,9 @@ Template.eventEdit.events({
 			} else {
 				editevent.region = instance.selectedRegion.get();
 				if (!editevent.region || editevent.region === 'all') {
-					Alert.error(mf('event.edit.plzSelectRegion', 'Please select the region for this event'));
+					Alert.error(
+						i18next.t('event.edit.plzSelectRegion', 'Please select the region for this event'),
+					);
 					return;
 				}
 
@@ -387,8 +387,8 @@ Template.eventEdit.events({
 		instance.busy('saving');
 		SaveAfterLogin(
 			instance,
-			mf('loginAction.saveEvent', 'Login and save event'),
-			mf('registerAction.saveEvent', 'Register and save event'),
+			i18next.t('loginAction.saveEvent', 'Login and save event'),
+			i18next.t('registerAction.saveEvent', 'Register and save event'),
 			async () => {
 				try {
 					eventId = await EventsMethods.save({
@@ -404,11 +404,9 @@ Template.eventEdit.events({
 					if (isNew) {
 						Router.go('showEvent', { _id: eventId });
 						Alert.success(
-							mf(
-								'message.eventCreated',
-								{ TITLE: editevent.title },
-								'The event "{TITLE}" has been created!',
-							),
+							i18next.t('message.eventCreated', 'The event "{TITLE}" has been created!', {
+								TITLE: editevent.title,
+							}),
 						);
 
 						const course = Courses.findOne(editevent.courseId);
@@ -430,20 +428,20 @@ Template.eventEdit.events({
 						);
 					} else {
 						Alert.success(
-							mf(
+							i18next.t(
 								'message.eventChangesSaved',
-								{ TITLE: editevent.title },
 								'Your changes to the event "{TITLE}" have been saved.',
+								{ TITLE: editevent.title },
 							),
 						);
 					}
 
 					if (updateReplicasInfos || updateReplicasTime) {
 						Alert.success(
-							mf(
+							i18next.t(
 								'eventEdit.replicatesUpdated',
-								{ TITLE: editevent.title },
 								'The replicas of "{TITLE}" have also been updated.',
+								{ TITLE: editevent.title },
 							),
 						);
 					}

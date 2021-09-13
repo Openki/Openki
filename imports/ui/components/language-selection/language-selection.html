@@ -21,9 +21,9 @@
 					{{#if languages}}
 						<li class="dropdown-header dropdown-legend">
 							<span class="dropdown-addon-right">
-								{{mf 'languageSelection.legend.percTranslated' '% translated'}}
+								{{i18n 'languageSelection.legend.percTranslated' '% translated'}}
 							</span>
-							{{mf 'languageSelection.legend.language' 'Language'}}
+							{{i18n 'languageSelection.legend.language' 'Language'}}
 						</li>
 						{{#each languages}}
 							<li>
@@ -45,7 +45,7 @@
 					{{else}}
 						<li>
 							<a
-							   class="dropdown-item">{{mf 'languageSelection.noLanguagesFound' 'No languages found.'}}</a>
+							   class="dropdown-item">{{i18n 'languageSelection.noLanguagesFound' 'No languages found.'}}</a>
 						</li>
 					{{/if}}
 					<li>
@@ -53,7 +53,7 @@
 					</li>
 					<li>
 						<a href="{{pathFor 'mfTrans'}}" class="dropdown-item">
-							{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
+							{{i18n 'Profile.translate_this_page' 'Help us to translate this Page'}}
 						</a>
 					</li>
 				</ul>

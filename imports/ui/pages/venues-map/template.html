@@ -3,9 +3,9 @@
 	<div class="container-fluid">
 		<h1>
 			{{#if regionName}}
-				{{mf 'venues.list.titleForRegion' 'Venues in region {REGION}' REGION=regionName}}
+				{{i18n 'venues.list.titleForRegion' 'Venues in region {REGION}' REGION=regionName}}
 			{{else}}
-				{{mf 'venues.list.title' 'Venues'}}
+				{{i18n 'venues.list.title' 'Venues'}}
 			{{/if}}
 		</h1>
 		<div class="row">
@@ -21,10 +21,10 @@
 						{{/each}}
 					</ul>
 				{{else}}
-					{{mf 'venues.list.noneFound' "No venues found"}}
+					{{i18n 'venues.list.noneFound' "No venues found"}}
 				{{/if}}
 				<a class="btn btn-secondary mt-3"
-				   href="{{pathFor 'venueDetails' _id='create'}}">{{mf 'profile.createNewVenue.button'}}</a>
+				   href="{{pathFor 'venueDetails' _id='create'}}">{{i18n 'profile.createNewVenue.button'}}</a>
 			</div>
 			<div class="col-12 col-md-10 venues-map-location-map">
 				{{> map markers=venueMarkers}}

@@ -1,7 +1,7 @@
 import { Match, check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Regions } from '/imports/api/regions/regions';
@@ -77,11 +77,11 @@ notificationJoin.Model = function (entry) {
 		},
 
 		/**
-		 * @param {string} userLocale
+		 * @param {string} lng
 		 * @param {UserModel} _actualRecipient
 		 * @param {string} unsubToken
 		 */
-		vars(userLocale, _actualRecipient, unsubToken) {
+		vars(lng, _actualRecipient, unsubToken) {
 			if (!newParticipant) {
 				throw new Error('New participant does not exist (0.o)');
 			}
@@ -89,20 +89,21 @@ notificationJoin.Model = function (entry) {
 				throw new Error('Course does not exist (0.o)');
 			}
 
-			const roleTitle = mf(`roles.${body.newRole}.short`, {}, undefined, userLocale);
+			const roleTitle = i18next.t(`roles.${body.newRole}.short`, { lng });
 			const subjectvars = {
 				COURSE: StringTools.truncate(course.name, 10),
 				USER: StringTools.truncate(newParticipant.username, 50),
 				ROLE: roleTitle,
+				lng,
 			};
 
 			// prettier-ignore
-			const subject = mf('notification.join.mail.subject', subjectvars, '{USER} joined {COURSE}: {ROLE}', userLocale);
+			const subject = i18next.t('notification.join.mail.subject', '{USER} joined {COURSE}: {ROLE}', subjectvars);
 
 			const figures = ['host', 'mentor', 'participant']
 				.filter((role) => course.roles.includes(role))
 				.map((role) => ({
-					role: StringTools.capitalize(mf(`roles.${role}.short`, {}, undefined, userLocale)),
+					role: StringTools.capitalize(i18next.t(`roles.${role}.short`, { lng })),
 					count: course.membersWithRole(role).length,
 				}));
 

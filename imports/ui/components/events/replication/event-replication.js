@@ -1,5 +1,5 @@
 import { ReactiveVar } from 'meteor/reactive-var';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import moment from 'moment';
@@ -221,11 +221,9 @@ Template.eventReplication.events({
 					const start = moment(replicaEvent.startLocal).format('llll');
 					Alert.serverError(
 						error,
-						mf(
-							'eventReplication.errWithReason',
-							{ START: start },
-							'Creating the copy on "{START}" failed.',
-						),
+						i18next.t('eventReplication.errWithReason', 'Creating the copy on "{START}" failed.', {
+							START: start,
+						}),
 					);
 				})
 				.finally(() => {
@@ -235,14 +233,14 @@ Template.eventReplication.events({
 						if (removed) {
 							const start = moment(replicaEvent.startLocal).format('llll');
 							Alert.success(
-								mf(
+								i18next.t(
 									'event.replicate.successCondensed',
+									'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}',
 									{
 										TITLE: instance.data.title,
 										NUM: removed,
 										DATE: start,
 									},
-									'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}',
 								),
 							);
 						}

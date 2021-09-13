@@ -1,7 +1,7 @@
 <template name="regionDetailsPage">
 	<div class="container mw-md">
 		<a href="{{pathFor 'tenantDetails' _id=region.tenant}}"><i class="fa fa-angle-left fa-fw"
-			   aria-hidden="true"></i> {{mf 'regionDetails.goToOverview' 'Go to all regions'}}</a>
+			   aria-hidden="true"></i> {{i18n 'regionDetails.goToOverview' 'Go to all regions'}}</a>
 		{{#if isNew}}
 			{{> regionEdit createArgs}}
 		{{else if editing}}

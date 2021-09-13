@@ -41,13 +41,13 @@ Template.registerHelper(
 	'i18n',
 	function (
 		key: string,
-		defaultValueOrData: string | { hash: Record<string, unknown> },
-		data: { hash: Record<string, unknown> },
+		defaultValueOrData: string | { hash?: Record<string, unknown> } = {},
+		data?: { hash: Record<string, unknown> },
 	) {
 		// defaultValue is optional
 		if (typeof defaultValueOrData === 'string') {
 			// function (key, defaultValue, data)
-			return i18next.t(key, defaultValueOrData, data.hash);
+			return i18next.t(key, defaultValueOrData, data?.hash);
 		}
 
 		// function (key, data)

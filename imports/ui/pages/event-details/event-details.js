@@ -1,6 +1,6 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
@@ -44,22 +44,17 @@ Template.eventPage.onCreated(() => {
 	let title;
 	let description = '';
 	if (event) {
-		title = mf(
-			'event.windowtitle',
-			{ EVENT: event.title, DATE: moment(event.start).calendar() },
-			'{DATE} - {EVENT}',
-		);
-		description = mf(
-			'event.metatag.description',
-			{
-				REGION: Regions.findOne(event.region).name,
-				VENUE: event.venue.name,
-			},
-			'{VENUE} in {REGION}',
-		);
+		title = i18next.t('event.windowtitle', '{DATE} - {EVENT}', {
+			EVENT: event.title,
+			DATE: moment(event.start).calendar(),
+		});
+		description = i18next.t('event.metatag.description', '{VENUE} in {REGION}', {
+			REGION: Regions.findOne(event.region).name,
+			VENUE: event.venue.name,
+		});
 		appendAsJsonLdToBody(event);
 	} else {
-		title = mf('event.windowtitle.create', 'Create event');
+		title = i18next.t('event.windowtitle.create', 'Create event');
 	}
 	Metatags.setCommonTags(title, description);
 });
@@ -73,8 +68,8 @@ Template.event.onCreated(function () {
 	this.addParticipant = () => {
 		SaveAfterLogin(
 			this,
-			mf('loginAction.enrollEvent', 'Login and enroll for event'),
-			mf('registerAction.enrollEvent', 'Login and enroll for event'),
+			i18next.t('loginAction.enrollEvent', 'Login and enroll for event'),
+			i18next.t('registerAction.enrollEvent', 'Login and enroll for event'),
 			async () => {
 				this.busy('registering');
 				try {
@@ -157,7 +152,9 @@ Template.event.events({
 			await EventsMethods.remove(oEvent._id);
 
 			Alert.success(
-				mf('eventDetails.eventRemoved', { TITLE: title }, 'The event "{TITLE}" has been deleted.'),
+				i18next.t('eventDetails.eventRemoved', 'The event "{TITLE}" has been deleted.', {
+					TITLE: title,
+				}),
 			);
 
 			Analytics.trackEvent(
@@ -304,10 +301,10 @@ Template.eventGroupAdd.events({
 
 			const groupName = Groups.findOne(groupId).name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'eventGroupAdd.groupAdded',
-					{ GROUP: groupName, EVENT: event.title },
 					'The group "{GROUP}" has been added to promote the event "{EVENT}".',
+					{ GROUP: groupName, EVENT: event.title },
 				),
 			);
 			instance.collapse();
@@ -329,10 +326,10 @@ Template.eventGroupRemove.events({
 
 			const groupName = Groups.findOne(groupId).name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'eventGroupAdd.groupRemoved',
-					{ GROUP: groupName, EVENT: event.title },
 					'The group "{GROUP}" has been removed from the event "{EVENT}".',
+					{ GROUP: groupName, EVENT: event.title },
 				),
 			);
 			instance.collapse();
@@ -354,10 +351,10 @@ Template.eventGroupMakeOrganizer.events({
 
 			const groupName = Groups.findOne(groupId).name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'eventGroupAdd.membersCanEditEvent',
-					{ GROUP: groupName, EVENT: event.title },
 					'Members of the group "{GROUP}" can now edit the event "{EVENT}".',
+					{ GROUP: groupName, EVENT: event.title },
 				),
 			);
 			instance.collapse();
@@ -379,10 +376,10 @@ Template.eventGroupRemoveOrganizer.events({
 
 			const groupName = Groups.findOne(groupId).name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'eventGroupAdd.membersCanNoLongerEditEvent',
-					{ GROUP: groupName, EVENT: event.title },
 					'Members of the group "{GROUP}" can no longer edit the event "{EVENT}".',
+					{ GROUP: groupName, EVENT: event.title },
 				),
 			);
 			instance.collapse();

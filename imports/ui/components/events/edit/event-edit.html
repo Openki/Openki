@@ -3,14 +3,12 @@
 		<div class="edit-page">
 			{{#unless hasParentCourse}}
 				{{#if _id}}
-					<h2>{{mf 'course.event.edit.edit' 'Edit event'}}</h2>
+					<h2>{{i18n 'course.event.edit.edit' 'Edit event'}}</h2>
 				{{else}}
-					<h2>{{mf 'course.event.edit.add' 'Add event'}}</h2>
-					{{#mf KEY='course.createEventInfo'}}
-						Use this form if you want to publish a singular, one-off, allready organised event. Otherwise create or propose a course here:
-					{{/mf}}
+					<h2>{{i18n 'course.event.edit.add' 'Add event'}}</h2>
+					{{i18n 'course.createEventInfo' 'Use this form if you want to publish a singular, one-off, allready organised event. Otherwise create or propose a course here:'}}
 					<a
-					   href="{{pathFor 'proposeCourse'}}">{{mf 'menue.ProposeCourse' 'Propose a course'}}</a>
+					   href="{{pathFor 'proposeCourse'}}">{{i18n 'menue.ProposeCourse' 'Propose a course'}}</a>
 				{{/if}}
 			{{/unless}}
 
@@ -19,15 +17,16 @@
 					{{> regionTag}}
 				{{/if}}
 				<div class="mb-3">
-					<label class="form-label">{{mf 'course.event.edit.title' 'Event title'}}</label>
+					<label
+						   class="form-label">{{i18n 'course.event.edit.title' 'Event title'}}</label>
 					<input type="text" class="js-event-title form-control form-control-lg" name="_"
-						   placeholder="{{mf 'event.title.placeholder' 'Put a catchy title here'}}"
+						   placeholder="{{i18n 'event.title.placeholder' 'Put a catchy title here'}}"
 						   size="30" value="{{this.title}}">
 				</div>
 				<div class="row gap-3">
 					<div class="col-md">
 						<label
-							   class="form-label">{{mf 'course.event.edit.date_start' 'Date'}}</label>
+							   class="form-label">{{i18n 'course.event.edit.date_start' 'Date'}}</label>
 						<div class="input-group">
 							<span class="input-group-text">
 								<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
@@ -38,7 +37,7 @@
 					</div>
 					<div class="col-md">
 						<label
-							   class="form-label">{{mf 'course.event.edit.time_start' 'Time start'}}</label>
+							   class="form-label">{{i18n 'course.event.edit.time_start' 'Time start'}}</label>
 						<div class="input-group">
 							<span class="input-group-text">
 								<span class="fa fa-hourglass-start fa-fw" aria-hidden="true"></span>
@@ -49,9 +48,9 @@
 					</div>
 					<div class="col-md js-time-end">
 						<label style="display:none">
-							{{mf 'course.event.edit.duration' 'Duration (in minutes)'}}
+							{{i18n 'course.event.edit.duration' 'Duration (in minutes)'}}
 							<button type="button" class="js-toggle-duration btn-icon"
-									data-tooltip="{{mf 'course.event.edit.switch_time_end' 'Switch to end time'}}">
+									data-tooltip="{{i18n 'course.event.edit.switch_time_end' 'Switch to end time'}}">
 								<span class="fa fa-exchange"></span>
 							</button>
 						</label>
@@ -63,9 +62,9 @@
 								   id="editEventDuration" value="" size="5" {{disableForPast}}>
 						</div>
 						<label class="form-label">
-							{{mf 'course.event.edit.time_end' 'Time end'}}
+							{{i18n 'course.event.edit.time_end' 'Time end'}}
 							<button type="button" class="js-toggle-duration btn-icon"
-									data-tooltip="{{mf 'course.event.edit.swich_duration' 'Switch to duration'}}">
+									data-tooltip="{{i18n 'course.event.edit.swich_duration' 'Switch to duration'}}">
 								<span class="fa fa-exchange"></span>
 							</button>
 						</label>
@@ -82,7 +81,8 @@
 			</div>
 			<div class="edit-page-body event-edit-body">
 				<div class="mb-3">
-					<label class="form-label">{{mf 'course.event.edit.desc' 'Description'}}</label>
+					<label
+						   class="form-label">{{i18n 'course.event.edit.desc' 'Description'}}</label>
 					{{> editableTextarea editableDescription}}
 				</div>
 				{{#unless isPrivate}}
@@ -91,7 +91,7 @@
 
 				{{#if showRegionSelection}}
 					<div class="mb-3">
-						<label class="form-label">{{mf 'course.edit.region' 'Region'}}</label>
+						<label class="form-label">{{i18n 'course.edit.region' 'Region'}}</label>
 						<div class="input-group">
 							<div class="input-group-text">
 								<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
@@ -100,7 +100,7 @@
 								<option class="select-placeholder" disabled
 										selected="{{#if isCurrentRegion 'all'}}selected{{/if}}"
 										value=''>
-									{{mf '_selection.pleaseSelect'}}
+									{{i18n '_selection.pleaseSelect'}}
 								</option>
 								{{#each regions}}
 									<option selected="{{#if isCurrentRegion _id}}selected{{/if}}"
@@ -117,8 +117,8 @@
 					{{> eventEditVenue}}
 					<div class="mb-3">
 						<label class="form-label">
-							{{mf 'course.event.edit.room' 'Room'}}
-							<small> {{mf '_inputField.optional'}}</small>
+							{{i18n 'course.event.edit.room' 'Room'}}
+							<small> {{i18n '_inputField.optional'}}</small>
 						</label>
 						<div class="input-group" id="editform_room" name="editform_room">
 							<span class="input-group-text">
@@ -130,8 +130,8 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label">
-							{{mf 'course.event.edit.maxParticipants' 'maximal number of participants'}}
-							<small> {{mf '_inputField.optional'}}</small>
+							{{i18n 'course.event.edit.maxParticipants' 'maximal number of participants'}}
+							<small> {{i18n '_inputField.optional'}}</small>
 						</label>
 						<div class="input-group">
 							<span class="input-group-text">
@@ -148,11 +148,9 @@
 						<input class="form-check-input js-check-event-internal" type="checkbox"
 							   value="" id="eventEditInternalCheck" {{isInternal}}>
 						<label class="form-check-label" for="eventEditInternalCheck">
-							{{mf 'event.edit.internal' 'Hide on front page'}}
+							{{i18n 'event.edit.internal' 'Hide on front page'}}
 							<span class="form-text d-block">
-								{{#mf KEY='event.edit.internal.description'}}
-									Show this event only on group and venue pages
-								{{/mf}}
+								{{i18n 'event.edit.internal.description' 'Show this event only on group and venue pages'}}
 							</span>
 						</label>
 					</div>
@@ -162,9 +160,7 @@
 								   name="updateReplicasInfo" value=""
 								   id="eventEditUpdateReplicasInfoCheck">
 							<label class="form-check-label" for="eventEditUpdateReplicasInfoCheck">
-								{{#mf KEY='event.edit.updateReplicasInfo' COUNT=affectedReplicaCount}}
-									Update {COUNT, plural, one {info from later copy} other {infos from # later copies as well}}
-								{{/mf}}
+								{{i18n 'event.edit.updateReplicasInfo' 'Update {COUNT, plural, one {info from later copy} other {infos from # later copies as well}}' COUNT=affectedReplicaCount}}
 							</label>
 						</div>
 						{{#if timeChanged}}
@@ -175,16 +171,15 @@
 									   {{disabledIfDayChanged}}>
 								<label class="form-check-label"
 									   for="eventEditUpdateReplicasTimeCheck">
-									{{#mf KEY='event.edit.updateReplicasTime' COUNT=affectedReplicaCount}}
-										Update time from {COUNT, plural, one {copy} other {copies}}
-									{{/mf}}
+									{{i18n 'event.edit.updateReplicasTime' 'Update time from {COUNT, plural, one {copy} other {copies}}'
+									COUNT=affectedReplicaCount}}
 								</label>
 							</div>
 							{{#if startDayChanged}}
 								<div class="panel panel-danger">
 									<div class="panel-heading">
 										<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
-										{{mf 'event.edit.startDayChanged' 'Updating the copies when the start day has been changed is not (yet) supported.'}}
+										{{i18n 'event.edit.startDayChanged' 'Updating the copies when the start day has been changed is not (yet) supported.'}}
 									</div>
 								</div>
 							{{else}}
@@ -193,90 +188,84 @@
 										 class="panel panel-warning changed-replicas {{emphasizeClass}}">
 										<div class="panel-heading">
 											<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
-											{{#mf KEY='event.edit.changedReplicas.heading' NUM=changedReplicas.length}}
-												Found {NUM, plural, one {one copy which varies} other {# copies which vary}} in time
-											{{/mf}}
+											{{i18n 'event.edit.changedReplicas.heading' 'Found {NUM, plural, one {one copy which varies} other {# copies which vary}} in time' NUM=changedReplicas.length}}
 										</div>
-									<div class="panel-body">
-										{{#unless updateChangedReplicas}}
-											<span class="update-changed-replicas-help">
-												{{#mf KEY='event.edit.changedReplicas.body' NUM=changedReplicas.length}}
-													By default {NUM, plural, one {this copy} other {these copies}} won't be updated as {NUM, plural, one {it has} other {they have}} another time set than the original event:
-												{{/mf}}
-											</span>
-										{{/unless}}
-										<ul>
-											{{#each replica in changedReplicas}}
-												<li>
-													<a href="{{pathFor 'showEvent' replica}}" target="_blank">
-														{{dateFormat replica.startLocal}}
-														-
-														{{replica.title}}
+										<div class="panel-body">
+											{{#unless updateChangedReplicas}}
+												<span class="update-changed-replicas-help">
+													{{i18n 'event.edit.changedReplicas.body' "By default {NUM, plural, one {this copy} other {these copies}} won't be updated as {NUM, plural, one {it has} other {they have}} another time set than the original event:" NUM=changedReplicas.length}}
+												</span>
+											{{/unless}}
+											<ul>
+												{{#each replica in changedReplicas}}
+													<li>
+														<a href="{{pathFor 'showEvent' replica}}"
+														   target="_blank">
+															{{dateFormat replica.startLocal}}
+															-
+															{{replica.title}}
 
-														({{timeFormat replica.startLocal}}
-														-
-														{{timeFormat replica.endLocal}})
-													</a>
-												</li>
-											{{/each}}
-										</ul>
-										<div class="form-check">
-											<input class="form-check-input js-update-changed-replicas-time" 
-											type="checkbox"
-											name="updateChangedReplicasTime" value="" id="eventEditUpdateChangedReplicasTimeCheck">
-											<label class="form-check-label" for="eventEditUpdateChangedReplicasTimeCheck">
-												{{#mf KEY='event.edit.updateChangedReplicasTime' NUM=changedReplicas.length}}
-												      Overwrite {NUM, plural, one {this events} other {these events}} time too
-												{{/mf}}
-											</label>
+															({{timeFormat replica.startLocal}}
+															-
+															{{timeFormat replica.endLocal}})
+														</a>
+													</li>
+												{{/each}}
+											</ul>
+											<div class="form-check">
+												<input class="form-check-input js-update-changed-replicas-time"
+													   type="checkbox"
+													   name="updateChangedReplicasTime" value=""
+													   id="eventEditUpdateChangedReplicasTimeCheck">
+												<label class="form-check-label"
+													   for="eventEditUpdateChangedReplicasTimeCheck">
+													{{i18n 'event.edit.updateChangedReplicasTime' 'Overwrite {NUM, plural, one {this events} other {these events}} time too' NUM=changedReplicas.length}}
+												</label>
+											</div>
 										</div>
 									</div>
-								</div>
+								{{/if}}
 							{{/if}}
 						{{/if}}
 					{{/if}}
-				{{/if}}
-				{{#if courseId}}
-					<div class="form-check">
-						{{#if new}}
-							<input class="form-check-input js-check-notify" type="checkbox" value="" id="eventEditCheckNotifyCheck" checked>
-							<label class="form-check-label" for="eventEditCheckNotifyCheck">
-								{{#mf KEY='event.edit.notifyNewEvent' COURSE=course.name}}
-									Notify all members of the course "{COURSE}" about this event.
-								{{/mf}}
-							</label>
-						{{else}}
-							<input class="form-check-input js-check-notify" type="checkbox" value="" id="eventEditCheckNotifyCheck">
-							<label class="form-check-label" for="eventEditCheckNotifyCheck">
-								{{#mf KEY='event.edit.notifyEditEvent' COURSE=course.name}}
-									Notify all members of the course "{COURSE}" about the changes you made.
-								{{/mf}}
-							</label>
-						{{/if}}
-					</div>
-				{{/if}}
-				{{#if notifyChecked}}
-					<label class="form-label">
-						{{mf 'course.event.edit.AddMessage' 'Add message'}}
-						<small> {{mf '_inputField.optional'}}</small>
-					</label>
-					<div class="input-group" id="editform_message" name="editform_message">
-						<span class="input-group-text">
-							<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
-						</span>
-						<textarea rows="3"
-								  class="form-control js-event-add-message"
-								  maxlength="2000"
-								  placeholder="{{mf 'event.edit.additionalMessage' 'If you feel good, describe what the members of the course should know.'}}"></textarea>
-					</div>
-				{{/if}}
-			</div>
+					{{#if courseId}}
+						<div class="form-check">
+							{{#if new}}
+								<input class="form-check-input js-check-notify" type="checkbox"
+									   value="" id="eventEditCheckNotifyCheck" checked>
+								<label class="form-check-label" for="eventEditCheckNotifyCheck">
+									{{i18n 'event.edit.notifyNewEvent' 'Notify all members of the course "{COURSE}" about this event.' COURSE=course.name}}
+								</label>
+							{{else}}
+								<input class="form-check-input js-check-notify" type="checkbox"
+									   value="" id="eventEditCheckNotifyCheck">
+								<label class="form-check-label" for="eventEditCheckNotifyCheck">
+									{{i18n 'event.edit.notifyEditEvent' 'Notify all members of the course "{COURSE}" about the changes you made.' COURSE=course.name}}
+								</label>
+							{{/if}}
+						</div>
+					{{/if}}
+					{{#if notifyChecked}}
+						<label class="form-label">
+							{{i18n 'course.event.edit.AddMessage' 'Add message'}}
+							<small> {{i18n '_inputField.optional'}}</small>
+						</label>
+						<div class="input-group" id="editform_message" name="editform_message">
+							<span class="input-group-text">
+								<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
+							</span>
+							<textarea rows="3" class="form-control js-event-add-message"
+									  maxlength="2000"
+									  placeholder="{{i18n 'event.edit.additionalMessage' 'If you feel good, describe what the members of the course should know.'}}"></textarea>
+						</div>
+					{{/if}}
+				</div>
 
-			<div class="form-actions">
-				{{> buttonSave saving=saving}}
-				{{> buttonCancel event="js-event-cancel"}}
+				<div class="form-actions">
+					{{> buttonSave saving=saving}}
+					{{> buttonCancel event="js-event-cancel"}}
+				</div>
 			</div>
 		</div>
-	</div>
 	</form>
 </template>

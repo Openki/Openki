@@ -1,5 +1,5 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Router } from 'meteor/iron:router';
 
 import * as Alert from '/imports/api/alerts/alert';
@@ -30,8 +30,8 @@ template.events({
 		instance.busy('join');
 		SaveAfterLogin(
 			instance,
-			mf('loginAction.invitation.join', 'Login and join'),
-			mf('registerAction.invitation.join', 'Register and join'),
+			i18next.t('loginAction.invitation.join', 'Login and join'),
+			i18next.t('registerAction.invitation.join', 'Register and join'),
 			async () => {
 				try {
 					await InvitationsMethods.join(
@@ -45,14 +45,12 @@ template.events({
 					Router.go('/');
 
 					Alert.success(
-						mf(
-							'invitation.join.success',
-							{ NAME: instance.data.tenant.name },
-							'You joined to tenant "{NAME}".',
-						),
+						i18next.t('invitation.join.success', 'You joined to tenant "{NAME}".', {
+							NAME: instance.data.tenant.name,
+						}),
 					);
 				} catch (err) {
-					Alert.serverError(err, mf('invitation.join.error', 'Join not worked.'));
+					Alert.serverError(err, i18next.t('invitation.join.error', 'Join not worked.'));
 				} finally {
 					instance.busy(false);
 				}

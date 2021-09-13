@@ -1,6 +1,6 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
@@ -87,10 +87,10 @@ Template.tenantSettings.events({
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'tenantSettings.memberAdded',
-					{ MEMBER: memberName, TENANT: tenantName },
 					'"{MEMBER}" has been added as a member to the organization "{TENANT}"',
+					{ MEMBER: memberName, TENANT: tenantName },
 				),
 			);
 		} catch (err) {
@@ -109,10 +109,10 @@ Template.tenantSettings.events({
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'tenantSettings.memberRemoved',
-					{ MEMBER: memberName, TENANT: tenantName },
 					'"{MEMBER}" has been removed from to the organization "{TENANT}"',
+					{ MEMBER: memberName, TENANT: tenantName },
 				),
 			);
 		} catch (err) {
@@ -134,10 +134,10 @@ Template.tenantSettings.events({
 			const adminName = Users.findOne(adminId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'tenantSettings.adminAdded',
-					{ ADMIN: adminName, TENANT: tenantName },
 					'"{ADMIN}" has been added as an admin to the organization "{TENANT}"',
+					{ ADMIN: adminName, TENANT: tenantName },
 				),
 			);
 		} catch (err) {
@@ -156,10 +156,10 @@ Template.tenantSettings.events({
 			const adminName = Users.findOne(adminId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'tenantSettings.adminRemoved',
-					{ ADMIN: adminName, TENANT: tenantName },
 					'"{ADMIN}" has been removed as an admin from to the organization "{TENANT}"',
+					{ ADMIN: adminName, TENANT: tenantName },
 				),
 			);
 		} catch (err) {

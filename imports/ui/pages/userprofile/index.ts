@@ -1,7 +1,7 @@
 import { Tooltips } from 'meteor/lookback:tooltips';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
@@ -112,11 +112,11 @@ template.events({
 		try {
 			await usersMethods.setHasContributed(Template.currentData().user._id);
 
-			Alert.success(mf('profile.setHasContributed.alert', 'User has contributed'));
+			Alert.success(i18next.t('profile.setHasContributed.alert', 'User has contributed'));
 		} catch (err) {
 			Alert.serverError(
 				err,
-				mf('profile.setHasContributed.error', 'Unable to set user has contributed.'),
+				i18next.t('profile.setHasContributed.error', 'Unable to set user has contributed.'),
 			);
 		}
 	},
@@ -125,11 +125,11 @@ template.events({
 		try {
 			await usersMethods.unsetHasContributed(Template.currentData().user._id);
 
-			Alert.success(mf('profile.unsetHasContributed.alert', 'Unset user has contributed'));
+			Alert.success(i18next.t('profile.unsetHasContributed.alert', 'Unset user has contributed'));
 		} catch (err) {
 			Alert.serverError(
 				err,
-				mf('profile.unsetHasContributed.error', 'Unable to unset user has contributed.'),
+				i18next.t('profile.unsetHasContributed.error', 'Unable to unset user has contributed.'),
 			);
 		}
 	},
@@ -138,9 +138,9 @@ template.events({
 		try {
 			await usersMethods.addPrivilege(Template.currentData().user._id, 'admin');
 
-			Alert.success(mf('privilege.addedAdmin', 'Granted admin privilege'));
+			Alert.success(i18next.t('privilege.addedAdmin', 'Granted admin privilege'));
 		} catch (err) {
-			Alert.serverError(err, mf('privilege.addedAdmin.error', 'Unable to add privilege'));
+			Alert.serverError(err, i18next.t('privilege.addedAdmin.error', 'Unable to add privilege'));
 		}
 	},
 
@@ -149,9 +149,9 @@ template.events({
 		try {
 			await usersMethods.removePrivilege(Template.currentData().user._id, priv);
 
-			Alert.success(mf('privilege.removed', 'Removed privilege'));
+			Alert.success(i18next.t('privilege.removed', 'Removed privilege'));
 		} catch (err) {
-			Alert.serverError(err, mf('privilege.removed.error', 'Unable to remove privilege'));
+			Alert.serverError(err, i18next.t('privilege.removed.error', 'Unable to remove privilege'));
 		}
 	},
 
@@ -163,9 +163,12 @@ template.events({
 		try {
 			await GroupsMethods.updateMembership(userId, groupId, true);
 
-			Alert.success(mf('profile.group.drafted', { NAME: name }, 'Added to group {NAME}'));
+			Alert.success(i18next.t('profile.group.drafted', 'Added to group {NAME}', { NAME: name }));
 		} catch (err) {
-			Alert.serverError(err, mf('profile.group.drafted.error', 'Unable to draft user into group'));
+			Alert.serverError(
+				err,
+				i18next.t('profile.group.drafted.error', 'Unable to draft user into group'),
+			);
 		}
 	},
 
@@ -178,9 +181,14 @@ template.events({
 		try {
 			await GroupsMethods.updateMembership(userId, groupId, false);
 
-			Alert.success(mf('profile.group.expelled', { NAME: name }, 'Expelled from group {NAME}'));
+			Alert.success(
+				i18next.t('profile.group.expelled', 'Expelled from group {NAME}', { NAME: name }),
+			);
 		} catch (err) {
-			Alert.serverError(err, mf('profile.group.expelled.error', 'Unable to expel user from group'));
+			Alert.serverError(
+				err,
+				i18next.t('profile.group.expelled.error', 'Unable to expel user from group'),
+			);
 		}
 	},
 
@@ -199,7 +207,7 @@ template.events({
 		const reason = instance.$('.js-reason').val() as string;
 
 		if (reason.length < 4) {
-			Alert.error(mf('profile.admin.remove.reason.longertext', 'longer text please'));
+			Alert.error(i18next.t('profile.admin.remove.reason.longertext', 'longer text please'));
 			instance.busy(false);
 			return;
 		}
@@ -207,7 +215,7 @@ template.events({
 		const userId = Template.parentData().user._id;
 
 		try {
-			Alert.success(mf('profile.account.deleted', 'The account has been deleted'));
+			Alert.success(i18next.t('profile.account.deleted', 'The account has been deleted'));
 			Router.go('users');
 		} finally {
 			instance.busy(false);

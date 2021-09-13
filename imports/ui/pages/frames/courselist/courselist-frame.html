@@ -17,7 +17,7 @@
 	{{#if moreCourses}}
 		<div class="show-more">
 			<button class="js-show-more-courses btn btn-secondary" type="button">
-				{{mf 'frame.courselist.showMore' 'Show more courses'}}
+				{{i18n 'frame.courselist.showMore' 'Show more courses'}}
 			</button>
 		</div>
 	{{/if}}
@@ -31,7 +31,7 @@
 			</span>
 			{{#unless hideInterested}}
 				<span class="frame-list-item-interested"
-					  title="{{mf 'frame.courseList.interestedPersons' 'Interested persons'}}">
+					  title="{{i18n 'frame.courseList.interestedPersons' 'Interested persons'}}">
 					<i class="fa fa-fw fa-user"></i>
 					{{interestedPersons course}}
 				</span>
@@ -47,7 +47,7 @@
 			<div class="frame-list-item-body">
 				<div class="frame-list-item-property frame-list-item-description">
 					<div class="frame-list-item-label">
-						{{mf 'frame.eventsList.description'}}
+						{{i18n 'frame.eventsList.description'}}
 					</div>
 					<div class="frame-list-item-content">
 						{{{course.description}}}
@@ -55,7 +55,7 @@
 				</div>
 				<div class="frame-list-item-links">
 					<a class="btn" href="{{pathFor 'showCourse' data=course}}" target="_blank">
-						{{mf 'frame.courseList.moreAboutThisCourse' 'More about this course on {SITENAME}' SITENAME=siteName}}
+						{{i18n 'frame.courseList.moreAboutThisCourse' 'More about this course on {SITENAME}' SITENAME=siteName}}
 					</a>
 				</div>
 			</div>

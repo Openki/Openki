@@ -6,9 +6,9 @@
 			{{#if regionStats}}
 				<h1>
 					{{#if regionName}}
-						{{mf 'region.list.titleForRegion' 'Overview {REGION}' REGION=regionName}}
+						{{i18n 'region.list.titleForRegion' 'Overview {REGION}' REGION=regionName}}
 					{{else}}
-						{{mf 'region.list.title' 'Regions'}}
+						{{i18n 'region.list.title' 'Regions'}}
 					{{/if}}
 				</h1>
 				<div>
@@ -22,28 +22,28 @@
 					</select>
 				</div>
 				<div class="stats-wrap">
-					<h2>{{mf 'regions.stats.header' 'group statistics'}}</h2>
+					<h2>{{i18n 'regions.stats.header' 'group statistics'}}</h2>
 					<table class="stats">
 						<thead>
 							<tr>
-								<th>{{mf 'region.stats.group' 'group'}}</th>
-								<th colspan="2">{{mf 'region.stats.courses' 'courses'}}</th>
-								<th colspan="2">{{mf 'region.stats.events' 'events'}}</th>
-								<th>{{mf 'region.stats.usersParticipating' 'users participating'}}
+								<th>{{i18n 'region.stats.group' 'group'}}</th>
+								<th colspan="2">{{i18n 'region.stats.courses' 'courses'}}</th>
+								<th colspan="2">{{i18n 'region.stats.events' 'events'}}</th>
+								<th>{{i18n 'region.stats.usersParticipating' 'users participating'}}
 								</th>
 							</tr>
 							<tr>
 								<th>&nbsp;</th>
-								<th>{{mf 'region.stats.courses.total' 'total'}}</th>
-								<th>{{mf 'region.stats.courses.active' 'active'}}</th>
-								<th>{{mf 'region.stats.events.passed' 'passed'}}</th>
-								<th>{{mf 'region.stats.events.future' 'future'}}</th>
+								<th>{{i18n 'region.stats.courses.total' 'total'}}</th>
+								<th>{{i18n 'region.stats.courses.active' 'active'}}</th>
+								<th>{{i18n 'region.stats.events.passed' 'passed'}}</th>
+								<th>{{i18n 'region.stats.events.future' 'future'}}</th>
 								<th>&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr class="js-stats-row">
-								<td>{{mf 'region.stats.total' 'total'}}</td>
+								<td>{{i18n 'region.stats.total' 'total'}}</td>
 								<td class="number"
 									title="some users participate in multiple events">
 									{{regionStats.total.numCourses}}
@@ -59,7 +59,7 @@
 										{{#if detail.group}}
 											{{ detail.groupName }}
 										{{else}}
-											{{mf 'region.stats.ungrouped' "Ungrouped"}}
+											{{i18n 'region.stats.ungrouped' "Ungrouped"}}
 										{{/if}}
 									</td>
 									<td class="number">{{detail.numCourses}}</td>

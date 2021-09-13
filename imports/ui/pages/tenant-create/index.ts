@@ -1,4 +1,4 @@
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
 
@@ -57,7 +57,7 @@ template.events({
 		const tenantName = instance.$('.js-tenant-name').val() as string;
 
 		if (!tenantName) {
-			Alert.error(mf('tenant.create.plsGiveName', 'Please give a organisation name'));
+			Alert.error(i18next.t('tenant.create.plsGiveName', 'Please give a organisation name'));
 			return;
 		}
 
@@ -67,7 +67,7 @@ template.events({
 		} as Omit<RegionsMethods.CreateFields, 'tenant'>;
 
 		if (!changes.name) {
-			Alert.error(mf('tenant.region.create.plsGiveName', 'Please give your region a name'));
+			Alert.error(i18next.t('tenant.region.create.plsGiveName', 'Please give your region a name'));
 			return;
 		}
 
@@ -76,7 +76,7 @@ template.events({
 			changes.loc = loc;
 		} else {
 			Alert.error(
-				mf(
+				i18next.t(
 					'tenant.region.create.plsSelectPointOnMap',
 					'Please add a marker on the map by clicking on the "+" sign.',
 				),
@@ -87,8 +87,8 @@ template.events({
 		instance.busy('saving');
 		SaveAfterLogin(
 			instance,
-			mf('loginAction.createPrivateRegion', 'Login and create private region'),
-			mf('registerAction.createPrivateRegion', 'Register and create private region'),
+			i18next.t('loginAction.createPrivateRegion', 'Login and create private region'),
+			i18next.t('registerAction.createPrivateRegion', 'Register and create private region'),
 			async () => {
 				try {
 					const tenantId = await TenantsMethods.create({ name: tenantName });
@@ -97,14 +97,16 @@ template.events({
 					Router.go('tenantDetails', { _id: tenantId });
 
 					Alert.success(
-						mf('privateRegion.saving.success', { NAME: changes.name }, 'Created region "{NAME}".'),
+						i18next.t('privateRegion.saving.success', 'Created region "{NAME}".', {
+							NAME: changes.name,
+						}),
 					);
 
 					Analytics.trackEvent('Tenant creations', 'Tenant with region creations');
 				} catch (err) {
 					Alert.serverError(
 						err,
-						mf('privateRegion.creating.error', 'Creating the region went wrong'),
+						i18next.t('privateRegion.creating.error', 'Creating the region went wrong'),
 					);
 				} finally {
 					instance.busy(false);

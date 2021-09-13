@@ -1,4 +1,4 @@
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment-timezone';
 
@@ -60,7 +60,7 @@ export interface OnSaveFields {
 			} as OnSaveFields;
 
 			if (!changes.name) {
-				Alert.error(mf('region.create.plsGiveName', 'Please give your region a name'));
+				Alert.error(i18next.t('region.create.plsGiveName', 'Please give your region a name'));
 				return;
 			}
 
@@ -69,7 +69,7 @@ export interface OnSaveFields {
 				changes.loc = loc;
 			} else {
 				Alert.error(
-					mf(
+					i18next.t(
 						'region.create.plsSelectPointOnMap',
 						'Please add a marker on the map by clicking on the "+" sign.',
 					),
@@ -80,21 +80,22 @@ export interface OnSaveFields {
 			instance.busy('saving');
 			SaveAfterLogin(
 				instance,
-				mf('loginAction.saveRegion', 'Login and save region'),
-				mf('registerAction.saveRegion', 'Register and save region'),
+				i18next.t('loginAction.saveRegion', 'Login and save region'),
+				i18next.t('registerAction.saveRegion', 'Register and save region'),
 				async () => {
 					try {
 						await instance.data.onSave(changes); // from the parent component
 
 						Alert.success(
-							mf(
-								'region.saving.success',
-								{ NAME: changes.name },
-								'Saved changes to region "{NAME}".',
-							),
+							i18next.t('region.saving.success', 'Saved changes to region "{NAME}".', {
+								NAME: changes.name,
+							}),
 						);
 					} catch (err) {
-						Alert.serverError(err, mf('region.saving.error', 'Saving the region went wrong'));
+						Alert.serverError(
+							err,
+							i18next.t('region.saving.error', 'Saving the region went wrong'),
+						);
 					} finally {
 						instance.busy(false);
 					}

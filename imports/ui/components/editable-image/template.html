@@ -15,18 +15,18 @@
 				</div>
 				{{#if (state 'dragover')}}
 					<div class="editable-image-drop">
-						{{mf 'fileUpload.drop.text' "Drop it like it's hot!"}}
+						{{i18n 'fileUpload.drop.text' "Drop it like it's hot!"}}
 					</div>
 				{{else}}
 					{{#if (stateEquals 'progress' 'edit')}}
-						<strong>{{mf 'fileUpload.choose.text' 'Choose a file'}}</strong>
+						<strong>{{i18n 'fileUpload.choose.text' 'Choose a file'}}</strong>
 						{{#if (state 'supportsDragndrop')}}
 							<span
-								  class="editable-image-dragndrop">{{mf 'fileUpload.drag.text' 'or drag it here'}}</span>
+								  class="editable-image-dragndrop">{{i18n 'fileUpload.drag.text' 'or drag it here'}}</span>
 						{{/if}}
 					{{else if (stateEquals 'progress' 'uploading')}}
 						<div class="editable-image-uploading">
-							{{mf 'fileUpload.uploading.text' 'Uploading...'}}
+							{{i18n 'fileUpload.uploading.text' 'Uploading...'}}
 						</div>
 					{{else if (stateEquals 'progress' 'ready')}}
 						{{fileName}}

@@ -1,7 +1,7 @@
 <template name="groupName">
 	<div class="tag tag-link group-tag">
 		<a class="js-group-label group-{{this}}" href="{{pathFor 'groupDetails' _id=this}}"
-		   data-tooltip="{{mf 'groupList.show_courses' '{NAME}, show all their courses' NAME=name}}">
+		   data-tooltip="{{i18n 'groupList.show_courses' '{NAME}, show all their courses' NAME=name}}">
 			{{short}}
 		</a>
 	</div>
@@ -10,7 +10,7 @@
 <template name="groupNameFull">
 	<div class="tag tag-link group-tag">
 		<a class="js-group-label" href="{{pathFor 'groupDetails' _id=this}}" data-html="true"
-		   data-tooltip="{{mf 'groupListFull.show_courses' 'Show all courses of this group'}}">
+		   data-tooltip="{{i18n 'groupListFull.show_courses' 'Show all courses of this group'}}">
 			{{name}}
 		</a>
 	</div>

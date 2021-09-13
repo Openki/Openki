@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
@@ -99,19 +99,21 @@ Template.loginFrame.onRendered(function () {
 
 TemplateMixins.FormfieldErrors(Template, 'loginFrame', {
 	noUsername: {
-		text: () => mf('login.warning.noUserName', 'Please enter your username or email to log in.'),
+		text: () =>
+			i18next.t('login.warning.noUserName', 'Please enter your username or email to log in.'),
 		field: 'username',
 	},
 	'Incorrect password': {
-		text: () => mf('login.password.password_incorrect', 'Incorrect password'),
+		text: () => i18next.t('login.password.password_incorrect', 'Incorrect password'),
 		field: 'password',
 	},
 	'User not found': {
-		text: () => mf('login.username.usr_doesnt_exist', 'This user does not exist.'),
+		text: () => i18next.t('login.username.usr_doesnt_exist', 'This user does not exist.'),
 		field: 'username',
 	},
 	'User has no password set': {
-		text: () => mf('login.username.no_password_set', 'Please login below with Google/Facebook.'),
+		text: () =>
+			i18next.t('login.username.no_password_set', 'Please login below with Google/Facebook.'),
 		field: 'username',
 	},
 });
@@ -266,30 +268,34 @@ Template.registerFrame.helpers({
 
 TemplateMixins.FormfieldErrors(Template, 'registerFrame', {
 	noUsername: {
-		text: () => mf('register.warning.noUserName', 'Please enter a name for your new user.'),
+		text: () => i18next.t('register.warning.noUserName', 'Please enter a name for your new user.'),
 		field: 'username',
 	},
 	'Username already exists.': {
 		text: () =>
-			mf('register.warning.userExists', 'This username already exists. Please choose another one.'),
+			i18next.t(
+				'register.warning.userExists',
+				'This username already exists. Please choose another one.',
+			),
 		field: 'username',
 	},
 	noPassword: {
-		text: () => mf('register.warning.noPasswordProvided', 'Please enter a password to register.'),
+		text: () =>
+			i18next.t('register.warning.noPasswordProvided', 'Please enter a password to register.'),
 		field: 'password',
 	},
 	noEmail: {
 		text: () =>
-			mf('register.warning.noEmailProvided', 'Please enter an email-address to register.'),
+			i18next.t('register.warning.noEmailProvided', 'Please enter an email-address to register.'),
 		field: 'email',
 	},
 	'email invalid': {
-		text: () => mf('register.warning.emailNotValid'),
+		text: () => i18next.t('register.warning.emailNotValid'),
 		field: 'email',
 	},
 	'Email already exists.': {
 		text: () =>
-			mf(
+			i18next.t(
 				'register.warning.emailExists',
 				'This email already exists. Have you tried resetting your password?',
 			),
@@ -348,10 +354,10 @@ Template.registerFrame.events({
 					const user = Meteor.user();
 
 					Alert.success(
-						mf(
+						i18next.t(
 							'profile.sentVerificationMail',
-							{ MAIL: user.emails[0].address },
 							'Verification mail has been sent to your address: "{MAIL}".',
+							{ MAIL: user.emails[0].address },
 						),
 					);
 
@@ -408,7 +414,7 @@ Template.forgotPwdFrame.events({
 					Alert.serverError(err, 'We were unable to send a mail to this address');
 				} else {
 					Alert.success(
-						mf(
+						i18next.t(
 							'forgotPassword.emailSent',
 							'An e-mail with further instructions on how to reset your password has been sent to you.',
 						),

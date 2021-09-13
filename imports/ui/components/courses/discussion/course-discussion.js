@@ -1,6 +1,6 @@
 import { Tooltips } from 'meteor/lookback:tooltips';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { Tracker } from 'meteor/tracker';
@@ -206,8 +206,8 @@ Template.postEdit.onCreated(function () {
 	this.validComment = new ReactiveVar(CourseDiscussions.validComment(this.data.text));
 
 	const placeholder = this.data.parentId
-		? mf('course.discussion.text_placeholder_answer', 'Your answer')
-		: mf('course.discussion.text_placeholder', 'Your comment');
+		? i18next.t('course.discussion.text_placeholder_answer', 'Your answer')
+		: i18next.t('course.discussion.text_placeholder', 'Your comment');
 
 	this.editableText = new Editable(false, placeholder);
 
@@ -336,7 +336,7 @@ Template.post.events({
 
 		try {
 			await CourseDiscussionsMethods.deleteComment(this._id);
-			Alert.success(mf('discussionPost.deleted', 'Comment has been deleted.'));
+			Alert.success(i18next.t('discussionPost.deleted', 'Comment has been deleted.'));
 		} catch (err) {
 			Alert.serverError(err, 'Could not delete comment');
 		}

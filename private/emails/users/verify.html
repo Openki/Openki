@@ -2,22 +2,22 @@
 	<tr>
 		<td>
 			<span class="title">
-				{{mf "verifyEmail.email.gretting" "Hi {NAME}" NAME=username}}
+				{{i18n "verifyEmail.email.gretting" "Hi {NAME}" NAME=username}}
 			</span>
 			<p>
-				{{mf "verifyEmail.email.introduction" "We're happy that you are part of the {SITE} community." SITE=siteName}}
+				{{i18n "verifyEmail.email.introduction" "We're happy that you are part of the {SITE} community." SITE=siteName}}
 			</p>
 			<p class="gap-md">
-				{{mf "verifyEmail.email.verification" "You can click this link to verify your email address. This helps us knowing you're a real person. :)"}}
+				{{i18n "verifyEmail.email.verification" "You can click this link to verify your email address. This helps us knowing you're a real person. :)"}}
 			</p>
 			<p class="text-center">
 				<a class="button" href="{{url}}">
-					{{mf "verifyEmail.email.verifyButton" "Verify email address"}}
+					{{i18n "verifyEmail.email.verifyButton" "Verify email address"}}
 				</a>
 			</p>
 			<p>
-				{{mf "verifyEmail.email.farewell" "Sincerely"}}<br />
-				{{mf "verifyEmail.email.postscript" "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)" SITE=siteName}}
+				{{i18n "verifyEmail.email.farewell" "Sincerely"}}<br />
+				{{i18n "verifyEmail.email.postscript" "Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)" SITE=siteName}}
 			</p>
 		</td>
 	</tr>
@@ -26,9 +26,9 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{mf "verifyEmail.email.unexpected" "If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}" REPORTEMAIL=reportEmail}}
+						{{i18n "verifyEmail.email.unexpected" "If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}" REPORTEMAIL=reportEmail}}
 						<a
-						   href="{{urlFor 'profile'}}">{{mf "verifyEmail.email.profileLink" "Visit your profile"}}</a>
+						   href="{{urlFor 'profile'}}">{{i18n "verifyEmail.email.profileLink" "Visit your profile"}}</a>
 					</td>
 				</tr>
 			</table>

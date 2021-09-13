@@ -1,4 +1,5 @@
-import { mf, msgfmt } from 'meteor/msgfmt:core';
+import { msgfmt } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
@@ -26,8 +27,8 @@ Template.footer.helpers({
 
 		return (Meteor.settings.public.footerLinks || []).map((linkSpec) => ({
 			link: linkSpec.link,
-			text: linkSpec.key ? mf(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
-			title: linkSpec.title_key ? mf(linkSpec.title_key, { SITENAME: siteName }) : '',
+			text: linkSpec.key ? i18next.t(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
+			title: linkSpec.title_key ? i18next.t(linkSpec.title_key, { SITENAME: siteName }) : '',
 		}));
 	},
 	version() {

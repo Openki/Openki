@@ -3,7 +3,7 @@
 		<div class="course-page-component-header">
 			<h4>
 				<span class="fa fa-comments fa-fw" aria-hidden="true"></span>&nbsp;
-				{{mf 'course.title.Discussion' 'Discussion'}}
+				{{i18n 'course.title.Discussion' 'Discussion'}}
 			</h4>
 		</div>
 		{{#if ready}}
@@ -19,9 +19,7 @@
 		{{#if limited}}
 			<button class="btn btn-lg btn-add course-page-btn js-show-all-posts" type="button">
 				<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
-				{{#mf KEY='course.discussions.showAllComments' NUM=count}}
-					Show all {NUM} comments
-				{{/mf}}
+				{{i18n 'course.discussions.showAllComment' 'Show all {NUM} comments' NUM=count}}
 			</button>
 		{{/if}}
 	</div>
@@ -36,7 +34,7 @@
 	{{#if notAllResponsesShown}}
 		<button class="mt-3 btn btn-link p-0 toggle-all-responses js-show-previous-replies"
 				type="button">
-			{{mf 'course.discussions.showPreviousReplies' 'Show all previous answers'}}
+			{{i18n 'course.discussions.showPreviousReplies' 'Show all previous answers'}}
 		</button>
 	{{/if}}
 	{{#each responses}}
@@ -55,9 +53,9 @@
 						{{disabledIfBusy}}>
 					{{#if busy 'saving'}}
 						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-						{{mf '_button.saving'}}
+						{{i18n '_button.saving'}}
 					{{else}}
-						{{mf 'course.discussion.comment_answer' 'Answer'}}
+						{{i18n 'course.discussion.comment_answer' 'Answer'}}
 					{{/if}}
 				</button>
 			</div>
@@ -67,10 +65,10 @@
 				{{#if busy 'saving'}}
 					<span class="fa fa-circle-o-notch fa-spin fa-fw"
 						  aria-hidden="true"></span>&nbsp;
-					{{mf '_button.saving' 'Saving...'}}
+					{{i18n '_button.saving' 'Saving...'}}
 				{{else}}
 					<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>&nbsp;
-					{{mf 'course.discussion.write_comment' 'Write a comment'}}
+					{{i18n 'course.discussion.write_comment' 'Write a comment'}}
 				{{/if}}
 			</button>
 		{{/if}}
@@ -86,11 +84,11 @@
 						</span>
 						{{#if notifyAll}}
 							<i class="fa fa-bell" aria-hidden="true"
-							   data-tooltip="{{mf 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
+							   data-tooltip="{{i18n 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
 						{{/if}}
 						{{#if hasBeenEdited}}
 							-
-							{{mf 'course.discussion.lastUpdate' 'Last update'}}:
+							{{i18n 'course.discussion.lastUpdate' 'Last update'}}:
 							<span data-tooltip="{{dateFormat time_updated}}">
 								{{fromNow time_updated}}
 							</span>
@@ -99,7 +97,7 @@
 					<span class="discussion-buttons">
 						{{#if mayEdit}}
 							<button type="button" class="js-discussion-edit discussion-edit-btn"
-									data-tooltip="{{mf '_button.edit'}}">
+									data-tooltip="{{i18n '_button.edit'}}">
 								<span class="fa fa-edit" aria-hidden="true"></span>
 							</button>
 						{{/if}}
@@ -130,7 +128,7 @@
 					{{#if showUserId}}
 						{{> discussionProfileLink userId}}
 					{{else}}
-						<strong>{{mf 'discussion.anonymous' 'Anonymous'}}</strong>
+						<strong>{{i18n 'discussion.anonymous' 'Anonymous'}}</strong>
 					{{/if}}
 					{{#unless new}}
 						<span class="discussion-post-header-sub">
@@ -139,11 +137,11 @@
 							</span>
 							{{#if notifyAll}}
 								<i class="fa fa-bell" aria-hidden="true"
-								   data-tooltip="{{mf 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
+								   data-tooltip="{{i18n 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
 							{{/if}}
 							{{#if hasBeenEdited}}
 								-
-								{{mf 'course.discussion.lastUpdate' 'Last update'}}:
+								{{i18n 'course.discussion.lastUpdate' 'Last update'}}:
 								<span data-tooltip="{{dateFormat time_updated}}">
 									{{fromNow time_updated}}
 								</span>
@@ -154,7 +152,7 @@
 				<div class="discussion-edit-body">
 					<div class="mb-3">
 						<input class="js-post-title discussion-edit-title form-control" type="text"
-							   placeholder="{{mf 'course.discussion.title_placeholder' 'Title'}} {{mf '_inputField.optional'}}"
+							   placeholder="{{i18n 'course.discussion.title_placeholder' 'Title'}} {{i18n '_inputField.optional'}}"
 							   value="{{title}}" />
 					</div>
 					<div class="mb-3 js-post-text">
@@ -167,7 +165,7 @@
 									   {{notifyAllChecked}} value="" id="canNotifyAllCheck">
 								<label class="form-check-label" for="canNotifyAllCheck">
 									<i class="fa fa-bell" aria-hidden="true"></i>
-									{{mf 'course.discussion.notifyAll' 'Notify all co-learners'}}
+									{{i18n 'course.discussion.notifyAll' 'Notify all co-learners'}}
 								</label>
 							</div>
 						{{/if}}
@@ -177,7 +175,7 @@
 							<label class="form-check-label discussion-toggle-anonymous"
 								   for="anonymousCheck">
 								<i class="fa fa-user-secret" aria-hidden="true"></i>
-								{{mf 'course.discussion.anon' 'Anonymous comment'}}
+								{{i18n 'course.discussion.anon' 'Anonymous comment'}}
 							</label>
 						</div>
 					{{/if}}
@@ -187,12 +185,12 @@
 							<span class="fa fa-send fa-fw" aria-hidden="true"></span>
 							{{#if new}}
 								{{#if parentId}}
-									{{mf 'course.discussion.comment_btn.answer' 'Answer!'}}
+									{{i18n 'course.discussion.comment_btn.answer' 'Answer!'}}
 								{{else}}
-									{{mf 'course.discussion.comment_btn.write' 'Write!'}}
+									{{i18n 'course.discussion.comment_btn.write' 'Write!'}}
 								{{/if}}
 							{{else}}
-								{{mf 'course.discussion.comment_btn.update' 'Update my comment!'}}
+								{{i18n 'course.discussion.comment_btn.update' 'Update my comment!'}}
 							{{/if}}
 						</button>
 						{{> buttonCancel event="js-discussion-cancel"}}
@@ -230,23 +228,23 @@
 	<span class="dropdown">
 		<button type="button" class="discussion-delete-btn" aria-expanded="false"
 				aria-haspopup="true" data-bs-toggle="dropdown"
-				data-tooltip="{{mf '_button.delete'}}">
+				data-tooltip="{{i18n '_button.delete'}}">
 			<span class="fa fa-remove" aria-hidden="true"></span>
 		</button>
 		<ul class="dropdown-menu dialog-dropdown right">
 			<li class="dropdown-header">
-				{{mf 'comment.delete.header' 'Delete comment'}}
+				{{i18n 'comment.delete.header' 'Delete comment'}}
 				<button type="button" class="btn-close"></button>
 			</li>
 			<li>
 				<hr class="dropdown-divider">
 			</li>
 			<li class="dialog-dropdown-text">
-				{{mf 'comment.delete.confirm' 'Do you really want to delete this comment?'}}
+				{{i18n 'comment.delete.confirm' 'Do you really want to delete this comment?'}}
 			</li>
 			<li class="dialog-dropdown-btn">
 				<button type="button" class="btn btn-remove js-delete-comment">
-					{{mf 'course.discussion.deleteCommentButton' 'Delete'}}
+					{{i18n 'course.discussion.deleteCommentButton' 'Delete'}}
 				</button>
 			</li>
 		</ul>

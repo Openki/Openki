@@ -1,4 +1,5 @@
-import { mf, msgfmt } from 'meteor/msgfmt:core';
+import { msgfmt } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
@@ -39,7 +40,7 @@ const helpers: { [name: string]: Function } = {
 		msgfmt.loading();
 		Session.get('locale');
 
-		return mf(`category.${name}`);
+		return i18next.t(`category.${name}`);
 	},
 
 	roleShort(type: string) {
@@ -52,7 +53,7 @@ const helpers: { [name: string]: Function } = {
 		msgfmt.loading();
 		Session.get('locale');
 
-		return mf(`roles.${type}.short`);
+		return i18next.t(`roles.${type}.short`);
 	},
 
 	roleIcon(type: string) {
@@ -322,7 +323,7 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 
 	Template.registerHelper('username', function (userId: string) {
 		if (!userId) {
-			return mf('noUser_placeholder', 'someone');
+			return i18next.t('noUser_placeholder', 'someone');
 		}
 
 		const cachedUser = getCachedUser(userId);
@@ -357,14 +358,14 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 
 		return Spacebars.SafeString(
 			`<a href="${getLocalisedValue(contribution.link)}" data-tooltip="${(Blaze as any)._escape(
-				mf(
+				i18next.t(
 					'user.hasContributed',
+					'{USERNAME} supported {SITENAME} with a donation. Click on the {ICON} for more information how to contribute.',
 					{
 						USERNAME: cachedUser.username,
 						SITENAME: getSiteName(Regions.currentRegion()),
 						ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
 					},
-					'{USERNAME} supported {SITENAME} with a donation. Click on the {ICON} for more information how to contribute.',
 				),
 			)}"><sup><i class="${contribution.icon}" aria-hidden="true"></i></sup></a>`,
 		);

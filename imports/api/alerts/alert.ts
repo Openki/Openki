@@ -1,5 +1,5 @@
 import { check } from 'meteor/check';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Alerts } from './alerts';
 
 /**
@@ -39,10 +39,10 @@ export function warning(message: string) {
 export function error(errorString: string) {
 	check(errorString, String);
 
-	const errorMessage = mf(
+	const errorMessage = i18next.t(
 		'_clientError',
-		{ ERROR: errorString },
 		'There was an error: "{ERROR}." Sorry about this.',
+		{ ERROR: errorString },
 	);
 
 	_alert('error', errorMessage, 60000);
@@ -57,10 +57,10 @@ export function serverError(errorOrMessage: Error | string, message?: string) {
 	if (typeof message !== 'string') {
 		check(errorOrMessage, String);
 
-		const errorMessage = mf(
+		const errorMessage = i18next.t(
 			'_serverErrorMessageOnly',
-			{ MESSAGE: errorOrMessage },
 			'There was an error on the server: "{MESSAGE}." Sorry about this.',
+			{ MESSAGE: errorOrMessage },
 		);
 
 		_alert('error', errorMessage, 60000);
@@ -68,10 +68,10 @@ export function serverError(errorOrMessage: Error | string, message?: string) {
 		check(errorOrMessage, Error);
 		check(message, String);
 
-		const errorMessage = mf(
+		const errorMessage = i18next.t(
 			'_serverError',
-			{ ERROR: errorOrMessage, MESSAGE: message },
 			'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.',
+			{ ERROR: errorOrMessage, MESSAGE: message },
 		);
 
 		_alert('error', errorMessage, 60000);

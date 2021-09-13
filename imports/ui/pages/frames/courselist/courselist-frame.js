@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { Router } from 'meteor/iron:router';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
@@ -15,7 +15,7 @@ import './courselist-frame.html';
 import SortSpec from '/imports/utils/sort-spec';
 
 Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
-	Metatags.setCommonTags(mf('course.list.windowtitle', 'Courses'));
+	Metatags.setCommonTags(i18next.t('course.list.windowtitle', 'Courses'));
 
 	this.query = Router.current().params.query;
 	this.sort = Router.current().params.query.sort;

@@ -1,5 +1,5 @@
 import { Router } from 'meteor/iron:router';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
@@ -83,7 +83,7 @@ Template.venueEdit.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		mf('venue.edit.description.placeholder', 'Some words about this venue'),
+		i18next.t('venue.edit.description.placeholder', 'Some words about this venue'),
 	);
 
 	instance.autorun(() => {
@@ -164,7 +164,7 @@ Template.venueEdit.events({
 		};
 
 		if (!changes.name) {
-			Alert.error(mf('venue.create.plsGiveVenueName', 'Please give your venue a name'));
+			Alert.error(i18next.t('venue.create.plsGiveVenueName', 'Please give your venue a name'));
 			return;
 		}
 
@@ -175,7 +175,10 @@ Template.venueEdit.events({
 
 		if (changes.description?.trim().length === 0) {
 			Alert.error(
-				mf('venue.create.plsProvideDescription', 'Please provide a description for your venue'),
+				i18next.t(
+					'venue.create.plsProvideDescription',
+					'Please provide a description for your venue',
+				),
 			);
 			return;
 		}
@@ -189,7 +192,7 @@ Template.venueEdit.events({
 		if (instance.isNew) {
 			changes.region = instance.selectedRegion.get();
 			if (!changes.region) {
-				Alert.error(mf('venue.create.plsSelectRegion', 'Please select a region'));
+				Alert.error(i18next.t('venue.create.plsSelectRegion', 'Please select a region'));
 				return;
 			}
 		}
@@ -198,7 +201,9 @@ Template.venueEdit.events({
 		if (loc) {
 			changes.loc = loc;
 		} else {
-			Alert.error(mf('venue.create.plsSelectPointOnMap', 'Please select a point on the map'));
+			Alert.error(
+				i18next.t('venue.create.plsSelectPointOnMap', 'Please select a point on the map'),
+			);
 			return;
 		}
 
@@ -206,14 +211,16 @@ Template.venueEdit.events({
 		instance.busy('saving');
 		SaveAfterLogin(
 			instance,
-			mf('loginAction.saveVenue', 'Login and save venue'),
-			mf('registerAction.saveVenue', 'Register and save venue'),
+			i18next.t('loginAction.saveVenue', 'Login and save venue'),
+			i18next.t('registerAction.saveVenue', 'Register and save venue'),
 			async () => {
 				try {
 					const res = await VenuesMethods.save(venueId, changes);
 
 					Alert.success(
-						mf('venue.saving.success', { NAME: changes.name }, 'Saved changes to venue "{NAME}".'),
+						i18next.t('venue.saving.success', 'Saved changes to venue "{NAME}".', {
+							NAME: changes.name,
+						}),
 					);
 
 					if (instance.isNew) {
@@ -228,7 +235,7 @@ Template.venueEdit.events({
 						instance.parentInstance().editing.set(false);
 					}
 				} catch (err) {
-					Alert.serverError(err, mf('venue.saving.error', 'Saving the venue went wrong'));
+					Alert.serverError(err, i18next.t('venue.saving.error', 'Saving the venue went wrong'));
 				} finally {
 					instance.busy(false);
 				}

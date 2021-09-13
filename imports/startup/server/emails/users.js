@@ -1,6 +1,6 @@
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Accounts } from 'meteor/accounts-base';
 import juice from 'juice';
 
@@ -20,34 +20,37 @@ Meteor.startup(() => {
 });
 
 Accounts.emailTemplates.verifyEmail.subject = function (user) {
-	return mf(
-		'verifyEmail.subject',
-		{ SITE: Accounts.emailTemplates.siteName, NAME: user.username },
-		'[{SITE}] Welcome to the {SITE} community, {NAME}',
-	);
+	return i18next.t('verifyEmail.subject', '[{SITE}] Welcome to the {SITE} community, {NAME}', {
+		SITE: Accounts.emailTemplates.siteName,
+		NAME: user.username,
+	});
 };
 
 Accounts.emailTemplates.verifyEmail.text = function (user, url) {
-	return `${mf('verifyEmail.email.gretting', 'Hi {NAME}', { NAME: user.username })}
+	return `${i18next.t('verifyEmail.email.gretting', 'Hi {NAME}', { NAME: user.username })}
 	
-${mf('verifyEmail.email.introduction', "We're happy that you are part of the {SITE} community.", {
-	SITE: Accounts.emailTemplates.siteName,
-})}
+${i18next.t(
+	'verifyEmail.email.introduction',
+	"We're happy that you are part of the {SITE} community.",
+	{
+		SITE: Accounts.emailTemplates.siteName,
+	},
+)}
 
-${mf(
+${i18next.t(
 	'verifyEmail.email.verification',
 	"You can click this link to verify your email address. This helps us knowing you're a real person. :)",
 )}
 ${url}
 
-${mf('verifyEmail.email.farewell', 'Sincerely')}
-${mf(
+${i18next.t('verifyEmail.email.farewell', 'Sincerely')}
+${i18next.t(
 	'verifyEmail.email.postscript',
 	"Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)",
 	{ SITE: Accounts.emailTemplates.siteName },
 )}
 
-${mf(
+${i18next.t(
 	'verifyEmail.email.unexpected',
 	"If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}",
 	{ REPORTEMAIL: PrivateSettings.reporter.recipient },
@@ -72,11 +75,9 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 };
 
 Accounts.emailTemplates.resetPassword.subject = function () {
-	return mf(
-		'resetPassword.subject',
-		{ SITE: Accounts.emailTemplates.siteName },
-		'[{SITE}] Reset your password on {SITE}',
-	);
+	return i18next.t('resetPassword.subject', '[{SITE}] Reset your password on {SITE}', {
+		SITE: Accounts.emailTemplates.siteName,
+	});
 };
 
 Accounts.urls.resetPassword = function (token) {
@@ -84,28 +85,24 @@ Accounts.urls.resetPassword = function (token) {
 };
 
 Accounts.emailTemplates.resetPassword.text = function (user, url) {
-	return `${mf('resetPassword.email.gretting', { NAME: user.username }, 'Hi {NAME}')}
+	return `${i18next.t('resetPassword.email.gretting', 'Hi {NAME}', { NAME: user.username })}
 				
-${mf(
-	'resetPassword.email.introduction',
-	{ SITE: Accounts.emailTemplates.siteName },
-	'You requested to reset your password on {SITE}.',
-)}
+${i18next.t('resetPassword.email.introduction', 'You requested to reset your password on {SITE}.', {
+	SITE: Accounts.emailTemplates.siteName,
+})}
 
-${mf(
+${i18next.t(
 	'resetPassword.email.verification',
 	'You can click on this link to reset your password. If you did not request this message, you can safely delete it.',
 )}
 ${url}
 
-${mf('resetPassword.email.farewell', 'Regards')}
-${mf(
-	'resetPassword.email.postscript',
-	{ SITE: Accounts.emailTemplates.siteName },
-	'{SITE} server at your service',
-)}
+${i18next.t('resetPassword.email.farewell', 'Regards')}
+${i18next.t('resetPassword.email.postscript', '{SITE} server at your service', {
+	SITE: Accounts.emailTemplates.siteName,
+})}
 
-${mf(
+${i18next.t(
 	'resetPassword.email.unexpected',
 	"If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}",
 	{ REPORTEMAIL: PrivateSettings.reporter.recipient },

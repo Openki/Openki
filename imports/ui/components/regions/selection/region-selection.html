@@ -15,7 +15,7 @@
 				<span class="input-group-text"><span class="fa fa-dot-circle-o fa-fw"
 						  aria-hidden="true"></span></span>
 				<input class="form-control js-region-search" type="text"
-					   value="{{#if currentRegionName}}{{currentRegionName}}{{else}}{{mf 'menue.All regions' 'All regions'}}{{/if}}">
+					   value="{{#if currentRegionName}}{{currentRegionName}}{{else}}{{i18n 'menue.All regions' 'All regions'}}{{/if}}">
 				<input class="d-none" type="submit">
 				<button class="btn dropdown-toggle" data-bs-toggle="dropdown" role="button"
 						aria-expanded="false" tabindex="-1"></button>
@@ -23,33 +23,33 @@
 					<li class="dropdown-header dropdown-legend">
 						<div class="dropdown-addon-right">
 							<span class="badge bg-primary rounded-pill"
-								  title="{{mf 'regionSelection.legend.numCoursesTitle' 'Number of courses'}}">
+								  title="{{i18n 'regionSelection.legend.numCoursesTitle' 'Number of courses'}}">
 								# <i class="fa fa-circle"></i>
 							</span>
 							<span class="badge bg-success text-dark rounded-pill"
-								  title="{{mf 'regionSelection.legend.numEventsTitle' 'Number of upcoming events'}}">
+								  title="{{i18n 'regionSelection.legend.numEventsTitle' 'Number of upcoming events'}}">
 								# <i class="fa fa-calendar"></i>
 							</span>
 						</div>
-						{{mf 'regionSelection.legend.region' 'Region'}}
+						{{i18n 'regionSelection.legend.region' 'Region'}}
 					</li>
 					<li>
 						<a href="#" class="dropdown-item js-region-link js-nav-dropdown-close"
-						   title="{{mf 'menue.All regions'}}">
+						   title="{{i18n 'menue.All regions'}}">
 							<div class="dropdown-addon-right">
 								<span class="badge bg-primary rounded-pill"
-									  title="{{mf 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
+									  title="{{i18n 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
 									{{allCourses}}
 								</span>
 								<span class="badge bg-success text-dark rounded-pill"
-									  title="{{mf 'regions.allUpcomingEvents.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
+									  title="{{i18n 'regions.allUpcomingEvents.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
 									{{allUpcomingEvents}}
 								</span>
 							</div>
 							{{#if isCurrentRegion 'all'}}
 								<span class="checkmark fa fa-check"></span>
 							{{/if}}
-							{{mf 'menue.All regions' 'All regions'}}
+							{{i18n 'menue.All regions' 'All regions'}}
 						</a>
 					</li>
 					{{#if state 'showAllRegions'}}
@@ -63,7 +63,7 @@
 							<li>
 								<a class="dropdown-item" href="{{aboutLink}}">
 									<i class="fa fa-info-circle" aria-hidden="true"></i>
-									{{mf 'regionSelection.aboutLink' 'About regions'}}
+									{{i18n 'regionSelection.aboutLink' 'About regions'}}
 								</a>
 							</li>
 						{{/if}}
@@ -77,7 +77,7 @@
 							</li>
 							<li>
 								<button class="btn btn-link js-show-all-regions" type="button">
-									{{mf 'regionSelection.showAll' 'Show all regions'}}
+									{{i18n 'regionSelection.showAll' 'Show all regions'}}
 								</button>
 							</li>
 						{{/if}}
@@ -93,11 +93,11 @@
 		<a href="#" class="dropdown-item js-region-link js-nav-dropdown-close" title="{{nameEn}}">
 			<div class="dropdown-addon-right">
 				<span class="badge bg-primary rounded-pill"
-					  title="{{mf 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
+					  title="{{i18n 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
 					{{courseCount}}
 				</span>
 				<span class="badge bg-success text-dark rounded-pill"
-					  title="{{mf 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
+					  title="{{i18n 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
 					{{futureEventCount}}
 				</span>
 			</div>
@@ -116,7 +116,7 @@
 			{{#if currentRegionName}}
 				{{currentRegionName}}
 			{{else}}
-				{{mf 'menue.All regions' 'All regions'}}
+				{{i18n 'menue.All regions' 'All regions'}}
 			{{/if}}
 		</a>
 	</li>

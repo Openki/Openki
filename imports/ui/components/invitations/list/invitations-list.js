@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import $ from 'jquery';
 
@@ -47,13 +47,13 @@ Template.invitationsList.helpers({
 	status(status) {
 		switch (status) {
 			case 'created':
-				return mf('invitations.status.created', 'Created');
+				return i18next.t('invitations.status.created', 'Created');
 			case 'send':
-				return mf('invitations.status.send', 'Send');
+				return i18next.t('invitations.status.send', 'Send');
 			case 'accepted':
-				return mf('invitations.status.accepted', 'Accepted');
+				return i18next.t('invitations.status.accepted', 'Accepted');
 			case 'failed':
-				return mf('invitations.status.failed', 'failed');
+				return i18next.t('invitations.status.failed', 'failed');
 
 			default:
 				return status;
@@ -74,7 +74,7 @@ Template.invitationsList.events({
 		} catch (err) {
 			Alert.serverError(
 				err,
-				mf('tenant.settings.invitations.removed.error', 'Invitations could not be removed.'),
+				i18next.t('tenant.settings.invitations.removed.error', 'Invitations could not be removed.'),
 			);
 		}
 	},

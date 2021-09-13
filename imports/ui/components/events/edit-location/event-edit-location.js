@@ -1,5 +1,5 @@
 import { Router } from 'meteor/iron:router';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
@@ -234,11 +234,9 @@ Template.eventEditVenue.events({
 			markers.remove({ proposed: true });
 			if (found.length === 0) {
 				Alert.warning(
-					mf(
-						'event.edit.noResultsforAddress',
-						{ ADDRESS: search },
-						'Found no results for address "{ADDRESS}"',
-					),
+					i18next.t('event.edit.noResultsforAddress', 'Found no results for address "{ADDRESS}"', {
+						ADDRESS: search,
+					}),
 				);
 			}
 			_.each(found, (foundLocation) => {

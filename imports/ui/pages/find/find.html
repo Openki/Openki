@@ -8,7 +8,7 @@
 	<div class="page-component find-header {{#if showingFilters}}filter-expanded{{/if}}">
 		<div class="find-header-heading">
 			<h1 class="find-heading">
-				{{mf 'find.WhatLearn?' 'What do I want to learn?'}}
+				{{i18n 'find.WhatLearn?' 'What do I want to learn?'}}
 			</h1>
 		</div>
 		<div class="find-header-search">
@@ -16,9 +16,9 @@
 				<div class="input-group">
 					<input class="js-search-input form-control" type="text" id="find"
 						   value="{{search}}"
-						   placeholder="{{mf 'find.search_placeholder' 'Everything'}}" />
+						   placeholder="{{i18n 'find.search_placeholder' 'Everything'}}" />
 					<button type="button" class="btn btn-success js-find-btn">
-						{{mf 'find.search_go' 'Go!'}}
+						{{i18n 'find.search_go' 'Go!'}}
 					</button>
 				</div>
 			</div>
@@ -42,7 +42,7 @@
 			{{#if hasMore}}
 				<div class="show-more-courses">
 					<button type="button" class="btn btn-success js-more-courses">
-						{{mf 'find.showMoreCourses' 'Show more courses'}}
+						{{i18n 'find.showMoreCourses' 'Show more courses'}}
 					</button>
 				</div>
 			{{/if}}
@@ -51,7 +51,7 @@
 				<div class="no-results">
 					<div class="no-results-body">
 						<span class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></span>
-						{{mf 'find.no-courses-found' 'No Courses found.'}}
+						{{i18n 'find.no-courses-found' 'No Courses found.'}}
 					</div>
 					{{#if searchIsLimited}}
 						<div class="btn-group">
@@ -59,12 +59,12 @@
 								<button type="button" class="btn btn-secondary js-all-regions-btn">
 									<span class="fa fa-dot-circle-o fa-fw"
 										  aria-hidden="true"></span>
-									{{mf 'find.searchAllRegions' 'Search in all regions'}}
+									{{i18n 'find.searchAllRegions' 'Search in all regions'}}
 								</button>
 							{{/if}}
 							{{#if activeFilters}}
 								<button type="button" class="btn btn-cancel js-toggle-filter">
-									{{mf 'find.hideFilters'}}
+									{{i18n 'find.hideFilters'}}
 								</button>
 							{{/if}}
 						</div>

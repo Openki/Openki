@@ -1,6 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf, msgfmt } from 'meteor/msgfmt:core';
+import { msgfmt } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
@@ -35,19 +36,17 @@ Template.courseRole.onCreated(function () {
 	if (Router.current().params.query.unsubscribe === this.data.role.type) {
 		SaveAfterLogin(
 			this,
-			mf('loginAction.unsubscribeFromCourse', 'Login and unsubscribe from Course'),
-			mf('registerAction.unsubscribeFromCourse', 'Register and unsubscribe from Course'),
+			i18next.t('loginAction.unsubscribeFromCourse', 'Login and unsubscribe from Course'),
+			i18next.t('registerAction.unsubscribeFromCourse', 'Register and unsubscribe from Course'),
 			async () => {
 				const user = Meteor.user();
 				const change = new Unsubscribe(this.data.course, user, this.data.role.type);
 				if (change.validFor(user)) {
 					await processChange(change);
 					Alert.success(
-						mf(
-							'course.roles.unsubscribed',
-							{ NAME: this.data.course.name },
-							'Unsubscribed from course {NAME}',
-						),
+						i18next.t('course.roles.unsubscribed', 'Unsubscribed from course {NAME}', {
+							NAME: this.data.course.name,
+						}),
 					);
 				} else {
 					Alert.error(`${change} not valid for ${user}`);
@@ -75,7 +74,7 @@ Template.courseRole.helpers({
 		msgfmt.loading();
 		Session.get('locale');
 
-		return mf(`roles.${type}.subscribe`);
+		return i18next.t(`roles.${type}.subscribe`);
 	},
 
 	/**
@@ -87,7 +86,7 @@ Template.courseRole.helpers({
 		msgfmt.loading();
 		Session.get('locale');
 
-		return mf(`roles.${type}.subscribed`);
+		return i18next.t(`roles.${type}.subscribed`);
 	},
 
 	/**
@@ -116,8 +115,8 @@ Template.courseRole.events({
 		instance.busy('enrolling');
 		SaveAfterLogin(
 			instance,
-			mf('loginAction.enroll', 'Login and enroll'),
-			mf('registerAction.enroll', 'Register and enroll'),
+			i18next.t('loginAction.enroll', 'Login and enroll'),
+			i18next.t('registerAction.enroll', 'Register and enroll'),
 			async () => {
 				await processChange(instance.subscribe(comment));
 				RouterAutoscroll.cancelNext();

@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
@@ -47,39 +47,39 @@ Template.courseDetailsPage.onCreated(function (this: any) {
 
 	const { course } = instance.data;
 
-	instance.editableName = new Editable(true, mf('course.title.placeholder'), {
+	instance.editableName = new Editable(true, i18next.t('course.title.placeholder'), {
 		onSave: async (newName) => {
 			await CoursesMethods.save(course._id, { name: newName });
 		},
 		onSuccess: (newName) => {
 			Alert.success(
-				mf(
+				i18next.t(
 					'courseDetails.message.nameChanged',
-					{ NAME: newName },
 					'The name of this course has been changed to "{NAME}".',
+					{ NAME: newName },
 				),
 			);
 		},
 		onError: (err) => {
-			Alert.serverError(err, mf('course.save.error', 'Saving the course went wrong'));
+			Alert.serverError(err, i18next.t('course.save.error', 'Saving the course went wrong'));
 		},
 	});
 
-	instance.editableDescription = new Editable(false, mf('course.description.placeholder'), {
+	instance.editableDescription = new Editable(false, i18next.t('course.description.placeholder'), {
 		onSave: async (newDescription) => {
 			await CoursesMethods.save(course._id, { description: newDescription });
 		},
 		onSuccess: () => {
 			Alert.success(
-				mf(
+				i18next.t(
 					'courseDetails.message.descriptionChanged',
-					{ NAME: course.name },
 					'The description of "{NAME}" has been changed.',
+					{ NAME: course.name },
 				),
 			);
 		},
 		onError: (err) => {
-			Alert.serverError(err, mf('course.save.error'));
+			Alert.serverError(err, i18next.t('course.save.error'));
 		},
 	});
 
@@ -150,10 +150,10 @@ Template.courseDetailsPage.events({
 			await CoursesMethods.remove(course._id);
 
 			Alert.success(
-				mf(
+				i18next.t(
 					'courseDetailsPage.message.courseHasBeenDeleted',
-					{ COURSE: course.name },
 					'The course "{COURSE}" has been deleted.',
+					{ COURSE: course.name },
 				),
 			);
 
@@ -191,10 +191,10 @@ Template.courseDetailsPage.events({
 			await CoursesMethods.archive(course._id);
 
 			Alert.success(
-				mf(
+				i18next.t(
 					'courseDetailsPage.message.courseHasBeenArchived',
-					{ COURSE: course.name },
 					'The course "{COURSE}" has been archived.',
+					{ COURSE: course.name },
 				),
 			);
 		} catch (err) {
@@ -215,10 +215,10 @@ Template.courseDetailsPage.events({
 			await CoursesMethods.unarchive(course._id);
 
 			Alert.success(
-				mf(
+				i18next.t(
 					'courseDetailsPage.message.courseHasBeenUnarchived',
-					{ COURSE: course.name },
 					'The course "{COURSE}" has been unarchived.',
+					{ COURSE: course.name },
 				),
 			);
 		} catch (err) {
@@ -294,10 +294,10 @@ Template.courseGroupAdd.events({
 
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'courseGroupAdd.groupAdded',
-					{ GROUP: groupName, COURSE: course.name },
 					'The group "{GROUP}" has been added to promote the course "{COURSE}".',
+					{ GROUP: groupName, COURSE: course.name },
 				),
 			);
 			instance.collapse();
@@ -319,10 +319,10 @@ Template.courseGroupRemove.events({
 
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'courseGroupAdd.groupRemoved',
-					{ GROUP: groupName, COURSE: course.name },
 					'The group "{GROUP}" has been removed from the course "{COURSE}".',
+					{ GROUP: groupName, COURSE: course.name },
 				),
 			);
 			instance.collapse();
@@ -344,10 +344,10 @@ Template.courseGroupMakeOrganizer.events({
 
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'courseGroupAdd.membersCanEditCourse',
-					{ GROUP: groupName, COURSE: course.name },
 					'Members of the group "{GROUP}" can now edit the course "{COURSE}".',
+					{ GROUP: groupName, COURSE: course.name },
 				),
 			);
 			instance.collapse();
@@ -369,10 +369,10 @@ Template.courseGroupRemoveOrganizer.events({
 
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'courseGroupAdd.membersCanNoLongerEditCourse',
-					{ GROUP: groupName, COURSE: course.name },
 					'Members of the group "{GROUP}" can no longer edit the course "{COURSE}".',
+					{ GROUP: groupName, COURSE: course.name },
 				),
 			);
 			instance.collapse();

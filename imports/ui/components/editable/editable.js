@@ -1,4 +1,4 @@
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Template } from 'meteor/templating';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
@@ -121,7 +121,7 @@ import './editable.html';
 			},
 			anchor: {
 				linkValidation: true,
-				placeholderText: mf('editable.link.placeholder', 'Paste link here...'),
+				placeholderText: i18next.t('editable.link.placeholder', 'Paste link here...'),
 			},
 			autoLink: true,
 			buttonLabels: 'fontawesome',

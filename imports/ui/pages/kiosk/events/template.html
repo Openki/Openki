@@ -35,7 +35,7 @@
 		</div>
 		{{#if ongoing.count}}
 			<div class="page-component">
-				<h3>{{mf 'kiosk.ongoing' '{NUM, plural, one {One ongoing event:} other {# ongoing events:} }' NUM=ongoing.count}}
+				<h3>{{i18n 'kiosk.ongoing' '{NUM, plural, one {One ongoing event:} other {# ongoing events:} }' NUM=ongoing.count}}
 				</h3>
 				{{> kioskEventList dataEvents=ongoing timePeriod="ongoing"}}
 			</div>
@@ -43,7 +43,7 @@
 
 		{{#if today.count}}
 			<div class="page-component page-component-seperated">
-				<h3>{{mf 'kiosk.today' '{NUM, plural, one {One event} other {# events} } later today:' NUM=today.count}}
+				<h3>{{i18n 'kiosk.today' '{NUM, plural, one {One event} other {# events} } later today:' NUM=today.count}}
 				</h3>
 				{{> kioskEventList dataEvents=today timePeriod="today"}}
 			</div>
@@ -51,11 +51,11 @@
 
 		{{#if future.count}}
 			<div class="page-component page-component-seperated">
-				<h3>{{mf 'kiosk.future' 'Future events:' NUM=future.count}}</h3>
+				<h3>{{i18n 'kiosk.future' 'Future events:' NUM=future.count}}</h3>
 				{{> kioskEventList dataEvents=future timePeriod="upcoming"}}
 			</div>
 		{{else}}
-			<h3>{{mf 'kiosk.noFutureEvents' 'There are no future events'}}</h3>
+			<h3>{{i18n 'kiosk.noFutureEvents' 'There are no future events'}}</h3>
 		{{/if}}
 	</div>
 </template>
@@ -76,7 +76,7 @@
 					<div class="kiosk-event-timecount">
 						<span class="fa fa-play-circle fa-fw" aria-hidden="true"></span>
 						{{#if isOngoing}}
-							{{mf 'kiosk.started' 'Started'}}
+							{{i18n 'kiosk.started' 'Started'}}
 						{{/if}}
 						{{fromNow start}}
 					</div>

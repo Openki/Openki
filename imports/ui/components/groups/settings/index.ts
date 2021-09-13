@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
@@ -71,10 +71,10 @@ template.helpers({
 					await GroupsMethods.updateLogo(groupId, file);
 					const groupName = Groups.findOne(groupId)?.name;
 					Alert.success(
-						mf(
+						i18next.t(
 							'groupSettings.group.logo.updated',
-							{ GROUP: groupName },
 							'Your changes to the settings of the group "{GROUP}" have been saved.',
+							{ GROUP: groupName },
 						),
 					);
 					parentInstance.editingSettings.set(false);
@@ -123,10 +123,10 @@ template.events({
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'groupSettings.memberAdded',
-					{ MEMBER: memberName, GROUP: groupName },
 					'"{MEMBER}" has been added as a member to the group "{GROUP}"',
+					{ MEMBER: memberName, GROUP: groupName },
 				),
 			);
 		} catch (err) {
@@ -142,10 +142,10 @@ template.events({
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				mf(
+				i18next.t(
 					'groupSettings.memberRemoved',
-					{ MEMBER: memberName, GROUP: groupName },
 					'"{MEMBER}" has been removed from to the group "{GROUP}"',
+					{ MEMBER: memberName, GROUP: groupName },
 				),
 			);
 		} catch (err) {

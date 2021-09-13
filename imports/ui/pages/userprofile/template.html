@@ -8,9 +8,9 @@
 
 				<div class="col-9">
 					<h1 class="mt-4">
-						{{mf 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}
+						{{i18n 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.username}}
 						{{#if ownuser}}
-							({{mf 'profile.its_you' "It's you!"}})
+							({{i18n 'profile.its_you' "It's you!"}})
 						{{else}}
 							{{contribution this.user._id}}
 							{{#if alterPrivileges}}
@@ -19,12 +19,12 @@
 										<button type="button"
 												class="btn btn-primary js-has-contributed">
 											<i class="{{contributedIcon}}" aria-hidden="true"></i>
-											{{mf 'profile.setHasContributed.button' 'User has contributed'}}
+											{{i18n 'profile.setHasContributed.button' 'User has contributed'}}
 										</button>
 									{{else}}
 										<button type="button"
 												class="btn btn-secondary js-unset-has-contributed">
-											{{mf 'profile.unsetHasContributed.button' 'Unset user has contributed'}}
+											{{i18n 'profile.unsetHasContributed.button' 'Unset user has contributed'}}
 										</button>
 									{{/unless}}
 								{{/if}}
@@ -37,7 +37,7 @@
 					{{#if ownuser}}
 						<a class="btn btn-primary" href="{{pathFor 'profile'}}">
 							<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
-							{{mf 'profile.preferenceslink' "Account settings"}}
+							{{i18n 'profile.preferenceslink' "Account settings"}}
 						</a>
 					{{else}}
 						{{#if acceptsPrivateMessages}}
@@ -54,7 +54,7 @@
 						<div class="col-md">
 							<h3>
 								<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
-								{{mf 'privileges.title' 'Edit Privileges'}}
+								{{i18n 'privileges.title' 'Edit Privileges'}}
 							</h3>
 							<div class="list-group">
 								{{#if privileges.admin}}
@@ -62,17 +62,17 @@
 										{{#if alterPrivileges}}
 											<button type="button"
 													class="js-remove-privilege-btn btn-close float-end"
-													data-tooltip="{{mf 'privilege.remove' 'Remove privilege'}}"
+													data-tooltip="{{i18n 'privilege.remove' 'Remove privilege'}}"
 													data-priv="admin">
 											</button>
 										{{/if}}
-										{{mf 'privilege.has.admin' 'Administrator privileges granted'}}
+										{{i18n 'privilege.has.admin' 'Administrator privileges granted'}}
 									</li>
 								{{else}}
 									{{#if alterPrivileges}}
 										<button type="button"
 												class="list-group-item-action list-group-item-secondary btn js-give-admin">
-											{{mf 'privilege.add.admin' 'Grant administrator privileges'}}
+											{{i18n 'privilege.add.admin' 'Grant administrator privileges'}}
 										</button>
 									{{/if}}
 								{{/if}}
@@ -84,7 +84,7 @@
 						<div class="col-md">
 							<h3>
 								<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
-								{{mf 'userprofile.groups.header' 'Edit groups'}}
+								{{i18n 'userprofile.groups.header' 'Edit groups'}}
 							</h3>
 							<div class="list-group">
 								{{#each inviteGroups}}
@@ -92,15 +92,15 @@
 										<li class="list-group-item list-group-item-success">
 											<button type="button"
 													class="js-group-expel-btn btn-close float-end"
-													data-tooltip="{{mf 'profile.group.expel' 'Expel from group {GROUPNAME}' GROUPNAME=this.name}}">
+													data-tooltip="{{i18n 'profile.group.expel' 'Expel from group {GROUPNAME}' GROUPNAME=this.name}}">
 											</button>
-											{{mf 'profile.group.member' 'Member of group '}}
+											{{i18n 'profile.group.member' 'Member of group '}}
 											<span class="group">{{name}}</span>
 										</li>
 									{{else}}
 										<button type="button"
 												class="js-draft-into-group list-group-item list-group-item-action list-group-item-secondary">
-											{{mf 'profile.group.draft' 'Draft into group '}}
+											{{i18n 'profile.group.draft' 'Draft into group '}}
 											{{name}}
 										</button>
 									{{/if}}
@@ -114,16 +114,17 @@
 		{{> usersCourselist profileData=this ownProfile=false}}
 
 		{{#if alterPrivileges}}
-			<h3 class="text-danger">{{mf 'profile.account.delete.header' 'Is this a SPAMER?'}}</h3>
+			<h3 class="text-danger">{{i18n 'profile.account.delete.header' 'Is this a SPAMER?'}}
+			</h3>
 			{{#unless (state 'verifyUserDelete')}}
 				{{> buttonDelete event="js-verify-user-delete-collapse"}}
 			{{else}}
 				<div class="border border-danger text-danger p-3">
-					<p>{{mf 'profile.account.reallydelete' 'The user profile "{NAME}" will be permanently deleted. {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will be automatically removed as well. Are you sure you want to do this?' NAME=this.user.username COURSES=numberOfCoursesAffectedByDelete INTERESTED=numberOfInterestedAffectedByDelete EVENTS=numberOfFutureEventsAffectedByDelete}}
+					<p>{{i18n 'profile.account.reallydelete' 'The user profile "{NAME}" will be permanently deleted. {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will be automatically removed as well. Are you sure you want to do this?' NAME=this.user.username COURSES=numberOfCoursesAffectedByDelete INTERESTED=numberOfInterestedAffectedByDelete EVENTS=numberOfFutureEventsAffectedByDelete}}
 					</p>
 					<div class="mb-3">
 						<textarea class='form-control js-reason'
-								  placeholder="{{mf 'profile.account.reason.placeholder' 'Reason for deleting this user'}}"></textarea>
+								  placeholder="{{i18n 'profile.account.reason.placeholder' 'Reason for deleting this user'}}"></textarea>
 					</div>
 					<div class="form-actions">
 						{{> buttonDeleteConfirm

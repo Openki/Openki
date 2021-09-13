@@ -4,9 +4,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">
-						{{#mf KEY='regionsSplash.welcome' SITE=siteName}}
-							Welcome to {SITE}!
-						{{/mf}}
+						{{i18n 'regionsSplash.welcome' 'Welcome to {SITE}!' SITE=siteName}}
 					</h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
@@ -14,17 +12,17 @@
 				<div class="modal-body">
 					<h4 class="regions-splash-header">
 						<i class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></i>
-						{{mf 'regionsSplash.plsChooseRegion' 'Please choose a region'}}
+						{{i18n 'regionsSplash.plsChooseRegion' 'Please choose a region'}}
 					</h4>
 					<div class="regions-splash-selection">
 						{{> regionSelection isSplash=true}}
 						<button class="js-confirm-region btn btn-primary" type="button">
-							{{mf 'regionSplash.ok' 'Go!'}}
+							{{i18n 'regionSplash.ok' 'Go!'}}
 						</button>
 					</div>
 					<div class="regions-splash-login">
 						<button class="js-login-for-region btn btn-link" type="button">
-							{{mf 'regionsSplash.login' 'Log in to use your last selected region'}}
+							{{i18n 'regionsSplash.login' 'Log in to use your last selected region'}}
 						</button>
 					</div>
 				</div>

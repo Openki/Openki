@@ -1,6 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import $ from 'jquery';
-import { mf, msgfmt } from 'meteor/msgfmt:core';
+import { msgfmt } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
@@ -200,7 +201,7 @@ Template.calendarNavControl.helpers({
 		msgfmt.loading();
 		Session.get('locale');
 
-		return mf(`calendar.${direction}.${unit}.${length}`);
+		return i18next.t(`calendar.${direction}.${unit}.${length}`);
 	},
 
 	currentUnit() {

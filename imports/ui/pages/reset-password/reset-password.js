@@ -1,5 +1,5 @@
 import { Router } from 'meteor/iron:router';
-import { mf } from 'meteor/msgfmt:core';
+import i18next from 'i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { Accounts } from 'meteor/accounts-base';
@@ -84,9 +84,12 @@ Template.resetPassword.events({
 		Accounts.resetPassword(token, password, (err) => {
 			instance.busy(false);
 			if (err) {
-				Alert.serverError(err, mf('resetPassword.passwordResetError', 'Unable to reset password'));
+				Alert.serverError(
+					err,
+					i18next.t('resetPassword.passwordResetError', 'Unable to reset password'),
+				);
 			} else {
-				Alert.success(mf('resetPassword.passwordReset.', 'Your password has been reset.'));
+				Alert.success(i18next.t('resetPassword.passwordReset.', 'Your password has been reset.'));
 				Router.go('profile');
 			}
 		});
