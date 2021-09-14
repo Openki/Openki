@@ -28,7 +28,7 @@ export interface UploadFile {
 }
 
 export function generatePublicUrl(fullFileName: string) {
-	return path.join(PublicSettings.s3.publicUrlBase, fullFileName);
+	return new URL(fullFileName, PublicSettings.s3.publicUrlBase).href;
 }
 
 export function upload(directoryName: string, file: UploadFile) {
