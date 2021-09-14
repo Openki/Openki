@@ -7,7 +7,7 @@
 			<button type="button" class="btn btn-delete js-unset-featured-group" {{disabledIfBusy}}>
 				{{#if busy 'deleting'}}
 					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
-					{{i18n '_button.deleting'}}
+					{{i18n '_button.deleting' 'Deleting...'}}
 				{{else}}
 					{{i18n 'featureGroup.deleteButton' 'Remove the featured group for "{REGION}"' REGION=currentRegionName}}
 				{{/if}}

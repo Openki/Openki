@@ -60,7 +60,7 @@
 									{{#unless isArchived}}
 										{{> buttonCourseArchive 
 										buttonClass="btn-archive"
-										textIdle=(mf 'course.archive.archiveButton.archive' 'Archive')
+										textIdle=(i18n 'course.archive.archiveButton.archive' 'Archive')
 									}}
 									{{/unless}}
 									{{> buttonDelete event="js-expand"}}
@@ -105,13 +105,13 @@
 			{{#unless hasArchiveButton}}
 				{{> buttonCourseArchive 
 					buttonClass="btn-warning"
-					textIdle=(mf 'course.delete.confirm.archiveButton' 'Rather archive')
+					textIdle=(i18n 'course.delete.confirm.archiveButton' 'Rather archive')
 				}}
 			{{/unless}}
 			{{> buttonDeleteConfirm
 				event="js-delete-course-confirm"
-				textIdle=(mf 'course.delete.confirm.button' 'Delete this course and its events.')
-				textBusy=(mf 'course.delete.confirm.button.busy' 'Deleting course...')
+				textIdle=(i18n 'course.delete.confirm.button' 'Delete this course and its events.')
+				textBusy=(i18n 'course.delete.confirm.button.busy' 'Deleting course...')
 			}}
 			{{> buttonCancel event="js-collapse"}}
 		</div>
