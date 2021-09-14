@@ -32,6 +32,10 @@ module.exports = {
 	// Where to write the locale files relative to process.cwd()
 	output: 'imports/startup/both/i18n/$LOCALE.json',
 
+	// An array of globs that describe where to look for source files
+	// relative to the location of the configuration file
+	input: ['imports/**/*.{js,ts,html}', 'private/emails/**/*.html'],
+
 	// Whether or not to sort the catalog
 	sort: true,
 };

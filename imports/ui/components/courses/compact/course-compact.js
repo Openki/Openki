@@ -100,7 +100,7 @@ Template.courseCompactRoles.helpers({
 		} else {
 			tooltip = i18next.t(
 				'course.compact.interestedCount',
-				'{NUM, plural, =0 {Nobody is} one {One person is} other {# persons are}} interested',
+				'{NUM, plural, =0{Nobody is} one{One person is} other{# persons are} } interested',
 				{ NUM: numMembers },
 			);
 

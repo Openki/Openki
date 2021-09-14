@@ -38,11 +38,11 @@
 						   title="{{i18n 'menue.All regions'}}">
 							<div class="dropdown-addon-right">
 								<span class="badge bg-primary rounded-pill"
-									  title="{{i18n 'regions.allCourses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses}} on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
+									  title="{{i18n 'regions.allCourses.title' '{COUNT, plural, =0{no courses} one{one course} other{# courses} } on {SITENAME}' COUNT=allCourses SITENAME=siteName}}">
 									{{allCourses}}
 								</span>
 								<span class="badge bg-success text-dark rounded-pill"
-									  title="{{i18n 'regions.allUpcomingEvents.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
+									  title="{{i18n 'regions.allUpcomingEvents.title' '{COUNT, plural, =0{no upcoming events} one{one upcoming event} other{# upcoming events} } on {SITENAME}' COUNT=allUpcomingEvents SITENAME=siteName}}">
 									{{allUpcomingEvents}}
 								</span>
 							</div>
@@ -93,11 +93,11 @@
 		<a href="#" class="dropdown-item js-region-link js-nav-dropdown-close" title="{{nameEn}}">
 			<div class="dropdown-addon-right">
 				<span class="badge bg-primary rounded-pill"
-					  title="{{i18n 'regions.courses.title' '{COUNT, plural, =0 {no courses} one {one course} other {# courses in}} in {REGION}' COUNT=courseCount REGION=this.name}}">
+					  title="{{i18n 'regions.courses.title' '{COUNT, plural, =0{no courses} one{one course} other{# courses in} } in {REGION}' COUNT=courseCount REGION=this.name}}">
 					{{courseCount}}
 				</span>
 				<span class="badge bg-success text-dark rounded-pill"
-					  title="{{i18n 'regions.eventCount.title' '{COUNT, plural, =0 {no upcoming events} one {one upcoming event} other {# upcoming events}} in {REGION}' COUNT=futureEventCount REGION=this.name}}">
+					  title="{{i18n 'regions.eventCount.title' '{COUNT, plural, =0{no upcoming events} one{one upcoming event} other{# upcoming events} } in {REGION}' COUNT=futureEventCount REGION=this.name}}">
 					{{futureEventCount}}
 				</span>
 			</div>

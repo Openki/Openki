@@ -235,7 +235,7 @@ Template.eventReplication.events({
 							Alert.success(
 								i18next.t(
 									'event.replicate.successCondensed',
-									'Cloned event "{TITLE}" {NUM, plural, one {for} other {# times until}} {DATE}',
+									'Cloned event "{TITLE}" {NUM, plural, one{for} other{# times until} } {DATE}',
 									{
 										TITLE: instance.data.title,
 										NUM: removed,

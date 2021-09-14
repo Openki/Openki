@@ -75,16 +75,16 @@
     "typescript": "4.2.2"
   },
   "scripts": {
-    "dev": "npx tsc --checkJs false && meteor --inspect --settings settings/dev.json",
-    "test": "npx tsc --checkJs false && MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
-    "app-test": "npx tsc --checkJs false && MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --full-app --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
-    "test-live": "npx tsc --checkJs false && MOCHA_GREP=$npm_config_grep meteor test --full-app --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
+    "dev": "npm run type-check && npm run extract-translations && meteor --inspect --settings settings/dev.json",
+    "test": "npm run type-check && MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
+    "app-test": "npm run type-check && MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --full-app --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
+    "test-live": "npm run type-check && MOCHA_GREP=$npm_config_grep meteor test --full-app --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
     "type-check": "npx tsc --checkJs false",
     "es-lint": "eslint . --ext .js,.ts",
     "sass-lint": "stylelint '**/*.scss'",
     "html-format": "html-beautify '{client,imports,private,public,server}/**/*.html' -r",
-    "extract-translations": "npx i18next 'imports/**/*.{js,ts,html}' 'private/emails/**/*.html'",
-    "reset": "meteor reset && rm server/extracts.msgfmt~"
+    "extract-translations": "rm imports/startup/both/i18n/en.json -f && npx i18next",
+    "reset": "meteor reset && rm server/extracts.msgfmt~ -f"
   },
   "repository": {
     "type": "git",

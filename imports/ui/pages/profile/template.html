@@ -107,8 +107,7 @@
 				<div class="page-component page-component-seperated">
 					<h3>{{i18n 'profile.tenants' 'My organizations'}}</h3>
 					<h5>
-						{{i18n 'profile.tenantMembership' 'You are {NUM_TENANTS, plural, =0 {not admin of any organization} =1 {admin of the organization:} other {admin of # organizations:}}'
-						NUM_TENANTS=tenantCount}}
+						{{i18n 'profile.tenantMembership' 'You are {NUM_TENANTS, plural, =0{not admin of any organization} one{admin of the organization:} other{admin of # organizations:} }' NUM_TENANTS=tenantCount}}
 					</h5>
 					<ul class="list-unstyled">
 						{{#each tenant in user.tenants}}
@@ -127,7 +126,7 @@
 			<div class="page-component page-component-seperated">
 				<h3>{{i18n 'profile.groups' 'My groups'}}</h3>
 				<h5>
-					{{i18n 'profile.groupMembership' 'You are {NUM_GROUPS, plural, =0 {not member of any group} =1 {member of the group:} other {member of # groups:}}' NUM_GROUPS=groupCount}}
+					{{i18n 'profile.groupMembership' 'You are {NUM_GROUPS, plural, =0{not member of any group} one{member of the group:} other{member of # groups:} }' NUM_GROUPS=groupCount}}
 				</h5>
 				<ul class="list-unstyled">
 					{{#each group in user.groups}}

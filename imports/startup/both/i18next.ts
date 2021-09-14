@@ -9,6 +9,30 @@ if (false) {
 	// whitelist, this is needed for meteor's dynamic-import module, to allow dynamic loading of modules
 	// on the client: https://docs.meteor.com/packages/dynamic-import.html#Using-import-with-dynamic-expressions
 	import(`/imports/startup/both/i18n/en.json`);
+
+	import(`/imports/startup/both/i18n/af.json`);
+	import(`/imports/startup/both/i18n/am.json`);
+	import(`/imports/startup/both/i18n/ar.json`);
+	import(`/imports/startup/both/i18n/da.json`);
+	import(`/imports/startup/both/i18n/de-ZH.json`);
+	import(`/imports/startup/both/i18n/de.json`);
+	import(`/imports/startup/both/i18n/el.json`);
+	import(`/imports/startup/both/i18n/es.json`);
+	import(`/imports/startup/both/i18n/fa.json`);
+	import(`/imports/startup/both/i18n/fl.json`);
+	import(`/imports/startup/both/i18n/fr.json`);
+	import(`/imports/startup/both/i18n/hu.json`);
+	import(`/imports/startup/both/i18n/it.json`);
+	import(`/imports/startup/both/i18n/ja.json`);
+	import(`/imports/startup/both/i18n/ko.json`);
+	import(`/imports/startup/both/i18n/nl.json`);
+	import(`/imports/startup/both/i18n/pt.json`);
+	import(`/imports/startup/both/i18n/rm.json`);
+	import(`/imports/startup/both/i18n/ru.json`);
+	import(`/imports/startup/both/i18n/sv.json`);
+	import(`/imports/startup/both/i18n/tr.json`);
+	import(`/imports/startup/both/i18n/zh-CN.json`);
+	import(`/imports/startup/both/i18n/zh-TW.json`);
 }
 
 i18next

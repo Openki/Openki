@@ -160,7 +160,7 @@
 								   name="updateReplicasInfo" value=""
 								   id="eventEditUpdateReplicasInfoCheck">
 							<label class="form-check-label" for="eventEditUpdateReplicasInfoCheck">
-								{{i18n 'event.edit.updateReplicasInfo' 'Update {COUNT, plural, one {info from later copy} other {infos from # later copies as well}}' COUNT=affectedReplicaCount}}
+								{{i18n 'event.edit.updateReplicasInfo' 'Update {COUNT, plural, one{info from later copy} other{infos from # later copies as well} }' COUNT=affectedReplicaCount}}
 							</label>
 						</div>
 						{{#if timeChanged}}
@@ -171,7 +171,7 @@
 									   {{disabledIfDayChanged}}>
 								<label class="form-check-label"
 									   for="eventEditUpdateReplicasTimeCheck">
-									{{i18n 'event.edit.updateReplicasTime' 'Update time from {COUNT, plural, one {copy} other {copies}}'
+									{{i18n 'event.edit.updateReplicasTime' 'Update time from {COUNT, plural, one{copy} other{copies} }'
 									COUNT=affectedReplicaCount}}
 								</label>
 							</div>
@@ -188,12 +188,12 @@
 										 class="panel panel-warning changed-replicas {{emphasizeClass}}">
 										<div class="panel-heading">
 											<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
-											{{i18n 'event.edit.changedReplicas.heading' 'Found {NUM, plural, one {one copy which varies} other {# copies which vary}} in time' NUM=changedReplicas.length}}
+											{{i18n 'event.edit.changedReplicas.heading' 'Found {NUM, plural, one{one copy which varies} other{# copies which vary} } in time' NUM=changedReplicas.length}}
 										</div>
 										<div class="panel-body">
 											{{#unless updateChangedReplicas}}
 												<span class="update-changed-replicas-help">
-													{{i18n 'event.edit.changedReplicas.body' "By default {NUM, plural, one {this copy} other {these copies}} won't be updated as {NUM, plural, one {it has} other {they have}} another time set than the original event:" NUM=changedReplicas.length}}
+													{{i18n 'event.edit.changedReplicas.body' "By default {NUM, plural, one{this copy} other{these copies} } won't be updated as {NUM, plural, one{it has} other{they have} } another time set than the original event:" NUM=changedReplicas.length}}
 												</span>
 											{{/unless}}
 											<ul>
@@ -219,7 +219,7 @@
 													   id="eventEditUpdateChangedReplicasTimeCheck">
 												<label class="form-check-label"
 													   for="eventEditUpdateChangedReplicasTimeCheck">
-													{{i18n 'event.edit.updateChangedReplicasTime' 'Overwrite {NUM, plural, one {this events} other {these events}} time too' NUM=changedReplicas.length}}
+													{{i18n 'event.edit.updateChangedReplicasTime' 'Overwrite {NUM, plural, one{this events} other{these events} } time too' NUM=changedReplicas.length}}
 												</label>
 											</div>
 										</div>

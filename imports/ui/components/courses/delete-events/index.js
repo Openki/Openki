@@ -149,7 +149,7 @@ Template.deleteEventsModal.events({
 							Alert.success(
 								i18next.t(
 									'deleteEventsModal.sucess',
-									'{NUM, plural, one {Event was} other {# events were}} successfully deleted.',
+									'{NUM, plural, one{Event was} other{# events were} } successfully deleted.',
 									{ NUM: removed },
 								),
 							);
