@@ -16,8 +16,9 @@ This file descripts all configurations and customization options. Remove the com
 		"emailLogo": "emails/openki.png", // Can be a logo from the /private/* folder or a base64 encoded string.
 		"regionSelection": {
 			"minNumber": 5, // The minimum number of regions displayed in the Regions selection. Default: 5
-			"aboutLink": "" // A link to a page that explains regions, if not set then none link is shown.
+			"aboutLink": "" // A link to a page that explains regions, if not set then none link is shown. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		},
+		"i18nHelpLink": "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto" // A link to a page that give instructions how to translate. Default: "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto", Set this value to "" to hide the link in the UI. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"matomo": {
 			"url": "https://analytics.mydomain.com/",
 			"site": 1 // Matomo id

@@ -5,6 +5,8 @@ import { _ } from 'meteor/underscore';
 
 import { Languages } from '/imports/api/languages/languages';
 
+import { PublicSettings } from '/imports/utils/PublicSettings';
+import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 import * as StringTools from '/imports/utils/string-tools';
 
 import './language-selection.html';
@@ -93,6 +95,10 @@ Template.languageSelection.helpers({
 	currentLanguage() {
 		return this === Languages[Session.get('locale')];
 	},
+
+	helpLink() {
+		return getLocalisedValue(PublicSettings.i18nHelpLink);
+	},
 });
 
 const updateLanguageSearch = _.debounce((instance) => {
@@ -120,8 +126,7 @@ Template.languageSelection.events({
 		} catch {
 			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 		}
-		// The db user update happens in the client/main.js in Tracker.autorun(() => { ... by
-		// messageformat
+		// The db user update happens in the client/main.js in Tracker.autorun(() => { ...
 		Session.set('locale', lg);
 
 		instance.parentInstance().searchingLanguages.set(false);

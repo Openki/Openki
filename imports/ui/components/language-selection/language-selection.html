@@ -42,14 +42,16 @@
 							   class="dropdown-item">{{i18n 'languageSelection.noLanguagesFound' 'No languages found.'}}</a>
 						</li>
 					{{/if}}
-					<li>
-						<hr class="dropdown-divider">
-					</li>
-					<li>
-						<a href="{{pathFor 'mfTrans'}}" class="dropdown-item">
-							{{i18n 'Profile.translate_this_page' 'Help us to translate this Page'}}
-						</a>
-					</li>
+					{{#if helpLink}}
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+						<li>
+							<a class="dropdown-item" href="{{helpLink}}">
+								{{i18n 'Profile.translate_this_page' 'Help us to translate this Page'}}
+							</a>
+						</li>
+					{{/if}}
 				</ul>
 			</div>
 		</form>

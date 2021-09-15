@@ -10,6 +10,8 @@ import { FilterPreview } from '/imports/ui/lib/filter-preview';
 
 import * as RegionSelection from '/imports/utils/region-selection';
 import * as StringTools from '/imports/utils/string-tools';
+import { PublicSettings } from '/imports/utils/PublicSettings';
+import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 
 import './region-selection.html';
 
@@ -46,7 +48,7 @@ Template.regionSelection.onCreated(function () {
 		this.state.set('showAllRegions', search !== '');
 	});
 
-	this.minNumberOfRegionInSelection = Meteor.settings.public.regionSelection?.minNumber || 5;
+	this.minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
 
 	/**
 	 * Query some regions
@@ -156,7 +158,7 @@ Template.regionSelection.helpers({
 	},
 
 	aboutLink() {
-		return Meteor.settings.public.regionSelection?.aboutLink;
+		return getLocalisedValue(PublicSettings.regionSelection.aboutLink);
 	},
 });
 

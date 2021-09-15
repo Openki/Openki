@@ -34,9 +34,9 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 - :mortar_board: Extendable participant roles
 - :white_flower: Groups-, community- and program-system and -filters
 - :date: Calendar and iCal exports ([Docs](https://gitlab.com/Openki/Openki/wikis/calendar-export))
-- :key: Single-Sign-on (OAuth: Github, Facebook, g+)
+- :key: Single-Sign-on (OAuth: Facebook, Google)
 - :iphone: Responsive design: Mobile, tablet and desktop computers
-- :ideograph_advantage: I18n: In-browser-GUI for [crowdsourced, live translation](https://openki.net/translate) (using [meteor-messageformat](https://github.com/gadicc/meteor-messageformat/))
+- :ideograph_advantage: I18n: In-browser-GUI for [crowdsourced translation](https://gitlab.com/Openki/Openki/-/wikis/i18n) (using [Weblate](https://hosted.weblate.org/projects/openki/openki/))
 - :envelope: Email notifications
 - :electric_plug: read-only JSON API
 
