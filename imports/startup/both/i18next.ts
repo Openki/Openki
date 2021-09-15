@@ -63,7 +63,7 @@ i18next
 
 /**
  * A reactive store that changed after a lang has changed and is ready (eg. after resource loading).
- * It is used to update string in the ui after without reloading the page 
+ * It is used to update string in the ui after without reloading the page
  */
 const reactiveLang = new ReactiveVar(Math.random());
 i18next.on('languageChanged', function () {
@@ -72,7 +72,7 @@ i18next.on('languageChanged', function () {
 i18next.on('loaded', function () {
 	reactiveLang.set(Math.random());
 });
-export const i18n: TFunction = (...args :any) => {
+export const i18n: TFunction = (...args: any) => {
 	reactiveLang.get();
 	// Wrap i18next.t to make it reactive
 	return (i18next.t as any)(...args);

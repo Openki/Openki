@@ -1,8 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-
 import { i18n } from '/imports/startup/both/i18next';
-import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
@@ -69,7 +67,7 @@ Template.courseRole.helpers({
 	 * @param {string} type
 	 */
 	roleSubscribe(type) {
-				return i18n(`roles.${type}.subscribe`);
+		return i18n(`roles.${type}.subscribe`);
 	},
 
 	/**

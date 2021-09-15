@@ -11,9 +11,7 @@
 				{{> eventParticipant participant=this event=..}}
 			{{/each}}
 			{{#if limited}}
-				<button
-					class="btn btn-add event-page-btn js-show-more-participants"
-					type="button">
+				<button class="btn btn-add event-page-btn js-show-more-participants" type="button">
 					{{i18n 'event.participants.showMoreParticipants' 'Show more participants'}}
 				</button>
 			{{/if}}
@@ -21,10 +19,9 @@
 	{{/if}}
 </template>
 
-
 <template name="eventParticipant">
 	<div class="event-participant {{ownUserParticipantClass}}">
-		{{> profileLink participant}} 
+		{{> profileLink participant}}
 		{{contribution participant}}
 		{{> participantContact participant=participant event=event}}
 	</div>

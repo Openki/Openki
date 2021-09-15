@@ -9,15 +9,31 @@ module.exports = {
 	lexers: {
 		html: [
 			{
-				lexer: 'HandlebarsLexer',
+				lexer: 'HandlebarsLexer', // We use BlazeJS. The Template syntax is Spacebars, a
+				// variant of Handlebars
 				functions: ['i18n'], // Array of functions to match
 			},
 		],
 
-		js: ['JavascriptLexer'], // if you're writing jsx inside .js files, change this to JsxLexer
-		ts: ['JavascriptLexer'],
+		js: [
+			{
+				lexer: 'JavascriptLexer', // if you're writing jsx inside .js files, change this to JsxLexer
+				functions: ['i18n'], // Array of functions to match
+			},
+		],
+		ts: [
+			{
+				lexer: 'JavascriptLexer',
+				functions: ['i18n'], // Array of functions to match
+			},
+		],
 
-		default: ['JavascriptLexer'],
+		default: [
+			{
+				lexer: 'JavascriptLexer',
+				functions: ['i18n'], // Array of functions to match
+			},
+		],
 	},
 
 	// An array of the locales in your applications

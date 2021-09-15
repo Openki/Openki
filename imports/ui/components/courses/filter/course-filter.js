@@ -1,4 +1,3 @@
-import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { i18n } from '/imports/startup/both/i18next';
 

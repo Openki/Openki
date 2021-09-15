@@ -24,7 +24,7 @@ import { checkContribution } from '../../utils/checkContribution';
  * Calling Session.get('timeLocale') also makes the helper reactive.
  */
 function toMomentWithTimeLocale(date: moment.MomentInput) {
-	return moment(date).locale(Session.get('timeLocale')||"en");
+	return moment(date).locale(Session.get('timeLocale') || 'en');
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

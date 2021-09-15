@@ -1,5 +1,4 @@
 import { i18n } from '/imports/startup/both/i18next';
-import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
