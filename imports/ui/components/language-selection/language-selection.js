@@ -1,4 +1,3 @@
-import { mfPkg } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
@@ -13,7 +12,6 @@ import './language-selection.html';
 Template.languageSelectionWrap.created = function () {
 	const instance = this;
 	instance.searchingLanguages = new ReactiveVar(false);
-	this.subscribe('mfStats');
 };
 
 Template.languageSelectionWrap.helpers({
@@ -90,22 +88,6 @@ Template.languageSelection.helpers({
 		const search = Template.instance().languageSearch.get();
 		const { name } = this;
 		return StringTools.markedName(search, name);
-	},
-
-	translated() {
-		const getTransPercent = () => {
-			const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
-			if (mfStats) {
-				const langStats = mfStats.langs.find((stats) => stats.lang === this.lg);
-				return langStats.transPercent;
-			}
-			return false;
-		};
-
-		const percent = this.lg === mfPkg.native ? 100 : getTransPercent();
-		const rating = percent >= 75 && 'well-translated';
-
-		return { percent, rating };
 	},
 
 	currentLanguage() {

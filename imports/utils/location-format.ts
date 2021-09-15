@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 
 function coordinateToString(coordinate: number) {
 	if (coordinate < 0) {
@@ -12,7 +12,7 @@ export function locationFormat(location: { coordinates: [number, number] }) {
 		return undefined;
 	}
 
-	return i18next.t('location.format', '{LAT} {LON}', {
+	return i18n('location.format', '{LAT} {LON}', {
 		LAT: coordinateToString(location.coordinates[1]),
 		LON: coordinateToString(location.coordinates[0]),
 	});

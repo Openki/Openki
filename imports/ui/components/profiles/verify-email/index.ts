@@ -1,6 +1,6 @@
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
@@ -29,7 +29,7 @@ template.events({
 		try {
 			await emailMethods.sendVerificationEmail();
 			Alert.success(
-				i18next.t(
+				i18n(
 					'profile.sentVerificationMail',
 					'Verification mail has been sent to your address: "{MAIL}".',
 					{ MAIL: Meteor.user()?.emails[0].address },

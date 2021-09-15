@@ -1,7 +1,7 @@
 import { Match, check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Log } from '/imports/api/log/log';
@@ -116,7 +116,7 @@ notificationPrivateMessage.Model = function (entry) {
 
 			const subjectvars = { SENDER: StringTools.truncate(sender.username, 10), lng };
 			// prettier-ignore
-			const subject = i18next.t('notification.privateMessage.mail.subject', 'Private message from {SENDER}', subjectvars);
+			const subject = i18n('notification.privateMessage.mail.subject', 'Private message from {SENDER}', subjectvars);
 			const htmlizedMessage = HtmlTools.plainToHtml(entry.body.message);
 
 			// Find out whether this is the copy sent to the sender.

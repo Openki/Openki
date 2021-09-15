@@ -1,7 +1,7 @@
 import { Match, check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Regions } from '/imports/api/regions/regions';
@@ -89,7 +89,7 @@ notificationJoin.Model = function (entry) {
 				throw new Error('Course does not exist (0.o)');
 			}
 
-			const roleTitle = i18next.t(`roles.${body.newRole}.short`, { lng });
+			const roleTitle = i18n(`roles.${body.newRole}.short`, { lng });
 			const subjectvars = {
 				COURSE: StringTools.truncate(course.name, 10),
 				USER: StringTools.truncate(newParticipant.username, 50),
@@ -98,12 +98,12 @@ notificationJoin.Model = function (entry) {
 			};
 
 			// prettier-ignore
-			const subject = i18next.t('notification.join.mail.subject', '{USER} joined {COURSE}: {ROLE}', subjectvars);
+			const subject = i18n('notification.join.mail.subject', '{USER} joined {COURSE}: {ROLE}', subjectvars);
 
 			const figures = ['host', 'mentor', 'participant']
 				.filter((role) => course.roles.includes(role))
 				.map((role) => ({
-					role: StringTools.capitalize(i18next.t(`roles.${role}.short`, { lng })),
+					role: StringTools.capitalize(i18n(`roles.${role}.short`, { lng })),
 					count: course.membersWithRole(role).length,
 				}));
 

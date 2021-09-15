@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
 import moment from 'moment';
 
@@ -96,9 +96,9 @@ Template.courseCompactRoles.helpers({
 		const isParticipant = hasRoleUser(this.members, 'participant', Meteor.userId());
 
 		if (numMembers === 1 && isParticipant) {
-			tooltip = i18next.t('course.compact.youAreInterested', 'You are interested');
+			tooltip = i18n('course.compact.youAreInterested', 'You are interested');
 		} else {
-			tooltip = i18next.t(
+			tooltip = i18n(
 				'course.compact.interestedCount',
 				'{NUM, plural, =0{Nobody is} one{One person is} other{# persons are} } interested',
 				{ NUM: numMembers },
@@ -106,7 +106,7 @@ Template.courseCompactRoles.helpers({
 
 			if (numMembers > 1 && isParticipant) {
 				tooltip += ' ';
-				tooltip += i18next.t('course.compact.interestedCountOwn', 'and you are one of them');
+				tooltip += i18n('course.compact.interestedCountOwn', 'and you are one of them');
 			}
 		}
 
@@ -131,19 +131,19 @@ Template.courseCompactRoles.helpers({
 
 		const tooltips = {
 			team: {
-				needed: i18next.t('course.list.status_titles.needs_organizer', 'Needs an organizer'),
-				occupied: i18next.t('course.list.status_titles.has_team', 'Has a organizer-team'),
-				occupiedByUser: i18next.t('course.list.status_titles.u_are_organizer', 'You are organizer'),
+				needed: i18n('course.list.status_titles.needs_organizer', 'Needs an organizer'),
+				occupied: i18n('course.list.status_titles.has_team', 'Has a organizer-team'),
+				occupiedByUser: i18n('course.list.status_titles.u_are_organizer', 'You are organizer'),
 			},
 			mentor: {
-				needed: i18next.t('course.list.status_titles.needs_mentor', 'Needs a mentor'),
-				occupied: i18next.t('course.list.status_titles.has_mentor', 'Has a mentor'),
-				occupiedByUser: i18next.t('course.list.status_titles.u_are_mentor', 'You are mentor'),
+				needed: i18n('course.list.status_titles.needs_mentor', 'Needs a mentor'),
+				occupied: i18n('course.list.status_titles.has_mentor', 'Has a mentor'),
+				occupiedByUser: i18n('course.list.status_titles.u_are_mentor', 'You are mentor'),
 			},
 			host: {
-				needed: i18next.t('course.list.status_titles.needs_host', 'Needs a host'),
-				occupied: i18next.t('course.list.status_titles.has_host', 'Has a host'),
-				occupiedByUser: i18next.t('course.list.status_titles.u_are_host', 'You are host'),
+				needed: i18n('course.list.status_titles.needs_host', 'Needs a host'),
+				occupied: i18n('course.list.status_titles.has_host', 'Has a host'),
+				occupiedByUser: i18n('course.list.status_titles.u_are_host', 'You are host'),
 			},
 		};
 

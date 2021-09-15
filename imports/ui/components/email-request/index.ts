@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
@@ -35,15 +35,15 @@ import './template.html';
 
 	const Template = TemplateMixins.FormfieldErrors(TemplateBase, 'emailRequestModal', {
 		noEmail: {
-			text: () => i18next.t('register.warning.noEmailProvided'),
+			text: () => i18n('register.warning.noEmailProvided'),
 			field: 'email',
 		},
 		'email invalid': {
-			text: () => i18next.t('register.warning.emailNotValid', 'Your email seems to have an error.'),
+			text: () => i18n('register.warning.emailNotValid', 'Your email seems to have an error.'),
 			field: 'email',
 		},
 		emailExists: {
-			text: () => i18next.t('register.warning.emailExists'),
+			text: () => i18n('register.warning.emailExists'),
 			field: 'email',
 		},
 	});
@@ -77,7 +77,7 @@ import './template.html';
 			try {
 				await usersMethods.updateEmail(email);
 
-				Alert.success(i18next.t('profile.updated', 'Updated profile'));
+				Alert.success(i18n('profile.updated', 'Updated profile'));
 				instance.$('.js-email-request-modal').modal('hide');
 			} catch (err) {
 				instance.errors.add(err.reason);

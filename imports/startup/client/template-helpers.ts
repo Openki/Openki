@@ -1,5 +1,4 @@
-import { msgfmt } from 'meteor/msgfmt:core';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
@@ -25,7 +24,7 @@ import { checkContribution } from '../../utils/checkContribution';
  * Calling Session.get('timeLocale') also makes the helper reactive.
  */
 function toMomentWithTimeLocale(date: moment.MomentInput) {
-	return moment(date).locale(Session.get('timeLocale'));
+	return moment(date).locale(Session.get('timeLocale')||"en");
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -35,25 +34,14 @@ const helpers: { [name: string]: Function } = {
 	},
 
 	categoryName(name: string) {
-		// Depend on locale and a composite mf string so we update reactively when locale changes
-		// and msgfmt finish loading translations
-		msgfmt.loading();
-		Session.get('locale');
-
-		return i18next.t(`category.${name}`);
+		return i18n(`category.${name}`);
 	},
 
 	roleShort(type: string) {
 		if (!type) {
 			return '';
 		}
-
-		// Depend on locale and a composite mf string so we update reactively when locale changes
-		// and msgfmt finish loading translations
-		msgfmt.loading();
-		Session.get('locale');
-
-		return i18next.t(`roles.${type}.short`);
+		return i18n(`roles.${type}.short`);
 	},
 
 	roleIcon(type: string) {
@@ -323,7 +311,7 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 
 	Template.registerHelper('username', function (userId: string) {
 		if (!userId) {
-			return i18next.t('noUser_placeholder', 'someone');
+			return i18n('noUser_placeholder', 'someone');
 		}
 
 		const cachedUser = getCachedUser(userId);
@@ -358,7 +346,7 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 
 		return Spacebars.SafeString(
 			`<a href="${getLocalisedValue(contribution.link)}" data-tooltip="${(Blaze as any)._escape(
-				i18next.t(
+				i18n(
 					'user.hasContributed',
 					'{USERNAME} supported {SITENAME} with a donation. Click on the {ICON} for more information how to contribute.',
 					{

@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
@@ -83,6 +83,6 @@ Template.avatarForm.events({
 
 		await usersMethods.updateAvatarColor(newColor);
 
-		Alert.success(i18next.t('profile.updated', 'Updated profile'));
+		Alert.success(i18n('profile.updated', 'Updated profile'));
 	},
 });

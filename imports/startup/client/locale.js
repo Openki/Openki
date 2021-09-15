@@ -1,23 +1,17 @@
 import { Meteor } from 'meteor/meteor';
+import i18next from 'i18next';
 import moment from 'moment';
-
 import { Accounts } from 'meteor/accounts-base';
-import { mfPkg, msgfmt } from 'meteor/msgfmt:core';
 import { _ } from 'meteor/underscore';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 import $ from 'jquery';
 import 'bootstrap-datepicker';
 
+import * as UsersMethods from '/imports/api/users/methods';
 import { Languages } from '/imports/api/languages/languages';
 
 import * as UrlTools from '/imports/utils/url-tools';
-
-// Always load english translation
-// For dynamically constructed translation strings there is no default
-// translation and meteor would show the translation key if there is no
-// translation in the current locale
-mfPkg.loadLangs('en');
 
 // Try to guess a sensible language
 Meteor.startup(() => {
@@ -85,17 +79,21 @@ Meteor.startup(() => {
 			return;
 		}
 
-		// messageformat set the locale value in the db user
-		mfPkg.setLocale(desiredLocale);
+		i18next.changeLanguage(desiredLocale);
 
-		// Logic taken from mfpkg:core to get text directionality
 		const lang = desiredLocale.substr(0, 2);
-		const textDirectionality = msgfmt.dirFromLang(lang);
+		const textDirectionality = i18next.dir(lang);
+		const isRTL = textDirectionality === 'rtl';
 		Session.set('textDirectionality', textDirectionality);
 
-		// Msgfmt already sets the dir attribute, but we want a class too.
-		const isRTL = textDirectionality === 'rtl';
-		$('body').toggleClass('rtl', isRTL);
+		// Set lang and dir attribute and a class for dir.
+		$('html').attr('lang', lang);
+		$('html').attr('dir', textDirectionality);
+		$('html').toggleClass('rtl', isRTL);
+
+		if (Meteor.userId()) {
+			UsersMethods.updateLocale(lang);
+		}
 
 		// Tell moment to switch the locale
 		// Also change timeLocale which will invalidate the parts that depend on it

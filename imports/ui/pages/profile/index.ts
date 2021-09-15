@@ -3,7 +3,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { ValidationError } from 'meteor/mdg:validation-error';
 
 import * as Alert from '/imports/api/alerts/alert';
@@ -59,15 +59,15 @@ const TemplateExtended = TemplateMixins.Expandible(TemplateBase, 'profilePage');
 
 const Template = TemplateMixins.FormfieldErrors(TemplateExtended, 'profilePage', {
 	noEmail: {
-		text: () => i18next.t('warning.noEmailProvided', 'Please enter a email.'),
+		text: () => i18n('warning.noEmailProvided', 'Please enter a email.'),
 		field: 'email',
 	},
 	emailNotValid: {
-		text: () => i18next.t('warning.emailNotValid', 'Your email seems to have an error.'),
+		text: () => i18n('warning.emailNotValid', 'Your email seems to have an error.'),
 		field: 'email',
 	},
 	emailExists: {
-		text: () => i18next.t('warning.emailExists', 'This email is already taken.'),
+		text: () => i18n('warning.emailExists', 'This email is already taken.'),
 		field: 'email',
 	},
 });
@@ -99,35 +99,32 @@ template.onCreated(function () {
 		);
 	}
 
-	instance.editableName = new Editable(true, i18next.t('profile.name.placeholder', 'Username'), {
+	instance.editableName = new Editable(true, i18n('profile.name.placeholder', 'Username'), {
 		serverValidationErrors: [
 			{
 				type: 'noUserName',
-				message: () => i18next.t('warning.noUserName', 'Please enter a name for your user.'),
+				message: () => i18n('warning.noUserName', 'Please enter a name for your user.'),
 			},
 			{
 				type: 'userExists',
 				message: () =>
-					i18next.t(
-						'warning.userExists',
-						'This username already exists. Please choose another one.',
-					),
+					i18n('warning.userExists', 'This username already exists. Please choose another one.'),
 			},
 			{
 				type: 'nameError',
-				message: () => i18next.t('update.username.failed', 'Failed to update username.'),
+				message: () => i18n('update.username.failed', 'Failed to update username.'),
 			},
 		],
 		onSave: async (newName) => {
 			usersMethods.updateUsername(newName);
 		},
 		onSuccess: () => {
-			Alert.success(i18next.t('profile.updated', 'Updated profile'));
+			Alert.success(i18n('profile.updated', 'Updated profile'));
 		},
 	});
 	instance.editableDescription = new Editable(
 		true,
-		i18next.t(
+		i18n(
 			'profile.description.placeholder',
 			'About you. Let the community know what your interests are.',
 		),
@@ -136,7 +133,7 @@ template.onCreated(function () {
 				await usersMethods.updateDescription(newDescription);
 			},
 			onSuccess: () => {
-				Alert.success(i18next.t('profile.updated', 'Updated profile'));
+				Alert.success(i18n('profile.updated', 'Updated profile'));
 			},
 		},
 	);
@@ -222,7 +219,7 @@ template.events({
 		try {
 			await usersMethods.selfRemove();
 
-			Alert.success(i18next.t('profile.deleted', 'Your account has been deleted'));
+			Alert.success(i18n('profile.deleted', 'Your account has been deleted'));
 		} finally {
 			instance.busy(false);
 		}
@@ -234,7 +231,7 @@ template.events({
 
 		try {
 			await usersMethods.updateEmail(instance.$('.js-email').val() as string);
-			Alert.success(i18next.t('profile.updated', 'Updated profile'));
+			Alert.success(i18n('profile.updated', 'Updated profile'));
 		} catch (err) {
 			if (ValidationError.is(err)) {
 				(err.details as any).forEach((fieldError: any) => {
@@ -252,7 +249,7 @@ template.events({
 		try {
 			await usersMethods.updateAutomatedNotification(allow);
 
-			Alert.success(i18next.t('profile.updated', 'Updated profile'));
+			Alert.success(i18n('profile.updated', 'Updated profile'));
 			if (!allow)
 				Analytics.trackEvent(
 					'Unsubscribes from notifications',
@@ -271,7 +268,7 @@ template.events({
 		try {
 			await usersMethods.updatePrivateMessages(allow);
 
-			Alert.success(i18next.t('profile.updated', 'Updated profile'));
+			Alert.success(i18n('profile.updated', 'Updated profile'));
 			if (!allow)
 				Analytics.trackEvent(
 					'Unsubscribes from notifications',
@@ -288,30 +285,23 @@ template.events({
 		const pass = (instance.find('.js-new-pwd') as HTMLInputElement).value;
 		if (pass !== '') {
 			if (pass !== (instance.find('.js-new-pwd-confirm') as HTMLInputElement).value) {
-				Alert.warning(
-					i18next.t('profile.passwordMismatch', "Sorry, Your new passwords don't match"),
-				);
+				Alert.warning(i18n('profile.passwordMismatch', "Sorry, Your new passwords don't match"));
 				return;
 			}
 			const minLength = 5; // We've got _some_ standards
 			if (pass.length < minLength) {
-				Alert.warning(
-					i18next.t('profile.passwordShort', 'Your desired password is too short, sorry.'),
-				);
+				Alert.warning(i18n('profile.passwordShort', 'Your desired password is too short, sorry.'));
 				return;
 			}
 			Accounts.changePassword(old, pass, (err) => {
 				if (err) {
 					Alert.serverError(
 						err,
-						i18next.t('profile.passwordChangeError', 'Failed to change your password'),
+						i18n('profile.passwordChangeError', 'Failed to change your password'),
 					);
 				} else {
 					Alert.success(
-						i18next.t(
-							'profile.passwordChangedSuccess',
-							'You have changed your password successfully.',
-						),
+						i18n('profile.passwordChangedSuccess', 'You have changed your password successfully.'),
 					);
 					instance.changingPass.set(false);
 				}

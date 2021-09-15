@@ -84,7 +84,7 @@
     "sass-lint": "stylelint '**/*.scss'",
     "html-format": "html-beautify '{client,imports,private,public,server}/**/*.html' -r",
     "extract-translations": "rm imports/startup/both/i18n/en.json -f && npx i18next",
-    "reset": "meteor reset && rm server/extracts.msgfmt~ -f"
+    "reset": "meteor reset"
   },
   "repository": {
     "type": "git",

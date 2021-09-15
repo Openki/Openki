@@ -268,31 +268,6 @@
 	display: inline-block;
 }
 
-.language-translated {
-	@include td-float(right);
-	color: $gray-light;
-
-	@media (max-width: $grid-float-breakpoint) {
-		color: $gray-lighter;
-	}
-
-	&::after {
-		content: '%';
-	}
-
-	&.well-translated {
-		color: $green-darker;
-
-		@media (max-width: $grid-float-breakpoint) {
-			color: $green;
-		}
-	}
-}
-
-.js-language-link:hover .language-translated {
-	color: $white;
-}
-
 .login-link .dropdown-menu {
 	@media (max-width: $grid-float-breakpoint) {
 		position: initial;

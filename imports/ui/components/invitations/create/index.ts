@@ -1,6 +1,6 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 
 import * as InvitationsMethods from '/imports/api/invitations/methods';
 import * as Alert from '/imports/api/alerts/alert';
@@ -27,7 +27,7 @@ const TemplateBase = TemplateAny as TemplateStaticTyped<
 const Template = TemplateMixins.FormfieldErrors(TemplateBase, 'invitationsCreate', {
 	notValid: {
 		text: () =>
-			i18next.t(
+			i18n(
 				'tenant.settings.invitations.error.notValid',
 				'Some of the e-mail addresses are not valid.',
 			),
@@ -104,17 +104,14 @@ template.events({
 			await InvitationsMethods.createMany(instance.data.tenant._id, instance.getEmails());
 
 			Alert.success(
-				i18next.t('tenant.settings.invitations.creation.success', 'Invitations have been created.'),
+				i18n('tenant.settings.invitations.creation.success', 'Invitations have been created.'),
 			);
 
 			instance.reset();
 		} catch (err) {
 			Alert.serverError(
 				err,
-				i18next.t(
-					'tenant.settings.invitations.creation.error',
-					'Invitations could not be created.',
-				),
+				i18n('tenant.settings.invitations.creation.error', 'Invitations could not be created.'),
 			);
 		} finally {
 			instance.busy(false);

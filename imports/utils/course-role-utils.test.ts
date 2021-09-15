@@ -1,14 +1,10 @@
 /* eslint no-unused-expressions: 0 */
 
 import { expect } from 'chai';
-import { msgfmt } from 'meteor/msgfmt:core';
 
 import { CourseMemberEntity } from '/imports/api/courses/courses';
 
 import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
-
-// This should not be here
-msgfmt.init('en');
 
 describe('Role check', () => {
 	const members: CourseMemberEntity[] = [

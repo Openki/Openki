@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 export interface ClientValidation {
@@ -111,7 +111,7 @@ export class Editable {
 			text: () => this.text.get(),
 			changed: this.changed,
 			simple: this.simple,
-			placeholderText: this.placeholderText || i18next.t('editable.add_text', 'Add text here'),
+			placeholderText: this.placeholderText || i18n('editable.add_text', 'Add text here'),
 			showControls: this.showControls,
 			store: this.store,
 		};

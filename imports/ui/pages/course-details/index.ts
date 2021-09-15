@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
@@ -47,13 +47,13 @@ Template.courseDetailsPage.onCreated(function (this: any) {
 
 	const { course } = instance.data;
 
-	instance.editableName = new Editable(true, i18next.t('course.title.placeholder'), {
+	instance.editableName = new Editable(true, i18n('course.title.placeholder'), {
 		onSave: async (newName) => {
 			await CoursesMethods.save(course._id, { name: newName });
 		},
 		onSuccess: (newName) => {
 			Alert.success(
-				i18next.t(
+				i18n(
 					'courseDetails.message.nameChanged',
 					'The name of this course has been changed to "{NAME}".',
 					{ NAME: newName },
@@ -61,17 +61,17 @@ Template.courseDetailsPage.onCreated(function (this: any) {
 			);
 		},
 		onError: (err) => {
-			Alert.serverError(err, i18next.t('course.save.error', 'Saving the course went wrong'));
+			Alert.serverError(err, i18n('course.save.error', 'Saving the course went wrong'));
 		},
 	});
 
-	instance.editableDescription = new Editable(false, i18next.t('course.description.placeholder'), {
+	instance.editableDescription = new Editable(false, i18n('course.description.placeholder'), {
 		onSave: async (newDescription) => {
 			await CoursesMethods.save(course._id, { description: newDescription });
 		},
 		onSuccess: () => {
 			Alert.success(
-				i18next.t(
+				i18n(
 					'courseDetails.message.descriptionChanged',
 					'The description of "{NAME}" has been changed.',
 					{ NAME: course.name },
@@ -79,7 +79,7 @@ Template.courseDetailsPage.onCreated(function (this: any) {
 			);
 		},
 		onError: (err) => {
-			Alert.serverError(err, i18next.t('course.save.error'));
+			Alert.serverError(err, i18n('course.save.error'));
 		},
 	});
 
@@ -150,7 +150,7 @@ Template.courseDetailsPage.events({
 			await CoursesMethods.remove(course._id);
 
 			Alert.success(
-				i18next.t(
+				i18n(
 					'courseDetailsPage.message.courseHasBeenDeleted',
 					'The course "{COURSE}" has been deleted.',
 					{ COURSE: course.name },
@@ -191,7 +191,7 @@ Template.courseDetailsPage.events({
 			await CoursesMethods.archive(course._id);
 
 			Alert.success(
-				i18next.t(
+				i18n(
 					'courseDetailsPage.message.courseHasBeenArchived',
 					'The course "{COURSE}" has been archived.',
 					{ COURSE: course.name },
@@ -215,7 +215,7 @@ Template.courseDetailsPage.events({
 			await CoursesMethods.unarchive(course._id);
 
 			Alert.success(
-				i18next.t(
+				i18n(
 					'courseDetailsPage.message.courseHasBeenUnarchived',
 					'The course "{COURSE}" has been unarchived.',
 					{ COURSE: course.name },
@@ -294,7 +294,7 @@ Template.courseGroupAdd.events({
 
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				i18next.t(
+				i18n(
 					'courseGroupAdd.groupAdded',
 					'The group "{GROUP}" has been added to promote the course "{COURSE}".',
 					{ GROUP: groupName, COURSE: course.name },
@@ -319,7 +319,7 @@ Template.courseGroupRemove.events({
 
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				i18next.t(
+				i18n(
 					'courseGroupAdd.groupRemoved',
 					'The group "{GROUP}" has been removed from the course "{COURSE}".',
 					{ GROUP: groupName, COURSE: course.name },
@@ -344,7 +344,7 @@ Template.courseGroupMakeOrganizer.events({
 
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				i18next.t(
+				i18n(
 					'courseGroupAdd.membersCanEditCourse',
 					'Members of the group "{GROUP}" can now edit the course "{COURSE}".',
 					{ GROUP: groupName, COURSE: course.name },
@@ -369,7 +369,7 @@ Template.courseGroupRemoveOrganizer.events({
 
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				i18next.t(
+				i18n(
 					'courseGroupAdd.membersCanNoLongerEditCourse',
 					'Members of the group "{GROUP}" can no longer edit the course "{COURSE}".',
 					{ GROUP: groupName, COURSE: course.name },

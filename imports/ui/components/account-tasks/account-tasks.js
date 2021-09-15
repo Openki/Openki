@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
-import * as usersMethods from '/imports/api/users/methods';
+import * as UsersMethods from '/imports/api/users/methods';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
@@ -99,21 +99,19 @@ Template.loginFrame.onRendered(function () {
 
 TemplateMixins.FormfieldErrors(Template, 'loginFrame', {
 	noUsername: {
-		text: () =>
-			i18next.t('login.warning.noUserName', 'Please enter your username or email to log in.'),
+		text: () => i18n('login.warning.noUserName', 'Please enter your username or email to log in.'),
 		field: 'username',
 	},
 	'Incorrect password': {
-		text: () => i18next.t('login.password.password_incorrect', 'Incorrect password'),
+		text: () => i18n('login.password.password_incorrect', 'Incorrect password'),
 		field: 'password',
 	},
 	'User not found': {
-		text: () => i18next.t('login.username.usr_doesnt_exist', 'This user does not exist.'),
+		text: () => i18n('login.username.usr_doesnt_exist', 'This user does not exist.'),
 		field: 'username',
 	},
 	'User has no password set': {
-		text: () =>
-			i18next.t('login.username.no_password_set', 'Please login below with Google/Facebook.'),
+		text: () => i18n('login.username.no_password_set', 'Please login below with Google/Facebook.'),
 		field: 'username',
 	},
 });
@@ -177,10 +175,10 @@ Template.loginFrame.events({
 
 			const regionId = CleanedRegion(Session.get('region'));
 			if (regionId) {
-				usersMethods.regionChange(regionId);
+				UsersMethods.regionChange(regionId);
 			}
 
-			usersMethods.updateLocale(Session.get('locale'));
+			UsersMethods.updateLocale(Session.get('locale'));
 
 			Analytics.trackEvent('Logins', 'Logins with password', Regions.findOne(regionId)?.nameEn);
 		} catch (err) {
@@ -213,10 +211,10 @@ Template.loginFrame.events({
 
 				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
-					usersMethods.regionChange(regionId);
+					UsersMethods.regionChange(regionId);
 				}
 
-				usersMethods.updateLocale(Session.get('locale'));
+				UsersMethods.updateLocale(Session.get('locale'));
 
 				Analytics.trackEvent(
 					'Logins',
@@ -268,34 +266,33 @@ Template.registerFrame.helpers({
 
 TemplateMixins.FormfieldErrors(Template, 'registerFrame', {
 	noUsername: {
-		text: () => i18next.t('register.warning.noUserName', 'Please enter a name for your new user.'),
+		text: () => i18n('register.warning.noUserName', 'Please enter a name for your new user.'),
 		field: 'username',
 	},
 	'Username already exists.': {
 		text: () =>
-			i18next.t(
+			i18n(
 				'register.warning.userExists',
 				'This username already exists. Please choose another one.',
 			),
 		field: 'username',
 	},
 	noPassword: {
-		text: () =>
-			i18next.t('register.warning.noPasswordProvided', 'Please enter a password to register.'),
+		text: () => i18n('register.warning.noPasswordProvided', 'Please enter a password to register.'),
 		field: 'password',
 	},
 	noEmail: {
 		text: () =>
-			i18next.t('register.warning.noEmailProvided', 'Please enter an email-address to register.'),
+			i18n('register.warning.noEmailProvided', 'Please enter an email-address to register.'),
 		field: 'email',
 	},
 	'email invalid': {
-		text: () => i18next.t('register.warning.emailNotValid'),
+		text: () => i18n('register.warning.emailNotValid'),
 		field: 'email',
 	},
 	'Email already exists.': {
 		text: () =>
-			i18next.t(
+			i18n(
 				'register.warning.emailExists',
 				'This email already exists. Have you tried resetting your password?',
 			),
@@ -346,15 +343,15 @@ Template.registerFrame.events({
 
 					const regionId = CleanedRegion(Session.get('region'));
 					if (regionId) {
-						usersMethods.regionChange(regionId);
+						UsersMethods.regionChange(regionId);
 					}
 
-					usersMethods.updateLocale(Session.get('locale'));
+					UsersMethods.updateLocale(Session.get('locale'));
 
 					const user = Meteor.user();
 
 					Alert.success(
-						i18next.t(
+						i18n(
 							'profile.sentVerificationMail',
 							'Verification mail has been sent to your address: "{MAIL}".',
 							{ MAIL: user.emails[0].address },
@@ -414,7 +411,7 @@ Template.forgotPwdFrame.events({
 					Alert.serverError(err, 'We were unable to send a mail to this address');
 				} else {
 					Alert.success(
-						i18next.t(
+						i18n(
 							'forgotPassword.emailSent',
 							'An e-mail with further instructions on how to reset your password has been sent to you.',
 						),

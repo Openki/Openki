@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
@@ -210,7 +210,7 @@ Template.venueDetails.events({
 		try {
 			await VenuesMethods.remove(venue._id);
 
-			Alert.success(i18next.t('venue.removed', 'Removed venue "{NAME}".', { NAME: venue.name }));
+			Alert.success(i18n('venue.removed', 'Removed venue "{NAME}".', { NAME: venue.name }));
 			Router.go('profile');
 		} catch (err) {
 			Alert.serverError(err, 'Deleting the venue went wrong');

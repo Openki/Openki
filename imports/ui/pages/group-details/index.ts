@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
@@ -43,7 +43,7 @@ const TemplateBase = TemplateAny as TemplateStaticTyped<
 
 const Template = TemplateMixins.FormfieldErrors(TemplateBase, 'groupDetailsPage', {
 	emptyField: {
-		text: () => i18next.t('group.details.error.allMandatory', 'All four fields are mandatory.'),
+		text: () => i18n('group.details.error.allMandatory', 'All four fields are mandatory.'),
 		field: 'all',
 	},
 });
@@ -64,22 +64,20 @@ template.onCreated(function () {
 		clientValidations: [
 			{
 				check: (text) => !!text,
-				errorMessage: () => i18next.t('group.details.error.allMandatory'),
+				errorMessage: () => i18n('group.details.error.allMandatory'),
 			},
 		],
 		onSuccess: () => {
 			Alert.success(
-				i18next.t(
-					'groupDetails.changesSaved',
-					'Your changes to the group "{GROUP}" have been saved.',
-					{ GROUP: group?.name },
-				),
+				i18n('groupDetails.changesSaved', 'Your changes to the group "{GROUP}" have been saved.', {
+					GROUP: group?.name,
+				}),
 			);
 		},
 		onError: (err) => {
 			Alert.serverError(
 				err,
-				i18next.t('groupDetails.saveError', 'Saving the group "{GROUP}" went wrong', {
+				i18n('groupDetails.saveError', 'Saving the group "{GROUP}" went wrong', {
 					GROUP: group?.name,
 				}),
 			);
@@ -90,7 +88,7 @@ template.onCreated(function () {
 
 	instance.editableName = new Editable(
 		true,
-		i18next.t('group.name.placeholder', 'Name of your group, institution, community or program'),
+		i18n('group.name.placeholder', 'Name of your group, institution, community or program'),
 		showControls
 			? {
 					...handleSaving,
@@ -103,7 +101,7 @@ template.onCreated(function () {
 
 	instance.editableShort = new Editable(
 		true,
-		i18next.t('group.short.placeholder', 'Abbreviation'),
+		i18n('group.short.placeholder', 'Abbreviation'),
 		showControls
 			? {
 					...handleSaving,
@@ -116,7 +114,7 @@ template.onCreated(function () {
 
 	instance.editableClaim = new Editable(
 		true,
-		i18next.t('group.claim.placeholder', 'The core idea'),
+		i18n('group.claim.placeholder', 'The core idea'),
 		showControls
 			? {
 					...handleSaving,
@@ -129,7 +127,7 @@ template.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		i18next.t(
+		i18n(
 			'group.description.placeholder',
 			'Describe the audience, the interests and activities of your group.',
 		),
@@ -236,8 +234,8 @@ template.events({
 		instance.busy('saving');
 		SaveAfterLogin(
 			instance,
-			i18next.t('loginAction.saveGroup', 'Login and save group'),
-			i18next.t('registerAction.saveGroup', 'Register and save group'),
+			i18n('loginAction.saveGroup', 'Login and save group'),
+			i18n('registerAction.saveGroup', 'Register and save group'),
 			async () => {
 				try {
 					const groupId = await GroupsMethods.save('create', group);
@@ -248,7 +246,7 @@ template.events({
 					instance.editableDescription.end();
 
 					Alert.success(
-						i18next.t('groupDetails.groupCreated', 'The Group {GROUP} has been created!', {
+						i18n('groupDetails.groupCreated', 'The Group {GROUP} has been created!', {
 							GROUP: group.name,
 						}),
 					);
@@ -257,7 +255,7 @@ template.events({
 
 					Router.go('groupDetails', { _id: groupId });
 				} catch (err) {
-					Alert.serverError(err, i18next.t('groupDetails.saveError', { GROUP: group.name }));
+					Alert.serverError(err, i18n('groupDetails.saveError', { GROUP: group.name }));
 				} finally {
 					instance.busy(false);
 				}

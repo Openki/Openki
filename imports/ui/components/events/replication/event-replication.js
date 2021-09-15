@@ -1,5 +1,5 @@
 import { ReactiveVar } from 'meteor/reactive-var';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import moment from 'moment';
@@ -221,7 +221,7 @@ Template.eventReplication.events({
 					const start = moment(replicaEvent.startLocal).format('llll');
 					Alert.serverError(
 						error,
-						i18next.t('eventReplication.errWithReason', 'Creating the copy on "{START}" failed.', {
+						i18n('eventReplication.errWithReason', 'Creating the copy on "{START}" failed.', {
 							START: start,
 						}),
 					);
@@ -233,7 +233,7 @@ Template.eventReplication.events({
 						if (removed) {
 							const start = moment(replicaEvent.startLocal).format('llll');
 							Alert.success(
-								i18next.t(
+								i18n(
 									'event.replicate.successCondensed',
 									'Cloned event "{TITLE}" {NUM, plural, one{for} other{# times until} } {DATE}',
 									{

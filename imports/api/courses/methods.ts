@@ -1,6 +1,6 @@
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 
 import { Courses, Course, CourseEntity, CourseModel } from './courses';
 import { Events } from '/imports/api/events/events';
@@ -218,7 +218,7 @@ export const save = ServerMethod(
 				{
 					user: user._id,
 					roles: ['participant', 'team'],
-					comment: i18next.t('courses.creator.defaultMessage', '(has proposed this course)'),
+					comment: i18n('courses.creator.defaultMessage', '(has proposed this course)'),
 				},
 			];
 			set.archived = false;

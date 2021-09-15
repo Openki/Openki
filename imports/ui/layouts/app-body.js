@@ -23,22 +23,12 @@ import '/imports/ui/components/introduction/introduction';
 import '/imports/ui/components/kiosk-link/kiosk-link';
 import '/imports/ui/components/navbar/navbar';
 import '/imports/ui/components/regions/splash/region-splash';
-import '/imports/ui/components/translate-info/translate-info';
 
 import './app-body.html';
 
 Template.layout.helpers({
 	testWarning() {
 		return Meteor.settings.public.testWarning;
-	},
-
-	translate() {
-		const { route } = Router.current();
-		return route?.getName() === 'mfTrans';
-	},
-
-	mayTranslate() {
-		return Boolean(Meteor.user());
 	},
 
 	showRegionSplash() {

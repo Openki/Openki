@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
@@ -71,7 +71,7 @@ template.helpers({
 					await GroupsMethods.updateLogo(groupId, file);
 					const groupName = Groups.findOne(groupId)?.name;
 					Alert.success(
-						i18next.t(
+						i18n(
 							'groupSettings.group.logo.updated',
 							'Your changes to the settings of the group "{GROUP}" have been saved.',
 							{ GROUP: groupName },
@@ -123,7 +123,7 @@ template.events({
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				i18next.t(
+				i18n(
 					'groupSettings.memberAdded',
 					'"{MEMBER}" has been added as a member to the group "{GROUP}"',
 					{ MEMBER: memberName, GROUP: groupName },
@@ -142,7 +142,7 @@ template.events({
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				i18next.t(
+				i18n(
 					'groupSettings.memberRemoved',
 					'"{MEMBER}" has been removed from to the group "{GROUP}"',
 					{ MEMBER: memberName, GROUP: groupName },

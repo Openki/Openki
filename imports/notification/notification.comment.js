@@ -1,7 +1,7 @@
 import { check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { _ } from 'meteor/underscore';
 
 import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
@@ -125,10 +125,10 @@ notificationComment.Model = function (entry) {
 			if (commenter) {
 				subjectvars.COMMENTER = StringTools.truncate(commenterName, 20);
 				// prettier-ignore
-				subject = i18next.t('notification.comment.mail.subject', 'Comment on {COURSE} by {COMMENTER}: {TITLE}', subjectvars);
+				subject = i18n('notification.comment.mail.subject', 'Comment on {COURSE} by {COMMENTER}: {TITLE}', subjectvars);
 			} else {
 				// prettier-ignore
-				subject = i18next.t('notification.comment.mail.subject.anon',  'Anonymous comment on {COURSE}: {TITLE}', subjectvars);
+				subject = i18n('notification.comment.mail.subject.anon',  'Anonymous comment on {COURSE}: {TITLE}', subjectvars);
 			}
 
 			/** @type {RegionModel | undefined}  */

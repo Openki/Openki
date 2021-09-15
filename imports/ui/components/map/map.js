@@ -1,6 +1,6 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { _ } from 'meteor/underscore';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
@@ -119,8 +119,8 @@ Template.map.onRendered(function () {
 
 	// Depending on view state, different controls are shown
 	const zoomControl = L.control.zoom({
-		zoomInTitle: i18next.t('map.zoomInTitle', 'zoom in'),
-		zoomOutTitle: i18next.t('map.zoomOutTitle', 'zoom out'),
+		zoomInTitle: i18n('map.zoomInTitle', 'zoom in'),
+		zoomOutTitle: i18n('map.zoomOutTitle', 'zoom out'),
 	});
 	const attributionControl = L.control.attribution();
 	const scaleControl = L.control.scale({
@@ -129,22 +129,22 @@ Template.map.onRendered(function () {
 	const fullscreenControl = new OpenkiControl({
 		icon: FaIcon('arrows-alt'),
 		action: 'js-make-fullscreen',
-		title: i18next.t('map.fullscreen', 'big map'),
+		title: i18n('map.fullscreen', 'big map'),
 	});
 	const closeFullscreenControl = new OpenkiControl({
 		icon: FaIcon('close'),
 		action: 'js-close-fullscreen',
-		title: i18next.t('map.fullscreenClose', 'close'),
+		title: i18n('map.fullscreenClose', 'close'),
 	});
 	const addMarkerControl = new OpenkiControl({
 		icon: FaCompIcon('plus', 'map-marker'),
 		action: 'js-add-marker',
-		title: i18next.t('map.addMarker', 'set marker'),
+		title: i18n('map.addMarker', 'set marker'),
 	});
 	const removeMarkerControl = new OpenkiControl({
 		icon: FaCompIcon('minus', 'map-marker'),
 		action: 'js-remove-marker',
-		title: i18next.t('map.removeMarker', 'remove the marker'),
+		title: i18n('map.removeMarker', 'remove the marker'),
 	});
 
 	instance.autorun(() => {

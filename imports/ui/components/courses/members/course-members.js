@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
@@ -78,16 +78,14 @@ Template.courseMember.onCreated(function () {
 
 	instance.editableMessage = new Editable(
 		true,
-		i18next.t('roles.message.placeholder', 'My interests...'),
+		i18n('roles.message.placeholder', 'My interests...'),
 		{
 			onSave: async (newMessage) => {
 				const change = new Message(instance.data.course, Meteor.user(), newMessage);
 				await processChange(change);
 			},
 			onSuccess: () => {
-				Alert.success(
-					i18next.t('courseMember.messageChanged', 'Your enroll-message has been changed.'),
-				);
+				Alert.success(i18n('courseMember.messageChanged', 'Your enroll-message has been changed.'));
 			},
 		},
 	);

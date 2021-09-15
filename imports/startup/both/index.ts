@@ -1,5 +1,4 @@
 import './ical';
-import './msgfmt';
 import './i18next';
 import './routes';
 

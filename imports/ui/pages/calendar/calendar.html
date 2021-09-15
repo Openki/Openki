@@ -54,7 +54,7 @@
 		<div class="btn-group">
 			<button type="button" class="btn btn-secondary js-change-date">
 				{{arrow}} <span
-					  class="d-none d-md-inline-block">{{mfString direction currentUnit 'short'}}</span>
+					  class="d-none d-md-inline-block">{{calendarNavText direction currentUnit 'short'}}</span>
 			</button>
 			<button type="button" class="btn btn-secondary" aria-expanded="false"
 					aria-haspopup="true" data-bs-toggle="dropdown" data-bs-reference="parent">
@@ -64,7 +64,7 @@
 				{{#each navUnits}}
 					<li>
 						<a class="dropdown-item js-change-unit" href="#">
-							{{mfString ../direction this 'long'}}
+							{{calendarNavText ../direction this 'long'}}
 						</a>
 					</li>
 				{{/each}}
@@ -73,7 +73,9 @@
 	</div>
 </template>
 
-<template name="calendarNavMF">
+<template name="calendarNavDynamicTranslations">
+	This template holds translation strings that are constructed dynamically
+
 	{{i18n 'calendar.previous.week.short' 'previous week'}}
 	{{i18n 'calendar.previous.month.short' 'previous month'}}
 	{{i18n 'calendar.previous.year.short' 'previous year'}}

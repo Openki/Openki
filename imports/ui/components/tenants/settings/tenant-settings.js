@@ -1,6 +1,6 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
@@ -87,7 +87,7 @@ Template.tenantSettings.events({
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
-				i18next.t(
+				i18n(
 					'tenantSettings.memberAdded',
 					'"{MEMBER}" has been added as a member to the organization "{TENANT}"',
 					{ MEMBER: memberName, TENANT: tenantName },
@@ -109,7 +109,7 @@ Template.tenantSettings.events({
 			const memberName = Users.findOne(memberId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
-				i18next.t(
+				i18n(
 					'tenantSettings.memberRemoved',
 					'"{MEMBER}" has been removed from to the organization "{TENANT}"',
 					{ MEMBER: memberName, TENANT: tenantName },
@@ -134,7 +134,7 @@ Template.tenantSettings.events({
 			const adminName = Users.findOne(adminId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
-				i18next.t(
+				i18n(
 					'tenantSettings.adminAdded',
 					'"{ADMIN}" has been added as an admin to the organization "{TENANT}"',
 					{ ADMIN: adminName, TENANT: tenantName },
@@ -156,7 +156,7 @@ Template.tenantSettings.events({
 			const adminName = Users.findOne(adminId)?.username;
 			const tenantName = Tenants.findOne(tenantId).name;
 			Alert.success(
-				i18next.t(
+				i18n(
 					'tenantSettings.adminRemoved',
 					'"{ADMIN}" has been removed as an admin from to the organization "{TENANT}"',
 					{ ADMIN: adminName, TENANT: tenantName },

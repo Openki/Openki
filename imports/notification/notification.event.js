@@ -1,7 +1,7 @@
 import { check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 
 import { Courses } from '/imports/api/courses/courses';
 /** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
@@ -132,10 +132,10 @@ notificationEvent.Model = function (entry) {
 			let subject;
 			if (entry.new) {
 				// prettier-ignore
-				subject = i18next.t('notification.event.mail.subject.new',  'On {DATE}: {TITLE}', subjectvars);
+				subject = i18n('notification.event.mail.subject.new',  'On {DATE}: {TITLE}', subjectvars);
 			} else {
 				// prettier-ignore
-				subject = i18next.t('notification.event.mail.subject.changed',  'Fixed {DATE}: {TITLE}', subjectvars);
+				subject = i18n('notification.event.mail.subject.changed',  'Fixed {DATE}: {TITLE}', subjectvars);
 			}
 
 			const { venue } = event;

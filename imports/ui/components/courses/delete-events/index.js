@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 import moment from 'moment';
@@ -133,7 +133,7 @@ Template.deleteEventsModal.events({
 					const start = moment(event.startLocal).format('llll');
 					Alert.serverError(
 						err,
-						i18next.t(
+						i18n(
 							'deleteEventsModal.errWithReason',
 							'Deleting the event "{TITLE} ({START})" failed.',
 							{ TITLE: event.title, START: start },
@@ -147,7 +147,7 @@ Template.deleteEventsModal.events({
 						instance.state.set('showDeleteConfirm', false);
 						if (removed) {
 							Alert.success(
-								i18next.t(
+								i18n(
 									'deleteEventsModal.sucess',
 									'{NUM, plural, one{Event was} other{# events were} } successfully deleted.',
 									{ NUM: removed },

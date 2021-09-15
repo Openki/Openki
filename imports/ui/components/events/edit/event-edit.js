@@ -8,7 +8,7 @@ import { Tooltips } from 'meteor/lookback:tooltips';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
-import i18next from 'i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
@@ -69,7 +69,7 @@ Template.eventEdit.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		i18next.t(
+		i18n(
 			'event.description.placeholder',
 			'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)',
 		),
@@ -152,11 +152,11 @@ const validateMaxParticipants = (maxParticipants) => {
 	const intVal = parseInt(maxParticipants, 10);
 	/* eslint-disable-next-line eqeqeq */
 	if (intVal != maxParticipants) {
-		Alert.error(i18next.t('event.edit.mustBeInteger', 'Number must be integer'));
+		Alert.error(i18n('event.edit.mustBeInteger', 'Number must be integer'));
 		return false;
 	}
 	if (intVal < 0) {
-		Alert.error(i18next.t('event.edit.mustBePositive', 'Number must be positive'));
+		Alert.error(i18n('event.edit.mustBePositive', 'Number must be positive'));
 		return false;
 	}
 	return intVal;
@@ -300,7 +300,7 @@ Template.eventEdit.events({
 		if (!start.isValid()) {
 			const exampleDate = moment().format('L');
 			Alert.error(
-				i18next.t('event.edit.dateFormatWarning', 'Date format must be of the form {EXAMPLEDATE}', {
+				i18n('event.edit.dateFormatWarning', 'Date format must be of the form {EXAMPLEDATE}', {
 					EXAMPLEDATE: exampleDate,
 				}),
 			);
@@ -324,7 +324,7 @@ Template.eventEdit.events({
 		}
 
 		if (editevent.title.length === 0) {
-			Alert.error(i18next.t('event.edit.plzProvideTitle', 'Please provide a title'));
+			Alert.error(i18n('event.edit.plzProvideTitle', 'Please provide a title'));
 			return;
 		}
 
@@ -334,7 +334,7 @@ Template.eventEdit.events({
 		}
 
 		if (!editevent.description) {
-			Alert.error(i18next.t('event.edit.plzProvideDescr', 'Please provide a description'));
+			Alert.error(i18n('event.edit.plzProvideDescr', 'Please provide a description'));
 			return;
 		}
 
@@ -343,7 +343,7 @@ Template.eventEdit.events({
 		if (isNew) {
 			if (start.isBefore(LocalTime.now())) {
 				Alert.error(
-					i18next.t(
+					i18n(
 						'event.edit.startInPast',
 						'The event starts in the past. Have you selected a start date and time?',
 					),
@@ -359,7 +359,7 @@ Template.eventEdit.events({
 				editevent.region = instance.selectedRegion.get();
 				if (!editevent.region || editevent.region === 'all') {
 					Alert.error(
-						i18next.t('event.edit.plzSelectRegion', 'Please select the region for this event'),
+						i18n('event.edit.plzSelectRegion', 'Please select the region for this event'),
 					);
 					return;
 				}
@@ -387,8 +387,8 @@ Template.eventEdit.events({
 		instance.busy('saving');
 		SaveAfterLogin(
 			instance,
-			i18next.t('loginAction.saveEvent', 'Login and save event'),
-			i18next.t('registerAction.saveEvent', 'Register and save event'),
+			i18n('loginAction.saveEvent', 'Login and save event'),
+			i18n('registerAction.saveEvent', 'Register and save event'),
 			async () => {
 				try {
 					eventId = await EventsMethods.save({
@@ -404,7 +404,7 @@ Template.eventEdit.events({
 					if (isNew) {
 						Router.go('showEvent', { _id: eventId });
 						Alert.success(
-							i18next.t('message.eventCreated', 'The event "{TITLE}" has been created!', {
+							i18n('message.eventCreated', 'The event "{TITLE}" has been created!', {
 								TITLE: editevent.title,
 							}),
 						);
@@ -428,7 +428,7 @@ Template.eventEdit.events({
 						);
 					} else {
 						Alert.success(
-							i18next.t(
+							i18n(
 								'message.eventChangesSaved',
 								'Your changes to the event "{TITLE}" have been saved.',
 								{ TITLE: editevent.title },
@@ -438,7 +438,7 @@ Template.eventEdit.events({
 
 					if (updateReplicasInfos || updateReplicasTime) {
 						Alert.success(
-							i18next.t(
+							i18n(
 								'eventEdit.replicatesUpdated',
 								'The replicas of "{TITLE}" have also been updated.',
 								{ TITLE: editevent.title },
