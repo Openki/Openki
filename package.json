@@ -15,7 +15,6 @@
     "bootstrap-datepicker": "1.9.0",
     "bootstrap-sass": "3.4.1",
     "es6-promisify": "7.0.0",
-    "events": "1.1.1",
     "i18next": "20.6.1",
     "i18next-chained-backend": "3.0.2",
     "i18next-icu": "2.0.3",
@@ -32,12 +31,11 @@
     "moment": "2.29.1",
     "moment-timezone": "0.5.33",
     "node-schedule": "2.0.0",
-    "postcss": "8.2.15",
-    "postcss-load-config": "3.0.1",
+    "postcss": "8.3.6",
+    "postcss-load-config": "3.1.0",
     "sanitize-html": "2.5.0",
     "seedrandom": "3.0.5",
-    "shariff": "3.2.1",
-    "url": "0.11.0"
+    "shariff": "3.2.1"
   },
   "devDependencies": {
     "@types/bootstrap": "5.1.4",
@@ -72,7 +70,7 @@
     "stylelint-config-prettier": "8.0.2",
     "stylelint-config-sass-guidelines": "8.0.0",
     "stylelint-prettier": "1.2.0",
-    "typescript": "4.2.2"
+    "typescript": "4.3.5"
   },
   "scripts": {
     "dev": "npm run extract-translations && npm run type-check && meteor --inspect --settings settings/dev.json",
