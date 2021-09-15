@@ -3,6 +3,7 @@ import ICU from 'i18next-icu';
 import ChainedBackend from 'i18next-chained-backend';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import LocalStorageBackend from 'i18next-localstorage-backend';
+import { Languages } from '/imports/api/languages/languages';
 
 // eslint-disable-next-line no-constant-condition
 if (false) {
@@ -61,6 +62,11 @@ i18next
 		},
 	});
 
+if (Meteor.isServer) {
+	// pre load all languages on the server.
+	i18next.loadLanguages(Object.keys(Languages));
+}
+
 /**
  * A reactive store that changed after a lang has changed and is ready (eg. after resource loading).
  * It is used to update string in the ui after without reloading the page
@@ -72,9 +78,12 @@ i18next.on('languageChanged', function () {
 i18next.on('loaded', function () {
 	reactiveLang.set(Math.random());
 });
+
+/**
+ * A reactive wrapper for i18next.t
+ */
 export const i18n: TFunction = (...args: any) => {
 	reactiveLang.get();
-	// Wrap i18next.t to make it reactive
 	return (i18next.t as any)(...args);
 };
 

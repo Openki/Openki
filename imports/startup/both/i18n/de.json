@@ -477,7 +477,7 @@
 	"notification.event.mail.titleDescription": "Beschrieb",
 	"notification.event.mail.unsubscribe": "Vom Kurs abmelden",
 	"notification.event.viewEvent": "Event anzeigen:",
-	"notification.join.mail.intro": "{USER} ist dem Kurs {COURSE} gerade als {ROLE} beigetreten.",
+	"notification.join.mail.intro": "{USERNAME} ist dem Kurs {COURSE} gerade als {ROLE} beigetreten.",
 	"notification.join.mail.linktext": "➜ Kurs anschauen",
 	"notification.join.mail.message": "Sie hinterliessen folgende Nachricht:",
 	"notification.join.mail.profileLink": "Besuche dein Profil",
