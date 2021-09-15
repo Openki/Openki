@@ -95,7 +95,7 @@
     "comment.delete.error": "Kommentar konnte nicht gelöscht werden. Grund: {ERROR}",
     "comment.delete.header": "Kommentar löschen",
     "comment.saving.error": "Dein Kommentar konnte nicht gespeichert werden. Sorry. Fehlerbeschreibung: {ERROR}",
-    "course.compact.interestedCount": "{NUM, plural, =0 {Keiner ist} one {Eine Person ist} other {# Personen sind}} interessiert",
+    "course.compact.interestedCount": "{NUM, plural, =0{Keiner ist} one{Eine Person ist} other{# Personen sind} } interessiert",
     "course.compact.interestedCountOwn": "und du bist einer von ihnen",
     "course.compact.membersCount": "Hat {NUM, plural, =0 {keine Mitlernenden} one {eine_n Mitlernende_n} other {# Mitlernende}}",
     "course.compact.youAreInterested": "Du bist interessiert",
@@ -365,7 +365,7 @@
     "introduction.more": "Mehr Infos:",
     "kiosk.future": "Zukünftige Veranstaltungen:",
     "kiosk.noFutureEvents": "Es gibt keine zukünftigen Veranstaltungen",
-    "kiosk.ongoing": "{NUM, plural, one {Eine laufende Veranstaltung} other {# laufende Veranstaltungen:} }",
+    "kiosk.ongoing": "{NUM, plural, one{Eine laufende Veranstaltung} other{# laufende Veranstaltungen:} }",
     "kiosk.started": "Angefangen",
     "kiosk.today": "{NUM, plural, one {Eine Veranstaltung} other {# Veranstaltungen} } später Heute:",
     "language.german": "Deutsch",
@@ -688,5 +688,9 @@
     "warning.noUserName": "Bitte einen Benutzernamen eingeben.",
     "warning.userExists": "Dieser Benutzername existiert bereits. Bitte wähle einen anderen.",
     "welcome": "Willkommen bei Meteor!",
-    "course.propose.CourseInfo": "Du entscheidest, was und wie du lernen oder unterrichten möchtest. Ein {SITENAME} Kurs kann alles von einer einfachen Idee über eine einzelnen Workshop bis hin zu einer organisierten Reihe von Veranstaltungen sein. Mehr Informationen findest du hier:"
+    "course.propose.CourseInfo": "Du entscheidest, was und wie du lernen oder unterrichten möchtest. Ein {SITENAME} Kurs kann alles von einer einfachen Idee über eine einzelnen Workshop bis hin zu einer organisierten Reihe von Veranstaltungen sein. Mehr Informationen findest du hier:",
+    "category.foreignlanguages": "Fremdsprachen",
+    "category.digitaldidactics": "Digitale Didaktik",
+    "category.blendedlearning": "Blended Learning",
+    "category.basicskills": "Grundkompetenzen"
 }
