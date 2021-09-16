@@ -60,7 +60,14 @@ template.onCreated(function () {
 	instance.onDrop = async (file: File) => {
 		let rezisedFile;
 		if (instance.data.maxSize) {
-			rezisedFile = await reduce().toBlob(file, { max: instance.data.maxSize });
+			try {
+				rezisedFile = await reduce().toBlob(file, { max: instance.data.maxSize });
+			} catch (ex) {
+				console.info(
+					`Some browsers do not support this. It is okay to use the original. Errormessage: ${ex}`,
+				);
+				rezisedFile = file;
+			}
 		} else {
 			rezisedFile = file;
 		}
