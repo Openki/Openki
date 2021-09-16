@@ -1,6 +1,7 @@
 import path from 'path';
 import AWS from 'aws-sdk';
 import mime from 'mime-types';
+import urljoin from 'url-join';
 import { Mongo } from 'meteor/mongo';
 
 import { PrivateSettings } from './PrivateSettings';
@@ -28,7 +29,7 @@ export interface UploadFile {
 }
 
 export function generatePublicUrl(fullFileName: string) {
-	return new URL(fullFileName, PublicSettings.s3.publicUrlBase).href;
+	return urljoin(PublicSettings.s3.publicUrlBase, fullFileName);
 }
 
 export function upload(directoryName: string, file: UploadFile) {

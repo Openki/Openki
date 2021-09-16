@@ -37,7 +37,7 @@ check(
 		avatarLogo: { src: String, alt: String },
 		ogLogo: { src: String },
 		emailLogo: String,
-		regionSelection: { minNumber: Match.Maybe(Number), aboutLink: Match.Maybe(LocalisedValue) },
+		regionSelection: { minNumber: Number, aboutLink: Match.Maybe(LocalisedValue) },
 		i18nHelpLink: Match.Maybe(LocalisedValue),
 		publicTenants: StringArray,
 		pricePolicyEnabled: Boolean,

@@ -264,6 +264,7 @@
   "discussionPost.deleted": "Comment has been deleted.",
   "editable.add_text": "Add text here",
   "editable.link.placeholder": "Paste link here...",
+  "editableImage.accept.error": "Only images are allowed.",
   "email.verified": "Your e-mail has been verified.",
   "emailrequest.text.greeting": "Hey \"{NAME}\"",
   "emailrequest.text.para1": "We’ve noticed that you did not provide your e-mail address yet.",
