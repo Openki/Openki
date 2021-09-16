@@ -27,30 +27,19 @@ Accounts.emailTemplates.verifyEmail.subject = function (user) {
 };
 
 Accounts.emailTemplates.verifyEmail.text = function (user, url) {
-	return `${i18n('verifyEmail.email.gretting', 'Hi {NAME}', { NAME: user.username })}
+	return `${i18n('verifyEmail.email.gretting', { NAME: user.username })}
 	
-${i18n('verifyEmail.email.introduction', "We're happy that you are part of the {SITE} community.", {
+${i18n('verifyEmail.email.introduction', {
 	SITE: Accounts.emailTemplates.siteName,
 })}
 
-${i18n(
-	'verifyEmail.email.verification',
-	"You can click this link to verify your email address. This helps us knowing you're a real person. :)",
-)}
+${i18n('verifyEmail.email.verification')}
 ${url}
 
-${i18n('verifyEmail.email.farewell', 'Sincerely')}
-${i18n(
-	'verifyEmail.email.postscript',
-	"Your ever so faithful {SITE} living on a virtual chip in a server farm (it's cold here)",
-	{ SITE: Accounts.emailTemplates.siteName },
-)}
+${i18n('verifyEmail.email.farewell')}
+${i18n('verifyEmail.email.postscript', { SITE: Accounts.emailTemplates.siteName })}
 
-${i18n(
-	'verifyEmail.email.unexpected',
-	"If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}",
-	{ REPORTEMAIL: PrivateSettings.reporter.recipient },
-)}`;
+${i18n('verifyEmail.email.unexpected', { REPORTEMAIL: PrivateSettings.reporter.recipient })}`;
 };
 
 Accounts.emailTemplates.verifyEmail.html = function (user, url) {
@@ -81,28 +70,21 @@ Accounts.urls.resetPassword = function (token) {
 };
 
 Accounts.emailTemplates.resetPassword.text = function (user, url) {
-	return `${i18n('resetPassword.email.gretting', 'Hi {NAME}', { NAME: user.username })}
+	return `${i18n('resetPassword.email.gretting', { NAME: user.username })}
 				
-${i18n('resetPassword.email.introduction', 'You requested to reset your password on {SITE}.', {
+${i18n('resetPassword.email.introduction', {
 	SITE: Accounts.emailTemplates.siteName,
 })}
 
-${i18n(
-	'resetPassword.email.verification',
-	'You can click on this link to reset your password. If you did not request this message, you can safely delete it.',
-)}
+${i18n('resetPassword.email.verification')}
 ${url}
 
-${i18n('resetPassword.email.farewell', 'Regards')}
-${i18n('resetPassword.email.postscript', '{SITE} server at your service', {
+${i18n('resetPassword.email.farewell')}
+${i18n('resetPassword.email.postscript', {
 	SITE: Accounts.emailTemplates.siteName,
 })}
 
-${i18n(
-	'resetPassword.email.unexpected',
-	"If you don't know why you got this mail, ignore it or send us a notification to: {REPORTEMAIL}",
-	{ REPORTEMAIL: PrivateSettings.reporter.recipient },
-)}`;
+${i18n('resetPassword.email.unexpected', { REPORTEMAIL: PrivateSettings.reporter.recipient })}`;
 };
 
 Accounts.emailTemplates.resetPassword.html = function (user, url) {
