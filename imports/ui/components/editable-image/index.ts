@@ -1,8 +1,8 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
-
 import reduce from 'image-blob-reduce';
+
 
 import './template.html';
 import './styles.scss';
@@ -63,6 +63,7 @@ template.onCreated(function () {
 			try {
 				rezisedFile = await reduce().toBlob(file, { max: instance.data.maxSize });
 			} catch (ex) {
+				// eslint-disable-next-line no-console
 				console.info(
 					`Some browsers do not support this. It is okay to use the original. Errormessage: ${ex}`,
 				);
