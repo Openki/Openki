@@ -10,7 +10,7 @@ base64@1.0.12
 email@2.1.1
 iron:router
 meteorhacks:ssr
-shell-server@0.5.0                  # Server-side component of the `meteor shell` command
+shell-server@0.5.0            # Server-side component of the `meteor shell` command
 kadira:dochead
 session@1.2.0
 underscore@1.0.10
