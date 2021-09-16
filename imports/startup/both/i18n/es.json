@@ -136,7 +136,6 @@
 	"kiosk.ongoing": "{NUM, plural, one {Un evento actual:} other {# eventos actuales:} }",
 	"kiosk.today": "{NUM, plural, one {Un evento} other {# eventos} } hoy mas tarde:",
 	"loading.loading": "Cargando...",
-	"location.edit.edit_location": "Editar lugar",
 	"login.frame.settings": "Configuración de la cuenta",
 	"login.login.submit": "Iniciar sesión",
 	"login.logout": "Salir",
