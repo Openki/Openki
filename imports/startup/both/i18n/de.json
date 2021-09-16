@@ -22,6 +22,8 @@
 	"adminPanel.heading": "Admin-Bereich",
 	"adminPanel.pleaseLogin": "Nur für Administratoren",
 	"adminPanel.tasks.log": "Log anzeigen",
+	"adminPanel.tasks.stats": "Statistiken",
+	"adminPanel.tasks.tenants": "Organisationen",
 	"adminPanel.tasks.users": "BenutzerInnen",
 	"adminPanel.tasks.venues": "Veranstaltungsorte",
 	"backToKiosk": "Zurück zur Übersicht",
