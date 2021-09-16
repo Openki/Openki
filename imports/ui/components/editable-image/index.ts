@@ -1,7 +1,7 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
-import reduce from 'image-blob-reduce';
+import ImageBlobReduce from 'image-blob-reduce';
 import { i18n } from '/imports/startup/both/i18next';
 
 import * as Alert from '/imports/api/alerts/alert';
@@ -68,7 +68,9 @@ template.onCreated(function () {
 		let rezisedFile;
 		if (instance.data.maxSize) {
 			try {
-				rezisedFile = await reduce().toBlob(file, { max: instance.data.maxSize });
+				rezisedFile = await new ImageBlobReduce({
+					pica: ImageBlobReduce.pica({ features: ['js', 'wasm'] }),
+				}).toBlob(file, { max: instance.data.maxSize });
 			} catch (ex) {
 				// eslint-disable-next-line no-console
 				console.info(
