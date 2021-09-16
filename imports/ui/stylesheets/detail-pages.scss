@@ -107,6 +107,7 @@
 .details-form-element:nth-child(2):nth-last-child(1) {
 	@include td-make-sm-column(6);
 	padding: 0;
+	width: 100%;
 }
 
 .details-form-element:nth-child(1):nth-last-child(2) {
