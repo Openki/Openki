@@ -2,7 +2,8 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import reduce from 'image-blob-reduce';
+import ImageBlobReduce from 'image-blob-reduce';
+import Pica from 'pica';
 
 import './template.html';
 import './styles.scss';
@@ -60,7 +61,19 @@ template.onCreated(function () {
 	instance.onDrop = async (file: File) => {
 		let rezisedFile;
 		if (instance.data.maxSize) {
-			rezisedFile = await reduce().toBlob(file, { max: instance.data.maxSize });
+			try {
+				rezisedFile = await new ImageBlobReduce().toBlob(file, { max: instance.data.maxSize });
+			} catch (ex) {
+				console.info("blocked "+ ex)
+				try {
+					rezisedFile = await new ImageBlobReduce(
+						new Pica({ features: ['js', 'wasm', 'cib', 'ww'] }),
+					).toBlob(file, { max: instance.data.maxSize });
+				} catch (ex2) {
+					console.info("s. blocked "+ ex2)
+					rezisedFile = file;
+				}
+			}
 		} else {
 			rezisedFile = file;
 		}
