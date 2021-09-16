@@ -387,7 +387,6 @@
 	"loading.loading": "Chargement...",
 	"location.details.hosts": "Hosts:",
 	"location.details.online": "site internet:",
-	"location.edit.hosts_admins": "Hôtes.ses/Administrateurs.trices:",
 	"location.edit.route": "Itinéraire:",
 	"location.link.tooltip": "Montrer les détails de {VENUE}",
 	"log.list.windowtitle": "Log",
