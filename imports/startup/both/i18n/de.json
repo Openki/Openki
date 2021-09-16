@@ -269,7 +269,7 @@
 	"event.editVenue.pleaseContactHost": "Bitte kontaktier die/den Host dieses Veranstaltungsorts um dich über die freien Zeiten und andere Details zu erkundigen:",
 	"event.group.addText": "Eine Gruppe verlinken",
 	"event.group.confirmOrgNotes": "Alle Mitglieder dieser Gruppe können dann diese Veranstaltung bearbeiten.",
-	"event.group.confirmRemoveText": "Gruppe {NAME} von dieser Veranstaltung entfernen?\n",
+	"event.group.confirmRemoveText": "Gruppe {NAME} von dieser Veranstaltung entfernen?",
 	"event.list.windowtitle": "Veranstaltungen",
 	"event.participants.showMoreParticipants": "Mehr Teilnehmende anzeigen",
 	"event.reallydelete": "Bitte bestätige, dass du diese Veranstaltung löschen möchtest. Dies kann nicht rückgängig gemacht werden.",
