@@ -148,7 +148,6 @@
 	"kiosk.today": "{NUM, plural, one {Ét møde} other {# møder} } senere i dag:",
 	"loading.loading": "Loading...",
 	"location.details.online": "Online:",
-	"location.edit.visible_in_list": "Synlig i liste (kan kontaktes af andre brugere)",
 	"login.frame.settings": "Kontoindstillinger",
 	"login.frame.welcome": "Velkommen {NAME}!",
 	"login.login.submit": "Login",

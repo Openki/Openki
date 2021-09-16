@@ -308,7 +308,6 @@
 	"loading.loading": "Laddar...",
 	"location.details.hosts": "Värd:",
 	"location.details.online": "Hemsida:",
-	"location.edit.route": "Färdväg:",
 	"location.link.tooltip": "Visa detaljer om {VENUE}",
 	"log.list.windowtitle": "Logg",
 	"login.OAuth.busy": "Loggar in med ",
