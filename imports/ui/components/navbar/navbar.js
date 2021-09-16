@@ -9,7 +9,7 @@ import { Regions } from '/imports/api/regions/regions';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
-import PublicSettings from '/imports/utils/PublicSettings';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
 import '/imports/ui/components/regions/selection/region-selection';
 import '/imports/ui/components/language-selection/language-selection';

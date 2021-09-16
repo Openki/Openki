@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
@@ -112,9 +112,9 @@ template.events({
 		try {
 			await instance.data.onDelete();
 
-			Alert.success(mf('region.removed', { NAME: region.name }, 'Removed region "{NAME}".'));
+			Alert.success(i18n('region.removed', 'Removed region "{NAME}".', { NAME: region.name }));
 		} catch (err) {
-			Alert.serverError(err, mf('region.deleting.error', 'Deleting the region went wrong'));
+			Alert.serverError(err, i18n('region.deleting.error', 'Deleting the region went wrong'));
 		} finally {
 			instance.busy(false);
 		}

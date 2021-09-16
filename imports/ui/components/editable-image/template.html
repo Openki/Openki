@@ -1,0 +1,56 @@
+<template name="editableImage">
+	{{#unless (stateEquals 'progress' 'display')}}
+		<form enctype="multipart/form-data" novalidate
+			  class="text-center editable-image{{#if (state 'supportsDragndrop')}} supports-dragndrop{{/if}}{{#if (state 'dragover')}} is-dragover{{/if}}">
+			<input type="file" accept="image/*" class="d-none" id="file" />
+			<label for="file">
+				<div class="mb-1">
+					{{#if (state 'preview')}}
+						<img src="{{state 'preview'}}" />
+					{{else if thumbnail}}
+						<img src="{{thumbnail}}" />
+					{{else}}
+						<i class="fa fa-image fa-5x" aria-hidden="true"></i>
+					{{/if}}
+				</div>
+				{{#if (state 'dragover')}}
+					<div class="editable-image-drop">
+						{{i18n 'fileUpload.drop.text' "Drop it like it's hot!"}}
+					</div>
+				{{else}}
+					{{#if (stateEquals 'progress' 'edit')}}
+						<span
+							  class="btn btn-secondary">{{i18n 'fileUpload.choose.text' 'Choose a file'}}</span>
+							{{#if (state 'supportsDragndrop')}}
+								<br>
+								<span
+									  class="editable-image-dragndrop">{{i18n 'fileUpload.drag.text' 'or drag it here'}}</span>
+							{{/if}}
+					{{else if (stateEquals 'progress' 'uploading')}}
+						<div class="editable-image-uploading">
+							{{i18n 'fileUpload.uploading.text' 'Uploading...'}}
+						</div>
+					{{else if (stateEquals 'progress' 'ready')}}
+						{{fileName}}
+					{{/if}}
+				{{/if}}
+			</label>
+		</form>
+		<div class='editable-image-controls'>
+			{{#if (stateEquals 'progress' 'ready')}}
+				{{> buttonSave event="js-editable-image-upload"}}
+			{{/if}}
+			{{> buttonCancel event="js-editable-image-cancel"}}
+		</div>
+	{{else}}
+		<div>
+			{{#if thumbnail}}
+				<img class="cursor-pointer js-editable-image-edit" src="{{thumbnail}}" />
+			{{else}}
+				<i class="fa fa-image fa-5x cursor-pointer js-editable-image-edit"
+				   aria-hidden="true"></i>
+			{{/if}}
+			<span class="align-top fa fa-pencil cursor-pointer js-editable-image-edit"></span>
+		</div>
+	{{/unless}}
+</template>

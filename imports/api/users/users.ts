@@ -87,7 +87,6 @@ export interface UserEntity extends Meteor.User {
 	contribution?: Date;
 
 	lastLogin: Date;
-	/** This value is managed by the messageformat package */
 	locale: string;
 	/** True if the user wants automated notification mails sent to them */
 	notifications: boolean;

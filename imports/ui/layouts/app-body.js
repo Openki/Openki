@@ -17,28 +17,18 @@ import '/imports/ui/components/account-tasks/account-tasks';
 import '/imports/ui/components/alerts/alerts';
 import '/imports/ui/components/email-request';
 import '/imports/ui/components/email-validation';
-import '/imports/ui/components/featured-group/featured-group';
+import '/imports/ui/components/featured-group';
 import '/imports/ui/components/footer/footer';
 import '/imports/ui/components/introduction/introduction';
 import '/imports/ui/components/kiosk-link/kiosk-link';
 import '/imports/ui/components/navbar/navbar';
 import '/imports/ui/components/regions/splash/region-splash';
-import '/imports/ui/components/translate-info/translate-info';
 
 import './app-body.html';
 
 Template.layout.helpers({
 	testWarning() {
 		return Meteor.settings.public.testWarning;
-	},
-
-	translate() {
-		const { route } = Router.current();
-		return route?.getName() === 'mfTrans';
-	},
-
-	mayTranslate() {
-		return Boolean(Meteor.user());
 	},
 
 	showRegionSplash() {

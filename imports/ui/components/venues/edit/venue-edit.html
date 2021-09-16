@@ -1,33 +1,34 @@
 <template name="venueEdit">
 	<div class="edit-page venue-edit">
 		{{#if _id}}
-			<h2>{{mf 'venue.edit.title' 'Edit venue'}}</h2>
+			<h2>{{i18n 'venue.edit.title' 'Edit venue'}}</h2>
 		{{else}}
-			<h2>{{mf 'venue.edit.titleCreate' 'Create new venue'}}</h2>
+			<h2>{{i18n 'venue.edit.titleCreate' 'Create new venue'}}</h2>
 		{{/if}}
 		<form>
 			<div class="mb-3">
-				<label class="form-label">{{mf 'venue.edit.name' 'Name:'}}</label>
+				<label class="form-label">{{i18n 'venue.edit.name' 'Name:'}}</label>
 				<input type="text" class="form-control js-name"
-					   placeholder="{{mf 'venue.edit.namePlaceholder' 'Full name of venue'}}"
+					   placeholder="{{i18n 'venue.edit.namePlaceholder' 'Full name of venue'}}"
 					   size="60" value="{{name}}">
 			</div>
 			<div class="mb-3">
-				<label class="form-label">{{mf 'venue.edit.description' 'Description:'}}</label>
+				<label class="form-label">{{i18n 'venue.edit.description' 'Description:'}}</label>
 				{{> editableTextarea editableDescription}}
 			</div>
 			{{#if showMapSelection}}
 				<div class="row gap-3 mb-3">
 					{{#if regionSelectable}}
 						<div class="col-md">
-							<label class="form-label">{{mf 'venue.edit.region' 'Region:'}}</label>
+							<label class="form-label">{{i18n 'venue.edit.region' 'Region:'}}</label>
 							<div class="input-group">
 								<span class="input-group-text">
 									<span class="fa fa-dot-circle-o fa-fw"
 										  aria-hidden="true"></span>
 								</span>
 								<select name='region' class="form-select js-region">
-									<option value=''>{{mf 'venue.edit.pls_select' 'Please select'}}
+									<option value=''>
+										{{i18n 'venue.edit.pls_select' 'Please select'}}
 									</option>
 									{{#each regions}}
 										<option value='{{_id}}'>{{name}}</option>
@@ -39,7 +40,7 @@
 					{{#if regionSelected}}
 						<div class="col-md">
 							<label
-								   class="form-label">{{mf 'venue.edit.map' 'Please add Location by klicking + (on the right inside the map)'}}</label>
+								   class="form-label">{{i18n 'venue.edit.map' 'Please add Location by klicking + (on the right inside the map)'}}</label>
 							{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
 						</div>
 					{{/if}}
@@ -47,41 +48,41 @@
 			{{/if}}
 
 			<div class="mb-3">
-				<label class="form-label">{{mf 'venue.details.address' 'Address:'}}</label>
+				<label class="form-label">{{i18n 'venue.details.address' 'Address:'}}</label>
 				<div class="input-group">
 					<span class="input-group-text">
 						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
 					</span>
 					<input class="form-control js-address"
-						   placeholder="{{mf 'venue.edit.address.placeholder' 'Street, City, State'}}"
+						   placeholder="{{i18n 'venue.edit.address.placeholder' 'Street, City, State'}}"
 						   value={{address}}>
 
 				</div>
 			</div>
 
 			<div class="mb-3">
-				<label class="form-label">{{mf 'venue.details.route'}}</label>
+				<label class="form-label">{{i18n 'venue.details.route'}}</label>
 				<div class="input-group">
 					<span class="input-group-text">
 						<span class="fa fa-map-signs"></span>
 					</span>
 					<textarea class="form-control js-route" id="editform-address"
-							  placeholder="{{mf 'venue.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left. '}}"
+							  placeholder="{{i18n 'venue.route.placeholder' 'near busstop, cross fence, then backjard, enter black door.. 23rd floor, then left.'}}"
 							  value={{route}}></textarea>
 				</div>
 			</div>
 			<div class="mb-3">
 				<label
-					   class="form-label">{{mf 'venue.edit.additionalInfo' 'Additional Info: (optional, but you will help others find the venue)'}}</label>
+					   class="form-label">{{i18n 'venue.edit.additionalInfo' 'Additional Info: (optional, but you will help others find the venue)'}}</label>
 				{{#if showAdditionalInfo}}
 					<button type="button"
 							class="btn btn-cancel btn-block js-toggle-additional-info-btn">
-						{{mf 'venue.edit.hideAdditionalInfo' 'Hide additional information'}}
+						{{i18n 'venue.edit.hideAdditionalInfo' 'Hide additional information'}}
 					</button>
 				{{else}}
 					<button type="button"
 							class="btn btn-secondary btn-block js-toggle-additional-info-btn">
-						{{mf 'venue.edit.provideAdditionalInfo' 'Fill out additional information'}}
+						{{i18n 'venue.edit.provideAdditionalInfo' 'Fill out additional information'}}
 					</button>
 				{{/if}}
 				<div {{displayAdditionalInfo}}>
@@ -99,27 +100,27 @@
 <template name="venueEditAdditionalInfo">
 	<div class="venue-edit-additional-info">
 		<div class="mb-3">
-			<label class="form-label">{{mf 'venue.edit.shortName' 'Abbreviation:'}}</label>
+			<label class="form-label">{{i18n 'venue.edit.shortName' 'Abbreviation:'}}</label>
 			<div class="input-group">
 				<span class="input-group-text">
 					<span class="fa fa-hashtag fa-fw" aria-hidden="true"></span>
 				</span>
 				<input class="form-control js-short"
-					   placeholder="{{mf 'venue.edit.short.placeholder' 'short name'}} {{mf '_inputField.optional'}}"
+					   placeholder="{{i18n 'venue.edit.short.placeholder' 'short name'}} {{i18n '_inputField.optional'}}"
 					   value="{{short}}">
 			</div>
 		</div>
 		<div class="row gap-3 mb-3">
 			<div class="col-md">
 				<label class="form-label">
-					{{mf 'venue.edit.max_ppl' 'Max. People'}}
+					{{i18n 'venue.edit.max_ppl' 'Max. People'}}
 				</label>
 				<input type="number" class="form-control js-maxPeople" size="4"
 					   value="{{maxPeople}}">
 			</div>
 			<div class="col-md">
 				<label class="form-label">
-					{{mf 'venue.edit.max_workplace' 'Max. Workplaces'}}
+					{{i18n 'venue.edit.max_workplace' 'Max. Workplaces'}}
 				</label>
 				<input type="number" class="form-control js-maxWorkplaces" size="4"
 					   value="{{maxWorkplaces}}">
@@ -127,70 +128,70 @@
 		</div>
 		<div class="row gap-3 mb-3">
 			<div class="col-md">
-				<label class="form-label">{{mf 'venue.edit.infra' 'Infrastructure:'}}</label>
+				<label class="form-label">{{i18n 'venue.edit.infra' 'Infrastructure:'}}</label>
 				<div class="form-check">
 					<input {{facilitiesCheck 'projector'}} id="venueEditProjectorCheck">
 					<label class="form-check-label" for="venueEditProjectorCheck">
-						{{mf 'venue.edit.projector' 'Projector'}}
+						{{i18n 'venue.edit.projector' 'Projector'}}
 					</label>
 				</div>
 				<div class="form-check">
 					<input {{facilitiesCheck 'screen'}} id="venueEditScreenCheck">
 					<label class="form-check-label" for="venueEditScreenCheck">
-						{{mf 'venue.edit.screen' 'Screen'}}
+						{{i18n 'venue.edit.screen' 'Screen'}}
 					</label>
 				</div>
 				<div class="form-check">
 					<input {{facilitiesCheck 'audio'}} id="venueEditAudioCheck">
 					<label class="form-check-label" for="venueEditAudioCheck">
-						{{mf 'venue.edit.audioSystem' 'Audio System'}}
+						{{i18n 'venue.edit.audioSystem' 'Audio System'}}
 					</label>
 				</div>
 				<div class="form-check">
 					<input {{facilitiesCheck 'blackboard'}} id="venueEditBlackboardCheck">
 					<label class="form-check-label" for="venueEditBlackboardCheck">
-						{{mf 'venue.edit.blackboard' 'Blackboard'}}
+						{{i18n 'venue.edit.blackboard' 'Blackboard'}}
 					</label>
 				</div>
 				<div class="form-check">
 					<input {{facilitiesCheck 'whiteboard'}} id="venueEditWhiteboardCheck">
 					<label class="form-check-label" for="venueEditWhiteboardCheck">
-						{{mf 'venue.edit.whiteboard' 'Whiteboard'}}
+						{{i18n 'venue.edit.whiteboard' 'Whiteboard'}}
 					</label>
 				</div>
 				<div class="form-check">
 					<input {{facilitiesCheck 'flipchart'}} id="venueEditFlipchartCheck">
 					<label class="form-check-label" for="venueEditFlipchartCheck">
-						{{mf 'venue.edit.flipchart' 'Flipchart'}}
+						{{i18n 'venue.edit.flipchart' 'Flipchart'}}
 					</label>
 				</div>
 				<div class="form-check">
 					<input {{facilitiesCheck 'wifi'}} id="venueEditWifiCheck">
 					<label class="form-check-label" for="venueEditWifiCheck">
-						{{mf 'venue.edit.wifi' 'Wifi'}}
+						{{i18n 'venue.edit.wifi' 'Wifi'}}
 					</label>
 				</div>
 				<div class="form-check">
 					<input {{facilitiesCheck 'kitchen'}} id="venueEditKitchenCheck">
 					<label class="form-check-label" for="venueEditKitchenCheck">
-						{{mf 'venue.edit.kitchen' 'Kitchen'}}
+						{{i18n 'venue.edit.kitchen' 'Kitchen'}}
 					</label>
 				</div>
 				<div class="form-check">
 					<input {{facilitiesCheck 'wheelchairs'}} id="venueEditWheelchairsCheck">
 					<label class="form-check-label" for="venueEditWheelchairsCheck">
-						{{mf 'venue.edit.suitableForWheelchairs' 'Suitable for wheelchairs'}}
+						{{i18n 'venue.edit.suitableForWheelchairs' 'Suitable for wheelchairs'}}
 					</label>
 				</div>
 			</div>
 			<div class="col-md">
 				<label
-					   class="form-label">{{mf 'venue.edit.additionalEquipment' 'Additional equipment:'}}</label>
+					   class="form-label">{{i18n 'venue.edit.additionalEquipment' 'Additional equipment:'}}</label>
 				<textarea class="form-control js-otherFacilities">{{otherFacilities}}</textarea>
 			</div>
 		</div>
 		<div class="mb-3">
-			<label class="form-label">{{mf 'venue.edit.website' 'Website:'}}</label>
+			<label class="form-label">{{i18n 'venue.edit.website' 'Website:'}}</label>
 			<div class="input-group">
 				<span class="input-group-text">
 					<span class="fa fa-globe fa-fw" aria-hidden="true"></span>

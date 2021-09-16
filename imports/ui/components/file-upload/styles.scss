@@ -1,0 +1,47 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.file-upload {
+	background-color: $blue-lighter;
+	font-size: 1.25rem;
+	padding: 50px 20px;
+	position: relative;
+}
+.file-upload.supports-dragndrop {
+	outline: 2px dashed #92b0b3;
+	outline-offset: -10px;
+
+	transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
+}
+.file-upload.is-dragover {
+	background-color: $white;
+	outline-color: $blue-lighter;
+	outline-offset: -20px;
+}
+
+.file-upload-drop {
+	font-weight: bold;
+}
+
+.file-upload-uploading {
+	font-style: italic;
+}
+
+.file-upload label {
+	cursor: pointer;
+	display: inline-block;
+	max-width: 80%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.file-upload label:hover strong {
+	color: $blue;
+}
+
+.file-upload-controls {
+	margin-left: 10px;
+	margin-top: 7px;
+	position: absolute;
+	z-index: 1069;
+}

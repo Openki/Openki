@@ -3,26 +3,27 @@ This file descripts all configurations and customization options. Remove the com
 ```
 {
 	"admins": ["greg"], // User Administrator Accounts
-	"prng": "", // Use the "static" value to define that a static seed should be used for test data
+	"prng": "", // Pseudo-Random Number Generator, use the "static" value to define that a static seed should be used for test data
 	"testdata": true, // Generates test data, is not needed for the productive system
 	"public": {
 		"siteName": "Openki-clone",
 		"siteStage": "beta", // The text top left at the logo
 		"testWarning": true, // Shows a banner saying that this is only for testing
-		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner
-		"headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner from the /kiosk/events/ page
+		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner. Can be a logo from the /public/logo/* folder or a base64 encoded string.
+		"headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the /public/logo/* folder or a base64 encoded string.
 		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" }, // The default image used for avatars (color is changed using the CSS filter 'hue-rotate')
 		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media
-		"emailLogo": "emails/openki.png",
+		"emailLogo": "emails/openki.png", // Can be a logo from the /private/* folder or a base64 encoded string.
 		"regionSelection": {
 			"minNumber": 5, // The minimum number of regions displayed in the Regions selection. Default: 5
-			"aboutLink": "" // A link to a page that explains regions, if not set then none link is shown.
+			"aboutLink": "" // A link to a page that explains regions, if not set then none link is shown. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		},
+		"i18nHelpLink": "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto" // A link to a page that give instructions how to translate. Default: "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto", Set this value to "" to hide the link in the UI. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"matomo": {
 			"url": "https://analytics.mydomain.com/",
 			"site": 1 // Matomo id
 		},
-		"pricePolicyEnabled": true, // by true, show only indicative prices (DE: Richtpreise)
+		"pricePolicyEnabled": true, // by true, show only indicative prices (DE: Richtpreise), default is true
 		"feature": {
 			"login": { // toggle visibility of login services
 				"google": true,
@@ -73,6 +74,9 @@ This file descripts all configurations and customization options. Remove the com
 					"subcategoryname1",
 					"subcategoryname2"
 				],
+		},
+		"s3": { // file storage
+			"publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name"
 		}
 	},
 	"siteEmail": "" // Sender e-mail address in mails
@@ -92,6 +96,13 @@ This file descripts all configurations and customization options. Remove the com
 			"clientId": "01234-xyz123.apps.googleusercontent.com",
 			"secret": "XYz_123"
 		}
+	},
+	"s3": { // file storage
+		"region": "nine-cz42",
+		"bucketEndpoint": "https://984b.objectstorage.nineapis.ch/bucket-name",
+		"bucketName": "bucket-name",
+		"accessKeyId": "abcd1234",
+		"secretAccessKey": "123abcd"
 	},
 	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }, // That web pages are pre-rendered for webcrawlers on the server side so that no client code has to be executed
 	"startup": { "buildDbCacheAsync": true }, // Build the cache in the db async or sync. For larger databases it takes a long time until all fields are updated, during this time the startup is blocked. The users cannot use the website. Because in a normal startup the database already has these fields, this task can also be done async.

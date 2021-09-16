@@ -1,4 +1,4 @@
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
@@ -22,7 +22,7 @@ const TemplateBase = TemplateAny as TemplateStaticTyped<
 const Template = TemplateMixins.FormfieldErrors(TemplateBase, 'report', {
 	reportMessage: {
 		text: () =>
-			mf(
+			i18n(
 				'report.warning.tooShort',
 				'The report message is too short! Please write more than 5 characters.',
 			),
@@ -69,13 +69,13 @@ template.events({
 		try {
 			await emailMethods.report(document.title, window.location.href, navigator.userAgent, message);
 			Alert.success(
-				mf(
+				i18n(
 					'report.confirm',
 					'Your report was sent. A human will try to find an appropriate solution.',
 				),
 			);
 		} catch (err) {
-			Alert.serverError(err, mf('report.notSent', 'Your report could not be sent'));
+			Alert.serverError(err, i18n('report.notSent', 'Your report could not be sent'));
 		} finally {
 			instance.state.set('');
 		}

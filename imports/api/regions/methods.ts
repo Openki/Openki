@@ -165,7 +165,7 @@ export const featureGroup = ServerMethod(
 export const unsetFeaturedGroup = ServerMethod('region.unsetFeaturedGroup', (regionId: string) => {
 	check(regionId, String);
 
-	Regions.update(regionId, { $set: { featuredGroup: undefined } });
+	Regions.update(regionId, { $set: { featuredGroup: '' } });
 });
 
 Meteor.methods({

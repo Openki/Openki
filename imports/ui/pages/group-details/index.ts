@@ -1,10 +1,10 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
-import { GroupEntity, Groups } from '/imports/api/groups/groups';
+import { GroupModel, Groups } from '/imports/api/groups/groups';
 import * as GroupsMethods from '/imports/api/groups/methods';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
@@ -26,7 +26,7 @@ import './styles.scss';
 const TemplateBase = TemplateAny as TemplateStaticTyped<
 	{
 		courseQuery: any;
-		group: GroupEntity | (Partial<GroupEntity> & { _id: 'create' });
+		group: GroupModel | (Partial<GroupModel> & { _id: 'create' });
 		isNew: boolean;
 		showCourses: boolean;
 	},
@@ -43,7 +43,7 @@ const TemplateBase = TemplateAny as TemplateStaticTyped<
 
 const Template = TemplateMixins.FormfieldErrors(TemplateBase, 'groupDetailsPage', {
 	emptyField: {
-		text: () => mf('group.details.error.allMandatory', 'All four fields are mandatory.'),
+		text: () => i18n('group.details.error.allMandatory', 'All four fields are mandatory.'),
 		field: 'all',
 	},
 });
@@ -64,26 +64,22 @@ template.onCreated(function () {
 		clientValidations: [
 			{
 				check: (text) => !!text,
-				errorMessage: () => mf('group.details.error.allMandatory'),
+				errorMessage: () => i18n('group.details.error.allMandatory'),
 			},
 		],
 		onSuccess: () => {
 			Alert.success(
-				mf(
-					'groupDetails.changesSaved',
-					{ GROUP: group?.name },
-					'Your changes to the group "{GROUP}" have been saved.',
-				),
+				i18n('groupDetails.changesSaved', 'Your changes to the group "{GROUP}" have been saved.', {
+					GROUP: group?.name,
+				}),
 			);
 		},
 		onError: (err) => {
 			Alert.serverError(
 				err,
-				mf(
-					'groupDetails.saveError',
-					{ GROUP: group?.name },
-					'Saving the group "{GROUP}" went wrong',
-				),
+				i18n('groupDetails.saveError', 'Saving the group "{GROUP}" went wrong', {
+					GROUP: group?.name,
+				}),
 			);
 		},
 	};
@@ -92,7 +88,7 @@ template.onCreated(function () {
 
 	instance.editableName = new Editable(
 		true,
-		mf('group.name.placeholder', 'Name of your group, institution, community or program'),
+		i18n('group.name.placeholder', 'Name of your group, institution, community or program'),
 		showControls
 			? {
 					...handleSaving,
@@ -105,7 +101,7 @@ template.onCreated(function () {
 
 	instance.editableShort = new Editable(
 		true,
-		mf('group.short.placeholder', 'Abbreviation'),
+		i18n('group.short.placeholder', 'Abbreviation'),
 		showControls
 			? {
 					...handleSaving,
@@ -118,7 +114,7 @@ template.onCreated(function () {
 
 	instance.editableClaim = new Editable(
 		true,
-		mf('group.claim.placeholder', 'The core idea'),
+		i18n('group.claim.placeholder', 'The core idea'),
 		showControls
 			? {
 					...handleSaving,
@@ -131,7 +127,7 @@ template.onCreated(function () {
 
 	instance.editableDescription = new Editable(
 		false,
-		mf(
+		i18n(
 			'group.description.placeholder',
 			'Describe the audience, the interests and activities of your group.',
 		),
@@ -147,7 +143,7 @@ template.onCreated(function () {
 
 	instance.autorun(() => {
 		const data = Template.currentData();
-		const currentGroup = Groups.findOne(groupId) || ({} as Partial<GroupEntity>);
+		const currentGroup = Groups.findOne(groupId) || ({} as Partial<GroupModel>);
 		const userId = Meteor.userId();
 		const mayEdit = data.isNew || !!(userId && isGroupMember(userId, groupId));
 		instance.mayEdit.set(mayEdit);
@@ -238,8 +234,8 @@ template.events({
 		instance.busy('saving');
 		SaveAfterLogin(
 			instance,
-			mf('loginAction.saveGroup', 'Login and save group'),
-			mf('registerAction.saveGroup', 'Register and save group'),
+			i18n('loginAction.saveGroup', 'Login and save group'),
+			i18n('registerAction.saveGroup', 'Register and save group'),
 			async () => {
 				try {
 					const groupId = await GroupsMethods.save('create', group);
@@ -250,18 +246,16 @@ template.events({
 					instance.editableDescription.end();
 
 					Alert.success(
-						mf(
-							'groupDetails.groupCreated',
-							{ GROUP: group.name },
-							'The Group {GROUP} has been created!',
-						),
+						i18n('groupDetails.groupCreated', 'The Group {GROUP} has been created!', {
+							GROUP: group.name,
+						}),
 					);
 
 					Analytics.trackEvent('Group creations', 'Group creations');
 
 					Router.go('groupDetails', { _id: groupId });
 				} catch (err) {
-					Alert.serverError(err, mf('groupDetails.saveError', { GROUP: group.name }));
+					Alert.serverError(err, i18n('groupDetails.saveError', { GROUP: group.name }));
 				} finally {
 					instance.busy(false);
 				}

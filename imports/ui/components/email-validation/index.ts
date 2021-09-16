@@ -1,4 +1,4 @@
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
@@ -55,7 +55,7 @@ import './template.html';
 				await emailMethods.sendVerificationEmail();
 
 				Alert.success(
-					mf('profile.sentVerificationMail', { MAIL: Meteor.user()?.emails[0].address }),
+					i18n('profile.sentVerificationMail', { MAIL: Meteor.user()?.emails[0].address }),
 				);
 				$('.js-email-validation-modal').modal('hide');
 			} catch (err) {

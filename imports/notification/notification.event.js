@@ -1,7 +1,7 @@
 import { check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 
 import { Courses } from '/imports/api/courses/courses';
 /** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
@@ -127,13 +127,15 @@ notificationEvent.Model = function (entry) {
 				DATE: startMoment.format('LL'),
 			};
 
+			subjectvars.lng = userLocale;
+
 			let subject;
 			if (entry.new) {
 				// prettier-ignore
-				subject = mf('notification.event.mail.subject.new', subjectvars, 'On {DATE}: {TITLE}', userLocale);
+				subject = i18n('notification.event.mail.subject.new',  'On {DATE}: {TITLE}', subjectvars);
 			} else {
 				// prettier-ignore
-				subject = mf('notification.event.mail.subject.changed', subjectvars, 'Fixed {DATE}: {TITLE}', userLocale);
+				subject = i18n('notification.event.mail.subject.changed',  'Fixed {DATE}: {TITLE}', subjectvars);
 			}
 
 			const { venue } = event;

@@ -11,7 +11,7 @@
 				<div class="modal-header">
 					<h4 class="modal-title">
 						<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i>
-						{{mf 'emailrequest.title' 'Add email'}}
+						{{i18n 'emailrequest.title' 'Add email'}}
 					</h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
@@ -19,13 +19,13 @@
 				<div class="modal-body">
 					<form>
 						<p>
-							{{mf 'emailrequest.text.greeting' 'Hey "{NAME}"' NAME=currentUser.username}}
+							{{i18n 'emailrequest.text.greeting' 'Hey "{NAME}"' NAME=currentUser.username}}
 						</p>
 						<p>
-							{{mf 'emailrequest.text.para1' 'We’ve noticed that you did not provide your e-mail address yet.'}}
+							{{i18n 'emailrequest.text.para1' 'We’ve noticed that you did not provide your e-mail address yet.'}}
 						</p>
 						<p>
-							{{mf 'emailrequest.text.para2' 'Providing an email-address ensures that you stay informed when you join a course and it allows the mentor / other users to send you a direct message. It is easy to unsubscribe from such notifications and your user data will stay protected and is never traded!'}}
+							{{i18n 'emailrequest.text.para2' 'Providing an email-address ensures that you stay informed when you join a course and it allows the mentor / other users to send you a direct message. It is easy to unsubscribe from such notifications and your user data will stay protected and is never traded!'}}
 						</p>
 						<div class="mb-3 {{errorClass 'email'}}">
 							<div class="input-group">
@@ -33,7 +33,7 @@
 									<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
 								</span>
 								<input class="form-control js-email"
-									   placeholder="{{mf 'frame.login.email' 'E-Mail'}}"
+									   placeholder="{{i18n 'frame.login.email' 'E-Mail'}}"
 									   type="email" />
 							</div>
 							{{errorMessage 'email'}}

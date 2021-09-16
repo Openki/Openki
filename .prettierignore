@@ -1,5 +1,3 @@
 # Ignore artifacts:
 .meteor/
 node_modules/
-server/mfAll.js
-server/mfAll.js~

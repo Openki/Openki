@@ -1,0 +1,29 @@
+<template name="featuredGroup">
+	{{#if featuredGroup}}
+		<div class="container">
+			<div class="featured-group">
+				<div class="featured-group-header">
+					<i class="fa fa-fw fa-star" aria-hidden="true"></i>
+					{{i18n 'featuredGroup.heading' 'Featured group in {REGION}' REGION=currentRegionName}}
+				</div>
+				<div class="featured-group-body">
+					{{#if featuredGroup.logo}}
+						<div class="featured-group-body-logo">
+							<img class="featured-group-logo" src="{{featuredGroup.logo}}">
+						</div>
+					{{/if}}
+					<div class="featured-group-body-content">
+						<div class="featured-group-name">
+							{{featuredGroup.name}} ({{featuredGroup.short}})
+						</div>
+						<div class="featured-group-links">
+							<a href="{{pathFor 'groupDetails' _id=featuredGroup._id}}">
+								{{i18n 'featuredGroup.coursesOnOpenki' 'Check out the courses of {GROUP} on {SITENAME}!' GROUP=featuredGroup.name SITENAME=siteName}}
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{{/if}}
+</template>

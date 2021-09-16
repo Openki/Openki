@@ -7,47 +7,54 @@
 </template>
 
 <template name="languageSelection">
-	<li class="navbar-form navbar-form-selection dropdown {{inNavbarClasses}}">
-		<span class="fa fa-language fa-fw" aria-hidden="true"></span>
-		<input type="text" class="form-control js-language-search" value="{{setLanguage.name}}">
-		<span class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		</span>
-		<ul class="dropdown-menu" role="menu">
-			{{#if languages}}
-				<li class="dropdown-header dropdown-legend">
-					<span class="dropdown-addon-right">
-						{{mf 'languageSelection.legend.percTranslated' '% translated'}}
-					</span>
-					{{mf 'languageSelection.legend.language' 'Language'}}
-				</li>
-				{{#each languages}}
-					<li>
-						<a href="#" class="js-language-link js-nav-dropdown-close"
-						   title="{{english}}">
-							<span class="language-translated {{translated.rating}}">
-								{{translated.percent}}
-							</span>
-							{{#if currentLanguage}}
-								<span class="checkmark fa fa-check"></span>
-							{{/if}}
-							<div class="language-name">
-								{{languageNameMarked}}
-							</div>
-						</a>
-					</li>
-				{{/each}}
-			{{else}}
-				<li>
-					<a>{{mf 'languageSelection.noLanguagesFound' 'No languages found.'}}</a>
-				</li>
-			{{/if}}
-			<li role="seperator" class="divider"></li>
-			<li>
-				<a href="{{pathFor 'mfTrans'}}">
-					{{mf 'Profile.translate_this_page' 'Help us to translate this Page'}}
-				</a>
-			</li>
-		</ul>
+	<li class="language-selection {{inNavbarClasses}}">
+		<form class="d-flex js-language-selection-form">
+			<div class="input-group input-group-sm input-group-outline p-2">
+				<span class="input-group-text"><span class="fa fa-language fa-fw"
+						  aria-hidden="true"></span></span>
+				<input type="text" class="form-control js-language-search"
+					   value="{{setLanguage.name}}">
+				<input class="d-none" type="submit">
+				<button class="btn dropdown-toggle" data-bs-toggle="dropdown" role="button"
+						aria-expanded="false" tabindex="-1"></button>
+				<ul class="dropdown-menu dropdown-menu-end mx-2" role="menu">
+					{{#if languages}}
+						<li class="dropdown-header dropdown-legend">
+							{{i18n 'languageSelection.legend.language' 'Language'}}
+						</li>
+						{{#each languages}}
+							<li>
+								<a href="#"
+								   class="dropdown-item js-language-link js-nav-dropdown-close"
+								   title="{{english}}">
+									{{#if currentLanguage}}
+										<span class="checkmark fa fa-check"></span>
+									{{/if}}
+									<div class="language-name">
+										{{languageNameMarked}}
+									</div>
+								</a>
+							</li>
+						{{/each}}
+					{{else}}
+						<li>
+							<a
+							   class="dropdown-item">{{i18n 'languageSelection.noLanguagesFound' 'No languages found.'}}</a>
+						</li>
+					{{/if}}
+					{{#if helpLink}}
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+						<li>
+							<a class="dropdown-item" href="{{helpLink}}">
+								{{i18n 'Profile.translate_this_page' 'Help us to translate this Page'}}
+							</a>
+						</li>
+					{{/if}}
+				</ul>
+			</div>
+		</form>
 	</li>
 </template>
 

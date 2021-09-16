@@ -1,5 +1,3 @@
-import $ from 'jquery';
-import { mfPkg } from 'meteor/msgfmt:core';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
@@ -7,16 +5,15 @@ import { _ } from 'meteor/underscore';
 
 import { Languages } from '/imports/api/languages/languages';
 
-import { ScssVars } from '/imports/ui/lib/scss-vars';
+import { PublicSettings } from '/imports/utils/PublicSettings';
+import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 import * as StringTools from '/imports/utils/string-tools';
-import * as Viewport from '/imports/ui/lib/viewport';
 
 import './language-selection.html';
 
 Template.languageSelectionWrap.created = function () {
 	const instance = this;
 	instance.searchingLanguages = new ReactiveVar(false);
-	this.subscribe('mfStats');
 };
 
 Template.languageSelectionWrap.helpers({
@@ -45,6 +42,15 @@ Template.languageDisplay.events({
 
 Template.languageSelection.onCreated(function () {
 	this.languageSearch = new ReactiveVar('');
+
+	// create a function to toggle displaying the regionSelection
+	// only if it is placed inside a wrap
+	this.close = () => {
+		const searchingLanguages = this.parentInstance().searchingLanguages;
+		if (searchingLanguages.get()) {
+			searchingLanguages.set(false);
+		}
+	};
 });
 
 Template.languageSelection.helpers({
@@ -86,36 +92,33 @@ Template.languageSelection.helpers({
 		return StringTools.markedName(search, name);
 	},
 
-	translated() {
-		const getTransPercent = () => {
-			const mfStats = mfPkg.mfMeta.findOne({ _id: '__stats' });
-			if (mfStats) {
-				const langStats = mfStats.langs.find((stats) => stats.lang === this.lg);
-				return langStats.transPercent;
-			}
-			return false;
-		};
-
-		const percent = this.lg === mfPkg.native ? 100 : getTransPercent();
-		const rating = percent >= 75 && 'well-translated';
-
-		return { percent, rating };
-	},
-
 	currentLanguage() {
 		return this === Languages[Session.get('locale')];
+	},
+
+	helpLink() {
+		return getLocalisedValue(PublicSettings.i18nHelpLink);
 	},
 });
 
 const updateLanguageSearch = _.debounce((instance) => {
 	let search = instance.$('.js-language-search').val();
 	search = String(search).trim();
-	instance.languageSearch.set(search);
+	if (!(instance.languageSearch.get() === search)) {
+		instance.languageSearch.set(search);
+		instance.$('.dropdown-toggle').dropdown('show');
+	}
 }, 100);
 
 Template.languageSelection.events({
 	'click .js-language-link'(event, instance) {
 		event.preventDefault();
+
+		// eslint-disable-next-line no-param-reassign
+		instance.searchHasFocus = false;
+		instance.$('.js-region-search').trigger('focusout');
+		instance.$('.dropdown-toggle').dropdown('hide');
+
 		const { lg } = this;
 
 		try {
@@ -123,23 +126,46 @@ Template.languageSelection.events({
 		} catch {
 			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 		}
-		// The db user update happens in the client/main.js in Tracker.autorun(() => { ... by
-		// messageformat
+		// The db user update happens in the client/main.js in Tracker.autorun(() => { ...
 		Session.set('locale', lg);
 
 		instance.parentInstance().searchingLanguages.set(false);
 	},
-
 	'keyup .js-language-search'(event, instance) {
-		if (event.which === 13) {
-			instance.$('.js-language-link').first().trigger('click');
-		} else {
-			updateLanguageSearch(instance);
-		}
+		// eslint-disable-next-line no-param-reassign
+		instance.searchHasFocus = true;
+		updateLanguageSearch(instance);
+	},
+
+	'submit .js-language-selection-form'(event, instance) {
+		event.preventDefault();
+		instance.$('.js-language-link').first().trigger('click');
 	},
 
 	'focus .js-language-search'(event, instance) {
-		instance.$('.dropdown-toggle').dropdown('toggle');
+		instance.$('.dropdown-toggle').dropdown('show');
+	},
+
+	'focusin/focusout .js-language-search'(event, instance) {
+		// eslint-disable-next-line no-param-reassign
+		instance.searchHasFocus = event.type === 'focusin';
+	},
+
+	'show.bs.dropdown'(event, instance) {
+		if (!instance.searchHasFocus) {
+			Meteor.defer(() => {
+				instance.$('.js-language-search').trigger('select');
+			});
+		}
+	},
+
+	'hide.bs.dropdown'(event, instance) {
+		if (!instance.searchHasFocus) {
+			instance.close();
+			return true;
+		}
+
+		return false;
 	},
 });
 
@@ -148,19 +174,7 @@ Template.languageSelection.onRendered(function () {
 
 	instance.$('.js-language-search').trigger('select');
 
-	instance
-		.parentInstance()
-		.$('.dropdown')
-		.on('hide.bs.dropdown', () => {
-			const viewportWidth = Viewport.get().width;
-			const isRetina = Session.get('isRetina');
-			const screenMD = viewportWidth >= ScssVars.screenSM && viewportWidth <= ScssVars.screenMD;
-
-			if (screenMD && !isRetina) {
-				$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').show();
-				$('.navbar-collapse > .nav:first-child > li:not(.navbar-link-active)').fadeTo('slow', 1);
-			}
-
-			instance.parentInstance().searchingLanguages.set(false);
-		});
+	instance.$('.dropdown').on('hide.bs.dropdown', () => {
+		instance.parentInstance().searchingLanguages.set(false);
+	});
 });

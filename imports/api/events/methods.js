@@ -1,6 +1,6 @@
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
 
@@ -338,10 +338,10 @@ export const save = ServerMethod(
 
 		if (sendNotifications) {
 			if (affectedReplicaCount) {
-				const affectedReplicaMessage = mf(
+				const affectedReplicaMessage = i18n(
 					'notification.event.affectedReplicaMessage',
+					'These changes have also been applied to {NUM, plural, one{the later copy} other{# later copies} }',
 					{ NUM: affectedReplicaCount },
-					'These changes have also been applied to {NUM, plural, one {the later copy} other {# later copies}}',
 				);
 
 				if (comment == null) {

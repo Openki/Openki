@@ -3,7 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import { EventModel } from '../api/events/events';
 import { Geodata } from '../api/regions/regions';
 
-import { pricePolicyEnabled } from './pricePolicyEnabled';
 import { PublicSettings } from './PublicSettings';
 
 /**
@@ -37,7 +36,7 @@ function addGeoToJsonLd(data: Geodata | undefined) {
  * @return jsonLd-fragment for offers
  */
 function addOffersToJsonLd() {
-	if (pricePolicyEnabled()) {
+	if (PublicSettings.pricePolicyEnabled) {
 		return {
 			'@type': 'AggregateOffer',
 			price: 'free',

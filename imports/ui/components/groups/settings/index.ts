@@ -1,11 +1,11 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
-import { GroupEntity, Groups } from '/imports/api/groups/groups';
+import { GroupModel, GroupEntity, Groups } from '/imports/api/groups/groups';
 import * as GroupsMethods from '/imports/api/groups/methods';
 import { Users } from '/imports/api/users/users';
 
@@ -13,13 +13,15 @@ import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/editable-image';
+import type { UploadImage, Data as EditableImageData } from '/imports/ui/components/editable-image';
 
 import './template.html';
 import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	{
-		group: GroupEntity | (Partial<GroupEntity> & { _id: 'create' });
+		group: GroupModel | (Partial<GroupEntity> & { _id: 'create' });
 	},
 	'groupSettings',
 	{ userSearch: ReactiveVar<string> }
@@ -29,12 +31,6 @@ const template = Template.groupSettings;
 
 template.onCreated(function () {
 	const instance = this;
-
-	// strip https:// from logoUrl because its already labeled as prefix
-	const { logoUrl } = instance.data.group;
-	if (logoUrl?.startsWith('https://')) {
-		instance.data.group.logoUrl = logoUrl.replace('https://', '');
-	}
 
 	instance.busy(false);
 
@@ -58,6 +54,37 @@ template.helpers({
 		}
 
 		return userSearchPrefix(search, { exclude: group.members, limit: 30 });
+	},
+
+	logoFileUploadArgs(): EditableImageData {
+		const instance = Template.instance();
+		return {
+			thumbnail: (instance.data.group as any)?.publicLogoUrl?.(),
+			maxSize: 100,
+			async onUpload(file: UploadImage) {
+				const parentInstance = instance.parentInstance() as any; // Not available in callback
+
+				instance.busy('saving');
+
+				const groupId = instance.data.group._id;
+				try {
+					await GroupsMethods.updateLogo(groupId, file);
+					const groupName = Groups.findOne(groupId)?.name;
+					Alert.success(
+						i18n(
+							'groupSettings.group.logo.updated',
+							'Your changes to the settings of the group "{GROUP}" have been saved.',
+							{ GROUP: groupName },
+						),
+					);
+					parentInstance.editingSettings.set(false);
+				} catch (err) {
+					Alert.serverError(err, 'Could not save settings');
+				} finally {
+					instance.busy(false);
+				}
+			},
+		};
 	},
 
 	kioskEventURL(group: GroupEntity) {
@@ -96,10 +123,10 @@ template.events({
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				mf(
+				i18n(
 					'groupSettings.memberAdded',
-					{ MEMBER: memberName, GROUP: groupName },
 					'"{MEMBER}" has been added as a member to the group "{GROUP}"',
+					{ MEMBER: memberName, GROUP: groupName },
 				),
 			);
 		} catch (err) {
@@ -115,50 +142,14 @@ template.events({
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				mf(
+				i18n(
 					'groupSettings.memberRemoved',
-					{ MEMBER: memberName, GROUP: groupName },
 					'"{MEMBER}" has been removed from to the group "{GROUP}"',
+					{ MEMBER: memberName, GROUP: groupName },
 				),
 			);
 		} catch (err) {
 			Alert.serverError(err, 'Could not remove member');
-		}
-	},
-
-	'input .js-logo-url'(_event, instance) {
-		const elem = instance.$('.js-logo-url');
-		const value = elem.val() as string;
-		if (value.includes('://')) {
-			elem.val(value.split('://')[1]);
-		}
-	},
-
-	async 'click .js-group-edit-save'(event, instance) {
-		event.preventDefault();
-
-		const parentInstance = instance.parentInstance() as any; // Not available in callback
-
-		const url = instance.$('.js-logo-url').val() as string;
-
-		instance.busy('saving');
-
-		const groupId = instance.data.group._id;
-		try {
-			await GroupsMethods.updateLogo(groupId, url);
-			const groupName = Groups.findOne(groupId)?.name;
-			Alert.success(
-				mf(
-					'groupSettings.group.logo.updated',
-					{ GROUP: groupName },
-					'Your changes to the settings of the group "{GROUP}" have been saved.',
-				),
-			);
-			parentInstance.editingSettings.set(false);
-		} catch (err) {
-			Alert.serverError(err, 'Could not save settings');
-		} finally {
-			instance.busy(false);
 		}
 	},
 

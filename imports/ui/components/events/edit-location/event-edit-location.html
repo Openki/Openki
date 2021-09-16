@@ -1,12 +1,12 @@
 <template name="eventEditVenue">
 	<div class="mb-3">
 		<label class="form-label">
-			{{mf 'course.event.edit.location' 'Venue'}}
-			<small>{{mf '_inputField.optional'}}</small>
+			{{i18n 'course.event.edit.location' 'Venue'}}
+			<small>{{i18n '_inputField.optional'}}</small>
 		</label>
 		<p>
 			<em class="text-muted">
-				{{mf 'event.edit.location.info' 'You can search the venues, choose from the recently used, click on the map, or create a new venue.'}}
+				{{i18n 'event.edit.location.info' 'You can search the venues, choose from the recently used, click on the map, or create a new venue.'}}
 			</em>
 		</p>
 		<div class="row">
@@ -22,38 +22,36 @@
 						{{/if}}
 						{{#if location.editor}}
 							<div class="event-edit-location-contact">
-								{{#mf KEY='event.editVenue.pleaseContactHost'}}
-									Please contact the host of this venue to check for availability and other details:
-								{{/mf}}
+								{{i18n 'event.editVenue.pleaseContactHost' 'Please contact the host of this venue to check for availability and other details:'}}
 								<a href="{{hostProfileLink}}" target="_blank">
 									<span class="fa fa-send fa-fw" aria-hidden="true"></span>
-									{{mf 'event.editVenue.contactHost' 'Contact host'}}
+									{{i18n 'event.editVenue.contactHost' 'Contact host'}}
 								</a>
 							</div>
 						{{/if}}
 					</div>
 					<button type="button" class="btn btn-edit js-location-change">
-						{{mf 'event.edit.locationChange' "Change venue"}}
+						{{i18n 'event.edit.locationChange' "Change venue"}}
 					</button>
 				{{else}}
 					<div class="input-group event-edit-location-searchbar">
 						<input type="text" class="form-control js-location-search-input"
-							   placeholder="{{mf 'event.edit.locationNamePlaceholder' 'Where?'}}"
+							   placeholder="{{i18n 'event.edit.locationNamePlaceholder' 'Where?'}}"
 							   value="{{location.name}}" />
 						<button type="submit" class="btn btn-go js-location-search-btn">
-							{{mf 'event.edit.addressSearch' "Search"}}
+							{{i18n 'event.edit.addressSearch' "Search"}}
 						</button>
 					</div>
 					{{#if searching}}
 						<input type="text" class="form-control js-location-address-search"
-							   placeholder="{{mf 'event.edit.locationAddressPlaceholder' 'Address'}}"
+							   placeholder="{{i18n 'event.edit.locationAddressPlaceholder' 'Address'}}"
 							   size="40" value="{{location.address}}" />
 					{{/if}}
 					{{#if haveLocationCandidates}}
 						{{#if searching}}
-							{{mf 'event.edit.locations.proposed' 'Matching locations:'}}
+							{{i18n 'event.edit.locations.proposed' 'Matching locations:'}}
 						{{else}}
-							{{mf 'event.edit.locations.previouslyUsed' 'Recently used locations:'}}
+							{{i18n 'event.edit.locations.previouslyUsed' 'Recently used locations:'}}
 						{{/if}}
 						<ul class="event-edit-location-candidates">
 							{{#each locationCandidates}}
@@ -66,12 +64,12 @@
 						</ul>
 					{{else}}
 						<div>
-							{{mf 'event.edit.locations.foundnone' 'No locations found.'}}
+							{{i18n 'event.edit.locations.foundnone' 'No locations found.'}}
 						</div>
 					{{/if}}
 					<a class="btn {{#if haveLocationCandidates}}btn-secondary{{else}}btn-add{{/if}} event-edit-location-create-venue"
 					   href="{{pathFor 'venueDetails' _id='create'}}" target="_blank">
-						{{mf 'profile.createNewVenue.button'}}
+						{{i18n 'profile.createNewVenue.button'}}
 					</a>
 				{{/if}}
 			</div>

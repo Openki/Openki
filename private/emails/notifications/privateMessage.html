@@ -3,14 +3,14 @@
 		<td>
 			{{#if senderCopy}}
 				<p>
-					{{mf "notification.privateMessage.mail.copyintro" 'This is a copy of your message that was sent to "{RECIPIENT}"' RECIPIENT=recipientName LOCALE=locale}}
+					{{i18n "notification.privateMessage.mail.copyintro" 'This is a copy of your message that was sent to "{RECIPIENT}"' RECIPIENT=recipientName lng=locale}}
 				</p>
 			{{/if}}
 			<span class="title">
-				{{mf "notification.event.mail.greeting" USERNAME=recipientName LOCALE=locale}}
+				{{i18n "notification.event.mail.greeting" USERNAME=recipientName lng=locale}}
 			</span>
 			<p>
-				{{mf "notification.privateMessage.mail.intro" 'You got a private message from:' LOCALE=locale}}
+				{{i18n "notification.privateMessage.mail.intro" 'You got a private message from:' lng=locale}}
 				<a href="{{senderLink}}">{{sender.username}}</a>
 				{{#if fromAddress}}
 					<a href="mailto:{{fromAddress}}">{{fromAddress}}</a>
@@ -18,7 +18,7 @@
 			</p>
 			{{#if courseLink}}
 				<p>
-					{{mf"notification.privateMessage.mail.fromCourse" 'This message was sent from course:' LOCALE=locale}}
+					{{i18n "notification.privateMessage.mail.fromCourse" 'This message was sent from course:' lng=locale}}
 					<a href="{{courseLink}}">{{courseName}}</a>
 				</p>
 			{{/if}}
@@ -31,7 +31,7 @@
 			</table>
 			<p>
 				<a
-				   href="{{senderLink}}">{{mf "notification.privateMessage.mail.linktext" '➜ See profile of "{SENDER}"' SENDER=sender.username LOCALE=locale}}</a>
+				   href="{{senderLink}}">{{i18n "notification.privateMessage.mail.linktext" '➜ See profile of "{SENDER}"' SENDER=sender.username lng=locale}}</a>
 			</p>
 		</td>
 	</tr>
@@ -41,10 +41,10 @@
 				<tr>
 					<td>
 						<a
-						   href="{{unsubLink}}">{{mf "notification.privateMessage.mail.unsubLink" "Unsubscribe from all private messages from users." SITENAME=siteName LOCALE=locale}}</a>
+						   href="{{unsubLink}}">{{i18n "notification.privateMessage.mail.unsubLink" "Unsubscribe from all private messages from users." SITENAME=siteName lng=locale}}</a>
 						&nbsp;
 						<a
-						   href="{{urlFor 'profile' query='campaign=privateMessage'}}">{{mf "notification.privateMessage.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
+						   href="{{urlFor 'profile' query='campaign=privateMessage'}}">{{i18n "notification.privateMessage.mail.profileLink" "Visit your profile" lng=locale}}</a>
 					</td>
 				</tr>
 			</table>

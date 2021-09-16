@@ -7,14 +7,14 @@
 						<li role="presentation" class="active">
 							<a href="#frequency" data-toggle="tab">
 								<span class="fa fa-list fa-fw" aria-hidden="true"></span>
-								{{mf 'event.replication.changeToPattern' 'Select frequency'}}
+								{{i18n 'event.replication.changeToPattern' 'Select frequency'}}
 							</a>
 						</li>
 						<li role="presentation">
 							<a href="#datepicker" data-toggle="tab">
 								<span class="fa fa-calendar-check-o fa-fw"
 									  aria-hidden="true"></span>
-								{{mf 'event.replication.changeToPicker' 'Pick dates'}}
+								{{i18n 'event.replication.changeToPicker' 'Pick dates'}}
 							</a>
 						</li>
 					</ul>
@@ -25,7 +25,7 @@
 					</div>
 					<div class="tab-pane mb-3 active" id="frequency">
 						<label class="form-label" for="replicateStart">
-							{{mf 'event.replication.interval.start' 'Interval Start'}}
+							{{i18n 'event.replication.interval.start' 'Interval Start'}}
 						</label>
 						<div class="input-group">
 							<span class="input-group-text">
@@ -37,7 +37,7 @@
 							<span class="replica-date-weekday">{{replicateStartDay}}</span>
 						</div>
 						<label class="form-label" for="replicateEnd">
-							{{mf 'event.replication.interval.end' 'Interval End'}}
+							{{i18n 'event.replication.interval.end' 'Interval End'}}
 						</label>
 						<div class="input-group">
 							<span class="input-group-text">
@@ -49,14 +49,14 @@
 							<span class="replica-date-weekday">{{replicateEndDay}}</span>
 						</div>
 						<label class="form-label" for="replicateFrequency">
-							{{mf 'event.replication.repeat' 'Repeat'}}
+							{{i18n 'event.replication.repeat' 'Repeat'}}
 						</label>
 						<div class="form-check">
 							<input class="form-check-input js-replicate-frequency js-update-replicas"
 								   type="radio" name="replicateFrequency"
 								   id="replicateFrequencyOnce" value="once">
 							<label class="form-check-label" for="replicateFrequencyOnce">
-								{{mf 'event.replication.freq.once' 'once'}}
+								{{i18n 'event.replication.freq.once' 'once'}}
 							</label>
 						</div>
 						<div class="form-check">
@@ -64,7 +64,7 @@
 								   type="radio" name="replicateFrequency"
 								   id="replicateFrequencyDaily" value="daily">
 							<label class="form-check-label" for="replicateFrequencyDaily">
-								{{mf 'event.replication.freq.daily' 'every day'}}
+								{{i18n 'event.replication.freq.daily' 'every day'}}
 							</label>
 						</div>
 						<div class="form-check">
@@ -72,7 +72,7 @@
 								   type="radio" name="replicateFrequency"
 								   id="replicateFrequencyWeekly" value="weekly" checked>
 							<label class="form-check-label" for="replicateFrequencyWeekly">
-								{{mf'event.replication.freq.weekly' 'once a week'}}
+								{{i18n 'event.replication.freq.weekly' 'once a week'}}
 							</label>
 						</div>
 						<div class="form-check">
@@ -80,7 +80,7 @@
 								   type="radio" name="replicateFrequency"
 								   id="replicateFrequencyBiWeekly" value="biWeekly">
 							<label class="form-check-label" for="replicateFrequencyBiWeekly">
-								{{mf'event.replication.freq.biWeekly' 'every 2 weeks'}}
+								{{i18n 'event.replication.freq.biWeekly' 'every 2 weeks'}}
 							</label>
 						</div>
 					</div>
@@ -89,9 +89,7 @@
 			<div class="col-md">
 				{{#if replicaDateCount}}
 					<label class="form-label">
-						{{#mf KEY='event.replication.createText' COUNT=replicaDateCount}}
-							Create {COUNT, plural, one {a copy on this date} other {# copies on this dates}}
-						{{/mf}}
+						{{i18n 'event.replication.createText' 'Create {COUNT, plural, one{a copy on this date} other{# copies on this dates} }' COUNT=replicaDateCount}}
 					</label>
 					<div class="replica-event-captions">
 						{{#each replicaDates}}
@@ -112,7 +110,8 @@
 						{{/each}}
 					</div>
 				{{else}}
-					<label class="form-label">{{mf 'event.replication.noDates' 'No date(s) selected'}}</label>
+					<label
+						   class="form-label">{{i18n 'event.replication.noDates' 'No date(s) selected'}}</label>
 					<div class="replica-event-captions">
 						<div class="event-caption placeholder">
 							<div class="event-caption-header-wrap">

@@ -8,6 +8,7 @@ import * as usersTenantsDenormalizer from '/imports/api/users/tenantsDenormalize
 import { Users } from '/imports/api/users/users';
 
 import Profile from '/imports/utils/profile';
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 function updateDbCacheFields() {
 	// Resync location cache in events
@@ -46,7 +47,7 @@ function updateDbCacheFields() {
 
 Meteor.startup(() => {
 	/* Initialize cache-fields on startup (Also called calculated fields or denomalized data) */
-	if (Meteor.settings.startup?.buildDbCacheAsync) {
+	if (PrivateSettings.startup.buildDbCacheAsync) {
 		Meteor.setTimeout(() => {
 			updateDbCacheFields();
 		}, 0);

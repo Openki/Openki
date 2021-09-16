@@ -20,8 +20,6 @@
 @import 'events/participants/event-participants';
 @import 'events/replication/event-replication';
 
-@import 'featured-group/featured-group';
-
 @import 'footer/footer';
 
 @import 'kiosk-link/kiosk-link';
@@ -29,6 +27,8 @@
 @import 'groups/list/group-list';
 
 @import 'introduction/introduction';
+
+@import 'language-selection/language-selection';
 
 @import 'map/map';
 
@@ -49,8 +49,6 @@
 
 @import 'tenants/regions/tenant-regions';
 @import 'tenants/settings/tenant-settings';
-
-@import 'translate-info/translate-info';
 
 @import 'venues/link/venue-link';
 @import 'venues/edit/venue-edit';

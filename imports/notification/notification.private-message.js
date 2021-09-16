@@ -1,7 +1,7 @@
 import { Match, check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Log } from '/imports/api/log/log';
@@ -102,11 +102,11 @@ notificationPrivateMessage.Model = function (entry) {
 		},
 
 		/**
-		 * @param {string} userLocale
+		 * @param {string} lng
 		 * @param {UserModel} actualRecipient
 		 * @param {string} unsubToken
 		 */
-		vars(userLocale, actualRecipient, unsubToken) {
+		vars(lng, actualRecipient, unsubToken) {
 			if (!sender) {
 				throw new Error('Sender does not exist (0.o)');
 			}
@@ -114,9 +114,9 @@ notificationPrivateMessage.Model = function (entry) {
 				throw new Error('targetRecipient does not exist (0.o)');
 			}
 
-			const subjectvars = { SENDER: StringTools.truncate(sender.username, 10) };
+			const subjectvars = { SENDER: StringTools.truncate(sender.username, 10), lng };
 			// prettier-ignore
-			const subject = mf('notification.privateMessage.mail.subject', subjectvars, 'Private message from {SENDER}', userLocale);
+			const subject = i18n('notification.privateMessage.mail.subject', 'Private message from {SENDER}', subjectvars);
 			const htmlizedMessage = HtmlTools.plainToHtml(entry.body.message);
 
 			// Find out whether this is the copy sent to the sender.

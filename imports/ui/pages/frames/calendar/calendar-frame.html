@@ -21,12 +21,12 @@
 			{{#if moreEvents}}
 				<div class="show-more">
 					<button class="btn btn-secondary js-show-more-events" type="button">
-						{{mf 'frame.calendar.showMoreEvents' 'Show more events'}}
+						{{i18n 'frame.calendar.showMoreEvents' 'Show more events'}}
 					</button>
 				</div>
 			{{/if}}
 		{{else}}
-			<h2 class="mt-5 text-center">{{mf 'frame.calendar.noEvents' 'No events planned'}}</h2>
+			<h2 class="mt-5 text-center">{{i18n 'frame.calendar.noEvents' 'No events planned'}}</h2>
 		{{/if}}
 	{{else}}
 		{{> loadingPage}}
@@ -51,7 +51,7 @@
 			<div class="frame-list-item-body">
 				<div class="frame-list-item-property">
 					<div class="frame-list-item-label">
-						{{mf 'frame.eventsList.when' 'When:'}}
+						{{i18n 'frame.eventsList.when' 'When:'}}
 					</div>
 					<div class="frame-list-item-content">
 						{{timeFormat start}} - {{timeFormat end}}
@@ -59,7 +59,7 @@
 				</div>
 				<div class="frame-list-item-property">
 					<div class="frame-list-item-label">
-						{{mf 'frame.eventsList.where' 'Where:'}}
+						{{i18n 'frame.eventsList.where' 'Where:'}}
 					</div>
 					<div class="frame-list-item-content">
 						{{#if venue._id}}
@@ -76,7 +76,7 @@
 				</div>
 				<div class="frame-list-item-property frame-list-item-description">
 					<div class="frame-list-item-label">
-						{{mf 'frame.eventsList.description' 'Description:'}}
+						{{i18n 'frame.eventsList.description' 'Description:'}}
 					</div>
 					<div class="frame-list-item-content">
 						{{{description}}}
@@ -84,11 +84,11 @@
 				</div>
 				<div class="frame-list-item-links">
 					<a class="btn" href="{{pathFor 'showEvent'}}" target="_blank">
-						{{mf 'frame.calendar.moreAboutThisEvent' 'More about this event on {SITENAME}' SITENAME=siteName}}
+						{{i18n 'frame.calendar.moreAboutThisEvent' 'More about this event on {SITENAME}' SITENAME=siteName}}
 					</a>
 					<a href="{{pathFor 'calEvent' this}}"
 					   class="btn js-download js-track-cal-download">
-						{{mf 'frame.calendar.download' 'Download'}}
+						{{i18n 'frame.calendar.download' 'Download'}}
 					</a>
 				</div>
 			</div>

@@ -1,4 +1,4 @@
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
 
 import { Groups } from '/imports/api/groups/groups';
@@ -28,7 +28,7 @@ export const GroupNameHelpers = {
 		}
 		const group = subbedGroup(this);
 		if (!group) {
-			return mf('group.missing', 'Group does not exist');
+			return i18n('group.missing', 'Group does not exist');
 		}
 		return group.name;
 	},

@@ -1,9 +1,5 @@
 import { assert, expect } from 'chai';
-import { msgfmt } from 'meteor/msgfmt:core';
 import * as StringTools from '/imports/utils/string-tools';
-
-// This should not be here
-msgfmt.init('en');
 
 describe('String tools', () => {
 	describe('Slug', () => {

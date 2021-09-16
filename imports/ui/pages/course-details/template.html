@@ -5,7 +5,7 @@
 				<div class="page-component">
 					{{#if isArchived}}
 						<div class="alert alert-archived text-center" role="alert">
-							<strong>{{mf 'course.archive.alert' 'This course is archived and not active anymore.'}}</strong>
+							<strong>{{i18n 'course.archive.alert' 'This course is archived and not active anymore.'}}</strong>
 						</div>
 					{{/if}}
 					{{#if edit}}
@@ -15,14 +15,14 @@
 							<div class="details-header">
 								{{#if course.internal}}
 									<span class="details-internal"
-										  data-tooltip="{{mf 'courseCompact.internal_course' 'Internal course'}}"></span>
+										  data-tooltip="{{i18n 'courseCompact.internal_course' 'Internal course'}}"></span>
 								{{/if}}
 								<div class="details-header-tags">
 									{{#if isProposal}}
 										<div class="proposal-tag">
 											<span class="fa fa-lightbulb-o fa-fw"
 												  aria-hidden="true"></span>
-											{{mf 'course.details.is-proposalTag' 'Proposal'}}
+											{{i18n 'course.details.is-proposalTag' 'Proposal'}}
 										</div>
 									{{/if}}
 									{{#with course}}
@@ -60,7 +60,7 @@
 									{{#unless isArchived}}
 										{{> buttonCourseArchive 
 										buttonClass="btn-archive"
-										textIdle=(mf 'course.archive.archiveButton.archive' 'Archive')
+										textIdle=(i18n 'course.archive.archiveButton.archive' 'Archive')
 									}}
 									{{/unless}}
 									{{> buttonDelete event="js-expand"}}
@@ -99,19 +99,19 @@
 
 <template name="confirmDialog">
 	<div class="course-delete-confirmation">
-		<p>{{mf 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}
+		<p>{{i18n 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}
 		</p>
 		<div class="form-actions">
 			{{#unless hasArchiveButton}}
 				{{> buttonCourseArchive 
 					buttonClass="btn-warning"
-					textIdle=(mf 'course.delete.confirm.archiveButton' 'Rather archive')
+					textIdle=(i18n 'course.delete.confirm.archiveButton' 'Rather archive')
 				}}
 			{{/unless}}
 			{{> buttonDeleteConfirm
 				event="js-delete-course-confirm"
-				textIdle=(mf 'course.delete.confirm.button' 'Delete this course and its events.')
-				textBusy=(mf 'course.delete.confirm.button.busy' 'Deleting course...')
+				textIdle=(i18n 'course.delete.confirm.button' 'Delete this course and its events.')
+				textBusy=(i18n 'course.delete.confirm.button.busy' 'Deleting course...')
 			}}
 			{{> buttonCancel event="js-collapse"}}
 		</div>
@@ -124,13 +124,13 @@
 			<li role="presentation" class='active'>
 				<a href="#description" data-toggle="tab">
 					<span class="fa fa-file-text fa-fw" aria-hidden="true"></span>
-					<span class="tab-label">{{mf 'course.subnav.descr' 'Description'}}</span>
+					<span class="tab-label">{{i18n 'course.subnav.descr' 'Description'}}</span>
 				</a>
 			</li>
 			<li role="presentation">
 				<a href="#history" data-toggle="tab">
 					<span class="fa fa-history fa-fw" aria-hidden="true"></span>
-					<span class="tab-label">{{mf 'course.subnav.history' 'History'}}</span>
+					<span class="tab-label">{{i18n 'course.subnav.history' 'History'}}</span>
 				</a>
 			</li>
 		</ul>
@@ -170,15 +170,16 @@
 			{{#if tools}}
 				<div class="btn-group tag-btn group-tag-btn addon align-top">
 					<button type="button" class="dropdown-toggle" aria-expanded="false"
-							aria-haspopup="true" data-toggle="dropdown">
-						<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
+							aria-haspopup="true" data-bs-toggle="dropdown">
 					</button>
 					<ul class="dropdown-menu dialog-dropdown">
 						<li class="dropdown-header">
-							{{mf 'grouplist.editgroup.header' 'Edit group'}}
+							{{i18n 'grouplist.editgroup.header' 'Edit group'}}
 							<button type="button" class="btn-close"></button>
 						</li>
-						<li role="seperator" class="divider"></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
 						{{#each tools}}
 							<li class="dialog-dropdown-btn">{{> toolTemplate}}</li>
 						{{/each}}
@@ -195,17 +196,18 @@
 	{{#if groupsToAdd}}
 		<div class="btn-group tag-btn group-tag-btn align-top">
 			<button type="button" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true"
-					data-toggle="dropdown">
+					data-bs-toggle="dropdown">
 				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
-				<span>{{mf 'course.group.addText' 'link a group'}}</span>
-				<span class="fa fa-caret-down fa-fw" aria-hidden="true"></span>
+				<span>{{i18n 'course.group.addText' 'link a group'}}</span>
 			</button>
 			<ul class="dropdown-menu dialog-dropdown">
 				<li class="dropdown-header">
-					{{mf 'grouplist.addgroups.header' 'Add group'}}
+					{{i18n 'grouplist.addgroups.header' 'Add group'}}
 					<button type="button" class="btn-close"></button>
 				</li>
-				<li role="seperator" class="divider"></li>
+				<li>
+					<hr class="dropdown-divider">
+				</li>
 				{{#each groupsToAdd}}
 					<li>
 						<button class="btn btn-link js-add-group" type="button" value="{{this}}">
@@ -215,7 +217,7 @@
 				{{/each}}
 				<li class="dialog-dropdown-btn">
 					<a href="{{pathFor 'groupDetails' _id='create'}}" class="btn btn-add">
-						{{mf 'profile.createNewGroup.button'}}
+						{{i18n 'profile.createNewGroup.button'}}
 					</a>
 				</li>
 			</ul>
@@ -227,15 +229,15 @@
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
 			{{#with groupId}}
-				{{mf 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}
+				{{i18n 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}
 			{{/with}}
 			<button type="button" class="btn btn-danger js-remove">
-				{{mf 'course.group.confirmRemoveButton' "Delist"}}
+				{{i18n 'course.group.confirmRemoveButton' "Delist"}}
 			</button>
 		</div>
 	{{else}}
 		<button type="button" class="js-expand btn btn-remove">
-			{{mf 'course.group.remove' 'Remove'}}
+			{{i18n 'course.group.remove' 'Remove'}}
 		</button>
 	{{/if}}
 </template>
@@ -244,17 +246,17 @@
 	{{#if expanded}}
 		<div class="group-tool-dialog add">
 			{{#with groupId}}
-				{{mf 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}
+				{{i18n 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}
 			{{/with}}
-			{{mf 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and can create new events for it."}}
+			{{i18n 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and can create new events for it."}}
 			<button type="button" class="btn btn-add js-makeOrganizer">
-				{{mf 'course.group.confimOrgButton' "Give editing rights"}}
+				{{i18n 'course.group.confimOrgButton' "Give editing rights"}}
 			</button>
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-add">
 			<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
-			{{mf 'course.group.addOrgText' "Give editing rights"}}
+			{{i18n 'course.group.addOrgText' "Give editing rights"}}
 		</a>
 	{{/if}}
 </template>
@@ -263,16 +265,16 @@
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
 			{{#with groupId}}
-				{{mf 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}
+				{{i18n 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}
 			{{/with}}
 			<button type="button" class="btn btn-danger js-removeOrganizer">
-				{{mf 'course.group.confimRemoveOrgButton' "Take away editing rights"}}
+				{{i18n 'course.group.confimRemoveOrgButton' "Take away editing rights"}}
 			</button>
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-remove">
 			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-			{{mf 'course.group.removeOrgText' "Remove editing rights"}}
+			{{i18n 'course.group.removeOrgText' "Remove editing rights"}}
 		</a>
 	{{/if}}
 </template>
@@ -281,7 +283,7 @@
 	<button type="submit" class="btn {{buttonClass}} js-course-archive" {{disabledIfBusy}}>
 		{{#if busy 'archive'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{mf 'course.archive.archiveButton.archiving' 'Archiving...'}}
+			{{i18n 'course.archive.archiveButton.archiving' 'Archiving...'}}
 		{{else}}
 			{{textIdle}}
 		{{/if}}
@@ -292,9 +294,9 @@
 	<button type="submit" class="btn btn-go js-course-unarchive" {{disabledIfBusy}}>
 		{{#if busy 'unarchive'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{mf 'course.archive.unarchiveButton.unarchiving' 'Unarchiving...'}}
+			{{i18n 'course.archive.unarchiveButton.unarchiving' 'Unarchiving...'}}
 		{{else}}
-			{{mf 'course.archive.unarchiveButton' 'Unarchive'}}
+			{{i18n 'course.archive.unarchiveButton' 'Unarchive'}}
 		{{/if}}
 	</button>
 </template>

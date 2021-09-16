@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import $ from 'jquery';
-import { mf, msgfmt } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
@@ -194,13 +194,8 @@ Template.calendarNavControl.helpers({
 		);
 	},
 
-	mfString(direction, unit, length) {
-		// Depend on locale and a composite mf string so we update reactively when locale changes
-		// and msgfmt finish loading translations
-		msgfmt.loading();
-		Session.get('locale');
-
-		return mf(`calendar.${direction}.${unit}.${length}`);
+	calendarNavText(direction, unit, length) {
+		return i18n(`calendar.${direction}.${unit}.${length}`);
 	},
 
 	currentUnit() {
@@ -212,21 +207,4 @@ Template.calendarNavControl.helpers({
 		const navUnits = ['week', 'month', 'year'];
 		return navUnits;
 	},
-});
-
-Template.calendarAddEvent.onRendered(function () {
-	const instance = this;
-	const eventCaption = instance.$('.event-caption-add');
-
-	function toggleCaptionClass(e) {
-		const removeClass = e.type === 'mouseout';
-		eventCaption.toggleClass('placeholder', removeClass);
-	}
-
-	eventCaption.on('mouseover mouseout', (e) => {
-		toggleCaptionClass(e);
-	});
-	instance.$('.event-caption-add-text').on('mouseover mouseout', (e) => {
-		toggleCaptionClass(e);
-	});
 });

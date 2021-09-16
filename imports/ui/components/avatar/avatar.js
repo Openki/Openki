@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
@@ -7,7 +7,7 @@ import { Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
 import * as Alert from '/imports/api/alerts/alert';
 
-import PublicSettings from '/imports/utils/PublicSettings';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
 import './avatar.html';
 
@@ -83,6 +83,6 @@ Template.avatarForm.events({
 
 		await usersMethods.updateAvatarColor(newColor);
 
-		Alert.success(mf('profile.updated', 'Updated profile'));
+		Alert.success(i18n('profile.updated', 'Updated profile'));
 	},
 });

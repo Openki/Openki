@@ -1,11 +1,10 @@
-import { mf, msgfmt } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 import { Spacebars } from 'meteor/spacebars';
 import moment from 'moment';
 
-import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
@@ -25,7 +24,7 @@ import { checkContribution } from '../../utils/checkContribution';
  * Calling Session.get('timeLocale') also makes the helper reactive.
  */
 function toMomentWithTimeLocale(date: moment.MomentInput) {
-	return moment(date).locale(Session.get('timeLocale'));
+	return moment(date).locale(Session.get('timeLocale') || 'en');
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -35,25 +34,14 @@ const helpers: { [name: string]: Function } = {
 	},
 
 	categoryName(name: string) {
-		// Depend on locale and a composite mf string so we update reactively when locale changes
-		// and msgfmt finish loading translations
-		msgfmt.loading();
-		Session.get('locale');
-
-		return mf(`category.${name}`);
+		return i18n(`category.${name}`);
 	},
 
 	roleShort(type: string) {
 		if (!type) {
 			return '';
 		}
-
-		// Depend on locale and a composite mf string so we update reactively when locale changes
-		// and msgfmt finish loading translations
-		msgfmt.loading();
-		Session.get('locale');
-
-		return mf(`roles.${type}.short`);
+		return i18n(`roles.${type}.short`);
 	},
 
 	roleIcon(type: string) {
@@ -227,15 +215,14 @@ const helpers: { [name: string]: Function } = {
 		return state.get(key);
 	},
 
-	/**
-	 * @param {string} groupId
-	 */
-	groupLogo(groupId: string) {
-		Template.instance().subscribe('group', groupId);
+	stateEquals(key: string, value: any) {
+		const state = (Template.instance() as any).state as ReactiveDict | undefined;
 
-		const group = Groups.findOne({ _id: groupId });
+		if (!(state instanceof ReactiveDict)) {
+			throw new Error('state is not a ReactiveDict');
+		}
 
-		return group?.logoUrl || '';
+		return state.equals(key, value);
 	},
 
 	/**
@@ -324,7 +311,7 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 
 	Template.registerHelper('username', function (userId: string) {
 		if (!userId) {
-			return mf('noUser_placeholder', 'someone');
+			return i18n('noUser_placeholder', 'someone');
 		}
 
 		const cachedUser = getCachedUser(userId);
@@ -359,14 +346,14 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 
 		return Spacebars.SafeString(
 			`<a href="${getLocalisedValue(contribution.link)}" data-tooltip="${(Blaze as any)._escape(
-				mf(
+				i18n(
 					'user.hasContributed',
+					'{USERNAME} supported {SITENAME} with a donation. Click on the {ICON} for more information how to contribute.',
 					{
 						USERNAME: cachedUser.username,
 						SITENAME: getSiteName(Regions.currentRegion()),
 						ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
 					},
-					'{USERNAME} supported {SITENAME} with a donation. Click on the {ICON} for more information how to contribute.',
 				),
 			)}"><sup><i class="${contribution.icon}" aria-hidden="true"></i></sup></a>`,
 		);

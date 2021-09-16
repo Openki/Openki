@@ -11,7 +11,9 @@ import { Venues } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
 import { InfoPages } from '/imports/api/infoPages/infoPages';
 
-if (Meteor.settings.testdata) {
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
+
+if (Meteor.isServer && PrivateSettings.testdata) {
 	const logResult = function (error, result) {
 		if (error) {
 			throw error;

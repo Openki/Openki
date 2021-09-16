@@ -3,14 +3,14 @@
 		{{#if showingFilters}}
 			<h4 class="filter-heading">
 				<i class="fa fa-filter fa-fw" aria-hidden="true"></i>
-				{{mf 'find.search_filter.title' 'Filter search'}}
+				{{i18n 'find.search_filter.title' 'Filter search'}}
 				<span class="filter-active-tag">
-					{{mf 'find.filter.isActive' 'active'}}
+					{{i18n 'find.filter.isActive' 'active'}}
 				</span>
 				<div class="filter-captions-header-buttons">
 					<button class="js-toggle-filters btn btn-lg btn-link p-0" type="button">
 						<span class="filter-remove-btn-text">
-							{{mf 'find.hideFilters' 'Remove all filters'}}
+							{{i18n 'find.hideFilters' 'Remove all filters'}}
 						</span>
 					</button>
 				</div>
@@ -19,7 +19,7 @@
 		<div class="filter-components">
 			<div class="filter-component filter-course-states">
 				<h4 class="filter-component-header">
-					{{mf 'find.filter.courseStates' 'Course states'}}
+					{{i18n 'find.filter.courseStates' 'Course states'}}
 				</h4>
 				<div class="filter-course-state-captions">
 					{{#each stateFilter in stateFilters}}
@@ -42,9 +42,9 @@
 						<div class="filter-captions-column float-end">
 							<div class="filter-caption-wrap">
 								<div class="filter-caption js-filter-caption-archived {{archivedFilterClasses}}"
-									 title="{{mf 'filterCaptions.archived.title' 'Show only courses that are archived'}}">
+									 title="{{i18n 'filterCaptions.archived.title' 'Show only courses that are archived'}}">
 									<span class="filter-caption-text">
-										{{mf 'filterCaptions.archived.label' 'Archived'}}
+										{{i18n 'filterCaptions.archived.label' 'Archived'}}
 										<i class="fa fa-times fa-fw" aria-hidden="true"></i>
 										<i class="fa fa-check fa-fw" aria-hidden="true"></i>
 									</span>
@@ -61,7 +61,7 @@
 		{{#unless showingFilters}}
 			<div class="filter-actions">
 				<button class="js-toggle-filters btn btn-link p-0" type="button">
-					{{mf 'filter.showAllFilters' 'Show all filters'}}
+					{{i18n 'filter.showAllFilters' 'Show all filters'}}
 				</button>
 			</div>
 		{{/unless}}
@@ -71,7 +71,7 @@
 <template name="additionalFilters">
 	<div aria-label="filter-course-roles" class="filter-component filter-course-roles" role="group">
 		<h4 class="filter-component-header">
-			{{mf 'find.filter.courseRoles' 'Course roles'}}
+			{{i18n 'find.filter.courseRoles' 'Course roles'}}
 		</h4>
 		{{#each role in roles}}
 			<button class="filter-course-role js-filter-course-role {{roleClasses role}}"
@@ -86,7 +86,7 @@
 	</div>
 	<div class="filter-component filter-course-categories">
 		<h4 class="filter-component-header">
-			{{mf 'find.filter.categories' 'Categories'}}
+			{{i18n 'find.filter.categories' 'Categories'}}
 		</h4>
 		{{#unless isMobile}}
 			{{#if categories}}
@@ -96,31 +96,30 @@
 							{{> categoryLabel}}
 							<button type="button"
 									class="remove-btn js-remove-category-btn fa fa-remove"
-									data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}">
+									data-tooltip="{{i18n 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=(categoryName this)}}">
 							</button>
 						</li>
 					{{/each}}
 				</ul>
 			{{/if}}
 		{{/unless}}
-		<div class="dropdown filter-categories-select">
+		<div class="input-group input-group-outline filter-categories-select">
 			<input class="js-search-categories form-control"
-				   placeholder="{{mf 'find.searchCategories.placeholder' 'Choose categories'}}"
+				   placeholder="{{i18n 'find.searchCategories.placeholder' 'Choose categories'}}"
 				   type="text">
-			<button aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown"
-					type="button">
-				<span class="caret"></span>
+			<button aria-expanded="false" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+					type="button" data-bs-reference="parent">
 			</button>
 			<ul class="dropdown-menu filter-categories-dropdown" role="menu">
 				{{#if availableCategories}}
 					{{#each availableCategories}}
 						<li class="{{this}}">
-							<a class="js-category-selection-label {{#if availableSubcategories this}}drodown-item-main{{/if}}"
+							<a class="js-category-selection-label {{#if availableSubcategories this}}drodown-item-main{{/if}} dropdown-item"
 							   href="#">
 								{{categoryNameMarked}}
 								{{#if availableSubcategories this}}
 									<small class="js-toggle-subcategories {{this}}"
-										   title="{{mf 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
+										   title="{{i18n 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
 										<span class="fa fa-angle-down" aria-hidden="true"></span>
 									</small>
 								{{/if}}
@@ -128,7 +127,7 @@
 						</li>
 						{{#each availableSubcategories this}}
 							<li class="js-sub-category {{..}}">
-								<a class="js-category-selection-label" href="#">
+								<a class="js-category-selection-label dropdown-item" href="#">
 									{{categoryNameMarked}}
 								</a>
 							</li>
@@ -137,7 +136,7 @@
 				{{else}}
 					<span class="filter-no-categories-found">
 						<span class="fa fa-exclamation fa-fw" aria-hidden="true"></span>
-						{{mf 'find.filter-no-categories-found' 'No categories found.'}}
+						{{i18n 'find.filter-no-categories-found' 'No categories found.'}}
 					</span>
 				{{/if}}
 			</ul>
@@ -147,9 +146,9 @@
 				<ul class="filter-selected-categories">
 					{{#each categories}}
 						<li>
-							<a class="js-category-label" href="#">{{categoryName}}</a>
+							<a class="js-category-label" href="#">{{categoryName this}}</a>
 							<button class="remove-btn js-remove-category-btn fa fa-remove"
-									data-tooltip="{{mf 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=categoryName}}"
+									data-tooltip="{{i18n 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=(categoryName this)}}"
 									type="button">
 							</button>
 						</li>
