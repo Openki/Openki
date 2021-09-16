@@ -105,6 +105,7 @@
 	"course.compact.interestedCount": "{NUM, plural, =0{Keiner ist} one{Eine Person ist} other{# Personen sind} } interessiert",
 	"course.compact.interestedCountOwn": "und du bist einer von ihnen",
 	"course.compact.youAreInterested": "Du bist interessiert",
+	"course.delete.confirm.archiveButton": "Lieber archivieren",
 	"course.delete.confirm.button": "Lösche diesen Kurs und seine Veranstaltungen",
 	"course.delete.confirm.button.busy": "Kurs wird gelöscht...",
 	"course.description.placeholder": "Beschreibe deine Idee, damit mehr Leute deinen Vorschlag finden und wissen was sie im Kurs erwartet.",
