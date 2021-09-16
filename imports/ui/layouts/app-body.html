@@ -19,17 +19,7 @@
 			{{> emailValidation}}
 
 			<div id="maincontent">
-				{{#if translate}}
-					<div class="container">
-						{{> translateInfo}}
-						{{#if mayTranslate}}
-							{{> yield}}
-						{{else}}
-							<h3>{{i18n "main.translate.pleaseLogin" "Please log-in to edit translations"}}
-							</h3>
-						{{/if}}
-					</div>
-				{{else if isAdminPage}}
+				{{#if isAdminPage}}
 					<div class="container mw-md">
 						<h1>{{i18n 'adminPanel.heading' 'Admin panel'}}</h1>
 						{{#if isAdmin}}

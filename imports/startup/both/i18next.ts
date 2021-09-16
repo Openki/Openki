@@ -82,7 +82,13 @@ i18next.on('loaded', function () {
  */
 export const i18n: TFunction = (...args: any) => {
 	reactiveLang.get();
-	return (i18next.t as any)(...args);
+	const result = (i18next.t as any)(...args);
+
+	if (Array.isArray(result)) {
+		return result.join();
+	}
+
+	return result;
 };
 
 // register a helper to use it in the templates
