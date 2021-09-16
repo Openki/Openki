@@ -3,7 +3,6 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 import reduce from 'image-blob-reduce';
 
-
 import './template.html';
 import './styles.scss';
 
