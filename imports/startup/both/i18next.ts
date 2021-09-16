@@ -41,7 +41,9 @@ i18next
 		fallbackLng: 'en',
 		backend: {
 			backends: [
+				// we use localstorage to cache translations for 7 days
 				LocalStorageBackend,
+				// and only load translations we need
 				resourcesToBackend((language, _namespace, callback) => {
 					import(`/imports/startup/both/i18n/${language}.json`)
 						.then((resources) => {
@@ -61,7 +63,7 @@ i18next
 	});
 
 if (Meteor.isServer) {
-	// pre load all languages on the server.
+	// on the server we pre load all languages.
 	i18next.loadLanguages(Object.keys(Languages));
 }
 
@@ -85,7 +87,8 @@ export const i18n: TFunction = (...args: any) => {
 	const result = (i18next.t as any)(...args);
 
 	if (Array.isArray(result)) {
-		return result.join();
+		// in some cases we get a string[] array back but we expect a string
+		return result.join('');
 	}
 
 	return result;
