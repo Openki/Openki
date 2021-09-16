@@ -34,9 +34,9 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 - :mortar_board: Extendable participant roles
 - :white_flower: Groups-, community- and program-system and -filters
 - :date: Calendar and iCal exports ([Docs](https://gitlab.com/Openki/Openki/wikis/calendar-export))
-- :key: Single-Sign-on (OAuth: Github, Facebook, g+)
+- :key: Single-Sign-on (OAuth: Facebook, Google)
 - :iphone: Responsive design: Mobile, tablet and desktop computers
-- :ideograph_advantage: I18n: In-browser-GUI for [crowdsourced, live translation](https://openki.net/translate) (using [meteor-messageformat](https://github.com/gadicc/meteor-messageformat/))
+- :ideograph_advantage: I18n: In-browser-GUI for [crowdsourced translation](https://gitlab.com/Openki/Openki/-/wikis/i18n) (using [Weblate](https://hosted.weblate.org/projects/openki/openki/))
 - :envelope: Email notifications
 - :electric_plug: read-only JSON API
 
@@ -97,27 +97,7 @@ Format files and automatically fix fixable problems with these commands:
 
 In case you get weird errors when starting (eg. error 14) try this command:
 
-    meteor reset
-
-#### [ERR_INVALID_CALLBACK]: Callback must be a function. Received undefined
-In case you get this error when starting. Create a empty file `server/extracts.msgfmt`.
-
-```
-fs.js:145 
-  throw new ERR_INVALID_CALLBACK(cb);
-  ^
- 
-TypeError [ERR_INVALID_CALLBACK] [ERR_INVALID_CALLBACK]: Callback must be a function. Received undefined
-    at maybeCallback (fs.js:145:9)
-    at Object.writeFile (fs.js:1332:14)
-    at packages/msgfmt_extract.js:267:14
-    at suppressedCallback (fs.js:215:5)
-    at FSReqCallback.oncomplete (fs.js:156:23) {
-  code: 'ERR_INVALID_CALLBACK'
-}
-```
-
-See: https://gitlab.com/Openki/Openki/-/issues/1414
+    meteor npm run reset
 
 ### Documentation
 - The technical documentation is here on GitLab in the :book: [Wiki](https://gitlab.com/Openki/Openki/wikis/home)

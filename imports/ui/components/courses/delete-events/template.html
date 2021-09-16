@@ -1,7 +1,7 @@
 <template name="deleteCourseEvents">
 	<div class="event-caption-wrap">
 		<button class="btn p-0 js-show-events-delete-modal"
-				title="{{mf 'course.event.edit.deleteEvents' 'Delete events'}}">
+				title="{{i18n 'course.event.edit.deleteEvents' 'Delete events'}}">
 			<div class="event-caption placeholder event-caption-action event-caption-delete">
 				<div class="event-caption-header-wrap">
 					<div class="event-caption-header">
@@ -27,7 +27,7 @@
 				<div class="modal-header">
 					<h4 class="modal-title">
 						<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
-						{{mf 'deleteEventsModal.title' 'Delete course events'}}
+						{{i18n 'deleteEventsModal.title' 'Delete course events'}}
 					</h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
@@ -37,13 +37,11 @@
 						<div class="panel panel-danger">
 							<div class="panel-heading">
 								<h4 class="panel-title">
-									{{mf 'deleteEventsModal.confirm' 'Confirm deleting events'}}
+									{{i18n 'deleteEventsModal.confirm' 'Confirm deleting events'}}
 								</h4>
 							</div>
 							<div class="panel-body">
-								{{#mf KEY='deleteEventsModal.reallyDelete' NUM=numSelectedEvents}}
-									Do you really want to delete {NUM, plural, one {this event} other {these # events}}?
-								{{/mf}}
+								{{i18n 'deleteEventsModal.reallyDelete' 'Do you really want to delete {NUM, plural, one{this event} other{these # events} }?' NUM=numSelectedEvents}}
 								<ul class="list-group selected-events">
 									{{#each event in selectedEvents}}
 										<li class="list-group-item list-group-item-danger">
@@ -61,18 +59,14 @@
 										{{#if busy 'deleting'}}
 											<span class="fa fa-circle-o-notch fa-spin fa-fw"
 												  aria-hidden="true"></span>
-											{{#mf KEY='deleteEventsModal.deletingEvents' NUM=numSelectedEvents}}
-												Deleting {NUM, plural, one {event} other {events}}...
-											{{/mf}}
+											{{i18n 'deleteEventsModal.deletingEvents' 'Deleting {NUM, plural, one{event} other{events} }...' NUM=numSelectedEvents}}
 										{{else}}
-											{{#mf KEY='deleteEventsModal.confirmDeleteEvents' NUM=numSelectedEvents}}
-												Delete {NUM, plural, one {event} other {events}}
-											{{/mf}}
+											{{i18n 'deleteEventsModal.confirmDeleteEvents' 'Delete {NUM, plural, one{event} other{events} }' NUM=numSelectedEvents}}
 										{{/if}}
 									</button>
 									<button type="button" class="btn btn-secondary js-cancel"
 											{{disabledIfBusy}}>
-										{{mf '_button.cancel'}}
+										{{i18n '_button.cancel'}}
 									</button>
 								</div>
 							</div>
@@ -92,15 +86,13 @@
 						<div class="delete-events-actions">
 							<button class="btn btn-danger js-show-delete-confirm"
 									{{disabledIfNoEventsSelected}}>
-								{{#mf KEY='deleteEventsModal.deleteEvents' NUM=numSelectedEvents}}
-									Delete {NUM, plural, =0 {event} one {event} other {# events}}
-								{{/mf}}
+								{{i18n 'deleteEventsModal.deleteEvents' 'Delete {NUM, plural, =0{event} one{event} other{# events} }' NUM=numSelectedEvents}}
 							</button>
 							<button class="btn btn-secondary js-toggle-all">
 								{{#if state 'allEventsSelected'}}
-									{{mf 'deleteEventsModal.clearSelection' 'Clear selection'}}
+									{{i18n 'deleteEventsModal.clearSelection' 'Clear selection'}}
 								{{else}}
-									{{mf 'deleteEventsModal.selectAll' 'Select all'}}
+									{{i18n 'deleteEventsModal.selectAll' 'Select all'}}
 								{{/if}}
 							</button>
 						</div>

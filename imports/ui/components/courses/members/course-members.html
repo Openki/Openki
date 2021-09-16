@@ -2,9 +2,7 @@
 	<div class="course-page-component-header">
 		<h4>
 			<span class="fa fa-users fa-fw" aria-hidden="true"></span>&nbsp;
-			{{#mf KEY='course.details.members.title' NUM=howManyEnrolled}}
-				{NUM, plural, =0 {No co-learners yet} one {1 Co-learner} other {# Co-learners}}
-			{{/mf}}
+			{{i18n 'course.details.members.title' '{NUM, plural, =0{No co-learners yet} one{1 Co-learner} other{# Co-learners} }' NUM=howManyEnrolled}}
 			{{#if canNotifyAll}}
 				<i class="fa fa-envelope contact-members js-contact-members"></i>
 			{{/if}}
@@ -16,18 +14,14 @@
 				{{> courseMember member=this course=..}}
 			{{/each}}
 			{{#if limited}}
-				<button
-					class="btn btn-lg btn-add course-page-btn js-show-more-members"
-					type="button">
-					{{#mf KEY='course.members.showMoreParticipants'}}
-						Show more co-learners
-					{{/mf}}
+				<button class="btn btn-lg btn-add course-page-btn js-show-more-members"
+						type="button">
+					{{i18n 'course.members.showMoreParticipants' 'Show more co-learners'}}
 				</button>
 			{{/if}}
 		</div>
 	{{/if}}
 </template>
-
 
 <template name="courseMember">
 	<div class="course-member {{ownUserMemberClass}}">
@@ -53,8 +47,8 @@
 				{{/if}}
 				{{#if maySubscribeToTeam}}
 					<button type="button" class="btn btn-sm btn-add float-end js-add-to-team-btn"
-						data-tooltip="{{mf 'course.roles.maketeam' 'Add to team'}}"
-						data-tooltip-direction="e">
+							data-tooltip="{{i18n 'course.roles.maketeam' 'Add to team'}}"
+							data-tooltip-direction="e">
 						<span class="fa fa-plus {{member.user}}"></span>
 						<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
 					</button>
@@ -78,21 +72,18 @@
 	</div>
 </template>
 
-
 <template name="removeFromTeamDropdown">
 	<span class="dropdown">
-		<button type="button" class="btn btn-sm btn-close btn-close-white"
-			aria-expanded="false"
-			aria-haspopup="true"
-			data-bs-toggle="dropdown"
-			data-tooltip="{{mf 'course.roles.removeTeam' 'Remove from team'}}"
-			data-tooltip-direction="e"></button>
+		<button type="button" class="btn btn-sm btn-close btn-close-white" aria-expanded="false"
+				aria-haspopup="true" data-bs-toggle="dropdown"
+				data-tooltip="{{i18n 'course.roles.removeTeam' 'Remove from team'}}"
+				data-tooltip-direction="e"></button>
 		<ul class="dropdown-menu dialog-dropdown right">
 			<li class="dropdown-header">
 				{{#if isNotPriviledgedSelf}}
-					{{mf 'course.details.removeTeam.self.header' 'Remove yourself from team'}}
+					{{i18n 'course.details.removeTeam.self.header' 'Remove yourself from team'}}
 				{{else}}
-					{{mf 'course.details.removeTeam.others.header' 'Remove member from team'}}
+					{{i18n 'course.details.removeTeam.others.header' 'Remove member from team'}}
 				{{/if}}
 				<button type="button" class="btn-close"></button>
 			</li>
@@ -101,14 +92,14 @@
 			</li>
 			<li class="dialog-dropdown-text">
 				{{#if isNotPriviledgedSelf}}
-					{{mf 'course.detail.remove.yourself.team' 'Remove yourself from the team? Only another member can add you back.'}}
+					{{i18n 'course.detail.remove.yourself.team' 'Remove yourself from the team? Only another member can add you back.'}}
 				{{else}}
-					{{mf 'course.detail.remove.other.team' 'Do you really want to remove this member from the team?'}}
+					{{i18n 'course.detail.remove.other.team' 'Do you really want to remove this member from the team?'}}
 				{{/if}}
 			</li>
 			<li class="dialog-dropdown-btn">
 				<button type="button" class="btn btn-remove js-remove-team">
-					{{mf 'course.group.remove' 'Remove'}}
+					{{i18n 'course.group.remove' 'Remove'}}
 				</button>
 			</li>
 		</ul>

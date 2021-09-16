@@ -6,7 +6,7 @@
 
 <template name="eventNotFound">
 	<div class="container">
-		<h4>{{mf "event.no_event" "Sorry, we couldn't find this event, maybe you need to login or it has been deleted or never existed in the first place."}}
+		<h4>{{i18n "event.no_event" "Sorry, we couldn't find this event, maybe you need to login or it has been deleted or never existed in the first place."}}
 		</h4>
 	</div>
 </template>
@@ -19,9 +19,9 @@
 					<h2>
 						{{#if editing}}
 							{{#if _id}}
-								{{mf 'event.details.edit.edit' 'Edit event'}}
+								{{i18n 'event.details.edit.edit' 'Edit event'}}
 							{{else}}
-								{{mf 'event.details.edit.add' 'Create an event'}}
+								{{i18n 'event.details.edit.add' 'Create an event'}}
 							{{/if}}
 						{{else}}
 							{{course.name}}
@@ -30,7 +30,7 @@
 					<a href="{{pathFor 'showCourse' _id=courseId}}"
 					   class="event-course-header-link">
 						<i class="fa fa-external-link"></i>
-						{{mf 'event.details.viewCourse' 'view course'}}
+						{{i18n 'event.details.viewCourse' 'view course'}}
 					</a>
 					{{> courseCategories course}}
 					{{> regionTag}}
@@ -53,16 +53,16 @@
 					<div class="page-component">
 						<div class="event-page-component-header">
 							<h4>
-								{{mf 'event.details.registration' 'Registration'}}
+								{{i18n 'event.details.registration' 'Registration'}}
 							</h4>
 						</div>
 					</div>
 					<div class="page-component">
 						<b>
 							{{#unless userRegisteredForEvent}}
-								{{mf 'event.details.i-participate-no' 'Let us know that you are participating in this event. Your registration is binding.'}}
+								{{i18n 'event.details.i-participate-no' 'Let us know that you are participating in this event. Your registration is binding.'}}
 							{{else}}
-								{{mf 'event.details.i-participate-yes' 'You are now registered. Your registration is binding.'}}
+								{{i18n 'event.details.i-participate-yes' 'You are now registered. Your registration is binding.'}}
 							{{/unless}}
 						</b>
 					</div>
@@ -104,7 +104,7 @@
 			<div class="details-content">
 				{{#if internal}}
 					<span class="details-internal"
-						  data-tooltip="{{mf 'eventCompact.internal_event' 'Internal event'}}"></span>
+						  data-tooltip="{{i18n 'eventCompact.internal_event' 'Internal event'}}"></span>
 				{{/if}}
 				<h3>{{this.title}}</h3>
 				<div class="tag-group multiline">
@@ -144,12 +144,12 @@
 					<div class="actions">
 						{{> buttonEdit event="js-event-edit"}}
 						<button type="button" class="btn btn-edit js-show-replication">
-							{{mf 'event.details.repl_menu_btn' 'Repeat'}}
+							{{i18n 'event.details.repl_menu_btn' 'Repeat'}}
 						</button>
 						<a class="btn btn-edit js-download js-track-cal-download"
 						   href="{{pathFor 'calEvent' this}}"
-						   title="{{mf 'event.detail.download_cal' 'Download event to my calendar'}}">
-							{{mf 'event.details.download' 'Download'}}
+						   title="{{i18n 'event.detail.download_cal' 'Download event to my calendar'}}">
+							{{i18n 'event.details.download' 'Download'}}
 						</a>
 						{{> buttonDelete event="js-expand"}}
 					</div>
@@ -169,13 +169,13 @@
 -->
 <template name="eventDeleteConfirmDialog">
 	<div class="event-delete-confirmation">
-		<p>{{mf 'event.reallydelete' 'Please confirm that you would like to delete this event. This cannot be undone.'}}
+		<p>{{i18n 'event.reallydelete' 'Please confirm that you would like to delete this event. This cannot be undone.'}}
 		</p>
 		<div class="form-actions">
 			{{> buttonDeleteConfirm
 				event="js-event-delete-confirm"
-				textIdle=(mf 'event.delete.confirm.button' 'Delete this event')
-				textBusy=(mf 'event.delete.confirm.button.busy' 'Deleting event...')
+				textIdle=(i18n 'event.delete.confirm.button' 'Delete this event')
+				textBusy=(i18n 'event.delete.confirm.button.busy' 'Deleting event...')
 			}}
 			{{> buttonCancel event="js-collapse"}}
 		</div>
@@ -198,7 +198,7 @@
 					</button>
 					<ul class="dropdown-menu dialog-dropdown">
 						<li class="dropdown-header">
-							{{mf 'grouplist.editgroup.header'}}
+							{{i18n 'grouplist.editgroup.header'}}
 							<button type="button" class="btn-close"></button>
 						</li>
 						<li>
@@ -221,11 +221,11 @@
 			<button type="button" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true"
 					data-bs-toggle="dropdown">
 				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
-				<span>{{mf 'event.group.addText' 'link a group'}}</span>
+				<span>{{i18n 'event.group.addText' 'link a group'}}</span>
 			</button>
 			<ul class="dropdown-menu dialog-dropdown">
 				<li class="dropdown-header">
-					{{mf 'grouplist.addgroups.header'}}
+					{{i18n 'grouplist.addgroups.header'}}
 					<button type="button" class="btn-close"></button>
 				</li>
 				<li>
@@ -240,7 +240,7 @@
 				{{/each}}
 				<li class="dialog-dropdown-btn">
 					<a href="{{pathFor 'groupDetails' _id='create'}}" class="btn btn-add">
-						{{mf 'profile.createNewGroup.button'}}
+						{{i18n 'profile.createNewGroup.button'}}
 					</a>
 				</li>
 			</ul>
@@ -252,16 +252,16 @@
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
 			{{#with groupId}}
-				{{mf 'event.group.confirmRemoveText' "Remove group {NAME} from this event?" NAME=name}}
+				{{i18n 'event.group.confirmRemoveText' "Remove group {NAME} from this event?" NAME=name}}
 			{{/with}}
 			<button type="button" class="btn btn-remove js-remove">
-				{{mf 'course.group.confirmRemoveButton'}}
+				{{i18n 'course.group.confirmRemoveButton'}}
 			</button>
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-remove">
 			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-			{{mf 'course.group.remove'}}
+			{{i18n 'course.group.remove'}}
 		</a>
 	{{/if}}
 </template>
@@ -270,17 +270,17 @@
 	{{#if expanded}}
 		<div class="group-tool-dialog add">
 			{{#with groupId}}
-				{{mf 'course.group.confirmOrgText' NAME=name}}
+				{{i18n 'course.group.confirmOrgText' NAME=name}}
 			{{/with}}
-			{{mf 'event.group.confirmOrgNotes' "All members of this group will be able to edit this event."}}
+			{{i18n 'event.group.confirmOrgNotes' "All members of this group will be able to edit this event."}}
 			<button type="button" class="btn btn-add js-makeOrganizer">
-				{{mf 'course.group.confimOrgButton'}}
+				{{i18n 'course.group.confimOrgButton'}}
 			</button>
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-add">
 			<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
-			{{mf 'course.group.addOrgText'}}
+			{{i18n 'course.group.addOrgText'}}
 		</a>
 	{{/if}}
 </template>
@@ -289,16 +289,16 @@
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
 			{{#with groupId}}
-				{{mf 'course.group.confirmRemoveOrgText' NAME=name}}
+				{{i18n 'course.group.confirmRemoveOrgText' NAME=name}}
 			{{/with}}
 			<button type="button" class="btn btn-remove js-removeOrganizer">
-				{{mf 'course.group.confimRemoveOrgButton'}}
+				{{i18n 'course.group.confimRemoveOrgButton'}}
 			</button>
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-remove">
 			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-			{{mf 'course.group.removeOrgText' NAME=name}}
+			{{i18n 'course.group.removeOrgText' NAME=name}}
 		</a>
 	{{/if}}
 </template>
@@ -307,9 +307,9 @@
 	<button type="button" class="btn btn-add btn-event {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'registering'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{mf '_button.registering' 'Registering...'}}
+			{{i18n '_button.registering' 'Registering...'}}
 		{{else}}
-			{{mf 'event.details.register' 'Register'}}
+			{{i18n 'event.details.register' 'Register'}}
 		{{/if}}
 	</button>
 </template>
@@ -318,9 +318,9 @@
 	<button type="button" class="btn btn-warning btn-event {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'registering'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{mf '_button.addingYouToWaitingQueue' 'Adding you to waiting queue...'}}
+			{{i18n '_button.addingYouToWaitingQueue' 'Adding you to waiting queue...'}}
 		{{else}}
-			{{mf 'event.details.isFullyBooked' 'Event is fully booked'}}
+			{{i18n 'event.details.isFullyBooked' 'Event is fully booked'}}
 		{{/if}}
 	</button>
 </template>
@@ -329,9 +329,9 @@
 	<button type="button" class="btn btn-cancel btn-event {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'unregistering'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{mf '_button.unregistering' 'Unregistering...'}}
+			{{i18n '_button.unregistering' 'Unregistering...'}}
 		{{else}}
-			{{mf 'event.details.unregister' 'Withdraw my registration'}}
+			{{i18n 'event.details.unregister' 'Withdraw my registration'}}
 		{{/if}}
 	</button>
 </template>

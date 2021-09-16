@@ -2,20 +2,20 @@
 	<tr>
 		<td>
 			<span class="title">
-				{{mf "notification.event.mail.greeting" "Hi {USERNAME}" USERNAME=username LOCALE=locale}}
+				{{i18n "notification.event.mail.greeting" "Hi {USERNAME}" USERNAME=username lng=locale}}
 			</span>
 			<p>
 				{{#if new}}
-					{{mf 'notification.event.mail.new' 'A new event was just published for course "{COURSE}":' COURSE=course.name LOCALE=locale}}
+					{{i18n 'notification.event.mail.new' 'A new event was just published for course "{COURSE}":' COURSE=course.name lng=locale}}
 				{{else}}
-					{{mf 'notification.event.mail.changed' 'The following event for course "{COURSE}" changed:' COURSE=course.name LOCALE=locale}}
+					{{i18n 'notification.event.mail.changed' 'The following event for course "{COURSE}" changed:' COURSE=course.name lng=locale}}
 				{{/if}}
 				<a href="{{courseLink}}"><i class="fa fa-external-link"></i>
-					{{mf 'event.details.viewCourse' 'view course' LOCALE=locale}}</a>
+					{{i18n 'event.details.viewCourse' 'view course' lng=locale}}</a>
 			</p>
 			{{#if additionalMessage}}
 				<p>
-					{{mf "notification.event.mail.personalMessage" 'The Organizer "{USERNAME}" left a message for you:' USERNAME=creatorName LOCALE=locale}}
+					{{i18n "notification.event.mail.personalMessage" 'The Organizer "{USERNAME}" left a message for you:' USERNAME=creatorName lng=locale}}
 				</p>
 				<table class="comment-box">
 					<tr>
@@ -26,18 +26,18 @@
 				</table>
 			{{else}}
 				<p>
-					{{mf "notification.event.mail.creationMessage" 'The event has been created by "{USERNAME}".' USERNAME=creatorName LOCALE=locale}}
+					{{i18n "notification.event.mail.creationMessage" 'The event has been created by "{USERNAME}".' USERNAME=creatorName lng=locale}}
 				</p>
 			{{/if}}
 
 			<a
-			   href="{{creatorLink}}">{{mf "notification.event.mail.commenterlink" '➜ See profile from {USERNAME}' USERNAME=creatorName LOCALE=locale}}</a>
+			   href="{{creatorLink}}">{{i18n "notification.event.mail.commenterlink" '➜ See profile from {USERNAME}' USERNAME=creatorName lng=locale}}</a>
 			<table style="margin: 2em auto; width: 92%;">
 				<tr>
 					<td bgcolor="#c1f2ae" style="padding: 15px;">
 						<div style="float: right;">
 							<a href="{{eventLink}}"><i class="fa fa-calendar"></i>
-								{{mf 'notification.event.viewEvent' 'view event' LOCALE=locale}}</a>
+								{{i18n 'notification.event.viewEvent' 'view event' lng=locale}}</a>
 						</div>
 						<a href="{{eventLink}}"
 						   style="color: #333 !important; text-decoration: none !important;">
@@ -64,7 +64,7 @@
 							{{event.title}}
 						</p>
 						<p style="font-weight: bold;">
-							{{mf "notification.event.mail.titleDescription" "Description" LOCALE=locale}}
+							{{i18n "notification.event.mail.titleDescription" "Description" lng=locale}}
 						</p>
 						<p>
 							{{{event.description}}}
@@ -75,26 +75,26 @@
 					<td width="350" style="padding: 5px; text-align:right;">
 						<a href="{{calLink}}"
 						   style="color: #00f !important; text-decoration: none !important;">
-							{{mf "notification.event.mail.linkCalendar" "Add this event to my calendar" LOCALE=locale}}
+							{{i18n "notification.event.mail.linkCalendar" "Add this event to my calendar" lng=locale}}
 						</a>
 						<br />
 					</td>
 				</tr>
 			</table>
 			<p class="gap-md text-center">
-				{{mf "notification.event.mail.informRegisterEvent" "Let us know if you participate in this event:" LOCALE=locale}}
+				{{i18n "notification.event.mail.informRegisterEvent" "Let us know if you participate in this event:" lng=locale}}
 			</p>
 			<p class="text-center">
 				<a class="button" href="{{registerToEventLink}}">
-					{{mf "notification.event.mail.registerEvent" "Yes, i take part!" LOCALE=locale}}
+					{{i18n "notification.event.mail.registerEvent" "Yes, i take part!" lng=locale}}
 				</a>
 			</p>
 			<p class="gap-md text-center">
-				{{mf "notification.event.mail.notinterested" "Not interested anymore?" LOCALE=locale}}
+				{{i18n "notification.event.mail.notinterested" "Not interested anymore?" lng=locale}}
 			</p>
 			<p class="text-center">
 				<a class="button" href="{{unsubscribeFromCourseLink}}">
-					{{mf "notification.event.mail.unsubscribe" "Unsubscribe from course." LOCALE=locale}}
+					{{i18n "notification.event.mail.unsubscribe" "Unsubscribe from course." lng=locale}}
 				</a>
 			</p>
 		</td>
@@ -104,16 +104,16 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{mf 'notification.event.mail.notice' 'You receive this mail because you are involved in the course "{COURSE}".' COURSE=course.name LOCALE=locale}}
+						{{i18n 'notification.event.mail.notice' 'You receive this mail because you are involved in the course "{COURSE}".' COURSE=course.name lng=locale}}
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<a
-						   href="{{unsubLink}}">{{mf "notification.event.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}</a>
+						   href="{{unsubLink}}">{{i18n "notification.event.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName lng=locale}}</a>
 						&nbsp;
 						<a
-						   href="{{urlFor 'profile' query='campaign=eventNotify'}}">{{mf "notification.event.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
+						   href="{{urlFor 'profile' query='campaign=eventNotify'}}">{{i18n "notification.event.mail.profileLink" "Visit your profile" lng=locale}}</a>
 					</td>
 				</tr>
 			</table>

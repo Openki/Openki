@@ -40,14 +40,14 @@
 	<i class="{{roleIcon role}} fa-fw" aria-hidden="true"></i>
 	{{> profileLink user}}
 	{{contribution user}}
-	{{mf 'course.history.userSubscribed' 'joined as {ROLE}' ROLE=(roleShort role)}}
+	{{i18n 'course.history.userSubscribed' 'joined as {ROLE}' ROLE=(roleShort role)}}
 </template>
 
 <template name="userUnsubscribedHistoryEntry">
 	<i class="{{roleIcon role}} fa-fw" aria-hidden="true"></i>
 	{{> profileLink user}}
 	{{contribution user}}
-	{{mf 'course.history.userUnsubscribed' 'retract {ROLE}' ROLE=(roleShort role)}}
+	{{i18n 'course.history.userUnsubscribed' 'retract {ROLE}' ROLE=(roleShort role)}}
 </template>
 
 <template name="eventInsertedHistoryEntry">
@@ -57,7 +57,7 @@
 		{{calendarDayShort startLocal}}
 		{{this.title}}
 	</a>
-	{{mf 'course.history.eventInserted' 'created by'}}
+	{{i18n 'course.history.eventInserted' 'created by'}}
 	{{> profileLink createdBy}}
 	{{contribution createdBy}}
 </template>
@@ -70,9 +70,9 @@
 		{{this.title}}
 	</a>
 	{{#if replicasUpdated}}
-		{{mf 'course.history.eventAndRepeatsUpdated' 'and repeats updated by'}}
+		{{i18n 'course.history.eventAndRepeatsUpdated' 'and repeats updated by'}}
 	{{else}}
-		{{mf 'course.history.eventUpdated' 'updated by'}}
+		{{i18n 'course.history.eventUpdated' 'updated by'}}
 	{{/if}}
 	{{> profileLink updatedBy}}
 	{{contribution updatedBy}}
@@ -83,19 +83,19 @@
 	{{weekdayFormat startLocal}}
 	{{calendarDayShort startLocal}}
 	{{this.title}}
-	{{mf 'course.history.eventRemoved' 'removed by'}}
+	{{i18n 'course.history.eventRemoved' 'removed by'}}
 	{{> profileLink removedBy}}
 	{{contribution removedBy}}
 </template>
 
 <template name="updatedHistoryEntry">
-	{{mf 'course.history.updated' 'Course updated by'}}
+	{{i18n 'course.history.updated' 'Course updated by'}}
 	{{> profileLink updatedBy}}
 	{{contribution updatedBy}}
 </template>
 
 <template name="createdHistoryEntry">
-	{{mf 'course.history.created_by' 'Course created by'}}
+	{{i18n 'course.history.created_by' 'Course created by'}}
 	{{> profileLink createdby}}
 	{{contribution createdby}}
 </template>

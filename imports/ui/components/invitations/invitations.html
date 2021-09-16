@@ -1,7 +1,7 @@
 <template name="invitations">
 	<h3>
 		<span class="fa fa-envelope fa-fw" aria-hidden="true"></span>
-		{{mf 'tenant.settings.title.invitations' 'Invitations'}}
+		{{i18n 'tenant.settings.title.invitations' 'Invitations'}}
 	</h3>
 	{{> invitationsCreate tenant=tenant}}
 	{{> invitationsList tenant=tenant}}

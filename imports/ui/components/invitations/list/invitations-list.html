@@ -6,39 +6,40 @@
 			<input class="form-check-input js-showAccepted" type="checkbox" value=""
 				   id="invitationsListShowAcceptedCheck">
 			<label class="form-check-label"
-				   for="invitationsListShowAcceptedCheck">{{mf 'invitations.list.showAccepted' 'Show accepted invitations'}}</label>
+				   for="invitationsListShowAcceptedCheck">{{i18n 'invitations.list.showAccepted' 'Show accepted invitations'}}</label>
 		</div>
 
 		{{#if invitations.count}}
 			<div class="row responsive-table-head">
-				<div class="col-3">{{mf 'invitations.list.to' 'To'}}</div>
+				<div class="col-3">{{i18n 'invitations.list.to' 'To'}}</div>
 
-				<div class="col-2">{{mf 'invitations.list.status' 'Status'}}
+				<div class="col-2">{{i18n 'invitations.list.status' 'Status'}}
 				</div>
 
-				<div class="col-3">{{mf 'invitations.list.acceptedBy' 'Accepted by'}}
+				<div class="col-3">{{i18n 'invitations.list.acceptedBy' 'Accepted by'}}
 				</div>
 
-				<div class="col-2">{{mf 'invitations.list.createdAt' 'Created At'}}
+				<div class="col-2">{{i18n 'invitations.list.createdAt' 'Created At'}}
 				</div>
 
 				<div class="col-2">
-					{{mf 'invitations.list.remove' 'Remove'}}
+					{{i18n 'invitations.list.remove' 'Remove'}}
 					<span class="fa fa-info-circle fa-fw"
-						  data-tooltip="{{mf 'invitations.list.remove.tooltip' 'Removing the invitation has no effect on the member who has already accepted.'}}"
+						  data-tooltip="{{i18n 'invitations.list.remove.tooltip' 'Removing the invitation has no effect on the member who has already accepted.'}}"
 						  data-tooltip-classes="tooltip-compact"></span>
 				</div>
 			</div>
 			{{#each invitation in invitations}}
 				<div class="row responsive-table-row">
 
-					<div class="col-6 responsive-table-head">{{mf 'invitations.list.to'}}</div>
+					<div class="col-6 responsive-table-head">{{i18n 'invitations.list.to'}}</div>
 					<div class="col-6 col-md-3">{{invitation.to}}</div>
 
-					<div class="col-6 responsive-table-head">{{mf 'invitations.list.status'}}</div>
+					<div class="col-6 responsive-table-head">{{i18n 'invitations.list.status'}}
+					</div>
 					<div class="col-6 col-md-2">{{status invitation.status}}</div>
 
-					<div class="col-6 responsive-table-head">{{mf 'invitations.list.acceptedBy'}}
+					<div class="col-6 responsive-table-head">{{i18n 'invitations.list.acceptedBy'}}
 					</div>
 					<div class="col-6 col-md-3">
 						{{#if invitation.acceptedBy}}
@@ -48,7 +49,7 @@
 						{{/if}}
 					</div>
 
-					<div class="col-6 responsive-table-head">{{mf 'invitations.list.createdAt'}}
+					<div class="col-6 responsive-table-head">{{i18n 'invitations.list.createdAt'}}
 					</div>
 					<div class="col-6 col-md-2"
 						 title="{{dateFormat invitation.createdAt}} {{timeFormat invitation.createdAt}}">
@@ -56,9 +57,9 @@
 					</div>
 
 					<div class="col-6 responsive-table-head">
-						{{mf 'invitations.list.remove'}}
+						{{i18n 'invitations.list.remove'}}
 						<span class="fa fa-info-circle fa-fw"
-							  data-tooltip="{{mf 'invitations.list.remove.tooltip'}}"
+							  data-tooltip="{{i18n 'invitations.list.remove.tooltip'}}"
 							  data-tooltip-classes="tooltip-compact"></span>
 					</div>
 					<div class="col-6 col-md-2">

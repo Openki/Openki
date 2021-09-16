@@ -1,21 +1,21 @@
 <template name="report">
 	{{#if sending}}
-		{{mf 'report.sending' 'Report is being sent…'}}
+		{{i18n 'report.sending' 'Report is being sent…'}}
 	{{/if}}
 	{{#if reporting}}
 		<div class="report p-3">
 			<form>
 				<div class="mb-3 {{errorClass 'reportMessage'}}">
 					<label class="form-label"
-						   for="reportMessage">{{mf 'report.text' 'Please tell us what is wrong.'}}</label>
+						   for="reportMessage">{{i18n 'report.text' 'Please tell us what is wrong.'}}</label>
 					<textarea class="js-report-message form-control" id="reportMessage" rows="3"
-							  placeholder="{{mf 'report.placeholder' 'My hovercraft is full of eels.'}}"></textarea>
+							  placeholder="{{i18n 'report.placeholder' 'My hovercraft is full of eels.'}}"></textarea>
 					{{errorMessage 'reportMessage'}}
 				</div>
 				<div class="d-flex gap-2 justify-content-end">
 					<button type="button" class='btn btn-save js-report-send'>
 						<i class="fa fa-send fa-fw" aria-hidden="true"></i>
-						{{mf 'report.report' 'Send report'}}
+						{{i18n 'report.report' 'Send report'}}
 					</button>
 					{{> buttonCancel event="js-report-cancel"}}
 				</div>
@@ -23,7 +23,7 @@
 		</div>
 	{{else}}
 		<button type="button" class="btn btn-secondary js-report">
-			{{mf 'report.open' 'Report problem'}}
+			{{i18n 'report.open' 'Report problem'}}
 		</button>
 	{{/if}}
 </template>

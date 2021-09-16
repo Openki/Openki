@@ -1,5 +1,5 @@
 import { Router } from 'meteor/iron:router';
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { ReactiveDict } from 'meteor/reactive-dict';
@@ -73,7 +73,7 @@ export type Data = {
 
 		instance.editableDescription = new Editable(
 			false,
-			mf(
+			i18n(
 				'course.description.placeholder',
 				'Describe your idea, so that more people will find it and that they`ll know what to expect.',
 			),
@@ -372,7 +372,7 @@ export type Data = {
 			} as Required<CoursesMethods.SaveFields>;
 
 			if (changes.name.length === 0) {
-				Alert.serverError(mf('course.edit.error.title', 'Please provide a title'));
+				Alert.serverError(i18n('course.edit.error.title', 'Please provide a title'));
 				return;
 			}
 
@@ -391,7 +391,7 @@ export type Data = {
 					changes.region = instance.$('.js-select-region').val() as string;
 				}
 				if (!changes.region) {
-					Alert.serverError(mf('course.edit.error.region', 'Please select a region'));
+					Alert.serverError(i18n('course.edit.error.region', 'Please select a region'));
 					return;
 				}
 
@@ -446,8 +446,8 @@ export type Data = {
 			instance.busy('saving');
 			SaveAfterLogin(
 				instance,
-				mf('loginAction.saveCourse', 'Login and save course'),
-				mf('registerAction.saveCourse', 'Register and save course'),
+				i18n('loginAction.saveCourse', 'Login and save course'),
+				i18n('registerAction.saveCourse', 'Register and save course'),
 				async () => {
 					try {
 						courseId = (await CoursesMethods.save(courseId, changes)) as string;
@@ -468,11 +468,9 @@ export type Data = {
 						} else {
 							if (isNew) {
 								Alert.success(
-									mf(
-										'message.courseCreated',
-										{ NAME: changes.name },
-										'The course "{NAME}" has been created!',
-									),
+									i18n('message.courseCreated', 'The course "{NAME}" has been created!', {
+										NAME: changes.name,
+									}),
 								);
 								Analytics.trackEvent(
 									'Course creations',
@@ -484,10 +482,10 @@ export type Data = {
 								);
 							} else {
 								Alert.success(
-									mf(
+									i18n(
 										'message.courseChangesSaved',
-										{ NAME: changes.name },
 										'Your changes to the course "{NAME}" have been saved.',
+										{ NAME: changes.name },
 									),
 								);
 							}

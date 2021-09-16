@@ -2,29 +2,29 @@
 	<button type="submit" class="btn btn-save text-nowrap {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'saving'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{mf '_button.saving' 'Saving...'}}
+			{{i18n '_button.saving' 'Saving...'}}
 		{{else}}
-			{{mf '_button.save'}}
+			{{i18n '_button.save'}}
 		{{/if}}
 	</button>
 </template>
 
 <template name="buttonCancel">
 	<button type="button" class="btn btn-cancel text-nowrap {{event}}" {{disabledIfBusy}}>
-		{{mf '_button.cancel'}}
+		{{i18n '_button.cancel'}}
 	</button>
 </template>
 
 <template name="buttonEdit">
 	<button type="button" class="btn btn-edit text-nowrap {{event}}" {{disabledIfBusy}}>
-		{{mf '_button.edit'}}
+		{{i18n '_button.edit'}}
 	</button>
 </template>
 
 <template name="buttonDelete">
 	<button type="button" class="btn btn-delete text-nowrap text-danger {{event}}"
 			{{disabledIfBusy}}>
-		{{mf '_button.delete'}}
+		{{i18n '_button.delete'}}
 	</button>
 </template>
 

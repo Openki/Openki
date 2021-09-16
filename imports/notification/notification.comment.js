@@ -1,7 +1,7 @@
 import { check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { _ } from 'meteor/underscore';
 
 import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
@@ -120,14 +120,15 @@ notificationComment.Model = function (entry) {
 				TITLE: StringTools.truncate(comment.title, 50),
 			};
 
+			subjectvars.lng = userLocale;
 			let subject;
 			if (commenter) {
 				subjectvars.COMMENTER = StringTools.truncate(commenterName, 20);
 				// prettier-ignore
-				subject = mf('notification.comment.mail.subject', subjectvars, 'Comment on {COURSE} by {COMMENTER}: {TITLE}', userLocale);
+				subject = i18n('notification.comment.mail.subject', 'Comment on {COURSE} by {COMMENTER}: {TITLE}', subjectvars);
 			} else {
 				// prettier-ignore
-				subject = mf('notification.comment.mail.subject.anon', subjectvars, 'Anonymous comment on {COURSE}: {TITLE}', userLocale);
+				subject = i18n('notification.comment.mail.subject.anon',  'Anonymous comment on {COURSE}: {TITLE}', subjectvars);
 			}
 
 			/** @type {RegionModel | undefined}  */

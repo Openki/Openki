@@ -10,7 +10,7 @@
 					<div class="details-map">
 						{{> map markers=markers maxZoom=16}}
 						<div class="coordinates">
-							{{mf 'regionDetails.coordinates' 'Coordinates:'}}
+							{{i18n 'regionDetails.coordinates' 'Coordinates:'}}
 							{{locationDisplay region.loc}}
 						</div>
 					</div>
@@ -18,7 +18,7 @@
 				{{#if region.tz}}
 					<p>
 						<span class="region-property-title">
-							{{mf 'regionDetails.timezone' 'Timezone:'}}
+							{{i18n 'regionDetails.timezone' 'Timezone:'}}
 						</span>
 						{{region.tz}}
 					</p>
@@ -41,13 +41,13 @@
 
 <template name="regionDeleteConfirmDialog">
 	<div class="region-delete-confirmation">
-		<p>{{mf 'region.reallydelete' 'Please confirm that you would like to delete this region with all courses, events and venues. This cannot be undone.'}}
+		<p>{{i18n 'region.reallydelete' 'Please confirm that you would like to delete this region with all courses, events and venues. This cannot be undone.'}}
 		</p>
 		<div class="form-actions">
 			{{> buttonDeleteConfirm
 				event="js-region-delete-confirm"
-				textIdle=(mf 'region.detail.remove' 'Remove this region')
-				textBusy=(mf 'region.detail.remove.busy' 'Deleting region...')
+				textIdle=(i18n 'region.detail.remove' 'Remove this region')
+				textBusy=(i18n 'region.detail.remove.busy' 'Deleting region...')
 			}}
 			{{> buttonCancel event="js-region-delete-cancel"}}
 		</div>

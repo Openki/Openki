@@ -141,7 +141,7 @@ export interface FormfieldErrorsMapping {
  *   };
  *   TemplateMixins.FormfieldErrors(Template, 'malcontentLogin', mapping);
  *```
- * Note how `text` is a function so that you can pass in an mf() call
+ * Note how `text` is a function so that you can pass in an i18n() call
  * that will only be evaluated once needed. (Not for performance but
  * because the visitor could change language.)
  *

@@ -1,9 +1,7 @@
 {
 	"editorconfig": true,
-	"content_unformatted": [
-		"pre",
-		"textarea",
-		"mf"
+	"unformatted": [
+		"i18n"
 	],
 	"wrap-attributes": "aligned-multiple",
 	"wrap-line-length": 100,

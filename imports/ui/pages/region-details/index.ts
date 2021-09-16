@@ -1,7 +1,7 @@
 import { check } from 'meteor/check';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { RegionModel } from '/imports/api/regions/regions';
@@ -50,7 +50,7 @@ template.helpers({
 		const { region } = instance.data;
 		return {
 			region,
-			title: mf('region.edit.titleCreate', 'Create new region'),
+			title: i18n('region.edit.titleCreate', 'Create new region'),
 			async onSave(changes) {
 				const regionId = await RegionsMethods.create({ tenant: region.tenant, ...changes });
 
@@ -69,7 +69,7 @@ template.helpers({
 		const { region } = instance.data;
 		return {
 			region,
-			title: mf('region.edit.titleEdit', 'Edit region'),
+			title: i18n('region.edit.titleEdit', 'Edit region'),
 			async onSave(changes) {
 				await RegionsMethods.update(region._id, changes);
 				instance.state.set('editing', false);

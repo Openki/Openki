@@ -1,6 +1,6 @@
 import { check } from 'meteor/check';
-import { mf } from 'meteor/msgfmt:core';
 import { Alerts } from './alerts';
+import { i18n } from '/imports/startup/both/i18next';
 
 /**
  * Private method to add an alert message
@@ -39,11 +39,9 @@ export function warning(message: string) {
 export function error(errorString: string) {
 	check(errorString, String);
 
-	const errorMessage = mf(
-		'_clientError',
-		{ ERROR: errorString },
-		'There was an error: "{ERROR}." Sorry about this.',
-	);
+	const errorMessage = i18n('_clientError', 'There was an error: "{ERROR}." Sorry about this.', {
+		ERROR: errorString,
+	});
 
 	_alert('error', errorMessage, 60000);
 }
@@ -57,10 +55,10 @@ export function serverError(errorOrMessage: Error | string, message?: string) {
 	if (typeof message !== 'string') {
 		check(errorOrMessage, String);
 
-		const errorMessage = mf(
+		const errorMessage = i18n(
 			'_serverErrorMessageOnly',
-			{ MESSAGE: errorOrMessage },
 			'There was an error on the server: "{MESSAGE}." Sorry about this.',
+			{ MESSAGE: errorOrMessage },
 		);
 
 		_alert('error', errorMessage, 60000);
@@ -68,10 +66,10 @@ export function serverError(errorOrMessage: Error | string, message?: string) {
 		check(errorOrMessage, Error);
 		check(message, String);
 
-		const errorMessage = mf(
+		const errorMessage = i18n(
 			'_serverError',
-			{ ERROR: errorOrMessage, MESSAGE: message },
 			'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.',
+			{ ERROR: errorOrMessage, MESSAGE: message },
 		);
 
 		_alert('error', errorMessage, 60000);

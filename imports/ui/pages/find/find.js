@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { Router } from 'meteor/iron:router';
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
@@ -70,11 +70,11 @@ Template.find.onCreated(function () {
 		const results = {};
 
 		Object.keys(Categories).forEach((mainCategory) => {
-			if (mf(`category.${mainCategory}`).toLowerCase().includes(queryToLowerCase)) {
+			if (i18n(`category.${mainCategory}`).toLowerCase().includes(queryToLowerCase)) {
 				results[mainCategory] = [];
 			}
 			Categories[mainCategory].forEach((subCategory) => {
-				if (mf(`category.${subCategory}`).toLowerCase().includes(queryToLowerCase)) {
+				if (i18n(`category.${subCategory}`).toLowerCase().includes(queryToLowerCase)) {
 					if (results[mainCategory]) {
 						results[mainCategory].push(subCategory);
 					} else {

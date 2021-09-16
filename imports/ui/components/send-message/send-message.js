@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { mf } from 'meteor/msgfmt:core';
+import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
@@ -43,12 +43,14 @@ Template.sendMessage.events({
 		try {
 			await emailMethods.sendVerificationEmail();
 
-			Alert.success(mf('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }));
+			Alert.success(
+				i18n('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }),
+			);
 		} catch (err) {
 			instance.state.set('verificationMailSent', false);
 			Alert.serverError(
 				err,
-				mf('profile.sendVerificationMailFailed', 'Failed to send verification mail'),
+				i18n('profile.sendVerificationMailFailed', 'Failed to send verification mail'),
 			);
 		}
 	},
@@ -70,7 +72,7 @@ Template.sendMessage.events({
 		const message = instance.$('.js-email-message').val();
 
 		if (message.length < 2) {
-			Alert.error(mf('profile.mail.longertext', 'longer text please'));
+			Alert.error(i18n('profile.mail.longertext', 'longer text please'));
 			instance.busy(false);
 			return;
 		}
@@ -91,13 +93,13 @@ Template.sendMessage.events({
 
 		try {
 			await emailMethods.sendEmail(data.recipientId, message, options);
-			Alert.success(mf('profile.mail.sent', 'Your message was sent'));
+			Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
 			instance.$('.js-email-message').val('');
 			if (data.onDone) {
 				data.onDone();
 			}
 		} catch (err) {
-			Alert.serverError(err, mf('profile.mail.sendFailed', 'Your message was not sent'));
+			Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
 		} finally {
 			instance.busy(false);
 		}

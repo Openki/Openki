@@ -3,9 +3,9 @@
 		{{#if isInvolved}}
 			<h3 class="badge-title">
 				{{#if ownProfile}}
-					{{mf 'users.courselist.myCourses' 'I am involved in the following courses'}}
+					{{i18n 'users.courselist.myCourses' 'I am involved in the following courses'}}
 				{{else}}
-					{{mf 'users.courselist.userCourses' '{NAME} is involved in the following courses' NAME=getName}}
+					{{i18n 'users.courselist.userCourses' '{NAME} is involved in the following courses' NAME=getName}}
 				{{/if}}
 			</h3>
 			{{#if ready}}
@@ -29,9 +29,9 @@
 									<span class="{{icon}} fa-fw" aria-hidden="true"></span>
 								</div>
 								{{#if ../ownProfile}}
-									{{mf roleMyList}}
+									{{i18n roleMyList}}
 								{{else}}
-									{{#mf KEY=roleUserList NAME=getName}}{{/mf}}
+									{{i18n roleUserList NAME=getName}}
 								{{/if}}
 							</h3>
 						{{/with}}
@@ -47,9 +47,9 @@
 										<span class="{{icon}} fa-fw" aria-hidden="true"></span>
 									</div>
 									{{#if ../ownProfile}}
-										{{mf roleMyListPast}}
+										{{i18n roleMyListPast}}
 									{{else}}
-										{{#mf KEY=roleUserListPast NAME=getName}}{{/mf}}
+										{{i18n roleUserListPast NAME=getName}}
 									{{/if}}
 								</h3>
 							{{/with}}

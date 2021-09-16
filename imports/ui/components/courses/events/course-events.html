@@ -9,12 +9,12 @@
 								<h4>
 									<span class="fa fa-calendar fa-fw"
 										  aria-hidden="true"></span>&nbsp;
-									{{mf 'course.events.pastList' 'Previous events'}}
+									{{i18n 'course.events.pastList' 'Previous events'}}
 								</h4>
 								{{#if haveFutureEvents}}
 									<a href="#future_events" class="link">
 										<span class="fa fa-arrow-down"></span>
-										{{mf 'course.events.futureListLink' 'future events'}}
+										{{i18n 'course.events.futureListLink' 'future events'}}
 									</a>
 								{{/if}}
 							</div>
@@ -27,12 +27,12 @@
 								<h4>
 									<span class="fa fa-calendar fa-fw"
 										  aria-hidden="true"></span>&nbsp;
-									{{mf 'course.events.ongoinglist' 'Ongoing events'}}
+									{{i18n 'course.events.ongoinglist' 'Ongoing events'}}
 								</h4>
 								{{#if havePastEvents}}
 									<a href="#past_events" class="past-events-link">
 										<span class="fa fa-arrow-up"></span>
-										{{mf 'course.events.pastListLink' 'past events'}}
+										{{i18n 'course.events.pastListLink' 'past events'}}
 									</a>
 								{{/if}}
 							</div>
@@ -45,12 +45,12 @@
 								<h4>
 									<span class="fa fa-calendar fa-fw"
 										  aria-hidden="true"></span>&nbsp;
-									{{mf 'course.events.upcominglist' 'Upcoming events'}}
+									{{i18n 'course.events.upcominglist' 'Upcoming events'}}
 								</h4>
 								{{#if havePastEvents}}
 									<a href="#past_events" class="past-events-link">
 										<span class="fa fa-arrow-up"></span>
-										{{mf 'course.events.pastListLink' 'past events'}}
+										{{i18n 'course.events.pastListLink' 'past events'}}
 									</a>
 								{{/if}}
 							</div>
@@ -60,7 +60,7 @@
 							<div class="show-more-courses">
 								{{#if haveMoreEvents}}
 									<button type="button" class="btn btn-add js-show-all-events">
-										{{mf 'course.events.showAllEvents' 'Show all events'}}
+										{{i18n 'course.events.showAllEvents' 'Show all events'}}
 									</button>
 								{{/if}}
 							</div>
@@ -75,7 +75,7 @@
 				<div class="course-page-component-header">
 					<h4>
 						<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>&nbsp;
-						{{mf 'course.details.noEvents' 'This course has no events'}}
+						{{i18n 'course.details.noEvents' 'This course has no events'}}
 					</h4>
 				</div>
 			</div>
@@ -85,7 +85,7 @@
 			<div class="course-page-component-header">
 				<h4>
 					<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>&nbsp;
-					{{mf 'course.details.eventsLoadingHeader' 'Events'}}
+					{{i18n 'course.details.eventsLoadingHeader' 'Events'}}
 				</h4>
 			</div>
 			{{> loadingRow}}
@@ -109,7 +109,7 @@
 			<div class="page-component">
 				{{#with course}}
 					<a class="js-track-cal-download" href="{{pathFor 'calCourse'}}" target="_blank">
-						{{mf 'course.download_cal' 'Download events to my calendar'}}
+						{{i18n 'course.download_cal' 'Download events to my calendar'}}
 					</a>
 				{{/with}}
 			</div>
@@ -120,7 +120,7 @@
 <template name="courseEventAdd">
 	<div class="event-caption-wrap">
 		<a class="btn p-0" href="{{pathFor 'showEvent' _id='create' query=addEventQuery}}"
-		   title="{{mf 'course.event.edit.add'}}">
+		   title="{{i18n 'course.event.edit.add'}}">
 			<div class="event-caption placeholder event-caption-action event-caption-add">
 				<div class="event-caption-header-wrap">
 					<div class="event-caption-header">

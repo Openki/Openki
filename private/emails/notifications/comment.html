@@ -2,13 +2,13 @@
 	<tr>
 		<td>
 			<span class="title">
-				{{mf "notification.event.mail.greeting" USERNAME=username LOCALE=locale}}
+				{{i18n "notification.event.mail.greeting" USERNAME=username lng=locale}}
 			</span>
 			<p>
 				{{#if commenter}}
-					{{mf "notification.comment.mail.intro" 'There was a comment by "{USERNAME}" on course "{COURSE}":' USERNAME=commenterName COURSE=course.name LOCALE=locale}}
+					{{i18n "notification.comment.mail.intro" 'There was a comment by "{USERNAME}" on course "{COURSE}":' USERNAME=commenterName COURSE=course.name lng=locale}}
 				{{else}}
-					{{mf "notification.comment.mail.intro.anon" 'There was an anonymous comment on "{COURSE}":' COURSE=course.name LOCALE=locale}}
+					{{i18n "notification.comment.mail.intro.anon" 'There was an anonymous comment on "{COURSE}":' COURSE=course.name lng=locale}}
 				{{/if}}
 			</p>
 			<table class="comment-box">
@@ -25,11 +25,11 @@
 			</table>
 			<p>
 				<a
-				   href="{{courseLink}}">{{mf "notification.comment.mail.linktext" '➜ See comment on {SITENAME}' SITENAME=customSiteName LOCALE=locale}}</a>
+				   href="{{courseLink}}">{{i18n "notification.comment.mail.linktext" '➜ See comment on {SITENAME}' SITENAME=customSiteName lng=locale}}</a>
 				{{#if commenter}}
 					<br />
 					<a
-					   href="{{commenterLink}}">{{mf "notification.comment.mail.commenterlink" '➜ See profile from {USERNAME}' USERNAME=commenterName LOCALE=locale}}</a>
+					   href="{{commenterLink}}">{{i18n "notification.comment.mail.commenterlink" '➜ See profile from {USERNAME}' USERNAME=commenterName lng=locale}}</a>
 				{{/if}}
 			</p>
 		</td>
@@ -39,16 +39,16 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{mf "notification.comment.mail.recpnote" "You receive this message because you're on the team of this course." LOCALE=locale}}
+						{{i18n "notification.comment.mail.recpnote" "You receive this message because you're on the team of this course." lng=locale}}
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<a
-						   href="{{unsubLink}}">{{mf "notification.comment.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName LOCALE=locale}}</a>
+						   href="{{unsubLink}}">{{i18n "notification.comment.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName lng=locale}}</a>
 						&nbsp;
 						<a
-						   href="{{urlFor 'profile' query='campaign=commentNotify'}}">{{mf "notification.comment.mail.profileLink" "Visit your profile" LOCALE=locale}}</a>
+						   href="{{urlFor 'profile' query='campaign=commentNotify'}}">{{i18n "notification.comment.mail.profileLink" "Visit your profile" lng=locale}}</a>
 					</td>
 				</tr>
 			</table>

@@ -4,10 +4,10 @@
 			<div class="details-form-element settings">
 				<h3>
 					<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
-					{{mf 'group.settings.title' 'Settings'}}
+					{{i18n 'group.settings.title' 'Settings'}}
 				</h3>
 				<div class="mb-3">
-					<label class="form-label">{{mf 'group.settings.field.logo' 'Logo'}}</label>
+					<label class="form-label">{{i18n 'group.settings.field.logo' 'Logo'}}</label>
 					{{> editableImage logoFileUploadArgs}}
 				</div>
 			</div>
@@ -15,13 +15,13 @@
 			<div class="details-form-element">
 				<h3>
 					<span class="fa fa-group fa-fw" aria-hidden="true"></span>
-					{{mf 'group.settings.title.Members' 'Members'}}
+					{{i18n 'group.settings.title.Members' 'Members'}}
 				</h3>
 				<div class="tag-group multiline">
 					{{#each group.members}}
 						<div class="tag tag-btn group-member-tag-btn-remove ">
 							<button class="js-member-remove-btn"
-									title="{{mf 'group.settings.removeFromGroup' 'remove member'}}"
+									title="{{i18n 'group.settings.removeFromGroup' 'remove member'}}"
 									type="button">
 								<i class="fa fa-remove fa-fw" aria-hidden="true"></i>
 								{{username this}}
@@ -29,7 +29,7 @@
 						</div>
 						<div class="tag tag-link group-member-tag-profile addon">
 							<a href="{{pathFor 'userprofile' _id=this}}"
-							   title="{{mf 'group.settings.member.profile' 'Visit profile'}}">
+							   title="{{i18n 'group.settings.member.profile' 'Visit profile'}}">
 								<i class="fa fa-user fa-fw" aria-hidden="true"></i>
 							</a>
 						</div>
@@ -37,13 +37,13 @@
 				</div>
 				<div class="mb-3">
 					<label
-						   class="form-label">{{mf 'group.settings.field.addMembers' 'Add a new member to your group'}}</label>
+						   class="form-label">{{i18n 'group.settings.field.addMembers' 'Add a new member to your group'}}</label>
 					<div class="input-group">
 						<span class="input-group-text">
 							<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 						</span>
 						<input class="js-search-users form-control" id="AddGroupMember"
-							   placeholder="{{mf 'group.settings.field.addMember.placeholder' 'Type name of buddy'}}"
+							   placeholder="{{i18n 'group.settings.field.addMember.placeholder' 'Type name of buddy'}}"
 							   size="40" type="text" />
 					</div>
 				</div>
@@ -51,7 +51,7 @@
 					{{#each foundUsers group}}
 						<div class="tag tag-btn group-member-tag-btn-add ">
 							<button class="js-member-add-btn"
-									title="{{mf 'group.settings.addMember' 'add as member'}}"
+									title="{{i18n 'group.settings.addMember' 'add as member'}}"
 									type="button">
 								<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
 								{{username this._id}}
@@ -59,7 +59,7 @@
 						</div>
 						<div class="tag tag-link group-member-tag-profile addon">
 							<a href="{{pathFor 'userprofile' _id=this._id}}"
-							   title="{{mf 'group.settings.member.profile'}}">
+							   title="{{i18n 'group.settings.member.profile'}}">
 								<i class="fa fa-user fa-fw" aria-hidden="true"></i>
 							</a>
 						</div>
@@ -70,7 +70,7 @@
 		<div class="details-addition">
 			<h3>
 				<span class="fa fa-link fa-fw" aria-hidden="true"></span>
-				{{mf 'group.linksCollection.title' '{NAME}-views' NAME=siteName}}
+				{{i18n 'group.linksCollection.title' '{NAME}-views' NAME=siteName}}
 			</h3>
 			<ul class="list-unstyled">
 				<li>Infoscreen-Link: <a href="{{kioskEventURL group}}">{{kioskEventURL group}}</a>

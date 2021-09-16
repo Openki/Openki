@@ -1,9 +1,5 @@
 import { assert } from 'chai';
-import { msgfmt } from 'meteor/msgfmt:core';
 import { SortSpec } from '/imports/utils/sort-spec';
-
-// This should not be here
-msgfmt.init('en');
 
 describe('Sort specification parsing', () => {
 	it('gives empty mongo sort specifier for empty string', () => {

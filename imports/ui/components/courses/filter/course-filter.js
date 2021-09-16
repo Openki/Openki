@@ -1,6 +1,5 @@
-import { mf, msgfmt } from 'meteor/msgfmt:core';
-import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
+import { i18n } from '/imports/startup/both/i18next';
 
 import { Roles } from '/imports/api/roles/roles';
 
@@ -15,29 +14,24 @@ import './course-filter.html';
 
 Template.filter.onCreated(function () {
 	this.autorun(() => {
-		// Depend on locale and a composite mf string so we update reactively when locale changes
-		// and msgfmt finish loading translations
-		msgfmt.loading();
-		Session.get('locale');
-
 		this.stateFilters = [
 			{
 				name: 'proposal',
 				cssClass: 'is-proposal',
-				label: mf('filterCaptions.is-proposal', 'Proposal'),
-				title: mf('filterCaptions.showProposal', 'Show all proposed courses'),
+				label: i18n('filterCaptions.is-proposal', 'Proposal'),
+				title: i18n('filterCaptions.showProposal', 'Show all proposed courses'),
 			},
 			{
 				name: 'upcomingEvent',
 				cssClass: 'has-upcoming-events',
-				label: mf('filterCaptions.upcoming.label', 'Upcoming'),
-				title: mf('filterCaptions.upcoming.title', 'Show all courses with upcoming events'),
+				label: i18n('filterCaptions.upcoming.label', 'Upcoming'),
+				title: i18n('filterCaptions.upcoming.title', 'Show all courses with upcoming events'),
 			},
 			{
 				name: 'resting',
 				cssClass: 'has-past-events',
-				label: mf('filterCaptions.resting.label', 'Resting'),
-				title: mf(
+				label: i18n('filterCaptions.resting.label', 'Resting'),
+				title: i18n(
 					'filterCaptions.resting.title',
 					'Courses with passed but without upcoming events',
 				),
@@ -176,15 +170,15 @@ Template.additionalFilters.onCreated(function () {
 		this.roles = [
 			{
 				name: 'team',
-				label: mf('find.needsOrganizer', 'Looking for an organizer'),
+				label: i18n('find.needsOrganizer', 'Looking for an organizer'),
 			},
 			{
 				name: 'mentor',
-				label: mf('find.needsMentor', 'Looking for a mentor'),
+				label: i18n('find.needsMentor', 'Looking for a mentor'),
 			},
 			{
 				name: 'host',
-				label: mf('find.needsHost', 'Looking for a host'),
+				label: i18n('find.needsHost', 'Looking for a host'),
 			},
 		].map(
 			// add icon from Roles collection to role object
@@ -239,14 +233,9 @@ Template.additionalFilters.helpers({
 	},
 
 	categoryNameMarked() {
-		// Depend on locale and a composite mf string so we update reactively when locale changes
-		// and msgfmt finish loading translations
-		msgfmt.loading();
-		Session.get('locale');
-
 		const search = Template.instance().findInstance.categorySearch.get();
 
-		return StringTools.markedName(search, mf(`category.${this}`));
+		return StringTools.markedName(search, i18n(`category.${this}`));
 	},
 
 	isMobile() {

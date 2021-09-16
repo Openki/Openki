@@ -1,8 +1,6 @@
 <template name="regionTag">
 	<div class="region-tag p-2 text-light">
 		<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-		{{#mf KEY='regionTag.inRegion' REGION=regionName}}
-			in {REGION}
-		{{/mf}}
+		{{i18n 'regionTag.inRegion' 'in {REGION}' REGION=regionName}}
 	</div>
 </template>

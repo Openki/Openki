@@ -1,6 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { mf, msgfmt } from 'meteor/msgfmt:core';
+
+import { i18n } from '/imports/startup/both/i18next';
 import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
@@ -51,13 +52,11 @@ function finderRoute(path) {
 			});
 		},
 		onAfterAction() {
-			msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
 			const { search } = this.params.query;
 			if (search) {
-				Metatags.setCommonTags(mf('find.windowtitle', { SEARCH: search }, 'Find "{SEARCH}"'));
+				Metatags.setCommonTags(i18n('find.windowtitle', 'Find "{SEARCH}"', { SEARCH: search }));
 			} else {
-				Metatags.setCommonTags(mf('find.WhatLearn?'));
+				Metatags.setCommonTags(i18n('find.WhatLearn?'));
 			}
 		},
 	};
@@ -116,9 +115,7 @@ Router.route('calendar', {
 		return this.params;
 	},
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
+		Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
 	},
 });
 
@@ -138,9 +135,7 @@ Router.route('tenants', {
 		return Meteor.subscribe('Tenants.findFilter');
 	},
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		Metatags.setCommonTags(mf('tenants.windowtitle', 'Organizations'));
+		Metatags.setCommonTags(i18n('tenants.windowtitle', 'Organizations'));
 	},
 });
 
@@ -164,9 +159,7 @@ Router.route('frameCalendar', {
 		return { cssRules };
 	},
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
+		Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
 	},
 });
 
@@ -210,9 +203,7 @@ Router.route('frameEvents', {
 	},
 
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		Metatags.setCommonTags(mf('event.list.windowtitle', 'Events'));
+		Metatags.setCommonTags(i18n('event.list.windowtitle', 'Events'));
 	},
 });
 
@@ -266,9 +257,7 @@ Router.route('framePropose', {
 		this.render();
 	},
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		Metatags.setCommonTags(mf('course.propose.windowtitle', 'Propose new course'));
+		Metatags.setCommonTags(i18n('course.propose.windowtitle', 'Propose new course'));
 	},
 });
 
@@ -281,9 +270,7 @@ Router.route('frameWeek', {
 	path: '/frame/week',
 	layoutTemplate: 'frameWeek',
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		Metatags.setCommonTags(mf('calendar.windowtitle', 'Calendar'));
+		Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
 	},
 });
 
@@ -387,9 +374,7 @@ Router.route('kioskEvents', {
 			Session.set('seconds', new Date());
 		}, 1000);
 
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		Metatags.setCommonTags(mf('event.list.windowtitle', 'Events'));
+		Metatags.setCommonTags(i18n('event.list.windowtitle', 'Events'));
 	},
 	unload() {
 		Meteor.clearInterval(this.timer);
@@ -403,9 +388,7 @@ Router.route('log', {
 		return this.params.query;
 	},
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		Metatags.setCommonTags(mf('log.list.windowtitle', 'Log'));
+		Metatags.setCommonTags(i18n('log.list.windowtitle', 'Log'));
 	},
 });
 
@@ -483,13 +466,9 @@ Router.route('profile', {
 			return;
 		}
 
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		const title = mf(
-			'profile.settings.windowtitle',
-			{ USER: user.username },
-			'My Profile Settings - {USER}',
-		);
+		const title = i18n('profile.settings.windowtitle', 'My Profile Settings - {USER}', {
+			USER: user.username,
+		});
 		Metatags.setCommonTags(title);
 	},
 });
@@ -497,9 +476,7 @@ Router.route('profile', {
 Router.route('proposeCourse', {
 	path: 'courses/propose',
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		Metatags.setCommonTags(mf('course.propose.windowtitle', 'Propose new course'));
+		Metatags.setCommonTags(i18n('course.propose.windowtitle', 'Propose new course'));
 	},
 	data: CourseTemplate,
 });
@@ -510,9 +487,7 @@ Router.route('resetPassword', {
 		return this.params.token;
 	},
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		document.title = mf('resetPassword.siteTitle', 'Reset password');
+		document.title = i18n('resetPassword.siteTitle', 'Reset password');
 	},
 });
 
@@ -565,10 +540,8 @@ Router.route('showCourse', {
 			return;
 		}
 
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
 		const { course } = data;
-		Metatags.setCommonTags(mf('course.windowtitle', { COURSE: course.name }, 'Course: {COURSE}'));
+		Metatags.setCommonTags(i18n('course.windowtitle', 'Course: {COURSE}', { COURSE: course.name }));
 	},
 });
 
@@ -655,9 +628,7 @@ Router.route('tenantCreate', {
 		this.render();
 	},
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		const title = mf('tenant.edit.siteTitle.create', 'Create private region');
+		const title = i18n('tenant.edit.siteTitle.create', 'Create private region');
 		Metatags.setCommonTags(title);
 	},
 });
@@ -734,11 +705,11 @@ Router.route('invitation', {
 	 * @this {{params: {token: string; query: { tenant: string; }}}}
 	 */
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
 		const tenant = Tenants.findOne({ _id: this.params.query.tenant });
 		if (tenant) {
-			const title = mf('invitation.show.siteTitle', 'Join {TENANT}', { TENANT: tenant.name });
+			const title = i18n('invitation.show.siteTitle', 'Join {TENANT}', {
+				TENANT: tenant.name,
+			});
 			Metatags.setCommonTags(title);
 		}
 	},
@@ -942,9 +913,7 @@ Router.route('userprofile', {
 		const user = Users.findOne({ _id: this.params._id });
 		if (!user) return;
 
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		const title = mf('profile.windowtitle', { USER: user.username }, 'Profile of {USER}');
+		const title = i18n('profile.windowtitle', 'Profile of {USER}', { USER: user.username });
 		Metatags.setCommonTags(title);
 	},
 });
@@ -967,9 +936,7 @@ Router.route('regionCreate', {
 		this.render();
 	},
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		const title = mf('region.edit.siteTitle.create', 'Create region');
+		const title = i18n('region.edit.siteTitle.create', 'Create region');
 		Metatags.setCommonTags(title);
 	},
 });
@@ -1056,9 +1023,7 @@ Router.route('venueDetails', {
 		if (venue._id) {
 			title = venue.name;
 		} else {
-			msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-			title = mf('venue.edit.siteTitle.create', 'Create Venue');
+			title = i18n('venue.edit.siteTitle.create', 'Create Venue');
 		}
 		Metatags.setCommonTags(title);
 	},
@@ -1075,8 +1040,6 @@ Router.route('venuesMap', {
 		this.render();
 	},
 	onAfterAction() {
-		msgfmt.loading(); // Rerun after msgfmt has loaded translation
-
-		Metatags.setCommonTags(mf('venue.map.windowtitle', 'Venues map'));
+		Metatags.setCommonTags(i18n('venue.map.windowtitle', 'Venues map'));
 	},
 });

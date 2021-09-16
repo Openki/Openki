@@ -11,17 +11,17 @@
 				<div class="modal-header">
 					<h4 class="modal-title">
 						<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i>
-						{{mf 'validate.email.title' 'Validate email'}}
+						{{i18n 'validate.email.title' 'Validate email'}}
 					</h4>
 					<span class="btn-close" data-bs-dismiss="modal"></span>
 				</div>
 				<div class="modal-body">
 					<span>
 						<p>
-							{{mf 'validate.email.text.greeting' 'Hey "{NAME}"' NAME=currentUser.username}}
+							{{i18n 'validate.email.text.greeting' 'Hey "{NAME}"' NAME=currentUser.username}}
 						</p>
 						<p>
-							{{mf 'validate.email.text.para1' 'We’ve noticed that you did not validate your e-mail address yet.'}}
+							{{i18n 'validate.email.text.para1' 'We’ve noticed that you did not validate your e-mail address yet.'}}
 						</p>
 					</span>
 					<div class="mb-3">
@@ -30,10 +30,10 @@
 							{{#if busy 'sending'}}
 								<span class="fa fa-circle-o-notch fa-spin fa-fw"
 									  aria-hidden="true"></span>
-								{{mf 'send.validation.submit.busy' 'Sending...'}}
+								{{i18n 'send.validation.submit.busy' 'Sending...'}}
 							{{else}}
 								<span class="fa fa-send fa-fw" aria-hidden="true"></span>
-								{{mf 'send.validation.email' 'Send me a validation email.'}}
+								{{i18n 'send.validation.email' 'Send me a validation email.'}}
 							{{/if}}
 						</button>
 					</div>

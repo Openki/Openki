@@ -12,7 +12,7 @@
 				<span>{{roleSubscribed role.type}}</span>
 				<button type="button" class="js-role-unsubscribe-btn btn btn-cancel"
 						name="{{role.type}}">
-					{{mf 'course.roles.retract' 'Retract'}}
+					{{i18n 'course.roles.retract' 'Retract'}}
 				</button>
 				<button type="button"
 						class="toggle-first-steps js-toggle-first-steps btn btn-link float-end">
@@ -22,41 +22,29 @@
 		</div>
 		{{#if showFirstSteps}}
 			<div class="course-role-first-steps">
-				<b>{{mf 'course.roles.firstSteps.title' 'Thanks for joining the course as {ROLE}!' ROLE=(roleShort role.type)}}</b>
+				<b>{{i18n 'course.roles.firstSteps.title' 'Thank you for your interest in the course!' ROLE=(roleShort role.type)}}</b>
 				<br>
 				{{#if roleIs 'participant'}}
-					{{#mf KEY='course.roles.firstSteps.youllGetNotified'}}
-						You will get an e-mail notification as soon as a date has been fixed.
-					{{/mf}}
+					{{i18n 'course.roles.firstSteps.youllGetNotified' 'You will get an e-mail notification as soon as a date has been fixed.'}}
 				{{/if}}
 				{{#if roleIs 'host'}}
-					{{#mf KEY='course.roles.firstSteps.informAboutVenue'}}
-						If not done already, please mention in your personal message information about the venue that you have access to.
-					{{/mf}}
+					{{i18n 'course.roles.firstSteps.informAboutVenue' 'If not done already, please mention in your personal message information about the venue that you have access to.'}}
 				{{/if}}
 				{{#if roleIs 'mentor'}}
-					{{#mf KEY='course.roles.firstSteps.mentionExperience'}}
-						If not done already, please mention in your personal message information about your experience on the topic
-					{{/mf}}
+					{{i18n 'course.roles.firstSteps.mentionExperience' 'If not done already, please mention in your personal message information about your experience on the topic'}}
 					{{> courseGuide}}
 				{{/if}}
 				{{#if roleIs 'team'}}
-					{{#mf KEY='course.roles.firstSteps.team'}}
-						If not done already, you can start with chosing the venue and, if needed, looking for mentor(s) and then fix a date.
-					{{/mf}}
+					{{i18n 'course.roles.firstSteps.team' 'If not done already, you can start with chosing the venue and, if needed, looking for mentor(s) and then fix a date.'}}
 					{{> courseGuide}}
 				{{/if}}
 				<br><br>
-				{{#mf KEY='course.roles.firstSteps.ifQuestions'}}
-					If you have any questions concerning the course please write a comment in the discussion below.
-				{{/mf}}
+				{{i18n 'course.roles.firstSteps.ifQuestions' 'If you have any questions concerning the course please write a comment in the discussion below.'}}
 				<br>
-				{{#mf KEY='course.roles.firstSteps.allMembersInformed'}}
-					All members of the organization-team will be informed.
-				{{/mf}}
+				{{i18n 'course.roles.firstSteps.allMembersInformed' 'All members of the organization-team will be informed.'}}
 				<br>
 				<button class="js-first-steps-comment btn btn-link p-0" type="button">
-					{{mf 'course.discussion.write_comment'}}
+					{{i18n 'course.discussion.write_comment'}}
 				</button>
 			</div>
 		{{/if}}
@@ -70,23 +58,23 @@
 				<div class="course-role-enroll-options">
 					<div class="mb-3">
 						<label class="form-label">
-							{{mf 'course.roles.leave_message' 'You can leave a message to appear next to your name:'}}
+							{{i18n 'course.roles.leave_message' 'You can leave a message to appear next to your name:'}}
 						</label>
 						{{#if roleIs 'participant'}}
 							<textarea class='form-control js-comment'
-									  placeholder={{mf 'course.roles.messageInfoParticipant' 'an (optional) message like a greeting, wish, or interest'}}>{{../../member.comment}}</textarea>
+									  placeholder={{i18n 'course.roles.messageInfoParticipant' 'an (optional) message like a greeting, wish, or interest'}}>{{../../member.comment}}</textarea>
 						{{/if}}
 						{{#if roleIs 'host'}}
 							<textarea class='form-control js-comment'
-									  placeholder={{mf 'course.roles.messageInfoHost' 'an (optional) message including information about the venue'}}>{{../../member.comment}}</textarea>
+									  placeholder={{i18n 'course.roles.messageInfoHost' 'an (optional) message including information about the venue'}}>{{../../member.comment}}</textarea>
 						{{/if}}
 						{{#if roleIs 'mentor'}}
 							<textarea class='form-control js-comment'
-									  placeholder={{mf 'course.roles.messageInfoMentor' 'an (optional) message including information about your experience on the topic'}}>{{../../member.comment}}</textarea>
+									  placeholder={{i18n 'course.roles.messageInfoMentor' 'an (optional) message including information about your experience on the topic'}}>{{../../member.comment}}</textarea>
 						{{/if}}
 						{{#if roleIs 'team'}}
 							<textarea class='form-control js-comment'
-									  placeholder={{mf 'course.roles.messageInfoMentor'}}>{{../../member.comment}}</textarea>
+									  placeholder={{i18n 'course.roles.messageInfoMentor'}}>{{../../member.comment}}</textarea>
 						{{/if}}
 					</div>
 					<div class="form-actions">
@@ -95,9 +83,9 @@
 							{{#if busy 'enrolling'}}
 								<i class="fa fa-circle-o-notch fa-spin fa-fw"
 								   aria-hidden="true"></i>
-								{{mf 'course.roles.join.busy' 'Joining course...'}}
+								{{i18n 'course.roles.join.busy' 'Joining course...'}}
 							{{else}}
-								{{mf 'course.roles.join' 'Join course'}}
+								{{i18n 'course.roles.join' 'Join course'}}
 							{{/if}}
 						</button>
 						{{> buttonCancel event="js-role-enroll-cancel"}}
@@ -121,11 +109,9 @@
 	<br>
 	<br>
 	<span>
-		{{#mf KEY='course.roles.firstSteps.guide'}}
-			Further information
-		{{/mf}}&colon;&nbsp;
+		{{i18n 'course.roles.firstSteps.guide' 'Further information'}}&colon;&nbsp;
 		<a href="{{guideLink}}" target='_blank'>
-			{{mf 'course.roles.firstSteps.guideLink' 'How to organize my first {SITENAME} course?' SITENAME=siteName}}
+			{{i18n 'course.roles.firstSteps.guideLink' 'How to organize my first {SITENAME} course?' SITENAME=siteName}}
 		</a>
 	</span>
 </template>

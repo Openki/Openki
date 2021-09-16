@@ -16,15 +16,15 @@
 				<a class="navbar-brand js-toggle-introduction" href="{{pathFor 'home'}}">
 					{{#if connecting}}
 						<span class="fa fa-circle-o-notch fa-spin fa-fw connecting"
-							  title="{{mf 'status.connecting' 'Connecting to server'}}">
+							  title="{{i18n 'status.connecting' 'Connecting to server'}}">
 						</span>
-						<span class="sr-only">{{mf 'status.connecting'}}</span>
+						<span class="sr-only">{{i18n 'status.connecting'}}</span>
 					{{/if}}
 					{{#if notConnected}}
 						<span class="fa fa-circle-o-notch fa-fw no-connection"
-							  title="{{mf 'status.notConnected' 'No connection to server'}}">
+							  title="{{i18n 'status.notConnected' 'No connection to server'}}">
 						</span>
-						<span class="sr-only">{{mf 'status.notConnected'}}</span>
+						<span class="sr-only">{{i18n 'status.notConnected'}}</span>
 					{{/if}}
 					{{#if connected}}
 						<img src="{{headerLogo}}" alt="{{headerAlt}}">
@@ -42,7 +42,7 @@
 						   class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close"
 						   id="nav_courses">
 							<span class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></span>
-							{{mf 'menue.Courses' 'Find'}}
+							{{i18n 'menue.Courses' 'Find'}}
 							<div class="nav-marker-caret"></div>
 						</a>
 					</li>
@@ -50,7 +50,7 @@
 						<a href="{{pathFor 'proposeCourse'}}"
 						   class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} navbar-link js-nav-dropdown-close">
 							<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
-							{{mf 'menue.Create' 'Create'}}
+							{{i18n 'menue.Create' 'Create'}}
 							<div class="nav-marker-caret"></div>
 						</a>
 					</li>
@@ -58,7 +58,7 @@
 						<a href="{{pathFor 'calendar'}}"
 						   class="{{activeClass 'calendar'}} navbar-link calendar-link js-nav-dropdown-close">
 							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-							{{mf 'menue.Calendar' 'Calendar'}}
+							{{i18n 'menue.Calendar' 'Calendar'}}
 							<div class="nav-marker-caret"></div>
 							<div class="nav-marker-bar"></div>
 						</a>
@@ -94,7 +94,7 @@
 		{{else}}
 			<a class="js-open-login loginButton navbar-link" id="openLogin" role="button">
 				<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
-				{{mf 'login.navig.unlogged' 'Login/Register'}}
+				{{i18n 'login.navig.unlogged' 'Login/Register'}}
 			</a>
 		{{/if}}
 	{{/if}}
@@ -109,25 +109,25 @@
 <template name="ownUserFrame">
 	<div class="ownuser-frame">
 		<div class="mb-3 ownuser-frame-welcome">
-			{{mf 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
+			{{i18n 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
 		</div>
 		<div class="mb-3">
 			<a class="btn btn-secondary form-control"
 			   href="{{pathFor 'userprofile' _id=currentUser._id}}">
 				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
-				{{mf 'login.frame.profile' 'Public profile'}}
+				{{i18n 'login.frame.profile' 'Public profile'}}
 			</a>
 		</div>
 		<div class="mb-3">
 			<a class="btn btn-secondary form-control" href="{{pathFor 'profile'}}">
 				<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
-				{{mf 'login.frame.settings' 'Account settings'}}
+				{{i18n 'login.frame.settings' 'Account settings'}}
 			</a>
 		</div>
 		<div class="mb-3">
 			<button type="button" class="btn btn-secondary js-logout form-control">
 				<span class="fa fa-sign-out fa-fw" aria-hidden="true"></span>
-				{{mf 'login.logout' 'Logout'}}
+				{{i18n 'login.logout' 'Logout'}}
 			</button>
 		</div>
 	</div>
@@ -135,9 +135,9 @@
 
 <template name="testWarningTicker">
 	<marquee bgcolor="#000" direction="left" scrollamount="5" scrolldelay="1" style="color:white;">
-		⚠ &nbsp; {{mf 'menue.Testpage' 'This is only a Testpage. '}} &nbsp; ⚠
+		⚠ &nbsp; {{i18n 'menue.Testpage' 'This is only a Testpage.'}} &nbsp; ⚠
 		<span style="padding-left:10em"> </span>
-		☠ &nbsp; {{mf 'menue.Testpage2' 'All data will be erased regularly. '}} &nbsp; ☠
+		☠ &nbsp; {{i18n 'menue.Testpage2' 'All data will be erased regularly.'}} &nbsp; ☠
 		<span style="padding-left:10em"> </span>
 	</marquee>
 </template>
