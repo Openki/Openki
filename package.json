@@ -10,7 +10,6 @@
     "@babel/runtime": "7.15.4",
     "@popperjs/core": "2.10.1",
     "aws-sdk": "2.988.0",
-    "bcrypt": "5.0.1",
     "bootstrap": "5.1.1",
     "bootstrap-datepicker": "1.9.0",
     "bootstrap-sass": "3.4.1",
