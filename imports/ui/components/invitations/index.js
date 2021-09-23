@@ -1,3 +1,4 @@
 import './list';
 import './create';
-import './invitations.html';
+
+import './template.html';

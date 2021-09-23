@@ -15,7 +15,7 @@ import UserSearchPrefix from '/imports/utils/user-search-prefix';
 import '/imports/ui/components/buttons/buttons';
 
 import './tenant-settings.html';
-import '../../invitations/invitations';
+import '../../invitations';
 
 Template.tenantSettings.onCreated(function () {
 	const instance = this;
