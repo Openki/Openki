@@ -24,7 +24,7 @@ import { Match, check } from 'meteor/check';
 /**
  * @extends {Mongo.Collection<InvitationEntity>}
  */
-export class InvitationsCollection extends Mongo.Collection {
+export class InvitationsCollection extends Mongo.Collection<InvitationEntity> {
 	constructor() {
 		super('Invitations');
 
