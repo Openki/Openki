@@ -9,7 +9,7 @@ import * as Alert from '/imports/api/alerts/alert';
 
 import '/imports/ui/components/profile-link/profile-link';
 
-import './invitations-list.html';
+import './template.html';
 
 Template.invitationsList.onCreated(function () {
 	const instance = this;
