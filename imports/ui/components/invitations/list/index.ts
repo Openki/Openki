@@ -1,17 +1,32 @@
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import $ from 'jquery';
 
-import { Invitations } from '/imports/api/invitations/invitations';
+import { Invitations, Status } from '/imports/api/invitations/invitations';
 import * as InvitationsMethods from '/imports/api/invitations/methods';
 import * as Alert from '/imports/api/alerts/alert';
+import { TenantModel } from '/imports/api/tenants/tenants';
 
 import '/imports/ui/components/profile-link/profile-link';
 
 import './template.html';
 
-Template.invitationsList.onCreated(function () {
+export interface Data {
+	tenant: TenantModel;
+}
+
+const Template = TemplateAny as TemplateStaticTyped<
+	Data,
+	'invitationsList',
+	{
+		state: ReactiveDict<{ showAccepted: boolean }>;
+	}
+>;
+
+const template = Template.invitationsList;
+
+template.onCreated(function () {
 	const instance = this;
 	const { tenant } = instance.data;
 
@@ -32,7 +47,7 @@ Template.invitationsList.helpers({
 	invitations() {
 		const instance = Template.instance();
 
-		const status = ['created', 'send', 'failed'];
+		const status: Status[] = ['created', 'send', 'failed'];
 
 		if (instance.state.get('showAccepted')) {
 			status.push('accepted');
@@ -41,10 +56,7 @@ Template.invitationsList.helpers({
 		return Invitations.findFilter({ tenant: instance.data.tenant._id, status });
 	},
 
-	/**
-	 * @param {'created' | 'send' | 'accepted' | 'failed' } status
-	 */
-	status(status) {
+	status(status: Status) {
 		switch (status) {
 			case 'created':
 				return i18n('invitations.status.created', 'Created');

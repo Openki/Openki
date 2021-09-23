@@ -4,6 +4,10 @@ import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import { Match, check } from 'meteor/check';
 
+/**
+ * @typedef {'created' | 'send' | 'accepted' | 'failed'} Status
+ */
+
 // ======== DB-Model: ========
 /**
  * @typedef {Object} InvitationEntity
@@ -11,7 +15,7 @@ import { Match, check } from 'meteor/check';
  * @property {string} tenant tenant id
  * @property {string} to
  * @property {string} token
- * @property {'created' | 'send' | 'accepted' | 'failed' } status
+ * @property {Status} status
  * @property {string} [acceptedBy] The user who has accepted the invitation. (by state 'accepted')
  * @property {Date} createdAt
  * @property {string} createdBy user id
@@ -40,7 +44,7 @@ export class InvitationsCollection extends Mongo.Collection {
 	/**
 	 * @param {{
 	 * tenant?: string;
-	 * status?: ('created' | 'send' | 'accepted' | 'failed')[] ;
+	 * status?: Status[];
 	 * }} [filter]
 	 * @param {number} [limit] how many to find
 	 * @param {number} [skip] skip this many before returning results
