@@ -20,7 +20,7 @@ import '/imports/ui/components/email-validation';
 import '/imports/ui/components/featured-group';
 import '/imports/ui/components/footer/footer';
 import '/imports/ui/components/introduction/introduction';
-import '/imports/ui/components/kiosk-link/kiosk-link';
+import '/imports/ui/components/kiosk-link';
 import '/imports/ui/components/navbar/navbar';
 import '/imports/ui/components/regions/splash/region-splash';
 
