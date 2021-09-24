@@ -1,12 +1,21 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import * as UrlTools from '/imports/utils/url-tools';
 
-import './kiosk-link.html';
+import './template.html';
+import './styles.scss';
 
-Template.kioskLink.helpers({
+const Template = TemplateAny as TemplateStaticTyped<
+	Record<string, unknown>,
+	'kioskLink',
+	Record<string, never>
+>;
+
+const template = Template.kioskLink;
+
+template.helpers({
 	link() {
 		const filterParams = Session.get('kioskFilter');
 		if (!filterParams) {
@@ -16,7 +25,7 @@ Template.kioskLink.helpers({
 		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 		const queryString = UrlTools.paramsToQueryString(filterParams);
 
-		const options = {};
+		const options: { query?: string } = {};
 		if (queryString.length) {
 			options.query = queryString;
 		}
@@ -25,7 +34,7 @@ Template.kioskLink.helpers({
 	},
 });
 
-Template.kioskLink.events({
+template.events({
 	'click .js-remove-back-to-kiosk'() {
 		return Session.set('kioskFilter', false);
 	},
