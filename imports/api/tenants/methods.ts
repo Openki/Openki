@@ -1,11 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
-import { Tenants } from './tenants';
+import { TenantEntity, Tenants } from './tenants';
 import { Users } from '/imports/api/users/users';
 import * as usersTenantsDenormalizer from '../users/tenantsDenormalizer';
 import { ServerMethod } from '/imports/utils/ServerMethod';
-import { TenantEntity } from '../invitations/methods';
 
 export const create = ServerMethod('tenant.create', (changes: Pick<TenantEntity, 'name'>) => {
 	check(changes, {

@@ -3,7 +3,7 @@ import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import $ from 'jquery';
 
-import { Invitations, Status } from '/imports/api/invitations/invitations';
+import { InvitationEntity, Invitations, Status } from '/imports/api/invitations/invitations';
 import * as InvitationsMethods from '/imports/api/invitations/methods';
 import * as Alert from '/imports/api/alerts/alert';
 import { TenantModel } from '/imports/api/tenants/tenants';
@@ -78,7 +78,7 @@ Template.invitationsList.events({
 		instance.state.set('showAccepted', $(event.currentTarget).prop('checked'));
 	},
 
-	async 'click .js-remove'(event, instance) {
+	async 'click .js-remove'(this: InvitationEntity, event, instance) {
 		event.preventDefault();
 
 		try {
