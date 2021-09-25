@@ -13,7 +13,7 @@ import { reactiveNow } from '/imports/utils/reactive-now';
 import { locationFormat } from '/imports/utils/location-format';
 
 import '/imports/ui/components/buttons/buttons';
-import '/imports/ui/components/events/list/event-list';
+import '/imports/ui/components/events/list';
 import '/imports/ui/components/map/map';
 import '/imports/ui/components/profile-link/profile-link';
 import '/imports/ui/components/venues/edit/venue-edit';

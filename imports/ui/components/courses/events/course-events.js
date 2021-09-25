@@ -9,7 +9,7 @@ import { Regions } from '/imports/api/regions/regions';
 
 import { reactiveNow } from '/imports/utils/reactive-now';
 
-import '/imports/ui/components/events/list/event-list';
+import '/imports/ui/components/events/list';
 import '/imports/ui/components/loading';
 import '../delete-events';
 
