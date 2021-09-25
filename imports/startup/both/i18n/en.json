@@ -433,6 +433,7 @@
   "grouplist.editgroup.header": "Edit group",
   "groupList.show_courses": "{NAME}, show all their courses",
   "groupListFull.show_courses": "Show all courses of this group",
+  "groupSettings.group.logo.removed": "Your changes to the settings of the group \"{GROUP}\" have been saved.",
   "groupSettings.group.logo.updated": "Your changes to the settings of the group \"{GROUP}\" have been saved.",
   "groupSettings.memberAdded": "\"{MEMBER}\" has been added as a member to the group \"{GROUP}\"",
   "groupSettings.memberRemoved": "\"{MEMBER}\" has been removed from to the group \"{GROUP}\"",

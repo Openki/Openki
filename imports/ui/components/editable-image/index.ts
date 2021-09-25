@@ -28,6 +28,7 @@ export interface Data {
 	maxSize?: number;
 	thumbnail?: string;
 	onUpload: (file: UploadImage) => void;
+	onDelete?: () => void;
 }
 
 const Template = TemplateAny as TemplateStaticTyped<
@@ -112,6 +113,9 @@ template.helpers({
 	fileName: () => {
 		return Template.instance().droppedFile.get()?.name;
 	},
+	deleteAllowed: () => {
+		return !!Template.instance().data.onDelete;
+	},
 });
 
 template.events({
@@ -145,6 +149,17 @@ template.events({
 		event.preventDefault();
 
 		instance.state.set('progress', 'edit');
+	},
+
+	'click .js-editable-image-delete'(event, instance) {
+		event.preventDefault();
+
+		if (instance.data.onDelete) {
+			instance.data.onDelete();
+		}
+		instance.droppedFile.set(undefined);
+		instance.state.set('preview', undefined);
+		instance.state.set('progress', 'display');
 	},
 
 	'click .js-editable-image-upload'(event, instance) {
