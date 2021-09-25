@@ -1,1 +1,1 @@
-import './buttons.html';
+import './template.html';
