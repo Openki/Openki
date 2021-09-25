@@ -12,7 +12,7 @@ import { Users } from '/imports/api/users/users';
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import { MeteorAsync } from '/imports/utils/promisify';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable-image';
 import type { UploadImage, Data as EditableImageData } from '/imports/ui/components/editable-image';
 

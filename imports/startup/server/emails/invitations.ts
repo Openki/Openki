@@ -3,9 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Router } from 'meteor/iron:router';
 
-import { Invitations } from '/imports/api/invitations/invitations';
+import { InvitationEntity, Invitations } from '/imports/api/invitations/invitations';
 import { Tenants } from '/imports/api/tenants/tenants';
-import { Users } from '/imports/api/users/users';
+import { UserModel, Users } from '/imports/api/users/users';
 import { Log } from '/imports/api/log/log';
 
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
@@ -13,10 +13,7 @@ import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
-/**
- * @param {import('/imports/api/invitations/invitations').InvitationEntity} invitation
- */
-function sendInvitation(invitation) {
+function sendInvitation(invitation: InvitationEntity) {
 	const tenant = Tenants.findOne(invitation.tenant);
 	if (!tenant) {
 		throw new Error('Tenant does not exist (0.o)');
@@ -27,7 +24,7 @@ function sendInvitation(invitation) {
 		throw new Error('Inviter does not exist (0.o)');
 	}
 
-	const recipient = Users.findOne({ 'emails.0.address': invitation.to }) || {};
+	const recipient = Users.findOne({ 'emails.0.address': invitation.to }) || ({} as UserModel);
 
 	const locale = recipient.locale || inviter.locale || 'en';
 
@@ -70,10 +67,7 @@ function sendInvitation(invitation) {
 	Email.send(email);
 }
 
-/**
- * @param {import('/imports/api/invitations/invitations').InvitationEntity} invitation
- */
-function handleInvitation(invitation) {
+function handleInvitation(invitation: InvitationEntity) {
 	const result = Log.record(
 		'Invitation.Send',
 		[invitation.createdBy, invitation.tenant],

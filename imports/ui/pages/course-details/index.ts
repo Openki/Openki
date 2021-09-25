@@ -21,7 +21,7 @@ import { Analytics } from '/imports/ui/lib/analytics';
 
 import * as IdTools from '/imports/utils/id-tools';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
 import '/imports/ui/components/courses/discussion/course-discussion';
 import '/imports/ui/components/courses/edit';

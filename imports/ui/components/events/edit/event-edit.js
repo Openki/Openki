@@ -30,7 +30,7 @@ import LocalTime from '/imports/utils/local-time';
 import { Analytics } from '/imports/ui/lib/analytics';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/events/edit-location/event-edit-location';
 import '/imports/ui/components/price-policy/price-policy';

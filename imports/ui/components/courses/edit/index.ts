@@ -22,7 +22,7 @@ import * as StringTools from '/imports/utils/string-tools';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/price-policy/price-policy';

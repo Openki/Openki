@@ -6,7 +6,7 @@ import { Accounts } from 'meteor/accounts-base';
 
 import * as Alert from '/imports/api/alerts/alert';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 
 import './reset-password.html';
 

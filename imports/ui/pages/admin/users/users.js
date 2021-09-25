@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 
 import './users.html';
 

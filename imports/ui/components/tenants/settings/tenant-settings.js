@@ -12,7 +12,7 @@ import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import * as TenantsMethods from '/imports/api/tenants/methods';
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 
 import './tenant-settings.html';
 import '../../invitations';

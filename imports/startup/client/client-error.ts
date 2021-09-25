@@ -5,10 +5,7 @@ import * as LogMethods from '/imports/api/log/methods';
 
 const clientId = Random.id();
 
-/**
- * @param {{name: string; message: string; stack?: string;}} error
- */
-const reportToServer = function (error) {
+const reportToServer = function (error: Error) {
 	const report = {
 		name: error.name,
 		message: error.message,
@@ -25,11 +22,8 @@ window.addEventListener('error', (event) => {
 	reportToServer(event.error);
 });
 
-/** @type string[] */
-const buffer = [];
-const discriminatoryReporting = function (
-	/** @type {[msg: string, error?: Error] | string[]} */ args,
-) {
+const buffer: string[] = [];
+const discriminatoryReporting = function (args: [msg: string, error?: Error] | string[]) {
 	const msg = args[0];
 
 	// "Exception from Tracker recompute function:"
@@ -48,7 +42,7 @@ const discriminatoryReporting = function (
 	if (msg.startsWith('Blaze.')) {
 		// There's a template name in there right?
 		const templateNames = /Template\.[^_]\w+/g;
-		buffer.push(msg.match(templateNames).join(','));
+		buffer.push(msg.match(templateNames)?.join(',') || '');
 		reportToServer({
 			name: 'TemplateError',
 			message: buffer.join('; '),

@@ -13,7 +13,7 @@ import { Analytics } from '/imports/ui/lib/analytics';
 import { Editable } from '/imports/ui/lib/editable';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 import '/imports/ui/components/groups/list/group-list';
 import '/imports/ui/components/profiles/course-list/profile-course-list';
 import '/imports/ui/components/profiles/verify-email';

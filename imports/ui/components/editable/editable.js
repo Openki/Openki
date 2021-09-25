@@ -4,7 +4,7 @@ import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import MediumEditor from 'medium-editor';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 
 import './editable.html';
 
