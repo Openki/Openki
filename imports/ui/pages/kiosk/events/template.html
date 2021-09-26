@@ -5,8 +5,8 @@
 				{{#if filter.group}}
 					<a href="{{pathFor 'groupDetails' _id=filter.group}}">
 						{{#if groupLogo filter.group}}
-							<img src="{{groupLogo filter.group}}"
-								 class="kiosk-logo kiosk-logo-group" />
+							<img class="kiosk-logo kiosk-logo-group" 
+								src="{{groupLogo filter.group}}" />
 						{{/if}}
 						{{groupShort filter.group}}
 					</a>

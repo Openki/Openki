@@ -24,6 +24,16 @@ import './styles.scss';
 	const template = Template.kioskEventsPage;
 
 	template.helpers({
+		groupLogo(groupId: string) {
+			const instance = Template.instance();
+			instance.subscribe('group', groupId);
+
+			const group = Groups.findOne({ _id: groupId });
+			if (group) {
+				return group.publicLogoUrl();
+			}
+			return '';
+		},
 		groupShort(groupId: string) {
 			const instance = Template.instance();
 			instance.subscribe('group', groupId);
