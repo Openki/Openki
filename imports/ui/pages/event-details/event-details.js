@@ -25,7 +25,7 @@ import { appendAsJsonLdToBody } from '/imports/utils/event-to-json-ld';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
 import '/imports/ui/components/events/edit/event-edit';
 import '/imports/ui/components/events/participants/event-participants';

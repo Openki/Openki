@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import { TenantEntity } from '../../invitations/methods';
 
-import { Tenants } from '/imports/api/tenants/tenants';
+import { TenantEntity, Tenants } from '/imports/api/tenants/tenants';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 Meteor.publish('tenant', function (tenantId) {

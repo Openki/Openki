@@ -12,7 +12,7 @@ import { Users } from '/imports/api/users/users';
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import { MeteorAsync } from '/imports/utils/promisify';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable-image';
 import type { UploadImage, Data as EditableImageData } from '/imports/ui/components/editable-image';
 
@@ -73,6 +73,29 @@ template.helpers({
 					Alert.success(
 						i18n(
 							'groupSettings.group.logo.updated',
+							'Your changes to the settings of the group "{GROUP}" have been saved.',
+							{ GROUP: groupName },
+						),
+					);
+					parentInstance.editingSettings.set(false);
+				} catch (err) {
+					Alert.serverError(err, 'Could not save settings');
+				} finally {
+					instance.busy(false);
+				}
+			},
+			async onDelete() {
+				const parentInstance = instance.parentInstance() as any; // Not available in callback
+
+				instance.busy('deleting');
+
+				const groupId = instance.data.group._id;
+				try {
+					await GroupsMethods.deleteLogo(groupId);
+					const groupName = Groups.findOne(groupId)?.name;
+					Alert.success(
+						i18n(
+							'groupSettings.group.logo.removed',
 							'Your changes to the settings of the group "{GROUP}" have been saved.',
 							{ GROUP: groupName },
 						),

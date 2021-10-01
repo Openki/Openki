@@ -4,23 +4,25 @@ import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import { Match, check } from 'meteor/check';
 
-// ======== DB-Model: ========
-/**
- * @typedef {Object} InvitationEntity
- * @property {string} _id ID
- * @property {string} tenant tenant id
- * @property {string} to
- * @property {string} token
- * @property {'created' | 'send' | 'accepted' | 'failed' } status
- * @property {string} [acceptedBy] The user who has accepted the invitation. (by state 'accepted')
- * @property {Date} createdAt
- * @property {string} createdBy user id
- */
+export type Status = 'created' | 'send' | 'accepted' | 'failed';
 
-/**
- * @extends {Mongo.Collection<InvitationEntity>}
- */
-export class InvitationsCollection extends Mongo.Collection {
+/** DB-Model */
+export interface InvitationEntity {
+	/** ID */
+	_id: string;
+	/** tenant id */
+	tenant: string;
+	to: string;
+	token: string;
+	status: Status;
+	/** The user who has accepted the invitation. (by state 'accepted') */
+	acceptedBy?: string;
+	createdAt: Date;
+	/** user id */
+	createdBy: string;
+}
+
+export class InvitationsCollection extends Mongo.Collection<InvitationEntity> {
 	constructor() {
 		super('Invitations');
 
@@ -38,23 +40,25 @@ export class InvitationsCollection extends Mongo.Collection {
 	}
 
 	/**
-	 * @param {{
-	 * tenant?: string;
-	 * status?: ('created' | 'send' | 'accepted' | 'failed')[] ;
-	 * }} [filter]
-	 * @param {number} [limit] how many to find
-	 * @param {number} [skip] skip this many before returning results
-	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
+	 * @param limit how many to find
+	 * @param skip skip this many before returning results
+	 * @param sort list of fields to sort by
 	 */
-	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+	findFilter(
+		filter: {
+			tenant?: string;
+			status?: Status[];
+		} = {},
+		limit = 0,
+		skip = 0,
+		sort?: [string, 'asc' | 'desc'][],
+	) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
 		check(sort, Match.Maybe([[String]]));
 
-		/** @type {Mongo.Selector<InvitationEntity>} */
-		const find = {};
-		/** @type {Mongo.Options<InvitationEntity>} */
-		const options = {};
+		const find: Mongo.Selector<InvitationEntity> = {};
+		const options: Mongo.Options<InvitationEntity> = {};
 		const order = sort || [];
 
 		if (limit > 0) {

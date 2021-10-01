@@ -16,7 +16,7 @@ import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import { isGroupMember } from '/imports/utils/is-group-member';
 import { Analytics } from '../../lib/analytics';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/groups/settings';
 

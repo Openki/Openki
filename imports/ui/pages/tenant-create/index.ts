@@ -12,7 +12,7 @@ import { LocationTracker } from '../../lib/location-tracker';
 import { SaveAfterLogin } from '../../lib/save-after-login';
 import { Analytics } from '../../lib/analytics';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/map/map';
 
@@ -20,7 +20,6 @@ import '/imports/ui/components/regions/display';
 import '/imports/ui/components/regions/edit';
 
 import './template.html';
-import './styles.scss';
 
 export interface Data {
 	tenant: TenantModel;

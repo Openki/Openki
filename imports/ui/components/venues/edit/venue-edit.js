@@ -15,7 +15,7 @@ import { LocationTracker } from '/imports/ui/lib/location-tracker';
 import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/map/map';
 

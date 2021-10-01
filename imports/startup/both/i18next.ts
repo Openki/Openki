@@ -34,26 +34,43 @@ if (false) {
 	import(`/imports/startup/both/i18n/zh-TW.json`);
 }
 
+let localStorageSupported;
+try {
+	localStorage.setItem('test1234', 'test1234');
+	localStorage.removeItem('test1234');
+	localStorageSupported = true;
+} catch {
+	// not allowed
+	localStorageSupported = false;
+}
+
+const backends = [];
+
+if (localStorageSupported) {
+	// we use localstorage to cache translations for 7 days
+	backends.push(LocalStorageBackend);
+}
+
+// and only load translations we need
+backends.push(
+	resourcesToBackend((language, _namespace, callback) => {
+		import(`/imports/startup/both/i18n/${language}.json`)
+			.then((resources) => {
+				callback(null, resources);
+			})
+			.catch((error) => {
+				callback(error, null);
+			});
+	}),
+);
+
 i18next
 	.use(ICU)
 	.use(ChainedBackend)
 	.init({
 		fallbackLng: 'en',
 		backend: {
-			backends: [
-				// we use localstorage to cache translations for 7 days
-				LocalStorageBackend,
-				// and only load translations we need
-				resourcesToBackend((language, _namespace, callback) => {
-					import(`/imports/startup/both/i18n/${language}.json`)
-						.then((resources) => {
-							callback(null, resources);
-						})
-						.catch((error) => {
-							callback(error, null);
-						});
-				}),
-			],
+			backends,
 			backendOptions: [
 				{
 					expirationTime: 7 * 24 * 60 * 60 * 1000, // 7 days

@@ -11,7 +11,7 @@ import LocalTime from '/imports/utils/local-time';
 import * as Alert from '/imports/api/alerts/alert';
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 
 import './event-replication.html';
 

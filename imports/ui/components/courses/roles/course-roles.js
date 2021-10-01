@@ -14,7 +14,7 @@ import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 
 import './course-roles.html';
 

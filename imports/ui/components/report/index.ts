@@ -5,7 +5,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import * as Alert from '/imports/api/alerts/alert';
 import * as emailMethods from '/imports/api/emails/methods';
 
-import '/imports/ui/components/buttons/buttons';
+import '/imports/ui/components/buttons';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import './template.html';

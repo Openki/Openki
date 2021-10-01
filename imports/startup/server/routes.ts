@@ -11,7 +11,7 @@ Router.route('profileNotificationsUnsubscribe', {
 
 		const accepted = Profile.Notifications.unsubscribe(unsubToken);
 
-		const query = {};
+		const query: { unsubscribed?: string; 'unsubscribe-error'?: string } = {};
 		if (accepted) {
 			query.unsubscribed = 'notifications';
 		} else {
@@ -34,7 +34,7 @@ Router.route('profilePrivateMessagesUnsubscribe', {
 
 		const accepted = Profile.PrivateMessages.unsubscribe(unsubToken);
 
-		const query = {};
+		const query: { unsubscribed?: string; 'unsubscribe-error'?: string } = {};
 		if (accepted) {
 			query.unsubscribed = 'privatemessages';
 		} else {

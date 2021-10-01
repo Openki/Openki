@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import '/imports/ui/components/events/list/event-list';
+import '/imports/ui/components/events/list';
 
 import './events-frame.html';
 

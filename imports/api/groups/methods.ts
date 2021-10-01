@@ -19,7 +19,6 @@ export const save = ServerMethod(
 			name?: string;
 			claim?: string;
 			description?: string;
-			logoUrl?: string;
 		},
 	) => {
 		check(groupId, String);
@@ -129,6 +128,39 @@ export const updateLogo = ServerMethod(
 		const update = { logoUrl: result.fullFileName };
 
 		Groups.update(group._id, { $set: update });
+
+		return groupId;
+	},
+	{ simulation: false },
+);
+export const deleteLogo = ServerMethod(
+	'group.delete.logo',
+	async (groupId: string) => {
+		check(groupId, String);
+
+		const userId = Meteor.userId();
+		if (!userId) {
+			throw new Meteor.Error(401, 'please log-in');
+		}
+
+		// Load group from DB
+		const group = Groups.findOne(groupId);
+		if (!group) {
+			throw new Meteor.Error(404, 'Group not found');
+		}
+
+		// User must be member of group to edit it
+		if (!isGroupMember(userId, group._id)) {
+			throw new Meteor.Error(401, 'Denied');
+		}
+
+		if (group.logoUrl && !group.logoUrl.startsWith('https://')) {
+			FileStorage.remove(group.logoUrl);
+		}
+
+		const update = { logoUrl: '' };
+
+		Groups.update(group._id, { $unset: update });
 
 		return groupId;
 	},

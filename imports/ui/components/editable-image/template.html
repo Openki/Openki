@@ -39,6 +39,8 @@
 		<div class='editable-image-controls'>
 			{{#if (stateEquals 'progress' 'ready')}}
 				{{> buttonSave event="js-editable-image-upload"}}
+			{{else if deleteAllowed}}
+				{{> buttonDelete event="js-editable-image-delete"}}
 			{{/if}}
 			{{> buttonCancel event="js-editable-image-cancel"}}
 		</div>

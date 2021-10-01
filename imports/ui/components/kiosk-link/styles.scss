@@ -1,3 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .back-to-kiosk {
 	@include td-pos(right, 50px);
 	background-color: $blue-lighter;
@@ -13,7 +15,7 @@
 }
 
 .back-to-kiosk a {
-	color: $gray-dark;
+	color: $gray-800;
 
 	&:hover {
 		color: $white;
@@ -21,17 +23,17 @@
 }
 
 .js-remove-back-to-kiosk {
-	@include opacity(0.4);
 	@include td-pos(right, 0);
 	background: none;
 	border: 0;
 	font-size: large;
+	opacity: 0.4;
 	position: absolute;
 	text-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
 	top: 0;
 
 	&:hover {
-		@include opacity(1);
 		color: $red;
+		opacity: 1;
 	}
 }
