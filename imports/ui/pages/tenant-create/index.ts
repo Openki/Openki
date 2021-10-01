@@ -20,7 +20,6 @@ import '/imports/ui/components/regions/display';
 import '/imports/ui/components/regions/edit';
 
 import './template.html';
-import './styles.scss';
 
 export interface Data {
 	tenant: TenantModel;
