@@ -7,20 +7,20 @@
 		{{/if}}
 		<form>
 			<div class="mb-3">
-				<label class="form-label">{{i18n 'venue.edit.name' 'Name:'}}</label>
+				<label class="form-label">{{i18n 'venue.edit.name' 'Name'}}</label>
 				<input type="text" class="form-control js-name"
 					   placeholder="{{i18n 'venue.edit.namePlaceholder' 'Full name of venue'}}"
 					   size="60" value="{{name}}">
 			</div>
 			<div class="mb-3">
-				<label class="form-label">{{i18n 'venue.edit.description' 'Description:'}}</label>
+				<label class="form-label">{{i18n 'venue.edit.description' 'Description'}}</label>
 				{{> editableTextarea editableDescription}}
 			</div>
 			{{#if showMapSelection}}
 				<div class="row gap-3 mb-3">
 					{{#if regionSelectable}}
 						<div class="col-md">
-							<label class="form-label">{{i18n 'venue.edit.region' 'Region:'}}</label>
+							<label class="form-label">{{i18n 'venue.edit.region' 'Region'}}</label>
 							<div class="input-group">
 								<span class="input-group-text">
 									<span class="fa fa-dot-circle-o fa-fw"
@@ -48,7 +48,7 @@
 			{{/if}}
 
 			<div class="mb-3">
-				<label class="form-label">{{i18n 'venue.details.address' 'Address:'}}</label>
+				<label class="form-label">{{i18n 'venue.details.address' 'Address'}}</label>
 				<div class="input-group">
 					<span class="input-group-text">
 						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
@@ -73,7 +73,7 @@
 			</div>
 			<div class="mb-3">
 				<label
-					   class="form-label">{{i18n 'venue.edit.additionalInfo' 'Additional Info: (optional, but you will help others find the venue)'}}</label>
+					   class="form-label">{{i18n 'venue.edit.additionalInfo' 'Additional Info (optional, but you will help others find the venue)'}}</label>
 				{{#if showAdditionalInfo}}
 					<button type="button"
 							class="btn btn-cancel btn-block js-toggle-additional-info-btn">
@@ -100,7 +100,7 @@
 <template name="venueEditAdditionalInfo">
 	<div class="venue-edit-additional-info">
 		<div class="mb-3">
-			<label class="form-label">{{i18n 'venue.edit.shortName' 'Abbreviation:'}}</label>
+			<label class="form-label">{{i18n 'venue.edit.shortName' 'Abbreviation'}}</label>
 			<div class="input-group">
 				<span class="input-group-text">
 					<span class="fa fa-hashtag fa-fw" aria-hidden="true"></span>
@@ -128,7 +128,7 @@
 		</div>
 		<div class="row gap-3 mb-3">
 			<div class="col-md">
-				<label class="form-label">{{i18n 'venue.edit.infra' 'Infrastructure:'}}</label>
+				<label class="form-label">{{i18n 'venue.edit.infra' 'Infrastructure'}}</label>
 				<div class="form-check">
 					<input {{facilitiesCheck 'projector'}} id="venueEditProjectorCheck">
 					<label class="form-check-label" for="venueEditProjectorCheck">
@@ -186,12 +186,12 @@
 			</div>
 			<div class="col-md">
 				<label
-					   class="form-label">{{i18n 'venue.edit.additionalEquipment' 'Additional equipment:'}}</label>
+					   class="form-label">{{i18n 'venue.edit.additionalEquipment' 'Additional equipment'}}</label>
 				<textarea class="form-control js-otherFacilities">{{otherFacilities}}</textarea>
 			</div>
 		</div>
 		<div class="mb-3">
-			<label class="form-label">{{i18n 'venue.edit.website' 'Website:'}}</label>
+			<label class="form-label">{{i18n 'venue.edit.website' 'Website'}}</label>
 			<div class="input-group">
 				<span class="input-group-text">
 					<span class="fa fa-globe fa-fw" aria-hidden="true"></span>
