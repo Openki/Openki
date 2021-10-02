@@ -304,7 +304,7 @@
 	"filter.showAllFilters": "Zeige alle Filter",
 	"filterCaptions.is-proposal": "Vorschlag",
 	"filterCaptions.resting.label": "Ruhend",
-	"filterCaptions.resting.title": "Kurse mit vergangenen aber keinen bevorstehenden Events.",
+	"filterCaptions.resting.title": "Kurse mit vergangenen aber keinen bevorstehenden Events",
 	"filterCaptions.showProposal": "Zeige nur Vorschläge",
 	"filterCaptions.upcoming.label": "Findet statt",
 	"filterCaptions.upcoming.title": "Zeige nur Kurse, die stattfinden",
