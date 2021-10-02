@@ -261,7 +261,7 @@
 	"event.details.viewCourse": "Kurs anschauen",
 	"event.edit.additionalMessage": "Sag was die Teilnehmer_innen des Kurses noch wissen sollten.",
 	"event.edit.addressSearch": "Suche",
-	"event.edit.dateFormatWarning": "Das Datum muss in der Form {EXAMPLEDATE} geschrieben sein.",
+	"event.edit.dateFormatWarning": "Das Datum muss in der Form {EXAMPLEDATE} geschrieben sein",
 	"event.edit.internal": "Auf der Startseite nicht angzeigen",
 	"event.edit.internal.description": "Diese Veranstaltung nur bei Gruppen und Orten anzeigen. (Für interne Veranstaltungen)",
 	"event.edit.location.info": "Hier kannst du Veranstaltungsorte suchen, die zuletzt verwendeten Orte auswählen, dich auf der Karte umsehen oder einen neuen Veranstaltungsort eintragen.",
