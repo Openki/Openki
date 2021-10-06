@@ -24,6 +24,5 @@ if (Meteor.isClient) {
 			await waitForSubscriptions();
 			await waitFor(haveTitle);
 		});
-
 	});
 }

@@ -147,7 +147,7 @@ Router.route('find', finderRoute('/find'));
 
 Router.route('users', {
 	path: 'admin/users',
-	template:"adminUsersPage",
+	template: 'adminUsersPage',
 	async action() {
 		await import('/imports/ui/pages/admin/users');
 		this.render();

@@ -1,13 +1,21 @@
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 
 import '/imports/ui/components/buttons';
 
-import './users.html';
+import './template.html';
 
-Template.adminUsersPage.onCreated(function () {
+const Template = TemplateAny as TemplateStaticTyped<
+	Record<string, unknown>,
+	'adminUsersPage',
+	{ userSearch: ReactiveVar<string> }
+>;
+
+const template = Template.adminUsersPage;
+
+template.onCreated(function () {
 	const instance = this;
 
 	instance.busy(false);
@@ -22,7 +30,7 @@ Template.adminUsersPage.onCreated(function () {
 	});
 });
 
-Template.adminUsersPage.helpers({
+template.helpers({
 	foundUsers() {
 		const instance = Template.instance();
 
@@ -35,8 +43,8 @@ Template.adminUsersPage.helpers({
 	},
 });
 
-Template.adminUsersPage.events({
-	'keyup .js-search-users'(event, instance) {
-		instance.userSearch.set(instance.$('.js-search-users').val());
+template.events({
+	'keyup .js-search-users'(_event, instance) {
+		instance.userSearch.set(instance.$('.js-search-users').val() as string);
 	},
 });
