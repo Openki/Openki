@@ -46,7 +46,7 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 - :bar_chart: statistics
 - :closed_lock_with_key: more privacy settings and security
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
-- :mailbox: Privat messaging
+- :mailbox: Private messaging
 - :name_badge: OpenBadges and feedback options
 - :ghost: Customizability
 - :open_file_folder: File upload for course-documentation
