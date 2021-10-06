@@ -7,7 +7,7 @@ import '/imports/ui/components/buttons';
 
 import './users.html';
 
-Template.users.onCreated(function () {
+Template.adminUsersPage.onCreated(function () {
 	const instance = this;
 
 	instance.busy(false);
@@ -22,7 +22,7 @@ Template.users.onCreated(function () {
 	});
 });
 
-Template.users.helpers({
+Template.adminUsersPage.helpers({
 	foundUsers() {
 		const instance = Template.instance();
 
@@ -35,7 +35,7 @@ Template.users.helpers({
 	},
 });
 
-Template.users.events({
+Template.adminUsersPage.events({
 	'keyup .js-search-users'(event, instance) {
 		instance.userSearch.set(instance.$('.js-search-users').val());
 	},

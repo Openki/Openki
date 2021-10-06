@@ -1,9 +1,9 @@
 import { Template } from 'meteor/templating';
 import { Tenants } from '/imports/api/tenants/tenants';
 
-import './tenants.html';
+import './template.html';
 
-Template.tenants.helpers({
+Template.adminTenantsPage.helpers({
 	tenants() {
 		return Tenants.find();
 	},

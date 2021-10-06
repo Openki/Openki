@@ -130,9 +130,13 @@ Router.route('featureGroup', {
 
 Router.route('tenants', {
 	path: 'admin/tenants',
-	template: 'tenants',
+	template: 'adminTenantsPage',
 	waitOn() {
 		return Meteor.subscribe('Tenants.findFilter');
+	},
+	async action() {
+		await import('/imports/ui/pages/admin/tenants');
+		this.render();
 	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('tenants.windowtitle', 'Organizations'));
@@ -143,6 +147,14 @@ Router.route('find', finderRoute('/find'));
 
 Router.route('users', {
 	path: 'admin/users',
+	template:"adminUsersPage",
+	async action() {
+		await import('/imports/ui/pages/admin/users');
+		this.render();
+	},
+	onAfterAction() {
+		Metatags.setCommonTags(i18n('admin.users.windowtitle', 'Users'));
+	},
 });
 
 Router.route('frameCalendar', {
