@@ -10,5 +10,4 @@ import './frames/schedule/schedule-frame';
 import './frames/week/week-frame';
 import './log/log';
 import './not-found';
-import './reset-password/reset-password';
 import './venue-details/venue-details';

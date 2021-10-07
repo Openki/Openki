@@ -500,6 +500,11 @@ Router.route('proposeCourse', {
 
 Router.route('resetPassword', {
 	path: 'reset-password/:token',
+	template: 'resetPasswordPage',
+	async action() {
+		await import('/imports/ui/pages/reset-password');
+		this.render();
+	},
 	data() {
 		return this.params.token;
 	},
