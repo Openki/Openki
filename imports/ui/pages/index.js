@@ -1,6 +1,5 @@
 import './admin/panel/admin-panel';
 import './calendar/calendar';
-import './course-create/course-create';
 import './event-details/event-details';
 import './info/info';
 import './find/find';

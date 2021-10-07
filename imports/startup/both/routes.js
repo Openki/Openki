@@ -487,6 +487,11 @@ Router.route('profile', {
 
 Router.route('proposeCourse', {
 	path: 'courses/propose',
+	template: 'courseProposePage',
+	async action() {
+		await import('/imports/ui/pages/course-create');
+		this.render();
+	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('course.propose.windowtitle', 'Propose new course'));
 	},
