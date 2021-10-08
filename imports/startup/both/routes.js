@@ -506,7 +506,7 @@ Router.route('resetPassword', {
 		this.render();
 	},
 	data() {
-		return this.params.token;
+		return { token: this.params.token };
 	},
 	onAfterAction() {
 		document.title = i18n('resetPassword.siteTitle', 'Reset password');

@@ -1,16 +1,32 @@
 import { Router } from 'meteor/iron:router';
-import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Template } from 'meteor/templating';
-import { Accounts } from 'meteor/accounts-base';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { AccountsAsync } from '/imports/utils/promisify';
+import { i18n } from '/imports/startup/both/i18next';
 
 import * as Alert from '/imports/api/alerts/alert';
 
 import '/imports/ui/components/buttons';
 
-import './reset-password.html';
+import './template.html';
+import './styles.scss';
 
-Template.resetPassword.onCreated(function () {
+const Template = TemplateAny as TemplateStaticTyped<
+	{ token: string },
+	'resetPasswordPage',
+	{
+		password: ReactiveVar<string>;
+		passwordValid: ReactiveVar<boolean>;
+		passwordSame: ReactiveVar<boolean>;
+		passwordNotSame: ReactiveVar<boolean>;
+		showPassword: ReactiveVar<boolean>;
+		updatePassword: () => void;
+	}
+>;
+
+const template = Template.resetPasswordPage;
+
+template.onCreated(function () {
 	const instance = this;
 	instance.busy(false);
 	instance.password = new ReactiveVar('');
@@ -20,16 +36,16 @@ Template.resetPassword.onCreated(function () {
 	instance.showPassword = new ReactiveVar(false);
 
 	instance.updatePassword = function () {
-		const password = $('.js-pwd-reset').val();
+		const password = $('.js-pwd-reset').val() as string;
 		instance.password.set(password);
 
 		if (instance.showPassword.get()) {
 			instance.passwordValid.set(password.length > 0);
 		} else {
-			const passwordConfirm = $('.js-confirm-pwd-reset').val();
+			const passwordConfirm = $('.js-confirm-pwd-reset').val() as string;
 			instance.passwordSame.set(password.length > 0 && password === passwordConfirm);
 			instance.passwordNotSame.set(
-				passwordConfirm &&
+				!!passwordConfirm &&
 					password.length <= passwordConfirm.length &&
 					password !== passwordConfirm,
 			);
@@ -38,7 +54,7 @@ Template.resetPassword.onCreated(function () {
 	};
 });
 
-Template.resetPassword.helpers({
+template.helpers({
 	showPassword() {
 		return Template.instance().showPassword.get();
 	},
@@ -60,39 +76,38 @@ Template.resetPassword.helpers({
 	},
 });
 
-Template.resetPassword.events({
-	'click .js-show-pwd'(event, instance) {
+template.events({
+	'click .js-show-pwd'(_event, instance) {
 		instance.showPassword.set(true);
 		instance.updatePassword();
 	},
 
-	'click .js-hide-pwd'(event, instance) {
+	'click .js-hide-pwd'(_event, instance) {
 		instance.showPassword.set(false);
 		instance.updatePassword();
 	},
 
-	'input, keyup, blur'(event, instance) {
+	'input, keyup, blur'(_event, instance) {
 		instance.updatePassword();
 	},
 
-	submit(event, instance) {
+	async submit(event, instance) {
 		instance.busy('saving');
 		event.preventDefault();
 
-		const password = instance.$('.js-pwd-reset').val();
-		const token = Template.instance().data;
-		Accounts.resetPassword(token, password, (err) => {
+		const password = instance.$('.js-pwd-reset').val() as string;
+		const { token } = Template.instance().data;
+
+		try {
+			await AccountsAsync.resetPassword(token, password);
+
+			Alert.success(i18n('resetPassword.passwordReset.', 'Your password has been reset.'));
+			Router.go('profile');
+		} catch (err) {
+			Alert.serverError(err, i18n('resetPassword.passwordResetError', 'Unable to reset password'));
+		} finally {
 			instance.busy(false);
-			if (err) {
-				Alert.serverError(
-					err,
-					i18n('resetPassword.passwordResetError', 'Unable to reset password'),
-				);
-			} else {
-				Alert.success(i18n('resetPassword.passwordReset.', 'Your password has been reset.'));
-				Router.go('profile');
-			}
-		});
+		}
 	},
 
 	'click .js-cancel-reset-pwd'() {
