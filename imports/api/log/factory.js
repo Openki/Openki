@@ -95,9 +95,9 @@ export class LogCollection extends Mongo.Collection {
 		super(name);
 
 		if (name && Meteor.isServer) {
-			this._ensureIndex({ tr: 1 });
-			this._ensureIndex({ ts: 1 });
-			this._ensureIndex({ rel: 1 });
+			this.createIndex({ tr: 1 });
+			this.createIndex({ ts: 1 });
+			this.createIndex({ rel: 1 });
 		}
 	}
 

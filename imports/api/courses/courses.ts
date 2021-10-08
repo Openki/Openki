@@ -132,7 +132,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 		});
 
 		if (Meteor.isServer) {
-			this._ensureIndex({ tenant: 1, archived: 1, region: 1, time_lastedit: 1, groups: 1 });
+			this.createIndex({ tenant: 1, archived: 1, region: 1, time_lastedit: 1, groups: 1 });
 		}
 	}
 

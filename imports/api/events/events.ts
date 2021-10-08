@@ -169,10 +169,10 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		});
 
 		if (Meteor.isServer) {
-			this._ensureIndex({ tenant: 1, region: 1, start: 1 });
-			this._ensureIndex({ tenant: 1, region: 1, end: 1 });
-			this._ensureIndex({ tenant: 1, region: 1, 'venue._id': 1 });
-			this._ensureIndex({ tenant: 1, region: 1, allGroups: 1 });
+			this.createIndex({ tenant: 1, region: 1, start: 1 });
+			this.createIndex({ tenant: 1, region: 1, end: 1 });
+			this.createIndex({ tenant: 1, region: 1, 'venue._id': 1 });
+			this.createIndex({ tenant: 1, region: 1, allGroups: 1 });
 		}
 	}
 

@@ -34,7 +34,7 @@ export class InfoPagesCollection extends Mongo.Collection<InfoPagesEntity> {
 		super('InfoPages');
 
 		if (Meteor.isServer) {
-			this._ensureIndex({ slug: 1, locale: 1, accuracy: -1 });
+			this.createIndex({ slug: 1, locale: 1, accuracy: -1 });
 		}
 	}
 }
