@@ -159,6 +159,7 @@ Router.route('users', {
 
 Router.route('frameCalendar', {
 	path: '/frame/calendar',
+	template: 'frameCalendarPage',
 	layoutTemplate: 'frameLayout',
 	data() {
 		const cssRules = new CssFromQuery(this.params.query, [
@@ -169,6 +170,10 @@ Router.route('frameCalendar', {
 			['regioncolor', 'color', '.frame-list-item-region'],
 		]).getCssRules();
 		return { cssRules };
+	},
+	async action() {
+		await import('/imports/ui/pages/frames/calendar');
+		this.render();
 	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));

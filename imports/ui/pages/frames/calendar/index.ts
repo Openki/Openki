@@ -15,7 +15,7 @@ import '/imports/ui/components/loading';
 
 import './calendar-frame.html';
 
-Template.frameCalendar.onCreated(function () {
+Template.frameCalendarPage.onCreated(function () {
 	const instance = this;
 
 	instance.groupedEvents = new ReactiveVar([]);
@@ -49,6 +49,11 @@ Template.frameCalendar.onCreated(function () {
 		const filterQuery = filter.toQuery();
 		const limit = instance.limit.get();
 
+		// Show internal events only when a group or venue is specified
+		if (!filterQuery.group && !filterQuery.venue && filterQuery.internal === undefined) {
+			filterQuery.internal = false;
+		}
+
 		instance.subscribe('Events.findFilter', filterQuery, limit + 1, {
 			onReady: () => {
 				if (!instance.pageReady.get()) {
@@ -65,7 +70,7 @@ Template.frameCalendar.onCreated(function () {
 	});
 });
 
-Template.frameCalendar.helpers({
+Template.frameCalendarPage.helpers({
 	pageReady: () => Template.instance().pageReady.get(),
 
 	ready: () => Template.instance().subscriptionsReady(),
@@ -82,7 +87,7 @@ Template.frameCalendar.helpers({
 	},
 });
 
-Template.frameCalendar.events({
+Template.frameCalendarPage.events({
 	'click .js-show-more-events'(event, instance) {
 		const { limit } = instance;
 		limit.set(limit.get() + 10);
