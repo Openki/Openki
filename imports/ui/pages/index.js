@@ -3,7 +3,6 @@ import './calendar/calendar';
 import './event-details/event-details';
 import './info/info';
 import './find/find';
-import './frames/courselist/courselist-frame';
 import './frames/events/events-frame';
 import './frames/schedule/schedule-frame';
 import './frames/week/week-frame';

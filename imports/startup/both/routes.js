@@ -182,6 +182,7 @@ Router.route('frameCalendar', {
 
 Router.route('frameCourselist', {
 	path: '/frame/courselist',
+	template: 'frameCourselistPage',
 	layoutTemplate: 'frameLayout',
 	data() {
 		const cssRules = new CssFromQuery(this.params.query, [
@@ -193,6 +194,10 @@ Router.route('frameCourselist', {
 		]).getCssRules();
 		const hideInterested = parseInt(this.params.query.hideInterested, 10) || 0;
 		return { cssRules, hideInterested };
+	},
+	async action() {
+		await import('/imports/ui/pages/frames/courselist');
+		this.render();
 	},
 });
 

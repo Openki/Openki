@@ -14,7 +14,7 @@ import '/imports/ui/components/loading';
 import './courselist-frame.html';
 import SortSpec from '/imports/utils/sort-spec';
 
-Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
+Template.frameCourselistPage.onCreated(function frameCourselistOnCreated() {
 	Metatags.setCommonTags(i18n('course.list.windowtitle', 'Courses'));
 
 	this.query = Router.current().params.query;
@@ -38,7 +38,7 @@ Template.frameCourselist.onCreated(function frameCourselistOnCreated() {
 	this.subscribe('Regions');
 });
 
-Template.frameCourselist.helpers({
+Template.frameCourselistPage.helpers({
 	ready: () => Template.instance().subscriptionsReady(),
 	courses: () =>
 		Courses.find(
@@ -55,7 +55,7 @@ Template.frameCourselist.helpers({
 	},
 });
 
-Template.frameCourselist.events({
+Template.frameCourselistPage.events({
 	'click .js-show-more-courses'(event, instance) {
 		const { limit } = instance;
 		limit.set(limit.get() + 5);
