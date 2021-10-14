@@ -11,7 +11,7 @@ import { reactiveNow } from '/imports/utils/reactive-now';
 
 import './schedule-frame.html';
 
-Template.frameSchedule.onCreated(function () {
+Template.frameSchedulePage.onCreated(function () {
 	const filter = Events.Filtering();
 
 	const instance = this;
@@ -230,7 +230,7 @@ Template.frameSchedule.onCreated(function () {
 	});
 });
 
-Template.frameSchedule.helpers({
+Template.frameSchedulePage.helpers({
 	month() {
 		const instance = Template.instance();
 		return moment(instance.scheduleStart.get()).format('MMMM');

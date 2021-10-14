@@ -285,7 +285,12 @@ Router.route('framePropose', {
 
 Router.route('frameSchedule', {
 	path: '/frame/schedule',
+	template: 'frameSchedulePage',
 	layoutTemplate: 'frameLayout',
+	async action() {
+		await import('/imports/ui/pages/frames/schedule');
+		this.render();
+	},
 });
 
 Router.route('frameWeek', {
