@@ -107,6 +107,11 @@ if (Meteor.isClient) {
 
 Router.route('adminPanel', {
 	path: 'admin',
+	template: 'adminPanelPage',
+	async action() {
+		await import('/imports/ui/pages/admin/panel');
+		this.render();
+	},
 });
 
 Router.route('calendar', {

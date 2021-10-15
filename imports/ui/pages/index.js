@@ -1,4 +1,3 @@
-import './admin/panel/admin-panel';
 import './calendar/calendar';
 import './event-details/event-details';
 import './info/info';
