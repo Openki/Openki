@@ -1,7 +1,7 @@
 <template name="adminPanel">
-	<div class="admin-panel">
+	<div class="row">
 		{{#each tasks}}
-			<div class="admin-task-wrap">
+			<div class="col-12 col-sm-6 col-md-4 mb-4">
 				<a href="{{pathFor route}}">
 					<div class="admin-task js-admin-task">
 						<i class="fa fa-2x {{icon}}" aria-hidden="true"></i>
