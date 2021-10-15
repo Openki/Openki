@@ -1,3 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .admin-task {
 	border: 1px solid lighten($blue-light, 5%);
 	border-radius: 4px;
@@ -7,7 +9,7 @@
 	transition-property: #{'background-color border-color'};
 
 	&:hover {
-		background-color: lighten($gray-lightest, 3%);
+		background-color: lighten($gray-200, 3%);
 		cursor: pointer;
 		transition-duration: 0.15s;
 		transition-property: #{'background-color border-color'};

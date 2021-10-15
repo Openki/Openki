@@ -1,9 +1,14 @@
 import { i18n } from '/imports/startup/both/i18next';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
-import './admin-panel.html';
+import './template.html';
+import './styles.scss';
 
-Template.adminPanel.helpers({
+const Template = TemplateAny as TemplateStaticTyped<'adminPanelPage'>;
+
+const template = Template.adminPanelPage;
+
+template.helpers({
 	tasks: () => [
 		{
 			name: i18n('adminPanel.tasks.log', 'Show log'),
