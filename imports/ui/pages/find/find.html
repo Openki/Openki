@@ -5,15 +5,15 @@
 </template>
 
 <template name="find">
-	<div class="page-component find-header {{#if showingFilters}}filter-expanded{{/if}}">
-		<div class="find-header-heading">
+	<div class="page-component row {{#if showingFilters}}filter-expanded{{/if}}">
+		<div class="col-12">
 			<h1 class="find-heading">
 				{{i18n 'find.WhatLearn?' 'What do I want to learn?'}}
 			</h1>
 		</div>
-		<div class="find-header-search">
+		<div class="col-12 {{#unless showingFilters}}col-md-6 col-lg-7{{/unless}}">
 			<div class="js-search-field">
-				<div class="input-group">
+				<div class="input-group input-group-lg">
 					<input class="js-search-input form-control" type="text" id="find"
 						   value="{{search}}"
 						   placeholder="{{i18n 'find.search_placeholder' 'Everything'}}" />
@@ -23,7 +23,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="find-header-filter">
+		<div class="col-12 {{#if showingFilters}}mb-3{{else}}col-md-6 col-lg-5{{/if}}">
 			{{> filter}}
 		</div>
 	</div>
