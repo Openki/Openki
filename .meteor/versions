@@ -45,7 +45,7 @@ gadicohen:sitemaps@0.0.26
 geojson-utils@1.0.10
 github-config-ui@1.0.2
 github-oauth@1.3.1
-google-config-ui@1.0.2
+google-config-ui@1.0.3
 google-oauth@1.4.1
 hot-code-push@1.0.4
 html-tools@1.1.2
