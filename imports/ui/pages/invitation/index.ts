@@ -13,12 +13,11 @@ import * as RegionSelection from '/imports/utils/region-selection';
 import './template.html';
 
 const Template = TemplateAny as TemplateStaticTyped<
+	'invitationPage',
 	{
 		tenant: TenantModel;
 		invitation: InvitationEntity;
-	},
-	'invitationPage',
-	Record<string, unknown>
+	}
 >;
 
 const template = Template.invitationPage;

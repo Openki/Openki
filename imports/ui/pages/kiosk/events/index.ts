@@ -15,11 +15,7 @@ import './template.html';
 import './styles.scss';
 
 {
-	const Template = TemplateAny as TemplateStaticTyped<
-		Record<string, unknown>,
-		'kioskEventsPage',
-		Record<string, never>
-	>;
+	const Template = TemplateAny as TemplateStaticTyped<'kioskEventsPage'>;
 
 	const template = Template.kioskEventsPage;
 
@@ -96,11 +92,7 @@ import './styles.scss';
 }
 
 {
-	const Template = TemplateAny as TemplateStaticTyped<
-		Record<string, unknown>,
-		'kioskEvent',
-		Record<string, never>
-	>;
+	const Template = TemplateAny as TemplateStaticTyped<'kioskEvent'>;
 
 	const template = Template.kioskEvent;
 	template.helpers({
@@ -119,11 +111,7 @@ import './styles.scss';
 }
 
 {
-	const Template = TemplateAny as TemplateStaticTyped<
-		Record<string, unknown>,
-		'kioskEventLocation',
-		Record<string, never>
-	>;
+	const Template = TemplateAny as TemplateStaticTyped<'kioskEventLocation'>;
 	const template = Template.kioskEventLocation;
 	template.helpers({
 		showLocation() {

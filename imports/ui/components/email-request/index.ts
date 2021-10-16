@@ -10,11 +10,7 @@ import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import './template.html';
 
 {
-	const Template = TemplateAny as TemplateStaticTyped<
-		Record<string, unknown>,
-		'emailRequest',
-		Record<string, never>
-	>;
+	const Template = TemplateAny as TemplateStaticTyped<'emailRequest'>;
 
 	const template = Template.emailRequest;
 
@@ -27,11 +23,7 @@ import './template.html';
 }
 
 {
-	const TemplateBase = TemplateAny as TemplateStaticTyped<
-		Record<string, unknown>,
-		'emailRequestModal',
-		Record<string, never>
-	>;
+	const TemplateBase = TemplateAny as TemplateStaticTyped<'emailRequestModal'>;
 
 	const Template = TemplateMixins.FormfieldErrors(TemplateBase, 'emailRequestModal', {
 		noEmail: {

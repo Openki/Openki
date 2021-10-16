@@ -8,8 +8,8 @@ import '/imports/ui/components/buttons';
 import './template.html';
 
 const Template = TemplateAny as TemplateStaticTyped<
-	Record<string, unknown>,
 	'adminUsersPage',
+	Record<string, unknown>,
 	{ userSearch: ReactiveVar<string> }
 >;
 

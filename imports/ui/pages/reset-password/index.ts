@@ -12,8 +12,8 @@ import './template.html';
 import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
-	{ token: string },
 	'resetPasswordPage',
+	{ token: string },
 	{
 		password: ReactiveVar<string>;
 		passwordValid: ReactiveVar<boolean>;

@@ -9,11 +9,7 @@ import * as emailMethods from '/imports/api/emails/methods';
 import './template.html';
 
 {
-	const Template = TemplateAny as TemplateStaticTyped<
-		Record<string, unknown>,
-		'emailValidation',
-		Record<string, never>
-	>;
+	const Template = TemplateAny as TemplateStaticTyped<'emailValidation'>;
 
 	const template = Template.emailValidation;
 
@@ -31,11 +27,7 @@ import './template.html';
 }
 
 {
-	const Template = TemplateAny as TemplateStaticTyped<
-		Record<string, unknown>,
-		'emailValidationModal',
-		Record<string, never>
-	>;
+	const Template = TemplateAny as TemplateStaticTyped<'emailValidationModal'>;
 
 	const template = Template.emailValidationModal;
 

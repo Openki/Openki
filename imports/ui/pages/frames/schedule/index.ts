@@ -1,17 +1,37 @@
 import { _ } from 'meteor/underscore';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment';
 
-import { Events } from '/imports/api/events/events';
+import { EventModel, Events } from '/imports/api/events/events';
 
 import LocalTime from '/imports/utils/local-time';
 import { reactiveNow } from '/imports/utils/reactive-now';
 
-import './schedule-frame.html';
+import './template.html';
+import './styles.scss';
 
-Template.frameSchedulePage.onCreated(function () {
+type EventViewModel = EventModel & { repKeyDay: number; repCount: number };
+
+const Template = TemplateAny as TemplateStaticTyped<
+	'frameSchedulePage',
+	unknown,
+	{
+		interval: ReactiveVar<number>;
+		scheduleStart: ReactiveVar<moment.Moment>;
+		separators: ReactiveVar<number[]>;
+		repeatingOnly: ReactiveVar<boolean>;
+		days: ReactiveVar<number[]>;
+		intervals: ReactiveVar<number[]>;
+		slots: ReactiveVar<any>;
+		kindMap: (title: string) => number | false;
+	}
+>;
+
+const template = Template.frameSchedulePage;
+
+template.onCreated(function () {
 	const filter = Events.Filtering();
 
 	const instance = this;
@@ -22,7 +42,7 @@ Template.frameSchedulePage.onCreated(function () {
 
 	// Read query params
 	this.autorun(() => {
-		const { query } = Router.current().params;
+		const query = Router.current().params.query as Record<string, string>;
 
 		instance.repeatingOnly.set(Object.prototype.hasOwnProperty.call(query, 'repeating'));
 
@@ -35,7 +55,7 @@ Template.frameSchedulePage.onCreated(function () {
 		}
 		instance.scheduleStart.set(scheduleStart);
 
-		const rawSeps = (query.sep || '').split(',');
+		const rawSeps = (query.sep || '').split(',') as string[];
 		const seps = [
 			...new Set(
 				rawSeps
@@ -66,8 +86,8 @@ Template.frameSchedulePage.onCreated(function () {
 		}
 
 		filter.clear().read(query);
-		filter.add('after', scheduleStart);
-		filter.add('end', moment(scheduleStart).add(4, 'week'));
+		filter.add('after', scheduleStart.toISOString());
+		filter.add('end', moment(scheduleStart).add(4, 'week').toISOString());
 		filter.done();
 	});
 
@@ -88,12 +108,12 @@ Template.frameSchedulePage.onCreated(function () {
 
 		// Track repeating events so we know how often they occur.
 		// The key to this dict is a combination of courseId, weekday and start time.
-		const repetitionCount = {};
-		const repetitionCountDay = {};
+		const repetitionCount: any = {};
+		const repetitionCountDay: any = {};
 
 		// Load events but keep only the first when they repeat on the same
 		// weekday at the same time.
-		const dedupedEvents = [];
+		const dedupedEvents: EventViewModel[] = [];
 		Events.findFilter(filter.toQuery()).forEach((event) => {
 			const eventStart = LocalTime.fromString(event.startLocal);
 
@@ -137,7 +157,7 @@ Template.frameSchedulePage.onCreated(function () {
 		// List of intervals where events or separators are placed
 		const intervals = _.reduce(
 			separators,
-			(rIntervals, separator) => {
+			(rIntervals: any, separator) => {
 				/* eslint-disable-next-line no-param-reassign */
 				rIntervals[separator] = separator;
 				return rIntervals;
@@ -146,14 +166,14 @@ Template.frameSchedulePage.onCreated(function () {
 		);
 
 		// List of days where events where found
-		const days = {};
+		const days: _.Dictionary<number> = {};
 
 		// Map of slots where events were found. Each slot holds a list of events.
-		const slots = {};
+		const slots: any = {};
 
 		// Count occurences of first few chars in event titles
 		// This helps coloring the events so they're easier to scan.
-		const kinds = {};
+		const kinds: any = {};
 
 		// Place found events into the slots
 		dedupedEvents.forEach((originalEvent) => {
@@ -194,7 +214,7 @@ Template.frameSchedulePage.onCreated(function () {
 			kinds[kindId] += 1;
 		});
 
-		const numCmp = function (a, b) {
+		const numCmp = function (a: number, b: number) {
 			return a - b;
 		};
 		instance.days.set(_.values(days).sort(numCmp));
@@ -202,8 +222,10 @@ Template.frameSchedulePage.onCreated(function () {
 
 		// Build list of most used titles (first few chars)
 		const mostUsedKinds = _.sortBy(_.pairs(kinds), (kv) => -kv[1]);
-		const kindRank = _.object(_.map(mostUsedKinds.slice(0, 15), (kv, rank) => [kv[0], rank + 1]));
-		instance.kindMap = function (title) {
+		const kindRank = _.object(
+			_.map(mostUsedKinds.slice(0, 15), (kv, rank) => [kv[0], rank + 1]),
+		) as _.Dictionary<number>;
+		instance.kindMap = function (title: string) {
 			const kindId = title.substr(0, 5);
 			if (kindRank[kindId]) {
 				return kindRank[kindId];
@@ -230,7 +252,7 @@ Template.frameSchedulePage.onCreated(function () {
 	});
 });
 
-Template.frameSchedulePage.helpers({
+template.helpers({
 	month() {
 		const instance = Template.instance();
 		return moment(instance.scheduleStart.get()).format('MMMM');
@@ -258,11 +280,11 @@ Template.frameSchedulePage.helpers({
 		});
 	},
 
-	type() {
+	type(this: EventViewModel) {
 		return Template.instance().kindMap(this.title) || 'other';
 	},
 
-	customStartTime(intervalStart) {
+	customStartTime(this: EventViewModel, intervalStart: moment.Moment) {
 		const event = this;
 		const startTime = moment(LocalTime.fromString(event.startLocal));
 		startTime.locale(intervalStart.locale());
@@ -272,11 +294,11 @@ Template.frameSchedulePage.helpers({
 		return isSame ? false : startTime.format('LT');
 	},
 
-	single() {
+	single(this: EventViewModel) {
 		return this.repCount < 2;
 	},
 
-	showDate() {
+	showDate(this: EventViewModel) {
 		// The date is shown if an event has no repetitions...
 		if (this.repCount < 2) {
 			return true;

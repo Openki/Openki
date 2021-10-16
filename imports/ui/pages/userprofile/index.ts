@@ -34,8 +34,8 @@ interface UserProfilePageData {
 }
 
 const Template = TemplateAny as TemplateStaticTyped<
-	UserProfilePageData,
 	'userprofilePage',
+	UserProfilePageData,
 	{ state: ReactiveDict<{ verifyUserDelete: boolean }>; coursesCreatedBy(): CourseModel[] }
 >;
 

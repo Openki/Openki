@@ -24,13 +24,13 @@ import './template.html';
 import './styles.scss';
 
 const TemplateBase = TemplateAny as TemplateStaticTyped<
+	'groupDetailsPage',
 	{
 		courseQuery: any;
 		group: GroupModel | (Partial<GroupModel> & { _id: 'create' });
 		isNew: boolean;
 		showCourses: boolean;
 	},
-	'groupDetailsPage',
 	{
 		mayEdit: ReactiveVar<boolean>;
 		editingSettings: ReactiveVar<boolean>;

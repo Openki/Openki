@@ -247,7 +247,7 @@ Template.courseDetailsDescription.helpers({
 
 Template.courseGroupList.helpers({
 	isOrganizer() {
-		return Template.instance().data.groupOrganizers.includes(IdTools.extract(this));
+		return (Template.instance().data as any).groupOrganizers.includes(IdTools.extract(this));
 	},
 	tools() {
 		const tools = [];

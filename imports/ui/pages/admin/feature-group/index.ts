@@ -9,11 +9,7 @@ import * as RegionsMethods from '/imports/api/regions/methods';
 import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<
-	Record<string, unknown>,
-	'adminFeatureGroupPage',
-	Record<string, never>
->;
+const Template = TemplateAny as TemplateStaticTyped<'adminFeatureGroupPage'>;
 
 const template = Template.adminFeatureGroupPage;
 

@@ -29,8 +29,8 @@ export interface MarkerEntity {
 }
 
 const Template = TemplateAny as TemplateStaticTyped<
-	Data,
 	'regionDisplay',
+	Data,
 	{
 		state: ReactiveDict<{ verifyDelete: boolean }>;
 		markers: Mongo.Collection<MarkerEntity>;

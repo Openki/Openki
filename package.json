@@ -44,7 +44,7 @@
     "@types/es6-promisify": "6.0.0",
     "@types/jquery": "3.5.6",
     "@types/medium-editor": "5.0.4",
-    "@types/meteor": "1.4.80",
+    "@types/meteor": "1.4.81",
     "@types/meteor-mdg-validation-error": "0.5.0",
     "@types/mime-types": "^2.1.1",
     "@types/mocha": "9.0.0",

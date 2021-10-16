@@ -9,8 +9,8 @@ import * as emailMethods from '/imports/api/emails/methods';
 import './template.html';
 
 const Template = TemplateAny as TemplateStaticTyped<
-	Record<string, unknown>,
 	'verifyEmail',
+	Record<string, unknown>,
 	{
 		state: ReactiveDict<{ sending: boolean }>;
 	}

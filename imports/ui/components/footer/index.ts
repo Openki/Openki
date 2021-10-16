@@ -1,24 +1,29 @@
 import { i18n } from '/imports/startup/both/i18next';
-import { Template } from 'meteor/templating';
-import { Meteor } from 'meteor/meteor';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment';
 
 import Version from '/imports/api/version/version';
 import { Regions } from '/imports/api/regions/regions';
 
 import { getSiteName } from '/imports/utils/getSiteName';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
-import './footer.html';
+import './template.html';
+import './styles.scss';
 
-Template.footer.onCreated(function () {
+const Template = TemplateAny as TemplateStaticTyped<'footer'>;
+
+const template = Template.footer;
+
+template.onCreated(function () {
 	this.subscribe('version');
 });
 
-Template.footer.helpers({
+template.helpers({
 	links() {
 		const siteName = getSiteName(Regions.currentRegion());
 
-		return (Meteor.settings.public.footerLinks || []).map((linkSpec) => ({
+		return PublicSettings.footerLinks.map((linkSpec) => ({
 			link: linkSpec.link,
 			text: linkSpec.key ? i18n(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
 			title: linkSpec.title_key ? i18n(linkSpec.title_key, { SITENAME: siteName }) : '',

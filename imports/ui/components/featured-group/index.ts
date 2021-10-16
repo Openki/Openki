@@ -6,8 +6,8 @@ import './template.html';
 import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
-	Record<string, unknown>,
 	'featuredGroup',
+	Record<string, unknown>,
 	{ featuredGroupId: () => string | undefined; featuredGroup: () => GroupModel | undefined }
 >;
 

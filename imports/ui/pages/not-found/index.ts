@@ -7,11 +7,7 @@ import '/imports/ui/components/report';
 import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<
-	Record<string, unknown>,
-	'notFound',
-	Record<string, unknown>
->;
+const Template = TemplateAny as TemplateStaticTyped<'notFound'>;
 
 const template = Template.notFound;
 

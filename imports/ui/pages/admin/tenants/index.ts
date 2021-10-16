@@ -3,11 +3,7 @@ import { Tenants } from '/imports/api/tenants/tenants';
 
 import './template.html';
 
-const Template = TemplateAny as TemplateStaticTyped<
-	Record<string, unknown>,
-	'adminTenantsPage',
-	Record<string, never>
->;
+const Template = TemplateAny as TemplateStaticTyped<'adminTenantsPage'>;
 
 const template = Template.adminTenantsPage;
 

@@ -17,11 +17,11 @@ import type { Data as EditData } from '/imports/ui/components/regions/edit';
 import './template.html';
 
 const Template = TemplateAny as TemplateStaticTyped<
+	'regionDetailsPage',
 	{
 		isNew: boolean;
 		region: RegionModel;
 	},
-	'regionDetailsPage',
 	{ state: ReactiveDict<{ editing: boolean }> }
 >;
 

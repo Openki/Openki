@@ -12,8 +12,8 @@ import './template.html';
 import './styles.scss';
 
 const TemplateBase = TemplateAny as TemplateStaticTyped<
-	Record<string, unknown>,
 	'report',
+	Record<string, unknown>,
 	{
 		state: ReactiveVar<string>;
 	}

@@ -45,8 +45,8 @@ export type Data = {
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		Data,
 		'courseEdit',
+		Data,
 		{
 			editableDescription: Editable;
 			state: ReactiveDict<{
@@ -538,8 +538,8 @@ export type Data = {
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		{ selected: string[]; role: RoleEntity; members: CourseMemberEntity[] },
 		'courseEditRole',
+		{ selected: string[]; role: RoleEntity; members: CourseMemberEntity[] },
 		{ checked: ReactiveVar<boolean> }
 	>;
 
@@ -588,8 +588,8 @@ export type Data = {
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		Record<string, unknown>,
 		'courseTitle',
+		Record<string, unknown>,
 		{
 			proposedSearch: ReactiveVar<string>;
 			focused: ReactiveVar<boolean>;
