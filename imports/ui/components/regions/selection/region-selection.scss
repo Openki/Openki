@@ -9,6 +9,11 @@
 	color: desaturate(darken($background-color, 40%), 50%);
 }
 
+.region-selection .is-splash .dropdown-menu {
+	/* fixes a UI error on splash */
+	margin-right: -13px !important;
+}
+
 .region-selection .dropdown-menu {
 	@media (max-width: $grid-float-breakpoint) {
 		background: none;

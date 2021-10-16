@@ -1,6 +1,6 @@
 import { check, Match } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
-import { StringArray, StringEnum } from './CustomChecks';
+import { StringEnum } from './CustomChecks';
 
 let privateSettings;
 
@@ -8,7 +8,7 @@ if (Meteor.isServer) {
 	// See settings-example.json.md for full documentation
 
 	const defaults = {
-		admins: [],
+		admins: [] as string[],
 		prng: '',
 		testdata: false,
 		siteEmail: '',
@@ -28,7 +28,7 @@ if (Meteor.isServer) {
 	check(
 		privateSettings,
 		Match.ObjectIncluding({
-			admins: StringArray,
+			admins: [String],
 			prng: StringEnum(['', 'static'] as const),
 			testdata: Boolean,
 			siteEmail: String,

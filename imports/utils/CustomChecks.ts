@@ -6,8 +6,6 @@ export const LocalisedValue = Match.OneOf(
 	Match.ObjectIncluding<Record<string, string | undefined>>({}),
 );
 
-export const StringArray = [String] as unknown as Match.Matcher<string[]>;
-
 export function StringEnum<T extends readonly string[]>(values: T) {
 	return Match.Where(function (str) {
 		check(str, String);

@@ -1,6 +1,6 @@
 import { check, Match } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
-import { LocalisedValue, StringArray } from './CustomChecks';
+import { LocalisedValue } from './CustomChecks';
 
 // See settings-example.json.md for full documentation
 
@@ -13,8 +13,10 @@ const defaults = {
 	ogLogo: { src: 'openki_logo_2018.png' },
 	regionSelection: { minNumber: 5, aboutLink: '' },
 	i18nHelpLink: 'https://gitlab.com/Openki/Openki/-/wikis/i18n-howto',
-	publicTenants: [],
+	publicTenants: [] as string[],
 	pricePolicyEnabled: true,
+	// eslint-disable-next-line camelcase
+	footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
 	faqLink: '/info/faq',
 	courseGuideLink: {
 		en: 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf',
@@ -39,14 +41,22 @@ check(
 		emailLogo: String,
 		regionSelection: { minNumber: Number, aboutLink: Match.Maybe(LocalisedValue) },
 		i18nHelpLink: Match.Maybe(LocalisedValue),
-		publicTenants: StringArray,
+		publicTenants: [String],
 		pricePolicyEnabled: Boolean,
+		footerLinks: [
+			{
+				link: String,
+				key: Match.Maybe(String),
+				title_key: Match.Maybe(String),
+				text: Match.Maybe(LocalisedValue),
+			},
+		],
 		faqLink: LocalisedValue,
 		courseGuideLink: LocalisedValue,
 		aboutLink: LocalisedValue,
 		contribution: Match.Maybe({
 			icon: String,
-			forbiddenChars: StringArray,
+			forbiddenChars: [String],
 			link: LocalisedValue,
 		}),
 		s3: {

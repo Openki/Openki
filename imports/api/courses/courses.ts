@@ -126,7 +126,7 @@ export class Course {
 export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseModel> {
 	constructor() {
 		super('Courses', {
-			transform(course: CourseEntity) {
+			transform(course) {
 				return _.extend(new Course(), course);
 			},
 		});

@@ -63,10 +63,13 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 		}
 	}
 
-	read(list: { [name in keyof T]: string }) {
+	read(list: Partial<{ [name in keyof T]: string }>) {
 		Object.keys(list).forEach((name) => {
 			try {
-				this.add(name, list[name]);
+				const value = list[name];
+				if (typeof value !== 'undefined') {
+					this.add(name, value);
+				}
 			} catch (e) {
 				if (!(e instanceof FilteringReadError)) {
 					throw e;
