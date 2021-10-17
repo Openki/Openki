@@ -2,7 +2,7 @@
 
 .frame-week-date-events {
 	@include clearfix;
-	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
+	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
 	padding: 10px 0;
 	width: auto;
 }

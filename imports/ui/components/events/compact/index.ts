@@ -1,26 +1,33 @@
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment';
+
+import { EventModel } from '/imports/api/events/events';
 
 import '/imports/ui/components/groups/list/group-list';
 import '/imports/ui/components/venues/link/venue-link';
 
-import './event-compact.html';
+import './template.html';
+import './styles.scss';
 
-Template.eventCompact.onCreated(function () {
-	this.withDate = this.parentInstance().data.withDate;
+const Template = TemplateAny as TemplateStaticTyped<'eventCompact', unknown, { withDate: boolean }>;
+
+const template = Template.eventCompact;
+
+template.onCreated(function () {
+	this.withDate = this.parentInstance()?.data.withDate || false;
 });
 
-Template.eventCompact.helpers({
-	eventCompactClasses() {
-		const eventCompactClasses = [];
+template.helpers({
+	eventCompactClasses(this: EventModel) {
+		const classes = [];
 		if (Template.instance().withDate) {
-			eventCompactClasses.push('has-date');
+			classes.push('has-date');
 		}
 		if (moment().isAfter(this.end)) {
-			eventCompactClasses.push('is-past');
+			classes.push('is-past');
 		}
 
-		return eventCompactClasses.join(' ');
+		return classes.join(' ');
 	},
 
 	withDate() {
@@ -28,8 +35,8 @@ Template.eventCompact.helpers({
 	},
 });
 
-Template.eventCompact.events({
-	'mouseover .js-venue-link, mouseout .js-venue-link'(e, instance) {
+template.events({
+	'mouseover .js-venue-link, mouseout .js-venue-link'(_event, instance) {
 		instance.$('.event-compact').toggleClass('elevate-child');
 	},
 });

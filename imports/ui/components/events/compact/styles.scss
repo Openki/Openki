@@ -1,49 +1,50 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 // *** Event compact ***
 //======================
 
 // ** Wrap
 //========================================================================================
 .event-compact-wrap {
-	@include td-make-xs-column(12);
+	@include make-col-ready();
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 2);
 }
 
 .frame-events-fluid .event-compact-wrap {
-	@media (min-width: $screen-xxs) and (max-width: $screen-xsm) {
-		@include td-make-xs-column(6);
-		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+	@include make-col(6);
+	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+
+	@include media-breakpoint-up(sm) {
+		@include make-col(4);
 	}
 
-	@media (min-width: $screen-xsm) {
-		@include td-make-xs-column(4);
-		@include td-make-sm-column(3);
-		@include td-make-lg-column(2);
-		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+	@include media-breakpoint-up(md) {
+		@include make-col(3);
+	}
+
+	@include media-breakpoint-up(xl) {
+		@include make-col(2);
 	}
 }
 
 .container .event-compact-wrap {
-	@media (min-width: $screen-xs) and (max-width: $screen-sm) {
-		@include td-make-xs-column(6);
-		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
-	}
+	@include make-col(6);
+	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 
-	@media (min-width: $screen-sm) {
-		@include td-make-xs-column(4);
-		@include td-make-md-column(3);
-		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+	@include media-breakpoint-up(md) {
+		@include make-col(4);
+	}
+	@include media-breakpoint-up(lg) {
+		@include make-col(3);
 	}
 }
 
 .container.mw-md .event-compact-wrap {
-	@media (min-width: $screen-xs) and (max-width: $screen-sm) {
-		@include td-make-xs-column(6);
-		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
-	}
+	@include make-col(6);
+	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 
-	@media (min-width: $screen-sm) {
-		@include td-make-xs-column(4);
-		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+	@include media-breakpoint-up(md) {
+		@include make-col(4);
 	}
 }
 
@@ -80,7 +81,7 @@
 	@include ellipsis;
 	background: $event-header-bg;
 	border-bottom: $event-compact-seperator-height solid $body-bg;
-	color: $gray-dark;
+	color: $gray-800;
 	padding: 5px;
 }
 
@@ -102,15 +103,15 @@
 // ** Title
 //========================================================================================
 .event-compact-title {
-	color: $gray-dark;
+	color: $gray-800;
 	display: inline;
 }
 
 .event-compact-title::after {
-	// Simulate margin: 0 0 5px;
+	// Simulate margin: 0 0 0.25rem;
 	content: '';
 	display: inline-block;
-	height: $font-size-h4 + 5px;
+	height: $h4-font-size + 0.25rem;
 	vertical-align: top;
 }
 
