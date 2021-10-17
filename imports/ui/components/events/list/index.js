@@ -1,3 +1,3 @@
-import '/imports/ui/components/events/compact/event-compact';
+import '/imports/ui/components/events/compact';
 
 import './template.html';
