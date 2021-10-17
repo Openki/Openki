@@ -301,7 +301,7 @@ Router.route('frameSchedule', {
 Router.route('frameWeek', {
 	path: '/frame/week',
 	template: 'frameWeekPage',
-	layoutTemplate: 'frameWeek',
+	layoutTemplate: 'frameLayout',
 	async action() {
 		await import('/imports/ui/pages/frames/week');
 		this.render();

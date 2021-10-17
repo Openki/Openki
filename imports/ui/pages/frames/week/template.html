@@ -1,13 +1,13 @@
 <template name="frameWeekPage">
 	<div class="frame-events-fluid">
-		{{#each weekdays}}
+		{{#each weekday in weekdays}}
 			<div class="calendar-date">
-				{{calendarDayFormat date}}
+				{{calendarDayFormat weekday.date}}
 			</div>
 			<div class="frame-week-date-events">
 				{{#if Template.subscriptionsReady}}
-					{{#if hasDayEvents}}
-						{{> eventList dataEvents=dayEvents withDate=false}}
+					{{#if hasDayEvents weekday}}
+						{{> eventList dataEvents=weekday.dayEvents withDate=false}}
 					{{else}}
 						<div class="text-center">
 							{{i18n 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
