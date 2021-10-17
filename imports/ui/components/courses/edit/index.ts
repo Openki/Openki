@@ -368,7 +368,7 @@ export type Data = {
 			const changes = {
 				internal,
 				name: StringTools.saneTitle(instance.$('.js-title').val() as string),
-				categories: instance.state.get('selectedCategories'),
+				categories: instance.state.get('selectedCategories') || [],
 			} as Required<CoursesMethods.SaveFields>;
 
 			if (changes.name.length === 0) {
