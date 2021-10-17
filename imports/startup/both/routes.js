@@ -300,7 +300,12 @@ Router.route('frameSchedule', {
 
 Router.route('frameWeek', {
 	path: '/frame/week',
+	template: 'frameWeekPage',
 	layoutTemplate: 'frameWeek',
+	async action() {
+		await import('/imports/ui/pages/frames/week');
+		this.render();
+	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
 	},
