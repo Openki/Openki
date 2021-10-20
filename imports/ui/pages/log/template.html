@@ -1,4 +1,4 @@
-<template name="showLog">
+<template name="logPage">
 	{{#unless privileged}}
 		<h1>PLZ login as admin!</h1>
 	{{else}}
@@ -38,7 +38,7 @@
 					<th>Body</th>
 				</tr>
 				{{#each results}}
-					{{> showLogEntry}}
+					{{> logEntry}}
 				{{else}}
 					{{#unless loading}}
 						<tr>
@@ -59,7 +59,7 @@
 	{{/unless}}
 </template>
 
-<template name="showLogEntry">
+<template name="logEntry">
 	<tr>
 		{{#if interval}}
 			<td></td>

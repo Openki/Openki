@@ -13,7 +13,7 @@ import * as UrlTools from '/imports/utils/url-tools';
 
 import './log.html';
 
-Template.showLog.onCreated(function () {
+Template.logPage.onCreated(function () {
 	const instance = this;
 	const batchLoad = 100;
 	instance.updateUrl = () => {
@@ -60,7 +60,7 @@ Template.showLog.onCreated(function () {
 	});
 });
 
-Template.showLog.helpers({
+Template.logPage.helpers({
 	privileged() {
 		return UserPrivilegeUtils.privilegedTo('admin');
 	},
@@ -119,7 +119,7 @@ Template.showLog.helpers({
 	},
 });
 
-Template.showLog.events({
+Template.logPage.events({
 	// Update the URI when the search-field was changed an loses focus
 	'change .js-update-url'(_event, instance) {
 		instance.updateUrl();
@@ -193,8 +193,8 @@ Template.showLog.events({
 	},
 });
 
-TemplateMixins.MultiExpandible(Template, 'showLogEntry');
-Template.showLogEntry.helpers({
+TemplateMixins.MultiExpandible(Template, 'logEntry');
+Template.logEntry.helpers({
 	date() {
 		const { date } = Template.instance().filter.toParams();
 		return date?.toISOString() || '';

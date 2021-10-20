@@ -420,9 +420,13 @@ Router.route('kioskEvents', {
 
 Router.route('log', {
 	path: '/log',
-	template: 'showLog',
+	template: 'logPage',
 	data() {
 		return this.params.query;
+	},
+	async action() {
+		await import('/imports/ui/pages/log');
+		this.render();
 	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('log.list.windowtitle', 'Log'));
