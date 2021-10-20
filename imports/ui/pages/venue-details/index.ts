@@ -1,12 +1,14 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Mongo } from 'meteor/mongo';
 
-import { Events } from '/imports/api/events/events';
-import { Regions } from '/imports/api/regions/regions';
+import { Events, EventModel } from '/imports/api/events/events';
+import { Geodata, RegionModel, Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
+import { VenueModel } from '/imports/api/venues/venues';
 import * as VenuesMethods from '/imports/api/venues/methods';
 
 import { reactiveNow } from '/imports/utils/reactive-now';
@@ -18,9 +20,31 @@ import '/imports/ui/components/map/map';
 import '/imports/ui/components/profile-link/profile-link';
 import '/imports/ui/components/venues/edit/venue-edit';
 
-import './venue-details.html';
+import './template.html';
+import './styles.scss';
 
-Template.venueDetails.onCreated(function () {
+type MarkerEntity = { loc: Geodata; main: boolean } | { loc: Geodata; center: boolean };
+
+const Template = TemplateAny as TemplateStaticTyped<
+	'venueDetailsPage',
+	{ venue: VenueModel },
+	{
+		editing: ReactiveVar<boolean>;
+		verifyDeleteVenue: ReactiveVar<boolean>;
+		eventLoadingBlockSize: number;
+		upcomingEventLimit: ReactiveVar<number>;
+		pastEventLimit: ReactiveVar<number>;
+		markers: Mongo.Collection<MarkerEntity>;
+		setLocation: (loc?: Geodata) => void;
+		setRegion: (region: RegionModel | undefined) => void;
+		getUpcomingEvents: (limit: number) => EventModel[];
+		getPastEvents: (limit: number) => EventModel[];
+	}
+>;
+
+const template = Template.venueDetailsPage;
+
+template.onCreated(function () {
 	const instance = this;
 	instance.busy();
 
@@ -32,23 +56,22 @@ Template.venueDetails.onCreated(function () {
 	this.upcomingEventLimit = new ReactiveVar(12);
 	this.pastEventLimit = new ReactiveVar(3);
 
-	const markers = new Meteor.Collection(null); // Local collection for in-memory storage
-	this.markers = markers;
+	this.markers = new Mongo.Collection(null); // Local collection for in-memory storage
 
-	this.setLocation = function (loc) {
-		markers.remove({ main: true });
+	this.setLocation = (loc) => {
+		this.markers.remove({ main: true });
 		if (loc) {
-			markers.insert({
+			this.markers.insert({
 				loc,
 				main: true,
 			});
 		}
 	};
 
-	this.setRegion = function (region) {
-		markers.remove({ center: true });
+	this.setRegion = (region) => {
+		this.markers.remove({ center: true });
 		if (region?.loc) {
-			markers.insert({
+			this.markers.insert({
 				loc: region.loc,
 				center: true,
 			});
@@ -70,9 +93,6 @@ Template.venueDetails.onCreated(function () {
 		}
 	});
 
-	/**
-	 * @param {number} limit
-	 */
 	this.getUpcomingEvents = (limit) => {
 		if (isNew) {
 			return [];
@@ -102,9 +122,6 @@ Template.venueDetails.onCreated(function () {
 		}
 	});
 
-	/**
-	 * @param {number} limit
-	 */
 	this.getPastEvents = (limit) => {
 		if (isNew) {
 			return [];
@@ -120,7 +137,7 @@ Template.venueDetails.onCreated(function () {
 	};
 });
 
-Template.venueDetails.onRendered(function () {
+template.onRendered(function () {
 	const instance = this;
 
 	instance.busy(false);
@@ -130,12 +147,12 @@ Template.venueDetails.onRendered(function () {
 
 		instance.setLocation(data.venue.loc);
 
-		const region = Regions.findOne(data.venue.region);
+		const region = Regions.findOne(data.venue.region || undefined);
 		instance.setRegion(region);
 	});
 });
 
-Template.venueDetails.helpers({
+template.helpers({
 	editing() {
 		return Template.instance().editing.get();
 	},
@@ -148,10 +165,7 @@ Template.venueDetails.helpers({
 		return Template.instance().markers;
 	},
 
-	/**
-	 * @param {{ coordinates: [number, number]; }} loc
-	 */
-	locationDisplay(loc) {
+	locationDisplay(loc: { coordinates: [number, number] }) {
 		return locationFormat(loc);
 	},
 
@@ -190,8 +204,8 @@ Template.venueDetails.helpers({
 	},
 });
 
-Template.venueDetails.events({
-	'click .js-venue-edit'(event, instance) {
+template.events({
+	'click .js-venue-edit'(_event, instance) {
 		instance.editing.set(true);
 		instance.verifyDeleteVenue.set(false);
 	},
@@ -204,7 +218,7 @@ Template.venueDetails.events({
 		Template.instance().verifyDeleteVenue.set(false);
 	},
 
-	async 'click .js-venue-delete-confirm'(event, instance) {
+	async 'click .js-venue-delete-confirm'(_event, instance) {
 		const { venue } = instance.data;
 		instance.busy('deleting');
 		try {
@@ -219,12 +233,12 @@ Template.venueDetails.events({
 		}
 	},
 
-	'click .js-show-more-upcoming-events'(e, instance) {
+	'click .js-show-more-upcoming-events'(_event, instance) {
 		const limit = instance.upcomingEventLimit;
 		limit.set(limit.get() + instance.eventLoadingBlockSize);
 	},
 
-	'click .js-show-more-past-events'(e, instance) {
+	'click .js-show-more-past-events'(_event, instance) {
 		const limit = instance.pastEventLimit;
 		limit.set(limit.get() + instance.eventLoadingBlockSize);
 	},

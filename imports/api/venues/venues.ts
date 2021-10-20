@@ -3,60 +3,60 @@ import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
-import { Events } from '/imports/api/events/events';
+import { EventEntity, Events } from '/imports/api/events/events';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
+import { Geodata } from '../regions/regions';
+import { UserModel } from '../users/users';
 
-/** @typedef {import('../users/users').UserModel} UserModel */
+/** DB-Model */
+export interface VenueEntity {
+	/** ID */
+	_id: string;
+	/** user ID */
+	editor: string;
+	name: string;
+	slug: string;
+	/** HTML */
+	description: string;
+	/** ID */
+	region?: string;
+	loc?: Geodata;
+	address: string;
+	route: string;
+	/** ID */
+	short: string;
+	/** Int */
+	maxPeople: number;
+	/** Int */
+	maxWorkplaces: number;
+	/** For keys see: Venues.facilityOptions */
+	facilities: {
+		[key: string]: string;
+	};
+	otherFacilities?: string;
+	/** URL */
+	website?: string;
+	createdby: string;
+	created: Date;
+	updated: Date;
+}
 
-// ======== DB-Model: ========
-/**
- * @typedef  {Object} VenueEntity
- * @property {string} _id             ID
- * @property {string} editor          user ID
- * @property {string} name
- * @property {string} slug
- * @property {string} description     HTML
- * @property {string|null} region     ID
- * @property {{ type: 'Point', coordinates: [number, number] }} [loc] GeoJSON coordinates
- * (Longitude, Latitude)
- * @property {string} address
- * @property {string} route
- *
- * Additional information
- * @property {string} short           ID
- * @property {number} maxPeople       Int
- * @property {number} maxWorkplaces   Int
- * @property {{[key: string]: string}} facilities For keys see: Venues.facilityOptions
- * @property {string} [otherFacilities]
- * @property {string} [website]         URL
- *
- * @property {string} createdby
- * @property {Date}   created
- * @property {Date}   updated
- */
-
-/**
- * @typedef {Venue & VenueEntity} VenueModel
- */
+export type VenueModel = Venue & VenueEntity;
 
 /**
  * Venue objects represent locations where events take place.
  */
 export class Venue {
-	constructor() {
-		this.facilities = {};
-	}
+	public facilities = {};
 
 	/**
 	 * Check whether a user may edit the venue.
-	 * @this {VenueModel}
-	 * @param {UserModel} user
 	 */
-	editableBy(user) {
+	editableBy(this: VenueModel, user: UserModel) {
 		if (!user) {
 			return false;
 		}
@@ -69,10 +69,19 @@ export class Venue {
 	}
 }
 
-/**
- * @extends {Mongo.Collection<VenueEntity, VenueModel>}
- */
-export class VenueCollection extends Mongo.Collection {
+export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
+	facilityOptions = [
+		'projector',
+		'screen',
+		'audio',
+		'blackboard',
+		'whiteboard',
+		'flipchart',
+		'wifi',
+		'kitchen',
+		'wheelchairs',
+	];
+
 	constructor() {
 		super('Venues', {
 			transform(venue) {
@@ -84,18 +93,6 @@ export class VenueCollection extends Mongo.Collection {
 			this.createIndex({ region: 1 });
 			this.createIndex({ loc: '2dsphere' });
 		}
-
-		this.facilityOptions = [
-			'projector',
-			'screen',
-			'audio',
-			'blackboard',
-			'whiteboard',
-			'flipchart',
-			'wifi',
-			'kitchen',
-			'wheelchairs',
-		];
 	}
 
 	// eslint-disable-next-line class-methods-use-this
@@ -105,25 +102,31 @@ export class VenueCollection extends Mongo.Collection {
 
 	/**
 	 * Find venues for given filters
-	 * @param {object} [filter] dictionary with filter options
-	 * @param {string} [filter.search] string of words to search for
-	 * @param {string} [filter.region] restrict to venues in that region
-	 * @param {string} [filter.editor]
-	 * @param {boolean} [filter.recent]
-	 * @param {number} [limit] how many to find
-	 * @param {number} [skip] skip this many before returning results
-	 * @param {[string, 'asc' | 'desc'][]} [sort] list of fields to sort by
+	 * @param filter dictionary with filter options
+	 * @param limit how many to find
+	 * @param skip skip this many before returning results
+	 * @param sort list of fields to sort by
 	 */
-	findFilter(filter = {}, limit = 0, skip = 0, sort) {
+	findFilter(
+		filter: {
+			/** string of words to search for */
+			search?: string;
+			/** restrict to venues in that region */
+			region?: string;
+			editor?: string;
+			recent?: boolean;
+		} = {},
+		limit = 0,
+		skip = 0,
+		sort?: [string, 'asc' | 'desc'][],
+	) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
 		check(sort, Match.Maybe([[String]]));
 
-		/** @type {Mongo.Selector<VenueEntity> } */
-		const find = {};
+		const find: Mongo.Selector<VenueEntity> = {};
 
-		/** @type {Mongo.Options<VenueEntity>} */
-		const options = { sort };
+		const options: Mongo.Options<VenueEntity> = { sort };
 
 		if (limit > 0) {
 			options.limit = limit;
@@ -149,7 +152,7 @@ export class VenueCollection extends Mongo.Collection {
 		}
 
 		if (filter.recent) {
-			const findRecent = {
+			const findRecent: Mongo.Selector<EventEntity> = {
 				'venue._id': { $exists: true },
 			};
 			if (filter.region) {
@@ -172,7 +175,7 @@ export class VenueCollection extends Mongo.Collection {
 			] // make unique with Set
 				.slice(0, limit || 10); // and limit it
 
-			find._id = { $in: recentLocations };
+			find._id = { $in: recentLocations as string[] };
 		}
 
 		return this.find(find, options);

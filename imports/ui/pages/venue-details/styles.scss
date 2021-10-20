@@ -9,7 +9,7 @@
 }
 
 .venue .description {
-	color: $gray-dark;
+	color: $gray-800;
 	font-size: small;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .venue-delete-confirmation {
-	$background-color: lighten($brand-danger, 20%);
+	$background-color: lighten($danger, 20%);
 
 	background-color: $background-color;
 	border: 1px solid darken($background-color, 20%);
