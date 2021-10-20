@@ -1033,13 +1033,13 @@ Router.route('regionDetails', {
 
 Router.route('venueDetails', {
 	path: 'venue/:_id/:slug?',
+	template: 'venueDetailsPage',
 	/**
 	 * @this {{params: {_id: string; slug?:string;}}}
 	 */
 	waitOn() {
 		return [Meteor.subscribe('venueDetails', this.params._id)];
 	},
-
 	data() {
 		const id = this.params._id;
 
@@ -1062,7 +1062,10 @@ Router.route('venueDetails', {
 
 		return data;
 	},
-
+	async action() {
+		await import('/imports/ui/pages/venue-details');
+		this.render();
+	},
 	onAfterAction() {
 		const data = this.data();
 		if (!data) {
