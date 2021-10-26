@@ -36,7 +36,7 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	}
 
 	const participant = Users.findOne(participantId);
-	if (!course) {
+	if (!participant) {
 		throw new Meteor.Error(`No user entry for ${participantId}`);
 	}
 
