@@ -1,7 +1,9 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .filter {
 	margin-top: 20px;
 
-	@media (min-width: $screen-sm-min) {
+	@include media-breakpoint-up(md) {
 		&:not(.open) {
 			margin-top: 0;
 		}
@@ -9,7 +11,7 @@
 }
 
 .filter-heading {
-	color: $brand-primary;
+	color: $primary;
 	display: none;
 	margin: 0 0 15px;
 }
@@ -39,25 +41,18 @@
 }
 
 .filter-remove-btn-text {
-	display: none;
-
-	@media (min-width: $screen-xxs) {
-		display: inline;
-	}
+	display: inline;
 }
 
-.filter-components {
-	@include make-row;
-}
 
 .filter-component ~ .filter-component {
-	@media (max-width: $screen-sm-max) {
+	@include media-breakpoint-down(md) {
 		margin-top: 15px;
 	}
 }
 
 .filter-component-header {
-	color: $brand-primary;
+	color: $primary;
 	display: none;
 	margin: 0 0 10px;
 }
@@ -72,7 +67,7 @@
 
 .filter-component .active {
 	.fa-check {
-		color: darken($brand-success, 20%);
+		color: darken($success, 20%);
 		display: inline-block;
 	}
 
@@ -81,39 +76,11 @@
 	}
 }
 
-.filter-course-states {
-	@include make-xs-column(12);
-}
 
-$filter-course-states-sm-column: 6;
 
-.filter-expanded .filter-course-states {
-	@include td-make-md-column($filter-course-states-sm-column);
-}
 
-$filter-course-state-captions-gutter: 10px;
 
-.filter-course-state-captions {
-	@include make-row($filter-course-state-captions-gutter);
-}
 
-.filter-course-state-captions + .filter-course-state-captions {
-	margin-top: 5px;
-}
-
-.filter-captions-column {
-	@include td-make-xs-column(4, $filter-course-state-captions-gutter);
-
-	@media (max-width: $screen-xxs) {
-		@include make-xs-column(12, $filter-course-state-captions-gutter);
-	}
-}
-
-.filter-captions-column + .filter-captions-column {
-	@media (max-width: $screen-xxs) {
-		margin-top: 10px;
-	}
-}
 
 .filter-caption-wrap {
 	height: 50px;
@@ -155,20 +122,14 @@ $filter-course-state-captions-gutter: 10px;
 		transition-property: #{'box-shadow opacity'};
 	}
 
-	@media (min-width: $screen-xs-min) {
-		font-size: large;
-	}
+	font-size: large;
+	
 }
 
 .filter-caption-text {
 	@include ellipsis;
 	display: block;
 	line-height: 40px;
-}
-
-.filter-course-roles {
-	@include td-make-sm-column(6);
-	@include td-make-md-column((12 - $filter-course-states-sm-column) / 2);
 }
 
 .filter-course-role {
@@ -180,7 +141,7 @@ $filter-course-state-captions-gutter: 10px;
 	padding: 0;
 
 	&:hover {
-		color: $brand-primary;
+		color: $primary;
 	}
 
 	&:focus {
@@ -212,28 +173,13 @@ $filter-course-state-captions-gutter: 10px;
 	display: inline;
 }
 
-.filter-course-categories {
-	@include td-make-sm-column(6);
-	@include td-make-md-column((12 - $filter-course-states-sm-column) / 2);
-}
 
 .filter-categories-select {
 	margin-bottom: 10px;
 	padding: 0;
 }
 
-.js-search-categories {
-	border: 1px dashed $category-bg;
-	box-shadow: none;
 
-	&:hover {
-		cursor: pointer;
-	}
-
-	&:focus {
-		border-style: solid;
-	}
-}
 
 .filter-no-categories-found {
 	padding: 5px 10px;
@@ -279,23 +225,13 @@ $filter-course-state-captions-gutter: 10px;
 	margin: 0;
 	padding: 0;
 
-	@media (max-width: $screen-xs) {
-		border: 1px solid $green;
-		border-radius: 4px;
-		margin-bottom: 10px;
-		padding: 5px;
-	}
 }
 
 .filter-selected-categories > li {
 	@include td-padding-all(0, 3px, 3px, 0);
 	margin-bottom: 3px;
 
-	@media (max-width: $screen-xs) {
-		display: inline-block;
-		margin: 5px 0;
-		padding-bottom: 0;
-	}
+	
 }
 
 .category-label + .remove-btn {

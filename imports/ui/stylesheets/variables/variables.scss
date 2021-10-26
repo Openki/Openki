@@ -51,6 +51,10 @@ $course-details-seperator-height:                3px;
 
 $course-member-comment-border-color:             shade-color($blue-lighter, 40%);
 
+// ** Category
+//========================================================================================
+$category-bg:                                    rgba($gray-400, .5);
+
 // ** Group
 //========================================================================================
 $group-bg:                                       $green-alternative;
@@ -65,6 +69,11 @@ $region-color:                                    $red-darkest;
 //========================================================================================
 $venue-bg:                                       desaturate($green, 40%);
 $venue-color:                                    $red-darkest;
+
+// ** Roles
+//========================================================================================
+$role-needed-bg:                                 $gray-200;
+$role-needed-color:                              darken($role-needed-bg, 38%);
 
 // ** Tenant
 //========================================================================================

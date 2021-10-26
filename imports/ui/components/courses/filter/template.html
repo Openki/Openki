@@ -16,14 +16,14 @@
 				</div>
 			</h4>
 		{{/if}}
-		<div class="filter-components">
-			<div class="filter-component filter-course-states">
+		<div class="row">
+			<div class="col filter-component">
 				<h4 class="filter-component-header">
 					{{i18n 'find.filter.courseStates' 'Course states'}}
 				</h4>
-				<div class="filter-course-state-captions">
+				<div class="row gx-3">
 					{{#each stateFilter in stateFilters}}
-						<div class="filter-captions-column">
+						<div class="col filter-captions-column">
 							<div class="filter-caption-wrap">
 								<div class="filter-caption js-filter-caption {{stateFilterClasses stateFilter}}"
 									 data-filter-name="{{stateFilter.name}}"
@@ -38,8 +38,8 @@
 					{{/each}}
 				</div>
 				{{#if showingFilters}}
-					<div class="filter-course-state-captions">
-						<div class="filter-captions-column float-end">
+					<div class="mt-2 row gx-3">
+						<div class="col-sm-4 offset-sm-8 filter-captions-column">
 							<div class="filter-caption-wrap">
 								<div class="filter-caption js-filter-caption-archived {{archivedFilterClasses}}"
 									 title="{{i18n 'filterCaptions.archived.title' 'Show only courses that are archived'}}">
@@ -69,7 +69,7 @@
 </template>
 
 <template name="additionalFilters">
-	<div aria-label="filter-course-roles" class="filter-component filter-course-roles" role="group">
+	<div aria-label="filter-course-roles" class="col-md-3 filter-component" role="group">
 		<h4 class="filter-component-header">
 			{{i18n 'find.filter.courseRoles' 'Course roles'}}
 		</h4>
@@ -84,7 +84,7 @@
 			</button>
 		{{/each}}
 	</div>
-	<div class="filter-component filter-course-categories">
+	<div class="col-md-3 filter-component">
 		<h4 class="filter-component-header">
 			{{i18n 'find.filter.categories' 'Categories'}}
 		</h4>
