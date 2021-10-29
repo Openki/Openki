@@ -109,7 +109,7 @@
 	"course.compact.interestedCount": "{NUM, plural, =0{Keiner ist} one{Eine Person ist} other{# Personen sind} } interessiert",
 	"course.compact.interestedCountOwn": "und du bist einer von ihnen",
 	"course.compact.youAreInterested": "Du bist interessiert",
-	"course.createEventInfo": "Verwenden Sie dieses Formular, wenn Sie eine <strong>einmalige</strong>, bereits organisierte Veranstaltung veröffentlichen möchten. Ansonsten können Sie hier einen Kurs erstellen oder vorschlagen:",
+	"course.createEventInfo": "Verwenden Sie dieses Formular, wenn Sie eine einmalige, bereits organisierte Veranstaltung veröffentlichen möchten. Ansonsten können Sie hier einen Kurs erstellen oder vorschlagen:",
 	"course.delete.confirm.archiveButton": "Lieber archivieren",
 	"course.delete.confirm.button": "Lösche diesen Kurs und seine Veranstaltungen",
 	"course.delete.confirm.button.busy": "Kurs wird gelöscht...",
