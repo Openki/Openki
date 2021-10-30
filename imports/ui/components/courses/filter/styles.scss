@@ -44,7 +44,6 @@
 	display: inline;
 }
 
-
 .filter-component ~ .filter-component {
 	@include media-breakpoint-down(md) {
 		margin-top: 15px;
@@ -76,12 +75,6 @@
 	}
 }
 
-
-
-
-
-
-
 .filter-caption-wrap {
 	height: 50px;
 }
@@ -90,7 +83,7 @@
 	border-color: $course-border-color;
 	border-style: solid;
 	border-width: 5px;
-	font-size: medium;
+	font-size: large;
 	height: 100%;
 	opacity: 0.75;
 	text-align: center;
@@ -121,9 +114,6 @@
 		transition-duration: 0.15s;
 		transition-property: #{'box-shadow opacity'};
 	}
-
-	font-size: large;
-	
 }
 
 .filter-caption-text {
@@ -173,13 +163,10 @@
 	display: inline;
 }
 
-
 .filter-categories-select {
 	margin-bottom: 10px;
 	padding: 0;
 }
-
-
 
 .filter-no-categories-found {
 	padding: 5px 10px;
@@ -224,14 +211,11 @@
 	list-style: none;
 	margin: 0;
 	padding: 0;
-
 }
 
 .filter-selected-categories > li {
 	@include td-padding-all(0, 3px, 3px, 0);
 	margin-bottom: 3px;
-
-	
 }
 
 .category-label + .remove-btn {
