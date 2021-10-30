@@ -27,7 +27,7 @@ import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories/course-categories';
-import '/imports/ui/components/events/edit/event-edit';
+import '/imports/ui/components/events/edit';
 import '/imports/ui/components/events/participants/event-participants';
 import '/imports/ui/components/events/replication/event-replication';
 import '/imports/ui/components/groups/list/group-list';
