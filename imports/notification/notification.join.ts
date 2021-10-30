@@ -104,11 +104,12 @@ export function Model(entry: { body: any }) {
 			const emailLogo = region?.custom?.emailLogo;
 			const siteName = getSiteName(region);
 
+			const courseLink = Router.url('showCourse', course, { query: 'campaign=joinNotify' });
 			return {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
-				course: Spacebars.SafeString(`<strong>${course.name}</strong>`),
+				course: Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`),
 				newParticipant: Spacebars.SafeString(`<strong>${newParticipant.username}</strong>`),
-				courseLink: Router.url('showCourse', course, { query: 'campaign=joinNotify' }),
+				courseLink,
 				subject,
 				memberCount: course.members.length,
 				roleTitle,

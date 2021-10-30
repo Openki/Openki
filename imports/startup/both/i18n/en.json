@@ -580,6 +580,7 @@
   "notification.join.mail.message": "They left this message:",
   "notification.join.mail.profileLink": "Visit your profile",
   "notification.join.mail.recpnote": "You receive this message because you're on the team of this course.",
+  "notification.join.mail.statsOverview": "Overview over participant in this course:",
   "notification.join.mail.subject": "{USER} joined {COURSE}: {ROLE}",
   "notification.join.mail.unsubLink": "Unsubscribe from all automated notifications.",
   "notification.privateMessage.mail.copyintro": "This is a copy of your message that was sent to \"{RECIPIENT}\"",
