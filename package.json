@@ -44,7 +44,7 @@
     "@types/es6-promisify": "6.0.0",
     "@types/jquery": "3.5.6",
     "@types/medium-editor": "5.0.4",
-    "@types/meteor": "1.4.81",
+    "@types/meteor": "1.4.83",
     "@types/meteor-mdg-validation-error": "0.5.0",
     "@types/mime-types": "^2.1.1",
     "@types/mocha": "9.0.0",
@@ -71,7 +71,7 @@
     "stylelint-config-prettier": "8.0.2",
     "stylelint-config-sass-guidelines": "8.0.0",
     "stylelint-prettier": "1.2.0",
-    "typescript": "4.3.5"
+    "typescript": "4.4.0"
   },
   "scripts": {
     "dev": "npm run extract-translations && npm run type-check && meteor --inspect --settings settings/dev.json",
