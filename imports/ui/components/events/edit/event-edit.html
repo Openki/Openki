@@ -28,10 +28,11 @@
 						<label
 							   class="form-label">{{i18n 'course.event.edit.date_start' 'Date'}}</label>
 						<div class="input-group">
-							<span class="input-group-text">
+							<label class="input-group-text" for="eventStartDate">
 								<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-							</span>
-							<input type="text" class="form-control js-event-start-date"
+							</label>
+							<input id="eventStartDate" type="text"
+								   class="form-control js-event-start-date"
 								   value="{{localDate startLocal}}" {{disableForPast}}>
 						</div>
 					</div>
