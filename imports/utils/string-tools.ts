@@ -41,11 +41,9 @@ export function markedName(search: string, name: string) {
 	if (match) {
 		const term = match[0];
 		const parts = name.split(term);
-		marked = parts
-			.map((Blaze as any)._escape)
-			.join(`<strong>${(Blaze as any)._escape(term)}</strong>`);
+		marked = parts.map(Blaze._escape).join(`<strong>${Blaze._escape(term)}</strong>`);
 	} else {
-		marked = (Blaze as any)._escape(name);
+		marked = Blaze._escape(name);
 	}
 	return Spacebars.SafeString(marked);
 }

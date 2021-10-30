@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 import { Spacebars } from 'meteor/spacebars';
+import { Blaze } from 'meteor/blaze';
 import moment from 'moment';
 
 import { Regions } from '/imports/api/regions/regions';
@@ -345,7 +346,7 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 		}
 
 		return Spacebars.SafeString(
-			`<a href="${getLocalisedValue(contribution.link)}" data-tooltip="${(Blaze as any)._escape(
+			`<a href="${getLocalisedValue(contribution.link)}" data-tooltip="${Blaze._escape(
 				i18n(
 					'user.hasContributed',
 					'{USERNAME} supported {SITENAME} with a donation. Click on the {ICON} for more information how to contribute.',

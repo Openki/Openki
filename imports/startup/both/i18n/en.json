@@ -575,7 +575,7 @@
   "notification.event.mail.unsubscribe": "Unsubscribe from course",
   "notification.event.viewEvent": "view event",
   "notification.join.mail.collaborationHint": "If you like them to collaborate feel free to contact them. If you like to give them the rights to edit the course, you can add them to the organisation team of your course by clicking on the bullhorn next to their name.",
-  "notification.join.mail.intro": "\"{USERNAME}\" just joined course \"{COURSE}\" as: {ROLE}.",
+  "notification.join.mail.intro": "{USERNAME} just joined course {COURSE} as: {ROLE}.",
   "notification.join.mail.linktext": "➜ View course",
   "notification.join.mail.message": "They left this message:",
   "notification.join.mail.profileLink": "Visit your profile",

@@ -2,29 +2,25 @@ import { Match, check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
+import { Spacebars } from 'meteor/spacebars';
 
 import { Courses } from '/imports/api/courses/courses';
-import { Regions } from '/imports/api/regions/regions';
-/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
+import { RegionModel, Regions } from '/imports/api/regions/regions';
 import { Log } from '/imports/api/log/log';
-import { Users } from '/imports/api/users/users';
+import { UserModel, Users } from '/imports/api/users/users';
 
 import * as HtmlTools from '/imports/utils/html-tools';
 import * as StringTools from '/imports/utils/string-tools';
 import { getSiteName } from '../utils/getSiteName';
 
-/** @typedef {import('../api/users/users').UserModel} UserModel */
-
-const notificationJoin = {};
-
 /**
  * Record the intent to send join notifications
- * @param {string} courseId ID for the CourseDiscussions collection
- * @param {string} participantId ID of the user that joined
- * @param {string} newRole new role of the participant
- * @param {string} [message] Optional message of the new participant
+ * @param courseId ID for the CourseDiscussions collection
+ * @param participantId ID of the user that joined
+ * @param newRole new role of the participant
+ * @param message Optional message of the new participant
  */
-notificationJoin.record = function (courseId, participantId, newRole, message) {
+export function record(courseId: string, participantId: string, newRole: string, message?: string) {
 	check(courseId, String);
 	check(participantId, String);
 	check(newRole, String);
@@ -40,13 +36,15 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 		throw new Meteor.Error(`No user entry for ${participantId}`);
 	}
 
-	const body = {};
+	const body: Record<string, unknown> = {};
 	body.courseId = course._id;
 	body.participantId = participant._id;
-	body.recipients = course.membersWithRole('team').map((m) => m.user);
 
 	// Don't send to new member, they know
-	body.recipients = body.recipients.filter((r) => r !== participantId);
+	body.recipients = course
+		.membersWithRole('team')
+		.map((m) => m.user)
+		.filter((r) => r !== participantId);
 
 	body.newRole = newRole;
 
@@ -55,18 +53,15 @@ notificationJoin.record = function (courseId, participantId, newRole, message) {
 	body.model = 'Join';
 
 	Log.record('Notification.Send', [course._id, participant._id], body);
-};
+}
 
-notificationJoin.Model = function (entry) {
+export function Model(entry: { body: any }) {
 	const { body } = entry;
 	const course = Courses.findOne(body.courseId);
 	const newParticipant = Users.findOne(body.participantId);
 
 	return {
-		/**
-		 * @param {UserModel} actualRecipient
-		 */
-		accepted(actualRecipient) {
+		accepted(actualRecipient: UserModel) {
 			if (actualRecipient.notifications === false) {
 				throw new Error('User wishes to not receive automated notifications');
 			}
@@ -76,12 +71,7 @@ notificationJoin.Model = function (entry) {
 			}
 		},
 
-		/**
-		 * @param {string} lng
-		 * @param {UserModel} _actualRecipient
-		 * @param {string} unsubToken
-		 */
-		vars(lng, _actualRecipient, unsubToken) {
+		vars(lng: string, _actualRecipient: UserModel, unsubToken: string) {
 			if (!newParticipant) {
 				throw new Error('New participant does not exist (0.o)');
 			}
@@ -107,8 +97,7 @@ notificationJoin.Model = function (entry) {
 					count: course.membersWithRole(role).length,
 				}));
 
-			/** @type {RegionModel | undefined}  */
-			let region;
+			let region: RegionModel | undefined;
 			if (course.region) {
 				region = Regions.findOne(course.region);
 			}
@@ -117,8 +106,8 @@ notificationJoin.Model = function (entry) {
 
 			return {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
-				course,
-				newParticipant,
+				course: Spacebars.SafeString(`<strong>${course.name}</strong>`),
+				newParticipant: Spacebars.SafeString(`<strong>${newParticipant.username}</strong>`),
 				courseLink: Router.url('showCourse', course, { query: 'campaign=joinNotify' }),
 				subject,
 				memberCount: course.members.length,
@@ -135,6 +124,4 @@ notificationJoin.Model = function (entry) {
 		},
 		template: 'notificationJoinEmail',
 	};
-};
-
-export default notificationJoin;
+}

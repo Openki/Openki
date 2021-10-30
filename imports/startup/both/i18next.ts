@@ -4,6 +4,8 @@ import ChainedBackend from 'i18next-chained-backend';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import LocalStorageBackend from 'i18next-localstorage-backend';
 import { Languages } from '/imports/api/languages/languages';
+import { Blaze, Handlebars } from 'meteor/blaze';
+import { Spacebars } from 'meteor/spacebars';
 
 // eslint-disable-next-line no-constant-condition
 if (false) {
@@ -105,10 +107,18 @@ export const i18n: TFunction = (...args: any) => {
 
 	if (Array.isArray(result)) {
 		// in some cases we get a string[] array back but we expect a string
-		return result.join('');
+		return result
+			.map((s) => {
+				if (s instanceof Handlebars.SafeString) {
+					return s;
+				}
+
+				return Blaze._escape(s);
+			})
+			.join('');
 	}
 
-	return result;
+	return Blaze._escape(result);
 };
 
 // register a helper to use it in the templates
@@ -122,11 +132,13 @@ Template.registerHelper(
 		// defaultValue is optional
 		if (typeof defaultValueOrData === 'string') {
 			// function (key, defaultValue, data)
-			return i18n(key, defaultValueOrData, data?.hash);
+			// We can use SafeString because i18n encodes all non-safe strings
+			return Spacebars.SafeString(i18n(key, defaultValueOrData, data?.hash));
 		}
 
 		// function (key, data)
-		return i18n(key, defaultValueOrData.hash);
+		// We can use SafeString because i18n encodes all non-safe strings
+		return Spacebars.SafeString(i18n(key, defaultValueOrData.hash));
 	},
 );
 

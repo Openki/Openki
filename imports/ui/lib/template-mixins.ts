@@ -227,7 +227,7 @@ export function FormfieldErrors<N extends string, D, T extends Record<string, un
 			}
 
 			const text = (instance.errorMapping || mapping)[message.key].text();
-			return Spacebars.SafeString(`<span class="form-text">${(Blaze as any)._escape(text)}</span>`);
+			return Spacebars.SafeString(`<span class="form-text">${Blaze._escape(text)}</span>`);
 		},
 	});
 
