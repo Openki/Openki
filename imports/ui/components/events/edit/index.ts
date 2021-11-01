@@ -9,7 +9,7 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 import { i18n } from '/imports/startup/both/i18next';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -17,7 +17,7 @@ import moment from 'moment';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';
-import { Events } from '/imports/api/events/events';
+import { EventModel, Events, EventVenueEntity } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { Regions } from '/imports/api/regions/regions';
 
@@ -36,9 +36,47 @@ import '/imports/ui/components/events/edit-location/event-edit-location';
 import '/imports/ui/components/price-policy/price-policy';
 import '/imports/ui/components/regions/tag';
 
-import './event-edit.html';
+import './template.html';
+import './styles.scss';
+import { SaveFields } from '/imports/api/events/methods';
 
-Template.eventEdit.onCreated(function () {
+type NewEventModel = {
+	new: boolean;
+	startLocal: string;
+	endLocal: string;
+	title: string;
+	courseId: string;
+	region: string;
+	description: string;
+	internal: boolean;
+};
+
+export type EventEditData =
+	| (EventModel & Partial<NewEventModel>)
+	| (NewEventModel & Partial<EventModel>);
+
+const Template = TemplateAny as TemplateStaticTyped<
+	'eventEdit',
+	EventEditData,
+	{
+		state: ReactiveDict<{
+			updateReplicasInfos: boolean;
+			startDayChanged: boolean;
+			timeChanged: boolean;
+			updateReplicasTime: boolean;
+			updateChangedReplicasTime: boolean;
+		}>;
+		parent: Blaze.TemplateInstance<any>;
+		selectedRegion: ReactiveVar<string>;
+		selectedLocation: ReactiveVar<Partial<EventVenueEntity>>;
+		notifyChecked: ReactiveVar<boolean>;
+		editableDescription: Editable;
+	}
+>;
+
+const template = Template.eventEdit;
+
+template.onCreated(function () {
 	const instance = this;
 	instance.busy(false);
 
@@ -58,13 +96,19 @@ Template.eventEdit.onCreated(function () {
 
 	this.subscribe('affectedReplica', Template.currentData()._id);
 
-	instance.parent = instance.parentInstance();
+	const parent = instance.parentInstance();
+
+	if (!parent) throw new Error('Unexpected undefined: parent');
+
+	instance.parent = parent;
 	instance.selectedRegion = new ReactiveVar(instance.data.region || Session.get('region'));
-	instance.selectedLocation = new ReactiveVar(instance.data.venue || {});
+	instance.selectedLocation = new ReactiveVar(
+		instance.data.venue || ({} as Partial<EventVenueEntity>),
+	);
 
 	// Sending an event notification is only possible when the event is
 	// attached to a course. Otherwise there is nobody to inform.
-	const notifyPreset = courseId && instance.data.new;
+	const notifyPreset = !!(courseId && instance.data.new);
 	instance.notifyChecked = new ReactiveVar(notifyPreset);
 
 	instance.editableDescription = new Editable(
@@ -77,23 +121,22 @@ Template.eventEdit.onCreated(function () {
 
 	instance.autorun(() => {
 		const data = Template.currentData();
-		data.editableDescription = instance.editableDescription;
 		instance.editableDescription.setText(data.description);
 	});
 });
 
-const getEventStartMoment = function (template) {
+function getEventStartMoment(instance: ReturnType<typeof Template['instance']>) {
 	return LocalTime.fromString(
-		template.$('.js-event-start-date').val(),
-		template.$('.js-event-start-time').val(),
+		instance.$('.js-event-start-date').val() as string,
+		instance.$('.js-event-start-time').val() as string,
 	);
-};
+}
 
-const getEventEndMoment = function (template) {
-	const startMoment = getEventStartMoment(template);
+function getEventEndMoment(instance: ReturnType<typeof Template['instance']>) {
+	const startMoment = getEventStartMoment(instance);
 	let endMoment = LocalTime.fromString(
 		startMoment.format('L'),
-		template.$('.js-event-end-time').val(),
+		instance.$('.js-event-end-time').val() as string,
 	);
 
 	// If the end time is earlier than the start time, assume the event
@@ -104,23 +147,23 @@ const getEventEndMoment = function (template) {
 	if (endMoment.diff(startMoment) < 0) {
 		endMoment = LocalTime.fromString(
 			startMoment.add(1, 'day').format('L'),
-			template.$('.js-event-end-time').val(),
+			instance.$('.js-event-end-time').val() as string,
 		);
 	}
 
 	return endMoment;
-};
+}
 
-const getEventDuration = function (template) {
-	const duration = parseInt(template.$('.js-event-duration').val(), 10);
+function getEventDuration(instance: ReturnType<typeof Template['instance']>) {
+	const duration = parseInt(instance.$('.js-event-duration').val() as string, 10);
 	return Math.max(0, duration);
-};
+}
 
 /* Patch the end time and the duration when start, end or duration changes */
-function updateTimes(template, updateEnd) {
-	const start = getEventStartMoment(template);
-	let end = getEventEndMoment(template);
-	let duration = getEventDuration(template);
+function updateTimes(instance: ReturnType<typeof Template['instance']>, updateEnd: boolean) {
+	const start = getEventStartMoment(instance);
+	let end = getEventEndMoment(instance);
+	let duration = getEventDuration(instance);
 	if (!start.isValid() || !end.isValid()) {
 		// If you put into the machine wrong figures, will the right answers come out?
 		return;
@@ -137,21 +180,20 @@ function updateTimes(template, updateEnd) {
 	}
 
 	duration = end.diff(start, 'minutes');
-	template.$('.js-event-start-date').val(start.format('L'));
-	template.$('.js-event-start-time').val(start.format('LT'));
-	template.$('.js-event-end-time').val(end.format('LT'));
-	template.$('.js-event-duration').val(duration.toString());
+	instance.$('.js-event-start-date').val(start.format('L'));
+	instance.$('.js-event-start-time').val(start.format('LT'));
+	instance.$('.js-event-end-time').val(end.format('LT'));
+	instance.$('.js-event-duration').val(duration.toString());
 }
 
 /**
  * validates input for maxParticipants
- * @param {String} maxParticipants - the user-input
- * @return - an integer if the input passed validation.
+ * @param maxParticipants the user-input
+ * @return an integer if the input passed validation.
  */
-const validateMaxParticipants = (maxParticipants) => {
+const validateMaxParticipants = (maxParticipants: string) => {
 	const intVal = parseInt(maxParticipants, 10);
-	/* eslint-disable-next-line eqeqeq */
-	if (intVal != maxParticipants) {
+	if (Number.isNaN(intVal)) {
 		Alert.error(i18n('event.edit.mustBeInteger', 'Number must be integer'));
 		return false;
 	}
@@ -162,7 +204,7 @@ const validateMaxParticipants = (maxParticipants) => {
 	return intVal;
 };
 
-Template.eventEdit.onRendered(function () {
+template.onRendered(function () {
 	const instance = this;
 	updateTimes(instance, false);
 
@@ -194,7 +236,7 @@ Template.eventEdit.onRendered(function () {
 	});
 });
 
-Template.eventEdit.helpers({
+template.helpers({
 	hasParentCourse() {
 		return Boolean(this.courseId);
 	},
@@ -206,12 +248,12 @@ Template.eventEdit.helpers({
 		return true;
 	},
 
-	localDate(date) {
+	localDate(date: string) {
 		return moment.utc(date).format('L');
 	},
 
-	affectedReplicaCount() {
-		return Events.find(AffectedReplicaSelectors(this)).count();
+	affectedReplicaCount(this: EventEditData) {
+		return Events.find(AffectedReplicaSelectors(this as any)).count();
 	},
 
 	disabledIfDayChanged() {
@@ -229,8 +271,8 @@ Template.eventEdit.helpers({
 		return Template.instance().state.get('timeChanged');
 	},
 
-	changedReplicas() {
-		return Events.find(AffectedReplicaSelectors(this))
+	changedReplicas(this: EventEditData) {
+		return Events.find(AffectedReplicaSelectors(this as any))
 			.fetch()
 			.filter((replica) => !replica.sameTime(this));
 	},
@@ -264,19 +306,15 @@ Template.eventEdit.helpers({
 		return selectedRegion && selectedRegion !== 'all';
 	},
 
-	disableForPast() {
-		return this.startUTC && this.startUTC < new Date() ? 'disabled' : '';
+	disableForPast(this: EventEditData) {
+		return this.start && this.start < new Date() ? 'disabled' : '';
 	},
 
 	isInternal() {
 		return this.internal ? 'checked' : null;
 	},
 
-	uploaded() {
-		return Template.instance().uploaded.get();
-	},
-
-	course() {
+	course(this: EventEditData) {
 		const { courseId } = this;
 		if (courseId) {
 			return Courses.findOne({ _id: courseId });
@@ -292,7 +330,7 @@ Template.eventEdit.helpers({
 	},
 });
 
-Template.eventEdit.events({
+template.events({
 	submit(event, instance) {
 		event.preventDefault();
 
@@ -308,37 +346,38 @@ Template.eventEdit.events({
 		}
 		const end = getEventEndMoment(instance);
 
-		const editevent = {
-			title: instance.$('.js-event-title').val(),
-			venue: instance.selectedLocation.get(),
-			room: instance.$('.js-event-room').val(),
-			startLocal: LocalTime.toString(start),
-			endLocal: LocalTime.toString(end),
-			internal: instance.$('.js-check-event-internal').is(':checked'),
-			maxParticipants: validateMaxParticipants(instance.$('.js-event-max-participants').val() || 0),
-		};
-
-		// validation was unsuccessful
-		if (editevent.maxParticipants === false) {
-			return;
-		}
-
-		if (editevent.title.length === 0) {
+		const title = instance.$('.js-event-title').val() as string;
+		if (title.length === 0) {
 			Alert.error(i18n('event.edit.plzProvideTitle', 'Please provide a title'));
 			return;
 		}
 
-		const newDescription = instance.data.editableDescription.getEdited();
-		if (newDescription) {
-			editevent.description = newDescription;
-		}
-
-		if (!editevent.description) {
+		const description = instance.editableDescription.getEdited();
+		if (!description) {
 			Alert.error(i18n('event.edit.plzProvideDescr', 'Please provide a description'));
 			return;
 		}
 
-		let eventId = this._id || '';
+		const maxParticipants = validateMaxParticipants(
+			(instance.$('.js-event-max-participants').val() as string) || '0',
+		);
+		// validation was unsuccessful
+		if (maxParticipants === false) {
+			return;
+		}
+
+		const editevent: SaveFields = {
+			title,
+			description,
+			venue: instance.selectedLocation.get(),
+			room: instance.$('.js-event-room').val() as string,
+			startLocal: LocalTime.toString(start),
+			endLocal: LocalTime.toString(end),
+			internal: instance.$('.js-check-event-internal').is(':checked'),
+			maxParticipants,
+		};
+
+		let eventId = instance.data._id || '';
 		const isNew = eventId === '';
 		if (isNew) {
 			if (start.isBefore(LocalTime.now())) {
@@ -351,10 +390,14 @@ Template.eventEdit.events({
 				return;
 			}
 
-			if (this.courseId) {
-				const course = Courses.findOne(this.courseId);
+			if (instance.data.courseId) {
+				const course = Courses.findOne(instance.data.courseId);
+				if (!course) {
+					throw new Error('Unexpected undefined: course');
+				}
+
 				editevent.region = course.region;
-				editevent.courseId = this.courseId;
+				editevent.courseId = instance.data.courseId;
 			} else {
 				editevent.region = instance.selectedRegion.get();
 				if (!editevent.region || editevent.region === 'all') {
@@ -382,7 +425,7 @@ Template.eventEdit.events({
 		const updateChangedReplicasTime =
 			updateReplicasTime && instance.state.get('updateChangedReplicasTime');
 		const sendNotifications = instance.$('.js-check-notify').is(':checked');
-		const addNotificationMessage = instance.$('.js-event-add-message').val();
+		const addNotificationMessage = instance.$('.js-event-add-message').val() as string;
 
 		instance.busy('saving');
 		SaveAfterLogin(
@@ -391,7 +434,7 @@ Template.eventEdit.events({
 			i18n('registerAction.saveEvent', 'Register and save event'),
 			async () => {
 				try {
-					eventId = await EventsMethods.save({
+					const result = await EventsMethods.save({
 						eventId,
 						updateReplicasInfos,
 						updateReplicasTime,
@@ -400,6 +443,10 @@ Template.eventEdit.events({
 						changes: editevent,
 						comment: addNotificationMessage,
 					});
+					if (!result) {
+						throw new Error('Unexpected undefined: eventId');
+					}
+					eventId = result;
 
 					if (isNew) {
 						Router.go('showEvent', { _id: eventId });
@@ -410,8 +457,15 @@ Template.eventEdit.events({
 						);
 
 						const course = Courses.findOne(editevent.courseId);
+						if (!course) {
+							throw new Error('Unexpected undefined: course');
+						}
+						const user = Meteor.user();
+						if (!user) {
+							throw new Error('Unexpected undefined: user');
+						}
 						let role;
-						if (_.intersection(Meteor.user().badges, course.editors).length > 0) {
+						if (_.intersection(user.badges, course.editors).length > 0) {
 							role = 'team';
 						} else if (UserPrivilegeUtils.privilegedTo('admin')) {
 							role = 'admin';
@@ -423,7 +477,11 @@ Template.eventEdit.events({
 							`Event creations as ${role}`,
 							Regions.findOne(course.region)?.nameEn,
 							Math.round(
-								(new Date() - course.time_created) / 1000 / 60 / 60 / 24 /* Umrechnung in Tage */,
+								(new Date().getTime() - course.time_created.getTime()) /
+									1000 /
+									60 /
+									60 /
+									24 /* Umrechnung in Tage */,
 							),
 						);
 					} else {
@@ -445,7 +503,7 @@ Template.eventEdit.events({
 							),
 						);
 					}
-					instance.parent.editing.set(false);
+					(instance.parent as any).editing.set(false);
 				} catch (err) {
 					Alert.serverError(err, 'Saving the event went wrong');
 				} finally {
@@ -455,11 +513,11 @@ Template.eventEdit.events({
 		);
 	},
 
-	'click .js-event-cancel'(event, instance) {
+	'click .js-event-cancel'(_event, instance) {
 		if (instance.data.new) {
 			window.history.back();
 		}
-		instance.parent.editing.set(false);
+		(instance.parent as any).editing.set(false);
 	},
 
 	'click .js-toggle-duration'() {
@@ -467,19 +525,20 @@ Template.eventEdit.events({
 		$('.js-time-end > *').toggle();
 	},
 
-	'click .js-check-notify'(event, instance) {
+	'click .js-check-notify'(_event, instance) {
 		instance.notifyChecked.set(instance.$('.js-check-notify').is(':checked'));
 	},
 
-	'change .js-event-start-date'(event, instance) {
-		const newDate = instance.$(event.target).val();
+	'change .js-event-start-date'(this: EventEditData, event, instance) {
+		const newDate = instance.$(event.target as any).val();
 		instance.state.set({
 			startDayChanged: !moment(newDate, 'L').isSame(this.startLocal, 'day'),
 		});
 	},
 
 	'change .js-event-duration, change .js-event-start-date, change .js-event-start-time'(
-		event,
+		this: EventEditData,
+		_event,
 		instance,
 	) {
 		updateTimes(instance, true);
@@ -493,7 +552,7 @@ Template.eventEdit.events({
 		});
 	},
 
-	'change .js-event-end-time'(event, instance) {
+	'change .js-event-end-time'(this: EventEditData, _event, instance) {
 		updateTimes(instance, false);
 		const newStart = getEventStartMoment(instance);
 		const newEnd = getEventEndMoment(instance);
@@ -505,19 +564,19 @@ Template.eventEdit.events({
 		});
 	},
 
-	'change .js-select-region'(event, instance) {
-		instance.selectedRegion.set(instance.$('.js-select-region').val());
+	'change .js-select-region'(_event, instance) {
+		instance.selectedRegion.set(instance.$('.js-select-region').val() as string);
 	},
 
 	'change .js-update-replicas-infos'(event, instance) {
-		instance.state.set('updateReplicasInfos', event.target.checked);
+		instance.state.set('updateReplicasInfos', (event.target as HTMLInputElement).checked);
 	},
 
 	'change .js-update-replicas-time'(event, instance) {
-		instance.state.set('updateReplicasTime', event.target.checked);
+		instance.state.set('updateReplicasTime', (event.target as HTMLInputElement).checked);
 	},
 
 	'change .js-update-changed-replicas-time'(event, instance) {
-		instance.state.set('updateChangedReplicasTime', event.target.checked);
+		instance.state.set('updateChangedReplicasTime', (event.target as HTMLInputElement).checked);
 	},
 });

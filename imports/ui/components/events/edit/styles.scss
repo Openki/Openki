@@ -1,19 +1,17 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .event .event-edit-header {
 	margin-top: 0;
 }
 
 .event-edit-header {
-	@media (min-width: $screen-xs) {
-		border-color: $event-header-bg;
-		border-style: solid;
-	}
+	border-color: $event-header-bg;
+	border-style: solid;
 }
 
 .event-edit-body {
-	@media (min-width: $screen-xs) {
-		border-color: $event-body-bg;
-		border-style: solid;
-	}
+	border-color: $event-body-bg;
+	border-style: solid;
 }
 
 .changed-replicas {

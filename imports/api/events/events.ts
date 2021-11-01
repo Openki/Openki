@@ -16,6 +16,20 @@ import * as StringTools from '/imports/utils/string-tools';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
+export interface EventVenueEntity {
+	/**
+	 * Optional reference to a document in the Venues collection. If this is set, the fields
+	 * name, loc, and address are synchronized
+	 */
+	_id?: string;
+	/** Descriptive name for the venue */
+	name?: string;
+	/** Event location in GeoJSON format */
+	loc?: Geodata;
+	/** Address string where the event will take place */
+	address?: string;
+}
+
 /** DB-Model */
 export interface EventEntity {
 	/** ID */
@@ -31,19 +45,7 @@ export interface EventEntity {
 	startLocal: string;
 	/** String of local date when event ends */
 	endLocal: string;
-	venue?: {
-		/**
-		 * Optional reference to a document in the Venues collection. If this is set, the fields
-		 * name, loc, and address are synchronized
-		 */
-		_id?: string;
-		/** Descriptive name for the venue */
-		name?: string;
-		/** Event location in GeoJSON format */
-		loc?: Geodata;
-		/** Address string where the event will take place */
-		address?: string;
-	};
+	venue?: EventVenueEntity;
 	/** (Where inside the building the event will take place) */
 	room: string;
 	/** userId */
@@ -64,6 +66,7 @@ export interface EventEntity {
 	groupOrganizers: string[];
 	/** ID of the replication parent, only cloned events have this */
 	replicaOf?: string;
+	participants?: string[];
 	/** maximum participants of event */
 	maxParticipants: number;
 	/**
@@ -110,7 +113,10 @@ export class OEvent {
 		return _.intersection(user.badges, this.editors).length > 0;
 	}
 
-	sameTime(this: EventModel, event: EventModel) {
+	sameTime(
+		this: { startLocal: string; endLocal: string },
+		event: { startLocal: string; endLocal: string },
+	) {
 		return ['startLocal', 'endLocal'].every((time) => {
 			const timeA = LocalTime.fromString((this as any)[time]);
 			const timeB = LocalTime.fromString((event as any)[time]);

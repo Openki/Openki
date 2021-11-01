@@ -48,7 +48,7 @@
 						</div>
 					</div>
 					<div class="col-md js-time-end">
-						<label style="display:none">
+						<label class="form-label" style="display:none">
 							{{i18n 'course.event.edit.duration' 'Duration (in minutes)'}}
 							<button type="button" class="js-toggle-duration btn-icon"
 									data-tooltip="{{i18n 'course.event.edit.switch_time_end' 'Switch to end time'}}">
@@ -74,8 +74,8 @@
 								<span class="fa fa-hourglass-end fa-fw" aria-hidden="true"></span>
 							</span>
 							<input type="text" class="js-event-end-time form-control" size="5"
-								   value="{{timeFormat endLocal}}
-						       {{disableForPast}}">
+								   value="{{timeFormat endLocal}}"
+						       {{disableForPast}}>
 						</div>
 					</div>
 				</div>
@@ -84,7 +84,7 @@
 				<div class="mb-3">
 					<label
 						   class="form-label">{{i18n 'course.event.edit.desc' 'Description'}}</label>
-					{{> editableTextarea editableDescription}}
+					{{> editableTextarea instance.editableDescription}}
 				</div>
 				{{#unless isPrivate}}
 					{{> pricePolicy dismissable=true wrap='mb-3'}}
