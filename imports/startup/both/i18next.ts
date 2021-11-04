@@ -99,11 +99,21 @@ i18next.on('loaded', function () {
 });
 
 /**
- * A reactive wrapper for i18next.t
+ * A reactive wrapper for i18next.t. Use { escapeText: true } to escape the i18n text. You can use
+ * Spacebars.SafeString(..) for params to allow some HTML.
  */
-export const i18n: TFunction = (...args: any) => {
+export const i18n: TFunction = (...args: any[]) => {
 	reactiveLang.get();
 	const result = (i18next.t as any)(...args);
+
+	let escapeText: boolean;
+	if (args.length === 2) {
+		escapeText = args[1].escapeText || false;
+	} else if (args.length === 3) {
+		escapeText = args[2].escapeText || false;
+	} else {
+		escapeText = false;
+	}
 
 	if (Array.isArray(result)) {
 		// in some cases we get a string[] array back but we expect a string
@@ -113,12 +123,12 @@ export const i18n: TFunction = (...args: any) => {
 					return s;
 				}
 
-				return Blaze._escape(s);
+				return escapeText !== false ? Blaze._escape(s) : s;
 			})
 			.join('');
 	}
 
-	return Blaze._escape(result);
+	return escapeText !== false ? Blaze._escape(result) : result;
 };
 
 // register a helper to use it in the templates
@@ -133,12 +143,14 @@ Template.registerHelper(
 		if (typeof defaultValueOrData === 'string') {
 			// function (key, defaultValue, data)
 			// We can use SafeString because i18n encodes all non-safe strings
-			return Spacebars.SafeString(i18n(key, defaultValueOrData, data?.hash));
+			return Spacebars.SafeString(
+				i18n(key, defaultValueOrData, { ...data?.hash, escapeText: true }),
+			);
 		}
 
 		// function (key, data)
 		// We can use SafeString because i18n encodes all non-safe strings
-		return Spacebars.SafeString(i18n(key, defaultValueOrData.hash));
+		return Spacebars.SafeString(i18n(key, { ...defaultValueOrData.hash, escapeText: true }));
 	},
 );
 
