@@ -69,7 +69,7 @@ export function elementsReady(test) {
  * or when the timeout runs out without the assertion coming through.
 
  */
-export function waitFor(assertion, timeout = 1000) {
+export function waitFor(assertion, timeout = 10000) {
 	return new Promise((resolve, reject) => {
 		const start = new Date().getTime();
 		/** @type {number|false} */
