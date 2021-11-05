@@ -127,7 +127,7 @@ Template.courseDetailsPage.helpers({
 		return !this.course.nextEvent && !this.course.lastEvent;
 	},
 	isArchived() {
-		return this.course.archived;
+		return this.course?.archived;
 	},
 	editableName() {
 		return (Template.instance() as any).editableName;
