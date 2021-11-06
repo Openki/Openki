@@ -16,12 +16,19 @@
 
 .region-selection .dropdown-menu {
 	@media (max-width: $grid-float-breakpoint) {
+		flex-basis: 100%;
 		background: none;
 		border: 0;
 		box-shadow: none;
 		margin-left: 0 !important;
 		margin-right: 0 !important;
 		position: initial;
+	}
+}
+
+.region-selection .is-splash .dropdown-menu {
+	@media (max-width: $grid-float-breakpoint) {
+		background: $white;
 	}
 }
 

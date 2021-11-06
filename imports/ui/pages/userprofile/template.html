@@ -79,36 +79,34 @@
 							</div>
 						</div>
 					{{/if}}
-					{{#unless ownuser}}
-						{{#if showInviteGroups}}
-							<div class="col-md">
-								<h3>
-									<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
-									{{i18n 'userprofile.groups.header' 'Edit groups'}}
-								</h3>
-								<div class="list-group">
-									{{#each inviteGroups}}
-										{{#if groupMember this ../user}}
-											<li class="list-group-item list-group-item-success">
-												<button type="button"
-														class="js-group-expel-btn btn-close float-end"
-														data-tooltip="{{i18n 'profile.group.expel' 'Expel from group {GROUPNAME}' GROUPNAME=this.name}}">
-												</button>
-												{{i18n 'profile.group.member' 'Member of group'}}
-												<span class="group">{{name}}</span>
-											</li>
-										{{else}}
+					{{#if showInviteGroups}}
+						<div class="col-md">
+							<h3>
+								<span class="fa fa-cog fa-fw" aria-hidden="true"></span>
+								{{i18n 'userprofile.groups.header' 'Edit groups'}}
+							</h3>
+							<div class="list-group">
+								{{#each inviteGroups}}
+									{{#if groupMember this ../user}}
+										<li class="list-group-item list-group-item-success">
 											<button type="button"
-													class="js-draft-into-group list-group-item list-group-item-action list-group-item-secondary">
-												{{i18n 'profile.group.draft' 'Draft into group'}}
-												{{name}}
+													class="js-group-expel-btn btn-close float-end"
+													data-tooltip="{{i18n 'profile.group.expel' 'Expel from group {GROUPNAME}' GROUPNAME=this.name}}">
 											</button>
-										{{/if}}
-									{{/each}}
-								</div>
+											{{i18n 'profile.group.member' 'Member of group'}}
+											<span class="group">{{name}}</span>
+										</li>
+									{{else}}
+										<button type="button"
+												class="js-draft-into-group list-group-item list-group-item-action list-group-item-secondary">
+											{{i18n 'profile.group.draft' 'Draft into group'}}
+											{{name}}
+										</button>
+									{{/if}}
+								{{/each}}
 							</div>
-						{{/if}}
-					{{/unless}}
+						</div>
+					{{/if}}
 				</div>
 			</div>
 		{{/if}}

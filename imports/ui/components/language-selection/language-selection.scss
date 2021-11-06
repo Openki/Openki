@@ -1,5 +1,6 @@
 .language-selection .dropdown-menu {
 	@media (max-width: $grid-float-breakpoint) {
+		flex-basis: 100%;
 		background: none;
 		border: 0;
 		box-shadow: none;
