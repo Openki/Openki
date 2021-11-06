@@ -1,5 +1,7 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .regions-splash .modal-header {
-	background-color: $brand-primary;
+	background-color: $primary;
 	color: $white;
 }
 
@@ -8,7 +10,7 @@
 }
 
 .regions-splash-header > .fa {
-	color: $brand-primary;
+	color: $primary;
 }
 
 .regions-splash input {
