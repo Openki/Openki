@@ -124,11 +124,17 @@ notificationComment.Model = function (entry) {
 			let subject;
 			if (commenter) {
 				subjectvars.COMMENTER = StringTools.truncate(commenterName, 20);
-				// prettier-ignore
-				subject = i18n('notification.comment.mail.subject', 'Comment on {COURSE} by {COMMENTER}: {TITLE}', subjectvars);
+				subject = i18n(
+					'notification.comment.mail.subject',
+					'Comment on {COURSE} by {COMMENTER}: {TITLE}',
+					subjectvars,
+				);
 			} else {
-				// prettier-ignore
-				subject = i18n('notification.comment.mail.subject.anon',  'Anonymous comment on {COURSE}: {TITLE}', subjectvars);
+				subject = i18n(
+					'notification.comment.mail.subject.anon',
+					'Anonymous comment on {COURSE}: {TITLE}',
+					subjectvars,
+				);
 			}
 
 			/** @type {RegionModel | undefined}  */

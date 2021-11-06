@@ -13,6 +13,15 @@ import * as HtmlTools from '/imports/utils/html-tools';
 import * as StringTools from '/imports/utils/string-tools';
 import { getSiteName } from '../utils/getSiteName';
 
+interface Body {
+	courseId: string;
+	participantId: string;
+	recipients: string[];
+	newRole: string;
+	message: string | undefined;
+	model: string;
+}
+
 /**
  * Record the intent to send join notifications
  * @param courseId ID for the CourseDiscussions collection
@@ -36,26 +45,27 @@ export function record(courseId: string, participantId: string, newRole: string,
 		throw new Meteor.Error(`No user entry for ${participantId}`);
 	}
 
-	const body: Record<string, unknown> = {};
-	body.courseId = course._id;
-	body.participantId = participant._id;
+	const body: Body = {
+		courseId: course._id,
+		participantId: participant._id,
 
-	// Don't send to new member, they know
-	body.recipients = course
-		.membersWithRole('team')
-		.map((m) => m.user)
-		.filter((r) => r !== participantId);
+		// Don't send to new member, they know
+		recipients: course
+			.membersWithRole('team')
+			.map((m) => m.user)
+			.filter((r) => r !== participantId),
 
-	body.newRole = newRole;
+		newRole,
 
-	body.message = message;
+		message,
 
-	body.model = 'Join';
+		model: 'Join',
+	};
 
 	Log.record('Notification.Send', [course._id, participant._id], body);
 }
 
-export function Model(entry: { body: any }) {
+export function Model(entry: { body: Body }) {
 	const { body } = entry;
 	const course = Courses.findOne(body.courseId);
 	const newParticipant = Users.findOne(body.participantId);
@@ -87,8 +97,11 @@ export function Model(entry: { body: any }) {
 				lng,
 			};
 
-			// prettier-ignore
-			const subject = i18n('notification.join.mail.subject', '{USER} joined {COURSE}: {ROLE}', subjectvars);
+			const subject = i18n(
+				'notification.join.mail.subject',
+				'{USER} joined {COURSE}: {ROLE}',
+				subjectvars,
+			);
 
 			const figures = ['host', 'mentor', 'participant']
 				.filter((role) => course.roles.includes(role))
@@ -113,7 +126,7 @@ export function Model(entry: { body: any }) {
 				subject,
 				memberCount: course.members.length,
 				roleTitle,
-				message: HtmlTools.plainToHtml(body.message),
+				message: body.message ? HtmlTools.plainToHtml(body.message) : undefined,
 				// For Team members when a mentor joins, add a hint for possible collaboration or
 				// invite into team
 				appendCollaborationHint: body.newRole === 'mentor',

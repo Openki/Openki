@@ -3,44 +3,49 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 
-import { Courses } from '/imports/api/courses/courses';
-/** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
+import { CourseModel, Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Log } from '/imports/api/log/log';
-import { Regions } from '/imports/api/regions/regions';
-/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
-import { Users } from '/imports/api/users/users';
-/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
+import { RegionModel, Regions } from '/imports/api/regions/regions';
+import { UserModel, Users } from '/imports/api/users/users';
 
 import LocalTime from '/imports/utils/local-time';
 import { getSiteName } from '../utils/getSiteName';
 
-const notificationEvent = {};
+interface Body {
+	new: boolean;
+	eventId: string;
+	additionalMessage: string | undefined;
+	recipients: string[];
+	courseId: string;
+	model: string;
+}
 
 /**
  * Record the intent to send event notifications
- * @param {string} eventId event id to announce
- * @param {boolean} isNew whether the event is a new one
- * @param {string} [additionalMessage] custom message
+ * @param eventId event id to announce
+ * @param isNew whether the event is a new one
+ * @param additionalMessage custom message
  */
-notificationEvent.record = function (eventId, isNew, additionalMessage) {
+export function record(eventId: string, isNew: boolean, additionalMessage?: string) {
 	check(eventId, String);
 	check(isNew, Boolean);
+	check(additionalMessage, Match.Optional(String));
+
 	const event = Events.findOne(eventId);
 	if (!event) {
-		throw new Meteor.Error(`No event for${eventId}`);
+		throw new Meteor.Error(`No event for ${eventId}`);
 	}
 
 	// What do we do when we receive an event which is not attached to a course?
 	// For now when we don't have a course we just go through the motions but
 	// the recipient list will be empty.
-	/** @type {CourseModel | undefined} */
-	let course;
+	let course: CourseModel | undefined;
 	if (event.courseId) {
 		course = Courses.findOne(event.courseId);
 	}
 
-	const body = {};
+	const body = {} as Body;
 	body.new = isNew;
 	body.eventId = event._id;
 	body.additionalMessage = additionalMessage;
@@ -57,37 +62,33 @@ notificationEvent.record = function (eventId, isNew, additionalMessage) {
 	body.model = 'Event';
 
 	Log.record('Notification.Send', course ? [course._id] : [], body);
-};
+}
 
-notificationEvent.Model = function (entry) {
+export function Model(entry: { body: Body }) {
 	const event = Events.findOne(entry.body.eventId);
 
-	let course = false;
+	let course: CourseModel | undefined;
 	if (event?.courseId) {
 		course = Courses.findOne(event.courseId);
 	}
 
-	/** @type {RegionModel | undefined}  */
-	let region;
+	let region: RegionModel | undefined;
 	if (event?.region) {
 		region = Regions.findOne(event.region);
 	}
 
-	let creator = false;
+	let creator: UserModel | undefined;
 	if (event?.createdBy) {
 		creator = Users.findOne(event.createdBy);
 	}
 
-	let creatorName = false;
+	let creatorName: string | undefined;
 	if (creator) {
 		creatorName = creator.username;
 	}
 
 	return {
-		/**
-		 * @param {UserModel} actualRecipient
-		 */
-		accepted(actualRecipient) {
+		accepted(actualRecipient: UserModel) {
 			if (actualRecipient.notifications === false) {
 				throw new Error('User wishes to not receive automated notifications');
 			}
@@ -97,12 +98,7 @@ notificationEvent.Model = function (entry) {
 			}
 		},
 
-		/**
-		 * @param {string} userLocale
-		 * @param {UserModel} actualRecipient
-		 * @param {string} unsubToken
-		 */
-		vars(userLocale, actualRecipient, unsubToken) {
+		vars(userLocale: string, _actualRecipient: UserModel, unsubToken: string) {
 			if (!event) {
 				throw new Error('Event does not exist (0.o)');
 			}
@@ -125,21 +121,22 @@ notificationEvent.Model = function (entry) {
 			const subjectvars = {
 				TITLE: event.title.substr(0, 30),
 				DATE: startMoment.format('LL'),
+				lng: userLocale,
 			};
 
-			subjectvars.lng = userLocale;
-
 			let subject;
-			if (entry.new) {
-				// prettier-ignore
-				subject = i18n('notification.event.mail.subject.new',  'On {DATE}: {TITLE}', subjectvars);
+			if (entry.body.new) {
+				subject = i18n('notification.event.mail.subject.new', 'On {DATE}: {TITLE}', subjectvars);
 			} else {
-				// prettier-ignore
-				subject = i18n('notification.event.mail.subject.changed',  'Fixed {DATE}: {TITLE}', subjectvars);
+				subject = i18n(
+					'notification.event.mail.subject.changed',
+					'Fixed {DATE}: {TITLE}',
+					subjectvars,
+				);
 			}
 
 			const { venue } = event;
-			let venueLine = false;
+			let venueLine: string | undefined;
 			if (venue) {
 				venueLine = [venue.name, venue.address].filter(Boolean).join(', ');
 			}
@@ -181,6 +178,4 @@ notificationEvent.Model = function (entry) {
 		},
 		template: 'notificationEventEmail',
 	};
-};
-
-export default notificationEvent;
+}
