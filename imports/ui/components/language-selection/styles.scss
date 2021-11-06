@@ -1,5 +1,7 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .language-selection .dropdown-menu {
-	@media (max-width: $grid-float-breakpoint) {
+	@include media-breakpoint-down(lg) {
 		background: none;
 		border: 0;
 		box-shadow: none;

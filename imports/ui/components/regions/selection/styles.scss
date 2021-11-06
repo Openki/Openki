@@ -1,5 +1,7 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .badge-courses {
-	background-color: $brand-primary;
+	background-color: $primary;
 }
 
 .badge-events {
@@ -15,7 +17,7 @@
 }
 
 .region-selection .dropdown-menu {
-	@media (max-width: $grid-float-breakpoint) {
+	@include media-breakpoint-down(lg) {
 		background: none;
 		border: 0;
 		box-shadow: none;
@@ -27,7 +29,7 @@
 }
 
 .region-selection .is-splash .dropdown-menu {
-	@media (max-width: $grid-float-breakpoint) {
+	@include media-breakpoint-down(lg) {
 		background: $white;
 	}
 }

@@ -1,5 +1,5 @@
 /** DB-Model */
-interface LanguageEntity {
+export interface LanguageEntity {
 	/** ISO 639-1 code */
 	lg: string;
 	/** Full name */
