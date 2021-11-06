@@ -4,7 +4,8 @@ import $ from 'jquery';
 
 import '/imports/ui/components/regions/selection';
 
-import './region-splash.html';
+import './template.html';
+import './styles.scss';
 
 Template.regionSplash.onRendered(function () {
 	this.$('.js-region-splash').modal('show');

@@ -22,7 +22,7 @@ import '/imports/ui/components/footer';
 import '/imports/ui/components/introduction/introduction';
 import '/imports/ui/components/kiosk-link';
 import '/imports/ui/components/navbar/navbar';
-import '/imports/ui/components/regions/splash/region-splash';
+import '/imports/ui/components/regions/splash';
 
 import './app-body.html';
 
