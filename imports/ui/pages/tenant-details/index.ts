@@ -6,7 +6,7 @@ import { TenantModel } from '/imports/api/tenants/tenants';
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/tenants/settings/tenant-settings';
-import '/imports/ui/components/tenants/regions/tenant-regions';
+import '/imports/ui/components/tenants/regions';
 
 import './template.html';
 import './styles.scss';
