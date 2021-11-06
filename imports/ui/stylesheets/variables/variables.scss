@@ -51,6 +51,10 @@ $course-details-seperator-height:                3px;
 
 $course-member-comment-border-color:             shade-color($blue-lighter, 40%);
 
+// ** Category
+//========================================================================================
+$category-bg:                                    rgba($gray-400, .5);
+
 // ** Group
 //========================================================================================
 $group-bg:                                       $green-alternative;
@@ -61,6 +65,16 @@ $group-label-color: 							 $blue;
 $region-bg:                                       desaturate($green, 40%);
 $region-color:                                    $red-darkest;
 
+// ** Venue
+//========================================================================================
+$venue-bg:                                       desaturate($green, 40%);
+$venue-color:                                    $red-darkest;
+
+// ** Roles
+//========================================================================================
+$role-needed-bg:                                 $gray-200;
+$role-needed-color:                              darken($role-needed-bg, 38%);
+
 // ** Tenant
 //========================================================================================
 $tenant-bg:                                       $green-alternative;
@@ -70,3 +84,8 @@ $tenant-label-color: 							  $blue;
 //========================================================================================
 $kiosk-wrap-padding-horizontal:                  $grid-gutter-width / 4;
 $kiosk-wrap-padding-vertical:                    $kiosk-wrap-padding-horizontal;
+
+// ** Footer
+//========================================================================================
+$footer-height:                                  50px;
+$footer-padding-vertical: 						 15px;

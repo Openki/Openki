@@ -6,7 +6,6 @@
 @import 'courses/compact/course-compact';
 @import 'courses/discussion/course-discussion';
 @import 'courses/events/course-events';
-@import 'courses/filter/course-filter';
 @import 'courses/history/course-history';
 @import 'courses/list/course-list';
 @import 'courses/members/course-members';
@@ -14,13 +13,9 @@
 
 @import 'editable/editable';
 
-@import 'events/compact/event-compact';
-@import 'events/edit/event-edit';
 @import 'events/edit-location/event-edit-location';
 @import 'events/participants/event-participants';
 @import 'events/replication/event-replication';
-
-@import 'footer/footer';
 
 @import 'groups/list/group-list';
 

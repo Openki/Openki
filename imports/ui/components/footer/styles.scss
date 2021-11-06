@@ -1,0 +1,43 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+footer {
+	background: $blue;
+	color: $white;
+	font-size: medium;
+	height: $footer-height + 1px;
+	position: relative;
+	text-align: center;
+	width: 100%;
+}
+
+.footer-links {
+	margin: 0 auto;
+	position: relative;
+}
+
+.footer-link {
+	color: $white;
+	line-height: $footer-height;
+	padding: $footer-padding-vertical 10px;
+
+	&:hover {
+		background: $blue-light;
+		color: $white;
+		text-decoration: none;
+	}
+}
+
+.footer-deployed-version {
+	color: $gray-200;
+	display: none;
+	font-size: small;
+	padding-right: 5px;
+	padding-top: $nav-link-padding-y / 2;
+	position: absolute;
+	right: 0;
+	top: 0;
+
+	@include media-breakpoint-up(md) {
+		display: block;
+	}
+}

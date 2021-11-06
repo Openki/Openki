@@ -1,0 +1,47 @@
+<template name="resetPasswordPage">
+	<div class="container mw-md">
+		<h1>{{i18n 'resetPassword.title' "Reset your password"}}</h1>
+		<form class="reset-password">
+			<div class="mb-3">
+				<div class="btn-group">
+					<button type="button"
+							class="btn btn-secondary js-hide-pwd {{#unless showPassword}}active{{/unless}}">
+						{{i18n 'resetPassword.confirmPasswordByTyping' "Confirm by typing it again"}}
+					</button>
+					<button type="button"
+							class="btn btn-secondary js-show-pwd {{#if showPassword}}active{{/if}}">
+						{{i18n 'resetPassword.confirmPasswordVisually' "Show what I typed"}}
+					</button>
+				</div>
+			</div>
+			<fieldset class="mb-3">
+				<label class="form-label" for="pass">{{i18n '_inputField.password'}}</label>
+				<input class="form-control js-pwd-reset" id="pass"
+					   placeholder="{{i18n 'profile.input.newPassword'}}"
+					   type="{{passwordFieldType}}">
+			</fieldset>
+			{{#unless showPassword}}
+				<fieldset class="mb-3">
+					<label class="form-label"
+						   for="passConfirm">{{i18n 'passwordReset.label.confirm' "Confirm"}}</label>
+					<input class="form-control js-confirm-pwd-reset" id="passConfirm"
+						   placeholder="{{i18n 'profile.input.repeatPassword'}}"
+						   type="{{passwordFieldType}}">
+					{{#if passwordSame}}
+						{{i18n 'resetPassword.message.passwordsSame' "Passwords match"}}
+					{{/if}}
+					{{#if passwordNotSame}}
+						{{i18n 'resetPassword.message.passwordsNotSame' "Passwords don't match"}}
+					{{/if}}
+				</fieldset>
+			{{/unless}}
+			<div class="form-actions">
+				<button type="submit" class="btn btn-save js-reset-pwd" {{submitDisabled}}
+						{{disabledIfBusy}}>
+					{{i18n 'resetPassword.confirm' "Set my password"}}
+				</button>
+				{{> buttonCancel event="js-cancel-reset-pwd"}}
+			</div>
+		</form>
+	</div>
+</template>

@@ -22,7 +22,7 @@ const replicaStartDate = (originalDate) => {
 	return startMoment;
 };
 
-Template.eventReplication.onCreated(function eventReplicationOnCreated() {
+Template.eventReplication.onCreated(function () {
 	const instance = this;
 
 	instance.busy(false);

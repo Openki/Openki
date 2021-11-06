@@ -41,8 +41,8 @@ export interface ProfilePageData {
 }
 
 const TemplateBase = TemplateAny as TemplateStaticTyped<
-	ProfilePageData,
 	'profilePage',
+	ProfilePageData,
 	{
 		changingPass: ReactiveVar<boolean>;
 		notificationsUnsubscribeSuccess: () => boolean;

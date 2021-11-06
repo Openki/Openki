@@ -4,6 +4,8 @@ import ChainedBackend from 'i18next-chained-backend';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import LocalStorageBackend from 'i18next-localstorage-backend';
 import { Languages } from '/imports/api/languages/languages';
+import { Blaze, Handlebars } from 'meteor/blaze';
+import { Spacebars } from 'meteor/spacebars';
 
 // eslint-disable-next-line no-constant-condition
 if (false) {
@@ -97,18 +99,36 @@ i18next.on('loaded', function () {
 });
 
 /**
- * A reactive wrapper for i18next.t
+ * A reactive wrapper for i18next.t. Use { escapeText: true } to escape the i18n text. You can use
+ * Spacebars.SafeString(..) for params to allow some HTML.
  */
-export const i18n: TFunction = (...args: any) => {
+export const i18n: TFunction = (...args: any[]) => {
 	reactiveLang.get();
 	const result = (i18next.t as any)(...args);
 
-	if (Array.isArray(result)) {
-		// in some cases we get a string[] array back but we expect a string
-		return result.join('');
+	let escapeText: boolean;
+	if (args.length === 2) {
+		escapeText = args[1].escapeText || false;
+	} else if (args.length === 3) {
+		escapeText = args[2].escapeText || false;
+	} else {
+		escapeText = false;
 	}
 
-	return result;
+	if (Array.isArray(result)) {
+		// in some cases we get a string[] array back but we expect a string
+		return result
+			.map((s) => {
+				if (s instanceof Handlebars.SafeString) {
+					return s;
+				}
+
+				return escapeText !== false ? Blaze._escape(s) : s;
+			})
+			.join('');
+	}
+
+	return escapeText !== false ? Blaze._escape(result) : result;
 };
 
 // register a helper to use it in the templates
@@ -122,11 +142,15 @@ Template.registerHelper(
 		// defaultValue is optional
 		if (typeof defaultValueOrData === 'string') {
 			// function (key, defaultValue, data)
-			return i18n(key, defaultValueOrData, data?.hash);
+			// We can use SafeString because i18n encodes all non-safe strings
+			return Spacebars.SafeString(
+				i18n(key, defaultValueOrData, { ...data?.hash, escapeText: true }),
+			);
 		}
 
 		// function (key, data)
-		return i18n(key, defaultValueOrData.hash);
+		// We can use SafeString because i18n encodes all non-safe strings
+		return Spacebars.SafeString(i18n(key, { ...defaultValueOrData.hash, escapeText: true }));
 	},
 );
 

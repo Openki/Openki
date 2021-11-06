@@ -127,7 +127,7 @@ Template.courseDetailsPage.helpers({
 		return !this.course.nextEvent && !this.course.lastEvent;
 	},
 	isArchived() {
-		return this.course.archived;
+		return this.course?.archived;
 	},
 	editableName() {
 		return (Template.instance() as any).editableName;
@@ -247,7 +247,7 @@ Template.courseDetailsDescription.helpers({
 
 Template.courseGroupList.helpers({
 	isOrganizer() {
-		return Template.instance().data.groupOrganizers.includes(IdTools.extract(this));
+		return (Template.instance().data as any).groupOrganizers.includes(IdTools.extract(this));
 	},
 	tools() {
 		const tools = [];

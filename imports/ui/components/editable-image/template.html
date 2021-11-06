@@ -21,11 +21,11 @@
 					{{#if (stateEquals 'progress' 'edit')}}
 						<span
 							  class="btn btn-secondary">{{i18n 'fileUpload.choose.text' 'Choose a file'}}</span>
-							{{#if (state 'supportsDragndrop')}}
-								<br>
-								<span
-									  class="editable-image-dragndrop">{{i18n 'fileUpload.drag.text' 'or drag it here'}}</span>
-							{{/if}}
+						{{#if (state 'supportsDragndrop')}}
+							<br>
+							<span
+								  class="editable-image-dragndrop">{{i18n 'fileUpload.drag.text' 'or drag it here'}}</span>
+						{{/if}}
 					{{else if (stateEquals 'progress' 'uploading')}}
 						<div class="editable-image-uploading">
 							{{i18n 'fileUpload.uploading.text' 'Uploading...'}}

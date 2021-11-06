@@ -12,8 +12,8 @@ import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import './template.html';
 
 const TemplateBase = TemplateAny as TemplateStaticTyped<
-	{ tenant: TenantEntity },
 	'invitationsCreate',
+	{ tenant: TenantEntity },
 	{
 		state: ReactiveDict<{ tried: boolean }>;
 		reset(): void;

@@ -1,0 +1,15 @@
+<template name="adminTenantsPage">
+	<h3>
+		{{i18n 'tenants.title' 'Organizations'}}
+	</h3>
+
+	<div class="list-group">
+		{{#each tenant in tenants}}
+			<a href="{{pathFor 'tenantDetails' data=tenant}}"
+			   class="list-group-item list-group-item-action">
+				<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+				{{tenant.name}}
+			</a>
+		{{/each}}
+	</div>
+</template>

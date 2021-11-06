@@ -1,0 +1,34 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.event .event-edit-header {
+	margin-top: 0;
+}
+
+.event-edit-header {
+	border-color: $event-header-bg;
+	border-style: solid;
+}
+
+.event-edit-body {
+	border-color: $event-body-bg;
+	border-style: solid;
+}
+
+.changed-replicas {
+	opacity: 0.4;
+	transition: opacity 0.15s;
+
+	&.is-emphasized {
+		opacity: 1;
+	}
+}
+
+.changed-replicas ul {
+	list-style-position: inside;
+	margin: 0;
+	padding: 0;
+}
+
+.update-changed-replicas-help + ul {
+	margin-top: 10px;
+}

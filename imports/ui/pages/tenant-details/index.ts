@@ -15,11 +15,7 @@ export interface Data {
 	tenant: TenantModel;
 }
 
-const Template = TemplateAny as TemplateStaticTyped<
-	Data,
-	'tenantDetailsPage',
-	Record<string, never>
->;
+const Template = TemplateAny as TemplateStaticTyped<'tenantDetailsPage', Data>;
 
 const template = Template.tenantDetailsPage;
 

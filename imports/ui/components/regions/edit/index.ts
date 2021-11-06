@@ -30,8 +30,8 @@ export interface OnSaveFields {
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		Data,
 		'regionEdit',
+		Data,
 		{ locationTracker: LocationTracker }
 	>;
 
@@ -107,9 +107,8 @@ export interface OnSaveFields {
 }
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		{ locationTracker: LocationTracker; region: RegionEntity },
 		'regionEditFields',
-		Record<string, unknown>
+		{ locationTracker: LocationTracker; region: RegionEntity }
 	>;
 
 	const template = Template.regionEditFields;

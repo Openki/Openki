@@ -27,8 +27,8 @@ export interface Data {
 }
 
 const Template = TemplateAny as TemplateStaticTyped<
-	Data,
 	'tenantCreatePage',
+	Data,
 	{
 		locationTracker: LocationTracker;
 	}

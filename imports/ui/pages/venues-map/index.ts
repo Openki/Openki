@@ -15,8 +15,8 @@ import './template.html';
 import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
-	Record<string, unknown>,
 	'venuesMapPage',
+	Record<string, unknown>,
 	{
 		filter: Filtering<{
 			region: Predicate<string, string, string>;

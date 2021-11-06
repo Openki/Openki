@@ -39,7 +39,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
 		});
 
 		if (Meteor.isServer) {
-			this._ensureIndex({ members: 1 });
+			this.createIndex({ members: 1 });
 		}
 	}
 

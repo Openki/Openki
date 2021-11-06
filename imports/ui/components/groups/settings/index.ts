@@ -20,10 +20,10 @@ import './template.html';
 import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
+	'groupSettings',
 	{
 		group: GroupModel | (Partial<GroupEntity> & { _id: 'create' });
 	},
-	'groupSettings',
 	{ userSearch: ReactiveVar<string> }
 >;
 

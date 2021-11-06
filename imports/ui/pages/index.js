@@ -1,17 +1,6 @@
-import './admin/panel/admin-panel';
-import './admin/users/users';
-import './admin/tenants/tenants';
 import './calendar/calendar';
-import './course-create/course-create';
 import './event-details/event-details';
 import './info/info';
 import './find/find';
-import './frames/calendar/calendar-frame';
-import './frames/courselist/courselist-frame';
 import './frames/events/events-frame';
-import './frames/schedule/schedule-frame';
-import './frames/week/week-frame';
-import './log/log';
 import './not-found';
-import './reset-password/reset-password';
-import './venue-details/venue-details';

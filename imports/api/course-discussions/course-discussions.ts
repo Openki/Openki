@@ -25,7 +25,7 @@ export class CourseDiscussionsCollection extends Mongo.Collection<CourseDiscussi
 		super('CourseDiscussions');
 
 		if (Meteor.isServer) {
-			this._ensureIndex({ courseId: 1 });
+			this.createIndex({ courseId: 1 });
 		}
 	}
 

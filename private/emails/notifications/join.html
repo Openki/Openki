@@ -5,7 +5,7 @@
 				{{i18n "notification.event.mail.greeting" USERNAME=username lng=locale}}
 			</span>
 			<p>
-				{{i18n "notification.join.mail.intro" '"{USERNAME}" just joined course "{COURSE}" as: {ROLE}.' USERNAME=newParticipant.username COURSE=course.name ROLE=roleTitle lng=locale}}
+				{{i18n "notification.join.mail.intro" '{USERNAME} just joined course {COURSE} as: {ROLE}.' USERNAME=newParticipant COURSE=course ROLE=roleTitle lng=locale}}
 			</p>
 			{{#if message}}
 				<p>
@@ -24,9 +24,10 @@
 					{{i18n "notification.join.mail.collaborationHint" 'If you like them to collaborate feel free to contact them. If you like to give them the rights to edit the course, you can add them to the organisation team of your course by clicking on the bullhorn next to their name.' lng=locale}}
 				</p>
 			{{/if}}
+			<strong>{{i18n "notification.join.mail.statsOverview" 'Overview over participant in this course:' lng=locale}}</strong>
 			<p>
-				{{#each figures}}
-					{{role}}: {{count}}<br />
+				{{#each figure in figures}}
+					{{figure.role}}: {{figure.count}}<br />
 				{{/each}}
 			</p>
 			<p>

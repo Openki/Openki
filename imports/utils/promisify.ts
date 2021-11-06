@@ -55,6 +55,7 @@ export const MeteorAsync = {
  */
 export const AccountsAsync = {
 	createUser: Accounts.createUser && promisify(Accounts.createUser),
+	resetPassword: Accounts.resetPassword && promisify(Accounts.resetPassword),
 };
 
 export default MeteorAsync;

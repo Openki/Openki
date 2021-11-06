@@ -1,0 +1,162 @@
+<template name="venueDetailsPage">
+	<div class="container mw-md">
+		{{#if editing}}
+			{{> venueEdit venue}}
+		{{else}}
+			{{#with venue}}
+				<div class="page-component">
+					<div class="details-header location-details-header">
+						{{#if picture}}
+							<img src="{{picture}}">
+						{{/if}}
+						<h3>
+							{{name}}
+							{{#if short}}
+								<small>{{short}}</small>
+							{{/if}}
+						</h3>
+						<p>{{{description}}}</p>
+					</div>
+
+					<div class="details-body location-details-body">
+						<div class="details-content">
+							{{#if loc}}
+								<div class="details-map">
+									{{> map markers=markers}}
+									<div class="coordinates">
+										{{i18n 'venueDetails.coordinates' 'Coordinates:'}}
+										{{locationDisplay this.loc}}
+									</div>
+								</div>
+							{{/if}}
+							{{#if editor}}
+								<p>
+									<span
+										  class="venue-property-title">{{i18n 'location.details.hosts' 'Hosts:'}}</span>
+									<ul class='hosts'>
+										<li>
+											{{> profileLink editor}}
+											{{contribution editor}}
+										</li>
+									</ul>
+								</p>
+							{{/if}}
+							{{#if contact.web}}
+								<p>
+									<span class="venue-property-title">
+										{{i18n 'location.details.online' 'Website:'}}
+									</span>
+									<a href="{{contact.web}}">{{contact.web}}</a>
+								</p>
+							{{/if}}
+							{{#if address}}
+								<p>
+									<span class="venue-property-title">
+										{{i18n 'venue.details.address' 'Address:'}}
+									</span>
+									{{address}}
+								</p>
+							{{/if}}
+							{{#if route}}
+								<p>
+									<span class="venue-property-title">
+										{{i18n 'venue.details.route' 'How to go there:'}}
+									</span>
+									<br>
+									{{route}}
+								</p>
+							{{/if}}
+							{{#if maxPeople}}
+								<p>
+									<span class="venue-property-title">
+										{{i18n 'venue.details.max_ppl' 'Maximum People:'}}
+									</span>
+									{{maxPeople}}
+								</p>
+							{{/if}}
+							{{#if maxWorkplaces}}
+								<p>
+									<span class="venue-property-title">
+										{{i18n 'venue.details.max_workplaces' 'Maximum Workplaces:'}}
+									</span>
+									{{maxWorkplaces}}
+								</p>
+							{{/if}}
+							{{#if facilityNames}}
+								<p>
+									<span class="venue-property-title">
+										{{i18n 'venue.details.availableInfrastructure' 'Available infrastructure:'}}
+									</span>
+									<ul>
+										{{#each facilityName in facilityNames}}
+											<li>{{facilityName}}</li>
+										{{/each}}
+									</ul>
+								</p>
+							{{/if}}
+							{{#if otherFacilities}}
+								<p>
+									<span class="venue-property-title">
+										{{i18n 'venue.details.additionalEquipment' 'Additional equipment:'}}
+									</span>
+									<br>
+									{{otherFacilities}}
+								</p>
+							{{/if}}
+						</div>
+					</div>
+					{{#if mayEdit}}
+						<div class="actions">
+							{{> buttonEdit event="js-venue-edit"}}
+							{{#unless verifyDelete}}
+								{{> buttonDelete event="js-venue-delete"}}
+							{{/unless}}
+						</div>
+						{{#if verifyDelete}}
+							{{> venueDeleteConfirmDialog}}
+						{{/if}}
+					{{/if}}
+				</div>
+			{{/with}}
+		{{/if}}
+		{{#if upcomingEvents}}
+			<div class="page-component">
+				<h2>{{i18n 'venue.details.upcomingEvents' "Upcoming events at this venue:"}}</h2>
+				{{> eventList dataEvents=upcomingEvents withDate=true}}
+				{{#if hasMoreUpcomingEvents}}
+					<div class="clearfix"></div>
+					<button type="button" class="btn btn-add js-show-more-upcoming-events">
+						{{i18n 'venue.details.showMoreUpcomingEvents' "Show more events"}}
+					</button>
+				{{/if}}
+			</div>
+		{{/if}}
+		{{#if pastEvents}}
+			<div class="page-component">
+				<h2>{{i18n 'venue.details.pastEvents' "Past events: "}}</h2>
+				{{> eventList dataEvents=pastEvents withDate=true}}
+				{{#if hasMorePastEvents}}
+					<div class="clearfix"></div>
+					<button type="button" class="btn btn-add js-show-more-past-events">
+						{{i18n 'venue.details.showMorePastEvents' "Show more events"}}
+					</button>
+				{{/if}}
+			</div>
+		{{/if}}
+	</div>
+</template>
+
+<template name="venueDeleteConfirmDialog">
+	<div class="venue-delete-confirmation">
+		<p>{{i18n 'venue.reallydelete' 'Please confirm that you would like to delete this venue. This cannot be undone.'}}
+		</p>
+		<div class="form-actions">
+			{{> buttonDeleteConfirm
+				event="js-venue-delete-confirm"
+				textIdle=(i18n 'venue.detail.remove' 'Remove this venue')
+				textBusy=(i18n 'venue.detail.remove.busy' 'Deleting venue...')
+			}}
+			{{> buttonCancel event="js-venue-delete-cancel"}}
+		</div>
+	</div>
+</template>

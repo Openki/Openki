@@ -32,8 +32,8 @@ export interface Data {
 }
 
 const Template = TemplateAny as TemplateStaticTyped<
-	Data,
 	'editableImage',
+	Data,
 	{
 		droppedFile: ReactiveVar<UploadImage | undefined>;
 		state: ReactiveDict<{

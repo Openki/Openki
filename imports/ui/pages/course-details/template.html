@@ -1,6 +1,6 @@
 <template name="courseDetailsPage">
 	<div class="container">
-		<div class="row course-page">
+		<div class="row course-page g-3">
 			<div class="col-lg-8">
 				<div class="page-component">
 					{{#if isArchived}}
@@ -110,7 +110,7 @@
 			{{/unless}}
 			{{> buttonDeleteConfirm
 				event="js-delete-course-confirm"
-				textIdle=(i18n 'course.delete.confirm.button' 'Delete this course and its events.')
+				textIdle=(i18n 'course.delete.confirm.button' 'Delete this course and its events')
 				textBusy=(i18n 'course.delete.confirm.button.busy' 'Deleting course...')
 			}}
 			{{> buttonCancel event="js-collapse"}}

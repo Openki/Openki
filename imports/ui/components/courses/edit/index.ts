@@ -45,8 +45,8 @@ export type Data = {
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		Data,
 		'courseEdit',
+		Data,
 		{
 			editableDescription: Editable;
 			state: ReactiveDict<{
@@ -368,7 +368,7 @@ export type Data = {
 			const changes = {
 				internal,
 				name: StringTools.saneTitle(instance.$('.js-title').val() as string),
-				categories: instance.state.get('selectedCategories'),
+				categories: instance.state.get('selectedCategories') || [],
 			} as Required<CoursesMethods.SaveFields>;
 
 			if (changes.name.length === 0) {
@@ -538,8 +538,8 @@ export type Data = {
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		{ selected: string[]; role: RoleEntity; members: CourseMemberEntity[] },
 		'courseEditRole',
+		{ selected: string[]; role: RoleEntity; members: CourseMemberEntity[] },
 		{ checked: ReactiveVar<boolean> }
 	>;
 
@@ -588,8 +588,8 @@ export type Data = {
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		Record<string, unknown>,
 		'courseTitle',
+		Record<string, unknown>,
 		{
 			proposedSearch: ReactiveVar<string>;
 			focused: ReactiveVar<boolean>;

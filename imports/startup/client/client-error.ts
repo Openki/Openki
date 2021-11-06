@@ -63,7 +63,7 @@ const discriminatoryReporting = function (args: [msg: string, error?: Error] | s
 
 // wrap the Meteor debug function
 const meteorDebug = Meteor._debug;
-Meteor._debug = function (/** @type {[msg: string, error: Error ] | string[]} */ ...args) {
+Meteor._debug = function (...args: [msg: string, error: Error] | string[]) {
 	meteorDebug.apply(this, args);
 	discriminatoryReporting(args);
 };

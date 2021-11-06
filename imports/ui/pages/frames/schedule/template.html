@@ -1,0 +1,51 @@
+<template name="frameSchedulePage">
+	<table class="schedule">
+		<thead>
+			<tr>
+				<th class="schedule-header-time" scope="col">
+					{{month}}
+				</th>
+				{{#each days}}
+					<th class="schedule-header-day" scope="col">
+						{{this}}
+					</th>
+				{{/each}}
+			</tr>
+		</thead>
+		<tbody>
+			{{#each intervals}}
+				<tr>
+					<td class="schedule-time" scope="row">
+						<div class="schedule-time-interval">
+							{{intervalLabel}}
+						</div>
+					</td>
+					{{#each slots}}
+						<td class="schedule-slot">
+							{{#each this}}
+								<a href="{{pathFor  'showEvent'}}" target="_blank">
+									<div class="schedule-event schedule-event-type-{{type}}">
+										{{title}}
+										{{#if showDate}}
+											<br>
+											<span class="schedule-event-time">
+												{{#unless single}}{{i18n 'schedule.startDateLabel' "start:"}}{{/unless}}
+												{{dateFormat start}}
+											</span>
+										{{/if}}
+										{{#if customStartTime ../../intervalStart}}
+											<br>
+											<span class="schedule-event-time">
+												{{customStartTime ../../intervalStart}}
+											</span>
+										{{/if}}
+									</div>
+								</a>
+							{{/each}}
+						</td>
+					{{/each}}
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</template>

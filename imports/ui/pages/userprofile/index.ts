@@ -34,8 +34,8 @@ interface UserProfilePageData {
 }
 
 const Template = TemplateAny as TemplateStaticTyped<
-	UserProfilePageData,
 	'userprofilePage',
+	UserProfilePageData,
 	{ state: ReactiveDict<{ verifyUserDelete: boolean }>; coursesCreatedBy(): CourseModel[] }
 >;
 
@@ -85,12 +85,25 @@ template.helpers({
 
 	showInviteGroups() {
 		const data = Template.currentData();
+
+		if (data.user._id === Meteor.userId()) {
+			return false;
+		}
 		return data.inviteGroups?.count && data.inviteGroups.count() > 0;
 	},
 
 	showSettings() {
 		const data = Template.currentData();
-		return data.showPrivileges || (data.inviteGroups?.count && data.inviteGroups.count() > 0);
+
+		if (data.showPrivileges) {
+			return true;
+		}
+
+		if (data.user._id === Meteor.userId()) {
+			return false;
+		}
+
+		return data.inviteGroups?.count && data.inviteGroups.count() > 0;
 	},
 	numberOfCoursesAffectedByDelete() {
 		return Template.instance().coursesCreatedBy().length;

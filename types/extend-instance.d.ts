@@ -1,7 +1,8 @@
 declare module 'meteor/blaze' {
 	namespace Blaze {
 		// Declarations for the instance extending that happens in file /imports/startup/client/extend-instance.ts
-		interface TemplateInstance {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		interface TemplateInstance<D = any> {
 			/**
 			 * Get the parent template instance. Source: http://stackoverflow.com/questions/27949407/how-to-get-the-parent-template-instance-of-the-current-template
 			 * @param levels How many levels to go up. Default is `1`

@@ -11,7 +11,8 @@
 <template name="regionSelection">
 	<li class="region-selection {{inNavbarClasses}}">
 		<form class="d-flex js-region-search-form" tabindex="0">
-			<div class="input-group input-group-sm input-group-outline p-2">
+			<div
+				 class="input-group input-group-outline {{#if isSplash}}is-splash{{else}}input-group-sm p-2 mt-2{{/if}}">
 				<span class="input-group-text"><span class="fa fa-dot-circle-o fa-fw"
 						  aria-hidden="true"></span></span>
 				<input class="form-control js-region-search" type="text"

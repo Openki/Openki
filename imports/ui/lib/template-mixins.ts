@@ -28,13 +28,13 @@ import { Spacebars } from 'meteor/spacebars';
  *   </div>
  * </template>
  */
-export function Expandible<D, N extends string, T extends Record<string, unknown>>(
-	TemplateBase: TemplateStaticTyped<D, N, T>,
+export function Expandible<N extends string, D, T extends Record<string, unknown>>(
+	TemplateBase: TemplateStaticTyped<N, D, T>,
 	templateName: N,
 ) {
 	const Template = TemplateBase as TemplateStaticTyped<
-		D,
 		N,
+		D,
 		T & { _expander: string; collapse: () => void }
 	>;
 
@@ -74,13 +74,13 @@ export interface MultiExpandibleTemplateProps {
 }
 
 /** Like Expandible but multiple expandibles can be open at the same time. */
-export function MultiExpandible<D, N extends string, T extends Record<string, unknown>>(
-	TemplateBase: TemplateStaticTyped<D, N, T>,
+export function MultiExpandible<N extends string, D, T extends Record<string, unknown>>(
+	TemplateBase: TemplateStaticTyped<N, D, T>,
 	templateName: N,
 ) {
 	const Template = TemplateBase as TemplateStaticTyped<
-		D,
 		N,
+		D,
 		T & { expanded: ReactiveVar<boolean> }
 	>;
 
@@ -168,14 +168,14 @@ export interface FormfieldErrorsMapping {
  * @param template The template to extend
  * @param mapping The mapping of error-keys to message objects
  */
-export function FormfieldErrors<D, N extends string, T extends Record<string, unknown>>(
-	TemplateBase: TemplateStaticTyped<D, N, T>,
+export function FormfieldErrors<N extends string, D, T extends Record<string, unknown>>(
+	TemplateBase: TemplateStaticTyped<N, D, T>,
 	templateName: N,
 	mapping?: FormfieldErrorsMapping,
 ) {
 	const Template = TemplateBase as TemplateStaticTyped<
-		D,
 		N,
+		D,
 		T & {
 			errorMapping: FormfieldErrorsMapping;
 			errors: {
@@ -227,7 +227,7 @@ export function FormfieldErrors<D, N extends string, T extends Record<string, un
 			}
 
 			const text = (instance.errorMapping || mapping)[message.key].text();
-			return Spacebars.SafeString(`<span class="form-text">${(Blaze as any)._escape(text)}</span>`);
+			return Spacebars.SafeString(`<span class="form-text">${Blaze._escape(text)}</span>`);
 		},
 	});
 

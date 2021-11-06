@@ -107,6 +107,11 @@ if (Meteor.isClient) {
 
 Router.route('adminPanel', {
 	path: 'admin',
+	template: 'adminPanelPage',
+	async action() {
+		await import('/imports/ui/pages/admin/panel');
+		this.render();
+	},
 });
 
 Router.route('calendar', {
@@ -130,9 +135,13 @@ Router.route('featureGroup', {
 
 Router.route('tenants', {
 	path: 'admin/tenants',
-	template: 'tenants',
+	template: 'adminTenantsPage',
 	waitOn() {
 		return Meteor.subscribe('Tenants.findFilter');
+	},
+	async action() {
+		await import('/imports/ui/pages/admin/tenants');
+		this.render();
 	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('tenants.windowtitle', 'Organizations'));
@@ -143,10 +152,19 @@ Router.route('find', finderRoute('/find'));
 
 Router.route('users', {
 	path: 'admin/users',
+	template: 'adminUsersPage',
+	async action() {
+		await import('/imports/ui/pages/admin/users');
+		this.render();
+	},
+	onAfterAction() {
+		Metatags.setCommonTags(i18n('admin.users.windowtitle', 'Users'));
+	},
 });
 
 Router.route('frameCalendar', {
 	path: '/frame/calendar',
+	template: 'frameCalendarPage',
 	layoutTemplate: 'frameLayout',
 	data() {
 		const cssRules = new CssFromQuery(this.params.query, [
@@ -158,6 +176,10 @@ Router.route('frameCalendar', {
 		]).getCssRules();
 		return { cssRules };
 	},
+	async action() {
+		await import('/imports/ui/pages/frames/calendar');
+		this.render();
+	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
 	},
@@ -165,6 +187,7 @@ Router.route('frameCalendar', {
 
 Router.route('frameCourselist', {
 	path: '/frame/courselist',
+	template: 'frameCourselistPage',
 	layoutTemplate: 'frameLayout',
 	data() {
 		const cssRules = new CssFromQuery(this.params.query, [
@@ -176,6 +199,10 @@ Router.route('frameCourselist', {
 		]).getCssRules();
 		const hideInterested = parseInt(this.params.query.hideInterested, 10) || 0;
 		return { cssRules, hideInterested };
+	},
+	async action() {
+		await import('/imports/ui/pages/frames/courselist');
+		this.render();
 	},
 });
 
@@ -263,12 +290,22 @@ Router.route('framePropose', {
 
 Router.route('frameSchedule', {
 	path: '/frame/schedule',
+	template: 'frameSchedulePage',
 	layoutTemplate: 'frameLayout',
+	async action() {
+		await import('/imports/ui/pages/frames/schedule');
+		this.render();
+	},
 });
 
 Router.route('frameWeek', {
 	path: '/frame/week',
-	layoutTemplate: 'frameWeek',
+	template: 'frameWeekPage',
+	layoutTemplate: 'frameLayout',
+	async action() {
+		await import('/imports/ui/pages/frames/week');
+		this.render();
+	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
 	},
@@ -383,9 +420,13 @@ Router.route('kioskEvents', {
 
 Router.route('log', {
 	path: '/log',
-	template: 'showLog',
+	template: 'logPage',
 	data() {
 		return this.params.query;
+	},
+	async action() {
+		await import('/imports/ui/pages/log');
+		this.render();
 	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('log.list.windowtitle', 'Log'));
@@ -475,6 +516,11 @@ Router.route('profile', {
 
 Router.route('proposeCourse', {
 	path: 'courses/propose',
+	template: 'courseProposePage',
+	async action() {
+		await import('/imports/ui/pages/course-create');
+		this.render();
+	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('course.propose.windowtitle', 'Propose new course'));
 	},
@@ -483,8 +529,13 @@ Router.route('proposeCourse', {
 
 Router.route('resetPassword', {
 	path: 'reset-password/:token',
+	template: 'resetPasswordPage',
+	async action() {
+		await import('/imports/ui/pages/reset-password');
+		this.render();
+	},
 	data() {
-		return this.params.token;
+		return { token: this.params.token };
 	},
 	onAfterAction() {
 		document.title = i18n('resetPassword.siteTitle', 'Reset password');
@@ -982,13 +1033,13 @@ Router.route('regionDetails', {
 
 Router.route('venueDetails', {
 	path: 'venue/:_id/:slug?',
+	template: 'venueDetailsPage',
 	/**
 	 * @this {{params: {_id: string; slug?:string;}}}
 	 */
 	waitOn() {
 		return [Meteor.subscribe('venueDetails', this.params._id)];
 	},
-
 	data() {
 		const id = this.params._id;
 
@@ -1011,7 +1062,10 @@ Router.route('venueDetails', {
 
 		return data;
 	},
-
+	async action() {
+		await import('/imports/ui/pages/venue-details');
+		this.render();
+	},
 	onAfterAction() {
 		const data = this.data();
 		if (!data) {

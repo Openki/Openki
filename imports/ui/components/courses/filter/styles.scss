@@ -1,0 +1,228 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.filter {
+	margin-top: 20px;
+
+	@include media-breakpoint-up(md) {
+		&:not(.open) {
+			margin-top: 0;
+		}
+	}
+}
+
+.filter-heading {
+	color: $primary;
+	display: none;
+	margin: 0 0 15px;
+}
+
+.filter.open .filter-heading {
+	border-bottom: 1px solid $blue-lighter;
+	display: block;
+	padding-bottom: 10px;
+}
+
+.filter-active-tag {
+	display: none;
+}
+
+.filter.active .filter-active-tag {
+	@include td-margin(left, 5px);
+	background-color: darken($green, 35%);
+	color: $white;
+	display: inline;
+	font-size: smaller;
+	padding: 3px 5px;
+}
+
+.filter-captions-header-buttons {
+	@include td-float(right);
+	display: block;
+}
+
+.filter-remove-btn-text {
+	display: inline;
+}
+
+.filter-component ~ .filter-component {
+	@include media-breakpoint-down(md) {
+		margin-top: 15px;
+	}
+}
+
+.filter-component-header {
+	color: $primary;
+	display: none;
+	margin: 0 0 10px;
+}
+
+.filter.open .filter-component-header {
+	display: block;
+}
+
+.filter-component .fa-check {
+	display: none;
+}
+
+.filter-component .active {
+	.fa-check {
+		color: darken($success, 20%);
+		display: inline-block;
+	}
+
+	.fa-times {
+		display: none;
+	}
+}
+
+.filter-caption-wrap {
+	height: 50px;
+}
+
+.filter-caption {
+	border-color: $course-border-color;
+	border-style: solid;
+	border-width: 5px;
+	font-size: large;
+	height: 100%;
+	opacity: 0.75;
+	text-align: center;
+	transition-duration: 0.15s;
+	transition-property: #{'box-shadow opacity'};
+	width: 100%;
+
+	&.is-proposal {
+		border-style: dashed;
+	}
+
+	&.has-upcoming-events {
+		background-color: $course-border-color;
+	}
+
+	&.is-archived {
+		border-color: $archived-color;
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&.active,
+	&:hover {
+		box-shadow: 0 0 4px rgba(67, 223, 37, 1);
+		opacity: 1;
+		transition-duration: 0.15s;
+		transition-property: #{'box-shadow opacity'};
+	}
+}
+
+.filter-caption-text {
+	@include ellipsis;
+	display: block;
+	line-height: 40px;
+}
+
+.filter-course-role {
+	@include td-text-align(left);
+	background-color: transparent;
+	border: 0;
+	display: block;
+	margin: 0;
+	padding: 0;
+
+	&:hover {
+		color: $primary;
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	&.active {
+		color: darken($green, 50%);
+	}
+}
+
+.filter-course-role + .filter-course-role {
+	margin-top: 5px;
+}
+
+.filter-course-role-icon {
+	@include td-margin(right, 5px);
+	background-color: $role-needed-bg;
+	color: $role-needed-color;
+	display: inline-block;
+	padding: 3px 5px;
+}
+
+.filter-course-role .checkmark {
+	display: none;
+}
+
+.filter-course-role.active .checkmark {
+	display: inline;
+}
+
+.filter-categories-select {
+	margin-bottom: 10px;
+	padding: 0;
+}
+
+.filter-no-categories-found {
+	padding: 5px 10px;
+
+	&:hover {
+		cursor: default;
+	}
+}
+
+.filter-categories-dropdown {
+	max-height: 300px;
+	min-width: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.filter-categories-dropdown .js-category-label {
+	background-color: $dropdown-bg;
+	box-shadow: none;
+	position: relative;
+}
+
+.js-toggle-subcategories {
+	padding: 0 5px;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.dropdown-menu > .js-sub-category {
+	@include td-margin(left, 20px);
+	border-left: 1px solid $blue-light;
+	display: none;
+}
+
+.js-sub-category > a {
+	@include td-padding(left, 15px);
+}
+
+.filter-selected-categories {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.filter-selected-categories > li {
+	@include td-padding-all(0, 3px, 3px, 0);
+	margin-bottom: 3px;
+}
+
+.category-label + .remove-btn {
+	@include td-margin(left, 5px);
+}
+
+.filter-actions {
+	@include td-text-align(right);
+	margin-top: 5px;
+}

@@ -34,8 +34,11 @@ This file descripts all configurations and customization options. Remove the com
 		"footerLinks": [
 			{
 				"link": "https://about.openki.net/",
-				"key": "footer.aboutOpenki",
-				"title_key": "navigation.footer.about.title"
+				"key": "footer.aboutOpenki", // text from the link. The value is a translation key from i18next it must be defined in code
+				"title_key": "navigation.footer.about.title" // text that is shown on hover the link. The value is a translation key from i18next it must be defined in code
+
+				// as a alternative for "key" you can set "text" for the text from the link
+				"text": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 			},
 			{
 				"link": "/info/faq",

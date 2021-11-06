@@ -1,0 +1,20 @@
+<template name="frameWeekPage">
+	{{#each weekday in weekdays}}
+		<div class="calendar-date">
+			{{calendarDayFormat weekday.date}}
+		</div>
+		<div class="frame-week-date-events">
+			{{#if Template.subscriptionsReady}}
+				{{#if hasDayEvents weekday}}
+					{{> eventList dataEvents=weekday.dayEvents withDate=false}}
+				{{else}}
+					<div class="text-center">
+						{{i18n 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
+					</div>
+				{{/if}}
+			{{else}}
+				{{> loadingRow}}
+			{{/if}}
+		</div>
+	{{/each}}
+</template>

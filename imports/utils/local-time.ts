@@ -40,7 +40,7 @@ export const LocalTime = {
 			fromString(date: string) {
 				return moment.tz(date, tz);
 			},
-			toString(date: Date) {
+			toString(date: Date | moment.Moment) {
 				return moment.tz(date, tz).format('YYYY-MM-DD[T]HH:mm');
 			},
 			at(date: Date) {

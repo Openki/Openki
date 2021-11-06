@@ -7,11 +7,7 @@ import * as UrlTools from '/imports/utils/url-tools';
 import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<
-	Record<string, unknown>,
-	'kioskLink',
-	Record<string, never>
->;
+const Template = TemplateAny as TemplateStaticTyped<'kioskLink'>;
 
 const template = Template.kioskLink;
 

@@ -12,8 +12,8 @@ import './template.html';
 import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
-	Record<string, unknown>,
 	'statsPage',
+	Record<string, unknown>,
 	{
 		regionName: ReactiveVar<string | false>;
 		region: ReactiveVar<string>;

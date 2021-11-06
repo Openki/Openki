@@ -27,8 +27,8 @@ export class InvitationsCollection extends Mongo.Collection<InvitationEntity> {
 		super('Invitations');
 
 		if (Meteor.isServer) {
-			this._ensureIndex({ tenant: 1 });
-			this._ensureIndex({ token: 1, to: 1 });
+			this.createIndex({ tenant: 1 });
+			this.createIndex({ token: 1, to: 1 });
 		}
 	}
 

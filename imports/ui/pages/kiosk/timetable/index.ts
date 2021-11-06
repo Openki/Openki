@@ -29,11 +29,7 @@ export interface Data {
 	}[];
 }
 
-const Template = TemplateAny as TemplateStaticTyped<
-	Data,
-	'kioskTimetablePage',
-	Record<string, never>
->;
+const Template = TemplateAny as TemplateStaticTyped<'kioskTimetablePage', Data>;
 
 const template = Template.kioskTimetablePage;
 

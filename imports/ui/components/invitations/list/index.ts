@@ -17,8 +17,8 @@ export interface Data {
 }
 
 const Template = TemplateAny as TemplateStaticTyped<
-	Data,
 	'invitationsList',
+	Data,
 	{
 		state: ReactiveDict<{ showAccepted: boolean }>;
 	}
