@@ -9,7 +9,7 @@ import { Venues } from '/imports/api/venues/venues';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
-import '/imports/ui/components/language-selection/language-selection';
+import '/imports/ui/components/language-selection';
 
 import './template.html';
 import './styles.scss';

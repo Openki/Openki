@@ -13,7 +13,8 @@ import * as StringTools from '/imports/utils/string-tools';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 
-import './region-selection.html';
+import './template.html';
+import './styles.scss';
 
 Template.regionSelectionWrap.onCreated(function () {
 	this.subscribe('Regions');

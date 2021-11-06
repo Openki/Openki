@@ -9,7 +9,8 @@ import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 import * as StringTools from '/imports/utils/string-tools';
 
-import './language-selection.html';
+import './template.html';
+import './styles.scss';
 
 Template.languageSelectionWrap.created = function () {
 	const instance = this;

@@ -2,7 +2,7 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import $ from 'jquery';
 
-import '/imports/ui/components/regions/selection/region-selection';
+import '/imports/ui/components/regions/selection';
 
 import './region-splash.html';
 
