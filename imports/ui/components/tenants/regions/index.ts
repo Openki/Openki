@@ -1,10 +1,20 @@
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
 
 import { Regions } from '/imports/api/regions/regions';
+import { TenantModel } from '/imports/api/tenants/tenants';
 
-import './tenant-regions.html';
+import './template.html';
 
-Template.tenantRegions.onCreated(function () {
+export interface Data {
+	tenant: TenantModel;
+}
+
+const Template = TemplateAny as TemplateStaticTyped<'tenantRegions', Data>;
+
+const template = Template.tenantRegions;
+
+template.onCreated(function () {
 	const instance = this;
 	const { tenant } = instance.data;
 	instance.autorun(() => {
@@ -13,17 +23,11 @@ Template.tenantRegions.onCreated(function () {
 });
 
 Template.tenantRegions.helpers({
-	/**
-	 * @param {string} tenantId
-	 */
-	regions(tenantId) {
+	regions(tenantId: string) {
 		return Regions.findFilter({ tenant: tenantId });
 	},
 
-	/**
-	 * @param {string} tenantId
-	 */
-	addRegionQuery(tenantId) {
+	addRegionQuery(tenantId: string) {
 		return `tenant=${tenantId}`;
 	},
 
