@@ -5,24 +5,25 @@ import { i18n } from '/imports/startup/both/i18next';
 import { _ } from 'meteor/underscore';
 
 import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
-import { Courses } from '/imports/api/courses/courses';
-import { Regions } from '/imports/api/regions/regions';
-/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
-import { Users } from '/imports/api/users/users';
+import { CourseModel, Courses } from '/imports/api/courses/courses';
+import { RegionModel, Regions } from '/imports/api/regions/regions';
+import { UserModel, Users } from '/imports/api/users/users';
 import { Log } from '/imports/api/log/log';
 
 import * as StringTools from '/imports/utils/string-tools';
 import { getSiteName } from '/imports/utils/getSiteName';
 
-/** @typedef {import('../api/users/users').UserModel} UserModel */
-
-const notificationComment = {};
+interface Body {
+	commentId: string;
+	recipients: string[];
+	model: string;
+}
 
 /**
  * Record the intent to send event notifications
- * @param {string} commentId ID for the CourseDiscussions collection
+ * @param commentId ID for the CourseDiscussions collection
  */
-notificationComment.record = function (commentId) {
+export function record(commentId: string) {
 	check(commentId, String);
 	const comment = CourseDiscussions.findOne(commentId);
 	if (!comment) {
@@ -34,7 +35,7 @@ notificationComment.record = function (commentId) {
 		throw new Meteor.Error(`No course entry for ${commentId}`);
 	}
 
-	const body = {};
+	const body = {} as Body;
 	body.commentId = comment._id;
 
 	if (comment.notifyAll) {
@@ -70,13 +71,14 @@ notificationComment.record = function (commentId) {
 	body.model = 'Comment';
 
 	Log.record('Notification.Send', [course._id, comment._id], body);
-};
+}
 
-notificationComment.Model = function (entry) {
+export function Model(entry: { body: Body }) {
 	const comment = CourseDiscussions.findOne(entry.body.commentId);
-	let course = false;
-	let commenter = false;
-	let commenterName = false;
+
+	let course: CourseModel | undefined;
+	let commenter: UserModel | undefined;
+	let commenterName: string | undefined;
 
 	if (comment) {
 		course = Courses.findOne(comment.courseId);
@@ -89,10 +91,7 @@ notificationComment.Model = function (entry) {
 	}
 
 	return {
-		/**
-		 * @param {UserModel} actualRecipient
-		 */
-		accepted(actualRecipient) {
+		accepted(actualRecipient: UserModel) {
 			if (actualRecipient.notifications === false) {
 				throw new Error('User wishes to not receive automated notifications');
 			}
@@ -102,12 +101,7 @@ notificationComment.Model = function (entry) {
 			}
 		},
 
-		/**
-		 * @param {string} userLocale
-		 * @param {UserModel} actualRecipient
-		 * @param {string} unsubToken
-		 */
-		vars(userLocale, actualRecipient, unsubToken) {
+		vars(userLocale: string, _actualRecipient: UserModel, unsubToken: string) {
 			if (!comment) {
 				throw new Error('Comment does not exist (0.o)');
 			}
@@ -118,12 +112,13 @@ notificationComment.Model = function (entry) {
 			const subjectvars = {
 				COURSE: StringTools.truncate(course.name, 10),
 				TITLE: StringTools.truncate(comment.title, 50),
+				COMMENTER: '',
+				lng: userLocale,
 			};
 
-			subjectvars.lng = userLocale;
 			let subject;
 			if (commenter) {
-				subjectvars.COMMENTER = StringTools.truncate(commenterName, 20);
+				subjectvars.COMMENTER = StringTools.truncate(commenterName || '', 20);
 				subject = i18n(
 					'notification.comment.mail.subject',
 					'Comment on {COURSE} by {COMMENTER}: {TITLE}',
@@ -137,8 +132,7 @@ notificationComment.Model = function (entry) {
 				);
 			}
 
-			/** @type {RegionModel | undefined}  */
-			let region;
+			let region: RegionModel | undefined;
 			if (course.region) {
 				region = Regions.findOne(course.region);
 			}
@@ -165,6 +159,4 @@ notificationComment.Model = function (entry) {
 		},
 		template: 'notificationCommentEmail',
 	};
-};
-
-export default notificationComment;
+}

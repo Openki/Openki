@@ -5,47 +5,52 @@ import { i18n } from '/imports/startup/both/i18next';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Log } from '/imports/api/log/log';
-import { Users } from '/imports/api/users/users';
-import { Regions } from '/imports/api/regions/regions';
-/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
+import { UserModel, Users } from '/imports/api/users/users';
+import { RegionModel, Regions } from '/imports/api/regions/regions';
 
 import * as HtmlTools from '/imports/utils/html-tools';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UserPrivilegeUtils from '../utils/user-privilege-utils';
 import { getSiteName } from '../utils/getSiteName';
 
-/** @typedef {import('../api/users/users').UserModel} UserModel */
-
-const notificationPrivateMessage = {};
+interface Body {
+	message: string;
+	sender: string;
+	recipients: string[];
+	targetRecipient: string;
+	revealSenderAddress: boolean;
+	model: string;
+	context: {
+		course?: string;
+		event?: string;
+	};
+}
 
 /**
  * Record the intent to send a private message
- * @param {string} senderId id of the user that sends the message
- * @param {string} recipientId id of the intended recipient
- * @param {string} message the message to transmit
- * @param {boolean} revealSenderAddress include email-address of sender in message
- * @param {boolean} sendCopyToSender send a copy of the message to the author
- * @param {{course?: string, event?: string}} context dictionary with
- * context ID (course, venue, &c.)
+ * @param senderId id of the user that sends the message
+ * @param recipientId id of the intended recipient
+ * @param message the message to transmit
+ * @param revealSenderAddress include email-address of sender in message
+ * @param sendCopyToSender send a copy of the message to the author
+ * @param context dictionary with context ID (course, venue, &c.)
  */
-notificationPrivateMessage.record = function (
-	senderId,
-	recipientId,
-	message,
-	revealSenderAddress,
-	sendCopyToSender,
-	context,
+export function record(
+	senderId: string,
+	recipientId: string,
+	message: string,
+	revealSenderAddress: boolean,
+	sendCopyToSender: boolean,
+	context: { course?: string; event?: string },
 ) {
 	check(senderId, String);
 	check(recipientId, String);
 	check(message, String);
 	check(revealSenderAddress, Boolean);
 	check(sendCopyToSender, Boolean);
-
-	const optionalId = Match.Optional(String);
 	check(context, {
-		course: optionalId,
-		event: optionalId,
+		course: Match.Optional(String),
+		event: Match.Optional(String),
 	});
 
 	const recipients = [recipientId];
@@ -64,9 +69,9 @@ notificationPrivateMessage.record = function (
 
 	const contextRel = Object.values(context);
 
-	const rel = [senderId, recipientId, ...contextRel].filter((id) => id);
+	const rel = [senderId, recipientId, ...contextRel].filter((id) => id) as string[];
 
-	const body = {
+	const body: Body = {
 		message,
 		sender: senderId,
 		recipients,
@@ -77,18 +82,15 @@ notificationPrivateMessage.record = function (
 	};
 
 	Log.record('Notification.Send', rel, body);
-};
+}
 
-notificationPrivateMessage.Model = function (entry) {
+export function Model(entry: { body: Body }) {
 	const { body } = entry;
 	const sender = Users.findOne(body.sender);
 	const targetRecipient = Users.findOne(body.targetRecipient);
 
 	return {
-		/**
-		 * @param {UserModel} actualRecipient
-		 */
-		accepted(actualRecipient) {
+		accepted(actualRecipient: UserModel) {
 			if (
 				!actualRecipient.allowPrivateMessages &&
 				!UserPrivilegeUtils.privileged(sender, 'admin')
@@ -101,12 +103,7 @@ notificationPrivateMessage.Model = function (entry) {
 			}
 		},
 
-		/**
-		 * @param {string} lng
-		 * @param {UserModel} actualRecipient
-		 * @param {string} unsubToken
-		 */
-		vars(lng, actualRecipient, unsubToken) {
+		vars(lng: string, actualRecipient: UserModel, unsubToken: string) {
 			if (!sender) {
 				throw new Error('Sender does not exist (0.o)');
 			}
@@ -125,8 +122,7 @@ notificationPrivateMessage.Model = function (entry) {
 			// Find out whether this is the copy sent to the sender.
 			const senderCopy = sender._id === actualRecipient._id;
 
-			/** @type {RegionModel | undefined}  */
-			let region;
+			let region: RegionModel | undefined;
 			if (actualRecipient.profile?.regionId) {
 				region = Regions.findOne(actualRecipient.profile?.regionId);
 			}
@@ -145,6 +141,9 @@ notificationPrivateMessage.Model = function (entry) {
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=privateMessage`,
 				customSiteName: siteName,
 				customEmailLogo: emailLogo,
+				fromAddress: '',
+				courseName: '',
+				courseLink: '',
 			};
 
 			if (!senderCopy && body.revealSenderAddress) {
@@ -172,6 +171,4 @@ notificationPrivateMessage.Model = function (entry) {
 		},
 		template: 'notificationPrivateMessageEmail',
 	};
-};
-
-export default notificationPrivateMessage;
+}
