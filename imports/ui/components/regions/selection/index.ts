@@ -30,6 +30,12 @@ import './styles.scss';
 		this.state = new ReactiveDict();
 		this.state.setDefault('searchingRegions', false);
 	});
+
+	template.helpers({
+		show() {
+			return Regions.findFilter({}, 2).count() > 1;
+		},
+	});
 }
 
 {

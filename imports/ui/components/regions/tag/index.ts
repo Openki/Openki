@@ -10,6 +10,9 @@ const Template = TemplateAny as TemplateStaticTyped<'regionTag'>;
 const template = Template.regionTag;
 
 template.helpers({
+	show() {
+		return !(Regions.findFilter({}, 2).count() === 1);
+	},
 	regionName() {
 		return Regions.findOne(this.region)?.name;
 	},

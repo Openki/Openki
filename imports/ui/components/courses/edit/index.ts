@@ -213,10 +213,16 @@ export type Data = {
 		},
 
 		showRegionSelection() {
-			// Region can be set for new courses only.
-			// For the proposal frame we hide the region selection when a region
-			// is set.
-			return !this._id && !(this.region && this.isFrame);
+			return (
+				// Region can be set for new courses only.
+				!this._id &&
+				// For the proposal frame we hide the region selection when a region
+				// is set.
+				!(this.region && this.isFrame) &&
+				// If there is only one region on this instance or it is visible to this user, it
+				// will be set automatically.
+				!(Regions.findFilter({}, 2).count() === 1)
+			);
 		},
 
 		hideCategories() {
@@ -387,6 +393,9 @@ export type Data = {
 				if (data.isFrame && data.region) {
 					// The region was preset for the frame
 					changes.region = data.region;
+				} else if (Regions.findFilter({}, 2).count() === 1) {
+					// There is only one region
+					changes.region = Regions.findOne({})?._id as string;
 				} else {
 					changes.region = instance.$('.js-select-region').val() as string;
 				}

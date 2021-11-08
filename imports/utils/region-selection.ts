@@ -108,6 +108,12 @@ export function subscribe(preferredTenant?: string, confirmAutodectionByUser = t
 			return;
 		}
 
+		const regions = Regions.findFilter({}, 2).fetch();
+		if (regions.length === 1 && useAsRegion(regions[0]._id)) {
+			// there is only one region on this instance or visible for this user
+			return;
+		}
+
 		// If no region has been selected previously, we show the splash-screen.
 
 		let region;

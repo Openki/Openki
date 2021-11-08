@@ -1,9 +1,11 @@
 <template name="regionSelectionWrap">
-	{{#if Template.subscriptionsReady}}
-		{{#if state 'searchingRegions'}}
-			{{> regionSelection inNavbar=inNavbar}}
-		{{else}}
-			{{> regionSelectionDisplay inNavbar=inNavbar}}
+	{{#if show}}
+		{{#if Template.subscriptionsReady}}
+			{{#if state 'searchingRegions'}}
+				{{> regionSelection inNavbar=inNavbar}}
+			{{else}}
+				{{> regionSelectionDisplay inNavbar=inNavbar}}
+			{{/if}}
 		{{/if}}
 	{{/if}}
 </template>
