@@ -8,7 +8,8 @@ import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import './price-policy.html';
+import './template.html';
+import './styles.scss';
 
 Template.pricePolicy.helpers({
 	hidePricePolicy() {
