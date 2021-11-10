@@ -1,31 +1,7 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .is-dismissable > .price-policy-content {
-	background-color: lighten($brand-success, 15%);
-	border: 1px solid $brand-success;
+	background-color: lighten($success, 15%);
+	border: 1px solid $success;
 	padding: 10px;
-}
-
-.is-dismissable .price-policy-actions {
-	margin-top: 10px;
-}
-
-$price-policy-actions-grid-width: 15px;
-
-.price-policy-actions {
-	@media (max-width: $screen-xs-max) {
-		@include make-row($price-policy-actions-grid-width);
-	}
-}
-
-.price-policy-action {
-	@media (max-width: $screen-xs-max) {
-		@include td-make-xs-column(6, $price-policy-actions-grid-width);
-	}
-
-	@media (min-width: $screen-sm-min) {
-		display: inline-block;
-
-		+ .price-policy-action {
-			margin-left: 5px;
-		}
-	}
 }

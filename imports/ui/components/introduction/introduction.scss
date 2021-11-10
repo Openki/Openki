@@ -147,19 +147,3 @@
 	@include opacity(0.6);
 	color: $blue;
 }
-
-@media (min-width: $screen-sm-min) {
-	.introduction .price-policy-infos,
-	.introduction .price-policy-actions {
-		display: inline-block;
-	}
-	.introduction .price-policy-actions .icon-text-icon {
-		display: none;
-	}
-}
-
-.introduction .price-policy-action {
-	@media (max-width: $screen-xs-max) {
-		@include td-make-xs-column(12, 15px);
-	}
-}

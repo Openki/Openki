@@ -1,4 +1,4 @@
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
@@ -11,72 +11,84 @@ import { Analytics } from '/imports/ui/lib/analytics';
 import './template.html';
 import './styles.scss';
 
-Template.pricePolicy.helpers({
-	hidePricePolicy() {
-		if (Session.equals('hidePricePolicy', true)) {
-			return true;
-		}
+{
+	const Template = TemplateAny as TemplateStaticTyped<'pricePolicy'>;
 
-		if (localStorage?.getItem('hidePricePolicy') === 'true') {
-			return true;
-		}
+	const template = Template.pricePolicy;
 
-		if (Meteor.user()?.hidePricePolicy) {
-			return true;
-		}
+	template.helpers({
+		hidePricePolicy() {
+			if (Session.equals('hidePricePolicy', true)) {
+				return true;
+			}
 
-		return false;
-	},
-});
+			if (localStorage?.getItem('hidePricePolicy') === 'true') {
+				return true;
+			}
 
-Template.pricePolicyContent.helpers({
-	cssClasses() {
-		const classes = [];
-		if (this.dismissable) {
-			classes.push('is-dismissable');
-		}
-		if (this.wrap) {
-			classes.push(this.wrap);
-		}
-		return classes.join(' ');
-	},
+			if (Meteor.user()?.hidePricePolicy) {
+				return true;
+			}
 
-	pricePolicyEnabled() {
-		return PublicSettings.pricePolicyEnabled;
-	},
+			return false;
+		},
+	});
+}
 
-	pricePolicyLink() {
-		const link = getLocalisedValue(PublicSettings.faqLink);
-		let locale = Session.get('locale');
-		const localizedTitles = new Map()
-			.set('de', 'dürfen-kurse-etwas-kosten')
-			.set('en', 'why-can-not-i-ask-for-a-fixed-price-as-a-mentor');
+{
+	const Template = TemplateAny as TemplateStaticTyped<'pricePolicyContent'>;
 
-		if (!localizedTitles.has(locale)) {
-			locale = locale.slice(0, 2);
-		}
+	const template = Template.pricePolicyContent;
 
-		if (localizedTitles.has(locale)) {
-			return `${link}#${localizedTitles.get(locale)}`;
-		}
-		return link;
-	},
-});
+	template.helpers({
+		cssClasses() {
+			const classes = [];
+			if (this.dismissable) {
+				classes.push('is-dismissable');
+			}
+			if (this.wrap) {
+				classes.push(this.wrap);
+			}
+			return classes.join(' ');
+		},
 
-Template.pricePolicyContent.events({
-	'click .js-hide-price-policy'() {
-		Session.set('hidePricePolicy', true);
-		try {
-			localStorage.setItem('hidePricePolicy', 'true'); // Note: At July 2021, only string values were allowed.
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
+		pricePolicyEnabled() {
+			return PublicSettings.pricePolicyEnabled;
+		},
 
-		// if logged in, hide the policy permanently for this user
-		if (Meteor.userId()) {
-			usersMethods.hidePricePolicy();
-		}
+		pricePolicyLink() {
+			const link = getLocalisedValue(PublicSettings.faqLink);
+			let locale = Session.get('locale');
+			const localizedTitles = new Map()
+				.set('de', 'dürfen-kurse-etwas-kosten')
+				.set('en', 'why-can-not-i-ask-for-a-fixed-price-as-a-mentor');
 
-		Analytics.trackEvent('price', 'hide policy');
-	},
-});
+			if (!localizedTitles.has(locale)) {
+				locale = locale.slice(0, 2);
+			}
+
+			if (localizedTitles.has(locale)) {
+				return `${link}#${localizedTitles.get(locale)}`;
+			}
+			return link;
+		},
+	});
+
+	template.events({
+		'click .js-hide-price-policy'() {
+			Session.set('hidePricePolicy', true);
+			try {
+				localStorage.setItem('hidePricePolicy', 'true'); // Note: At July 2021, only string values were allowed.
+			} catch {
+				// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+			}
+
+			// if logged in, hide the policy permanently for this user
+			if (Meteor.userId()) {
+				usersMethods.hidePricePolicy();
+			}
+
+			Analytics.trackEvent('price', 'hide policy');
+		},
+	});
+}
