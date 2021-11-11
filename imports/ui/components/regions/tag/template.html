@@ -1,8 +1,6 @@
 <template name="regionTag">
-	{{#if show}}
-		<div class="region-tag p-2 text-light">
-			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
-			{{i18n 'regionTag.inRegion' 'in {REGION}' REGION=regionName}}
-		</div>
-	{{/if}}
+	<div class="region-tag p-2 text-light">
+		<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+		{{i18n 'regionTag.inRegion' 'in {REGION}' REGION=regionName}}
+	</div>
 </template>
