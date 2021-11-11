@@ -54,11 +54,8 @@ export function record(courseId: string, participantId: string, newRole: string,
 			.membersWithRole('team')
 			.map((m) => m.user)
 			.filter((r) => r !== participantId),
-
 		newRole,
-
 		message,
-
 		model: 'Join',
 	};
 
@@ -75,7 +72,6 @@ export function Model(entry: { body: Body }) {
 			if (actualRecipient.notifications === false) {
 				throw new Error('User wishes to not receive automated notifications');
 			}
-
 			if (!actualRecipient.hasEmail()) {
 				throw new Error('Recipient has no email address registered');
 			}

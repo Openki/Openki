@@ -1,13 +1,14 @@
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
+import { Spacebars } from 'meteor/spacebars';
 
 import { CourseModel, Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Log } from '/imports/api/log/log';
 import { RegionModel, Regions } from '/imports/api/regions/regions';
-import { UserModel, Users } from '/imports/api/users/users';
+import { UserModel } from '/imports/api/users/users';
 
 import LocalTime from '/imports/utils/local-time';
 import { getSiteName } from '../utils/getSiteName';
@@ -77,16 +78,6 @@ export function Model(entry: { body: Body }) {
 		region = Regions.findOne(event.region);
 	}
 
-	let creator: UserModel | undefined;
-	if (event?.createdBy) {
-		creator = Users.findOne(event.createdBy);
-	}
-
-	let creatorName: string | undefined;
-	if (creator) {
-		creatorName = creator.username;
-	}
-
 	return {
 		accepted(actualRecipient: UserModel) {
 			if (actualRecipient.notifications === false) {
@@ -144,10 +135,10 @@ export function Model(entry: { body: Body }) {
 			const siteName = getSiteName(region);
 			const emailLogo = region.custom?.emailLogo;
 
+			const courseLink = Router.url('showCourse', course, { query: 'campaign=eventNotify' });
 			return {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				event,
-				course,
 				eventDate: startMoment.format('LL'),
 				eventStart: startMoment.format('LT'),
 				eventEnd: endMoment.format('LT'),
@@ -158,7 +149,7 @@ export function Model(entry: { body: Body }) {
 				registerToEventLink: Router.url('showEvent', event, {
 					query: 'action=register&campaign=eventNotify',
 				}),
-				courseLink: Router.url('showCourse', course, { query: 'campaign=eventNotify' }),
+				course: Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`),
 				unsubscribeFromCourseLink: Router.url('showCourse', course, {
 					query: 'unsubscribe=participant&campaign=eventNotify',
 				}),
@@ -166,11 +157,6 @@ export function Model(entry: { body: Body }) {
 				new: entry.body.new,
 				subject,
 				additionalMessage: entry.body.additionalMessage,
-				creator,
-				creatorLink: `${Meteor.absoluteUrl(
-					`user/${event.createdBy}/${creatorName}`,
-				)}?campaign=eventNotify`,
-				creatorName,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventNotify`,
 				customSiteName: siteName,
 				customEmailLogo: emailLogo,
