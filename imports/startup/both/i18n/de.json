@@ -456,7 +456,6 @@
 	"notification.comment.mail.subject.anon": "Anonymer Kommentar bei {COURSE}: {TITLE}",
 	"notification.comment.mail.unsubLink": "Für alle weiteren automatischen Benachrichtigungen abmelden.",
 	"notification.event.mail.changed": "Die folgende Veranstaltung beim Kurs \"{COURSE}\" hat sich geändert:",
-	"notification.event.mail.creationMessage": "Die Veranstaltung wurde von \"{USERNAME}\" erstellt.",
 	"notification.event.mail.greeting": "Hallo {USERNAME}",
 	"notification.event.mail.informRegisterEvent": "Lass uns wissen, ob du am Event teilnimmst:",
 	"notification.event.mail.linkCalendar": "Trage diese Veranstaltung in meinen Kalender ein",
