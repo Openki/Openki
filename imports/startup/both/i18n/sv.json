@@ -369,7 +369,6 @@
 	"notification.event.mail.profileLink": "Besök din profil",
 	"notification.event.mail.subject.changed": "Fixed {DATE}: {TITLE}",
 	"notification.event.mail.subject.new": "På {DATE}: {TITLE}",
-	"notification.event.viewEvent": "visa event",
 	"notification.join.mail.intro": "\"{USERNAME}\" gick just med i kursen \"{COURSE}\" som: {ROLE}.",
 	"notification.join.mail.linktext": "➜ Visa kurs",
 	"notification.join.mail.subject": "{USER} gick med {COURSE}: {ROLE}",

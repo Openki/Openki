@@ -459,7 +459,6 @@
 	"notification.event.mail.subject.new": "Le {DATE}: {TITLE}",
 	"notification.event.mail.titleDescription": "Description",
 	"notification.event.mail.unsubscribe": "Se désabonner du cours.",
-	"notification.event.viewEvent": "Voir l'évènement",
 	"notification.join.mail.intro": "\"{USERNAME}\" vient de rejoindre le cours \"{COURSE}\" en tant que: {ROLE}.",
 	"notification.join.mail.linktext": "➜ voir le cours",
 	"notification.join.mail.message": "Ils ont laissé ce message : ",
