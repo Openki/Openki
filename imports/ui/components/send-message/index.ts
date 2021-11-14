@@ -8,7 +8,7 @@ import * as emailMethods from '/imports/api/emails/methods';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
-import '../profiles/verify-email';
+import '/imports/ui/components/profiles/verify-email';
 
 import './send-message.html';
 

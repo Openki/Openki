@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
-import '/imports/ui/components/send-message/send-message';
+import '/imports/ui/components/send-message';
 import './participant-contact.html';
 
 Template.participantContact.onCreated(function () {
