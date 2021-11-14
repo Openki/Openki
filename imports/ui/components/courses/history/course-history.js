@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 
 import { Events } from '/imports/api/events/events';
 
-import '/imports/ui/components/profile-link/profile-link';
+import '/imports/ui/components/profile-link';
 
 import './course-history.html';
 

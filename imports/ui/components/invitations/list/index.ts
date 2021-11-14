@@ -8,7 +8,7 @@ import * as InvitationsMethods from '/imports/api/invitations/methods';
 import * as Alert from '/imports/api/alerts/alert';
 import { TenantModel } from '/imports/api/tenants/tenants';
 
-import '/imports/ui/components/profile-link/profile-link';
+import '/imports/ui/components/profile-link';
 
 import './template.html';
 

@@ -3,7 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
 import '/imports/ui/components/participant/contact/participant-contact';
-import '/imports/ui/components/profile-link/profile-link';
+import '/imports/ui/components/profile-link';
 
 import './event-participants.html';
 
