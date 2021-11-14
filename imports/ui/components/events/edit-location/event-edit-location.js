@@ -11,7 +11,7 @@ import { Venues } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
-import '/imports/ui/components/map/map';
+import '/imports/ui/components/map';
 import '/imports/ui/components/venues/link/venue-link';
 
 import './event-edit-location.html';

@@ -10,7 +10,7 @@ import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable/editable';
-import '/imports/ui/components/map/map';
+import '/imports/ui/components/map';
 
 import './template.html';
 import './styles.scss';

@@ -9,7 +9,7 @@ import { LocationTracker } from '/imports/ui/lib/location-tracker';
 import { Filtering } from '/imports/utils/filtering';
 import { Predicate } from '/imports/utils/predicates';
 
-import '/imports/ui/components/map/map';
+import '/imports/ui/components/map';
 
 import './template.html';
 import './styles.scss';

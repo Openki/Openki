@@ -1,36 +1,63 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { _ } from 'meteor/underscore';
 import { i18n } from '/imports/startup/both/i18next';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 
-import './map.html';
+import './template.html';
+import './styles.scss';
+
+export interface LocEntity {
+	type: string;
+	coordinates: [number, number];
+}
+
+export interface MarkerEntity {
+	_id: string;
+	main?: boolean;
+	center?: boolean;
+	proposed?: boolean;
+	draggable?: boolean;
+	hover?: boolean;
+	selected?: boolean;
+	loc: LocEntity;
+}
 
 /* Display markers on an interactive map
  *
  * Expected data
  * markers: A cursor of geojson documents
  */
+const Template = TemplateAny as TemplateStaticTyped<
+	'map',
+	{
+		maxZoom?: number;
+		mini: boolean;
+		markers: Mongo.Collection<MarkerEntity>;
+		allowPlacing: () => boolean;
+		allowRemoving: () => boolean;
+	},
+	{
+		fullscreen: ReactiveVar<boolean>;
+		proposeMarker: () => void;
+		removeMarker: () => void;
+	}
+>;
 
-Template.map.onCreated(function () {
+const template = Template.map;
+
+template.onCreated(function () {
 	this.fullscreen = new ReactiveVar(false);
 });
 
-/**
- * @param {string} faClass
- */
-const FaIcon = function (faClass) {
+const FaIcon = function (faClass: string) {
 	return function () {
 		return L.DomUtil.create('span', `fa fa-${faClass}`);
 	};
 };
 
-/**
- * @param {string} opClass
- * @param {string} icClass
- */
-const FaCompIcon = function (opClass, icClass) {
+const FaCompIcon = function (opClass: string, icClass: string) {
 	return function () {
 		const cont = L.DomUtil.create('span', 'fa');
 		L.DomUtil.create('i', `fa fa-${opClass}`, cont);
@@ -52,7 +79,7 @@ const OpenkiControl = L.Control.extend({
 		position: 'topright',
 	},
 
-	initialize(options) {
+	initialize(options: any) {
 		L.Util.setOptions(this, options);
 	},
 
@@ -64,12 +91,12 @@ const OpenkiControl = L.Control.extend({
 	},
 });
 
-Template.map.onRendered(function () {
+template.onRendered(function () {
 	const instance = this;
 	const maxZoom = instance.data.maxZoom || 19;
 
-	const layers = {};
-	const centers = {};
+	const layers: { [id: string]: any } = {};
+	const centers: { [id: string]: any } = {};
 
 	L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
 
@@ -81,8 +108,8 @@ Template.map.onRendered(function () {
 	const map = L.map(instance.find('.map'), options).setView(L.latLng(0, 0), 1);
 
 	// Add tiles depending on language
-	let tiles = null;
-	const tileLayers = {
+	let tiles: any = null;
+	const tileLayers: { [lang: string]: () => any } = {
 		de() {
 			return L.tileLayer('//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
 				maxZoom,
@@ -151,7 +178,7 @@ Template.map.onRendered(function () {
 		const fullscreen = instance.fullscreen.get();
 		const { mini } = instance.data;
 
-		const show = function (control, originalToggle) {
+		const show = function (control: { shown: boolean | undefined }, originalToggle: boolean) {
 			const toggle = Boolean(originalToggle);
 
 			if (control.shown === undefined) {
@@ -233,13 +260,13 @@ Template.map.onRendered(function () {
 	instance.autorun(() => {
 		const { markers } = instance.data;
 
-		const addMarker = function (mark) {
+		const addMarker = function (mark: MarkerEntity) {
 			// Marks that have the center flage set are not displayed but used for anchoring the map
 			if (mark.center) {
 				centers[mark._id] = L.geoJson(mark.loc).getBounds();
 			} else {
 				const marker = L.geoJson(mark.loc, {
-					pointToLayer(feature, latlng) {
+					pointToLayer(_feature: any, latlng: any) {
 						let m;
 						if (mark.proposed) {
 							m = L.circleMarker(latlng, geojsonProposedMarkerOptions);
@@ -255,11 +282,11 @@ Template.map.onRendered(function () {
 							markers.update({}, { $set: { selected: false } });
 							markers.update(mark._id, { $set: { selected: true } });
 						});
-						m.on('dragend', (event) => {
-							const latLng = event.target.getLatLng();
+						m.on('dragend', (event: any) => {
+							const latLng = event.target.getLatLng() as { lng: number; lat: number };
 							const loc = {
 								type: 'Point',
-								coordinates: [latLng.lng, latLng.lat],
+								coordinates: [latLng.lng, latLng.lat] as [number, number],
 							};
 							map.panTo(latLng);
 							markers.update(mark._id, { $set: { loc } });
@@ -279,7 +306,7 @@ Template.map.onRendered(function () {
 			}
 		};
 
-		const removeMarker = function (mark) {
+		const removeMarker = function (mark: MarkerEntity) {
 			if (layers[mark._id]) {
 				map.removeLayer(layers[mark._id]);
 			}
@@ -287,7 +314,7 @@ Template.map.onRendered(function () {
 			delete centers[mark._id];
 		};
 
-		const updateMarker = function (mark) {
+		const updateMarker = function (mark: MarkerEntity) {
 			const layer = layers[mark._id];
 			if (!layer) {
 				return;
@@ -334,7 +361,7 @@ Template.map.onRendered(function () {
 	};
 });
 
-Template.map.helpers({
+template.helpers({
 	mapContainerClass() {
 		if (Template.instance().fullscreen.get()) {
 			return 'map-fullscreen';
@@ -360,32 +387,32 @@ Template.map.helpers({
 	},
 });
 
-Template.map.events({
-	click(event, instance) {
+template.events({
+	click(_event, instance) {
 		if (instance.data.mini) {
 			instance.fullscreen.set(true);
 		}
 	},
 
-	'mousedown .js-add-marker'(event, instance) {
+	'mousedown .js-add-marker'(_event, instance) {
 		instance.proposeMarker();
 	},
 
-	'click .js-remove-marker'(event, instance) {
+	'click .js-remove-marker'(_event, instance) {
 		instance.removeMarker();
 	},
 
-	'click .js-make-fullscreen'(event, instance) {
+	'click .js-make-fullscreen'(_event, instance) {
 		instance.fullscreen.set(true);
 	},
 
-	'click .js-close-fullscreen'(event, instance) {
+	'click .js-close-fullscreen'(_event, instance) {
 		instance.fullscreen.set(false);
 	},
 
 	keyup(event, instance) {
 		// Press escape to close fullscreen
-		if (event.keyCode === 27) {
+		if ((event as any).keyCode === 27) {
 			instance.fullscreen.set(false);
 		}
 	},

@@ -1,3 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .map-box {
 	height: 200px;
 	width: 200px;
@@ -43,7 +45,7 @@
 }
 
 .leaflet-control-container .leaflet-right .leaflet-control:hover {
-	color: $brand-primary;
+	color: $primary;
 	cursor: pointer;
 }
 
