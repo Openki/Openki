@@ -30,18 +30,16 @@ export const sendVerificationEmail = ServerMethod(
 	{ simulation: false },
 );
 
+export interface SendEmailOptions {
+	revealAddress: boolean;
+	sendCopy: boolean;
+	courseId?: string;
+	eventId?: string;
+}
+
 export const sendEmail = ServerMethod(
 	'sendEmail',
-	(
-		userId: string,
-		message: string,
-		options: {
-			revealAddress: boolean;
-			sendCopy: boolean;
-			courseId?: string;
-			eventId?: string;
-		},
-	) => {
+	(userId: string, message: string, options: SendEmailOptions) => {
 		check(userId, String);
 		check(message, String);
 		check(options, {

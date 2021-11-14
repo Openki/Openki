@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import * as emailMethods from '/imports/api/emails/methods';
@@ -10,9 +10,32 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import '/imports/ui/components/profiles/verify-email';
 
-import './send-message.html';
+import './template.html';
+import './styles.scss';
+import { SendEmailOptions } from '/imports/api/emails/methods';
 
-Template.sendMessage.onCreated(function () {
+interface Data {
+	courseId?: string;
+	eventId?: string;
+	recipientId: string;
+	onDone?: () => void;
+}
+
+const Template = TemplateAny as TemplateStaticTyped<
+	'sendMessage',
+	Data,
+	{
+		state: ReactiveDict<{
+			revealAddress: boolean;
+			sendCopy: boolean;
+			verificationMailSent: boolean;
+		}>;
+	}
+>;
+
+const template = Template.sendMessage;
+
+template.onCreated(function () {
 	this.busy(false);
 	this.state = new ReactiveDict();
 	this.state.setDefault({
@@ -22,11 +45,11 @@ Template.sendMessage.onCreated(function () {
 	});
 });
 
-Template.sendMessage.onRendered(function () {
+template.onRendered(function () {
 	this.$('.js-email-message').trigger('select');
 });
 
-Template.sendMessage.helpers({
+template.helpers({
 	hasEmail() {
 		return Meteor.user()?.hasEmail() || false;
 	},
@@ -36,16 +59,20 @@ Template.sendMessage.helpers({
 	},
 });
 
-Template.sendMessage.events({
-	async 'click .js-verify-mail'(event, instance) {
+template.events({
+	async 'click .js-verify-mail'(_event, instance) {
 		instance.state.set('verificationMailSent', true);
+
+		const user = Meteor.user();
+
+		if (!user) {
+			throw new Error('Unexpected null: user');
+		}
 
 		try {
 			await emailMethods.sendVerificationEmail();
 
-			Alert.success(
-				i18n('profile.sentVerificationMail', { MAIL: Meteor.user().emails[0].address }),
-			);
+			Alert.success(i18n('profile.sentVerificationMail', { MAIL: user.emails[0].address }));
 		} catch (err) {
 			instance.state.set('verificationMailSent', false);
 			Alert.serverError(
@@ -56,8 +83,8 @@ Template.sendMessage.events({
 	},
 
 	'change input[type="checkbox"]'(event, instance) {
-		const target = instance.$(event.currentTarget);
-		instance.state.set(target.attr('name'), target.prop('checked'));
+		const target = instance.$((event as any).currentTarget as any);
+		instance.state.set(target.attr('name') as any, target.prop('checked'));
 	},
 
 	async 'submit .js-send-message'(event, instance) {
@@ -69,7 +96,7 @@ Template.sendMessage.events({
 		}
 
 		const { state } = instance;
-		const message = instance.$('.js-email-message').val();
+		const message = instance.$('.js-email-message').val() as string;
 
 		if (message.length < 2) {
 			Alert.error(i18n('profile.mail.longertext', 'longer text please'));
@@ -77,9 +104,9 @@ Template.sendMessage.events({
 			return;
 		}
 
-		const options = {
-			revealAddress: state.get('revealAddress'),
-			sendCopy: state.get('sendCopy'),
+		const options: SendEmailOptions = {
+			revealAddress: state.get('revealAddress') || false,
+			sendCopy: state.get('sendCopy') || false,
 		};
 
 		const data = Template.currentData();
