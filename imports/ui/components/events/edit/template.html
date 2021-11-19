@@ -176,21 +176,20 @@
 								</label>
 							</div>
 							{{#if startDayChanged}}
-								<div class="panel panel-danger">
-									<div class="panel-heading">
+								<div class="card text-white bg-danger mb-4">
+									<div class="card-body p-2">
 										<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
 										{{i18n 'event.edit.startDayChanged' 'Updating the copies when the start day has been changed is not (yet) supported.'}}
 									</div>
 								</div>
 							{{else}}
 								{{#if changedReplicas.length}}
-									<div
-										 class="panel panel-warning changed-replicas {{emphasizeClass}}">
-										<div class="panel-heading">
+									<div class="card mb-4 changed-replicas {{emphasizeClass}}">
+										<div class="card-header bg-warning">
 											<i class="fa fa-warning fa-fw" aria-hidden="true"></i>
 											{{i18n 'event.edit.changedReplicas.heading' 'Found {NUM, plural, one{one copy which varies} other{# copies which vary} } in time' NUM=changedReplicas.length}}
 										</div>
-										<div class="panel-body">
+										<div class="card-body">
 											{{#unless updateChangedReplicas}}
 												<span class="update-changed-replicas-help">
 													{{i18n 'event.edit.changedReplicas.body' "By default {NUM, plural, one{this copy} other{these copies} } won't be updated as {NUM, plural, one{it has} other{they have} } another time set than the original event:" NUM=changedReplicas.length}}
