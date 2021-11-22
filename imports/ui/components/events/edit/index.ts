@@ -32,7 +32,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable/editable';
-import '/imports/ui/components/events/edit-location/event-edit-location';
+import '/imports/ui/components/events/edit-location';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
 

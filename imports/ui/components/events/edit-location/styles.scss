@@ -1,9 +1,11 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 // *** Event location edit ***
 //============================
 
 .event-edit-location-selected {
 	background-color: $white;
-	border: 1px solid darken($gray-lighter, 0%);
+	border: 1px solid darken($gray-400, 0%);
 	border-radius: 4px;
 	display: block;
 	padding: 10px;

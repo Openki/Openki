@@ -14,7 +14,7 @@ import { Users } from '/imports/api/users/users';
 import '/imports/ui/components/map';
 import '/imports/ui/components/venues/link/venue-link';
 
-import './event-edit-location.html';
+import './template.html';
 
 Template.eventEditVenue.onCreated(function () {
 	const instance = this;
