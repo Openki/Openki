@@ -69,6 +69,15 @@ export class Venue {
 	}
 }
 
+export interface FindFilter {
+	/** string of words to search for */
+	search?: string;
+	/** restrict to venues in that region */
+	region?: string;
+	editor?: string;
+	recent?: boolean;
+}
+
 export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 	facilityOptions = [
 		'projector',
@@ -107,19 +116,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 	 * @param skip skip this many before returning results
 	 * @param sort list of fields to sort by
 	 */
-	findFilter(
-		filter: {
-			/** string of words to search for */
-			search?: string;
-			/** restrict to venues in that region */
-			region?: string;
-			editor?: string;
-			recent?: boolean;
-		} = {},
-		limit = 0,
-		skip = 0,
-		sort?: [string, 'asc' | 'desc'][],
-	) {
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: [string, 'asc' | 'desc'][]) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
 		check(sort, Match.Maybe([[String]]));
