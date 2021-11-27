@@ -1,20 +1,61 @@
 import { Geodata, Regions } from '/imports/api/regions/regions';
 import { Mongo } from 'meteor/mongo';
 
-interface MarkerEntity {
+export type PresetMarkerEntity = {
+	preset: true;
+
+	presetName?: string;
+	presetAddress?: string;
+	editor?: string;
+};
+
+export type ProposedMarkerEntity = {
+	proposed: true;
+
 	_id: string;
 	loc: Geodata;
-	main?: boolean;
-	draggable?: boolean;
-	/** Marks that have the center flage set are not displayed but used for anchoring the map */
-	center?: boolean;
-	proposed?: boolean;
-	selected?: boolean;
-	hover?: boolean;
+
 	presetAddress?: string;
 	name?: string;
-	remove?: boolean;
-}
+} & Partial<PresetMarkerEntity>;
+
+export type SelectedMarkerEntity = {
+	selected: true;
+};
+
+export type MainMarkerEntity = {
+	main: true;
+
+	_id: string;
+	loc: Geodata;
+	draggable?: boolean;
+};
+
+export type CenteredMarkerEntity = {
+	/** Marks that have the center flage set are not displayed but used for anchoring the map */
+	center: true;
+
+	_id: string;
+	loc: Geodata;
+};
+
+export type RemoveMarkerEntity = {
+	remove: true;
+
+	_id: string;
+	loc: Geodata;
+};
+
+export type MarkerEntity = {
+	_id: string;
+	hover?: boolean;
+} & (
+	| MainMarkerEntity
+	| CenteredMarkerEntity
+	| RemoveMarkerEntity
+	| ProposedMarkerEntity
+	| PresetMarkerEntity
+);
 
 export class LocationTracker {
 	/** Local collection for in-memory storage */
@@ -22,7 +63,7 @@ export class LocationTracker {
 
 	setLocation(location: { loc?: Geodata }, draggable?: boolean, soft?: boolean) {
 		if (soft) {
-			const marker = this.markers.findOne({ main: true });
+			const marker = this.markers.findOne({ main: true }) as MainMarkerEntity;
 			if (marker && location?.loc) {
 				this.markers.update({ _id: marker._id }, { $set: { loc: location.loc, draggable } });
 				return;
@@ -39,7 +80,7 @@ export class LocationTracker {
 	}
 
 	getLocation() {
-		return this.markers.findOne({ main: true })?.loc;
+		return (this.markers.findOne({ main: true }) as MainMarkerEntity)?.loc;
 	}
 
 	setRegion(regionId: string) {

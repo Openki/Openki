@@ -28,6 +28,7 @@ export interface EventVenueEntity {
 	loc?: Geodata;
 	/** Address string where the event will take place */
 	address?: string;
+	editor?: string;
 }
 
 /** DB-Model */

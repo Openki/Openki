@@ -3,9 +3,9 @@ import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { Regions } from '/imports/api/regions/regions';
-import { Venues } from '/imports/api/venues/venues';
+import { VenueEntity, Venues } from '/imports/api/venues/venues';
 
-import { LocationTracker } from '/imports/ui/lib/location-tracker';
+import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
 import { Filtering } from '/imports/utils/filtering';
 import { Predicate } from '/imports/utils/predicates';
 
@@ -52,12 +52,14 @@ template.onCreated(function () {
 		// Here we assume venues are not changed or removed.
 		instance.locationTracker.markers.remove({});
 		Venues.findFilter(query).observe({
-			added(originalLocation) {
-				const location = { ...originalLocation };
-				location.proposed = true;
-				location.presetName = location.name;
-				location.presetAddress = location.address;
-				location.preset = true;
+			added(originalLocation: VenueEntity) {
+				const location = {
+					...originalLocation,
+					proposed: true,
+					preset: true,
+					presetName: originalLocation.name,
+					presetAddress: originalLocation.address,
+				} as MarkerEntity;
 				instance.locationTracker.markers.insert(location);
 			},
 		});

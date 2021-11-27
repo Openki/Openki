@@ -534,6 +534,7 @@ Meteor.methods({
 							'venue.name': venue.name,
 							'venue.address': venue.address,
 							'venue.loc': venue.loc,
+							'venue.editor': venue.editor,
 						},
 					};
 				} else {

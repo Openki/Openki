@@ -1,28 +1,52 @@
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
+import { EventVenueEntity } from '/imports/api/events/events';
 import * as Alert from '/imports/api/alerts/alert';
+import { FindFilter, VenueEntity, Venues } from '/imports/api/venues/venues';
+import { UserModel, Users } from '/imports/api/users/users';
 
-import { LocationTracker } from '/imports/ui/lib/location-tracker';
-import { Venues } from '/imports/api/venues/venues';
-import { Users } from '/imports/api/users/users';
-/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
+import {
+	CenteredMarkerEntity,
+	LocationTracker,
+	MainMarkerEntity,
+	ProposedMarkerEntity,
+	RemoveMarkerEntity,
+	SelectedMarkerEntity,
+} from '/imports/ui/lib/location-tracker';
 
 import '/imports/ui/components/map';
 import '/imports/ui/components/venues/link/venue-link';
 
 import './template.html';
+import './styles.scss';
 
-Template.eventEditVenue.onCreated(function () {
+const Template = TemplateAny as TemplateStaticTyped<
+	'eventEditVenue',
+	unknown,
+	{
+		locationTracker: LocationTracker;
+		location: ReactiveVar<Partial<EventVenueEntity>>;
+		search: ReactiveVar<string>;
+		addressSearch: ReactiveVar<boolean>;
+		venueEditor: ReactiveVar<UserModel | false | undefined>;
+		locationIs: (type: 'unset' | 'preset' | 'own') => boolean;
+		reset: () => void;
+	}
+>;
+
+const template = Template.eventEditVenue;
+
+template.onCreated(function () {
 	const instance = this;
 	// Something, somewhere, must have gone terribly wrong (for this line to exist)
-	instance.parent = instance.parentInstance();
+	const parent = instance.parentInstance() as any;
 
 	instance.locationTracker = new LocationTracker();
-	instance.location = instance.parent.selectedLocation;
+	instance.location = parent.selectedLocation;
 	instance.search = new ReactiveVar('');
 	instance.addressSearch = new ReactiveVar(Boolean(instance.location.get().name));
 
@@ -49,7 +73,7 @@ Template.eventEditVenue.onCreated(function () {
 	});
 
 	instance.autorun(() => {
-		const regionId = instance.parent.selectedRegion.get();
+		const regionId = parent.selectedRegion.get();
 		instance.locationTracker.setRegion(regionId);
 	});
 
@@ -60,7 +84,7 @@ Template.eventEditVenue.onCreated(function () {
 	instance.autorun(() => {
 		// Set proposed location as new location when it is selected
 		instance.locationTracker.markers.find({ proposed: true, selected: true }).observe({
-			added(mark) {
+			added(mark: ProposedMarkerEntity & SelectedMarkerEntity) {
 				// When a propsed marker is selected, we clear the other location proposals and
 				// store it as new location for the event
 				const updLocation = instance.location.get();
@@ -71,7 +95,7 @@ Template.eventEditVenue.onCreated(function () {
 				if (mark.presetAddress) {
 					updLocation.address = mark.presetAddress;
 				}
-				if (mark.preset) {
+				if ('preset' in mark && mark.preset) {
 					updLocation._id = mark._id;
 					updLocation.editor = mark.editor;
 					updLocation.name = mark.presetName;
@@ -86,9 +110,9 @@ Template.eventEditVenue.onCreated(function () {
 
 		// Update position if marker was dragged
 		instance.locationTracker.markers.find({ main: true }).observe({
-			changed(mark) {
+			changed(mark: MainMarkerEntity | RemoveMarkerEntity) {
 				const updLocation = instance.location.get();
-				if (mark.remove) {
+				if ('remove' in mark && mark.remove) {
 					delete updLocation.loc;
 				} else {
 					if (_.isEqual(mark.loc, updLocation.loc)) {
@@ -111,7 +135,7 @@ Template.eventEditVenue.onCreated(function () {
 		const search = instance.search.get().trim();
 		instance.locationTracker.markers.remove({ proposed: true });
 
-		const query = { region: instance.parent.selectedRegion.get() };
+		const query: FindFilter = { region: parent.selectedRegion.get() };
 
 		if (search.length > 0) {
 			query.search = search;
@@ -123,18 +147,19 @@ Template.eventEditVenue.onCreated(function () {
 
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
-			added(originalLocation) {
-				const location = { ...originalLocation };
-				location.proposed = true;
-				location.presetName = location.name;
-				location.presetAddress = location.address;
-				location.preset = true;
+			added(originalLocation: VenueEntity) {
+				const location = {
+					...originalLocation,
+					proposed: true,
+					preset: true,
+					presetName: originalLocation.name,
+					presetAddress: originalLocation.address,
+				} as ProposedMarkerEntity;
 				instance.locationTracker.markers.insert(location);
 			},
 		});
 	});
 
-	/** @type {ReactiveVar<UserModel|false>} */
 	this.venueEditor = new ReactiveVar(false);
 	this.autorun(() => {
 		const venueEditor = this.location.get().editor;
@@ -146,7 +171,7 @@ Template.eventEditVenue.onCreated(function () {
 	});
 });
 
-Template.eventEditVenue.helpers({
+template.helpers({
 	location() {
 		return Template.instance().location.get();
 	},
@@ -200,14 +225,13 @@ Template.eventEditVenue.helpers({
 	},
 });
 
-Template.eventEditVenue.events({
+template.events({
 	async 'click .js-location-search-btn'(event, instance) {
 		event.preventDefault();
 
 		instance.addressSearch.set(true);
 		const search = instance.$('.js-location-search-input').val();
-		/** @type {{[name: string]: any}} */
-		const nominatimQuery = {
+		const nominatimQuery: Record<string, any> = {
 			format: 'json',
 			q: search,
 			limit: 10,
@@ -215,7 +239,7 @@ Template.eventEditVenue.events({
 
 		const { markers } = instance.locationTracker;
 
-		const region = markers.findOne({ center: true });
+		const region = markers.findOne({ center: true }) as CenteredMarkerEntity;
 		if (region?.loc) {
 			nominatimQuery.viewbox = [
 				region.loc.coordinates[0] - 0.1,
@@ -245,7 +269,7 @@ Template.eventEditVenue.events({
 					proposed: true,
 					presetAddress: foundLocation.display_name,
 					name: foundLocation.display_name,
-				};
+				} as ProposedMarkerEntity;
 				instance.locationTracker.markers.insert(marker);
 			});
 		} catch (reason) {
@@ -253,37 +277,37 @@ Template.eventEditVenue.events({
 		}
 	},
 
-	'click .js-location-change'(event, instance) {
+	'click .js-location-change'(_event, instance) {
 		instance.addressSearch.set(false);
 		instance.location.set({});
 		instance.search.set('');
 	},
 
-	'click .js-location-candidate'(event, instance) {
+	'click .js-location-candidate'(_event, instance) {
 		instance.locationTracker.markers.update(this._id, { $set: { selected: true } });
 	},
 
 	'keyup .js-location-search-input'(event, instance) {
 		const updLocation = instance.location.get();
-		updLocation.name = event.target.value;
+		updLocation.name = (event.target as HTMLInputElement).value;
 		instance.location.set(updLocation);
 
 		instance.addressSearch.set(false);
-		instance.search.set(event.target.value);
+		instance.search.set((event.target as HTMLInputElement).value);
 	},
 
 	'keyup .js-location-address-search'(event, instance) {
 		const updLocation = instance.location.get();
-		updLocation.address = event.target.value;
+		updLocation.address = (event.target as HTMLInputElement).value;
 		instance.location.set(updLocation);
 	},
 
-	'mouseenter .js-location-candidate'(event, instance) {
+	'mouseenter .js-location-candidate'(_event, instance) {
 		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
 		instance.locationTracker.markers.update(this._id, { $set: { hover: true } });
 	},
 
-	'mouseleave .js-location-candidate'(event, instance) {
+	'mouseleave .js-location-candidate'(_event, instance) {
 		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
 	},
 });
