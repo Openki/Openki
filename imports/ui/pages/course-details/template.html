@@ -161,7 +161,7 @@
 <template name="courseGroupList">
 	<div class="tag-group multiline">
 		{{#each groups}}
-			{{> groupName}}
+			{{> groupName groupId=this}}
 			{{#if isOrganizer}}
 				<div class="tag group-tag addon">
 					<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
