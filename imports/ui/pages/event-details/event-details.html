@@ -185,10 +185,10 @@
 <template name="eventGroupList">
 	<div class="tag-group multiline">
 		{{#each allGroups}}
-			{{> groupName}}
+			{{> groupName groupId=this isOrganizer=isOrganizer}}
 			{{#if isOrganizer}}
 				<div class="tag group-tag addon">
-					<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
+					<span class="fa fa-bullhorn fa-fw" aria-hidden="true" title="{{i18n 'grouplist.organizer.title'}}"></span>
 				</div>
 			{{/if}}
 			{{#if tools}}
@@ -251,9 +251,7 @@
 <template name="eventGroupRemove">
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
-			{{#with groupId}}
-				{{i18n 'event.group.confirmRemoveText' "Remove group {NAME} from this event?" NAME=name}}
-			{{/with}}
+			{{i18n 'event.group.confirmRemoveText' "Remove group {NAME} from this event?" NAME=(name groupId)}}
 			<button type="button" class="btn btn-remove js-remove">
 				{{i18n 'course.group.confirmRemoveButton'}}
 			</button>
@@ -269,9 +267,7 @@
 <template name="eventGroupMakeOrganizer">
 	{{#if expanded}}
 		<div class="group-tool-dialog add">
-			{{#with groupId}}
-				{{i18n 'course.group.confirmOrgText' NAME=name}}
-			{{/with}}
+			{{i18n 'course.group.confirmOrgText' NAME=(name groupId)}}
 			{{i18n 'event.group.confirmOrgNotes' "All members of this group will be able to edit this event."}}
 			<button type="button" class="btn btn-add js-makeOrganizer">
 				{{i18n 'course.group.confimOrgButton'}}
@@ -288,9 +284,7 @@
 <template name="eventGroupRemoveOrganizer">
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
-			{{#with groupId}}
-				{{i18n 'course.group.confirmRemoveOrgText' NAME=name}}
-			{{/with}}
+			{{i18n 'course.group.confirmRemoveOrgText' NAME=(name groupId)}}
 			<button type="button" class="btn btn-remove js-removeOrganizer">
 				{{i18n 'course.group.confimRemoveOrgButton'}}
 			</button>
@@ -298,7 +292,7 @@
 	{{else}}
 		<a href="#" class="js-expand btn btn-remove">
 			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
-			{{i18n 'course.group.removeOrgText' NAME=name}}
+			{{i18n 'course.group.removeOrgText' NAME=(name groupId)}}
 		</a>
 	{{/if}}
 </template>

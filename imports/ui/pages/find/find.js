@@ -178,7 +178,7 @@ Template.find.events({
 	'mouseover .js-group-label, mouseout .js-group-label'(e, instance) {
 		FilterPreview({
 			property: 'group',
-			id: this,
+			id: this.groupId,
 			activate: e.type === 'mouseover',
 			delayed: true,
 			instance,

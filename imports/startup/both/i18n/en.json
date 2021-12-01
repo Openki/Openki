@@ -432,6 +432,7 @@
   "groupDetails.saveError": "Saving the group \"{GROUP}\" went wrong",
   "grouplist.addgroups.header": "Add group",
   "grouplist.editgroup.header": "Edit group",
+  "grouplist.organizer.title": "Course is co-organized by this group",
   "groupList.show_courses": "{NAME}, show all their courses",
   "groupListFull.show_courses": "Show all courses of this group",
   "groupSettings.group.logo.removed": "Your changes to the settings of the group \"{GROUP}\" have been saved.",

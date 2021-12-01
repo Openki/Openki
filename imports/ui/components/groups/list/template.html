@@ -1,0 +1,17 @@
+<template name="groupName">
+	<div class="tag tag-link group-tag {{#if isOrganizer}}group-tag-is-organizer{{/if}}">
+		<a class="js-group-label group-{{groupId}}" href="{{pathFor 'groupDetails' _id=groupId}}"
+		   data-tooltip="{{i18n 'groupList.show_courses' '{NAME}, show all their courses' NAME=(name groupId)}}">
+			{{short groupId}}
+		</a>
+	</div>
+</template>
+
+<template name="groupNameFull">
+	<div class="tag tag-link group-tag">
+		<a class="js-group-label" href="{{pathFor 'groupDetails' _id=groupId}}" data-html="true"
+		   data-tooltip="{{i18n 'groupListFull.show_courses' 'Show all courses of this group'}}">
+			{{name groupId}}
+		</a>
+	</div>
+</template>

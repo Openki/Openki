@@ -30,7 +30,7 @@ import '/imports/ui/components/courses/history/course-history';
 import '/imports/ui/components/courses/members/course-members';
 import '/imports/ui/components/courses/roles/course-roles';
 import '/imports/ui/components/editable/editable';
-import '/imports/ui/components/groups/list/group-list';
+import '/imports/ui/components/groups/list';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
 import '/imports/ui/components/sharing/sharing';
