@@ -2,7 +2,8 @@ import { Template } from 'meteor/templating';
 
 import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
 
-import './group-list.html';
+import './template.html';
+import './styles.scss';
 
 Template.groupName.helpers(GroupNameHelpers);
 
