@@ -6,6 +6,10 @@
 	@include tag-btn($group-bg, $group-label-color);
 }
 
+.group-tag-is-organizer {
+	border-left: 2px solid rgba(150, 197, 149, 0.5);
+}
+
 .group-tools {
 	padding: 10px 0;
 }

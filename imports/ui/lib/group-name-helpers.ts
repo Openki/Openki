@@ -9,7 +9,7 @@ function subbedGroup(groupId: string) {
 }
 
 export const GroupNameHelpers = {
-	short(groupId:string) {
+	short(groupId: string) {
 		if (!groupId) {
 			return false;
 		}
@@ -19,7 +19,7 @@ export const GroupNameHelpers = {
 		}
 		return group.short;
 	},
-	name(groupId:string) {
+	name(groupId: string) {
 		if (!groupId) {
 			return false;
 		}

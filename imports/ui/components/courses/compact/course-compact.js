@@ -58,6 +58,10 @@ Template.courseCompact.helpers({
 
 		return filterPreviewClasses.join(' ');
 	},
+
+	isOrganizer(groupId) {
+		return this.groupOrganizers.includes(groupId);
+	},
 });
 
 Template.courseCompactEvent.helpers({
