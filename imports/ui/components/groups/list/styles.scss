@@ -1,3 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .group-tag {
 	@include tag($group-bg, $group-label-color);
 }
@@ -18,11 +20,11 @@
 	padding: 10px;
 
 	&.add {
-		background-color: rgba($brand-success, 0.35);
+		background-color: rgba($success, 0.35);
 	}
 
 	&.danger {
-		background-color: rgba($brand-danger, 0.2);
+		background-color: rgba($danger, 0.2);
 	}
 }
 
