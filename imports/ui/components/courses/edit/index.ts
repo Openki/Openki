@@ -23,7 +23,7 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
-import '/imports/ui/components/courses/categories/course-categories';
+import '/imports/ui/components/courses/categories';
 import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';

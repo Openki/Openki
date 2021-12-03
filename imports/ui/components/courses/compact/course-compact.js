@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { Roles } from '/imports/api/roles/roles';
 import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
-import '/imports/ui/components/courses/categories/course-categories';
+import '/imports/ui/components/courses/categories';
 
 import './course-compact.html';
 

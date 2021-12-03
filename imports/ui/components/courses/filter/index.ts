@@ -8,7 +8,7 @@ import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
 import * as StringTools from '/imports/utils/string-tools';
 
-import '/imports/ui/components/courses/categories/course-categories';
+import '/imports/ui/components/courses/categories';
 
 import './template.html';
 import './styles.scss';

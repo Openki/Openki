@@ -1,1 +1,2 @@
-import './course-categories.html';
+import './template.html';
+import './styles.scss';
