@@ -1,0 +1,45 @@
+{{#emailBase subject=subject site=site}}
+	<tr> 
+		<td>
+			<span class="title">
+				{{i18n "notification.group.course.mail.greeting" "Hi {USERNAME}" USERNAME=username lng=locale}}
+			</span>
+			<p>
+				{{i18n "notification.group.course.mail.intro" '{USERNAME} just proposed course {COURSE} in group {GROUPS}.' USERNAME=username COURSE=course GROUPS=groups lng=locale}}
+			</p>
+			{{#if courseDescription}}
+				<table class="comment-box">
+					<tr>
+						<td>
+							{{{courseDescription}}}
+						</td>
+					</tr>
+				</table>
+			{{/if}}
+			<p>
+				<a
+				   href="{{courseLink}}">{{i18n "notification.group.course.mail.linktext" '➜ View course' lng=locale}}</a>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="footer">
+				<tr>
+					<td>
+						{{i18n "notification.group.course.mail.recpnote" "You receive this message because you're a member of {GROUPS}." GROUPS=groups lng=locale}}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a
+						   href="{{unsubLink}}">{{i18n "notification.join.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName lng=locale}}</a>
+						&nbsp;
+						<a
+						   href="{{urlFor 'profile' query='campaign=groupCourseNotify'}}">{{i18n "notification.join.mail.profileLink" "Visit your profile" lng=locale}}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{{/emailBase}}
