@@ -11,7 +11,7 @@ import { Course, Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import Profile from '/imports/utils/profile';
+import * as Profile from '/imports/utils/profile';
 import { isEmail } from '/imports/utils/email-tools';
 import * as StringTools from '/imports/utils/string-tools';
 import { AsyncTools } from '/imports/utils/async-tools';
