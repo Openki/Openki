@@ -1,6 +1,7 @@
 import { check, Match } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
-import { LocalisedValue } from './CustomChecks';
+
+import { LocalisedValue } from '/imports/utils/CustomChecks';
 
 // See settings-example.json.md for full documentation
 

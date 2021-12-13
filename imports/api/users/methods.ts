@@ -7,31 +7,28 @@ import { ValidationError } from 'meteor/mdg:validation-error';
 import { Log } from '/imports/api/log/log';
 import { Groups } from '/imports/api/groups/groups';
 import { Users } from '/imports/api/users/users';
-import { Courses } from '/imports/api/courses/courses';
+import { Course, Courses } from '/imports/api/courses/courses';
+import { Events } from '/imports/api/events/events';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import Profile from '/imports/utils/profile';
 import { isEmail } from '/imports/utils/email-tools';
 import * as StringTools from '/imports/utils/string-tools';
 import { AsyncTools } from '/imports/utils/async-tools';
-/** @typedef {import('/imports/api/courses/courses').Course} Course */
-import { Events } from '../events/events';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import { PublicSettings } from '/imports/utils/PublicSettings';
-/** @typedef {import('./users').UserModel} UserModel */
 
 /**
  * Set user region
  */
-export const regionChange = ServerMethod(
-	'user.regionChange',
-	/**
-	 * @param {string} newRegion
-	 */
-	(newRegion) => {
-		Profile.Region.change(Meteor.userId(), newRegion, 'client call');
-	},
-);
+export const regionChange = ServerMethod('user.regionChange', (newRegion: string) => {
+	const userId = Meteor.userId();
+	if (!userId) {
+		throw new Meteor.Error(401, 'please log in');
+	}
+
+	Profile.Region.change(userId, newRegion, 'client call');
+});
 
 /**
  * Update user avatar color
@@ -39,57 +36,51 @@ export const regionChange = ServerMethod(
 export const updateAvatarColor = ServerMethod(
 	'user.updateAvatarColor',
 	/**
-	 * @param {number} [newColor] hsl hue number, otherwise a random color is generated
+	 * @param newColor hsl hue number, otherwise a random color is generated
 	 */
-	(newColor) => {
+	(newColor?: number) => {
 		check(newColor, Match.Optional(Number));
 
+		const userId = Meteor.userId();
+		if (!userId) {
+			throw new Meteor.Error(401, 'please log in');
+		}
+
 		const color = newColor ?? _.random(360);
-		Profile.AvatarColor.change(Meteor.userId(), color);
+		Profile.AvatarColor.change(userId, color);
 	},
 );
 
 /**
  * Update user description
  */
-export const updateDescription = ServerMethod(
-	'user.updateDescription',
-	/**
-	 * @param {string} description
-	 */
-	(description) => {
-		check(description, String);
+export const updateDescription = ServerMethod('user.updateDescription', (description: string) => {
+	check(description, String);
 
-		/** @type {UserModel} */
-		const user = Meteor.user();
-		if (!user) {
-			throw new ValidationError([{ name: 'description', type: 'plzLogin' }], 'Not logged-in');
-		}
+	const user = Meteor.user();
+	if (!user) {
+		throw new ValidationError([{ name: 'description', type: 'plzLogin' }], 'Not logged-in');
+	}
 
-		const sane = StringTools.saneTitle(description).trim().substring(0, 400);
+	const sane = StringTools.saneTitle(description).trim().substring(0, 400);
 
-		const result = Profile.Description.change(user._id, sane);
-		if (!result) {
-			throw new ValidationError(
-				[{ name: 'description', type: 'descriptionError' }],
-				'Failed to update description',
-			);
-		}
-	},
-);
+	const result = Profile.Description.change(user._id, sane);
+	if (!result) {
+		throw new ValidationError(
+			[{ name: 'description', type: 'descriptionError' }],
+			'Failed to update description',
+		);
+	}
+});
 
 /**
  * Update username
  */
 export const updateUsername = ServerMethod(
 	'user.updateUsername',
-	/**
-	 * @param {string} description
-	 */
-	(username) => {
+	(username: string) => {
 		check(username, String);
 
-		/** @type {UserModel | undefined} */
 		const user = Meteor.user();
 		if (!user) {
 			throw new ValidationError([{ name: 'username', type: 'plzLogin' }], 'Not logged-in');
@@ -97,7 +88,7 @@ export const updateUsername = ServerMethod(
 
 		let saneUsername = StringTools.saneTitle(username);
 
-		(PublicSettings.contribution?.forbiddenChars || []).forEach((c) => {
+		((PublicSettings.contribution?.forbiddenChars || []) as string[]).forEach((c) => {
 			saneUsername = saneUsername.replace(RegExp(c, 'g'), '');
 		});
 		saneUsername = saneUsername.trim().substring(0, 200);
@@ -136,13 +127,9 @@ export const updateUsername = ServerMethod(
  */
 export const updateAutomatedNotification = ServerMethod(
 	'user.updateAutomatedNotification',
-	/**
-	 * @param {boolean} allow
-	 */
-	(allow) => {
+	(allow: boolean) => {
 		check(allow, Boolean);
 
-		/** @type {UserModel} */
 		const user = Meteor.user();
 		if (!user) {
 			throw new ValidationError([{ name: 'notifications', type: 'plzLogin' }], 'Not logged-in');
@@ -159,13 +146,9 @@ export const updateAutomatedNotification = ServerMethod(
  */
 export const updatePrivateMessages = ServerMethod(
 	'user.updatePrivateMessages',
-	/**
-	 * @param {boolean} allow
-	 */
-	(allow) => {
+	(allow: boolean) => {
 		check(allow, Boolean);
 
-		/** @type {UserModel} */
 		const user = Meteor.user();
 		if (!user) {
 			throw new ValidationError(
@@ -185,10 +168,7 @@ export const updatePrivateMessages = ServerMethod(
  */
 export const updateEmail = ServerMethod(
 	'user.updateEmail',
-	/**
-	 * @param {string} email
-	 */
-	(email) => {
+	(email: string) => {
 		check(email, String);
 
 		const user = Meteor.user();
@@ -233,27 +213,30 @@ export const selfRemove = ServerMethod('user.self.remove', () => {
 
 export const adminRemove = ServerMethod(
 	'user.admin.remove',
-	/**
-	 * @param {string} userId
-	 * @param {string} reason
-	 * @param {object} [options]
-	 * @param {boolean} [options.courses] On true the courses (and events) created by the user
-	 * will also be deleted
-	 */
-	(userId, reason, options) => {
+	(
+		userId: string,
+		reason: string,
+		options?: {
+			/** On true the courses (and events) created by the user will also be deleted */
+			courses?: boolean;
+		},
+	) => {
 		check(userId, String);
 		check(reason, String);
 		check(
-			options,
+			options as any,
 			Match.Optional({
 				courses: Match.Optional(Boolean),
 			}),
 		);
 
-		if (!UserPrivilegeUtils.privilegedTo('admin')) return;
+		const operatorId = Meteor.userId();
 
-		/** @type {Course[]} */
-		const deletedCourses = [];
+		if (!operatorId || !UserPrivilegeUtils.privilegedTo('admin')) {
+			return;
+		}
+
+		const deletedCourses: Course[] = [];
 		let numberOfDeletedEvents = 0;
 		if (options?.courses) {
 			// Remove courses created by this user
@@ -281,8 +264,8 @@ export const adminRemove = ServerMethod(
 			Courses.updateGroups(course._id);
 		});
 
-		const operatorId = Meteor.userId();
-		const user = Users.findOne(userId);
+		const user = Users.findOne(userId) as any;
+
 		delete user.services;
 
 		Users.remove({ _id: userId });
@@ -299,11 +282,7 @@ export const adminRemove = ServerMethod(
 
 export const addPrivilege = ServerMethod(
 	'user.addPrivilege',
-	/**
-	 * @param {string} userId
-	 * @param {string} privilege
-	 */
-	(userId, privilege) => {
+	(userId: string, privilege: 'admin') => {
 		check(userId, String);
 		check(privilege, String);
 
@@ -319,6 +298,7 @@ export const addPrivilege = ServerMethod(
 		Users.update(
 			{ _id: user._id },
 			{ $addToSet: { privileges: privilege } },
+			undefined,
 			AsyncTools.checkUpdateOne,
 		);
 	},
@@ -326,11 +306,7 @@ export const addPrivilege = ServerMethod(
 
 export const removePrivilege = ServerMethod(
 	'user.removePrivilege',
-	/**
-	 * @param {string} userId
-	 * @param {string} privilege
-	 */
-	(userId, privilege) => {
+	(userId: string, privilege: 'admin') => {
 		check(userId, String);
 		check(privilege, String);
 
@@ -341,22 +317,26 @@ export const removePrivilege = ServerMethod(
 
 		const operator = Meteor.user();
 
-		if (!UserPrivilegeUtils.privileged(operator, 'admin') && operator?._id !== user._id) {
+		if (
+			!operator ||
+			(!UserPrivilegeUtils.privileged(operator, 'admin') && operator?._id !== user._id)
+		) {
 			return;
 		}
 
 		Users.update(
 			{ _id: user._id },
 			{ $pull: { privileges: privilege } },
+			undefined,
 			AsyncTools.checkUpdateOne,
 		);
 	},
 );
 
-export const setHasContributed = ServerMethod('user.setHasContributed', (userId) => {
+export const setHasContributed = ServerMethod('user.setHasContributed', (userId: string) => {
 	const operator = Meteor.user();
 
-	if (!UserPrivilegeUtils.privileged(operator, 'admin')) {
+	if (!operator || !UserPrivilegeUtils.privileged(operator, 'admin')) {
 		return;
 	}
 
@@ -373,10 +353,10 @@ export const setHasContributed = ServerMethod('user.setHasContributed', (userId)
 	});
 });
 
-export const unsetHasContributed = ServerMethod('user.unsetHasContributed', (userId) => {
+export const unsetHasContributed = ServerMethod('user.unsetHasContributed', (userId: string) => {
 	const operator = Meteor.user();
 
-	if (!UserPrivilegeUtils.privileged(operator, 'admin')) {
+	if (!operator || !UserPrivilegeUtils.privileged(operator, 'admin')) {
 		return;
 	}
 
@@ -394,35 +374,33 @@ export const unsetHasContributed = ServerMethod('user.unsetHasContributed', (use
 });
 
 export const hidePricePolicy = ServerMethod('user.hidePricePolicy', () => {
-	Users.update(Meteor.userId(), { $set: { hidePricePolicy: true } });
+	const userId = Meteor.userId();
+	if (!userId) {
+		throw new Meteor.Error(401, 'please log in');
+	}
+
+	Users.update(userId, { $set: { hidePricePolicy: true } });
 });
 
-export const name = ServerMethod(
-	'user.name',
-	/**
-	 * @param {string} userId
-	 */
-	function (userId) {
-		this.unblock();
-		const user = Users.findOne(userId, { fields: { username: 1, contribution: 1 } });
-		if (!user) {
-			return false;
-		}
-		return user;
-	},
-);
+export const name = ServerMethod('user.name', function (userId: string) {
+	this.unblock();
+	const user = Users.findOne(userId, { fields: { username: 1, contribution: 1 } });
+	if (!user) {
+		return false;
+	}
+	return user;
+});
 
-export const updateLocale = ServerMethod(
-	'user.updateLocale',
-	/**
-	 * @param {string} locale
-	 */
-	(locale) => {
-		Users.update(Meteor.userId(), {
-			$set: { locale },
-		});
-	},
-);
+export const updateLocale = ServerMethod('user.updateLocale', (locale: string) => {
+	const userId = Meteor.userId();
+	if (!userId) {
+		throw new Meteor.Error(401, 'please log in');
+	}
+
+	Users.update(userId, {
+		$set: { locale },
+	});
+});
 
 Meteor.methods({
 	/**
@@ -440,7 +418,7 @@ Meteor.methods({
 					return;
 				}
 
-				const groups = [];
+				const groups: string[] = [];
 				Groups.find({ members: user._id }).forEach((group) => {
 					groups.push(group._id);
 				});
@@ -455,7 +433,7 @@ Meteor.methods({
 					},
 				};
 
-				Users.rawCollection().update({ _id: user._id }, update, (err, result) => {
+				Users.rawCollection().update({ _id: user._id }, update, (err: any, result: any) => {
 					if (err) {
 						reject(err);
 					} else {

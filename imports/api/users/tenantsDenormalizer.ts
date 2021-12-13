@@ -20,53 +20,29 @@ export function onStartUp() {
 	console.log(`users.tenantsDenormalizer.onStartUp: ${updated} affected users`);
 }
 
-/**
- * @param {string} userId
- * @param {string} tenantId
- */
-export function afterTenantCreate(userId, tenantId) {
+export function afterTenantCreate(userId: string, tenantId: string) {
 	Users.update(userId, { $addToSet: { tenants: { _id: tenantId, privileges: ['admin'] } } });
 }
 
-/**
- * @param {string} userId
- * @param {string} tenantId
- */
-export function afterTenantAddMember(userId, tenantId) {
+export function afterTenantAddMember(userId: string, tenantId: string) {
 	Users.update(userId, { $addToSet: { tenants: { _id: tenantId } } });
 }
 
-/**
- * @param {string} userId
- * @param {string} tenantId
- */
-export function afterTenantRemoveMember(userId, tenantId) {
+export function afterTenantRemoveMember(userId: string, tenantId: string) {
 	Users.update(userId, { $pull: { tenants: { _id: tenantId } } });
 }
 
-/**
- * @param {string} userId
- * @param {string} tenantId
- */
-export function afterTenantAddAdmin(userId, tenantId) {
+export function afterTenantAddAdmin(userId: string, tenantId: string) {
 	Users.update(userId, { $addToSet: { tenants: { _id: tenantId, privileges: ['admin'] } } });
 }
 
-/**
- * @param {string} userId
- * @param {string} tenantId
- */
-export function afterTenantRemoveAdmin(userId, tenantId) {
+export function afterTenantRemoveAdmin(userId: string, tenantId: string) {
 	Users.update(
 		{ _id: userId, 'tenants._id': tenantId },
 		{ $pull: { 'tenants.$.privileges': 'admin' } },
 	);
 }
 
-/**
- * @param {string} userId
- * @param {string} tenantId
- */
-export function afterInvitationJoin(userId, tenantId) {
+export function afterInvitationJoin(userId: string, tenantId: string) {
 	Users.update(userId, { $addToSet: { tenants: { _id: tenantId } } });
 }
