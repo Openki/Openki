@@ -10,9 +10,9 @@ import { Log } from '/imports/api/log/log';
 import { Users } from '/imports/api/users/users';
 
 import * as notificationEvent from '/imports/notification/notification.event';
-import notificationComment from '/imports/notification/notification.comment';
+import * as notificationComment from '/imports/notification/notification.comment';
 import * as notificationJoin from '/imports/notification/notification.join';
-import notificationPrivateMessage from '/imports/notification/notification.private-message';
+import * as notificationPrivateMessage from '/imports/notification/notification.private-message';
 
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '../utils/PublicSettings';
