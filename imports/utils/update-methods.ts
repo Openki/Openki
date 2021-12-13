@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { Groups } from '/imports/api/groups/groups';
+import { UserModel } from '../api/users/users';
 
 // The code to update the groups and groupOrganizers field must do the same
 // thing for Courses and Events. So we parameterize the methods
@@ -9,16 +10,13 @@ import { Groups } from '/imports/api/groups/groups';
 
 /**
  * Create an update method for the groups field
- * @template T
- * @param {Mongo.Collection<T>} collection The collection the changes will be applied to when the
- * method is called
+ * @param collection The collection the changes will be applied to when the method is called
  */
-export function promote(collection) {
-	return function (
-		/** @type {string} */ docId,
-		/** @type {string} */ groupId,
-		/** @type {boolean} */ enable,
-	) {
+export function promote<
+	T extends { groups: string[]; groupOrganizers: string[] },
+	U extends { _id: string; editableBy: (user: UserModel) => boolean },
+>(collection: Mongo.Collection<T, U> & { updateGroups: (docId: string) => void }) {
+	return function (docId: string, groupId: string, enable: boolean) {
 		check(docId, String);
 		check(groupId, String);
 		check(enable, Boolean);
@@ -41,7 +39,7 @@ export function promote(collection) {
 		const mayPromote = user.mayPromoteWith(group._id);
 		const mayEdit = doc.editableBy(user);
 
-		const update = {};
+		const update: any = {};
 		if (enable) {
 			// The user is allowed to add the group if she is part of the group
 			if (!mayPromote) {
@@ -66,17 +64,14 @@ export function promote(collection) {
 
 /**
  * Create an update method for the groupOrganizers field
- * @template T
- * @param {Mongo.Collection<T>} collection the collection the changes will be applied to when the
- * method is called
+ * @param collection the collection the changes will be applied to when the method is called
  * @return A function that can be used as meteor method
  */
-export function editing(collection) {
-	return function (
-		/** @type {string} */ docId,
-		/** @type {string} */ groupId,
-		/** @type {boolean} */ enable,
-	) {
+export function editing<
+	T extends { groupOrganizers: string[] },
+	U extends { _id: string; editableBy: (user: UserModel) => boolean },
+>(collection: Mongo.Collection<T, U> & { updateGroups: (docId: string) => void }) {
+	return function (docId: string, groupId: string, enable: boolean) {
 		check(docId, String);
 		check(groupId, String);
 		check(enable, Boolean);
@@ -96,7 +91,7 @@ export function editing(collection) {
 			throw new Meteor.Error(401, 'Not permitted');
 		}
 
-		const update = {};
+		const update: any = {};
 		const op = enable ? '$addToSet' : '$pull';
 		update[op] = { groupOrganizers: group._id };
 
