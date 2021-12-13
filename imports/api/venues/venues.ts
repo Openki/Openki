@@ -56,7 +56,7 @@ export class Venue {
 	/**
 	 * Check whether a user may edit the venue.
 	 */
-	editableBy(this: VenueModel, user: UserModel) {
+	editableBy(this: VenueModel, user: UserModel | undefined | null) {
 		if (!user) {
 			return false;
 		}

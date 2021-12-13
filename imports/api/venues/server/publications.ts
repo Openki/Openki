@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 
-import { FindFilter, VenueEntity, Venues } from '../venues';
+import { FindFilter, VenueEntity, Venues } from '/imports/api/venues/venues';
 
 Meteor.publish('venues', (region?: string) => {
 	check(region, Match.Maybe(String));
