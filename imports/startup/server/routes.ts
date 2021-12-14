@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 
-import Profile from '/imports/utils/profile';
+import * as Profile from '/imports/utils/profile';
 
 // Server only routes
 

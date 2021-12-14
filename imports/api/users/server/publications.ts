@@ -8,7 +8,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 Meteor.publish('user', function (userId) {
 	// Public fields from users
-	const fields = {
+	const fields: Mongo.FieldSpecifier = {
 		username: 1,
 		description: 1,
 		acceptsPrivateMessages: 1,
@@ -27,7 +27,7 @@ Meteor.publish('user', function (userId) {
 // Always publish their own data for logged-in users
 // https://github.com/meteor/guide/issues/651
 Meteor.publish(null, function () {
-	return Users.find(this.userId);
+	return Users.find(this.userId as any);
 });
 
 Meteor.publish('userSearch', (search) => {

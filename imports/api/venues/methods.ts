@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 import { Regions } from '../regions/regions';
-import { Venues } from './venues';
+import { VenueEntity, Venues } from './venues';
 /** @typedef {import('./venues').VenueEntity} VenueEntity */
 
 import { AsyncTools } from '/imports/utils/async-tools';
@@ -13,24 +13,23 @@ import * as StringTools from '/imports/utils/string-tools';
 
 export const save = ServerMethod(
 	'venue.save',
-	/**
-	 * @param {string} venueId
-	 * @param {{
-				name?: string;
-				description?: string;
-				region?: string;
-				loc?: { type: 'Point', coordinates: [number, number] };
-				address?: string;
-				route?: string;
-				short?: string;
-				maxPeople?: number;
-				maxWorkplaces?: number;
-				facilities?: string[];
-				otherFacilities?: string;
-				website?: string;
-			}} changes
-	 */
-	(venueId, changes) => {
+	(
+		venueId: string,
+		changes: {
+			name?: string;
+			description?: string;
+			region?: string;
+			loc?: { type: 'Point'; coordinates: [number, number] };
+			address?: string;
+			route?: string;
+			short?: string;
+			maxPeople?: number;
+			maxWorkplaces?: number;
+			facilities?: string[];
+			otherFacilities?: string;
+			website?: string;
+		},
+	) => {
 		check(venueId, String);
 		check(changes, {
 			name: Match.Optional(String),
@@ -66,8 +65,7 @@ export const save = ServerMethod(
 		}
 
 		/* Changes we want to perform */
-		/** @type {VenueEntity} */
-		const set = { updated: new Date() };
+		const set = { updated: new Date() } as VenueEntity;
 
 		if (changes.description) {
 			set.description = HtmlTools.saneHtml(changes.description.trim().substring(0, 640 * 1024));
@@ -100,7 +98,7 @@ export const save = ServerMethod(
 		if (changes.facilities !== undefined) {
 			set.facilities = _.reduce(
 				changes.facilities,
-				(originalFs, f) => {
+				(originalFs: any, f) => {
 					const fs = { ...originalFs };
 					if (Venues.facilityOptions.includes(f)) {
 						fs[f] = true;
@@ -133,32 +131,26 @@ export const save = ServerMethod(
 				editor: user._id,
 				createdby: user._id,
 				created: new Date(),
-			});
+			} as VenueEntity);
 		}
 
-		Venues.update({ _id: venueId }, { $set: set }, AsyncTools.checkUpdateOne);
+		Venues.update({ _id: venueId }, { $set: set }, undefined, AsyncTools.checkUpdateOne);
 
 		return venueId;
 	},
 );
 
-export const remove = ServerMethod(
-	'venue.remove',
-	/**
-	 * @param {string} venueId
-	 */
-	(venueId) => {
-		check(venueId, String);
+export const remove = ServerMethod('venue.remove', (venueId: string) => {
+	check(venueId, String);
 
-		const venue = Venues.findOne(venueId);
-		if (!venue) {
-			throw new Meteor.Error(404, 'No such venue');
-		}
+	const venue = Venues.findOne(venueId);
+	if (!venue) {
+		throw new Meteor.Error(404, 'No such venue');
+	}
 
-		if (!venue.editableBy(Meteor.user())) {
-			throw new Meteor.Error(401, 'Please log in');
-		}
+	if (!venue.editableBy(Meteor.user())) {
+		throw new Meteor.Error(401, 'Please log in');
+	}
 
-		return Venues.remove(venueId);
-	},
-);
+	return Venues.remove(venueId);
+});

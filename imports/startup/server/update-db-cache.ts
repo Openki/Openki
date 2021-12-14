@@ -1,14 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 
-import { AsyncTools } from '/imports/utils/async-tools';
+import { Users } from '/imports/api/users/users';
 import * as coursesTenantDenormalizer from '/imports/api/courses/tenantDenormalizer';
 import * as eventsTenantDenormalizer from '/imports/api/events/tenantDenormalizer';
 import * as usersTenantsDenormalizer from '/imports/api/users/tenantsDenormalizer';
 
-import { Users } from '/imports/api/users/users';
-
-import Profile from '/imports/utils/profile';
+import * as Profile from '/imports/utils/profile';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { AsyncTools } from '/imports/utils/async-tools';
 
 function updateDbCacheFields() {
 	// Resync location cache in events
