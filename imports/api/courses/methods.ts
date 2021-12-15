@@ -15,7 +15,7 @@ import { Log } from '/imports/api/log/log';
 
 import { Subscribe, Unsubscribe, Message, processChange } from './subscription';
 
-import Notification from '/imports/notification/notification';
+import { Notification } from '/imports/notification/notification';
 
 import { AsyncTools } from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
