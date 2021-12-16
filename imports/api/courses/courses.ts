@@ -42,6 +42,7 @@ export interface CourseEntity {
 	slug: string;
 	/** ID_region */
 	region: string;
+	additionalInfos: { name: string; value: string }[];
 	/** (what for?) */
 	date: Date;
 	/** ID_user */

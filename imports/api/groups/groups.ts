@@ -6,6 +6,12 @@ import { _ } from 'meteor/underscore';
 import { Filtering } from '/imports/utils/filtering';
 import * as FileStorage from '/imports/utils/FileStorage';
 
+export interface GroupEntityAdditionalInfoForProposals {
+	name: string;
+	displayText: string;
+	placeholder: string;
+}
+
 /** DB-Model */
 export interface GroupEntity {
 	/** ID */
@@ -15,6 +21,7 @@ export interface GroupEntity {
 	claim: string;
 	description: string;
 	logoUrl?: string;
+	additionalInfosForProposals?: GroupEntityAdditionalInfoForProposals[];
 	/** List of userIds */
 	members: string[];
 }

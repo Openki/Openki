@@ -94,6 +94,7 @@ export interface SaveFields {
 	categories?: string[];
 	name?: string;
 	region?: string;
+	additionalInfos?: { name: string; value: string }[];
 	roles?: { [type: string]: boolean };
 	subs?: string[];
 	unsubs?: string[];
@@ -111,6 +112,7 @@ export const save = ServerMethod(
 			categories: Match.Optional([String]),
 			name: Match.Optional(String),
 			region: Match.Optional(String),
+			additionalInfos: Match.Optional([{ name: String, value: String }]),
 			roles: Match.Optional(Object),
 			subs: Match.Optional([String]),
 			unsubs: Match.Optional([String]),
@@ -190,6 +192,12 @@ export const save = ServerMethod(
 		if (changes.name) {
 			set.name = StringTools.saneTitle(changes.name).substring(0, 1000);
 			set.slug = StringTools.slug(set.name);
+		}
+		if (changes.additionalInfos) {
+			set.additionalInfos = changes.additionalInfos.map((i: any) => ({
+				name: i.name,
+				value: i.value.substring(0, 100),
+			}));
 		}
 		if (changes.internal !== undefined) {
 			set.internal = changes.internal;

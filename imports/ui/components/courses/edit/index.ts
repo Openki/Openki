@@ -11,7 +11,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import Categories from '/imports/api/categories/categories';
 import { Course, CourseMemberEntity, CourseModel, Courses } from '/imports/api/courses/courses';
 import * as CoursesMethods from '/imports/api/courses/methods';
-import { Groups } from '/imports/api/groups/groups';
+import { GroupEntityAdditionalInfoForProposals, Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { RoleEntity, Roles } from '/imports/api/roles/roles';
 
@@ -58,8 +58,11 @@ export type Data = {
 			}>;
 			savedCourseId: ReactiveVar<string | undefined>;
 			showSavedMessage: ReactiveVar<boolean>;
+			showRegionSelection: () => boolean;
 			showInternalCheckbox: () => boolean;
 			getSavedCourse: () => CourseModel | undefined;
+			getGroups: () => string[];
+			additionalInfos: () => GroupEntityAdditionalInfoForProposals[];
 			resetFields: () => void;
 		}
 	>;
@@ -127,6 +130,20 @@ export type Data = {
 			}
 		});
 
+		instance.showRegionSelection = () => {
+			const data = Template.currentData();
+			return (
+				// Region can be set for new courses only.
+				!data._id &&
+				// For the proposal frame we hide the region selection when a region
+				// is set.
+				!(data.region && data.isFrame) &&
+				// If there is only one region on this instance or it is visible to this user, it
+				// will be set automatically.
+				!(Regions.findFilter({}, 2).count() === 1)
+			);
+		};
+
 		instance.showInternalCheckbox = () => {
 			const data = Template.currentData();
 
@@ -146,6 +163,27 @@ export type Data = {
 		};
 
 		instance.getSavedCourse = () => Courses.findOne(instance.savedCourseId.get());
+
+		instance.getGroups = () => {
+			const data = Template.currentData();
+			const groups = [];
+			if (!data.isFrame) {
+				if (data.group) {
+					groups.push(data.group);
+				}
+			} else if (data.teamGroups?.length > 0) {
+				groups.push(...data.teamGroups);
+			}
+			return groups;
+		};
+
+		instance.additionalInfos = () => {
+			const groups = instance.getGroups();
+
+			return Groups.find({ _id: { $in: groups } })
+				.fetch()
+				.flatMap((g) => g.additionalInfosForProposals || []);
+		};
 
 		instance.resetFields = () => {
 			instance.$('.js-title').val('');
@@ -212,17 +250,15 @@ export type Data = {
 			return selectedCategories?.includes(`${this}`) ? 'checked' : '';
 		},
 
-		showRegionSelection() {
+		showMoreInfo() {
 			return (
-				// Region can be set for new courses only.
-				!this._id &&
-				// For the proposal frame we hide the region selection when a region
-				// is set.
-				!(this.region && this.isFrame) &&
-				// If there is only one region on this instance or it is visible to this user, it
-				// will be set automatically.
-				!(Regions.findFilter({}, 2).count() === 1)
+				Template.instance().showRegionSelection() ||
+				Template.instance().additionalInfos().length > 0
 			);
+		},
+
+		getAdditionalInfoValue(name: string) {
+			return Template.currentData().additionalInfos?.filter((a) => a.name === name)[0]?.value;
 		},
 
 		hideCategories() {
@@ -258,10 +294,6 @@ export type Data = {
 			return filterParams.search;
 		},
 
-		editableDescription() {
-			return Template.instance().editableDescription;
-		},
-
 		newCourseGroupName() {
 			if (this.group) {
 				const groupId = this.group;
@@ -271,10 +303,6 @@ export type Data = {
 				}
 			}
 			return false;
-		},
-
-		showInternalCheckbox() {
-			return Template.instance().showInternalCheckbox();
 		},
 
 		showSavedMessage() {
@@ -404,15 +432,7 @@ export type Data = {
 					return;
 				}
 
-				const groups = [];
-				if (!data.isFrame) {
-					if (data.group) {
-						groups.push(data.group);
-					}
-				} else if (hasTeamGroups) {
-					groups.push(...data.teamGroups);
-				}
-				changes.groups = groups;
+				changes.groups = instance.getGroups();
 			}
 
 			changes.roles = {};
@@ -451,6 +471,10 @@ export type Data = {
 					}
 				});
 			}
+
+			changes.additionalInfos = instance.additionalInfos().map((i) => {
+				return { name: i.name, value: instance.$(`.js-additional-info-${i.name}`).val() as string };
+			});
 
 			instance.busy('saving');
 			SaveAfterLogin(

@@ -79,7 +79,7 @@
 					<div class="mb-3">
 						<label
 							   class="form-label">{{i18n 'course.edit.description' 'Description'}}</label>
-						{{> editableTextarea editableDescription}}
+						{{> editableTextarea instance.editableDescription}}
 					</div>
 					{{#if hasPricePolicy}}
 						{{> pricePolicy dismissable=true wrap='mb-3'}}
@@ -144,34 +144,52 @@
 								{{/each}}
 							</div>
 						{{/if}}
-						{{#if showRegionSelection}}
+						{{#if showMoreInfo}}
 							<div class="col-md">
-								<label
-									   class="form-label">{{i18n 'course.edit.region' 'Region'}}</label>
-								<div class="input-group">
-									<div class="input-group-text">
-										<span class="fa fa-dot-circle-o fa-fw"
-											  aria-hidden="true"></span>
+
+								{{#if instance.showRegionSelection}}
+									<div class="mb-3">
+										<label
+											   class="form-label">{{i18n 'course.edit.region' 'Region'}}</label>
+										<div class="input-group">
+											<div class="input-group-text">
+												<span class="fa fa-dot-circle-o fa-fw"
+													  aria-hidden="true"></span>
+											</div>
+											<select class="js-select-region form-select"
+													name='region'>
+												<option value='' disabled
+														selected="{{#if isCurrentRegion 'all'}}selected{{/if}}"
+														class="select-placeholder">
+													{{i18n '_selection.pleaseSelect'}}
+												</option>
+												{{#each region in regions}}
+													<option value='{{region._id}}'
+															selected="{{#if isCurrentRegion region._id}}selected{{/if}}">
+														{{region.name}}
+													</option>
+												{{/each}}
+											</select>
+										</div>
 									</div>
-									<select class="js-select-region form-select" name='region'>
-										<option value='' disabled
-												selected="{{#if isCurrentRegion 'all'}}selected{{/if}}"
-												class="select-placeholder">
-											{{i18n '_selection.pleaseSelect'}}
-										</option>
-										{{#each region in regions}}
-											<option value='{{region._id}}'
-													selected="{{#if isCurrentRegion region._id}}selected{{/if}}">
-												{{region.name}}
-											</option>
-										{{/each}}
-									</select>
-								</div>
+								{{/if}}
+
+								{{#each field in instance.additionalInfos}}
+									<div class="mb-3">
+										<label class="form-label"
+											   for="course-additional-info-{{field.name}}">{{field.displayText}}</label>
+										<input type="text"
+											   class="form-control js-additional-info-{{field.name}}"
+											   id="course-additional-info-{{field.name}}"
+											   placeholder="{{field.placeholder}}"
+											   value="{{getAdditionalInfoValue field.name}}">
+									</div>
+								{{/each}}
 							</div>
 						{{/if}}
 					</div>
 
-					{{#if showInternalCheckbox}}
+					{{#if instance.showInternalCheckbox}}
 						<div class="mb-3">
 							<label
 								   class="form-label">{{i18n 'course.edit.intern' 'Hide on front page'}}</label>
