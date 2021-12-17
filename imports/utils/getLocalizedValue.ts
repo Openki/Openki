@@ -5,7 +5,7 @@
 			"de": "https://about.openki.net/ueber-uns/spenden/"
 		}
  */
-export function getLocalisedValue(
+export function getLocalizedValue(
 	setting: string | Record<string, unknown> | undefined | null,
 	locale: string = Session.get('locale'),
 ) {
@@ -34,4 +34,4 @@ export function getLocalisedValue(
 	return setting[Object.keys(setting)[0]];
 }
 
-export default getLocalisedValue;
+export default getLocalizedValue;

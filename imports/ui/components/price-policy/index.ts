@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 
 import * as usersMethods from '/imports/api/users/methods';
 import { PublicSettings } from '/imports/utils/PublicSettings';
-import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
+import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
@@ -57,7 +57,7 @@ import './styles.scss';
 		},
 
 		pricePolicyLink() {
-			const link = getLocalisedValue(PublicSettings.faqLink);
+			const link = getLocalizedValue(PublicSettings.faqLink);
 			let locale = Session.get('locale');
 			const localizedTitles = new Map()
 				.set('de', 'dürfen-kurse-etwas-kosten')

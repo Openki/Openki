@@ -12,7 +12,7 @@ import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
 import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
-import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
+import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { UserEntity } from '/imports/api/fixtures/ensureFixture';
 import { checkContribution } from '../../utils/checkContribution';
@@ -69,15 +69,15 @@ const helpers: { [name: string]: Function } = {
 	},
 
 	guideLink() {
-		return getLocalisedValue(PublicSettings.courseGuideLink);
+		return getLocalizedValue(PublicSettings.courseGuideLink);
 	},
 
 	faqLink() {
-		return getLocalisedValue(PublicSettings.faqLink);
+		return getLocalizedValue(PublicSettings.faqLink);
 	},
 
 	aboutLink() {
-		return getLocalisedValue(PublicSettings.aboutLink);
+		return getLocalizedValue(PublicSettings.aboutLink);
 	},
 
 	log(context: any) {
@@ -346,7 +346,7 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 		}
 
 		return Spacebars.SafeString(
-			`<a href="${getLocalisedValue(contribution.link)}" data-tooltip="${Blaze._escape(
+			`<a href="${getLocalizedValue(contribution.link)}" data-tooltip="${Blaze._escape(
 				i18n(
 					'user.hasContributed',
 					'{USERNAME} supported {SITENAME} with a donation. Click on the {ICON} for more information how to contribute.',

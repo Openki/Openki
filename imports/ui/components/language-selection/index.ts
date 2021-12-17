@@ -6,7 +6,7 @@ import { _ } from 'meteor/underscore';
 import { LanguageEntity, Languages } from '/imports/api/languages/languages';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
-import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
+import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import * as StringTools from '/imports/utils/string-tools';
 
 import './template.html';
@@ -138,7 +138,7 @@ import './styles.scss';
 		},
 
 		helpLink() {
-			return getLocalisedValue(PublicSettings.i18nHelpLink);
+			return getLocalizedValue(PublicSettings.i18nHelpLink);
 		},
 	});
 

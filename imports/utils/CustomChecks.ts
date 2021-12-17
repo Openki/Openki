@@ -1,7 +1,7 @@
 import { check, Match } from 'meteor/check';
 
-/** allows localised value eg. with `getLocalisedValue(...)` to have a string per language. */
-export const LocalisedValue = Match.OneOf(
+/** allows localised value eg. with `getLocalizedValue(...)` to have a string per language. */
+export const LocalizedValue = Match.OneOf(
 	String,
 	Match.ObjectIncluding<Record<string, string | undefined>>({}),
 );

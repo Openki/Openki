@@ -1,7 +1,7 @@
 import { check, Match } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 
-import { LocalisedValue } from '/imports/utils/CustomChecks';
+import { LocalizedValue } from '/imports/utils/CustomChecks';
 
 // See settings-example.json.md for full documentation
 
@@ -40,8 +40,8 @@ check(
 		avatarLogo: { src: String, alt: String },
 		ogLogo: { src: String },
 		emailLogo: String,
-		regionSelection: { minNumber: Number, aboutLink: Match.Maybe(LocalisedValue) },
-		i18nHelpLink: Match.Maybe(LocalisedValue),
+		regionSelection: { minNumber: Number, aboutLink: Match.Maybe(LocalizedValue) },
+		i18nHelpLink: Match.Maybe(LocalizedValue),
 		publicTenants: [String],
 		pricePolicyEnabled: Boolean,
 		footerLinks: [
@@ -49,16 +49,16 @@ check(
 				link: String,
 				key: Match.Maybe(String),
 				title_key: Match.Maybe(String),
-				text: Match.Maybe(LocalisedValue),
+				text: Match.Maybe(LocalizedValue),
 			},
 		],
-		faqLink: LocalisedValue,
-		courseGuideLink: LocalisedValue,
-		aboutLink: LocalisedValue,
+		faqLink: LocalizedValue,
+		courseGuideLink: LocalizedValue,
+		aboutLink: LocalizedValue,
 		contribution: Match.Maybe({
 			icon: String,
 			forbiddenChars: [String],
-			link: LocalisedValue,
+			link: LocalizedValue,
 		}),
 		s3: {
 			publicUrlBase: String,

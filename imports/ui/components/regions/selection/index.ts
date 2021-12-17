@@ -11,7 +11,7 @@ import { FilterPreview } from '/imports/ui/lib/filter-preview';
 import * as RegionSelection from '/imports/utils/region-selection';
 import * as StringTools from '/imports/utils/string-tools';
 import { PublicSettings } from '/imports/utils/PublicSettings';
-import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
+import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 
 import './template.html';
 import './styles.scss';
@@ -202,7 +202,7 @@ import './styles.scss';
 		},
 
 		aboutLink() {
-			return getLocalisedValue(PublicSettings.regionSelection.aboutLink);
+			return getLocalizedValue(PublicSettings.regionSelection.aboutLink);
 		},
 	});
 
