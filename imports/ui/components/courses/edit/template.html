@@ -177,11 +177,11 @@
 								{{#each field in instance.additionalInfos}}
 									<div class="mb-3">
 										<label class="form-label"
-											   for="course-additional-info-{{field.name}}">{{field.displayText}}</label>
+											   for="course-additional-info-{{field.name}}">{{localized field.displayText}}</label>
 										<input type="text"
 											   class="form-control js-additional-info-{{field.name}}"
 											   id="course-additional-info-{{field.name}}"
-											   placeholder="{{field.placeholder}}"
+											   placeholder="{{localized field.placeholder}}"
 											   value="{{getAdditionalInfoValue field.name}}">
 									</div>
 								{{/each}}
