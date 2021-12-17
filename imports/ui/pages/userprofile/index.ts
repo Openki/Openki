@@ -61,16 +61,8 @@ template.helpers({
 		return Template.currentData().user._id === Meteor.userId();
 	},
 
-	contributionFeature() {
-		return !!PublicSettings.contribution;
-	},
-
 	hasContributed() {
 		return checkContribution(Template.currentData().user.contribution);
-	},
-
-	contributedIcon() {
-		return PublicSettings.contribution?.icon;
 	},
 
 	acceptsPrivateMessages() {

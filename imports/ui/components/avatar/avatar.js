@@ -44,14 +44,6 @@ Template.avatar.helpers({
 	class() {
 		return Template.currentData().class || '';
 	},
-
-	alt() {
-		return PublicSettings.avatarLogo.alt;
-	},
-
-	avatarLogo() {
-		return PublicSettings.avatarLogo.src;
-	},
 });
 
 Template.avatarForm.onCreated(function () {

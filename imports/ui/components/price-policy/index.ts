@@ -52,10 +52,6 @@ import './styles.scss';
 			return classes.join(' ');
 		},
 
-		pricePolicyEnabled() {
-			return PublicSettings.pricePolicyEnabled;
-		},
-
 		pricePolicyLink() {
 			const link = getLocalizedValue(PublicSettings.faqLink);
 			let locale = Session.get('locale');

@@ -232,14 +232,6 @@ export type Data = {
 			});
 		},
 
-		roleDescription() {
-			return `roles.${this.type}.description`;
-		},
-
-		roleSubscription() {
-			return `roles.${this.type}.subscribe`;
-		},
-
 		isChecked() {
 			const selectedCategories = Template.instance().state.get('selectedCategories');
 			return selectedCategories?.includes(`${this}`) ? 'checkbox-checked' : '';

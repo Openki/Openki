@@ -14,11 +14,11 @@
 						{{else}}
 							{{contribution this.user._id}}
 							{{#if alterPrivileges}}
-								{{#if contributionFeature}}
+								{{#if PublicSettings.contribution}}
 									{{#unless hasContributed}}
 										<button type="button"
 												class="btn btn-primary js-has-contributed">
-											<i class="{{contributedIcon}}" aria-hidden="true"></i>
+											<i class="{{PublicSettings.contribution.icon}}" aria-hidden="true"></i>
 											{{i18n 'profile.setHasContributed.button' 'User has contributed'}}
 										</button>
 									{{else}}

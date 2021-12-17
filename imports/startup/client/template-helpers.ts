@@ -68,16 +68,12 @@ const helpers: { [name: string]: Function } = {
 		return id && Session.equals('region', id);
 	},
 
-	guideLink() {
-		return getLocalizedValue(PublicSettings.courseGuideLink);
+	PublicSettings() {
+		return PublicSettings;
 	},
 
-	faqLink() {
-		return getLocalizedValue(PublicSettings.faqLink);
-	},
-
-	aboutLink() {
-		return getLocalizedValue(PublicSettings.aboutLink);
+	localized(value: string | Record<string, unknown> | null | undefined) {
+		return getLocalizedValue(value);
 	},
 
 	log(context: any) {
