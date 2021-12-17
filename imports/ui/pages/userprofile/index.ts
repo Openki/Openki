@@ -15,7 +15,6 @@ import * as usersMethods from '/imports/api/users/methods';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { PublicSettings } from '/imports/utils/PublicSettings';
 import { checkContribution } from '/imports/utils/checkContribution';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list';

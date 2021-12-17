@@ -129,12 +129,6 @@ Template.courseDetailsPage.helpers({
 	isArchived() {
 		return this.course?.archived;
 	},
-	editableName() {
-		return (Template.instance() as any).editableName;
-	},
-	editableDescription() {
-		return (Template.instance() as any).editableDescription;
-	},
 });
 
 Template.courseDetailsPage.events({
