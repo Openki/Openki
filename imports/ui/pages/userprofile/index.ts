@@ -19,7 +19,7 @@ import { checkContribution } from '/imports/utils/checkContribution';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list';
 import '/imports/ui/components/profiles/verify-email';
-import '/imports/ui/components/avatar/avatar';
+import '/imports/ui/components/avatar';
 import '/imports/ui/components/send-message';
 
 import './template.html';
