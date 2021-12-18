@@ -43,10 +43,10 @@ export interface CourseEntity {
 	slug: string;
 	/** ID_region */
 	region: string;
-	additionalInfos: Pick<
+	additionalInfos: (Pick<
 		GroupEntityAdditionalInfosForProposals,
 		'name' | 'displayText' | 'visibleFor'
-	>[];
+	> & { value: string })[];
 	/** (what for?) */
 	date: Date;
 	/** ID_user */
