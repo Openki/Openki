@@ -11,6 +11,17 @@ import { Mongo } from 'meteor/mongo';
 // "restart"       -> Date      ISODate("2016-01-14T00:24:46.610Z")
 // ===========================
 
-const Version = new Mongo.Collection('Version');
+interface VersionEntity {
+	basic: string;
+	complete: string;
+	branch: string;
+	commit: string;
+	commitDate: string;
+	commitShort: string;
+	activation: Date;
+	lastStart: Date;
+}
+
+const Version = new Mongo.Collection<VersionEntity>('Version');
 
 export default Version;
