@@ -11,7 +11,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import Categories from '/imports/api/categories/categories';
 import { Course, CourseMemberEntity, CourseModel, Courses } from '/imports/api/courses/courses';
 import * as CoursesMethods from '/imports/api/courses/methods';
-import { GroupEntityAdditionalInfoForProposals, Groups } from '/imports/api/groups/groups';
+import { GroupEntityAdditionalInfosForProposals, Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { RoleEntity, Roles } from '/imports/api/roles/roles';
 
@@ -62,7 +62,7 @@ export type Data = {
 			showInternalCheckbox: () => boolean;
 			getSavedCourse: () => CourseModel | undefined;
 			getGroups: () => string[];
-			additionalInfos: () => GroupEntityAdditionalInfoForProposals[];
+			additionalInfos: () => GroupEntityAdditionalInfosForProposals[];
 			resetFields: () => void;
 		}
 	>;
@@ -105,7 +105,11 @@ export type Data = {
 			instance.state.set('editingCategories', !data._id);
 			instance.state.set('selectedCategories', data.categories);
 
-			if (!data.isFrame) {
+			if (data && data instanceof Course && !(data as CourseModel).isNew()) {
+				data.groupOrganizers.forEach((g) => {
+					instance.subscribe('group', g);
+				});
+			} else if (!data.isFrame) {
 				if (data.group) {
 					instance.subscribe('group', data.group);
 				}
@@ -167,7 +171,10 @@ export type Data = {
 		instance.getGroups = () => {
 			const data = Template.currentData();
 			const groups = [];
-			if (!data.isFrame) {
+
+			if (data && data instanceof Course && !(data as CourseModel).isNew()) {
+				groups.push(...data.groupOrganizers);
+			} else if (!data.isFrame) {
 				if (data.group) {
 					groups.push(data.group);
 				}
@@ -465,7 +472,12 @@ export type Data = {
 			}
 
 			changes.additionalInfos = instance.additionalInfos().map((i) => {
-				return { name: i.name, value: instance.$(`.js-additional-info-${i.name}`).val() as string };
+				return {
+					name: i.name,
+					displayText: i.displayText,
+					value: instance.$(`.js-additional-info-${i.name}`).val() as string,
+					visibleFor: i.visibleFor,
+				};
 			});
 
 			instance.busy('saving');

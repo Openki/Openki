@@ -2,6 +2,7 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
+import { _ } from 'meteor/underscore';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
@@ -15,11 +16,11 @@ import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Viewport from '/imports/ui/lib/viewport';
 
-import { _ } from 'meteor/underscore';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import * as IdTools from '/imports/utils/id-tools';
+import getLocalizedValue from '/imports/utils/getLocalizedValue';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
@@ -230,6 +231,23 @@ Template.courseDetailsPage.events({
 
 		const { course } = instance.data;
 		Router.go('showCourse', course, { query: { edit: 'course' } });
+	},
+});
+
+Template.courseDetailsSubmenu.helpers({
+	additionalInfos() {
+		const user = Meteor.user();
+
+		const course = Template.instance().data.course;
+
+		const isEditor = user && course.editableBy(user);
+
+		return course.additionalInfos
+			.filter((i: any) => i.visibleFor === 'all' || (i.visibleFor === 'editors' && isEditor))
+			.map((i: any) => ({
+				displayText: getLocalizedValue(i.displayText),
+				value: i.value,
+			}));
 	},
 });
 

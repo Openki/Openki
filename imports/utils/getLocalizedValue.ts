@@ -1,3 +1,5 @@
+export type LocalizedValue = string | Record<string, unknown>;
+
 /**
  * Returns a loacalised value based on the current set locale. 
  * @example {
@@ -6,7 +8,7 @@
 		}
  */
 export function getLocalizedValue(
-	setting: string | Record<string, unknown> | undefined | null,
+	setting: LocalizedValue | undefined | null,
 	locale: string = Session.get('locale'),
 ) {
 	if (!setting) {

@@ -2,11 +2,11 @@ import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 
-import { Courses, Course, CourseEntity, CourseModel } from './courses';
+import { Courses, Course, CourseEntity, CourseModel } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
-import { CourseDiscussions } from '../course-discussions/course-discussions';
+import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 import { Roles } from '/imports/api/roles/roles';
 import * as UpdateMethods from '/imports/utils/update-methods';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
@@ -21,9 +21,11 @@ import { AsyncTools } from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
+import { LocalizedValue as LocalizedValueType } from '/imports/utils/getLocalizedValue';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
-import { UserModel } from '../users/users';
+import { UserModel } from '/imports/api/users/users';
+import { LocalizedValue, StringEnum } from '/imports/utils/CustomChecks';
 
 function registerMethod(method: {
 	method: string;
@@ -94,7 +96,12 @@ export interface SaveFields {
 	categories?: string[];
 	name?: string;
 	region?: string;
-	additionalInfos?: { name: string; value: string }[];
+	additionalInfos?: {
+		name: string;
+		displayText: LocalizedValueType;
+		value: string;
+		visibleFor: 'all' | 'editors';
+	}[];
 	roles?: { [type: string]: boolean };
 	subs?: string[];
 	unsubs?: string[];
@@ -112,7 +119,14 @@ export const save = ServerMethod(
 			categories: Match.Optional([String]),
 			name: Match.Optional(String),
 			region: Match.Optional(String),
-			additionalInfos: Match.Optional([{ name: String, value: String }]),
+			additionalInfos: Match.Optional([
+				{
+					name: String,
+					displayText: LocalizedValue,
+					value: String,
+					visibleFor: StringEnum(['all', 'editors'] as const),
+				},
+			]),
 			roles: Match.Optional(Object),
 			subs: Match.Optional([String]),
 			unsubs: Match.Optional([String]),
@@ -195,8 +209,10 @@ export const save = ServerMethod(
 		}
 		if (changes.additionalInfos) {
 			set.additionalInfos = changes.additionalInfos.map((i: any) => ({
-				name: i.name,
-				value: i.value.substring(0, 100),
+				name: i.name.substring(0, 50),
+				displayText: i.displayText,
+				value: i.value.substring(0, 200),
+				visibleFor: i.visibleFor,
 			}));
 		}
 		if (changes.internal !== undefined) {

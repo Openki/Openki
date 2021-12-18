@@ -5,11 +5,19 @@ import { _ } from 'meteor/underscore';
 
 import { Filtering } from '/imports/utils/filtering';
 import * as FileStorage from '/imports/utils/FileStorage';
+import { LocalizedValue } from '/imports/utils/getLocalizedValue';
 
-export interface GroupEntityAdditionalInfoForProposals {
+export interface GroupEntityAdditionalInfosForProposals {
+	/** For internal us, must be unique in the list. */
 	name: string;
-	displayText: string;
-	placeholder: string;
+	/** Used when the value is edited. */
+	editText: LocalizedValue;
+	/** Used when the value is edited as placeholder in the field. */
+	editPlaceholder: LocalizedValue;
+	/** Used when the value is shown. It will be copied to the course object. */
+	displayText: LocalizedValue;
+	/** Who will see the entered values. It will be copied to the course object. */
+	visibleFor: 'all' | 'editors';
 }
 
 /** DB-Model */
@@ -21,7 +29,8 @@ export interface GroupEntity {
 	claim: string;
 	description: string;
 	logoUrl?: string;
-	additionalInfosForProposals?: GroupEntityAdditionalInfoForProposals[];
+	/** Customize the inputs that the user can enter when creating and editing a course. */
+	additionalInfosForProposals?: GroupEntityAdditionalInfosForProposals[];
 	/** List of userIds */
 	members: string[];
 }
