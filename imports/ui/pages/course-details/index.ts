@@ -242,12 +242,14 @@ Template.courseDetailsSubmenu.helpers({
 
 		const isEditor = user && course.editableBy(user);
 
-		return course.additionalInfos
-			.filter((i: any) => i.visibleFor === 'all' || (i.visibleFor === 'editors' && isEditor))
-			.map((i: any) => ({
-				displayText: getLocalizedValue(i.displayText),
-				value: i.value,
-			}));
+		return (
+			course.additionalInfos
+				?.filter((i: any) => i.visibleFor === 'all' || (i.visibleFor === 'editors' && isEditor))
+				.map((i: any) => ({
+					displayText: getLocalizedValue(i.displayText),
+					value: i.value,
+				})) || []
+		);
 	},
 });
 

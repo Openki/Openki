@@ -6,7 +6,7 @@ import { Users } from '/imports/api/users/users';
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-Meteor.publish('user', function (userId) {
+Meteor.publish('user', function (userId: string) {
 	// Public fields from users
 	const fields: Mongo.FieldSpecifier = {
 		username: 1,

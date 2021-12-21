@@ -1,34 +1,51 @@
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { Users } from '/imports/api/users/users';
-/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import '/imports/ui/components/send-message';
-import './participant-contact.html';
 
-Template.participantContact.onCreated(function () {
-	this.userSub = Meteor.subscribe('user', this.data.participant);
+import './template.html';
+import './styles.scss';
 
-	this.state = new ReactiveDict();
+const Template = TemplateAny as TemplateStaticTyped<
+	'participantContact',
+	{ participant: string },
+	{
+		state: ReactiveDict<{
+			showModal: boolean;
+		}>;
+	}
+>;
 
-	this.state.setDefault({
+const template = Template.participantContact;
+
+template.onCreated(function () {
+	const instance = this;
+
+ Meteor.subscribe('user', instance.data.participant);
+
+	instance.state = new ReactiveDict();
+
+	instance.state.setDefault({
 		showModal: false,
 	});
 });
 
-Template.participantContact.onRendered(function () {
-	this.autorun(() => {
-		if (this.state.get('showModal')) {
+template.onRendered(function () {
+	const instance = this;
+
+	instance.autorun(() => {
+		if (instance.state.get('showModal')) {
 			Meteor.defer(() => {
-				this.$('.js-participant-contact-modal').modal('show');
+				instance.$('.js-participant-contact-modal').modal('show');
 			});
 		}
 	});
 });
 
-Template.participantContact.helpers({
+template.helpers({
 	hideModal() {
 		const instance = Template.instance();
 		return () => {
@@ -37,30 +54,30 @@ Template.participantContact.helpers({
 	},
 
 	showParticipantContact() {
+		const data = Template.currentData();
+
 		const userId = Meteor.userId();
 		if (!userId) {
 			return false;
 		}
 
-		return userId !== this.participant;
+		return userId !== data.participant;
 	},
 
 	userAcceptsPrivateMessages() {
-		const user = Users.findOne(this.participant);
-		return user?.acceptsPrivateMessages;
-	},
+		const data = Template.currentData();
 
-	userSubReady() {
-		return Template.instance().userSub.ready();
+		const user = Users.findOne(data.participant);
+		return user?.acceptsPrivateMessages;
 	},
 });
 
-Template.participantContact.events({
-	'click .js-show-participant-contact-modal'(event, instance) {
+template.events({
+	'click .js-show-participant-contact-modal'(_event, instance) {
 		instance.state.set('showModal', true);
 	},
 
-	'hidden.bs.modal .js-participant-contact-modal'(event, instance) {
+	'hidden.bs.modal .js-participant-contact-modal'(_event, instance) {
 		instance.state.set('showModal', false);
 	},
 });
