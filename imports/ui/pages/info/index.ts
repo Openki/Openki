@@ -1,5 +1,5 @@
 import { Router } from 'meteor/iron:router';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import $ from 'jquery';
 import { Meteor } from 'meteor/meteor';
 
@@ -8,11 +8,19 @@ import { ScssVars } from '/imports/ui/lib/scss-vars';
 import './template.html';
 import './styles.scss';
 
-Template.infoPage.onCreated(function () {
+const Template = TemplateAny as TemplateStaticTyped<
+	'infoPage',
+	never,
+	{ headerTag: string; contentTags: string; scrollTo: (id: string) => void }
+>;
+
+const template = Template.infoPage;
+
+template.onCreated(function () {
 	this.headerTag = 'h3';
 	this.contentTags = 'p, ul';
 
-	this.scrollTo = (/** @type {string} */ id) => {
+	this.scrollTo = (id) => {
 		const idSelector = `#${decodeURIComponent(id)}`;
 		const targetTitle = this.$(idSelector);
 		if (targetTitle.length) {
@@ -24,7 +32,7 @@ Template.infoPage.onCreated(function () {
 	};
 });
 
-Template.infoPage.onRendered(function () {
+template.onRendered(function () {
 	// in order to create nice IDs for the questions also for non-english
 	// alphabets we make our own ones
 	this.$(this.headerTag).each(function () {
@@ -47,7 +55,7 @@ Template.infoPage.onRendered(function () {
 	}
 });
 
-Template.infoPage.events({
+template.events({
 	'click h3'(event, instance) {
 		const title = $(event.currentTarget);
 		title.nextUntil(instance.headerTag, instance.contentTags).toggle();
@@ -57,7 +65,10 @@ Template.infoPage.events({
 	'click a[href^="#"]'(event, instance) {
 		event.preventDefault();
 		const href = $(event.currentTarget).attr('href');
-		const id = href.substring(1); // Drop the hash-char
+		const id = href?.substring(1); // Drop the hash-char
+		if (!id) {
+			return;
+		}
 		instance.scrollTo(id);
 	},
 });
