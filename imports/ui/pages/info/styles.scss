@@ -1,7 +1,9 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 /* stylelint-disable max-nesting-depth, selector-no-qualifying-type */
 .info-page {
 	h2 {
-		color: $brand-primary;
+		color: $primary;
 	}
 
 	p + h2,
@@ -18,7 +20,7 @@
 
 		&:hover,
 		&.active {
-			border-color: $brand-primary;
+			border-color: $primary;
 		}
 	}
 

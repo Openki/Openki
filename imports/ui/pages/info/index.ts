@@ -5,7 +5,8 @@ import { Meteor } from 'meteor/meteor';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 
-import './info.html';
+import './template.html';
+import './styles.scss';
 
 Template.infoPage.onCreated(function () {
 	this.headerTag = 'h3';
