@@ -37,6 +37,23 @@ export interface GroupEntity {
 export type GroupModel = Group & GroupEntity;
 
 export class Group {
+	additionalInfosForProposals = [
+		{
+			name: 'phone',
+			displayText: { en: 'Phone number:', de: 'Telefonnummer:' },
+			editText: { en: 'Phone number (for orga.-team only)', de: 'Telefonnummer (nur für Ogra.-Team' },
+			editPlaceholder: '+41 ## ### ## ##',
+			visibleFor: 'editors',
+		},
+		{
+			name: 'for',
+			displayText: 'For:',
+			editText: 'For',
+			editPlaceholder: 'eg. Childs, Adults',
+			visibleFor: 'all',
+		},
+	];
+
 	publicLogoUrl(this: GroupModel) {
 		if (!this.logoUrl) {
 			return '';

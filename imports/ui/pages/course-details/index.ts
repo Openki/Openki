@@ -34,7 +34,7 @@ import '/imports/ui/components/editable/editable';
 import '/imports/ui/components/groups/list';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
-import '/imports/ui/components/sharing/sharing';
+import '/imports/ui/components/sharing';
 import '/imports/ui/components/report';
 
 import './template.html';
