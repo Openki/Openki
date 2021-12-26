@@ -41,7 +41,10 @@ export class Group {
 		{
 			name: 'phone',
 			displayText: { en: 'Phone number:', de: 'Telefonnummer:' },
-			editText: { en: 'Phone number (for orga.-team only)', de: 'Telefonnummer (nur für Ogra.-Team' },
+			editText: {
+				en: 'Phone number (for orga.-team only)',
+				de: 'Telefonnummer (nur für Ogra.-Team',
+			},
 			editPlaceholder: '+41 ## ### ## ##',
 			visibleFor: 'editors',
 		},
