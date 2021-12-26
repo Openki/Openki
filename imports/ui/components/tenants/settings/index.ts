@@ -1,11 +1,11 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Tenants } from '/imports/api/tenants/tenants';
-import { Users } from '/imports/api/users/users';
+import { UserModel, Users } from '/imports/api/users/users';
 
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
@@ -13,11 +13,20 @@ import * as TenantsMethods from '/imports/api/tenants/methods';
 import UserSearchPrefix from '/imports/utils/user-search-prefix';
 
 import '/imports/ui/components/buttons';
+import '/imports/ui/components/invitations';
 
-import './tenant-settings.html';
-import '../../invitations';
+import './template.html';
+import './styles.scss';
 
-Template.tenantSettings.onCreated(function () {
+const Template = TemplateAny as TemplateStaticTyped<
+	'tenantSettings',
+	never,
+	{ memberSearch: ReactiveVar<string>; adminSearch: ReactiveVar<string> }
+>;
+
+const template = Template.tenantSettings;
+
+template.onCreated(function () {
 	const instance = this;
 
 	instance.busy(false);
@@ -39,14 +48,14 @@ Template.tenantSettings.onCreated(function () {
 	});
 });
 
-Template.tenantSettings.helpers({
+template.helpers({
 	tenantName() {
 		const tenant = Tenants.findOne(Router.current().params._id);
 		return tenant?.name;
 	},
 	members() {
 		const tenant = Tenants.findOne(Router.current().params._id);
-		return tenant.members.filter((m) => !tenant?.admins?.includes(m));
+		return tenant?.members.filter((m) => !tenant?.admins?.includes(m));
 	},
 	foundMembers() {
 		const instance = Template.instance();
@@ -57,7 +66,7 @@ Template.tenantSettings.helpers({
 		}
 
 		const tenant = Tenants.findOne(Router.current().params._id);
-		return UserSearchPrefix(search, { exclude: tenant.members, limit: 30 });
+		return UserSearchPrefix(search, { exclude: tenant?.members, limit: 30 });
 	},
 	foundAdmins() {
 		const instance = Template.instance();
@@ -68,16 +77,16 @@ Template.tenantSettings.helpers({
 		}
 
 		const tenant = Tenants.findOne(Router.current().params._id);
-		return UserSearchPrefix(search, { exclude: tenant.admins, limit: 30 });
+		return UserSearchPrefix(search, { exclude: tenant?.admins, limit: 30 });
 	},
 });
 
-Template.tenantSettings.events({
-	'keyup .js-search-members'(event, instance) {
-		instance.memberSearch.set(instance.$('.js-search-members').val());
+template.events({
+	'keyup .js-search-members'(_event, instance) {
+		instance.memberSearch.set(instance.$('.js-search-members').val() as string);
 	},
 
-	async 'click .js-member-add-btn'() {
+	async 'click .js-member-add-btn'(this: UserModel) {
 		RouterAutoscroll.cancelNext();
 
 		const memberId = this._id;
@@ -85,7 +94,7 @@ Template.tenantSettings.events({
 		try {
 			await TenantsMethods.addMember(memberId, tenantId);
 			const memberName = Users.findOne(memberId)?.username;
-			const tenantName = Tenants.findOne(tenantId).name;
+			const tenantName = Tenants.findOne(tenantId)?.name;
 			Alert.success(
 				i18n(
 					'tenantSettings.memberAdded',
@@ -98,7 +107,7 @@ Template.tenantSettings.events({
 		}
 	},
 
-	async 'click .js-member-remove-btn'() {
+	async 'click .js-member-remove-btn'(this: UserModel) {
 		RouterAutoscroll.cancelNext();
 
 		const memberId = `${this}`;
@@ -107,7 +116,7 @@ Template.tenantSettings.events({
 			await TenantsMethods.removeMember(memberId, tenantId);
 
 			const memberName = Users.findOne(memberId)?.username;
-			const tenantName = Tenants.findOne(tenantId).name;
+			const tenantName = Tenants.findOne(tenantId)?.name;
 			Alert.success(
 				i18n(
 					'tenantSettings.memberRemoved',
@@ -120,11 +129,11 @@ Template.tenantSettings.events({
 		}
 	},
 
-	'keyup .js-search-admins'(event, instance) {
-		instance.adminSearch.set(instance.$('.js-search-admins').val());
+	'keyup .js-search-admins'(_event, instance) {
+		instance.adminSearch.set(instance.$('.js-search-admins').val() as string);
 	},
 
-	async 'click .js-admin-add-btn'() {
+	async 'click .js-admin-add-btn'(this: UserModel) {
 		RouterAutoscroll.cancelNext();
 
 		const adminId = this._id;
@@ -132,7 +141,7 @@ Template.tenantSettings.events({
 		try {
 			await TenantsMethods.addAdmin(adminId, tenantId);
 			const adminName = Users.findOne(adminId)?.username;
-			const tenantName = Tenants.findOne(tenantId).name;
+			const tenantName = Tenants.findOne(tenantId)?.name;
 			Alert.success(
 				i18n(
 					'tenantSettings.adminAdded',
@@ -145,7 +154,7 @@ Template.tenantSettings.events({
 		}
 	},
 
-	async 'click .js-admin-remove-btn'() {
+	async 'click .js-admin-remove-btn'(this: UserModel) {
 		RouterAutoscroll.cancelNext();
 
 		const adminId = `${this}`;
@@ -154,7 +163,7 @@ Template.tenantSettings.events({
 			await TenantsMethods.removeAdmin(adminId, tenantId);
 
 			const adminName = Users.findOne(adminId)?.username;
-			const tenantName = Tenants.findOne(tenantId).name;
+			const tenantName = Tenants.findOne(tenantId)?.name;
 			Alert.success(
 				i18n(
 					'tenantSettings.adminRemoved',
