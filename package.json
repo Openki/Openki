@@ -71,7 +71,7 @@
     "stylelint-config-prettier": "9.0.3",
     "stylelint-config-sass-guidelines": "9.0.1",
     "stylelint-prettier": "2.0.0",
-    "typescript": "4.4.0"
+    "typescript": "4.4.4"
   },
   "scripts": {
     "dev": "npm run extract-translations && npm run type-check && meteor --inspect --settings settings/dev.json",
