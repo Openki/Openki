@@ -17,15 +17,17 @@ const Template = TemplateAny as TemplateStaticTyped<
 const template = Template.infoPage;
 
 template.onCreated(function () {
-	this.headerTag = 'h3';
-	this.contentTags = 'p, ul';
+	const instance = this;
 
-	this.scrollTo = (id) => {
+	instance.headerTag = 'h3';
+	instance.contentTags = 'p, ul';
+
+	instance.scrollTo = (id) => {
 		const idSelector = `#${decodeURIComponent(id)}`;
-		const targetTitle = this.$(idSelector);
+		const targetTitle = instance.$(idSelector);
 		if (targetTitle.length) {
 			Meteor.defer(() => {
-				targetTitle.nextUntil(this.headerTag).show();
+				targetTitle.nextUntil(instance.headerTag).show();
 				$(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
 			});
 		}
@@ -33,10 +35,12 @@ template.onCreated(function () {
 });
 
 template.onRendered(function () {
+	const instance = this;
+
 	// in order to create nice IDs for the questions also for non-english
 	// alphabets we make our own ones
-	this.$(this.headerTag).each(function () {
-		const title = $(this);
+	instance.$(instance.headerTag).each(function () {
+		const title = $(instance);
 		const id = title
 			.text()
 			.trim()

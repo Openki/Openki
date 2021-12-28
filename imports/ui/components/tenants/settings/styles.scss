@@ -11,12 +11,7 @@ $tenant-member-bg: rgba($gray-600, 0.15);
 }
 
 .tenant-member-tag-btn-add {
-	@include tag-btn(
-		darken($tenant-member-bg, 10%),
-		$body-color,
-		$success,
-		darken($success, 45%)
-	);
+	@include tag-btn(darken($tenant-member-bg, 10%), $body-color, $success, darken($success, 45%));
 }
 
 $tenant-admin-bg: rgba($red, 0.15);
@@ -30,10 +25,5 @@ $tenant-admin-bg: rgba($red, 0.15);
 }
 
 .tenant-admin-tag-btn-add {
-	@include tag-btn(
-		darken($tenant-admin-bg, 10%),
-		$body-color,
-		$success,
-		darken($success, 45%)
-	);
+	@include tag-btn(darken($tenant-admin-bg, 10%), $body-color, $success, darken($success, 45%));
 }
