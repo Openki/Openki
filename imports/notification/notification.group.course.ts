@@ -8,7 +8,7 @@ import { Courses } from '/imports/api/courses/courses';
 import { Groups } from '/imports/api/groups/groups';
 import { RegionModel, Regions } from '/imports/api/regions/regions';
 import { Log } from '/imports/api/log/log';
-import { UserModel } from '/imports/api/users/users';
+import Users, { UserModel } from '/imports/api/users/users';
 
 import * as StringTools from '/imports/utils/string-tools';
 import { getSiteName } from '../utils/getSiteName';
@@ -61,6 +61,11 @@ export function Model(entry: { body: Body }) {
 		throw new Error('Groups does not exist (0.o)');
 	}
 
+	const creater = Users.findOne(course.createdby);
+	if (!creater) {
+		throw new Error('Creater does not exist (0.o)');
+	}
+
 	return {
 		accepted(actualRecipient: UserModel) {
 			if (actualRecipient.notifications === false) {
@@ -109,6 +114,7 @@ export function Model(entry: { body: Body }) {
 						)
 						.join(', '),
 				),
+				creater,
 				subject,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=groupCourseNotify`,
 				customSiteName: siteName,

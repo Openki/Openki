@@ -5,7 +5,7 @@
 				{{i18n "notification.group.course.mail.greeting" "Hi {USERNAME}" USERNAME=username lng=locale}}
 			</span>
 			<p>
-				{{i18n "notification.group.course.mail.intro" '{USERNAME} just proposed course {COURSE} in group {GROUPS}.' USERNAME=username COURSE=course GROUPS=groups lng=locale}}
+				{{i18n "notification.group.course.mail.intro" '{CREATER} just proposed the course {COURSE} in your group {GROUPS}.' CREATER=creater.username COURSE=course GROUPS=groups lng=locale}}
 			</p>
 			{{#if courseDescription}}
 				<table class="comment-box">
@@ -16,6 +16,9 @@
 					</tr>
 				</table>
 			{{/if}}
+			<p>
+				{{i18n "notification.group.course.mail.next" "You can contact {CREATER} in order to support and help organizing the course. You have the possibility to edit the  description and announce events." CREATER=creater.username lng=locale}}
+			</p>
 			<p>
 				<a
 				   href="{{courseLink}}">{{i18n "notification.group.course.mail.linktext" '➜ View course' lng=locale}}</a>
