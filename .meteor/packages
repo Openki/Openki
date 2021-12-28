@@ -45,7 +45,7 @@ gadicohen:sitemaps
 # Build
 es5-shim@4.8.0                  # ECMAScript 5 compatibility for older browsers
 ecmascript@0.16.0               # Enable ECMAScript2015+ syntax in app code
-standard-minifier-js@2.7.1      # JS minifier run for production mode
+standard-minifier-js@2.7.2      # JS minifier run for production mode
 juliancwirko:postcss            # Enables PostCSS and Autoprefixer for bootstrap
 
 # DEV
