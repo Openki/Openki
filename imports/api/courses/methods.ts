@@ -15,6 +15,8 @@ import { Log } from '/imports/api/log/log';
 
 import { Subscribe, Unsubscribe, Message, processChange } from './subscription';
 
+import { Notification } from '/imports/notification/notification';
+
 import { AsyncTools } from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
@@ -227,6 +229,8 @@ export const save = ServerMethod(
 			const enrichedSet = timeLasteditDenormalizer.beforeInsert(set);
 			/* eslint-disable-next-line no-param-reassign */
 			courseId = Courses.insert(enrichedSet);
+
+			Notification['Group.Course'].record(courseId);
 
 			// Init calculated fields
 			Meteor.call('course.updateNextEvent', courseId);
