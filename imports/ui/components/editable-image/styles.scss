@@ -6,12 +6,14 @@
 	padding: 50px 20px;
 	position: relative;
 }
+
 .editable-image.supports-dragndrop {
 	outline: 2px dashed #92b0b3;
 	outline-offset: -10px;
 
 	transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
 }
+
 .editable-image.is-dragover {
 	background-color: $white;
 	outline-color: $blue-lighter;
