@@ -12,7 +12,7 @@ if (Meteor.isClient) {
 		const randomTitle = `PROPOSE${1000 + Math.floor(Math.random() * 9000)}`;
 
 		const haveEditfield = () => {
-			assert(() => $('.js-title').length > 0, 'New course edit field present');
+			assert($('.js-title').length > 0, 'New course edit field present');
 		};
 
 		it('allows to select mentor role', async () => {
@@ -30,7 +30,7 @@ if (Meteor.isClient) {
 			const link = await waitFor(() => {
 				const alertLink = $('.alert a');
 				assert(
-					() => alertLink.text().includes(randomTitle),
+					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
 				return alertLink.attr('href');
@@ -41,7 +41,7 @@ if (Meteor.isClient) {
 
 			await waitFor(() => {
 				assert(
-					() => $('.course-role-enrolled button[name=mentor]').length >= 0,
+					$('.course-role-enrolled button[name=mentor]').length >= 0,
 					'Listed as mentor in the created course',
 				);
 			});
@@ -61,7 +61,7 @@ if (Meteor.isClient) {
 			const link = await waitFor(() => {
 				const alertLink = $('.alert a');
 				assert(
-					() => alertLink.text().includes(randomTitle),
+					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
 				return alertLink.attr('href');
@@ -72,7 +72,7 @@ if (Meteor.isClient) {
 
 			await waitFor(() => {
 				assert(
-					() => $('.group-cc89c5e476').length > 0 && $('.group-573edec5d6').length > 0,
+					$('.group-cc89c5e476').length > 0 && $('.group-573edec5d6').length > 0,
 					'Multiple groups added in the created course',
 				);
 			});
@@ -92,7 +92,7 @@ if (Meteor.isClient) {
 			const link = await waitFor(() => {
 				const alertLink = $('.alert a');
 				assert(
-					() => alertLink.text().includes(randomTitle),
+					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
 				return alertLink.attr('href');
@@ -103,7 +103,7 @@ if (Meteor.isClient) {
 
 			await waitFor(() => {
 				assert(
-					() => $('.course-role-enrolled button[name=mentor]').length >= 0,
+					$('.course-role-enrolled button[name=mentor]').length >= 0,
 					'Listed as mentor in the created course',
 				);
 			});
@@ -115,14 +115,14 @@ if (Meteor.isClient) {
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 
-			assert(() => $('.js-category-checkbox').length > 0, 'Categories are usually present.');
+			assert($('.js-category-checkbox').length > 0, 'Categories are usually present.');
 
 			Router.go('/frame/propose?hideCategories=1');
 
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 
-			assert(() => $('.js-category-checkbox').length === 0, 'Param hides categories.');
+			assert($('.js-category-checkbox').length === 0, 'Param hides categories.');
 
 			$('.js-title').val(randomTitle);
 			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
@@ -130,7 +130,7 @@ if (Meteor.isClient) {
 
 			await waitFor(() => {
 				assert(
-					() => $('.alert a').text().includes(randomTitle),
+					$('.alert a').text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
 			});
