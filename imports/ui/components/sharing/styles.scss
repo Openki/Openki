@@ -1,3 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .shariff-wrapper {
 	@include td-text-align(right);
 	padding: 15px;
@@ -36,10 +38,6 @@ $shariff-button-margin-left: 10px;
 
 	&:hover {
 		opacity: 1;
-	}
-
-	@media (min-width: $screen-xs-min) {
-		opacity: 0.75;
 	}
 }
 

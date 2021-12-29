@@ -1,3 +1,5 @@
+export type LocalizedValue = string | Record<string, unknown>;
+
 /**
  * Returns a loacalised value based on the current set locale. 
  * @example {
@@ -5,8 +7,8 @@
 			"de": "https://about.openki.net/ueber-uns/spenden/"
 		}
  */
-export function getLocalisedValue(
-	setting: string | Record<string, unknown> | undefined | null,
+export function getLocalizedValue(
+	setting: LocalizedValue | undefined | null,
 	locale: string = Session.get('locale'),
 ) {
 	if (!setting) {
@@ -34,4 +36,4 @@ export function getLocalisedValue(
 	return setting[Object.keys(setting)[0]];
 }
 
-export default getLocalisedValue;
+export default getLocalizedValue;

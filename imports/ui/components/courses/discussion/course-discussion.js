@@ -15,7 +15,7 @@ import { Editable } from '/imports/ui/lib/editable';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons';
-import '/imports/ui/components/avatar/avatar';
+import '/imports/ui/components/avatar';
 import '/imports/ui/components/profile-link';
 
 import './course-discussion.html';

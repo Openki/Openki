@@ -5,6 +5,20 @@ import { _ } from 'meteor/underscore';
 
 import { Filtering } from '/imports/utils/filtering';
 import * as FileStorage from '/imports/utils/FileStorage';
+import { LocalizedValue } from '/imports/utils/getLocalizedValue';
+
+export interface GroupEntityAdditionalInfosForProposals {
+	/** For internal us, must be unique in the list. */
+	name: string;
+	/** Used when the value is edited. */
+	editText: LocalizedValue;
+	/** Used when the value is edited as placeholder in the field. */
+	editPlaceholder: LocalizedValue;
+	/** Used when the value is shown. It will be copied to the course object. */
+	displayText: LocalizedValue;
+	/** Who will see the entered values. It will be copied to the course object. */
+	visibleFor: 'all' | 'editors';
+}
 
 /** DB-Model */
 export interface GroupEntity {
@@ -15,12 +29,34 @@ export interface GroupEntity {
 	claim: string;
 	description: string;
 	logoUrl?: string;
+	/** Customize the inputs that the user can enter when creating and editing a course. */
+	additionalInfosForProposals?: GroupEntityAdditionalInfosForProposals[];
 	/** List of userIds */
 	members: string[];
 }
 export type GroupModel = Group & GroupEntity;
 
 export class Group {
+	additionalInfosForProposals = [
+		{
+			name: 'phone',
+			displayText: { en: 'Phone number:', de: 'Telefonnummer:' },
+			editText: {
+				en: 'Phone number (for orga.-team only)',
+				de: 'Telefonnummer (nur für Ogra.-Team',
+			},
+			editPlaceholder: '+41 ## ### ## ##',
+			visibleFor: 'editors',
+		},
+		{
+			name: 'for',
+			displayText: 'For:',
+			editText: 'For',
+			editPlaceholder: 'eg. Childs, Adults',
+			visibleFor: 'all',
+		},
+	];
+
 	publicLogoUrl(this: GroupModel) {
 		if (!this.logoUrl) {
 			return '';

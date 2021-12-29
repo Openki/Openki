@@ -7,8 +7,7 @@ import { ServerMethod } from '/imports/utils/ServerMethod';
 
 export const clientError = ServerMethod(
 	'log.clientError',
-	/**
-	 * @param {{
+	function (originalReport: {
 		name: string;
 		message: string;
 		location: string;
@@ -16,11 +15,8 @@ export const clientError = ServerMethod(
 		tsClient: Date;
 		clientId: string;
 		userAgent: string;
-	 }} originalReport 
-	 */
-	function (originalReport) {
-		const report = { ...originalReport };
-		check(report, {
+	}) {
+		check(originalReport, {
 			name: String,
 			message: String,
 			location: String,
@@ -29,9 +25,16 @@ export const clientError = ServerMethod(
 			clientId: String,
 			userAgent: String,
 		});
+		const report: typeof originalReport & {
+			userId?: string;
+			connectionId?: string;
+		} = { ...originalReport };
 		report.connectionId = this.connection?.id;
 
-		const rel = [report.name, report.connectionId, report.clientId].filter((id) => !!id);
+		const rel = [report.name, report.connectionId, report.clientId].filter(
+			(id) => !!id,
+		) as string[];
+
 		const userId = Meteor.userId();
 		if (userId) {
 			report.userId = userId;

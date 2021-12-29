@@ -1,33 +1,46 @@
 import { Router } from 'meteor/iron:router';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import $ from 'jquery';
 import { Meteor } from 'meteor/meteor';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 
-import './info.html';
+import './template.html';
+import './styles.scss';
 
-Template.infoPage.onCreated(function () {
-	this.headerTag = 'h3';
-	this.contentTags = 'p, ul';
+const Template = TemplateAny as TemplateStaticTyped<
+	'infoPage',
+	never,
+	{ headerTag: string; contentTags: string; scrollTo: (id: string) => void }
+>;
 
-	this.scrollTo = (/** @type {string} */ id) => {
+const template = Template.infoPage;
+
+template.onCreated(function () {
+	const instance = this;
+
+	instance.headerTag = 'h3';
+	instance.contentTags = 'p, ul';
+
+	instance.scrollTo = (id) => {
 		const idSelector = `#${decodeURIComponent(id)}`;
-		const targetTitle = this.$(idSelector);
+		const targetTitle = instance.$(idSelector);
 		if (targetTitle.length) {
 			Meteor.defer(() => {
-				targetTitle.nextUntil(this.headerTag).show();
+				targetTitle.nextUntil(instance.headerTag).show();
 				$(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
 			});
 		}
 	};
 });
 
-Template.infoPage.onRendered(function () {
+template.onRendered(function () {
+	const instance = this;
+
 	// in order to create nice IDs for the questions also for non-english
 	// alphabets we make our own ones
-	this.$(this.headerTag).each(function () {
-		const title = $(this);
+	instance.$(instance.headerTag).each(function () {
+		const title = $(instance);
 		const id = title
 			.text()
 			.trim()
@@ -46,7 +59,7 @@ Template.infoPage.onRendered(function () {
 	}
 });
 
-Template.infoPage.events({
+template.events({
 	'click h3'(event, instance) {
 		const title = $(event.currentTarget);
 		title.nextUntil(instance.headerTag, instance.contentTags).toggle();
@@ -56,7 +69,10 @@ Template.infoPage.events({
 	'click a[href^="#"]'(event, instance) {
 		event.preventDefault();
 		const href = $(event.currentTarget).attr('href');
-		const id = href.substring(1); // Drop the hash-char
+		const id = href?.substring(1); // Drop the hash-char
+		if (!id) {
+			return;
+		}
 		instance.scrollTo(id);
 	},
 });

@@ -1,0 +1,29 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+$tenant-member-bg: rgba($gray-600, 0.15);
+
+.tenant-member-tag-profile {
+	@include tag($tenant-member-bg, $body-color, $tenant-member-bg, $primary);
+}
+
+.tenant-member-tag-btn-remove {
+	@include tag-btn($tenant-member-bg, $body-color, $danger, darken($danger, 30%));
+}
+
+.tenant-member-tag-btn-add {
+	@include tag-btn(darken($tenant-member-bg, 10%), $body-color, $success, darken($success, 45%));
+}
+
+$tenant-admin-bg: rgba($red, 0.15);
+
+.tenant-admin-tag-profile {
+	@include tag($tenant-admin-bg, $body-color, $tenant-admin-bg, $primary);
+}
+
+.tenant-admin-tag-btn-remove {
+	@include tag-btn($tenant-admin-bg, $body-color, $danger, darken($danger, 30%));
+}
+
+.tenant-admin-tag-btn-add {
+	@include tag-btn(darken($tenant-admin-bg, 10%), $body-color, $success, darken($success, 45%));
+}

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template } from 'meteor/templating';
 
-import '/imports/ui/components/participant/contact/participant-contact';
+import '/imports/ui/components/participant/contact';
 import '/imports/ui/components/profile-link';
 
 import './event-participants.html';

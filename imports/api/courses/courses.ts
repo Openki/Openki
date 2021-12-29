@@ -15,6 +15,7 @@ import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
+import { GroupEntityAdditionalInfosForProposals } from '../groups/groups';
 
 export interface CourseMemberEntity {
 	user: string;
@@ -42,6 +43,10 @@ export interface CourseEntity {
 	slug: string;
 	/** ID_region */
 	region: string;
+	additionalInfos: (Pick<
+		GroupEntityAdditionalInfosForProposals,
+		'name' | 'displayText' | 'visibleFor'
+	> & { value: string })[];
 	/** (what for?) */
 	date: Date;
 	/** ID_user */
