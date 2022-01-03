@@ -3,12 +3,12 @@ import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { _ } from 'meteor/underscore';
 import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';
-import { Events } from '/imports/api/events/events';
+import { EventModel, Events, EventVenueEntity } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
@@ -37,354 +37,429 @@ import '/imports/ui/components/sharing';
 import '/imports/ui/components/report';
 import '/imports/ui/components/venues/link/venue-link';
 
-import './event-details.html';
+import './template.html';
+import './styles.scss';
 
-Template.eventPage.onCreated(() => {
-	const event = Events.findOne(Router.current().params._id);
-	let title;
-	let description = '';
-	if (event) {
-		title = i18n('event.windowtitle', '{DATE} - {EVENT}', {
-			EVENT: event.title,
-			DATE: moment(event.start).calendar(),
-		});
-		description = i18n('event.metatag.description', '{VENUE} in {REGION}', {
-			REGION: Regions.findOne(event.region).name,
-			VENUE: event.venue.name,
-		});
-		appendAsJsonLdToBody(event);
-	} else {
-		title = i18n('event.windowtitle.create', 'Create event');
-	}
-	Metatags.setCommonTags(title, description);
-});
+{
+	const Template = TemplateAny as TemplateStaticTyped<'eventPage'>;
 
-Template.event.onCreated(function () {
-	const event = this.data;
-	this.busy(false);
-	this.editing = new ReactiveVar(!event._id);
-	this.subscribe('courseDetails', event.courseId);
+	const template = Template.eventPage;
 
-	this.addParticipant = () => {
-		SaveAfterLogin(
-			this,
-			i18n('loginAction.enrollEvent', 'Login and enroll for event'),
-			i18n('registerAction.enrollEvent', 'Login and enroll for event'),
-			async () => {
-				this.busy('registering');
-				try {
-					await EventsMethods.addParticipant(event._id);
-
-					Analytics.trackEvent(
-						'RSVPs',
-						'RSVPs as participant',
-						Regions.findOne(event.region)?.nameEn,
-					);
-				} catch (err) {
-					Alert.serverError(err, '');
-				} finally {
-					this.busy(false);
-				}
-			},
-		);
-	};
-
-	// register from email
-	if (Router.current().params.query.action === 'register') {
-		this.addParticipant();
-	}
-});
-
-Template.event.helpers({
-	acceptsParticipants() {
-		// no maxParticipants
-		if (!this.maxParticipants) {
-			return true;
+	template.onCreated(() => {
+		const event = Events.findOne(Router.current().params._id);
+		let title;
+		let description = '';
+		if (event) {
+			title = i18n('event.windowtitle', '{DATE} - {EVENT}', {
+				EVENT: event.title,
+				DATE: moment(event.start).calendar(),
+			});
+			description = i18n('event.metatag.description', '{VENUE} in {REGION}', {
+				REGION: Regions.findOne(event.region)?.name,
+				VENUE: event.venue?.name,
+			});
+			appendAsJsonLdToBody(event);
+		} else {
+			title = i18n('event.windowtitle.create', 'Create event');
 		}
+		Metatags.setCommonTags(title, description);
+	});
+}
 
-		if (!this.participants) {
-			return true;
-		}
+{
+	const Template = TemplateAny as TemplateStaticTyped<
+		'event',
+		EventModel,
+		{ editing: ReactiveVar<boolean>; addParticipant: () => void }
+	>;
 
-		if (this.participants.length < this.maxParticipants) {
-			return true;
-		}
-		return false;
-	},
+	const template = Template.event;
 
-	course() {
-		if (this.courseId) {
-			return Courses.findOne(this.courseId);
-		}
-		return false;
-	},
+	template.onCreated(function () {
+		const event = this.data;
+		this.busy(false);
+		this.editing = new ReactiveVar(!event._id);
+		this.subscribe('courseDetails', event.courseId);
 
-	editing() {
-		return this.new || Template.instance().editing.get();
-	},
+		this.addParticipant = () => {
+			SaveAfterLogin(
+				this,
+				i18n('loginAction.enrollEvent', 'Login and enroll for event'),
+				i18n('registerAction.enrollEvent', 'Login and enroll for event'),
+				async () => {
+					this.busy('registering');
+					try {
+						await EventsMethods.addParticipant(event._id);
 
-	isFuture() {
-		return moment().isBefore(this.end);
-	},
-
-	userRegisteredForEvent() {
-		return this.participants?.includes(Meteor.userId());
-	},
-});
-
-Template.event.events({
-	'mouseover .event-course-header, mouseout .event-course-header'(event, instance) {
-		instance.$(event.currentTarget).toggleClass('highlight', event.type === 'mouseover');
-	},
-
-	'click .event-course-header'() {
-		Router.go('showCourse', { _id: this.courseId });
-	},
-
-	async 'click .js-event-delete-confirm'(event, instance) {
-		const oEvent = instance.data;
-		const { title, region } = oEvent;
-		const course = oEvent.courseId;
-		instance.busy('deleting');
-
-		Template.instance().editing.set(false);
-		try {
-			await EventsMethods.remove(oEvent._id);
-
-			Alert.success(
-				i18n('eventDetails.eventRemoved', 'The event "{TITLE}" has been deleted.', {
-					TITLE: title,
-				}),
+						Analytics.trackEvent(
+							'RSVPs',
+							'RSVPs as participant',
+							Regions.findOne(event.region)?.nameEn,
+						);
+					} catch (err) {
+						Alert.serverError(err, '');
+					} finally {
+						this.busy(false);
+					}
+				},
 			);
+		};
 
-			Analytics.trackEvent(
-				'Event deletions',
-				'Event deletions as team',
-				Regions.findOne(region)?.nameEn,
-			);
+		// register from email
+		if (Router.current().params.query.action === 'register') {
+			this.addParticipant();
+		}
+	});
 
-			if (course) {
-				Router.go('showCourse', { _id: course });
-			} else {
-				Router.go('/');
+	template.helpers({
+		acceptsParticipants(this: EventModel) {
+			// no maxParticipants
+			if (!this.maxParticipants) {
+				return true;
 			}
-		} catch (err) {
-			Alert.serverError(err, 'Could not remove event');
-		} finally {
-			instance.busy(false);
-		}
-	},
 
-	'click .js-event-edit'(event, instance) {
-		if (PleaseLogin()) {
-			return;
-		}
-		instance.editing.set(true);
-	},
+			if (!this.participants) {
+				return true;
+			}
 
-	'click .js-register-event'(event, instance) {
-		instance.addParticipant();
-	},
+			if (this.participants.length < this.maxParticipants) {
+				return true;
+			}
+			return false;
+		},
 
-	async 'click .js-unregister-event'(event, instance) {
-		instance.busy('unregistering');
+		course() {
+			if (this.courseId) {
+				return Courses.findOne(this.courseId);
+			}
+			return false;
+		},
 
-		try {
-			await EventsMethods.removeParticipant(instance.data._id);
+		editing() {
+			return this.new || Template.instance().editing.get();
+		},
 
+		isFuture(this: EventModel) {
+			return moment().isBefore(this.end);
+		},
+
+		userRegisteredForEvent(this: EventModel) {
+			const userId = Meteor.userId();
+			return userId && this.participants?.includes(userId);
+		},
+	});
+
+	template.events({
+		'mouseover .event-course-header, mouseout .event-course-header'(event, instance) {
+			instance.$(event.currentTarget as any).toggleClass('highlight', event.type === 'mouseover');
+		},
+		
+		'click .event-course-header'() {
+			Router.go('showCourse', { _id: this.courseId });
+		},
+
+		async 'click .js-event-delete-confirm'(_event, instance) {
+			const oEvent = instance.data;
+			const { title, region } = oEvent;
+			const course = oEvent.courseId;
+			instance.busy('deleting');
+
+			Template.instance().editing.set(false);
+			try {
+				await EventsMethods.remove(oEvent._id);
+
+				Alert.success(
+					i18n('eventDetails.eventRemoved', 'The event "{TITLE}" has been deleted.', {
+						TITLE: title,
+					}),
+				);
+
+				Analytics.trackEvent(
+					'Event deletions',
+					'Event deletions as team',
+					Regions.findOne(region)?.nameEn,
+				);
+
+				if (course) {
+					Router.go('showCourse', { _id: course });
+				} else {
+					Router.go('/');
+				}
+			} catch (err) {
+				Alert.serverError(err, 'Could not remove event');
+			} finally {
+				instance.busy(false);
+			}
+		},
+
+		'click .js-event-edit'(_event, instance) {
+			if (PleaseLogin()) {
+				return;
+			}
+			instance.editing.set(true);
+		},
+
+		'click .js-register-event'(_event, instance) {
+			instance.addParticipant();
+		},
+
+		async 'click .js-unregister-event'(_event, instance) {
+			instance.busy('unregistering');
+
+			try {
+				await EventsMethods.removeParticipant(instance.data._id);
+
+				Analytics.trackEvent(
+					'Unsubscribes RSVPs',
+					'Unsubscribes RSVPs as participant',
+					Regions.findOne(instance.data.region)?.nameEn,
+				);
+			} catch (err) {
+				Alert.serverError(err, 'could not remove participant');
+			} finally {
+				instance.busy(false);
+			}
+		},
+	});
+}
+
+{
+	const Template = TemplateMixins.Expandible(
+		TemplateAny as TemplateStaticTyped<
+			'eventDisplay',
+			{ region: string; venue?: EventVenueEntity },
+			{ locationTracker: LocationTracker; replicating: ReactiveVar<boolean> }
+		>,
+		'eventDisplay',
+	);
+
+	const template = Template.eventDisplay;
+
+	template.onCreated(function () {
+		const instance = this;
+		instance.locationTracker = new LocationTracker();
+		instance.replicating = new ReactiveVar(false);
+	});
+
+	template.onRendered(function () {
+		const instance = this;
+		instance.locationTracker.setRegion(instance.data.region);
+		instance.locationTracker.setLocation(instance.data.venue);
+	});
+
+	template.helpers({
+		mayEdit() {
+			return this.editableBy(Meteor.user());
+		},
+		eventMarkers() {
+			return Template.instance().locationTracker.markers;
+		},
+		hasVenue(this: EventModel) {
+			return this.venue?.loc;
+		},
+		replicating() {
+			return Template.instance().replicating.get();
+		},
+	});
+
+	template.events({
+		'click .js-show-replication'(_event, instance) {
+			instance.replicating.set(true);
+			instance.collapse();
+		},
+
+		'click .js-track-cal-download'(_event, instance) {
 			Analytics.trackEvent(
-				'Unsubscribes RSVPs',
-				'Unsubscribes RSVPs as participant',
+				'Events downloads',
+				'Event downloads via event details',
 				Regions.findOne(instance.data.region)?.nameEn,
 			);
-		} catch (err) {
-			Alert.serverError(err, 'could not remove participant');
-		} finally {
-			instance.busy(false);
-		}
-	},
-});
+		},
+	});
+}
 
-TemplateMixins.Expandible(Template, 'eventDisplay');
-Template.eventDisplay.onCreated(function () {
-	this.locationTracker = new LocationTracker();
-	this.replicating = new ReactiveVar(false);
-});
+{
+	const Template = TemplateAny as TemplateStaticTyped<'eventGroupList', EventModel>;
 
-Template.eventDisplay.onRendered(function () {
-	this.locationTracker.setRegion(this.data.region);
-	this.locationTracker.setLocation(this.data.venue);
-});
+	const template = Template.eventGroupList;
 
-Template.eventDisplay.helpers({
-	mayEdit() {
-		return this.editableBy(Meteor.user());
-	},
-	eventMarkers() {
-		return Template.instance().locationTracker.markers;
-	},
-	hasVenue() {
-		return this.venue?.loc;
-	},
-	replicating() {
-		return Template.instance().replicating.get();
-	},
-});
+	template.helpers({
+		isOrganizer(this: EventModel) {
+			return Template.instance().data.editors.includes(IdTools.extract(this));
+		},
+		tools() {
+			const tools = [];
+			const user = Meteor.user();
+			if (user) {
+				const groupId = String(this);
+				const event = Template.parentData();
 
-Template.eventDisplay.events({
-	'click .js-show-replication'(event, instance) {
-		instance.replicating.set(true);
-		instance.collapse();
-	},
+				// Groups may be adopted from the course, these cannot be removed
+				const ownGroup = event.groups.includes(groupId);
 
-	'click .js-track-cal-download'(event, instance) {
-		Analytics.trackEvent(
-			'Events downloads',
-			'Event downloads via event details',
-			Regions.findOne(instance.data.region)?.nameEn,
-		);
-	},
-});
-
-Template.eventGroupList.helpers({
-	isOrganizer() {
-		return Template.instance().data.editors.includes(IdTools.extract(this));
-	},
-	tools() {
-		const tools = [];
-		const user = Meteor.user();
-		if (user) {
-			const groupId = String(this);
-			const event = Template.parentData();
-
-			// Groups may be adopted from the course, these cannot be removed
-			const ownGroup = event.groups.includes(groupId);
-
-			if (ownGroup && (user.mayPromoteWith(groupId) || event.editableBy(user))) {
-				tools.push({
-					toolTemplate: Template.eventGroupRemove,
-					groupId,
-					event,
-				});
+				if (ownGroup && (user.mayPromoteWith(groupId) || event.editableBy(user))) {
+					tools.push({
+						toolTemplate: TemplateAny.eventGroupRemove,
+						groupId,
+						event,
+					});
+				}
+				if (ownGroup && event.editableBy(user)) {
+					const hasOrgRights = event.groupOrganizers.includes(groupId);
+					tools.push({
+						toolTemplate: hasOrgRights
+							? TemplateAny.eventGroupRemoveOrganizer
+							: TemplateAny.eventGroupMakeOrganizer,
+						groupId,
+						event,
+					});
+				}
 			}
-			if (ownGroup && event.editableBy(user)) {
-				const hasOrgRights = event.groupOrganizers.includes(groupId);
-				tools.push({
-					toolTemplate: hasOrgRights
-						? Template.eventGroupRemoveOrganizer
-						: Template.eventGroupMakeOrganizer,
-					groupId,
-					event,
-				});
+			return tools;
+		},
+	});
+}
+{
+	const Template = TemplateMixins.Expandible(
+		TemplateAny as TemplateStaticTyped<'eventGroupAdd', EventModel>,
+		'eventGroupAdd',
+	);
+
+	const template = Template.eventGroupAdd;
+
+	template.helpers({
+		...GroupNameHelpers,
+		groupsToAdd(this: EventModel) {
+			const user = Meteor.user();
+			return user && _.difference(user.groups, this.allGroups);
+		},
+	});
+
+	template.events({
+		async 'click .js-add-group'(e, instance) {
+			const event = instance.data;
+			const groupId = (e.currentTarget as HTMLButtonElement).value;
+
+			try {
+				await EventsMethods.promote(event._id, groupId, true);
+
+				const groupName = Groups.findOne(groupId)?.name;
+				Alert.success(
+					i18n(
+						'eventGroupAdd.groupAdded',
+						'The group "{GROUP}" has been added to promote the event "{EVENT}".',
+						{ GROUP: groupName, EVENT: event.title },
+					),
+				);
+				instance.collapse();
+			} catch (err) {
+				Alert.serverError(err, 'Failed to add group');
 			}
-		}
-		return tools;
-	},
-});
+		},
+	});
+}
 
-TemplateMixins.Expandible(Template, 'eventGroupAdd');
-Template.eventGroupAdd.helpers(GroupNameHelpers);
-Template.eventGroupAdd.helpers({
-	groupsToAdd() {
-		const user = Meteor.user();
-		return user && _.difference(user.groups, this.allGroups);
-	},
-});
+{
+	const Template = TemplateMixins.Expandible(
+		TemplateAny as TemplateStaticTyped<'eventGroupRemove', { event: EventModel; groupId: string }>,
+		'eventGroupRemove',
+	);
 
-Template.eventGroupAdd.events({
-	async 'click .js-add-group'(e, instance) {
-		const event = instance.data;
-		const groupId = e.currentTarget.value;
+	const template = Template.eventGroupRemove;
 
-		try {
-			await EventsMethods.promote(event._id, groupId, true);
+	template.helpers(GroupNameHelpers);
+	template.events({
+		async 'click .js-remove'(_e, instance) {
+			const { event } = instance.data;
+			const { groupId } = instance.data;
 
-			const groupName = Groups.findOne(groupId).name;
-			Alert.success(
-				i18n(
-					'eventGroupAdd.groupAdded',
-					'The group "{GROUP}" has been added to promote the event "{EVENT}".',
-					{ GROUP: groupName, EVENT: event.title },
-				),
-			);
-			instance.collapse();
-		} catch (err) {
-			Alert.serverError(err, 'Failed to add group');
-		}
-	},
-});
+			try {
+				await EventsMethods.promote(event._id, groupId, false);
 
-TemplateMixins.Expandible(Template, 'eventGroupRemove');
-Template.eventGroupRemove.helpers(GroupNameHelpers);
-Template.eventGroupRemove.events({
-	async 'click .js-remove'(e, instance) {
-		const { event } = instance.data;
-		const { groupId } = instance.data;
+				const groupName = Groups.findOne(groupId)?.name;
+				Alert.success(
+					i18n(
+						'eventGroupAdd.groupRemoved',
+						'The group "{GROUP}" has been removed from the event "{EVENT}".',
+						{ GROUP: groupName, EVENT: event.title },
+					),
+				);
+				instance.collapse();
+			} catch (err) {
+				Alert.serverError(err, 'Failed to remove group');
+			}
+		},
+	});
+}
 
-		try {
-			await EventsMethods.promote(event._id, groupId, false);
+{
+	const Template = TemplateMixins.Expandible(
+		TemplateAny as TemplateStaticTyped<
+			'eventGroupMakeOrganizer',
+			{ event: EventModel; groupId: string }
+		>,
+		'eventGroupMakeOrganizer',
+	);
 
-			const groupName = Groups.findOne(groupId).name;
-			Alert.success(
-				i18n(
-					'eventGroupAdd.groupRemoved',
-					'The group "{GROUP}" has been removed from the event "{EVENT}".',
-					{ GROUP: groupName, EVENT: event.title },
-				),
-			);
-			instance.collapse();
-		} catch (err) {
-			Alert.serverError(err, 'Failed to remove group');
-		}
-	},
-});
+	const template = Template.eventGroupMakeOrganizer;
 
-TemplateMixins.Expandible(Template, 'eventGroupMakeOrganizer');
-Template.eventGroupMakeOrganizer.helpers(GroupNameHelpers);
-Template.eventGroupMakeOrganizer.events({
-	async 'click .js-makeOrganizer'(e, instance) {
-		const { event } = instance.data;
-		const { groupId } = instance.data;
+	template.helpers(GroupNameHelpers);
+	template.events({
+		async 'click .js-makeOrganizer'(_e, instance) {
+			const { event } = instance.data;
+			const { groupId } = instance.data;
 
-		try {
-			await EventsMethods.editing(event._id, groupId, true);
+			try {
+				await EventsMethods.editing(event._id, groupId, true);
 
-			const groupName = Groups.findOne(groupId).name;
-			Alert.success(
-				i18n(
-					'eventGroupAdd.membersCanEditEvent',
-					'Members of the group "{GROUP}" can now edit the event "{EVENT}".',
-					{ GROUP: groupName, EVENT: event.title },
-				),
-			);
-			instance.collapse();
-		} catch (err) {
-			Alert.serverError(err, 'Failed to give group editing rights');
-		}
-	},
-});
+				const groupName = Groups.findOne(groupId)?.name;
+				Alert.success(
+					i18n(
+						'eventGroupAdd.membersCanEditEvent',
+						'Members of the group "{GROUP}" can now edit the event "{EVENT}".',
+						{ GROUP: groupName, EVENT: event.title },
+					),
+				);
+				instance.collapse();
+			} catch (err) {
+				Alert.serverError(err, 'Failed to give group editing rights');
+			}
+		},
+	});
+}
 
-TemplateMixins.Expandible(Template, 'eventGroupRemoveOrganizer');
-Template.eventGroupRemoveOrganizer.helpers(GroupNameHelpers);
-Template.eventGroupRemoveOrganizer.events({
-	async 'click .js-removeOrganizer'(e, instance) {
-		const { event } = instance.data;
-		const { groupId } = instance.data;
+{
+	const Template = TemplateMixins.Expandible(
+		TemplateAny as TemplateStaticTyped<
+			'eventGroupRemoveOrganizer',
+			{ event: EventModel; groupId: string }
+		>,
+		'eventGroupRemoveOrganizer',
+	);
 
-		try {
-			await EventsMethods.editing(event._id, groupId, false);
+	const template = Template.eventGroupRemoveOrganizer;
 
-			const groupName = Groups.findOne(groupId).name;
-			Alert.success(
-				i18n(
-					'eventGroupAdd.membersCanNoLongerEditEvent',
-					'Members of the group "{GROUP}" can no longer edit the event "{EVENT}".',
-					{ GROUP: groupName, EVENT: event.title },
-				),
-			);
-			instance.collapse();
-		} catch (err) {
-			Alert.serverError(err, 'Failed to remove organizer status');
-		}
-	},
-});
+	template.helpers(GroupNameHelpers);
+	template.events({
+		async 'click .js-removeOrganizer'(_e, instance) {
+			const { event } = instance.data;
+			const { groupId } = instance.data;
+
+			try {
+				await EventsMethods.editing(event._id, groupId, false);
+
+				const groupName = Groups.findOne(groupId)?.name;
+				Alert.success(
+					i18n(
+						'eventGroupAdd.membersCanNoLongerEditEvent',
+						'Members of the group "{GROUP}" can no longer edit the event "{EVENT}".',
+						{ GROUP: groupName, EVENT: event.title },
+					),
+				);
+				instance.collapse();
+			} catch (err) {
+				Alert.serverError(err, 'Failed to remove organizer status');
+			}
+		},
+	});
+}

@@ -61,7 +61,7 @@ export class LocationTracker {
 	/** Local collection for in-memory storage */
 	public markers = new Mongo.Collection<MarkerEntity>(null);
 
-	setLocation(location: { loc?: Geodata }, draggable?: boolean, soft?: boolean) {
+	setLocation(location: { loc?: Geodata } | undefined, draggable?: boolean, soft?: boolean) {
 		if (soft) {
 			const marker = this.markers.findOne({ main: true }) as MainMarkerEntity;
 			if (marker && location?.loc) {

@@ -1,3 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 $header-bg: darken($blue-lighter, 5%);
 
 .event-course-header {
@@ -35,14 +37,11 @@ $header-bg: darken($blue-lighter, 5%);
 }
 
 .event-course-header + .event {
+	background-color: rgba($green, 0.35);
 	border-color: $header-bg;
 	border-style: solid;
 	border-width: 0 5px 5px;
-
-	@media (min-width: $screen-xs-min) {
-		background-color: rgba($green, 0.35);
-		padding: 15px;
-	}
+	padding: 15px;
 }
 
 .event + .page-component {
@@ -84,7 +83,7 @@ $header-bg: darken($blue-lighter, 5%);
 }
 
 .event-delete-confirmation {
-	$background-color: lighten($brand-danger, 20%);
+	$background-color: lighten($danger, 20%);
 
 	background-color: $background-color;
 	border: 1px solid darken($background-color, 20%);
