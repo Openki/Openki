@@ -40,7 +40,7 @@
   "devDependencies": {
     "@types/bootstrap": "5.1.6",
     "@types/bootstrap-datepicker": "0.0.15",
-    "@types/chai": "4.3.0",
+    "@types/chai": "4.2.21",
     "@types/es6-promisify": "6.0.1",
     "@types/jquery": "3.5.11",
     "@types/medium-editor": "5.0.5",
@@ -55,7 +55,7 @@
     "@types/url-join": "4.0.1",
     "@typescript-eslint/eslint-plugin": "5.8.1",
     "@typescript-eslint/parser": "5.8.1",
-    "assertion-error": "2.0.0",
+    "assertion-error": "1.1.0",
     "autoprefixer": "10.4.0",
     "chai": "4.3.4",
     "chromedriver": "90.0.1",
