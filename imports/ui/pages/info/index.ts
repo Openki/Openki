@@ -39,8 +39,8 @@ template.onRendered(function () {
 
 	// in order to create nice IDs for the questions also for non-english
 	// alphabets we make our own ones
-	instance.$(instance.headerTag).each(function () {
-		const title = $(instance);
+	instance.$(instance.headerTag).each((_index, element) => {
+		const title = $(element);
 		const id = title
 			.text()
 			.trim()
