@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-import { Groups } from '../groups';
+import { Groups } from '/imports/api/groups/groups';
 
 Meteor.publish('Groups.findFilter', (filter) => Groups.findFilter(filter));
 

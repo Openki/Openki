@@ -10,8 +10,8 @@ import { RegionModel, Regions } from '/imports/api/regions/regions';
 
 import * as HtmlTools from '/imports/utils/html-tools';
 import * as StringTools from '/imports/utils/string-tools';
-import * as UserPrivilegeUtils from '../utils/user-privilege-utils';
-import { getSiteName } from '../utils/getSiteName';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { getSiteName } from '/imports/utils/getSiteName';
 
 interface Body {
 	message: string;

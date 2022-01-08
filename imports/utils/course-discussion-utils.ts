@@ -1,5 +1,5 @@
-import { CourseMemberEntity } from '../api/courses/courses';
-import { UserModel } from '../api/users/users';
+import { CourseMemberEntity } from '/imports/api/courses/courses';
+import { UserModel } from '/imports/api/users/users';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 

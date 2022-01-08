@@ -11,7 +11,7 @@ import { UserModel, Users } from '/imports/api/users/users';
 
 import * as HtmlTools from '/imports/utils/html-tools';
 import * as StringTools from '/imports/utils/string-tools';
-import { getSiteName } from '../utils/getSiteName';
+import { getSiteName } from '/imports/utils/getSiteName';
 
 interface Body {
 	courseId: string;

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { Groups } from '/imports/api/groups/groups';
-import { UserModel } from '../api/users/users';
+import { UserModel } from '/imports/api/users/users';
 
 // The code to update the groups and groupOrganizers field must do the same
 // thing for Courses and Events. So we parameterize the methods

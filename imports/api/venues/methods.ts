@@ -2,8 +2,8 @@ import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-import { Regions } from '../regions/regions';
-import { VenueEntity, Venues } from './venues';
+import { Regions } from '/imports/api/regions/regions';
+import { VenueEntity, Venues } from '/imports/api/venues/venues';
 /** @typedef {import('./venues').VenueEntity} VenueEntity */
 
 import { AsyncTools } from '/imports/utils/async-tools';

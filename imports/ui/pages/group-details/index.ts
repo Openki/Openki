@@ -14,7 +14,7 @@ import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import { Store, Editable } from '/imports/ui/lib/editable';
 import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import { isGroupMember } from '/imports/utils/is-group-member';
-import { Analytics } from '../../lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable/editable';

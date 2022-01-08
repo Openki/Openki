@@ -16,7 +16,7 @@ import * as notificationGroupCourse from '/imports/notification/notification.gro
 import * as notificationPrivateMessage from '/imports/notification/notification.private-message';
 
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
-import { PublicSettings } from '../utils/PublicSettings';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
 export const Notification = {
 	Event: notificationEvent,

@@ -1,4 +1,4 @@
-import { EventEntity } from '../api/events/events';
+import { EventEntity } from '/imports/api/events/events';
 
 export function AffectedReplicaSelectors(
 	event: { _id: string; start: Date; replicaOf?: string } | { _id: undefined },

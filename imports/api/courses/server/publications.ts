@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Courses } from '../courses';
+import { Courses } from '/imports/api/courses/courses';
 import { visibleTenants } from '/imports/utils/visible-tenants';
 
 Meteor.publish('courseDetails', (id) =>

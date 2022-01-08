@@ -11,7 +11,7 @@ import { Log } from '/imports/api/log/log';
 import Users, { UserModel } from '/imports/api/users/users';
 
 import * as StringTools from '/imports/utils/string-tools';
-import { getSiteName } from '../utils/getSiteName';
+import { getSiteName } from '/imports/utils/getSiteName';
 
 interface Body {
 	courseId: string;

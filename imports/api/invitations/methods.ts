@@ -5,7 +5,7 @@ import { Random } from 'meteor/random';
 import { InvitationEntity, Invitations } from './invitations';
 import { Tenants } from '/imports/api/tenants/tenants';
 import { ServerMethod } from '/imports/utils/ServerMethod';
-import * as usersTenantsDenormalizer from '../users/tenantsDenormalizer';
+import * as usersTenantsDenormalizer from '/imports/api/users/tenantsDenormalizer';
 
 function tenantMutationPreconditionCheck(tenantId: string) {
 	check(tenantId, String);

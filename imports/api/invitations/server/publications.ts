@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-import { Invitations } from '../invitations';
+import { Invitations } from '/imports/api/invitations/invitations';
 import { Tenants } from '/imports/api/tenants/tenants';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 

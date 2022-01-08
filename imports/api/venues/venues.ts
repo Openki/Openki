@@ -9,8 +9,8 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
-import { Geodata } from '../regions/regions';
-import { UserModel } from '../users/users';
+import { Geodata } from '/imports/api/regions/regions';
+import { UserModel } from '/imports/api/users/users';
 
 /** DB-Model */
 export interface VenueEntity {

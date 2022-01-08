@@ -3,7 +3,7 @@ import { _ } from 'meteor/underscore';
 
 import * as IdTools from '/imports/utils/id-tools';
 
-import { GroupEntity } from '../groups/groups';
+import { GroupEntity } from '/imports/api/groups/groups';
 
 export type Role = 'admin';
 

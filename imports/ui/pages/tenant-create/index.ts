@@ -8,9 +8,9 @@ import { RegionModel } from '/imports/api/regions/regions';
 import * as TenantsMethods from '/imports/api/tenants/methods';
 import * as RegionsMethods from '/imports/api/regions/methods';
 
-import { LocationTracker } from '../../lib/location-tracker';
-import { SaveAfterLogin } from '../../lib/save-after-login';
-import { Analytics } from '../../lib/analytics';
+import { LocationTracker } from '/imports/ui/lib/location-tracker';
+import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable/editable';

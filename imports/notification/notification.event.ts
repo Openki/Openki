@@ -11,7 +11,7 @@ import { RegionModel, Regions } from '/imports/api/regions/regions';
 import { UserModel } from '/imports/api/users/users';
 
 import LocalTime from '/imports/utils/local-time';
-import { getSiteName } from '../utils/getSiteName';
+import { getSiteName } from '/imports/utils/getSiteName';
 
 interface Body {
 	new: boolean;

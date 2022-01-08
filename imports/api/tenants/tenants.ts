@@ -5,7 +5,7 @@ import { Match, check } from 'meteor/check';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
-import { UserModel } from '../users/users';
+import { UserModel } from '/imports/api/users/users';
 
 /** DB-Model */
 

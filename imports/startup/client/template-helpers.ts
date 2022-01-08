@@ -15,7 +15,7 @@ import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { UserEntity } from '/imports/api/fixtures/ensureFixture';
-import { checkContribution } from '../../utils/checkContribution';
+import { checkContribution } from '/imports/utils/checkContribution';
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.

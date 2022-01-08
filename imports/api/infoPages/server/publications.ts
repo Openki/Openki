@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-import { InfoPages } from '../infoPages';
+import { InfoPages } from '/imports/api/infoPages/infoPages';
 
 Meteor.publish('infoPage', (slug, locale) => {
 	const locales = [locale];
