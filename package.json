@@ -57,7 +57,7 @@
     "@typescript-eslint/parser": "5.8.1",
     "autoprefixer": "10.4.0",
     "chai": "4.3.4",
-    "chromedriver": "97.0.0",
+    "chromedriver": "95.0.0",
     "eslint": "8.5.0",
     "eslint-config-airbnb-base-typescript-prettier": "4.1.0",
     "eslint-import-resolver-meteor": "0.4.0",
