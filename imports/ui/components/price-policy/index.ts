@@ -3,8 +3,6 @@ import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
 import * as usersMethods from '/imports/api/users/methods';
-import { PublicSettings } from '/imports/utils/PublicSettings';
-import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
@@ -50,23 +48,6 @@ import './styles.scss';
 				classes.push(this.wrap);
 			}
 			return classes.join(' ');
-		},
-
-		pricePolicyLink() {
-			const link = getLocalizedValue(PublicSettings.faqLink);
-			let locale = Session.get('locale');
-			const localizedTitles = new Map()
-				.set('de', 'dürfen-kurse-etwas-kosten')
-				.set('en', 'why-can-not-i-ask-for-a-fixed-price-as-a-mentor');
-
-			if (!localizedTitles.has(locale)) {
-				locale = locale.slice(0, 2);
-			}
-
-			if (localizedTitles.has(locale)) {
-				return `${link}#${localizedTitles.get(locale)}`;
-			}
-			return link;
 		},
 	});
 

@@ -211,6 +211,7 @@
   "course.list.windowtitle": "Courses",
   "course.members.showMoreParticipants": "Show more co-learners",
   "course.propose.CourseInfo": "Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More information here:",
+  "course.propose.faq": "FAQ",
   "course.propose.guideLink": "How to organize my first {SITENAME} course?",
   "course.propose.windowtitle": "Propose new course",
   "course.reallydelete": "Please confirm that you would like to delete this course. This cannot be undone.",

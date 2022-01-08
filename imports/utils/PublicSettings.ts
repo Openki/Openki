@@ -19,6 +19,10 @@ const defaults = {
 	// eslint-disable-next-line camelcase
 	footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
 	faqLink: '/info/faq',
+	pricePolicyLink: {
+		en: '/info/faq#whycannotiaskforafixedpriceasamentor',
+		de: '/info/faq#drfenkurseetwaskosten',
+	},
 	courseGuideLink: {
 		en: 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf',
 		de: 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf',
@@ -53,6 +57,7 @@ check(
 			},
 		],
 		faqLink: LocalizedValue,
+		pricePolicyLink: LocalizedValue,
 		courseGuideLink: LocalizedValue,
 		aboutLink: LocalizedValue,
 		contribution: Match.Maybe({

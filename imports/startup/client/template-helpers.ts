@@ -12,7 +12,7 @@ import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
 import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
-import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
+import { getLocalizedValue, LocalizedValue } from '/imports/utils/getLocalizedValue';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { UserEntity } from '/imports/api/fixtures/ensureFixture';
 import { checkContribution } from '/imports/utils/checkContribution';
@@ -72,7 +72,7 @@ const helpers: { [name: string]: Function } = {
 		return PublicSettings;
 	},
 
-	localized(value: string | Record<string, unknown> | null | undefined) {
+	localized(value: LocalizedValue | null | undefined) {
 		return getLocalizedValue(value);
 	},
 
