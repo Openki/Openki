@@ -153,7 +153,7 @@ import './styles.scss';
 		'mouseover .event-course-header, mouseout .event-course-header'(event, instance) {
 			instance.$(event.currentTarget as any).toggleClass('highlight', event.type === 'mouseover');
 		},
-		
+
 		'click .event-course-header'() {
 			Router.go('showCourse', { _id: this.courseId });
 		},

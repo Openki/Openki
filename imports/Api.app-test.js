@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 import { assert } from 'chai';
-import { AssertionError } from 'assertion-error';
+import AssertionError from 'assertion-error';
 
 import '/imports/api/fixtures/methods';
 
