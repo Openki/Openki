@@ -3,7 +3,7 @@ import { check } from 'meteor/check';
 import { Random } from 'meteor/random';
 
 import { InvitationEntity, Invitations } from './invitations';
-import { Tenants } from '../tenants/tenants';
+import { Tenants } from '/imports/api/tenants/tenants';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as usersTenantsDenormalizer from '../users/tenantsDenormalizer';
 

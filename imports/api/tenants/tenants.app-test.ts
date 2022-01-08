@@ -4,7 +4,7 @@ import { assert } from 'chai';
 
 import { Tenants } from './tenants';
 import * as TenantsMethods from './methods';
-import { Users } from '../users/users';
+import { Users } from '/imports/api/users/users';
 
 if (Meteor.isClient) {
 	describe('Tenant', () => {

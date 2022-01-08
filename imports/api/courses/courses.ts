@@ -3,8 +3,8 @@ import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
-import { UserModel } from '../users/users';
-import { EventEntity } from '../events/events';
+import { UserModel } from '/imports/api/users/users';
+import { EventEntity } from '/imports/api/events/events';
 // eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from './tenantDenormalizer';
 
@@ -15,7 +15,7 @@ import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
-import { GroupEntityAdditionalInfosForProposals } from '../groups/groups';
+import { GroupEntityAdditionalInfosForProposals } from '/imports/api/groups/groups';
 
 export interface CourseMemberEntity {
 	user: string;

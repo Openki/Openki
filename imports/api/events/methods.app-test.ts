@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Events } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { MeteorAsync } from '/imports/utils/promisify';
-import { CourseModel, Courses } from '../courses/courses';
+import { CourseModel, Courses } from '/imports/api/courses/courses';
 
 if (Meteor.isClient) {
 	describe('Event', () => {

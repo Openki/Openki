@@ -6,7 +6,7 @@ import * as tenantDenormalizer from './tenantDenormalizer';
 
 import { Geodata } from '/imports/api/regions/regions';
 import { Courses } from '/imports/api/courses/courses';
-import { UserModel } from '../users/users';
+import { UserModel } from '/imports/api/users/users';
 
 import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
