@@ -254,7 +254,9 @@ export const save = ServerMethod(
 			/* eslint-disable-next-line no-param-reassign */
 			courseId = Courses.insert(enrichedSet);
 
-			Notification['Group.Course'].record(courseId);
+			if (set.groupOrganizers.length > 0) {
+				Notification['Group.Course'].record(courseId);
+			}
 
 			// Init calculated fields
 			Meteor.call('course.updateNextEvent', courseId);

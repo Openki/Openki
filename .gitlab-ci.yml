@@ -1,4 +1,4 @@
-image: openki/meteor-chromium:1.1.1
+image: openki/meteor-chromium:1.1.2
 
 
 stages:

@@ -8,7 +8,13 @@ import { MeteorAsync } from '/imports/utils/promisify';
 
 if (Meteor.isClient) {
 	describe('Frontpage', function () {
-		this.timeout(60000);
+		before(async function () {
+			this.timeout(60000);
+			// A previous test might have logged us in.
+			if (Meteor.userId()) {
+				await MeteorAsync.logout();
+			}
+		});
 		beforeEach(async () => {
 			await MeteorAsync.call('fixtures.clean');
 		});

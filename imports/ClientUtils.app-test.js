@@ -2,7 +2,7 @@ import { DDP } from 'meteor/ddp-client';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 import { Promise } from 'meteor/promise';
-import AssertionError from 'assertion-error';
+import { AssertionError } from 'chai';
 import { promisify } from 'es6-promisify';
 
 /**
