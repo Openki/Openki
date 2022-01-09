@@ -462,7 +462,7 @@
 	"notification.event.mail.new": "Eine neue Veranstaltung wurde veröffentlicht für den Kurs \"{COURSE}\":",
 	"notification.event.mail.notice": "Du erhältst diese Nachricht weil du Teil des Kurses \"{COURSE}\" bist.",
 	"notification.event.mail.notinterested": "Nicht mehr interessiert?",
-	"notification.event.mail.personalMessage": "Der Organisator \"{USERNAME}\" hat eine Nachricht für dich hinterlassen:",
+	"notification.event.mail.personalMessage": "Der Organisator hat eine Nachricht für dich hinterlassen:",
 	"notification.event.mail.profileLink": "Besuche dein Profil",
 	"notification.event.mail.registerEvent": "Ja, ich mache mit!",
 	"notification.event.mail.subject.changed": "{DATE} festgelegt: {TITLE}",
