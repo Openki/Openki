@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
 
 import { Events } from '/imports/api/events/events';
-import { UserModel } from '../users/users';
+import { UserModel } from '/imports/api/users/users';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 

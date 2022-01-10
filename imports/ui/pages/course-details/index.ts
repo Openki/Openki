@@ -2,6 +2,7 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
+import { _ } from 'meteor/underscore';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
@@ -15,14 +16,14 @@ import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Viewport from '/imports/ui/lib/viewport';
 
-import { _ } from 'meteor/underscore';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import * as IdTools from '/imports/utils/id-tools';
+import getLocalizedValue from '/imports/utils/getLocalizedValue';
 
 import '/imports/ui/components/buttons';
-import '/imports/ui/components/courses/categories/course-categories';
+import '/imports/ui/components/courses/categories';
 import '/imports/ui/components/courses/discussion/course-discussion';
 import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/events/course-events';
@@ -30,10 +31,10 @@ import '/imports/ui/components/courses/history/course-history';
 import '/imports/ui/components/courses/members/course-members';
 import '/imports/ui/components/courses/roles/course-roles';
 import '/imports/ui/components/editable/editable';
-import '/imports/ui/components/groups/list/group-list';
-import '/imports/ui/components/price-policy/price-policy';
+import '/imports/ui/components/groups/list';
+import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
-import '/imports/ui/components/sharing/sharing';
+import '/imports/ui/components/sharing';
 import '/imports/ui/components/report';
 
 import './template.html';
@@ -128,12 +129,6 @@ Template.courseDetailsPage.helpers({
 	},
 	isArchived() {
 		return this.course?.archived;
-	},
-	editableName() {
-		return (Template.instance() as any).editableName;
-	},
-	editableDescription() {
-		return (Template.instance() as any).editableDescription;
 	},
 });
 
@@ -236,6 +231,25 @@ Template.courseDetailsPage.events({
 
 		const { course } = instance.data;
 		Router.go('showCourse', course, { query: { edit: 'course' } });
+	},
+});
+
+Template.courseDetailsSubmenu.helpers({
+	additionalInfos() {
+		const user = Meteor.user();
+
+		const course = Template.instance().data.course;
+
+		const isEditor = user && course.editableBy(user);
+
+		return (
+			course.additionalInfos
+				?.filter((i: any) => i.visibleFor === 'all' || (i.visibleFor === 'editors' && isEditor))
+				.map((i: any) => ({
+					displayText: getLocalizedValue(i.displayText),
+					value: i.value,
+				})) || []
+		);
 	},
 });
 

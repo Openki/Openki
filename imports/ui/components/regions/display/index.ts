@@ -9,7 +9,8 @@ import { UserModel } from '/imports/api/users/users';
 
 import { locationFormat } from '/imports/utils/location-format';
 
-import '/imports/ui/components/map/map';
+import '/imports/ui/components/map';
+import type { LocEntity, MarkerEntity } from '/imports/ui/components/map';
 
 import './template.html';
 import './styles.scss';
@@ -18,14 +19,6 @@ export interface Data {
 	region: RegionModel;
 	onEdit: () => void;
 	onDelete: () => Promise<void>;
-}
-
-export interface LocEntity {
-	coordinates: [number, number];
-}
-export interface MarkerEntity {
-	loc: LocEntity;
-	main: boolean;
 }
 
 const Template = TemplateAny as TemplateStaticTyped<

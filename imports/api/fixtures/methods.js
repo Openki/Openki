@@ -10,7 +10,7 @@ import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
-import { InfoPages } from '../infoPages/infoPages';
+import { InfoPages } from '/imports/api/infoPages/infoPages';
 import { infoPages } from './data/infoPages/infoPages';
 
 import * as HtmlTools from '/imports/utils/html-tools';

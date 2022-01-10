@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { SSR } from 'meteor/meteorhacks:ssr';
 
 import { Log } from '/imports/api/log/log';
-import Notification from '/imports/notification/notification';
+import * as Notification from '/imports/notification/notification';
 
 // Watch the Log for event notifications
 Meteor.startup(() => {
@@ -12,6 +12,10 @@ Meteor.startup(() => {
 		Assets.getText('emails/notifications/comment.html'),
 	);
 	SSR.compileTemplate('notificationJoinEmail', Assets.getText('emails/notifications/join.html'));
+	SSR.compileTemplate(
+		'notificationGroupCourseEmail',
+		Assets.getText('emails/notifications/group.course.html'),
+	);
 	SSR.compileTemplate(
 		'notificationPrivateMessageEmail',
 		Assets.getText('emails/notifications/privateMessage.html'),

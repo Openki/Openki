@@ -1,0 +1,13 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.language-selection .dropdown-menu {
+	@include media-breakpoint-down(lg) {
+		background: none;
+		border: 0;
+		box-shadow: none;
+		flex-basis: 100%;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		position: initial;
+	}
+}

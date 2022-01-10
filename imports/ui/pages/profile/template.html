@@ -130,7 +130,7 @@
 				</h5>
 				<ul class="list-unstyled">
 					{{#each group in user.groups}}
-						<li class="mb-3">{{> groupNameFull group._id}}</li>
+						<li class="mb-3">{{> groupNameFull groupId=group._id}}</li>
 					{{/each}}
 				</ul>
 				<a class="btn btn-add" href="{{pathFor 'groupDetails' _id='create'}}">

@@ -1,0 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.category-tag {
+	@include tag($category-bg, $blue);
+}

@@ -125,7 +125,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 		filter: { /** restrict to regions in that tenant */ tenant?: string } = {},
 		limit = 0,
 		skip = 0,
-		sort: [string, 'asc' | 'desc'][],
+		sort?: [string, 'asc' | 'desc'][],
 	) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));

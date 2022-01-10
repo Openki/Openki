@@ -15,13 +15,12 @@ import * as usersMethods from '/imports/api/users/methods';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { PublicSettings } from '/imports/utils/PublicSettings';
 import { checkContribution } from '/imports/utils/checkContribution';
 
 import '/imports/ui/components/profiles/course-list/profile-course-list';
 import '/imports/ui/components/profiles/verify-email';
-import '/imports/ui/components/avatar/avatar';
-import '/imports/ui/components/send-message/send-message';
+import '/imports/ui/components/avatar';
+import '/imports/ui/components/send-message';
 
 import './template.html';
 
@@ -61,16 +60,8 @@ template.helpers({
 		return Template.currentData().user._id === Meteor.userId();
 	},
 
-	contributionFeature() {
-		return !!PublicSettings.contribution;
-	},
-
 	hasContributed() {
 		return checkContribution(Template.currentData().user.contribution);
-	},
-
-	contributedIcon() {
-		return PublicSettings.contribution?.icon;
 	},
 
 	acceptsPrivateMessages() {

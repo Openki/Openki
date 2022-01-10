@@ -7,11 +7,11 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import { RegionModel } from '/imports/api/regions/regions';
 import * as RegionsMethods from '/imports/api/regions/methods';
 
-import { Analytics } from '../../lib/analytics';
+import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/regions/display';
-import '/imports/ui/components/regions/edit';
 import type { Data as DisplayData } from '/imports/ui/components/regions/display';
+import '/imports/ui/components/regions/edit';
 import type { Data as EditData } from '/imports/ui/components/regions/edit';
 
 import './template.html';

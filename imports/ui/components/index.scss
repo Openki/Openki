@@ -2,7 +2,6 @@
 
 @import 'alerts/alerts';
 
-@import 'courses/categories/course-categories';
 @import 'courses/compact/course-compact';
 @import 'courses/discussion/course-discussion';
 @import 'courses/events/course-events';
@@ -13,37 +12,14 @@
 
 @import 'editable/editable';
 
-@import 'events/edit-location/event-edit-location';
 @import 'events/participants/event-participants';
 @import 'events/replication/event-replication';
 
-@import 'groups/list/group-list';
-
 @import 'introduction/introduction';
-
-@import 'language-selection/language-selection';
-
-@import 'map/map';
 
 @import 'navbar/navbar';
 
-@import 'participant/contact/participant-contact';
-
-@import 'price-policy/price-policy';
-
 @import 'profiles/course-list/profile-course-list';
-
-@import 'regions/selection/region-selection';
-@import 'regions/splash/region-splash';
-
-@import 'send-message/send-message';
-
-@import 'sharing/sharing';
-
-@import 'tenants/regions/tenant-regions';
-@import 'tenants/settings/tenant-settings';
 
 @import 'venues/link/venue-link';
 @import 'venues/edit/venue-edit';
-
-@import 'avatar/avatar';

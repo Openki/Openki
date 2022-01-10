@@ -34,25 +34,25 @@
 				</div>
 				<div class="modal-body">
 					{{#if state 'showDeleteConfirm'}}
-						<div class="panel panel-danger">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									{{i18n 'deleteEventsModal.confirm' 'Confirm deleting events'}}
-								</h4>
+						<div class="card">
+							<div class="card-header text-white bg-danger">
+								{{i18n 'deleteEventsModal.confirm' 'Confirm deleting events'}}
 							</div>
-							<div class="panel-body">
+							<div class="card-body">
 								{{i18n 'deleteEventsModal.reallyDelete' 'Do you really want to delete {NUM, plural, one{this event} other{these # events} }?' NUM=numSelectedEvents}}
-								<ul class="list-group selected-events">
-									{{#each event in selectedEvents}}
-										<li class="list-group-item list-group-item-danger">
-											<button type="button"
-													class="btn-close js-deselect-event float-end"
-													data-event-id="{{event._id}}"
-													aria-label="Close"></button>
-											{{> deleteEventsEvent event}}
-										</li>
-									{{/each}}
-								</ul>
+							</div>
+							<ul class="list-group list-group-flush selected-events">
+								{{#each event in selectedEvents}}
+									<li class="list-group-item list-group-item-danger">
+										<button type="button"
+												class="btn-close js-deselect-event float-end"
+												data-event-id="{{event._id}}"
+												aria-label="Close"></button>
+										{{> deleteEventsEvent event}}
+									</li>
+								{{/each}}
+							</ul>
+							<div class="card-body">
 								<div class="delete-events-actions">
 									<button type="button" class="btn btn-danger js-delete-events"
 											{{disabledIfBusy}}>
@@ -76,10 +76,10 @@
 							{{#each upcomingEvents}}
 								<div class="form-check">
 									<input class="form-check-input" type="checkbox" value=""
-										   id="deleteEventsListCheck" checked="{{isSelected}}"
-										   {{disabledIfBusy}} />
+										   id="deleteEventsListCheck{{this._id}}"
+										   checked="{{isSelected}}" {{disabledIfBusy}} />
 									<label class="form-check-label"
-										   for="deleteEventsListCheck">{{> deleteEventsEvent this}}</label>
+										   for="deleteEventsListCheck{{this._id}}">{{> deleteEventsEvent this}}</label>
 								</div>
 							{{/each}}
 						</div>

@@ -3,7 +3,7 @@ import { check } from 'meteor/check';
 
 import { TenantEntity, Tenants } from './tenants';
 import { Users } from '/imports/api/users/users';
-import * as usersTenantsDenormalizer from '../users/tenantsDenormalizer';
+import * as usersTenantsDenormalizer from '/imports/api/users/tenantsDenormalizer';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 
 export const create = ServerMethod('tenant.create', (changes: Pick<TenantEntity, 'name'>) => {

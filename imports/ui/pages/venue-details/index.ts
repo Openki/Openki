@@ -14,16 +14,16 @@ import * as VenuesMethods from '/imports/api/venues/methods';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import { locationFormat } from '/imports/utils/location-format';
 
+import { CenteredMarkerEntity, MainMarkerEntity } from '/imports/ui/lib/location-tracker';
+
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/events/list';
-import '/imports/ui/components/map/map';
-import '/imports/ui/components/profile-link/profile-link';
+import '/imports/ui/components/map';
+import '/imports/ui/components/profile-link';
 import '/imports/ui/components/venues/edit/venue-edit';
 
 import './template.html';
 import './styles.scss';
-
-type MarkerEntity = { loc: Geodata; main: boolean } | { loc: Geodata; center: boolean };
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'venueDetailsPage',
@@ -34,7 +34,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 		eventLoadingBlockSize: number;
 		upcomingEventLimit: ReactiveVar<number>;
 		pastEventLimit: ReactiveVar<number>;
-		markers: Mongo.Collection<MarkerEntity>;
+		markers: Mongo.Collection<MainMarkerEntity | CenteredMarkerEntity>;
 		setLocation: (loc?: Geodata) => void;
 		setRegion: (region: RegionModel | undefined) => void;
 		getUpcomingEvents: (limit: number) => EventModel[];

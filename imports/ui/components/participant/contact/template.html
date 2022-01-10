@@ -1,0 +1,38 @@
+<template name="participantContact">
+	{{#if showParticipantContact}}
+		<div class="participant-contact">
+			{{#if Template.subscriptionsReady}}
+				{{#if userAcceptsPrivateMessages}}
+					<button class="btn btn-link p-0 js-show-participant-contact-modal"
+							type="button">
+						<i class="fa fa-envelope fa-fw"></i>
+					</button>
+				{{else}}
+					<button class="btn btn-link p-0 disabled" type="button" disabled>
+						<i class="fa fa-envelope fa-fw"
+						   title="{{i18n 'user.acceptsPrivateMessages.false' 'User does not accept private messages from users'}}"></i>
+					</button>
+				{{/if}}
+			{{/if}}
+		</div>
+		{{#if state 'showModal'}}
+			<div class="modal js-participant-contact-modal" tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">
+								<i class="fa fa-paper-plane fa-fw" aria-hidden="true"></i>
+								{{i18n 'participantContactModal.writeMessageTo' 'Write a message to {USER}' USER=(username participant)}}
+							</h4>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							{{> sendMessage recipientId=participant courseId=course._id eventId=event._id onDone=hideModal}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{{/if}}
+	{{/if}}
+</template>

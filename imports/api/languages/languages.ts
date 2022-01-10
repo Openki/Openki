@@ -1,5 +1,5 @@
 /** DB-Model */
-interface LanguageEntity {
+export interface LanguageEntity {
 	/** ISO 639-1 code */
 	lg: string;
 	/** Full name */
@@ -87,7 +87,7 @@ export const Languages: { [abbreviation: string]: LanguageEntity } = {
 		name: 'Türkçe',
 		short: 'tr',
 		english: 'Turkish',
-		visible: false,
+		visible: true,
 	},
 	'zh-CN': {
 		lg: 'zh-CN',

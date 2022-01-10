@@ -31,7 +31,7 @@
 								</div>
 								<div class="course-details-title">
 									{{#if mayEdit}}
-										{{> editable editableName}}
+										{{> editable instance.editableName}}
 									{{else}}
 										<h2>{{course.name}}</h2>
 									{{/if}}
@@ -45,7 +45,7 @@
 									{{> courseGroupList}}
 								{{/with}}
 							</div>
-							{{> courseDetailsSubmenu editableDescription=editableDescription course=course}}
+							{{> courseDetailsSubmenu editableDescription=instance.editableDescription course=course}}
 						</div>
 						{{#unless course.isPrivate}}
 							{{> sharing}}
@@ -138,6 +138,11 @@
 	<div class="tab-content course-details-content">
 		<div class="tab-pane active" id="description">
 			{{> courseDetailsDescription editableDescription=editableDescription course=course}}
+			{{#each info in additionalInfos}}
+				<p>
+					<strong>{{info.displayText}}</strong>: {{info.value}}
+				</p>
+			{{/each}}
 		</div>
 		<div class="tab-pane course-history" id="history">
 			{{> coursehistory}}
@@ -161,10 +166,11 @@
 <template name="courseGroupList">
 	<div class="tag-group multiline">
 		{{#each groups}}
-			{{> groupName}}
+			{{> groupName groupId=this isOrganizer=isOrganizer}}
 			{{#if isOrganizer}}
 				<div class="tag group-tag addon">
-					<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
+					<span class="fa fa-bullhorn fa-fw" aria-hidden="true"
+						  title="{{i18n 'grouplist.organizer.title' 'Course is co-organized by this group'}}"></span>
 				</div>
 			{{/if}}
 			{{#if tools}}
@@ -211,7 +217,7 @@
 				{{#each groupsToAdd}}
 					<li>
 						<button class="btn btn-link js-add-group" type="button" value="{{this}}">
-							{{name}}
+							{{name this}}
 						</button>
 					</li>
 				{{/each}}
@@ -228,9 +234,7 @@
 <template name="courseGroupRemove">
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
-			{{#with groupId}}
-				{{i18n 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=name}}
-			{{/with}}
+			{{i18n 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=(name groupId)}}
 			<button type="button" class="btn btn-danger js-remove">
 				{{i18n 'course.group.confirmRemoveButton' "Delist"}}
 			</button>
@@ -245,9 +249,7 @@
 <template name="courseGroupMakeOrganizer">
 	{{#if expanded}}
 		<div class="group-tool-dialog add">
-			{{#with groupId}}
-				{{i18n 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=name}}
-			{{/with}}
+			{{i18n 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=(name groupId)}}
 			{{i18n 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and can create new events for it."}}
 			<button type="button" class="btn btn-add js-makeOrganizer">
 				{{i18n 'course.group.confimOrgButton' "Give editing rights"}}
@@ -264,9 +266,7 @@
 <template name="courseGroupRemoveOrganizer">
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
-			{{#with groupId}}
-				{{i18n 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=name}}
-			{{/with}}
+			{{i18n 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=(name groupId)}}
 			<button type="button" class="btn btn-danger js-removeOrganizer">
 				{{i18n 'course.group.confimRemoveOrgButton' "Take away editing rights"}}
 			</button>

@@ -9,8 +9,8 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
-import { Geodata } from '../regions/regions';
-import { UserModel } from '../users/users';
+import { Geodata } from '/imports/api/regions/regions';
+import { UserModel } from '/imports/api/users/users';
 
 /** DB-Model */
 export interface VenueEntity {
@@ -56,7 +56,7 @@ export class Venue {
 	/**
 	 * Check whether a user may edit the venue.
 	 */
-	editableBy(this: VenueModel, user: UserModel) {
+	editableBy(this: VenueModel, user: UserModel | undefined | null) {
 		if (!user) {
 			return false;
 		}
@@ -67,6 +67,15 @@ export class Venue {
 			UserPrivilegeUtils.privileged(user, 'admin') // Admins can edit all venues
 		);
 	}
+}
+
+export interface FindFilter {
+	/** string of words to search for */
+	search?: string;
+	/** restrict to venues in that region */
+	region?: string;
+	editor?: string;
+	recent?: boolean;
 }
 
 export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
@@ -107,19 +116,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 	 * @param skip skip this many before returning results
 	 * @param sort list of fields to sort by
 	 */
-	findFilter(
-		filter: {
-			/** string of words to search for */
-			search?: string;
-			/** restrict to venues in that region */
-			region?: string;
-			editor?: string;
-			recent?: boolean;
-		} = {},
-		limit = 0,
-		skip = 0,
-		sort?: [string, 'asc' | 'desc'][],
-	) {
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: [string, 'asc' | 'desc'][]) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
 		check(sort, Match.Maybe([[String]]));

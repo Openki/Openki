@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import { EventModel } from '/imports/api/events/events';
 
-import '/imports/ui/components/groups/list/group-list';
+import '/imports/ui/components/groups/list';
 import '/imports/ui/components/venues/link/venue-link';
 
 import './template.html';

@@ -1,18 +1,17 @@
 import { Meteor } from 'meteor/meteor';
+import { Match, check } from 'meteor/check';
 import { ValidationError } from 'meteor/mdg:validation-error';
 
-import { Courses, Course } from './courses';
+import { Courses, Course } from '/imports/api/courses/courses';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
-
 import * as Alert from '/imports/api/alerts/alert';
 import { Events } from '/imports/api/events/events';
 import { Users, User } from '/imports/api/users/users';
-import { Match, check } from 'meteor/check';
-import { MeteorAsync } from '/imports/utils/promisify';
 
 import { hasRole } from '/imports/utils/course-role-utils';
-import Notification from '/imports/notification/notification';
+import { MeteorAsync } from '/imports/utils/promisify';
+import { Notification } from '/imports/notification/notification';
 
 /**
  * @param {Subscribe | Unsubscribe | Message} change

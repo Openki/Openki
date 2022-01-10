@@ -12,10 +12,10 @@ import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
 import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
-import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
+import { getLocalizedValue, LocalizedValue } from '/imports/utils/getLocalizedValue';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { UserEntity } from '/imports/api/fixtures/ensureFixture';
-import { checkContribution } from '../../utils/checkContribution';
+import { checkContribution } from '/imports/utils/checkContribution';
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -68,16 +68,12 @@ const helpers: { [name: string]: Function } = {
 		return id && Session.equals('region', id);
 	},
 
-	guideLink() {
-		return getLocalisedValue(PublicSettings.courseGuideLink);
+	PublicSettings() {
+		return PublicSettings;
 	},
 
-	faqLink() {
-		return getLocalisedValue(PublicSettings.faqLink);
-	},
-
-	aboutLink() {
-		return getLocalisedValue(PublicSettings.aboutLink);
+	localized(value: LocalizedValue | null | undefined) {
+		return getLocalizedValue(value);
 	},
 
 	log(context: any) {
@@ -346,7 +342,7 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 		}
 
 		return Spacebars.SafeString(
-			`<a href="${getLocalisedValue(contribution.link)}" data-tooltip="${Blaze._escape(
+			`<a href="${getLocalizedValue(contribution.link)}" data-tooltip="${Blaze._escape(
 				i18n(
 					'user.hasContributed',
 					'{USERNAME} supported {SITENAME} with a donation. Click on the {ICON} for more information how to contribute.',

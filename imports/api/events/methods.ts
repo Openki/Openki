@@ -20,7 +20,7 @@ import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { VenueModel, Venues } from '/imports/api/venues/venues';
 
-import Notification from '/imports/notification/notification';
+import { Notification } from '/imports/notification/notification';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
@@ -534,6 +534,7 @@ Meteor.methods({
 							'venue.name': venue.name,
 							'venue.address': venue.address,
 							'venue.loc': venue.loc,
+							'venue.editor': venue.editor,
 						},
 					};
 				} else {

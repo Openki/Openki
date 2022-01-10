@@ -5,7 +5,7 @@ import { Introduction } from '/imports/ui/lib/introduction';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
 
-import '/imports/ui/components/price-policy/price-policy';
+import '/imports/ui/components/price-policy';
 
 import './introduction.html';
 

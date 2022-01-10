@@ -6,16 +6,14 @@
 			</span>
 			<p>
 				{{#if new}}
-					{{i18n 'notification.event.mail.new' 'A new event was just published for course "{COURSE}":' COURSE=course.name lng=locale}}
+					{{i18n 'notification.event.mail.new' 'A new event was just published for course {COURSE}:' COURSE=course lng=locale}}
 				{{else}}
-					{{i18n 'notification.event.mail.changed' 'The following event for course "{COURSE}" changed:' COURSE=course.name lng=locale}}
+					{{i18n 'notification.event.mail.changed' 'The following event for course {COURSE} changed:' COURSE=course lng=locale}}
 				{{/if}}
-				<a href="{{courseLink}}"><i class="fa fa-external-link"></i>
-					{{i18n 'event.details.viewCourse' 'view course' lng=locale}}</a>
 			</p>
 			{{#if additionalMessage}}
 				<p>
-					{{i18n "notification.event.mail.personalMessage" 'The Organizer "{USERNAME}" left a message for you:' USERNAME=creatorName lng=locale}}
+					{{i18n "notification.event.mail.personalMessage" 'The organizer left a message for you:' lng=locale}}
 				</p>
 				<table class="comment-box">
 					<tr>
@@ -24,29 +22,21 @@
 						</td>
 					</tr>
 				</table>
-			{{else}}
-				<p>
-					{{i18n "notification.event.mail.creationMessage" 'The event has been created by "{USERNAME}".' USERNAME=creatorName lng=locale}}
-				</p>
 			{{/if}}
 
-			<a
-			   href="{{creatorLink}}">{{i18n "notification.event.mail.commenterlink" '➜ See profile from {USERNAME}' USERNAME=creatorName lng=locale}}</a>
 			<table style="margin: 2em auto; width: 92%;">
 				<tr>
 					<td bgcolor="#c1f2ae" style="padding: 15px;">
-						<div style="float: right;">
-							<a href="{{eventLink}}"><i class="fa fa-calendar"></i>
-								{{i18n 'notification.event.viewEvent' 'view event' lng=locale}}</a>
-						</div>
 						<a href="{{eventLink}}"
 						   style="color: #333 !important; text-decoration: none !important;">
-							{{eventDate}}
-							<br />
-							{{eventStart}}
-							{{#if eventEnd}}
-								- {{eventEnd}}
-							{{/if}}
+							<strong>
+								{{eventDate}}
+								<br />
+								{{eventStart}}
+								{{#if eventEnd}}
+									- {{eventEnd}}
+								{{/if}}
+							</strong>
 							{{#if venueLine}}
 								<br />
 								{{venueLine}}
@@ -93,7 +83,7 @@
 				{{i18n "notification.event.mail.notinterested" "Not interested anymore?" lng=locale}}
 			</p>
 			<p class="text-center">
-				<a class="button" href="{{unsubscribeFromCourseLink}}">
+				<a href="{{unsubscribeFromCourseLink}}">
 					{{i18n "notification.event.mail.unsubscribe" "Unsubscribe from course" lng=locale}}
 				</a>
 			</p>
@@ -104,7 +94,7 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{i18n 'notification.event.mail.notice' 'You receive this mail because you are involved in the course "{COURSE}".' COURSE=course.name lng=locale}}
+						{{i18n 'notification.event.mail.notice' 'You receive this mail because you are involved in the course "{COURSE}".' COURSE=course lng=locale}}
 					</td>
 				</tr>
 				<tr>

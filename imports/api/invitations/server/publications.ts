@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
-import { Invitations } from '../invitations';
-import { Tenants } from '../../tenants/tenants';
+import { Invitations } from '/imports/api/invitations/invitations';
+import { Tenants } from '/imports/api/tenants/tenants';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 Meteor.publish('invitation', function (tenantId, token) {

@@ -44,13 +44,13 @@ gadicohen:sitemaps
 
 # Build
 es5-shim@4.8.0                  # ECMAScript 5 compatibility for older browsers
-ecmascript@0.16.0               # Enable ECMAScript2015+ syntax in app code
-standard-minifier-js@2.7.1      # JS minifier run for production mode
+ecmascript@0.16.1               # Enable ECMAScript2015+ syntax in app code
+standard-minifier-js@2.8.0      # JS minifier run for production mode
 juliancwirko:postcss            # Enables PostCSS and Autoprefixer for bootstrap
 
 # DEV
 msavin:mongol
-typescript@4.4.0
+typescript@4.4.1
 
 # Test
 meteortesting:mocha@2.0.1       # A package for writing and running your meteor app and package tests with mocha

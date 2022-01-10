@@ -1,6 +1,7 @@
 import { check, Match } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
-import { LocalisedValue } from './CustomChecks';
+
+import { LocalizedValue } from '/imports/utils/CustomChecks';
 
 // See settings-example.json.md for full documentation
 
@@ -18,6 +19,10 @@ const defaults = {
 	// eslint-disable-next-line camelcase
 	footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
 	faqLink: '/info/faq',
+	pricePolicyLink: {
+		en: '/info/faq#why-can-not-i-ask-for-a-fixed-price-as-a-mentor',
+		de: '/info/faq#dürfen-kurse-etwas-kosten',
+	},
 	courseGuideLink: {
 		en: 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf',
 		de: 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf',
@@ -39,8 +44,8 @@ check(
 		avatarLogo: { src: String, alt: String },
 		ogLogo: { src: String },
 		emailLogo: String,
-		regionSelection: { minNumber: Number, aboutLink: Match.Maybe(LocalisedValue) },
-		i18nHelpLink: Match.Maybe(LocalisedValue),
+		regionSelection: { minNumber: Number, aboutLink: Match.Maybe(LocalizedValue) },
+		i18nHelpLink: Match.Maybe(LocalizedValue),
 		publicTenants: [String],
 		pricePolicyEnabled: Boolean,
 		footerLinks: [
@@ -48,16 +53,17 @@ check(
 				link: String,
 				key: Match.Maybe(String),
 				title_key: Match.Maybe(String),
-				text: Match.Maybe(LocalisedValue),
+				text: Match.Maybe(LocalizedValue),
 			},
 		],
-		faqLink: LocalisedValue,
-		courseGuideLink: LocalisedValue,
-		aboutLink: LocalisedValue,
+		faqLink: LocalizedValue,
+		pricePolicyLink: LocalizedValue,
+		courseGuideLink: LocalizedValue,
+		aboutLink: LocalizedValue,
 		contribution: Match.Maybe({
 			icon: String,
 			forbiddenChars: [String],
-			link: LocalisedValue,
+			link: LocalizedValue,
 		}),
 		s3: {
 			publicUrlBase: String,

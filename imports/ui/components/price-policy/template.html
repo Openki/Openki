@@ -1,0 +1,79 @@
+<template name="pricePolicy">
+	{{#if dismissable}}
+		{{#unless hidePricePolicy}}
+			{{> pricePolicyContent}}
+		{{/unless}}
+	{{else}}
+		{{> pricePolicyContent}}
+	{{/if}}
+</template>
+
+<template name="pricePolicyContent">
+	{{#if PublicSettings.pricePolicyEnabled}}
+		<div class="price-policy {{cssClasses}}">
+			<div class="price-policy-content">
+				{{#if dismissable}}
+					<div>
+						<div class="icon-text">
+							<div class="icon-text-icon">
+								<i class="fa fa-info fa-fw" aria-hidden="true"></i>
+							</div>
+							<div class="icon-text-text">
+								{{i18n 'pricePolicy.disclaimer' "Education should be open to everyone, that's why {SITENAME} only allows suggested/orientation prices." SITENAME=siteName}}
+							</div>
+						</div>
+					</div>
+					<div class="row g-2 mt-1">
+						<div class="col-12 col-sm-6">
+							<a href="{{localized PublicSettings.pricePolicyLink}}">
+								<div class="icon-text">
+									<div class="icon-text-icon">
+										<i class="fa fa-fw fa-book" aria-hidden="true"></i>
+									</div>
+									<div class="icon-text-text">
+										{{i18n 'pricePolicy.moreAboutPricePolicy' 'Read our price policy'}}
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-12 col-sm-6">
+							<a class="js-hide-price-policy" href="#">
+								<div class="icon-text">
+									<div class="icon-text-icon">
+										<i class="fa fa-fw fa-ban" aria-hidden="true"></i>
+									</div>
+									<div class="icon-text-text">
+										{{i18n 'pricePolicy.dontShowAnymore' "Don't show this anymore"}}
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				{{else}}
+					<div class="d-lg-inline-block">
+						<div class="icon-text">
+							<div class="icon-text-icon">
+								<i class="fa fa-info fa-fw" aria-hidden="true"></i>
+							</div>
+							<div class="icon-text-text">
+								{{i18n 'pricePolicy.disclaimer' "Education should be open to everyone, that's why {SITENAME} only allows suggested/orientation prices." SITENAME=siteName}}
+							</div>
+						</div>
+					</div>
+					<div class="d-lg-inline-block">
+						<a href="{{localized PublicSettings.pricePolicyLink}}">
+							<div class="icon-text">
+								<div class="icon-text-icon d-lg-none">
+									<i class="fa fa-fw fa-book" aria-hidden="true"></i>
+								</div>
+								<div class="icon-text-text">
+									{{i18n 'pricePolicy.moreAboutPricePolicy' 'Read our price policy'}}
+								</div>
+							</div>
+						</a>
+					</div>
+				{{/if}}
+			</div>
+		</div>
+	{{/if}}
+</template>

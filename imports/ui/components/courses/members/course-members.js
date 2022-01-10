@@ -13,8 +13,8 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/editable/editable';
-import '/imports/ui/components/participant/contact/participant-contact';
-import '/imports/ui/components/profile-link/profile-link';
+import '/imports/ui/components/participant/contact';
+import '/imports/ui/components/profile-link';
 
 import './course-members.html';
 

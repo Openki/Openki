@@ -10,7 +10,7 @@ import { Log } from '/imports/api/log/log';
 
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
-import { getLocalisedValue } from '/imports/utils/getLocalisedValue';
+import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 function sendInvitation(invitation: InvitationEntity) {
@@ -47,7 +47,7 @@ function sendInvitation(invitation: InvitationEntity) {
 		invitationLink: Router.url('invitation', invitation, {
 			query: `tenant=${invitation.tenant}&campaign=invitationEmail`,
 		}),
-		moreLink: getLocalisedValue(PublicSettings.aboutLink, locale),
+		moreLink: getLocalizedValue(PublicSettings.aboutLink, locale),
 		reportEmail: PrivateSettings.reporter.recipient,
 		locale,
 	});

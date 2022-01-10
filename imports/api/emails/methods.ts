@@ -9,7 +9,7 @@ import juice from 'juice';
 import Version from '/imports/api/version/version';
 import { Users } from '/imports/api/users/users';
 
-import Notification from '/imports/notification/notification';
+import { Notification } from '/imports/notification/notification';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as HtmlTools from '/imports/utils/html-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
@@ -30,18 +30,16 @@ export const sendVerificationEmail = ServerMethod(
 	{ simulation: false },
 );
 
+export interface SendEmailOptions {
+	revealAddress: boolean;
+	sendCopy: boolean;
+	courseId?: string;
+	eventId?: string;
+}
+
 export const sendEmail = ServerMethod(
 	'sendEmail',
-	(
-		userId: string,
-		message: string,
-		options: {
-			revealAddress: boolean;
-			sendCopy: boolean;
-			courseId?: string;
-			eventId?: string;
-		},
-	) => {
+	(userId: string, message: string, options: SendEmailOptions) => {
 		check(userId, String);
 		check(message, String);
 		check(options, {

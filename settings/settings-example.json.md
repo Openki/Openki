@@ -11,7 +11,7 @@ This file descripts all configurations and customization options. Remove the com
 		"testWarning": true, // Shows a banner saying that this is only for testing
 		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner. Can be a logo from the /public/logo/* folder or a base64 encoded string.
 		"headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the /public/logo/* folder or a base64 encoded string.
-		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" }, // The default image used for avatars (color is changed using the CSS filter 'hue-rotate')
+		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" }, // The default image used for avatars (color is changed using the CSS filter 'hue-rotate'). The "alt" setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media
 		"emailLogo": "emails/openki.png", // Can be a logo from the /private/* folder or a base64 encoded string.
 		"regionSelection": {
@@ -52,9 +52,10 @@ This file descripts all configurations and customization options. Remove the com
 			}
 		],
 		"faqLink": "/info/faq", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+		"pricePolicyLink": "...", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"courseGuideLink": "...", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"aboutLink": "https://about.openki.net", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-		"contribution": // Contribution to the plattform, a admin can set in the userprofile that a user has contributed. This shows a icon next to the username. Remove this setting to disable this feature. 
+		"contribution": // Contribution to the plattform, a admin can set in the userprofile that a user has contributed. This shows a icon next to the username. Remove this setting to disable this feature.
 		    { "icon": "fa fa-heart"
 			, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"] // forbidden chars in username
 			, "link": // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`

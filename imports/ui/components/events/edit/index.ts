@@ -20,6 +20,7 @@ import { Courses } from '/imports/api/courses/courses';
 import { EventModel, Events, EventVenueEntity } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { Regions } from '/imports/api/regions/regions';
+import { SaveFields } from '/imports/api/events/methods';
 
 import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import { Editable } from '/imports/ui/lib/editable';
@@ -32,13 +33,12 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable/editable';
-import '/imports/ui/components/events/edit-location/event-edit-location';
-import '/imports/ui/components/price-policy/price-policy';
+import '/imports/ui/components/events/edit-location';
+import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
 
 import './template.html';
 import './styles.scss';
-import { SaveFields } from '/imports/api/events/methods';
 
 type NewEventModel = {
 	new: boolean;

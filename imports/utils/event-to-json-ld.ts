@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
-import { EventModel } from '../api/events/events';
-import { Geodata } from '../api/regions/regions';
+import { EventModel } from '/imports/api/events/events';
+import { Geodata } from '/imports/api/regions/regions';
 
 import { PublicSettings } from './PublicSettings';
 

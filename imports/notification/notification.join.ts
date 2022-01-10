@@ -11,7 +11,16 @@ import { UserModel, Users } from '/imports/api/users/users';
 
 import * as HtmlTools from '/imports/utils/html-tools';
 import * as StringTools from '/imports/utils/string-tools';
-import { getSiteName } from '../utils/getSiteName';
+import { getSiteName } from '/imports/utils/getSiteName';
+
+interface Body {
+	courseId: string;
+	participantId: string;
+	recipients: string[];
+	newRole: string;
+	message: string | undefined;
+	model: string;
+}
 
 /**
  * Record the intent to send join notifications
@@ -36,26 +45,24 @@ export function record(courseId: string, participantId: string, newRole: string,
 		throw new Meteor.Error(`No user entry for ${participantId}`);
 	}
 
-	const body: Record<string, unknown> = {};
-	body.courseId = course._id;
-	body.participantId = participant._id;
+	const body: Body = {
+		courseId: course._id,
+		participantId: participant._id,
 
-	// Don't send to new member, they know
-	body.recipients = course
-		.membersWithRole('team')
-		.map((m) => m.user)
-		.filter((r) => r !== participantId);
-
-	body.newRole = newRole;
-
-	body.message = message;
-
-	body.model = 'Join';
+		// Don't send to new member, they know
+		recipients: course
+			.membersWithRole('team')
+			.map((m) => m.user)
+			.filter((r) => r !== participantId),
+		newRole,
+		message,
+		model: 'Join',
+	};
 
 	Log.record('Notification.Send', [course._id, participant._id], body);
 }
 
-export function Model(entry: { body: any }) {
+export function Model(entry: { body: Body }) {
 	const { body } = entry;
 	const course = Courses.findOne(body.courseId);
 	const newParticipant = Users.findOne(body.participantId);
@@ -65,7 +72,6 @@ export function Model(entry: { body: any }) {
 			if (actualRecipient.notifications === false) {
 				throw new Error('User wishes to not receive automated notifications');
 			}
-
 			if (!actualRecipient.hasEmail()) {
 				throw new Error('Recipient has no email address registered');
 			}
@@ -87,8 +93,11 @@ export function Model(entry: { body: any }) {
 				lng,
 			};
 
-			// prettier-ignore
-			const subject = i18n('notification.join.mail.subject', '{USER} joined {COURSE}: {ROLE}', subjectvars);
+			const subject = i18n(
+				'notification.join.mail.subject',
+				'{USER} joined {COURSE}: {ROLE}',
+				subjectvars,
+			);
 
 			const figures = ['host', 'mentor', 'participant']
 				.filter((role) => course.roles.includes(role))
@@ -113,7 +122,7 @@ export function Model(entry: { body: any }) {
 				subject,
 				memberCount: course.members.length,
 				roleTitle,
-				message: HtmlTools.plainToHtml(body.message),
+				message: body.message ? HtmlTools.plainToHtml(body.message) : undefined,
 				// For Team members when a mentor joins, add a hint for possible collaboration or
 				// invite into team
 				appendCollaborationHint: body.newRole === 'mentor',

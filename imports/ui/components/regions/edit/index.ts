@@ -3,14 +3,14 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import moment from 'moment-timezone';
 
 import { Geodata, RegionEntity } from '/imports/api/regions/regions';
-
 import * as Alert from '/imports/api/alerts/alert';
-import { LocationTracker } from '/imports/ui/lib/location-tracker';
+
+import { LocationTracker, MainMarkerEntity } from '/imports/ui/lib/location-tracker';
 import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable/editable';
-import '/imports/ui/components/map/map';
+import '/imports/ui/components/map';
 
 import './template.html';
 import './styles.scss';
@@ -123,7 +123,7 @@ export interface OnSaveFields {
 
 		locationTracker.markers.find().observe({
 			added(orginalLocation) {
-				if (orginalLocation.proposed) {
+				if ('proposed' in orginalLocation && orginalLocation.proposed) {
 					// The map widget does not reactively update markers when their
 					// flags change. So we remove the propsed marker it added and
 					// replace it by a main one. This is only a little weird.
@@ -134,13 +134,13 @@ export interface OnSaveFields {
 						main: true,
 						draggable: true,
 						proposed: undefined,
-					};
+					} as MainMarkerEntity;
 					locationTracker.markers.insert(location);
 				}
 			},
 
 			changed(location) {
-				if (location.remove) {
+				if ('remove' in location && location.remove) {
 					locationTracker.markers.remove(location._id);
 				}
 			},
