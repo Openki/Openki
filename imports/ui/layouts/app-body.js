@@ -13,7 +13,7 @@ import * as Viewport from '/imports/ui/lib/viewport';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-import '/imports/ui/components/account-tasks/account-tasks';
+import '/imports/ui/components/account-tasks';
 import '/imports/ui/components/alerts/alerts';
 import '/imports/ui/components/email-request';
 import '/imports/ui/components/email-validation';

@@ -1,5 +1,7 @@
 /* stylelint-disable selector-max-compound-selectors */
 
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .navbar .navbar-nav > .open > .login-dropdown,
 .navbar .navbar-nav > .dropdown > .login-dropdown {
 	@media (min-width: $screen-sm) {
