@@ -54,6 +54,13 @@ $link-decoration: none;
 
 $form-label-color: shade-color($blue, 20%);
 
+// Dropdowns
+//
+// Dropdown menu container and contents.
+
+//** Background for the dropdown menu.
+$dropdown-bg: lighten($blue-lighter, 8.7%) !default;
+
 // Tooltips
 
 $tooltip-bg: $blue;

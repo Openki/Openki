@@ -39,7 +39,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 	}
 >;
 
-export const template = Template.fileUpload;
+const template = Template.fileUpload;
 
 template.onCreated(function () {
 	const instance = this;

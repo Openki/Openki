@@ -1,9 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import * as UsersMethods from '/imports/api/users/methods';
@@ -14,196 +13,199 @@ import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Viewport from '/imports/ui/lib/viewport';
 
 import { isEmail } from '/imports/utils/email-tools';
-import { MeteorAsync } from '/imports/utils/promisify';
+import { AccountsAsync, MeteorAsync } from '/imports/utils/promisify';
 
 import { Regions } from '/imports/api/regions/regions';
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import './account-tasks.html';
+import './template.html';
+import './styles.scss';
 
-Template.accountTasks.onCreated(function () {
-	this.accountTask = new ReactiveVar('login');
-	this.autorun(() => {
-		if (Session.equals('pleaseLogin', true)) {
-			this.$('.js-account-tasks').modal('show');
+{
+	const Template = TemplateAny as TemplateStaticTyped<
+		'accountTasks',
+		unknown,
+		{
+			accountTask: ReactiveVar<string>;
+			transferUsername: boolean;
+			transferPassword: boolean;
+			transferMail: boolean;
 		}
+	>;
+
+	const template = Template.accountTasks;
+
+	template.onCreated(function () {
+		const instance = this;
+
+		instance.accountTask = new ReactiveVar('login');
+		instance.autorun(() => {
+			if (Session.equals('pleaseLogin', true)) {
+				instance.$('.js-account-tasks').modal('show');
+			}
+		});
 	});
-});
 
-Template.accountTasks.helpers({
-	activeAccountTask: (task) => Template.instance().accountTask.get() === task,
-	pleaseLogin: () => Session.get('pleaseLogin'),
-});
+	template.helpers({
+		activeAccountTask: (task: string) => Template.instance().accountTask.get() === task,
+		pleaseLogin: () => Session.get('pleaseLogin'),
+	});
 
-Template.accountTasks.events({
-	'show.bs.modal .js-account-tasks'(event, instance) {
-		/* eslint-disable-next-line no-param-reassign */
-		instance.transferUsername = false;
-		/* eslint-disable-next-line no-param-reassign */
-		instance.transferPassword = false;
-		/* eslint-disable-next-line no-param-reassign */
-		instance.transferMail = false;
-	},
-
-	'shown.bs.modal .js-account-tasks'(event, instance) {
-		instance.$('input').first().trigger('select');
-	},
-
-	'hide.bs.modal .js-account-tasks'(event, instance) {
-		instance.$('input').val('');
-	},
-
-	'hidden.bs.modal .js-account-tasks'(event, instance) {
-		instance.accountTask.set('login');
-		Session.set('pleaseLogin', false);
-	},
-});
-
-Template.loginFrame.onCreated(function () {
-	this.busy(false);
-
-	const oAuthServices = [];
-	const login = Meteor.settings.public.feature?.login;
-	if (login?.google) {
-		oAuthServices.push({
-			key: 'google',
-			name: 'Google',
-			serviceName: 'Google',
-		});
-	}
-	if (login?.facebook) {
-		oAuthServices.push({
-			key: 'facebook',
-			name: 'Facebook',
-			serviceName: 'Facebook',
-		});
-	}
-	if (login?.github) {
-		oAuthServices.push({
-			key: 'github',
-			name: 'GitHub',
-			serviceName: 'Github',
-		});
-	}
-	this.OAuthServices = oAuthServices;
-});
-
-Template.loginFrame.onRendered(function () {
-	const { transferMail } = this.parentInstance();
-	if (transferMail) {
-		this.$('.js-username').val(transferMail);
-	}
-
-	this.$('input').first().trigger('select');
-});
-
-TemplateMixins.FormfieldErrors(Template, 'loginFrame', {
-	noUsername: {
-		text: () => i18n('login.warning.noUserName', 'Please enter your username or email to log in.'),
-		field: 'username',
-	},
-	'Incorrect password': {
-		text: () => i18n('login.password.password_incorrect', 'Incorrect password'),
-		field: 'password',
-	},
-	'User not found': {
-		text: () => i18n('login.username.usr_doesnt_exist', 'This user does not exist.'),
-		field: 'username',
-	},
-	'User has no password set': {
-		text: () => i18n('login.username.no_password_set', 'Please login below with Google/Facebook.'),
-		field: 'username',
-	},
-});
-
-Template.loginFrame.events({
-	'click .js-forgot-pwd-btn'(event, instance) {
-		event.preventDefault();
-
-		const username = instance.$('.js-username').val();
-		if (isEmail(username)) {
+	template.events({
+		'show.bs.modal .js-account-tasks'(_event, instance) {
 			/* eslint-disable-next-line no-param-reassign */
-			instance.parentInstance().transferMail = username;
-		}
+			instance.transferUsername = false;
+			/* eslint-disable-next-line no-param-reassign */
+			instance.transferPassword = false;
+			/* eslint-disable-next-line no-param-reassign */
+			instance.transferMail = false;
+		},
 
-		instance.parentInstance().accountTask.set('recoverPwd');
-	},
+		'shown.bs.modal .js-account-tasks'(_event, instance) {
+			instance.$('input').first().trigger('select');
+		},
 
-	'click .js-register-open'(event, instance) {
-		let username = instance.$('.js-username').val();
-		const password = instance.$('.js-password').val();
-		let email;
+		'hide.bs.modal .js-account-tasks'(_event, instance) {
+			instance.$('input').val('');
+		},
 
-		// Sometimes people register with their email address in the first field
-		// Move entered username over to email field if it contains a @
-		if (isEmail(username)) {
-			email = username;
-			username = email.substr(0, email.indexOf('@'));
-		}
+		'hidden.bs.modal .js-account-tasks'(_event, instance) {
+			instance.accountTask.set('login');
+			Session.set('pleaseLogin', false);
+		},
+	});
+}
 
-		const parentInstance = instance.parentInstance();
-		parentInstance.transferUsername = username;
-		parentInstance.transferPassword = password;
-		parentInstance.transferMail = email;
-
-		instance.parentInstance().accountTask.set('register');
-	},
-
-	async 'submit form, click .js-login'(event, instance) {
-		event.preventDefault();
-		instance.errors.reset();
-
-		const user = instance.$('.js-username').val();
-		if (!user) {
-			instance.errors.add('noUsername');
-		}
-
-		if (instance.errors.present()) {
-			return;
-		}
-
-		const password = instance.$('.js-password').val();
-
-		instance.busy('logging-in');
-		try {
-			await MeteorAsync.loginWithPassword(user, password);
-
-			if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
-				$('#bs-navbar-collapse-1').collapse('hide');
+{
+	const Template = TemplateMixins.FormfieldErrors(
+		TemplateAny as TemplateStaticTyped<
+			'loginFrame',
+			unknown,
+			{
+				OAuthServices: {
+					key: string;
+					name: string;
+					serviceName: string;
+				}[];
 			}
-			$('.js-account-tasks').modal('hide');
+		>,
+		'loginFrame',
+		{
+			noUsername: {
+				text: () =>
+					i18n('login.warning.noUserName', 'Please enter your username or email to log in.'),
+				field: 'username',
+			},
+			'Incorrect password': {
+				text: () => i18n('login.password.password_incorrect', 'Incorrect password'),
+				field: 'password',
+			},
+			'User not found': {
+				text: () => i18n('login.username.usr_doesnt_exist', 'This user does not exist.'),
+				field: 'username',
+			},
+			'User has no password set': {
+				text: () =>
+					i18n('login.username.no_password_set', 'Please login below with Google/Facebook.'),
+				field: 'username',
+			},
+		},
+	);
 
-			const regionId = CleanedRegion(Session.get('region'));
-			if (regionId) {
-				UsersMethods.regionChange(regionId);
+	const template = Template.loginFrame;
+
+	template.onCreated(function () {
+		const instance = this;
+
+		instance.busy(false);
+
+		const oAuthServices = [];
+		const login = Meteor.settings.public.feature?.login;
+		if (login?.google) {
+			oAuthServices.push({
+				key: 'google',
+				name: 'Google',
+				serviceName: 'Google',
+			});
+		}
+		if (login?.facebook) {
+			oAuthServices.push({
+				key: 'facebook',
+				name: 'Facebook',
+				serviceName: 'Facebook',
+			});
+		}
+		if (login?.github) {
+			oAuthServices.push({
+				key: 'github',
+				name: 'GitHub',
+				serviceName: 'Github',
+			});
+		}
+		instance.OAuthServices = oAuthServices;
+	});
+
+	template.onRendered(function () {
+		const { transferMail } = this.parentInstance() as any;
+		if (transferMail) {
+			this.$('.js-username').val(transferMail);
+		}
+
+		this.$('input').first().trigger('select');
+	});
+
+	template.events({
+		'click .js-forgot-pwd-btn'(event, instance) {
+			event.preventDefault();
+
+			const username = instance.$('.js-username').val() as string;
+			if (isEmail(username)) {
+				/* eslint-disable-next-line no-param-reassign */
+				(instance.parentInstance() as any).transferMail = username;
 			}
 
-			UsersMethods.updateLocale(Session.get('locale'));
+			(instance.parentInstance() as any).accountTask.set('recoverPwd');
+		},
 
-			Analytics.trackEvent('Logins', 'Logins with password', Regions.findOne(regionId)?.nameEn);
-		} catch (err) {
-			instance.errors.add(err.reason);
-		} finally {
-			instance.busy(false);
-		}
-	},
+		'click .js-register-open'(_event, instance) {
+			let username = instance.$('.js-username').val() as string;
+			const password = instance.$('.js-password').val() as string;
+			let email;
 
-	'click .js-oauth-btn'(event, instance) {
-		event.preventDefault();
+			// Sometimes people register with their email address in the first field
+			// Move entered username over to email field if it contains a @
+			if (isEmail(username)) {
+				email = username;
+				username = email.substr(0, email.indexOf('@'));
+			}
 
-		const { service } = event.currentTarget.dataset;
-		const loginMethod = `loginWith${service}`;
-		if (!Meteor[loginMethod]) {
-			Alert.serverError(new Error(`don't have ${loginMethod}`), '');
-			return;
-		}
+			const parentInstance = instance.parentInstance() as any;
+			parentInstance.transferUsername = username;
+			parentInstance.transferPassword = password;
+			parentInstance.transferMail = email;
 
-		instance.busy(service);
-		Meteor[loginMethod]({}, (err) => {
-			instance.busy(false);
-			if (err) {
-				Alert.serverError(err, '');
-			} else {
+			parentInstance.accountTask.set('register');
+		},
+
+		async 'submit form, click .js-login'(event, instance) {
+			event.preventDefault();
+			instance.errors.reset();
+
+			const user = instance.$('.js-username').val() as string;
+			if (!user) {
+				instance.errors.add('noUsername');
+			}
+
+			if (instance.errors.present()) {
+				return;
+			}
+
+			const password = instance.$('.js-password').val() as string;
+
+			instance.busy('logging-in');
+			try {
+				await MeteorAsync.loginWithPassword(user, password);
+
 				if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
 				}
@@ -218,123 +220,31 @@ Template.loginFrame.events({
 
 				Analytics.trackEvent(
 					'Logins',
-					`Logins with ${service}`,
-					Regions.findOne(Meteor.user().profile.regionId)?.nameEn,
+					'Logins with password',
+					regionId ? Regions.findOne(regionId)?.nameEn : '',
 				);
+			} catch (err) {
+				instance.errors.add(err.reason);
+			} finally {
+				instance.busy(false);
 			}
-		});
-	},
-});
+		},
 
-Template.loginFrame.helpers({
-	pleaseLogin: () => Session.get('pleaseLogin'),
+		'click .js-oauth-btn'(event, instance) {
+			event.preventDefault();
 
-	loginAction: () => Session.get('loginAction'),
+			const { service } = event.currentTarget.dataset;
+			const loginMethod = `loginWith${service}`;
+			if (!(Meteor as any)[loginMethod]) {
+				Alert.serverError(new Error(`don't have ${loginMethod}`), '');
+				return;
+			}
 
-	OAuthServices: () => Template.instance().OAuthServices,
-});
-
-Template.registerFrame.onCreated(function () {
-	this.busy(false);
-});
-
-Template.registerFrame.onRendered(function () {
-	const parentInstance = this.parentInstance();
-
-	const { transferUsername, transferPassword, transferMail } = parentInstance;
-
-	if (transferUsername) {
-		this.$('.js-username').val(transferUsername);
-	}
-
-	if (transferPassword) {
-		this.$('.js-password').val(transferPassword);
-	}
-
-	if (transferMail) {
-		this.$('.js-email').val(transferMail);
-	}
-
-	this.$('input').first().trigger('select');
-});
-
-Template.registerFrame.helpers({
-	pleaseLogin: () => Session.get('pleaseLogin'),
-
-	registerAction: () => Session.get('registerAction'),
-});
-
-TemplateMixins.FormfieldErrors(Template, 'registerFrame', {
-	noUsername: {
-		text: () => i18n('register.warning.noUserName', 'Please enter a name for your new user.'),
-		field: 'username',
-	},
-	'Username already exists.': {
-		text: () =>
-			i18n(
-				'register.warning.userExists',
-				'This username already exists. Please choose another one.',
-			),
-		field: 'username',
-	},
-	noPassword: {
-		text: () => i18n('register.warning.noPasswordProvided', 'Please enter a password to register.'),
-		field: 'password',
-	},
-	noEmail: {
-		text: () =>
-			i18n('register.warning.noEmailProvided', 'Please enter an email-address to register.'),
-		field: 'email',
-	},
-	'email invalid': {
-		text: () => i18n('register.warning.emailNotValid'),
-		field: 'email',
-	},
-	'Email already exists.': {
-		text: () =>
-			i18n(
-				'register.warning.emailExists',
-				'This email already exists. Have you tried resetting your password?',
-			),
-		field: 'email',
-	},
-});
-
-Template.registerFrame.events({
-	'click .js-register'(event, instance) {
-		event.preventDefault();
-		instance.errors.reset();
-
-		const username = instance.$('.js-username').val();
-		if (!username) {
-			instance.errors.add('noUsername');
-		}
-
-		const password = instance.$('.js-password').val();
-		if (!password) {
-			instance.errors.add('noPassword');
-		}
-
-		const email = instance.$('.js-email').val();
-		if (!email) {
-			instance.errors.add('noEmail');
-		}
-
-		if (instance.errors.present()) {
-			return;
-		}
-
-		instance.busy('registering');
-		Accounts.createUser(
-			{
-				username,
-				password,
-				email,
-			},
-			(err) => {
+			instance.busy(service);
+			(Meteor as any)[loginMethod]({}, (err: any) => {
 				instance.busy(false);
 				if (err) {
-					instance.errors.add(err.reason);
+					Alert.serverError(err, '');
 				} else {
 					if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
 						$('#bs-navbar-collapse-1').collapse('hide');
@@ -348,81 +258,239 @@ Template.registerFrame.events({
 
 					UsersMethods.updateLocale(Session.get('locale'));
 
-					const user = Meteor.user();
-
-					Alert.success(
-						i18n(
-							'profile.sentVerificationMail',
-							'Verification mail has been sent to your address: "{MAIL}".',
-							{ MAIL: user.emails[0].address },
-						),
-					);
-
 					Analytics.trackEvent(
-						'Registers',
-						'Registers with password',
-						Regions.findOne(user.profile.regionId)?.nameEn,
+						'Logins',
+						`Logins with ${service}`,
+						Regions.findOne(Meteor.user()?.profile.regionId)?.nameEn,
 					);
 				}
+			});
+		},
+	});
+
+	template.helpers({
+		pleaseLogin: () => Session.get('pleaseLogin'),
+
+		loginAction: () => Session.get('loginAction'),
+
+		OAuthServices: () => Template.instance().OAuthServices,
+	});
+}
+
+{
+	const Template = TemplateMixins.FormfieldErrors(
+		TemplateAny as TemplateStaticTyped<'registerFrame'>,
+		'registerFrame',
+		{
+			noUsername: {
+				text: () => i18n('register.warning.noUserName', 'Please enter a name for your new user.'),
+				field: 'username',
 			},
-		);
-	},
-
-	'click .js-back-to-login'(event, instance) {
-		instance.parentInstance().accountTask.set('login');
-	},
-});
-
-Template.forgotPwdFrame.onCreated(function () {
-	this.busy(false);
-	this.emailIsValid = new ReactiveVar(false);
-});
-
-Template.forgotPwdFrame.onRendered(function () {
-	const { transferMail } = this.parentInstance();
-	if (transferMail) {
-		this.$('.js-reset-pw-email').val(transferMail);
-		this.emailIsValid.set(true);
-	}
-
-	this.$('input').first().trigger('select');
-});
-
-Template.forgotPwdFrame.helpers({
-	noValidEmail: () => !Template.instance().emailIsValid.get(),
-});
-
-Template.forgotPwdFrame.events({
-	'input, change, paste, keyup, mouseup'(event, instance) {
-		const email = instance.$('.js-reset-pw-email').val();
-		instance.emailIsValid.set(isEmail(email));
-	},
-
-	submit(event, instance) {
-		event.preventDefault();
-		instance.busy('requesting-pw-reset');
-		Accounts.forgotPassword(
-			{
-				email: instance.$('.js-reset-pw-email').val(),
+			'Username already exists.': {
+				text: () =>
+					i18n(
+						'register.warning.userExists',
+						'This username already exists. Please choose another one.',
+					),
+				field: 'username',
 			},
-			(err) => {
+			noPassword: {
+				text: () =>
+					i18n('register.warning.noPasswordProvided', 'Please enter a password to register.'),
+				field: 'password',
+			},
+			noEmail: {
+				text: () =>
+					i18n('register.warning.noEmailProvided', 'Please enter an email-address to register.'),
+				field: 'email',
+			},
+			'email invalid': {
+				text: () => i18n('register.warning.emailNotValid'),
+				field: 'email',
+			},
+			'Email already exists.': {
+				text: () =>
+					i18n(
+						'register.warning.emailExists',
+						'This email already exists. Have you tried resetting your password?',
+					),
+				field: 'email',
+			},
+		},
+	);
+
+	const template = Template.registerFrame;
+
+	template.onCreated(function () {
+		const instance = this;
+		instance.busy(false);
+	});
+
+	template.onRendered(function () {
+		const instance = this;
+
+		const parentInstance = instance.parentInstance() as any;
+
+		const { transferUsername, transferPassword, transferMail } = parentInstance;
+
+		if (transferUsername) {
+			instance.$('.js-username').val(transferUsername);
+		}
+
+		if (transferPassword) {
+			instance.$('.js-password').val(transferPassword);
+		}
+
+		if (transferMail) {
+			instance.$('.js-email').val(transferMail);
+		}
+
+		instance.$('input').first().trigger('select');
+	});
+
+	template.helpers({
+		pleaseLogin: () => Session.get('pleaseLogin'),
+
+		registerAction: () => Session.get('registerAction'),
+	});
+
+	template.events({
+		async 'click .js-register'(event, instance) {
+			event.preventDefault();
+			instance.errors.reset();
+
+			const username = instance.$('.js-username').val() as string;
+			if (!username) {
+				instance.errors.add('noUsername');
+			}
+
+			const password = instance.$('.js-password').val() as string;
+			if (!password) {
+				instance.errors.add('noPassword');
+			}
+
+			const email = instance.$('.js-email').val() as string;
+			if (!email) {
+				instance.errors.add('noEmail');
+			}
+
+			if (instance.errors.present()) {
+				return;
+			}
+
+			instance.busy('registering');
+
+			try {
+				await AccountsAsync.createUser({
+					username,
+					password,
+					email,
+				});
+
+				if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
+					$('#bs-navbar-collapse-1').collapse('hide');
+				}
+				$('.js-account-tasks').modal('hide');
+
+				const regionId = CleanedRegion(Session.get('region'));
+				if (regionId) {
+					UsersMethods.regionChange(regionId);
+				}
+
+				UsersMethods.updateLocale(Session.get('locale'));
+
+				const user = Meteor.user();
+
+				if (!user) {
+					throw new Error('Unexpected falsy: user');
+				}
+
+				Alert.success(
+					i18n(
+						'profile.sentVerificationMail',
+						'Verification mail has been sent to your address: "{MAIL}".',
+						{ MAIL: user.emails[0].address },
+					),
+				);
+
+				Analytics.trackEvent(
+					'Registers',
+					'Registers with password',
+					Regions.findOne(user.profile.regionId)?.nameEn,
+				);
+			} catch (err) {
+				instance.errors.add(err.reason);
+			} finally {
 				instance.busy(false);
-				if (err) {
-					Alert.serverError(err, 'We were unable to send a mail to this address');
-				} else {
-					Alert.success(
-						i18n(
-							'forgotPassword.emailSent',
-							'An e-mail with further instructions on how to reset your password has been sent to you.',
-						),
-					);
-					instance.parentInstance().accountTask.set('login');
-				}
-			},
-		);
-	},
+			}
+		},
 
-	'click .js-reset-pwd-close-btn'(event, instance) {
-		instance.parentInstance().accountTask.set('login');
-	},
-});
+		'click .js-back-to-login'(_event, instance) {
+			(instance.parentInstance() as any).accountTask.set('login');
+		},
+	});
+}
+{
+	const Template = TemplateAny as TemplateStaticTyped<
+		'forgotPwdFrame',
+		unknown,
+		{ emailIsValid: ReactiveVar<boolean> }
+	>;
+
+	const template = Template.forgotPwdFrame;
+
+	template.onCreated(function () {
+		const instance = this;
+		instance.busy(false);
+		instance.emailIsValid = new ReactiveVar(false);
+	});
+
+	template.onRendered(function () {
+		const instance = this;
+		const { transferMail } = instance.parentInstance() as any;
+		if (transferMail) {
+			instance.$('.js-reset-pw-email').val(transferMail);
+			instance.emailIsValid.set(true);
+		}
+
+		instance.$('input').first().trigger('select');
+	});
+
+	template.helpers({
+		noValidEmail: () => !Template.instance().emailIsValid.get(),
+	});
+
+	template.events({
+		'input, change, paste, keyup, mouseup'(_event, instance) {
+			const email = instance.$('.js-reset-pw-email').val() as string;
+			instance.emailIsValid.set(isEmail(email));
+		},
+
+		async submit(event, instance) {
+			event.preventDefault();
+			instance.busy('requesting-pw-reset');
+
+			try {
+				await AccountsAsync.forgotPassword({
+					email: instance.$('.js-reset-pw-email').val() as string,
+				});
+
+				Alert.success(
+					i18n(
+						'forgotPassword.emailSent',
+						'An e-mail with further instructions on how to reset your password has been sent to you.',
+					),
+				);
+				(instance.parentInstance() as any).accountTask.set('login');
+			} catch (err) {
+				Alert.serverError(err, 'We were unable to send a mail to this address');
+			} finally {
+				instance.busy(false);
+			}
+		},
+
+		'click .js-reset-pwd-close-btn'(_event, instance) {
+			(instance.parentInstance() as any).accountTask.set('login');
+		},
+	});
+}
