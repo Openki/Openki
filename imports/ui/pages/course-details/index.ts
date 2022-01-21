@@ -24,7 +24,7 @@ import getLocalizedValue from '/imports/utils/getLocalizedValue';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
-import '/imports/ui/components/courses/discussion/course-discussion';
+import '/imports/ui/components/courses/discussion';
 import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/events/course-events';
 import '/imports/ui/components/courses/history/course-history';

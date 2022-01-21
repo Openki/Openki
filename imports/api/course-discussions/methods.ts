@@ -23,7 +23,7 @@ const sanitizeComment = (comment: { title: string; text: string }) => {
 	return { title: saneTitle, text: saneHtml };
 };
 
-interface PostCommentFields {
+export interface PostCommentFields {
 	courseId: string;
 	parentId?: string;
 	title: string;
@@ -98,9 +98,15 @@ export const postComment = ServerMethod(
 	},
 );
 
+export interface EditCommentFields {
+	_id: string;
+	title: string;
+	text: string;
+}
+
 export const editComment = ServerMethod(
 	'courseDiscussion.editComment',
-	(comment: { _id: string; title: string; text: string }) => {
+	(comment: EditCommentFields) => {
 		check(comment, {
 			_id: String,
 			title: String,

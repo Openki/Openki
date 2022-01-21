@@ -1,3 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .discussion-conversation {
 	background: $blue-lighter;
 	padding: 15px ($grid-gutter-width / 2);
@@ -87,15 +89,15 @@ $discussion-post-bg: $blue-lighter;
 .discussion-delete-btn {
 	background: none;
 	border: 0;
-	color: $gray-light;
+	color: $gray-600;
 
 	&:hover {
-		color: $gray-dark;
+		color: $gray-800;
 	}
 }
 
 .discussion-post-header-sub {
-	color: $gray-light;
+	color: $gray-600;
 	cursor: default;
 }
 
@@ -137,7 +139,7 @@ $discussion-post-bg: $blue-lighter;
 	}
 }
 
-$discussion-edit-bg: lighten($gray-lighter, 10%);
+$discussion-edit-bg: lighten($gray-400, 10%);
 
 .discussion-edit-content {
 	background: $discussion-edit-bg;

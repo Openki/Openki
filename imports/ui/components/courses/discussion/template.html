@@ -11,9 +11,9 @@
 		{{else}}
 			{{> loadingRow}}
 		{{/if}}
-		{{#each posts}}
+		{{#each p in posts}}
 			<div class="discussion-conversation">
-				{{> post}}
+				{{> post p}}
 			</div>
 		{{/each}}
 		{{#if limited}}
@@ -37,8 +37,8 @@
 			{{i18n 'course.discussions.showPreviousReplies' 'Show all previous answers'}}
 		</button>
 	{{/if}}
-	{{#each responses}}
-		{{> post}}
+	{{#each response in responses}}
+		{{> post response}}
 	{{/each}}
 	{{#if allowResponse}}
 		{{> post newResponse}}
@@ -207,7 +207,7 @@
 		{{contribution this}}
 	{{else}}
 		<span class="username">
-			Anonymous
+			{{i18n 'comment.profileLink.anonymous' 'Anonymous'}}
 		</span>
 	{{/if}}
 </template>

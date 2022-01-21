@@ -103,6 +103,7 @@
   "category.tutoring": "Support / Tutoring",
   "comment.delete.confirm": "Do you really want to delete this comment?",
   "comment.delete.header": "Delete comment",
+  "comment.profileLink.anonymous": "Anonymous",
   "course.archive.alert": "This course is archived and not active anymore.",
   "course.archive.archiveButton.archive": "Archive",
   "course.archive.archiveButton.archiving": "Archiving...",
