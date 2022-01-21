@@ -56,7 +56,7 @@ import './styles.scss';
 					// Jump to the selected comment.
 					// This method should work for screenreaders too.
 					window.location.hash = `#comment${select}`;
-					(RouterAutoscroll as any).scheduleScroll();
+					RouterAutoscroll.scheduleScroll();
 				});
 			}
 		});
@@ -275,7 +275,7 @@ import './styles.scss';
 			instance.$('.js-discussion-edit').trigger('click');
 			(instance.parentInstance() as any).notifyAll.set(true);
 			window.location.hash = '#discussion';
-			(RouterAutoscroll as any).scheduleScroll();
+			RouterAutoscroll.scheduleScroll();
 		},
 
 		'click .js-discussion-edit'(event, instance) {
