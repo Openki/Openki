@@ -9,9 +9,7 @@ function getScrollTop() {
 	return document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
 }
 
-function delay(ms: number | undefined) {
-	return new Promise((resolve) => setTimeout(resolve, ms));
-}
+const delay = (ms: number | undefined) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function waitUntil(conditionFn: () => boolean) {
 	if (!conditionFn()) {
@@ -19,7 +17,6 @@ async function waitUntil(conditionFn: () => boolean) {
 		await waitUntil(conditionFn);
 	}
 }
-
 function whenReady(callFn: () => void) {
 	return async function (this: { ready: () => boolean; _rendered: boolean }) {
 		if (this.ready()) {
@@ -48,6 +45,12 @@ class RouterAutoscroll {
 			this.backToPosition = this.scrollPositions.get(window.location.href);
 		};
 
+		Router.onBeforeAction(async function (this: { next: () => void }) {
+			document.documentElement.style.scrollBehavior = 'auto';
+			window.scrollTo({ top: 0, behavior: 'auto' });
+			document.documentElement.style.scrollBehavior = '';
+			this.next();
+		});
 		Router.onAfterAction(whenReady(() => this.scheduleScroll()));
 		Router.onStop(() => this.saveScrollPosition());
 	}
@@ -84,8 +87,7 @@ class RouterAutoscroll {
 
 	private static scrollToPos(position: number | undefined) {
 		if (position === undefined) return;
-
-		window.scroll(0, position);
+		window.scrollTo({ top: position, behavior: 'auto' });
 	}
 
 	public scheduleScroll() {
