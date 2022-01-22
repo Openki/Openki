@@ -273,7 +273,7 @@ import './styles.scss';
 	template.events({
 		'notifyAll .js-discussion-edit'(_event, instance) {
 			instance.$('.js-discussion-edit').trigger('click');
-			(instance.parentInstance() as any).notifyAll.set(true);
+			(instance.parentInstance(2) as any).notifyAll.set(true);
 			window.location.hash = '#discussion';
 			RouterAutoscroll.scheduleScroll();
 		},
