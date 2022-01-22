@@ -9,9 +9,23 @@ function getScrollTop() {
 	return document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
 }
 
+function delay(ms: number | undefined) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function waitUntil(conditionFn: () => boolean) {
+	if (!conditionFn()) {
+		await delay(50);
+		await waitUntil(conditionFn);
+	}
+}
+
 function whenReady(callFn: () => void) {
-	return function (this: { ready: () => boolean }) {
-		if (this.ready()) callFn();
+	return async function (this: { ready: () => boolean; _rendered: boolean }) {
+		if (this.ready()) {
+			await waitUntil(() => this._rendered);
+			callFn();
+		}
 	};
 }
 
