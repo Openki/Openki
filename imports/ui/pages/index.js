@@ -1,4 +1,4 @@
-import './calendar/calendar';
+import './calendar';
 import './event-details';
 import './info';
 import './find/find';
