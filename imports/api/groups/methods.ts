@@ -5,10 +5,22 @@ import * as HtmlTools from '/imports/utils/html-tools';
 import { Users } from '/imports/api/users/users';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 
-import { GroupEntity, Groups } from './groups';
+import { Group, GroupEntity, GroupModel, Groups } from './groups';
 
-import { isGroupMember } from '/imports/utils/is-group-member';
 import * as FileStorage from '/imports/utils/FileStorage';
+
+function loadGroup(groupId: string) {
+	// new!
+	if (groupId === '') {
+		return new Group() as GroupModel;
+	}
+
+	const group = Groups.findOne({ _id: groupId });
+	if (!group) {
+		throw new Meteor.Error(404, 'Group not found');
+	}
+	return group;
+}
 
 export const save = ServerMethod(
 	'group.save',
@@ -29,29 +41,21 @@ export const save = ServerMethod(
 			description: Match.Optional(String),
 		});
 
-		const userId = Meteor.userId();
-		if (!userId) {
+		const user = Meteor.user();
+		if (!user) {
 			throw new Meteor.Error(401, 'please log-in');
 		}
-		const isNew = groupId === 'create';
 
 		// Load group from DB
-		let group;
-		if (isNew) {
-			// Saving user is added as first member of the group
-			group = {
-				members: [userId],
-			};
-		} else {
-			group = Groups.findOne(groupId);
-			if (!group) {
-				throw new Meteor.Error(404, 'Group not found');
-			}
+		const group = loadGroup(groupId);
+
+		if (!group.editableBy(user)) {
+			throw new Meteor.Error(401, 'Denied');
 		}
 
-		// User must be member of group to edit it
-		if (!isNew && !isGroupMember(userId, group._id as string)) {
-			throw new Meteor.Error(401, 'Denied');
+		if (group.isNew()) {
+			// Saving user is added as first member of the group
+			group.members.push(user._id);
 		}
 
 		const updates = {} as Mongo.OptionalId<GroupEntity>;
@@ -86,10 +90,10 @@ export const save = ServerMethod(
 			throw new Meteor.Error('The name, short, claim and description fields are mandatory.');
 		}
 
-		if (isNew) {
+		if (group.isNew()) {
 			/* eslint-disable-next-line no-param-reassign */
 			groupId = Groups.insert(_.extend(group, updates));
-			Meteor.call('user.updateBadges', userId);
+			Meteor.call('user.updateBadges', user._id);
 		} else {
 			Groups.update(group._id as string, { $set: updates });
 		}
@@ -103,19 +107,15 @@ export const updateLogo = ServerMethod(
 	async (groupId: string, file: FileStorage.UploadFile) => {
 		check(groupId, String);
 
-		const userId = Meteor.userId();
-		if (!userId) {
+		const user = Meteor.user();
+		if (!user) {
 			throw new Meteor.Error(401, 'please log-in');
 		}
 
 		// Load group from DB
-		const group = Groups.findOne(groupId);
-		if (!group) {
-			throw new Meteor.Error(404, 'Group not found');
-		}
+		const group = loadGroup(groupId);
 
-		// User must be member of group to edit it
-		if (!isGroupMember(userId, group._id)) {
+		if (group.isNew() || !group.editableBy(user)) {
 			throw new Meteor.Error(401, 'Denied');
 		}
 
@@ -133,24 +133,21 @@ export const updateLogo = ServerMethod(
 	},
 	{ simulation: false },
 );
+
 export const deleteLogo = ServerMethod(
 	'group.delete.logo',
 	async (groupId: string) => {
 		check(groupId, String);
 
-		const userId = Meteor.userId();
-		if (!userId) {
+		const user = Meteor.user();
+		if (!user) {
 			throw new Meteor.Error(401, 'please log-in');
 		}
 
 		// Load group from DB
-		const group = Groups.findOne(groupId);
-		if (!group) {
-			throw new Meteor.Error(404, 'Group not found');
-		}
+		const group = loadGroup(groupId);
 
-		// User must be member of group to edit it
-		if (!isGroupMember(userId, group._id)) {
+		if (group.isNew() ||!group.editableBy(user)) {
 			throw new Meteor.Error(401, 'Denied');
 		}
 
@@ -173,24 +170,16 @@ export const updateMembership = ServerMethod(
 		check(userId, String);
 		check(groupId, String);
 
-		const senderId = Meteor.userId();
-		if (!senderId) {
-			throw new Meteor.Error('Not permitted');
+		const sender = Meteor.user();
+		if (!sender) {
+			throw new Meteor.Error(401, 'please log-in');
 		}
 
-		// Only current members of the group may draft other people into it
-		// We build a selector that only finds the group if the sender is a
-		// member of it.
-		const sel = {
-			_id: groupId,
-			members: senderId,
-		};
+		// Load group from DB
+		const group = loadGroup(groupId);
 
-		// This check is not strictly necessary when the update uses the same
-		// selector. It generates an error message though, whereas the update is
-		// blind to that.
-		if (!Groups.findOne(sel)) {
-			throw new Meteor.Error('No permitted');
+		if (group.isNew() ||!group.editableBy(sender)) {
+			throw new Meteor.Error(401, 'Denied');
 		}
 
 		const user = Users.findOne({ _id: userId });
@@ -208,7 +197,7 @@ export const updateMembership = ServerMethod(
 		// By using the restrictive selector that checks group membership we can
 		// avoid the unlikely race condition where a user is not member anymore
 		// but can still add somebody else to the group.
-		Groups.update(sel, update);
+		Groups.update(group._id, update);
 
 		if (Meteor.isServer) {
 			Meteor.call('user.updateBadges', user._id);

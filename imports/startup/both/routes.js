@@ -9,7 +9,7 @@ import momentTz from 'moment-timezone';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
-import { Groups } from '/imports/api/groups/groups';
+import { Group, Groups } from '/imports/api/groups/groups';
 import { Region, Regions } from '/imports/api/regions/regions';
 /** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
 /** @typedef {import('/imports/api/tenants/tenants').TenantModel} TenantModel */
@@ -321,7 +321,7 @@ Router.route('groupDetails', {
 		let group;
 		const isNew = this.params._id === 'create';
 		if (isNew) {
-			group = { _id: 'create' };
+			group = new Group();
 		} else {
 			group = Groups.findOne(this.params._id);
 		}
@@ -338,7 +338,6 @@ Router.route('groupDetails', {
 		return {
 			courseQuery,
 			group,
-			isNew,
 			showCourses: !isNew,
 		};
 	},

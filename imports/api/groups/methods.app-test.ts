@@ -22,7 +22,7 @@ if (Meteor.isClient) {
 				description: `${randomName} description`,
 			};
 
-			const groupId = await GroupsMethods.save('create', newGroup);
+			const groupId = await GroupsMethods.save('', newGroup);
 
 			assert.isString(groupId, 'group.save returns an groupId string');
 
@@ -50,7 +50,7 @@ if (Meteor.isClient) {
 				description: `${randomName} description`,
 			};
 
-			const groupId = await GroupsMethods.save('create', newGroup);
+			const groupId = await GroupsMethods.save('', newGroup);
 
 			assert.isString(groupId, 'group.save returns an groupId string');
 
