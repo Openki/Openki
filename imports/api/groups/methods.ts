@@ -147,7 +147,7 @@ export const deleteLogo = ServerMethod(
 		// Load group from DB
 		const group = loadGroup(groupId);
 
-		if (group.isNew() ||!group.editableBy(user)) {
+		if (group.isNew() || !group.editableBy(user)) {
 			throw new Meteor.Error(401, 'Denied');
 		}
 
@@ -178,7 +178,7 @@ export const updateMembership = ServerMethod(
 		// Load group from DB
 		const group = loadGroup(groupId);
 
-		if (group.isNew() ||!group.editableBy(sender)) {
+		if (group.isNew() || !group.editableBy(sender)) {
 			throw new Meteor.Error(401, 'Denied');
 		}
 

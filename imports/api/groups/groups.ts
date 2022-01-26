@@ -9,8 +9,6 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
 import * as FileStorage from '/imports/utils/FileStorage';
 import { LocalizedValue } from '/imports/utils/getLocalizedValue';
-import { isGroupMember } from '/imports/utils/is-group-member';
-import groups from '../fixtures/data/group.fixtures';
 
 export interface GroupEntityAdditionalInfosForProposals {
 	/** For internal us, must be unique in the list. */
