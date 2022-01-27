@@ -16,8 +16,8 @@ const template = Template.tenantRegions;
 
 template.onCreated(function () {
 	const instance = this;
-	const { tenant } = instance.data;
 	instance.autorun(() => {
+		const { tenant } = Template.currentData();
 		instance.subscribe('Regions.findFilter', { tenant: tenant._id });
 	});
 });
@@ -32,7 +32,7 @@ Template.tenantRegions.helpers({
 	},
 
 	showAddRegion() {
-		const { tenant } = Template.instance().data;
+		const { tenant } = Template.currentData();
 		return tenant.editableBy(Meteor.user());
 	},
 });
