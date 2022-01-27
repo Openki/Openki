@@ -1,52 +1,81 @@
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
-import { Alerts } from '/imports/api/alerts/alerts';
+import { Alerts, AlertEnity } from '/imports/api/alerts/alerts';
 
-import './alerts.html';
+import './template.html';
+import './styles.scss';
 
-Template.alerts.onCreated(function () {
-	this.updateSpacerHeight = () => {
-		this.$('.alert-messages-spacer').height(this.$('.alert-messages').height());
-	};
-});
+{
+	const Template = TemplateAny as TemplateStaticTyped<
+		'alerts',
+		unknown,
+		{ updateSpacerHeight: () => void }
+	>;
 
-Template.alerts.helpers({
-	alerts() {
-		return Alerts.find();
-	},
-});
+	const template = Template.alerts;
 
-Template.alert.onCreated(function () {
-	this.remove = (alertId) => {
-		const $alert = this.$('.alert-message');
-		// get 'transition-duration' and convert to miliseconds for fadeOut
-		const duration = parseFloat($alert.css('transition-duration')) * 1000;
-		$alert.fadeOut(duration, () => {
-			this.parentInstance().updateSpacerHeight();
-			Alerts.remove({ _id: alertId });
-		});
-	};
-});
+	template.onCreated(function () {
+		const instance = this;
 
-Template.alert.onRendered(function () {
-	this.parentInstance().updateSpacerHeight();
-	const alert = Template.currentData();
-	this.$('.alert-message').toggleClass('is-faded-in');
+		instance.updateSpacerHeight = () => {
+			instance.$('.alert-messages-spacer').height(instance.$('.alert-messages').height() || 0);
+		};
+	});
 
-	this.timedRemove = setTimeout(() => this.remove(alert._id), alert.timeout);
-});
+	template.helpers({
+		alerts() {
+			return Alerts.find();
+		},
+	});
+}
 
-Template.alert.events({
-	'click .js-remove-alert'(event, instance) {
-		if (instance.timedRemove) {
-			clearTimeout(instance.timedRemove);
-		}
-		instance.remove(this._id);
-	},
-});
+{
+	const Template = TemplateAny as TemplateStaticTyped<
+		'alert',
+		AlertEnity,
+		{ remove: (alertId: string) => void; timedRemove: NodeJS.Timeout }
+	>;
 
-Template.alert.helpers({
-	contextualClass() {
-		return this.type === 'error' ? 'danger' : this.type;
-	},
-});
+	const template = Template.alert;
+
+	template.onCreated(function () {
+		const instance = this;
+		instance.remove = (alertId) => {
+			const $alert = instance.$('.alert-message');
+			// get 'transition-duration' and convert to miliseconds for fadeOut
+			const duration = parseFloat($alert.css('transition-duration')) * 1000;
+			$alert.fadeOut(duration, () => {
+				(instance.parentInstance() as any).updateSpacerHeight();
+				Alerts.remove({ _id: alertId });
+			});
+		};
+	});
+
+	template.onRendered(function () {
+		const instance = this;
+
+		(instance.parentInstance() as any).updateSpacerHeight();
+		const alert = Template.currentData();
+		instance.$('.alert-message').toggleClass('is-faded-in');
+
+		instance.timedRemove = setTimeout(() => instance.remove(alert._id), alert.timeout);
+	});
+
+	template.events({
+		'click .js-remove-alert'(_event, instance) {
+			const alert = Template.currentData();
+
+			if (instance.timedRemove) {
+				clearTimeout(instance.timedRemove);
+			}
+			instance.remove(alert._id);
+		},
+	});
+
+	template.helpers({
+		contextualClass() {
+			const alert = Template.currentData();
+			return alert.type === 'error' ? 'danger' : alert.type;
+		},
+	});
+}
