@@ -40,6 +40,8 @@ export interface GroupEntity {
 export type GroupModel = Group & GroupEntity;
 
 export class Group {
+	members = [];
+
 	/**
 	 * Check if the group is new (not yet saved).
 	 */

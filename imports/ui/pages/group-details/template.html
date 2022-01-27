@@ -1,6 +1,6 @@
 <template name="groupDetailsPage">
 	<div class="container">
-		{{#if isNew}}
+		{{#if group.isNew}}
 			<h2>{{i18n 'group.details.titleNew' "Create new group"}}</h2>
 		{{/if}}
 		<div class="page-component group-details">
@@ -14,7 +14,7 @@
 						data-tooltip="{{i18n 'group.page.removeFilter' 'See all courses'}}">
 					<i class="fa fa-remove fa-lg" aria-hidden="true"></i>
 				</button>
-				{{#unless isNew}}
+				{{#unless group.isNew}}
 					{{#if mayEdit}}
 						<button class="btn btn-link float-end ms-2 js-group-settings"
 								data-tooltip="{{i18n 'group.settings.title'}}">
@@ -71,7 +71,7 @@
 					</div>
 				</div>
 			{{/if}}
-			{{#if isNew}}
+			{{#if group.isNew}}
 				<div class="actions">
 					{{> buttonSave event="js-group-save" saving=saving}}
 					{{> buttonCancel event="js-group-cancel"}}

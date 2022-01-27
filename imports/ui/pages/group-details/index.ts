@@ -156,7 +156,7 @@ template.onCreated(function () {
 template.helpers({
 	isFeatured() {
 		const region = Regions.currentRegion();
-		return region?.featuredGroup === Template.instance().data.group._id;
+		return region && region.featuredGroup === Template.instance().data.group._id;
 	},
 
 	headerClasses() {
@@ -178,7 +178,7 @@ template.helpers({
 		return instance.mayEdit.get() && instance.editableShort;
 	},
 	hasContent() {
-		const { group } = Template.instance().data;
+		const { group } = Template.currentData();
 		if (group.isNew()) {
 			return true;
 		}
@@ -198,7 +198,8 @@ template.helpers({
 	},
 	editingSettings() {
 		const instance = Template.instance();
-		return instance.mayEdit.get() && !this.isNew && instance.editingSettings.get();
+		const { group } = Template.currentData();
+		return instance.mayEdit.get() && !group.isNew() && instance.editingSettings.get();
 	},
 });
 
