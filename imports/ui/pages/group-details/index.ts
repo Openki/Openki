@@ -13,7 +13,6 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import { Store, Editable } from '/imports/ui/lib/editable';
 import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
-import { isGroupMember } from '/imports/utils/is-group-member';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
@@ -27,8 +26,7 @@ const TemplateBase = TemplateAny as TemplateStaticTyped<
 	'groupDetailsPage',
 	{
 		courseQuery: any;
-		group: GroupModel | (Partial<GroupModel> & { _id: 'create' });
-		isNew: boolean;
+		group: GroupModel;
 		showCourses: boolean;
 	},
 	{
@@ -84,7 +82,7 @@ template.onCreated(function () {
 		},
 	};
 
-	const showControls = !this.data.isNew;
+	const showControls = !this.data.group.isNew();
 
 	instance.editableName = new Editable(
 		true,
@@ -144,8 +142,8 @@ template.onCreated(function () {
 	instance.autorun(() => {
 		const data = Template.currentData();
 		const currentGroup = Groups.findOne(groupId) || ({} as Partial<GroupModel>);
-		const userId = Meteor.userId();
-		const mayEdit = data.isNew || !!(userId && isGroupMember(userId, groupId));
+		const user = Meteor.user();
+		const mayEdit = data.group.editableBy(user);
 		instance.mayEdit.set(mayEdit);
 
 		instance.editableName.setText(currentGroup.name || '');
@@ -158,7 +156,7 @@ template.onCreated(function () {
 template.helpers({
 	isFeatured() {
 		const region = Regions.currentRegion();
-		return region?.featuredGroup === Template.instance().data.group._id;
+		return region && region.featuredGroup === Template.instance().data.group._id;
 	},
 
 	headerClasses() {
@@ -180,8 +178,8 @@ template.helpers({
 		return instance.mayEdit.get() && instance.editableShort;
 	},
 	hasContent() {
-		const { group, isNew } = Template.instance().data;
-		if (isNew) {
+		const { group } = Template.currentData();
+		if (group.isNew()) {
 			return true;
 		}
 		return group.claim || group.description;
@@ -200,7 +198,8 @@ template.helpers({
 	},
 	editingSettings() {
 		const instance = Template.instance();
-		return instance.mayEdit.get() && !this.isNew && instance.editingSettings.get();
+		const { group } = Template.currentData();
+		return instance.mayEdit.get() && !group.isNew() && instance.editingSettings.get();
 	},
 });
 
@@ -238,7 +237,7 @@ template.events({
 			i18n('registerAction.saveGroup', 'Register and save group'),
 			async () => {
 				try {
-					const groupId = await GroupsMethods.save('create', group);
+					const groupId = await GroupsMethods.save('', group);
 
 					instance.editableName.end();
 					instance.editableShort.end();

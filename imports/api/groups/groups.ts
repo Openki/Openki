@@ -3,6 +3,9 @@ import { Mongo } from 'meteor/mongo';
 import { Match, check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
 
+import { UserModel } from '/imports/api/users/users';
+
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
 import * as FileStorage from '/imports/utils/FileStorage';
 import { LocalizedValue } from '/imports/utils/getLocalizedValue';
@@ -37,6 +40,29 @@ export interface GroupEntity {
 export type GroupModel = Group & GroupEntity;
 
 export class Group {
+	members = [];
+
+	/**
+	 * Check if the group is new (not yet saved).
+	 */
+	isNew(this: GroupModel) {
+		return !this._id;
+	}
+
+	/**
+	 * Check whether a user may edit the group.
+	 */
+	editableBy(this: GroupModel, user: UserModel | null | undefined) {
+		if (!user) {
+			return false;
+		}
+		return (
+			this.isNew() /* Anybody may create a new group */ ||
+			UserPrivilegeUtils.privileged(user, 'admin') /* Admins can edit all groups */ ||
+			this.members?.includes(user._id) /* User must be member of group to edit it */
+		);
+	}
+
 	publicLogoUrl(this: GroupModel) {
 		if (!this.logoUrl) {
 			return '';
