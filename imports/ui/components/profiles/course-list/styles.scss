@@ -1,3 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 /* stylelint-disable-next-line selector-no-qualifying-type */
 .profile-courselist h3[id] {
 	margin-top: 10px;
@@ -22,7 +24,7 @@
 
 .profile-courselist .role-label {
 	cursor: pointer;
-	transition-duration: .25s;
+	transition-duration: 0.25s;
 	transition-property: #{'color background box-shadow'};
 
 	&:hover,
@@ -30,11 +32,5 @@
 		background: darken($user-bg, 5%);
 		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
 		color: desaturate(darken($user-bg, 50%), 80%);
-	}
-}
-
-.profile-courselist .course-compact-wrap {
-	@media (min-width: $screen-xsm) {
-		@include td-make-xs-column(6, 7.5px);
 	}
 }

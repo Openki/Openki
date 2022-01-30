@@ -15,7 +15,7 @@ import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/groups/list';
-import '/imports/ui/components/profiles/course-list/profile-course-list';
+import '/imports/ui/components/profiles/course-list';
 import '/imports/ui/components/profiles/verify-email';
 import '/imports/ui/components/venues/link/venue-link';
 import '/imports/ui/components/avatar';

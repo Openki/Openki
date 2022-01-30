@@ -111,7 +111,7 @@
 				</div>
 			</div>
 		{{/if}}
-		{{> usersCourselist profileData=this ownProfile=false}}
+		{{> usersCourselist user=this.user ownProfile=false}}
 
 		{{#if alterPrivileges}}
 			<h3 class="text-danger">{{i18n 'profile.account.delete.header' 'Is this a SPAMER?'}}

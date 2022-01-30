@@ -14,6 +14,13 @@
 	}
 }
 
+// For backwards compatibility, an exception for the user profile
+.profile-courselist .course-compact-wrap {
+	@media (min-width: $screen-xsm) {
+		@include td-make-xs-column(6, 7.5px);
+	}
+}
+
 // ** Compact
 //========================================================================================
 
