@@ -68,6 +68,13 @@ export const Languages: { [abbreviation: string]: LanguageEntity } = {
 		english: 'Korean',
 		visible: false,
 	},
+	'nb-NO': {
+		lg: 'nb-NO',
+		name: 'Norsk Bokmål',
+		short: 'nb',
+		english: 'Norwegian Bokmål',
+		visible: true,
+	},
 	pt: {
 		lg: 'pt',
 		name: 'Português',
