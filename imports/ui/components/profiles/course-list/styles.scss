@@ -22,7 +22,7 @@
 
 .profile-courselist .role-label {
 	cursor: pointer;
-	transition-duration: $default-transition-time;
+	transition-duration: .25s;
 	transition-property: #{'color background box-shadow'};
 
 	&:hover,
