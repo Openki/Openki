@@ -115,7 +115,7 @@ template.onCreated(function () {
 		false,
 		i18n(
 			'event.description.placeholder',
-			'Describe your event as accurately as possible. This helps people to know how to prepare and what to expect from this meeting (eg. level, prerequisites, activities, teaching methods, what to bring, et cetera)',
+			'Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)',
 		),
 	);
 
@@ -194,11 +194,11 @@ function updateTimes(instance: ReturnType<typeof Template['instance']>, updateEn
 const validateMaxParticipants = (maxParticipants: string) => {
 	const intVal = parseInt(maxParticipants, 10);
 	if (Number.isNaN(intVal)) {
-		Alert.error(i18n('event.edit.mustBeInteger', 'Number must be integer'));
+		Alert.error(i18n('event.edit.mustBeInteger', 'Must be a whole number'));
 		return false;
 	}
 	if (intVal < 0) {
-		Alert.error(i18n('event.edit.mustBePositive', 'Number must be positive'));
+		Alert.error(i18n('event.edit.mustBePositive', 'The number must be positive'));
 		return false;
 	}
 	return intVal;
@@ -338,9 +338,13 @@ template.events({
 		if (!start.isValid()) {
 			const exampleDate = moment().format('L');
 			Alert.error(
-				i18n('event.edit.dateFormatWarning', 'Date format must be of the form {EXAMPLEDATE}', {
-					EXAMPLEDATE: exampleDate,
-				}),
+				i18n(
+					'event.edit.dateFormatWarning',
+					'The date format must be of the {EXAMPLEDATE} format.',
+					{
+						EXAMPLEDATE: exampleDate,
+					},
+				),
 			);
 			return;
 		}
@@ -430,7 +434,7 @@ template.events({
 		instance.busy('saving');
 		SaveAfterLogin(
 			instance,
-			i18n('loginAction.saveEvent', 'Login and save event'),
+			i18n('loginAction.saveEvent', 'Log in and save event'),
 			i18n('registerAction.saveEvent', 'Register and save event'),
 			async () => {
 				try {
@@ -498,7 +502,7 @@ template.events({
 						Alert.success(
 							i18n(
 								'eventEdit.replicatesUpdated',
-								'The replicas of "{TITLE}" have also been updated.',
+								'Replicas of "{TITLE}" have also been updated.',
 								{ TITLE: editevent.title },
 							),
 						);

@@ -36,10 +36,10 @@
 					{{#if state 'showDeleteConfirm'}}
 						<div class="card">
 							<div class="card-header text-white bg-danger">
-								{{i18n 'deleteEventsModal.confirm' 'Confirm deleting events'}}
+								{{i18n 'deleteEventsModal.confirm' 'Confirm deletion of events'}}
 							</div>
 							<div class="card-body">
-								{{i18n 'deleteEventsModal.reallyDelete' 'Do you really want to delete {NUM, plural, one{this event} other{these # events} }?' NUM=numSelectedEvents}}
+								{{i18n 'deleteEventsModal.reallyDelete' 'Delete {NUM, plural, one{this event} other{these # events} }?' NUM=numSelectedEvents}}
 							</div>
 							<ul class="list-group list-group-flush selected-events">
 								{{#each event in selectedEvents}}
@@ -59,7 +59,7 @@
 										{{#if busy 'deleting'}}
 											<span class="fa fa-circle-o-notch fa-spin fa-fw"
 												  aria-hidden="true"></span>
-											{{i18n 'deleteEventsModal.deletingEvents' 'Deleting {NUM, plural, one{event} other{events} }...' NUM=numSelectedEvents}}
+											{{i18n 'deleteEventsModal.deletingEvents' 'Deleting {NUM, plural, one{event} other{events} }…' NUM=numSelectedEvents}}
 										{{else}}
 											{{i18n 'deleteEventsModal.confirmDeleteEvents' 'Delete {NUM, plural, one{event} other{events} }' NUM=numSelectedEvents}}
 										{{/if}}

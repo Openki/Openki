@@ -8,10 +8,10 @@
 						{{#if activeAccountTask 'login'}}
 							{{#if pleaseLogin}}
 								<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i>
-								{{i18n 'Please.login' 'Please login or register'}}
+								{{i18n 'Please.login' 'Please log in or register'}}
 							{{else}}
 								<i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>
-								{{i18n 'login.login.title' 'Login'}}
+								{{i18n 'login.login.title' 'Log in'}}
 							{{/if}}
 						{{/if}}
 						{{#if activeAccountTask 'register'}}
@@ -51,7 +51,7 @@
 						<span class="fa fa-user fa-fw" aria-hidden="true"></span>
 					</span>
 					<input class="form-control js-username"
-						   placeholder="{{i18n 'frame.login.usernameOrEmail' 'Username or Email'}}"
+						   placeholder="{{i18n 'frame.login.usernameOrEmail' 'Username or e-mail address'}}"
 						   type="text" />
 				</div>
 				{{errorMessage 'username'}}
@@ -77,12 +77,12 @@
 						{{disabledIfBusy}}>
 					{{#if busy 'logging-in'}}
 						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-						{{i18n 'login.login.submit.busy' 'Logging in...'}}
+						{{i18n 'login.login.submit.busy' 'Logging in…'}}
 					{{else}}
 						{{#if pleaseLogin}}
 							{{loginAction}}
 						{{else}}
-							{{i18n 'login.login.submit' 'Login'}}
+							{{i18n 'login.login.submit' 'Log in'}}
 						{{/if}}
 					{{/if}}
 				</button>
@@ -114,7 +114,7 @@
 				</div>
 				<div class="collapse" id="{{service.key}}-info">
 					<div class="text-muted">
-						{{i18n 'login.OAuth.info' '{SITENAME} is getting your user-information (username, email, ...) from that service. They will not have any access to data or information about your activity here except that the fact you logged in.' SITENAME=siteName}}
+						{{i18n 'login.OAuth.info' '{SITENAME} is getting your user-information (username, e-mail address, …) from that service. It will not grant access to data or info about your activity here, except the fact that you logged in.' SITENAME=siteName}}
 					</div>
 				</div>
 			{{/each}}
@@ -169,7 +169,7 @@
 			<button type="submit" class="btn btn-add form-control js-register" {{disabledIfBusy}}>
 				{{#if busy 'registering'}}
 					<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-					{{i18n 'login.register.submit.busy' 'Registering...'}}
+					{{i18n 'login.register.submit.busy' 'Registering…'}}
 				{{else}}
 					{{#if pleaseLogin}}
 						{{registerAction}}
@@ -192,7 +192,7 @@
 	<form class="js-reset-pw">
 		<div class="forgot_login">
 			<p>
-				{{i18n 'forgot.explanation' "We can send you a mail that allows you to reset your password. This is only possible if you've provided us with a mail address"}}
+				{{i18n 'forgot.explanation' "An e-mail allowing you to reset your password can be sent. This is only possible if you've provided an e-mail address"}}
 			</p>
 			<div class="mb-3">
 				<div class="input-group">
@@ -215,7 +215,7 @@
 						{{disabledIfBusy}}>
 					{{#if busy 'requesting-pw-reset'}}
 						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-						{{i18n 'forgot.send.busy' 'Resetting password...'}}
+						{{i18n 'forgot.send.busy' 'Resetting password…'}}
 					{{else}}
 						{{i18n 'forgot.send' 'Reset my password'}}
 					{{/if}}

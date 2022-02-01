@@ -72,7 +72,7 @@ template.helpers({
 					Alert.success(
 						i18n(
 							'groupSettings.group.logo.updated',
-							'Your changes to the settings of the group "{GROUP}" have been saved.',
+							'Changes to the "{GROUP}" group settings have been saved.',
 							{ GROUP: groupName },
 						),
 					);
@@ -95,7 +95,7 @@ template.helpers({
 					Alert.success(
 						i18n(
 							'groupSettings.group.logo.removed',
-							'Your changes to the settings of the group "{GROUP}" have been saved.',
+							'Changes to the "{GROUP}" group settings have been saved.',
 							{ GROUP: groupName },
 						),
 					);
@@ -145,11 +145,10 @@ template.events({
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				i18n(
-					'groupSettings.memberAdded',
-					'"{MEMBER}" has been added as a member to the group "{GROUP}"',
-					{ MEMBER: memberName, GROUP: groupName },
-				),
+				i18n('groupSettings.memberAdded', '"{MEMBER}" has been added to the "{GROUP}" group', {
+					MEMBER: memberName,
+					GROUP: groupName,
+				}),
 			);
 		} catch (err) {
 			Alert.serverError(err, 'Could not add member');
@@ -166,7 +165,7 @@ template.events({
 			Alert.success(
 				i18n(
 					'groupSettings.memberRemoved',
-					'"{MEMBER}" has been removed from to the group "{GROUP}"',
+					'"{MEMBER}" has been removed from the "{GROUP}" group',
 					{ MEMBER: memberName, GROUP: groupName },
 				),
 			);

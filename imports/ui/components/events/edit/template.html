@@ -6,7 +6,7 @@
 					<h2>{{i18n 'course.event.edit.edit' 'Edit event'}}</h2>
 				{{else}}
 					<h2>{{i18n 'course.event.edit.add' 'Add event'}}</h2>
-					{{i18n 'course.createEventInfo' 'Use this form if you want to publish a singular, one-off, allready organised event. Otherwise create or propose a course here:'}}
+					{{i18n 'course.createEventInfo' 'Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a course here:'}}
 					<a
 					   href="{{pathFor 'proposeCourse'}}">{{i18n 'menue.ProposeCourse' 'Propose a course'}}</a>
 				{{/if}}
@@ -20,7 +20,7 @@
 					<label
 						   class="form-label">{{i18n 'course.event.edit.title' 'Event title'}}</label>
 					<input type="text" class="js-event-title form-control form-control-lg" name="_"
-						   placeholder="{{i18n 'event.title.placeholder' 'Put a catchy title here'}}"
+						   placeholder="{{i18n 'event.title.placeholder' 'Write a catchy title here'}}"
 						   size="30" value="{{this.title}}">
 				</div>
 				<div class="row gap-3">
@@ -160,7 +160,7 @@
 								   name="updateReplicasInfo" value=""
 								   id="eventEditUpdateReplicasInfoCheck">
 							<label class="form-check-label" for="eventEditUpdateReplicasInfoCheck">
-								{{i18n 'event.edit.updateReplicasInfo' 'Update {COUNT, plural, one{info from later copy} other{infos from # later copies} } as well.' COUNT=affectedReplicaCount}}
+								{{i18n 'event.edit.updateReplicasInfo' 'Update {COUNT, plural, one{info from later copy} other{info from # later copies} } as well.' COUNT=affectedReplicaCount}}
 							</label>
 						</div>
 						{{#if timeChanged}}
@@ -233,13 +233,13 @@
 								<input class="form-check-input js-check-notify" type="checkbox"
 									   value="" id="eventEditCheckNotifyCheck" checked>
 								<label class="form-check-label" for="eventEditCheckNotifyCheck">
-									{{i18n 'event.edit.notifyNewEvent' 'Notify all members of the course "{COURSE}" about this event.' COURSE=course.name}}
+									{{i18n 'event.edit.notifyNewEvent' 'Notify all members of the "{COURSE}" course about this event.' COURSE=course.name}}
 								</label>
 							{{else}}
 								<input class="form-check-input js-check-notify" type="checkbox"
 									   value="" id="eventEditCheckNotifyCheck">
 								<label class="form-check-label" for="eventEditCheckNotifyCheck">
-									{{i18n 'event.edit.notifyEditEvent' 'Notify all members of the course "{COURSE}" about the changes you made.' COURSE=course.name}}
+									{{i18n 'event.edit.notifyEditEvent' 'Notify all members of the "{COURSE}" course about the changes you made.' COURSE=course.name}}
 								</label>
 							{{/if}}
 						</div>
@@ -255,7 +255,7 @@
 							</span>
 							<textarea rows="3" class="form-control js-event-add-message"
 									  maxlength="2000"
-									  placeholder="{{i18n 'event.edit.additionalMessage' 'If you feel good, describe what the members of the course should know.'}}"></textarea>
+									  placeholder="{{i18n 'event.edit.additionalMessage' 'If you feel good about doing so, describe what members of the course should know.'}}"></textarea>
 						</div>
 					{{/if}}
 				</div>

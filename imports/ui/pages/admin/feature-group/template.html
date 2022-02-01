@@ -2,12 +2,12 @@
 	{{#if featuredGroup}}
 		<div class="admin-featured-group">
 			<div class="admin-featured-group-body">
-				{{i18n 'featureGroup.groupIsFeatured' 'The group "{GROUP}" is featured for the region "{REGION}".' GROUP=featuredGroup.name REGION=currentRegionName}}
+				{{i18n 'featureGroup.groupIsFeatured' 'The "{GROUP}" group is featured for the "{REGION}" region.' GROUP=featuredGroup.name REGION=currentRegionName}}
 			</div>
 			<button type="button" class="btn btn-delete js-unset-featured-group" {{disabledIfBusy}}>
 				{{#if busy 'deleting'}}
 					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
-					{{i18n '_button.deleting' 'Deleting...'}}
+					{{i18n '_button.deleting' 'Deleting…'}}
 				{{else}}
 					{{i18n 'featureGroup.deleteButton' 'Remove the featured group for "{REGION}"' REGION=currentRegionName}}
 				{{/if}}
@@ -32,7 +32,7 @@
 					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
 					{{i18n '_button.saving'}}
 				{{else}}
-					{{i18n 'featureGroup.saveButton' 'Feature this group in the region "{REGION}"' REGION=currentRegionName}}
+					{{i18n 'featureGroup.saveButton' 'Feature this group in the "{REGION}" region' REGION=currentRegionName}}
 				{{/if}}
 			</button>
 		</div>

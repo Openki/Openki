@@ -6,7 +6,7 @@
 
 <template name="eventNotFound">
 	<div class="container">
-		<h4>{{i18n "event.no_event" "Sorry, we couldn't find this event, maybe you need to login or it has been deleted or never existed in the first place."}}
+		<h4>{{i18n "event.no_event" "Could not find this event. Maybe you must log in, it was deleted, or never existed in the first place."}}
 		</h4>
 	</div>
 </template>
@@ -60,7 +60,7 @@
 					<div class="page-component">
 						<b>
 							{{#unless userRegisteredForEvent}}
-								{{i18n 'event.details.i-participate-no' 'Let us know that you are participating in this event. Your registration is binding.'}}
+								{{i18n 'event.details.i-participate-no' 'Let it be known you are participating in this event. Your registration is binding.'}}
 							{{else}}
 								{{i18n 'event.details.i-participate-yes' 'You are now registered. Your registration is binding.'}}
 							{{/unless}}
@@ -175,7 +175,7 @@
 			{{> buttonDeleteConfirm
 				event="js-event-delete-confirm"
 				textIdle=(i18n 'event.delete.confirm.button' 'Delete this event')
-				textBusy=(i18n 'event.delete.confirm.button.busy' 'Deleting event...')
+				textBusy=(i18n 'event.delete.confirm.button.busy' 'Deleting event…')
 			}}
 			{{> buttonCancel event="js-collapse"}}
 		</div>
@@ -252,7 +252,7 @@
 <template name="eventGroupRemove">
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
-			{{i18n 'event.group.confirmRemoveText' "Remove group {NAME} from this event?" NAME=(name groupId)}}
+			{{i18n 'event.group.confirmRemoveText' 'Remove the "{NAME}" group from this event?' NAME=(name groupId)}}
 			<button type="button" class="btn btn-remove js-remove">
 				{{i18n 'course.group.confirmRemoveButton'}}
 			</button>
@@ -302,7 +302,7 @@
 	<button type="button" class="btn btn-add btn-event {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'registering'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{i18n '_button.registering' 'Registering...'}}
+			{{i18n '_button.registering' 'Registering…'}}
 		{{else}}
 			{{i18n 'event.details.register' 'Register'}}
 		{{/if}}
@@ -313,9 +313,9 @@
 	<button type="button" class="btn btn-warning btn-event {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'registering'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{i18n '_button.addingYouToWaitingQueue' 'Adding you to waiting queue...'}}
+			{{i18n '_button.addingYouToWaitingQueue' 'Adding you to waiting queue…'}}
 		{{else}}
-			{{i18n 'event.details.isFullyBooked' 'Event is fully booked'}}
+			{{i18n 'event.details.isFullyBooked' 'The event is fully booked'}}
 		{{/if}}
 	</button>
 </template>
@@ -324,7 +324,7 @@
 	<button type="button" class="btn btn-cancel btn-event {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'unregistering'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{i18n '_button.unregistering' 'Unregistering...'}}
+			{{i18n '_button.unregistering' 'Unregistering…'}}
 		{{else}}
 			{{i18n 'event.details.unregister' 'Withdraw my registration'}}
 		{{/if}}

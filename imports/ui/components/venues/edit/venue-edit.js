@@ -206,7 +206,7 @@ Template.venueEdit.events({
 		instance.busy('saving');
 		SaveAfterLogin(
 			instance,
-			i18n('loginAction.saveVenue', 'Login and save venue'),
+			i18n('loginAction.saveVenue', 'Log in and save venue'),
 			i18n('registerAction.saveVenue', 'Register and save venue'),
 			async () => {
 				try {
@@ -230,7 +230,7 @@ Template.venueEdit.events({
 						instance.parentInstance().editing.set(false);
 					}
 				} catch (err) {
-					Alert.serverError(err, i18n('venue.saving.error', 'Saving the venue went wrong'));
+					Alert.serverError(err, i18n('venue.saving.error', 'Could not save the venue'));
 				} finally {
 					instance.busy(false);
 				}

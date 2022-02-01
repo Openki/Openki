@@ -269,7 +269,7 @@ export class Unsubscribe extends Change {
 
 	apply() {
 		const update = { $pull: { 'members.$.roles': this.role } };
-		// Unsubscribe from team also means remove editor rights.
+		// Unsubscribe from the team also means remove editor rights.
 		if (this.role === 'team') {
 			update.$pull.editors = this.user._id;
 			Events.update(

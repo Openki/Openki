@@ -93,7 +93,7 @@ import './styles.scss';
 		{
 			noUsername: {
 				text: () =>
-					i18n('login.warning.noUserName', 'Please enter your username or email to log in.'),
+					i18n('login.warning.noUserName', 'Please enter your username or e-mail address to log in.'),
 				field: 'username',
 			},
 			'Incorrect password': {
@@ -105,8 +105,7 @@ import './styles.scss';
 				field: 'username',
 			},
 			'User has no password set': {
-				text: () =>
-					i18n('login.username.no_password_set', 'Please login below with Google/Facebook.'),
+				text: () => i18n('login.username.no_password_set', 'Please log in below.'),
 				field: 'username',
 			},
 		},
@@ -290,7 +289,7 @@ import './styles.scss';
 				text: () =>
 					i18n(
 						'register.warning.userExists',
-						'This username already exists. Please choose another one.',
+						'This username is already in use. Please choose another one.',
 					),
 				field: 'username',
 			},

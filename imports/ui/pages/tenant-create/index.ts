@@ -56,7 +56,7 @@ template.events({
 		const tenantName = instance.$('.js-tenant-name').val() as string;
 
 		if (!tenantName) {
-			Alert.error(i18n('tenant.create.plsGiveName', 'Please give a organisation name'));
+			Alert.error(i18n('tenant.create.plsGiveName', 'Please give a organization name'));
 			return;
 		}
 
@@ -86,7 +86,7 @@ template.events({
 		instance.busy('saving');
 		SaveAfterLogin(
 			instance,
-			i18n('loginAction.createPrivateRegion', 'Login and create private region'),
+			i18n('loginAction.createPrivateRegion', 'Log in and create private region'),
 			i18n('registerAction.createPrivateRegion', 'Register and create private region'),
 			async () => {
 				try {

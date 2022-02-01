@@ -80,7 +80,7 @@ export interface OnSaveFields {
 			instance.busy('saving');
 			SaveAfterLogin(
 				instance,
-				i18n('loginAction.saveRegion', 'Login and save region'),
+				i18n('loginAction.saveRegion', 'Log in and save region'),
 				i18n('registerAction.saveRegion', 'Register and save region'),
 				async () => {
 					try {
