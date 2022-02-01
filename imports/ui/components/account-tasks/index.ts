@@ -93,7 +93,10 @@ import './styles.scss';
 		{
 			noUsername: {
 				text: () =>
-					i18n('login.warning.noUserName', 'Please enter your username or e-mail address to log in.'),
+					i18n(
+						'login.warning.noUserName',
+						'Please enter your username or e-mail address to log in.',
+					),
 				field: 'username',
 			},
 			'Incorrect password': {

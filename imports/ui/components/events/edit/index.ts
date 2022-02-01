@@ -500,11 +500,9 @@ template.events({
 
 					if (updateReplicasInfos || updateReplicasTime) {
 						Alert.success(
-							i18n(
-								'eventEdit.replicatesUpdated',
-								'Replicas of "{TITLE}" have also been updated.',
-								{ TITLE: editevent.title },
-							),
+							i18n('eventEdit.replicatesUpdated', 'Replicas of "{TITLE}" have also been updated.', {
+								TITLE: editevent.title,
+							}),
 						);
 					}
 					(instance.parent as any).editing.set(false);
