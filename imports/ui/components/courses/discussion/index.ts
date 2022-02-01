@@ -223,7 +223,7 @@ import './styles.scss';
 
 			try {
 				await CourseDiscussionsMethods.deleteComment(post._id);
-				Alert.success(i18n('discussionPost.deleted', 'Comment has been deleted.'));
+				Alert.success(i18n('discussionPost.deleted', 'Comment deleted.'));
 			} catch (err) {
 				Alert.serverError(err, 'Could not delete comment');
 			}

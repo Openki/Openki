@@ -121,7 +121,7 @@ import './editable.html';
 			},
 			anchor: {
 				linkValidation: true,
-				placeholderText: i18n('editable.link.placeholder', 'Paste link here...'),
+				placeholderText: i18n('editable.link.placeholder', 'Paste link here…'),
 			},
 			autoLink: true,
 			buttonLabels: 'fontawesome',

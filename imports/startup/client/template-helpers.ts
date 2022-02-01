@@ -345,7 +345,7 @@ Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[nam
 			`<a href="${getLocalizedValue(contribution.link)}" data-tooltip="${Blaze._escape(
 				i18n(
 					'user.hasContributed',
-					'{USERNAME} supported {SITENAME} with a donation. Click on the {ICON} for more information how to contribute.',
+					'{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.',
 					{
 						USERNAME: cachedUser.username,
 						SITENAME: getSiteName(Regions.currentRegion()),

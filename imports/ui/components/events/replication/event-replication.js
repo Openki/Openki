@@ -221,7 +221,7 @@ Template.eventReplication.events({
 					const start = moment(replicaEvent.startLocal).format('llll');
 					Alert.serverError(
 						error,
-						i18n('eventReplication.errWithReason', 'Creating the copy on "{START}" failed.', {
+						i18n('eventReplication.errWithReason', 'Could not create the copy on "{START}".', {
 							START: start,
 						}),
 					);

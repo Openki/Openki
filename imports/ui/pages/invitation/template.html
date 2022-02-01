@@ -7,7 +7,7 @@
 					{{i18n 'invitation.join.welcome' "Welcome to {SITENAME}!" SITENAME=siteName}}
 				</h1>
 				<p class="fs-4">
-					{{i18n 'invitation.join.text' "Become part of the organisation {TENANT} and propose, discuss, develop, organise and publish courses with {INVITER} and other amazing people in the organisation {TENANT}." TENANT=tenant.name INVITER=(username invitation.createdBy)}}
+					{{i18n 'invitation.join.text' "Become part of the organization {TENANT} and propose, discuss, develop, organize and publish courses with {INVITER} and other nice people in the organization {TENANT}." TENANT=tenant.name INVITER=(username invitation.createdBy)}}
 				</p>
 				<button class="btn btn-lg btn-save js-join" {{disabledIfBusy}}>
 					{{#unless currentUser}}

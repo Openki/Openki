@@ -23,32 +23,32 @@
 				</div>
 				{{#each role in roles}}
 					{{#if coursesByRoleCount role.type false}}
-							<h3 id="{{role.type}}">
-								<div class="badge">
-									<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
-								</div>
-								{{#if ownProfile}}
-									{{i18n (roleMyList role.type)}}
-								{{else}}
-									{{i18n (roleUserList role.type) NAME=getName}}
-								{{/if}}
-							</h3>
+						<h3 id="{{role.type}}">
+							<div class="badge">
+								<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
+							</div>
+							{{#if ownProfile}}
+								{{i18n (roleMyList role.type)}}
+							{{else}}
+								{{i18n (roleUserList role.type) NAME=getName}}
+							{{/if}}
+						</h3>
 						{{> courseList coursesByRole role.type false}}
 					{{/if}}
 				{{/each}}
 				{{#each role in roles}}
 					{{#if showArchived role}}
 						{{#if coursesByRoleCount role.type true}}
-								<h3 id="{{role.type}}_archived">
-									<div class="badge is-archived">
-										<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
-									</div>
-									{{#if ownProfile}}
-										{{i18n (roleMyListPast role.type)}}
-									{{else}}
-										{{i18n (roleUserListPast role.type) NAME=getName}}
-									{{/if}}
-								</h3>
+							<h3 id="{{role.type}}_archived">
+								<div class="badge is-archived">
+									<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>
+								</div>
+								{{#if ownProfile}}
+									{{i18n (roleMyListPast role.type)}}
+								{{else}}
+									{{i18n (roleUserListPast role.type) NAME=getName}}
+								{{/if}}
+							</h3>
 							{{> courseList coursesByRole role.type true}}
 						{{/if}}
 					{{/if}}

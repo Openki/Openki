@@ -3,7 +3,7 @@ module.exports = {
 	createOldCatalogs: false,
 
 	// Key separator used in your translation keys
-	// If you want to use plain english keys, separators such as `.` and `:` will conflict. You might want to set `keySeparator: false` and `namespaceSeparator: false`. That way, `t('Status: Loading...')` will not think that there are a namespace and three separator dots for instance.
+	// If you want to use plain english keys, separators such as `.` and `:` will conflict. You might want to set `keySeparator: false` and `namespaceSeparator: false`. That way, `t('Status: Loading…')` will not think that there are a namespace and three separator dots for instance.
 	keySeparator: false,
 
 	lexers: {
@@ -40,7 +40,7 @@ module.exports = {
 	locales: ['en'],
 
 	// Namespace separator used in your translation keys
-	// If you want to use plain english keys, separators such as `.` and `:` will conflict. You might want to set `keySeparator: false` and `namespaceSeparator: false`. That way, `t('Status: Loading...')` will not think that there are a namespace and three separator dots for instance.
+	// If you want to use plain english keys, separators such as `.` and `:` will conflict. You might want to set `keySeparator: false` and `namespaceSeparator: false`. That way, `t('Status: Loading…')` will not think that there are a namespace and three separator dots for instance.
 	namespaceSeparator: false,
 
 	// Supports $LOCALE and $NAMESPACE injection

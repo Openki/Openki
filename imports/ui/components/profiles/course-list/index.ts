@@ -17,7 +17,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 	'usersCourselist',
 	{
 		user: UserModel;
-		ownProfile: boolean
+		ownProfile: boolean;
 	},
 	{
 		courseSub: Meteor.SubscriptionHandle;

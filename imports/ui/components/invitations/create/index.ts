@@ -29,7 +29,7 @@ const Template = TemplateMixins.FormfieldErrors(TemplateBase, 'invitationsCreate
 		text: () =>
 			i18n(
 				'tenant.settings.invitations.error.notValid',
-				'Some of the e-mail addresses are not valid.',
+				'Some of the e-mail addresses are invalid.',
 			),
 		field: 'invitations-emails',
 	},

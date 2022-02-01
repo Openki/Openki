@@ -1,4 +1,4 @@
-// Groups are groups, organisations, institutions, virtual or real instituts, departments or
+// Groups are groups, organizations, institutions, virtual or real instituts, departments or
 // bodies...
 
 export const groups = [

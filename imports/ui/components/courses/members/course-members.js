@@ -78,7 +78,7 @@ Template.courseMember.onCreated(function () {
 
 	instance.editableMessage = new Editable(
 		true,
-		i18n('roles.message.placeholder', 'My interests...'),
+		i18n('roles.message.placeholder', 'My interests…'),
 		{
 			onSave: async (newMessage) => {
 				const change = new Message(instance.data.course, Meteor.user(), newMessage);

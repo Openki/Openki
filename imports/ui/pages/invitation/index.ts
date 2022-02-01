@@ -29,7 +29,7 @@ template.events({
 		instance.busy('join');
 		SaveAfterLogin(
 			instance,
-			i18n('loginAction.invitation.join', 'Login and join'),
+			i18n('loginAction.invitation.join', 'Log in and join'),
 			i18n('registerAction.invitation.join', 'Register and join'),
 			async () => {
 				try {

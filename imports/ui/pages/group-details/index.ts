@@ -67,7 +67,7 @@ template.onCreated(function () {
 		],
 		onSuccess: () => {
 			Alert.success(
-				i18n('groupDetails.changesSaved', 'Your changes to the group "{GROUP}" have been saved.', {
+				i18n('groupDetails.changesSaved', 'Changes to the "{GROUP}" group have been saved.', {
 					GROUP: group?.name,
 				}),
 			);
@@ -75,7 +75,7 @@ template.onCreated(function () {
 		onError: (err) => {
 			Alert.serverError(
 				err,
-				i18n('groupDetails.saveError', 'Saving the group "{GROUP}" went wrong', {
+				i18n('groupDetails.saveError', 'Could not save the "{GROUP}" group', {
 					GROUP: group?.name,
 				}),
 			);
@@ -233,7 +233,7 @@ template.events({
 		instance.busy('saving');
 		SaveAfterLogin(
 			instance,
-			i18n('loginAction.saveGroup', 'Login and save group'),
+			i18n('loginAction.saveGroup', 'Log in and save group'),
 			i18n('registerAction.saveGroup', 'Register and save group'),
 			async () => {
 				try {
@@ -245,7 +245,7 @@ template.events({
 					instance.editableDescription.end();
 
 					Alert.success(
-						i18n('groupDetails.groupCreated', 'The Group {GROUP} has been created!', {
+						i18n('groupDetails.groupCreated', 'The "{GROUP}" group was created.', {
 							GROUP: group.name,
 						}),
 					);

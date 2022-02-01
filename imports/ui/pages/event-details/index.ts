@@ -50,7 +50,7 @@ import './styles.scss';
 		let title;
 		let description = '';
 		if (event) {
-			title = i18n('event.windowtitle', '{DATE} - {EVENT}', {
+			title = i18n('event.windowtitle', '{DATE} — {EVENT}', {
 				EVENT: event.title,
 				DATE: moment(event.start).calendar(),
 			});
@@ -84,8 +84,8 @@ import './styles.scss';
 		this.addParticipant = () => {
 			SaveAfterLogin(
 				this,
-				i18n('loginAction.enrollEvent', 'Login and enroll for event'),
-				i18n('registerAction.enrollEvent', 'Login and enroll for event'),
+				i18n('loginAction.enrollEvent', 'Log in and enroll for event'),
+				i18n('registerAction.enrollEvent', 'Log in and enroll for event'),
 				async () => {
 					this.busy('registering');
 					try {
@@ -169,7 +169,7 @@ import './styles.scss';
 				await EventsMethods.remove(oEvent._id);
 
 				Alert.success(
-					i18n('eventDetails.eventRemoved', 'The event "{TITLE}" has been deleted.', {
+					i18n('eventDetails.eventRemoved', 'The "{TITLE}" event has been deleted.', {
 						TITLE: title,
 					}),
 				);
@@ -347,7 +347,7 @@ import './styles.scss';
 				Alert.success(
 					i18n(
 						'eventGroupAdd.groupAdded',
-						'The group "{GROUP}" has been added to promote the event "{EVENT}".',
+						'The group "{GROUP}" has been added to promote the "{EVENT}" event.',
 						{ GROUP: groupName, EVENT: event.title },
 					),
 				);
@@ -380,7 +380,7 @@ import './styles.scss';
 				Alert.success(
 					i18n(
 						'eventGroupAdd.groupRemoved',
-						'The group "{GROUP}" has been removed from the event "{EVENT}".',
+						'The group "{GROUP}" has been removed from the "{EVENT}" event.',
 						{ GROUP: groupName, EVENT: event.title },
 					),
 				);
@@ -416,7 +416,7 @@ import './styles.scss';
 				Alert.success(
 					i18n(
 						'eventGroupAdd.membersCanEditEvent',
-						'Members of the group "{GROUP}" can now edit the event "{EVENT}".',
+						'Members of the group "{GROUP}" can now edit the "{EVENT}" event.',
 						{ GROUP: groupName, EVENT: event.title },
 					),
 				);
@@ -452,7 +452,7 @@ import './styles.scss';
 				Alert.success(
 					i18n(
 						'eventGroupAdd.membersCanNoLongerEditEvent',
-						'Members of the group "{GROUP}" can no longer edit the event "{EVENT}".',
+						'Members of the group "{GROUP}" can no longer edit the "{EVENT}" event.',
 						{ GROUP: groupName, EVENT: event.title },
 					),
 				);

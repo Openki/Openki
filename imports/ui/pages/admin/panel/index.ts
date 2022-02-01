@@ -31,7 +31,7 @@ template.helpers({
 			route: 'venuesMap',
 		},
 		{
-			name: i18n('adminPanel.tasks.stats', 'Statistics'),
+			name: i18n('adminPanel.tasks.stats', 'Stats'),
 			icon: 'fa fa-line-chart',
 			route: 'stats',
 		},

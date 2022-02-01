@@ -12,7 +12,7 @@
 					<i class="fa fa-envelope-o fa-stack-1x"></i>
 					<i class="fa fa-ban fa-stack-2x"></i>
 				</span>
-				{{i18n 'notifications.unsubscribeSuccess' 'You have successfully unsubscribed from automated notifications.'}}
+				{{i18n 'notifications.unsubscribeSuccess' 'You have unsubscribed from automated notifications.'}}
 			</div>
 		{{/if}}
 		{{#if privateMessagesUnsubscribeSuccess}}
@@ -21,7 +21,7 @@
 					<i class="fa fa-envelope-o fa-stack-1x"></i>
 					<i class="fa fa-ban fa-stack-2x"></i>
 				</span>
-				{{i18n 'privateMessages.unsubscribeSuccess' 'You have successfully unsubscribed from private messages from users.'}}
+				{{i18n 'privateMessages.unsubscribeSuccess' 'You will not get private messages from users.'}}
 			</div>
 		{{/if}}
 		{{#if unsubscribeError}}
@@ -30,7 +30,7 @@
 					<i class="fa fa-envelope-o fa-stack-1x"></i>
 					<i class="fa fa-ban fa-stack-2x"></i>
 				</span>
-				{{i18n 'notifications.unsubscribeError' 'There has been an error with your unsubscription. Please Try again.'}}
+				{{i18n 'notifications.unsubscribeError' 'Could not unsubscribe. Please Try again.'}}
 			</div>
 		{{/if}}
 		{{#unless currentUser}}
@@ -62,13 +62,13 @@
 
 			{{#if user.email}}
 				<div class="page-component page-component-seperated">
-					<h3>{{i18n 'profile.email_settings' 'E-Mail settings'}}</h3>
+					<h3>{{i18n 'profile.email_settings' 'E-mail settings'}}</h3>
 					<div class="row g-4 mb-2">
 						<div class="col-sm-6">
 							<form class="row g-2 mb-2 js-email-form">
 								<div class="col {{errorClass 'email'}}">
 									<label for="editform_email" class="sr-only">
-										{{i18n 'profile.email' 'E-Mail'}}
+										{{i18n 'profile.email' 'E-mail'}}
 									</label>
 
 									<input class="form-control js-email" id="editform_email"
@@ -88,7 +88,7 @@
 								<input class="form-check-input js-notifications" type="checkbox"
 									   value="" id="notificationsCheck" {{notificationsChecked}} />
 								<label class="form-check-label" for="notificationsCheck">
-									{{i18n 'profile.toggle.notifications' 'Receive automated notifications via email'}}
+									{{i18n 'profile.toggle.notifications' 'Receive automated notifications via e-mail'}}
 								</label>
 							</div>
 							<div class="form-check form-switch">
@@ -96,7 +96,7 @@
 									   type="checkbox" value="" id="allowPrivateMessagesCheck"
 									   {{allowPrivateMessagesChecked}} />
 								<label class="form-check-label" for="allowPrivateMessagesCheck">
-									{{i18n 'profile.toggle.allowPrivateMessages' 'Receive private messages from users via email'}}
+									{{i18n 'profile.toggle.allowPrivateMessages' 'Receive private messages from users via e-mail'}}
 								</label>
 							</div>
 						</div>
@@ -146,7 +146,7 @@
 						{{/each}}
 					</ul>
 				{{else}}
-					<p>{{i18n 'userprofile.noOwnVenues' "You're not editor of any venue."}}</p>
+					<p>{{i18n 'userprofile.noOwnVenues' "You're not an editor of any venue."}}</p>
 				{{/if}}
 				<a class="btn btn-add" href="{{pathFor 'venueDetails' _id='create'}}">
 					{{i18n 'profile.createNewVenue.button' 'Create a new venue'}}
@@ -214,7 +214,7 @@
 								{{> buttonDeleteConfirm
 									event="js-profile-delete-confirm-btn"
 									textIdle=(i18n 'profile.delete.confirm.button' 'Delete my user and all its profile')
-									textBusy=(i18n 'profile.delete.confirm.button.busy' 'Deleting profile...')
+									textBusy=(i18n 'profile.delete.confirm.button.busy' 'Deleting profile…')
 								}}
 								{{> buttonCancel event="js-collapse"}}
 							</div>
