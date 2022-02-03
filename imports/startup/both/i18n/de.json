@@ -291,7 +291,7 @@
 	"event.reallydelete": "Bitte bestätige, dass du diese Veranstaltung löschen möchtest. Dies kann nicht rückgängig gemacht werden.",
 	"event.replication.changeToPattern": "Frequenz wählen",
 	"event.replication.changeToPicker": "Daten wählen",
-	"event.replication.createText": "Erstelle {COUNT, Plural, one{eine Kopie an diesem Datum} other{# Kopien an diesem Datum}",
+	"event.replication.createText": "Erstelle {COUNT, plural, one{eine Kopie an diesem Datum} other{# Kopien an diesem Datum} }",
 	"event.replication.freq.daily": "täglich",
 	"event.replication.freq.once": "einmalig",
 	"event.replication.interval.end": "Ende der Wiederhohlungen",

@@ -91,19 +91,19 @@
 					<label class="form-label">
 						{{i18n 'event.replication.createText' 'Create {COUNT, plural, one{a copy on this date} other{# copies on this dates} }' COUNT=replicaDateCount}}
 					</label>
-					<div class="replica-event-captions">
-						{{#each replicaDates}}
-							<div class="event-caption" title="{{dateTimeLong this}}">
+					<div class="replica-event-captions row">
+						{{#each date in replicaDates}}
+							<div class="event-caption col-3" title="{{dateTimeLong date}}">
 								<div class="event-caption-header-wrap">
 									<div class="event-caption-header">
 										<span class="fa fa-map-pin"></span>
-										{{weekdayFormat this}}
+										{{weekdayFormat date}}
 										<div class="event-caption-pseudoborder"></div>
 									</div>
 								</div>
 								<div class="event-caption-body-wrap">
 									<div class="event-caption-body">
-										{{dateShort this}}
+										{{dateShort date}}
 									</div>
 								</div>
 							</div>
