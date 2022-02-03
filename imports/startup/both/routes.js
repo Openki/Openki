@@ -8,7 +8,7 @@ import moment from 'moment';
 import momentTz from 'moment-timezone';
 
 import { Courses } from '/imports/api/courses/courses';
-import { Events } from '/imports/api/events/events';
+import { Events, OEvent } from '/imports/api/events/events';
 import { Group, Groups } from '/imports/api/groups/groups';
 import { Region, Regions } from '/imports/api/regions/regions';
 /** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
@@ -626,11 +626,11 @@ Router.route('showEvent', {
 		const create = this.params._id === 'create';
 		if (create) {
 			const propose = LocalTime.now().startOf('hour');
-			event = {
+			event = _.extend(new OEvent(), {
 				new: true,
 				startLocal: LocalTime.toString(propose),
 				endLocal: LocalTime.toString(moment(propose).add(2, 'hour')),
-			};
+			});
 			const course = Courses.findOne(this.params.query.courseId);
 			if (course) {
 				event.title = course.name;

@@ -518,8 +518,9 @@ template.events({
 	'click .js-event-cancel'(_event, instance) {
 		if (instance.data.new) {
 			window.history.back();
+		} else {
+			(instance.parent as any).editing.set(false);
 		}
-		(instance.parent as any).editing.set(false);
 	},
 
 	'click .js-toggle-duration'() {
