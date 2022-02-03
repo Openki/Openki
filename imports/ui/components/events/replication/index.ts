@@ -13,7 +13,8 @@ import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-select
 
 import '/imports/ui/components/buttons';
 
-import './event-replication.html';
+import './template.html';
+import './styles.scss';
 
 const replicaStartDate = (originalDate) => {
 	const originalMoment = moment(originalDate);

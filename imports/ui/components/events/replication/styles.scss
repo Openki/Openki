@@ -1,13 +1,15 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .replica-tab-content {
 	border-color: $blue;
 	padding: 15px;
 }
 
 .replica-date-weekday {
-	@include td-padding(right, $padding-base-horizontal);
+	@include td-padding(right, $input-padding-x);
 	@include td-pos(right, 0);
-	color: $gray-light;
-	padding-top: $padding-base-vertical;
+	color: $gray-600;
+	padding-top: $input-padding-y;
 	position: absolute;
 	top: 0;
 	z-index: 3;
@@ -20,7 +22,6 @@
 }
 
 .replica-event-captions > .event-caption {
-	@include td-make-xs-column(3);
 	padding: 2.5px 5px;
 }
 
