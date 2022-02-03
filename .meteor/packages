@@ -19,7 +19,7 @@ dynamic-import@0.7.2
 
 # Accounts
 accounts-password@2.2.0
-accounts-base@2.2.0
+accounts-base@2.2.1
 accounts-facebook@1.3.3
 accounts-google@1.4.0
 accounts-github@1.5.0
