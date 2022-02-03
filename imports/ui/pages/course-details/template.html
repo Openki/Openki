@@ -111,7 +111,7 @@
 			{{> buttonDeleteConfirm
 				event="js-delete-course-confirm"
 				textIdle=(i18n 'course.delete.confirm.button' 'Delete this course and its events')
-				textBusy=(i18n 'course.delete.confirm.button.busy' 'Deleting course...')
+				textBusy=(i18n 'course.delete.confirm.button.busy' 'Deleting course…')
 			}}
 			{{> buttonCancel event="js-collapse"}}
 		</div>
@@ -234,7 +234,7 @@
 <template name="courseGroupRemove">
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
-			{{i18n 'course.group.confirmRemoveText' 'Stop listing group "{NAME}" as promoters?' NAME=(name groupId)}}
+			{{i18n 'course.group.confirmRemoveText' 'Stop listing the "{NAME}" group as promoters?' NAME=(name groupId)}}
 			<button type="button" class="btn btn-danger js-remove">
 				{{i18n 'course.group.confirmRemoveButton' "Delist"}}
 			</button>
@@ -249,8 +249,8 @@
 <template name="courseGroupMakeOrganizer">
 	{{#if expanded}}
 		<div class="group-tool-dialog add">
-			{{i18n 'course.group.confirmOrgText' 'Add group "{NAME}" as editors?' NAME=(name groupId)}}
-			{{i18n 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and can create new events for it."}}
+			{{i18n 'course.group.confirmOrgText' 'Add members of the "{NAME}" group as editors?' NAME=(name groupId)}}
+			{{i18n 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and create new events for it."}}
 			<button type="button" class="btn btn-add js-makeOrganizer">
 				{{i18n 'course.group.confimOrgButton' "Give editing rights"}}
 			</button>
@@ -266,7 +266,7 @@
 <template name="courseGroupRemoveOrganizer">
 	{{#if expanded}}
 		<div class="group-tool-dialog danger">
-			{{i18n 'course.group.confirmRemoveOrgText' 'Take away all editing rights from group "{NAME}"?' NAME=(name groupId)}}
+			{{i18n 'course.group.confirmRemoveOrgText' 'Revoke all editing rights from the "{NAME}" group?' NAME=(name groupId)}}
 			<button type="button" class="btn btn-danger js-removeOrganizer">
 				{{i18n 'course.group.confimRemoveOrgButton' "Take away editing rights"}}
 			</button>
@@ -283,7 +283,7 @@
 	<button type="submit" class="btn {{buttonClass}} js-course-archive" {{disabledIfBusy}}>
 		{{#if busy 'archive'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{i18n 'course.archive.archiveButton.archiving' 'Archiving...'}}
+			{{i18n 'course.archive.archiveButton.archiving' 'Archiving…'}}
 		{{else}}
 			{{textIdle}}
 		{{/if}}
@@ -294,7 +294,7 @@
 	<button type="submit" class="btn btn-go js-course-unarchive" {{disabledIfBusy}}>
 		{{#if busy 'unarchive'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
-			{{i18n 'course.archive.unarchiveButton.unarchiving' 'Unarchiving...'}}
+			{{i18n 'course.archive.unarchiveButton.unarchiving' 'Unarchiving…'}}
 		{{else}}
 			{{i18n 'course.archive.unarchiveButton' 'Unarchive'}}
 		{{/if}}

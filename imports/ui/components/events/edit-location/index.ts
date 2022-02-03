@@ -258,7 +258,7 @@ template.events({
 			markers.remove({ proposed: true });
 			if (found.length === 0) {
 				Alert.warning(
-					i18n('event.edit.noResultsforAddress', 'Found no results for address "{ADDRESS}"', {
+					i18n('event.edit.noResultsforAddress', 'Found no results for the address "{ADDRESS}"', {
 						ADDRESS: search,
 					}),
 				);

@@ -78,7 +78,7 @@ export type Data = {
 			false,
 			i18n(
 				'course.description.placeholder',
-				'Describe your idea, so that more people will find it and that they`ll know what to expect.',
+				'Describe your idea, so more people find it and know what to expect.',
 			),
 		);
 
@@ -483,7 +483,7 @@ export type Data = {
 			instance.busy('saving');
 			SaveAfterLogin(
 				instance,
-				i18n('loginAction.saveCourse', 'Login and save course'),
+				i18n('loginAction.saveCourse', 'Log in and save course'),
 				i18n('registerAction.saveCourse', 'Register and save course'),
 				async () => {
 					try {

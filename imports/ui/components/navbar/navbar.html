@@ -94,7 +94,7 @@
 		{{else}}
 			<a class="js-open-login loginButton navbar-link" id="openLogin" role="button">
 				<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
-				{{i18n 'login.navig.unlogged' 'Login/Register'}}
+				{{i18n 'login.navig.unlogged' 'Log in/register'}}
 			</a>
 		{{/if}}
 	{{/if}}
@@ -109,7 +109,7 @@
 <template name="ownUserFrame">
 	<div class="ownuser-frame">
 		<div class="mb-3 ownuser-frame-welcome">
-			{{i18n 'login.frame.welcome' 'Welcome {NAME}!' NAME=currentUser.username}}
+			{{i18n 'login.frame.welcome' 'Welcome {NAME}.' NAME=currentUser.username}}
 		</div>
 		<div class="mb-3">
 			<a class="btn btn-secondary form-control"
@@ -127,7 +127,7 @@
 		<div class="mb-3">
 			<button type="button" class="btn btn-secondary js-logout form-control">
 				<span class="fa fa-sign-out fa-fw" aria-hidden="true"></span>
-				{{i18n 'login.logout' 'Logout'}}
+				{{i18n 'login.logout' 'Log out'}}
 			</button>
 		</div>
 	</div>
@@ -135,7 +135,7 @@
 
 <template name="testWarningTicker">
 	<marquee bgcolor="#000" direction="left" scrollamount="5" scrolldelay="1" style="color:white;">
-		⚠ &nbsp; {{i18n 'menue.Testpage' 'This is only a Testpage.'}} &nbsp; ⚠
+		⚠ &nbsp; {{i18n 'menue.Testpage' 'This is only a testpage.'}} &nbsp; ⚠
 		<span style="padding-left:10em"> </span>
 		☠ &nbsp; {{i18n 'menue.Testpage2' 'All data will be erased regularly.'}} &nbsp; ☠
 		<span style="padding-left:10em"> </span>

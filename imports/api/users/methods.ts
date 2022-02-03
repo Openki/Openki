@@ -186,7 +186,10 @@ export const updateEmail = ServerMethod(
 		}
 
 		if (!newEmail) {
-			throw new ValidationError([{ name: 'email', type: 'noEmail' }], 'Please enter a email.');
+			throw new ValidationError(
+				[{ name: 'email', type: 'noEmail' }],
+				'Please enter an e-mail address.',
+			);
 		}
 
 		if (!isEmail(newEmail)) {

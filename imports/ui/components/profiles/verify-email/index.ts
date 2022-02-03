@@ -37,7 +37,7 @@ template.events({
 			);
 		} catch (err) {
 			instance.state.set('sending', false);
-			Alert.serverError(err, 'Failed to send verification mail');
+			Alert.serverError(err, 'Could not send verification e-mail');
 		}
 	},
 });

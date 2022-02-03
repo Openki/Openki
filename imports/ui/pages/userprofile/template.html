@@ -111,16 +111,16 @@
 				</div>
 			</div>
 		{{/if}}
-		{{> usersCourselist profileData=this ownProfile=false}}
+		{{> usersCourselist user=this.user ownProfile=false}}
 
 		{{#if alterPrivileges}}
-			<h3 class="text-danger">{{i18n 'profile.account.delete.header' 'Is this a SPAMER?'}}
+			<h3 class="text-danger">{{i18n 'profile.account.delete.header' 'Is this a spammer?'}}
 			</h3>
 			{{#unless (state 'verifyUserDelete')}}
 				{{> buttonDelete event="js-verify-user-delete-collapse"}}
 			{{else}}
 				<div class="border border-danger text-danger p-3">
-					<p>{{i18n 'profile.account.reallydelete' 'The user profile "{NAME}" will be permanently deleted. {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will be automatically removed as well. Are you sure you want to do this?' NAME=this.user.username COURSES=numberOfCoursesAffectedByDelete INTERESTED=numberOfInterestedAffectedByDelete EVENTS=numberOfFutureEventsAffectedByDelete}}
+					<p>{{i18n 'profile.account.reallydelete' 'Remove the user profile "{NAME}" permanently? {COURSES, number} Courses created by this user (with {INTERESTED, number} Participants and {EVENTS, number} upcoming events) will also be removed.' NAME=this.user.username COURSES=numberOfCoursesAffectedByDelete INTERESTED=numberOfInterestedAffectedByDelete EVENTS=numberOfFutureEventsAffectedByDelete}}
 					</p>
 					<div class="mb-3">
 						<textarea class='form-control js-reason'
@@ -130,7 +130,7 @@
 						{{> buttonDeleteConfirm
 						event="js-verify-user-delete-confirm"
 						textIdle=(i18n 'profile.account.delete.confirm.button' 'Delete user and all his traces')
-						textBusy=(i18n 'profile.account.delete.confirm.button.busy' 'Deleting profile...')
+						textBusy=(i18n 'profile.account.delete.confirm.button.busy' 'Deleting profile…')
 					}}
 						{{> buttonCancel event="js-verify-user-delete-collapse"}}
 					</div>

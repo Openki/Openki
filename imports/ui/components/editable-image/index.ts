@@ -46,7 +46,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 	}
 >;
 
-export const template = Template.editableImage;
+const template = Template.editableImage;
 
 template.onCreated(function () {
 	const instance = this;

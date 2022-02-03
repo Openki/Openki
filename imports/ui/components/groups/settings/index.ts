@@ -10,7 +10,6 @@ import * as GroupsMethods from '/imports/api/groups/methods';
 import { Users } from '/imports/api/users/users';
 
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
-import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable-image';
@@ -22,7 +21,7 @@ import './styles.scss';
 const Template = TemplateAny as TemplateStaticTyped<
 	'groupSettings',
 	{
-		group: GroupModel | (Partial<GroupEntity> & { _id: 'create' });
+		group: GroupModel;
 	},
 	{ userSearch: ReactiveVar<string> }
 >;
@@ -73,7 +72,7 @@ template.helpers({
 					Alert.success(
 						i18n(
 							'groupSettings.group.logo.updated',
-							'Your changes to the settings of the group "{GROUP}" have been saved.',
+							'Changes to the "{GROUP}" group settings have been saved.',
 							{ GROUP: groupName },
 						),
 					);
@@ -96,7 +95,7 @@ template.helpers({
 					Alert.success(
 						i18n(
 							'groupSettings.group.logo.removed',
-							'Your changes to the settings of the group "{GROUP}" have been saved.',
+							'Changes to the "{GROUP}" group settings have been saved.',
 							{ GROUP: groupName },
 						),
 					);
@@ -138,19 +137,18 @@ template.events({
 		instance.userSearch.set(instance.$('.js-search-users').val() as string);
 	},
 
-	async 'click .js-member-add-btn'() {
+	async 'click .js-member-add-btn'(this: { _id: string }) {
 		const memberId = this._id;
 		const groupId = Router.current().params._id;
 		try {
-			await MeteorAsync.call('group.updateMembership', memberId, groupId, true);
+			await GroupsMethods.updateMembership(memberId, groupId, true);
 			const memberName = Users.findOne(memberId)?.username;
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
-				i18n(
-					'groupSettings.memberAdded',
-					'"{MEMBER}" has been added as a member to the group "{GROUP}"',
-					{ MEMBER: memberName, GROUP: groupName },
-				),
+				i18n('groupSettings.memberAdded', '"{MEMBER}" has been added to the "{GROUP}" group', {
+					MEMBER: memberName,
+					GROUP: groupName,
+				}),
 			);
 		} catch (err) {
 			Alert.serverError(err, 'Could not add member');
@@ -167,7 +165,7 @@ template.events({
 			Alert.success(
 				i18n(
 					'groupSettings.memberRemoved',
-					'"{MEMBER}" has been removed from to the group "{GROUP}"',
+					'"{MEMBER}" has been removed from the "{GROUP}" group',
 					{ MEMBER: memberName, GROUP: groupName },
 				),
 			);

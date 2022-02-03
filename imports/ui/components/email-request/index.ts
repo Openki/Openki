@@ -31,7 +31,8 @@ import './template.html';
 			field: 'email',
 		},
 		'email invalid': {
-			text: () => i18n('register.warning.emailNotValid', 'Your email seems to have an error.'),
+			text: () =>
+				i18n('register.warning.emailNotValid', 'Your e-mail address seems to have an error.'),
 			field: 'email',
 		},
 		emailExists: {

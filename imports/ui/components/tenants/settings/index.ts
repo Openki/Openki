@@ -98,7 +98,7 @@ template.events({
 			Alert.success(
 				i18n(
 					'tenantSettings.memberAdded',
-					'"{MEMBER}" has been added as a member to the organization "{TENANT}"',
+					'"{MEMBER}" has been added to the "{TENANT}" organization',
 					{ MEMBER: memberName, TENANT: tenantName },
 				),
 			);
@@ -120,7 +120,7 @@ template.events({
 			Alert.success(
 				i18n(
 					'tenantSettings.memberRemoved',
-					'"{MEMBER}" has been removed from to the organization "{TENANT}"',
+					'"{MEMBER}" has been removed from the "{TENANT}" organization',
 					{ MEMBER: memberName, TENANT: tenantName },
 				),
 			);
@@ -145,7 +145,7 @@ template.events({
 			Alert.success(
 				i18n(
 					'tenantSettings.adminAdded',
-					'"{ADMIN}" has been added as an admin to the organization "{TENANT}"',
+					'"{ADMIN}" has been added as admin of the "{TENANT}" organization',
 					{ ADMIN: adminName, TENANT: tenantName },
 				),
 			);
@@ -167,7 +167,7 @@ template.events({
 			Alert.success(
 				i18n(
 					'tenantSettings.adminRemoved',
-					'"{ADMIN}" has been removed as an admin from to the organization "{TENANT}"',
+					'"{ADMIN}" has been removed as admin of the "{TENANT}" organization',
 					{ ADMIN: adminName, TENANT: tenantName },
 				),
 			);

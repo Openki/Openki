@@ -24,7 +24,7 @@ import getLocalizedValue from '/imports/utils/getLocalizedValue';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
-import '/imports/ui/components/courses/discussion/course-discussion';
+import '/imports/ui/components/courses/discussion';
 import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/events/course-events';
 import '/imports/ui/components/courses/history/course-history';
@@ -147,7 +147,7 @@ Template.courseDetailsPage.events({
 			Alert.success(
 				i18n(
 					'courseDetailsPage.message.courseHasBeenDeleted',
-					'The course "{COURSE}" has been deleted.',
+					'The "{COURSE}" course was deleted.',
 					{ COURSE: course.name },
 				),
 			);
@@ -169,7 +169,7 @@ Template.courseDetailsPage.events({
 
 			Router.go('/');
 		} catch (err) {
-			Alert.serverError(err, 'Removing the course "{COURSE}" went wrong');
+			Alert.serverError(err, 'Removing the "{COURSE}" course went wrong');
 		} finally {
 			instance.busy(false);
 		}
@@ -188,7 +188,7 @@ Template.courseDetailsPage.events({
 			Alert.success(
 				i18n(
 					'courseDetailsPage.message.courseHasBeenArchived',
-					'The course "{COURSE}" has been archived.',
+					'The "{COURSE}" course was archived.',
 					{ COURSE: course.name },
 				),
 			);
@@ -212,12 +212,12 @@ Template.courseDetailsPage.events({
 			Alert.success(
 				i18n(
 					'courseDetailsPage.message.courseHasBeenUnarchived',
-					'The course "{COURSE}" has been unarchived.',
+					'The "{COURSE}" course has been unarchived.',
 					{ COURSE: course.name },
 				),
 			);
 		} catch (err) {
-			Alert.serverError(err, 'Unarchive the course "{COURSE}" went wrong');
+			Alert.serverError(err, 'Unarchive the "{COURSE}" course went wrong');
 		} finally {
 			instance.busy(false);
 		}
@@ -310,7 +310,7 @@ Template.courseGroupAdd.events({
 			Alert.success(
 				i18n(
 					'courseGroupAdd.groupAdded',
-					'The group "{GROUP}" has been added to promote the course "{COURSE}".',
+					'The "{GROUP}" group was added to promote the "{COURSE}" course.',
 					{ GROUP: groupName, COURSE: course.name },
 				),
 			);
@@ -335,7 +335,7 @@ Template.courseGroupRemove.events({
 			Alert.success(
 				i18n(
 					'courseGroupAdd.groupRemoved',
-					'The group "{GROUP}" has been removed from the course "{COURSE}".',
+					'The "{GROUP}" group was removed from the "{COURSE}" course.',
 					{ GROUP: groupName, COURSE: course.name },
 				),
 			);
@@ -360,7 +360,7 @@ Template.courseGroupMakeOrganizer.events({
 			Alert.success(
 				i18n(
 					'courseGroupAdd.membersCanEditCourse',
-					'Members of the group "{GROUP}" can now edit the course "{COURSE}".',
+					'Members of the "{GROUP}" group can now edit the "{COURSE}" course.',
 					{ GROUP: groupName, COURSE: course.name },
 				),
 			);
@@ -385,7 +385,7 @@ Template.courseGroupRemoveOrganizer.events({
 			Alert.success(
 				i18n(
 					'courseGroupAdd.membersCanNoLongerEditCourse',
-					'Members of the group "{GROUP}" can no longer edit the course "{COURSE}".',
+					'Members of the "{GROUP}" group can no longer edit the "{COURSE}" course.',
 					{ GROUP: groupName, COURSE: course.name },
 				),
 			);

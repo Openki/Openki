@@ -22,7 +22,7 @@
 									<i class="fa fa-info fa-fw" aria-hidden="true"></i>
 								</div>
 								<div class="icon-text-text">
-									{{i18n 'course.propose.CourseInfo' 'Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More information here:' SITENAME=siteName}}
+									{{i18n 'course.propose.CourseInfo' 'Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More info here:' SITENAME=siteName}}
 									<a href="{{localized PublicSettings.courseGuideLink}}"
 									   target='_blank'>
 										{{i18n 'course.propose.guideLink' 'How to organize my first {SITENAME} course?' SITENAME=siteName}}
@@ -45,7 +45,7 @@
 								{{i18n 'course.edit.savedMessage' 'Your proposal has been saved!'}}
 							</h4>
 							<a class="alert-link" href="{{savedCourseLink}}" target="_blank">
-								{{i18n 'course.edit.linkToCourse' 'Click here to see your new course "{NAME}" on {SITENAME}' NAME=savedCourseName SITENAME=siteName}}
+								{{i18n 'course.edit.linkToCourse' 'Click here to see your new "{NAME}" course on {SITENAME}' NAME=savedCourseName SITENAME=siteName}}
 							</a>
 							<button type="button" class="btn-close js-close" data-bs-dismiss="alert"
 									aria-label="Close"></button>
@@ -140,7 +140,7 @@
 						{{#if (state 'fullRoleSelection')}}
 							<div class="col-md">
 								<label
-									   class="form-label">{{i18n 'course.edit.needs.role' 'This course might need...'}}</label>
+									   class="form-label">{{i18n 'course.edit.needs.role' 'This course might need…'}}</label>
 								{{#each role in availableRoles}}
 									{{> courseEditRole selected=roles role=role members=members}}
 								{{/each}}

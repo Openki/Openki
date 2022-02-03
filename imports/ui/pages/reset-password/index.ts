@@ -96,7 +96,7 @@ template.events({
 		event.preventDefault();
 
 		const password = instance.$('.js-pwd-reset').val() as string;
-		const { token } = Template.instance().data;
+		const { token } = Template.currentData();
 
 		try {
 			await AccountsAsync.resetPassword(token, password);

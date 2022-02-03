@@ -51,7 +51,7 @@ import './template.html';
 				);
 				$('.js-email-validation-modal').modal('hide');
 			} catch (err) {
-				Alert.serverError(err, 'Failed to send verification mail');
+				Alert.serverError(err, 'Could not send verification e-mail');
 			} finally {
 				instance.busy(false);
 			}

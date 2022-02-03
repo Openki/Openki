@@ -1,9 +1,4 @@
-@import 'account-tasks/account-tasks';
-
-@import 'alerts/alerts';
-
 @import 'courses/compact/course-compact';
-@import 'courses/discussion/course-discussion';
 @import 'courses/events/course-events';
 @import 'courses/history/course-history';
 @import 'courses/list/course-list';
@@ -13,13 +8,10 @@
 @import 'editable/editable';
 
 @import 'events/participants/event-participants';
-@import 'events/replication/event-replication';
 
 @import 'introduction/introduction';
 
 @import 'navbar/navbar';
-
-@import 'profiles/course-list/profile-course-list';
 
 @import 'venues/link/venue-link';
 @import 'venues/edit/venue-edit';

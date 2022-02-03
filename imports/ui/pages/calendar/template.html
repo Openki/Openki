@@ -2,8 +2,8 @@
 	{{> calendarNav date=startDate}}
 	<div class="container calendar-container">
 		<div class="page-component">
-			{{#each days}}
-				{{> calendarDayFormat day=this filter=filter}}
+			{{#each day in days}}
+				{{> calendarDayFormat day=day filter=filter}}
 				<hr>
 			{{/each}}
 		</div>

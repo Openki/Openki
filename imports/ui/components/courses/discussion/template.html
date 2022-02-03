@@ -11,9 +11,9 @@
 		{{else}}
 			{{> loadingRow}}
 		{{/if}}
-		{{#each posts}}
+		{{#each p in posts}}
 			<div class="discussion-conversation">
-				{{> post}}
+				{{> post p}}
 			</div>
 		{{/each}}
 		{{#if limited}}
@@ -37,8 +37,8 @@
 			{{i18n 'course.discussions.showPreviousReplies' 'Show all previous answers'}}
 		</button>
 	{{/if}}
-	{{#each responses}}
-		{{> post}}
+	{{#each response in responses}}
+		{{> post response}}
 	{{/each}}
 	{{#if allowResponse}}
 		{{> post newResponse}}
@@ -185,12 +185,12 @@
 							<span class="fa fa-send fa-fw" aria-hidden="true"></span>
 							{{#if new}}
 								{{#if parentId}}
-									{{i18n 'course.discussion.comment_btn.answer' 'Answer!'}}
+									{{i18n 'course.discussion.comment_btn.answer' 'Answer'}}
 								{{else}}
-									{{i18n 'course.discussion.comment_btn.write' 'Write!'}}
+									{{i18n 'course.discussion.comment_btn.write' 'Write'}}
 								{{/if}}
 							{{else}}
-								{{i18n 'course.discussion.comment_btn.update' 'Update my comment!'}}
+								{{i18n 'course.discussion.comment_btn.update' 'Update my comment'}}
 							{{/if}}
 						</button>
 						{{> buttonCancel event="js-discussion-cancel"}}
@@ -207,7 +207,7 @@
 		{{contribution this}}
 	{{else}}
 		<span class="username">
-			Anonymous
+			{{i18n 'comment.profileLink.anonymous' 'Anonymous'}}
 		</span>
 	{{/if}}
 </template>
@@ -240,7 +240,7 @@
 				<hr class="dropdown-divider">
 			</li>
 			<li class="dialog-dropdown-text">
-				{{i18n 'comment.delete.confirm' 'Do you really want to delete this comment?'}}
+				{{i18n 'comment.delete.confirm' 'Delete this comment?'}}
 			</li>
 			<li class="dialog-dropdown-btn">
 				<button type="button" class="btn btn-remove js-delete-comment">

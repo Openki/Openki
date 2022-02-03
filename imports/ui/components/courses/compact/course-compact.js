@@ -136,7 +136,7 @@ Template.courseCompactRoles.helpers({
 		const tooltips = {
 			team: {
 				needed: i18n('course.list.status_titles.needs_organizer', 'Needs an organizer'),
-				occupied: i18n('course.list.status_titles.has_team', 'Has a organizer-team'),
+				occupied: i18n('course.list.status_titles.has_team', 'Has an organizer-team'),
 				occupiedByUser: i18n('course.list.status_titles.u_are_organizer', 'You are organizer'),
 			},
 			mentor: {

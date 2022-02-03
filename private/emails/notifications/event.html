@@ -6,9 +6,9 @@
 			</span>
 			<p>
 				{{#if new}}
-					{{i18n 'notification.event.mail.new' 'A new event was just published for course {COURSE}:' COURSE=course lng=locale}}
+					{{i18n 'notification.event.mail.new' 'A new event was just published for the "{COURSE}" course:' COURSE=course lng=locale}}
 				{{else}}
-					{{i18n 'notification.event.mail.changed' 'The following event for course {COURSE} changed:' COURSE=course lng=locale}}
+					{{i18n 'notification.event.mail.changed' 'The following event for {COURSE} course changed:' COURSE=course lng=locale}}
 				{{/if}}
 			</p>
 			{{#if additionalMessage}}
@@ -76,7 +76,7 @@
 			</p>
 			<p class="text-center">
 				<a class="button" href="{{registerToEventLink}}">
-					{{i18n "notification.event.mail.registerEvent" "Yes, i take part!" lng=locale}}
+					{{i18n "notification.event.mail.registerEvent" "Yes, I take part." lng=locale}}
 				</a>
 			</p>
 			<p class="gap-md text-center">
@@ -94,7 +94,7 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{i18n 'notification.event.mail.notice' 'You receive this mail because you are involved in the course "{COURSE}".' COURSE=course lng=locale}}
+						{{i18n 'notification.event.mail.notice' 'You receive this e-mail because you are involved in the "{COURSE}" course.' COURSE=course lng=locale}}
 					</td>
 				</tr>
 				<tr>

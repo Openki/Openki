@@ -135,7 +135,7 @@ Template.deleteEventsModal.events({
 						err,
 						i18n(
 							'deleteEventsModal.errWithReason',
-							'Deleting the event "{TITLE} ({START})" failed.',
+							'Could not delete the "{TITLE} ({START})" event.',
 							{ TITLE: event.title, START: start },
 						),
 					);

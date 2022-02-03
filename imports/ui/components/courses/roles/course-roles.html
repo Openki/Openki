@@ -22,24 +22,24 @@
 		</div>
 		{{#if showFirstSteps}}
 			<div class="course-role-first-steps">
-				<b>{{i18n 'course.roles.firstSteps.title' 'Thank you for your interest in the course!' ROLE=(roleShort role.type)}}</b>
+				<b>{{i18n 'course.roles.firstSteps.title' 'Thank you for your interest in the course.' ROLE=(roleShort role.type)}}</b>
 				<br>
 				{{#if roleIs 'participant'}}
 					{{i18n 'course.roles.firstSteps.youllGetNotified' 'You will get an e-mail notification as soon as a date has been fixed.'}}
 				{{/if}}
 				{{#if roleIs 'host'}}
-					{{i18n 'course.roles.firstSteps.informAboutVenue' 'If not done already, please mention in your personal message information about the venue that you have access to.'}}
+					{{i18n 'course.roles.firstSteps.informAboutVenue' 'If not done already, please mention the venue(s) you have access to in your personal message info.'}}
 				{{/if}}
 				{{#if roleIs 'mentor'}}
-					{{i18n 'course.roles.firstSteps.mentionExperience' 'If not done already, please mention in your personal message information about your experience on the topic.'}}
+					{{i18n 'course.roles.firstSteps.mentionExperience' 'If not done already, please mention your experiences on the topic in your personal message info.'}}
 					{{> courseGuide}}
 				{{/if}}
 				{{#if roleIs 'team'}}
-					{{i18n 'course.roles.firstSteps.team' 'If not done already, you can start with chosing the venue and, if needed, looking for mentor(s) and then fix a date.'}}
+					{{i18n 'course.roles.firstSteps.team' 'If not done already, you can start with chosing the venue and, and if needed, looking for mentor(s) and then fixing a date.'}}
 					{{> courseGuide}}
 				{{/if}}
 				<br><br>
-				{{i18n 'course.roles.firstSteps.ifQuestions' 'If you have any questions concerning the course please write a comment in the discussion below.'}}
+				{{i18n 'course.roles.firstSteps.ifQuestions' 'Please write questions concerning the course in the discussion below.'}}
 				<br>
 				{{i18n 'course.roles.firstSteps.allMembersInformed' 'All members of the organization-team will be informed.'}}
 				<br>
@@ -66,11 +66,11 @@
 						{{/if}}
 						{{#if roleIs 'host'}}
 							<textarea class='form-control js-comment'
-									  placeholder={{i18n 'course.roles.messageInfoHost' 'an (optional) message including information about the venue'}}>{{../../member.comment}}</textarea>
+									  placeholder={{i18n 'course.roles.messageInfoHost' 'an (optional) message including info about the venue'}}>{{../../member.comment}}</textarea>
 						{{/if}}
 						{{#if roleIs 'mentor'}}
 							<textarea class='form-control js-comment'
-									  placeholder={{i18n 'course.roles.messageInfoMentor' 'an (optional) message including information about your experience on the topic'}}>{{../../member.comment}}</textarea>
+									  placeholder={{i18n 'course.roles.messageInfoMentor' 'an (optional) message including info about your experience on the topic'}}>{{../../member.comment}}</textarea>
 						{{/if}}
 						{{#if roleIs 'team'}}
 							<textarea class='form-control js-comment'
@@ -83,7 +83,7 @@
 							{{#if busy 'enrolling'}}
 								<i class="fa fa-circle-o-notch fa-spin fa-fw"
 								   aria-hidden="true"></i>
-								{{i18n 'course.roles.join.busy' 'Joining course...'}}
+								{{i18n 'course.roles.join.busy' 'Joining course…'}}
 							{{else}}
 								{{i18n 'course.roles.join' 'Join course'}}
 							{{/if}}
@@ -109,7 +109,7 @@
 	<br>
 	<br>
 	<span>
-		{{i18n 'course.roles.firstSteps.guide' 'Further information'}}&colon;&nbsp;
+		{{i18n 'course.roles.firstSteps.guide' 'Further info'}}&colon;&nbsp;
 		<a href="{{localized PublicSettings.courseGuideLink}}" target='_blank'>
 			{{i18n 'course.roles.firstSteps.guideLink' 'How to organize my first {SITENAME} course?' SITENAME=siteName}}
 		</a>

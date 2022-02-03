@@ -15,7 +15,7 @@ import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/groups/list';
-import '/imports/ui/components/profiles/course-list/profile-course-list';
+import '/imports/ui/components/profiles/course-list';
 import '/imports/ui/components/profiles/verify-email';
 import '/imports/ui/components/venues/link/venue-link';
 import '/imports/ui/components/avatar';
@@ -59,15 +59,15 @@ const TemplateExtended = TemplateMixins.Expandible(TemplateBase, 'profilePage');
 
 const Template = TemplateMixins.FormfieldErrors(TemplateExtended, 'profilePage', {
 	noEmail: {
-		text: () => i18n('warning.noEmailProvided', 'Please enter a email.'),
+		text: () => i18n('warning.noEmailProvided', 'Please enter an e-mail address.'),
 		field: 'email',
 	},
 	emailNotValid: {
-		text: () => i18n('warning.emailNotValid', 'Your email seems to have an error.'),
+		text: () => i18n('warning.emailNotValid', 'Your e-mail address seems to have an error.'),
 		field: 'email',
 	},
 	emailExists: {
-		text: () => i18n('warning.emailExists', 'This email is already taken.'),
+		text: () => i18n('warning.emailExists', 'This e-mail address is already in use.'),
 		field: 'email',
 	},
 });
@@ -108,11 +108,11 @@ template.onCreated(function () {
 			{
 				type: 'userExists',
 				message: () =>
-					i18n('warning.userExists', 'This username already exists. Please choose another one.'),
+					i18n('warning.userExists', 'This username is already in use. Please choose another one.'),
 			},
 			{
 				type: 'nameError',
-				message: () => i18n('update.username.failed', 'Failed to update username.'),
+				message: () => i18n('update.username.failed', 'Could not update username.'),
 			},
 		],
 		onSave: async (newName) => {
@@ -285,24 +285,22 @@ template.events({
 		const pass = (instance.find('.js-new-pwd') as HTMLInputElement).value;
 		if (pass !== '') {
 			if (pass !== (instance.find('.js-new-pwd-confirm') as HTMLInputElement).value) {
-				Alert.warning(i18n('profile.passwordMismatch', "Sorry, Your new passwords don't match"));
+				Alert.warning(i18n('profile.passwordMismatch', "Sorry, your new passwords don't match"));
 				return;
 			}
 			const minLength = 5; // We've got _some_ standards
 			if (pass.length < minLength) {
-				Alert.warning(i18n('profile.passwordShort', 'Your desired password is too short, sorry.'));
+				Alert.warning(i18n('profile.passwordShort', 'Your desired password is too short. Sorry.'));
 				return;
 			}
 			Accounts.changePassword(old, pass, (err) => {
 				if (err) {
 					Alert.serverError(
 						err,
-						i18n('profile.passwordChangeError', 'Failed to change your password'),
+						i18n('profile.passwordChangeError', 'Could not change your password'),
 					);
 				} else {
-					Alert.success(
-						i18n('profile.passwordChangedSuccess', 'You have changed your password successfully.'),
-					);
+					Alert.success(i18n('profile.passwordChangedSuccess', 'You have changed your password.'));
 					instance.changingPass.set(false);
 				}
 			});

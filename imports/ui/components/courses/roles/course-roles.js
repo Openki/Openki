@@ -34,15 +34,15 @@ Template.courseRole.onCreated(function () {
 	if (Router.current().params.query.unsubscribe === this.data.role.type) {
 		SaveAfterLogin(
 			this,
-			i18n('loginAction.unsubscribeFromCourse', 'Login and unsubscribe from Course'),
-			i18n('registerAction.unsubscribeFromCourse', 'Register and unsubscribe from Course'),
+			i18n('loginAction.unsubscribeFromCourse', 'Log in and unsubscribe from course'),
+			i18n('registerAction.unsubscribeFromCourse', 'Register and unsubscribe from course'),
 			async () => {
 				const user = Meteor.user();
 				const change = new Unsubscribe(this.data.course, user, this.data.role.type);
 				if (change.validFor(user)) {
 					await processChange(change);
 					Alert.success(
-						i18n('course.roles.unsubscribed', 'Unsubscribed from course {NAME}', {
+						i18n('course.roles.unsubscribed', 'Unsubscribed from {NAME} course', {
 							NAME: this.data.course.name,
 						}),
 					);
@@ -103,7 +103,7 @@ Template.courseRole.events({
 		instance.busy('enrolling');
 		SaveAfterLogin(
 			instance,
-			i18n('loginAction.enroll', 'Login and enroll'),
+			i18n('loginAction.enroll', 'Log in and enroll'),
 			i18n('registerAction.enroll', 'Register and enroll'),
 			async () => {
 				await processChange(instance.subscribe(comment));

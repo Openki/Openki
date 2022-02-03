@@ -26,6 +26,8 @@ if (false) {
 	import(`/imports/startup/both/i18n/hu.json`);
 	import(`/imports/startup/both/i18n/it.json`);
 	import(`/imports/startup/both/i18n/ja.json`);
+	import(`/imports/startup/both/i18n/ko.json`);
+	import(`/imports/startup/both/i18n/nb.json`);
 	import(`/imports/startup/both/i18n/nl.json`);
 	import(`/imports/startup/both/i18n/pt.json`);
 	import(`/imports/startup/both/i18n/rm.json`);
