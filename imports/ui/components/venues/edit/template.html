@@ -14,7 +14,7 @@
 			</div>
 			<div class="mb-3">
 				<label class="form-label">{{i18n 'venue.edit.description' 'Description'}}</label>
-				{{> editableTextarea editableDescription}}
+				{{> editableTextarea instance.editableDescription}}
 			</div>
 			{{#if showMapSelection}}
 				<div class="row gap-3 mb-3">
@@ -30,8 +30,8 @@
 									<option value=''>
 										{{i18n 'venue.edit.pls_select' 'Please select'}}
 									</option>
-									{{#each regions}}
-										<option value='{{_id}}'>{{name}}</option>
+									{{#each region in regions}}
+										<option value='{{region._id}}'>{{region.name}}</option>
 									{{/each}}
 								</select>
 							</div>
