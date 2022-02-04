@@ -173,6 +173,10 @@ template.helpers({
 		return Object.keys(this.facilities);
 	},
 
+	facilitiesDisplay(name: string) {
+		return `venue.facility.${name}`;
+	},
+
 	verifyDelete() {
 		return Template.instance().verifyDeleteVenue.get();
 	},

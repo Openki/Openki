@@ -89,7 +89,7 @@
 									</span>
 									<ul>
 										{{#each facilityName in facilityNames}}
-											<li>{{facilityName}}</li>
+											<li>{{i18n (facilitiesDisplay facilityName)}}</li>
 										{{/each}}
 									</ul>
 								</p>
@@ -159,4 +159,18 @@
 			{{> buttonCancel event="js-venue-delete-cancel"}}
 		</div>
 	</div>
+</template>
+
+<template name="venueDynamicTranslations">
+	This template holds translation strings that are constructed dynamically in this component
+
+	{{i18n 'venue.facility.projector' 'Projector'}}
+	{{i18n 'venue.facility.screen' 'Screen'}}
+	{{i18n 'venue.facility.audio' 'Audio System'}}
+	{{i18n 'venue.facility.blackboard' 'Blackboard'}}
+	{{i18n 'venue.facility.whiteboard' 'Whiteboard'}}
+	{{i18n 'venue.facility.flipchart' 'Flipchart'}}
+	{{i18n 'venue.facility.wifi' 'Wi-Fi'}}
+	{{i18n 'venue.facility.kitchen' 'Kitchen'}}
+	{{i18n 'venue.facility.wheelchairs' 'Accessible by wheelchair'}}
 </template>

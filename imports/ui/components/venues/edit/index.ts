@@ -281,6 +281,9 @@ import './styles.scss';
 	const template = Template.venueEditAdditionalInfo;
 
 	template.helpers({
+		facilityOptions() {
+			return Venues.facilityOptions;
+		},
 		facilitiesCheck(name: string) {
 			const data = Template.currentData();
 
@@ -298,6 +301,9 @@ import './styles.scss';
 				attrs.checked = 'checked';
 			}
 			return attrs;
+		},
+		facilitiesDisplay(name: string) {
+			return `venue.facility.${name}`;
 		},
 	});
 }
