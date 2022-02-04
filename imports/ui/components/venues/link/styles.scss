@@ -1,3 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .venue-tag {
 	@include tag($venue-bg, $venue-color);
 }
