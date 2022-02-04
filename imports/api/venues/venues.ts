@@ -38,8 +38,6 @@ export interface VenueEntity {
 		[key: string]: string;
 	};
 	otherFacilities?: string;
-	/** URL */
-	website?: string;
 	createdby: string;
 	created: Date;
 	updated: Date;

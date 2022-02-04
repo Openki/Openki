@@ -180,7 +180,6 @@ import './styles.scss';
 				maxWorkplaces: parseInt(instance.$('.js-maxWorkplaces').val() as string, 10),
 				facilities: [],
 				otherFacilities: instance.$('.js-otherFacilities').val() as string,
-				website: instance.$('.js-website').val() as string,
 			};
 
 			if (!changes.name) {

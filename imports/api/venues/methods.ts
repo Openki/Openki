@@ -23,7 +23,6 @@ export interface SaveFields {
 	maxWorkplaces?: number;
 	facilities?: string[];
 	otherFacilities?: string;
-	website?: string;
 }
 
 export const save = ServerMethod('venue.save', (venueId: string, changes: SaveFields) => {
@@ -40,7 +39,6 @@ export const save = ServerMethod('venue.save', (venueId: string, changes: SaveFi
 		maxWorkplaces: Match.Optional(Number),
 		facilities: Match.Optional([String]),
 		otherFacilities: Match.Optional(String),
-		website: Match.Optional(String),
 	});
 
 	const user = Meteor.user();
@@ -108,10 +106,6 @@ export const save = ServerMethod('venue.save', (venueId: string, changes: SaveFi
 
 	if (changes.otherFacilities) {
 		set.otherFacilities = changes.otherFacilities.substring(0, 40 * 1024);
-	}
-
-	if (changes.website) {
-		set.website = changes.website.substring(0, 40 * 1024);
 	}
 
 	if (isNew) {
