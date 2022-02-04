@@ -1,3 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .venue-edit {
 	background-color: lighten($venue-bg, 10%);
 	border: 4px solid $venue-bg;
