@@ -24,7 +24,7 @@ const template = Template.participantContact;
 template.onCreated(function () {
 	const instance = this;
 
-	Meteor.subscribe('user', instance.data.participant);
+	instance.subscribe('user', instance.data.participant);
 
 	instance.state = new ReactiveDict();
 

@@ -123,10 +123,6 @@ import './styles.scss';
 			return Template.instance().showAdditionalInfo.get();
 		},
 
-		regions() {
-			return Regions.find();
-		},
-
 		showMapSelection() {
 			const instance = Template.instance();
 

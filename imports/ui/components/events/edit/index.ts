@@ -288,10 +288,6 @@ template.helpers({
 		return Template.instance().state.get('updateChangedReplicasTime');
 	},
 
-	regions() {
-		return Regions.find();
-	},
-
 	showRegionSelection() {
 		// You can select the region for events that are new and not associated
 		// with a course

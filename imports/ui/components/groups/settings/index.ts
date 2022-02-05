@@ -1,5 +1,4 @@
 import { Router } from 'meteor/iron:router';
-import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
@@ -38,7 +37,7 @@ template.onCreated(function () {
 	instance.autorun(() => {
 		const search = instance.userSearch.get();
 		if (search.length > 0) {
-			Meteor.subscribe('userSearch', search);
+			instance.subscribe('userSearch', search);
 		}
 	});
 });
