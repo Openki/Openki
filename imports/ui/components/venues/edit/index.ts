@@ -64,7 +64,6 @@ import './styles.scss';
 		} else {
 			// For existing venues the region is already selected and cannot
 			// be changed
-
 			instance.selectedRegion.set(this.data.region);
 		}
 
@@ -126,7 +125,7 @@ import './styles.scss';
 		showMapSelection() {
 			const instance = Template.instance();
 
-			return instance.regionSelectable.get() || Boolean(instance.selectedRegion.get());
+			return instance.regionSelectable.get() || !!instance.selectedRegion.get();
 		},
 
 		regionSelectable() {
@@ -134,7 +133,7 @@ import './styles.scss';
 		},
 
 		regionSelected() {
-			return Boolean(Template.instance().selectedRegion.get());
+			return !!Template.instance().selectedRegion.get();
 		},
 
 		venueMarkers() {
