@@ -64,7 +64,7 @@ export interface CourseEntity {
 		dateTime: Date;
 		type: string;
 		data: any;
-	};
+	}[];
 	/**
 	 * (calculated) List of user and group id allowed to edit the course, calculated from members
 	 * and groupOrganizers

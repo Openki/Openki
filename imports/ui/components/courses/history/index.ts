@@ -1,19 +1,27 @@
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { Events } from '/imports/api/events/events';
+import { CourseModel } from '/imports/api/courses/courses';
 
 import '/imports/ui/components/profile-link';
 
-import './course-history.html';
+import './template.html';
+import './styles.scss';
 
-Template.coursehistory.helpers({
+const Template = TemplateAny as TemplateStaticTyped<'coursehistory', { course: CourseModel }>;
+
+const template = Template.coursehistory;
+
+template.helpers({
 	pastEventsList() {
-		/** @type {{dateTime: Date|undefined, template: string, data: object}[]} */
-		const historyEntries = [];
+		const historyEntries: { dateTime: Date | undefined; template: string; data: object }[] = [];
 
 		// add past events
 		historyEntries.push(
-			...Events.find({ courseId: this.course._id, start: { $lt: new Date() } }).map((e) => ({
+			...Events.find({
+				courseId: Template.currentData().course._id,
+				start: { $lt: new Date() },
+			}).map((e) => ({
 				dateTime: e.start,
 				template: 'eventHeldHistoryEntry',
 				data: e,

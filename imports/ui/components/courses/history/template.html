@@ -1,31 +1,29 @@
 <template name="coursehistory">
-	<div class="timeline-pre">
-		<div class="timeline-start-container">
-			<div class="timeline-start"></div>
-		</div>
-		<div class="timeline-header"></div>
-	</div>
-
-	{{#each pastEventsList}}
-		<div class="timeline">
-			<div class="timeline-eventdate" title="{{dateLong dateTime}}">
-				{{fromNow dateTime}}
-			</div>
-			<div class="timeline-eventline-container">
-				<div class="timeline-eventline"></div>
-				<div class="timeline-eventpoint"></div>
+	<div class="container">
+		<div class="timeline-pre row">
+			<div class="col-1 offset-3">
+				<div class="timeline-start"></div>
 			</div>
 		</div>
-		<div class="coursehistory-event">
-			{{> Template.dynamic template=this.template data=this.data}}
+		<div class="row">
+			{{#each event in pastEventsList}}
+				<div class="timeline-eventdate col-3" title="{{dateLong event.dateTime}}">
+					{{fromNow event.dateTime}}
+				</div>
+				<div class="timeline-eventline-container col-1">
+					<div class="timeline-eventline"></div>
+					<div class="timeline-eventpoint"></div>
+				</div>
+				<div class="coursehistory-event col-8">
+					{{> Template.dynamic template=event.template data=event.data}}
+				</div>
+			{{/each}}
 		</div>
-	{{/each}}
-
-	<div class="timeline-post">
-		<div class="timeline-end-container">
-			<div class="timeline-end"></div>
+		<div class="timeline-post row">
+			<div class="col-1 offset-3">
+				<div class="timeline-end"></div>
+			</div>
 		</div>
-		<div class="timeline-footer"></div>
 	</div>
 </template>
 
