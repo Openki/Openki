@@ -156,7 +156,11 @@ template.onCreated(function () {
 template.helpers({
 	isFeatured() {
 		const region = Regions.currentRegion();
-		return region && region.featuredGroup === Template.instance().data.group._id;
+		return (
+			region &&
+			!Template.instance().data.group.isNew() &&
+			region.featuredGroup === Template.instance().data.group._id
+		);
 	},
 
 	headerClasses() {
