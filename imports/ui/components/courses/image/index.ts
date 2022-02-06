@@ -18,7 +18,7 @@ template.helpers({
 	imageUploadArgs(): EditableImageData {
 		const instance = Template.instance();
 		return {
-			thumbnail: instance.data.course?.publicImageUrl?.(),
+			thumbnail: instance.data.course?.publicImageUrl(),
 			maxSize: 100,
 			async onUpload(file: UploadImage) {
 				const courseId = instance.data.course._id;
@@ -29,15 +29,17 @@ template.helpers({
 					Alert.serverError(err, 'Could not save image.');
 				}
 			},
-			async onDelete() {
-				const courseId = instance.data.course._id;
-				try {
-					await CourseMethods.deleteImage(courseId);
-					Alert.success(i18n('course.edit.image.removed', 'Image have been removed.'));
-				} catch (err) {
-					Alert.serverError(err, 'Could not remove image.');
-				}
-			},
+			onDelete: instance.data.course?.image
+				? async function () {
+						const courseId = instance.data.course._id;
+						try {
+							await CourseMethods.deleteImage(courseId);
+							Alert.success(i18n('course.edit.image.removed', 'Image have been removed.'));
+						} catch (err) {
+							Alert.serverError(err, 'Could not remove image.');
+						}
+				  }
+				: undefined,
 		};
 	},
 });
