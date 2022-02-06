@@ -22,6 +22,7 @@ import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 import { LocalizedValue as LocalizedValueType } from '/imports/utils/getLocalizedValue';
+import * as FileStorage from '/imports/utils/FileStorage';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import { UserModel } from '/imports/api/users/users';
@@ -295,6 +296,68 @@ export const save = ServerMethod(
 
 		return courseId;
 	},
+);
+
+export const updateImage = ServerMethod(
+	'course.update.image',
+	async (courseId: string, file: FileStorage.UploadFile) => {
+		check(courseId, String);
+
+		const user = Meteor.user();
+		if (!user) {
+			throw new Meteor.Error(401, 'please log-in');
+		}
+
+		// Load group from DB
+		const course = loadCourse(courseId);
+
+		if (course.isNew() || !course.editableBy(user)) {
+			throw new Meteor.Error(401, 'Denied');
+		}
+
+		if (course.image && !course.image.startsWith('https://')) {
+			FileStorage.remove(course.image);
+		}
+
+		const result = await FileStorage.upload('courses/image/', file);
+
+		const update = { image: result.fullFileName };
+
+		Courses.update(course._id, { $set: update });
+
+		return courseId;
+	},
+	{ simulation: false },
+);
+
+export const deleteImage = ServerMethod(
+	'course.delete.image',
+	async (courseId: string) => {
+		check(courseId, String);
+
+		const user = Meteor.user();
+		if (!user) {
+			throw new Meteor.Error(401, 'please log-in');
+		}
+
+		// Load group from DB
+		const course = loadCourse(courseId);
+
+		if (course.isNew() || !course.editableBy(user)) {
+			throw new Meteor.Error(401, 'Denied');
+		}
+
+		if (course.image && !course.image.startsWith('https://')) {
+			FileStorage.remove(course.image);
+		}
+
+		const update = { image: '' };
+
+		Courses.update(course._id, { $unset: update });
+
+		return courseId;
+	},
+	{ simulation: false },
 );
 
 /**

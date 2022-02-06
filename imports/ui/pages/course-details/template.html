@@ -12,7 +12,7 @@
 						{{> courseEdit course}}
 					{{else}}
 						<div class="course-details {{courseStateClasses}}">
-							<div class="details-header">
+							<div class="details-header" {{detailsHeaderAttr}}>
 								{{#if course.internal}}
 									<span class="details-internal"
 										  data-tooltip="{{i18n 'courseCompact.internal_course' 'Internal course'}}"></span>
@@ -127,6 +127,14 @@
 					<span class="tab-label">{{i18n 'course.subnav.descr' 'Description'}}</span>
 				</a>
 			</li>
+			{{#if mayEdit}}
+				<li role="presentation">
+					<a href="#image" data-toggle="tab">
+						<span class="fa fa-image fa-fw" aria-hidden="true"></span>
+						<span class="tab-label">{{i18n 'course.subnav.image' 'Image'}}</span>
+					</a>
+				</li>
+			{{/if}}
 			<li role="presentation">
 				<a href="#history" data-toggle="tab">
 					<span class="fa fa-history fa-fw" aria-hidden="true"></span>
@@ -147,6 +155,11 @@
 		<div class="tab-pane course-history" id="history">
 			{{> coursehistory}}
 		</div>
+		{{#if mayEdit}}
+			<div class="tab-pane" id="image">
+				{{> courseImage}}
+			</div>
+		{{/if}}
 		{{#unless course.isPrivate}}
 			{{> pricePolicy dismissable=true wrap='course-details-price-policy'}}
 		{{/unless}}
