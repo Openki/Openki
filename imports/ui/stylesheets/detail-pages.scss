@@ -83,7 +83,6 @@
 .details-map .coordinates {
 	@include td-margin-all(5px, 5px, 5px, 0);
 	@include td-text-align(right);
-	font-weight: bold;
 }
 
 .details-form {
