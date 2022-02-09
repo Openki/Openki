@@ -14,6 +14,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
+import * as FileStorage from '/imports/utils/FileStorage';
 import * as StringTools from '/imports/utils/string-tools';
 import { GroupEntityAdditionalInfosForProposals } from '/imports/api/groups/groups';
 
@@ -40,6 +41,7 @@ export interface CourseEntity {
 	 */
 	groupOrganizers: string[];
 	description: string;
+	image: string;
 	slug: string;
 	/** ID_region */
 	region: string;
@@ -125,6 +127,14 @@ export class Course {
 
 	userHasRole(this: CourseModel, userId: string | undefined | null, role: string) {
 		return hasRoleUser(this.members, role, userId);
+	}
+
+	publicImageUrl(this: CourseModel) {
+		if (!this.image) {
+			return '';
+		}
+
+		return FileStorage.generatePublicUrl(this.image);
 	}
 }
 

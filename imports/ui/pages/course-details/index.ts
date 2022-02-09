@@ -28,6 +28,7 @@ import '/imports/ui/components/courses/discussion';
 import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/events/course-events';
 import '/imports/ui/components/courses/history';
+import '/imports/ui/components/courses/image';
 import '/imports/ui/components/courses/members/course-members';
 import '/imports/ui/components/courses/roles/course-roles';
 import '/imports/ui/components/editable/editable';
@@ -100,6 +101,15 @@ Template.courseDetailsPage.onCreated(function (this: any) {
 
 Template.courseDetailsPage.helpers({
 	// more helpers in course.roles.js
+
+	detailsHeaderAttr() {
+		return {
+			style: `
+	background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${this.course?.publicImageUrl()}');
+	background-position: center;
+	background-size: cover;`,
+		};
+	},
 
 	mayEdit() {
 		return this.course?.editableBy(Meteor.user());
@@ -235,6 +245,9 @@ Template.courseDetailsPage.events({
 });
 
 Template.courseDetailsSubmenu.helpers({
+	mayEdit() {
+		return this.course?.editableBy(Meteor.user());
+	},
 	additionalInfos() {
 		const user = Meteor.user();
 

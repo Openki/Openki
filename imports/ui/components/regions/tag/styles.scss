@@ -2,7 +2,7 @@
 
 .region-tag {
 	@include td-pos(right, 0);
-	background-color: rgba($blue, 0.75);
+	background-color: lighten($blue, 5%);
 	border-bottom-left-radius: 3px;
 	position: absolute;
 	top: 0;
