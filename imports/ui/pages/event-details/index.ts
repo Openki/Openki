@@ -19,7 +19,6 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
-import * as IdTools from '/imports/utils/id-tools';
 import * as Metatags from '/imports/utils/metatags';
 import { appendAsJsonLdToBody } from '/imports/utils/event-to-json-ld';
 
@@ -285,7 +284,8 @@ import './styles.scss';
 
 	template.helpers({
 		isOrganizer(this: EventModel) {
-			return Template.instance().data.editors.includes(IdTools.extract(this));
+			const { editors } = Template.currentData();
+			return editors.includes(this._id);
 		},
 		tools() {
 			const tools = [];
