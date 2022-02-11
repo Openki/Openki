@@ -124,9 +124,7 @@ import './styles.scss';
 	template.helpers({
 		// more helpers in course.roles.js
 
-		detailsHeaderAttr() {
-			const { course } = Template.currentData();
-
+		detailsHeaderAttr(course: CourseModel) {
 			return {
 				style: `
 		background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${course?.publicImageUrl()}');
@@ -135,12 +133,10 @@ import './styles.scss';
 			};
 		},
 
-		mayEdit() {
-			const { course } = Template.currentData();
+		mayEdit(course: CourseModel) {
 			return course?.editableBy(Meteor.user());
 		},
-		courseStateClasses() {
-			const { course } = Template.currentData();
+		courseStateClasses(course: CourseModel) {
 			const classes = [];
 
 			if (course?.nextEvent) {
@@ -160,12 +156,10 @@ import './styles.scss';
 		mobileViewport() {
 			return Viewport.get().width <= ScssVars.screenMD;
 		},
-		isProposal() {
-			const { course } = Template.currentData();
+		isProposal(course: CourseModel) {
 			return !course.nextEvent && !course.lastEvent;
 		},
-		isArchived() {
-			const { course } = Template.currentData();
+		isArchived(course: CourseModel) {
 			return course?.archived;
 		},
 	});
@@ -292,12 +286,11 @@ import './styles.scss';
 
 	template.helpers({
 		mayEdit() {
-			const { course } = Template.currentData();
+			const { course } = Template.instance().data;
 			return course?.editableBy(Meteor.user());
 		},
 		additionalInfos() {
-			const { course } = Template.currentData();
-
+			const { course } = Template.instance().data;
 			const user = Meteor.user();
 
 			const isEditor = user && course.editableBy(user);
@@ -333,7 +326,7 @@ import './styles.scss';
 
 	template.helpers({
 		mayEdit() {
-			const { course } = Template.currentData();
+			const { course } = Template.instance().data;
 			return course?.editableBy(Meteor.user());
 		},
 	});
@@ -344,15 +337,15 @@ import './styles.scss';
 	const template = Template.courseGroupList;
 
 	template.helpers({
-		isOrganizer() {
-			const course = Template.currentData();
-			return course.groupOrganizers.includes(course._id);
+		isOrganizer(this: string) {
+			const course = Template.instance().data;
+			return course.groupOrganizers.includes(this);
 		},
 		tools() {
 			const tools = [];
 			const user = Meteor.user();
 			const groupId = String(this);
-			const course = (Template as any).parentData();
+			const course = Template.instance().data;
 			if (user?.mayPromoteWith(groupId) || course.editableBy(user)) {
 				tools.push({
 					toolTemplate: (Template as any).courseGroupRemove,
@@ -383,7 +376,7 @@ import './styles.scss';
 	template.helpers(GroupNameHelpers);
 	template.helpers({
 		groupsToAdd() {
-			const course = Template.currentData();
+			const course = Template.instance().data;
 			const user = Meteor.user();
 			return user && _.difference(user.groups, course.groups);
 		},
@@ -391,7 +384,7 @@ import './styles.scss';
 
 	template.events({
 		async 'click .js-add-group'(event, instance) {
-			const course = Template.currentData();
+			const course = instance.data;
 			const groupId = (event.currentTarget as HTMLInputElement).value;
 
 			try {
@@ -424,7 +417,7 @@ import './styles.scss';
 	template.helpers(GroupNameHelpers);
 	template.events({
 		async 'click .js-remove'(_event, instance) {
-			const { course, groupId } = Template.currentData();
+			const { course, groupId } = instance.data;
 
 			try {
 				await CoursesMethods.promote(course._id, groupId, false);
@@ -456,7 +449,7 @@ import './styles.scss';
 	template.helpers(GroupNameHelpers);
 	template.events({
 		async 'click .js-makeOrganizer'(_event, instance) {
-			const { course, groupId } = Template.currentData();
+			const { course, groupId } = instance.data;
 
 			try {
 				await CoursesMethods.editing(course._id, groupId, true);
@@ -488,7 +481,7 @@ import './styles.scss';
 	template.helpers(GroupNameHelpers);
 	template.events({
 		async 'click .js-removeOrganizer'(_event, instance) {
-			const { course, groupId } = Template.currentData();
+			const { course, groupId } = instance.data;
 
 			try {
 				await CoursesMethods.editing(course._id, groupId, false);

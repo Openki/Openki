@@ -3,7 +3,7 @@
 		<div class="row course-page g-3">
 			<div class="col-lg-8">
 				<div class="page-component">
-					{{#if isArchived}}
+					{{#if (isArchived course)}}
 						<div class="alert alert-archived text-center" role="alert">
 							<strong>{{i18n 'course.archive.alert' 'This course is archived and not active anymore.'}}</strong>
 						</div>
@@ -11,14 +11,14 @@
 					{{#if edit}}
 						{{> courseEdit course}}
 					{{else}}
-						<div class="course-details {{courseStateClasses}}">
-							<div class="details-header" {{detailsHeaderAttr}}>
+						<div class="course-details {{courseStateClasses course}}">
+							<div class="details-header" {{detailsHeaderAttr course}}>
 								{{#if course.internal}}
 									<span class="details-internal"
 										  data-tooltip="{{i18n 'courseCompact.internal_course' 'Internal course'}}"></span>
 								{{/if}}
 								<div class="details-header-tags">
-									{{#if isProposal}}
+									{{#if (isProposal course)}}
 										<div class="proposal-tag">
 											<span class="fa fa-lightbulb-o fa-fw"
 												  aria-hidden="true"></span>
@@ -30,7 +30,7 @@
 									{{/with}}
 								</div>
 								<div class="course-details-title">
-									{{#if mayEdit}}
+									{{#if (mayEdit course)}}
 										{{> editable instance.editableName}}
 									{{else}}
 										<h2>{{course.name}}</h2>
@@ -50,14 +50,14 @@
 						{{#unless course.isPrivate}}
 							{{> sharing}}
 						{{/unless}}
-						{{#if mayEdit}}
+						{{#if (mayEdit course)}}
 							<div class="actions">
 								{{> buttonEdit event="js-course-edit"}}
-								{{#if isArchived}}
+								{{#if (isArchived course)}}
 									{{> buttonCourseUnarchive}}
 								{{/if}}
 								{{#unless expanded}}
-									{{#unless isArchived}}
+									{{#unless (isArchived course)}}
 										{{> buttonCourseArchive 
 										buttonClass="btn-archive"
 										textIdle=(i18n 'course.archive.archiveButton.archive' 'Archive')
@@ -68,7 +68,7 @@
 							</div>
 						{{/if}}
 						{{#if expanded}}
-							{{> confirmDialog hasArchiveButton=isArchived}}
+							{{> confirmDialog hasArchiveButton=(isArchived course)}}
 						{{/if}}
 						{{> courseRoles rolesDetails}}
 					{{/if}}
