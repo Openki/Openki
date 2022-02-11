@@ -25,9 +25,7 @@
 											{{i18n 'course.details.is-proposalTag' 'Proposal'}}
 										</div>
 									{{/if}}
-									{{#with course}}
-										{{> regionTag}}
-									{{/with}}
+									{{> regionTag course}}
 								</div>
 								<div class="course-details-title">
 									{{#if (mayEdit course)}}
@@ -36,14 +34,12 @@
 										<h2>{{course.name}}</h2>
 									{{/if}}
 								</div>
-								{{#with course}}
-									{{#if categories}}
-										<div class="course-details-categories">
-											{{> courseCategories}}
-										</div>
-									{{/if}}
-									{{> courseGroupList}}
-								{{/with}}
+								{{#if course.categories}}
+									<div class="course-details-categories">
+										{{> courseCategories course}}
+									</div>
+								{{/if}}
+								{{> courseGroupList course}}
 							</div>
 							{{> courseDetailsSubmenu editableDescription=instance.editableDescription course=course}}
 						</div>
