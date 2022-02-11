@@ -10,8 +10,8 @@
 	</div>
 	{{#if members}}
 		<div class="course-members">
-			{{#each sortedMembers}}
-				{{> courseMember member=this course=..}}
+			{{#each member in sortedMembers}}
+				{{> courseMember member=member course=this}}
 			{{/each}}
 			{{#if limited}}
 				<button class="btn btn-lg btn-add course-page-btn js-show-more-members"
