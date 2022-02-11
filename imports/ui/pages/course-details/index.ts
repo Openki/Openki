@@ -337,30 +337,25 @@ import './styles.scss';
 	const template = Template.courseGroupList;
 
 	template.helpers({
-		isOrganizer(this: string) {
+		isOrganizer(groupId: string) {
 			const course = Template.instance().data;
-			return course.groupOrganizers.includes(this);
+			return course.groupOrganizers.includes(groupId);
 		},
-		tools() {
+		tools(groupId: string) {
 			const tools = [];
 			const user = Meteor.user();
-			const groupId = String(this);
 			const course = Template.instance().data;
 			if (user?.mayPromoteWith(groupId) || course.editableBy(user)) {
 				tools.push({
-					toolTemplate: (Template as any).courseGroupRemove,
-					groupId,
-					course,
+					template: 'courseGroupRemove',
+					data: { groupId, course },
 				});
 			}
 			if (user && course.editableBy(user)) {
 				const hasOrgRights = course.groupOrganizers.includes(groupId);
 				tools.push({
-					toolTemplate: hasOrgRights
-						? (Template as any).courseGroupRemoveOrganizer
-						: (Template as any).courseGroupMakeOrganizer,
-					groupId,
-					course,
+					template: hasOrgRights ? 'courseGroupRemoveOrganizer' : 'courseGroupMakeOrganizer',
+					data: { groupId, course },
 				});
 			}
 			return tools;

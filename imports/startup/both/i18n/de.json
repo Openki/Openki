@@ -123,7 +123,7 @@
 	"course.detail.remove.yourself.team": "Dich selbst aus dem Oranisationsteam nehmen? Nur andere Mitglieder können dich wieder hinzufügen.",
 	"course.details.eventsLoadingHeader": "Veranstaltungen",
 	"course.details.is-proposalTag": "Vorschlag",
-	"course.details.members.title": "{NUM, Plural, =0{Noch keine Mitlernenden} one{1 Mitlerner_in} other{# Mitlernende} }",
+	"course.details.members.title": "{NUM, plural, =0{Noch keine Mitlernenden} one{1 Mitlerner_in} other{# Mitlernende} }",
 	"course.details.noEvents": "Dieser Kurs hat keine Veranstaltungen",
 	"course.details.removeTeam.others.header": "Mitglied vom Team entfernen",
 	"course.details.removeTeam.self.header": "Dich selbst vom Team entfernen",

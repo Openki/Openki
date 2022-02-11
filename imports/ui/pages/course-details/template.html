@@ -178,15 +178,15 @@
 
 <template name="courseGroupList">
 	<div class="tag-group multiline">
-		{{#each groups}}
-			{{> groupName groupId=this isOrganizer=isOrganizer}}
-			{{#if isOrganizer}}
+		{{#each groupId in groups}}
+			{{> groupName groupId=groupId isOrganizer=(isOrganizer groupId)}}
+			{{#if (isOrganizer groupId)}}
 				<div class="tag group-tag addon">
 					<span class="fa fa-bullhorn fa-fw" aria-hidden="true"
 						  title="{{i18n 'grouplist.organizer.title' 'Course is co-organized by this group'}}"></span>
 				</div>
 			{{/if}}
-			{{#if tools}}
+			{{#if (tools groupId)}}
 				<div class="btn-group tag-btn group-tag-btn addon align-top">
 					<button type="button" class="dropdown-toggle" aria-expanded="false"
 							aria-haspopup="true" data-bs-toggle="dropdown">
@@ -199,8 +199,10 @@
 						<li>
 							<hr class="dropdown-divider">
 						</li>
-						{{#each tools}}
-							<li class="dialog-dropdown-btn">{{> toolTemplate}}</li>
+						{{#each tool in (tools groupId)}}
+							<li class="dialog-dropdown-btn">
+								{{> Template.dynamic template=tool.template data=tool.data}}
+							</li>
 						{{/each}}
 					</ul>
 				</div>
