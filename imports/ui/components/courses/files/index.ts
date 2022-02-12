@@ -10,16 +10,16 @@ import type { UploadImage, Data as EditableImageData } from '/imports/ui/compone
 
 import './template.html';
 
-const Template = TemplateAny as TemplateStaticTyped<'courseImage', { course: CourseModel }>;
+const Template = TemplateAny as TemplateStaticTyped<'courseFiles', { course: CourseModel }>;
 
-const template = Template.courseImage;
+const template = Template.courseFiles;
 
 template.helpers({
 	imageUploadArgs(): EditableImageData {
 		const instance = Template.instance();
 		return {
 			thumbnail: instance.data.course?.publicImageUrl(),
-			maxSize: 100,
+			maxSize: 1000,
 			async onUpload(file: UploadImage) {
 				const courseId = instance.data.course._id;
 				try {

@@ -29,7 +29,7 @@ import '/imports/ui/components/courses/discussion';
 import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/events/course-events';
 import '/imports/ui/components/courses/history';
-import '/imports/ui/components/courses/image';
+import '/imports/ui/components/courses/files';
 import '/imports/ui/components/courses/members';
 import '/imports/ui/components/courses/roles/course-roles';
 import '/imports/ui/components/editable/editable';

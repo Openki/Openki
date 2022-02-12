@@ -6,9 +6,9 @@
 			<label for="file">
 				<div class="mb-1">
 					{{#if (state 'preview')}}
-						<img src="{{state 'preview'}}" />
+						<img class="mw-100" src="{{state 'preview'}}" />
 					{{else if thumbnail}}
-						<img src="{{thumbnail}}" />
+						<img class="mw-100" src="{{thumbnail}}" />
 					{{else}}
 						<i class="fa fa-image fa-5x" aria-hidden="true"></i>
 					{{/if}}
@@ -47,7 +47,7 @@
 	{{else}}
 		<div>
 			{{#if thumbnail}}
-				<img class="cursor-pointer js-editable-image-edit" src="{{thumbnail}}" />
+				<img class="cursor-pointer mw-100 js-editable-image-edit" src="{{thumbnail}}" />
 			{{else}}
 				<i class="fa fa-image fa-5x cursor-pointer js-editable-image-edit"
 				   aria-hidden="true"></i>

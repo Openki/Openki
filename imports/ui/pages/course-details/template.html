@@ -125,9 +125,9 @@
 			</li>
 			{{#if mayEdit}}
 				<li role="presentation">
-					<a href="#image" data-toggle="tab">
-						<span class="fa fa-image fa-fw" aria-hidden="true"></span>
-						<span class="tab-label">{{i18n 'course.subnav.image' 'Image'}}</span>
+					<a href="#files" data-toggle="tab">
+						<span class="fa fa-file fa-fw" aria-hidden="true"></span>
+						<span class="tab-label">{{i18n 'course.subnav.files' 'Files'}}</span>
 					</a>
 				</li>
 			{{/if}}
@@ -152,8 +152,8 @@
 			{{> coursehistory}}
 		</div>
 		{{#if mayEdit}}
-			<div class="tab-pane" id="image">
-				{{> courseImage}}
+			<div class="tab-pane" id="files">
+				{{> courseFiles}}
 			</div>
 		{{/if}}
 		{{#unless course.isPrivate}}
