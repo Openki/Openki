@@ -387,7 +387,8 @@ import './styles.scss';
 					username,
 					password,
 					email,
-				});
+					locale: Session.get('locale'),
+				} as any);
 
 				if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');

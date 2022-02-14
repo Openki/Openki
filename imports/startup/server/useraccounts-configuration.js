@@ -112,6 +112,8 @@ Accounts.onCreateUser((options, originalUser) => {
 		user.emails = [{ address: providedEmail, verified }];
 	}
 
+	user.locale = options.locale;
+
 	user.tenants = [];
 
 	user.groups = [];
