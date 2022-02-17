@@ -26,7 +26,7 @@ export interface UploadImage {
 
 export interface Data {
 	maxSize?: number;
-	thumbnail?: string;
+	thumbnail?: { src?: string; maxSize?: number };
 	onUpload: (file: UploadImage) => void;
 	onDelete?: () => void;
 }
@@ -110,6 +110,17 @@ template.onCreated(function () {
 });
 
 template.helpers({
+	thumbnailAttributes: () => {
+		const { data } = Template.instance();
+
+		if (!data.thumbnail?.maxSize) {
+			return {};
+		}
+
+		return {
+			style: `max-width: ${data.thumbnail.maxSize}px; max-height: ${data.thumbnail.maxSize}px`,
+		};
+	},
 	fileName: () => {
 		return Template.instance().droppedFile.get()?.name;
 	},

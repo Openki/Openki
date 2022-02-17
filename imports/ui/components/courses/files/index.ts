@@ -18,7 +18,7 @@ template.helpers({
 	imageUploadArgs(): EditableImageData {
 		const instance = Template.instance();
 		return {
-			thumbnail: instance.data.course?.publicImageUrl(),
+			thumbnail: { src: instance.data.course?.publicImageUrl(), maxSize: 150 },
 			maxSize: 1000,
 			async onUpload(file: UploadImage) {
 				const courseId = instance.data.course._id;
