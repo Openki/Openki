@@ -39,10 +39,14 @@ const Template = TemplateAny as TemplateStaticTyped<
 		state: ReactiveDict<{
 			supportsDragndrop: boolean;
 			progress: 'display' | 'edit' | 'ready' | 'uploading';
+			copyRights: false;
 			dragover: boolean;
 			preview: string | undefined;
 		}>;
 		onDrop: (file: File) => void;
+		onUpload: () => void;
+		onDelete: () => void;
+		onCancel: () => void;
 	}
 >;
 
@@ -56,6 +60,7 @@ template.onCreated(function () {
 	instance.state.setDefault({
 		supportsDragndrop,
 		progress: 'display',
+		copyRights: false,
 		dragover: false,
 		preview: undefined,
 	});
@@ -94,6 +99,7 @@ template.onCreated(function () {
 					content: reader.result as string,
 				});
 
+				instance.state.set('copyRights', false);
 				instance.state.set('progress', 'ready');
 			};
 			reader.readAsBinaryString(rezisedFile);
@@ -107,10 +113,40 @@ template.onCreated(function () {
 			reader.readAsDataURL(rezisedFile);
 		}
 	};
+
+	instance.onUpload = () => {
+		const droppedFile = instance.droppedFile.get();
+		if (!droppedFile) {
+			throw new Error(`Unexpected undefined: file`);
+		}
+
+		instance.state.set('progress', 'uploading');
+
+		instance.data.onUpload(droppedFile);
+
+		instance.droppedFile.set(undefined);
+		instance.state.set('preview', undefined);
+		instance.state.set('progress', 'display');
+	};
+
+	instance.onDelete = () => {
+		if (instance.data.onDelete) {
+			instance.data.onDelete();
+		}
+		instance.droppedFile.set(undefined);
+		instance.state.set('preview', undefined);
+		instance.state.set('progress', 'display');
+	};
+
+	instance.onCancel = () => {
+		instance.droppedFile.set(undefined);
+		instance.state.set('preview', undefined);
+		instance.state.set('progress', 'display');
+	};
 });
 
 template.helpers({
-	thumbnailAttributes: () => {
+	thumbnailAttributes() {
 		const { data } = Template.instance();
 
 		if (!data.thumbnail?.maxSize) {
@@ -121,11 +157,27 @@ template.helpers({
 			style: `max-width: ${data.thumbnail.maxSize}px; max-height: ${data.thumbnail.maxSize}px`,
 		};
 	},
-	fileName: () => {
+	uploadButtonAttributes() {
+		const instance = Template.instance();
+
+		const attributes: Record<string, any> = {
+			onClick: instance.onUpload,
+		};
+
+		if (!instance.state.get('copyRights')) {
+			attributes.disabled = 'disabled';
+		}
+
+		return attributes;
+	},
+	fileName() {
 		return Template.instance().droppedFile.get()?.name;
 	},
-	deleteAllowed: () => {
+	deleteAllowed() {
 		return !!Template.instance().data.onDelete;
+	},
+	copyRightsChecked() {
+		return Template.instance().state.get('copyRights') ? 'checked' : '';
 	},
 });
 
@@ -162,39 +214,7 @@ template.events({
 		instance.state.set('progress', 'edit');
 	},
 
-	'click .js-editable-image-delete'(event, instance) {
-		event.preventDefault();
-
-		if (instance.data.onDelete) {
-			instance.data.onDelete();
-		}
-		instance.droppedFile.set(undefined);
-		instance.state.set('preview', undefined);
-		instance.state.set('progress', 'display');
-	},
-
-	'click .js-editable-image-upload'(event, instance) {
-		event.preventDefault();
-
-		const droppedFile = instance.droppedFile.get();
-		if (!droppedFile) {
-			throw new Error(`Unexpected undefined: file`);
-		}
-
-		instance.state.set('progress', 'uploading');
-
-		instance.data.onUpload(droppedFile);
-
-		instance.droppedFile.set(undefined);
-		instance.state.set('preview', undefined);
-		instance.state.set('progress', 'display');
-	},
-
-	'click .js-editable-image-cancel'(event, instance) {
-		event.preventDefault();
-
-		instance.droppedFile.set(undefined);
-		instance.state.set('preview', undefined);
-		instance.state.set('progress', 'display');
+	'change .js-check-copy-rights'(_event, instance) {
+		instance.state.set('copyRights', instance.$('.js-check-copy-rights').prop('checked'));
 	},
 });

@@ -1,40 +1,45 @@
+<template name="button">
+	<button {{attributes}} {{disabledIfBusy}}>
+		{{> Template.contentBlock}}
+	</button>
+</template>
+
 <template name="buttonSave">
-	<button type="submit" class="btn btn-save text-nowrap {{event}}" {{disabledIfBusy}}>
+	{{#button type="submit" class=(concat "btn btn-save text-nowrap " event) onClick=(asCallback 'onClick') disabled=disabled}}
 		{{#if busy 'saving'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n '_button.saving' 'Saving…'}}
 		{{else}}
 			{{i18n '_button.save'}}
 		{{/if}}
-	</button>
+	{{/button}}
 </template>
 
 <template name="buttonCancel">
-	<button type="button" class="btn btn-cancel text-nowrap {{event}}" {{disabledIfBusy}}>
+	{{#button type="button" class=(concat "btn btn-cancel text-nowrap " event) onClick=(asCallback 'onClick') disabled=disabled}}
 		{{i18n '_button.cancel'}}
-	</button>
+	{{/button}}
 </template>
 
 <template name="buttonEdit">
-	<button type="button" class="btn btn-edit text-nowrap {{event}}" {{disabledIfBusy}}>
+	{{#button type="button" class=(concat "btn btn-edit text-nowrap " event) onClick=(asCallback 'onClick') disabled=disabled}}
 		{{i18n '_button.edit'}}
-	</button>
+	{{/button}}
 </template>
 
 <template name="buttonDelete">
-	<button type="button" class="btn btn-delete text-nowrap text-danger {{event}}"
-			{{disabledIfBusy}}>
+	{{#button type="button" class=(concat "btn btn-delete text-nowrap text-danger " event) onClick=(asCallback 'onClick') disabled=disabled}}
 		{{i18n '_button.delete'}}
-	</button>
+	{{/button}}
 </template>
 
 <template name="buttonDeleteConfirm">
-	<button type="button" class="btn btn-danger text-nowrap {{event}}" {{disabledIfBusy}}>
+	{{#button type="button" class=(concat "btn btn-danger text-nowrap " event) onClick=(asCallback 'onClick') disabled=disabled}}
 		{{#if busy 'deleting'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{textBusy}}
 		{{else}}
 			{{textIdle}}
 		{{/if}}
-	</button>
+	{{/button}}
 </template>

@@ -35,19 +35,29 @@
 					{{/if}}
 				{{/if}}
 			</label>
+			{{#if (stateEquals 'progress' 'ready')}}
+				<div class="form-check text-start">
+					<input class="form-check-input js-check-copy-rights" type="checkbox" value=""
+						   id="editableImageCopyRights" {{copyRightsChecked}}>
+					<label class="form-check-label" for="editableImageCopyRights">
+						{{i18n 'fileUpload.copyrights' 'I have the copy rights to publish that file.'}}
+					</label>
+				</div>
+			{{/if}}
 		</form>
 		<div class='editable-image-controls'>
 			{{#if (stateEquals 'progress' 'ready')}}
-				{{> buttonSave event="js-editable-image-upload"}}
+				{{> buttonSave uploadButtonAttributes}}
 			{{else if deleteAllowed}}
-				{{> buttonDelete event="js-editable-image-delete"}}
+				{{> buttonDelete onClick=(asCallback 'onDelete')}}
 			{{/if}}
-			{{> buttonCancel event="js-editable-image-cancel"}}
+			{{> buttonCancel onClick=(asCallback 'onCancel')}}
 		</div>
 	{{else}}
 		<div>
 			{{#if thumbnail.src}}
-				<img class="cursor-pointer js-editable-image-edit" {{thumbnailAttributes}} src="{{thumbnail.src}}" />
+				<img class="cursor-pointer js-editable-image-edit" {{thumbnailAttributes}}
+					 src="{{thumbnail.src}}" />
 			{{else}}
 				<i class="fa fa-image fa-5x cursor-pointer js-editable-image-edit"
 				   aria-hidden="true"></i>

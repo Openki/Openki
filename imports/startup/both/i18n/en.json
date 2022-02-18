@@ -359,6 +359,7 @@
   "featureGroup.groupIsFeatured": "The \"{GROUP}\" group is featured for the \"{REGION}\" region.",
   "featureGroup.saveButton": "Feature this group in the \"{REGION}\" region",
   "fileUpload.choose.text": "Choose a file",
+  "fileUpload.copyrights": "I have the copy rights to publish that file.",
   "fileUpload.drag.text": "or drag it here",
   "fileUpload.drop.text": "Drop it like it's hot!",
   "fileUpload.uploading.text": "Uploading…",
