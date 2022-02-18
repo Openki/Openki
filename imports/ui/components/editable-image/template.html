@@ -56,13 +56,29 @@
 	{{else}}
 		<div>
 			{{#if thumbnail.src}}
-				<img class="cursor-pointer js-editable-image-edit img-thumbnail" {{thumbnailAttributes}}
-					 src="{{thumbnail.src}}" />
+				<img class="cursor-pointer js-editable-image-edit img-thumbnail"
+					 {{thumbnailAttributes}} src="{{thumbnail.src}}" />
 			{{else}}
 				<i class="fa fa-image fa-5x cursor-pointer js-editable-image-edit"
 				   aria-hidden="true"></i>
 			{{/if}}
 			<span class="align-top fa fa-pencil cursor-pointer js-editable-image-edit"></span>
+			<span class="align-top fa fa-eye cursor-pointer js-editable-image-show"
+				  data-bs-toggle="modal" data-bs-target="#editable-image-{{instance.id}}"></span>
+
+			<div class="modal fade" id="editable-image-{{instance.id}}" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-xl">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+						</div>
+						<div class="modal-body text-center">
+							<img class="mw-100" src="{{thumbnail.src}}" />
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	{{/unless}}
 </template>

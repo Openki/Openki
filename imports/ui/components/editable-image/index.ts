@@ -15,6 +15,10 @@ const supportsDragndrop = (function () {
 	return 'draggable' in div || ('ondragstart' in div && 'ondrop' in div);
 })();
 
+function id() {
+	return Date.now().toString(36) + Math.random().toString(36).substring(2);
+}
+
 export interface UploadImage {
 	lastModified: Date;
 	name: string;
@@ -35,6 +39,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 	'editableImage',
 	Data,
 	{
+		id: string;
 		droppedFile: ReactiveVar<UploadImage | undefined>;
 		state: ReactiveDict<{
 			supportsDragndrop: boolean;
@@ -54,6 +59,8 @@ const template = Template.editableImage;
 
 template.onCreated(function () {
 	const instance = this;
+
+	instance.id = id();
 
 	instance.droppedFile = new ReactiveVar(undefined);
 	instance.state = new ReactiveDict();
