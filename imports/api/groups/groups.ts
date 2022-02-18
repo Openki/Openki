@@ -21,6 +21,8 @@ export interface GroupEntityAdditionalInfosForProposals {
 	displayText: LocalizedValue;
 	/** Who will see the entered values. It will be copied to the course object. */
 	visibleFor: 'all' | 'editors';
+
+	type?: 'input' | 'textarea';
 }
 
 /** DB-Model */

@@ -176,7 +176,7 @@
 									</div>
 								{{/if}}
 
-								{{#each field in instance.additionalInfos}}
+								{{#each field in instance.additionalInfos "input"}}
 									<div class="mb-3">
 										<label class="form-label"
 											   for="course-additional-info-{{field.name}}">{{localized field.editText}}</label>
@@ -190,6 +190,15 @@
 							</div>
 						{{/if}}
 					</div>
+					{{#each field in instance.additionalInfos "textarea"}}
+						<div class="mb-3">
+							<label class="form-label"
+								   for="course-additional-info-{{field.name}}">{{localized field.editText}}</label>
+							<textarea class="form-control js-additional-info-{{field.name}}"
+									  id="course-additional-info-{{field.name}}"
+									  placeholder="{{localized field.editPlaceholder}}" rows="3">{{getAdditionalInfoValue field.name}}</textarea>
+						</div>
+					{{/each}}
 
 					{{#if instance.showInternalCheckbox}}
 						<div class="mb-3">
