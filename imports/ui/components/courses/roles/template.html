@@ -1,6 +1,6 @@
 <template name="courseRoles">
-	{{#each this}}
-		{{> courseRole}}
+	{{#each role in roles}}
+		{{> courseRole role}}
 	{{/each}}
 </template>
 
@@ -20,7 +20,7 @@
 				</button>
 			</div>
 		</div>
-		{{#if showFirstSteps}}
+		{{#if state 'showFirstSteps'}}
 			<div class="course-role-first-steps">
 				<b>{{i18n 'course.roles.firstSteps.title' 'Thank you for your interest in the course.' ROLE=(roleShort role.type)}}</b>
 				<br>
@@ -49,8 +49,8 @@
 			</div>
 		{{/if}}
 	{{else}}
-		<div class="course-role{{#if enrolling}}-enroll{{/if}}">
-			{{#if enrolling}}
+		<div class="course-role{{#if state 'enrolling'}}-enroll{{/if}}">
+			{{#if state 'enrolling'}}
 				<div class="course-role-title-enroll">
 					<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>&nbsp;
 					{{roleSubscribe role.type}}
