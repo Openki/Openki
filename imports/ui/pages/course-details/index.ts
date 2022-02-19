@@ -125,6 +125,11 @@ import './styles.scss';
 		// more helpers in course.roles.js
 
 		detailsHeaderAttr(course: CourseModel) {
+			const src = course?.publicImageUrl();
+			if (!src) {
+				return {};
+			}
+
 			return {
 				style: `
 		background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${course?.publicImageUrl()}');
