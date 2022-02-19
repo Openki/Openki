@@ -20,6 +20,7 @@ import { Venues, Venue } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/venues/venues').VenueModel} VenueModel */
 /** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
+/** @typedef {import('/imports/api/courses/courses').CourseMemberEntity} CourseMemberEntity */
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 import { Analytics } from '/imports/ui/lib/analytics';
@@ -92,11 +93,13 @@ const makeFilterQuery = function (params) {
 
 /**
  * @param {CourseModel} course
+ * @param {CourseMemberEntity} member
  */
-function loadRoles(course) {
+function loadRoles(course, member) {
 	return Roles.filter((r) => course.roles?.includes(r.type)).map((r) => ({
 		role: r,
 		subscribed: course.userHasRole(Meteor.userId(), r.type),
+		comment: member.comment,
 		course,
 	}));
 }
@@ -573,7 +576,7 @@ Router.route('showCourse', {
 		const member = getMember(course.members, userId);
 		const data = {
 			edit: !!this.params.query.edit,
-			rolesDetails: loadRoles(course),
+			rolesDetails: loadRoles(course, member),
 			course,
 			member,
 			select: this.params.query.select,

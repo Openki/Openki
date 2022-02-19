@@ -24,6 +24,7 @@ import './styles.scss';
 export interface Data {
 	role: RoleEntity;
 	subscribed: boolean;
+	comment: string;
 	course: CourseModel;
 }
 
