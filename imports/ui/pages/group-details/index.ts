@@ -16,7 +16,7 @@ import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
-import '/imports/ui/components/editable/editable';
+import '/imports/ui/components/editable';
 import '/imports/ui/components/groups/settings';
 
 import './template.html';
@@ -59,12 +59,12 @@ template.onCreated(function () {
 	instance.editingSettings = new ReactiveVar(false);
 
 	const handleSaving: Store = {
-		clientValidations: [
-			{
+		clientValidations: {
+			all: {
 				check: (text) => !!text,
 				errorMessage: () => i18n('group.details.error.allMandatory'),
 			},
-		],
+		},
 		onSuccess: () => {
 			Alert.success(
 				i18n('groupDetails.changesSaved', 'Changes to the "{GROUP}" group have been saved.', {

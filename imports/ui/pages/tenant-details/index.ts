@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { TenantModel } from '/imports/api/tenants/tenants';
 
 import '/imports/ui/components/buttons';
-import '/imports/ui/components/editable/editable';
+import '/imports/ui/components/editable';
 import '/imports/ui/components/tenants/settings';
 import '/imports/ui/components/tenants/regions';
 

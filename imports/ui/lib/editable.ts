@@ -2,7 +2,7 @@ import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 export interface ClientValidation {
-	check: (text: string) => boolean;
+	check: (text: string | undefined) => boolean;
 	errorMessage: () => string;
 }
 
@@ -12,11 +12,20 @@ export interface ServerValidationErrorHandler {
 }
 
 export interface Store {
-	clientValidations?: ClientValidation[];
+	clientValidations?: { [name: string]: ClientValidation };
 	serverValidationErrors?: ServerValidationErrorHandler[];
-	onSave?: (text: string) => Promise<void>;
-	onSuccess?: (text: string) => void;
-	onError?: (err: any, text: string) => void;
+	onSave?: (text: string | undefined) => Promise<void>;
+	onSuccess?: (text: string | undefined) => void;
+	onError?: (err: any, text: string | undefined) => void;
+}
+
+export interface State {
+	text: () => string;
+	changed: ReactiveVar<boolean>;
+	simple: boolean;
+	placeholderText: string;
+	showControls: boolean;
+	store: Store;
 }
 
 /**
@@ -59,7 +68,10 @@ export class Editable {
 	changed: ReactiveVar<boolean>;
 
 	/** The template instance that is currently displaying the editable */
-	editingInstance?: any;
+	editingInstance?: {
+		getEdited: () => string | undefined;
+		getTotalFocusTimeInSeconds: () => number;
+	};
 
 	constructor(simple = true, placeholderText = '', store?: Store) {
 		this.simple = simple;
@@ -82,7 +94,6 @@ export class Editable {
 
 	/**
 	 * get the edited version of the text, returns undefined if the field was not changed
-	 * @returns {string|undefined}
 	 */
 	getEdited(): string | undefined {
 		return this.editingInstance?.getEdited();
@@ -102,10 +113,10 @@ export class Editable {
 		this.changed.set(false);
 	}
 
-	/**
-	 * @param {Blaze.Template} instance
-	 */
-	connect(instance: Blaze.Template) {
+	connect(instance: {
+		getEdited: () => string | undefined;
+		getTotalFocusTimeInSeconds: () => number;
+	}): State {
 		this.editingInstance = instance;
 		return {
 			text: () => this.text.get(),

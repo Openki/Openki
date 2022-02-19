@@ -116,7 +116,7 @@ template.onCreated(function () {
 			},
 		],
 		onSave: async (newName) => {
-			usersMethods.updateUsername(newName);
+			await usersMethods.updateUsername(newName || '');
 		},
 		onSuccess: () => {
 			Alert.success(i18n('profile.updated', 'Updated profile'));
@@ -130,7 +130,7 @@ template.onCreated(function () {
 		),
 		{
 			onSave: async (newDescription) => {
-				await usersMethods.updateDescription(newDescription);
+				await usersMethods.updateDescription(newDescription || '');
 			},
 			onSuccess: () => {
 				Alert.success(i18n('profile.updated', 'Updated profile'));

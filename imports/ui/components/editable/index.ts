@@ -1,65 +1,90 @@
 import { i18n } from '/imports/startup/both/i18next';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { ValidationError, ValidationErrorDetail } from 'meteor/mdg:validation-error';
+
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
+import { Editable, State } from '/imports/ui/lib/editable';
 
 import MediumEditor from 'medium-editor';
 
 import '/imports/ui/components/buttons';
 
-import './editable.html';
+import './template.html';
+import './styles.scss';
 
-['editable', 'editableTextarea'].forEach((templateName) => {
+function EditableMixing<N extends string, D extends Editable, T extends Record<string, unknown>>(
+	TemplateBase: TemplateStaticTyped<N, D, T>,
+	templateName: N,
+) {
+	const Template = TemplateMixins.FormfieldErrors(
+		TemplateBase as TemplateStaticTyped<
+			N,
+			D,
+			T & {
+				state: State;
+				errorMapping: TemplateMixins.FormfieldErrorsMapping;
+				editor: MediumEditor.MediumEditor;
+				getEdited: () => string | undefined;
+				getTotalFocusTimeInSeconds: () => number;
+				store: () => Promise<void>;
+				reset: () => void;
+			}
+		>,
+		templateName,
+	);
+
 	const template = Template[templateName];
 	template.onCreated(function () {
+		const instance = this;
 		// This reeks
-		const data = Template.currentData();
+		const { data } = instance;
 		if (!data) {
 			throw new Error('Editable got empty data');
 		}
-		this.state = data.connect(this);
+		instance.state = data.connect(instance);
 
 		// Add error mapping for the FormfieldErrors
-		const errorMapping = {};
-		const { clientValidations } = this.state.store;
-		Object.keys(clientValidations || {}).forEach((key) => {
-			const validation = clientValidations[key];
-			errorMapping[key] = {
-				text: validation.errorMessage,
-				field: 'input',
-			};
-		});
-		this.state.store?.serverValidationErrors?.forEach((e) => {
+		const errorMapping: TemplateMixins.FormfieldErrorsMapping = {};
+		const { clientValidations } = instance.state.store;
+		if (clientValidations) {
+			Object.keys(clientValidations).forEach((key) => {
+				const validation = clientValidations[key];
+				errorMapping[key] = {
+					text: validation.errorMessage,
+					field: 'input',
+				};
+			});
+		}
+		instance.state.store?.serverValidationErrors?.forEach((e) => {
 			errorMapping[e.type] = {
 				text: e.message,
 				field: 'input',
 			};
 		});
 
-		this.errorMapping = errorMapping;
+		instance.errorMapping = errorMapping;
 	});
-
-	TemplateMixins.FormfieldErrors(Template, templateName);
 
 	template.onRendered(function () {
 		const instance = this;
-		const editable = this.$('.js-editable');
+		const editable = instance.$('.js-editable');
 		let initialized = false;
 		let changedByUser = false;
 		let totalFocusTimeInSeconds = 0;
-		let startGettingFocus;
+		let startGettingFocus: number | undefined;
 
-		instance.getEdited = function () {
+		instance.getEdited = () => {
 			if (!instance.state?.changed.get()) {
 				return undefined;
 			}
 			return instance.state.simple ? editable.text().trim() : editable.html().trim();
 		};
 
-		instance.getTotalFocusTimeInSeconds = function () {
+		instance.getTotalFocusTimeInSeconds = () => {
 			return totalFocusTimeInSeconds;
 		};
 
-		instance.reset = function () {
+		instance.reset = () => {
 			const text = instance.state.text();
 
 			if (instance.state.simple) {
@@ -88,33 +113,31 @@ import './editable.html';
 			}
 		});
 
-		instance.store = async function () {
+		instance.store = async () => {
 			const newText = instance.getEdited();
 			try {
-				await instance.state.store.onSave(newText);
+				await instance.state.store.onSave?.(newText);
 
 				instance.state.changed.set(false);
 				changedByUser = false;
 				startGettingFocus = undefined;
 				totalFocusTimeInSeconds = 0;
 
-				if (instance.state.store.onSuccess) {
-					instance.state.store.onSuccess(newText);
-				}
-			} catch (err) {
-				if (err.error === 'validation-error') {
+				instance.state.store.onSuccess?.(newText);
+			} catch (err: unknown) {
+				if (ValidationError.is(err)) {
 					// Handle server validation errors
-					err.details.forEach((fieldError) => {
+					(err.details as unknown as ValidationErrorDetail[]).forEach((fieldError) => {
 						instance.errors.add(fieldError.type);
 					});
-				} else if (instance.state.store.onError) {
+				} else {
 					// Handle global error
-					instance.state.store.onError(err, newText);
+					instance.state.store.onError?.(err, newText);
 				}
 			}
 		};
 
-		const options = {
+		const options: MediumEditor.CoreOptions = {
 			placeholder: {
 				hideOnClick: false,
 				text: instance.state.placeholderText,
@@ -132,7 +155,7 @@ import './editable.html';
 		}
 
 		// Initialize the editor interface
-		instance.editor = new MediumEditor(editable, options);
+		instance.editor = new MediumEditor(editable as any, options);
 
 		// Register when the field is being edited
 		editable.on('input', () => {
@@ -144,7 +167,9 @@ import './editable.html';
 			startGettingFocus = Date.now();
 		});
 		editable.on('blur', () => {
-			totalFocusTimeInSeconds += Math.round((Date.now() - startGettingFocus) / 1000);
+			totalFocusTimeInSeconds += Math.round(
+				(Date.now() - (startGettingFocus || Date.now())) / 1000,
+			);
 		});
 	});
 
@@ -172,12 +197,14 @@ import './editable.html';
 			// Check if input is invalid
 			instance.errors.reset();
 			const { clientValidations } = instance.state.store;
-			Object.keys(clientValidations || {}).forEach((key) => {
-				const validation = clientValidations[key];
-				if (!validation.check(instance.getEdited())) {
-					instance.errors.add(key);
-				}
-			});
+			if (clientValidations) {
+				Object.keys(clientValidations).forEach((key) => {
+					const validation = clientValidations[key];
+					if (!validation.check(instance.getEdited())) {
+						instance.errors.add(key);
+					}
+				});
+			}
 			if (instance.errors.present()) {
 				return;
 			}
@@ -191,20 +218,24 @@ import './editable.html';
 			instance.state.changed.set(false);
 		},
 
-		'click .js-editable-edit'(event, instance) {
-			instance.$('.js-editable').focus();
+		'click .js-editable-edit'(_event, instance) {
+			instance.$('.js-editable').trigger('focus');
 
 			// Moving the cursor to the end of the editable element?
 			// http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity
-			const selectEnd = function (el) {
+			const selectEnd = function (el: Node) {
 				const range = document.createRange();
 				range.selectNodeContents(el);
 				range.collapse(false);
 				const selection = window.getSelection();
-				selection.removeAllRanges();
-				selection.addRange(range);
+				selection?.removeAllRanges();
+				selection?.addRange(range);
 			};
 			selectEnd(instance.$('.js-editable')[0]);
 		},
 	});
+}
+
+['editable', 'editableTextarea'].forEach((templateName) => {
+	EditableMixing(TemplateAny as any, templateName);
 });

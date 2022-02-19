@@ -9,7 +9,7 @@ import { LocationTracker, MainMarkerEntity } from '/imports/ui/lib/location-trac
 import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 
 import '/imports/ui/components/buttons';
-import '/imports/ui/components/editable/editable';
+import '/imports/ui/components/editable';
 import '/imports/ui/components/map';
 
 import './template.html';

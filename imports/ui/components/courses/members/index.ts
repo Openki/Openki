@@ -13,7 +13,7 @@ import { Editable } from '/imports/ui/lib/editable';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-import '/imports/ui/components/editable/editable';
+import '/imports/ui/components/editable';
 import '/imports/ui/components/participant/contact';
 import '/imports/ui/components/profile-link';
 
