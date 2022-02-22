@@ -7,20 +7,14 @@
 }
 
 .container .course-event-list .event-compact-wrap {
-	@media (min-width: $screen-xs) {
-		@include td-make-xs-column(6);
-		padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
-	}
+	@include td-make-xs-column(6);
+	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 }
 
 .course-event-list {
 	@include clearfix;
-	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 2) * -1);
+	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 4) * -1);
 	width: auto;
-
-	@media (min-width: $screen-xs) {
-		margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 4) * -1);
-	}
 }
 
 .course-page-component-header + .course-event-list {
