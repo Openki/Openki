@@ -37,8 +37,12 @@ template.onCreated(function () {
 });
 
 template.helpers({
-	reporting: () => Template.instance().state.get() === 'reporting',
-	sending: () => Template.instance().state.get() === 'sending',
+	reporting() {
+		return Template.instance().state.get() === 'reporting';
+	},
+	sending() {
+		return Template.instance().state.get() === 'sending';
+	},
 });
 
 template.events({

@@ -39,7 +39,7 @@ export class CssFromQuery {
 				// hexify color values
 				if (property.name.includes('color')) {
 					if (queryValue.match(/^[0-9A-F]+$/i)) {
-						cssValue = `#${queryValue.substr(0, 8)}`;
+						cssValue = `#${queryValue.substring(0, 8)}`;
 					}
 				} else {
 					const intVal = parseInt(queryValue, 10);

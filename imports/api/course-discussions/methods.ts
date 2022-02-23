@@ -13,11 +13,11 @@ import * as HtmlTools from '/imports/utils/html-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 
 const sanitizeComment = (comment: { title: string; text: string }) => {
-	const saneTitle = StringTools.saneTitle(comment.title).substr(0, 200).trim();
+	const saneTitle = StringTools.saneTitle(comment.title).substring(0, 200).trim();
 
 	// String-truncating HTML may leave a broken tag at the end
 	// The sanitizer will have to clean the mess.
-	const unsaneHtml = comment.text.substr(0, 640 * 1024).trim();
+	const unsaneHtml = comment.text.substring(0, 640 * 1024).trim();
 	const saneHtml = HtmlTools.saneHtml(unsaneHtml);
 
 	return { title: saneTitle, text: saneHtml };

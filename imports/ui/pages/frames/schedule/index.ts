@@ -207,7 +207,7 @@ template.onCreated(function () {
 
 			slots[mins][day].push(event);
 
-			const kindId = event.title.substr(0, 5);
+			const kindId = event.title.substring(0, 5);
 			if (!kinds[kindId]) {
 				kinds[kindId] = 1;
 			}
@@ -226,7 +226,7 @@ template.onCreated(function () {
 			_.map(mostUsedKinds.slice(0, 15), (kv, rank) => [kv[0], rank + 1]),
 		) as _.Dictionary<number>;
 		instance.kindMap = function (title: string) {
-			const kindId = title.substr(0, 5);
+			const kindId = title.substring(0, 5);
 			if (kindRank[kindId]) {
 				return kindRank[kindId];
 			}

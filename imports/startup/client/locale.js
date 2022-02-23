@@ -81,7 +81,7 @@ Meteor.startup(() => {
 
 		i18next.changeLanguage(desiredLocale);
 
-		const lang = desiredLocale.substr(0, 2);
+		const lang = desiredLocale.substring(0, 2);
 		const textDirectionality = i18next.dir(lang);
 		const isRTL = textDirectionality === 'rtl';
 		Session.set('textDirectionality', textDirectionality);

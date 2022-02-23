@@ -54,7 +54,7 @@ template.onCreated(function () {
 });
 
 template.helpers({
-	fileName: () => {
+	fileName() {
 		return Template.instance().droppedFile.get()?.name;
 	},
 });
