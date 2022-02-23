@@ -27,7 +27,7 @@ import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
 import '/imports/ui/components/courses/discussion';
 import '/imports/ui/components/courses/edit';
-import '/imports/ui/components/courses/events/course-events';
+import '/imports/ui/components/courses/events';
 import '/imports/ui/components/courses/history';
 import '/imports/ui/components/courses/files';
 import '/imports/ui/components/courses/members';

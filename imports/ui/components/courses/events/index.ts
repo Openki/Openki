@@ -1,11 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { Analytics } from '/imports/ui/lib/analytics';
 
-import { Events } from '/imports/api/events/events';
+import { EventEntity, EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
+import { CourseModel } from '/imports/api/courses/courses';
 
 import { reactiveNow } from '/imports/utils/reactive-now';
 
@@ -13,130 +14,152 @@ import '/imports/ui/components/events/list';
 import '/imports/ui/components/loading';
 import '/imports/ui/components/courses/delete-events';
 
-import './course-events.html';
+import './template.html';
+import './styles.scss';
 
-Template.courseEvents.onCreated(function () {
-	const instance = this;
-	const courseId = this.data.course._id;
-
-	instance.eventSub = instance.subscribe('eventsForCourse', courseId);
-
-	const maxEventsShown = 4;
-	instance.showAllEvents = new ReactiveVar(false);
-	this.showModal = new ReactiveVar(false);
-
-	instance.haveEvents = function () {
-		return Events.findFilter({ course: courseId, start: reactiveNow.get() }, 1).count() > 0;
-	};
-
-	instance.haveMoreEvents = function () {
-		return (
-			Events.findFilter({ course: courseId, start: reactiveNow.get() }).count() > maxEventsShown
-		);
-	};
-
-	instance.ongoingEvents = function () {
-		return Events.findFilter({ course: courseId, ongoing: reactiveNow.get() });
-	};
-
-	instance.futureEvents = function () {
-		const limit = instance.showAllEvents.get() ? 0 : maxEventsShown;
-
-		return Events.findFilter({ course: courseId, after: reactiveNow.get() }, limit);
-	};
-});
-
-Template.courseEvents.helpers({
-	mayAdd() {
-		return this.course.editableBy(Meteor.user());
-	},
-
-	haveEvents() {
-		return Template.instance().haveEvents();
-	},
-
-	ongoingEvents() {
-		return Template.instance().ongoingEvents();
-	},
-
-	haveOngoingEvents() {
-		return Template.instance().ongoingEvents().count() > 0;
-	},
-
-	futureEvents() {
-		return Template.instance().futureEvents();
-	},
-
-	haveFutureEvents() {
-		return Template.instance().futureEvents().count() > 0;
-	},
-
-	haveMoreEvents() {
-		const instance = Template.instance();
-		return instance.haveMoreEvents() && !instance.showAllEvents.get();
-	},
-
-	ready() {
-		return Template.instance().eventSub.ready();
-	},
-
-	showModal() {
-		return Template.instance().showModal.get();
-	},
-
-	upcomingEvents() {
-		return Events.findFilter({
-			course: this.course._id,
-			after: reactiveNow.get(),
-		});
-	},
-});
-
-Template.courseEvents.events({
-	'click .js-show-all-events'() {
-		Template.instance().showAllEvents.set(true);
-	},
-
-	'scroll .js-scrollable-container'(event, instance) {
-		const scrollableContainer = instance.$('.js-scrollable-container');
-
-		// Use dom element to get true height of clipped div
-		// https://stackoverflow.com/questions/4612992/get-full-height-of-a-clipped-div#5627286
-		const trueHeight = scrollableContainer[0].scrollHeight;
-		const visibleHeight = scrollableContainer.height();
-
-		// Compute height and subtract a possible deviation
-		const computedHeight = trueHeight - visibleHeight - 1;
-
-		instance.$('.fade-top ').fadeIn(200);
-
-		if (scrollableContainer.scrollTop() === 0) {
-			instance.$('.fade-top').fadeOut(200);
-		} else if (scrollableContainer.scrollTop() >= computedHeight) {
-			instance.$('.fade-bottom').fadeOut(200);
-		} else {
-			instance.$('.fade-top').fadeIn(200);
-			instance.$('.fade-bottom').fadeIn(200);
+{
+	const Template = TemplateAny as TemplateStaticTyped<
+		'courseEvents',
+		{ course: CourseModel },
+		{
+			eventSub: Meteor.SubscriptionHandle;
+			showAllEvents: ReactiveVar<boolean>;
+			showModal: ReactiveVar<boolean>;
+			haveEvents: () => boolean;
+			haveMoreEvents: () => boolean;
+			ongoingEvents: () => Mongo.Cursor<EventEntity, EventModel>;
+			futureEvents: () => Mongo.Cursor<EventEntity, EventModel>;
 		}
-	},
+	>;
 
-	'click .js-track-cal-download'(event, instance) {
-		Analytics.trackEvent(
-			'Events downloads',
-			'Events downloads via course details',
-			Regions.findOne(instance.data.course.region)?.nameEn,
-		);
-	},
-});
+	const template = Template.courseEvents;
 
-Template.courseEventAdd.helpers({
-	addEventQuery() {
-		return `courseId=${this.course._id}`;
-	},
-});
+	template.onCreated(function () {
+		const instance = this;
+		const courseId = this.data.course._id;
 
-Template.courseEventAdd.events({
-	'mouseover/mouseout .event-caption-action'(event, instance) {
-		instance.$(event.currentTarget).toggleClass('placeholder', event.type === 'mouseout');
-	},
-});
+		instance.eventSub = instance.subscribe('eventsForCourse', courseId);
+
+		const maxEventsShown = 4;
+		instance.showAllEvents = new ReactiveVar(false);
+		this.showModal = new ReactiveVar(false);
+
+		instance.haveEvents = function () {
+			return Events.findFilter({ course: courseId, start: reactiveNow.get() }, 1).count() > 0;
+		};
+
+		instance.haveMoreEvents = function () {
+			return (
+				Events.findFilter({ course: courseId, start: reactiveNow.get() }).count() > maxEventsShown
+			);
+		};
+
+		instance.ongoingEvents = function () {
+			return Events.findFilter({ course: courseId, ongoing: reactiveNow.get() });
+		};
+
+		instance.futureEvents = function () {
+			const limit = instance.showAllEvents.get() ? 0 : maxEventsShown;
+
+			return Events.findFilter({ course: courseId, after: reactiveNow.get() }, limit);
+		};
+	});
+
+	template.helpers({
+		mayAdd() {
+			const { data } = Template.instance();
+			return data.course.editableBy(Meteor.user());
+		},
+
+		haveEvents() {
+			return Template.instance().haveEvents();
+		},
+
+		ongoingEvents() {
+			return Template.instance().ongoingEvents();
+		},
+
+		haveOngoingEvents() {
+			return Template.instance().ongoingEvents().count() > 0;
+		},
+
+		futureEvents() {
+			return Template.instance().futureEvents();
+		},
+
+		haveFutureEvents() {
+			return Template.instance().futureEvents().count() > 0;
+		},
+
+		haveMoreEvents() {
+			const instance = Template.instance();
+			return instance.haveMoreEvents() && !instance.showAllEvents.get();
+		},
+
+		ready() {
+			return Template.instance().eventSub.ready();
+		},
+
+		showModal() {
+			return Template.instance().showModal.get();
+		},
+
+		upcomingEvents() {
+			const { data } = Template.instance();
+			return Events.findFilter({
+				course: data.course._id,
+				after: reactiveNow.get(),
+			});
+		},
+	});
+
+	template.events({
+		'click .js-show-all-events'(_event, instance) {
+			instance.showAllEvents.set(true);
+		},
+
+		'scroll .js-scrollable-container'(_event, instance) {
+			const scrollableContainer = instance.$('.js-scrollable-container');
+
+			// Use dom element to get true height of clipped div
+			// https://stackoverflow.com/questions/4612992/get-full-height-of-a-clipped-div#5627286
+			const trueHeight = scrollableContainer[0].scrollHeight;
+			const visibleHeight = scrollableContainer.height() || 0;
+			const scrollTop = scrollableContainer.scrollTop() || 0;
+
+			// Compute height and subtract a possible deviation
+			const computedHeight = trueHeight - visibleHeight - 1;
+
+			instance.$('.fade-top ').fadeIn(200);
+
+			if (scrollTop === 0) {
+				instance.$('.fade-top').fadeOut(200);
+			} else if (scrollTop >= computedHeight) {
+				instance.$('.fade-bottom').fadeOut(200);
+			} else {
+				instance.$('.fade-top').fadeIn(200);
+				instance.$('.fade-bottom').fadeIn(200);
+			}
+		},
+
+		'click .js-track-cal-download'(_event, instance) {
+			Analytics.trackEvent(
+				'Events downloads',
+				'Events downloads via course details',
+				Regions.findOne(instance.data.course.region)?.nameEn,
+			);
+		},
+	});
+}
+
+{
+	const Template = TemplateAny as TemplateStaticTyped<'courseEventAdd', { course: CourseModel }>;
+
+	const template = Template.courseEventAdd;
+
+	template.events({
+		'mouseover/mouseout .event-caption-action'(event, instance) {
+			instance.$(event.currentTarget as any).toggleClass('placeholder', event.type === 'mouseout');
+		},
+	});
+}
