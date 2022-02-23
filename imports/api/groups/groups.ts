@@ -21,8 +21,8 @@ export interface GroupEntityAdditionalInfosForProposals {
 	displayText: LocalizedValue;
 	/** Who will see the entered values. It will be copied to the course object. */
 	visibleFor: 'all' | 'editors';
-	/** Optional: The type of field. 'input' for single-line, 'textarea' for multi-line input. Default: 'input' */
-	type?: 'input' | 'textarea';
+	/** Optional: The type of field. 'singleLine' for single-line, 'multiLine' for multi-line input. Default: 'singleLine' */
+	type?: 'singleLine' | 'multiLine';
 }
 
 /** DB-Model */

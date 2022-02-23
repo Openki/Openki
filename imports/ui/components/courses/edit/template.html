@@ -176,7 +176,7 @@
 									</div>
 								{{/if}}
 
-								{{#each field in instance.additionalInfos "input"}}
+								{{#each field in instance.additionalInfos "singleLine"}}
 									<div class="mb-3">
 										<label class="form-label"
 											   for="course-additional-info-{{field.name}}">{{localized field.editText}}</label>
@@ -190,7 +190,7 @@
 							</div>
 						{{/if}}
 					</div>
-					{{#each field in instance.additionalInfos "textarea"}}
+					{{#each field in instance.additionalInfos "multiLine"}}
 						<div class="mb-3">
 							<label class="form-label"
 								   for="course-additional-info-{{field.name}}">{{localized field.editText}}</label>

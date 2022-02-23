@@ -62,7 +62,9 @@ export type Data = {
 			showInternalCheckbox: () => boolean;
 			getSavedCourse: () => CourseModel | undefined;
 			getGroups: () => string[];
-			additionalInfos: (type?: 'input' | 'textarea') => GroupEntityAdditionalInfosForProposals[];
+			additionalInfos: (
+				type?: 'singleLine' | 'multiLine',
+			) => GroupEntityAdditionalInfosForProposals[];
 			resetFields: () => void;
 		}
 	>;
@@ -184,7 +186,7 @@ export type Data = {
 			return groups;
 		};
 
-		instance.additionalInfos = (type?: 'input' | 'textarea') => {
+		instance.additionalInfos = (type?: 'singleLine' | 'multiLine') => {
 			const groups = instance.getGroups();
 
 			return (
@@ -192,7 +194,7 @@ export type Data = {
 					.fetch()
 					.flatMap((g) => g.additionalInfosForProposals || [])
 					// when type is undefined all will get back
-					.filter((g) => !type || (g.type || 'input') === type)
+					.filter((g) => !type || (g.type || 'singleLine') === type)
 			);
 		};
 
