@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { ReactiveVar } from 'meteor/reactive-var';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { Analytics } from '/imports/ui/lib/analytics';
@@ -23,8 +23,9 @@ import './styles.scss';
 		{ course: CourseModel },
 		{
 			eventSub: Meteor.SubscriptionHandle;
-			showAllEvents: ReactiveVar<boolean>;
-			showModal: ReactiveVar<boolean>;
+			state: ReactiveDict<{ showAllEvents: boolean; showModal: boolean }>;
+			deleteCourseEventsArgs: { onShowEventsDeleteModal: () => void };
+			deleteEventsModalArgs: { onShowEventsDeleteModal: () => void };
 			haveEvents: () => boolean;
 			haveMoreEvents: () => boolean;
 			ongoingEvents: () => Mongo.Cursor<EventEntity, EventModel>;
@@ -41,8 +42,8 @@ import './styles.scss';
 		instance.eventSub = instance.subscribe('eventsForCourse', courseId);
 
 		const maxEventsShown = 4;
-		instance.showAllEvents = new ReactiveVar(false);
-		this.showModal = new ReactiveVar(false);
+		instance.state = new ReactiveDict();
+		instance.state.setDefault({ showAllEvents: false, showModal: false });
 
 		instance.haveEvents = function () {
 			return Events.findFilter({ course: courseId, start: reactiveNow.get() }, 1).count() > 0;
@@ -59,7 +60,7 @@ import './styles.scss';
 		};
 
 		instance.futureEvents = function () {
-			const limit = instance.showAllEvents.get() ? 0 : maxEventsShown;
+			const limit = instance.state.get('showAllEvents') ? 0 : maxEventsShown;
 
 			return Events.findFilter({ course: courseId, after: reactiveNow.get() }, limit);
 		};
@@ -71,20 +72,8 @@ import './styles.scss';
 			return data.course.editableBy(Meteor.user());
 		},
 
-		haveEvents() {
-			return Template.instance().haveEvents();
-		},
-
-		ongoingEvents() {
-			return Template.instance().ongoingEvents();
-		},
-
 		haveOngoingEvents() {
 			return Template.instance().ongoingEvents().count() > 0;
-		},
-
-		futureEvents() {
-			return Template.instance().futureEvents();
 		},
 
 		haveFutureEvents() {
@@ -93,29 +82,41 @@ import './styles.scss';
 
 		haveMoreEvents() {
 			const instance = Template.instance();
-			return instance.haveMoreEvents() && !instance.showAllEvents.get();
+			return instance.haveMoreEvents() && !instance.state.get('showAllEvents');
 		},
 
 		ready() {
 			return Template.instance().eventSub.ready();
 		},
 
-		showModal() {
-			return Template.instance().showModal.get();
+		deleteCourseEventsArgs() {
+			const instance = Template.instance();
+			return {
+				onShowEventsDeleteModal: () => {
+					instance.state.set('showModal', true);
+				},
+			};
 		},
 
-		upcomingEvents() {
-			const { data } = Template.instance();
-			return Events.findFilter({
+		deleteEventsModalArgs() {
+			const instance = Template.instance();
+			const { data } = instance;
+			const upcomingEvents = Events.findFilter({
 				course: data.course._id,
 				after: reactiveNow.get(),
 			});
+			return {
+				upcomingEvents,
+				onHideEventsDeleteModal() {
+					instance.state.set('showModal', false);
+				},
+			};
 		},
 	});
 
 	template.events({
 		'click .js-show-all-events'(_event, instance) {
-			instance.showAllEvents.set(true);
+			instance.state.set('showAllEvents', true);
 		},
 
 		'scroll .js-scrollable-container'(_event, instance) {

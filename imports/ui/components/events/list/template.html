@@ -1,8 +1,8 @@
 <template name="eventList">
 	<div class="container-fluid">
 		<div class="row">
-			{{#each dataEvents}}
-				{{> eventCompact}}
+			{{#each event in dataEvents}}
+				{{> eventCompact event}}
 			{{/each}}
 		</div>
 	</div>

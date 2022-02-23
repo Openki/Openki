@@ -14,7 +14,10 @@ import './template.html';
 import './styles.scss';
 
 {
-	const Template = TemplateAny as TemplateStaticTyped<'deleteCourseEvents'>;
+	const Template = TemplateAny as TemplateStaticTyped<
+		'deleteCourseEvents',
+		{ onShowEventsDeleteModal: () => void }
+	>;
 
 	const template = Template.deleteCourseEvents;
 
@@ -26,7 +29,7 @@ import './styles.scss';
 		},
 
 		'click .js-show-events-delete-modal'(_event, instance) {
-			(instance.parentInstance() as any).showModal.set(true);
+			instance.data.onShowEventsDeleteModal();
 		},
 	});
 }
@@ -34,7 +37,7 @@ import './styles.scss';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'deleteEventsModal',
-		{ upcomingEvents: Mongo.Cursor<EventEntity, EventModel> },
+		{ upcomingEvents: Mongo.Cursor<EventEntity, EventModel>; onHideEventsDeleteModal: () => void },
 		{
 			state: ReactiveDict<{
 				selectedEvents: EventModel[];
@@ -98,7 +101,7 @@ import './styles.scss';
 
 	template.events({
 		'hidden.bs.modal .js-delete-events-modal'(_event, instance) {
-			(instance.parentInstance() as any).showModal.set(false);
+			instance.data.onHideEventsDeleteModal();
 		},
 
 		'click .js-toggle-all'(_event, instance) {

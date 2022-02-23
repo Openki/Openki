@@ -1,6 +1,6 @@
 <template name="courseEvents">
 	{{#if ready}}
-		{{#if haveEvents}}
+		{{#if instance.haveEvents}}
 			<div class="page-component">
 				<div class="fade-wrap">
 					<div class="course-events js-scrollable-container">
@@ -37,7 +37,7 @@
 								{{/if}}
 							</div>
 							<div class="course-event-list">
-								{{> eventList dataEvents=ongoingEvents withDate=false}}
+								{{> eventList dataEvents=instance.ongoingEvents withDate=false}}
 							</div>
 						{{/if}}
 						{{#if haveFutureEvents}}
@@ -55,7 +55,7 @@
 								{{/if}}
 							</div>
 							<div class="course-event-list">
-								{{> eventList dataEvents=futureEvents withDate=true}}
+								{{> eventList dataEvents=instance.futureEvents withDate=true}}
 							</div>
 							<div class="show-more-courses mt-2">
 								{{#if haveMoreEvents}}
@@ -95,17 +95,17 @@
 	{{#if mayAdd}}
 		<div class="page-component course-event-tasks">
 			{{> courseEventAdd}}
-			{{#if haveEvents}}
-				{{> deleteCourseEvents}}
+			{{#if instance.haveEvents}}
+				{{> deleteCourseEvents deleteCourseEventsArgs}}
 			{{/if}}
-			{{#if showModal}}
-				{{> deleteEventsModal upcomingEvents=upcomingEvents}}
+			{{#if state 'showModal'}}
+				{{> deleteEventsModal deleteEventsModalArgs}}
 			{{/if}}
 		</div>
 	{{/if}}
 
 	{{#if ready}}
-		{{#if haveEvents}}
+		{{#if instance.haveEvents}}
 			<div class="page-component">
 				{{#with course}}
 					<a class="js-track-cal-download" href="{{pathFor 'calCourse'}}" target="_blank">
