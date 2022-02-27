@@ -12,7 +12,11 @@ import { reactiveNow } from '/imports/utils/reactive-now';
 import './template.html';
 import './styles.scss';
 
-type EventViewModel = EventModel & { repKeyDay: number; repCount: number };
+type EventViewModel = EventModel & {
+	repKeyDay?: string;
+	repKey?: string;
+	repCount: number;
+};
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'frameSchedulePage',
@@ -114,7 +118,9 @@ template.onCreated(function () {
 		// Load events but keep only the first when they repeat on the same
 		// weekday at the same time.
 		const dedupedEvents: EventViewModel[] = [];
-		Events.findFilter(filter.toQuery()).forEach((event) => {
+		Events.findFilter(filter.toQuery()).forEach((originalEvent) => {
+			// eslint-disable-next-line no-param-reassign
+			const event = { ...originalEvent } as EventViewModel;
 			const eventStart = LocalTime.fromString(event.startLocal);
 
 			// Build key that is the same for events of the same course that
@@ -180,7 +186,7 @@ template.onCreated(function () {
 			const event = { ...originalEvent };
 			const eventStart = LocalTime.fromString(event.startLocal);
 
-			event.repCount = repetitionCountDay[event.repKeyDay];
+			event.repCount = repetitionCountDay[event.repKeyDay as string];
 			if (event.repCount < 2 && instance.repeatingOnly.get()) {
 				// Skip
 				return;
