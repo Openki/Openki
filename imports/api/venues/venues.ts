@@ -173,7 +173,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 			find._id = { $in: recentLocations as string[] };
 		}
 
-		return this.find(find, options);
+		return this.find(find, options) as Mongo.Cursor<VenueEntity, VenueModel>;
 	}
 }
 

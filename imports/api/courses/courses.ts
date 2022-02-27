@@ -392,7 +392,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 			'lastEvent.loc': 0,
 		};
 
-		return this.find(find, options);
+		return this.find(find, options) as Mongo.Cursor<CourseEntity, CourseModel>;
 	}
 }
 

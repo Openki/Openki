@@ -79,8 +79,8 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 		return this;
 	}
 
-	readAndValidate(list: { [name in keyof T]: string }) {
-		Object.keys(list).forEach((name) => this.add(name, list[name]));
+	readAndValidate(list: Partial<{ [name in keyof T]: string }>) {
+		Object.keys(list).forEach((name) => this.add(name, list[name] as string));
 		return this;
 	}
 

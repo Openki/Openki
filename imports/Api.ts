@@ -5,33 +5,52 @@ import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Venues } from '/imports/api/venues/venues';
-import { Regions } from './api/regions/regions';
-import { visibleTenants } from './utils/visible-tenants';
+import { Geodata, Regions } from '/imports/api/regions/regions';
 
-const apiResponse = function (collection, formatter) {
-	return (filter, limit, skip, sort) => {
+import { visibleTenants } from '/imports/utils/visible-tenants';
+import { Filtering } from '/imports/utils/filtering';
+import { ParamWrapper, Predicate } from '/imports/utils/predicates';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type ExtractQuery<P> = P extends ParamWrapper<infer _G, infer Q> ? Q : never;
+
+export interface ApiCollection<T, U, F extends { [name: string]: Predicate<any> }> {
+	findFilter(
+		filter?: Partial<{ [name in keyof F]: ExtractQuery<F[name]> }>,
+		limit?: number,
+		skip?: number,
+		sort?: [string, 'asc' | 'desc'][],
+	): Mongo.Cursor<T, U>;
+	Filtering(): Filtering<F>;
+}
+
+function apiResponse<T, U, F extends { [name: string]: Predicate<any> }, R>(
+	collection: ApiCollection<T, U, F>,
+	formatter: (model: U) => R,
+) {
+	return (filter = {}, limit = 0, skip = 0, sort?: [string, 'asc' | 'desc'][]) => {
 		const query = collection.Filtering().readAndValidate(filter).done().toQuery();
 		return collection
 			.findFilter({ ...query, tenants: visibleTenants() }, limit, skip, sort)
 			.map(formatter);
 	};
-};
+}
 
-const maybeUrl = function (route, context) {
+function maybeUrl(route: string, context: { _id?: string } | undefined) {
 	if (!context || !context._id) {
 		return undefined;
 	}
 	return Router.url(route, context);
-};
+}
 
 const Api = {
 	groups: apiResponse(Groups, (originalGroup) => {
-		const group = { ...originalGroup };
+		const group = { ...originalGroup } as typeof originalGroup & { link: string };
 		group.link = Router.url('groupDetails', group);
 		return group;
 	}),
 	venues: apiResponse(Venues, (originalVenue) => {
-		const venue = { ...originalVenue };
+		const venue = { ...originalVenue } as typeof originalVenue & { link: string };
 		venue.link = Router.url('venueDetails', venue);
 		return venue;
 	}),
@@ -48,6 +67,36 @@ const Api = {
 			link: Router.url('showEvent', ev),
 			internal: ev.internal,
 			room: ev.room,
+		} as {
+			id: string;
+			title: string;
+			description: string;
+			startLocal: string;
+			endLocal: string;
+			start: Date;
+			end: Date;
+			duration: number;
+			link: string;
+			internal: boolean;
+			room: string;
+			createdBy?: { id: string; name: string };
+			venue?: {
+				id: string | undefined;
+				name: string | undefined;
+				loc: Geodata | undefined;
+				link: string | undefined;
+			};
+			course?: {
+				id: string;
+				name: string;
+				link: string;
+			};
+			groups: {
+				id: string;
+				name: string;
+				short: string;
+				link: string;
+			}[];
 		};
 
 		const creator = Users.findOne(ev.createdBy);
@@ -102,6 +151,27 @@ const Api = {
 			link: Router.url('showCourse', orginalCourse),
 			internal: orginalCourse.internal,
 			interested: orginalCourse.interested,
+		} as {
+			id: string;
+			name: string;
+			description: string;
+			link: string;
+			internal: boolean;
+			interested: number;
+			region?: {
+				id: string;
+				name: string;
+			};
+			createdBy?: {
+				id: string;
+				name: string;
+			};
+			groups: {
+				id: string;
+				name: string;
+				short: string;
+				link: string;
+			}[];
 		};
 
 		const region = Regions.findOne(orginalCourse.region);
@@ -112,7 +182,7 @@ const Api = {
 			};
 		}
 
-		const creator = Users.findOne(orginalCourse.createdBy);
+		const creator = Users.findOne(orginalCourse.createdby);
 		if (creator) {
 			course.createdBy = {
 				id: creator._id,

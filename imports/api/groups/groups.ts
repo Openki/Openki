@@ -92,6 +92,15 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
 		return new Filtering({});
 	}
 
+	findFilter(
+		filter?: {
+			own?: false;
+		},
+		limit?: number,
+		skip?: number,
+		sort?: [string, 'asc' | 'desc'][] | undefined,
+	): Mongo.Cursor<GroupEntity, GroupModel>;
+
 	/**
 	 * Find groups for given filters
 	 * @param filter dictionary with filter options
