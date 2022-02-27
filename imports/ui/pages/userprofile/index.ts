@@ -205,7 +205,7 @@ template.events({
 		instance.state.set('verifyUserDelete', !instance.state.get('verifyUserDelete'));
 	},
 
-	'click .js-verify-user-delete-confirm'(_event, instance) {
+	async 'click .js-verify-user-delete-confirm'(_event, instance) {
 		if (PleaseLogin()) {
 			return;
 		}
@@ -223,11 +223,11 @@ template.events({
 		const userId = instance.data.user._id;
 
 		try {
+			await usersMethods.adminRemove(userId, reason, { courses: true });
 			Alert.success(i18n('profile.account.deleted', 'The account has been deleted'));
 			Router.go('users');
 		} finally {
 			instance.busy(false);
 		}
-		usersMethods.adminRemove(userId, reason, { courses: true });
 	},
 });
