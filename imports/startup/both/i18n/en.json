@@ -147,6 +147,7 @@
   "course.edit.edit_course": "Edit course",
   "course.edit.error.region": "Please select a region",
   "course.edit.error.title": "Please provide a title",
+  "course.edit.files.desc": "Tip: Take your own photo of an object that is used in or symbolises your course.",
   "course.edit.files.label": "Files",
   "course.edit.iCanTeach": "I can teach",
   "course.edit.image.removed": "Image have been removed.",

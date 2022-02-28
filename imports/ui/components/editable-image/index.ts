@@ -168,7 +168,7 @@ template.helpers({
 		const instance = Template.instance();
 
 		const attributes: Record<string, any> = {
-			onClick: instance.onUpload,
+			event: 'js-editable-image-upload',
 		};
 
 		if (!instance.state.get('copyRights')) {
@@ -223,5 +223,20 @@ template.events({
 
 	'change .js-check-copy-rights'(_event, instance) {
 		instance.state.set('copyRights', instance.$('.js-check-copy-rights').prop('checked'));
+	},
+
+	'click .js-editable-image-upload'(event, instance) {
+		event.preventDefault();
+		instance.onUpload();
+	},
+
+	'click .js-editable-image-delete'(event, instance) {
+		event.preventDefault();
+		instance.onDelete();
+	},
+
+	'click .js-editable-image-cancel'(event, instance) {
+		event.preventDefault();
+		instance.onCancel();
 	},
 });

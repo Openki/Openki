@@ -6,9 +6,9 @@
 			<label for="file">
 				<div class="mb-1">
 					{{#if (state 'preview')}}
-						<img {{thumbnailAttributes}} src="{{state 'preview'}}" />
+						<img {{thumbnailAttributes}} src={{state 'preview'}} />
 					{{else if thumbnail.src}}
-						<img {{thumbnailAttributes}} src="{{thumbnail.src}}" />
+						<img {{thumbnailAttributes}} src={{thumbnail.src}} />
 					{{else}}
 						<i class="fa fa-image fa-5x" aria-hidden="true"></i>
 					{{/if}}
@@ -49,15 +49,15 @@
 			{{#if (stateEquals 'progress' 'ready')}}
 				{{> buttonSave uploadButtonAttributes}}
 			{{else if deleteAllowed}}
-				{{> buttonDelete onClick=(asCallback 'onDelete')}}
+				{{> buttonDelete event="js-editable-image-delete"}}
 			{{/if}}
-			{{> buttonCancel onClick=(asCallback 'onCancel')}}
+			{{> buttonCancel event="js-editable-image-cancel"}}
 		</div>
 	{{else}}
 		<div>
 			{{#if thumbnail.src}}
 				<img class="cursor-pointer js-editable-image-edit img-thumbnail"
-					 {{thumbnailAttributes}} src="{{thumbnail.src}}" />
+					 {{thumbnailAttributes}} src={{thumbnail.src}} />
 			{{else}}
 				<i class="fa fa-image fa-5x cursor-pointer js-editable-image-edit"
 				   aria-hidden="true"></i>
@@ -76,7 +76,7 @@
 										aria-label="Close"></button>
 							</div>
 							<div class="modal-body text-center">
-								<img class="mw-100" src="{{thumbnail.src}}" />
+								<img class="mw-100" src={{thumbnail.src}} />
 							</div>
 						</div>
 					</div>

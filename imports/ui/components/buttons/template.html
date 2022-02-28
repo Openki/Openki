@@ -5,7 +5,7 @@
 </template>
 
 <template name="buttonSave">
-	{{#button type="submit" class=(concat "btn btn-save text-nowrap " event) onClick=(asCallback 'onClick') disabled=disabled}}
+	{{#button type="submit" class=(concat "btn btn-save text-nowrap " event) disabled=disabled}}
 		{{#if busy 'saving'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n '_button.saving' 'Saving…'}}
@@ -16,25 +16,25 @@
 </template>
 
 <template name="buttonCancel">
-	{{#button type="button" class=(concat "btn btn-cancel text-nowrap " event) onClick=(asCallback 'onClick') disabled=disabled}}
+	{{#button type="button" class=(concat "btn btn-cancel text-nowrap " event) disabled=disabled}}
 		{{i18n '_button.cancel'}}
 	{{/button}}
 </template>
 
 <template name="buttonEdit">
-	{{#button type="button" class=(concat "btn btn-edit text-nowrap " event) onClick=(asCallback 'onClick') disabled=disabled}}
+	{{#button type="button" class=(concat "btn btn-edit text-nowrap " event) disabled=disabled}}
 		{{i18n '_button.edit'}}
 	{{/button}}
 </template>
 
 <template name="buttonDelete">
-	{{#button type="button" class=(concat "btn btn-delete text-nowrap text-danger " event) onClick=(asCallback 'onClick') disabled=disabled}}
+	{{#button type="button" class=(concat "btn btn-delete text-nowrap text-danger " event) disabled=disabled}}
 		{{i18n '_button.delete'}}
 	{{/button}}
 </template>
 
 <template name="buttonDeleteConfirm">
-	{{#button type="button" class=(concat "btn btn-danger text-nowrap " event) onClick=(asCallback 'onClick') disabled=disabled}}
+	{{#button type="button" class=(concat "btn btn-danger text-nowrap " event) disabled=disabled}}
 		{{#if busy 'deleting'}}
 			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{textBusy}}

@@ -237,18 +237,6 @@ const helpers: { [name: string]: Function } = {
 	concat(...strings: string[]) {
 		return Array.prototype.slice.call(strings, 0, -1).join('');
 	},
-
-	/**
-	 * Give a callback down to a child without calling it.
-	 * https://forums.meteor.com/t/blaze-callback-is-called-when-passed-to-another-template/37604/3
-	 */
-	asCallback(this: any, prop: string) {
-		const callback = this?.[prop] || (Template.instance() as any)[prop];
-		if (!callback) {
-			return undefined;
-		}
-		return () => callback;
-	},
 };
 
 Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[name]));
