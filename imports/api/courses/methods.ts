@@ -323,7 +323,9 @@ export const updateImage = ServerMethod(
 
 		const update = { image: result.fullFileName };
 
-		Courses.update(course._id, { $set: update });
+		const enrichedSet = timeLasteditDenormalizer.beforeUpdateImage(update);
+		Courses.update(course._id, { $set: enrichedSet });
+		historyDenormalizer.afterUpdateImage(courseId, user._id);
 
 		return courseId;
 	},
@@ -353,7 +355,9 @@ export const deleteImage = ServerMethod(
 
 		const update = { image: '' };
 
-		Courses.update(course._id, { $unset: update });
+		const set = timeLasteditDenormalizer.beforeDeleteImage();
+		Courses.update(course._id, { $unset: update, $set: set });
+		historyDenormalizer.afterDeleteImage(courseId, user._id);
 
 		return courseId;
 	},
