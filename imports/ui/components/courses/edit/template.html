@@ -176,28 +176,28 @@
 									</div>
 								{{/if}}
 
-								{{#each field in instance.additionalInfos "singleLine"}}
+								{{#each field in instance.customFields "singleLine"}}
 									<div class="mb-3">
 										<label class="form-label"
-											   for="course-additional-info-{{field.name}}">{{localized field.editText}}</label>
+											   for="course-custom-field-{{field.name}}">{{localized field.editText}}</label>
 										<input type="text"
-											   class="form-control js-additional-info-{{field.name}}"
-											   id="course-additional-info-{{field.name}}"
+											   class="form-control js-custom-field-{{field.name}}"
+											   id="course-custom-field-{{field.name}}"
 											   placeholder="{{localized field.editPlaceholder}}"
-											   value="{{getAdditionalInfoValue field.name}}">
+											   value="{{getCustomFieldValue field.name}}">
 									</div>
 								{{/each}}
 							</div>
 						{{/if}}
 					</div>
-					{{#each field in instance.additionalInfos "multiLine"}}
+					{{#each field in instance.customFields "multiLine"}}
 						<div class="mb-3">
 							<label class="form-label"
-								   for="course-additional-info-{{field.name}}">{{localized field.editText}}</label>
-							<textarea class="form-control js-additional-info-{{field.name}}"
-									  id="course-additional-info-{{field.name}}"
+								   for="course-custom-field-{{field.name}}">{{localized field.editText}}</label>
+							<textarea class="form-control js-custom-field-{{field.name}}"
+									  id="course-custom-field-{{field.name}}"
 									  placeholder="{{localized field.editPlaceholder}}"
-									  rows="3">{{getAdditionalInfoValue field.name}}</textarea>
+									  rows="3">{{getCustomFieldValue field.name}}</textarea>
 						</div>
 					{{/each}}
 

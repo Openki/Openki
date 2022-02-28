@@ -10,7 +10,7 @@ import { Filtering } from '/imports/utils/filtering';
 import * as FileStorage from '/imports/utils/FileStorage';
 import { LocalizedValue } from '/imports/utils/getLocalizedValue';
 
-export interface GroupEntityAdditionalInfosForProposals {
+export interface GroupEntityCustomCourseFields {
 	/** For internal us, must be unique in the list. */
 	name: string;
 	/** Used when the value is edited. */
@@ -35,7 +35,7 @@ export interface GroupEntity {
 	description: string;
 	logoUrl?: string;
 	/** Customize the inputs that the user can enter when creating and editing a course. */
-	additionalInfosForProposals?: GroupEntityAdditionalInfosForProposals[];
+	customCourseFields?: GroupEntityCustomCourseFields[];
 	/** List of userIds */
 	members: string[];
 }

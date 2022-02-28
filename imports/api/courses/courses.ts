@@ -16,7 +16,7 @@ import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import * as FileStorage from '/imports/utils/FileStorage';
 import * as StringTools from '/imports/utils/string-tools';
-import { GroupEntityAdditionalInfosForProposals } from '/imports/api/groups/groups';
+import { GroupEntityCustomCourseFields } from '/imports/api/groups/groups';
 
 export interface CourseMemberEntity {
 	user: string;
@@ -45,10 +45,9 @@ export interface CourseEntity {
 	slug: string;
 	/** ID_region */
 	region: string;
-	additionalInfos: (Pick<
-		GroupEntityAdditionalInfosForProposals,
-		'name' | 'displayText' | 'visibleFor'
-	> & { value: string })[];
+	customFields: (Pick<GroupEntityCustomCourseFields, 'name' | 'displayText' | 'visibleFor'> & {
+		value: string;
+	})[];
 	/** (what for?) */
 	date: Date;
 	/** ID_user */

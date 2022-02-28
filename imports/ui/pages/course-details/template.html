@@ -142,7 +142,7 @@
 	<div class="tab-content course-details-content">
 		<div class="tab-pane active" id="description">
 			{{> courseDetailsDescription editableDescription=editableDescription course=course}}
-			{{#each info in additionalInfos}}
+			{{#each info in customFields}}
 				<p>
 					<strong>{{info.displayText}}</strong>: <span
 						  style="white-space: pre-line;">{{info.value}}</span>

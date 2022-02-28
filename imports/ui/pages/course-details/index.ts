@@ -294,14 +294,14 @@ import './styles.scss';
 			const { course } = Template.instance().data;
 			return course?.editableBy(Meteor.user());
 		},
-		additionalInfos() {
+		customFields() {
 			const { course } = Template.instance().data;
 			const user = Meteor.user();
 
 			const isEditor = user && course.editableBy(user);
 
 			return (
-				course.additionalInfos
+				course.customFields
 					?.filter((i) => i.visibleFor === 'all' || (i.visibleFor === 'editors' && isEditor))
 					.map((i) => ({
 						displayText: getLocalizedValue(i.displayText),
