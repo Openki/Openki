@@ -7,7 +7,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import moment from 'moment';
 
 import * as Alert from '/imports/api/alerts/alert';
-import { Courses } from '/imports/api/courses/courses';
+import { CourseModel, Courses } from '/imports/api/courses/courses';
 import { EventModel, Events, EventVenueEntity } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { Groups } from '/imports/api/groups/groups';
@@ -111,6 +111,20 @@ import './styles.scss';
 	});
 
 	template.helpers({
+		eventCourseHeaderAttr(course: CourseModel) {
+			const src = course?.publicImageUrl();
+			if (!src) {
+				return {};
+			}
+
+			return {
+				style: `
+	background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${course?.publicImageUrl()}');
+	background-position: center;
+	background-size: cover;`,
+			};
+		},
+
 		acceptsParticipants(this: EventModel) {
 			// no maxParticipants
 			if (!this.maxParticipants) {

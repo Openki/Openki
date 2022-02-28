@@ -4,13 +4,21 @@ $header-bg: darken($blue-lighter, 5%);
 
 .event-course-header {
 	background-color: $header-bg;
+	border-color: $header-bg;
+	border-style: solid;
+	border-width: 5px 5px 0px;
 	cursor: pointer;
-	padding: 15px;
+	padding: 10px;
 	position: relative;
 	transition: background-color 0.15s;
 
 	&.highlight {
 		background-color: darken($header-bg, 2%);
+	}
+
+	.region-tag {
+		top: -5px;
+		right: -5px;
 	}
 }
 

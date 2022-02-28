@@ -15,6 +15,18 @@ Template.courseCompact.helpers({
 		return !instance.eventSub || instance.eventSub.ready();
 	},
 
+	courseCss(course) {
+		const src = course?.publicImageUrl();
+		if (!src) {
+			return '';
+		}
+
+		return `
+	background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${course?.publicImageUrl()}');
+	background-position: center;
+	background-size: cover;`;
+	},
+
 	courseStateClasses() {
 		const classes = [];
 
