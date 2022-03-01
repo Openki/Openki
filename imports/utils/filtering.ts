@@ -64,9 +64,8 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 	}
 
 	read(list: Partial<{ [name in keyof T]: string }>) {
-		Object.keys(list).forEach((name) => {
+		Object.entries(list).forEach(([name, value]) => {
 			try {
-				const value = list[name];
 				if (typeof value !== 'undefined') {
 					this.add(name, value);
 				}
@@ -165,8 +164,8 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 			this._dep.depend();
 		}
 		const params: { [name in keyof T]+?: string } = {};
-		Object.keys(this._settledPredicates).forEach((name) => {
-			params[name as keyof T] = (this._settledPredicates[name] as any).param();
+		Object.entries(this._settledPredicates).forEach(([name, value]) => {
+			params[name as keyof T] = value?.param();
 		});
 		return params;
 	}
@@ -178,8 +177,8 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 		const query: {
 			[name in keyof T]+?: ReturnType<Extract<ReturnType<T[name]>, ParamWrapper>['query']>;
 		} = {};
-		Object.keys(this._settledPredicates).forEach((name) => {
-			query[name as keyof T] = (this._settledPredicates[name] as any).query();
+		Object.entries(this._settledPredicates).forEach(([name, value]) => {
+			query[name as keyof T] = value?.query();
 		});
 		return query;
 	}

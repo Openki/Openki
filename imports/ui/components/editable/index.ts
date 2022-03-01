@@ -47,8 +47,7 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 		const errorMapping: TemplateMixins.FormfieldErrorsMapping = {};
 		const { clientValidations } = instance.state.store;
 		if (clientValidations) {
-			Object.keys(clientValidations).forEach((key) => {
-				const validation = clientValidations[key];
+			Object.entries(clientValidations).forEach(([key, validation]) => {
 				errorMapping[key] = {
 					text: validation.errorMessage,
 					field: 'input',
@@ -198,8 +197,7 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 			instance.errors.reset();
 			const { clientValidations } = instance.state.store;
 			if (clientValidations) {
-				Object.keys(clientValidations).forEach((key) => {
-					const validation = clientValidations[key];
+				Object.entries(clientValidations).forEach(([key, validation]) => {
 					if (!validation.check(instance.getEdited())) {
 						instance.errors.add(key);
 					}

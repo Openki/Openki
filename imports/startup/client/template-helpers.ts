@@ -239,7 +239,7 @@ const helpers: { [name: string]: Function } = {
 	},
 };
 
-Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[name]));
+Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name, helper));
 
 /**
  * Register username and contribution helper. Cache the user data.
