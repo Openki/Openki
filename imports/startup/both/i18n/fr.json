@@ -570,7 +570,7 @@
 	"notification.event.mail.greeting": "Hello {USERNAME}",
 	"notification.event.mail.informRegisterEvent": "Faites-nous savoir si vous participez à cet événement :\n",
 	"notification.event.mail.linkCalendar": "Ajouter cet évènement à mon calendrier",
-	"notification.event.mail.new": "Un nouvel événement vient d'être publié pour le cours {COURS} :",
+	"notification.event.mail.new": "Un nouvel événement vient d'être publié pour le cours {COURSE} :",
 	"notification.event.mail.notice": "Vous recevez ce courrier parce que vous participez au cours \"{COURS}\".",
 	"notification.event.mail.notinterested": "Plus intéressé-e?",
 	"notification.event.mail.personalMessage": "L'organisateur a laissé un message pour vous :",
