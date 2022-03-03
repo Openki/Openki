@@ -19,7 +19,7 @@ import {
 } from '/imports/ui/lib/location-tracker';
 
 import '/imports/ui/components/map';
-import '../../venues/link';
+import '/imports/ui/components/venues/link';
 
 import './template.html';
 import './styles.scss';
