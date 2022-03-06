@@ -16,6 +16,10 @@ Template.courseCompact.helpers({
 	},
 
 	courseCss(course) {
+		if (!course.nextEvent) {
+			return '';
+		}
+
 		const src = course?.publicImageUrl();
 		if (!src) {
 			return '';
