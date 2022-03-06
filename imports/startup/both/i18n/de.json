@@ -531,6 +531,7 @@
 	"notification.privateMessage.mail.unsubLink": "Alle privaten Nachrichten von Benutzern abbestellen.",
 	"participantContactModal.writeMessageTo": "Sende eine Nachricht an {USER}",
 	"passwordReset.label.confirm": "Bestätige",
+	"pricePolicy.disclaimer": "Bildung soll für alle offen sein. Deshalb erlaubt {SITENAME} nur Richtpreise.",
 	"pricePolicy.dontShowAnymore": "Nicht mehr anzeigen",
 	"pricePolicy.moreAboutPricePolicy": "Lies unsere Preispolitik",
 	"privilege.add.admin": "Admin-Rechte verleihen",
