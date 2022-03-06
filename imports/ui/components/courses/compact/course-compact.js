@@ -26,7 +26,7 @@ Template.courseCompact.helpers({
 		}
 
 		return `
-	background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${course?.publicImageUrl()}');
+	background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${src}');
 	background-position: center;
 	background-size: cover;`;
 	},
