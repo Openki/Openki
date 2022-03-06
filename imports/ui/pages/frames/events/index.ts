@@ -1,12 +1,23 @@
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+
+import { EventEntity, EventModel } from '/imports/api/events/events';
 
 import '/imports/ui/components/events/list';
 
-import './events-frame.html';
+import './template.html';
+import './styles.scss';
 
-Template.frameEvents.onRendered(function () {
+const Template = TemplateAny as TemplateStaticTyped<
+	'frameEvents',
+	Mongo.Cursor<EventEntity, EventModel>
+>;
+
+const template = Template.frameEvents;
+
+template.onRendered(function () {
 	const instance = this;
-	this.autorun(() => {
+
+	instance.autorun(() => {
 		instance.$('a').attr('target', '_blank');
 	});
 });
