@@ -245,7 +245,7 @@
 	"course.subnav.files": "Dateien",
 	"course.subnav.history": "Was geschah",
 	"course.title.Discussion": "Diskussion",
-	"course.title.placeholder": "Was interessiert dich?",
+	"course.title.placeholder": "Dein Thema, kurz und treffend",
 	"course.windowtitle": "Kurs: {COURSE}",
 	"courseCompact.internal_course": "Interner Kurs",
 	"courseDetails.message.descriptionChanged": "Die Beschreibung von \"{NAME}\" hat sich geändert.",
