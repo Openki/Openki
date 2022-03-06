@@ -375,6 +375,7 @@
 	"notification.privateMessage.mail.linktext": "➜ Visa avsändarens profil \"{SENDER}\"",
 	"notification.privateMessage.mail.subject": "Privat meddelande ifrån {SENDER}",
 	"passwordReset.label.confirm": "Bekräfta",
+	"pricePolicy.disclaimer": "Folkbildning borde vara öppet för alla, det är varför {SITENAME} bara tillåter priser som inkluderar alla.",
 	"pricePolicy.dontShowAnymore": "Visa inte detta mer",
 	"pricePolicy.moreAboutPricePolicy": "Läs vår pris policy",
 	"privilege.add.admin": "Garantera administratör privilegier",
