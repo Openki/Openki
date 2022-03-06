@@ -2,7 +2,8 @@
 	{{#if ready}}
 		<div class="course-compact-wrap">
 			<a href="{{pathFor 'showCourse'}}">
-				<div class="course-compact {{courseStateClasses}} {{filterPreviewClasses}}">
+				<div class="course-compact {{courseStateClasses}} {{filterPreviewClasses}}"
+					 style={{courseCss this}}>
 					<div class="course-compact-content">
 						{{#if internal}}
 							<span class="course-compact-internal"

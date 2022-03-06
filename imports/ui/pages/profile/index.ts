@@ -17,7 +17,7 @@ import '/imports/ui/components/buttons';
 import '/imports/ui/components/groups/list';
 import '/imports/ui/components/profiles/course-list';
 import '/imports/ui/components/profiles/verify-email';
-import '/imports/ui/components/venues/link/venue-link';
+import '/imports/ui/components/venues/link';
 import '/imports/ui/components/avatar';
 import { VenueEntity, VenueModel } from '/imports/api/venues/venues';
 import { TenantEntity, TenantModel } from '/imports/api/tenants/tenants';
@@ -116,7 +116,7 @@ template.onCreated(function () {
 			},
 		],
 		onSave: async (newName) => {
-			usersMethods.updateUsername(newName);
+			await usersMethods.updateUsername(newName || '');
 		},
 		onSuccess: () => {
 			Alert.success(i18n('profile.updated', 'Updated profile'));
@@ -130,7 +130,7 @@ template.onCreated(function () {
 		),
 		{
 			onSave: async (newDescription) => {
-				await usersMethods.updateDescription(newDescription);
+				await usersMethods.updateDescription(newDescription || '');
 			},
 			onSuccess: () => {
 				Alert.success(i18n('profile.updated', 'Updated profile'));

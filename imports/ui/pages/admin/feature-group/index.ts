@@ -19,7 +19,9 @@ template.onCreated(function () {
 });
 
 template.helpers({
-	groups: () => Groups.find({}, { sort: { name: 1 } }),
+	groups() {
+		return Groups.find({}, { sort: { name: 1 } });
+	},
 	featuredGroup() {
 		const groupId = Regions.currentRegion()?.featuredGroup;
 		if (!groupId) {

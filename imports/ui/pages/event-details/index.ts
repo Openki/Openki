@@ -7,7 +7,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import moment from 'moment';
 
 import * as Alert from '/imports/api/alerts/alert';
-import { Courses } from '/imports/api/courses/courses';
+import { CourseModel, Courses } from '/imports/api/courses/courses';
 import { EventModel, Events, EventVenueEntity } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { Groups } from '/imports/api/groups/groups';
@@ -19,7 +19,6 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
-import * as IdTools from '/imports/utils/id-tools';
 import * as Metatags from '/imports/utils/metatags';
 import { appendAsJsonLdToBody } from '/imports/utils/event-to-json-ld';
 
@@ -28,14 +27,14 @@ import { Analytics } from '/imports/ui/lib/analytics';
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
 import '/imports/ui/components/events/edit';
-import '/imports/ui/components/events/participants/event-participants';
+import '/imports/ui/components/events/participants';
 import '/imports/ui/components/events/replication';
 import '/imports/ui/components/groups/list';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
 import '/imports/ui/components/sharing';
 import '/imports/ui/components/report';
-import '/imports/ui/components/venues/link/venue-link';
+import '/imports/ui/components/venues/link';
 
 import './template.html';
 import './styles.scss';
@@ -112,6 +111,20 @@ import './styles.scss';
 	});
 
 	template.helpers({
+		eventCourseHeaderAttr(course: CourseModel) {
+			const src = course?.publicImageUrl();
+			if (!src) {
+				return {};
+			}
+
+			return {
+				style: `
+	background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${src}');
+	background-position: center;
+	background-size: cover;`,
+			};
+		},
+
 		acceptsParticipants(this: EventModel) {
 			// no maxParticipants
 			if (!this.maxParticipants) {
@@ -285,7 +298,8 @@ import './styles.scss';
 
 	template.helpers({
 		isOrganizer(this: EventModel) {
-			return Template.instance().data.editors.includes(IdTools.extract(this));
+			const { editors } = Template.currentData();
+			return editors.includes(this._id);
 		},
 		tools() {
 			const tools = [];

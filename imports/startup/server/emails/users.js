@@ -23,23 +23,35 @@ Accounts.emailTemplates.verifyEmail.subject = function (user) {
 	return i18n('verifyEmail.subject', '[{SITE}] Welcome to the {SITE} community, {NAME}', {
 		SITE: Accounts.emailTemplates.siteName,
 		NAME: user.username,
+		lng: user.locale,
 	});
 };
 
 Accounts.emailTemplates.verifyEmail.text = function (user, url) {
-	return `${i18n('verifyEmail.email.gretting', { NAME: user.username })}
+	return `${i18n('verifyEmail.email.gretting', { NAME: user.username, lng: user.locale })}
 	
 ${i18n('verifyEmail.email.introduction', {
 	SITE: Accounts.emailTemplates.siteName,
+	lng: user.locale,
 })}
 
-${i18n('verifyEmail.email.verification')}
+${i18n('verifyEmail.email.verification', {
+	lng: user.locale,
+})}
 ${url}
 
-${i18n('verifyEmail.email.farewell')}
-${i18n('verifyEmail.email.postscript', { SITE: Accounts.emailTemplates.siteName })}
+${i18n('verifyEmail.email.farewell', {
+	lng: user.locale,
+})}
+${i18n('verifyEmail.email.postscript', {
+	SITE: Accounts.emailTemplates.siteName,
+	lng: user.locale,
+})}
 
-${i18n('verifyEmail.email.unexpected', { REPORTEMAIL: PrivateSettings.reporter.recipient })}`;
+${i18n('verifyEmail.email.unexpected', {
+	REPORTEMAIL: PrivateSettings.reporter.recipient,
+	lng: user.locale,
+})}`;
 };
 
 Accounts.emailTemplates.verifyEmail.html = function (user, url) {
@@ -55,13 +67,15 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 			username: user.username,
 			url,
 			reportEmail: PrivateSettings.reporter.recipient,
+			locale: user.locale,
 		}),
 	);
 };
 
-Accounts.emailTemplates.resetPassword.subject = function () {
+Accounts.emailTemplates.resetPassword.subject = function (user) {
 	return i18n('resetPassword.subject', '[{SITE}] Reset your password on {SITE}', {
 		SITE: Accounts.emailTemplates.siteName,
+		lng: user.locale,
 	});
 };
 
@@ -70,21 +84,30 @@ Accounts.urls.resetPassword = function (token) {
 };
 
 Accounts.emailTemplates.resetPassword.text = function (user, url) {
-	return `${i18n('resetPassword.email.gretting', { NAME: user.username })}
+	return `${i18n('resetPassword.email.gretting', { NAME: user.username, lng: user.locale })}
 				
 ${i18n('resetPassword.email.introduction', {
 	SITE: Accounts.emailTemplates.siteName,
+	lng: user.locale,
 })}
 
-${i18n('resetPassword.email.verification')}
+${i18n('resetPassword.email.verification', {
+	lng: user.locale,
+})}
 ${url}
 
-${i18n('resetPassword.email.farewell')}
+${i18n('resetPassword.email.farewell', {
+	lng: user.locale,
+})}
 ${i18n('resetPassword.email.postscript', {
 	SITE: Accounts.emailTemplates.siteName,
+	lng: user.locale,
 })}
 
-${i18n('resetPassword.email.unexpected', { REPORTEMAIL: PrivateSettings.reporter.recipient })}`;
+${i18n('resetPassword.email.unexpected', {
+	REPORTEMAIL: PrivateSettings.reporter.recipient,
+	lng: user.locale,
+})}`;
 };
 
 Accounts.emailTemplates.resetPassword.html = function (user, url) {
@@ -100,6 +123,7 @@ Accounts.emailTemplates.resetPassword.html = function (user, url) {
 			username: user.username,
 			url,
 			reportEmail: PrivateSettings.reporter.recipient,
+			locale: user.locale,
 		}),
 	);
 };

@@ -10,8 +10,8 @@
 	</div>
 	{{#if members}}
 		<div class="course-members">
-			{{#each sortedMembers}}
-				{{> courseMember member=this course=..}}
+			{{#each member in sortedMembers}}
+				{{> courseMember member=member course=this}}
 			{{/each}}
 			{{#if limited}}
 				<button class="btn btn-lg btn-add course-page-btn js-show-more-members"
@@ -31,17 +31,15 @@
 			{{> participantContact participant=member.user course=course}}
 			<div class="course-member-roles">
 				{{#if memberRoles.length}}
-					{{#each memberRoles}}
+					{{#each role in memberRoles}}
 						<div class='course-member-role float-end'>
 							<span class="course-member-role-text">
-								<span class="{{rolelistIcon this}} fa-fw" aria-hidden="true"></span>
-								<span class="role-short">{{roleShort this}}</span>
+								<span class="{{rolelistIcon role}} fa-fw" aria-hidden="true"></span>
+								<span class="role-short">{{roleShort role}}</span>
 							</span>
-							{{#with ..}}
-								{{#if mayUnsubscribeFromTeam ..}}
-									{{> removeFromTeamDropdown}}
-								{{/if}}
-							{{/with}}
+							{{#if mayUnsubscribeFromTeam role}}
+								{{> removeFromTeamDropdown}}
+							{{/if}}
 						</div>
 					{{/each}}
 				{{/if}}

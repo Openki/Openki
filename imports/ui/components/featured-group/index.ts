@@ -39,5 +39,7 @@ template.onCreated(function () {
 });
 
 template.helpers({
-	featuredGroup: () => Template.instance().featuredGroup(),
+	featuredGroup() {
+		return Template.instance().featuredGroup();
+	},
 });

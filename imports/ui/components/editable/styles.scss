@@ -1,3 +1,5 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 @mixin editable-popout {
 	.editable-wrap {
 		margin: -8px;
@@ -69,10 +71,10 @@
 }
 
 .editable-icon {
-	color: $gray-light;
+	color: $gray-600;
 	cursor: default;
 	padding: 0.2em;
-	transition: color $default-transition-time;
+	transition: color 0.25s;
 
 	&:hover {
 		cursor: pointer;
@@ -80,7 +82,7 @@
 }
 
 .editable-wrap:hover .editable-icon {
-	color: $gray-dark;
+	color: $gray-800;
 }
 
 .editable-wrap-rich .editable-icon {
@@ -91,7 +93,7 @@
 
 .editable:focus + .editable-icon,
 .editable-changed + .editable-icon {
-	color: $gray-dark;
+	color: $gray-800;
 }
 
 .editable-controls {

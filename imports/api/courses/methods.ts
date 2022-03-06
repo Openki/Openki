@@ -22,6 +22,7 @@ import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 import { LocalizedValue as LocalizedValueType } from '/imports/utils/getLocalizedValue';
+import * as FileStorage from '/imports/utils/FileStorage';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import { UserModel } from '/imports/api/users/users';
@@ -96,7 +97,7 @@ export interface SaveFields {
 	categories?: string[];
 	name?: string;
 	region?: string;
-	additionalInfos?: {
+	customFields?: {
 		name: string;
 		displayText: LocalizedValueType;
 		value: string;
@@ -119,7 +120,7 @@ export const save = ServerMethod(
 			categories: Match.Optional([String]),
 			name: Match.Optional(String),
 			region: Match.Optional(String),
-			additionalInfos: Match.Optional([
+			customFields: Match.Optional([
 				{
 					name: String,
 					displayText: LocalizedValue,
@@ -207,8 +208,8 @@ export const save = ServerMethod(
 			set.name = StringTools.saneTitle(changes.name).substring(0, 1000);
 			set.slug = StringTools.slug(set.name);
 		}
-		if (changes.additionalInfos) {
-			set.additionalInfos = changes.additionalInfos.map((i: any) => ({
+		if (changes.customFields) {
+			set.customFields = changes.customFields.map((i: any) => ({
 				name: i.name.substring(0, 50),
 				displayText: i.displayText,
 				value: i.value.substring(0, 200),
@@ -295,6 +296,72 @@ export const save = ServerMethod(
 
 		return courseId;
 	},
+);
+
+export const updateImage = ServerMethod(
+	'course.update.image',
+	async (courseId: string, file: FileStorage.UploadFile) => {
+		check(courseId, String);
+
+		const user = Meteor.user();
+		if (!user) {
+			throw new Meteor.Error(401, 'please log-in');
+		}
+
+		// Load group from DB
+		const course = loadCourse(courseId);
+
+		if (course.isNew() || !course.editableBy(user)) {
+			throw new Meteor.Error(401, 'Denied');
+		}
+
+		if (course.image && !course.image.startsWith('https://')) {
+			FileStorage.remove(course.image);
+		}
+
+		const result = await FileStorage.upload('courses/image/', file);
+
+		const update = { image: result.fullFileName };
+
+		const enrichedSet = timeLasteditDenormalizer.beforeUpdateImage(update);
+		Courses.update(course._id, { $set: enrichedSet });
+		historyDenormalizer.afterUpdateImage(courseId, user._id);
+
+		return courseId;
+	},
+	{ simulation: false },
+);
+
+export const deleteImage = ServerMethod(
+	'course.delete.image',
+	async (courseId: string) => {
+		check(courseId, String);
+
+		const user = Meteor.user();
+		if (!user) {
+			throw new Meteor.Error(401, 'please log-in');
+		}
+
+		// Load group from DB
+		const course = loadCourse(courseId);
+
+		if (course.isNew() || !course.editableBy(user)) {
+			throw new Meteor.Error(401, 'Denied');
+		}
+
+		if (course.image && !course.image.startsWith('https://')) {
+			FileStorage.remove(course.image);
+		}
+
+		const update = { image: '' };
+
+		const set = timeLasteditDenormalizer.beforeDeleteImage();
+		Courses.update(course._id, { $unset: update, $set: set });
+		historyDenormalizer.afterDeleteImage(courseId, user._id);
+
+		return courseId;
+	},
+	{ simulation: false },
 );
 
 /**

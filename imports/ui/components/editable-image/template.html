@@ -6,9 +6,9 @@
 			<label for="file">
 				<div class="mb-1">
 					{{#if (state 'preview')}}
-						<img src="{{state 'preview'}}" />
-					{{else if thumbnail}}
-						<img src="{{thumbnail}}" />
+						<img {{thumbnailAttributes}} src={{state 'preview'}} />
+					{{else if thumbnail.src}}
+						<img {{thumbnailAttributes}} src={{thumbnail.src}} />
 					{{else}}
 						<i class="fa fa-image fa-5x" aria-hidden="true"></i>
 					{{/if}}
@@ -35,10 +35,19 @@
 					{{/if}}
 				{{/if}}
 			</label>
+			{{#if (stateEquals 'progress' 'ready')}}
+				<div class="form-check text-start">
+					<input class="form-check-input js-check-copy-rights" type="checkbox" value=""
+						   id="editableImageCopyRights" {{copyRightsChecked}}>
+					<label class="form-check-label" for="editableImageCopyRights">
+						{{i18n 'fileUpload.copyrights' 'I have the copy rights to publish that file.'}}
+					</label>
+				</div>
+			{{/if}}
 		</form>
 		<div class='editable-image-controls'>
 			{{#if (stateEquals 'progress' 'ready')}}
-				{{> buttonSave event="js-editable-image-upload"}}
+				{{> buttonSave uploadButtonAttributes}}
 			{{else if deleteAllowed}}
 				{{> buttonDelete event="js-editable-image-delete"}}
 			{{/if}}
@@ -46,13 +55,33 @@
 		</div>
 	{{else}}
 		<div>
-			{{#if thumbnail}}
-				<img class="cursor-pointer js-editable-image-edit" src="{{thumbnail}}" />
+			{{#if thumbnail.src}}
+				<img class="cursor-pointer js-editable-image-edit img-thumbnail"
+					 {{thumbnailAttributes}} src={{thumbnail.src}} />
 			{{else}}
 				<i class="fa fa-image fa-5x cursor-pointer js-editable-image-edit"
 				   aria-hidden="true"></i>
 			{{/if}}
 			<span class="align-top fa fa-pencil cursor-pointer js-editable-image-edit"></span>
+			{{#if thumbnail.src}}
+				<span class="align-top fa fa-eye cursor-pointer js-editable-image-show"
+					  data-bs-toggle="modal"
+					  data-bs-target="#editable-image-{{instance.id}}"></span>
+				<div class="modal fade" id="editable-image-{{instance.id}}" tabindex="-1"
+					 aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered modal-xl">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+							</div>
+							<div class="modal-body text-center">
+								<img class="mw-100" src={{thumbnail.src}} />
+							</div>
+						</div>
+					</div>
+				</div>
+			{{/if}}
 		</div>
 	{{/unless}}
 </template>

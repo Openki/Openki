@@ -20,7 +20,7 @@ import '/imports/ui/components/buttons';
 import '/imports/ui/components/events/list';
 import '/imports/ui/components/map';
 import '/imports/ui/components/profile-link';
-import '/imports/ui/components/venues/edit/venue-edit';
+import '/imports/ui/components/venues/edit';
 
 import './template.html';
 import './styles.scss';
@@ -171,6 +171,10 @@ template.helpers({
 
 	facilityNames() {
 		return Object.keys(this.facilities);
+	},
+
+	facilitiesDisplay(name: string) {
+		return `venue.facility.${name}`;
 	},
 
 	verifyDelete() {

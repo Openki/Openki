@@ -226,8 +226,8 @@ template.onRendered(function () {
 	const fitBounds = _.debounce(() => {
 		const bounds = L.latLngBounds([]);
 		let count = 0;
-		Object.keys(layers).forEach((layerPos) => {
-			bounds.extend(layers[layerPos].getBounds());
+		Object.values(layers).forEach((layer) => {
+			bounds.extend(layer.getBounds());
 			count += 1;
 		});
 
@@ -235,8 +235,8 @@ template.onRendered(function () {
 
 		// Use center markers when there are no other markers
 		if (count < 1) {
-			Object.keys(centers).forEach((centerPos) => {
-				bounds.extend(centers[centerPos]);
+			Object.values(centers).forEach((center) => {
+				bounds.extend(center);
 				count += 1;
 			});
 			if (count === 1) {

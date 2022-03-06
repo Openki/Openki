@@ -1,10 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-import * as IdTools from '/imports/utils/id-tools';
-
-import { GroupEntity } from '/imports/api/groups/groups';
-
 export type Role = 'admin';
 
 export interface UserEntity extends Meteor.User {
@@ -118,10 +114,9 @@ export class User {
 	 * Check whether the user may promote things with the given group.
 	 * The user must be a member of the group to be allowed to promote things with it.
 	 *
-	 * @param group The group to check, this may be an Id or a group object
+	 * @param groupId The group to check
 	 */
-	mayPromoteWith(this: UserModel, group: string | GroupEntity) {
-		const groupId = IdTools.extract(group);
+	mayPromoteWith(this: UserModel, groupId: string) {
 		if (!groupId || !this.groups) {
 			return false;
 		}

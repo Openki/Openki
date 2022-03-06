@@ -214,7 +214,7 @@ import './styles.scss';
 
 	template.helpers({
 		shortId(id: string) {
-			return id.substr(0, 8);
+			return id.substring(0, 8);
 		},
 		isodate(date: moment.Moment) {
 			return moment(date).toISOString();

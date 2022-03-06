@@ -14,8 +14,9 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { AsyncTools } from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
+import * as FileStorage from '/imports/utils/FileStorage';
 import * as StringTools from '/imports/utils/string-tools';
-import { GroupEntityAdditionalInfosForProposals } from '/imports/api/groups/groups';
+import { GroupEntityCustomCourseFields } from '/imports/api/groups/groups';
 
 export interface CourseMemberEntity {
 	user: string;
@@ -40,13 +41,13 @@ export interface CourseEntity {
 	 */
 	groupOrganizers: string[];
 	description: string;
+	image: string;
 	slug: string;
 	/** ID_region */
 	region: string;
-	additionalInfos: (Pick<
-		GroupEntityAdditionalInfosForProposals,
-		'name' | 'displayText' | 'visibleFor'
-	> & { value: string })[];
+	customFields: (Pick<GroupEntityCustomCourseFields, 'name' | 'displayText' | 'visibleFor'> & {
+		value: string;
+	})[];
 	/** (what for?) */
 	date: Date;
 	/** ID_user */
@@ -64,7 +65,7 @@ export interface CourseEntity {
 		dateTime: Date;
 		type: string;
 		data: any;
-	};
+	}[];
 	/**
 	 * (calculated) List of user and group id allowed to edit the course, calculated from members
 	 * and groupOrganizers
@@ -125,6 +126,14 @@ export class Course {
 
 	userHasRole(this: CourseModel, userId: string | undefined | null, role: string) {
 		return hasRoleUser(this.members, role, userId);
+	}
+
+	publicImageUrl(this: CourseModel) {
+		if (!this.image) {
+			return '';
+		}
+
+		return FileStorage.generatePublicUrl(this.image);
 	}
 }
 
@@ -382,7 +391,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 			'lastEvent.loc': 0,
 		};
 
-		return this.find(find, options);
+		return this.find(find, options) as Mongo.Cursor<CourseEntity, CourseModel>;
 	}
 }
 

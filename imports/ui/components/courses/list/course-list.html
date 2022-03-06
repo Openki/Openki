@@ -1,7 +1,7 @@
 <template name="courseList">
 	<div class="course-list">
-		{{#each this}}
-			{{> courseCompact}}
+		{{#each course in this}}
+			{{> courseCompact course}}
 		{{/each}}
 	</div>
 </template>

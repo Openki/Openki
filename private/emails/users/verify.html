@@ -2,22 +2,22 @@
 	<tr>
 		<td>
 			<span class="title">
-				{{i18n "verifyEmail.email.gretting" "Hi {NAME}" NAME=username}}
+				{{i18n "verifyEmail.email.gretting" "Hi {NAME}" NAME=username lng=locale}}
 			</span>
 			<p>
-				{{i18n "verifyEmail.email.introduction" "We're happy that you are part of the {SITE} community." SITE=siteName}}
+				{{i18n "verifyEmail.email.introduction" "We're happy that you are part of the {SITE} community." SITE=siteName lng=locale}}
 			</p>
 			<p class="gap-md">
-				{{i18n "verifyEmail.email.verification" "Please click this link to verify your e-mail address. This helps verify you're a real person."}}
+				{{i18n "verifyEmail.email.verification" "Please click this link to verify your e-mail address. This helps verify you're a real person." lng=locale}}
 			</p>
 			<p class="text-center">
 				<a class="button" href="{{url}}">
-					{{i18n "verifyEmail.email.verifyButton" "Verify email address"}}
+					{{i18n "verifyEmail.email.verifyButton" "Verify email address" lng=locale}}
 				</a>
 			</p>
 			<p>
-				{{i18n "verifyEmail.email.farewell" "If you have any questions or suggestions, please do not hesitate contacting us."}}<br />
-				{{i18n "verifyEmail.email.postscript" "Kind regards, your {SITE} team" SITE=siteName}}
+				{{i18n "verifyEmail.email.farewell" "If you have any questions or suggestions, please do not hesitate contacting us." lng=locale}}<br />
+				{{i18n "verifyEmail.email.postscript" "Kind regards, your {SITE} team" SITE=siteName lng=locale}}
 			</p>
 		</td>
 	</tr>
@@ -26,9 +26,9 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{i18n "verifyEmail.email.unexpected" "If you don't know why you got this e-mail, ignore it or send us a notification to: {REPORTEMAIL}" REPORTEMAIL=reportEmail}}
+						{{i18n "verifyEmail.email.unexpected" "If you don't know why you got this e-mail, ignore it or send us a notification to: {REPORTEMAIL}" REPORTEMAIL=reportEmail lng=locale}}
 						<a
-						   href="{{urlFor 'profile'}}">{{i18n "verifyEmail.email.profileLink" "Visit your profile"}}</a>
+						   href="{{urlFor 'profile'}}">{{i18n "verifyEmail.email.profileLink" "Visit your profile" lng=locale}}</a>
 					</td>
 				</tr>
 			</table>

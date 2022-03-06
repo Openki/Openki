@@ -84,13 +84,21 @@ import './template.html';
 	});
 
 	template.helpers({
-		pageReady: () => Template.instance().pageReady.get(),
+		pageReady() {
+			return Template.instance().pageReady.get();
+		},
 
-		ready: () => Template.instance().subscriptionsReady(),
+		ready() {
+			return Template.instance().subscriptionsReady();
+		},
 
-		days: () => Template.instance().days.get(),
+		days() {
+			return Template.instance().days.get();
+		},
 
-		eventsOn: (day: string) => Template.instance().groupedEvents.get()[day],
+		eventsOn(day: string) {
+			return Template.instance().groupedEvents.get()[day];
+		},
 
 		moreEvents() {
 			const limit = Template.instance().limit.get();
@@ -122,7 +130,9 @@ import './template.html';
 	});
 
 	template.helpers({
-		allRegions: () => Session.equals('region', 'all'),
+		allRegions() {
+			return Session.equals('region', 'all');
+		},
 
 		regionName() {
 			return Regions.findOne(this.region)?.name;

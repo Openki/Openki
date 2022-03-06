@@ -47,9 +47,13 @@ Template.layout.helpers({
 		return !Regions.currentRegion()?.isPrivate();
 	},
 
-	isAdminPage: () => Router.current().url.includes('admin'),
+	isAdminPage() {
+		return Router.current().url.includes('admin');
+	},
 
-	isAdmin: () => UserPrivilegeUtils.privilegedTo('admin'),
+	isAdmin() {
+		return UserPrivilegeUtils.privilegedTo('admin');
+	},
 
 	isNotAdminPanel() {
 		const { route } = Router.current();

@@ -322,7 +322,9 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		editableText: () => Template.instance().editableText,
+		editableText() {
+			return Template.instance().editableText;
+		},
 
 		postClass() {
 			return this.parentId ? 'discussion-comment' : 'discussion-post';

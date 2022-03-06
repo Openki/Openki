@@ -11,7 +11,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import Categories from '/imports/api/categories/categories';
 import { Course, CourseMemberEntity, CourseModel, Courses } from '/imports/api/courses/courses';
 import * as CoursesMethods from '/imports/api/courses/methods';
-import { GroupEntityAdditionalInfosForProposals, Groups } from '/imports/api/groups/groups';
+import { GroupEntityCustomCourseFields, Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { RoleEntity, Roles } from '/imports/api/roles/roles';
 
@@ -24,7 +24,7 @@ import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
-import '/imports/ui/components/editable/editable';
+import '/imports/ui/components/editable';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
 
@@ -62,7 +62,7 @@ export type Data = {
 			showInternalCheckbox: () => boolean;
 			getSavedCourse: () => CourseModel | undefined;
 			getGroups: () => string[];
-			additionalInfos: () => GroupEntityAdditionalInfosForProposals[];
+			customFields: (type?: 'singleLine' | 'multiLine') => GroupEntityCustomCourseFields[];
 			resetFields: () => void;
 		}
 	>;
@@ -184,12 +184,16 @@ export type Data = {
 			return groups;
 		};
 
-		instance.additionalInfos = () => {
+		instance.customFields = (type?: 'singleLine' | 'multiLine') => {
 			const groups = instance.getGroups();
 
-			return Groups.find({ _id: { $in: groups } })
-				.fetch()
-				.flatMap((g) => g.additionalInfosForProposals || []);
+			return (
+				Groups.find({ _id: { $in: groups } })
+					.fetch()
+					.flatMap((g) => g.customCourseFields || [])
+					// when type is undefined all will get back
+					.filter((g) => !type || (g.type || 'singleLine') === type)
+			);
 		};
 
 		instance.resetFields = () => {
@@ -251,13 +255,12 @@ export type Data = {
 
 		showMoreInfo() {
 			return (
-				Template.instance().showRegionSelection() ||
-				Template.instance().additionalInfos().length > 0
+				Template.instance().showRegionSelection() || Template.instance().customFields().length > 0
 			);
 		},
 
-		getAdditionalInfoValue(name: string) {
-			return Template.currentData().additionalInfos?.filter((a) => a.name === name)[0]?.value;
+		getCustomFieldValue(name: string) {
+			return Template.currentData().customFields?.filter((a) => a.name === name)[0]?.value;
 		},
 
 		hideCategories() {
@@ -471,11 +474,11 @@ export type Data = {
 				});
 			}
 
-			changes.additionalInfos = instance.additionalInfos().map((i) => {
+			changes.customFields = instance.customFields().map((i) => {
 				return {
 					name: i.name,
 					displayText: i.displayText,
-					value: instance.$(`.js-additional-info-${i.name}`).val() as string,
+					value: instance.$(`.js-custom-field-${i.name}`).val() as string,
 					visibleFor: i.visibleFor,
 				};
 			});

@@ -40,7 +40,7 @@ const UpdatesApplied = new Mongo.Collection<UpdatesAppliedEntity>('UpdatesApplie
 Meteor.startup(() => {
 	const skipInitial = UpdatesApplied.find().count() === 0;
 
-	Object.keys(UpdatesAvailable).forEach((name) => {
+	Object.entries(UpdatesAvailable).forEach(([name, updateAvailable]) => {
 		if (UpdatesApplied.find({ name }).count() === 0) {
 			const entry: UpdatesAppliedEntity = {
 				name,
@@ -54,7 +54,7 @@ Meteor.startup(() => {
 			} else {
 				/* eslint-disable-next-line no-console */
 				console.log(`Applying update ${name}`);
-				entry.affected = UpdatesAvailable[name]();
+				entry.affected = updateAvailable();
 				entry.applied = new Date();
 				/* eslint-disable-next-line no-console */
 				console.log(`${name}: ${entry.affected} affected documents`);

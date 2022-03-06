@@ -10,7 +10,7 @@ import { Filtering } from '/imports/utils/filtering';
 import * as FileStorage from '/imports/utils/FileStorage';
 import { LocalizedValue } from '/imports/utils/getLocalizedValue';
 
-export interface GroupEntityAdditionalInfosForProposals {
+export interface GroupEntityCustomCourseFields {
 	/** For internal us, must be unique in the list. */
 	name: string;
 	/** Used when the value is edited. */
@@ -21,6 +21,8 @@ export interface GroupEntityAdditionalInfosForProposals {
 	displayText: LocalizedValue;
 	/** Who will see the entered values. It will be copied to the course object. */
 	visibleFor: 'all' | 'editors';
+	/** Optional: The type of field. 'singleLine' for single-line, 'multiLine' for multi-line input. Default: 'singleLine' */
+	type?: 'singleLine' | 'multiLine';
 }
 
 /** DB-Model */
@@ -33,7 +35,7 @@ export interface GroupEntity {
 	description: string;
 	logoUrl?: string;
 	/** Customize the inputs that the user can enter when creating and editing a course. */
-	additionalInfosForProposals?: GroupEntityAdditionalInfosForProposals[];
+	customCourseFields?: GroupEntityCustomCourseFields[];
 	/** List of userIds */
 	members: string[];
 }
@@ -89,6 +91,15 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
 	Filtering() {
 		return new Filtering({});
 	}
+
+	findFilter(
+		filter?: {
+			own?: false;
+		},
+		limit?: number,
+		skip?: number,
+		sort?: [string, 'asc' | 'desc'][] | undefined,
+	): Mongo.Cursor<GroupEntity, GroupModel>;
 
 	/**
 	 * Find groups for given filters

@@ -58,14 +58,17 @@ import './template.html';
 	});
 
 	template.helpers({
-		ready: () => Template.instance().subscriptionsReady(),
-		courses: () =>
-			Courses.find(
+		ready() {
+			return Template.instance().subscriptionsReady();
+		},
+		courses() {
+			return Courses.find(
 				{},
 				{
 					limit: Template.instance().limit.get(),
 				},
-			),
+			);
+		},
 		moreCourses() {
 			const limit = Template.instance().limit.get();
 			const courseCount = Courses.find({}, { limit: limit + 1 }).count();
@@ -96,9 +99,15 @@ import './template.html';
 	});
 
 	template.helpers({
-		allRegions: () => Session.equals('region', 'all'),
-		regionOf: (course: CourseModel) => Regions.findOne(course.region)?.name,
-		expanded: () => Template.instance().expanded.get(),
+		allRegions() {
+			return Session.equals('region', 'all');
+		},
+		regionOf(course: CourseModel) {
+			return Regions.findOne(course.region)?.name;
+		},
+		expanded() {
+			return Template.instance().expanded.get();
+		},
 		interestedPersons(course: CourseModel) {
 			return course.members.length;
 		},

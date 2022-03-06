@@ -5,31 +5,31 @@ import { assert, AssertionError } from 'chai';
 import '/imports/api/fixtures/methods';
 
 // Checks response status and content-type
-const assertGoodHeaders = function (result) {
+function assertGoodHeaders(result: Response) {
 	assert.equal(result.status, 200);
 	assert.equal(result.headers.get('Content-Type'), 'application/json; charset=utf-8');
-};
+}
 
 // Construct a function that fails if it's ever called with a lesser value than the one before
-const AssertAscending = function (base, message) {
-	let current = base;
-	return function (next) {
+function AssertAscending(base: Date, message: string | undefined) {
+	let current = base.valueOf();
+	return function (next: number) {
 		assert.isAtLeast(next, current, message);
 		current = next;
 	};
-};
+}
 
-const AssertDescending = function (base, message) {
-	let current = base;
-	return function (next) {
+const AssertDescending = function (base: Date, message: string | undefined) {
+	let current = base.valueOf();
+	return function (next: number) {
 		assert.isAtMost(next, current, message);
 		current = next;
 	};
 };
 
-const AssertAscendingString = function (base, message) {
+const AssertAscendingString = function (base: string, message: string) {
 	let current = base.toLowerCase();
-	return function (next) {
+	return function (next: string) {
 		const lowerNext = next.toLowerCase();
 		const side = current.localeCompare(lowerNext);
 		if (side > 0) {
@@ -78,7 +78,7 @@ if (Meteor.isClient) {
 					const { data } = json;
 					assert.isNotEmpty(data);
 
-					const starts = _.pluck(data, 'start').map((datestr) => new Date(datestr));
+					const starts = _.pluck(data, 'start').map((datestr) => new Date(datestr).valueOf());
 
 					// Because we start at the current time, this test will also detect events
 					// in the past as order violation
@@ -92,7 +92,7 @@ if (Meteor.isClient) {
 					const result = await fetch(events);
 					assertGoodHeaders(result);
 					const json = await result.json();
-					const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr));
+					const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr).valueOf());
 					starts.forEach(
 						AssertAscending(new Date(), 'ascending ordering of start-dates was requested'),
 					);
@@ -119,7 +119,7 @@ if (Meteor.isClient) {
 					const json = await result.json();
 					const { data } = json;
 					assert.isNotEmpty(data);
-					data.forEach((event) => {
+					data.forEach((event: { groups: string }) => {
 						assert.include(event.groups, groupId, 'only events for selected group');
 					});
 				});
@@ -134,7 +134,7 @@ if (Meteor.isClient) {
 					const { data } = json;
 					assert.isNotEmpty(data);
 
-					const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr));
+					const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr).valueOf());
 
 					// Because we start at the current time, this test will also detect if events from the
 					// future as order violation
@@ -165,7 +165,7 @@ if (Meteor.isClient) {
 					const json = await result.json();
 					const { data } = json;
 					assert.isNotEmpty(data);
-					data.forEach((element) => {
+					data.forEach((element: { region: any }) => {
 						assert.equal(element.region, testistan, 'region must be testistan');
 					});
 				});

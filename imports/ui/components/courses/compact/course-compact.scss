@@ -83,7 +83,7 @@
 .has-upcoming-events > .course-compact-content {
 	@include td-make-xs-column(7.5);
 	@include td-padding-all(0, 5px, 0, 15px);
-	background: $has-upcoming-events-bg;
+	background: transparent;
 }
 
 // ** Title

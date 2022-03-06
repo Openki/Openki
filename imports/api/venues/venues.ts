@@ -38,8 +38,6 @@ export interface VenueEntity {
 		[key: string]: string;
 	};
 	otherFacilities?: string;
-	/** URL */
-	website?: string;
 	createdby: string;
 	created: Date;
 	updated: Date;
@@ -175,7 +173,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 			find._id = { $in: recentLocations as string[] };
 		}
 
-		return this.find(find, options);
+		return this.find(find, options) as Mongo.Cursor<VenueEntity, VenueModel>;
 	}
 }
 

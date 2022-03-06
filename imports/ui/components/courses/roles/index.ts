@@ -1,13 +1,15 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Subscribe, Unsubscribe, processChange } from '/imports/api/courses/subscription';
 import { Regions } from '/imports/api/regions/regions';
 import { Users } from '/imports/api/users/users';
+import { RoleEntity } from '/imports/api/roles/roles';
+import { CourseModel } from '/imports/api/courses/courses';
 
 import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
@@ -16,34 +18,55 @@ import { Analytics } from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
 
-import './course-roles.html';
+import './template.html';
+import './styles.scss';
 
-Template.courseRole.onCreated(function () {
-	this.busy(false);
-	this.enrolling = new ReactiveVar(false);
-	this.showFirstSteps = new ReactiveVar(false);
+export interface Data {
+	role: RoleEntity;
+	subscribed: boolean;
+	comment: string;
+	course: CourseModel;
+}
+
+const Template = TemplateAny as TemplateStaticTyped<
+	'courseRole',
+	Data,
+	{
+		state: ReactiveDict<{ enrolling: boolean; showFirstSteps: boolean }>;
+		courseSubscribe: (comment?: string) => Subscribe;
+	}
+>;
+
+const template = Template.courseRole;
+
+template.onCreated(function () {
+	const instance = this;
+
+	instance.busy(false);
+	instance.state = new ReactiveDict();
+	instance.state.setDefault({ enrolling: false, showFirstSteps: false });
 
 	// Build a subscribe change
-	this.subscribe = function (comment) {
+	instance.courseSubscribe = (comment) => {
 		const user = Users.currentUser();
-		return new Subscribe(this.data.course, user, this.data.role.type, comment);
+		return new Subscribe(instance.data.course, user, instance.data.role.type, comment);
 	};
 
 	// unsubscribe by email
 	// HACK this is not the right place to act on router actions
-	if (Router.current().params.query.unsubscribe === this.data.role.type) {
+	if (Router.current().params.query.unsubscribe === instance.data.role.type) {
 		SaveAfterLogin(
-			this,
+			instance,
 			i18n('loginAction.unsubscribeFromCourse', 'Log in and unsubscribe from course'),
 			i18n('registerAction.unsubscribeFromCourse', 'Register and unsubscribe from course'),
 			async () => {
 				const user = Meteor.user();
-				const change = new Unsubscribe(this.data.course, user, this.data.role.type);
+				const change = new Unsubscribe(instance.data.course, user, instance.data.role.type);
 				if (change.validFor(user)) {
 					await processChange(change);
 					Alert.success(
 						i18n('course.roles.unsubscribed', 'Unsubscribed from {NAME} course', {
-							NAME: this.data.course.name,
+							NAME: instance.data.course.name,
 						}),
 					);
 				} else {
@@ -54,93 +77,82 @@ Template.courseRole.onCreated(function () {
 	}
 });
 
-Template.courseRole.helpers({
-	showFirstSteps() {
-		return Template.instance().showFirstSteps.get();
-	},
-
-	enrolling() {
-		return Template.instance().enrolling.get();
-	},
-
-	/**
-	 * @param {string} type
-	 */
-	roleSubscribe(type) {
+template.helpers({
+	roleSubscribe(type: string) {
 		return i18n(`roles.${type}.subscribe`);
 	},
 
-	/**
-	 * @param {string} type
-	 */
-	roleSubscribed(type) {
+	roleSubscribed(type: string) {
 		return i18n(`roles.${type}.subscribed`);
 	},
 
-	/**
-	 * @param {string} type
-	 */
-	roleIs(type) {
-		return this.role.type === type;
+	roleIs(type: string) {
+		const { data } = Template.instance();
+		return data.role.type === type;
 	},
 
 	maySubscribe() {
 		const operator = Users.currentUser();
-		return Template.instance().subscribe().validFor(operator);
+		return Template.instance().courseSubscribe().validFor(operator);
 	},
 });
 
-Template.courseRole.events({
+template.events({
 	'click .js-role-enroll-btn'(event, instance) {
 		event.preventDefault();
-		instance.enrolling.set(true);
+		instance.state.set('enrolling', true);
 	},
 
 	'click .js-role-subscribe-btn'(event, instance) {
 		event.preventDefault();
 		RouterAutoscroll.cancelNext();
-		const comment = instance.$('.js-comment').val().trim();
+
+		const { data } = instance;
+		const comment = (instance.$('.js-comment').val() as string).trim();
 		instance.busy('enrolling');
 		SaveAfterLogin(
 			instance,
 			i18n('loginAction.enroll', 'Log in and enroll'),
 			i18n('registerAction.enroll', 'Register and enroll'),
 			async () => {
-				await processChange(instance.subscribe(comment));
+				await processChange(instance.courseSubscribe(comment));
 				RouterAutoscroll.cancelNext();
-				instance.showFirstSteps.set(true);
 				instance.busy(false);
-				instance.enrolling.set(false);
+				instance.state.set('showFirstSteps', true);
+				instance.state.set('enrolling', false);
 
 				Analytics.trackEvent(
 					'Enrollments in courses',
-					`Enrollments in courses as ${this.role.type}`,
-					Regions.findOne(this.course.region)?.nameEn,
+					`Enrollments in courses as ${data.role.type}`,
+					Regions.findOne(data.course.region)?.nameEn,
 				);
 			},
 		);
 	},
 
-	'click .js-role-enroll-cancel'(e, template) {
-		template.enrolling.set(false);
+	'click .js-role-enroll-cancel'(_event, instance) {
+		instance.state.set('enrolling', false);
 		return false;
 	},
 
-	async 'click .js-role-unsubscribe-btn'(event) {
+	async 'click .js-role-unsubscribe-btn'(event, instance) {
 		event.preventDefault();
 		RouterAutoscroll.cancelNext();
-		const change = new Unsubscribe(this.course, Meteor.user(), this.role.type);
+
+		const { data } = instance;
+
+		const change = new Unsubscribe(data.course, Meteor.user(), data.role.type);
 		await processChange(change);
 		RouterAutoscroll.cancelNext();
 		Analytics.trackEvent(
 			'Unsubscribes from courses',
-			`Unsubscribes from courses as ${this.role.type}`,
-			Regions.findOne(this.course.region)?.nameEn,
+			`Unsubscribes from courses as ${data.role.type}`,
+			Regions.findOne(data.course.region)?.nameEn,
 		);
 	},
 
-	'click .js-toggle-first-steps'(event, instance) {
-		instance.showFirstSteps.set(!instance.showFirstSteps.get());
+	'click .js-toggle-first-steps'(_event, instance) {
+		instance.state.set('showFirstSteps', !instance.state.get('showFirstSteps'));
 	},
 
 	'click .js-first-steps-comment'() {

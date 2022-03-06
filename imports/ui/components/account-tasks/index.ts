@@ -47,8 +47,12 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		activeAccountTask: (task: string) => Template.instance().accountTask.get() === task,
-		pleaseLogin: () => Session.get('pleaseLogin'),
+		activeAccountTask(task: string) {
+			return Template.instance().accountTask.get() === task;
+		},
+		pleaseLogin() {
+			return Session.get('pleaseLogin');
+		},
 	});
 
 	template.events({
@@ -178,7 +182,7 @@ import './styles.scss';
 			// Move entered username over to email field if it contains a @
 			if (isEmail(username)) {
 				email = username;
-				username = email.substr(0, email.indexOf('@'));
+				username = email.substring(0, email.indexOf('@'));
 			}
 
 			const parentInstance = instance.parentInstance() as any;
@@ -213,7 +217,7 @@ import './styles.scss';
 				}
 				$('.js-account-tasks').modal('hide');
 
-				const regionId = CleanedRegion(Session.get('region'));
+				const regionId = CleanedRegion(Session.get(`region`));
 				if (regionId) {
 					UsersMethods.regionChange(regionId);
 				}
@@ -271,11 +275,17 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		pleaseLogin: () => Session.get('pleaseLogin'),
+		pleaseLogin() {
+			return Session.get('pleaseLogin');
+		},
 
-		loginAction: () => Session.get('loginAction'),
+		loginAction() {
+			return Session.get('loginAction');
+		},
 
-		OAuthServices: () => Template.instance().OAuthServices,
+		OAuthServices() {
+			return Template.instance().OAuthServices;
+		},
 	});
 }
 
@@ -285,37 +295,51 @@ import './styles.scss';
 		'registerFrame',
 		{
 			noUsername: {
-				text: () => i18n('register.warning.noUserName', 'Please enter a name for your new user.'),
+				text() {
+					return i18n('register.warning.noUserName', 'Please enter a name for your new user.');
+				},
 				field: 'username',
 			},
 			'Username already exists.': {
-				text: () =>
-					i18n(
+				text() {
+					return i18n(
 						'register.warning.userExists',
 						'This username is already in use. Please choose another one.',
-					),
+					);
+				},
 				field: 'username',
 			},
 			noPassword: {
-				text: () =>
-					i18n('register.warning.noPasswordProvided', 'Please enter a password to register.'),
+				text() {
+					return i18n(
+						'register.warning.noPasswordProvided',
+						'Please enter a password to register.',
+					);
+				},
 				field: 'password',
 			},
 			noEmail: {
-				text: () =>
-					i18n('register.warning.noEmailProvided', 'Please enter an email-address to register.'),
+				text() {
+					return i18n(
+						'register.warning.noEmailProvided',
+						'Please enter an email-address to register.',
+					);
+				},
 				field: 'email',
 			},
 			'email invalid': {
-				text: () => i18n('register.warning.emailNotValid'),
+				text() {
+					return i18n('register.warning.emailNotValid');
+				},
 				field: 'email',
 			},
 			'Email already exists.': {
-				text: () =>
-					i18n(
+				text() {
+					return i18n(
 						'register.warning.emailExists',
 						'This email already exists. Have you tried resetting your password?',
-					),
+					);
+				},
 				field: 'email',
 			},
 		},
@@ -351,9 +375,13 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		pleaseLogin: () => Session.get('pleaseLogin'),
+		pleaseLogin() {
+			return Session.get('pleaseLogin');
+		},
 
-		registerAction: () => Session.get('registerAction'),
+		registerAction() {
+			return Session.get('registerAction');
+		},
 	});
 
 	template.events({
@@ -387,7 +415,8 @@ import './styles.scss';
 					username,
 					password,
 					email,
-				});
+					locale: Session.get('locale'),
+				} as any);
 
 				if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
 					$('#bs-navbar-collapse-1').collapse('hide');
@@ -459,7 +488,9 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		noValidEmail: () => !Template.instance().emailIsValid.get(),
+		noValidEmail() {
+			return !Template.instance().emailIsValid.get();
+		},
 	});
 
 	template.events({

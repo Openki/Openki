@@ -14,7 +14,7 @@
 			</div>
 			<div class="mb-3">
 				<label class="form-label">{{i18n 'venue.edit.description' 'Description'}}</label>
-				{{> editableTextarea editableDescription}}
+				{{> editableTextarea instance.editableDescription}}
 			</div>
 			{{#if showMapSelection}}
 				<div class="row gap-3 mb-3">
@@ -30,8 +30,8 @@
 									<option value=''>
 										{{i18n 'venue.edit.pls_select' 'Please select'}}
 									</option>
-									{{#each regions}}
-										<option value='{{_id}}'>{{name}}</option>
+									{{#each region in regions}}
+										<option value='{{region._id}}'>{{region.name}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -40,7 +40,7 @@
 					{{#if regionSelected}}
 						<div class="col-md">
 							<label
-								   class="form-label">{{i18n 'venue.edit.map' 'Please add Location by klicking + (on the right inside the map)'}}</label>
+								   class="form-label">{{i18n 'venue.edit.map' 'Please add location by clicking "+" (on the right inside the map)'}}</label>
 							{{> map markers=venueMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
 						</div>
 					{{/if}}
@@ -61,7 +61,8 @@
 			</div>
 
 			<div class="mb-3">
-				<label class="form-label">{{i18n 'venue.details.route'}}</label>
+				<label class="form-label"
+					   for="editform-address">{{i18n 'venue.details.route'}}</label>
 				<div class="input-group">
 					<span class="input-group-text">
 						<span class="fa fa-map-signs"></span>
@@ -129,74 +130,19 @@
 		<div class="row gap-3 mb-3">
 			<div class="col-md">
 				<label class="form-label">{{i18n 'venue.edit.infra' 'Infrastructure'}}</label>
-				<div class="form-check">
-					<input {{facilitiesCheck 'projector'}} id="venueEditProjectorCheck">
-					<label class="form-check-label" for="venueEditProjectorCheck">
-						{{i18n 'venue.edit.projector' 'Projector'}}
-					</label>
-				</div>
-				<div class="form-check">
-					<input {{facilitiesCheck 'screen'}} id="venueEditScreenCheck">
-					<label class="form-check-label" for="venueEditScreenCheck">
-						{{i18n 'venue.edit.screen' 'Screen'}}
-					</label>
-				</div>
-				<div class="form-check">
-					<input {{facilitiesCheck 'audio'}} id="venueEditAudioCheck">
-					<label class="form-check-label" for="venueEditAudioCheck">
-						{{i18n 'venue.edit.audioSystem' 'Audio System'}}
-					</label>
-				</div>
-				<div class="form-check">
-					<input {{facilitiesCheck 'blackboard'}} id="venueEditBlackboardCheck">
-					<label class="form-check-label" for="venueEditBlackboardCheck">
-						{{i18n 'venue.edit.blackboard' 'Blackboard'}}
-					</label>
-				</div>
-				<div class="form-check">
-					<input {{facilitiesCheck 'whiteboard'}} id="venueEditWhiteboardCheck">
-					<label class="form-check-label" for="venueEditWhiteboardCheck">
-						{{i18n 'venue.edit.whiteboard' 'Whiteboard'}}
-					</label>
-				</div>
-				<div class="form-check">
-					<input {{facilitiesCheck 'flipchart'}} id="venueEditFlipchartCheck">
-					<label class="form-check-label" for="venueEditFlipchartCheck">
-						{{i18n 'venue.edit.flipchart' 'Flipchart'}}
-					</label>
-				</div>
-				<div class="form-check">
-					<input {{facilitiesCheck 'wifi'}} id="venueEditWifiCheck">
-					<label class="form-check-label" for="venueEditWifiCheck">
-						{{i18n 'venue.edit.wifi' 'Wi-Fi'}}
-					</label>
-				</div>
-				<div class="form-check">
-					<input {{facilitiesCheck 'kitchen'}} id="venueEditKitchenCheck">
-					<label class="form-check-label" for="venueEditKitchenCheck">
-						{{i18n 'venue.edit.kitchen' 'Kitchen'}}
-					</label>
-				</div>
-				<div class="form-check">
-					<input {{facilitiesCheck 'wheelchairs'}} id="venueEditWheelchairsCheck">
-					<label class="form-check-label" for="venueEditWheelchairsCheck">
-						{{i18n 'venue.edit.suitableForWheelchairs' 'Accessible by wheelchair'}}
-					</label>
-				</div>
+				{{#each facility in facilityOptions}}
+					<div class="form-check">
+						<input {{facilitiesCheck facility}} id="venueEdit{{facility}}Check">
+						<label class="form-check-label" for="venueEdit{{facility}}Check">
+							{{i18n (facilitiesDisplay facility)}}
+						</label>
+					</div>
+				{{/each}}
 			</div>
 			<div class="col-md">
 				<label
 					   class="form-label">{{i18n 'venue.edit.additionalEquipment' 'Additional equipment'}}</label>
 				<textarea class="form-control js-otherFacilities">{{otherFacilities}}</textarea>
-			</div>
-		</div>
-		<div class="mb-3">
-			<label class="form-label">{{i18n 'venue.edit.website' 'Website'}}</label>
-			<div class="input-group">
-				<span class="input-group-text">
-					<span class="fa fa-globe fa-fw" aria-hidden="true"></span>
-				</span>
-				<input type="text" class="form-control js-website" value="{{website}}">
 			</div>
 		</div>
 	</div>

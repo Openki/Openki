@@ -1,6 +1,6 @@
 <template name="courseRoles">
-	{{#each this}}
-		{{> courseRole}}
+	{{#each role in roles}}
+		{{> courseRole role}}
 	{{/each}}
 </template>
 
@@ -20,7 +20,7 @@
 				</button>
 			</div>
 		</div>
-		{{#if showFirstSteps}}
+		{{#if state 'showFirstSteps'}}
 			<div class="course-role-first-steps">
 				<b>{{i18n 'course.roles.firstSteps.title' 'Thank you for your interest in the course.' ROLE=(roleShort role.type)}}</b>
 				<br>
@@ -49,8 +49,8 @@
 			</div>
 		{{/if}}
 	{{else}}
-		<div class="course-role{{#if enrolling}}-enroll{{/if}}">
-			{{#if enrolling}}
+		<div class="course-role{{#if state 'enrolling'}}-enroll{{/if}}">
+			{{#if state 'enrolling'}}
 				<div class="course-role-title-enroll">
 					<span class="{{role.icon}} fa-fw" aria-hidden="true"></span>&nbsp;
 					{{roleSubscribe role.type}}
@@ -62,19 +62,19 @@
 						</label>
 						{{#if roleIs 'participant'}}
 							<textarea class='form-control js-comment'
-									  placeholder={{i18n 'course.roles.messageInfoParticipant' 'an (optional) message like a greeting, wish, or interest'}}>{{../../member.comment}}</textarea>
+									  placeholder={{i18n 'course.roles.messageInfoParticipant' 'an (optional) message like a greeting, wish, or interest'}}>{{comment}}</textarea>
 						{{/if}}
 						{{#if roleIs 'host'}}
 							<textarea class='form-control js-comment'
-									  placeholder={{i18n 'course.roles.messageInfoHost' 'an (optional) message including info about the venue'}}>{{../../member.comment}}</textarea>
+									  placeholder={{i18n 'course.roles.messageInfoHost' 'an (optional) message including info about the venue'}}>{{comment}}</textarea>
 						{{/if}}
 						{{#if roleIs 'mentor'}}
 							<textarea class='form-control js-comment'
-									  placeholder={{i18n 'course.roles.messageInfoMentor' 'an (optional) message including info about your experience on the topic'}}>{{../../member.comment}}</textarea>
+									  placeholder={{i18n 'course.roles.messageInfoMentor' 'an (optional) message including info about your experience on the topic'}}>{{comment}}</textarea>
 						{{/if}}
 						{{#if roleIs 'team'}}
 							<textarea class='form-control js-comment'
-									  placeholder={{i18n 'course.roles.messageInfoMentor'}}>{{../../member.comment}}</textarea>
+									  placeholder={{i18n 'course.roles.messageInfoMentor'}}>{{comment}}</textarea>
 						{{/if}}
 					</div>
 					<div class="form-actions">

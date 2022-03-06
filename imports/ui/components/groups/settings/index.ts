@@ -1,5 +1,4 @@
 import { Router } from 'meteor/iron:router';
-import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
@@ -38,7 +37,7 @@ template.onCreated(function () {
 	instance.autorun(() => {
 		const search = instance.userSearch.get();
 		if (search.length > 0) {
-			Meteor.subscribe('userSearch', search);
+			instance.subscribe('userSearch', search);
 		}
 	});
 });
@@ -83,29 +82,31 @@ template.helpers({
 					instance.busy(false);
 				}
 			},
-			async onDelete() {
-				const parentInstance = instance.parentInstance() as any; // Not available in callback
+			onDelete: (instance.data.group as any)?.logoUrl
+				? async function () {
+						const parentInstance = instance.parentInstance() as any; // Not available in callback
 
-				instance.busy('deleting');
+						instance.busy('deleting');
 
-				const groupId = instance.data.group._id;
-				try {
-					await GroupsMethods.deleteLogo(groupId);
-					const groupName = Groups.findOne(groupId)?.name;
-					Alert.success(
-						i18n(
-							'groupSettings.group.logo.removed',
-							'Changes to the "{GROUP}" group settings have been saved.',
-							{ GROUP: groupName },
-						),
-					);
-					parentInstance.editingSettings.set(false);
-				} catch (err) {
-					Alert.serverError(err, 'Could not save settings');
-				} finally {
-					instance.busy(false);
-				}
-			},
+						const groupId = instance.data.group._id;
+						try {
+							await GroupsMethods.deleteLogo(groupId);
+							const groupName = Groups.findOne(groupId)?.name;
+							Alert.success(
+								i18n(
+									'groupSettings.group.logo.removed',
+									'Changes to the "{GROUP}" group settings have been saved.',
+									{ GROUP: groupName },
+								),
+							);
+							parentInstance.editingSettings.set(false);
+						} catch (err) {
+							Alert.serverError(err, 'Could not save settings');
+						} finally {
+							instance.busy(false);
+						}
+				  }
+				: undefined,
 		};
 	},
 

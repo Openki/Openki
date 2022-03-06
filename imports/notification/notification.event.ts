@@ -110,7 +110,7 @@ export function Model(entry: { body: Body }) {
 			endMoment.locale(userLocale);
 
 			const subjectvars = {
-				TITLE: event.title.substr(0, 30),
+				TITLE: event.title.substring(0, 30),
 				DATE: startMoment.format('LL'),
 				lng: userLocale,
 			};

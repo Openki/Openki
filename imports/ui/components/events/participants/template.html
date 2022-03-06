@@ -7,8 +7,8 @@
 	</div>
 	{{#if participants}}
 		<div class="event-participants">
-			{{#each sortedParticipants}}
-				{{> eventParticipant participant=this event=..}}
+			{{#each participant in sortedParticipants}}
+				{{> eventParticipant participant=participant event=this}}
 			{{/each}}
 			{{#if limited}}
 				<button class="btn btn-add event-page-btn js-show-more-participants" type="button">

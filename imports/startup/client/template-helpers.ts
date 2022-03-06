@@ -230,9 +230,16 @@ const helpers: { [name: string]: Function } = {
 	instance() {
 		return Template.instance();
 	},
+
+	/**
+	 * Takes any number of arguments and returns them concatenated.
+	 */
+	concat(...strings: string[]) {
+		return Array.prototype.slice.call(strings, 0, -1).join('');
+	},
 };
 
-Object.keys(helpers).forEach((name) => Template.registerHelper(name, helpers[name]));
+Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name, helper));
 
 /**
  * Register username and contribution helper. Cache the user data.

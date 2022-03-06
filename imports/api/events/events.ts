@@ -396,7 +396,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 
 		(options.sort as string[][]).push(['start', startSortOrder]);
 
-		return this.find(find, options);
+		return this.find(find, options) as Mongo.Cursor<EventEntity, EventModel>;
 	}
 }
 

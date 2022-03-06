@@ -1,3 +1,6 @@
+/* stylelint-disable selector-max-id */
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .venue-edit {
 	background-color: lighten($venue-bg, 10%);
 	border: 4px solid $venue-bg;
@@ -14,4 +17,8 @@
 	border: 1px solid $venue-bg;
 	margin-top: 10px;
 	padding: 15px;
+}
+
+#editform-address {
+	height: 75px;
 }

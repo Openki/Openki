@@ -41,13 +41,14 @@ const Template = TemplateAny as TemplateStaticTyped<
 const template = Template.userprofilePage;
 
 template.onCreated(function () {
-	this.busy(false);
-	const userId = Template.instance().data.user._id;
+	const instance = this;
+	instance.busy(false);
+	const userId = instance.data.user._id;
 
-	this.state = new ReactiveDict(undefined, { verifyUserDelete: false });
+	instance.state = new ReactiveDict(undefined, { verifyUserDelete: false });
 
-	this.subscribe('Courses.findFilter', { createdby: userId });
-	this.coursesCreatedBy = () => {
+	instance.subscribe('Courses.findFilter', { createdby: userId });
+	instance.coursesCreatedBy = () => {
 		return Courses.find({ createdby: userId }).fetch();
 	};
 });
@@ -57,16 +58,17 @@ template.helpers({
 	 * whether userprofile is for the logged-in user
 	 */
 	ownuser() {
-		return Template.currentData().user._id === Meteor.userId();
+		return Template.instance().data.user._id === Meteor.userId();
 	},
 
 	hasContributed() {
-		return checkContribution(Template.currentData().user.contribution);
+		return checkContribution(Template.instance().data.user.contribution);
 	},
 
 	acceptsPrivateMessages() {
 		return (
-			Template.currentData().user.acceptsPrivateMessages || UserPrivilegeUtils.privilegedTo('admin')
+			Template.instance().data.user.acceptsPrivateMessages ||
+			UserPrivilegeUtils.privilegedTo('admin')
 		);
 	},
 
@@ -75,7 +77,7 @@ template.helpers({
 	},
 
 	showInviteGroups() {
-		const data = Template.currentData();
+		const { data } = Template.instance();
 
 		if (data.user._id === Meteor.userId()) {
 			return false;
@@ -84,7 +86,7 @@ template.helpers({
 	},
 
 	showSettings() {
-		const data = Template.currentData();
+		const { data } = Template.instance();
 
 		if (data.showPrivileges) {
 			return true;
@@ -112,9 +114,10 @@ template.helpers({
 });
 
 template.events({
-	async 'click .js-has-contributed'() {
+	async 'click .js-has-contributed'(_event, instance) {
+		const { data } = instance;
 		try {
-			await usersMethods.setHasContributed(Template.currentData().user._id);
+			await usersMethods.setHasContributed(data.user._id);
 
 			Alert.success(i18n('profile.setHasContributed.alert', 'User has contributed'));
 		} catch (err) {
@@ -125,9 +128,10 @@ template.events({
 		}
 	},
 
-	async 'click .js-unset-has-contributed'() {
+	async 'click .js-unset-has-contributed'(_event, instance) {
+		const { data } = instance;
 		try {
-			await usersMethods.unsetHasContributed(Template.currentData().user._id);
+			await usersMethods.unsetHasContributed(data.user._id);
 
 			Alert.success(i18n('profile.unsetHasContributed.alert', 'Unset user has contributed'));
 		} catch (err) {
@@ -138,9 +142,10 @@ template.events({
 		}
 	},
 
-	async 'click .js-give-admin'() {
+	async 'click .js-give-admin'(_event, instance) {
+		const { data } = instance;
 		try {
-			await usersMethods.addPrivilege(Template.currentData().user._id, 'admin');
+			await usersMethods.addPrivilege(data.user._id, 'admin');
 
 			Alert.success(i18n('privilege.addedAdmin', 'Granted admin privilege'));
 		} catch (err) {
@@ -149,9 +154,10 @@ template.events({
 	},
 
 	async 'click .js-remove-privilege-btn'(event, instance) {
+		const { data } = instance;
 		const priv = instance.$(event.target as any).data('priv');
 		try {
-			await usersMethods.removePrivilege(Template.currentData().user._id, priv);
+			await usersMethods.removePrivilege(data.user._id, priv);
 
 			Alert.success(i18n('privilege.removed', 'Removed privilege'));
 		} catch (err) {
@@ -159,10 +165,10 @@ template.events({
 		}
 	},
 
-	async 'click .js-draft-into-group'(this: GroupEntity) {
-		const groupId = this._id;
-		const { name } = this;
-		const userId = Template.parentData().user._id;
+	async 'click .js-draft-into-group'(this: GroupEntity, _event, instance) {
+		const { _id: groupId, name } = this;
+		const { data } = instance;
+		const userId = data.user._id;
 
 		try {
 			await GroupsMethods.updateMembership(userId, groupId, true);
@@ -176,11 +182,11 @@ template.events({
 		}
 	},
 
-	async 'click .js-group-expel-btn'(this: GroupEntity) {
+	async 'click .js-group-expel-btn'(this: GroupEntity, _event, instance) {
 		Tooltips.hide();
-		const groupId = this._id;
-		const { name } = this;
-		const userId = Template.parentData().user._id;
+		const { _id: groupId, name } = this;
+		const { data } = instance;
+		const userId = data.user._id;
 
 		try {
 			await GroupsMethods.updateMembership(userId, groupId, false);
@@ -199,7 +205,7 @@ template.events({
 		instance.state.set('verifyUserDelete', !instance.state.get('verifyUserDelete'));
 	},
 
-	'click .js-verify-user-delete-confirm'(_event, instance) {
+	async 'click .js-verify-user-delete-confirm'(_event, instance) {
 		if (PleaseLogin()) {
 			return;
 		}
@@ -214,14 +220,14 @@ template.events({
 			return;
 		}
 
-		const userId = Template.parentData().user._id;
+		const userId = instance.data.user._id;
 
 		try {
+			await usersMethods.adminRemove(userId, reason, { courses: true });
 			Alert.success(i18n('profile.account.deleted', 'The account has been deleted'));
 			Router.go('users');
 		} finally {
 			instance.busy(false);
 		}
-		usersMethods.adminRemove(userId, reason, { courses: true });
 	},
 });

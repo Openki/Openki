@@ -3,7 +3,7 @@
 		<div class="row course-page g-3">
 			<div class="col-lg-8">
 				<div class="page-component">
-					{{#if isArchived}}
+					{{#if (isArchived course)}}
 						<div class="alert alert-archived text-center" role="alert">
 							<strong>{{i18n 'course.archive.alert' 'This course is archived and not active anymore.'}}</strong>
 						</div>
@@ -11,53 +11,49 @@
 					{{#if edit}}
 						{{> courseEdit course}}
 					{{else}}
-						<div class="course-details {{courseStateClasses}}">
-							<div class="details-header">
+						<div class="course-details {{courseStateClasses course}}">
+							<div class="details-header" {{detailsHeaderAttr course}}>
 								{{#if course.internal}}
 									<span class="details-internal"
 										  data-tooltip="{{i18n 'courseCompact.internal_course' 'Internal course'}}"></span>
 								{{/if}}
 								<div class="details-header-tags">
-									{{#if isProposal}}
+									{{#if (isProposal course)}}
 										<div class="proposal-tag">
 											<span class="fa fa-lightbulb-o fa-fw"
 												  aria-hidden="true"></span>
 											{{i18n 'course.details.is-proposalTag' 'Proposal'}}
 										</div>
 									{{/if}}
-									{{#with course}}
-										{{> regionTag}}
-									{{/with}}
+									{{> regionTag course}}
 								</div>
 								<div class="course-details-title">
-									{{#if mayEdit}}
+									{{#if (mayEdit course)}}
 										{{> editable instance.editableName}}
 									{{else}}
 										<h2>{{course.name}}</h2>
 									{{/if}}
 								</div>
-								{{#with course}}
-									{{#if categories}}
-										<div class="course-details-categories">
-											{{> courseCategories}}
-										</div>
-									{{/if}}
-									{{> courseGroupList}}
-								{{/with}}
+								{{#if course.categories}}
+									<div class="course-details-categories">
+										{{> courseCategories course}}
+									</div>
+								{{/if}}
+								{{> courseGroupList course}}
 							</div>
 							{{> courseDetailsSubmenu editableDescription=instance.editableDescription course=course}}
 						</div>
 						{{#unless course.isPrivate}}
 							{{> sharing}}
 						{{/unless}}
-						{{#if mayEdit}}
+						{{#if (mayEdit course)}}
 							<div class="actions">
 								{{> buttonEdit event="js-course-edit"}}
-								{{#if isArchived}}
+								{{#if (isArchived course)}}
 									{{> buttonCourseUnarchive}}
 								{{/if}}
 								{{#unless expanded}}
-									{{#unless isArchived}}
+									{{#unless (isArchived course)}}
 										{{> buttonCourseArchive 
 										buttonClass="btn-archive"
 										textIdle=(i18n 'course.archive.archiveButton.archive' 'Archive')
@@ -68,9 +64,9 @@
 							</div>
 						{{/if}}
 						{{#if expanded}}
-							{{> confirmDialog hasArchiveButton=isArchived}}
+							{{> confirmDialog hasArchiveButton=(isArchived course)}}
 						{{/if}}
-						{{> courseRoles rolesDetails}}
+						{{> courseRoles roles=rolesDetails}}
 					{{/if}}
 				</div>
 				{{#if mobileViewport}}
@@ -127,6 +123,14 @@
 					<span class="tab-label">{{i18n 'course.subnav.descr' 'Description'}}</span>
 				</a>
 			</li>
+			{{#if mayEdit}}
+				<li role="presentation">
+					<a href="#files" data-toggle="tab">
+						<span class="fa fa-file fa-fw" aria-hidden="true"></span>
+						<span class="tab-label">{{i18n 'course.subnav.files' 'Files'}}</span>
+					</a>
+				</li>
+			{{/if}}
 			<li role="presentation">
 				<a href="#history" data-toggle="tab">
 					<span class="fa fa-history fa-fw" aria-hidden="true"></span>
@@ -138,15 +142,21 @@
 	<div class="tab-content course-details-content">
 		<div class="tab-pane active" id="description">
 			{{> courseDetailsDescription editableDescription=editableDescription course=course}}
-			{{#each info in additionalInfos}}
+			{{#each info in customFields}}
 				<p>
-					<strong>{{info.displayText}}</strong>: {{info.value}}
+					<strong>{{info.displayText}}</strong>: <span
+						  style="white-space: pre-line;">{{info.value}}</span>
 				</p>
 			{{/each}}
 		</div>
 		<div class="tab-pane course-history" id="history">
 			{{> coursehistory}}
 		</div>
+		{{#if mayEdit}}
+			<div class="tab-pane" id="files">
+				{{> courseFiles}}
+			</div>
+		{{/if}}
 		{{#unless course.isPrivate}}
 			{{> pricePolicy dismissable=true wrap='course-details-price-policy'}}
 		{{/unless}}
@@ -165,15 +175,15 @@
 
 <template name="courseGroupList">
 	<div class="tag-group multiline">
-		{{#each groups}}
-			{{> groupName groupId=this isOrganizer=isOrganizer}}
-			{{#if isOrganizer}}
+		{{#each groupId in groups}}
+			{{> groupName groupId=groupId isOrganizer=(isOrganizer groupId)}}
+			{{#if (isOrganizer groupId)}}
 				<div class="tag group-tag addon">
 					<span class="fa fa-bullhorn fa-fw" aria-hidden="true"
 						  title="{{i18n 'grouplist.organizer.title' 'Course is co-organized by this group'}}"></span>
 				</div>
 			{{/if}}
-			{{#if tools}}
+			{{#if (tools groupId)}}
 				<div class="btn-group tag-btn group-tag-btn addon align-top">
 					<button type="button" class="dropdown-toggle" aria-expanded="false"
 							aria-haspopup="true" data-bs-toggle="dropdown">
@@ -186,8 +196,10 @@
 						<li>
 							<hr class="dropdown-divider">
 						</li>
-						{{#each tools}}
-							<li class="dialog-dropdown-btn">{{> toolTemplate}}</li>
+						{{#each tool in (tools groupId)}}
+							<li class="dialog-dropdown-btn">
+								{{> Template.dynamic template=tool.template data=tool.data}}
+							</li>
 						{{/each}}
 					</ul>
 				</div>

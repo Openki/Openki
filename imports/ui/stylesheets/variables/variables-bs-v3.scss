@@ -26,10 +26,6 @@ $shadow-sm-blur:                                 4px;
 //========================================================================================
 $footer-height:                                  50px;
 
-// ** Category
-//========================================================================================
-$category-bg:                                    rgba($gray-lighter, .5);
-
 // ** Region
 //========================================================================================
 $region-bg:                                       desaturate($green, 40%);
@@ -83,8 +79,6 @@ $course-compact-next-event-color:                $gray-dark;
 
 $course-page-component-bg:                       $blue-lighter;
 $course-details-seperator-height:                3px;
-
-$course-member-comment-border-color:             darken($blue-lighter, 20%);
 
 // ** Buttons
 //========================================================================================
