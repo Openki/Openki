@@ -20,6 +20,7 @@
 	"_option.on": "فتح",
 	"_selection.pleaseSelect": "\nاختر من فضلك",
 	"_serverError": "كان هناك خطأ في الخادم:\"{MESSAGE} ({ERROR}).\" أسف على هذا.",
+	"_serverErrorMessageOnly": "حدث خطأ في الخادم: \"{MESSAGE}.\" أسف على هذا.",
 	"backToKiosk": "الرجوع إلى النظرة العامة",
 	"calendar.next.month.long": "الذهاب إلى الشهر المقبل",
 	"calendar.next.month.short": "\nالشهر القادم",
