@@ -1,3 +1,5 @@
+import { Mongo } from 'meteor/mongo';
+
 /** DB-Model */
 export interface LanguageEntity {
 	/** ISO 639-1 code */
@@ -9,9 +11,11 @@ export interface LanguageEntity {
 	/** English full name */
 	english: string;
 	visible: boolean;
+	/** Stats from weblate */
+	translatedPercent?: number;
 }
 
-export const Languages: { [abbreviation: string]: LanguageEntity } = {
+export const LanguagesRaw: { [abbreviation: string]: LanguageEntity } = {
 	ar: {
 		lg: 'ar',
 		name: 'العربية',
@@ -118,5 +122,13 @@ export const Languages: { [abbreviation: string]: LanguageEntity } = {
 		visible: true,
 	},
 };
+
+export class LanguagesCollection extends Mongo.Collection<LanguageEntity> {
+	constructor() {
+		super('Languages');
+	}
+}
+
+export const Languages = new LanguagesCollection();
 
 export default Languages;

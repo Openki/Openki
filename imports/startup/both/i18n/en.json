@@ -490,6 +490,7 @@
   "language.german": "German",
   "languageSelection.legend.language": "Language",
   "languageSelection.noLanguagesFound": "No languages found.",
+  "languageSelection.translatedPercent": "% translated",
   "loading.loading": "Loading…",
   "location.details.hosts": "Hosts:",
   "location.details.online": "Website:",

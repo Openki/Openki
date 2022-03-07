@@ -8,11 +8,11 @@ import './template.html';
 import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
-	'frameEvents',
+	'frameEventsPage',
 	Mongo.Cursor<EventEntity, EventModel>
 >;
 
-const template = Template.frameEvents;
+const template = Template.frameEventsPage;
 
 template.onRendered(function () {
 	const instance = this;
