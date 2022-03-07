@@ -1,0 +1,8 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.frame-events {
+	@include clearfix;
+	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 8) * -1);
+	padding: 20px 0;
+	width: auto;
+}

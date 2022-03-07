@@ -3,7 +3,7 @@ import ICU from 'i18next-icu';
 import ChainedBackend from 'i18next-chained-backend';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import LocalStorageBackend from 'i18next-localstorage-backend';
-import { Languages } from '/imports/api/languages/languages';
+import { LanguagesRaw } from '/imports/api/languages/languages';
 import { Blaze, Handlebars } from 'meteor/blaze';
 import { Spacebars } from 'meteor/spacebars';
 
@@ -85,7 +85,7 @@ i18next
 
 if (Meteor.isServer) {
 	// on the server we pre load all languages.
-	i18next.loadLanguages(Object.keys(Languages));
+	i18next.loadLanguages(Object.keys(LanguagesRaw));
 }
 
 /**

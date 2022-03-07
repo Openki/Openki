@@ -20,6 +20,9 @@
 				<ul class="dropdown-menu dropdown-menu-end mx-2" role="menu">
 					{{#if languages}}
 						<li class="dropdown-header dropdown-legend">
+							<div class="dropdown-addon-right">
+								{{i18n 'languageSelection.translatedPercent' '% translated'}}
+							</div>
 							{{i18n 'languageSelection.legend.language' 'Language'}}
 						</li>
 						{{#each languages}}
@@ -29,6 +32,11 @@
 								   title="{{english}}">
 									{{#if currentLanguage}}
 										<span class="checkmark fa fa-check"></span>
+									{{/if}}
+									{{#if translatedPercent}}
+										<div class="dropdown-addon-right">
+											{{translatedPercent}} %
+										</div>
 									{{/if}}
 									<div class="language-name">
 										{{languageNameMarked}}

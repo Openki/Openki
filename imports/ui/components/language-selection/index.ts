@@ -3,7 +3,7 @@ import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import { LanguageEntity, Languages } from '/imports/api/languages/languages';
+import { LanguageEntity, LanguagesRaw, Languages } from '/imports/api/languages/languages';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
@@ -26,6 +26,7 @@ import './styles.scss';
 	template.onCreated(function () {
 		const instance = this;
 		instance.searchingLanguages = new ReactiveVar(false);
+		instance.subscribe('Languages');
 	});
 
 	template.helpers({
@@ -48,7 +49,7 @@ import './styles.scss';
 			return '';
 		},
 		setLanguage() {
-			return Languages[Session.get('locale')];
+			return LanguagesRaw[Session.get('locale')];
 		},
 	});
 
@@ -103,11 +104,11 @@ import './styles.scss';
 		},
 
 		setLanguage() {
-			return Languages[Session.get('locale')];
+			return Languages.find(Session.get('locale'));
 		},
 
 		languages() {
-			const visibleLanguages = Object.values(Languages).filter((lg) => lg.visible);
+			const visibleLanguages = Languages.find({ visible: true });
 			const search = Template.instance().languageSearch.get().toLowerCase();
 			const results: LanguageEntity[] = [];
 
@@ -134,7 +135,7 @@ import './styles.scss';
 		},
 
 		currentLanguage(this: LanguageEntity) {
-			return this === Languages[Session.get('locale')];
+			return this.lg === Session.get('locale');
 		},
 
 		helpLink() {

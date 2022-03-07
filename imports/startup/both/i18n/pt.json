@@ -312,6 +312,7 @@
 	"notification.event.mail.profileLink": "Visite seu perfil",
 	"notification.event.mail.registerEvent": "Sim, eu participo!",
 	"participantContactModal.writeMessageTo": "Escreva uma mensagem para {USER}",
+	"pricePolicy.disclaimer": "Educação deve ser aberta a todxs, por isso {SITENAME} permite apenas preços sugeridos / de orientação.",
 	"pricePolicy.dontShowAnymore": "Não mostre mais isso",
 	"pricePolicy.moreAboutPricePolicy": "Leia nossa política de preços",
 	"privilege.add.admin": "Conceder privilégios de administrador",

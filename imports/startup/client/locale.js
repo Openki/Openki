@@ -9,7 +9,7 @@ import $ from 'jquery';
 import 'bootstrap-datepicker';
 
 import * as UsersMethods from '/imports/api/users/methods';
-import { Languages } from '/imports/api/languages/languages';
+import { LanguagesRaw } from '/imports/api/languages/languages';
 
 import * as UrlTools from '/imports/utils/url-tools';
 
@@ -22,12 +22,12 @@ Meteor.startup(() => {
 
 		/** @type {false | string} */
 		let locale = false;
-		if (Languages[lang]) {
+		if (LanguagesRaw[lang]) {
 			locale = lang;
 		}
 		if (!locale && lang.length > 2) {
 			const short = lang.substring(0, 2);
-			if (Languages[short]) {
+			if (LanguagesRaw[short]) {
 				locale = short;
 			}
 		}

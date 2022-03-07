@@ -211,6 +211,7 @@ Router.route('frameCourselist', {
 
 Router.route('frameEvents', {
 	path: '/frame/events',
+	template: 'frameEventsPage',
 	layoutTemplate: 'frameLayout',
 	waitOn() {
 		this.filter = Events.Filtering().read(this.params.query).done();
