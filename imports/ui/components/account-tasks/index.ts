@@ -6,16 +6,17 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 
 import * as Alert from '/imports/api/alerts/alert';
 import * as UsersMethods from '/imports/api/users/methods';
+import { Regions } from '/imports/api/regions/regions';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Viewport from '/imports/ui/lib/viewport';
+import PublicSettings from '/imports/utils/PublicSettings';
 
 import { isEmail } from '/imports/utils/email-tools';
 import { AccountsAsync, MeteorAsync } from '/imports/utils/promisify';
 
-import { Regions } from '/imports/api/regions/regions';
 import { Analytics } from '/imports/ui/lib/analytics';
 
 import './template.html';
@@ -126,22 +127,22 @@ import './styles.scss';
 		instance.busy(false);
 
 		const oAuthServices = [];
-		const login = Meteor.settings.public.feature?.login;
-		if (login?.google) {
+		const login = PublicSettings.feature.login;
+		if (login.google) {
 			oAuthServices.push({
 				key: 'google',
 				name: 'Google',
 				serviceName: 'Google',
 			});
 		}
-		if (login?.facebook) {
+		if (login.facebook) {
 			oAuthServices.push({
 				key: 'facebook',
 				name: 'Facebook',
 				serviceName: 'Facebook',
 			});
 		}
-		if (login?.github) {
+		if (login.github) {
 			oAuthServices.push({
 				key: 'github',
 				name: 'GitHub',

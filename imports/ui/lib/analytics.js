@@ -2,6 +2,7 @@ import $ from 'jquery';
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
+import PublicSettings from '/imports/utils/PublicSettings';
 
 export const Analytics = {};
 
@@ -23,7 +24,7 @@ const MatomoPattern = Match.ObjectIncluding({
  * Returns true if matomo analytics settings are configured.
  */
 Analytics.isConfigured = function () {
-	return Match.test(Meteor.settings.public.matomo, SettingsPattern);
+	return Match.test(PublicSettings.matomo, SettingsPattern);
 };
 
 /**
@@ -47,13 +48,13 @@ Analytics.load = function () {
 		result = Promise.resolve(window.AnalyticsTracker);
 	} else {
 		result = new Promise((resolve, reject) => {
-			check(Meteor.settings.public.matomo, SettingsPattern);
-			const config = Meteor.settings.public.matomo;
+			check(PublicSettings.matomo, SettingsPattern);
+			const config = PublicSettings.matomo;
 
 			if (!loading) {
 				// Use $.ajax with cache instead of $.loadScript().
 				loading = $.ajax({
-					url: `${config.url}${config.jsPath || 'js/'}`,
+					url: `${config.url}${config.jsPath}`,
 					cache: true,
 					dataType: 'script',
 				}).always(() => {
@@ -80,10 +81,10 @@ Analytics.load = function () {
  */
 Analytics.tracker = function () {
 	return Analytics.load().then((matomo) => {
-		check(Meteor.settings.public.matomo, SettingsPattern);
+		check(PublicSettings.matomo, SettingsPattern);
 		if (!tracker) {
-			const config = Meteor.settings.public.matomo;
-			tracker = matomo.getTracker(`${config.url}${config.phpPath || 'js/'}`, config.site);
+			const config = PublicSettings.matomo;
+			tracker = matomo.getTracker(`${config.url}${config.phpPath}`, config.site);
 		}
 		return tracker;
 	});
