@@ -56,12 +56,20 @@ check(
 		regionSelection: { minNumber: Number, aboutLink: Match.Maybe(LocalizedValue) },
 		i18nHelpLink: Match.Maybe(LocalizedValue),
 		publicTenants: [String],
-		matomo: Match.Maybe({
-			url: String,
-			site: Match.Integer,
-			jsPath: String,
-			phpPath: String,
-		}),
+		matomo: Match.Maybe(
+			Match.OneOf(
+				{
+					jsPath: String,
+					phpPath: String,
+				},
+				{
+					url: String,
+					site: Match.Integer,
+					jsPath: String,
+					phpPath: String,
+				},
+			),
+		),
 		pricePolicyEnabled: Boolean,
 		feature: {
 			login: { google: Boolean, facebook: Boolean, github: Boolean },
