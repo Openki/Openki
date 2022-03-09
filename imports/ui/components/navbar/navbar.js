@@ -32,7 +32,7 @@ Template.navbar.onRendered(function () {
 			activeNavLink.toggleClass('navbar-link-covering', notAtTop);
 		});
 	} else {
-		$(document).click((event) => {
+		$(document).on('click', (event) => {
 			if (this.$(event.target).parents('.navbar-collapse').length === 0) {
 				this.$('.navbar-collapse').collapse('hide');
 			}
@@ -41,10 +41,6 @@ Template.navbar.onRendered(function () {
 });
 
 Template.navbar.helpers({
-	showTestWarning() {
-		return Meteor.settings.public.testWarning;
-	},
-
 	connected() {
 		return Meteor.status().status === 'connected';
 	},

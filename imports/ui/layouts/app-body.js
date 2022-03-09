@@ -27,10 +27,6 @@ import '/imports/ui/components/regions/splash';
 import './app-body.html';
 
 Template.layout.helpers({
-	testWarning() {
-		return Meteor.settings.public.testWarning;
-	},
-
 	showRegionSplash() {
 		const { route } = Router.current();
 		if (!route) {

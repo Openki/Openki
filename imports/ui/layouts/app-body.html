@@ -7,7 +7,7 @@
 		<div id="topBar">
 			{{> navbar}}
 		</div>
-		<div id="outer" class="{{#if testWarning}}test-warning{{/if}}">
+		<div id="outer" class="{{#if PublicSettings.testWarning}}test-warning{{/if}}">
 			{{> yield region='aboveContent'}}
 
 			{{> alerts}}

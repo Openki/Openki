@@ -8,6 +8,7 @@ import { LocalizedValue } from '/imports/utils/CustomChecks';
 const defaults = {
 	siteName: 'Hmmm',
 	siteStage: '',
+	testWarning: false,
 	headerLogo: { src: '', alt: '' },
 	headerLogoKiosk: { src: '', alt: '' },
 	avatarLogo: { src: '', alt: '' },
@@ -15,7 +16,14 @@ const defaults = {
 	regionSelection: { minNumber: 5, aboutLink: '' },
 	i18nHelpLink: 'https://gitlab.com/Openki/Openki/-/wikis/i18n-howto',
 	publicTenants: [] as string[],
+	matomo: {
+		jsPath: 'js/',
+		phpPath: 'js/',
+	},
 	pricePolicyEnabled: true,
+	feature: {
+		login: { google: false, facebook: false, github: false },
+	},
 	// eslint-disable-next-line camelcase
 	footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
 	faqLink: '/info/faq',
@@ -39,6 +47,7 @@ check(
 	Match.ObjectIncluding({
 		siteName: String,
 		siteStage: String,
+		testWarning: Boolean,
 		headerLogo: { src: String, alt: String },
 		headerLogoKiosk: { src: String, alt: String },
 		avatarLogo: { src: String, alt: String },
@@ -47,7 +56,16 @@ check(
 		regionSelection: { minNumber: Number, aboutLink: Match.Maybe(LocalizedValue) },
 		i18nHelpLink: Match.Maybe(LocalizedValue),
 		publicTenants: [String],
+		matomo: Match.Maybe({
+			url: String,
+			site: Match.Integer,
+			jsPath: String,
+			phpPath: String,
+		}),
 		pricePolicyEnabled: Boolean,
+		feature: {
+			login: { google: Boolean, facebook: Boolean, github: Boolean },
+		},
 		footerLinks: [
 			{
 				link: String,
