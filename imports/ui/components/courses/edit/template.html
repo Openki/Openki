@@ -251,9 +251,8 @@
 	<div class="mb-3 js-proposed-search">
 		<label class="form-label">{{i18n 'course.edit.title' 'Title'}}</label>
 		<div class="dropdown">
-			<input class="form-control form-control-lg js-title dropdown-toggle" id="editform_name"
-				   placeholder="{{i18n 'course.title.placeholder' 'What are you interested in?'}}"
-				   size="40" type="text" data-bs-toggle="dropdown" value="{{name}}" />
+			<input class="form-control form-control-lg dropdown-toggle js-title" id="editform_name"
+				   {{attributes}} size="40" type="text" data-bs-toggle="dropdown" value="{{name}}" />
 			<ul class="dropdown-menu proposed-courses js-proposed-courses {{#unless proposedCourses.count}}d-none{{/unless}}"
 				role="menu" aria-labelledby="editform_name">
 				{{#if proposedCourses.count}}

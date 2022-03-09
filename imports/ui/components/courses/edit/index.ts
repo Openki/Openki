@@ -667,6 +667,12 @@ export type Data = {
 			}
 			return [];
 		},
+		attributes() {
+			// Fix: Wrong encoding in french
+			return {
+				placeholder: i18n('course.title.placeholder', 'What are you interested in?'),
+			};
+		},
 	});
 
 	template.events({
