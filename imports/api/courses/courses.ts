@@ -186,18 +186,19 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 				return;
 			}
 
-			this.rawCollection().update(
+			this.update(
 				{ _id: course._id },
 				{
 					$set: {
 						interested: course.members?.length || 0,
 					},
 				},
-				(err, result) => {
+				{ multi: true },
+				(err?: any, result?: number) => {
 					if (err) {
 						reject(err);
 					} else {
-						resolve(result.result.nModified === 0);
+						resolve(result === 0);
 					}
 				},
 			);
@@ -227,11 +228,11 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 
 			const update = { $set: { editors } };
 
-			this.rawCollection().update({ _id: course._id }, update, (err, result) => {
+			this.update({ _id: course._id }, update, { multi: true }, (err?: any, result?: number) => {
 				if (err) {
 					reject(err);
 				} else {
-					resolve(result.result.nModified === 0);
+					resolve(result === 0);
 				}
 			});
 		}).then(
