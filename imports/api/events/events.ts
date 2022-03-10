@@ -255,18 +255,13 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 				update.allGroups = _.union(event.groups, courseGroups);
 			}
 
-			this.update(
-				{ _id: event._id },
-				{ $set: update },
-				{ multi: true },
-				(err?: any, result?: number) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve(result=== 0);
-					}
-				},
-			);
+			this.rawCollection().updateMany({ _id: event._id }, { $set: update }, {}, (err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result?.modifiedCount === 0);
+				}
+			});
 		});
 	}
 
