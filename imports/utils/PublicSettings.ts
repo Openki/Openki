@@ -36,6 +36,9 @@ const defaults = {
 		de: 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf',
 	},
 	aboutLink: 'https://about.openki.net',
+	categories: {} as {
+		[category: string]: string[];
+	},
 };
 
 // none deep merge
@@ -90,6 +93,13 @@ check(
 			icon: String,
 			forbiddenChars: [String],
 			link: LocalizedValue,
+		}),
+		categories: Match.Where((c) => {
+			check(c, Object);
+			Object.values(c).forEach((value) => {
+				check(value, [String]);
+			});
+			return true;
 		}),
 		s3: {
 			publicUrlBase: String,

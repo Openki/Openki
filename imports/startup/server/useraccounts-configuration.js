@@ -5,9 +5,10 @@ import { Accounts } from 'meteor/accounts-base';
 import * as usersMethods from '/imports/api/users/methods';
 
 import { isEmail } from '/imports/utils/email-tools';
+import PrivateSettings from '/imports/utils/PrivateSettings';
 
 Meteor.startup(() => {
-	const serviceConf = Meteor.settings.service;
+	const serviceConf = PrivateSettings.service;
 	if (serviceConf) {
 		if (serviceConf.google) {
 			ServiceConfiguration.configurations.remove({
