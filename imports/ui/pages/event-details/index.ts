@@ -299,7 +299,7 @@ import './styles.scss';
 	template.helpers({
 		isOrganizer(this: EventModel) {
 			const { editors } = Template.currentData();
-			return editors.includes(this._id);
+			return editors?.includes(this._id);
 		},
 		tools() {
 			const tools = [];
