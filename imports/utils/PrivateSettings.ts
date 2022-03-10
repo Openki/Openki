@@ -18,6 +18,7 @@ if (Meteor.isServer) {
 		},
 		robots: true,
 		printLog: false,
+		service: {},
 		startup: { buildDbCacheAsync: false },
 	};
 
@@ -38,6 +39,20 @@ if (Meteor.isServer) {
 			},
 			robots: Boolean,
 			printLog: Boolean,
+			service: {
+				facebook: Match.Maybe({
+					appId: String,
+					secret: String,
+				}),
+				github: Match.Maybe({
+					clientId: String,
+					secret: String,
+				}),
+				google: Match.Maybe({
+					clientId: String,
+					secret: String,
+				}),
+			},
 			s3: {
 				region: String,
 				bucketEndpoint: String,
