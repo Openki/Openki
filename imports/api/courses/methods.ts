@@ -245,7 +245,9 @@ export const save = ServerMethod(
 				{
 					user: user._id,
 					roles: ['participant', 'team'],
-					comment: i18n('courses.creator.defaultMessage', '(has proposed this course)'),
+					comment: i18n('courses.creator.defaultMessage', '(has proposed this course)', {
+						lng: user.locale,
+					}),
 				},
 			];
 			set.archived = false;
