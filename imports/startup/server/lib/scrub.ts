@@ -1,12 +1,36 @@
 import moment from 'moment';
 import { Match, check } from 'meteor/check';
 
+import { LogCollection, LogEntity } from '/imports/api/log/factory';
+
 export class ScrubRule {
-	static read(d) {
+	name: string;
+
+	grace: number;
+
+	select: Mongo.Selector<LogEntity>;
+
+	remove: boolean;
+
+	unset: string[] | undefined;
+
+	static read(d: {
+		name: string;
+		grace: number;
+		select: Mongo.Selector<LogEntity>;
+		remove?: boolean;
+		unset?: string[];
+	}) {
 		return new ScrubRule(d.name, d.grace, d.select, d.remove, d.unset);
 	}
 
-	constructor(name, grace, select, remove = false, unset = undefined) {
+	constructor(
+		name: string,
+		grace: number,
+		select: Mongo.Selector<LogEntity>,
+		remove = false,
+		unset: string[] | undefined = undefined,
+	) {
 		check(name, String);
 		this.name = name;
 
@@ -23,10 +47,10 @@ export class ScrubRule {
 		this.unset = unset;
 	}
 
-	scrub(log, now) {
+	scrub(log: LogCollection, now: moment.Moment) {
 		const today = moment(now).startOf('day');
 		const cutoff = today.subtract(this.grace, 'days').toDate();
-		const select = { ...this.select, ts: { $lt: cutoff } };
+		const select: Mongo.Selector<LogEntity> = { ...this.select, ts: { $lt: cutoff } };
 
 		// Register intent to scrub in the log
 		const pending = log.record('scrub', [this.name], {
@@ -35,11 +59,11 @@ export class ScrubRule {
 		});
 
 		// Record completion of scrubbing
-		const recordResult = (err, count) => {
+		const recordResult = (err: any, count: number) => {
 			if (err) {
 				pending.error(err);
 			} else {
-				pending.success({ count });
+				pending.success({ count } as any);
 			}
 		};
 
@@ -52,14 +76,14 @@ export class ScrubRule {
 		}
 
 		if (this.unset) {
-			const expr = {};
+			const expr: { [selector: string]: string } = {};
 
 			// Query for existence of one of the fields that are to be
 			// unset. This is not done for performance reasons but
 			// so that the count in the result is correct. Records
 			// where all the fields were already unset must not show
 			// up in the count of newly unset records.
-			const fieldSelects = [];
+			const fieldSelects: Mongo.Query<LogEntity>[] = [];
 			this.unset.forEach((name) => {
 				const selector = `body.${name}`;
 				expr[selector] = '';
@@ -76,17 +100,27 @@ export class ScrubRule {
 }
 
 export class Scrubber {
-	static read(d) {
+	rules: ScrubRule[];
+
+	static read(
+		d: {
+			name: string;
+			grace: number;
+			select: Mongo.Selector<LogEntity>;
+			remove?: boolean;
+			unset?: string[];
+		}[],
+	) {
 		check(d, [Object]);
 		return new Scrubber(d.map(ScrubRule.read));
 	}
 
-	constructor(rules) {
+	constructor(rules: ScrubRule[]) {
 		check(rules, [ScrubRule]);
 		this.rules = rules;
 	}
 
-	scrub(log, now) {
+	scrub(log: LogCollection, now: moment.Moment) {
 		this.rules.forEach((rule) => {
 			rule.scrub(log, now);
 		});

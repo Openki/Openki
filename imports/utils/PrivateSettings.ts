@@ -18,7 +18,6 @@ if (Meteor.isServer) {
 		},
 		robots: true,
 		printLog: false,
-		service: {},
 		startup: { buildDbCacheAsync: false },
 	};
 
@@ -39,7 +38,7 @@ if (Meteor.isServer) {
 			},
 			robots: Boolean,
 			printLog: Boolean,
-			service: {
+			service: Match.Maybe({
 				facebook: Match.Maybe({
 					appId: String,
 					secret: String,
@@ -52,7 +51,16 @@ if (Meteor.isServer) {
 					clientId: String,
 					secret: String,
 				}),
-			},
+			}),
+			scrub: Match.Maybe([
+				{
+					name: String,
+					grace: Number,
+					select: Object,
+					remove: Match.Maybe(Boolean),
+					unset: Match.Maybe([String]),
+				},
+			]),
 			s3: {
 				region: String,
 				bucketEndpoint: String,
