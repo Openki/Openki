@@ -39,8 +39,8 @@ $discussion-thumb-width: 50;
 $discussion-post-bg: $blue-lighter;
 
 .discussion-post-content {
+	@include break-word;
 	border-color: darken($discussion-post-bg, 10%);
-	word-break: break-all;
 }
 
 .discussion-post-header,
