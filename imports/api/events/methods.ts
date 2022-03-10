@@ -347,7 +347,7 @@ export const save = ServerMethod(
 				const affectedReplicaMessage = i18n(
 					'notification.event.affectedReplicaMessage',
 					'These changes have also been applied to {NUM, plural, one{the later copy} other{# later copies} }',
-					{ NUM: affectedReplicaCount },
+					{ NUM: affectedReplicaCount, lng: user.locale },
 				);
 
 				if (comment == null) {
