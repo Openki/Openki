@@ -1,6 +1,7 @@
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
-import { UpdateQuery } from 'mongodb';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { UpdateFilter } from 'mongodb';
 import { i18n } from '/imports/startup/both/i18next';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
@@ -520,7 +521,7 @@ Meteor.methods({
 					venue = Venues.findOne(event.venue._id);
 				}
 
-				let update: Mongo.Modifier<EventEntity>;
+				let update: UpdateFilter<EventEntity> | Partial<EventEntity>;
 				if (venue) {
 					if (event.start < new Date()) {
 						// Do not update venue for historical events
@@ -543,11 +544,11 @@ Meteor.methods({
 					update = { $unset: { 'venue._id': 1 } };
 				}
 
-				Events.update({ _id: event._id }, update, { multi: true }, (err?: any, result?: number) => {
+				Events.rawCollection().updateMany({ _id: event._id }, update, {}, (err, result) => {
 					if (err) {
 						reject(err);
 					} else {
-						resolve(result === 0);
+						resolve(result?.modifiedCount === 0);
 					}
 				});
 			}).catch((reason) => {
