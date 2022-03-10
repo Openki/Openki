@@ -36,9 +36,7 @@ const defaults = {
 		de: 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf',
 	},
 	aboutLink: 'https://about.openki.net',
-	categories: {} as {
-		[category: string]: string[];
-	},
+	categories: {},
 };
 
 // none deep merge
