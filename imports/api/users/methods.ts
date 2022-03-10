@@ -436,11 +436,11 @@ Meteor.methods({
 					},
 				};
 
-				Users.rawCollection().update({ _id: user._id }, update, (err: any, result: any) => {
+				Users.update({ _id: user._id }, update, { multi: true }, (err?: any, result?: number) => {
 					if (err) {
 						reject(err);
 					} else {
-						resolve(result.result.nModified === 0);
+						resolve(result === 0);
 					}
 				});
 			});

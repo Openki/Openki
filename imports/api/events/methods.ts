@@ -520,7 +520,7 @@ Meteor.methods({
 					venue = Venues.findOne(event.venue._id);
 				}
 
-				let update: UpdateQuery<EventEntity> | Partial<EventEntity>;
+				let update: Mongo.Modifier<EventEntity>;
 				if (venue) {
 					if (event.start < new Date()) {
 						// Do not update venue for historical events
@@ -543,11 +543,11 @@ Meteor.methods({
 					update = { $unset: { 'venue._id': 1 } };
 				}
 
-				Events.rawCollection().update({ _id: event._id }, update, (err, result) => {
+				Events.update({ _id: event._id }, update, { multi: true }, (err?: any, result?: number) => {
 					if (err) {
 						reject(err);
 					} else {
-						resolve(result.result.nModified === 0);
+						resolve(result === 0);
 					}
 				});
 			}).catch((reason) => {
