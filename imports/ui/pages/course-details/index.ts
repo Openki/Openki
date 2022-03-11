@@ -206,7 +206,13 @@ import './styles.scss';
 
 				Router.go('/');
 			} catch (err) {
-				Alert.serverError(err, 'Removing the "{COURSE}" course went wrong');
+				Alert.serverError(
+					err,
+					i18n(
+						'courseDetailsPage.message.courseHasBeenDeleted.error',
+						'Removing the "{COURSE}" course went wrong',
+					),
+				);
 			} finally {
 				instance.busy(false);
 			}
@@ -230,7 +236,13 @@ import './styles.scss';
 					),
 				);
 			} catch (err) {
-				Alert.serverError(err, 'Archive the course "{COURSE}" went wrong');
+				Alert.serverError(
+					err,
+					i18n(
+						'courseDetailsPage.message.courseHasBeenArchived.error',
+						'Archive the course "{COURSE}" went wrong',
+					),
+				);
 			} finally {
 				instance.busy(false);
 			}
@@ -254,7 +266,13 @@ import './styles.scss';
 					),
 				);
 			} catch (err) {
-				Alert.serverError(err, 'Unarchive the "{COURSE}" course went wrong');
+				Alert.serverError(
+					err,
+					i18n(
+						'courseDetailsPage.message.courseHasBeenUnarchived.error',
+						'Unarchive the "{COURSE}" course went wrong',
+					),
+				);
 			} finally {
 				instance.busy(false);
 			}
@@ -400,7 +418,7 @@ import './styles.scss';
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, 'Failed to add group');
+				Alert.serverError(err, i18n('courseGroupAdd.groupAdded.error', 'Failed to add group'));
 			}
 		},
 	});
@@ -432,7 +450,7 @@ import './styles.scss';
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, 'Failed to remove group');
+				Alert.serverError(err, i18n('courseGroupAdd.groupRemoved.error', 'Failed to remove group'));
 			}
 		},
 	});
@@ -464,7 +482,10 @@ import './styles.scss';
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, 'Failed to give group editing rights');
+				Alert.serverError(
+					err,
+					i18n('courseGroupAdd.membersCanEditCourse.error', 'Failed to give group editing rights'),
+				);
 			}
 		},
 	});
@@ -496,7 +517,13 @@ import './styles.scss';
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, 'Failed to remove organizer status');
+				Alert.serverError(
+					err,
+					i18n(
+						'courseGroupAdd.membersCanNoLongerEditCourse.error',
+						'Failed to remove organizer status',
+					),
+				);
 			}
 		},
 	});

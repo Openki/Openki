@@ -231,7 +231,7 @@ template.events({
 			Alert.success(i18n('venue.removed', 'Removed venue "{NAME}".', { NAME: venue.name }));
 			Router.go('profile');
 		} catch (err) {
-			Alert.serverError(err, 'Deleting the venue went wrong');
+			Alert.serverError(err, i18n('venue.removed.error', 'Deleting the venue went wrong'));
 		} finally {
 			instance.busy(false);
 		}

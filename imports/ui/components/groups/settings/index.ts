@@ -77,7 +77,10 @@ template.helpers({
 					);
 					parentInstance.editingSettings.set(false);
 				} catch (err) {
-					Alert.serverError(err, 'Could not save settings');
+					Alert.serverError(
+						err,
+						i18n('groupSettings.group.logo.updated.error', 'Could not save settings'),
+					);
 				} finally {
 					instance.busy(false);
 				}
@@ -101,7 +104,10 @@ template.helpers({
 							);
 							parentInstance.editingSettings.set(false);
 						} catch (err) {
-							Alert.serverError(err, 'Could not save settings');
+							Alert.serverError(
+								err,
+								i18n('groupSettings.group.logo.removed.error', 'Could not save settings'),
+							);
 						} finally {
 							instance.busy(false);
 						}
@@ -152,7 +158,7 @@ template.events({
 				}),
 			);
 		} catch (err) {
-			Alert.serverError(err, 'Could not add member');
+			Alert.serverError(err, i18n('groupSettings.memberAdded.error', 'Could not add member'));
 		}
 	},
 
@@ -171,7 +177,7 @@ template.events({
 				),
 			);
 		} catch (err) {
-			Alert.serverError(err, 'Could not remove member');
+			Alert.serverError(err, i18n('groupSettings.memberRemoved.error', 'Could not remove member'));
 		}
 	},
 

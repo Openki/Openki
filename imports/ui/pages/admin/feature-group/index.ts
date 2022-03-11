@@ -47,7 +47,7 @@ template.events({
 		try {
 			await RegionsMethods.featureGroup(regionId, groupId);
 		} catch (err) {
-			Alert.serverError(err, '');
+			Alert.serverError(err);
 		} finally {
 			instance.busy(false);
 		}
@@ -66,7 +66,7 @@ template.events({
 		try {
 			await RegionsMethods.unsetFeaturedGroup(regionId);
 		} catch (err) {
-			Alert.serverError(err, '');
+			Alert.serverError(err);
 		} finally {
 			instance.busy(false);
 		}

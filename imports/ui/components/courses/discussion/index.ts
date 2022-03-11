@@ -225,7 +225,7 @@ import './styles.scss';
 				await CourseDiscussionsMethods.deleteComment(post._id);
 				Alert.success(i18n('discussionPost.deleted', 'Comment deleted.'));
 			} catch (err) {
-				Alert.serverError(err, 'Could not delete comment');
+				Alert.serverError(err, i18n('discussionPost.deleted.error', 'Could not delete comment'));
 			}
 		},
 	});
@@ -423,7 +423,10 @@ import './styles.scss';
 					await CourseDiscussionsMethods.editComment(comment);
 				}
 			} catch (err) {
-				Alert.serverError(err, 'Posting your comment went wrong');
+				Alert.serverError(
+					err,
+					i18n('courseDiscussions.postComment.error', 'Posting your comment went wrong'),
+				);
 			} finally {
 				instance.busy(false);
 			}

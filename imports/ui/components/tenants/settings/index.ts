@@ -103,7 +103,7 @@ template.events({
 				),
 			);
 		} catch (err) {
-			Alert.serverError(err, 'Could not add member');
+			Alert.serverError(err, i18n('tenantSettings.memberAdded.error', 'Could not add member'));
 		}
 	},
 
@@ -125,7 +125,7 @@ template.events({
 				),
 			);
 		} catch (err) {
-			Alert.serverError(err, 'Could not remove member');
+			Alert.serverError(err, i18n('tenantSettings.memberRemoved.error', 'Could not remove member'));
 		}
 	},
 
@@ -150,7 +150,7 @@ template.events({
 				),
 			);
 		} catch (err) {
-			Alert.serverError(err, 'Could not add admin');
+			Alert.serverError(err, i18n('tenantSettings.adminAdded.error', 'Could not add admin'));
 		}
 	},
 
@@ -172,7 +172,7 @@ template.events({
 				),
 			);
 		} catch (err) {
-			Alert.serverError(err, 'Could not remove admin');
+			Alert.serverError(err, i18n('tenantSettings.adminRemoved.error', 'Could not remove admin'));
 		}
 	},
 });
