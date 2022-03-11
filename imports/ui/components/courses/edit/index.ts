@@ -533,7 +533,10 @@ export type Data = {
 							Router.go('showCourse', { _id: courseId });
 						}
 					} catch (err) {
-						Alert.serverError(err, 'Saving the course went wrong');
+						Alert.serverError(
+							err,
+							i18n('message.courseChangesSaved.error', 'Saving the course went wrong'),
+						);
 					} finally {
 						instance.busy(false);
 					}

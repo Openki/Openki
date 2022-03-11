@@ -243,7 +243,7 @@ import './styles.scss';
 			const { service } = event.currentTarget.dataset;
 			const loginMethod = `loginWith${service}`;
 			if (!(Meteor as any)[loginMethod]) {
-				Alert.serverError(new Error(`don't have ${loginMethod}`), '');
+				Alert.serverError(new Error(`don't have ${loginMethod}`));
 				return;
 			}
 
@@ -251,7 +251,7 @@ import './styles.scss';
 			(Meteor as any)[loginMethod]({}, (err: any) => {
 				instance.busy(false);
 				if (err) {
-					Alert.serverError(err, '');
+					Alert.serverError(err);
 				} else {
 					if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
 						$('#bs-navbar-collapse-1').collapse('hide');
@@ -517,7 +517,10 @@ import './styles.scss';
 				);
 				(instance.parentInstance() as any).accountTask.set('login');
 			} catch (err) {
-				Alert.serverError(err, 'We were unable to send a mail to this address');
+				Alert.serverError(
+					err,
+					i18n('forgotPassword.emailSent.error', 'We were unable to send a mail to this address'),
+				);
 			} finally {
 				instance.busy(false);
 			}

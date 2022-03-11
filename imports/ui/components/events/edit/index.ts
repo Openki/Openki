@@ -503,7 +503,10 @@ template.events({
 					}
 					(instance.parent as any).editing.set(false);
 				} catch (err) {
-					Alert.serverError(err, 'Saving the event went wrong');
+					Alert.serverError(
+						err,
+						i18n('eventEdit.replicatesUpdated.error', 'Saving the event went wrong'),
+					);
 				} finally {
 					instance.busy(false);
 				}

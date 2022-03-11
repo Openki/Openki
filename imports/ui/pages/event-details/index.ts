@@ -96,7 +96,7 @@ import './styles.scss';
 							Regions.findOne(event.region)?.nameEn,
 						);
 					} catch (err) {
-						Alert.serverError(err, '');
+						Alert.serverError(err);
 					} finally {
 						this.busy(false);
 					}
@@ -199,7 +199,7 @@ import './styles.scss';
 					Router.go('/');
 				}
 			} catch (err) {
-				Alert.serverError(err, 'Could not remove event');
+				Alert.serverError(err, i18n('eventDetails.eventRemoved.error', 'Could not remove event'));
 			} finally {
 				instance.busy(false);
 			}
@@ -367,7 +367,7 @@ import './styles.scss';
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, 'Failed to add group');
+				Alert.serverError(err, i18n('eventGroupAdd.groupAdded.error', 'Failed to add group'));
 			}
 		},
 	});
@@ -400,7 +400,7 @@ import './styles.scss';
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, 'Failed to remove group');
+				Alert.serverError(err, i18n('eventGroupAdd.groupRemoved.error', 'Failed to remove group'));
 			}
 		},
 	});
@@ -436,7 +436,10 @@ import './styles.scss';
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, 'Failed to give group editing rights');
+				Alert.serverError(
+					err,
+					i18n('eventGroupAdd.membersCanEditEvent.error', 'Failed to give group editing rights'),
+				);
 			}
 		},
 	});
@@ -472,7 +475,13 @@ import './styles.scss';
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, 'Failed to remove organizer status');
+				Alert.serverError(
+					err,
+					i18n(
+						'eventGroupAdd.membersCanNoLongerEditEvent.error',
+						'Failed to remove organizer status',
+					),
+				);
 			}
 		},
 	});
