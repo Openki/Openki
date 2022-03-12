@@ -1,6 +1,6 @@
 <template name="venueDetailsPage">
 	<div class="container mw-md">
-		{{#if editing}}
+		{{#if state 'editing'}}
 			{{> venueEdit venue}}
 		{{else}}
 			{{#with venue}}
@@ -108,11 +108,11 @@
 					{{#if mayEdit}}
 						<div class="actions">
 							{{> buttonEdit event="js-venue-edit"}}
-							{{#unless verifyDelete}}
+							{{#unless state 'verifyDelete'}}
 								{{> buttonDelete event="js-venue-delete"}}
 							{{/unless}}
 						</div>
-						{{#if verifyDelete}}
+						{{#if state 'verifyDelete'}}
 							{{> venueDeleteConfirmDialog}}
 						{{/if}}
 					{{/if}}
