@@ -2,7 +2,6 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
 import { Mongo } from 'meteor/mongo';
 
 import { Events, EventModel } from '/imports/api/events/events';
@@ -29,11 +28,13 @@ const Template = TemplateAny as TemplateStaticTyped<
 	'venueDetailsPage',
 	{ venue: VenueModel },
 	{
-		editing: ReactiveVar<boolean>;
-		verifyDeleteVenue: ReactiveVar<boolean>;
 		eventLoadingBlockSize: number;
-		upcomingEventLimit: ReactiveVar<number>;
-		pastEventLimit: ReactiveVar<number>;
+		state: ReactiveDict<{
+			editing: boolean;
+			verifyDelete: boolean;
+			upcomingEventLimit: number;
+			pastEventLimit: number;
+		}>;
 		markers: Mongo.Collection<MainMarkerEntity | CenteredMarkerEntity>;
 		setLocation: (loc?: Geodata) => void;
 		setRegion: (region: RegionModel | undefined) => void;
@@ -48,13 +49,16 @@ template.onCreated(function () {
 	const instance = this;
 	instance.busy();
 
-	const isNew = !this.data.venue._id;
-	this.editing = new ReactiveVar(isNew);
-	this.verifyDeleteVenue = new ReactiveVar(false);
-
 	this.eventLoadingBlockSize = 9;
-	this.upcomingEventLimit = new ReactiveVar(12);
-	this.pastEventLimit = new ReactiveVar(3);
+
+	const isNew = !this.data.venue._id;
+	this.state = new ReactiveDict();
+	this.state.setDefault({
+		editing: isNew,
+		verifyDelete: false,
+		upcomingEventLimit: 12,
+		pastEventLimit: 3,
+	});
 
 	this.markers = new Mongo.Collection(null); // Local collection for in-memory storage
 
@@ -79,18 +83,23 @@ template.onCreated(function () {
 	};
 
 	this.autorun(() => {
-		if (!isNew) {
-			// Add one to the limit so we know there is more to show
-			const limit = instance.upcomingEventLimit.get() + 1;
-
-			const now = reactiveNow.get();
-			const predicate = {
-				venue: instance.data.venue._id,
-				after: now,
-			};
-
-			instance.subscribe('Events.findFilter', predicate, limit);
+		if (isNew) {
+			return;
 		}
+
+		const limit = instance.state.get('upcomingEventLimit');
+		if (limit === undefined) {
+			throw new Error('Unexpected undefined: limit');
+		}
+
+		const now = reactiveNow.get();
+		const predicate = {
+			venue: instance.data.venue._id,
+			after: now,
+		};
+
+		// Add one to the limit so we know there is more to show
+		instance.subscribe('Events.findFilter', predicate, limit + 1);
 	});
 
 	this.getUpcomingEvents = (limit) => {
@@ -108,18 +117,23 @@ template.onCreated(function () {
 	};
 
 	this.autorun(() => {
-		if (!isNew) {
-			// Add one to the limit so we know there is more to show
-			const limit = instance.pastEventLimit.get() + 1;
-
-			const now = reactiveNow.get();
-			const predicate = {
-				venue: instance.data.venue._id,
-				before: now,
-			};
-
-			instance.subscribe('Events.findFilter', predicate, limit);
+		if (isNew) {
+			return;
 		}
+
+		const limit = instance.state.get('pastEventLimit');
+		if (limit === undefined) {
+			throw new Error('Unexpected undefined: limit');
+		}
+
+		const now = reactiveNow.get();
+		const predicate = {
+			venue: instance.data.venue._id,
+			before: now,
+		};
+
+		// Add one to the limit so we know there is more to show
+		instance.subscribe('Events.findFilter', predicate, limit + 1);
 	});
 
 	this.getPastEvents = (limit) => {
@@ -153,10 +167,6 @@ template.onRendered(function () {
 });
 
 template.helpers({
-	editing() {
-		return Template.instance().editing.get();
-	},
-
 	mayEdit() {
 		return this.editableBy(Meteor.user());
 	},
@@ -177,32 +187,48 @@ template.helpers({
 		return `venue.facility.${name}`;
 	},
 
-	verifyDelete() {
-		return Template.instance().verifyDeleteVenue.get();
-	},
-
 	upcomingEvents() {
 		const instance = Template.instance();
-		return instance.getUpcomingEvents(instance.upcomingEventLimit.get());
+
+		const limit = instance.state.get('upcomingEventLimit');
+		if (limit === undefined) {
+			throw new Error('Unexpected undefined: limit');
+		}
+
+		return instance.getUpcomingEvents(limit);
 	},
 
 	hasMoreUpcomingEvents() {
 		const instance = Template.instance();
 
-		const limit = instance.upcomingEventLimit.get();
+		const limit = instance.state.get('upcomingEventLimit');
+		if (limit === undefined) {
+			throw new Error('Unexpected undefined: limit');
+		}
+
 		const query = instance.getUpcomingEvents(limit + 1);
 		return query.length > limit;
 	},
 
 	pastEvents() {
 		const instance = Template.instance();
-		return instance.getPastEvents(instance.pastEventLimit.get());
+
+		const limit = instance.state.get('pastEventLimit');
+		if (limit === undefined) {
+			throw new Error('Unexpected undefined: limit');
+		}
+
+		return instance.getPastEvents(limit);
 	},
 
 	hasMorePastEvents() {
 		const instance = Template.instance();
 
-		const limit = instance.pastEventLimit.get();
+		const limit = instance.state.get('pastEventLimit');
+		if (limit === undefined) {
+			throw new Error('Unexpected undefined: limit');
+		}
+
 		const query = instance.getPastEvents(limit + 1);
 		return query.length > limit;
 	},
@@ -210,16 +236,16 @@ template.helpers({
 
 template.events({
 	'click .js-venue-edit'(_event, instance) {
-		instance.editing.set(true);
-		instance.verifyDeleteVenue.set(false);
+		instance.state.set('editing', true);
+		instance.state.set('verifyDelete', false);
 	},
 
 	'click .js-venue-delete'() {
-		Template.instance().verifyDeleteVenue.set(true);
+		Template.instance().state.set('verifyDelete', true);
 	},
 
 	'click .js-venue-delete-cancel'() {
-		Template.instance().verifyDeleteVenue.set(false);
+		Template.instance().state.set('verifyDelete', false);
 	},
 
 	async 'click .js-venue-delete-confirm'(_event, instance) {
@@ -238,12 +264,18 @@ template.events({
 	},
 
 	'click .js-show-more-upcoming-events'(_event, instance) {
-		const limit = instance.upcomingEventLimit;
-		limit.set(limit.get() + instance.eventLoadingBlockSize);
+		const limit = instance.state.get('upcomingEventLimit');
+		if (limit === undefined) {
+			throw new Error('Unexpected undefined: limit');
+		}
+		instance.state.set('upcomingEventLimit', limit + instance.eventLoadingBlockSize);
 	},
 
 	'click .js-show-more-past-events'(_event, instance) {
-		const limit = instance.pastEventLimit;
-		limit.set(limit.get() + instance.eventLoadingBlockSize);
+		const limit = instance.state.get('pastEventLimit');
+		if (limit === undefined) {
+			throw new Error('Unexpected undefined: limit');
+		}
+		instance.state.set('pastEventLimit', limit + instance.eventLoadingBlockSize);
 	},
 });
