@@ -10,7 +10,7 @@
 			{{i18n 'tenant.details.regions.numberOfUpcomingEvents' 'Number of upcoming events'}}
 		</div>
 	</div>
-	{{#each region in regions tenant._id}}
+	{{#each region in regions}}
 		<div class="row responsive-table-row">
 			<div class="col-6 responsive-table-head">{{i18n 'tenant.details.regions.name'}}</div>
 			<div class="col-6 col-md-4"><a
@@ -26,7 +26,8 @@
 		</div>
 	{{/each}}
 	{{#if showAddRegion}}
-		<a class="btn btn-add" href="{{pathFor 'regionCreate' query=(addRegionQuery tenant._id)}}">
+		<a class="btn btn-add"
+		   href="{{pathFor 'regionCreate' query=(concat 'tenant=' tenant._id)}}">
 			{{i18n 'tenant.details.regions.createNew.button' 'Create a new region'}}
 		</a>
 	{{/if}}
