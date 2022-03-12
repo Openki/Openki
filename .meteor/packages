@@ -30,7 +30,6 @@ service-configuration@1.3.0
 
 # UI
 reactive-var@1.0.11             # Reactive variable for tracker
-fortawesome:fontawesome
 bevanhunt:leaflet
 fourseven:scss
 lookback:tooltips
