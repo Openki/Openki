@@ -42,6 +42,9 @@ const defaults = {
 // none deep merge
 const publicSettings = { ...defaults, ...Meteor.settings.public };
 
+// seperate merge of matomo to make jsPath and phpPath optional
+publicSettings.matomo = { ...defaults.matomo, ...Meteor.settings.public.matomo };
+
 // Check that everything is set as expected in the settings.
 check(
 	publicSettings,
