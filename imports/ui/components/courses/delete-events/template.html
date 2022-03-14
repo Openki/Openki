@@ -5,7 +5,7 @@
 			<div class="event-caption placeholder event-caption-action event-caption-delete">
 				<div class="event-caption-header-wrap">
 					<div class="event-caption-header">
-						<span class="fa fa-map-pin"></span>
+						<span class="fa-solid fa-map-pin"></span>
 						<div class="event-caption-pseudoborder"></div>
 					</div>
 				</div>
@@ -13,7 +13,7 @@
 					<div class="event-caption-body"></div>
 				</div>
 				<span class="event-caption-icon">
-					<i class="fa fa-trash fa-2x"></i>
+					<i class="fa-solid fa-trash-can fa-2x"></i>
 				</span>
 			</div>
 		</button>
@@ -26,7 +26,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">
-						<i class="fa fa-trash fa-fw" aria-hidden="true"></i>
+						<span class="fa-solid fa-trash-can fa-fw" aria-hidden="true"></span>
 						{{i18n 'deleteEventsModal.title' 'Delete course events'}}
 					</h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -57,7 +57,7 @@
 									<button type="button" class="btn btn-danger js-delete-events"
 											{{disabledIfBusy}}>
 										{{#if busy 'deleting'}}
-											<span class="fa fa-circle-o-notch fa-spin fa-fw"
+											<span class="fa-solid fa-circle-notch fa-spin fa-fw"
 												  aria-hidden="true"></span>
 											{{i18n 'deleteEventsModal.deletingEvents' 'Deleting {NUM, plural, one{event} other{events} }…' NUM=numSelectedEvents}}
 										{{else}}
@@ -109,12 +109,12 @@
 	</span>
 	<div class="delete-events-details">
 		<span class="delete-events-details-component">
-			<i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
+			<span class="fa-solid fa-calendar-days fa-fw" aria-hidden="true"></span>
 			{{weekdayFormat start}}
 			{{dateFormat start}}
 		</span>
 		<span class="delete-events-details-component">
-			<i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
+			<span class="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
 			{{timeFormat start}}
 			-
 			{{timeFormat end}}

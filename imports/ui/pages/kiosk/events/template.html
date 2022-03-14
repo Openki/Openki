@@ -74,7 +74,7 @@
 			<div class="kiosk-event kiosk-event-{{timePeriod}}">
 				{{#unless isUpcoming}}
 					<div class="kiosk-event-timecount">
-						<span class="fa fa-play-circle fa-fw" aria-hidden="true"></span>
+						<span class="fa-solid fa-circle-play fa-fw" aria-hidden="true"></span>
 						{{#if isOngoing}}
 							{{i18n 'kiosk.started' 'Started'}}
 						{{/if}}
@@ -87,10 +87,10 @@
 					{{/unless}}
 					<div class="kiosk-event-moment">
 						{{#if isUpcoming}}
-							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+							<span class="fa-solid fa-calendar-days fa-fw" aria-hidden="true"></span>
 							{{dateFormat start}} <br>
 						{{/if}}
-						<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+						<span class="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
 						{{timeFormat start}}
 						{{#unless isUpcoming}}
 							- {{timeFormat end}}
@@ -119,13 +119,13 @@
 <template name="kioskEventLocation">
 	<div class="kiosk-event-location">
 		{{#if showLocation}}
-			<span class="fa fa-home fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-house fa-fw" aria-hidden="true"></span>
 			{{location.name}}
 			{{#if room}} - {{/if}}
 		{{/if}}
 		{{#if room}}
 			{{#unless showLocation}}
-				<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
+				<span class="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
 			{{/unless}}
 			{{room}}
 		{{/if}}

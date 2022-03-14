@@ -3,9 +3,10 @@
 		<div class="page-component">
 			{{! No line between flash and text, but inside the text. }}
 			<h1 style="white-space: nowrap;">
-				<span class="fa fa-flash fa-fw text-warning" aria-hidden="true"></span>&nbsp;<span
+				<span class="fa-solid fa-bolt fa-fw text-warning"
+					  aria-hidden="true"></span>&nbsp;<span
 					  style="white-space: normal;">{{i18n 'notFound.title' "Page not found"}}</span>&nbsp;<span
-					  class="fa fa-flash fa-fw text-warning" aria-hidden="true"></span>
+					  class="fa-solid fa-bolt fa-fw text-warning" aria-hidden="true"></span>
 			</h1>
 			<h3>
 				{{i18n 'notFound.explanation' "This page is not available. Maybe it never existed."}}
@@ -31,7 +32,7 @@
 				</li>
 				<li class="list-inline-item">
 					<a href="{{pathFor 'home'}}">
-						<span class="fa fa-home fa-fw" aria-hidden="true"></span>
+						<span class="fa-solid fa-house fa-fw" aria-hidden="true"></span>
 						{{i18n 'notFound.visitStartPage' "Go to the start page"}}
 					</a>
 				</li>

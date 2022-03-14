@@ -232,7 +232,7 @@ import './styles.scss';
 
 			const direction = isRTL ? 'left' : 'right';
 			return Spacebars.SafeString(
-				`<span class="fa fa-arrow-${direction} fa-fw" aria-hidden="true"></span>`,
+				`<span class="fa-solid fa-arrow-${direction} fa-fw" aria-hidden="true"></span>`,
 			);
 		},
 
