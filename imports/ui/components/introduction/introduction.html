@@ -3,8 +3,12 @@
 		<div class="container {{#if isInCalendar}}calendar-introduction{{/if}}">
 			<div class="introduction">
 				<h3>
-					<a class="js-introduction-toggle-btn {{#if openedIntro}}introduction-hide-btn{{else}}introduction-show-btn{{/if}}"
-					   href="#">
+					<a class="js-introduction-toggle-btn" href="#">
+						{{#if openedIntro}}
+							<span class="fa fa-angle-up fa-fw" aria-hidden="true"></span>
+						{{else}}
+							<span class="fa fa-angle-down fa-fw" aria-hidden="true"></span>
+						{{/if}}
 						{{i18n 'introduction.Title' 'What does {SITENAME} do for you?' SITENAME=siteName}}
 					</a>
 					<a class="js-introduction-close-btn" href="#"
@@ -16,7 +20,8 @@
 					<div class="introduction-content">
 						<ul class="introduction-steps">
 							<li>
-								<h2><span class="fa-regular fa-lightbulb" aria-hidden="true"></span></h2>
+								<h2><span class="fa-regular fa-lightbulb" aria-hidden="true"></span>
+								</h2>
 								{{i18n 'introduction.1_teachOrLearn' 'You want to learn something, or teach others.'}}
 							</li>
 							<li>

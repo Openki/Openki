@@ -11,8 +11,12 @@
 	padding: 10px;
 }
 
-.event-edit-location-selected > .fa {
-	color: $green-darker;
+.event-edit-location-selected > {
+	.fa-regular,
+	.fa-brands,
+	.fa-solid {
+		color: $green-darker;
+	}
 }
 
 .event-edit-location-address {

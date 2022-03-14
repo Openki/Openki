@@ -246,11 +246,15 @@
 	}
 }
 
-.navbar-form-selection > .fa {
-	color: $white;
+.navbar-form-selection > {
+	.fa-regular,
+	.fa-brands,
+	.fa-solid {
+		color: $white;
 
-	@media (max-width: $grid-float-breakpoint) {
-		display: none;
+		@media (max-width: $grid-float-breakpoint) {
+			display: none;
+		}
 	}
 }
 

@@ -9,8 +9,12 @@
 	margin-top: 0;
 }
 
-.regions-splash-header > .fa {
-	color: $primary;
+.regions-splash-header > {
+	.fa-regular,
+	.fa-brands,
+	.fa-solid {
+		color: $primary;
+	}
 }
 
 .regions-splash input {
