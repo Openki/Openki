@@ -16,7 +16,6 @@ import { Session } from 'meteor/session';
 import { Introduction } from '/imports/ui/lib/introduction';
 import * as RegionSelection from '/imports/utils/region-selection';
 
-import '@fortawesome/fontawesome-free/js/all.js';
 import './bootstrap';
 
 // close any verification dialogs still open
