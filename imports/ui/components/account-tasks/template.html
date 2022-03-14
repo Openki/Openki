@@ -11,7 +11,8 @@
 								   aria-hidden="true"></i>
 								{{i18n 'Please.login' 'Please log in or register'}}
 							{{else}}
-								<i class="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true"></i>
+								<i class="fa-solid fa-right-to-bracket fa-fw"
+								   aria-hidden="true"></i>
 								{{i18n 'login.login.title' 'Log in'}}
 							{{/if}}
 						{{/if}}
@@ -77,7 +78,8 @@
 				<button type="submit" class='btn btn-secondary js-login form-control'
 						{{disabledIfBusy}}>
 					{{#if busy 'logging-in'}}
-						<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+						<span class="fa-solid fa-circle-notch fa-spin fa-fw"
+							  aria-hidden="true"></span>
 						{{i18n 'login.login.submit.busy' 'Logging in…'}}
 					{{else}}
 						{{#if pleaseLogin}}
