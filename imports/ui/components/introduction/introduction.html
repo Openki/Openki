@@ -5,15 +5,15 @@
 				<h3>
 					<a class="js-introduction-toggle-btn" href="#">
 						{{#if openedIntro}}
-							<span class="fa fa-angle-up fa-fw" aria-hidden="true"></span>
+							<span class="fa-solid fa-angle-up fa-fw" aria-hidden="true"></span>
 						{{else}}
-							<span class="fa fa-angle-down fa-fw" aria-hidden="true"></span>
+							<span class="fa-solid fa-angle-down fa-fw" aria-hidden="true"></span>
 						{{/if}}
 						{{i18n 'introduction.Title' 'What does {SITENAME} do for you?' SITENAME=siteName}}
 					</a>
 					<a class="js-introduction-close-btn" href="#"
 					   title="{{i18n 'introduction.close.title' 'Close introduction'}}">
-						<span class="remove-btn fa fa-remove" aria-hidden="true"></span>
+						<span class="remove-btn fa-solid fa-xmark" aria-hidden="true"></span>
 					</a>
 				</h3>
 				{{#if openedIntro}}
@@ -25,14 +25,15 @@
 								{{i18n 'introduction.1_teachOrLearn' 'You want to learn something, or teach others.'}}
 							</li>
 							<li>
-								<h2><span class="fa fa-search" aria-hidden="true"></span></h2>
+								<h2><span class="fa-solid fa-magnifying-glass" aria-hidden="true"></span></h2>
 								{{i18n 'introduction.2_searchNPropose' 'You search if the course already exists. If not, just propose it.'}}
 							</li>
 							{{#if clearfixFor "screenXS"}}
 								<div class="clearfix"></div>
 							{{/if}}
 							<li>
-								<h2><span class="fa fa-graduation-cap" aria-hidden="true"></span>
+								<h2><span class="fa-solid fa-graduation-cap"
+										  aria-hidden="true"></span>
 								</h2>
 								{{i18n 'introduction.3_enrole' 'Everybody can join your course as participant, mentor or host.'}}
 							</li>
@@ -40,7 +41,8 @@
 								<div class="clearfix"></div>
 							{{/if}}
 							<li>
-								<h2><span class="fa fa-calendar-check-o" aria-hidden="true"></span>
+								<h2><span class="fa-regular fa-calendar-check"
+										  aria-hidden="true"></span>
 								</h2>
 								{{i18n 'introduction.4_schedule' 'When everybody needed is in, a date gets fixed.'}}
 							</li>
@@ -48,11 +50,12 @@
 								<div class="clearfix"></div>
 							{{/if}}
 							<li>
-								<h2><span class="fa fa-rocket" aria-hidden="true"></span></h2>
+								<h2><span class="fa-solid fa-rocket" aria-hidden="true"></span></h2>
 								{{i18n 'introduction.5_takePlace' 'The course takes place.'}}
 							</li>
 							<li>
-								<h2><span class="fa fa-info-circle" aria-hidden="true"></span></h2>
+								<h2><span class="fa-solid fa-circle-info" aria-hidden="true"></span>
+								</h2>
 								{{i18n 'introduction.more' 'More info:'}}<br>
 								<a
 								   href="{{localized PublicSettings.aboutLink}}">{{i18n 'main.about_link' 'About'}}</a><br>

@@ -7,7 +7,7 @@
 <template name="buttonSave">
 	{{#button type="submit" class=(concat "btn btn-save text-nowrap " event) disabled=disabled}}
 		{{#if busy 'saving'}}
-			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n '_button.saving' 'Saving…'}}
 		{{else}}
 			{{i18n '_button.save'}}
@@ -36,7 +36,7 @@
 <template name="buttonDeleteConfirm">
 	{{#button type="button" class=(concat "btn btn-danger text-nowrap " event) disabled=disabled}}
 		{{#if busy 'deleting'}}
-			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{textBusy}}
 		{{else}}
 			{{textIdle}}

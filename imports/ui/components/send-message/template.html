@@ -22,7 +22,7 @@
 			{{else}}
 				<div class="card mb-3">
 					<div class="card-header bg-warning">
-						<i class="fa fa-check-circle-o" aria-hidden="true"></i>
+						<span class="fa-regular fa-circle-check" aria-hidden="true"></span>
 						{{i18n 'sendMessage.plsVerifyEmail' 'Please verify your e-mail address'}}
 					</div>
 					<div class="card-body p-3">
@@ -37,10 +37,10 @@
 		<div class="form-actions">
 			<button type="submit" class="btn btn-save" {{disabledIfBusy}}>
 				{{#if busy 'sending'}}
-					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
+					<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 					{{i18n 'userprofile.sendmail-btn.busy' 'Sending e-mail…'}}
 				{{else}}
-					<i class="fa fa-send fa-fw" aria-hidden="true"></i>
+					<span class="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
 					{{i18n 'userprofile.sendmail-btn' 'Send e-mail'}}
 				{{/if}}
 			</button>

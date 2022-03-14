@@ -119,21 +119,21 @@
 		<ul class="nav nav-tabs">
 			<li role="presentation" class='active'>
 				<a href="#description" data-toggle="tab">
-					<span class="fa fa-file-text fa-fw" aria-hidden="true"></span>
+					<span class="fa-solid fa-file-lines fa-fw" aria-hidden="true"></span>
 					<span class="tab-label">{{i18n 'course.subnav.descr' 'Description'}}</span>
 				</a>
 			</li>
 			{{#if mayEdit}}
 				<li role="presentation">
 					<a href="#files" data-toggle="tab">
-						<span class="fa fa-file fa-fw" aria-hidden="true"></span>
+						<span class="fa-solid fa-file fa-fw" aria-hidden="true"></span>
 						<span class="tab-label">{{i18n 'course.subnav.files' 'Files'}}</span>
 					</a>
 				</li>
 			{{/if}}
 			<li role="presentation">
 				<a href="#history" data-toggle="tab">
-					<span class="fa fa-history fa-fw" aria-hidden="true"></span>
+					<span class="fa-solid fa-clock-rotate-left fa-fw" aria-hidden="true"></span>
 					<span class="tab-label">{{i18n 'course.subnav.history' 'History'}}</span>
 				</a>
 			</li>
@@ -179,7 +179,7 @@
 			{{> groupName groupId=groupId isOrganizer=(isOrganizer groupId)}}
 			{{#if (isOrganizer groupId)}}
 				<div class="tag group-tag addon">
-					<span class="fa fa-bullhorn fa-fw" aria-hidden="true"
+					<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"
 						  title="{{i18n 'grouplist.organizer.title' 'Course is co-organized by this group'}}"></span>
 				</div>
 			{{/if}}
@@ -215,7 +215,7 @@
 		<div class="btn-group tag-btn group-tag-btn align-top">
 			<button type="button" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true"
 					data-bs-toggle="dropdown">
-				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+				<span class="fa-solid fa-plus fa-fw" aria-hidden="true"></span>
 				<span>{{i18n 'course.group.addText' 'link a group'}}</span>
 			</button>
 			<ul class="dropdown-menu dialog-dropdown">
@@ -269,7 +269,7 @@
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-add">
-			<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
 			{{i18n 'course.group.addOrgText' "Give editing rights"}}
 		</a>
 	{{/if}}
@@ -285,7 +285,7 @@
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-remove">
-			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-xmark fa-fw" aria-hidden="true"></span>
 			{{i18n 'course.group.removeOrgText' "Remove editing rights"}}
 		</a>
 	{{/if}}
@@ -294,7 +294,7 @@
 <template name="buttonCourseArchive">
 	<button type="submit" class="btn {{buttonClass}} js-course-archive" {{disabledIfBusy}}>
 		{{#if busy 'archive'}}
-			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n 'course.archive.archiveButton.archiving' 'Archiving…'}}
 		{{else}}
 			{{textIdle}}
@@ -305,7 +305,7 @@
 <template name="buttonCourseUnarchive">
 	<button type="submit" class="btn btn-go js-course-unarchive" {{disabledIfBusy}}>
 		{{#if busy 'unarchive'}}
-			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n 'course.archive.unarchiveButton.unarchiving' 'Unarchiving…'}}
 		{{else}}
 			{{i18n 'course.archive.unarchiveButton' 'Unarchive'}}
