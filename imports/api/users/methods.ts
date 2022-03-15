@@ -405,6 +405,17 @@ export const updateLocale = ServerMethod('user.updateLocale', (locale: string) =
 	});
 });
 
+export const updateLastLogin = ServerMethod('user.updateLastLogin', () => {
+	const userId = Meteor.userId();
+	if (!userId) {
+		throw new Meteor.Error(401, 'please log in');
+	}
+
+	Users.update(userId, {
+		$set: { lastLogin: new Date() },
+	});
+});
+
 Meteor.methods({
 	/**
 	 * Recalculate the groups and badges field
