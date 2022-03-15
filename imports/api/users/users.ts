@@ -3,6 +3,11 @@ import { _ } from 'meteor/underscore';
 
 export type Role = 'admin';
 
+export interface UserProfile {
+	name: string;
+	regionId?: string;
+}
+
 export interface UserEntity extends Meteor.User {
 	/** ID */
 	_id: string;
@@ -69,10 +74,7 @@ export interface UserEntity extends Meteor.User {
 		address: string;
 		verified: boolean;
 	}[];
-	profile: {
-		name: string;
-		regionId: string;
-	};
+	profile: UserProfile;
 	/** [admin] */
 	privileges: Role[];
 
