@@ -23,7 +23,7 @@ import './styles.scss';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'courseMembers',
-		CourseModel,
+		CourseModel | undefined,
 		{ increaseBy: number; membersDisplayLimit: ReactiveVar<number> }
 	>;
 
@@ -37,21 +37,34 @@ import './styles.scss';
 	template.helpers({
 		howManyEnrolled() {
 			const course = Template.instance().data;
+			if (!course) {
+				return undefined;
+			}
 			return course.members.length;
 		},
 
 		canNotifyAll() {
 			const course = Template.instance().data;
+			if (!course) {
+				return undefined;
+			}
 			return hasRoleUser(course.members, 'team', Meteor.userId());
 		},
 
 		ownUserMember() {
 			const course = Template.instance().data;
+			if (!course) {
+				return undefined;
+			}
 			return course.members.find((member) => member.user === Meteor.userId());
 		},
 
 		sortedMembers() {
-			const { members } = Template.instance().data;
+			const course = Template.instance().data;
+			if (!course) {
+				return undefined;
+			}
+			const { members } = course;
 			members.sort((a, b) => {
 				const aRoles = a.roles.filter((role) => role !== 'participant');
 				const bRoles = b.roles.filter((role) => role !== 'participant');

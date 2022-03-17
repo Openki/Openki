@@ -83,7 +83,12 @@ export const sendEmail = ServerMethod(
 
 export const report = ServerMethod(
 	'report',
-	(title, location, userAgent, reportMessage) => {
+	(title: string, location: string, userAgent: string, reportMessage: string) => {
+		check(title, String);
+		check(location, String);
+		check(userAgent, String);
+		check(reportMessage, String);
+
 		let reporter = 'A fellow visitor';
 		const rootUrl = Meteor.absoluteUrl();
 		const user = Meteor.user();

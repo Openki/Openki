@@ -3,6 +3,7 @@ import AWS from 'aws-sdk';
 import mime from 'mime-types';
 import urljoin from 'url-join';
 import { Mongo } from 'meteor/mongo';
+import { Match } from 'meteor/check';
 
 import { PrivateSettings } from './PrivateSettings';
 import { PublicSettings } from './PublicSettings';
@@ -21,18 +22,19 @@ function createS3Client() {
 	});
 }
 
-export interface UploadFile {
-	name: string;
-	mimeType: string;
+export const UploadFilePattern = {
+	name: String,
 	/** As BinaryString */
-	content: string;
-}
+	mimeType: String,
+	content: String,
+};
+export type UploadFile = Match.PatternMatch<typeof UploadFilePattern>;
 
 export function generatePublicUrl(fullFileName: string) {
 	return urljoin(PublicSettings.s3.publicUrlBase, fullFileName);
 }
 
-export function upload(directoryName: string, file: UploadFile) {
+export async function upload(directoryName: string, file: UploadFile) {
 	const fullKey = path.join(
 		directoryName,
 		`${new Mongo.ObjectID().toHexString()}.${mime.extension(file.mimeType)}`,
@@ -49,12 +51,8 @@ export function upload(directoryName: string, file: UploadFile) {
 		Metadata: { originalName: file.name },
 	};
 
-	return s3
-		.upload(params)
-		.promise()
-		.then(() => {
-			return { fullFileName: fullKey, publicUrl: generatePublicUrl(fullKey) };
-		});
+	await s3.upload(params).promise();
+	return { fullFileName: fullKey, publicUrl: generatePublicUrl(fullKey) };
 }
 
 export function remove(fullFileName: string) {

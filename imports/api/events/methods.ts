@@ -441,6 +441,8 @@ export const addParticipant = ServerMethod(
 	 * @param eventId The event to register for
 	 */
 	(eventId: string) => {
+		check(eventId, String);
+
 		const user = Meteor.user();
 		if (!user) {
 			throw new Meteor.Error(401, 'please log in');
@@ -473,6 +475,8 @@ export const addParticipant = ServerMethod(
 );
 
 export const removeParticipant = ServerMethod('event.removeParticipant', (eventId: string) => {
+	check(eventId, String);
+
 	const userId = Meteor.userId();
 	if (!userId) {
 		throw new Meteor.Error(401, 'please log in');
