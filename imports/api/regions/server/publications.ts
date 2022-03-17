@@ -1,13 +1,16 @@
 import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 import { Regions } from '/imports/api/regions/regions';
 
 import { visibleTenants } from '/imports/utils/visible-tenants';
 
 Meteor.publish('Regions', () => Regions.find({ tenant: { $in: visibleTenants() } }));
 
-Meteor.publish('regionDetails', (id) =>
-	Regions.find({ _id: id, tenant: { $in: visibleTenants() } }),
-);
+Meteor.publish('regionDetails', (id: string) => {
+	check(id, String);
+
+	return Regions.find({ _id: id, tenant: { $in: visibleTenants() } });
+});
 
 Meteor.publish('Regions.findFilter', (filter, limit, skip, sort) => {
 	if (!visibleTenants().includes(filter.tenant)) {

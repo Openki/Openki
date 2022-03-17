@@ -8,6 +8,7 @@ import { ServerMethod } from '/imports/utils/ServerMethod';
 import { Group, GroupEntity, GroupModel, Groups } from './groups';
 
 import * as FileStorage from '/imports/utils/FileStorage';
+import { UploadFilePattern } from '/imports/utils/FileStorage';
 
 function loadGroup(groupId: string) {
 	// new!
@@ -106,6 +107,7 @@ export const updateLogo = ServerMethod(
 	'group.update.logo',
 	async (groupId: string, file: FileStorage.UploadFile) => {
 		check(groupId, String);
+		check(file, UploadFilePattern);
 
 		const user = Meteor.user();
 		if (!user) {

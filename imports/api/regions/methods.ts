@@ -13,6 +13,12 @@ import { AsyncTools } from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
 
+export const CreateFieldsPattern = {
+	tenant: String,
+	name: String,
+	loc: { type: String, coordinates: [Number] as [NumberConstructor] },
+	tz: String,
+};
 export interface CreateFields {
 	tenant: string;
 	name: string;
@@ -24,12 +30,7 @@ export const create = ServerMethod(
 	'region.create',
 
 	(changes: CreateFields) => {
-		check(changes, {
-			tenant: String,
-			name: String,
-			loc: { type: String, coordinates: [Number] },
-			tz: String,
-		});
+		check(changes, CreateFieldsPattern);
 
 		const user = Meteor.user();
 		if (!user) {
@@ -65,6 +66,12 @@ export const create = ServerMethod(
 	},
 );
 
+export const UpdateFieldsPattern = {
+	name: Match.Maybe(String),
+	loc: Match.Maybe({ type: String, coordinates: [Number] }),
+	tz: Match.Maybe(String),
+};
+
 export interface UpdateFields {
 	name?: string;
 	loc?: { type: 'Point'; coordinates: [number, number] };
@@ -73,11 +80,7 @@ export interface UpdateFields {
 
 export const update = ServerMethod('region.update', (regionId: string, changes: UpdateFields) => {
 	check(regionId, String);
-	check(changes, {
-		name: Match.Maybe(String),
-		loc: Match.Maybe({ type: String, coordinates: [Number] }),
-		tz: Match.Maybe(String),
-	});
+	check(changes, UpdateFieldsPattern);
 
 	const user = Meteor.user();
 	if (!user) {

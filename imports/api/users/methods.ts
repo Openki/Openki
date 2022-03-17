@@ -337,6 +337,8 @@ export const removePrivilege = ServerMethod(
 );
 
 export const setHasContributed = ServerMethod('user.setHasContributed', (userId: string) => {
+	check(userId, String);
+
 	const operator = Meteor.user();
 
 	if (!operator || !UserPrivilegeUtils.privileged(operator, 'admin')) {
@@ -357,6 +359,8 @@ export const setHasContributed = ServerMethod('user.setHasContributed', (userId:
 });
 
 export const unsetHasContributed = ServerMethod('user.unsetHasContributed', (userId: string) => {
+	check(userId, String);
+
 	const operator = Meteor.user();
 
 	if (!operator || !UserPrivilegeUtils.privileged(operator, 'admin')) {
@@ -386,6 +390,8 @@ export const hidePricePolicy = ServerMethod('user.hidePricePolicy', () => {
 });
 
 export const name = ServerMethod('user.name', function (userId: string) {
+	check(userId, String);
+
 	this.unblock();
 	const user = Users.findOne(userId, { fields: { username: 1, contribution: 1 } });
 	if (!user) {
@@ -395,6 +401,8 @@ export const name = ServerMethod('user.name', function (userId: string) {
 });
 
 export const updateLocale = ServerMethod('user.updateLocale', (locale: string) => {
+	check(locale, String);
+
 	const userId = Meteor.userId();
 	if (!userId) {
 		throw new Meteor.Error(401, 'please log in');

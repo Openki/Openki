@@ -304,6 +304,7 @@ export const updateImage = ServerMethod(
 	'course.update.image',
 	async (courseId: string, file: FileStorage.UploadFile) => {
 		check(courseId, String);
+		check(file, FileStorage.UploadFilePattern);
 
 		const user = Meteor.user();
 		if (!user) {
@@ -385,6 +386,8 @@ export const promote = ServerMethod('course.promote', UpdateMethods.promote(Cour
 export const editing = ServerMethod('course.editing', UpdateMethods.editing(Courses));
 
 export const archive = ServerMethod('course.archive', (courseId: string) => {
+	check(courseId, String);
+
 	const course = Courses.findOne({ _id: courseId });
 	if (!course) {
 		throw new Meteor.Error(404, 'no such course');
@@ -400,6 +403,8 @@ export const archive = ServerMethod('course.archive', (courseId: string) => {
 });
 
 export const unarchive = ServerMethod('course.unarchive', (courseId: string) => {
+	check(courseId, String);
+
 	const course = Courses.findOne({ _id: courseId });
 	if (!course) {
 		throw new Meteor.Error(404, 'no such course');
@@ -415,6 +420,8 @@ export const unarchive = ServerMethod('course.unarchive', (courseId: string) => 
 });
 
 export const remove = ServerMethod('course.remove', (courseId: string) => {
+	check(courseId, String);
+
 	const course = Courses.findOne({ _id: courseId });
 	if (!course) {
 		throw new Meteor.Error(404, 'no such course');
