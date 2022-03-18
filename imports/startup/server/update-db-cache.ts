@@ -7,7 +7,7 @@ import * as usersTenantsDenormalizer from '/imports/api/users/tenantsDenormalize
 
 import * as Profile from '/imports/utils/profile';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
-import { AsyncTools } from '/imports/utils/async-tools';
+import * as AsyncTools from '/imports/utils/async-tools';
 
 function updateDbCacheFields() {
 	// Resync location cache in events
@@ -37,7 +37,11 @@ function updateDbCacheFields() {
 	Meteor.setInterval(
 		() => {
 			// Update nextEvent for courses where it expired
-			Meteor.call('course.updateNextEvent', { 'nextEvent.start': { $lt: new Date() } });
+			Meteor.call(
+				'course.updateNextEvent',
+				{ 'nextEvent.start': { $lt: new Date() } },
+				AsyncTools.logErrors,
+			);
 			Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
 		},
 		60 * 1000, // Check every minute

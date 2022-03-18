@@ -1,4 +1,12 @@
-export type LocalizedValue = string | Record<string, unknown>;
+import { Match } from 'meteor/check';
+
+/** allows localised value eg. with `getLocalizedValue(...)` to have a string per language. */
+export const LocalizedValuePattern = Match.OneOf(
+	String,
+	Match.ObjectIncluding<Record<string, string | undefined>>({}),
+);
+
+export type LocalizedValue = Match.PatternMatch<typeof LocalizedValuePattern>;
 
 /**
  * Returns a loacalised value based on the current set locale. 

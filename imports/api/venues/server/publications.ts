@@ -5,6 +5,7 @@ import { FindFilter, VenueEntity, Venues } from '/imports/api/venues/venues';
 
 Meteor.publish('venues', (region?: string) => {
 	check(region, Match.Maybe(String));
+
 	const find: Mongo.Selector<VenueEntity> = {};
 	if (region) {
 		find.region = region;
@@ -12,8 +13,14 @@ Meteor.publish('venues', (region?: string) => {
 	return Venues.find(find);
 });
 
-Meteor.publish('venueDetails', (id: string) => Venues.find(id));
+Meteor.publish('venueDetails', (id: string) => {
+	check(id, String);
 
-Meteor.publish('Venues.findFilter', (find?: FindFilter, limit?: number) =>
-	Venues.findFilter(find, limit),
-);
+	return Venues.find(id);
+});
+
+Meteor.publish('Venues.findFilter', (find?: FindFilter, limit?: number) => {
+	check(limit, Match.Maybe(Match.Integer));
+
+	return Venues.findFilter(find, limit);
+});
