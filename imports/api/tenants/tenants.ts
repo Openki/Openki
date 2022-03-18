@@ -74,14 +74,25 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
 		} = {},
 		limit = 0,
 		skip = 0,
-		sort: [string, 'asc' | 'desc'][],
+		sort?: [string, 'asc' | 'desc'][],
 	) {
 		check(limit, Match.Maybe(Number));
 		check(skip, Match.Maybe(Number));
 		check(sort, Match.Maybe([[String]]));
 
+		const me = Meteor.user();
+		if (!me) {
+			// User is not logged in...
+			return [];
+		}
+
 		const find: Mongo.Selector<TenantEntity> = {};
 		const options: Mongo.Options<TenantEntity> = { sort };
+
+		// Only members of a tenant or admins can see a tenant
+		if (!UserPrivilegeUtils.privileged(me, 'admin')) {
+			find.members = me._id;
+		}
 
 		if (limit > 0) {
 			options.limit = limit;
@@ -92,13 +103,7 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
 		}
 
 		if (filter.adminOf) {
-			const me = Meteor.userId();
-			if (!me) {
-				// User is not logged in...
-				return [];
-			}
-
-			find.admins = me;
+			find.admins = me._id;
 		}
 
 		return this.find(find, options);

@@ -24,6 +24,7 @@ function tenantMutationPreconditionCheck(tenantId: string) {
 export const createMany = ServerMethod(
 	'invitation.createMany',
 	(tenantId: string, emails: string[]) => {
+		check(tenantId, String);
 		check(emails, [String]);
 
 		tenantMutationPreconditionCheck(tenantId);

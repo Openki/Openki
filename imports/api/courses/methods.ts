@@ -17,16 +17,16 @@ import { Subscribe, Unsubscribe, Message, processChange } from './subscription';
 
 import { Notification } from '/imports/notification/notification';
 
-import { AsyncTools } from '/imports/utils/async-tools';
+import * as AsyncTools from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
-import { LocalizedValue as LocalizedValueType } from '/imports/utils/getLocalizedValue';
+import { LocalizedValuePattern } from '/imports/utils/getLocalizedValue';
 import * as FileStorage from '/imports/utils/FileStorage';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import { UserModel } from '/imports/api/users/users';
-import { LocalizedValue, StringEnum } from '/imports/utils/CustomChecks';
+import { StringEnum, Type } from '/imports/utils/CustomChecks';
 
 function registerMethod(method: {
 	method: string;
@@ -92,48 +92,34 @@ registerMethod(Subscribe);
 registerMethod(Unsubscribe);
 registerMethod(Message);
 
-export interface SaveFields {
-	description?: string;
-	categories?: string[];
-	name?: string;
-	region?: string;
-	customFields?: {
-		name: string;
-		displayText: LocalizedValueType;
-		value: string;
-		visibleFor: 'all' | 'editors';
-	}[];
-	roles?: { [type: string]: boolean };
-	subs?: string[];
-	unsubs?: string[];
-	groups?: string[];
-	internal?: boolean;
-}
+export const CustomFieldPattern = {
+	name: String,
+	displayText: LocalizedValuePattern,
+	value: String,
+	visibleFor: StringEnum(['all', 'editors'] as const),
+};
+export type CustomField = Type<typeof CustomFieldPattern>;
+
+export const SaveFieldPattern = {
+	description: Match.Optional(String),
+	categories: Match.Optional([String]),
+	name: Match.Optional(String),
+	region: Match.Optional(String),
+	customFields: Match.Optional([CustomFieldPattern]),
+	roles: Match.Optional(Match.ObjectIncluding<Record<string, boolean>>({})),
+	subs: Match.Optional([String]),
+	unsubs: Match.Optional([String]),
+	groups: Match.Optional([String]),
+	internal: Match.Optional(Boolean),
+};
+export type SaveFields = Type<typeof SaveFieldPattern>;
 
 export const save = ServerMethod(
 	'course.save',
 
 	(courseId: string, changes: SaveFields) => {
 		check(courseId, String);
-		check(changes, {
-			description: Match.Optional(String),
-			categories: Match.Optional([String]),
-			name: Match.Optional(String),
-			region: Match.Optional(String),
-			customFields: Match.Optional([
-				{
-					name: String,
-					displayText: LocalizedValue,
-					value: String,
-					visibleFor: StringEnum(['all', 'editors'] as const),
-				},
-			]),
-			roles: Match.Optional(Object),
-			subs: Match.Optional([String]),
-			unsubs: Match.Optional([String]),
-			groups: Match.Optional([String]),
-			internal: Match.Optional(Boolean),
-		});
+		check(changes, SaveFieldPattern);
 
 		const user = Meteor.user();
 		if (!user) {
@@ -163,7 +149,7 @@ export const save = ServerMethod(
 					Courses.update(
 						{ _id: courseId },
 						{ $pull: { roles: type } },
-						undefined,
+						{ multi: true },
 						AsyncTools.checkUpdateOne,
 					);
 
@@ -185,7 +171,7 @@ export const save = ServerMethod(
 						Courses.update(
 							{ _id: courseId },
 							{ $addToSet: { roles: type } },
-							undefined,
+							{ multi: true },
 							AsyncTools.checkUpdateOne,
 						);
 					}
@@ -270,7 +256,7 @@ export const save = ServerMethod(
 			Courses.update(
 				{ _id: courseId },
 				{ $set: enrichedSet },
-				undefined,
+				{ multi: true },
 				AsyncTools.checkUpdateOne,
 			);
 
@@ -304,6 +290,7 @@ export const updateImage = ServerMethod(
 	'course.update.image',
 	async (courseId: string, file: FileStorage.UploadFile) => {
 		check(courseId, String);
+		check(file, FileStorage.UploadFilePattern);
 
 		const user = Meteor.user();
 		if (!user) {
@@ -385,6 +372,8 @@ export const promote = ServerMethod('course.promote', UpdateMethods.promote(Cour
 export const editing = ServerMethod('course.editing', UpdateMethods.editing(Courses));
 
 export const archive = ServerMethod('course.archive', (courseId: string) => {
+	check(courseId, String);
+
 	const course = Courses.findOne({ _id: courseId });
 	if (!course) {
 		throw new Meteor.Error(404, 'no such course');
@@ -400,6 +389,8 @@ export const archive = ServerMethod('course.archive', (courseId: string) => {
 });
 
 export const unarchive = ServerMethod('course.unarchive', (courseId: string) => {
+	check(courseId, String);
+
 	const course = Courses.findOne({ _id: courseId });
 	if (!course) {
 		throw new Meteor.Error(404, 'no such course');
@@ -415,6 +406,8 @@ export const unarchive = ServerMethod('course.unarchive', (courseId: string) => 
 });
 
 export const remove = ServerMethod('course.remove', (courseId: string) => {
+	check(courseId, String);
+
 	const course = Courses.findOne({ _id: courseId });
 	if (!course) {
 		throw new Meteor.Error(404, 'no such course');
