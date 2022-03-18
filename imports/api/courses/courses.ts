@@ -11,7 +11,7 @@ import * as tenantDenormalizer from './tenantDenormalizer';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { AsyncTools } from '/imports/utils/async-tools';
+import * as AsyncTools from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import * as FileStorage from '/imports/utils/FileStorage';

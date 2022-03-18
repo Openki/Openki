@@ -6,7 +6,7 @@ import { Regions } from '/imports/api/regions/regions';
 import { VenueEntity, Venues } from '/imports/api/venues/venues';
 /** @typedef {import('./venues').VenueEntity} VenueEntity */
 
-import { AsyncTools } from '/imports/utils/async-tools';
+import * as AsyncTools from '/imports/utils/async-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
@@ -125,7 +125,7 @@ export const save = ServerMethod('venue.save', (venueId: string, changes: SaveFi
 		} as VenueEntity);
 	}
 
-	Venues.update({ _id: venueId }, { $set: set }, undefined, AsyncTools.checkUpdateOne);
+	Venues.update({ _id: venueId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);
 
 	return venueId;
 });

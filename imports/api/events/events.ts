@@ -8,7 +8,7 @@ import { Geodata } from '/imports/api/regions/regions';
 import { Courses } from '/imports/api/courses/courses';
 import { UserModel } from '/imports/api/users/users';
 
-import { AsyncTools } from '/imports/utils/async-tools';
+import * as AsyncTools from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
 import * as Predicates from '/imports/utils/predicates';

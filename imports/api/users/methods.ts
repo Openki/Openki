@@ -14,7 +14,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as Profile from '/imports/utils/profile';
 import { isEmail } from '/imports/utils/email-tools';
 import * as StringTools from '/imports/utils/string-tools';
-import { AsyncTools } from '/imports/utils/async-tools';
+import * as AsyncTools from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
@@ -301,7 +301,7 @@ export const addPrivilege = ServerMethod(
 		Users.update(
 			{ _id: user._id },
 			{ $addToSet: { privileges: privilege } },
-			undefined,
+			{ multi: true },
 			AsyncTools.checkUpdateOne,
 		);
 	},
@@ -330,7 +330,7 @@ export const removePrivilege = ServerMethod(
 		Users.update(
 			{ _id: user._id },
 			{ $pull: { privileges: privilege } },
-			undefined,
+			{ multi: true },
 			AsyncTools.checkUpdateOne,
 		);
 	},
