@@ -15,7 +15,7 @@
 		<form class="d-flex js-region-search-form" tabindex="0">
 			<div
 				 class="input-group input-group-outline {{#if isSplash}}is-splash{{else}}input-group-sm p-2 mt-2{{/if}}">
-				<span class="input-group-text"><span class="fa fa-dot-circle-o fa-fw"
+				<span class="input-group-text"><span class="fa-regular fa-circle-dot fa-fw"
 						  aria-hidden="true"></span></span>
 				<input class="form-control js-region-search" type="text"
 					   value="{{#if currentRegionName}}{{currentRegionName}}{{else}}{{i18n 'menue.All regions' 'All regions'}}{{/if}}">
@@ -27,11 +27,11 @@
 						<div class="dropdown-addon-right">
 							<span class="badge bg-primary rounded-pill"
 								  title="{{i18n 'regionSelection.legend.numCoursesTitle' 'Number of courses'}}">
-								# <i class="fa fa-circle"></i>
+								# <i class="fa-solid fa-circle"></i>
 							</span>
 							<span class="badge bg-success text-dark rounded-pill"
 								  title="{{i18n 'regionSelection.legend.numEventsTitle' 'Number of upcoming events'}}">
-								# <i class="fa fa-calendar"></i>
+								# <i class="fa-solid fa-calendar"></i>
 							</span>
 						</div>
 						{{i18n 'regionSelection.legend.region' 'Region'}}
@@ -50,7 +50,7 @@
 								</span>
 							</div>
 							{{#if isCurrentRegion 'all'}}
-								<span class="checkmark fa fa-check"></span>
+								<span class="checkmark fa-solid fa-check"></span>
 							{{/if}}
 							{{i18n 'menue.All regions' 'All regions'}}
 						</a>
@@ -65,7 +65,7 @@
 							</li>
 							<li>
 								<a class="dropdown-item" href="{{aboutLink}}">
-									<i class="fa fa-info-circle" aria-hidden="true"></i>
+									<span class="fa-solid fa-circle-info" aria-hidden="true"></span>
 									{{i18n 'regionSelection.aboutLink' 'About regions'}}
 								</a>
 							</li>
@@ -92,7 +92,7 @@
 </template>
 
 <template name="regionSelectionItem">
-	<li class={{private}}>
+	<li class="{{private}}">
 		<a href="#" class="dropdown-item js-region-link js-nav-dropdown-close" title="{{nameEn}}">
 			<div class="dropdown-addon-right">
 				<span class="badge bg-primary rounded-pill"
@@ -105,7 +105,7 @@
 				</span>
 			</div>
 			{{#if isCurrentRegion _id}}
-				<span class="checkmark fa fa-check"></span>
+				<span class="checkmark fa-solid fa-check"></span>
 			{{/if}}
 			{{regionNameMarked}}
 		</a>
@@ -115,7 +115,7 @@
 <template name="regionSelectionDisplay">
 	<li class="{{inNavbarClasses}}">
 		<a class="navbar-link js-region-selection-display">
-			<span class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></span>
+			<span class="fa-regular fa-circle-dot fa-fw" aria-hidden="true"></span>
 			{{#if currentRegionName}}
 				{{currentRegionName}}
 			{{else}}

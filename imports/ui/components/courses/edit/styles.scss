@@ -23,6 +23,10 @@
 	text-align: left;
 }
 
-.proposed-courses > .dropdown-header > .fa {
-	margin-right: 7px;
+.proposed-courses > .dropdown-header > {
+	.fa-regular,
+	.fa-brands,
+	.fa-solid {
+		margin-right: 7px;
+	}
 }

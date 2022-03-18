@@ -10,7 +10,8 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">
-						<i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i>
+						<span class="fa-solid fa-circle-exclamation fa-fw"
+							  aria-hidden="true"></span>
 						{{i18n 'validate.email.title' 'Validate e-mail address'}}
 					</h4>
 					<span class="btn-close" data-bs-dismiss="modal"></span>
@@ -28,11 +29,12 @@
 						<button class="js-send-validation-email btn btn-add form-control"
 								{{disabledIfBusy}}>
 							{{#if busy 'sending'}}
-								<span class="fa fa-circle-o-notch fa-spin fa-fw"
+								<span class="fa-solid fa-circle-notch fa-spin fa-fw"
 									  aria-hidden="true"></span>
 								{{i18n 'send.validation.submit.busy' 'Sending…'}}
 							{{else}}
-								<span class="fa fa-send fa-fw" aria-hidden="true"></span>
+								<span class="fa-solid fa-paper-plane fa-fw"
+									  aria-hidden="true"></span>
 								{{i18n 'send.validation.email' 'Send me a validation e-mail.'}}
 							{{/if}}
 						</button>

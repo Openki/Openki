@@ -29,7 +29,7 @@
 					</h2>
 					<a href="{{pathFor 'showCourse' _id=courseId}}"
 					   class="event-course-header-link">
-						<i class="fa fa-external-link"></i>
+						<span class="fa-solid fa-up-right-from-square" aria-hidden="true"></span>
 						{{i18n 'event.details.viewCourse' 'view course'}}
 					</a>
 					{{> courseCategories course}}
@@ -91,10 +91,10 @@
 		<div class="details-header event-details-header">
 			<span class="day">{{weekdayFormat startLocal}}</span><br>
 			<span class="date">
-				<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+				<span class="fa-solid fa-calendar-days fa-fw" aria-hidden="true"></span>
 				{{calendarDayShort startLocal}}
 			</span>
-			<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+			<span class="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
 			{{timeFormat startLocal}} - {{timeFormat endLocal}}
 		</div>
 		<div class="details-body event-details-body">
@@ -111,7 +111,7 @@
 					{{> venueLink}}
 					{{#if venue.address}}
 						<div class="tag">
-							<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+							<span class="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
 							{{venue.address}}
 						</div>
 					{{/if}}
@@ -188,7 +188,7 @@
 			{{> groupName groupId=this isOrganizer=isOrganizer}}
 			{{#if isOrganizer}}
 				<div class="tag group-tag addon">
-					<span class="fa fa-bullhorn fa-fw" aria-hidden="true"
+					<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"
 						  title="{{i18n 'grouplist.organizer.title'}}"></span>
 				</div>
 			{{/if}}
@@ -221,7 +221,7 @@
 		<div class="btn-group tag-btn group-tag-btn align-top">
 			<button type="button" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true"
 					data-bs-toggle="dropdown">
-				<span class="fa fa-plus fa-fw" aria-hidden="true"></span>
+				<span class="fa-solid fa-plus fa-fw" aria-hidden="true"></span>
 				<span>{{i18n 'event.group.addText' 'link a group'}}</span>
 			</button>
 			<ul class="dropdown-menu dialog-dropdown">
@@ -259,7 +259,7 @@
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-remove">
-			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-xmark fa-fw" aria-hidden="true"></span>
 			{{i18n 'course.group.remove'}}
 		</a>
 	{{/if}}
@@ -276,7 +276,7 @@
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-add">
-			<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
 			{{i18n 'course.group.addOrgText'}}
 		</a>
 	{{/if}}
@@ -292,7 +292,7 @@
 		</div>
 	{{else}}
 		<a href="#" class="js-expand btn btn-remove">
-			<span class="fa fa-remove fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-xmark fa-fw" aria-hidden="true"></span>
 			{{i18n 'course.group.removeOrgText' NAME=(name groupId)}}
 		</a>
 	{{/if}}
@@ -301,7 +301,7 @@
 <template name="buttonRegister">
 	<button type="button" class="btn btn-add btn-event {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'registering'}}
-			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n '_button.registering' 'Registering…'}}
 		{{else}}
 			{{i18n 'event.details.register' 'Register'}}
@@ -312,7 +312,7 @@
 <template name="buttonRegistrationClosed">
 	<button type="button" class="btn btn-warning btn-event {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'registering'}}
-			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n '_button.addingYouToWaitingQueue' 'Adding you to waiting queue…'}}
 		{{else}}
 			{{i18n 'event.details.isFullyBooked' 'The event is fully booked'}}
@@ -323,7 +323,7 @@
 <template name="buttonUnregister">
 	<button type="button" class="btn btn-cancel btn-event {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'unregistering'}}
-			<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n '_button.unregistering' 'Unregistering…'}}
 		{{else}}
 			{{i18n 'event.details.unregister' 'Withdraw my registration'}}

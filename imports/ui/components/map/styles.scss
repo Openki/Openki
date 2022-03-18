@@ -5,8 +5,12 @@
 	width: 200px;
 }
 
-.map-box .fa {
-	font-size: 30px;
+.map-box {
+	.fa-regular,
+	.fa-brands,
+	.fa-solid {
+		font-size: 30px;
+	}
 }
 
 .map-fullscreen {
