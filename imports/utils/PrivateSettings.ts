@@ -1,4 +1,4 @@
-import { check, Match } from 'meteor/check';
+import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { StringEnum } from './CustomChecks';
 

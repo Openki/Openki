@@ -10,13 +10,7 @@ import { Courses } from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
 import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as courseTimeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
-import {
-	EventEntity,
-	EventModel,
-	Events,
-	EventVenueEntity,
-	OEvent,
-} from '/imports/api/events/events';
+import { EventEntity, EventModel, Events, OEvent } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { VenueModel, Venues } from '/imports/api/venues/venues';
@@ -32,6 +26,7 @@ import LocalTime from '/imports/utils/local-time';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UpdateMethods from '/imports/utils/update-methods';
 import { ServerMethod } from '/imports/utils/ServerMethod';
+import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
 
 /**
  * @param updateOptions What should be updated
@@ -93,20 +88,46 @@ const ReplicaSync = function (
 	};
 };
 
-export interface SaveFields {
-	title: string;
-	description: string;
-	venue?: EventVenueEntity;
-	room?: string;
-	startLocal?: string;
-	endLocal?: string;
-	internal?: boolean;
-	maxParticipants?: number;
-	courseId?: string;
-	region?: string;
-	replicaOf?: string;
-	groups?: string[];
-}
+export const GeodataPattern = {
+	type: StringEnum(['Point'] as const),
+	/** (not lat-long !) */
+	coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>([Number, Number]),
+};
+
+export type Geodata = Type<typeof GeodataPattern>;
+
+export const EventVenuePattern = {
+	_id: Match.Optional(String),
+	name: Match.Optional(String),
+	loc: Match.Optional(GeodataPattern),
+	address: Match.Optional(String),
+	editor: Match.Optional(String),
+};
+
+export const CreateFieldsPattern = {
+	title: String,
+	description: String,
+	venue: Match.Optional(EventVenuePattern),
+	room: Match.Optional(String),
+	startLocal: Match.Optional(String),
+	endLocal: Match.Optional(String),
+	internal: Match.Optional(Boolean),
+	maxParticipants: Match.Optional(Match.Integer),
+};
+
+export type CreateFields = Type<typeof CreateFieldsPattern>;
+
+export const UpdateFieldsPattern = {
+	...CreateFieldsPattern,
+	courseId: Match.Optional(String),
+	region: String,
+	replicaOf: Match.Optional(String),
+	groups: Match.Optional([String]),
+};
+
+export type UpdateFields = Type<typeof UpdateFieldsPattern>;
+
+export type SaveFields = CreateFields & UpdateFields;
 
 export const save = ServerMethod(
 	'event.save',
@@ -132,27 +153,18 @@ export const save = ServerMethod(
 
 		check(eventId, String);
 
-		const expectedFields: Match.Pattern = {
-			title: String,
-			description: String,
-			venue: Match.Optional(Object),
-			room: Match.Optional(String),
-			startLocal: Match.Optional(String),
-			endLocal: Match.Optional(String),
-			internal: Match.Optional(Boolean),
-			maxParticipants: Match.Optional(Match.Integer),
-		};
-
 		const isNew = eventId === '';
-		if (isNew) {
-			expectedFields.courseId = Match.Optional(String);
-			expectedFields.region = String;
-			expectedFields.replicaOf = Match.Optional(String);
-			expectedFields.groups = Match.Optional([String]);
-		}
 
+		const expectedFields = isNew ? CreateFieldsPattern : UpdateFieldsPattern;
 		check(changes, expectedFields);
 		check(comment, Match.Maybe(String));
+		check(sendNotifications, Match.Maybe(Boolean));
+
+		if (!isNew) {
+			check(updateReplicasInfos, Match.Maybe(Boolean));
+			check(updateReplicasTime, Match.Maybe(Boolean));
+			check(updateChangedReplicasTime, Match.Maybe(Boolean));
+		}
 
 		const editFields = changes as Partial<EventEntity>;
 

@@ -16,6 +16,7 @@ import { ServerMethod } from '/imports/utils/ServerMethod';
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { Type } from '/imports/utils/CustomChecks';
 
 export const sendVerificationEmail = ServerMethod(
 	'sendVerificationEmail',
@@ -30,24 +31,20 @@ export const sendVerificationEmail = ServerMethod(
 	{ simulation: false },
 );
 
-export interface SendEmailOptions {
-	revealAddress: boolean;
-	sendCopy: boolean;
-	courseId?: string;
-	eventId?: string;
-}
+export const SendEmailOptionsPattern = {
+	revealAddress: Boolean,
+	sendCopy: Boolean,
+	courseId: Match.Optional(String),
+	eventId: Match.Optional(String),
+};
+export type SendEmailOptions = Type<typeof SendEmailOptionsPattern>;
 
 export const sendEmail = ServerMethod(
 	'sendEmail',
 	(userId: string, message: string, options: SendEmailOptions) => {
 		check(userId, String);
 		check(message, String);
-		check(options, {
-			revealAddress: Boolean,
-			sendCopy: Boolean,
-			courseId: Match.Optional(String),
-			eventId: Match.Optional(String),
-		});
+		check(options, SendEmailOptionsPattern);
 
 		const operator = Meteor.user();
 		if (!operator) {

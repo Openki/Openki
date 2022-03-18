@@ -366,7 +366,7 @@ template.events({
 			return;
 		}
 
-		const editevent: SaveFields = {
+		const editevent = {
 			title,
 			description,
 			venue: instance.selectedLocation.get(),
@@ -375,7 +375,7 @@ template.events({
 			endLocal: LocalTime.toString(end),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
 			maxParticipants,
-		};
+		} as SaveFields;
 
 		let eventId = instance.data._id || '';
 		const isNew = eventId === '';
