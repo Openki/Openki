@@ -104,7 +104,7 @@ export const EventVenuePattern = {
 	editor: Match.Optional(String),
 };
 
-export const CreateFieldsPattern = {
+export const UpdateFieldsPattern = {
 	title: String,
 	description: String,
 	venue: Match.Optional(EventVenuePattern),
@@ -114,18 +114,16 @@ export const CreateFieldsPattern = {
 	internal: Match.Optional(Boolean),
 	maxParticipants: Match.Optional(Match.Integer),
 };
+export type UpdateFields = Type<typeof UpdateFieldsPattern>;
 
-export type CreateFields = Type<typeof CreateFieldsPattern>;
-
-export const UpdateFieldsPattern = {
-	...CreateFieldsPattern,
+export const CreateFieldsPattern = {
+	...UpdateFieldsPattern,
 	courseId: Match.Optional(String),
 	region: String,
 	replicaOf: Match.Optional(String),
 	groups: Match.Optional([String]),
 };
-
-export type UpdateFields = Type<typeof UpdateFieldsPattern>;
+export type CreateFields = Type<typeof CreateFieldsPattern>;
 
 export type SaveFields = CreateFields & UpdateFields;
 
