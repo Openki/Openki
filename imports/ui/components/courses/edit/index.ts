@@ -405,7 +405,7 @@ export type Data = {
 				internal,
 				name: StringTools.saneTitle(instance.$('.js-title').val() as string),
 				categories: instance.state.get('selectedCategories') || [],
-			} as Required<CoursesMethods.SaveFields>;
+			} as unknown as Required<CoursesMethods.SaveFields>;
 
 			if (changes.name.length === 0) {
 				Alert.serverError(i18n('course.edit.error.title', 'Please provide a title'));

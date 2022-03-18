@@ -1,7 +1,7 @@
-import { check, Match } from 'meteor/check';
+import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 
-import { LocalizedValue } from '/imports/utils/CustomChecks';
+import { LocalizedValuePattern } from '/imports/utils/getLocalizedValue';
 
 // See settings-example.json.md for full documentation
 
@@ -57,8 +57,8 @@ check(
 		avatarLogo: { src: String, alt: String },
 		ogLogo: { src: String },
 		emailLogo: String,
-		regionSelection: { minNumber: Number, aboutLink: Match.Maybe(LocalizedValue) },
-		i18nHelpLink: Match.Maybe(LocalizedValue),
+		regionSelection: { minNumber: Number, aboutLink: Match.Maybe(LocalizedValuePattern) },
+		i18nHelpLink: Match.Maybe(LocalizedValuePattern),
 		publicTenants: [String],
 		matomo: Match.Maybe(
 			Match.OneOf(
@@ -83,17 +83,17 @@ check(
 				link: String,
 				key: Match.Maybe(String),
 				title_key: Match.Maybe(String),
-				text: Match.Maybe(LocalizedValue),
+				text: Match.Maybe(LocalizedValuePattern),
 			},
 		],
-		faqLink: LocalizedValue,
-		pricePolicyLink: LocalizedValue,
-		courseGuideLink: LocalizedValue,
-		aboutLink: LocalizedValue,
+		faqLink: LocalizedValuePattern,
+		pricePolicyLink: LocalizedValuePattern,
+		courseGuideLink: LocalizedValuePattern,
+		aboutLink: LocalizedValuePattern,
 		contribution: Match.Maybe({
 			icon: String,
 			forbiddenChars: [String],
-			link: LocalizedValue,
+			link: LocalizedValuePattern,
 		}),
 		categories: Match.Where((c) => {
 			check(c, Object);
