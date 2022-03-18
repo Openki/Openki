@@ -21,10 +21,11 @@
 				<div class=" timetable-row {{#if isRoomRow room @index}}timetable-row--room{{/if}}">
 					<div class="timetable-location text-start">
 						<a href="{{pathFor 'venueDetails' data=location}}">
-							<span class="fa fa-home fa-fw" aria-hidden="true"></span>
+							<span class="fa-solid fa-house fa-fw" aria-hidden="true"></span>
 							{{venue.name}}
 							{{#if room}}
-								<span class="fa fa-map-signs fa-fw" aria-hidden="true"></span>
+								<span class="fa-solid fa-signs-post fa-fw"
+									  aria-hidden="true"></span>
 								{{ room }}
 							{{/if}}
 						</a>
@@ -37,7 +38,8 @@
 										{{this.title}}
 									</div>
 									<div class="timetable-event-time">
-										<span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+										<span class="fa-regular fa-clock fa-fw"
+											  aria-hidden="true"></span>
 										{{timeFormat start}} - {{timeFormat end}}
 									</div>
 									<div class="timetable-event-description">

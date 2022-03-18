@@ -2,15 +2,15 @@
 	<div class="container mw-md">
 		<div class="page-component">
 			<h1>
-				<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
+				<span class="fa-solid fa-gears fa-fw" aria-hidden="true"></span>
 				{{i18n 'login.frame.settings'}}
 			</h1>
 		</div>
 		{{#if notificationsUnsubscribeSuccess}}
 			<div class="alert alert-success" role="alert">
 				<span class="fa-stack fa-lg">
-					<i class="fa fa-envelope-o fa-stack-1x"></i>
-					<i class="fa fa-ban fa-stack-2x"></i>
+					<i class="fa-regular fa-envelope fa-stack-1x"></i>
+					<i class="fa-solid fa-ban fa-stack-2x"></i>
 				</span>
 				{{i18n 'notifications.unsubscribeSuccess' 'You have unsubscribed from automated notifications.'}}
 			</div>
@@ -18,8 +18,8 @@
 		{{#if privateMessagesUnsubscribeSuccess}}
 			<div class="alert alert-success" role="alert">
 				<span class="fa-stack fa-lg">
-					<i class="fa fa-envelope-o fa-stack-1x"></i>
-					<i class="fa fa-ban fa-stack-2x"></i>
+					<i class="fa-regular fa-envelope fa-stack-1x"></i>
+					<i class="fa-solid fa-ban fa-stack-2x"></i>
 				</span>
 				{{i18n 'privateMessages.unsubscribeSuccess' 'You will not get private messages from users.'}}
 			</div>
@@ -27,8 +27,8 @@
 		{{#if unsubscribeError}}
 			<div class="alert alert-danger" role="alert">
 				<span class="fa-stack fa-lg">
-					<i class="fa fa-envelope-o fa-stack-1x"></i>
-					<i class="fa fa-ban fa-stack-2x"></i>
+					<i class="fa-regular fa-envelope fa-stack-1x"></i>
+					<i class="fa-solid fa-ban fa-stack-2x"></i>
 				</span>
 				{{i18n 'notifications.unsubscribeError' 'Could not unsubscribe. Please Try again.'}}
 			</div>
@@ -53,7 +53,7 @@
 
 						<a class="btn btn-primary"
 						   href="{{pathFor 'userprofile' _id=currentUser._id}}">
-							<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+							<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
 							{{i18n 'login.frame.profile' 'Public profile'}}
 						</a>
 					</div>
