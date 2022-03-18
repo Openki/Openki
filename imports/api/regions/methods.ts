@@ -9,7 +9,7 @@ import { RegionEntity, Regions } from './regions';
 import { Venues } from '/imports/api/venues/venues';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { AsyncTools } from '/imports/utils/async-tools';
+import * as AsyncTools from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
 
@@ -116,7 +116,7 @@ export const update = ServerMethod('region.update', (regionId: string, changes: 
 		set.tz = changes.tz.trim().substring(0, 40);
 	}
 
-	Regions.update({ _id: regionId }, { $set: set }, undefined, AsyncTools.checkUpdateOne);
+	Regions.update({ _id: regionId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);
 
 	return regionId;
 });

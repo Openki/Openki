@@ -17,7 +17,7 @@ import { Subscribe, Unsubscribe, Message, processChange } from './subscription';
 
 import { Notification } from '/imports/notification/notification';
 
-import { AsyncTools } from '/imports/utils/async-tools';
+import * as AsyncTools from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
@@ -149,7 +149,7 @@ export const save = ServerMethod(
 					Courses.update(
 						{ _id: courseId },
 						{ $pull: { roles: type } },
-						undefined,
+						{ multi: true },
 						AsyncTools.checkUpdateOne,
 					);
 
@@ -171,7 +171,7 @@ export const save = ServerMethod(
 						Courses.update(
 							{ _id: courseId },
 							{ $addToSet: { roles: type } },
-							undefined,
+							{ multi: true },
 							AsyncTools.checkUpdateOne,
 						);
 					}
@@ -256,7 +256,7 @@ export const save = ServerMethod(
 			Courses.update(
 				{ _id: courseId },
 				{ $set: enrichedSet },
-				undefined,
+				{ multi: true },
 				AsyncTools.checkUpdateOne,
 			);
 
