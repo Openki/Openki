@@ -1,16 +1,17 @@
 import { check } from 'meteor/check';
 
+export type FieldSort = [string, 'asc' | 'desc'];
+
 // SortSpec interface
 
 /**
  * builds a SortSpec from a given mongo sort-specifier
  */
-export const SortSpec = (spec: [string, 'asc' | 'desc'][]) => {
+export const SortSpec = (spec: FieldSort[]) => {
 	check(spec, [[String]]);
 	return {
 		/**
-		 * @returns {string[][]} returns a  mongo sort-specifier of the form
-		 * [['name', 'asc'], ['age', 'desc']]
+		 * @returns a mongo sort-specifier of the form [['name', 'asc'], ['age', 'desc']]
 		 */
 		spec: () => spec,
 	};
