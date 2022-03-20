@@ -9,7 +9,7 @@ import './template.html';
 import './styles.scss';
 
 export interface LocEntity {
-	type: string;
+	type: 'Point';
 	coordinates: [number, number];
 }
 
@@ -72,7 +72,11 @@ const FaCompIcon = function (opClass: string, icClass: string) {
 	};
 };
 
-const OpenkiControl = L.Control.extend({
+const OpenkiControl: new (options: {
+	icon: () => HTMLElement;
+	action: string;
+	title: string;
+}) => L.Control = L.Control.extend({
 	options: {
 		icon: null,
 		action: '',
@@ -96,8 +100,8 @@ template.onRendered(function () {
 	const instance = this;
 	const maxZoom = instance.data.maxZoom || 19;
 
-	const layers: { [id: string]: any } = {};
-	const centers: { [id: string]: any } = {};
+	const layers: { [id: string]: L.GeoJSON<any> } = {};
+	const centers: { [id: string]: L.LatLngBounds } = {};
 
 	L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
 
@@ -109,8 +113,8 @@ template.onRendered(function () {
 	const map = L.map(instance.find('.map'), options).setView(L.latLng(0, 0), 1);
 
 	// Add tiles depending on language
-	let tiles: any = null;
-	const tileLayers: { [lang: string]: () => any } = {
+	let tiles: L.TileLayer;
+	const tileLayers: { [lang: string]: () => L.TileLayer } = {
 		de() {
 			return L.tileLayer('//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
 				maxZoom,
@@ -179,7 +183,7 @@ template.onRendered(function () {
 		const fullscreen = instance.fullscreen.get();
 		const { mini } = instance.data;
 
-		const show = function (control: { shown: boolean | undefined }, originalToggle: boolean) {
+		const show = function (control: { shown?: boolean } & L.Control, originalToggle: boolean) {
 			const toggle = Boolean(originalToggle);
 
 			if (control.shown === undefined) {
@@ -264,10 +268,10 @@ template.onRendered(function () {
 		const addMarker = function (mark: MarkerEntity) {
 			// Marks that have the center flage set are not displayed but used for anchoring the map
 			if (mark.center) {
-				centers[mark._id] = L.geoJson(mark.loc).getBounds();
+				centers[mark._id] = L.geoJSON(mark.loc).getBounds();
 			} else {
-				const marker = L.geoJson(mark.loc, {
-					pointToLayer(_feature: any, latlng: any) {
+				const marker = L.geoJSON(mark.loc, {
+					pointToLayer(_feature: any, latlng: L.LatLngExpression) {
 						let m;
 						if (mark.proposed) {
 							m = L.circleMarker(latlng, geojsonProposedMarkerOptions);
@@ -283,10 +287,10 @@ template.onRendered(function () {
 							markers.update({}, { $set: { selected: false } });
 							markers.update(mark._id, { $set: { selected: true } });
 						});
-						m.on('dragend', (event: any) => {
+						m.on('dragend', (event) => {
 							const latLng = event.target.getLatLng() as { lng: number; lat: number };
 							const loc = {
-								type: 'Point',
+								type: 'Point' as const,
 								coordinates: [latLng.lng, latLng.lat] as [number, number],
 							};
 							map.panTo(latLng);
