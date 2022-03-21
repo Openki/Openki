@@ -11,12 +11,12 @@
 										  aria-hidden="true"></span>&nbsp;
 									{{i18n 'course.events.pastList' 'Previous events'}}
 								</h4>
-								{{#if haveFutureEvents}}
-									<a href="#future_events" class="link">
-										<span class="fa-solid fa-arrow-down"></span>
-										{{i18n 'course.events.futureListLink' 'future events'}}
+									{{#if haveFutureEvents}}
+										<a href="#future_events" class="link">
+											<span class="fa-solid fa-arrow-down"></span>
+											{{i18n 'course.events.futureListLink' 'future events'}}
 									</a>
-								{{/if}}
+									{{/if}}
 							</div>
 							<div class="course-event-list">
 								{{> eventList dataEvents=pastEvents withDate=true}}
@@ -29,12 +29,12 @@
 										  aria-hidden="true"></span>&nbsp;
 									{{i18n 'course.events.ongoinglist' 'Ongoing events'}}
 								</h4>
-								{{#if havePastEvents}}
-									<a href="#past_events" class="past-events-link">
-										<span class="fa-solid fa-arrow-up"></span>
-										{{i18n 'course.events.pastListLink' 'past events'}}
+									{{#if havePastEvents}}
+										<a href="#past_events" class="past-events-link">
+											<span class="fa-solid fa-arrow-up"></span>
+											{{i18n 'course.events.pastListLink' 'past events'}}
 									</a>
-								{{/if}}
+									{{/if}}
 							</div>
 							<div class="course-event-list">
 								{{> eventList dataEvents=instance.ongoingEvents withDate=false}}
@@ -45,14 +45,14 @@
 								<h4>
 									<span class="fa-regular fa-calendar-days fa-fw"
 										  aria-hidden="true"></span>&nbsp;
-									{{i18n 'course.events.upcominglist' 'Upcoming events'}}
+									{{i18n 'course.events.upcominglist' '{NUM, plural, =0{No upcoming events yet} one{1 upcoming event} other{# upcoming events} }' NUM=upcomingEventsCount}}
 								</h4>
-								{{#if havePastEvents}}
-									<a href="#past_events" class="past-events-link">
-										<span class="fa-solid fa-arrow-up"></span>
-										{{i18n 'course.events.pastListLink' 'past events'}}
+									{{#if havePastEvents}}
+										<a href="#past_events" class="past-events-link">
+											<span class="fa-solid fa-arrow-up"></span>
+											{{i18n 'course.events.pastListLink' 'past events'}}
 									</a>
-								{{/if}}
+									{{/if}}
 							</div>
 							<div class="course-event-list">
 								{{> eventList dataEvents=instance.futureEvents withDate=true}}

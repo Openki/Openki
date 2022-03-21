@@ -67,6 +67,10 @@ import './styles.scss';
 	});
 
 	template.helpers({
+		upcomingEventsCount() {
+			const course = Template.instance().data;
+			return course.course.futureEvents.valueOf();
+		},
 		mayAdd() {
 			const { data } = Template.instance();
 			return data.course.editableBy(Meteor.user());
