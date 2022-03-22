@@ -3,7 +3,7 @@ import Shariff from 'shariff';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Session } from 'meteor/session';
 
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 
 import './template.html';
 import './styles.scss';

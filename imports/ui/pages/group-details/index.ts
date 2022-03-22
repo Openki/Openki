@@ -13,7 +13,7 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import { Store, Editable } from '/imports/ui/lib/editable';
 import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable';

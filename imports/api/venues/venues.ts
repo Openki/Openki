@@ -4,13 +4,14 @@ import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
 import { EventEntity, Events } from '/imports/api/events/events';
+import { UserModel } from '/imports/api/users/users';
+import { Geodata } from '/imports/api/regions/regions';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
-import { Geodata } from '/imports/api/regions/regions';
-import { UserModel } from '/imports/api/users/users';
+import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
 
 /** DB-Model */
 export interface VenueEntity {
@@ -114,10 +115,10 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 	 * @param skip skip this many before returning results
 	 * @param sort list of fields to sort by
 	 */
-	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: [string, 'asc' | 'desc'][]) {
-		check(limit, Match.Maybe(Number));
-		check(skip, Match.Maybe(Number));
-		check(sort, Match.Maybe([[String]]));
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
+		check(limit, Match.Maybe(Match.Integer));
+		check(skip, Match.Maybe(Match.Integer));
+		check(sort, Match.Maybe([FieldSortPattern]));
 
 		const find: Mongo.Selector<VenueEntity> = {};
 

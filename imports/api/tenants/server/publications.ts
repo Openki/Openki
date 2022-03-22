@@ -2,7 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 
 import { TenantEntity, Tenants } from '/imports/api/tenants/tenants';
+
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
 
 Meteor.publish('tenant', function (tenantId: string) {
 	check(tenantId, String);
@@ -38,11 +40,11 @@ Meteor.publish(
 		} = {},
 		limit = 0,
 		skip = 0,
-		sort?: [string, 'asc' | 'desc'][],
+		sort?: FieldSort[],
 	) {
 		check(limit, Match.Optional(Match.Integer));
 		check(skip, Match.Optional(Match.Integer));
-		check(sort, Match.Optional([[String]]));
+		check(sort, Match.Optional([FieldSortPattern]));
 
 		const filter = { ...find };
 

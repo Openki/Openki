@@ -128,7 +128,7 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
 			rel: Match.Optional([String]),
 			tr: Match.Optional([String]),
 		});
-		check(limit, Number);
+		check(limit, Match.Integer);
 
 		const query: Mongo.Selector<LogEntity> = {};
 		if (filter.start) query.ts = { $lte: filter.start };

@@ -20,7 +20,7 @@ import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 
 import * as StringTools from '/imports/utils/string-tools';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';

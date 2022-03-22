@@ -10,6 +10,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as Predicates from '/imports/utils/predicates';
 import { Filtering } from '/imports/utils/filtering';
 import { PublicSettings } from '/imports/utils/PublicSettings';
+import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
 
 export interface Geodata {
 	type: 'Point';
@@ -125,11 +126,11 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 		filter: { /** restrict to regions in that tenant */ tenant?: string } = {},
 		limit = 0,
 		skip = 0,
-		sort?: [string, 'asc' | 'desc'][],
+		sort?: FieldSort[],
 	) {
-		check(limit, Match.Maybe(Number));
-		check(skip, Match.Maybe(Number));
-		check(sort, Match.Maybe([[String]]));
+		check(limit, Match.Maybe(Match.Integer));
+		check(skip, Match.Maybe(Match.Integer));
+		check(sort, Match.Maybe([FieldSortPattern]));
 
 		const selector: Mongo.Selector<RegionEntity> = {};
 
