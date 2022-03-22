@@ -43,7 +43,7 @@ function maybeUrl(route: string, context: { _id?: string } | undefined) {
 	return Router.url(route, context);
 }
 
-const Api = {
+export const Api = {
 	groups: apiResponse(Groups, (originalGroup) => {
 		const group = { ...originalGroup } as typeof originalGroup & { link: string };
 		group.link = Router.url('groupDetails', group);
