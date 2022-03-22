@@ -1,4 +1,5 @@
 import { Router } from 'meteor/iron:router';
+import { WebApp } from 'meteor/webapp'
 
 import Api from '/imports/Api';
 import FieldOrdering from '/imports/utils/field-ordering';
