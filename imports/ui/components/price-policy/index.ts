@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 
 import * as usersMethods from '/imports/api/users/methods';
 
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 
 import './template.html';
 import './styles.scss';

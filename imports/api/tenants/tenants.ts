@@ -3,9 +3,11 @@ import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
+import { UserModel } from '/imports/api/users/users';
+
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
-import { UserModel } from '/imports/api/users/users';
+import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
 
 /** DB-Model */
 
@@ -74,11 +76,11 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
 		} = {},
 		limit = 0,
 		skip = 0,
-		sort?: [string, 'asc' | 'desc'][],
+		sort?: FieldSort[],
 	) {
-		check(limit, Match.Maybe(Number));
-		check(skip, Match.Maybe(Number));
-		check(sort, Match.Maybe([[String]]));
+		check(limit, Match.Maybe(Match.Integer));
+		check(skip, Match.Maybe(Match.Integer));
+		check(sort, Match.Maybe([FieldSortPattern]));
 
 		const me = Meteor.user();
 		if (!me) {

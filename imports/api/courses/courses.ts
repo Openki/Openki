@@ -17,6 +17,7 @@ import * as Predicates from '/imports/utils/predicates';
 import * as FileStorage from '/imports/utils/FileStorage';
 import * as StringTools from '/imports/utils/string-tools';
 import { GroupEntityCustomCourseFields } from '/imports/api/groups/groups';
+import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
 
 export interface CourseMemberEntity {
 	user: string;
@@ -267,11 +268,11 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 		} = {},
 		limit = 0,
 		skip = 0,
-		sort?: [string, 'asc' | 'desc'][],
+		sort?: FieldSort[],
 	) {
-		check(limit, Match.Maybe(Number));
-		check(skip, Match.Maybe(Number));
-		check(sort, Match.Maybe([[String]]));
+		check(limit, Match.Maybe(Match.Integer));
+		check(skip, Match.Maybe(Match.Integer));
+		check(sort, Match.Maybe([FieldSortPattern]));
 
 		const find: Mongo.Selector<CourseEntity> = {};
 		const options: Mongo.Options<CourseEntity> = {};

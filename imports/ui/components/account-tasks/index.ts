@@ -17,7 +17,7 @@ import PublicSettings from '/imports/utils/PublicSettings';
 import { isEmail } from '/imports/utils/email-tools';
 import { AccountsAsync, MeteorAsync } from '/imports/utils/promisify';
 
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 
 import './template.html';
 import './styles.scss';

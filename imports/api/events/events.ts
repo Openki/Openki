@@ -15,6 +15,7 @@ import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { PublicSettings } from '/imports/utils/PublicSettings';
+import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
 
 export interface EventVenueEntity {
 	/**
@@ -274,10 +275,10 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 	 *
 	 * The events are sorted by start date (ascending, before-filter causes descending order)
 	 */
-	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: [string, 'asc' | 'desc'][]) {
-		check(limit, Match.Maybe(Number));
-		check(skip, Match.Maybe(Number));
-		check(sort, Match.Maybe([[String]]));
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
+		check(limit, Match.Maybe(Match.Integer));
+		check(skip, Match.Maybe(Match.Integer));
+		check(sort, Match.Maybe([FieldSortPattern]));
 
 		const find: Mongo.Selector<EventEntity> = {};
 		const and = [];

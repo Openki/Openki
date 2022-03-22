@@ -23,7 +23,7 @@ import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/courses/courses').CourseMemberEntity} CourseMemberEntity */
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import CourseTemplate from '/imports/ui/lib/course-template';
 import { CssFromQuery } from '/imports/ui/lib/css-from-query';

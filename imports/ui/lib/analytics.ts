@@ -8,14 +8,14 @@ let loading: false | JQuery.jqXHR<any>;
 
 let _tracker: any;
 
-export const MatomoSettingsPattern = Match.ObjectIncluding({
+const SettingsPattern = Match.ObjectIncluding({
 	url: String,
 	site: Match.Integer,
 	jsPath: String,
 	phpPath: String,
 });
 
-export const MatomoPattern = Match.ObjectIncluding({
+const MatomoPattern = Match.ObjectIncluding({
 	getTracker: Match.Where((f) => typeof f === 'function'),
 });
 
@@ -23,7 +23,7 @@ export const MatomoPattern = Match.ObjectIncluding({
  * Returns true if matomo analytics settings are configured.
  */
 export function isConfigured() {
-	return Match.test(PublicSettings.matomo, MatomoSettingsPattern);
+	return Match.test(PublicSettings.matomo, SettingsPattern);
 }
 
 /**
@@ -47,7 +47,7 @@ export function load(): Promise<any> {
 		result = Promise.resolve(window.AnalyticsTracker);
 	} else {
 		result = new Promise((resolve, reject) => {
-			check(PublicSettings.matomo, MatomoSettingsPattern);
+			check(PublicSettings.matomo, SettingsPattern);
 			const config = PublicSettings.matomo;
 
 			if (!loading) {
@@ -80,7 +80,7 @@ export function load(): Promise<any> {
  */
 export async function tracker() {
 	const matomo = await load();
-	check(PublicSettings.matomo, MatomoSettingsPattern);
+	check(PublicSettings.matomo, SettingsPattern);
 	if (!_tracker) {
 		const config = PublicSettings.matomo;
 		_tracker = matomo.getTracker(`${config.url}${config.phpPath}`, config.site);
