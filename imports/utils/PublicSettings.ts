@@ -1,6 +1,7 @@
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 
+import { MatomoSettingsPattern } from 'imports/ui/lib/analytics';
 import { LocalizedValuePattern } from '/imports/utils/getLocalizedValue';
 
 // See settings-example.json.md for full documentation
@@ -66,12 +67,7 @@ check(
 					jsPath: String,
 					phpPath: String,
 				},
-				{
-					url: String,
-					site: Match.Integer,
-					jsPath: String,
-					phpPath: String,
-				},
+				MatomoSettingsPattern,
 			),
 		),
 		pricePolicyEnabled: Boolean,
