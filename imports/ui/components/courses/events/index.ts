@@ -69,7 +69,7 @@ import './styles.scss';
 	template.helpers({
 		upcomingEventsCount() {
 			const course = Template.instance().data;
-			return course.course.futureEvents.valueOf();
+			return course.course.futureEvents;
 		},
 		mayAdd() {
 			const { data } = Template.instance();
