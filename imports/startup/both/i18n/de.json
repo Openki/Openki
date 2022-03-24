@@ -538,6 +538,7 @@
 	"notification.join.mail.statsOverview": "Übersicht über die Interessierten dieses Kurses:",
 	"notification.join.mail.subject": "{USER} ist dem Kurs {COURSE} beigetreten: {ROLE}",
 	"notification.join.mail.unsubLink": "Für alle weiteren automatischen Benachrichtigungen abmelden.",
+	"notification.privateMessage.mail.copyintro": "Dies ist eine Kopie deiner Nachricht, welche an \"{RECIPIENT}\" gesendet wurde",
 	"notification.privateMessage.mail.fromCourse": "Diese Nachricht wurde vom Kurs gesendet:",
 	"notification.privateMessage.mail.intro": "Du hast eine private Nachricht bekommen von:",
 	"notification.privateMessage.mail.linktext": "➜ {SENDER}'s Profil besuchen",
