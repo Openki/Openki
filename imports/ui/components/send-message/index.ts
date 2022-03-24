@@ -57,6 +57,9 @@ template.helpers({
 	hasVerifiedEmail() {
 		return Meteor.user()?.hasVerifiedEmail() || false;
 	},
+	loggedInUser() {
+		return Meteor.user() || false;
+	},
 });
 
 template.events({
