@@ -10,6 +10,7 @@ import { Filtering } from '/imports/utils/filtering';
 import * as FileStorage from '/imports/utils/FileStorage';
 import { LocalizedValue } from '/imports/utils/getLocalizedValue';
 import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
+import { Type } from '/imports/utils/CustomChecks';
 
 export interface GroupEntityCustomCourseFields {
 	/** For internal us, must be unique in the list. */
@@ -75,6 +76,12 @@ export class Group {
 	}
 }
 
+export const FindFilterPattern = {
+	/** Limit to groups where logged-in user is a member */
+	own: Match.Maybe(Boolean),
+};
+export type FindFilter = Type<typeof FindFilterPattern>;
+
 export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> {
 	constructor() {
 		super('Groups', {
@@ -99,7 +106,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
 		},
 		limit?: number,
 		skip?: number,
-		sort?: [string, 'asc' | 'desc'][] | undefined,
+		sort?: FieldSort[] | undefined,
 	): Mongo.Cursor<GroupEntity, GroupModel>;
 
 	/**
@@ -109,15 +116,8 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
 	 * @param skip skip this many before returning results
 	 * @param sort list of fields to sort by
 	 */
-	findFilter(
-		filter: {
-			/** Limit to groups where logged-in user is a member */
-			own?: boolean;
-		} = {},
-		limit = 0,
-		skip = 0,
-		sort?: FieldSort[],
-	) {
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
+		check(filter, Match.Maybe(FindFilterPattern));
 		check(limit, Match.Maybe(Match.Integer));
 		check(skip, Match.Maybe(Match.Integer));
 		check(sort, Match.Maybe([FieldSortPattern]));

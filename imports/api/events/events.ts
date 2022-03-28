@@ -16,6 +16,7 @@ import * as StringTools from '/imports/utils/string-tools';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
+import { Tuple, Type } from '/imports/utils/CustomChecks';
 
 export interface EventVenueEntity {
 	/**
@@ -128,45 +129,46 @@ export class OEvent {
 	}
 }
 
-export interface FindFilter {
+export const FindFilterPattern = {
 	/** string of words to search for */
-	search?: string;
+	search: Match.Maybe(String),
 	/** include only events that overlap the given
 	 * period (list of start and end date) */
-	period?: [Date, Date];
+	period: Match.Maybe(Tuple<[start: DateConstructor, end: DateConstructor]>([Date, Date])),
 	/** only events that end after this date */
-	start?: Date;
+	start: Match.Maybe(Date),
 	/** only events that ended before this date */
-	before?: Date;
+	before: Match.Maybe(Date),
 	/** only events that are ongoing during this date */
-	ongoing?: Date;
+	ongoing: Match.Maybe(Date),
 	/** only events that started before this date */
-	end?: Date;
+	end: Match.Maybe(Date),
 	/**  only events starting after this date */
-	after?: Date;
+	after: Match.Maybe(Date),
 	/** only events at this venue (ID) */
-	venue?: string;
+	venue: Match.Maybe(String),
 	/** only events at this venues (IDs) */
-	venues?: string[];
+	venues: Match.Maybe([String]),
 	/** only events in this room (string match) */
-	room?: string;
+	room: Match.Maybe(String),
 	/** only events that are not attached to a course */
-	standalone?: boolean;
+	standalone: Match.Maybe(Boolean),
 	/** restrict to given region */
-	region?: string;
+	region: Match.Maybe(String),
 	/** restrict to given tenants */
-	tenants?: string[];
+	tenants: Match.Maybe([String]),
 	/** list of category ID the event must be in */
-	categories?: string[];
+	categories: Match.Maybe([String]),
 	/** the event must be in that group (ID) */
-	group?: string;
+	group: Match.Maybe(String),
 	/** the event must be in one of the group ID */
-	groups?: string[];
+	groups: Match.Maybe([String]),
 	/** only events for this course (ID) */
-	course?: string;
+	course: Match.Maybe(String),
 	/** only events that are internal (if true) or public (if false) */
-	internal?: boolean;
-}
+	internal: Match.Maybe(Boolean),
+};
+export type FindFilter = Type<typeof FindFilterPattern>;
 
 export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> {
 	constructor() {
@@ -212,7 +214,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 
 	/**
 	 * Recalculate the group-related fields of an event
-	 * @param {string} eventId the event to update
+	 * @param eventId the event to update
 	 */
 	updateGroups(eventId: string) {
 		AsyncTools.untilClean((resolve, reject) => {
@@ -276,6 +278,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 	 * The events are sorted by start date (ascending, before-filter causes descending order)
 	 */
 	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
+		check(filter, Match.Maybe(FindFilterPattern));
 		check(limit, Match.Maybe(Match.Integer));
 		check(skip, Match.Maybe(Match.Integer));
 		check(sort, Match.Maybe([FieldSortPattern]));

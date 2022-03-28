@@ -10,28 +10,37 @@ import { Geodata, Regions } from '/imports/api/regions/regions';
 import { visibleTenants } from '/imports/utils/visible-tenants';
 import { Filtering } from '/imports/utils/filtering';
 import { ParamWrapper, Predicate } from '/imports/utils/predicates';
+import { FieldSort } from '/imports/utils/sort-spec';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type ExtractQuery<P> = P extends ParamWrapper<infer _G, infer Q> ? Q : never;
 
-export interface ApiCollection<T, U, F extends { [name: string]: Predicate<any> }> {
+type ToFilter<T> = { [name in keyof T]: ExtractQuery<T[name]> };
+
+export interface ApiCollection<
+	T,
+	U,
+	P extends { [name: string]: Predicate<any> },
+	F = ToFilter<P>,
+> {
 	findFilter(
-		filter?: Partial<{ [name in keyof F]: ExtractQuery<F[name]> }>,
+		filter?: Partial<F>,
 		limit?: number,
 		skip?: number,
-		sort?: [string, 'asc' | 'desc'][],
+		sort?: FieldSort[],
 	): Mongo.Cursor<T, U>;
-	Filtering(): Filtering<F>;
+	Filtering(): Filtering<P>;
 }
 
 function apiResponse<T, U, F extends { [name: string]: Predicate<any> }, R>(
-	collection: ApiCollection<T, U, F>,
+	collection: ApiCollection<T, U, F, ToFilter<F> & typeof additionalFilters>,
 	formatter: (model: U) => R,
+	additionalFilters = {},
 ) {
-	return (filter = {}, limit = 0, skip = 0, sort?: [string, 'asc' | 'desc'][]) => {
+	return (filter = {}, limit = 0, skip = 0, sort?: FieldSort[]) => {
 		const query = collection.Filtering().readAndValidate(filter).done().toQuery();
 		return collection
-			.findFilter({ ...query, tenants: visibleTenants() }, limit, skip, sort)
+			.findFilter({ ...query, ...additionalFilters }, limit, skip, sort)
 			.map(formatter);
 	};
 }
@@ -54,158 +63,166 @@ export const Api = {
 		venue.link = Router.url('venueDetails', venue);
 		return venue;
 	}),
-	events: apiResponse(Events, (ev) => {
-		const evr = {
-			id: ev._id,
-			title: ev.title,
-			description: ev.description,
-			startLocal: ev.startLocal,
-			endLocal: ev.endLocal,
-			start: ev.start,
-			end: ev.end,
-			duration: moment(ev.end).diff(ev.start) / 60000, // Minutes
-			link: Router.url('showEvent', ev),
-			internal: ev.internal,
-			room: ev.room,
-		} as {
-			id: string;
-			title: string;
-			description: string;
-			startLocal: string;
-			endLocal: string;
-			start: Date;
-			end: Date;
-			duration: number;
-			link: string;
-			internal: boolean;
-			room: string;
-			createdBy?: { id: string; name: string };
-			venue?: {
-				id: string | undefined;
-				name: string | undefined;
-				loc: Geodata | undefined;
-				link: string | undefined;
-			};
-			course?: {
+	events: apiResponse(
+		Events,
+		(ev) => {
+			const evr = {
+				id: ev._id,
+				title: ev.title,
+				description: ev.description,
+				startLocal: ev.startLocal,
+				endLocal: ev.endLocal,
+				start: ev.start,
+				end: ev.end,
+				duration: moment(ev.end).diff(ev.start) / 60000, // Minutes
+				link: Router.url('showEvent', ev),
+				internal: ev.internal,
+				room: ev.room,
+			} as {
 				id: string;
-				name: string;
+				title: string;
+				description: string;
+				startLocal: string;
+				endLocal: string;
+				start: Date;
+				end: Date;
+				duration: number;
 				link: string;
+				internal: boolean;
+				room: string;
+				createdBy?: { id: string; name: string };
+				venue?: {
+					id: string | undefined;
+					name: string | undefined;
+					loc: Geodata | undefined;
+					link: string | undefined;
+				};
+				course?: {
+					id: string;
+					name: string;
+					link: string;
+				};
+				groups: {
+					id: string;
+					name: string;
+					short: string;
+					link: string;
+				}[];
 			};
-			groups: {
-				id: string;
-				name: string;
-				short: string;
-				link: string;
-			}[];
-		};
 
-		const creator = Users.findOne(ev.createdBy);
-		if (creator) {
-			evr.createdBy = {
-				id: creator._id,
-				name: creator.username,
-			};
-		}
-
-		if (ev.venue) {
-			evr.venue = {
-				id: ev.venue._id,
-				name: ev.venue.name,
-				loc: ev.venue.loc,
-				link: maybeUrl('venueDetails', ev.venue),
-			};
-		}
-
-		if (ev.courseId) {
-			const course = Courses.findOne(ev.courseId);
-			if (course) {
-				evr.course = {
-					id: ev.courseId,
-					name: course.name,
-					link: Router.url('showCourse', course),
+			const creator = Users.findOne(ev.createdBy);
+			if (creator) {
+				evr.createdBy = {
+					id: creator._id,
+					name: creator.username,
 				};
 			}
-		}
 
-		evr.groups = [];
-		const groups = ev.allGroups || [];
-		groups.forEach((groupId) => {
-			const group = Groups.findOne(groupId);
-			if (group) {
-				evr.groups.push({
-					id: group._id,
-					name: group.name,
-					short: group.short,
-					link: Router.url('groupDetails', group),
-				});
+			if (ev.venue) {
+				evr.venue = {
+					id: ev.venue._id,
+					name: ev.venue.name,
+					loc: ev.venue.loc,
+					link: maybeUrl('venueDetails', ev.venue),
+				};
 			}
-		});
 
-		return evr;
-	}),
-	courses: apiResponse(Courses, (orginalCourse) => {
-		const course = {
-			id: orginalCourse._id,
-			name: orginalCourse.name,
-			description: orginalCourse.description,
-			link: Router.url('showCourse', orginalCourse),
-			internal: orginalCourse.internal,
-			interested: orginalCourse.interested,
-		} as {
-			id: string;
-			name: string;
-			description: string;
-			link: string;
-			internal: boolean;
-			interested: number;
-			region?: {
+			if (ev.courseId) {
+				const course = Courses.findOne(ev.courseId);
+				if (course) {
+					evr.course = {
+						id: ev.courseId,
+						name: course.name,
+						link: Router.url('showCourse', course),
+					};
+				}
+			}
+
+			evr.groups = [];
+			const groups = ev.allGroups || [];
+			groups.forEach((groupId) => {
+				const group = Groups.findOne(groupId);
+				if (group) {
+					evr.groups.push({
+						id: group._id,
+						name: group.name,
+						short: group.short,
+						link: Router.url('groupDetails', group),
+					});
+				}
+			});
+
+			return evr;
+		},
+		{ tenants: visibleTenants() },
+	),
+	courses: apiResponse(
+		Courses,
+		(orginalCourse) => {
+			const course = {
+				id: orginalCourse._id,
+				name: orginalCourse.name,
+				description: orginalCourse.description,
+				link: Router.url('showCourse', orginalCourse),
+				internal: orginalCourse.internal,
+				interested: orginalCourse.interested,
+			} as {
 				id: string;
 				name: string;
-			};
-			createdBy?: {
-				id: string;
-				name: string;
-			};
-			groups: {
-				id: string;
-				name: string;
-				short: string;
+				description: string;
 				link: string;
-			}[];
-		};
-
-		const region = Regions.findOne(orginalCourse.region);
-		if (region) {
-			course.region = {
-				id: region._id,
-				name: region.name,
+				internal: boolean;
+				interested: number;
+				region?: {
+					id: string;
+					name: string;
+				};
+				createdBy?: {
+					id: string;
+					name: string;
+				};
+				groups: {
+					id: string;
+					name: string;
+					short: string;
+					link: string;
+				}[];
 			};
-		}
 
-		const creator = Users.findOne(orginalCourse.createdby);
-		if (creator) {
-			course.createdBy = {
-				id: creator._id,
-				name: creator.username,
-			};
-		}
-
-		course.groups = [];
-		const groups = orginalCourse.groups || [];
-		groups.forEach((groupId) => {
-			const group = Groups.findOne(groupId);
-			if (group) {
-				course.groups.push({
-					id: group._id,
-					name: group.name,
-					short: group.short,
-					link: Router.url('groupDetails', group),
-				});
+			const region = Regions.findOne(orginalCourse.region);
+			if (region) {
+				course.region = {
+					id: region._id,
+					name: region.name,
+				};
 			}
-		});
 
-		return course;
-	}),
+			const creator = Users.findOne(orginalCourse.createdby);
+			if (creator) {
+				course.createdBy = {
+					id: creator._id,
+					name: creator.username,
+				};
+			}
+
+			course.groups = [];
+			const groups = orginalCourse.groups || [];
+			groups.forEach((groupId) => {
+				const group = Groups.findOne(groupId);
+				if (group) {
+					course.groups.push({
+						id: group._id,
+						name: group.name,
+						short: group.short,
+						link: Router.url('groupDetails', group),
+					});
+				}
+			});
+
+			return course;
+		},
+		{ tenants: visibleTenants() },
+	),
 };
 
 export default Api;
