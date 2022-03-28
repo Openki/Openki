@@ -3,6 +3,7 @@ import { Match, check } from 'meteor/check';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { Type } from '/imports/utils/CustomChecks';
 
 // ======== DB-Model: ========
 export interface Resolution {
@@ -60,6 +61,13 @@ class ResultLogger {
 		this.log.update(this.id, { $push: { res: resolution } });
 	}
 }
+
+export const FindFilterPattern = {
+	start: Match.Maybe(Date),
+	rel: Match.Maybe([String]),
+	tr: Match.Maybe([String]),
+};
+export type FindFilter = Type<typeof FindFilterPattern>;
 
 /**
  * The Application Log records user and system decisions. It is intended to become the single source
@@ -122,12 +130,8 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
 		return new ResultLogger(id, this);
 	}
 
-	findFilter(filter: { start?: Date; rel?: string[]; tr?: string[] }, limit: number) {
-		check(filter, {
-			start: Match.Optional(Date),
-			rel: Match.Optional([String]),
-			tr: Match.Optional([String]),
-		});
+	findFilter(filter: FindFilter, limit: number) {
+		check(filter, FindFilterPattern);
 		check(limit, Match.Integer);
 
 		const query: Mongo.Selector<LogEntity> = {};

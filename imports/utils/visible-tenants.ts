@@ -13,7 +13,7 @@ export function visibleTenants() {
 		usersTenants = [];
 	}
 
-	return usersTenants.concat(PublicSettings.publicTenants);
+	return usersTenants.concat(PublicSettings.publicTenants).filter((t) => t);
 }
 
 export default visibleTenants;

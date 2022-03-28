@@ -5,8 +5,11 @@ import { Match, check } from 'meteor/check';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
+import { Type, StringEnum } from '/imports/utils/CustomChecks';
 
-export type Status = 'created' | 'send' | 'accepted' | 'failed';
+export const StatusPattern = StringEnum(['created', 'send', 'accepted', 'failed'] as const);
+
+export type Status = Type<typeof StatusPattern>;
 
 /** DB-Model */
 export interface InvitationEntity {
@@ -23,6 +26,12 @@ export interface InvitationEntity {
 	/** user id */
 	createdBy: string;
 }
+
+export const FindFilterPattern = {
+	tenant: Match.Maybe(String),
+	status: Match.Maybe([StatusPattern]),
+};
+export type FindFilter = Type<typeof FindFilterPattern>;
 
 export class InvitationsCollection extends Mongo.Collection<InvitationEntity> {
 	constructor() {
@@ -46,22 +55,15 @@ export class InvitationsCollection extends Mongo.Collection<InvitationEntity> {
 	 * @param skip skip this many before returning results
 	 * @param sort list of fields to sort by
 	 */
-	findFilter(
-		filter: {
-			tenant?: string;
-			status?: Status[];
-		} = {},
-		limit = 0,
-		skip = 0,
-		sort?: FieldSort[],
-	) {
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
+		check(filter, Match.Maybe(FindFilterPattern));
 		check(limit, Match.Maybe(Match.Integer));
 		check(skip, Match.Maybe(Match.Integer));
 		check(sort, Match.Maybe([FieldSortPattern]));
 
 		const find: Mongo.Selector<InvitationEntity> = {};
 		const options: Mongo.Options<InvitationEntity> = {};
-		const order = sort || [];
+		const order = (sort || []) as FieldSort[];
 
 		if (limit > 0) {
 			options.limit = limit;
