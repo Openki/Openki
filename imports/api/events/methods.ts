@@ -17,8 +17,6 @@ import { VenueModel, Venues } from '/imports/api/venues/venues';
 
 import { Notification } from '/imports/notification/notification';
 
-import { PleaseLogin } from '/imports/ui/lib/please-login';
-
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import * as AsyncTools from '/imports/utils/async-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
@@ -168,10 +166,6 @@ export const save = ServerMethod(
 
 		const user = Meteor.user();
 		if (!user) {
-			if (Meteor.isClient) {
-				PleaseLogin();
-				return undefined;
-			}
 			throw new Meteor.Error(401, 'please log in');
 		}
 

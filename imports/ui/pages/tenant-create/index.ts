@@ -9,7 +9,7 @@ import * as TenantsMethods from '/imports/api/tenants/methods';
 import * as RegionsMethods from '/imports/api/regions/methods';
 
 import { LocationTracker } from '/imports/ui/lib/location-tracker';
-import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
@@ -84,34 +84,29 @@ template.events({
 		}
 
 		instance.busy('saving');
-		SaveAfterLogin(
-			instance,
-			i18n('loginAction.createPrivateRegion', 'Log in and create private region'),
-			i18n('registerAction.createPrivateRegion', 'Register and create private region'),
-			async () => {
-				try {
-					const tenantId = await TenantsMethods.create({ name: tenantName });
-					await RegionsMethods.create({ tenant: tenantId, ...changes });
+		PleaseLogin(instance, async () => {
+			try {
+				const tenantId = await TenantsMethods.create({ name: tenantName });
+				await RegionsMethods.create({ tenant: tenantId, ...changes });
 
-					Router.go('tenantDetails', { _id: tenantId });
+				Router.go('tenantDetails', { _id: tenantId });
 
-					Alert.success(
-						i18n('privateRegion.saving.success', 'Created region "{NAME}".', {
-							NAME: changes.name,
-						}),
-					);
+				Alert.success(
+					i18n('privateRegion.saving.success', 'Created region "{NAME}".', {
+						NAME: changes.name,
+					}),
+				);
 
-					Analytics.trackEvent('Tenant creations', 'Tenant with region creations');
-				} catch (err) {
-					Alert.serverError(
-						err,
-						i18n('privateRegion.creating.error', 'Creating the region went wrong'),
-					);
-				} finally {
-					instance.busy(false);
-				}
-			},
-		);
+				Analytics.trackEvent('Tenant creations', 'Tenant with region creations');
+			} catch (err) {
+				Alert.serverError(
+					err,
+					i18n('privateRegion.creating.error', 'Creating the region went wrong'),
+				);
+			} finally {
+				instance.busy(false);
+			}
+		});
 	},
 
 	'click .js-edit-cancel'() {
