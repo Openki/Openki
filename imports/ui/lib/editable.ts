@@ -16,7 +16,7 @@ export interface Store {
 	serverValidationErrors?: ServerValidationErrorHandler[];
 	onSave?: (text: string | undefined) => Promise<void>;
 	onSuccess?: (text: string | undefined) => void;
-	onError?: (err: any, text: string | undefined) => void;
+	onError?: (err: unknown, text: string | undefined) => void;
 }
 
 export interface State {

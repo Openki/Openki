@@ -165,7 +165,7 @@ if (Meteor.isClient) {
 					const json = await result.json();
 					const { data } = json;
 					assert.isNotEmpty(data);
-					data.forEach((element: { region: any }) => {
+					data.forEach((element: { region: string }) => {
 						assert.equal(element.region, testistan, 'region must be testistan');
 					});
 				});

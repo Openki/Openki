@@ -32,7 +32,7 @@ export interface LogEntity {
 	 */
 	rel: string[];
 	/** Contents of the log entry. These are not indexed and depend on the track. */
-	body: any;
+	body: unknown;
 	res: Resolution[];
 }
 
@@ -44,7 +44,7 @@ class ResultLogger {
 		this.record(true, message);
 	}
 
-	error(error: any) {
+	error(error: unknown) {
 		const message = JSON.parse(JSON.stringify(error));
 		this.record(false, message);
 	}
@@ -108,7 +108,7 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
 	 * @param rel related ID
 	 * @param body log body depending on track
 	 */
-	record(track: string, rel: string[], body: any) {
+	record(track: string, rel: string[], body: unknown) {
 		check(track, String);
 		check(rel, [String]);
 		check(body, Object);

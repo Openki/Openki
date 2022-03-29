@@ -186,7 +186,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		}
 	}
 
-	insert(event: EventModel, callback?: (err: any | undefined, _id?: string) => void) {
+	insert(event: EventModel, callback?: (err?: unknown, _id?: string) => void) {
 		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
 
 		return super.insert(enrichedEvent, callback);
