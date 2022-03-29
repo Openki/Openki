@@ -1,20 +1,28 @@
 import { Match, check } from 'meteor/check';
 
+/** Helper type utility to filter out not undefined properties: https://www.typescriptlang.org/docs/handbook/2/mapped-types.html */
+type PickNotUndefined<T> = {
+	[P in keyof T as Extract<T[P], undefined> extends never ? P : never]: T[P];
+};
+
 /** Make properties that are may be undefined also optional. */
-type UndefinedToOptional<Type> = Type extends Record<string, unknown>
-	? {
-			[Property in keyof Type as Extract<Type[Property], undefined> extends never
-				? Property
-				: never]: UndefinedToOptional<Type[Property]>;
-	  } & {
-			[Property in keyof Type as Extract<Type[Property], undefined> extends never
-				? never
-				: Property]?: UndefinedToOptional<Type[Property]>;
-	  }
-	: Type;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+type UndefinedToOptional<T> = Partial<T> & Pick<T, keyof PickNotUndefined<T>>;
+
+/** Recursive make properties that are may be undefined also optional. */
+export type RecursiveUndefinedToOptional<T> = UndefinedToOptional<{
+	[P in keyof T]: T[P] extends (infer U)[]
+		? RecursiveUndefinedToOptional<U>[]
+		: T[P] extends object
+		? RecursiveUndefinedToOptional<T[P]>
+		: T[P] extends object | undefined
+		? RecursiveUndefinedToOptional<T[P]> | undefined
+		: T[P];
+}>;
 
 /** Convert a meteor/check Match.Pattern to a typescript type */
-export type Type<Pattern extends Match.Pattern> = UndefinedToOptional<Match.PatternMatch<Pattern>>;
+export type Type<T extends Match.Pattern> = RecursiveUndefinedToOptional<Match.PatternMatch<T>>;
 
 export function Tuple<T extends readonly Match.Pattern[]>(pattern: [...T]) {
 	return Match.Where(function (values) {
