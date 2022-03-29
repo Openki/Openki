@@ -107,7 +107,7 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
 			find.admins = me._id;
 		}
 
-		return this.find(find, options);
+		return this.find(find, options) as Mongo.Cursor<TenantEntity, TenantModel>;
 	}
 }
 

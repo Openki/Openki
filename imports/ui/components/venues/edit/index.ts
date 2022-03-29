@@ -12,7 +12,7 @@ import * as VenuesMethods from '/imports/api/venues/methods';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { Editable } from '/imports/ui/lib/editable';
 import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
-import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
@@ -218,38 +218,33 @@ import './styles.scss';
 
 			const venueId = data._id || '';
 			instance.busy('saving');
-			SaveAfterLogin(
-				instance,
-				i18n('loginAction.saveVenue', 'Log in and save venue'),
-				i18n('registerAction.saveVenue', 'Register and save venue'),
-				async () => {
-					try {
-						const res = await VenuesMethods.save(venueId, changes);
+			PleaseLogin(instance, async () => {
+				try {
+					const res = await VenuesMethods.save(venueId, changes);
 
-						Alert.success(
-							i18n('venue.saving.success', 'Saved changes to venue "{NAME}".', {
-								NAME: changes.name,
-							}),
+					Alert.success(
+						i18n('venue.saving.success', 'Saved changes to venue "{NAME}".', {
+							NAME: changes.name,
+						}),
+					);
+
+					if (instance.isNew) {
+						Analytics.trackEvent(
+							'Venue creations',
+							'Venue creations',
+							Regions.findOne(changes.region)?.nameEn,
 						);
 
-						if (instance.isNew) {
-							Analytics.trackEvent(
-								'Venue creations',
-								'Venue creations',
-								Regions.findOne(changes.region)?.nameEn,
-							);
-
-							Router.go('venueDetails', { _id: res });
-						} else {
-							(instance.parentInstance() as any).editing.set(false);
-						}
-					} catch (err) {
-						Alert.serverError(err, i18n('venue.saving.error', 'Could not save the venue'));
-					} finally {
-						instance.busy(false);
+						Router.go('venueDetails', { _id: res });
+					} else {
+						(instance.parentInstance() as any).editing.set(false);
 					}
-				},
-			);
+				} catch (err) {
+					Alert.serverError(err, i18n('venue.saving.error', 'Could not save the venue'));
+				} finally {
+					instance.busy(false);
+				}
+			});
 		},
 
 		'click .js-toggle-additional-info-btn'(_event, instance) {

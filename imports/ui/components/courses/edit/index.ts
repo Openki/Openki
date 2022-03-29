@@ -16,7 +16,7 @@ import { Regions } from '/imports/api/regions/regions';
 import { RoleEntity, Roles } from '/imports/api/roles/roles';
 
 import { Editable } from '/imports/ui/lib/editable';
-import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import * as StringTools from '/imports/utils/string-tools';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
@@ -484,19 +484,30 @@ export type Data = {
 			});
 
 			instance.busy('saving');
-			SaveAfterLogin(
-				instance,
-				i18n('loginAction.saveCourse', 'Log in and save course'),
-				i18n('registerAction.saveCourse', 'Register and save course'),
-				async () => {
-					try {
-						courseId = (await CoursesMethods.save(courseId, changes)) as string;
+			PleaseLogin(instance, async () => {
+				try {
+					courseId = (await CoursesMethods.save(courseId, changes)) as string;
 
-						if (instance.data.isFrame) {
-							instance.savedCourseId.set(courseId);
-							instance.showSavedMessage.set(true);
-							instance.resetFields();
+					if (instance.data.isFrame) {
+						instance.savedCourseId.set(courseId);
+						instance.showSavedMessage.set(true);
+						instance.resetFields();
 
+						Analytics.trackEvent(
+							'Course creations',
+							`Course creations as ${
+								changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'
+							}`,
+							Regions.findOne(changes.region)?.nameEn,
+							instance.editableDescription.getTotalFocusTimeInSeconds(),
+						);
+					} else {
+						if (isNew) {
+							Alert.success(
+								i18n('message.courseCreated', 'The course "{NAME}" has been created!', {
+									NAME: changes.name,
+								}),
+							);
 							Analytics.trackEvent(
 								'Course creations',
 								`Course creations as ${
@@ -506,42 +517,26 @@ export type Data = {
 								instance.editableDescription.getTotalFocusTimeInSeconds(),
 							);
 						} else {
-							if (isNew) {
-								Alert.success(
-									i18n('message.courseCreated', 'The course "{NAME}" has been created!', {
-										NAME: changes.name,
-									}),
-								);
-								Analytics.trackEvent(
-									'Course creations',
-									`Course creations as ${
-										changes.subs.length > 0 ? changes.subs.sort().join(' and ') : 'participant'
-									}`,
-									Regions.findOne(changes.region)?.nameEn,
-									instance.editableDescription.getTotalFocusTimeInSeconds(),
-								);
-							} else {
-								Alert.success(
-									i18n(
-										'message.courseChangesSaved',
-										'Your changes to the course "{NAME}" have been saved.',
-										{ NAME: changes.name },
-									),
-								);
-							}
-
-							Router.go('showCourse', { _id: courseId });
+							Alert.success(
+								i18n(
+									'message.courseChangesSaved',
+									'Your changes to the course "{NAME}" have been saved.',
+									{ NAME: changes.name },
+								),
+							);
 						}
-					} catch (err) {
-						Alert.serverError(
-							err,
-							i18n('message.courseChangesSaved.error', 'Saving the course went wrong'),
-						);
-					} finally {
-						instance.busy(false);
+
+						Router.go('showCourse', { _id: courseId });
 					}
-				},
-			);
+				} catch (err) {
+					Alert.serverError(
+						err,
+						i18n('message.courseChangesSaved.error', 'Saving the course went wrong'),
+					);
+				} finally {
+					instance.busy(false);
+				}
+			});
 		},
 
 		'click .js-course-edit-cancel'(_event, instance) {

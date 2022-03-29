@@ -11,7 +11,7 @@ import { Users } from '/imports/api/users/users';
 import { RoleEntity } from '/imports/api/roles/roles';
 import { CourseModel } from '/imports/api/courses/courses';
 
-import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import * as Analytics from '/imports/ui/lib/analytics';
@@ -55,25 +55,20 @@ template.onCreated(function () {
 	// unsubscribe by email
 	// HACK this is not the right place to act on router actions
 	if (Router.current().params.query.unsubscribe === instance.data.role.type) {
-		SaveAfterLogin(
-			instance,
-			i18n('loginAction.unsubscribeFromCourse', 'Log in and unsubscribe from course'),
-			i18n('registerAction.unsubscribeFromCourse', 'Register and unsubscribe from course'),
-			async () => {
-				const user = Meteor.user();
-				const change = new Unsubscribe(instance.data.course, user, instance.data.role.type);
-				if (change.validFor(user)) {
-					await processChange(change);
-					Alert.success(
-						i18n('course.roles.unsubscribed', 'Unsubscribed from {NAME} course', {
-							NAME: instance.data.course.name,
-						}),
-					);
-				} else {
-					Alert.error(`${change} not valid for ${user}`);
-				}
-			},
-		);
+		PleaseLogin(instance, async () => {
+			const user = Meteor.user();
+			const change = new Unsubscribe(instance.data.course, user, instance.data.role.type);
+			if (change.validFor(user)) {
+				await processChange(change);
+				Alert.success(
+					i18n('course.roles.unsubscribed', 'Unsubscribed from {NAME} course', {
+						NAME: instance.data.course.name,
+					}),
+				);
+			} else {
+				Alert.error(`${change} not valid for ${user}`);
+			}
+		});
 	}
 });
 
@@ -110,24 +105,19 @@ template.events({
 		const { data } = instance;
 		const comment = (instance.$('.js-comment').val() as string).trim();
 		instance.busy('enrolling');
-		SaveAfterLogin(
-			instance,
-			i18n('loginAction.enroll', 'Log in and enroll'),
-			i18n('registerAction.enroll', 'Register and enroll'),
-			async () => {
-				await processChange(instance.courseSubscribe(comment));
-				RouterAutoscroll.cancelNext();
-				instance.busy(false);
-				instance.state.set('showFirstSteps', true);
-				instance.state.set('enrolling', false);
+		PleaseLogin(instance, async () => {
+			await processChange(instance.courseSubscribe(comment));
+			RouterAutoscroll.cancelNext();
+			instance.busy(false);
+			instance.state.set('showFirstSteps', true);
+			instance.state.set('enrolling', false);
 
-				Analytics.trackEvent(
-					'Enrollments in courses',
-					`Enrollments in courses as ${data.role.type}`,
-					Regions.findOne(data.course.region)?.nameEn,
-				);
-			},
-		);
+			Analytics.trackEvent(
+				'Enrollments in courses',
+				`Enrollments in courses as ${data.role.type}`,
+				Regions.findOne(data.course.region)?.nameEn,
+			);
+		});
 	},
 
 	'click .js-role-enroll-cancel'(_event, instance) {

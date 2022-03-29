@@ -49,7 +49,7 @@ template.onCreated(function () {
 
 	instance.subscribe('Courses.findFilter', { createdby: userId });
 	instance.coursesCreatedBy = () => {
-		return Courses.find({ createdby: userId }).fetch();
+		return Courses.findFilter({ createdby: userId }).fetch();
 	};
 });
 
@@ -206,28 +206,25 @@ template.events({
 	},
 
 	async 'click .js-verify-user-delete-confirm'(_event, instance) {
-		if (PleaseLogin()) {
-			return;
-		}
-
 		instance.busy('deleting');
+		PleaseLogin(instance, async () => {
+			const reason = instance.$('.js-reason').val() as string;
 
-		const reason = instance.$('.js-reason').val() as string;
+			if (reason.length < 4) {
+				Alert.error(i18n('profile.admin.remove.reason.longertext', 'longer text please'));
+				instance.busy(false);
+				return;
+			}
 
-		if (reason.length < 4) {
-			Alert.error(i18n('profile.admin.remove.reason.longertext', 'longer text please'));
-			instance.busy(false);
-			return;
-		}
+			const userId = instance.data.user._id;
 
-		const userId = instance.data.user._id;
-
-		try {
-			await usersMethods.adminRemove(userId, reason, { courses: true });
-			Alert.success(i18n('profile.account.deleted', 'The account has been deleted'));
-			Router.go('users');
-		} finally {
-			instance.busy(false);
-		}
+			try {
+				await usersMethods.adminRemove(userId, reason, { courses: true });
+				Alert.success(i18n('profile.account.deleted', 'The account has been deleted'));
+				Router.go('users');
+			} finally {
+				instance.busy(false);
+			}
+		});
 	},
 });
