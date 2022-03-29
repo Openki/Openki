@@ -30,14 +30,14 @@ import { StringEnum, Type } from '/imports/utils/CustomChecks';
 
 function registerMethod(method: {
 	method: string;
-	read: (body: any) => {
+	read: (body: unknown) => {
 		validate(): void;
 		permitted: (user: UserModel | undefined | null) => boolean;
-		provide(rel: string[], body: any): void;
+		provide(rel: string[], body: unknown): void;
 		apply(): void;
 	};
 }): void {
-	const apply = function (params: any) {
+	const apply = function (params: unknown) {
 		const change = method.read(params);
 		try {
 			change.validate();
@@ -195,7 +195,7 @@ export const save = ServerMethod(
 			set.slug = StringTools.slug(set.name);
 		}
 		if (changes.customFields) {
-			set.customFields = changes.customFields.map((i: any) => ({
+			set.customFields = changes.customFields.map((i) => ({
 				name: i.name.substring(0, 50),
 				displayText: i.displayText,
 				value: i.value.substring(0, 200),

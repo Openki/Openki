@@ -66,7 +66,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 			updateReplicasTime: boolean;
 			updateChangedReplicasTime: boolean;
 		}>;
-		parent: Blaze.TemplateInstance<any>;
+		parent: Blaze.TemplateInstance;
 		selectedRegion: ReactiveVar<string>;
 		selectedLocation: ReactiveVar<Partial<EventVenueEntity>>;
 		notifyChecked: ReactiveVar<boolean>;

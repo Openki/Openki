@@ -25,7 +25,7 @@ import './styles.scss';
 const TemplateBase = TemplateAny as TemplateStaticTyped<
 	'groupDetailsPage',
 	{
-		courseQuery: any;
+		courseQuery: unknown;
 		group: GroupModel;
 		showCourses: boolean;
 	},
@@ -74,7 +74,7 @@ template.onCreated(function () {
 		},
 		onError: (err) => {
 			Alert.serverError(
-				err,
+				err as string | Error,
 				i18n('groupDetails.saveError', 'Could not save the "{GROUP}" group', {
 					GROUP: group?.name,
 				}),

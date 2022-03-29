@@ -66,7 +66,7 @@ export interface CourseEntity {
 	history: {
 		dateTime: Date;
 		type: string;
-		data: any;
+		data: object;
 	}[];
 	/**
 	 * (calculated) List of user and group id allowed to edit the course, calculated from members
@@ -168,7 +168,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 
 	insert(
 		course: Mongo.OptionalId<CourseEntity>,
-		callback?: (err: any | undefined, id?: string) => void,
+		callback?: (err: unknown | undefined, id?: string) => void,
 	) {
 		const enrichedCourse = tenantDenormalizer.beforeInsert(course);
 

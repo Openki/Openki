@@ -31,14 +31,14 @@ export function logErrors(error: { stack: any }, result: unknown) {
  */
 // eslint-disable-next-line import/no-mutable-exports
 export let untilClean: (
-	clean: (resolve: (value: boolean) => void, reject: (reason?: any) => void) => void,
+	clean: (resolve: (value: boolean) => void, reject: (reason?: unknown) => void) => void,
 ) => Promise<void>;
 
 if (Meteor.isServer) {
 	const maxTries = 3;
 
 	const tryClean = function (
-		clean: (resolve: (value: boolean) => void, reject: (reason?: any) => void) => void,
+		clean: (resolve: (value: boolean) => void, reject: (reason?: unknown) => void) => void,
 		tries: number,
 	): Promise<void> {
 		return new Promise((resolve, reject) => {

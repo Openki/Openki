@@ -85,7 +85,10 @@ import './styles.scss';
 				);
 			},
 			onError: (err) => {
-				Alert.serverError(err, i18n('course.save.error', 'Saving the course went wrong'));
+				Alert.serverError(
+					err as string | Error,
+					i18n('course.save.error', 'Saving the course went wrong'),
+				);
 			},
 		});
 
@@ -103,7 +106,7 @@ import './styles.scss';
 				);
 			},
 			onError: (err) => {
-				Alert.serverError(err, i18n('course.save.error'));
+				Alert.serverError(err as string | Error, i18n('course.save.error'));
 			},
 		});
 

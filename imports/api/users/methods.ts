@@ -444,13 +444,18 @@ Meteor.methods({
 					},
 				};
 
-				Users.rawCollection().updateMany({ _id: user._id }, update, {}, (err: any, result: any) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve(result?.modifiedCount === 0);
-					}
-				});
+				Users.rawCollection().updateMany(
+					{ _id: user._id },
+					update,
+					{},
+					(err?: unknown, result?: { modifiedCount: number }) => {
+						if (err) {
+							reject(err);
+						} else {
+							resolve(result?.modifiedCount === 0);
+						}
+					},
+				);
 			});
 		});
 	},
