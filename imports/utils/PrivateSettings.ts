@@ -55,6 +55,7 @@ if (Meteor.isServer) {
 			scrub: Match.Maybe([
 				{
 					name: String,
+					comment: Match.Maybe(String),
 					grace: Number,
 					select: Object,
 					remove: Match.Maybe(Boolean),

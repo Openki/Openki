@@ -49,3 +49,15 @@ export function StringEnum<T extends readonly string[]>(values: T) {
 		return values.includes(str);
 	}) as Match.Matcher<typeof values[number]>;
 }
+
+export function Record<T extends Match.Pattern>(type: T) {
+	return Match.Where((c) => {
+		check(c, Object);
+		Object.values(c).forEach((value) => {
+			check(value, type);
+		});
+		return true;
+	}) as Match.Matcher<{
+		[category: string]: Match.PatternMatch<T>;
+	}>;
+}
