@@ -1,7 +1,5 @@
-import PublicSettings from '/imports/utils/PublicSettings';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
-const Categories = { ...PublicSettings.categories } as {
-	[category: string]: string[];
-};
+const Categories = { ...PublicSettings.categories };
 
 export default Categories;

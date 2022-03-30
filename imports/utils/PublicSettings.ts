@@ -1,7 +1,8 @@
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 
-import { LocalizedValuePattern } from '/imports/utils/getLocalizedValue';
+import { Record } from '/imports/utils/CustomChecks';
+import { LocalizedValue, LocalizedValuePattern } from '/imports/utils/getLocalizedValue';
 
 // See settings-example.json.md for full documentation
 
@@ -94,14 +95,12 @@ check(
 			icon: String,
 			forbiddenChars: [String],
 			link: LocalizedValuePattern,
-		}),
-		categories: Match.Where((c) => {
-			check(c, Object);
-			Object.values(c).forEach((value) => {
-				check(value, [String]);
-			});
-			return true;
-		}),
+		}) as Match.Matcher<{
+			icon: string;
+			forbiddenChars: string[];
+			link: LocalizedValue;
+		}>,
+		categories: Record([String]),
 		s3: {
 			publicUrlBase: String,
 		},
