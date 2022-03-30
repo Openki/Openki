@@ -3,12 +3,14 @@ import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
-import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { Filtering } from '/imports/utils/filtering';
 import { UserModel } from '/imports/api/users/users';
 
-/** DB-Model */
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { Filtering } from '/imports/utils/filtering';
+import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
+import { Type } from '/imports/utils/CustomChecks';
 
+/** DB-Model */
 export interface TenantEntity {
 	/** ID */
 	_id: string;
@@ -36,6 +38,12 @@ export class Tenant {
 		);
 	}
 }
+
+export const FindFilterPattern = {
+	/** Limit to tenants where logged-in user is a admin */
+	adminOf: Match.Maybe(Boolean),
+};
+export type FindFilter = Type<typeof FindFilterPattern>;
 
 export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantModel> {
 	constructor() {
@@ -67,18 +75,11 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
 	 * @param skip skip this many before returning results
 	 * @param sort list of fields to sort by
 	 */
-	findFilter(
-		filter: {
-			/** Limit to tenants where logged-in user is a admin */
-			adminOf?: boolean;
-		} = {},
-		limit = 0,
-		skip = 0,
-		sort?: [string, 'asc' | 'desc'][],
-	) {
-		check(limit, Match.Maybe(Number));
-		check(skip, Match.Maybe(Number));
-		check(sort, Match.Maybe([[String]]));
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
+		check(filter, Match.Maybe(FindFilterPattern));
+		check(limit, Match.Maybe(Match.Integer));
+		check(skip, Match.Maybe(Match.Integer));
+		check(sort, Match.Maybe([FieldSortPattern]));
 
 		const me = Meteor.user();
 		if (!me) {

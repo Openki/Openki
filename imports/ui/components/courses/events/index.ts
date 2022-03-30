@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 
 import { EventEntity, EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';

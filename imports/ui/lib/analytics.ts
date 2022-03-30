@@ -2,18 +2,17 @@ import $ from 'jquery';
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
-import PublicSettings from '/imports/utils/PublicSettings';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
-export const Analytics = {};
+let loading: false | JQuery.jqXHR<any>;
 
-/** @type {false | JQuery.jqXHR<any>} */
-let loading;
-
-let tracker;
+let _tracker: any;
 
 const SettingsPattern = Match.ObjectIncluding({
 	url: String,
 	site: Match.Integer,
+	jsPath: String,
+	phpPath: String,
 });
 
 const MatomoPattern = Match.ObjectIncluding({
@@ -23,21 +22,21 @@ const MatomoPattern = Match.ObjectIncluding({
 /**
  * Returns true if matomo analytics settings are configured.
  */
-Analytics.isConfigured = function () {
+export function isConfigured() {
 	return Match.test(PublicSettings.matomo, SettingsPattern);
-};
+}
 
 /**
  * Returns true if the tracker exists.
  */
-Analytics.hasTracker = function () {
-	return Boolean(tracker);
-};
+export function hasTracker() {
+	return !!_tracker;
+}
 
 /**
  * Returns a promise resolving to the global Matomo object.
  */
-Analytics.load = function () {
+export function load(): Promise<any> {
 	let result;
 
 	// Piwik/Matomo entry point is the global window.Piwik object. That one
@@ -74,21 +73,20 @@ Analytics.load = function () {
 	}
 
 	return result;
-};
+}
 
 /**
  * Returns a promise resolving to the configured matomo tracker object.
  */
-Analytics.tracker = function () {
-	return Analytics.load().then((matomo) => {
-		check(PublicSettings.matomo, SettingsPattern);
-		if (!tracker) {
-			const config = PublicSettings.matomo;
-			tracker = matomo.getTracker(`${config.url}${config.phpPath}`, config.site);
-		}
-		return tracker;
-	});
-};
+export async function tracker() {
+	const matomo = await load();
+	check(PublicSettings.matomo, SettingsPattern);
+	if (!_tracker) {
+		const config = PublicSettings.matomo;
+		_tracker = matomo.getTracker(`${config.url}${config.phpPath}`, config.site);
+	}
+	return _tracker;
+}
 
 /**
  * Invokes the callback with the matomo tracker object.
@@ -98,23 +96,19 @@ Analytics.tracker = function () {
  * Example:
  *     Analytics.trytrack((tracker) => tracker.trackPageView());
  */
-Analytics.trytrack = function (callback) {
-	if (Analytics.isConfigured()) {
-		Analytics.tracker().then(callback, (err) => {
+export function trytrack(callback: (t: any) => void) {
+	if (isConfigured()) {
+		tracker().then(callback, (err) => {
 			Meteor._debug('Exception when gathering analytics data', err);
 		});
 	}
-};
+}
 /**
  * Track a event in matomo or log to console.
- * @param {string} category
- * @param {string} action
- * @param {string} [name]
- * @param {number} [value]
  */
-Analytics.trackEvent = function (category, action, name, value) {
-	if (Analytics.isConfigured()) {
-		Analytics.trytrack((t) => {
+export function trackEvent(category: string, action: string, name?: string, value?: number) {
+	if (isConfigured()) {
+		trytrack((t) => {
 			t.trackEvent(category, action, name, value);
 		});
 	} else {
@@ -126,17 +120,17 @@ Analytics.trackEvent = function (category, action, name, value) {
 			}}`,
 		);
 	}
-};
+}
 
 /**
  * Installs action-hooks on the router.
  */
-Analytics.installRouterActions = function (router) {
-	let started;
+export function installRouterActions(router: any) {
+	let started: Date | null;
 
-	router.onBeforeAction(function () {
-		if (Analytics.hasTracker()) {
-			Analytics.trytrack((t) => t.deleteCustomVariables());
+	router.onBeforeAction(function (this: any) {
+		if (hasTracker()) {
+			trytrack((t) => t.deleteCustomVariables());
 			started = new Date();
 		}
 		this.next();
@@ -146,9 +140,9 @@ Analytics.installRouterActions = function (router) {
 		// Router.onAfterAction sometimes fires more than once on each page run.
 		// https://github.com/iron-meteor/iron-router/issues/1031
 		if (Tracker.currentComputation.firstRun) {
-			Analytics.trytrack((t) => {
+			trytrack((t) => {
 				if (started) {
-					t.setGenerationTimeMs(new Date() - started);
+					t.setGenerationTimeMs(new Date().getTime() - started.getTime());
 					started = null;
 				}
 				t.enableLinkTracking();
@@ -158,6 +152,4 @@ Analytics.installRouterActions = function (router) {
 			});
 		}
 	});
-};
-
-export default Analytics;
+}

@@ -1,6 +1,6 @@
 import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import $ from 'jquery';
 
 import { Regions } from '/imports/api/regions/regions';
@@ -23,9 +23,13 @@ import '/imports/ui/components/kiosk-link';
 import '/imports/ui/components/navbar/navbar';
 import '/imports/ui/components/regions/splash';
 
-import './app-body.html';
+import './template.html';
 
-Template.layout.helpers({
+const Template = TemplateAny as TemplateStaticTyped<'layout'>;
+
+const template = Template.layout;
+
+template.helpers({
 	showRegionSplash() {
 		const { route } = Router.current();
 		if (!route) {
@@ -56,7 +60,7 @@ Template.layout.helpers({
 	},
 });
 
-Template.layout.events({
+template.events({
 	// Clicks on the logo toggle the intro blurb, but only when already on home
 	'click .js-toggle-introduction'() {
 		const { route } = Router.current();
@@ -66,7 +70,7 @@ Template.layout.events({
 	},
 });
 
-Template.layout.onRendered(() => {
+template.onRendered(() => {
 	Viewport.update();
 	$(window).on('resize', () => {
 		Viewport.update();
@@ -74,11 +78,11 @@ Template.layout.onRendered(() => {
 	Session.set('isRetina', window.devicePixelRatio === 2);
 });
 
-/* Workaround to prevent iron-router from messing with server-side downloads
- *
- * Class 'js-download' must be added to those links.
- */
-Template.layout.events({
+template.events({
+	/* Workaround to prevent iron-router from messing with server-side downloads
+	 *
+	 * Class 'js-download' must be added to those links.
+	 */
 	'click .js-download'(event) {
 		event.stopPropagation();
 	},

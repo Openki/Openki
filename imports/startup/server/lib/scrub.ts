@@ -59,7 +59,7 @@ export class ScrubRule {
 		});
 
 		// Record completion of scrubbing
-		const recordResult = (err: any, count: number) => {
+		const recordResult = (err: unknown, count: number) => {
 			if (err) {
 				pending.error(err);
 			} else {

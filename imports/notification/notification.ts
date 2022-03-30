@@ -7,6 +7,7 @@ import { Match, check } from 'meteor/check';
 import juice from 'juice';
 
 import { Log } from '/imports/api/log/log';
+import { LogEntity } from '/imports/api/log/factory';
 import { UserModel, Users } from '/imports/api/users/users';
 
 import * as notificationEvent from '/imports/notification/notification.event';
@@ -42,7 +43,7 @@ export namespace SendResult {
 		unsubToken: string | null,
 		sent: boolean,
 		recipient: string,
-		message: any,
+		message: unknown,
 		reason: string,
 	) {
 		check(sent, Boolean);
@@ -66,27 +67,51 @@ export namespace SendResult {
 	}
 }
 
+interface Vars {
+	fromAddress?: string;
+	siteName: string;
+	customSiteName?: string;
+	customEmailLogo?: string;
+	site: { url: string; logo: string; name: string };
+	customSiteUrl?: string;
+	locale: string;
+	username: string;
+	subject: string;
+}
+
 /**
  * Handle event notification
  * @param entry Notification.Event log entry to process
  */
-export function send(entry: { _id: string; body: { model: string; recipients: string[] } }) {
+export function send(entry: LogEntity & { body: { model: string; recipients: string[] } }) {
 	// Find out for which recipients sending has already been attempted.
 	const concluded: { [recipient: string]: boolean } = {};
 
 	Log.find({
 		tr: 'Notification.SendResult',
 		rel: entry._id,
-	}).forEach((result) => {
-		concluded[result.body.recipient] = true;
-	});
+	})
+		.map((r) => r as { body: { recipient: string } })
+		.forEach((result) => {
+			concluded[result.body.recipient] = true;
+		});
 
 	const model = (
 		Notification as {
 			[name: string]: {
-				Model(entry: any): {
+				Model(entry: unknown): {
 					accepted(user: UserModel): void;
-					vars(userLocale: string, user: UserModel, unsubToken: string): Record<string, any>;
+					vars(
+						userLocale: string,
+						user: UserModel,
+						unsubToken: string,
+					): {
+						fromAddress?: string;
+						customSiteName?: string;
+						customEmailLogo?: string;
+						customSiteUrl?: string;
+						subject: string;
+					};
 					template: string;
 				};
 			};
@@ -116,7 +141,7 @@ export function send(entry: { _id: string; body: { model: string; recipients: st
 				const subjectPrefix = `[${siteName}] `;
 
 				unsubToken = Random.secret();
-				const vars = model.vars(userLocale, user, unsubToken);
+				const vars = model.vars(userLocale, user, unsubToken) as Vars;
 
 				const fromAddress = vars.fromAddress || Accounts.emailTemplates.from;
 

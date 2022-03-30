@@ -3,6 +3,7 @@ import { Match, check } from 'meteor/check';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { Type } from '/imports/utils/CustomChecks';
 
 // ======== DB-Model: ========
 export interface Resolution {
@@ -31,7 +32,7 @@ export interface LogEntity {
 	 */
 	rel: string[];
 	/** Contents of the log entry. These are not indexed and depend on the track. */
-	body: any;
+	body: unknown;
 	res: Resolution[];
 }
 
@@ -43,7 +44,7 @@ class ResultLogger {
 		this.record(true, message);
 	}
 
-	error(error: any) {
+	error(error: unknown) {
 		const message = JSON.parse(JSON.stringify(error));
 		this.record(false, message);
 	}
@@ -60,6 +61,13 @@ class ResultLogger {
 		this.log.update(this.id, { $push: { res: resolution } });
 	}
 }
+
+export const FindFilterPattern = {
+	start: Match.Maybe(Date),
+	rel: Match.Maybe([String]),
+	tr: Match.Maybe([String]),
+};
+export type FindFilter = Type<typeof FindFilterPattern>;
 
 /**
  * The Application Log records user and system decisions. It is intended to become the single source
@@ -100,7 +108,7 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
 	 * @param rel related ID
 	 * @param body log body depending on track
 	 */
-	record(track: string, rel: string[], body: any) {
+	record(track: string, rel: string[], body: unknown) {
 		check(track, String);
 		check(rel, [String]);
 		check(body, Object);
@@ -122,13 +130,9 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
 		return new ResultLogger(id, this);
 	}
 
-	findFilter(filter: { start?: Date; rel?: string[]; tr?: string[] }, limit: number) {
-		check(filter, {
-			start: Match.Optional(Date),
-			rel: Match.Optional([String]),
-			tr: Match.Optional([String]),
-		});
-		check(limit, Number);
+	findFilter(filter: FindFilter, limit: number) {
+		check(filter, FindFilterPattern);
+		check(limit, Match.Integer);
 
 		const query: Mongo.Selector<LogEntity> = {};
 		if (filter.start) query.ts = { $lte: filter.start };

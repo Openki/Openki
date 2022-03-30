@@ -1,25 +1,25 @@
 import { Router } from 'meteor/iron:router';
+import { WebApp } from 'meteor/webapp';
 
-import Api from '/imports/Api';
+import { Api } from '/imports/Api';
 import FieldOrdering from '/imports/utils/field-ordering';
 import { FilteringReadError } from '/imports/utils/filtering';
 import SortSpec from '/imports/utils/sort-spec';
 
-WebApp.rawConnectHandlers.use('/api', (req, res, next) => {
+WebApp.rawConnectHandlers.use('/api', (_req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	return next();
 });
 
 class NoActionError {
-	/**
-	 * @param {string} message
-	 */
-	constructor(message) {
+	message: string;
+
+	constructor(message: string) {
 		this.message = message;
 	}
 }
 
-const jSendResponder = function (res, process) {
+const jSendResponder = function (res: any, process: any) {
 	try {
 		const body = {
 			status: 'success',
@@ -29,13 +29,13 @@ const jSendResponder = function (res, process) {
 		res.setHeader('Content-Type', 'application/json; charset=utf-8');
 		res.end(JSON.stringify(body, null, '\t'));
 	} catch (e) {
-		const body = {};
+		const body: any = {};
 		if (e instanceof FilteringReadError || e instanceof NoActionError) {
 			res.statusCode = 400;
 			body.status = 'fail';
 			body.data = {};
-			if (e.name) {
-				body.data[e.name] = e.message;
+			if ((e as any).name) {
+				body.data[(e as any).name] = e.message;
 			} else {
 				body.data.error = e.message;
 			}
@@ -55,7 +55,7 @@ Router.route('api.0.json', {
 	where: 'server',
 	action() {
 		jSendResponder(this.response, () => {
-			const { handler } = this.params;
+			const handler: 'groups' | 'venues' | 'events' | 'courses' = this.params.handler;
 			if (!Object.prototype.hasOwnProperty.call(Api, handler)) {
 				throw new NoActionError('Invalid action');
 			}
@@ -78,7 +78,7 @@ Router.route('api.0.json', {
 			// Sort the results again so computed fields are sorted too
 			// WARNING: In many cases this will be too late, because the limit
 			// has already excluded results.
-			return FieldOrdering(sorting).sorted(results);
+			return FieldOrdering(sorting).sorted(results as any);
 		});
 	},
 });

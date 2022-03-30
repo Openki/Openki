@@ -1,10 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 
+import { FindFilter } from '/imports/api/log/factory';
 import { Log } from '/imports/api/log/log';
+
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-Meteor.publish('log', function (filter, limit: number) {
+Meteor.publish('log', function (filter: FindFilter, limit: number) {
 	check(limit, Match.Integer);
 
 	// Non-admins get an empty list
