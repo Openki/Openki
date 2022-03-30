@@ -19,7 +19,7 @@ import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Viewport from '/imports/ui/lib/viewport';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 
 import getLocalizedValue from '/imports/utils/getLocalizedValue';
 
@@ -85,7 +85,10 @@ import './styles.scss';
 				);
 			},
 			onError: (err) => {
-				Alert.serverError(err, i18n('course.save.error', 'Saving the course went wrong'));
+				Alert.serverError(
+					err as string | Error,
+					i18n('course.save.error', 'Saving the course went wrong'),
+				);
 			},
 		});
 
@@ -103,7 +106,7 @@ import './styles.scss';
 				);
 			},
 			onError: (err) => {
-				Alert.serverError(err, i18n('course.save.error'));
+				Alert.serverError(err as string | Error, i18n('course.save.error'));
 			},
 		});
 

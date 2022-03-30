@@ -22,7 +22,7 @@ import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Metatags from '/imports/utils/metatags';
 import { appendAsJsonLdToBody } from '/imports/utils/event-to-json-ld';
 
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';

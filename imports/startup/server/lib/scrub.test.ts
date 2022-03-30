@@ -43,7 +43,7 @@ describe('The Log-Scrubber', () => {
 
 		const cursor = log.find({ tr: 'test' });
 		const handle = cursor.observeChanges({
-			changed: (_id, doc) => {
+			changed: (_id, doc: any) => {
 				handle.stop(); // cleanup
 				try {
 					assert.equal(doc.body.a, undefined);

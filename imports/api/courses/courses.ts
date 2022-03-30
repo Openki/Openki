@@ -17,6 +17,8 @@ import * as Predicates from '/imports/utils/predicates';
 import * as FileStorage from '/imports/utils/FileStorage';
 import * as StringTools from '/imports/utils/string-tools';
 import { GroupEntityCustomCourseFields } from '/imports/api/groups/groups';
+import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
+import { StringEnum, Type } from '/imports/utils/CustomChecks';
 
 export interface CourseMemberEntity {
 	user: string;
@@ -64,7 +66,7 @@ export interface CourseEntity {
 	history: {
 		dateTime: Date;
 		type: string;
-		data: any;
+		data: object;
 	}[];
 	/**
 	 * (calculated) List of user and group id allowed to edit the course, calculated from members
@@ -137,6 +139,20 @@ export class Course {
 	}
 }
 
+export const FindFilterPattern = {
+	tenants: Match.Maybe([String]),
+	region: Match.Maybe(String),
+	state: Match.Maybe(StringEnum(['proposal', 'resting', 'upcomingEvent'] as const)),
+	userInvolved: Match.Maybe(String),
+	categories: Match.Maybe([String]),
+	group: Match.Maybe(String),
+	internal: Match.Maybe(Boolean),
+	search: Match.Maybe(String),
+	needsRole: Match.Maybe([StringEnum(['host', 'mentor', 'team'] as const)]),
+	archived: Match.Maybe(Boolean),
+};
+export type FindFilter = Type<typeof FindFilterPattern>;
+
 export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseModel> {
 	constructor() {
 		super('Courses', {
@@ -152,7 +168,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 
 	insert(
 		course: Mongo.OptionalId<CourseEntity>,
-		callback?: (err: any | undefined, id?: string) => void,
+		callback?: (err: unknown | undefined, id?: string) => void,
 	) {
 		const enrichedCourse = tenantDenormalizer.beforeInsert(course);
 
@@ -252,30 +268,15 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 	 * @param skip skip this many before returning results
 	 * @param sort list of fields to sort by
 	 */
-	findFilter(
-		filter: {
-			tenants?: string[];
-			region?: string;
-			state?: 'proposal' | 'resting' | 'upcomingEvent';
-			userInvolved?: string;
-			categories?: string[];
-			group?: string;
-			internal?: boolean;
-			search?: string;
-			needsRole?: ('host' | 'mentor' | 'team')[];
-			archived?: boolean;
-		} = {},
-		limit = 0,
-		skip = 0,
-		sort?: [string, 'asc' | 'desc'][],
-	) {
-		check(limit, Match.Maybe(Number));
-		check(skip, Match.Maybe(Number));
-		check(sort, Match.Maybe([[String]]));
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
+		check(filter, Match.Maybe(FindFilterPattern));
+		check(limit, Match.Maybe(Match.Integer));
+		check(skip, Match.Maybe(Match.Integer));
+		check(sort, Match.Maybe([FieldSortPattern]));
 
 		const find: Mongo.Selector<CourseEntity> = {};
 		const options: Mongo.Options<CourseEntity> = {};
-		const order = sort || [];
+		const order = (sort || []) as FieldSort[];
 
 		if (limit > 0) {
 			options.limit = limit;

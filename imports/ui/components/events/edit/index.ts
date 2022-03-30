@@ -28,7 +28,7 @@ import { Editable } from '/imports/ui/lib/editable';
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import LocalTime from '/imports/utils/local-time';
 
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/buttons';
@@ -66,7 +66,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 			updateReplicasTime: boolean;
 			updateChangedReplicasTime: boolean;
 		}>;
-		parent: Blaze.TemplateInstance<any>;
+		parent: Blaze.TemplateInstance;
 		selectedRegion: ReactiveVar<string>;
 		selectedLocation: ReactiveVar<Partial<EventVenueEntity>>;
 		notifyChecked: ReactiveVar<boolean>;

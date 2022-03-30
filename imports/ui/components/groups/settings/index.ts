@@ -57,7 +57,7 @@ template.helpers({
 	logoFileUploadArgs(): EditableImageData {
 		const instance = Template.instance();
 		return {
-			thumbnail: (instance.data.group as any)?.publicLogoUrl?.(),
+			thumbnail: { src: instance.data.group?.publicLogoUrl?.(), maxSize: 150 },
 			maxSize: 100,
 			async onUpload(file: UploadImage) {
 				const parentInstance = instance.parentInstance() as any; // Not available in callback
@@ -85,7 +85,7 @@ template.helpers({
 					instance.busy(false);
 				}
 			},
-			onDelete: (instance.data.group as any)?.logoUrl
+			onDelete: instance.data.group?.logoUrl
 				? async function () {
 						const parentInstance = instance.parentInstance() as any; // Not available in callback
 

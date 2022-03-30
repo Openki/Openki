@@ -1,6 +1,12 @@
-import { check } from 'meteor/check';
+import { Match, check } from 'meteor/check';
 
-export type FieldSort = [string, 'asc' | 'desc'];
+import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
+
+export const FieldSortPattern = Tuple<
+	[field: StringConstructor, sort: Match.Matcher<'asc' | 'desc'>]
+>([String, StringEnum(['asc', 'desc'] as const)]);
+
+export type FieldSort = Type<typeof FieldSortPattern>;
 
 // SortSpec interface
 
@@ -8,7 +14,7 @@ export type FieldSort = [string, 'asc' | 'desc'];
  * builds a SortSpec from a given mongo sort-specifier
  */
 export const SortSpec = (spec: FieldSort[]) => {
-	check(spec, [[String]]);
+	check(spec, [FieldSortPattern]);
 	return {
 		/**
 		 * @returns a mongo sort-specifier of the form [['name', 'asc'], ['age', 'desc']]
