@@ -24,7 +24,7 @@ export type RecursiveUndefinedToOptional<T> = UndefinedToOptional<{
 /** Convert a meteor/check Match.Pattern to a typescript type */
 export type Type<T extends Match.Pattern> = RecursiveUndefinedToOptional<Match.PatternMatch<T>>;
 
-export function Tuple<T extends readonly Match.Pattern[]>(pattern: [...T]) {
+export function Tuple<T extends readonly Match.Pattern[]>(...pattern: [...T]) {
 	return Match.Where(function (values) {
 		check(values, [Match.Any]);
 
@@ -43,7 +43,7 @@ export function Tuple<T extends readonly Match.Pattern[]>(pattern: [...T]) {
 	}>;
 }
 
-export function StringEnum<T extends readonly string[]>(values: T) {
+export function StringEnum<T extends readonly string[]>(...values: T) {
 	return Match.Where(function (str) {
 		check(str, String);
 		return values.includes(str);

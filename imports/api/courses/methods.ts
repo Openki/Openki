@@ -95,7 +95,7 @@ export const CustomFieldPattern = {
 	name: String,
 	displayText: LocalizedValuePattern,
 	value: String,
-	visibleFor: StringEnum(['all', 'editors'] as const),
+	visibleFor: StringEnum('all', 'editors'),
 };
 export type CustomField = Type<typeof CustomFieldPattern>;
 

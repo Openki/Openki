@@ -29,7 +29,7 @@ if (Meteor.isServer) {
 		privateSettings,
 		Match.ObjectIncluding({
 			admins: [String],
-			prng: StringEnum(['', 'static'] as const),
+			prng: StringEnum('', 'static'),
 			testdata: Boolean,
 			siteEmail: String,
 			reporter: {
