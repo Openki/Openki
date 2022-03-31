@@ -55,13 +55,14 @@ ${i18n('verifyEmail.email.unexpected', {
 };
 
 Accounts.emailTemplates.verifyEmail.html = function (user, url) {
+	const emailLogo = PublicSettings.emailLogo;
 	return juice(
 		SSR.render('userVerifyEmail', {
 			subject: Accounts.emailTemplates.verifyEmail.subject(user),
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: base64PngImageData(PublicSettings.emailLogo),
+				logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
 			username: user.username,
@@ -111,13 +112,14 @@ ${i18n('resetPassword.email.unexpected', {
 };
 
 Accounts.emailTemplates.resetPassword.html = function (user, url) {
+	const emailLogo = PublicSettings.emailLogo;
 	return juice(
 		SSR.render('userResetPasswordEmail', {
 			subject: Accounts.emailTemplates.resetPassword.subject(user),
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: base64PngImageData(PublicSettings.emailLogo),
+				logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
 			username: user.username,

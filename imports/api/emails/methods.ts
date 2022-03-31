@@ -115,6 +115,7 @@ export const report = ServerMethod(
 
 		const reportEmail = PrivateSettings.reporter;
 
+		const emailLogo = PublicSettings.emailLogo;
 		let message = SSR.render('reportEmail', {
 			reporter,
 			location,
@@ -122,7 +123,7 @@ export const report = ServerMethod(
 			title,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: base64PngImageData(PublicSettings.emailLogo),
+				logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
 				name: siteName,
 			},
 			report: reportMessage,
