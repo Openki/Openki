@@ -4,7 +4,7 @@ import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
 
 export const FieldSortPattern = Tuple<
 	[field: StringConstructor, sort: Match.Matcher<'asc' | 'desc'>]
->([String, StringEnum(['asc', 'desc'] as const)]);
+>(String, StringEnum('asc', 'desc'));
 
 export type FieldSort = Type<typeof FieldSortPattern>;
 

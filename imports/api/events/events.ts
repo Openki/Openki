@@ -134,7 +134,7 @@ export const FindFilterPattern = {
 	search: Match.Maybe(String),
 	/** include only events that overlap the given
 	 * period (list of start and end date) */
-	period: Match.Maybe(Tuple<[start: DateConstructor, end: DateConstructor]>([Date, Date])),
+	period: Match.Maybe(Tuple<[start: DateConstructor, end: DateConstructor]>(Date, Date)),
 	/** only events that end after this date */
 	start: Match.Maybe(Date),
 	/** only events that ended before this date */

@@ -142,14 +142,14 @@ export class Course {
 export const FindFilterPattern = {
 	tenants: Match.Maybe([String]),
 	region: Match.Maybe(String),
-	state: Match.Maybe(StringEnum(['proposal', 'resting', 'upcomingEvent'] as const)),
+	state: Match.Maybe(StringEnum('proposal', 'resting', 'upcomingEvent')),
 	userInvolved: Match.Maybe(String),
 	createdby: Match.Maybe(String),
 	categories: Match.Maybe([String]),
 	group: Match.Maybe(String),
 	internal: Match.Maybe(Boolean),
 	search: Match.Maybe(String),
-	needsRole: Match.Maybe([StringEnum(['host', 'mentor', 'team'] as const)]),
+	needsRole: Match.Maybe([StringEnum('host', 'mentor', 'team')]),
 	archived: Match.Maybe(Boolean),
 };
 export type FindFilter = Type<typeof FindFilterPattern>;

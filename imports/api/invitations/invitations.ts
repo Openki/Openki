@@ -7,7 +7,7 @@ import * as Predicates from '/imports/utils/predicates';
 import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
 import { Type, StringEnum } from '/imports/utils/CustomChecks';
 
-export const StatusPattern = StringEnum(['created', 'send', 'accepted', 'failed'] as const);
+export const StatusPattern = StringEnum('created', 'send', 'accepted', 'failed');
 
 export type Status = Type<typeof StatusPattern>;
 

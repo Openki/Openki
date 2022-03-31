@@ -87,9 +87,9 @@ const ReplicaSync = function (
 };
 
 export const GeodataPattern = {
-	type: StringEnum(['Point'] as const),
+	type: StringEnum('Point'),
 	/** (not lat-long !) */
-	coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>([Number, Number]),
+	coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
 };
 
 export type Geodata = Type<typeof GeodataPattern>;

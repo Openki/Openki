@@ -12,19 +12,19 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as AsyncTools from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
+import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
 
 export const CreateFieldsPattern = {
 	tenant: String,
 	name: String,
-	loc: { type: String, coordinates: [Number] as [NumberConstructor] },
+	loc: {
+		type: StringEnum('Point'),
+		coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
+	},
 	tz: String,
 };
-export interface CreateFields {
-	tenant: string;
-	name: string;
-	loc: { type: 'Point'; coordinates: [number, number] };
-	tz: string;
-}
+
+export type CreateFields = Type<typeof CreateFieldsPattern>;
 
 export const create = ServerMethod(
 	'region.create',
