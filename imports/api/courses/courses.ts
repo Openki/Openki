@@ -269,7 +269,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 	 * @param skip skip this many before returning results
 	 * @param sort list of fields to sort by
 	 */
-	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort: FieldSort[] = []) {
 		check(filter, Match.Maybe(FindFilterPattern));
 		check(limit, Match.Maybe(Match.Integer));
 		check(skip, Match.Maybe(Match.Integer));
@@ -277,7 +277,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 
 		const find: Mongo.Selector<CourseEntity> = {};
 		const options: Mongo.Options<CourseEntity> = {};
-		const order = (sort || []) as FieldSort[];
+		const order = sort;
 
 		if (limit > 0) {
 			options.limit = limit;
