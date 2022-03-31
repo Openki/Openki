@@ -4,9 +4,10 @@ import moment from 'moment';
 
 import { Log } from '/imports/api/log/log';
 import { Scrubber } from '/imports/startup/server/lib/scrub';
+import PrivateSettings from '/imports/utils/PrivateSettings';
 
 Meteor.startup(() => {
-	const scrubSettings = Meteor.settings.scrub;
+	const scrubSettings = PrivateSettings.scrub;
 	if (scrubSettings) {
 		const scrubber = Scrubber.read(scrubSettings);
 		const scrubCall = Meteor.bindEnvironment(() => scrubber.scrub(Log, moment()));

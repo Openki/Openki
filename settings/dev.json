@@ -47,7 +47,7 @@
 		},
 		"aboutLink": "https://about.openki.net",
 		"contribution": 
-		    { "icon": "fa fa-heart"
+		    { "icon": "fa-solid fa-heart"
 			, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"]
 			, "link": 
 				{ "en": "https://about.openki.net/en/ueber-uns/spenden/"

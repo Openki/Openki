@@ -43,8 +43,12 @@
 	list-style: none;
 }
 
-.kiosk-language-selection > li > .fa {
-	color: $blue;
+.kiosk-language-selection > li > {
+	.fa-regular,
+	.fa-brands,
+	.fa-solid {
+		color: $blue;
+	}
 }
 
 .kiosk-language-selection > li > .dropdown-menu {

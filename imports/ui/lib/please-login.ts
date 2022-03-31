@@ -3,22 +3,15 @@ import { Session } from 'meteor/session';
 import { Blaze } from 'meteor/blaze';
 
 /**
- * Handle saving and logging in
+ * Handle action that need a logged in user
  * @param instance the template instance
- * @param loginAction Text that is shown to user in the login window
- * @param registerAction Text that is shown to user in the register window
  * @param afterLogin the save method
  */
-export function SaveAfterLogin(
-	instance: Blaze.TemplateInstance,
-	loginAction: string,
-	registerAction: string,
-	afterLogin: () => void,
-) {
+export function PleaseLogin(instance: Blaze.TemplateInstance, afterLogin: () => void) {
 	let openedLogin = false;
 
 	instance.autorun((computation) => {
-		if (Meteor.user()) {
+		if (Meteor.userId()) {
 			// if the user is loggged in stop the computation and call the save function
 
 			computation.stop();
@@ -32,12 +25,10 @@ export function SaveAfterLogin(
 		} else {
 			// if the user is not logged in open up the login window
 
-			Session.set('loginAction', loginAction);
-			Session.set('registerAction', registerAction);
 			Session.set('pleaseLogin', true);
 			openedLogin = true;
 		}
 	});
 }
 
-export default SaveAfterLogin;
+export default PleaseLogin;

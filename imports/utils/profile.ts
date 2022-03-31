@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 import { Match, check } from 'meteor/check';
+import { LogEntity } from '../api/log/factory';
 
 import { Log } from '/imports/api/log/log';
 import { Regions } from '/imports/api/regions/regions';
@@ -114,15 +115,17 @@ export namespace Notifications {
 		// Find the relevant notification result
 		Log.find({
 			rel: token,
-		}).forEach((entry) => {
-			// See whether it was indeed a secret token.
-			// This check is not redundant because public ID like courseID
-			// are also written into the rel-index and would be found if provided.
-			if (entry.body.unsubToken === token) {
-				Notifications.change(entry.body.recipient, false, entry._id, 'unsubscribe token');
-				accepted = true;
-			}
-		});
+		})
+			.map((r) => r as LogEntity & { body: { unsubToken: string; recipient: string } })
+			.forEach((entry) => {
+				// See whether it was indeed a secret token.
+				// This check is not redundant because public ID like courseID
+				// are also written into the rel-index and would be found if provided.
+				if (entry.body.unsubToken === token) {
+					Notifications.change(entry.body.recipient, false, entry._id, 'unsubscribe token');
+					accepted = true;
+				}
+			});
 		return accepted;
 	}
 }
@@ -173,15 +176,17 @@ export namespace PrivateMessages {
 		// Find the relevant private message result
 		Log.find({
 			rel: token,
-		}).forEach((entry) => {
-			// See whether it was indeed a secret token.
-			// This check is not redundant because public ID like courseID
-			// are also written into the rel-index and would be found if provided.
-			if (entry.body.unsubToken === token) {
-				PrivateMessages.change(entry.body.recipient, false, entry._id, 'unsubscribe token');
-				accepted = true;
-			}
-		});
+		})
+			.map((r) => r as LogEntity & { body: { unsubToken: string; recipient: string } })
+			.forEach((entry) => {
+				// See whether it was indeed a secret token.
+				// This check is not redundant because public ID like courseID
+				// are also written into the rel-index and would be found if provided.
+				if (entry.body.unsubToken === token) {
+					PrivateMessages.change(entry.body.recipient, false, entry._id, 'unsubscribe token');
+					accepted = true;
+				}
+			});
 		return accepted;
 	}
 }

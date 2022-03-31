@@ -1,6 +1,7 @@
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
-import { UpdateQuery } from 'mongodb';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { UpdateFilter } from 'mongodb';
 import { i18n } from '/imports/startup/both/i18next';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
@@ -9,28 +10,21 @@ import { Courses } from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
 import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as courseTimeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
-import {
-	EventEntity,
-	EventModel,
-	Events,
-	EventVenueEntity,
-	OEvent,
-} from '/imports/api/events/events';
+import { EventEntity, EventModel, Events, OEvent } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { VenueModel, Venues } from '/imports/api/venues/venues';
 
 import { Notification } from '/imports/notification/notification';
 
-import { PleaseLogin } from '/imports/ui/lib/please-login';
-
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
-import { AsyncTools } from '/imports/utils/async-tools';
+import * as AsyncTools from '/imports/utils/async-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 import LocalTime from '/imports/utils/local-time';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UpdateMethods from '/imports/utils/update-methods';
 import { ServerMethod } from '/imports/utils/ServerMethod';
+import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
 
 /**
  * @param updateOptions What should be updated
@@ -92,20 +86,44 @@ const ReplicaSync = function (
 	};
 };
 
-export interface SaveFields {
-	title: string;
-	description: string;
-	venue?: EventVenueEntity;
-	room?: string;
-	startLocal?: string;
-	endLocal?: string;
-	internal?: boolean;
-	maxParticipants?: number;
-	courseId?: string;
-	region?: string;
-	replicaOf?: string;
-	groups?: string[];
-}
+export const GeodataPattern = {
+	type: StringEnum('Point'),
+	/** (not lat-long !) */
+	coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
+};
+
+export type Geodata = Type<typeof GeodataPattern>;
+
+export const EventVenuePattern = {
+	_id: Match.Optional(String),
+	name: Match.Optional(String),
+	loc: Match.Optional(GeodataPattern),
+	address: Match.Optional(String),
+	editor: Match.Optional(String),
+};
+
+export const UpdateFieldsPattern = {
+	title: String,
+	description: String,
+	venue: Match.Optional(EventVenuePattern),
+	room: Match.Optional(String),
+	startLocal: Match.Optional(String),
+	endLocal: Match.Optional(String),
+	internal: Match.Optional(Boolean),
+	maxParticipants: Match.Optional(Match.Integer),
+};
+export type UpdateFields = Type<typeof UpdateFieldsPattern>;
+
+export const CreateFieldsPattern = {
+	...UpdateFieldsPattern,
+	courseId: Match.Optional(String),
+	region: String,
+	replicaOf: Match.Optional(String),
+	groups: Match.Optional([String]),
+};
+export type CreateFields = Type<typeof CreateFieldsPattern>;
+
+export type SaveFields = CreateFields & UpdateFields;
 
 export const save = ServerMethod(
 	'event.save',
@@ -131,36 +149,23 @@ export const save = ServerMethod(
 
 		check(eventId, String);
 
-		const expectedFields: Match.Pattern = {
-			title: String,
-			description: String,
-			venue: Match.Optional(Object),
-			room: Match.Optional(String),
-			startLocal: Match.Optional(String),
-			endLocal: Match.Optional(String),
-			internal: Match.Optional(Boolean),
-			maxParticipants: Match.Optional(Match.Integer),
-		};
-
 		const isNew = eventId === '';
-		if (isNew) {
-			expectedFields.courseId = Match.Optional(String);
-			expectedFields.region = String;
-			expectedFields.replicaOf = Match.Optional(String);
-			expectedFields.groups = Match.Optional([String]);
-		}
 
+		const expectedFields = isNew ? CreateFieldsPattern : UpdateFieldsPattern;
 		check(changes, expectedFields);
 		check(comment, Match.Maybe(String));
+		check(sendNotifications, Match.Maybe(Boolean));
+
+		if (!isNew) {
+			check(updateReplicasInfos, Match.Maybe(Boolean));
+			check(updateReplicasTime, Match.Maybe(Boolean));
+			check(updateChangedReplicasTime, Match.Maybe(Boolean));
+		}
 
 		const editFields = changes as Partial<EventEntity>;
 
 		const user = Meteor.user();
 		if (!user) {
-			if (Meteor.isClient) {
-				PleaseLogin();
-				return undefined;
-			}
 			throw new Meteor.Error(401, 'please log in');
 		}
 
@@ -347,7 +352,7 @@ export const save = ServerMethod(
 				const affectedReplicaMessage = i18n(
 					'notification.event.affectedReplicaMessage',
 					'These changes have also been applied to {NUM, plural, one{the later copy} other{# later copies} }',
-					{ NUM: affectedReplicaCount },
+					{ NUM: affectedReplicaCount, lng: user.locale },
 				);
 
 				if (comment == null) {
@@ -440,6 +445,8 @@ export const addParticipant = ServerMethod(
 	 * @param eventId The event to register for
 	 */
 	(eventId: string) => {
+		check(eventId, String);
+
 		const user = Meteor.user();
 		if (!user) {
 			throw new Meteor.Error(401, 'please log in');
@@ -472,6 +479,8 @@ export const addParticipant = ServerMethod(
 );
 
 export const removeParticipant = ServerMethod('event.removeParticipant', (eventId: string) => {
+	check(eventId, String);
+
 	const userId = Meteor.userId();
 	if (!userId) {
 		throw new Meteor.Error(401, 'please log in');
@@ -520,7 +529,7 @@ Meteor.methods({
 					venue = Venues.findOne(event.venue._id);
 				}
 
-				let update: UpdateQuery<EventEntity> | Partial<EventEntity>;
+				let update: UpdateFilter<EventEntity> | Partial<EventEntity>;
 				if (venue) {
 					if (event.start < new Date()) {
 						// Do not update venue for historical events
@@ -543,11 +552,11 @@ Meteor.methods({
 					update = { $unset: { 'venue._id': 1 } };
 				}
 
-				Events.rawCollection().update({ _id: event._id }, update, (err, result) => {
+				Events.rawCollection().updateMany({ _id: event._id }, update, {}, (err, result) => {
 					if (err) {
 						reject(err);
 					} else {
-						resolve(result.result.nModified === 0);
+						resolve(result?.modifiedCount === 0);
 					}
 				});
 			}).catch((reason) => {

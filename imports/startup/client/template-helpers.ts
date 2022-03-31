@@ -76,7 +76,7 @@ const helpers: { [name: string]: Function } = {
 		return getLocalizedValue(value);
 	},
 
-	log(context: any) {
+	log(context: unknown) {
 		if (window.console) {
 			/* eslint-disable-next-line no-console */
 			console.log(arguments.length > 0 ? context : this);

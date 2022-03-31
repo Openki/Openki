@@ -10,6 +10,8 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as Predicates from '/imports/utils/predicates';
 import { Filtering } from '/imports/utils/filtering';
 import { PublicSettings } from '/imports/utils/PublicSettings';
+import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
+import { Type } from '/imports/utils/CustomChecks';
 
 export interface Geodata {
 	type: 'Point';
@@ -82,6 +84,12 @@ export class Region {
 	}
 }
 
+export const FindFilterPattern = {
+	/** restrict to regions in that tenant */
+	tenant: Match.Maybe(String),
+};
+export type FindFilter = Type<typeof FindFilterPattern>;
+
 export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionModel> {
 	constructor() {
 		super('Regions', {
@@ -121,15 +129,11 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 	 * @param skip skip this many before returning results
 	 * @param sort list of fields to sort by
 	 */
-	findFilter(
-		filter: { /** restrict to regions in that tenant */ tenant?: string } = {},
-		limit = 0,
-		skip = 0,
-		sort?: [string, 'asc' | 'desc'][],
-	) {
-		check(limit, Match.Maybe(Number));
-		check(skip, Match.Maybe(Number));
-		check(sort, Match.Maybe([[String]]));
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
+		check(filter, Match.Maybe(FindFilterPattern));
+		check(limit, Match.Maybe(Match.Integer));
+		check(skip, Match.Maybe(Match.Integer));
+		check(sort, Match.Maybe([FieldSortPattern]));
 
 		const selector: Mongo.Selector<RegionEntity> = {};
 

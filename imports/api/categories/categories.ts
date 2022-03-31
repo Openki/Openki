@@ -1,7 +1,5 @@
-import { Meteor } from 'meteor/meteor';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
-const Categories = { ...Meteor.settings.public.categories } as {
-	[category: string]: string[];
-};
+const Categories = { ...PublicSettings.categories };
 
 export default Categories;

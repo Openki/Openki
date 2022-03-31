@@ -7,6 +7,8 @@ import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 Meteor.publish('user', function (userId: string) {
+	check(userId, String);
+
 	// Public fields from users
 	const fields: Mongo.FieldSpecifier = {
 		username: 1,
@@ -32,5 +34,6 @@ Meteor.publish(null, function () {
 
 Meteor.publish('userSearch', (search) => {
 	check(search, String);
+
 	return userSearchPrefix(search, { fields: { username: 1 }, limit: 10 });
 });

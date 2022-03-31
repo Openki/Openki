@@ -8,14 +8,25 @@ import { UserModel } from '/imports/api/users/users';
 // thing for Courses and Events. So we parameterize the methods
 // with a collection passed as argument on construction.
 
+export interface GroupPromoterEntity {
+	groups: string[];
+	groupOrganizers: string[];
+}
+
+export interface GroupPromoterModel {
+	_id: string;
+	editableBy(user: UserModel): boolean;
+}
+
+export interface GroupPromoters extends Mongo.Collection<GroupPromoterEntity, GroupPromoterModel> {
+	updateGroups(docId: string): void;
+}
+
 /**
  * Create an update method for the groups field
  * @param collection The collection the changes will be applied to when the method is called
  */
-export function promote<
-	T extends { groups: string[]; groupOrganizers: string[] },
-	U extends { _id: string; editableBy: (user: UserModel) => boolean },
->(collection: Mongo.Collection<T, U> & { updateGroups: (docId: string) => void }) {
+export function promote(collection: GroupPromoters) {
 	return function (docId: string, groupId: string, enable: boolean) {
 		check(docId, String);
 		check(groupId, String);
@@ -39,7 +50,7 @@ export function promote<
 		const mayPromote = user.mayPromoteWith(group._id);
 		const mayEdit = doc.editableBy(user);
 
-		const update: any = {};
+		const update: Mongo.Modifier<GroupPromoterEntity> = {};
 		if (enable) {
 			// The user is allowed to add the group if she is part of the group
 			if (!mayPromote) {
@@ -67,10 +78,7 @@ export function promote<
  * @param collection the collection the changes will be applied to when the method is called
  * @return A function that can be used as meteor method
  */
-export function editing<
-	T extends { groupOrganizers: string[] },
-	U extends { _id: string; editableBy: (user: UserModel) => boolean },
->(collection: Mongo.Collection<T, U> & { updateGroups: (docId: string) => void }) {
+export function editing(collection: GroupPromoters) {
 	return function (docId: string, groupId: string, enable: boolean) {
 		check(docId, String);
 		check(groupId, String);
@@ -91,7 +99,7 @@ export function editing<
 			throw new Meteor.Error(401, 'Not permitted');
 		}
 
-		const update: any = {};
+		const update: Mongo.Modifier<GroupPromoterEntity> = {};
 		const op = enable ? '$addToSet' : '$pull';
 		update[op] = { groupOrganizers: group._id };
 

@@ -4,13 +4,15 @@ import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 
 import { EventEntity, Events } from '/imports/api/events/events';
+import { UserModel } from '/imports/api/users/users';
+import { Geodata } from '/imports/api/regions/regions';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
-import { Geodata } from '/imports/api/regions/regions';
-import { UserModel } from '/imports/api/users/users';
+import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
+import { Type } from '/imports/utils/CustomChecks';
 
 /** DB-Model */
 export interface VenueEntity {
@@ -67,14 +69,15 @@ export class Venue {
 	}
 }
 
-export interface FindFilter {
+export const FindFilterPattern = {
 	/** string of words to search for */
-	search?: string;
+	search: Match.Maybe(String),
 	/** restrict to venues in that region */
-	region?: string;
-	editor?: string;
-	recent?: boolean;
-}
+	region: Match.Maybe(String),
+	editor: Match.Maybe(String),
+	recent: Match.Maybe(Boolean),
+};
+export type FindFilter = Type<typeof FindFilterPattern>;
 
 export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 	facilityOptions = [
@@ -114,10 +117,11 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 	 * @param skip skip this many before returning results
 	 * @param sort list of fields to sort by
 	 */
-	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: [string, 'asc' | 'desc'][]) {
-		check(limit, Match.Maybe(Number));
-		check(skip, Match.Maybe(Number));
-		check(sort, Match.Maybe([[String]]));
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
+		check(filter, Match.Maybe(FindFilterPattern));
+		check(limit, Match.Maybe(Match.Integer));
+		check(skip, Match.Maybe(Match.Integer));
+		check(sort, Match.Maybe([FieldSortPattern]));
 
 		const find: Mongo.Selector<VenueEntity> = {};
 

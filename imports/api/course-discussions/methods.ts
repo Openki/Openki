@@ -11,6 +11,7 @@ import { Notification } from '/imports/notification/notification';
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
+import { Type } from '/imports/utils/CustomChecks';
 
 const sanitizeComment = (comment: { title: string; text: string }) => {
 	const saneTitle = StringTools.saneTitle(comment.title).substring(0, 200).trim();
@@ -23,26 +24,20 @@ const sanitizeComment = (comment: { title: string; text: string }) => {
 	return { title: saneTitle, text: saneHtml };
 };
 
-export interface PostCommentFields {
-	courseId: string;
-	parentId?: string;
-	title: string;
-	text: string;
-	anon: boolean;
-	notifyAll?: boolean;
-}
+export const PostCommentFieldsPattern = {
+	courseId: String,
+	parentId: Match.Optional(String),
+	title: String,
+	text: String,
+	anon: Boolean,
+	notifyAll: Match.Optional(Boolean),
+};
+export type PostCommentFields = Type<typeof PostCommentFieldsPattern>;
 
 export const postComment = ServerMethod(
 	'courseDiscussion.postComment',
 	function (comment: PostCommentFields) {
-		check(comment, {
-			courseId: String,
-			parentId: Match.Optional(String),
-			title: String,
-			text: String,
-			anon: Boolean,
-			notifyAll: Match.Optional(Boolean),
-		});
+		check(comment, PostCommentFieldsPattern);
 
 		const saneComment = sanitizeComment(comment) as CourseDiscussionEnity & { saving?: boolean };
 
@@ -98,20 +93,17 @@ export const postComment = ServerMethod(
 	},
 );
 
-export interface EditCommentFields {
-	_id: string;
-	title: string;
-	text: string;
-}
+export const EditCommentFieldsPattern = {
+	_id: String,
+	title: String,
+	text: String,
+};
+export type EditCommentFields = Type<typeof EditCommentFieldsPattern>;
 
 export const editComment = ServerMethod(
 	'courseDiscussion.editComment',
 	(comment: EditCommentFields) => {
-		check(comment, {
-			_id: String,
-			title: String,
-			text: String,
-		});
+		check(comment, EditCommentFieldsPattern);
 
 		const update = sanitizeComment(comment) as CourseDiscussionEnity;
 

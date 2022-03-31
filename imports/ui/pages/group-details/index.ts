@@ -9,11 +9,10 @@ import * as GroupsMethods from '/imports/api/groups/methods';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 
-import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import { Store, Editable } from '/imports/ui/lib/editable';
-import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
-import { Analytics } from '/imports/ui/lib/analytics';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
+import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable';
@@ -25,7 +24,7 @@ import './styles.scss';
 const TemplateBase = TemplateAny as TemplateStaticTyped<
 	'groupDetailsPage',
 	{
-		courseQuery: any;
+		courseQuery: unknown;
 		group: GroupModel;
 		showCourses: boolean;
 	},
@@ -74,7 +73,7 @@ template.onCreated(function () {
 		},
 		onError: (err) => {
 			Alert.serverError(
-				err,
+				err as string | Error,
 				i18n('groupDetails.saveError', 'Could not save the "{GROUP}" group', {
 					GROUP: group?.name,
 				}),
@@ -209,11 +208,7 @@ template.helpers({
 
 template.events({
 	'click .js-group-settings'(_event, instance) {
-		if (PleaseLogin()) {
-			return false;
-		}
 		instance.editingSettings.set(!instance.editingSettings.get());
-		return true;
 	},
 
 	'click .js-group-save'(_event, instance) {
@@ -235,35 +230,30 @@ template.events({
 		}
 
 		instance.busy('saving');
-		SaveAfterLogin(
-			instance,
-			i18n('loginAction.saveGroup', 'Log in and save group'),
-			i18n('registerAction.saveGroup', 'Register and save group'),
-			async () => {
-				try {
-					const groupId = await GroupsMethods.save('', group);
+		PleaseLogin(instance, async () => {
+			try {
+				const groupId = await GroupsMethods.save('', group);
 
-					instance.editableName.end();
-					instance.editableShort.end();
-					instance.editableClaim.end();
-					instance.editableDescription.end();
+				instance.editableName.end();
+				instance.editableShort.end();
+				instance.editableClaim.end();
+				instance.editableDescription.end();
 
-					Alert.success(
-						i18n('groupDetails.groupCreated', 'The "{GROUP}" group was created.', {
-							GROUP: group.name,
-						}),
-					);
+				Alert.success(
+					i18n('groupDetails.groupCreated', 'The "{GROUP}" group was created.', {
+						GROUP: group.name,
+					}),
+				);
 
-					Analytics.trackEvent('Group creations', 'Group creations');
+				Analytics.trackEvent('Group creations', 'Group creations');
 
-					Router.go('groupDetails', { _id: groupId });
-				} catch (err) {
-					Alert.serverError(err, i18n('groupDetails.saveError', { GROUP: group.name }));
-				} finally {
-					instance.busy(false);
-				}
-			},
-		);
+				Router.go('groupDetails', { _id: groupId });
+			} catch (err) {
+				Alert.serverError(err, i18n('groupDetails.saveError', { GROUP: group.name }));
+			} finally {
+				instance.busy(false);
+			}
+		});
 	},
 
 	'click .js-group-cancel'() {

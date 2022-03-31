@@ -14,7 +14,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as Profile from '/imports/utils/profile';
 import { isEmail } from '/imports/utils/email-tools';
 import * as StringTools from '/imports/utils/string-tools';
-import { AsyncTools } from '/imports/utils/async-tools';
+import * as AsyncTools from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
@@ -301,7 +301,7 @@ export const addPrivilege = ServerMethod(
 		Users.update(
 			{ _id: user._id },
 			{ $addToSet: { privileges: privilege } },
-			undefined,
+			{ multi: true },
 			AsyncTools.checkUpdateOne,
 		);
 	},
@@ -330,13 +330,15 @@ export const removePrivilege = ServerMethod(
 		Users.update(
 			{ _id: user._id },
 			{ $pull: { privileges: privilege } },
-			undefined,
+			{ multi: true },
 			AsyncTools.checkUpdateOne,
 		);
 	},
 );
 
 export const setHasContributed = ServerMethod('user.setHasContributed', (userId: string) => {
+	check(userId, String);
+
 	const operator = Meteor.user();
 
 	if (!operator || !UserPrivilegeUtils.privileged(operator, 'admin')) {
@@ -357,6 +359,8 @@ export const setHasContributed = ServerMethod('user.setHasContributed', (userId:
 });
 
 export const unsetHasContributed = ServerMethod('user.unsetHasContributed', (userId: string) => {
+	check(userId, String);
+
 	const operator = Meteor.user();
 
 	if (!operator || !UserPrivilegeUtils.privileged(operator, 'admin')) {
@@ -386,6 +390,8 @@ export const hidePricePolicy = ServerMethod('user.hidePricePolicy', () => {
 });
 
 export const name = ServerMethod('user.name', function (userId: string) {
+	check(userId, String);
+
 	this.unblock();
 	const user = Users.findOne(userId, { fields: { username: 1, contribution: 1 } });
 	if (!user) {
@@ -395,6 +401,8 @@ export const name = ServerMethod('user.name', function (userId: string) {
 });
 
 export const updateLocale = ServerMethod('user.updateLocale', (locale: string) => {
+	check(locale, String);
+
 	const userId = Meteor.userId();
 	if (!userId) {
 		throw new Meteor.Error(401, 'please log in');
@@ -402,6 +410,17 @@ export const updateLocale = ServerMethod('user.updateLocale', (locale: string) =
 
 	Users.update(userId, {
 		$set: { locale },
+	});
+});
+
+export const updateLastLogin = ServerMethod('user.updateLastLogin', () => {
+	const userId = Meteor.userId();
+	if (!userId) {
+		throw new Meteor.Error(401, 'please log in');
+	}
+
+	Users.update(userId, {
+		$set: { lastLogin: new Date() },
 	});
 });
 
@@ -436,13 +455,18 @@ Meteor.methods({
 					},
 				};
 
-				Users.rawCollection().update({ _id: user._id }, update, (err: any, result: any) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve(result.result.nModified === 0);
-					}
-				});
+				Users.rawCollection().updateMany(
+					{ _id: user._id },
+					update,
+					{},
+					(err?: unknown, result?: { modifiedCount: number }) => {
+						if (err) {
+							reject(err);
+						} else {
+							resolve(result?.modifiedCount === 0);
+						}
+					},
+				);
 			});
 		});
 	},

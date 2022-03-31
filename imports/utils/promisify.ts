@@ -12,9 +12,9 @@ export const MeteorAsync = {
 		Meteor.callAsync
 			? Meteor.callAsync
 			: Meteor.call &&
-			  ((name: string, ...args: any[]) =>
+			  ((name: string, ...args: unknown[]) =>
 					new Promise((resolve, reject) => {
-						Meteor.call(name, ...args, (err: any, res: any) => {
+						Meteor.call(name, ...args, (err: unknown, res: unknown) => {
 							if (err) {
 								reject(err);
 							} else {
@@ -26,13 +26,13 @@ export const MeteorAsync = {
 	subscribe:
 		Meteor.subscribe &&
 		(function () {
-			return (name: string, ...args: any[]) =>
+			return (name: string, ...args: unknown[]) =>
 				new Promise<Meteor.SubscriptionHandle>((resolve, reject) => {
 					const handle = Meteor.subscribe(name, ...args, {
 						onReady: () => {
 							resolve(handle);
 						},
-						onStop: (err: any) => {
+						onStop: (err: unknown) => {
 							if (err) {
 								reject(err);
 							}

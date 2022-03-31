@@ -1,10 +1,10 @@
 <template name="courseMembers">
 	<div class="course-page-component-header">
 		<h4>
-			<span class="fa fa-users fa-fw" aria-hidden="true"></span>&nbsp;
+			<span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
 			{{i18n 'course.details.members.title' '{NUM, plural, =0{No co-learners yet} one{1 Co-learner} other{# Co-learners} }' NUM=howManyEnrolled}}
 			{{#if canNotifyAll}}
-				<i class="fa fa-envelope contact-members js-contact-members"></i>
+				<i class="fa-solid fa-envelope contact-members js-contact-members"></i>
 			{{/if}}
 		</h4>
 	</div>
@@ -47,8 +47,8 @@
 					<button type="button" class="btn btn-sm btn-add float-end js-add-to-team-btn"
 							data-tooltip="{{i18n 'course.roles.maketeam' 'Add to team'}}"
 							data-tooltip-direction="e">
-						<span class="fa fa-plus {{member.user}}"></span>
-						<span class="fa fa-bullhorn fa-fw" aria-hidden="true"></span>
+						<span class="fa-solid fa-plus {{member.user}}"></span>
+						<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
 					</button>
 				{{/if}}
 			</div>

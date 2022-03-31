@@ -7,9 +7,8 @@ import { promisify } from 'es6-promisify';
 
 /**
  * Returns a promise which resolves when all subscriptions are done.
- * @returns {Promise<void>}
  */
-export function waitForSubscriptions() {
+export function waitForSubscriptions(): Promise<void> {
 	return new Promise((resolve) => {
 		const poll = Meteor.setInterval(() => {
 			if (DDP._allSubscriptionsReady()) {
@@ -32,9 +31,8 @@ export const afterFlush = Tracker.afterFlush && promisify(Tracker.afterFlush);
  *
  * The test function is run in response to dom mutation events. See:
  * https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
- * @param {(mutations: MutationRecord[]) => any} test
  */
-export function elementsReady(test) {
+export function elementsReady(test: (mutations: MutationRecord[]) => any) {
 	return new Promise((resolve) => {
 		const result = test([]);
 		if (result !== undefined) {
@@ -60,22 +58,20 @@ export function elementsReady(test) {
 
 /**
  * Try an assertion on every DOM mutation
- * @template T
- * @param {()=>T} assertion function that throws an AssertionError until its demands are met
- * @param {number} timeout after this many milliseconds, the AssertionError is passed on
- * @returns {Promise<T>} Returns a promise that resolves with the last return value of
+ * @param assertion function that throws an AssertionError until its demands are met
+ * @param timeout after this many milliseconds, the AssertionError is passed on
+ * @returns Returns a promise that resolves with the last return value of
  * assertion() once the assertion holds. The promise is
  * rejected when the assertion throws something which is not an AssertionError
  * or when the timeout runs out without the assertion coming through.
 
  */
-export function waitFor(assertion, timeout = 10000) {
+export function waitFor<T>(assertion: () => T, timeout = 10000): Promise<T> {
 	return new Promise((resolve, reject) => {
 		const start = new Date().getTime();
-		/** @type {number|false} */
-		let timer = false;
+		let timer: number | false = false;
 		/** @type {MutationObserver|false} */
-		let observer = false;
+		let observer: MutationObserver | false = false;
 
 		const clearWatchers = () => {
 			if (timer) {

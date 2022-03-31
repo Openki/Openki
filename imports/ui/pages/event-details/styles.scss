@@ -78,6 +78,7 @@ $header-bg: darken($blue-lighter, 5%);
 }
 
 .event-details-description {
+	@include break-word;
 	margin-top: 10px;
 }
 

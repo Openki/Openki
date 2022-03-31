@@ -9,7 +9,7 @@ import './template.html';
 import './styles.scss';
 
 export interface LocEntity {
-	type: string;
+	type: 'Point';
 	coordinates: [number, number];
 }
 
@@ -53,25 +53,30 @@ template.onCreated(function () {
 
 const FaIcon = function (faClass: string) {
 	return function () {
-		return L.DomUtil.create('span', `fa fa-${faClass}`);
+		return L.DomUtil.create('span', faClass);
 	};
 };
 
 const FaCompIcon = function (opClass: string, icClass: string) {
 	return function () {
 		const cont = L.DomUtil.create('span', 'fa');
-		L.DomUtil.create('i', `fa fa-${opClass}`, cont);
+		L.DomUtil.create('i', opClass, cont);
 
-		const ic = L.DomUtil.create('i', `fa fa-lg fa-${icClass}`, cont);
+		const ic = L.DomUtil.create('i', `${icClass} fa-lg`, cont);
 		ic.style.position = 'absolute';
 		ic.style.left = '0.7ex';
+		ic.style.top = '0.7ex';
 		L.DomUtil.setOpacity(ic, 0.5);
 
 		return cont;
 	};
 };
 
-const OpenkiControl = L.Control.extend({
+const OpenkiControl: new (options: {
+	icon: () => HTMLElement;
+	action: string;
+	title: string;
+}) => L.Control = L.Control.extend({
 	options: {
 		icon: null,
 		action: '',
@@ -95,8 +100,8 @@ template.onRendered(function () {
 	const instance = this;
 	const maxZoom = instance.data.maxZoom || 19;
 
-	const layers: { [id: string]: any } = {};
-	const centers: { [id: string]: any } = {};
+	const layers: { [id: string]: L.GeoJSON<any> } = {};
+	const centers: { [id: string]: L.LatLngBounds } = {};
 
 	L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
 
@@ -108,8 +113,8 @@ template.onRendered(function () {
 	const map = L.map(instance.find('.map'), options).setView(L.latLng(0, 0), 1);
 
 	// Add tiles depending on language
-	let tiles: any = null;
-	const tileLayers: { [lang: string]: () => any } = {
+	let tiles: L.TileLayer;
+	const tileLayers: { [lang: string]: () => L.TileLayer } = {
 		de() {
 			return L.tileLayer('//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
 				maxZoom,
@@ -154,22 +159,22 @@ template.onRendered(function () {
 		imperial: Session.equals('locale', 'en'),
 	});
 	const fullscreenControl = new OpenkiControl({
-		icon: FaIcon('arrows-alt'),
+		icon: FaIcon('fa-solid fa-maximize'),
 		action: 'js-make-fullscreen',
 		title: i18n('map.fullscreen', 'big map'),
 	});
 	const closeFullscreenControl = new OpenkiControl({
-		icon: FaIcon('close'),
-		action: 'js-close-fullscreen',
+		icon: FaIcon('fa-solid fa-xmark'),
+		action: 'js-close-fullscreen fa-2x',
 		title: i18n('map.fullscreenClose', 'close'),
 	});
 	const addMarkerControl = new OpenkiControl({
-		icon: FaCompIcon('plus', 'map-marker'),
+		icon: FaCompIcon('fa-solid fa-plus', 'fa-solid fa-location-dot'),
 		action: 'js-add-marker',
 		title: i18n('map.addMarker', 'set marker'),
 	});
 	const removeMarkerControl = new OpenkiControl({
-		icon: FaCompIcon('minus', 'map-marker'),
+		icon: FaCompIcon('fa-solid fa-minus', 'fa-solid fa-location-dot'),
 		action: 'js-remove-marker',
 		title: i18n('map.removeMarker', 'remove the marker'),
 	});
@@ -178,7 +183,7 @@ template.onRendered(function () {
 		const fullscreen = instance.fullscreen.get();
 		const { mini } = instance.data;
 
-		const show = function (control: { shown: boolean | undefined }, originalToggle: boolean) {
+		const show = function (control: { shown?: boolean } & L.Control, originalToggle: boolean) {
 			const toggle = Boolean(originalToggle);
 
 			if (control.shown === undefined) {
@@ -253,7 +258,7 @@ template.onRendered(function () {
 
 	// This must be one of the ugliest pieces of code I've written ever
 	const mainIcon = L.divIcon({
-		html: '<span class="fa fa-map-marker" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
+		html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
 	});
 
 	// Tracked so that observe() will be stopped when the template is destroyed
@@ -263,10 +268,10 @@ template.onRendered(function () {
 		const addMarker = function (mark: MarkerEntity) {
 			// Marks that have the center flage set are not displayed but used for anchoring the map
 			if (mark.center) {
-				centers[mark._id] = L.geoJson(mark.loc).getBounds();
+				centers[mark._id] = L.geoJSON(mark.loc).getBounds();
 			} else {
-				const marker = L.geoJson(mark.loc, {
-					pointToLayer(_feature: any, latlng: any) {
+				const marker = L.geoJSON(mark.loc, {
+					pointToLayer(_feature: any, latlng: L.LatLngExpression) {
 						let m;
 						if (mark.proposed) {
 							m = L.circleMarker(latlng, geojsonProposedMarkerOptions);
@@ -282,10 +287,10 @@ template.onRendered(function () {
 							markers.update({}, { $set: { selected: false } });
 							markers.update(mark._id, { $set: { selected: true } });
 						});
-						m.on('dragend', (event: any) => {
+						m.on('dragend', (event) => {
 							const latLng = event.target.getLatLng() as { lng: number; lat: number };
 							const loc = {
-								type: 'Point',
+								type: 'Point' as const,
 								coordinates: [latLng.lng, latLng.lat] as [number, number],
 							};
 							map.panTo(latLng);

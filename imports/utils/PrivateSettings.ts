@@ -1,4 +1,4 @@
-import { check, Match } from 'meteor/check';
+import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { StringEnum } from './CustomChecks';
 
@@ -29,7 +29,7 @@ if (Meteor.isServer) {
 		privateSettings,
 		Match.ObjectIncluding({
 			admins: [String],
-			prng: StringEnum(['', 'static'] as const),
+			prng: StringEnum('', 'static'),
 			testdata: Boolean,
 			siteEmail: String,
 			reporter: {
@@ -38,6 +38,30 @@ if (Meteor.isServer) {
 			},
 			robots: Boolean,
 			printLog: Boolean,
+			service: Match.Maybe({
+				facebook: Match.Maybe({
+					appId: String,
+					secret: String,
+				}),
+				github: Match.Maybe({
+					clientId: String,
+					secret: String,
+				}),
+				google: Match.Maybe({
+					clientId: String,
+					secret: String,
+				}),
+			}),
+			scrub: Match.Maybe([
+				{
+					name: String,
+					comment: Match.Maybe(String),
+					grace: Number,
+					select: Object,
+					remove: Match.Maybe(Boolean),
+					unset: Match.Maybe([String]),
+				},
+			]),
 			s3: {
 				region: String,
 				bucketEndpoint: String,

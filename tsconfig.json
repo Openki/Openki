@@ -34,6 +34,7 @@
 			"/*": ["*"]
 		},
 		"moduleResolution": "node",
+		"allowUmdGlobalAccess": true, // Needed for leaflet meteor package
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
 		"preserveSymlinks": true

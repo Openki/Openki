@@ -6,17 +6,18 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 
 import * as Alert from '/imports/api/alerts/alert';
 import * as UsersMethods from '/imports/api/users/methods';
+import { Regions } from '/imports/api/regions/regions';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Viewport from '/imports/ui/lib/viewport';
+import PublicSettings from '/imports/utils/PublicSettings';
 
 import { isEmail } from '/imports/utils/email-tools';
 import { AccountsAsync, MeteorAsync } from '/imports/utils/promisify';
 
-import { Regions } from '/imports/api/regions/regions';
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 
 import './template.html';
 import './styles.scss';
@@ -126,22 +127,22 @@ import './styles.scss';
 		instance.busy(false);
 
 		const oAuthServices = [];
-		const login = Meteor.settings.public.feature?.login;
-		if (login?.google) {
+		const login = PublicSettings.feature.login;
+		if (login.google) {
 			oAuthServices.push({
 				key: 'google',
 				name: 'Google',
 				serviceName: 'Google',
 			});
 		}
-		if (login?.facebook) {
+		if (login.facebook) {
 			oAuthServices.push({
 				key: 'facebook',
 				name: 'Facebook',
 				serviceName: 'Facebook',
 			});
 		}
-		if (login?.github) {
+		if (login.github) {
 			oAuthServices.push({
 				key: 'github',
 				name: 'GitHub',
@@ -242,7 +243,7 @@ import './styles.scss';
 			const { service } = event.currentTarget.dataset;
 			const loginMethod = `loginWith${service}`;
 			if (!(Meteor as any)[loginMethod]) {
-				Alert.serverError(new Error(`don't have ${loginMethod}`), '');
+				Alert.serverError(new Error(`don't have ${loginMethod}`));
 				return;
 			}
 
@@ -250,7 +251,7 @@ import './styles.scss';
 			(Meteor as any)[loginMethod]({}, (err: any) => {
 				instance.busy(false);
 				if (err) {
-					Alert.serverError(err, '');
+					Alert.serverError(err);
 				} else {
 					if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
 						$('#bs-navbar-collapse-1').collapse('hide');
@@ -275,14 +276,6 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		pleaseLogin() {
-			return Session.get('pleaseLogin');
-		},
-
-		loginAction() {
-			return Session.get('loginAction');
-		},
-
 		OAuthServices() {
 			return Template.instance().OAuthServices;
 		},
@@ -372,16 +365,6 @@ import './styles.scss';
 		}
 
 		instance.$('input').first().trigger('select');
-	});
-
-	template.helpers({
-		pleaseLogin() {
-			return Session.get('pleaseLogin');
-		},
-
-		registerAction() {
-			return Session.get('registerAction');
-		},
 	});
 
 	template.events({
@@ -516,7 +499,10 @@ import './styles.scss';
 				);
 				(instance.parentInstance() as any).accountTask.set('login');
 			} catch (err) {
-				Alert.serverError(err, 'We were unable to send a mail to this address');
+				Alert.serverError(
+					err,
+					i18n('forgotPassword.emailSent.error', 'We were unable to send a mail to this address'),
+				);
 			} finally {
 				instance.busy(false);
 			}

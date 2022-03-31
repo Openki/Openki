@@ -23,16 +23,15 @@ template.onCreated(function () {
 });
 
 Template.tenantRegions.helpers({
-	regions(tenantId: string) {
-		return Regions.findFilter({ tenant: tenantId });
-	},
-
-	addRegionQuery(tenantId: string) {
-		return `tenant=${tenantId}`;
+	regions() {
+		const instance = Template.instance();
+		const { tenant } = instance.data;
+		return Regions.findFilter({ tenant: tenant._id });
 	},
 
 	showAddRegion() {
-		const { tenant } = Template.currentData();
+		const instance = Template.instance();
+		const { tenant } = instance.data;
 		return tenant.editableBy(Meteor.user());
 	},
 });

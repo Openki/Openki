@@ -22,7 +22,7 @@ export async function processChange(change) {
 	} catch (err) {
 		/* eslint-disable-next-line no-console */
 		console.log(err);
-		Alert.serverError(err, '');
+		Alert.serverError(err);
 	}
 }
 

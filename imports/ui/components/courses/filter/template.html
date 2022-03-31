@@ -2,7 +2,7 @@
 	<div class="filter {{filterClasses}}">
 		{{#if showingFilters}}
 			<h4 class="filter-heading">
-				<i class="fa fa-filter fa-fw" aria-hidden="true"></i>
+				<i class="fa-solid fa-filter fa-fw" aria-hidden="true"></i>
 				{{i18n 'find.search_filter.title' 'Filter search'}}
 				<span class="filter-active-tag">
 					{{i18n 'find.filter.isActive' 'active'}}
@@ -30,7 +30,7 @@
 									 title="{{stateFilter.title}}">
 									<span class="filter-caption-text">
 										{{stateFilter.label}}
-										<i class="fa fa-check fa-fw" aria-hidden="true"></i>
+										<i class="fa-solid fa-check fa-fw" aria-hidden="true"></i>
 									</span>
 								</div>
 							</div>
@@ -45,8 +45,8 @@
 									 title="{{i18n 'filterCaptions.archived.title' 'Show only courses that are archived'}}">
 									<span class="filter-caption-text">
 										{{i18n 'filterCaptions.archived.label' 'Archived'}}
-										<i class="fa fa-times fa-fw" aria-hidden="true"></i>
-										<i class="fa fa-check fa-fw" aria-hidden="true"></i>
+										<i class="fa-solid fa-xmark fa-fw" aria-hidden="true"></i>
+										<i class="fa-solid fa-check fa-fw" aria-hidden="true"></i>
 									</span>
 								</div>
 							</div>
@@ -80,7 +80,7 @@
 					<i class="{{role.icon}} fa-fw" aria-hidden="true"></i>
 				</span>
 				{{role.label}}
-				<i class="fa fa-check" aria-hidden="true"></i>
+				<i class="fa-solid fa-check" aria-hidden="true"></i>
 			</button>
 		{{/each}}
 	</div>
@@ -95,7 +95,7 @@
 						<li>
 							{{> categoryLabel}}
 							<button type="button"
-									class="remove-btn js-remove-category-btn fa fa-remove"
+									class="remove-btn js-remove-category-btn fa-solid fa-xmark"
 									data-tooltip="{{i18n 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=(categoryName this)}}">
 							</button>
 						</li>
@@ -120,7 +120,8 @@
 								{{#if availableSubcategories this}}
 									<small class="js-toggle-subcategories {{this}}"
 										   title="{{i18n 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
-										<span class="fa fa-angle-down" aria-hidden="true"></span>
+										<span class="fa-solid fa-angle-down"
+											  aria-hidden="true"></span>
 									</small>
 								{{/if}}
 							</a>
@@ -135,7 +136,7 @@
 					{{/each}}
 				{{else}}
 					<span class="filter-no-categories-found">
-						<span class="fa fa-exclamation fa-fw" aria-hidden="true"></span>
+						<span class="fa-solid fa-exclamation fa-fw" aria-hidden="true"></span>
 						{{i18n 'find.filter-no-categories-found' 'No categories found'}}
 					</span>
 				{{/if}}
@@ -147,7 +148,7 @@
 					{{#each categories}}
 						<li>
 							<a class="js-category-label" href="#">{{categoryName this}}</a>
-							<button class="remove-btn js-remove-category-btn fa fa-remove"
+							<button class="remove-btn js-remove-category-btn fa-solid fa-xmark"
 									data-tooltip="{{i18n 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=(categoryName this)}}"
 									type="button">
 							</button>

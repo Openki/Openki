@@ -2,7 +2,7 @@
 	<div class="page-component discussion" id="discussion">
 		<div class="course-page-component-header">
 			<h4>
-				<span class="fa fa-comments fa-fw" aria-hidden="true"></span>&nbsp;
+				<span class="fa-solid fa-comments fa-fw" aria-hidden="true"></span>&nbsp;
 				{{i18n 'course.title.Discussion' 'Discussion'}}
 			</h4>
 		</div>
@@ -18,7 +18,7 @@
 		{{/each}}
 		{{#if limited}}
 			<button class="btn btn-lg btn-add course-page-btn js-show-all-posts" type="button">
-				<i class="fa fa-chevron-down fa-fw" aria-hidden="true"></i>
+				<i class="fa-solid fa-chevron-down fa-fw" aria-hidden="true"></i>
 				{{i18n 'course.discussions.showAllComment' 'Show all {NUM} comments' NUM=count}}
 			</button>
 		{{/if}}
@@ -52,7 +52,8 @@
 				<button type="button" class="js-discussion-edit btn btn-add discussion-reply-btn"
 						{{disabledIfBusy}}>
 					{{#if busy 'saving'}}
-						<span class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></span>
+						<span class="fa-solid fa-circle-notch fa-spin fa-fw"
+							  aria-hidden="true"></span>
 						{{i18n '_button.saving'}}
 					{{else}}
 						{{i18n 'course.discussion.comment_answer' 'Answer'}}
@@ -63,11 +64,11 @@
 			<button type="button" class="btn btn-lg btn-add course-page-btn js-discussion-edit"
 					{{disabledIfBusy}}>
 				{{#if busy 'saving'}}
-					<span class="fa fa-circle-o-notch fa-spin fa-fw"
+					<span class="fa-solid fa-circle-notch fa-spin fa-fw"
 						  aria-hidden="true"></span>&nbsp;
 					{{i18n '_button.saving'}}
 				{{else}}
-					<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>&nbsp;
+					<span class="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>&nbsp;
 					{{i18n 'course.discussion.write_comment' 'Write a comment'}}
 				{{/if}}
 			</button>
@@ -83,7 +84,7 @@
 							{{fromNow time_created}}
 						</span>
 						{{#if notifyAll}}
-							<i class="fa fa-bell" aria-hidden="true"
+							<i class="fa-solid fa-bell" aria-hidden="true"
 							   data-tooltip="{{i18n 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
 						{{/if}}
 						{{#if hasBeenEdited}}
@@ -98,7 +99,7 @@
 						{{#if mayEdit}}
 							<button type="button" class="js-discussion-edit discussion-edit-btn"
 									data-tooltip="{{i18n '_button.edit'}}">
-								<span class="fa fa-edit" aria-hidden="true"></span>
+								<span class="fa-solid fa-pen-to-square" aria-hidden="true"></span>
 							</button>
 						{{/if}}
 						{{#if mayDelete}}
@@ -136,7 +137,7 @@
 								{{fromNow time_created}}
 							</span>
 							{{#if notifyAll}}
-								<i class="fa fa-bell" aria-hidden="true"
+								<i class="fa-solid fa-bell" aria-hidden="true"
 								   data-tooltip="{{i18n 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
 							{{/if}}
 							{{#if hasBeenEdited}}
@@ -164,7 +165,7 @@
 								<input class="form-check-input js-notify-all" type='checkbox'
 									   {{notifyAllChecked}} value="" id="canNotifyAllCheck">
 								<label class="form-check-label" for="canNotifyAllCheck">
-									<i class="fa fa-bell" aria-hidden="true"></i>
+									<i class="fa-solid fa-bell" aria-hidden="true"></i>
 									{{i18n 'course.discussion.notifyAll' 'Notify all co-learners'}}
 								</label>
 							</div>
@@ -174,7 +175,7 @@
 								   {{anonChecked}} {{anonDisabled}} id="anonymousCheck" />
 							<label class="form-check-label discussion-toggle-anonymous"
 								   for="anonymousCheck">
-								<i class="fa fa-user-secret" aria-hidden="true"></i>
+								<i class="fa-solid fa-user-secret" aria-hidden="true"></i>
 								{{i18n 'course.discussion.anon' 'Anonymous comment'}}
 							</label>
 						</div>
@@ -182,7 +183,7 @@
 					<div class="form-actions">
 						<button type="submit" class="btn btn-save discussion-save-btn"
 								{{disabledIfBusy}} {{enableWhenValid}}>
-							<span class="fa fa-send fa-fw" aria-hidden="true"></span>
+							<span class="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
 							{{#if new}}
 								{{#if parentId}}
 									{{i18n 'course.discussion.comment_btn.answer' 'Answer'}}
@@ -229,7 +230,7 @@
 		<button type="button" class="discussion-delete-btn" aria-expanded="false"
 				aria-haspopup="true" data-bs-toggle="dropdown"
 				data-tooltip="{{i18n '_button.delete'}}">
-			<span class="fa fa-remove" aria-hidden="true"></span>
+			<span class="fa-solid fa-xmark" aria-hidden="true"></span>
 		</button>
 		<ul class="dropdown-menu dialog-dropdown right">
 			<li class="dropdown-header">

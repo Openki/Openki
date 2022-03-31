@@ -273,7 +273,7 @@ template.events({
 				instance.locationTracker.markers.insert(marker);
 			});
 		} catch (reason) {
-			Alert.serverError(reason, '');
+			Alert.serverError(reason);
 		}
 	},
 

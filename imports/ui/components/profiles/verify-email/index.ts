@@ -37,7 +37,10 @@ template.events({
 			);
 		} catch (err) {
 			instance.state.set('sending', false);
-			Alert.serverError(err, 'Could not send verification e-mail');
+			Alert.serverError(
+				err,
+				i18n('profile.sentVerificationMail.error', 'Could not send verification e-mail'),
+			);
 		}
 	},
 });

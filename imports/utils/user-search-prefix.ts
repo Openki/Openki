@@ -4,7 +4,7 @@ import { UserEntity, Users } from '/imports/api/users/users';
 
 export function userSearchPrefix(
 	prefix: string,
-	options: { limit?: number; exclude?: string[]; fields?: any } = {},
+	options: { limit?: number; exclude?: string[]; fields?: Mongo.FieldSpecifier } = {},
 ) {
 	const prefixExp = `^${prefix.replace(/([.*+?^${}()|[\]/\\])/g, '\\$1')}`;
 	const query: Mongo.Selector<UserEntity> = { username: new RegExp(prefixExp, 'i') };

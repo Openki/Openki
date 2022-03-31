@@ -3,7 +3,8 @@
 		  class="text-center file-upload{{#if (state 'supportsDragndrop')}} supports-dragndrop{{/if}}{{#if (state 'dragover')}} is-dragover{{/if}}">
 		<input type="file" accept="{{accept}}" class="d-none" id="file" />
 		<label for="file">
-			<div class="mb-1"><i class="fa fa-file-o fa-5x" aria-hidden="true"></i></div>
+			<div class="mb-1"><i class="fa-regular fa-file-lines fa-5x" aria-hidden="true"></i>
+			</div>
 			{{#if (state 'dragover')}}
 				<div class="file-upload-drop">
 					{{i18n 'fileUpload.drop.text' "Drop it like it's hot!"}}
