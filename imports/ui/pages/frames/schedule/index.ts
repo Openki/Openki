@@ -112,8 +112,8 @@ template.onCreated(function () {
 
 		// Track repeating events so we know how often they occur.
 		// The key to this dict is a combination of courseId, weekday and start time.
-		const repetitionCount: any = {};
-		const repetitionCountDay: any = {};
+		const repetitionCount: { [key: string]: number } = {};
+		const repetitionCountDay: { [key: string]: number } = {};
 
 		// Load events but keep only the first when they repeat on the same
 		// weekday at the same time.
@@ -163,7 +163,7 @@ template.onCreated(function () {
 		// List of intervals where events or separators are placed
 		const intervals = _.reduce(
 			separators,
-			(rIntervals: any, separator) => {
+			(rIntervals: { [separator: number]: number }, separator) => {
 				/* eslint-disable-next-line no-param-reassign */
 				rIntervals[separator] = separator;
 				return rIntervals;

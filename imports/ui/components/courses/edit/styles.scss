@@ -8,6 +8,10 @@
 
 	&.is-frame {
 		margin-top: 0;
+
+		@include media-breakpoint-down(sm) {
+			padding: 10px;
+		}
 	}
 }
 
@@ -23,6 +27,10 @@
 	text-align: left;
 }
 
-.proposed-courses > .dropdown-header > .fa {
-	margin-right: 7px;
+.proposed-courses > .dropdown-header > {
+	.fa-regular,
+	.fa-brands,
+	.fa-solid {
+		margin-right: 7px;
+	}
 }

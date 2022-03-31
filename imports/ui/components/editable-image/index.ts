@@ -167,7 +167,7 @@ template.helpers({
 	uploadButtonAttributes() {
 		const instance = Template.instance();
 
-		const attributes: Record<string, any> = {
+		const attributes: Record<string, unknown> = {
 			event: 'js-editable-image-upload',
 		};
 

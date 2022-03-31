@@ -2,7 +2,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 
 import '/imports/ui/components/alerts';
 
-import './frame-body.html';
+import './template.html';
 
 const Template = TemplateAny as TemplateStaticTyped<'frameLayout'>;
 

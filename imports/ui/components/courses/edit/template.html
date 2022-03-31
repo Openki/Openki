@@ -19,7 +19,7 @@
 							</h2>
 							<div class="icon-text">
 								<div class="icon-text-icon">
-									<i class="fa fa-info fa-fw" aria-hidden="true"></i>
+									<i class="fa-solid fa-info fa-fw" aria-hidden="true"></i>
 								</div>
 								<div class="icon-text-text">
 									{{i18n 'course.propose.CourseInfo' 'Start your own {SITENAME} course here. Whether as a mentor or participant, you decide what and how you want to learn. More info here:' SITENAME=siteName}}
@@ -41,7 +41,7 @@
 					{{#if showSavedMessage}}
 						<div class="alert alert-success alert-dismissible fade show" role="alert">
 							<h4>
-								<i class="fa fa-check" aria-hidden="true"></i>
+								<i class="fa-solid fa-check" aria-hidden="true"></i>
 								{{i18n 'course.edit.savedMessage' 'Your proposal has been saved!'}}
 							</h4>
 							<a class="alert-link" href="{{savedCourseLink}}" target="_blank">
@@ -62,7 +62,7 @@
 										   class="btn btn-lg {{simpleRoleActiveClass 'participant'}}">
 										<input class="d-none" type="radio" name="role"
 											   value="participant" checked>
-										<i class="fa fa-user fa-lg fa-fw"></i>
+										<i class="fa-solid fa-user fa-lg fa-fw"></i>
 										{{i18n 'course.edit.iWantToLearn' 'I want to learn'}}
 									</label>
 								</div>
@@ -70,7 +70,7 @@
 									<label class="btn btn-lg {{simpleRoleActiveClass 'mentor'}}">
 										<input class="d-none" type="radio" name="role"
 											   value="mentor">
-										<i class="fa fa-graduation-cap fa-lg fa-fw"></i>
+										<i class="fa-solid fa-graduation-cap fa-lg fa-fw"></i>
 										{{i18n 'course.edit.iCanTeach' 'I can teach'}}
 									</label>
 								</div>
@@ -103,7 +103,7 @@
 												{{> categoryLabel}}
 												{{#if hasSubcategories this}}
 													<i
-													   class="fa fa-angle-down fa-fw {{isChecked}}"></i>
+													   class="fa-solid fa-angle-down fa-fw {{isChecked}}"></i>
 												{{/if}}
 											</label>
 										</div>
@@ -155,7 +155,7 @@
 											   class="form-label">{{i18n 'course.edit.region' 'Region'}}</label>
 										<div class="input-group">
 											<div class="input-group-text">
-												<span class="fa fa-dot-circle-o fa-fw"
+												<span class="fa-regular fa-circle-dot fa-fw"
 													  aria-hidden="true"></span>
 											</div>
 											<select class="js-select-region form-select"
@@ -251,14 +251,14 @@
 	<div class="mb-3 js-proposed-search">
 		<label class="form-label">{{i18n 'course.edit.title' 'Title'}}</label>
 		<div class="dropdown">
-			<input class="form-control form-control-lg js-title dropdown-toggle" id="editform_name"
-				   placeholder="{{i18n 'course.title.placeholder' 'What are you interested in?'}}"
-				   size="40" type="text" data-bs-toggle="dropdown" value="{{name}}" />
+			<input class="form-control form-control-lg dropdown-toggle js-title" id="editform_name"
+				   {{attributes}} size="40" type="text" data-bs-toggle="dropdown"
+				   value="{{name}}" />
 			<ul class="dropdown-menu proposed-courses js-proposed-courses {{#unless proposedCourses.count}}d-none{{/unless}}"
 				role="menu" aria-labelledby="editform_name">
 				{{#if proposedCourses.count}}
 					<li class="dropdown-header">
-						<i class="fa fa-info" aria-hidden="true"></i>
+						<i class="fa-solid fa-info" aria-hidden="true"></i>
 						{{i18n 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
 					</li>
 					<li>

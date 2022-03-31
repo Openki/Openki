@@ -19,7 +19,7 @@ import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Viewport from '/imports/ui/lib/viewport';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 
 import getLocalizedValue from '/imports/utils/getLocalizedValue';
 
@@ -85,7 +85,10 @@ import './styles.scss';
 				);
 			},
 			onError: (err) => {
-				Alert.serverError(err, i18n('course.save.error', 'Saving the course went wrong'));
+				Alert.serverError(
+					err as string | Error,
+					i18n('course.save.error', 'Saving the course went wrong'),
+				);
 			},
 		});
 
@@ -103,7 +106,7 @@ import './styles.scss';
 				);
 			},
 			onError: (err) => {
-				Alert.serverError(err, i18n('course.save.error'));
+				Alert.serverError(err as string | Error, i18n('course.save.error'));
 			},
 		});
 
@@ -171,100 +174,109 @@ import './styles.scss';
 
 	template.events({
 		async 'click .js-delete-course-confirm'(_event, instance) {
-			if (PleaseLogin()) {
-				return;
-			}
-
-			const { course } = instance.data;
 			instance.busy('deleting');
+			PleaseLogin(instance, async () => {
+				const { course } = instance.data;
 
-			try {
-				await CoursesMethods.remove(course._id);
+				try {
+					await CoursesMethods.remove(course._id);
 
-				Alert.success(
-					i18n(
-						'courseDetailsPage.message.courseHasBeenDeleted',
-						'The "{COURSE}" course was deleted.',
-						{ COURSE: course.name },
-					),
-				);
+					Alert.success(
+						i18n(
+							'courseDetailsPage.message.courseHasBeenDeleted',
+							'The "{COURSE}" course was deleted.',
+							{ COURSE: course.name },
+						),
+					);
 
-				let role;
-				if (_.intersection(Meteor.user()?.badges || [], course.editors).length > 0) {
-					role = 'team';
-				} else if (UserPrivilegeUtils.privilegedTo('admin')) {
-					role = 'admin';
-				} else {
-					role = 'unknown';
+					let role;
+					if (_.intersection(Meteor.user()?.badges || [], course.editors).length > 0) {
+						role = 'team';
+					} else if (UserPrivilegeUtils.privilegedTo('admin')) {
+						role = 'admin';
+					} else {
+						role = 'unknown';
+					}
+
+					Analytics.trackEvent(
+						'Course deletions',
+						`Course deletions as ${role}`,
+						Regions.findOne(course.region)?.nameEn,
+					);
+
+					Router.go('/');
+				} catch (err) {
+					Alert.serverError(
+						err,
+						i18n(
+							'courseDetailsPage.message.courseHasBeenDeleted.error',
+							'Removing the "{COURSE}" course went wrong',
+						),
+					);
+				} finally {
+					instance.busy(false);
 				}
-
-				Analytics.trackEvent(
-					'Course deletions',
-					`Course deletions as ${role}`,
-					Regions.findOne(course.region)?.nameEn,
-				);
-
-				Router.go('/');
-			} catch (err) {
-				Alert.serverError(err, 'Removing the "{COURSE}" course went wrong');
-			} finally {
-				instance.busy(false);
-			}
+			});
 		},
 
 		async 'click .js-course-archive'(_event, instance) {
-			if (PleaseLogin()) {
-				return;
-			}
-
-			const { course } = instance.data;
 			instance.busy('archive');
-			try {
-				await CoursesMethods.archive(course._id);
+			PleaseLogin(instance, async () => {
+				const { course } = instance.data;
+				try {
+					await CoursesMethods.archive(course._id);
 
-				Alert.success(
-					i18n(
-						'courseDetailsPage.message.courseHasBeenArchived',
-						'The "{COURSE}" course was archived.',
-						{ COURSE: course.name },
-					),
-				);
-			} catch (err) {
-				Alert.serverError(err, 'Archive the course "{COURSE}" went wrong');
-			} finally {
-				instance.busy(false);
-			}
+					Alert.success(
+						i18n(
+							'courseDetailsPage.message.courseHasBeenArchived',
+							'The "{COURSE}" course was archived.',
+							{ COURSE: course.name },
+						),
+					);
+				} catch (err) {
+					Alert.serverError(
+						err,
+						i18n(
+							'courseDetailsPage.message.courseHasBeenArchived.error',
+							'Archive the course "{COURSE}" went wrong',
+						),
+					);
+				} finally {
+					instance.busy(false);
+				}
+			});
 		},
 
 		async 'click .js-course-unarchive'(_event, instance) {
-			if (PleaseLogin()) {
-				return;
-			}
-
-			const { course } = instance.data;
 			instance.busy('unarchive');
-			try {
-				await CoursesMethods.unarchive(course._id);
+			PleaseLogin(instance, async () => {
+				const { course } = instance.data;
+				try {
+					await CoursesMethods.unarchive(course._id);
 
-				Alert.success(
-					i18n(
-						'courseDetailsPage.message.courseHasBeenUnarchived',
-						'The "{COURSE}" course has been unarchived.',
-						{ COURSE: course.name },
-					),
-				);
-			} catch (err) {
-				Alert.serverError(err, 'Unarchive the "{COURSE}" course went wrong');
-			} finally {
-				instance.busy(false);
-			}
+					Alert.success(
+						i18n(
+							'courseDetailsPage.message.courseHasBeenUnarchived',
+							'The "{COURSE}" course has been unarchived.',
+							{ COURSE: course.name },
+						),
+					);
+				} catch (err) {
+					Alert.serverError(
+						err,
+						i18n(
+							'courseDetailsPage.message.courseHasBeenUnarchived.error',
+							'Unarchive the "{COURSE}" course went wrong',
+						),
+					);
+				} finally {
+					instance.busy(false);
+				}
+			});
 		},
 
 		'click .js-course-edit'(_event, instance) {
 			instance.collapse();
-			if (PleaseLogin()) {
-				return;
-			}
 
 			const { course } = instance.data;
 			Router.go('showCourse', course, { query: { edit: 'course' } });
@@ -400,7 +412,7 @@ import './styles.scss';
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, 'Failed to add group');
+				Alert.serverError(err, i18n('courseGroupAdd.groupAdded.error', 'Failed to add group'));
 			}
 		},
 	});
@@ -432,7 +444,7 @@ import './styles.scss';
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, 'Failed to remove group');
+				Alert.serverError(err, i18n('courseGroupAdd.groupRemoved.error', 'Failed to remove group'));
 			}
 		},
 	});
@@ -464,7 +476,10 @@ import './styles.scss';
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, 'Failed to give group editing rights');
+				Alert.serverError(
+					err,
+					i18n('courseGroupAdd.membersCanEditCourse.error', 'Failed to give group editing rights'),
+				);
 			}
 		},
 	});
@@ -496,7 +511,13 @@ import './styles.scss';
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, 'Failed to remove organizer status');
+				Alert.serverError(
+					err,
+					i18n(
+						'courseGroupAdd.membersCanNoLongerEditCourse.error',
+						'Failed to remove organizer status',
+					),
+				);
 			}
 		},
 	});

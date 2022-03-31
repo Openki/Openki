@@ -22,13 +22,13 @@ import * as EventsMethods from '/imports/api/events/methods';
 import { Regions } from '/imports/api/regions/regions';
 import { SaveFields } from '/imports/api/events/methods';
 
-import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 import { Editable } from '/imports/ui/lib/editable';
 
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import LocalTime from '/imports/utils/local-time';
 
-import { Analytics } from '/imports/ui/lib/analytics';
+import * as Analytics from '/imports/ui/lib/analytics';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/buttons';
@@ -66,7 +66,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 			updateReplicasTime: boolean;
 			updateChangedReplicasTime: boolean;
 		}>;
-		parent: Blaze.TemplateInstance<any>;
+		parent: Blaze.TemplateInstance;
 		selectedRegion: ReactiveVar<string>;
 		selectedLocation: ReactiveVar<Partial<EventVenueEntity>>;
 		notifyChecked: ReactiveVar<boolean>;
@@ -366,7 +366,7 @@ template.events({
 			return;
 		}
 
-		const editevent: SaveFields = {
+		const editevent = {
 			title,
 			description,
 			venue: instance.selectedLocation.get(),
@@ -375,7 +375,7 @@ template.events({
 			endLocal: LocalTime.toString(end),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
 			maxParticipants,
-		};
+		} as SaveFields;
 
 		let eventId = instance.data._id || '';
 		const isNew = eventId === '';
@@ -428,87 +428,85 @@ template.events({
 		const addNotificationMessage = instance.$('.js-event-add-message').val() as string;
 
 		instance.busy('saving');
-		SaveAfterLogin(
-			instance,
-			i18n('loginAction.saveEvent', 'Log in and save event'),
-			i18n('registerAction.saveEvent', 'Register and save event'),
-			async () => {
-				try {
-					const result = await EventsMethods.save({
-						eventId,
-						updateReplicasInfos,
-						updateReplicasTime,
-						updateChangedReplicasTime,
-						sendNotifications,
-						changes: editevent,
-						comment: addNotificationMessage,
-					});
-					if (!result) {
-						throw new Error('Unexpected undefined: eventId');
-					}
-					eventId = result;
-
-					if (isNew) {
-						Router.go('showEvent', { _id: eventId });
-						Alert.success(
-							i18n('message.eventCreated', 'The event "{TITLE}" has been created!', {
-								TITLE: editevent.title,
-							}),
-						);
-
-						const course = Courses.findOne(editevent.courseId);
-						if (!course) {
-							throw new Error('Unexpected undefined: course');
-						}
-						const user = Meteor.user();
-						if (!user) {
-							throw new Error('Unexpected undefined: user');
-						}
-						let role;
-						if (_.intersection(user.badges, course.editors).length > 0) {
-							role = 'team';
-						} else if (UserPrivilegeUtils.privilegedTo('admin')) {
-							role = 'admin';
-						} else {
-							role = 'unknown';
-						}
-						Analytics.trackEvent(
-							'Event creations',
-							`Event creations as ${role}`,
-							Regions.findOne(course.region)?.nameEn,
-							Math.round(
-								(new Date().getTime() - course.time_created.getTime()) /
-									1000 /
-									60 /
-									60 /
-									24 /* Umrechnung in Tage */,
-							),
-						);
-					} else {
-						Alert.success(
-							i18n(
-								'message.eventChangesSaved',
-								'Your changes to the event "{TITLE}" have been saved.',
-								{ TITLE: editevent.title },
-							),
-						);
-					}
-
-					if (updateReplicasInfos || updateReplicasTime) {
-						Alert.success(
-							i18n('eventEdit.replicatesUpdated', 'Replicas of "{TITLE}" have also been updated.', {
-								TITLE: editevent.title,
-							}),
-						);
-					}
-					(instance.parent as any).editing.set(false);
-				} catch (err) {
-					Alert.serverError(err, 'Saving the event went wrong');
-				} finally {
-					instance.busy(false);
+		PleaseLogin(instance, async () => {
+			try {
+				const result = await EventsMethods.save({
+					eventId,
+					updateReplicasInfos,
+					updateReplicasTime,
+					updateChangedReplicasTime,
+					sendNotifications,
+					changes: editevent,
+					comment: addNotificationMessage,
+				});
+				if (!result) {
+					throw new Error('Unexpected undefined: eventId');
 				}
-			},
-		);
+				eventId = result;
+
+				if (isNew) {
+					Router.go('showEvent', { _id: eventId });
+					Alert.success(
+						i18n('message.eventCreated', 'The event "{TITLE}" has been created!', {
+							TITLE: editevent.title,
+						}),
+					);
+
+					const course = Courses.findOne(editevent.courseId);
+					if (!course) {
+						throw new Error('Unexpected undefined: course');
+					}
+					const user = Meteor.user();
+					if (!user) {
+						throw new Error('Unexpected undefined: user');
+					}
+					let role;
+					if (_.intersection(user.badges, course.editors).length > 0) {
+						role = 'team';
+					} else if (UserPrivilegeUtils.privilegedTo('admin')) {
+						role = 'admin';
+					} else {
+						role = 'unknown';
+					}
+					Analytics.trackEvent(
+						'Event creations',
+						`Event creations as ${role}`,
+						Regions.findOne(course.region)?.nameEn,
+						Math.round(
+							(new Date().getTime() - course.time_created.getTime()) /
+								1000 /
+								60 /
+								60 /
+								24 /* Umrechnung in Tage */,
+						),
+					);
+				} else {
+					Alert.success(
+						i18n(
+							'message.eventChangesSaved',
+							'Your changes to the event "{TITLE}" have been saved.',
+							{ TITLE: editevent.title },
+						),
+					);
+				}
+
+				if (updateReplicasInfos || updateReplicasTime) {
+					Alert.success(
+						i18n('eventEdit.replicatesUpdated', 'Replicas of "{TITLE}" have also been updated.', {
+							TITLE: editevent.title,
+						}),
+					);
+				}
+				(instance.parent as any).editing.set(false);
+			} catch (err) {
+				Alert.serverError(
+					err,
+					i18n('eventEdit.replicatesUpdated.error', 'Saving the event went wrong'),
+				);
+			} finally {
+				instance.busy(false);
+			}
+		});
 	},
 
 	'click .js-event-cancel'(_event, instance) {

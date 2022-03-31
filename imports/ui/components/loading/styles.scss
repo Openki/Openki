@@ -12,9 +12,13 @@
 	vertical-align: -0.3em;
 }
 
-.loading-row .fa,
-.loading-page .fa {
-	color: $green;
+.loading-row,
+.loading-page {
+	.fa-regular,
+	.fa-brands,
+	.fa-solid {
+		color: $green;
+	}
 }
 
 .loading-page {

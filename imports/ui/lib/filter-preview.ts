@@ -12,7 +12,7 @@ export function FilterPreview(options: {
 	/** delay the fade effect */
 	delayed?: boolean;
 	/** instance object for scoping */
-	instance?: any;
+	instance?: Blaze.TemplateInstance;
 }) {
 	const instance = options.instance || false;
 	const course = instance ? instance.$('.course-compact') : $('.course-compact');

@@ -6,7 +6,7 @@
 			</div>
 			<button type="button" class="btn btn-delete js-unset-featured-group" {{disabledIfBusy}}>
 				{{#if busy 'deleting'}}
-					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
+					<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 					{{i18n '_button.deleting' 'Deleting…'}}
 				{{else}}
 					{{i18n 'featureGroup.deleteButton' 'Remove the featured group for "{REGION}"' REGION=currentRegionName}}
@@ -29,7 +29,7 @@
 		<div class="form-actions">
 			<button type="submit" class="btn btn-save" {{disabledIfBusy}}>
 				{{#if busy 'saving'}}
-					<i class="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>
+					<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 					{{i18n '_button.saving'}}
 				{{else}}
 					{{i18n 'featureGroup.saveButton' 'Feature this group in the "{REGION}" region' REGION=currentRegionName}}

@@ -28,22 +28,6 @@
 	padding-top: 0;
 }
 
-.introduction-show-btn,
-.introduction-hide-btn {
-	&::before {
-		font-family: FontAwesome;
-		margin-right: 3px;
-	}
-}
-
-.introduction-show-btn::before {
-	content: '\f106';
-}
-
-.introduction-hide-btn::before {
-	content: '\f107';
-}
-
 .js-introduction-close-btn {
 	@include td-pos(right, 13px);
 	font-size: large;
@@ -143,7 +127,11 @@
 	}
 }
 
-.introduction-steps > li > h2 > .fa {
-	@include opacity(0.6);
-	color: $blue;
+.introduction-steps > li > h2 > {
+	.fa-regular,
+	.fa-brands,
+	.fa-solid {
+		@include opacity(0.6);
+		color: $blue;
+	}
 }

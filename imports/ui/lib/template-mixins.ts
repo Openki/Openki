@@ -88,7 +88,7 @@ export function MultiExpandible<N extends string, D, T extends Record<string, un
 
 	let dx = -1000;
 	let dy = -1000;
-	const nomove = function (e: any) {
+	const nomove = function (e: { screenX: number; screenY: number }) {
 		return Math.abs(dx - e.screenX) < 5 && Math.abs(dy - e.screenY) < 5;
 	};
 

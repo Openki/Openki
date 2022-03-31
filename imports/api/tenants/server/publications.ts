@@ -1,9 +1,14 @@
 import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 
-import { TenantEntity, Tenants } from '/imports/api/tenants/tenants';
+import { FindFilter, TenantEntity, Tenants } from '/imports/api/tenants/tenants';
+
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { FieldSort } from '/imports/utils/sort-spec';
 
-Meteor.publish('tenant', function (tenantId) {
+Meteor.publish('tenant', function (tenantId: string) {
+	check(tenantId, String);
+
 	const user = Meteor.user();
 
 	if (!user) {
@@ -26,20 +31,8 @@ Meteor.publish('tenant', function (tenantId) {
 	return Tenants.find(filter, { fields: { ...Tenants.publicFields, admins: showAdminsFields } });
 });
 
-Meteor.publish('Tenants.findFilter', function (find, limit, skip, sort) {
-	const filter = { ...find };
-
-	const user = Meteor.user();
-
-	if (!user) {
-		this.ready();
-		return undefined;
-	}
-
-	// Only members of a tenant or admins can see a tenant
-	if (!UserPrivilegeUtils.privileged(user, 'admin')) {
-		filter.members = user._id;
-	}
-
-	return Tenants.findFilter(filter, limit, skip, sort);
-});
+Meteor.publish(
+	'Tenants.findFilter',
+	(find: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) =>
+		Tenants.findFilter(find, limit, skip, sort),
+);

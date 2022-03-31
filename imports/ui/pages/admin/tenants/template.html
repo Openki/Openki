@@ -7,7 +7,7 @@
 		{{#each tenant in tenants}}
 			<a href="{{pathFor 'tenantDetails' data=tenant}}"
 			   class="list-group-item list-group-item-action">
-				<i class="fa fa-user fa-fw" aria-hidden="true"></i>
+				<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
 				{{tenant.name}}
 			</a>
 		{{/each}}

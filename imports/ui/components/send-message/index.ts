@@ -57,9 +57,6 @@ template.helpers({
 	hasVerifiedEmail() {
 		return Meteor.user()?.hasVerifiedEmail() || false;
 	},
-	loggedInUser() {
-		return Meteor.user() || false;
-	},
 });
 
 template.events({
@@ -92,46 +89,44 @@ template.events({
 
 	async 'submit .js-send-message'(event, instance) {
 		event.preventDefault();
+
 		instance.busy('sending');
+		PleaseLogin(instance, async () => {
+			const { state } = instance;
+			const message = instance.$('.js-email-message').val() as string;
 
-		if (PleaseLogin()) {
-			return;
-		}
-
-		const { state } = instance;
-		const message = instance.$('.js-email-message').val() as string;
-
-		if (message.length < 2) {
-			Alert.error(i18n('profile.mail.longertext', 'longer text please'));
-			instance.busy(false);
-			return;
-		}
-
-		const options: SendEmailOptions = {
-			revealAddress: state.get('revealAddress') || false,
-			sendCopy: state.get('sendCopy') || false,
-		};
-
-		const data = Template.currentData();
-		if (data.courseId) {
-			options.courseId = data.courseId;
-		}
-
-		if (data.eventId) {
-			options.eventId = data.eventId;
-		}
-
-		try {
-			await emailMethods.sendEmail(data.recipientId, message, options);
-			Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
-			instance.$('.js-email-message').val('');
-			if (data.onDone) {
-				data.onDone();
+			if (message.length < 2) {
+				Alert.error(i18n('profile.mail.longertext', 'longer text please'));
+				instance.busy(false);
+				return;
 			}
-		} catch (err) {
-			Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
-		} finally {
-			instance.busy(false);
-		}
+
+			const options: SendEmailOptions = {
+				revealAddress: state.get('revealAddress') || false,
+				sendCopy: state.get('sendCopy') || false,
+			};
+
+			const data = Template.currentData();
+			if (data.courseId) {
+				options.courseId = data.courseId;
+			}
+
+			if (data.eventId) {
+				options.eventId = data.eventId;
+			}
+
+			try {
+				await emailMethods.sendEmail(data.recipientId, message, options);
+				Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
+				instance.$('.js-email-message').val('');
+				if (data.onDone) {
+					data.onDone();
+				}
+			} catch (err) {
+				Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
+			} finally {
+				instance.busy(false);
+			}
+		});
 	},
 });

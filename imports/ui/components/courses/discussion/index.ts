@@ -225,7 +225,7 @@ import './styles.scss';
 				await CourseDiscussionsMethods.deleteComment(post._id);
 				Alert.success(i18n('discussionPost.deleted', 'Comment deleted.'));
 			} catch (err) {
-				Alert.serverError(err, 'Could not delete comment');
+				Alert.serverError(err, i18n('discussionPost.deleted.error', 'Could not delete comment'));
 			}
 		},
 	});
@@ -392,7 +392,7 @@ import './styles.scss';
 			event.stopImmediatePropagation();
 			event.preventDefault();
 
-			let comment = { title: instance.$('.js-post-title').val() as string } as
+			const comment = { title: instance.$('.js-post-title').val() as string } as
 				| PostCommentFields
 				| EditCommentFields;
 
@@ -406,24 +406,27 @@ import './styles.scss';
 
 			try {
 				if (instance.data.new) {
-					comment = comment as PostCommentFields;
-					comment.courseId = instance.data.courseId;
+					const postComment = comment as PostCommentFields;
+					postComment.courseId = instance.data.courseId;
 
 					if (instance.data.parentId) {
-						comment.parentId = instance.data.parentId;
+						postComment.parentId = instance.data.parentId;
 					}
 
-					comment.anon = instance.$('.js-anon').prop('checked');
-					comment.notifyAll = instance.$('.js-notify-all').prop('checked') || false;
+					postComment.anon = instance.$('.js-anon').prop('checked');
+					postComment.notifyAll = instance.$('.js-notify-all').prop('checked') || false;
 
-					await CourseDiscussionsMethods.postComment(comment);
+					await CourseDiscussionsMethods.postComment(postComment);
 				} else {
-					comment = comment as EditCommentFields;
-					comment._id = instance.data._id;
-					await CourseDiscussionsMethods.editComment(comment);
+					const editComment = comment as EditCommentFields;
+					editComment._id = instance.data._id;
+					await CourseDiscussionsMethods.editComment(editComment);
 				}
 			} catch (err) {
-				Alert.serverError(err, 'Posting your comment went wrong');
+				Alert.serverError(
+					err,
+					i18n('courseDiscussions.postComment.error', 'Posting your comment went wrong'),
+				);
 			} finally {
 				instance.busy(false);
 			}

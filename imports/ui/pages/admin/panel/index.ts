@@ -13,32 +13,32 @@ template.helpers({
 		return [
 			{
 				name: i18n('adminPanel.tasks.log', 'Show log'),
-				icon: 'fa-list-alt',
+				icon: 'fa-regular fa-rectangle-list',
 				route: 'log',
 			},
 			{
 				name: i18n('adminPanel.tasks.featuredGroup', 'Feature group'),
-				icon: 'fa-users',
+				icon: 'fa-solid fa-users',
 				route: 'featureGroup',
 			},
 			{
 				name: i18n('adminPanel.tasks.users', 'Users'),
-				icon: 'fa-user',
+				icon: 'fa-solid fa-user',
 				route: 'users',
 			},
 			{
 				name: i18n('adminPanel.tasks.venues', 'Venues'),
-				icon: 'fa-home',
+				icon: 'fa-solid fa-house',
 				route: 'venuesMap',
 			},
 			{
 				name: i18n('adminPanel.tasks.stats', 'Stats'),
-				icon: 'fa fa-line-chart',
+				icon: 'fa-solid fa-chart-line',
 				route: 'stats',
 			},
 			{
 				name: i18n('adminPanel.tasks.tenants', 'Organizations'),
-				icon: 'fa-sitemap',
+				icon: 'fa-solid fa-sitemap',
 				route: 'tenants',
 			},
 		];

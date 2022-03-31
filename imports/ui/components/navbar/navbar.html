@@ -1,6 +1,6 @@
 <template name="navbar">
 	<nav class="navbar navbar-default navbar-fixed-top" id="topnavbar" role="navigation">
-		{{#if showTestWarning}}
+		{{#if PublicSettings.testWarning}}
 			{{> testWarningTicker}}
 		{{/if}}
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -15,13 +15,13 @@
 				</button>
 				<a class="navbar-brand js-toggle-introduction" href="{{pathFor 'home'}}">
 					{{#if connecting}}
-						<span class="fa fa-circle-o-notch fa-spin fa-fw connecting"
+						<span class="fa-solid fa-circle-notch fa-spin fa-fw connecting"
 							  title="{{i18n 'status.connecting' 'Connecting to server'}}">
 						</span>
 						<span class="sr-only">{{i18n 'status.connecting'}}</span>
 					{{/if}}
 					{{#if notConnected}}
-						<span class="fa fa-circle-o-notch fa-fw no-connection"
+						<span class="fa-solid fa-circle-notch fa-fw no-connection"
 							  title="{{i18n 'status.notConnected' 'No connection to server'}}">
 						</span>
 						<span class="sr-only">{{i18n 'status.notConnected'}}</span>
@@ -41,7 +41,7 @@
 						<a href="{{pathFor 'home'}}"
 						   class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close"
 						   id="nav_courses">
-							<span class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></span>
+							<span class="fa-regular fa-lightbulb fa-fw" aria-hidden="true"></span>
 							{{i18n 'menue.Courses' 'Find'}}
 							<div class="nav-marker-caret"></div>
 						</a>
@@ -49,7 +49,7 @@
 					<li class="{{activeClass 'proposeCourse'}} col-4-sm-auto p-0">
 						<a href="{{pathFor 'proposeCourse'}}"
 						   class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} navbar-link js-nav-dropdown-close">
-							<span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
+							<span class="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
 							{{i18n 'menue.Create' 'Create'}}
 							<div class="nav-marker-caret"></div>
 						</a>
@@ -57,7 +57,8 @@
 					<li class="{{activeClass 'calendar'}} col-4-sm-auto p-0">
 						<a href="{{pathFor 'calendar'}}"
 						   class="{{activeClass 'calendar'}} navbar-link calendar-link js-nav-dropdown-close">
-							<span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+							<span class="fa-regular fa-calendar-days fa-fw"
+								  aria-hidden="true"></span>
 							{{i18n 'menue.Calendar' 'Calendar'}}
 							<div class="nav-marker-caret"></div>
 							<div class="nav-marker-bar"></div>
@@ -88,12 +89,12 @@
 		{{#if currentUser}}
 			<a class="loginButton navbar-link" aria-expanded="false" data-bs-toggle="dropdown"
 			   role="button">
-				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+				<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
 				{{currentUser.username}}
 			</a>
 		{{else}}
 			<a class="js-open-login loginButton navbar-link" id="openLogin" role="button">
-				<span class="fa fa-sign-in fa-fw" aria-hidden="true"></span>
+				<span class="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true"></span>
 				{{i18n 'login.navig.unlogged' 'Log in/register'}}
 			</a>
 		{{/if}}
@@ -114,19 +115,19 @@
 		<div class="mb-3">
 			<a class="btn btn-secondary form-control"
 			   href="{{pathFor 'userprofile' _id=currentUser._id}}">
-				<span class="fa fa-user fa-fw" aria-hidden="true"></span>
+				<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
 				{{i18n 'login.frame.profile' 'Public profile'}}
 			</a>
 		</div>
 		<div class="mb-3">
 			<a class="btn btn-secondary form-control" href="{{pathFor 'profile'}}">
-				<span class="fa fa-cogs fa-fw" aria-hidden="true"></span>
+				<span class="fa-solid fa-gears fa-fw" aria-hidden="true"></span>
 				{{i18n 'login.frame.settings' 'Account settings'}}
 			</a>
 		</div>
 		<div class="mb-3">
 			<button type="button" class="btn btn-secondary js-logout form-control">
-				<span class="fa fa-sign-out fa-fw" aria-hidden="true"></span>
+				<span class="fa-solid fa-right-from-bracket fa-fw" aria-hidden="true"></span>
 				{{i18n 'login.logout' 'Log out'}}
 			</button>
 		</div>

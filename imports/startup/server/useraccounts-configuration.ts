@@ -3,44 +3,55 @@ import { _ } from 'meteor/underscore';
 import { Accounts } from 'meteor/accounts-base';
 
 import * as usersMethods from '/imports/api/users/methods';
+import { UserModel, UserProfile } from '/imports/api/users/users';
 
 import { isEmail } from '/imports/utils/email-tools';
+import PrivateSettings from '/imports/utils/PrivateSettings';
 
 Meteor.startup(() => {
-	const serviceConf = Meteor.settings.service;
+	const serviceConf = PrivateSettings.service;
 	if (serviceConf) {
 		if (serviceConf.google) {
-			ServiceConfiguration.configurations.remove({
-				service: 'google',
-			});
-			ServiceConfiguration.configurations.insert({
-				service: 'google',
-				loginStyle: 'popup',
-				clientId: serviceConf.google.clientId,
-				secret: serviceConf.google.secret,
-			});
+			ServiceConfiguration.configurations.upsert(
+				{
+					service: 'google',
+				},
+				{
+					$set: {
+						loginStyle: 'popup',
+						clientId: serviceConf.google.clientId,
+						secret: serviceConf.google.secret,
+					},
+				},
+			);
 		}
 		if (serviceConf.facebook) {
-			ServiceConfiguration.configurations.remove({
-				service: 'facebook',
-			});
-			ServiceConfiguration.configurations.insert({
-				service: 'facebook',
-				loginStyle: 'popup',
-				appId: serviceConf.facebook.appId,
-				secret: serviceConf.facebook.secret,
-			});
+			ServiceConfiguration.configurations.upsert(
+				{
+					service: 'facebook',
+				},
+				{
+					$set: {
+						loginStyle: 'popup',
+						appId: serviceConf.facebook.appId,
+						secret: serviceConf.facebook.secret,
+					},
+				},
+			);
 		}
 		if (serviceConf.github) {
-			ServiceConfiguration.configurations.remove({
-				service: 'github',
-			});
-			ServiceConfiguration.configurations.insert({
-				service: 'github',
-				loginStyle: 'popup',
-				clientId: serviceConf.github.clientId,
-				secret: serviceConf.github.secret,
-			});
+			ServiceConfiguration.configurations.upsert(
+				{
+					service: 'github',
+				},
+				{
+					$set: {
+						loginStyle: 'popup',
+						clientId: serviceConf.github.clientId,
+						secret: serviceConf.github.secret,
+					},
+				},
+			);
 		}
 	}
 });
@@ -57,23 +68,23 @@ Accounts.validateNewUser((user) => {
 	return true;
 });
 
-Accounts.onCreateUser((options, originalUser) => {
-	const user = { ...originalUser };
+Accounts.onCreateUser((options: any, originalUser) => {
+	const user = { ...originalUser } as UserModel;
 	if (options.profile) {
-		user.profile = options.profile;
+		user.profile = options.profile as UserProfile;
 	} else {
-		user.profile = {};
+		user.profile = {} as UserProfile;
 	}
 	// Collect info where a username could possibly be found
 	let nameProviders = [user, user.profile];
 	if (user.services) {
-		nameProviders = nameProviders.concat(_.toArray(user.services));
+		nameProviders = nameProviders.concat(_.toArray(originalUser.services));
 	}
 
 	// Try to glean a username
-	let name = false;
-	let username = false;
-	let provider = false;
+	let name;
+	let username;
+	let provider: { name?: string; username?: string } | undefined;
 	/* eslint-disable-next-line no-cond-assign */
 	while ((provider = nameProviders.pop()) !== undefined) {
 		if (!name && provider.name) {
@@ -85,20 +96,23 @@ Accounts.onCreateUser((options, originalUser) => {
 	}
 
 	// We're not picky and try assigning a name no questions asked
-	user.username = username || name;
-	user.profile.name = name || username;
+	user.username = (username || name) as string;
+	user.profile.name = (name || username) as string;
 
 	if (!user.privileges) {
 		user.privileges = [];
 	}
 
 	// Read email-address if provided
-	let providedEmail = false;
+	let providedEmail;
 	let verified = true; // Assume verified unless there is a flag that says it's not
 	const services = user.services;
 	if (services) {
 		['facebook', 'google', 'github'].forEach((loginProvider) => {
-			const provided = services[loginProvider];
+			const provided = (services as any)[loginProvider] as {
+				email?: string;
+				verified_email?: boolean;
+			};
 			if (provided?.email) {
 				providedEmail = provided.email;
 				if (typeof provided.verified_email === 'boolean') {
@@ -127,6 +141,8 @@ Accounts.onCreateUser((options, originalUser) => {
 
 Accounts.onLogin(() => {
 	const user = Meteor.user();
+
+	usersMethods.updateLastLogin();
 
 	// generate a avatar color for every new user
 	if (user && user.avatar?.color === undefined) {

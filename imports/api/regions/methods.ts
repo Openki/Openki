@@ -9,27 +9,28 @@ import { RegionEntity, Regions } from './regions';
 import { Venues } from '/imports/api/venues/venues';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { AsyncTools } from '/imports/utils/async-tools';
+import * as AsyncTools from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
+import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
 
-export interface CreateFields {
-	tenant: string;
-	name: string;
-	loc: { type: 'Point'; coordinates: [number, number] };
-	tz: string;
-}
+export const CreateFieldsPattern = {
+	tenant: String,
+	name: String,
+	loc: {
+		type: StringEnum('Point'),
+		coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
+	},
+	tz: String,
+};
+
+export type CreateFields = Type<typeof CreateFieldsPattern>;
 
 export const create = ServerMethod(
 	'region.create',
 
 	(changes: CreateFields) => {
-		check(changes, {
-			tenant: String,
-			name: String,
-			loc: { type: String, coordinates: [Number] },
-			tz: String,
-		});
+		check(changes, CreateFieldsPattern);
 
 		const user = Meteor.user();
 		if (!user) {
@@ -65,19 +66,20 @@ export const create = ServerMethod(
 	},
 );
 
-export interface UpdateFields {
-	name?: string;
-	loc?: { type: 'Point'; coordinates: [number, number] };
-	tz?: string;
-}
+export const UpdateFieldsPattern = {
+	name: Match.Maybe(String),
+	loc: Match.Maybe({
+		type: StringEnum('Point'),
+		coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
+	}),
+	tz: Match.Maybe(String),
+};
+
+export type UpdateFields = Type<typeof UpdateFieldsPattern>;
 
 export const update = ServerMethod('region.update', (regionId: string, changes: UpdateFields) => {
 	check(regionId, String);
-	check(changes, {
-		name: Match.Maybe(String),
-		loc: Match.Maybe({ type: String, coordinates: [Number] }),
-		tz: Match.Maybe(String),
-	});
+	check(changes, UpdateFieldsPattern);
 
 	const user = Meteor.user();
 	if (!user) {
@@ -113,7 +115,7 @@ export const update = ServerMethod('region.update', (regionId: string, changes: 
 		set.tz = changes.tz.trim().substring(0, 40);
 	}
 
-	Regions.update({ _id: regionId }, { $set: set }, undefined, AsyncTools.checkUpdateOne);
+	Regions.update({ _id: regionId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);
 
 	return regionId;
 });

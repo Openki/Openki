@@ -1,41 +1,46 @@
 import { Meteor } from 'meteor/meteor';
 
-export const AsyncTools = {};
-
-/**
- * @param {any} err
- * @param {number} aff
- */
-AsyncTools.checkUpdateOne = function (err, aff) {
-	if (err) {
-		throw err;
+export function checkUpdateOne(error: unknown, affectedDocuments: number) {
+	if (error) {
+		throw error;
 	}
-	if (aff !== 1) {
-		throw new Error(`Query affected ${aff} docs, expected 1`);
+	if (affectedDocuments !== 1) {
+		throw new Error(`Query affected ${affectedDocuments} docs, expected 1`);
 	}
-};
+}
 
 /**
  * Simple async callback receiver that logs errors
- * @param {{ stack: any; }} err
- * @param {any} ret
  */
-AsyncTools.logErrors = function (err, ret) {
-	if (err) {
+export function logErrors(error: { stack: any }, result: unknown) {
+	if (error) {
 		/* eslint-disable-next-line no-console */
-		console.log(err.stack);
+		console.log(error.stack);
 	}
-	return ret;
-};
+	return result;
+}
+
+/**
+ * On the server. Repeatedly apply a cleaning function until it reports no update.
+ *
+ * This is supposed to settle racing cache updates with the last version
+ * winning. I have not worked this out formally (nor could I), so this strategy
+ * will likely fail in edge cases.
+ *
+ * @param clean the cleaning function
+ */
+// eslint-disable-next-line import/no-mutable-exports
+export let untilClean: (
+	clean: (resolve: (value: boolean) => void, reject: (reason?: unknown) => void) => void,
+) => Promise<void>;
 
 if (Meteor.isServer) {
 	const maxTries = 3;
-	/**
-	 * @param {(resolve: (value: boolean) => void, reject: (reason?: any) => void) => void} clean
-	 * @param {number} tries
-	 * @returns {Promise<void>}
-	 */
-	const tryClean = function (clean, tries) {
+
+	const tryClean = function (
+		clean: (resolve: (value: boolean) => void, reject: (reason?: unknown) => void) => void,
+		tries: number,
+	): Promise<void> {
 		return new Promise((resolve, reject) => {
 			clean(resolve, reject);
 		}).then(
@@ -61,27 +66,13 @@ if (Meteor.isServer) {
 		);
 	};
 
-	/**
-	 * Repeatedly apply a cleaning function until it reports no update.
-	 * @param {(resolve: (value: boolean) => void, reject: (reason?: any) => void) => void} clean
-	 * - the cleaning function
-	 * @returns {Promise<void>}
-	 *
-	 * This is supposed to settle racing cache updates with the last version
-	 * winning. I have not worked this out formally (nor could I), so this strategy
-	 * will likely fail in edge cases.
-	 */
-	AsyncTools.untilClean = function (clean) {
+	untilClean = function (clean) {
 		return tryClean(clean, maxTries);
 	};
-}
-
-if (Meteor.isClient) {
+} else {
 	// On the client clean() is not run and the returned promise doesn't resolve.
-	AsyncTools.untilClean = function () {
+	untilClean = function () {
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		return new Promise(() => {}); /* promise that doesn't resolve */
 	};
 }
-
-export default AsyncTools;

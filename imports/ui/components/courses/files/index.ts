@@ -26,7 +26,7 @@ template.helpers({
 					await CourseMethods.updateImage(courseId, file);
 					Alert.success(i18n('course.edit.image.updated', 'Image have been saved.'));
 				} catch (err) {
-					Alert.serverError(err, 'Could not save image.');
+					Alert.serverError(err, i18n('course.edit.image.updated.error', 'Could not save image.'));
 				}
 			},
 			onDelete: instance.data.course?.image
@@ -36,7 +36,10 @@ template.helpers({
 							await CourseMethods.deleteImage(courseId);
 							Alert.success(i18n('course.edit.image.removed', 'Image have been removed.'));
 						} catch (err) {
-							Alert.serverError(err, 'Could not remove image.');
+							Alert.serverError(
+								err,
+								i18n('course.edit.image.removed.error', 'Could not remove image.'),
+							);
 						}
 				  }
 				: undefined,

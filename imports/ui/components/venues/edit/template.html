@@ -23,7 +23,7 @@
 							<label class="form-label">{{i18n 'venue.edit.region' 'Region'}}</label>
 							<div class="input-group">
 								<span class="input-group-text">
-									<span class="fa fa-dot-circle-o fa-fw"
+									<span class="fa-regular fa-circle-dot fa-fw"
 										  aria-hidden="true"></span>
 								</span>
 								<select name='region' class="form-select js-region">
@@ -51,11 +51,11 @@
 				<label class="form-label">{{i18n 'venue.edit.address' 'Address'}}</label>
 				<div class="input-group">
 					<span class="input-group-text">
-						<span class="fa fa-map-marker fa-fw" aria-hidden="true"></span>
+						<span class="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
 					</span>
 					<input class="form-control js-address"
 						   placeholder="{{i18n 'venue.edit.address.placeholder' 'Street, City, State'}}"
-						   value={{address}}>
+						   value="{{address}}">
 
 				</div>
 			</div>
@@ -65,11 +65,11 @@
 					   for="editform-address">{{i18n 'venue.details.route'}}</label>
 				<div class="input-group">
 					<span class="input-group-text">
-						<span class="fa fa-map-signs"></span>
+						<span class="fa-solid fa-signs-post"></span>
 					</span>
 					<textarea class="form-control js-route" id="editform-address"
 							  placeholder="{{i18n 'venue.route.placeholder' 'near busstop, cross fence, then backyard, enter the black door… 23rd floor, then left.'}}"
-							  value={{route}}></textarea>
+							  value="{{route}}"></textarea>
 				</div>
 			</div>
 			<div class="mb-3">
@@ -104,7 +104,7 @@
 			<label class="form-label">{{i18n 'venue.edit.shortName' 'Abbreviation'}}</label>
 			<div class="input-group">
 				<span class="input-group-text">
-					<span class="fa fa-hashtag fa-fw" aria-hidden="true"></span>
+					<span class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></span>
 				</span>
 				<input class="form-control js-short"
 					   placeholder="{{i18n 'venue.edit.short.placeholder' 'short name'}} {{i18n '_inputField.optional'}}"

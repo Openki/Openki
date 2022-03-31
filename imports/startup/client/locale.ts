@@ -15,13 +15,12 @@ import * as UrlTools from '/imports/utils/url-tools';
 
 // Try to guess a sensible language
 Meteor.startup(() => {
-	const useLocale = function (/** @type {string | undefined | null} */ lang) {
+	const useLocale = function (lang: string | false | null | undefined) {
 		if (!lang) {
 			return false;
 		}
 
-		/** @type {false | string} */
-		let locale = false;
+		let locale: false | string = false;
 		if (LanguagesRaw[lang]) {
 			locale = lang;
 		}
@@ -108,7 +107,7 @@ Meteor.startup(() => {
 		// I do not understand why setting language: moment.locale() does not
 		// work for the datepicker. But we want to use the momentjs settings
 		// anyway, so we might as well clobber the 'en' locale.
-		const locale = moment().localeData();
+		const locale = moment().localeData() as any;
 
 		const monthsShort = function () {
 			if (typeof locale.monthsShort === 'function') {
@@ -117,7 +116,7 @@ Meteor.startup(() => {
 			return locale._monthsShort;
 		};
 
-		$.fn.datepicker.dates.en = _.extend({}, $.fn.datepicker.dates.en, {
+		($.fn.datepicker as any).dates.en = _.extend({}, ($.fn.datepicker as any).dates.en, {
 			days: locale._weekdays,
 			daysShort: locale._weekdaysShort,
 			daysMin: locale._weekdaysMin,
