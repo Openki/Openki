@@ -19,8 +19,6 @@ Meteor.publish('venueDetails', (id: string) => {
 	return Venues.find(id);
 });
 
-Meteor.publish('Venues.findFilter', (find?: FindFilter, limit?: number) => {
-	check(limit, Match.Maybe(Match.Integer));
-
-	return Venues.findFilter(find, limit);
-});
+Meteor.publish('Venues.findFilter', (find?: FindFilter, limit?: number) =>
+	Venues.findFilter(find, limit),
+);

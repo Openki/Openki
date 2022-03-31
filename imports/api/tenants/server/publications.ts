@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
-import { Match, check } from 'meteor/check';
+import { check } from 'meteor/check';
 
-import { TenantEntity, Tenants } from '/imports/api/tenants/tenants';
+import { FindFilter, TenantEntity, Tenants } from '/imports/api/tenants/tenants';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
+import { FieldSort } from '/imports/utils/sort-spec';
 
 Meteor.publish('tenant', function (tenantId: string) {
 	check(tenantId, String);
@@ -33,21 +33,6 @@ Meteor.publish('tenant', function (tenantId: string) {
 
 Meteor.publish(
 	'Tenants.findFilter',
-	function (
-		find: {
-			/** Limit to tenants where logged-in user is a admin */
-			adminOf?: boolean;
-		} = {},
-		limit = 0,
-		skip = 0,
-		sort?: FieldSort[],
-	) {
-		check(limit, Match.Optional(Match.Integer));
-		check(skip, Match.Optional(Match.Integer));
-		check(sort, Match.Optional([FieldSortPattern]));
-
-		const filter = { ...find };
-
-		return Tenants.findFilter(filter, limit, skip, sort);
-	},
+	(find: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) =>
+		Tenants.findFilter(find, limit, skip, sort),
 );
