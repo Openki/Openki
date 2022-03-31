@@ -22,12 +22,12 @@ function createS3Client() {
 	});
 }
 
-export const UploadFilePattern = {
+export const UploadFilePattern = Match.ObjectIncluding({
 	name: String,
 	/** As BinaryString */
 	mimeType: String,
 	content: String,
-};
+});
 export type UploadFile = Match.PatternMatch<typeof UploadFilePattern>;
 
 export function generatePublicUrl(fullFileName: string) {
