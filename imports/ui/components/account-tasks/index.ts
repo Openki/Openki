@@ -276,14 +276,6 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		pleaseLogin() {
-			return Session.get('pleaseLogin');
-		},
-
-		loginAction() {
-			return Session.get('loginAction');
-		},
-
 		OAuthServices() {
 			return Template.instance().OAuthServices;
 		},
@@ -373,16 +365,6 @@ import './styles.scss';
 		}
 
 		instance.$('input').first().trigger('select');
-	});
-
-	template.helpers({
-		pleaseLogin() {
-			return Session.get('pleaseLogin');
-		},
-
-		registerAction() {
-			return Session.get('registerAction');
-		},
 	});
 
 	template.events({

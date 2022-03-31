@@ -6,7 +6,7 @@ import { Geodata, RegionEntity } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 
 import { LocationTracker, MainMarkerEntity } from '/imports/ui/lib/location-tracker';
-import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
+import PleaseLogin from '/imports/ui/lib/please-login';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable';
@@ -78,26 +78,21 @@ export interface OnSaveFields {
 			}
 
 			instance.busy('saving');
-			SaveAfterLogin(
-				instance,
-				i18n('loginAction.saveRegion', 'Log in and save region'),
-				i18n('registerAction.saveRegion', 'Register and save region'),
-				async () => {
-					try {
-						await instance.data.onSave(changes); // from the parent component
+			PleaseLogin(instance, async () => {
+				try {
+					await instance.data.onSave(changes); // from the parent component
 
-						Alert.success(
-							i18n('region.saving.success', 'Saved changes to region "{NAME}".', {
-								NAME: changes.name,
-							}),
-						);
-					} catch (err) {
-						Alert.serverError(err, i18n('region.saving.error', 'Saving the region went wrong'));
-					} finally {
-						instance.busy(false);
-					}
-				},
-			);
+					Alert.success(
+						i18n('region.saving.success', 'Saved changes to region "{NAME}".', {
+							NAME: changes.name,
+						}),
+					);
+				} catch (err) {
+					Alert.serverError(err, i18n('region.saving.error', 'Saving the region went wrong'));
+				} finally {
+					instance.busy(false);
+				}
+			});
 		},
 
 		'click .js-edit-cancel'(_event, instance) {

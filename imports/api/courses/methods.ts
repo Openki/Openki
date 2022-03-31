@@ -24,7 +24,6 @@ import * as HtmlTools from '/imports/utils/html-tools';
 import { LocalizedValuePattern } from '/imports/utils/getLocalizedValue';
 import * as FileStorage from '/imports/utils/FileStorage';
 
-import { PleaseLogin } from '/imports/ui/lib/please-login';
 import { UserModel } from '/imports/api/users/users';
 import { StringEnum, Type } from '/imports/utils/CustomChecks';
 
@@ -123,10 +122,6 @@ export const save = ServerMethod(
 
 		const user = Meteor.user();
 		if (!user) {
-			if (Meteor.isClient) {
-				PleaseLogin();
-				return undefined;
-			}
 			throw new Meteor.Error(401, 'please log in');
 		}
 

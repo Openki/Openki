@@ -144,6 +144,7 @@ export const FindFilterPattern = {
 	region: Match.Maybe(String),
 	state: Match.Maybe(StringEnum(['proposal', 'resting', 'upcomingEvent'] as const)),
 	userInvolved: Match.Maybe(String),
+	createdby: Match.Maybe(String),
 	categories: Match.Maybe([String]),
 	group: Match.Maybe(String),
 	internal: Match.Maybe(Boolean),
@@ -345,6 +346,10 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 
 		if (filter.userInvolved) {
 			find['members.user'] = filter.userInvolved;
+		}
+
+		if (filter.createdby) {
+			find.createdby = filter.createdby;
 		}
 
 		if (filter.categories) {

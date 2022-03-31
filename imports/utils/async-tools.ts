@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-export function checkUpdateOne(error: any, affectedDocuments: number) {
+export function checkUpdateOne(error: unknown, affectedDocuments: number) {
 	if (error) {
 		throw error;
 	}

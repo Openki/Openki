@@ -82,11 +82,7 @@
 							  aria-hidden="true"></span>
 						{{i18n 'login.login.submit.busy' 'Logging in…'}}
 					{{else}}
-						{{#if pleaseLogin}}
-							{{loginAction}}
-						{{else}}
-							{{i18n 'login.login.submit' 'Log in'}}
-						{{/if}}
+						{{i18n 'login.login.submit' 'Log in'}}
 					{{/if}}
 				</button>
 			</div>
@@ -175,11 +171,7 @@
 					<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 					{{i18n 'login.register.submit.busy' 'Registering…'}}
 				{{else}}
-					{{#if pleaseLogin}}
-						{{registerAction}}
-					{{else}}
-						{{i18n 'login.register.submit'}}
-					{{/if}}
+					{{i18n 'login.register.submit'}}
 				{{/if}}
 			</button>
 		</div>
