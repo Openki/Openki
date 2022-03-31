@@ -7,39 +7,34 @@ import { VenueEntity, Venues } from '/imports/api/venues/venues';
 /** @typedef {import('./venues').VenueEntity} VenueEntity */
 
 import * as AsyncTools from '/imports/utils/async-tools';
+import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
 import * as HtmlTools from '/imports/utils/html-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as StringTools from '/imports/utils/string-tools';
 
-export interface SaveFields {
-	name?: string;
-	description?: string;
-	region?: string;
-	loc?: { type: 'Point'; coordinates: [number, number] };
-	address?: string;
-	route?: string;
-	short?: string;
-	maxPeople?: number;
-	maxWorkplaces?: number;
-	facilities?: string[];
-	otherFacilities?: string;
-}
+export const SaveFieldPattern = {
+	name: Match.Optional(String),
+	description: Match.Optional(String),
+	region: Match.Optional(String),
+	loc: Match.Optional(
+		Match.OneOf(null, {
+			type: StringEnum('Point'),
+			coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
+		}),
+	),
+	address: Match.Optional(String),
+	route: Match.Optional(String),
+	short: Match.Optional(String),
+	maxPeople: Match.Optional(Match.Integer),
+	maxWorkplaces: Match.Optional(Match.Integer),
+	facilities: Match.Optional([String]),
+	otherFacilities: Match.Optional(String),
+};
+export type SaveFields = Type<typeof SaveFieldPattern>;
 
 export const save = ServerMethod('venue.save', (venueId: string, changes: SaveFields) => {
 	check(venueId, String);
-	check(changes, {
-		name: Match.Optional(String),
-		description: Match.Optional(String),
-		region: Match.Optional(String),
-		loc: Match.Optional(Match.OneOf(null, { type: String, coordinates: [Number] })),
-		address: Match.Optional(String),
-		route: Match.Optional(String),
-		short: Match.Optional(String),
-		maxPeople: Match.Optional(Number),
-		maxWorkplaces: Match.Optional(Number),
-		facilities: Match.Optional([String]),
-		otherFacilities: Match.Optional(String),
-	});
+	check(changes, SaveFieldPattern);
 
 	const user = Meteor.user();
 	if (!user) {
@@ -79,7 +74,7 @@ export const save = ServerMethod('venue.save', (venueId: string, changes: SaveFi
 	if (changes.short !== undefined) {
 		set.short = changes.short.trim().substring(0, 40);
 	}
-	if (changes.loc !== undefined) {
+	if (changes.loc !== undefined && changes.loc !== null) {
 		set.loc = changes.loc;
 		set.loc.type = 'Point';
 	}
