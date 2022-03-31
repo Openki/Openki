@@ -15,9 +15,8 @@ import { Regions } from '/imports/api/regions/regions';
 
 import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
 import { LocationTracker } from '/imports/ui/lib/location-tracker';
-import { PleaseLogin } from '/imports/ui/lib/please-login';
-import { SaveAfterLogin } from '/imports/ui/lib/save-after-login';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import * as Metatags from '/imports/utils/metatags';
 import { appendAsJsonLdToBody } from '/imports/utils/event-to-json-ld';
@@ -75,33 +74,29 @@ import './styles.scss';
 	const template = Template.event;
 
 	template.onCreated(function () {
-		const event = this.data;
-		this.busy(false);
-		this.editing = new ReactiveVar(!event._id);
-		this.subscribe('courseDetails', event.courseId);
+		const instance = this;
+		const event = instance.data;
+		instance.busy(false);
+		instance.editing = new ReactiveVar(!event._id);
+		instance.subscribe('courseDetails', event.courseId);
 
-		this.addParticipant = () => {
-			SaveAfterLogin(
-				this,
-				i18n('loginAction.enrollEvent', 'Log in and enroll for event'),
-				i18n('registerAction.enrollEvent', 'Log in and enroll for event'),
-				async () => {
-					this.busy('registering');
-					try {
-						await EventsMethods.addParticipant(event._id);
+		instance.addParticipant = () => {
+			instance.busy('registering');
+			PleaseLogin(instance, async () => {
+				try {
+					await EventsMethods.addParticipant(event._id);
 
-						Analytics.trackEvent(
-							'RSVPs',
-							'RSVPs as participant',
-							Regions.findOne(event.region)?.nameEn,
-						);
-					} catch (err) {
-						Alert.serverError(err);
-					} finally {
-						this.busy(false);
-					}
-				},
-			);
+					Analytics.trackEvent(
+						'RSVPs',
+						'RSVPs as participant',
+						Regions.findOne(event.region)?.nameEn,
+					);
+				} catch (err) {
+					Alert.serverError(err);
+				} finally {
+					this.busy(false);
+				}
+			});
 		};
 
 		// register from email
@@ -206,9 +201,6 @@ import './styles.scss';
 		},
 
 		'click .js-event-edit'(_event, instance) {
-			if (PleaseLogin()) {
-				return;
-			}
 			instance.editing.set(true);
 		},
 

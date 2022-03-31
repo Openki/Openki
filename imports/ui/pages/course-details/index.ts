@@ -174,118 +174,109 @@ import './styles.scss';
 
 	template.events({
 		async 'click .js-delete-course-confirm'(_event, instance) {
-			if (PleaseLogin()) {
-				return;
-			}
-
-			const { course } = instance.data;
 			instance.busy('deleting');
+			PleaseLogin(instance, async () => {
+				const { course } = instance.data;
 
-			try {
-				await CoursesMethods.remove(course._id);
+				try {
+					await CoursesMethods.remove(course._id);
 
-				Alert.success(
-					i18n(
-						'courseDetailsPage.message.courseHasBeenDeleted',
-						'The "{COURSE}" course was deleted.',
-						{ COURSE: course.name },
-					),
-				);
+					Alert.success(
+						i18n(
+							'courseDetailsPage.message.courseHasBeenDeleted',
+							'The "{COURSE}" course was deleted.',
+							{ COURSE: course.name },
+						),
+					);
 
-				let role;
-				if (_.intersection(Meteor.user()?.badges || [], course.editors).length > 0) {
-					role = 'team';
-				} else if (UserPrivilegeUtils.privilegedTo('admin')) {
-					role = 'admin';
-				} else {
-					role = 'unknown';
+					let role;
+					if (_.intersection(Meteor.user()?.badges || [], course.editors).length > 0) {
+						role = 'team';
+					} else if (UserPrivilegeUtils.privilegedTo('admin')) {
+						role = 'admin';
+					} else {
+						role = 'unknown';
+					}
+
+					Analytics.trackEvent(
+						'Course deletions',
+						`Course deletions as ${role}`,
+						Regions.findOne(course.region)?.nameEn,
+					);
+
+					Router.go('/');
+				} catch (err) {
+					Alert.serverError(
+						err,
+						i18n(
+							'courseDetailsPage.message.courseHasBeenDeleted.error',
+							'Removing the "{COURSE}" course went wrong',
+						),
+					);
+				} finally {
+					instance.busy(false);
 				}
-
-				Analytics.trackEvent(
-					'Course deletions',
-					`Course deletions as ${role}`,
-					Regions.findOne(course.region)?.nameEn,
-				);
-
-				Router.go('/');
-			} catch (err) {
-				Alert.serverError(
-					err,
-					i18n(
-						'courseDetailsPage.message.courseHasBeenDeleted.error',
-						'Removing the "{COURSE}" course went wrong',
-					),
-				);
-			} finally {
-				instance.busy(false);
-			}
+			});
 		},
 
 		async 'click .js-course-archive'(_event, instance) {
-			if (PleaseLogin()) {
-				return;
-			}
-
-			const { course } = instance.data;
 			instance.busy('archive');
-			try {
-				await CoursesMethods.archive(course._id);
+			PleaseLogin(instance, async () => {
+				const { course } = instance.data;
+				try {
+					await CoursesMethods.archive(course._id);
 
-				Alert.success(
-					i18n(
-						'courseDetailsPage.message.courseHasBeenArchived',
-						'The "{COURSE}" course was archived.',
-						{ COURSE: course.name },
-					),
-				);
-			} catch (err) {
-				Alert.serverError(
-					err,
-					i18n(
-						'courseDetailsPage.message.courseHasBeenArchived.error',
-						'Archive the course "{COURSE}" went wrong',
-					),
-				);
-			} finally {
-				instance.busy(false);
-			}
+					Alert.success(
+						i18n(
+							'courseDetailsPage.message.courseHasBeenArchived',
+							'The "{COURSE}" course was archived.',
+							{ COURSE: course.name },
+						),
+					);
+				} catch (err) {
+					Alert.serverError(
+						err,
+						i18n(
+							'courseDetailsPage.message.courseHasBeenArchived.error',
+							'Archive the course "{COURSE}" went wrong',
+						),
+					);
+				} finally {
+					instance.busy(false);
+				}
+			});
 		},
 
 		async 'click .js-course-unarchive'(_event, instance) {
-			if (PleaseLogin()) {
-				return;
-			}
-
-			const { course } = instance.data;
 			instance.busy('unarchive');
-			try {
-				await CoursesMethods.unarchive(course._id);
+			PleaseLogin(instance, async () => {
+				const { course } = instance.data;
+				try {
+					await CoursesMethods.unarchive(course._id);
 
-				Alert.success(
-					i18n(
-						'courseDetailsPage.message.courseHasBeenUnarchived',
-						'The "{COURSE}" course has been unarchived.',
-						{ COURSE: course.name },
-					),
-				);
-			} catch (err) {
-				Alert.serverError(
-					err,
-					i18n(
-						'courseDetailsPage.message.courseHasBeenUnarchived.error',
-						'Unarchive the "{COURSE}" course went wrong',
-					),
-				);
-			} finally {
-				instance.busy(false);
-			}
+					Alert.success(
+						i18n(
+							'courseDetailsPage.message.courseHasBeenUnarchived',
+							'The "{COURSE}" course has been unarchived.',
+							{ COURSE: course.name },
+						),
+					);
+				} catch (err) {
+					Alert.serverError(
+						err,
+						i18n(
+							'courseDetailsPage.message.courseHasBeenUnarchived.error',
+							'Unarchive the "{COURSE}" course went wrong',
+						),
+					);
+				} finally {
+					instance.busy(false);
+				}
+			});
 		},
 
 		'click .js-course-edit'(_event, instance) {
 			instance.collapse();
-			if (PleaseLogin()) {
-				return;
-			}
 
 			const { course } = instance.data;
 			Router.go('showCourse', course, { query: { edit: 'course' } });
