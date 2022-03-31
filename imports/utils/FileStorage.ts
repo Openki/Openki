@@ -24,8 +24,8 @@ function createS3Client() {
 
 export const UploadFilePattern = Match.ObjectIncluding({
 	name: String,
-	/** As BinaryString */
 	mimeType: String,
+	/** As BinaryString */
 	content: String,
 });
 export type UploadFile = Match.PatternMatch<typeof UploadFilePattern>;
