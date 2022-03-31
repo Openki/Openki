@@ -34,11 +34,12 @@ function sendInvitation(invitation: InvitationEntity) {
 
 	const subject = `Invitation to ${tenant.name}`;
 
+	const emailLogo = PublicSettings.emailLogo;
 	let message = SSR.render('invitationEmail', {
 		subject,
 		site: {
 			url: Meteor.absoluteUrl(),
-			logo: base64PngImageData(PublicSettings.emailLogo),
+			logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
 			name: siteName,
 		},
 		tenant,
