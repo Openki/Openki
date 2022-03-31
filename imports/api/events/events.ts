@@ -277,7 +277,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 	 *
 	 * The events are sorted by start date (ascending, before-filter causes descending order)
 	 */
-	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
+	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort: FieldSort[] = []) {
 		check(filter, Match.Maybe(FindFilterPattern));
 		check(limit, Match.Maybe(Match.Integer));
 		check(skip, Match.Maybe(Match.Integer));
@@ -287,7 +287,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		const and = [];
 
 		const options: Mongo.Options<EventEntity> = {};
-		options.sort = Array.isArray(sort) ? sort : [];
+		options.sort = sort;
 
 		let startSortOrder = 'asc';
 
