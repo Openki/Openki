@@ -68,15 +68,14 @@ export const create = ServerMethod(
 
 export const UpdateFieldsPattern = {
 	name: Match.Maybe(String),
-	loc: Match.Maybe({ type: String, coordinates: [Number] }),
+	loc: Match.Maybe({
+		type: StringEnum('Point'),
+		coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
+	}),
 	tz: Match.Maybe(String),
 };
 
-export interface UpdateFields {
-	name?: string;
-	loc?: { type: 'Point'; coordinates: [number, number] };
-	tz?: string;
-}
+export type UpdateFields = Type<typeof UpdateFieldsPattern>;
 
 export const update = ServerMethod('region.update', (regionId: string, changes: UpdateFields) => {
 	check(regionId, String);
