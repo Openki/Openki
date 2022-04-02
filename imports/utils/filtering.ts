@@ -159,6 +159,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 		return this;
 	}
 
+	/** Convert back to query params that can be used as param in a url. */
 	toParams() {
 		if (Tracker.active) {
 			this._dep.depend();
@@ -170,6 +171,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 		return params;
 	}
 
+	/** Convert to a filter object that can be send to a server method oder publisher */
 	toQuery() {
 		if (Tracker.active) {
 			this._dep.depend();
