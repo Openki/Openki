@@ -15,7 +15,7 @@ import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { PublicSettings } from '/imports/utils/PublicSettings';
-import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
+import { FieldSort, FieldSortPattern, Sort } from '/imports/utils/sort-spec';
 import { Tuple, Type } from '/imports/utils/CustomChecks';
 
 export interface EventVenueEntity {
@@ -287,9 +287,8 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		const and = [];
 
 		const options: Mongo.Options<EventEntity> = {};
-		options.sort = sort;
 
-		let startSortOrder = 'asc';
+		let startSortOrder: Sort = 'asc';
 
 		if (limit > 0) {
 			options.limit = limit;
@@ -398,7 +397,9 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 			find.$and = and;
 		}
 
-		(options.sort as string[][]).push(['start', startSortOrder]);
+		sort.push(['start', startSortOrder]);
+
+		options.sort = sort;
 
 		return this.find(find, options) as Mongo.Cursor<EventEntity, EventModel>;
 	}
