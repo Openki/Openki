@@ -1,0 +1,60 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+// ** Navigation container
+//========================================================================================
+.calendar-nav-container {
+	background-color: rgba($calendar-nav-bg, 0.97);
+	display: none;
+	margin-bottom: 10px;
+	padding: 0 10px;
+	position: fixed;
+	text-align: center;
+	top: $navbar-height;
+	transition: box-shadow 0.25s;
+	width: 100%;
+	z-index: 1010;
+}
+
+.calendar-nav-container-covering {
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+// ** Navigation
+//========================================================================================
+.calendar-nav {
+	display: table;
+	margin: 0 auto;
+	padding: 5px 0;
+}
+
+// ** Navigation elements
+//========================================================================================
+.calendar-nav-control,
+.calendar-nav-moment {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.calendar-nav > .calendar-nav-control:last-child .dropdown-menu {
+	@include td-pos(left, auto);
+	@include td-pos(right, 0);
+}
+
+.calendar-nav-moment {
+	padding: 0 20px;
+}
+
+// ** Navigation week & date
+//========================================================================================
+.calendar-nav-week,
+.calendar-nav-date {
+	display: table-row;
+}
+
+.calendar-nav-week {
+	font-size: large;
+}
+
+.calendar-nav-date {
+	font-size: small;
+}
