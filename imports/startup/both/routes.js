@@ -216,7 +216,7 @@ Router.route('frameEvents', {
 	waitOn() {
 		this.filter = Events.Filtering().read(this.params.query).done();
 
-		const filterParams = this.filter.toParams();
+		const filterParams = this.filter.toQuery();
 		filterParams.after = reactiveNow.get();
 
 		const limit = parseInt(this.params.query.count, 10) || 6;
@@ -225,7 +225,7 @@ Router.route('frameEvents', {
 	},
 
 	data() {
-		const filterParams = this.filter.toParams();
+		const filterParams = this.filter.toQuery();
 		filterParams.after = reactiveNow.get();
 
 		const limit = parseInt(this.params.query.count, 10) || 6;
@@ -369,10 +369,10 @@ Router.route('kioskEvents', {
 		this.filter = Events.Filtering().read(this.params.query).done();
 		Session.set('kioskFilter', this.filter.toParams());
 
-		const queryFuture = this.filter.toParams();
+		const queryFuture = this.filter.toQuery();
 		queryFuture.after = now;
 
-		const queryOngoing = this.filter.toParams();
+		const queryOngoing = this.filter.toQuery();
 		queryOngoing.ongoing = now;
 
 		return [
@@ -387,17 +387,17 @@ Router.route('kioskEvents', {
 		tomorrow.setHours(tomorrow.getHours() + 24);
 		tomorrow.setHours(0);
 
-		const queryFuture = this.filter.toParams();
+		const queryFuture = this.filter.toQuery();
 		queryFuture.after = tomorrow;
 
-		const queryToday = this.filter.toParams();
+		const queryToday = this.filter.toQuery();
 		queryToday.after = now;
 		queryToday.before = tomorrow;
 
-		const queryNow = this.filter.toParams();
+		const queryNow = this.filter.toQuery();
 		queryNow.ongoing = now;
 
-		const filterParams = this.filter.toParams();
+		const filterParams = this.filter.toQuery();
 		return {
 			today: Events.findFilter(queryToday, 20),
 			future: Events.findFilter(queryFuture, 10),

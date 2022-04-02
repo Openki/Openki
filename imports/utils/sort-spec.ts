@@ -1,10 +1,14 @@
-import { Match, check } from 'meteor/check';
+import { check } from 'meteor/check';
 
 import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
 
-export const FieldSortPattern = Tuple<
-	[field: StringConstructor, sort: Match.Matcher<'asc' | 'desc'>]
->(String, StringEnum('asc', 'desc'));
+export const SortPattern = StringEnum('asc', 'desc');
+export type Sort = Type<typeof SortPattern>;
+
+export const FieldSortPattern = Tuple<[field: StringConstructor, sort: typeof SortPattern]>(
+	String,
+	SortPattern,
+);
 
 export type FieldSort = Type<typeof FieldSortPattern>;
 

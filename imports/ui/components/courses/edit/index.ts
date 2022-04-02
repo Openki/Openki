@@ -278,12 +278,13 @@ export type Data = {
 				return false;
 			}
 
-			const { search } = filter.toParams();
+			const filterQuery = filter.toQuery();
+
+			const { search } = filterQuery;
 			if (!search) {
 				return false;
 			}
 
-			const filterQuery = filter.toQuery();
 			const results = Courses.findFilter(filterQuery, 1);
 
 			return results.count() === 0 && search;
