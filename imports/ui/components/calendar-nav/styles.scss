@@ -15,6 +15,11 @@
 	z-index: 1010;
 }
 
+.frame .calendar-nav-container {
+	position: relative;
+	top: auto;
+}
+
 .calendar-nav-container-covering {
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
