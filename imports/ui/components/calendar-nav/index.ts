@@ -59,7 +59,7 @@ import './styles.scss';
 			options.query = queryString;
 		}
 
-		Router.go('calendar', {}, options);
+		Router.go(Router.current().route?.getName(), {}, options);
 	};
 	const mvDateHandler = function (unit: string, instance: any) {
 		const amount = instance.data.direction === 'previous' ? -1 : 1;
@@ -73,7 +73,6 @@ import './styles.scss';
 			start.add(amount, unit).add(weekCorrection, 'week').startOf('week');
 		}
 		calendarInstance.filter.add('start', start).done();
-		/* eslint-disable-next-line no-restricted-globals */
 		updateUrl(calendarInstance);
 		return false;
 	};
