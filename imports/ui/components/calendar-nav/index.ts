@@ -7,6 +7,8 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import { Spacebars } from 'meteor/spacebars';
 import moment from 'moment';
 
+import Events from '/imports/api/events/events';
+
 import * as UrlTools from '/imports/utils/url-tools';
 
 import './template.html';
@@ -49,8 +51,13 @@ import './styles.scss';
 }
 
 {
-	const updateUrl = function (instance: any) {
-		const filterParams = instance.filter.toParams();
+	const units = ['week', 'month', 'year'] as const;
+
+	type Direction = 'previous' | 'next';
+	type Unit = typeof units[number];
+
+	const updateUrl = function (filter: ReturnType<typeof Events['Filtering']>) {
+		const filterParams = filter.toParams();
 		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 		const queryString = UrlTools.paramsToQueryString(filterParams);
 
@@ -59,12 +66,12 @@ import './styles.scss';
 			options.query = queryString;
 		}
 
-		Router.go(Router.current().route?.getName(), {}, options);
+		Router.go(Router.current().route.getName(), {}, options);
 	};
-	const mvDateHandler = function (unit: string, instance: any) {
+	const mvDateHandler = function (unit: Unit, instance: any) {
 		const amount = instance.data.direction === 'previous' ? -1 : 1;
-		const calendarInstance = instance.parentInstance(2);
-		const start = calendarInstance.filter.get('start');
+		const filter = instance.parentInstance(2).filter as ReturnType<typeof Events['Filtering']>;
+		const start = filter.get('start');
 		const weekCorrection = unit === 'week' ? 0 : 1;
 
 		if (amount < 0) {
@@ -72,12 +79,15 @@ import './styles.scss';
 		} else {
 			start.add(amount, unit).add(weekCorrection, 'week').startOf('week');
 		}
-		calendarInstance.filter.add('start', start).done();
-		updateUrl(calendarInstance);
+		filter.add('start', start).done();
+		updateUrl(filter);
 		return false;
 	};
 
-	const Template = TemplateAny as TemplateStaticTyped<'calendarNavControl', { direction: string }>;
+	const Template = TemplateAny as TemplateStaticTyped<
+		'calendarNavControl',
+		{ direction: Direction }
+	>;
 
 	const template = Template.calendarNavControl;
 
@@ -88,7 +98,7 @@ import './styles.scss';
 			mvDateHandler(unit, instance);
 		},
 
-		'click .js-change-unit'(this: string, event, instance) {
+		'click .js-change-unit'(this: Unit, event, instance) {
 			event.preventDefault();
 
 			const unit = this;
@@ -122,9 +132,8 @@ import './styles.scss';
 			return parentInstance.currentUnit.get();
 		},
 
-		navUnits() {
-			const navUnits = ['week', 'month', 'year'];
-			return navUnits;
+		units() {
+			return units;
 		},
 	});
 }
