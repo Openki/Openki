@@ -12,16 +12,16 @@ import Events from '/imports/api/events/events';
 import * as UrlTools from '/imports/utils/url-tools';
 
 import './template.html';
-import './styles.scss';
+import '../styles.scss';
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		'calendarNav',
+		'calendarNavWeek',
 		unknown,
 		{ currentUnit: ReactiveVar<string> }
 	>;
 
-	const template = Template.calendarNav;
+	const template = Template.calendarNavWeek;
 
 	template.helpers({
 		endDateTo(date: moment.Moment) {
@@ -85,11 +85,11 @@ import './styles.scss';
 	};
 
 	const Template = TemplateAny as TemplateStaticTyped<
-		'calendarNavControl',
+		'calendarNavWeekControl',
 		{ direction: Direction }
 	>;
 
-	const template = Template.calendarNavControl;
+	const template = Template.calendarNavWeekControl;
 
 	template.events({
 		'click .js-change-date'(event, instance) {
