@@ -1,7 +1,7 @@
-<template name="calendarNav">
+<template name="calendarNavWeek">
 	<div class="calendar-nav-container">
 		<div class="calendar-nav">
-			{{> calendarNavControl direction='previous'}}
+			{{> calendarNavWeekControl direction='previous'}}
 			<div class="calendar-nav-moment">
 				<div class="lead">
 					{{i18n "calendar.weekNumber" "Week"}} {{weekNr date}}
@@ -13,12 +13,12 @@
 						{{dateShort (endDateTo date)}}</span>
 				</div>
 			</div>
-			{{> calendarNavControl direction='next'}}
+			{{> calendarNavWeekControl direction='next'}}
 		</div>
 	</div>
 </template>
 
-<template name="calendarNavControl">
+<template name="calendarNavWeekControl">
 	<div class="calendar-nav-control">
 		<div class="btn-group">
 			<button type="button" class="btn btn-secondary js-change-date">
@@ -42,7 +42,7 @@
 	</div>
 </template>
 
-<template name="calendarNavDynamicTranslations">
+<template name="calendarNavWeekDynamicTranslations">
 	This template holds translation strings that are constructed dynamically in this component
 
 	{{i18n 'calendar.previous.week.short' 'previous week'}}
