@@ -2,10 +2,8 @@ import { Router } from 'meteor/iron:router';
 import $ from 'jquery';
 import { i18n } from '/imports/startup/both/i18next';
 import { Session } from 'meteor/session';
-import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Spacebars } from 'meteor/spacebars';
-import moment from 'moment';
 
 import Events from '/imports/api/events/events';
 
@@ -15,23 +13,9 @@ import './template.html';
 import '../styles.scss';
 
 {
-	const Template = TemplateAny as TemplateStaticTyped<
-		'calendarNavDay',
-		unknown,
-		{ currentUnit: ReactiveVar<string> }
-	>;
+	const Template = TemplateAny as TemplateStaticTyped<'calendarNavDay'>;
 
 	const template = Template.calendarNavDay;
-
-	template.helpers({
-		endDateTo(date: moment.Moment) {
-			return moment(date).add(6, 'days');
-		},
-	});
-
-	template.onCreated(function () {
-		this.currentUnit = new ReactiveVar('week');
-	});
 
 	template.onRendered(function () {
 		const navContainer = this.$('.calendar-nav-container');
@@ -51,10 +35,7 @@ import '../styles.scss';
 }
 
 {
-	const units = ['week', 'month', 'year'] as const;
-
 	type Direction = 'previous' | 'next';
-	type Unit = typeof units[number];
 
 	const updateUrl = function (filter: ReturnType<typeof Events['Filtering']>) {
 		const filterParams = filter.toParams();
@@ -68,17 +49,13 @@ import '../styles.scss';
 
 		Router.go(Router.current().route.getName(), {}, options);
 	};
-	const mvDateHandler = function (unit: Unit, instance: any) {
+	const mvDateHandler = function (instance: any) {
 		const amount = instance.data.direction === 'previous' ? -1 : 1;
 		const filter = instance.parentInstance(2).filter as ReturnType<typeof Events['Filtering']>;
 		const start = filter.get('start');
-		const weekCorrection = unit === 'week' ? 0 : 1;
 
-		if (amount < 0) {
-			start.add(amount, unit).startOf('week');
-		} else {
-			start.add(amount, unit).add(weekCorrection, 'week').startOf('week');
-		}
+		start.add(amount, 'day');
+
 		filter.add('start', start).done();
 		updateUrl(filter);
 		return false;
@@ -94,16 +71,7 @@ import '../styles.scss';
 	template.events({
 		'click .js-change-date'(event, instance) {
 			event.preventDefault();
-			const unit = (instance.parentInstance() as any).currentUnit.get();
-			mvDateHandler(unit, instance);
-		},
-
-		'click .js-change-unit'(this: Unit, event, instance) {
-			event.preventDefault();
-
-			const unit = this;
-			(instance.parentInstance() as any).currentUnit.set(unit);
-			mvDateHandler(unit, instance);
+			mvDateHandler(instance);
 		},
 	});
 
@@ -123,17 +91,8 @@ import '../styles.scss';
 			);
 		},
 
-		calendarNavText(direction: string, unit: string, length: string) {
-			return i18n(`calendar.${direction}.${unit}.${length}`);
-		},
-
-		currentUnit() {
-			const parentInstance = Template.instance().parentInstance() as any;
-			return parentInstance.currentUnit.get();
-		},
-
-		units() {
-			return units;
+		text(direction: string, length: string) {
+			return i18n(`calendar.${direction}.day.${length}`);
 		},
 	});
 }
