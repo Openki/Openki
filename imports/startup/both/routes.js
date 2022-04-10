@@ -213,24 +213,9 @@ Router.route('frameEvents', {
 	path: '/frame/events',
 	template: 'frameEventsPage',
 	layoutTemplate: 'frameLayout',
-	waitOn() {
-		this.filter = Events.Filtering().read(this.params.query).done();
-
-		const filterParams = this.filter.toQuery();
-		filterParams.after = reactiveNow.get();
-
-		const limit = parseInt(this.params.query.count, 10) || 6;
-
-		return Meteor.subscribe('Events.findFilter', filterParams, limit * 2);
-	},
 
 	data() {
-		const filterParams = this.filter.toQuery();
-		filterParams.after = reactiveNow.get();
-
-		const limit = parseInt(this.params.query.count, 10) || 6;
-
-		return Events.findFilter(filterParams, limit);
+		return this.params.query;
 	},
 
 	async action() {
