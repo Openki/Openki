@@ -1,19 +1,17 @@
-import { Router } from 'meteor/iron:router';
 import $ from 'jquery';
 import { i18n } from '/imports/startup/both/i18next';
 import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Spacebars } from 'meteor/spacebars';
-
-import Events from '/imports/api/events/events';
-
-import * as UrlTools from '/imports/utils/url-tools';
+import moment from 'moment';
 
 import './template.html';
 import '../styles.scss';
 
+export type Data = { date: moment.Moment; onChange: (newDate: moment.Moment) => void };
+
 {
-	const Template = TemplateAny as TemplateStaticTyped<'calendarNavDay'>;
+	const Template = TemplateAny as TemplateStaticTyped<'calendarNavDay', Data>;
 
 	const template = Template.calendarNavDay;
 
@@ -37,30 +35,6 @@ import '../styles.scss';
 {
 	type Direction = 'previous' | 'next';
 
-	const updateUrl = function (filter: ReturnType<typeof Events['Filtering']>) {
-		const filterParams = filter.toParams();
-		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
-		const queryString = UrlTools.paramsToQueryString(filterParams);
-
-		const options: { query?: string } = {};
-		if (queryString.length) {
-			options.query = queryString;
-		}
-
-		Router.go(Router.current().route.getName(), {}, options);
-	};
-	const mvDateHandler = function (instance: any) {
-		const amount = instance.data.direction === 'previous' ? -1 : 1;
-		const filter = instance.parentInstance(2).filter as ReturnType<typeof Events['Filtering']>;
-		const start = filter.get('start');
-
-		start.add(amount, 'day');
-
-		filter.add('start', start).done();
-		updateUrl(filter);
-		return false;
-	};
-
 	const Template = TemplateAny as TemplateStaticTyped<
 		'calendarNavDayControl',
 		{ direction: Direction }
@@ -71,13 +45,20 @@ import '../styles.scss';
 	template.events({
 		'click .js-change-date'(event, instance) {
 			event.preventDefault();
-			mvDateHandler(instance);
+
+			const parentData = instance.parentInstance()?.data as Data;
+
+			const amount = instance.data.direction === 'previous' ? -1 : 1;
+
+			const newDate = parentData.date.add(amount, 'day');
+
+			parentData.onChange(newDate);
 		},
 	});
 
 	template.helpers({
 		arrow() {
-			const data = Template.currentData();
+			const data = Template.instance().data;
 
 			let isRTL = Session.equals('textDirectionality', 'rtl');
 

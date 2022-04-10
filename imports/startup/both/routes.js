@@ -233,6 +233,11 @@ Router.route('frameEvents', {
 		return Events.findFilter(filterParams, limit);
 	},
 
+	async action() {
+		await import('/imports/ui/pages/frames/events');
+		this.render();
+	},
+
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('event.list.windowtitle', 'Events'));
 	},
