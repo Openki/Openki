@@ -1,8 +1,8 @@
 <template name="calendarNavDay">
 	<div class="calendar-nav-container">
-		<div class="calendar-nav">
+		<div class="row justify-content-center align-items-center py-1">
 			{{> calendarNavDayControl direction='previous'}}
-			<div class="calendar-nav-moment">
+			<div class="col-auto">
 				<div class="lead">
 					<span class="d-none d-md-inline-block">{{dateLong date}}</span>
 					<span class="d-md-none">{{dateShort date}}</span>
@@ -17,7 +17,7 @@
 </template>
 
 <template name="calendarNavDayControl">
-	<div class="calendar-nav-control">
+	<div class="col-auto px-4">
 		<button type="button" class="btn btn-secondary js-change-date">
 			{{arrow}} <span class="d-none d-md-inline-block">{{text direction 'short'}}</span>
 		</button>
