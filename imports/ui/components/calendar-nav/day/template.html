@@ -1,17 +1,25 @@
 <template name="calendarNavDay">
 	<div class="calendar-nav-container">
-		<div class="row justify-content-center align-items-center py-1">
-			{{> calendarNavDayControl direction='previous'}}
-			<div class="col-auto">
-				<div class="lead">
-					<span class="d-none d-md-inline-block">{{dateLong date}}</span>
-					<span class="d-md-none">{{dateShort date}}</span>
-				</div>
-				<div>
-					{{i18n "calendar.weekNumber" "Week"}} {{weekNr date}}
+		<div class="row align-items-center py-1">
+			<div class="col-md-3">
+				{{> searchField searchFieldAttr}}
+			</div>
+			<div class="col-md-6">
+				<div class="row justify-content-center align-items-center">
+
+					{{> calendarNavDayControl direction='previous'}}
+					<div class="col-auto">
+						<div class="lead">
+							<span class="d-none d-md-inline-block">{{dateLong date}}</span>
+							<span class="d-md-none">{{dateShort date}}</span>
+						</div>
+						<div>
+							{{i18n "calendar.weekNumber" "Week"}} {{weekNr date}}
+						</div>
+					</div>
+					{{> calendarNavDayControl direction='next'}}
 				</div>
 			</div>
-			{{> calendarNavDayControl direction='next'}}
 		</div>
 	</div>
 </template>

@@ -22,7 +22,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 	{
 		date: moment.Moment;
 		filter: ReturnType<typeof Events['Filtering']>;
-		update: (newDate: moment.Moment) => void;
+		update: () => void;
 	}
 >;
 
@@ -46,9 +46,7 @@ template.onCreated(function () {
 		Meteor.subscribe('Events.findFilter', filterParams, limit * 2);
 	});
 
-	instance.update = (newDate: moment.Moment) => {
-		instance.filter.add('start', newDate.toISOString()).done();
-
+	instance.update = () => {
 		const filterParams = instance.filter.toParams() as Record<string, string>;
 		filterParams.count = instance.data.count || DefaultLimit.toString();
 		filterParams.control = instance.data.control || '0';
@@ -80,9 +78,15 @@ template.helpers({
 	calendarNavAttr() {
 		const instance = Template.instance();
 		return {
+			search: instance.filter.get('search'),
+			onChangeSearch: (newValue: string) => {
+				instance.filter.add('search', newValue).done();
+				instance.update();
+			},
 			date: instance.filter.get('start') || moment(reactiveNow.get()),
-			onChange: (newDate) => {
-				instance.update(newDate);
+			onChangeDate: (newDate) => {
+				instance.filter.add('start', newDate.toISOString()).done();
+				instance.update();
 			},
 		} as CalendarNavData;
 	},
