@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -20,6 +19,7 @@ import '/imports/ui/components/courses/list/course-list';
 import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/filter';
 import '/imports/ui/components/loading';
+import '/imports/ui/components/search-field';
 
 import './template.html';
 import './styles.scss';
@@ -168,23 +168,6 @@ template.onCreated(function () {
 });
 
 template.events({
-	'keyup .js-search-input': _.debounce((_event, instance) => {
-		instance.filter.add('search', $('.js-search-input').val() as string).done();
-		// we don't updateURL() here, only after the field loses focus
-	}, 200),
-
-	// Update the URI when the search-field was changed an loses focus
-	'change .js-search-field'(_event, instance) {
-		instance.updateUrl();
-	},
-
-	'click .js-find-btn'(event, instance) {
-		event.preventDefault();
-
-		instance.filter.add('search', $('.js-search-input').val() as string).done();
-		instance.updateUrl();
-	},
-
 	'mouseover .js-category-label'(this: string, _event, instance) {
 		FilterPreview({
 			property: 'category',
@@ -254,8 +237,17 @@ template.events({
 });
 
 template.helpers({
-	search() {
-		return Template.instance().filter.get('search');
+	searchFieldAttr() {
+		const instance = Template.instance();
+		return {
+			search: instance.filter.get('search'),
+			onChange: (newValue: string) => {
+				instance.filter.add('search', newValue).done();
+			},
+			onFocusOut: () => {
+				instance.updateUrl();
+			},
+		};
 	},
 
 	showingFilters() {

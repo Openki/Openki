@@ -1,0 +1,14 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+
+.js-search-field {
+	width: 100%;
+
+	@include media-breakpoint-up(md) {
+		max-width: 500px;
+	}
+}
+
+.js-search-input {
+	font-size: large;
+}
