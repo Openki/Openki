@@ -1,5 +1,5 @@
 import './calendar';
 import './event-details';
 import './info';
-import './find/find';
+import './find';
 import './not-found';
