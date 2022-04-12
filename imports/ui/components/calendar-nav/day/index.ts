@@ -5,10 +5,17 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import { Spacebars } from 'meteor/spacebars';
 import moment from 'moment';
 
+import '/imports/ui/components/search-field';
+
 import './template.html';
 import '../styles.scss';
 
-export type Data = { date: moment.Moment; onChange: (newDate: moment.Moment) => void };
+export type Data = {
+	search: string;
+	onChangeSearch: (newValue: string) => void;
+	date: moment.Moment;
+	onChangeDate: (newDate: moment.Moment) => void;
+};
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<'calendarNavDay', Data>;
@@ -29,6 +36,12 @@ export type Data = { date: moment.Moment; onChange: (newDate: moment.Moment) => 
 				navContainer.removeClass('calendar-nav-container-covering');
 			}
 		});
+	});
+	template.helpers({
+		searchFieldAttr() {
+			const data = Template.instance().data;
+			return { search: data.search, onChange: data.onChangeSearch };
+		},
 	});
 }
 
@@ -52,7 +65,7 @@ export type Data = { date: moment.Moment; onChange: (newDate: moment.Moment) => 
 
 			const newDate = parentData.date.add(amount, 'day');
 
-			parentData.onChange(newDate);
+			parentData.onChangeDate(newDate);
 		},
 	});
 

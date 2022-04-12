@@ -14,7 +14,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 	{
 		value: string;
 		onChange: (newValue: string) => void;
-		onFocusOut: () => void;
+		onFocusOut?: () => void;
 	}
 >;
 
@@ -28,13 +28,13 @@ template.events({
 
 	// Update the URI when the search-field was changed an loses focus
 	'change .js-search-field'(_event, instance) {
-		instance.data.onFocusOut();
+		instance.data.onFocusOut?.();
 	},
 
 	'click .js-find-btn'(event, instance) {
 		event.preventDefault();
 
 		instance.data.onChange(instance.$('.js-search-input').val() as string)
-		instance.data.onFocusOut();
+		instance.data.onFocusOut?.();
 	},
 });
