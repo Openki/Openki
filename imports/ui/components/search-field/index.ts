@@ -22,7 +22,7 @@ const template = Template.searchField;
 
 template.events({
 	'keyup .js-search-input': _.debounce((_event, instance) => {
-		instance.data.onChange(instance.$('.js-search-input').val() as string)
+		instance.data.onChange(instance.$('.js-search-input').val() as string);
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 
@@ -34,7 +34,7 @@ template.events({
 	'click .js-find-btn'(event, instance) {
 		event.preventDefault();
 
-		instance.data.onChange(instance.$('.js-search-input').val() as string)
+		instance.data.onChange(instance.$('.js-search-input').val() as string);
 		instance.data.onFocusOut?.();
 	},
 });
