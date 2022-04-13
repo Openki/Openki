@@ -52,6 +52,10 @@ function finderRoute(path) {
 				region: Session.get('region'),
 			});
 		},
+		async action() {
+			await import('/imports/ui/pages/find');
+			this.render();
+		},
 		onAfterAction() {
 			const { search } = this.params.query;
 			if (search) {

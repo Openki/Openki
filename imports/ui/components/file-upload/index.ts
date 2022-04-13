@@ -114,6 +114,6 @@ template.events({
 
 	'click .js-file-upload-cancel'(event) {
 		event.preventDefault();
-		Template.currentData().onCancel();
+		Template.instance().data.onCancel();
 	},
 });

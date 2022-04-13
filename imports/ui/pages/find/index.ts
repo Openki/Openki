@@ -2,7 +2,7 @@ import $ from 'jquery';
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Template } from 'meteor/templating';
+import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
 import Categories from '/imports/api/categories/categories';
@@ -21,12 +21,38 @@ import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/filter';
 import '/imports/ui/components/loading';
 
-import './find.html';
+import './template.html';
+import './styles.scss';
 
 const hiddenFilters = ['needsRole', 'categories'];
 const filters = hiddenFilters.concat(['state']);
 
-Template.find.onCreated(function () {
+const Template = TemplateAny as TemplateStaticTyped<
+	'find',
+	{
+		[key: string]: string;
+	},
+	{
+		updateUrl: () => boolean;
+		updateCategorySearch: (query: any) => void;
+
+		updateCategorySearchDebounced: ((query: any) => void) & _.Cancelable;
+		showingFilters: ReactiveVar<boolean>;
+		categorySearch: ReactiveVar<string>;
+		categorySearchResults: ReactiveVar<{
+			[name: string]: string[];
+		}>;
+
+		courseBlockSize: number;
+		courseLimit: ReactiveVar<number>;
+		coursesReady: ReactiveVar<boolean>;
+		filter: ReturnType<typeof Courses['Filtering']>;
+	}
+>;
+
+const template = Template.find;
+
+template.onCreated(function () {
 	const instance = this;
 
 	// Reflect filter selection in URI
@@ -34,17 +60,19 @@ Template.find.onCreated(function () {
 	// change. For example, when the search-field receives keydowns, the filter
 	// is updated but the change is not reflected in the URI.
 	instance.updateUrl = function () {
-		const urlParams = instance.filter.toParams();
+		const urlParams = instance.filter.toParams() as {
+			[name: string]: string;
+		};
 		delete urlParams.region; // HACK region is kept in the session (for bad reasons)
 		delete urlParams.internal;
 
 		// used to keep scrollpos when navigating back
 		if (instance.courseLimit.get() > instance.courseBlockSize) {
-			urlParams.coursesAmount = instance.courseLimit.get();
+			urlParams.coursesAmount = instance.courseLimit.get().toString();
 		}
 		const queryString = UrlTools.paramsToQueryString(urlParams);
 
-		const options = {};
+		const options: { query?: string } = {};
 
 		if (queryString.length) {
 			options.query = queryString;
@@ -67,11 +95,13 @@ Template.find.onCreated(function () {
 		}
 
 		const queryToLowerCase = query.toLowerCase();
-		const results = {};
+		const results = {} as {
+			[name: string]: string[];
+		};
 
 		Object.keys(Categories).forEach((mainCategory) => {
 			if (i18n(`category.${mainCategory}`).toLowerCase().includes(queryToLowerCase)) {
-				results[mainCategory] = [];
+				results[mainCategory] = [] as string[];
 			}
 			Categories[mainCategory].forEach((subCategory) => {
 				if (i18n(`category.${subCategory}`).toLowerCase().includes(queryToLowerCase)) {
@@ -137,25 +167,25 @@ Template.find.onCreated(function () {
 	});
 });
 
-Template.find.events({
-	'keyup .js-search-input': _.debounce((event, instance) => {
-		instance.filter.add('search', $('.js-search-input').val()).done();
+template.events({
+	'keyup .js-search-input': _.debounce((_event, instance) => {
+		instance.filter.add('search', $('.js-search-input').val() as string).done();
 		// we don't updateURL() here, only after the field loses focus
 	}, 200),
 
 	// Update the URI when the search-field was changed an loses focus
-	'change .js-search-field'(event, instance) {
+	'change .js-search-field'(_event, instance) {
 		instance.updateUrl();
 	},
 
 	'click .js-find-btn'(event, instance) {
 		event.preventDefault();
 
-		instance.filter.add('search', $('.js-search-input').val()).done();
+		instance.filter.add('search', $('.js-search-input').val() as string).done();
 		instance.updateUrl();
 	},
 
-	'mouseover .js-category-label'(e, instance) {
+	'mouseover .js-category-label'(this: string, _event, instance) {
 		FilterPreview({
 			property: 'category',
 			id: this,
@@ -165,7 +195,7 @@ Template.find.events({
 		});
 	},
 
-	'mouseout .js-category-label'(e, instance) {
+	'mouseout .js-category-label'(this: string, _event, instance) {
 		FilterPreview({
 			property: 'category',
 			id: this,
@@ -175,17 +205,21 @@ Template.find.events({
 		});
 	},
 
-	'mouseover .js-group-label, mouseout .js-group-label'(e, instance) {
+	'mouseover .js-group-label, mouseout .js-group-label'(
+		this: { groupId: string },
+		event,
+		instance,
+	) {
 		FilterPreview({
 			property: 'group',
 			id: this.groupId,
-			activate: e.type === 'mouseover',
+			activate: event.type === 'mouseover',
 			delayed: true,
 			instance,
 		});
 	},
 
-	'click .js-category-label'(event, instance) {
+	'click .js-category-label'(_event, instance) {
 		instance.filter.add('categories', `${this}`).done();
 		instance.$('.js-search-categories').val('');
 		instance.updateCategorySearch('');
@@ -197,12 +231,12 @@ Template.find.events({
 		window.scrollTo(0, 0);
 	},
 
-	'click .js-toggle-filter'(event, instance) {
+	'click .js-toggle-filter'(_event, instance) {
 		const showingFilters = !instance.showingFilters.get();
 		instance.showingFilters.set(showingFilters);
 
 		if (!showingFilters) {
-			filters.forEach((filter) => instance.filter.disable(filter));
+			filters.forEach((filter) => instance.filter.disable(filter as any));
 			instance.filter.done();
 			instance.updateUrl();
 		}
@@ -212,14 +246,14 @@ Template.find.events({
 		RegionSelection.change('all');
 	},
 
-	'click .js-more-courses'(event, instance) {
+	'click .js-more-courses'(_event, instance) {
 		const { courseLimit } = instance;
 		courseLimit.set(courseLimit.get() + instance.courseBlockSize);
 		instance.updateUrl();
 	},
 });
 
-Template.find.helpers({
+template.helpers({
 	search() {
 		return Template.instance().filter.get('search');
 	},
@@ -241,7 +275,7 @@ Template.find.helpers({
 
 	hasResults() {
 		const filterQuery = Template.instance().filter.toQuery();
-		return Courses.findFilter(filterQuery, 1).count() > 0;
+		return Courses.findFilter(filterQuery as any, 1).count() > 0;
 	},
 
 	hasMore() {
@@ -252,7 +286,7 @@ Template.find.helpers({
 
 		const filterQuery = instance.filter.toQuery();
 		const limit = instance.courseLimit.get();
-		const results = Courses.findFilter(filterQuery, limit + 1);
+		const results = Courses.findFilter(filterQuery as any, limit + 1);
 
 		return results.count() > limit;
 	},
@@ -261,7 +295,7 @@ Template.find.helpers({
 		const instance = Template.instance();
 		const filterQuery = instance.filter.toQuery();
 
-		return Courses.findFilter(filterQuery, instance.courseLimit.get());
+		return Courses.findFilter(filterQuery as any, instance.courseLimit.get());
 	},
 
 	ready() {
@@ -274,14 +308,14 @@ Template.find.helpers({
 
 	activeFilters() {
 		const activeFilters = Template.instance().filter;
-		return hiddenFilters.some((filter) => !!activeFilters.get(filter));
+		return hiddenFilters.some((filter) => !!activeFilters.get(filter as any));
 	},
 
 	searchIsLimited() {
 		const activeFilters = Template.instance().filter;
 		const relevantFilters = hiddenFilters.slice(); // clone
 		relevantFilters.push('region');
-		return relevantFilters.some((filter) => !!activeFilters.get(filter));
+		return relevantFilters.some((filter) => !!activeFilters.get(filter as any));
 	},
 
 	isMobile() {

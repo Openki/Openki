@@ -55,7 +55,7 @@ import './styles.scss';
 		const instance = this;
 
 		(instance.parentInstance() as any).updateSpacerHeight();
-		const alert = Template.currentData();
+		const alert = instance.data;
 		instance.$('.alert-message').toggleClass('is-faded-in');
 
 		instance.timedRemove = setTimeout(() => instance.remove(alert._id), alert.timeout);
@@ -63,7 +63,7 @@ import './styles.scss';
 
 	template.events({
 		'click .js-remove-alert'(_event, instance) {
-			const alert = Template.currentData();
+			const alert = instance.data;
 
 			if (instance.timedRemove) {
 				clearTimeout(instance.timedRemove);
