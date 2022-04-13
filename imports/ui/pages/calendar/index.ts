@@ -130,4 +130,3 @@ import './styles.scss';
 		},
 	});
 }
-
