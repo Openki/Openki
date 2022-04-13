@@ -106,7 +106,7 @@ template.events({
 				sendCopy: state.get('sendCopy') || false,
 			};
 
-			const data = Template.currentData();
+			const { data } = instance;
 			if (data.courseId) {
 				options.courseId = data.courseId;
 			}

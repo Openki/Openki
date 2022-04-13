@@ -21,7 +21,7 @@ const template = Template.tenantDetailsPage;
 
 template.helpers({
 	editingSettings() {
-		const { tenant } = Template.currentData();
+		const { tenant } = Template.instance().data;
 		return tenant.editableBy(Meteor.user());
 	},
 });
