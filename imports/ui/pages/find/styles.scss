@@ -1,16 +1,14 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
 .find-heading {
 	color: $blue;
 	margin-top: 0;
-
-	@media (max-width: $screen-xs-max) {
-		margin: 0 0 10px;
-	}
 }
 
 .js-search-field {
 	width: 100%;
 
-	@media (min-width: $screen-md-min) {
+	@include media-breakpoint-up(md) {
 		max-width: 500px;
 	}
 }
@@ -25,7 +23,7 @@
 }
 
 .no-results-body > .fa-exclamation-circle {
-	color: $brand-warning;
+	color: $warning;
 }
 
 .no-results > .btn-group {

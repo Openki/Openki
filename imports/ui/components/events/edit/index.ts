@@ -94,7 +94,7 @@ template.onCreated(function () {
 		instance.subscribe('courseDetails', courseId);
 	}
 
-	this.subscribe('affectedReplica', Template.currentData()._id);
+	this.subscribe('affectedReplica', instance.data._id);
 
 	const parent = instance.parentInstance();
 
@@ -155,7 +155,7 @@ function getEventEndMoment(instance: ReturnType<typeof Template['instance']>) {
 }
 
 function getEventDuration(instance: ReturnType<typeof Template['instance']>) {
-	const duration = parseInt(instance.$('.js-event-duration').val() as string, 10);
+	const duration = parseInt(instance.$('.js-event-duration').val() as string, 10) || 0;
 	return Math.max(0, duration);
 }
 
