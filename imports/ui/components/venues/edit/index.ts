@@ -171,8 +171,8 @@ import './styles.scss';
 				address: instance.$('.js-address').val() as string,
 				route: instance.$('.js-route').val() as string,
 				short: instance.$('.js-short').val() as string,
-				maxPeople: parseInt(instance.$('.js-maxPeople').val() as string, 10),
-				maxWorkplaces: parseInt(instance.$('.js-maxWorkplaces').val() as string, 10),
+				maxPeople: parseInt(instance.$('.js-maxPeople').val() as string, 10) || undefined, // give back undefined in case of NaN or 0
+				maxWorkplaces: parseInt(instance.$('.js-maxWorkplaces').val() as string, 10) || undefined, // give back undefined in case of NaN or 0
 				facilities: [],
 				otherFacilities: instance.$('.js-otherFacilities').val() as string,
 			};
@@ -237,7 +237,7 @@ import './styles.scss';
 
 						Router.go('venueDetails', { _id: res });
 					} else {
-						(instance.parentInstance() as any).editing.set(false);
+						(instance.parentInstance() as any).state.set('editing', false);
 					}
 				} catch (err) {
 					Alert.serverError(err, i18n('venue.saving.error', 'Could not save the venue'));
@@ -255,7 +255,7 @@ import './styles.scss';
 			if (instance.isNew) {
 				Router.go('/');
 			} else {
-				(instance.parentInstance() as any).editing.set(false);
+				(instance.parentInstance() as any).state.set('editing', false);
 			}
 		},
 

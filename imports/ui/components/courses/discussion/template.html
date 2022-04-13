@@ -27,9 +27,9 @@
 
 <template name="post">
 	{{#if editing}}
-		{{> postEdit}}
+		{{> postEdit this}}
 	{{else}}
-		{{> postShow}}
+		{{> postShow this}}
 	{{/if}}
 	{{#if notAllResponsesShown}}
 		<button class="mt-3 btn btn-link p-0 toggle-all-responses js-show-previous-replies"
