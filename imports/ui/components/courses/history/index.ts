@@ -14,12 +14,15 @@ const template = Template.coursehistory;
 
 template.helpers({
 	pastEventsList() {
+		const instance = Template.instance();
+		const { course } = instance.data;
+
 		const historyEntries: { dateTime: Date | undefined; template: string; data: object }[] = [];
 
 		// add past events
 		historyEntries.push(
 			...Events.find({
-				courseId: Template.currentData().course._id,
+				courseId: course._id,
 				start: { $lt: new Date() },
 			}).map((e) => ({
 				dateTime: e.start,
@@ -27,8 +30,6 @@ template.helpers({
 				data: e,
 			})),
 		);
-
-		const course = Template.instance().data.course;
 
 		// merge with all history entries
 		historyEntries.push(

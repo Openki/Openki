@@ -109,7 +109,7 @@ import './styles.scss';
 			if (instance.state.get('allEventsSelected')) {
 				selectedEvents = [];
 			} else {
-				selectedEvents = Template.currentData().upcomingEvents.fetch();
+				selectedEvents = instance.data.upcomingEvents.fetch();
 			}
 
 			instance.state.set({ selectedEvents });
