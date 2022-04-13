@@ -32,7 +32,7 @@ import './styles.scss';
 
 	template.helpers({
 		color() {
-			const data = Template.currentData();
+			const data = Template.instance().data;
 
 			// the form sets the color directly
 			if (data.color !== undefined) {
@@ -51,7 +51,7 @@ import './styles.scss';
 		},
 
 		class() {
-			return Template.currentData().class || '';
+			return Template.instance().data.class || '';
 		},
 	});
 }

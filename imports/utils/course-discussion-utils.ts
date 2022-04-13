@@ -8,7 +8,7 @@ export function mayDeletePost(
 	course: { members: CourseMemberEntity[] },
 	post: { userId?: string },
 ) {
-	if (!user || !post.userId) {
+	if (!user) {
 		return false;
 	}
 	return (

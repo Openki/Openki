@@ -181,7 +181,7 @@ template.helpers({
 		return instance.mayEdit.get() && instance.editableShort;
 	},
 	hasContent() {
-		const { group } = Template.currentData();
+		const { group } = Template.instance().data;
 		if (group.isNew()) {
 			return true;
 		}
@@ -201,7 +201,7 @@ template.helpers({
 	},
 	editingSettings() {
 		const instance = Template.instance();
-		const { group } = Template.currentData();
+		const { group } = instance.data;
 		return instance.mayEdit.get() && !group.isNew() && instance.editingSettings.get();
 	},
 });

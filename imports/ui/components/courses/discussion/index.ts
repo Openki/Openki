@@ -71,7 +71,7 @@ import './styles.scss';
 
 		posts() {
 			const instance = Template.instance();
-			const data = Template.currentData();
+			const { data } = instance;
 
 			let posts = CourseDiscussions.find(
 				{
@@ -96,7 +96,7 @@ import './styles.scss';
 
 		newPost() {
 			const instance = Template.instance();
-			const data = Template.currentData();
+			const { data } = instance;
 
 			return {
 				new: true,
@@ -159,7 +159,7 @@ import './styles.scss';
 			// Note that the 'discussion' subscription from the 'discussion' template
 			// covers responses as well
 			const instance = Template.instance();
-			const post = Template.currentData();
+			const post = Template.instance().data;
 
 			if (!instance.isParent) {
 				return false;
@@ -176,7 +176,7 @@ import './styles.scss';
 
 		notAllResponsesShown() {
 			const instance = Template.instance();
-			const post = Template.currentData();
+			const post = instance.data;
 
 			if (!instance.isParent) {
 				return false;
@@ -216,7 +216,7 @@ import './styles.scss';
 		},
 
 		async 'click button.js-delete-comment'(event) {
-			const post = Template.currentData();
+			const post = Template.instance().data;
 
 			Tooltips.hide();
 			event.stopImmediatePropagation();
@@ -238,7 +238,7 @@ import './styles.scss';
 
 	template.helpers({
 		postClasses() {
-			const post = Template.currentData();
+			const post = Template.instance().data;
 
 			const classes = [];
 
@@ -251,12 +251,12 @@ import './styles.scss';
 		},
 
 		mayEdit() {
-			const post = Template.currentData();
+			const post = Template.instance().data;
 			return CourseDiscussionUtils.mayEditPost(Meteor.user(), post);
 		},
 
 		mayDelete() {
-			const post = Template.currentData();
+			const post = Template.instance().data;
 			const course = Courses.findOne(post.courseId);
 			if (!course) {
 				throw new Error('Unexpected falsy: course');
@@ -265,7 +265,7 @@ import './styles.scss';
 		},
 
 		hasBeenEdited() {
-			const post = Template.currentData();
+			const post = Template.instance().data;
 			return moment(post.time_updated).isAfter(post.time_created);
 		},
 	});
@@ -353,7 +353,7 @@ import './styles.scss';
 		},
 
 		hasBeenEdited() {
-			const post = Template.currentData();
+			const post = Template.instance().data;
 			return moment(post.time_updated).isAfter(post.time_created);
 		},
 

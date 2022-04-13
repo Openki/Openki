@@ -173,7 +173,7 @@ template.helpers({
 	replicaDateCount: () => Template.instance().activeDays().length,
 
 	replicaDates() {
-		const event = Template.currentData();
+		const event = Template.instance().data;
 		const start = moment(event.start);
 		return Template.instance()
 			.activeDays()
