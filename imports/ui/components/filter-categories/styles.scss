@@ -1,0 +1,58 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+
+.filter-categories-select {
+	margin-bottom: 10px;
+	padding: 0;
+}
+
+.filter-no-categories-found {
+	padding: 5px 10px;
+
+	&:hover {
+		cursor: default;
+	}
+}
+
+.filter-categories-dropdown {
+	max-height: 300px;
+	min-width: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.filter-categories-dropdown .js-category-label {
+	background-color: $dropdown-bg;
+	box-shadow: none;
+	position: relative;
+}
+
+.js-toggle-subcategories {
+	padding: 0 5px;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.dropdown-menu > .js-sub-category {
+	@include td-margin(left, 20px);
+	border-left: 1px solid $blue-light;
+	display: none;
+}
+
+.js-sub-category > a {
+	@include td-padding(left, 15px);
+}
+
+.filter-selected-categories {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.filter-selected-categories > li {
+	@include td-padding-all(0, 3px, 3px, 0);
+	margin-bottom: 3px;
+}
+
