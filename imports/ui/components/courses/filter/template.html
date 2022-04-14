@@ -88,21 +88,6 @@
 		<h4 class="filter-component-header">
 			{{i18n 'find.filter.categories' 'Categories'}}
 		</h4>
-		{{#unless isMobile}}
-			{{#if categories}}
-				<ul class="filter-selected-categories">
-					{{#each categories}}
-						<li>
-							{{> categoryLabel}}
-							<button type="button"
-									class="remove-btn js-remove-category-btn fa-solid fa-xmark"
-									data-tooltip="{{i18n 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=(categoryName this)}}">
-							</button>
-						</li>
-					{{/each}}
-				</ul>
-			{{/if}}
-		{{/unless}}
 		<div class="input-group input-group-outline filter-categories-select">
 			<input class="js-search-categories form-control"
 				   placeholder="{{i18n 'find.searchCategories.placeholder' 'Choose categories'}}"
@@ -142,20 +127,17 @@
 				{{/if}}
 			</ul>
 		</div>
-		{{#if isMobile}}
-			{{#if categories}}
-				<ul class="filter-selected-categories">
-					{{#each categories}}
-						<li>
-							<a class="js-category-label" href="#">{{categoryName this}}</a>
-							<button class="remove-btn js-remove-category-btn fa-solid fa-xmark"
-									data-tooltip="{{i18n 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=(categoryName this)}}"
-									type="button">
-							</button>
-						</li>
-					{{/each}}
-				</ul>
-			{{/if}}
+		{{#if categories}}
+			<ul class="filter-selected-categories">
+				{{#each categories}}
+					<li>
+						<button type="button" class="remove-btn js-remove-category-btn"
+								data-tooltip="{{i18n 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=(categoryName this)}}">
+							{{categoryName this}} <i class="fa-solid fa-xmark fa-fw"></i>
+						</button>
+					</li>
+				{{/each}}
+			</ul>
 		{{/if}}
 	</div>
 </template>
