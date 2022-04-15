@@ -5,8 +5,7 @@
 				{{> searchField searchFieldAttr}}
 			</div>
 			<div class="col-md-6">
-				<div class="row justify-content-center align-items-center">
-
+				<div class="row justify-content-center align-items-center text-center">
 					{{> calendarNavDayControl direction='previous'}}
 					<div class="col-auto">
 						<div class="lead">
@@ -19,6 +18,9 @@
 					</div>
 					{{> calendarNavDayControl direction='next'}}
 				</div>
+			</div>
+			<div class="col-md-3">
+				{{> filterCategories filterCategoriesAttr}}
 			</div>
 		</div>
 	</div>

@@ -88,6 +88,15 @@ template.helpers({
 				instance.filter.add('start', newDate.toISOString()).done();
 				instance.update();
 			},
+			categories: instance.filter.get('categories'),
+			onAddCategory: (categorie) => {
+				instance.filter.add('categories', categorie).done();
+				instance.update();
+			},
+			onRemoveCategory: (categorie) => {
+				instance.filter.remove('categories', categorie).done();
+				instance.update();
+			},
 		} as CalendarNavData;
 	},
 
