@@ -118,7 +118,7 @@ template.events({
 
 	'click .js-toggle-subcategories'(this: string, event, instance) {
 		event.stopPropagation();
-
+		event.preventDefault();
 		instance.$(`.js-sub-category.${this}`).toggle();
 		instance.$(`.js-toggle-subcategories.${this} span`).toggleClass('fa-angle-down fa-angle-up');
 	},
