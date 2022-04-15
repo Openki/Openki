@@ -256,6 +256,10 @@ export const save = ServerMethod(
 			);
 
 			historyDenormalizer.afterUpdate(courseId, user._id);
+			if (changes.categories) {
+				// if categories are update, update those from the event
+				Meteor.call('events.updateCategories', { courseId });
+			}
 		}
 
 		if (changes.subs) {
