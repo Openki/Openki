@@ -321,6 +321,7 @@ export const save = ServerMethod(
 					slug: editFields.slug as string,
 					startLocal: editFields.startLocal as string,
 				});
+				Meteor.call('events.updateCategories', { _id: eventId });
 			}
 		} else {
 			Events.update(eventId, { $set: editFields });
@@ -372,6 +373,7 @@ export const save = ServerMethod(
 		if (Meteor.isServer) {
 			Meteor.call('event.updateVenue', eventId, AsyncTools.logErrors);
 			Meteor.call('event.updateGroups', eventId, AsyncTools.logErrors);
+			Meteor.call('event.updateCategories', eventId, AsyncTools.logErrors);
 			Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);
 
 			// the assumption is that all replicas have the same course if any
@@ -573,6 +575,16 @@ Meteor.methods({
 		const idOnly = { fields: { _id: 1 } };
 		Events.find(selector, idOnly).forEach((event) => {
 			Events.updateGroups(event._id);
+		});
+	},
+
+	/**
+	 * Enrich the categories from the course
+	 */
+	'event.updateCategories'(selector) {
+		const idOnly = { fields: { _id: 1 } };
+		Events.find(selector, idOnly).forEach((event) => {
+			Events.updateCategories(event._id);
 		});
 	},
 });
