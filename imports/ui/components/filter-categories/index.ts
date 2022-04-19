@@ -16,7 +16,11 @@ import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'filterCategories',
-	{ categories: string[]; onAdd: (category: string) => void; onRemove: (category: string) => void }
+	{
+		categories: string[] | undefined;
+		onAdd: (category: string) => void;
+		onRemove: (category: string) => void;
+	}
 >;
 
 const template = Template.filterCategories;
@@ -75,7 +79,7 @@ template.helpers({
 
 	categorySelected(category: string) {
 		const { data } = Template.instance();
-		if (!data.categories.includes(category)) {
+		if (!data.categories?.includes(category)) {
 			return {};
 		}
 		return { selected: 'selected' };
