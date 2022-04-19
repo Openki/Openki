@@ -83,7 +83,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 		return this;
 	}
 
-	remove(name: keyof T, param: string) {
+	remove(name: keyof T, param?: string) {
 		try {
 			if (!this._availablePredicates[name]) {
 				throw new FilteringReadError('', `No predicate ${name}`);

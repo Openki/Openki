@@ -49,7 +49,7 @@ export type Data = {
 		filterCategoriesAttr() {
 			const data = Template.instance().data;
 			return {
-				categories: data.categories,
+				categories: data.categories || [],
 				onAdd: data.onAddCategory,
 				onRemove: data.onRemoveCategory,
 			};

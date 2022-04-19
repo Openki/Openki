@@ -80,12 +80,15 @@ template.helpers({
 		return {
 			search: instance.filter.get('search'),
 			onChangeSearch: (newValue: string) => {
-				instance.filter.add('search', newValue).done();
+				instance.filter.add('search', newValue).remove('start').remove('end').done();
 				instance.update();
 			},
 			date: instance.filter.get('start') || moment(reactiveNow.get()),
 			onChangeDate: (newDate) => {
-				instance.filter.add('start', newDate.toISOString()).done();
+				instance.filter
+					.add('start', newDate.startOf('day').toISOString())
+					.add('end', newDate.add(1, 'days').startOf('day').toISOString())
+					.done();
 				instance.update();
 			},
 			categories: instance.filter.get('categories'),

@@ -107,7 +107,7 @@ export const flag: Predicate<boolean> = function (param) {
 
 export const date: Predicate<moment.Moment, Date, string | moment.Moment> = function (param) {
 	if (!param) {
-		throw new FilteringReadError('', 'Empty date');
+		return undefined;
 	}
 	let value: moment.Moment;
 	if (param === 'now') {

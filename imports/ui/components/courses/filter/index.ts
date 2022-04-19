@@ -232,7 +232,7 @@ import './styles.scss';
 		filterCategoriesAttr() {
 			const { findInstance } = Template.instance();
 			return {
-				categories: findInstance.filter.get('categories'),
+				categories: findInstance.filter.get('categories') || [],
 				onAdd: (category: string) => {
 					findInstance.filter.add('categories', category).done();
 					findInstance.updateUrl();
