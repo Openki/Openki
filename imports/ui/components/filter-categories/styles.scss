@@ -1,58 +1,26 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
-
-.filter-categories-select {
-	margin-bottom: 10px;
-	padding: 0;
+/* stylelint-disable-next-line selector-class-pattern */
+.select2-results__option {
+	line-height: 1.3;
+	padding-bottom: 0 !important;
+	padding-top: 0 !important;
 }
 
-.filter-no-categories-found {
-	padding: 5px 10px;
-
-	&:hover {
-		cursor: default;
-	}
+/* stylelint-disable-next-line selector-class-pattern */
+.select2-selection--multiple::before {
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 5px solid #888;
+	content: '';
+	position: absolute;
+	right: 7px;
+	top: 42%;
 }
 
-.filter-categories-dropdown {
-	max-height: 300px;
-	min-width: 100%;
-	overflow-x: hidden;
-	overflow-y: auto;
-}
+.categories-select-sub-option {
+	@include td-margin(left, 0.5rem);
 
-.filter-categories-dropdown .js-category-label {
-	background-color: $dropdown-bg;
-	box-shadow: none;
-	position: relative;
-}
-
-.js-toggle-subcategories {
-	padding: 0 5px;
-
-	&:hover {
-		cursor: pointer;
-	}
-}
-
-.dropdown-menu > .js-sub-category {
-	@include td-margin(left, 20px);
+	@include td-padding(left, 0.5rem);
 	border-left: 1px solid $blue-light;
-	display: none;
 }
-
-.js-sub-category > a {
-	@include td-padding(left, 15px);
-}
-
-.filter-selected-categories {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-.filter-selected-categories > li {
-	@include td-padding-all(0, 3px, 3px, 0);
-	margin-bottom: 3px;
-}
-
