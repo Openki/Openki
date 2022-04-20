@@ -392,6 +392,8 @@
   "filterCaptions.showProposal": "Show all proposed courses",
   "filterCaptions.upcoming.label": "Upcoming",
   "filterCaptions.upcoming.title": "Show all courses with upcoming events",
+  "filterGroups.no-groups-found": "No groups found",
+  "filterGroups.placeholder": "Choose group",
   "find.filter-no-categories-found": "No categories found",
   "find.filter.categories": "Categories",
   "find.filter.courseRoles": "Course roles",

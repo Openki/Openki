@@ -6,6 +6,8 @@ import Events from '/imports/api/events/events';
 
 import * as UrlTools from '/imports/utils/url-tools';
 import { reactiveNow } from '/imports/utils/reactive-now';
+import { Filtering } from '/imports/utils/filtering';
+import * as Predicates from '/imports/utils/predicates';
 
 import '/imports/ui/components/events/list';
 import '/imports/ui/components/calendar-nav/day';
@@ -50,6 +52,7 @@ template.onCreated(function () {
 		const filterParams = instance.filter.toParams() as Record<string, string>;
 		filterParams.count = instance.data.count || DefaultLimit.toString();
 		filterParams.control = instance.data.control || '0';
+		filterParams['control.groups'] = instance.data['control.groups'] || '';
 		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 		const queryString = UrlTools.paramsToQueryString(filterParams);
 
@@ -91,13 +94,28 @@ template.helpers({
 					.done();
 				instance.update();
 			},
-			categories: instance.filter.get('categories'),
-			onAddCategory: (categorie) => {
-				instance.filter.add('categories', categorie).done();
+			availableGroups: new Filtering({
+				'control.groups': Predicates.ids,
+			})
+				.read(instance.data)
+				.done()
+				.get('control.groups'),
+			selectedGroups: instance.filter.get('groups'),
+			onAddGroup: (group) => {
+				instance.filter.add('groups', group).done();
 				instance.update();
 			},
-			onRemoveCategory: (categorie) => {
-				instance.filter.remove('categories', categorie).done();
+			onRemoveGroup: (group) => {
+				instance.filter.remove('groups', group).done();
+				instance.update();
+			},
+			categories: instance.filter.get('categories'),
+			onAddCategory: (category) => {
+				instance.filter.add('categories', category).done();
+				instance.update();
+			},
+			onRemoveCategory: (category) => {
+				instance.filter.remove('categories', category).done();
 				instance.update();
 			},
 		} as CalendarNavData;

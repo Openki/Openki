@@ -1,7 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
 
 import { Courses } from '/imports/api/courses/courses';
 
