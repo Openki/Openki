@@ -1,10 +1,10 @@
 <template name="calendarNavDay">
 	<div class="calendar-nav-container">
-		<div class="row align-items-center py-1">
-			<div class="col-md-3">
+		<div class="row align-items-center p-2">
+			<div class="col-md-3 col-lg-4 p-1">
 				{{> searchField searchFieldAttr}}
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-6 col-lg-4 p-1">
 				<div class="row justify-content-center align-items-center text-center">
 					{{> calendarNavDayControl direction='previous'}}
 					<div class="col-auto">
@@ -19,9 +19,18 @@
 					{{> calendarNavDayControl direction='next'}}
 				</div>
 			</div>
-			<div class="col-md-3">
-				{{> filterCategories filterCategoriesAttr}}
-			</div>
+			{{#if availableGroups}}
+				<div class="col-md-4 col-lg-2 p-1">
+					{{> filterGroups filterGroupsAttr}}
+				</div>
+				<div class="col-md-4 col-lg-2 p-1">
+					{{> filterCategories filterCategoriesAttr}}
+				</div>
+			{{else}}
+				<div class="offset-lg-2 col-md-4 col-lg-2 p-1">
+					{{> filterCategories filterCategoriesAttr}}
+				</div>
+			{{/if}}
 		</div>
 	</div>
 </template>

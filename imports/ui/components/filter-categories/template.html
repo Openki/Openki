@@ -1,7 +1,6 @@
 <template name="filterCategories">
 	{{#if categories}}
-		<select class="js-categories-select categories-select form-control"
-				multiple="multiple">
+		<select class="js-categories-select categories-select form-control" multiple="multiple">
 			{{#each categories}}
 				<option class="js-categories-select-option categories-select-option"
 						{{categorySelected this}} value="{{this}}">{{categoryName this}}

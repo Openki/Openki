@@ -6,6 +6,7 @@ import { Spacebars } from 'meteor/spacebars';
 import moment from 'moment';
 
 import '/imports/ui/components/search-field';
+import '/imports/ui/components/filter-groups';
 import '/imports/ui/components/filter-categories';
 
 import './template.html';
@@ -16,6 +17,10 @@ export type Data = {
 	onChangeSearch: (newValue: string) => void;
 	date: moment.Moment;
 	onChangeDate: (newDate: moment.Moment) => void;
+	availableGroups: string[];
+	selectedGroups: string[];
+	onAddGroup: (group: string) => void;
+	onRemoveGroup: (group: string) => void;
 	categories: string[];
 	onAddCategory: (category: string) => void;
 	onRemoveCategory: (category: string) => void;
@@ -46,10 +51,19 @@ export type Data = {
 			const data = Template.instance().data;
 			return { search: data.search, onChange: data.onChangeSearch };
 		},
+		filterGroupsAttr() {
+			const data = Template.instance().data;
+			return {
+				availableGroups: data.availableGroups,
+				selectedGroups: data.selectedGroups,
+				onAdd: data.onAddGroup,
+				onRemove: data.onRemoveGroup,
+			};
+		},
 		filterCategoriesAttr() {
 			const data = Template.instance().data;
 			return {
-				categories: data.categories || [],
+				categories: data.categories,
 				onAdd: data.onAddCategory,
 				onRemove: data.onRemoveCategory,
 			};
