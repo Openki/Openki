@@ -232,7 +232,6 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 			let editors = event.groupOrganizers.slice(); // Clone
 
 			// If an event has a parent course, it inherits all groups and all editors from it.
-			/** @type {string[]} */
 			let courseGroups: string[] = [];
 			if (event.courseId) {
 				const course = Courses.findOne(event.courseId);
