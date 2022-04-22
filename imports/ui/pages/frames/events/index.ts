@@ -52,7 +52,7 @@ template.onCreated(function () {
 		const filterParams = instance.filter.toParams() as Record<string, string>;
 		filterParams.count = instance.data.count || DefaultLimit.toString();
 		filterParams.control = instance.data.control || '0';
-		filterParams['control.groups'] = instance.data['control.groups'] || '';
+		filterParams.filterGroups = instance.data.filterGroups || '';
 		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 		const queryString = UrlTools.paramsToQueryString(filterParams);
 
@@ -95,11 +95,11 @@ template.helpers({
 				instance.update();
 			},
 			availableGroups: new Filtering({
-				'control.groups': Predicates.ids,
+				filterGroups: Predicates.ids,
 			})
 				.read(instance.data)
 				.done()
-				.get('control.groups'),
+				.get('filterGroups'),
 			selectedGroups: instance.filter.get('groups'),
 			onAddGroup: (group) => {
 				instance.filter.add('groups', group).done();
