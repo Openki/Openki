@@ -181,7 +181,6 @@
 	"event.title.placeholder": "Un título pegadizo",
 	"event.windowtitle.create": "Crear evento",
 	"find.filter.categories": "Categorías",
-	"find.filter.removeCategory": "Remover categoría {CATEGORYNAME} del filtro",
 	"find.needsHost": "Buscando host",
 	"find.needsMentor": "Buscando mentor",
 	"find.search_filter.title": "Busqueda filtrada",
