@@ -4,10 +4,8 @@ import { i18n } from '/imports/startup/both/i18next';
 import { Roles } from '/imports/api/roles/roles';
 
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
-import { ScssVars } from '/imports/ui/lib/scss-vars';
-import * as Viewport from '/imports/ui/lib/viewport';
-import * as StringTools from '/imports/utils/string-tools';
 
+import '/imports/ui/components/filter-categories';
 import '/imports/ui/components/courses/categories';
 
 import './template.html';
@@ -214,19 +212,6 @@ import './styles.scss';
 		});
 	});
 
-	template.onRendered(function () {
-		const instance = this;
-		const catSelect = instance.$('.filter-categories-select');
-
-		catSelect.on('show.bs.dropdown hide.bs.dropdown', () => {
-			instance.$('.dropdown-toggle').fadeToggle(200);
-		});
-
-		catSelect.on('shown.bs.dropdown', () => {
-			instance.$('.js-search-categories').trigger('select');
-		});
-	});
-
 	template.helpers({
 		roles() {
 			return Template.instance().roles;
@@ -244,29 +229,19 @@ import './styles.scss';
 			return classes.join(' ');
 		},
 
-		categories() {
+		filterCategoriesAttr() {
 			const { findInstance } = Template.instance();
-			return findInstance.filter.get('categories');
-		},
-
-		availableCategories() {
-			const { findInstance } = Template.instance();
-			return Object.keys(findInstance.categorySearchResults.get());
-		},
-
-		availableSubcategories(mainCategory: string) {
-			const { findInstance } = Template.instance();
-			return findInstance.categorySearchResults.get()[mainCategory];
-		},
-
-		categoryNameMarked() {
-			const search = Template.instance().findInstance.categorySearch.get();
-
-			return StringTools.markedName(search, i18n(`category.${this}`));
-		},
-
-		isMobile() {
-			return Viewport.get().width <= ScssVars.screenXS;
+			return {
+				categories: findInstance.filter.get('categories'),
+				onAdd: (category: string) => {
+					findInstance.filter.add('categories', category).done();
+					findInstance.updateUrl();
+				},
+				onRemove: (category: string) => {
+					findInstance.filter.remove('categories', category).done();
+					findInstance.updateUrl();
+				},
+			};
 		},
 	});
 
@@ -286,58 +261,6 @@ import './styles.scss';
 				id: instance.$(event.currentTarget as any).data('filter-name'),
 				activate: event.type === 'mouseover',
 			});
-		},
-
-		'mouseout .js-category-selection-label, mouseover .js-category-selection-label'(
-			this: string,
-			event,
-		) {
-			FilterPreview({
-				property: 'category',
-				id: this,
-				activate: event.type === 'mouseover',
-			});
-		},
-
-		'keyup .js-search-categories'(_event, instance) {
-			const query = instance.$('.js-search-categories').val();
-
-			instance.findInstance.updateCategorySearchDebounced(query);
-
-			instance.$('.dropdown-toggle').dropdown('show');
-		},
-
-		'click .js-search-categories'(_event, instance) {
-			instance.$('.dropdown-toggle').dropdown('toggle');
-		},
-
-		'click .js-toggle-subcategories'(event, instance) {
-			event.stopPropagation();
-			instance.$(`.js-sub-category.${this}`).toggle();
-			instance.$(`.js-toggle-subcategories.${this} span`).toggleClass('fa-angle-down fa-angle-up');
-		},
-
-		'click .js-category-selection-label'(event, instance) {
-			event.preventDefault();
-			const { findInstance } = instance;
-
-			// Add to filter
-			findInstance.filter.add('categories', `${this}`).done();
-
-			// Clear search field
-			instance.$('.js-search-categories').val('');
-
-			findInstance.updateCategorySearch('');
-			findInstance.updateUrl();
-
-			window.scrollTo(0, 0);
-		},
-
-		'click .js-remove-category-btn'(_event, instance) {
-			const { findInstance } = instance;
-
-			findInstance.filter.remove('categories', `${this}`).done();
-			findInstance.updateUrl();
 		},
 	});
 }
