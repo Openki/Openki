@@ -321,7 +321,7 @@ export const save = ServerMethod(
 					slug: editFields.slug as string,
 					startLocal: editFields.startLocal as string,
 				});
-				Meteor.call('events.updateCategories', { _id: eventId });
+				Meteor.call('event.updateCategories', { _id: eventId });
 			}
 		} else {
 			Events.update(eventId, { $set: editFields });
