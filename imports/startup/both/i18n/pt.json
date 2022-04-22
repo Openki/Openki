@@ -232,7 +232,6 @@
 	"find.filter.categories": "Categorias",
 	"find.filter.courseStates": "estados do curso ",
 	"find.filter.isActive": "ativo",
-	"find.filter.removeCategory": "Remover categoria {CATEGORYNAME} do filtro",
 	"find.hideFilters": "Remover tudos os filtros",
 	"find.needsHost": "Procurando por um host",
 	"find.needsMentor": "Procurando por um mentor",
