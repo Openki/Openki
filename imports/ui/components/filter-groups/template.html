@@ -1,0 +1,11 @@
+<template name="filterGroups">
+	{{#if availableGroups}}
+		<select class="js-groups-select groups-select form-control" multiple="multiple">
+			{{#each availableGroups}}
+				<option class="js-groups-select-option groups-select-option" {{groupSelected this}}
+						value="{{this}}">{{name this}}
+				</option>
+			{{/each}}
+		</select>
+	{{/if}}
+</template>

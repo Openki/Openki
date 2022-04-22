@@ -44,6 +44,9 @@ export const id: Predicate<string> = function (param) {
 };
 
 export const ids: Predicate<string[]> = function (param) {
+	if (!param) {
+		return undefined;
+	}
 	const make = function (values: string[]): ParamWrapper<string[]> {
 		return {
 			merge(other) {
@@ -107,7 +110,7 @@ export const flag: Predicate<boolean> = function (param) {
 
 export const date: Predicate<moment.Moment, Date, string | moment.Moment> = function (param) {
 	if (!param) {
-		throw new FilteringReadError('', 'Empty date');
+		return undefined;
 	}
 	let value: moment.Moment;
 	if (param === 'now') {
