@@ -6,8 +6,6 @@ type PickNotUndefined<T> = {
 };
 
 /** Make properties that are may be undefined also optional. */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 type UndefinedToOptional<T> = Partial<T> & Pick<T, keyof PickNotUndefined<T>>;
 
 /** Recursive make properties that are may be undefined also optional. */

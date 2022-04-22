@@ -9,6 +9,7 @@ import { Group, GroupEntity, GroupModel, Groups } from './groups';
 
 import * as FileStorage from '/imports/utils/FileStorage';
 import { UploadFilePattern } from '/imports/utils/FileStorage';
+import { Type } from '/imports/utils/CustomChecks';
 
 function loadGroup(groupId: string) {
 	// new!
@@ -23,85 +24,77 @@ function loadGroup(groupId: string) {
 	return group;
 }
 
-export const save = ServerMethod(
-	'group.save',
-	(
-		groupId: string,
-		changes: {
-			short?: string;
-			name?: string;
-			claim?: string;
-			description?: string;
-		},
-	) => {
-		check(groupId, String);
-		check(changes, {
-			short: Match.Optional(String),
-			name: Match.Optional(String),
-			claim: Match.Optional(String),
-			description: Match.Optional(String),
-		});
+export const SaveFieldPattern = {
+	short: Match.Optional(String),
+	name: Match.Optional(String),
+	claim: Match.Optional(String),
+	description: Match.Optional(String),
+};
+export type SaveFields = Type<typeof SaveFieldPattern>;
 
-		const user = Meteor.user();
-		if (!user) {
-			throw new Meteor.Error(401, 'please log-in');
-		}
+export const save = ServerMethod('group.save', (groupId: string, changes: SaveFields) => {
+	check(groupId, String);
+	check(changes, SaveFieldPattern);
 
-		// Load group from DB
-		const group = loadGroup(groupId);
+	const user = Meteor.user();
+	if (!user) {
+		throw new Meteor.Error(401, 'please log-in');
+	}
 
-		if (!group.editableBy(user)) {
-			throw new Meteor.Error(401, 'Denied');
-		}
+	// Load group from DB
+	const group = loadGroup(groupId);
 
-		if (group.isNew()) {
-			// Saving user is added as first member of the group
-			group.members.push(user._id);
-		}
+	if (!group.editableBy(user)) {
+		throw new Meteor.Error(401, 'Denied');
+	}
 
-		const updates = {} as Mongo.OptionalId<GroupEntity>;
-		if (changes.short !== undefined) {
-			let short = changes.short.trim();
-			if (short.length === 0) {
-				short = `${group.name || changes.name}`;
-			}
-			updates.short = short.substring(0, 7);
-		}
-		if (changes.name !== undefined) {
-			updates.name = changes.name.substring(0, 50);
-		}
-		if (changes.claim !== undefined) {
-			updates.claim = changes.claim.substring(0, 1000);
-		}
-		if (changes.description !== undefined) {
-			const description = changes.description.substring(0, 640 * 1024);
-			if (Meteor.isServer) {
-				updates.description = HtmlTools.saneHtml(description);
-			} else {
-				updates.description = description;
-			}
-		}
+	if (group.isNew()) {
+		// Saving user is added as first member of the group
+		group.members.push(user._id);
+	}
 
-		// Don't update nothing
-		if (Object.keys(updates).length === 0) {
-			return undefined;
+	const updates = {} as Mongo.OptionalId<GroupEntity>;
+	if (changes.short !== undefined) {
+		let short = changes.short.trim();
+		if (short.length === 0) {
+			short = `${group.name || changes.name}`;
 		}
-
-		if (Object.values(updates).some((u) => !u)) {
-			throw new Meteor.Error('The name, short, claim and description fields are mandatory.');
-		}
-
-		if (group.isNew()) {
-			/* eslint-disable-next-line no-param-reassign */
-			groupId = Groups.insert(_.extend(group, updates));
-			Meteor.call('user.updateBadges', user._id);
+		updates.short = short.substring(0, 7);
+	}
+	if (changes.name !== undefined) {
+		updates.name = changes.name.substring(0, 50);
+	}
+	if (changes.claim !== undefined) {
+		updates.claim = changes.claim.substring(0, 1000);
+	}
+	if (changes.description !== undefined) {
+		const description = changes.description.substring(0, 640 * 1024);
+		if (Meteor.isServer) {
+			updates.description = HtmlTools.saneHtml(description);
 		} else {
-			Groups.update(group._id as string, { $set: updates });
+			updates.description = description;
 		}
+	}
 
-		return groupId;
-	},
-);
+	// Don't update nothing
+	if (Object.keys(updates).length === 0) {
+		return undefined;
+	}
+
+	if (Object.values(updates).some((u) => !u)) {
+		throw new Meteor.Error('The name, short, claim and description fields are mandatory.');
+	}
+
+	if (group.isNew()) {
+		/* eslint-disable-next-line no-param-reassign */
+		groupId = Groups.insert(_.extend(group, updates));
+		Meteor.call('user.updateBadges', user._id);
+	} else {
+		Groups.update(group._id as string, { $set: updates });
+	}
+
+	return groupId;
+});
 
 export const updateLogo = ServerMethod(
 	'group.update.logo',
