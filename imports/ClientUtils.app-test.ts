@@ -70,7 +70,6 @@ export function waitFor<T>(assertion: () => T, timeout = 10000): Promise<T> {
 	return new Promise((resolve, reject) => {
 		const start = new Date().getTime();
 		let timer: number | false = false;
-		/** @type {MutationObserver|false} */
 		let observer: MutationObserver | false = false;
 
 		const clearWatchers = () => {

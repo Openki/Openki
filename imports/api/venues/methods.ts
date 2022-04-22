@@ -4,7 +4,6 @@ import { _ } from 'meteor/underscore';
 
 import { Regions } from '/imports/api/regions/regions';
 import { VenueEntity, Venues } from '/imports/api/venues/venues';
-/** @typedef {import('./venues').VenueEntity} VenueEntity */
 
 import * as AsyncTools from '/imports/utils/async-tools';
 import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
