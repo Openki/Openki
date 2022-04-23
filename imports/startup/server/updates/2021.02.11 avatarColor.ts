@@ -1,5 +1,6 @@
-import { Users } from '/imports/api/users/users';
+import { _ } from 'meteor/underscore';
 
+import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
 export default function update() {
@@ -8,9 +9,10 @@ export default function update() {
 	Users.find({})
 		.fetch()
 		.forEach((orginalUser) => {
-			const user = { ...orginalUser };
-			user.allowPrivateMessages = true;
-			delete user.acceptsMessages;
+			const user = { ...orginalUser } as any;
+			user.avatar = {};
+			user.avatar.color = _.random(360);
+
 			updated += Users.update(user._id, user);
 		});
 

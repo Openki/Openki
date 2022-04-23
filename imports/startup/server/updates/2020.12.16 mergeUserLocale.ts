@@ -9,7 +9,7 @@ export default function update() {
 	Users.find({})
 		.fetch()
 		.forEach((originalUser) => {
-			const user = { ...originalUser };
+			const user = { ...originalUser } as any;
 			if (user.profile) {
 				user.locale = user.profile.locale;
 				delete user.profile.locale;

@@ -11,7 +11,7 @@ export function update() {
 	const tenantId = Tenants.insert({
 		name: Meteor.settings.public.siteName,
 		members: [],
-	});
+	} as any);
 
 	updated += 1;
 
