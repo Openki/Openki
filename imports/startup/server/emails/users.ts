@@ -58,7 +58,7 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 	const emailLogo = PublicSettings.emailLogo;
 	return juice(
 		SSR.render('userVerifyEmail', {
-			subject: Accounts.emailTemplates.verifyEmail.subject(user),
+			subject: Accounts.emailTemplates.verifyEmail.subject?.(user),
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
 				url: Meteor.absoluteUrl(),
@@ -115,7 +115,7 @@ Accounts.emailTemplates.resetPassword.html = function (user, url) {
 	const emailLogo = PublicSettings.emailLogo;
 	return juice(
 		SSR.render('userResetPasswordEmail', {
-			subject: Accounts.emailTemplates.resetPassword.subject(user),
+			subject: Accounts.emailTemplates.resetPassword.subject?.(user),
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
 				url: Meteor.absoluteUrl(),
