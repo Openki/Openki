@@ -27,7 +27,7 @@ import * as FileStorage from '/imports/utils/FileStorage';
 import { UserModel } from '/imports/api/users/users';
 import { StringEnum, Type } from '/imports/utils/CustomChecks';
 
-function registerMethod<T>(method: {
+export interface Method<T> {
 	method: string;
 	read: (body: T) => {
 		validate(): void;
@@ -40,7 +40,9 @@ function registerMethod<T>(method: {
 		): void;
 		apply(): void;
 	};
-}): void {
+}
+
+function registerMethod<T>(method: Method<T>): void {
 	const apply = function (params: T) {
 		const change = method.read(params);
 		try {
