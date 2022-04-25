@@ -188,7 +188,7 @@
   "course.events.pastList": "Previous events",
   "course.events.pastListLink": "past events",
   "course.events.showAllEvents": "Show all events",
-  "course.events.upcominglist": "Upcoming events",
+  "course.events.upcominglist": "{NUM, plural, =0{No upcoming events yet} one{1 upcoming event} other{# upcoming events} }",
   "course.group.addOrgText": "Give editing rights",
   "course.group.addText": "link a group",
   "course.group.confimOrgButton": "Give editing rights",
