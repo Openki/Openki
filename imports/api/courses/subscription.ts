@@ -8,6 +8,7 @@ import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDeno
 import * as Alert from '/imports/api/alerts/alert';
 import { Events } from '/imports/api/events/events';
 import { Users, User, UserModel } from '/imports/api/users/users';
+import { Method } from '/imports/api/courses/methods';
 
 import { hasRole } from '/imports/utils/course-role-utils';
 import { MeteorAsync } from '/imports/utils/promisify';
@@ -49,6 +50,11 @@ const checkCourse = function (obj: any) {
  *
  */
 abstract class Change<T> {
+	/** See: https://stackoverflow.com/questions/33387318/access-to-static-properties-via-this-constructor-in-typescript/33404548#33404548 */
+	get ['constructor']() {
+		return typeof this as unknown as Method<T>;
+	}
+
 	/**
 	 * Find out whether the change makes sense and could be applied
 	 * by the given user.
@@ -91,7 +97,12 @@ export class Subscribe extends Change<{
 		return 'Courses.Subscribe';
 	}
 
-	static read(body: { courseId: string; userId: string; role: string; comment: string }) {
+	static read(body: {
+		courseId: string;
+		userId: string;
+		role: string;
+		comment?: string | undefined;
+	}) {
 		check(body, Object);
 		return new this(
 			Courses.findOne(body.courseId),
