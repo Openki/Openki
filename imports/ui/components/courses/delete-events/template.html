@@ -5,7 +5,6 @@
 			<div class="event-caption placeholder event-caption-action event-caption-delete">
 				<div class="event-caption-header-wrap">
 					<div class="event-caption-header">
-						<span class="fa-solid fa-map-pin"></span>
 						<div class="event-caption-pseudoborder"></div>
 					</div>
 				</div>
@@ -29,8 +28,8 @@
 						<span class="fa-solid fa-trash-can fa-fw" aria-hidden="true"></span>
 						{{i18n 'deleteEventsModal.title' 'Delete course events'}}
 					</h4>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					{{#if state 'showDeleteConfirm'}}
@@ -38,39 +37,41 @@
 							<div class="card-header text-white bg-danger">
 								{{i18n 'deleteEventsModal.confirm' 'Confirm deletion of events'}}
 							</div>
-							<div class="card-body">
-								{{i18n 'deleteEventsModal.reallyDelete' 'Delete {NUM, plural, one{this event} other{these # events} }?' NUM=numSelectedEvents}}
+								<div class="card-body">
+									{{i18n 'deleteEventsModal.reallyDelete' 'Delete {NUM, plural, one{this event} other{these # events} }?' NUM=numSelectedEvents}}
 							</div>
-							<ul class="list-group list-group-flush selected-events">
-								{{#each event in (state 'selectedEvents')}}
-									<li class="list-group-item list-group-item-danger">
-										<button type="button"
-												class="btn-close js-deselect-event float-end"
-												data-event-id="{{event._id}}"
-												aria-label="Close"></button>
-										{{> deleteEventsEvent event}}
-									</li>
-								{{/each}}
-							</ul>
-							<div class="card-body">
-								<div class="delete-events-actions">
-									<button type="button" class="btn btn-danger js-delete-events"
-											{{disabledIfBusy}}>
-										{{#if busy 'deleting'}}
-											<span class="fa-solid fa-circle-notch fa-spin fa-fw"
-												  aria-hidden="true"></span>
-											{{i18n 'deleteEventsModal.deletingEvents' 'Deleting {NUM, plural, one{event} other{events} }…' NUM=numSelectedEvents}}
-										{{else}}
-											{{i18n 'deleteEventsModal.confirmDeleteEvents' 'Delete {NUM, plural, one{event} other{events} }' NUM=numSelectedEvents}}
-										{{/if}}
+									<ul class="list-group list-group-flush selected-events">
+										{{#each event in (state 'selectedEvents')}}
+											<li class="list-group-item list-group-item-danger">
+												<button type="button"
+														class="btn-close js-deselect-event float-end"
+														data-event-id="{{event._id}}"
+														aria-label="Close"></button>
+												{{> deleteEventsEvent event}}
+											</li>
+										{{/each}}
+									</ul>
+									<div class="card-body">
+										<div class="delete-events-actions">
+											<button type="button"
+													class="btn btn-danger js-delete-events"
+													{{disabledIfBusy}}>
+												{{#if busy 'deleting'}}
+													<span class="fa-solid fa-circle-notch fa-spin fa-fw"
+														  aria-hidden="true"></span>
+													{{i18n 'deleteEventsModal.deletingEvents' 'Deleting {NUM, plural, one{event} other{events} }…' NUM=numSelectedEvents}}
+												{{else}}
+													{{i18n 'deleteEventsModal.confirmDeleteEvents' 'Delete {NUM, plural, one{event} other{events} }' NUM=numSelectedEvents}}
+												{{/if}}
+											</button>
+											<button type="button"
+													class="btn btn-secondary js-cancel"
+													{{disabledIfBusy}}>
+												{{i18n '_button.cancel'}}
 									</button>
-									<button type="button" class="btn btn-secondary js-cancel"
-											{{disabledIfBusy}}>
-										{{i18n '_button.cancel'}}
-									</button>
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>
 					{{else}}
 						<div class="delete-events-list">
 							{{#each upcomingEvents}}
@@ -88,13 +89,13 @@
 									{{disabledIfNoEventsSelected}}>
 								{{i18n 'deleteEventsModal.deleteEvents' 'Delete {NUM, plural, =0{event} one{event} other{# events} }' NUM=numSelectedEvents}}
 							</button>
-							<button class="btn btn-secondary js-toggle-all">
-								{{#if state 'allEventsSelected'}}
-									{{i18n 'deleteEventsModal.clearSelection' 'Clear selection'}}
-								{{else}}
-									{{i18n 'deleteEventsModal.selectAll' 'Select all'}}
-								{{/if}}
-							</button>
+								<button class="btn btn-secondary js-toggle-all">
+									{{#if state 'allEventsSelected'}}
+										{{i18n 'deleteEventsModal.clearSelection' 'Clear selection'}}
+									{{else}}
+										{{i18n 'deleteEventsModal.selectAll' 'Select all'}}
+									{{/if}}
+								</button>
 						</div>
 					{{/if}}
 				</div>
