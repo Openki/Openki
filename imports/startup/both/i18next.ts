@@ -144,6 +144,12 @@ Template.registerHelper(
 		// defaultValue is optional
 		if (typeof defaultValueOrData === 'string') {
 			// function (key, defaultValue, data)
+
+			if (data?.hash?.attr) {
+				// eslint-disable-next-line no-param-reassign
+				delete data?.hash?.attr;
+				return i18n(key, defaultValueOrData, { ...data?.hash });
+			}
 			// We can use SafeString because i18n encodes all non-safe strings
 			return Spacebars.SafeString(
 				i18n(key, defaultValueOrData, { ...data?.hash, escapeText: true }),
@@ -151,6 +157,12 @@ Template.registerHelper(
 		}
 
 		// function (key, data)
+
+		if (defaultValueOrData?.hash?.attr) {
+			// eslint-disable-next-line no-param-reassign
+			delete defaultValueOrData?.hash?.attr;
+			return i18n(key, { ...defaultValueOrData?.hash });
+		}
 		// We can use SafeString because i18n encodes all non-safe strings
 		return Spacebars.SafeString(i18n(key, { ...defaultValueOrData.hash, escapeText: true }));
 	},
