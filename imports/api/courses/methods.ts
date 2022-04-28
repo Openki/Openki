@@ -193,7 +193,7 @@ export const save = ServerMethod(
 			set.customFields = changes.customFields.map((i) => ({
 				name: i.name.substring(0, 50),
 				displayText: i.displayText,
-				value: i.value.substring(0, 200),
+				value: i.value.substring(0, 2000),
 				visibleFor: i.visibleFor,
 			}));
 		}
