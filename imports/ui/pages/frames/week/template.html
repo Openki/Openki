@@ -1,4 +1,7 @@
 <template name="frameWeekPage">
+	{{#if control}}
+		{{> calendarNavDay calendarNavAttr}}
+	{{/if}}
 	{{#each weekday in weekdays}}
 		<div class="calendar-date">
 			{{calendarDayFormat weekday.date}}
