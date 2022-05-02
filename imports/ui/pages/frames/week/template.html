@@ -1,23 +1,25 @@
 <template name="frameWeekPage">
 	{{#if control}}
-		{{> calendarNavDay calendarNavAttr}}
+		{{> calendarNavWeek calendarNavAttr}}
 	{{/if}}
-	{{#each weekday in weekdays}}
-		<div class="calendar-date">
-			{{calendarDayFormat weekday.date}}
-		</div>
-		<div class="frame-week-date-events">
-			{{#if Template.subscriptionsReady}}
-				{{#if hasDayEvents weekday}}
-					{{> eventList dataEvents=weekday.dayEvents withDate=false}}
+	<div class="py-4">
+		{{#each weekday in weekdays}}
+			<div class="calendar-date">
+				{{calendarDayFormat weekday.date}}
+			</div>
+			<div class="frame-week-date-events">
+				{{#if Template.subscriptionsReady}}
+					{{#if hasDayEvents weekday}}
+						{{> eventList dataEvents=weekday.dayEvents withDate=false}}
+					{{else}}
+						<div class="text-center">
+							{{i18n 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
+						</div>
+					{{/if}}
 				{{else}}
-					<div class="text-center">
-						{{i18n 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
-					</div>
+					{{> loadingRow}}
 				{{/if}}
-			{{else}}
-				{{> loadingRow}}
-			{{/if}}
-		</div>
-	{{/each}}
+			</div>
+		{{/each}}
+	</div>
 </template>

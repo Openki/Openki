@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { Events, FindFilter } from '/imports/api/events/events';
 
-import '/imports/ui/components/calendar-nav/week';
+import '/imports/ui/components/calendar-nav/multi';
 import '/imports/ui/components/events/list';
 import '/imports/ui/components/loading';
 

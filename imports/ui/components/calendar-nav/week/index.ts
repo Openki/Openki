@@ -1,37 +1,35 @@
-import { Router } from 'meteor/iron:router';
 import $ from 'jquery';
 import { i18n } from '/imports/startup/both/i18next';
 import { Session } from 'meteor/session';
-import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Spacebars } from 'meteor/spacebars';
 import moment from 'moment';
 
-import Events from '/imports/api/events/events';
-
-import * as UrlTools from '/imports/utils/url-tools';
+import '/imports/ui/components/search-field';
+import '/imports/ui/components/filter-groups';
+import '/imports/ui/components/filter-categories';
 
 import './template.html';
 import '../styles.scss';
 
+export type Data = {
+	search: string;
+	onChangeSearch: (newValue: string) => void;
+	date: moment.Moment;
+	onChangeDate: (newDate: moment.Moment) => void;
+	availableGroups: string[];
+	selectedGroups: string[];
+	onAddGroup: (group: string) => void;
+	onRemoveGroup: (group: string) => void;
+	categories: string[];
+	onAddCategory: (category: string) => void;
+	onRemoveCategory: (category: string) => void;
+};
+
 {
-	const Template = TemplateAny as TemplateStaticTyped<
-		'calendarNavWeek',
-		unknown,
-		{ currentUnit: ReactiveVar<string> }
-	>;
+	const Template = TemplateAny as TemplateStaticTyped<'calendarNavWeek', Data>;
 
 	const template = Template.calendarNavWeek;
-
-	template.helpers({
-		endDateTo(date: moment.Moment) {
-			return moment(date).add(6, 'days');
-		},
-	});
-
-	template.onCreated(function () {
-		this.currentUnit = new ReactiveVar('week');
-	});
 
 	template.onRendered(function () {
 		const navContainer = this.$('.calendar-nav-container');
@@ -48,41 +46,36 @@ import '../styles.scss';
 			}
 		});
 	});
+	template.helpers({
+		endDateTo(date: moment.Moment) {
+			return moment(date).add(6, 'days');
+		},
+		searchFieldAttr() {
+			const data = Template.instance().data;
+			return { search: data.search, onChange: data.onChangeSearch };
+		},
+		filterGroupsAttr() {
+			const data = Template.instance().data;
+			return {
+				availableGroups: data.availableGroups,
+				selectedGroups: data.selectedGroups,
+				onAdd: data.onAddGroup,
+				onRemove: data.onRemoveGroup,
+			};
+		},
+		filterCategoriesAttr() {
+			const data = Template.instance().data;
+			return {
+				categories: data.categories,
+				onAdd: data.onAddCategory,
+				onRemove: data.onRemoveCategory,
+			};
+		},
+	});
 }
 
 {
-	const units = ['week', 'month', 'year'] as const;
-
 	type Direction = 'previous' | 'next';
-	type Unit = typeof units[number];
-
-	const updateUrl = function (filter: ReturnType<typeof Events['Filtering']>) {
-		const filterParams = filter.toParams();
-		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
-		const queryString = UrlTools.paramsToQueryString(filterParams);
-
-		const options: { query?: string } = {};
-		if (queryString.length) {
-			options.query = queryString;
-		}
-
-		Router.go(Router.current().route.getName(), {}, options);
-	};
-	const mvDateHandler = function (unit: Unit, instance: any) {
-		const amount = instance.data.direction === 'previous' ? -1 : 1;
-		const filter = instance.parentInstance(2).filter as ReturnType<typeof Events['Filtering']>;
-		const start = filter.get('start');
-		const weekCorrection = unit === 'week' ? 0 : 1;
-
-		if (amount < 0) {
-			start.add(amount, unit).startOf('week');
-		} else {
-			start.add(amount, unit).add(weekCorrection, 'week').startOf('week');
-		}
-		filter.add('start', start).done();
-		updateUrl(filter);
-		return false;
-	};
 
 	const Template = TemplateAny as TemplateStaticTyped<
 		'calendarNavWeekControl',
@@ -94,22 +87,20 @@ import '../styles.scss';
 	template.events({
 		'click .js-change-date'(event, instance) {
 			event.preventDefault();
-			const unit = (instance.parentInstance() as any).currentUnit.get();
-			mvDateHandler(unit, instance);
-		},
 
-		'click .js-change-unit'(this: Unit, event, instance) {
-			event.preventDefault();
+			const parentData = instance.parentInstance()?.data as Data;
 
-			const unit = this;
-			(instance.parentInstance() as any).currentUnit.set(unit);
-			mvDateHandler(unit, instance);
+			const amount = instance.data.direction === 'previous' ? -7 : 7;
+
+			const newDate = parentData.date.add(amount, 'day');
+
+			parentData.onChangeDate(newDate);
 		},
 	});
 
 	template.helpers({
 		arrow() {
-			const data = Template.currentData();
+			const data = Template.instance().data;
 
 			let isRTL = Session.equals('textDirectionality', 'rtl');
 
@@ -123,17 +114,8 @@ import '../styles.scss';
 			);
 		},
 
-		calendarNavText(direction: string, unit: string, length: string) {
-			return i18n(`calendar.${direction}.${unit}.${length}`);
-		},
-
-		currentUnit() {
-			const parentInstance = Template.instance().parentInstance() as any;
-			return parentInstance.currentUnit.get();
-		},
-
-		units() {
-			return units;
+		text(direction: string, length: string) {
+			return i18n(`calendar.${direction}.week.${length}`);
 		},
 	});
 }
