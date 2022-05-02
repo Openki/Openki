@@ -12,8 +12,8 @@ import * as Predicates from '/imports/utils/predicates';
 
 import '/imports/ui/components/events/list';
 import '/imports/ui/components/loading';
-import '/imports/ui/components/calendar-nav/day';
-import type { Data as CalendarNavData } from '/imports/ui/components/calendar-nav/day';
+import '/imports/ui/components/calendar-nav/week';
+import type { Data as CalendarNavData } from '/imports/ui/components/calendar-nav/week';
 
 import './template.html';
 import './styles.scss';
