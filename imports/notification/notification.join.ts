@@ -12,6 +12,7 @@ import { UserModel, Users } from '/imports/api/users/users';
 import * as HtmlTools from '/imports/utils/html-tools';
 import * as StringTools from '/imports/utils/string-tools';
 import { getSiteName } from '/imports/utils/getSiteName';
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 interface Body {
 	courseId: string;
@@ -122,6 +123,7 @@ export function Model(entry: { body: Body }) {
 				subject,
 				memberCount: course.members.length,
 				roleTitle,
+				email: Spacebars.SafeString(`<span style="color:blue">${PrivateSettings.siteEmail}</span>`),
 				message: body.message ? HtmlTools.plainToHtml(body.message) : undefined,
 				// For Team members when a mentor joins, add a hint for possible collaboration or
 				// invite into team
