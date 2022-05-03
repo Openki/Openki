@@ -19,8 +19,9 @@
 		transition: border-color 0.15s;
 
 		&:hover {
-			border-color: $primary;
 			background-color: #ebf4f8;
+			border-color: $primary;
+			padding: 0.5rem;
 		}
 
 		&.active {
