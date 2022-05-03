@@ -1,44 +1,47 @@
 <template name="calendarNavWeek">
-	<div class="calendar-nav-container">
-		<div class="calendar-nav">
-			{{> calendarNavWeekControl direction='previous'}}
-			<div class="calendar-nav-moment">
-				<div class="lead">
-					{{i18n "calendar.weekNumber" "Week"}} {{weekNr date}}
-				</div>
-				<div>
-					<span class="d-none d-md-inline-block">{{dateLong date}} -
-						{{dateLong (endDateTo date)}}</span>
-					<span class="d-md-none">{{dateShort date}} -
-						{{dateShort (endDateTo date)}}</span>
+	<div class="calendar-nav-container text-center">
+		<div class="row align-items-center p-2">
+			<div class="col-md-3 col-lg-4 p-1">
+				{{> searchField searchFieldAttr}}
+			</div>
+			<div class="col-md-6 col-lg-4 p-1">
+				<div class="row justify-content-center align-items-center text-center">
+					{{> calendarNavWeekControl direction='previous'}}
+					<div class="col-auto">
+						<div class="lead">
+							{{i18n "calendar.weekNumber" "Week"}} {{weekNr date}}
+						</div>
+						<div>
+							<span class="d-none d-md-inline-block">{{dateLong date}} -
+								{{dateLong (endDateTo date)}}</span>
+							<span class="d-md-none">{{dateShort date}} -
+								{{dateShort (endDateTo date)}}</span>
+						</div>
+					</div>
+					{{> calendarNavWeekControl direction='next'}}
 				</div>
 			</div>
-			{{> calendarNavWeekControl direction='next'}}
+			{{#if availableGroups}}
+				<div class="col-md-4 col-lg-2 p-1">
+					{{> filterGroups filterGroupsAttr}}
+				</div>
+				<div class="col-md-4 col-lg-2 p-1">
+					{{> filterCategories filterCategoriesAttr}}
+				</div>
+			{{else}}
+				<div class="offset-lg-2 col-md-4 col-lg-2 p-1">
+					{{> filterCategories filterCategoriesAttr}}
+				</div>
+			{{/if}}
 		</div>
 	</div>
 </template>
 
 <template name="calendarNavWeekControl">
-	<div class="calendar-nav-control">
-		<div class="btn-group">
-			<button type="button" class="btn btn-secondary js-change-date">
-				{{arrow}} <span
-					  class="d-none d-md-inline-block">{{calendarNavText direction currentUnit 'short'}}</span>
-			</button>
-			<button type="button" class="btn btn-secondary" aria-expanded="false"
-					aria-haspopup="true" data-bs-toggle="dropdown" data-bs-reference="parent">
-				<span class="fa-solid fa-list-ul fa-fw" aria-hidden="true"></span>
-			</button>
-			<ul class="dropdown-menu">
-				{{#each units}}
-					<li>
-						<a class="dropdown-item js-change-unit" href="#">
-							{{calendarNavText ../direction this 'long'}}
-						</a>
-					</li>
-				{{/each}}
-			</ul>
-		</div>
+	<div class="col-auto px-4">
+		<button type="button" class="btn btn-secondary js-change-date">
+			{{arrow}} <span class="d-none d-md-inline-block">{{text direction 'short'}}</span>
+		</button>
 	</div>
 </template>
 
@@ -46,15 +49,5 @@
 	This template holds translation strings that are constructed dynamically in this component
 
 	{{i18n 'calendar.previous.week.short' 'previous week'}}
-	{{i18n 'calendar.previous.month.short' 'previous month'}}
-	{{i18n 'calendar.previous.year.short' 'previous year'}}
 	{{i18n 'calendar.next.week.short' 'next week'}}
-	{{i18n 'calendar.next.month.short' 'next month'}}
-	{{i18n 'calendar.next.year.short' 'next year'}}
-	{{i18n 'calendar.previous.week.long' 'Go to previous week'}}
-	{{i18n 'calendar.previous.month.long' 'Go to previous month'}}
-	{{i18n 'calendar.previous.year.long' 'Go to previous year'}}
-	{{i18n 'calendar.next.week.long' 'Go to next week'}}
-	{{i18n 'calendar.next.month.long' 'Go to next month'}}
-	{{i18n 'calendar.next.year.long' 'Go to next year'}}
 </template>

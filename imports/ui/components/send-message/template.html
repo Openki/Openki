@@ -2,7 +2,7 @@
 	<form class="js-send-message">
 		<div class="mb-3">
 			<textarea class="form-control send-message-textarea js-email-message"
-					  placeholder="{{i18n 'profile.mail.placeholder' 'Hi {USER}. I wanted to tell you…' USER=(username recipientId)}}"></textarea>
+					  placeholder="{{i18n 'profile.mail.placeholder' 'Hi {USER}. I wanted to tell you…' USER=(username recipientId) attr=true}}"></textarea>
 		</div>
 		{{#if hasEmail}}
 			{{#if hasVerifiedEmail}}

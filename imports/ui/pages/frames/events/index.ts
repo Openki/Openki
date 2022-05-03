@@ -40,18 +40,18 @@ template.onCreated(function () {
 
 		instance.date = instance.filter.get('start');
 
-		const filterParams = this.filter.toQuery();
+		const filterParams = instance.filter.toQuery();
 		filterParams.after = reactiveNow.get();
 
 		const limit = parseInt(data.count, 10) || DefaultLimit;
 
-		Meteor.subscribe('Events.findFilter', filterParams, limit * 2);
+		instance.subscribe('Events.findFilter', filterParams, limit * 2);
 	});
 
 	instance.update = () => {
 		const filterParams = instance.filter.toParams() as Record<string, string>;
 		filterParams.count = instance.data.count || DefaultLimit.toString();
-		filterParams.control = instance.data.control || '0';
+		filterParams.control = '1';
 		filterParams.filterGroups = instance.data.filterGroups || '';
 		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 		const queryString = UrlTools.paramsToQueryString(filterParams);
@@ -68,8 +68,13 @@ template.onCreated(function () {
 template.onRendered(function () {
 	const instance = this;
 
-	instance.autorun(() => {
-		instance.$('a').attr('target', '_blank');
+	this.autorun(() => {
+		// rerun when subscriptions become ready
+		instance.subscriptionsReady();
+		// wait until subtemplates are rendered
+		setTimeout(() => {
+			instance.$('a').attr('target', '_blank');
+		}, 0);
 	});
 });
 
@@ -83,15 +88,12 @@ template.helpers({
 		return {
 			search: instance.filter.get('search'),
 			onChangeSearch: (newValue: string) => {
-				instance.filter.add('search', newValue).remove('start').remove('end').done();
+				instance.filter.add('search', newValue).done();
 				instance.update();
 			},
 			date: instance.filter.get('start') || moment(reactiveNow.get()),
 			onChangeDate: (newDate) => {
-				instance.filter
-					.add('start', newDate.startOf('day').toISOString())
-					.add('end', newDate.add(1, 'days').startOf('day').toISOString())
-					.done();
+				instance.filter.add('start', newDate.startOf('day').toISOString()).done();
 				instance.update();
 			},
 			availableGroups: new Filtering({

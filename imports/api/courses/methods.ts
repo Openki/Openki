@@ -27,16 +27,23 @@ import * as FileStorage from '/imports/utils/FileStorage';
 import { UserModel } from '/imports/api/users/users';
 import { StringEnum, Type } from '/imports/utils/CustomChecks';
 
-function registerMethod(method: {
+export interface Method<T> {
 	method: string;
-	read: (body: unknown) => {
+	read: (body: T) => {
 		validate(): void;
 		permitted: (user: UserModel | undefined | null) => boolean;
-		provide(rel: string[], body: unknown): void;
+		provide(
+			rel: string[],
+			body: {
+				operatorId: string | undefined;
+			},
+		): void;
 		apply(): void;
 	};
-}): void {
-	const apply = function (params: unknown) {
+}
+
+function registerMethod<T>(method: Method<T>): void {
+	const apply = function (params: T) {
 		const change = method.read(params);
 		try {
 			change.validate();
@@ -193,7 +200,7 @@ export const save = ServerMethod(
 			set.customFields = changes.customFields.map((i) => ({
 				name: i.name.substring(0, 50),
 				displayText: i.displayText,
-				value: i.value.substring(0, 200),
+				value: i.value.substring(0, 2000),
 				visibleFor: i.visibleFor,
 			}));
 		}

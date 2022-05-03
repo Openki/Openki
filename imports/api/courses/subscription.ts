@@ -2,21 +2,19 @@ import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 import { ValidationError } from 'meteor/mdg:validation-error';
 
-import { Courses, Course } from '/imports/api/courses/courses';
+import { Courses, Course, CourseModel } from '/imports/api/courses/courses';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 import * as Alert from '/imports/api/alerts/alert';
 import { Events } from '/imports/api/events/events';
-import { Users, User } from '/imports/api/users/users';
+import { Users, User, UserModel } from '/imports/api/users/users';
+import { Method } from '/imports/api/courses/methods';
 
 import { hasRole } from '/imports/utils/course-role-utils';
 import { MeteorAsync } from '/imports/utils/promisify';
 import { Notification } from '/imports/notification/notification';
 
-/**
- * @param {Subscribe | Unsubscribe | Message} change
- */
-export async function processChange(change) {
+export async function processChange<T>(change: Change<T>) {
 	try {
 		await MeteorAsync.call(change.constructor.method, change.dict());
 	} catch (err) {
@@ -26,16 +24,18 @@ export async function processChange(change) {
 	}
 }
 
-const checkUser = function (obj) {
+const checkUser = function (obj: any) {
 	if (!(obj instanceof User)) {
 		throw new Meteor.Error('Match failed', 'Expected User object');
 	}
+	return obj as UserModel;
 };
 
-const checkCourse = function (obj) {
+const checkCourse = function (obj: any) {
 	if (!(obj instanceof Course)) {
 		throw new Meteor.Error('Match failed', 'Expected Course object');
 	}
+	return obj as CourseModel;
 };
 
 /** A change by a user
@@ -49,12 +49,17 @@ const checkCourse = function (obj) {
  * the change is sent to the server to be applied.
  *
  */
-class Change {
+abstract class Change<T> {
+	/** See: https://stackoverflow.com/questions/33387318/access-to-static-properties-via-this-constructor-in-typescript/33404548#33404548 */
+	get ['constructor']() {
+		return typeof this as unknown as Method<T>;
+	}
+
 	/**
 	 * Find out whether the change makes sense and could be applied
 	 * by the given user.
 	 */
-	validFor(operator) {
+	validFor(operator: UserModel | undefined | null) {
 		try {
 			this.validate();
 		} catch (e) {
@@ -65,14 +70,39 @@ class Change {
 		}
 		return this.permitted(operator);
 	}
+
+	abstract validate(): void;
+
+	abstract permitted(operator: UserModel | undefined | null): boolean;
+
+	abstract dict(): T;
 }
 
-export class Subscribe extends Change {
+export class Subscribe extends Change<{
+	change: string;
+	courseId: string;
+	userId: string;
+	role: string;
+	comment: string | undefined;
+}> {
+	course: CourseModel;
+
+	user: UserModel;
+
+	role: string;
+
+	comment: string | undefined;
+
 	static get method() {
 		return 'Courses.Subscribe';
 	}
 
-	static read(body) {
+	static read(body: {
+		courseId: string;
+		userId: string;
+		role: string;
+		comment?: string | undefined;
+	}) {
 		check(body, Object);
 		return new this(
 			Courses.findOne(body.courseId),
@@ -82,14 +112,17 @@ export class Subscribe extends Change {
 		);
 	}
 
-	constructor(course, user, role, comment) {
+	constructor(
+		course: CourseModel | undefined,
+		user: UserModel | undefined,
+		role: string,
+		comment?: string | undefined,
+	) {
 		super();
 
-		checkCourse(course);
-		this.course = course;
+		this.course = checkCourse(course);
 
-		checkUser(user);
-		this.user = user;
+		this.user = checkUser(user);
 
 		check(role, String);
 		this.role = role;
@@ -113,7 +146,7 @@ export class Subscribe extends Change {
 		}
 	}
 
-	permitted(operator) {
+	permitted(operator: UserModel | undefined | null) {
 		if (!operator) {
 			return false;
 		}
@@ -157,7 +190,12 @@ export class Subscribe extends Change {
 		};
 	}
 
-	provide(rel, body) {
+	provide(
+		rel: string[],
+		body: {
+			operatorId: string | undefined;
+		},
+	) {
 		rel.push(this.user._id);
 		Object.assign(body, this.dict());
 	}
@@ -197,23 +235,32 @@ export class Subscribe extends Change {
 	}
 }
 
-export class Unsubscribe extends Change {
+export class Unsubscribe extends Change<{
+	change: string;
+	courseId: string;
+	userId: string;
+	role: string;
+}> {
+	course: CourseModel;
+
+	user: UserModel;
+
+	role: string;
+
 	static get method() {
 		return 'Courses.Unsubscribe';
 	}
 
-	static read(body) {
+	static read(body: { courseId: string; userId: string; role: string }) {
 		return new this(Courses.findOne(body.courseId), Users.findOne(body.userId), body.role);
 	}
 
-	constructor(course, user, role) {
+	constructor(course: CourseModel | undefined, user: UserModel | null | undefined, role: string) {
 		super();
 
-		checkCourse(course);
-		this.course = course;
+		this.course = checkCourse(course);
 
-		checkUser(user);
-		this.user = user;
+		this.user = checkUser(user);
 
 		check(role, String);
 		this.role = role;
@@ -231,7 +278,7 @@ export class Unsubscribe extends Change {
 		}
 	}
 
-	permitted(operator) {
+	permitted(operator: UserModel | undefined | null) {
 		if (!operator) {
 			return false;
 		}
@@ -261,14 +308,19 @@ export class Unsubscribe extends Change {
 		};
 	}
 
-	provide(rel, body) {
+	provide(
+		rel: string[],
+		body: {
+			operatorId: string | undefined;
+		},
+	) {
 		rel.push(this.user._id);
 		rel.push(this.course._id);
 		Object.assign(body, this.dict());
 	}
 
 	apply() {
-		const update = { $pull: { 'members.$.roles': this.role } };
+		const update = { $pull: { 'members.$.roles': this.role } } as any;
 		// Unsubscribe from the team also means remove editor rights.
 		if (this.role === 'team') {
 			update.$pull.editors = this.user._id;
@@ -281,7 +333,9 @@ export class Unsubscribe extends Change {
 		Courses.update({ _id: this.course._id, 'members.user': this.user._id }, update);
 
 		// Housekeeping: Remove members that have no role left
-		Courses.update({ _id: this.course._id }, { $pull: { members: { roles: { $size: 0 } } } });
+		Courses.update({ _id: this.course._id }, {
+			$pull: { members: { roles: { $size: 0 } } },
+		} as any);
 
 		// Update member related calculated fields
 		Courses.updateInterested(this.course._id);
@@ -292,23 +346,36 @@ export class Unsubscribe extends Change {
 	}
 }
 
-export class Message extends Change {
+export class Message extends Change<{
+	change: string;
+	courseId: string;
+	userId: string;
+	message: string | undefined;
+}> {
+	course: CourseModel;
+
+	user: UserModel;
+
+	message: string | undefined;
+
 	static get method() {
 		return 'Courses.Message';
 	}
 
-	static read(body) {
+	static read(body: { courseId: string; userId: string; message: string | undefined }) {
 		return new this(Courses.findOne(body.courseId), Users.findOne(body.userId), body.message);
 	}
 
-	constructor(course, user, message) {
+	constructor(
+		course: CourseModel | undefined,
+		user: UserModel | null | undefined,
+		message: string | undefined,
+	) {
 		super();
 
-		checkCourse(course);
-		this.course = course;
+		this.course = checkCourse(course);
 
-		checkUser(user);
-		this.user = user;
+		this.user = checkUser(user);
 
 		check(message, Match.Optional(String));
 		this.message = message;
@@ -323,7 +390,7 @@ export class Message extends Change {
 		return true;
 	}
 
-	permitted(operator) {
+	permitted(operator: UserModel | undefined | null) {
 		if (!operator) {
 			return false;
 		}
@@ -341,7 +408,12 @@ export class Message extends Change {
 		};
 	}
 
-	provide(rel, body) {
+	provide(
+		rel: string[],
+		body: {
+			operatorId: string | undefined;
+		},
+	) {
 		rel.push(this.user._id);
 		rel.push(this.course._id);
 		Object.assign(body, this.dict());
