@@ -25,7 +25,7 @@
 					<label class="form-label"
 						   for="passConfirm">{{i18n 'passwordReset.label.confirm' "Confirm"}}</label>
 					<input class="form-control js-confirm-pwd-reset" id="passConfirm"
-						   placeholder="{{i18n 'profile.input.repeatPassword'}}"
+						   placeholder="{{i18n 'profile.input.repeatPassword' attr=true}}"
 						   type="{{passwordFieldType}}">
 					{{#if passwordSame}}
 						{{i18n 'resetPassword.message.passwordsSame' "Passwords match"}}

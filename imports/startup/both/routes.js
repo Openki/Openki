@@ -217,16 +217,13 @@ Router.route('frameEvents', {
 	path: '/frame/events',
 	template: 'frameEventsPage',
 	layoutTemplate: 'frameLayout',
-
 	data() {
 		return this.params.query;
 	},
-
 	async action() {
 		await import('/imports/ui/pages/frames/events');
 		this.render();
 	},
-
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('event.list.windowtitle', 'Events'));
 	},
@@ -300,6 +297,9 @@ Router.route('frameWeek', {
 	path: '/frame/week',
 	template: 'frameWeekPage',
 	layoutTemplate: 'frameLayout',
+	data() {
+		return this.params.query;
+	},
 	async action() {
 		await import('/imports/ui/pages/frames/week');
 		this.render();
