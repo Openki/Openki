@@ -101,6 +101,8 @@ export const Api = {
 					id: string;
 					name: string;
 					link: string;
+					image?: string;
+					customFields?: { name: string; value: string }[];
 				};
 				groups: {
 					id: string;
@@ -134,6 +136,13 @@ export const Api = {
 						id: ev.courseId,
 						name: course.name,
 						link: Router.url('showCourse', course),
+						image: course.publicImageUrl(),
+						customFields: course.customFields
+							?.filter((f) => f.visibleFor === 'all')
+							.map((f) => ({
+								name: f.name,
+								value: f.value,
+							})),
 					};
 				}
 			}
@@ -164,6 +173,13 @@ export const Api = {
 				name: orginalCourse.name,
 				description: orginalCourse.description,
 				link: Router.url('showCourse', orginalCourse),
+				image: orginalCourse.publicImageUrl(),
+				customFields: orginalCourse.customFields
+					?.filter((f) => f.visibleFor === 'all')
+					.map((f) => ({
+						name: f.name,
+						value: f.value,
+					})),
 				internal: orginalCourse.internal,
 				interested: orginalCourse.interested,
 			} as {
@@ -171,6 +187,8 @@ export const Api = {
 				name: string;
 				description: string;
 				link: string;
+				image?: string;
+				customFields?: { name: string; value: string }[];
 				internal: boolean;
 				interested: number;
 				region?: {
