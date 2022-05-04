@@ -132,7 +132,7 @@ export class Course {
 
 	publicImageUrl(this: CourseModel) {
 		if (!this.image) {
-			return '';
+			return undefined;
 		}
 
 		return FileStorage.generatePublicUrl(this.image);
