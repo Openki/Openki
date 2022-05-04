@@ -37,6 +37,7 @@ const defaults = {
 		de: 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf',
 	},
 	aboutLink: 'https://about.openki.net',
+	eventDescriptionMax: 15000,
 	categories: {},
 };
 
@@ -100,6 +101,7 @@ check(
 			forbiddenChars: string[];
 			link: LocalizedValue;
 		}>,
+		eventDescriptionMax: Match.Maybe(Number),
 		categories: Record([String]),
 		s3: {
 			publicUrlBase: String,

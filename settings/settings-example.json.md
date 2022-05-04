@@ -63,6 +63,7 @@ This file descripts all configurations and customization options. Remove the com
 				, "de": "https://about.openki.net/ueber-uns/spenden/"
 				}
 			},
+		"eventDescriptionMax": 15000, // Max characters allowed for the description-field of events. Default: 15000
 		"categories": { // Categories for courses, main and/or sub categories
 			"sports":
 				[
