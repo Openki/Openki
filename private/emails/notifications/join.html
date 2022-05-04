@@ -4,35 +4,36 @@
 			<span class="title">
 				{{i18n "notification.event.mail.greeting" USERNAME=username lng=locale}}
 			</span>
-				<p>
-					{{i18n "notification.join.mail.intro" '{USERNAME} just joined course {COURSE} as: {ROLE}.' USERNAME=newParticipant COURSE=course ROLE=roleTitle lng=locale}}
+			<p>
+				{{i18n "notification.join.mail.intro" '{USERNAME} just joined course {COURSE} as: {ROLE}.' USERNAME=newParticipant COURSE=course ROLE=roleTitle lng=locale}}
 			</p>
-					{{#if message}}
-						<p>
-							{{i18n "notification.join.mail.message" 'They left this message:' lng=locale}}
+			{{#if message}}
+				<p>
+					{{i18n "notification.join.mail.message" 'They left this message:' lng=locale}}
 				</p>
-							<table class="comment-box">
-								<tr>
-									<td>
-										{{message}}
-									</td>
-								</tr>
-							</table>
-					{{/if}}
-					{{#if appendCollaborationHint}}
-						<p>
-							{{i18n "notification.join.mail.collaborationHint" 'If you like them to collaborate feel free to make contact. Give out rights to edit the course by adding people to its organization team by clicking the bullhorn next to a name.' lng=locale}}
+				<table class="comment-box">
+					<tr>
+						<td>
+							{{message}}
+						</td>
+					</tr>
+				</table>
+			{{/if}}
+			{{#if appendCollaborationHint}}
+				<p>
+					{{i18n "notification.join.mail.collaborationHint" 'If you like them to collaborate feel free to make contact. Give out rights to edit the course by adding people to its organization team by clicking the bullhorn next to a name.' lng=locale}}
 				</p>
-					{{/if}}
-					<strong>{{i18n "notification.join.mail.statsOverview" 'Overview over participants in this course:' lng=locale}}</strong>
-						<p>
-							{{#each figure in figures}}
-								{{figure.role}}: {{figure.count}}<br />
-							{{/each}}
-						</p>
-						<p>
-							<a href="{{courseLink}}">{{i18n "notification.join.mail.linktext" '➜ View course' lng=locale}}</a>
-						</p>
+			{{/if}}
+			<strong>{{i18n "notification.join.mail.statsOverview" 'Overview over participants in this course:' lng=locale}}</strong>
+			<p>
+				{{#each figure in figures}}
+					{{figure.role}}: {{figure.count}}<br />
+				{{/each}}
+			</p>
+			<p>
+				<a
+				   href="{{courseLink}}">{{i18n "notification.join.mail.linktext" '➜ View course' lng=locale}}</a>
+			</p>
 		</td>
 	</tr>
 	<tr>
@@ -45,9 +46,11 @@
 				</tr>
 				<tr>
 					<td>
-						<a href="{{unsubLink}}">{{i18n "notification.join.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName lng=locale}}</a>
-							&nbsp;
-							<a href="{{urlFor 'profile' query='campaign=joinNotify'}}">{{i18n "notification.join.mail.profileLink" "Visit your profile" lng=locale}}</a>
+						<a
+						   href="{{unsubLink}}">{{i18n "notification.join.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName lng=locale}}</a>
+						&nbsp;
+						<a
+						   href="{{urlFor 'profile' query='campaign=joinNotify'}}">{{i18n "notification.join.mail.profileLink" "Visit your profile" lng=locale}}</a>
 					</td>
 				</tr>
 				<tr>
