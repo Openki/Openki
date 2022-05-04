@@ -1,0 +1,12 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+/* stylelint-disable-next-line selector-class-pattern */
+.select2-selection--multiple::before {
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 5px solid #888;
+	content: '';
+	position: absolute;
+	right: 7px;
+	top: 42%;
+}

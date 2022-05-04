@@ -24,7 +24,7 @@ export function FilterPreview(options: {
 	if (property === 'state') {
 		selector = options.id;
 	} else if (property === 'role') {
-		selector = `needs-${selector}`;
+		selector = `needs-role-${options.id}`;
 	} else {
 		selector = `${property}-${options.id}`;
 	}

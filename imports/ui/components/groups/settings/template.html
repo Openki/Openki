@@ -21,7 +21,7 @@
 					{{#each group.members}}
 						<div class="tag tag-btn group-member-tag-btn-remove ">
 							<button class="js-member-remove-btn"
-									title="{{i18n 'group.settings.removeFromGroup' 'remove member'}}"
+									title="{{i18n 'group.settings.removeFromGroup' 'remove member' attr=true}}"
 									type="button">
 								<i class="fa-solid fa-xmark fa-fw" aria-hidden="true"></i>
 								{{username this}}
@@ -29,7 +29,7 @@
 						</div>
 						<div class="tag tag-link group-member-tag-profile addon">
 							<a href="{{pathFor 'userprofile' _id=this}}"
-							   title="{{i18n 'group.settings.member.profile' 'Visit profile'}}">
+							   title="{{i18n 'group.settings.member.profile' 'Visit profile' attr=true}}">
 								<i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
 							</a>
 						</div>
@@ -43,7 +43,7 @@
 							<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
 						</span>
 						<input class="js-search-users form-control" id="AddGroupMember"
-							   placeholder="{{i18n 'group.settings.field.addMember.placeholder' 'Type name of buddy'}}"
+							   placeholder="{{i18n 'group.settings.field.addMember.placeholder' 'Type name of buddy' attr=true}}"
 							   size="40" type="text" />
 					</div>
 				</div>
@@ -51,7 +51,7 @@
 					{{#each foundUsers group}}
 						<div class="tag tag-btn group-member-tag-btn-add ">
 							<button class="js-member-add-btn"
-									title="{{i18n 'group.settings.addMember' 'add as member'}}"
+									title="{{i18n 'group.settings.addMember' 'add as member' attr=true}}"
 									type="button">
 								<i class="fa-solid fa-plus fa-fw" aria-hidden="true"></i>
 								{{username this._id}}
@@ -59,7 +59,7 @@
 						</div>
 						<div class="tag tag-link group-member-tag-profile addon">
 							<a href="{{pathFor 'userprofile' _id=this._id}}"
-							   title="{{i18n 'group.settings.member.profile'}}">
+							   title="{{i18n 'group.settings.member.profile' attr=true}}">
 								<i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
 							</a>
 						</div>

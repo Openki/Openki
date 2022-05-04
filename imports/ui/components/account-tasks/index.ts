@@ -161,6 +161,12 @@ import './styles.scss';
 		this.$('input').first().trigger('select');
 	});
 
+	template.helpers({
+		OAuthServices() {
+			return Template.instance().OAuthServices;
+		},
+	});
+
 	template.events({
 		'click .js-forgot-pwd-btn'(event, instance) {
 			event.preventDefault();
@@ -272,12 +278,6 @@ import './styles.scss';
 					);
 				}
 			});
-		},
-	});
-
-	template.helpers({
-		OAuthServices() {
-			return Template.instance().OAuthServices;
 		},
 	});
 }

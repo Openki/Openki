@@ -5,18 +5,6 @@
 	margin-top: 0;
 }
 
-.js-search-field {
-	width: 100%;
-
-	@include media-breakpoint-up(md) {
-		max-width: 500px;
-	}
-}
-
-.js-search-input {
-	font-size: large;
-}
-
 .no-results {
 	font-size: large;
 	max-width: 400px;

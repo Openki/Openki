@@ -8,7 +8,7 @@
 			{{#each members}}
 				<div class="tag tag-btn tenant-member-tag-btn-remove">
 					<button class="js-member-remove-btn"
-							title="{{i18n 'tenant.settings.removeFromTenant' 'remove member'}}"
+							title="{{i18n 'tenant.settings.removeFromTenant' 'remove member' attr=true}}"
 							type="button">
 						<i class="fa-solid fa-xmark fa-fw" aria-hidden="true"></i>
 						{{username this}}
@@ -16,7 +16,7 @@
 				</div>
 				<div class="tag tag-link tenant-member-tag-profile addon">
 					<a href="{{pathFor 'userprofile' _id=this}}"
-					   title="{{i18n 'tenant.settings.member.profile' 'Visit profile'}}">
+					   title="{{i18n 'tenant.settings.member.profile' 'Visit profile' attr=true}}">
 						<i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
 					</a>
 				</div>
@@ -30,7 +30,7 @@
 					<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
 				</span>
 				<input class="js-search-members form-control" id="AddTenantMember"
-					   placeholder="{{i18n 'tenant.settings.field.addMember.placeholder' 'Type name of buddy'}}"
+					   placeholder="{{i18n 'tenant.settings.field.addMember.placeholder' 'Type name of buddy' attr=true}}"
 					   size="40" type="text" />
 			</div>
 		</div>
@@ -38,7 +38,7 @@
 			{{#each foundMembers}}
 				<div class="tag tag-btn tenant-member-tag-btn-add">
 					<button class="js-member-add-btn"
-							title="{{i18n 'tenant.settings.addMember' 'add as member'}}"
+							title="{{i18n 'tenant.settings.addMember' 'add as member' attr=true}}"
 							type="button">
 						<i class="fa-solid fa-plus fa-fw" aria-hidden="true"></i>
 						{{username this._id}}
@@ -46,7 +46,7 @@
 				</div>
 				<div class="tag tag-link tenant-member-tag-profile addon">
 					<a href="{{pathFor 'userprofile' _id=this._id}}"
-					   title="{{i18n 'tenant.settings.member.profile'}}">
+					   title="{{i18n 'tenant.settings.member.profile' attr=true}}">
 						<i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
 					</a>
 				</div>
@@ -64,7 +64,7 @@
 			{{#each tenant.admins}}
 				<div class="tag tag-btn tenant-admin-tag-btn-remove">
 					<button class="js-admin-remove-btn"
-							title="{{i18n 'tenant.settings.removeAdminFromTenant' 'remove admin'}}"
+							title="{{i18n 'tenant.settings.removeAdminFromTenant' 'remove admin' attr=true}}"
 							type="button">
 						<i class="fa-solid fa-xmark fa-fw" aria-hidden="true"></i>
 						{{username this}}
@@ -72,7 +72,7 @@
 				</div>
 				<div class="tag tag-link tenant-admin-tag-profile addon">
 					<a href="{{pathFor 'userprofile' _id=this}}"
-					   title="{{i18n 'tenant.settings.admin.profile' 'Visit profile'}}">
+					   title="{{i18n 'tenant.settings.admin.profile' 'Visit profile' attr=true}}">
 						<i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
 					</a>
 				</div>
@@ -86,7 +86,7 @@
 					<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
 				</span>
 				<input class="js-search-admins form-control" id="AddTenantAdmin"
-					   placeholder="{{i18n 'tenant.settings.field.addAdmin.placeholder' 'Type name of buddy'}}"
+					   placeholder="{{i18n 'tenant.settings.field.addAdmin.placeholder' 'Type name of buddy' attr=true}}"
 					   size="40" type="text" />
 			</div>
 		</div>
@@ -94,7 +94,7 @@
 			{{#each foundAdmins}}
 				<div class="tag tag-btn tenant-admin-tag-btn-add">
 					<button class="js-admin-add-btn"
-							title="{{i18n 'tenant.settings.addAdmin' 'add as admin'}}"
+							title="{{i18n 'tenant.settings.addAdmin' 'add as admin' attr=true}}"
 							type="button">
 						<i class="fa-solid fa-plus fa-fw" aria-hidden="true"></i>
 						{{username this._id}}
@@ -102,7 +102,7 @@
 				</div>
 				<div class="tag tag-link tenant-admin-tag-profile addon">
 					<a href="{{pathFor 'userprofile' _id=this._id}}"
-					   title="{{i18n 'tenant.settings.admin.profile'}}">
+					   title="{{i18n 'tenant.settings.admin.profile' attr=true}}">
 						<i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
 					</a>
 				</div>

@@ -7,7 +7,7 @@ export function update() {
 	Log.find({ tr: 'Courses.Subscribe' })
 		.fetch()
 		.forEach((entry) => {
-			const { courseId, userId, role } = entry.body;
+			const { courseId, userId, role } = entry.body as any;
 
 			Courses.update(courseId, {
 				$addToSet: {
@@ -24,7 +24,7 @@ export function update() {
 	Log.find({ tr: 'Courses.Unsubscribe' })
 		.fetch()
 		.forEach((entry) => {
-			const { courseId, userId, role } = entry.body;
+			const { courseId, userId, role } = entry.body as any;
 
 			Courses.update(courseId, {
 				$addToSet: {

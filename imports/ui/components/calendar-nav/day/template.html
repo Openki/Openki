@@ -1,0 +1,51 @@
+<template name="calendarNavDay">
+	<div class="calendar-nav-container text-center">
+		<div class="row align-items-center p-2">
+			<div class="col-md-3 col-lg-4 p-1">
+				{{> searchField searchFieldAttr}}
+			</div>
+			<div class="col-md-6 col-lg-4 p-1">
+				<div class="row justify-content-center align-items-center text-center">
+					{{> calendarNavDayControl direction='previous'}}
+					<div class="col-auto">
+						<div class="lead">
+							<span class="d-none d-md-inline-block">{{dateLong date}}</span>
+							<span class="d-md-none">{{dateShort date}}</span>
+						</div>
+						<div>
+							{{i18n "calendar.weekNumber" "Week"}} {{weekNr date}}
+						</div>
+					</div>
+					{{> calendarNavDayControl direction='next'}}
+				</div>
+			</div>
+			{{#if availableGroups}}
+				<div class="col-md-4 col-lg-2 p-1">
+					{{> filterGroups filterGroupsAttr}}
+				</div>
+				<div class="col-md-4 col-lg-2 p-1">
+					{{> filterCategories filterCategoriesAttr}}
+				</div>
+			{{else}}
+				<div class="offset-lg-2 col-md-4 col-lg-2 p-1">
+					{{> filterCategories filterCategoriesAttr}}
+				</div>
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+<template name="calendarNavDayControl">
+	<div class="col-auto px-4">
+		<button type="button" class="btn btn-secondary js-change-date">
+			{{arrow}} <span class="d-none d-md-inline-block">{{text direction 'short'}}</span>
+		</button>
+	</div>
+</template>
+
+<template name="calendarNavDayDynamicTranslations">
+	This template holds translation strings that are constructed dynamically in this component
+
+	{{i18n 'calendar.previous.day.short' 'previous day'}}
+	{{i18n 'calendar.next.day.short' 'next day'}}
+</template>

@@ -16,6 +16,8 @@ function updateDbCacheFields() {
 	// Update list of organizers per course
 	Meteor.call('course.updateGroups', {}, AsyncTools.logErrors);
 
+	Meteor.call('event.updateCategories', {}, AsyncTools.logErrors);
+
 	// Update List of badges per user
 	Meteor.call('user.updateBadges', {}, AsyncTools.logErrors);
 

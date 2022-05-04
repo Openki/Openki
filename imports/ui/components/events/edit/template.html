@@ -20,7 +20,7 @@
 					<label
 						   class="form-label">{{i18n 'course.event.edit.title' 'Event title'}}</label>
 					<input type="text" class="js-event-title form-control form-control-lg" name="_"
-						   placeholder="{{i18n 'event.title.placeholder' 'Write a catchy title here'}}"
+						   placeholder="{{i18n 'event.title.placeholder' 'Write a catchy title here' attr=true}}"
 						   size="30" value="{{this.title}}">
 				</div>
 				<div class="row gap-3">
@@ -263,7 +263,7 @@
 							</span>
 							<textarea rows="3" class="form-control js-event-add-message"
 									  maxlength="2000"
-									  placeholder="{{i18n 'event.edit.additionalMessage' 'If you feel good about doing so, describe what members of the course should know.'}}"></textarea>
+									  placeholder="{{i18n 'event.edit.additionalMessage' 'If you feel good about doing so, describe what members of the course should know.' attr=true}}"></textarea>
 						</div>
 					{{/if}}
 				</div>

@@ -148,7 +148,7 @@
 						</button>
 						<a class="btn btn-edit js-download js-track-cal-download"
 						   href="{{pathFor 'calEvent' this}}"
-						   title="{{i18n 'event.detail.download_cal' 'Download event to my calendar'}}">
+						   title="{{i18n 'event.detail.download_cal' 'Download event to my calendar' attr=true}}">
 							{{i18n 'event.details.download' 'Download'}}
 						</a>
 						{{> buttonDelete event="js-expand"}}
@@ -189,7 +189,7 @@
 			{{#if isOrganizer}}
 				<div class="tag group-tag addon">
 					<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"
-						  title="{{i18n 'grouplist.organizer.title'}}"></span>
+						  title="{{i18n 'grouplist.organizer.title' attr=true}}"></span>
 				</div>
 			{{/if}}
 			{{#if tools}}

@@ -14,7 +14,7 @@ import { InfoPages } from '/imports/api/infoPages/infoPages';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 if (Meteor.isServer && PrivateSettings.testdata) {
-	const logResult = function (error, result) {
+	const logResult = (error: unknown, result: unknown) => {
 		if (error) {
 			throw error;
 		}
@@ -22,7 +22,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 		console.log(result);
 	};
 
-	const ifCollectionEmpty = function (collection, methods) {
+	const ifCollectionEmpty = <T, U>(collection: Mongo.Collection<T, U>, methods: string[]) => {
 		if (collection.find().count() === 0) {
 			methods.forEach((method) => {
 				Meteor.call(method, logResult);

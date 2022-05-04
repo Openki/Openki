@@ -5,7 +5,6 @@ import { Courses } from '/imports/api/courses/courses';
 import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 import { Events } from '/imports/api/events/events';
 import { RegionEntity, Regions } from './regions';
-/** @typedef {import('./regions').RegionEntity} RegionEntity */
 import { Venues } from '/imports/api/venues/venues';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';

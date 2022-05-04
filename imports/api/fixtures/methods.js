@@ -26,7 +26,7 @@ import { venues } from './data/venue.fixtures';
 
 /**
  * Make a number that looks like a human chose it, favouring 2 and 5
- * @param {Prng} prng
+ * @param {{(): number;}} prng
  * @returns {number}
  */
 const humandistrib = function (prng) {
