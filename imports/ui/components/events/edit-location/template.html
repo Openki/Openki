@@ -37,7 +37,7 @@
 				{{else}}
 					<div class="input-group event-edit-location-searchbar">
 						<input type="text" class="form-control js-location-search-input"
-							   placeholder="{{i18n 'event.edit.locationNamePlaceholder' 'Where to?'}}"
+							   placeholder="{{i18n 'event.edit.locationNamePlaceholder' 'Where to?' attr=true}}"
 							   value="{{location.name}}" />
 						<button type="submit" class="btn btn-go js-location-search-btn">
 							{{i18n 'event.edit.addressSearch' "Search"}}
@@ -45,7 +45,7 @@
 					</div>
 					{{#if searching}}
 						<input type="text" class="form-control js-location-address-search"
-							   placeholder="{{i18n 'event.edit.locationAddressPlaceholder' 'Address'}}"
+							   placeholder="{{i18n 'event.edit.locationAddressPlaceholder' 'Address' attr=true}}"
 							   size="40" value="{{location.address}}" />
 					{{/if}}
 					{{#if haveLocationCandidates}}

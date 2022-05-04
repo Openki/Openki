@@ -27,16 +27,23 @@ import * as FileStorage from '/imports/utils/FileStorage';
 import { UserModel } from '/imports/api/users/users';
 import { StringEnum, Type } from '/imports/utils/CustomChecks';
 
-function registerMethod(method: {
+export interface Method<T> {
 	method: string;
-	read: (body: unknown) => {
+	read: (body: T) => {
 		validate(): void;
 		permitted: (user: UserModel | undefined | null) => boolean;
-		provide(rel: string[], body: unknown): void;
+		provide(
+			rel: string[],
+			body: {
+				operatorId: string | undefined;
+			},
+		): void;
 		apply(): void;
 	};
-}): void {
-	const apply = function (params: unknown) {
+}
+
+function registerMethod<T>(method: Method<T>): void {
+	const apply = function (params: T) {
 		const change = method.read(params);
 		try {
 			change.validate();
@@ -256,6 +263,10 @@ export const save = ServerMethod(
 			);
 
 			historyDenormalizer.afterUpdate(courseId, user._id);
+			if (changes.categories) {
+				// if categories are update, update those from the event
+				Meteor.call('event.updateCategories', { courseId });
+			}
 		}
 
 		if (changes.subs) {

@@ -252,8 +252,8 @@
 		<label class="form-label">{{i18n 'course.edit.title' 'Title'}}</label>
 		<div class="dropdown">
 			<input class="form-control form-control-lg dropdown-toggle js-title" id="editform_name"
-				   {{attributes}} size="40" type="text" data-bs-toggle="dropdown"
-				   value="{{name}}" />
+				   placeholder="{{i18n 'course.title.placeholder' 'What are you interested in?' attr=true}}"
+				   size="40" type="text" data-bs-toggle="dropdown" value="{{name}}" />
 			<ul class="dropdown-menu proposed-courses js-proposed-courses {{#unless proposedCourses.count}}d-none{{/unless}}"
 				role="menu" aria-labelledby="editform_name">
 				{{#if proposedCourses.count}}

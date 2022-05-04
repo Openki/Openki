@@ -16,13 +16,13 @@
 				<a class="navbar-brand js-toggle-introduction" href="{{pathFor 'home'}}">
 					{{#if connecting}}
 						<span class="fa-solid fa-circle-notch fa-spin fa-fw connecting"
-							  title="{{i18n 'status.connecting' 'Connecting to server'}}">
+							  title="{{i18n 'status.connecting' 'Connecting to server' attr=true}}">
 						</span>
 						<span class="sr-only">{{i18n 'status.connecting'}}</span>
 					{{/if}}
 					{{#if notConnected}}
 						<span class="fa-solid fa-circle-notch fa-fw no-connection"
-							  title="{{i18n 'status.notConnected' 'No connection to server'}}">
+							  title="{{i18n 'status.notConnected' 'No connection to server' attr=true}}">
 						</span>
 						<span class="sr-only">{{i18n 'status.notConnected'}}</span>
 					{{/if}}

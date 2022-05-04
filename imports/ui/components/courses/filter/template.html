@@ -42,7 +42,7 @@
 						<div class="col-sm-4 offset-sm-8 filter-captions-column">
 							<div class="filter-caption-wrap">
 								<div class="filter-caption js-filter-caption-archived {{archivedFilterClasses}}"
-									 title="{{i18n 'filterCaptions.archived.title' 'Show only courses that are archived'}}">
+									 title="{{i18n 'filterCaptions.archived.title' 'Show only courses that are archived' attr=true}}">
 									<span class="filter-caption-text">
 										{{i18n 'filterCaptions.archived.label' 'Archived'}}
 										<i class="fa-solid fa-xmark fa-fw" aria-hidden="true"></i>
@@ -88,74 +88,6 @@
 		<h4 class="filter-component-header">
 			{{i18n 'find.filter.categories' 'Categories'}}
 		</h4>
-		{{#unless isMobile}}
-			{{#if categories}}
-				<ul class="filter-selected-categories">
-					{{#each categories}}
-						<li>
-							{{> categoryLabel}}
-							<button type="button"
-									class="remove-btn js-remove-category-btn fa-solid fa-xmark"
-									data-tooltip="{{i18n 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=(categoryName this)}}">
-							</button>
-						</li>
-					{{/each}}
-				</ul>
-			{{/if}}
-		{{/unless}}
-		<div class="input-group input-group-outline filter-categories-select">
-			<input class="js-search-categories form-control"
-				   placeholder="{{i18n 'find.searchCategories.placeholder' 'Choose categories'}}"
-				   type="text">
-			<button aria-expanded="false" class="btn dropdown-toggle" data-bs-toggle="dropdown"
-					type="button" data-bs-reference="parent">
-			</button>
-			<ul class="dropdown-menu filter-categories-dropdown" role="menu">
-				{{#if availableCategories}}
-					{{#each availableCategories}}
-						<li class="{{this}}">
-							<a class="js-category-selection-label {{#if availableSubcategories this}}drodown-item-main{{/if}} dropdown-item"
-							   href="#">
-								{{categoryNameMarked}}
-								{{#if availableSubcategories this}}
-									<small class="js-toggle-subcategories {{this}}"
-										   title="{{i18n 'find.showSubcategories.title' 'Show/Hide subcategories'}}">
-										<span class="fa-solid fa-angle-down"
-											  aria-hidden="true"></span>
-									</small>
-								{{/if}}
-							</a>
-						</li>
-						{{#each availableSubcategories this}}
-							<li class="js-sub-category {{..}}">
-								<a class="js-category-selection-label dropdown-item" href="#">
-									{{categoryNameMarked}}
-								</a>
-							</li>
-						{{/each}}
-					{{/each}}
-				{{else}}
-					<span class="filter-no-categories-found">
-						<span class="fa-solid fa-exclamation fa-fw" aria-hidden="true"></span>
-						{{i18n 'find.filter-no-categories-found' 'No categories found'}}
-					</span>
-				{{/if}}
-			</ul>
-		</div>
-		{{#if isMobile}}
-			{{#if categories}}
-				<ul class="filter-selected-categories">
-					{{#each categories}}
-						<li>
-							<a class="js-category-label" href="#">{{categoryName this}}</a>
-							<button class="remove-btn js-remove-category-btn fa-solid fa-xmark"
-									data-tooltip="{{i18n 'find.filter.removeCategory' 'Remove category {CATEGORYNAME} from filter' CATEGORYNAME=(categoryName this)}}"
-									type="button">
-							</button>
-						</li>
-					{{/each}}
-				</ul>
-			{{/if}}
-		{{/if}}
+		{{> filterCategories filterCategoriesAttr}}
 	</div>
 </template>

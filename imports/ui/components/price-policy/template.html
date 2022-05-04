@@ -1,15 +1,5 @@
 <template name="pricePolicy">
-	{{#if dismissable}}
-		{{#unless hidePricePolicy}}
-			{{> pricePolicyContent}}
-		{{/unless}}
-	{{else}}
-		{{> pricePolicyContent}}
-	{{/if}}
-</template>
-
-<template name="pricePolicyContent">
-	{{#if PublicSettings.pricePolicyEnabled}}
+	{{#if shown}}
 		<div class="price-policy {{cssClasses}}">
 			<div class="price-policy-content">
 				{{#if dismissable}}

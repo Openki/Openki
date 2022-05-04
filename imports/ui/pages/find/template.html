@@ -12,16 +12,7 @@
 			</h1>
 		</div>
 		<div class="col-12 {{#unless showingFilters}}col-md-6 col-lg-7{{/unless}}">
-			<div class="js-search-field">
-				<div class="input-group input-group-lg">
-					<input class="js-search-input form-control" type="text" id="find"
-						   value="{{search}}"
-						   placeholder="{{i18n 'find.search_placeholder' 'Everything'}}" />
-					<button type="button" class="btn btn-success js-find-btn">
-						{{i18n 'find.search_go' 'Go!'}}
-					</button>
-				</div>
-			</div>
+			{{> searchField searchFieldAttr}}
 		</div>
 		<div class="col-12 {{#if showingFilters}}mb-3{{else}}col-md-6 col-lg-5{{/if}}">
 			{{> filter}}

@@ -18,9 +18,15 @@
 		padding-bottom: 5px;
 		transition: border-color 0.15s;
 
-		&:hover,
-		&.active {
+		&:hover {
+			background-color: #ebf4f8;
 			border-color: $primary;
+			padding: 0.5rem;
+		}
+
+		&.active {
+			background-color: #9fc5d6;
+			padding: 0.5rem;
 		}
 	}
 

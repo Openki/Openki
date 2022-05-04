@@ -25,6 +25,7 @@ import { SaveFields } from '/imports/api/events/methods';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import { Editable } from '/imports/ui/lib/editable';
 
+import { PublicSettings } from '/imports/utils/PublicSettings';
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import LocalTime from '/imports/utils/local-time';
 
@@ -355,6 +356,16 @@ template.events({
 		const description = instance.editableDescription.getEdited();
 		if (!description) {
 			Alert.error(i18n('event.edit.plzProvideDescr', 'Please provide a description'));
+			return;
+		}
+		if (description.length > PublicSettings.eventDescriptionMax) {
+			Alert.error(
+				i18n(
+					'event.edit.plzShortDescr',
+					'Too many characters used. Please remove {NUMBER} characters to be able to save.',
+					{ NUMBER: description.length - PublicSettings.eventDescriptionMax },
+				),
+			);
 			return;
 		}
 

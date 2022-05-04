@@ -1,0 +1,60 @@
+<template name="calendarNavMulti">
+	<div class="calendar-nav-container text-center">
+		<div class="calendar-nav">
+			{{> calendarNavMultiControl direction='previous'}}
+			<div class="calendar-nav-moment">
+				<div class="lead">
+					{{i18n "calendar.weekNumber" "Week"}} {{weekNr date}}
+				</div>
+				<div>
+					<span class="d-none d-md-inline-block">{{dateLong date}} -
+						{{dateLong (endDateTo date)}}</span>
+					<span class="d-md-none">{{dateShort date}} -
+						{{dateShort (endDateTo date)}}</span>
+				</div>
+			</div>
+			{{> calendarNavMultiControl direction='next'}}
+		</div>
+	</div>
+</template>
+
+<template name="calendarNavMultiControl">
+	<div class="calendar-nav-control">
+		<div class="btn-group">
+			<button type="button" class="btn btn-secondary js-change-date">
+				{{arrow}} <span
+					  class="d-none d-md-inline-block">{{calendarNavText direction currentUnit 'short'}}</span>
+			</button>
+			<button type="button" class="btn btn-secondary" aria-expanded="false"
+					aria-haspopup="true" data-bs-toggle="dropdown" data-bs-reference="parent">
+				<span class="fa-solid fa-list-ul fa-fw" aria-hidden="true"></span>
+			</button>
+			<ul class="dropdown-menu">
+				{{#each units}}
+					<li>
+						<a class="dropdown-item js-change-unit" href="#">
+							{{calendarNavText ../direction this 'long'}}
+						</a>
+					</li>
+				{{/each}}
+			</ul>
+		</div>
+	</div>
+</template>
+
+<template name="calendarNavMultiDynamicTranslations">
+	This template holds translation strings that are constructed dynamically in this component
+
+	{{i18n 'calendar.previous.week.short' 'previous week'}}
+	{{i18n 'calendar.previous.month.short' 'previous month'}}
+	{{i18n 'calendar.previous.year.short' 'previous year'}}
+	{{i18n 'calendar.next.week.short' 'next week'}}
+	{{i18n 'calendar.next.month.short' 'next month'}}
+	{{i18n 'calendar.next.year.short' 'next year'}}
+	{{i18n 'calendar.previous.week.long' 'Go to previous week'}}
+	{{i18n 'calendar.previous.month.long' 'Go to previous month'}}
+	{{i18n 'calendar.previous.year.long' 'Go to previous year'}}
+	{{i18n 'calendar.next.week.long' 'Go to next week'}}
+	{{i18n 'calendar.next.month.long' 'Go to next month'}}
+	{{i18n 'calendar.next.year.long' 'Go to next year'}}
+</template>
