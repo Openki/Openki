@@ -313,7 +313,7 @@
 	"event.edit.plzProvideDescr": "Bitte eine Beschreibung eingeben",
 	"event.edit.plzProvideTitle": "Bitte einen Titel eingeben",
 	"event.edit.plzSelectRegion": "Bitte Region wählen",
-	"event.edit.plzShortDescr": "Zu viele Zeichen benutzt. Bitte entferne mindestens {NUMBER} Zeichen um speichern zu können (wegen begrenztem Platz im Programmheft).",
+	"event.edit.plzShortDescr": "Zu viele Zeichen benutzt in der Beschreibung. Bitte entferne mindestens {NUMBER} Zeichen um speichern zu können (wegen begrenztem Platz im Programmheft).",
 	"event.edit.startDayChanged": "Die Aktualisierung der Kopien, wenn der Starttag geändert wurde, wird (noch) nicht unterstützt.",
 	"event.edit.startInPast": "Die Veranstaltung beginnt in der Vergangenheit. Haben Sie ein Startdatum und eine Startzeit ausgewählt?",
 	"event.edit.updateReplicasInfo": "{COUNT, plural, one{Eine weitere Kopie} other{# weitere Kopien} } auch anpassen.",
