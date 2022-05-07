@@ -1,3 +1,8 @@
 <template name="richtext">
-	<div class="js-richtext richtext form-control {{class}}">{{text}}</div>
+	<div class="js-richtext richtext form-control {{class}} {{#if characterLimitReached}}is-invalid{{/if}}">{{text}}</div>
+	{{#if characterLimitReached}}
+		<div class="invalid-feedback">
+			{{i18n 'richtext.maxlength' 'Too many characters used. Please remove {NUMBER} characters.' NUMBER=removeNumberOfCharacters}}
+		</div>
+	{{/if}}
 </template>
