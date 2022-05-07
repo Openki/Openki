@@ -787,6 +787,7 @@
   "resetPassword.siteTitle": "Reset password",
   "resetPassword.subject": "[{SITE}] Reset your password on {SITE}",
   "resetPassword.title": "Reset your password",
+  "richtext.link.placeholder": "Paste link here…",
   "roles.host.description": "a host that provides a place",
   "roles.host.myList": "I provide a place for",
   "roles.host.short": "host",
