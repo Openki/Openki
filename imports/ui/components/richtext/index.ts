@@ -26,6 +26,11 @@ template.onRendered(function () {
 	const instance = this;
 	const $richtext = instance.$('.js-richtext');
 
+	$richtext.html(instance.data.text || '');
+	instance.autorun(() => {
+		$richtext.html(Template.currentData().text || '');
+	});
+
 	const isRTL = Session.equals('textDirectionality', 'rtl');
 	const align = !isRTL ? 'left' : 'right';
 
@@ -35,11 +40,11 @@ template.onRendered(function () {
 		disableDoubleReturn: true,
 		placeholder: {
 			hideOnClick: false,
-			text: instance.data.placeholder,
+			text: instance.data.placeholder || i18n('richtext.placeholder.default', 'Type your text'),
 		},
 		anchor: {
 			linkValidation: true,
-			placeholderText: i18n('richtext.link.placeholder', 'Paste link here…'),
+			placeholderText: i18n('richtext.link.placeholder', 'Paste or type a link'),
 		},
 		autoLink: true,
 		buttonLabels: 'fontawesome',
