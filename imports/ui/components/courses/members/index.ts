@@ -120,7 +120,7 @@ import './styles.scss';
 		instance.subscribe('user', data.member.user);
 
 		instance.editableMessage = new Editable(
-			true,
+			false,
 			i18n('roles.message.placeholder', 'My interests…'),
 			{
 				onSave: async (newMessage) => {
