@@ -64,6 +64,7 @@
 	display: inline-block;
 	min-width: 8em;
 	width: auto;
+
 	&:focus,
 	&.editable-changed {
 		min-width: 10em;
