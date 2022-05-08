@@ -152,12 +152,12 @@
 				</div>
 				<div class="discussion-edit-body">
 					<div class="mb-3">
-						<input class="js-post-title discussion-edit-title form-control" type="text"
+						<input class="js-post-title discussion-edit-title form-control form-control-lg" type="text"
 							   placeholder="{{i18n 'course.discussion.title_placeholder' 'Title' attr=true}} {{i18n '_inputField.optional' attr=true}}"
 							   value="{{title}}" />
 					</div>
-					<div class="mb-3 js-post-text">
-						{{> editableTextarea editableText}}
+					<div class="mb-3">
+						{{> richtext class="js-post-text" text=text placeholder=richtextPlaceholder}}
 					</div>
 					{{#if new}}
 						{{#if canNotifyAll}}
