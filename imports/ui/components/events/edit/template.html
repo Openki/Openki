@@ -87,7 +87,7 @@
 				<div class="mb-3">
 					<label
 						   class="form-label">{{i18n 'course.event.edit.desc' 'Description'}}</label>
-					{{> editableTextarea instance.editableDescription}}
+					{{> richtext class="js-event-description" text=description placeholder=(i18n 'event.description.placeholder' 'Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)') maxlength=PublicSettings.eventDescriptionMax}}
 				</div>
 				{{#unless isPrivate}}
 					{{> pricePolicy dismissable=true wrap='mb-3'}}
