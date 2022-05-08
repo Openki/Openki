@@ -34,7 +34,7 @@ template.onRendered(function () {
 	const isRTL = Session.equals('textDirectionality', 'rtl');
 	const align = !isRTL ? 'left' : 'right';
 
-	const options: MediumEditor.CoreOptions = {
+	const meOptions: MediumEditor.CoreOptions = {
 		toolbar: {
 			static: true,
 			sticky: true,
@@ -74,7 +74,7 @@ template.onRendered(function () {
 
 	// Initialize the editor interface
 	// eslint-disable-next-line no-new
-	new MediumEditor($richtext[0], options);
+	new MediumEditor($richtext[0], meOptions);
 
 	instance.numberOfCharacters.set($richtext.text().trim().length);
 
