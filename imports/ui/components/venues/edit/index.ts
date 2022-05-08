@@ -159,11 +159,20 @@ import './styles.scss';
 				address: instance.$('.js-address').val() as string,
 				route: instance.$('.js-route').val() as string,
 				short: instance.$('.js-short').val() as string,
-				maxPeople: parseInt(instance.$('.js-maxPeople').val() as string, 10) || undefined, // give back undefined in case of NaN or 0
-				maxWorkplaces: parseInt(instance.$('.js-maxWorkplaces').val() as string, 10) || undefined, // give back undefined in case of NaN or 0
 				facilities: [],
 				otherFacilities: instance.$('.js-otherFacilities').val() as string,
 			};
+
+			const maxPeople = parseInt(instance.$('.js-maxPeople').val() as string, 10) || undefined; // give back undefined in case of NaN or 0
+			if (maxPeople && maxPeople > 0) {
+				changes.maxPeople = maxPeople;
+			}
+
+			const maxWorkplaces =
+				parseInt(instance.$('.js-maxWorkplaces').val() as string, 10) || undefined; // give back undefined in case of NaN or 0
+			if (maxWorkplaces && maxWorkplaces > 0) {
+				changes.maxWorkplaces = maxWorkplaces;
+			}
 
 			if (!changes.name) {
 				Alert.error(i18n('venue.create.plsGiveVenueName', 'Please give your venue a name'));
