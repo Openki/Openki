@@ -35,7 +35,15 @@ template.onRendered(function () {
 	const align = !isRTL ? 'left' : 'right';
 
 	const options: MediumEditor.CoreOptions = {
-		toolbar: { static: true, align, updateOnEmptySelection: true },
+		toolbar: {
+			static: true,
+			sticky: true,
+			stickyTopOffset: 55,
+			align,
+			updateOnEmptySelection: true,
+			// list of supported html tags / formatting. Should be same as in the saneHtml(...) function
+			buttons: ['h4', 'bold', 'italic', 'underline', 'anchor', 'unorderedlist', 'orderedlist'],
+		},
 		disableExtraSpaces: true,
 		disableDoubleReturn: true,
 		placeholder: {
@@ -49,6 +57,20 @@ template.onRendered(function () {
 		autoLink: true,
 		buttonLabels: 'fontawesome',
 	};
+
+	// Make titles translateable
+	const meExtensions = (MediumEditor as any).extensions;
+
+	const meButton = meExtensions.button.prototype.defaults;
+	meButton.h4.aria = i18n('richtext.button.h4.title', 'subheader');
+	meButton.h4.contentFA = '<i class="fa fa-header">';
+	meButton.bold.aria = i18n('richtext.button.bold.title', 'bold');
+	meButton.italic.aria = i18n('richtext.button.italic.title', 'italic');
+	meButton.underline.aria = i18n('richtext.button.underline.title', 'underline');
+	meButton.unorderedlist.aria = i18n('richtext.button.unorderedlist.title', 'unordered list');
+	meButton.orderedlist.aria = i18n('richtext.button.orderedlist.title', 'ordered list');
+
+	meExtensions.anchor.prototype.aria = i18n('richtext.button.anchor.title', 'link');
 
 	// Initialize the editor interface
 	// eslint-disable-next-line no-new
