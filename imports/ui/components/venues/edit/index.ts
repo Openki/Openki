@@ -10,13 +10,12 @@ import { VenueModel, Venues } from '/imports/api/venues/venues';
 import * as VenuesMethods from '/imports/api/venues/methods';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
-import { Editable } from '/imports/ui/lib/editable';
 import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
-import '/imports/ui/components/editable';
+import '/imports/ui/components/richtext';
 import '/imports/ui/components/map';
 
 import './template.html';
@@ -32,7 +31,6 @@ import './styles.scss';
 			locationTracker: LocationTracker;
 			selectedRegion: ReactiveVar<string | undefined | null>;
 			regionSelectable: ReactiveVar<boolean>;
-			editableDescription: Editable;
 		}
 	>;
 
@@ -98,16 +96,6 @@ import './styles.scss';
 					instance.locationTracker.markers.remove(location._id);
 				}
 			},
-		});
-
-		instance.editableDescription = new Editable(
-			false,
-			i18n('venue.edit.description.placeholder', 'Some words about this venue'),
-		);
-
-		instance.autorun(() => {
-			const data = Template.currentData();
-			instance.editableDescription.setText(data.description);
 		});
 	});
 
@@ -182,17 +170,15 @@ import './styles.scss';
 				return;
 			}
 
-			const newDescription = instance.editableDescription.getEdited();
-			if (newDescription) {
-				changes.description = newDescription;
-			}
-
-			if (changes.description?.trim().length === 0) {
+			const $description = instance.$('.js-description');
+			if (!$description.text()) {
 				Alert.error(
 					i18n('venue.create.plsProvideDescription', 'Please provide a description for your venue'),
 				);
 				return;
 			}
+
+			changes.description = $description.html();
 
 			Venues.facilityOptions.forEach((facility) => {
 				if (instance.$(`.js-${facility}`).prop('checked')) {
