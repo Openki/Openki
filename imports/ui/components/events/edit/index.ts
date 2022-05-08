@@ -23,7 +23,6 @@ import { Regions } from '/imports/api/regions/regions';
 import { SaveFields } from '/imports/api/events/methods';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
-import { Editable } from '/imports/ui/lib/editable';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
@@ -33,7 +32,7 @@ import * as Analytics from '/imports/ui/lib/analytics';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/buttons';
-import '/imports/ui/components/editable';
+import '/imports/ui/components/richtext';
 import '/imports/ui/components/events/edit-location';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
@@ -71,7 +70,6 @@ const Template = TemplateAny as TemplateStaticTyped<
 		selectedRegion: ReactiveVar<string>;
 		selectedLocation: ReactiveVar<Partial<EventVenueEntity>>;
 		notifyChecked: ReactiveVar<boolean>;
-		editableDescription: Editable;
 	}
 >;
 
@@ -111,19 +109,6 @@ template.onCreated(function () {
 	// attached to a course. Otherwise there is nobody to inform.
 	const notifyPreset = !!(courseId && instance.data.new);
 	instance.notifyChecked = new ReactiveVar(notifyPreset);
-
-	instance.editableDescription = new Editable(
-		false,
-		i18n(
-			'event.description.placeholder',
-			'Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)',
-		),
-	);
-
-	instance.autorun(() => {
-		const data = Template.currentData();
-		instance.editableDescription.setText(data.description);
-	});
 });
 
 function getEventStartMoment(instance: ReturnType<typeof Template['instance']>) {
@@ -353,17 +338,17 @@ template.events({
 			return;
 		}
 
-		const description = instance.editableDescription.getEdited();
-		if (!description) {
+		const $description = instance.$('.js-event-description');
+		if (!$description.text()) {
 			Alert.error(i18n('event.edit.plzProvideDescr', 'Please provide a description'));
 			return;
 		}
-		if (description.length > PublicSettings.eventDescriptionMax) {
+		if ($description.text().length > PublicSettings.eventDescriptionMax) {
 			Alert.error(
 				i18n(
 					'event.edit.plzShortDescr',
 					'Too many characters used. Please remove {NUMBER} characters to be able to save.',
-					{ NUMBER: description.length - PublicSettings.eventDescriptionMax },
+					{ NUMBER: $description.text().length - PublicSettings.eventDescriptionMax },
 				),
 			);
 			return;
@@ -379,7 +364,7 @@ template.events({
 
 		const editevent = {
 			title,
-			description,
+			description: $description.html(),
 			venue: instance.selectedLocation.get(),
 			room: instance.$('.js-event-room').val() as string,
 			startLocal: LocalTime.toString(start),
