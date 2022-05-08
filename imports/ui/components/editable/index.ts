@@ -76,7 +76,7 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 			if (!instance.state?.changed.get()) {
 				return undefined;
 			}
-			return instance.state.simple ? editable.text().trim() : editable.html().trim();
+			return instance.state.multiline ? editable.html().trim() : editable.text().trim();
 		};
 
 		instance.getTotalFocusTimeInSeconds = () => {
@@ -86,10 +86,10 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 		instance.reset = () => {
 			const text = instance.state.text();
 
-			if (instance.state.simple) {
-				editable.text(text);
-			} else {
+			if (instance.state.multiline) {
 				editable.html(text);
+			} else {
+				editable.text(text);
 			}
 
 			// HACK remove placeholder when there is content
@@ -178,7 +178,7 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 
 		meExtensions.anchor.prototype.aria = i18n('richtext.button.anchor.title', 'link');
 
-		if (instance.state.simple) {
+		if (!instance.state.multiline) {
 			meOptions.disableReturn = true;
 			meOptions.toolbar = false;
 		}
@@ -209,14 +209,25 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 			return instance.state.showControls && instance.state.changed.get();
 		},
 
-		wrapAttrs() {
+		wrapClasses() {
 			const instance = Template.instance();
-			return instance.state.simple ? 'editable-wrap-simple' : 'editable-wrap-rich';
+			return instance.state.multiline ? 'editable-wrap-multiline' : 'editable-wrap-singleline';
 		},
 
-		editableAttrs() {
+		editableClasses() {
 			const instance = Template.instance();
-			return instance.state.changed.get() ? 'editable-changed' : '';
+
+			const classes = [];
+
+			if (instance.state.changed.get()) {
+				classes.push('editable-changed');
+			}
+
+			if (!instance.state.showControls) {
+				classes.push('form-control');
+			}
+
+			return classes.join(' ');
 		},
 	});
 
@@ -265,6 +276,6 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 	});
 }
 
-['editable', 'editableTextarea'].forEach((templateName) => {
+['editable'].forEach((templateName) => {
 	EditableMixing(TemplateAny as any, templateName);
 });

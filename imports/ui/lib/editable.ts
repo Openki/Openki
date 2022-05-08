@@ -22,7 +22,7 @@ export interface Store {
 export interface State {
 	text: () => string;
 	changed: ReactiveVar<boolean>;
-	simple: boolean;
+	multiline: boolean;
 	placeholderText: string;
 	showControls: boolean;
 	store: Store;
@@ -53,7 +53,7 @@ export interface State {
  * It is assumed that only one instance is using this interface at a time,
  */
 export class Editable {
-	simple: boolean;
+	multiline: boolean;
 
 	store: Store;
 
@@ -73,8 +73,8 @@ export class Editable {
 		getTotalFocusTimeInSeconds: () => number;
 	};
 
-	constructor(simple = true, placeholderText = '', store?: Store) {
-		this.simple = simple;
+	constructor(multiline = false, placeholderText = '', store?: Store) {
+		this.multiline = multiline;
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		this.store = store || {};
 		this.placeholderText = placeholderText;
@@ -121,7 +121,7 @@ export class Editable {
 		return {
 			text: () => this.text.get(),
 			changed: this.changed,
-			simple: this.simple,
+			multiline: this.multiline,
 			placeholderText: this.placeholderText || i18n('editable.add_text', 'Add text here'),
 			showControls: this.showControls,
 			store: this.store,
