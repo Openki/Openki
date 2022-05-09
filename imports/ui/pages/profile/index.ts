@@ -99,7 +99,7 @@ template.onCreated(function () {
 		);
 	}
 
-	instance.editableName = new Editable(true, i18n('profile.name.placeholder', 'Username'), {
+	instance.editableName = new Editable(false, i18n('profile.name.placeholder', 'Username'), {
 		serverValidationErrors: [
 			{
 				type: 'noUserName',
