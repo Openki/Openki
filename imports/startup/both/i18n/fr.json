@@ -282,7 +282,6 @@
 	"discussionPost.deleted": "Commentaire supprimé.",
 	"discussionPost.deleted.error": "Le commentaire n'a pu être supprimé",
 	"editable.add_text": "Ajouter du texte ici",
-	"editable.link.placeholder": "Coller le lien ici…",
 	"editableImage.accept.error": "Seules les images sont autorisées.",
 	"email.verified": "Votre E-mail a été vérifié.",
 	"emailrequest.text.greeting": "Bonjour \"{NAME}\" ",
