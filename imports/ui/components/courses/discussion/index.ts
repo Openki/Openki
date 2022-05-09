@@ -15,10 +15,10 @@ import * as CourseDiscussionsMethods from '/imports/api/course-discussions/metho
 import { EditCommentFields, PostCommentFields } from '/imports/api/course-discussions/methods';
 import * as Alert from '/imports/api/alerts/alert';
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
-import { Editable } from '/imports/ui/lib/editable';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons';
+import '/imports/ui/components/richtext';
 import '/imports/ui/components/avatar';
 import '/imports/ui/components/profile-link';
 
@@ -290,7 +290,7 @@ import './styles.scss';
 	const Template = TemplateAny as TemplateStaticTyped<
 		'postEdit',
 		CourseDiscussionEnity & { new?: true },
-		{ anon: ReactiveVar<boolean>; validComment: ReactiveVar<boolean>; editableText: Editable }
+		{ anon: ReactiveVar<boolean>; validComment: ReactiveVar<boolean> }
 	>;
 
 	const template = Template.postEdit;
@@ -299,22 +299,7 @@ import './styles.scss';
 		const instance = this;
 
 		instance.anon = new ReactiveVar(!instance.data.userId);
-		instance.validComment = new ReactiveVar(CourseDiscussions.validComment(instance.data.text));
-
-		const placeholder = instance.data.parentId
-			? i18n('course.discussion.text_placeholder_answer', 'Your answer')
-			: i18n('course.discussion.text_placeholder', 'Your comment');
-
-		instance.editableText = new Editable(false, placeholder);
-
-		// UGLY: The event handler to save the comment is defined on the parent instance.
-		// (Because that's where the editing-state flag is.) To make the text available
-		// to the handler, we assign the editable on the parent. Improvements welcome.
-		(instance.parentInstance() as any).editableText = instance.editableText;
-
-		instance.autorun(() => {
-			instance.editableText.setText(Template.currentData().text);
-		});
+		instance.validComment = new ReactiveVar(!!instance.data.text.trim());
 	});
 	template.onRendered(function () {
 		const instance = this;
@@ -322,8 +307,10 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		editableText() {
-			return Template.instance().editableText;
+		richtextPlaceholder() {
+			return Template.instance().data.parentId
+				? i18n('course.discussion.text_placeholder_answer', 'Your answer')
+				: i18n('course.discussion.text_placeholder', 'Your comment');
 		},
 
 		postClass() {
@@ -380,8 +367,8 @@ import './styles.scss';
 
 	template.events({
 		'keyup .js-post-text, change .js-post-text'(_event, instance) {
-			const edited = instance.editableText.getEdited();
-			instance.validComment.set(!!edited && CourseDiscussions.validComment(edited));
+			const edited = instance.$('.js-post-text').text().trim();
+			instance.validComment.set(!!edited);
 		},
 
 		change(_event, instance) {
@@ -396,9 +383,9 @@ import './styles.scss';
 				| PostCommentFields
 				| EditCommentFields;
 
-			const editedText = instance.editableText.getEdited();
-			if (editedText) {
-				comment.text = editedText;
+			const $postText = instance.$('.js-post-text');
+			if ($postText.text().trim()) {
+				comment.text = $postText.html();
 			}
 
 			(instance.parentInstance() as any).editing.set(false);
