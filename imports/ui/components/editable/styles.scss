@@ -56,13 +56,14 @@
 	}
 }
 
-.editable-wrap-rich .editable {
-	min-height: 4ex;
+.editable-wrap-multiline .editable {
+	min-height: 100px;
 }
 
-.editable-wrap-simple .editable {
+.editable-wrap-singleline .editable {
 	display: inline-block;
 	min-width: 8em;
+	width: auto;
 
 	&:focus,
 	&.editable-changed {
@@ -85,7 +86,7 @@
 	color: $gray-800;
 }
 
-.editable-wrap-rich .editable-icon {
+.editable-wrap-multiline .editable-icon {
 	@include td-pos(right, 0);
 	position: absolute;
 	top: 0;
@@ -105,10 +106,4 @@
 .editable-controls button {
 	@include td-margin(right, 5px);
 	box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-}
-
-.editable-textarea {
-	height: 100px;
-	overflow: auto;
-	resize: vertical;
 }

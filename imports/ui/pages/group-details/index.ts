@@ -84,7 +84,7 @@ template.onCreated(function () {
 	const showControls = !this.data.group.isNew();
 
 	instance.editableName = new Editable(
-		true,
+		false,
 		i18n('group.name.placeholder', 'Name of your group, institution, community or program'),
 		showControls
 			? {
@@ -97,7 +97,7 @@ template.onCreated(function () {
 	);
 
 	instance.editableShort = new Editable(
-		true,
+		false,
 		i18n('group.short.placeholder', 'Abbreviation'),
 		showControls
 			? {
@@ -110,7 +110,7 @@ template.onCreated(function () {
 	);
 
 	instance.editableClaim = new Editable(
-		true,
+		false,
 		i18n('group.claim.placeholder', 'The core idea'),
 		showControls
 			? {
@@ -123,7 +123,7 @@ template.onCreated(function () {
 	);
 
 	instance.editableDescription = new Editable(
-		false,
+		true,
 		i18n(
 			'group.description.placeholder',
 			'Describe the audience, the interests and activities of your group.',

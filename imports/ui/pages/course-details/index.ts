@@ -71,7 +71,7 @@ import './styles.scss';
 
 		const { course } = instance.data;
 
-		instance.editableName = new Editable(true, i18n('course.title.placeholder'), {
+		instance.editableName = new Editable(false, i18n('course.title.placeholder'), {
 			onSave: async (newName) => {
 				await CoursesMethods.save(course._id, { name: newName });
 			},
@@ -92,7 +92,7 @@ import './styles.scss';
 			},
 		});
 
-		instance.editableDescription = new Editable(false, i18n('course.description.placeholder'), {
+		instance.editableDescription = new Editable(true, i18n('course.description.placeholder'), {
 			onSave: async (newDescription) => {
 				await CoursesMethods.save(course._id, { description: newDescription });
 			},

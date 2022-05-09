@@ -10,13 +10,12 @@ import { VenueModel, Venues } from '/imports/api/venues/venues';
 import * as VenuesMethods from '/imports/api/venues/methods';
 
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
-import { Editable } from '/imports/ui/lib/editable';
 import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
-import '/imports/ui/components/editable';
+import '/imports/ui/components/richtext';
 import '/imports/ui/components/map';
 
 import './template.html';
@@ -32,7 +31,6 @@ import './styles.scss';
 			locationTracker: LocationTracker;
 			selectedRegion: ReactiveVar<string | undefined | null>;
 			regionSelectable: ReactiveVar<boolean>;
-			editableDescription: Editable;
 		}
 	>;
 
@@ -99,16 +97,6 @@ import './styles.scss';
 				}
 			},
 		});
-
-		instance.editableDescription = new Editable(
-			false,
-			i18n('venue.edit.description.placeholder', 'Some words about this venue'),
-		);
-
-		instance.autorun(() => {
-			const data = Template.currentData();
-			instance.editableDescription.setText(data.description);
-		});
 	});
 
 	template.helpers({
@@ -171,28 +159,35 @@ import './styles.scss';
 				address: instance.$('.js-address').val() as string,
 				route: instance.$('.js-route').val() as string,
 				short: instance.$('.js-short').val() as string,
-				maxPeople: parseInt(instance.$('.js-maxPeople').val() as string, 10) || undefined, // give back undefined in case of NaN or 0
-				maxWorkplaces: parseInt(instance.$('.js-maxWorkplaces').val() as string, 10) || undefined, // give back undefined in case of NaN or 0
 				facilities: [],
 				otherFacilities: instance.$('.js-otherFacilities').val() as string,
 			};
+
+			const maxPeople = parseInt(instance.$('.js-maxPeople').val() as string, 10) || undefined; // give back undefined in case of NaN or 0
+			if (maxPeople && maxPeople > 0) {
+				changes.maxPeople = maxPeople;
+			}
+
+			const maxWorkplaces =
+				parseInt(instance.$('.js-maxWorkplaces').val() as string, 10) || undefined; // give back undefined in case of NaN or 0
+			if (maxWorkplaces && maxWorkplaces > 0) {
+				changes.maxWorkplaces = maxWorkplaces;
+			}
 
 			if (!changes.name) {
 				Alert.error(i18n('venue.create.plsGiveVenueName', 'Please give your venue a name'));
 				return;
 			}
 
-			const newDescription = instance.editableDescription.getEdited();
-			if (newDescription) {
-				changes.description = newDescription;
-			}
-
-			if (changes.description?.trim().length === 0) {
+			const $description = instance.$('.js-description');
+			if (!$description.text()) {
 				Alert.error(
 					i18n('venue.create.plsProvideDescription', 'Please provide a description for your venue'),
 				);
 				return;
 			}
+
+			changes.description = $description.html();
 
 			Venues.facilityOptions.forEach((facility) => {
 				if (instance.$(`.js-${facility}`).prop('checked')) {
