@@ -8,13 +8,13 @@
 		<form>
 			<div class="mb-3">
 				<label class="form-label">{{i18n 'venue.edit.name' 'Name'}}</label>
-				<input type="text" class="form-control js-name"
+				<input type="text" class="js-name form-control form-control-lg"
 					   placeholder="{{i18n 'venue.edit.namePlaceholder' 'Full name of venue' attr=true}}"
 					   size="60" value="{{name}}">
 			</div>
 			<div class="mb-3">
 				<label class="form-label">{{i18n 'venue.edit.description' 'Description'}}</label>
-				{{> editableTextarea instance.editableDescription}}
+				{{> richtext class="js-description" text=description placeholder=(i18n 'venue.edit.description.placeholder' 'Some words about this venue')}}
 			</div>
 			{{#if showMapSelection}}
 				<div class="row gap-3 mb-3">
