@@ -347,8 +347,11 @@ template.events({
 			Alert.error(
 				i18n(
 					'event.edit.plzShortDescr',
-					'Too many characters used. Please remove {NUMBER} characters to be able to save.',
-					{ NUMBER: $description.text().length - PublicSettings.eventDescriptionMax },
+					'Too many characters used. {MAXNUMBER} are allowed. Please remove {NUMBER} characters to be able to save.',
+					{
+						MAXNUMBER: PublicSettings.eventDescriptionMax,
+						NUMBER: $description.text().length - PublicSettings.eventDescriptionMax,
+					},
 				),
 			);
 			return;
