@@ -28,11 +28,6 @@ export class CourseDiscussionsCollection extends Mongo.Collection<CourseDiscussi
 			this.createIndex({ courseId: 1 });
 		}
 	}
-
-	// eslint-disable-next-line class-methods-use-this
-	validComment(text: string) {
-		return text.trim().length > 0;
-	}
 }
 export const CourseDiscussions = new CourseDiscussionsCollection();
 
