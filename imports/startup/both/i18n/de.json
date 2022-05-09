@@ -651,6 +651,7 @@
 	"resetPassword.siteTitle": "Passwort zurücksetzen",
 	"resetPassword.subject": "[{SITE}] Setze dein Passwort für {SITE} zurück",
 	"resetPassword.title": "Passwort zurücksetzen",
+	"richtext.link.placeholder": "Hier Link einfügen…",
 	"roles.host.description": "einen Gastgeber, der einen Ort zur Verfügung stellt",
 	"roles.host.myList": "Ich stelle einen Ort zur Verfügung für",
 	"roles.host.short": "Gastgeber",

@@ -13,8 +13,10 @@ import * as HtmlTools from '/imports/utils/html-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import { Type } from '/imports/utils/CustomChecks';
 
-const sanitizeComment = (comment: { title: string; text: string }) => {
-	const saneTitle = StringTools.saneTitle(comment.title).substring(0, 200).trim();
+const sanitizeComment = (comment: { title?: string; text: string }) => {
+	const saneTitle = StringTools.saneTitle(comment?.title || '')
+		.substring(0, 200)
+		.trim();
 
 	// String-truncating HTML may leave a broken tag at the end
 	// The sanitizer will have to clean the mess.
@@ -27,7 +29,7 @@ const sanitizeComment = (comment: { title: string; text: string }) => {
 export const PostCommentFieldsPattern = {
 	courseId: String,
 	parentId: Match.Optional(String),
-	title: String,
+	title: Match.Optional(String),
 	text: String,
 	anon: Boolean,
 	notifyAll: Match.Optional(Boolean),
@@ -41,7 +43,7 @@ export const postComment = ServerMethod(
 
 		const saneComment = sanitizeComment(comment) as CourseDiscussionEnity & { saving?: boolean };
 
-		if (!CourseDiscussions.validComment(saneComment.text)) {
+		if (!saneComment.text) {
 			throw new Meteor.Error(400, 'Invalid comment');
 		}
 

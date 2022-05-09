@@ -93,10 +93,6 @@
 	padding: 5px 10px;
 }
 
-.course-member-comment .editable {
-	@include td-padding(left, 0);
-}
-
 .course-participant-contact {
 	@include td-margin(left, 10px);
 	@include td-padding(left, 0);
