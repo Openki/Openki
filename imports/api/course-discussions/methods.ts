@@ -53,10 +53,13 @@ export const postComment = ServerMethod(
 		}
 		saneComment.courseId = course._id;
 
-		const userId = Meteor.userId();
-		if (userId && !comment.anon) {
-			saneComment.userId = userId;
-			saneComment.notifyAll = comment.notifyAll && course.userHasRole(userId, 'team');
+		const user = Meteor.user();
+		if (user && !comment.anon) {
+			saneComment.userId = user._id;
+			saneComment.notifyAll =
+				comment.notifyAll &&
+				(course.userHasRole(user._id, 'team') ||
+					user.groups.some((g) => course?.groupOrganizers.includes(g)));
 		}
 
 		const now = new Date();
