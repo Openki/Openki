@@ -8,6 +8,58 @@ import { MeteorAsync } from '/imports/utils/promisify';
 
 if (Meteor.isClient) {
 	describe('Course details', () => {
+		describe('Organizer group course', function () {
+			this.timeout(30000);
+
+			it('should allow to set a group as organizer', async () => {
+				Router.go('/course/e49ed1ce5d');
+				await MeteorAsync.loginWithPassword('greg', 'greg');
+				await waitForSubscriptions();
+
+				await waitFor(() => {
+					assert(
+						$('.group-tag-btn .js-expand').length > 0,
+						`Show info editing rights to group button is shown`,
+					);
+				});
+
+				await waitFor(() => {
+					$('.group-tag-btn .js-expand').trigger('click');
+					assert($('.js-makeOrganizer').length > 0, `Give editing rights to group button is shown`);
+				});
+
+				await waitFor(() => {
+					$('.js-makeOrganizer').trigger('click');
+					assert($('.group-tag-is-organizer').length > 0, `Group is organizer`);
+				});
+			});
+
+			it('should allow a member a organizer group to send a message to all', async () => {
+				Router.go('/course/e49ed1ce5d');
+				await MeteorAsync.loginWithPassword('Normalo', 'greg');
+				await waitForSubscriptions();
+
+				await waitFor(() => {
+					assert($('.js-discussion-edit').length > 0, `Write a comment is shown`);
+				});
+
+				$('.js-discussion-edit').trigger('click');
+
+				await waitFor(() => {
+					assert($('.js-notify-all').length > 0, `Notify all co-learners checkbox is shown`);
+				});
+
+				$('.js-post-text').html('Hello to all').trigger('keyup');
+				await waitFor(() => {
+					assert($('.discussion-save-btn:not([disabled])').length > 0, `Save button is active`);
+				});
+
+				$('.discussion-save-btn').trigger('click');
+				await waitFor(() => {
+					assert($('.discussion-post-body').length > 0, `Message is visible`);
+				});
+			});
+		});
 		describe('Archive course', function () {
 			this.timeout(30000);
 
