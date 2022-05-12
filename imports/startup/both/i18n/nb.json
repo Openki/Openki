@@ -235,7 +235,6 @@
 	"discussion.anonymous": "Anonym",
 	"discussionPost.deleted": "Kommentaren har blitt slettet.",
 	"editable.add_text": "Legg til tekst her",
-	"editable.link.placeholder": "Lim inn lenke her …",
 	"editableImage.accept.error": "Kun bilder tillates.",
 	"email.verified": "E-posten din har blitt bekreftet.",
 	"emailrequest.text.greeting": "Hei «{NAME}»",

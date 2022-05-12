@@ -360,8 +360,12 @@ import './styles.scss';
 			}
 
 			const course = Courses.findOne(this.courseId);
+			const user = Meteor.user();
 
-			return !!course?.userHasRole(Meteor.userId(), 'team');
+			return !!(
+				course?.userHasRole(user?._id, 'team') ||
+				user?.groups.some((g) => course?.groupOrganizers.includes(g))
+			);
 		},
 	});
 

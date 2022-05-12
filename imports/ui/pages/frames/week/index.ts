@@ -41,7 +41,7 @@ template.onCreated(function () {
 	instance.startOfWeek = new ReactiveVar(undefined);
 	instance.weekdays = new ReactiveVar([]);
 
-	this.autorun(() => {
+	instance.autorun(() => {
 		const data = Template.currentData();
 
 		instance.filter = Events.Filtering().read(data).done();
@@ -60,7 +60,7 @@ template.onCreated(function () {
 		instance.subscribe('Events.findFilter', filterParams, 200);
 	});
 
-	this.autorun(() => {
+	instance.autorun(() => {
 		const data = Template.currentData();
 		const filter = Events.Filtering().read(data).done();
 
@@ -102,7 +102,7 @@ template.onCreated(function () {
 
 template.onRendered(function () {
 	const instance = this;
-	this.autorun(() => {
+	instance.autorun(() => {
 		// rerun when subscriptions become ready
 		instance.subscriptionsReady();
 		// wait until subtemplates are rendered
