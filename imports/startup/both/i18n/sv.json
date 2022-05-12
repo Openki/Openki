@@ -191,7 +191,6 @@
 	"deleteEventsModal.title": "Radera kursens event ",
 	"discussion.anonymous": "Anonym",
 	"editable.add_text": "Lägg till text här",
-	"editable.link.placeholder": "Klistra in länk här…",
 	"event.delete.confirm.button": "Radera detta eventet",
 	"event.delete.confirm.button.busy": "Raderar event…",
 	"event.description.placeholder": "Beskriv ditt event så noga och korrekt som möjligt. Detta hjälper folk att veta hur de ska förbereda sig och vad som förväntas ifrån denna träffen (t.ex. svårighet, förkunskaper, aktiviteter, undervisningsmetoder, vad som behövs tas med osv) ",
