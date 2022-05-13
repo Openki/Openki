@@ -18,6 +18,8 @@ import type { Data as CalendarNavData } from '/imports/ui/components/calendar-na
 import './template.html';
 import './styles.scss';
 
+const DefaultLimit = 200;
+
 type Weekday = {
 	date: moment.Moment;
 	dayEvents: Mongo.Cursor<EventEntity, EventModel>;
@@ -27,9 +29,10 @@ const Template = TemplateAny as TemplateStaticTyped<
 	'frameWeekPage',
 	Record<string, string>,
 	{
-		startOfWeek: ReactiveVar<moment.Moment | undefined>;
-		weekdays: ReactiveVar<Weekday[]>;
+		startOfWeek: moment.Moment;
+		weekdays: Weekday[];
 		filter: ReturnType<typeof Events['Filtering']>;
+		limit: number;
 		update: () => void;
 	}
 >;
@@ -38,56 +41,68 @@ const template = Template.frameWeekPage;
 
 template.onCreated(function () {
 	const instance = this;
-	instance.startOfWeek = new ReactiveVar(undefined);
-	instance.weekdays = new ReactiveVar([]);
+	instance.weekdays = [];
 
 	instance.autorun(() => {
 		const data = Template.currentData();
 
 		instance.filter = Events.Filtering().read(data).done();
 
-		instance.startOfWeek.set(
-			(instance.filter.get('after') || moment(reactiveNow.get())).startOf('week'),
-		);
+		const date = instance.filter.get('after') || moment(reactiveNow.get());
 
-		const filterParams = instance.filter.toQuery();
-		const startOfWeek = instance.startOfWeek.get();
-		filterParams.after = reactiveNow.get();
+		instance.startOfWeek = date.startOf('week');
+
+		const filterQuery = instance.filter.toQuery();
+		const startOfWeek = instance.startOfWeek;
 		if (startOfWeek) {
-			filterParams.after = startOfWeek.toDate();
-			filterParams.before = moment(startOfWeek).add(1, 'week').toDate();
+			filterQuery.after = startOfWeek.toDate();
+			filterQuery.end = moment(startOfWeek).add(1, 'week').toDate();
 		}
-		instance.subscribe('Events.findFilter', filterParams, 200);
+
+		instance.limit =
+			new Filtering({
+				count: Predicates.integer,
+			})
+				.read(data)
+				.done()
+				.toQuery().count || DefaultLimit;
+
+		instance.subscribe('Events.findFilter', filterQuery, instance.limit + 1);
 	});
 
 	instance.autorun(() => {
 		const data = Template.currentData();
 		const filter = Events.Filtering().read(data).done();
 
-		const start = instance.startOfWeek.get();
+		const start = instance.startOfWeek;
 		const end = moment(start).add(1, 'week');
 
 		const weekdays = [];
 		let current = moment(start);
 		while (current.isBefore(end)) {
 			const next = moment(current).add(1, 'day');
-			const filterParams = filter.toQuery();
-			filterParams.after = current.toDate();
-			filterParams.before = next.toDate();
+			const filterQuery = filter.toQuery();
+			filterQuery.after = current.toDate();
+			filterQuery.end = next.toDate();
 
 			weekdays.push({
 				date: current,
-				dayEvents: Events.findFilter(filterParams, 200),
+				dayEvents: Events.findFilter(filterQuery, instance.limit),
 			});
 			current = next;
 		}
-		instance.weekdays.set(weekdays);
+		instance.weekdays = weekdays;
 	});
 
 	instance.update = () => {
 		const filterParams = instance.filter.toParams() as Record<string, string>;
+		filterParams.count = instance.limit.toString();
 		filterParams.control = '1';
-		filterParams.filterGroups = instance.data.filterGroups || '';
+		if (instance.data.filterGroups) {
+			filterParams.filterGroups = instance.data.filterGroups;
+		} else {
+			delete filterParams.filterGroups;
+		}
 		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 		const queryString = UrlTools.paramsToQueryString(filterParams);
 
@@ -125,7 +140,7 @@ template.helpers({
 				instance.filter.add('search', newValue).done();
 				instance.update();
 			},
-			date: instance.filter.get('after') || moment(reactiveNow.get()),
+			date: instance.startOfWeek,
 			onChangeDate: (newDate) => {
 				instance.filter.add('after', newDate.startOf('week').toISOString()).done();
 				instance.update();
@@ -162,6 +177,6 @@ template.helpers({
 	},
 
 	weekdays() {
-		return Template.instance().weekdays.get();
+		return Template.instance().weekdays;
 	},
 });
