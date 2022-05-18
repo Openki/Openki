@@ -21,6 +21,7 @@ import './bootstrap';
 // close any verification dialogs still open
 Router.onBeforeAction(function (this: any) {
 	Tooltips.hide();
+	$('.tooltip').attr('style', '');
 
 	Session.set('verify', false);
 
