@@ -615,7 +615,6 @@
 	"notification.privateMessage.mail.copyintro": "Ceci est une copie du message que vous avez envoyé à \"{RECIPIENT}\"",
 	"notification.privateMessage.mail.fromCourse": "Ce message a été envoyé depuis le cours :",
 	"notification.privateMessage.mail.intro": "Vous avez un message privé de :",
-	"notification.privateMessage.mail.linktext": "➜ Voir le profil de \"{SENDER}\"",
 	"notification.privateMessage.mail.profileLink": "Voir votre profil",
 	"notification.privateMessage.mail.subject": "Message privé de {SENDER}",
 	"notification.privateMessage.mail.unsubLink": "Se désinscrire de tous les messages privées venant des utilisateurs.",
