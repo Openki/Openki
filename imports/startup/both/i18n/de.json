@@ -533,7 +533,6 @@
 	"notification.privateMessage.mail.copyintro": "Dies ist eine Kopie deiner Nachricht, welche an \"{RECIPIENT}\" gesendet wurde",
 	"notification.privateMessage.mail.fromCourse": "Diese Nachricht wurde vom Kurs gesendet:",
 	"notification.privateMessage.mail.intro": "Du hast eine private Nachricht bekommen von:",
-	"notification.privateMessage.mail.linktext": "➜ {SENDER}'s Profil besuchen",
 	"notification.privateMessage.mail.profileLink": "Besuche dein Profil",
 	"notification.privateMessage.mail.subject": "Private Nachricht von {SENDER}",
 	"notification.privateMessage.mail.unsubLink": "Alle privaten Nachrichten von Benutzern abbestellen.",
