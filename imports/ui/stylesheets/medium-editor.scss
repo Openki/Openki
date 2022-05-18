@@ -17,7 +17,7 @@
 }
 
 // medium-editor-placeholder-relative is used from medium-editor for a fix in firefox
-.medium-editor-placeholder-relative:after {
+.medium-editor-placeholder-relative::after {
 	// Normalize with none relative
 	color: #b3b3b1;
 }
