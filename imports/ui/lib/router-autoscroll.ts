@@ -34,24 +34,36 @@ class RouterAutoscroll {
 	// Saved positions will survive a hot code push
 	private scrollPositions = new ReactiveDict<Record<string, number>>('okgrow-router-autoscroll');
 
-	/** Do not scroll the next time you normally would */
 	private _cancelNext = false;
 
 	public marginTop = 0;
 
 	constructor() {
+		const self = this;
+
 		// TODO use history state so we don't litter
 		window.onpopstate = () => {
 			this.backToPosition = this.scrollPositions.get(window.location.href);
 		};
 
 		Router.onBeforeAction(async function (this: { next: () => void }) {
-			document.documentElement.style.scrollBehavior = 'auto';
-			window.scrollTo({ top: 0, behavior: 'auto' });
-			document.documentElement.style.scrollBehavior = '';
+			if (!self._cancelNext) {
+				document.documentElement.style.scrollBehavior = 'auto';
+				window.scrollTo({ top: 0, behavior: 'auto' });
+				document.documentElement.style.scrollBehavior = '';
+			}
+
 			this.next();
 		});
-		Router.onAfterAction(whenReady(() => this.scheduleScroll()));
+		Router.onAfterAction(
+			whenReady(() => {
+				if (self._cancelNext) {
+					self._cancelNext = false;
+				} else {
+					self.scheduleScroll();
+				}
+			}),
+		);
 		Router.onStop(() => this.saveScrollPosition());
 	}
 
@@ -71,11 +83,6 @@ class RouterAutoscroll {
 		}
 
 		const id = window.location.hash.replace('#', '');
-
-		if (this._cancelNext) {
-			this._cancelNext = false;
-			return undefined;
-		}
 
 		const element = id && document.getElementById(id);
 		if (element) {
@@ -99,6 +106,7 @@ class RouterAutoscroll {
 		});
 	}
 
+	/** Do not scroll the next time you normally would */
 	public cancelNext() {
 		this._cancelNext = true;
 	}
