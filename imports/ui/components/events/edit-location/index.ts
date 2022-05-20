@@ -287,7 +287,6 @@ template.events({
 	},
 
 	'click .js-location-candidate'(_event, instance) {
-		debugger;
 		instance.locationTracker.markers.update(this._id, { $set: { selected: true } });
 	},
 
