@@ -265,7 +265,10 @@ template.events({
 			}
 			_.each(found, (foundLocation) => {
 				const marker = {
-					loc: { type: 'Point', coordinates: [foundLocation.lon, foundLocation.lat] },
+					loc: {
+						type: 'Point',
+						coordinates: [parseFloat(foundLocation.lon), parseFloat(foundLocation.lat)],
+					},
 					proposed: true,
 					presetAddress: foundLocation.display_name,
 					name: foundLocation.display_name,
@@ -284,6 +287,7 @@ template.events({
 	},
 
 	'click .js-location-candidate'(_event, instance) {
+		debugger;
 		instance.locationTracker.markers.update(this._id, { $set: { selected: true } });
 	},
 
