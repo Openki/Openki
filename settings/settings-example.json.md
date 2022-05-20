@@ -82,7 +82,8 @@ This file descripts all configurations and customization options. Remove the com
 		},
 		"s3": { // file storage
 			"publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name"
-		}
+		},
+		apiMaxLimit: 100 // Max enitity the apis gets back. Default: 100
 	},
 	"siteEmail": "" // Sender e-mail address in mails
 	"reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"}, // Sender and recipient address for "Report problem" function
