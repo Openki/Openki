@@ -2,6 +2,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
+import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import { LanguageEntity, LanguagesRaw, Languages } from '/imports/api/languages/languages';
 
@@ -155,6 +156,8 @@ import './styles.scss';
 	template.events({
 		'click .js-language-link'(this: LanguageEntity, event, instance) {
 			event.preventDefault();
+
+			RouterAutoscroll.cancelNext();
 
 			// eslint-disable-next-line no-param-reassign
 			instance.searchHasFocus = false;
