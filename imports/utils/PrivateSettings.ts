@@ -19,6 +19,7 @@ if (Meteor.isServer) {
 		robots: true,
 		printLog: false,
 		startup: { buildDbCacheAsync: false },
+		apiMaxLimit: 100,
 	};
 
 	// none deep merge
@@ -70,6 +71,7 @@ if (Meteor.isServer) {
 				secretAccessKey: String,
 			},
 			startup: { buildDbCacheAsync: Boolean },
+			apiMaxLimit: Number,
 		}),
 	);
 }
