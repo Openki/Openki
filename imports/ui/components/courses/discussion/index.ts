@@ -16,6 +16,7 @@ import { EditCommentFields, PostCommentFields } from '/imports/api/course-discus
 import * as Alert from '/imports/api/alerts/alert';
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/richtext';
@@ -359,8 +360,13 @@ import './styles.scss';
 				return false;
 			}
 
-			const course = Courses.findOne(this.courseId);
 			const user = Meteor.user();
+
+			if (UserPrivilegeUtils.privileged(user, 'admin')) {
+				return true;
+			}
+
+			const course = Courses.findOne(this.courseId);
 
 			return !!(
 				course?.userHasRole(user?._id, 'team') ||

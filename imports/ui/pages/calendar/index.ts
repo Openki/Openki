@@ -49,9 +49,10 @@ import './styles.scss';
 			const filterQuery = filter.toQuery() as FindFilter;
 
 			const start = filter.get('start').toDate();
-			const limit = filter.get('start').add(1, 'week').toDate();
+			const end = filter.get('start').add(1, 'week').toDate();
 
-			filterQuery.period = [start, limit];
+			filterQuery.after = start;
+			filterQuery.end = end;
 			instance.eventSub = instance.subscribe('Events.findFilter', filterQuery);
 		});
 	});

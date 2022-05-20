@@ -64,14 +64,15 @@
 							{{/each}}
 						</ul>
 					{{else}}
-						<div>
+						<p>
 							{{i18n 'event.edit.locations.foundnone' 'No locations found.'}}
-						</div>
+						</p>
+						<p>
+							{{i18n 'profile.createNewVenue.question' 'Are you responsible for this venue?'}}
+							<a href="{{pathFor 'venueDetails' _id='create'}}"
+							   target="_blank">{{i18n 'profile.createNewVenue.linkText' 'Set up a venue that is visible to others and can be reused.'}}</a>
+						</p>
 					{{/if}}
-					<a class="btn {{#if haveLocationCandidates}}btn-secondary{{else}}btn-add{{/if}} event-edit-location-create-venue"
-					   href="{{pathFor 'venueDetails' _id='create'}}" target="_blank">
-						{{i18n 'profile.createNewVenue.button'}}
-					</a>
 				{{/if}}
 			</div>
 			<div class="col event-edit-location-map">
