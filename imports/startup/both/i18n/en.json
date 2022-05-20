@@ -652,7 +652,7 @@
   "profile.changePass": "Change my password",
   "profile.createNewGroup.button": "Create a new group",
   "profile.createNewVenue.button": "Create a new venue",
-  "profile.createNewVenue.linkText": "Set up a venue that is visible to others and can be reused for other events.",
+  "profile.createNewVenue.linkText": "Set up a venue that is visible to others and can be reused.",
   "profile.createNewVenue.question": "Are you responsible for this venue?",
   "profile.danger_zone": "Danger zone",
   "profile.delete.confirm.button": "Delete my user and all its profile",
