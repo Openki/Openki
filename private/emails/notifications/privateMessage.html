@@ -29,10 +29,25 @@
 					</td>
 				</tr>
 			</table>
-			<p>
-				<a
-				   href="{{senderLink}}">{{i18n "notification.privateMessage.mail.linktext" '➜ View profile of "{SENDER}"' SENDER=sender.username lng=locale}}</a>
-			</p>
+			{{#if fromAddress}}
+				<p class="text-center">
+					<a class="button" href="{{senderLink}}">
+						{{i18n "notification.privateMessage.mail.replyButton" 'Reply over {SITENAME}' SITENAME=siteName lng=locale}}
+					</a>
+				</p>
+				<p class="text-center">
+					{{i18n "notification.privateMessage.mail.direct.answerText" 'You can also send {SENDERNAME} an email directly  by clicking reply in your email client' SENDERNAME=sender.username lng=locale}}
+					<br><br />
+					<a class="text-center" href="mailto:{{fromAddress}}">{{fromAddress}}</a>
+				</p>
+
+			{{else}}
+				<p class="text-center">
+					<a class="button" href="{{senderLink}}">
+						{{i18n "notification.privateMessage.mail.replyButton.simple" 'Reply' lng=locale}}
+					</a>
+				</p>
+			{{/if}}
 		</td>
 	</tr>
 	<tr>

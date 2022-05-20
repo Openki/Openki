@@ -108,6 +108,38 @@ export const flag: Predicate<boolean> = function (param) {
 	};
 };
 
+export const integer: Predicate<number> = function (param) {
+	if (param === undefined) {
+		return undefined;
+	}
+	const state = parseInt(param, 10);
+
+	if (!Number.isInteger(state)) {
+		throw new FilteringReadError('', 'Invalid integer');
+	}
+
+	return {
+		merge(other) {
+			return other;
+		},
+		without() {
+			return undefined;
+		},
+		get() {
+			return state;
+		},
+		param() {
+			return state.toString();
+		},
+		query() {
+			return state;
+		},
+		equals(other) {
+			return other.get() === state;
+		},
+	};
+};
+
 export const date: Predicate<moment.Moment, Date, string | moment.Moment> = function (param) {
 	if (!param) {
 		return undefined;
