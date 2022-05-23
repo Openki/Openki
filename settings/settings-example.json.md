@@ -83,7 +83,7 @@ This file descripts all configurations and customization options. Remove the com
 		"s3": { // file storage
 			"publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name"
 		},
-		apiMaxLimit: 100 // Max enitity the apis gets back. Default: 100
+		apiMaxLimit: 100 // Maximum number of entities that the api returns. Default: 100. If the parameter "limit" is not set in the URL, the API always returns 100 entities whatever this setting is set to.
 	},
 	"siteEmail": "" // Sender e-mail address in mails
 	"reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"}, // Sender and recipient address for "Report problem" function
