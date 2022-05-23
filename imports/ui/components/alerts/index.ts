@@ -43,7 +43,7 @@ import './styles.scss';
 		instance.remove = (alertId) => {
 			const $alert = instance.$('.alert-message');
 			// get 'transition-duration' and convert to miliseconds for fadeOut
-			const duration = parseFloat($alert.css('transition-duration')) * 1000;
+			const duration = Number.parseFloat($alert.css('transition-duration')) * 1000;
 			$alert.fadeOut(duration, () => {
 				(instance.parentInstance() as any).updateSpacerHeight();
 				Alerts.remove({ _id: alertId });

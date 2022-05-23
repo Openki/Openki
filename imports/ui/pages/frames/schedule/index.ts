@@ -66,9 +66,9 @@ template.onCreated(function () {
 					.filter((rawSep) => rawSep.length) // get rid of 0-length
 					.map((rawSep) => {
 						if (rawSep.length < 3) {
-							return parseInt(`${rawSep}00`, 10);
+							return Number.parseInt(`${rawSep}00`, 10);
 						}
-						return parseInt(rawSep, 10);
+						return Number.parseInt(rawSep, 10);
 					}) // standardize format
 					.filter((hm) => !Number.isNaN(hm)) // filter NaN's
 					.map((hm) => {
@@ -80,7 +80,7 @@ template.onCreated(function () {
 		];
 		instance.separators.set(seps);
 
-		const readInterval = parseInt(query.interval, 10);
+		const readInterval = Number.parseInt(query.interval, 10);
 		if (!Number.isNaN(readInterval) && readInterval > 0) {
 			instance.interval.set(readInterval);
 		} else if (seps.length > 0) {
