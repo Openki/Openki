@@ -24,7 +24,7 @@ $details-header-padding-horizontal:              15px;
 
 // ** Events
 //========================================================================================
-$event-body-bg:                                  $blue-lighter;
+$event-body-bg:                                  tint-color($green, 65%);
 $event-header-bg:                                $green;
 
 $event-compact-height:                           200px;
@@ -32,7 +32,7 @@ $event-compact-seperator-height:                 3px;
 
 $event-compact-with-date-height:                 220px;
 
-$event-page-component-bg:                        $blue-lighter;
+$event-page-component-bg:                        tint-color($green, 65%);
 
 // ** Courses
 //========================================================================================
