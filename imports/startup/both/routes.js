@@ -204,7 +204,7 @@ Router.route('frameCourselist', {
 			['regionbg', 'background-color', '.frame-list-item-region'],
 			['regioncolor', 'color', '.frame-list-item-region'],
 		]).getCssRules();
-		const hideInterested = parseInt(this.params.query.hideInterested, 10) || 0;
+		const hideInterested = Number.parseInt(this.params.query.hideInterested, 10) || 0;
 		return { cssRules, hideInterested };
 	},
 	async action() {

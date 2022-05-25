@@ -61,7 +61,16 @@ template.onCreated(function () {
 	instance.update = () => {
 		const filterParams = instance.filter.toParams() as Record<string, string>;
 		filterParams.count = instance.limit.toString();
-		filterParams.control = '1';
+		if (instance.data.control) {
+			filterParams.control = instance.data.control;
+		} else {
+			delete filterParams.control;
+		}
+		if (instance.data.hideSwitches) {
+			filterParams.hideSwitches = instance.data.hideSwitches;
+		} else {
+			delete filterParams.hideSwitches;
+		}
 		if (instance.data.filterGroups) {
 			filterParams.filterGroups = instance.data.filterGroups;
 		} else {
@@ -100,6 +109,7 @@ template.helpers({
 	calendarNavAttr() {
 		const instance = Template.instance();
 		return {
+			hideSwitches: instance.data.hideSwitches === '1',
 			search: instance.filter.get('search'),
 			onChangeSearch: (newValue: string) => {
 				instance.filter.add('search', newValue).done();

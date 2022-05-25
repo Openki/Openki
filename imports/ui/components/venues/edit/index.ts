@@ -163,7 +163,8 @@ import './styles.scss';
 				otherFacilities: instance.$('.js-otherFacilities').val() as string,
 			};
 
-			const maxPeople = parseInt(instance.$('.js-maxPeople').val() as string, 10) || undefined; // give back undefined in case of NaN or 0
+			const maxPeople =
+				Number.parseInt(instance.$('.js-maxPeople').val() as string, 10) || undefined; // give back undefined in case of NaN or 0
 			if (maxPeople && maxPeople > 0) {
 				changes.maxPeople = maxPeople;
 			}
