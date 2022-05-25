@@ -111,31 +111,35 @@
 				{{> regionTag}}
 			{{/unless}}
 			<div class="details-content">
-				{{#if hasVenue}}
-					<div class="details-map">
-						{{> map markers=eventMarkers}}
-
-						{{#if venue.address}}
-							<div class="tag mt-1">
-								<span class="fa-solid fa-location-dot fa-fw"
-									  aria-hidden="true"></span>
-								{{venue.address}}
-							</div>
-						{{/if}}
-					</div>
-				{{/if}}
 				{{#if internal}}
 					<span class="details-internal"
 						  data-tooltip="{{i18n 'eventCompact.internal_event' 'Internal event'}}"></span>
 				{{/if}}
+				<div class="row">
+					<div class="col-md-7">
+						<h3>{{this.title}}</h3>
 
-				<h3>{{this.title}}</h3>
+						{{> eventGroupList this}}
+						<p class="event-details-description">
+							{{{description}}}
+						</p>
+					</div>
+					<div class="col-md-5">
+						{{#if hasVenue}}
+							<div class="details-map">
+								{{> map markers=eventMarkers}}
 
-				{{> eventGroupList this}}
-				<p class="event-details-description">
-
-					{{{description}}}
-				</p>
+								{{#if venue.address}}
+									<div class="tag mt-1">
+										<span class="fa-solid fa-location-dot fa-fw"
+											  aria-hidden="true"></span>
+										{{venue.address}}
+									</div>
+								{{/if}}
+							</div>
+						{{/if}}
+					</div>
+				</div>
 			</div>
 			{{#unless isPrivate}}
 				{{> pricePolicy dismissable=true wrap='event-details-price-policy'}}
