@@ -112,7 +112,7 @@ export const integer: Predicate<number> = function (param) {
 	if (param === undefined) {
 		return undefined;
 	}
-	const state = parseInt(param, 10);
+	const state = Number.parseInt(param, 10);
 
 	if (!Number.isInteger(state)) {
 		throw new FilteringReadError('', 'Invalid integer');

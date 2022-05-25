@@ -267,7 +267,10 @@ template.events({
 				const marker = {
 					loc: {
 						type: 'Point',
-						coordinates: [parseFloat(foundLocation.lon), parseFloat(foundLocation.lat)],
+						coordinates: [
+							Number.parseFloat(foundLocation.lon),
+							Number.parseFloat(foundLocation.lat),
+						],
 					},
 					proposed: true,
 					presetAddress: foundLocation.display_name,
