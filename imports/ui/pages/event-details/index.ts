@@ -20,6 +20,7 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import * as Metatags from '/imports/utils/metatags';
 import { appendAsJsonLdToBody } from '/imports/utils/event-to-json-ld';
+import getLocalizedValue from '/imports/utils/getLocalizedValue';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 
@@ -141,6 +142,29 @@ import './styles.scss';
 				return Courses.findOne(this.courseId);
 			}
 			return false;
+		},
+		customFields() {
+			if (!this.courseId) {
+				return [];
+			}
+			const course = Courses.findOne(this.courseId);
+
+			if (!course) {
+				return [];
+			}
+
+			const user = Meteor.user();
+
+			const isEditor = user && course.editableBy(user);
+
+			return (
+				course.customFields
+					?.filter((i) => i.visibleFor === 'all' || (i.visibleFor === 'editors' && isEditor))
+					.map((i) => ({
+						displayText: getLocalizedValue(i.displayText),
+						value: i.value,
+					})) || []
+			);
 		},
 
 		editing() {
