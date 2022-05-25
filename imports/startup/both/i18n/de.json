@@ -556,6 +556,8 @@
 	"profile.changePass": "Mein Passwort ändern",
 	"profile.createNewGroup.button": "Eine neue Gruppe erstellen",
 	"profile.createNewVenue.button": "Einen neuen Veranstaltungsort erstellen",
+	"profile.createNewVenue.linkText": "Erstelle einen öffentlichen Veranstaltungsort, der wieder ausgewählt werden kann.",
+	"profile.createNewVenue.question": "Bist du verantwortlich für diesen Veranstaltungsort?",
 	"profile.danger_zone": "Gefahren-Zone",
 	"profile.delete.confirm.button": "Lösche meinen Benutzer und mein Profil",
 	"profile.delete.confirm.button.busy": "Lösche Profil…",
