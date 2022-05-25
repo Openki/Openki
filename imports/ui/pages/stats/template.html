@@ -57,7 +57,8 @@
 								<tr class="js-stats-row">
 									<td>
 										{{#if detail.group}}
-											{{ detail.groupName }}
+											<a
+											   href="{{pathFor 'groupDetails' _id=detail.group}}">{{detail.groupName}}</a>
 										{{else}}
 											{{i18n 'region.stats.ungrouped' "Ungrouped"}}
 										{{/if}}
