@@ -305,7 +305,7 @@
   "event.details.registration": "Registration",
   "event.details.repl_menu_btn": "Repeat",
   "event.details.unregister": "Withdraw my registration",
-  "event.details.viewCourse": "view course",
+  "event.details.viewCourse": "To the course overview",
   "event.edit.additionalMessage": "If you feel good about doing so, describe what members of the course should know.",
   "event.edit.addressSearch": "Search",
   "event.edit.changedReplicas.body": "By default {NUM, plural, one{this copy} other{these copies} } won't be updated as {NUM, plural, one{it has} other{they have} } another time set than the original event:",
