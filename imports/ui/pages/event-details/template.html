@@ -16,6 +16,11 @@
 		<div class="col-lg-8">
 			{{#if course}}
 				<div class="event-course-header" {{eventCourseHeaderAttr course}}>
+					<a href="{{pathFor 'showCourse' _id=courseId}}"
+					   class="event-course-header-link">
+						<i class="fa-solid fa-angle-left" aria-hidden="true"></i>
+						{{i18n 'event.details.viewCourse' 'view course'}}
+					</a>
 					<h2>
 						{{#if editing}}
 							{{#if _id}}
@@ -27,11 +32,7 @@
 							{{course.name}}
 						{{/if}}
 					</h2>
-					<a href="{{pathFor 'showCourse' _id=courseId}}"
-					   class="event-course-header-link">
-						<span class="fa-solid fa-up-right-from-square" aria-hidden="true"></span>
-						{{i18n 'event.details.viewCourse' 'view course'}}
-					</a>
+
 					{{> courseCategories course}}
 					{{> regionTag}}
 				</div>
