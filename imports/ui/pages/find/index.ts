@@ -91,7 +91,7 @@ template.onCreated(function () {
 		filter.clear().read(query).done();
 
 		if (query.coursesAmount) {
-			const coursesAmount = parseInt(query.coursesAmount, 10);
+			const coursesAmount = Number.parseInt(query.coursesAmount, 10);
 			if (coursesAmount > instance.courseBlockSize) {
 				instance.courseLimit.set(coursesAmount);
 			}

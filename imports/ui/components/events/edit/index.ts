@@ -141,7 +141,7 @@ function getEventEndMoment(instance: ReturnType<typeof Template['instance']>) {
 }
 
 function getEventDuration(instance: ReturnType<typeof Template['instance']>) {
-	const duration = parseInt(instance.$('.js-event-duration').val() as string, 10) || 0;
+	const duration = Number.parseInt(instance.$('.js-event-duration').val() as string, 10) || 0;
 	return Math.max(0, duration);
 }
 
@@ -178,7 +178,7 @@ function updateTimes(instance: ReturnType<typeof Template['instance']>, updateEn
  * @return an integer if the input passed validation.
  */
 const validateMaxParticipants = (maxParticipants: string) => {
-	const intVal = parseInt(maxParticipants, 10);
+	const intVal = Number.parseInt(maxParticipants, 10);
 	if (Number.isNaN(intVal)) {
 		Alert.error(i18n('event.edit.mustBeInteger', 'Must be a whole number'));
 		return false;

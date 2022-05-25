@@ -13,6 +13,7 @@ import './template.html';
 import '../styles.scss';
 
 export type Data = {
+	hideSwitches: boolean;
 	search: string;
 	onChangeSearch: (newValue: string) => void;
 	date: moment.Moment;
