@@ -18,27 +18,32 @@
 				<div class="event-course-header" {{eventCourseHeaderAttr course}}>
 					<a href="{{pathFor 'showCourse' _id=courseId}}"
 					   class="event-course-header-link">
-						<i class="fa-solid fa-angle-left" aria-hidden="true"></i>
-						{{i18n 'event.details.viewCourse' 'view course'}}
+						<i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+						{{i18n 'event.details.viewCourse' 'To the course overview'}}
 					</a>
 					<h2>
-						{{#if editing}}
-							{{#if _id}}
-								{{i18n 'event.details.edit.edit' 'Edit event'}}
-							{{else}}
-								{{i18n 'event.details.edit.add' 'Create an event'}}
-							{{/if}}
-						{{else}}
-							{{course.name}}
-						{{/if}}
+						{{course.name}}
 					</h2>
 
 					{{> courseCategories course}}
 					{{> regionTag}}
+					{{#each info in course.customFields}}
+						<p>
+							<strong>{{info.displayText}}</strong>: <span
+								  style="white-space: pre-line;">{{info.value}}</span>
+						</p>
+					{{/each}}
 				</div>
 			{{/if}}
 			<div class="event">
 				{{#if editing}}
+					<h3>
+						{{#if _id}}
+							{{i18n 'event.details.edit.edit' 'Edit event'}}
+						{{else}}
+							{{i18n 'event.details.edit.add' 'Create an event'}}
+						{{/if}}
+					</h3>
 					{{> eventEdit}}
 				{{else}}
 					{{> eventDisplay}}
@@ -90,42 +95,45 @@
 <template name="eventDisplay">
 	<div class="page-component">
 		<div class="details-header event-details-header">
-			<span class="day">{{weekdayFormat startLocal}}</span><br>
-			<span class="date">
+			<p class="h3">
 				<span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-				{{calendarDayShort startLocal}}
-			</span>
-			<span class="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
-			{{timeFormat startLocal}} - {{timeFormat endLocal}}
+				{{weekdayFormat startLocal}} {{calendarDayShort startLocal}}
+				<br><small><span class="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
+					{{timeFormat startLocal}} - {{timeFormat endLocal}}</small>
+			</p>
+
+			<div class="tag-group multiline">
+				{{> venueLink}}
+			</div>
 		</div>
 		<div class="details-body event-details-body">
 			{{#unless courseId}}
 				{{> regionTag}}
 			{{/unless}}
 			<div class="details-content">
+				{{#if hasVenue}}
+					<div class="details-map">
+						{{> map markers=eventMarkers}}
+
+						{{#if venue.address}}
+							<div class="tag mt-1">
+								<span class="fa-solid fa-location-dot fa-fw"
+									  aria-hidden="true"></span>
+								{{venue.address}}
+							</div>
+						{{/if}}
+					</div>
+				{{/if}}
 				{{#if internal}}
 					<span class="details-internal"
 						  data-tooltip="{{i18n 'eventCompact.internal_event' 'Internal event'}}"></span>
 				{{/if}}
+
 				<h3>{{this.title}}</h3>
-				<div class="tag-group multiline">
-					{{> venueLink}}
-					{{#if venue.address}}
-						<div class="tag">
-							<span class="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
-							{{venue.address}}
-						</div>
-					{{/if}}
-				</div>
 
 				{{> eventGroupList this}}
-
 				<p class="event-details-description">
-					{{#if hasVenue}}
-						<div class="details-map">
-							{{> map markers=eventMarkers}}
-						</div>
-					{{/if}}
+
 					{{{description}}}
 				</p>
 			</div>
