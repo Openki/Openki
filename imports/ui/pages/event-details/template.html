@@ -101,10 +101,6 @@
 				<br><small><span class="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
 					{{timeFormat startLocal}} - {{timeFormat endLocal}}</small>
 			</p>
-
-			<div class="tag-group multiline">
-				{{> venueLink}}
-			</div>
 		</div>
 		<div class="details-body event-details-body">
 			{{#unless courseId}}
@@ -125,19 +121,22 @@
 						</p>
 					</div>
 					<div class="col-md-5">
-						{{#if hasVenue}}
-							<div class="details-map">
+						<div class="details-map">
+							{{#if hasVenue}}
 								{{> map markers=eventMarkers}}
+							{{/if}}
 
-								{{#if venue.address}}
-									<div class="tag mt-1">
-										<span class="fa-solid fa-location-dot fa-fw"
-											  aria-hidden="true"></span>
-										{{venue.address}}
-									</div>
-								{{/if}}
+							<div class="tag-group multiline mt-1">
+								{{> venueLink}}
 							</div>
-						{{/if}}
+							{{#if venue.address}}
+								<div class="tag">
+									<span class="fa-solid fa-location-dot fa-fw"
+										  aria-hidden="true"></span>
+									{{venue.address}}
+								</div>
+							{{/if}}
+						</div>
 					</div>
 				</div>
 			</div>
