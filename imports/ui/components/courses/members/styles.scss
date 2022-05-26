@@ -60,8 +60,9 @@
 	text-transform: uppercase;
 }
 
-.js-add-to-team-btn {
+.add-to-team-btn {
 	@include td-margin(left, 6px);
+	margin-top: 2px;
 	padding: 2px 6px;
 }
 
