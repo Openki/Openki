@@ -4,14 +4,8 @@
 	margin-top: 0;
 }
 
-.event-edit-header {
-	border-color: $event-header-bg;
-	border-style: solid;
-}
-
-.event-edit-body {
-	border-color: $event-body-bg;
-	border-style: solid;
+.event-edit {
+	background-color: $event-body-bg;
 }
 
 .changed-replicas {
