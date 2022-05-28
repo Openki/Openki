@@ -10,7 +10,7 @@ $dropdown-transition-time: 0.3s;
 
 .dropdown-menu > li > a,
 .dropdown-menu > li > .btn-link {
-	@include td-text-align(left);
+	text-align: start;
 	@include ellipsis;
 	color: $dropdown-link-color;
 	padding: 3px 20px;
@@ -72,6 +72,6 @@ $dropdown-legend-color: $brand-primary;
 
 .dropdown-legend {
 	@include clearfix;
-	@include td-text-align(left);
+	text-align: start;
 	color: $dropdown-legend-color;
 }

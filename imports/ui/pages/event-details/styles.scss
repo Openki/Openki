@@ -98,12 +98,12 @@ $header-bg: darken($blue-lighter, 5%);
 .btn-event {
 	font-size: 18px;
 	font-weight: bold;
-	text-align: left;
+	text-align: start;
 }
 
 .event-page-btn {
 	@include btn-lg;
-	@include td-text-align(left);
+	text-align: start;
 	margin-top: 3px;
 	width: 100%;
 }
