@@ -103,8 +103,8 @@ $header-bg: darken($blue-lighter, 5%);
 
 .event-page-btn {
 	@include btn-lg;
-	text-align: start;
 	margin-top: 3px;
+	text-align: start;
 	width: 100%;
 }
 
