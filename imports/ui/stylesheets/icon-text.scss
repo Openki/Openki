@@ -4,7 +4,7 @@
 
 .icon-text-icon,
 .icon-text-text {
-	@include td-text-align(left);
+	text-align: start;
 	display: table-cell;
 	vertical-align: top;
 }

@@ -27,7 +27,7 @@
 
 .timeline-eventdate {
 	@include ellipsis;
-	@include td-text-align(right);
+	text-align: end;
 	color: rgb(109, 112, 112);
 	height: 20px;
 	padding: 0;

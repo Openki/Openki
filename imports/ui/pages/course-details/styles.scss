@@ -31,7 +31,7 @@
 // ** Component buttons
 //========================================================================================
 .course-page-btn {
-	@include td-text-align(left);
+	text-align: start;
 	margin-top: $course-details-seperator-height;
 	padding: 10px 12px;
 	width: 100%;
