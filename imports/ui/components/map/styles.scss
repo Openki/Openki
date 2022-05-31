@@ -5,7 +5,8 @@
 	width: 200px;
 }
 
-.map-box {
+.map-box,
+.map-fullscreen {
 	.fa-regular,
 	.fa-brands,
 	.fa-solid {
@@ -33,6 +34,10 @@
 .map {
 	height: 100%;
 	width: 100%;
+}
+
+.leaflet-right .comp-icon {
+	margin-right: 18px;
 }
 
 .leaflet-marker-pane .leaflet-marker-icon {
