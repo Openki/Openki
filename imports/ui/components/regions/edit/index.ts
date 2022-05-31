@@ -172,7 +172,7 @@ export interface OnSaveFields {
 			const { data } = Template.instance();
 			const { locationTracker } = data;
 
-			return () => locationTracker.getLocation();
+			return () => !!locationTracker.getLocation();
 		},
 	});
 }
