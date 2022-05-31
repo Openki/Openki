@@ -107,6 +107,7 @@ template.onRendered(function () {
 	const options = {
 		zoomControl: false,
 		attributionControl: false,
+		dragging: !L.Browser.mobile,
 	};
 
 	const map = L.map(instance.find('.map'), options).setView(L.latLng(0, 0), 1);
@@ -381,23 +382,6 @@ template.helpers({
 			return 'map-fullscreen';
 		}
 		return 'map-box';
-	},
-
-	mapStyleInner() {
-		const style = [];
-		if (Template.instance().fullscreen.get()) {
-			style.push('z-index: 9999');
-		}
-		return style.join(';');
-	},
-
-	fullscreen() {
-		return Template.instance().fullscreen.get();
-	},
-
-	fullscreenControl() {
-		const instance = Template.instance();
-		return !instance.fullscreen.get();
 	},
 });
 
