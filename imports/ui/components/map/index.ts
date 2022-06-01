@@ -354,10 +354,24 @@ template.onRendered(function () {
 	});
 
 	instance.autorun(() => {
-		instance.fullscreen.get();
+		const fullscreen = instance.fullscreen.get();
+
 		Meteor.setTimeout(() => {
-			map.invalidateSize();
-			fitBounds();
+			if (fullscreen) {
+				instance.find('.map').parentElement?.setAttribute('style', 'position: fixed'); // Fix for iOS
+				map.dragging.enable();
+			} else {
+				instance.find('.map').parentElement?.setAttribute('style', '');
+				if (!L.Browser.mobile) {
+					map.dragging.enable();
+				} else {
+					map.dragging.disable();
+				}
+			}
+			Meteor.setTimeout(() => {
+				map.invalidateSize();
+				fitBounds();
+			}, 0);
 		}, 0);
 	});
 
