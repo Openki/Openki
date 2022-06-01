@@ -9,7 +9,7 @@ function getScrollTop() {
 	return document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
 }
 
-const delay = (ms: number | undefined) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise((resolve) => Meteor.setTimeout(resolve, ms));
 
 async function waitUntil(conditionFn: () => boolean) {
 	if (!conditionFn()) {

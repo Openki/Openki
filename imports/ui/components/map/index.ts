@@ -3,7 +3,6 @@ import { _ } from 'meteor/underscore';
 import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Session } from 'meteor/session';
-import { Tracker } from 'meteor/tracker';
 
 import './template.html';
 import './styles.scss';
@@ -354,9 +353,9 @@ template.onRendered(function () {
 		});
 	});
 
-	Tracker.autorun(() => {
+	instance.autorun(() => {
 		instance.fullscreen.get();
-		window.setTimeout(() => {
+		Meteor.setTimeout(() => {
 			map.invalidateSize();
 			fitBounds();
 		}, 0);

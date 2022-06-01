@@ -32,7 +32,7 @@ template.onRendered(function () {
 
 	instance.autorun(() => {
 		Viewport.get();
-		setTimeout(() => {
+		Meteor.setTimeout(() => {
 			instance
 				.$('.js-categories-select')
 				.select2({
