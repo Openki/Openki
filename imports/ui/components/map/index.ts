@@ -355,11 +355,13 @@ template.onRendered(function () {
 
 	instance.autorun(() => {
 		instance.fullscreen.get();
-		Meteor.setTimeout(() => {
-			map.invalidateSize();
-			fitBounds();
-		}, 0);
+	
 	});
+
+	Meteor.setInterval(() => {
+		map.invalidateSize();
+		fitBounds();
+	}, 1000);
 
 	instance.proposeMarker = function () {
 		const center = map.getCenter();
