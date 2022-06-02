@@ -133,18 +133,15 @@ import './styles.scss';
 
 			// We return a function so the reactive dependency on locationState is
 			// established from within the map template which will call it.
-			return function () {
+			return () =>
 				// We only allow placing if we don't have a selected location yet
-				return !locationTracker.getLocation();
-			};
+				!locationTracker.getLocation();
 		},
 
 		allowRemoving() {
 			const { locationTracker } = Template.instance();
 
-			return function () {
-				return locationTracker.getLocation();
-			};
+			return () => !!locationTracker.getLocation();
 		},
 	});
 

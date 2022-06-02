@@ -123,12 +123,12 @@
 }
 
 .filter-course-role {
-	@include td-text-align(left);
 	background-color: transparent;
 	border: 0;
 	display: block;
 	margin: 0;
 	padding: 0;
+	text-align: start;
 
 	&:hover {
 		color: $primary;
@@ -177,6 +177,6 @@
 }
 
 .filter-actions {
-	@include td-text-align(right);
 	margin-top: 5px;
+	text-align: end;
 }
