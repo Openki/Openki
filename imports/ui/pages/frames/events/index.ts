@@ -91,11 +91,11 @@ template.onCreated(function () {
 template.onRendered(function () {
 	const instance = this;
 
-	this.autorun(() => {
+	instance.autorun(() => {
 		// rerun when subscriptions become ready
 		instance.subscriptionsReady();
 		// wait until subtemplates are rendered
-		setTimeout(() => {
+		Meteor.setTimeout(() => {
 			instance.$('a').attr('target', '_blank');
 		}, 0);
 	});

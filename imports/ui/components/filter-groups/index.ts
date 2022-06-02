@@ -55,7 +55,7 @@ template.onRendered(function () {
 			// Select2 has been initialized
 			instance.$('.js-groups-select').select2('destroy');
 		}
-		setTimeout(() => {
+		Meteor.setTimeout(() => {
 			instance.$('.js-groups-select').select2({
 				theme: 'bootstrap',
 				templateResult(data: any) {
