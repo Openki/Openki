@@ -358,10 +358,10 @@ template.onRendered(function () {
 
 		Meteor.setTimeout(() => {
 			if (fullscreen) {
-				instance.find('.map').parentElement?.setAttribute('style', 'position: fixed'); // Fix for iOS
+				instance.find('.map-box,.map-fullscreen').setAttribute('style', 'position: fixed'); // Fix for iOS
 				map.dragging.enable();
 			} else {
-				instance.find('.map').parentElement?.setAttribute('style', '');
+				instance.find('.map-box,.map-fullscreen').setAttribute('style', '');
 				if (!L.Browser.mobile) {
 					map.dragging.enable();
 				} else {
