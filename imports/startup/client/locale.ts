@@ -91,7 +91,7 @@ Meteor.startup(() => {
 		$('html').toggleClass('rtl', isRTL);
 
 		if (Meteor.userId()) {
-			UsersMethods.updateLocale(lang);
+			UsersMethods.updateLocale(desiredLocale);
 		}
 
 		// Tell moment to switch the locale

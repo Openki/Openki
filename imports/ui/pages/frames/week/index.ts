@@ -129,7 +129,7 @@ template.onRendered(function () {
 		// rerun when subscriptions become ready
 		instance.subscriptionsReady();
 		// wait until subtemplates are rendered
-		setTimeout(() => {
+		Meteor.setTimeout(() => {
 			instance.$('a').attr('target', '_blank');
 		}, 0);
 	});
