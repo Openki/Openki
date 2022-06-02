@@ -10,7 +10,7 @@
 			</em>
 		</p>
 		<div class="row">
-			<div class="col">
+			<div class="col-md-7">
 				{{#if locationIsPreset}}
 					<div class="event-edit-location-selected">
 						<span class="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
@@ -75,7 +75,7 @@
 					{{/if}}
 				{{/if}}
 			</div>
-			<div class="col event-edit-location-map">
+			<div class="col-md-5 event-edit-location-map">
 				{{> map markers=eventMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
 			</div>
 		</div>
