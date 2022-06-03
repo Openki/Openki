@@ -594,7 +594,6 @@
 	"notification.event.mail.registerEvent": "Oui, je participe.",
 	"notification.event.mail.subject.changed": "Fixé {DATE}: {TITLE}",
 	"notification.event.mail.subject.new": "Le {DATE}: {TITLE}",
-	"notification.event.mail.titleDescription": "Description",
 	"notification.event.mail.unsubLink": "Se désinscrire à toutes les notifications automatiques.",
 	"notification.event.mail.unsubscribe": "Se désabonner du cours",
 	"notification.group.course.mail.greeting": "Salut {USERNAME}",
