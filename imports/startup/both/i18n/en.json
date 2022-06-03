@@ -626,7 +626,6 @@
   "notification.rsvp.mail.linkCalendar": "Add this event to my calendar",
   "notification.rsvp.mail.profileLink": "Visit your profile",
   "notification.rsvp.mail.subject": "Confirmation {DATE} {TITLE}",
-  "notification.rsvp.mail.titleDescription": "Description",
   "notification.rsvp.mail.unsubLink": "Unsubscribe from all automated notifications.",
   "notifications.unsubscribeError": "Could not unsubscribe. Please Try again.",
   "notifications.unsubscribeSuccess": "You have unsubscribed from automated notifications.",
