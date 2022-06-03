@@ -1,0 +1,77 @@
+{{#emailBase subject=subject site=site}}
+	<tr>
+		<td>
+			<span class="title">
+				{{i18n "notification.rsvp.mail.greeting" "Hi {USERNAME}" USERNAME=username lng=locale}}
+			</span>
+			<p>
+				{{i18n 'notification.rsvp.mail.intro' 'We are looking forward to see you on {DATE}. Your seat is reserved. If you can not join the event, please let the organizers know by withdrawing your registration.' DATE=eventDate lng=locale}}
+			</p>
+			<p>
+				{{i18n 'notification.rsvp.mail.attending' 'You are attending the following event:' lng=locale}}
+			</p>
+			<table style="margin: 2em auto; width: 92%;">
+				<tr>
+					<td bgcolor="#c1f2ae" style="padding: 15px;">
+						<a href="{{eventLink}}"
+						   style="color: #333 !important; text-decoration: none !important;">
+							<strong>
+								{{eventDate}}
+								<br />
+								{{eventStart}}
+								{{#if eventEnd}}
+									- {{eventEnd}}
+								{{/if}}
+							</strong>
+							{{#if venueLine}}
+								<br />
+								{{venueLine}}
+							{{/if}}
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td height="2px" style="font-size: 2px;">
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#d9eaf2" style="padding: 15px;">
+						<p style="font-size: 14px; font-weight: bold;">
+							{{event.title}}
+						</p>
+						<p style="font-weight: bold;">
+							{{i18n "notification.rsvp.mail.titleDescription" "Description" lng=locale}}
+						</p>
+						<p>
+							{{{event.description}}}
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="350" style="padding: 5px; text-align:right;">
+						<a href="{{calLink}}"
+						   style="color: #00f !important; text-decoration: none !important;">
+							{{i18n "notification.rsvp.mail.linkCalendar" "Add this event to my calendar" lng=locale}}
+						</a>
+						<br />
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="footer">
+				<tr>
+					<td>
+						<a
+						   href="{{unsubLink}}">{{i18n "notification.rsvp.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName lng=locale}}</a>
+						&nbsp;
+						<a
+						   href="{{urlFor 'profile' query='campaign=rsvpNotify'}}">{{i18n "notification.rsvp.mail.profileLink" "Visit your profile" lng=locale}}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{{/emailBase}}
