@@ -435,7 +435,6 @@
 	"notification.comment.mail.profileLink": "Besøk profilen din",
 	"notification.event.mail.greeting": "Hei {USERNAME}",
 	"notification.event.mail.profileLink": "Besøk profilen din",
-	"notification.event.mail.titleDescription": "Beskrivelse",
 	"notification.group.course.mail.greeting": "Hei {USERNAME}",
 	"notification.group.course.mail.linktext": "➜ Vis fag",
 	"notification.group.course.mail.subject": "{COURSE} foreslått i {GROUPS}",
