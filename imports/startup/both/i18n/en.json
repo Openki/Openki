@@ -306,7 +306,7 @@
   "event.details.repl_menu_btn": "Repeat",
   "event.details.unregister": "Withdraw my registration",
   "event.details.viewCourse": "To the course overview",
-  "event.edit.additionalMessage": "If you feel good about doing so, describe what members of the course should know.",
+  "event.edit.additionalMessage": "If you feel good about doing so, describe what members of the course should know. (This message is only sent to the interested users and will not be visible in the event description afterwards.)",
   "event.edit.addressSearch": "Search",
   "event.edit.changedReplicas.body": "By default {NUM, plural, one{this copy} other{these copies} } won't be updated as {NUM, plural, one{it has} other{they have} } another time set than the original event:",
   "event.edit.changedReplicas.heading": "Found {NUM, plural, one{one copy which varies} other{# copies which vary} } in time",
