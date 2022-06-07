@@ -207,7 +207,7 @@ template.onRendered(function () {
 			}
 		};
 
-		show(attributionControl, fullscreen);
+		show(attributionControl, true);
 		show(zoomControl, true);
 		show(scaleControl, fullscreen);
 		show(fullscreenControl, !fullscreen);
