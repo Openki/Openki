@@ -8,6 +8,7 @@ import * as UrlTools from '/imports/utils/url-tools';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/events/list';
 import '/imports/ui/components/loading';
@@ -128,10 +129,11 @@ template.onRendered(function () {
 	instance.autorun(() => {
 		// rerun when subscriptions become ready
 		instance.subscriptionsReady();
+
 		// wait until subtemplates are rendered
-		Meteor.setTimeout(() => {
-			instance.$('a').attr('target', '_blank');
-		}, 0);
+		MeteorAsync.defer();
+
+		instance.$('a').attr('target', '_blank');
 	});
 });
 

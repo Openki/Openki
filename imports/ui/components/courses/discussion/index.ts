@@ -3,7 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Tracker } from 'meteor/tracker';
 import moment from 'moment';
 
 import { Courses } from '/imports/api/courses/courses';
@@ -17,6 +16,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { TrackerAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/richtext';
@@ -50,15 +50,15 @@ import './styles.scss';
 		const limit = select ? 0 : 3;
 		instance.limit = new ReactiveVar(limit);
 
-		instance.sub = instance.subscribe('discussion', instance.data.courseId, () => {
+		instance.sub = instance.subscribe('discussion', instance.data.courseId, async () => {
 			if (select) {
 				// Wait for the templates to render before trying to jump there.
-				Tracker.afterFlush(() => {
-					// Jump to the selected comment.
-					// This method should work for screenreaders too.
-					window.location.hash = `#comment${select}`;
-					RouterAutoscroll.scheduleScroll();
-				});
+				await TrackerAsync.afterFlush();
+
+				// Jump to the selected comment.
+				// This method should work for screenreaders too.
+				window.location.hash = `#comment${select}`;
+				RouterAutoscroll.scheduleScroll();
 			}
 		});
 
