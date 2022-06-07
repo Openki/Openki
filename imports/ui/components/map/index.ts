@@ -4,6 +4,8 @@ import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Session } from 'meteor/session';
 
+import { MeteorAsync } from '/imports/utils/promisify';
+
 import './template.html';
 import './styles.scss';
 
@@ -353,26 +355,27 @@ template.onRendered(function () {
 		});
 	});
 
-	instance.autorun(() => {
+	instance.autorun(async () => {
 		const fullscreen = instance.fullscreen.get();
 
-		Meteor.setTimeout(() => {
-			if (fullscreen) {
-				instance.find('.map-box,.map-fullscreen').setAttribute('style', 'position: fixed'); // Fix for iOS
+		await MeteorAsync.defer();
+
+		if (fullscreen) {
+			instance.find('.map-box,.map-fullscreen').setAttribute('style', 'position: fixed'); // Fix for iOS
+			map.dragging.enable();
+		} else {
+			instance.find('.map-box,.map-fullscreen').setAttribute('style', '');
+			if (!L.Browser.mobile) {
 				map.dragging.enable();
 			} else {
-				instance.find('.map-box,.map-fullscreen').setAttribute('style', '');
-				if (!L.Browser.mobile) {
-					map.dragging.enable();
-				} else {
-					map.dragging.disable();
-				}
+				map.dragging.disable();
 			}
-			Meteor.setTimeout(() => {
-				map.invalidateSize();
-				fitBounds();
-			}, 0);
-		}, 0);
+		}
+
+		await MeteorAsync.defer();
+
+		map.invalidateSize();
+		fitBounds();
 	});
 
 	instance.proposeMarker = function () {
