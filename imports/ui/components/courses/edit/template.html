@@ -27,8 +27,8 @@
 									   target='_blank'>
 										{{i18n 'course.propose.guideLink' 'How to organize my first {SITENAME} course?' SITENAME=siteName}}
 									</a>,
-									<a href="{{localized PublicSettings.faqLink}}"
-									   target="_blank">{{i18n 'course.propose.faq' 'FAQ'}}</a>
+										<a href="{{localized PublicSettings.faqLink}}"
+										   target="_blank">{{i18n 'course.propose.faq' 'FAQ'}}</a>
 								</div>
 							</div>
 						{{/unless}}
@@ -44,44 +44,45 @@
 								<i class="fa-solid fa-check" aria-hidden="true"></i>
 								{{i18n 'course.edit.savedMessage' 'Your proposal has been saved!'}}
 							</h4>
-							<a class="alert-link" href="{{savedCourseLink}}" target="_blank">
-								{{i18n 'course.edit.linkToCourse' 'Click here to see your new "{NAME}" course on {SITENAME}' NAME=savedCourseName SITENAME=siteName}}
+								<a class="alert-link" href="{{savedCourseLink}}" target="_blank">
+									{{i18n 'course.edit.linkToCourse' 'Click here to see your new "{NAME}" course on {SITENAME}' NAME=savedCourseName SITENAME=siteName}}
 							</a>
-							<button type="button" class="btn-close js-close" data-bs-dismiss="alert"
-									aria-label="Close"></button>
+									<button type="button" class="btn-close js-close"
+											data-bs-dismiss="alert" aria-label="Close"></button>
 						</div>
 					{{/if}}
 					{{#if (state 'simpleRoleSelection')}}
 						<div class="mb-3">
 							<label class="form-label"
 								   id="learnOrTeachTitle">{{i18n 'course.edit.learnOrTeach' 'Learn or teach?'}}</label>
-							<div class="btn-group-toggle row" role="group"
-								 aria-labelledby="learnOrTeachTitle">
-								<div class="col d-grid">
-									<label
-										   class="btn btn-lg {{simpleRoleActiveClass 'participant'}}">
-										<input class="d-none" type="radio" name="role"
-											   value="participant" checked>
-										<i class="fa-solid fa-user fa-lg fa-fw"></i>
-										{{i18n 'course.edit.iWantToLearn' 'I want to learn'}}
+								<div class="btn-group-toggle row" role="group"
+									 aria-labelledby="learnOrTeachTitle">
+									<div class="col d-grid">
+										<label
+											   class="btn btn-lg {{simpleRoleActiveClass 'participant'}}">
+											<input class="d-none" type="radio" name="role"
+												   value="participant" checked>
+											<i class="fa-solid fa-user fa-lg fa-fw"></i>
+											{{i18n 'course.edit.iWantToLearn' 'I want to learn'}}
 									</label>
-								</div>
-								<div class="col d-grid">
-									<label class="btn btn-lg {{simpleRoleActiveClass 'mentor'}}">
-										<input class="d-none" type="radio" name="role"
-											   value="mentor">
-										<i class="fa-solid fa-graduation-cap fa-lg fa-fw"></i>
-										{{i18n 'course.edit.iCanTeach' 'I can teach'}}
+									</div>
+									<div class="col d-grid">
+										<label
+											   class="btn btn-lg {{simpleRoleActiveClass 'mentor'}}">
+											<input class="d-none" type="radio" name="role"
+												   value="mentor">
+											<i class="fa-solid fa-graduation-cap fa-lg fa-fw"></i>
+											{{i18n 'course.edit.iCanTeach' 'I can teach'}}
 									</label>
+									</div>
 								</div>
-							</div>
 						</div>
 					{{/if}}
 					{{> courseTitle}}
 					<div class="mb-3">
 						<label
 							   class="form-label">{{i18n 'course.edit.description' 'Description'}}</label>
-						{{> editable instance.editableDescription}}
+							{{> editable instance.editableDescription}}
 					</div>
 					{{#if hasPricePolicy}}
 						{{> pricePolicy dismissable=true wrap='mb-3'}}
@@ -92,47 +93,48 @@
 								{{#if (state 'editingCategories')}}
 									<label
 										   class="form-label mb-0">{{i18n 'course.edit.edit_categories' 'Edit Categories'}}</label>
-									{{#each availableCategories}}
-										<div class="form-check mt-2">
-											<input class='form-check-input js-category-checkbox cat_{{this}}'
-												   name='{{this}}' type='checkbox' value="1"
-												   id="courseEditCategory{{this}}"
-												   {{checkCategory}} />
-											<label class="form-check-label {{isChecked}}"
-												   for="courseEditCategory{{this}}">
-												{{> categoryLabel}}
-												{{#if hasSubcategories this}}
-													<i
-													   class="fa-solid fa-angle-down fa-fw {{isChecked}}"></i>
-												{{/if}}
-											</label>
-										</div>
-										{{#each availableSubcategories this}}
-											<div class="form-check ms-4">
-												<input class="form-check-input js-category-checkbox cat_{{this}}"
+										{{#each availableCategories}}
+											<div class="form-check mt-2">
+												<input class='form-check-input js-category-checkbox cat_{{this}}'
 													   name='{{this}}' type='checkbox' value="1"
-													   id="courseEditSubCategory{{this}}"
+													   id="courseEditCategory{{this}}"
 													   {{checkCategory}} />
 												<label class="form-check-label {{isChecked}}"
-													   for="courseEditSubCategory{{this}}">
+													   for="courseEditCategory{{this}}">
 													{{> categoryLabel}}
+													{{#if hasSubcategories this}}
+														<i
+														   class="fa-solid fa-angle-down fa-fw {{isChecked}}"></i>
+													{{/if}}
 												</label>
 											</div>
+											{{#each availableSubcategories this}}
+												<div class="form-check ms-4">
+													<input class="form-check-input js-category-checkbox cat_{{this}}"
+														   name='{{this}}' type='checkbox' value="1"
+														   id="courseEditSubCategory{{this}}"
+														   {{checkCategory}} />
+													<label class="form-check-label {{isChecked}}"
+														   for="courseEditSubCategory{{this}}">
+														{{> categoryLabel}}
+													</label>
+												</div>
+											{{/each}}
 										{{/each}}
-									{{/each}}
 								{{else}}
 									<label
 										   class="form-label">{{i18n 'course.edit.categories' 'Categories'}}</label>
-									{{#if categories}}
-										{{> courseCategories}}
-									{{/if}}
-									{{#unless categories}}
-										<div>
-											{{i18n 'course.edit.no.categories' 'No categories'}}
+										{{#if categories}}
+											{{> courseCategories}}
+										{{/if}}
+										{{#unless categories}}
+											<div>
+												{{i18n 'course.edit.no.categories' 'No categories'}}
 										</div>
-									{{/unless}}
-									<button type="button" class="btn btn-edit js-edit-categories">
-										{{i18n 'course.edit.edit_categories'}}
+										{{/unless}}
+										<button type="button"
+												class="btn btn-edit js-edit-categories">
+											{{i18n 'course.edit.edit_categories'}}
 									</button>
 								{{/if}}
 							</div>
@@ -141,9 +143,9 @@
 							<div class="col-md">
 								<label
 									   class="form-label">{{i18n 'course.edit.needs.role' 'This course might need…'}}</label>
-								{{#each role in availableRoles}}
-									{{> courseEditRole selected=roles role=role members=members}}
-								{{/each}}
+									{{#each role in availableRoles}}
+										{{> courseEditRole selected=roles role=role members=members}}
+									{{/each}}
 							</div>
 						{{/if}}
 						{{#if showMoreInfo}}
@@ -153,26 +155,26 @@
 									<div class="mb-3">
 										<label
 											   class="form-label">{{i18n 'course.edit.region' 'Region'}}</label>
-										<div class="input-group">
-											<div class="input-group-text">
-												<span class="fa-regular fa-circle-dot fa-fw"
-													  aria-hidden="true"></span>
-											</div>
-											<select class="js-select-region form-select"
-													name='region'>
-												<option value='' disabled
-														selected="{{#if isCurrentRegion 'all'}}selected{{/if}}"
-														class="select-placeholder">
-													{{i18n '_selection.pleaseSelect'}}
+											<div class="input-group">
+												<div class="input-group-text">
+													<span class="fa-regular fa-circle-dot fa-fw"
+														  aria-hidden="true"></span>
+												</div>
+												<select class="js-select-region form-select"
+														name='region'>
+													<option value='' disabled
+															selected="{{#if isCurrentRegion 'all'}}selected{{/if}}"
+															class="select-placeholder">
+														{{i18n '_selection.pleaseSelect'}}
 												</option>
-												{{#each region in regions}}
+														{{#each region in regions}}
 													<option value='{{region._id}}'
 															selected="{{#if isCurrentRegion region._id}}selected{{/if}}">
 														{{region.name}}
 													</option>
-												{{/each}}
-											</select>
-										</div>
+													{{/each}}
+												</select>
+											</div>
 									</div>
 								{{/if}}
 
@@ -205,13 +207,14 @@
 						<div class="mb-3">
 							<label
 								   class="form-label">{{i18n 'course.edit.intern' 'Hide on front page'}}</label>
-							<div class="form-check">
-								<input class="form-check-input js-check-internal" type="checkbox"
-									   value="" id="internalCheckbox" {{isInternal}} />
-								<label class="form-check-label" for="internalCheckbox">
-									{{i18n 'course.edit.internDescription' "Only show when looking at a group's courses"}}
+								<div class="form-check">
+									<input class="form-check-input js-check-internal"
+										   type="checkbox" value="" id="internalCheckbox"
+										   {{isInternal}} />
+									<label class="form-check-label" for="internalCheckbox">
+										{{i18n 'course.edit.internDescription' "Only show when looking at a group's courses"}}
 								</label>
-							</div>
+								</div>
 						</div>
 					{{/if}}
 
@@ -250,27 +253,32 @@
 <template name="courseTitle">
 	<div class="mb-3 js-proposed-search">
 		<label class="form-label">{{i18n 'course.edit.title' 'Title'}}</label>
-		<div class="dropdown">
-			<input class="form-control form-control-lg dropdown-toggle js-title" id="editform_name"
-				   placeholder="{{i18n 'course.title.placeholder' 'What are you interested in?' attr=true}}"
-				   size="40" type="text" data-bs-toggle="dropdown" value="{{name}}" />
-			<ul class="dropdown-menu proposed-courses js-proposed-courses {{#unless proposedCourses.count}}d-none{{/unless}}"
-				role="menu" aria-labelledby="editform_name">
-				{{#if proposedCourses.count}}
-					<li class="dropdown-header">
-						<i class="fa-solid fa-info" aria-hidden="true"></i>
-						{{i18n 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
-					</li>
-					<li>
-						<hr class="dropdown-divider">
-					</li>
-					{{#each proposedCourses}}
-						<li class="dropdown-entry js-dropdown-entry" role="presentation"><a
-							   class="dropdown-item" href="{{pathFor 'showCourse'}}" role="menuitem"
-							   tabindex="-1">{{name}}</a></li>
-					{{/each}}
-				{{/if}}
-			</ul>
-		</div>
+			<div class="dropdown">
+				<input class="form-control form-control-lg dropdown-toggle js-title"
+					   id="editform_name"
+					   placeholder="{{i18n 'course.title.placeholder' 'What are you interested in?' attr=true}}"
+					   size="40" type="text" data-bs-toggle="dropdown" value="{{name}}" />
+				<ul class="dropdown-menu proposed-courses js-proposed-courses {{#unless proposedCourses.count}}d-none{{/unless}}"
+					role="menu" aria-labelledby="editform_name">
+					{{#if proposedCourses.count}}
+						<li class="dropdown-header">
+							<i class="fa-solid fa fa-info-circle" aria-hidden="true"></i>
+							{{i18n 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
+							<button type="button" class="btn btn-close"></button>
+						</li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+						{{#each proposedCourses}}
+							<li class="dropdown-entry js-dropdown-entry" role="presentation"><a
+								   class="dropdown-item" href="{{pathFor 'showCourse'}}"
+								   role="menuitem" tabindex="-1">{{name}}</a></li>
+						{{/each}}
+					{{/if}}
+					<button type="button" class="btn btn-cancel js-close-btn close-dropdown-button">
+						{{i18n 'button.proposedCourses.close' 'No thanks'}}
+					</button>
+				</ul>
+			</div>
 	</div>
 </template>
