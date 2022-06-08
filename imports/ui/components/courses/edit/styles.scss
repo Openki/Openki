@@ -25,6 +25,9 @@
 .proposed-courses > .dropdown-header {
 	margin-top: 8.5px;
 	text-align: left;
+	color: black;
+	font-weight: 600;
+	font-size: 1.2rem;
 }
 
 .proposed-courses > .dropdown-header > {
@@ -32,5 +35,19 @@
 	.fa-brands,
 	.fa-solid {
 		margin-right: 7px;
+		font-size: 1.5rem;
+		color: $blue;
 	}
+}
+
+.dropdown {
+	position: relative;
+}
+
+.proposed-courses > button.close-dropdown-button {
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-bottom: 8px;
+	margin-top: 8px;
 }
