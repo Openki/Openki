@@ -3,7 +3,19 @@ import { Meteor } from 'meteor/meteor';
 import { EventModel } from '/imports/api/events/events';
 import { Geodata } from '/imports/api/regions/regions';
 
-import { PublicSettings } from './PublicSettings';
+import { PublicSettings } from '/imports/utils/PublicSettings';
+
+function getSiteDefaultImage() {
+	const ogLogo = PublicSettings.ogLogo.src;
+
+	if (ogLogo.startsWith(PublicSettings.s3.publicUrlBase)) {
+		// in our s3 file storage
+		return ogLogo;
+	}
+
+	// in the openki repository folder "public/logo/"
+	return Meteor.absoluteUrl(`logo/${ogLogo}`);
+}
 
 /**
  * Checks if there is enough data ro make a reasonable jsonLd
@@ -83,7 +95,7 @@ function createJsonLd(data: EventModel) {
 			  }
 			: undefined,
 		description: data.description || data.title,
-		image: Meteor.absoluteUrl(`logo/${PublicSettings.ogLogo.src}`),
+		image: getSiteDefaultImage(),
 		offers: addOffersToJsonLd(),
 		performer: addPerformerToJsonLd(),
 	};
@@ -96,7 +108,7 @@ function createJsonLd(data: EventModel) {
  */
 export function appendAsJsonLdToBody(data: EventModel) {
 	if (checkJsonLdMinReqs(data)) {
-		$(document).ready(() => {
+		$(() => {
 			const jsonLdTag = document.createElement('script');
 			jsonLdTag.type = 'application/ld+json';
 			const jsonLd = createJsonLd(data);
