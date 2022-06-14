@@ -1,4 +1,3 @@
-import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
@@ -18,7 +17,7 @@ import './styles.scss';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'calendarPage',
-		unknown,
+		Record<string, string>,
 		{ filter: ReturnType<typeof Events['Filtering']>; eventSub: Meteor.SubscriptionHandle }
 	>;
 
@@ -32,11 +31,11 @@ import './styles.scss';
 
 		// Read URL state
 		instance.autorun(() => {
-			const { query } = Router.current().params;
+			const query = Template.currentData();
 
 			// Show internal events only when a group or venue is specified
 			if (!query.group && !query.venue && query.internal === undefined) {
-				query.internal = false;
+				query.internal = '0';
 			}
 
 			filter
@@ -79,18 +78,14 @@ import './styles.scss';
 	template.helpers({
 		days() {
 			const start = Template.instance().filter.get('start');
-			let i = 0;
 			const days = [];
-			for (; i < 7; i += 1) {
+			for (let i = 0; i < 7; i += 1) {
 				days.push({
 					start: moment(start).add(i, 'days'),
 					end: moment(start).add(i + 1, 'days'),
 				});
 			}
 			return days;
-		},
-		filter() {
-			return Template.instance().filter;
 		},
 		startDate() {
 			return moment(Template.instance().filter.get('start'));
@@ -125,10 +120,6 @@ import './styles.scss';
 			filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
 
 			return Events.findFilter(filterQuery);
-		},
-		eventsReady() {
-			const instance = Template.instance();
-			return (instance.parentInstance() as any).eventSub.ready();
 		},
 	});
 }
