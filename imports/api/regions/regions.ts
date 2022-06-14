@@ -45,12 +45,20 @@ export interface RegionEntity {
 		siteName?: string;
 		siteStage?: string;
 		headerLogo?: {
-			/** The logo in the top left corner. Can be a logo from the /public/logo/* folder or a base64 encoded string. */
+			/**
+			 * The logo in the top left corner. Can be a logo from the /public/logo/* folder, from
+			 * our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded
+			 * string.
+			 */
 			src: string;
 			alt: string;
 		};
 		headerLogoKiosk?: {
-			/** The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the /public/logo/* folder or a base64 encoded string. */
+			/**
+			 * The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the
+			 * /public/logo/* folder, from our s3 file storage (must start with the "publicUrlBase"
+			 * setting) or a base64 encoded string.
+			 */
 			src: string;
 			alt: string;
 		};
