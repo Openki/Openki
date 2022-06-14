@@ -122,7 +122,12 @@ Router.route('adminPanel', {
 });
 
 Router.route('calendar', {
-	path: 'calendarPage',
+	path: 'calendar',
+	template: 'calendarPage',
+	async action() {
+		await import('/imports/ui/pages/calendar');
+		this.render();
+	},
 	data() {
 		return this.params;
 	},
