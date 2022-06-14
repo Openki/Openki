@@ -6,6 +6,8 @@ import moment from 'moment';
 
 import { Events, FindFilter } from '/imports/api/events/events';
 
+import { MeteorAsync } from '/imports/utils/promisify';
+
 import '/imports/ui/components/calendar-nav/multi';
 import '/imports/ui/components/events/list';
 import '/imports/ui/components/loading';
@@ -15,12 +17,12 @@ import './styles.scss';
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		'calendar',
+		'calendarPage',
 		unknown,
 		{ filter: ReturnType<typeof Events['Filtering']>; eventSub: Meteor.SubscriptionHandle }
 	>;
 
-	const template = Template.calendar;
+	const template = Template.calendarPage;
 
 	template.onCreated(function () {
 		const instance = this;
@@ -60,16 +62,15 @@ import './styles.scss';
 	template.onRendered(function () {
 		const instance = Template.instance();
 		// change of week does not trigger onRendered again
-		this.autorun(() => {
+		instance.autorun(async () => {
 			// only do this in the current week
 			if (moment().format('w') === instance.filter.get('start').format('w')) {
 				if (instance.eventSub.ready()) {
-					Meteor.defer(function () {
-						const elem = instance.$('.js-calendar-date').eq(moment().weekday());
+					await MeteorAsync.defer();
+					const elem = instance.$('.js-calendar-date').eq(moment().weekday());
 
-						// calendar nav and topnav are together 103 px fixed height, we add 7px margin
-						window.scrollTo(0, (elem.offset() || { top: 0 }).top - 110);
-					});
+					// calendar nav and topnav are together 103 px fixed height, we add 7px margin
+					window.scrollTo(0, (elem.offset() || { top: 0 }).top - 110);
 				}
 			}
 		});

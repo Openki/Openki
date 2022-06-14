@@ -122,7 +122,7 @@ Router.route('adminPanel', {
 });
 
 Router.route('calendar', {
-	path: 'calendar',
+	path: 'calendarPage',
 	data() {
 		return this.params;
 	},
