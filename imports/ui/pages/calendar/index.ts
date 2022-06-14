@@ -1,6 +1,5 @@
 import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 
 import { Events, FindFilter } from '/imports/api/events/events';
@@ -18,7 +17,7 @@ import './styles.scss';
 	const Template = TemplateAny as TemplateStaticTyped<
 		'calendarPage',
 		Record<string, string>,
-		{ filter: ReturnType<typeof Events['Filtering']>; eventSub: Meteor.SubscriptionHandle }
+		{ filter: ReturnType<typeof Events['Filtering']> }
 	>;
 
 	const template = Template.calendarPage;
@@ -54,7 +53,7 @@ import './styles.scss';
 
 			filterQuery.after = start;
 			filterQuery.end = end;
-			instance.eventSub = instance.subscribe('Events.findFilter', filterQuery);
+			instance.subscribe('Events.findFilter', filterQuery);
 		});
 	});
 
@@ -64,7 +63,7 @@ import './styles.scss';
 		instance.autorun(async () => {
 			// only do this in the current week
 			if (moment().format('w') === instance.filter.get('start').format('w')) {
-				if (instance.eventSub.ready()) {
+				if (instance.subscriptionsReady()) {
 					await MeteorAsync.defer();
 					const elem = instance.$('.js-calendar-date').eq(moment().weekday());
 
