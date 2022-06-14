@@ -2,10 +2,14 @@
 	{{> calendarNavMulti date=startDate}}
 	<div class="container calendar-container">
 		<div class="page-component">
-			{{#each day in days}}
-				{{> calendarDayFormat day=day filter=filter}}
-				<hr>
-			{{/each}}
+			{{#if Template.subscriptionsReady}}
+				{{#each day in days}}
+					{{> calendarDayFormat day=day filter=instance.filter}}
+					<hr>
+				{{/each}}
+			{{else}}
+				{{> loadingRow}}
+			{{/if}}
 		</div>
 	</div>
 </template>
@@ -14,17 +18,12 @@
 	<div class="js-calendar-date calendar-date">
 		{{calendarDayFormat day.start}}
 	</div>
-	{{#if eventsReady}}
-		{{#unless hasEvents}}
-			<br>
-			{{i18n 'calendar.noCoursesThisDay' "There are no events on this day"}}
-		{{/unless}}
-		{{#if hasEvents}}
-			<div class="calendar-event-list">
-				{{> eventList dataEvents=events withDate=false}}
-			</div>
-		{{/if}}
+	{{#if hasEvents}}
+		<div class="calendar-event-list">
+			{{> eventList dataEvents=events withDate=false}}
+		</div>
 	{{else}}
-		{{> loadingRow}}
+		<br>
+		{{i18n 'calendar.noCoursesThisDay' "There are no events on this day"}}
 	{{/if}}
 </template>
