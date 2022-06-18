@@ -30,28 +30,26 @@ import './styles.scss';
 
 		// Read URL state
 		instance.autorun(() => {
-			const query = Template.currentData();
+			const data = Template.currentData();
 
 			// Show internal events only when a group or venue is specified
-			if (!query.group && !query.venue && query.internal === undefined) {
-				query.internal = '0';
+			if (!data.group && !data.venue && data.internal === undefined) {
+				data.internal = '0';
 			}
 
 			filter
 				.clear()
 				.add('start', moment().startOf('week').toISOString())
-				.read(query)
+				.read(data)
 				.add('region', Session.get('region'))
 				.done();
-		});
 
-		instance.autorun(() => {
 			const filterQuery = filter.toQuery() as FindFilter;
 
-			const start = filter.get('start').toDate();
+			const after = filter.get('start').toDate();
 			const end = filter.get('start').add(1, 'week').toDate();
 
-			filterQuery.after = start;
+			filterQuery.after = after;
 			filterQuery.end = end;
 			instance.subscribe('Events.findFilter', filterQuery);
 		});
@@ -93,7 +91,7 @@ import './styles.scss';
 }
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		'calendarDayFormat',
+		'calendarDay',
 		{
 			day: {
 				start: moment.Moment;
@@ -103,18 +101,18 @@ import './styles.scss';
 		}
 	>;
 
-	const template = Template.calendarDayFormat;
+	const template = Template.calendarDay;
 
 	template.helpers({
 		hasEvents() {
-			const data = Template.currentData();
+			const data = Template.instance().data;
 			const filterQuery = data.filter.toQuery() as FindFilter;
 			filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
 
 			return Events.findFilter(filterQuery, 1).count() > 0;
 		},
 		events() {
-			const data = Template.currentData();
+			const data = Template.instance().data;
 			const filterQuery = data.filter.toQuery() as FindFilter;
 			filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
 
