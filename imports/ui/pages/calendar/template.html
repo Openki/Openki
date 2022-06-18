@@ -4,7 +4,7 @@
 		<div class="page-component">
 			{{#if Template.subscriptionsReady}}
 				{{#each day in days}}
-					{{> calendarDayFormat day=day filter=instance.filter}}
+					{{> calendarDay day=day filter=instance.filter}}
 					<hr>
 				{{/each}}
 			{{else}}
@@ -14,7 +14,7 @@
 	</div>
 </template>
 
-<template name="calendarDayFormat">
+<template name="calendarDay">
 	<div class="js-calendar-date calendar-date">
 		{{calendarDayFormat day.start}}
 	</div>

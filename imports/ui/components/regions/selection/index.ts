@@ -26,9 +26,11 @@ import './styles.scss';
 	const template = Template.regionSelectionWrap;
 
 	template.onCreated(function () {
-		this.subscribe('Regions');
-		this.state = new ReactiveDict();
-		this.state.setDefault('searchingRegions', false);
+		const instance = this;
+
+		instance.subscribe('Regions');
+		instance.state = new ReactiveDict();
+		instance.state.setDefault('searchingRegions', false);
 	});
 
 	template.helpers({
