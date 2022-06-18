@@ -41,6 +41,10 @@ export interface RegionEntity {
 	futureEventCount: number;
 	/** ID of featured group */
 	featuredGroup: string;
+	/**
+	 * If set the calendar page jumps automatic to this date.
+	 */
+	calendarStartDate?: Date;
 	custom?: {
 		siteName?: string;
 		siteStage?: string;
@@ -118,7 +122,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 	currentRegion() {
 		const regionId = Session.get('region');
 
-		if (!regionId) {
+		if (!regionId || regionId === 'all') {
 			return undefined;
 		}
 
