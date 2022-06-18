@@ -3,6 +3,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import moment from 'moment';
 
 import { Events, FindFilter } from '/imports/api/events/events';
+import { Regions } from '/imports/api/regions/regions';
 
 import { MeteorAsync } from '/imports/utils/promisify';
 
@@ -37,9 +38,10 @@ import './styles.scss';
 				data.internal = '0';
 			}
 
+			const start = Regions.currentRegion()?.calendarStartDate || new Date();
 			filter
 				.clear()
-				.add('start', moment().startOf('week').toISOString())
+				.add('start', moment(start).startOf('week').toISOString())
 				.read(data)
 				.add('region', Session.get('region'))
 				.done();
