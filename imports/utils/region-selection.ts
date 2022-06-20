@@ -177,3 +177,7 @@ export function change(regionId: string) {
 		usersMethods.regionChange(regionId);
 	}
 }
+
+export function hasMultipleRegions() {
+	return Regions.findFilter({}, 2).count() > 1;
+}

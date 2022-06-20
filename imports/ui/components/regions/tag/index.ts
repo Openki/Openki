@@ -2,6 +2,8 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 
 import { Regions } from '/imports/api/regions/regions';
 
+import { hasMultipleRegions } from '/imports/utils/region-selection';
+
 import './template.html';
 import './styles.scss';
 
@@ -13,4 +15,5 @@ template.helpers({
 	regionName() {
 		return Regions.findOne(this.region)?.name;
 	},
+	hasMultipleRegions,
 });
