@@ -48,8 +48,9 @@ import './styles.scss';
 
 			const filterQuery = filter.toQuery() as FindFilter;
 
-			const after = filter.get('start').toDate();
-			const end = filter.get('start').add(1, 'week').toDate();
+			const startMoment = filter.get('start') as moment.Moment;
+			const after = startMoment.toDate();
+			const end = startMoment.add(1, 'week').toDate();
 
 			filterQuery.after = after;
 			filterQuery.end = end;
@@ -62,7 +63,7 @@ import './styles.scss';
 		// change of week does not trigger onRendered again
 		instance.autorun(async () => {
 			// only do this in the current week
-			if (moment().format('w') === instance.filter.get('start').format('w')) {
+			if (moment().format('w') === instance.filter.get('start')?.format('w')) {
 				if (instance.subscriptionsReady()) {
 					await MeteorAsync.defer();
 					const elem = instance.$('.js-calendar-date').eq(moment().weekday());
