@@ -4,13 +4,13 @@
 	{{/if}}
 	<div class="py-4">
 		{{#each weekday in weekdays}}
-			<div class="calendar-date">
+			<div class="frame-week-date">
 				{{calendarDayFormat weekday.date}}
 			</div>
 			<div class="frame-week-date-events">
 				{{#if Template.subscriptionsReady}}
 					{{#if hasDayEvents weekday}}
-						{{> eventList dataEvents=weekday.dayEvents withDate=false}}
+						{{> eventList dataEvents=weekday.dayEvents withDate=false withImage=true}}
 					{{else}}
 						<div class="text-center">
 							{{i18n 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}

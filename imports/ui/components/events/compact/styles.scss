@@ -52,6 +52,8 @@
 //========================================================================================
 .event-compact {
 	background: $event-body-bg;
+	display: flex;
+	flex-flow: column;
 	height: $event-compact-height;
 	overflow: hidden;
 	position: relative;
@@ -71,6 +73,7 @@
 .event-compact-body {
 	@include ellipsis-multiline(6);
 
+	flex-grow: 1;
 	padding: 5px;
 	position: relative;
 }
