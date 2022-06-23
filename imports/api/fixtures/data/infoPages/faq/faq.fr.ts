@@ -29,7 +29,7 @@ Toutefois, nous sommes sensibles au fait que de nombreuses options supplémentai
 
 Openki est non seulement un logiciel open source, mais sont développement et son organisation est également totalement transparente. Cela signifie, par exemple, que vous pouvez suivre et participer aux discussions sur les prochaines étapes techniques sur le [gestionnaire d'issues](https://github.com/Openki/Openki/issues). Vous pouvez également envoyer un courriel avec vos suggestions à : openki-core [at] lists.xiala.net.
 
-Vous avez également la possibilité de traduire Openki en utilisant le très facile d'usage [traducteur en ligne](https://openki.net/translate).
+Vous avez également la possibilité de traduire Openki en utilisant le très facile d'usage [traducteur en ligne](https://gitlab.com/Openki/Openki/-/wikis/i18n-howto).
 
 ### Qui administre le site Openki.net ?
 
