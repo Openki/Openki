@@ -31,6 +31,21 @@ template.helpers({
 		return classes.join(' ');
 	},
 
+	showImage() {
+		const { event, withImage } = Template.instance().data;
+
+		if (!withImage) {
+			return false;
+		}
+
+		const src = event?.publicImageUrl();
+		if (!src) {
+			return false;
+		}
+
+		return true;
+	},
+
 	bodyStyle() {
 		const { event, withImage } = Template.instance().data;
 
