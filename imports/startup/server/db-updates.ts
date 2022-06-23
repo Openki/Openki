@@ -14,6 +14,7 @@ import update20210329EnrichTenant from './updates/2021.03.29 enrichTenant';
 import { update as update20210309HistorySubscribeUnsubscribe } from './updates/2021.03.09 historySubscribeUnsubscribe';
 import { update as update20210421EnsureCourseArchivedField } from './updates/2021.04.21 ensureCourseArchivedField';
 import { update as update20210513ensureTenantAdminsField } from './updates/2021.05.13 ensureTenantAdminsField';
+import { update as update20220621EnrichEventCourseImage } from './updates/2022.06.21 enrichEventCourseImage';
 
 const UpdatesAvailable: { [name: string]: () => number } = {
 	'2020.12.16 mergeUserLocale': update20201216MergeUserLocale,
@@ -26,6 +27,7 @@ const UpdatesAvailable: { [name: string]: () => number } = {
 	'2021.03.09 historySubscribeUnsubscribe': update20210309HistorySubscribeUnsubscribe,
 	'2021.04.21 ensureCourseArchivedField': update20210421EnsureCourseArchivedField,
 	'2021.05.13 ensureTenantAdminsField': update20210513ensureTenantAdminsField,
+	'2022.06.21 enrichEventCourseImage': update20220621EnrichEventCourseImage,
 };
 
 interface UpdatesAppliedEntity {

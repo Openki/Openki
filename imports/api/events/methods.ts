@@ -10,6 +10,7 @@ import { Courses } from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
 import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as courseTimeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
+import * as courseImageDenormalizer from '/imports/api/events/courseImageDenormalizer';
 import { EventEntity, EventModel, Events, OEvent } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
@@ -311,7 +312,8 @@ export const save = ServerMethod(
 		if (isNew) {
 			editFields.createdBy = user._id;
 			editFields.groupOrganizers = [];
-			eventId = Events.insert(editFields as EventModel);
+			const enrichedEvent = courseImageDenormalizer.beforeInsert(editFields as EventEntity);
+			eventId = Events.insert(enrichedEvent);
 
 			if (editFields.courseId) {
 				courseTimeLasteditDenormalizer.afterEventInsert(editFields.courseId);

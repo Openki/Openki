@@ -9,29 +9,46 @@ import '/imports/ui/components/venues/link';
 import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<'eventCompact', unknown, { withDate: boolean }>;
+const Template = TemplateAny as TemplateStaticTyped<
+	'eventCompact',
+	{ event: EventModel; withDate: boolean; withImage: boolean }
+>;
 
 const template = Template.eventCompact;
 
-template.onCreated(function () {
-	this.withDate = this.parentInstance()?.data.withDate || false;
-});
-
 template.helpers({
-	eventCompactClasses(this: EventModel) {
+	eventCompactClasses() {
+		const { event, withDate } = Template.instance().data;
+
 		const classes = [];
-		if (Template.instance().withDate) {
+		if (withDate) {
 			classes.push('has-date');
 		}
-		if (moment().isAfter(this.end)) {
+		if (moment().isAfter(event.end)) {
 			classes.push('is-past');
 		}
 
 		return classes.join(' ');
 	},
 
-	withDate() {
-		return Template.instance().withDate;
+	bodyStyle() {
+		const { event, withImage } = Template.instance().data;
+
+		if (!withImage) {
+			return '';
+		}
+
+		const src = event?.publicImageUrl();
+		if (!src) {
+			return '';
+		}
+
+		return {
+			style: `
+	background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${src}');
+	background-position: center;
+	background-size: cover;`,
+		};
 	},
 });
 
