@@ -189,7 +189,7 @@ import './styles.scss';
 			// Move entered username over to email field if it contains a @
 			if (isEmail(username)) {
 				email = username;
-				username = email.substring(0, email.indexOf('@'));
+				username = "";
 			}
 
 			const parentInstance = instance.parentInstance() as any;
