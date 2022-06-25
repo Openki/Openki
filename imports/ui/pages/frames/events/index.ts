@@ -8,7 +8,6 @@ import * as UrlTools from '/imports/utils/url-tools';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
-import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/events/list';
 import '/imports/ui/components/calendar-nav/day';
