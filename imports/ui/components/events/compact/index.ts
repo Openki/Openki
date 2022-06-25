@@ -11,7 +11,7 @@ import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'eventCompact',
-	{ event: EventModel; withDate?: boolean; withImage?: boolean }
+	{ event: EventModel; withDate?: boolean; withImage?: boolean; open?: 'external' }
 >;
 
 const template = Template.eventCompact;
@@ -29,6 +29,10 @@ template.helpers({
 		}
 
 		return classes.join(' ');
+	},
+
+	openExternal() {
+		return Template.instance().data.open === 'external';
 	},
 
 	showImage() {
