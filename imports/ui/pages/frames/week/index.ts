@@ -124,19 +124,6 @@ template.onCreated(function () {
 	};
 });
 
-template.onRendered(function () {
-	const instance = this;
-	instance.autorun(() => {
-		// rerun when subscriptions become ready
-		instance.subscriptionsReady();
-
-		// wait until subtemplates are rendered
-		MeteorAsync.defer();
-
-		instance.$('a').attr('target', '_blank');
-	});
-});
-
 template.helpers({
 	control() {
 		return Template.instance().data.control === '1';

@@ -1,6 +1,7 @@
 <template name="eventCompact">
 	<div class="event-compact-wrap">
-		<a href="{{pathFor 'showEvent' _id=event._id slug=event.slug}}">
+		<a href="{{pathFor 'showEvent' _id=event._id slug=event.slug}}"
+		   target="{{#if openExternal}}_blank{{/if}}">
 			<div class="event-compact {{eventCompactClasses}}">
 				<div class="event-compact-header">
 					{{#if withDate}}
