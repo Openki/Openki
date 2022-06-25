@@ -123,8 +123,13 @@ Router.route('adminPanel', {
 
 Router.route('calendar', {
 	path: 'calendar',
+	template: 'calendarPage',
 	data() {
-		return this.params;
+		return this.params.query;
+	},
+	async action() {
+		await import('/imports/ui/pages/calendar');
+		this.render();
 	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));

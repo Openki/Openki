@@ -1,7 +1,7 @@
-import { Tracker } from 'meteor/tracker';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
+
+import { MeteorAsync, TrackerAsync } from '/imports/utils/promisify';
 
 // use _jQuery if available, otherwise support IE9+
 function getScrollTop() {
@@ -9,11 +9,10 @@ function getScrollTop() {
 	return document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
 }
 
-const delay = (ms: number) => new Promise((resolve) => Meteor.setTimeout(resolve, ms));
-
 async function waitUntil(conditionFn: () => boolean) {
 	if (!conditionFn()) {
-		await delay(50);
+		await MeteorAsync.setTimeout(50);
+
 		await waitUntil(conditionFn);
 	}
 }
@@ -97,13 +96,13 @@ class RouterAutoscroll {
 		window.scrollTo({ top: position, behavior: 'auto' });
 	}
 
-	public scheduleScroll() {
-		Tracker.afterFlush(() => {
-			Meteor.defer(() => {
-				const position = this.getScrollToPosition();
-				RouterAutoscroll.scrollToPos(position);
-			});
-		});
+	public async scheduleScroll() {
+		await TrackerAsync.afterFlush();
+
+		await MeteorAsync.defer();
+
+		const position = this.getScrollToPosition();
+		RouterAutoscroll.scrollToPos(position);
 	}
 
 	/** Do not scroll the next time you normally would */

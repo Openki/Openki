@@ -64,19 +64,28 @@ import './styles.scss';
 
 			const currentRegion = Regions.currentRegion();
 			if (currentRegion?.custom?.headerLogoKiosk?.src) {
+				// the region has a custom logo
 				headerLogo = currentRegion.custom.headerLogoKiosk.src;
+			} else {
+				// general logo
+				headerLogo = PublicSettings.headerLogoKiosk.src;
 			}
-
-			headerLogo = headerLogo || PublicSettings.headerLogoKiosk.src;
 
 			if (!headerLogo) {
 				return '';
 			}
 
 			if (headerLogo.startsWith('data:image/')) {
+				// base64 image
 				return headerLogo;
 			}
 
+			if (headerLogo.startsWith(PublicSettings.s3.publicUrlBase)) {
+				// in our s3 file storage
+				return headerLogo;
+			}
+
+			// in the openki repository folder "public/logo/"
 			return `/logo/${headerLogo}`;
 		},
 

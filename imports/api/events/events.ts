@@ -13,6 +13,7 @@ import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
+import * as FileStorage from '/imports/utils/FileStorage';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { FieldSort, FieldSortPattern, Sort } from '/imports/utils/sort-spec';
@@ -96,6 +97,8 @@ export interface EventEntity {
 	start: Date;
 	/** (calculated) date object calculated from endLocal field. */
 	end: Date;
+	/** (calculated) image from the course */
+	courseImage: string;
 }
 
 export type EventModel = OEvent & EventEntity;
@@ -128,6 +131,14 @@ export class OEvent {
 
 			return timeA.hour() === timeB.hour() && timeA.minute() === timeB.minute();
 		});
+	}
+
+	publicImageUrl(this: EventModel) {
+		if (!this.courseImage) {
+			return undefined;
+		}
+
+		return FileStorage.generatePublicUrl(this.courseImage);
 	}
 }
 
@@ -190,7 +201,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		}
 	}
 
-	insert(event: EventModel, callback?: (err?: unknown, _id?: string) => void) {
+	insert(event: EventEntity, callback?: (err?: unknown, _id?: string) => void) {
 		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
 
 		return super.insert(enrichedEvent, callback);
