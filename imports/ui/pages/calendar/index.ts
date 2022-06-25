@@ -1,10 +1,11 @@
-import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 
 import { Events, FindFilter } from '/imports/api/events/events';
+import { Regions } from '/imports/api/regions/regions';
+
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import '/imports/ui/components/calendar-nav/multi';
 import '/imports/ui/components/events/list';
@@ -15,12 +16,12 @@ import './styles.scss';
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		'calendar',
-		unknown,
-		{ filter: ReturnType<typeof Events['Filtering']>; eventSub: Meteor.SubscriptionHandle }
+		'calendarPage',
+		Record<string, string>,
+		{ filter: ReturnType<typeof Events['Filtering']> }
 	>;
 
-	const template = Template.calendar;
+	const template = Template.calendarPage;
 
 	template.onCreated(function () {
 		const instance = this;
@@ -30,46 +31,45 @@ import './styles.scss';
 
 		// Read URL state
 		instance.autorun(() => {
-			const { query } = Router.current().params;
+			const data = Template.currentData();
 
 			// Show internal events only when a group or venue is specified
-			if (!query.group && !query.venue && query.internal === undefined) {
-				query.internal = false;
+			if (!data.group && !data.venue && data.internal === undefined) {
+				data.internal = '0';
 			}
 
+			const start = Regions.currentRegion()?.calendarStartDate || new Date();
 			filter
 				.clear()
-				.add('start', moment().startOf('week').toISOString())
-				.read(query)
+				.add('start', moment(start).startOf('week').toISOString())
+				.read(data)
 				.add('region', Session.get('region'))
 				.done();
-		});
 
-		instance.autorun(() => {
 			const filterQuery = filter.toQuery() as FindFilter;
 
-			const start = filter.get('start').toDate();
-			const end = filter.get('start').add(1, 'week').toDate();
+			const startMoment = filter.get('start') as moment.Moment;
+			const after = startMoment.toDate();
+			const end = startMoment.add(1, 'week').toDate();
 
-			filterQuery.after = start;
+			filterQuery.after = after;
 			filterQuery.end = end;
-			instance.eventSub = instance.subscribe('Events.findFilter', filterQuery);
+			instance.subscribe('Events.findFilter', filterQuery);
 		});
 	});
 
 	template.onRendered(function () {
 		const instance = Template.instance();
 		// change of week does not trigger onRendered again
-		this.autorun(() => {
+		instance.autorun(async () => {
 			// only do this in the current week
-			if (moment().format('w') === instance.filter.get('start').format('w')) {
-				if (instance.eventSub.ready()) {
-					Meteor.defer(function () {
-						const elem = instance.$('.js-calendar-date').eq(moment().weekday());
+			if (moment().format('w') === instance.filter.get('start')?.format('w')) {
+				if (instance.subscriptionsReady()) {
+					await MeteorAsync.defer();
+					const elem = instance.$('.js-calendar-date').eq(moment().weekday());
 
-						// calendar nav and topnav are together 103 px fixed height, we add 7px margin
-						window.scrollTo(0, (elem.offset() || { top: 0 }).top - 110);
-					});
+					// calendar nav and topnav are together 103 px fixed height, we add 7px margin
+					window.scrollTo(0, (elem.offset() || { top: 0 }).top - 110);
 				}
 			}
 		});
@@ -78,18 +78,14 @@ import './styles.scss';
 	template.helpers({
 		days() {
 			const start = Template.instance().filter.get('start');
-			let i = 0;
 			const days = [];
-			for (; i < 7; i += 1) {
+			for (let i = 0; i < 7; i += 1) {
 				days.push({
 					start: moment(start).add(i, 'days'),
 					end: moment(start).add(i + 1, 'days'),
 				});
 			}
 			return days;
-		},
-		filter() {
-			return Template.instance().filter;
 		},
 		startDate() {
 			return moment(Template.instance().filter.get('start'));
@@ -98,7 +94,7 @@ import './styles.scss';
 }
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		'calendarDayFormat',
+		'calendarDay',
 		{
 			day: {
 				start: moment.Moment;
@@ -108,26 +104,22 @@ import './styles.scss';
 		}
 	>;
 
-	const template = Template.calendarDayFormat;
+	const template = Template.calendarDay;
 
 	template.helpers({
 		hasEvents() {
-			const data = Template.currentData();
+			const data = Template.instance().data;
 			const filterQuery = data.filter.toQuery() as FindFilter;
 			filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
 
 			return Events.findFilter(filterQuery, 1).count() > 0;
 		},
 		events() {
-			const data = Template.currentData();
+			const data = Template.instance().data;
 			const filterQuery = data.filter.toQuery() as FindFilter;
 			filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
 
 			return Events.findFilter(filterQuery);
-		},
-		eventsReady() {
-			const instance = Template.instance();
-			return (instance.parentInstance() as any).eventSub.ready();
 		},
 	});
 }

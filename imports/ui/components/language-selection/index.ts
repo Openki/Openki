@@ -9,6 +9,7 @@ import { LanguageEntity, LanguagesRaw, Languages } from '/imports/api/languages/
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import * as StringTools from '/imports/utils/string-tools';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import './template.html';
 import './styles.scss';
@@ -196,11 +197,11 @@ import './styles.scss';
 			instance.searchHasFocus = event.type === 'focusin';
 		},
 
-		'show.bs.dropdown'(_event, instance) {
+		async 'show.bs.dropdown'(_event, instance) {
 			if (!instance.searchHasFocus) {
-				Meteor.defer(() => {
-					instance.$('.js-language-search').trigger('select');
-				});
+				await MeteorAsync.defer();
+
+				instance.$('.js-language-search').trigger('select');
 			}
 		},
 

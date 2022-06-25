@@ -71,7 +71,7 @@ import '../styles.scss';
 	const mvDateHandler = function (unit: Unit, instance: any) {
 		const amount = instance.data.direction === 'previous' ? -1 : 1;
 		const filter = instance.parentInstance(2).filter as ReturnType<typeof Events['Filtering']>;
-		const start = filter.get('start');
+		const start = filter.get('start') as moment.Moment;
 		const weekCorrection = unit === 'week' ? 0 : 1;
 
 		if (amount < 0) {

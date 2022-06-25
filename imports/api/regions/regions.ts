@@ -41,16 +41,28 @@ export interface RegionEntity {
 	futureEventCount: number;
 	/** ID of featured group */
 	featuredGroup: string;
+	/**
+	 * If set the calendar page jumps automatic to this date.
+	 */
+	calendarStartDate?: Date;
 	custom?: {
 		siteName?: string;
 		siteStage?: string;
 		headerLogo?: {
-			/** The logo in the top left corner. Can be a logo from the /public/logo/* folder or a base64 encoded string. */
+			/**
+			 * The logo in the top left corner. Can be a logo from the /public/logo/* folder, from
+			 * our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded
+			 * string.
+			 */
 			src: string;
 			alt: string;
 		};
 		headerLogoKiosk?: {
-			/** The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the /public/logo/* folder or a base64 encoded string. */
+			/**
+			 * The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the
+			 * /public/logo/* folder, from our s3 file storage (must start with the "publicUrlBase"
+			 * setting) or a base64 encoded string.
+			 */
 			src: string;
 			alt: string;
 		};
@@ -110,7 +122,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 	currentRegion() {
 		const regionId = Session.get('region');
 
-		if (!regionId) {
+		if (!regionId || regionId === 'all') {
 			return undefined;
 		}
 

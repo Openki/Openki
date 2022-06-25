@@ -52,6 +52,8 @@
 //========================================================================================
 .event-compact {
 	background: $event-body-bg;
+	display: flex;
+	flex-flow: column;
 	height: $event-compact-height;
 	overflow: hidden;
 	position: relative;
@@ -71,6 +73,7 @@
 .event-compact-body {
 	@include ellipsis-multiline(6);
 
+	flex-grow: 1;
 	padding: 5px;
 	position: relative;
 }
@@ -120,6 +123,10 @@
 .event-compact-description {
 	color: $blue;
 	display: inline;
+}
+
+.event-compact-description-with-image {
+	color: $gray-800 !important;
 }
 
 // ** Internal indicator dot

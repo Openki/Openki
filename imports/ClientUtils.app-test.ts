@@ -1,9 +1,7 @@
 import { DDP } from 'meteor/ddp-client';
 import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
 import { Promise } from 'meteor/promise';
 import { AssertionError } from 'chai';
-import { promisify } from 'es6-promisify';
 
 /**
  * Returns a promise which resolves when all subscriptions are done.
@@ -18,13 +16,6 @@ export function waitForSubscriptions(): Promise<void> {
 		}, 200);
 	});
 }
-
-/**
- * Tracker.afterFlush runs code when all consequent of a tracker based change
- * (such as a route change) have occured. This makes it a promise.
- * Source: https://guide.meteor.com/testing.html#full-app-integration-test
- */
-export const afterFlush = Tracker.afterFlush && promisify(Tracker.afterFlush);
 
 /**
  * Returns a promise which resolves if test returns anything but undefined.
