@@ -11,7 +11,7 @@ import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'eventCompact',
-	{ event: EventModel; withDate: boolean; withImage: boolean }
+	{ event: EventModel; withDate?: boolean; withImage?: boolean }
 >;
 
 const template = Template.eventCompact;
