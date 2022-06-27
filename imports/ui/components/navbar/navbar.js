@@ -141,6 +141,14 @@ Template.navbar.events({
 			}
 		}
 	},
+
+	'show.bs.collapse .navbar-collapse'(event, instance){
+		console.log("collapse content show event fired");
+	},
+
+	'hide.bs.collapse .navbar-collapse'(event, instance){
+		console.log("collapse content hide event fired");
+	},
 });
 
 Template.loginButton.helpers({
