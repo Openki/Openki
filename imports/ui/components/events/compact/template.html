@@ -1,7 +1,7 @@
 <template name="eventCompact">
 	<div class="event-compact-wrap">
 		<a href="{{pathFor 'showEvent' _id=event._id slug=event.slug}}"
-		   target="{{#if openExternal}}_blank{{/if}}">
+		   target="{{#if openInNewTab}}_blank{{/if}}">
 			<div class="event-compact {{eventCompactClasses}}">
 				<div class="event-compact-header">
 					{{#if withDate}}
@@ -16,7 +16,7 @@
 					</span>
 					<br>
 					<div class="tag-group">
-						{{> venueLink venue=event.venue}}
+						{{> venueLink venue=event.venue openInNewTab=openInNewTab}}
 					</div>
 				</div>
 				<div class="event-compact-body" {{bodyStyle}}>
