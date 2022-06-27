@@ -10,7 +10,7 @@
 			<div class="frame-week-date-events">
 				{{#if Template.subscriptionsReady}}
 					{{#if hasDayEvents weekday}}
-						{{> eventList dataEvents=weekday.dayEvents withDate=false withImage=true open="external"}}
+						{{> eventList dataEvents=weekday.dayEvents withDate=false withImage=true openInNewTab=true}}
 					{{else}}
 						<div class="text-center">
 							{{i18n 'frameCalendar.nothingOnThisDay' "Relax, nothing happening today."}}
