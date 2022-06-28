@@ -128,34 +128,26 @@ export type SaveFields = CreateFields & UpdateFields;
 
 export const save = ServerMethod(
 	'event.save',
-
-	(args: {
-		changes: SaveFields;
-		updateReplicasInfos?: boolean;
-		updateReplicasTime?: boolean;
-		updateChangedReplicasTime?: boolean;
-		sendNotifications?: boolean;
-		eventId: string;
-		comment?: string | null;
-	}) => {
-		const {
-			changes,
-			updateReplicasInfos,
-			updateReplicasTime,
-			updateChangedReplicasTime,
-			sendNotifications,
-		} = args;
-
-		let { eventId, comment } = args;
-
+	/**
+	 * @param eventId The event id or to create a new event, pass an empty Id
+	 */
+	(
+		eventId: string,
+		changes: SaveFields,
+		updateReplicasInfos?: boolean,
+		updateReplicasTime?: boolean,
+		updateChangedReplicasTime?: boolean,
+		sendNotifications?: boolean,
+		comment?: string,
+	) => {
 		check(eventId, String);
 
 		const isNew = eventId === '';
 
 		const expectedFields = isNew ? CreateFieldsPattern : UpdateFieldsPattern;
 		check(changes, expectedFields);
-		check(comment, Match.Maybe(String));
 		check(sendNotifications, Match.Maybe(Boolean));
+		check(comment, Match.Maybe(String));
 
 		if (!isNew) {
 			check(updateReplicasInfos, Match.Maybe(Boolean));
@@ -313,6 +305,7 @@ export const save = ServerMethod(
 			editFields.createdBy = user._id;
 			editFields.groupOrganizers = [];
 			const enrichedEvent = courseImageDenormalizer.beforeInsert(editFields as EventEntity);
+			// eslint-disable-next-line no-param-reassign
 			eventId = Events.insert(enrichedEvent);
 
 			if (editFields.courseId) {

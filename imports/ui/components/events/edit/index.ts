@@ -429,15 +429,15 @@ template.events({
 		instance.busy('saving');
 		PleaseLogin(instance, async () => {
 			try {
-				const result = await EventsMethods.save({
+				const result = await EventsMethods.save(
 					eventId,
+					editevent,
 					updateReplicasInfos,
 					updateReplicasTime,
 					updateChangedReplicasTime,
 					sendNotifications,
-					changes: editevent,
-					comment: addNotificationMessage,
-				});
+					addNotificationMessage,
+				);
 				if (!result) {
 					throw new Error('Unexpected undefined: eventId');
 				}
