@@ -6,23 +6,29 @@
 
 		<div class="details-body region-details-body">
 			<div class="details-content">
-				{{#if region.loc}}
-					<div class="details-map">
-						{{> map markers=markers maxZoom=16}}
-						<div class="coordinates">
-							{{i18n 'regionDetails.coordinates' 'Coordinates:'}}
-							{{locationDisplay region.loc}}
-						</div>
+				<div class="row">
+					<div class="{{#if region.loc}}col-md-7{{else}}col{{/if}}">
+						{{#if region.tz}}
+							<p>
+								<span class="region-property-title">
+									{{i18n 'regionDetails.timezone' 'Timezone:'}}
+								</span>
+								{{region.tz}}
+							</p>
+						{{/if}}
 					</div>
-				{{/if}}
-				{{#if region.tz}}
-					<p>
-						<span class="region-property-title">
-							{{i18n 'regionDetails.timezone' 'Timezone:'}}
-						</span>
-						{{region.tz}}
-					</p>
-				{{/if}}
+					{{#if region.loc}}
+						<div class="col-md-5">
+							<div class="details-map">
+								{{> map markers=markers maxZoom=16}}
+								<div class="coordinates">
+									{{i18n 'regionDetails.coordinates' 'Coordinates:'}}
+									{{locationDisplay region.loc}}
+								</div>
+							</div>
+						</div>
+					{{/if}}
+				</div>
 			</div>
 		</div>
 		{{#if mayEdit}}

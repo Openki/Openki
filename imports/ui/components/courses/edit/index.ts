@@ -75,7 +75,7 @@ export type Data = {
 		instance.busy(false);
 
 		instance.editableDescription = new Editable(
-			false,
+			true,
 			i18n(
 				'course.description.placeholder',
 				'Describe your idea, so more people find it and know what to expect.',
@@ -198,7 +198,7 @@ export type Data = {
 
 		instance.resetFields = () => {
 			instance.$('.js-title').val('');
-			instance.$('.editable-textarea').html('');
+			instance.editableDescription.setText('');
 			instance.state.set('selectedCategories', []);
 			instance.state.set('simpleSelectedRole', 'participant');
 		};

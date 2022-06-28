@@ -12,7 +12,7 @@
 				{{/if}}
 			{{/unless}}
 
-			<div class="edit-page-header event-edit-header">
+			<div class="edit-page-header event-edit">
 				{{#if showRegionTag}}
 					{{> regionTag}}
 				{{/if}}
@@ -83,11 +83,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="edit-page-body event-edit-body">
+			<div class="edit-page-body event-edit">
 				<div class="mb-3">
 					<label
 						   class="form-label">{{i18n 'course.event.edit.desc' 'Description'}}</label>
-					{{> editableTextarea instance.editableDescription}}
+					{{> richtext class="js-event-description" text=description placeholder=(i18n 'event.description.placeholder' 'Describe your event as accurately as possible. This helps people know how to prepare and what to expect from this meeting (e.g. level, prerequisites, activities, teaching methods, what to bring, etc.)') maxlength=PublicSettings.eventDescriptionMax}}
 				</div>
 				{{#unless isPrivate}}
 					{{> pricePolicy dismissable=true wrap='mb-3'}}
@@ -263,7 +263,7 @@
 							</span>
 							<textarea rows="3" class="form-control js-event-add-message"
 									  maxlength="2000"
-									  placeholder="{{i18n 'event.edit.additionalMessage' 'If you feel good about doing so, describe what members of the course should know.' attr=true}}"></textarea>
+									  placeholder="{{i18n 'event.edit.additionalMessage' 'If you feel good about doing so, describe what members of the course should know. (This message is only sent to the interested users and will not be visible in the event description afterwards.)' attr=true}}"></textarea>
 						</div>
 					{{/if}}
 				</div>

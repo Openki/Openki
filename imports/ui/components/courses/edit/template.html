@@ -81,7 +81,7 @@
 					<div class="mb-3">
 						<label
 							   class="form-label">{{i18n 'course.edit.description' 'Description'}}</label>
-						{{> editableTextarea instance.editableDescription}}
+						{{> editable instance.editableDescription}}
 					</div>
 					{{#if hasPricePolicy}}
 						{{> pricePolicy dismissable=true wrap='mb-3'}}
@@ -124,7 +124,7 @@
 									<label
 										   class="form-label">{{i18n 'course.edit.categories' 'Categories'}}</label>
 									{{#if categories}}
-										{{> courseCategories}}
+										{{> courseCategories this}}
 									{{/if}}
 									{{#unless categories}}
 										<div>

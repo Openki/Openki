@@ -1,13 +1,22 @@
 import { DocHead } from 'meteor/kadira:dochead';
 import { Meteor } from 'meteor/meteor';
-import { PublicSettings } from './PublicSettings';
+
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
 function getSiteTitlePrefix() {
 	return `${PublicSettings.siteName}  - `;
 }
 
 function getSiteDefaultImage() {
-	return Meteor.absoluteUrl(`logo/${PublicSettings.ogLogo.src}`);
+	const ogLogo = PublicSettings.ogLogo.src;
+
+	if (ogLogo.startsWith(PublicSettings.s3.publicUrlBase)) {
+		// in our s3 file storage
+		return ogLogo;
+	}
+
+	// in the openki repository folder "public/logo/"
+	return Meteor.absoluteUrl(`logo/${ogLogo}`);
 }
 
 export function removeAll() {

@@ -76,7 +76,7 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 			if (!instance.state?.changed.get()) {
 				return undefined;
 			}
-			return instance.state.simple ? editable.text().trim() : editable.html().trim();
+			return instance.state.multiline ? editable.html().trim() : editable.text().trim();
 		};
 
 		instance.getTotalFocusTimeInSeconds = () => {
@@ -86,16 +86,16 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 		instance.reset = () => {
 			const text = instance.state.text();
 
-			if (instance.state.simple) {
-				editable.text(text);
-			} else {
+			if (instance.state.multiline) {
 				editable.html(text);
+			} else {
+				editable.text(text);
 			}
 
 			// HACK remove placeholder when there is content
 			// We should be using setContent() anyway, but it's not defined?!
 			if (text) {
-				editable.removeClass('medium-editor-placeholder');
+				editable.removeClass('medium-editor-placeholder medium-editor-placeholder-relative');
 			}
 
 			instance.errors.reset();
@@ -136,28 +136,64 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 			}
 		};
 
-		const options: MediumEditor.CoreOptions = {
+		const isRTL = Session.equals('textDirectionality', 'rtl');
+		const align = !isRTL ? 'left' : 'right';
+
+		const meOptions: MediumEditor.CoreOptions = {
+			toolbar: {
+				static: true,
+				sticky: true,
+				stickyTopOffset: 55,
+				align,
+				updateOnEmptySelection: true,
+				// list of supported html tags / formatting. Should be same as in the saneHtml(...) function
+				buttons: ['h4', 'bold', 'italic', 'underline', 'anchor', 'unorderedlist', 'orderedlist'],
+			},
+			disableExtraSpaces: true,
+			disableDoubleReturn: true,
 			placeholder: {
 				hideOnClick: false,
-				text: instance.state.placeholderText,
+				text:
+					instance.state.placeholderText || i18n('richtext.placeholder.default', 'Type your text'),
 			},
 			anchor: {
 				linkValidation: true,
-				placeholderText: i18n('editable.link.placeholder', 'Paste link here…'),
+				placeholderText: i18n('richtext.link.placeholder', 'Paste or type a link'),
 			},
 			autoLink: true,
 			buttonLabels: 'fontawesome',
 		};
-		if (instance.state.simple) {
-			options.disableReturn = true;
-			options.toolbar = false;
+
+		// Make titles translateable
+		const meExtensions = (MediumEditor as any).extensions;
+
+		const meButton = meExtensions.button.prototype.defaults;
+		meButton.h4.aria = i18n('richtext.button.h4.title', 'subheader');
+		meButton.h4.contentFA = '<i class="fa fa-header">';
+		meButton.bold.aria = i18n('richtext.button.bold.title', 'bold');
+		meButton.italic.aria = i18n('richtext.button.italic.title', 'italic');
+		meButton.underline.aria = i18n('richtext.button.underline.title', 'underline');
+		meButton.unorderedlist.aria = i18n('richtext.button.unorderedlist.title', 'unordered list');
+		meButton.orderedlist.aria = i18n('richtext.button.orderedlist.title', 'ordered list');
+
+		meExtensions.anchor.prototype.aria = i18n('richtext.button.anchor.title', 'link');
+
+		if (!instance.state.multiline) {
+			meOptions.disableReturn = true;
+			meOptions.toolbar = false;
 		}
 
 		// Initialize the editor interface
-		instance.editor = new MediumEditor(editable as any, options);
+		// eslint-disable-next-line no-new
+		new MediumEditor(editable[0], meOptions);
 
 		// Register when the field is being edited
 		editable.on('input', () => {
+			// Fix placeholder position on empty after change
+			if (editable.text().length === 0) {
+				editable.html('');
+			}
+
 			changedByUser = true;
 			instance.state.changed.set(true);
 		});
@@ -178,14 +214,25 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 			return instance.state.showControls && instance.state.changed.get();
 		},
 
-		wrapAttrs() {
+		wrapClasses() {
 			const instance = Template.instance();
-			return instance.state.simple ? 'editable-wrap-simple' : 'editable-wrap-rich';
+			return instance.state.multiline ? 'editable-wrap-multiline' : 'editable-wrap-singleline';
 		},
 
-		editableAttrs() {
+		editableClasses() {
 			const instance = Template.instance();
-			return instance.state.changed.get() ? 'editable-changed' : '';
+
+			const classes = [];
+
+			if (instance.state.changed.get()) {
+				classes.push('editable-changed');
+			}
+
+			if (!instance.state.showControls) {
+				classes.push('form-control');
+			}
+
+			return classes.join(' ');
 		},
 	});
 
@@ -234,6 +281,6 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 	});
 }
 
-['editable', 'editableTextarea'].forEach((templateName) => {
+['editable'].forEach((templateName) => {
 	EditableMixing(TemplateAny as any, templateName);
 });

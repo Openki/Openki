@@ -54,6 +54,7 @@
 				, "de": "https://about.openki.net/ueber-uns/spenden/"
 				}
 			},
+		"eventDescriptionMax": 500,
 		"categories": {"sports":
 			[
 				"martialarts",

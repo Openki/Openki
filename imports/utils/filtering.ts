@@ -1,11 +1,23 @@
 import { _ } from 'meteor/underscore';
 import { Tracker } from 'meteor/tracker';
-import { ParamWrapper, Predicate } from './predicates';
+import { ParamWrapper, Predicate } from 'imports/utils/predicates';
 
 export class FilteringReadError {
 	// eslint-disable-next-line no-useless-constructor
 	constructor(public name: string, public message: string) {}
 }
+
+/**
+ * A helper type to get the generic parameter.
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type GetPredicateT1<C extends Predicate<any>> = C extends Predicate<infer T1, infer _T2, infer _T3>
+	? T1
+	: unknown;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type GetPredicateT3<C extends Predicate<any>> = C extends Predicate<infer _T1, infer _T2, infer T3>
+	? T3
+	: unknown;
 
 export class Filtering<T extends { [name: string]: Predicate<any> }> {
 	private _predicates: { [name in keyof T]+?: ReturnType<T[name]> } = {};
@@ -22,19 +34,14 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 		return this;
 	}
 
-	get(name: keyof T) {
+	get<N extends keyof T>(name: N): GetPredicateT1<T[N]> | undefined {
 		if (Tracker.active) {
 			this._dep.depend();
 		}
-
-		const predicate = this._settledPredicates[name];
-		if (!predicate) {
-			return undefined;
-		}
-		return predicate.get();
+		return this._settledPredicates[name]?.get();
 	}
 
-	add(name: keyof T, param: string) {
+	add<N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string) {
 		try {
 			if (!this._availablePredicates[name]) {
 				throw new FilteringReadError('', `No predicate ${name}`);

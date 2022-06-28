@@ -4,6 +4,8 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 
 import { Users } from '/imports/api/users/users';
 
+import { MeteorAsync } from '/imports/utils/promisify';
+
 import '/imports/ui/components/send-message';
 
 import './template.html';
@@ -36,11 +38,11 @@ template.onCreated(function () {
 template.onRendered(function () {
 	const instance = this;
 
-	instance.autorun(() => {
+	instance.autorun(async () => {
 		if (instance.state.get('showModal')) {
-			Meteor.defer(() => {
-				instance.$('.js-participant-contact-modal').modal('show');
-			});
+			await MeteorAsync.defer();
+
+			instance.$('.js-participant-contact-modal').modal('show');
 		}
 	});
 });

@@ -5,6 +5,7 @@ import { Api } from '/imports/Api';
 import FieldOrdering from '/imports/utils/field-ordering';
 import { FilteringReadError } from '/imports/utils/filtering';
 import SortSpec from '/imports/utils/sort-spec';
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 WebApp.rawConnectHandlers.use('/api', (_req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
@@ -70,8 +71,8 @@ Router.route('api.0.json', {
 			delete filter.limit;
 			delete filter.skip;
 
-			const selectedLimit = Number.parseInt(query.limit, 10) || 100;
-			const limit = Math.max(0, Math.min(100, selectedLimit));
+			const selectedLimit = Number.parseInt(query.limit, 10) || 100; // If nothing is specified, 100 enities are returned.
+			const limit = Math.max(0, Math.min(PrivateSettings.apiMaxLimit, selectedLimit));
 			const skip = Number.parseInt(query.skip, 10) || 0;
 			const results = Api[handler](filter, limit, skip, sorting.spec());
 

@@ -123,8 +123,13 @@ Router.route('adminPanel', {
 
 Router.route('calendar', {
 	path: 'calendar',
+	template: 'calendarPage',
 	data() {
-		return this.params;
+		return this.params.query;
+	},
+	async action() {
+		await import('/imports/ui/pages/calendar');
+		this.render();
 	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
@@ -204,7 +209,7 @@ Router.route('frameCourselist', {
 			['regionbg', 'background-color', '.frame-list-item-region'],
 			['regioncolor', 'color', '.frame-list-item-region'],
 		]).getCssRules();
-		const hideInterested = parseInt(this.params.query.hideInterested, 10) || 0;
+		const hideInterested = Number.parseInt(this.params.query.hideInterested, 10) || 0;
 		return { cssRules, hideInterested };
 	},
 	async action() {

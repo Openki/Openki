@@ -202,18 +202,13 @@ template.helpers({
 		// We return a function so the reactive dependency on locationState is
 		// established from within the map template which will call it. The
 		// craziness is strong with this one.
-		return function () {
-			return !location.get().loc;
-		};
+		return () => !location.get().loc;
 	},
 
 	allowRemoving() {
-		const { locationIs } = Template.instance();
-		const { location } = Template.instance();
+		const { locationIs, location } = Template.instance();
 
-		return function () {
-			return locationIs('own') && location.get().loc;
-		};
+		return () => locationIs('own') && !!location.get().loc;
 	},
 
 	hoverClass() {
@@ -265,7 +260,13 @@ template.events({
 			}
 			_.each(found, (foundLocation) => {
 				const marker = {
-					loc: { type: 'Point', coordinates: [foundLocation.lon, foundLocation.lat] },
+					loc: {
+						type: 'Point',
+						coordinates: [
+							Number.parseFloat(foundLocation.lon),
+							Number.parseFloat(foundLocation.lat),
+						],
+					},
 					proposed: true,
 					presetAddress: foundLocation.display_name,
 					name: foundLocation.display_name,
