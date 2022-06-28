@@ -1,9 +1,9 @@
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import $ from 'jquery';
-import { Meteor } from 'meteor/meteor';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import './template.html';
 import './styles.scss';
@@ -22,14 +22,14 @@ template.onCreated(function () {
 	instance.headerTag = 'h3';
 	instance.contentTags = 'p, ul';
 
-	instance.scrollTo = (id) => {
+	instance.scrollTo = async (id) => {
 		const idSelector = `#${decodeURIComponent(id)}`;
 		const targetTitle = instance.$(idSelector);
 		if (targetTitle.length) {
-			Meteor.defer(() => {
-				targetTitle.nextUntil(instance.headerTag).show();
-				$(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
-			});
+			await MeteorAsync.defer();
+
+			targetTitle.nextUntil(instance.headerTag).show();
+			$(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
 		}
 	};
 });

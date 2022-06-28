@@ -37,6 +37,7 @@ const defaults = {
 		de: 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf',
 	},
 	aboutLink: 'https://about.openki.net',
+	eventDescriptionMax: 15000,
 	categories: {},
 };
 
@@ -51,14 +52,26 @@ check(
 	publicSettings,
 	Match.ObjectIncluding({
 		siteName: String,
+		/** The text top left at the logo */
 		siteStage: String,
+		/** Shows a banner saying that this is only for testing */
 		testWarning: Boolean,
+		/** The logo in the top left corner */
 		headerLogo: { src: String, alt: String },
+		/** The logo in the top left corner from the /kiosk/events/ page. */
 		headerLogoKiosk: { src: String, alt: String },
+		/** The default image used for avatars */
 		avatarLogo: { src: String, alt: String },
+		/** The image to be shown in social media */
 		ogLogo: { src: String },
 		emailLogo: String,
-		regionSelection: { minNumber: Number, aboutLink: Match.Maybe(LocalizedValuePattern) },
+		regionSelection: {
+			/** The minimum number of regions displayed in the Regions selection. */
+			minNumber: Number,
+			/** A link to a page that explains regions, if not set then none link is shown. */
+			aboutLink: Match.Maybe(LocalizedValuePattern),
+		},
+		/** A link to a page that give instructions how to translate. */
 		i18nHelpLink: Match.Maybe(LocalizedValuePattern),
 		publicTenants: [String],
 		matomo: Match.Maybe(
@@ -77,13 +90,20 @@ check(
 		),
 		pricePolicyEnabled: Boolean,
 		feature: {
+			/** toggle visibility of login services */
 			login: { google: Boolean, facebook: Boolean, github: Boolean },
 		},
 		footerLinks: [
 			{
 				link: String,
+				/**
+				 * text from the link. The value is a translation key from i18next it must be
+				 * defined in code
+				 */
 				key: Match.Maybe(String),
+				/** text that is shown on hover the link */
 				title_key: Match.Maybe(String),
+				/** as a alternative for "key" */
 				text: Match.Maybe(LocalizedValuePattern),
 			},
 		],
@@ -91,8 +111,10 @@ check(
 		pricePolicyLink: LocalizedValuePattern,
 		courseGuideLink: LocalizedValuePattern,
 		aboutLink: LocalizedValuePattern,
+		/** Contribution to the plattform. */
 		contribution: Match.Maybe({
 			icon: String,
+			/** forbidden chars in username */
 			forbiddenChars: [String],
 			link: LocalizedValuePattern,
 		}) as Match.Matcher<{
@@ -100,7 +122,11 @@ check(
 			forbiddenChars: string[];
 			link: LocalizedValue;
 		}>,
+		/** Max characters allowed for the description-field of events. */
+		eventDescriptionMax: Match.Maybe(Number),
+		/**  Categories for courses, main and/or sub categories */
 		categories: Record([String]),
+		/** file storage */
 		s3: {
 			publicUrlBase: String,
 		},

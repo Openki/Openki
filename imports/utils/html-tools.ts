@@ -26,7 +26,7 @@ export function plainToHtml(text: string) {
 export function saneHtml(unsaneHtml: string): string {
 	// The rel=nofollow is added so that our service is less attractive to forum spam
 	const options = {
-		allowedTags: ['br', 'p', 'b', 'i', 'u', 'a', 'h3', 'h4', 'blockquote', 'ul', 'ol', 'li'],
+		allowedTags: ['br', 'p', 'b', 'i', 'u', 'a', 'h4', 'ul', 'ol', 'li'],
 		allowedAttributes: {
 			a: ['href', 'rel'],
 		},

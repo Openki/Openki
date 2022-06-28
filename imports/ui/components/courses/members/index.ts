@@ -10,7 +10,6 @@ import { CourseMemberEntity, CourseModel } from '/imports/api/courses/courses';
 import { Users } from '/imports/api/users/users';
 
 import { Editable } from '/imports/ui/lib/editable';
-import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/editable';
@@ -44,11 +43,18 @@ import './styles.scss';
 		},
 
 		canNotifyAll() {
-			const course = Template.instance().data;
-			if (!course) {
-				return undefined;
+			const user = Meteor.user();
+
+			if (UserPrivilegeUtils.privileged(user, 'admin')) {
+				return true;
 			}
-			return hasRoleUser(course.members, 'team', Meteor.userId());
+
+			const course = Template.instance().data;
+
+			return !!(
+				course?.userHasRole(user?._id, 'team') ||
+				user?.groups.some((g) => course?.groupOrganizers.includes(g))
+			);
 		},
 
 		ownUserMember() {
@@ -120,7 +126,7 @@ import './styles.scss';
 		instance.subscribe('user', data.member.user);
 
 		instance.editableMessage = new Editable(
-			true,
+			false,
 			i18n('roles.message.placeholder', 'My interests…'),
 			{
 				onSave: async (newMessage) => {

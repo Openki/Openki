@@ -13,7 +13,6 @@ const supportsDragndrop = (function () {
 
 export interface UploadFile {
 	lastModified: Date;
-	name: string;
 	size: number;
 	mimeType: string;
 	/** As BinaryString */
@@ -101,7 +100,6 @@ template.events({
 		reader.onload = () => {
 			instance.data.onUpload({
 				lastModified: new Date(droppedFile.lastModified),
-				name: droppedFile.name,
 				size: droppedFile.size,
 				mimeType: droppedFile.type,
 				content: reader.result as string,

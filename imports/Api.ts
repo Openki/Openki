@@ -75,6 +75,7 @@ export const Api = {
 				start: ev.start,
 				end: ev.end,
 				duration: moment(ev.end).diff(ev.start) / 60000, // Minutes
+				maxParticipants: ev.maxParticipants,
 				link: Router.url('showEvent', ev),
 				internal: ev.internal,
 				room: ev.room,
@@ -87,6 +88,7 @@ export const Api = {
 				start: Date;
 				end: Date;
 				duration: number;
+				maxParticipants: number;
 				link: string;
 				internal: boolean;
 				room: string;
@@ -94,6 +96,7 @@ export const Api = {
 				venue?: {
 					id: string | undefined;
 					name: string | undefined;
+					address: string | undefined;
 					loc: Geodata | undefined;
 					link: string | undefined;
 				};
@@ -101,6 +104,8 @@ export const Api = {
 					id: string;
 					name: string;
 					link: string;
+					image?: string;
+					customFields?: { name: string; value: string }[];
 				};
 				groups: {
 					id: string;
@@ -122,6 +127,7 @@ export const Api = {
 				evr.venue = {
 					id: ev.venue._id,
 					name: ev.venue.name,
+					address: ev.venue.address,
 					loc: ev.venue.loc,
 					link: maybeUrl('venueDetails', ev.venue),
 				};
@@ -134,6 +140,13 @@ export const Api = {
 						id: ev.courseId,
 						name: course.name,
 						link: Router.url('showCourse', course),
+						image: course.publicImageUrl(),
+						customFields: course.customFields
+							?.filter((f) => f.visibleFor === 'all')
+							.map((f) => ({
+								name: f.name,
+								value: f.value,
+							})),
 					};
 				}
 			}
@@ -164,6 +177,13 @@ export const Api = {
 				name: orginalCourse.name,
 				description: orginalCourse.description,
 				link: Router.url('showCourse', orginalCourse),
+				image: orginalCourse.publicImageUrl(),
+				customFields: orginalCourse.customFields
+					?.filter((f) => f.visibleFor === 'all')
+					.map((f) => ({
+						name: f.name,
+						value: f.value,
+					})),
 				internal: orginalCourse.internal,
 				interested: orginalCourse.interested,
 			} as {
@@ -171,6 +191,8 @@ export const Api = {
 				name: string;
 				description: string;
 				link: string;
+				image?: string;
+				customFields?: { name: string; value: string }[];
 				internal: boolean;
 				interested: number;
 				region?: {

@@ -11,6 +11,7 @@ import { LogEntity } from '/imports/api/log/factory';
 import { UserModel, Users } from '/imports/api/users/users';
 
 import * as notificationEvent from '/imports/notification/notification.event';
+import * as notificationRsvp from '/imports/notification/notification.rsvp';
 import * as notificationComment from '/imports/notification/notification.comment';
 import * as notificationJoin from '/imports/notification/notification.join';
 import * as notificationGroupCourse from '/imports/notification/notification.group.course';
@@ -21,6 +22,7 @@ import { PublicSettings } from '/imports/utils/PublicSettings';
 
 export const Notification = {
 	Event: notificationEvent,
+	Rsvp: notificationRsvp,
 	Comment: notificationComment,
 	Join: notificationJoin,
 	'Group.Course': notificationGroupCourse,

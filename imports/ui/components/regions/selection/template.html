@@ -1,5 +1,5 @@
 <template name="regionSelectionWrap">
-	{{#if show}}
+	{{#if hasMultipleRegions}}
 		{{#if Template.subscriptionsReady}}
 			{{#if state 'searchingRegions'}}
 				{{> regionSelection inNavbar=inNavbar}}

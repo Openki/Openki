@@ -1,8 +1,8 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
 .shariff-wrapper {
-	@include td-text-align(right);
 	padding: 15px;
+	text-align: end;
 }
 
 .shariff-wrapper > p {

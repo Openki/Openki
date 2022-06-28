@@ -102,14 +102,14 @@ const helpers: { [name: string]: Function } = {
 		if (!date) {
 			return false;
 		}
-		return toMomentWithTimeLocale(date).format('LL');
+		return toMomentWithTimeLocale(date).format('ll');
 	},
 
 	dateTimeLong(date: moment.MomentInput) {
 		if (!date) {
 			return false;
 		}
-		return toMomentWithTimeLocale(date).format('LLLL');
+		return toMomentWithTimeLocale(date).format('llll');
 	},
 
 	timeFormat(date: moment.MomentInput) {
