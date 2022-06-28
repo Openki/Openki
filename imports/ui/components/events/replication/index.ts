@@ -226,11 +226,7 @@ template.events({
 					replicaEvent.courseId = courseId;
 				}
 
-				// To create a new event, pass an empty Id
-				const eventId = '';
-				const args = { eventId, changes: replicaEvent };
-
-				EventsMethods.save(args)
+				EventsMethods.save('', replicaEvent)
 					.then(() => {
 						removed += 1;
 					})
