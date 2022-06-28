@@ -126,11 +126,11 @@ export type CreateFields = Type<typeof CreateFieldsPattern>;
 
 export type SaveFields = CreateFields & UpdateFields;
 
+/**
+ * @param eventId The event id or to create a new event, pass an empty Id
+ */
 export const save = ServerMethod(
 	'event.save',
-	/**
-	 * @param eventId The event id or to create a new event, pass an empty Id
-	 */
 	(
 		eventId: string,
 		changes: SaveFields,
