@@ -141,6 +141,16 @@ Template.navbar.events({
 			}
 		}
 	},
+
+	'show.bs.collapse .navbar-collapse'(/* event, instance */) {
+		console.log('collapse content show event fired');
+		// make menu icon a cross
+	},
+
+	'hide.bs.collapse .navbar-collapse'(/* event, instance */) {
+		console.log('collapse content hide event fired');
+		// make menu icon menu bars again
+	},
 });
 
 Template.loginButton.helpers({
