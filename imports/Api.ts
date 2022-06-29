@@ -140,7 +140,6 @@ export const Api = {
 						id: ev.courseId,
 						name: course.name,
 						link: Router.url('showCourse', course),
-						image: course.publicImageUrl(),
 						customFields: course.customFields
 							?.filter((f) => f.visibleFor === 'all')
 							.map((f) => ({
@@ -148,6 +147,11 @@ export const Api = {
 								value: f.value,
 							})),
 					};
+
+					const image = course.publicImageUrl();
+					if (image) {
+						evr.course.image = image;
+					}
 				}
 			}
 

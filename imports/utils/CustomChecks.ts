@@ -5,10 +5,13 @@ type PickNotUndefined<T> = {
 	[P in keyof T as Extract<T[P], undefined> extends never ? P : never]: T[P];
 };
 
-/** Make properties that are may be undefined also optional. */
-type UndefinedToOptional<T> = Partial<T> & Pick<T, keyof PickNotUndefined<T>>;
+/** Helper type utility to remove undefined and null from the properties types */
+type RecursiveNonNullable<T> = { [P in keyof T]: NonNullable<T[P]> };
 
-/** Recursive make properties that are may be undefined also optional. */
+/** Make properties that are may be undefined optional. */
+type UndefinedToOptional<T> = RecursiveNonNullable<Partial<T>> & Pick<T, keyof PickNotUndefined<T>>;
+
+/** Recursive make properties that are may be undefined optional. */
 export type RecursiveUndefinedToOptional<T> = UndefinedToOptional<{
 	[P in keyof T]: T[P] extends (infer U)[]
 		? RecursiveUndefinedToOptional<U>[]
@@ -16,6 +19,8 @@ export type RecursiveUndefinedToOptional<T> = UndefinedToOptional<{
 		? RecursiveUndefinedToOptional<T[P]>
 		: T[P] extends object | undefined
 		? RecursiveUndefinedToOptional<T[P]> | undefined
+		: T[P] extends object | undefined | null
+		? RecursiveUndefinedToOptional<T[P]> | undefined | null
 		: T[P];
 }>;
 

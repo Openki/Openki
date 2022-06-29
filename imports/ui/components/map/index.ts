@@ -156,8 +156,8 @@ template.onRendered(function () {
 
 	// Depending on view state, different controls are shown
 	const zoomControl = L.control.zoom({
-		zoomInTitle: i18n('map.zoomInTitle', 'Zoom in'),
-		zoomOutTitle: i18n('map.zoomOutTitle', 'Zoom out'),
+		zoomInTitle: i18n('map.zoomInTitle', 'Zoom in') ?? '',
+		zoomOutTitle: i18n('map.zoomOutTitle', 'Zoom out') ?? '',
 	});
 	const attributionControl = L.control.attribution();
 	const scaleControl = L.control.scale({
@@ -289,7 +289,7 @@ template.onRendered(function () {
 						} else {
 							m = L.marker(latlng, {
 								icon: mainIcon,
-								draggable: mark.draggable,
+								draggable: mark.draggable ?? false,
 							});
 						}
 						// When the marker is clicked, mark it as 'selected' in the collection,

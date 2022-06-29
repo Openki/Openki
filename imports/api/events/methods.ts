@@ -32,7 +32,11 @@ import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
  */
 const ReplicaSync = function (
 	event: EventEntity,
-	updateOptions: { infos?: boolean; time?: boolean; changedReplicas: { time?: boolean } },
+	updateOptions: {
+		infos?: boolean | undefined;
+		time?: boolean | undefined;
+		changedReplicas?: { time?: boolean | undefined } | undefined;
+	},
 ) {
 	let affected = 0;
 
@@ -49,7 +53,7 @@ const ReplicaSync = function (
 			const updateTime =
 				timeIsValid &&
 				updateOptions.time &&
-				(replica.sameTime(event) || updateOptions.changedReplicas.time);
+				(replica.sameTime(event) || updateOptions?.changedReplicas?.time);
 
 			if (updateTime) {
 				const newStartMoment = moment(replica.start).set(startTime);
@@ -124,7 +128,7 @@ export const CreateFieldsPattern = {
 };
 export type CreateFields = Type<typeof CreateFieldsPattern>;
 
-export type SaveFields = CreateFields & UpdateFields;
+export type SaveFields = Partial<CreateFields> & UpdateFields;
 
 /**
  * @param eventId The event id or to create a new event, pass an empty Id
@@ -134,11 +138,11 @@ export const save = ServerMethod(
 	(
 		eventId: string,
 		changes: SaveFields,
-		updateReplicasInfos?: boolean,
-		updateReplicasTime?: boolean,
-		updateChangedReplicasTime?: boolean,
-		sendNotifications?: boolean,
-		comment?: string,
+		updateReplicasInfos?: boolean | null,
+		updateReplicasTime?: boolean | null,
+		updateChangedReplicasTime?: boolean | null,
+		sendNotifications?: boolean | null,
+		comment?: string | null,
 	) => {
 		check(eventId, String);
 
@@ -323,9 +327,9 @@ export const save = ServerMethod(
 
 			if (updateReplicasInfos || updateReplicasTime) {
 				const updateOptions = {
-					infos: updateReplicasInfos,
-					time: updateReplicasTime,
-					changedReplicas: { time: updateChangedReplicasTime },
+					infos: updateReplicasInfos ?? false,
+					time: updateReplicasTime ?? false,
+					changedReplicas: { time: updateChangedReplicasTime ?? false },
 				};
 				const replicaSync = ReplicaSync(event, updateOptions);
 				replicaSync.apply(editFields);
@@ -351,14 +355,17 @@ export const save = ServerMethod(
 					{ NUM: affectedReplicaCount, lng: user.locale },
 				);
 
-				if (comment == null) {
+				if (comment === null || comment === undefined) {
+					// eslint-disable-next-line no-param-reassign
 					comment = affectedReplicaMessage;
 				} else {
+					// eslint-disable-next-line no-param-reassign
 					comment = `${affectedReplicaMessage}\n\n${comment}`;
 				}
 			}
 
-			if (comment != null) {
+			if (comment) {
+				// eslint-disable-next-line no-param-reassign
 				comment = comment.trim().substring(0, 2000).trim();
 			}
 
