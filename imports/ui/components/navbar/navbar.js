@@ -124,7 +124,7 @@ Template.navbar.events({
 		// therefore I think it's easiest to create class "js-is-hidden" in order to keep
 		// track of the state
 		// in html we have the bar icon and the js-is-hidden class as the initial state
-		let myDiv = instance.$('.navbar-collapse');
+		const myDiv = instance.$('.navbar-collapse');
 		if (myDiv.hasClass('js-is-hidden')) {
 			// changes from hidden to visible
 			myDiv.removeClass('js-is-hidden');
