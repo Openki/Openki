@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { Match, check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
 import * as HtmlTools from '/imports/utils/html-tools';

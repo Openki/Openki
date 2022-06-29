@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';

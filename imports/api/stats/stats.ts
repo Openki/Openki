@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { Mongo } from 'meteor/mongo';
 
 import { CourseEntity, CourseModel, Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';

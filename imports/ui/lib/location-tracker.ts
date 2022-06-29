@@ -1,5 +1,5 @@
-import { Geodata, Regions } from '/imports/api/regions/regions';
 import { Mongo } from 'meteor/mongo';
+import { Geodata, Regions } from '/imports/api/regions/regions';
 
 export type PresetMarkerEntity = {
 	preset: true;
