@@ -26,6 +26,7 @@ import * as StringTools from '/imports/utils/string-tools';
 import * as UpdateMethods from '/imports/utils/update-methods';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
+import { GroupPromoters } from '/imports/utils/update-methods';
 
 /**
  * @param updateOptions What should be updated
@@ -426,7 +427,10 @@ export const remove = ServerMethod('event.remove', (eventId: string) => {
  * @param add Whether to add or remove the group
  *
  */
-export const promote = ServerMethod('event.promote', UpdateMethods.promote(Events));
+export const promote = ServerMethod(
+	'event.promote',
+	UpdateMethods.promote(Events as unknown as GroupPromoters),
+);
 
 /**
  * Add or remove a group from the groupOrganizers list
@@ -436,7 +440,10 @@ export const promote = ServerMethod('event.promote', UpdateMethods.promote(Event
  * @param add Whether to add or remove the group
  *
  */
-export const editing = ServerMethod('event.editing', UpdateMethods.editing(Events));
+export const editing = ServerMethod(
+	'event.editing',
+	UpdateMethods.editing(Events as unknown as GroupPromoters),
+);
 
 /**
  * Add current user as event-participant

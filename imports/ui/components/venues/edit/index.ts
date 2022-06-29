@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';

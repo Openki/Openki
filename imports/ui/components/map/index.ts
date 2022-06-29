@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { _ } from 'meteor/underscore';
 import { i18n } from '/imports/startup/both/i18next';
