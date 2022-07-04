@@ -185,7 +185,7 @@ export const FindFilterPattern = {
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
-export class EventsCollection extends Mongo.Collection<EventEntity, EventModel>   {
+export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> {
 	constructor() {
 		super('Events', {
 			transform(event) {
