@@ -16,6 +16,11 @@
 	}
 }
 
+.navbar-default {
+	$logo-height: 49px;
+	height: $logo-height;
+}
+
 .navbar-collapse {
 	@media (max-width: $grid-float-breakpoint) {
 		border-top: 1px solid $navbar-default-border;
