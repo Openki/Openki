@@ -16,9 +16,9 @@
 	}
 }
 
-.navbar-default {
-	$logo-height: 49px;
-	height: $logo-height;
+.navbar-toggle {
+	margin: 0px;
+	margin-right: 22px;
 }
 
 .navbar-collapse {
@@ -286,6 +286,6 @@
 
 .menu-icon {
 	color: white;
-	transform: scale(1.5,1);
-	margin-left: 8px;
+	transform: scale(1.7,1);
+	display: inline-block;
 }
