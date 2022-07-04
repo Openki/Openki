@@ -128,7 +128,7 @@ Template.navbar.events({
 		if (myDiv.hasClass('js-is-hidden')) {
 			// changes from hidden to visible
 			myDiv.removeClass('js-is-hidden');
-			instance.$('.js-toggle-button').html('<i class="fa-solid fa-x menu-icon"></i>');
+			instance.$('.js-toggle-button').html('<i class="fa-solid fa-x cross-icon"></i>');
 		} else {
 			// changes from visible to hidden
 			myDiv.addClass('js-is-hidden');
