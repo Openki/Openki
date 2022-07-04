@@ -17,7 +17,7 @@
 }
 
 .navbar-toggle {
-	margin: 0px;
+	margin: 0;
 	margin-right: 22px;
 }
 
@@ -285,7 +285,7 @@
 }
 
 .menu-icon {
-	color: white;
-	transform: scale(1.7,1);
+	color: $white;
 	display: inline-block;
+	transform: scale(1.7, 1);
 }
