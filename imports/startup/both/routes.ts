@@ -16,6 +16,7 @@ import { Tenant, TenantModel, Tenants } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
 import { Venues, Venue, VenueModel } from '/imports/api/venues/venues';
 import { UserModel, Users } from '/imports/api/users/users';
+import { InvitationEntity, Invitations } from '/imports/api/invitations/invitations';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
@@ -29,7 +30,23 @@ import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Metatags from '/imports/utils/metatags';
 import * as Predicates from '/imports/utils/predicates';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { Invitations } from '/imports/api/invitations/invitations';
+
+interface RouteThis<P extends Record<string, string>, Q extends Record<string, string> | unknown> {
+	params: P & { query: Q };
+}
+
+interface Route<
+	P extends Record<string, string>,
+	Q extends Record<string, string> | unknown = unknown,
+	D = never,
+> {
+	path: string;
+	template: string;
+	waitOn(this: RouteThis<P, Q>): Meteor.SubscriptionHandle[];
+	data(this: RouteThis<P, Q>): D;
+	action(this: { render: () => void }): void;
+	onAfterAction(this: RouteThis<P, Q> & Route<P, Q, D>): void;
+}
 
 function finderRoute(path: string) {
 	return {
@@ -674,20 +691,14 @@ Router.route('tenantCreate', {
 Router.route('tenantDetails', {
 	path: 'tenant/:_id/:short?',
 	template: 'tenantDetailsPage',
-	/**
-	 * @this {{params: {_id: string; slug?: string;}}}
-	 */
 	waitOn() {
 		return [Meteor.subscribe('tenant', this.params._id)];
 	},
-	/**
-	 * @this {{params: {_id: string; slug?: string;}}}
-	 */
 	data() {
 		const tenant = Tenants.findOne({ _id: this.params._id });
 
 		if (!tenant) {
-			return false;
+			return undefined;
 		}
 
 		return { tenant };
@@ -696,33 +707,24 @@ Router.route('tenantDetails', {
 		await import('/imports/ui/pages/tenant-details');
 		this.render();
 	},
-	/**
-	 * @this {{params: {_id: string; slug?: string;}}}
-	 */
 	onAfterAction() {
 		const tenant = Tenants.findOne({ _id: this.params._id });
 		if (tenant) {
 			Metatags.setCommonTags(tenant.name);
 		}
 	},
-});
+} as Route<{ _id: string; slug?: string }, unknown, { tenant: TenantModel } | undefined>);
 
 Router.route('invitation', {
 	path: 'invitation/:token',
 	template: 'invitationPage',
-	/**
-	 * @this {{params: {token: string; query: { tenant: string; }}}}
-	 */
 	waitOn() {
 		return [Meteor.subscribe('invitation', this.params?.query?.tenant, this.params?.token)];
 	},
-	/**
-	 * @this {{params: {token: string; query: { tenant: string; }}}}
-	 */
 	data() {
 		const tenant = Tenants.findOne({ _id: this.params?.query?.tenant });
 		if (!tenant) {
-			return false;
+			return undefined;
 		}
 
 		const invitation = Invitations.findOne({
@@ -730,7 +732,7 @@ Router.route('invitation', {
 			token: this.params?.token,
 		});
 		if (!invitation) {
-			return false;
+			return undefined;
 		}
 
 		return { tenant, invitation };
@@ -739,9 +741,6 @@ Router.route('invitation', {
 		await import('/imports/ui/pages/invitation');
 		this.render();
 	},
-	/**
-	 * @this {{params: {token: string; query: { tenant: string; }}}}
-	 */
 	onAfterAction() {
 		const tenant = Tenants.findOne({ _id: this.params.query.tenant });
 		if (tenant) {
@@ -751,7 +750,7 @@ Router.route('invitation', {
 			Metatags.setCommonTags(title);
 		}
 	},
-});
+} as Route<{ token: string }, { tenant: string }, { tenant: TenantModel; invitation: InvitationEntity } | undefined>);
 
 Router.route('timetable', {
 	path: '/kiosk/timetable',
@@ -982,20 +981,14 @@ Router.route('regionCreate', {
 Router.route('regionDetails', {
 	path: 'region/:_id/:slug?',
 	template: 'regionDetailsPage',
-	/**
-	 * @this {{params: {_id: string; slug?: string;}}}
-	 */
 	waitOn() {
 		return [Meteor.subscribe('regionDetails', this.params._id)];
 	},
-	/**
-	 * @this {{params: {_id: string; slug?: string;}}}
-	 */
 	data() {
 		const region = Regions.findOne(this.params._id);
 
 		if (!region) {
-			return false; // Not found
+			return undefined; // Not found
 		}
 
 		return { region };
@@ -1004,9 +997,6 @@ Router.route('regionDetails', {
 		await import('/imports/ui/pages/region-details');
 		this.render();
 	},
-	/**
-	 * @this {{params: {_id: string; slug?: string;}}}
-	 */
 	onAfterAction() {
 		const region = this.data()?.region;
 
@@ -1016,22 +1006,19 @@ Router.route('regionDetails', {
 
 		Metatags.setCommonTags(region.name);
 	},
-});
+} as Route<{ _id: string; slug?: string }, unknown, { region: RegionModel } | undefined>);
 
 Router.route('venueDetails', {
 	path: 'venue/:_id/:slug?',
 	template: 'venueDetailsPage',
-	/**
-	 * @this {{params: {_id: string; slug?:string;}}}
-	 */
 	waitOn() {
 		return [Meteor.subscribe('venueDetails', this.params._id)];
 	},
 	data() {
 		const id = this.params._id;
 
-		let venue: VenueModel;
-		const data = {};
+		let venue: VenueModel | undefined;
+		const data: { venue: VenueModel } = {};
 		if (id === 'create') {
 			const userId = Meteor.userId();
 			venue = new Venue() as VenueModel;
@@ -1040,7 +1027,7 @@ Router.route('venueDetails', {
 		} else {
 			venue = Venues.findOne({ _id: this.params._id });
 			if (!venue) {
-				return false; // Not found
+				return undefined; // Not found
 			}
 		}
 
@@ -1067,7 +1054,7 @@ Router.route('venueDetails', {
 		}
 		Metatags.setCommonTags(title);
 	},
-});
+} as Route<{ _id: string; slug?: string }, unknown, { venue: VenueModel } | undefined>);
 
 Router.route('venuesMap', {
 	path: 'venues',
