@@ -60,7 +60,7 @@ template.helpers({
 
 		return {
 			style: `
-	background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${src}');
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5)), url('${src}');
 	background-position: center;
 	background-size: cover;`,
 		};
