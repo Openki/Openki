@@ -7,26 +7,21 @@ import { _ } from 'meteor/underscore';
 import moment from 'moment';
 import momentTz from 'moment-timezone';
 
-import { Courses } from '/imports/api/courses/courses';
-import { Events, OEvent } from '/imports/api/events/events';
+import { CourseMemberEntity, CourseModel, Courses } from '/imports/api/courses/courses';
+import { EventEntity, Events, OEvent } from '/imports/api/events/events';
 import { Group, Groups } from '/imports/api/groups/groups';
-import { Region, Regions } from '/imports/api/regions/regions';
-/** @typedef {import('/imports/api/regions/regions').RegionModel} RegionModel */
-/** @typedef {import('/imports/api/tenants/tenants').TenantModel} TenantModel */
+import { Region, RegionModel, Regions } from '/imports/api/regions/regions';
 import { InfoPages } from '/imports/api/infoPages/infoPages';
-import { Tenant, Tenants } from '/imports/api/tenants/tenants';
+import { Tenant, TenantModel, Tenants } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
-import { Venues, Venue } from '/imports/api/venues/venues';
-import { Users } from '/imports/api/users/users';
-/** @typedef {import('/imports/api/venues/venues').VenueModel} VenueModel */
-/** @typedef {import('/imports/api/courses/courses').CourseModel} CourseModel */
-/** @typedef {import('/imports/api/courses/courses').CourseMemberEntity} CourseMemberEntity */
-/** @typedef {import('/imports/api/users/users').UserModel} UserModel */
+import { Venues, Venue, VenueModel } from '/imports/api/venues/venues';
+import { UserModel, Users } from '/imports/api/users/users';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import CourseTemplate from '/imports/ui/lib/course-template';
 import { CssFromQuery } from '/imports/ui/lib/css-from-query';
+import { ProfilePageData } from '/imports/ui/pages/profile';
 
 import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
@@ -36,7 +31,7 @@ import * as Predicates from '/imports/utils/predicates';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { Invitations } from '/imports/api/invitations/invitations';
 
-function finderRoute(path) {
+function finderRoute(path: string) {
 	return {
 		path,
 		template: 'findWrap',
@@ -72,8 +67,7 @@ const makeFilterQuery = function (params) {
 
 	const query = filter.toQuery();
 
-	/** @type {moment.Moment | undefined} */
-	let start;
+	let start: moment.Moment | undefined;
 	if (params.start) {
 		start = moment(params.start);
 	}
@@ -81,8 +75,7 @@ const makeFilterQuery = function (params) {
 		start = moment(reactiveNow.get()).startOf('day');
 	}
 
-	/** @type {moment.Moment | undefined} */
-	let end;
+	let end: moment.Moment | undefined;
 	if (params.end) {
 		end = moment(params.end);
 	}
@@ -95,11 +88,7 @@ const makeFilterQuery = function (params) {
 	return query;
 };
 
-/**
- * @param {CourseModel} course
- * @param {CourseMemberEntity} member
- */
-function loadRoles(course, member) {
+function loadRoles(course: CourseModel, member: CourseMemberEntity) {
 	return Roles.filter((r) => course.roles?.includes(r.type)).map((r) => ({
 		role: r,
 		subscribed: course.userHasRole(Meteor.userId(), r.type),
@@ -479,10 +468,8 @@ Router.route('profile', {
 		];
 	},
 	data() {
-		/** @type {import('/imports/ui/pages/profile').ProfilePageData} */
-		const data = {};
-		/** @type {UserModel | null} */
-		const user = Meteor.user();
+		const data: ProfilePageData = {};
+		const user: UserModel | null = Meteor.user();
 		if (user) {
 			const userdata = {
 				_id: user._id,
@@ -666,10 +653,8 @@ Router.route('tenantCreate', {
 	path: 'tenant/create',
 	template: 'tenantCreatePage',
 	data() {
-		/** @type TenantModel */
-		const tenant = new Tenant();
-		/** @type RegionModel */
-		const region = new Region();
+		const tenant = new Tenant() as TenantModel;
+		const region = new Region() as RegionModel;
 		region.tz = momentTz.tz.guess();
 		return {
 			tenant,
@@ -778,14 +763,8 @@ Router.route('timetable', {
 	data() {
 		const query = makeFilterQuery(this.params.query);
 
-		/**
-		 * @type {moment.MomentInput}
-		 */
-		let start;
-		/**
-		 * @type {moment.MomentInput}
-		 */
-		let end;
+		let start: moment.MomentInput;
+		let end: moment.MomentInput;
 
 		const events = Events.findFilter(query, 200).fetch();
 
@@ -810,14 +789,10 @@ Router.route('timetable', {
 		const timestampEnd = end.toDate().getTime();
 
 		const span = timestampEnd - timestampStart;
-		/**
-		 * @type {{ [day: string]: {moment: moment.Moment, relStart:number, relEnd:number}; } }
-		 */
-		const days = {};
-		/**
-		 * @type {{ [hour: string]: {moment: moment.Moment, relStart:number, relEnd:number}; } }
-		 */
-		const hours = {};
+
+		const days: { [day: string]: { moment: moment.Moment; relStart: number; relEnd: number } } = {};
+		const hours: { [hour: string]: { moment: moment.Moment; relStart: number; relEnd: number } } =
+			{};
 		const cursor = moment(start);
 		do {
 			const month = cursor.month();
@@ -848,10 +823,21 @@ Router.route('timetable', {
 			cursor.add(1, 'hour');
 		} while (cursor.isBefore(end));
 
-		/**
-		 * @type {{[venue:string]: {venue: VenueModel, perRoom: {[room:string]:{room:string,venue:VenueModel,rows:(import('/imports/api/events/events').EventEntity & {relStart: number, relEnd: number})[]}}}}}
-		 */
-		const perVenue = {};
+		const perVenue: {
+			[venue: string]: {
+				venue: VenueModel;
+				perRoom: {
+					[room: string]: {
+						room: string;
+						venue: VenueModel;
+						rows: (EventEntity & {
+							relStart: number;
+							relEnd: number;
+						})[];
+					};
+				};
+			};
+		} = {};
 		const useVenue = function (venue, room) {
 			const id = venue._id || `#${venue.name}`;
 			if (!perVenue[id]) {
@@ -975,8 +961,7 @@ Router.route('regionCreate', {
 	path: 'region/create',
 	template: 'regionDetailsPage',
 	data() {
-		/** @type RegionModel */
-		const region = new Region();
+		const region = new Region() as RegionModel;
 		region.tenant = this.params.query.tenant;
 		region.tz = momentTz.tz.guess();
 		return {
@@ -1045,12 +1030,11 @@ Router.route('venueDetails', {
 	data() {
 		const id = this.params._id;
 
-		/** @type {VenueModel} */
-		let venue;
+		let venue: VenueModel;
 		const data = {};
 		if (id === 'create') {
 			const userId = Meteor.userId();
-			venue = new Venue();
+			venue = new Venue() as VenueModel;
 			venue.region = CleanedRegion(Session.get('region'));
 			venue.editor = userId;
 		} else {
