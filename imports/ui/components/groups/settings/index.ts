@@ -146,7 +146,7 @@ template.events({
 
 	async 'click .js-member-add-btn'(this: { _id: string }) {
 		const memberId = this._id;
-		const groupId = Router.current().params._id;
+		const groupId = Router.current().params._id as string;
 		try {
 			await GroupsMethods.updateMembership(memberId, groupId, true);
 			const memberName = Users.findOne(memberId)?.username;
@@ -164,7 +164,7 @@ template.events({
 
 	async 'click .js-member-remove-btn'() {
 		const memberId = `${this}`;
-		const groupId = Router.current().params._id;
+		const groupId = Router.current().params._id as string;
 		try {
 			await GroupsMethods.updateMembership(memberId, groupId, false);
 			const memberName = Users.findOne(memberId)?.username;

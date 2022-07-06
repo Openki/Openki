@@ -179,7 +179,7 @@ template.onCreated(function () {
 
 		// Count occurences of first few chars in event titles
 		// This helps coloring the events so they're easier to scan.
-		const kinds: any = {};
+		const kinds: Record<string, number> = {};
 
 		// Place found events into the slots
 		dedupedEvents.forEach((originalEvent) => {
@@ -223,13 +223,13 @@ template.onCreated(function () {
 		const numCmp = function (a: number, b: number) {
 			return a - b;
 		};
-		instance.days.set(_.values(days).sort(numCmp));
-		instance.intervals.set(_.values(intervals).sort(numCmp));
+		instance.days.set(Object.values(days).sort(numCmp));
+		instance.intervals.set(Object.values(intervals).sort(numCmp));
 
 		// Build list of most used titles (first few chars)
-		const mostUsedKinds = _.sortBy(_.pairs(kinds), (kv) => -kv[1]);
+		const mostUsedKinds = _.sortBy(Object.entries(kinds), (kv) => -kv[1]);
 		const kindRank = _.object(
-			_.map(mostUsedKinds.slice(0, 15), (kv, rank) => [kv[0], rank + 1]),
+			mostUsedKinds.slice(0, 15).map((kv, rank) => [kv[0], rank + 1]),
 		) as _.Dictionary<number>;
 		instance.kindMap = function (title: string) {
 			const kindId = title.substring(0, 5);

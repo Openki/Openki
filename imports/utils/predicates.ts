@@ -77,7 +77,7 @@ export const ids: Predicate<string[]> = function (param) {
 			},
 		};
 	};
-	return make(_.uniq(param.split(',')));
+	return make([...new Set(param.split(','))]);
 };
 
 export const flag: Predicate<boolean> = function (param) {
