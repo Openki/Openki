@@ -15,9 +15,9 @@ import {
 	FindFilter as EventsFindFilter,
 	OEvent,
 } from '/imports/api/events/events';
-import { Group, GroupModel, Groups } from '/imports/api/groups/groups';
+import { Group, GroupEntity, GroupModel, Groups } from '/imports/api/groups/groups';
 import { Region, RegionModel, Regions } from '/imports/api/regions/regions';
-import { InfoPages } from '/imports/api/infoPages/infoPages';
+import { InfoPages, InfoPagesEntity } from '/imports/api/infoPages/infoPages';
 import { Tenant, TenantModel, Tenants } from '/imports/api/tenants/tenants';
 import { RoleEntity, Roles } from '/imports/api/roles/roles';
 import { Venues, Venue, VenueModel } from '/imports/api/venues/venues';
@@ -28,7 +28,6 @@ import * as Analytics from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import CourseTemplate from '/imports/ui/lib/course-template';
 import { CssFromQuery } from '/imports/ui/lib/css-from-query';
-import { ProfilePageData } from '/imports/ui/pages/profile';
 
 import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
@@ -123,7 +122,7 @@ Router.route('adminPanel', {
 	},
 });
 
-Router.route('calendar', {
+Router.route<Record<string, string>, Record<string, never>, Record<string, string>>('calendar', {
 	path: 'calendar',
 	template: 'calendarPage',
 	data() {
@@ -226,7 +225,7 @@ Router.route<{ cssRules: string[] }, Record<string, never>, Record<string, strin
 	},
 );
 
-Router.route('frameEvents', {
+Router.route<Record<string, string>, Record<string, never>, Record<string, string>>('frameEvents', {
 	path: '/frame/events',
 	template: 'frameEventsPage',
 	layoutTemplate: 'frameLayout',
@@ -309,7 +308,7 @@ Router.route('frameSchedule', {
 	},
 });
 
-Router.route('frameWeek', {
+Router.route<Record<string, string>, Record<string, never>, Record<string, string>>('frameWeek', {
 	path: '/frame/week',
 	template: 'frameWeekPage',
 	layoutTemplate: 'frameLayout',
@@ -454,7 +453,7 @@ Router.route<
 	},
 });
 
-Router.route('log', {
+Router.route<Record<string, string>, Record<string, never>, Record<string, string>>('log', {
 	path: '/log',
 	template: 'logPage',
 	data() {
@@ -480,7 +479,13 @@ Router.route('pages', {
 	},
 });
 
-Router.route('info', {
+Router.route<
+	| undefined
+	| {
+			page: InfoPagesEntity;
+	  },
+	{ page_slug: string }
+>('info', {
 	path: 'info/:page_slug',
 	template: 'infoPage',
 	waitOn() {
@@ -489,7 +494,7 @@ Router.route('info', {
 	data() {
 		const page = InfoPages.findOne({ slug: this.params.page_slug });
 		if (!page) {
-			return false;
+			return undefined;
 		}
 
 		return { page };
@@ -502,7 +507,7 @@ Router.route('info', {
 	},
 });
 
-Router.route('profile', {
+Router.route<any>('profile', {
 	path: 'profile',
 	template: 'profilePage',
 	waitOn() {
@@ -513,7 +518,7 @@ Router.route('profile', {
 		];
 	},
 	data() {
-		const data: ProfilePageData = {};
+		const data: any = {};
 		const user: UserModel | null = Meteor.user();
 		if (user) {
 			const userdata = {
@@ -561,7 +566,14 @@ Router.route('proposeCourse', {
 	data: CourseTemplate,
 });
 
-Router.route('resetPassword', {
+Router.route<
+	{
+		token: string;
+	},
+	{
+		token: string;
+	}
+>('resetPassword', {
 	path: 'reset-password/:token',
 	template: 'resetPasswordPage',
 	async action() {
@@ -699,7 +711,10 @@ Router.route('stats', {
 	},
 });
 
-Router.route('tenantCreate', {
+Router.route<{
+	tenant: TenantModel;
+	region: RegionModel;
+}>('tenantCreate', {
 	path: 'tenant/create',
 	template: 'tenantCreatePage',
 	data() {
@@ -972,7 +987,19 @@ Router.route<
 	},
 });
 
-Router.route('userprofile', {
+Router.route<
+	| undefined
+	| {
+			user: UserModel;
+			alterPrivileges: boolean;
+			privileges: {
+				[role: string]: boolean;
+			};
+			inviteGroups: Mongo.Cursor<GroupEntity, GroupModel>;
+			showPrivileges: number | true;
+	  },
+	{ _id: string }
+>('userprofile', {
 	path: 'user/:_id/:username?',
 	template: 'userprofilePage',
 	waitOn() {
@@ -984,7 +1011,7 @@ Router.route('userprofile', {
 	data() {
 		const user = Users.findOne({ _id: this.params._id });
 		if (!user) {
-			return false; // not loaded?
+			return undefined; // not loaded?
 		}
 
 		// What privileges the user has
