@@ -1,6 +1,5 @@
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
-import { _ } from 'meteor/underscore';
 
 import { Regions } from '/imports/api/regions/regions';
 import { VenueEntity, Venues } from '/imports/api/venues/venues';
@@ -85,17 +84,13 @@ export const save = ServerMethod('venue.save', (venueId: string, changes: SaveFi
 		set.maxWorkplaces = Math.min(1e10, Math.max(0, changes.maxWorkplaces));
 	}
 	if (changes.facilities !== undefined) {
-		set.facilities = _.reduce(
-			changes.facilities,
-			(originalFs: any, f) => {
-				const fs = { ...originalFs };
-				if (Venues.facilityOptions.includes(f)) {
-					fs[f] = true;
-				}
-				return fs;
-			},
-			{},
-		);
+		set.facilities = changes.facilities.reduce((originalFs: any, f) => {
+			const fs = { ...originalFs };
+			if (Venues.facilityOptions.includes(f)) {
+				fs[f] = true;
+			}
+			return fs;
+		}, {});
 	}
 
 	if (changes.otherFacilities) {

@@ -161,8 +161,7 @@ template.onCreated(function () {
 		const separators = instance.separators.get().slice().reverse();
 
 		// List of intervals where events or separators are placed
-		const intervals = _.reduce(
-			separators,
+		const intervals = separators.reduce(
 			(rIntervals: { [separator: number]: number }, separator) => {
 				/* eslint-disable-next-line no-param-reassign */
 				rIntervals[separator] = separator;
@@ -199,7 +198,7 @@ template.onCreated(function () {
 
 			const minuteDiff = eventStart.diff(dayStart, 'minutes');
 			const intervalStart = Math.floor(minuteDiff / interval) * interval;
-			const closestSeparator = _.find(separators, (sep) => sep <= minuteDiff);
+			const closestSeparator = separators.find((sep) => sep <= minuteDiff);
 
 			const mins = Math.max(intervalStart, closestSeparator || 0);
 			intervals[mins] = mins;
@@ -267,21 +266,19 @@ template.helpers({
 	days() {
 		const instance = Template.instance();
 		const scheduleStart = instance.scheduleStart.get();
-		return _.map(instance.days.get(), (day) =>
-			moment(scheduleStart).add(day, 'days').format('dddd'),
-		);
+		return instance.days.get().map((day) => moment(scheduleStart).add(day, 'days').format('dddd'));
 	},
 
 	intervals() {
 		const instance = Template.instance();
 		const slots = instance.slots.get();
 
-		return _.map(instance.intervals.get(), (mins) => {
+		return instance.intervals.get().map((mins) => {
 			const intervalStart = moment().hour(0).minute(mins);
 			return {
 				intervalStart,
 				intervalLabel: intervalStart.format('LT'),
-				slots: _.map(instance.days.get(), (day) => (slots[mins] && slots[mins][day]) || []),
+				slots: instance.days.get().map((day) => (slots[mins] && slots[mins][day]) || []),
 			};
 		});
 	},
