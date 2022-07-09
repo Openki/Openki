@@ -410,7 +410,7 @@ template.events({
 				// in the URL to assign a group to the event on creation
 				const groups = [];
 				if (Router.current().params.query.group) {
-					groups.push(Router.current().params.query.group);
+					groups.push(Router.current().params.query.group as string);
 				}
 				editevent.groups = groups;
 			}

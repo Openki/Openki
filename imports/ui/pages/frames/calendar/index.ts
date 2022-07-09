@@ -37,7 +37,7 @@ import './template.html';
 		instance.pageReady = new ReactiveVar(false);
 
 		const { query } = Router.current().params;
-		instance.limit = new ReactiveVar(parseInt(query.count, 10) || 200);
+		instance.limit = new ReactiveVar(parseInt(query.count || '', 10) || 200);
 
 		let startDate = moment();
 		if (query.start) {
