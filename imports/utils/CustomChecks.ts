@@ -12,7 +12,7 @@ type RecursiveNonNullable<T> = { [P in keyof T]: NonNullable<T[P]> };
 type UndefinedToOptional<T> = RecursiveNonNullable<Partial<T>> & Pick<T, keyof PickNotUndefined<T>>;
 
 /** Recursive make properties that are may be undefined optional. */
-export type RecursiveUndefinedToOptional<T> = UndefinedToOptional<{
+type RecursiveUndefinedToOptional<T> = UndefinedToOptional<{
 	[P in keyof T]: T[P] extends (infer U)[]
 		? RecursiveUndefinedToOptional<U>[]
 		: T[P] extends object
@@ -24,8 +24,11 @@ export type RecursiveUndefinedToOptional<T> = UndefinedToOptional<{
 		: T[P];
 }>;
 
+/** Match.Optional and Match.Maybe behaves diffrent when the pattern is a property of a object or not. */
+type BaseOrObjectMatchHelper<T> = T extends object ? RecursiveUndefinedToOptional<T> : T;
+
 /** Convert a meteor/check Match.Pattern to a typescript type */
-export type Type<T extends Match.Pattern> = RecursiveUndefinedToOptional<Match.PatternMatch<T>>;
+export type Type<T extends Match.Pattern> = BaseOrObjectMatchHelper<Match.PatternMatch<T>>;
 
 export function Tuple<T extends readonly Match.Pattern[]>(...pattern: [...T]) {
 	return Match.Where(function (values) {
