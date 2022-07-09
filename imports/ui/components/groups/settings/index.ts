@@ -117,25 +117,25 @@ template.helpers({
 	},
 
 	kioskEventURL(group: GroupEntity) {
-		return Router.routes.kioskEvents.url({}, { query: { group: group._id } });
+		return Router.url('kioskEvents', {}, { query: { group: group._id } });
 	},
 	timetableURL(group: GroupEntity) {
-		return Router.routes.timetable.url({}, { query: { group: group._id } });
+		return Router.url('timetable', {}, { query: { group: group._id } });
 	},
 	scheduleURL(group: GroupEntity) {
-		return Router.routes.frameSchedule.url({}, { query: { group: group._id } });
+		return Router.url('frameSchedule', {}, { query: { group: group._id } });
 	},
 	frameEventsURL(group: GroupEntity) {
-		return Router.routes.frameEvents.url({}, { query: { group: group._id } });
+		return Router.url('frameEvents', {}, { query: { group: group._id } });
 	},
 	frameWeekURL(group: GroupEntity) {
-		return Router.routes.frameWeek.url({}, { query: { group: group._id } });
+		return Router.url('frameWeek', {}, { query: { group: group._id } });
 	},
 	frameCalendarURL(group: GroupEntity) {
-		return Router.routes.frameCalendar.url({}, { query: { group: group._id } });
+		return Router.url('frameCalendar', {}, { query: { group: group._id } });
 	},
 	frameListURL(group: GroupEntity) {
-		return Router.routes.frameCourselist.url({}, { query: { group: group._id } });
+		return Router.url('frameCourselist', {}, { query: { group: group._id } });
 	},
 });
 
@@ -146,7 +146,7 @@ template.events({
 
 	async 'click .js-member-add-btn'(this: { _id: string }) {
 		const memberId = this._id;
-		const groupId = Router.current().params._id;
+		const groupId = Router.current().params._id as string;
 		try {
 			await GroupsMethods.updateMembership(memberId, groupId, true);
 			const memberName = Users.findOne(memberId)?.username;
@@ -164,7 +164,7 @@ template.events({
 
 	async 'click .js-member-remove-btn'() {
 		const memberId = `${this}`;
-		const groupId = Router.current().params._id;
+		const groupId = Router.current().params._id as string;
 		try {
 			await GroupsMethods.updateMembership(memberId, groupId, false);
 			const memberName = Users.findOne(memberId)?.username;

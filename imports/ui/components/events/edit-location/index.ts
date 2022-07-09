@@ -189,7 +189,7 @@ template.helpers({
 	},
 
 	hostProfileLink() {
-		return Router.url('userprofile', Template.instance().venueEditor.get());
+		return Router.url('userprofile', Template.instance().venueEditor.get() as any);
 	},
 
 	eventMarkers() {

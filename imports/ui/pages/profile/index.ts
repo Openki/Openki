@@ -36,7 +36,7 @@ export interface ProfilePageData {
 		tenants: Mongo.Cursor<TenantEntity, TenantModel>;
 		groups: Mongo.Cursor<GroupEntity>;
 		venues: Mongo.Cursor<VenueEntity, VenueModel>;
-		email: string;
+		email: string | undefined;
 		verified: boolean;
 	};
 }
