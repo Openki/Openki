@@ -55,6 +55,7 @@ $share-services: (
 	'twitter': map-bg(#55acee, #32bbf5),
 	'telegram': map-bg(#08c, #007dbb),
 	'whatsapp': map-bg(#5cbe4a, #34af23),
+	'linkedin': map-bg(#333, #0077b5),
 );
 
 @each $service, $properties in $share-services {
