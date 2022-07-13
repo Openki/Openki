@@ -659,6 +659,7 @@
 	"profile.changePass": "Changer mon mot de passe",
 	"profile.createNewGroup.button": "Créer un nouveau groupe",
 	"profile.createNewVenue.button": "Créer un nouveau lieu",
+	"profile.createNewVenue.linkText": "Définissez un lieu qui est visible aux autres et peut être réutilisé.",
 	"profile.createNewVenue.question": "Êtes-vous le responsable de ce lieu ?",
 	"profile.danger_zone": "Zone dangereuse",
 	"profile.delete.confirm.button": "Supprimer mon utilisateur et tout son profil",
