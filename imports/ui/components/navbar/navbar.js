@@ -119,23 +119,6 @@ Template.navbar.helpers({
 });
 
 Template.navbar.events({
-	'click .js-toggle-button'(event, instance) {
-		// bootstrap navbar-collapse does not use any "hide" or "show" class
-		// therefore I think it's easiest to create class "js-is-hidden" in order to keep
-		// track of the state
-		// in html we have the bar icon and the js-is-hidden class as the initial state
-		const myDiv = instance.$('.navbar-collapse');
-		if (myDiv.hasClass('js-is-hidden')) {
-			// changes from hidden to visible
-			myDiv.removeClass('js-is-hidden');
-			instance.$('.js-toggle-button').html('<i class="fa-solid fa-x cross-icon"></i>');
-		} else {
-			// changes from visible to hidden
-			myDiv.addClass('js-is-hidden');
-			instance.$('.js-toggle-button').html('<i class="fa-solid fa-bars menu-icon"></i>');
-		}
-	},
-
 	'click .js-nav-dropdown-close'(event, instance) {
 		instance.$('.navbar-collapse').collapse('hide');
 	},

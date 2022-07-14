@@ -284,13 +284,16 @@
 	}
 }
 
-.menu-icon {
-	color: $white;
-	//display: inline-block;
+.fa-bars {
 	transform: scale(1.7, 1);
 }
 
-.cross-icon {
-	color: $white;
-	//display: inline-block;
+.navbar-toggle.collapsed .fa-bars,
+.navbar-toggle .fa-x {
+	display: block;
+}
+
+.navbar-toggle .fa-bars,
+.navbar-toggle.collapsed .fa-x {
+	display: none;
 }
