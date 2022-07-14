@@ -8,7 +8,7 @@
 	{{#if subscribed}}
 		<div class="course-role-enrolled">
 			<div class="course-role-title">
-				<span class="{{role.icon}} icon fa-fw"></span>&nbsp;
+				<span class="{{role.icon}} text-muted fa-fw"></span>&nbsp;
 				<span>{{roleSubscribed role.type}}</span>
 				<button type="button" class="js-role-unsubscribe-btn btn btn-cancel"
 						name="{{role.type}}">
@@ -52,7 +52,7 @@
 		<div class="course-role{{#if state 'enrolling'}}-enroll{{/if}}">
 			{{#if state 'enrolling'}}
 				<div class="course-role-title-enroll">
-					<span class="{{role.icon}} icon fa-fw" aria-hidden="true"></span>&nbsp;
+					<span class="{{role.icon}} text-muted fa-fw" aria-hidden="true"></span>&nbsp;
 					{{roleSubscribe role.type}}
 				</div>
 				<div class="course-role-enroll-options">
@@ -96,7 +96,8 @@
 					<button type="button"
 							class="btn btn-lg btn-add text-start course-page-btn js-role-enroll-btn"
 							name="participant">
-						<span class="{{role.icon}} icon fa-fw" aria-hidden="true"></span>&nbsp;
+						<span class="{{role.icon}} text-muted fa-fw"
+							  aria-hidden="true"></span>&nbsp;
 						{{roleSubscribe role.type}}
 					</button>
 				{{/if}}
