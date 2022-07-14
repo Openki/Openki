@@ -16,6 +16,11 @@
 	}
 }
 
+.navbar-toggle {
+	margin: 0;
+	margin-right: 22px;
+}
+
 .navbar-collapse {
 	@media (max-width: $grid-float-breakpoint) {
 		border-top: 1px solid $navbar-default-border;
@@ -277,4 +282,15 @@
 	@media (max-width: $grid-float-breakpoint) {
 		position: initial;
 	}
+}
+
+.menu-icon {
+	color: $white;
+	//display: inline-block;
+	transform: scale(1.7, 1);
+}
+
+.cross-icon {
+	color: $white;
+	//display: inline-block;
 }
