@@ -56,6 +56,7 @@
 						</a>
 					</li>
 					{{#if state 'showAllRegions'}}
+						<!-- hier kommt die lange Auswahl, was im Cursor allRegions-->
 						{{#each region in allRegions}}
 							{{> regionSelectionItem region}}
 						{{/each}}
@@ -71,7 +72,8 @@
 							</li>
 						{{/if}}
 					{{else}}
-						{{#each region in mostActiveRegions}}
+						<!-- hier kommt die kurze Auswahl: notAllRegions-->
+						{{#each region in notAllRegions}}
 							{{> regionSelectionItem region}}
 						{{/each}}
 						{{#if hasMoreRegions}}
