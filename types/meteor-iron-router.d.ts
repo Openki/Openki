@@ -70,7 +70,12 @@ declare module 'meteor/iron:router' {
 			 * Subscriptions or other things we want to "wait" on. This also
 			 * automatically uses the loading hook.
 			 */
-			waitOn?: (this: RouteThis<P, Q>) => Meteor.SubscriptionHandle | Meteor.SubscriptionHandle[];
+			waitOn?: (
+				this: RouteThis<P, Q>,
+			) =>
+				| Meteor.SubscriptionHandle
+				| (() => boolean)
+				| (Meteor.SubscriptionHandle | (() => boolean))[];
 
 			notFoundTemplate?: string;
 
