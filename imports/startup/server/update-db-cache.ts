@@ -37,6 +37,7 @@ function updateDbCacheFields() {
 	// On startup do a full scan to catch stragglers
 	Meteor.call('course.updateNextEvent', {}, AsyncTools.logErrors);
 	Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
+	Meteor.call('egion.updatePrivateFields', {}, AsyncTools.logErrors);
 	Meteor.setInterval(
 		() => {
 			// Update nextEvent for courses where it expired

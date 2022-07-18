@@ -102,6 +102,7 @@ import './styles.scss';
 		this.minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
 
 		this.regions = (options = {}) => {
+			
 			const query: Mongo.Selector<RegionEntity> = {};
 
 			if (typeof options.active === 'boolean') {
@@ -113,10 +114,16 @@ import './styles.scss';
 				query.name = new RegExp(search, 'i');
 			}
 
-			return Regions.find(query, {
-				sort: { futureEventCount: -1, courseCount: -1, name: 1 },
+			const cursor: Mongo.Cursor<RegionEntity, RegionModel> = Regions.find(query, {
+				sort: { private: -1, futureEventCount: -1, courseCount: -1, name: 1 },
 				limit: options.limit,
 			});
+
+			console.log("options are: ", options);
+
+			cursor.forEach(element => console.log(element));
+
+			return cursor;
 		};
 
 		this.changeRegion = (regionId) => {
@@ -173,22 +180,6 @@ import './styles.scss';
 				.reduce((acc, region) => acc + region.futureEventCount, 0);
 		},
 
-		mostActiveRegions() {
-			const minNumber = Template.instance().minNumberOfRegionInSelection;
-
-			const allActiveRegions = Template.instance().regions({ active: true });
-
-			if (allActiveRegions.count() >= minNumber) return allActiveRegions;
-
-			// Query more to have a min Number of regions
-			const someInactiveRegions = Template.instance().regions({
-				active: false,
-				limit: minNumber - allActiveRegions.count(),
-			});
-
-			return [...allActiveRegions.fetch(), ...someInactiveRegions.fetch()];
-		},
-
 		hasMoreRegions() {
 			const minNumber = Template.instance().minNumberOfRegionInSelection;
 
@@ -202,6 +193,12 @@ import './styles.scss';
 
 		allRegions() {
 			return Template.instance().regions();
+		},
+
+		notAllRegions() {
+			const instance = Template.instance();
+			const minNumber = instance.minNumberOfRegionInSelection;
+			return instance.regions({ active: true, limit: minNumber });
 		},
 
 		aboutLink() {
