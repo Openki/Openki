@@ -79,7 +79,7 @@ import './styles.scss';
 			regions: (options?: {
 				active?: boolean;
 				limit?: number;
-			}) => Mongo.Cursor<RegionEntity, RegionModel>;
+			}) => RegionEntity[];
 			changeRegion: (regionId: string) => void;
 			close: () => void;
 		}
@@ -102,28 +102,68 @@ import './styles.scss';
 		this.minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
 
 		this.regions = (options = {}) => {
+
+			/*
+			first query the selected one
+			then do the rest of the query: without selected one, so that filtering don't exclude the currently selected region
+			put the two together
+			*/
+
+			const returnedArray: RegionEntity[] = [];
 			
-			const query: Mongo.Selector<RegionEntity> = {};
+			let query: Mongo.Selector<RegionEntity> = {};
+
+			// independently of any query options, currentRegion ist the currently selected region
+			const currentRegion: RegionEntity | undefined = Regions.currentRegion();
+
+			let currentId: Mongo.FieldExpression<string> = "" as Mongo.FieldExpression<string>;
+			// currentId is "" if no region is currently selected
+			if ( currentRegion ) { currentId = currentRegion._id as Mongo.FieldExpression<string>; }
 
 			if (typeof options.active === 'boolean') {
-				query.futureEventCount = options.active ? { $gt: 0 } : { $eq: 0 };
+				if ( options.active===true){
+					// find all private and all active public regions except the selected one
+					query = { 
+						_id: {$not: currentId },
+						$or: [ { private: { $eq: true }}, { futureEventCount: { $gt: 0} } ]
+					};
+				} else {
+					// find all private and all passive public regions except the selected one
+					query = {
+						_id: {$not: currentId },
+						$or: [ { private: { $eq: true }}, { futureEventCount: { $eq: 0} } ]
+					};
+				}
+			} else {
+				// if no active option is passed: exclude the selected region
+				query = { _id: {$not: currentId } };
 			}
-
+			
+			// in case the user is searching a region, only potential results are included
 			const search = this.state.get('search');
 			if (search && search !== '') {
 				query.name = new RegExp(search, 'i');
 			}
 
-			const cursor: Mongo.Cursor<RegionEntity, RegionModel> = Regions.find(query, {
+
+			const regionArray: RegionModel[] = Regions.find(query, {
 				sort: { private: -1, futureEventCount: -1, courseCount: -1, name: 1 },
 				limit: options.limit,
-			});
+			}).fetch();
 
-			console.log("options are: ", options);
+			if(currentRegion){
+				returnedArray.push(currentRegion);
+				regionArray.forEach( element => returnedArray.push(element));
+				if (typeof options.limit === 'number' && returnedArray.length > options.limit) {
+					// as the currently selected region was not queried, ther could be one too many
+					regionArray.pop();
+				}
+			} else {
+				regionArray.forEach( element => returnedArray.push(element));
+			}
+			console.log("returnedArray is: ", returnedArray);
 
-			cursor.forEach(element => console.log(element));
-
-			return cursor;
+			return returnedArray;
 		};
 
 		this.changeRegion = (regionId) => {
@@ -183,12 +223,11 @@ import './styles.scss';
 		hasMoreRegions() {
 			const minNumber = Template.instance().minNumberOfRegionInSelection;
 
-			const numberOfRegions = Template.instance().regions().count();
+			const numberOfRegions = Template.instance().regions().length;
 
-			return (
-				numberOfRegions > minNumber &&
-				numberOfRegions > Template.instance().regions({ active: true }).count()
-			);
+			console.log("hasMoreRegoins returns: ", numberOfRegions > minNumber);
+
+			return numberOfRegions > minNumber;
 		},
 
 		allRegions() {
@@ -198,11 +237,12 @@ import './styles.scss';
 		notAllRegions() {
 			const instance = Template.instance();
 			const minNumber = instance.minNumberOfRegionInSelection;
-			return instance.regions({ active: true, limit: minNumber });
+			return instance.regions({ limit: minNumber });
 		},
 
 		aboutLink() {
-			return getLocalizedValue(PublicSettings.regionSelection.aboutLink);
+			//return getLocalizedValue(PublicSettings.regionSelection.aboutLink);
+			return "/info/faq#what-is-an-openki-region";
 		},
 	});
 
