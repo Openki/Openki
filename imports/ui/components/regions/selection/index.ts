@@ -76,10 +76,7 @@ import './styles.scss';
 			/**
 			 * Query some regions
 			 */
-			regions: (options?: {
-				active?: boolean;
-				limit?: number;
-			}) => RegionEntity[];
+			regions: (options?: { active?: boolean; limit?: number }) => RegionEntity[];
 			changeRegion: (regionId: string) => void;
 			close: () => void;
 		}
@@ -102,7 +99,6 @@ import './styles.scss';
 		this.minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
 
 		this.regions = (options = {}) => {
-
 			/*
 			first query the selected one
 			then do the rest of the query: without selected one, so that filtering don't exclude the currently selected region
@@ -110,58 +106,59 @@ import './styles.scss';
 			*/
 
 			const returnedArray: RegionEntity[] = [];
-			
+
 			let query: Mongo.Selector<RegionEntity> = {};
 
 			// independently of any query options, currentRegion ist the currently selected region
 			const currentRegion: RegionEntity | undefined = Regions.currentRegion();
 
-			let currentId: Mongo.FieldExpression<string> = "" as Mongo.FieldExpression<string>;
+			let currentId: Mongo.FieldExpression<string> = '' as Mongo.FieldExpression<string>;
 			// currentId is "" if no region is currently selected
-			if ( currentRegion ) { currentId = currentRegion._id as Mongo.FieldExpression<string>; }
+			if (currentRegion) {
+				currentId = currentRegion._id as Mongo.FieldExpression<string>;
+			}
 
 			if (typeof options.active === 'boolean') {
-				if ( options.active===true){
+				if (options.active === true) {
 					// find all private and all active public regions except the selected one
-					query = { 
-						_id: {$not: currentId },
-						$or: [ { private: { $eq: true }}, { futureEventCount: { $gt: 0} } ]
+					query = {
+						_id: { $not: currentId },
+						$or: [{ private: { $eq: true } }, { futureEventCount: { $gt: 0 } }],
 					};
 				} else {
 					// find all private and all passive public regions except the selected one
 					query = {
-						_id: {$not: currentId },
-						$or: [ { private: { $eq: true }}, { futureEventCount: { $eq: 0} } ]
+						_id: { $not: currentId },
+						$or: [{ private: { $eq: true } }, { futureEventCount: { $eq: 0 } }],
 					};
 				}
 			} else {
 				// if no active option is passed: exclude the selected region
-				query = { _id: {$not: currentId } };
+				query = { _id: { $not: currentId } };
 			}
-			
+
 			// in case the user is searching a region, only potential results are included
 			const search = this.state.get('search');
 			if (search && search !== '') {
 				query.name = new RegExp(search, 'i');
 			}
 
-
 			const regionArray: RegionModel[] = Regions.find(query, {
 				sort: { private: -1, futureEventCount: -1, courseCount: -1, name: 1 },
 				limit: options.limit,
 			}).fetch();
 
-			if(currentRegion){
+			if (currentRegion) {
 				returnedArray.push(currentRegion);
-				regionArray.forEach( element => returnedArray.push(element));
+				regionArray.forEach((element) => returnedArray.push(element));
 				if (typeof options.limit === 'number' && returnedArray.length > options.limit) {
 					// as the currently selected region was not queried, ther could be one too many
 					regionArray.pop();
 				}
 			} else {
-				regionArray.forEach( element => returnedArray.push(element));
+				regionArray.forEach((element) => returnedArray.push(element));
 			}
-			console.log("returnedArray is: ", returnedArray);
+			console.log('returnedArray is: ', returnedArray);
 
 			return returnedArray;
 		};
@@ -225,7 +222,7 @@ import './styles.scss';
 
 			const numberOfRegions = Template.instance().regions().length;
 
-			console.log("hasMoreRegoins returns: ", numberOfRegions > minNumber);
+			console.log('hasMoreRegoins returns: ', numberOfRegions > minNumber);
 
 			return numberOfRegions > minNumber;
 		},
@@ -241,8 +238,7 @@ import './styles.scss';
 		},
 
 		aboutLink() {
-			//return getLocalizedValue(PublicSettings.regionSelection.aboutLink);
-			return "/info/faq#what-is-an-openki-region";
+			return getLocalizedValue(PublicSettings.regionSelection.aboutLink);
 		},
 	});
 
@@ -284,7 +280,7 @@ import './styles.scss';
 			instance.$('.js-region-search').trigger('focusout');
 			instance.$('.dropdown-toggle').dropdown('hide');
 			if (!instance.state.equals('search', '')) {
-				const selectedRegion = instance.regions().fetch()[0];
+				const selectedRegion = instance.regions()[0];
 				if (selectedRegion) {
 					instance.changeRegion(selectedRegion._id);
 				} else {
