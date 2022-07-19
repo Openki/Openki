@@ -6,12 +6,13 @@ export function route<
 	D = never,
 	P extends Record<string, string> = Record<string, never>,
 	Q extends Record<string, string> | unknown = unknown,
+	T extends Record<string, unknown> = Record<string, never>,
 >(
 	pathOrRouteName: string,
-	options: Router.RouteOptions<D, P, Q> & { onRun?: () => Promise<unknown> },
+	options: Router.RouteOptions<D, P, Q, T> & { onRun?: () => Promise<unknown> },
 ) {
 	if (!options.onRun) {
-		Router.route<D, P, Q>(pathOrRouteName, options);
+		Router.route<D, P, Q, T>(pathOrRouteName, options);
 		return;
 	}
 
@@ -59,9 +60,9 @@ export function route<
 					};
 			  },
 		...options,
-	};
+	} as Router.RouteOptions<D, P, Q, T>;
 
-	Router.route<D, P, Q>(pathOrRouteName, newOptions);
+	Router.route<D, P, Q, T>(pathOrRouteName, newOptions);
 }
 
 export default route;
