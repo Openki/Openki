@@ -194,15 +194,13 @@ Meteor.methods({
 });
 
 Meteor.methods({
-	'region.updatePrivateFields'(){
-		// called at server startup; needs to be called each time the publicSettings 
+	'region.updatePrivateFields'() {
+		// called at server startup; needs to be called each time the publicSettings
 		// (publicTenants member) is modified -> which happens manually?
 		const allRegions: Mongo.Cursor<RegionEntity, RegionModel> = Regions.find();
-			allRegions.forEach((element) => {
-					Regions.upsert({_id: element._id}, {$set: {private:element.isPrivate()}}); 
-					console.log(element.name, " has attribute private = ", element.private);
-				}
-			)
-	}
-
+		allRegions.forEach((element) => {
+			Regions.upsert({ _id: element._id }, { $set: { private: element.isPrivate() } });
+			console.log(element.name, ' has attribute private = ', element.private);
+		});
+	},
 });

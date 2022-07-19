@@ -17,7 +17,8 @@
 				 class="input-group input-group-outline {{#if isSplash}}is-splash{{else}}input-group-sm p-2 mt-2{{/if}}">
 				<span class="input-group-text"><span class="fa-regular fa-circle-dot fa-fw"
 						  aria-hidden="true"></span></span>
-				<input class="form-control js-region-search {{#if currentRegionName}} region-selection-font-weight-bold {{/if}}" type="text"
+				<input class="form-control js-region-search {{#if currentRegionName}} region-selection-font-weight-bold {{/if}}"
+					   type="text"
 					   value="{{#if currentRegionName}}{{currentRegionName}}{{else}}{{i18n 'menue.All regions' 'All regions'}}{{/if}}">
 				<input class="d-none" type="submit">
 				<button class="btn dropdown-toggle" data-bs-toggle="dropdown" role="button"
@@ -95,8 +96,9 @@
 
 <template name="regionSelectionItem">
 	<li class="{{private}}">
-		<a href="#" class="dropdown-item js-region-link js-nav-dropdown-close  {{#if isCurrentRegion _id}} region-selection-font-weight-bold {{/if}}"
-			title="{{nameEn}}">
+		<a href="#"
+		   class="dropdown-item js-region-link js-nav-dropdown-close  {{#if isCurrentRegion _id}} region-selection-font-weight-bold {{/if}}"
+		   title="{{nameEn}}">
 			<div class="dropdown-addon-right">
 				<span class="badge bg-primary rounded-pill"
 					  title="{{i18n 'regions.courses.title' '{COUNT, plural, =0{no courses} one{one course} other{# courses in} } in {REGION}' COUNT=courseCount REGION=this.name attr=true}}">

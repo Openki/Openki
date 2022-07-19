@@ -78,7 +78,6 @@ export interface RegionEntity {
 export type RegionModel = Region & RegionEntity;
 
 export class Region {
-
 	// possibly not necessary anymore, but of course still used by some methods now -> new issue?
 	isPrivate(this: RegionModel) {
 		return !PublicSettings.publicTenants.includes(this.tenant);
