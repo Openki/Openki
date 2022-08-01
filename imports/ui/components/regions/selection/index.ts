@@ -99,97 +99,40 @@ import './styles.scss';
 
 		this.regions = (options = {}) => {
 
-			//regions will be pushed to this array in the order we need them to be
-			let arrayToBeReturned:RegionModel[] = [];
-
 			// read the current region
-			//const current:RegionModel|undefined = Regions.currentRegion();
+			const currentId: string = Regions.currentRegion()?._id || '';
 
 			// first get all available regions from minimongo
-			
+			let regionsArray = Regions.find().fetch();
 
-			const allRegions = Regions.find().fetch()
-			.sort( region => region.futureEventCount )	//least important filter
-			//.sort( region => region.isPrivate()? 1 : 0 )
-			//.sort( region => region._id === current?._id? 0 : 1 )		//most important filter
-			
-			;
-			console.dir(allRegions);
-			console.log(options);
-			arrayToBeReturned = allRegions;
-			
-			return arrayToBeReturned;
+			// sort in the order we want, least priority first
+			regionsArray
+			.sort( (a, b) => {
+				if(a.courseCount<b.courseCount){return 1;}
+				else {return 0;} // move downwards in list if a<b, otherwise leave list as it is
+			})
+			.sort( (a, b) => {
+				if(a.futureEventCount<b.futureEventCount){return 1;}
+				else {return 0;}
+			})
+			.sort( e => e.isPrivate()? 1:-1)
+			.sort( e => (e._id===currentId)? -1:1);
 
-			/*
-			first query the selected one
-			then do the rest of the query: without selected one, so that filtering don't exclude the currently selected region
-			put the two together
-			*/
-
-			/*
-			const returnedArray: RegionEntity[] = [];
-
-			let query: Mongo.Selector<RegionEntity> = {};
-
-			// independently of any query options, currentRegion ist the currently selected region
-			const currentRegion: RegionEntity | undefined = Regions.currentRegion();
-
-			let currentId: Mongo.FieldExpression<string> = '' as Mongo.FieldExpression<string>;
-			if (currentRegion) {
-				// currentId is '' if no region is currently selected
-				currentId = currentRegion._id as Mongo.FieldExpression<string>;
-			}
-
-			// in case an 'active' option is set: modify the filter accordingly
-			// no option set: active as well as inactive regions are returned
-			if (typeof options.active === 'boolean') {
-				if (options.active === true) {
-					// find all private and all active public regions except the selected one
-					query = {
-						_id: { $not: currentId },
-						$or: [{ private: { $eq: true } }, { futureEventCount: { $gt: 0 } }],
-					};
+			// filter active option
+			if(typeof options.active === 'boolean'){
+				if(options.active === true){
+					regionsArray = [... regionsArray.filter( e => (e.futureEventCount>0))];
 				} else {
-					// find all private and all passive public regions except the selected one
-					query = {
-						_id: { $not: currentId },
-						$or: [{ private: { $eq: true } }, { futureEventCount: { $eq: 0 } }],
-					};
+					regionsArray = [... regionsArray.filter( e => (e.futureEventCount==0))];
 				}
-			} else {
-				// if no active option is passed: exclude the selected region
-				query = { _id: { $not: currentId } };
 			}
 
-			// in case the user is searching a region, only potential results are included
-			const search = this.state.get('search');
-			if (search && search !== '') {
-				query.name = new RegExp(search, 'i');
+			// filter limit option
+			if(options.limit){
+				regionsArray = [ ... regionsArray.slice(0, options.limit)];
 			}
-
-
-			Regions.find().fetch().sort((r)=>r.isPrivate())
-
-			const regionArray: RegionModel[] = Regions.find(query, {
-				sort: { private: -1, futureEventCount: -1, courseCount: -1, name: 1 },
-				limit: options.limit,
-			}).fetch();
-
-			if (currentRegion) {
-				returnedArray.push(currentRegion);
-				regionArray.forEach((element) => returnedArray.push(element));
-				if (typeof options.limit === 'number' && returnedArray.length > options.limit) {
-					// as the currently selected region was not queried, ther could be one too many
-					regionArray.pop();
-				}
-			} else {
-				regionArray.forEach((element) => returnedArray.push(element));
-			}
-			console.log('returnedArray is: ', returnedArray);
-
-			return returnedArray;
-
-			*/
+			
+			return regionsArray;
 		};
 
 		this.changeRegion = (regionId) => {

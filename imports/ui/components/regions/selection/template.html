@@ -51,9 +51,10 @@
 								</span>
 							</div>
 							{{#if isCurrentRegion 'all'}}
-								<span class="checkmark fa-solid fa-check fw-bold"></span>
+								<span class="checkmark fa-solid fa-check"></span>
+								<span class="fw-bold">{{i18n 'menue.All regions' 'All regions'}}</span>
+							{{else}} {{i18n 'menue.All regions' 'All regions'}}
 							{{/if}}
-							{{i18n 'menue.All regions' 'All regions'}}
 						</a>
 					</li>
 					{{#if state 'showAllRegions'}}
