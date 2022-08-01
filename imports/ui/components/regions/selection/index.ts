@@ -98,7 +98,6 @@ import './styles.scss';
 		this.minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
 
 		this.regions = (options = {}) => {
-
 			// read the current region
 			const currentId: string = Regions.currentRegion()?._id || '';
 
@@ -107,31 +106,36 @@ import './styles.scss';
 
 			// sort in the order we want, least priority first
 			regionsArray
-			.sort( (a, b) => {
-				if(a.courseCount<b.courseCount){return 1;}
-				else {return 0;} // move downwards in list if a<b, otherwise leave list as it is
-			})
-			.sort( (a, b) => {
-				if(a.futureEventCount<b.futureEventCount){return 1;}
-				else {return 0;}
-			})
-			.sort( e => e.isPrivate()? 1:-1)
-			.sort( e => (e._id===currentId)? -1:1);
+				.sort((a, b) => {
+					if (a.courseCount < b.courseCount) {
+						return 1;
+					}
+					return 0;
+					// move downwards in list if a<b, otherwise leave list as it is
+				})
+				.sort((a, b) => {
+					if (a.futureEventCount < b.futureEventCount) {
+						return 1;
+					}
+					return 0;
+				})
+				.sort((e) => (e.isPrivate() ? 1 : -1))
+				.sort((e) => (e._id === currentId ? -1 : 1));
 
 			// filter active option
-			if(typeof options.active === 'boolean'){
-				if(options.active === true){
-					regionsArray = [... regionsArray.filter( e => (e.futureEventCount>0))];
+			if (typeof options.active === 'boolean') {
+				if (options.active === true) {
+					regionsArray = [...regionsArray.filter((e) => e.futureEventCount > 0)];
 				} else {
-					regionsArray = [... regionsArray.filter( e => (e.futureEventCount==0))];
+					regionsArray = [...regionsArray.filter((e) => e.futureEventCount == 0)];
 				}
 			}
 
 			// filter limit option
-			if(options.limit){
-				regionsArray = [ ... regionsArray.slice(0, options.limit)];
+			if (options.limit) {
+				regionsArray = [...regionsArray.slice(0, options.limit)];
 			}
-			
+
 			return regionsArray;
 		};
 
