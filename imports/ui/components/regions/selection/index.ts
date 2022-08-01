@@ -1,4 +1,3 @@
-import { Mongo } from 'meteor/mongo';
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
@@ -99,12 +98,35 @@ import './styles.scss';
 		this.minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
 
 		this.regions = (options = {}) => {
+
+			//regions will be pushed to this array in the order we need them to be
+			let arrayToBeReturned:RegionModel[] = [];
+
+			// read the current region
+			//const current:RegionModel|undefined = Regions.currentRegion();
+
+			// first get all available regions from minimongo
+			
+
+			const allRegions = Regions.find().fetch()
+			.sort( region => region.futureEventCount )	//least important filter
+			//.sort( region => region.isPrivate()? 1 : 0 )
+			//.sort( region => region._id === current?._id? 0 : 1 )		//most important filter
+			
+			;
+			console.dir(allRegions);
+			console.log(options);
+			arrayToBeReturned = allRegions;
+			
+			return arrayToBeReturned;
+
 			/*
 			first query the selected one
 			then do the rest of the query: without selected one, so that filtering don't exclude the currently selected region
 			put the two together
 			*/
 
+			/*
 			const returnedArray: RegionEntity[] = [];
 
 			let query: Mongo.Selector<RegionEntity> = {};
@@ -113,11 +135,13 @@ import './styles.scss';
 			const currentRegion: RegionEntity | undefined = Regions.currentRegion();
 
 			let currentId: Mongo.FieldExpression<string> = '' as Mongo.FieldExpression<string>;
-			// currentId is "" if no region is currently selected
 			if (currentRegion) {
+				// currentId is '' if no region is currently selected
 				currentId = currentRegion._id as Mongo.FieldExpression<string>;
 			}
 
+			// in case an 'active' option is set: modify the filter accordingly
+			// no option set: active as well as inactive regions are returned
 			if (typeof options.active === 'boolean') {
 				if (options.active === true) {
 					// find all private and all active public regions except the selected one
@@ -143,6 +167,9 @@ import './styles.scss';
 				query.name = new RegExp(search, 'i');
 			}
 
+
+			Regions.find().fetch().sort((r)=>r.isPrivate())
+
 			const regionArray: RegionModel[] = Regions.find(query, {
 				sort: { private: -1, futureEventCount: -1, courseCount: -1, name: 1 },
 				limit: options.limit,
@@ -161,6 +188,8 @@ import './styles.scss';
 			console.log('returnedArray is: ', returnedArray);
 
 			return returnedArray;
+
+			*/
 		};
 
 		this.changeRegion = (regionId) => {
@@ -221,8 +250,6 @@ import './styles.scss';
 			const minNumber = Template.instance().minNumberOfRegionInSelection;
 
 			const numberOfRegions = Template.instance().regions().length;
-
-			console.log('hasMoreRegoins returns: ', numberOfRegions > minNumber);
 
 			return numberOfRegions > minNumber;
 		},

@@ -26,6 +26,7 @@ export interface OnSaveFields {
 	name: string;
 	tz: string;
 	loc: Geodata;
+	private: boolean;
 }
 
 {

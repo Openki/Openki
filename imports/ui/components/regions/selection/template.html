@@ -51,13 +51,13 @@
 								</span>
 							</div>
 							{{#if isCurrentRegion 'all'}}
-								<span class="checkmark fa-solid fa-check"></span>
+								<span class="checkmark fa-solid fa-check fw-bold"></span>
 							{{/if}}
 							{{i18n 'menue.All regions' 'All regions'}}
 						</a>
 					</li>
 					{{#if state 'showAllRegions'}}
-						<!-- hier kommt die lange Auswahl, was im Cursor allRegions-->
+						{{! <!-- here follows the "long" version, all regions that the user has access to --> }}
 						{{#each region in allRegions}}
 							{{> regionSelectionItem region}}
 						{{/each}}
@@ -73,7 +73,7 @@
 							</li>
 						{{/if}}
 					{{else}}
-						<!-- hier kommt die kurze Auswahl: notAllRegions-->
+					{{! <!--here follows the "short" version, only some regions are shown--> }} 
 						{{#each region in notAllRegions}}
 							{{> regionSelectionItem region}}
 						{{/each}}
@@ -97,7 +97,7 @@
 <template name="regionSelectionItem">
 	<li class="{{private}}">
 		<a href="#"
-		   class="dropdown-item js-region-link js-nav-dropdown-close  {{#if isCurrentRegion _id}} region-selection-font-weight-bold {{/if}}"
+		   class="dropdown-item js-region-link js-nav-dropdown-close {{#if isCurrentRegion _id}}fw-bold{{/if}}"
 		   title="{{nameEn}}">
 			<div class="dropdown-addon-right">
 				<span class="badge bg-primary rounded-pill"
