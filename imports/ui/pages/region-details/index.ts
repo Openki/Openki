@@ -54,9 +54,6 @@ template.helpers({
 			region,
 			title: i18n('region.edit.titleCreate', 'Create new region'),
 			async onSave(changes) {
-				// check if region must be private before creating database entry
-				changes.private = !!region.isPrivate();
-
 				const regionId = await RegionsMethods.create({ tenant: region.tenant, ...changes });
 
 				Router.go('regionDetails', { _id: regionId });

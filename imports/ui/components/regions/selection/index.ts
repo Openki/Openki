@@ -101,8 +101,14 @@ import './styles.scss';
 			// read the current region
 			const currentId: string = Regions.currentRegion()?._id || '';
 
-			// first get all available regions from minimongo
-			let regionsArray = Regions.find().fetch();
+			// prepare for query
+			const query: Mongo.Selector<RegionEntity> = {};
+			const search = this.state.get('search');
+			if (search && search !== '') {
+				query.name = new RegExp(search, 'i');
+			}
+			// first get all available regions from minimongo (that are not excluded by search)
+			let regionsArray = Regions.find(query).fetch();
 
 			// sort in the order we want, least priority first
 			regionsArray
