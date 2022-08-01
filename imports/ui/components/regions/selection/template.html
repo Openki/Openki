@@ -17,7 +17,7 @@
 				 class="input-group input-group-outline {{#if isSplash}}is-splash{{else}}input-group-sm p-2 mt-2{{/if}}">
 				<span class="input-group-text"><span class="fa-regular fa-circle-dot fa-fw"
 						  aria-hidden="true"></span></span>
-				<input class="form-control js-region-search {{#if currentRegionName}} region-selection-font-weight-bold {{/if}}"
+				<input class="form-control js-region-search {{#if currentRegionName}} fw-bold {{/if}}"
 					   type="text"
 					   value="{{#if currentRegionName}}{{currentRegionName}}{{else}}{{i18n 'menue.All regions' 'All regions'}}{{/if}}">
 				<input class="d-none" type="submit">
@@ -52,8 +52,7 @@
 							</div>
 							{{#if isCurrentRegion 'all'}}
 								<span class="checkmark fa-solid fa-check"></span>
-								<span
-									  class="fw-bold">{{i18n 'menue.All regions' 'All regions'}}</span>
+								<span class="fw-bold">{{i18n 'menue.All regions' 'All regions'}}</span>
 							{{else}} {{i18n 'menue.All regions' 'All regions'}}
 							{{/if}}
 						</a>
