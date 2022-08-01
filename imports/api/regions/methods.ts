@@ -5,7 +5,7 @@ import { Match, check } from 'meteor/check';
 import { Courses } from '/imports/api/courses/courses';
 import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 import { Events } from '/imports/api/events/events';
-import { RegionEntity, Regions, RegionModel } from './regions';
+import { RegionEntity, Regions } from './regions';
 import { Venues } from '/imports/api/venues/venues';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
@@ -189,18 +189,6 @@ Meteor.methods({
 			}).count();
 
 			Regions.update(regionId, { $set: { courseCount, futureEventCount } });
-		});
-	},
-});
-
-Meteor.methods({
-	'region.updatePrivateFields'() {
-		// called at server startup; needs to be called each time the publicSettings
-		// (publicTenants member) is modified -> which happens manually?
-		const allRegions: Mongo.Cursor<RegionEntity, RegionModel> = Regions.find();
-		allRegions.forEach((element) => {
-			Regions.upsert({ _id: element._id }, { $set: { private: element.isPrivate() } });
-			console.log(element.name, ' has attribute private = ', element.private);
 		});
 	},
 });
