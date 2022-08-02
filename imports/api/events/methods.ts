@@ -544,7 +544,7 @@ Meteor.methods({
 					venue = Venues.findOne(event.venue._id);
 				}
 
-				let update: UpdateFilter<EventEntity> | Partial<EventEntity>;
+				let update: UpdateFilter<EventEntity>;
 				if (venue) {
 					if (event.start < new Date()) {
 						// Do not update venue for historical events
@@ -560,7 +560,7 @@ Meteor.methods({
 							'venue.loc': venue.loc,
 							'venue.editor': venue.editor,
 						},
-					};
+					} as UpdateFilter<EventEntity>;
 				} else {
 					// If the venue vanished from the DB we delete the reference but let the cached fields
 					// live on
