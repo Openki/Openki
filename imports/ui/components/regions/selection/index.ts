@@ -127,13 +127,13 @@ import './styles.scss';
 				})
 				.sort((e) => (e.isPrivate() ? 1 : -1))
 				.sort((e) => (e._id === currentId ? -1 : 1));
-
+				
 			// filter active option
 			if (typeof options.active === 'boolean') {
 				if (options.active === true) {
 					regionsArray = [...regionsArray.filter((e) => e.futureEventCount > 0)];
 				} else {
-					regionsArray = [...regionsArray.filter((e) => e.futureEventCount == 0)];
+					regionsArray = [...regionsArray.filter((e) => e.futureEventCount === 0)];
 				}
 			}
 
