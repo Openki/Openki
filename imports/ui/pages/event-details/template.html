@@ -60,7 +60,7 @@
 							</h4>
 						</div>
 					</div>
-					<div class="page-component">
+					<div class="page-component px-1">
 						<b>
 							{{#unless userRegisteredForEvent}}
 								{{i18n 'event.details.i-participate-no' 'Let it be known you are participating in this event. Your registration is binding.'}}
@@ -69,15 +69,60 @@
 							{{/unless}}
 						</b>
 					</div>
-					<div class="page-component">
+					<div class="page-component px-1 {{#if registerDropdown}}text-bg-secondary{{/if}}">
 						{{#unless userRegisteredForEvent}}
 							{{#if acceptsParticipants}}
-								{{> buttonRegister event="js-register-event"}}
+								{{#unless registerDropdown}}
+									{{> buttonBeforeRegister event="js-before-register-event"}}
+								{{else}}
+									<p>
+										{{i18n 'event.details.want-to-register' 'Do you want to reserve a seat as ROLENAME for the event EVENTTITLE on the DATE?'}}
+										<!--
+										{{i18n
+											'event.details.want-to-register' 
+											'Do you want to reserve a seat as {ROLENAME} for the event {EVENTTITLE} on the {DATE}?'
+											ROLENAME=roleName EVENTTITLE=eventTitle DATE=eventDate
+											attr=true
+										}}
+										-->
+										<!--{{i18n 'regions.allCourses.title'
+										'{COUNT, plural, =0{no courses} one{one course} other{# courses} } on {SITENAME}' COUNT=allCourses SITENAME=siteName attr=true}}"-->
+									</p>
+									<p>
+										<div class="row justify-content-between align-items-center">
+											<div class="col-lg-7">
+												{{> buttonRegister event="js-register-event"}}
+											</div>
+											<div class="col-lg-4">
+												{{> buttonCancel event="w-100 js-register-event-cancel"}}
+											</div>
+										</div>
+									</p>
+								{{/unless}}
 							{{else}}
 								{{> buttonRegistrationClosed}}
 							{{/if}}
 						{{else}}
-							{{> buttonUnregister event="js-unregister-event"}}
+							{{#unless unregisterDropdown}}
+								{{> buttonBeforeUnregister event="js-before-unregister-event"}}
+							{{else}}
+								<p>
+									{{i18n 'event.details.want-to-withdraw' 'Do you want to withdraw your registration for the event EVENTTITLE on the DATE?'}}
+								</p>
+								<p>
+									<div class="row justify content-between align-items-center">
+										<div class="col-lg-7">
+											{{> buttonUnregister event="js-unregister-event"}}
+										</div>
+										<div class="col-lg-4">
+											{{> buttonCancel event="w-100 js-unregister-event-cancel"}}
+										</div>
+									</div>
+								</p>
+								<p>
+									{{i18n 'event.details.youStayEnrolled' 'Note that you will stay enrolled as interested for the course COURSETITLE'}}
+								</p>
+								{{/unless}}
 						{{/unless}}
 					</div>
 				{{/if}}
@@ -310,13 +355,19 @@
 	{{/if}}
 </template>
 
-<template name="buttonRegister">
+<template name="buttonBeforeRegister">
 	<button type="button" class="btn btn-add btn-event {{event}}" {{disabledIfBusy}}>
+		{{i18n 'event.details.reserve-a-seat' 'Reserve a seat'}}
+	</button>
+</template>
+
+<template name="buttonRegister">
+	<button type="button" class="btn btn-add btn-event w-100 {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'registering'}}
 			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n '_button.registering' 'Registering…'}}
 		{{else}}
-			{{i18n 'event.details.register' 'Register'}}
+			{{i18n 'event.details.register-yes' 'Yes'}}
 		{{/if}}
 	</button>
 </template>
@@ -332,13 +383,19 @@
 	</button>
 </template>
 
+<template name="buttonBeforeUnregister">
+	<button type="button" class="btn btn-add btn-event {{event}}" {{disabledIfBusy}}>
+		{{i18n 'event.details.withdraw-registration' 'Withdraw my registration'}}
+	</button>
+</template>
+
 <template name="buttonUnregister">
-	<button type="button" class="btn btn-cancel btn-event {{event}}" {{disabledIfBusy}}>
+	<button type="button" class="btn btn-danger btn-event w-100 {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'unregistering'}}
 			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n '_button.unregistering' 'Unregistering…'}}
 		{{else}}
-			{{i18n 'event.details.unregister' 'Withdraw my registration'}}
+			{{i18n 'event.details.unregister-yes' 'Withdraw'}}
 		{{/if}}
 	</button>
 </template>
