@@ -200,6 +200,8 @@ Router.route('frameCourselist', {
 		const cssRules = new CssFromQuery(this.params.query, [
 			['itembg', 'background-color', '.frame-list-item'],
 			['itemcolor', 'color', '.frame-list-item'],
+			['itemfontweight', 'font-weight', '.frame-list-item-header'],
+			['contentfontweight', 'font-weight', '.frame-list-item-content'],
 			['linkcolor', 'color', '.frame-list-item a'],
 			['regionbg', 'background-color', '.frame-list-item-region'],
 			['regioncolor', 'color', '.frame-list-item-region'],
