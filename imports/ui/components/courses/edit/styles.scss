@@ -23,20 +23,20 @@
 }
 
 .proposed-courses > .dropdown-header {
+	color: #000;
+	font-size: 1.2rem;
+	font-weight: 600;
 	margin-top: 8.5px;
 	text-align: left;
-	color: black;
-	font-weight: 600;
-	font-size: 1.2rem;
 }
 
 .proposed-courses > .dropdown-header > {
 	.fa-regular,
 	.fa-brands,
 	.fa-solid {
-		margin-right: 7px;
-		font-size: 1.5rem;
 		color: $blue;
+		font-size: 1.5rem;
+		margin-right: 7px;
 	}
 }
 
@@ -44,10 +44,10 @@
 	position: relative;
 }
 
-.proposed-courses > button.close-dropdown-button {
-	position: relative;
+.proposed-courses button.close-dropdown-button {
 	left: 50%;
-	transform: translateX(-50%);
 	margin-bottom: 8px;
 	margin-top: 8px;
+	position: relative;
+	transform: translateX(-50%);
 }
