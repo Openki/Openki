@@ -189,7 +189,10 @@ import './styles.scss';
 			return Template.instance().state.get('registerDropdown');
 		},
 		unregisterDropdown() {
-			return Template.instance().state.get('unregisterDropdown');;
+			return Template.instance().state.get('unregisterDropdown');
+		},
+		anyDropdown() {
+			return Template.instance().state.get('unregisterDropdown') || Template.instance().state.get('registerDropdown');
 		},
 	});
 
