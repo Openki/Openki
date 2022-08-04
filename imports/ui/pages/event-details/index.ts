@@ -70,10 +70,11 @@ import './styles.scss';
 	const Template = TemplateAny as TemplateStaticTyped<
 		'event',
 		EventModel,
-		{ editing: ReactiveVar<boolean>;
+		{
+			editing: ReactiveVar<boolean>;
 			addParticipant: () => void;
-			getCourseTitleIfAny: () => String | undefined;
-			state: ReactiveDict<{ registerDropdown: boolean, unregisterDropdown: boolean }>;
+			getCourseTitleIfAny: () => string | undefined;
+			state: ReactiveDict<{ registerDropdown: boolean; unregisterDropdown: boolean }>;
 		}
 	>;
 
@@ -108,8 +109,8 @@ import './styles.scss';
 		};
 
 		instance.getCourseTitleIfAny = () => {
-			if(this.data.courseId){
-				return Courses.findOne({_id: this.data.courseId})?.name;
+			if (this.data.courseId) {
+				return Courses.findOne({ _id: this.data.courseId })?.name;
 			}
 			return undefined;
 		};
@@ -121,7 +122,9 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		userName() {return Meteor.user()?.username || "(not logged in?)";},
+		userName() {
+			return Meteor.user()?.username || i18n('eventDetails.notLoggedIn', '(not logged in?)');
+		},
 
 		eventDate() {
 			const d = String(this.startLocal);
@@ -129,9 +132,7 @@ import './styles.scss';
 		},
 
 		courseTitle() {
-			console.log("helper entered");
 			const a = Template.instance().getCourseTitleIfAny();
-			console.log("getTitle called");
 			return a;
 		},
 
@@ -214,7 +215,10 @@ import './styles.scss';
 			return Template.instance().state.get('unregisterDropdown');
 		},
 		anyDropdown() {
-			return Template.instance().state.get('unregisterDropdown') || Template.instance().state.get('registerDropdown');
+			return (
+				Template.instance().state.get('unregisterDropdown') ||
+				Template.instance().state.get('registerDropdown')
+			);
 		},
 	});
 
