@@ -72,6 +72,7 @@ import './styles.scss';
 		EventModel,
 		{ editing: ReactiveVar<boolean>;
 			addParticipant: () => void;
+			getCourseTitleIfAny: () => String | undefined;
 			state: ReactiveDict<{ registerDropdown: boolean, unregisterDropdown: boolean }>;
 		}
 	>;
@@ -106,6 +107,13 @@ import './styles.scss';
 			});
 		};
 
+		instance.getCourseTitleIfAny = () => {
+			if(this.data.courseId){
+				return Courses.findOne({_id: this.data.courseId})?.name;
+			}
+			return undefined;
+		};
+
 		// register from email
 		if (Router.current().params.query.action === 'register') {
 			this.addParticipant();
@@ -113,6 +121,20 @@ import './styles.scss';
 	});
 
 	template.helpers({
+		userName() {return Meteor.user()?.username || "(not logged in?)";},
+
+		eventDate() {
+			const d = String(this.startLocal);
+			return d.slice(0, d.indexOf('T'));
+		},
+
+		courseTitle() {
+			console.log("helper entered");
+			const a = Template.instance().getCourseTitleIfAny();
+			console.log("getTitle called");
+			return a;
+		},
+
 		eventCourseHeaderAttr(course: CourseModel) {
 			const src = course?.publicImageUrl();
 			if (!src) {
