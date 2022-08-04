@@ -86,10 +86,10 @@
 									</p>
 									<p>
 									<div class="row justify-content-between align-items-center">
-										<div class="col-lg-4">
-											{{> buttonCancel event="w-100 js-register-event-cancel"}}
+										<div class="col-lg-4 d-grid">
+											{{> buttonCancel event="js-register-event-cancel"}}
 										</div>
-										<div class="col-lg-7">
+										<div class="col-lg-7 d-grid">
 											{{> buttonRegister event="js-register-event"}}
 										</div>
 									</div>
@@ -111,10 +111,10 @@
 								</p>
 								<p>
 								<div class="row justify-content-between align-items-center">
-									<div class="col-lg-4">
-										{{> buttonCancel event="w-100 js-unregister-event-cancel"}}
+									<div class="col-lg-4 d-grid">
+										{{> buttonCancel event="js-unregister-event-cancel"}}
 									</div>
-									<div class="col-lg-7">
+									<div class="col-lg-7 d-grid">
 										{{> buttonUnregister event="js-unregister-event"}}
 									</div>
 								</div>
@@ -368,7 +368,7 @@
 </template>
 
 <template name="buttonRegister">
-	<button type="button" class="btn btn-add btn-event text-center w-100 {{event}}"
+	<button type="button" class="btn btn-add btn-event text-center {{event}}"
 			{{disabledIfBusy}}>
 		{{#if busy 'registering'}}
 			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
@@ -397,7 +397,7 @@
 </template>
 
 <template name="buttonUnregister">
-	<button type="button" class="btn btn-danger btn-event text-center w-100 {{event}}"
+	<button type="button" class="btn btn-danger btn-event text-center {{event}}"
 			{{disabledIfBusy}}>
 		{{#if busy 'unregistering'}}
 			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
