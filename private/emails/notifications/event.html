@@ -24,11 +24,10 @@
 				</table>
 			{{/if}}
 
-			<table style="margin: 2em auto; width: 92%;">
+			<table class="event">
 				<tr>
-					<td bgcolor="#c1f2ae" style="padding: 15px;">
-						<a href="{{eventLink}}"
-						   style="color: #333 !important; text-decoration: none !important;">
+					<td class="event-header">
+						<a href="{{eventLink}}">
 							<strong>
 								{{eventDate}}
 								<br />
@@ -45,16 +44,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td height="2px" style="font-size: 2px;">
+					<td class="event-gap">
 					</td>
 				</tr>
 				<tr>
-					<td bgcolor="#d9eaf2" style="padding: 15px;">
-						<p style="font-size: 14px; font-weight: bold;">
+					<td class="event-body">
+						<p class="title">
 							{{event.title}}
-						</p>
-						<p style="font-weight: bold;">
-							{{i18n "notification.event.mail.titleDescription" "Description" lng=locale}}
 						</p>
 						<p>
 							{{{event.description}}}
@@ -62,9 +58,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td width="350" style="padding: 5px; text-align:right;">
-						<a href="{{calLink}}"
-						   style="color: #00f !important; text-decoration: none !important;">
+					<td class="event-link">
+						<a href="{{calLink}}">
 							{{i18n "notification.event.mail.linkCalendar" "Add this event to my calendar" lng=locale}}
 						</a>
 						<br />

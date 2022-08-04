@@ -24,6 +24,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 	{
 		date: moment.Moment;
 		filter: ReturnType<typeof Events['Filtering']>;
+		limit: number;
 		update: () => void;
 	}
 >;
@@ -38,21 +39,43 @@ template.onCreated(function () {
 
 		instance.filter = Events.Filtering().read(data).done();
 
-		instance.date = instance.filter.get('start');
+		const date = instance.filter.get('after') || moment(reactiveNow.get());
 
-		const filterParams = instance.filter.toQuery();
-		filterParams.after = reactiveNow.get();
+		instance.date = date.startOf('day');
 
-		const limit = parseInt(data.count, 10) || DefaultLimit;
+		const filterQuery = instance.filter.toQuery();
 
-		instance.subscribe('Events.findFilter', filterParams, limit * 2);
+		filterQuery.after = instance.date.toDate();
+
+		instance.limit =
+			new Filtering({
+				count: Predicates.integer,
+			})
+				.read(data)
+				.done()
+				.toQuery().count || DefaultLimit;
+
+		instance.subscribe('Events.findFilter', filterQuery, instance.limit + 1);
 	});
 
 	instance.update = () => {
 		const filterParams = instance.filter.toParams() as Record<string, string>;
-		filterParams.count = instance.data.count || DefaultLimit.toString();
-		filterParams.control = '1';
-		filterParams.filterGroups = instance.data.filterGroups || '';
+		filterParams.count = instance.limit.toString();
+		if (instance.data.control) {
+			filterParams.control = instance.data.control;
+		} else {
+			delete filterParams.control;
+		}
+		if (instance.data.hideSwitches) {
+			filterParams.hideSwitches = instance.data.hideSwitches;
+		} else {
+			delete filterParams.hideSwitches;
+		}
+		if (instance.data.filterGroups) {
+			filterParams.filterGroups = instance.data.filterGroups;
+		} else {
+			delete filterParams.filterGroups;
+		}
 		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 		const queryString = UrlTools.paramsToQueryString(filterParams);
 
@@ -65,19 +88,6 @@ template.onCreated(function () {
 	};
 });
 
-template.onRendered(function () {
-	const instance = this;
-
-	this.autorun(() => {
-		// rerun when subscriptions become ready
-		instance.subscriptionsReady();
-		// wait until subtemplates are rendered
-		setTimeout(() => {
-			instance.$('a').attr('target', '_blank');
-		}, 0);
-	});
-});
-
 template.helpers({
 	control() {
 		return Template.instance().data.control === '1';
@@ -86,14 +96,15 @@ template.helpers({
 	calendarNavAttr() {
 		const instance = Template.instance();
 		return {
+			hideSwitches: instance.data.hideSwitches === '1',
 			search: instance.filter.get('search'),
 			onChangeSearch: (newValue: string) => {
 				instance.filter.add('search', newValue).done();
 				instance.update();
 			},
-			date: instance.filter.get('start') || moment(reactiveNow.get()),
+			date: instance.date,
 			onChangeDate: (newDate) => {
-				instance.filter.add('start', newDate.startOf('day').toISOString()).done();
+				instance.filter.add('after', newDate.startOf('day').toISOString()).done();
 				instance.update();
 			},
 			availableGroups: new Filtering({
@@ -125,11 +136,8 @@ template.helpers({
 
 	events() {
 		const instance = Template.instance();
-		const filterParams = instance.filter.toQuery();
-		filterParams.after = reactiveNow.get();
-
-		const limit = parseInt(instance.data.count, 10) || DefaultLimit;
-
-		return Events.findFilter(filterParams, limit);
+		const filterQuery = instance.filter.toQuery();
+		filterQuery.after = instance.date.toDate();
+		return Events.findFilter(filterQuery, instance.limit);
 	},
 });

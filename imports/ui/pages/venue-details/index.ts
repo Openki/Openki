@@ -1,9 +1,9 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Mongo } from 'meteor/mongo';
 
 import { Events, EventModel } from '/imports/api/events/events';
 import { Geodata, RegionModel, Regions } from '/imports/api/regions/regions';

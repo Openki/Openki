@@ -19,8 +19,9 @@ import * as RegionSelection from '/imports/utils/region-selection';
 import './bootstrap';
 
 // close any verification dialogs still open
-Router.onBeforeAction(function (this: any) {
+Router.onBeforeAction(function () {
 	Tooltips.hide();
+	$('.tooltip').attr('style', '');
 
 	Session.set('verify', false);
 

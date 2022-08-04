@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 

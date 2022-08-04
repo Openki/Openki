@@ -27,10 +27,10 @@
 
 .timeline-eventdate {
 	@include ellipsis;
-	@include td-text-align(right);
 	color: rgb(109, 112, 112);
 	height: 20px;
 	padding: 0;
+	text-align: end;
 
 	&.active {
 		color: $gray-800;

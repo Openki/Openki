@@ -91,7 +91,7 @@ template.onCreated(function () {
 		filter.clear().read(query).done();
 
 		if (query.coursesAmount) {
-			const coursesAmount = parseInt(query.coursesAmount, 10);
+			const coursesAmount = Number.parseInt(query.coursesAmount, 10);
 			if (coursesAmount > instance.courseBlockSize) {
 				instance.courseLimit.set(coursesAmount);
 			}
@@ -211,7 +211,10 @@ template.helpers({
 	newCourse() {
 		const instance = Template.instance();
 		const course = CourseTemplate();
-		course.name = instance.filter.get('search');
+		const search = instance.filter.get('search');
+		if (search) {
+			course.name = search;
+		}
 		const groupId = instance.filter.get('group');
 		if (groupId) {
 			course.group = groupId;

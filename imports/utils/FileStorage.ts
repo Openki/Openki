@@ -23,7 +23,6 @@ function createS3Client() {
 }
 
 export const UploadFilePattern = Match.ObjectIncluding({
-	name: String,
 	mimeType: String,
 	/** As BinaryString */
 	content: String,
@@ -48,7 +47,6 @@ export async function upload(directoryName: string, file: UploadFile) {
 		ContentType: file.mimeType,
 		ACL: 'public-read',
 		Body: Buffer.from(file.content, 'binary'),
-		Metadata: { originalName: file.name },
 	};
 
 	await s3.upload(params).promise();

@@ -1,17 +1,20 @@
+import { Mongo } from 'meteor/mongo';
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Meteor } from 'meteor/meteor';
 
 import { RegionEntity, RegionModel, Regions } from '/imports/api/regions/regions';
 
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 
+import { hasMultipleRegions } from '/imports/utils/region-selection';
+
 import * as RegionSelection from '/imports/utils/region-selection';
 import * as StringTools from '/imports/utils/string-tools';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import './template.html';
 import './styles.scss';
@@ -26,15 +29,15 @@ import './styles.scss';
 	const template = Template.regionSelectionWrap;
 
 	template.onCreated(function () {
-		this.subscribe('Regions');
-		this.state = new ReactiveDict();
-		this.state.setDefault('searchingRegions', false);
+		const instance = this;
+
+		instance.subscribe('Regions');
+		instance.state = new ReactiveDict();
+		instance.state.setDefault('searchingRegions', false);
 	});
 
 	template.helpers({
-		show() {
-			return Regions.findFilter({}, 2).count() > 1;
-		},
+		hasMultipleRegions,
 	});
 }
 
@@ -143,12 +146,12 @@ import './styles.scss';
 		};
 	});
 
-	template.onRendered(function () {
-		Meteor.defer(() => {
-			if (!this.data || !this.data.isSplash) {
-				this.$('.js-region-search').trigger('select');
-			}
-		});
+	template.onRendered(async function () {
+		await MeteorAsync.defer();
+
+		if (!this.data || !this.data.isSplash) {
+			this.$('.js-region-search').trigger('select');
+		}
 	});
 
 	template.helpers({
@@ -267,11 +270,11 @@ import './styles.scss';
 			instance.$('.js-region-search').trigger('select');
 		},
 
-		'show.bs.dropdown'(_event, instance) {
+		async 'show.bs.dropdown'(_event, instance) {
 			if (!instance.searchHasFocus) {
-				Meteor.defer(() => {
-					instance.$('.js-region-search').trigger('select');
-				});
+				await MeteorAsync.defer();
+
+				instance.$('.js-region-search').trigger('select');
 			}
 		},
 

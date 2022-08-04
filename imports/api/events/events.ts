@@ -13,6 +13,7 @@ import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
+import * as FileStorage from '/imports/utils/FileStorage';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { FieldSort, FieldSortPattern, Sort } from '/imports/utils/sort-spec';
@@ -96,6 +97,8 @@ export interface EventEntity {
 	start: Date;
 	/** (calculated) date object calculated from endLocal field. */
 	end: Date;
+	/** (calculated) image from the course */
+	courseImage: string;
 }
 
 export type EventModel = OEvent & EventEntity;
@@ -129,24 +132,34 @@ export class OEvent {
 			return timeA.hour() === timeB.hour() && timeA.minute() === timeB.minute();
 		});
 	}
+
+	publicImageUrl(this: EventModel) {
+		if (!this.courseImage) {
+			return undefined;
+		}
+
+		return FileStorage.generatePublicUrl(this.courseImage);
+	}
 }
 
 export const FindFilterPattern = {
 	/** string of words to search for */
 	search: Match.Maybe(String),
-	/** include only events that overlap the given
-	 * period (list of start and end date) */
+	/** include only events that overlap the given period (list of start and end date) */
 	period: Match.Maybe(Tuple<[start: DateConstructor, end: DateConstructor]>(Date, Date)),
-	/** only events that end after this date */
+	/** only events that end after this date (so it also includes ongoning events at this point in time) */
 	start: Match.Maybe(Date),
-	/** only events that ended before this date */
-	before: Match.Maybe(Date),
-	/** only events that are ongoing during this date */
-	ongoing: Match.Maybe(Date),
-	/** only events that started before this date */
-	end: Match.Maybe(Date),
 	/**  only events starting after this date */
 	after: Match.Maybe(Date),
+	/** only events that are ongoing during this date */
+	ongoing: Match.Maybe(Date),
+	/**
+	 * only events that ended before this date, if none "after" is given this also changes the
+	 * order of events
+	 */
+	before: Match.Maybe(Date),
+	/** only events that started before this date, (so it also includes ongoning events at this point in time) */
+	end: Match.Maybe(Date),
 	/** only events at this venue (ID) */
 	venue: Match.Maybe(String),
 	/** only events at this venues (IDs) */
@@ -188,7 +201,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		}
 	}
 
-	insert(event: EventModel, callback?: (err?: unknown, _id?: string) => void) {
+	insert(event: EventEntity, callback?: (err?: unknown, _id?: string) => void) {
 		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
 
 		return super.insert(enrichedEvent, callback);
@@ -207,8 +220,8 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 			venues: Predicates.ids,
 			room: Predicates.string,
 			start: Predicates.date,
-			before: Predicates.date,
 			after: Predicates.date,
+			before: Predicates.date,
 			end: Predicates.date,
 			internal: Predicates.flag,
 		});

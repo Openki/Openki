@@ -19,6 +19,7 @@ if (Meteor.isServer) {
 		robots: true,
 		printLog: false,
 		startup: { buildDbCacheAsync: false },
+		apiMaxLimit: 100,
 	};
 
 	// none deep merge
@@ -28,16 +29,27 @@ if (Meteor.isServer) {
 	check(
 		privateSettings,
 		Match.ObjectIncluding({
+			/** User Administrator Accounts */
 			admins: [String],
+			/** Pseudo-Random Number Generator */
 			prng: StringEnum('', 'static'),
+			/** Generates test data, is not needed for the productive system */
 			testdata: Boolean,
+			/** Sender e-mail address in mails */
 			siteEmail: String,
+			/**
+			 * Sender and recipient address for "Report problem" function. The recipient is also
+			 * visible in e-mail that are send to users.
+			 */
 			reporter: {
 				sender: String,
 				recipient: String,
 			},
+			/** Tells robots/crawlers whether to index the website or not */
 			robots: Boolean,
+			/** Print the log on the server in the console, usually only for development */
 			printLog: Boolean,
+			/** OAuth */
 			service: Match.Maybe({
 				facebook: Match.Maybe({
 					appId: String,
@@ -52,6 +64,7 @@ if (Meteor.isServer) {
 					secret: String,
 				}),
 			}),
+			/** Delete entries from the log or remove critical information */
 			scrub: Match.Maybe([
 				{
 					name: String,
@@ -62,6 +75,7 @@ if (Meteor.isServer) {
 					unset: Match.Maybe([String]),
 				},
 			]),
+			/** file storage */
 			s3: {
 				region: String,
 				bucketEndpoint: String,
@@ -69,7 +83,12 @@ if (Meteor.isServer) {
 				accessKeyId: String,
 				secretAccessKey: String,
 			},
-			startup: { buildDbCacheAsync: Boolean },
+			startup: {
+				/** Build the cache in the db async or sync */
+				buildDbCacheAsync: Boolean,
+			},
+			/** Maximum number of entities that the api returns. */
+			apiMaxLimit: Number,
 		}),
 	);
 }
