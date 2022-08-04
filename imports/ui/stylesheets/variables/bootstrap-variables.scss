@@ -78,11 +78,7 @@ $hr-color: $blue-lighter;
 
 $modal-sm: 400px;
 
-// Remainder of required Bootstrap stylesheets
 @import '{}/node_modules/bootstrap/scss/variables'; // Required
-@import '{}/node_modules/bootstrap/scss/mixins'; // Required
-
-@import '{}/node_modules/bootstrap/scss/utilities'; // Optional
 
 // Modify Bootstrap maps
 
@@ -96,6 +92,12 @@ $grid-breakpoints: map-merge($grid-breakpoints, $custom-grid-breakpoints);
 // Define the maximum width of `.container` for different screen sizes.
 
 $container-max-widths: map-remove($container-max-widths, xxl);
+
+@import '{}/node_modules/bootstrap/scss/maps'; // Optional
+
+@import '{}/node_modules/bootstrap/scss/mixins'; // Required
+
+@import '{}/node_modules/bootstrap/scss/utilities'; // Optional
 
 // Add grid-breakpoints to max-width utilites: mw-sm, mw-md, ...
 

@@ -47,16 +47,6 @@
 	}
 }
 
-@mixin td-text-align($dir) {
-	$opposite-dir: if($dir == left, right, left);
-
-	text-align: $dir;
-
-	.rtl & {
-		text-align: $opposite-dir;
-	}
-}
-
 @mixin td-float($dir) {
 	$opposite-dir: if($dir == left, right, left);
 

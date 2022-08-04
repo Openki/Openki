@@ -141,7 +141,7 @@ function getEventEndMoment(instance: ReturnType<typeof Template['instance']>) {
 }
 
 function getEventDuration(instance: ReturnType<typeof Template['instance']>) {
-	const duration = parseInt(instance.$('.js-event-duration').val() as string, 10) || 0;
+	const duration = Number.parseInt(instance.$('.js-event-duration').val() as string, 10) || 0;
 	return Math.max(0, duration);
 }
 
@@ -178,7 +178,7 @@ function updateTimes(instance: ReturnType<typeof Template['instance']>, updateEn
  * @return an integer if the input passed validation.
  */
 const validateMaxParticipants = (maxParticipants: string) => {
-	const intVal = parseInt(maxParticipants, 10);
+	const intVal = Number.parseInt(maxParticipants, 10);
 	if (Number.isNaN(intVal)) {
 		Alert.error(i18n('event.edit.mustBeInteger', 'Must be a whole number'));
 		return false;
@@ -410,7 +410,7 @@ template.events({
 				// in the URL to assign a group to the event on creation
 				const groups = [];
 				if (Router.current().params.query.group) {
-					groups.push(Router.current().params.query.group);
+					groups.push(Router.current().params.query.group as string);
 				}
 				editevent.groups = groups;
 			}
@@ -429,15 +429,15 @@ template.events({
 		instance.busy('saving');
 		PleaseLogin(instance, async () => {
 			try {
-				const result = await EventsMethods.save({
+				const result = await EventsMethods.save(
 					eventId,
+					editevent,
 					updateReplicasInfos,
 					updateReplicasTime,
 					updateChangedReplicasTime,
 					sendNotifications,
-					changes: editevent,
-					comment: addNotificationMessage,
-				});
+					addNotificationMessage,
+				);
 				if (!result) {
 					throw new Error('Unexpected undefined: eventId');
 				}

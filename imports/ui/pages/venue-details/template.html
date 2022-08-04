@@ -20,89 +20,95 @@
 
 					<div class="details-body location-details-body">
 						<div class="details-content">
-							{{#if loc}}
-								<div class="details-map">
-									{{> map markers=markers}}
-									<div class="coordinates">
-										{{i18n 'venueDetails.coordinates' 'Coordinates:'}}
-										{{locationDisplay this.loc}}
-									</div>
+							<div class="row">
+								<div class="{{#if loc}}col-md-7{{else}}col{{/if}}">
+									{{#if editor}}
+										<p>
+											<span
+												  class="venue-property-title">{{i18n 'location.details.hosts' 'Hosts:'}}</span>
+										<ul class='hosts'>
+											<li>
+												{{> profileLink editor}}
+												{{contribution editor}}
+											</li>
+										</ul>
+										</p>
+									{{/if}}
+									{{#if contact.web}}
+										<p>
+											<span class="venue-property-title">
+												{{i18n 'location.details.online' 'Website:'}}
+											</span>
+											<a href="{{contact.web}}">{{contact.web}}</a>
+										</p>
+									{{/if}}
+									{{#if address}}
+										<p>
+											<span class="venue-property-title">
+												{{i18n 'venue.details.address' 'Address:'}}
+											</span>
+											{{address}}
+										</p>
+									{{/if}}
+									{{#if route}}
+										<p>
+											<span class="venue-property-title">
+												{{i18n 'venue.details.route' 'How to go there:'}}
+											</span>
+											<br>
+											<span style="white-space: pre-line;">{{route}}</span>
+										</p>
+									{{/if}}
+									{{#if maxPeople}}
+										<p>
+											<span class="venue-property-title">
+												{{i18n 'venue.details.max_ppl' 'Maximum People:'}}
+											</span>
+											{{maxPeople}}
+										</p>
+									{{/if}}
+									{{#if maxWorkplaces}}
+										<p>
+											<span class="venue-property-title">
+												{{i18n 'venue.details.max_workplaces' 'Maximum Workplaces:'}}
+											</span>
+											{{maxWorkplaces}}
+										</p>
+									{{/if}}
+									{{#if facilityNames}}
+										<p>
+											<span class="venue-property-title">
+												{{i18n 'venue.details.availableInfrastructure' 'Available infrastructure:'}}
+											</span>
+										<ul>
+											{{#each facilityName in facilityNames}}
+												<li>{{i18n (facilitiesDisplay facilityName)}}</li>
+											{{/each}}
+										</ul>
+										</p>
+									{{/if}}
+									{{#if otherFacilities}}
+										<p>
+											<span class="venue-property-title">
+												{{i18n 'venue.details.additionalEquipment' 'Additional equipment:'}}
+											</span>
+											<br>
+											{{otherFacilities}}
+										</p>
+									{{/if}}
 								</div>
-							{{/if}}
-							{{#if editor}}
-								<p>
-									<span
-										  class="venue-property-title">{{i18n 'location.details.hosts' 'Hosts:'}}</span>
-									<ul class='hosts'>
-										<li>
-											{{> profileLink editor}}
-											{{contribution editor}}
-										</li>
-									</ul>
-								</p>
-							{{/if}}
-							{{#if contact.web}}
-								<p>
-									<span class="venue-property-title">
-										{{i18n 'location.details.online' 'Website:'}}
-									</span>
-									<a href="{{contact.web}}">{{contact.web}}</a>
-								</p>
-							{{/if}}
-							{{#if address}}
-								<p>
-									<span class="venue-property-title">
-										{{i18n 'venue.details.address' 'Address:'}}
-									</span>
-									{{address}}
-								</p>
-							{{/if}}
-							{{#if route}}
-								<p>
-									<span class="venue-property-title">
-										{{i18n 'venue.details.route' 'How to go there:'}}
-									</span>
-									<br>
-									<span style="white-space: pre-line;">{{route}}</span>
-								</p>
-							{{/if}}
-							{{#if maxPeople}}
-								<p>
-									<span class="venue-property-title">
-										{{i18n 'venue.details.max_ppl' 'Maximum People:'}}
-									</span>
-									{{maxPeople}}
-								</p>
-							{{/if}}
-							{{#if maxWorkplaces}}
-								<p>
-									<span class="venue-property-title">
-										{{i18n 'venue.details.max_workplaces' 'Maximum Workplaces:'}}
-									</span>
-									{{maxWorkplaces}}
-								</p>
-							{{/if}}
-							{{#if facilityNames}}
-								<p>
-									<span class="venue-property-title">
-										{{i18n 'venue.details.availableInfrastructure' 'Available infrastructure:'}}
-									</span>
-									<ul>
-										{{#each facilityName in facilityNames}}
-											<li>{{i18n (facilitiesDisplay facilityName)}}</li>
-										{{/each}}
-									</ul>
-								</p>
-							{{/if}}
-							{{#if otherFacilities}}
-								<p>
-									<span class="venue-property-title">
-										{{i18n 'venue.details.additionalEquipment' 'Additional equipment:'}}
-									</span>
-									<br>
-									{{otherFacilities}}
-								</p>
-							{{/if}}
+								{{#if loc}}
+									<div class="col-md-5">
+										<div class="details-map">
+											{{> map markers=markers}}
+											<div class="coordinates">
+												{{i18n 'venueDetails.coordinates' 'Coordinates:'}}
+												{{locationDisplay this.loc}}
+											</div>
+										</div>
+									</div>
+								{{/if}}
+							</div>
 						</div>
 					</div>
 					{{#if mayEdit}}

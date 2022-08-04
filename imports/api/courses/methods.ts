@@ -1,5 +1,6 @@
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { i18n } from '/imports/startup/both/i18next';
 
 import { Courses, Course, CourseEntity, CourseModel } from '/imports/api/courses/courses';
@@ -11,7 +12,9 @@ import { Roles } from '/imports/api/roles/roles';
 import * as UpdateMethods from '/imports/utils/update-methods';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
+import * as eventsCourseImageDenormalizer from '/imports/api/events/courseImageDenormalizer';
 import { Log } from '/imports/api/log/log';
+import { UserModel } from '/imports/api/users/users';
 
 import { Subscribe, Unsubscribe, Message, processChange } from './subscription';
 
@@ -23,9 +26,8 @@ import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 import { LocalizedValuePattern } from '/imports/utils/getLocalizedValue';
 import * as FileStorage from '/imports/utils/FileStorage';
-
-import { UserModel } from '/imports/api/users/users';
 import { StringEnum, Type } from '/imports/utils/CustomChecks';
+import { GroupPromoters } from '/imports/utils/update-methods';
 
 export interface Method<T> {
 	method: string;
@@ -316,11 +318,13 @@ export const updateImage = ServerMethod(
 
 		const result = await FileStorage.upload('courses/image/', file);
 
-		const update = { image: result.fullFileName };
+		const image = result.fullFileName;
+		const update = { image };
 
 		const enrichedSet = timeLasteditDenormalizer.beforeUpdateImage(update);
 		Courses.update(course._id, { $set: enrichedSet });
 		historyDenormalizer.afterUpdateImage(courseId, user._id);
+		eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, image);
 
 		return courseId;
 	},
@@ -353,6 +357,7 @@ export const deleteImage = ServerMethod(
 		const set = timeLasteditDenormalizer.beforeDeleteImage();
 		Courses.update(course._id, { $unset: update, $set: set });
 		historyDenormalizer.afterDeleteImage(courseId, user._id);
+		eventsCourseImageDenormalizer.afterCourseDeleteImage(courseId);
 
 		return courseId;
 	},
@@ -366,7 +371,10 @@ export const deleteImage = ServerMethod(
  * @param add Whether to add or remove the group
  *
  */
-export const promote = ServerMethod('course.promote', UpdateMethods.promote(Courses));
+export const promote = ServerMethod(
+	'course.promote',
+	UpdateMethods.promote(Courses as unknown as GroupPromoters),
+);
 
 /**
  * Add or remove a group from the groupOrganizers list
@@ -375,7 +383,10 @@ export const promote = ServerMethod('course.promote', UpdateMethods.promote(Cour
  * @param add Whether to add or remove the group
  *
  */
-export const editing = ServerMethod('course.editing', UpdateMethods.editing(Courses));
+export const editing = ServerMethod(
+	'course.editing',
+	UpdateMethods.editing(Courses as unknown as GroupPromoters),
+);
 
 export const archive = ServerMethod('course.archive', (courseId: string) => {
 	check(courseId, String);

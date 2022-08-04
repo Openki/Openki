@@ -29,10 +29,10 @@ export interface UploadImage {
 }
 
 export interface Data {
-	maxSize?: number;
-	thumbnail?: { src?: string; maxSize?: number };
+	maxSize?: number | undefined;
+	thumbnail?: { src?: string | undefined; maxSize?: number | undefined } | undefined;
 	onUpload: (file: UploadImage) => void;
-	onDelete?: () => void;
+	onDelete?: (() => void) | undefined;
 }
 
 const Template = TemplateAny as TemplateStaticTyped<

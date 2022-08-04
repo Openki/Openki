@@ -33,7 +33,7 @@ import './styles.scss';
 	const Template = TemplateAny as TemplateStaticTyped<
 		'alert',
 		AlertEnity,
-		{ remove: (alertId: string) => void; timedRemove: NodeJS.Timeout }
+		{ remove: (alertId: string) => void; timedRemove: number }
 	>;
 
 	const template = Template.alert;
@@ -43,7 +43,7 @@ import './styles.scss';
 		instance.remove = (alertId) => {
 			const $alert = instance.$('.alert-message');
 			// get 'transition-duration' and convert to miliseconds for fadeOut
-			const duration = parseFloat($alert.css('transition-duration')) * 1000;
+			const duration = Number.parseFloat($alert.css('transition-duration')) * 1000;
 			$alert.fadeOut(duration, () => {
 				(instance.parentInstance() as any).updateSpacerHeight();
 				Alerts.remove({ _id: alertId });
@@ -58,7 +58,7 @@ import './styles.scss';
 		const alert = instance.data;
 		instance.$('.alert-message').toggleClass('is-faded-in');
 
-		instance.timedRemove = setTimeout(() => instance.remove(alert._id), alert.timeout);
+		instance.timedRemove = Meteor.setTimeout(() => instance.remove(alert._id), alert.timeout);
 	});
 
 	template.events({
@@ -66,7 +66,7 @@ import './styles.scss';
 			const alert = instance.data;
 
 			if (instance.timedRemove) {
-				clearTimeout(instance.timedRemove);
+				Meteor.clearTimeout(instance.timedRemove);
 			}
 			instance.remove(alert._id);
 		},
