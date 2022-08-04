@@ -127,13 +127,11 @@ import './styles.scss';
 		},
 
 		eventDate() {
-			const d = String(this.startLocal);
-			return d.slice(0, d.indexOf('T'));
+			return moment(Template.instance().data.startLocal).format('L');
 		},
 
 		courseTitle() {
-			const a = Template.instance().getCourseTitleIfAny();
-			return a;
+			return Template.instance().getCourseTitleIfAny();
 		},
 
 		eventCourseHeaderAttr(course: CourseModel) {
