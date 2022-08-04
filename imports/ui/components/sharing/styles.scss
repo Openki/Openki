@@ -61,9 +61,11 @@ $share-services: (
 @each $service, $properties in $share-services {
 	.shariff-button.#{$service} > a {
 		background-color: map-get($properties, 'bg');
+		background-color: $share-bg-color; //map-get($properties, 'bg');
 
 		&:hover {
 			background-color: map-get($properties, 'bg-hover');
+			background-color: darken($share-bg-color, 5%); //map-get($properties, 'bg-hover');
 		}
 	}
 }
