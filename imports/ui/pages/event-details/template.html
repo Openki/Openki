@@ -368,8 +368,7 @@
 </template>
 
 <template name="buttonRegister">
-	<button type="button" class="btn btn-add btn-event text-center {{event}}"
-			{{disabledIfBusy}}>
+	<button type="button" class="btn btn-add btn-event text-center {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'registering'}}
 			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n '_button.registering' 'Registering…'}}
@@ -397,8 +396,7 @@
 </template>
 
 <template name="buttonUnregister">
-	<button type="button" class="btn btn-danger btn-event text-center {{event}}"
-			{{disabledIfBusy}}>
+	<button type="button" class="btn btn-danger btn-event text-center {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'unregistering'}}
 			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n '_button.unregistering' 'Unregistering…'}}
