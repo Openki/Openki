@@ -19,7 +19,6 @@ import './template.html';
 		'frameCourselistPage',
 		unknown,
 		{
-			sort: string;
 			limit: ReactiveVar<number>;
 		}
 	>;
@@ -27,13 +26,15 @@ import './template.html';
 	const template = Template.frameCourselistPage;
 
 	template.onCreated(function () {
+		const instance = this;
+
 		Metatags.setCommonTags(i18n('course.list.windowtitle', 'Courses'));
 
 		const query = Router.current().params.query;
-		this.sort = query.sort;
-		this.limit = new ReactiveVar(parseInt(query.count, 10) || 5);
+		const sort = query.sort;
+		instance.limit = new ReactiveVar(parseInt(query.count || '', 10) || 5);
 
-		this.autorun(() => {
+		instance.autorun(() => {
 			const filter = Courses.Filtering().read(query).done();
 
 			const filterQuery = filter.toQuery();
@@ -43,9 +44,9 @@ import './template.html';
 				filterQuery.internal = false;
 			}
 
-			const sorting = this.sort ? SortSpec.fromString(this.sort) : SortSpec.unordered();
+			const sorting = sort ? SortSpec.fromString(sort) : SortSpec.unordered();
 
-			this.subscribe(
+			instance.subscribe(
 				'Courses.findFilter',
 				filterQuery,
 				this.limit.get() + 1,

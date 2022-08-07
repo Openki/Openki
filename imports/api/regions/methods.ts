@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { Match, check } from 'meteor/check';
 
 import { Courses } from '/imports/api/courses/courses';

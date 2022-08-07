@@ -17,7 +17,7 @@ template.onRendered(function () {
 		this.shariff = new Shariff(this.find('.shariff'), {
 			lang: Session.get('locale'),
 			mailUrl: 'mailto:',
-			services: ['twitter', 'facebook', 'telegram', 'whatsapp', 'mail'],
+			services: ['linkedin', 'twitter', 'facebook', 'telegram', 'whatsapp', 'mail'],
 		});
 
 		this.$('.fab, .fas').addClass('fa fa-fw');

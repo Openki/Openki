@@ -33,7 +33,7 @@ if (Meteor.isClient) {
 					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
-				return alertLink.attr('href');
+				return alertLink.attr('href') as string;
 			});
 
 			// The link opens in a new window so we can't just trigger('click')
@@ -64,7 +64,7 @@ if (Meteor.isClient) {
 					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
-				return alertLink.attr('href');
+				return alertLink.attr('href') as string;
 			});
 
 			// The link opens in a new window so we can't just trigger('click')
@@ -95,7 +95,7 @@ if (Meteor.isClient) {
 					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
-				return alertLink.attr('href');
+				return alertLink.attr('href') as string;
 			});
 
 			// The link opens in a new window so we can't just trigger('click')

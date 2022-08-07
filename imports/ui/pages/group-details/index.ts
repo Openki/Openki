@@ -206,6 +206,20 @@ template.helpers({
 	},
 });
 
+function allSet(group: {
+	name: string | undefined;
+	short: string | undefined;
+	claim: string | undefined;
+	description: string | undefined;
+}): group is {
+	name: string;
+	short: string;
+	claim: string;
+	description: string;
+} {
+	return Object.values(group).every((u) => u);
+}
+
 template.events({
 	'click .js-group-settings'(_event, instance) {
 		instance.editingSettings.set(!instance.editingSettings.get());
@@ -221,11 +235,8 @@ template.events({
 
 		instance.errors.reset();
 
-		if (Object.values(group).some((u) => !u)) {
+		if (!allSet(group)) {
 			instance.errors.add('emptyField');
-		}
-
-		if (instance.errors.present()) {
 			return;
 		}
 

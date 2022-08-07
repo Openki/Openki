@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -194,11 +195,12 @@ import './styles.scss';
 			});
 
 			if (instance.isNew) {
-				changes.region = instance.selectedRegion.get() || undefined;
-				if (!changes.region) {
+				const region = instance.selectedRegion.get();
+				if (!region) {
 					Alert.error(i18n('venue.create.plsSelectRegion', 'Please select a region'));
 					return;
 				}
+				changes.region = region;
 			}
 
 			const loc = instance.locationTracker.getLocation();

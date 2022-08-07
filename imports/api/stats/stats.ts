@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { Mongo } from 'meteor/mongo';
 
 import { CourseEntity, CourseModel, Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
@@ -105,22 +106,19 @@ function getActiveCoursesStats(courses: Mongo.Cursor<CourseEntity, CourseModel>)
 	return activeCourses;
 }
 
-function getGroupStats(regionId: string, groupId?: string | undefined) {
-	let groupFilter: string | RegExp | Mongo.FieldExpression<string> | undefined = groupId;
-	if (!groupFilter) {
-		groupFilter = { $eq: [] } as any;
-	}
-
-	const groupRow = Groups.findOne({ _id: groupId }, { fields: { name: 1 } });
-
-	const name = groupRow?.name;
-
-	const courseFilter: Mongo.Selector<CourseEntity> = {
-		groups: groupFilter,
-	};
+function getGroupStats(regionId: string, groupId?: string) {
+	const courseFilter: Mongo.Selector<CourseEntity> = {};
 
 	if (regionId) {
 		courseFilter.region = regionId;
+	}
+
+	let name: string | undefined;
+	if (groupId) {
+		const groupRow = Groups.findOne({ _id: groupId }, { fields: { name: 1 } });
+		name = groupRow?.name;
+
+		courseFilter.groups = groupId;
 	}
 
 	const courses = Courses.find(courseFilter);
