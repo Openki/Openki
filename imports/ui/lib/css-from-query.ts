@@ -20,7 +20,7 @@ export class CssFromQuery {
 
 	/**
 	 * Add customizable properties
-	 * @param  properties the customizable properties to add
+	 * @param properties the customizable properties to add
 	 */
 	addCustomizableProperties(properties: [key: string, name: string, selector: string][]) {
 		properties.forEach((property) => {

@@ -26,7 +26,7 @@ export interface VenueEntity {
 	description: string;
 	/** ID */
 	region?: string;
-	loc?: Geodata;
+	loc: Geodata;
 	address: string;
 	route: string;
 	/** ID */

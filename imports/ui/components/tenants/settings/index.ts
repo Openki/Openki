@@ -90,7 +90,7 @@ template.events({
 		RouterAutoscroll.cancelNext();
 
 		const memberId = this._id;
-		const tenantId = Router.current().params._id;
+		const tenantId = Router.current().params._id as string;
 		try {
 			await TenantsMethods.addMember(memberId, tenantId);
 			const memberName = Users.findOne(memberId)?.username;
@@ -111,7 +111,7 @@ template.events({
 		RouterAutoscroll.cancelNext();
 
 		const memberId = `${this}`;
-		const tenantId = Router.current().params._id;
+		const tenantId = Router.current().params._id as string;
 		try {
 			await TenantsMethods.removeMember(memberId, tenantId);
 
@@ -137,7 +137,7 @@ template.events({
 		RouterAutoscroll.cancelNext();
 
 		const adminId = this._id;
-		const tenantId = Router.current().params._id;
+		const tenantId = Router.current().params._id as string;
 		try {
 			await TenantsMethods.addAdmin(adminId, tenantId);
 			const adminName = Users.findOne(adminId)?.username;
@@ -158,7 +158,7 @@ template.events({
 		RouterAutoscroll.cancelNext();
 
 		const adminId = `${this}`;
-		const tenantId = Router.current().params._id;
+		const tenantId = Router.current().params._id as string;
 		try {
 			await TenantsMethods.removeAdmin(adminId, tenantId);
 
