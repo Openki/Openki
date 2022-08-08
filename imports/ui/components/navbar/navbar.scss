@@ -16,6 +16,11 @@
 	}
 }
 
+.navbar-toggle {
+	margin: 0;
+	margin-right: 22px;
+}
+
 .navbar-collapse {
 	@media (max-width: $grid-float-breakpoint) {
 		border-top: 1px solid $navbar-default-border;
@@ -277,4 +282,18 @@
 	@media (max-width: $grid-float-breakpoint) {
 		position: initial;
 	}
+}
+
+.fa-bars {
+	transform: scale(1.7, 1);
+}
+
+.navbar-toggle.collapsed .fa-bars,
+.navbar-toggle .fa-x {
+	display: block;
+}
+
+.navbar-toggle .fa-bars,
+.navbar-toggle.collapsed .fa-x {
+	display: none;
 }

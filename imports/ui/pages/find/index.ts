@@ -211,7 +211,10 @@ template.helpers({
 	newCourse() {
 		const instance = Template.instance();
 		const course = CourseTemplate();
-		course.name = instance.filter.get('search');
+		const search = instance.filter.get('search');
+		if (search) {
+			course.name = search;
+		}
 		const groupId = instance.filter.get('group');
 		if (groupId) {
 			course.group = groupId;

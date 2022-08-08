@@ -410,7 +410,7 @@ template.events({
 				// in the URL to assign a group to the event on creation
 				const groups = [];
 				if (Router.current().params.query.group) {
-					groups.push(Router.current().params.query.group);
+					groups.push(Router.current().params.query.group as string);
 				}
 				editevent.groups = groups;
 			}
@@ -429,15 +429,15 @@ template.events({
 		instance.busy('saving');
 		PleaseLogin(instance, async () => {
 			try {
-				const result = await EventsMethods.save({
+				const result = await EventsMethods.save(
 					eventId,
+					editevent,
 					updateReplicasInfos,
 					updateReplicasTime,
 					updateChangedReplicasTime,
 					sendNotifications,
-					changes: editevent,
-					comment: addNotificationMessage,
-				});
+					addNotificationMessage,
+				);
 				if (!result) {
 					throw new Error('Unexpected undefined: eventId');
 				}

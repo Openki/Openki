@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment';
