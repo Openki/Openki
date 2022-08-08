@@ -560,9 +560,9 @@ export type Data = {
 			const checked = instance.$(`input.cat_${catKey}`).prop('checked');
 			if (checked) {
 				selectedCategories.push(catKey);
-				selectedCategories = _.uniq(selectedCategories);
+				selectedCategories = [...new Set(selectedCategories)]; // make unique
 			} else {
-				selectedCategories = _.without(selectedCategories, catKey);
+				selectedCategories = selectedCategories.filter((c) => c !== catKey);
 
 				if (Categories[catKey]) {
 					// Remove all the subcategories as well

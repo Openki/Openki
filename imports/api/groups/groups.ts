@@ -116,6 +116,13 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
 	 * @param skip skip this many before returning results
 	 * @param sort list of fields to sort by
 	 */
+	findFilter(
+		filter: FindFilter,
+		limit?: number,
+		skip?: number,
+		sort?: FieldSort[],
+	): Mongo.Cursor<GroupEntity, GroupModel>;
+
 	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {
 		check(filter, Match.Maybe(FindFilterPattern));
 		check(limit, Match.Maybe(Match.Integer));

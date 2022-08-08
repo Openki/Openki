@@ -161,8 +161,7 @@ template.onCreated(function () {
 		const separators = instance.separators.get().slice().reverse();
 
 		// List of intervals where events or separators are placed
-		const intervals = _.reduce(
-			separators,
+		const intervals = separators.reduce(
 			(rIntervals: { [separator: number]: number }, separator) => {
 				/* eslint-disable-next-line no-param-reassign */
 				rIntervals[separator] = separator;
@@ -179,7 +178,7 @@ template.onCreated(function () {
 
 		// Count occurences of first few chars in event titles
 		// This helps coloring the events so they're easier to scan.
-		const kinds: any = {};
+		const kinds: Record<string, number> = {};
 
 		// Place found events into the slots
 		dedupedEvents.forEach((originalEvent) => {
@@ -199,7 +198,7 @@ template.onCreated(function () {
 
 			const minuteDiff = eventStart.diff(dayStart, 'minutes');
 			const intervalStart = Math.floor(minuteDiff / interval) * interval;
-			const closestSeparator = _.find(separators, (sep) => sep <= minuteDiff);
+			const closestSeparator = separators.find((sep) => sep <= minuteDiff);
 
 			const mins = Math.max(intervalStart, closestSeparator || 0);
 			intervals[mins] = mins;
@@ -223,13 +222,13 @@ template.onCreated(function () {
 		const numCmp = function (a: number, b: number) {
 			return a - b;
 		};
-		instance.days.set(_.values(days).sort(numCmp));
-		instance.intervals.set(_.values(intervals).sort(numCmp));
+		instance.days.set(Object.values(days).sort(numCmp));
+		instance.intervals.set(Object.values(intervals).sort(numCmp));
 
 		// Build list of most used titles (first few chars)
-		const mostUsedKinds = _.sortBy(_.pairs(kinds), (kv) => -kv[1]);
+		const mostUsedKinds = _.sortBy(Object.entries(kinds), (kv) => -kv[1]);
 		const kindRank = _.object(
-			_.map(mostUsedKinds.slice(0, 15), (kv, rank) => [kv[0], rank + 1]),
+			mostUsedKinds.slice(0, 15).map((kv, rank) => [kv[0], rank + 1]),
 		) as _.Dictionary<number>;
 		instance.kindMap = function (title: string) {
 			const kindId = title.substring(0, 5);
@@ -267,21 +266,19 @@ template.helpers({
 	days() {
 		const instance = Template.instance();
 		const scheduleStart = instance.scheduleStart.get();
-		return _.map(instance.days.get(), (day) =>
-			moment(scheduleStart).add(day, 'days').format('dddd'),
-		);
+		return instance.days.get().map((day) => moment(scheduleStart).add(day, 'days').format('dddd'));
 	},
 
 	intervals() {
 		const instance = Template.instance();
 		const slots = instance.slots.get();
 
-		return _.map(instance.intervals.get(), (mins) => {
+		return instance.intervals.get().map((mins) => {
 			const intervalStart = moment().hour(0).minute(mins);
 			return {
 				intervalStart,
 				intervalLabel: intervalStart.format('LT'),
-				slots: _.map(instance.days.get(), (day) => (slots[mins] && slots[mins][day]) || []),
+				slots: instance.days.get().map((day) => (slots[mins] && slots[mins][day]) || []),
 			};
 		});
 	},
