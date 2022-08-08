@@ -3,6 +3,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import $ from 'jquery';
 
 import { Regions } from '/imports/api/regions/regions';
@@ -15,6 +16,20 @@ import '/imports/ui/components/regions/selection';
 import '/imports/ui/components/language-selection';
 
 import './navbar.html';
+
+Template.navbar.onCreated(function () {
+	const instance = this;
+	instance.state = new ReactiveDict();
+	instance.state.setDefault({
+		navbarIsCollapsed: false,
+	});
+	
+	instance.autorun(() => {
+		instance.state.set({'navbarIsCollapsed': $('.navbar-toggle').hasClass('collapsed')});
+	});
+	
+})
+
 
 Template.navbar.onRendered(function () {
 	const instance = this;
@@ -115,6 +130,11 @@ Template.navbar.helpers({
 			return isRTL ? 'navbar-right' : '';
 		}
 		return isRTL ? '' : 'navbar-right';
+	},
+
+	navbarIsCollapsed() {
+		console.log("inside helper");
+		return this.state.get('navbarIsCollapsed');
 	},
 });
 
