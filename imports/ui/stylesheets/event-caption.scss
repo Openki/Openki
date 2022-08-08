@@ -113,10 +113,14 @@ $event-caption-body-bg: $event-body-bg;
 	color: $green-dark;
 }
 
-.event-caption-delete .event-caption-icon {
-	color: #bfbfbf;
+.event-caption-delete {
+	.event-caption-icon {
+		color: $event-trashcan-color;
+	}
 }
 
-.event-caption-delete .event-caption-icon:hover {
-	color: $red;
+.event-caption-delete:hover {
+	.event-caption-icon {
+		color: $red;
+	}
 }
