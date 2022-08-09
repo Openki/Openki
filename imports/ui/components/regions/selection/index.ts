@@ -110,24 +110,30 @@ import './styles.scss';
 			// first get all available regions from minimongo (that are not excluded by search)
 			let regionsArray = Regions.find(query).fetch();
 
-			// sort in the order we want, least priority first
-			regionsArray
-				.sort((a, b) => {
-					if (a.courseCount < b.courseCount) {
-						return 1;
-					}
-					return 0;
-					// move downwards in list if a<b, otherwise leave list as it is
-				})
-				.sort((a, b) => {
-					if (a.futureEventCount < b.futureEventCount) {
-						return 1;
-					}
-					return 0;
-				})
-				.sort((e) => (e.isPrivate() ? 1 : -1))
-				.sort((e) => (e._id === currentId ? -1 : 1));
-				
+			// sort in the order we want
+			regionsArray.sort((a, b) => {
+				// first priority has the current region
+				if (a._id === currentId) return -1;
+				if (b._id === currentId) return 1;
+
+				// second priority have private regions
+				const pa = a.isPrivate();
+				const pb = b.isPrivate();
+				if (pa && !pb) return -1;
+				if (pb && !pa) return 1;
+
+				// then regions with more future events first
+				if (a.futureEventCount > b.futureEventCount) return -1;
+				if (b.futureEventCount > a.futureEventCount) return 1;
+
+				// finally regions with more future courses
+				if (a.courseCount > b.courseCount) return -1;
+				if (b.courseCount > a.courseCount) return 1;
+
+				// if no return happened yet, regions are equivalent
+				return 0;
+			});
+
 			// filter active option
 			if (typeof options.active === 'boolean') {
 				if (options.active === true) {
