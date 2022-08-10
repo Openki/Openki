@@ -342,7 +342,6 @@
 	"event.group.confirmRemoveText": "Supprimer le groupe \"{NAME}\" de cet événement ?",
 	"event.list.windowtitle": "Evénements",
 	"event.metatag.description": "{VENUE} dans {REGION}",
-	"event.no_event": "Cet événement n'a pu être trouvé ; vous devez peut-être être connecté, ou il a été supprimé, ou n'a jamais existé.",
 	"event.participants.showMoreParticipants": "Montrer plus de participants",
 	"event.reallydelete": "Veuillez confirmer que vous souhaitez supprimer cet événement. Cette demande ne peut pas être annulée.",
 	"event.replicate.successCondensed": "L'événement \"{TITLE}\" cloné {NUM, plural, one{pour} other{# fois jusqu'à} } {DATE}",
