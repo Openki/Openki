@@ -179,7 +179,7 @@ import './styles.scss';
 }
 
 {
-	type Role = { icon?: string; name: string; label: string };
+	type Role = { icon?: string | undefined; name: string; label: string };
 
 	const Template = TemplateAny as TemplateStaticTyped<
 		'additionalFilters',

@@ -114,6 +114,10 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 
 		instance.store = async () => {
 			const newText = instance.getEdited();
+			if (newText === undefined) {
+				// Nothing has changed
+				return;
+			}
 			try {
 				await instance.state.store.onSave?.(newText);
 

@@ -21,7 +21,7 @@ export const clientError = ServerMethod('log.clientError', function (originalRep
 	check(originalReport, ReportPattern);
 	const report: Report & {
 		userId?: string;
-		connectionId?: string;
+		connectionId?: string | undefined;
 	} = { ...originalReport };
 	report.connectionId = this.connection?.id;
 

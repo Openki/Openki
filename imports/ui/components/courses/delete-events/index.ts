@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
