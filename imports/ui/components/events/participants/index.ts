@@ -33,6 +33,12 @@ import './styles.scss';
 			return data.participants?.length || 0;
 		},
 
+		howManyFreePlaces() {
+			const { data } = Template.instance();
+			const occupied = data.participants?.length || 0;
+			return data.maxParticipants - occupied;
+		},
+
 		sortedParticipants() {
 			const instance = Template.instance();
 			const { participants } = instance.data;
