@@ -1,16 +1,17 @@
 <template name="calendarPage">
-	{{> calendarNavMulti date=startDate}}
+	{{> calendarNavMulti date=startDate setIsAttendeeFilterOn=setterToBePassedToChild}}
 	<div class="container calendar-container">
 		<div class="page-component">
 			{{#if Template.subscriptionsReady}}
 				{{#each day in days}}
-					{{> calendarDay day=day filter=instance.filter}}
+					{{> calendarDay day=day filter=instance.filter isAttendeeFilterOn=isAttendeeFilterOn}}
 					<hr>
 				{{/each}}
 			{{else}}
 				{{> loadingRow}}
 			{{/if}}
 		</div>
+		
 	</div>
 </template>
 
@@ -20,7 +21,20 @@
 	</div>
 	{{#if hasEvents}}
 		<div class="calendar-event-list">
-			{{> eventList dataEvents=events withDate=false withImage=true}}
+			{{> eventList dataEvents=(maybeFilteredEvents events isAttendeeFilterOn=isAttendeeFilterOn) withDate=false withImage=true}}
+			{{!<!-- setIsAttendeeFilterOn is a method that is passed into the child and can be called in its eventhandler
+				to update the parent's state. It takes a boolean as it's only argument. -->}}
+			{{!<!-- 
+			
+				Last big question here: how to update the state in templateinstance "calenderPage"
+				from an event handler in its child instance "calendarNavMulti"?
+				-> in react and vue as well I believe we would pass a handler function as an argument
+				into the child and then call that 'propfunction' in the child's eventhandler.
+
+				TemplateInstance calendarDay can receive it's parants state via an argument
+
+				-> change isRSVP into isAttendee in event compact files
+			-->}}
 		</div>
 	{{else}}
 		<br>

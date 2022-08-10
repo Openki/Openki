@@ -2,8 +2,9 @@ import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment';
 
-import { Events, FindFilter } from '/imports/api/events/events';
+import { EventModel, Events, FindFilter } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
+import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { MeteorAsync } from '/imports/utils/promisify';
 
@@ -18,7 +19,13 @@ import './styles.scss';
 	const Template = TemplateAny as TemplateStaticTyped<
 		'calendarPage',
 		Record<string, string>,
-		{ filter: ReturnType<typeof Events['Filtering']> }
+		{
+			filter: ReturnType<typeof Events['Filtering']>;
+			state: ReactiveDict<{
+				isAttendeeFilterOn: boolean;
+			}>;
+			setIsAttendeeFilterOn: (trueOrfalse: boolean) => void;
+		}
 	>;
 
 	const template = Template.calendarPage;
@@ -28,6 +35,15 @@ import './styles.scss';
 
 		const filter = Events.Filtering();
 		instance.filter = filter;
+
+		instance.state = new ReactiveDict;
+		instance.state.setDefault(
+			{isAttendeeFilterOn: false}
+		);
+		instance.setIsAttendeeFilterOn = (trueOrfalse: boolean) => {
+			console.log("parent's helper called: ", trueOrfalse);
+			this.state.set('isAttendeeFilterOn', trueOrfalse);
+		};
 
 		// Read URL state
 		instance.autorun(() => {
@@ -90,6 +106,14 @@ import './styles.scss';
 		startDate() {
 			return moment(Template.instance().filter.get('start'));
 		},
+		setterToBePassedToChild(){
+			// returns a function
+			return Template.instance().setIsAttendeeFilterOn;
+		},
+		isAttendeeFilterOn(){
+			// returns a value of the state (true / false)
+			return Template.instance().state.get('isAttendeeFilterOn');
+		}	
 	});
 }
 {
@@ -101,6 +125,7 @@ import './styles.scss';
 				end: moment.Moment;
 			};
 			filter: ReturnType<typeof Events['Filtering']>;
+			isAttendeeFilterOn: boolean;
 		}
 	>;
 
@@ -120,6 +145,21 @@ import './styles.scss';
 			filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
 
 			return Events.findFilter(filterQuery);
+		},
+		maybeFilteredEvents(events: EventModel[], filters: any) {
+			let maybeFilteredEvents = [ ...events ];
+			const userId = Meteor.userId();
+			const something = filters.hash.isAttendeeFilterOn;
+			console.log(userId, something);
+			if(filters.hash.isAttendeeFilterOn && userId) {
+				console.log("inside if");
+				maybeFilteredEvents = maybeFilteredEvents.filter( (event) => {
+					const a = event.participants?.includes(userId);
+					console.log(a);
+					return a;
+				});
+			}
+			return maybeFilteredEvents;
 		},
 	});
 }
