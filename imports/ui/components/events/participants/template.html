@@ -3,6 +3,10 @@
 		<h4>
 			<span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
 			{{i18n 'event.details.paticipants.title' '{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }' NUM=howManyEnrolled}}
+			<br />
+			<span class="free-places">
+				{{i18n 'event.details.participants.free.places' '{NUM, plural, =0{No free seats} one{one free seat} other{# free seats} }' NUM=howManyFreePlaces}}
+			</span>
 		</h4>
 	</div>
 	{{#if participants}}
