@@ -11,12 +11,27 @@ import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'eventCompact',
-	{ event: EventModel; withDate?: boolean; withImage?: boolean; openInNewTab?: boolean }
+	{ 
+		event: EventModel;
+		withDate?: boolean;
+		withImage?: boolean;
+		openInNewTab?: boolean 
+	}
 >;
 
 const template = Template.eventCompact;
 
 template.helpers({
+	isRSVP() {
+		const { event } = Template.instance().data;
+		const participantsArray = event.participants;
+		if(!participantsArray) return false;
+		const userId = Meteor.userId();
+		if(!userId) return false;
+		if(participantsArray.includes(userId)) return true;
+		return false;
+	},
+
 	eventCompactClasses() {
 		const { event, withDate } = Template.instance().data;
 

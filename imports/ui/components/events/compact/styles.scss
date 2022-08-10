@@ -86,6 +86,10 @@
 	border-bottom: $event-compact-seperator-height solid $body-bg;
 	color: $gray-800;
 	padding: 5px;
+
+	&.event-rsvp {
+		background: $user-bg;
+	}
 }
 
 .event-compact-header .fa-clock-o,
