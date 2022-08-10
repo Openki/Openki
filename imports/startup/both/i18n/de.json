@@ -326,7 +326,6 @@
 	"event.group.confirmOrgNotes": "Alle Mitglieder dieser Gruppe können dann diese Veranstaltung bearbeiten.",
 	"event.group.confirmRemoveText": "Gruppe {NAME} von dieser Veranstaltung entfernen?",
 	"event.list.windowtitle": "Veranstaltungen",
-	"event.no_event": "Diese Veranstaltung konnte nicht gefunden werden. Vielleicht musst du dich anmelden oder sie wurde gelöscht oder hat nie existiert.",
 	"event.participants.showMoreParticipants": "Mehr Teilnehmende anzeigen",
 	"event.reallydelete": "Bitte bestätige, dass du diese Veranstaltung löschen möchtest. Dies kann nicht rückgängig gemacht werden.",
 	"event.replication.changeToPattern": "Frequenz wählen",
