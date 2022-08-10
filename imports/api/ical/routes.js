@@ -42,7 +42,7 @@ function sendIcal(events, response) {
 			summary: dbevent.title,
 			location,
 			description: plainDescription,
-			url: Router.routes.showEvent.url(dbevent),
+			url: Router.url('showEvent', dbevent),
 		});
 
 		if (!dname) {

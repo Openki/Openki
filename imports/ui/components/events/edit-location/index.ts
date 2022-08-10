@@ -95,7 +95,7 @@ template.onCreated(function () {
 				if (mark.presetAddress) {
 					updLocation.address = mark.presetAddress;
 				}
-				if ('preset' in mark && mark.preset) {
+				if (mark.preset) {
 					updLocation._id = mark._id;
 					updLocation.editor = mark.editor;
 					updLocation.name = mark.presetName;
@@ -148,13 +148,13 @@ template.onCreated(function () {
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
 			added(originalLocation: VenueEntity) {
-				const location = {
+				const location: ProposedMarkerEntity = {
 					...originalLocation,
 					proposed: true,
 					preset: true,
 					presetName: originalLocation.name,
 					presetAddress: originalLocation.address,
-				} as ProposedMarkerEntity;
+				};
 				instance.locationTracker.markers.insert(location);
 			},
 		});
@@ -189,7 +189,7 @@ template.helpers({
 	},
 
 	hostProfileLink() {
-		return Router.url('userprofile', Template.instance().venueEditor.get());
+		return Router.url('userprofile', Template.instance().venueEditor.get() as any);
 	},
 
 	eventMarkers() {

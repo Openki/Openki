@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { CourseEntity, Courses } from './courses';
 
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers

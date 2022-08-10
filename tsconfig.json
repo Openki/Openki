@@ -27,6 +27,7 @@
 		"strictPropertyInitialization": true, // Enusre non-undefined class properties are initialized in the constructor.
 		"strictFunctionTypes": true, // Disable bivariant parameter checking for function types.
 		"strictNullChecks": true, // The null and undefined values are not in the domain of every type and are only assignable to themselves and any.
+		"exactOptionalPropertyTypes": true, // Differentiate between undefined and not present
 		/* Module Resolution Options */
 		"baseUrl": ".",
 		"paths": {

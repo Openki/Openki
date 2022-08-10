@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { UserModel } from '/imports/api/users/users';
 
 declare module 'meteor/meteor' {

@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { _ } from 'meteor/underscore';
 import { assert, AssertionError } from 'chai';
 
 import '/imports/api/fixtures/methods';
@@ -78,7 +77,7 @@ if (Meteor.isClient) {
 					const { data } = json;
 					assert.isNotEmpty(data);
 
-					const starts = _.pluck(data, 'start').map((datestr) => new Date(datestr).valueOf());
+					const starts = data.map((d: any) => new Date(d.start).valueOf());
 
 					// Because we start at the current time, this test will also detect events
 					// in the past as order violation
@@ -92,7 +91,7 @@ if (Meteor.isClient) {
 					const result = await fetch(events);
 					assertGoodHeaders(result);
 					const json = await result.json();
-					const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr).valueOf());
+					const starts = json.data.map((e: any) => new Date(e.start).valueOf());
 					starts.forEach(
 						AssertAscending(new Date(), 'ascending ordering of start-dates was requested'),
 					);
@@ -104,7 +103,7 @@ if (Meteor.isClient) {
 					const result = await fetch(events);
 					assertGoodHeaders(result);
 					const json = await result.json();
-					const titles = _.pluck(json.data, 'title');
+					const titles = json.data.map((e: any) => e.title);
 					titles.reverse();
 					titles.forEach(AssertAscendingString('', 'descending ordering of titles was requested'));
 				});
@@ -134,7 +133,7 @@ if (Meteor.isClient) {
 					const { data } = json;
 					assert.isNotEmpty(data);
 
-					const starts = _.pluck(json.data, 'start').map((datestr) => new Date(datestr).valueOf());
+					const starts = json.data.map((e: any) => new Date(e.start).valueOf());
 
 					// Because we start at the current time, this test will also detect if events from the
 					// future as order violation

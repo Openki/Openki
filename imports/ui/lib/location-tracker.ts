@@ -1,12 +1,12 @@
-import { Geodata, Regions } from '/imports/api/regions/regions';
 import { Mongo } from 'meteor/mongo';
+import { Geodata, Regions } from '/imports/api/regions/regions';
 
 export type PresetMarkerEntity = {
 	preset: true;
 
-	presetName?: string;
-	presetAddress?: string;
-	editor?: string;
+	presetName: string;
+	presetAddress: string;
+	editor: string;
 };
 
 export type ProposedMarkerEntity = {
@@ -15,9 +15,9 @@ export type ProposedMarkerEntity = {
 	_id: string;
 	loc: Geodata;
 
-	presetAddress?: string;
-	name?: string;
-} & Partial<PresetMarkerEntity>;
+	presetAddress: string;
+	name: string;
+} & PresetMarkerEntity;
 
 export type SelectedMarkerEntity = {
 	selected: true;
@@ -61,7 +61,7 @@ export class LocationTracker {
 	/** Local collection for in-memory storage */
 	public markers = new Mongo.Collection<MarkerEntity>(null);
 
-	setLocation(location: { loc?: Geodata } | undefined, draggable?: boolean, soft?: boolean) {
+	setLocation(location: { loc?: Geodata } | undefined, draggable = false, soft = false) {
 		if (soft) {
 			const marker = this.markers.findOne({ main: true }) as MainMarkerEntity;
 			if (marker && location?.loc) {
