@@ -559,3 +559,14 @@ import './styles.scss';
 		},
 	});
 }
+
+{
+	const Template = TemplateAny as TemplateStaticTyped<'eventNotFound'>;
+	const template = Template.eventNotFound;
+
+	template.events({
+		'click .js-login'() {
+			$('.js-account-tasks').modal('show');
+		},
+	});
+}
