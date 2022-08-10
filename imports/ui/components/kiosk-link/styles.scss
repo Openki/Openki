@@ -3,37 +3,23 @@
 .back-to-kiosk {
 	@include td-pos(right, 50px);
 	background-color: $blue-lighter;
+	border: 1px solid #000;
 	border-radius: 50%;
-	bottom: 30px;
-	box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
-	height: 100px;
+	bottom: 50px;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	font-size: x-large;
+	font-weight: bold;
+	height: 150px;
 	padding: 30px 20px 0;
+	padding-top: 0;
 	position: fixed;
 	text-align: center;
-	width: 100px;
+	vertical-align: middle;
+	width: 150px;
 	z-index: 1;
-}
-
-.back-to-kiosk a {
-	color: $gray-800;
 
 	&:hover {
-		color: $white;
-	}
-}
-
-.js-remove-back-to-kiosk {
-	@include td-pos(right, 0);
-	background: none;
-	border: 0;
-	font-size: large;
-	opacity: 0.4;
-	position: absolute;
-	text-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
-	top: 0;
-
-	&:hover {
-		color: $red;
-		opacity: 1;
+		background-color: $green-alternative;
+		box-shadow: 0 18px 24px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 	}
 }
