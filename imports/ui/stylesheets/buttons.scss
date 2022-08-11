@@ -34,7 +34,7 @@
 	@extend .btn-secondary;
 
 	&:hover {
-		@extend .btn-warning:hover;
+		@extend .btn-warning;
 		border-color: $warning;
 	}
 }
@@ -45,7 +45,7 @@
 	@extend .btn-secondary;
 
 	&:hover {
-		@extend .btn-danger:hover;
+		@extend .btn-danger;
 		border-color: $danger;
 		color: $black !important;
 	}

@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { Mongo } from 'meteor/mongo';
 import { Match, check } from 'meteor/check';
 
 import { LogCollection, LogEntity } from '/imports/api/log/factory';

@@ -3,6 +3,7 @@ import { i18n } from '/imports/startup/both/i18next';
 
 import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
 import * as Viewport from '/imports/ui/lib/viewport';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import select2 from 'select2';
 import 'select2/dist/css/select2.min';
@@ -45,7 +46,7 @@ template.onRendered(function () {
 			instance.data.onRemove(event.params.data.id);
 		});
 
-	instance.autorun(() => {
+	instance.autorun(async () => {
 		Viewport.get(); // trigger rerender after viewport resize
 		instance.data.selectedGroups?.forEach((group) => {
 			// trigger rerender after load
@@ -55,32 +56,32 @@ template.onRendered(function () {
 			// Select2 has been initialized
 			instance.$('.js-groups-select').select2('destroy');
 		}
-		setTimeout(() => {
-			instance.$('.js-groups-select').select2({
-				theme: 'bootstrap',
-				templateResult(data: any) {
-					// We only really care if there is an element to pull classes from
-					if (!data.element) {
-						return data.text;
-					}
+		await MeteorAsync.defer();
 
-					const $element = $(data.element);
+		instance.$('.js-groups-select').select2({
+			theme: 'bootstrap',
+			templateResult(data: any) {
+				// We only really care if there is an element to pull classes from
+				if (!data.element) {
+					return data.text;
+				}
 
-					const $wrapper = $('<span></span>');
-					$wrapper.addClass($element[0].className);
+				const $element = $(data.element);
 
-					$wrapper.text(data.text);
+				const $wrapper = $('<span></span>');
+				$wrapper.addClass($element[0].className);
 
-					return $wrapper;
+				$wrapper.text(data.text);
+
+				return $wrapper;
+			},
+			placeholder: i18n('filterGroups.placeholder', 'Choose group'),
+			language: {
+				noResults() {
+					return i18n('filterGroups.no-groups-found', 'No groups found');
 				},
-				placeholder: i18n('filterGroups.placeholder', 'Choose group'),
-				language: {
-					noResults() {
-						return i18n('filterGroups.no-groups-found', 'No groups found');
-					},
-				},
-			});
-		}, 0);
+			},
+		});
 	});
 });
 

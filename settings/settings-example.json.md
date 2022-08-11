@@ -9,10 +9,10 @@ This file descripts all configurations and customization options. Remove the com
 		"siteName": "Openki-clone",
 		"siteStage": "beta", // The text top left at the logo
 		"testWarning": true, // Shows a banner saying that this is only for testing
-		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner. Can be a logo from the /public/logo/* folder or a base64 encoded string.
-		"headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the /public/logo/* folder or a base64 encoded string.
+		"headerLogo": { "src": "openki-logo-web-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner. Can be a logo from the /public/logo/* folder, from our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded string.
+		"headerLogoKiosk": { "src": "openki-logo-kiosk-2020.svg", "alt": "Openki Logo" }, // The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the /public/logo/* folder, from our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded string.
 		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" }, // The default image used for avatars (color is changed using the CSS filter 'hue-rotate'). The "alt" setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
-		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media
+		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media. Can be a logo from the /public/logo/* folder or from our s3 file storage (must start with the "publicUrlBase" setting).
 		"emailLogo": "emails/openki.png", // Can be a logo from the /private/* folder or a base64 encoded string.
 		"regionSelection": {
 			"minNumber": 5, // The minimum number of regions displayed in the Regions selection. Default: 5
@@ -82,7 +82,8 @@ This file descripts all configurations and customization options. Remove the com
 		},
 		"s3": { // file storage
 			"publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name"
-		}
+		},
+		apiMaxLimit: 100 // Maximum number of entities that the api returns. Default: 100. If the parameter "limit" is not set in the URL, the API always returns 100 entities whatever this setting is set to.
 	},
 	"siteEmail": "" // Sender e-mail address in mails
 	"reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"}, // Sender and recipient address for "Report problem" function
@@ -109,7 +110,7 @@ This file descripts all configurations and customization options. Remove the com
 		"accessKeyId": "abcd1234",
 		"secretAccessKey": "123abcd"
 	},
-	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }, // That web pages are pre-rendered for webcrawlers on the server side so that no client code has to be executed
+	"PrerenderIO": { "serviceUrl": "http://localhost:3033/", "token": "mytoken" }, // That web pages are pre-rendered for webcrawlers on the server side so that no client code has to be executed. See: https://guide.meteor.com/deployment.html#seo
 	"startup": { "buildDbCacheAsync": true }, // Build the cache in the db async or sync. For larger databases it takes a long time until all fields are updated, during this time the startup is blocked. The users cannot use the website. Because in a normal startup the database already has these fields, this task can also be done async.
 	"scrub": // Delete entries from the log or remove critical information, The log can be viewed via .../log
 		[ { "name": "scrub client-errors", "comment": "client-side errors may contain sensitive data, drop them quickly"

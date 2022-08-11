@@ -9,45 +9,45 @@
 			<span class="title">
 				{{i18n "notification.event.mail.greeting" USERNAME=recipientName lng=locale}}
 			</span>
-				<p>
-					{{i18n "notification.privateMessage.mail.intro" 'You got a private message from:' lng=locale}}
-					<a href="{{senderLink}}">{{sender.username}}</a>
-					{{#if fromAddress}}
-						<a href="mailto:{{fromAddress}}">{{fromAddress}}</a>
-					{{/if}}
-				</p>
-				{{#if courseLink}}
-					<p>
-						{{i18n "notification.privateMessage.mail.fromCourse" 'This message was sent from course:' lng=locale}}
-						<a href="{{courseLink}}">{{courseName}}</a>
-					</p>
-				{{/if}}
-				<table class="comment-box">
-					<tr>
-						<td>
-							{{{message}}}
-						</td>
-					</tr>
-				</table>
+			<p>
+				{{i18n "notification.privateMessage.mail.intro" 'You got a private message from:' lng=locale}}
+				<a href="{{senderLink}}">{{sender.username}}</a>
 				{{#if fromAddress}}
-					<p class="text-center">
-						<a class="button" href="{{senderLink}}">
-							{{i18n "notification.privateMessage.mail.replyButton" 'Reply over {SITENAME}' SITENAME=siteName lng=locale}}
-					</a>
-					</p>
-					<p class="text-center">
-						{{i18n "notification.privateMessage.mail.direct.answerText" 'You can also send {SENDERNAME} an email directly  by clicking reply in your email client' SENDERNAME=sender.username lng=locale}}
-						<br><br />
-						<a class="text-center" href="mailto:{{fromAddress}}">{{fromAddress}}</a>
-					</p>
-
-				{{else}}
-					<p class="text-center">
-						<a class="button" href="{{senderLink}}">
-							{{i18n "notification.privateMessage.mail.replyButton.simple" 'Reply' lng=locale}}
-					</a>
-					</p>
+					<a href="mailto:{{fromAddress}}">{{fromAddress}}</a>
 				{{/if}}
+			</p>
+			{{#if courseLink}}
+				<p>
+					{{i18n "notification.privateMessage.mail.fromCourse" 'This message was sent from course:' lng=locale}}
+					<a href="{{courseLink}}">{{courseName}}</a>
+				</p>
+			{{/if}}
+			<table class="comment-box">
+				<tr>
+					<td>
+						{{{message}}}
+					</td>
+				</tr>
+			</table>
+			{{#if fromAddress}}
+				<p class="text-center">
+					<a class="button" href="{{senderLink}}">
+						{{i18n "notification.privateMessage.mail.replyButton" 'Reply over {SITENAME}' SITENAME=siteName lng=locale}}
+					</a>
+				</p>
+				<p class="text-center">
+					{{i18n "notification.privateMessage.mail.direct.answerText" 'You can also send {SENDERNAME} an email directly  by clicking reply in your email client' SENDERNAME=sender.username lng=locale}}
+					<br><br />
+					<a class="text-center" href="mailto:{{fromAddress}}">{{fromAddress}}</a>
+				</p>
+
+			{{else}}
+				<p class="text-center">
+					<a class="button" href="{{senderLink}}">
+						{{i18n "notification.privateMessage.mail.replyButton.simple" 'Reply' lng=locale}}
+					</a>
+				</p>
+			{{/if}}
 		</td>
 	</tr>
 	<tr>
@@ -55,9 +55,11 @@
 			<table class="footer">
 				<tr>
 					<td>
-						<a href="{{unsubLink}}">{{i18n "notification.privateMessage.mail.unsubLink" "Unsubscribe from all private messages from users." SITENAME=siteName lng=locale}}</a>
-							&nbsp;
-							<a href="{{urlFor 'profile' query='campaign=privateMessage'}}">{{i18n "notification.privateMessage.mail.profileLink" "Visit your profile" lng=locale}}</a>
+						<a
+						   href="{{unsubLink}}">{{i18n "notification.privateMessage.mail.unsubLink" "Unsubscribe from all private messages from users." SITENAME=siteName lng=locale}}</a>
+						&nbsp;
+						<a
+						   href="{{urlFor 'profile' query='campaign=privateMessage'}}">{{i18n "notification.privateMessage.mail.profileLink" "Visit your profile" lng=locale}}</a>
 					</td>
 				</tr>
 			</table>

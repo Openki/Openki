@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
 import { FindFilter, TenantEntity, Tenants } from '/imports/api/tenants/tenants';

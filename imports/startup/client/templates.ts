@@ -12,7 +12,7 @@ Router.configure({
 });
 Router.onBeforeAction('dataNotFound');
 
-Router.onBeforeAction(function (this: any) {
+Router.onBeforeAction(function () {
 	Metatags.removeAll();
 	this.next();
 });

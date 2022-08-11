@@ -143,8 +143,6 @@ export function Model(entry: { body: Body }) {
 				eventStart: startMoment.format('LT'),
 				eventEnd: endMoment.format('LT'),
 				venueLine,
-				regionName: region.name,
-				timeZone: endMoment.format('z'), // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
 				eventLink: Router.url('showEvent', event, { query: 'campaign=eventNotify' }),
 				registerToEventLink: Router.url('showEvent', event, {
 					query: 'action=register&campaign=eventNotify',

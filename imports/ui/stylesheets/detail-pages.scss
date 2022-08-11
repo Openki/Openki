@@ -65,14 +65,7 @@
 }
 
 .details-map {
-	padding-top: $form-group-margin-bottom;
 	width: 100%;
-
-	@media (min-width: $screen-sm) {
-		@include td-float(right);
-		@include td-padding-all(0, 0, 0, $form-group-margin-bottom);
-		width: 300px;
-	}
 }
 
 .details-map .map-box {
@@ -82,7 +75,7 @@
 
 .details-map .coordinates {
 	@include td-margin-all(5px, 5px, 5px, 0);
-	@include td-text-align(right);
+	text-align: end;
 }
 
 .details-form {

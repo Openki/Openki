@@ -10,6 +10,7 @@ import { Courses } from '/imports/api/courses/courses';
 import { Subscribe, processChange } from '/imports/api/courses/subscription';
 import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as courseTimeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
+import * as courseImageDenormalizer from '/imports/api/events/courseImageDenormalizer';
 import { EventEntity, EventModel, Events, OEvent } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
@@ -25,13 +26,18 @@ import * as StringTools from '/imports/utils/string-tools';
 import * as UpdateMethods from '/imports/utils/update-methods';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
+import { GroupPromoters } from '/imports/utils/update-methods';
 
 /**
  * @param updateOptions What should be updated
  */
 const ReplicaSync = function (
 	event: EventEntity,
-	updateOptions: { infos?: boolean; time?: boolean; changedReplicas: { time?: boolean } },
+	updateOptions: {
+		infos?: boolean | undefined;
+		time?: boolean | undefined;
+		changedReplicas?: { time?: boolean | undefined } | undefined;
+	},
 ) {
 	let affected = 0;
 
@@ -48,7 +54,7 @@ const ReplicaSync = function (
 			const updateTime =
 				timeIsValid &&
 				updateOptions.time &&
-				(replica.sameTime(event) || updateOptions.changedReplicas.time);
+				(replica.sameTime(event) || updateOptions?.changedReplicas?.time);
 
 			if (updateTime) {
 				const newStartMoment = moment(replica.start).set(startTime);
@@ -123,38 +129,30 @@ export const CreateFieldsPattern = {
 };
 export type CreateFields = Type<typeof CreateFieldsPattern>;
 
-export type SaveFields = CreateFields & UpdateFields;
+export type SaveFields = Partial<CreateFields> & UpdateFields;
 
+/**
+ * @param eventId The event id or to create a new event, pass an empty Id
+ */
 export const save = ServerMethod(
 	'event.save',
-
-	(args: {
-		changes: SaveFields;
-		updateReplicasInfos?: boolean;
-		updateReplicasTime?: boolean;
-		updateChangedReplicasTime?: boolean;
-		sendNotifications?: boolean;
-		eventId: string;
-		comment?: string | null;
-	}) => {
-		const {
-			changes,
-			updateReplicasInfos,
-			updateReplicasTime,
-			updateChangedReplicasTime,
-			sendNotifications,
-		} = args;
-
-		let { eventId, comment } = args;
-
+	(
+		eventId: string,
+		changes: SaveFields,
+		updateReplicasInfos?: boolean | null,
+		updateReplicasTime?: boolean | null,
+		updateChangedReplicasTime?: boolean | null,
+		sendNotifications?: boolean | null,
+		comment?: string | null,
+	) => {
 		check(eventId, String);
 
 		const isNew = eventId === '';
 
 		const expectedFields = isNew ? CreateFieldsPattern : UpdateFieldsPattern;
 		check(changes, expectedFields);
-		check(comment, Match.Maybe(String));
 		check(sendNotifications, Match.Maybe(Boolean));
+		check(comment, Match.Maybe(String));
 
 		if (!isNew) {
 			check(updateReplicasInfos, Match.Maybe(Boolean));
@@ -311,7 +309,9 @@ export const save = ServerMethod(
 		if (isNew) {
 			editFields.createdBy = user._id;
 			editFields.groupOrganizers = [];
-			eventId = Events.insert(editFields as EventModel);
+			const enrichedEvent = courseImageDenormalizer.beforeInsert(editFields as EventEntity);
+			// eslint-disable-next-line no-param-reassign
+			eventId = Events.insert(enrichedEvent);
 
 			if (editFields.courseId) {
 				courseTimeLasteditDenormalizer.afterEventInsert(editFields.courseId);
@@ -328,9 +328,9 @@ export const save = ServerMethod(
 
 			if (updateReplicasInfos || updateReplicasTime) {
 				const updateOptions = {
-					infos: updateReplicasInfos,
-					time: updateReplicasTime,
-					changedReplicas: { time: updateChangedReplicasTime },
+					infos: updateReplicasInfos ?? false,
+					time: updateReplicasTime ?? false,
+					changedReplicas: { time: updateChangedReplicasTime ?? false },
 				};
 				const replicaSync = ReplicaSync(event, updateOptions);
 				replicaSync.apply(editFields);
@@ -356,14 +356,17 @@ export const save = ServerMethod(
 					{ NUM: affectedReplicaCount, lng: user.locale },
 				);
 
-				if (comment == null) {
+				if (comment === null || comment === undefined) {
+					// eslint-disable-next-line no-param-reassign
 					comment = affectedReplicaMessage;
 				} else {
+					// eslint-disable-next-line no-param-reassign
 					comment = `${affectedReplicaMessage}\n\n${comment}`;
 				}
 			}
 
-			if (comment != null) {
+			if (comment) {
+				// eslint-disable-next-line no-param-reassign
 				comment = comment.trim().substring(0, 2000).trim();
 			}
 
@@ -424,7 +427,10 @@ export const remove = ServerMethod('event.remove', (eventId: string) => {
  * @param add Whether to add or remove the group
  *
  */
-export const promote = ServerMethod('event.promote', UpdateMethods.promote(Events));
+export const promote = ServerMethod(
+	'event.promote',
+	UpdateMethods.promote(Events as unknown as GroupPromoters),
+);
 
 /**
  * Add or remove a group from the groupOrganizers list
@@ -434,7 +440,10 @@ export const promote = ServerMethod('event.promote', UpdateMethods.promote(Event
  * @param add Whether to add or remove the group
  *
  */
-export const editing = ServerMethod('event.editing', UpdateMethods.editing(Events));
+export const editing = ServerMethod(
+	'event.editing',
+	UpdateMethods.editing(Events as unknown as GroupPromoters),
+);
 
 /**
  * Add current user as event-participant
@@ -466,6 +475,10 @@ export const addParticipant = ServerMethod(
 		}
 
 		Events.update({ _id: eventId }, { $addToSet: { participants: user._id } });
+
+		// Send notifications
+		Notification.Rsvp.record(eventId, user._id);
+
 		// if you cant load course its probably because the event doesnt have one
 		const course = Courses.findOne(event.courseId);
 		if (!course) {
@@ -531,7 +544,7 @@ Meteor.methods({
 					venue = Venues.findOne(event.venue._id);
 				}
 
-				let update: UpdateFilter<EventEntity> | Partial<EventEntity>;
+				let update: UpdateFilter<EventEntity>;
 				if (venue) {
 					if (event.start < new Date()) {
 						// Do not update venue for historical events
@@ -547,7 +560,7 @@ Meteor.methods({
 							'venue.loc': venue.loc,
 							'venue.editor': venue.editor,
 						},
-					};
+					} as UpdateFilter<EventEntity>;
 				} else {
 					// If the venue vanished from the DB we delete the reference but let the cached fields
 					// live on

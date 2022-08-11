@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -133,18 +134,15 @@ import './styles.scss';
 
 			// We return a function so the reactive dependency on locationState is
 			// established from within the map template which will call it.
-			return function () {
+			return () =>
 				// We only allow placing if we don't have a selected location yet
-				return !locationTracker.getLocation();
-			};
+				!locationTracker.getLocation();
 		},
 
 		allowRemoving() {
 			const { locationTracker } = Template.instance();
 
-			return function () {
-				return locationTracker.getLocation();
-			};
+			return () => !!locationTracker.getLocation();
 		},
 	});
 
@@ -163,7 +161,8 @@ import './styles.scss';
 				otherFacilities: instance.$('.js-otherFacilities').val() as string,
 			};
 
-			const maxPeople = parseInt(instance.$('.js-maxPeople').val() as string, 10) || undefined; // give back undefined in case of NaN or 0
+			const maxPeople =
+				Number.parseInt(instance.$('.js-maxPeople').val() as string, 10) || undefined; // give back undefined in case of NaN or 0
 			if (maxPeople && maxPeople > 0) {
 				changes.maxPeople = maxPeople;
 			}
@@ -196,11 +195,12 @@ import './styles.scss';
 			});
 
 			if (instance.isNew) {
-				changes.region = instance.selectedRegion.get() || undefined;
-				if (!changes.region) {
+				const region = instance.selectedRegion.get();
+				if (!region) {
 					Alert.error(i18n('venue.create.plsSelectRegion', 'Please select a region'));
 					return;
 				}
+				changes.region = region;
 			}
 
 			const loc = instance.locationTracker.getLocation();

@@ -33,17 +33,14 @@ if (Meteor.isClient) {
 					internal: true,
 				};
 
-				const eventId = (await EventsMethods.save({
-					eventId: '',
-					changes: newEvent,
-				})) as string;
+				const eventId = (await EventsMethods.save('', newEvent)) as string;
 
 				assert.isString(eventId, 'event.save returns an eventId string');
 
 				const event: any = { ...newEvent };
 				delete event.region;
 				event.title += ' No really';
-				await EventsMethods.save({ eventId, changes: event });
+				await EventsMethods.save(eventId, event);
 			});
 
 			it('Sanitizes event strings', async function () {
@@ -73,10 +70,7 @@ if (Meteor.isClient) {
 					region: regionId,
 				};
 
-				const eventId = await EventsMethods.save({
-					eventId: '',
-					changes: newEvent,
-				});
+				const eventId = await EventsMethods.save('', newEvent);
 
 				const handle = await MeteorAsync.subscribe('event', eventId);
 				handle.stop();
@@ -117,10 +111,7 @@ if (Meteor.isClient) {
 						internal: true,
 					};
 
-					await EventsMethods.save({
-						eventId: '',
-						changes: newEvent,
-					});
+					await EventsMethods.save('', newEvent);
 
 					const newCourse = Courses.findOne(courseId);
 

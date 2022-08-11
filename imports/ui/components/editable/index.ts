@@ -95,7 +95,7 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 			// HACK remove placeholder when there is content
 			// We should be using setContent() anyway, but it's not defined?!
 			if (text) {
-				editable.removeClass('medium-editor-placeholder');
+				editable.removeClass('medium-editor-placeholder medium-editor-placeholder-relative');
 			}
 
 			instance.errors.reset();
@@ -114,6 +114,10 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 
 		instance.store = async () => {
 			const newText = instance.getEdited();
+			if (newText === undefined) {
+				// Nothing has changed
+				return;
+			}
 			try {
 				await instance.state.store.onSave?.(newText);
 
@@ -189,6 +193,11 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 
 		// Register when the field is being edited
 		editable.on('input', () => {
+			// Fix placeholder position on empty after change
+			if (editable.text().length === 0) {
+				editable.html('');
+			}
+
 			changedByUser = true;
 			instance.state.changed.set(true);
 		});

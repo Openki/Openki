@@ -1,6 +1,7 @@
 import { promisify } from 'es6-promisify';
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { Tracker } from 'meteor/tracker';
 
 /**
  * This contains some async/Promise wrapper for existing meteor function,
@@ -47,6 +48,11 @@ export const MeteorAsync = {
 			password: string,
 		) => Promise<void>),
 	logout: Meteor.logout && promisify<void>(Meteor.logout),
+	setTimeout:
+		Meteor.setTimeout &&
+		((delay: number) => new Promise((resolve) => Meteor.setTimeout(resolve, delay))),
+	/** Defer execution of a function to run asynchronously in the background (similar to `MeteorAsync.delay(func, 0)`. */
+	defer: Meteor.defer && (() => new Promise((resolve) => Meteor.defer(resolve))),
 };
 
 /**
@@ -57,6 +63,15 @@ export const AccountsAsync = {
 	createUser: Accounts.createUser && promisify(Accounts.createUser),
 	forgotPassword: Accounts.forgotPassword && promisify(Accounts.forgotPassword),
 	resetPassword: Accounts.resetPassword && promisify(Accounts.resetPassword),
+};
+
+export const TrackerAsync = {
+	/**
+	 * `Tracker.afterFlush` runs code when all consequent of a tracker based change (such as a route
+	 * change) have occured.
+	 * Source: https://guide.meteor.com/testing.html#full-app-integration-test
+	 */
+	afterFlush: Tracker.afterFlush && promisify(Tracker.afterFlush),
 };
 
 export default MeteorAsync;
