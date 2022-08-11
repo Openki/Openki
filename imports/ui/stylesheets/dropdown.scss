@@ -10,10 +10,10 @@ $dropdown-transition-time: 0.3s;
 
 .dropdown-menu > li > a,
 .dropdown-menu > li > .btn-link {
-	@include td-text-align(left);
 	@include ellipsis;
 	color: $dropdown-link-color;
 	padding: 3px 20px;
+	text-align: start;
 	width: 100%;
 
 	&:hover {
@@ -72,6 +72,6 @@ $dropdown-legend-color: $brand-primary;
 
 .dropdown-legend {
 	@include clearfix;
-	@include td-text-align(left);
 	color: $dropdown-legend-color;
+	text-align: start;
 }

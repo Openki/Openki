@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { Router } from 'meteor/iron:router';
 import moment from 'moment';
 import { Users } from '/imports/api/users/users';
@@ -75,6 +76,7 @@ export const Api = {
 				start: ev.start,
 				end: ev.end,
 				duration: moment(ev.end).diff(ev.start) / 60000, // Minutes
+				maxParticipants: ev.maxParticipants,
 				link: Router.url('showEvent', ev),
 				internal: ev.internal,
 				room: ev.room,
@@ -87,6 +89,7 @@ export const Api = {
 				start: Date;
 				end: Date;
 				duration: number;
+				maxParticipants: number;
 				link: string;
 				internal: boolean;
 				room: string;
@@ -94,6 +97,7 @@ export const Api = {
 				venue?: {
 					id: string | undefined;
 					name: string | undefined;
+					address: string | undefined;
 					loc: Geodata | undefined;
 					link: string | undefined;
 				};
@@ -124,6 +128,7 @@ export const Api = {
 				evr.venue = {
 					id: ev.venue._id,
 					name: ev.venue.name,
+					address: ev.venue.address,
 					loc: ev.venue.loc,
 					link: maybeUrl('venueDetails', ev.venue),
 				};
@@ -136,7 +141,6 @@ export const Api = {
 						id: ev.courseId,
 						name: course.name,
 						link: Router.url('showCourse', course),
-						image: course.publicImageUrl(),
 						customFields: course.customFields
 							?.filter((f) => f.visibleFor === 'all')
 							.map((f) => ({
@@ -144,6 +148,11 @@ export const Api = {
 								value: f.value,
 							})),
 					};
+
+					const image = course.publicImageUrl();
+					if (image) {
+						evr.course.image = image;
+					}
 				}
 			}
 

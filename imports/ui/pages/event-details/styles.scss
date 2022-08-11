@@ -45,7 +45,6 @@ $header-bg: darken($blue-lighter, 5%);
 }
 
 .event-course-header + .event {
-	background-color: rgba($green, 0.35);
 	border-color: $header-bg;
 	border-style: solid;
 	border-width: 0 5px 5px;
@@ -70,11 +69,8 @@ $header-bg: darken($blue-lighter, 5%);
 }
 
 .event-details-header {
-	background: $header-bg;
-}
-
-.event-details-header .date {
-	font-size: x-large;
+	background: $event-header-bg;
+	padding: 20px 15px 10px;
 }
 
 .event-details-description {
@@ -102,12 +98,28 @@ $header-bg: darken($blue-lighter, 5%);
 .btn-event {
 	font-size: 18px;
 	font-weight: bold;
-	text-align: left;
+	text-align: start;
 }
 
 .event-page-btn {
 	@include btn-lg;
-	@include td-text-align(left);
 	margin-top: 3px;
+	text-align: start;
 	width: 100%;
+}
+
+// ** Internal indicator dot
+//========================================================================================
+.details-internal {
+	background-color: #f00;
+	border-radius: 50%;
+	height: 5px;
+	left: 6px;
+	position: absolute;
+	top: 6px;
+	width: 5px;
+}
+
+.event-detail-register-dropdown {
+	background-color: $event-page-component-bg;
 }

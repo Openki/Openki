@@ -54,15 +54,24 @@ Template.navbar.helpers({
 
 		const currentRegion = Regions.currentRegion();
 		if (currentRegion?.custom?.headerLogo?.src) {
+			// the region has a custom logo
 			headerLogo = currentRegion.custom.headerLogo.src;
 		} else {
+			// general logo
 			headerLogo = PublicSettings.headerLogo.src;
 		}
 
 		if (headerLogo.startsWith('data:image/')) {
+			// base64 image
 			return headerLogo;
 		}
 
+		if (headerLogo.startsWith(PublicSettings.s3.publicUrlBase)) {
+			// in our s3 file storage
+			return headerLogo;
+		}
+
+		// in the openki repository folder "public/logo/"
 		return `/logo/${headerLogo}`;
 	},
 

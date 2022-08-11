@@ -5,6 +5,7 @@ import { Api } from '/imports/Api';
 import FieldOrdering from '/imports/utils/field-ordering';
 import { FilteringReadError } from '/imports/utils/filtering';
 import SortSpec from '/imports/utils/sort-spec';
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 WebApp.rawConnectHandlers.use('/api', (_req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
@@ -50,12 +51,16 @@ const jSendResponder = function (res: any, process: any) {
 	}
 };
 
-Router.route('api.0.json', {
+Router.route<
+	never,
+	{ handler: 'groups' | 'venues' | 'events' | 'courses' },
+	{ sort?: string; limit?: string; skip?: string }
+>('api.0.json', {
 	path: '/api/0/json/:handler',
 	where: 'server',
 	action() {
 		jSendResponder(this.response, () => {
-			const handler: 'groups' | 'venues' | 'events' | 'courses' = this.params.handler;
+			const handler = this.params.handler;
 			if (!Object.prototype.hasOwnProperty.call(Api, handler)) {
 				throw new NoActionError('Invalid action');
 			}
@@ -70,9 +75,9 @@ Router.route('api.0.json', {
 			delete filter.limit;
 			delete filter.skip;
 
-			const selectedLimit = Number.parseInt(query.limit, 10) || 100;
-			const limit = Math.max(0, Math.min(100, selectedLimit));
-			const skip = Number.parseInt(query.skip, 10) || 0;
+			const selectedLimit = Number.parseInt(query.limit || '', 10) || 100; // If nothing is specified, 100 enities are returned.
+			const limit = Math.max(0, Math.min(PrivateSettings.apiMaxLimit, selectedLimit));
+			const skip = Number.parseInt(query.skip || '', 10) || 0;
 			const results = Api[handler](filter, limit, skip, sorting.spec());
 
 			// Sort the results again so computed fields are sorted too

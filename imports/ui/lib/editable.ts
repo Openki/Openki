@@ -14,7 +14,7 @@ export interface ServerValidationErrorHandler {
 export interface Store {
 	clientValidations?: { [name: string]: ClientValidation };
 	serverValidationErrors?: ServerValidationErrorHandler[];
-	onSave?: (text: string | undefined) => Promise<void>;
+	onSave?: (text: string) => Promise<void>;
 	onSuccess?: (text: string | undefined) => void;
 	onError?: (err: unknown, text: string | undefined) => void;
 }
@@ -68,10 +68,12 @@ export class Editable {
 	changed: ReactiveVar<boolean>;
 
 	/** The template instance that is currently displaying the editable */
-	editingInstance?: {
-		getEdited: () => string | undefined;
-		getTotalFocusTimeInSeconds: () => number;
-	};
+	editingInstance?:
+		| {
+				getEdited: () => string | undefined;
+				getTotalFocusTimeInSeconds: () => number;
+		  }
+		| undefined;
 
 	constructor(multiline = false, placeholderText = '', store?: Store) {
 		this.multiline = multiline;

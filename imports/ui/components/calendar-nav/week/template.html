@@ -6,7 +6,9 @@
 			</div>
 			<div class="col-md-6 col-lg-4 p-1">
 				<div class="row justify-content-center align-items-center text-center">
-					{{> calendarNavWeekControl direction='previous'}}
+					{{#unless hideSwitches}}
+						{{> calendarNavWeekControl direction='previous'}}
+					{{/unless}}
 					<div class="col-auto">
 						<div class="lead">
 							{{i18n "calendar.weekNumber" "Week"}} {{weekNr date}}
@@ -18,7 +20,9 @@
 								{{dateShort (endDateTo date)}}</span>
 						</div>
 					</div>
-					{{> calendarNavWeekControl direction='next'}}
+					{{#unless hideSwitches}}
+						{{> calendarNavWeekControl direction='next'}}
+					{{/unless}}
 				</div>
 			</div>
 			{{#if availableGroups}}

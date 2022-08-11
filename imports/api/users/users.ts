@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 
 export type Role = 'admin';
@@ -161,7 +162,7 @@ export class User {
 	}
 }
 
-export const Users = Meteor.users as Mongo.Collection<UserEntity, UserModel> & {
+export const Users = Meteor.users as unknown as Mongo.Collection<UserEntity, UserModel> & {
 	/**
 	 * Get the current user
 	 * @return User or if the user is not logged-in, a placeholder "anon" object is returned.
