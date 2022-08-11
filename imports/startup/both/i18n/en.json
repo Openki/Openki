@@ -301,6 +301,7 @@
   "event.details.i-participate-no": "Let it be known you are participating in this event. Your registration is binding.",
   "event.details.i-participate-yes": "You are now registered. Your registration is binding.",
   "event.details.isFullyBooked": "The event is fully booked",
+  "event.details.participants.free.places": "{NUM, plural, =0{No free seats} one{one free seat} other{# free seats} }",
   "event.details.paticipants.title": "{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }",
   "event.details.register-register": "Register",
   "event.details.registration": "Registration",
