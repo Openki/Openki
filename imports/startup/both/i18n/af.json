@@ -3,8 +3,5 @@
 	"_button.save": "Stoor",
 	"_inputField.password": "Wagwoord",
 	"calendar.windowtitle": "Kalender",
-	"category.biology": "Biologie",
-	"event.details.register-register": "",
-	"event.details.reserve-a-seat": "",
-	"event.details.unregister-withdraw": "Meine Anmeldung zurücknehmen"
+	"category.biology": "Biologie"
 }
