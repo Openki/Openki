@@ -33,7 +33,6 @@ import './styles.scss';
 		{
 			count: ReactiveVar<number>;
 			limit: ReactiveVar<number>;
-			sub: Meteor.SubscriptionHandle;
 			notifyAll: ReactiveVar<boolean>;
 		}
 	>;
@@ -50,7 +49,7 @@ import './styles.scss';
 		const limit = select ? 0 : 3;
 		instance.limit = new ReactiveVar(limit);
 
-		instance.sub = instance.subscribe('discussion', instance.data.courseId, async () => {
+		instance.subscribe('discussion', instance.data.courseId, async () => {
 			if (select) {
 				// Wait for the templates to render before trying to jump there.
 				await TrackerAsync.afterFlush();
@@ -66,10 +65,6 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		ready() {
-			return Template.instance().sub.ready();
-		},
-
 		posts() {
 			const instance = Template.instance();
 			const { data } = instance;

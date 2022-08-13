@@ -21,7 +21,6 @@ const Template = TemplateAny as TemplateStaticTyped<
 		ownProfile: boolean;
 	},
 	{
-		courseSub: Meteor.SubscriptionHandle;
 		coursesByRole: (role: string, archived: boolean) => Mongo.Cursor<CourseEntity, CourseModel>;
 	}
 >;
@@ -32,11 +31,11 @@ template.onCreated(function () {
 	const instance = this;
 	const id = instance.data.user._id;
 
-	instance.courseSub = instance.subscribe('Courses.findFilter', {
+	instance.subscribe('Courses.findFilter', {
 		userInvolved: id,
 		archived: false,
 	});
-	instance.courseSub = instance.subscribe('Courses.findFilter', {
+	instance.subscribe('Courses.findFilter', {
 		userInvolved: id,
 		archived: true,
 	});
@@ -88,9 +87,6 @@ Template.usersCourselist.helpers({
 			return username;
 		}
 		return false;
-	},
-	ready() {
-		return Template.instance().courseSub.ready();
 	},
 	isInvolved() {
 		const userId = Template.currentData().user._id;
