@@ -3,7 +3,7 @@ import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { Regions } from '/imports/api/regions/regions';
-import { VenueEntity, Venues } from '/imports/api/venues/venues';
+import { Venues } from '/imports/api/venues/venues';
 
 import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
 import { Filtering } from '/imports/utils/filtering';
@@ -53,7 +53,7 @@ import './styles.scss';
 			// Here we assume venues are not changed or removed.
 			instance.locationTracker.markers.remove({});
 			Venues.findFilter(query).observe({
-				added(originalLocation: VenueEntity) {
+				added(originalLocation) {
 					const location = {
 						...originalLocation,
 						proposed: true,
