@@ -11,7 +11,7 @@
 	{{#each course in courses}}
 		{{> frameCourselistCourse course=course hideInterested=hideInterested}}
 	{{/each}}
-	{{#unless ready}}
+	{{#unless Template.subscriptionsReady}}
 		{{> loadingRow}}
 	{{/unless}}
 	{{#if moreCourses}}
