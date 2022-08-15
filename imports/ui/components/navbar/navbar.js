@@ -21,15 +21,9 @@ Template.navbar.onCreated(function () {
 	const instance = this;
 	instance.state = new ReactiveDict();
 	instance.state.setDefault({
-		navbarIsCollapsed: false,
+		navbarIsCollapsed: true,
 	});
-	
-	instance.autorun(() => {
-		instance.state.set({'navbarIsCollapsed': $('.navbar-toggle').hasClass('collapsed')});
-	});
-	
-})
-
+});
 
 Template.navbar.onRendered(function () {
 	const instance = this;
@@ -133,12 +127,19 @@ Template.navbar.helpers({
 	},
 
 	navbarIsCollapsed() {
-		console.log("inside helper");
-		return this.state.get('navbarIsCollapsed');
+		return Template.instance().state.get('navbarIsCollapsed');
 	},
 });
 
 Template.navbar.events({
+	'show.bs.collapse .navbar'() {
+		Template.instance().state.set('navbarIsCollapsed', false);
+	},
+
+	'hide.bs.collapse .navbar'() {
+		Template.instance().state.set('navbarIsCollapsed', true);
+	},
+
 	'click .js-nav-dropdown-close'(event, instance) {
 		instance.$('.navbar-collapse').collapse('hide');
 	},
