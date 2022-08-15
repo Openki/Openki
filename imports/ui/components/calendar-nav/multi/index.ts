@@ -17,7 +17,7 @@ import '../styles.scss';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'calendarNavMulti',
-		{ date: unknown; setIsAttendeeFilterOn: (trueOrfalse: boolean) => void;},
+		{ date: unknown; setIsAttendeeFilterOn: (trueOrfalse: boolean) => void },
 		{ currentUnit: ReactiveVar<string> }
 	>;
 
@@ -50,10 +50,10 @@ import '../styles.scss';
 	});
 
 	template.events({
-		'change .js-filter-own-events' (event) {
+		'change .js-filter-own-events'(event) {
 			// call the parent method that gets passed into this template as a (prop) argument
-			Template.instance().data.setIsAttendeeFilterOn( (event.target as HTMLInputElement).checked );
-		}
+			Template.instance().data.setIsAttendeeFilterOn((event.target as HTMLInputElement).checked);
+		},
 	});
 }
 

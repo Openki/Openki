@@ -36,10 +36,8 @@ import './styles.scss';
 		const filter = Events.Filtering();
 		instance.filter = filter;
 
-		instance.state = new ReactiveDict;
-		instance.state.setDefault(
-			{isAttendeeFilterOn: false}
-		);
+		instance.state = new ReactiveDict();
+		instance.state.setDefault({ isAttendeeFilterOn: false });
 		instance.setIsAttendeeFilterOn = (trueOrfalse: boolean) => {
 			this.state.set('isAttendeeFilterOn', trueOrfalse);
 		};
@@ -105,14 +103,14 @@ import './styles.scss';
 		startDate() {
 			return moment(Template.instance().filter.get('start'));
 		},
-		setterToBePassedToChild(){
+		setterToBePassedToChild() {
 			// returns a function
 			return Template.instance().setIsAttendeeFilterOn;
 		},
-		isAttendeeFilterOn(){
+		isAttendeeFilterOn() {
 			// returns a value of the state (true / false)
 			return Template.instance().state.get('isAttendeeFilterOn');
-		}	
+		},
 	});
 }
 {
@@ -146,16 +144,11 @@ import './styles.scss';
 			return Events.findFilter(filterQuery);
 		},
 		maybeFilteredEvents(events: EventModel[], filters: any) {
-			let maybeFilteredEvents = [ ...events ];
+			let maybeFilteredEvents = [...events];
 			const userId = Meteor.userId();
-			const something = filters.hash.isAttendeeFilterOn;
-			console.log(userId, something);
-			if(filters.hash.isAttendeeFilterOn && userId) {
-				console.log("inside if");
-				maybeFilteredEvents = maybeFilteredEvents.filter( (event) => {
-					const a = event.participants?.includes(userId);
-					console.log(a);
-					return a;
+			if (filters.hash.isAttendeeFilterOn && userId) {
+				maybeFilteredEvents = maybeFilteredEvents.filter((event) => {
+					return event.participants?.includes(userId);
 				});
 			}
 			return maybeFilteredEvents;
