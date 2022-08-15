@@ -7,7 +7,7 @@
 		/* beautify ignore:end */
 
 	</style>
-	{{#if pageReady}}
+	{{#if Template.subscriptionsReady}}
 		{{#if days}}
 			{{#each day in days}}
 				<h4 class="frame-list-title">{{day}}</h4>
@@ -15,9 +15,6 @@
 					{{> frameCalendarEvent event}}
 				{{/each}}
 			{{/each}}
-			{{#unless ready}}
-				{{> loadingRow}}
-			{{/unless}}
 			{{#if moreEvents}}
 				<div class="show-more">
 					<button class="btn btn-secondary js-show-more-events" type="button">

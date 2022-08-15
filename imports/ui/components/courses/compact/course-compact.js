@@ -10,11 +10,6 @@ import '/imports/ui/components/courses/categories';
 import './course-compact.html';
 
 Template.courseCompact.helpers({
-	ready() {
-		const { instance } = Template;
-		return !instance.eventSub || instance.eventSub.ready();
-	},
-
 	courseCss(course) {
 		if (!course.nextEvent) {
 			return '';

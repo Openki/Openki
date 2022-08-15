@@ -114,9 +114,9 @@ $event-caption-body-bg: $event-body-bg;
 }
 
 .event-caption-delete .event-caption-icon {
-	color: #bfbfbf;
+	color: $event-trashcan-color;
 }
 
-.event-caption-delete .event-caption-icon:hover {
+.event-caption-delete:hover .event-caption-icon {
 	color: $red;
 }

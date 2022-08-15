@@ -22,7 +22,6 @@ import './template.html';
 		{
 			groupedEvents: ReactiveVar<_.Dictionary<EventModel[]>>;
 			days: ReactiveVar<string[]>;
-			pageReady: ReactiveVar<boolean>;
 			limit: ReactiveVar<number>;
 		}
 	>;
@@ -34,7 +33,6 @@ import './template.html';
 
 		instance.groupedEvents = new ReactiveVar({});
 		instance.days = new ReactiveVar([]);
-		instance.pageReady = new ReactiveVar(false);
 
 		const { query } = Router.current().params;
 		instance.limit = new ReactiveVar(parseInt(query.count || '', 10) || 200);
@@ -67,13 +65,7 @@ import './template.html';
 				filterQuery.internal = false;
 			}
 
-			instance.subscribe('Events.findFilter', filterQuery, limit + 1, {
-				onReady: () => {
-					if (!instance.pageReady.get()) {
-						instance.pageReady.set(true);
-					}
-				},
-			});
+			instance.subscribe('Events.findFilter', filterQuery, limit + 1);
 
 			const events = Events.find({}, { sort: { start: 1 }, limit }).fetch();
 			const groupedEvents = _.groupBy(events, (event) => moment(event.start).format('LL'));
@@ -84,14 +76,6 @@ import './template.html';
 	});
 
 	template.helpers({
-		pageReady() {
-			return Template.instance().pageReady.get();
-		},
-
-		ready() {
-			return Template.instance().subscriptionsReady();
-		},
-
 		days() {
 			return Template.instance().days.get();
 		},
