@@ -76,7 +76,6 @@ import './template.html';
 	});
 
 	template.helpers({
-
 		days() {
 			return Template.instance().days.get();
 		},
