@@ -41,7 +41,6 @@ import './styles.scss';
 			{isAttendeeFilterOn: false}
 		);
 		instance.setIsAttendeeFilterOn = (trueOrfalse: boolean) => {
-			console.log("parent's helper called: ", trueOrfalse);
 			this.state.set('isAttendeeFilterOn', trueOrfalse);
 		};
 

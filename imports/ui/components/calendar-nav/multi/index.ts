@@ -51,7 +51,8 @@ import '../styles.scss';
 
 	template.events({
 		'change .js-filter-own-events' (event) {
-			Template.instance().data.setIsAttendeeFilterOn((event.target as HTMLInputElement).checked);
+			// call the parent method that gets passed into this template as a (prop) argument
+			Template.instance().data.setIsAttendeeFilterOn( (event.target as HTMLInputElement).checked );
 		}
 	});
 }
