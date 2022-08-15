@@ -1,5 +1,5 @@
 <template name="courseCompact">
-	{{#if ready}}
+	{{#if Template.subscriptionsReady}}
 		<div class="course-compact-wrap">
 			<a href="{{pathFor 'showCourse'}}">
 				<div class="course-compact {{courseStateClasses}} {{filterPreviewClasses}}"
