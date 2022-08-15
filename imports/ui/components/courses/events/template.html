@@ -1,5 +1,5 @@
 <template name="courseEvents">
-	{{#if ready}}
+	{{#if Template.subscriptionsReady}}
 		{{#if instance.haveEvents}}
 			<div class="page-component">
 				<div class="fade-wrap">
@@ -105,7 +105,7 @@
 		</div>
 	{{/if}}
 
-	{{#if ready}}
+	{{#if Template.subscriptionsReady}}
 		{{#if instance.haveEvents}}
 			<div class="page-component">
 				{{#with course}}
