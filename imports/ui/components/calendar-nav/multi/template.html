@@ -4,20 +4,20 @@
 			{{> calendarNavMultiControl direction='previous'}}
 			<div class="calendar-nav-moment">
 				<div class="lead">
-					{{i18n "calendar.weekNumber" "Week"}} {{weekNr data.date}}
+					{{i18n "calendar.weekNumber" "Week"}} {{weekNr date}}
 				</div>
 				<div>
-					<span class="d-none d-md-inline-block">{{dateLong data.date}} -
-						{{dateLong (endDateTo data.date)}}</span>
-					<span class="d-md-none">{{dateShort data.date}} -
-						{{dateShort (endDateTo data.date)}}</span>
+					<span class="d-none d-md-inline-block">{{dateLong date}} -
+						{{dateLong (endDateTo date)}}</span>
+					<span class="d-md-none">{{dateShort date}} -
+						{{dateShort (endDateTo date)}}</span>
 				</div>
 			</div>
 			{{> calendarNavMultiControl direction='next'}}
 		</div>
-		<div class="align-content-center text-center">
+		<div class="align-content-center text-center pb-2">
 			<input type="checkbox" id="filter-own-events" class="js-filter-own-events" name="filter-own-events" >
-			<label for="filter-own-events">filter events you attend</label>
+			<label for="filter-own-events">{{i18n 'calendar.filter-own-events' 'Show my events only'}}</label>
 		</div>
 	</div>
 </template>

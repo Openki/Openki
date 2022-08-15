@@ -134,6 +134,7 @@ const helpers: { [name: string]: Function } = {
 	},
 
 	weekNr(date: moment.MomentInput) {
+		console.log("helper 'WeekNr' called: ", date);
 		if (!date) {
 			return false;
 		}

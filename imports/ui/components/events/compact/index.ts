@@ -11,18 +11,13 @@ import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'eventCompact',
-	{ 
-		event: EventModel;
-		withDate?: boolean;
-		withImage?: boolean;
-		openInNewTab?: boolean 
-	}
+	{ event: EventModel; withDate?: boolean; withImage?: boolean; openInNewTab?: boolean }
 >;
 
 const template = Template.eventCompact;
 
 template.helpers({
-	isRSVP() {
+	userAttendsEvent() {
 		const { event } = Template.instance().data;
 		const participantsArray = event.participants;
 		if(!participantsArray) return false;

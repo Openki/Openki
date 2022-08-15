@@ -3,7 +3,7 @@
 		<a href="{{pathFor 'showEvent' _id=event._id slug=event.slug}}"
 		   target="{{#if openInNewTab}}_blank{{/if}}">
 			<div class="event-compact {{eventCompactClasses}}">
-				<div class="event-compact-header {{#if isRSVP}}event-rsvp{{/if}}">
+				<div class="event-compact-header {{#if userAttendsEvent}}user-attends-event{{/if}}">
 					{{#if withDate}}
 						<span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
 						{{weekdayFormat event.startLocal}}
