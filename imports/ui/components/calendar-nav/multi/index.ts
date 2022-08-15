@@ -27,6 +27,9 @@ import '../styles.scss';
 		endDateTo(date: moment.Moment) {
 			return moment(date).add(6, 'days');
 		},
+		userIsLoggedIn() {
+			return !!Meteor.userId();
+		},
 	});
 
 	template.onCreated(function () {
