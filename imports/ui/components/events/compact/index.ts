@@ -65,6 +65,20 @@ template.helpers({
 	background-size: cover;`,
 		};
 	},
+
+	isEventFullyBooked() {
+		if (Template.instance().data.event.maxParticipants) {
+			if (
+				Template.instance().data.event.maxParticipants -
+					(Template.instance().data.event.participants?.length || 0) ===
+				0
+			) {
+				return true;
+			}
+			return false;
+		}
+		return false;
+	},
 });
 
 template.events({
