@@ -728,6 +728,8 @@
   "region.deleting.error": "Deleting the region went wrong",
   "region.detail.remove": "Remove this region",
   "region.detail.remove.busy": "Deleting region…",
+  "region.edit.descriptionLabel": "Description:",
+  "region.edit.descriptionPlaceholder": "An optional description",
   "region.edit.map": "Please add the center of the region by clicking \"+\" (on the right inside the map)",
   "region.edit.name": "Name:",
   "region.edit.namePlaceholder": "Full name of region",

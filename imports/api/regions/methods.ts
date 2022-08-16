@@ -22,6 +22,7 @@ export const CreateFieldsPattern = {
 		coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
 	},
 	tz: String,
+	description: String,
 };
 
 export type CreateFields = Type<typeof CreateFieldsPattern>;
@@ -62,6 +63,9 @@ export const create = ServerMethod(
 
 		set.tz = changes.tz.trim().substring(0, 40);
 
+		set.description = changes.description.trim().substring(0, 200);
+		// check this already when the user writes into the textarea? is there a limit for course descriptions?
+
 		return Regions.insert(set);
 	},
 );
@@ -73,6 +77,7 @@ export const UpdateFieldsPattern = {
 		coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
 	}),
 	tz: Match.Maybe(String),
+	description: String,
 };
 
 export type UpdateFields = Type<typeof UpdateFieldsPattern>;
@@ -113,6 +118,11 @@ export const update = ServerMethod('region.update', (regionId: string, changes: 
 
 	if (changes.tz) {
 		set.tz = changes.tz.trim().substring(0, 40);
+	}
+
+	if (changes.description) {
+		set.description = changes.description.trim().substring(0, 200);
+		// check this already when the user writes into the textarea?
 	}
 
 	Regions.update({ _id: regionId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);
