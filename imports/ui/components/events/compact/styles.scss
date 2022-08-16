@@ -140,3 +140,24 @@
 	top: 2px;
 	width: 3px;
 }
+
+// event fully booked
+//============================================================================================
+.event-fully-booked {
+	background-color: rgba(239, 17, 16, 0.6);
+	border-radius: 5px;
+	color: $white;
+	display: flow-root;
+	font-family: monospace, sans-serif;
+	font-size: 2em;
+	font-stretch: narrower;
+	font-weight: 950;
+	margin-block-start: 18px;
+	padding: 5px;
+	position: absolute;
+	top: 40%;
+	transform: rotate(-27deg);
+	transform: rotate(-27deg);
+	transform: rotate(-27deg);
+	width: fit-content;
+}
