@@ -866,6 +866,7 @@
   "tenant.create.plsGiveName": "Please give a organization name",
   "tenant.create.title": "Create your private region",
   "tenant.details.regions.createNew.button": "Create a new region",
+  "tenant.details.regions.description": "Description",
   "tenant.details.regions.name": "Name",
   "tenant.details.regions.numberOfCourses": "Number of courses",
   "tenant.details.regions.numberOfUpcomingEvents": "Number of upcoming events",
