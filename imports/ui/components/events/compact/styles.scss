@@ -144,7 +144,7 @@
 // event fully booked
 //============================================================================================
 .event-fully-booked {
-	background-color: rgba(239, 17, 16, 0.6);
+	background-color: rgba(255, 82, 82, 0.4);
 	border-radius: 5px;
 	color: $white;
 	display: flow-root;
@@ -157,7 +157,8 @@
 	position: absolute;
 	top: 40%;
 	transform: rotate(-27deg);
-	transform: rotate(-27deg);
+	transform: rotate(-27d300eg);
 	transform: rotate(-27deg);
 	width: fit-content;
+	z-index: 300;
 }
