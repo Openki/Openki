@@ -20,7 +20,7 @@ template.helpers({
 	userAttendsEvent() {
 		const { participants } = Template.instance().data.event;
 		const userId = Meteor.userId();
-		if (!userId) { 
+		if (!userId) {
 			return false;
 		}
 		return participants?.includes(userId);
