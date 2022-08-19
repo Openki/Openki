@@ -18,13 +18,12 @@ const template = Template.eventCompact;
 
 template.helpers({
 	userAttendsEvent() {
-		const { event } = Template.instance().data;
-		const participantsArray = event.participants;
-		if (!participantsArray) return false;
+		const { participants } = Template.instance().data.event;
 		const userId = Meteor.userId();
-		if (!userId) return false;
-		if (participantsArray.includes(userId)) return true;
-		return false;
+		if (!userId) { 
+			return false;
+		}
+		return participants?.includes(userId);
 	},
 
 	eventCompactClasses() {
