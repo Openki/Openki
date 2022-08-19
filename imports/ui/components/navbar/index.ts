@@ -15,22 +15,16 @@ import { PublicSettings } from '/imports/utils/PublicSettings';
 import '/imports/ui/components/regions/selection';
 import '/imports/ui/components/language-selection';
 
-import './navbar.html';
+import './template.html';
 
-export type Data = {
-	// data that's given into the template -> nothing
-	// to even have this makes sense if we want to export and if the data is complex?
-}
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'navbar',
-		Data,
+		null,
 		{
 			state: ReactiveDict<{
 				navbarIsCollapsed: boolean;
 			}>;
-			// Other method signatures could go here. Attributes bzw varibales would probably be related to the state and
-			// therefore belong into the state object.
 		}
 	>;
 
@@ -59,13 +53,13 @@ export type Data = {
 				navbar.toggleClass('navbar-covering', notAtTop);
 				activeNavLink.toggleClass('navbar-link-covering', notAtTop);
 			});
-		} /*else {
+		} else {
 			$(document).on('click', (event) => {
-				if (this.$(event.target).parents('.navbar-collapse').length === 0) {
+				if (this.$(event.target as any).parents('.navbar-collapse').length === 0) {
 					this.$('.navbar-collapse').collapse('hide');
 				}
 			});
-		}*/
+		}
 	});
 
 	template.helpers({
@@ -172,7 +166,7 @@ export type Data = {
 				// make menu item scroll up when opening the dropdown menu
 				if (event.type === 'show') {
 					const scrollTo = $(event.currentTarget);
-					if(scrollTo && container){
+					if (scrollTo && container) {
 						container.animate({
 							scrollTop: scrollTo.offset()!.top - container.offset()!.top + container.scrollTop()!,
 						});
@@ -185,13 +179,7 @@ export type Data = {
 	});
 }
 {
-	const Template = TemplateAny as TemplateStaticTyped<
-		'loginButton',
-		{},	// empty data object (will always be called data, as it's defined
-			//as the same type in Blaze.TemplateInstance<D>> which is called data?
-			//-> in blaze docs probably is info on that
-		{} // no custom properties
-	>;
+	const Template = TemplateAny as TemplateStaticTyped<'loginButton'>;
 
 	const template = Template.loginButton;
 
@@ -208,7 +196,7 @@ export type Data = {
 	});
 }
 {
-	const Template = TemplateAny as TemplateStaticTyped<'ownUserFrame'>;	// D and T parameters are not necessairy maybe
+	const Template = TemplateAny as TemplateStaticTyped<'ownUserFrame'>;
 
 	const template = Template.ownUserFrame;
 
@@ -219,7 +207,7 @@ export type Data = {
 
 			const routeName = Router.current().route?.getName();
 			if (routeName === 'profile') {
-				Router.go('userprofile', Meteor.user() as Record<string, any>|undefined);
+				Router.go('userprofile', Meteor.user() as any);
 			}
 		},
 
