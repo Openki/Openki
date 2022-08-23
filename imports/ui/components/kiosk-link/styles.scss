@@ -3,7 +3,7 @@
 .back-to-kiosk {
 	@include td-pos(right, 50px);
 	background-color: $blue-lighter;
-	border: 1px solid #000;
+	border: 4px solid #38829c;
 	border-radius: 50%;
 	bottom: 50px;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
