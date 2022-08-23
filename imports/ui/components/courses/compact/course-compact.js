@@ -23,7 +23,8 @@ Template.courseCompact.helpers({
 		return `
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.75)), url('${src}');
 	background-position: center;
-	background-size: cover;`;
+	background-size: cover;
+	background-repeat: no-repeat;`;
 	},
 
 	courseStateClasses() {
