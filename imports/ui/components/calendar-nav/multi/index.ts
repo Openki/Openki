@@ -17,7 +17,7 @@ import '../styles.scss';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'calendarNavMulti',
-		{ date: unknown; setIsAttendeeFilterOn: (trueOrfalse: boolean) => void },
+		{ date: unknown; setIsAttendeeFilterOn: (state: boolean) => void },
 		{ currentUnit: ReactiveVar<string> }
 	>;
 
