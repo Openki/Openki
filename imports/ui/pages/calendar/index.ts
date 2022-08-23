@@ -24,7 +24,7 @@ import './styles.scss';
 			state: ReactiveDict<{
 				isAttendeeFilterOn: boolean;
 			}>;
-			setIsAttendeeFilterOn: (trueOrfalse: boolean) => void;
+			setIsAttendeeFilterOn: (state: boolean) => void;
 		}
 	>;
 
@@ -38,8 +38,8 @@ import './styles.scss';
 
 		instance.state = new ReactiveDict();
 		instance.state.setDefault({ isAttendeeFilterOn: false });
-		instance.setIsAttendeeFilterOn = (trueOrfalse: boolean) => {
-			this.state.set('isAttendeeFilterOn', trueOrfalse);
+		instance.setIsAttendeeFilterOn = (state: boolean) => {
+			this.state.set('isAttendeeFilterOn', state);
 		};
 
 		// Read URL state
