@@ -313,8 +313,12 @@ import './styles.scss';
 		const instance = this;
 		instance.state = new ReactiveDict();
 		instance.state.setDefault({
-			showMoreState: true
+			showMoreState: false
 		});
+	});
+
+	template.onRendered(function () {
+		console.log("rendered ", document.getElementById('description')?.style);
 	});
 
 	template.helpers({
@@ -342,6 +346,9 @@ import './styles.scss';
 			console.log(state);
 			return state ? 'course-description-show-more':'';
 		},
+		descriptionFlowsOver(){
+			console.log("div ", document.getElementById('description'));
+		}
 	});
 }
 {

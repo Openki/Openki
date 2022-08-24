@@ -197,6 +197,10 @@ $course-details-content-padding-horizontal: (
 	width: $course-details-content-padding-horizontal;
 }
 
+.course-description-show-more {
+	max-height: none;
+}
+
 // ** Description
 //========================================================================================
 .course-details-description {
