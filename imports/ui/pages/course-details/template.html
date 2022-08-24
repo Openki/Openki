@@ -140,7 +140,7 @@
 		</ul>
 	</nav>
 	<div class="tab-content course-details-content">
-		<div class="tab-pane active {{myHelper}} myclass" id="description">
+		<div class="tab-pane active {{showMore}} overflow-hidden" id="description">
 			{{> courseDetailsDescription editableDescription=editableDescription course=course}}
 			{{#each info in customFields}}
 				<p>
@@ -149,6 +149,7 @@
 				</p>
 			{{/each}}
 		</div>
+		{{#if descriptionFlowsOver}} show more button {{/if}}
 		<div class="tab-pane course-history" id="history">
 			{{> coursehistory}}
 		</div>
