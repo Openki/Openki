@@ -2,9 +2,9 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import $ from 'jquery';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
+import { decode } from 'html-entities';
 
 import { EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
@@ -103,7 +103,7 @@ import './template.html';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'frameCalendarEvent',
-		unknown,
+		EventModel,
 		{ expanded: ReactiveVar<boolean> }
 	>;
 
@@ -123,6 +123,16 @@ import './template.html';
 		},
 
 		expanded: () => Template.instance().expanded.get(),
+
+		getAttendees() {
+			const { data } = Template.instance();
+			return data.participants?.length || 0;
+		},
+
+		getTotalAvailableSeats() {
+			const { data } = Template.instance();
+			return data.maxParticipants?.valueOf() || decode('&#8734;');
+		},
 	});
 
 	template.events({
