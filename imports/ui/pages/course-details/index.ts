@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
+import { ReactiveDict } from 'meteor/reactive-dict';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
@@ -57,7 +58,10 @@ import './styles.scss';
 				member: boolean;
 				select: string;
 			},
-			{ editableName: Editable; editableDescription: Editable }
+			{ 
+				editableName: Editable;
+				editableDescription: Editable
+			}
 		>,
 		'courseDetailsPage',
 	);
@@ -296,10 +300,22 @@ import './styles.scss';
 			course: CourseModel;
 			member: boolean;
 			select: string;
+		},
+		{
+			state: ReactiveDict<{ showMoreState: boolean }>;
 		}
+		
 	>;
 
 	const template = Template.courseDetailsSubmenu;
+
+	template.onCreated(function () {
+		const instance = this;
+		instance.state = new ReactiveDict();
+		instance.state.setDefault({
+			showMoreState: true
+		});
+	});
 
 	template.helpers({
 		mayEdit() {
@@ -320,6 +336,11 @@ import './styles.scss';
 						value: i.value,
 					})) || []
 			);
+		},
+		showMore(){
+			const state = Template.instance().state.get('showMoreState');
+			console.log(state);
+			return state ? 'course-description-show-more':'';
 		},
 	});
 }
