@@ -1,6 +1,8 @@
 import { Mongo } from 'meteor/mongo';
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict';
+
 import moment from 'moment';
 
 import { EventEntity, EventModel, Events } from '/imports/api/events/events';
@@ -34,6 +36,10 @@ const Template = TemplateAny as TemplateStaticTyped<
 		filter: ReturnType<typeof Events['Filtering']>;
 		limit: number;
 		update: () => void;
+		state: ReactiveDict<{
+			isAttendeeFilterOn: boolean;
+		}>;
+		setIsAttendeeFilterOn: (state: boolean) => void;
 	}
 >;
 
@@ -42,6 +48,12 @@ const template = Template.frameWeekPage;
 template.onCreated(function () {
 	const instance = this;
 	instance.weekdays = [];
+
+	instance.state = new ReactiveDict();
+	instance.state.setDefault({ isAttendeeFilterOn: false });
+	instance.setIsAttendeeFilterOn = (state: boolean) => {
+		this.state.set('isAttendeeFilterOn', state);
+	};
 
 	instance.autorun(() => {
 		const data = Template.currentData();
@@ -167,6 +179,10 @@ template.helpers({
 				instance.filter.remove('categories', category).done();
 				instance.update();
 			},
+			onChangeAttendingEventsOnly: (state) => {
+				console.log("onChangeAttendingEventsOnly", state);
+				// where to filter best? understand code!
+			},
 		} as CalendarNavData;
 	},
 
@@ -177,4 +193,14 @@ template.helpers({
 	weekdays() {
 		return Template.instance().weekdays;
 	},
+	setterToBePassedToChild() {
+		// returns a function
+		return Template.instance().setIsAttendeeFilterOn;
+	},
+	isAttendeeFilterOn() {
+		// returns a value of the state (true / false)
+		console.log("helper called in parent");
+		return Template.instance().state.get('isAttendeeFilterOn');
+	},
+
 });

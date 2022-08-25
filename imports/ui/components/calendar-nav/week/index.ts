@@ -25,6 +25,7 @@ export type Data = {
 	categories: string[];
 	onAddCategory: (category: string) => void;
 	onRemoveCategory: (category: string) => void;
+	onChangeAttendingEventsOnly: (state: boolean) => void;
 };
 
 {
@@ -71,6 +72,12 @@ export type Data = {
 				onAdd: data.onAddCategory,
 				onRemove: data.onRemoveCategory,
 			};
+		},
+	});
+
+	template.events({
+		'click .js-filter-own-events'(event) {
+			Template.instance().data.onChangeAttendingEventsOnly((event.target as HTMLInputElement).checked);
 		},
 	});
 }
