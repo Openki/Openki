@@ -2,18 +2,18 @@
 	<div class="editable-wrap {{wrapClasses}} {{errorClass 'input'}}">
 		<div class="js-editable editable {{editableClasses}}"></div>
 		{{#unless showControls}}
-			<span class="fa-solid fa-pencil editable-icon js-editable-edit"></span>
+			<span class="fa-solid fa-pencil editable-icon js-editable-edit js-editable-editstarted"></span>
 		{{/unless}}
 		{{errorMessage 'input'}}
 	</div>
 	{{#if showControls}}
 		{{> editableControls}}
-	{{/if}}
+	{{/if}}	
 </template>
 
 <template name='editableControls'>
-	<div class='editable-controls'>
-		{{> buttonSave event="js-editable-save"}}
-		{{> buttonCancel event="js-editable-cancel"}}
+	<div class='editable-controls m-3'>
+		{{> buttonSave event="js-editable-save js-editable-editfinished"}}
+		{{> buttonCancel event="js-editable-cancel js-editable-editfinished"}}
 	</div>
 </template>
