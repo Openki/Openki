@@ -302,7 +302,17 @@ import './styles.scss';
 			select: string;
 		},
 		{
-			state: ReactiveDict<{ showMoreState: boolean }>;
+			state: ReactiveDict<{
+				/**
+				 * In case the user clicks on "show more", showMoreState will be set to true
+				 */
+				showMoreState: boolean;
+				/**
+				 *After render as well as in the helper (onReload) descriptionFlowsOver is updated.
+				 */
+				descriptionFlowsOver: boolean;
+			}>;
+			checkOverFlow: ()=>void;
 		}
 		
 	>;
@@ -313,12 +323,20 @@ import './styles.scss';
 		const instance = this;
 		instance.state = new ReactiveDict();
 		instance.state.setDefault({
-			showMoreState: false
+			showMoreState: false,
+			descriptionFlowsOver: false
 		});
+		instance.checkOverFlow = () => {
+			const div = document.getElementById('description');
+			if(div) {
+				instance.state.set( { descriptionFlowsOver: div.scrollHeight > div.clientHeight });
+			}
+			console.log("checkoverflow", instance.state);
+		};
 	});
 
 	template.onRendered(function () {
-		console.log("rendered ", document.getElementById('description')?.style);
+		Template.instance().checkOverFlow();
 	});
 
 	template.helpers({
@@ -343,12 +361,34 @@ import './styles.scss';
 		},
 		showMore(){
 			const state = Template.instance().state.get('showMoreState');
-			console.log(state);
 			return state ? 'course-description-show-more':'';
 		},
 		descriptionFlowsOver(){
 			console.log("div ", document.getElementById('description'));
+		},
+		showMoreOrLessText(){
+			return Template.instance().state.get('showMoreState')? 'show less':'show more'
 		}
+	});
+
+	template.events({
+		'click #js-course-desciption-showmoreorless' () {
+			const state = Template.instance().state;
+			state.set( { showMoreState: !state.get('showMoreState') } );
+		},
+		'click .js-editable-editstarted' () {
+			/* this class is assigned in editable/template.html
+			 this is really confusing I guess: clicks on this class are only caught here
+			 although editables exist in a lot of other places. not shure if this is a solid way...
+			 reason is that the save/cancel buttons are not visible in if not all description is shown*/
+			Template.instance().state.set( { showMoreState: true } );
+		},
+		'click .js-editable-editfinished' () {
+			// this class is assigned in editable/template.html
+			Template.instance().state.set( { showMoreState: false } );
+			Template.instance().checkOverFlow();
+			// when exiting editing view, showmore does not appear yet, even when it should
+		},
 	});
 }
 {
