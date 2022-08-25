@@ -21,7 +21,7 @@
 	</div>
 	{{#if hasEvents}}
 		<div class="calendar-event-list">
-			{{> eventList eventsToBeDisplayed=(maybeFilteredEvents events isAttendeeFilterOn=isAttendeeFilterOn) withDate=false withImage=true}}
+			{{> eventList dataEvents=(maybeFilteredEvents events isAttendeeFilterOn=isAttendeeFilterOn) withDate=false withImage=true}}
 			{{!<!-- maybeFilteredEvents is a template helper that gives back a list of events in function of two arguments: events and isAttendeeFilterOn -->}}
 		</div>
 	{{else}}
