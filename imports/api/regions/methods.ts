@@ -63,7 +63,7 @@ export const create = ServerMethod(
 
 		set.tz = changes.tz.trim().substring(0, 40);
 
-		set.description = changes.description.trim().substring(0, 200);
+		set.description = changes.description.trim().substring(0, 1000);
 		// check this already when the user writes into the textarea? is there a limit for course descriptions?
 
 		return Regions.insert(set);
@@ -121,7 +121,7 @@ export const update = ServerMethod('region.update', (regionId: string, changes: 
 	}
 
 	if (changes.description) {
-		set.description = changes.description.trim().substring(0, 200);
+		set.description = changes.description.trim().substring(0, 1000);
 		// check this already when the user writes into the textarea?
 	}
 
