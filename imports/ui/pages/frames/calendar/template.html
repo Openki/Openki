@@ -36,6 +36,12 @@
 			<span class="frame-list-item-toggle-indicator">
 				<i class="fa-solid fa-angle-down"></i>
 			</span>
+			<div class="frame-list-free-seats-tooltip">
+				{{getAttendees}}/{{getTotalAvailableSeats}}
+				<span class="frame-list-free-seats-tooltip-text">
+					{{i18n 'frame.list.free.seats.tooltip' '{FreeSeats} of {TOTALSEATS} seats reserved' TOTALSEATS=getTotalAvailableSeats FreeSeats=getAttendees}}
+				</span>
+			</div>
 			<span class="frame-list-item-time">
 				{{timeFormat start}}
 			</span>
@@ -50,45 +56,46 @@
 					<div class="frame-list-item-label">
 						{{i18n 'frame.eventsList.when' 'When:'}}
 					</div>
-					<div class="frame-list-item-content">
-						{{timeFormat start}} - {{timeFormat end}}
+						<div class="frame-list-item-content">
+							{{timeFormat start}} - {{timeFormat end}}
+						</div>
 					</div>
-				</div>
-				<div class="frame-list-item-property">
-					<div class="frame-list-item-label">
-						{{i18n 'frame.eventsList.where' 'Where:'}}
+					<div class="frame-list-item-property">
+						<div class="frame-list-item-label">
+							{{i18n 'frame.eventsList.where' 'Where:'}}
 					</div>
-					<div class="frame-list-item-content">
-						{{#if venue._id}}
-							<a href="{{pathFor 'venueDetails' _id=venue._id}}" target="_blank">
-								{{venue.name}}
-							</a>
-						{{else}}
-							{{venue.name}}
-						{{/if}}
-						{{#if room}}
-							- {{room}}
-						{{/if}}
+							<div class="frame-list-item-content">
+								{{#if venue._id}}
+									<a href="{{pathFor 'venueDetails' _id=venue._id}}"
+									   target="_blank">
+										{{venue.name}}
+									</a>
+								{{else}}
+									{{venue.name}}
+								{{/if}}
+								{{#if room}}
+									- {{room}}
+								{{/if}}
+							</div>
+						</div>
+						<div class="frame-list-item-property frame-list-item-description">
+							<div class="frame-list-item-label">
+								{{i18n 'frame.eventsList.description' 'Description:'}}
 					</div>
-				</div>
-				<div class="frame-list-item-property frame-list-item-description">
-					<div class="frame-list-item-label">
-						{{i18n 'frame.eventsList.description' 'Description:'}}
-					</div>
-					<div class="frame-list-item-content">
-						{{{description}}}
-					</div>
-				</div>
-				<div class="frame-list-item-links">
-					<a class="btn" href="{{pathFor 'showEvent'}}" target="_blank">
-						{{i18n 'frame.calendar.moreAboutThisEvent' 'More about this event on {SITENAME}' SITENAME=siteName}}
+								<div class="frame-list-item-content">
+									{{{description}}}
+								</div>
+							</div>
+							<div class="frame-list-item-links">
+								<a class="btn" href="{{pathFor 'showEvent'}}" target="_blank">
+									{{i18n 'frame.calendar.moreAboutThisEvent' 'More about this event on {SITENAME}' SITENAME=siteName}}
 					</a>
-					<a href="{{pathFor 'calEvent' this}}"
-					   class="btn js-download js-track-cal-download">
-						{{i18n 'frame.calendar.download' 'Download'}}
+									<a href="{{pathFor 'calEvent' this}}"
+									   class="btn js-download js-track-cal-download">
+										{{i18n 'frame.calendar.download' 'Download'}}
 					</a>
-				</div>
-			</div>
+							</div>
+						</div>
 		{{/if}}
 	</div>
 </template>
