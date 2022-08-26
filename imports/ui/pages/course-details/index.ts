@@ -58,10 +58,7 @@ import './styles.scss';
 				member: boolean;
 				select: string;
 			},
-			{ 
-				editableName: Editable;
-				editableDescription: Editable
-			}
+			{ editableName: Editable; editableDescription: Editable }
 		>,
 		'courseDetailsPage',
 	);
@@ -303,19 +300,12 @@ import './styles.scss';
 		},
 		{
 			state: ReactiveDict<{
-				/**
-				 * In case the user clicks on "show more", showMoreState will be set to true
-				 */
 				showMoreState: boolean;
-				/**
-				 *After render as well as in the helper (onReload) descriptionFlowsOver is updated.
-				 */
 				descriptionFlowsOver: boolean;
 				descriptionBeingEdited: boolean;
 			}>;
-			checkOverFlow: ()=>void;
+			checkOverFlow: () => void;
 		}
-		
 	>;
 
 	const template = Template.courseDetailsSubmenu;
@@ -326,13 +316,13 @@ import './styles.scss';
 		instance.state.setDefault({
 			showMoreState: false,
 			descriptionFlowsOver: false,
-			descriptionBeingEdited: false
+			descriptionBeingEdited: false,
 		});
 		instance.checkOverFlow = () => {
 			// function to check if the description is longer than the div that displays it
 			const div = document.getElementsByClassName('course-description')[0];
-			if(div) {
-				instance.state.set( { descriptionFlowsOver: div.scrollHeight > div.clientHeight });
+			if (div) {
+				instance.state.set({ descriptionFlowsOver: div.scrollHeight > div.clientHeight });
 			}
 		};
 	});
@@ -361,46 +351,53 @@ import './styles.scss';
 					})) || []
 			);
 		},
-		showMore(){
+		showMoreClass() {
+			// gives back class for css
 			const state = Template.instance().state.get('showMoreState');
-			return state ? 'course-description-show-more':'';
+			return state ? 'course-description-show-more' : '';
 		},
-		descriptionFlowsOver(){
-			console.log("div ", document.getElementById('description'));
+		showMoreOrLessText() {
+			// gives back the text of the button
+			return Template.instance().state.get('showMoreState')
+				? i18n('courseDetailsPage.showless', 'show less')
+				: i18n('courseDetailsPage.showmore', 'show more');
 		},
-		showMoreOrLessText(){
-			return Template.instance().state.get('showMoreState')?
-			i18n('courseDetailsPage.showless','show less'):
-			i18n('courseDetailsPage.showmore','show more')
-		},
-		showMoreOrLess(){
-			// show button displayed when there is overflow and the description is being edited
+		showMoreOrLess() {
+			// button is displayed when there is overflow and the description is being edited
 			const state = Template.instance().state;
-			console.log("showmoreorless: ", state.get('descriptionFlowsOver') && !state.get('descriptionBeingEdited'));
 			return state.get('descriptionFlowsOver') && !state.get('descriptionBeingEdited');
-		}
+		},
 	});
 
 	template.events({
-		'click #js-course-desciption-showmoreorless' () {
+		'click #js-course-desciption-showmoreorless'() {
 			// toggles the showMoreState
 			const state = Template.instance().state;
-			state.set( { showMoreState: !state.get('showMoreState') } );
+			state.set({ showMoreState: !state.get('showMoreState') });
 		},
-		'click .editable-wrap' () {
-			// sets the state: all description should be visible and the button 
+		'click .editable-wrap'() {
+			// sets the state when the user starts editing
 			const instance = Template.instance();
 			instance.state.set({ descriptionBeingEdited: true });
 			instance.state.set({ showMoreState: true });
 		},
 
 		// js-editable-editfinished is assigned in editable/template.html
-		'click .js-editable-save, click .js-editable-cancel' () {
+		'click .js-editable-save, click .js-editable-cancel'() {
+			// state when user finishes editing, check overlfow with new text
 			const instance = Template.instance();
-			instance.state.set({ descriptionBeingEdited: false});
+			instance.state.set({ descriptionBeingEdited: false });
 			instance.state.set({ showMoreState: false });
 			// trying to simulate useEffect()
-			setTimeout(()=>instance.checkOverFlow(), 200);
+			setTimeout(() => instance.checkOverFlow(), 200);
+		},
+		'focusout .editable-wrap'(){
+			// on focus out we allow the button to be shown.
+			// the editable itself can have been modified and saved/canceled or not,
+			// independent of descriptionBeingEdited, it has its own state
+			// -> this is not ideal, but possible ok for now
+			const instance = Template.instance();
+			instance.state.set({ descriptionBeingEdited: false });
 		},
 	});
 }
