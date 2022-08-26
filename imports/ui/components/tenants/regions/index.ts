@@ -27,6 +27,7 @@ Template.tenantRegions.helpers({
 		const instance = Template.instance();
 		const { tenant } = instance.data;
 		return Regions.findFilter({ tenant: tenant._id });
+		
 	},
 
 	showAddRegion() {
