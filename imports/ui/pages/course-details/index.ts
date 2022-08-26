@@ -311,6 +311,7 @@ import './styles.scss';
 				 *After render as well as in the helper (onReload) descriptionFlowsOver is updated.
 				 */
 				descriptionFlowsOver: boolean;
+				descriptionBeingEdited: boolean;
 			}>;
 			checkOverFlow: ()=>void;
 		}
@@ -324,14 +325,15 @@ import './styles.scss';
 		instance.state = new ReactiveDict();
 		instance.state.setDefault({
 			showMoreState: false,
-			descriptionFlowsOver: false
+			descriptionFlowsOver: false,
+			descriptionBeingEdited: false
 		});
 		instance.checkOverFlow = () => {
-			const div = document.getElementById('description');
+			// function to check if the description is longer than the div that displays it
+			const div = document.getElementsByClassName('course-description')[0];
 			if(div) {
 				instance.state.set( { descriptionFlowsOver: div.scrollHeight > div.clientHeight });
 			}
-			console.log("checkoverflow", instance.state);
 		};
 	});
 
@@ -367,27 +369,38 @@ import './styles.scss';
 			console.log("div ", document.getElementById('description'));
 		},
 		showMoreOrLessText(){
-			return Template.instance().state.get('showMoreState')? 'show less':'show more'
+			return Template.instance().state.get('showMoreState')?
+			i18n('courseDetailsPage.showless','show less'):
+			i18n('courseDetailsPage.showmore','show more')
+		},
+		showMoreOrLess(){
+			// show button displayed when there is overflow and the description is being edited
+			const state = Template.instance().state;
+			console.log("showmoreorless: ", state.get('descriptionFlowsOver') && !state.get('descriptionBeingEdited'));
+			return state.get('descriptionFlowsOver') && !state.get('descriptionBeingEdited');
 		}
 	});
 
 	template.events({
 		'click #js-course-desciption-showmoreorless' () {
+			// toggles the showMoreState
 			const state = Template.instance().state;
 			state.set( { showMoreState: !state.get('showMoreState') } );
 		},
-		'click .js-editable-editstarted' () {
-			/* this class is assigned in editable/template.html
-			 this is really confusing I guess: clicks on this class are only caught here
-			 although editables exist in a lot of other places. not shure if this is a solid way...
-			 reason is that the save/cancel buttons are not visible in if not all description is shown*/
-			Template.instance().state.set( { showMoreState: true } );
+		'click .editable-wrap' () {
+			// sets the state: all description should be visible and the button 
+			const instance = Template.instance();
+			instance.state.set({ descriptionBeingEdited: true });
+			instance.state.set({ showMoreState: true });
 		},
-		'click .js-editable-editfinished' () {
-			// this class is assigned in editable/template.html
-			Template.instance().state.set( { showMoreState: false } );
-			Template.instance().checkOverFlow();
-			// when exiting editing view, showmore does not appear yet, even when it should
+
+		// js-editable-editfinished is assigned in editable/template.html
+		'click .js-editable-save, click .js-editable-cancel' () {
+			const instance = Template.instance();
+			instance.state.set({ descriptionBeingEdited: false});
+			instance.state.set({ showMoreState: false });
+			// trying to simulate useEffect()
+			setTimeout(()=>instance.checkOverFlow(), 200);
 		},
 	});
 }

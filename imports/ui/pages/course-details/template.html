@@ -141,20 +141,28 @@
 	</nav>
 	<div class="tab-content course-details-content">
 		<!--bis hier ist ok-->
-		<div class="tab-pane active {{showMore}} overflow-hidden" id="description">
-			{{> courseDetailsDescription editableDescription=editableDescription course=course}}
-			{{#each info in customFields}}
-				<p>
-					<strong>{{info.displayText}}</strong>: <span
-						  style="white-space: pre-line;">{{info.value}}</span>
-				</p>
-			{{/each}}
-		</div>
-		{{#if state 'descriptionFlowsOver'}}
-			<div id="js-course-desciption-showmoreorless" role="button" class="text-center">
-				--- {{showMoreOrLessText}} ---
+		<div class="tab-pane active overflow-hidden {{showMore}}" id="description">
+			<div class="fade-wrap">
+				<div class="course-description overflow-hidden {{showMore}}">
+					{{> courseDetailsDescription editableDescription=editableDescription course=course}}
+					{{#each info in customFields}}
+						<p>
+							<strong>{{info.displayText}}</strong>: <span
+								style="white-space: pre-line;">{{info.value}}</span>
+						</p>
+					{{/each}}
+				</div>
+				<div class="fade-top"></div>
+				{{#unless state 'showMoreState'}}
+					<div class="fade-bottom course-description-fade-bottom"></div>
+				{{/unless}}
 			</div>
-		{{/if}}
+			{{#if showMoreOrLess}} 
+				<div id="js-course-desciption-showmoreorless" role="button" class="text-center course-details-showmoreorless">
+					— {{showMoreOrLessText}} —
+				</div>
+			{{/if}}
+		</div>
 		<!--ab hier ist ok-->
 		<div class="tab-pane course-history" id="history">
 			{{> coursehistory}}
