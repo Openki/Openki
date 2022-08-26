@@ -131,7 +131,7 @@ import './template.html';
 
 		getTotalAvailableSeats() {
 			const { data } = Template.instance();
-			return data.maxParticipants?.valueOf() || decode('&#8734;');
+			return data.maxParticipants || decode('&#8734;');
 		},
 	});
 
