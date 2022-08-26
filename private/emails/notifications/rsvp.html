@@ -15,8 +15,6 @@
 								<td class="event-header">
 									<a href="{{eventLink}}">
 										<strong>
-											{{event.title}}
-											<br />
 											{{eventDate}}
 											<br />
 											{{eventStart}}
@@ -43,11 +41,10 @@
 									<p>
 										{{{event.description}}}
 									</p>
-									<button type="button"
-											style="padding: 6px; border-radius: 12px; margin-top: 6px; background-color: palegreen; float: right;"
-											onclick=" window.location.href='{{eventLink}}' ;">
+									<a class="button event-confirmation-email-button"
+									   href='{{eventLink}}'>
 										{{i18n "notification.rsvp.mail.linkEvent" "Visit Event" lng=locale}}
-									</button>
+									</a>
 								</td>
 							</tr>
 							<tr>
