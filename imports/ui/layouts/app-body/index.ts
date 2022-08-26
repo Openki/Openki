@@ -20,7 +20,7 @@ import '/imports/ui/components/featured-group';
 import '/imports/ui/components/footer';
 import '/imports/ui/components/introduction/introduction';
 import '/imports/ui/components/kiosk-link';
-import '/imports/ui/components/navbar/navbar';
+import '/imports/ui/components/navbar';
 import '/imports/ui/components/regions/splash';
 
 import './template.html';
