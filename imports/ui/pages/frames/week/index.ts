@@ -39,7 +39,6 @@ const Template = TemplateAny as TemplateStaticTyped<
 		state: ReactiveDict<{
 			isAttendeeFilterOn: boolean;
 		}>;
-		setIsAttendeeFilterOn: (state: boolean) => void;
 	}
 >;
 
@@ -51,10 +50,7 @@ template.onCreated(function () {
 
 	instance.state = new ReactiveDict();
 	instance.state.setDefault({ isAttendeeFilterOn: false });
-	instance.setIsAttendeeFilterOn = (state: boolean) => {
-		this.state.set('isAttendeeFilterOn', state);
-	};
-
+	
 	instance.autorun(() => {
 		const data = Template.currentData();
 
@@ -65,6 +61,12 @@ template.onCreated(function () {
 		instance.startOfWeek = date.startOf('week');
 
 		const filterQuery = instance.filter.toQuery();
+
+		// filter isAttendeeFilterOn in addition to filtering that get's passed in via url
+		if(Meteor.userId() && instance.state.get('isAttendeeFilterOn')){
+			filterQuery.participant = Meteor.userId()!;
+		}
+
 		const startOfWeek = instance.startOfWeek;
 		if (startOfWeek) {
 			filterQuery.after = startOfWeek.toDate();
@@ -180,8 +182,7 @@ template.helpers({
 				instance.update();
 			},
 			onChangeAttendingEventsOnly: (state) => {
-				console.log("onChangeAttendingEventsOnly", state);
-				// where to filter best? understand code!
+				instance.state.set('isAttendeeFilterOn', state);
 			},
 		} as CalendarNavData;
 	},
@@ -193,14 +194,4 @@ template.helpers({
 	weekdays() {
 		return Template.instance().weekdays;
 	},
-	setterToBePassedToChild() {
-		// returns a function
-		return Template.instance().setIsAttendeeFilterOn;
-	},
-	isAttendeeFilterOn() {
-		// returns a value of the state (true / false)
-		console.log("helper called in parent");
-		return Template.instance().state.get('isAttendeeFilterOn');
-	},
-
 });
