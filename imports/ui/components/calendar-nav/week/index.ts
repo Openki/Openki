@@ -77,7 +77,13 @@ export type Data = {
 
 	template.events({
 		'click .js-filter-own-events'(event) {
-			Template.instance().data.onChangeAttendingEventsOnly((event.target as HTMLInputElement).checked);
+			const radioSwitch = event.target as HTMLInputElement;
+			if (Meteor.user()) {
+				Template.instance().data.onChangeAttendingEventsOnly(radioSwitch.checked);
+			} else {
+				radioSwitch.checked = false;
+				$('.js-account-tasks').modal('show');
+			}
 		},
 	});
 }

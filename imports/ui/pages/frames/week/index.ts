@@ -50,7 +50,7 @@ template.onCreated(function () {
 
 	instance.state = new ReactiveDict();
 	instance.state.setDefault({ isAttendeeFilterOn: false });
-	
+
 	instance.autorun(() => {
 		const data = Template.currentData();
 
@@ -63,7 +63,7 @@ template.onCreated(function () {
 		const filterQuery = instance.filter.toQuery();
 
 		// filter isAttendeeFilterOn in addition to filtering that get's passed in via url
-		if(Meteor.userId() && instance.state.get('isAttendeeFilterOn')){
+		if (Meteor.userId() && instance.state.get('isAttendeeFilterOn')) {
 			filterQuery.participant = Meteor.userId()!;
 		}
 
