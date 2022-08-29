@@ -297,6 +297,7 @@ import './styles.scss';
 			course: CourseModel;
 			member: boolean;
 			select: string;
+			editableDescription: Editable;
 		},
 		{
 			state: ReactiveDict<{
@@ -365,7 +366,8 @@ import './styles.scss';
 		showMoreOrLess() {
 			// button is displayed when there is overflow and the description is being edited
 			const state = Template.instance().state;
-			return state.get('descriptionFlowsOver') && !state.get('descriptionBeingEdited');
+			const editingObject = Template.instance().data.editableDescription;
+			return state.get('descriptionFlowsOver') && editingObject.changed.get()!==true;
 		},
 	});
 
@@ -375,29 +377,20 @@ import './styles.scss';
 			const state = Template.instance().state;
 			state.set({ showMoreState: !state.get('showMoreState') });
 		},
+		
 		'click .editable-wrap'() {
 			// sets the state when the user starts editing
 			const instance = Template.instance();
-			instance.state.set({ descriptionBeingEdited: true });
 			instance.state.set({ showMoreState: true });
 		},
-
+		
 		// js-editable-editfinished is assigned in editable/template.html
 		'click .js-editable-save, click .js-editable-cancel'() {
 			// state when user finishes editing, check overlfow with new text
 			const instance = Template.instance();
-			instance.state.set({ descriptionBeingEdited: false });
 			instance.state.set({ showMoreState: false });
 			// trying to simulate useEffect()
 			setTimeout(() => instance.checkOverFlow(), 200);
-		},
-		'focusout .editable-wrap'(){
-			// on focus out we allow the button to be shown.
-			// the editable itself can have been modified and saved/canceled or not,
-			// independent of descriptionBeingEdited, it has its own state
-			// -> this is not ideal, but possible ok for now
-			const instance = Template.instance();
-			instance.state.set({ descriptionBeingEdited: false });
 		},
 	});
 }
