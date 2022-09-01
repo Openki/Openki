@@ -5,10 +5,22 @@
 </template>
 
 <template name="eventNotFound">
-	<div class="container">
-		<h4>{{i18n "event.no_event" "Could not find this event. Maybe you must log in, it was deleted, or never existed in the first place."}}
-		</h4>
-	</div>
+
+	{{#if currentUser}}
+		<h3 class="event-notfound-text">
+			{{i18n "event.not_exists" "Could not find this event. Maybe it was deleted, or never existed in the first place."}}
+		</h3>
+	{{/if}}
+	{{#unless currentUser}}
+		<div class="container">
+			<h3 class="event-notfound-text">{{i18n "user.not.logged_in" "Could not find this event. Maybe you must log in!"}}
+			</h3>
+			<button class=" js-login btn btn-save event-notfound-text page-notfound-text">
+				<span class="fa-solid fa-right-to-bracket fa-fw"></span>
+				<span>{{i18n 'event.not_exists.unlogged' 'Log in/register'}}</span>
+			</button>
+		</div>
+	{{/unless}}
 </template>
 
 <template name="event">
@@ -69,15 +81,53 @@
 							{{/unless}}
 						</b>
 					</div>
-					<div class="page-component">
+					<div
+						 class="page-component {{#if anyDropdown}} pt-3 px-3 event-detail-register-dropdown{{/if}}">
 						{{#unless userRegisteredForEvent}}
 							{{#if acceptsParticipants}}
-								{{> buttonRegister event="js-register-event"}}
+								{{#unless registerDropdown}}
+									{{> buttonBeforeRegister event="js-before-register-event"}}
+								{{else}}
+									<p>
+										{{i18n 'event.details.want-to-register' 'Do you want to reserve a seat as {USERNAME} for the event "{EVENTTITLE}" on the {DATE}? Your reservation is binding.' USERNAME=userName EVENTTITLE=title DATE=eventDate attr=true}}
+									</p>
+									<p>
+									<div class="row justify-content-between align-items-center">
+										<div class="col-lg-4 d-grid">
+											{{> buttonCancel event="js-register-event-cancel"}}
+										</div>
+										<div class="col-lg-7 d-grid">
+											{{> buttonRegister event="js-register-event"}}
+										</div>
+									</div>
+									</p>
+								{{/unless}}
 							{{else}}
 								{{> buttonRegistrationClosed}}
 							{{/if}}
 						{{else}}
-							{{> buttonUnregister event="js-unregister-event"}}
+							{{#unless unregisterDropdown}}
+								{{> buttonBeforeUnregister event="js-before-unregister-event"}}
+							{{else}}
+								<p>
+									{{i18n 'event.details.want-to-withdraw' 'Do you want to withdraw your registration for the event "{EVENTTITLE}" on the {DATE}?' EVENTTITLE=title DATE=eventDate}}
+								</p>
+								<p>
+								<div class="row justify-content-between align-items-center">
+									<div class="col-lg-4 d-grid">
+										{{> buttonCancel event="js-unregister-event-cancel"}}
+									</div>
+									<div class="col-lg-7 d-grid">
+										{{> buttonUnregister event="js-unregister-event"}}
+									</div>
+								</div>
+								</p>
+								{{#if courseTitle}}
+									<p>
+										{{i18n 'event.details.youStayEnrolled' 'Note that you will stay enrolled as interested for the course "{COURSETITLE}".' COURSETITLE=courseTitle}}
+									</p>
+								{{/if}}
+							{{/unless}}
 						{{/unless}}
 					</div>
 				{{/if}}
@@ -310,13 +360,19 @@
 	{{/if}}
 </template>
 
-<template name="buttonRegister">
+<template name="buttonBeforeRegister">
 	<button type="button" class="btn btn-add btn-event {{event}}" {{disabledIfBusy}}>
+		{{i18n 'event.details.reserve-a-seat' 'Reserve a seat'}}
+	</button>
+</template>
+
+<template name="buttonRegister">
+	<button type="button" class="btn btn-add btn-event text-center {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'registering'}}
 			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n '_button.registering' 'Registering…'}}
 		{{else}}
-			{{i18n 'event.details.register' 'Register'}}
+			{{i18n 'event.details.register-register' 'Register'}}
 		{{/if}}
 	</button>
 </template>
@@ -332,13 +388,19 @@
 	</button>
 </template>
 
+<template name="buttonBeforeUnregister">
+	<button type="button" class="btn btn-add btn-event {{event}}" {{disabledIfBusy}}>
+		{{i18n 'event.details.withdraw-registration' 'Withdraw my registration'}}
+	</button>
+</template>
+
 <template name="buttonUnregister">
-	<button type="button" class="btn btn-cancel btn-event {{event}}" {{disabledIfBusy}}>
+	<button type="button" class="btn btn-danger btn-event text-center {{event}}" {{disabledIfBusy}}>
 		{{#if busy 'unregistering'}}
 			<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
 			{{i18n '_button.unregistering' 'Unregistering…'}}
 		{{else}}
-			{{i18n 'event.details.unregister' 'Withdraw my registration'}}
+			{{i18n 'event.details.unregister-withdraw' 'Withdraw'}}
 		{{/if}}
 	</button>
 </template>

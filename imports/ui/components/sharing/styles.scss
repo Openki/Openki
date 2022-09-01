@@ -17,6 +17,7 @@
 $shariff-link-padding: 5px;
 $shariff-button-margin-bottom: ($shariff-link-padding * 2) + 5px;
 $shariff-button-margin-left: 10px;
+$shariff-bg-color: #77b8e9;
 
 .shariff > .orientation-horizontal {
 	@include list-unstyled;
@@ -45,26 +46,11 @@ $shariff-button-margin-left: 10px;
 	@return ('bg': $bg, 'bg-hover': $bg-hover);
 }
 
-// used the color values from shariff less files for services
-// https://github.com/heiseonline/shariff/tree/develop/src/style/services
-$share-services: (
-	'diaspora': map-bg(#999, #b3b3b3),
-	'facebook': map-bg(#3b5998, #4273c8),
-	'googleplus': map-bg(#d34836, #f75b44),
-	'mail': map-bg(#999, #a8a8a8),
-	'twitter': map-bg(#55acee, #32bbf5),
-	'telegram': map-bg(#08c, #007dbb),
-	'whatsapp': map-bg(#5cbe4a, #34af23),
-	'linkedin': map-bg(#333, #0077b5),
-);
+.shariff-button > a {
+	background-color: $shariff-bg-color;
 
-@each $service, $properties in $share-services {
-	.shariff-button.#{$service} > a {
-		background-color: map-get($properties, 'bg');
-
-		&:hover {
-			background-color: map-get($properties, 'bg-hover');
-		}
+	&:hover {
+		background-color: darken($shariff-bg-color, 5%);
 	}
 }
 

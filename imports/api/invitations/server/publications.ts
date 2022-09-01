@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-import { Invitations } from '/imports/api/invitations/invitations';
+import { FindFilter, Invitations } from '/imports/api/invitations/invitations';
 import { Tenants } from '/imports/api/tenants/tenants';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
@@ -24,10 +24,9 @@ Meteor.publish('invitations.findFilter', function (filter, limit, skip, sortPara
 		return undefined;
 	}
 
-	return Invitations.findFilter(
-		{ tenant: tenantId, status: filter.status },
-		limit,
-		skip,
-		sortParams,
-	);
+	const newFilter = { tenant: tenantId } as FindFilter;
+	if (filter.status) {
+		newFilter.status = filter.status;
+	}
+	return Invitations.findFilter(newFilter, limit, skip, sortParams);
 });

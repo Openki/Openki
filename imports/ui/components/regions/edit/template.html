@@ -40,4 +40,10 @@
 			{{/each}}
 		</select>
 	</div>
+	<div class="mb-3">
+		<label for="region-description-id" class="form-label">{{i18n 'region.edit.descriptionLabel' 'Description:'}}</label>
+		<textarea id="region-description-id" class="js-description form-control"
+			   placeholder="{{i18n 'region.edit.descriptionPlaceholder' 'An optional description' attr=true}}"
+			   value="{{region.description}}"></textarea>
+	</div>
 </template>
