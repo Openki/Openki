@@ -60,10 +60,10 @@ import './template.html';
 				}
 			});
 		}
-		
+
 		// closing the navbar when screen is made larger
 		$(window).on('resize', () => {
-			if(Viewport.get().width > ScssVars.gridFloatBreakpoint){
+			if (Viewport.get().width > ScssVars.gridFloatBreakpoint) {
 				// this closes the navbar via jquery, which triggers an event that will
 				// change the (blaze) state and close the modal as well
 				this.$('.navbar-collapse').collapse('hide');
