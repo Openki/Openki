@@ -2,9 +2,9 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import $ from 'jquery';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
+import { decode } from 'html-entities';
 
 import { EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
@@ -22,7 +22,6 @@ import './template.html';
 		{
 			groupedEvents: ReactiveVar<_.Dictionary<EventModel[]>>;
 			days: ReactiveVar<string[]>;
-			pageReady: ReactiveVar<boolean>;
 			limit: ReactiveVar<number>;
 		}
 	>;
@@ -34,7 +33,6 @@ import './template.html';
 
 		instance.groupedEvents = new ReactiveVar({});
 		instance.days = new ReactiveVar([]);
-		instance.pageReady = new ReactiveVar(false);
 
 		const { query } = Router.current().params;
 		instance.limit = new ReactiveVar(parseInt(query.count || '', 10) || 200);
@@ -67,13 +65,7 @@ import './template.html';
 				filterQuery.internal = false;
 			}
 
-			instance.subscribe('Events.findFilter', filterQuery, limit + 1, {
-				onReady: () => {
-					if (!instance.pageReady.get()) {
-						instance.pageReady.set(true);
-					}
-				},
-			});
+			instance.subscribe('Events.findFilter', filterQuery, limit + 1);
 
 			const events = Events.find({}, { sort: { start: 1 }, limit }).fetch();
 			const groupedEvents = _.groupBy(events, (event) => moment(event.start).format('LL'));
@@ -84,14 +76,6 @@ import './template.html';
 	});
 
 	template.helpers({
-		pageReady() {
-			return Template.instance().pageReady.get();
-		},
-
-		ready() {
-			return Template.instance().subscriptionsReady();
-		},
-
 		days() {
 			return Template.instance().days.get();
 		},
@@ -119,7 +103,7 @@ import './template.html';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'frameCalendarEvent',
-		unknown,
+		EventModel,
 		{ expanded: ReactiveVar<boolean> }
 	>;
 
@@ -139,6 +123,16 @@ import './template.html';
 		},
 
 		expanded: () => Template.instance().expanded.get(),
+
+		getAttendees() {
+			const { data } = Template.instance();
+			return data.participants?.length || 0;
+		},
+
+		getTotalAvailableSeats() {
+			const { data } = Template.instance();
+			return data.maxParticipants || decode('&#8734;');
+		},
 	});
 
 	template.events({

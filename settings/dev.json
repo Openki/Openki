@@ -12,7 +12,7 @@
 		"publicTenants": ["8410c099a7"],
 		"regionSelection": {
 			"minNumber": 5,
-			"aboutLink": ""
+			"aboutLink": "/info/faq#what-is-an-openki-region"
 		},
 		"pricePolicyEnabled": true,
 		"feature": {

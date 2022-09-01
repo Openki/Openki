@@ -1,4 +1,5 @@
 import { ReactiveVar } from 'meteor/reactive-var';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { _ } from 'meteor/underscore';
@@ -69,7 +70,12 @@ import './styles.scss';
 	const Template = TemplateAny as TemplateStaticTyped<
 		'event',
 		EventModel,
-		{ editing: ReactiveVar<boolean>; addParticipant: () => void }
+		{
+			editing: ReactiveVar<boolean>;
+			addParticipant: () => void;
+			getCourseTitleIfAny: () => string | undefined;
+			state: ReactiveDict<{ registerDropdown: boolean; unregisterDropdown: boolean }>;
+		}
 	>;
 
 	const template = Template.event;
@@ -79,6 +85,8 @@ import './styles.scss';
 		const event = instance.data;
 		instance.busy(false);
 		instance.editing = new ReactiveVar(!event._id);
+		instance.state = new ReactiveDict();
+		instance.state.setDefault({ registerDropdown: false, unregisterDropdown: false });
 		instance.subscribe('courseDetails', event.courseId);
 
 		instance.addParticipant = () => {
@@ -100,6 +108,13 @@ import './styles.scss';
 			});
 		};
 
+		instance.getCourseTitleIfAny = () => {
+			if (this.data.courseId) {
+				return Courses.findOne({ _id: this.data.courseId })?.name;
+			}
+			return undefined;
+		};
+
 		// register from email
 		if (Router.current().params.query.action === 'register') {
 			this.addParticipant();
@@ -107,6 +122,18 @@ import './styles.scss';
 	});
 
 	template.helpers({
+		userName() {
+			return Meteor.user()?.username || i18n('eventDetails.notLoggedIn', '(not logged in?)');
+		},
+
+		eventDate() {
+			return moment(Template.instance().data.startLocal).format('L');
+		},
+
+		courseTitle() {
+			return Template.instance().getCourseTitleIfAny();
+		},
+
 		eventCourseHeaderAttr(course: CourseModel) {
 			const src = course?.publicImageUrl();
 			if (!src) {
@@ -179,6 +206,18 @@ import './styles.scss';
 			const userId = Meteor.userId();
 			return userId && this.participants?.includes(userId);
 		},
+		registerDropdown() {
+			return Template.instance().state.get('registerDropdown');
+		},
+		unregisterDropdown() {
+			return Template.instance().state.get('unregisterDropdown');
+		},
+		anyDropdown() {
+			return (
+				Template.instance().state.get('unregisterDropdown') ||
+				Template.instance().state.get('registerDropdown')
+			);
+		},
 	});
 
 	template.events({
@@ -228,8 +267,21 @@ import './styles.scss';
 			instance.editing.set(true);
 		},
 
+		'click .js-before-register-event'(_event, instance) {
+			instance.state.set('registerDropdown', true);
+		},
+
 		'click .js-register-event'(_event, instance) {
 			instance.addParticipant();
+			instance.state.set('registerDropdown', false);
+		},
+
+		'click .js-register-event-cancel'(_event, instance) {
+			instance.state.set('registerDropdown', false);
+		},
+
+		'click .js-before-unregister-event'(_event, instance) {
+			instance.state.set('unregisterDropdown', true);
 		},
 
 		async 'click .js-unregister-event'(_event, instance) {
@@ -248,6 +300,11 @@ import './styles.scss';
 			} finally {
 				instance.busy(false);
 			}
+			instance.state.set('unregisterDropdown', false);
+		},
+
+		'click .js-unregister-event-cancel'(_event, instance) {
+			instance.state.set('unregisterDropdown', false);
 		},
 	});
 }
@@ -499,6 +556,17 @@ import './styles.scss';
 					),
 				);
 			}
+		},
+	});
+}
+
+{
+	const Template = TemplateAny as TemplateStaticTyped<'eventNotFound'>;
+	const template = Template.eventNotFound;
+
+	template.events({
+		'click .js-login'() {
+			$('.js-account-tasks').modal('show');
 		},
 	});
 }
