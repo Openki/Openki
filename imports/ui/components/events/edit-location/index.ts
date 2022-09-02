@@ -6,7 +6,7 @@ import { _ } from 'meteor/underscore';
 
 import { EventVenueEntity } from '/imports/api/events/events';
 import * as Alert from '/imports/api/alerts/alert';
-import { FindFilter, VenueEntity, Venues } from '/imports/api/venues/venues';
+import { FindFilter, Venues } from '/imports/api/venues/venues';
 import { UserModel, Users } from '/imports/api/users/users';
 
 import {
@@ -147,7 +147,7 @@ template.onCreated(function () {
 
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
-			added(originalLocation: VenueEntity) {
+			added(originalLocation) {
 				const location: ProposedMarkerEntity = {
 					...originalLocation,
 					proposed: true,

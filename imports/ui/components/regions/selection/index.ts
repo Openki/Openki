@@ -1,4 +1,3 @@
-import { Mongo } from 'meteor/mongo';
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
@@ -76,10 +75,7 @@ import './styles.scss';
 			/**
 			 * Query some regions
 			 */
-			regions: (options?: {
-				active?: boolean;
-				limit?: number;
-			}) => Mongo.Cursor<RegionEntity, RegionModel>;
+			regions: (options?: { active?: boolean; limit?: number }) => RegionEntity[];
 			changeRegion: (regionId: string) => void;
 			close: () => void;
 		}
@@ -102,21 +98,57 @@ import './styles.scss';
 		this.minNumberOfRegionInSelection = PublicSettings.regionSelection.minNumber;
 
 		this.regions = (options = {}) => {
+			// read the current region
+			const currentId: string = Regions.currentRegion()?._id || '';
+
+			// prepare for query
 			const query: Mongo.Selector<RegionEntity> = {};
-
-			if (typeof options.active === 'boolean') {
-				query.futureEventCount = options.active ? { $gt: 0 } : { $eq: 0 };
-			}
-
 			const search = this.state.get('search');
 			if (search && search !== '') {
 				query.name = new RegExp(search, 'i');
 			}
+			// first get all available regions from minimongo (that are not excluded by search)
+			let regionsArray = Regions.find(query).fetch();
 
-			return Regions.find(query, {
-				sort: { futureEventCount: -1, courseCount: -1, name: 1 },
-				limit: options.limit,
+			// sort in the order we want
+			regionsArray.sort((a, b) => {
+				// first priority has the current region
+				if (a._id === currentId) return -1;
+				if (b._id === currentId) return 1;
+
+				// second priority have private regions
+				const pa = a.isPrivate();
+				const pb = b.isPrivate();
+				if (pa && !pb) return -1;
+				if (pb && !pa) return 1;
+
+				// then regions with more future events first
+				if (a.futureEventCount > b.futureEventCount) return -1;
+				if (b.futureEventCount > a.futureEventCount) return 1;
+
+				// finally regions with more future courses
+				if (a.courseCount > b.courseCount) return -1;
+				if (b.courseCount > a.courseCount) return 1;
+
+				// if no return happened yet, regions are equivalent
+				return 0;
 			});
+
+			// filter active option
+			if (typeof options.active === 'boolean') {
+				if (options.active === true) {
+					regionsArray = [...regionsArray.filter((e) => e.futureEventCount > 0)];
+				} else {
+					regionsArray = [...regionsArray.filter((e) => e.futureEventCount === 0)];
+				}
+			}
+
+			// filter limit option
+			if (options.limit) {
+				regionsArray = [...regionsArray.slice(0, options.limit)];
+			}
+
+			return regionsArray;
 		};
 
 		this.changeRegion = (regionId) => {
@@ -173,35 +205,22 @@ import './styles.scss';
 				.reduce((acc, region) => acc + region.futureEventCount, 0);
 		},
 
-		mostActiveRegions() {
-			const minNumber = Template.instance().minNumberOfRegionInSelection;
-
-			const allActiveRegions = Template.instance().regions({ active: true });
-
-			if (allActiveRegions.count() >= minNumber) return allActiveRegions;
-
-			// Query more to have a min Number of regions
-			const someInactiveRegions = Template.instance().regions({
-				active: false,
-				limit: minNumber - allActiveRegions.count(),
-			});
-
-			return [...allActiveRegions.fetch(), ...someInactiveRegions.fetch()];
-		},
-
 		hasMoreRegions() {
 			const minNumber = Template.instance().minNumberOfRegionInSelection;
 
-			const numberOfRegions = Template.instance().regions().count();
+			const numberOfRegions = Template.instance().regions().length;
 
-			return (
-				numberOfRegions > minNumber &&
-				numberOfRegions > Template.instance().regions({ active: true }).count()
-			);
+			return numberOfRegions > minNumber;
 		},
 
 		allRegions() {
 			return Template.instance().regions();
+		},
+
+		notAllRegions() {
+			const instance = Template.instance();
+			const minNumber = instance.minNumberOfRegionInSelection;
+			return instance.regions({ limit: minNumber });
 		},
 
 		aboutLink() {
@@ -247,7 +266,7 @@ import './styles.scss';
 			instance.$('.js-region-search').trigger('focusout');
 			instance.$('.dropdown-toggle').dropdown('hide');
 			if (!instance.state.equals('search', '')) {
-				const selectedRegion = instance.regions().fetch()[0];
+				const selectedRegion = instance.regions()[0];
 				if (selectedRegion) {
 					instance.changeRegion(selectedRegion._id);
 				} else {

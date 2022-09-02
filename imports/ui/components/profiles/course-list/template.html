@@ -8,7 +8,7 @@
 					{{i18n 'users.courselist.userCourses' '{NAME} is involved in the following courses' NAME=getName}}
 				{{/if}}
 			</h3>
-			{{#if ready}}
+			{{#if Template.subscriptionsReady}}
 				<div>
 					{{#each role in roles}}
 						{{#if coursesByRoleCount role.type false}}

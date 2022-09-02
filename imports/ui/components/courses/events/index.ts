@@ -23,7 +23,6 @@ import './styles.scss';
 		'courseEvents',
 		{ course: CourseModel },
 		{
-			eventSub: Meteor.SubscriptionHandle;
 			state: ReactiveDict<{ showAllEvents: boolean; showModal: boolean }>;
 			deleteCourseEventsArgs: { onShowEventsDeleteModal: () => void };
 			deleteEventsModalArgs: { onShowEventsDeleteModal: () => void };
@@ -40,7 +39,7 @@ import './styles.scss';
 		const instance = this;
 		const courseId = this.data.course._id;
 
-		instance.eventSub = instance.subscribe('eventsForCourse', courseId);
+		instance.subscribe('eventsForCourse', courseId);
 
 		const maxEventsShown = 4;
 		instance.state = new ReactiveDict();
@@ -88,10 +87,6 @@ import './styles.scss';
 		haveMoreEvents() {
 			const instance = Template.instance();
 			return instance.haveMoreEvents() && !instance.state.get('showAllEvents');
-		},
-
-		ready() {
-			return Template.instance().eventSub.ready();
 		},
 
 		deleteCourseEventsArgs() {

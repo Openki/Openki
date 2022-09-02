@@ -258,8 +258,9 @@
 				role="menu" aria-labelledby="editform_name">
 				{{#if proposedCourses.count}}
 					<li class="dropdown-header">
-						<i class="fa-solid fa-info" aria-hidden="true"></i>
+						<i class="fa-solid fa-info-circle" aria-hidden="true"></i>
 						{{i18n 'proposedCoursesDropdown.joinExistingCourseQuestion' 'Maybe you would like to join an existing course?'}}
+						<button type="button" class="btn btn-close"></button>
 					</li>
 					<li>
 						<hr class="dropdown-divider">
@@ -270,6 +271,9 @@
 							   tabindex="-1">{{name}}</a></li>
 					{{/each}}
 				{{/if}}
+				<button type="button" class="btn btn-cancel js-close-btn close-dropdown-button">
+					{{i18n 'button.proposedCourses.close' 'No thanks'}}
+				</button>
 			</ul>
 		</div>
 	</div>

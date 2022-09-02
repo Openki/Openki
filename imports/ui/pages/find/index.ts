@@ -35,7 +35,6 @@ const Template = TemplateAny as TemplateStaticTyped<
 
 		courseBlockSize: number;
 		courseLimit: ReactiveVar<number>;
-		coursesReady: ReactiveVar<boolean>;
 		filter: ReturnType<typeof Courses['Filtering']>;
 	}
 >;
@@ -79,7 +78,6 @@ template.onCreated(function () {
 	instance.showingFilters = new ReactiveVar(false);
 	instance.courseBlockSize = 36;
 	instance.courseLimit = new ReactiveVar(instance.courseBlockSize);
-	instance.coursesReady = new ReactiveVar(false); // Latch
 
 	const filter = Courses.Filtering();
 	instance.filter = filter;
@@ -112,14 +110,11 @@ template.onCreated(function () {
 	// Update whenever filter changes
 	instance.autorun(() => {
 		const filterQuery = filter.toQuery();
-		instance.coursesReady.set(false);
 
 		// Add one to the limit so we know there is more to show
 		const limit = instance.courseLimit.get() + 1;
 
-		instance.subscribe('Courses.findFilter', filterQuery, limit, () => {
-			instance.coursesReady.set(true);
-		});
+		instance.subscribe('Courses.findFilter', filterQuery, limit);
 	});
 });
 
@@ -229,9 +224,6 @@ template.helpers({
 
 	hasMore() {
 		const instance = Template.instance();
-		if (!instance.coursesReady.get()) {
-			return false;
-		}
 
 		const filterQuery = instance.filter.toQuery();
 		const limit = instance.courseLimit.get();
@@ -245,10 +237,6 @@ template.helpers({
 		const filterQuery = instance.filter.toQuery();
 
 		return Courses.findFilter(filterQuery as any, instance.courseLimit.get());
-	},
-
-	ready() {
-		return Template.instance().coursesReady.get();
 	},
 
 	filteredRegion() {

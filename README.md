@@ -39,17 +39,16 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 - :ideograph_advantage: I18n: In-browser-GUI for [crowdsourced translation](https://gitlab.com/Openki/Openki/-/wikis/i18n) (using [Weblate](https://hosted.weblate.org/projects/openki/openki/))
 - :envelope: Email notifications
 - :electric_plug: read-only JSON API
+- :door: private usage, multitenancy
+- :mailbox: Private messaging
+- :ghost: Customizability, White Labeling
+- :open_file_folder: File upload
 
 #### Intended features
 - :white_large_square: White-labeling for groups, locations and regions
-- :door: internal usage
 - :bar_chart: statistics
-- :closed_lock_with_key: more privacy settings and security
+- :closed_lock_with_key: more privacy settings
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
-- :mailbox: Private messaging
-- :name_badge: OpenBadges and feedback options
-- :ghost: Customizability
-- :open_file_folder: File upload for course-documentation
 - :iphone: Smartphone App
 
 ----
@@ -64,10 +63,10 @@ In the interest of having a open and welcoming environment for everyone, we agre
 - `cd /some/path/Openki`
 - `meteor npm install`
 - Run `meteor npm run dev` (We support server side debugging. For help, see: https://nodejs.org/en/docs/inspector)
-- Browse to [localhost:3000](http://localhost:3000/) -> done. (admin: `greg`/`greg`, any other visible user has pwd `greg` as well)
+- Browse to [localhost:3000](http://localhost:3000/) -> done. 
 
-- There are other actions, for example `meteor npm run es-lint`.
-
+Admin user is called `greg` with pass: `greg`, any other visible user has pass `greg` as well.
+Further reading in our [wiki](https://gitlab.com/Openki/Openki/-/wikis/Docs%20for%20developers)
 
 ### Running the tests
 
