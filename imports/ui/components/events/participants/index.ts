@@ -65,6 +65,16 @@ import './template.html';
 			return data.maxParticipants - occupied;
 		},
 
+		isParticipantsMoreThanTow() {
+			const { data } = Template.instance();
+			if (data.participants) {
+				if (data.participants.length >= 2) {
+					return true;
+				}
+			}
+			return false;
+		},
+
 		sortedParticipants() {
 			const instance = Template.instance();
 			const { participants } = instance.data;
