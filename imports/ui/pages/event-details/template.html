@@ -4,25 +4,6 @@
 	</div>
 </template>
 
-<template name="eventNotFound">
-
-	{{#if currentUser}}
-		<h3 class="event-notfound-text">
-			{{i18n "event.not_exists" "Could not find this event. Maybe it was deleted, or never existed in the first place."}}
-		</h3>
-	{{/if}}
-	{{#unless currentUser}}
-		<div class="container">
-			<h3 class="event-notfound-text">{{i18n "user.not.logged_in" "Could not find this event. Maybe you must log in!"}}
-			</h3>
-			<button class=" js-login btn btn-save event-notfound-text page-notfound-text">
-				<span class="fa-solid fa-right-to-bracket fa-fw"></span>
-				<span>{{i18n 'event.not_exists.unlogged' 'Log in/register'}}</span>
-			</button>
-		</div>
-	{{/unless}}
-</template>
-
 <template name="event">
 	<div class="row">
 		<div class="col-lg-8">
@@ -219,6 +200,23 @@
 			{{/if}}
 		{{/if}}
 	</div>
+</template>
+
+<template name="eventNotFound">
+	{{#if currentUser}}
+		<h3 class="event-notfound-text">
+			{{i18n "event.not_exists" "Could not find this event. Maybe it was deleted, or never existed in the first place."}}
+		</h3>
+	{{else}}
+		<div class="container">
+			<h3 class="event-notfound-text">{{i18n "user.not.logged_in" "Could not find this event. Maybe you must log in!"}}
+			</h3>
+			<button class="js-login btn btn-save event-notfound-text page-notfound-text">
+				<span class="fa-solid fa-right-to-bracket fa-fw"></span>
+				<span>{{i18n 'event.not_exists.unlogged' 'Log in/register'}}</span>
+			</button>
+		</div>
+	{{/if}}
 </template>
 
 <!-- COPYPASTA WARNING
