@@ -55,13 +55,10 @@ import './template.html';
 			);
 		});
 
-		this.subscribe('Regions');
+		instance.subscribe('Regions');
 	});
 
 	template.helpers({
-		ready() {
-			return Template.instance().subscriptionsReady();
-		},
 		courses() {
 			return Courses.find(
 				{},

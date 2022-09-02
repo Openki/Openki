@@ -4,6 +4,12 @@
 			<span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>
 			{{i18n 'tenant.settings.title.Members' 'Members'}} ({{members.length}})
 		</h3>
+		<div class="icon-text-icon">
+			<div class="icon-text-text">
+				{{i18n 'tenant.settings.members.description' 'Members can see and use the above regions in the organisation {TENANT}.' TENANT=tenantName}}
+			</div>
+		</div>
+		<br />
 		<div class="tag-group multiline">
 			{{#each members}}
 				<div class="tag tag-btn tenant-member-tag-btn-remove">
@@ -60,6 +66,10 @@
 			<span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>
 			{{i18n 'tenant.settings.title.admin' 'Admins'}} ({{tenant.admins.length}})
 		</h3>
+		<div class="icon-text-text">
+			{{i18n 'tenant.settings.admin.description' 'Admins are empowered to see and manage this panel here, like you.'}}
+		</div>
+		<br />
 		<div class="tag-group multiline">
 			{{#each tenant.admins}}
 				<div class="tag tag-btn tenant-admin-tag-btn-remove">

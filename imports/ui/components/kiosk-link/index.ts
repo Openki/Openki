@@ -29,9 +29,3 @@ template.helpers({
 		return Router.url('kioskEvents', {}, options);
 	},
 });
-
-template.events({
-	'click .js-remove-back-to-kiosk'() {
-		return Session.set('kioskFilter', false);
-	},
-});

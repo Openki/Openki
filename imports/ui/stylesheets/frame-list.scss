@@ -125,3 +125,37 @@
 	margin-top: 10px;
 	text-align: center;
 }
+
+.frame-list-free-seats-tooltip {
+	@include td-float(right);
+	margin-right: 15px;
+	text-align: right;
+}
+
+.frame-list-free-seats-tooltip {
+	display: inline-block;
+	position: relative;
+}
+
+.frame-list-free-seats-tooltip-text {
+	background-color: #555;
+	border-radius: 6px;
+	bottom: 125%;
+	color: #fff;
+	left: 50%;
+	margin-left: -80px;
+	margin-top: -200px;
+	opacity: 0;
+	padding: 5px 0;
+	position: absolute;
+	text-align: center;
+	transition: opacity 0.3s;
+	visibility: hidden;
+	width: 120px;
+	z-index: 1;
+}
+
+.frame-list-free-seats-tooltip:hover .frame-list-free-seats-tooltip-text {
+	opacity: 1;
+	visibility: visible;
+}
