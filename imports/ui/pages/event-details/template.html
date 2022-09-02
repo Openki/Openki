@@ -70,7 +70,7 @@
 									{{> buttonBeforeRegister event="js-before-register-event"}}
 								{{else}}
 									<p>
-										{{i18n 'event.details.want-to-register' 'Do you want to reserve a seat as {USERNAME} for the event "{EVENTTITLE}" on the {DATE}? Your reservation is binding.' USERNAME=userName EVENTTITLE=title DATE=eventDate attr=true}}
+										{{i18n 'event.details.want-to-register' 'Do you want to reserve a seat as {USERNAME} for the event "{EVENTTITLE}" on the {DATE}? Your reservation is binding.' USERNAME=userName EVENTTITLE=title DATE=(dateFormat startLocal) attr=true}}
 									</p>
 									<p>
 									<div class="row justify-content-between align-items-center">
