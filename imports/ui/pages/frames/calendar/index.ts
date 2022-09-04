@@ -9,8 +9,6 @@ import { decode } from 'html-entities';
 import { EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
-import * as Analytics from '/imports/ui/lib/analytics';
-
 import '/imports/ui/components/loading';
 
 import './template.html';
