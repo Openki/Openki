@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import { FindFilter, Invitations } from '/imports/api/invitations/invitations';
 import { Tenants } from '/imports/api/tenants/tenants';
+import { FieldSort } from '/imports/utils/sort-spec';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 Meteor.publish('invitation', function (tenantId, token) {
@@ -14,19 +15,21 @@ Meteor.publish('invitation', function (tenantId, token) {
 	return [invitation, Tenants.find(tenantId)];
 });
 
-Meteor.publish('invitations.findFilter', function (filter, limit, skip, sortParams) {
-	const tenantId = filter.tenant;
+Meteor.publish(
+	'invitations.findFilter',
+	function (filter: FindFilter, limit, skip, sort: FieldSort[]) {
+		const tenantId = filter.tenant;
 
-	const user = Meteor.user();
+		const user = Meteor.user();
 
-	if (!user || !(UserPrivilegeUtils.privileged(user, 'admin') || user.isTenantAdmin(tenantId))) {
-		this.ready();
-		return undefined;
-	}
+		if (
+			!user ||
+			!(UserPrivilegeUtils.privileged(user, 'admin') || (tenantId && user.isTenantAdmin(tenantId)))
+		) {
+			this.ready();
+			return undefined;
+		}
 
-	const newFilter = { tenant: tenantId } as FindFilter;
-	if (filter.status) {
-		newFilter.status = filter.status;
-	}
-	return Invitations.findFilter(newFilter, limit, skip, sortParams);
-});
+		return Invitations.findFilter(filter, limit, skip, sort);
+	},
+);
