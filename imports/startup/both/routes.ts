@@ -15,14 +15,20 @@ import {
 	FindFilter as EventsFindFilter,
 	OEvent,
 } from '/imports/api/events/events';
-import { Group, GroupEntity, GroupModel, Groups } from '/imports/api/groups/groups';
-import { Region, RegionModel, Regions } from '/imports/api/regions/regions';
-import { InfoPages, InfoPagesEntity } from '/imports/api/infoPages/infoPages';
-import { Tenant, TenantModel, Tenants } from '/imports/api/tenants/tenants';
+import { Group, GroupEntity, GroupModel } from '/imports/api/groups/groups';
+import * as Groups from '/imports/api/groups/publications';
+import { Region, RegionModel } from '/imports/api/regions/regions';
+import * as Regions from '/imports/api/regions/publications';
+import { InfoPagesEntity } from '/imports/api/infoPages/infoPages';
+import * as InfoPages from '/imports/api/infoPages/publications';
+import { Tenant, TenantEntity, TenantModel, Tenants } from '/imports/api/tenants/tenants';
 import { RoleEntity, Roles } from '/imports/api/roles/roles';
-import { Venues, Venue, VenueModel } from '/imports/api/venues/venues';
+import { Venue, VenueEntity, VenueModel } from '/imports/api/venues/venues';
+import * as Venues from '/imports/api/venues/publications';
 import { UserModel, Users } from '/imports/api/users/users';
 import { InvitationEntity, Invitations } from '/imports/api/invitations/invitations';
+
+import type { Data as GroupDetailsData } from '/imports/ui/pages/group-details';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 import CleanedRegion from '/imports/ui/lib/cleaned-region';
@@ -36,6 +42,7 @@ import * as Metatags from '/imports/utils/metatags';
 import * as Predicates from '/imports/utils/predicates';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as RouterAsync from '/imports/utils/RouterAsync';
+import { SubscriptionType } from '/imports/utils/ServerPublish';
 
 function finderRoute(path: string) {
 	return {
@@ -323,17 +330,10 @@ RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, 
 );
 
 RouterAsync.route<
-	| {
-			courseQuery: Record<string, string> & {
-				group: string;
-				region: string | undefined;
-			};
-			group: GroupModel;
-			showCourses: boolean;
-	  }
-	| undefined,
+	GroupDetailsData | undefined,
 	{ _id: string },
-	Record<string, string>
+	Record<string, string>,
+	{ details: SubscriptionType<typeof Groups['details']> }
 >('groupDetails', {
 	path: 'group/:_id/:short?',
 	template: 'groupDetailsPage',
@@ -341,7 +341,8 @@ RouterAsync.route<
 		await import('/imports/ui/pages/group-details');
 	},
 	waitOn() {
-		return [Meteor.subscribe('group', this.params._id)];
+		this.details = Groups.details.subscribe(this.params._id);
+		return () => this.details.ready();
 	},
 	data() {
 		let group;
@@ -349,7 +350,7 @@ RouterAsync.route<
 		if (isNew) {
 			group = new Group() as GroupModel;
 		} else {
-			group = Groups.findOne(this.params._id);
+			group = this.details();
 		}
 
 		if (!group) {
@@ -368,7 +369,7 @@ RouterAsync.route<
 		};
 	},
 	onAfterAction() {
-		const group = Groups.findOne({ _id: this.params._id });
+		const group = this.details();
 		if (group) {
 			Metatags.setCommonTags(group.name);
 		}
@@ -385,7 +386,8 @@ RouterAsync.route<
 		filter: Record<string, any>;
 	},
 	Record<string, never>,
-	Record<string, string>
+	Record<string, string>,
+	{ timer: number }
 >('kioskEvents', {
 	path: '/kiosk/events',
 	template: 'kioskEventsPage',
@@ -437,14 +439,14 @@ RouterAsync.route<
 		};
 	},
 	onAfterAction() {
-		(this as any).timer = Meteor.setInterval(() => {
+		this.timer = Meteor.setInterval(() => {
 			Session.set('seconds', new Date());
 		}, 1000);
 
 		Metatags.setCommonTags(i18n('event.list.windowtitle', 'Events'));
 	},
 	onStop() {
-		Meteor.clearInterval((this as any).timer);
+		Meteor.clearInterval(this.timer);
 	},
 });
 
@@ -478,15 +480,20 @@ RouterAsync.route<
 	| {
 			page: InfoPagesEntity;
 	  },
-	{ page_slug: string }
+	{ page_slug: string },
+	unknown,
+	{
+		infoPage: SubscriptionType<typeof InfoPages['details']>;
+	}
 >('info', {
 	path: 'info/:page_slug',
 	template: 'infoPage',
 	waitOn() {
-		return [Meteor.subscribe('infoPage', this.params.page_slug, Session.get('locale'))];
+		this.infoPage = InfoPages.details.subscribe(this.params.page_slug, Session.get('locale'));
+		return () => this.infoPage.ready();
 	},
 	data() {
-		const page = InfoPages.findOne({ slug: this.params.page_slug });
+		const page = this.infoPage();
 		if (!page) {
 			return undefined;
 		}
@@ -494,28 +501,68 @@ RouterAsync.route<
 		return { page };
 	},
 	onAfterAction() {
-		const page = InfoPages.findOne({ slug: this.params.page_slug });
+		const page = this.infoPage();
 		if (page) {
 			Metatags.setCommonTags(page.title);
 		}
 	},
 });
 
-RouterAsync.route<any>('profile', {
+RouterAsync.route<
+	{
+		user?: {
+			_id: string;
+			name: string;
+			notifications: boolean;
+			allowPrivateMessages: boolean;
+			tenants: Mongo.Cursor<TenantEntity, TenantModel> | never[];
+			groups: Mongo.Cursor<GroupEntity, GroupModel>;
+			venues: Mongo.Cursor<VenueEntity, VenueModel>;
+			email: string;
+			verified: boolean;
+		};
+	},
+	Record<string, never>,
+	unknown,
+	{
+		venues: SubscriptionType<typeof Venues['findFilter']>;
+		groups: SubscriptionType<typeof Groups['findFilter']>;
+	}
+>('profile', {
 	path: 'profile',
 	template: 'profilePage',
 	async onRun() {
 		await import('/imports/ui/pages/profile');
 	},
 	waitOn() {
+		const userId = Meteor.userId();
+
+		if (!userId) {
+			return [];
+		}
+
+		this.venues = Venues.findFilter.subscribe({ editor: userId });
+		this.groups = Groups.findFilter.subscribe({ own: true });
 		return [
 			Meteor.subscribe('Tenants.findFilter', { adminOf: true }),
-			Meteor.subscribe('Groups.findFilter', { own: true }),
-			Meteor.subscribe('Venues.findFilter', { editor: Meteor.userId() }),
+			() => this.groups.ready(),
+			() => this.venues.ready(),
 		];
 	},
 	data() {
-		const data: any = {};
+		const data: {
+			user?: {
+				_id: string;
+				name: string;
+				notifications: boolean;
+				allowPrivateMessages: boolean;
+				tenants: Mongo.Cursor<TenantEntity, TenantModel> | never[];
+				groups: Mongo.Cursor<GroupEntity, GroupModel>;
+				venues: Mongo.Cursor<VenueEntity, VenueModel>;
+				email: string;
+				verified: boolean;
+			};
+		} = {};
 		const user: UserModel | null = Meteor.user();
 		if (user) {
 			const userdata = {
@@ -524,8 +571,8 @@ RouterAsync.route<any>('profile', {
 				notifications: user.notifications,
 				allowPrivateMessages: user.allowPrivateMessages,
 				tenants: Tenants.findFilter({ adminOf: true }),
-				groups: Groups.findFilter({ own: true }),
-				venues: Venues.findFilter({ editor: user._id }),
+				groups: this.groups(),
+				venues: this.venues(),
 				email: user.emails?.[0]?.address,
 				verified: user.emails?.[0]?.verified || false,
 			};
@@ -986,7 +1033,11 @@ RouterAsync.route<
 			inviteGroups: Mongo.Cursor<GroupEntity, GroupModel>;
 			showPrivileges: number | true;
 	  },
-	{ _id: string }
+	{ _id: string },
+	unknown,
+	{
+		groups: SubscriptionType<typeof Groups['findFilter']>;
+	}
 >('userprofile', {
 	path: 'user/:_id/:username?',
 	template: 'userprofilePage',
@@ -994,10 +1045,8 @@ RouterAsync.route<
 		await import('/imports/ui/pages/userprofile');
 	},
 	waitOn() {
-		return [
-			Meteor.subscribe('user', this.params._id),
-			Meteor.subscribe('Groups.findFilter', { own: true }),
-		];
+		this.groups = Groups.findFilter.subscribe({ own: true });
+		return [Meteor.subscribe('user', this.params._id), () => this.groups.ready()];
 	},
 	data() {
 		const user = Users.findOne({ _id: this.params._id });
@@ -1022,7 +1071,7 @@ RouterAsync.route<
 			user,
 			alterPrivileges,
 			privileges,
-			inviteGroups: Groups.findFilter({ own: true }),
+			inviteGroups: this.groups(),
 			showPrivileges,
 		};
 	},
@@ -1060,81 +1109,88 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<{ region: RegionModel } | undefined, { _id: string; slug?: string }>(
-	'regionDetails',
-	{
-		path: 'region/:_id/:slug?',
-		template: 'regionDetailsPage',
-		async onRun() {
-			await import('/imports/ui/pages/region-details');
-		},
-		waitOn() {
-			return [Meteor.subscribe('regionDetails', this.params._id)];
-		},
-		data() {
-			const region = Regions.findOne(this.params._id);
+RouterAsync.route<
+	{ region: RegionModel } | undefined,
+	{ _id: string; slug?: string },
+	unknown,
+	{ details: SubscriptionType<typeof Regions['details']> }
+>('regionDetails', {
+	path: 'region/:_id/:slug?',
+	template: 'regionDetailsPage',
+	async onRun() {
+		await import('/imports/ui/pages/region-details');
+	},
+	waitOn() {
+		this.details = Regions.details.subscribe(this.params._id);
+		return () => this.details.ready();
+	},
+	data() {
+		const region = this.details();
 
-			if (!region) {
+		if (!region) {
+			return undefined; // Not found
+		}
+
+		return { region };
+	},
+	onAfterAction() {
+		const region = this.data()?.region;
+
+		if (!region) {
+			return;
+		}
+
+		Metatags.setCommonTags(region.name);
+	},
+});
+
+RouterAsync.route<
+	{ venue: VenueModel } | undefined,
+	{ _id: string; slug?: string },
+	unknown,
+	{ details: SubscriptionType<typeof Venues['details']> }
+>('venueDetails', {
+	path: 'venue/:_id/:slug?',
+	template: 'venueDetailsPage',
+	async onRun() {
+		await import('/imports/ui/pages/venue-details');
+	},
+	waitOn() {
+		this.details = Venues.details.subscribe(this.params._id);
+
+		return () => this.details.ready();
+	},
+	data() {
+		const id = this.params._id;
+
+		let venue: VenueModel | undefined;
+		if (id === 'create') {
+			venue = new Venue() as VenueModel;
+		} else {
+			venue = this.details();
+			if (!venue) {
 				return undefined; // Not found
 			}
+		}
 
-			return { region };
-		},
-		onAfterAction() {
-			const region = this.data()?.region;
-
-			if (!region) {
-				return;
-			}
-
-			Metatags.setCommonTags(region.name);
-		},
+		return { venue };
 	},
-);
+	onAfterAction() {
+		const data = this.data();
+		if (!data) {
+			return;
+		}
 
-RouterAsync.route<{ venue: VenueModel } | undefined, { _id: string; slug?: string }>(
-	'venueDetails',
-	{
-		path: 'venue/:_id/:slug?',
-		template: 'venueDetailsPage',
-		async onRun() {
-			await import('/imports/ui/pages/venue-details');
-		},
-		waitOn() {
-			return [Meteor.subscribe('venueDetails', this.params._id)];
-		},
-		data() {
-			const id = this.params._id;
-
-			let venue: VenueModel | undefined;
-			if (id === 'create') {
-				venue = new Venue() as VenueModel;
-			} else {
-				venue = Venues.findOne({ _id: this.params._id });
-				if (!venue) {
-					return undefined; // Not found
-				}
-			}
-
-			return { venue };
-		},
-		onAfterAction() {
-			const data = this.data();
-			if (!data) {
-				return;
-			}
-
-			const { venue } = data;
-			let title;
-			if (venue._id) {
-				title = venue.name;
-			} else {
-				title = i18n('venue.edit.siteTitle.create', 'Create Venue');
-			}
-			Metatags.setCommonTags(title);
-		},
+		const { venue } = data;
+		let title;
+		if (venue._id) {
+			title = venue.name;
+		} else {
+			title = i18n('venue.edit.siteTitle.create', 'Create Venue');
+		}
+		Metatags.setCommonTags(title);
 	},
-);
+});
 
 RouterAsync.route('venuesMap', {
 	path: 'venues',
@@ -1143,7 +1199,7 @@ RouterAsync.route('venuesMap', {
 		await import('/imports/ui/pages/venues-map');
 	},
 	waitOn() {
-		return Meteor.subscribe('venues', CleanedRegion(Session.get('region')));
+		return Venues.all.subscribe(CleanedRegion(Session.get('region')));
 	},
 	onAfterAction() {
 		Metatags.setCommonTags(i18n('venue.map.windowtitle', 'Venues map'));

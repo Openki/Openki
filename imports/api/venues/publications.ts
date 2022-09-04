@@ -1,10 +1,11 @@
-import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { Match, check } from 'meteor/check';
 
 import { FindFilter, VenueEntity, Venues } from '/imports/api/venues/venues';
 
-Meteor.publish('venues', (region?: string) => {
+import { ServerPublish } from '/imports/utils/ServerPublish';
+
+export const all = ServerPublish('venues', (region?: string) => {
 	check(region, Match.Maybe(String));
 
 	const find: Mongo.Selector<VenueEntity> = {};
@@ -14,12 +15,16 @@ Meteor.publish('venues', (region?: string) => {
 	return Venues.find(find);
 });
 
-Meteor.publish('venueDetails', (id: string) => {
-	check(id, String);
+export const details = ServerPublish(
+	'venueDetails',
+	(id: string) => {
+		check(id, String);
 
-	return Venues.find(id);
-});
+		return Venues.find(id);
+	},
+	(id: string) => Venues.findOne(id),
+);
 
-Meteor.publish('Venues.findFilter', (find?: FindFilter, limit?: number) =>
+export const findFilter = ServerPublish('Venues.findFilter', (find?: FindFilter, limit?: number) =>
 	Venues.findFilter(find, limit),
 );

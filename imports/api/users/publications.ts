@@ -5,9 +5,16 @@ import { check } from 'meteor/check';
 import { Users } from '/imports/api/users/users';
 
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
+import { ServerPublish } from '/imports/utils/ServerPublish';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-Meteor.publish('user', function (userId: string) {
+// Always publish their own data for logged-in users
+// https://github.com/meteor/guide/issues/651
+Meteor.publish(null, function () {
+	return Users.find(this.userId as any);
+});
+
+export const details = ServerPublish('user', function (userId: string) {
 	check(userId, String);
 
 	// Public fields from users
@@ -27,13 +34,7 @@ Meteor.publish('user', function (userId: string) {
 	return Users.find({ _id: userId }, { fields });
 });
 
-// Always publish their own data for logged-in users
-// https://github.com/meteor/guide/issues/651
-Meteor.publish(null, function () {
-	return Users.find(this.userId as any);
-});
-
-Meteor.publish('userSearch', (search) => {
+export const findFilter = ServerPublish('userSearch', (search: string) => {
 	check(search, String);
 
 	return userSearchPrefix(search, { fields: { username: 1 }, limit: 10 });
