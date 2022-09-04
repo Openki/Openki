@@ -1,14 +1,16 @@
-import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
+
 import { Courses } from '/imports/api/courses/courses';
+
+import { ServerPublish } from '/imports/utils/ServerPublish';
 import { visibleTenants } from '/imports/utils/visible-tenants';
 
-Meteor.publish('courseDetails', (id: string) => {
+export const details = ServerPublish('courseDetails', (id: string) => {
 	check(id, String);
 
 	return Courses.find({ _id: id, tenant: { $in: visibleTenants() } });
 });
 
-Meteor.publish('Courses.findFilter', (filter, limit, skip, sortParams) =>
+export const findFilter = ServerPublish('Courses.findFilter', (filter, limit, skip, sortParams) =>
 	Courses.findFilter({ ...filter, tenants: visibleTenants() }, limit, skip, sortParams),
 );

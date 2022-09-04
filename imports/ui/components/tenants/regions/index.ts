@@ -1,8 +1,10 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
-import { Regions } from '/imports/api/regions/regions';
+import * as Regions from '/imports/api/regions/publications';
 import { TenantModel } from '/imports/api/tenants/tenants';
+
+import { SubscriptionType } from '/imports/utils/ServerPublish';
 
 import './template.html';
 
@@ -10,7 +12,13 @@ export interface Data {
 	tenant: TenantModel;
 }
 
-const Template = TemplateAny as TemplateStaticTyped<'tenantRegions', Data>;
+const Template = TemplateAny as TemplateStaticTyped<
+	'tenantRegions',
+	Data,
+	{
+		regions: SubscriptionType<typeof Regions['findFilter']>;
+	}
+>;
 
 const template = Template.tenantRegions;
 
@@ -18,15 +26,14 @@ template.onCreated(function () {
 	const instance = this;
 	instance.autorun(() => {
 		const { tenant } = Template.currentData();
-		instance.subscribe('Regions.findFilter', { tenant: tenant._id });
+		instance.regions = Regions.findFilter.subscribe(instance, { tenant: tenant._id });
 	});
 });
 
-Template.tenantRegions.helpers({
+template.helpers({
 	regions() {
 		const instance = Template.instance();
-		const { tenant } = instance.data;
-		return Regions.findFilter({ tenant: tenant._id });
+		return instance.regions();
 	},
 
 	showAddRegion() {

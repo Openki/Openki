@@ -5,15 +5,15 @@ import { check } from 'meteor/check';
 import { FindFilter, TenantEntity, Tenants } from '/imports/api/tenants/tenants';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { ServerPublish } from '/imports/utils/ServerPublish';
 import { FieldSort } from '/imports/utils/sort-spec';
 
-Meteor.publish('tenant', function (tenantId: string) {
+export const details = ServerPublish('tenant', function (tenantId: string) {
 	check(tenantId, String);
 
 	const user = Meteor.user();
 
 	if (!user) {
-		this.ready();
 		return undefined;
 	}
 
@@ -32,7 +32,7 @@ Meteor.publish('tenant', function (tenantId: string) {
 	return Tenants.find(filter, { fields: { ...Tenants.publicFields, admins: showAdminsFields } });
 });
 
-Meteor.publish(
+export const findFilter = ServerPublish(
 	'Tenants.findFilter',
 	(find: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) =>
 		Tenants.findFilter(find, limit, skip, sort),

@@ -1,7 +1,10 @@
-import { Meteor } from 'meteor/meteor';
 import fetch from 'node-fetch';
+import { Match, check } from 'meteor/check';
 
-import { LanguagesRaw } from '/imports/api/languages/languages';
+import { LanguagesRaw, Languages, LanguageEntity } from '/imports/api/languages/languages';
+
+import { Type } from '/imports/utils/CustomChecks';
+import { ServerPublish } from '/imports/utils/ServerPublish';
 
 const weblateMapping = { de_ZH: 'de-ZH', nb_NO: 'nb' } as { [weblateCode: string]: string };
 
@@ -33,12 +36,34 @@ const languages = { ...LanguagesRaw };
 	}
 })();
 
-// See: https://guide.meteor.com/data-loading.html#custom-publication
-Meteor.publish('Languages', async function () {
-	Object.entries(languages).forEach(([code, value]) => {
-		this.added('Languages', code, value);
-	});
+export const FindFilterPattern = {
+	code: Match.Maybe(String),
+	visible: Match.Maybe(Boolean),
+};
+export type FindFilter = Type<typeof FindFilterPattern>;
 
-	// We can call ready to indicate to the client that the initial document sent has been sent
-	this.ready();
-});
+// See: https://guide.meteor.com/data-loading.html#custom-publication
+export const findFilter = ServerPublish(
+	'Languages',
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	function (_filter: FindFilter) {
+		Object.entries(languages).forEach(([code, value]) => {
+			this.added('Languages', code, value);
+		});
+	},
+	(filter: FindFilter) => {
+		check(filter, Match.Maybe(FindFilterPattern));
+
+		const selector = {
+			_id: filter.code,
+		} as Mongo.Query<LanguageEntity>;
+
+		if (typeof filter.visible === 'boolean') {
+			selector.visible = filter.visible;
+		}
+
+		return Languages.find(selector);
+	},
+);
+
+export default findFilter;

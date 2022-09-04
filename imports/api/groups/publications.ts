@@ -1,12 +1,17 @@
-import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 import { Groups } from '/imports/api/groups/groups';
 
-Meteor.publish('Groups.findFilter', (filter) => Groups.findFilter(filter));
+import { ServerPublish } from '/imports/utils/ServerPublish';
 
-Meteor.publish('group', (groupId: string) => {
-	check(groupId, String);
+export const findFilter = ServerPublish('Groups.findFilter', (filter) => Groups.findFilter(filter));
 
-	return Groups.find(groupId);
-});
+export const details = ServerPublish(
+	'group',
+	(groupId: string) => {
+		check(groupId, String);
+
+		return Groups.find(groupId);
+	},
+	(groupId: string) => Groups.findOne(groupId),
+);

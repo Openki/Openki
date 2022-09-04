@@ -1,12 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
 
-import { Events } from '/imports/api/events/events';
+import { Events, FindFilter } from '/imports/api/events/events';
 
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import { visibleTenants } from '/imports/utils/visible-tenants';
+import { ServerPublish } from '/imports/utils/ServerPublish';
 
-Meteor.publish('events', (region?: string) => {
+export const all = ServerPublish('events', (region?: string) => {
 	check(region, Match.Optional(String));
 
 	if (!region) {
@@ -15,23 +16,26 @@ Meteor.publish('events', (region?: string) => {
 	return Events.find({ region, tenant: { $in: visibleTenants() } });
 });
 
-Meteor.publish('event', (eventId: string) => {
+export const details = ServerPublish('event', (eventId: string) => {
 	check(eventId, String);
 
 	return Events.find({ _id: eventId, tenant: { $in: visibleTenants() } });
 });
 
-Meteor.publish('Events.findFilter', (filter, limit, skip, sort) =>
-	Events.findFilter({ ...filter, tenants: visibleTenants() }, limit, skip, sort),
+export const findFilter = ServerPublish(
+	'Events.findFilter',
+	(filter: FindFilter = {}, limit = 0, skip = 0, sort?: [string, 'asc' | 'desc'][]) => {
+		return Events.findFilter({ ...filter, tenants: visibleTenants() }, limit, skip, sort);
+	},
 );
 
-Meteor.publish('eventsForCourse', (courseId: string) => {
+export const forCourse = ServerPublish('eventsForCourse', (courseId: string) => {
 	check(courseId, String);
 
 	return Events.find({ courseId, tenant: { $in: visibleTenants() } });
 });
 
-Meteor.publish('affectedReplica', (eventId: string) => {
+export const affectedReplica = ServerPublish('affectedReplica', (eventId: string) => {
 	check(eventId, String);
 
 	const event = Events.findOne({
