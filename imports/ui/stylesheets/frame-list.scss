@@ -128,13 +128,11 @@
 
 .frame-list-free-seats-tooltip {
 	@include td-float(right);
-	margin-right: 15px;
-	text-align: right;
-}
-
-.frame-list-free-seats-tooltip {
 	display: inline-block;
+	font-weight: normal;
+	margin-right: 15px;
 	position: relative;
+	text-align: right;
 }
 
 .frame-list-free-seats-tooltip-text {
