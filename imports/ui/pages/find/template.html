@@ -26,7 +26,7 @@
 				{{/each}}
 			</div>
 
-			{{#unless ready}}
+			{{#unless Template.subscriptionsReady}}
 				{{> loadingPage}}
 			{{/unless}}
 
@@ -38,7 +38,7 @@
 				</div>
 			{{/if}}
 		{{else}}
-			{{#if ready}}
+			{{#if Template.subscriptionsReady}}
 				<div class="no-results">
 					<div class="no-results-body">
 						<span class="fa-solid fa-circle-exclamation fa-fw"

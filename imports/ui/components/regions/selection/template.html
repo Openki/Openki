@@ -59,7 +59,7 @@
 						</a>
 					</li>
 					{{#if state 'showAllRegions'}}
-						{{! <!-- here follows the "long" version, all regions that the user has access to --> }}
+						{{! here follows the "long" version, all regions that the user has access to }}
 						{{#each region in allRegions}}
 							{{> regionSelectionItem region}}
 						{{/each}}
@@ -75,7 +75,7 @@
 							</li>
 						{{/if}}
 					{{else}}
-						{{! <!--here follows the "short" version, only some regions are shown--> }}
+						{{! here follows the "short" version, only some regions are shown }}
 						{{#each region in notAllRegions}}
 							{{> regionSelectionItem region}}
 						{{/each}}

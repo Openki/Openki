@@ -126,10 +126,6 @@ import './styles.scss';
 			return Meteor.user()?.username || i18n('eventDetails.notLoggedIn', '(not logged in?)');
 		},
 
-		eventDate() {
-			return moment(Template.instance().data.startLocal).format('L');
-		},
-
 		courseTitle() {
 			return Template.instance().getCourseTitleIfAny();
 		},
@@ -556,6 +552,17 @@ import './styles.scss';
 					),
 				);
 			}
+		},
+	});
+}
+
+{
+	const Template = TemplateAny as TemplateStaticTyped<'eventNotFound'>;
+	const template = Template.eventNotFound;
+
+	template.events({
+		'click .js-login'() {
+			$('.js-account-tasks').modal('show');
 		},
 	});
 }

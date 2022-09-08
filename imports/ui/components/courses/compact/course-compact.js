@@ -10,11 +10,6 @@ import '/imports/ui/components/courses/categories';
 import './course-compact.html';
 
 Template.courseCompact.helpers({
-	ready() {
-		const { instance } = Template;
-		return !instance.eventSub || instance.eventSub.ready();
-	},
-
 	courseCss(course) {
 		if (!course.nextEvent) {
 			return '';
@@ -28,7 +23,8 @@ Template.courseCompact.helpers({
 		return `
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.75)), url('${src}');
 	background-position: center;
-	background-size: cover;`;
+	background-size: cover;
+	background-repeat: no-repeat;`;
 	},
 
 	courseStateClasses() {
