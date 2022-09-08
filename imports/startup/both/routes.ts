@@ -132,9 +132,6 @@ RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, 
 		data() {
 			return this.params.query;
 		},
-		onAfterAction() {
-			Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
-		},
 	},
 );
 
@@ -155,9 +152,6 @@ RouterAsync.route('tenants', {
 	waitOn() {
 		return Meteor.subscribe('Tenants.findFilter');
 	},
-	onAfterAction() {
-		Metatags.setCommonTags(i18n('tenants.windowtitle', 'Organizations'));
-	},
 });
 
 RouterAsync.route('find', finderRoute('/find'));
@@ -167,9 +161,6 @@ RouterAsync.route('users', {
 	template: 'adminUsersPage',
 	async onRun() {
 		await import('/imports/ui/pages/admin/users');
-	},
-	onAfterAction() {
-		Metatags.setCommonTags(i18n('admin.users.windowtitle', 'Users'));
 	},
 });
 
@@ -191,9 +182,6 @@ RouterAsync.route<{ cssRules: string[] }, Record<string, never>, Record<string, 
 				['regioncolor', 'color', '.frame-list-item-region'],
 			]).getCssRules();
 			return { cssRules };
-		},
-		onAfterAction() {
-			Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
 		},
 	},
 );
@@ -232,9 +220,6 @@ RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, 
 		},
 		data() {
 			return this.params.query;
-		},
-		onAfterAction() {
-			Metatags.setCommonTags(i18n('event.list.windowtitle', 'Events'));
 		},
 	},
 );
@@ -289,9 +274,6 @@ RouterAsync.route<{ cssRules: string[] } & any, Record<string, never>, Record<st
 
 			return query;
 		},
-		onAfterAction() {
-			Metatags.setCommonTags(i18n('course.propose.windowtitle', 'Propose new course'));
-		},
 	},
 );
 
@@ -315,9 +297,6 @@ RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, 
 		},
 		data() {
 			return this.params.query;
-		},
-		onAfterAction() {
-			Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
 		},
 	},
 );
@@ -366,12 +345,6 @@ RouterAsync.route<
 			group,
 			showCourses: !isNew,
 		};
-	},
-	onAfterAction() {
-		const group = Groups.findOne({ _id: this.params._id });
-		if (group) {
-			Metatags.setCommonTags(group.name);
-		}
 	},
 });
 
@@ -440,8 +413,6 @@ RouterAsync.route<
 		(this as any).timer = Meteor.setInterval(() => {
 			Session.set('seconds', new Date());
 		}, 1000);
-
-		Metatags.setCommonTags(i18n('event.list.windowtitle', 'Events'));
 	},
 	onStop() {
 		Meteor.clearInterval((this as any).timer);
@@ -456,9 +427,6 @@ RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, 
 	},
 	data() {
 		return this.params.query;
-	},
-	onAfterAction() {
-		Metatags.setCommonTags(i18n('log.list.windowtitle', 'Log'));
 	},
 });
 
@@ -533,17 +501,6 @@ RouterAsync.route<any>('profile', {
 		}
 		return data;
 	},
-	onAfterAction() {
-		const user = Meteor.user();
-		if (!user) {
-			return;
-		}
-
-		const title = i18n('profile.settings.windowtitle', 'My Profile Settings - {USER}', {
-			USER: user.username,
-		});
-		Metatags.setCommonTags(title);
-	},
 });
 
 RouterAsync.route('proposeCourse', {
@@ -551,9 +508,6 @@ RouterAsync.route('proposeCourse', {
 	template: 'courseProposePage',
 	async onRun() {
 		await import('/imports/ui/pages/course-create');
-	},
-	onAfterAction() {
-		Metatags.setCommonTags(i18n('course.propose.windowtitle', 'Propose new course'));
 	},
 	data: CourseTemplate,
 });
@@ -573,9 +527,6 @@ RouterAsync.route<
 	},
 	data() {
 		return { token: this.params.token };
-	},
-	onAfterAction() {
-		document.title = i18n('resetPassword.siteTitle', 'Reset password');
 	},
 });
 
@@ -621,29 +572,6 @@ RouterAsync.route<
 			select: this.params.query.select,
 		};
 		return data;
-	},
-	onAfterAction() {
-		const data = this.data();
-		if (!data) {
-			return;
-		}
-
-		const { course } = data;
-		Metatags.setCommonTags(i18n('course.windowtitle', 'Course: {COURSE}', { COURSE: course.name }));
-	},
-});
-
-RouterAsync.route('showCourseHistory', {
-	path: 'course/:_id/:slug/History',
-	// template: 'coursehistory',
-	waitOn() {
-		return [Meteor.subscribe('courseDetails', this.params._id)];
-	},
-	data() {
-		const course = Courses.findOne({ _id: this.params._id });
-		return {
-			course,
-		};
 	},
 });
 
@@ -718,10 +646,6 @@ RouterAsync.route<{
 			region,
 		};
 	},
-	onAfterAction() {
-		const title = i18n('tenant.edit.siteTitle.create', 'Create private region');
-		Metatags.setCommonTags(title);
-	},
 });
 
 RouterAsync.route<{ tenant: TenantModel } | undefined, { _id: string; slug?: string }>(
@@ -743,12 +667,6 @@ RouterAsync.route<{ tenant: TenantModel } | undefined, { _id: string; slug?: str
 			}
 
 			return { tenant };
-		},
-		onAfterAction() {
-			const tenant = Tenants.findOne({ _id: this.params._id });
-			if (tenant) {
-				Metatags.setCommonTags(tenant.name);
-			}
 		},
 	},
 );
@@ -781,15 +699,6 @@ RouterAsync.route<
 		}
 
 		return { tenant, invitation };
-	},
-	onAfterAction() {
-		const tenant = Tenants.findOne({ _id: this.params.query.tenant });
-		if (tenant) {
-			const title = i18n('invitation.show.siteTitle', 'Join {TENANT}', {
-				TENANT: tenant.name,
-			});
-			Metatags.setCommonTags(title);
-		}
 	},
 });
 
@@ -1026,13 +935,6 @@ RouterAsync.route<
 			showPrivileges,
 		};
 	},
-	onAfterAction() {
-		const user = Users.findOne({ _id: this.params._id });
-		if (!user) return;
-
-		const title = i18n('profile.windowtitle', 'Profile of {USER}', { USER: user.username });
-		Metatags.setCommonTags(title);
-	},
 });
 
 RouterAsync.route<
@@ -1053,10 +955,6 @@ RouterAsync.route<
 			isNew: true,
 			region,
 		};
-	},
-	onAfterAction() {
-		const title = i18n('region.edit.siteTitle.create', 'Create region');
-		Metatags.setCommonTags(title);
 	},
 });
 
@@ -1079,15 +977,6 @@ RouterAsync.route<{ region: RegionModel } | undefined, { _id: string; slug?: str
 			}
 
 			return { region };
-		},
-		onAfterAction() {
-			const region = this.data()?.region;
-
-			if (!region) {
-				return;
-			}
-
-			Metatags.setCommonTags(region.name);
 		},
 	},
 );
@@ -1118,21 +1007,6 @@ RouterAsync.route<{ venue: VenueModel } | undefined, { _id: string; slug?: strin
 
 			return { venue };
 		},
-		onAfterAction() {
-			const data = this.data();
-			if (!data) {
-				return;
-			}
-
-			const { venue } = data;
-			let title;
-			if (venue._id) {
-				title = venue.name;
-			} else {
-				title = i18n('venue.edit.siteTitle.create', 'Create Venue');
-			}
-			Metatags.setCommonTags(title);
-		},
 	},
 );
 
@@ -1144,8 +1018,5 @@ RouterAsync.route('venuesMap', {
 	},
 	waitOn() {
 		return Meteor.subscribe('venues', CleanedRegion(Session.get('region')));
-	},
-	onAfterAction() {
-		Metatags.setCommonTags(i18n('venue.map.windowtitle', 'Venues map'));
 	},
 });

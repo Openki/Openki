@@ -9,6 +9,8 @@ import * as UrlTools from '/imports/utils/url-tools';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
+import i18n from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/events/list';
 import '/imports/ui/components/loading';
@@ -41,6 +43,11 @@ const template = Template.frameWeekPage;
 
 template.onCreated(function () {
 	const instance = this;
+
+	instance.autorun(() => {
+		Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
+	});
+
 	instance.weekdays = [];
 
 	instance.autorun(() => {
