@@ -9,6 +9,8 @@ import { decode } from 'html-entities';
 import { EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
+import i18n from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/loading';
@@ -30,6 +32,10 @@ import './template.html';
 
 	template.onCreated(function () {
 		const instance = this;
+
+		instance.autorun(() => {
+			Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
+		});
 
 		instance.groupedEvents = new ReactiveVar({});
 		instance.days = new ReactiveVar([]);

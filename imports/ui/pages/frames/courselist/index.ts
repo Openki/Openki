@@ -28,7 +28,9 @@ import './template.html';
 	template.onCreated(function () {
 		const instance = this;
 
-		Metatags.setCommonTags(i18n('course.list.windowtitle', 'Courses'));
+		instance.autorun(() => {
+			Metatags.setCommonTags(i18n('course.list.windowtitle', 'Courses'));
+		});
 
 		const query = Router.current().params.query;
 		const sort = query.sort;
