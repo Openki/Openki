@@ -1,16 +1,17 @@
 <template name="calendarPage">
-	{{> calendarNavMulti date=startDate}}
+	{{> calendarNavMulti date=startDate setIsAttendeeFilterOn=setterToBePassedToChild}}
 	<div class="container calendar-container">
 		<div class="page-component">
 			{{#if Template.subscriptionsReady}}
 				{{#each day in days}}
-					{{> calendarDay day=day filter=instance.filter}}
+					{{> calendarDay day=day filter=instance.filter isAttendeeFilterOn=isAttendeeFilterOn}}
 					<hr>
 				{{/each}}
 			{{else}}
 				{{> loadingRow}}
 			{{/if}}
 		</div>
+
 	</div>
 </template>
 
@@ -20,7 +21,8 @@
 	</div>
 	{{#if hasEvents}}
 		<div class="calendar-event-list">
-			{{> eventList dataEvents=events withDate=false withImage=true}}
+			{{> eventList dataEvents=(maybeFilteredEvents events isAttendeeFilterOn=isAttendeeFilterOn) withDate=false withImage=true}}
+			{{!<!-- maybeFilteredEvents is a template helper that gives back a list of events in function of two arguments: events and isAttendeeFilterOn -->}}
 		</div>
 	{{else}}
 		<br>
