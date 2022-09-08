@@ -14,7 +14,7 @@
 									aria-label="Close"></button>
 						</div>
 						<div class="modal-body text-dark">
-							{{> sendMessage recipientId=userId attendeesArray=attendeesArray courseId=course._id eventId=event._id onDone=hideModal}}
+							{{> sendMessage recipientId=userId attendeesArray=participants courseId=course._id eventId=event._id onDone=hideModal}}
 						</div>
 					</div>
 				</div>
@@ -23,10 +23,9 @@
 		<h4>
 			<span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
 			{{i18n 'event.details.paticipants.title' '{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }' NUM=howManyEnrolled}}
-			{{#if isParticipantsMoreThanOne}}
+			{{#if canNotifyAll}}
 				<i class="fa-solid fa-envelope float-end js-contact-event-members"></i>
 			{{/if}}
-
 			<br />
 			{{#if maxParticipants}}
 				<span class="free-places">
