@@ -19,6 +19,8 @@ interface Data {
 	eventId?: string;
 	recipientId: string;
 	onDone?: () => void;
+
+	attendeesArray?: string[];
 }
 
 const Template = TemplateAny as TemplateStaticTyped<
@@ -115,17 +117,34 @@ template.events({
 				options.eventId = data.eventId;
 			}
 
-			try {
-				await emailMethods.sendEmail(data.recipientId, message, options);
-				Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
-				instance.$('.js-email-message').val('');
-				if (data.onDone) {
-					data.onDone();
+			if (data.attendeesArray) {
+				const attendeesArrayWithoutCurrentUser = data.attendeesArray.filter(function (value) {
+					return value !== Meteor.userId();
+				});
+
+				attendeesArrayWithoutCurrentUser?.forEach(async function sendtoAll(item) {
+					try {
+						await emailMethods.sendEmail(item, message, options);
+						Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
+					} catch (err) {
+						Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
+					} finally {
+						instance.busy(false);
+					}
+				});
+			} else {
+				try {
+					await emailMethods.sendEmail(data.recipientId, message, options);
+					Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
+				} catch (err) {
+					Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
+				} finally {
+					instance.busy(false);
 				}
-			} catch (err) {
-				Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
-			} finally {
-				instance.busy(false);
+			}
+			instance.$('.js-email-message').val('');
+			if (data.onDone) {
+				data.onDone();
 			}
 		});
 	},

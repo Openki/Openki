@@ -16,7 +16,7 @@
 	text-align: center;
 	vertical-align: middle;
 	width: 150px;
-	z-index: 1;
+	z-index: $zindex-back-to-kiosk;
 
 	&:hover {
 		background-color: $green-alternative;
