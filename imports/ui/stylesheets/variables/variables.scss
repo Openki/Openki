@@ -43,6 +43,8 @@ $proposal-border-style:                          dashed;
 $has-past-events-border-style:                   solid;
 $archived-color:                                 #f5ecc6;
 
+$course-page-role-icon-color:                   #4c4c4c;
+
 $course-compact-next-event-bg:                   $green;
 $course-compact-next-event-color:                $gray-800;
 
@@ -97,3 +99,9 @@ $kiosk-wrap-padding-vertical:                    $kiosk-wrap-padding-horizontal;
 //========================================================================================
 $footer-height:                                  50px;
 $footer-padding-vertical: 						 15px;
+
+// ** Z-index master list
+$zindex-editable-image:							 900;
+$zindex-file-upload:							 900;
+$zindex-map: 									 9999;
+$zindex-back-to-kiosk: 							 1000;

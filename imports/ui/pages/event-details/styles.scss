@@ -123,3 +123,11 @@ $header-bg: darken($blue-lighter, 5%);
 .event-detail-register-dropdown {
 	background-color: $event-page-component-bg;
 }
+
+.event-notfound-text {
+	left: 50%;
+	position: absolute;
+	text-align: center;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
