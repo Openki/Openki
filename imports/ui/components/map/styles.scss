@@ -20,7 +20,7 @@
 	right: 0;
 	// position: fixed; Does not work on iOS check index.ts how it is fixed
 	top: 0;
-	z-index: 9999;
+	z-index: $zindex-map;
 }
 
 .map-fullscreen .fa-map-marker {
