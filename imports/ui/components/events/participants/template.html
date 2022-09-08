@@ -10,8 +10,8 @@
 									  aria-hidden="true"></span>
 								{{i18n 'participantContactModal.writeMessageToAllAttendees' ' Write a message to all participants' }}
 							</h4>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
 						</div>
 						<div class="modal-body text-dark">
 							{{> sendMessage recipientId=userId attendeesArray=attendeesArray courseId=course._id eventId=event._id onDone=hideModal}}
