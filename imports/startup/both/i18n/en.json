@@ -440,7 +440,7 @@
   "frame.eventsList.description": "Description:",
   "frame.eventsList.when": "When:",
   "frame.eventsList.where": "Where:",
-  "frame.list.free.seats.tooltip": "{RESERVEDSEATS} of {TOTALSEATS} seats reserved",
+  "frame.list.free.seats.info.tooltip": "{RESERVEDSEATS} of {TOTALSEATS} seats reserved",
   "frame.login.email": "E-Mail",
   "frame.login.username": "Username",
   "frame.login.usernameOrEmail": "Username or e-mail address",
