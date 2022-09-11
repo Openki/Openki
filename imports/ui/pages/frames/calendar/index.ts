@@ -98,11 +98,18 @@ import './template.html';
 	});
 }
 
+function getTotalAvailableSeats() {
+	const { data } = Template.instance();
+	return data.maxParticipants || decode('&#8734;');
+}
+
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'frameCalendarEvent',
 		EventModel,
-		{ expanded: ReactiveVar<boolean> }
+		{
+			expanded: ReactiveVar<boolean>;
+		}
 	>;
 
 	const template = Template.frameCalendarEvent;
@@ -130,6 +137,13 @@ import './template.html';
 		getTotalAvailableSeats() {
 			const { data } = Template.instance();
 			return data.maxParticipants || decode('&#8734;');
+		},
+
+		overwriteUnlimitedSign() {
+			if (getTotalAvailableSeats() === decode('&#8734;')) {
+				return 'unlimited';
+			}
+			return getTotalAvailableSeats();
 		},
 	});
 
