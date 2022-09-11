@@ -23,17 +23,11 @@ const template = Template.eventCompact;
 
 template.helpers({
 	isEventFullyBooked() {
-		if (Template.instance().data.event.maxParticipants) {
-			if (
-				Template.instance().data.event.maxParticipants -
-					(Template.instance().data.event.participants?.length || 0) ===
-				0
-			) {
-				return true;
-			}
+		const { event } = Template.instance().data;
+		if (!event.maxParticipants) {
 			return false;
 		}
-		return false;
+		return (event.participants?.length || 0) >= event.maxParticipants;
 	},
 
 	eventCompactClasses() {
