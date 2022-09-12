@@ -7,10 +7,11 @@ import { Regions } from '/imports/api/regions/regions';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { MeteorAsync } from '/imports/utils/promisify';
+import i18n from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/calendar-nav/multi';
 import '/imports/ui/components/events/list';
-import '/imports/ui/components/loading';
 
 import './template.html';
 import './styles.scss';
@@ -32,6 +33,10 @@ import './styles.scss';
 
 	template.onCreated(function () {
 		const instance = this;
+
+		instance.autorun(() => {
+			Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
+		});
 
 		const filter = Events.Filtering();
 		instance.filter = filter;
