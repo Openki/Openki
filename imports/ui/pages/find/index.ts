@@ -11,251 +11,280 @@ import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
 import * as UrlTools from '/imports/utils/url-tools';
+import { i18n } from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
+import '/imports/ui/components/groups/list';
 import '/imports/ui/components/courses/list/course-list';
 import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/filter';
-import '/imports/ui/components/loading';
 import '/imports/ui/components/search-field';
 
 import './template.html';
 import './styles.scss';
 
-const hiddenFilters = ['needsRole', 'categories'];
-const filters = hiddenFilters.concat(['state']);
+{
+	const Template = TemplateAny as TemplateStaticTyped<
+		'findPage',
+		Record<string, string> & {
+			internal: boolean;
+			region: string;
+		}
+	>;
 
-const Template = TemplateAny as TemplateStaticTyped<
-	'find',
-	{
-		[key: string]: string;
-	},
-	{
-		updateUrl: () => boolean;
-		showingFilters: ReactiveVar<boolean>;
+	const template = Template.findPage;
 
-		courseBlockSize: number;
-		courseLimit: ReactiveVar<number>;
-		filter: ReturnType<typeof Courses['Filtering']>;
-	}
->;
+	template.onCreated(function () {
+		const instance = this;
 
-const template = Template.find;
+		instance.autorun(() => {
+			const { search } = Template.currentData();
+			if (search) {
+				Metatags.setCommonTags(i18n('find.windowtitle', 'Find "{SEARCH}"', { SEARCH: search }));
+			} else {
+				Metatags.setCommonTags(i18n('find.WhatLearn?'));
+			}
+		});
+	});
+}
 
-template.onCreated(function () {
-	const instance = this;
+{
+	const hiddenFilters = ['needsRole', 'categories'];
+	const filters = hiddenFilters.concat(['state']);
 
-	// Reflect filter selection in URI
-	// This creates a browser history entry so it is not done on every filter
-	// change. For example, when the search-field receives keydowns, the filter
-	// is updated but the change is not reflected in the URI.
-	instance.updateUrl = function () {
-		const urlParams = instance.filter.toParams() as {
-			[name: string]: string;
+	const Template = TemplateAny as TemplateStaticTyped<
+		'find',
+		{
+			[key: string]: string;
+		},
+		{
+			updateUrl: () => boolean;
+			showingFilters: ReactiveVar<boolean>;
+
+			courseBlockSize: number;
+			courseLimit: ReactiveVar<number>;
+			filter: ReturnType<typeof Courses['Filtering']>;
+		}
+	>;
+
+	const template = Template.find;
+
+	template.onCreated(function () {
+		const instance = this;
+
+		// Reflect filter selection in URI
+		// This creates a browser history entry so it is not done on every filter
+		// change. For example, when the search-field receives keydowns, the filter
+		// is updated but the change is not reflected in the URI.
+		instance.updateUrl = function () {
+			const urlParams = instance.filter.toParams() as {
+				[name: string]: string;
+			};
+			delete urlParams.region; // HACK region is kept in the session (for bad reasons)
+			delete urlParams.internal;
+
+			// used to keep scrollpos when navigating back
+			if (instance.courseLimit.get() > instance.courseBlockSize) {
+				urlParams.coursesAmount = instance.courseLimit.get().toString();
+			}
+			const queryString = UrlTools.paramsToQueryString(urlParams);
+
+			const options: { query?: string } = {};
+
+			if (queryString.length) {
+				options.query = queryString;
+			}
+
+			RouterAutoscroll.cancelNext();
+
+			const router = Router.current();
+			Router.go(router.route.getName(), { _id: router.params._id }, options);
+
+			return true;
 		};
-		delete urlParams.region; // HACK region is kept in the session (for bad reasons)
-		delete urlParams.internal;
 
-		// used to keep scrollpos when navigating back
-		if (instance.courseLimit.get() > instance.courseBlockSize) {
-			urlParams.coursesAmount = instance.courseLimit.get().toString();
-		}
-		const queryString = UrlTools.paramsToQueryString(urlParams);
+		instance.showingFilters = new ReactiveVar(false);
+		instance.courseBlockSize = 36;
+		instance.courseLimit = new ReactiveVar(instance.courseBlockSize);
 
-		const options: { query?: string } = {};
+		const filter = Courses.Filtering();
+		instance.filter = filter;
 
-		if (queryString.length) {
-			options.query = queryString;
-		}
+		// Read URL state
+		instance.autorun(() => {
+			const query = Template.currentData();
 
-		RouterAutoscroll.cancelNext();
+			filter.clear().read(query).done();
 
-		const router = Router.current();
-		Router.go(router.route.getName(), { _id: router.params._id }, options);
-
-		return true;
-	};
-
-	instance.showingFilters = new ReactiveVar(false);
-	instance.courseBlockSize = 36;
-	instance.courseLimit = new ReactiveVar(instance.courseBlockSize);
-
-	const filter = Courses.Filtering();
-	instance.filter = filter;
-
-	// Read URL state
-	instance.autorun(() => {
-		const query = Template.currentData();
-
-		filter.clear().read(query).done();
-
-		if (query.coursesAmount) {
-			const coursesAmount = Number.parseInt(query.coursesAmount, 10);
-			if (coursesAmount > instance.courseBlockSize) {
-				instance.courseLimit.set(coursesAmount);
-			}
-		} else {
-			instance.courseLimit.set(instance.courseBlockSize);
-		}
-	});
-
-	// When there are filters set, show the filtering pane
-	instance.autorun(() => {
-		Object.keys(filter.toParams()).forEach((name) => {
-			if (hiddenFilters.includes(name)) {
-				instance.showingFilters.set(true);
+			if (query.coursesAmount) {
+				const coursesAmount = Number.parseInt(query.coursesAmount, 10);
+				if (coursesAmount > instance.courseBlockSize) {
+					instance.courseLimit.set(coursesAmount);
+				}
+			} else {
+				instance.courseLimit.set(instance.courseBlockSize);
 			}
 		});
+
+		// When there are filters set, show the filtering pane
+		instance.autorun(() => {
+			Object.keys(filter.toParams()).forEach((name) => {
+				if (hiddenFilters.includes(name)) {
+					instance.showingFilters.set(true);
+				}
+			});
+		});
+
+		// Update whenever filter changes
+		instance.autorun(() => {
+			const filterQuery = filter.toQuery();
+
+			// Add one to the limit so we know there is more to show
+			const limit = instance.courseLimit.get() + 1;
+
+			instance.subscribe('Courses.findFilter', filterQuery, limit);
+		});
 	});
 
-	// Update whenever filter changes
-	instance.autorun(() => {
-		const filterQuery = filter.toQuery();
+	template.events({
+		'mouseover .js-category-label'(this: string, _event, instance) {
+			FilterPreview({
+				property: 'category',
+				id: this,
+				activate: true,
+				delayed: true,
+				instance,
+			});
+		},
 
-		// Add one to the limit so we know there is more to show
-		const limit = instance.courseLimit.get() + 1;
+		'mouseout .js-category-label'(this: string, _event, instance) {
+			FilterPreview({
+				property: 'category',
+				id: this,
+				activate: false,
+				delayed: true,
+				instance,
+			});
+		},
 
-		instance.subscribe('Courses.findFilter', filterQuery, limit);
-	});
-});
-
-template.events({
-	'mouseover .js-category-label'(this: string, _event, instance) {
-		FilterPreview({
-			property: 'category',
-			id: this,
-			activate: true,
-			delayed: true,
+		'mouseover .js-group-label, mouseout .js-group-label'(
+			this: { groupId: string },
+			event,
 			instance,
-		});
-	},
+		) {
+			FilterPreview({
+				property: 'group',
+				id: this.groupId,
+				activate: event.type === 'mouseover',
+				delayed: true,
+				instance,
+			});
+		},
 
-	'mouseout .js-category-label'(this: string, _event, instance) {
-		FilterPreview({
-			property: 'category',
-			id: this,
-			activate: false,
-			delayed: true,
-			instance,
-		});
-	},
-
-	'mouseover .js-group-label, mouseout .js-group-label'(
-		this: { groupId: string },
-		event,
-		instance,
-	) {
-		FilterPreview({
-			property: 'group',
-			id: this.groupId,
-			activate: event.type === 'mouseover',
-			delayed: true,
-			instance,
-		});
-	},
-
-	'click .js-category-label'(_event, instance) {
-		instance.filter.add('categories', `${this}`).done();
-		instance.updateUrl();
-		window.scrollTo(0, 0);
-	},
-
-	'click .js-group-label'() {
-		window.scrollTo(0, 0);
-	},
-
-	'click .js-toggle-filter'(_event, instance) {
-		const showingFilters = !instance.showingFilters.get();
-		instance.showingFilters.set(showingFilters);
-
-		if (!showingFilters) {
-			filters.forEach((filter) => instance.filter.disable(filter as any));
-			instance.filter.done();
+		'click .js-category-label'(_event, instance) {
+			instance.filter.add('categories', `${this}`).done();
 			instance.updateUrl();
-		}
-	},
+			window.scrollTo(0, 0);
+		},
 
-	'click .js-all-regions-btn'() {
-		RegionSelection.change('all');
-	},
+		'click .js-group-label'() {
+			window.scrollTo(0, 0);
+		},
 
-	'click .js-more-courses'(_event, instance) {
-		const { courseLimit } = instance;
-		courseLimit.set(courseLimit.get() + instance.courseBlockSize);
-		instance.updateUrl();
-	},
-});
+		'click .js-toggle-filter'(_event, instance) {
+			const showingFilters = !instance.showingFilters.get();
+			instance.showingFilters.set(showingFilters);
 
-template.helpers({
-	searchFieldAttr() {
-		const instance = Template.instance();
-		return {
-			search: instance.filter.get('search'),
-			onChange: (newValue: string) => {
-				instance.filter.add('search', newValue).done();
-			},
-			onFocusOut: () => {
+			if (!showingFilters) {
+				filters.forEach((filter) => instance.filter.disable(filter as any));
+				instance.filter.done();
 				instance.updateUrl();
-			},
-		};
-	},
+			}
+		},
 
-	showingFilters() {
-		return Template.instance().showingFilters.get();
-	},
+		'click .js-all-regions-btn'() {
+			RegionSelection.change('all');
+		},
 
-	newCourse() {
-		const instance = Template.instance();
-		const course = CourseTemplate();
-		const search = instance.filter.get('search');
-		if (search) {
-			course.name = search;
-		}
-		const groupId = instance.filter.get('group');
-		if (groupId) {
-			course.group = groupId;
-		}
-		return course;
-	},
+		'click .js-more-courses'(_event, instance) {
+			const { courseLimit } = instance;
+			courseLimit.set(courseLimit.get() + instance.courseBlockSize);
+			instance.updateUrl();
+		},
+	});
 
-	hasResults() {
-		const filterQuery = Template.instance().filter.toQuery();
-		return Courses.findFilter(filterQuery as any, 1).count() > 0;
-	},
+	template.helpers({
+		searchFieldAttr() {
+			const instance = Template.instance();
+			return {
+				search: instance.filter.get('search'),
+				onChange: (newValue: string) => {
+					instance.filter.add('search', newValue).done();
+				},
+				onFocusOut: () => {
+					instance.updateUrl();
+				},
+			};
+		},
 
-	hasMore() {
-		const instance = Template.instance();
+		showingFilters() {
+			return Template.instance().showingFilters.get();
+		},
 
-		const filterQuery = instance.filter.toQuery();
-		const limit = instance.courseLimit.get();
-		const results = Courses.findFilter(filterQuery as any, limit + 1);
+		newCourse() {
+			const instance = Template.instance();
+			const course = CourseTemplate();
+			const search = instance.filter.get('search');
+			if (search) {
+				course.name = search;
+			}
+			const groupId = instance.filter.get('group');
+			if (groupId) {
+				course.group = groupId;
+			}
+			return course;
+		},
 
-		return results.count() > limit;
-	},
+		hasResults() {
+			const filterQuery = Template.instance().filter.toQuery();
+			return Courses.findFilter(filterQuery as any, 1).count() > 0;
+		},
 
-	results() {
-		const instance = Template.instance();
-		const filterQuery = instance.filter.toQuery();
+		hasMore() {
+			const instance = Template.instance();
 
-		return Courses.findFilter(filterQuery as any, instance.courseLimit.get());
-	},
+			const filterQuery = instance.filter.toQuery();
+			const limit = instance.courseLimit.get();
+			const results = Courses.findFilter(filterQuery as any, limit + 1);
 
-	filteredRegion() {
-		return Boolean(Template.instance().filter.get('region'));
-	},
+			return results.count() > limit;
+		},
 
-	activeFilters() {
-		const activeFilters = Template.instance().filter;
-		return hiddenFilters.some((filter) => !!activeFilters.get(filter as any));
-	},
+		results() {
+			const instance = Template.instance();
+			const filterQuery = instance.filter.toQuery();
 
-	searchIsLimited() {
-		const activeFilters = Template.instance().filter;
-		const relevantFilters = hiddenFilters.slice(); // clone
-		relevantFilters.push('region');
-		return relevantFilters.some((filter) => !!activeFilters.get(filter as any));
-	},
+			return Courses.findFilter(filterQuery as any, instance.courseLimit.get());
+		},
 
-	isMobile() {
-		return Viewport.get().width <= ScssVars.screenXS;
-	},
-});
+		filteredRegion() {
+			return Boolean(Template.instance().filter.get('region'));
+		},
+
+		activeFilters() {
+			const activeFilters = Template.instance().filter;
+			return hiddenFilters.some((filter) => !!activeFilters.get(filter as any));
+		},
+
+		searchIsLimited() {
+			const activeFilters = Template.instance().filter;
+			const relevantFilters = hiddenFilters.slice(); // clone
+			relevantFilters.push('region');
+			return relevantFilters.some((filter) => !!activeFilters.get(filter as any));
+		},
+
+		isMobile() {
+			return Viewport.get().width <= ScssVars.screenXS;
+		},
+	});
+}
