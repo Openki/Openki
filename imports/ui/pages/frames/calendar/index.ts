@@ -13,8 +13,6 @@ import i18n from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 import * as Analytics from '/imports/ui/lib/analytics';
 
-import '/imports/ui/components/loading';
-
 import './template.html';
 
 {

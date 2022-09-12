@@ -15,7 +15,6 @@ import i18n from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/events/list';
-import '/imports/ui/components/loading';
 import '/imports/ui/components/calendar-nav/week';
 import type { Data as CalendarNavData } from '/imports/ui/components/calendar-nav/week';
 

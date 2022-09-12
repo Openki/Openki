@@ -12,7 +12,6 @@ import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/calendar-nav/multi';
 import '/imports/ui/components/events/list';
-import '/imports/ui/components/loading';
 
 import './template.html';
 import './styles.scss';
