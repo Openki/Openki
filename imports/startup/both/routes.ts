@@ -1,7 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 
-import { i18n } from '/imports/startup/both/i18next';
 import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
@@ -32,47 +31,9 @@ import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 import { Filtering } from '/imports/utils/filtering';
 import LocalTime from '/imports/utils/local-time';
 import { reactiveNow } from '/imports/utils/reactive-now';
-import * as Metatags from '/imports/utils/metatags';
 import * as Predicates from '/imports/utils/predicates';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as RouterAsync from '/imports/utils/RouterAsync';
-
-function finderRoute(path: string) {
-	return {
-		path,
-		template: 'findWrap',
-		yieldRegions: {
-			featuredGroup: { to: 'aboveContent' },
-		},
-		async onRun() {
-			await import('/imports/ui/pages/find');
-		},
-		data() {
-			const { query } = this.params;
-
-			// Add filter options for the homepage
-			return _.extend(query, {
-				internal: false,
-				region: Session.get('region'),
-			});
-		},
-		onAfterAction() {
-			const { search } = this.params.query;
-			if (search) {
-				Metatags.setCommonTags(i18n('find.windowtitle', 'Find "{SEARCH}"', { SEARCH: search }));
-			} else {
-				Metatags.setCommonTags(i18n('find.WhatLearn?'));
-			}
-		},
-	} as Router.RouteOptions<
-		{
-			internal: boolean;
-			region: string;
-		},
-		Record<string, never>,
-		{ search: string }
-	> & { onRun?: () => Promise<unknown> };
-}
 
 const makeFilterQuery = function (params: Record<string, string>) {
 	const filter = Events.Filtering().read(params).done();
@@ -154,7 +115,30 @@ RouterAsync.route('tenants', {
 	},
 });
 
-RouterAsync.route('find', finderRoute('/find'));
+RouterAsync.route<
+	Record<string, string> & {
+		internal: boolean;
+		region: string;
+	}
+>('home', {
+	path: '/',
+	template: 'findPage',
+	yieldRegions: {
+		featuredGroup: { to: 'aboveContent' },
+	},
+	async onRun() {
+		await import('/imports/ui/pages/find');
+	},
+	data() {
+		const { query } = this.params;
+
+		// Add filter options for the homepage
+		return _.extend(query, {
+			internal: false,
+			region: Session.get('region'),
+		});
+	},
+});
 
 RouterAsync.route('users', {
 	path: 'admin/users',
@@ -348,8 +332,6 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route('home', finderRoute('/'));
-
 RouterAsync.route<
 	{
 		today: Mongo.Cursor<EventEntity, EventModel>;
@@ -430,17 +412,6 @@ RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, 
 	},
 });
 
-RouterAsync.route('pages', {
-	// /////// static /////////
-	path: 'page/:page_name',
-	action() {
-		this.render(this.params.page_name);
-	},
-	onAfterAction() {
-		Metatags.setCommonTags(this.params.page_name);
-	},
-});
-
 RouterAsync.route<
 	| undefined
 	| {
@@ -450,6 +421,9 @@ RouterAsync.route<
 >('info', {
 	path: 'info/:page_slug',
 	template: 'infoPage',
+	async onRun() {
+		await import('/imports/ui/pages/info');
+	},
 	waitOn() {
 		return [Meteor.subscribe('infoPage', this.params.page_slug, Session.get('locale'))];
 	},
@@ -460,12 +434,6 @@ RouterAsync.route<
 		}
 
 		return { page };
-	},
-	onAfterAction() {
-		const page = InfoPages.findOne({ slug: this.params.page_slug });
-		if (page) {
-			Metatags.setCommonTags(page.title);
-		}
 	},
 });
 
@@ -583,6 +551,9 @@ RouterAsync.route<
 	path: 'event/:_id/:slug?',
 	template: 'eventPage',
 	notFoundTemplate: 'eventNotFound',
+	async onRun() {
+		await import('/imports/ui/pages/event-details');
+	},
 	waitOn() {
 		const subs = [Meteor.subscribe('event', this.params._id)];
 		const { courseId } = this.params.query;
