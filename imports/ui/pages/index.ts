@@ -1,2 +1,4 @@
-import './loading';
+import './event-details';
+import './info';
+import './find';
 import './not-found';
