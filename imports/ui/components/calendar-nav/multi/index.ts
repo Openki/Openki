@@ -17,7 +17,7 @@ import '../styles.scss';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'calendarNavMulti',
-		{ date: unknown; setIsAttendeeFilterOn: (state: boolean) => void },
+		unknown,
 		{ currentUnit: ReactiveVar<string> }
 	>;
 
@@ -47,13 +47,6 @@ import '../styles.scss';
 				navContainer.removeClass('calendar-nav-container-covering');
 			}
 		});
-	});
-
-	template.events({
-		'change .js-filter-own-events'(event) {
-			// call the parent method that gets passed into this template as a (prop) argument
-			Template.instance().data.setIsAttendeeFilterOn((event.target as HTMLInputElement).checked);
-		},
 	});
 }
 

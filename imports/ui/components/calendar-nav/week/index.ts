@@ -25,7 +25,6 @@ export type Data = {
 	categories: string[];
 	onAddCategory: (category: string) => void;
 	onRemoveCategory: (category: string) => void;
-	onChangeAttendingEventsOnly: (state: boolean) => void;
 };
 
 {
@@ -72,18 +71,6 @@ export type Data = {
 				onAdd: data.onAddCategory,
 				onRemove: data.onRemoveCategory,
 			};
-		},
-	});
-
-	template.events({
-		'click .js-filter-own-events'(event) {
-			const radioSwitch = event.target as HTMLInputElement;
-			if (Meteor.user()) {
-				Template.instance().data.onChangeAttendingEventsOnly(radioSwitch.checked);
-			} else {
-				radioSwitch.checked = false;
-				$('.js-account-tasks').modal('show');
-			}
 		},
 	});
 }

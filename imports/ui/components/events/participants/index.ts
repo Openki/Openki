@@ -9,7 +9,6 @@ import '/imports/ui/components/participant/contact';
 import '/imports/ui/components/profile-link';
 
 import MeteorAsync from '/imports/utils/promisify';
-import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import './styles.scss';
 import './template.html';
@@ -66,26 +65,14 @@ import './template.html';
 			return data.maxParticipants - occupied;
 		},
 
-		canNotifyAll() {
-			const { participants } = Template.instance().data;
-
-			if (participants && participants.length < 2) {
-				// to view people
-				return false;
+		isParticipantsMoreThanOne() {
+			const { data } = Template.instance();
+			if (data.participants) {
+				if (data.participants.length >= 2) {
+					return true;
+				}
 			}
-
-			const user = Meteor.user();
-
-			if (UserPrivilegeUtils.privileged(user, 'admin')) {
-				return true;
-			}
-
-			const course = Template.instance().data;
-
-			return !!(
-				(user && course?.editableBy(user)) ||
-				user?.groups.some((g) => course?.groupOrganizers.includes(g))
-			);
+			return false;
 		},
 
 		sortedParticipants() {
@@ -105,6 +92,10 @@ import './template.html';
 			const participantsDisplayLimit = Template.instance().participantsDisplayLimit.get();
 			return participantsDisplayLimit && this.participants.length > participantsDisplayLimit;
 		},
+		attendeesArray() {
+			return Template.instance().data.participants;
+		},
+
 		hideModal() {
 			const instance = Template.instance();
 			return () => {
