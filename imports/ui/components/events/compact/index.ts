@@ -17,6 +17,15 @@ const Template = TemplateAny as TemplateStaticTyped<
 const template = Template.eventCompact;
 
 template.helpers({
+	userAttendsEvent() {
+		const { participants } = Template.instance().data.event;
+		const userId = Meteor.userId();
+		if (!userId) {
+			return false;
+		}
+		return participants?.includes(userId);
+	},
+
 	eventCompactClasses() {
 		const { event, withDate } = Template.instance().data;
 
