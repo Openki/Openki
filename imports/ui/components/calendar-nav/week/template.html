@@ -1,6 +1,6 @@
 <template name="calendarNavWeek">
-	<div class="calendar-nav-container text-center flex-container">
-		<div class="row align-items-center p-1">
+	<div class="calendar-nav-container text-center">
+		<div class="row align-items-center p-2">
 			<div class="col-md-3 col-lg-4 p-1">
 				{{> searchField searchFieldAttr}}
 			</div>
@@ -25,30 +25,16 @@
 					{{/unless}}
 				</div>
 			</div>
-		</div>
-		<div class="row align-items-center p-1">
-			{{#if availableGroups}}
-				<div class="col-md-4 col-lg-2 p-1">
-					{{> filterGroups filterGroupsAttr}}
-				</div>
-				<div class="col-md-4 col-lg-2 p-1">
-					{{> filterCategories filterCategoriesAttr}}
-				</div>
-				<div class="col-md-4 col-lg-2 p-1 text-start">
-					<div class="form-check form-switch">
-						<input type="checkbox" id="filter-own-events"
-							   class="form-check-input float-none js-filter-own-events"
-							   name="filter-own-events">
-						<label
-							   for="filter-own-events">{{i18n 'calendar.filter-own-events' 'Show my events only'}}</label>
+			<div class="row align-items-center p-2">
+				{{#if availableGroups}}
+					<div class="col-md-4 col-lg-2 p-1">
+						{{> filterGroups filterGroupsAttr}}
 					</div>
-
-				</div>
-			{{else}}
+				{{/if}}
 				<div class="col-md-4 col-lg-2 p-1">
 					{{> filterCategories filterCategoriesAttr}}
 				</div>
-			{{/if}}
+			</div>
 		</div>
 	</div>
 </template>

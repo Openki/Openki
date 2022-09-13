@@ -2,18 +2,15 @@ import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import $ from 'jquery';
 
-import { InfoPagesEntity } from '/imports/api/infoPages/infoPages';
-
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import { MeteorAsync } from '/imports/utils/promisify';
-import * as Metatags from '/imports/utils/metatags';
 
 import './template.html';
 import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'infoPage',
-	{ page: InfoPagesEntity },
+	never,
 	{ headerTag: string; contentTags: string; scrollTo: (id: string) => void }
 >;
 
@@ -21,13 +18,6 @@ const template = Template.infoPage;
 
 template.onCreated(function () {
 	const instance = this;
-
-	instance.autorun(() => {
-		const { page } = Template.currentData();
-		if (page) {
-			Metatags.setCommonTags(page.title);
-		}
-	});
 
 	instance.headerTag = 'h3';
 	instance.contentTags = 'p, ul';

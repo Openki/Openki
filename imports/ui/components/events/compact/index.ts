@@ -30,15 +30,6 @@ template.helpers({
 		return (event.participants?.length || 0) >= event.maxParticipants;
 	},
 
-	userAttendsEvent() {
-		const { participants } = Template.instance().data.event;
-		const userId = Meteor.userId();
-		if (!userId) {
-			return false;
-		}
-		return participants?.includes(userId);
-	},
-
 	eventCompactClasses() {
 		const { event, withDate } = Template.instance().data;
 
