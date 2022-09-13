@@ -1,6 +1,8 @@
 import { Mongo } from 'meteor/mongo';
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict';
+
 import moment from 'moment';
 
 import { EventEntity, EventModel, Events } from '/imports/api/events/events';
@@ -9,9 +11,10 @@ import * as UrlTools from '/imports/utils/url-tools';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
+import i18n from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/events/list';
-import '/imports/ui/components/loading';
 import '/imports/ui/components/calendar-nav/week';
 import type { Data as CalendarNavData } from '/imports/ui/components/calendar-nav/week';
 
@@ -34,6 +37,9 @@ const Template = TemplateAny as TemplateStaticTyped<
 		filter: ReturnType<typeof Events['Filtering']>;
 		limit: number;
 		update: () => void;
+		state: ReactiveDict<{
+			isAttendeeFilterOn: boolean;
+		}>;
 	}
 >;
 
@@ -41,7 +47,15 @@ const template = Template.frameWeekPage;
 
 template.onCreated(function () {
 	const instance = this;
+
+	instance.autorun(() => {
+		Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
+	});
+
 	instance.weekdays = [];
+
+	instance.state = new ReactiveDict();
+	instance.state.setDefault({ isAttendeeFilterOn: false });
 
 	instance.autorun(() => {
 		const data = Template.currentData();
@@ -53,6 +67,12 @@ template.onCreated(function () {
 		instance.startOfWeek = date.startOf('week');
 
 		const filterQuery = instance.filter.toQuery();
+
+		// filter isAttendeeFilterOn in addition to filtering that get's passed in via url
+		if (Meteor.userId() && instance.state.get('isAttendeeFilterOn')) {
+			filterQuery.participant = Meteor.userId()!;
+		}
+
 		const startOfWeek = instance.startOfWeek;
 		if (startOfWeek) {
 			filterQuery.after = startOfWeek.toDate();
@@ -166,6 +186,9 @@ template.helpers({
 			onRemoveCategory: (category) => {
 				instance.filter.remove('categories', category).done();
 				instance.update();
+			},
+			onChangeAttendingEventsOnly: (state) => {
+				instance.state.set('isAttendeeFilterOn', state);
 			},
 		} as CalendarNavData;
 	},

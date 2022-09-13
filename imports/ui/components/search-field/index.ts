@@ -4,7 +4,6 @@ import { _ } from 'meteor/underscore';
 import '/imports/ui/components/courses/list/course-list';
 import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/filter';
-import '/imports/ui/components/loading';
 
 import './template.html';
 import './styles.scss';
