@@ -56,7 +56,7 @@ template.helpers({
 
 	isNotAdminPanel() {
 		const { route } = Router.current();
-		return route && route.getName() !== 'adminPanel';
+		return !(route?.getName() === 'adminPanel');
 	},
 });
 
@@ -64,7 +64,7 @@ template.events({
 	// Clicks on the logo toggle the intro blurb, but only when already on home
 	'click .js-toggle-introduction'() {
 		const { route } = Router.current();
-		if (route?.options.template === 'findWrap') {
+		if (route?.getName() === 'home') {
 			Introduction.showIntro();
 		}
 	},

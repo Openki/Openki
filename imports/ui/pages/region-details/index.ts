@@ -1,13 +1,14 @@
 import { check } from 'meteor/check';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
-import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { RegionModel } from '/imports/api/regions/regions';
 import * as RegionsMethods from '/imports/api/regions/methods';
 
 import * as Analytics from '/imports/ui/lib/analytics';
+import i18n from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/regions/display';
 import type { Data as DisplayData } from '/imports/ui/components/regions/display';
@@ -37,6 +38,19 @@ template.onCreated(function () {
 		if (!isNew) {
 			check(region._id, String);
 		}
+	});
+
+	instance.autorun(() => {
+		const { isNew, region } = Template.currentData();
+
+		let title;
+		if (isNew) {
+			title = i18n('region.edit.siteTitle.create', 'Create region');
+		} else {
+			title = region.name;
+		}
+
+		Metatags.setCommonTags(title);
 	});
 
 	instance.state = new ReactiveDict(undefined, { editing: false });
