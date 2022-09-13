@@ -11,12 +11,25 @@ import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'eventCompact',
-	{ event: EventModel; withDate?: boolean; withImage?: boolean; openInNewTab?: boolean }
+	{
+		event: EventModel;
+		withDate?: boolean;
+		withImage?: boolean;
+		openInNewTab?: boolean;
+	}
 >;
 
 const template = Template.eventCompact;
 
 template.helpers({
+	isEventFullyBooked() {
+		const { event } = Template.instance().data;
+		if (!event.maxParticipants) {
+			return false;
+		}
+		return (event.participants?.length || 0) >= event.maxParticipants;
+	},
+
 	eventCompactClasses() {
 		const { event, withDate } = Template.instance().data;
 
@@ -24,7 +37,12 @@ template.helpers({
 		if (withDate) {
 			classes.push('has-date');
 		}
-		if (moment().isAfter(event.end)) {
+		if (
+			moment().isAfter(event.end) ||
+			Template.instance().data.event.maxParticipants -
+				(Template.instance().data.event.participants?.length || 0) ===
+				0
+		) {
 			classes.push('is-past');
 		}
 
