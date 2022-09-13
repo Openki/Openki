@@ -103,11 +103,6 @@ import './template.html';
 	});
 }
 
-function getTotalAvailableSeats() {
-	const { data } = Template.instance();
-	return data.maxParticipants || decode('&#8734;');
-}
-
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'frameCalendarEvent',
