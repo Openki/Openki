@@ -9,6 +9,7 @@ import { UserModel } from '/imports/api/users/users';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 
 import '/imports/ui/components/courses/list/course-list';
+import '/imports/ui/components/loading';
 
 import './template.html';
 import './styles.scss';

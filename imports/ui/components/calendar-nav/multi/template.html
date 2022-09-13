@@ -15,15 +15,6 @@
 			</div>
 			{{> calendarNavMultiControl direction='next'}}
 		</div>
-		{{#if currentUser}}
-			<div class="form-check form-switch align-content-center text-center pb-2">
-				<input type="checkbox" id="filter-own-events"
-					   class="form-check-input float-none js-filter-own-events"
-					   name="filter-own-events">
-				<label
-					   for="filter-own-events">{{i18n 'calendar.filter-own-events' 'Show my events only'}}</label>
-			</div>
-		{{/if}}
 	</div>
 </template>
 

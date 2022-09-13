@@ -20,7 +20,6 @@ function getSiteDefaultImage() {
 }
 
 export function removeAll() {
-	document.title = PublicSettings.siteName;
 	DocHead.removeDocHeadAddedTags();
 }
 
