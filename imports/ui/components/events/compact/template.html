@@ -3,47 +3,41 @@
 		<a href="{{pathFor 'showEvent' _id=event._id slug=event.slug}}"
 		   target="{{#if openInNewTab}}_blank{{/if}}">
 			<div class="event-compact {{eventCompactClasses}}">
-
 				{{#if isEventFullyBooked}}
-					<span class="event-fully-booked">{{i18n 'course.event.fullyBooked' 'Fully booked'}}
-					</span>
+					<span
+						  class="event-fully-booked">{{i18n 'course.event.fullyBooked' 'Fully booked'}}</span>
 				{{/if}}
-				<div class="event-compact-header">
-
-					<div
-						 class="event-compact-header {{#if userAttendsEvent}}user-attends-event{{/if}}">
-
-						{{#if withDate}}
-							<span class="fa-regular fa-calendar-days fa-fw"
-								  aria-hidden="true"></span>
-							{{weekdayFormat event.startLocal}}
-							{{calendarDayShort event.startLocal}}
-							<br>
-						{{/if}}
-						<span class="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
-						<span class="event-compact-time">
-							{{timeFormat event.startLocal}} - {{timeFormat event.endLocal}}
-						</span>
+				<div class="event-compact-header {{#if userAttendsEvent}}user-attends-event{{/if}}">
+					{{#if withDate}}
+						<span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+						{{weekdayFormat event.startLocal}}
+						{{calendarDayShort event.startLocal}}
 						<br>
-						<div class="tag-group">
-							{{> venueLink venue=event.venue openInNewTab=openInNewTab}}
-						</div>
-					</div>
-					<div class="event-compact-body" {{bodyStyle}}>
-						{{#if event.internal}}
-							<span class="event-compact-internal"
-								  data-tooltip="{{i18n 'eventCompact.internal_event' 'Internal event'}}"></span>
-						{{/if}}
-						<h4 class="event-compact-title">
-							{{plain event.title}}
-						</h4>
-						<br />
-						<p
-						   class="event-compact-description{{#if showImage}} event-compact-description-with-image{{/if}}">
-							{{plain event.description}}
-						</p>
+					{{/if}}
+					<span class="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
+					<span class="event-compact-time">
+						{{timeFormat event.startLocal}} - {{timeFormat event.endLocal}}
+					</span>
+					<br>
+					<div class="tag-group">
+						{{> venueLink venue=event.venue openInNewTab=openInNewTab}}
 					</div>
 				</div>
+				<div class="event-compact-body" {{bodyStyle}}>
+					{{#if event.internal}}
+						<span class="event-compact-internal"
+							  data-tooltip="{{i18n 'eventCompact.internal_event' 'Internal event'}}"></span>
+					{{/if}}
+					<h4 class="event-compact-title">
+						{{plain event.title}}
+					</h4>
+					<br />
+					<p
+					   class="event-compact-description{{#if showImage}} event-compact-description-with-image{{/if}}">
+						{{plain event.description}}
+					</p>
+				</div>
+			</div>
 		</a>
 	</div>
 </template>
