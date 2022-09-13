@@ -182,6 +182,8 @@ export const FindFilterPattern = {
 	course: Match.Maybe(String),
 	/** only events that are internal (if true) or public (if false) */
 	internal: Match.Maybe(Boolean),
+	/** only events with given participant (ID) */
+	participant: Match.Maybe(String),
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
@@ -212,6 +214,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		return new Filtering({
 			course: Predicates.id,
 			region: Predicates.id,
+			participant: Predicates.id,
 			search: Predicates.string,
 			categories: Predicates.ids,
 			group: Predicates.id,
@@ -426,6 +429,10 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 
 		if (filter.course) {
 			find.courseId = filter.course;
+		}
+
+		if (filter.participant) {
+			find.participants = filter.participant;
 		}
 
 		if (filter.internal !== undefined) {

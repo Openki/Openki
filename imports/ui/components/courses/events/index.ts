@@ -12,7 +12,6 @@ import { CourseModel } from '/imports/api/courses/courses';
 import { reactiveNow } from '/imports/utils/reactive-now';
 
 import '/imports/ui/components/events/list';
-import '/imports/ui/components/loading';
 import '/imports/ui/components/courses/delete-events';
 
 import './template.html';
