@@ -1,10 +1,12 @@
 import { Router } from 'meteor/iron:router';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { AccountsAsync } from '/imports/utils/promisify';
-import { i18n } from '/imports/startup/both/i18next';
 
 import * as Alert from '/imports/api/alerts/alert';
+
+import { AccountsAsync } from '/imports/utils/promisify';
+import i18n from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/buttons';
 
@@ -28,7 +30,13 @@ const template = Template.resetPasswordPage;
 
 template.onCreated(function () {
 	const instance = this;
+
+	instance.autorun(() => {
+		Metatags.setCommonTags(i18n('resetPassword.siteTitle', 'Reset password'));
+	});
+
 	instance.busy(false);
+
 	instance.password = new ReactiveVar('');
 	instance.passwordValid = new ReactiveVar(false);
 	instance.passwordSame = new ReactiveVar(false);
