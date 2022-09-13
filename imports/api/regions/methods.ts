@@ -63,8 +63,8 @@ export const create = ServerMethod(
 
 		set.tz = changes.tz.trim().substring(0, 40);
 
-		set.description = changes.description.trim().substring(0, 200);
-		// check this already when the user writes into the textarea? is there a limit for course descriptions?
+		set.description = changes.description.trim().substring(0, 1000);
+		// Todo: check this already when the user writes into the textarea? is there a limit for course descriptions?
 
 		return Regions.insert(set);
 	},
@@ -121,8 +121,8 @@ export const update = ServerMethod('region.update', (regionId: string, changes: 
 	}
 
 	if (changes.description) {
-		set.description = changes.description.trim().substring(0, 200);
-		// check this already when the user writes into the textarea?
+		set.description = changes.description.trim().substring(0, 1000);
+		// Todo: check this already when the user writes into the textarea?
 	}
 
 	Regions.update({ _id: regionId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);

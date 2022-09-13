@@ -15,6 +15,10 @@
 	}
 }
 
+.course-edit-body .dropdown {
+	position: relative;
+}
+
 .proposed-courses {
 	border: 1px solid $primary;
 	max-height: 200px;
@@ -37,27 +41,10 @@
 	}
 }
 
-.dropdown {
-	position: relative;
-}
-
 .proposed-courses > .close-dropdown-button {
 	left: 50%;
 	margin-bottom: 8px;
 	margin-top: 8px;
 	position: relative;
 	transform: translateX(-50%);
-}
-
-.event-notfound-text {
-	left: 50%;
-	position: absolute;
-	text-align: center;
-	top: 50%;
-	transform: translate(-50%, -50%);
-}
-
-.page-notfound-text {
-	font-size: 1rem;
-	margin-top: 5rem;
 }

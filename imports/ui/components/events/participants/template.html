@@ -1,10 +1,33 @@
 <template name="eventParticipants">
 	<div class="event-page-component-header">
+		{{#if state 'showModal'}}
+			<div class="modal js-participant-contact-modal-all" tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">
+								<span class="fa-solid fa-paper-plane fa-fw"
+									  aria-hidden="true"></span>
+								{{i18n 'participantContactModal.writeMessageToAllAttendees' ' Write a message to all participants' }}
+							</h4>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+						</div>
+						<div class="modal-body text-dark">
+							{{> sendMessage recipientId=userId attendeesArray=attendeesArray courseId=course._id eventId=event._id onDone=hideModal}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{{/if}}
 		<h4>
 			<span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
 			{{i18n 'event.details.paticipants.title' '{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }' NUM=howManyEnrolled}}
-			<br />
+			{{#if isParticipantsMoreThanOne}}
+				<i class="fa-solid fa-envelope float-end js-contact-event-members"></i>
+			{{/if}}
 
+			<br />
 			{{#if maxParticipants}}
 				<span class="free-places">
 					{{i18n 'event.details.participants.free.places' '{NUM, plural, =0{No free seats} one{one free seat} other{# free seats} }' NUM=howManyFreePlaces}}
