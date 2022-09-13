@@ -138,13 +138,6 @@ function getTotalAvailableSeats() {
 			const { data } = Template.instance();
 			return data.maxParticipants || decode('&#8734;');
 		},
-
-		overwriteUnlimitedSign() {
-			if (getTotalAvailableSeats() === decode('&#8734;')) {
-				return 'unlimited';
-			}
-			return getTotalAvailableSeats();
-		},
 	});
 
 	template.events({
