@@ -3,6 +3,8 @@ import { Meteor } from 'meteor/meteor';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
+// See: https://guide.meteor.com/deployment.html#seo
+
 function getSiteTitlePrefix() {
 	return `${PublicSettings.siteName}  - `;
 }
@@ -20,21 +22,26 @@ function getSiteDefaultImage() {
 }
 
 export function removeAll() {
+	DocHead.setTitle(PublicSettings.siteName);
 	DocHead.removeDocHeadAddedTags();
 }
 
 export function setCommonTags(title: string, description = '') {
-	document.title = getSiteTitlePrefix() + title;
+	const fullTitle = getSiteTitlePrefix() + title;
+	const image = getSiteDefaultImage();
+
+	DocHead.setTitle(fullTitle);
 
 	DocHead.addMeta({ property: 'og:type', content: 'website' });
-	DocHead.addMeta({ property: 'og:title', content: document.title });
-	DocHead.addMeta({ property: 'og:image', content: getSiteDefaultImage() });
+	DocHead.addMeta({ property: 'og:title', content: fullTitle });
+	DocHead.addMeta({ property: 'og:image', content: image });
 
 	DocHead.addMeta({ name: 'twitter:card', content: 'summary' });
-	DocHead.addMeta({ name: 'twitter:title', content: document.title });
-	DocHead.addMeta({ name: 'twitter:image', content: getSiteDefaultImage() });
+	DocHead.addMeta({ name: 'twitter:title', content: fullTitle });
+	DocHead.addMeta({ name: 'twitter:image', content: image });
 
 	if (description) {
+		DocHead.addMeta({ name: 'description', content: description });
 		DocHead.addMeta({ property: 'og:description', content: description });
 		DocHead.addMeta({ name: 'twitter:description', content: description });
 	}

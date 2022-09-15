@@ -20,7 +20,7 @@ import '/imports/ui/components/featured-group';
 import '/imports/ui/components/footer';
 import '/imports/ui/components/introduction/introduction';
 import '/imports/ui/components/kiosk-link';
-import '/imports/ui/components/navbar/navbar';
+import '/imports/ui/components/navbar';
 import '/imports/ui/components/regions/splash';
 
 import './template.html';
@@ -56,7 +56,7 @@ template.helpers({
 
 	isNotAdminPanel() {
 		const { route } = Router.current();
-		return route && route.getName() !== 'adminPanel';
+		return !(route?.getName() === 'adminPanel');
 	},
 });
 
@@ -64,7 +64,7 @@ template.events({
 	// Clicks on the logo toggle the intro blurb, but only when already on home
 	'click .js-toggle-introduction'() {
 		const { route } = Router.current();
-		if (route?.options.template === 'findWrap') {
+		if (route?.getName() === 'home') {
 			Introduction.showIntro();
 		}
 	},

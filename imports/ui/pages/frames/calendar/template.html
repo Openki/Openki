@@ -36,6 +36,12 @@
 			<span class="frame-list-item-toggle-indicator">
 				<i class="fa-solid fa-angle-down"></i>
 			</span>
+			<div class="frame-list-free-seats-tooltip">
+				{{getAttendees}}/{{getTotalAvailableSeats}}
+				<span class="frame-list-free-seats-tooltip-text">
+					{{i18n 'frame.list.free.seats.tooltip' '{FREESEATS} of {TOTALSEATS} seats reserved' TOTALSEATS=getTotalAvailableSeats FREESEATS=getAttendees}}
+				</span>
+			</div>
 			<span class="frame-list-item-time">
 				{{timeFormat start}}
 			</span>

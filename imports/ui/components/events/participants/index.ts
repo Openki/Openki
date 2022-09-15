@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
@@ -7,14 +8,23 @@ import { EventModel } from '/imports/api/events/events';
 import '/imports/ui/components/participant/contact';
 import '/imports/ui/components/profile-link';
 
-import './template.html';
+import MeteorAsync from '/imports/utils/promisify';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+
 import './styles.scss';
+import './template.html';
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'eventParticipants',
 		EventModel,
-		{ increaseBy: number; participantsDisplayLimit: ReactiveVar<number> }
+		{
+			increaseBy: number;
+			participantsDisplayLimit: ReactiveVar<number>;
+			state: ReactiveDict<{
+				showModal: boolean;
+			}>;
+		}
 	>;
 
 	const template = Template.eventParticipants;
@@ -24,6 +34,23 @@ import './styles.scss';
 
 		instance.increaseBy = 10;
 		instance.participantsDisplayLimit = new ReactiveVar(this.increaseBy);
+
+		instance.state = new ReactiveDict();
+
+		instance.state.setDefault({
+			showModal: false,
+		});
+	});
+
+	template.onRendered(function () {
+		const instance = this;
+
+		instance.autorun(async () => {
+			if (instance.state.get('showModal')) {
+				await MeteorAsync.defer();
+				instance.$('.js-participant-contact-modal-all').modal('show');
+			}
+		});
 	});
 
 	template.helpers({
@@ -37,6 +64,28 @@ import './styles.scss';
 			const { data } = Template.instance();
 			const occupied = data.participants?.length || 0;
 			return data.maxParticipants - occupied;
+		},
+
+		canNotifyAll() {
+			const { participants } = Template.instance().data;
+
+			if (participants && participants.length < 2) {
+				// to view people
+				return false;
+			}
+
+			const user = Meteor.user();
+
+			if (UserPrivilegeUtils.privileged(user, 'admin')) {
+				return true;
+			}
+
+			const course = Template.instance().data;
+
+			return !!(
+				(user && course?.editableBy(user)) ||
+				user?.groups.some((g) => course?.groupOrganizers.includes(g))
+			);
 		},
 
 		sortedParticipants() {
@@ -56,12 +105,29 @@ import './styles.scss';
 			const participantsDisplayLimit = Template.instance().participantsDisplayLimit.get();
 			return participantsDisplayLimit && this.participants.length > participantsDisplayLimit;
 		},
+		hideModal() {
+			const instance = Template.instance();
+			return () => {
+				instance.$('.js-participant-contact-modal-all').modal('hide');
+			};
+		},
 	});
 
 	template.events({
 		'click .js-show-more-participants'(_event, instance) {
 			const { participantsDisplayLimit } = instance;
 			participantsDisplayLimit.set(participantsDisplayLimit.get() + instance.increaseBy);
+		},
+
+		'click .js-contact-event-members'() {
+			const instance = Template.instance();
+			instance.state.set('showModal', false);
+
+			if (instance.state.get('showModal') === true) {
+				instance.state.set('showModal', false);
+			} else {
+				instance.state.set('showModal', true);
+			}
 		},
 	});
 }
@@ -77,6 +143,7 @@ import './styles.scss';
 	template.helpers({
 		ownUserParticipantClass() {
 			const { data } = Template.instance();
+
 			if (data.participant === Meteor.userId()) {
 				return 'is-own-user';
 			}
