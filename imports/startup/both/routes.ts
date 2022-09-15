@@ -40,6 +40,7 @@ import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Predicates from '/imports/utils/predicates';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as RouterAsync from '/imports/utils/RouterAsync';
+import { SubscriptionType } from '/imports/utils/ServerPublish';
 
 const makeFilterQuery = function (params: Record<string, string>) {
 	const filter = Events.Filtering().read(params).done();
@@ -999,10 +1000,9 @@ RouterAsync.route<
 			return undefined; // Not found
 		}
 
-			return { region };
-		},
+		return { region };
 	},
-);
+});
 
 RouterAsync.route<
 	{ venue: VenueModel } | undefined,
@@ -1033,10 +1033,9 @@ RouterAsync.route<
 			}
 		}
 
-			return { venue };
-		},
+		return { venue };
 	},
-);
+});
 
 RouterAsync.route('venuesMap', {
 	path: 'venues',
