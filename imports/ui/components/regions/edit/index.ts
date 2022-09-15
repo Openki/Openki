@@ -25,6 +25,7 @@ export interface Data {
 export interface OnSaveFields {
 	name: string;
 	tz: string;
+	description: string;
 	loc: Geodata;
 }
 
@@ -57,6 +58,7 @@ export interface OnSaveFields {
 			const changes = {
 				name: instance.$('.js-name').val(),
 				tz: instance.$('.js-timezone').val(),
+				description: instance.$('.js-description').val(),
 			} as OnSaveFields;
 
 			if (!changes.name) {

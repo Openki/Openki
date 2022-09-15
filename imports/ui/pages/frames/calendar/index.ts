@@ -2,16 +2,16 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import $ from 'jquery';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
+import { decode } from 'html-entities';
 
 import { EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
+import i18n from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 import * as Analytics from '/imports/ui/lib/analytics';
-
-import '/imports/ui/components/loading';
 
 import './template.html';
 
@@ -30,6 +30,10 @@ import './template.html';
 
 	template.onCreated(function () {
 		const instance = this;
+
+		instance.autorun(() => {
+			Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
+		});
 
 		instance.groupedEvents = new ReactiveVar({});
 		instance.days = new ReactiveVar([]);
@@ -103,7 +107,7 @@ import './template.html';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'frameCalendarEvent',
-		unknown,
+		EventModel,
 		{ expanded: ReactiveVar<boolean> }
 	>;
 
@@ -123,6 +127,16 @@ import './template.html';
 		},
 
 		expanded: () => Template.instance().expanded.get(),
+
+		getAttendees() {
+			const { data } = Template.instance();
+			return data.participants?.length || 0;
+		},
+
+		getTotalAvailableSeats() {
+			const { data } = Template.instance();
+			return data.maxParticipants || decode('&#8734;');
+		},
 	});
 
 	template.events({
