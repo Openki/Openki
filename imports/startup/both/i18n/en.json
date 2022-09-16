@@ -185,6 +185,7 @@
   "course.event.edit.time_end": "Time end",
   "course.event.edit.time_start": "Time start",
   "course.event.edit.title": "Event title",
+  "course.event.fullyBooked": "Fully booked",
   "course.events.futureListLink": "future events",
   "course.events.ongoinglist": "Ongoing events",
   "course.events.pastList": "Previous events",
