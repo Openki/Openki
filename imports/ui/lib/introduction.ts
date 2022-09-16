@@ -20,7 +20,7 @@ export const Introduction = {
 		}
 
 		const routeName = Router.current().route?.getName();
-		return routeName === 'home' || routeName === 'find';
+		return routeName === 'home';
 	},
 
 	openIntro() {

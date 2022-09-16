@@ -1,6 +1,5 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
@@ -20,8 +19,9 @@ import * as Viewport from '/imports/ui/lib/viewport';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as Analytics from '/imports/ui/lib/analytics';
-
 import getLocalizedValue from '/imports/utils/getLocalizedValue';
+import i18n from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
@@ -67,6 +67,12 @@ import './styles.scss';
 	template.onCreated(function () {
 		const instance = this;
 
+		instance.autorun(() => {
+			const { course } = Template.currentData();
+			const title = i18n('course.windowtitle', 'Course: {COURSE}', { COURSE: course.name });
+			Metatags.setCommonTags(title);
+		});
+
 		instance.busy(false);
 
 		const { course } = instance.data;
@@ -110,7 +116,7 @@ import './styles.scss';
 			},
 		});
 
-		this.autorun(() => {
+		instance.autorun(() => {
 			const data = Template.currentData();
 
 			if (!data.course) {
