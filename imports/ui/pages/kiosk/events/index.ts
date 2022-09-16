@@ -8,6 +8,8 @@ import { Groups } from '/imports/api/groups/groups';
 import { Venues } from '/imports/api/venues/venues';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
+import i18n from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/language-selection';
 
@@ -18,6 +20,14 @@ import './styles.scss';
 	const Template = TemplateAny as TemplateStaticTyped<'kioskEventsPage'>;
 
 	const template = Template.kioskEventsPage;
+
+	template.onCreated(function () {
+		const instance = this;
+
+		instance.autorun(() => {
+			Metatags.setCommonTags(i18n('event.list.windowtitle', 'Events'));
+		});
+	});
 
 	template.helpers({
 		groupLogo(groupId: string) {
