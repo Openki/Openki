@@ -70,7 +70,10 @@ import './template.html';
 			}
 
 			instance.subscribe('Events.findFilter', filterQuery, limit + 1);
+		});
 
+		instance.autorun(() => {
+			const limit = instance.limit.get();
 			const events = Events.find({}, { sort: { start: 1 }, limit }).fetch();
 			const groupedEvents = _.groupBy(events, (event) => moment(event.start).format('LL'));
 
