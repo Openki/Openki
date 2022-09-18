@@ -16,20 +16,27 @@ const Template = TemplateAny as TemplateStaticTyped<
 		withDate?: boolean;
 		withImage?: boolean;
 		openInNewTab?: boolean;
+	},
+	{
+		isFullyBooked: () => boolean;
 	}
 >;
 
 const template = Template.eventCompact;
 
-template.helpers({
-	isEventFullyBooked() {
-		const { event } = Template.instance().data;
+template.onCreated(function () {
+	const instance = this;
+
+	instance.isFullyBooked = () => {
+		const { event } = instance.data;
 		if (!event.maxParticipants) {
 			return false;
 		}
 		return (event.participants?.length || 0) >= event.maxParticipants;
-	},
+	};
+});
 
+template.helpers({
 	userAttendsEvent() {
 		const { participants } = Template.instance().data.event;
 		const userId = Meteor.userId();
@@ -40,18 +47,14 @@ template.helpers({
 	},
 
 	eventCompactClasses() {
-		const { event, withDate } = Template.instance().data;
+		const instance = Template.instance();
+		const { event, withDate } = instance.data;
 
 		const classes = [];
 		if (withDate) {
 			classes.push('has-date');
 		}
-		if (
-			moment().isAfter(event.end) ||
-			Template.instance().data.event.maxParticipants -
-				(Template.instance().data.event.participants?.length || 0) ===
-				0
-		) {
+		if (moment().isAfter(event.end) || instance.isFullyBooked()) {
 			classes.push('is-past');
 		}
 
