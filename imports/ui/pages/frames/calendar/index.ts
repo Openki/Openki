@@ -4,7 +4,7 @@ import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
-import { decode } from 'html-entities';
+import { Spacebars } from 'meteor/spacebars';
 
 import { EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
@@ -135,7 +135,7 @@ import './template.html';
 
 		getTotalAvailableSeats() {
 			const { data } = Template.instance();
-			return data.maxParticipants || decode('&#8734;');
+			return data.maxParticipants || Spacebars.SafeString('&#8734;');
 		},
 	});
 
