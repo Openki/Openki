@@ -49,7 +49,13 @@ template.onCreated(function () {
 	// Build a subscribe change
 	instance.courseSubscribe = (comment) => {
 		const user = Users.currentUser();
-		return new Subscribe(instance.data.course, user, instance.data.role.type, comment);
+		return new Subscribe(
+			instance.data.course,
+			user,
+			instance.data.role.type,
+			'interested',
+			comment,
+		);
 	};
 
 	// unsubscribe by email

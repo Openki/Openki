@@ -485,7 +485,7 @@ export const addParticipant = ServerMethod(
 			return;
 		}
 
-		const change = new Subscribe(course, user, 'participant');
+		const change = new Subscribe(course, user, 'participant', 'rsvp');
 
 		if (change.validFor(user)) {
 			processChange(change);
