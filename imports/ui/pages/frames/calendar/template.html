@@ -7,26 +7,25 @@
 		/* beautify ignore:end */
 
 	</style>
+	{{#each day in days}}
+		<h4 class="frame-list-title">{{day}}</h4>
+		{{#each event in (eventsOn day)}}
+			{{> frameCalendarEvent event}}
+		{{/each}}
+	{{/each}}
 	{{#if Template.subscriptionsReady}}
-		{{#if days}}
-			{{#each day in days}}
-				<h4 class="frame-list-title">{{day}}</h4>
-				{{#each event in (eventsOn day)}}
-					{{> frameCalendarEvent event}}
-				{{/each}}
-			{{/each}}
-			{{#if moreEvents}}
-				<div class="show-more">
-					<button class="btn btn-secondary js-show-more-events" type="button">
-						{{i18n 'frame.calendar.showMoreEvents' 'Show more events'}}
-					</button>
-				</div>
-			{{/if}}
-		{{else}}
+		{{#unless days}}
 			<h2 class="mt-5 text-center">{{i18n 'frame.calendar.noEvents' 'No events planned'}}</h2>
+		{{/unless}}
+		{{#if moreEvents}}
+			<div class="show-more">
+				<button class="btn btn-secondary js-show-more-events" type="button">
+					{{i18n 'frame.calendar.showMoreEvents' 'Show more events'}}
+				</button>
+			</div>
 		{{/if}}
 	{{else}}
-		{{> loadingPage}}
+		{{> loadingRow}}
 	{{/if}}
 </template>
 
