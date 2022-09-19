@@ -133,6 +133,12 @@
 	margin-right: 15px;
 	position: relative;
 	text-align: right;
+	font-family: var(--bs-body-font-family);
+}
+
+.frame-list-item-header > i {
+	opacity: 0.6;
+	margin-top: 2px;
 }
 
 .frame-list-free-seats-tooltip-text {
