@@ -11,7 +11,6 @@ import { Regions } from '/imports/api/regions/regions';
 
 import i18n from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
-import * as Analytics from '/imports/ui/lib/analytics';
 
 import './template.html';
 
@@ -111,7 +110,9 @@ import './template.html';
 	const Template = TemplateAny as TemplateStaticTyped<
 		'frameCalendarEvent',
 		EventModel,
-		{ expanded: ReactiveVar<boolean> }
+		{
+			expanded: ReactiveVar<boolean>;
+		}
 	>;
 
 	const template = Template.frameCalendarEvent;
@@ -140,6 +141,15 @@ import './template.html';
 			const { data } = Template.instance();
 			return data.maxParticipants || Spacebars.SafeString('&#8734;');
 		},
+
+		isUnlimited() {
+			const { data } = Template.instance();
+			const maxParticipants = data.maxParticipants || decode('&#8734;');
+			if (maxParticipants === decode('&#8734;')) {
+				return true;
+			}
+			return false;
+		},
 	});
 
 	template.events({
@@ -147,14 +157,6 @@ import './template.html';
 			$(event.currentTarget).toggleClass('active');
 			instance.$('.frame-list-item-time').toggle();
 			instance.expanded.set(!instance.expanded.get());
-		},
-
-		'click .js-track-cal-download'() {
-			Analytics.trackEvent(
-				'Events downloads',
-				'Event downloads via calendar frame',
-				Regions.findOne(this.region)?.nameEn,
-			);
 		},
 	});
 }
