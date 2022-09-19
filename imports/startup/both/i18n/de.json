@@ -419,6 +419,7 @@
 	"frame.eventsList.description": "Beschreibung:",
 	"frame.eventsList.when": "Wann:",
 	"frame.eventsList.where": "Wo:",
+	"frame.list.reservation.status.tooltip": "{RESERVEDSEATS} von {TOTALSEATS} Plätze reserviert",
 	"frame.login.email": "E-Mail",
 	"frame.login.username": "Benutzername",
 	"frame.login.usernameOrEmail": "Benutzername oder E-Mail",
