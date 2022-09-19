@@ -144,11 +144,7 @@ import './template.html';
 
 		isUnlimited() {
 			const { data } = Template.instance();
-			const maxParticipants = data.maxParticipants || decode('&#8734;');
-			if (maxParticipants === decode('&#8734;')) {
-				return true;
-			}
-			return false;
+			return !data.maxParticipants;
 		},
 	});
 
