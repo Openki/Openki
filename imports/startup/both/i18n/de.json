@@ -632,6 +632,8 @@
 	"profile.sendingVerificationMail": "Eine E-Mail zur Bestätigung deiner Adresse wurde versendet.",
 	"profile.sentVerificationMail": "Eine E-Mail zur Bestätigung wurde an deine Adresse gesendet: \"{MAIL}\".",
 	"profile.settings.windowtitle": "Meine Profileinstellungen – {USER}",
+	"profile.toggle.allowPrivateMessages": "Erhalte private Nachrichten von anderen Nutzer_innen per E-Mail",
+	"profile.toggle.notifications": "Erhalte automatisierte Nachrichten per E-Mail",
 	"profile.updated": "Profil aktualisiert",
 	"profile.users_profile_page": "Profilseite von {NAME}",
 	"profile.venues": "Meine Veranstaltungsorte:",
