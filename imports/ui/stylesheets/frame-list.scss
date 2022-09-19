@@ -129,16 +129,16 @@
 .frame-list-free-seats {
 	@include td-float(right);
 	display: inline-block;
+	font-family: var(--bs-body-font-family);
 	font-weight: normal;
 	margin-right: 15px;
 	position: relative;
 	text-align: right;
-	font-family: var(--bs-body-font-family);
 }
 
 .frame-list-item-header > i {
-	opacity: 0.6;
 	margin-top: 2px;
+	opacity: 0.6;
 }
 
 .frame-list-free-seats-tooltip-text {
