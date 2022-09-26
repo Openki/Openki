@@ -55,33 +55,31 @@ import './template.html';
 
 	template.helpers({
 		howManyEnrolled() {
-			const { data } = Template.instance();
+			const course = Template.instance().data;
 
-			return data.participants?.length || 0;
+			return course.participants?.length || 0;
 		},
 
 		howManyFreePlaces() {
-			const { data } = Template.instance();
-			const occupied = data.participants?.length || 0;
-			return data.maxParticipants - occupied;
+			const course = Template.instance().data;
+			const occupied = course.participants?.length || 0;
+			return course.maxParticipants - occupied;
 		},
 
 		canNotifyAll() {
 			const { participants } = Template.instance().data;
 
-			if (participants && participants.length < 2) {
-				// to view people
+			if (!(participants && participants.length > 1)) {
 				return false;
 			}
 
-			const user = Meteor.user();
-
-			if (UserPrivilegeUtils.privileged(user, 'admin')) {
+			if (UserPrivilegeUtils.privilegedTo('admin')) {
 				return true;
 			}
 
 			const course = Template.instance().data;
 
+			const user = Meteor.user();
 			return !!(
 				(user && course?.editableBy(user)) ||
 				user?.groups.some((g) => course?.groupOrganizers.includes(g))
