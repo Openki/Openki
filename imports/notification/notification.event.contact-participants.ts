@@ -46,6 +46,19 @@ export function record(
 
 	const recipients = [];
 
+	const event = Events.findOne(eventId);
+	if (!event) {
+		throw new Meteor.Error(`No event for ${eventId}`);
+	}
+
+	const participants = event.participants;
+
+	if (!participants) {
+		throw new Meteor.Error(`Event ${eventId} has none participants.`);
+	}
+
+	recipients.push(...participants.filter((p) => p !== senderId));
+
 	if (sendCopyToSender) {
 		const sender = Users.findOne(senderId);
 		if (!sender) {
@@ -58,19 +71,6 @@ export function record(
 			throw new Meteor.Error(404, 'Sender has no email address');
 		}
 	}
-
-	const event = Events.findOne(eventId);
-	if (!event) {
-		throw new Meteor.Error(`No event for ${eventId}`);
-	}
-
-	const participants = event.participants;
-
-	if (!participants) {
-		throw new Meteor.Error(`Event ${eventId} has none participants.`);
-	}
-
-	recipients.push(...participants);
 
 	const body: Body = {
 		event: eventId,
@@ -147,7 +147,7 @@ export function Model(entry: { body: Body }) {
 				eventTitle: '',
 			};
 
-			if (!senderCopy && body.revealSenderAddress) {
+			if (body.revealSenderAddress) {
 				const senderAddress = sender.verifiedEmailAddress();
 				if (!senderAddress) {
 					throw new Meteor.Error(400, 'no verified email address');
@@ -160,16 +160,22 @@ export function Model(entry: { body: Body }) {
 			const startMoment = regionZone.at(event.start);
 			startMoment.locale(userLocale);
 
-			const eventFullTitle = i18n('notification.privateMessage.mail.title', '{DATE} — {EVENT}', {
-				EVENT: event.title,
-				DATE: startMoment.calendar(),
+			const eventFullTitle = i18n(
+				'notification.event.contact-participants.mail.title',
+				'{DATE} — {EVENT}',
+				{
+					EVENT: event.title,
+					DATE: startMoment.calendar(),
+				},
+			);
+			const eventUrl = Router.url('showEvent', event, {
+				query: 'campaign=eventContactParticipants',
 			});
-			const eventUrl = Router.url('showEvent', event, { query: 'campaign=privateMessage' });
 
 			vars.eventTitle = Spacebars.SafeString(`<a href="${eventUrl}">${eventFullTitle}</a>`);
 
 			return vars;
 		},
-		template: 'notificationPrivateMessageEmail',
+		template: 'notificationEventContactParticipantsEmail',
 	};
 }
