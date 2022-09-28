@@ -71,7 +71,12 @@ template.events({
 
 		instance.state.set('sending');
 		try {
-			await emailMethods.report(document.title, window.location.href, navigator.userAgent, message);
+			await emailMethods.sendReport(
+				document.title,
+				window.location.href,
+				navigator.userAgent,
+				message,
+			);
 			Alert.success(
 				i18n(
 					'report.confirm',

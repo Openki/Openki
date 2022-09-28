@@ -126,15 +126,19 @@
 	text-align: center;
 }
 
-.frame-list-free-seats-tooltip {
+.frame-list-free-seats {
 	@include td-float(right);
+	display: inline-block;
+	font-family: var(--bs-body-font-family);
+	font-weight: normal;
 	margin-right: 15px;
+	position: relative;
 	text-align: right;
 }
 
-.frame-list-free-seats-tooltip {
-	display: inline-block;
-	position: relative;
+.frame-list-item-header > i {
+	margin-top: 2px;
+	opacity: 0.6;
 }
 
 .frame-list-free-seats-tooltip-text {
@@ -155,7 +159,7 @@
 	z-index: 1;
 }
 
-.frame-list-free-seats-tooltip:hover .frame-list-free-seats-tooltip-text {
+.frame-list-free-seats:hover .frame-list-free-seats-tooltip-text {
 	opacity: 1;
 	visibility: visible;
 }

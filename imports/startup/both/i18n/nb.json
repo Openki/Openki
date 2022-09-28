@@ -324,7 +324,6 @@
 	"forgot.notValid": "Skriv inn adressen du registrerte deg med.",
 	"forgot.send": "Tilbakestill passordet mitt",
 	"forgot.send.busy": "Tilbakestiller passord …",
-	"frame.calendar.download": "Last ned",
 	"frame.calendar.moreAboutThisEvent": "Mer om denne begivenheten på {SITENAME}",
 	"frame.calendar.noEvents": "Ingen begivenheter planlagt",
 	"frame.calendar.showMoreEvents": "Vis flere begivenheter",
