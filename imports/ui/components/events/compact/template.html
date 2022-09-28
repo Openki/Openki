@@ -3,6 +3,10 @@
 		<a href="{{pathFor 'showEvent' _id=event._id slug=event.slug}}"
 		   target="{{#if openInNewTab}}_blank{{/if}}">
 			<div class="event-compact {{eventCompactClasses}}">
+				{{#if instance.isFullyBooked}}
+					<span
+						  class="event-fully-booked">{{i18n 'course.event.fullyBooked' 'Fully booked'}}</span>
+				{{/if}}
 				<div class="event-compact-header {{#if userAttendsEvent}}user-attends-event{{/if}}">
 					{{#if withDate}}
 						<span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>

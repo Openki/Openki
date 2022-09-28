@@ -15,7 +15,6 @@
     "bootstrap-datepicker": "1.9.0",
     "bootstrap-sass": "3.4.1",
     "es6-promisify": "7.0.0",
-    "html-entities": "2.3.3",
     "i18next": "21.9.1",
     "i18next-chained-backend": "3.1.0",
     "i18next-icu": "2.0.3",

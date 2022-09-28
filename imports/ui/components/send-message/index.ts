@@ -12,7 +12,7 @@ import '/imports/ui/components/profiles/verify-email';
 
 import './template.html';
 import './styles.scss';
-import { SendEmailOptions } from '/imports/api/emails/methods';
+import { SendPrivateMessageOptions } from '/imports/api/emails/methods';
 
 interface Data {
 	courseId?: string;
@@ -103,7 +103,7 @@ template.events({
 				return;
 			}
 
-			const options: SendEmailOptions = {
+			const options: SendPrivateMessageOptions = {
 				revealAddress: state.get('revealAddress') || false,
 				sendCopy: state.get('sendCopy') || false,
 			};
@@ -124,7 +124,7 @@ template.events({
 
 				attendeesArrayWithoutCurrentUser?.forEach(async function sendtoAll(item) {
 					try {
-						await emailMethods.sendEmail(item, message, options);
+						await emailMethods.sendPrivateMessage(item, message, options);
 						Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
 					} catch (err) {
 						Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
@@ -134,7 +134,7 @@ template.events({
 				});
 			} else {
 				try {
-					await emailMethods.sendEmail(data.recipientId, message, options);
+					await emailMethods.sendPrivateMessage(data.recipientId, message, options);
 					Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
 				} catch (err) {
 					Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
