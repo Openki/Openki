@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 import juice from 'juice';
 
-import Version from '/imports/api/version/version';
+import { Version } from '/imports/api/version/version';
 import { Users } from '/imports/api/users/users';
 
 import { Notification } from '/imports/notification/notification';

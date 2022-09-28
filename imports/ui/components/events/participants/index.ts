@@ -8,7 +8,7 @@ import { EventModel } from '/imports/api/events/events';
 import '/imports/ui/components/participant/contact';
 import '/imports/ui/components/profile-link';
 
-import MeteorAsync from '/imports/utils/promisify';
+import { MeteorAsync } from '/imports/utils/promisify';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import './styles.scss';

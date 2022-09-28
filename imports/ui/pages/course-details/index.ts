@@ -19,8 +19,8 @@ import * as Viewport from '/imports/ui/lib/viewport';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as Analytics from '/imports/ui/lib/analytics';
-import getLocalizedValue from '/imports/utils/getLocalizedValue';
-import i18n from '/imports/startup/both/i18next';
+import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/buttons';

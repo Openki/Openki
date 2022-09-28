@@ -2,7 +2,7 @@ import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment';
 
-import Version from '/imports/api/version/version';
+import { Version } from '/imports/api/version/version';
 import { Regions } from '/imports/api/regions/regions';
 
 import { getSiteName } from '/imports/utils/getSiteName';

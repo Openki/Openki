@@ -8,7 +8,7 @@ import { TenantModel } from '/imports/api/tenants/tenants';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as RegionSelection from '/imports/utils/region-selection';
-import i18n from '/imports/startup/both/i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import './template.html';
