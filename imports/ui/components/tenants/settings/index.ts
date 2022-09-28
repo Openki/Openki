@@ -10,7 +10,7 @@ import { UserModel, Users } from '/imports/api/users/users';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 
 import * as TenantsMethods from '/imports/api/tenants/methods';
-import UserSearchPrefix from '/imports/utils/user-search-prefix';
+import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/invitations';
@@ -66,7 +66,7 @@ template.helpers({
 		}
 
 		const tenant = Tenants.findOne(Router.current().params._id);
-		return UserSearchPrefix(search, { exclude: tenant?.members, limit: 30 });
+		return userSearchPrefix(search, { exclude: tenant?.members, limit: 30 });
 	},
 	foundAdmins() {
 		const instance = Template.instance();
@@ -77,7 +77,7 @@ template.helpers({
 		}
 
 		const tenant = Tenants.findOne(Router.current().params._id);
-		return UserSearchPrefix(search, { exclude: tenant?.admins, limit: 30 });
+		return userSearchPrefix(search, { exclude: tenant?.admins, limit: 30 });
 	},
 });
 

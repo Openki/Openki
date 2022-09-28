@@ -6,9 +6,9 @@ import { i18n } from '/imports/startup/both/i18next';
 import { Events } from '/imports/api/events/events';
 import { Log } from '/imports/api/log/log';
 import { RegionModel, Regions } from '/imports/api/regions/regions';
-import Users, { UserModel } from '/imports/api/users/users';
+import { Users, UserModel } from '/imports/api/users/users';
 
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import { getSiteName } from '/imports/utils/getSiteName';
 
 interface Body {
