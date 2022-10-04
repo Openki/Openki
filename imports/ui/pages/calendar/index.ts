@@ -7,7 +7,7 @@ import { Regions } from '/imports/api/regions/regions';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { MeteorAsync } from '/imports/utils/promisify';
-import i18n from '/imports/startup/both/i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/calendar-nav/multi';

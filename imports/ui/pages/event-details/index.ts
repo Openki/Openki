@@ -21,7 +21,7 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import * as Metatags from '/imports/utils/metatags';
 import { appendAsJsonLdToBody } from '/imports/utils/event-to-json-ld';
-import getLocalizedValue from '/imports/utils/getLocalizedValue';
+import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 

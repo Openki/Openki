@@ -10,7 +10,7 @@ import { Log } from '/imports/api/log/log';
 import { RegionModel, Regions } from '/imports/api/regions/regions';
 import { UserModel } from '/imports/api/users/users';
 
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import { getSiteName } from '/imports/utils/getSiteName';
 
 interface Body {

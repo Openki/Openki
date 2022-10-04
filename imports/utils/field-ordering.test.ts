@@ -1,6 +1,7 @@
 import { assert } from 'chai';
-import FieldOrdering from '/imports/utils/field-ordering';
-import SortSpec from '/imports/utils/sort-spec';
+
+import { FieldOrdering } from '/imports/utils/field-ordering';
+import { SortSpec } from '/imports/utils/sort-spec';
 
 describe('Ordering by object fields ', () => {
 	const empty = {};

@@ -2,7 +2,7 @@ import { sitemaps } from 'meteor/gadicohen:sitemaps';
 import { Router } from 'meteor/iron:router';
 
 import { Courses } from '/imports/api/courses/courses';
-import visibleTenants from '/imports/utils/visible-tenants';
+import { visibleTenants } from '/imports/utils/visible-tenants';
 
 // To compress all sitemap as gzip file
 sitemaps.config('gzip', true);

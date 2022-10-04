@@ -24,7 +24,8 @@
 			<span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
 			{{i18n 'event.details.paticipants.title' '{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }' NUM=howManyEnrolled}}
 			{{#if canNotifyAll}}
-				<i class="fa-solid fa-envelope event-participants-contact float-end js-contact-event-members"></i>
+				<i
+				   class="fa-solid fa-envelope event-participants-contact float-end js-contact-event-members"></i>
 			{{/if}}
 			<br />
 			{{#if maxParticipants}}

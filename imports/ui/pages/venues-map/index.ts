@@ -5,7 +5,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import { Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
 
-import i18n from '/imports/startup/both/i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
