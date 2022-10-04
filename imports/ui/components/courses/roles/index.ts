@@ -12,7 +12,7 @@ import { RoleEntity } from '/imports/api/roles/roles';
 import { CourseModel } from '/imports/api/courses/courses';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 
@@ -100,14 +100,14 @@ template.events({
 
 	'click .js-role-subscribe-btn'(event, instance) {
 		event.preventDefault();
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 
 		const { data } = instance;
 		const comment = (instance.$('.js-comment').val() as string).trim();
 		instance.busy('enrolling');
 		PleaseLogin(instance, async () => {
 			await processChange(instance.courseSubscribe(comment));
-			RouterAutoscroll.cancelNext();
+			routerAutoscroll.cancelNext();
 			instance.busy(false);
 			instance.state.set('showFirstSteps', true);
 			instance.state.set('enrolling', false);
@@ -127,13 +127,13 @@ template.events({
 
 	async 'click .js-role-unsubscribe-btn'(event, instance) {
 		event.preventDefault();
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 
 		const { data } = instance;
 
 		const change = new Unsubscribe(data.course, Meteor.user(), data.role.type);
 		await processChange(change);
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 		Analytics.trackEvent(
 			'Unsubscribes from courses',
 			`Unsubscribes from courses as ${data.role.type}`,
@@ -148,6 +148,6 @@ template.events({
 	'click .js-first-steps-comment'() {
 		$('.course-page-btn.js-discussion-edit').trigger('click');
 		window.location.hash = '#discussion';
-		RouterAutoscroll.scheduleScroll();
+		routerAutoscroll.scheduleScroll();
 	},
 });

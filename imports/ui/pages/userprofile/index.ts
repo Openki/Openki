@@ -2,7 +2,6 @@ import { Tooltips } from 'meteor/lookback:tooltips';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
@@ -14,7 +13,8 @@ import { UserModel } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
-
+import { i18n } from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { checkContribution } from '/imports/utils/checkContribution';
 
@@ -43,6 +43,13 @@ const template = Template.userprofilePage;
 
 template.onCreated(function () {
 	const instance = this;
+
+	instance.autorun(() => {
+		const { user } = Template.currentData();
+		const title = i18n('profile.windowtitle', 'Profile of {USER}', { USER: user.username });
+		Metatags.setCommonTags(title);
+	});
+
 	instance.busy(false);
 	const userId = instance.data.user._id;
 

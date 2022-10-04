@@ -172,5 +172,3 @@ export function getRegionStats(regionFilter: string) {
 	stats.total = getStatsTotal(regionFilter);
 	return stats;
 }
-
-export default getRegionStats;

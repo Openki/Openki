@@ -5,6 +5,9 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import { Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
 
+import { i18n } from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
+
 import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
 import { Filtering } from '/imports/utils/filtering';
 import { Predicate } from '/imports/utils/predicates';
@@ -30,6 +33,10 @@ import './styles.scss';
 
 	template.onCreated(function () {
 		const instance = this;
+
+		instance.autorun(() => {
+			Metatags.setCommonTags(i18n('venue.map.windowtitle', 'Venues map'));
+		});
 
 		instance.filter = Venues.Filtering();
 		instance.autorun(() => {

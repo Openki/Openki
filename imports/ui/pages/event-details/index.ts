@@ -21,7 +21,7 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import * as Metatags from '/imports/utils/metatags';
 import { appendAsJsonLdToBody } from '/imports/utils/event-to-json-ld';
-import getLocalizedValue from '/imports/utils/getLocalizedValue';
+import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 
@@ -45,24 +45,27 @@ import './styles.scss';
 
 	const template = Template.eventPage;
 
-	template.onCreated(() => {
-		const event = Events.findOne(Router.current().params._id);
-		let title;
-		let description = '';
-		if (event) {
-			title = i18n('event.windowtitle', '{DATE} — {EVENT}', {
-				EVENT: event.title,
-				DATE: moment(event.start).calendar(),
-			});
-			description = i18n('event.metatag.description', '{VENUE} in {REGION}', {
-				REGION: Regions.findOne(event.region)?.name,
-				VENUE: event.venue?.name,
-			});
-			appendAsJsonLdToBody(event);
-		} else {
-			title = i18n('event.windowtitle.create', 'Create event');
-		}
-		Metatags.setCommonTags(title, description);
+	template.onCreated(function () {
+		const instance = this;
+		instance.autorun(() => {
+			const event = Events.findOne(Router.current().params._id);
+			let title;
+			let description = '';
+			if (event) {
+				title = i18n('event.windowtitle', '{DATE} — {EVENT}', {
+					EVENT: event.title,
+					DATE: moment(event.start).calendar(),
+				});
+				description = i18n('event.metatag.description', '{VENUE} in {REGION}', {
+					REGION: Regions.findOne(event.region)?.name,
+					VENUE: event.venue?.name,
+				});
+				appendAsJsonLdToBody(event);
+			} else {
+				title = i18n('event.windowtitle.create', 'Create event');
+			}
+			Metatags.setCommonTags(title, description);
+		});
 	});
 }
 
@@ -124,10 +127,6 @@ import './styles.scss';
 	template.helpers({
 		userName() {
 			return Meteor.user()?.username || i18n('eventDetails.notLoggedIn', '(not logged in?)');
-		},
-
-		eventDate() {
-			return moment(Template.instance().data.startLocal).format('L');
 		},
 
 		courseTitle() {

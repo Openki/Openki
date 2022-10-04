@@ -251,5 +251,3 @@ export const Api = {
 		{ tenants: visibleTenants() },
 	),
 };
-
-export default Api;

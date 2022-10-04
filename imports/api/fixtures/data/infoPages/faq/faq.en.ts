@@ -183,5 +183,3 @@ For now, region admins cannot be contacted directly. Please send an e-mail reque
 
 ### Where can I find answers to technical questions?
 Detailed technical documentation can be found in our [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home).`;
-
-export default body;

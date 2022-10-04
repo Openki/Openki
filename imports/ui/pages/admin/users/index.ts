@@ -1,6 +1,8 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
+import { i18n } from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 
 import '/imports/ui/components/buttons';
@@ -17,6 +19,10 @@ const template = Template.adminUsersPage;
 
 template.onCreated(function () {
 	const instance = this;
+
+	instance.autorun(() => {
+		Metatags.setCommonTags(i18n('admin.users.windowtitle', 'Users'));
+	});
 
 	instance.busy(false);
 

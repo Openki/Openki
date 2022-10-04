@@ -8,9 +8,11 @@ import { LogCollection, LogEntity } from '/imports/api/log/factory';
 import { Log } from '/imports/api/log/log';
 
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as UrlTools from '/imports/utils/url-tools';
+import { i18n } from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
 import './template.html';
 import './styles.scss';
@@ -32,6 +34,11 @@ import './styles.scss';
 
 	template.onCreated(function () {
 		const instance = this;
+
+		instance.autorun(() => {
+			Metatags.setCommonTags(i18n('log.list.windowtitle', 'Log'));
+		});
+
 		const batchLoad = 100;
 		instance.updateUrl = () => {
 			const filterParams = instance.filter.toParams();
@@ -43,7 +50,7 @@ import './styles.scss';
 				options.query = queryString;
 			}
 
-			RouterAutoscroll.cancelNext();
+			routerAutoscroll.cancelNext();
 
 			const router = Router.current();
 			Router.go(router.route.getName(), {}, options);

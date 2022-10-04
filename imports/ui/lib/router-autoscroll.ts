@@ -111,4 +111,4 @@ class RouterAutoscroll {
 	}
 }
 
-export default new RouterAutoscroll();
+export const routerAutoscroll = new RouterAutoscroll();

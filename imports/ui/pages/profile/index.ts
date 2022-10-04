@@ -4,15 +4,20 @@ import { Accounts } from 'meteor/accounts-base';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
-import { i18n } from '/imports/startup/both/i18next';
 import { ValidationError } from 'meteor/mdg:validation-error';
 
 import * as Alert from '/imports/api/alerts/alert';
 import * as usersMethods from '/imports/api/users/methods';
+import { VenueEntity, VenueModel } from '/imports/api/venues/venues';
+import { TenantEntity, TenantModel } from '/imports/api/tenants/tenants';
+import { GroupEntity } from '/imports/api/groups/groups';
+
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Analytics from '/imports/ui/lib/analytics';
 import { Editable } from '/imports/ui/lib/editable';
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
+import { i18n } from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/groups/list';
@@ -20,9 +25,7 @@ import '/imports/ui/components/profiles/course-list';
 import '/imports/ui/components/profiles/verify-email';
 import '/imports/ui/components/venues/link';
 import '/imports/ui/components/avatar';
-import { VenueEntity, VenueModel } from '/imports/api/venues/venues';
-import { TenantEntity, TenantModel } from '/imports/api/tenants/tenants';
-import { GroupEntity } from '/imports/api/groups/groups';
+import '/imports/ui/components/editable';
 
 import './template.html';
 import './styles.scss';
@@ -77,6 +80,17 @@ const template = Template.profilePage;
 
 template.onCreated(function () {
 	const instance = this;
+
+	instance.autorun(() => {
+		const user = Meteor.user();
+		if (!user) {
+			return;
+		}
+		const title = i18n('profile.settings.windowtitle', 'My Profile Settings - {USER}', {
+			USER: user.username,
+		});
+		Metatags.setCommonTags(title);
+	});
 
 	instance.busy(false);
 	instance.changingPass = new ReactiveVar(false);
@@ -139,7 +153,7 @@ template.onCreated(function () {
 		},
 	);
 
-	this.autorun(() => {
+	instance.autorun(() => {
 		const user = Meteor.user();
 
 		instance.editableName.setText(user?.username || '');
@@ -243,7 +257,7 @@ template.events({
 	},
 
 	async 'change .js-notifications'(_event, instance) {
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 
 		const allow = instance.$('.js-notifications').prop('checked');
 
@@ -262,7 +276,7 @@ template.events({
 	},
 
 	async 'change .js-allowPrivateMessages'(_event, instance) {
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 
 		const allow = instance.$('.js-allowPrivateMessages').prop('checked');
 

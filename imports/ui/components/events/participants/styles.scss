@@ -21,8 +21,12 @@
 	font-size: medium;
 }
 
+.event-participants-contact:hover {
+	cursor: pointer;
+}
+
 .free-places {
 	display: block;
 	font-size: 16px;
-	text-align: right;
+	text-align: end;
 }

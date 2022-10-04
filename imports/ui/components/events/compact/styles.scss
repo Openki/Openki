@@ -86,6 +86,10 @@
 	border-bottom: $event-compact-seperator-height solid $body-bg;
 	color: $gray-800;
 	padding: 5px;
+
+	&.user-attends-event {
+		background: $user-bg;
+	}
 }
 
 .event-compact-header .fa-clock-o,
@@ -139,4 +143,28 @@
 	position: absolute;
 	top: 2px;
 	width: 3px;
+}
+
+// event fully booked
+//============================================================================================
+.event-fully-booked {
+	background-color: rgba(255, 82, 82, 0.4);
+	border-radius: 5px;
+	color: $white;
+	display: flow-root;
+	font-family: monospace, sans-serif;
+	font-size: 2em;
+	font-stretch: narrower;
+	font-weight: 950;
+	left: 5%;
+	margin-block-start: 18px;
+	padding: 5px;
+	position: absolute;
+	text-align: center;
+	top: 40%;
+	transform: rotate(-27deg);
+	transform: rotate(-27d300eg);
+	transform: rotate(-27deg);
+	width: fit-content;
+	z-index: 300;
 }
