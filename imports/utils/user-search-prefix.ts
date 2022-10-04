@@ -24,5 +24,3 @@ export function userSearchPrefix(
 
 	return Users.find(query, customizedOptions);
 }
-
-export default userSearchPrefix;

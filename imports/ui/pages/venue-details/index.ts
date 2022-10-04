@@ -2,7 +2,6 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { Events, EventModel } from '/imports/api/events/events';
@@ -13,6 +12,8 @@ import * as VenuesMethods from '/imports/api/venues/methods';
 
 import { reactiveNow } from '/imports/utils/reactive-now';
 import { locationFormat } from '/imports/utils/location-format';
+import { i18n } from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
 import { CenteredMarkerEntity, MainMarkerEntity } from '/imports/ui/lib/location-tracker';
 
@@ -48,42 +49,54 @@ const template = Template.venueDetailsPage;
 
 template.onCreated(function () {
 	const instance = this;
+
+	instance.autorun(() => {
+		const { venue } = Template.currentData();
+		let title;
+		if (venue._id) {
+			title = venue.name;
+		} else {
+			title = i18n('venue.edit.siteTitle.create', 'Create Venue');
+		}
+		Metatags.setCommonTags(title);
+	});
+
 	instance.busy();
 
-	this.eventLoadingBlockSize = 9;
+	instance.eventLoadingBlockSize = 9;
 
-	const isNew = !this.data.venue._id;
-	this.state = new ReactiveDict();
-	this.state.setDefault({
+	const isNew = !instance.data.venue._id;
+	instance.state = new ReactiveDict();
+	instance.state.setDefault({
 		editing: isNew,
 		verifyDelete: false,
 		upcomingEventLimit: 12,
 		pastEventLimit: 3,
 	});
 
-	this.markers = new Mongo.Collection(null); // Local collection for in-memory storage
+	instance.markers = new Mongo.Collection(null); // Local collection for in-memory storage
 
-	this.setLocation = (loc) => {
-		this.markers.remove({ main: true });
+	instance.setLocation = (loc) => {
+		instance.markers.remove({ main: true });
 		if (loc) {
-			this.markers.insert({
+			instance.markers.insert({
 				loc,
 				main: true,
 			});
 		}
 	};
 
-	this.setRegion = (region) => {
-		this.markers.remove({ center: true });
+	instance.setRegion = (region) => {
+		instance.markers.remove({ center: true });
 		if (region?.loc) {
-			this.markers.insert({
+			instance.markers.insert({
 				loc: region.loc,
 				center: true,
 			});
 		}
 	};
 
-	this.autorun(() => {
+	instance.autorun(() => {
 		if (isNew) {
 			return;
 		}
@@ -103,7 +116,7 @@ template.onCreated(function () {
 		instance.subscribe('Events.findFilter', predicate, limit + 1);
 	});
 
-	this.getUpcomingEvents = (limit) => {
+	instance.getUpcomingEvents = (limit) => {
 		if (isNew) {
 			return [];
 		}
@@ -117,7 +130,7 @@ template.onCreated(function () {
 		return Events.findFilter(filter, limit).fetch();
 	};
 
-	this.autorun(() => {
+	instance.autorun(() => {
 		if (isNew) {
 			return;
 		}
@@ -137,7 +150,7 @@ template.onCreated(function () {
 		instance.subscribe('Events.findFilter', predicate, limit + 1);
 	});
 
-	this.getPastEvents = (limit) => {
+	instance.getPastEvents = (limit) => {
 		if (isNew) {
 			return [];
 		}

@@ -26,7 +26,7 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';

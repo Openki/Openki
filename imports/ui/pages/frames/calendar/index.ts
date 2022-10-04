@@ -4,14 +4,13 @@ import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
-import { decode } from 'html-entities';
+import { Spacebars } from 'meteor/spacebars';
 
 import { EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
-import * as Analytics from '/imports/ui/lib/analytics';
-
-import '/imports/ui/components/loading';
+import { i18n } from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
 import './template.html';
 
@@ -30,6 +29,10 @@ import './template.html';
 
 	template.onCreated(function () {
 		const instance = this;
+
+		instance.autorun(() => {
+			Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
+		});
 
 		instance.groupedEvents = new ReactiveVar({});
 		instance.days = new ReactiveVar([]);
@@ -66,7 +69,10 @@ import './template.html';
 			}
 
 			instance.subscribe('Events.findFilter', filterQuery, limit + 1);
+		});
 
+		instance.autorun(() => {
+			const limit = instance.limit.get();
 			const events = Events.find({}, { sort: { start: 1 }, limit }).fetch();
 			const groupedEvents = _.groupBy(events, (event) => moment(event.start).format('LL'));
 
@@ -104,7 +110,9 @@ import './template.html';
 	const Template = TemplateAny as TemplateStaticTyped<
 		'frameCalendarEvent',
 		EventModel,
-		{ expanded: ReactiveVar<boolean> }
+		{
+			expanded: ReactiveVar<boolean>;
+		}
 	>;
 
 	const template = Template.frameCalendarEvent;
@@ -131,7 +139,12 @@ import './template.html';
 
 		getTotalAvailableSeats() {
 			const { data } = Template.instance();
-			return data.maxParticipants || decode('&#8734;');
+			return data.maxParticipants || Spacebars.SafeString('&#8734;');
+		},
+
+		isUnlimited() {
+			const { data } = Template.instance();
+			return !data.maxParticipants;
 		},
 	});
 
@@ -140,14 +153,6 @@ import './template.html';
 			$(event.currentTarget).toggleClass('active');
 			instance.$('.frame-list-item-time').toggle();
 			instance.expanded.set(!instance.expanded.get());
-		},
-
-		'click .js-track-cal-download'() {
-			Analytics.trackEvent(
-				'Events downloads',
-				'Event downloads via calendar frame',
-				Regions.findOne(this.region)?.nameEn,
-			);
 		},
 	});
 }

@@ -43,5 +43,3 @@ export function getLocalizedValue(
 	// fallback take first
 	return setting[Object.keys(setting)[0]];
 }
-
-export default getLocalizedValue;

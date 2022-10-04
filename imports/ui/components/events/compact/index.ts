@@ -11,20 +11,50 @@ import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'eventCompact',
-	{ event: EventModel; withDate?: boolean; withImage?: boolean; openInNewTab?: boolean }
+	{
+		event: EventModel;
+		withDate?: boolean;
+		withImage?: boolean;
+		openInNewTab?: boolean;
+	},
+	{
+		isFullyBooked: () => boolean;
+	}
 >;
 
 const template = Template.eventCompact;
 
+template.onCreated(function () {
+	const instance = this;
+
+	instance.isFullyBooked = () => {
+		const { event } = instance.data;
+		if (!event.maxParticipants) {
+			return false;
+		}
+		return (event.participants?.length || 0) >= event.maxParticipants;
+	};
+});
+
 template.helpers({
+	userAttendsEvent() {
+		const { participants } = Template.instance().data.event;
+		const userId = Meteor.userId();
+		if (!userId) {
+			return false;
+		}
+		return participants?.includes(userId);
+	},
+
 	eventCompactClasses() {
-		const { event, withDate } = Template.instance().data;
+		const instance = Template.instance();
+		const { event, withDate } = instance.data;
 
 		const classes = [];
 		if (withDate) {
 			classes.push('has-date');
 		}
-		if (moment().isAfter(event.end)) {
+		if (moment().isAfter(event.end) || instance.isFullyBooked()) {
 			classes.push('is-past');
 		}
 

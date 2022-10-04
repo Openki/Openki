@@ -4,8 +4,8 @@ import { _ } from 'meteor/underscore';
 import { Courses } from '/imports/api/courses/courses';
 import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 import { Events } from '/imports/api/events/events';
-import ensure from './ensureFixture';
-import Prng from './Prng';
+import { ensure } from '/imports/api/fixtures/ensureFixture';
+import { Prng } from '/imports/api/fixtures/Prng';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
@@ -14,7 +14,7 @@ import { InfoPages } from '/imports/api/infoPages/infoPages';
 import { infoPages } from './data/infoPages/infoPages';
 
 import * as HtmlTools from '/imports/utils/html-tools';
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import * as StringTools from '/imports/utils/string-tools';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 

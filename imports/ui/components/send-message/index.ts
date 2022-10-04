@@ -12,13 +12,15 @@ import '/imports/ui/components/profiles/verify-email';
 
 import './template.html';
 import './styles.scss';
-import { SendEmailOptions } from '/imports/api/emails/methods';
+import { SendPrivateMessageOptions } from '/imports/api/emails/methods';
 
 interface Data {
 	courseId?: string;
 	eventId?: string;
 	recipientId: string;
 	onDone?: () => void;
+
+	attendeesArray?: string[];
 }
 
 const Template = TemplateAny as TemplateStaticTyped<
@@ -101,7 +103,7 @@ template.events({
 				return;
 			}
 
-			const options: SendEmailOptions = {
+			const options: SendPrivateMessageOptions = {
 				revealAddress: state.get('revealAddress') || false,
 				sendCopy: state.get('sendCopy') || false,
 			};
@@ -115,17 +117,34 @@ template.events({
 				options.eventId = data.eventId;
 			}
 
-			try {
-				await emailMethods.sendEmail(data.recipientId, message, options);
-				Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
-				instance.$('.js-email-message').val('');
-				if (data.onDone) {
-					data.onDone();
+			if (data.attendeesArray) {
+				const attendeesArrayWithoutCurrentUser = data.attendeesArray.filter(function (value) {
+					return value !== Meteor.userId();
+				});
+
+				attendeesArrayWithoutCurrentUser?.forEach(async function sendtoAll(item) {
+					try {
+						await emailMethods.sendPrivateMessage(item, message, options);
+						Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
+					} catch (err) {
+						Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
+					} finally {
+						instance.busy(false);
+					}
+				});
+			} else {
+				try {
+					await emailMethods.sendPrivateMessage(data.recipientId, message, options);
+					Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
+				} catch (err) {
+					Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
+				} finally {
+					instance.busy(false);
 				}
-			} catch (err) {
-				Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
-			} finally {
-				instance.busy(false);
+			}
+			instance.$('.js-email-message').val('');
+			if (data.onDone) {
+				data.onDone();
 			}
 		});
 	},

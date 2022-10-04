@@ -7,7 +7,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import { Spacebars } from 'meteor/spacebars';
 import moment from 'moment';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 
 import * as UrlTools from '/imports/utils/url-tools';
 
@@ -17,7 +17,7 @@ import '../styles.scss';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'calendarNavMulti',
-		unknown,
+		{ date: unknown; setIsAttendeeFilterOn: (state: boolean) => void },
 		{ currentUnit: ReactiveVar<string> }
 	>;
 
@@ -47,6 +47,13 @@ import '../styles.scss';
 				navContainer.removeClass('calendar-nav-container-covering');
 			}
 		});
+	});
+
+	template.events({
+		'change .js-filter-own-events'(event) {
+			// call the parent method that gets passed into this template as a (prop) argument
+			Template.instance().data.setIsAttendeeFilterOn((event.target as HTMLInputElement).checked);
+		},
 	});
 }
 

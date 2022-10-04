@@ -1,6 +1,7 @@
 <template name="frameWeekPage">
+	{{> accountTasks}}
 	{{#if control}}
-		{{> calendarNavWeek calendarNavAttr}}
+		{{> calendarNavWeek calendarNavAttr }}
 	{{/if}}
 	<div class="py-4">
 		{{#each weekday in weekdays}}

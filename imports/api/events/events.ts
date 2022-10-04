@@ -10,7 +10,7 @@ import { UserModel } from '/imports/api/users/users';
 
 import * as AsyncTools from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 import * as FileStorage from '/imports/utils/FileStorage';
@@ -182,6 +182,8 @@ export const FindFilterPattern = {
 	course: Match.Maybe(String),
 	/** only events that are internal (if true) or public (if false) */
 	internal: Match.Maybe(Boolean),
+	/** only events with given participant (ID) */
+	participant: Match.Maybe(String),
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
@@ -212,6 +214,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		return new Filtering({
 			course: Predicates.id,
 			region: Predicates.id,
+			participant: Predicates.id,
 			search: Predicates.string,
 			categories: Predicates.ids,
 			group: Predicates.id,
@@ -428,6 +431,10 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 			find.courseId = filter.course;
 		}
 
+		if (filter.participant) {
+			find.participants = filter.participant;
+		}
+
 		if (filter.internal !== undefined) {
 			find.internal = Boolean(filter.internal);
 		}
@@ -457,5 +464,3 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 }
 
 export const Events = new EventsCollection();
-
-export default Events;

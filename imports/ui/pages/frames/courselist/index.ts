@@ -8,9 +8,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import { Regions } from '/imports/api/regions/regions';
 import { CourseModel, Courses } from '/imports/api/courses/courses';
 import * as Metatags from '/imports/utils/metatags';
-import SortSpec from '/imports/utils/sort-spec';
-
-import '/imports/ui/components/loading';
+import { SortSpec } from '/imports/utils/sort-spec';
 
 import './template.html';
 
@@ -28,7 +26,9 @@ import './template.html';
 	template.onCreated(function () {
 		const instance = this;
 
-		Metatags.setCommonTags(i18n('course.list.windowtitle', 'Courses'));
+		instance.autorun(() => {
+			Metatags.setCommonTags(i18n('course.list.windowtitle', 'Courses'));
+		});
 
 		const query = Router.current().params.query;
 		const sort = query.sort;
