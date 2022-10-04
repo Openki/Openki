@@ -85,6 +85,10 @@ $event-caption-body-bg: $event-body-bg;
 	@include td-margin(left, 15px);
 }
 
+.event-caption-wrap .btn:hover {
+	border-color: transparent;
+}
+
 .event-caption-action {
 	width: 65px;
 }
