@@ -13,6 +13,7 @@ import { UserModel, Users } from '/imports/api/users/users';
 import * as notificationEvent from '/imports/notification/notification.event';
 import * as notificationEventContactParticipants from '/imports/notification/notification.event.contact-participants';
 import * as notificationRsvp from '/imports/notification/notification.rsvp';
+import * as notificationRsvpTeam from '/imports/notification/notification.rsvp.team';
 import * as notificationComment from '/imports/notification/notification.comment';
 import * as notificationJoin from '/imports/notification/notification.join';
 import * as notificationGroupCourse from '/imports/notification/notification.group.course';
@@ -25,6 +26,7 @@ export const Notification = {
 	Event: notificationEvent,
 	'Event.ContactParticipants': notificationEventContactParticipants,
 	Rsvp: notificationRsvp,
+	'Rsvp.Team': notificationRsvpTeam,
 	Comment: notificationComment,
 	Join: notificationJoin,
 	'Group.Course': notificationGroupCourse,

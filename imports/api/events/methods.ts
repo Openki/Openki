@@ -476,8 +476,10 @@ export const addParticipant = ServerMethod(
 
 		Events.update({ _id: eventId }, { $addToSet: { participants: user._id } });
 
-		// Send notifications
+		// Send notifications to user
 		Notification.Rsvp.record(eventId, user._id);
+		// Send notification to team
+		Notification['Rsvp.Team'].record(eventId, user._id);
 
 		// if you cant load course its probably because the event doesnt have one
 		const course = Courses.findOne(event.courseId);
