@@ -24,7 +24,7 @@ import './template.html';
 import './styles.scss';
 
 export type Data = {
-	courseQuery: Record<string, string> & {
+	courseQuery: Record<string, string | undefined> & {
 		group: string;
 		region: string | undefined;
 	};

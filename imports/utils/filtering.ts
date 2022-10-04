@@ -70,11 +70,11 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 		}
 	}
 
-	read(list: Partial<{ [name in keyof T]: string }>) {
+	read(list: Partial<{ [name in keyof T]: string | undefined }>) {
 		Object.entries(list).forEach(([name, value]) => {
 			try {
-				if (typeof value !== 'undefined') {
-					this.add(name, value);
+				if (value !== undefined) {
+					this.add(name, value as string);
 				}
 			} catch (e) {
 				if (!(e instanceof FilteringReadError)) {

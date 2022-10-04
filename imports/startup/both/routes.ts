@@ -18,15 +18,13 @@ import { Group, GroupEntity, GroupModel } from '/imports/api/groups/groups';
 import * as Groups from '/imports/api/groups/publications';
 import { Region, RegionModel } from '/imports/api/regions/regions';
 import * as Regions from '/imports/api/regions/publications';
-import { InfoPagesEntity } from '/imports/api/infoPages/infoPages';
 import * as InfoPages from '/imports/api/infoPages/publications';
 import { Tenant, TenantEntity, TenantModel, Tenants } from '/imports/api/tenants/tenants';
-import { RoleEntity, Roles } from '/imports/api/roles/roles';
+import { Roles } from '/imports/api/roles/roles';
 import { Venue, VenueEntity, VenueModel } from '/imports/api/venues/venues';
 import * as Venues from '/imports/api/venues/publications';
 import { UserModel, Users } from '/imports/api/users/users';
-import { InvitationEntity, Invitations } from '/imports/api/invitations/invitations';
-
+import { Invitations } from '/imports/api/invitations/invitations';
 import type { Data as GroupDetailsData } from '/imports/ui/pages/group-details';
 
 import * as Analytics from '/imports/ui/lib/analytics';
@@ -40,9 +38,8 @@ import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Predicates from '/imports/utils/predicates';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as RouterAsync from '/imports/utils/RouterAsync';
-import { SubscriptionType } from '/imports/utils/ServerPublish';
 
-const makeFilterQuery = function (params: Record<string, string>) {
+const makeFilterQuery = function (params: Record<string, string | undefined>) {
 	const filter = Events.Filtering().read(params).done();
 
 	const query = filter.toQuery() as EventsFindFilter;
@@ -89,19 +86,16 @@ RouterAsync.route('adminPanel', {
 	},
 });
 
-RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, string>>(
-	'calendar',
-	{
-		path: 'calendar',
-		template: 'calendarPage',
-		async onRun() {
-			await import('/imports/ui/pages/calendar');
-		},
-		data() {
-			return this.params.query;
-		},
+RouterAsync.route('calendar', {
+	path: 'calendar',
+	template: 'calendarPage',
+	async onRun() {
+		await import('/imports/ui/pages/calendar');
 	},
-);
+	data() {
+		return this.params.query;
+	},
+});
 
 RouterAsync.route('featureGroup', {
 	path: 'admin/feature-group',
@@ -122,12 +116,7 @@ RouterAsync.route('tenants', {
 	},
 });
 
-RouterAsync.route<
-	Record<string, string> & {
-		internal: boolean;
-		region: string;
-	}
->('home', {
+RouterAsync.route('home', {
 	path: '/',
 	template: 'findPage',
 	yieldRegions: {
@@ -155,118 +144,106 @@ RouterAsync.route('users', {
 	},
 });
 
-RouterAsync.route<{ cssRules: string[] }, Record<string, never>, Record<string, string>>(
-	'frameCalendar',
-	{
-		path: '/frame/calendar',
-		template: 'frameCalendarPage',
-		layoutTemplate: 'frameLayout',
-		async onRun() {
-			await import('/imports/ui/pages/frames/calendar');
-		},
-		data() {
-			const cssRules = new CssFromQuery(this.params.query, [
-				['itembg', 'background-color', '.frame-list-item'],
-				['itemcolor', 'color', '.frame-list-item'],
-				['linkcolor', 'color', '.frame-list-item a'],
-				['regionbg', 'background-color', '.frame-list-item-region'],
-				['regioncolor', 'color', '.frame-list-item-region'],
-			]).getCssRules();
-			return { cssRules };
-		},
+RouterAsync.route('frameCalendar', {
+	path: '/frame/calendar',
+	template: 'frameCalendarPage',
+	layoutTemplate: 'frameLayout',
+	async onRun() {
+		await import('/imports/ui/pages/frames/calendar');
 	},
-);
-
-RouterAsync.route<{ cssRules: string[] }, Record<string, never>, Record<string, string>>(
-	'frameCourselist',
-	{
-		path: '/frame/courselist',
-		template: 'frameCourselistPage',
-		layoutTemplate: 'frameLayout',
-		async onRun() {
-			await import('/imports/ui/pages/frames/courselist');
-		},
-		data() {
-			const cssRules = new CssFromQuery(this.params.query, [
-				['itembg', 'background-color', '.frame-list-item'],
-				['itemcolor', 'color', '.frame-list-item'],
-				['linkcolor', 'color', '.frame-list-item a'],
-				['regionbg', 'background-color', '.frame-list-item-region'],
-				['regioncolor', 'color', '.frame-list-item-region'],
-			]).getCssRules();
-			const hideInterested = Number.parseInt(this.params.query.hideInterested, 10) || 0;
-			return { cssRules, hideInterested };
-		},
+	data() {
+		const cssRules = new CssFromQuery(this.params.query, [
+			['itembg', 'background-color', '.frame-list-item'],
+			['itemcolor', 'color', '.frame-list-item'],
+			['linkcolor', 'color', '.frame-list-item a'],
+			['regionbg', 'background-color', '.frame-list-item-region'],
+			['regioncolor', 'color', '.frame-list-item-region'],
+		]).getCssRules();
+		return { cssRules };
 	},
-);
+});
 
-RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, string>>(
-	'frameEvents',
-	{
-		path: '/frame/events',
-		template: 'frameEventsPage',
-		layoutTemplate: 'frameLayout',
-		async onRun() {
-			await import('/imports/ui/pages/frames/events');
-		},
-		data() {
-			return this.params.query;
-		},
+RouterAsync.route('frameCourselist', {
+	path: '/frame/courselist',
+	template: 'frameCourselistPage',
+	layoutTemplate: 'frameLayout',
+	async onRun() {
+		await import('/imports/ui/pages/frames/courselist');
 	},
-);
-
-RouterAsync.route<{ cssRules: string[] } & any, Record<string, never>, Record<string, string>>(
-	'framePropose',
-	{
-		path: '/frame/propose',
-		template: 'frameProposePage',
-		layoutTemplate: 'frameLayout',
-		async onRun() {
-			await import('/imports/ui/pages/frames/propose');
-		},
-		waitOn: () => Meteor.subscribe('Regions'),
-		data() {
-			const predicates = {
-				region: Predicates.id,
-				addTeamGroups: Predicates.ids,
-				neededRoles: Predicates.ids,
-				setCreatorsRoles: Predicates.ids,
-				internal: Predicates.flag,
-				hidePricePolicy: Predicates.flag,
-				hideCategories: Predicates.flag,
-			};
-			const query = new Filtering(predicates).read(this.params.query).done().toQuery() as any;
-
-			if (query.addTeamGroups) {
-				// For security reasons only 5 groups are allowed
-				query.teamGroups = query.addTeamGroups.slice(0, 5);
-			}
-			delete query.addTeamGroups;
-
-			if (!query.neededRoles) {
-				query.neededRoles = ['mentor'];
-			}
-			if (query.setCreatorsRoles) {
-				query.hideRoleSelection = true;
-			} else {
-				query.setCreatorsRoles = [];
-			}
-			query.roles = ['mentor', 'host'].filter(
-				(role) => query.neededRoles.includes(role) || query.setCreatorsRoles.includes(role),
-			);
-			delete query.neededRoles;
-
-			query.creatorsRoles = ['mentor', 'host'].filter((role) =>
-				query.setCreatorsRoles.includes(role),
-			);
-			delete query.setCreatorsRoles;
-
-			query.isFrame = true;
-
-			return query;
-		},
+	data() {
+		const cssRules = new CssFromQuery(this.params.query, [
+			['itembg', 'background-color', '.frame-list-item'],
+			['itemcolor', 'color', '.frame-list-item'],
+			['linkcolor', 'color', '.frame-list-item a'],
+			['regionbg', 'background-color', '.frame-list-item-region'],
+			['regioncolor', 'color', '.frame-list-item-region'],
+		]).getCssRules();
+		const hideInterested = Number.parseInt(this.params.query.hideInterested || '', 10) || 0;
+		return { cssRules, hideInterested };
 	},
-);
+});
+
+RouterAsync.route('frameEvents', {
+	path: '/frame/events',
+	template: 'frameEventsPage',
+	layoutTemplate: 'frameLayout',
+	async onRun() {
+		await import('/imports/ui/pages/frames/events');
+	},
+	data() {
+		return this.params.query;
+	},
+});
+
+RouterAsync.route('framePropose', {
+	path: '/frame/propose',
+	template: 'frameProposePage',
+	layoutTemplate: 'frameLayout',
+	async onRun() {
+		await import('/imports/ui/pages/frames/propose');
+	},
+	waitOn: () => Meteor.subscribe('Regions'),
+	data() {
+		const predicates = {
+			region: Predicates.id,
+			addTeamGroups: Predicates.ids,
+			neededRoles: Predicates.ids,
+			setCreatorsRoles: Predicates.ids,
+			internal: Predicates.flag,
+			hidePricePolicy: Predicates.flag,
+			hideCategories: Predicates.flag,
+		};
+		const query = new Filtering(predicates).read(this.params.query).done().toQuery() as any;
+
+		if (query.addTeamGroups) {
+			// For security reasons only 5 groups are allowed
+			query.teamGroups = query.addTeamGroups.slice(0, 5);
+		}
+		delete query.addTeamGroups;
+
+		if (!query.neededRoles) {
+			query.neededRoles = ['mentor'];
+		}
+		if (query.setCreatorsRoles) {
+			query.hideRoleSelection = true;
+		} else {
+			query.setCreatorsRoles = [];
+		}
+		query.roles = ['mentor', 'host'].filter(
+			(role) => query.neededRoles.includes(role) || query.setCreatorsRoles.includes(role),
+		);
+		delete query.neededRoles;
+
+		query.creatorsRoles = ['mentor', 'host'].filter((role) =>
+			query.setCreatorsRoles.includes(role),
+		);
+		delete query.setCreatorsRoles;
+
+		query.isFrame = true;
+
+		return query;
+	},
+});
 
 RouterAsync.route('frameSchedule', {
 	path: '/frame/schedule',
@@ -277,43 +254,34 @@ RouterAsync.route('frameSchedule', {
 	},
 });
 
-RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, string>>(
-	'frameWeek',
-	{
-		path: '/frame/week',
-		template: 'frameWeekPage',
-		layoutTemplate: 'frameLayout',
-		async onRun() {
-			await import('/imports/ui/pages/frames/week');
-		},
-		data() {
-			return this.params.query;
-		},
+RouterAsync.route('frameWeek', {
+	path: '/frame/week',
+	template: 'frameWeekPage',
+	layoutTemplate: 'frameLayout',
+	async onRun() {
+		await import('/imports/ui/pages/frames/week');
 	},
-);
+	data() {
+		return this.params.query;
+	},
+});
 
-RouterAsync.route<
-	GroupDetailsData | undefined,
-	{ _id: string },
-	Record<string, string>,
-	{ details: SubscriptionType<typeof Groups['details']> }
->('groupDetails', {
+RouterAsync.route('groupDetails', {
 	path: 'group/:_id/:short?',
 	template: 'groupDetailsPage',
 	async onRun() {
 		await import('/imports/ui/pages/group-details');
 	},
-	waitOn() {
-		this.details = Groups.details.subscribe(this.params._id);
-		return () => this.details.ready();
+	subscriptions() {
+		return { details: Groups.details.subscribe(this.params._id as string) };
 	},
-	data() {
-		let group;
+	data(): GroupDetailsData | undefined {
+		let group: GroupModel | undefined;
 		const isNew = this.params._id === 'create';
 		if (isNew) {
 			group = new Group() as GroupModel;
 		} else {
-			group = this.details();
+			group = this.subscriptions().details();
 		}
 
 		if (!group) {
@@ -333,17 +301,7 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<
-	{
-		today: Mongo.Cursor<EventEntity, EventModel>;
-		future: Mongo.Cursor<EventEntity, EventModel>;
-		ongoing: Mongo.Cursor<EventEntity, EventModel>;
-		filter: Record<string, any>;
-	},
-	Record<string, never>,
-	Record<string, string>,
-	{ timer: number }
->('kioskEvents', {
+RouterAsync.route('kioskEvents', {
 	path: '/kiosk/events',
 	template: 'kioskEventsPage',
 	layoutTemplate: 'kioskLayout',
@@ -394,16 +352,16 @@ RouterAsync.route<
 		};
 	},
 	onAfterAction() {
-		this.timer = Meteor.setInterval(() => {
+		(this as any).timer = Meteor.setInterval(() => {
 			Session.set('seconds', new Date());
 		}, 1000);
 	},
 	onStop() {
-		Meteor.clearInterval(this.timer);
+		Meteor.clearInterval((this as any).timer);
 	},
 });
 
-RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, string>>('log', {
+RouterAsync.route('log', {
 	path: '/log',
 	template: 'logPage',
 	async onRun() {
@@ -414,28 +372,19 @@ RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, 
 	},
 });
 
-RouterAsync.route<
-	| undefined
-	| {
-			page: InfoPagesEntity;
-	  },
-	{ page_slug: string },
-	unknown,
-	{
-		infoPage: SubscriptionType<typeof InfoPages['details']>;
-	}
->('info', {
+RouterAsync.route('info', {
 	path: 'info/:page_slug',
 	template: 'infoPage',
 	async onRun() {
 		await import('/imports/ui/pages/info');
 	},
-	waitOn() {
-		this.infoPage = InfoPages.details.subscribe(this.params.page_slug, Session.get('locale'));
-		return () => this.infoPage.ready();
+	subscriptions() {
+		return {
+			infoPage: InfoPages.details.subscribe(this.params.page_slug as string, Session.get('locale')),
+		};
 	},
 	data() {
-		const page = this.infoPage();
+		const page = this.subscriptions().infoPage();
 		if (!page) {
 			return undefined;
 		}
@@ -444,27 +393,7 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<
-	{
-		user?: {
-			_id: string;
-			name: string;
-			notifications: boolean;
-			allowPrivateMessages: boolean;
-			tenants: Mongo.Cursor<TenantEntity, TenantModel> | never[];
-			groups: Mongo.Cursor<GroupEntity, GroupModel>;
-			venues: Mongo.Cursor<VenueEntity, VenueModel>;
-			email: string;
-			verified: boolean;
-		};
-	},
-	Record<string, never>,
-	unknown,
-	{
-		venues: SubscriptionType<typeof Venues['findFilter']>;
-		groups: SubscriptionType<typeof Groups['findFilter']>;
-	}
->('profile', {
+RouterAsync.route('profile', {
 	path: 'profile',
 	template: 'profilePage',
 	async onRun() {
@@ -477,12 +406,12 @@ RouterAsync.route<
 			return [];
 		}
 
-		this.venues = Venues.findFilter.subscribe({ editor: userId });
-		this.groups = Groups.findFilter.subscribe({ own: true });
+		(this as any).venues = Venues.findFilter.subscribe({ editor: userId });
+		(this as any).groups = Groups.findFilter.subscribe({ own: true });
 		return [
 			Meteor.subscribe('Tenants.findFilter', { adminOf: true }),
-			() => this.groups.ready(),
-			() => this.venues.ready(),
+			() => (this as any).groups.ready(),
+			() => (this as any).venues.ready(),
 		];
 	},
 	data() {
@@ -507,8 +436,8 @@ RouterAsync.route<
 				notifications: user.notifications,
 				allowPrivateMessages: user.allowPrivateMessages,
 				tenants: Tenants.findFilter({ adminOf: true }),
-				groups: this.groups(),
-				venues: this.venues(),
+				groups: (this as any).groups(),
+				venues: (this as any).venues(),
 				email: user.emails?.[0]?.address,
 				verified: user.emails?.[0]?.verified || false,
 			};
@@ -527,14 +456,7 @@ RouterAsync.route('proposeCourse', {
 	data: CourseTemplate,
 });
 
-RouterAsync.route<
-	{
-		token: string;
-	},
-	{
-		token: string;
-	}
->('resetPassword', {
+RouterAsync.route('resetPassword', {
 	path: 'reset-password/:token',
 	template: 'resetPasswordPage',
 	async onRun() {
@@ -545,23 +467,7 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<
-	| {
-			edit: boolean;
-			rolesDetails: {
-				role: RoleEntity;
-				subscribed: boolean;
-				comment: string | undefined;
-				course: CourseModel;
-			}[];
-			course: CourseModel;
-			member: CourseMemberEntity | undefined;
-			select: string;
-	  }
-	| undefined,
-	Record<string, never>,
-	{ edit: string; select: string }
->('showCourse', {
+RouterAsync.route('showCourse', {
 	path: 'course/:_id/:slug?',
 	template: 'courseDetailsPage',
 	async onRun() {
@@ -571,7 +477,7 @@ RouterAsync.route<
 		return Meteor.subscribe('courseDetails', this.params._id);
 	},
 	data() {
-		const course = Courses.findOne({ _id: this.params._id });
+		const course = Courses.findOne({ _id: this.params._id as string });
 
 		if (!course) {
 			return undefined;
@@ -590,11 +496,7 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<
-	(EventModel & { new?: boolean; startLocal?: string; endLocal?: string }) | undefined,
-	Record<string, never>,
-	{ courseId: string }
->('showEvent', {
+RouterAsync.route('showEvent', {
 	path: 'event/:_id/:slug?',
 	template: 'eventPage',
 	notFoundTemplate: 'eventNotFound',
@@ -628,7 +530,7 @@ RouterAsync.route<
 				event.internal = course.internal;
 			}
 		} else {
-			event = Events.findOne({ _id: this.params._id });
+			event = Events.findOne({ _id: this.params._id as string });
 			if (!event) {
 				return undefined;
 			}
@@ -646,10 +548,7 @@ RouterAsync.route('stats', {
 	},
 });
 
-RouterAsync.route<{
-	tenant: TenantModel;
-	region: RegionModel;
-}>('tenantCreate', {
+RouterAsync.route('tenantCreate', {
 	path: 'tenant/create',
 	template: 'tenantCreatePage',
 	async onRun() {
@@ -666,34 +565,27 @@ RouterAsync.route<{
 	},
 });
 
-RouterAsync.route<{ tenant: TenantModel } | undefined, { _id: string; slug?: string }>(
-	'tenantDetails',
-	{
-		path: 'tenant/:_id/:short?',
-		template: 'tenantDetailsPage',
-		async onRun() {
-			await import('/imports/ui/pages/tenant-details');
-		},
-		waitOn() {
-			return [Meteor.subscribe('tenant', this.params._id)];
-		},
-		data() {
-			const tenant = Tenants.findOne({ _id: this.params._id });
-
-			if (!tenant) {
-				return undefined;
-			}
-
-			return { tenant };
-		},
+RouterAsync.route('tenantDetails', {
+	path: 'tenant/:_id/:short?',
+	template: 'tenantDetailsPage',
+	async onRun() {
+		await import('/imports/ui/pages/tenant-details');
 	},
-);
+	waitOn() {
+		return [Meteor.subscribe('tenant', this.params._id)];
+	},
+	data() {
+		const tenant = Tenants.findOne({ _id: this.params._id as string });
 
-RouterAsync.route<
-	{ tenant: TenantModel; invitation: InvitationEntity } | undefined,
-	{ token: string },
-	{ tenant: string }
->('invitation', {
+		if (!tenant) {
+			return undefined;
+		}
+
+		return { tenant };
+	},
+});
+
+RouterAsync.route('invitation', {
 	path: 'invitation/:token',
 	template: 'invitationPage',
 	async onRun() {
@@ -703,14 +595,20 @@ RouterAsync.route<
 		return [Meteor.subscribe('invitation', this.params?.query?.tenant, this.params?.token)];
 	},
 	data() {
-		const tenant = Tenants.findOne({ _id: this.params?.query?.tenant });
+		const tenantId = this.params?.query?.tenant;
+		const invitationToken = this.params?.token;
+		if (!tenantId || !invitationToken) {
+			return undefined;
+		}
+
+		const tenant = Tenants.findOne({ _id: tenantId });
 		if (!tenant) {
 			return undefined;
 		}
 
 		const invitation = Invitations.findOne({
-			tenant: this.params?.query?.tenant,
-			token: this.params?.token,
+			tenant: tenantId,
+			token: invitationToken,
 		});
 		if (!invitation) {
 			return undefined;
@@ -720,34 +618,7 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<
-	| never[]
-	| {
-			days: {
-				moment: moment.Moment;
-				relStart: number;
-				relEnd: number;
-			}[];
-			hours: {
-				moment: moment.Moment;
-				relStart: number;
-				relEnd: number;
-			}[];
-			grouped: {
-				perRoom: {
-					room: string;
-					venue: VenueModel;
-					rows: (EventEntity & {
-						relStart: number;
-						relEnd: number;
-					})[];
-				}[];
-				venue: VenueModel;
-			}[];
-	  },
-	Record<string, string>,
-	Record<string, string>
->('timetable', {
+RouterAsync.route('timetable', {
 	path: '/kiosk/timetable',
 	template: 'kioskTimetablePage',
 	layoutTemplate: 'kioskLayout',
@@ -902,34 +773,18 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<
-	| undefined
-	| {
-			user: UserModel;
-			alterPrivileges: boolean;
-			privileges: {
-				[role: string]: boolean;
-			};
-			inviteGroups: Mongo.Cursor<GroupEntity, GroupModel>;
-			showPrivileges: number | true;
-	  },
-	{ _id: string },
-	unknown,
-	{
-		groups: SubscriptionType<typeof Groups['findFilter']>;
-	}
->('userprofile', {
+RouterAsync.route('userprofile', {
 	path: 'user/:_id/:username?',
 	template: 'userprofilePage',
 	async onRun() {
 		await import('/imports/ui/pages/userprofile');
 	},
 	waitOn() {
-		this.groups = Groups.findFilter.subscribe({ own: true });
-		return [Meteor.subscribe('user', this.params._id), () => this.groups.ready()];
+		(this as any).groups = Groups.findFilter.subscribe({ own: true });
+		return [Meteor.subscribe('user', this.params._id), () => (this as any).groups.ready()];
 	},
 	data() {
-		const user = Users.findOne({ _id: this.params._id });
+		const user = Users.findOne({ _id: this.params._id as string });
 		if (!user) {
 			return undefined; // not loaded?
 		}
@@ -951,17 +806,13 @@ RouterAsync.route<
 			user,
 			alterPrivileges,
 			privileges,
-			inviteGroups: this.groups(),
+			inviteGroups: (this as any).groups(),
 			showPrivileges,
 		};
 	},
 });
 
-RouterAsync.route<
-	{ isNew: boolean; region: RegionModel },
-	Record<string, never>,
-	{ tenant: string }
->('regionCreate', {
+RouterAsync.route('regionCreate', {
 	path: 'region/create',
 	template: 'regionDetailsPage',
 	async onRun() {
@@ -969,7 +820,14 @@ RouterAsync.route<
 	},
 	data() {
 		const region = new Region() as RegionModel;
-		region.tenant = this.params.query.tenant;
+
+		const tenantId = this.params.query.tenant;
+
+		if (!tenantId) {
+			return undefined;
+		}
+
+		region.tenant = tenantId;
 		region.tz = momentTz.tz.guess();
 		return {
 			isNew: true,
@@ -978,23 +836,17 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<
-	{ region: RegionModel } | undefined,
-	{ _id: string; slug?: string },
-	unknown,
-	{ details: SubscriptionType<typeof Regions['details']> }
->('regionDetails', {
+RouterAsync.route('regionDetails', {
 	path: 'region/:_id/:slug?',
 	template: 'regionDetailsPage',
 	async onRun() {
 		await import('/imports/ui/pages/region-details');
 	},
-	waitOn() {
-		this.details = Regions.details.subscribe(this.params._id);
-		return () => this.details.ready();
+	subscriptions() {
+		return { details: Regions.details.subscribe(this.params._id as string) };
 	},
 	data() {
-		const region = this.details();
+		const region = this.subscriptions().details();
 
 		if (!region) {
 			return undefined; // Not found
@@ -1004,21 +856,14 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<
-	{ venue: VenueModel } | undefined,
-	{ _id: string; slug?: string },
-	unknown,
-	{ details: SubscriptionType<typeof Venues['details']> }
->('venueDetails', {
+RouterAsync.route('venueDetails', {
 	path: 'venue/:_id/:slug?',
 	template: 'venueDetailsPage',
 	async onRun() {
 		await import('/imports/ui/pages/venue-details');
 	},
-	waitOn() {
-		this.details = Venues.details.subscribe(this.params._id);
-
-		return () => this.details.ready();
+	subscriptions() {
+		return { details: Venues.details.subscribe(this.params._id as string) };
 	},
 	data() {
 		const id = this.params._id;
@@ -1027,7 +872,7 @@ RouterAsync.route<
 		if (id === 'create') {
 			venue = new Venue() as VenueModel;
 		} else {
-			venue = this.details();
+			venue = this.subscriptions().details();
 			if (!venue) {
 				return undefined; // Not found
 			}
