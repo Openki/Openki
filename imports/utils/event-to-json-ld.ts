@@ -118,5 +118,3 @@ export function appendAsJsonLdToBody(data: EventModel) {
 		});
 	}
 }
-
-export default appendAsJsonLdToBody;

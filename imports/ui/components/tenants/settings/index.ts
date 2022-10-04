@@ -7,7 +7,7 @@ import * as Alert from '/imports/api/alerts/alert';
 import { Tenants } from '/imports/api/tenants/tenants';
 import { UserModel, Users } from '/imports/api/users/users';
 
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 
 import * as TenantsMethods from '/imports/api/tenants/methods';
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
@@ -87,7 +87,7 @@ template.events({
 	},
 
 	async 'click .js-member-add-btn'(this: UserModel) {
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 
 		const memberId = this._id;
 		const tenantId = Router.current().params._id as string;
@@ -108,7 +108,7 @@ template.events({
 	},
 
 	async 'click .js-member-remove-btn'(this: UserModel) {
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 
 		const memberId = `${this}`;
 		const tenantId = Router.current().params._id as string;
@@ -134,7 +134,7 @@ template.events({
 	},
 
 	async 'click .js-admin-add-btn'(this: UserModel) {
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 
 		const adminId = this._id;
 		const tenantId = Router.current().params._id as string;
@@ -155,7 +155,7 @@ template.events({
 	},
 
 	async 'click .js-admin-remove-btn'(this: UserModel) {
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 
 		const adminId = `${this}`;
 		const tenantId = Router.current().params._id as string;

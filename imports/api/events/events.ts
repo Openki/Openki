@@ -464,5 +464,3 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 }
 
 export const Events = new EventsCollection();
-
-export default Events;

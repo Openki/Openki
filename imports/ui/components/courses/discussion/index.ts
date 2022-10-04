@@ -14,7 +14,7 @@ import * as CourseDiscussionsMethods from '/imports/api/course-discussions/metho
 import { EditCommentFields, PostCommentFields } from '/imports/api/course-discussions/methods';
 import * as Alert from '/imports/api/alerts/alert';
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { TrackerAsync } from '/imports/utils/promisify';
 
@@ -57,7 +57,7 @@ import './styles.scss';
 				// Jump to the selected comment.
 				// This method should work for screenreaders too.
 				window.location.hash = `#comment${select}`;
-				RouterAutoscroll.scheduleScroll();
+				routerAutoscroll.scheduleScroll();
 			}
 		});
 
@@ -271,7 +271,7 @@ import './styles.scss';
 			instance.$('.js-discussion-edit').trigger('click');
 			(instance.parentInstance(2) as any).notifyAll.set(true);
 			window.location.hash = '#discussion';
-			RouterAutoscroll.scheduleScroll();
+			routerAutoscroll.scheduleScroll();
 		},
 
 		'click .js-discussion-edit'(event, instance) {

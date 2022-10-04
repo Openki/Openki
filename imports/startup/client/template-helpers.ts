@@ -7,14 +7,13 @@ import { Blaze } from 'meteor/blaze';
 import moment from 'moment';
 
 import { Regions } from '/imports/api/regions/regions';
-import { Users } from '/imports/api/users/users';
+import { UserEntity, Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
 import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue, LocalizedValue } from '/imports/utils/getLocalizedValue';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { UserEntity } from '/imports/api/fixtures/ensureFixture';
 import { checkContribution } from '/imports/utils/checkContribution';
 
 /**

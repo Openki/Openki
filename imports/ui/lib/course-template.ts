@@ -8,5 +8,3 @@ export function CourseTemplate(): Partial<CourseEditData> {
 		region: Session.get('region'),
 	};
 }
-
-export default CourseTemplate;

@@ -403,5 +403,3 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 }
 
 export const Courses = new CoursesCollection();
-
-export default Courses;

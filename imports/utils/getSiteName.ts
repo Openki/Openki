@@ -8,5 +8,3 @@ export function getSiteName(region?: RegionModel): string {
 
 	return PublicSettings.siteName;
 }
-
-export default getSiteName;

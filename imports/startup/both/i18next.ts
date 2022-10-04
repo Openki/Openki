@@ -167,5 +167,3 @@ Template.registerHelper(
 		return Spacebars.SafeString(i18n(key, { ...defaultValueOrData.hash, escapeText: true }));
 	},
 );
-
-export default i18n;

@@ -192,5 +192,3 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 		return query;
 	}
 }
-
-export default Filtering;
