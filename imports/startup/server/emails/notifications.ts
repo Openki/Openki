@@ -13,6 +13,10 @@ Meteor.startup(() => {
 	);
 	SSR.compileTemplate('notificationRsvpEmail', Assets.getText('emails/notifications/rsvp.html'));
 	SSR.compileTemplate(
+		'notificationRsvpTeamEmail',
+		Assets.getText('emails/notifications/rsvp.team.html'),
+	);
+	SSR.compileTemplate(
 		'notificationCommentEmail',
 		Assets.getText('emails/notifications/comment.html'),
 	);
