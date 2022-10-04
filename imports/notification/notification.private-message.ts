@@ -142,13 +142,12 @@ export function Model(entry: { body: Body }) {
 				eventLink: '',
 			};
 
-			if (!senderCopy && body.revealSenderAddress) {
+			if (body.revealSenderAddress) {
 				const senderAddress = sender.verifiedEmailAddress();
-				if (senderAddress) {
-					vars.fromAddress = senderAddress;
-				} else {
+				if (!senderAddress) {
 					throw new Meteor.Error(400, 'no verified email address');
 				}
+				vars.fromAddress = senderAddress;
 			}
 
 			let region: RegionModel | undefined;
