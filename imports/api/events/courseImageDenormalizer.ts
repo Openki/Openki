@@ -1,5 +1,5 @@
-import { Courses } from '../courses/courses';
-import Events, { EventEntity } from './events';
+import { Courses } from '/imports/api/courses/courses';
+import { Events, EventEntity } from '/imports/api/events/events';
 
 export function beforeInsert(event: EventEntity): EventEntity {
 	if (!event.courseId) {

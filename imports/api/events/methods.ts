@@ -20,7 +20,7 @@ import { Notification } from '/imports/notification/notification';
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import * as AsyncTools from '/imports/utils/async-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UpdateMethods from '/imports/utils/update-methods';
 import { ServerMethod } from '/imports/utils/ServerMethod';

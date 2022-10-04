@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import Version from '/imports/api/version/version';
+import { Version } from '/imports/api/version/version';
 import { _ } from 'meteor/underscore';
 
 Meteor.startup(() => {

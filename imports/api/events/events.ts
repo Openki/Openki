@@ -10,7 +10,7 @@ import { UserModel } from '/imports/api/users/users';
 
 import * as AsyncTools from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 import * as FileStorage from '/imports/utils/FileStorage';

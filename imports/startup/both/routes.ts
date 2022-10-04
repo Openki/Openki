@@ -24,12 +24,12 @@ import { UserModel, Users } from '/imports/api/users/users';
 import { InvitationEntity, Invitations } from '/imports/api/invitations/invitations';
 
 import * as Analytics from '/imports/ui/lib/analytics';
-import CleanedRegion from '/imports/ui/lib/cleaned-region';
-import CourseTemplate from '/imports/ui/lib/course-template';
+import { CleanedRegion } from '/imports/ui/lib/cleaned-region';
+import { CourseTemplate } from '/imports/ui/lib/course-template';
 import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 
 import { Filtering } from '/imports/utils/filtering';
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Predicates from '/imports/utils/predicates';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';

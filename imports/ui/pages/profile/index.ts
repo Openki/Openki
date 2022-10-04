@@ -16,7 +16,7 @@ import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Analytics from '/imports/ui/lib/analytics';
 import { Editable } from '/imports/ui/lib/editable';
 import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
-import i18n from '/imports/startup/both/i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/buttons';

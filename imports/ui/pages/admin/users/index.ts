@@ -1,7 +1,7 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
-import i18n from '/imports/startup/both/i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 

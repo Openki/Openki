@@ -1,7 +1,7 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { i18n } from '/imports/startup/both/i18next';
 
-import Categories from '/imports/api/categories/categories';
+import { Categories } from '/imports/api/categories/categories';
 
 import * as Viewport from '/imports/ui/lib/viewport';
 import { MeteorAsync } from '/imports/utils/promisify';

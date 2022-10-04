@@ -5,7 +5,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import * as Alert from '/imports/api/alerts/alert';
 
 import { AccountsAsync } from '/imports/utils/promisify';
-import i18n from '/imports/startup/both/i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/buttons';

@@ -7,7 +7,7 @@ import { RegionModel } from '/imports/api/regions/regions';
 import * as RegionsMethods from '/imports/api/regions/methods';
 
 import * as Analytics from '/imports/ui/lib/analytics';
-import i18n from '/imports/startup/both/i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/regions/display';

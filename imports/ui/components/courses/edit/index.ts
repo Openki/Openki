@@ -8,7 +8,7 @@ import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 import * as Alert from '/imports/api/alerts/alert';
-import Categories from '/imports/api/categories/categories';
+import { Categories } from '/imports/api/categories/categories';
 import { Course, CourseMemberEntity, CourseModel, Courses } from '/imports/api/courses/courses';
 import * as CoursesMethods from '/imports/api/courses/methods';
 import { GroupEntityCustomCourseFields, Groups } from '/imports/api/groups/groups';
