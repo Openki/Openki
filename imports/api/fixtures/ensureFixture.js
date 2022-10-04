@@ -254,5 +254,3 @@ export const ensure = {
 		return venue;
 	},
 };
-
-export default ensure;

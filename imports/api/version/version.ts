@@ -23,5 +23,3 @@ export interface VersionEntity {
 }
 
 export const Version = new Mongo.Collection<VersionEntity>('Version');
-
-export default Version;

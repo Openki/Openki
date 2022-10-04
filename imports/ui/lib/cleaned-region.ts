@@ -5,5 +5,3 @@
 export function CleanedRegion(region: string) {
 	return region === 'all' ? undefined : region;
 }
-
-export default CleanedRegion;

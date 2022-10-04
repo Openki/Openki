@@ -99,5 +99,3 @@ if (Meteor.isServer) {
  * Only available on the server.
  */
 export const PrivateSettings = privateSettings as NonNullable<typeof privateSettings>;
-
-export default PrivateSettings;

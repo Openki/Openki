@@ -79,5 +79,3 @@ export const FieldOrdering = function (sortSpec: { spec: () => FieldSort[] }) {
 		sorted: <T>(list: Record<string, T>[]) => copy(list).sort(ordering()),
 	};
 };
-
-export default FieldOrdering;

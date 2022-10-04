@@ -23,6 +23,7 @@ module.exports = {
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
 		'object-shorthand': ['error', 'always'],
 		'prefer-destructuring': ['error', { object: false, array: false }],
+		'import/no-default-export': 'error',
 
 		// disabled rules
 		'func-names': 'off',
@@ -30,10 +31,10 @@ module.exports = {
 		'max-classes-per-file': 'off',
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
+		'import/prefer-default-export': 'off',
 		// Fix some problem with js files imports ts file
 		'import/no-unresolved': 'off',
 		'import/extensions': 'off',
-		'import/named': 'off',
 
 		'@typescript-eslint/no-this-alias': 'warn',
 		'prettier/prettier': 'warn',
