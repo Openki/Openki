@@ -151,16 +151,19 @@
 						</p>
 					{{/each}}
 				</div>
-				<div class="fade-top"></div>
-				{{#unless state 'showMoreState'}}
-					<div class="fade-bottom course-description-fade-bottom"></div>
-				{{/unless}}
+				{{#if state 'descriptionFlowsOver'}}
+					{{#unless state 'showMore'}}
+						<div class="fade-bottom course-description-fade-bottom"></div>
+					{{/unless}}
+				{{/if}}
 			</div>
-			{{#if showMoreOrLess}}
-				<div id="js-course-desciption-showmoreorless" role="button"
-					 class="text-center course-details-showmoreorless">
-					— {{showMoreOrLessText}} —
-				</div>
+			{{#if state 'descriptionFlowsOver'}}
+				{{#unless state 'showMore'}}
+					<div role="button"
+						 class="js-course-desciption-show-more text-center course-details-show-more ">
+						— {{i18n 'courseDetails.showMore' 'show more'}} —
+					</div>
+				{{/unless}}
 			{{/if}}
 		</div>
 		<div class="tab-pane course-history" id="history">
