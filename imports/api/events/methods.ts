@@ -17,7 +17,6 @@ import { Regions } from '/imports/api/regions/regions';
 import { VenueModel, Venues } from '/imports/api/venues/venues';
 
 import { Notification } from '/imports/notification/notification';
-
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import * as AsyncTools from '/imports/utils/async-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
@@ -27,6 +26,7 @@ import * as UpdateMethods from '/imports/utils/update-methods';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
 import { GroupPromoters } from '/imports/utils/update-methods';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 /**
  * @param updateOptions What should be updated
@@ -476,8 +476,10 @@ export const addParticipant = ServerMethod(
 
 		Events.update({ _id: eventId }, { $addToSet: { participants: user._id } });
 
-		// Send notifications
+		// Send notifications to user
 		Notification.Rsvp.record(eventId, user._id);
+		// Send notification to team
+		Notification['Rsvp.Team'].record(eventId, user._id);
 
 		// if you cant load course its probably because the event doesnt have one
 		const course = Courses.findOne(event.courseId);
@@ -485,7 +487,7 @@ export const addParticipant = ServerMethod(
 			return;
 		}
 
-		const change = new Subscribe(course, user, 'participant');
+		const change = new Subscribe(course, user, 'participant', 'rsvp');
 
 		if (change.validFor(user)) {
 			processChange(change);
@@ -513,6 +515,45 @@ export const removeParticipant = ServerMethod('event.removeParticipant', (eventI
 
 	Events.update({ _id: eventId }, { $pull: { participants: userId } });
 });
+
+export const ContactParticipantsOptionsPattern = {
+	revealAddress: Boolean,
+	sendCopy: Boolean,
+};
+export type ContactParticipantsOptions = Type<typeof ContactParticipantsOptionsPattern>;
+
+export const contactParticipants = ServerMethod(
+	'event.contactParticipants',
+	(eventId: string, message: string, options: ContactParticipantsOptions) => {
+		check(eventId, String);
+		check(message, String);
+		check(options, ContactParticipantsOptionsPattern);
+
+		const operator = Meteor.user();
+		if (!operator) {
+			throw new Meteor.Error(401, 'please log in');
+		}
+		const event = Events.findOne(eventId);
+		if (!event) {
+			throw new Meteor.Error(404, 'event not found');
+		}
+		if (
+			!event.editableBy(operator) &&
+			!operator.groups.some((g) => event.groupOrganizers.includes(g)) &&
+			!UserPrivilegeUtils.privileged(operator, 'admin')
+		) {
+			throw new Meteor.Error(401, 'not permitted');
+		}
+
+		Notification['Event.ContactParticipants'].record(
+			operator._id,
+			message,
+			eventId,
+			options.revealAddress,
+			options.sendCopy,
+		);
+	},
+);
 
 Meteor.methods({
 	/**

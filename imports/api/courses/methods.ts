@@ -274,7 +274,7 @@ export const save = ServerMethod(
 		if (changes.subs) {
 			const changedCourse = Courses.findOne(courseId);
 			changes.subs.forEach((role: string) => {
-				const change = new Subscribe(changedCourse, user, role);
+				const change = new Subscribe(changedCourse, user, role, 'interested');
 				if (change.validFor(user)) {
 					processChange(change);
 				}
