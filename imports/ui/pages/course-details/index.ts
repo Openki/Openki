@@ -307,11 +307,9 @@ import './styles.scss';
 		},
 		{
 			state: ReactiveDict<{
-				showMoreState: boolean;
+				showMore: boolean;
 				descriptionFlowsOver: boolean;
-				descriptionBeingEdited: boolean;
 			}>;
-			checkOverFlow: () => void;
 		}
 	>;
 
@@ -321,21 +319,24 @@ import './styles.scss';
 		const instance = this;
 		instance.state = new ReactiveDict();
 		instance.state.setDefault({
-			showMoreState: false,
+			showMore: false,
 			descriptionFlowsOver: false,
-			descriptionBeingEdited: false,
 		});
-		instance.checkOverFlow = () => {
-			// function to check if the description is longer than the div that displays it
-			const div = document.getElementsByClassName('course-description')[0];
-			if (div) {
-				instance.state.set({ descriptionFlowsOver: div.scrollHeight > div.clientHeight });
-			}
-		};
 	});
 
 	template.onRendered(function () {
-		Template.instance().checkOverFlow();
+		const instance = this;
+
+		instance.autorun(async () => {
+			// function to check if the description is longer than the div that displays it
+			const courseDescriptionElement = instance.$('.course-description')[0];
+			if (courseDescriptionElement) {
+				instance.state.set({
+					descriptionFlowsOver:
+						courseDescriptionElement.scrollHeight > courseDescriptionElement.clientHeight,
+				});
+			}
+		});
 	});
 
 	template.helpers({
@@ -360,43 +361,22 @@ import './styles.scss';
 		},
 		showMoreClass() {
 			// gives back class for css
-			const state = Template.instance().state.get('showMoreState');
+			const state = Template.instance().state.get('showMore');
 			return state ? 'course-description-show-more' : '';
-		},
-		showMoreOrLessText() {
-			// gives back the text of the button
-			return Template.instance().state.get('showMoreState')
-				? i18n('courseDetailsPage.showless', 'show less')
-				: i18n('courseDetailsPage.showmore', 'show more');
-		},
-		showMoreOrLess() {
-			// button is displayed when there is overflow and the description is being edited
-			const state = Template.instance().state;
-			const editingObject = Template.instance().data.editableDescription;
-			return state.get('descriptionFlowsOver') && editingObject.changed.get()!==true;
 		},
 	});
 
 	template.events({
-		'click #js-course-desciption-showmoreorless'() {
-			// toggles the showMoreState
-			const state = Template.instance().state;
-			state.set({ showMoreState: !state.get('showMoreState') });
+		'click .js-course-desciption-show-more'() {
+			// toggles the showMore
+			const { state } = Template.instance();
+			state.set({ showMore: true });
 		},
-		
+
 		'click .editable-wrap'() {
 			// sets the state when the user starts editing
 			const instance = Template.instance();
-			instance.state.set({ showMoreState: true });
-		},
-		
-		// js-editable-editfinished is assigned in editable/template.html
-		'click .js-editable-save, click .js-editable-cancel'() {
-			// state when user finishes editing, check overlfow with new text
-			const instance = Template.instance();
-			instance.state.set({ showMoreState: false });
-			// trying to simulate useEffect()
-			setTimeout(() => instance.checkOverFlow(), 200);
+			instance.state.set({ showMore: true });
 		},
 	});
 }

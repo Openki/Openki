@@ -201,7 +201,7 @@ $course-details-content-padding-horizontal: (
 	max-height: 280px; // ca 300px - 1 rem
 }
 
-.course-description-show-more {
+.course-description-truncated {
 	max-height: none;
 }
 
@@ -215,7 +215,7 @@ $course-details-content-padding-horizontal: (
 	height: 60px;
 }
 
-.course-details-showmoreorless {
+.course-details-show-more {
 	color: $linkblue;
 }
 
