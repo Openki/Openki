@@ -307,8 +307,7 @@ import './styles.scss';
 		},
 		{
 			state: ReactiveDict<{
-				showMore: boolean;
-				descriptionFlowsOver: boolean;
+				descriptionTruncated: boolean;
 			}>;
 		}
 	>;
@@ -319,8 +318,7 @@ import './styles.scss';
 		const instance = this;
 		instance.state = new ReactiveDict();
 		instance.state.setDefault({
-			showMore: false,
-			descriptionFlowsOver: false,
+			descriptionTruncated: true,
 		});
 	});
 
@@ -332,7 +330,7 @@ import './styles.scss';
 			const courseDescriptionElement = instance.$('.course-description')[0];
 			if (courseDescriptionElement) {
 				instance.state.set({
-					descriptionFlowsOver:
+					descriptionTruncated:
 						courseDescriptionElement.scrollHeight > courseDescriptionElement.clientHeight,
 				});
 			}
@@ -359,24 +357,19 @@ import './styles.scss';
 					})) || []
 			);
 		},
-		showMoreClass() {
-			// gives back class for css
-			const state = Template.instance().state.get('showMore');
-			return state ? 'course-description-show-more' : '';
-		},
 	});
 
 	template.events({
 		'click .js-course-desciption-show-more'() {
 			// toggles the showMore
 			const { state } = Template.instance();
-			state.set({ showMore: true });
+			state.set({ descriptionTruncated: false });
 		},
 
 		'click .editable-wrap'() {
 			// sets the state when the user starts editing
 			const instance = Template.instance();
-			instance.state.set({ showMore: true });
+			instance.state.set({ descriptionTruncated: false });
 		},
 	});
 }
