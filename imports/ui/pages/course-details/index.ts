@@ -2,6 +2,7 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
+import { ReactiveDict } from 'meteor/reactive-dict';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
@@ -302,10 +303,39 @@ import './styles.scss';
 			course: CourseModel;
 			member: boolean;
 			select: string;
+			editableDescription: Editable;
+		},
+		{
+			state: ReactiveDict<{
+				descriptionTruncated: boolean;
+			}>;
 		}
 	>;
 
 	const template = Template.courseDetailsSubmenu;
+
+	template.onCreated(function () {
+		const instance = this;
+		instance.state = new ReactiveDict();
+		instance.state.setDefault({
+			descriptionTruncated: true,
+		});
+	});
+
+	template.onRendered(function () {
+		const instance = this;
+
+		instance.autorun(async () => {
+			// function to check if the description is longer than the div that displays it
+			const courseDescriptionElement = instance.$('.course-description')[0];
+			if (courseDescriptionElement) {
+				instance.state.set({
+					descriptionTruncated:
+						courseDescriptionElement.scrollHeight > courseDescriptionElement.clientHeight,
+				});
+			}
+		});
+	});
 
 	template.helpers({
 		mayEdit() {
@@ -326,6 +356,20 @@ import './styles.scss';
 						value: i.value,
 					})) || []
 			);
+		},
+	});
+
+	template.events({
+		'click .js-course-desciption-show-more'() {
+			// toggles the showMore
+			const { state } = Template.instance();
+			state.set({ descriptionTruncated: false });
+		},
+
+		'click .editable-wrap'() {
+			// sets the state when the user starts editing
+			const instance = Template.instance();
+			instance.state.set({ descriptionTruncated: false });
 		},
 	});
 }
