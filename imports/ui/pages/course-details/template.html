@@ -140,9 +140,9 @@
 		</ul>
 	</nav>
 	<div class="tab-content course-details-content">
-		<div class="tab-pane {{#unless state 'descriptionTruncated'}}mh-none{{/unless}} active overflow-hidden" id="description">
+		<div class="tab-pane {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}} active" id="description">
 			<div class="fade-wrap">
-				<div class="course-description overflow-hidden {{#unless state 'descriptionTruncated'}}mh-none{{/unless}}">
+				<div class="course-description {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}}">
 					{{> courseDetailsDescription editableDescription=editableDescription course=course}}
 					{{#each info in customFields}}
 						<p>
@@ -157,7 +157,7 @@
 			</div>
 			{{#if state 'descriptionTruncated'}}
 					<div role="button"
-						 class="js-course-desciption-show-more text-center course-details-show-more ">
+						 class="js-course-desciption-show-more link-primary text-center">
 						— {{i18n 'courseDetails.showMore' 'show more'}} —
 					</div>
 			{{/if}}
