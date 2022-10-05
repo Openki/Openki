@@ -256,6 +256,7 @@
   "courseCompact.internal_course": "Internal course",
   "courseDetails.message.descriptionChanged": "The description of \"{NAME}\" has been changed.",
   "courseDetails.message.nameChanged": "The name of this course has been changed to \"{NAME}\".",
+  "courseDetails.showMore": "show more",
   "courseDetailsPage.message.courseHasBeenArchived": "The \"{COURSE}\" course was archived.",
   "courseDetailsPage.message.courseHasBeenArchived.error": "Archive the course \"{COURSE}\" went wrong",
   "courseDetailsPage.message.courseHasBeenDeleted": "The \"{COURSE}\" course was deleted.",

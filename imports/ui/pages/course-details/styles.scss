@@ -197,6 +197,20 @@ $course-details-content-padding-horizontal: (
 	width: $course-details-content-padding-horizontal;
 }
 
+.course-description {
+	max-height: 280px; // ca 300px - 1 rem
+}
+
+.course-description-fade-wrap {
+	position: relative;
+}
+
+.course-description-fade-bottom {
+	@include gradient-y(transparent, #ebf4f8);
+	bottom: 0;
+	height: 60px;
+}
+
 // ** Description
 //========================================================================================
 .course-details-description {
