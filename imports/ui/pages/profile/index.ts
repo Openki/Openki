@@ -15,8 +15,8 @@ import { GroupEntity } from '/imports/api/groups/groups';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Analytics from '/imports/ui/lib/analytics';
 import { Editable } from '/imports/ui/lib/editable';
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
-import i18n from '/imports/startup/both/i18next';
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/buttons';
@@ -257,7 +257,7 @@ template.events({
 	},
 
 	async 'change .js-notifications'(_event, instance) {
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 
 		const allow = instance.$('.js-notifications').prop('checked');
 
@@ -276,7 +276,7 @@ template.events({
 	},
 
 	async 'change .js-allowPrivateMessages'(_event, instance) {
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 
 		const allow = instance.$('.js-allowPrivateMessages').prop('checked');
 

@@ -2,9 +2,9 @@ import { Router } from 'meteor/iron:router';
 import { WebApp } from 'meteor/webapp';
 
 import { Api } from '/imports/Api';
-import FieldOrdering from '/imports/utils/field-ordering';
+import { FieldOrdering } from '/imports/utils/field-ordering';
 import { FilteringReadError } from '/imports/utils/filtering';
-import SortSpec from '/imports/utils/sort-spec';
+import { SortSpec } from '/imports/utils/sort-spec';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 WebApp.rawConnectHandlers.use('/api', (_req, res, next) => {

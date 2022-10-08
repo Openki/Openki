@@ -28,5 +28,3 @@ export const Roles: RoleEntity[] = [
 		preset: true,
 	},
 ];
-
-export default Roles;

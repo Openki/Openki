@@ -7,7 +7,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import { Spacebars } from 'meteor/spacebars';
 import moment from 'moment';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 
 import * as UrlTools from '/imports/utils/url-tools';
 

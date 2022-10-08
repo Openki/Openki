@@ -48,5 +48,3 @@ export function ServerMethod<T extends any[], R>(
 	// give back a callable and typesafe function for the client
 	return ((...args: T) => MeteorAsync.call(name, ...args)) as (...args: T) => Promise<R>;
 }
-
-export default ServerMethod;

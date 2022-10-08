@@ -1,16 +1,18 @@
 import { Accounts } from 'meteor/accounts-base';
 import crypto from 'crypto';
-import Prng from './Prng';
+
+import { Prng } from '/imports/api/fixtures/Prng';
 import { Groups } from '/imports/api/groups/groups';
 import { Tenants } from '/imports/api/tenants/tenants';
 import { Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
+
 import * as StringTools from '/imports/utils/string-tools';
 
 /** @typedef {import('../users/users').UserEntity} UserEntity */
 
-const ensure = {
+export const ensure = {
 	/**
 	 * @param {string[]} strings
 	 */
@@ -252,5 +254,3 @@ const ensure = {
 		return venue;
 	},
 };
-
-export default ensure;

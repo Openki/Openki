@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 import juice from 'juice';
 
-import Version from '/imports/api/version/version';
+import { Version } from '/imports/api/version/version';
 import { Users } from '/imports/api/users/users';
 
 import { Notification } from '/imports/notification/notification';
@@ -31,20 +31,20 @@ export const sendVerificationEmail = ServerMethod(
 	{ simulation: false },
 );
 
-export const SendEmailOptionsPattern = {
+export const SendPrivateMessageOptionsPattern = {
 	revealAddress: Boolean,
 	sendCopy: Boolean,
 	courseId: Match.Optional(String),
 	eventId: Match.Optional(String),
 };
-export type SendEmailOptions = Type<typeof SendEmailOptionsPattern>;
+export type SendPrivateMessageOptions = Type<typeof SendPrivateMessageOptionsPattern>;
 
-export const sendEmail = ServerMethod(
+export const sendPrivateMessage = ServerMethod(
 	'sendEmail',
-	(userId: string, message: string, options: SendEmailOptions) => {
+	(userId: string, message: string, options: SendPrivateMessageOptions) => {
 		check(userId, String);
 		check(message, String);
-		check(options, SendEmailOptionsPattern);
+		check(options, SendPrivateMessageOptionsPattern);
 
 		const operator = Meteor.user();
 		if (!operator) {
@@ -78,7 +78,7 @@ export const sendEmail = ServerMethod(
 	},
 );
 
-export const report = ServerMethod(
+export const sendReport = ServerMethod(
 	'report',
 	(title: string, location: string, userAgent: string, reportMessage: string) => {
 		check(title, String);

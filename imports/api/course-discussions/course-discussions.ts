@@ -30,5 +30,3 @@ export class CourseDiscussionsCollection extends Mongo.Collection<CourseDiscussi
 	}
 }
 export const CourseDiscussions = new CourseDiscussionsCollection();
-
-export default CourseDiscussions;

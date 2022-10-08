@@ -150,7 +150,7 @@ import './styles.scss';
 			const user = Users.findOne(data.member.user);
 			if (!user) return undefined; // Probably not loaded yet
 
-			return new Subscribe(data.course, user, 'team');
+			return new Subscribe(data.course, user, 'team', 'interested');
 		};
 
 		instance.removeFromTeam = () => {

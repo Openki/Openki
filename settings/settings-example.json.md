@@ -49,6 +49,10 @@ This file descripts all configurations and customization options. Remove the com
 				"link": "https://gitlab.com/Openki/Openki/",
 				"text": "GitLab",
 				"title_key": "navigation.footer.codeOnGitLab"
+			},
+			{ "link": "https://about.openki.net/privacy-policy/"
+			, "key": "main.privacyPolicy"
+			, "title_key": "main.privacyPolicy.tooltip"
 			}
 		],
 		"faqLink": "/info/faq", // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
