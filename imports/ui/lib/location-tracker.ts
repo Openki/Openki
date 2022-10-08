@@ -95,5 +95,3 @@ export class LocationTracker {
 		}
 	}
 }
-
-export default LocationTracker;

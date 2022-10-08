@@ -4,12 +4,16 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { EventModel } from '/imports/api/events/events';
+import * as EventsMethods from '/imports/api/events/methods';
+
+import { i18n } from '/imports/startup/both/i18next';
+import { MeteorAsync } from '/imports/utils/promisify';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/participant/contact';
 import '/imports/ui/components/profile-link';
 
-import MeteorAsync from '/imports/utils/promisify';
-import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import type { Data as SendMessageData } from '/imports/ui/components/send-message';
 
 import './styles.scss';
 import './template.html';
@@ -55,37 +59,51 @@ import './template.html';
 
 	template.helpers({
 		howManyEnrolled() {
-			const { data } = Template.instance();
+			const course = Template.instance().data;
 
-			return data.participants?.length || 0;
+			return course.participants?.length || 0;
 		},
 
 		howManyFreePlaces() {
-			const { data } = Template.instance();
-			const occupied = data.participants?.length || 0;
-			return data.maxParticipants - occupied;
+			const course = Template.instance().data;
+			const occupied = course.participants?.length || 0;
+			return course.maxParticipants - occupied;
 		},
 
 		canNotifyAll() {
 			const { participants } = Template.instance().data;
 
-			if (participants && participants.length < 2) {
-				// to view people
+			if (!(participants && participants.length > 1)) {
 				return false;
 			}
 
-			const user = Meteor.user();
-
-			if (UserPrivilegeUtils.privileged(user, 'admin')) {
+			if (UserPrivilegeUtils.privilegedTo('admin')) {
 				return true;
 			}
 
-			const course = Template.instance().data;
+			const event = Template.instance().data;
 
+			const user = Meteor.user();
 			return !!(
-				(user && course?.editableBy(user)) ||
-				user?.groups.some((g) => course?.groupOrganizers.includes(g))
+				(user && event?.editableBy(user)) ||
+				user?.groups.some((g) => event?.groupOrganizers.includes(g))
 			);
+		},
+
+		sendMessageAttr(): SendMessageData {
+			const instance = Template.instance();
+			const { data } = instance;
+
+			return {
+				placeholder: i18n(
+					'eventParticipants.sendMessage.placeholder',
+					"Hi there, I'm looking forward for tomorrow. Please bring your laptops. And don't forget to opt out now if you can't attend in order to free your seat.",
+				),
+				onSend: async (message, options) => {
+					EventsMethods.contactParticipants(data._id, message, options);
+					instance.$('.js-participant-contact-modal-all').modal('hide');
+				},
+			};
 		},
 
 		sortedParticipants() {
@@ -104,12 +122,6 @@ import './template.html';
 		limited() {
 			const participantsDisplayLimit = Template.instance().participantsDisplayLimit.get();
 			return participantsDisplayLimit && this.participants.length > participantsDisplayLimit;
-		},
-		hideModal() {
-			const instance = Template.instance();
-			return () => {
-				instance.$('.js-participant-contact-modal-all').modal('hide');
-			};
 		},
 	});
 

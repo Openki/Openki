@@ -137,5 +137,3 @@ check(
  * Get access to some settings from the `Meteor.settings.public` enriched with default values.
  */
 export const PublicSettings = publicSettings;
-
-export default PublicSettings;

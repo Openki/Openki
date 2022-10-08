@@ -8,5 +8,3 @@ export function isEmail(str: string) {
 	check(str, String);
 	return str.search(/^[^@\s]+@([^@.\s]+\.)+\w+$/g) === 0;
 }
-
-export default isEmail;

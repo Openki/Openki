@@ -1,6 +1,6 @@
 import { Courses } from '/imports/api/courses/courses';
 
-export default function update() {
+export function update() {
 	let updated = 0;
 
 	Courses.find({ interested: { $exists: false } })

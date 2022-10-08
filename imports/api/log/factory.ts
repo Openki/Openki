@@ -161,5 +161,3 @@ export const logFactory = {
 		// Local collection for in-memory storage
 		new LogCollection(null),
 };
-
-export default logFactory;

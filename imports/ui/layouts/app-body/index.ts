@@ -9,7 +9,7 @@ import * as RegionSelection from '/imports/utils/region-selection';
 import { Introduction } from '/imports/ui/lib/introduction';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import '/imports/ui/components/account-tasks';
@@ -88,4 +88,4 @@ template.events({
 	},
 });
 
-RouterAutoscroll.marginTop = ScssVars.navbarHeight;
+routerAutoscroll.marginTop = ScssVars.navbarHeight;

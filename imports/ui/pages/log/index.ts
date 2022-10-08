@@ -8,10 +8,10 @@ import { LogCollection, LogEntity } from '/imports/api/log/factory';
 import { Log } from '/imports/api/log/log';
 
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as UrlTools from '/imports/utils/url-tools';
-import i18n from '/imports/startup/both/i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import './template.html';
@@ -50,7 +50,7 @@ import './styles.scss';
 				options.query = queryString;
 			}
 
-			RouterAutoscroll.cancelNext();
+			routerAutoscroll.cancelNext();
 
 			const router = Router.current();
 			Router.go(router.route.getName(), {}, options);

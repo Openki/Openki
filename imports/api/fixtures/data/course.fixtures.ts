@@ -1101,5 +1101,3 @@ export const courses = [
 		region: 'Englistan',
 	},
 ];
-
-export default courses;

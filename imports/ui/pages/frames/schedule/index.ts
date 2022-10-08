@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { EventModel, Events } from '/imports/api/events/events';
 
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import { reactiveNow } from '/imports/utils/reactive-now';
 
 import './template.html';
