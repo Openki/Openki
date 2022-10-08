@@ -13,6 +13,7 @@ import { Method } from '/imports/api/courses/methods';
 import { hasRole } from '/imports/utils/course-role-utils';
 import { MeteorAsync } from '/imports/utils/promisify';
 import { Notification } from '/imports/notification/notification';
+import { StringEnum, Type } from '/imports/utils/CustomChecks';
 
 export async function processChange<T>(change: Change<T>) {
 	try {
@@ -78,11 +79,15 @@ abstract class Change<T> {
 	abstract dict(): T;
 }
 
+export const ReasonPattern = StringEnum('interested', 'rsvp');
+export type Reason = Type<typeof ReasonPattern>;
+
 export class Subscribe extends Change<{
 	change: string;
 	courseId: string;
 	userId: string;
 	role: string;
+	reason: Reason;
 	comment: string | undefined;
 }> {
 	course: CourseModel;
@@ -90,6 +95,8 @@ export class Subscribe extends Change<{
 	user: UserModel;
 
 	role: string;
+
+	reason: Reason;
 
 	comment: string | undefined;
 
@@ -101,6 +108,7 @@ export class Subscribe extends Change<{
 		courseId: string;
 		userId: string;
 		role: string;
+		reason: Reason;
 		comment?: string | undefined;
 	}) {
 		check(body, Object);
@@ -108,6 +116,7 @@ export class Subscribe extends Change<{
 			Courses.findOne(body.courseId),
 			Users.findOne(body.userId),
 			body.role,
+			body.reason,
 			body.comment,
 		);
 	}
@@ -116,6 +125,7 @@ export class Subscribe extends Change<{
 		course: CourseModel | undefined,
 		user: UserModel | undefined,
 		role: string,
+		reason: Reason,
 		comment?: string | undefined,
 	) {
 		super();
@@ -126,6 +136,9 @@ export class Subscribe extends Change<{
 
 		check(role, String);
 		this.role = role;
+
+		check(reason, ReasonPattern);
+		this.reason = reason;
 
 		check(comment, Match.Optional(String));
 		this.comment = comment;
@@ -186,6 +199,7 @@ export class Subscribe extends Change<{
 			courseId: this.course._id,
 			userId: this.user._id,
 			role: this.role,
+			reason: this.reason,
 			comment: this.comment,
 		};
 	}
@@ -230,8 +244,10 @@ export class Subscribe extends Change<{
 		timeLasteditDenormalizer.afterSubscribe(this.course._id);
 		historyDenormalizer.afterSubscribe(this.course._id, this.user._id, this.role);
 
-		// Send notifications
-		Notification.Join.record(this.course._id, this.user._id, this.role, this.comment);
+		if (this.reason === 'interested') {
+			// Send notifications
+			Notification.Join.record(this.course._id, this.user._id, this.role, this.comment);
+		}
 	}
 }
 

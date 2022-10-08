@@ -27,5 +27,3 @@ export function AffectedReplicaSelectors(
 
 	return selector;
 }
-
-export default AffectedReplicaSelectors;

@@ -162,5 +162,3 @@ export const groups = [
 		members: [''],
 	},
 ];
-
-export default groups;

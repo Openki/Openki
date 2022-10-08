@@ -30,5 +30,3 @@ export const GroupNameHelpers = {
 		return group.name;
 	},
 };
-
-export default GroupNameHelpers;

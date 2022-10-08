@@ -6,7 +6,7 @@ import { Geodata, RegionEntity } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 
 import { LocationTracker, MainMarkerEntity } from '/imports/ui/lib/location-tracker';
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable';

@@ -169,5 +169,3 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 }
 
 export const Regions = new RegionsCollection();
-
-export default Regions;

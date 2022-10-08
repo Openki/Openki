@@ -11,7 +11,7 @@ export class CssFromQuery {
 		// define a default set of customizable properties
 		this.addCustomizableProperties([
 			['bgcolor', 'background-color', 'body'],
-			['color', 'color', 'body'],
+			['color', 'color', 'body, i'],
 			['fontsize', 'font-size', '*'],
 		]);
 
@@ -56,5 +56,3 @@ export class CssFromQuery {
 		return cssRules;
 	}
 }
-
-export default CssFromQuery;

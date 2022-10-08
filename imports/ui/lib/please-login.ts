@@ -30,5 +30,3 @@ export function PleaseLogin(instance: Blaze.TemplateInstance, afterLogin: () => 
 		}
 	});
 }
-
-export default PleaseLogin;

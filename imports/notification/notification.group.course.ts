@@ -8,7 +8,7 @@ import { Courses } from '/imports/api/courses/courses';
 import { Groups } from '/imports/api/groups/groups';
 import { RegionModel, Regions } from '/imports/api/regions/regions';
 import { Log } from '/imports/api/log/log';
-import Users, { UserModel } from '/imports/api/users/users';
+import { Users, UserModel } from '/imports/api/users/users';
 
 import * as StringTools from '/imports/utils/string-tools';
 import { getSiteName } from '/imports/utils/getSiteName';

@@ -23,5 +23,3 @@ Meteor.setInterval(() => {
 		reactiveNow.set(now);
 	}
 }, 1000 * 5);
-
-export default reactiveNow;

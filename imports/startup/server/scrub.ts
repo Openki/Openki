@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import { Log } from '/imports/api/log/log';
 import { Scrubber } from '/imports/startup/server/lib/scrub';
-import PrivateSettings from '/imports/utils/PrivateSettings';
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 Meteor.startup(() => {
 	const scrubSettings = PrivateSettings.scrub;

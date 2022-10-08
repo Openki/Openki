@@ -64,5 +64,3 @@ export function route<
 
 	Router.route<D, P, Q, T>(pathOrRouteName, newOptions);
 }
-
-export default route;

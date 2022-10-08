@@ -90,5 +90,3 @@ export class InvitationsCollection extends Mongo.Collection<InvitationEntity> {
 }
 
 export const Invitations = new InvitationsCollection();
-
-export default Invitations;

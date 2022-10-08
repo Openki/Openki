@@ -8,7 +8,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import { Regions } from '/imports/api/regions/regions';
 import { CourseModel, Courses } from '/imports/api/courses/courses';
 import * as Metatags from '/imports/utils/metatags';
-import SortSpec from '/imports/utils/sort-spec';
+import { SortSpec } from '/imports/utils/sort-spec';
 
 import './template.html';
 

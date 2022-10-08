@@ -178,5 +178,3 @@ La page Openki.net est transmise via SSL et donc chiffrée par défaut. C'est la
 ### Où puis-je trouver des réponses à des questions techniques ?
 
 Une documentation technique détaillée peut être trouvée sur le [wiki du répo sur github](https://github.com/Openki/Openki/wiki/).`;
-
-export default body;

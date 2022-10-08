@@ -862,5 +862,3 @@ export const events = [
 		title: 'Notebooks auf Ubuntu Linux umruesten',
 	},
 ];
-
-export default events;

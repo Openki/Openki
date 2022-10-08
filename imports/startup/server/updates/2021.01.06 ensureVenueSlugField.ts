@@ -1,7 +1,7 @@
 import { Venues } from '/imports/api/venues/venues';
 import * as StringTools from '/imports/utils/string-tools';
 
-export default function update() {
+export function update() {
 	let updated = 0;
 
 	Venues.find({ slug: { $exists: false } })
