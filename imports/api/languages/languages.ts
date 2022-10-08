@@ -130,5 +130,3 @@ export class LanguagesCollection extends Mongo.Collection<LanguageEntity> {
 }
 
 export const Languages = new LanguagesCollection();
-
-export default Languages;

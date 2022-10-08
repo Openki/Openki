@@ -11,9 +11,10 @@ import { GroupEntity } from '/imports/api/groups/groups';
 import * as GroupsMethods from '/imports/api/groups/methods';
 import { UserModel } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
+import * as emailMethods from '/imports/api/emails/methods';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
-import i18n from '/imports/startup/both/i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { checkContribution } from '/imports/utils/checkContribution';
@@ -22,6 +23,7 @@ import '/imports/ui/components/profiles/course-list';
 import '/imports/ui/components/profiles/verify-email';
 import '/imports/ui/components/avatar';
 import '/imports/ui/components/send-message';
+import type { Data as SendMessageData } from '/imports/ui/components/send-message';
 
 import './template.html';
 
@@ -106,6 +108,20 @@ template.helpers({
 
 		return data.inviteGroups?.count && data.inviteGroups.count() > 0;
 	},
+
+	sendMessageAttr(): SendMessageData {
+		const { data } = Template.instance();
+
+		return {
+			placeholder: i18n('profile.mail.placeholder', 'Hi {USER}. I wanted to tell you…', {
+				USER: data.user,
+			}),
+			onSend: async (message, options) => {
+				await emailMethods.sendPrivateMessage(data.user._id, message, options);
+			},
+		};
+	},
+
 	numberOfCoursesAffectedByDelete() {
 		return Template.instance().coursesCreatedBy().length;
 	},

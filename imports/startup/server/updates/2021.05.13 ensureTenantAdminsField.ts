@@ -7,5 +7,3 @@ export function update() {
 
 	return updated;
 }
-
-export default update;

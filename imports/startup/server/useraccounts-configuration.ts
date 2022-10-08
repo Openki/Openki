@@ -6,7 +6,7 @@ import * as usersMethods from '/imports/api/users/methods';
 import { UserModel, UserProfile } from '/imports/api/users/users';
 
 import { isEmail } from '/imports/utils/email-tools';
-import PrivateSettings from '/imports/utils/PrivateSettings';
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 Meteor.startup(() => {
 	const serviceConf = PrivateSettings.service;

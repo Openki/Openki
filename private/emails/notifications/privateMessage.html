@@ -7,7 +7,7 @@
 				</p>
 			{{/if}}
 			<span class="title">
-				{{i18n "notification.event.mail.greeting" USERNAME=recipientName lng=locale}}
+				{{i18n "notification.privateMessage.mail.greeting" "Hi {USERNAME}" USERNAME=recipientName lng=locale}}
 			</span>
 			<p>
 				{{i18n "notification.privateMessage.mail.intro" 'You got a private message from:' lng=locale}}
@@ -20,6 +20,12 @@
 				<p>
 					{{i18n "notification.privateMessage.mail.fromCourse" 'This message was sent from course:' lng=locale}}
 					<a href="{{courseLink}}">{{courseName}}</a>
+				</p>
+			{{/if}}
+			{{#if eventLink}}
+				<p>
+					{{i18n "notification.privateMessage.mail.fromEvent" 'This message was sent from event:' lng=locale}}
+					<a href="{{eventLink}}">{{eventTitle}}</a>
 				</p>
 			{{/if}}
 			<table class="comment-box">
@@ -40,7 +46,6 @@
 					<br><br />
 					<a class="text-center" href="mailto:{{fromAddress}}">{{fromAddress}}</a>
 				</p>
-
 			{{else}}
 				<p class="text-center">
 					<a class="button" href="{{senderLink}}">

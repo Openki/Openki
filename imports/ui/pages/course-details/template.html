@@ -140,14 +140,28 @@
 		</ul>
 	</nav>
 	<div class="tab-content course-details-content">
-		<div class="tab-pane active" id="description">
-			{{> courseDetailsDescription editableDescription=editableDescription course=course}}
-			{{#each info in customFields}}
-				<p>
-					<strong>{{info.displayText}}</strong>: <span
-						  style="white-space: pre-line;">{{info.value}}</span>
-				</p>
-			{{/each}}
+		<div class="tab-pane {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}} active"
+			 id="description">
+			<div class="fade-wrap">
+				<div
+					 class="course-description {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}}">
+					{{> courseDetailsDescription editableDescription=editableDescription course=course}}
+					{{#each info in customFields}}
+						<p>
+							<strong>{{info.displayText}}</strong>: <span
+								  style="white-space: pre-line;">{{info.value}}</span>
+						</p>
+					{{/each}}
+				</div>
+				{{#if state 'descriptionTruncated'}}
+					<div class="fade-bottom course-description-fade-bottom"></div>
+				{{/if}}
+			</div>
+			{{#if state 'descriptionTruncated'}}
+				<div role="button" class="js-course-desciption-show-more link-primary text-center">
+					— {{i18n 'courseDetails.showMore' 'show more'}} —
+				</div>
+			{{/if}}
 		</div>
 		<div class="tab-pane course-history" id="history">
 			{{> coursehistory}}
