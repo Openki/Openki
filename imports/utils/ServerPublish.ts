@@ -35,6 +35,11 @@ export type SubscriptionType<
 
 export type Record<T extends readonly Mongo.Cursor<any>[]> = Mongo.Cursor<any> | [...T] | undefined;
 
+type QueryBuilder<T extends any[], R> = (
+	this: { userId: ReturnType<typeof Meteor['userId']> },
+	...args: T
+) => R;
+
 /**
  * Registers a function as a meteor publish and makes it subscribable for the client.
  *
@@ -80,7 +85,7 @@ export function ServerPublish<
 >(
 	name: string,
 	publisher: (this: Subscription, ...args: T) => R | void,
-	queryBuilder: (...args: T) => Q,
+	queryBuilder: QueryBuilder<T, Q>,
 ): Publication<T, Q>;
 /**
  * Registers a function as a meteor publish and makes it subscribable for the client.
@@ -106,7 +111,7 @@ export function ServerPublish<
 >(
 	name: string,
 	publisher: (this: Subscription, ...args: T) => R | void,
-	queryBuilder: (...args: T) => Q = publisher as (...args: T) => Q,
+	queryBuilder: QueryBuilder<T, Q> = publisher as QueryBuilder<T, Q>,
 ) {
 	if (Meteor.isServer) {
 		// on the server register the publisher / publish the record set
@@ -134,7 +139,7 @@ export function ServerPublish<
 			const handle = subscriber.subscribe(name, ...args);
 
 			const query = function () {
-				return queryBuilder(...args);
+				return queryBuilder.call({ userId: Meteor.userId() }, ...args);
 			};
 			query.ready = function () {
 				return handle.ready();

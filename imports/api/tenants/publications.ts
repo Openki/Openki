@@ -8,32 +8,58 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { ServerPublish } from '/imports/utils/ServerPublish';
 import { FieldSort } from '/imports/utils/sort-spec';
 
-export const details = ServerPublish('tenant', function (tenantId: string) {
-	check(tenantId, String);
+export const details = ServerPublish(
+	'tenant',
+	(tenantId: string) => {
+		check(tenantId, String);
 
-	const user = Meteor.user();
+		const user = Meteor.user();
 
-	if (!user) {
-		return undefined;
-	}
+		if (!user) {
+			return undefined;
+		}
 
-	const filter: Mongo.Selector<TenantEntity> = { _id: tenantId };
+		const filter: Mongo.Selector<TenantEntity> = { _id: tenantId };
 
-	// Only members of a tenant or admins can see a tenant
-	if (!UserPrivilegeUtils.privileged(user, 'admin')) {
-		filter.members = user._id;
-	}
+		// Only members of a tenant or admins can see a tenant
+		if (!UserPrivilegeUtils.privileged(user, 'admin')) {
+			filter.members = user._id;
+		}
 
-	// Only admins can see all tenant admins. Note: Admin privileg is not something that is
-	// likely to happen and reactive changes are not needed.
-	const showAdminsFields =
-		UserPrivilegeUtils.privileged(user, 'admin') || user.isTenantAdmin(tenantId) ? 1 : 0;
+		// Only admins can see all tenant admins. Note: Admin privileg is not something that is
+		// likely to happen and reactive changes are not needed.
+		const showAdminsFields =
+			UserPrivilegeUtils.privileged(user, 'admin') || user.isTenantAdmin(tenantId) ? 1 : 0;
 
-	return Tenants.find(filter, { fields: { ...Tenants.publicFields, admins: showAdminsFields } });
-});
+		return Tenants.find(filter, { fields: { ...Tenants.publicFields, admins: showAdminsFields } });
+	},
+	(tenantId: string) => {
+		const user = Meteor.user();
+
+		if (!user) {
+			return undefined;
+		}
+
+		const filter: Mongo.Selector<TenantEntity> = { _id: tenantId };
+
+		// Only members of a tenant or admins can see a tenant
+		if (!UserPrivilegeUtils.privileged(user, 'admin')) {
+			filter.members = user._id;
+		}
+
+		// Only admins can see all tenant admins. Note: Admin privileg is not something that is
+		// likely to happen and reactive changes are not needed.
+		const showAdminsFields =
+			UserPrivilegeUtils.privileged(user, 'admin') || user.isTenantAdmin(tenantId) ? 1 : 0;
+
+		return Tenants.findOne(filter, {
+			fields: { ...Tenants.publicFields, admins: showAdminsFields },
+		});
+	},
+);
 
 export const findFilter = ServerPublish(
 	'Tenants.findFilter',
-	(find: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) =>
+	(find?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
 		Tenants.findFilter(find, limit, skip, sort),
 );

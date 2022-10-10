@@ -9,5 +9,3 @@ export const forCourse = ServerPublish('discussion', (courseId: string) => {
 
 	return CourseDiscussions.find({ courseId });
 });
-
-export default forCourse;

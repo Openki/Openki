@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import { Regions } from '/imports/api/regions/regions';
+import { FindFilter, Regions } from '/imports/api/regions/regions';
 import { ServerPublish } from '/imports/utils/ServerPublish';
+import { FieldSort } from '/imports/utils/sort-spec';
 
 import { visibleTenants } from '/imports/utils/visible-tenants';
 
@@ -10,20 +11,13 @@ export const all = ServerPublish('Regions', () =>
 
 export const details = ServerPublish(
 	'regionDetails',
-	(id: string) => Regions.find({ _id: id, tenant: { $in: visibleTenants() } }),
-	(id: string) => Regions.findOne({ _id: id, tenant: { $in: visibleTenants() } }),
+	(regionId: string) => Regions.find({ _id: regionId, tenant: { $in: visibleTenants() } }),
+	(regionId: string) => Regions.findOne({ _id: regionId, tenant: { $in: visibleTenants() } }),
 );
 
 export const findFilter = ServerPublish(
 	'Regions.findFilter',
-	(
-		filter?: {
-			tenant?: string;
-		},
-		limit?: number,
-		skip?: number,
-		sort?: [string, 'asc' | 'desc'][] | undefined,
-	) => {
+	(filter?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) => {
 		if (filter?.tenant && !visibleTenants().includes(filter.tenant)) {
 			throw new Meteor.Error(401, 'Not permitted');
 		}

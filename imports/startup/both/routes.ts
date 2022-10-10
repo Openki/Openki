@@ -19,12 +19,14 @@ import * as Groups from '/imports/api/groups/publications';
 import { Region, RegionModel } from '/imports/api/regions/regions';
 import * as Regions from '/imports/api/regions/publications';
 import * as InfoPages from '/imports/api/infoPages/publications';
-import { Tenant, TenantEntity, TenantModel, Tenants } from '/imports/api/tenants/tenants';
+import { Tenant, TenantEntity, TenantModel } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
 import { Venue, VenueEntity, VenueModel } from '/imports/api/venues/venues';
 import * as Venues from '/imports/api/venues/publications';
-import { UserModel, Users } from '/imports/api/users/users';
-import { Invitations } from '/imports/api/invitations/invitations';
+import * as Tenants from '/imports/api/tenants/publications';
+import * as Invitations from '/imports/api/invitations/publications';
+import * as Users from '/imports/api/users/publications';
+import { UserModel } from '/imports/api/users/users';
 import type { Data as GroupDetailsData } from '/imports/ui/pages/group-details';
 
 import * as Analytics from '/imports/ui/lib/analytics';
@@ -111,8 +113,8 @@ RouterAsync.route('tenants', {
 	async onRun() {
 		await import('/imports/ui/pages/admin/tenants');
 	},
-	waitOn() {
-		return Meteor.subscribe('Tenants.findFilter');
+	subscriptions() {
+		return { findFilter: Tenants.findFilter.subscribe() };
 	},
 });
 
@@ -281,7 +283,7 @@ RouterAsync.route('groupDetails', {
 		if (isNew) {
 			group = new Group() as GroupModel;
 		} else {
-			group = this.subscriptions().details();
+			group = this.subscriptions()?.details();
 		}
 
 		if (!group) {
@@ -384,7 +386,7 @@ RouterAsync.route('info', {
 		};
 	},
 	data() {
-		const page = this.subscriptions().infoPage();
+		const page = this.subscriptions()?.infoPage();
 		if (!page) {
 			return undefined;
 		}
@@ -399,20 +401,18 @@ RouterAsync.route('profile', {
 	async onRun() {
 		await import('/imports/ui/pages/profile');
 	},
-	waitOn() {
+	subscriptions() {
 		const userId = Meteor.userId();
 
 		if (!userId) {
-			return [];
+			return undefined;
 		}
 
-		(this as any).venues = Venues.findFilter.subscribe({ editor: userId });
-		(this as any).groups = Groups.findFilter.subscribe({ own: true });
-		return [
-			Meteor.subscribe('Tenants.findFilter', { adminOf: true }),
-			() => (this as any).groups.ready(),
-			() => (this as any).venues.ready(),
-		];
+		return {
+			tenants: Tenants.findFilter.subscribe({ adminOf: true }),
+			venues: Venues.findFilter.subscribe({ editor: userId }),
+			groups: Groups.findFilter.subscribe({ own: true }),
+		};
 	},
 	data() {
 		const data: {
@@ -429,15 +429,16 @@ RouterAsync.route('profile', {
 			};
 		} = {};
 		const user: UserModel | null = Meteor.user();
-		if (user) {
+		const subs = this.subscriptions();
+		if (user && subs) {
 			const userdata = {
 				_id: user._id,
 				name: user.username,
 				notifications: user.notifications,
 				allowPrivateMessages: user.allowPrivateMessages,
-				tenants: Tenants.findFilter({ adminOf: true }),
-				groups: (this as any).groups(),
-				venues: (this as any).venues(),
+				tenants: subs.tenants(),
+				groups: subs.groups(),
+				venues: subs.venues(),
 				email: user.emails?.[0]?.address,
 				verified: user.emails?.[0]?.verified || false,
 			};
@@ -571,11 +572,11 @@ RouterAsync.route('tenantDetails', {
 	async onRun() {
 		await import('/imports/ui/pages/tenant-details');
 	},
-	waitOn() {
-		return [Meteor.subscribe('tenant', this.params._id)];
+	subscriptions() {
+		return { tenant: Tenants.details.subscribe(this.params._id as string) };
 	},
 	data() {
-		const tenant = Tenants.findOne({ _id: this.params._id as string });
+		const tenant = this.subscriptions()?.tenant();
 
 		if (!tenant) {
 			return undefined;
@@ -591,25 +592,31 @@ RouterAsync.route('invitation', {
 	async onRun() {
 		await import('/imports/ui/pages/invitation');
 	},
-	waitOn() {
-		return [Meteor.subscribe('invitation', this.params?.query?.tenant, this.params?.token)];
-	},
-	data() {
+	subscriptions() {
 		const tenantId = this.params?.query?.tenant;
 		const invitationToken = this.params?.token;
 		if (!tenantId || !invitationToken) {
 			return undefined;
 		}
 
-		const tenant = Tenants.findOne({ _id: tenantId });
+		return {
+			tenant: Tenants.details.subscribe(tenantId),
+			invitation: Invitations.details.subscribe(tenantId, invitationToken),
+		};
+	},
+	data() {
+		const sub = this.subscriptions();
+
+		if (!sub) {
+			return undefined;
+		}
+
+		const tenant = sub.tenant();
 		if (!tenant) {
 			return undefined;
 		}
 
-		const invitation = Invitations.findOne({
-			tenant: tenantId,
-			token: invitationToken,
-		});
+		const invitation = sub.invitation();
 		if (!invitation) {
 			return undefined;
 		}
@@ -779,12 +786,16 @@ RouterAsync.route('userprofile', {
 	async onRun() {
 		await import('/imports/ui/pages/userprofile');
 	},
-	waitOn() {
-		(this as any).groups = Groups.findFilter.subscribe({ own: true });
-		return [Meteor.subscribe('user', this.params._id), () => (this as any).groups.ready()];
+	subscriptions() {
+		return {
+			groups: Groups.findFilter.subscribe({ own: true }),
+			user: Users.details.subscribe(this.params._id as string),
+		};
 	},
 	data() {
-		const user = Users.findOne({ _id: this.params._id as string });
+		const sub = this.subscriptions();
+
+		const user = sub?.user();
 		if (!user) {
 			return undefined; // not loaded?
 		}
@@ -806,7 +817,7 @@ RouterAsync.route('userprofile', {
 			user,
 			alterPrivileges,
 			privileges,
-			inviteGroups: (this as any).groups(),
+			inviteGroups: sub?.groups(),
 			showPrivileges,
 		};
 	},
@@ -846,7 +857,7 @@ RouterAsync.route('regionDetails', {
 		return { details: Regions.details.subscribe(this.params._id as string) };
 	},
 	data() {
-		const region = this.subscriptions().details();
+		const region = this.subscriptions()?.details();
 
 		if (!region) {
 			return undefined; // Not found
@@ -872,7 +883,7 @@ RouterAsync.route('venueDetails', {
 		if (id === 'create') {
 			venue = new Venue() as VenueModel;
 		} else {
-			venue = this.subscriptions().details();
+			venue = this.subscriptions()?.details();
 			if (!venue) {
 				return undefined; // Not found
 			}
@@ -888,7 +899,7 @@ RouterAsync.route('venuesMap', {
 	async onRun() {
 		await import('/imports/ui/pages/venues-map');
 	},
-	waitOn() {
-		return Meteor.subscribe('venues', CleanedRegion(Session.get('region')));
+	subscriptions() {
+		return { venues: Venues.all.subscribe(CleanedRegion(Session.get('region'))) };
 	},
 });

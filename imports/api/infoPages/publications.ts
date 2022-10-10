@@ -26,5 +26,3 @@ export const details = ServerPublish(
 		return InfoPages.findOne({ slug, locale: { $in: locales } }, { sort: { accuracy: -1 } });
 	},
 );
-
-export default details;
