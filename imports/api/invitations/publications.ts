@@ -7,19 +7,31 @@ import { ServerPublish } from '/imports/utils/ServerPublish';
 import { FieldSort } from '/imports/utils/sort-spec';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-export const details = ServerPublish('invitation', function (tenantId: string, token: string) {
-	const invitation = Invitations.find({ tenant: tenantId, token });
+export const details = ServerPublish(
+	'invitation',
+	(tenantId: string, token: string) => {
+		const invitation = Invitations.find({ tenant: tenantId, token });
 
-	if (invitation.count() === 0) {
-		return undefined;
-	}
+		if (invitation.count() === 0) {
+			return undefined;
+		}
 
-	return [invitation, Tenants.find(tenantId)];
-});
+		return [invitation, Tenants.find(tenantId)];
+	},
+	(tenantId: string, token: string) => {
+		const invitation = Invitations.findOne({ tenant: tenantId, token });
+
+		if (!invitation) {
+			return undefined;
+		}
+
+		return { invitation, tenant: Tenants.findOne(tenantId) };
+	},
+);
 
 export const findFilter = ServerPublish(
 	'invitations.findFilter',
-	function (filter: FindFilter, limit, skip, sort: FieldSort[]) {
+	(filter: FindFilter, limit, skip, sort: FieldSort[]) => {
 		const tenantId = filter.tenant;
 
 		const user = Meteor.user();

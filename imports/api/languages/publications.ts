@@ -65,5 +65,3 @@ export const findFilter = ServerPublish(
 		return Languages.find(selector);
 	},
 );
-
-export default findFilter;

@@ -1,14 +1,15 @@
 import { Router } from 'meteor/iron:router';
-import { SubscriptionHandle } from './ServerPublish';
+
+import { SubscriptionHandle } from '/imports/utils/ServerPublish';
 
 // Extends the route function to support async await in onRun
 
-export function route<D, S extends Record<string, SubscriptionHandle<any>>>(
+export function route<D, S extends Record<string, SubscriptionHandle<any>> | undefined>(
 	pathOrRouteName: string,
 	options: Omit<Router.RouteOptions<D>, 'data'> & {
 		onRun?: () => Promise<unknown>;
 		subscriptions: (this: Router.RouteThis) => S;
-		data: (
+		data?: (
 			this: Router.RouteThis & {
 				subscriptions: (this: Router.RouteThis) => S;
 			},
@@ -28,7 +29,7 @@ export function route<D>(
 		data: (this: Router.RouteThis) => D;
 	},
 ): void;
-export function route<D, S extends Record<string, SubscriptionHandle<any>>>(
+export function route<D, S extends Record<string, SubscriptionHandle<any>> | undefined>(
 	pathOrRouteName: string,
 	options: Omit<Router.RouteOptions<D>, 'data'> & {
 		onRun?: () => Promise<unknown>;
@@ -53,16 +54,19 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>>>(
 		options.waitOn = function () {
 			return Object.values(subscriptions.call(this)).map((s: any) => () => s.ready());
 		};
+
 		const data = options.data;
-		// eslint-disable-next-line no-param-reassign
-		options.data = function () {
-			this.subscriptions = () => subscriptions.call(this);
-			try {
-				return data?.call(this);
-			} finally {
-				delete (this as any).subscriptions;
-			}
-		};
+		if (data) {
+			// eslint-disable-next-line no-param-reassign
+			options.data = function () {
+				this.subscriptions = () => subscriptions.call(this);
+				try {
+					return data?.call(this);
+				} finally {
+					delete (this as any).subscriptions;
+				}
+			};
+		}
 	}
 
 	if (!options.onRun) {
