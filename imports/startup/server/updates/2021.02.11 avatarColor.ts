@@ -3,7 +3,7 @@ import { _ } from 'meteor/underscore';
 import { Users } from '/imports/api/users/users';
 /** @typedef {import('/imports/api/users/users').UserModel} UserModel */
 
-export default function update() {
+export function update() {
 	let updated = 0;
 
 	Users.find({})

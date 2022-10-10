@@ -10,5 +10,3 @@ export interface AlertEnity {
 	timeout: number;
 }
 export const Alerts: Mongo.Collection<AlertEnity> = new Mongo.Collection(null); // Local collection for in-memory storage
-
-export default Alerts;

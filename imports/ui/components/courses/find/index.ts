@@ -4,10 +4,10 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 
 import { Courses } from '/imports/api/courses/courses';
 
-import CourseTemplate from '/imports/ui/lib/course-template';
+import { CourseTemplate } from '/imports/ui/lib/course-template';
 import * as RegionSelection from '/imports/utils/region-selection';
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
 import * as UrlTools from '/imports/utils/url-tools';
@@ -67,7 +67,7 @@ template.onCreated(function () {
 			options.query = queryString;
 		}
 
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 
 		const router = Router.current();
 		Router.go(router.route.getName(), { _id: router.params._id }, options);

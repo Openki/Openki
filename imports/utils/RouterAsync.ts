@@ -118,5 +118,3 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>>>(
 
 	Router.route(pathOrRouteName, newOptions);
 }
-
-export default route;

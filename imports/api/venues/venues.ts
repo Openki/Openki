@@ -182,5 +182,3 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 }
 
 export const Venues = new VenueCollection();
-
-export default Venues;

@@ -56,5 +56,3 @@ export class CssFromQuery {
 		return cssRules;
 	}
 }
-
-export default CssFromQuery;

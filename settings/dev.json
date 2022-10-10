@@ -35,6 +35,10 @@
 			, "text": "GitLab"
 			, "title_key": "navigation.footer.codeOnGitLab"
 			}
+		,	{ "link": "https://about.openki.net/privacy-policy/"
+			, "key": "main.privacyPolicy"
+			, "title_key": "main.privacyPolicy.tooltip"
+			}
 		],
 		"faqLink": "/info/faq",
 		"pricePolicyLink": {

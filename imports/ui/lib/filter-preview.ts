@@ -50,5 +50,3 @@ export function FilterPreview(options: {
 		label.parent().toggleClass('highlight');
 	}
 }
-
-export default FilterPreview;

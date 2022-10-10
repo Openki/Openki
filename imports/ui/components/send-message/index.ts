@@ -12,15 +12,16 @@ import '/imports/ui/components/profiles/verify-email';
 
 import './template.html';
 import './styles.scss';
-import { SendPrivateMessageOptions } from '/imports/api/emails/methods';
 
-interface Data {
-	courseId?: string;
-	eventId?: string;
-	recipientId: string;
-	onDone?: () => void;
-
-	attendeesArray?: string[];
+export interface Data {
+	placeholder: string;
+	onSend: (
+		message: string,
+		options: {
+			revealAddress: boolean;
+			sendCopy: boolean;
+		},
+	) => Promise<void>;
 }
 
 const Template = TemplateAny as TemplateStaticTyped<
@@ -49,16 +50,6 @@ template.onCreated(function () {
 
 template.onRendered(function () {
 	this.$('.js-email-message').trigger('select');
-});
-
-template.helpers({
-	hasEmail() {
-		return Meteor.user()?.hasEmail() || false;
-	},
-
-	hasVerifiedEmail() {
-		return Meteor.user()?.hasVerifiedEmail() || false;
-	},
 });
 
 template.events({
@@ -103,49 +94,22 @@ template.events({
 				return;
 			}
 
-			const options: SendPrivateMessageOptions = {
+			const options = {
 				revealAddress: state.get('revealAddress') || false,
 				sendCopy: state.get('sendCopy') || false,
 			};
 
 			const { data } = instance;
-			if (data.courseId) {
-				options.courseId = data.courseId;
-			}
 
-			if (data.eventId) {
-				options.eventId = data.eventId;
-			}
-
-			if (data.attendeesArray) {
-				const attendeesArrayWithoutCurrentUser = data.attendeesArray.filter(function (value) {
-					return value !== Meteor.userId();
-				});
-
-				attendeesArrayWithoutCurrentUser?.forEach(async function sendtoAll(item) {
-					try {
-						await emailMethods.sendPrivateMessage(item, message, options);
-						Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
-					} catch (err) {
-						Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
-					} finally {
-						instance.busy(false);
-					}
-				});
-			} else {
-				try {
-					await emailMethods.sendPrivateMessage(data.recipientId, message, options);
-					Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
-				} catch (err) {
-					Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
-				} finally {
-					instance.busy(false);
-				}
+			try {
+				await data.onSend(message, options);
+				Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
+			} catch (err) {
+				Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
+			} finally {
+				instance.busy(false);
 			}
 			instance.$('.js-email-message').val('');
-			if (data.onDone) {
-				data.onDone();
-			}
 		});
 	},
 });

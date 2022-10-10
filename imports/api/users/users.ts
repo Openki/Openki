@@ -185,5 +185,3 @@ Users.currentUser = function () {
 	anon.anon = true;
 	return anon;
 };
-
-export default Users;

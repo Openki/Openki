@@ -15,5 +15,3 @@ export function visibleTenants() {
 
 	return usersTenants.concat(PublicSettings.publicTenants).filter((t) => t);
 }
-
-export default visibleTenants;
