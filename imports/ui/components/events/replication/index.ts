@@ -8,7 +8,7 @@ import { EventModel } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import * as Alert from '/imports/api/alerts/alert';
 
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 

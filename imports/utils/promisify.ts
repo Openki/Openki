@@ -73,5 +73,3 @@ export const TrackerAsync = {
 	 */
 	afterFlush: Tracker.afterFlush && promisify(Tracker.afterFlush),
 };
-
-export default MeteorAsync;

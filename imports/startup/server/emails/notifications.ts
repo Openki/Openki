@@ -7,7 +7,15 @@ import * as Notification from '/imports/notification/notification';
 // Watch the Log for event notifications
 Meteor.startup(() => {
 	SSR.compileTemplate('notificationEventEmail', Assets.getText('emails/notifications/event.html'));
+	SSR.compileTemplate(
+		'notificationEventContactParticipantsEmail',
+		Assets.getText('emails/notifications/event.contact-participants.html'),
+	);
 	SSR.compileTemplate('notificationRsvpEmail', Assets.getText('emails/notifications/rsvp.html'));
+	SSR.compileTemplate(
+		'notificationRsvpTeamEmail',
+		Assets.getText('emails/notifications/rsvp.team.html'),
+	);
 	SSR.compileTemplate(
 		'notificationCommentEmail',
 		Assets.getText('emails/notifications/comment.html'),

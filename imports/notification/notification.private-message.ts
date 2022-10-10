@@ -13,7 +13,7 @@ import * as HtmlTools from '/imports/utils/html-tools';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { getSiteName } from '/imports/utils/getSiteName';
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 
 interface Body {
 	message: string;
@@ -142,13 +142,12 @@ export function Model(entry: { body: Body }) {
 				eventLink: '',
 			};
 
-			if (!senderCopy && body.revealSenderAddress) {
+			if (body.revealSenderAddress) {
 				const senderAddress = sender.verifiedEmailAddress();
-				if (senderAddress) {
-					vars.fromAddress = senderAddress;
-				} else {
+				if (!senderAddress) {
 					throw new Meteor.Error(400, 'no verified email address');
 				}
+				vars.fromAddress = senderAddress;
 			}
 
 			let region: RegionModel | undefined;
