@@ -21,13 +21,21 @@ import * as Regions from '/imports/api/regions/publications';
 import * as InfoPages from '/imports/api/infoPages/publications';
 import { Tenant, TenantEntity, TenantModel } from '/imports/api/tenants/tenants';
 import { Roles } from '/imports/api/roles/roles';
-import { Venue, VenueEntity, VenueModel } from '/imports/api/venues/venues';
+import {
+	Venue,
+	VenueEntity,
+	VenueModel,
+	FindParams as ParamPredicates,
+} from '/imports/api/venues/venues';
 import * as Venues from '/imports/api/venues/publications';
 import * as Tenants from '/imports/api/tenants/publications';
 import * as Invitations from '/imports/api/invitations/publications';
 import * as Users from '/imports/api/users/publications';
 import { UserModel } from '/imports/api/users/users';
+
 import type { Data as GroupDetailsData } from '/imports/ui/pages/group-details';
+import type { Data as VenuesMapData } from '/imports/ui/pages/venues-map';
+import type { Data as AdminTenantsData } from '/imports/ui/pages/admin/tenants';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 import { CleanedRegion } from '/imports/ui/lib/cleaned-region';
@@ -115,6 +123,9 @@ RouterAsync.route('tenants', {
 	},
 	subscriptions() {
 		return { findFilter: Tenants.findFilter.subscribe() };
+	},
+	data(): AdminTenantsData {
+		return { tenants: this.subscriptions()?.findFilter() };
 	},
 });
 
@@ -316,10 +327,10 @@ RouterAsync.route('kioskEvents', {
 		const filter = Events.Filtering().read(this.params.query).done();
 		Session.set('kioskFilter', filter.toParams());
 
-		const queryFuture = filter.toQuery() as EventsFindFilter;
+		const queryFuture: EventsFindFilter = filter.toQuery();
 		queryFuture.after = now;
 
-		const queryOngoing = filter.toQuery() as EventsFindFilter;
+		const queryOngoing: EventsFindFilter = filter.toQuery();
 		queryOngoing.ongoing = now;
 
 		return [
@@ -600,7 +611,6 @@ RouterAsync.route('invitation', {
 		}
 
 		return {
-			tenant: Tenants.details.subscribe(tenantId),
 			invitation: Invitations.details.subscribe(tenantId, invitationToken),
 		};
 	},
@@ -611,17 +621,12 @@ RouterAsync.route('invitation', {
 			return undefined;
 		}
 
-		const tenant = sub.tenant();
-		if (!tenant) {
-			return undefined;
-		}
-
 		const invitation = sub.invitation();
 		if (!invitation) {
 			return undefined;
 		}
 
-		return { tenant, invitation };
+		return invitation;
 	},
 });
 
@@ -900,6 +905,19 @@ RouterAsync.route('venuesMap', {
 		await import('/imports/ui/pages/venues-map');
 	},
 	subscriptions() {
-		return { venues: Venues.all.subscribe(CleanedRegion(Session.get('region'))) };
+		const filter = new Filtering(ParamPredicates);
+		const region = CleanedRegion(Session.get('region'));
+		if (region) {
+			filter.add('region', region);
+		}
+		filter.read(this.params.query).done();
+		const query = filter.toQuery();
+		return { venues: Venues.findFilter.subscribe(query) };
+	},
+	data(): VenuesMapData {
+		return {
+			region: CleanedRegion(Session.get('region')),
+			venues: this.subscriptions()?.venues(),
+		};
 	},
 });
