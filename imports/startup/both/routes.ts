@@ -1,6 +1,4 @@
-import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-
 import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
@@ -71,7 +69,7 @@ function loadRoles(course: CourseModel, member?: CourseMemberEntity) {
 }
 
 if (Meteor.isClient) {
-	Analytics.installRouterActions(Router);
+	Analytics.installRouterActions();
 }
 
 RouterAsync.route('adminPanel', {
