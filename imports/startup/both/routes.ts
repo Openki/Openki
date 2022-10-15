@@ -6,13 +6,13 @@ import { _ } from 'meteor/underscore';
 import moment from 'moment';
 import momentTz from 'moment-timezone';
 
-import { CourseMemberEntity, CourseModel, Courses } from '/imports/api/courses/courses';
+import { CourseMemberEntity, CourseModel } from '/imports/api/courses/courses';
 import {
 	EventEntity,
 	EventModel,
-	Events,
 	FindFilter as EventsFindFilter,
 	OEvent,
+	FindParams as EventParamPredicates,
 } from '/imports/api/events/events';
 import { Group, GroupEntity, GroupModel } from '/imports/api/groups/groups';
 import * as Groups from '/imports/api/groups/publications';
@@ -25,10 +25,12 @@ import {
 	Venue,
 	VenueEntity,
 	VenueModel,
-	FindParams as ParamPredicates,
+	FindParams as VenueParamPredicates,
 } from '/imports/api/venues/venues';
 import * as Venues from '/imports/api/venues/publications';
+import * as Events from '/imports/api/events/publications';
 import * as Tenants from '/imports/api/tenants/publications';
+import * as Courses from '/imports/api/courses/publications';
 import * as Invitations from '/imports/api/invitations/publications';
 import * as Users from '/imports/api/users/publications';
 import { UserModel } from '/imports/api/users/users';
@@ -50,7 +52,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as RouterAsync from '/imports/utils/RouterAsync';
 
 const makeFilterQuery = function (params: Record<string, string | undefined>) {
-	const filter = Events.Filtering().read(params).done();
+	const filter = new Filtering(EventParamPredicates).read(params).done();
 
 	const query = filter.toQuery() as EventsFindFilter;
 
@@ -321,30 +323,13 @@ RouterAsync.route('kioskEvents', {
 	async onRun() {
 		await import('/imports/ui/pages/kiosk/events');
 	},
-	waitOn() {
+	subscriptions() {
 		const now = reactiveNow.get(); // Time dependency so this will be reactively updated
-
-		const filter = Events.Filtering().read(this.params.query).done();
-		Session.set('kioskFilter', filter.toParams());
-
-		const queryFuture: EventsFindFilter = filter.toQuery();
-		queryFuture.after = now;
-
-		const queryOngoing: EventsFindFilter = filter.toQuery();
-		queryOngoing.ongoing = now;
-
-		return [
-			Meteor.subscribe('Events.findFilter', queryFuture, 20),
-			Meteor.subscribe('Events.findFilter', queryOngoing),
-		];
-	},
-	data() {
-		const now = reactiveNow.get();
 		const tomorrow = new Date(now);
 		tomorrow.setHours(tomorrow.getHours() + 24);
 		tomorrow.setHours(0);
 
-		const filter = Events.Filtering().read(this.params.query).done();
+		const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
 
 		const queryFuture = filter.toQuery() as EventsFindFilter;
 		queryFuture.after = tomorrow;
@@ -356,11 +341,22 @@ RouterAsync.route('kioskEvents', {
 		const queryNow = filter.toQuery() as EventsFindFilter;
 		queryNow.ongoing = now;
 
+		return {
+			today: Events.findFilter.subscribe(queryToday, 20),
+			future: Events.findFilter.subscribe(queryFuture, 10),
+			ongoing: Events.findFilter.subscribe(queryNow),
+		};
+	},
+	data() {
+		const sub = this.subscriptions();
+
+		const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+
 		const filterParams = filter.toQuery();
 		return {
-			today: Events.findFilter(queryToday, 20),
-			future: Events.findFilter(queryFuture, 10),
-			ongoing: Events.findFilter(queryNow),
+			today: sub?.today(),
+			future: sub?.future(),
+			ongoing: sub?.ongoing(),
 			filter: filterParams,
 		};
 	},
@@ -485,18 +481,20 @@ RouterAsync.route('showCourse', {
 	async onRun() {
 		await import('/imports/ui/pages/course-details');
 	},
-	waitOn() {
-		return Meteor.subscribe('courseDetails', this.params._id);
+	subscriptions() {
+		return { courses: Courses.details.subscribe(this.params._id as string) };
 	},
 	data() {
-		const course = Courses.findOne({ _id: this.params._id as string });
+		const course = this.subscriptions()?.courses();
 
 		if (!course) {
 			return undefined;
 		}
 
 		const userId = Meteor.userId();
-		const member = course.members?.find((memberCandidate) => memberCandidate.user === userId);
+		const member = course.members?.find(
+			(memberCandidate: CourseMemberEntity) => memberCandidate.user === userId,
+		);
 		const data = {
 			edit: !!this.params.query.edit,
 			rolesDetails: loadRoles(course, member),
@@ -508,6 +506,42 @@ RouterAsync.route('showCourse', {
 	},
 });
 
+RouterAsync.route('createEvent', {
+	path: 'event/create',
+	template: 'eventPage',
+	notFoundTemplate: 'eventNotFound',
+	async onRun() {
+		await import('/imports/ui/pages/event-details');
+	},
+	subscriptions() {
+		const { courseId } = this.params.query;
+		if (courseId) {
+			return { course: Courses.details.subscribe(courseId) };
+		}
+		return undefined;
+	},
+	data() {
+		const subs = this.subscriptions();
+
+		const propose = LocalTime.now().startOf('hour');
+		const event = _.extend(new OEvent(), {
+			new: true,
+			startLocal: LocalTime.toString(propose),
+			endLocal: LocalTime.toString(moment(propose).add(2, 'hour')),
+		}) as EventModel & { new?: boolean; startLocal?: string; endLocal?: string };
+		const course = subs?.course?.();
+		if (course) {
+			event.title = course.name;
+			event.courseId = course._id;
+			event.region = course.region;
+			event.description = course.description;
+			event.internal = course.internal;
+		}
+
+		return event;
+	},
+});
+
 RouterAsync.route('showEvent', {
 	path: 'event/:_id/:slug?',
 	template: 'eventPage',
@@ -515,40 +549,15 @@ RouterAsync.route('showEvent', {
 	async onRun() {
 		await import('/imports/ui/pages/event-details');
 	},
-	waitOn() {
-		const subs = [Meteor.subscribe('event', this.params._id)];
-		const { courseId } = this.params.query;
-		if (courseId) {
-			subs.push(Meteor.subscribe('courseDetails', courseId));
-		}
-		return subs;
+	subscriptions() {
+		return {
+			event: Events.details.subscribe(this.params._id as string),
+		};
 	},
 	data() {
-		let event: (EventModel & { new?: boolean; startLocal?: string; endLocal?: string }) | undefined;
-		const create = this.params._id === 'create';
-		if (create) {
-			const propose = LocalTime.now().startOf('hour');
-			event = _.extend(new OEvent(), {
-				new: true,
-				startLocal: LocalTime.toString(propose),
-				endLocal: LocalTime.toString(moment(propose).add(2, 'hour')),
-			}) as EventModel & { new?: boolean; startLocal?: string; endLocal?: string };
-			const course = Courses.findOne(this.params.query.courseId);
-			if (course) {
-				event.title = course.name;
-				event.courseId = course._id;
-				event.region = course.region;
-				event.description = course.description;
-				event.internal = course.internal;
-			}
-		} else {
-			event = Events.findOne({ _id: this.params._id as string });
-			if (!event) {
-				return undefined;
-			}
-		}
+		const subs = this.subscriptions();
 
-		return event;
+		return subs?.event();
 	},
 });
 
@@ -637,19 +646,17 @@ RouterAsync.route('timetable', {
 	async onRun() {
 		await import('/imports/ui/pages/kiosk/timetable');
 	},
-	waitOn() {
-		return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params.query), 200);
+	subscriptions() {
+		return { events: Events.findFilter.subscribe(makeFilterQuery(this.params.query), 200) };
 	},
 	data() {
-		const query = makeFilterQuery(this.params.query);
-
 		let start: moment.MomentInput;
 		let end: moment.MomentInput;
 
-		const events = Events.findFilter(query, 200).fetch();
+		const events = this.subscriptions?.()?.events().fetch();
 
 		// collect time when first event starts and last event ends
-		events.forEach((event) => {
+		events.forEach((event: EventModel) => {
 			if (!start || event.start < start) {
 				start = event.start;
 			}
@@ -741,7 +748,7 @@ RouterAsync.route('timetable', {
 			return perVenue[id].perRoom[room].rows;
 		};
 
-		events.forEach((originalEvent) => {
+		events.forEach((originalEvent: EventModel) => {
 			const event: any = {
 				...originalEvent,
 			};
@@ -905,7 +912,7 @@ RouterAsync.route('venuesMap', {
 		await import('/imports/ui/pages/venues-map');
 	},
 	subscriptions() {
-		const filter = new Filtering(ParamPredicates);
+		const filter = new Filtering(VenueParamPredicates);
 		const region = CleanedRegion(Session.get('region'));
 		if (region) {
 			filter.add('region', region);

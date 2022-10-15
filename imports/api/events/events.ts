@@ -187,6 +187,24 @@ export const FindFilterPattern = {
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
+export const FindParams = {
+	course: Predicates.id,
+	region: Predicates.id,
+	participant: Predicates.id,
+	search: Predicates.string,
+	categories: Predicates.ids,
+	group: Predicates.id,
+	groups: Predicates.ids,
+	venue: Predicates.id,
+	venues: Predicates.ids,
+	room: Predicates.string,
+	start: Predicates.date,
+	after: Predicates.date,
+	before: Predicates.date,
+	end: Predicates.date,
+	internal: Predicates.flag,
+};
+
 export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> {
 	constructor() {
 		super('Events', {
@@ -211,23 +229,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
-		return new Filtering({
-			course: Predicates.id,
-			region: Predicates.id,
-			participant: Predicates.id,
-			search: Predicates.string,
-			categories: Predicates.ids,
-			group: Predicates.id,
-			groups: Predicates.ids,
-			venue: Predicates.id,
-			venues: Predicates.ids,
-			room: Predicates.string,
-			start: Predicates.date,
-			after: Predicates.date,
-			before: Predicates.date,
-			end: Predicates.date,
-			internal: Predicates.flag,
-		});
+		return new Filtering(FindParams);
 	}
 
 	/**
