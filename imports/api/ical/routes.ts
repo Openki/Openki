@@ -77,6 +77,7 @@ Router.route('cal', {
 		sendIcal(Events.findFilter(filter.toQuery()), this.response);
 	},
 });
+
 Router.route('calEvent', {
 	path: 'cal/event/:_id.ics',
 	where: 'server',
@@ -84,6 +85,7 @@ Router.route('calEvent', {
 		sendIcal(Events.find({ _id: this.params._id }), this.response);
 	},
 });
+
 Router.route('calCourse', {
 	path: 'cal/course/:slug,:_id.ics',
 	where: 'server',
