@@ -130,7 +130,10 @@ declare module 'meteor/iron:router' {
 			 * `action: 'myActionFunction'`
 			 */
 			action?: (
-				this: RouteThis<P, Q> & { response: any; render: (templateName?: string) => void } & T,
+				this: RouteThis<P, Q> & {
+					response: any;
+					render: (templateName?: string) => void;
+				} & T,
 			) => void;
 
 			/**

@@ -1,21 +1,22 @@
 import { Router } from 'meteor/iron:router';
 import moment from 'moment';
 
-import { Events } from '/imports/api/events/events';
+import { EventEntity, EventModel, Events } from '/imports/api/events/events';
 
 import * as StringTools from '/imports/utils/string-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
 
 import ical from 'ical-generator';
+import { Mongo } from 'meteor/mongo';
 
-function sendIcal(events, response) {
+function sendIcal(events: Mongo.Cursor<EventEntity, EventModel>, response: any) {
 	const calendar = ical({ name: 'Openki Calendar' });
-	let dname;
+	let name = '';
 
 	events.forEach((dbevent) => {
 		const end = dbevent.end || dbevent.start;
 
-		let location = [];
+		const location = [];
 		if (dbevent.room) {
 			location.push(dbevent.room);
 		}
@@ -26,7 +27,6 @@ function sendIcal(events, response) {
 				location.push(venue.address);
 			}
 		}
-		location = location.join(', ');
 
 		const twoLines = /<(p|div|h[0-9])>/g;
 		const oneLine = /<(ul|ol|li|br ?\/?)>/g;
@@ -40,17 +40,17 @@ function sendIcal(events, response) {
 			start: dbevent.start,
 			end,
 			summary: dbevent.title,
-			location,
+			location: location.join(', '),
 			description: plainDescription,
 			url: Router.url('showEvent', dbevent),
 		});
 
-		if (!dname) {
+		if (!name) {
 			const sName = StringTools.slug(dbevent.title);
 			const sDate = moment(dbevent.start).format('YYYY-MM-DD');
-			dname = `openki-${sName}-${sDate}.ics`;
+			name = `openki-${sName}-${sDate}.ics`;
 		} else {
-			dname = 'openki-calendar.ics';
+			name = 'openki-calendar.ics';
 		}
 	});
 
@@ -58,39 +58,38 @@ function sendIcal(events, response) {
 
 	response.writeHead(200, {
 		'Content-Type': 'text/calendar; charset=UTF-8',
-		'Content-Disposition': `attachment; filename="${dname}"`,
+		'Content-Disposition': `attachment; filename="${name}"`,
 	});
 
 	response.write(calendarstring);
 	response.end();
 }
 
-/* eslint-disable-next-line array-callback-return */
-Router.map(function () {
-	this.route('cal', {
-		path: 'cal/',
-		where: 'server',
-		action() {
-			const filter = Events.Filtering();
-			const query = this.params.query || {};
+Router.route('cal', {
+	path: 'cal/',
+	where: 'server',
+	action() {
+		const filter = Events.Filtering();
+		const query = (this.params.query as Record<string, unknown>) || {};
 
-			filter.add('start', moment()).read(query).done();
+		filter.add('start', moment()).read(query).done();
 
-			sendIcal(Events.findFilter(filter.toQuery()), this.response);
-		},
-	});
-	this.route('calEvent', {
-		path: 'cal/event/:_id.ics',
-		where: 'server',
-		action() {
-			sendIcal(Events.find({ _id: this.params._id }), this.response);
-		},
-	});
-	this.route('calCourse', {
-		path: 'cal/course/:slug,:_id.ics',
-		where: 'server',
-		action() {
-			sendIcal(Events.find({ courseId: this.params._id }), this.response);
-		},
-	});
+		sendIcal(Events.findFilter(filter.toQuery()), this.response);
+	},
+});
+
+Router.route('calEvent', {
+	path: 'cal/event/:_id.ics',
+	where: 'server',
+	action() {
+		sendIcal(Events.find({ _id: this.params._id }), this.response);
+	},
+});
+
+Router.route('calCourse', {
+	path: 'cal/course/:slug,:_id.ics',
+	where: 'server',
+	action() {
+		sendIcal(Events.find({ courseId: this.params._id }), this.response);
+	},
 });
