@@ -8,6 +8,8 @@ import { Stats } from '/imports/api/stats/stats';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
+
 import './template.html';
 import './styles.scss';
 
@@ -25,7 +27,7 @@ const template = Template.statsPage;
 
 template.onCreated(function () {
 	function getRegionFromQuery() {
-		const region: string = Router.current().params.query.region || Session.get('region');
+		const region = Router.current().params.query.region || LocalRegionStore.get();
 
 		return region || 'all';
 	}
