@@ -138,6 +138,19 @@ export function ServerPublish<
 
 			const handle = subscriber.subscribe(name, ...args);
 
+			// Remove callback function
+			// Inspired from https://github.com/meteor/meteor/blob/master/packages/ddp-client/common/livedata_connection.js#L347
+			if (args.length) {
+				const lastParam = args[args.length - 1];
+				if (
+					lastParam &&
+					(typeof lastParam === 'function' ||
+						[lastParam.onReady, lastParam.onStop].some((f) => typeof f === 'function'))
+				) {
+					args.pop();
+				}
+			}
+
 			const query = function () {
 				return queryBuilder.call({ userId: Meteor.userId() }, ...args);
 			};

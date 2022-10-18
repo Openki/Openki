@@ -2,8 +2,9 @@ import { Accounts } from 'meteor/accounts-base';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
-import { Regions } from '/imports/api/regions/regions';
+import * as Regions from '/imports/api/regions/publications';
 import * as usersMethods from '/imports/api/users/methods';
+import { RegionModel } from '/imports/api/regions/regions';
 
 import * as UserLocation from '/imports/utils/user-location';
 import * as UrlTools from '/imports/utils/url-tools';
@@ -16,7 +17,7 @@ export const regionDependentRoutes = ['home', 'calendar', 'venuesMap', 'groupDet
 /**
  * @param tenantId the tenant where the region should be.
  */
-function useAsRegion(regionIdOrName: string, tenantId?: string) {
+function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: string) {
 	if (!regionIdOrName) {
 		return false;
 	}
@@ -34,7 +35,11 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 
 	// Normal case region ID
 	if (
-		Regions.findOne(tenantId ? { tenant: tenantId, _id: regionIdOrName } : { _id: regionIdOrName })
+		regions.some(
+			tenantId
+				? (r) => r.tenant === tenantId && r._id === regionIdOrName
+				: (r) => r._id === regionIdOrName,
+		)
 	) {
 		try {
 			localStorage.setItem('region', regionIdOrName);
@@ -46,8 +51,10 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 	}
 
 	// Special case by name so you can do ?region=Spilistan
-	const region = Regions.findOne(
-		tenantId ? { tenant: tenantId, name: regionIdOrName } : { name: regionIdOrName },
+	const region = regions.find(
+		tenantId
+			? (r) => r.tenant === tenantId && r.name === regionIdOrName
+			: (r) => r.name === regionIdOrName,
 	);
 	if (region) {
 		try {
@@ -67,14 +74,15 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
  * @param preferredTenant On set: Prefer a particular tenant when detection.
  * @param confirmAutodectionByUser On true: Let the user approve the automatic region selection/detection.
  */
-export function subscribe(preferredTenant?: string, confirmAutodectionByUser = true) {
-	Meteor.subscribe('Regions', async () => {
+export async function subscribe(preferredTenant?: string, confirmAutodectionByUser = true) {
+	const findFilter = Regions.findFilter.subscribe(async () => {
 		const selectors = [
 			Session.get('region'),
 			UrlTools.queryParam('region'),
 			localStorage?.getItem('region'),
 		].filter(Boolean);
 
+		const regions = findFilter().fetch();
 		if (preferredTenant) {
 			// check if we can find a region for a preferred tenant
 
@@ -91,8 +99,9 @@ export function subscribe(preferredTenant?: string, confirmAutodectionByUser = t
 				console.log(`Region autodetection error: ${err}`);
 			}
 
-			preferredTenantRegion = preferredTenantRegion || Regions.findOne({ preferredTenant });
-			if (preferredTenantRegion && useAsRegion(preferredTenantRegion._id)) {
+			preferredTenantRegion =
+				preferredTenantRegion || regions.find((r) => r.tenant === preferredTenant);
+			if (preferredTenantRegion && useAsRegion(regions, preferredTenantRegion._id)) {
 				// found a region for the preferred tenant
 				if (confirmAutodectionByUser) {
 					Session.set('showRegionSplash', true);
@@ -104,12 +113,11 @@ export function subscribe(preferredTenant?: string, confirmAutodectionByUser = t
 		}
 
 		// If any of these regions are usable we stop here
-		if (selectors.some((s) => useAsRegion(s))) {
+		if (selectors.some((s) => useAsRegion(regions, s))) {
 			return;
 		}
 
-		const regions = Regions.findFilter({}, 2).fetch();
-		if (regions.length === 1 && useAsRegion(regions[0]._id)) {
+		if (regions.length === 1 && useAsRegion(regions, regions[0]._id)) {
 			// there is only one region on this instance or visible for this user
 			return;
 		}
@@ -127,10 +135,10 @@ export function subscribe(preferredTenant?: string, confirmAutodectionByUser = t
 		}
 
 		if (region) {
-			useAsRegion(region._id);
+			useAsRegion(regions, region._id);
 		} else {
 			// Give up
-			useAsRegion('all');
+			useAsRegion(regions, 'all');
 		}
 
 		if (confirmAutodectionByUser) {
@@ -176,8 +184,4 @@ export function change(regionId: string) {
 	if (regionId !== 'all' && Meteor.userId()) {
 		usersMethods.regionChange(regionId);
 	}
-}
-
-export function hasMultipleRegions() {
-	return Regions.findFilter({}, 2).count() > 1;
 }
