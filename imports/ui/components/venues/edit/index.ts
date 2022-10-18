@@ -3,17 +3,16 @@ import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Session } from 'meteor/session';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Regions } from '/imports/api/regions/regions';
 import { VenueModel, Venues } from '/imports/api/venues/venues';
 import * as VenuesMethods from '/imports/api/venues/methods';
 
-import { CleanedRegion } from '/imports/ui/lib/cleaned-region';
 import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as Analytics from '/imports/ui/lib/analytics';
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/richtext';
@@ -53,7 +52,7 @@ import './styles.scss';
 		if (instance.isNew) {
 			instance.autorun(() => {
 				// If the session sets the region, we use it
-				const sessionRegion = CleanedRegion(Session.get('region'));
+				const sessionRegion = LocalRegionStore.getCleaned();
 
 				instance.selectedRegion.set(sessionRegion);
 

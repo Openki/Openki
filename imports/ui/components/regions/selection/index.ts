@@ -1,19 +1,17 @@
-import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { RegionEntity, RegionModel, Regions } from '/imports/api/regions/regions';
 
-import { FilterPreview } from '/imports/ui/lib/filter-preview';
-
-import { hasMultipleRegions } from '/imports/utils/region-selection';
-
 import * as RegionSelection from '/imports/utils/region-selection';
 import * as StringTools from '/imports/utils/string-tools';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import { MeteorAsync } from '/imports/utils/promisify';
+
+import { FilterPreview } from '/imports/ui/lib/filter-preview';
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import './template.html';
 import './styles.scss';
@@ -36,7 +34,9 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		hasMultipleRegions,
+		hasMultipleRegions() {
+			return Regions.findFilter({}, 2).count() > 1;
+		},
 	});
 }
 
@@ -152,7 +152,7 @@ import './styles.scss';
 		};
 
 		this.changeRegion = (regionId) => {
-			const changed = !Session.equals('region', regionId);
+			const changed = !LocalRegionStore.equals(regionId);
 
 			RegionSelection.change(regionId);
 
@@ -240,7 +240,7 @@ import './styles.scss';
 
 		'mouseover/mouseout/focusin/focusout .js-region-link'(this: RegionModel, event) {
 			const id = this._id;
-			if (id && Session.equals('region', 'all')) {
+			if (id && LocalRegionStore.equals('all')) {
 				FilterPreview({
 					property: 'region',
 					id,

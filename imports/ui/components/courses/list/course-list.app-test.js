@@ -1,10 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
 import { assert } from 'chai';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
-import { MeteorAsync } from '/imports/utils/promisify';
+
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 if (Meteor.isClient) {
 	describe('Frontpage', function () {
@@ -23,7 +24,8 @@ if (Meteor.isClient) {
 		});
 		it('should list 7 courses for unauthenticated user (Testistan)', async () => {
 			Router.go('/');
-			Session.set('region', '9JyFCoKWkxnf8LWPh'); // Testistan
+
+			LocalRegionStore.set('9JyFCoKWkxnf8LWPh'); // Testistan
 
 			await waitForSubscriptions();
 			const titles = await waitFor(() => {

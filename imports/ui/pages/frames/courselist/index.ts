@@ -2,13 +2,15 @@ import $ from 'jquery';
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import { Regions } from '/imports/api/regions/regions';
 import { CourseModel, Courses } from '/imports/api/courses/courses';
+
 import * as Metatags from '/imports/utils/metatags';
 import { SortSpec } from '/imports/utils/sort-spec';
+
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import './template.html';
 
@@ -98,7 +100,7 @@ import './template.html';
 
 	template.helpers({
 		allRegions() {
-			return Session.equals('region', 'all');
+			return LocalRegionStore.equals('all');
 		},
 		regionOf(course: CourseModel) {
 			return Regions.findOne(course.region)?.name;
