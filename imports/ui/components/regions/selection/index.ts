@@ -7,8 +7,6 @@ import { RegionEntity, RegionModel, Regions } from '/imports/api/regions/regions
 
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 
-import { hasMultipleRegions } from '/imports/utils/region-selection';
-
 import * as RegionSelection from '/imports/utils/region-selection';
 import * as StringTools from '/imports/utils/string-tools';
 import { PublicSettings } from '/imports/utils/PublicSettings';
@@ -36,7 +34,9 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		hasMultipleRegions,
+		hasMultipleRegions() {
+			return Regions.findFilter({}, 2).count() > 1;
+		},
 	});
 }
 
