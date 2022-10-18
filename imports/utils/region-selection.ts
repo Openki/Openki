@@ -9,6 +9,8 @@ import { RegionModel } from '/imports/api/regions/regions';
 import * as UserLocation from '/imports/utils/user-location';
 import * as UrlTools from '/imports/utils/url-tools';
 
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
+
 /**
  * List of routes that show different results when the region changes.
  */
@@ -24,12 +26,7 @@ function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: 
 
 	// Special case 'all'
 	if (!tenantId && regionIdOrName === 'all') {
-		try {
-			localStorage.setItem('region', regionIdOrName);
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
-		Session.set('region', regionIdOrName);
+		LocalRegionStore.set(regionIdOrName);
 		return true;
 	}
 
@@ -41,12 +38,7 @@ function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: 
 				: (r) => r._id === regionIdOrName,
 		)
 	) {
-		try {
-			localStorage.setItem('region', regionIdOrName);
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
-		Session.set('region', regionIdOrName);
+		LocalRegionStore.set(regionIdOrName);
 		return true;
 	}
 
@@ -57,12 +49,7 @@ function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: 
 			: (r) => r.name === regionIdOrName,
 	);
 	if (region) {
-		try {
-			localStorage.setItem('region', region._id);
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
-		Session.set('region', region._id);
+		LocalRegionStore.set(region._id);
 		return true;
 	}
 
@@ -77,10 +64,10 @@ function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: 
 export async function subscribe(preferredTenant?: string, confirmAutodectionByUser = true) {
 	const findFilter = Regions.findFilter.subscribe(async () => {
 		const selectors = [
-			Session.get('region'),
+			LocalRegionStore.get(),
 			UrlTools.queryParam('region'),
 			localStorage?.getItem('region'),
-		].filter(Boolean);
+		].filter(Boolean) as string[];
 
 		const regions = findFilter().fetch();
 		if (preferredTenant) {
@@ -161,12 +148,7 @@ export function init() {
 		if (user) {
 			const { regionId } = user.profile;
 			if (regionId) {
-				try {
-					localStorage.setItem('region', regionId);
-				} catch {
-					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-				}
-				Session.set('region', regionId);
+				LocalRegionStore.set(regionId);
 			}
 		}
 	});
@@ -175,12 +157,7 @@ export function init() {
 }
 
 export function change(regionId: string) {
-	try {
-		localStorage.setItem('region', regionId); // to survive page reload
-	} catch {
-		// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-	}
-	Session.set('region', regionId);
+	LocalRegionStore.set(regionId);
 	if (regionId !== 'all' && Meteor.userId()) {
 		usersMethods.regionChange(regionId);
 	}

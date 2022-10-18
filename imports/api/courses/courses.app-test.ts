@@ -7,6 +7,8 @@ import { UserModel } from '/imports/api/users/users';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
+
 if (Meteor.isClient) {
 	describe('Courses', () => {
 		describe('Find by filter', () => {
@@ -17,7 +19,7 @@ if (Meteor.isClient) {
 				if (Meteor.userId()) {
 					await MeteorAsync.logout();
 				}
-				Session.set('region', 'all');
+				LocalRegionStore.reset();
 			});
 
 			it('should a gast only show courses from public tenants', async function () {

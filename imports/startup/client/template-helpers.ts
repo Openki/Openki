@@ -5,16 +5,19 @@ import { Tracker } from 'meteor/tracker';
 import { Spacebars } from 'meteor/spacebars';
 import { Blaze } from 'meteor/blaze';
 import moment from 'moment';
+import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Regions } from '/imports/api/regions/regions';
 import { UserEntity, Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
+
 import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue, LocalizedValue } from '/imports/utils/getLocalizedValue';
-import { ReactiveDict } from 'meteor/reactive-dict';
 import { checkContribution } from '/imports/utils/checkContribution';
+
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -64,7 +67,7 @@ const helpers: { [name: string]: Function } = {
 	 * @param id Region ID
 	 */
 	isCurrentRegion(id: string) {
-		return id && Session.equals('region', id);
+		return id && LocalRegionStore.equals(id);
 	},
 
 	PublicSettings() {

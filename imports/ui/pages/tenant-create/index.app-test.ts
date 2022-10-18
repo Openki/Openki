@@ -5,13 +5,15 @@ import { Meteor } from 'meteor/meteor';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
+
 if (Meteor.isClient) {
 	describe('tenant create page', function () {
 		this.timeout(30000);
 		before(async function () {
 			this.timeout(8000);
 			Session.set('locale', 'en');
-			Session.set('region', 'all');
+			LocalRegionStore.reset();
 		});
 
 		it('should be navigable', async () => {

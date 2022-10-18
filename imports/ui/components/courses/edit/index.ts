@@ -1,6 +1,5 @@
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
-import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
@@ -15,12 +14,13 @@ import { GroupEntityCustomCourseFields, Groups } from '/imports/api/groups/group
 import { Regions } from '/imports/api/regions/regions';
 import { RoleEntity, Roles } from '/imports/api/roles/roles';
 
-import { Editable } from '/imports/ui/lib/editable';
-import { PleaseLogin } from '/imports/ui/lib/please-login';
-
 import * as StringTools from '/imports/utils/string-tools';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
+
 import * as Analytics from '/imports/ui/lib/analytics';
+import { Editable } from '/imports/ui/lib/editable';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
@@ -647,7 +647,7 @@ export type Data = {
 			if (this.dropdownVisible()) {
 				this.subscribe('Courses.findFilter', {
 					search: this.proposedSearch.get(),
-					region: Session.get('region'),
+					region: LocalRegionStore.get(),
 				});
 				if (!this.$('.dropdown').hasClass('open')) {
 					this.$('.dropdown-toggle').dropdown('toggle');
@@ -660,7 +660,7 @@ export type Data = {
 		proposedCourses() {
 			const instance = Template.instance();
 			const search = instance.proposedSearch.get();
-			const region = Session.get('region');
+			const region = LocalRegionStore.get();
 			if (instance.dropdownVisible()) {
 				return Courses.findFilter({ search, region }, 20, undefined, [['name', 'asc']]);
 			}
