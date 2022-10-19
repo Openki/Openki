@@ -40,6 +40,9 @@ import * as Predicates from '/imports/utils/predicates';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as RouterAsync from '/imports/utils/RouterAsync';
 
+import * as Analytics from '/imports/ui/lib/analytics';
+import { CourseTemplate } from '/imports/ui/lib/course-template';
+import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import type { Data as GroupDetailsData } from '/imports/ui/pages/group-details';
@@ -908,7 +911,7 @@ RouterAsync.route('venuesMap', {
 	},
 	subscriptions() {
 		const filter = new Filtering(VenueParamPredicates);
-		const region = CleanedRegion(Session.get('region'));
+		const region = LocalRegionStore.getCleaned();
 		if (region) {
 			filter.add('region', region);
 		}
@@ -918,7 +921,7 @@ RouterAsync.route('venuesMap', {
 	},
 	data(): VenuesMapData {
 		return {
-			region: CleanedRegion(Session.get('region')),
+			region: LocalRegionStore.getCleaned(),
 			venues: this.subscriptions()?.venues(),
 		};
 	},
