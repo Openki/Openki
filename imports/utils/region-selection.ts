@@ -73,7 +73,7 @@ export async function subscribe(preferredTenant?: string, confirmAutodectionByUs
 		if (preferredTenant) {
 			// check if we can find a region for a preferred tenant
 
-			if (selectors.some((s) => useAsRegion(s, preferredTenant))) {
+			if (selectors.some((s) => useAsRegion(regions, s, preferredTenant))) {
 				return;
 			}
 
