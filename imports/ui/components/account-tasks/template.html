@@ -16,6 +16,10 @@
 								{{i18n 'login.login.title' 'Log in'}}
 							{{/if}}
 						{{/if}}
+						{{#if activeAccountTask 'visitor'}}
+							<i class="fa-solid fa-user-plus fa-fw" aria-hidden="true"></i>
+							{{i18n 'login.visitor.submit'}}
+						{{/if}}
 						{{#if activeAccountTask 'register'}}
 							<i class="fa-solid fa-user-plus fa-fw" aria-hidden="true"></i>
 							{{i18n 'login.register.submit'}}
@@ -29,14 +33,14 @@
 							aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					{{#if activeAccountTask 'register'}}
+					{{#if activeAccountTask 'visitor'}}
+						{{> visitorFrame}}
+					{{else if activeAccountTask 'register'}}
 						{{> registerFrame}}
+					{{else if activeAccountTask 'recoverPwd'}}
+						{{> forgotPwdFrame}}
 					{{else}}
-						{{#if activeAccountTask 'recoverPwd'}}
-							{{> forgotPwdFrame}}
-						{{else}}
-							{{> loginFrame}}
-						{{/if}}
+						{{> loginFrame}}
 					{{/if}}
 				</div>
 			</div>
@@ -120,11 +124,57 @@
 				</div>
 			{{/each}}
 			<hr>
-			<div class="mb-3">
-				<button class="btn btn-add form-control js-register-open" type="button">
-					{{i18n 'login.register.submit' 'Create account'}}
-				</button>
+			<div class="row g-2 align-items-center">
+				<div class="col">
+					<button class="btn btn-add form-control js-visitor-open my-2" type="button">
+						{{i18n 'login.visitor.submit' 'Continue as visitor'}}
+					</button>
+				</div>
 			</div>
+			<div class="row g-2 align-items-center">
+				<div class="col">
+					<button class="btn btn-add form-control js-register-open my-2" type="button">
+						{{i18n 'login.register.submit' 'Create account'}}
+					</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</template>
+
+<template name="visitorFrame">
+	<form>
+		<div class="mb-3 {{errorClass 'email'}}">
+			<div class="input-group">
+				<span class="input-group-text">
+					<span class="fa-solid fa-envelope fa-fw" aria-hidden="true"></span>
+				</span>
+				<input class="form-control js-email"
+					   placeholder="{{i18n 'frame.visitor.email' 'E-Mail' attr=true}}"
+					   type="email" />
+			</div>
+			{{errorMessage 'email'}}
+		</div>
+		<div class="mb-3">
+			<span class="visitor-mail-disclaimer">
+				{{i18n 'login.frame.visitor.mailDisclaimer' 'Providing an e-mail address allows use to notify you eg. about new events.'}}
+			</span>
+		</div>
+		<div class="mb-3">
+			<button type="submit" class="btn btn-add form-control js-visitor" {{disabledIfBusy}}>
+				{{#if busy 'registering'}}
+					<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+					{{i18n 'login.visitor.submit.busy' 'Registering…'}}
+				{{else}}
+					{{i18n 'login.visitor.submit'}}
+				{{/if}}
+			</button>
+		</div>
+		<hr>
+		<div class="mb-3">
+			<button class="js-back-to-login btn btn-secondary form-control" type="button">
+				{{i18n 'login.visitor.backToLogin' 'Go back to login'}}
+			</button>
 		</div>
 	</form>
 </template>
