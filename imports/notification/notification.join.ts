@@ -89,7 +89,7 @@ export function Model(entry: { body: Body }) {
 			const roleTitle = i18n(`roles.${body.newRole}.short`, { lng });
 			const subjectvars = {
 				COURSE: StringTools.truncate(course.name, 10),
-				USER: StringTools.truncate(newParticipant.username, 50),
+				USER: StringTools.truncate(newParticipant.getDisplayName(), 50),
 				ROLE: roleTitle,
 				lng,
 			};
@@ -118,7 +118,7 @@ export function Model(entry: { body: Body }) {
 			return {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				course: Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`),
-				newParticipant: Spacebars.SafeString(`<strong>${newParticipant.username}</strong>`),
+				newParticipant: Spacebars.SafeString(`<strong>${newParticipant.getDisplayName()}</strong>`),
 				courseLink,
 				subject,
 				memberCount: course.members.length,

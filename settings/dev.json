@@ -20,7 +20,8 @@
 				"google": true,
 				"facebook": true,
 				"github": true
-			}
+			},
+			"visitorUser": true
 		},
 		"footerLinks":
 		[	{ "link": "https://about.openki.net/"
