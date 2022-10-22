@@ -93,7 +93,7 @@ template.events({
 		const tenantId = Router.current().params._id as string;
 		try {
 			await TenantsMethods.addMember(memberId, tenantId);
-			const memberName = Users.findOne(memberId)?.username;
+			const memberName = Users.findOne(memberId)?.getDisplayName();
 			const tenantName = Tenants.findOne(tenantId)?.name;
 			Alert.success(
 				i18n(
@@ -115,7 +115,7 @@ template.events({
 		try {
 			await TenantsMethods.removeMember(memberId, tenantId);
 
-			const memberName = Users.findOne(memberId)?.username;
+			const memberName = Users.findOne(memberId)?.getDisplayName();
 			const tenantName = Tenants.findOne(tenantId)?.name;
 			Alert.success(
 				i18n(
@@ -140,7 +140,7 @@ template.events({
 		const tenantId = Router.current().params._id as string;
 		try {
 			await TenantsMethods.addAdmin(adminId, tenantId);
-			const adminName = Users.findOne(adminId)?.username;
+			const adminName = Users.findOne(adminId)?.getDisplayName();
 			const tenantName = Tenants.findOne(tenantId)?.name;
 			Alert.success(
 				i18n(
@@ -162,7 +162,7 @@ template.events({
 		try {
 			await TenantsMethods.removeAdmin(adminId, tenantId);
 
-			const adminName = Users.findOne(adminId)?.username;
+			const adminName = Users.findOne(adminId)?.getDisplayName();
 			const tenantName = Tenants.findOne(tenantId)?.name;
 			Alert.success(
 				i18n(

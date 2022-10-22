@@ -124,13 +124,15 @@
 				</div>
 			{{/each}}
 			<hr>
-			<div class="row g-2 align-items-center">
-				<div class="col">
-					<button class="btn btn-add form-control js-visitor-open my-2" type="button">
-						{{i18n 'login.visitor.submit' 'Continue as visitor'}}
-					</button>
+			{{#if PublicSettings.feature.visitorUser}}
+				<div class="row g-2 align-items-center">
+					<div class="col">
+						<button class="btn btn-add form-control js-visitor-open my-2" type="button">
+							{{i18n 'login.visitor.submit' 'Continue as visitor'}}
+						</button>
+					</div>
 				</div>
-			</div>
+			{{/if}}
 			<div class="row g-2 align-items-center">
 				<div class="col">
 					<button class="btn btn-add form-control js-register-open my-2" type="button">

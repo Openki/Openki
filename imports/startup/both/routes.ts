@@ -454,7 +454,7 @@ RouterAsync.route<any>('profile', {
 		if (user) {
 			const userdata = {
 				_id: user._id,
-				name: user.username,
+				name: user.getDisplayName(),
 				notifications: user.notifications,
 				allowPrivateMessages: user.allowPrivateMessages,
 				tenants: Tenants.findFilter({ adminOf: true }),

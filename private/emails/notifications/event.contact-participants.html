@@ -26,7 +26,7 @@
 					</a>
 				</p>
 				<p class="text-center">
-					{{i18n "notification.event.contact-participants.mail.direct.answerText" 'You can also send {SENDERNAME} an email directly by clicking reply in your email client' SENDERNAME=sender.username lng=locale}}
+					{{i18n "notification.event.contact-participants.mail.direct.answerText" 'You can also send {SENDERNAME} an email directly by clicking reply in your email client' SENDERNAME=sender.getDisplayName lng=locale}}
 					<br><br />
 					<a class="text-center" href="mailto:{{fromAddress}}">{{fromAddress}}</a>
 				</p>
