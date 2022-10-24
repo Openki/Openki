@@ -30,7 +30,7 @@ template.helpers({
 			title: linkSpec.title_key ? i18n(linkSpec.title_key, { SITENAME: siteName }) : '',
 		}));
 
-		if (siteName === 'Openki') {
+		if (siteName !== 'Openki') {
 			list.forEach((element) => {
 				if (element.text === 'Source-code') {
 					list[2].text = i18n(
