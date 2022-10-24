@@ -13,7 +13,7 @@
 					{{#unless currentUser}}
 						{{i18n "invitation.join.newUser" "Join {TENANT}" TENANT=tenant.name}}
 					{{else}}
-						{{i18n "invitation.join.existingUser" "Join {TENANT} with user {USER}" TENANT=tenant.name USER=currentUser.username}}
+						{{i18n "invitation.join.existingUser" "Join {TENANT} with user {USER}" TENANT=tenant.name USER=currentUser.getDisplayName}}
 					{{/unless}}
 				</button>
 			</div>

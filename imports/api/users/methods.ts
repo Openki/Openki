@@ -395,9 +395,9 @@ export const name = ServerMethod('user.name', function (userId: string) {
 	this.unblock();
 	const user = Users.findOne(userId, { fields: { username: 1, contribution: 1 } });
 	if (!user) {
-		return false;
+		return undefined;
 	}
-	return user;
+	return user as Meteor.User;
 });
 
 export const updateLocale = ServerMethod('user.updateLocale', (locale: string) => {
