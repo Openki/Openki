@@ -132,7 +132,7 @@ export function Model(entry: { body: Body }) {
 			return {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				event: eventTitle,
-				newParticipant: Spacebars.SafeString(`<strong>${newParticipant.username}</strong>`),
+				newParticipant: Spacebars.SafeString(`<strong>${newParticipant.getDisplayName()}</strong>`),
 				subject,
 				participantsCount: event.participants?.length ?? 0,
 				email: Spacebars.SafeString(`<span style="color:blue">${PrivateSettings.siteEmail}</span>`),
