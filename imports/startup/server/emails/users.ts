@@ -7,6 +7,7 @@ import juice from 'juice';
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { UserModel } from '/imports/api/users/users';
 
 if (PrivateSettings.siteEmail) {
 	Accounts.emailTemplates.from = PrivateSettings.siteEmail;
@@ -22,13 +23,16 @@ Meteor.startup(() => {
 Accounts.emailTemplates.verifyEmail.subject = function (user) {
 	return i18n('verifyEmail.subject', '[{SITE}] Welcome to the {SITE} community, {NAME}', {
 		SITE: Accounts.emailTemplates.siteName,
-		NAME: user.username,
+		NAME: (user as UserModel).getDisplayName(),
 		lng: user.locale,
 	});
 };
 
 Accounts.emailTemplates.verifyEmail.text = function (user, url) {
-	return `${i18n('verifyEmail.email.gretting', { NAME: user.username, lng: user.locale })}
+	return `${i18n('verifyEmail.email.gretting', {
+		NAME: (user as UserModel).getDisplayName(),
+		lng: user.locale,
+	})}
 	
 ${i18n('verifyEmail.email.introduction', {
 	SITE: Accounts.emailTemplates.siteName,
@@ -65,7 +69,7 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 				logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
-			username: user.username,
+			username: (user as UserModel).getDisplayName(),
 			url,
 			reportEmail: PrivateSettings.reporter.recipient,
 			locale: user.locale,
@@ -85,7 +89,10 @@ Accounts.urls.resetPassword = function (token) {
 };
 
 Accounts.emailTemplates.resetPassword.text = function (user, url) {
-	return `${i18n('resetPassword.email.gretting', { NAME: user.username, lng: user.locale })}
+	return `${i18n('resetPassword.email.gretting', {
+		NAME: (user as UserModel).getDisplayName(),
+		lng: user.locale,
+	})}
 				
 ${i18n('resetPassword.email.introduction', {
 	SITE: Accounts.emailTemplates.siteName,
@@ -122,7 +129,7 @@ Accounts.emailTemplates.resetPassword.html = function (user, url) {
 				logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
-			username: user.username,
+			username: (user as UserModel).getDisplayName(),
 			url,
 			reportEmail: PrivateSettings.reporter.recipient,
 			locale: user.locale,

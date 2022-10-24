@@ -438,7 +438,7 @@ RouterAsync.route('profile', {
 		if (user && subs) {
 			const userdata = {
 				_id: user._id,
-				name: user.username,
+				name: user.getDisplayName(),
 				notifications: user.notifications,
 				allowPrivateMessages: user.allowPrivateMessages,
 				tenants: subs.tenants(),

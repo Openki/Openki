@@ -31,7 +31,7 @@
 							{{#if ownProfile}}
 								{{i18n (roleMyList role.type)}}
 							{{else}}
-								{{i18n (roleUserList role.type) NAME=getName}}
+								{{i18n (roleUserList role.type) NAME=user.getDisplayName}}
 							{{/if}}
 						</h3>
 						{{> courseList coursesByRole role.type false}}
@@ -47,7 +47,7 @@
 								{{#if ownProfile}}
 									{{i18n (roleMyListPast role.type)}}
 								{{else}}
-									{{i18n (roleUserListPast role.type) NAME=getName}}
+									{{i18n (roleUserListPast role.type) NAME=user.getDisplayName}}
 								{{/if}}
 							</h3>
 							{{> courseList coursesByRole role.type true}}

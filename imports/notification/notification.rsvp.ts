@@ -106,7 +106,7 @@ export function Model(entry: { body: Body }) {
 			const emailLogo = region.custom?.emailLogo;
 
 			return {
-				username: actualRecipient.username,
+				username: actualRecipient.getDisplayName(),
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				event,
 				eventDate: startMoment.format('LL'),

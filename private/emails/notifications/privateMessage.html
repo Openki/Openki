@@ -11,7 +11,7 @@
 			</span>
 			<p>
 				{{i18n "notification.privateMessage.mail.intro" 'You got a private message from:' lng=locale}}
-				<a href="{{senderLink}}">{{sender.username}}</a>
+				<a href="{{senderLink}}">{{sender.getDisplayName}}</a>
 				{{#if fromAddress}}
 					<a href="mailto:{{fromAddress}}">{{fromAddress}}</a>
 				{{/if}}
@@ -42,7 +42,7 @@
 					</a>
 				</p>
 				<p class="text-center">
-					{{i18n "notification.privateMessage.mail.direct.answerText" 'You can also send {SENDERNAME} an email directly  by clicking reply in your email client' SENDERNAME=sender.username lng=locale}}
+					{{i18n "notification.privateMessage.mail.direct.answerText" 'You can also send {SENDERNAME} an email directly  by clicking reply in your email client' SENDERNAME=sender.getDisplayName lng=locale}}
 					<br><br />
 					<a class="text-center" href="mailto:{{fromAddress}}">{{fromAddress}}</a>
 				</p>

@@ -149,7 +149,7 @@ template.events({
 		const groupId = Router.current().params._id as string;
 		try {
 			await GroupsMethods.updateMembership(memberId, groupId, true);
-			const memberName = Users.findOne(memberId)?.username;
+			const memberName = Users.findOne(memberId)?.getDisplayName();
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
 				i18n('groupSettings.memberAdded', '"{MEMBER}" has been added to the "{GROUP}" group', {
@@ -167,7 +167,7 @@ template.events({
 		const groupId = Router.current().params._id as string;
 		try {
 			await GroupsMethods.updateMembership(memberId, groupId, false);
-			const memberName = Users.findOne(memberId)?.username;
+			const memberName = Users.findOne(memberId)?.getDisplayName();
 			const groupName = Groups.findOne(groupId)?.name;
 			Alert.success(
 				i18n(
