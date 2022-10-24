@@ -114,7 +114,7 @@ template.helpers({
 
 		return {
 			placeholder: i18n('profile.mail.placeholder', 'Hi {USER}. I wanted to tell you…', {
-				USER: data.user,
+				USER: data.user.username,
 			}),
 			onSend: async (message, options) => {
 				await emailMethods.sendPrivateMessage(data.user._id, message, options);
