@@ -4,11 +4,12 @@ import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 import { Spacebars } from 'meteor/spacebars';
 import { Blaze } from 'meteor/blaze';
+import { _ } from 'meteor/underscore';
 import moment from 'moment';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Regions } from '/imports/api/regions/regions';
-import { UserEntity, Users } from '/imports/api/users/users';
+import { UserEntity, User, Users } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
 
@@ -251,7 +252,7 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 	// To prevent unlimited cache-growth, after a enough lookups we
 	// build a new cache from the old
 	const cacheLimit = 1000;
-	let cache: { [id: string]: Pick<UserEntity, 'username' | 'contribution'> } = {};
+	let cache: { [id: string]: Pick<UserEntity, 'username' | 'contribution'> & User } = {};
 	let previousCache: typeof cache = {};
 	let lookups = 0;
 	const pending: { [id: string]: Tracker.Dependency } = {};
@@ -281,7 +282,7 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 
 		if (cachedUser === undefined) {
 			// Substitute until the name (or its absence) is loaded
-			cachedUser = { username: '◌' };
+			cachedUser = _.extend(new User(), { username: '◌' });
 
 			if (pending[userId]) {
 				pending[userId].depend();
@@ -301,7 +302,7 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 				usersMethods
 					.name(userId)
 					.then((user) => {
-						cache[userId] = user || { username: '?!' };
+						cache[userId] = _.extend(new User(), user) || _.extend(new User(), { username: '?!' });
 						pending[userId].changed();
 						delete pending[userId];
 					})
@@ -326,7 +327,7 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 			return `userId: ${userId}`;
 		}
 
-		return cachedUser.username;
+		return cachedUser.getDisplayName();
 	});
 
 	Template.registerHelper('contribution', function (userId: string) {
@@ -356,7 +357,7 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 					'user.hasContributed',
 					'{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.',
 					{
-						USERNAME: cachedUser.username,
+						USERNAME: cachedUser.getDisplayName(),
 						SITENAME: getSiteName(Regions.currentRegion()),
 						ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
 					},

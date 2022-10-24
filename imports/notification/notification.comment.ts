@@ -86,7 +86,7 @@ export function Model(entry: { body: Body }) {
 			commenter = Users.findOne(comment.userId);
 		}
 		if (commenter) {
-			commenterName = commenter.username;
+			commenterName = commenter.getDisplayName();
 		}
 	}
 

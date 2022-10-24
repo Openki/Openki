@@ -48,7 +48,7 @@ template.onCreated(function () {
 
 	instance.autorun(() => {
 		const { user } = Template.currentData();
-		const title = i18n('profile.windowtitle', 'Profile of {USER}', { USER: user.username });
+		const title = i18n('profile.windowtitle', 'Profile of {USER}', { USER: user.getDisplayName() });
 		Metatags.setCommonTags(title);
 	});
 

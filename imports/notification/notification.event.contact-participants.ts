@@ -110,7 +110,7 @@ export function Model(entry: { body: Body }) {
 
 			const subjectvars = {
 				EVENT: StringTools.truncate(event.title, 50),
-				SENDER: StringTools.truncate(sender.username, 10),
+				SENDER: StringTools.truncate(sender.getDisplayName(), 10),
 				lng: userLocale,
 			};
 			const subject = i18n(
@@ -136,7 +136,7 @@ export function Model(entry: { body: Body }) {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				sender,
 				senderLink: senderUrl,
-				senderName: Spacebars.SafeString(`<a href="${senderUrl}">${sender.username}</a>`),
+				senderName: Spacebars.SafeString(`<a href="${senderUrl}">${sender.getDisplayName()}</a>`),
 				subject,
 				message: htmlizedMessage,
 				senderCopy,
