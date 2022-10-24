@@ -140,7 +140,7 @@ export function send(entry: LogEntity & { body: { model: string; recipients: str
 
 				const address = user.emailAddress();
 
-				const { username } = user;
+				const username = user.getDisplayName();
 				const userLocale = user.locale || 'en';
 
 				const { siteName } = Accounts.emailTemplates;
