@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
+import { Random } from 'meteor/random';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { AccountsAsync, MeteorAsync } from '/imports/utils/promisify';
 
@@ -179,6 +180,12 @@ import './styles.scss';
 			(instance.parentInstance() as any).accountTask.set('recoverPwd');
 		},
 
+		'click .js-visitor-open'(_event, instance) {
+			const parentInstance = instance.parentInstance() as any;
+
+			parentInstance.accountTask.set('visitor');
+		},
+
 		'click .js-register-open'(_event, instance) {
 			let username = instance.$('.js-username').val() as string;
 			const password = instance.$('.js-password').val() as string;
@@ -281,6 +288,109 @@ import './styles.scss';
 	});
 }
 
+{
+	const Template = TemplateMixins.FormfieldErrors(
+		TemplateAny as TemplateStaticTyped<'visitorFrame'>,
+		'visitorFrame',
+		{
+			noEmail: {
+				text() {
+					return i18n(
+						'visitor.warning.noEmailProvided',
+						'Please enter an email-address to continue.',
+					);
+				},
+				field: 'email',
+			},
+			'email invalid': {
+				text() {
+					return i18n('visitor.warning.emailNotValid');
+				},
+				field: 'email',
+			},
+			'Email already exists.': {
+				text() {
+					return i18n(
+						'visitor.warning.emailExists',
+						'This email already exists. Have you tried resetting your password?',
+					);
+				},
+				field: 'email',
+			},
+		},
+	);
+
+	const template = Template.visitorFrame;
+
+	template.onCreated(function () {
+		const instance = this;
+		instance.busy(false);
+	});
+
+	template.onRendered(function () {
+		const instance = this;
+
+		instance.$('input').first().trigger('select');
+	});
+
+	template.events({
+		async 'click .js-visitor'(event, instance) {
+			event.preventDefault();
+			instance.errors.reset();
+
+			const email = instance.$('.js-email').val() as string;
+			if (!email) {
+				instance.errors.add('noEmail');
+			}
+
+			if (instance.errors.present()) {
+				return;
+			}
+
+			instance.busy('registering');
+
+			try {
+				await AccountsAsync.createUser({
+					email,
+					password: Random.secret(),
+					locale: Session.get('locale'),
+				} as any);
+
+				if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
+					$('#bs-navbar-collapse-1').collapse('hide');
+				}
+				$('.js-account-tasks').modal('hide');
+
+				const regionId = LocalRegionStore.getCleaned();
+				if (regionId) {
+					UsersMethods.regionChange(regionId);
+				}
+
+				UsersMethods.updateLocale(Session.get('locale'));
+
+				const user = Meteor.user();
+
+				if (!user) {
+					throw new Error('Unexpected falsy: user');
+				}
+
+				Analytics.trackEvent(
+					'Registers',
+					'Visitor',
+					Regions.findOne(user.profile.regionId)?.nameEn,
+				);
+			} catch (err) {
+				instance.errors.add(err.reason);
+			} finally {
+				instance.busy(false);
+			}
+		},
+
+		'click .js-back-to-login'(_event, instance) {
+			(instance.parentInstance() as any).accountTask.set('login');
+		},
+	});
+}
 {
 	const Template = TemplateMixins.FormfieldErrors(
 		TemplateAny as TemplateStaticTyped<'registerFrame'>,

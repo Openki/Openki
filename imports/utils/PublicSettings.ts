@@ -24,6 +24,7 @@ const defaults = {
 	pricePolicyEnabled: true,
 	feature: {
 		login: { google: false, facebook: false, github: false },
+		visitorUser: false,
 	},
 	// eslint-disable-next-line camelcase
 	footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
@@ -92,6 +93,8 @@ check(
 		feature: {
 			/** toggle visibility of login services */
 			login: { google: Boolean, facebook: Boolean, github: Boolean },
+			/** allow user without name and password */
+			visitorUser: Boolean,
 		},
 		footerLinks: [
 			{
