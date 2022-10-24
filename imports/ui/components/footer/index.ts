@@ -10,6 +10,7 @@ import { PublicSettings } from '/imports/utils/PublicSettings';
 
 import './template.html';
 import './styles.scss';
+import { Lightsail } from 'aws-sdk';
 
 const Template = TemplateAny as TemplateStaticTyped<'footer'>;
 
@@ -23,11 +24,31 @@ template.helpers({
 	links() {
 		const siteName = getSiteName(Regions.currentRegion());
 
-		return PublicSettings.footerLinks.map((linkSpec) => ({
+		const list = PublicSettings.footerLinks.map((linkSpec) => ({
 			link: linkSpec.link,
 			text: linkSpec.key ? i18n(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
 			title: linkSpec.title_key ? i18n(linkSpec.title_key, { SITENAME: siteName }) : '',
 		}));
+
+		if (siteName === 'Openki') {
+			list.forEach((element) => {
+				if (element.text === 'Source-code') {
+					list[2].text = i18n(
+						'navigation.footer.sourceCodeOnGitLab.powerdByOpenki',
+						'Powerd by Openki',
+					);
+					return list;
+				}
+				return list;
+			});
+		} else {
+			return PublicSettings.footerLinks.map((linkSpec) => ({
+				link: linkSpec.link,
+				text: linkSpec.key ? i18n(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
+				title: linkSpec.title_key ? i18n(linkSpec.title_key, { SITENAME: siteName }) : '',
+			}));
+		}
+		return list;
 	},
 	version() {
 		const version = Version.findOne();
