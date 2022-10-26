@@ -50,9 +50,17 @@ export const MeteorAsync = {
 	logout: Meteor.logout && promisify<void>(Meteor.logout),
 	setTimeout:
 		Meteor.setTimeout &&
-		((delay: number) => new Promise((resolve) => Meteor.setTimeout(resolve, delay))),
+		((delay: number) =>
+			new Promise((resolve) => {
+				Meteor.setTimeout(resolve, delay);
+			})),
 	/** Defer execution of a function to run asynchronously in the background (similar to `MeteorAsync.delay(func, 0)`. */
-	defer: Meteor.defer && (() => new Promise((resolve) => Meteor.defer(resolve))),
+	defer:
+		Meteor.defer &&
+		(() =>
+			new Promise((resolve) => {
+				Meteor.defer(resolve);
+			})),
 };
 
 /**
