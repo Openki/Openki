@@ -389,7 +389,6 @@ export const hidePricePolicy = ServerMethod('user.hidePricePolicy', () => {
 	Users.update(userId, { $set: { hidePricePolicy: true } });
 });
 
-
 export const updateLocale = ServerMethod('user.updateLocale', (locale: string) => {
 	check(locale, String);
 
