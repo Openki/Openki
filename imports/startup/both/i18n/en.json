@@ -506,7 +506,6 @@
   "invitation.email.intro": "You have been invited by {INVITER} to join \"{TENANT}\" on {SITENAME}.",
   "invitation.email.join": "Accept invitation",
   "invitation.email.more": "Find out more",
-  "invitation.email.unexpected": "If you don't know why you got this e-mail, ignore it or send a notification to:",
   "invitation.join.error": "Join not worked.",
   "invitation.join.existingUser": "Join {TENANT} with user {USER}",
   "invitation.join.newUser": "Join {TENANT}",
