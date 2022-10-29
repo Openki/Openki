@@ -293,6 +293,7 @@
 	"editableImage.accept.error": "Nur Bilder sind erlaubt.",
 	"email.base.greeting": "Hallo {USERNAME}",
 	"email.base.profileLink": "Besuche dein Profil",
+	"email.base.receiveNote.courseTeam": "Du erhältst diese Nachricht, weil du im Team dieses Kurses bist.",
 	"email.base.spamPrevention": "Um sicher zu gehen, dass unsere E-Mails nicht in den SPAM Ordner gelangen, füge {MAIL} zu deinen Kontakten hinzu.",
 	"email.base.unsubscribeLink.automatedNotifications": "Für alle weiteren automatischen Benachrichtigungen abmelden.",
 	"email.verified": "Deine E-Mail wurde bestätigt.",
