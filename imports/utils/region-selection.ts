@@ -63,7 +63,7 @@ function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: 
  * @param confirmAutodectionByUser On true: Let the user approve the automatic region selection/detection.
  */
 export async function subscribe(
-	instance?: Subscriber,
+	instance: Subscriber,
 	preferredTenant?: string,
 	confirmAutodectionByUser = true,
 ) {
@@ -158,7 +158,7 @@ export function init() {
 		}
 	});
 
-	subscribe();
+	subscribe(Meteor);
 }
 
 export async function change(regionId: string) {
