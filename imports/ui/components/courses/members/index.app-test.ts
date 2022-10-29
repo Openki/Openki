@@ -35,7 +35,7 @@ if (Meteor.isClient) {
 			await MeteorAsync.loginWithPassword('Seee', 'greg');
 			const field = await waitFor(findCommentField);
 			field.text(comment);
-			$('.js-role-subscribe-btn').trigger('click');
+			$('.js-role-subscribe-btn:first').trigger('click');
 			await waitFor(findComment);
 		});
 	});

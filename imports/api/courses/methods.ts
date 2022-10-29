@@ -16,7 +16,7 @@ import * as eventsCourseImageDenormalizer from '/imports/api/events/courseImageD
 import { Log } from '/imports/api/log/log';
 import { UserModel } from '/imports/api/users/users';
 
-import { Subscribe, Unsubscribe, Message, processChange } from './subscription';
+import { Subscribe, Unsubscribe, Message } from './subscription';
 
 import { Notification } from '/imports/notification/notification';
 
@@ -125,7 +125,7 @@ export type SaveFields = Type<typeof SaveFieldPattern>;
 export const save = ServerMethod(
 	'course.save',
 
-	(courseId: string, changes: SaveFields) => {
+	async (courseId: string, changes: SaveFields) => {
 		check(courseId, String);
 		check(changes, SaveFieldPattern);
 
@@ -276,7 +276,7 @@ export const save = ServerMethod(
 			changes.subs.forEach((role: string) => {
 				const change = new Subscribe(changedCourse, user, role, 'interested');
 				if (change.validFor(user)) {
-					processChange(change);
+					change.apply();
 				}
 			});
 		}
@@ -285,7 +285,7 @@ export const save = ServerMethod(
 			changes.unsubs.forEach((role: string) => {
 				const change = new Unsubscribe(changedCourse, user, role);
 				if (change.validFor(user)) {
-					processChange(change);
+					change.apply();
 				}
 			});
 		}

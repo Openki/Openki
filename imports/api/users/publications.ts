@@ -16,6 +16,24 @@ if (Meteor.isServer) {
 	});
 }
 
+export const simple = ServerPublish(
+	'user.simple',
+	(userId: string) => {
+		check(userId, String);
+
+		// Public fields from users
+		const fields: Mongo.FieldSpecifier = { username: 1, contribution: 1 };
+
+		return Users.find(userId, { fields });
+	},
+	(userId: string) => {
+		// Public fields from users
+		const fields: Mongo.FieldSpecifier = { username: 1, contribution: 1 };
+
+		return Users.findOne(userId, { fields });
+	},
+);
+
 export const details = ServerPublish(
 	'user',
 	(userId: string) => {
