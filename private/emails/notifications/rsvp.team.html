@@ -2,7 +2,7 @@
 	<tr>
 		<td>
 			<span class="title">
-				{{i18n "notification.rsvp.team.mail.greeting" "Hi {USERNAME}" USERNAME=username lng=locale}}
+				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
 			</span>
 			<p>
 				{{i18n "notification.rsvp.team.mail.intro" '{USERNAME} just reserved a seat for event "{EVENT}".' USERNAME=newParticipant EVENT=event lng=locale}}
@@ -17,21 +17,21 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{i18n "notification.rsvp.team.mail.recpnote" "You receive this message because you're on the team of this course." lng=locale}}
+						{{i18n "email.base.receiveNote.courseTeam" lng=locale}}
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<a
-						   href="{{unsubLink}}">{{i18n "notification.rsvp.team.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName lng=locale}}</a>
+						   href="{{unsubLink}}">{{i18n "email.base.unsubscribeLink.automatedNotifications" SITENAME=siteName lng=locale}}</a>
 						&nbsp;
 						<a
-						   href="{{urlFor 'profile' query='campaign=rsvpTeamNotify'}}">{{i18n "notification.rsvp.team.mail.profileLink" "Visit your profile" lng=locale}}</a>
+						   href="{{urlFor 'profile' query='campaign=rsvpTeamNotify'}}">{{i18n "email.base.profileLink" lng=locale}}</a>
 					</td>
 				</tr>
 				<tr>
 					<td style="padding-top: 16px;">
-						{{i18n "notification.rsvp.team.mail.spamPrevention" 'To make sure our emails do not enter in your SPAM folder, please add {MAIL} to your contacts.' MAIL=email lng=locale}}
+						{{i18n "email.base.spamPrevention" MAIL=email lng=locale}}
 					</td>
 				</tr>
 			</table>

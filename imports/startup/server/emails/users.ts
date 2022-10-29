@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { Accounts } from 'meteor/accounts-base';
 import juice from 'juice';
+import { Spacebars } from 'meteor/spacebars';
 
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
@@ -29,8 +30,8 @@ Accounts.emailTemplates.verifyEmail.subject = function (user) {
 };
 
 Accounts.emailTemplates.verifyEmail.text = function (user, url) {
-	return `${i18n('verifyEmail.email.gretting', {
-		NAME: (user as UserModel).getDisplayName(),
+	return `${i18n('email.base.greeting', {
+		USERNAME: (user as UserModel).getDisplayName(),
 		lng: user.locale,
 	})}
 	
@@ -44,15 +45,15 @@ ${i18n('verifyEmail.email.verification', {
 })}
 ${url}
 
-${i18n('verifyEmail.email.farewell', {
+${i18n('email.base.farewell', {
 	lng: user.locale,
 })}
-${i18n('verifyEmail.email.postscript', {
+${i18n('email.base.postscript', {
 	SITE: Accounts.emailTemplates.siteName,
 	lng: user.locale,
 })}
 
-${i18n('verifyEmail.email.unexpected', {
+${i18n('email.base.unexpected', {
 	REPORTEMAIL: PrivateSettings.reporter.recipient,
 	lng: user.locale,
 })}`;
@@ -71,7 +72,9 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 			},
 			username: (user as UserModel).getDisplayName(),
 			url,
-			reportEmail: PrivateSettings.reporter.recipient,
+			reportEmail: Spacebars.SafeString(
+				`<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
+			),
 			locale: user.locale,
 		}),
 	);
@@ -89,8 +92,8 @@ Accounts.urls.resetPassword = function (token) {
 };
 
 Accounts.emailTemplates.resetPassword.text = function (user, url) {
-	return `${i18n('resetPassword.email.gretting', {
-		NAME: (user as UserModel).getDisplayName(),
+	return `${i18n('email.base.greeting', {
+		USERNAME: (user as UserModel).getDisplayName(),
 		lng: user.locale,
 	})}
 				
@@ -104,15 +107,15 @@ ${i18n('resetPassword.email.verification', {
 })}
 ${url}
 
-${i18n('resetPassword.email.farewell', {
+${i18n('email.base.farewell', {
 	lng: user.locale,
 })}
-${i18n('resetPassword.email.postscript', {
+${i18n('email.base.postscript', {
 	SITE: Accounts.emailTemplates.siteName,
 	lng: user.locale,
 })}
 
-${i18n('resetPassword.email.unexpected', {
+${i18n('email.base.unexpected', {
 	REPORTEMAIL: PrivateSettings.reporter.recipient,
 	lng: user.locale,
 })}`;
@@ -131,7 +134,9 @@ Accounts.emailTemplates.resetPassword.html = function (user, url) {
 			},
 			username: (user as UserModel).getDisplayName(),
 			url,
-			reportEmail: PrivateSettings.reporter.recipient,
+			reportEmail: Spacebars.SafeString(
+				`<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
+			),
 			locale: user.locale,
 		}),
 	);

@@ -2,6 +2,7 @@ import juice from 'juice';
 import { Meteor } from 'meteor/meteor';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Router } from 'meteor/iron:router';
+import { Spacebars } from 'meteor/spacebars';
 
 import { InvitationEntity, Invitations } from '/imports/api/invitations/invitations';
 import { Tenants } from '/imports/api/tenants/tenants';
@@ -49,7 +50,9 @@ function sendInvitation(invitation: InvitationEntity) {
 			query: `tenant=${invitation.tenant}&campaign=invitationEmail`,
 		}),
 		moreLink: getLocalizedValue(PublicSettings.aboutLink, locale),
-		reportEmail: PrivateSettings.reporter.recipient,
+		reportEmail: Spacebars.SafeString(
+			`<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
+		),
 		locale,
 	});
 
