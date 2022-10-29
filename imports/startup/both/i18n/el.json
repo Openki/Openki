@@ -147,6 +147,8 @@
 	"course.title.placeholder": "Τι σε ενδιαφέρει;",
 	"discussion.anonymous": "Ανώνυμος",
 	"editable.add_text": "Προσθήκη κειμένου εδώ",
+	"email.base.greeting": "Γεια σου {USERNAME}",
+	"email.base.profileLink": "Επίσκεψη του προφίλ σου",
 	"event.delete.confirm.button": "Διαγραφή συνάντησης",
 	"event.delete.confirm.button.busy": "Διαγραφή συνάντησης…",
 	"event.detail.download_cal": "Αποθήκευση της συνάντησης στο ημερολόγιο μου",
