@@ -27,6 +27,18 @@ Meteor.publish('user', function (userId: string) {
 	return Users.find({ _id: userId }, { fields });
 });
 
+Meteor.publish('user.simple', function (userId: string) {
+	check(userId, String);
+
+	// Public fields from users
+	const fields: Mongo.FieldSpecifier = {
+		username: 1,
+		contribution: 1,
+	};
+
+	return Users.find({ _id: userId }, { fields });
+});
+
 // Always publish their own data for logged-in users
 // https://github.com/meteor/guide/issues/651
 Meteor.publish(null, function () {
