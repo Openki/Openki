@@ -16,7 +16,7 @@ import { Meteor } from 'meteor/meteor';
  */
 export function ServerMethod<T extends any[], R>(
 	name: string,
-	run: (this: Meteor.MethodThisType, ...args: T) => R,
+	run: (this: Meteor.MethodThisType, ...args: T) => R | Promise<R>,
 	options: {
 		/**
 		 * When a method is called, it usually runs twice—once on the client to simulate the result
