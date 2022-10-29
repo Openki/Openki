@@ -497,7 +497,6 @@
 	"introduction.close.title": "Fermer l'introduction",
 	"introduction.more": "Plus d'informations :",
 	"invitation.email.about": "{SITENAME} est une plateforme d'éducation ouvert communautaire où les utilisateurs organisent collectivement des cours. Vous pouvez proposer, discuter, développer et publier des idées et éventuellement faire de bonnes rencontres en ligne ou dans la vie réelle. Amusez-vous à partager vos expériences.",
-	"invitation.email.greeting": "Salut {USERNAME}",
 	"invitation.email.intro": "Vous avez été invité par {INVITER} pour rejoindre \"{TENANT}\" sur {SITENAME}.",
 	"invitation.email.join": "Accepter l'invitation",
 	"invitation.email.more": "En savoir plus",
