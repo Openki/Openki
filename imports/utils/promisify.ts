@@ -2,6 +2,9 @@ import { promisify } from 'es6-promisify';
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Tracker } from 'meteor/tracker';
+import { Promise } from 'meteor/promise';
+
+promisify.Promise = Promise;
 
 /**
  * This contains some async/Promise wrapper for existing meteor function,

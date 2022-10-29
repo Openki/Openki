@@ -3,6 +3,7 @@ import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 import { Router } from 'meteor/iron:router';
+import { Promise } from 'meteor/promise';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
@@ -74,7 +75,7 @@ export function load(): Promise<any> {
 		});
 	}
 
-	return result;
+	return result as any;
 }
 
 /**
