@@ -32,6 +32,7 @@ module.exports = {
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 		'import/prefer-default-export': 'off',
+		'default-param-last': 'off',
 		// Fix some problem with js files imports ts file
 		'import/no-unresolved': 'off',
 		'import/extensions': 'off',

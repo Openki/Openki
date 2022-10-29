@@ -156,9 +156,9 @@ export function init() {
 	subscribe();
 }
 
-export function change(regionId: string) {
+export async function change(regionId: string) {
 	LocalRegionStore.set(regionId);
 	if (regionId !== 'all' && Meteor.userId()) {
-		usersMethods.regionChange(regionId);
+		await usersMethods.regionChange(regionId);
 	}
 }
