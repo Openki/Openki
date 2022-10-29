@@ -11,7 +11,7 @@ export const findFilter = ServerPublish('log', (filter: FindFilter, limit: numbe
 
 	// Non-admins get an empty list
 	if (!UserPrivilegeUtils.privileged(Meteor.userId(), 'admin')) {
-		return [];
+		return Log.findFilter({}, 0);
 	}
 
 	return Log.findFilter(filter, limit);
