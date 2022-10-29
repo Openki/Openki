@@ -291,6 +291,7 @@
 	"editableImage.accept.error": "Seules les images sont autorisées.",
 	"email.base.greeting": "Salut {USERNAME}",
 	"email.base.profileLink": "Voir votre profil",
+	"email.base.receiveNote.courseTeam": "Vous recevez ce message parce que vous êtes dans l'équipe de ce cours.",
 	"email.base.spamPrevention": "Pour vous assurer que nos e-mails ne tombent pas dans vos SPAM, veuillez ajouter {MAIL} dans vos contacts.",
 	"email.base.unsubscribeLink.automatedNotifications": "Se désinscrire à toutes les notifications automatiques.",
 	"email.verified": "Votre E-mail a été vérifié.",
