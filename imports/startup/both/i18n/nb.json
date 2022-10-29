@@ -432,7 +432,6 @@
 	"notFound.goBack": "Gå tilbake",
 	"notFound.title": "Fant ikke siden",
 	"notFound.visitStartPage": "Gå til startsiden",
-	"notification.group.course.mail.greeting": "Hei {USERNAME}",
 	"notification.group.course.mail.linktext": "➜ Vis fag",
 	"notification.group.course.mail.subject": "{COURSE} foreslått i {GROUPS}",
 	"notification.join.mail.intro": "{USERNAME} tok akkurat del i {COURSE} som: {ROLE}.",
