@@ -209,21 +209,21 @@ import './styles.scss';
 	});
 
 	template.events({
-		'click .js-add-to-team-btn'(event, instance) {
+		async 'click .js-add-to-team-btn'(event, instance) {
 			event.preventDefault();
 			const change = instance.subscribeToTeam();
 			if (!change) {
 				throw new Error('Unexpected falsy: change');
 			}
-			processChange(change);
+			await processChange(change);
 		},
-		'click .js-remove-team'(event, instance) {
+		async 'click .js-remove-team'(event, instance) {
 			event.preventDefault();
 			const change = instance.removeFromTeam();
 			if (!change) {
 				throw new Error('Unexpected falsy: change');
 			}
-			processChange(change);
+			await processChange(change);
 		},
 	});
 }

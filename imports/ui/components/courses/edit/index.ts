@@ -487,7 +487,7 @@ export type Data = {
 			instance.busy('saving');
 			PleaseLogin(instance, async () => {
 				try {
-					courseId = (await CoursesMethods.save(courseId, changes)) as string;
+					courseId = await CoursesMethods.save(courseId, changes);
 
 					if (instance.data.isFrame) {
 						instance.savedCourseId.set(courseId);
