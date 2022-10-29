@@ -481,7 +481,6 @@
 	"introduction.Title": "Was tut {SITENAME} für dich?",
 	"introduction.close.title": "Einführung schliessen",
 	"introduction.more": "Mehr Infos:",
-	"invitation.email.greeting": "Hallo {USERNAME}",
 	"kiosk.future": "Zukünftige Veranstaltungen:",
 	"kiosk.noFutureEvents": "Es gibt keine zukünftigen Veranstaltungen",
 	"kiosk.ongoing": "{NUM, plural, one{Eine laufende Veranstaltung} other{# laufende Veranstaltungen:} }",
