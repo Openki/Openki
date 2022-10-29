@@ -2,28 +2,15 @@ import { promisify } from 'es6-promisify';
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Tracker } from 'meteor/tracker';
+import { Promise } from 'meteor/promise';
+
+promisify.Promise = Promise;
 
 /**
  * This contains some async/Promise wrapper for existing meteor function,
  * so those can be used mit asnyc/await.
  */
 export const MeteorAsync = {
-	call:
-		// On the server there should be a callAsync: https://docs.meteor.com/changelog.html#v14420170407
-		Meteor.callAsync
-			? Meteor.callAsync
-			: Meteor.call &&
-			  ((name: string, ...args: unknown[]) =>
-					new Promise((resolve, reject) => {
-						Meteor.call(name, ...args, (err: unknown, res: unknown) => {
-							if (err) {
-								reject(err);
-							} else {
-								resolve(res);
-							}
-						});
-					})),
-
 	subscribe:
 		Meteor.subscribe &&
 		(function () {

@@ -232,10 +232,10 @@ import './styles.scss';
 
 				const regionId = LocalRegionStore.getCleaned();
 				if (regionId) {
-					UsersMethods.regionChange(regionId);
+					await UsersMethods.regionChange(regionId);
 				}
 
-				UsersMethods.updateLocale(Session.get('locale'));
+				await UsersMethods.updateLocale(Session.get('locale'));
 
 				Analytics.trackEvent(
 					'Logins',
@@ -249,7 +249,7 @@ import './styles.scss';
 			}
 		},
 
-		'click .js-oauth-btn'(event, instance) {
+		async 'click .js-oauth-btn'(event, instance) {
 			event.preventDefault();
 
 			const { service } = event.currentTarget.dataset;
@@ -260,7 +260,7 @@ import './styles.scss';
 			}
 
 			instance.busy(service);
-			(Meteor as any)[loginMethod]({}, (err: any) => {
+			(Meteor as any)[loginMethod]({}, async (err: any) => {
 				instance.busy(false);
 				if (err) {
 					Alert.serverError(err);
@@ -272,10 +272,10 @@ import './styles.scss';
 
 					const regionId = LocalRegionStore.getCleaned();
 					if (regionId) {
-						UsersMethods.regionChange(regionId);
+						await UsersMethods.regionChange(regionId);
 					}
 
-					UsersMethods.updateLocale(Session.get('locale'));
+					await UsersMethods.updateLocale(Session.get('locale'));
 
 					Analytics.trackEvent(
 						'Logins',
@@ -363,10 +363,10 @@ import './styles.scss';
 
 				const regionId = LocalRegionStore.getCleaned();
 				if (regionId) {
-					UsersMethods.regionChange(regionId);
+					await UsersMethods.regionChange(regionId);
 				}
 
-				UsersMethods.updateLocale(Session.get('locale'));
+				await UsersMethods.updateLocale(Session.get('locale'));
 
 				const user = Meteor.user();
 
@@ -517,10 +517,10 @@ import './styles.scss';
 
 				const regionId = LocalRegionStore.getCleaned();
 				if (regionId) {
-					UsersMethods.regionChange(regionId);
+					await UsersMethods.regionChange(regionId);
 				}
 
-				UsersMethods.updateLocale(Session.get('locale'));
+				await UsersMethods.updateLocale(Session.get('locale'));
 
 				const user = Meteor.user();
 
