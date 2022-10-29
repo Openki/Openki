@@ -503,7 +503,6 @@
   "introduction.more": "More info:",
   "introduction.Title": "What does {SITENAME} do for you?",
   "invitation.email.about": "{SITENAME} is a open peer-to-peer education platform where users collectively organize Courses. You can propose, discuss, develop and publish ideas and eventually meet nice people online or in real life. Enjoy sharing your experiences.",
-  "invitation.email.greeting": "Hi {USERNAME}",
   "invitation.email.intro": "You have been invited by {INVITER} to join \"{TENANT}\" on {SITENAME}.",
   "invitation.email.join": "Accept invitation",
   "invitation.email.more": "Find out more",
