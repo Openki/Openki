@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { Accounts } from 'meteor/accounts-base';
 import juice from 'juice';
+import { Spacebars } from 'meteor/spacebars';
 
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
@@ -71,7 +72,9 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 			},
 			username: (user as UserModel).getDisplayName(),
 			url,
-			reportEmail: PrivateSettings.reporter.recipient,
+			reportEmail: Spacebars.SafeString(
+				`<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
+			),
 			locale: user.locale,
 		}),
 	);
@@ -131,7 +134,9 @@ Accounts.emailTemplates.resetPassword.html = function (user, url) {
 			},
 			username: (user as UserModel).getDisplayName(),
 			url,
-			reportEmail: PrivateSettings.reporter.recipient,
+			reportEmail: Spacebars.SafeString(
+				`<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
+			),
 			locale: user.locale,
 		}),
 	);
