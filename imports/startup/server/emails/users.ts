@@ -29,8 +29,8 @@ Accounts.emailTemplates.verifyEmail.subject = function (user) {
 };
 
 Accounts.emailTemplates.verifyEmail.text = function (user, url) {
-	return `${i18n('verifyEmail.email.gretting', {
-		NAME: (user as UserModel).getDisplayName(),
+	return `${i18n('email.base.greeting', {
+		USERNAME: (user as UserModel).getDisplayName(),
 		lng: user.locale,
 	})}
 	
@@ -44,15 +44,15 @@ ${i18n('verifyEmail.email.verification', {
 })}
 ${url}
 
-${i18n('verifyEmail.email.farewell', {
+${i18n('email.base.farewell', {
 	lng: user.locale,
 })}
-${i18n('verifyEmail.email.postscript', {
+${i18n('email.base.postscript', {
 	SITE: Accounts.emailTemplates.siteName,
 	lng: user.locale,
 })}
 
-${i18n('verifyEmail.email.unexpected', {
+${i18n('email.base.unexpected', {
 	REPORTEMAIL: PrivateSettings.reporter.recipient,
 	lng: user.locale,
 })}`;
@@ -89,8 +89,8 @@ Accounts.urls.resetPassword = function (token) {
 };
 
 Accounts.emailTemplates.resetPassword.text = function (user, url) {
-	return `${i18n('resetPassword.email.gretting', {
-		NAME: (user as UserModel).getDisplayName(),
+	return `${i18n('email.base.greeting', {
+		USERNAME: (user as UserModel).getDisplayName(),
 		lng: user.locale,
 	})}
 				
@@ -104,15 +104,15 @@ ${i18n('resetPassword.email.verification', {
 })}
 ${url}
 
-${i18n('resetPassword.email.farewell', {
+${i18n('email.base.farewell', {
 	lng: user.locale,
 })}
-${i18n('resetPassword.email.postscript', {
+${i18n('email.base.postscript', {
 	SITE: Accounts.emailTemplates.siteName,
 	lng: user.locale,
 })}
 
-${i18n('resetPassword.email.unexpected', {
+${i18n('email.base.unexpected', {
 	REPORTEMAIL: PrivateSettings.reporter.recipient,
 	lng: user.locale,
 })}`;
