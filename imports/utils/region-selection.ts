@@ -8,6 +8,7 @@ import { RegionModel } from '/imports/api/regions/regions';
 
 import * as UserLocation from '/imports/utils/user-location';
 import * as UrlTools from '/imports/utils/url-tools';
+import { Subscriber } from '/imports/utils/ServerPublish';
 
 import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
@@ -61,8 +62,12 @@ function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: 
  * @param preferredTenant On set: Prefer a particular tenant when detection.
  * @param confirmAutodectionByUser On true: Let the user approve the automatic region selection/detection.
  */
-export async function subscribe(preferredTenant?: string, confirmAutodectionByUser = true) {
-	const findFilter = Regions.findFilter.subscribe(async () => {
+export async function subscribe(
+	instance?: Subscriber,
+	preferredTenant?: string,
+	confirmAutodectionByUser = true,
+) {
+	const findFilter = Regions.findFilter.subscribe(instance, async () => {
 		const selectors = [
 			LocalRegionStore.get(),
 			UrlTools.queryParam('region'),
