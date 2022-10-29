@@ -293,6 +293,7 @@
 	"email.base.profileLink": "Voir votre profil",
 	"email.base.receiveNote.courseTeam": "Vous recevez ce message parce que vous êtes dans l'équipe de ce cours.",
 	"email.base.spamPrevention": "Pour vous assurer que nos e-mails ne tombent pas dans vos SPAM, veuillez ajouter {MAIL} dans vos contacts.",
+	"email.base.unexpected": "Si vous ignorez pourquoi vous recevez cet email, vous pouvez l'ignorer ou nous envoyez une notification à : {REPORTEMAIL}",
 	"email.base.unsubscribeLink.automatedNotifications": "Se désinscrire à toutes les notifications automatiques.",
 	"email.verified": "Votre E-mail a été vérifié.",
 	"emailrequest.text.greeting": "Bonjour \"{NAME}\"",
