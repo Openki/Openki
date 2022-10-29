@@ -10,7 +10,6 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Regions } from '/imports/api/regions/regions';
 import { UserEntity, User, Users } from '/imports/api/users/users';
-import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
 
 import { getSiteName } from '/imports/utils/getSiteName';
@@ -260,7 +259,11 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 	// Update the cache if users are pushed to the collection
 	Users.find({}, { fields: { _id: 1, username: 1, contribution: 1 } }).observe({
 		added(user) {
-			cache[user._id] = user;
+			cache[user._id] = _.extend(new User(), user || { username: '?!' });
+			if (pending[user._id]) {
+				pending[user._id].changed();
+				delete pending[user._id];
+			}
 		},
 		changed(user) {
 			cache[user._id] = user;
@@ -299,17 +302,7 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 					lookups = 0;
 				}
 
-				usersMethods
-					.name(userId)
-					.then((user) => {
-						cache[userId] = _.extend(new User(), user) || _.extend(new User(), { username: '?!' });
-						pending[userId].changed();
-						delete pending[userId];
-					})
-					.catch((err) => {
-						/* eslint-disable-next-line no-console */
-						console.warn(err);
-					});
+				Meteor.subscribe('user.simple', userId);
 			}
 		}
 

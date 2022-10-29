@@ -11,13 +11,12 @@ import { Users, User, UserModel } from '/imports/api/users/users';
 import { Method } from '/imports/api/courses/methods';
 
 import { hasRole } from '/imports/utils/course-role-utils';
-import { MeteorAsync } from '/imports/utils/promisify';
 import { Notification } from '/imports/notification/notification';
 import { StringEnum, Type } from '/imports/utils/CustomChecks';
 
 export async function processChange<T>(change: Change<T>) {
 	try {
-		await MeteorAsync.call(change.constructor.method, change.dict());
+		await Meteor.callAsync(change.constructor.method, change.dict());
 	} catch (err) {
 		/* eslint-disable-next-line no-console */
 		console.log(err);

@@ -389,16 +389,6 @@ export const hidePricePolicy = ServerMethod('user.hidePricePolicy', () => {
 	Users.update(userId, { $set: { hidePricePolicy: true } });
 });
 
-export const name = ServerMethod('user.name', function (userId: string) {
-	check(userId, String);
-
-	this.unblock();
-	const user = Users.findOne(userId, { fields: { username: 1, contribution: 1 } });
-	if (!user) {
-		return undefined;
-	}
-	return user as Meteor.User;
-});
 
 export const updateLocale = ServerMethod('user.updateLocale', (locale: string) => {
 	check(locale, String);
