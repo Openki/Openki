@@ -261,7 +261,7 @@ export const save = ServerMethod(
 				{ _id: courseId },
 				{ $set: enrichedSet },
 				{ multi: true },
-					AsyncTools.checkUpdateOne,
+				AsyncTools.checkUpdateOne,
 			);
 
 			historyDenormalizer.afterUpdate(courseId, user._id);
