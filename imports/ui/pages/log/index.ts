@@ -24,7 +24,6 @@ import './styles.scss';
 		Parameters<ReturnType<LogCollection['Filtering']>['read']>[0],
 		{
 			filter: ReturnType<LogCollection['Filtering']>;
-			ready: ReactiveVar<boolean>;
 			limit: ReactiveVar<number>;
 			updateUrl: () => boolean;
 		}
@@ -58,7 +57,6 @@ import './styles.scss';
 			return true;
 		};
 
-		instance.ready = new ReactiveVar(false);
 		instance.limit = new ReactiveVar(batchLoad);
 
 		const filter = Log.Filtering();
@@ -73,14 +71,11 @@ import './styles.scss';
 		// Update whenever filter changes
 		instance.autorun(() => {
 			const filterQuery = filter.toQuery();
-			instance.ready.set(false);
 
 			// Have some extra log entries ready so that they are shown immediately
 			// when more are demanded
 			const overLimit = instance.limit.get() + batchLoad + 1;
-			instance.subscribe('log', filterQuery, overLimit, () => {
-				instance.ready.set(true);
-			});
+			instance.subscribe('log', filterQuery, overLimit);
 		});
 	});
 
@@ -132,10 +127,6 @@ import './styles.scss';
 				last = ts;
 			});
 			return inter;
-		},
-
-		loading() {
-			return !Template.instance().ready.get();
 		},
 	});
 
