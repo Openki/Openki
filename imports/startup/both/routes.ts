@@ -215,7 +215,9 @@ RouterAsync.route('framePropose', {
 	async onRun() {
 		await import('/imports/ui/pages/frames/propose');
 	},
-	waitOn: () => Meteor.subscribe('Regions'),
+	subscriptions() {
+		return { regions: Regions.all.subscribe() };
+	},
 	data() {
 		const predicates = {
 			region: Predicates.id,
