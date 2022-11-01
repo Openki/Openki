@@ -4,7 +4,7 @@ import { Mongo } from 'meteor/mongo';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
-import { Events, EventModel } from '/imports/api/events/events';
+import * as Events from '/imports/api/events/publications';
 import { Geodata, RegionModel, Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 import { VenueModel } from '/imports/api/venues/venues';
@@ -13,6 +13,7 @@ import * as VenuesMethods from '/imports/api/venues/methods';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
+import { SubscriptionType } from '/imports/utils/ServerPublish';
 
 import { CenteredMarkerEntity, MainMarkerEntity } from '/imports/ui/lib/location-tracker';
 
@@ -33,6 +34,8 @@ const Template = TemplateAny as TemplateStaticTyped<
 	'venueDetailsPage',
 	{ venue: VenueModel },
 	{
+		upcomingEvents?: SubscriptionType<typeof Events['findFilter']>;
+		pastEvents?: SubscriptionType<typeof Events['findFilter']>;
 		state: ReactiveDict<{
 			editing: boolean;
 			verifyDelete: boolean;
@@ -42,8 +45,6 @@ const Template = TemplateAny as TemplateStaticTyped<
 		markers: Mongo.Collection<MainMarkerEntity | CenteredMarkerEntity>;
 		setLocation: (loc?: Geodata) => void;
 		setRegion: (region: RegionModel | undefined) => void;
-		getUpcomingEvents: (limit: number) => EventModel[];
-		getPastEvents: (limit: number) => EventModel[];
 	}
 >;
 
@@ -106,23 +107,8 @@ template.onCreated(function () {
 		const filter = { venue: venue._id, after: now };
 
 		// Add one to the limit so we know there is more to show
-		instance.subscribe('Events.findFilter', filter, limit + 1);
+		instance.upcomingEvents = Events.findFilter.subscribe(filter, limit + 1);
 	});
-
-	instance.getUpcomingEvents = (limit) => {
-		const { venue } = Template.currentData();
-		if (!venue._id) {
-			return [];
-		}
-
-		const now = reactiveNow.get();
-		const filter = {
-			venue: instance.data.venue._id,
-			after: now,
-		};
-
-		return Events.findFilter(filter, limit).fetch();
-	};
 
 	instance.autorun(() => {
 		const { venue } = Template.currentData();
@@ -136,22 +122,8 @@ template.onCreated(function () {
 		const filter = { venue: venue._id, before: now };
 
 		// Add one to the limit so we know there is more to show
-		instance.subscribe('Events.findFilter', filter, limit + 1);
+		instance.pastEvents = Events.findFilter.subscribe(filter, limit + 1);
 	});
-	instance.getPastEvents = (limit) => {
-		const { venue } = Template.currentData();
-		if (!venue._id) {
-			return [];
-		}
-
-		const now = reactiveNow.get();
-		const filter = {
-			venue: instance.data.venue._id,
-			before: now,
-		};
-
-		return Events.findFilter(filter, limit).fetch();
-	};
 });
 
 template.onRendered(function () {
@@ -184,31 +156,24 @@ template.helpers({
 
 	upcomingEvents() {
 		const instance = Template.instance();
-		const limit = instance.state.get('upcomingEventLimit') || 0;
-		return instance.getUpcomingEvents(limit);
+		return (instance.upcomingEvents?.().fetch() || []).slice(0, -1);
 	},
 
 	hasMoreUpcomingEvents() {
 		const instance = Template.instance();
-
-		const limit = instance.state.get('upcomingEventLimit') || 0;
-		const query = instance.getUpcomingEvents(limit + 1);
-		return query.length > limit;
+		const count = instance.upcomingEvents?.().count() || 0;
+		return count > (instance.state.get('upcomingEventLimit') || 0);
 	},
 
 	pastEvents() {
 		const instance = Template.instance();
-
-		const limit = instance.state.get('pastEventLimit') || 0;
-		return instance.getPastEvents(limit);
+		return (instance.pastEvents?.().fetch() || []).slice(0, -1);
 	},
 
 	hasMorePastEvents() {
 		const instance = Template.instance();
-
-		const limit = instance.state.get('pastEventLimit') || 0;
-		const query = instance.getPastEvents(limit + 1);
-		return query.length > limit;
+		const count = instance.pastEvents?.().count() || 0;
+		return count > (instance.state.get('pastEventLimit') || 0);
 	},
 });
 
