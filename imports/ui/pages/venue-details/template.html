@@ -100,10 +100,10 @@
 								{{#if loc}}
 									<div class="col-md-5">
 										<div class="details-map">
-											{{> map markers=markers}}
+											{{> map markers=instance.markers}}
 											<div class="coordinates">
 												{{i18n 'venueDetails.coordinates' 'Coordinates:'}}
-												{{locationDisplay this.loc}}
+												{{locationFormat this.loc}}
 											</div>
 										</div>
 									</div>

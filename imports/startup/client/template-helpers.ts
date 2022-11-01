@@ -16,6 +16,7 @@ import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue, LocalizedValue } from '/imports/utils/getLocalizedValue';
 import { checkContribution } from '/imports/utils/checkContribution';
+import { locationFormat } from '/imports/utils/location-format';
 
 import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
@@ -157,6 +158,10 @@ const helpers: { [name: string]: Function } = {
 			return false;
 		}
 		return toMomentWithTimeLocale(date).format('dddd, Do MMMM');
+	},
+
+	locationFormat(loc: { coordinates: [number, number] }) {
+		return locationFormat(loc);
 	},
 
 	/**
