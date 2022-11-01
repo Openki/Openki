@@ -170,16 +170,16 @@ template.onRendered(function () {
 });
 
 template.helpers({
-	mayEdit() {
-		return this.editableBy(Meteor.user());
+	mayEdit(venue: VenueModel) {
+		return venue.editableBy(Meteor.user());
 	},
 
-	facilityNames() {
-		return Object.keys(this.facilities);
+	facilityNames(venue: VenueModel) {
+		return Object.keys(venue.facilities);
 	},
 
 	facilitiesDisplay(name: string) {
-		return `venue.facility.${name}`;
+		return i18n(`venue.facility.${name}`);
 	},
 
 	upcomingEvents() {
