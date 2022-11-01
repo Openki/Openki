@@ -120,9 +120,8 @@ export const update = ServerMethod('region.update', (regionId: string, changes: 
 		set.tz = changes.tz.trim().substring(0, 40);
 	}
 
-	if (changes.description) {
+	if (changes.description !== undefined) {
 		set.description = changes.description.trim().substring(0, 1000);
-		// Todo: check this already when the user writes into the textarea?
 	}
 
 	Regions.update({ _id: regionId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);

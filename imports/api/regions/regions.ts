@@ -86,7 +86,7 @@ export class Region {
 	/**
 	 * Check whether a user may edit the region.
 	 */
-	editableBy(this: RegionModel, user?: UserModel) {
+	editableBy(this: RegionModel, user?: UserModel | null) {
 		if (!user) {
 			return false;
 		}
