@@ -304,7 +304,7 @@ import './styles.scss';
 			},
 			'email invalid': {
 				text() {
-					return i18n('visitor.warning.emailNotValid');
+					return i18n('register.warning.emailNotValid');
 				},
 				field: 'email',
 			},
