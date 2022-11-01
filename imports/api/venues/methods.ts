@@ -93,7 +93,7 @@ export const save = ServerMethod('venue.save', (venueId: string, changes: SaveFi
 		}, {});
 	}
 
-	if (changes.otherFacilities) {
+	if (changes.otherFacilities !== undefined) {
 		set.otherFacilities = changes.otherFacilities.substring(0, 40 * 1024);
 	}
 

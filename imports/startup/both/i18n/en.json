@@ -538,7 +538,6 @@
   "languageSelection.translatedPercent": "% translated",
   "loading.loading": "Loading…",
   "location.details.hosts": "Hosts:",
-  "location.details.online": "Website:",
   "location.format": "{LAT} {LON}",
   "location.link.tooltip": "Show details of {VENUE}",
   "log.list.windowtitle": "Log",
