@@ -1,5 +1,6 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 import * as Regions from '/imports/api/regions/publications';
 import { TenantModel } from '/imports/api/tenants/tenants';
@@ -16,7 +17,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 	'tenantRegions',
 	Data,
 	{
-		regions: SubscriptionType<typeof Regions['findFilter']>;
+		regions: ReactiveVar<SubscriptionType<typeof Regions['findFilter']> | undefined>;
 	}
 >;
 
@@ -24,16 +25,18 @@ const template = Template.tenantRegions;
 
 template.onCreated(function () {
 	const instance = this;
+
+	instance.regions = new ReactiveVar(undefined);
 	instance.autorun(() => {
 		const { tenant } = Template.currentData();
-		instance.regions = Regions.findFilter.subscribe(instance, { tenant: tenant._id });
+		instance.regions.set(Regions.findFilter.subscribe(instance, { tenant: tenant._id }));
 	});
 });
 
 template.helpers({
 	regions() {
 		const instance = Template.instance();
-		return instance.regions();
+		return instance.regions.get()?.();
 	},
 
 	showAddRegion() {

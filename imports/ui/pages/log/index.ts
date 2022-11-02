@@ -25,9 +25,9 @@ import './styles.scss';
 		// LogCollection.Filtering Params are allowed as data input
 		Parameters<ReturnType<LogCollection['Filtering']>['read']>[0],
 		{
-			logs: SubscriptionType<typeof Logs['findFilter']>;
-			filter: ReturnType<LogCollection['Filtering']>;
+			logs: ReactiveVar<SubscriptionType<typeof Logs['findFilter']> | undefined>;
 			limit: ReactiveVar<number>;
+			filter: ReturnType<LogCollection['Filtering']>;
 			updateUrl: () => boolean;
 		}
 	>;
@@ -60,6 +60,7 @@ import './styles.scss';
 			return true;
 		};
 
+		instance.logs = new ReactiveVar(undefined);
 		instance.limit = new ReactiveVar(batchLoad);
 
 		const filter = Log.Filtering();
@@ -78,7 +79,7 @@ import './styles.scss';
 			// Have some extra log entries ready so that they are shown immediately
 			// when more are demanded
 			const overLimit = instance.limit.get() + batchLoad + 1;
-			instance.logs = Logs.findFilter.subscribe(instance, filterQuery, overLimit);
+			instance.logs.set(Logs.findFilter.subscribe(instance, filterQuery, overLimit));
 		});
 	});
 
@@ -106,17 +107,14 @@ import './styles.scss';
 			const instance = Template.instance();
 
 			const limit = instance.limit.get();
-			const results = instance
-				.logs()
-				.fetch()
-				.slice(0, limit + 1);
+			const results = instance.logs.get()?.().count() || 0;
 
-			return results.length > limit;
+			return results > limit;
 		},
 
 		results() {
 			const instance = Template.instance();
-			const entries = instance.logs().fetch().slice(0, instance.limit.get());
+			const entries = instance.logs.get()?.().fetch().slice(0, instance.limit.get()) || [];
 			let last: moment.Moment | false = false;
 			const inter: (LogEntity | { interval: string })[] = [];
 			entries.forEach((entry) => {
