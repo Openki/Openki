@@ -110,7 +110,7 @@ template.onCreated(function () {
 		const filter = { venue: venue._id, after: now };
 
 		// Add one to the limit so we know there is more to show
-		instance.upcomingEvents.set(Events.findFilter.subscribe(filter, limit + 1));
+		instance.upcomingEvents.set(Events.findFilter.subscribe(instance, filter, limit + 1));
 	});
 
 	instance.autorun(() => {
@@ -125,7 +125,7 @@ template.onCreated(function () {
 		const filter = { venue: venue._id, before: now };
 
 		// Add one to the limit so we know there is more to show
-		instance.pastEvents.set(Events.findFilter.subscribe(filter, limit + 1));
+		instance.pastEvents.set(Events.findFilter.subscribe(instance, filter, limit + 1));
 	});
 });
 
