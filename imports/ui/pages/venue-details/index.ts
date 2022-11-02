@@ -1,6 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import { ReactiveVar } from 'meteor/reactive-var';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
@@ -34,8 +35,8 @@ const Template = TemplateAny as TemplateStaticTyped<
 	'venueDetailsPage',
 	{ venue: VenueModel },
 	{
-		upcomingEvents?: SubscriptionType<typeof Events['findFilter']>;
-		pastEvents?: SubscriptionType<typeof Events['findFilter']>;
+		upcomingEvents: ReactiveVar<SubscriptionType<typeof Events['findFilter']> | undefined>;
+		pastEvents: ReactiveVar<SubscriptionType<typeof Events['findFilter']> | undefined>;
 		state: ReactiveDict<{
 			editing: boolean;
 			verifyDelete: boolean;
@@ -66,6 +67,8 @@ template.onCreated(function () {
 
 	instance.busy();
 
+	instance.upcomingEvents = new ReactiveVar(undefined);
+	instance.pastEvents = new ReactiveVar(undefined);
 	instance.state = new ReactiveDict();
 	instance.state.setDefault({
 		editing: false,
@@ -107,7 +110,7 @@ template.onCreated(function () {
 		const filter = { venue: venue._id, after: now };
 
 		// Add one to the limit so we know there is more to show
-		instance.upcomingEvents = Events.findFilter.subscribe(filter, limit + 1);
+		instance.upcomingEvents.set(Events.findFilter.subscribe(filter, limit + 1));
 	});
 
 	instance.autorun(() => {
@@ -122,7 +125,7 @@ template.onCreated(function () {
 		const filter = { venue: venue._id, before: now };
 
 		// Add one to the limit so we know there is more to show
-		instance.pastEvents = Events.findFilter.subscribe(filter, limit + 1);
+		instance.pastEvents.set(Events.findFilter.subscribe(filter, limit + 1));
 	});
 });
 
@@ -156,23 +159,23 @@ template.helpers({
 
 	upcomingEvents() {
 		const instance = Template.instance();
-		return (instance.upcomingEvents?.().fetch() || []).slice(0, -1);
+		return (instance.upcomingEvents.get()?.().fetch() || []).slice(0, -1);
 	},
 
 	hasMoreUpcomingEvents() {
 		const instance = Template.instance();
-		const count = instance.upcomingEvents?.().count() || 0;
+		const count = instance.upcomingEvents.get()?.().count() || 0;
 		return count > (instance.state.get('upcomingEventLimit') || 0);
 	},
 
 	pastEvents() {
 		const instance = Template.instance();
-		return (instance.pastEvents?.().fetch() || []).slice(0, -1);
+		return (instance.pastEvents.get()?.().fetch() || []).slice(0, -1);
 	},
 
 	hasMorePastEvents() {
 		const instance = Template.instance();
-		const count = instance.pastEvents?.().count() || 0;
+		const count = instance.pastEvents.get()?.().count() || 0;
 		return count > (instance.state.get('pastEventLimit') || 0);
 	},
 });
