@@ -1,6 +1,10 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Groups, GroupModel } from '/imports/api/groups/groups';
+import { ReactiveVar } from 'meteor/reactive-var';
+
+import * as Groups from '/imports/api/groups/publications';
 import { Regions } from '/imports/api/regions/regions';
+
+import { SubscriptionType } from '/imports/utils/ServerPublish';
 
 import './template.html';
 import './styles.scss';
@@ -8,38 +12,29 @@ import './styles.scss';
 const Template = TemplateAny as TemplateStaticTyped<
 	'featuredGroup',
 	Record<string, unknown>,
-	{ featuredGroupId: () => string | undefined; featuredGroup: () => GroupModel | undefined }
+	{ featuredGroup: ReactiveVar<SubscriptionType<typeof Groups['details']> | undefined> }
 >;
 
 const template = Template.featuredGroup;
 
 template.onCreated(function () {
-	this.featuredGroupId = () => {
+	const instance = this;
+
+	instance.featuredGroup = new ReactiveVar(undefined);
+
+	instance.autorun(() => {
 		const region = Regions.currentRegion();
-		if (!region?.featuredGroup) {
-			return undefined;
-		}
-		return region.featuredGroup;
-	};
-
-	this.featuredGroup = () => {
-		const groupId = this.featuredGroupId();
-		if (!groupId) {
-			return undefined;
-		}
-		return Groups.findOne(groupId);
-	};
-
-	this.autorun(() => {
-		const groupId = this.featuredGroupId();
-		if (groupId) {
-			this.subscribe('group', groupId);
+		const featuredGroupId = region?.featuredGroup;
+		if (!featuredGroupId) {
+			instance.featuredGroup.set(undefined);
+		} else {
+			instance.featuredGroup.set(Groups.details.subscribe(instance, featuredGroupId));
 		}
 	});
 });
 
 template.helpers({
 	featuredGroup() {
-		return Template.instance().featuredGroup();
+		return Template.instance().featuredGroup.get()?.();
 	},
 });

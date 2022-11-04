@@ -129,7 +129,7 @@ import './styles.scss';
 
 		instance.autorun(() => {
 			const { member } = Template.currentData();
-			instance.user.set(Users.details.subscribe(member.user));
+			instance.user.set(Users.details.subscribe(instance, member.user));
 		});
 
 		instance.editableMessage = new Editable(
