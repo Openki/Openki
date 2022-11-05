@@ -19,7 +19,7 @@
 					</h2>
 
 					{{> courseCategories course}}
-					{{> regionTag}}
+					{{> regionTag this}}
 					{{#each info in customFields}}
 						<p>
 							<strong>{{info.displayText}}</strong>: <span
@@ -135,7 +135,7 @@
 		</div>
 		<div class="details-body event-details-body">
 			{{#unless courseId}}
-				{{> regionTag}}
+				{{> regionTag this}}
 			{{/unless}}
 			<div class="details-content">
 				{{#if internal}}
