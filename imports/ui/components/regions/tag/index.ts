@@ -1,25 +1,42 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
 
-import { Regions } from '/imports/api/regions/regions';
+import * as Regions from '/imports/api/regions/publications';
+
+import { SubscriptionType } from '/imports/utils/ServerPublish';
 
 import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<'regionTag'>;
+const Template = TemplateAny as TemplateStaticTyped<
+	'regionTag',
+	{ region: string },
+	{
+		regions: ReactiveVar<SubscriptionType<typeof Regions['all']> | undefined>;
+	}
+>;
 
 const template = Template.regionTag;
 
 template.onCreated(function () {
 	const instance = this;
 
-	instance.subscribe('Regions');
+	instance.regions = new ReactiveVar(undefined);
+	instance.autorun(() => {
+		instance.regions.set(Regions.all.subscribe());
+	});
 });
 
 template.helpers({
 	regionName() {
-		return Regions.findOne(this.region)?.name;
+		const instance = Template.instance();
+		return instance.regions
+			.get()?.()
+			.fetch()
+			.find((r) => r._id === instance.data.region)?.name;
 	},
 	hasMultipleRegions() {
-		return Regions.findFilter({}, 2).count() > 1;
+		const instance = Template.instance();
+		return instance.regions.get()?.().count() ?? 0 > 1;
 	},
 });
