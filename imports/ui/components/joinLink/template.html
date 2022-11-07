@@ -5,22 +5,18 @@
 	</h3>
 	<label
 		   class="form-label">{{i18n 'joinLink.description' 'Anyone with this link can join your organisation as member.'}}</label>
-	<form class="row g-2 mb-2 js-email-form">
-		{{#unless joinLink}}
-			<div class="col-auto">
-				{{> joinLinkCreate tenantId=tenant._id}}
-			</div>
-		{{else}}
-			<div class="col">
-				<input class="form-control js-join-link" id="joinLink" type="text"
-					   value="{{joinLink.token}}" readonly />
-			</div>
+	{{#unless joinLink}}
+		{{> joinLinkCreate tenantId=tenant._id}}
+	{{else}}
+		<input class="form-control js-join-link" id="joinLink" type="text"
+			   value="{{joinLink.token}}" readonly />
+		<form class="row g-2 mb-2 js-email-form">
 			<div class="col-auto">
 				{{> joinLinkRebuild tenantId=tenant._id}}
 			</div>
 			<div class="col-auto">
 				{{> joinLinkRemove tenantId=tenant._id}}
 			</div>
-		{{/unless}}
-	</form>
+		</form>
+	{{/unless}}
 </template>
