@@ -10,6 +10,7 @@ Meteor.publish('joinLink', function (tenantId, token) {
 
 	if (joinLink.count() === 0) {
 		this.ready();
+		return undefined;
 	}
 
 	return [joinLink, Tenants.find(tenantId)];
