@@ -8,8 +8,9 @@
 	{{#unless joinLink}}
 		{{> joinLinkCreate tenantId=tenant._id}}
 	{{else}}
-		<input class="form-control js-join-link" id="joinLink" type="text"
-			   value="{{joinLink.token}}" readonly />
+		<input class="form-control js-join-link mb-3" id="joinLink" type="text"
+			   value="{{urlFor 'join' token=joinLink.token query=(concat 'tenant=' joinLink.tenant)}}"
+			   readonly />
 		<form class="row g-2 mb-2 js-email-form">
 			<div class="col-auto">
 				{{> joinLinkRebuild tenantId=tenant._id}}
