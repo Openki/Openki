@@ -31,7 +31,6 @@ import * as Tenants from '/imports/api/tenants/publications';
 import * as Courses from '/imports/api/courses/publications';
 import * as Invitations from '/imports/api/invitations/publications';
 import * as Users from '/imports/api/users/publications';
-import { UserModel } from '/imports/api/users/users';
 
 import { Filtering } from '/imports/utils/filtering';
 import { LocalTime } from '/imports/utils/local-time';
@@ -435,7 +434,7 @@ RouterAsync.route('profile', {
 				verified: boolean;
 			};
 		} = {};
-		const user: UserModel | null = Meteor.user();
+		const user = Meteor.user();
 		const subs = this.subscriptions();
 		if (user && subs) {
 			const userdata = {
@@ -613,7 +612,7 @@ RouterAsync.route('invitation', {
 		await import('/imports/ui/pages/invitation');
 	},
 	subscriptions() {
-		const tenantId = this.params?.query?.tenant;
+		const tenantId = this.params?.query?.tenant ;
 		const invitationToken = this.params?.token;
 		if (!tenantId || !invitationToken) {
 			return undefined;
@@ -636,6 +635,33 @@ RouterAsync.route('invitation', {
 		}
 
 		return invitation;
+	},
+});
+
+RouterAsync.route('join', {
+	path: 'join/:token',
+	template: 'joinPage',
+	async onRun() {
+		await import('/imports/ui/pages/join');
+	},
+	waitOn() {
+		return [Meteor.subscribe('joinLink', this.params?.query?.tenant, this.params?.token)];
+	},
+	data() {
+		const tenant = Tenants.findOne({ _id: this.params?.query?.tenant });
+		if (!tenant) {
+			return undefined;
+		}
+
+		const joinLink = JoinLinks.findOne({
+			tenant: this.params?.query?.tenant,
+			token: this.params?.token,
+		});
+		if (!joinLink) {
+			return undefined;
+		}
+
+		return { tenant, joinLink };
 	},
 });
 
@@ -748,17 +774,23 @@ RouterAsync.route('timetable', {
 			return perVenue[id].perRoom[room].rows;
 		};
 
-		events.forEach((originalEvent: EventModel) => {
-			const event: any = {
+		events.forEach((originalEvent) => {
+			const event: EventEntity & {
+				relStart: number;
+				relEnd: number;
+			} = {
 				...originalEvent,
+				relStart: (originalEvent.start.getTime() - timestampStart) / span,
+				relEnd: (timestampEnd - originalEvent.end.getTime()) / span,
 			};
-			event.relStart = (event.start.getTime() - timestampStart) / span;
-			event.relEnd = (timestampEnd - event.end.getTime()) / span;
 			let placed = false;
 
 			const room = event.room || null;
-			const roomRows = useVenue(event.venue, room);
-			roomRows.forEach((roomRow: any) => {
+			const roomRows = useVenue(event.venue, room) as unknown as (EventEntity & {
+				relStart: number;
+				relEnd: number;
+			})[][];
+			roomRows.forEach((roomRow) => {
 				let last: any;
 				roomRow.forEach((placedEvent: any) => {
 					if (!last || placedEvent.end > last) {
@@ -773,7 +805,7 @@ RouterAsync.route('timetable', {
 				return true;
 			});
 			if (!placed) {
-				roomRows.push([event] as any);
+				roomRows.push([event]);
 			}
 		});
 

@@ -535,7 +535,6 @@
 	"languageSelection.translatedPercent": "% traduit",
 	"loading.loading": "Chargement…",
 	"location.details.hosts": "Hosts :",
-	"location.details.online": "site internet :",
 	"location.format": "{LAT} {LON}",
 	"location.link.tooltip": "Montrer les détails de {VENUE}",
 	"log.list.windowtitle": "Log",

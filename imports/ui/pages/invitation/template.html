@@ -1,6 +1,5 @@
 <template name="invitationPage">
 	<div class="container">
-
 		<div class="p-2 p-md-5 bg-light rounded-3">
 			<div class="container-fluid py-2 py-md-5">
 				<h1 class="display-5">
@@ -16,6 +15,9 @@
 						{{i18n "invitation.join.existingUser" "Join {TENANT} with user {USER}" TENANT=tenant.name USER=currentUser.getDisplayName}}
 					{{/unless}}
 				</button>
+				<a class="btn btn-lg btn-secondary" href="{{pathFor 'home'}}">
+					{{i18n 'invitation.join.no' 'No thanks'}}
+				</a>
 			</div>
 		</div>
 

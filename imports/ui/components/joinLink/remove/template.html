@@ -1,0 +1,18 @@
+<template name="joinLinkRemove">
+	{{#unless state 'confirm'}}
+		{{> buttonDelete event="js-join-link-remove"}}
+	{{else}}
+		<div class="join-link-remove-confirmation">
+			<p>{{i18n 'joinLink.reallydelete' 'Please confirm that you would like to delete this join link.'}}
+			</p>
+			<div class="form-actions">
+				{{> buttonDeleteConfirm
+				event="js-join-link-remove-confirm"
+				textIdle=(i18n 'joinLink.confirm.button' 'Delete this join link')
+				textBusy=(i18n 'joinLink.confirm.button.busy' 'Deleting join link…')
+			}}
+				{{> buttonCancel event="js-join-link-remove-collapse"}}
+			</div>
+		</div>
+	{{/unless}}
+</template>

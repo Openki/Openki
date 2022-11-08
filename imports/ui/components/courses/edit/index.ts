@@ -409,7 +409,7 @@ export type Data = {
 			} as unknown as Required<CoursesMethods.SaveFields>;
 
 			if (changes.name.length === 0) {
-				Alert.serverError(i18n('course.edit.error.title', 'Please provide a title'));
+				Alert.serverError(i18n('course.edit.error.title', 'Please provide a title') as string);
 				return;
 			}
 
@@ -431,7 +431,7 @@ export type Data = {
 					changes.region = instance.$('.js-select-region').val() as string;
 				}
 				if (!changes.region) {
-					Alert.serverError(i18n('course.edit.error.region', 'Please select a region'));
+					Alert.serverError(i18n('course.edit.error.region', 'Please select a region') as string);
 					return;
 				}
 
