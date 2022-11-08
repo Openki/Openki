@@ -14,6 +14,7 @@ import { userSearchPrefix } from '/imports/utils/user-search-prefix';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/invitations';
+import '/imports/ui/components/joinLink';
 
 import './template.html';
 import './styles.scss';
