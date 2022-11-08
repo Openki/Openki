@@ -450,7 +450,7 @@ RouterAsync.route<any>('profile', {
 	},
 	data() {
 		const data: any = {};
-		const user: UserModel | null = Meteor.user();
+		const user = Meteor.user();
 		if (user) {
 			const userdata = {
 				_id: user._id,
@@ -810,16 +810,22 @@ RouterAsync.route<
 		};
 
 		events.forEach((originalEvent) => {
-			const event: any = {
+			const event: EventEntity & {
+				relStart: number;
+				relEnd: number;
+			} = {
 				...originalEvent,
+				relStart: (originalEvent.start.getTime() - timestampStart) / span,
+				relEnd: (timestampEnd - originalEvent.end.getTime()) / span,
 			};
-			event.relStart = (event.start.getTime() - timestampStart) / span;
-			event.relEnd = (timestampEnd - event.end.getTime()) / span;
 			let placed = false;
 
 			const room = event.room || null;
-			const roomRows = useVenue(event.venue, room);
-			roomRows.forEach((roomRow: any) => {
+			const roomRows = useVenue(event.venue, room) as unknown as (EventEntity & {
+				relStart: number;
+				relEnd: number;
+			})[][];
+			roomRows.forEach((roomRow) => {
 				let last: any;
 				roomRow.forEach((placedEvent: any) => {
 					if (!last || placedEvent.end > last) {
@@ -834,7 +840,7 @@ RouterAsync.route<
 				return true;
 			});
 			if (!placed) {
-				roomRows.push([event] as any);
+				roomRows.push([event]);
 			}
 		});
 
