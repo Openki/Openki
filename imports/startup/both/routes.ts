@@ -781,7 +781,7 @@ RouterAsync.route('timetable', {
 			return perVenue[id].perRoom[room].rows;
 		};
 
-		events.forEach((originalEvent) => {
+		events.forEach((originalEvent: EventModel) => {
 			const event: EventEntity & {
 				relStart: number;
 				relEnd: number;

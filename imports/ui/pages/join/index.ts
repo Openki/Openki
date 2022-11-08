@@ -45,7 +45,7 @@ template.events({
 				await JoinLinksMethods.join(instance.data.joinLink.tenant, instance.data.joinLink.token);
 
 				// Reload regions to load regions from tenant
-				RegionSelection.subscribe(instance.data.joinLink.tenant, false);
+				RegionSelection.subscribe(instance, instance.data.joinLink.tenant, false);
 
 				Router.go('/');
 

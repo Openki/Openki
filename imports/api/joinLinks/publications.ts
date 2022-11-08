@@ -31,7 +31,7 @@ export const details = ServerPublish(
 
 export const findFilter = ServerPublish(
 	'joinLinks.findFilter',
-	(filter: FindFilter, limit, skip, sort: FieldSort[]) => {
+	(filter: FindFilter, limit?, skip?, sort?: FieldSort[]) => {
 		const tenantId = filter.tenant;
 
 		const user = Meteor.user();
