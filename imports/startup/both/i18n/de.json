@@ -494,7 +494,6 @@
 	"languageSelection.noLanguagesFound": "Keine Sprache gefunden.",
 	"loading.loading": "lädt…",
 	"location.details.hosts": "Gastgeber:",
-	"location.details.online": "Online:",
 	"location.link.tooltip": "Details von {VENUE} anzeigen",
 	"log.list.windowtitle": "Log",
 	"login.OAuth.busy": "Anmelden mit",
