@@ -20,6 +20,7 @@ import { RoleEntity, Roles } from '/imports/api/roles/roles';
 import { Venues, Venue, VenueModel } from '/imports/api/venues/venues';
 import { UserModel, Users } from '/imports/api/users/users';
 import { InvitationEntity, Invitations } from '/imports/api/invitations/invitations';
+import { JoinLinkEntity, JoinLinks } from '/imports/api/joinLinks/joinLinks';
 
 import { Filtering } from '/imports/utils/filtering';
 import { LocalTime } from '/imports/utils/local-time';
@@ -668,6 +669,37 @@ RouterAsync.route<
 		}
 
 		return { tenant, invitation };
+	},
+});
+
+RouterAsync.route<
+	{ tenant: TenantModel; joinLink: JoinLinkEntity } | undefined,
+	{ token: string },
+	{ tenant: string }
+>('join', {
+	path: 'join/:token',
+	template: 'joinPage',
+	async onRun() {
+		await import('/imports/ui/pages/join');
+	},
+	waitOn() {
+		return [Meteor.subscribe('joinLink', this.params?.query?.tenant, this.params?.token)];
+	},
+	data() {
+		const tenant = Tenants.findOne({ _id: this.params?.query?.tenant });
+		if (!tenant) {
+			return undefined;
+		}
+
+		const joinLink = JoinLinks.findOne({
+			tenant: this.params?.query?.tenant,
+			token: this.params?.token,
+		});
+		if (!joinLink) {
+			return undefined;
+		}
+
+		return { tenant, joinLink };
 	},
 });
 
