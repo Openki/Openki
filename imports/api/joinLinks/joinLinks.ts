@@ -4,11 +4,8 @@ import { Match, check } from 'meteor/check';
 
 import { Filtering } from '/imports/utils/filtering';
 import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
-import { Type, StringEnum } from '/imports/utils/CustomChecks';
+import { Type } from '/imports/utils/CustomChecks';
 
-export const StatusPattern = StringEnum('created', 'send', 'accepted', 'failed');
-
-export type Status = Type<typeof StatusPattern>;
 
 /** DB-Model */
 export interface JoinLinkEntity {
