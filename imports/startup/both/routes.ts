@@ -30,6 +30,7 @@ import * as Events from '/imports/api/events/publications';
 import * as Tenants from '/imports/api/tenants/publications';
 import * as Courses from '/imports/api/courses/publications';
 import * as Invitations from '/imports/api/invitations/publications';
+import * as JoinLinks from '/imports/api/joinLinks/publications';
 import * as Users from '/imports/api/users/publications';
 
 import { Filtering } from '/imports/utils/filtering';
@@ -612,7 +613,7 @@ RouterAsync.route('invitation', {
 		await import('/imports/ui/pages/invitation');
 	},
 	subscriptions() {
-		const tenantId = this.params?.query?.tenant ;
+		const tenantId = this.params?.query?.tenant;
 		const invitationToken = this.params?.token;
 		if (!tenantId || !invitationToken) {
 			return undefined;
@@ -644,24 +645,30 @@ RouterAsync.route('join', {
 	async onRun() {
 		await import('/imports/ui/pages/join');
 	},
-	waitOn() {
-		return [Meteor.subscribe('joinLink', this.params?.query?.tenant, this.params?.token)];
-	},
-	data() {
-		const tenant = Tenants.findOne({ _id: this.params?.query?.tenant });
-		if (!tenant) {
+	subscriptions() {
+		const tenantId = this.params?.query?.tenant;
+		const joinToken = this.params?.token;
+		if (!tenantId || !joinToken) {
 			return undefined;
 		}
 
-		const joinLink = JoinLinks.findOne({
-			tenant: this.params?.query?.tenant,
-			token: this.params?.token,
-		});
+		return {
+			joinLink: JoinLinks.details.subscribe(tenantId, joinToken),
+		};
+	},
+	data() {
+		const sub = this.subscriptions();
+
+		if (!sub) {
+			return undefined;
+		}
+
+		const joinLink = sub.joinLink();
 		if (!joinLink) {
 			return undefined;
 		}
 
-		return { tenant, joinLink };
+		return joinLink;
 	},
 });
 
