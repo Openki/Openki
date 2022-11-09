@@ -30,10 +30,10 @@ template.onCreated(function () {
 	const instance = this;
 	const { tenant } = instance.data;
 
-	instance.joinLink = new ReactiveVar(undefined)
+	instance.joinLink = new ReactiveVar(undefined);
 
 	instance.autorun(() => {
-		instance.joinLink.set (JoinLinks.findFilter.subscribe({ tenant: tenant._id }));
+		instance.joinLink.set(JoinLinks.findFilter.subscribe({ tenant: tenant._id }));
 	});
 });
 
