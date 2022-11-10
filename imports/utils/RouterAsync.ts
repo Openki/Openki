@@ -52,7 +52,9 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
 	if (subscriptions) {
 		// eslint-disable-next-line no-param-reassign
 		options.waitOn = function () {
-			return Object.values(subscriptions.call(this)).map((s: any) => () => s.ready());
+			return Object.values(subscriptions.call(this)).map(
+				(s) => () => (s as SubscriptionHandle<any>).isLoading(),
+			);
 		};
 
 		const data = options.data;
