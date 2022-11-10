@@ -32,24 +32,19 @@ export const regionChange = ServerMethod('user.regionChange', (newRegion: string
 
 /**
  * Update user avatar color
+ * @param newColor hsl hue number, otherwise a random color is generated
  */
-export const updateAvatarColor = ServerMethod(
-	'user.updateAvatarColor',
-	/**
-	 * @param newColor hsl hue number, otherwise a random color is generated
-	 */
-	(newColor?: number) => {
-		check(newColor, Match.Optional(Number));
+export const updateAvatarColor = ServerMethod('user.updateAvatarColor', (newColor?: number) => {
+	check(newColor, Match.Optional(Number));
 
-		const userId = Meteor.userId();
-		if (!userId) {
-			throw new Meteor.Error(401, 'please log in');
-		}
+	const userId = Meteor.userId();
+	if (!userId) {
+		throw new Meteor.Error(401, 'please log in');
+	}
 
-		const color = newColor ?? _.random(360);
-		Profile.AvatarColor.change(userId, color);
-	},
-);
+	const color = newColor ?? _.random(360);
+	Profile.AvatarColor.change(userId, color);
+});
 
 /**
  * Update user description

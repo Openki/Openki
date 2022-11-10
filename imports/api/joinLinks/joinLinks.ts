@@ -6,7 +6,6 @@ import { Filtering } from '/imports/utils/filtering';
 import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
 import { Type } from '/imports/utils/CustomChecks';
 
-
 /** DB-Model */
 export interface JoinLinkEntity {
 	/** ID */
