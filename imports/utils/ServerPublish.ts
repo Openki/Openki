@@ -8,7 +8,7 @@ export interface SubscriptionHandle<T> {
 	/** Query the loaded data. */
 	(): T;
 	/** True if the server has marked the subscription as ready. A reactive data source. */
-	ready(): boolean;
+	isLoading(): boolean;
 	/**
 	 * Cancel the subscription. This will typically result in the server directing the client to
 	 * remove the subscription’s data from the client’s cache.
@@ -154,7 +154,7 @@ export function ServerPublish<
 			const query = function () {
 				return queryBuilder.call({ userId: Meteor.userId() }, ...args);
 			};
-			query.ready = function () {
+			query.isLoading = function () {
 				return handle.ready();
 			};
 			query.stop = function () {
