@@ -4,7 +4,6 @@ import { Meteor } from 'meteor/meteor';
 import { Regions } from '/imports/api/regions/regions';
 import { VenueEntity, Venues } from '/imports/api/venues/venues';
 
-import * as AsyncTools from '/imports/utils/async-tools';
 import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
 import * as HtmlTools from '/imports/utils/html-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
@@ -30,7 +29,7 @@ export const SaveFieldPattern = {
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
-export const save = ServerMethod('venue.save', (venueId: string, changes: SaveFields) => {
+export const save = ServerMethod('venue.save', async (venueId: string, changes: SaveFields) => {
 	check(venueId, String);
 	check(changes, SaveFieldPattern);
 
@@ -42,7 +41,7 @@ export const save = ServerMethod('venue.save', (venueId: string, changes: SaveFi
 	let venue;
 	const isNew = venueId.length === 0;
 	if (!isNew) {
-		venue = Venues.findOne(venueId);
+		venue = await Venues.findOneAsync(venueId);
 		if (!venue) {
 			throw new Meteor.Error(404, 'Venue not found');
 		}
@@ -99,7 +98,7 @@ export const save = ServerMethod('venue.save', (venueId: string, changes: SaveFi
 
 	if (isNew) {
 		/* region cannot be changed */
-		const region = Regions.findOne(changes.region);
+		const region = await Regions.findOneAsync(changes.region);
 		if (!region) {
 			throw new Meteor.Error(404, 'region missing');
 		}
@@ -107,22 +106,23 @@ export const save = ServerMethod('venue.save', (venueId: string, changes: SaveFi
 		set.region = region._id;
 
 		/* eslint-disable-next-line no-param-reassign */
-		venueId = Venues.insert({
+		venueId = await Venues.insertAsync({
+			...set,
 			editor: user._id,
 			createdby: user._id,
 			created: new Date(),
-		} as VenueEntity);
+		});
+	} else {
+		await Venues.updateAsync({ _id: venueId }, { $set: set });
 	}
-
-	Venues.update({ _id: venueId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);
 
 	return venueId;
 });
 
-export const remove = ServerMethod('venue.remove', (venueId: string) => {
+export const remove = ServerMethod('venue.remove', async (venueId: string) => {
 	check(venueId, String);
 
-	const venue = Venues.findOne(venueId);
+	const venue = await Venues.findOneAsync(venueId);
 	if (!venue) {
 		throw new Meteor.Error(404, 'No such venue');
 	}
@@ -131,5 +131,5 @@ export const remove = ServerMethod('venue.remove', (venueId: string) => {
 		throw new Meteor.Error(401, 'Please log in');
 	}
 
-	return Venues.remove(venueId);
+	return Venues.removeAsync(venueId);
 });

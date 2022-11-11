@@ -77,7 +77,7 @@ export const UpdateFieldsPattern = {
 		coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
 	}),
 	tz: Match.Maybe(String),
-	description: String,
+	description: Match.Maybe(String),
 };
 
 export type UpdateFields = Type<typeof UpdateFieldsPattern>;

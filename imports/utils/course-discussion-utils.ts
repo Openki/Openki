@@ -4,7 +4,7 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 export function mayDeletePost(
-	user: UserModel | undefined | null,
+	user: UserModel | undefined,
 	course: { members: CourseMemberEntity[] },
 	post: { userId?: string },
 ) {

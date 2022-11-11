@@ -32,24 +32,19 @@ export const regionChange = ServerMethod('user.regionChange', (newRegion: string
 
 /**
  * Update user avatar color
+ * @param newColor hsl hue number, otherwise a random color is generated
  */
-export const updateAvatarColor = ServerMethod(
-	'user.updateAvatarColor',
-	/**
-	 * @param newColor hsl hue number, otherwise a random color is generated
-	 */
-	(newColor?: number) => {
-		check(newColor, Match.Optional(Number));
+export const updateAvatarColor = ServerMethod('user.updateAvatarColor', (newColor?: number) => {
+	check(newColor, Match.Optional(Number));
 
-		const userId = Meteor.userId();
-		if (!userId) {
-			throw new Meteor.Error(401, 'please log in');
-		}
+	const userId = Meteor.userId();
+	if (!userId) {
+		throw new Meteor.Error(401, 'please log in');
+	}
 
-		const color = newColor ?? _.random(360);
-		Profile.AvatarColor.change(userId, color);
-	},
-);
+	const color = newColor ?? _.random(360);
+	Profile.AvatarColor.change(userId, color);
+});
 
 /**
  * Update user description
@@ -57,14 +52,14 @@ export const updateAvatarColor = ServerMethod(
 export const updateDescription = ServerMethod('user.updateDescription', (description: string) => {
 	check(description, String);
 
-	const user = Meteor.user();
-	if (!user) {
+	const userId = Meteor.userId();
+	if (!userId) {
 		throw new ValidationError([{ name: 'description', type: 'plzLogin' }], 'Not logged-in');
 	}
 
 	const sane = StringTools.saneTitle(description).trim().substring(0, 400);
 
-	const result = Profile.Description.change(user._id, sane);
+	const result = Profile.Description.change(userId, sane);
 	if (!result) {
 		throw new ValidationError(
 			[{ name: 'description', type: 'descriptionError' }],
