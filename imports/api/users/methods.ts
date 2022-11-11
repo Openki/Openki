@@ -52,14 +52,14 @@ export const updateAvatarColor = ServerMethod('user.updateAvatarColor', (newColo
 export const updateDescription = ServerMethod('user.updateDescription', (description: string) => {
 	check(description, String);
 
-	const user = Meteor.user();
-	if (!user) {
+	const userId = Meteor.userId();
+	if (!userId) {
 		throw new ValidationError([{ name: 'description', type: 'plzLogin' }], 'Not logged-in');
 	}
 
 	const sane = StringTools.saneTitle(description).trim().substring(0, 400);
 
-	const result = Profile.Description.change(user._id, sane);
+	const result = Profile.Description.change(userId, sane);
 	if (!result) {
 		throw new ValidationError(
 			[{ name: 'description', type: 'descriptionError' }],

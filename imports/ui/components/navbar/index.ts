@@ -216,7 +216,7 @@ import './template.html';
 
 			const routeName = Router.current().route?.getName();
 			if (routeName === 'profile') {
-				Router.go('userprofile', Meteor.user() as any);
+				Router.go('userprofile', Meteor.user() ?? undefined);
 			}
 		},
 
