@@ -248,7 +248,7 @@ import './styles.scss';
 
 		mayEdit() {
 			const post = Template.instance().data;
-			return CourseDiscussionUtils.mayEditPost(Meteor.user(), post);
+			return CourseDiscussionUtils.mayEditPost(Meteor.user() ?? undefined, post);
 		},
 
 		mayDelete() {
@@ -257,7 +257,7 @@ import './styles.scss';
 			if (!course) {
 				throw new Error('Unexpected falsy: course');
 			}
-			return CourseDiscussionUtils.mayDeletePost(Meteor.user(), course, post);
+			return CourseDiscussionUtils.mayDeletePost(Meteor.user() ?? undefined, course, post);
 		},
 
 		hasBeenEdited() {
@@ -325,7 +325,7 @@ import './styles.scss';
 		},
 
 		anonDisabled() {
-			if (Meteor.user()) {
+			if (Meteor.userId()) {
 				return {};
 			}
 			return { disabled: 1 };

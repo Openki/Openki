@@ -117,8 +117,7 @@ export const editComment = ServerMethod(
 			throw new Meteor.Error(404, 'no such comment');
 		}
 
-		const user = Meteor.user();
-		if (!CourseDiscussionUtils.mayEditPost(user, originalComment)) {
+		if (!CourseDiscussionUtils.mayEditPost(Meteor.user() ?? undefined, originalComment)) {
 			throw new Meteor.Error(401, 'you cant');
 		}
 
