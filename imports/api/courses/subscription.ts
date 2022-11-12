@@ -3,6 +3,7 @@ import { Match, check } from 'meteor/check';
 import { ValidationError } from 'meteor/mdg:validation-error';
 
 import { Courses, Course, CourseModel } from '/imports/api/courses/courses';
+import * as interestedDenormalizer from '/imports/api/courses/interestedDenormalizer';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 import * as Alert from '/imports/api/alerts/alert';
@@ -237,14 +238,14 @@ export class Subscribe extends Change<{
 		}
 
 		// Update member related calculated fields
-		Courses.updateInterested(this.course._id);
+		interestedDenormalizer.afterSubscribe(this.course._id);
 		Courses.updateGroups(this.course._id);
 
 		timeLasteditDenormalizer.afterSubscribe(this.course._id);
 		historyDenormalizer.afterSubscribe(this.course._id, this.user._id, this.role);
 
 		if (this.reason === 'interested') {
-			// Send notifications
+			// Send notification to team
 			Notification.Join.record(this.course._id, this.user._id, this.role, this.comment);
 		}
 	}
@@ -353,7 +354,7 @@ export class Unsubscribe extends Change<{
 		} as any);
 
 		// Update member related calculated fields
-		Courses.updateInterested(this.course._id);
+		interestedDenormalizer.afterUnsubscribe(this.course._id);
 		Courses.updateGroups(this.course._id);
 
 		timeLasteditDenormalizer.afterUnsubscribe(this.course._id);

@@ -253,7 +253,6 @@ export const save = ServerMethod(
 
 			// Init calculated fields
 			Meteor.call('course.updateNextEvent', courseId);
-			Courses.updateInterested(courseId);
 			Courses.updateGroups(courseId);
 		} else {
 			const enrichedSet = timeLasteditDenormalizer.beforeUpdate(set);
