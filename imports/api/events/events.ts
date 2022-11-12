@@ -209,6 +209,12 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		return super.insert(enrichedEvent, callback);
 	}
 
+	insertAsync(event: EventEntity, callback?: (err?: unknown, _id?: string) => void) {
+		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
+
+		return super.insertAsync(enrichedEvent, callback);
+	}
+
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
 		return new Filtering({
