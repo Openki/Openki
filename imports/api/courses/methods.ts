@@ -12,6 +12,7 @@ import { Roles } from '/imports/api/roles/roles';
 import * as UpdateMethods from '/imports/utils/update-methods';
 import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
+import * as eventsCategoriesDenormalizer from '/imports/api/events/categoriesDenormalizer';
 import * as eventsCourseImageDenormalizer from '/imports/api/events/courseImageDenormalizer';
 import { Log } from '/imports/api/log/log';
 import { UserModel } from '/imports/api/users/users';
@@ -256,17 +257,15 @@ export const save = ServerMethod(
 			Courses.updateGroups(courseId);
 		} else {
 			const enrichedSet = timeLasteditDenormalizer.beforeUpdate(set);
-			Courses.update(
-				{ _id: courseId },
-				{ $set: enrichedSet },
-				{ multi: true },
-				AsyncTools.checkUpdateOne,
-			);
+			Courses.update({ _id: courseId }, { $set: enrichedSet });
 
 			historyDenormalizer.afterUpdate(courseId, user._id);
 			if (changes.categories) {
 				// if categories are update, update those from the event
-				Meteor.call('event.updateCategories', { courseId });
+				eventsCategoriesDenormalizer.afterCourseUpdateCategories({
+					_id: courseId,
+					categories: changes.categories,
+				});
 			}
 		}
 
