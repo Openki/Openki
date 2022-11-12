@@ -386,53 +386,45 @@ export const editing = ServerMethod(
 	UpdateMethods.editing(Courses as unknown as GroupPromoters),
 );
 
-export const archive = ServerMethod('course.archive', (courseId: string) => {
+export const archive = ServerMethod('course.archive', async (courseId: string) => {
 	check(courseId, String);
 
-	const course = Courses.findOne({ _id: courseId });
+	const course = await Courses.findOneAsync({ _id: courseId });
 	if (!course) {
 		throw new Meteor.Error(404, 'no such course');
 	}
 	if (!course.editableBy(Meteor.user())) {
 		throw new Meteor.Error(401, 'edit not permitted');
 	}
-	Courses.update(course._id, {
-		$set: {
-			archived: true,
-		},
-	});
+	await Courses.updateAsync(course._id, { $set: { archived: true } });
 });
 
-export const unarchive = ServerMethod('course.unarchive', (courseId: string) => {
+export const unarchive = ServerMethod('course.unarchive', async (courseId: string) => {
 	check(courseId, String);
 
-	const course = Courses.findOne({ _id: courseId });
+	const course = await Courses.findOneAsync({ _id: courseId });
 	if (!course) {
 		throw new Meteor.Error(404, 'no such course');
 	}
 	if (!course.editableBy(Meteor.user())) {
 		throw new Meteor.Error(401, 'edit not permitted');
 	}
-	Courses.update(course._id, {
-		$set: {
-			archived: false,
-		},
-	});
+	await Courses.updateAsync(course._id, { $set: { archived: false } });
 });
 
-export const remove = ServerMethod('course.remove', (courseId: string) => {
+export const remove = ServerMethod('course.remove', async (courseId: string) => {
 	check(courseId, String);
 
-	const course = Courses.findOne({ _id: courseId });
+	const course = await Courses.findOneAsync({ _id: courseId });
 	if (!course) {
 		throw new Meteor.Error(404, 'no such course');
 	}
 	if (!course.editableBy(Meteor.user())) {
 		throw new Meteor.Error(401, 'edit not permitted');
 	}
-	Events.remove({ courseId });
-	CourseDiscussions.remove({ courseId });
-	Courses.remove(courseId);
+	await Events.removeAsync({ courseId });
+	await CourseDiscussions.removeAsync({ courseId });
+	await Courses.removeAsync(courseId);
 });
 
 Meteor.methods({
