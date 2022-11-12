@@ -219,8 +219,6 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 			course.groups = course.groups.map(ensure.group);
 			course.groupOrganizers = [];
 
-			course.interested = course.members.length;
-
 			Courses.insert(course);
 		});
 
