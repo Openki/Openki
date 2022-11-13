@@ -291,8 +291,6 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		});
 	}
 
-
-
 	/**
 	 * Find events for given filters
 	 * @param filter dictionary with filter options
