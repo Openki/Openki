@@ -1,8 +1,8 @@
-import { ServerPublish } from '/imports/utils/ServerPublish';
+import { ServerPublishOne } from '/imports/utils/ServerPublish';
 
 import { InfoPages } from '/imports/api/infoPages/infoPages';
 
-export const details = ServerPublish(
+export const [details, useDetails] = ServerPublishOne(
 	'infoPage',
 	(slug: string, locale: string) => {
 		check(slug, String);

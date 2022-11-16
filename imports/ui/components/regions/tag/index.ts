@@ -3,7 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import * as Regions from '/imports/api/regions/publications';
 
-import { SubscriptionType } from '/imports/utils/ServerPublish';
+import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
 
 import './template.html';
 import './styles.scss';

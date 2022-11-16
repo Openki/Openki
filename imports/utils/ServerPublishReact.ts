@@ -1,17 +1,38 @@
 import { Meteor, Subscription } from 'meteor/meteor';
 import { useFind, useSubscribe } from 'meteor/react-meteor-data';
+import { publish, QueryBuilder, removeCallback } from './ServerPublishUtils';
 
-interface Publication<A extends any[], T> {
+export interface Publication<A extends any[], T> {
 	/**
 	 * Subscribe to the record set.
 	 */
 	(...args: A): [isLoading: () => boolean, data: T];
 }
 
-type QueryBuilder<A extends any[], T> = (
-	this: { userId: ReturnType<typeof Meteor['userId']> },
-	...args: A
-) => T;
+export function createPublicationMany<A extends any[], T>(
+	name: string,
+	queryBuilder: QueryBuilder<A, Mongo.Cursor<T, T>>,
+) {
+	return function (...args: A) {
+		const isLoading = useSubscribe(name, ...args);
+		const queryArgs = removeCallback(args);
+		return [
+			isLoading,
+			useFind<T>(() => queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs), queryArgs),
+		];
+	};
+}
+
+export function createPublicationOne<A extends any[], T>(
+	name: string,
+	queryBuilder: QueryBuilder<A, T>,
+): Publication<A, T> {
+	return function (...args: A): [() => boolean, T] {
+		const isLoading = useSubscribe(name, ...args);
+		const queryArgs = removeCallback(args);
+		return [isLoading, queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs)];
+	};
+}
 
 /**
  * Registers a function as a meteor publish and makes it subscribable for the client.
@@ -57,29 +78,10 @@ export function ServerPublishMany<A extends any[], T>(
 	publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T> | undefined,
 	queryBuilder: QueryBuilder<A, Mongo.Cursor<T>> = publisher as QueryBuilder<A, Mongo.Cursor<T>>,
 ) {
-	if (Meteor.isServer) {
-		// on the server register the publisher / publish the record set
-		// wrap the call to handle options
-		Meteor.publish(name, function (...args) {
-			// everyting is okay, do the work
-			const result = publisher.call(this, ...args);
-			if (result === undefined) {
-				this.ready();
-			}
-			return result;
-		});
-	}
+	publish(name, publisher);
 
 	// give back a Publication that a client can subscribe
-	const publication = function (...args: A) {
-		const isLoading = useSubscribe(name, ...args);
-		return [
-			isLoading,
-			useFind<T>(() => queryBuilder.call({ userId: Meteor.userId() }, ...args), args),
-		];
-	};
-
-	return publication;
+	return createPublicationMany<A, T>(name, queryBuilder);
 }
 
 /**
@@ -103,20 +105,8 @@ export function ServerPublishOne<A extends any[], T>(
 	publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T>,
 	queryBuilder: QueryBuilder<A, T>,
 ): Publication<A, T> {
-	if (Meteor.isServer) {
-		// on the server register the publisher / publish the record set
-		// wrap the call to handle options
-		Meteor.publish(name, function (...args) {
-			// everyting is okay, do the work
-			return publisher.call(this, ...args);
-		});
-	}
+	publish(name, publisher);
 
 	// give back a Publication that a client can subscribe
-	const publication = function (...args: A): [() => boolean, T] {
-		const isLoading = useSubscribe(name, ...args);
-		return [isLoading, queryBuilder.call({ userId: Meteor.userId() }, ...args)];
-	};
-
-	return publication;
+	return createPublicationOne<A, T>(name, queryBuilder);
 }

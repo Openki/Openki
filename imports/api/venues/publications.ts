@@ -3,10 +3,10 @@ import { Match, check } from 'meteor/check';
 
 import { FindFilter, VenueEntity, Venues } from '/imports/api/venues/venues';
 
-import { ServerPublish } from '/imports/utils/ServerPublish';
+import { ServerPublishMany, ServerPublishOne } from '/imports/utils/ServerPublish';
 import { FieldSort } from '/imports/utils/sort-spec';
 
-export const all = ServerPublish('venues', (regionId?: string) => {
+export const [all, useAll] = ServerPublishMany('venues', (regionId?: string) => {
 	check(regionId, Match.Maybe(String));
 
 	const find: Mongo.Selector<VenueEntity> = {};
@@ -16,7 +16,7 @@ export const all = ServerPublish('venues', (regionId?: string) => {
 	return Venues.find(find);
 });
 
-export const details = ServerPublish(
+export const [details, useDetails] = ServerPublishOne(
 	'venueDetails',
 	(venueId: string) => {
 		check(venueId, String);
@@ -28,7 +28,7 @@ export const details = ServerPublish(
 	},
 );
 
-export const findFilter = ServerPublish(
+export const [findFilter, useFindFilter] = ServerPublishMany(
 	'Venues.findFilter',
 	(find?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
 		Venues.findFilter(find, limit, skip, sort),

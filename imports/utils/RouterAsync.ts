@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 
-import { SubscriptionHandle } from '/imports/utils/ServerPublish';
+import { SubscriptionHandle } from '/imports/utils/ServerPublishBlaze';
 
 // Extends the route function to support async await in onRun
 
