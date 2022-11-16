@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { FindFilter, Invitations } from '/imports/api/invitations/invitations';
 import { Tenants } from '/imports/api/tenants/tenants';
 
-import { ServerPublish } from '/imports/utils/ServerPublish';
+import { ServerPublish } from '/imports/utils/ServerPublishBlaze';
 import { FieldSort } from '/imports/utils/sort-spec';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 

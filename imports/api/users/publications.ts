@@ -5,7 +5,7 @@ import { check } from 'meteor/check';
 import { Users } from '/imports/api/users/users';
 
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';
-import { ServerPublish } from '/imports/utils/ServerPublish';
+import { ServerPublishMany, ServerPublishOne } from '/imports/utils/ServerPublish';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 if (Meteor.isServer) {
@@ -16,7 +16,7 @@ if (Meteor.isServer) {
 	});
 }
 
-export const simple = ServerPublish(
+export const [simple, useSimple] = ServerPublishOne(
 	'user.simple',
 	(userId: string) => {
 		check(userId, String);
@@ -34,7 +34,7 @@ export const simple = ServerPublish(
 	},
 );
 
-export const details = ServerPublish(
+export const [details, useDetails] = ServerPublishOne(
 	'user',
 	(userId: string) => {
 		check(userId, String);
@@ -74,7 +74,7 @@ export const details = ServerPublish(
 	},
 );
 
-export const findFilter = ServerPublish('userSearch', (search: string) => {
+export const [findFilter, useFindFilter] = ServerPublishMany('userSearch', (search: string) => {
 	check(search, String);
 
 	return userSearchPrefix(search, { fields: { username: 1 }, limit: 10 });

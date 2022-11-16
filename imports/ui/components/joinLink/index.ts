@@ -4,7 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { TenantModel } from '/imports/api/tenants/tenants';
 import * as JoinLinks from '/imports/api/joinLinks/publications';
 
-import { SubscriptionType } from '/imports/utils/ServerPublish';
+import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
 
 import './create';
 import './rebuild';

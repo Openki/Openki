@@ -8,7 +8,7 @@ import { RegionModel } from '/imports/api/regions/regions';
 
 import * as UserLocation from '/imports/utils/user-location';
 import * as UrlTools from '/imports/utils/url-tools';
-import { Subscriber } from '/imports/utils/ServerPublish';
+import { Subscriber } from '/imports/utils/ServerPublishBlaze';
 
 import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 

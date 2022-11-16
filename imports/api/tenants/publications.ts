@@ -5,10 +5,11 @@ import { check } from 'meteor/check';
 import { FindFilter, TenantEntity, Tenants } from '/imports/api/tenants/tenants';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { ServerPublish } from '/imports/utils/ServerPublish';
+import { ServerPublishMany } from '/imports/utils/ServerPublish';
 import { FieldSort } from '/imports/utils/sort-spec';
+import { ServerPublish } from '/imports/utils/ServerPublishBlaze';
 
-export const details = ServerPublish(
+export const [details, useDetails] = ServerPublishMany(
 	'tenant',
 	(tenantId: string) => {
 		check(tenantId, String);

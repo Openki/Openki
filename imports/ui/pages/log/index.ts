@@ -14,7 +14,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as UrlTools from '/imports/utils/url-tools';
 import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
-import { SubscriptionType } from '/imports/utils/ServerPublish';
+import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
 
 import './template.html';
 import './styles.scss';

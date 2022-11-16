@@ -11,7 +11,7 @@ import * as Users from '/imports/api/users/publications';
 
 import { Editable } from '/imports/ui/lib/editable';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { SubscriptionType } from '/imports/utils/ServerPublish';
+import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
 
 import '/imports/ui/components/editable';
 import '/imports/ui/components/participant/contact';

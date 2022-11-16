@@ -14,7 +14,7 @@ import * as VenuesMethods from '/imports/api/venues/methods';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
-import { SubscriptionType } from '/imports/utils/ServerPublish';
+import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
 
 import { CenteredMarkerEntity, MainMarkerEntity } from '/imports/ui/lib/location-tracker';
 

@@ -4,7 +4,7 @@ import { Match, check } from 'meteor/check';
 import { LanguagesRaw, Languages, LanguageEntity } from '/imports/api/languages/languages';
 
 import { Type } from '/imports/utils/CustomChecks';
-import { ServerPublish } from '/imports/utils/ServerPublish';
+import { ServerPublishMany } from '/imports/utils/ServerPublish';
 
 const weblateMapping = { de_ZH: 'de-ZH', nb_NO: 'nb' } as { [weblateCode: string]: string };
 
@@ -43,7 +43,7 @@ export const FindFilterPattern = {
 export type FindFilter = Type<typeof FindFilterPattern>;
 
 // See: https://guide.meteor.com/data-loading.html#custom-publication
-export const findFilter = ServerPublish(
+export const [findFilter, useFindFilter] = ServerPublishMany(
 	'Languages',
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	function (_filter: FindFilter) {
