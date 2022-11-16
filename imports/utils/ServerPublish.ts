@@ -9,36 +9,31 @@ export interface SubscriptionHandle<T> {
 	(): T;
 	/** True if the server has marked the subscription as ready. A reactive data source. */
 	isLoading(): boolean;
-	/**
-	 * Cancel the subscription. This will typically result in the server directing the client to
-	 * remove the subscription’s data from the client’s cache.
-	 */
-	stop(): void;
 }
 
-export interface Publication<T extends any[], D> {
+export interface Publication<A extends any[], T> {
 	/**
 	 * Subscribe to the record set.
 	 */
-	subscribe(...args: T): SubscriptionHandle<D>;
+	subscribe(...args: A): SubscriptionHandle<T>;
 	/**
 	 * Subscribe to the record set. With a other subscriber eg. the Blaze template instance.
 	 */
-	subscribe(subscriber?: Subscriber | undefined, ...args: T): SubscriptionHandle<D>;
+	subscribe(subscriber?: Subscriber | undefined, ...args: A): SubscriptionHandle<T>;
 }
 
 export type SubscriptionType<
-	P extends Publication<T, D>,
-	T extends any[] = any,
-	D = any,
+	P extends Publication<A, T>,
+	A extends any[] = any,
+	T = any,
 > = ReturnType<P['subscribe']>;
 
 export type Record<T extends readonly Mongo.Cursor<any>[]> = Mongo.Cursor<any> | [...T] | undefined;
 
-type QueryBuilder<T extends any[], R> = (
+type QueryBuilder<A extends any[], T> = (
 	this: { userId: ReturnType<typeof Meteor['userId']> },
-	...args: T
-) => R;
+	...args: A
+) => T;
 
 /**
  * Registers a function as a meteor publish and makes it subscribable for the client.
@@ -52,14 +47,14 @@ type QueryBuilder<T extends any[], R> = (
  * @param publisher Function called on the server each time a client subscribes.
  * @returns A Publication that a client can subscribe to.
  */
-export function ServerPublish<
-	T extends any[],
+function ServerPublish<
+	A extends any[],
 	C extends readonly Mongo.Cursor<any>[],
-	R extends Record<C>,
+	T extends Record<C>,
 >(
 	name: string,
-	publisher: (this: Pick<Subscription, 'userId'>, ...args: T) => R,
-): Publication<T, R>;
+	publisher: (this: Pick<Subscription, 'userId'>, ...args: A) => T,
+): Publication<A, T>;
 
 /**
  * Registers a function as a meteor publish and makes it subscribable for the client.
@@ -77,41 +72,26 @@ export function ServerPublish<
  * See https://guide.meteor.com/data-loading.html
  * @returns A Publication that a client can subscribe to.
  */
-export function ServerPublish<
-	T extends any[],
+function ServerPublish<
+	A extends any[],
 	C extends readonly Mongo.Cursor<any>[],
-	R extends Record<C>,
+	T extends Record<C>,
 	Q,
 >(
 	name: string,
-	publisher: (this: Subscription, ...args: T) => R | void,
-	queryBuilder: QueryBuilder<T, Q>,
-): Publication<T, Q>;
-/**
- * Registers a function as a meteor publish and makes it subscribable for the client.
- *
- * This helps to make the publish type safe and usable via a JS module.
- *
- * Inspired by the Advanced Method Boilerplate in the Meteor Guide.
- * https://guide.meteor.com/methods.html#advanced-boilerplate
- *
- * @param name Name of the record set.
- * @param publisher Function called on the server each time a client subscribes. Inside the function,
- * `this` is the publish handler object.
- * @param queryBuilder Function called on the client, this is usefull if the call on the client
- * differ from the server eg. `.findOne(...)`.
- * See https://guide.meteor.com/data-loading.html
- * @returns A Publication that a client can subscribe to.
- */
-export function ServerPublish<
-	T extends any[],
+	publisher: (this: Subscription, ...args: A) => T | void,
+	queryBuilder: QueryBuilder<A, Q>,
+): Publication<A, Q>;
+
+function ServerPublish<
+	A extends any[],
 	C extends readonly Mongo.Cursor<any>[],
-	R extends Record<C>,
-	Q extends R | any,
+	T extends Record<C>,
+	Q extends T | any,
 >(
 	name: string,
-	publisher: (this: Subscription, ...args: T) => R | void,
-	queryBuilder: QueryBuilder<T, Q> = publisher as QueryBuilder<T, Q>,
+	publisher: (this: Subscription, ...args: A) => T | void,
+	queryBuilder: QueryBuilder<A, Q> = publisher as QueryBuilder<A, Q>,
 ) {
 	if (Meteor.isServer) {
 		// on the server register the publisher / publish the record set
@@ -128,7 +108,7 @@ export function ServerPublish<
 
 	// give back a Publication that a client can subscribe
 	return {
-		subscribe(...args: T) {
+		subscribe(...args: A) {
 			let subscriber: Subscriber = Meteor;
 
 			const firstArg = args[0];
@@ -157,10 +137,62 @@ export function ServerPublish<
 			query.isLoading = function () {
 				return handle.ready();
 			};
-			query.stop = function () {
-				handle.stop();
-			};
 			return query;
 		},
-	} as Publication<T, Q>;
+	} as Publication<A, Q>;
+}
+
+/**
+ * Registers a function as a meteor publish and makes it subscribable for the client.
+ *
+ * This helps to make the publish type safe and usable via a JS module.
+ *
+ * Inspired by the Advanced Method Boilerplate in the Meteor Guide.
+ * https://guide.meteor.com/methods.html#advanced-boilerplate
+ *
+ * @param name Name of the record set.
+ * @param publisher Function called on the server each time a client subscribes.
+ * @returns A Publication that a client can subscribe to.
+ */
+export function ServerPublishMany<A extends any[], T extends Mongo.Cursor<any>>(
+	name: string,
+	publisher: (this: Pick<Subscription, 'userId'>, ...args: A) => T,
+): Publication<A, T>;
+
+/**
+ * Registers a function as a meteor publish and makes it subscribable for the client.
+ *
+ * This helps to make the publish type safe and usable via a JS module.
+ *
+ * Inspired by the Advanced Method Boilerplate in the Meteor Guide.
+ * https://guide.meteor.com/methods.html#advanced-boilerplate
+ *
+ * @param name Name of the record set.
+ * @param publisher Function called on the server each time a client subscribes. Inside the function,
+ * `this` is the publish handler object.
+ * @param queryBuilder Function called on the client, this is usefull if the call on the client
+ * differ from the server eg. `.findOne(...)`.
+ * See https://guide.meteor.com/data-loading.html
+ * @returns A Publication that a client can subscribe to.
+ */
+export function ServerPublishMany<A extends any[], T>(
+	name: string,
+	publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T> | undefined,
+	queryBuilder: QueryBuilder<A, T>,
+): Publication<A, T>;
+
+export function ServerPublishMany<A extends any[], T>(
+	name: string,
+	publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T> | undefined,
+	queryBuilder: QueryBuilder<A, T> = publisher as QueryBuilder<A, T>,
+) {
+	return ServerPublish(name, publisher as any, queryBuilder as any);
+}
+
+export function ServerPublishOne<A extends any[], T>(
+	name: string,
+	publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T>,
+	queryBuilder: QueryBuilder<A, T>,
+) {
+	return ServerPublish(name, publisher, queryBuilder);
 }
