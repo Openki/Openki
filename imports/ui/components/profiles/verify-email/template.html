@@ -1,13 +1,5 @@
 <template name="verifyEmail">
-	{{#if state 'sending'}}
-		<div class="alert alert-success" role="alert">
-			<strong>{{i18n 'profile.verifyEmail.mailOnItsWay' "Verification e-mail on its way."}}</strong><br>
-			{{i18n 'profile.sendingVerificationMail' "You will be sent a verification e-mail to click shortly."}}
-		</div>
-	{{else}}
-		<button type="button" class="btn btn-secondary js-verify-mail-btn">
-			<span class="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
-			{{i18n 'profile.verifymail' 'Resend verification e-mail'}}
-		</button>
-	{{/if}}
+	<div>
+		{{> React component=VerifyEmail}}
+	</div>
 </template>
