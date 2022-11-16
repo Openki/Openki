@@ -18,7 +18,7 @@ import { publish, QueryBuilder } from './ServerPublishUtils';
 export function ServerPublishMany<A extends any[], T, U>(
 	name: string,
 	publisher: (this: Pick<Subscription, 'userId'>, ...args: A) => Mongo.Cursor<T, U>,
-): [Blaze.Publication<A, Mongo.Cursor<T, U>>, React.Publication<A, U>];
+): [Blaze.Publication<A, Mongo.Cursor<T, U>>, React.Publication<A, U[]>];
 
 /**
  * Registers a function as a meteor publish and makes it subscribable for the client.
@@ -40,7 +40,7 @@ export function ServerPublishMany<A extends any[], T, U>(
 	name: string,
 	publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T, U> | void,
 	queryBuilder: QueryBuilder<A, U>,
-): [Blaze.Publication<A, Mongo.Cursor<T, U>>, React.Publication<A, U>];
+): [Blaze.Publication<A, Mongo.Cursor<T, U>>, React.Publication<A, U[]>];
 
 export function ServerPublishMany<A extends any[], T, U>(
 	name: string,
