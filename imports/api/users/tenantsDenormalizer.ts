@@ -47,8 +47,8 @@ export async function afterTenantRemoveAdmin(userId: string, tenantId: string) {
 	);
 }
 
-export function afterInvitationJoin(userId: string, tenantId: string) {
-	Users.update(userId, { $addToSet: { tenants: { _id: tenantId } } });
+export async function afterInvitationJoin(userId: string, tenantId: string) {
+	await Users.updateAsync(userId, { $addToSet: { tenants: { _id: tenantId } } });
 }
 
 export function afterJoinLinkJoin(userId: string, tenantId: string) {

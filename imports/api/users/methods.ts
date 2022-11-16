@@ -9,6 +9,7 @@ import { Groups } from '/imports/api/groups/groups';
 import { Users } from '/imports/api/users/users';
 import { Course, Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
+import * as courseInterestedDenormalizer from '/imports/api/courses/interestedDenormalizer';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as Profile from '/imports/utils/profile';
@@ -17,6 +18,7 @@ import * as StringTools from '/imports/utils/string-tools';
 import * as AsyncTools from '/imports/utils/async-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import { PublicSettings } from '/imports/utils/PublicSettings';
+import { Type } from '/imports/utils/CustomChecks';
 
 /**
  * Set user region
@@ -209,24 +211,19 @@ export const selfRemove = ServerMethod('user.self.remove', () => {
 	}
 });
 
+export const AdminRemoveOptionsPattern = {
+	/** On true the courses (and events) created by the user will also be deleted */
+	courses: Match.Maybe(Boolean),
+};
+
+export type AdminRemoveOptions = Type<typeof AdminRemoveOptionsPattern>;
+
 export const adminRemove = ServerMethod(
 	'user.admin.remove',
-	(
-		userId: string,
-		reason: string,
-		options?: {
-			/** On true the courses (and events) created by the user will also be deleted */
-			courses?: boolean;
-		},
-	) => {
+	async (userId: string, reason: string, options: AdminRemoveOptions = {}) => {
 		check(userId, String);
 		check(reason, String);
-		check(
-			options as any,
-			Match.Optional({
-				courses: Match.Optional(Boolean),
-			}),
-		);
+		check(options, Match.Maybe(AdminRemoveOptionsPattern));
 
 		const operatorId = Meteor.userId();
 
@@ -236,7 +233,7 @@ export const adminRemove = ServerMethod(
 
 		const deletedCourses: Course[] = [];
 		let numberOfDeletedEvents = 0;
-		if (options?.courses) {
+		if (options.courses) {
 			// Remove courses created by this user
 			Courses.find({ createdby: userId })
 				.fetch()
@@ -250,7 +247,9 @@ export const adminRemove = ServerMethod(
 
 		// Updated courses and events he is involted
 		const courses = Courses.find({ 'members.user': userId }).fetch();
-		courses.forEach((course) => {
+
+		// eslint-disable-next-line no-restricted-syntax
+		for await (const course of courses) {
 			Events.update({ courseId: course._id }, { $pull: { editors: userId } }, { multi: true });
 			Events.update({ courseId: course._id }, { $pull: { participants: userId } }, { multi: true });
 
@@ -258,9 +257,9 @@ export const adminRemove = ServerMethod(
 			Courses.update({ _id: course._id }, { $pull: { editors: userId } });
 
 			// Update member related calculated fields
-			Courses.updateInterested(course._id);
+			await courseInterestedDenormalizer.afterUserAdminRemove(course._id);
 			Courses.updateGroups(course._id);
-		});
+		}
 
 		const user = Users.findOne(userId) as any;
 

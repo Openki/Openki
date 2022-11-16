@@ -38,7 +38,7 @@ export type PostCommentFields = Type<typeof PostCommentFieldsPattern>;
 
 export const postComment = ServerMethod(
 	'courseDiscussion.postComment',
-	function (comment: PostCommentFields) {
+	async function (comment: PostCommentFields) {
 		check(comment, PostCommentFieldsPattern);
 
 		const saneComment = sanitizeComment(comment) as CourseDiscussionEnity & { saving?: boolean };
@@ -47,7 +47,7 @@ export const postComment = ServerMethod(
 			throw new Meteor.Error(400, 'Invalid comment');
 		}
 
-		const course = Courses.findOne(comment.courseId);
+		const course = await Courses.findOneAsync(comment.courseId);
 		if (!course) {
 			throw new Meteor.Error(404, 'course not found');
 		}
@@ -67,7 +67,7 @@ export const postComment = ServerMethod(
 		saneComment.time_updated = now;
 
 		if (comment.parentId) {
-			const parentComment = CourseDiscussions.findOne(comment.parentId);
+			const parentComment = await CourseDiscussions.findOneAsync(comment.parentId);
 
 			if (!parentComment) {
 				throw new Meteor.Error(404, 'parent comment not found');
@@ -90,7 +90,7 @@ export const postComment = ServerMethod(
 			saneComment.saving = true;
 		}
 
-		const commentId = CourseDiscussions.insert(saneComment);
+		const commentId = await CourseDiscussions.insertAsync(saneComment);
 
 		Notification.Comment.record(commentId);
 
@@ -107,12 +107,12 @@ export type EditCommentFields = Type<typeof EditCommentFieldsPattern>;
 
 export const editComment = ServerMethod(
 	'courseDiscussion.editComment',
-	(comment: EditCommentFields) => {
+	async (comment: EditCommentFields) => {
 		check(comment, EditCommentFieldsPattern);
 
 		const update = sanitizeComment(comment) as CourseDiscussionEnity;
 
-		const originalComment = CourseDiscussions.findOne(comment._id);
+		const originalComment = await CourseDiscussions.findOneAsync(comment._id);
 		if (!originalComment) {
 			throw new Meteor.Error(404, 'no such comment');
 		}
@@ -123,33 +123,36 @@ export const editComment = ServerMethod(
 
 		update.time_updated = new Date();
 
-		CourseDiscussions.update(originalComment._id, { $set: update });
+		await CourseDiscussions.updateAsync(originalComment._id, { $set: update });
 	},
 );
 
-export const deleteComment = ServerMethod('courseDiscussion.deleteComment', (commentId: string) => {
-	check(commentId, String);
+export const deleteComment = ServerMethod(
+	'courseDiscussion.deleteComment',
+	async (commentId: string) => {
+		check(commentId, String);
 
-	const user = Meteor.user();
-	if (!user) {
-		throw new Meteor.Error(401, 'please log in');
-	}
+		const user = Meteor.user();
+		if (!user) {
+			throw new Meteor.Error(401, 'please log in');
+		}
 
-	const comment = CourseDiscussions.findOne(commentId);
-	if (!comment) {
-		throw new Meteor.Error(404, 'no such comment');
-	}
+		const comment = await CourseDiscussions.findOneAsync(commentId);
+		if (!comment) {
+			throw new Meteor.Error(404, 'no such comment');
+		}
 
-	const course = Courses.findOne(comment.courseId);
+		const course = await Courses.findOneAsync(comment.courseId);
 
-	if (!course) {
-		throw new Meteor.Error(401, 'delete not permitted');
-	}
+		if (!course) {
+			throw new Meteor.Error(401, 'delete not permitted');
+		}
 
-	if (!CourseDiscussionUtils.mayDeletePost(user, course, comment)) {
-		throw new Meteor.Error(401, 'delete not permitted');
-	}
+		if (!CourseDiscussionUtils.mayDeletePost(user, course, comment)) {
+			throw new Meteor.Error(401, 'delete not permitted');
+		}
 
-	CourseDiscussions.remove({ _id: comment._id });
-	CourseDiscussions.remove({ parentId: comment._id });
-});
+		await CourseDiscussions.removeAsync({ _id: comment._id });
+		await CourseDiscussions.removeAsync({ parentId: comment._id });
+	},
+);

@@ -11,6 +11,7 @@ import { Subscribe, processChange } from '/imports/api/courses/subscription';
 import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as courseTimeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 import * as courseImageDenormalizer from '/imports/api/events/courseImageDenormalizer';
+import * as categoriesDenormalizer from '/imports/api/events/categoriesDenormalizer';
 import { EventEntity, EventModel, Events, OEvent } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
@@ -309,7 +310,10 @@ export const save = ServerMethod(
 		if (isNew) {
 			editFields.createdBy = user._id;
 			editFields.groupOrganizers = [];
-			const enrichedEvent = courseImageDenormalizer.beforeInsert(editFields as EventEntity);
+			let enrichedEvent = courseImageDenormalizer.beforeInsert(editFields as EventEntity);
+			if (editFields.courseId) {
+				enrichedEvent = categoriesDenormalizer.beforeInsert(editFields as EventEntity);
+			}
 			// eslint-disable-next-line no-param-reassign
 			eventId = Events.insert(enrichedEvent);
 
@@ -321,7 +325,6 @@ export const save = ServerMethod(
 					slug: editFields.slug as string,
 					startLocal: editFields.startLocal as string,
 				});
-				Meteor.call('event.updateCategories', { _id: eventId });
 			}
 		} else {
 			Events.update(eventId, { $set: editFields });
@@ -376,7 +379,6 @@ export const save = ServerMethod(
 		if (Meteor.isServer) {
 			Meteor.call('event.updateVenue', eventId, AsyncTools.logErrors);
 			Meteor.call('event.updateGroups', eventId, AsyncTools.logErrors);
-			Meteor.call('event.updateCategories', eventId, AsyncTools.logErrors);
 			Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);
 
 			// the assumption is that all replicas have the same course if any
@@ -629,16 +631,6 @@ Meteor.methods({
 		const idOnly = { fields: { _id: 1 } };
 		Events.find(selector, idOnly).forEach((event) => {
 			Events.updateGroups(event._id);
-		});
-	},
-
-	/**
-	 * Enrich the categories from the course
-	 */
-	'event.updateCategories'(selector) {
-		const idOnly = { fields: { _id: 1 } };
-		Events.find(selector, idOnly).forEach((event) => {
-			Events.updateCategories(event._id);
 		});
 	},
 });
