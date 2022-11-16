@@ -1,42 +1,32 @@
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
+import React from 'react';
+import { Template } from 'meteor/templating';
+import { i18n } from '/imports/startup/both/i18next';
 
-import * as Regions from '/imports/api/regions/publications';
+import { useAll } from '/imports/api/regions/publications';
 
-import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
-
-import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<
-	'regionTag',
-	{ region: string },
-	{
-		regions: ReactiveVar<SubscriptionType<typeof Regions['all']> | undefined>;
+export function RegionTag(props: { region: string }) {
+	const [isLoading, regions] = useAll();
+
+	function regionName(region: string) {
+		return regions.find((r) => r._id === region)?.name;
 	}
->;
+	if (!isLoading() && regions.length > 1) {
+		return (
+			<div className="region-tag p-2 text-light">
+				<span className="fa-solid fa-location-dot" aria-hidden="true"></span>&nbsp;
+				{i18n('regionTag.inRegion', 'in {REGION}', { REGION: regionName(props.region) })}
+			</div>
+		);
+	}
 
-const template = Template.regionTag;
+	return undefined;
+}
 
-template.onCreated(function () {
-	const instance = this;
+// for Blaze
 
-	instance.regions = new ReactiveVar(undefined);
-	instance.autorun(() => {
-		instance.regions.set(Regions.all.subscribe());
-	});
-});
+// eslint-disable-next-line import/first
+import './template.html';
 
-template.helpers({
-	regionName() {
-		const instance = Template.instance();
-		return instance.regions
-			.get()?.()
-			.fetch()
-			.find((r) => r._id === instance.data.region)?.name;
-	},
-	hasMultipleRegions() {
-		const instance = Template.instance();
-		return instance.regions.get()?.().count() ?? 0 > 1;
-	},
-});
+Template.registerHelper(RegionTag.name, () => RegionTag);

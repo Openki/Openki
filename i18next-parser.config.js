@@ -27,6 +27,12 @@ module.exports = {
 				functions: ['i18n'], // Array of functions to match
 			},
 		],
+		tsx: [
+			{
+				lexer: 'JsxLexer',
+				functions: ['i18n'], // Array of functions to match
+			},
+		],
 
 		default: [
 			{
@@ -50,7 +56,7 @@ module.exports = {
 
 	// An array of globs that describe where to look for source files
 	// relative to the location of the configuration file
-	input: ['imports/**/*.{js,ts,html}', 'private/emails/**/*.html'],
+	input: ['imports/**/*.{js,html,ts,tsx}', 'private/emails/**/*.html'],
 
 	// Whether or not to sort the catalog
 	sort: true,

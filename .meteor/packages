@@ -37,6 +37,7 @@ jquery
 markdown
 mys:fonts
 react-meteor-data
+react-template-helper
 
 # SEO
 mdg:seo
