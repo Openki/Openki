@@ -159,7 +159,9 @@ import './styles.scss';
 
 	template.events({
 		'mouseover/mouseout .event-caption-action'(event, instance) {
-			instance.$(event.currentTarget as any).toggleClass('placeholder', event.type === 'mouseout');
+			instance
+				.$(event.currentTarget as any)
+				.toggleClass('event-caption-placeholder', event.type === 'mouseout');
 		},
 	});
 }
