@@ -227,6 +227,12 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		return super.insert(enrichedEvent, callback);
 	}
 
+	insertAsync(event: EventEntity, callback?: (err?: unknown, _id?: string) => void) {
+		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
+
+		return super.insertAsync(enrichedEvent, callback);
+	}
+
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
 		return new Filtering(FindParams);
@@ -276,43 +282,6 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 				update.courseGroups = courseGroups;
 				update.allGroups = _.union(event.groups, courseGroups);
 			}
-
-			this.rawCollection().updateMany({ _id: event._id }, { $set: update }, {}, (err, result) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(result?.modifiedCount === 0);
-				}
-			});
-		});
-	}
-
-	/**
-	 * Recalculate the group-related fields of an event
-	 * @param eventId the event to update
-	 */
-	updateCategories(eventId: string) {
-		AsyncTools.untilClean((resolve, reject) => {
-			const event = this.findOne(eventId);
-
-			if (!event) {
-				// Nothing was successfully updated, we're done.
-				resolve(true);
-				return;
-			}
-
-			if (!event.courseId) {
-				resolve(true);
-				return;
-			}
-			// categories comes from the parent course
-
-			const course = Courses.findOne(event.courseId);
-			if (!course) {
-				throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
-			}
-
-			const update: Partial<EventEntity> = { categories: course.categories };
 
 			this.rawCollection().updateMany({ _id: event._id }, { $set: update }, {}, (err, result) => {
 				if (err) {
