@@ -330,6 +330,7 @@ RouterAsync.route('kioskEvents', {
 		tomorrow.setHours(0);
 
 		const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+		Session.set('kioskFilter', filter.toParams());
 
 		const queryFuture = filter.toQuery() as EventsFindFilter;
 		queryFuture.after = tomorrow;
