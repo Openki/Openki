@@ -21,7 +21,7 @@ export function RegionTag(props: { region: string }) {
 		);
 	}
 
-	return undefined;
+	return null;
 }
 
 // for Blaze

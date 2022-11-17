@@ -35,7 +35,7 @@ export function KioskLink() {
 			</a>
 		);
 	}
-	return undefined;
+	return null;
 }
 
 // for Blaze
