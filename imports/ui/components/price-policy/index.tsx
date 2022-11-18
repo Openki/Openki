@@ -1,84 +1,176 @@
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
+import React from 'react';
+import { Template } from 'meteor/templating';
+import { i18n } from '/imports/startup/both/i18next';
+import { useTracker } from 'meteor/react-meteor-data';
+import { useSessionEquals, useUser } from '/imports/utils/react-meteor-data';
 
 import * as usersMethods from '/imports/api/users/methods';
+import { Regions } from '/imports/api/regions/regions';
 
 import * as Analytics from '/imports/ui/lib/analytics';
+import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import { PublicSettings } from '/imports/utils/PublicSettings';
+import { getSiteName } from '/imports/utils/getSiteName';
 
-import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<
-	'pricePolicy',
-	{ dismissable?: boolean; wrap?: string },
-	{ hidePricePolicy: () => boolean }
->;
+function Disclaimer() {
+	const siteName = useTracker(() => getSiteName(Regions.currentRegion()));
 
-const template = Template.pricePolicy;
+	return (
+		<div className="icon-text">
+			<div className="icon-text-icon">
+				<i className="fa-solid fa-info fa-fw" aria-hidden="true"></i>
+			</div>
+			<div className="icon-text-text">
+				{i18n(
+					'pricePolicy.disclaimer',
+					"Education should be open to everyone. That's why {SITENAME} only allows suggested/orientation prices.",
+					{ SITENAME: siteName },
+				)}
+			</div>
+		</div>
+	);
+}
+function More() {
+	return (
+		<a href={getLocalizedValue(PublicSettings.pricePolicyLink)}>
+			<div className="icon-text">
+				<div className="icon-text-icon">
+					<i className="fa-solid fa-book fa-fw" aria-hidden="true"></i>
+				</div>
+				<div className="icon-text-text">
+					{i18n('pricePolicy.moreAboutPricePolicy', 'Read our price policy')}
+				</div>
+			</div>
+		</a>
+	);
+}
+async function handleHideClick() {
+	Session.set('hidePricePolicy', true);
+	try {
+		localStorage.setItem('hidePricePolicy', 'true'); // Note: At July 2021, only string values were allowed.
+	} catch {
+		// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+	}
 
-template.onCreated(function () {
-	const instance = this;
+	// if logged in, hide the policy permanently for this user
+	if (Meteor.userId()) {
+		await usersMethods.hidePricePolicy();
+	}
 
-	instance.hidePricePolicy = () => {
-		if (Session.equals('hidePricePolicy', true)) {
-			return true;
-		}
+	Analytics.trackEvent('price', 'hide policy');
+}
 
-		if (localStorage?.getItem('hidePricePolicy') === 'true') {
-			return true;
-		}
+function Dismissable() {
+	return (
+		<a href="#" onClick={handleHideClick}>
+			<div className="icon-text">
+				<div className="icon-text-icon">
+					<i className="fa-solid fa-ban fa-fw" aria-hidden="true"></i>
+				</div>
+				<div className="icon-text-text">
+					{i18n('pricePolicy.dontShowAnymore', "Don't show this anymore")}
+				</div>
+			</div>
+		</a>
+	);
+}
 
-		if (Meteor.user()?.hidePricePolicy) {
-			return true;
-		}
+interface Props {
+	dismissable?: boolean | undefined;
+	wrap?: string | undefined;
+}
 
-		return false;
-	};
-});
+function dismissed() {
+	const hidePricePolicy = useSessionEquals('hidePricePolicy', true);
+	const user = useUser();
 
-template.helpers({
-	shown() {
-		const instance = Template.instance();
-		const { data } = instance;
-
-		if (!PublicSettings.pricePolicyEnabled) {
-			return false;
-		}
-
-		if (data.dismissable) {
-			return !instance.hidePricePolicy();
-		}
+	if (hidePricePolicy) {
 		return true;
-	},
+	}
 
-	cssClasses() {
-		const classes = [];
-		if (this.dismissable) {
-			classes.push('is-dismissable');
-		}
-		if (this.wrap) {
-			classes.push(this.wrap);
-		}
-		return classes.join(' ');
-	},
-});
+	if (localStorage?.getItem('hidePricePolicy') === 'true') {
+		return true;
+	}
 
-template.events({
-	'click .js-hide-price-policy'() {
-		Session.set('hidePricePolicy', true);
-		try {
-			localStorage.setItem('hidePricePolicy', 'true'); // Note: At July 2021, only string values were allowed.
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
+	if (user) {
+		return true;
+	}
 
-		// if logged in, hide the policy permanently for this user
-		if (Meteor.userId()) {
-			usersMethods.hidePricePolicy();
-		}
+	return false;
+}
 
-		Analytics.trackEvent('price', 'hide policy');
-	},
-});
+function shown(props: Props) {
+	if (!PublicSettings.pricePolicyEnabled) {
+		return false;
+	}
+
+	if (props.dismissable) {
+		return !dismissed();
+	}
+	return true;
+}
+
+function Content(props: { dismissable?: boolean | undefined }) {
+	if (props.dismissable) {
+		return (
+			<>
+				<div>
+					<Disclaimer />
+				</div>
+				<div className="row g-2 mt-1">
+					<div className="col-12 col-sm-6">
+						<More />
+					</div>
+					<div className="col-12 col-sm-6">
+						<Dismissable />
+					</div>
+				</div>
+			</>
+		);
+	}
+	return (
+		<>
+			<div className="d-lg-inline-block">
+				<Disclaimer />
+			</div>{' '}
+			<div className="d-lg-inline-block">
+				<More />
+			</div>
+		</>
+	);
+}
+
+function classNames(props: Props) {
+	const classes = [];
+	if (props.dismissable) {
+		classes.push('is-dismissable');
+	}
+	if (props.wrap) {
+		classes.push(props.wrap);
+	}
+	return classes.join(' ');
+}
+
+export function PricePolicy(props: Props) {
+	if (!shown(props)) {
+		return null;
+	}
+
+	return (
+		<div className={`price-policy ${classNames(props)}`}>
+			<div className="price-policy-content">
+				<Content dismissable={props.dismissable} />
+			</div>
+		</div>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper(PricePolicy.name, () => PricePolicy);
