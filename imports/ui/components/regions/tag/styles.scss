@@ -1,14 +1,10 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
 .region-tag {
-	@include td-pos(right, 0);
 	background-color: lighten($blue, 5%);
-	border-bottom-left-radius: 3px;
+	border-end-start-radius: 3px;
+	inset-block-start: 0;
+	inset-inline-end: 0;
 	position: absolute;
-	top: 0;
-}
-
-.rtl .region-tag {
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 3px;
+	white-space: nowrap;
 }

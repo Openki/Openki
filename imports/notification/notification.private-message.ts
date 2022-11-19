@@ -113,7 +113,10 @@ export function Model(entry: { body: Body }) {
 				throw new Error('targetRecipient does not exist (0.o)');
 			}
 
-			const subjectvars = { SENDER: StringTools.truncate(sender.username, 10), lng: userLocale };
+			const subjectvars = {
+				SENDER: StringTools.truncate(sender.getDisplayName(), 10),
+				lng: userLocale,
+			};
 			const subject = i18n(
 				'notification.privateMessage.mail.subject',
 				'Private message from {SENDER}',
@@ -131,7 +134,7 @@ export function Model(entry: { body: Body }) {
 				subject,
 				message: htmlizedMessage,
 				senderCopy,
-				recipientName: targetRecipient.username,
+				recipientName: targetRecipient.getDisplayName(),
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=privateMessage`,
 				customSiteName: undefined as string | undefined,
 				customEmailLogo: undefined as string | undefined,

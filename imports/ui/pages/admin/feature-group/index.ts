@@ -1,10 +1,11 @@
-import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import * as RegionsMethods from '/imports/api/regions/methods';
+
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import './template.html';
 import './styles.scss';
@@ -35,7 +36,7 @@ template.events({
 	async 'submit .js-feature-group'(event, instance) {
 		event.preventDefault();
 
-		const regionId = Session.get('region');
+		const regionId = LocalRegionStore.get();
 		if (!regionId) {
 			return;
 		}
@@ -56,7 +57,7 @@ template.events({
 	async 'click .js-unset-featured-group'(event, instance) {
 		event.preventDefault();
 
-		const regionId = Session.get('region');
+		const regionId = LocalRegionStore.get();
 		if (!regionId) {
 			return;
 		}

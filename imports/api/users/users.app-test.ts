@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
+import { Promise } from 'meteor/promise';
 import { Accounts } from 'meteor/accounts-base';
 import { MeteorAsync, AccountsAsync } from '/imports/utils/promisify';
 import { userSearchPrefix } from '/imports/utils/user-search-prefix';

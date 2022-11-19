@@ -4,17 +4,21 @@ import { Session } from 'meteor/session';
 import { Tracker } from 'meteor/tracker';
 import { Spacebars } from 'meteor/spacebars';
 import { Blaze } from 'meteor/blaze';
+import { _ } from 'meteor/underscore';
 import moment from 'moment';
+import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Regions } from '/imports/api/regions/regions';
-import { UserEntity, Users } from '/imports/api/users/users';
-import * as usersMethods from '/imports/api/users/methods';
+import { UserEntity, User, Users } from '/imports/api/users/users';
 import { Roles } from '/imports/api/roles/roles';
+
 import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue, LocalizedValue } from '/imports/utils/getLocalizedValue';
-import { ReactiveDict } from 'meteor/reactive-dict';
 import { checkContribution } from '/imports/utils/checkContribution';
+import { locationFormat } from '/imports/utils/location-format';
+
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -64,7 +68,7 @@ const helpers: { [name: string]: Function } = {
 	 * @param id Region ID
 	 */
 	isCurrentRegion(id: string) {
-		return id && Session.equals('region', id);
+		return id && LocalRegionStore.equals(id);
 	},
 
 	PublicSettings() {
@@ -154,6 +158,10 @@ const helpers: { [name: string]: Function } = {
 			return false;
 		}
 		return toMomentWithTimeLocale(date).format('dddd, Do MMMM');
+	},
+
+	locationFormat(loc: { coordinates: [number, number] }) {
+		return locationFormat(loc);
 	},
 
 	/**
@@ -248,7 +256,7 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 	// To prevent unlimited cache-growth, after a enough lookups we
 	// build a new cache from the old
 	const cacheLimit = 1000;
-	let cache: { [id: string]: Pick<UserEntity, 'username' | 'contribution'> } = {};
+	let cache: { [id: string]: Pick<UserEntity, 'username' | 'contribution'> & User } = {};
 	let previousCache: typeof cache = {};
 	let lookups = 0;
 	const pending: { [id: string]: Tracker.Dependency } = {};
@@ -256,7 +264,11 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 	// Update the cache if users are pushed to the collection
 	Users.find({}, { fields: { _id: 1, username: 1, contribution: 1 } }).observe({
 		added(user) {
-			cache[user._id] = user;
+			cache[user._id] = _.extend(new User(), user || { username: '?!' });
+			if (pending[user._id]) {
+				pending[user._id].changed();
+				delete pending[user._id];
+			}
 		},
 		changed(user) {
 			cache[user._id] = user;
@@ -278,7 +290,7 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 
 		if (cachedUser === undefined) {
 			// Substitute until the name (or its absence) is loaded
-			cachedUser = { username: '◌' };
+			cachedUser = _.extend(new User(), { username: '◌' });
 
 			if (pending[userId]) {
 				pending[userId].depend();
@@ -295,17 +307,7 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 					lookups = 0;
 				}
 
-				usersMethods
-					.name(userId)
-					.then((user) => {
-						cache[userId] = user || { username: '?!' };
-						pending[userId].changed();
-						delete pending[userId];
-					})
-					.catch((err) => {
-						/* eslint-disable-next-line no-console */
-						console.warn(err);
-					});
+				Meteor.subscribe('user.simple', userId);
 			}
 		}
 
@@ -323,7 +325,7 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 			return `userId: ${userId}`;
 		}
 
-		return cachedUser.username;
+		return cachedUser.getDisplayName();
 	});
 
 	Template.registerHelper('contribution', function (userId: string) {
@@ -353,7 +355,7 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 					'user.hasContributed',
 					'{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.',
 					{
-						USERNAME: cachedUser.username,
+						USERNAME: cachedUser.getDisplayName(),
 						SITENAME: getSiteName(Regions.currentRegion()),
 						ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
 					},

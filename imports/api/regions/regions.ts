@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { Session } from 'meteor/session';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
@@ -12,6 +11,8 @@ import { Filtering } from '/imports/utils/filtering';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
 import { Type } from '/imports/utils/CustomChecks';
+
+import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 export interface Geodata {
 	type: 'Point';
@@ -85,7 +86,7 @@ export class Region {
 	/**
 	 * Check whether a user may edit the region.
 	 */
-	editableBy(this: RegionModel, user?: UserModel) {
+	editableBy(this: RegionModel, user?: UserModel | null) {
 		if (!user) {
 			return false;
 		}
@@ -121,7 +122,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 	 * Returns the region from the db based on the session setting.
 	 */
 	currentRegion() {
-		const regionId = Session.get('region');
+		const regionId = LocalRegionStore.get();
 
 		if (!regionId || regionId === 'all') {
 			return undefined;

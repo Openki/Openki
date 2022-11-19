@@ -29,7 +29,8 @@ This file descripts all configurations and customization options. Remove the com
 				"google": true,
 				"facebook": true,
 				"github": true
-			}
+			},
+			"visitorUser": true // allow user without name and password
 		},
 		"footerLinks": [
 			{

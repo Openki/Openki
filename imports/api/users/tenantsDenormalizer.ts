@@ -20,29 +20,37 @@ export function onStartUp() {
 	console.log(`users.tenantsDenormalizer.onStartUp: ${updated} affected users`);
 }
 
-export function afterTenantCreate(userId: string, tenantId: string) {
-	Users.update(userId, { $addToSet: { tenants: { _id: tenantId, privileges: ['admin'] } } });
+export async function afterTenantCreate(userId: string, tenantId: string) {
+	await Users.updateAsync(userId, {
+		$addToSet: { tenants: { _id: tenantId, privileges: ['admin'] } },
+	});
 }
 
-export function afterTenantAddMember(userId: string, tenantId: string) {
-	Users.update(userId, { $addToSet: { tenants: { _id: tenantId } } });
+export async function afterTenantAddMember(userId: string, tenantId: string) {
+	Users.updateAsync(userId, { $addToSet: { tenants: { _id: tenantId } } });
 }
 
-export function afterTenantRemoveMember(userId: string, tenantId: string) {
-	Users.update(userId, { $pull: { tenants: { _id: tenantId } } });
+export async function afterTenantRemoveMember(userId: string, tenantId: string) {
+	await Users.updateAsync(userId, { $pull: { tenants: { _id: tenantId } } });
 }
 
-export function afterTenantAddAdmin(userId: string, tenantId: string) {
-	Users.update(userId, { $addToSet: { tenants: { _id: tenantId, privileges: ['admin'] } } });
+export async function afterTenantAddAdmin(userId: string, tenantId: string) {
+	await Users.updateAsync(userId, {
+		$addToSet: { tenants: { _id: tenantId, privileges: ['admin'] } },
+	});
 }
 
-export function afterTenantRemoveAdmin(userId: string, tenantId: string) {
-	Users.update(
+export async function afterTenantRemoveAdmin(userId: string, tenantId: string) {
+	await Users.updateAsync(
 		{ _id: userId, 'tenants._id': tenantId },
 		{ $pull: { 'tenants.$.privileges': 'admin' } },
 	);
 }
 
-export function afterInvitationJoin(userId: string, tenantId: string) {
+export async function afterInvitationJoin(userId: string, tenantId: string) {
+	await Users.updateAsync(userId, { $addToSet: { tenants: { _id: tenantId } } });
+}
+
+export function afterJoinLinkJoin(userId: string, tenantId: string) {
 	Users.update(userId, { $addToSet: { tenants: { _id: tenantId } } });
 }

@@ -80,13 +80,6 @@ Template.usersCourselist.helpers({
 		return `roles.${role}.myList.past`;
 	},
 
-	getName() {
-		const { username } = Template.currentData().user;
-		if (username) {
-			return username;
-		}
-		return false;
-	},
 	isInvolved() {
 		const userId = Template.currentData().user._id;
 		return (
