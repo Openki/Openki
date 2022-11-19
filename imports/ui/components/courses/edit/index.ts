@@ -5,6 +5,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
+import { Session } from 'meteor/session';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Categories } from '/imports/api/categories/categories';
