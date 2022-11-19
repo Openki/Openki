@@ -4,10 +4,19 @@ import { Log } from '/imports/api/log/log';
 // Record a login attempt in the log
 const registerAttempt =
 	(track: string) => (attempt: { user: { _id: string; username: string } }) => {
-		const body = { ...attempt } as unknown as { userId: string; username: string };
+		const body = { ...attempt } as unknown as {
+			userId: string;
+			username?: string;
+			visitor?: boolean;
+		};
 		if (attempt.user) {
 			body.userId = attempt.user._id;
-			body.username = attempt.user.username;
+
+			if (attempt.user.username) {
+				body.username = attempt.user.username;
+			} else {
+				body.visitor = true;
+			}
 		}
 
 		// Too much (secret) info in the user object

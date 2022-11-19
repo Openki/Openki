@@ -18,37 +18,7 @@ export function waitForSubscriptions(): Promise<void> {
 }
 
 /**
- * Returns a promise which resolves if test returns anything but undefined.
- *
- * The test function is run in response to dom mutation events. See:
- * https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
- */
-export function elementsReady(test: (mutations: MutationRecord[]) => any) {
-	return new Promise((resolve) => {
-		const result = test([]);
-		if (result !== undefined) {
-			resolve(result);
-		} else {
-			const observer = new MutationObserver((mutations) => {
-				const mutationsResult = test(mutations);
-				if (mutationsResult !== undefined) {
-					observer.disconnect();
-					resolve(mutationsResult);
-				}
-			});
-
-			observer.observe(document.body, {
-				childList: true,
-				subtree: true,
-				attributes: false,
-				characterData: false,
-			});
-		}
-	});
-}
-
-/**
- * Try an assertion on every DOM mutation
+ * Try an assertion in 100ms interval
  * @param assertion function that throws an AssertionError until its demands are met
  * @param timeout after this many milliseconds, the AssertionError is passed on
  * @returns Returns a promise that resolves with the last return value of
@@ -60,15 +30,11 @@ export function elementsReady(test: (mutations: MutationRecord[]) => any) {
 export function waitFor<T>(assertion: () => T, timeout = 10000): Promise<T> {
 	return new Promise((resolve, reject) => {
 		const start = new Date().getTime();
-		let timer: number | false = false;
-		let observer: MutationObserver | false = false;
+		let interval: any = false;
 
 		const clearWatchers = () => {
-			if (timer) {
-				Meteor.clearTimeout(timer);
-			}
-			if (observer) {
-				observer.disconnect();
+			if (interval) {
+				clearInterval(interval);
 			}
 		};
 
@@ -93,15 +59,6 @@ export function waitFor<T>(assertion: () => T, timeout = 10000): Promise<T> {
 		if (tryIt()) {
 			return;
 		}
-
-		timer = Meteor.setTimeout(tryIt, timeout);
-		observer = new MutationObserver(tryIt);
-
-		observer.observe(document.body, {
-			childList: true,
-			subtree: true,
-			attributes: true,
-			characterData: true,
-		});
+		interval = setInterval(tryIt, 100);
 	});
 }

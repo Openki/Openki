@@ -1,6 +1,4 @@
-import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-
 import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
@@ -22,11 +20,7 @@ import { RoleEntity, Roles } from '/imports/api/roles/roles';
 import { Venues, Venue, VenueModel } from '/imports/api/venues/venues';
 import { UserModel, Users } from '/imports/api/users/users';
 import { InvitationEntity, Invitations } from '/imports/api/invitations/invitations';
-
-import * as Analytics from '/imports/ui/lib/analytics';
-import { CleanedRegion } from '/imports/ui/lib/cleaned-region';
-import { CourseTemplate } from '/imports/ui/lib/course-template';
-import { CssFromQuery } from '/imports/ui/lib/css-from-query';
+import { JoinLinkEntity, JoinLinks } from '/imports/api/joinLinks/joinLinks';
 
 import { Filtering } from '/imports/utils/filtering';
 import { LocalTime } from '/imports/utils/local-time';
@@ -34,6 +28,11 @@ import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Predicates from '/imports/utils/predicates';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as RouterAsync from '/imports/utils/RouterAsync';
+import { CleanedRegion } from '/imports/ui/lib/cleaned-region';
+
+import * as Analytics from '/imports/ui/lib/analytics';
+import { CourseTemplate } from '/imports/ui/lib/course-template';
+import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 
 const makeFilterQuery = function (params: Record<string, string>) {
 	const filter = Events.Filtering().read(params).done();
@@ -71,7 +70,7 @@ function loadRoles(course: CourseModel, member?: CourseMemberEntity) {
 }
 
 if (Meteor.isClient) {
-	Analytics.installRouterActions(Router);
+	Analytics.installRouterActions();
 }
 
 RouterAsync.route('adminPanel', {
@@ -452,11 +451,11 @@ RouterAsync.route<any>('profile', {
 	},
 	data() {
 		const data: any = {};
-		const user: UserModel | null = Meteor.user();
+		const user = Meteor.user();
 		if (user) {
 			const userdata = {
 				_id: user._id,
-				name: user.username,
+				name: user.getDisplayName(),
 				notifications: user.notifications,
 				allowPrivateMessages: user.allowPrivateMessages,
 				tenants: Tenants.findFilter({ adminOf: true }),
@@ -674,6 +673,37 @@ RouterAsync.route<
 });
 
 RouterAsync.route<
+	{ tenant: TenantModel; joinLink: JoinLinkEntity } | undefined,
+	{ token: string },
+	{ tenant: string }
+>('join', {
+	path: 'join/:token',
+	template: 'joinPage',
+	async onRun() {
+		await import('/imports/ui/pages/join');
+	},
+	waitOn() {
+		return [Meteor.subscribe('joinLink', this.params?.query?.tenant, this.params?.token)];
+	},
+	data() {
+		const tenant = Tenants.findOne({ _id: this.params?.query?.tenant });
+		if (!tenant) {
+			return undefined;
+		}
+
+		const joinLink = JoinLinks.findOne({
+			tenant: this.params?.query?.tenant,
+			token: this.params?.token,
+		});
+		if (!joinLink) {
+			return undefined;
+		}
+
+		return { tenant, joinLink };
+	},
+});
+
+RouterAsync.route<
 	| never[]
 	| {
 			days: {
@@ -812,16 +842,22 @@ RouterAsync.route<
 		};
 
 		events.forEach((originalEvent) => {
-			const event: any = {
+			const event: EventEntity & {
+				relStart: number;
+				relEnd: number;
+			} = {
 				...originalEvent,
+				relStart: (originalEvent.start.getTime() - timestampStart) / span,
+				relEnd: (timestampEnd - originalEvent.end.getTime()) / span,
 			};
-			event.relStart = (event.start.getTime() - timestampStart) / span;
-			event.relEnd = (timestampEnd - event.end.getTime()) / span;
 			let placed = false;
 
 			const room = event.room || null;
-			const roomRows = useVenue(event.venue, room);
-			roomRows.forEach((roomRow: any) => {
+			const roomRows = useVenue(event.venue, room) as unknown as (EventEntity & {
+				relStart: number;
+				relEnd: number;
+			})[][];
+			roomRows.forEach((roomRow) => {
 				let last: any;
 				roomRow.forEach((placedEvent: any) => {
 					if (!last || placedEvent.end > last) {
@@ -836,7 +872,7 @@ RouterAsync.route<
 				return true;
 			});
 			if (!placed) {
-				roomRows.push([event] as any);
+				roomRows.push([event]);
 			}
 		});
 

@@ -84,7 +84,7 @@ template.helpers({
 			placeholder: i18n(
 				'participantContact.sendMessage.placeholder',
 				'Hi {USER}. I wanted to tell you…',
-				{ USER: user?.username },
+				{ USER: user?.getDisplayName() },
 			),
 			onSend: async (message, options) => {
 				const sendPrivateMessageOptions = options as SendPrivateMessageOptions;

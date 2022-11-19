@@ -87,7 +87,7 @@ template.onCreated(function () {
 			return;
 		}
 		const title = i18n('profile.settings.windowtitle', 'My Profile Settings - {USER}', {
-			USER: user.username,
+			USER: user.getDisplayName(),
 		});
 		Metatags.setCommonTags(title);
 	});

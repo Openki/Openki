@@ -2,6 +2,9 @@ import $ from 'jquery';
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
+import { Router } from 'meteor/iron:router';
+import { Promise } from 'meteor/promise';
+
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
 let loading: false | JQuery.jqXHR<any>;
@@ -72,7 +75,7 @@ export function load(): Promise<any> {
 		});
 	}
 
-	return result;
+	return result as any;
 }
 
 /**
@@ -125,10 +128,10 @@ export function trackEvent(category: string, action: string, name?: string, valu
 /**
  * Installs action-hooks on the router.
  */
-export function installRouterActions(router: any) {
+export function installRouterActions() {
 	let started: Date | null;
 
-	router.onBeforeAction(function (this: any) {
+	Router.onBeforeAction(function (this) {
 		if (hasTracker()) {
 			trytrack((t) => t.deleteCustomVariables());
 			started = new Date();
@@ -136,7 +139,7 @@ export function installRouterActions(router: any) {
 		this.next();
 	});
 
-	router.onAfterAction(() => {
+	Router.onAfterAction(() => {
 		// Router.onAfterAction sometimes fires more than once on each page run.
 		// https://github.com/iron-meteor/iron-router/issues/1031
 		if (Tracker.currentComputation.firstRun) {

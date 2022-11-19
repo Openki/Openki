@@ -1,13 +1,13 @@
-import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment';
+import { ReactiveDict } from 'meteor/reactive-dict';
+import { i18n } from '/imports/startup/both/i18next';
+import { Session } from 'meteor/session';
 
 import { EventModel, Events, FindFilter } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
-import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { MeteorAsync } from '/imports/utils/promisify';
-import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/calendar-nav/multi';
