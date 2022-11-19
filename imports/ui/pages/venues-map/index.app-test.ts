@@ -6,8 +6,6 @@ import { MeteorAsync } from '/imports/utils/promisify';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
-
 if (Meteor.isClient) {
 	describe('Venues map', function () {
 		this.timeout(30000);
@@ -16,7 +14,7 @@ if (Meteor.isClient) {
 
 			await MeteorAsync.loginWithPassword('greg', 'greg');
 			Session.set('locale', 'en');
-			LocalRegionStore.reset();
+			Session.set('region', 'all');
 		});
 
 		it('should be navigable', async () => {

@@ -1,10 +1,8 @@
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
-
 import type { Data as CourseEditData } from '/imports/ui/components/courses/edit';
 
 export function CourseTemplate(): Partial<CourseEditData> {
 	return {
 		roles: ['host', 'mentor'],
-		region: LocalRegionStore.get(),
+		region: Session.get('region'),
 	};
 }

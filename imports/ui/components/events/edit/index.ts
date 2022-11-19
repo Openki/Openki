@@ -28,7 +28,6 @@ import { LocalTime } from '/imports/utils/local-time';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
@@ -100,7 +99,7 @@ template.onCreated(function () {
 	if (!parent) throw new Error('Unexpected undefined: parent');
 
 	instance.parent = parent;
-	instance.selectedRegion = new ReactiveVar(instance.data.region || LocalRegionStore.get());
+	instance.selectedRegion = new ReactiveVar(instance.data.region || Session.get('region'));
 	instance.selectedLocation = new ReactiveVar(
 		instance.data.venue || ({} as Partial<EventVenueEntity>),
 	);
