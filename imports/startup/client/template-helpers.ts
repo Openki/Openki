@@ -364,3 +364,9 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 		);
 	});
 }
+
+/** Utility to simplify the map of a Blaze component to a React component for backwards compatibility. */
+Template.registerHelper('component', function (this: any, f: any) {
+	this.component = f;
+	return this;
+});
