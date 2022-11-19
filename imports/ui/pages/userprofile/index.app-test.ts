@@ -8,15 +8,13 @@ import { Users } from '/imports/api/users/users';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
-
 if (Meteor.isClient) {
 	describe('userprofile page', function () {
 		this.timeout(30000);
 		before(async function () {
 			this.timeout(8000);
 			Session.set('locale', 'en');
-			LocalRegionStore.reset();
+			Session.set('region', 'all');
 		});
 
 		it('should be navigable', async () => {
