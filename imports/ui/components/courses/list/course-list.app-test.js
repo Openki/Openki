@@ -5,8 +5,6 @@ import { MeteorAsync } from '/imports/utils/promisify';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
-
 if (Meteor.isClient) {
 	describe('Frontpage', function () {
 		this.timeout(60000);
@@ -25,7 +23,7 @@ if (Meteor.isClient) {
 		it('should list 7 courses for unauthenticated user (Testistan)', async () => {
 			Router.go('/');
 
-			LocalRegionStore.set('9JyFCoKWkxnf8LWPh'); // Testistan
+			Session.set('region', '9JyFCoKWkxnf8LWPh'); // Testistan
 
 			await waitForSubscriptions();
 			const titles = await waitFor(() => {

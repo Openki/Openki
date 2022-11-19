@@ -20,7 +20,6 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as Analytics from '/imports/ui/lib/analytics';
 import { Editable } from '/imports/ui/lib/editable';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
@@ -647,7 +646,7 @@ export type Data = {
 			if (this.dropdownVisible()) {
 				this.subscribe('Courses.findFilter', {
 					search: this.proposedSearch.get(),
-					region: LocalRegionStore.get(),
+					region: Session.get('region'),
 				});
 				if (!this.$('.dropdown').hasClass('open')) {
 					this.$('.dropdown-toggle').dropdown('toggle');
@@ -660,7 +659,7 @@ export type Data = {
 		proposedCourses() {
 			const instance = Template.instance();
 			const search = instance.proposedSearch.get();
-			const region = LocalRegionStore.get();
+			const region = Session.get('region');
 			if (instance.dropdownVisible()) {
 				return Courses.findFilter({ search, region }, 20, undefined, [['name', 'asc']]);
 			}

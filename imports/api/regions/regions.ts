@@ -12,8 +12,6 @@ import { PublicSettings } from '/imports/utils/PublicSettings';
 import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
 import { Type } from '/imports/utils/CustomChecks';
 
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
-
 export interface Geodata {
 	type: 'Point';
 	/** (not lat-long !) */
@@ -122,7 +120,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 	 * Returns the region from the db based on the session setting.
 	 */
 	currentRegion() {
-		const regionId = LocalRegionStore.get();
+		const regionId = Session.get('region');
 
 		if (!regionId || regionId === 'all') {
 			return undefined;

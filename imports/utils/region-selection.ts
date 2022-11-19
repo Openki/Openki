@@ -8,8 +8,6 @@ import * as usersMethods from '/imports/api/users/methods';
 import * as UserLocation from '/imports/utils/user-location';
 import * as UrlTools from '/imports/utils/url-tools';
 
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
-
 /**
  * List of routes that show different results when the region changes.
  */
@@ -25,7 +23,7 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 
 	// Special case 'all'
 	if (!tenantId && regionIdOrName === 'all') {
-		LocalRegionStore.set(regionIdOrName);
+		Session.set('region', regionIdOrName);
 		return true;
 	}
 
@@ -33,7 +31,7 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 	if (
 		Regions.findOne(tenantId ? { tenant: tenantId, _id: regionIdOrName } : { _id: regionIdOrName })
 	) {
-		LocalRegionStore.set(regionIdOrName);
+		Session.set('region', regionIdOrName);
 		return true;
 	}
 
@@ -42,7 +40,7 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 		tenantId ? { tenant: tenantId, name: regionIdOrName } : { name: regionIdOrName },
 	);
 	if (region) {
-		LocalRegionStore.set(region._id);
+		Session.set('region', region._id);
 		return true;
 	}
 
@@ -57,7 +55,7 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 export function subscribe(preferredTenant?: string, confirmAutodectionByUser = true) {
 	Meteor.subscribe('Regions', async () => {
 		const selectors = [
-			LocalRegionStore.get(),
+			Session.get('region'),
 			UrlTools.queryParam('region'),
 			localStorage?.getItem('region'),
 		].filter(Boolean) as string[];
@@ -140,7 +138,7 @@ export function init() {
 		if (user) {
 			const { regionId } = user.profile;
 			if (regionId) {
-				LocalRegionStore.set(regionId);
+				Session.set('region', regionId);
 			}
 		}
 	});
@@ -149,7 +147,7 @@ export function init() {
 }
 
 export async function change(regionId: string) {
-	LocalRegionStore.set(regionId);
+	Session.set('region', regionId);
 	if (regionId !== 'all' && Meteor.userId()) {
 		await usersMethods.regionChange(regionId);
 	}
