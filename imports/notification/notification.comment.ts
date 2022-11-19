@@ -138,7 +138,6 @@ export function Model(entry: { body: Body }) {
 			}
 			const emailLogo = region?.custom?.emailLogo;
 			const siteName = getSiteName(region);
-
 			return {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				course,
@@ -148,9 +147,11 @@ export function Model(entry: { body: Body }) {
 				subject,
 				comment,
 				commenter,
-				commenterLink: `${Meteor.absoluteUrl(
-					`user/${comment.userId}/${commenterName}`,
-				)}?campaign=commentNotify`,
+				commenterLink: Router.url(
+					'userprofile',
+					{ _id: comment.userId, username: commenterName },
+					{ query: 'campaign=commentNotify' },
+				),
 				commenterName,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=commentNotify`,
 				customSiteName: siteName,
