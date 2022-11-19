@@ -3,6 +3,7 @@ import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Session } from 'meteor/session';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Regions } from '/imports/api/regions/regions';
