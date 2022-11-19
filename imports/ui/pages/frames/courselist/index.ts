@@ -10,8 +10,6 @@ import { CourseModel, Courses } from '/imports/api/courses/courses';
 import * as Metatags from '/imports/utils/metatags';
 import { SortSpec } from '/imports/utils/sort-spec';
 
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
-
 import './template.html';
 
 {
@@ -100,7 +98,7 @@ import './template.html';
 
 	template.helpers({
 		allRegions() {
-			return LocalRegionStore.equals('all');
+			return Session.equals('region', 'all');
 		},
 		regionOf(course: CourseModel) {
 			return Regions.findOne(course.region)?.name;

@@ -12,7 +12,7 @@ import * as VenuesMethods from '/imports/api/venues/methods';
 import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as Analytics from '/imports/ui/lib/analytics';
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
+import { CleanedRegion } from '/imports/ui/lib/cleaned-region';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/richtext';
@@ -52,7 +52,7 @@ import './styles.scss';
 		if (instance.isNew) {
 			instance.autorun(() => {
 				// If the session sets the region, we use it
-				const sessionRegion = LocalRegionStore.getCleaned();
+				const sessionRegion = CleanedRegion(Session.get('region'));
 
 				instance.selectedRegion.set(sessionRegion);
 

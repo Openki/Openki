@@ -28,11 +28,11 @@ import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Predicates from '/imports/utils/predicates';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as RouterAsync from '/imports/utils/RouterAsync';
+import { CleanedRegion } from '/imports/ui/lib/cleaned-region';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 import { CourseTemplate } from '/imports/ui/lib/course-template';
 import { CssFromQuery } from '/imports/ui/lib/css-from-query';
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 const makeFilterQuery = function (params: Record<string, string>) {
 	const filter = Events.Filtering().read(params).done();
@@ -134,7 +134,7 @@ RouterAsync.route<
 		// Add filter options for the homepage
 		return _.extend(query, {
 			internal: false,
-			region: LocalRegionStore.get(),
+			region: Session.get('region'),
 		});
 	},
 });
@@ -320,7 +320,7 @@ RouterAsync.route<
 
 		const courseQuery = Object.assign(this.params.query, {
 			group: group._id,
-			region: LocalRegionStore.get(),
+			region: Session.get('region'),
 		});
 
 		return {
@@ -1024,6 +1024,6 @@ RouterAsync.route('venuesMap', {
 		await import('/imports/ui/pages/venues-map');
 	},
 	waitOn() {
-		return Meteor.subscribe('venues', LocalRegionStore.getCleaned());
+		return Meteor.subscribe('venues', CleanedRegion(Session.get('region')));
 	},
 });
