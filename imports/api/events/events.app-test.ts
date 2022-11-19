@@ -1,10 +1,12 @@
 import { assert } from 'chai';
 import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
+import { Session } from 'meteor/session';
 
 import { Events } from '/imports/api/events/events';
 import { UserModel } from '/imports/api/users/users';
 
+import { Default as RegionDefault } from '/imports/ui/lib/cleaned-region';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
 if (Meteor.isClient) {
@@ -17,7 +19,7 @@ if (Meteor.isClient) {
 				if (Meteor.userId()) {
 					await MeteorAsync.logout();
 				}
-				Session.set('region', 'all');
+				Session.set('region', RegionDefault);
 
 				await MeteorAsync.subscribe('Events.findFilter');
 			});

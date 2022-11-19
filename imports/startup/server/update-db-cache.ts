@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import { Users } from '/imports/api/users/users';
 import * as coursesTenantDenormalizer from '/imports/api/courses/tenantDenormalizer';
+import * as eventsCategoriesDenormalizer from '/imports/api/events/categoriesDenormalizer';
 import * as eventsTenantDenormalizer from '/imports/api/events/tenantDenormalizer';
 import * as usersTenantsDenormalizer from '/imports/api/users/tenantsDenormalizer';
 
@@ -17,7 +18,7 @@ function updateDbCacheFields() {
 	// Update list of organizers per course
 	Meteor.call('course.updateGroups', {}, AsyncTools.logErrors);
 
-	Meteor.call('event.updateCategories', {}, AsyncTools.logErrors);
+	eventsCategoriesDenormalizer.onStartUp();
 
 	// Update List of badges per user
 	Meteor.call('user.updateBadges', {}, AsyncTools.logErrors);

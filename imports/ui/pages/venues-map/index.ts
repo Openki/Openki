@@ -1,16 +1,16 @@
 import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { i18n } from '/imports/startup/both/i18next';
+import { Session } from 'meteor/session';
 
 import { Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
 
-import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
-
-import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
 import { Filtering } from '/imports/utils/filtering';
 import { Predicate } from '/imports/utils/predicates';
+
+import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
 
 import '/imports/ui/components/map';
 

@@ -8,7 +8,6 @@ import './translations.html';
 import './useraccounts-configuration';
 
 import { Meteor } from 'meteor/meteor';
-
 import { Router } from 'meteor/iron:router';
 import { Tooltips } from 'meteor/lookback:tooltips';
 import { Session } from 'meteor/session';

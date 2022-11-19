@@ -4,14 +4,15 @@ import { Email } from 'meteor/email';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
+import { Router } from 'meteor/iron:router';
 import juice from 'juice';
+import { Spacebars } from 'meteor/spacebars';
 
 import { Version } from '/imports/api/version/version';
 import { Users } from '/imports/api/users/users';
 
 import { Notification } from '/imports/notification/notification';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import * as HtmlTools from '/imports/utils/html-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
@@ -87,10 +88,11 @@ export const sendReport = ServerMethod(
 		check(reportMessage, String);
 
 		let reporter = 'A fellow visitor';
-		const rootUrl = Meteor.absoluteUrl();
 		const user = Meteor.user();
 		if (user) {
-			reporter = `<a href='${rootUrl}user/${user._id}'>${HtmlTools.plainToHtml(user.username)}</a>`;
+			reporter = Spacebars.SafeString(
+				`<a href='${Router.url('userprofile', user)}'>${user.getDisplayName()}</a>`,
+			);
 		}
 		moment.locale('en');
 

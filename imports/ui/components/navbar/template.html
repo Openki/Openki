@@ -3,7 +3,7 @@
 		{{#if PublicSettings.testWarning}}
 			{{> testWarningTicker}}
 		{{/if}}
-		<!-- Brand and toggle get grouped for better mobile display -->
+		{{! Brand and toggle get grouped for better mobile display }}
 		<div class="navbar-container container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle navbar-brand collapsed"
@@ -91,7 +91,7 @@
 			<a class="loginButton navbar-link" aria-expanded="false" data-bs-toggle="dropdown"
 			   role="button">
 				<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-				{{currentUser.username}}
+				{{currentUser.getDisplayName}}
 			</a>
 		{{else}}
 			<a class="js-open-login loginButton navbar-link" id="openLogin" role="button">
@@ -111,7 +111,7 @@
 <template name="ownUserFrame">
 	<div class="ownuser-frame">
 		<div class="mb-3 ownuser-frame-welcome">
-			{{i18n 'login.frame.welcome' 'Welcome {NAME}.' NAME=currentUser.username}}
+			{{i18n 'login.frame.welcome' 'Welcome {NAME}.' NAME=currentUser.getDisplayName}}
 		</div>
 		<div class="mb-3">
 			<a class="btn btn-secondary form-control"

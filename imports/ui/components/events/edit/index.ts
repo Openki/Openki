@@ -22,14 +22,13 @@ import * as EventsMethods from '/imports/api/events/methods';
 import { Regions } from '/imports/api/regions/regions';
 import { SaveFields } from '/imports/api/events/methods';
 
-import { PleaseLogin } from '/imports/ui/lib/please-login';
-
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import { LocalTime } from '/imports/utils/local-time';
-
-import * as Analytics from '/imports/ui/lib/analytics';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+
+import { PleaseLogin } from '/imports/ui/lib/please-login';
+import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/richtext';

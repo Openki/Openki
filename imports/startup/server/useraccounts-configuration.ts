@@ -139,14 +139,13 @@ Accounts.onCreateUser((options: any, originalUser) => {
 	return user;
 });
 
-Accounts.onLogin(() => {
+Accounts.onLogin(async () => {
+	await usersMethods.updateLastLogin();
+
 	const user = Meteor.user();
-
-	usersMethods.updateLastLogin();
-
 	// generate a avatar color for every new user
 	if (user && user.avatar?.color === undefined) {
-		usersMethods.updateAvatarColor();
+		await usersMethods.updateAvatarColor();
 	}
 });
 
