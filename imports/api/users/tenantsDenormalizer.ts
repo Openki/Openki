@@ -27,7 +27,7 @@ export async function afterTenantCreate(userId: string, tenantId: string) {
 }
 
 export async function afterTenantAddMember(userId: string, tenantId: string) {
-	Users.updateAsync(userId, { $addToSet: { tenants: { _id: tenantId } } });
+	await Users.updateAsync(userId, { $addToSet: { tenants: { _id: tenantId } } });
 }
 
 export async function afterTenantRemoveMember(userId: string, tenantId: string) {
@@ -51,6 +51,6 @@ export async function afterInvitationJoin(userId: string, tenantId: string) {
 	await Users.updateAsync(userId, { $addToSet: { tenants: { _id: tenantId } } });
 }
 
-export function afterJoinLinkJoin(userId: string, tenantId: string) {
-	Users.update(userId, { $addToSet: { tenants: { _id: tenantId } } });
+export async function afterJoinLinkJoin(userId: string, tenantId: string) {
+	await Users.updateAsync(userId, { $addToSet: { tenants: { _id: tenantId } } });
 }

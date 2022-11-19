@@ -7,10 +7,10 @@ import { Tenants } from '/imports/api/tenants/tenants';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import * as usersTenantsDenormalizer from '/imports/api/users/tenantsDenormalizer';
 
-export const create = ServerMethod('joinLinks.create', (tenantId: string) => {
+export const create = ServerMethod('joinLinks.create', async (tenantId: string) => {
 	check(tenantId, String);
 
-	const tenant = Tenants.findOne(tenantId);
+	const tenant = await Tenants.findOneAsync(tenantId);
 	if (!tenant) {
 		throw new Meteor.Error(401, 'Not permitted');
 	}
@@ -26,7 +26,7 @@ export const create = ServerMethod('joinLinks.create', (tenantId: string) => {
 	const createdBy = user._id;
 
 	// Update or insert
-	JoinLinks.upsert(
+	await JoinLinks.upsertAsync(
 		{
 			// Selector
 			tenant: tenantId,
@@ -43,10 +43,10 @@ export const create = ServerMethod('joinLinks.create', (tenantId: string) => {
 	);
 });
 
-export const remove = ServerMethod('joinLinks.remove', (tenantId: string) => {
+export const remove = ServerMethod('joinLinks.remove', async (tenantId: string) => {
 	check(tenantId, String);
 
-	const tenant = Tenants.findOne(tenantId);
+	const tenant = await Tenants.findOneAsync(tenantId);
 	if (!tenant) {
 		throw new Meteor.Error(401, 'Not permitted');
 	}
@@ -56,14 +56,14 @@ export const remove = ServerMethod('joinLinks.remove', (tenantId: string) => {
 		throw new Meteor.Error(401, 'Not permitted');
 	}
 
-	JoinLinks.remove({ tenant: tenantId });
+	await JoinLinks.removeAsync({ tenant: tenantId });
 });
 
-export const join = ServerMethod('joinLinks.join', (tenantId: string, token: string) => {
+export const join = ServerMethod('joinLinks.join', async (tenantId: string, token: string) => {
 	check(tenantId, String);
 	check(token, String);
 
-	const joinLink = JoinLinks.findOne({ tenant: tenantId, token });
+	const joinLink = await JoinLinks.findOneAsync({ tenant: tenantId, token });
 	if (!joinLink) {
 		throw new Meteor.Error(401, 'Not permitted');
 	}
@@ -73,7 +73,7 @@ export const join = ServerMethod('joinLinks.join', (tenantId: string, token: str
 		throw new Meteor.Error(401, 'please log in');
 	}
 
-	Tenants.update(tenantId, { $addToSet: { members: userId } });
+	await Tenants.updateAsync(tenantId, { $addToSet: { members: userId } });
 
-	usersTenantsDenormalizer.afterJoinLinkJoin(userId, tenantId);
+	await usersTenantsDenormalizer.afterJoinLinkJoin(userId, tenantId);
 });
