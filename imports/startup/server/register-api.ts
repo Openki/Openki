@@ -10,6 +10,8 @@ import '/imports/api/groups/server/publications';
 import '/imports/api/infoPages/server/publications';
 import '/imports/api/invitations/methods';
 import '/imports/api/invitations/server/publications';
+import '/imports/api/joinLinks/methods';
+import '/imports/api/joinLinks/server/publications';
 import '/imports/api/languages/server/publications';
 import '/imports/api/log/methods';
 import '/imports/api/log/server/publications';

@@ -2,7 +2,7 @@
 	<tr>
 		<td>
 			<span class="title">
-				{{i18n "notification.rsvp.mail.greeting" "Hi {USERNAME}" USERNAME=username lng=locale}}
+				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
 			</span>
 			<p>
 				{{i18n 'notification.rsvp.mail.intro' 'We are looking forward to see you on {DATE}. Your seat is reserved. If you can not join the event, please let the organizers know by withdrawing your registration.' DATE=eventDate lng=locale}}
@@ -63,10 +63,10 @@
 				<tr>
 					<td>
 						<a
-						   href="{{unsubLink}}">{{i18n "notification.rsvp.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName lng=locale}}</a>
+						   href="{{unsubLink}}">{{i18n "email.base.unsubscribeLink.automatedNotifications" SITENAME=siteName lng=locale}}</a>
 						&nbsp;
 						<a
-						   href="{{urlFor 'profile' query='campaign=rsvpNotify'}}">{{i18n "notification.rsvp.mail.profileLink" "Visit your profile" lng=locale}}</a>
+						   href="{{urlFor 'profile' query='campaign=rsvpNotify'}}">{{i18n "email.base.profileLink" lng=locale}}</a>
 					</td>
 				</tr>
 			</table>

@@ -109,7 +109,7 @@ Template.courseCompactRoles.helpers({
 
 	participantTooltip() {
 		let tooltip;
-		const numMembers = this.members.length;
+		const numMembers = this.interested;
 		const isParticipant = hasRoleUser(this.members, 'participant', Meteor.userId());
 
 		if (numMembers === 1 && isParticipant) {

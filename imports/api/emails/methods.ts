@@ -90,7 +90,9 @@ export const sendReport = ServerMethod(
 		const rootUrl = Meteor.absoluteUrl();
 		const user = Meteor.user();
 		if (user) {
-			reporter = `<a href='${rootUrl}user/${user._id}'>${HtmlTools.plainToHtml(user.username)}</a>`;
+			reporter = `<a href='${rootUrl}user/${user._id}'>${HtmlTools.plainToHtml(
+				user.getDisplayName(),
+			)}</a>`;
 		}
 		moment.locale('en');
 
