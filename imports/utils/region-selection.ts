@@ -13,6 +13,15 @@ import * as UrlTools from '/imports/utils/url-tools';
  */
 export const regionDependentRoutes = ['home', 'calendar', 'venuesMap', 'groupDetails'];
 
+function persistRegion(region: string) {
+	try {
+		localStorage.setItem('region', region); // to survive page reload
+	} catch {
+		// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+	}
+	Session.set('region', region);
+}
+
 /**
  * @param tenantId the tenant where the region should be.
  */
@@ -23,7 +32,7 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 
 	// Special case 'all'
 	if (!tenantId && regionIdOrName === 'all') {
-		Session.set('region', regionIdOrName);
+		persistRegion(regionIdOrName);
 		return true;
 	}
 
@@ -31,7 +40,7 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 	if (
 		Regions.findOne(tenantId ? { tenant: tenantId, _id: regionIdOrName } : { _id: regionIdOrName })
 	) {
-		Session.set('region', regionIdOrName);
+		persistRegion(regionIdOrName);
 		return true;
 	}
 
@@ -40,7 +49,7 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 		tenantId ? { tenant: tenantId, name: regionIdOrName } : { name: regionIdOrName },
 	);
 	if (region) {
-		Session.set('region', region._id);
+		persistRegion(region._id);
 		return true;
 	}
 
@@ -138,7 +147,7 @@ export function init() {
 		if (user) {
 			const { regionId } = user.profile;
 			if (regionId) {
-				Session.set('region', regionId);
+				persistRegion(regionId);
 			}
 		}
 	});
@@ -147,7 +156,7 @@ export function init() {
 }
 
 export async function change(regionId: string) {
-	Session.set('region', regionId);
+	persistRegion(regionId);
 	if (regionId !== 'all' && Meteor.userId()) {
 		await usersMethods.regionChange(regionId);
 	}
