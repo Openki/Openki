@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
+import { Session } from 'meteor/session';
 
 import { UserModel } from '/imports/api/users/users';
 

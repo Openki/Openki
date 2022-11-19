@@ -1,6 +1,7 @@
 import { assert } from 'chai';
 import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
+import { Session } from 'meteor/session';
 
 import { Courses } from '/imports/api/courses/courses';
 import { UserModel } from '/imports/api/users/users';

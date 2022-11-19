@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import { assert } from 'chai';
 import { MeteorAsync } from '/imports/utils/promisify';
+import { Session } from 'meteor/session';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
 
