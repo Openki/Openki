@@ -122,7 +122,7 @@ template.events({
 	'mouseover .js-category-label'(event, instance) {
 		FilterPreview({
 			property: 'category',
-			id: event.currentTarget.getAttribute('data-category') as string,
+			id: event.target.dataset.category as string,
 			activate: true,
 			delayed: true,
 			instance,
@@ -132,7 +132,7 @@ template.events({
 	'mouseout .js-category-label'(event, instance) {
 		FilterPreview({
 			property: 'category',
-			id: event.target.getAttribute('data-category') as string,
+			id: event.target.dataset.category as string,
 			activate: false,
 			delayed: true,
 			instance,

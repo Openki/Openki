@@ -1,57 +1,92 @@
-import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment';
+import { Session } from 'meteor/session';
+import { i18n } from '/imports/startup/both/i18next';
+import React from 'react';
+import { useTracker } from 'meteor/react-meteor-data';
 
-import { Version } from '/imports/api/version/version';
+import { useDetails } from '/imports/api/version/publications';
 import { Regions } from '/imports/api/regions/regions';
 
 import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
-import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<'footer'>;
+function Links() {
+	const siteName = getSiteName(useTracker(() => Regions.currentRegion()));
 
-const template = Template.footer;
-
-template.onCreated(function () {
-	this.subscribe('version');
-});
-
-template.helpers({
-	links() {
-		const siteName = getSiteName(Regions.currentRegion());
-
+	function links() {
 		return PublicSettings.footerLinks.map((linkSpec) => ({
 			link: linkSpec.link,
 			text: linkSpec.key ? i18n(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
 			title: linkSpec.title_key ? i18n(linkSpec.title_key, { SITENAME: siteName }) : '',
 		}));
-	},
-	version() {
-		const version = Version.findOne();
+	}
+
+	return (
+		<>
+			{links().map((l) => (
+				<a className="footer-link" href={l.link} title={l.title}>
+					{l.text}
+				</a>
+			))}
+		</>
+	);
+}
+
+function Footer() {
+	const [isLoading, version] = useDetails();
+	const locale = useTracker(() => Session.get('timeLocale')) || 'en';
+
+	function versionName() {
 		return version && version.basic + (version.branch !== 'master' ? ` ${version.branch}` : '');
-	},
-	fullInfo() {
-		const version = Version.findOne();
+	}
+	function fullInfo() {
 		return (
 			version &&
 			`${version.complete} on "${version.branch}" from ${version.commitDate} - restarted: ${moment(
 				version.lastStart,
-			).format('lll')}`
+			)
+				.locale(locale)
+				.format('lll')}`
 		);
-	},
-	commit() {
-		const version = Version.findOne();
+	}
+
+	function commit() {
 		return version?.commitShort;
-	},
-	deployed() {
-		const version = Version.findOne();
+	}
+
+	function deployed() {
 		return version?.activation;
-	},
-	restart() {
-		const version = Version.findOne();
-		return version?.lastStart;
-	},
-});
+	}
+
+	if (!isLoading()) {
+		return (
+			<footer className="footer">
+				<Links />
+				<span title={fullInfo()} className="footer-deployed-version">
+					{versionName()} {commit()}
+					<br />
+					{i18n('footer.deployedAt', 'deployed:')} {moment(deployed()).locale(locale).format('L')}
+				</span>
+			</footer>
+		);
+	}
+	return (
+		<footer className="footer">
+			<Links />
+			<span className="footer-deployed-version">
+				<span className="placeholder" style={{ minWidth: '100px' }}></span>
+				<br />
+				<span className="placeholder" style={{ minWidth: '100px' }}></span>
+			</span>
+		</footer>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper(Footer.name, () => Footer);
