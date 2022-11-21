@@ -1,4 +1,4 @@
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Template } from 'meteor/templating';
 import moment from 'moment';
 import { Session } from 'meteor/session';
 import { i18n } from '/imports/startup/both/i18next';
