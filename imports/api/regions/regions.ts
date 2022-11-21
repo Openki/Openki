@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
+import { Session } from 'meteor/session';
 
 import { UserModel } from '/imports/api/users/users';
 
@@ -11,8 +12,6 @@ import { Filtering } from '/imports/utils/filtering';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
 import { Type } from '/imports/utils/CustomChecks';
-
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 export interface Geodata {
 	type: 'Point';
@@ -122,7 +121,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 	 * Returns the region from the db based on the session setting.
 	 */
 	currentRegion() {
-		const regionId = LocalRegionStore.get();
+		const regionId = Session.get('region');
 
 		if (!regionId || regionId === 'all') {
 			return undefined;

@@ -1,6 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { i18n } from '/imports/startup/both/i18next';
+import { Session } from 'meteor/session';
 
 import { Regions } from '/imports/api/regions/regions';
 import { VenueEntity, VenueModel } from '/imports/api/venues/venues';

@@ -3,14 +3,13 @@ import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Session } from 'meteor/session';
 
 import { Regions } from '/imports/api/regions/regions';
 import { CourseModel, Courses } from '/imports/api/courses/courses';
 
 import * as Metatags from '/imports/utils/metatags';
 import { SortSpec } from '/imports/utils/sort-spec';
-
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import './template.html';
 
@@ -100,7 +99,7 @@ import './template.html';
 
 	template.helpers({
 		allRegions() {
-			return LocalRegionStore.equals('all');
+			return Session.equals('region', 'all');
 		},
 		regionOf(course: CourseModel) {
 			return Regions.findOne(course.region)?.name;

@@ -1,4 +1,5 @@
 import { Match } from 'meteor/check';
+import { Session } from 'meteor/session';
 
 /** allows localised value eg. with `getLocalizedValue(...)` to have a string per language. */
 export const LocalizedValuePattern = Match.OneOf(

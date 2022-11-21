@@ -18,8 +18,6 @@ import { getLocalizedValue, LocalizedValue } from '/imports/utils/getLocalizedVa
 import { checkContribution } from '/imports/utils/checkContribution';
 import { locationFormat } from '/imports/utils/location-format';
 
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
-
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
  *
@@ -68,7 +66,7 @@ const helpers: { [name: string]: Function } = {
 	 * @param id Region ID
 	 */
 	isCurrentRegion(id: string) {
-		return id && LocalRegionStore.equals(id);
+		return id && Session.equals('region', id);
 	},
 
 	PublicSettings() {
