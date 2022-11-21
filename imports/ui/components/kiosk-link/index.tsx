@@ -2,6 +2,7 @@ import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
 import { i18n } from '/imports/startup/both/i18next';
 import React from 'react';
+import { Template } from 'meteor/templating';
 
 import * as UrlTools from '/imports/utils/url-tools';
 

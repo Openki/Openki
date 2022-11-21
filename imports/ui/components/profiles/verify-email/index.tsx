@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import React, { useState } from 'react';
+import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import * as emailMethods from '/imports/api/emails/methods';
