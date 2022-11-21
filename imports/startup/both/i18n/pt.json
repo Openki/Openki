@@ -36,7 +36,7 @@
 	"calendar.previous.year.short": "ano anterior",
 	"calendar.weekNumber": "Semana",
 	"calendar.windowtitle": "Calendário",
-	"categories.show_courses": "Mostrar todos os cursos em",
+	"categories.show_courses": "Mostrar todos os cursos em {CATEGORY}",
 	"category.artistry": "Arte",
 	"category.biology": "Biologia",
 	"category.chemistry": "Química",

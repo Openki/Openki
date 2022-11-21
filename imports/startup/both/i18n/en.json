@@ -49,7 +49,7 @@
   "calendar.previous.year.short": "previous year",
   "calendar.weekNumber": "Week",
   "calendar.windowtitle": "Calendar",
-  "categories.show_courses": "Show all courses in",
+  "categories.show_courses": "Show all courses in {CATEGORY}",
   "category.♥undefined♥": "♥Undefined♥",
   "category.artistry": "Artistry",
   "category.basicskills": "Basic Skills",

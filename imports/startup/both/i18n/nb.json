@@ -47,7 +47,7 @@
 	"calendar.previous.year.short": "forrige år",
 	"calendar.weekNumber": "Uke",
 	"calendar.windowtitle": "Kalender",
-	"categories.show_courses": "Vis alle fag innen",
+	"categories.show_courses": "Vis alle fag innen {CATEGORY}",
 	"category.artistry": "Kunst",
 	"category.basicskills": "Grunnleggende ferdigheter",
 	"category.biology": "Biologi",

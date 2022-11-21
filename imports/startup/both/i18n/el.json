@@ -27,7 +27,7 @@
 	"calendar.previous.year.short": "προηγούμενος χρόνος",
 	"calendar.weekNumber": "Εβδομάδα",
 	"calendar.windowtitle": "Ημερολόγιο",
-	"categories.show_courses": "Εμφάνιση όλων των μαθημάτων σε",
+	"categories.show_courses": "Εμφάνιση όλων των μαθημάτων σε {CATEGORY}",
 	"category.artistry": "Δεξιοτεχνία",
 	"category.biology": "Βιολογία",
 	"category.chemistry": "Χημεία",

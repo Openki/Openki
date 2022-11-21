@@ -18,7 +18,7 @@
 						{{course.name}}
 					</h2>
 
-					{{> courseCategories course}}
+					{{> courseCategories categories=course.categories}}
 					{{> regionTag this}}
 					{{#each info in customFields}}
 						<p>
