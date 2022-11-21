@@ -2,14 +2,13 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import moment from 'moment';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { i18n } from '/imports/startup/both/i18next';
+import { Session } from 'meteor/session';
 
 import { EventModel, Events, FindFilter } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
 import { MeteorAsync } from '/imports/utils/promisify';
 import * as Metatags from '/imports/utils/metatags';
-
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import '/imports/ui/components/calendar-nav/multi';
 import '/imports/ui/components/events/list';
@@ -62,7 +61,7 @@ import './styles.scss';
 				.clear()
 				.add('start', moment(start).startOf('week').toISOString())
 				.read(data)
-				.add('region', LocalRegionStore.get())
+				.add('region', Session.get('region'))
 				.done();
 
 			const filterQuery = filter.toQuery() as FindFilter;

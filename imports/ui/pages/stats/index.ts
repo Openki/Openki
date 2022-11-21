@@ -1,14 +1,13 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Session } from 'meteor/session';
 
 import * as StatsMethods from '/imports/api/stats/methods';
 import { Regions } from '/imports/api/regions/regions';
 import { Stats } from '/imports/api/stats/stats';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import './template.html';
 import './styles.scss';
@@ -27,7 +26,7 @@ const template = Template.statsPage;
 
 template.onCreated(function () {
 	function getRegionFromQuery() {
-		const region = Router.current().params.query.region || LocalRegionStore.get();
+		const region: string = Router.current().params.query.region || Session.get('region');
 
 		return region || 'all';
 	}

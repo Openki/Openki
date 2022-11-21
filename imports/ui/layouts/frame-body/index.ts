@@ -1,4 +1,5 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Session } from 'meteor/session';
 
 import * as Viewport from '/imports/ui/lib/viewport';
 

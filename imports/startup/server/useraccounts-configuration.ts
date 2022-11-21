@@ -140,10 +140,9 @@ Accounts.onCreateUser((options: any, originalUser) => {
 });
 
 Accounts.onLogin(async () => {
+	await usersMethods.updateLastLogin();
+
 	const user = Meteor.user();
-
-	usersMethods.updateLastLogin();
-
 	// generate a avatar color for every new user
 	if (user && user.avatar?.color === undefined) {
 		await usersMethods.updateAvatarColor();

@@ -1,13 +1,13 @@
 import { assert } from 'chai';
 import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
+import { Session } from 'meteor/session';
 
 import { Events } from '/imports/api/events/events';
 import { UserModel } from '/imports/api/users/users';
 
+import { Default as RegionDefault } from '/imports/ui/lib/cleaned-region';
 import { PublicSettings } from '/imports/utils/PublicSettings';
-
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 if (Meteor.isClient) {
 	describe('Events', () => {
@@ -19,7 +19,7 @@ if (Meteor.isClient) {
 				if (Meteor.userId()) {
 					await MeteorAsync.logout();
 				}
-				LocalRegionStore.reset();
+				Session.set('region', RegionDefault);
 
 				await MeteorAsync.subscribe('Events.findFilter');
 			});

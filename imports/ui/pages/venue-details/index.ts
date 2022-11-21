@@ -27,9 +27,9 @@ import '/imports/ui/components/venues/edit';
 import './template.html';
 import './styles.scss';
 
-const upcomingEventLimitDefault = 12;
-const pastEventLimitDefault = 3;
-const eventLoadingBlockSize = 9;
+const UpcomingEventLimitDefault = 12;
+const PastEventLimitDefault = 3;
+const EventLoadingBlockSize = 9;
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'venueDetailsPage',
@@ -73,8 +73,8 @@ template.onCreated(function () {
 	instance.state.setDefault({
 		editing: false,
 		verifyDelete: false,
-		upcomingEventLimit: upcomingEventLimitDefault,
-		pastEventLimit: pastEventLimitDefault,
+		upcomingEventLimit: UpcomingEventLimitDefault,
+		pastEventLimit: PastEventLimitDefault,
 	});
 
 	instance.markers = new Mongo.Collection(null); // Local collection for in-memory storage
@@ -104,7 +104,7 @@ template.onCreated(function () {
 			return;
 		}
 
-		const limit = instance.state.get('upcomingEventLimit') || upcomingEventLimitDefault;
+		const limit = instance.state.get('upcomingEventLimit') || UpcomingEventLimitDefault;
 
 		const now = reactiveNow.get();
 		const filter = { venue: venue._id, after: now };
@@ -119,7 +119,7 @@ template.onCreated(function () {
 			return;
 		}
 
-		const limit = instance.state.get('pastEventLimit') || pastEventLimitDefault;
+		const limit = instance.state.get('pastEventLimit') || PastEventLimitDefault;
 
 		const now = reactiveNow.get();
 		const filter = { venue: venue._id, before: now };
@@ -211,11 +211,11 @@ template.events({
 
 	'click .js-show-more-upcoming-events'(_event, instance) {
 		const limit = instance.state.get('upcomingEventLimit') || 0;
-		instance.state.set('upcomingEventLimit', limit + eventLoadingBlockSize);
+		instance.state.set('upcomingEventLimit', limit + EventLoadingBlockSize);
 	},
 
 	'click .js-show-more-past-events'(_event, instance) {
 		const limit = instance.state.get('pastEventLimit') || 0;
-		instance.state.set('pastEventLimit', limit + eventLoadingBlockSize);
+		instance.state.set('pastEventLimit', limit + EventLoadingBlockSize);
 	},
 });

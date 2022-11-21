@@ -39,11 +39,11 @@ import { reactiveNow } from '/imports/utils/reactive-now';
 import * as Predicates from '/imports/utils/predicates';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as RouterAsync from '/imports/utils/RouterAsync';
+import { CleanedRegion } from '/imports/ui/lib/cleaned-region';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 import { CourseTemplate } from '/imports/ui/lib/course-template';
 import { CssFromQuery } from '/imports/ui/lib/css-from-query';
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import type { Data as GroupDetailsData } from '/imports/ui/pages/group-details';
 import type { Data as VenuesMapData } from '/imports/ui/pages/venues-map';
@@ -144,7 +144,7 @@ RouterAsync.route('home', {
 		// Add filter options for the homepage
 		return _.extend(query, {
 			internal: false,
-			region: LocalRegionStore.get(),
+			region: Session.get('region'),
 		});
 	},
 });
@@ -305,7 +305,7 @@ RouterAsync.route('groupDetails', {
 
 		const courseQuery = Object.assign(this.params.query, {
 			group: group._id,
-			region: LocalRegionStore.get(),
+			region: Session.get('region'),
 		});
 
 		return {
@@ -953,7 +953,7 @@ RouterAsync.route('venuesMap', {
 	},
 	subscriptions() {
 		const filter = new Filtering(VenueParamPredicates);
-		const region = LocalRegionStore.getCleaned();
+		const region = CleanedRegion(Session.get('region'));
 		if (region) {
 			filter.add('region', region);
 		}
@@ -963,7 +963,7 @@ RouterAsync.route('venuesMap', {
 	},
 	data(): VenuesMapData {
 		return {
-			region: LocalRegionStore.getCleaned(),
+			region: CleanedRegion(Session.get('region')),
 			venues: this.subscriptions()?.venues(),
 		};
 	},

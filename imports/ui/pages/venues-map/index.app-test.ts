@@ -3,10 +3,9 @@ import { Router } from 'meteor/iron:router';
 import $ from 'jquery';
 import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
+import { Session } from 'meteor/session';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
-
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 if (Meteor.isClient) {
 	describe('Venues map', function () {
@@ -16,7 +15,7 @@ if (Meteor.isClient) {
 
 			await MeteorAsync.loginWithPassword('greg', 'greg');
 			Session.set('locale', 'en');
-			LocalRegionStore.reset();
+			Session.set('region', 'all');
 		});
 
 		it('should be navigable', async () => {
