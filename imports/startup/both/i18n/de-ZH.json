@@ -34,7 +34,7 @@
 	"calendar.previous.year.short": "s'Jahr vorher",
 	"calendar.weekNumber": "Wuchä",
 	"calendar.windowtitle": "Kaländer",
-	"categories.show_courses": "Zeig alli Kürs in",
+	"categories.show_courses": "Zeig alli Kürs in {CATEGORY}",
 	"category.artistry": "Artistik",
 	"category.biology": "Biologie",
 	"category.chemistry": "Chemie",

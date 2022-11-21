@@ -10,7 +10,7 @@
 								  data-tooltip="{{i18n 'courseCompact.internal_course' 'Internal course'}}"></span>
 						{{/if}}
 						<div class="course-compact-title" title="{{name}}">{{name}}</div>
-						{{> courseCategories this}}
+						{{> courseCategories categories=this.categories}}
 					</div>
 					{{#if nextEvent}}
 						{{> courseCompactEvent}}

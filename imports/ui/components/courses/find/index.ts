@@ -119,20 +119,20 @@ template.onCreated(function () {
 });
 
 template.events({
-	'mouseover .js-category-label'(this: string, _event, instance) {
+	'mouseover .js-category-label'(event, instance) {
 		FilterPreview({
 			property: 'category',
-			id: this,
+			id: event.currentTarget.getAttribute('data-category') as string,
 			activate: true,
 			delayed: true,
 			instance,
 		});
 	},
 
-	'mouseout .js-category-label'(this: string, _event, instance) {
+	'mouseout .js-category-label'(event, instance) {
 		FilterPreview({
 			property: 'category',
-			id: this,
+			id: event.target.getAttribute('data-category') as string,
 			activate: false,
 			delayed: true,
 			instance,
