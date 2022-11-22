@@ -38,6 +38,7 @@ markdown
 mys:fonts
 react-meteor-data
 react-template-helper
+react-meteor-accounts
 
 # SEO
 mdg:seo

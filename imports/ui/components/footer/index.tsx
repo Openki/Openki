@@ -26,8 +26,8 @@ function Links() {
 
 	return (
 		<>
-			{links().map((l) => (
-				<a className="footer-link" href={l.link} title={l.title}>
+			{links().map((l, index) => (
+				<a key={index} className="footer-link" href={l.link} title={l.title}>
 					{l.text}
 				</a>
 			))}

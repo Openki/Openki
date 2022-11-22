@@ -1,63 +1,114 @@
 import { i18n } from '/imports/startup/both/i18next';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
+import { Template } from 'meteor/templating';
+import React, { useEffect, useState } from 'react';
+import { useUser } from 'meteor/react-meteor-accounts';
 
 import * as Alert from '/imports/api/alerts/alert';
 import * as emailMethods from '/imports/api/emails/methods';
+import { UserModel } from '/imports/api/users/users';
 
+function EmailValidationModal(props: { user: UserModel }) {
+	const { user } = props;
+
+	const [isBusy, setIsBusy] = useState(false);
+
+	useEffect(() => {
+		$('.js-email-validation-modal').show();
+	});
+
+	async function handleClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+		event.preventDefault();
+
+		setIsBusy(true);
+		try {
+			await emailMethods.sendVerificationEmail();
+
+			Alert.success(
+				i18n('profile.sentVerificationMail', { MAIL: Meteor.user()?.emails[0].address }),
+			);
+			$('.js-email-validation-modal').hide();
+		} catch (err) {
+			Alert.serverError(
+				err,
+				i18n('profile.sentVerificationMail.error', 'Could not send verification e-mail'),
+			);
+		} finally {
+			setIsBusy(false);
+		}
+	}
+
+	return (
+		<div className="js-email-validation-modal modal" tabIndex={-1} role="dialog">
+			<div className="modal-dialog modal-sm" role="document">
+				<div className="modal-content">
+					<div className="modal-header">
+						<h4 className="modal-title">
+							<span className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></span>
+							{i18n('validate.email.title', 'Validate e-mail address')}
+						</h4>
+						<span className="btn-close" data-bs-dismiss="modal"></span>
+					</div>
+					<div className="modal-body">
+						<span>
+							<p>
+								{i18n('validate.email.text.greeting', 'Hey "{NAME}"', {
+									NAME: user?.getDisplayName(),
+								})}
+							</p>
+							<p>
+								{i18n(
+									'validate.email.text.para1',
+									'You have not validated your e-mail address yet.',
+								)}
+							</p>
+						</span>
+						<div className="mb-3">
+							<button className="btn btn-add form-control" disabled={isBusy} onClick={handleClick}>
+								isBusy? (
+								<>
+									<span
+										className="fa-solid fa-circle-notch fa-spin fa-fw"
+										aria-hidden="true"
+									></span>
+									{i18n('send.validation.submit.busy', 'Sending…')}
+								</>
+								):(
+								<>
+									<span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
+									{i18n('send.validation.email', 'Send me a validation e-mail.')}
+								</>
+								)
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+export function EmailValidation() {
+	function showEmailValidation(user: UserModel | null): user is UserModel {
+		return (
+			!!user &&
+			user.hasEmail() &&
+			!user.hasVerifiedEmail() &&
+			moment().subtract(7, 'days').isAfter(user.createdAt)
+		);
+	}
+
+	const user = useUser();
+
+	if (!showEmailValidation(user)) {
+		return null;
+	}
+	return <EmailValidationModal user={user} />;
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
 import './template.html';
 
-{
-	const Template = TemplateAny as TemplateStaticTyped<'emailValidation'>;
-
-	const template = Template.emailValidation;
-
-	template.helpers({
-		showEmailValidation() {
-			const user = Meteor.user();
-			return (
-				user &&
-				user.hasEmail() &&
-				!user.hasVerifiedEmail() &&
-				moment().subtract(7, 'days').isAfter(user.createdAt)
-			);
-		},
-	});
-}
-
-{
-	const Template = TemplateAny as TemplateStaticTyped<'emailValidationModal'>;
-
-	const template = Template.emailValidationModal;
-
-	template.onCreated(function () {
-		this.busy(false);
-	});
-
-	template.onRendered(function () {
-		this.$('.js-email-validation-modal').modal('show');
-	});
-
-	template.events({
-		async 'click .js-send-validation-email'(event, instance) {
-			event.preventDefault();
-			instance.busy('sending');
-			try {
-				await emailMethods.sendVerificationEmail();
-
-				Alert.success(
-					i18n('profile.sentVerificationMail', { MAIL: Meteor.user()?.emails[0].address }),
-				);
-				$('.js-email-validation-modal').modal('hide');
-			} catch (err) {
-				Alert.serverError(
-					err,
-					i18n('profile.sentVerificationMail.error', 'Could not send verification e-mail'),
-				);
-			} finally {
-				instance.busy(false);
-			}
-		},
-	});
-}
+Template.registerHelper(EmailValidation.name, () => EmailValidation);
