@@ -1,4 +1,5 @@
 import { Router } from 'meteor/iron:router';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 import { SubscriptionHandle } from '/imports/utils/ServerPublishBlaze';
 
