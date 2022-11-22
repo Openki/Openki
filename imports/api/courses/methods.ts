@@ -32,7 +32,7 @@ import { GroupPromoters } from '/imports/utils/update-methods';
 
 export interface Method<T> {
 	method: string;
-	read: (body: T) => {
+	read: (params: T) => {
 		validate(): void;
 		permitted: (user: UserModel | undefined | null) => boolean;
 		provide(
