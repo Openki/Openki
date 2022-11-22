@@ -105,7 +105,7 @@ export function send(entry: LogEntity & { body: { model: string; recipients: str
 	const model = (
 		Notification as {
 			[name: string]: {
-				Model(entry: unknown): {
+				Model(_entry: unknown): {
 					accepted(user: UserModel): void;
 					vars(
 						userLocale: string,

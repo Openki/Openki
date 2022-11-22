@@ -1,5 +1,6 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { i18n } from '/imports/startup/both/i18next';
+import { Router } from 'meteor/iron:router';
 
 import { Categories } from '/imports/api/categories/categories';
 
