@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { Meteor } from 'meteor/meteor';
 
 import moment from 'moment';
 
