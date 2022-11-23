@@ -4,8 +4,7 @@ import React from 'react';
 import { Template } from 'meteor/templating';
 import { i18n } from '/imports/startup/both/i18next';
 import { useTracker } from 'meteor/react-meteor-data';
-import { useSessionEquals } from '/imports/utils/react-meteor-data';
-import { useUser } from 'meteor/react-meteor-accounts';
+import { useSessionEquals, useUser } from '/imports/utils/react-meteor-data';
 
 import * as usersMethods from '/imports/api/users/methods';
 import { Regions } from '/imports/api/regions/regions';
