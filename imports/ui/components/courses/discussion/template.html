@@ -205,7 +205,7 @@
 
 <template name="discussionProfileLink">
 	{{#if this}}
-		{{> profileLink}}
+		{{> profileLink userId=this}}
 		{{contribution this}}
 	{{else}}
 		<span class="username">
