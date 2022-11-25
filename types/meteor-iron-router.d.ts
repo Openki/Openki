@@ -143,6 +143,19 @@ declare module 'meteor/iron:router' {
 			},
 		): string;
 
+		/**
+		 * Returns a relative path given a route name, data context and optional query
+		 * and hash parameters.
+		 */
+		function path(
+			routeName: string,
+			params?: Record<string, any>,
+			options?: {
+				query?: string | Record<string, any>;
+				hash?: string;
+			},
+		): string;
+
 		function go(
 			urlOrRouteName: string,
 			params?: Record<string, any>,
