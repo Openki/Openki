@@ -1,11 +1,11 @@
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { i18n } from '/imports/startup/both/i18next';
 import { Router } from 'meteor/iron:router';
+import { Template } from 'meteor/templating';
+import React, { useEffect } from 'react';
 
 import { Categories } from '/imports/api/categories/categories';
 
 import * as Viewport from '/imports/ui/lib/viewport';
-import { MeteorAsync } from '/imports/utils/promisify';
 
 import select2 from 'select2';
 import 'select2/dist/css/select2.min';
@@ -13,35 +13,24 @@ import 'select2-theme-bootstrap5/dist/select2-bootstrap.min';
 
 import '/imports/ui/components/courses/categories';
 
-import './template.html';
 import './styles.scss';
 
 (select2 as any)();
 
-const Template = TemplateAny as TemplateStaticTyped<
-	'filterCategories',
-	{
-		categories: string[] | undefined;
-		onAdd: (category: string) => void;
-		onRemove: (category: string) => void;
-	}
->;
+function FilterCategories(props: {
+	categories: string[] | undefined;
+	onAdd: (category: string) => void;
+	onRemove: (category: string) => void;
+}) {
+	const categories = Object.keys(Categories);
 
-const template = Template.filterCategories;
-
-template.onRendered(function () {
-	const instance = this;
-
-	instance.autorun(async () => {
+	useEffect(() => {
 		// re run after viewport change or param change
 		Viewport.get();
 		// eslint-disable-next-line no-unused-expressions
 		Router.current().params;
 
-		await MeteorAsync.defer();
-
-		instance
-			.$('.js-categories-select')
+		$('.js-categories-select')
 			.select2({
 				theme: 'bootstrap',
 				templateResult(data: any) {
@@ -67,32 +56,44 @@ template.onRendered(function () {
 				},
 			})
 			.on('select2:select', (event) => {
-				instance.data.onAdd(event.params.data.id);
+				props.onAdd(event.params.data.id);
 			})
 			.on('select2:unselect', (event) => {
-				instance.data.onRemove(event.params.data.id);
+				props.onRemove(event.params.data.id);
 			});
 	});
-});
 
-template.helpers({
-	categories() {
-		return Object.keys(Categories);
-	},
+	if (categories) {
+		return (
+			<select
+				className="js-categories-select categories-select form-control"
+				multiple={true}
+				value={props.categories}
+			>
+				{categories.map((category) => (
+					<React.Fragment key={category}>
+						<option className="categories-select-option" value={category}>
+							{i18n(`category.${category}`)}
+						</option>
+						{Categories[category].map((subcategory) => (
+							<option
+								key={subcategory}
+								className="categories-select-sub-option"
+								value={subcategory}
+							>
+								{i18n(`category.${subcategory}`)}
+							</option>
+						))}
+					</React.Fragment>
+				))}
+			</select>
+		);
+	}
+	return null;
+}
 
-	subcategories(mainCategory: string) {
-		return Categories[mainCategory];
-	},
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
 
-	categoryName(category: string) {
-		return i18n(`category.${category}`);
-	},
-
-	categorySelected(category: string) {
-		const { data } = Template.instance();
-		if (!data.categories?.includes(category)) {
-			return {};
-		}
-		return { selected: 'selected' };
-	},
-});
+Template.registerHelper(FilterCategories.name, () => FilterCategories);
