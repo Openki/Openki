@@ -10,6 +10,7 @@ import { Regions } from '/imports/api/regions/regions';
 
 import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
+import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 
 import './styles.scss';
 
@@ -19,7 +20,9 @@ function Links() {
 	function links() {
 		return PublicSettings.footerLinks.map((linkSpec) => ({
 			link: linkSpec.link,
-			text: linkSpec.key ? i18n(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
+			text: linkSpec.key
+				? i18n(linkSpec.key, { SITENAME: siteName })
+				: getLocalizedValue(linkSpec.text),
 			title: linkSpec.title_key ? i18n(linkSpec.title_key, { SITENAME: siteName }) : '',
 		}));
 	}

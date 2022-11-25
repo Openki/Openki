@@ -1,38 +1,53 @@
 import Shariff from 'shariff';
-
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { i18n } from '/imports/startup/both/i18next';
+import React, { useEffect } from 'react';
+import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 
-import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<'sharing', never, { shariff: any }>;
-
-const template = Template.sharing;
-
-template.onRendered(function () {
-	this.autorun(() => {
-		this.shariff = new Shariff(this.find('.shariff'), {
+export function Sharing() {
+	useEffect(() => {
+		const $shariff = $('.shariff');
+		// eslint-disable-next-line no-new
+		new Shariff($shariff, {
 			lang: Session.get('locale'),
 			mailUrl: 'mailto:',
 			services: ['linkedin', 'twitter', 'facebook', 'telegram', 'whatsapp', 'mail'],
 		});
 
-		this.$('.fab, .fas').addClass('fa fa-fw');
+		$shariff.find('.fab, .fas').addClass('fa fa-fw');
+
+		$shariff.on('click', 'a', function (event) {
+			// this reads out which social button it is, e.g. facebook, twitter
+			const source = $(event.currentTarget)
+				.parent()
+				.attr('class')
+				?.replace('shariff-button', '')
+				.trim();
+
+			Analytics.trackEvent('social', `${source} clicked`);
+		});
 	});
-});
 
-template.events({
-	'click .shariff a'(event) {
-		// this reads out which social button it is, e.g. facebook, twitter
-		const source = $(event.currentTarget)
-			.parent()
-			.attr('class')
-			?.replace('shariff-button', '')
-			.trim();
+	return (
+		<div className="shariff-wrapper">
+			<p>{i18n('sharing.title', 'Share this course with your friends')}</p>
+			<div
+				className="shariff"
+				data-mail-body={`${i18n(
+					'sharing.mailbody.quote',
+					'look what I found, are you interested?',
+				)} {url}`}
+			></div>
+		</div>
+	);
+}
 
-		Analytics.trackEvent('social', `${source} clicked`);
-	},
-});
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper(Sharing.name, () => Sharing);
