@@ -3,3 +3,8 @@
 .tenant-tag {
 	@include tag($tenant-bg, $tenant-label-color);
 }
+
+.adminPanel-button {
+	color: #fff;
+	margin-bottom: 14px;
+}
