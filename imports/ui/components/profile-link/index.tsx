@@ -5,6 +5,8 @@ import { Template } from 'meteor/templating';
 
 import { getUserName } from '/imports/ui/lib/getUserName';
 
+import './styles.scss';
+
 export function ProfileLink(props: { userId: string }) {
 	const userName = useTracker(() => getUserName(props.userId));
 
