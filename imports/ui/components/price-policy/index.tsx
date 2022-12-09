@@ -2,7 +2,7 @@ import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Template } from 'meteor/templating';
-import { i18n } from '/imports/startup/both/i18next';
+import { useTranslation } from 'react-i18next';
 import { useTracker } from 'meteor/react-meteor-data';
 import { useSessionEquals, useUser } from '/imports/utils/react-meteor-data';
 
@@ -17,6 +17,7 @@ import { getSiteName } from '/imports/utils/getSiteName';
 import './styles.scss';
 
 function Disclaimer() {
+	const { t } = useTranslation();
 	const siteName = useTracker(() => getSiteName(Regions.currentRegion()));
 
 	return (
@@ -25,7 +26,7 @@ function Disclaimer() {
 				<i className="fa-solid fa-info fa-fw" aria-hidden="true"></i>
 			</div>
 			<div className="icon-text-text">
-				{i18n(
+				{t(
 					'pricePolicy.disclaimer',
 					"Education should be open to everyone. That's why {SITENAME} only allows suggested/orientation prices.",
 					{ SITENAME: siteName },
@@ -35,6 +36,7 @@ function Disclaimer() {
 	);
 }
 function More() {
+	const { t } = useTranslation();
 	return (
 		<a href={getLocalizedValue(PublicSettings.pricePolicyLink)}>
 			<div className="icon-text">
@@ -42,7 +44,7 @@ function More() {
 					<i className="fa-solid fa-book fa-fw" aria-hidden="true"></i>
 				</div>
 				<div className="icon-text-text">
-					{i18n('pricePolicy.moreAboutPricePolicy', 'Read our price policy')}
+					{t('pricePolicy.moreAboutPricePolicy', 'Read our price policy')}
 				</div>
 			</div>
 		</a>
@@ -65,6 +67,7 @@ async function handleHideClick() {
 }
 
 function Dismissable() {
+	const { t } = useTranslation();
 	return (
 		<a href="#" onClick={handleHideClick}>
 			<div className="icon-text">
@@ -72,7 +75,7 @@ function Dismissable() {
 					<i className="fa-solid fa-ban fa-fw" aria-hidden="true"></i>
 				</div>
 				<div className="icon-text-text">
-					{i18n('pricePolicy.dontShowAnymore', "Don't show this anymore")}
+					{t('pricePolicy.dontShowAnymore', "Don't show this anymore")}
 				</div>
 			</div>
 		</a>
@@ -84,7 +87,7 @@ interface Props {
 	wrap?: string | undefined;
 }
 
-function dismissed() {
+function useDismissed() {
 	const hidePricePolicy = useSessionEquals('hidePricePolicy', true);
 	const user = useUser();
 
@@ -103,13 +106,15 @@ function dismissed() {
 	return false;
 }
 
-function shown(props: Props) {
+function useShown(props: Props) {
+	const dismissed = useDismissed();
+
 	if (!PublicSettings.pricePolicyEnabled) {
 		return false;
 	}
 
 	if (props.dismissable) {
-		return !dismissed();
+		return !dismissed;
 	}
 	return true;
 }
@@ -156,7 +161,7 @@ function classNames(props: Props) {
 }
 
 export function PricePolicy(props: Props) {
-	if (!shown(props)) {
+	if (!useShown(props)) {
 		return null;
 	}
 

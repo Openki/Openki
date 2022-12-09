@@ -30,7 +30,7 @@ module.exports = {
 		tsx: [
 			{
 				lexer: 'JsxLexer',
-				functions: ['i18n'], // Array of functions to match
+				functions: ['t'], // Array of functions to match
 			},
 		],
 

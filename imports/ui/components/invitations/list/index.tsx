@@ -1,93 +1,180 @@
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { i18n } from '/imports/startup/both/i18next';
-import { ReactiveDict } from 'meteor/reactive-dict';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
+import { Template } from 'meteor/templating';
 import $ from 'jquery';
 
-import { InvitationEntity, Invitations, Status } from '/imports/api/invitations/invitations';
+import { InvitationEntity, Status } from '/imports/api/invitations/invitations';
+import { useFindFilter } from '/imports/api/invitations/publications';
 import * as InvitationsMethods from '/imports/api/invitations/methods';
 import * as Alert from '/imports/api/alerts/alert';
-import { TenantModel } from '/imports/api/tenants/tenants';
 
-import '/imports/ui/components/profile-link';
+import { useDateTimeFormat } from '/imports/utils/react-moment-format';
 
-import './template.html';
+import { ProfileLink } from '/imports/ui/components/profile-link';
 
-export interface Data {
-	tenant: TenantModel;
+function statusFormat(t: TFunction<'translation', undefined>, status: Status) {
+	switch (status) {
+		case 'created':
+			return t('invitations.status.created', 'Created');
+		case 'send':
+			return t('invitations.status.send', 'Send');
+		case 'accepted':
+			return t('invitations.status.accepted', 'Accepted');
+		case 'failed':
+			return t('invitations.status.failed', 'failed');
+
+		default:
+			return status;
+	}
 }
 
-const Template = TemplateAny as TemplateStaticTyped<
-	'invitationsList',
-	Data,
-	{
-		state: ReactiveDict<{ showAccepted: boolean }>;
+function Invitations(props: { tenantId: string; invitations: InvitationEntity[] }) {
+	const { tenantId, invitations } = props;
+
+	const { t } = useTranslation();
+	const { dateFormat, timeFormat } = useDateTimeFormat();
+
+	if (invitations.length === 0) {
+		return null;
 	}
->;
 
-const template = Template.invitationsList;
+	return (
+		<>
+			<div className="row responsive-table-head">
+				<div className="col-3">{t('invitations.list.to', 'To')}</div>
+				<div className="col-2">{t('invitations.list.status', 'Status')}</div>
+				<div className="col-3">{t('invitations.list.acceptedBy', 'Accepted by')}</div>
+				<div className="col-2">{t('invitations.list.createdAt', 'Created At')}</div>
+				<div className="col-2">
+					{t('invitations.list.remove', 'Remove')}&nbsp;
+					<span
+						className="fa-solid fa-circle-info fa-fw"
+						data-tooltip={t(
+							'invitations.list.remove.tooltip',
+							'Removing the invitation has no effect on the member who has already accepted.',
+						)}
+						data-tooltip-classes="tooltip-compact"
+					></span>
+				</div>
+			</div>
+			{invitations.map((invitation) => {
+				return (
+					<div key={invitation._id} className="row responsive-table-row">
+						<div className="col-6 responsive-table-head">{t('invitations.list.to')}</div>
+						<div className="col-6 col-md-3">{invitation.to}</div>
 
-template.onCreated(function () {
-	const instance = this;
-	const { tenant } = instance.data;
+						<div className="col-6 responsive-table-head">{t('invitations.list.status')}</div>
+						<div className="col-6 col-md-2">{statusFormat(t, invitation.status)}</div>
 
-	instance.state = new ReactiveDict(undefined, {
-		showAccepted: false,
-	});
-	instance.autorun(() => {
-		instance.subscribe('invitations.findFilter', { tenant: tenant._id });
-	});
-});
+						<div className="col-6 responsive-table-head">{t('invitations.list.acceptedBy')}</div>
+						<div className="col-6 col-md-3">
+							{invitation.acceptedBy ? (
+								<ProfileLink userId={invitation.acceptedBy as string} />
+							) : (
+								'-'
+							)}
+						</div>
 
-template.helpers({
-	hasSomeInvitations() {
-		const instance = Template.instance();
-		return Invitations.findFilter({ tenant: instance.data.tenant._id }, 1).count() > 0;
-	},
+						<div className="col-6 responsive-table-head">{t('invitations.list.createdAt')}</div>
+						<div
+							className="col-6 col-md-2"
+							title={`${dateFormat(invitation.createdAt)} ${timeFormat(invitation.createdAt)}`}
+						>
+							{dateFormat(invitation.createdAt)}
+						</div>
 
-	invitations() {
-		const instance = Template.instance();
+						<div className="col-6 responsive-table-head">
+							{t('invitations.list.remove')}
+							<span
+								className="fa-solid fa-circle-info fa-fw"
+								data-tooltip={t('invitations.list.remove.tooltip')}
+								data-tooltip-classes="tooltip-compact"
+							></span>
+						</div>
+						<div className="col-6 col-md-2">
+							<button
+								type="button"
+								className="btn btn-sm btn-delete text-danger js-remove"
+								onClick={async (event) => {
+									event.preventDefault();
 
-		const status: Status[] = ['created', 'send', 'failed'];
+									try {
+										await InvitationsMethods.remove(tenantId, invitation._id);
+									} catch (err) {
+										Alert.serverError(
+											err,
+											t(
+												'tenant.settings.invitations.removed.error',
+												'Invitations could not be removed.',
+											),
+										);
+									}
+								}}
+							>
+								<span className="fa-solid fa-trash-can" aria-hidden="true"></span>
+							</button>
+						</div>
+					</div>
+				);
+			})}
+		</>
+	);
+}
 
-		if (instance.state.get('showAccepted')) {
-			status.push('accepted');
-		}
+export interface Props {
+	tenantId: string;
+}
 
-		return Invitations.findFilter({ tenant: instance.data.tenant._id, status });
-	},
+export function InvitationsList(props: Props) {
+	const { tenantId } = props;
 
-	status(status: Status) {
-		switch (status) {
-			case 'created':
-				return i18n('invitations.status.created', 'Created');
-			case 'send':
-				return i18n('invitations.status.send', 'Send');
-			case 'accepted':
-				return i18n('invitations.status.accepted', 'Accepted');
-			case 'failed':
-				return i18n('invitations.status.failed', 'failed');
+	const { t } = useTranslation();
+	const [showAccepted, setShowAccepted] = useState(false);
+	const [isLoading, invitations] = useFindFilter({ tenant: tenantId });
 
-			default:
-				return status;
-		}
-	},
-});
+	const status: Status[] = ['created', 'send', 'failed'];
 
-template.events({
-	'change .js-showAccepted'(event, instance) {
-		instance.state.set('showAccepted', $(event.currentTarget).prop('checked'));
-	},
+	if (showAccepted) {
+		status.push('accepted');
+	}
 
-	async 'click .js-remove'(this: InvitationEntity, event, instance) {
-		event.preventDefault();
+	if (isLoading()) {
+		return null;
+	}
 
-		try {
-			await InvitationsMethods.remove(instance.data.tenant._id, this._id);
-		} catch (err) {
-			Alert.serverError(
-				err,
-				i18n('tenant.settings.invitations.removed.error', 'Invitations could not be removed.'),
-			);
-		}
-	},
-});
+	if (invitations.length === 0) {
+		return null;
+	}
+
+	return (
+		<>
+			<div className="mt-4"></div>
+
+			<div className="form-check">
+				<input
+					className="form-check-input"
+					type="checkbox"
+					value=""
+					id="invitationsListShowAcceptedCheck"
+					onChange={(event) => {
+						setShowAccepted($(event.currentTarget).prop('checked'));
+					}}
+				/>
+				<label className="form-check-label" htmlFor="invitationsListShowAcceptedCheck">
+					{t('invitations.list.showAccepted', 'Show accepted invitations')}
+				</label>
+			</div>
+			<Invitations
+				tenantId={tenantId}
+				invitations={invitations.filter((i) => status.includes(i.status))}
+			/>
+		</>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper(InvitationsList.name, () => InvitationsList);

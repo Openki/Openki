@@ -1,21 +1,20 @@
 import { Meteor } from 'meteor/meteor';
-import { i18n } from '/imports/startup/both/i18next';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Template } from 'meteor/templating';
 
 import * as Alert from '/imports/api/alerts/alert';
 import * as emailMethods from '/imports/api/emails/methods';
 
 export function VerifyEmail() {
+	const { t } = useTranslation();
 	const [sending, setSending] = useState(false);
 	if (sending) {
 		return (
 			<div className="alert alert-success" role="alert">
-				<strong>
-					{i18n('profile.verifyEmail.mailOnItsWay', 'Verification e-mail on its way.')}
-				</strong>
+				<strong>{t('profile.verifyEmail.mailOnItsWay', 'Verification e-mail on its way.')}</strong>
 				<br />
-				{i18n(
+				{t(
 					'profile.sendingVerificationMail',
 					'You will be sent a verification e-mail to click shortly.',
 				)}
@@ -35,7 +34,7 @@ export function VerifyEmail() {
 				try {
 					await emailMethods.sendVerificationEmail();
 					Alert.success(
-						i18n(
+						t(
 							'profile.sentVerificationMail',
 							'Verification mail has been sent to your address: "{MAIL}".',
 							{ MAIL: Meteor.user()?.emails[0].address },
@@ -45,13 +44,13 @@ export function VerifyEmail() {
 					setSending(false);
 					Alert.serverError(
 						err,
-						i18n('profile.sentVerificationMail.error', 'Could not send verification e-mail'),
+						t('profile.sentVerificationMail.error', 'Could not send verification e-mail'),
 					);
 				}
 			}}
 		>
 			<span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
-			{i18n('profile.verifymail', 'Resend verification e-mail')}
+			{t('profile.verifymail', 'Resend verification e-mail')}
 		</button>
 	);
 }

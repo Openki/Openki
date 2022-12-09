@@ -1,5 +1,5 @@
 import { _ } from 'meteor/underscore';
-import { i18n } from '/imports/startup/both/i18next';
+import { useTranslation } from 'react-i18next';
 import React, { useCallback, useState } from 'react';
 import { Template } from 'meteor/templating';
 
@@ -12,6 +12,8 @@ function SearchField(props: {
 }) {
 	const { onChange, onFocusOut } = props;
 	const [value, setValue] = useState(props.search ?? '');
+
+	const { t } = useTranslation();
 
 	// prevented unwanted input in the search
 	const handleSearch = useCallback(
@@ -44,7 +46,7 @@ function SearchField(props: {
 					type="text"
 					id="find"
 					value={value}
-					placeholder={i18n('find.search_placeholder', 'Everything')}
+					placeholder={t('find.search_placeholder', 'Everything')}
 					onChange={handleChange}
 				/>
 				<button
@@ -56,7 +58,7 @@ function SearchField(props: {
 						onFocusOut?.();
 					}}
 				>
-					{i18n('find.search_go', 'Go!')}
+					{t('find.search_go', 'Go!')}
 				</button>
 			</div>
 		</div>

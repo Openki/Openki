@@ -1,8 +1,8 @@
-import { i18n } from '/imports/startup/both/i18next';
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
 import { Template } from 'meteor/templating';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSessionEquals, useUser } from '/imports/utils/react-meteor-data';
 
 import * as Alert from '/imports/api/alerts/alert';
@@ -12,6 +12,7 @@ import { UserModel } from '/imports/api/users/users';
 function EmailValidationModal(props: { user: UserModel }) {
 	const { user } = props;
 
+	const { t } = useTranslation();
 	const [isBusy, setIsBusy] = useState(false);
 	const emailValidationModalClosed = useSessionEquals('emailValidationModalClosed', true);
 
@@ -32,14 +33,12 @@ function EmailValidationModal(props: { user: UserModel }) {
 		try {
 			await emailMethods.sendVerificationEmail();
 
-			Alert.success(
-				i18n('profile.sentVerificationMail', { MAIL: Meteor.user()?.emails[0].address }),
-			);
+			Alert.success(t('profile.sentVerificationMail', { MAIL: Meteor.user()?.emails[0].address }));
 			$('.js-email-validation-modal').modal('hide');
 		} catch (err) {
 			Alert.serverError(
 				err,
-				i18n('profile.sentVerificationMail.error', 'Could not send verification e-mail'),
+				t('profile.sentVerificationMail.error', 'Could not send verification e-mail'),
 			);
 		} finally {
 			setIsBusy(false);
@@ -54,22 +53,19 @@ function EmailValidationModal(props: { user: UserModel }) {
 						<h4 className="modal-title">
 							<span className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></span>
 							&nbsp;
-							{i18n('validate.email.title', 'Validate e-mail address')}
+							{t('validate.email.title', 'Validate e-mail address')}
 						</h4>
 						<span className="btn-close" data-bs-dismiss="modal"></span>
 					</div>
 					<div className="modal-body">
 						<span>
 							<p>
-								{i18n('validate.email.text.greeting', 'Hey "{NAME}"', {
+								{t('validate.email.text.greeting', 'Hey "{NAME}"', {
 									NAME: user?.getDisplayName(),
 								})}
 							</p>
 							<p>
-								{i18n(
-									'validate.email.text.para1',
-									'You have not validated your e-mail address yet.',
-								)}
+								{t('validate.email.text.para1', 'You have not validated your e-mail address yet.')}
 							</p>
 						</span>
 						<div className="mb-3">
@@ -81,12 +77,12 @@ function EmailValidationModal(props: { user: UserModel }) {
 											aria-hidden="true"
 										></span>
 										&nbsp;
-										{i18n('send.validation.submit.busy', 'Sending…')}
+										{t('send.validation.submit.busy', 'Sending…')}
 									</>
 								) : (
 									<>
 										<span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>&nbsp;
-										{i18n('send.validation.email', 'Send me a validation e-mail.')}
+										{t('send.validation.email', 'Send me a validation e-mail.')}
 									</>
 								)}
 							</button>
@@ -99,7 +95,7 @@ function EmailValidationModal(props: { user: UserModel }) {
 }
 
 export function EmailValidation() {
-	function showEmailValidation(user: UserModel | null): user is UserModel {
+	function useShowEmailValidation(user: UserModel | null): user is UserModel {
 		return (
 			!useSessionEquals('emailValidationModalClosed', true) &&
 			!!user &&
@@ -111,7 +107,7 @@ export function EmailValidation() {
 
 	const user = useUser();
 
-	if (!showEmailValidation(user)) {
+	if (!useShowEmailValidation(user)) {
 		return null;
 	}
 	return <EmailValidationModal user={user} />;

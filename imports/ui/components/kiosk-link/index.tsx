@@ -1,6 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
-import { i18n } from '/imports/startup/both/i18next';
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { Template } from 'meteor/templating';
 
@@ -26,12 +26,14 @@ function buildBackLink() {
 }
 
 export function KioskLink() {
+	const { t } = useTranslation();
+
 	const link = buildBackLink();
 	if (link) {
 		return (
 			<a href={link}>
 				<button type="button" className="back-to-kiosk">
-					{i18n('backToKiosk', 'Return to overview')}
+					{t('backToKiosk', 'Return to overview')}
 				</button>
 			</a>
 		);
