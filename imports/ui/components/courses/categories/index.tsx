@@ -1,27 +1,29 @@
 import { Router } from 'meteor/iron:router';
-import { i18n } from '/imports/startup/both/i18next';
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 
 import './styles.scss';
 
 export function CategoryLabel(props: { category: string }) {
 	const { category } = props;
-	return <div className="tag category-tag">{i18n(`category.${category}`)}</div>;
+	const { t } = useTranslation();
+	return <div className="tag category-tag">{t(`category.${category}`)}</div>;
 }
 
 function CategoryLabelLinked(props: { category: string }) {
 	const { category } = props;
+	const { t } = useTranslation();
 	return (
 		<div className="tag tag-link category-tag">
 			<a
 				className={`js-category-label category-${category}`}
 				data-category={category}
-				data-tooltip={`${i18n('categories.show_courses', 'Show all courses in {CATEGORY}', {
-					CATEGORY: i18n(`category.${category}`),
+				data-tooltip={`${t('categories.show_courses', 'Show all courses in {CATEGORY}', {
+					CATEGORY: t(`category.${category}`),
 				})}`}
 				href={Router.url('home', {}, { query: `categories=${category}` })}
 			>
-				{i18n(`category.${category}`)}
+				{t(`category.${category}`)}
 			</a>
 		</div>
 	);

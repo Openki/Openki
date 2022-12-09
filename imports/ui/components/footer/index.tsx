@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import moment from 'moment';
 import { Session } from 'meteor/session';
-import { i18n } from '/imports/startup/both/i18next';
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 
@@ -15,15 +15,16 @@ import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import './styles.scss';
 
 function Links() {
+	const { t } = useTranslation();
 	const siteName = getSiteName(useTracker(() => Regions.currentRegion()));
 
 	function links() {
 		return PublicSettings.footerLinks.map((linkSpec) => ({
 			link: linkSpec.link,
 			text: linkSpec.key
-				? i18n(linkSpec.key, { SITENAME: siteName })
+				? t(linkSpec.key, { SITENAME: siteName })
 				: getLocalizedValue(linkSpec.text),
-			title: linkSpec.title_key ? i18n(linkSpec.title_key, { SITENAME: siteName }) : '',
+			title: linkSpec.title_key ? t(linkSpec.title_key, { SITENAME: siteName }) : '',
 		}));
 	}
 
@@ -39,6 +40,7 @@ function Links() {
 }
 
 function Footer() {
+	const { t } = useTranslation();
 	const [isLoading, version] = useDetails();
 	const locale = useTracker(() => Session.get('timeLocale')) || 'en';
 
@@ -71,7 +73,7 @@ function Footer() {
 				<span title={fullInfo()} className="footer-deployed-version">
 					{versionName()} {commit()}
 					<br />
-					{i18n('footer.deployedAt', 'deployed:')} {moment(deployed()).locale(locale).format('L')}
+					{t('footer.deployedAt', 'deployed:')} {moment(deployed()).locale(locale).format('L')}
 				</span>
 			</footer>
 		);

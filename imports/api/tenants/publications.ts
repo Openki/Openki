@@ -5,11 +5,11 @@ import { check } from 'meteor/check';
 import { FindFilter, TenantEntity, Tenants } from '/imports/api/tenants/tenants';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { ServerPublishMany } from '/imports/utils/ServerPublish';
+import { ServerPublishOne } from '/imports/utils/ServerPublish';
 import { FieldSort } from '/imports/utils/sort-spec';
 import { ServerPublish } from '/imports/utils/ServerPublishBlaze';
 
-export const [details, useDetails] = ServerPublishMany(
+export const [details, useDetails] = ServerPublishOne(
 	'tenant',
 	(tenantId: string) => {
 		check(tenantId, String);
@@ -17,7 +17,7 @@ export const [details, useDetails] = ServerPublishMany(
 		const user = Meteor.user();
 
 		if (!user) {
-			return undefined;
+			throw new Meteor.Error(401, 'please log in');
 		}
 
 		const filter: Mongo.Selector<TenantEntity> = { _id: tenantId };
@@ -27,12 +27,13 @@ export const [details, useDetails] = ServerPublishMany(
 			filter.members = user._id;
 		}
 
+		const fields: Mongo.FieldSpecifier = { ...Tenants.publicFields };
 		// Only admins can see all tenant admins. Note: Admin privileg is not something that is
 		// likely to happen and reactive changes are not needed.
-		const showAdminsFields =
-			UserPrivilegeUtils.privileged(user, 'admin') || user.isTenantAdmin(tenantId) ? 1 : 0;
-
-		return Tenants.find(filter, { fields: { ...Tenants.publicFields, admins: showAdminsFields } });
+		if (UserPrivilegeUtils.privileged(user, 'admin') || user.isTenantAdmin(tenantId)) {
+			fields.admins = 1;
+		}
+		return Tenants.find(filter, { fields });
 	},
 	(tenantId: string) => {
 		const user = Meteor.user();
@@ -48,14 +49,13 @@ export const [details, useDetails] = ServerPublishMany(
 			filter.members = user._id;
 		}
 
+		const fields: Mongo.FieldSpecifier = { ...Tenants.publicFields };
 		// Only admins can see all tenant admins. Note: Admin privileg is not something that is
 		// likely to happen and reactive changes are not needed.
-		const showAdminsFields =
-			UserPrivilegeUtils.privileged(user, 'admin') || user.isTenantAdmin(tenantId) ? 1 : 0;
-
-		return Tenants.findOne(filter, {
-			fields: { ...Tenants.publicFields, admins: showAdminsFields },
-		});
+		if (UserPrivilegeUtils.privileged(user, 'admin') || user.isTenantAdmin(tenantId)) {
+			fields.admins = 1;
+		}
+		return Tenants.findOne(filter, { fields });
 	},
 );
 

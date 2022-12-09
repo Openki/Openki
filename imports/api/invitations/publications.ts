@@ -3,11 +3,12 @@ import { Meteor } from 'meteor/meteor';
 import { FindFilter, Invitations } from '/imports/api/invitations/invitations';
 import { Tenants } from '/imports/api/tenants/tenants';
 
-import { ServerPublish } from '/imports/utils/ServerPublishBlaze';
+import { ServerPublish as ServerPublishBlaze } from '/imports/utils/ServerPublishBlaze';
+import { ServerPublishMany } from '/imports/utils/ServerPublish';
 import { FieldSort } from '/imports/utils/sort-spec';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
-export const details = ServerPublish(
+export const details = ServerPublishBlaze(
 	'invitation',
 	(tenantId: string, token: string) => {
 		const invitation = Invitations.find({ tenant: tenantId, token });
@@ -29,10 +30,10 @@ export const details = ServerPublish(
 	},
 );
 
-export const findFilter = ServerPublish(
+export const [findFilter, useFindFilter] = ServerPublishMany(
 	'invitations.findFilter',
-	(filter: FindFilter, limit, skip, sort: FieldSort[]) => {
-		const tenantId = filter.tenant;
+	(filter?: FindFilter, limit?, skip?, sort?: FieldSort[]) => {
+		const tenantId = filter?.tenant;
 
 		const user = Meteor.user();
 
@@ -40,7 +41,7 @@ export const findFilter = ServerPublish(
 			!user ||
 			!(UserPrivilegeUtils.privileged(user, 'admin') || (tenantId && user.isTenantAdmin(tenantId)))
 		) {
-			return undefined;
+			throw new Meteor.Error(401, 'not permitted');
 		}
 
 		return Invitations.findFilter(filter, limit, skip, sort);

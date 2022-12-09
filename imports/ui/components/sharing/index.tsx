@@ -1,5 +1,5 @@
 import Shariff from 'shariff';
-import { i18n } from '/imports/startup/both/i18next';
+import { useTranslation } from 'react-i18next';
 import React, { useEffect } from 'react';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
@@ -9,6 +9,7 @@ import * as Analytics from '/imports/ui/lib/analytics';
 import './styles.scss';
 
 export function Sharing() {
+	const { t } = useTranslation();
 	useEffect(() => {
 		const $shariff = $('.shariff');
 		// eslint-disable-next-line no-new
@@ -34,10 +35,10 @@ export function Sharing() {
 
 	return (
 		<div className="shariff-wrapper">
-			<p>{i18n('sharing.title', 'Share this course with your friends')}</p>
+			<p>{t('sharing.title', 'Share this course with your friends')}</p>
 			<div
 				className="shariff"
-				data-mail-body={`${i18n(
+				data-mail-body={`${t(
 					'sharing.mailbody.quote',
 					'look what I found, are you interested?',
 				)} {url}`}

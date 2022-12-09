@@ -1,7 +1,7 @@
-import { i18n } from '/imports/startup/both/i18next';
 import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Categories } from '/imports/api/categories/categories';
 
@@ -23,6 +23,8 @@ function FilterCategories(props: {
 	onRemove: (category: string) => void;
 }) {
 	const categories = Object.keys(Categories);
+
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		// re run after viewport change or param change
@@ -48,10 +50,10 @@ function FilterCategories(props: {
 
 					return $wrapper;
 				},
-				placeholder: i18n('find.searchCategories.placeholder', 'Choose categories'),
+				placeholder: t('find.searchCategories.placeholder', 'Choose categories'),
 				language: {
 					noResults() {
-						return i18n('find.filter-no-categories-found', 'No categories found');
+						return t('find.filter-no-categories-found', 'No categories found');
 					},
 				},
 			})
@@ -73,7 +75,7 @@ function FilterCategories(props: {
 				{categories.map((category) => (
 					<React.Fragment key={category}>
 						<option className="categories-select-option" value={category}>
-							{i18n(`category.${category}`)}
+							{t(`category.${category}`)}
 						</option>
 						{Categories[category].map((subcategory) => (
 							<option
@@ -81,7 +83,7 @@ function FilterCategories(props: {
 								className="categories-select-sub-option"
 								value={subcategory}
 							>
-								{i18n(`category.${subcategory}`)}
+								{t(`category.${subcategory}`)}
 							</option>
 						))}
 					</React.Fragment>
