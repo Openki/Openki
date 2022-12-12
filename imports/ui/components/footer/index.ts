@@ -22,33 +22,42 @@ template.onCreated(function () {
 template.helpers({
 	links() {
 		const siteName = getSiteName(Regions.currentRegion());
+		interface ModifiedLinksArray {
+			link: string;
+			key?: string;
+			title_key?: string;
+			text?: string;
+		}
 
-		const list = PublicSettings.footerLinks.map((linkSpec) => ({
-			link: linkSpec.link,
-			text: linkSpec.key ? i18n(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
-			title: linkSpec.title_key ? i18n(linkSpec.title_key, { SITENAME: siteName }) : '',
-		}));
+		const modifiedLinksArray: ModifiedLinksArray[] = [];
 
 		if (siteName !== 'Openki') {
-			list.forEach((element) => {
-				if (element.text === 'Source-code') {
-					list[2].text = i18n(
-						'navigation.footer.sourceCodeOnGitLab.powerdByOpenki',
-						'Powered by Openki',
-					);
-					return list;
+			PublicSettings.footerLinks.forEach((element) => {
+				if (element.key !== 'navigation.footer.sourceCodeOnGitLab') {
+					modifiedLinksArray.push(element);
+				} else {
+					const footerLink = {
+						link: 'https://gitlab.com/Openki/Openki/',
+						key: 'navigation.footer.sourceCodeOnGitLab.powerdByOpenki',
+						title_key: 'navigation.footer.codeOnGitLab.tooltip',
+					};
+					modifiedLinksArray.push(footerLink);
 				}
-				return list;
 			});
-		} else {
-			return PublicSettings.footerLinks.map((linkSpec) => ({
+
+			return modifiedLinksArray.map((linkSpec) => ({
 				link: linkSpec.link,
 				text: linkSpec.key ? i18n(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
 				title: linkSpec.title_key ? i18n(linkSpec.title_key, { SITENAME: siteName }) : '',
 			}));
 		}
-		return list;
+		return PublicSettings.footerLinks.map((linkSpec) => ({
+			link: linkSpec.link,
+			text: linkSpec.key ? i18n(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
+			title: linkSpec.title_key ? i18n(linkSpec.title_key, { SITENAME: siteName }) : '',
+		}));
 	},
+
 	version() {
 		const version = Version.findOne();
 		return version && version.basic + (version.branch !== 'master' ? ` ${version.branch}` : '');
