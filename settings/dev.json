@@ -59,26 +59,67 @@
 				"de": "https://about.openki.net/ueber-uns/spenden/"
 			}
 		},
-		"eventDescriptionMax": 500,
+		"eventDescriptionMax": 500, 
 		"categories": {
-			"sports": ["martialarts", "teamsport", "artistry"],
-			"handicraft": ["metalwood", "electronics", "fabric", "gardening", "construction"],
-			"sciences": ["geography", "physics", "medicine", "mathematics", "chemistry", "biology"],
-			"humanities": ["languages", "history", "sociology", "politics", "philosophy", "lawbusiness"],
-			"culture": [
-				"literature",
-				"theatre",
-				"music",
-				"dance",
-				"fineart",
-				"design",
-				"photography",
-				"film",
-				"cooking",
-				"subculture"
-			],
-			"computer": ["internet", "programming", "operating"],
-			"misc": ["♥undefined♥", "experimental", "spiritual", "education", "ecology"]
+			"sports":
+				[
+					"martialarts",
+					"teamsport",
+					"artistry"
+				],
+			"handicraft":
+				[
+					"metalwood",
+					"electronics",
+					"fabric",
+					"gardening",
+					"construction"
+				],
+			"sciences": 
+				[
+					"geography",
+					"physics",
+					"medicine",
+					"mathematics",
+					"chemistry",
+					"biology"
+				],
+			"humanities": 
+				[
+					"languages",
+					"history",
+					"sociology",
+					"politics",
+					"philosophy",
+					"lawbusiness"
+				],
+			"culture": 
+				[
+					"literature",
+					"theatre",
+					"music",
+					"dance",
+					"fineart",
+					"design",
+					"photography",
+					"film",
+					"cooking",
+					"subculture"
+				],
+			"computer": 
+				[
+					"internet",
+					"programming",
+					"operating"
+				],
+			"misc": 
+				[
+					"♥undefined♥",
+					"experimental",
+					"spiritual",
+					"education",
+					"ecology"
+				]
 		},
 		"s3": {
 			"publicUrlBase": "https://cz42.objectstorage.nineapis.ch/v1/AUTH_cda71cf5c64a4609b0ff99ffc399666f/bucket-openkitest"
