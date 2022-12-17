@@ -18,7 +18,7 @@ import '/imports/ui/components/email-request';
 import '/imports/ui/components/email-validation';
 import '/imports/ui/components/featured-group';
 import '/imports/ui/components/footer';
-import '/imports/ui/components/introduction/introduction';
+import '/imports/ui/components/introduction';
 import '/imports/ui/components/kiosk-link';
 import '/imports/ui/components/navbar';
 import '/imports/ui/components/regions/splash';
