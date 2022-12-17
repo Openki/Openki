@@ -186,6 +186,7 @@ export const ensure = {
 			claim: '',
 			members: [ensure.user('EdDillinger')._id],
 			description: 'Fixture group',
+			createdby: ensure.user('EdDillinger')._id,
 		});
 		/* eslint-disable-next-line no-console */
 		console.log(`Added fixture group '${short}' id: ${id}`);
