@@ -1,32 +1,26 @@
 import { Accounts } from 'meteor/accounts-base';
 import crypto from 'crypto';
+import { Mongo } from 'meteor/mongo';
 
 import { Prng } from '/imports/api/fixtures/Prng';
 import { Groups } from '/imports/api/groups/groups';
 import { Tenants } from '/imports/api/tenants/tenants';
-import { Regions } from '/imports/api/regions/regions';
-import { Venues } from '/imports/api/venues/venues';
-import { Users } from '/imports/api/users/users';
+import { RegionEntity, Regions } from '/imports/api/regions/regions';
+import { VenueEntity, Venues } from '/imports/api/venues/venues';
+import { UserEntity, Users } from '/imports/api/users/users';
 
 import * as StringTools from '/imports/utils/string-tools';
 
 /** @typedef {import('../users/users').UserEntity} UserEntity */
 
 export const ensure = {
-	/**
-	 * @param {string[]} strings
-	 */
-	fixedId(strings) {
+	fixedId(strings: string[]) {
 		const md5 = crypto.createHash('md5');
 		strings.forEach((str) => md5.update(str));
 		return md5.digest('hex').substring(0, 10);
 	},
 
-	/**
-	 * @param {string} name
-	 * @param {string | undefined} [adminId]
-	 */
-	tenant(name, adminId) {
+	tenant(name: string, adminId?: string | undefined) {
 		const tenant = Tenants.findOne({ name });
 		if (tenant) {
 			if (adminId) {
@@ -64,28 +58,24 @@ export const ensure = {
 		return id;
 	},
 
-	/**
-	 * @param {UserEntity} user
-	 * @param {string} regionId
-	 */
-	userInTenant(user, regionId) {
+	userInTenant(user: UserEntity, regionId: string) {
 		const region = Regions.findOne(regionId);
 
 		if (!region || !region.tenant) {
 			return;
 		}
 
-		if (user.tenants?.includes(region.tenant)) {
+		if (user.tenants?.find((t) => t._id === region.tenant)) {
 			return;
 		}
 
 		Users.update(user._id, {
-			$addToSet: { tenants: region.tenant },
+			$addToSet: { tenants: { _id: region.tenant, privileges: ['admin'] } },
 		});
 
 		const tenant = Tenants.findOne(region.tenant);
 
-		if (tenant?.members?.includes(user._id)) {
+		if (!tenant || tenant?.members?.includes(user._id)) {
 			return;
 		}
 
@@ -94,12 +84,7 @@ export const ensure = {
 		});
 	},
 
-	/**
-	 * @param {string} name
-	 * @param {string} [region]
-	 * @param {boolean} [verified=false]
-	 */
-	user(name, region, verified = false) {
+	user(name: string, region?: string | undefined, verified = false) {
 		const prng = Prng('ensureUser');
 
 		if (!name) {
@@ -124,15 +109,13 @@ export const ensure = {
 			return user;
 		}
 
-		const id = Accounts.createUser(
-			/** @type {UserEntity} */ {
-				username: name,
-				email,
-				profile: { name },
-				notifications: true,
-				allowPrivateMessages: true,
-			},
-		);
+		const id = Accounts.createUser({
+			username: name,
+			email,
+			profile: { name },
+			notifications: true,
+			allowPrivateMessages: true,
+		} as any);
 
 		const age = Math.floor(prng() * 100000000000);
 		const time = new Date().getTime();
@@ -148,7 +131,7 @@ export const ensure = {
 					},
 					createdAt: new Date(time - age),
 					lastLogin: new Date(time - age / 30),
-				},
+				} as any,
 			},
 		);
 
@@ -173,10 +156,7 @@ export const ensure = {
 		return user;
 	},
 
-	/**
-	 * @param {string} name
-	 */
-	region(name) {
+	region(name: string) {
 		const region = Regions.findOne({ name });
 		if (region) {
 			return region._id;
@@ -185,17 +165,14 @@ export const ensure = {
 		const id = Regions.insert({
 			name,
 			loc: { type: 'Point', coordinates: [8.3, 47.05] },
-		});
+		} as Mongo.OptionalId<RegionEntity>);
 		/* eslint-disable-next-line no-console */
 		console.log(`Added region: ${name} ${id}`);
 
 		return id;
 	},
 
-	/**
-	 * @param {string} short
-	 */
-	group(short) {
+	group(short: string) {
 		const group = Groups.findOne({ short });
 		if (group) {
 			return group._id;
@@ -206,8 +183,10 @@ export const ensure = {
 			_id: id,
 			name: short,
 			short,
+			claim: '',
 			members: [ensure.user('EdDillinger')._id],
 			description: 'Fixture group',
+			createdby: ensure.user('EdDillinger')._id,
 		});
 		/* eslint-disable-next-line no-console */
 		console.log(`Added fixture group '${short}' id: ${id}`);
@@ -215,11 +194,7 @@ export const ensure = {
 		return id;
 	},
 
-	/**
-	 * @param {string} name
-	 * @param {string} regionId
-	 */
-	venue(name, regionId) {
+	venue(name: string, regionId: string) {
 		const prng = Prng('ensureVenue');
 
 		let venue = Venues.findOne({ name, region: regionId });
@@ -227,25 +202,28 @@ export const ensure = {
 			return venue;
 		}
 
-		venue = {
+		const venueEntity = {
 			name,
 			region: regionId,
-		};
+		} as VenueEntity;
 
-		venue.slug = StringTools.slug(venue.name);
+		venueEntity.slug = StringTools.slug(venueEntity.name);
 
 		const region = Regions.findOne(regionId);
+		if (!region || !region.loc) {
+			throw new Error('Unexpected undefined');
+		}
 		const lat = region.loc.coordinates[1] + prng() ** 2 * 0.02 * (prng() > 0.5 ? 1 : -1);
 		const lon = region.loc.coordinates[0] + prng() ** 2 * 0.02 * (prng() > 0.5 ? 1 : -1);
-		venue.loc = { type: 'Point', coordinates: [lon, lat] };
+		venueEntity.loc = { type: 'Point', coordinates: [lon, lat] };
 
-		venue._id = ensure.fixedId([venue.name, venue.region]);
+		venueEntity._id = ensure.fixedId([venueEntity.name, venueEntity.region as string]);
 
 		const age = Math.floor(prng() * 80000000000);
-		venue.time_created = new Date(new Date().getTime() - age);
-		venue.time_lastedit = new Date(new Date().getTime() - age * 0.25);
+		venueEntity.created = new Date(new Date().getTime() - age);
+		venueEntity.updated = new Date(new Date().getTime() - age * 0.25);
 
-		Venues.insert(venue);
+		Venues.insert(venueEntity);
 
 		venue = Venues.findOne({ name, region: regionId });
 		if (!venue) {
