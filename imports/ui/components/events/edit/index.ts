@@ -87,12 +87,14 @@ template.onCreated(function () {
 		updateChangedReplicasTime: false,
 	});
 
-	const { courseId } = this.data;
-	if (courseId) {
-		instance.subscribe('courseDetails', courseId);
+	const event = instance.data;
+	if (event.courseId) {
+		instance.subscribe('courseDetails', event.courseId);
 	}
 
-	this.subscribe('affectedReplica', instance.data._id);
+	if (event._id) {
+		instance.subscribe('affectedReplica', instance.data._id);
+	}
 
 	const parent = instance.parentInstance();
 
@@ -106,7 +108,7 @@ template.onCreated(function () {
 
 	// Sending an event notification is only possible when the event is
 	// attached to a course. Otherwise there is nobody to inform.
-	const notifyPreset = !!(courseId && instance.data.new);
+	const notifyPreset = !!(event.courseId && instance.data.new);
 	instance.notifyChecked = new ReactiveVar(notifyPreset);
 });
 
@@ -194,8 +196,14 @@ template.onRendered(function () {
 	updateTimes(instance, false);
 
 	instance.autorun(() => {
-		// Depend on locale so we update reactively when it changes
-		Session.get('locale');
+		const desiredLocale = Session.get('locale');
+
+		if (!desiredLocale) {
+			// if nothing set we wait for a change
+			return;
+		}
+
+		const language = desiredLocale.substring(0, 2);
 
 		const $dateInput = instance.$('.js-event-start-date');
 
@@ -206,6 +214,7 @@ template.onRendered(function () {
 		// So instead we clobber the 'en' settings with settings for the
 		// selected language.
 		$dateInput.datepicker({
+			language,
 			weekStart: moment.localeData().firstDayOfWeek(),
 			autoclose: true,
 			startDate: new Date(),
