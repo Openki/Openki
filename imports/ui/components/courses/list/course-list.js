@@ -1,3 +1,3 @@
-import '/imports/ui/components/courses/compact/course-compact';
+import '/imports/ui/components/courses/compact';
 
 import './course-list.html';
