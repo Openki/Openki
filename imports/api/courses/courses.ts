@@ -51,8 +51,6 @@ export interface CourseEntity {
 	customFields: (Pick<GroupEntityCustomCourseFields, 'name' | 'displayText' | 'visibleFor'> & {
 		value: string;
 	})[];
-	/** (what for?) */
-	date: Date;
 	/** ID_user */
 	createdby: string;
 	// eslint-disable-next-line camelcase
