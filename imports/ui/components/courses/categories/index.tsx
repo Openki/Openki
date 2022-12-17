@@ -1,5 +1,6 @@
 import { Router } from 'meteor/iron:router';
 import { useTranslation } from 'react-i18next';
+import { Template } from 'meteor/templating';
 import React from 'react';
 
 import './styles.scss';
