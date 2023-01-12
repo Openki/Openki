@@ -35,7 +35,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 
 		courseBlockSize: number;
 		courseLimit: ReactiveVar<number>;
-		filter: ReturnType<typeof Courses['Filtering']>;
+		filter: ReturnType<(typeof Courses)['Filtering']>;
 	}
 >;
 
