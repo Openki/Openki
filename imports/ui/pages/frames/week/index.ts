@@ -35,7 +35,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 	{
 		startOfWeek: moment.Moment;
 		weekdays: Weekday[];
-		filter: ReturnType<typeof Events['Filtering']>;
+		filter: ReturnType<(typeof Events)['Filtering']>;
 		limit: number;
 		update: () => void;
 		state: ReactiveDict<{
