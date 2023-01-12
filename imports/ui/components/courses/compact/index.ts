@@ -4,7 +4,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import moment from 'moment';
 
 import { Roles } from '/imports/api/roles/roles';
-import {  CourseModel } from '/imports/api/courses/courses';
+import { CourseModel } from '/imports/api/courses/courses';
 
 import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
 

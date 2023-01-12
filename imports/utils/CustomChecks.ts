@@ -53,7 +53,7 @@ export function StringEnum<T extends readonly string[]>(...values: T) {
 	return Match.Where(function (str) {
 		check(str, String);
 		return values.includes(str);
-	}) as Match.Matcher<typeof values[number]>;
+	}) as Match.Matcher<(typeof values)[number]>;
 }
 
 export function Record<T extends Match.Pattern>(type: T) {
