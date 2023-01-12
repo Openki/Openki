@@ -27,7 +27,7 @@ $event-caption-border: $yellow;
 
 .event-caption-header > .fa-map-pin {
 	@include td-pos(left, 50%);
-	color: $text-color;
+	color: $body-color;
 	font-size: 8px;
 	position: absolute;
 	top: -5px;
@@ -55,7 +55,7 @@ $event-caption-body-bg: $event-body-bg;
 	border-color: $event-caption-border;
 	border-style: solid;
 	border-width: 0 1.5px 1.5px;
-	color: $text-color;
+	color: $body-color;
 	display: table-cell;
 	padding: 3px;
 	transition: border-color $default-transition-time;
@@ -74,7 +74,7 @@ $event-caption-body-bg: $event-body-bg;
 
 .event-caption-placeholder .event-caption-header,
 .event-caption-placeholder .event-caption-body {
-	border-color: $gray-lightest;
+	border-color: $gray-200;
 }
 
 .event-caption-wrap {

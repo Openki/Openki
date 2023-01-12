@@ -21,7 +21,7 @@ import './styles.scss';
 		'calendarPage',
 		Record<string, string>,
 		{
-			filter: ReturnType<typeof Events['Filtering']>;
+			filter: ReturnType<(typeof Events)['Filtering']>;
 			state: ReactiveDict<{
 				isAttendeeFilterOn: boolean;
 			}>;
@@ -126,7 +126,7 @@ import './styles.scss';
 				start: moment.Moment;
 				end: moment.Moment;
 			};
-			filter: ReturnType<typeof Events['Filtering']>;
+			filter: ReturnType<(typeof Events)['Filtering']>;
 			isAttendeeFilterOn: boolean;
 		}
 	>;

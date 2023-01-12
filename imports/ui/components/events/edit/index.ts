@@ -112,14 +112,14 @@ template.onCreated(function () {
 	instance.notifyChecked = new ReactiveVar(notifyPreset);
 });
 
-function getEventStartMoment(instance: ReturnType<typeof Template['instance']>) {
+function getEventStartMoment(instance: ReturnType<(typeof Template)['instance']>) {
 	return LocalTime.fromString(
 		instance.$('.js-event-start-date').val() as string,
 		instance.$('.js-event-start-time').val() as string,
 	);
 }
 
-function getEventEndMoment(instance: ReturnType<typeof Template['instance']>) {
+function getEventEndMoment(instance: ReturnType<(typeof Template)['instance']>) {
 	const startMoment = getEventStartMoment(instance);
 	let endMoment = LocalTime.fromString(
 		startMoment.format('L'),
@@ -141,13 +141,13 @@ function getEventEndMoment(instance: ReturnType<typeof Template['instance']>) {
 	return endMoment;
 }
 
-function getEventDuration(instance: ReturnType<typeof Template['instance']>) {
+function getEventDuration(instance: ReturnType<(typeof Template)['instance']>) {
 	const duration = Number.parseInt(instance.$('.js-event-duration').val() as string, 10) || 0;
 	return Math.max(0, duration);
 }
 
 /* Patch the end time and the duration when start, end or duration changes */
-function updateTimes(instance: ReturnType<typeof Template['instance']>, updateEnd: boolean) {
+function updateTimes(instance: ReturnType<(typeof Template)['instance']>, updateEnd: boolean) {
 	const start = getEventStartMoment(instance);
 	let end = getEventEndMoment(instance);
 	let duration = getEventDuration(instance);
