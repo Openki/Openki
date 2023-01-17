@@ -87,12 +87,14 @@ template.onCreated(function () {
 		updateChangedReplicasTime: false,
 	});
 
-	const { courseId } = this.data;
-	if (courseId) {
-		instance.subscribe('courseDetails', courseId);
+	const event = instance.data;
+	if (event.courseId) {
+		instance.subscribe('courseDetails', event.courseId);
 	}
 
-	this.subscribe('affectedReplica', instance.data._id);
+	if (event._id) {
+		instance.subscribe('affectedReplica', instance.data._id);
+	}
 
 	const parent = instance.parentInstance();
 
@@ -106,18 +108,18 @@ template.onCreated(function () {
 
 	// Sending an event notification is only possible when the event is
 	// attached to a course. Otherwise there is nobody to inform.
-	const notifyPreset = !!(courseId && instance.data.new);
+	const notifyPreset = !!(event.courseId && instance.data.new);
 	instance.notifyChecked = new ReactiveVar(notifyPreset);
 });
 
-function getEventStartMoment(instance: ReturnType<typeof Template['instance']>) {
+function getEventStartMoment(instance: ReturnType<(typeof Template)['instance']>) {
 	return LocalTime.fromString(
 		instance.$('.js-event-start-date').val() as string,
 		instance.$('.js-event-start-time').val() as string,
 	);
 }
 
-function getEventEndMoment(instance: ReturnType<typeof Template['instance']>) {
+function getEventEndMoment(instance: ReturnType<(typeof Template)['instance']>) {
 	const startMoment = getEventStartMoment(instance);
 	let endMoment = LocalTime.fromString(
 		startMoment.format('L'),
@@ -139,13 +141,13 @@ function getEventEndMoment(instance: ReturnType<typeof Template['instance']>) {
 	return endMoment;
 }
 
-function getEventDuration(instance: ReturnType<typeof Template['instance']>) {
+function getEventDuration(instance: ReturnType<(typeof Template)['instance']>) {
 	const duration = Number.parseInt(instance.$('.js-event-duration').val() as string, 10) || 0;
 	return Math.max(0, duration);
 }
 
 /* Patch the end time and the duration when start, end or duration changes */
-function updateTimes(instance: ReturnType<typeof Template['instance']>, updateEnd: boolean) {
+function updateTimes(instance: ReturnType<(typeof Template)['instance']>, updateEnd: boolean) {
 	const start = getEventStartMoment(instance);
 	let end = getEventEndMoment(instance);
 	let duration = getEventDuration(instance);
@@ -194,8 +196,14 @@ template.onRendered(function () {
 	updateTimes(instance, false);
 
 	instance.autorun(() => {
-		// Depend on locale so we update reactively when it changes
-		Session.get('locale');
+		const desiredLocale = Session.get('locale');
+
+		if (!desiredLocale) {
+			// if nothing set we wait for a change
+			return;
+		}
+
+		const language = desiredLocale.substring(0, 2);
 
 		const $dateInput = instance.$('.js-event-start-date');
 
@@ -206,6 +214,7 @@ template.onRendered(function () {
 		// So instead we clobber the 'en' settings with settings for the
 		// selected language.
 		$dateInput.datepicker({
+			language,
 			weekStart: moment.localeData().firstDayOfWeek(),
 			autoclose: true,
 			startDate: new Date(),
@@ -342,18 +351,21 @@ template.events({
 			Alert.error(i18n('event.edit.plzProvideDescr', 'Please provide a description'));
 			return;
 		}
-		if ($description.text().length > PublicSettings.eventDescriptionMax) {
-			Alert.error(
-				i18n(
-					'event.edit.plzShortDescr',
-					'Too many characters used. {MAXNUMBER} are allowed. Please remove {NUMBER} characters to be able to save.',
-					{
-						MAXNUMBER: PublicSettings.eventDescriptionMax,
-						NUMBER: $description.text().length - PublicSettings.eventDescriptionMax,
-					},
-				),
-			);
-			return;
+
+		if (PublicSettings.eventDescriptionMax) {
+			if ($description.text().length > PublicSettings.eventDescriptionMax) {
+				Alert.error(
+					i18n(
+						'event.edit.plzShortDescr',
+						'Too many characters used. {MAXNUMBER} are allowed. Please remove {NUMBER} characters to be able to save.',
+						{
+							MAXNUMBER: PublicSettings.eventDescriptionMax,
+							NUMBER: $description.text().length - PublicSettings.eventDescriptionMax,
+						},
+					),
+				);
+				return;
+			}
 		}
 
 		const maxParticipants = validateMaxParticipants(

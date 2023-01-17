@@ -1,4 +1,5 @@
 import { Router } from 'meteor/iron:router';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 // Extends the route function to support async await in onRun
 

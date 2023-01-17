@@ -1,5 +1,5 @@
 .tooltip {
-	background: $brand-primary;
+	background: $primary;
 	border-radius: 4px;
 	box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
 	color: $body-bg;
@@ -12,7 +12,7 @@
 	z-index: $zindex-tooltip;
 
 	&::after {
-		border-color: $brand-primary transparent transparent;
+		border-color: $primary transparent transparent;
 		border-style: solid;
 		border-width: 10px;
 		content: '';
@@ -32,13 +32,13 @@
 }
 
 .tooltip--right::after {
-	border-color: transparent $brand-primary transparent transparent;
+	border-color: transparent $primary transparent transparent;
 	left: -15px;
 	top: 5px;
 }
 
 .tooltip--left::after {
-	border-color: transparent transparent transparent $brand-primary;
+	border-color: transparent transparent transparent $primary;
 	left: auto;
 	right: -15px;
 	top: 5px;
