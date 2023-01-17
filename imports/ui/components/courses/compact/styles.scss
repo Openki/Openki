@@ -72,6 +72,12 @@
 	}
 }
 
+.course-compact.elevate-child,
+.course-compact.elevate-child:hover {
+	box-shadow: none;
+	transition: box-shadow $default-transition-time;
+}
+
 // ** Content
 //========================================================================================
 .course-compact-content {
@@ -113,7 +119,7 @@
 // ** Categories
 //========================================================================================
 .course-compact-content > .course-categories {
-	height: 50px;
+	height: 55px;
 	margin-bottom: 0;
 	overflow: hidden;
 }
