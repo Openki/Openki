@@ -1,47 +1,77 @@
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Meteor } from 'meteor/meteor';
-import { ReactiveVar } from 'meteor/reactive-var';
+import { Router } from 'meteor/iron:router';
+import { Template } from 'meteor/templating';
+import React from 'react';
+import { useUser } from '/imports/utils/react-meteor-data';
+import { useTranslation } from 'react-i18next';
 
-import * as Regions from '/imports/api/regions/publications';
+import { useFindFilter } from '/imports/api/regions/publications';
 import { TenantModel } from '/imports/api/tenants/tenants';
-
-import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
-
-import './template.html';
 
 export interface Data {
 	tenant: TenantModel;
 }
 
-const Template = TemplateAny as TemplateStaticTyped<
-	'tenantRegions',
-	Data,
-	{
-		regions: ReactiveVar<SubscriptionType<typeof Regions['findFilter']> | undefined>;
+export function TenantRegions(props: Data) {
+	const { tenant } = props;
+
+	const { t } = useTranslation();
+	const user = useUser();
+	const [isLoading, regions] = useFindFilter({ tenant: tenant._id });
+
+	if (isLoading()) {
+		return null;
 	}
->;
 
-const template = Template.tenantRegions;
+	return (
+		<>
+			<h3>{t('tenant.details.regions.title', 'Regions')}</h3>
+			<div className="row responsive-table-head">
+				<div className="col-md-2">{t('tenant.details.regions.name', 'Name')}</div>
+				<div className="col-md-2">
+					{t('tenant.details.regions.numberOfCourses', 'Number of courses')}
+				</div>
+				<div className="col-md-2">
+					{t('tenant.details.regions.numberOfUpcomingEvents', 'Number of upcoming events')}
+				</div>
+				<div className="col-md-6">{t('tenant.details.regions.description', 'Description')}</div>
+			</div>
+			{regions.map((region) => (
+				<div key={region._id} className="row responsive-table-row">
+					<div className="col-6 responsive-table-head">{t('tenant.details.regions.name')}</div>
+					<div className="col-6 col-md-2">
+						<a href={Router.path('regionDetails', { _id: region._id })}>{region.name}</a>
+					</div>
 
-template.onCreated(function () {
-	const instance = this;
+					<div className="col-6 responsive-table-head">
+						{t('tenant.details.regions.numberOfCourses')}
+					</div>
+					<div className="col-6 col-md-2">{region.courseCount}</div>
 
-	instance.regions = new ReactiveVar(undefined);
-	instance.autorun(() => {
-		const { tenant } = Template.currentData();
-		instance.regions.set(Regions.findFilter.subscribe(instance, { tenant: tenant._id }));
-	});
-});
+					<div className="col-6 responsive-table-head">
+						{t('tenant.details.regions.numberOfUpcomingEvents')}
+					</div>
+					<div className="col-6 col-md-2">{region.futureEventCount}</div>
 
-template.helpers({
-	regions() {
-		const instance = Template.instance();
-		return instance.regions.get()?.();
-	},
+					<div className="col-6 responsive-table-head">
+						{t('tenant.details.regions.description')}
+					</div>
+					<div className="col-6 col-md-6 text-truncate">{region.description}</div>
+				</div>
+			))}
+			{tenant.editableBy(user) ? (
+				<a
+					className="btn btn-add"
+					href={Router.url('regionCreate',{}, { query: `tenant=${tenant._id}` })}
+				>
+					{t('tenant.details.regions.createNew.button', 'Create a new region')}
+				</a>
+			) : null}
+		</>
+	);
+}
 
-	showAddRegion() {
-		const instance = Template.instance();
-		const { tenant } = instance.data;
-		return tenant.editableBy(Meteor.user());
-	},
-});
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper(TenantRegions.name, () => TenantRegions);
