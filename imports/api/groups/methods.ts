@@ -50,8 +50,9 @@ export const save = ServerMethod('group.save', (groupId: string, changes: SaveFi
 	}
 
 	if (group.isNew()) {
-		// Saving user is added as first member of the group
+		// Saving user is added as first member of the group and as creater
 		group.members.push(user._id);
+		group.createdby = user._id;
 	}
 
 	const updates = {} as Mongo.OptionalId<GroupEntity>;

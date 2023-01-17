@@ -13,7 +13,7 @@ import * as Viewport from '/imports/ui/lib/viewport';
 import * as UrlTools from '/imports/utils/url-tools';
 
 import '/imports/ui/components/groups/list';
-import '/imports/ui/components/courses/list/course-list';
+import '/imports/ui/components/courses/compact';
 import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/filter';
 import '/imports/ui/components/search-field';
@@ -35,7 +35,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 
 		courseBlockSize: number;
 		courseLimit: ReactiveVar<number>;
-		filter: ReturnType<typeof Courses['Filtering']>;
+		filter: ReturnType<(typeof Courses)['Filtering']>;
 	}
 >;
 
