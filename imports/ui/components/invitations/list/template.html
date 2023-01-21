@@ -24,9 +24,9 @@
 
 				<div class="col-2">
 					{{i18n 'invitations.list.remove' 'Remove'}}
-					<span class="fa-solid fa-circle-info fa-fw"
-						  data-tooltip="{{i18n 'invitations.list.remove.tooltip' 'Removing the invitation has no effect on the member who has already accepted.'}}"
-						  data-tooltip-classes="tooltip-compact"></span>
+					<span class="fa-solid fa-circle-info fa-fw" data-bs-toggle="tooltip"
+						  data-bs-title="{{i18n 'invitations.list.remove.tooltip' 'Removing the invitation has no effect on the member who has already accepted.'}}"
+						  data-bs-custom-class="tooltip-compact"></span>
 				</div>
 			</div>
 			{{#each invitation in invitations}}
@@ -58,8 +58,8 @@
 
 					<div class="col-6 responsive-table-head">
 						{{i18n 'invitations.list.remove'}}
-						<span class="fa-solid fa-circle-info fa-fw"
-							  data-tooltip="{{i18n 'invitations.list.remove.tooltip'}}"
+						<span class="fa-solid fa-circle-info fa-fw" data-bs-toggle="tooltip"
+							  data-bs-title="{{i18n 'invitations.list.remove.tooltip'}}"
 							  data-tooltip-classes="tooltip-compact"></span>
 					</div>
 					<div class="col-6 col-md-2">

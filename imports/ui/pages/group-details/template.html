@@ -11,13 +11,15 @@
 					   aria-hidden="true" class="fa-solid fa-star fa-fw"></i>
 				{{/if}}
 				<button class="btn btn-link float-end ms-2 js-group-remove-filter"
-						data-tooltip="{{i18n 'group.page.removeFilter' 'See all courses'}}">
+						data-bs-toggle="tooltip"
+						data-bs-title="{{i18n 'group.page.removeFilter' 'See all courses'}}">
 					<i class="fa-solid fa-xmark fa-lg" aria-hidden="true"></i>
 				</button>
 				{{#unless group.isNew}}
 					{{#if mayEdit}}
 						<button class="btn btn-link float-end ms-2 js-group-settings"
-								data-tooltip="{{i18n 'group.settings.title'}}">
+								data-bs-toggle="tooltip"
+								data-bs-title="{{i18n 'group.settings.title'}}">
 							<i class="fa-solid fa-gear fa-lg" aria-hidden="true"></i>
 						</button>
 					{{/if}}
