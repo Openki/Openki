@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { MeteorAsync } from '/imports/utils/promisify';
 
 /**
  * Registers a function as a meteor method and makes it callable.
@@ -17,7 +16,7 @@ import { MeteorAsync } from '/imports/utils/promisify';
  */
 export function ServerMethod<T extends any[], R>(
 	name: string,
-	run: (this: Meteor.MethodThisType, ...args: T) => R,
+	run: (this: Meteor.MethodThisType, ...args: T) => R | Promise<R>,
 	options: {
 		/**
 		 * When a method is called, it usually runs twice—once on the client to simulate the result
@@ -46,5 +45,5 @@ export function ServerMethod<T extends any[], R>(
 	});
 
 	// give back a callable and typesafe function for the client
-	return ((...args: T) => MeteorAsync.call(name, ...args)) as (...args: T) => Promise<R>;
+	return ((...args: T) => Meteor.callAsync(name, ...args)) as (...args: T) => Promise<R>;
 }

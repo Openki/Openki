@@ -61,9 +61,9 @@ import '../styles.scss';
 	const units = ['week', 'month', 'year'] as const;
 
 	type Direction = 'previous' | 'next';
-	type Unit = typeof units[number];
+	type Unit = (typeof units)[number];
 
-	const updateUrl = function (filter: ReturnType<typeof Events['Filtering']>) {
+	const updateUrl = function (filter: ReturnType<(typeof Events)['Filtering']>) {
 		const filterParams = filter.toParams();
 		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 		const queryString = UrlTools.paramsToQueryString(filterParams);
@@ -77,7 +77,7 @@ import '../styles.scss';
 	};
 	const mvDateHandler = function (unit: Unit, instance: any) {
 		const amount = instance.data.direction === 'previous' ? -1 : 1;
-		const filter = instance.parentInstance(2).filter as ReturnType<typeof Events['Filtering']>;
+		const filter = instance.parentInstance(2).filter as ReturnType<(typeof Events)['Filtering']>;
 		const start = filter.get('start') as moment.Moment;
 		const weekCorrection = unit === 'week' ? 0 : 1;
 

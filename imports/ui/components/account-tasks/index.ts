@@ -13,11 +13,11 @@ import { Regions } from '/imports/api/regions/regions';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { isEmail } from '/imports/utils/email-tools';
 
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Viewport from '/imports/ui/lib/viewport';
 import * as Analytics from '/imports/ui/lib/analytics';
+import { CleanedRegion } from '/imports/ui/lib/cleaned-region';
 
 import './template.html';
 import './styles.scss';
@@ -230,12 +230,12 @@ import './styles.scss';
 				}
 				$('.js-account-tasks').modal('hide');
 
-				const regionId = LocalRegionStore.getCleaned();
+				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
-					UsersMethods.regionChange(regionId);
+					await UsersMethods.regionChange(regionId);
 				}
 
-				UsersMethods.updateLocale(Session.get('locale'));
+				await UsersMethods.updateLocale(Session.get('locale'));
 
 				Analytics.trackEvent(
 					'Logins',
@@ -249,7 +249,7 @@ import './styles.scss';
 			}
 		},
 
-		'click .js-oauth-btn'(event, instance) {
+		async 'click .js-oauth-btn'(event, instance) {
 			event.preventDefault();
 
 			const { service } = event.currentTarget.dataset;
@@ -260,7 +260,7 @@ import './styles.scss';
 			}
 
 			instance.busy(service);
-			(Meteor as any)[loginMethod]({}, (err: any) => {
+			(Meteor as any)[loginMethod]({}, async (err: any) => {
 				instance.busy(false);
 				if (err) {
 					Alert.serverError(err);
@@ -270,12 +270,12 @@ import './styles.scss';
 					}
 					$('.js-account-tasks').modal('hide');
 
-					const regionId = LocalRegionStore.getCleaned();
+					const regionId = CleanedRegion(Session.get('region'));
 					if (regionId) {
-						UsersMethods.regionChange(regionId);
+						await UsersMethods.regionChange(regionId);
 					}
 
-					UsersMethods.updateLocale(Session.get('locale'));
+					await UsersMethods.updateLocale(Session.get('locale'));
 
 					Analytics.trackEvent(
 						'Logins',
@@ -304,7 +304,7 @@ import './styles.scss';
 			},
 			'email invalid': {
 				text() {
-					return i18n('visitor.warning.emailNotValid');
+					return i18n('register.warning.emailNotValid');
 				},
 				field: 'email',
 			},
@@ -361,12 +361,12 @@ import './styles.scss';
 				}
 				$('.js-account-tasks').modal('hide');
 
-				const regionId = LocalRegionStore.getCleaned();
+				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
-					UsersMethods.regionChange(regionId);
+					await UsersMethods.regionChange(regionId);
 				}
 
-				UsersMethods.updateLocale(Session.get('locale'));
+				await UsersMethods.updateLocale(Session.get('locale'));
 
 				const user = Meteor.user();
 
@@ -515,12 +515,12 @@ import './styles.scss';
 				}
 				$('.js-account-tasks').modal('hide');
 
-				const regionId = LocalRegionStore.getCleaned();
+				const regionId = CleanedRegion(Session.get('region'));
 				if (regionId) {
-					UsersMethods.regionChange(regionId);
+					await UsersMethods.regionChange(regionId);
 				}
 
-				UsersMethods.updateLocale(Session.get('locale'));
+				await UsersMethods.updateLocale(Session.get('locale'));
 
 				const user = Meteor.user();
 

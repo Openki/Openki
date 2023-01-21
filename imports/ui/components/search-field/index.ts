@@ -1,7 +1,7 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
-import '/imports/ui/components/courses/list/course-list';
+import '/imports/ui/components/courses/list';
 import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/filter';
 

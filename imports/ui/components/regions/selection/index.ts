@@ -1,6 +1,7 @@
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Session } from 'meteor/session';
 
 import { RegionEntity, RegionModel, Regions } from '/imports/api/regions/regions';
 
@@ -11,7 +12,6 @@ import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import { MeteorAsync } from '/imports/utils/promisify';
 
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import './template.html';
 import './styles.scss';
@@ -152,7 +152,7 @@ import './styles.scss';
 		};
 
 		this.changeRegion = (regionId) => {
-			const changed = !LocalRegionStore.equals(regionId);
+			const changed = !Session.equals('region', regionId);
 
 			RegionSelection.change(regionId);
 
@@ -240,7 +240,7 @@ import './styles.scss';
 
 		'mouseover/mouseout/focusin/focusout .js-region-link'(this: RegionModel, event) {
 			const id = this._id;
-			if (id && LocalRegionStore.equals('all')) {
+			if (id && Session.equals('region', 'all')) {
 				FilterPreview({
 					property: 'region',
 					id,

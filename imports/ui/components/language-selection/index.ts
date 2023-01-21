@@ -145,7 +145,7 @@ import './styles.scss';
 		},
 	});
 
-	const updateLanguageSearch = _.debounce((instance: ReturnType<typeof Template['instance']>) => {
+	const updateLanguageSearch = _.debounce((instance: ReturnType<(typeof Template)['instance']>) => {
 		let search = instance.$('.js-language-search').val();
 		search = String(search).trim();
 		if (!(instance.languageSearch.get() === search)) {

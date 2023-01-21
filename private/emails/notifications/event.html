@@ -2,7 +2,7 @@
 	<tr>
 		<td>
 			<span class="title">
-				{{i18n "notification.event.mail.greeting" "Hi {USERNAME}" USERNAME=username lng=locale}}
+				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
 			</span>
 			<p>
 				{{#if new}}
@@ -95,10 +95,10 @@
 				<tr>
 					<td>
 						<a
-						   href="{{unsubLink}}">{{i18n "notification.event.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName lng=locale}}</a>
+						   href="{{unsubLink}}">{{i18n "email.base.unsubscribeLink.automatedNotifications" SITENAME=siteName lng=locale}}</a>
 						&nbsp;
 						<a
-						   href="{{urlFor 'profile' query='campaign=eventNotify'}}">{{i18n "notification.event.mail.profileLink" "Visit your profile" lng=locale}}</a>
+						   href="{{urlFor 'profile' query='campaign=eventNotify'}}">{{i18n "email.base.profileLink" lng=locale}}</a>
 					</td>
 				</tr>
 			</table>

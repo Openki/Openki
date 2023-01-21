@@ -5,13 +5,12 @@ import { _ } from 'meteor/underscore';
 import moment from 'moment';
 import { Spacebars } from 'meteor/spacebars';
 import { i18n } from '/imports/startup/both/i18next';
+import { Session } from 'meteor/session';
 
 import { EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
 import * as Metatags from '/imports/utils/metatags';
-
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import './template.html';
 
@@ -124,7 +123,7 @@ import './template.html';
 
 	template.helpers({
 		allRegions() {
-			return LocalRegionStore.equals('all');
+			return Session.equals('region', 'all');
 		},
 
 		regionName() {

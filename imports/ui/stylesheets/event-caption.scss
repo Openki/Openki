@@ -27,7 +27,7 @@ $event-caption-border: $yellow;
 
 .event-caption-header > .fa-map-pin {
 	@include td-pos(left, 50%);
-	color: $text-color;
+	color: $body-color;
 	font-size: 8px;
 	position: absolute;
 	top: -5px;
@@ -55,26 +55,26 @@ $event-caption-body-bg: $event-body-bg;
 	border-color: $event-caption-border;
 	border-style: solid;
 	border-width: 0 1.5px 1.5px;
-	color: $text-color;
+	color: $body-color;
 	display: table-cell;
 	padding: 3px;
 	transition: border-color $default-transition-time;
 	vertical-align: middle;
 }
 
-.event-caption.placeholder .event-caption-header {
+.event-caption-placeholder .event-caption-header {
 	background-color: rgba(desaturate($event-caption-header-bg, 55%), 0.5);
 }
 
-.event-caption.placeholder .event-caption-body {
+.event-caption-placeholder .event-caption-body {
 	background-color: rgba(desaturate($event-caption-body-bg, 50%), 0.5);
 	color: transparent;
 	text-shadow: 0 0 1.5px rgba(0, 0, 0, 0.5);
 }
 
-.event-caption.placeholder .event-caption-header,
-.event-caption.placeholder .event-caption-body {
-	border-color: $gray-lightest;
+.event-caption-placeholder .event-caption-header,
+.event-caption-placeholder .event-caption-body {
+	border-color: $gray-200;
 }
 
 .event-caption-wrap {
@@ -103,7 +103,7 @@ $event-caption-body-bg: $event-body-bg;
 	border-color: lighten($red, 5%);
 }
 
-.event-caption-action.placeholder .event-caption-body {
+.event-caption-action.event-caption-placeholder .event-caption-body {
 	text-shadow: 0 0 0;
 }
 
