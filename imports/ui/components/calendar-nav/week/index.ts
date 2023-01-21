@@ -78,7 +78,7 @@ export type Data = {
 	template.events({
 		'click .js-filter-own-events'(event) {
 			const radioSwitch = event.target as HTMLInputElement;
-			if (Meteor.user()) {
+			if (Meteor.userId()) {
 				Template.instance().data.onChangeAttendingEventsOnly(radioSwitch.checked);
 			} else {
 				radioSwitch.checked = false;

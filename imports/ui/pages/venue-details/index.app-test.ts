@@ -3,12 +3,11 @@ import { Router } from 'meteor/iron:router';
 import $ from 'jquery';
 import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
+import { Session } from 'meteor/session';
 
 import { Venues } from '/imports/api/venues/venues';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
-
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 if (Meteor.isClient) {
 	describe('venue details page', function () {
@@ -16,7 +15,7 @@ if (Meteor.isClient) {
 		before(async function () {
 			this.timeout(8000);
 			Session.set('locale', 'en');
-			LocalRegionStore.reset();
+			Session.set('region', 'all');
 		});
 
 		it('should be navigable', async () => {

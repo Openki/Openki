@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
@@ -5,9 +6,6 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { RegionModel } from '/imports/api/regions/regions';
-import { UserModel } from '/imports/api/users/users';
-
-import { locationFormat } from '/imports/utils/location-format';
 
 import '/imports/ui/components/map';
 import type { LocEntity, MarkerEntity } from '/imports/ui/components/map';
@@ -44,7 +42,7 @@ template.onCreated(function () {
 	const markers = new Mongo.Collection<MarkerEntity>(null); // Local collection for in-memory storage
 	instance.markers = markers;
 
-	this.setLocation = (loc) => {
+	instance.setLocation = (loc) => {
 		markers.remove({ main: true });
 		if (!loc) {
 			return;
@@ -67,21 +65,9 @@ template.onRendered(function () {
 
 template.helpers({
 	mayEdit() {
-		const { region } = Template.currentData();
+		const { region } = Template.instance().data;
 
-		return region.editableBy(Meteor.user() as UserModel);
-	},
-
-	verifyDelete() {
-		return Template.instance().state.get('verifyDelete');
-	},
-
-	markers() {
-		return Template.instance().markers;
-	},
-
-	locationDisplay(loc: LocEntity) {
-		return locationFormat(loc);
+		return region.editableBy(Meteor.user());
 	},
 });
 

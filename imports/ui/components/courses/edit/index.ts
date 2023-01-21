@@ -5,6 +5,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
+import { Session } from 'meteor/session';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Categories } from '/imports/api/categories/categories';
@@ -20,7 +21,6 @@ import { hasRoleUser } from '/imports/utils/course-role-utils';
 import * as Analytics from '/imports/ui/lib/analytics';
 import { Editable } from '/imports/ui/lib/editable';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
@@ -409,7 +409,7 @@ export type Data = {
 			} as unknown as Required<CoursesMethods.SaveFields>;
 
 			if (changes.name.length === 0) {
-				Alert.serverError(i18n('course.edit.error.title', 'Please provide a title'));
+				Alert.serverError(i18n('course.edit.error.title', 'Please provide a title') as string);
 				return;
 			}
 
@@ -431,7 +431,7 @@ export type Data = {
 					changes.region = instance.$('.js-select-region').val() as string;
 				}
 				if (!changes.region) {
-					Alert.serverError(i18n('course.edit.error.region', 'Please select a region'));
+					Alert.serverError(i18n('course.edit.error.region', 'Please select a region') as string);
 					return;
 				}
 
@@ -487,7 +487,7 @@ export type Data = {
 			instance.busy('saving');
 			PleaseLogin(instance, async () => {
 				try {
-					courseId = (await CoursesMethods.save(courseId, changes)) as string;
+					courseId = await CoursesMethods.save(courseId, changes);
 
 					if (instance.data.isFrame) {
 						instance.savedCourseId.set(courseId);
@@ -647,7 +647,7 @@ export type Data = {
 			if (this.dropdownVisible()) {
 				this.subscribe('Courses.findFilter', {
 					search: this.proposedSearch.get(),
-					region: LocalRegionStore.get(),
+					region: Session.get('region'),
 				});
 				if (!this.$('.dropdown').hasClass('open')) {
 					this.$('.dropdown-toggle').dropdown('toggle');
@@ -660,7 +660,7 @@ export type Data = {
 		proposedCourses() {
 			const instance = Template.instance();
 			const search = instance.proposedSearch.get();
-			const region = LocalRegionStore.get();
+			const region = Session.get('region');
 			if (instance.dropdownVisible()) {
 				return Courses.findFilter({ search, region }, 20, undefined, [['name', 'asc']]);
 			}

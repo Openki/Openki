@@ -7,7 +7,7 @@
 				</p>
 			{{/if}}
 			<span class="title">
-				{{i18n "notification.privateMessage.mail.greeting" "Hi {USERNAME}" USERNAME=recipientName lng=locale}}
+				{{i18n "email.base.greeting" USERNAME=recipientName lng=locale}}
 			</span>
 			<p>
 				{{i18n "notification.privateMessage.mail.intro" 'You got a private message from:' lng=locale}}
@@ -64,7 +64,7 @@
 						   href="{{unsubLink}}">{{i18n "notification.privateMessage.mail.unsubLink" "Unsubscribe from all private messages from users." SITENAME=siteName lng=locale}}</a>
 						&nbsp;
 						<a
-						   href="{{urlFor 'profile' query='campaign=privateMessage'}}">{{i18n "notification.privateMessage.mail.profileLink" "Visit your profile" lng=locale}}</a>
+						   href="{{urlFor 'profile' query='campaign=privateMessage'}}">{{i18n "email.base.profileLink" lng=locale}}</a>
 					</td>
 				</tr>
 			</table>

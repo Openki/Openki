@@ -38,7 +38,7 @@ template.onCreated(function () {
 	});
 });
 
-Template.invitationsList.helpers({
+template.helpers({
 	hasSomeInvitations() {
 		const instance = Template.instance();
 		return Invitations.findFilter({ tenant: instance.data.tenant._id }, 1).count() > 0;
@@ -73,7 +73,7 @@ Template.invitationsList.helpers({
 	},
 });
 
-Template.invitationsList.events({
+template.events({
 	'change .js-showAccepted'(event, instance) {
 		instance.state.set('showAccepted', $(event.currentTarget).prop('checked'));
 	},

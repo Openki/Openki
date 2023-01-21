@@ -8,12 +8,19 @@ import * as usersMethods from '/imports/api/users/methods';
 import * as UserLocation from '/imports/utils/user-location';
 import * as UrlTools from '/imports/utils/url-tools';
 
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
-
 /**
  * List of routes that show different results when the region changes.
  */
 export const regionDependentRoutes = ['home', 'calendar', 'venuesMap', 'groupDetails'];
+
+function persistRegion(region: string) {
+	try {
+		localStorage.setItem('region', region); // to survive page reload
+	} catch {
+		// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+	}
+	Session.set('region', region);
+}
 
 /**
  * @param tenantId the tenant where the region should be.
@@ -25,7 +32,7 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 
 	// Special case 'all'
 	if (!tenantId && regionIdOrName === 'all') {
-		LocalRegionStore.set(regionIdOrName);
+		persistRegion(regionIdOrName);
 		return true;
 	}
 
@@ -33,7 +40,7 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 	if (
 		Regions.findOne(tenantId ? { tenant: tenantId, _id: regionIdOrName } : { _id: regionIdOrName })
 	) {
-		LocalRegionStore.set(regionIdOrName);
+		persistRegion(regionIdOrName);
 		return true;
 	}
 
@@ -42,7 +49,7 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 		tenantId ? { tenant: tenantId, name: regionIdOrName } : { name: regionIdOrName },
 	);
 	if (region) {
-		LocalRegionStore.set(region._id);
+		persistRegion(region._id);
 		return true;
 	}
 
@@ -57,7 +64,7 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
 export function subscribe(preferredTenant?: string, confirmAutodectionByUser = true) {
 	Meteor.subscribe('Regions', async () => {
 		const selectors = [
-			LocalRegionStore.get(),
+			Session.get('region'),
 			UrlTools.queryParam('region'),
 			localStorage?.getItem('region'),
 		].filter(Boolean) as string[];
@@ -140,7 +147,7 @@ export function init() {
 		if (user) {
 			const { regionId } = user.profile;
 			if (regionId) {
-				LocalRegionStore.set(regionId);
+				persistRegion(regionId);
 			}
 		}
 	});
@@ -148,9 +155,9 @@ export function init() {
 	subscribe();
 }
 
-export function change(regionId: string) {
-	LocalRegionStore.set(regionId);
+export async function change(regionId: string) {
+	persistRegion(regionId);
 	if (regionId !== 'all' && Meteor.userId()) {
-		usersMethods.regionChange(regionId);
+		await usersMethods.regionChange(regionId);
 	}
 }

@@ -2,7 +2,7 @@
 	<tr>
 		<td>
 			<span class="title">
-				{{i18n "invitation.email.greeting" 'Hi {USERNAME}' USERNAME=recipient.getDisplayName lng=locale}}
+				{{i18n "email.base.greeting" USERNAME=recipient.getDisplayName lng=locale}}
 			</span>
 			<p>
 				{{i18n "invitation.email.intro" 'You have been invited by {INVITER} to join "{TENANT}" on {SITENAME}.' INVITER=inviter.getDisplayName TENANT=tenant.name SITENAME=site.name lng=locale}}
@@ -24,8 +24,7 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{i18n "invitation.email.unexpected" "If you don't know why you got this e-mail, ignore it or send a notification to:"}}
-						<a href="mailto:{{reportEmail}}">{{reportEmail}}</a>
+						{{i18n "email.base.unexpected" REPORTEMAIL=reportEmail lng=locale}}
 					</td>
 				</tr>
 			</table>

@@ -22,13 +22,13 @@
 			</div>
 		</div>
 		<div class="page-component log-pane">
-			{{#if loading}}
+			{{#unless Template.subscriptionsReady}}
 				<div class="loading">
 					<h1>
 						<marquee>&nbsp;&nbsp;&nbsp;LOADING! BE PATIENT! ENJOY THE SUN!</marquee>
 					</h1>
 				</div>
-			{{/if}}
+			{{/unless}}
 			<table class="table">
 				<tr>
 					<th>ID</th>
@@ -40,16 +40,16 @@
 				{{#each results}}
 					{{> logEntry}}
 				{{else}}
-					{{#unless loading}}
+					{{#if Template.subscriptionsReady}}
 						<tr>
 							<td>Nothing found.</td>
 						</tr>
-					{{/unless}}
+					{{/if}}
 				{{/each}}
 			</table>
 
 			{{#if hasMore}}
-				<div class="show-more-courses">
+				<div class="text-center">
 					<button type="button" class="btn btn-success js-more">
 						Show more
 					</button>

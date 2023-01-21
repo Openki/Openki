@@ -1,6 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { i18n } from '/imports/startup/both/i18next';
+import { Session } from 'meteor/session';
 
 import { Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
@@ -10,7 +11,6 @@ import { Filtering } from '/imports/utils/filtering';
 import { Predicate } from '/imports/utils/predicates';
 
 import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
-import * as LocalRegionStore from '/imports/ui/lib/LocalRegionStore';
 
 import '/imports/ui/components/map';
 
@@ -41,7 +41,7 @@ import './styles.scss';
 		instance.filter = Venues.Filtering();
 		instance.autorun(() => {
 			instance.filter.clear();
-			instance.filter.add('region', LocalRegionStore.get());
+			instance.filter.add('region', Session.get('region'));
 			instance.filter.read(Router.current().params.query);
 			instance.filter.done();
 		});
@@ -49,7 +49,7 @@ import './styles.scss';
 		instance.locationTracker = new LocationTracker();
 
 		instance.autorun(() => {
-			const regionId = LocalRegionStore.get();
+			const regionId = Session.get('region');
 			instance.locationTracker.setRegion(regionId);
 		});
 
