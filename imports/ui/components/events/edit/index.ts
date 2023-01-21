@@ -25,7 +25,7 @@ import { PublicSettings } from '/imports/utils/PublicSettings';
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import { LocalTime } from '/imports/utils/local-time';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { hideTooltips } from '/imports/utils/enableTooltips';
+import * as Tooltips from '/imports/utils/Tooltips';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as Analytics from '/imports/ui/lib/analytics';
@@ -528,7 +528,7 @@ template.events({
 	},
 
 	'click .js-toggle-duration'() {
-	hideTooltips(document);
+		Tooltips.hide();
 
 		$('.js-time-end > *').toggle();
 	},

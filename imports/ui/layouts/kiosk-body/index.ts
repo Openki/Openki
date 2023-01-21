@@ -1,7 +1,7 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Session } from 'meteor/session';
 
-import { enableTooltips } from '/imports/utils/enableTooltips';
+import * as Tooltips from '/imports/utils/Tooltips';
 
 import * as Viewport from '/imports/ui/lib/viewport';
 
@@ -22,7 +22,7 @@ template.onRendered(() => {
 	document.addEventListener(
 		'DOMNodeInserted',
 		function () {
-			enableTooltips(document);
+			Tooltips.enable();
 		},
 		false,
 	);

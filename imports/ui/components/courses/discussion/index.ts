@@ -15,7 +15,7 @@ import * as Alert from '/imports/api/alerts/alert';
 
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { hideTooltips } from '/imports/utils/enableTooltips';
+import * as Tooltips from '/imports/utils/Tooltips';
 import { TrackerAsync } from '/imports/utils/promisify';
 
 import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
@@ -216,7 +216,7 @@ import './styles.scss';
 		async 'click button.js-delete-comment'(event) {
 			const post = Template.instance().data;
 
-			hideTooltips(document);
+			Tooltips.hide();
 			event.stopImmediatePropagation();
 
 			try {
@@ -277,7 +277,7 @@ import './styles.scss';
 		},
 
 		'click .js-discussion-edit'(event, instance) {
-			hideTooltips(document);
+			Tooltips.hide();
 			event.stopImmediatePropagation();
 			(instance.parentInstance() as any).editing.set(true);
 		},
