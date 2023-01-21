@@ -25,8 +25,8 @@
 				</div>
 				<div class="event-compact-body" {{bodyStyle}}>
 					{{#if event.internal}}
-						<span class="event-compact-internal"
-							  data-tooltip="{{i18n 'eventCompact.internal_event' 'Internal event'}}"></span>
+						<span class="event-compact-internal" data-bs-toggle="tooltip"
+							  data-bs-title="{{i18n 'eventCompact.internal_event' 'Internal event'}}"></span>
 					{{/if}}
 					<h4 class="event-compact-title">
 						{{plain event.title}}
