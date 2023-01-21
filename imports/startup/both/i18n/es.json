@@ -13,7 +13,6 @@
 	"_clientError": "Hubo un error : \"{ERROR}.\" Lo sentimos por esto.",
 	"_inputField.optional": "(opcional)",
 	"_inputField.password": "Contraseña",
-	"_message.removed": "borrado",
 	"_option.off": "desactivado",
 	"_selection.pleaseSelect": "por favor seleccione",
 	"_serverError": "hay un error en el servidor: \"{MESSAGE} ({ERROR}).\" Lo sentimos.",
