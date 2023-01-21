@@ -17,7 +17,7 @@ import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { checkContribution } from '/imports/utils/checkContribution';
-import { hideTooltips } from '/imports/utils/enableTooltips';
+import * as Tooltips from '/imports/utils/Tooltips';
 
 import '/imports/ui/components/profiles/course-list';
 import '/imports/ui/components/profiles/verify-email';
@@ -207,7 +207,7 @@ template.events({
 	},
 
 	async 'click .js-group-expel-btn'(this: GroupEntity, _event, instance) {
-		hideTooltips(document);
+		Tooltips.hide();
 
 		const { _id: groupId, name } = this;
 		const { data } = instance;
