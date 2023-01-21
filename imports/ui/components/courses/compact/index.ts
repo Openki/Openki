@@ -7,7 +7,6 @@ import { Roles } from '/imports/api/roles/roles';
 import { CourseModel } from '/imports/api/courses/courses';
 
 import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
-import { enableTooltips } from '/imports/utils/enableTooltips';
 
 import '/imports/ui/components/courses/categories';
 import '/imports/ui/components/groups/list';
@@ -18,11 +17,6 @@ import './template.html';
 	const Template = TemplateAny as TemplateStaticTyped<'courseCompact', CourseModel>;
 
 	const template = Template.courseCompact;
-
-	template.onRendered(function () {
-		const instance = this;
-		enableTooltips(instance.firstNode as HTMLElement);
-	});
 
 	template.helpers({
 		courseCss(course: CourseModel) {
@@ -122,11 +116,6 @@ import './template.html';
 	const Template = TemplateAny as TemplateStaticTyped<'courseCompactRoles', CourseModel>;
 
 	const template = Template.courseCompactRoles;
-
-	template.onRendered(function () {
-		const instance = this;
-		enableTooltips(instance.firstNode as HTMLElement);
-	});
 
 	template.helpers({
 		requiresRole(this: CourseModel, role: string) {

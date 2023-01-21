@@ -9,18 +9,18 @@ import './useraccounts-configuration';
 
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
-import { Tooltips } from 'meteor/lookback:tooltips';
 import { Session } from 'meteor/session';
 
-import { Introduction } from '/imports/ui/lib/introduction';
 import * as RegionSelection from '/imports/utils/region-selection';
+import { hideTooltips } from '/imports/utils/enableTooltips';
+
+import { Introduction } from '/imports/ui/lib/introduction';
 
 import './bootstrap';
 
 // close any verification dialogs still open
 Router.onBeforeAction(function () {
-	Tooltips.hide();
-	$('.tooltip').attr('style', '');
+	hideTooltips(document);
 
 	Session.set('verify', false);
 

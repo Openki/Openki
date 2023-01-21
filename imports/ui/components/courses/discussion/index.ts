@@ -1,4 +1,3 @@
-import { Tooltips } from 'meteor/lookback:tooltips';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -13,11 +12,13 @@ import {
 import * as CourseDiscussionsMethods from '/imports/api/course-discussions/methods';
 import { EditCommentFields, PostCommentFields } from '/imports/api/course-discussions/methods';
 import * as Alert from '/imports/api/alerts/alert';
+
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
-import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { hideTooltips } from '/imports/utils/enableTooltips';
 import { TrackerAsync } from '/imports/utils/promisify';
-import { enableTooltips } from '/imports/utils/enableTooltips';
+
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/richtext';
@@ -215,7 +216,7 @@ import './styles.scss';
 		async 'click button.js-delete-comment'(event) {
 			const post = Template.instance().data;
 
-			Tooltips.hide();
+			hideTooltips(document);
 			event.stopImmediatePropagation();
 
 			try {
@@ -232,11 +233,6 @@ import './styles.scss';
 	const Template = TemplateAny as TemplateStaticTyped<'postShow', CourseDiscussionEnity>;
 
 	const template = Template.postShow;
-
-	template.onRendered(function () {
-		const instance = this;
-		enableTooltips(instance.firstNode as HTMLElement);
-	});
 
 	template.helpers({
 		postClasses() {
@@ -281,7 +277,7 @@ import './styles.scss';
 		},
 
 		'click .js-discussion-edit'(event, instance) {
-			Tooltips.hide();
+			hideTooltips(document);
 			event.stopImmediatePropagation();
 			(instance.parentInstance() as any).editing.set(true);
 		},
@@ -303,10 +299,10 @@ import './styles.scss';
 		instance.anon = new ReactiveVar(!instance.data.userId);
 		instance.validComment = new ReactiveVar(!!instance.data.text.trim());
 	});
+
 	template.onRendered(function () {
 		const instance = this;
 		instance.$('.discussion-edit-title').trigger('select');
-		enableTooltips(instance.firstNode as HTMLElement);
 	});
 
 	template.helpers({
@@ -432,26 +428,3 @@ import './styles.scss';
 		},
 	});
 }
-
-{
-	const Template = TemplateAny as TemplateStaticTyped<'removeCommentDropdown'>;
-
-	const template = Template.removeCommentDropdown;
-
-	template.onRendered(function () {
-		const instance = this;
-		enableTooltips(instance.firstNode as HTMLElement);
-	});
-}
-
-{
-	const Template = TemplateAny as TemplateStaticTyped<'discussionProfileLink'>;
-
-	const template = Template.discussionProfileLink;
-
-	template.onRendered(function () {
-		const instance = this;
-		enableTooltips(instance.firstNode as HTMLElement);
-	});
-}
-
