@@ -17,6 +17,7 @@ import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
 import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { TrackerAsync } from '/imports/utils/promisify';
+import { enableTooltips } from '/imports/utils/enableTooltips';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/richtext';
@@ -232,6 +233,11 @@ import './styles.scss';
 
 	const template = Template.postShow;
 
+	template.onRendered(function () {
+		const instance = this;
+		enableTooltips(instance.firstNode as HTMLElement);
+	});
+
 	template.helpers({
 		postClasses() {
 			const post = Template.instance().data;
@@ -300,6 +306,7 @@ import './styles.scss';
 	template.onRendered(function () {
 		const instance = this;
 		instance.$('.discussion-edit-title').trigger('select');
+		enableTooltips(instance.firstNode as HTMLElement);
 	});
 
 	template.helpers({
@@ -425,3 +432,26 @@ import './styles.scss';
 		},
 	});
 }
+
+{
+	const Template = TemplateAny as TemplateStaticTyped<'removeCommentDropdown'>;
+
+	const template = Template.removeCommentDropdown;
+
+	template.onRendered(function () {
+		const instance = this;
+		enableTooltips(instance.firstNode as HTMLElement);
+	});
+}
+
+{
+	const Template = TemplateAny as TemplateStaticTyped<'discussionProfileLink'>;
+
+	const template = Template.discussionProfileLink;
+
+	template.onRendered(function () {
+		const instance = this;
+		enableTooltips(instance.firstNode as HTMLElement);
+	});
+}
+
