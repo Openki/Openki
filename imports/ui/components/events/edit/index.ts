@@ -4,7 +4,6 @@
 // the timezone might actually change when a different region is selected. We
 // wouldn't want the time or even date field to change because of this switch.
 
-import { Tooltips } from 'meteor/lookback:tooltips';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
@@ -26,6 +25,7 @@ import { PublicSettings } from '/imports/utils/PublicSettings';
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import { LocalTime } from '/imports/utils/local-time';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { hideTooltips } from '/imports/utils/enableTooltips';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as Analytics from '/imports/ui/lib/analytics';
@@ -528,7 +528,8 @@ template.events({
 	},
 
 	'click .js-toggle-duration'() {
-		Tooltips.hide();
+	hideTooltips(document);
+
 		$('.js-time-end > *').toggle();
 	},
 
