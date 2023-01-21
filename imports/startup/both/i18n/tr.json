@@ -12,7 +12,6 @@
 	"_clientError": "Bir hata oluştu: \"{ERROR}.\" Bunun için özür dileriz.",
 	"_inputField.optional": "(tercihen)",
 	"_inputField.password": "Şifre",
-	"_option.off": "Kapalı",
 	"_selection.pleaseSelect": "Lütfen seçiniz",
 	"_serverError": "Sunucuda bir hata oluştu: \"{MESSAGE} ({ERROR}).\" Bunun için üzgünüz.",
 	"_serverErrorMessageOnly": "Sunucuda bir hata oluştu: \"{MESSAGE}.\" Bunun için üzgünüz.",

@@ -7,7 +7,6 @@
 	"_button.save": "保存",
 	"_inputField.optional": "（可选）",
 	"_inputField.password": "密码",
-	"_option.off": "关",
 	"_selection.pleaseSelect": "请选择",
 	"_serverError": "服务器抛出了错误：「{MESSAGE} ({ERROR})」。对此我们很抱歉。",
 	"calendar.next.month.long": "前往下个月",
