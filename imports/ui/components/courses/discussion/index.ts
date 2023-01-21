@@ -1,4 +1,3 @@
-import { Tooltips } from 'meteor/lookback:tooltips';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -13,10 +12,13 @@ import {
 import * as CourseDiscussionsMethods from '/imports/api/course-discussions/methods';
 import { EditCommentFields, PostCommentFields } from '/imports/api/course-discussions/methods';
 import * as Alert from '/imports/api/alerts/alert';
+
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
-import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as Tooltips from '/imports/utils/Tooltips';
 import { TrackerAsync } from '/imports/utils/promisify';
+
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/richtext';
@@ -297,6 +299,7 @@ import './styles.scss';
 		instance.anon = new ReactiveVar(!instance.data.userId);
 		instance.validComment = new ReactiveVar(!!instance.data.text.trim());
 	});
+
 	template.onRendered(function () {
 		const instance = this;
 		instance.$('.discussion-edit-title').trigger('select');
