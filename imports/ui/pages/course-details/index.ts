@@ -70,7 +70,7 @@ import './styles.scss';
 
 		instance.autorun(() => {
 			const { course } = Template.currentData();
-			const title = i18n('course.windowtitle', 'Course: {COURSE}', { COURSE: course.name });
+			const title = course.name;
 			Metatags.setCommonTags(title);
 		});
 
