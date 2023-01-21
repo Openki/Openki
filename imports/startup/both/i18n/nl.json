@@ -6,7 +6,6 @@
 	"_button.saving": "Aan het opslaan..",
 	"_inputField.optional": "(optioneel)",
 	"_inputField.password": "Wachtwoord\n",
-	"_option.off": "Uit",
 	"_selection.pleaseSelect": "Maak een keuze",
 	"_serverError": "Er is een fout opgetreden: \" {MESSAGE} ({ERROR}).\" Excuses voor het ongemak.",
 	"adminPanel.backToDashboard": "Ga terug naar het overzicht",

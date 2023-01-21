@@ -9,7 +9,6 @@
 	"_clientError": "Ce stato un errore: \"{ERROR}.\" Ci scusiamo per l’inconveniente.",
 	"_inputField.optional": "(opzionale)",
 	"_inputField.password": "Password",
-	"_option.off": "Attivato",
 	"_selection.pleaseSelect": "Seleziona",
 	"_serverError": "Ce stato un errore sul server: \"{MESSAGE} ({ERROR}).\" Ci scusiamo per l'inconveniente.",
 	"_serverErrorMessageOnly": "Ce stato un errore sul server: \"{MESSAGE}.\" Ci scusiamo per l'inconveniente.",
