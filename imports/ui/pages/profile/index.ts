@@ -11,7 +11,6 @@ import * as usersMethods from '/imports/api/users/methods';
 import { VenueEntity, VenueModel } from '/imports/api/venues/venues';
 import { TenantEntity, TenantModel } from '/imports/api/tenants/tenants';
 import { GroupEntity } from '/imports/api/groups/groups';
-import { PublicSettings } from '/imports/utils/PublicSettings';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
@@ -181,10 +180,6 @@ template.helpers({
 			return 'checked';
 		}
 		return '';
-	},
-
-	getSiteName() {
-		return PublicSettings.siteName;
 	},
 
 	allowPrivateMessagesChecked() {
