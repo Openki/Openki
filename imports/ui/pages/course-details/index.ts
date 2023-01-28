@@ -84,18 +84,13 @@ import './styles.scss';
 			},
 			onSuccess: (newName) => {
 				Alert.success(
-					i18n(
-						'courseDetails.message.nameChanged',
-						'The name of this course has been changed to "{NAME}".',
-						{ NAME: newName },
-					),
+					i18n('courseDetails.message.nameChanged', 'The name has been changed to "{NAME}".', {
+						NAME: newName,
+					}),
 				);
 			},
 			onError: (err) => {
-				Alert.serverError(
-					err as string | Error,
-					i18n('course.save.error', 'Saving the course went wrong'),
-				);
+				Alert.serverError(err as string | Error, i18n('course.save.error', 'Saving went wrong'));
 			},
 		});
 
@@ -107,7 +102,7 @@ import './styles.scss';
 				Alert.success(
 					i18n(
 						'courseDetails.message.descriptionChanged',
-						'The description of "{NAME}" has been changed.',
+						'The description of {NAME} has been changed.',
 						{ NAME: course.name },
 					),
 				);
@@ -189,11 +184,9 @@ import './styles.scss';
 					await CoursesMethods.remove(course._id);
 
 					Alert.success(
-						i18n(
-							'courseDetailsPage.message.courseHasBeenDeleted',
-							'The "{COURSE}" course was deleted.',
-							{ COURSE: course.name },
-						),
+						i18n('courseDetailsPage.message.courseHasBeenDeleted', '{COURSE} was deleted.', {
+							COURSE: course.name,
+						}),
 					);
 
 					let role;
@@ -215,10 +208,7 @@ import './styles.scss';
 				} catch (err) {
 					Alert.serverError(
 						err,
-						i18n(
-							'courseDetailsPage.message.courseHasBeenDeleted.error',
-							'Removing the "{COURSE}" course went wrong',
-						),
+						i18n('courseDetailsPage.message.courseHasBeenDeleted.error', 'Removing went wrong'),
 					);
 				} finally {
 					instance.busy(false);
@@ -234,19 +224,14 @@ import './styles.scss';
 					await CoursesMethods.archive(course._id);
 
 					Alert.success(
-						i18n(
-							'courseDetailsPage.message.courseHasBeenArchived',
-							'The "{COURSE}" course was archived.',
-							{ COURSE: course.name },
-						),
+						i18n('courseDetailsPage.message.courseHasBeenArchived', '{COURSE} was archived.', {
+							COURSE: course.name,
+						}),
 					);
 				} catch (err) {
 					Alert.serverError(
 						err,
-						i18n(
-							'courseDetailsPage.message.courseHasBeenArchived.error',
-							'Archive the course "{COURSE}" went wrong',
-						),
+						i18n('courseDetailsPage.message.courseHasBeenArchived.error', 'Archiving went wrong'),
 					);
 				} finally {
 					instance.busy(false);
@@ -264,7 +249,7 @@ import './styles.scss';
 					Alert.success(
 						i18n(
 							'courseDetailsPage.message.courseHasBeenUnarchived',
-							'The "{COURSE}" course has been unarchived.',
+							'{COURSE} has been unarchived.',
 							{ COURSE: course.name },
 						),
 					);
@@ -273,7 +258,7 @@ import './styles.scss';
 						err,
 						i18n(
 							'courseDetailsPage.message.courseHasBeenUnarchived.error',
-							'Unarchive the "{COURSE}" course went wrong',
+							'Unarchiving went wrong',
 						),
 					);
 				} finally {
@@ -454,15 +439,14 @@ import './styles.scss';
 
 				const groupName = Groups.findOne(groupId)?.name;
 				Alert.success(
-					i18n(
-						'courseGroupAdd.groupAdded',
-						'The "{GROUP}" group was added to promote the "{COURSE}" course.',
-						{ GROUP: groupName, COURSE: course.name },
-					),
+					i18n('courseGroupAdd.groupAdded', '{GROUP} was added to promote {COURSE}.', {
+						GROUP: groupName,
+						COURSE: course.name,
+					}),
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, i18n('courseGroupAdd.groupAdded.error', 'Failed to add group'));
+				Alert.serverError(err, i18n('courseGroupAdd.groupAdded.error', 'Adding failed'));
 			}
 		},
 	});
@@ -486,15 +470,14 @@ import './styles.scss';
 
 				const groupName = Groups.findOne(groupId)?.name;
 				Alert.success(
-					i18n(
-						'courseGroupAdd.groupRemoved',
-						'The "{GROUP}" group was removed from the "{COURSE}" course.',
-						{ GROUP: groupName, COURSE: course.name },
-					),
+					i18n('courseGroupAdd.groupRemoved', '{GROUP} was removed from {COURSE}.', {
+						GROUP: groupName,
+						COURSE: course.name,
+					}),
 				);
 				instance.collapse();
 			} catch (err) {
-				Alert.serverError(err, i18n('courseGroupAdd.groupRemoved.error', 'Failed to remove group'));
+				Alert.serverError(err, i18n('courseGroupAdd.groupRemoved.error', 'Removing failed'));
 			}
 		},
 	});
@@ -518,17 +501,16 @@ import './styles.scss';
 
 				const groupName = Groups.findOne(groupId)?.name;
 				Alert.success(
-					i18n(
-						'courseGroupAdd.membersCanEditCourse',
-						'Members of the "{GROUP}" group can now edit the "{COURSE}" course.',
-						{ GROUP: groupName, COURSE: course.name },
-					),
+					i18n('courseGroupAdd.membersCanEditCourse', 'Members of {GROUP} can now edit {COURSE}.', {
+						GROUP: groupName,
+						COURSE: course.name,
+					}),
 				);
 				instance.collapse();
 			} catch (err) {
 				Alert.serverError(
 					err,
-					i18n('courseGroupAdd.membersCanEditCourse.error', 'Failed to give group editing rights'),
+					i18n('courseGroupAdd.membersCanEditCourse.error', 'Failed to give editing rights'),
 				);
 			}
 		},
@@ -555,7 +537,7 @@ import './styles.scss';
 				Alert.success(
 					i18n(
 						'courseGroupAdd.membersCanNoLongerEditCourse',
-						'Members of the "{GROUP}" group can no longer edit the "{COURSE}" course.',
+						'Members of {GROUP} can no longer edit {COURSE}.',
 						{ GROUP: groupName, COURSE: course.name },
 					),
 				);
