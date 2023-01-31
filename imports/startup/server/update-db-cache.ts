@@ -10,8 +10,11 @@ import * as Profile from '/imports/utils/profile';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 import * as AsyncTools from '/imports/utils/async-tools';
 import { MeteorAsync } from '/imports/utils/promisify';
+import { Log } from '/imports/api/log/log';
 
 function updateDbCacheFields() {
+	Log.record('db.cache.start', [], {});
+
 	// Resync location cache in events
 	Meteor.call('event.updateVenue', {}, AsyncTools.logErrors);
 
@@ -40,6 +43,7 @@ function updateDbCacheFields() {
 	Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
 	Meteor.setInterval(
 		() => {
+			Log.record('db.cache.update.start', [], {});
 			// Update nextEvent for courses where it expired
 			Meteor.call(
 				'course.updateNextEvent',
@@ -47,6 +51,7 @@ function updateDbCacheFields() {
 				AsyncTools.logErrors,
 			);
 			Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
+			Log.record('db.cache.update.finish', [], {});
 		},
 		60 * 1000, // Check every minute
 	);
