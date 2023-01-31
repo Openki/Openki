@@ -14,8 +14,8 @@
 						<div class="course-details {{courseStateClasses course}}">
 							<div class="details-header" {{detailsHeaderAttr course}}>
 								{{#if course.internal}}
-									<span class="details-internal"
-										  data-tooltip="{{i18n '_label.internal'}}"></span>
+									<span class="details-internal" data-bs-toggle="tooltip"
+										  data-bs-title="{{i18n '_label.internal' attr=true}}"></span>
 								{{/if}}
 								<div class="details-header-tags">
 									{{#if (isProposal course)}}
