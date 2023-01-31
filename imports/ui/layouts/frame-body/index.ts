@@ -1,4 +1,7 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Session } from 'meteor/session';
+
+import * as Tooltips from '/imports/utils/Tooltips';
 
 import * as Viewport from '/imports/ui/lib/viewport';
 
@@ -16,6 +19,7 @@ template.onRendered(() => {
 		Viewport.update();
 	});
 	Session.set('isRetina', window.devicePixelRatio === 2);
+	Tooltips.enable();
 });
 
 template.events({

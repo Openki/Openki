@@ -1,13 +1,13 @@
-import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment';
+import { ReactiveDict } from 'meteor/reactive-dict';
+import { i18n } from '/imports/startup/both/i18next';
+import { Session } from 'meteor/session';
 
 import { EventModel, Events, FindFilter } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
-import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { MeteorAsync } from '/imports/utils/promisify';
-import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/calendar-nav/multi';
@@ -21,7 +21,7 @@ import './styles.scss';
 		'calendarPage',
 		Record<string, string>,
 		{
-			filter: ReturnType<typeof Events['Filtering']>;
+			filter: ReturnType<(typeof Events)['Filtering']>;
 			state: ReactiveDict<{
 				isAttendeeFilterOn: boolean;
 			}>;
@@ -126,7 +126,7 @@ import './styles.scss';
 				start: moment.Moment;
 				end: moment.Moment;
 			};
-			filter: ReturnType<typeof Events['Filtering']>;
+			filter: ReturnType<(typeof Events)['Filtering']>;
 			isAttendeeFilterOn: boolean;
 		}
 	>;

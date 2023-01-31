@@ -3,6 +3,7 @@ import { Router } from 'meteor/iron:router';
 import $ from 'jquery';
 import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
+import { Session } from 'meteor/session';
 
 import { Venues } from '/imports/api/venues/venues';
 

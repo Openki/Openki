@@ -25,4 +25,3 @@ import 'bootstrap/js/dist/modal';
 // import 'bootstrap/js/dist/scrollspy';
 // import 'bootstrap/js/dist/tab';
 // import 'bootstrap/js/dist/toast';
-// import 'bootstrap/js/dist/tooltip';

@@ -1,13 +1,16 @@
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-import { Courses } from '/imports/api/courses/courses';
-import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
-import { Events } from '/imports/api/events/events';
+import { CourseEntity, Courses } from '/imports/api/courses/courses';
+import {
+	CourseDiscussionEnity,
+	CourseDiscussions,
+} from '/imports/api/course-discussions/course-discussions';
+import { EventEntity, Events } from '/imports/api/events/events';
 import { ensure } from '/imports/api/fixtures/ensureFixture';
 import { Prng } from '/imports/api/fixtures/Prng';
-import { Groups } from '/imports/api/groups/groups';
-import { Regions } from '/imports/api/regions/regions';
+import { GroupEntity, Groups } from '/imports/api/groups/groups';
+import { RegionEntity, Regions } from '/imports/api/regions/regions';
 import { Venues } from '/imports/api/venues/venues';
 import { Users } from '/imports/api/users/users';
 import { InfoPages } from '/imports/api/infoPages/infoPages';
@@ -26,10 +29,8 @@ import { venues } from './data/venue.fixtures';
 
 /**
  * Make a number that looks like a human chose it, favouring 2 and 5
- * @param {{(): number;}} prng
- * @returns {number}
  */
-const humandistrib = function (prng) {
+const humandistrib = function (prng: { (): number }): number {
 	const factors = [0, 0, 1, 2, 2, 3, 5, 5];
 	return (
 		factors[Math.floor(Math.random() * factors.length)] * (prng() > 0.7 ? humandistrib(prng) : 1) +
@@ -43,9 +44,8 @@ const humandistrib = function (prng) {
  * dates closer to the original date preferred.
  * For future dates, a date between the original date and double the time between now and then
  * is chosen.
- * @param {Date} date
  */
-const sometimesAfter = function (date) {
+const sometimesAfter = function (date: Date) {
 	const prng = Prng('sometimesAfter');
 
 	// Seconds between then and now
@@ -70,10 +70,10 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 			const region = {
 				...r,
 				tenant: prng() > 0.3 ? ensure.tenant('Hmmm') : ensure.tenant('Kopf', userKopf),
-			}; // clone
-			if (region.loc) {
-				const coordinates = region.loc.reverse(); // GeoJSON takes latitude first
-				region.loc = { type: 'Point', coordinates };
+			} as unknown as RegionEntity; // clone
+			if (r.loc) {
+				const coordinates = r.loc.reverse(); // GeoJSON takes latitude first
+				region.loc = { type: 'Point', coordinates: coordinates as [long: number, lat: number] };
 			}
 			Regions.insert(region);
 		});
@@ -98,7 +98,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 
 	const groupsCreate = function () {
 		groups.forEach((g) => {
-			const group = { ...g };
+			const group = { ...g } as unknown as Mongo.OptionalId<GroupEntity>;
 			group.createdby = 'ServerScript_loadingTestgroups';
 
 			// Always use same id for same group to avoid broken urls while testing
@@ -120,9 +120,9 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 			// Don't create events that exist already
 			.filter((e) => !Events.findOne({ _id: e._id }))
 			.forEach((e) => {
-				const event = { ...e };
-				event.createdBy = ensure.user(event.createdby, event.region)._id;
-				event.groups = event.groups?.map(ensure.group) || [];
+				const event = { ...e } as unknown as Mongo.OptionalId<EventEntity>;
+				event.createdBy = ensure.user(e.createdBy, e.region)._id;
+				event.groups = e.groups?.map(ensure.group) || [];
 				event.groupOrganizers = [];
 
 				// We place the first event in the series on the monday of this week
@@ -134,24 +134,24 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 					weekstart.setSeconds(0);
 					weekstart.setDate(weekstart.getDate() - weekstart.getDay() + 1);
 
-					const dayOfFirstEvent = new Date(event.start.$date);
+					const dayOfFirstEvent = new Date(e.start.$date);
 					dayOfFirstEvent.setHours(0);
 					dayOfFirstEvent.setMinutes(0);
 					dayOfFirstEvent.setSeconds(0);
 					dateOffset = weekstart.getTime() - dayOfFirstEvent.getTime();
 				}
 
-				event.venue = ensure.venue(event.venue, event.region);
-				event.internal = Boolean(event.internal);
+				event.venue = ensure.venue(e.venue, e.region);
+				event.internal = Boolean(e.internal);
 
-				const regionZone = LocalTime.zone(event.region);
+				const regionZone = LocalTime.zone(e.region);
 
-				event.startLocal = LocalTime.toString(new Date(event.start.$date + dateOffset));
+				event.startLocal = LocalTime.toString(new Date(e.start.$date + dateOffset));
 				event.start = regionZone.fromString(event.startLocal).toDate();
-				event.endLocal = new Date(event.end.$date + dateOffset);
+				event.endLocal = LocalTime.toString(new Date(e.end.$date + dateOffset));
 				event.end = regionZone.fromString(event.endLocal).toDate();
-				event.time_created = new Date(event.time_created.$date);
-				event.time_lastedit = new Date(event.time_lastedit.$date);
+				event.time_created = new Date(e.time_created.$date);
+				event.time_lastedit = new Date(e.time_lastedit.$date);
 				Events.insert(event);
 			});
 
@@ -164,17 +164,22 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 		const testRegions = [
 			Regions.findOne('9JyFCoKWkxnf8LWPh'),
 			Regions.findOne('EZqQLGL4PtFCxCNrp'),
-		];
+		].map((r) => {
+			if (!r) {
+				throw new Error('Unexpected undefined');
+			}
+			return r._id;
+		});
 
 		venues.forEach((v) => {
 			const venueData = { ...v };
 			venueData.region = prng() > 0.85 ? testRegions[0] : testRegions[1];
 
-			const venue = ensure.venue(venueData.name, venueData.region._id);
+			const venue = ensure.venue(venueData.name, venueData.region);
 
 			_.extend(venue, venueData);
 
-			venue.createdby = ensure.user(venue.createdby, venueData.region._id)._id;
+			venue.createdby = ensure.user(venue.createdby, venueData.region)._id;
 
 			Venues.update(venue._id, venue);
 		});
@@ -186,15 +191,13 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 		const prng = Prng('createCourses');
 
 		courses.forEach((c) => {
-			const course = { ...c };
+			const course = { ...c } as unknown as Mongo.OptionalId<CourseEntity>;
 
 			course.slug = StringTools.slug(course.name);
 			course.internal = Boolean(course.internal);
 
 			course._id = ensure.fixedId([course.name, course.description]);
 
-			course.date =
-				prng() > 0.5 ? new Date(new Date().getTime() + (prng() - 0.25) * 8000000000) : false;
 			const age = Math.floor(prng() * 80000000000);
 			course.time_created = new Date(new Date().getTime() - age);
 			course.time_lastedit = new Date(new Date().getTime() - age * 0.25);
@@ -206,7 +209,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 				course.region = prng() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp';
 			}
 
-			course.members.forEach((member) => {
+			course.members.forEach((member: any) => {
 				// eslint-disable-next-line no-param-reassign
 				member.user = ensure.user(member.user, course.region)._id;
 			});
@@ -218,8 +221,6 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 			}
 			course.groups = course.groups.map(ensure.group);
 			course.groupOrganizers = [];
-
-			course.interested = course.members.length;
 
 			Courses.insert(course);
 		});
@@ -265,7 +266,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 		Courses.find().forEach((course) => {
 			const eventCount = Math.floor((prng() * 1.6) ** 10);
 			for (let n = 0; n < eventCount; n += 1) {
-				const event = {};
+				const event = {} as Mongo.OptionalId<EventEntity>;
 				let { description } = course;
 				if (!description) description = 'No description'; // :-(
 				const words = _.shuffle(description.split(' '));
@@ -323,7 +324,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 
 				const { members } = course;
 				const randomMember = members[Math.floor(Math.random() * members.length)];
-				event.createdby = ensure.user(randomMember?.user || 'Serverscript', event.region)._id;
+				event.createdBy = ensure.user(randomMember?.user || 'Serverscript', event.region)._id;
 				const age = Math.floor(prng() * 10000000000);
 				event.time_created = new Date(new Date().getTime() - age);
 				event.time_lastedit = new Date(new Date().getTime() - age * 0.25);
@@ -349,7 +350,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 			const words = description.split(' ');
 
 			for (let n = 0; n < createCount; n += 1) {
-				const comment = {};
+				const comment = {} as Mongo.OptionalId<CourseDiscussionEnity>;
 				comment.courseId = course._id;
 				comment.title = _.sample(words, 1 + Math.floor(prng() * 3)).join(' ');
 				comment.text = HtmlTools.saneHtml(
@@ -360,15 +361,17 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 				comment.time_updated =
 					prng() < 0.9 ? comment.time_created : sometimesAfter(comment.time_created);
 
-				let commenter;
 				if (!courseMembers || prng() < 0.2) {
 					// Leave some anonymous comments
 					if (prng() < 0.7) {
-						commenter = Users.findOne({}, { skip: Math.floor(prng() * userCount) })._id;
-						comment.userId = commenter.user;
+						const user = Users.findOne({}, { skip: Math.floor(prng() * userCount) });
+						if (!user) {
+							throw new Error('Unexpected undefined');
+						}
+						comment.userId = user._id;
 					}
 				} else {
-					commenter = course.members[Math.floor(prng() * courseMembers)];
+					const commenter = course.members[Math.floor(prng() * courseMembers)];
 					comment.userId = commenter.user;
 				}
 

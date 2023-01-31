@@ -22,10 +22,10 @@ if (Meteor.isClient) {
 			await waitFor(haveEditfield);
 			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
-			$('input[value=mentor]').trigger('click');
+			$('input[value=mentor]:first').trigger('click');
 			$('.js-title').val(randomTitle);
 			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			$('.js-course-edit-save').trigger('click');
+			$('.js-course-edit-save:first').trigger('click');
 
 			const link = await waitFor(() => {
 				const alertLink = $('.alert a');
@@ -53,10 +53,10 @@ if (Meteor.isClient) {
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 
-			$('input[value=mentor]').trigger('click');
+			$('input[value=mentor]:first').trigger('click');
 			$('.js-title').val(randomTitle);
 			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			$('.js-course-edit-save').trigger('click');
+			$('.js-course-edit-save:first').trigger('click');
 
 			const link = await waitFor(() => {
 				const alertLink = $('.alert a');
@@ -87,7 +87,7 @@ if (Meteor.isClient) {
 
 			$('.js-title').val(randomTitle);
 			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			$('.js-course-edit-save').trigger('click');
+			$('.js-course-edit-save:first').trigger('click');
 
 			const link = await waitFor(() => {
 				const alertLink = $('.alert a');
@@ -126,7 +126,7 @@ if (Meteor.isClient) {
 
 			$('.js-title').val(randomTitle);
 			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			$('.js-course-edit-save').trigger('click');
+			$('.js-course-edit-save:first').trigger('click');
 
 			await waitFor(() => {
 				assert(

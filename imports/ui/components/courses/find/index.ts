@@ -4,16 +4,18 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 
 import { Courses } from '/imports/api/courses/courses';
 
+import * as UrlTools from '/imports/utils/url-tools';
+import * as Tooltips from '/imports/utils/Tooltips';
+
 import { CourseTemplate } from '/imports/ui/lib/course-template';
 import * as RegionSelection from '/imports/utils/region-selection';
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
 import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
-import * as UrlTools from '/imports/utils/url-tools';
 
 import '/imports/ui/components/groups/list';
-import '/imports/ui/components/courses/list/course-list';
+import '/imports/ui/components/courses/compact';
 import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/filter';
 import '/imports/ui/components/search-field';
@@ -35,7 +37,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 
 		courseBlockSize: number;
 		courseLimit: ReactiveVar<number>;
-		filter: ReturnType<typeof Courses['Filtering']>;
+		filter: ReturnType<(typeof Courses)['Filtering']>;
 	}
 >;
 
@@ -154,12 +156,14 @@ template.events({
 	},
 
 	'click .js-category-label'(_event, instance) {
+		Tooltips.hide();
 		instance.filter.add('categories', `${this}`).done();
 		instance.updateUrl();
 		window.scrollTo(0, 0);
 	},
 
 	'click .js-group-label'() {
+		Tooltips.hide();
 		window.scrollTo(0, 0);
 	},
 

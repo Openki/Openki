@@ -126,7 +126,9 @@ import './styles.scss';
 
 	template.helpers({
 		userName() {
-			return Meteor.user()?.username || i18n('eventDetails.notLoggedIn', '(not logged in?)');
+			return (
+				Meteor.user()?.getDisplayName() || i18n('eventDetails.notLoggedIn', '(not logged in?)')
+			);
 		},
 
 		courseTitle() {

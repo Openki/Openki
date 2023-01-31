@@ -1,4 +1,3 @@
-import { Tooltips } from 'meteor/lookback:tooltips';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
@@ -18,6 +17,7 @@ import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { checkContribution } from '/imports/utils/checkContribution';
+import * as Tooltips from '/imports/utils/Tooltips';
 
 import '/imports/ui/components/profiles/course-list';
 import '/imports/ui/components/profiles/verify-email';
@@ -48,7 +48,7 @@ template.onCreated(function () {
 
 	instance.autorun(() => {
 		const { user } = Template.currentData();
-		const title = i18n('profile.windowtitle', 'Profile of {USER}', { USER: user.username });
+		const title = i18n('profile.windowtitle', 'Profile of {USER}', { USER: user.getDisplayName() });
 		Metatags.setCommonTags(title);
 	});
 
@@ -114,7 +114,7 @@ template.helpers({
 
 		return {
 			placeholder: i18n('profile.mail.placeholder', 'Hi {USER}. I wanted to tell you…', {
-				USER: data.user,
+				USER: data.user.username,
 			}),
 			onSend: async (message, options) => {
 				await emailMethods.sendPrivateMessage(data.user._id, message, options);
@@ -208,6 +208,7 @@ template.events({
 
 	async 'click .js-group-expel-btn'(this: GroupEntity, _event, instance) {
 		Tooltips.hide();
+
 		const { _id: groupId, name } = this;
 		const { data } = instance;
 		const userId = data.user._id;
