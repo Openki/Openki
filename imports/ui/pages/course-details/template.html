@@ -5,7 +5,7 @@
 				<div class="page-component">
 					{{#if (isArchived course)}}
 						<div class="alert alert-archived text-center" role="alert">
-							<strong>{{i18n 'course.archive.alert' 'This course is archived and not active anymore.'}}</strong>
+							<strong>{{i18n 'course.archive.alert' '{COURSE} is archived and not active anymore.' COURSE=course.name}}</strong>
 						</div>
 					{{/if}}
 					{{#if edit}}
@@ -14,8 +14,8 @@
 						<div class="course-details {{courseStateClasses course}}">
 							<div class="details-header" {{detailsHeaderAttr course}}>
 								{{#if course.internal}}
-									<span class="details-internal"
-										  data-tooltip="{{i18n 'courseCompact.internal_course' 'Internal course'}}"></span>
+									<span class="details-internal" data-bs-toggle="tooltip"
+										  data-bs-title="{{i18n '_label.internal' attr=true}}"></span>
 								{{/if}}
 								<div class="details-header-tags">
 									{{#if (isProposal course)}}
@@ -64,7 +64,7 @@
 							</div>
 						{{/if}}
 						{{#if expanded}}
-							{{> confirmDialog hasArchiveButton=(isArchived course)}}
+							{{> confirmDialog hasArchiveButton=(isArchived course) course=course}}
 						{{/if}}
 						{{> courseRoles roles=rolesDetails}}
 					{{/if}}
@@ -95,7 +95,7 @@
 
 <template name="confirmDialog">
 	<div class="course-delete-confirmation">
-		<p>{{i18n 'course.reallydelete' 'Please confirm that you would like to delete this course. This cannot be undone.'}}
+		<p>{{i18n 'course.reallydelete' 'Please confirm that you would like to delete {COURSE}. This cannot be undone.' COURSE=course.name}}
 		</p>
 		<div class="form-actions">
 			{{#unless hasArchiveButton}}
@@ -106,8 +106,8 @@
 			{{/unless}}
 			{{> buttonDeleteConfirm
 				event="js-delete-course-confirm"
-				textIdle=(i18n 'course.delete.confirm.button' 'Delete this course and its events')
-				textBusy=(i18n 'course.delete.confirm.button.busy' 'Deleting course…')
+				textIdle=(i18n 'course.delete.confirm.button' 'Delete {COURSE} and its events' COURSE=course.name)
+				textBusy=(i18n '_button.deleting')
 			}}
 			{{> buttonCancel event="js-collapse"}}
 		</div>
@@ -194,7 +194,7 @@
 			{{#if (isOrganizer groupId)}}
 				<div class="tag group-tag addon">
 					<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"
-						  title="{{i18n 'grouplist.organizer.title' 'Course is co-organized by this group' attr=true}}"></span>
+						  title="{{i18n 'grouplist.organizer.title' '{COURSE} is co-organized by this group' COURSE=name attr=true}}"></span>
 				</div>
 			{{/if}}
 			{{#if (tools groupId)}}

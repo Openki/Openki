@@ -505,7 +505,7 @@ export type Data = {
 					} else {
 						if (isNew) {
 							Alert.success(
-								i18n('message.courseCreated', 'The course "{NAME}" has been created!', {
+								i18n('message.courseCreated', '{NAME} has been created!', {
 									NAME: changes.name,
 								}),
 							);
@@ -519,21 +519,16 @@ export type Data = {
 							);
 						} else {
 							Alert.success(
-								i18n(
-									'message.courseChangesSaved',
-									'Your changes to the course "{NAME}" have been saved.',
-									{ NAME: changes.name },
-								),
+								i18n('message.courseChangesSaved', 'Your changes to {NAME} have been saved.', {
+									NAME: changes.name,
+								}),
 							);
 						}
 
 						Router.go('showCourse', { _id: courseId });
 					}
 				} catch (err) {
-					Alert.serverError(
-						err,
-						i18n('message.courseChangesSaved.error', 'Saving the course went wrong'),
-					);
+					Alert.serverError(err, i18n('message.courseChangesSaved.error', 'Saving went wrong'));
 				} finally {
 					instance.busy(false);
 				}

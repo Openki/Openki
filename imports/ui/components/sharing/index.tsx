@@ -35,7 +35,7 @@ export function Sharing() {
 
 	return (
 		<div className="shariff-wrapper">
-			<p>{t('sharing.title', 'Share this course with your friends')}</p>
+			<p>{t('sharing.title', 'Share it with your friends')}</p>
 			<div
 				className="shariff"
 				data-mail-body={`${t(

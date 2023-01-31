@@ -6,9 +6,9 @@
 			</span>
 			<p>
 				{{#if commenter}}
-					{{i18n "notification.comment.mail.intro" 'There was a comment by "{USERNAME}" on course "{COURSE}":' USERNAME=commenterName COURSE=course.name lng=locale}}
+					{{i18n "notification.comment.mail.intro" 'There was a comment by {USERNAME} on {COURSE}:' USERNAME=commenterName COURSE=course.name lng=locale}}
 				{{else}}
-					{{i18n "notification.comment.mail.intro.anon" 'There was an anonymous comment on "{COURSE}":' COURSE=course.name lng=locale}}
+					{{i18n "notification.comment.mail.intro.anon" 'There was an anonymous comment on {COURSE}:' COURSE=course.name lng=locale}}
 				{{/if}}
 			</p>
 			<table class="comment-box">
@@ -39,7 +39,7 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{i18n "email.base.receiveNote.courseTeam" lng=locale}}
+						{{i18n "email.base.receiveNote.courseTeam" COURSE=course.name lng=locale}}
 					</td>
 				</tr>
 				<tr>
