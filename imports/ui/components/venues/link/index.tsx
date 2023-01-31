@@ -25,7 +25,8 @@ function VenueTag(props: { venue: VenueModel; openInNewTab?: boolean | undefined
 			<div className="tag tag-link venue-tag">
 				<a
 					className="js-venue-link"
-					data-tooltip={t('location.link.tooltip', 'Show details of {VENUE}', {
+					data-bs-toggle="tooltip"
+					data-bs-title={t('location.link.tooltip', 'Show details of {VENUE}', {
 						VENUE: venue.name,
 					})}
 					href={Router.url('venueDetails', venue)}

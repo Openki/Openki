@@ -87,13 +87,13 @@
 </template>
 
 <template name="updatedHistoryEntry">
-	{{i18n 'course.history.updated' 'Course updated by'}}
+	{{i18n 'course.history.updated' 'Updated by'}}
 	{{> profileLink userId=updatedBy}}
 	{{contribution updatedBy}}
 </template>
 
 <template name="createdHistoryEntry">
-	{{i18n 'course.history.created_by' 'Course created by'}}
+	{{i18n 'course.history.created_by' 'Created by'}}
 	{{> profileLink userId=createdby}}
 	{{contribution createdby}}
 </template>

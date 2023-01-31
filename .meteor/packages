@@ -32,7 +32,6 @@ blaze-html-templates            # Compile .html files into Meteor Blaze views
 reactive-var@1.0.12             # Reactive variable for tracker
 bevanhunt:leaflet
 fourseven:scss
-lookback:tooltips
 jquery
 markdown
 mys:fonts
