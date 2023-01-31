@@ -22,7 +22,7 @@
 		</div>
 		{{#if state 'showFirstSteps'}}
 			<div class="course-role-first-steps">
-				<b>{{i18n 'course.roles.firstSteps.title' 'Thank you for your interest in the course.' ROLE=(roleShort role.type)}}</b>
+				<b>{{i18n 'course.roles.firstSteps.title' 'Thank you for your interest in {COURSE}.' COURSE=course.name ROLE=(roleShort role.type)}}</b>
 				<br>
 				{{#if roleIs 'participant'}}
 					{{i18n 'course.roles.firstSteps.youllGetNotified' 'You will get an e-mail notification as soon as a next date has been fixed.'}}
@@ -84,9 +84,9 @@
 							{{#if busy 'enrolling'}}
 								<i class="fa-solid fa-circle-notch fa-spin fa-fw"
 								   aria-hidden="true"></i>
-								{{i18n 'course.roles.join.busy' 'Joining course…'}}
+								{{i18n 'course.roles.join.busy' 'Joining…'}}
 							{{else}}
-								{{i18n 'course.roles.join' 'Join course'}}
+								{{i18n 'course.roles.join' 'Join {COURSE}' COURSE=course.name}}
 							{{/if}}
 						</button>
 						{{> buttonCancel event="js-role-enroll-cancel"}}

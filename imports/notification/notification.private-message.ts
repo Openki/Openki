@@ -1,6 +1,7 @@
 import { Match, check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
+import { Spacebars } from 'meteor/spacebars';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Log } from '/imports/api/log/log';
@@ -113,7 +114,10 @@ export function Model(entry: { body: Body }) {
 				throw new Error('targetRecipient does not exist (0.o)');
 			}
 
-			const subjectvars = { SENDER: StringTools.truncate(sender.username, 10), lng: userLocale };
+			const subjectvars = {
+				SENDER: StringTools.truncate(sender.getDisplayName(), 10),
+				lng: userLocale,
+			};
 			const subject = i18n(
 				'notification.privateMessage.mail.subject',
 				'Private message from {SENDER}',
@@ -131,15 +135,13 @@ export function Model(entry: { body: Body }) {
 				subject,
 				message: htmlizedMessage,
 				senderCopy,
-				recipientName: targetRecipient.username,
+				recipientName: targetRecipient.getDisplayName(),
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=privateMessage`,
 				customSiteName: undefined as string | undefined,
 				customEmailLogo: undefined as string | undefined,
 				fromAddress: '',
-				courseName: '',
-				courseLink: '',
-				eventTitle: '',
-				eventLink: '',
+				course: '',
+				event: '',
 			};
 
 			if (body.revealSenderAddress) {
@@ -159,10 +161,10 @@ export function Model(entry: { body: Body }) {
 				if (!course) {
 					throw new Meteor.Error(404, 'course not found');
 				}
-				vars.courseName = course.name;
-				vars.courseLink = Router.url('showCourse', course, {
+				const courseLink = Router.url('showCourse', course, {
 					query: 'campaign=privateMessage',
 				});
+				vars.course = Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`);
 
 				regionId = course.region;
 			}
@@ -183,10 +185,10 @@ export function Model(entry: { body: Body }) {
 					EVENT: event.title,
 					DATE: startMoment.calendar(),
 				});
-				vars.eventTitle = title;
-				vars.eventLink = Router.url('showEvent', event, {
+				const eventLink = Router.url('showEvent', event, {
 					query: 'campaign=privateMessage',
 				});
+				vars.event = Spacebars.SafeString(`<a href="${eventLink}">${title}</a>`);
 
 				regionId = event.region;
 			}

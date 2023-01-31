@@ -40,6 +40,7 @@ export interface GroupEntity {
 	customCourseFields?: GroupEntityCustomCourseFields[];
 	/** List of userIds */
 	members: string[];
+	createdby: string;
 }
 export type GroupModel = Group & GroupEntity;
 

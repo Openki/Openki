@@ -70,7 +70,7 @@ Meteor.startup(() => {
 });
 
 Meteor.startup(() => {
-	Tracker.autorun(() => {
+	Tracker.autorun(async () => {
 		const desiredLocale = Session.get('locale');
 
 		if (!desiredLocale) {
@@ -91,7 +91,7 @@ Meteor.startup(() => {
 		$('html').toggleClass('rtl', isRTL);
 
 		if (Meteor.userId()) {
-			UsersMethods.updateLocale(desiredLocale);
+			await UsersMethods.updateLocale(desiredLocale);
 		}
 
 		// Tell moment to switch the locale

@@ -7,6 +7,7 @@ import { UserModel } from '/imports/api/users/users';
 import { EventEntity } from '/imports/api/events/events';
 // eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from './tenantDenormalizer';
+import * as interestedDenormalizer from './interestedDenormalizer';
 
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 import { PublicSettings } from '/imports/utils/PublicSettings';
@@ -50,8 +51,6 @@ export interface CourseEntity {
 	customFields: (Pick<GroupEntityCustomCourseFields, 'name' | 'displayText' | 'visibleFor'> & {
 		value: string;
 	})[];
-	/** (what for?) */
-	date: Date;
 	/** ID_user */
 	createdby: string;
 	// eslint-disable-next-line camelcase
@@ -79,7 +78,7 @@ export interface CourseEntity {
 	nextEvent: EventEntity | null;
 	/** (calculated) most recent event object, only includes the _id and start field */
 	lastEvent: EventEntity | null;
-	/** (calculated) */
+	/** (calculated) based to members.length, to support sorting by number of interested user over url params */
 	interested: number;
 }
 
@@ -171,9 +170,20 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 		course: Mongo.OptionalId<CourseEntity>,
 		callback?: (err: unknown | undefined, id?: string) => void,
 	) {
-		const enrichedCourse = tenantDenormalizer.beforeInsert(course);
+		let enrichedCourse = tenantDenormalizer.beforeInsert(course);
+		enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
 
 		return super.insert(enrichedCourse, callback);
+	}
+
+	async insertAsync(
+		course: Mongo.OptionalId<CourseEntity>,
+		callback?: (err: unknown | undefined, id?: string) => void,
+	) {
+		let enrichedCourse = tenantDenormalizer.beforeInsert(course);
+		enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
+
+		return super.insertAsync(enrichedCourse, callback);
 	}
 
 	// eslint-disable-next-line class-methods-use-this
@@ -187,38 +197,6 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 			needsRole: Predicates.ids,
 			internal: Predicates.flag,
 			archived: Predicates.flag,
-		});
-	}
-
-	/**
-	 * Update the number of interested user
-	 */
-	updateInterested(courseId: string) {
-		AsyncTools.untilClean((resolve, reject) => {
-			const course = this.findOne(courseId);
-
-			if (!course) {
-				// If the course doesn't exist it doesn't need updating
-				resolve(true);
-				return;
-			}
-
-			this.rawCollection().updateMany(
-				{ _id: course._id },
-				{
-					$set: {
-						interested: course.members?.length || 0,
-					},
-				},
-				{},
-				(err, result) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve(result?.modifiedCount === 0);
-					}
-				},
-			);
 		});
 	}
 

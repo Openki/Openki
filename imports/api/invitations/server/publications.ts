@@ -10,6 +10,7 @@ Meteor.publish('invitation', function (tenantId, token) {
 
 	if (invitation.count() === 0) {
 		this.ready();
+		return undefined;
 	}
 
 	return [invitation, Tenants.find(tenantId)];

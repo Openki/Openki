@@ -120,7 +120,7 @@ export const Api = {
 			if (creator) {
 				evr.createdBy = {
 					id: creator._id,
-					name: creator.username,
+					name: creator.getDisplayName(),
 				};
 			}
 
@@ -228,7 +228,7 @@ export const Api = {
 			if (creator) {
 				course.createdBy = {
 					id: creator._id,
-					name: creator.username,
+					name: creator.getDisplayName(),
 				};
 			}
 

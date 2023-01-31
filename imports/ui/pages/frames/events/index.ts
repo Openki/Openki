@@ -25,7 +25,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 	Record<string, string>,
 	{
 		date: moment.Moment;
-		filter: ReturnType<typeof Events['Filtering']>;
+		filter: ReturnType<(typeof Events)['Filtering']>;
 		limit: number;
 		update: () => void;
 	}

@@ -1,5 +1,6 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { i18n } from '/imports/startup/both/i18next';
+import { Router } from 'meteor/iron:router';
 
 import { Categories } from '/imports/api/categories/categories';
 
@@ -32,7 +33,10 @@ template.onRendered(function () {
 	const instance = this;
 
 	instance.autorun(async () => {
+		// re run after viewport change or param change
 		Viewport.get();
+		// eslint-disable-next-line no-unused-expressions
+		Router.current().params;
 
 		await MeteorAsync.defer();
 

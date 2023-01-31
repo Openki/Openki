@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import { Session } from 'meteor/session';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
+import { Session } from 'meteor/session';
 
 import { UserModel } from '/imports/api/users/users';
 
@@ -37,7 +37,7 @@ export interface RegionEntity {
 	 */
 	courseCount: number;
 	/**
-	 * Number of future events in that region, calculated field (does not count internal courses)
+	 * Number of future events in that region, calculated field (does not count internal events)
 	 */
 	futureEventCount: number;
 	/** ID of featured group */
@@ -85,7 +85,7 @@ export class Region {
 	/**
 	 * Check whether a user may edit the region.
 	 */
-	editableBy(this: RegionModel, user?: UserModel) {
+	editableBy(this: RegionModel, user?: UserModel | null) {
 		if (!user) {
 			return false;
 		}

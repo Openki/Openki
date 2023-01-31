@@ -8,7 +8,7 @@ import { UserModel } from '/imports/api/users/users';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 
-import '/imports/ui/components/courses/list/course-list';
+import '/imports/ui/components/courses/list';
 
 import './template.html';
 import './styles.scss';
@@ -80,13 +80,6 @@ Template.usersCourselist.helpers({
 		return `roles.${role}.myList.past`;
 	},
 
-	getName() {
-		const { username } = Template.currentData().user;
-		if (username) {
-			return username;
-		}
-		return false;
-	},
 	isInvolved() {
 		const userId = Template.currentData().user._id;
 		return (
