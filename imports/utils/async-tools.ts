@@ -18,7 +18,7 @@ export function logErrors(error: { stack: any }, result: unknown) {
 	if (error) {
 		/* eslint-disable-next-line no-console */
 		console.log(error.stack);
-		Log.record('db.cache.update.error', [], error);
+		Log.record('db.cache.update.error', [], {});
 	}
 	return result;
 }
