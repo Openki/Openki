@@ -110,7 +110,6 @@
 	"course.createEventInfo": "Tekil, bir defaya mahsus, tamamen organise edilmiş bir etkinlik yayınlamak istiyorsanız bu formu kullanın. Aksi takdirde, burada bir kurs oluşturun veya önerin:",
 	"course.delete.confirm.archiveButton": "Daha ziyade arşivle",
 	"course.delete.confirm.button": "Bu kursu ve etkinlikleri sil",
-	"course.delete.confirm.button.busy": "Kurs siliniyor…",
 	"course.description.placeholder": "Fikrinizi açıklayın, böylece daha fazla insan onu bulsun ve ne bekleyeceklerini bilsinler.",
 	"course.detail.remove.other.team": "Bu üyeyi ekipten gerçekten kaldırmak istiyor musunuz?",
 	"course.detail.remove.yourself.team": "Kendinizi ekipten kaldırmak mı istiyorunuz? Sadece bir başka üye sizi yeniden ekleyebilir.",
