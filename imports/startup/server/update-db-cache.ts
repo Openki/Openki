@@ -24,7 +24,7 @@ function updateDbCacheFields() {
 		Meteor.call('course.updateGroups', {}, AsyncTools.logErrors);
 		Log.record('db.cache.log.course.updateGroups', [], {});
 
-		eventsCategoriesDenormalizer.onStartUp();
+		//eventsCategoriesDenormalizer.onStartUp();
 		Log.record('db.cache.log.eventsCategoriesDenormalizer', [], {});
 
 		// Update List of badges per user
