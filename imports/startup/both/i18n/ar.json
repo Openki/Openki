@@ -712,7 +712,6 @@
 	"roles.team.subscribed": "أنت في الفريق",
 	"roles.team.userList": "{NAME} ينظم",
 	"roles.team.userList.past": "{NAME} كان ينظم",
-	"route.showCourse": "دورة",
 	"schedule.startDateLabel": "بدء:",
 	"send.validation.email": "أرسل لي رسالة تأكيد بالبريد الإلكتروني.",
 	"send.validation.submit.busy": "جاري الأرسال…",

@@ -443,7 +443,6 @@
 	"roles.team.subscribe": "Jag hjälper till att organisera",
 	"roles.team.subscribed": "Du är med i teamet ",
 	"roles.team.userList": "{NAME} organiserar",
-	"route.showCourse": "kurs",
 	"schedule.startDateLabel": "start:",
 	"status.connecting": "Kopplar till server",
 	"status.notConnected": "Ingen kontakt med servern",

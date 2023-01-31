@@ -823,7 +823,6 @@
 	"roles.team.subscribed": "Tu fais partie de l'équipe",
 	"roles.team.userList": "{NAME} organise",
 	"roles.team.userList.past": "{NAME} a organisé",
-	"route.showCourse": "cours",
 	"schedule.startDateLabel": "début :",
 	"send.validation.email": "Envoyez-moi un email de validation.",
 	"send.validation.submit.busy": "Envoi…",
