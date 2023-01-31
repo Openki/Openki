@@ -1,15 +1,52 @@
 import Tooltip from 'bootstrap/js/dist/tooltip';
 
-export function enable() {
-	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+export function create(target: ParentNode = document) {
+	const tooltipTriggerList = target.querySelectorAll('[data-bs-toggle="tooltip"]');
 	[...(tooltipTriggerList as any)].map((tooltipTriggerEl) =>
 		Tooltip.getOrCreateInstance(tooltipTriggerEl),
 	);
 }
 
-export function hide() {
-	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-	[...(tooltipTriggerList as any)].forEach((tooltipTriggerEl) =>
-		Tooltip.getOrCreateInstance(tooltipTriggerEl).hide(),
-	);
+export function update(target: ParentNode = document) {
+	const tooltipTriggerList = target.querySelectorAll('[data-bs-toggle="tooltip"]');
+	[...(tooltipTriggerList as any)].map((tooltipTriggerEl) => {
+		Tooltip.getOrCreateInstance(tooltipTriggerEl).dispose();
+		return Tooltip.getOrCreateInstance(tooltipTriggerEl);
+	});
+}
+
+export function hide(target: ParentNode = document) {
+	const tooltipTriggerList = target.querySelectorAll('[data-bs-toggle="tooltip"]');
+	[...(tooltipTriggerList as any)].forEach((tooltipTriggerEl) => {
+		const tooltip = Tooltip.getOrCreateInstance(tooltipTriggerEl);
+		tooltip.hide();
+	});
+}
+
+export function enable() {
+	// Options for the observer (which mutations to observe)
+	const config: MutationObserverInit = {
+		attributes: true,
+		attributeFilter: ['data-bs-title'],
+		childList: true,
+		subtree: true,
+	};
+
+	// Callback function to execute when mutations are observed
+	const callback: MutationCallback = (mutationList) => {
+		// eslint-disable-next-line no-restricted-syntax
+		for (const mutation of mutationList) {
+			if (mutation.type === 'childList') {
+				create(mutation.target.parentNode || document);
+			} else if (mutation.type === 'attributes') {
+				update(mutation.target.parentNode || document);
+			}
+		}
+	};
+
+	// Create an observer instance linked to the callback function
+	const observer = new MutationObserver(callback);
+
+	// Start observing the target node for configured mutations
+	observer.observe(document, config);
 }

@@ -47,7 +47,7 @@
 					<button type="button"
 							class="js-add-to-team-btn btn btn-sm btn-add float-end add-to-team-btn"
 							data-bs-toggle="tooltip"
-							data-bs-title="{{i18n 'course.roles.maketeam' 'Add to team'}}">
+							data-bs-title="{{i18n 'course.roles.maketeam' 'Add to team' attr=true}}">
 						<span class="fa-solid fa-plus {{member.user}}"></span>
 						<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
 					</button>
@@ -73,7 +73,7 @@
 
 <template name="removeFromTeamDropdown">
 	<span class="dropdown" data-bs-toggle="tooltip"
-		  data-bs-title="{{i18n 'course.roles.removeTeam' 'Remove from team'}}">
+		  data-bs-title="{{i18n 'course.roles.removeTeam' 'Remove from team' attr=true}}">
 		<button type="button" class="btn btn-sm btn-close btn-close-white" aria-expanded="false"
 				data-bs-toggle="dropdown"></button>
 		<ul class="dropdown-menu dialog-dropdown right">
