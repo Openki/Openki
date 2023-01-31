@@ -67,7 +67,7 @@ template.onCreated(function () {
 			if (change.validFor(user)) {
 				await processChange(change);
 				Alert.success(
-					i18n('course.roles.unsubscribed', 'Unsubscribed from {NAME} course', {
+					i18n('course.roles.unsubscribed', 'Unsubscribed from {NAME}', {
 						NAME: instance.data.course.name,
 					}),
 				);
