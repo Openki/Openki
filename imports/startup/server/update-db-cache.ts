@@ -13,38 +13,47 @@ import { MeteorAsync } from '/imports/utils/promisify';
 import { Log } from '/imports/api/log/log';
 
 function updateDbCacheFields() {
-	Log.record('db.cache.start', [], {});
+	try {
+		Log.record('db.cache.start', [], {});
 
-	// Resync location cache in events
-	Meteor.call('event.updateVenue', {}, AsyncTools.logErrors);
+		// Resync location cache in events
+		Meteor.call('event.updateVenue', {}, AsyncTools.logErrors);
+		Log.record('db.cache.log.event.updateVenue', [], {});
 
-	// Update list of organizers per course
-	Meteor.call('course.updateGroups', {}, AsyncTools.logErrors);
+		// Update list of organizers per course
+		Meteor.call('course.updateGroups', {}, AsyncTools.logErrors);
+		Log.record('db.cache.log.course.updateGroups', [], {});
 
-	eventsCategoriesDenormalizer.onStartUp();
+		eventsCategoriesDenormalizer.onStartUp();
+		Log.record('db.cache.log.eventsCategoriesDenormalizer', [], {});
 
-	// Update List of badges per user
-	Meteor.call('user.updateBadges', {}, AsyncTools.logErrors);
+		// Update List of badges per user
+		Meteor.call('user.updateBadges', {}, AsyncTools.logErrors);
+		Log.record('db.cache.log.user.updateBadges', [], {});
 
-	coursesTenantDenormalizer.onStartUp();
-	eventsTenantDenormalizer.onStartUp();
-	usersTenantsDenormalizer.onStartUp();
+		coursesTenantDenormalizer.onStartUp();
+		Log.record('db.cache.log.coursesTenantDenormalizer', [], {});
+		eventsTenantDenormalizer.onStartUp();
+		Log.record('db.cache.log.eventsTenantDenormalizer', [], {});
+		usersTenantsDenormalizer.onStartUp();
+		Log.record('db.cache.log.usersTenantsDenormalizer', [], {});
 
-	// The `acceptsPrivateMessage` field is denormalized via `observe` to keep up to date after a
-	// change is made.
-	Users.find({}, { fields: { allowPrivateMessages: 1, emails: 1 } }).observe({
-		added: Profile.updateAcceptsPrivateMessages,
-		changed: Profile.updateAcceptsPrivateMessages,
-	});
+		// The `acceptsPrivateMessage` field is denormalized via `observe` to keep up to date after a
+		// change is made.
+		Users.find({}, { fields: { allowPrivateMessages: 1, emails: 1 } }).observe({
+			added: Profile.updateAcceptsPrivateMessages,
+			changed: Profile.updateAcceptsPrivateMessages,
+		});
+		Log.record('db.cache.log.updateAcceptsPrivateMessages', [], {});
 
-	// Keep the nextEvent entry updated
-	// On startup do a full scan to catch stragglers
-	Meteor.call('course.updateNextEvent', {}, AsyncTools.logErrors);
-	Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
-	Meteor.setInterval(
-		() => {
-			try {
-				Log.record('db.cache.update.start', [], {});
+		// Keep the nextEvent entry updated
+		// On startup do a full scan to catch stragglers
+		Meteor.call('course.updateNextEvent', {}, AsyncTools.logErrors);
+		Log.record('db.cache.log.course.updateNextEvent', [], {});
+		Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
+		Log.record('db.cache.log.region.updateCounters', [], {});
+		Meteor.setInterval(
+			() => {
 				// Update nextEvent for courses where it expired
 				Meteor.call(
 					'course.updateNextEvent',
@@ -52,13 +61,12 @@ function updateDbCacheFields() {
 					AsyncTools.logErrors,
 				);
 				Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
-				Log.record('db.cache.update.finish', [], {});
-			} catch (e) {
-				Log.record('db.cache.update.start.error', [], e);
-			}
-		},
-		60 * 1000, // Check every minute
-	);
+			},
+			60 * 1000, // Check every minute
+		);
+	} catch (e) {
+		Log.record('db.cache.error', [], e);
+	}
 }
 
 Meteor.startup(async () => {
