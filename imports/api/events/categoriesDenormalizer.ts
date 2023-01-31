@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import { EventEntity, Events } from '/imports/api/events/events';
 import { Courses } from '/imports/api/courses/courses';
-import { Log } from '/imports/api/log/log';
 
 import * as AsyncTools from '/imports/utils/async-tools';
 
@@ -11,18 +10,12 @@ export function onStartUp() {
 	let updated = 0;
 
 	Courses.find({}, { fields: { _id: 1, categories: 1 } }).forEach((course) => {
-		try {
-			Log.record('db.cache.event.update', [], {});
-			Log.record('db.cache.event.update', [], { c: course });
-			updated += Events.update(
-				{ courseId: course._id },
-				{ $set: { categories: course.categories } },
-				{ multi: true },
-				AsyncTools.logErrors,
-			);
-		} catch (e) {
-			Log.record('db.cache.error', [], {});
-		}
+		updated += Events.update(
+			{ courseId: course._id },
+			{ $set: { categories: course.categories || [] } },
+			{ multi: true },
+			AsyncTools.logErrors,
+		);
 	});
 
 	/* eslint-disable-next-line no-console */
