@@ -14,11 +14,11 @@ export function checkUpdateOne(error: unknown, affectedDocuments: number) {
 /**
  * Simple async callback receiver that logs errors
  */
-export function logErrors(error: { stack: any }, result: unknown) {
+export function logErrors(error: Error, result: unknown) {
 	if (error) {
 		/* eslint-disable-next-line no-console */
 		console.log(error.stack);
-		Log.record('db.cache.update.error', [], {});
+		Log.record('error', [], { name: error.name, message: error.message, stack: error.stack });
 	}
 	return result;
 }
