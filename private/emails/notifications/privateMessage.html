@@ -16,16 +16,14 @@
 					<a href="mailto:{{fromAddress}}">{{fromAddress}}</a>
 				{{/if}}
 			</p>
-			{{#if courseLink}}
+			{{#if course}}
 				<p>
-					{{i18n "notification.privateMessage.mail.fromCourse" 'This message was sent from course:' lng=locale}}
-					<a href="{{courseLink}}">{{courseName}}</a>
+					{{i18n "notification.privateMessage.mail.fromCourse" 'This message was sent from {COURSE}.' COURSE=course lng=locale}}
 				</p>
 			{{/if}}
-			{{#if eventLink}}
+			{{#if event}}
 				<p>
-					{{i18n "notification.privateMessage.mail.fromEvent" 'This message was sent from event:' lng=locale}}
-					<a href="{{eventLink}}">{{eventTitle}}</a>
+					{{i18n "notification.privateMessage.mail.fromEvent" 'This message was sent from {EVENT}.' EVENT=event lng=locale}}
 				</p>
 			{{/if}}
 			<table class="comment-box">
