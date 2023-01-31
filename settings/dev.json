@@ -51,15 +51,15 @@
 			"de": "https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf"
 		},
 		"aboutLink": "https://about.openki.net",
-		"contribution": {
-			"icon": "fa-solid fa-heart",
-			"forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"],
-			"link": {
-				"en": "https://about.openki.net/en/ueber-uns/spenden/",
-				"de": "https://about.openki.net/ueber-uns/spenden/"
-			}
-		},
-		"eventDescriptionMax": 500, 
+		"contribution": 
+		    { "icon": "fa-solid fa-heart"
+			, "forbiddenChars": ["🖤", "💖", "💔", "💚", "💜", "❤️", "🧡", "💕", "💛", "💝"]
+			, "link": 
+				{ "en": "https://about.openki.net/en/ueber-uns/spenden/"
+				, "de": "https://about.openki.net/ueber-uns/spenden/"
+				}
+			},
+		"eventDescriptionMax": 500,
 		"categories": {"sports":
 			[
 				"martialarts",
