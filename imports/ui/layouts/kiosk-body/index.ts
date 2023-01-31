@@ -19,13 +19,7 @@ template.onRendered(() => {
 		Viewport.update();
 	});
 	Session.set('isRetina', window.devicePixelRatio === 2);
-	document.addEventListener(
-		'DOMNodeInserted',
-		function () {
-			Tooltips.enable();
-		},
-		false,
-	);
+	Tooltips.enable();
 });
 
 template.events({
