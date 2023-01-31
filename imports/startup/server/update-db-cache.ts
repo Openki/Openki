@@ -43,15 +43,19 @@ function updateDbCacheFields() {
 	Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
 	Meteor.setInterval(
 		() => {
-			Log.record('db.cache.update.start', [], {});
-			// Update nextEvent for courses where it expired
-			Meteor.call(
-				'course.updateNextEvent',
-				{ 'nextEvent.start': { $lt: new Date() } },
-				AsyncTools.logErrors,
-			);
-			Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
-			Log.record('db.cache.update.finish', [], {});
+			try {
+				Log.record('db.cache.update.start', [], {});
+				// Update nextEvent for courses where it expired
+				Meteor.call(
+					'course.updateNextEvent',
+					{ 'nextEvent.start': { $lt: new Date() } },
+					AsyncTools.logErrors,
+				);
+				Meteor.call('region.updateCounters', {}, AsyncTools.logErrors);
+				Log.record('db.cache.update.finish', [], {});
+			} catch (e) {
+				Log.record('db.cache.update.start.error', [], e);
+			}
 		},
 		60 * 1000, // Check every minute
 	);
