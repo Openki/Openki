@@ -23,23 +23,22 @@
 			},
 			"visitorUser": true
 		},
-		"footerLinks": [
-			{
-				"link": "https://about.openki.net/",
-				"key": "footer.aboutOpenki",
-				"title_key": "navigation.footer.about.title"
-			},
-			{ "link": "/info/faq", "key": "main.faq_link", "title_key": "navigation.footer.faq.title" },
-			{
-				"link": "https://gitlab.com/Openki/Openki/",
-				"key": "navigation.footer.sourceCodeOnGitLab",
-				"title_key": "navigation.footer.codeOnGitLab.tooltip"
-			},
-
-			{
-				"link": "https://about.openki.net/privacy-policy/",
-				"key": "main.privacyPolicy",
-				"title_key": "main.privacyPolicy.tooltip"
+		"footerLinks":
+		[	{ "link": "https://about.openki.net/"
+			, "key": "footer.aboutOpenki"
+			, "title_key": "navigation.footer.about.title"
+			}
+		,	{ "link": "/info/faq"
+			, "key": "main.faq_link"
+			, "title_key": "navigation.footer.faq.title"
+			}
+		,	{ "link": "https://gitlab.com/Openki/Openki/"
+			, "key": "navigation.footer.sourceCodeOnGitLab"
+			, "title_key": "navigation.footer.codeOnGitLab.tooltip"
+			}
+		,	{ "link": "https://about.openki.net/privacy-policy/"
+			, "key": "main.privacyPolicy"
+			, "title_key": "main.privacyPolicy.tooltip"
 			}
 		],
 		"faqLink": "/info/faq",
@@ -61,66 +60,65 @@
 			}
 		},
 		"eventDescriptionMax": 500, 
-		"categories": {
-			"sports":
-				[
-					"martialarts",
-					"teamsport",
-					"artistry"
-				],
-			"handicraft":
-				[
-					"metalwood",
-					"electronics",
-					"fabric",
-					"gardening",
-					"construction"
-				],
-			"sciences": 
-				[
-					"geography",
-					"physics",
-					"medicine",
-					"mathematics",
-					"chemistry",
-					"biology"
-				],
-			"humanities": 
-				[
-					"languages",
-					"history",
-					"sociology",
-					"politics",
-					"philosophy",
-					"lawbusiness"
-				],
-			"culture": 
-				[
-					"literature",
-					"theatre",
-					"music",
-					"dance",
-					"fineart",
-					"design",
-					"photography",
-					"film",
-					"cooking",
-					"subculture"
-				],
-			"computer": 
-				[
-					"internet",
-					"programming",
-					"operating"
-				],
-			"misc": 
-				[
-					"♥undefined♥",
-					"experimental",
-					"spiritual",
-					"education",
-					"ecology"
-				]
+		"categories": {"sports":
+			[
+				"martialarts",
+				"teamsport",
+				"artistry"
+			],
+		"handicraft":
+			[
+				"metalwood",
+				"electronics",
+				"fabric",
+				"gardening",
+				"construction"
+			],
+		"sciences":
+			[
+				"geography",
+				"physics",
+				"medicine",
+				"mathematics",
+				"chemistry",
+				"biology"
+			],
+		"humanities":
+			[
+				"languages",
+				"history",
+				"sociology",
+				"politics",
+				"philosophy",
+				"lawbusiness"
+			],
+		"culture":
+			[
+				"literature",
+				"theatre",
+				"music",
+				"dance",
+				"fineart",
+				"design",
+				"photography",
+				"film",
+				"cooking",
+				"subculture"
+			],
+		"computer":
+			[
+				"internet",
+				"programming",
+				"operating"
+			],
+		"misc":
+			[
+				"♥undefined♥",
+				"experimental",
+				"spiritual",
+				"education",
+				"ecology"
+			]
 		},
 		"s3": {
 			"publicUrlBase": "https://cz42.objectstorage.nineapis.ch/v1/AUTH_cda71cf5c64a4609b0ff99ffc399666f/bucket-openkitest"
