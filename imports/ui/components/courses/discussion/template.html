@@ -80,7 +80,8 @@
 				<div class="discussion-post-header">
 					{{> discussionProfileLink userId}}
 					<span class="discussion-post-header-sub">
-						<span data-bs-toggle="tooltip" data-bs-title="{{dateFormat time_created attr=true}}">
+						<span data-bs-toggle="tooltip"
+							  data-bs-title="{{dateFormat time_created attr=true}}">
 							{{fromNow time_created}}
 						</span>
 						{{#if notifyAll}}
