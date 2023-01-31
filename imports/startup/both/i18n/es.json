@@ -112,7 +112,6 @@
 	"course.createEventInfo": "Utilice este formulario para publicar un evento singular, único y ya organizado. De lo contrario, cree o proponga un curso aquí:",
 	"course.delete.confirm.archiveButton": "Más bien archivo",
 	"course.delete.confirm.button": "Eliminar este curso y sus eventos",
-	"course.delete.confirm.button.busy": "Eliminado curso…",
 	"course.description.placeholder": "Describa su idea, para que más gente la encuentre y sepa qué esperar.",
 	"course.detail.remove.other.team": "¿Remover este miembro de este equipo?",
 	"course.detail.remove.yourself.team": "¿Te retiras del equipo? Solo otro miembro puede añadirte de nuevo.",
