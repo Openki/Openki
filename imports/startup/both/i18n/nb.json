@@ -214,7 +214,6 @@
 	"course.subnav.history": "Historikk",
 	"course.title.Discussion": "Diskusjon",
 	"course.title.placeholder": "Hva er du interessert i?",
-	"courseCompact.internal_course": "Internt kurs",
 	"courseDetails.message.descriptionChanged": "Beskrivelsen av «{NAME}» har blitt endret.",
 	"courseGroupAdd.groupAdded.error": "Kunne ikke legge til gruppe",
 	"courseGroupAdd.groupRemoved": "{GROUP}-gruppen ble fjernet fra {COURSE}-faget.",
