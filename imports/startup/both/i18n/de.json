@@ -742,7 +742,6 @@
 	"roles.team.subscribed": "Du bist im Team",
 	"roles.team.userList": "{NAME} organisiert",
 	"roles.team.userList.past": "{NAME} organisierte",
-	"route.showCourse": "Kurs",
 	"schedule.startDateLabel": "Start:",
 	"send.validation.email": "Sende mir eine Bestätigungs-E-Mail.",
 	"send.validation.submit.busy": "Wird übermittelt…",
