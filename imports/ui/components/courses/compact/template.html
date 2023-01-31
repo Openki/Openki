@@ -52,23 +52,23 @@
 <template name="courseCompactRoles">
 	<div class="course-compact-roles">
 		<div class="course-compact-role {{roleStateClass 'team'}}" data-bs-toggle="tooltip"
-			 data-bs-title="{{roleStateTooltip 'team'}}" href="#">
+			 data-bs-title="{{roleStateTooltip 'team' attr=true}}" href="#">
 			<i class="{{roleIcon 'team'}}" aria-hidden="true"></i>
 		</div>
 		{{#if requiresRole 'mentor'}}
 			<div class="course-compact-role {{roleStateClass 'mentor'}}" data-bs-toggle="tooltip"
-				 data-bs-title="{{roleStateTooltip 'mentor'}}" href="#">
+				 data-bs-title="{{roleStateTooltip 'mentor' attr=true}}" href="#">
 				<i class="{{roleIcon 'mentor'}}" aria-hidden="true"></i>
 			</div>
 		{{/if}}
 		{{#if requiresRole 'host'}}
 			<div class="course-compact-role {{roleStateClass 'host'}}" data-bs-toggle="tooltip"
-				 data-bs-title="{{roleStateTooltip 'host'}}" href="#">
+				 data-bs-title="{{roleStateTooltip 'host' attr=true}}" href="#">
 				<i class="{{roleIcon 'host'}}" aria-hidden="true"></i>
 			</div>
 		{{/if}}
 		<div class="course-compact-role {{participantClass}}" data-bs-toggle="tooltip"
-			 data-bs-title="{{participantTooltip}}">
+			 data-bs-title="{{participantTooltip attr=true}}">
 			<i class="{{roleIcon 'participant'}}" aria-hidden="true"></i>
 			{{members.length}}
 		</div>
