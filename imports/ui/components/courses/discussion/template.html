@@ -80,18 +80,18 @@
 				<div class="discussion-post-header">
 					{{> discussionProfileLink userId}}
 					<span class="discussion-post-header-sub">
-						<span data-bs-toggle="tooltip" data-bs-title="{{dateFormat time_created}}">
+						<span data-bs-toggle="tooltip" data-bs-title="{{dateFormat time_created attr=true}}">
 							{{fromNow time_created}}
 						</span>
 						{{#if notifyAll}}
 							<i class="fa-solid fa-bell" aria-hidden="true" data-bs-toggle="tooltip"
-							   data-bs-title="{{i18n 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
+							   data-bs-title="{{i18n 'course.discussion.allNotified' 'All co-learners notifed' attr=true}}"></i>
 						{{/if}}
 						{{#if hasBeenEdited}}
 							-
 							{{i18n 'course.discussion.lastUpdate' 'Last update'}}:
 							<span data-bs-toggle="tooltip"
-								  data-bs-title="{{dateFormat time_updated}}">
+								  data-bs-title="{{dateFormat time_updated attr=true}}">
 								{{fromNow time_updated}}
 							</span>
 						{{/if}}
@@ -134,19 +134,19 @@
 					{{#unless new}}
 						<span class="discussion-post-header-sub">
 							<span data-bs-toggle="tooltip"
-								  data-bs-title="{{dateFormat time_created}}">
+								  data-bs-title="{{dateFormat time_created attr=true}}">
 								{{fromNow time_created}}
 							</span>
 							{{#if notifyAll}}
 								<i class="fa-solid fa-bell" aria-hidden="true"
 								   data-bs-toggle="tooltip"
-								   data-bs-title="{{i18n 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
+								   data-bs-title="{{i18n 'course.discussion.allNotified' 'All co-learners notifed' attr=true}}"></i>
 							{{/if}}
 							{{#if hasBeenEdited}}
 								-
 								{{i18n 'course.discussion.lastUpdate' 'Last update'}}:
 								<span data-bs-toggle="tooltip"
-									  data-bs-title="{{dateFormat time_updated}}">
+									  data-bs-title="{{dateFormat time_updated attr=true}}">
 									{{fromNow time_updated}}
 								</span>
 							{{/if}}
