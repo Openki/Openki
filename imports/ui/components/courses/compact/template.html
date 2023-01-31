@@ -6,8 +6,8 @@
 					 style="{{courseCss this}}">
 					<div class="course-compact-content">
 						{{#if internal}}
-							<span class="course-compact-internal"
-								  data-tooltip="{{i18n '_label.internal'}}"></span>
+							<span class="course-compact-internal" data-bs-toggle="tooltip"
+								  data-bs-title="{{i18n '_label.internal'}}"></span>
 						{{/if}}
 						<div class="course-compact-title" title="{{name}}">{{name}}</div>
 						{{> courseCategories this}}
@@ -51,23 +51,24 @@
 
 <template name="courseCompactRoles">
 	<div class="course-compact-roles">
-		<div class="course-compact-role {{roleStateClass 'team'}}"
-			 data-tooltip="{{roleStateTooltip 'team'}}" href="#">
+		<div class="course-compact-role {{roleStateClass 'team'}}" data-bs-toggle="tooltip"
+			 data-bs-title="{{roleStateTooltip 'team' attr=true}}" href="#">
 			<i class="{{roleIcon 'team'}}" aria-hidden="true"></i>
 		</div>
 		{{#if requiresRole 'mentor'}}
-			<div class="course-compact-role {{roleStateClass 'mentor'}}"
-				 data-tooltip="{{roleStateTooltip 'mentor'}}" href="#">
+			<div class="course-compact-role {{roleStateClass 'mentor'}}" data-bs-toggle="tooltip"
+				 data-bs-title="{{roleStateTooltip 'mentor' attr=true}}" href="#">
 				<i class="{{roleIcon 'mentor'}}" aria-hidden="true"></i>
 			</div>
 		{{/if}}
 		{{#if requiresRole 'host'}}
-			<div class="course-compact-role {{roleStateClass 'host'}}"
-				 data-tooltip="{{roleStateTooltip 'host'}}" href="#">
+			<div class="course-compact-role {{roleStateClass 'host'}}" data-bs-toggle="tooltip"
+				 data-bs-title="{{roleStateTooltip 'host' attr=true}}" href="#">
 				<i class="{{roleIcon 'host'}}" aria-hidden="true"></i>
 			</div>
 		{{/if}}
-		<div class="course-compact-role {{participantClass}}" data-tooltip="{{participantTooltip}}">
+		<div class="course-compact-role {{participantClass}}" data-bs-toggle="tooltip"
+			 data-bs-title="{{participantTooltip attr=true}}">
 			<i class="{{roleIcon 'participant'}}" aria-hidden="true"></i>
 			{{members.length}}
 		</div>

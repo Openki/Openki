@@ -103,6 +103,18 @@
 					</div>
 				</div>
 			{{/if}}
+			{{#if isAdmin}}
+				<div class="page-component page-component-seperated">
+					<h3>{{i18n 'profile.administration.title' 'Administration'}}</h3>
+					<h5>
+						{{i18n 'profile.administration.link' 'You are an administrator of {SITENAME}' SITENAME=PublicSettings.siteName }}
+					</h5>
+					<a class="button btn btn-primary"
+					   href="{{pathFor 'adminPanel'}}">
+						{{i18n "profile.administration.button" "Visit admin panel" lng=locale}}
+					</a>
+				</div>
+			{{/if}}
 			{{#if tenantCount}}
 				<div class="page-component page-component-seperated">
 					<h3>{{i18n 'profile.tenants' 'My organizations'}}</h3>
@@ -122,7 +134,6 @@
 					</ul>
 				</div>
 			{{/if}}
-
 			<div class="page-component page-component-seperated">
 				<h3>{{i18n 'profile.groups' 'My groups'}}</h3>
 				<h5>
