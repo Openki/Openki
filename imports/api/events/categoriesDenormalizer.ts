@@ -12,6 +12,8 @@ export function onStartUp() {
 
 	Courses.find({}, { fields: { _id: 1, categories: 1 } }).forEach((course) => {
 		try {
+			Log.record('db.cache.event.update', [], {});
+			Log.record('db.cache.event.update', [], { c: course });
 			updated += Events.update(
 				{ courseId: course._id },
 				{ $set: { categories: course.categories } },
@@ -19,7 +21,7 @@ export function onStartUp() {
 				AsyncTools.logErrors,
 			);
 		} catch (e) {
-			Log.record('db.cache.error', [], e);
+			Log.record('db.cache.error', [], {});
 		}
 	});
 
