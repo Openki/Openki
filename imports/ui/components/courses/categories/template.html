@@ -7,7 +7,7 @@
 <template name="categoryLabelLinked">
 	<div class="tag tag-link category-tag">
 		<a class='js-category-label category-{{this}}' data-bs-toggle="tooltip"
-		   data-bs-title="{{i18n 'categories.show_courses' 'Show all in {COURSE}' COURSE=(categoryName this)}}"
+		   data-bs-title="{{i18n 'categories.show_courses' 'Show all in {COURSE}' COURSE=(categoryName this) attr=true}}"
 		   href="{{pathFor 'home' query=(concat 'categories=' this)}}">
 			{{categoryName this}}
 		</a>
