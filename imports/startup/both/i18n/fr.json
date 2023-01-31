@@ -247,7 +247,6 @@
 	"course.subnav.history": "Histoire",
 	"course.title.Discussion": "Discussion",
 	"course.title.placeholder": "Qu'est ce qui vous intéresse ?",
-	"courseCompact.internal_course": "Cours interne",
 	"courseDetails.message.descriptionChanged": "La description de \"{NAME}\" a changé.",
 	"courseDetails.message.nameChanged": "Le nom de ce cours a changé en \"{NAME}\".",
 	"courseDetailsPage.message.courseHasBeenArchived": "Le cours \"{COURSE}\" a été archivé.",
