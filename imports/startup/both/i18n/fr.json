@@ -466,7 +466,6 @@
 	"groupDetails.groupCreated": "Le groupe {GROUP} a été créé.",
 	"groupDetails.saveError": "Le groupe \"{GROUP}\" n'a pu être enregistré",
 	"groupList.show_courses": "{NAME}, montrer tous leur cours",
-	"groupListFull.show_courses": "Montrer tout les cours de ce groupe",
 	"groupSettings.group.logo.removed": "Tous les changements dans les préférences du groupe \"{GROUP}\" ont été enregistrés.",
 	"groupSettings.group.logo.removed.error": "Les préférences n'ont pu être enregistrées",
 	"groupSettings.group.logo.updated": "Tous les changements dans les préférences du groupe \"{GROUP}\" ont été enregistrés.",
