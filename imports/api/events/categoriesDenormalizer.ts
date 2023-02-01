@@ -2,8 +2,6 @@
 import { EventEntity, Events } from '/imports/api/events/events';
 import { Courses } from '/imports/api/courses/courses';
 
-import * as AsyncTools from '/imports/utils/async-tools';
-
 // Based on the guide from meteor: https://guide.meteor.com/collections.html#abstracting-denormalizers
 
 export function onStartUp() {
@@ -14,7 +12,6 @@ export function onStartUp() {
 			{ courseId: course._id },
 			{ $set: { categories: course.categories || [] } },
 			{ multi: true },
-			AsyncTools.logErrors,
 		);
 	});
 
