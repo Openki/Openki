@@ -457,7 +457,6 @@
 	"groupDetails.groupCreated": "Die \"{GROUP}\" Gruppe wurde erstellt.",
 	"groupDetails.saveError": "Die Gruppe \"{GROUP}\" konnte nicht gespeichert werden",
 	"groupList.show_courses": "Zeige alle Kurse von \"{NAME}\"",
-	"groupListFull.show_courses": "Zeige alle Kurse dieser Gruppe",
 	"groupSettings.memberAdded": "\"{MEMBER}\" wurde zur Gruppe \"{GROUP}\" hinzugefügt",
 	"groupSettings.memberRemoved": "\"{MEMBER}\" wurde von der Gruppe \"{GROUP}\" entfernt",
 	"grouplist.addgroups.header": "Füge eine Gruppe hinzu",
