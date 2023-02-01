@@ -9,9 +9,9 @@ import '/imports/ui/components/alerts';
 
 import './template.html';
 
-const Template = TemplateAny as TemplateStaticTyped<'frameLayout'>;
+const Template = TemplateAny as TemplateStaticTyped<'kioskLayout'>;
 
-const template = Template.frameLayout;
+const template = Template.kioskLayout;
 
 template.onRendered(() => {
 	Viewport.update();
