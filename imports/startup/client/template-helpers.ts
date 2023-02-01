@@ -348,7 +348,9 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 		}
 
 		return Spacebars.SafeString(
-			`<a href="${getLocalizedValue(contribution.link)}" data-tooltip="${Blaze._escape(
+			`<a href="${getLocalizedValue(
+				contribution.link,
+			)}" data-bs-toggle="tooltip" data-bs-title="${Blaze._escape(
 				i18n(
 					'user.hasContributed',
 					'{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.',

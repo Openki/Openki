@@ -44,7 +44,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 	add<N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string) {
 		try {
 			if (!this._availablePredicates[name]) {
-				throw new FilteringReadError('', `No predicate ${name}`);
+				throw new FilteringReadError('', `No predicate ${name as string}`);
 			}
 			const toAdd = this._availablePredicates[name](param);
 			if (!toAdd) {
@@ -93,7 +93,7 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
 	remove(name: keyof T, param?: string) {
 		try {
 			if (!this._availablePredicates[name]) {
-				throw new FilteringReadError('', `No predicate ${name}`);
+				throw new FilteringReadError('', `No predicate ${name as string}`);
 			}
 			const toRemove = this._availablePredicates[name](param as any);
 

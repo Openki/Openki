@@ -7,7 +7,7 @@ $body-color: $gray-800;
 
 // ** Tabs
 //========================================================================================
-$tab-content-bg: tint-color($blue-lighter, 5%);
+$tab-content-bg: lighten($blue-lighter, 5%);
 $tab-content-border-width: 1px;
 
 // ** Box shadow

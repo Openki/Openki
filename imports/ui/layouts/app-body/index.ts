@@ -11,6 +11,7 @@ import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
 import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as Tooltips from '/imports/utils/Tooltips';
 
 import '/imports/ui/components/account-tasks';
 import '/imports/ui/components/alerts';
@@ -76,6 +77,7 @@ template.onRendered(() => {
 		Viewport.update();
 	});
 	Session.set('isRetina', window.devicePixelRatio === 2);
+	Tooltips.enable();
 });
 
 template.events({

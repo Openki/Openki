@@ -131,6 +131,7 @@ export function Model(entry: { body: Body }) {
 			const eventTitle = Spacebars.SafeString(`<a href="${eventUrl}">${eventFullTitle}</a>`);
 			return {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
+				course: course.name,
 				event: eventTitle,
 				newParticipant: Spacebars.SafeString(`<strong>${newParticipant.getDisplayName()}</strong>`),
 				subject,
