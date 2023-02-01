@@ -16,7 +16,7 @@
 			{{#if limited}}
 				<button class="btn btn-lg btn-add course-page-btn js-show-more-members"
 						type="button">
-					{{i18n 'course.members.showMoreParticipants' 'Show more co-learners'}}
+					{{i18n '_button.more'}}
 				</button>
 			{{/if}}
 		</div>
@@ -46,8 +46,8 @@
 				{{#if maySubscribeToTeam}}
 					<button type="button"
 							class="js-add-to-team-btn btn btn-sm btn-add float-end add-to-team-btn"
-							data-tooltip="{{i18n 'course.roles.maketeam' 'Add to team'}}"
-							data-tooltip-direction="e">
+							data-bs-toggle="tooltip"
+							data-bs-title="{{i18n 'course.roles.maketeam' 'Add to team' attr=true}}">
 						<span class="fa-solid fa-plus {{member.user}}"></span>
 						<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
 					</button>
@@ -72,11 +72,10 @@
 </template>
 
 <template name="removeFromTeamDropdown">
-	<span class="dropdown">
+	<span class="dropdown" data-bs-toggle="tooltip"
+		  data-bs-title="{{i18n 'course.roles.removeTeam' 'Remove from team' attr=true}}">
 		<button type="button" class="btn btn-sm btn-close btn-close-white" aria-expanded="false"
-				aria-haspopup="true" data-bs-toggle="dropdown"
-				data-tooltip="{{i18n 'course.roles.removeTeam' 'Remove from team'}}"
-				data-tooltip-direction="e"></button>
+				data-bs-toggle="dropdown"></button>
 		<ul class="dropdown-menu dialog-dropdown right">
 			<li class="dropdown-header">
 				{{#if isNotPriviledgedSelf}}

@@ -1,5 +1,5 @@
 .nav-tabs > li > a {
-	color: $gray-dark;
+	color: $gray-800;
 
 	&:hover {
 		background-color: $blue-light;
@@ -28,7 +28,7 @@
 }
 
 .tab-label {
-	@media (max-width: $screen-xs) {
+	@include media-breakpoint-down(sm) {
 		display: none;
 
 		.active & {
