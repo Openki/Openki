@@ -105,7 +105,7 @@
 								</p>
 								{{#if courseTitle}}
 									<p>
-										{{i18n 'event.details.youStayEnrolled' 'Note that you will stay enrolled as interested for the course "{COURSETITLE}".' COURSETITLE=courseTitle}}
+										{{i18n 'event.details.youStayEnrolled' 'Note that you will stay enrolled as interested for {COURSETITLE}.' COURSETITLE=courseTitle}}
 									</p>
 								{{/if}}
 							{{/unless}}
@@ -139,8 +139,8 @@
 			{{/unless}}
 			<div class="details-content">
 				{{#if internal}}
-					<span class="details-internal"
-						  data-tooltip="{{i18n 'eventCompact.internal_event' 'Internal event'}}"></span>
+					<span class="details-internal" data-bs-toggle="tooltip"
+						  data-bs-title="{{i18n '_label.internal' attr=true}}"></span>
 				{{/if}}
 				<div class="row">
 					<div class="col-md-7">
