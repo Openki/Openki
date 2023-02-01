@@ -37,7 +37,7 @@ export interface RegionEntity {
 	 */
 	courseCount: number;
 	/**
-	 * Number of future events in that region, calculated field (does not count internal courses)
+	 * Number of future events in that region, calculated field (does not count internal events)
 	 */
 	futureEventCount: number;
 	/** ID of featured group */

@@ -10,7 +10,7 @@ export function onStartUp() {
 	Courses.find({}, { fields: { _id: 1, categories: 1 } }).forEach((course) => {
 		updated += Events.update(
 			{ courseId: course._id },
-			{ $set: { categories: course.categories } },
+			{ $set: { categories: course.categories || [] } },
 			{ multi: true },
 		);
 	});
