@@ -530,26 +530,6 @@ $state-danger-text: #a94442 !default;
 $state-danger-bg: #f2dede !default;
 $state-danger-border: darken($state-danger-bg, 5%) !default;
 
-//== Tooltips
-//
-//##
-
-//** Tooltip max width
-$tooltip-max-width: none !default;
-
-//** Tooltip text color
-$tooltip-color: $white !default;
-
-//** Tooltip background color
-$tooltip-bg: $brand-primary !default;
-$tooltip-opacity: 1 !default;
-
-//** Tooltip arrow width
-$tooltip-arrow-width: 4px !default;
-
-//** Tooltip arrow color
-$tooltip-arrow-color: $tooltip-bg !default;
-
 //== Popovers
 //
 //##
