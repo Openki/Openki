@@ -9,6 +9,8 @@ $enable-gradients: true;
 // Include functions first (so we can manipulate colors, SVGs, calc, etc)
 @import '{}/node_modules/bootstrap/scss/functions'; // Required
 
+@import '{}/node_modules/bootstrap/scss/variables'; // Required
+
 // Default variable overrides
 
 $secondary: #f0f0f0;
@@ -21,34 +23,34 @@ $secondary: #f0f0f0;
 // margins. For compatibility reasons we use "14px", many views were made at a time when we used
 // bootstrap version 3, "14px" corresponds to the value at that time.
 $font-size-root: 14px;
-$font-size-large: ceil($font-size-root * 1.25) !default;
+$font-size-large: ceil($font-size-root * 1.25);
 
-$font-family-sans-serif: 'Source Sans Pro', sans-serif !default;
+$font-family-sans-serif: 'Source Sans Pro', sans-serif;
 
 // Components
 //
 // Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
-$padding-large-vertical: 10px !default;
-$padding-large-horizontal: 16px !default;
+$padding-large-vertical: 10px;
+$padding-large-horizontal: 16px;
 
-$border-radius-large: 6px !default;
+$border-radius-large: 6px;
 
-$border-radius-base: 4px !default;
+$border-radius-base: 4px;
 
 // Navbar
 //
 // For backwards compatibility
-$navbar-height: 50px !default;
-$zindex-navbar-fixed: 1030 !default;
+$navbar-height: 50px;
+$zindex-navbar-fixed: 1030;
 
 // Buttons
 //
 // For each of Bootstrap's buttons, define text, background and border color.
 
 // Allows for customizing button radius independently from global border radius
-$btn-border-radius-base: $border-radius-base !default;
-$btn-border-radius-large: $border-radius-large !default;
+$btn-border-radius-base: $border-radius-base;
+$btn-border-radius-large: $border-radius-large;
 
 // Links
 //
@@ -60,27 +62,26 @@ $link-decoration: none;
 
 $form-label-color: shade-color($blue, 20%);
 
-$form-group-margin-bottom: 15px !default;
+$form-group-margin-bottom: 15px;
 
 // Dropdowns
 //
 // Dropdown menu container and contents.
 
 //** Background for the dropdown menu.
-$dropdown-bg: lighten($blue-lighter, 8.7%) !default;
+$dropdown-bg: lighten($blue-lighter, 8.7%);
+
+$hr-color: $blue-lighter;
 
 // Tooltips
 
 $tooltip-bg: $blue;
 $tooltip-opacity: 1;
-
-$hr-color: $blue-lighter;
+$tooltip-font-size: $font-size-base;
 
 // Modals
 
 $modal-sm: 400px;
-
-@import '{}/node_modules/bootstrap/scss/variables'; // Required
 
 // Modify Bootstrap maps
 
