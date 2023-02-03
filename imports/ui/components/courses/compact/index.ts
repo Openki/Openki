@@ -12,6 +12,7 @@ import '/imports/ui/components/courses/categories';
 import '/imports/ui/components/groups/list';
 
 import './template.html';
+import './styles.scss';
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<'courseCompact', CourseModel>;
