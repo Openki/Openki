@@ -18,43 +18,35 @@
 				</h3>
 				{{#if openedIntro}}
 					<div class="introduction-content">
-						<ul class="introduction-steps">
-							<li>
+						<div
+							 class="introduction-steps row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
+							<div class="col">
 								<h2><span class="fa-regular fa-lightbulb" aria-hidden="true"></span>
 								</h2>
 								{{i18n 'introduction.1_teachOrLearn' 'You want to learn something, or teach others.'}}
-							</li>
-							<li>
+							</div>
+							<div class="col">
 								<h2><span class="fa-solid fa-magnifying-glass"
 										  aria-hidden="true"></span></h2>
 								{{i18n 'introduction.2_searchNPropose' 'You search if the course already exists. If not, just propose it.'}}
-							</li>
-							{{#if clearfixFor "screenXS"}}
-								<div class="clearfix"></div>
-							{{/if}}
-							<li>
+							</div>
+							<div class="col">
 								<h2><span class="fa-solid fa-graduation-cap"
 										  aria-hidden="true"></span>
 								</h2>
 								{{i18n 'introduction.3_enrole' 'Everybody can join your course as participant, mentor or host.'}}
-							</li>
-							{{#if clearfixFor "screenSM"}}
-								<div class="clearfix"></div>
-							{{/if}}
-							<li>
+							</div>
+							<div class="col">
 								<h2><span class="fa-regular fa-calendar-check"
 										  aria-hidden="true"></span>
 								</h2>
 								{{i18n 'introduction.4_schedule' 'When everybody needed is in, a date gets fixed.'}}
-							</li>
-							{{#if clearfixFor "screenXS"}}
-								<div class="clearfix"></div>
-							{{/if}}
-							<li>
+							</div>
+							<div class="col">
 								<h2><span class="fa-solid fa-rocket" aria-hidden="true"></span></h2>
 								{{i18n 'introduction.5_takePlace' 'The course takes place.'}}
-							</li>
-							<li>
+							</div>
+							<div class="col">
 								<h2><span class="fa-solid fa-circle-info" aria-hidden="true"></span>
 								</h2>
 								{{i18n 'introduction.more' 'More info:'}}<br>
@@ -62,9 +54,8 @@
 								   href="{{localized PublicSettings.aboutLink}}">{{i18n 'main.about_link' 'About'}}</a><br>
 								<a
 								   href="{{localized PublicSettings.faqLink}}">{{i18n 'main.faq_link' 'FAQ'}}</a>
-							</li>
-						</ul>
-						<div class="clearfix"></div>
+							</div>
+						</div>
 						{{#if hasPricePolicy}}
 							{{> pricePolicy}}
 						{{/if}}
