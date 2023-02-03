@@ -42,12 +42,6 @@
 	max-height: 386px;
 }
 
-.navbar-form {
-	@media (max-width: $grid-float-breakpoint) {
-		border: 0;
-		box-shadow: none;
-	}
-}
 
 .navbar-container {
 	max-width: 1600px;
@@ -238,35 +232,6 @@
 	@media (min-width: $grid-float-breakpoint) {
 		background-color: lighten($navbar-default-bg, 10%);
 		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-	}
-}
-
-.navbar-form-selection {
-	font-size: large;
-	margin: 0;
-	padding: 8.5px 0;
-
-	@media (max-width: $grid-float-breakpoint) {
-		padding: 8.5px 8.5px 0 !important;
-	}
-}
-
-.navbar-form-selection > {
-	.fa-regular,
-	.fa-brands,
-	.fa-solid {
-		color: $white;
-
-		@media (max-width: $grid-float-breakpoint) {
-			display: none;
-		}
-	}
-}
-
-.navbar-form-selection > .form-control {
-	@media (max-width: $grid-float-breakpoint) {
-		height: 100%;
-		width: 100%;
 	}
 }
 
