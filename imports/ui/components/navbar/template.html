@@ -1,61 +1,56 @@
 <template name="navbar">
-	<nav class="navbar navbar-default navbar-fixed-top" id="topnavbar" role="navigation">
+	<nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-primary">
 		{{#if PublicSettings.testWarning}}
 			{{> testWarningTicker}}
 		{{/if}}
 		{{! Brand and toggle get grouped for better mobile display }}
 		<div class="navbar-container container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle navbar-brand collapsed"
-						data-bs-toggle="collapse" data-bs-target="#bs-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<i class="fa-solid fa-bars text-white"></i>
-					<i class="fa-solid fa-x text-white"></i>
-				</button>
-				<a class="navbar-brand js-toggle-introduction" href="{{pathFor 'home'}}">
-					{{#if connecting}}
-						<span class="fa-solid fa-circle-notch fa-spin fa-fw connecting"
-							  title="{{i18n 'status.connecting' 'Connecting to server' attr=true}}">
-						</span>
-						<span class="sr-only">{{i18n 'status.connecting'}}</span>
-					{{/if}}
-					{{#if notConnected}}
-						<span class="fa-solid fa-circle-notch fa-fw no-connection"
-							  title="{{i18n 'status.notConnected' 'No connection to server' attr=true}}">
-						</span>
-						<span class="sr-only">{{i18n 'status.notConnected'}}</span>
-					{{/if}}
-					{{#if connected}}
-						<img src="{{headerLogo}}" alt="{{headerAlt}}">
-					{{/if}}
-					<span class="site-name">{{siteName}}</span>
-					<span class="site-stage">{{siteStage}}</span>
-				</a>
-			</div>
-			<div class="collapse navbar-collapse overflow-auto" id="bs-navbar-collapse-1">
-				<ul
-					class="nav navbar-nav {{toggleNavbarRight 'left'}} row-sm-auto row-no-gutters px-1 text-center">
-					<li
-						class="{{activeClass 'home'}} {{activeClass 'showCourse'}} col-4-sm-auto p-0">
+			<a class="navbar-brand js-toggle-introduction" href="{{pathFor 'home'}}">
+				{{#if connecting}}
+					<span class="fa-solid fa-circle-notch fa-spin fa-fw connecting"
+						  title="{{i18n 'status.connecting' 'Connecting to server' attr=true}}">
+					</span>
+					<span class="sr-only">{{i18n 'status.connecting'}}</span>
+				{{/if}}
+				{{#if notConnected}}
+					<span class="fa-solid fa-circle-notch fa-fw no-connection"
+						  title="{{i18n 'status.notConnected' 'No connection to server' attr=true}}">
+					</span>
+					<span class="sr-only">{{i18n 'status.notConnected'}}</span>
+				{{/if}}
+				{{#if connected}}
+					<img src="{{headerLogo}}" alt="{{headerAlt}}">
+				{{/if}}
+				<span class="site-name">{{siteName}}</span>
+				<span class="site-stage">{{siteStage}}</span>
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#bs-navbar-collapse" aria-controls="bs-navbar-collapse"
+					aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="bs-navbar-collapse">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
 						<a href="{{pathFor 'home'}}"
-						   class="{{activeClass 'home'}} {{activeClass 'showCourse'}} navbar-link js-nav-dropdown-close"
+						   class="{{activeClass 'home'}} {{activeClass 'showCourse'}} nav-link js-nav-dropdown-close"
 						   id="nav_courses">
 							<span class="fa-regular fa-lightbulb fa-fw" aria-hidden="true"></span>
 							{{i18n 'menue.Courses' 'Find'}}
 							<div class="nav-marker-caret"></div>
 						</a>
 					</li>
-					<li class="{{activeClass 'proposeCourse'}} col-4-sm-auto p-0">
+					<li class="nav-item">
 						<a href="{{pathFor 'proposeCourse'}}"
-						   class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} navbar-link js-nav-dropdown-close">
+						   class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} nav-link js-nav-dropdown-close">
 							<span class="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
 							{{i18n 'menue.Create' 'Create'}}
 							<div class="nav-marker-caret"></div>
 						</a>
 					</li>
-					<li class="{{activeClass 'calendar'}} col-4-sm-auto p-0">
+					<li class="nav-item">
 						<a href="{{pathFor 'calendar'}}"
-						   class="{{activeClass 'calendar'}} navbar-link calendar-link js-nav-dropdown-close">
+						   class="{{activeClass 'calendar'}} nav-link calendar-link js-nav-dropdown-close">
 							<span class="fa-regular fa-calendar-days fa-fw"
 								  aria-hidden="true"></span>
 							{{i18n 'menue.Calendar' 'Calendar'}}
@@ -64,37 +59,34 @@
 						</a>
 					</li>
 				</ul>
-				<div class="{{toggleNavbarRight}}">
-					<ul class="nav navbar-nav row-sm-auto row-no-gutters px-1 text-center">
-						{{> regionSelectionWrap inNavbar=true}}
-						{{> languageSelectionWrap inNavbar=true}}
-					</ul>
-					<ul class="nav navbar-nav text-center">
-						<li class="dropdown login-link">
-							{{> loginButton}}
-							<div class="dropdown-menu dropdown-menu-end login-dropdown">
-								{{> userFrame}}
-							</div>
-						</li>
-					</ul>
-				</div>
+				<ul class="navbar-nav">
+					{{> regionSelectionWrap inNavbar=true}}
+					{{> languageSelectionWrap inNavbar=true}}
+				</ul>
+				<ul class="navbar-nav text-center">
+					<li class="dropdown login-link">
+						{{> loginButton}}
+						<div class="dropdown-menu dropdown-menu-end login-dropdown">
+							{{> userFrame}}
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</nav>
-	<div class="navbar-custom-modal {{#if navbarIsCollapsed}}d-none{{/if}} js-nav-dropdown-close">
-	</div>
+
 </template>
 
 <template name='loginButton'>
 	{{#if loginServicesConfigured}}
 		{{#if currentUser}}
-			<a class="loginButton navbar-link" aria-expanded="false" data-bs-toggle="dropdown"
+			<a class="loginButton nav-link text-white" aria-expanded="false" data-bs-toggle="dropdown"
 			   role="button">
 				<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
 				{{currentUser.getDisplayName}}
 			</a>
 		{{else}}
-			<a class="js-open-login loginButton navbar-link" id="openLogin" role="button">
+			<a class="js-open-login loginButton nav-link text-white" id="openLogin" role="button">
 				<span class="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true"></span>
 				{{i18n 'login.navig.unlogged' 'Log in/register'}}
 			</a>

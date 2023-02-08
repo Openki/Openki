@@ -36,12 +36,6 @@ $border-radius-large: 6px !default;
 
 $border-radius-base: 4px !default;
 
-// Navbar
-//
-// For backwards compatibility
-$navbar-height: 50px !default;
-$zindex-navbar-fixed: 1030 !default;
-
 // Buttons
 //
 // For each of Bootstrap's buttons, define text, background and border color.
@@ -76,6 +70,15 @@ $hr-color: $blue-lighter;
 $modal-sm: 400px;
 
 @import '{}/node_modules/bootstrap/scss/variables'; // Required
+
+// Navbar
+//
+// For backwards compatibility
+$nav-link-padding-y: 0.822rem;
+$navbar-height: 50px !default;
+$navbar-padding-y: null;
+$zindex-navbar-fixed: 1030 !default;
+$navbar-nav-link-padding-x:         1rem;
 
 // Tooltips
 
