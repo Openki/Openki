@@ -47,7 +47,7 @@ import './styles.scss';
 		if (Viewport.get().width > gridFloatBreakpoint) {
 			$(window).on('scroll', () => {
 				const navbar = instance.$('.navbar');
-				const activeNavLink = instance.$('.navbar-link-active');
+				const activeNavLink = instance.$('.navbar-link.active');
 				const notAtTop = ($(window).scrollTop() || 0) > 5;
 
 				navbar.toggleClass('navbar-covering', notAtTop);
