@@ -24,10 +24,11 @@
 				<span class="site-name">{{siteName}}</span>
 				<span class="site-stage">{{siteStage}}</span>
 			</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+			<button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
 					data-bs-target="#bs-navbar-collapse" aria-controls="bs-navbar-collapse"
 					aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
+				<i class="fa-solid fa-bars text-white"></i>
+				<i class="fa-solid fa-x text-white"></i>
 			</button>
 			<div class="collapse navbar-collapse" id="bs-navbar-collapse">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -80,8 +81,8 @@
 <template name='loginButton'>
 	{{#if loginServicesConfigured}}
 		{{#if currentUser}}
-			<a class="loginButton nav-link text-white" aria-expanded="false" data-bs-toggle="dropdown"
-			   role="button">
+			<a class="loginButton nav-link text-white" aria-expanded="false"
+			   data-bs-toggle="dropdown" role="button">
 				<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
 				{{currentUser.getDisplayName}}
 			</a>

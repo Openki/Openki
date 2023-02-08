@@ -17,6 +17,10 @@
 // 	}
 // }
 
+.navbar-toggler {
+	border: 0 !important;
+}
+
 // .navbar-toggle {
 // 	margin: 0;
 // 	margin-right: 22px;
@@ -61,10 +65,10 @@
 }
 
 .navbar-brand > img {
-	margin-top: -15px;
-	margin-bottom: -22px;
 	display: inline-block;
 	height: 49px;
+	margin-bottom: -22px;
+	margin-top: -15px;
 	position: relative;
 }
 
@@ -75,11 +79,11 @@
 }
 
 .site-stage {
-	inset-inline-end: 0;
 	bottom: 2px;
 	color: $gray-800;
 	font-size: small;
 	font-weight: bold;
+	inset-inline-end: 0;
 	position: absolute;
 	transform: rotate(345deg);
 	transition: text-shadow $default-transition-time;
@@ -144,29 +148,29 @@
 	width: 0;
 }
 
-// .navbar-link-active {
-// 	@media (max-width: $grid-float-breakpoint) {
-// 		background-color: lighten($navbar-default-bg, 10%);
-// 	}
-// }
+.nav-link.active {
+	@include media-breakpoint-down(lg) {
+		background-color: lighten($primary, 10%);
+	}
+}
 
 .nav-link.active .nav-marker-caret {
-	// 	@media (min-width: $grid-float-breakpoint) {
-	opacity: 1;
-	// 	}
+	@include media-breakpoint-up(lg) {
+		opacity: 1;
+	}
 }
 
 .nav-link.active.calendar-link > .nav-marker-caret {
-	// 	@media (min-width: $grid-float-breakpoint) {
-	border-bottom-color: $calendar-nav-bg;
-	// 	}
+	@include media-breakpoint-up(lg) {
+		border-bottom-color: $calendar-nav-bg;
+	}
 }
 
 .nav-link.active.calendar-link.navbar-link-covering > .nav-marker-bar {
-	// 	@media (min-width: $grid-float-breakpoint) {
-	background-color: $calendar-nav-bg;
-	opacity: 1;
-	// 	}
+	@include media-breakpoint-up(lg) {
+		background-color: $calendar-nav-bg;
+		opacity: 1;
+	}
 }
 
 // .navbar .navbar-nav:first-child,
@@ -223,13 +227,13 @@
 // 	}
 // }
 
-// .navbar-covering {
-// 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-// }
+.navbar-covering {
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
 
-// .navbar-covering .nav-marker-caret {
-// 	opacity: 0;
-// }
+.navbar-covering .nav-marker-caret {
+	opacity: 0;
+}
 
 .navbar-covering .nav-link.active,
 .navbar-covering .navbar-nav > li > .nav-link.active:hover,
@@ -254,28 +258,16 @@
 // 	}
 // }
 
-// .fa-bars {
-// 	transform: scale(1.7, 1);
-// }
+.navbar-toggler .fa-bars {
+	transform: scale(1.7, 1);
+}
 
-// .navbar-toggle.collapsed .fa-bars,
-// .navbar-toggle .fa-x {
-// 	display: block;
-// }
+.navbar-toggler.collapsed .fa-bars,
+.navbar-toggler .fa-x {
+	display: block;
+}
 
-// .navbar-toggle .fa-bars,
-// .navbar-toggle.collapsed .fa-x {
-// 	display: none;
-// }
-
-// .navbar-custom-modal {
-// 	background-color: rgb(0, 0, 0); /* Fallback color */
-// 	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-// 	height: 100%; /* Full height */
-// 	left: 0;
-// 	overflow: auto; /* Enable scroll if needed */
-// 	position: fixed;
-// 	top: 0;
-// 	width: 100%; /* Full width */
-// 	z-index: 1001;
-// }
+.navbar-toggler .fa-bars,
+.navbar-toggler.collapsed .fa-x {
+	display: none;
+}
