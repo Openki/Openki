@@ -1,21 +1,21 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 // /* stylelint-disable selector-max-compound-selectors */
 
-// .navbar {
+.navbar {
 // 	border: 0;
-// 	transition: box-shadow $default-transition-time;
+ 	transition: box-shadow $default-transition-time;
 
-// 	@media (max-width: $grid-float-breakpoint) {
-// 		.dropdown-legend {
-// 			color: $black;
-// 		}
+@include media-breakpoint-down(lg) {
+		.dropdown-legend {
+			color: $black;
+		}
 
-// 		.dropdown-menu > li > a,
-// 		.dropdown-menu > li > .btn-link {
-// 			color: $white;
-// 		}
-// 	}
-// }
+		.dropdown-menu > li > a,
+		.dropdown-menu > li > .btn-link {
+			color: $white;
+		}
+	}
+}
 
 .navbar-toggler {
 	border: 0 !important;
@@ -26,26 +26,28 @@
 // 	margin-right: 22px;
 // }
 
-// .navbar-collapse {
-// 	@media (max-width: $grid-float-breakpoint) {
-// 		border-top: 1px solid $navbar-default-border;
-// 		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+.navbar-collapse {
+	@include media-breakpoint-down(lg) {
+		 		border-top: 1px solid $navbar-default-border;
+		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
 
-// 		/* Fix: Removes small bar on opening/closing */
-// 		&[aria-expanded='false'] {
-// 			display: none;
-// 		}
+		// 		/* Fix: Removes small bar on opening/closing */
+		// 		&[aria-expanded='false'] {
+		// 			display: none;
+		// 		}
 
-// 		&[aria-expanded='true'] {
-// 			height: auto !important;
-// 		}
-// 	}
-// }
+		// 		&[aria-expanded='true'] {
+		// 			height: auto !important;
+		// 		}
+	}
+}
 
-// .navbar-fixed-top .navbar-collapse,
-// .navbar-fixed-bottom .navbar-collapse {
-// 	max-height: 386px;
-// }
+@include media-breakpoint-down(lg) {
+	.navbar-collapse {
+		max-height: 386px;
+		overflow: auto;
+	}
+}
 
 .navbar-container {
 	max-width: 1600px;
@@ -112,9 +114,9 @@
 		text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
 	}
 
-	// 	@media (max-width: $grid-float-breakpoint) {
-	// 		border-bottom: 1px solid $navbar-default-border;
-	// 	}
+	@include media-breakpoint-down(lg) {
+			border-bottom: 1px solid $navbar-default-border;
+		}
 }
 
 // .nav > li > a {
@@ -244,9 +246,11 @@
 	}
 }
 
-// .navbar .js-region-search-form {
-// 	display: inline;
-// }
+.navbar .js-region-search-form,
+.navbar .js-language-selection-form {
+	margin: 4px 0;
+	// display: inline;
+}
 
 // .language-name {
 // 	display: inline-block;
@@ -270,4 +274,21 @@
 .navbar-toggler .fa-bars,
 .navbar-toggler.collapsed .fa-x {
 	display: none;
+}
+
+.navbar-collapse {
+	margin-inline-start: calc(var(--bs-gutter-x) * -0.5);
+	margin-inline-end: calc(var(--bs-gutter-x) * -0.5);
+}
+
+.navbar-custom-modal {
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	height: 100%; /* Full height */
+	left: 0;
+	overflow: auto; /* Enable scroll if needed */
+	position: fixed;
+	top: 0;
+	width: 100%; /* Full width */
+	z-index: 1001;
 }
