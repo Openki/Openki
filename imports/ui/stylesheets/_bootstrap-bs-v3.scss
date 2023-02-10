@@ -18,48 +18,6 @@ $bootstrap-sass-asset-helper: false;
 
 // copied from bootstrap-sass/assets/stylesheets/bootstrap/forms it is needed for forms.
 @mixin form-inline {
-	// Kick in the inline
-	@media (min-width: $screen-sm-min) {
-		// Inline-block all the things for "inline"
-		.form-group {
-			display: inline-block;
-			margin-bottom: 0;
-			vertical-align: middle;
-		}
-
-		// In navbar-form, allow folks to *not* use `.form-group`
-		.form-control {
-			display: inline-block;
-			vertical-align: middle;
-			width: auto; // Prevent labels from stacking above inputs in `.form-group`
-		}
-
-		// Make static controls behave like regular ones
-		.form-control-static {
-			display: inline-block;
-		}
-
-		.input-group {
-			display: inline-table;
-			vertical-align: middle;
-
-			.input-group-addon,
-			.input-group-btn,
-			.form-control {
-				width: auto;
-			}
-		}
-
-		// Input groups need that 100% width though
-		.input-group > .form-control {
-			width: 100%;
-		}
-
-		// Re-override the feedback icon.
-		.has-feedback .form-control-feedback {
-			top: 0;
-		}
-	}
 }
 
 // @import '{}/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons';
@@ -69,8 +27,8 @@ $bootstrap-sass-asset-helper: false;
 // @import '{}/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/dropdowns';
 // @import '{}/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/button-groups';
 // @import '{}/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/input-groups';
-@import '{}/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navs';
-@import '{}/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navbar';
+// @import '{}/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navs';
+// @import '{}/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navbar';
 // @import '{}/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/breadcrumbs';
 // @import '{}/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/pagination';
 // @import '{}/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/pager';
