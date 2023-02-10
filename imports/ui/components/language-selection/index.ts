@@ -46,7 +46,13 @@ import './styles.scss';
 	template.helpers({
 		inNavbarClasses() {
 			if (this.inNavbar) {
-				return 'nav-item';
+				return 'nav-item text-center col-6 col-lg-auto';
+			}
+			return '';
+		},
+		inNavbarClassesLink() {
+			if (this.inNavbar) {
+				return 'text-white';
 			}
 			return '';
 		},
@@ -100,7 +106,7 @@ import './styles.scss';
 	template.helpers({
 		inNavbarClasses() {
 			if (this.inNavbar) {
-				return 'nav-item';
+				return 'nav-item text-center col-6 col-lg-auto';
 			}
 			return '';
 		},

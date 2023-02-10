@@ -139,7 +139,6 @@ import './styles.scss';
 			return '';
 		},
 
-
 		navbarIsCollapsed() {
 			return Template.instance().state.get('navbarIsCollapsed');
 		},
@@ -162,7 +161,7 @@ import './styles.scss';
 			const { gridFloatBreakpoint } = ScssVars;
 
 			if (Viewport.get().width <= gridFloatBreakpoint) {
-				const container = instance.$('#bs-navbar-collapse-1');
+				const container = instance.$('#bs-navbar-collapse');
 
 				// make menu item scroll up when opening the dropdown menu
 				if (event.type === 'show') {
