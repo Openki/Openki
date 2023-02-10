@@ -2,10 +2,9 @@
 // /* stylelint-disable selector-max-compound-selectors */
 
 .navbar {
-// 	border: 0;
- 	transition: box-shadow $default-transition-time;
+	transition: box-shadow $default-transition-time;
 
-@include media-breakpoint-down(lg) {
+	@include media-breakpoint-down(lg) {
 		.dropdown-legend {
 			color: $black;
 		}
@@ -21,24 +20,10 @@
 	border: 0 !important;
 }
 
-// .navbar-toggle {
-// 	margin: 0;
-// 	margin-right: 22px;
-// }
-
 .navbar-collapse {
 	@include media-breakpoint-down(lg) {
-		 		border-top: 1px solid $navbar-default-border;
+		border-top: 1px solid $navbar-default-border;
 		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
-
-		// 		/* Fix: Removes small bar on opening/closing */
-		// 		&[aria-expanded='false'] {
-		// 			display: none;
-		// 		}
-
-		// 		&[aria-expanded='true'] {
-		// 			height: auto !important;
-		// 		}
 	}
 }
 
@@ -115,15 +100,9 @@
 	}
 
 	@include media-breakpoint-down(lg) {
-			border-bottom: 1px solid $navbar-default-border;
-		}
+		border-bottom: 1px solid $navbar-default-border;
+	}
 }
-
-// .nav > li > a {
-// 	@media (max-width: $grid-float-breakpoint) {
-// 		padding: 15px 7px 14px;
-// 	}
-// }
 
 .nav-marker-bar {
 	background-color: transparent;
@@ -175,60 +154,6 @@
 	}
 }
 
-// .navbar .navbar-nav:first-child,
-// .navbar .navbar-nav:last-child {
-// 	margin-bottom: 0;
-// 	margin-top: 0;
-// }
-
-// .navbar .navbar-nav > .open > .dropdown-menu {
-// 	@media (min-width: $grid-float-breakpoint) {
-// 		padding-top: 10px;
-// 		z-index: -1;
-// 	}
-
-// 	@media (max-width: $grid-float-breakpoint) {
-// 		padding: 0;
-// 	}
-// }
-
-// .navbar .navbar-nav > .open > .dropdown-menu > li > a {
-// 	@media (max-width: $grid-float-breakpoint) {
-// 		color: $white;
-// 	}
-// }
-
-// .navbar .navbar-nav > .open > .dropdown-menu > li > a:last-child > a {
-// 	@media (max-width: $grid-float-breakpoint) {
-// 		border-bottom: 0;
-// 	}
-// }
-
-// .navbar .navbar-nav > .open > .navbar-link,
-// .navbar .navbar-nav > .open > .navbar-link:hover,
-// .navbar .navbar-nav > .open > .navbar-link:focus,
-// .navbar .navbar-nav .show.navbar-link,
-// .navbar .navbar-nav .show.navbar-link:hover,
-// .navbar .navbar-nav .show.navbar-link:focus {
-// 	background-color: lighten($navbar-default-bg, 10%);
-
-// 	@media (min-width: $grid-float-breakpoint) {
-// 		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-// 	}
-// }
-
-// .navbar .navbar-nav > .open > .navbar-link > .nav-marker-caret {
-// 	opacity: 0;
-// }
-
-// .navbar .navbar-nav > .open > .navbar-link > .nav-marker-bar {
-// 	background-color: $dropdown-bg;
-
-// 	@media (min-width: $grid-float-breakpoint) {
-// 		opacity: 1;
-// 	}
-// }
-
 .navbar-covering {
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
@@ -249,18 +174,7 @@
 .navbar .js-region-search-form,
 .navbar .js-language-selection-form {
 	margin: 4px 0;
-	// display: inline;
 }
-
-// .language-name {
-// 	display: inline-block;
-// }
-
-// .login-link .dropdown-menu {
-// 	@media (max-width: $grid-float-breakpoint) {
-// 		position: initial;
-// 	}
-// }
 
 .navbar-toggler .fa-bars {
 	transform: scale(1.7, 1);
