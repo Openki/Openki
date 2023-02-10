@@ -1,5 +1,5 @@
 @import '{}/imports/ui/stylesheets/variables/index';
-// /* stylelint-disable selector-max-compound-selectors */
+/* stylelint-disable selector-max-compound-selectors */
 
 .navbar {
 	transition: box-shadow $default-transition-time;
@@ -95,12 +95,12 @@
 	transition-duration: $default-transition-time;
 	transition-property: #{'background-color, box-shadow, text-shadow'};
 
-	&:hover {
-		text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
-	}
-
 	@include media-breakpoint-down(lg) {
 		border-bottom: 1px solid $navbar-default-border;
+	}
+
+	&:hover {
+		text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
 	}
 }
 
@@ -163,8 +163,8 @@
 }
 
 .navbar-covering .nav-link.active,
-.navbar-covering .navbar-nav > li > .nav-link.active:hover,
-.navbar-covering .navbar-nav > li > .nav-link.active:focus {
+.navbar-covering .nav-link.active:hover,
+.navbar-covering .nav-link.active:focus {
 	@include media-breakpoint-up(lg) {
 		background-color: lighten($primary, 10%);
 		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
@@ -191,8 +191,8 @@
 }
 
 .navbar-collapse {
-	margin-inline-start: calc(var(--bs-gutter-x) * -0.5);
 	margin-inline-end: calc(var(--bs-gutter-x) * -0.5);
+	margin-inline-start: calc(var(--bs-gutter-x) * -0.5);
 }
 
 .navbar-custom-modal {
