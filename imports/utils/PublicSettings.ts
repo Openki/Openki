@@ -80,6 +80,8 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
 		forbiddenChars: string[];
 		link: LocalizedValue;
 	}>,
+	/** Max characters allowed for the description-field of courses. */
+	courseDescriptionMax: Match.Maybe(Number),
 	/** Max characters allowed for the description-field of events. */
 	eventDescriptionMax: Match.Maybe(Number),
 	/**  Categories for courses, main and/or sub categories */
@@ -124,6 +126,7 @@ const defaults = {
 		de: 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf',
 	},
 	aboutLink: 'https://about.openki.net',
+	courseDescriptionMax: 15000,
 	eventDescriptionMax: 15000,
 	categories: {},
 };

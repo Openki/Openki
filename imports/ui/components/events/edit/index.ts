@@ -355,14 +355,10 @@ template.events({
 		if (PublicSettings.eventDescriptionMax) {
 			if ($description.text().length > PublicSettings.eventDescriptionMax) {
 				Alert.error(
-					i18n(
-						'event.edit.plzShortDescr',
-						'Too many characters used. {MAXNUMBER} are allowed. Please remove {NUMBER} characters to be able to save.',
-						{
-							MAXNUMBER: PublicSettings.eventDescriptionMax,
-							NUMBER: $description.text().length - PublicSettings.eventDescriptionMax,
-						},
-					),
+					i18n('_inputField.maxlength', {
+						MAXNUMBER: PublicSettings.eventDescriptionMax,
+						NUMBER: $description.text().length - PublicSettings.eventDescriptionMax,
+					}),
 				);
 				return;
 			}

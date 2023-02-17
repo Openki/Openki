@@ -115,35 +115,44 @@ template.onCreated(function () {
 		);
 	}
 
-	instance.editableName = new Editable(false, i18n('profile.name.placeholder', 'Username'), {
-		serverValidationErrors: [
-			{
-				type: 'noUserName',
-				message: () => i18n('warning.noUserName', 'Please enter a name for your user.'),
+	instance.editableName = new Editable(
+		false,
+		i18n('profile.name.placeholder', 'Username'),
+		undefined,
+		{
+			serverValidationErrors: [
+				{
+					type: 'noUserName',
+					message: () => i18n('warning.noUserName', 'Please enter a name for your user.'),
+				},
+				{
+					type: 'userExists',
+					message: () =>
+						i18n(
+							'warning.userExists',
+							'This username is already in use. Please choose another one.',
+						),
+				},
+				{
+					type: 'nameError',
+					message: () => i18n('update.username.failed', 'Could not update username.'),
+				},
+			],
+			onSave: async (newName) => {
+				await usersMethods.updateUsername(newName || '');
 			},
-			{
-				type: 'userExists',
-				message: () =>
-					i18n('warning.userExists', 'This username is already in use. Please choose another one.'),
+			onSuccess: () => {
+				Alert.success(i18n('profile.updated', 'Updated profile'));
 			},
-			{
-				type: 'nameError',
-				message: () => i18n('update.username.failed', 'Could not update username.'),
-			},
-		],
-		onSave: async (newName) => {
-			await usersMethods.updateUsername(newName || '');
 		},
-		onSuccess: () => {
-			Alert.success(i18n('profile.updated', 'Updated profile'));
-		},
-	});
+	);
 	instance.editableDescription = new Editable(
 		true,
 		i18n(
 			'profile.description.placeholder',
 			'About you. Let the community know what your interests are.',
 		),
+		undefined,
 		{
 			onSave: async (newDescription) => {
 				await usersMethods.updateDescription(newDescription || '');
