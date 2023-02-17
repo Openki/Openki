@@ -23,6 +23,14 @@
 			},
 			"visitorUser": true
 		},
+		"nav":
+		{	
+			"brandLink":"/",
+			"home": true,
+			"proposeCourse": true,
+			"calendar": true,
+			"moreLinks": [ ]
+		},
 		"footerLinks":
 		[	{ "link": "https://about.openki.net/"
 			, "key": "footer.aboutOpenki"

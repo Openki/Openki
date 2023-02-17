@@ -5,7 +5,8 @@
 		{{/if}}
 		{{! Brand and toggle get grouped for better mobile display }}
 		<div class="navbar-container container-fluid">
-			<a class="navbar-brand js-toggle-introduction me-4" href="{{pathFor 'home'}}">
+			<a class="navbar-brand js-toggle-introduction me-4"
+			   href="{{PublicSettings.nav.brandLink}}">
 				{{#if connecting}}
 					<span class="fa-solid fa-circle-notch fa-spin fa-fw connecting"
 						  title="{{i18n 'status.connecting' 'Connecting to server' attr=true}}">
@@ -32,33 +33,48 @@
 			</button>
 			<div class="collapse navbar-collapse" id="bs-navbar-collapse">
 				<ul class="navbar-nav flex-row me-auto mb-lg-0">
-					<li class="nav-item text-center col-4 col-lg-auto">
-						<a href="{{pathFor 'home'}}"
-						   class="{{activeClass 'home'}} {{activeClass 'showCourse'}} nav-link js-nav-dropdown-close"
-						   id="nav_courses">
-							<span class="fa-regular fa-lightbulb fa-fw" aria-hidden="true"></span>
-							{{i18n 'menue.Courses' 'Find'}}
-							<div class="nav-marker-caret"></div>
-						</a>
-					</li>
-					<li class="nav-item text-center col-4 col-lg-auto">
-						<a href="{{pathFor 'proposeCourse'}}"
-						   class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} nav-link js-nav-dropdown-close">
-							<span class="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
-							{{i18n 'menue.Create' 'Create'}}
-							<div class="nav-marker-caret"></div>
-						</a>
-					</li>
-					<li class="nav-item text-center col-4 col-lg-auto">
-						<a href="{{pathFor 'calendar'}}"
-						   class="{{activeClass 'calendar'}} nav-link calendar-link js-nav-dropdown-close">
-							<span class="fa-regular fa-calendar-days fa-fw"
-								  aria-hidden="true"></span>
-							{{i18n 'menue.Calendar' 'Calendar'}}
-							<div class="nav-marker-caret"></div>
-							<div class="nav-marker-bar"></div>
-						</a>
-					</li>
+					{{#if PublicSettings.nav.home}}
+						<li class="nav-item text-center col col-lg-auto">
+							<a href="{{pathFor 'home'}}"
+							   class="{{activeClass 'home'}} {{activeClass 'showCourse'}} nav-link js-nav-dropdown-close"
+							   id="nav_courses">
+								<span class="fa-regular fa-lightbulb fa-fw"
+									  aria-hidden="true"></span>
+								{{i18n 'menue.Courses' 'Find'}}
+								<div class="nav-marker-caret"></div>
+							</a>
+						</li>
+					{{/if}}
+					{{#if PublicSettings.nav.proposeCourse}}
+						<li class="nav-item text-center col col-lg-auto">
+							<a href="{{pathFor 'proposeCourse'}}"
+							   class="{{activeClass 'proposeCourse'}} {{activeClass 'showEvent' 'create'}} nav-link js-nav-dropdown-close">
+								<span class="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
+								{{i18n 'menue.Create' 'Create'}}
+								<div class="nav-marker-caret"></div>
+							</a>
+						</li>
+					{{/if}}
+					{{#if PublicSettings.nav.calendar}}
+						<li class="nav-item text-center col col-lg-auto">
+							<a href="{{pathFor 'calendar'}}"
+							   class="{{activeClass 'calendar'}} nav-link calendar-link js-nav-dropdown-close">
+								<span class="fa-regular fa-calendar-days fa-fw"
+									  aria-hidden="true"></span>
+								{{i18n 'menue.Calendar' 'Calendar'}}
+								<div class="nav-marker-caret"></div>
+								<div class="nav-marker-bar"></div>
+							</a>
+						</li>
+					{{/if}}
+					{{#each links}}
+						<li class="nav-item text-center col col-lg-auto">
+							<a href="{{link}}" class="nav-link js-nav-dropdown-close">
+								<span class="{{icon}} fa-fw" aria-hidden="true"></span>
+								{{text}}
+							</a>
+						</li>
+					{{/each}}
 				</ul>
 				<ul class="navbar-nav flex-row">
 					{{> regionSelectionWrap inNavbar=true}}

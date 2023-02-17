@@ -51,6 +51,25 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
 		/** allow user without name and password */
 		visitorUser: Boolean,
 	},
+	nav: {
+		brandLink: String,
+		home: Boolean,
+		proposeCourse: Boolean,
+		calendar: Boolean,
+		moreLinks: [
+			{
+				link: String,
+				icon: String,
+				/**
+				 * text from the link. The value is a translation key from i18next it must be
+				 * defined in code
+				 */
+				key: Match.Maybe(String),
+				/** as a alternative for "key" */
+				text: Match.Maybe(LocalizedValuePattern),
+			},
+		],
+	},
 	footerLinks: [
 		{
 			link: String,
@@ -113,6 +132,13 @@ const defaults = {
 	feature: {
 		login: { google: false, facebook: false, github: false },
 		visitorUser: false,
+	},
+	nav: {
+		brandLink: '/',
+		home: true,
+		proposeCourse: true,
+		calendar: true,
+		moreLinks: [] as { link: string; icon: string; key?: string; text?: string }[],
 	},
 	// eslint-disable-next-line camelcase
 	footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
