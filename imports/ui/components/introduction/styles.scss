@@ -7,7 +7,7 @@
 	@include clearfix;
 	background-color: $background-color;
 	margin-top: 15px;
-	padding: 2px ($grid-gutter-width / 2) 0;
+	padding: 2px ($grid-gutter-width / 2);
 	position: relative;
 	transition: background-color 1s;
 
