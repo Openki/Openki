@@ -59,6 +59,7 @@
 				, "de": "https://about.openki.net/ueber-uns/spenden/"
 				}
 			},
+		"courseDescriptionMax": 500,
 		"eventDescriptionMax": 500,
 		"categories": {"sports":
 			[
