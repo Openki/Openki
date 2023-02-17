@@ -32,6 +32,23 @@ This file descripts all configurations and customization options. Remove the com
 			},
 			"visitorUser": true // allow user without name and password
 		},
+		"nav":
+		{
+			"brandLink": "/", // link from the logo
+			"home": true, // show/hide home link in navbar Default: true 
+			"proposeCourse": true, // show/hide propose link in navbar Default: true 
+			"calendar": true,  // show/hide calendar link in navbar Default: true 
+			"moreLinks": [
+				{
+					"link": "https://about.openki.net/",
+					"icon": "...", // icon from fontawesome
+					"key": "...", // text from the link. The value is a translation key from i18next it must be defined in code
+
+					// as a alternative for "key" you can set "text" for the text from the link
+					"text": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+				}
+			]
+		},
 		"footerLinks": [
 			{
 				"link": "https://about.openki.net/",

@@ -10,6 +10,8 @@ import { Regions } from '/imports/api/regions/regions';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
 import { PublicSettings } from '/imports/utils/PublicSettings';
+import { i18n } from '/imports/startup/both/i18next';
+import { getSiteName } from '/imports/utils/getSiteName';
 
 import '/imports/ui/components/regions/selection';
 import '/imports/ui/components/language-selection';
@@ -126,6 +128,16 @@ import './styles.scss';
 			}
 
 			return PublicSettings.siteStage;
+		},
+
+		links() {
+			const siteName = getSiteName(Regions.currentRegion());
+
+			return PublicSettings.nav.moreLinks.map((linkSpec) => ({
+				link: linkSpec.link,
+				icon: linkSpec.icon,
+				text: linkSpec.key ? i18n(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
+			}));
 		},
 
 		activeClass(linkRoute: string, id: string) {

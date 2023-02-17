@@ -46,7 +46,7 @@ import './styles.scss';
 	template.helpers({
 		inNavbarClasses() {
 			if (this.inNavbar) {
-				return 'nav-item text-center col-6 col-lg-auto';
+				return 'nav-item text-center col col-lg-auto';
 			}
 			return '';
 		},
@@ -106,7 +106,7 @@ import './styles.scss';
 	template.helpers({
 		inNavbarClasses() {
 			if (this.inNavbar) {
-				return 'nav-item text-center col-6 col-lg-auto';
+				return 'nav-item text-center col col-lg-auto';
 			}
 			return '';
 		},
