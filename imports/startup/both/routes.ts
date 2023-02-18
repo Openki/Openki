@@ -731,7 +731,7 @@ RouterAsync.route<
 	Record<string, string>,
 	Record<string, string>,
 	{
-		future: Mongo.Cursor<EventEntity, EventModel>;
+		future_length: Mongo.Cursor<EventEntity, EventModel>;
 	}
 >('timetable', {
 	path: '/kiosk/timetable',
@@ -752,10 +752,6 @@ RouterAsync.route<
 		];
 	},
 	data() {
-		const filter = Events.Filtering().read(this.params.query).done();
-
-		const queryFuture = filter.toQuery() as EventsFindFilter;
-
 		const query = makeFilterQuery(this.params.query);
 
 		let start: moment.MomentInput;
@@ -902,7 +898,7 @@ RouterAsync.route<
 			days: Object.values(days),
 			hours: Object.values(hours),
 			grouped,
-			future: Events.findFilter(queryFuture, 10)
+			future_length: events.length
 		};
 
 
