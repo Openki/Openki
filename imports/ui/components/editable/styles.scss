@@ -29,8 +29,8 @@
 		transition: box-shadow ease-in-out 0.15s;
 
 		&.is-invalid {
-			margin: -1px;
 			border: 1px solid $danger;
+			margin: -1px;
 		}
 
 		&:focus,
@@ -51,8 +51,8 @@
 	outline: none;
 
 	&.is-invalid {
-		margin: -1px;
 		border: 1px solid $danger;
+		margin: -1px;
 	}
 
 	&:focus,
