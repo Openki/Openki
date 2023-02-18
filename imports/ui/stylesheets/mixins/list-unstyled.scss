@@ -1,5 +1,5 @@
 @mixin list-unstyled {
 	list-style: none;
-	margin-bottom: 0;
-	padding-left: 0;
+	margin-block-end: 0;
+	padding-inline-start: 0;
 }

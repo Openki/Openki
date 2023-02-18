@@ -135,6 +135,7 @@ import './styles.scss';
 		instance.editableMessage = new Editable(
 			false,
 			i18n('roles.message.placeholder', 'My interests…'),
+			undefined,
 			{
 				onSave: async (newMessage) => {
 					const change = new Message(course, Meteor.user(), newMessage);

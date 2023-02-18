@@ -345,7 +345,6 @@
 	"group.settings.title.Members": "Medlemmer",
 	"group.short.placeholder": "Forkortelse",
 	"groupDetails.saveError": "Kunne ikke lagre {GROUP}-gruppen",
-	"groupListFull.show_courses": "Vis alle fag i denne gruppen",
 	"groupSettings.group.logo.removed.error": "Kunne ikke lagre innstillingene",
 	"groupSettings.group.logo.updated.error": "Kunne ikke lagre innstillingene",
 	"groupSettings.memberAdded.error": "Kunne ikke legge til medlem",

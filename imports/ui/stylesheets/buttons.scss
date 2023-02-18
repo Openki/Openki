@@ -1,5 +1,38 @@
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
 
+.btn {
+	transition: border-color 0.15s ease-in-out;
+}
+
+.btn-primary:focus {
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(56, 130, 156, 0.6);
+}
+
+.remove-btn {
+	background-color: transparent;
+	border: 0;
+	color: $gray-500;
+	padding: 0;
+
+	&:hover {
+		color: $gray-800;
+		cursor: pointer;
+	}
+}
+
+.btn-icon {
+	background: none;
+	border: 0;
+	cursor: pointer;
+	font-size: $font-size-sm;
+	margin-inline-start: 5px;
+	padding: 0;
+}
+
+.btn-inline {
+	margin-inline-start: 5px;
+}
+
 .btn-secondary {
 	border-color: tint-color($blue, 65%);
 

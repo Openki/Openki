@@ -1,12 +1,13 @@
+@import '{}/imports/ui/stylesheets/variables/index';
 /* stylelint-disable selector-max-id, selector-max-compound-selectors */
 
 .introduction {
-	$background-color: lighten($gray-lightest, 5%);
+	$background-color: lighten($gray-200, 5%);
 
 	@include clearfix;
 	background-color: $background-color;
 	margin-top: 15px;
-	padding: 2px ($grid-gutter-width / 2) 0;
+	padding: 2px ($grid-gutter-width / 2);
 	position: relative;
 	transition: background-color 1s;
 
@@ -29,109 +30,100 @@
 }
 
 .js-introduction-close-btn {
-	@include td-pos(right, 13px);
 	font-size: large;
+	inset-inline-end: 13px;
 	position: absolute;
 	top: 10px;
 }
 
 .introduction-content {
-	border-top: 1px solid $gray-lighter;
+	border-top: 1px solid $gray-300;
 	margin-top: 5px;
 	padding: 12px ($grid-gutter-width / 2);
 }
 
 .introduction-steps {
-	@include list-unstyled;
 	font-size: medium;
 	text-align: center;
 }
 
-.introduction-steps > li {
-	@include td-make-xs-column(6);
-	@include td-make-sm-column(4);
-	@include td-make-md-column(2);
-	margin-bottom: 15px;
+.introduction-steps > .col {
+	margin-bottom: 8px;
+	position: relative;
+	text-align: center;
 
-	@media (max-width: $screen-xxs) {
-		@include td-make-xs-column(12);
-		padding-bottom: 20px;
-		text-align: center;
-	}
+	&::after {
+		color: lighten($gray-600, 15%);
+		font-family: FontAwesome;
+		font-size: 16px;
+		opacity: 0.5;
 
-	&:nth-child(2),
-	&:nth-child(4) {
-		@media (max-width: $screen-sm) {
-			padding-bottom: 15px;
+		@include media-breakpoint-down(sm) {
+			content: '';
+			display: block;
+			text-align: center;
 		}
 	}
 }
 
-.introduction-steps > li > h2 {
+.introduction-steps > .col > h2 {
 	margin-bottom: 8px;
 	margin-top: 0;
 	text-align: center;
 
 	&::after {
-		@include opacity(0.5);
-		@include td-pos(right, 0);
-		color: lighten($gray-light, 15%);
+		color: lighten($gray-600, 15%);
 		content: '';
 		font-family: FontAwesome;
 		font-size: 16px;
+		inset-inline-end: 0;
+		opacity: 0.5;
 		position: absolute;
 		top: 6px;
 
-		@media (max-width: $screen-xxs) {
-			@include td-pos(right, 47%);
-			bottom: -15px;
-			content: '';
+		@include media-breakpoint-down(sm) {
+			content: '' !important;
 		}
 	}
-}
-
-.introduction-steps > li:nth-of-type(2) > h2::after,
-.introduction-steps > li:nth-of-type(4) > h2::after {
-	@media (max-width: $screen-sm) {
-		content: '';
-	}
-}
-
-.introduction-steps > li:nth-of-type(3) > h2::after {
-	@media (max-width: $screen-md) and (min-width: $screen-sm) {
-		content: '';
-	}
-}
-
-.introduction-steps > li:last-of-type > h2::after {
-	content: '';
 }
 
 .rtl {
-	.introduction-steps > li > h2::after {
+	.introduction-steps > .col > h2::after {
 		content: '\f060';
 		right: auto;
 	}
+}
 
-	.introduction-steps > li:nth-of-type(2) > h2::after,
-	.introduction-steps > li:nth-of-type(4) > h2::after {
-		@media (max-width: $screen-sm) {
-			content: '';
-		}
+.introduction-steps > .col:nth-of-type(2) > h2::after,
+.introduction-steps > .col:nth-of-type(4) > h2::after {
+	@include media-breakpoint-down(md) {
+		content: '' !important;
 	}
+}
 
-	.introduction-steps > li:nth-of-type(3) > h2::after {
-		@media (max-width: $screen-md) and (min-width: $screen-sm) {
-			content: '';
+.introduction-steps > .col:nth-of-type(3) > h2::after {
+	@include media-breakpoint-up(md) {
+		@include media-breakpoint-down(lg) {
+			content: '' !important;
 		}
 	}
 }
 
-.introduction-steps > li > h2 > {
+.introduction-steps > .col:last-of-type {
+	&::after {
+		content: '' !important;
+	}
+
+	> h2::after {
+		content: '' !important;
+	}
+}
+
+.introduction-steps > .col > h2 > {
 	.fa-regular,
 	.fa-brands,
 	.fa-solid {
-		@include opacity(0.6);
 		color: $blue;
+		opacity: 0.6;
 	}
 }

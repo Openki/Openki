@@ -51,6 +51,25 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
 		/** allow user without name and password */
 		visitorUser: Boolean,
 	},
+	nav: {
+		brandLink: String,
+		home: Boolean,
+		proposeCourse: Boolean,
+		calendar: Boolean,
+		moreLinks: [
+			{
+				link: String,
+				icon: String,
+				/**
+				 * text from the link. The value is a translation key from i18next it must be
+				 * defined in code
+				 */
+				key: Match.Maybe(String),
+				/** as a alternative for "key" */
+				text: Match.Maybe(LocalizedValuePattern),
+			},
+		],
+	},
 	footerLinks: [
 		{
 			link: String,
@@ -80,6 +99,8 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
 		forbiddenChars: string[];
 		link: LocalizedValue;
 	}>,
+	/** Max characters allowed for the description-field of courses. */
+	courseDescriptionMax: Match.Maybe(Number),
 	/** Max characters allowed for the description-field of events. */
 	eventDescriptionMax: Match.Maybe(Number),
 	/**  Categories for courses, main and/or sub categories */
@@ -112,6 +133,13 @@ const defaults = {
 		login: { google: false, facebook: false, github: false },
 		visitorUser: false,
 	},
+	nav: {
+		brandLink: '/',
+		home: true,
+		proposeCourse: true,
+		calendar: true,
+		moreLinks: [] as { link: string; icon: string; key?: string; text?: string }[],
+	},
 	// eslint-disable-next-line camelcase
 	footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
 	faqLink: '/info/faq',
@@ -124,6 +152,7 @@ const defaults = {
 		de: 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf',
 	},
 	aboutLink: 'https://about.openki.net',
+	courseDescriptionMax: 15000,
 	eventDescriptionMax: 15000,
 	categories: {},
 };

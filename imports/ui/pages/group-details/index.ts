@@ -98,6 +98,7 @@ template.onCreated(function () {
 	instance.editableName = new Editable(
 		false,
 		i18n('group.name.placeholder', 'Name of your group, institution, community or program'),
+		undefined,
 		showControls
 			? {
 					...handleSaving,
@@ -111,6 +112,7 @@ template.onCreated(function () {
 	instance.editableShort = new Editable(
 		false,
 		i18n('group.short.placeholder', 'Abbreviation'),
+		undefined,
 		showControls
 			? {
 					...handleSaving,
@@ -124,6 +126,7 @@ template.onCreated(function () {
 	instance.editableClaim = new Editable(
 		false,
 		i18n('group.claim.placeholder', 'The core idea'),
+		undefined,
 		showControls
 			? {
 					...handleSaving,
@@ -140,6 +143,7 @@ template.onCreated(function () {
 			'group.description.placeholder',
 			'Describe the audience, the interests and activities of your group.',
 		),
+		undefined,
 		showControls
 			? {
 					...handleSaving,
