@@ -1,19 +1,24 @@
 <template name='editable'>
 	<div class="editable-wrap {{wrapClasses}} {{errorClass 'input'}}">
-		<div class="js-editable editable {{editableClasses}}"></div>
+		<div
+			 class="js-editable editable {{editableClasses}} {{#if characterLimitReached}}is-invalid{{/if}}">
+		</div>
+		{{#if characterLimitReached}}
+			<div class="invalid-feedback">
+				{{i18n '_inputField.maxlength' NUMBER=removeNumberOfCharacters MAXNUMBER=maxlength}}
+			</div>
+		{{/if}}
 		{{#unless showControls}}
 			<span class="fa-solid fa-pencil editable-icon js-editable-edit"></span>
 		{{/unless}}
 		{{errorMessage 'input'}}
 	</div>
 	{{#if showControls}}
-		{{> editableControls}}
+		<div class='editable-controls'>
+			{{#unless characterLimitReached}}
+				{{> buttonSave event="js-editable-save"}}
+			{{/unless}}
+			{{> buttonCancel event="js-editable-cancel"}}
+		</div>
 	{{/if}}
-</template>
-
-<template name='editableControls'>
-	<div class='editable-controls'>
-		{{> buttonSave event="js-editable-save"}}
-		{{> buttonCancel event="js-editable-cancel"}}
-	</div>
 </template>

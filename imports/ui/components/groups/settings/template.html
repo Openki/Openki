@@ -1,69 +1,72 @@
 <template name="groupSettings">
 	<form>
 		<div class="details-form group-settings">
-			<div class="details-form-element settings">
-				<h3>
-					<span class="fa-solid fa-gear fa-fw" aria-hidden="true"></span>
-					{{i18n 'group.settings.title' 'Settings'}}
-				</h3>
-				<div class="mb-3">
-					<label class="form-label">{{i18n 'group.settings.field.logo' 'Logo'}}</label>
-					{{> editableImage logoFileUploadArgs}}
-				</div>
-			</div>
-
-			<div class="details-form-element">
-				<h3>
-					<span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>
-					{{i18n 'group.settings.title.Members' 'Members'}}
-				</h3>
-				<div class="tag-group multiline">
-					{{#each group.members}}
-						<div class="tag tag-btn group-member-tag-btn-remove ">
-							<button class="js-member-remove-btn"
-									title="{{i18n 'group.settings.removeFromGroup' 'remove member' attr=true}}"
-									type="button">
-								<i class="fa-solid fa-xmark fa-fw" aria-hidden="true"></i>
-								{{username this}}
-							</button>
-						</div>
-						<div class="tag tag-link group-member-tag-profile addon">
-							<a href="{{pathFor 'userprofile' _id=this}}"
-							   title="{{i18n 'group.settings.member.profile' 'Visit profile' attr=true}}">
-								<i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
-							</a>
-						</div>
-					{{/each}}
-				</div>
-				<div class="mb-3">
-					<label
-						   class="form-label">{{i18n 'group.settings.field.addMembers' 'Add a new member to your group'}}</label>
-					<div class="input-group">
-						<span class="input-group-text">
-							<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-						</span>
-						<input class="js-search-users form-control" id="AddGroupMember"
-							   placeholder="{{i18n 'group.settings.field.addMember.placeholder' 'Type name of buddy' attr=true}}"
-							   size="40" type="text" />
+			<div class="row">
+				<div class="col-md">
+					<h3>
+						<span class="fa-solid fa-gear fa-fw" aria-hidden="true"></span>
+						{{i18n 'group.settings.title' 'Settings'}}
+					</h3>
+					<div class="mb-3">
+						<label
+							   class="form-label">{{i18n 'group.settings.field.logo' 'Logo'}}</label>
+						{{> editableImage logoFileUploadArgs}}
 					</div>
 				</div>
-				<div class="tag-group multiline">
-					{{#each foundUsers group}}
-						<div class="tag tag-btn group-member-tag-btn-add ">
-							<button class="js-member-add-btn"
-									title="{{i18n 'group.settings.addMember' 'add as member' attr=true}}"
-									type="button">
-								<i class="fa-solid fa-plus fa-fw" aria-hidden="true"></i>
-								{{username this._id}}
-							</button>
+
+				<div class="col-md">
+					<h3>
+						<span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>
+						{{i18n 'group.settings.title.Members' 'Members'}}
+					</h3>
+					<div class="tag-group multiline">
+						{{#each group.members}}
+							<div class="tag tag-btn group-member-tag-btn-remove ">
+								<button class="js-member-remove-btn"
+										title="{{i18n 'group.settings.removeFromGroup' 'remove member' attr=true}}"
+										type="button">
+									<i class="fa-solid fa-xmark fa-fw" aria-hidden="true"></i>
+									{{username this}}
+								</button>
+							</div>
+							<div class="tag tag-link group-member-tag-profile addon">
+								<a href="{{pathFor 'userprofile' _id=this}}"
+								   title="{{i18n 'group.settings.member.profile' 'Visit profile' attr=true}}">
+									<i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+								</a>
+							</div>
+						{{/each}}
+					</div>
+					<div class="mb-3">
+						<label
+							   class="form-label">{{i18n 'group.settings.field.addMembers' 'Add a new member to your group'}}</label>
+						<div class="input-group">
+							<span class="input-group-text">
+								<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+							</span>
+							<input class="js-search-users form-control" id="AddGroupMember"
+								   placeholder="{{i18n 'group.settings.field.addMember.placeholder' 'Type name of buddy' attr=true}}"
+								   size="40" type="text" />
 						</div>
-						<div class="tag tag-link group-member-tag-profile addon">
-							<a href="{{pathFor 'userprofile' _id=this._id}}"
-							   title="{{i18n 'group.settings.member.profile' attr=true}}">
-								<i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
-							</a>
-						</div>
-					{{/each}}
+					</div>
+					<div class="tag-group multiline">
+						{{#each foundUsers group}}
+							<div class="tag tag-btn group-member-tag-btn-add ">
+								<button class="js-member-add-btn"
+										title="{{i18n 'group.settings.addMember' 'add as member' attr=true}}"
+										type="button">
+									<i class="fa-solid fa-plus fa-fw" aria-hidden="true"></i>
+									{{username this._id}}
+								</button>
+							</div>
+							<div class="tag tag-link group-member-tag-profile addon">
+								<a href="{{pathFor 'userprofile' _id=this._id}}"
+								   title="{{i18n 'group.settings.member.profile' attr=true}}">
+									<i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>
+								</a>
+							</div>
+						{{/each}}
+					</div>
 				</div>
 			</div>
 		</div>

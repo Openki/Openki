@@ -28,6 +28,11 @@
 		padding: 6px 12px;
 		transition: box-shadow ease-in-out 0.15s;
 
+		&.is-invalid {
+			border: 1px solid $danger;
+			margin: -1px;
+		}
+
 		&:focus,
 		&.editable-changed {
 			border: 1px solid #ccc;
@@ -44,6 +49,11 @@
 
 .editable {
 	outline: none;
+
+	&.is-invalid {
+		border: 1px solid $danger;
+		margin: -1px;
+	}
 
 	&:focus,
 	&.editable-changed {

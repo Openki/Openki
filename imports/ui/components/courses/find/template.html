@@ -14,11 +14,7 @@
 	</div>
 	<div class="page-component">
 		{{#if hasResults}}
-			<div class="course-list">
-				{{#each result in results}}
-					{{> courseCompact result}}
-				{{/each}}
-			</div>
+			{{> courseList courses=results}}
 
 			{{#unless Template.subscriptionsReady}}
 				{{> loadingPage}}

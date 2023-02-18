@@ -8,6 +8,7 @@ import * as Viewport from '/imports/ui/lib/viewport';
 import '/imports/ui/components/price-policy';
 
 import './template.html';
+import './styles.scss';
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<'introduction'>;

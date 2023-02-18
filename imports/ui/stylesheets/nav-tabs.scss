@@ -1,5 +1,5 @@
 .nav-tabs > li > a {
-	color: $gray-dark;
+	color: $gray-800;
 
 	&:hover {
 		background-color: $blue-light;
@@ -8,11 +8,17 @@
 	}
 }
 
-.nav-tabs > .active > a,
-.nav-tabs > .active > a:hover,
-.nav-tabs > .active > a:focus {
+.nav-tabs .active > a,
+.nav-tabs .active > a:hover,
+.nav-tabs .active > a:focus {
 	background-color: $tab-content-bg;
 	border-top: 3px solid $blue-light;
+}
+
+.nav-tabs .nav-link:not(.active):hover,
+.nav-tabs .nav-link:not(.active):focus {
+	background-color: $primary;
+	color: #fff;
 }
 
 .tab-content {
@@ -28,7 +34,7 @@
 }
 
 .tab-label {
-	@media (max-width: $screen-xs) {
+	@include media-breakpoint-down(sm) {
 		display: none;
 
 		.active & {

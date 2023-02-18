@@ -36,12 +36,6 @@ $border-radius-large: 6px !default;
 
 $border-radius-base: 4px !default;
 
-// Navbar
-//
-// For backwards compatibility
-$navbar-height: 50px !default;
-$zindex-navbar-fixed: 1030 !default;
-
 // Buttons
 //
 // For each of Bootstrap's buttons, define text, background and border color.
@@ -60,17 +54,14 @@ $link-decoration: none;
 
 $form-label-color: shade-color($blue, 20%);
 
+$form-group-margin-bottom: 15px !default;
+
 // Dropdowns
 //
 // Dropdown menu container and contents.
 
 //** Background for the dropdown menu.
 $dropdown-bg: lighten($blue-lighter, 8.7%) !default;
-
-// Tooltips
-
-$tooltip-bg: $blue;
-$tooltip-opacity: 1;
 
 $hr-color: $blue-lighter;
 
@@ -79,6 +70,28 @@ $hr-color: $blue-lighter;
 $modal-sm: 400px;
 
 @import '{}/node_modules/bootstrap/scss/variables'; // Required
+
+// Navbar
+$nav-link-padding-y: 0.822rem;
+$navbar-height: 50px !default;
+$navbar-padding-y: null;
+$zindex-navbar-fixed: 1030 !default;
+$navbar-nav-link-padding-x: 1rem;
+$navbar-toggler-focus-width: 0;
+$navbar-brand-padding-y: 0.5rem;
+$navbar-default-border: darken($primary, 6.5%) !default;
+
+// Nav
+$nav-link-color: #000;
+$nav-tabs-link-hover-border-color: $primary;
+$nav-tabs-link-active-border-color: $primary $primary #fff;
+$nav-tabs-border-color: $primary;
+
+// Tooltips
+
+$tooltip-bg: $blue;
+$tooltip-opacity: 1;
+$tooltip-font-size: $font-size-base;
 
 // Modify Bootstrap maps
 

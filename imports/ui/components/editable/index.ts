@@ -13,10 +13,13 @@ import '/imports/ui/components/buttons';
 import './template.html';
 import './styles.scss';
 
-function EditableMixing<N extends string, D extends Editable, T extends Record<string, unknown>>(
-	TemplateBase: TemplateStaticTyped<N, D, T>,
-	templateName: N,
-) {
+function EditableMixing<
+	N extends string,
+	D extends Editable,
+	T extends Record<string, unknown> & {
+		numberOfCharacters: ReactiveVar<number>;
+	},
+>(TemplateBase: TemplateStaticTyped<N, D, T>, templateName: N) {
 	const Template = TemplateMixins.FormfieldErrors(
 		TemplateBase as TemplateStaticTyped<
 			N,
@@ -27,6 +30,7 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 				editor: MediumEditor.MediumEditor;
 				getEdited: () => string | undefined;
 				getTotalFocusTimeInSeconds: () => number;
+				numberOfCharacters: ReactiveVar<number>;
 				store: () => Promise<void>;
 				reset: () => void;
 			}
@@ -43,6 +47,8 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 			throw new Error('Editable got empty data');
 		}
 		instance.state = data.connect(instance);
+
+		instance.numberOfCharacters = new ReactiveVar(0);
 
 		// Add error mapping for the FormfieldErrors
 		const errorMapping: TemplateMixins.FormfieldErrorsMapping = {};
@@ -67,7 +73,7 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 
 	template.onRendered(function () {
 		const instance = this;
-		const editable = instance.$('.js-editable');
+		const $editable = instance.$('.js-editable');
 		let initialized = false;
 		let changedByUser = false;
 		let totalFocusTimeInSeconds = 0;
@@ -77,7 +83,7 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 			if (!instance.state?.changed.get()) {
 				return undefined;
 			}
-			return instance.state.multiline ? editable.html().trim() : editable.text().trim();
+			return instance.state.multiline ? $editable.html().trim() : $editable.text().trim();
 		};
 
 		instance.getTotalFocusTimeInSeconds = () => {
@@ -88,15 +94,15 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 			const text = instance.state.text();
 
 			if (instance.state.multiline) {
-				editable.html(text);
+				$editable.html(text);
 			} else {
-				editable.text(text);
+				$editable.text(text);
 			}
 
 			// HACK remove placeholder when there is content
 			// We should be using setContent() anyway, but it's not defined?!
 			if (text) {
-				editable.removeClass('medium-editor-placeholder medium-editor-placeholder-relative');
+				$editable.removeClass('medium-editor-placeholder medium-editor-placeholder-relative');
 			}
 
 			instance.errors.reset();
@@ -190,23 +196,28 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 
 		// Initialize the editor interface
 		// eslint-disable-next-line no-new
-		new MediumEditor(editable[0], meOptions);
+		new MediumEditor($editable[0], meOptions);
+
+		instance.numberOfCharacters.set($editable.text().trim().length);
 
 		// Register when the field is being edited
-		editable.on('input', () => {
+		$editable.on('input', () => {
 			// Fix placeholder position on empty after change
-			if (editable.text().length === 0) {
-				editable.html('');
+			if ($editable.text().length === 0) {
+				$editable.html('');
 			}
+
+			// Get the number of visible characters
+			instance.numberOfCharacters.set($editable.text().trim().length);
 
 			changedByUser = true;
 			instance.state.changed.set(true);
 		});
 
-		editable.on('focus', () => {
+		$editable.on('focus', () => {
 			startGettingFocus = Date.now();
 		});
-		editable.on('blur', () => {
+		$editable.on('blur', () => {
 			totalFocusTimeInSeconds += Math.round(
 				(Date.now() - (startGettingFocus || Date.now())) / 1000,
 			);
@@ -214,6 +225,26 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 	});
 
 	template.helpers({
+		characterLimitReached() {
+			const instance = Template.instance();
+
+			if (!instance.data.maxlength) {
+				return false;
+			}
+
+			return instance.numberOfCharacters.get() > instance.data.maxlength;
+		},
+
+		removeNumberOfCharacters() {
+			const instance = Template.instance();
+
+			if (!instance.data.maxlength) {
+				return 0;
+			}
+
+			return instance.numberOfCharacters.get() - instance.data.maxlength;
+		},
+
 		showControls() {
 			const instance = Template.instance();
 			return instance.state.showControls && instance.state.changed.get();
@@ -266,6 +297,10 @@ function EditableMixing<N extends string, D extends Editable, T extends Record<s
 			event.preventDefault();
 			instance.reset();
 			instance.state.changed.set(false);
+
+			// Get the number of visible characters
+			const $editable = instance.$('.js-editable');
+			instance.numberOfCharacters.set($editable.text().trim().length);
 		},
 
 		'click .js-editable-edit'(_event, instance) {
