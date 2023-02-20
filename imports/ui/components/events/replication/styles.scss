@@ -2,7 +2,7 @@
 @import '{}/imports/ui/stylesheets/actions';
 
 .replica-tab-content {
-	border-color: $blue;
+	border-color: var(--bs-primary);
 	padding: 15px;
 }
 

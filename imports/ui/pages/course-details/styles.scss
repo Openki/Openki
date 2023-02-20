@@ -6,9 +6,7 @@
 // ** Component header
 //========================================================================================
 .course-page-component-header {
-	$background-color: $blue;
-
-	background: $background-color;
+	background: var(--bs-primary);
 	color: $white;
 	padding: 15px;
 }

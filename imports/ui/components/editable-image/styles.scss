@@ -38,7 +38,7 @@
 }
 
 .editable-image label:hover strong {
-	color: $blue;
+	color: var(--bs-primary);
 }
 
 .editable-image-controls {

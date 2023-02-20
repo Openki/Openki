@@ -54,7 +54,7 @@
 }
 
 .leaflet-control-container .leaflet-right .leaflet-control:hover {
-	color: $primary;
+	color: var(--bs-primary);
 	cursor: pointer;
 }
 

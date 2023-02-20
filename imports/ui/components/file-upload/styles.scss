@@ -38,7 +38,7 @@
 }
 
 .file-upload label:hover strong {
-	color: $blue;
+	color: var(--bs-primary);
 }
 
 .file-upload-controls {
