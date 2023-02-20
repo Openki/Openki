@@ -1,4 +1,10 @@
 <template name="layout">
+	<style>
+		:root {
+			--bs-primary: rgb({{PublicSettings.theme.primary}});
+			--bs-primary-rgb: {{PublicSettings.theme.primary}};
+		}
+	</style>
 	{{#if showRegionSplash}}
 		{{> regionSplash}}
 	{{/if}}

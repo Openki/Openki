@@ -1,7 +1,7 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
 footer {
-	background: $blue;
+	background: var(--bs-primary);
 	color: $white;
 	font-size: medium;
 	height: $footer-height + 1px;

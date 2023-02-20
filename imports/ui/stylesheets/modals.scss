@@ -1,7 +1,7 @@
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
 
 .modal-header {
-	background: $primary;
+	background: var(--bs-primary);
 	color: $white;
 }
 

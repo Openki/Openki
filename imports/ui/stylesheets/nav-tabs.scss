@@ -17,7 +17,7 @@
 
 .nav-tabs .nav-link:not(.active):hover,
 .nav-tabs .nav-link:not(.active):focus {
-	background-color: $primary;
+	background-color:var(--bs-primary);
 	color: #fff;
 }
 

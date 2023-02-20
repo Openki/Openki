@@ -1,7 +1,7 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
 .regions-splash .modal-header {
-	background-color: $primary;
+	background-color: var(--bs-primary);
 	color: $white;
 }
 
@@ -13,7 +13,7 @@
 	.fa-regular,
 	.fa-brands,
 	.fa-solid {
-		color: $primary;
+		color: var(--bs-primary);
 	}
 }
 
