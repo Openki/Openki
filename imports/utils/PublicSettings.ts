@@ -21,6 +21,9 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
 	/** The image to be shown in social media */
 	ogLogo: { src: String },
 	emailLogo: String,
+	theme: {
+		brand: String,
+	},
 	regionSelection: {
 		/** The minimum number of regions displayed in the Regions selection. */
 		minNumber: Number,
@@ -121,6 +124,9 @@ const defaults = {
 	headerLogoKiosk: { src: '', alt: '' },
 	avatarLogo: { src: '', alt: '' },
 	ogLogo: { src: 'openki_logo_2018.png' },
+	theme: {
+		brand: '#38829c',
+	},
 	regionSelection: { minNumber: 5, aboutLink: '' },
 	i18nHelpLink: 'https://gitlab.com/Openki/Openki/-/wikis/i18n-howto',
 	publicTenants: [] as string[],

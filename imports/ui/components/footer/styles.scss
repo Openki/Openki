@@ -1,7 +1,6 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
 footer {
-	background: var(--bs-primary);
 	color: $white;
 	font-size: medium;
 	height: $footer-height + 1px;
@@ -21,7 +20,7 @@ footer {
 	padding: $footer-padding-vertical 10px;
 
 	&:hover {
-		background: $blue-light;
+		background-color: #{'hsl(var(--openki-brand-hs) calc(var(--openki-brand-l) + 10%))'};
 		color: $white;
 		text-decoration: none;
 	}
