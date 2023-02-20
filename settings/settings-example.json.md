@@ -14,6 +14,9 @@ This file descripts all configurations and customization options. Remove the com
 		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" }, // The default image used for avatars (color is changed using the CSS filter 'hue-rotate'). The "alt" setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media. Can be a logo from the /public/logo/* folder or from our s3 file storage (must start with the "publicUrlBase" setting).
 		"emailLogo": "emails/openki.png", // Can be a logo from the /private/* folder or a base64 encoded string.
+		"theme": { // Theming the ui 
+			"brand": "#38829c"
+		},
 		"regionSelection": {
 			"minNumber": 5, // The minimum number of regions displayed in the Regions selection. Default: 5
 			"aboutLink": "" // A link to a page that explains regions, if not set then none link is shown. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`

@@ -10,7 +10,7 @@
 		"ogLogo": { "src": "openki_logo_2018.png" },
 		"emailLogo": "emails/openki.png",
 		"theme": {
-			"primary": "0, 155, 75"
+			"brand": "#38829c"
 		},
 		"publicTenants": ["8410c099a7"],
 		"regionSelection": {
