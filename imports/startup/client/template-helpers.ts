@@ -273,7 +273,9 @@ Template.registerHelper('contribution', function (userId: string) {
 	}
 
 	return Spacebars.SafeString(
-		`<a href="${getLocalizedValue(contribution.link)}" data-tooltip="${Blaze._escape(
+		`<a href="${getLocalizedValue(
+			contribution.link,
+		)}" data-bs-toggle="tooltip" data-bs-title="${Blaze._escape(
 			i18n(
 				'user.hasContributed',
 				'{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.',
@@ -292,46 +294,4 @@ Template.registerHelper('component', function (this: any, f: any) {
 	const self = { ...this };
 	self.component = f;
 	return self;
-});
-
-Template.registerHelper('username', function (userId: string) {
-	return getUserName(userId);
-});
-
-Template.registerHelper('contribution', function (userId: string) {
-	if (!userId) {
-		return '';
-	}
-
-	const contribution = PublicSettings.contribution;
-
-	if (!contribution) {
-		return '';
-	}
-
-	const cachedUser = getCachedUser(userId);
-
-	if (!cachedUser) {
-		return '';
-	}
-
-	if (!checkContribution(cachedUser.contribution)) {
-		return '';
-	}
-
-	return Spacebars.SafeString(
-		`<a href="${getLocalizedValue(
-			contribution.link,
-		)}" data-bs-toggle="tooltip" data-bs-title="${Blaze._escape(
-			i18n(
-				'user.hasContributed',
-				'{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.',
-				{
-					USERNAME: cachedUser.getDisplayName(),
-					SITENAME: getSiteName(Regions.currentRegion()),
-					ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
-				},
-			),
-		)}"><sup><i class="${contribution.icon}" aria-hidden="true"></i></sup></a>`,
-	);
 });
