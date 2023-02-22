@@ -133,10 +133,10 @@ import './styles.scss';
 		links() {
 			const siteName = getSiteName(Regions.currentRegion());
 
-			return PublicSettings.nav.moreLinks.map((linkSpec) => ({
-				link: linkSpec.link,
-				icon: linkSpec.icon,
-				text: linkSpec.key ? i18n(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
+			return PublicSettings.nav.customEntries.map((entry) => ({
+				link: entry.link,
+				icon: entry.icon,
+				text: entry.key ? i18n(entry.key, { SITENAME: siteName }) : entry.text,
 			}));
 		},
 

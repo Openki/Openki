@@ -36,6 +36,7 @@
     "select2": "4.0.13",
     "select2-theme-bootstrap5": "0.1.1",
     "shariff": "3.2.1",
+    "tinycolor2": "1.6.0",
     "url-join": "5.0.0"
   },
   "devDependencies": {
@@ -56,6 +57,7 @@
     "@types/sanitize-html": "2.8.0",
     "@types/seedrandom": "3.0.4",
     "@types/select2": "4.0.55",
+    "@types/tinycolor2": "1.4.3",
     "@typescript-eslint/eslint-plugin": "5.52.0",
     "@typescript-eslint/parser": "5.52.0",
     "autoprefixer": "10.4.13",
