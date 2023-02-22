@@ -20,7 +20,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 	'joinLink',
 	Data,
 	{
-		joinLink: ReactiveVar<SubscriptionType<typeof JoinLinks['findFilter']> | undefined>;
+		joinLink: ReactiveVar<SubscriptionType<(typeof JoinLinks)['findFilter']> | undefined>;
 	}
 >;
 

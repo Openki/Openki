@@ -25,7 +25,7 @@ import './styles.scss';
 		// LogCollection.Filtering Params are allowed as data input
 		Parameters<ReturnType<LogCollection['Filtering']>['read']>[0],
 		{
-			logs: ReactiveVar<SubscriptionType<typeof Logs['findFilter']> | undefined>;
+			logs: ReactiveVar<SubscriptionType<(typeof Logs)['findFilter']> | undefined>;
 			limit: ReactiveVar<number>;
 			filter: ReturnType<LogCollection['Filtering']>;
 			updateUrl: () => boolean;
