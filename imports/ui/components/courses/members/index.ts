@@ -112,7 +112,7 @@ import './styles.scss';
 		'courseMember',
 		{ member: CourseMemberEntity; course: CourseModel },
 		{
-			user: ReactiveVar<SubscriptionType<typeof Users['details']> | undefined>;
+			user: ReactiveVar<SubscriptionType<(typeof Users)['details']> | undefined>;
 			editableMessage: Editable;
 			subscribeToTeam: () => Subscribe | undefined;
 			removeFromTeam: () => Unsubscribe | undefined;

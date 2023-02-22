@@ -12,7 +12,7 @@ import './styles.scss';
 const Template = TemplateAny as TemplateStaticTyped<
 	'featuredGroup',
 	Record<string, unknown>,
-	{ featuredGroup: ReactiveVar<SubscriptionType<typeof Groups['details']> | undefined> }
+	{ featuredGroup: ReactiveVar<SubscriptionType<(typeof Groups)['details']> | undefined> }
 >;
 
 const template = Template.featuredGroup;

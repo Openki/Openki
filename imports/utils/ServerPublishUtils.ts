@@ -3,7 +3,7 @@ import { Meteor, Subscription } from 'meteor/meteor';
 export type Record<T extends readonly Mongo.Cursor<any>[]> = Mongo.Cursor<any> | [...T] | undefined;
 
 export type QueryBuilder<A extends any[], T> = (
-	this: { userId: ReturnType<typeof Meteor['userId']> },
+	this: { userId: ReturnType<(typeof Meteor)['userId']> },
 	...args: A
 ) => T;
 

@@ -35,8 +35,8 @@ const Template = TemplateAny as TemplateStaticTyped<
 	'venueDetailsPage',
 	{ venue: VenueModel },
 	{
-		upcomingEvents: ReactiveVar<SubscriptionType<typeof Events['findFilter']> | undefined>;
-		pastEvents: ReactiveVar<SubscriptionType<typeof Events['findFilter']> | undefined>;
+		upcomingEvents: ReactiveVar<SubscriptionType<(typeof Events)['findFilter']> | undefined>;
+		pastEvents: ReactiveVar<SubscriptionType<(typeof Events)['findFilter']> | undefined>;
 		state: ReactiveDict<{
 			editing: boolean;
 			verifyDelete: boolean;
