@@ -59,7 +59,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
 		home: Boolean,
 		proposeCourse: Boolean,
 		calendar: Boolean,
-		moreLinks: [
+		customEntries: [
 			{
 				link: String,
 				icon: String,
@@ -144,7 +144,7 @@ const defaults = {
 		home: true,
 		proposeCourse: true,
 		calendar: true,
-		moreLinks: [] as { link: string; icon: string; key?: string; text?: string }[],
+		customEntries: [] as { link: string; icon: string; key?: string; text?: string }[],
 	},
 	// eslint-disable-next-line camelcase
 	footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],

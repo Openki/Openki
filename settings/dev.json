@@ -32,7 +32,7 @@
 			"home": true,
 			"proposeCourse": true,
 			"calendar": true,
-			"moreLinks": [ ]
+			"customEntries": [ ]
 		},
 		"footerLinks":
 		[	{ "link": "https://about.openki.net/"
