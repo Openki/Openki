@@ -131,7 +131,7 @@
 
 .nav-link.active {
 	@include media-breakpoint-down(lg) {
-		background-color: lighten($primary, 10%);
+		background-color: #{'hsl(var(--openki-brand-hs) calc(var(--openki-brand-l) + 10%))'};
 	}
 }
 
@@ -166,7 +166,7 @@
 .navbar-covering .nav-link.active:hover,
 .navbar-covering .nav-link.active:focus {
 	@include media-breakpoint-up(lg) {
-		background-color: lighten($primary, 10%);
+		background-color: #{'hsl(var(--openki-brand-hs) calc(var(--openki-brand-l) + 10%))'};
 		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 	}
 }

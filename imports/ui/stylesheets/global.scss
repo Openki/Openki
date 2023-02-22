@@ -35,3 +35,7 @@ a:focus,
 .cursor-pointer:hover {
 	cursor: pointer;
 }
+
+.bg-brand {
+	background-color: var(--openki-brand) !important;
+}
