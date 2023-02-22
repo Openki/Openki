@@ -3,7 +3,7 @@
 $tenant-member-bg: rgba($gray-600, 0.15);
 
 .tenant-member-tag-profile {
-	@include tag($tenant-member-bg, $body-color, $tenant-member-bg, var(--bs-primary));
+	@include tag($tenant-member-bg, $body-color, $tenant-member-bg, $primary);
 }
 
 .tenant-member-tag-btn-remove {
@@ -17,7 +17,7 @@ $tenant-member-bg: rgba($gray-600, 0.15);
 $tenant-admin-bg: rgba($red, 0.15);
 
 .tenant-admin-tag-profile {
-	@include tag($tenant-admin-bg, $body-color, $tenant-admin-bg, var(--bs-primary));
+	@include tag($tenant-admin-bg, $body-color, $tenant-admin-bg, $primary);
 }
 
 .tenant-admin-tag-btn-remove {

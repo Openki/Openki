@@ -3,7 +3,7 @@
 /* stylelint-disable max-nesting-depth, selector-no-qualifying-type */
 .info-page {
 	h2 {
-		color: var(--bs-primary);
+		color: $primary;
 	}
 
 	p + h2,
@@ -20,7 +20,7 @@
 
 		&:hover {
 			background-color: #ebf4f8;
-			border-color:var(--bs-primary);
+			border-color: $primary;
 		}
 
 		&.active {

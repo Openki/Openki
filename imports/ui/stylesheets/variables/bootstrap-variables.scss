@@ -82,9 +82,9 @@ $navbar-default-border: darken($primary, 6.5%) !default;
 
 // Nav
 $nav-link-color: #000;
-$nav-tabs-link-hover-border-color: var(--bs-primary);
-$nav-tabs-link-active-border-color: var(--bs-primary) var(--bs-primary) #fff;
-$nav-tabs-border-color: var(--bs-primary);
+$nav-tabs-link-hover-border-color: $primary;
+$nav-tabs-link-active-border-color: $primary $primary #fff;
+$nav-tabs-border-color: $primary;
 
 // Tooltips
 
