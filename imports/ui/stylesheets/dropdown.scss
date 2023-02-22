@@ -51,9 +51,8 @@ $dropdown-transition-time: 0.3s;
 	display: inline-block;
 }
 
-
 .dropdown-legend {
 	@include clearfix;
-	color:var(--bs-primary);
+	color: $primary;
 	text-align: start;
 }

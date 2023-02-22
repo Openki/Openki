@@ -3,7 +3,7 @@
 $group-member-bg: rgba($gray-600, 0.15);
 
 .group-member-tag-profile {
-	@include tag($group-member-bg, $body-color, $group-member-bg, var(--bs-primary));
+	@include tag($group-member-bg, $body-color, $group-member-bg, $primary);
 }
 
 .group-member-tag-btn-remove {

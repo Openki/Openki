@@ -23,7 +23,7 @@ $header-bg: darken($blue-lighter, 5%);
 }
 
 .event-page-component-header {
-	$background-color: var(--bs-primary);
+	$background-color: $blue;
 
 	background: $background-color;
 	color: $white;
