@@ -1,3 +1,5 @@
+import { Mongo } from 'meteor/mongo';
+
 import { Regions } from '/imports/api/regions/regions';
 // eslint-disable-next-line import/no-cycle
 import { EventEntity, Events } from '/imports/api/events/events';
