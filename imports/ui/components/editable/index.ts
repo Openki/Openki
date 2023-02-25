@@ -2,6 +2,7 @@ import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { ValidationError, ValidationErrorDetail } from 'meteor/mdg:validation-error';
 import { Session } from 'meteor/session';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import { Editable, State } from '/imports/ui/lib/editable';
