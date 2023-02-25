@@ -132,6 +132,14 @@ declare module 'meteor/iron:router' {
 			action?: (
 				this: RouteThis<P, Q> & {
 					response: any;
+					redirect: (
+						urlOrRouteName: string,
+						params?: Record<string, any>,
+						options?: {
+							query?: string | Record<string, any>;
+							hash?: string;
+						},
+					) => void;
 					render: (templateName?: string) => void;
 				} & T,
 			) => void;
