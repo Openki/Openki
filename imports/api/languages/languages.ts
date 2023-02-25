@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 
 /** DB-Model */
 export interface LanguageEntity {
+	[name: string]: unknown;
 	/** ISO 639-1 code */
 	lg: string;
 	/** Full name */
