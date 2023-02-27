@@ -18,6 +18,7 @@ $bootstrap-sass-asset-helper: false;
 
 // copied from bootstrap-sass/assets/stylesheets/bootstrap/forms it is needed for forms.
 @mixin form-inline {
+	// non empty
 }
 
 // @import '{}/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons';
