@@ -1,3 +1,5 @@
+import { Mongo } from 'meteor/mongo';
+
 import { CourseEntity, Courses } from './courses';
 
 function update(courseId: string) {

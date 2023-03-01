@@ -5,6 +5,7 @@ import * as Tooltips from '/imports/utils/Tooltips';
 
 import * as Viewport from '/imports/ui/lib/viewport';
 
+import '/imports/ui/layouts/root.html';
 import '/imports/ui/components/alerts';
 
 import './template.html';

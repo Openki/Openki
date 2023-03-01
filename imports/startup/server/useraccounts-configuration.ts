@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
+import { ServiceConfiguration } from 'meteor/service-configuration';
 import { Accounts } from 'meteor/accounts-base';
 
 import * as usersMethods from '/imports/api/users/methods';

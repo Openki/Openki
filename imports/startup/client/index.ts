@@ -18,13 +18,11 @@ import { Introduction } from '/imports/ui/lib/introduction';
 
 import './bootstrap';
 
-// close any verification dialogs still open
-Router.onBeforeAction(function () {
+Router.onStop(function () {
 	Tooltips.hide();
 
+	// close any verification dialogs still open
 	Session.set('verify', false);
-
-	this.next();
 });
 
 Meteor.startup(RegionSelection.init);

@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
@@ -673,7 +674,37 @@ RouterAsync.route('join', {
 	},
 });
 
-RouterAsync.route('timetable', {
+RouterAsync.route<
+	| never[]
+	| {
+			days: {
+				moment: moment.Moment;
+				relStart: number;
+				relEnd: number;
+			}[];
+			hours: {
+				moment: moment.Moment;
+				relStart: number;
+				relEnd: number;
+			}[];
+			grouped: {
+				perRoom: {
+					room: string;
+					venue: VenueModel;
+					rows: (EventEntity & {
+						relStart: number;
+						relEnd: number;
+					})[];
+				}[];
+				venue: VenueModel;
+			}[];
+	  },
+	Record<string, string>,
+	Record<string, string>,
+	{
+		future_length: Mongo.Cursor<EventEntity, EventModel>;
+	}
+>('timetable', {
 	path: '/kiosk/timetable',
 	template: 'kioskTimetablePage',
 	layoutTemplate: 'kioskLayout',
@@ -828,6 +859,7 @@ RouterAsync.route('timetable', {
 			days: Object.values(days),
 			hours: Object.values(hours),
 			grouped,
+			future_length: events.length,
 		};
 	},
 });

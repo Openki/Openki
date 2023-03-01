@@ -10,7 +10,6 @@ $enable-gradients: true;
 @import '{}/node_modules/bootstrap/scss/functions'; // Required
 
 // Default variable overrides
-
 $secondary: #f0f0f0;
 
 // Typography
@@ -80,6 +79,7 @@ $navbar-nav-link-padding-x: 1rem;
 $navbar-toggler-focus-width: 0;
 $navbar-brand-padding-y: 0.5rem;
 $navbar-default-border: darken($primary, 6.5%) !default;
+$navbar-dark-color: $white;
 
 // Nav
 $nav-link-color: #000;
