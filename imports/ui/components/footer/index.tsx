@@ -68,7 +68,7 @@ function Footer() {
 
 	if (!isLoading()) {
 		return (
-			<footer className="footer">
+			<footer className="footer bg-brand">
 				<Links />
 				<span title={fullInfo()} className="footer-deployed-version">
 					{versionName()} {commit()}
@@ -79,7 +79,7 @@ function Footer() {
 		);
 	}
 	return (
-		<footer className="footer">
+		<footer className="footer bg-brand">
 			<Links />
 			<span className="footer-deployed-version">
 				<span className="placeholder" style={{ minWidth: '100px' }}></span>
