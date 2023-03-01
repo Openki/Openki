@@ -47,7 +47,7 @@ This file descripts all configurations and customization options. Remove the com
 				"title_key": "navigation.footer.faq.title"
 			},
 			{ "link": "https://gitlab.com/Openki/Openki/"
-			, "key": "navigation.footer.sourceCode"
+			, "key": "navigation.footer.powerdByOpenki"
 			, "title_key": "navigation.footer.codeOnGitLab"
 			}
 			{ "link": "https://about.openki.net/privacy-policy/"
