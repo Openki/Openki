@@ -2,7 +2,13 @@
 /* stylelint-disable selector-max-compound-selectors */
 
 .navbar {
+	background-image: none;
 	transition: box-shadow $default-transition-time;
+
+	.dropdown-menu {
+		/* align dropdown with bottom of navbar */
+		top: 106%;
+	}
 
 	@include media-breakpoint-down(lg) {
 		.dropdown-legend {
