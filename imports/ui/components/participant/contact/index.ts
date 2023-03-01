@@ -15,7 +15,6 @@ import '/imports/ui/components/send-message';
 import type { Data as SendMessageData } from '/imports/ui/components/send-message';
 
 import './template.html';
-import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'participantContact',

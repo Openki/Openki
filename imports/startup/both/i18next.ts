@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import i18next, { TFunction } from 'i18next';
 import ICU from 'i18next-icu';
 import ChainedBackend from 'i18next-chained-backend';
