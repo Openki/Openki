@@ -64,11 +64,10 @@ This file descripts all configurations and customization options. Remove the com
 				"key": "main.faq_link",
 				"title_key": "navigation.footer.faq.title"
 			},
-			{
-				"link": "https://gitlab.com/Openki/Openki/",
-				"text": "GitLab",
-				"title_key": "navigation.footer.codeOnGitLab"
-			},
+			{ "link": "https://gitlab.com/Openki/Openki/"
+			, "key": "navigation.footer.powerdByOpenki"
+			, "title_key": "navigation.footer.codeOnGitLab"
+			}
 			{ "link": "https://about.openki.net/privacy-policy/"
 			, "key": "main.privacyPolicy"
 			, "title_key": "main.privacyPolicy.tooltip"
