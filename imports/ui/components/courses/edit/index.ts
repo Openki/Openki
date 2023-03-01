@@ -421,12 +421,12 @@ export type Data = {
 			}
 
 			const numberOfCharacters = instance.editableDescription.getNumberOfCharacters();
-			if (PublicSettings.eventDescriptionMax && numberOfCharacters) {
-				if (numberOfCharacters > PublicSettings.eventDescriptionMax) {
+			if (PublicSettings.courseDescriptionMax && numberOfCharacters) {
+				if (numberOfCharacters > PublicSettings.courseDescriptionMax) {
 					Alert.error(
 						i18n('_inputField.maxlength', {
-							MAXNUMBER: PublicSettings.eventDescriptionMax,
-							NUMBER: numberOfCharacters - PublicSettings.eventDescriptionMax,
+							MAXNUMBER: PublicSettings.courseDescriptionMax,
+							NUMBER: numberOfCharacters - PublicSettings.courseDescriptionMax,
 						}),
 					);
 					return;
