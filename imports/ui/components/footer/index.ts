@@ -22,13 +22,13 @@ template.onCreated(function () {
 template.helpers({
 	links() {
 		const siteName = getSiteName(Regions.currentRegion());
-
 		return PublicSettings.footerLinks.map((linkSpec) => ({
 			link: linkSpec.link,
 			text: linkSpec.key ? i18n(linkSpec.key, { SITENAME: siteName }) : linkSpec.text,
 			title: linkSpec.title_key ? i18n(linkSpec.title_key, { SITENAME: siteName }) : '',
 		}));
 	},
+
 	version() {
 		const version = Version.findOne();
 		return version && version.basic + (version.branch !== 'master' ? ` ${version.branch}` : '');
