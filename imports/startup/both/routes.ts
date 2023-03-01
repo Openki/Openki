@@ -742,15 +742,7 @@ RouterAsync.route<
 		await import('/imports/ui/pages/kiosk/timetable');
 	},
 	waitOn() {
-		const filter = Events.Filtering().read(this.params.query).done();
-		Session.set('kioskFilter', filter.toParams());
-
-		const queryFuture = filter.toQuery() as EventsFindFilter;
-
-		return [
-			Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params.query), 200),
-			Meteor.subscribe('Events.findFilter', queryFuture, 20)
-		];
+		return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params.query), 200);
 	},
 	data() {
 		const query = makeFilterQuery(this.params.query);
@@ -899,10 +891,8 @@ RouterAsync.route<
 			days: Object.values(days),
 			hours: Object.values(hours),
 			grouped,
-			future_length: events.length
+			future_length: events.length,
 		};
-
-
 	},
 });
 

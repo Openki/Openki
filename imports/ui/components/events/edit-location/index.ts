@@ -268,8 +268,14 @@ template.events({
 						],
 					},
 					proposed: true,
-					presetAddress: foundLocation.display_name.replace(/[^\d]*(\d+), ([^,]+),.*, ([^,]+), (\d+), [^,]+/, "$2 $1, $4 $3"),
-					name: foundLocation.display_name.replace(/[^\d]*(\d+), ([^,]+),.*, ([^,]+), (\d+), [^,]+/, "$2 $1, $4 $3"),
+					presetAddress: foundLocation.display_name.replace(
+						/[^\d]*(\d+), ([^,]+),.*, ([^,]+), (\d+), [^,]+/,
+						'$2 $1, $4 $3',
+					),
+					name: foundLocation.display_name.replace(
+						/[^\d]*(\d+), ([^,]+),.*, ([^,]+), (\d+), [^,]+/,
+						'$2 $1, $4 $3',
+					),
 				} as ProposedMarkerEntity;
 				instance.locationTracker.markers.insert(marker);
 			});
