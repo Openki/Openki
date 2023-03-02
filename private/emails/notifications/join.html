@@ -31,7 +31,8 @@
 				{{/each}}
 			</p>
 			<p>
-				{{i18n "notification.join.mail.linktext" '➜ View {COURSE}' COURSE=course lng=locale}}
+				<a
+				   href="{{courseLink}}">{{i18n "notification.join.mail.linktext" '➜ View {COURSE}' COURSE=course lng=locale}}</a>
 			</p>
 		</td>
 	</tr>

@@ -15,6 +15,7 @@ import { Roles } from '/imports/api/roles/roles';
 import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue, LocalizedValue } from '/imports/utils/getLocalizedValue';
+import { getColor, getColorRawHs, getColorRawL, getColorRawRgb } from '/imports/utils/getColor';
 import { checkContribution } from '/imports/utils/checkContribution';
 import { locationFormat } from '/imports/utils/location-format';
 
@@ -75,6 +76,22 @@ const helpers: { [name: string]: Function } = {
 
 	localized(value: LocalizedValue | null | undefined) {
 		return getLocalizedValue(value);
+	},
+
+	getColor(value: string) {
+		return getColor(value);
+	},
+
+	getColorRawRgb(value: string) {
+		return getColorRawRgb(value);
+	},
+
+	getColorRawHs(value: string) {
+		return getColorRawHs(value);
+	},
+
+	getColorRawL(value: string) {
+		return getColorRawL(value);
 	},
 
 	log(context: unknown) {

@@ -34,7 +34,7 @@
 								{{i18n (roleUserList role.type) NAME=user.getDisplayName}}
 							{{/if}}
 						</h3>
-						{{> courseList coursesByRole role.type false}}
+						{{> courseList courses=(coursesByRole role.type false) small=true}}
 					{{/if}}
 				{{/each}}
 				{{#each role in roles}}
@@ -50,7 +50,7 @@
 									{{i18n (roleUserListPast role.type) NAME=user.getDisplayName}}
 								{{/if}}
 							</h3>
-							{{> courseList coursesByRole role.type true}}
+							{{> courseList courses=(coursesByRole role.type true) small=true}}
 						{{/if}}
 					{{/if}}
 				{{/each}}

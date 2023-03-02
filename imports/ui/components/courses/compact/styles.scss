@@ -1,25 +1,4 @@
-// *** Course compact ***
-//=================
-
-// ** Wrap
-//========================================================================================
-.course-compact-wrap {
-	@include td-make-xs-column(12, 15px);
-	padding-bottom: 7.5px;
-
-	@media (min-width: $screen-xsm) {
-		@include td-make-xs-column(6, 7.5px);
-		@include td-make-md-column(4, 7.5px);
-		@include td-make-lg-column(3, 7.5px);
-	}
-}
-
-// For backwards compatibility, an exception for the user profile
-.profile-courselist .course-compact-wrap {
-	@media (min-width: $screen-xsm) {
-		@include td-make-xs-column(6, 7.5px);
-	}
-}
+@import '{}/imports/ui/stylesheets/variables/index';
 
 // ** Compact
 //========================================================================================
@@ -81,15 +60,14 @@
 // ** Content
 //========================================================================================
 .course-compact-content {
-	@include td-make-xs-column(9);
-	@include td-padding-all(0, 0, 0, 15px);
 	background: $body-bg;
+	padding-inline-start: 15px;
 }
 
 .has-upcoming-events > .course-compact-content {
-	@include td-make-xs-column(7.5);
-	@include td-padding-all(0, 5px, 0, 15px);
 	background: transparent;
+	padding-inline-end: 5px;
+	padding-inline-start: 15px;
 }
 
 // ** Title
@@ -97,7 +75,7 @@
 .course-compact-title {
 	@include ellipsis-multiline(2);
 
-	color: $gray-dark;
+	color: $gray-700;
 	font-size: 20px;
 	line-height: 24px;
 	margin: 9.5px 0;
@@ -127,11 +105,11 @@
 // ** Event
 //========================================================================================
 .course-compact-next-event {
-	@include td-make-xs-column(4.5);
-	@include td-pos(right, -7px);
 	background: $course-compact-next-event-bg;
 	color: $course-compact-next-event-color;
+	inset-inline-end: -7px;
 	max-height: 150px;
+	overflow: hidden;
 	padding: 5px;
 	position: relative;
 	text-align: center;
@@ -145,8 +123,7 @@
 // ** Roles
 //========================================================================================
 .course-compact-roles {
-	@include td-make-xs-column(3);
-	@include td-pos(right, -7px);
+	inset-inline-end: -7px;
 	padding: 0;
 	position: relative;
 	top: -7px;
@@ -184,6 +161,8 @@
 }
 
 .course-compact > .course-groups {
-	@include td-pos(right, $course-border-width);
 	bottom: $course-border-width;
+	inset-inline-end: $course-border-width;
+	padding: 0;
+	width: auto;
 }

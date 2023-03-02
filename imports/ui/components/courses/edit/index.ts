@@ -15,6 +15,7 @@ import { GroupEntityCustomCourseFields, Groups } from '/imports/api/groups/group
 import { Regions } from '/imports/api/regions/regions';
 import { RoleEntity, Roles } from '/imports/api/roles/roles';
 
+import { PublicSettings } from '/imports/utils/PublicSettings';
 import * as StringTools from '/imports/utils/string-tools';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 
@@ -80,6 +81,7 @@ export type Data = {
 				'course.description.placeholder',
 				'Describe your idea, so more people find it and know what to expect.',
 			),
+			PublicSettings.courseDescriptionMax,
 		);
 
 		instance.state = new ReactiveDict();
@@ -416,6 +418,19 @@ export type Data = {
 			const newDescription = instance.editableDescription.getEdited();
 			if (newDescription) {
 				changes.description = newDescription;
+			}
+
+			const numberOfCharacters = instance.editableDescription.getNumberOfCharacters();
+			if (PublicSettings.courseDescriptionMax && numberOfCharacters) {
+				if (numberOfCharacters > PublicSettings.courseDescriptionMax) {
+					Alert.error(
+						i18n('_inputField.maxlength', {
+							MAXNUMBER: PublicSettings.courseDescriptionMax,
+							NUMBER: numberOfCharacters - PublicSettings.courseDescriptionMax,
+						}),
+					);
+					return;
+				}
 			}
 
 			let courseId = data._id || '';
