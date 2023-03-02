@@ -19,4 +19,4 @@ Before opening a new issue, make sure to search for keywords in the issues to ma
 <!-- What permissions are required to perform the described actions? Are they consistent with the existing permissions as documented for users and groups -->
 
 ### Links / references
-<!-- Put here some references and links (ex. link this issue to allready existing issues that concern this one or have similar approaches) -->
+<!-- Put here some references and links (ex. link this issue to already existing issues that concern this one or have similar approaches) -->
