@@ -116,32 +116,38 @@
 
 <template name="courseDetailsSubmenu">
 	<nav class="course-details-nav">
-		<ul class="nav nav-tabs">
-			<li role="presentation" class='active'>
-				<a href="#description" data-toggle="tab">
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="nav-item" role="presentation">
+				<button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+						data-bs-target="#description" type="button" role="tab"
+						aria-controls="description" aria-selected="true">
 					<span class="fa-solid fa-file-lines fa-fw" aria-hidden="true"></span>
 					<span class="tab-label">{{i18n 'course.subnav.descr' 'Description'}}</span>
-				</a>
+				</button>
 			</li>
 			{{#if mayEdit}}
-				<li role="presentation">
-					<a href="#files" data-toggle="tab">
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="files-tab" data-bs-toggle="tab"
+							data-bs-target="#files" type="button" role="tab" aria-controls="files"
+							aria-selected="false">
 						<span class="fa-solid fa-file fa-fw" aria-hidden="true"></span>
 						<span class="tab-label">{{i18n 'course.subnav.files' 'Files'}}</span>
-					</a>
+					</button>
 				</li>
 			{{/if}}
-			<li role="presentation">
-				<a href="#history" data-toggle="tab">
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="history-tab" data-bs-toggle="tab"
+						data-bs-target="#history" type="button" role="tab" aria-controls="history"
+						aria-selected="false">
 					<span class="fa-solid fa-clock-rotate-left fa-fw" aria-hidden="true"></span>
 					<span class="tab-label">{{i18n 'course.subnav.history' 'History'}}</span>
-				</a>
+				</button>
 			</li>
 		</ul>
 	</nav>
 	<div class="tab-content course-details-content">
 		<div class="tab-pane {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}} active"
-			 id="description">
+			 id="description" role="tabpanel" aria-labelledby="description-tab" tabindex="0">
 			<div class="fade-wrap">
 				<div
 					 class="course-description {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}}">
@@ -163,11 +169,13 @@
 				</div>
 			{{/if}}
 		</div>
-		<div class="tab-pane course-history" id="history">
+		<div class="tab-pane course-history" id="history" role="tabpanel"
+			 aria-labelledby="history-tab" tabindex="0">
 			{{> coursehistory}}
 		</div>
 		{{#if mayEdit}}
-			<div class="tab-pane" id="files">
+			<div class="tab-pane" id="files" role="tabpanel" aria-labelledby="files-tab"
+				 tabindex="0">
 				{{> courseFiles}}
 			</div>
 		{{/if}}
@@ -248,7 +256,7 @@
 					</li>
 				{{/each}}
 				<li class="dialog-dropdown-btn">
-					<a href="{{pathFor 'groupDetails' _id='create'}}" class="btn btn-add">
+					<a href="{{pathFor 'groupDetails' _id='create'}}" class="btn btn-success">
 						{{i18n 'profile.createNewGroup.button'}}
 					</a>
 				</li>
@@ -266,7 +274,7 @@
 			</button>
 		</div>
 	{{else}}
-		<button type="button" class="js-expand btn btn-remove">
+		<button type="button" class="js-expand btn btn-danger">
 			{{i18n 'course.group.remove' 'Remove'}}
 		</button>
 	{{/if}}
@@ -277,12 +285,12 @@
 		<div class="group-tool-dialog add">
 			{{i18n 'course.group.confirmOrgText' 'Add members of the "{NAME}" group as editors?' NAME=(name groupId)}}
 			{{i18n 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and create new events for it."}}
-			<button type="button" class="btn btn-add js-makeOrganizer">
+			<button type="button" class="btn btn-success js-makeOrganizer">
 				{{i18n 'course.group.confimOrgButton' "Give editing rights"}}
 			</button>
 		</div>
 	{{else}}
-		<a href="#" class="js-expand btn btn-add">
+		<a href="#" class="js-expand btn btn-success">
 			<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
 			{{i18n 'course.group.addOrgText' "Give editing rights"}}
 		</a>
@@ -298,7 +306,7 @@
 			</button>
 		</div>
 	{{else}}
-		<a href="#" class="js-expand btn btn-remove">
+		<a href="#" class="js-expand btn btn-danger">
 			<span class="fa-solid fa-xmark fa-fw" aria-hidden="true"></span>
 			{{i18n 'course.group.removeOrgText' "Remove editing rights"}}
 		</a>

@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { Session } from 'meteor/session';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
@@ -729,7 +730,10 @@ RouterAsync.route<
 			}[];
 	  },
 	Record<string, string>,
-	Record<string, string>
+	Record<string, string>,
+	{
+		future_length: Mongo.Cursor<EventEntity, EventModel>;
+	}
 >('timetable', {
 	path: '/kiosk/timetable',
 	template: 'kioskTimetablePage',
@@ -887,6 +891,7 @@ RouterAsync.route<
 			days: Object.values(days),
 			hours: Object.values(hours),
 			grouped,
+			future_length: events.length,
 		};
 	},
 });
