@@ -674,37 +674,7 @@ RouterAsync.route('join', {
 	},
 });
 
-RouterAsync.route<
-	| never[]
-	| {
-			days: {
-				moment: moment.Moment;
-				relStart: number;
-				relEnd: number;
-			}[];
-			hours: {
-				moment: moment.Moment;
-				relStart: number;
-				relEnd: number;
-			}[];
-			grouped: {
-				perRoom: {
-					room: string;
-					venue: VenueModel;
-					rows: (EventEntity & {
-						relStart: number;
-						relEnd: number;
-					})[];
-				}[];
-				venue: VenueModel;
-			}[];
-	  },
-	Record<string, string>,
-	Record<string, string>,
-	{
-		future_length: Mongo.Cursor<EventEntity, EventModel>;
-	}
->('timetable', {
+RouterAsync.route('timetable', {
 	path: '/kiosk/timetable',
 	template: 'kioskTimetablePage',
 	layoutTemplate: 'kioskLayout',
