@@ -15,8 +15,8 @@ import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
 
 import '/imports/ui/components/groups/list';
-import '/imports/ui/components/courses/compact';
 import '/imports/ui/components/courses/edit';
+import '/imports/ui/components/courses/list';
 import '/imports/ui/components/courses/filter';
 import '/imports/ui/components/search-field';
 

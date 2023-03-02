@@ -2,14 +2,6 @@
 	max-height: none !important;
 }
 
-.admin-active-task {
-	margin-top: 15px;
-}
-
-.admin-back-to-dashboard > i {
-	@include td-margin(right, 5px);
-}
-
 .checkmark {
 	@include td-padding(left, 5px);
 	color: $green-dark;
@@ -42,4 +34,8 @@ a:focus,
 
 .cursor-pointer:hover {
 	cursor: pointer;
+}
+
+.bg-brand {
+	background-color: var(--openki-brand) !important;
 }

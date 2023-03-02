@@ -14,18 +14,14 @@
 	</div>
 	<div class="page-component">
 		{{#if hasResults}}
-			<div class="course-list">
-				{{#each result in results}}
-					{{> courseCompact result}}
-				{{/each}}
-			</div>
+			{{> courseList courses=results}}
 
 			{{#unless Template.subscriptionsReady}}
 				{{> loadingPage}}
 			{{/unless}}
 
 			{{#if hasMore}}
-				<div class="text-center">
+				<div class="text-center mt-3">
 					<button type="button" class="btn btn-success js-more-courses">
 						{{i18n '_button.more'}}
 					</button>

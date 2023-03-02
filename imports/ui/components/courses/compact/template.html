@@ -1,10 +1,10 @@
 <template name="courseCompact">
 	{{#if Template.subscriptionsReady}}
-		<div class="course-compact-wrap">
+		<div class="col">
 			<a href="{{pathFor 'showCourse'}}">
-				<div class="course-compact {{courseStateClasses}} {{filterPreviewClasses}}"
+				<div class="row mx-0 align-items-start course-compact {{courseStateClasses}} {{filterPreviewClasses}}"
 					 style="{{courseCss this}}">
-					<div class="course-compact-content">
+					<div class="course-compact-content col-8">
 						{{#if internal}}
 							<span class="course-compact-internal" data-bs-toggle="tooltip"
 								  data-bs-title="{{i18n '_label.internal' attr=true}}"></span>
@@ -29,7 +29,7 @@
 </template>
 
 <template name="courseCompactEvent">
-	<div class="course-compact-next-event">
+	<div class="course-compact-next-event col">
 		{{#if nextEvent.venue.name}}
 			<div class="course-compact-next-event-component">
 				<i class="fa-solid fa-house fa-fw" aria-hidden="true"></i>
@@ -50,7 +50,7 @@
 </template>
 
 <template name="courseCompactRoles">
-	<div class="course-compact-roles">
+	<div class="course-compact-roles col">
 		<div class="course-compact-role {{roleStateClass 'team'}}" data-bs-toggle="tooltip"
 			 data-bs-title="{{roleStateTooltip 'team' attr=true}}" href="#">
 			<i class="{{roleIcon 'team'}}" aria-hidden="true"></i>

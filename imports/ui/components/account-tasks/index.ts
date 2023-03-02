@@ -226,7 +226,7 @@ import './styles.scss';
 				await MeteorAsync.loginWithPassword(user, password);
 
 				if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
-					$('#bs-navbar-collapse-1').collapse('hide');
+					$('#bs-navbar-collapse').collapse('hide');
 				}
 				$('.js-account-tasks').modal('hide');
 
@@ -266,7 +266,7 @@ import './styles.scss';
 					Alert.serverError(err);
 				} else {
 					if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
-						$('#bs-navbar-collapse-1').collapse('hide');
+						$('#bs-navbar-collapse').collapse('hide');
 					}
 					$('.js-account-tasks').modal('hide');
 
@@ -357,7 +357,7 @@ import './styles.scss';
 				} as any);
 
 				if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
-					$('#bs-navbar-collapse-1').collapse('hide');
+					$('#bs-navbar-collapse').collapse('hide');
 				}
 				$('.js-account-tasks').modal('hide');
 
@@ -511,7 +511,7 @@ import './styles.scss';
 				} as any);
 
 				if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
-					$('#bs-navbar-collapse-1').collapse('hide');
+					$('#bs-navbar-collapse').collapse('hide');
 				}
 				$('.js-account-tasks').modal('hide');
 
