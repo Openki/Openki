@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import $ from 'jquery';
@@ -11,11 +10,14 @@ import { Regions } from '/imports/api/regions/regions';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
 import { PublicSettings } from '/imports/utils/PublicSettings';
+import { i18n } from '/imports/startup/both/i18next';
+import { getSiteName } from '/imports/utils/getSiteName';
 
 import '/imports/ui/components/regions/selection';
 import '/imports/ui/components/language-selection';
 
 import './template.html';
+import './styles.scss';
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
@@ -47,7 +49,7 @@ import './template.html';
 		if (Viewport.get().width > gridFloatBreakpoint) {
 			$(window).on('scroll', () => {
 				const navbar = instance.$('.navbar');
-				const activeNavLink = instance.$('.navbar-link-active');
+				const activeNavLink = instance.$('.navbar-link.active');
 				const notAtTop = ($(window).scrollTop() || 0) > 5;
 
 				navbar.toggleClass('navbar-covering', notAtTop);
@@ -128,24 +130,25 @@ import './template.html';
 			return PublicSettings.siteStage;
 		},
 
+		links() {
+			const siteName = getSiteName(Regions.currentRegion());
+
+			return PublicSettings.nav.customEntries.map((entry) => ({
+				link: entry.link,
+				icon: entry.icon,
+				text: entry.key ? i18n(entry.key, { SITENAME: siteName }) : entry.text,
+			}));
+		},
+
 		activeClass(linkRoute: string, id: string) {
 			const router = Router.current();
 			if (router.route?.getName() === linkRoute) {
 				if (typeof id === 'string' && router.params._id !== id) {
 					return '';
 				}
-				return 'navbar-link-active';
+				return 'active';
 			}
 			return '';
-		},
-
-		toggleNavbarRight(LTRPos: string) {
-			const isRTL = Session.equals('textDirectionality', 'rtl');
-
-			if (LTRPos === 'left') {
-				return isRTL ? 'navbar-right' : '';
-			}
-			return isRTL ? '' : 'navbar-right';
 		},
 
 		navbarIsCollapsed() {
@@ -170,7 +173,7 @@ import './template.html';
 			const { gridFloatBreakpoint } = ScssVars;
 
 			if (Viewport.get().width <= gridFloatBreakpoint) {
-				const container = instance.$('#bs-navbar-collapse-1');
+				const container = instance.$('#bs-navbar-collapse');
 
 				// make menu item scroll up when opening the dropdown menu
 				if (event.type === 'show') {

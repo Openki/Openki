@@ -14,6 +14,9 @@ This file descripts all configurations and customization options. Remove the com
 		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" }, // The default image used for avatars (color is changed using the CSS filter 'hue-rotate'). The "alt" setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"ogLogo": { "src": "openki_logo_2018.png"}, // The image to be shown in social media. Can be a logo from the /public/logo/* folder or from our s3 file storage (must start with the "publicUrlBase" setting).
 		"emailLogo": "emails/openki.png", // Can be a logo from the /private/* folder or a base64 encoded string.
+		"theme": { // Theming the ui
+			"brand": "#38829c"
+		},
 		"regionSelection": {
 			"minNumber": 5, // The minimum number of regions displayed in the Regions selection. Default: 5
 			"aboutLink": "" // A link to a page that explains regions, if not set then none link is shown. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
@@ -32,12 +35,27 @@ This file descripts all configurations and customization options. Remove the com
 			},
 			"visitorUser": true // allow user without name and password
 		},
+		"nav":
+		{
+			"brandLink": "/", // target link when clicking on the logo Default: "/"
+			"home": true, // show/hide find/home item in navbar Default: true
+			"proposeCourse": true, // show/hide propose item in navbar Default: true
+			"calendar": true,  // show/hide calendar item in navbar Default: true
+			"customEntries": [
+				{
+					"link": "https://about.openki.net/",
+					"icon": "fa-solid fa-pen", // icon from fontawesome
+					"key": "...", // text from the entry. The value is a translation key from i18next it must be defined in code
+					// as a alternative for "key" you can set "text" for the text from the entry
+					"text": "..." // this setting can be a string or a object with key & values for every language `{ "en": "Edit", "de": "Bearbeiten", ... }`
+				}
+			]
+		},
 		"footerLinks": [
 			{
 				"link": "https://about.openki.net/",
-				"key": "footer.aboutOpenki", // text from the link. The value is a translation key from i18next it must be defined in code
-				"title_key": "navigation.footer.about.title" // text that is shown on hover the link. The value is a translation key from i18next it must be defined in code
-
+				"key": "footer.aboutOpenki", // text from the entry. The value is a translation key from i18next it must be defined in code
+				"title_key": "navigation.footer.about.title" // text that is shown on hover the entry. The value is a translation key from i18next it must be defined in code
 				// as a alternative for "key" you can set "text" for the text from the link
 				"text": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 			},
@@ -46,11 +64,10 @@ This file descripts all configurations and customization options. Remove the com
 				"key": "main.faq_link",
 				"title_key": "navigation.footer.faq.title"
 			},
-			{
-				"link": "https://gitlab.com/Openki/Openki/",
-				"text": "GitLab",
-				"title_key": "navigation.footer.codeOnGitLab"
-			},
+			{ "link": "https://gitlab.com/Openki/Openki/"
+			, "key": "navigation.footer.powerdByOpenki"
+			, "title_key": "navigation.footer.codeOnGitLab"
+			}
 			{ "link": "https://about.openki.net/privacy-policy/"
 			, "key": "main.privacyPolicy"
 			, "title_key": "main.privacyPolicy.tooltip"
@@ -68,6 +85,7 @@ This file descripts all configurations and customization options. Remove the com
 				, "de": "https://about.openki.net/ueber-uns/spenden/"
 				}
 			},
+		"courseDescriptionMax": 15000, // Max characters allowed for the description-field of courses. Default: 15000
 		"eventDescriptionMax": 15000, // Max characters allowed for the description-field of events. Default: 15000
 		"categories": { // Categories for courses, main and/or sub categories
 			"sports":
