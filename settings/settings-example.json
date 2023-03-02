@@ -1,6 +1,5 @@
-This file descripts all configurations and customization options. Remove the comment at the end of the line to make it work.
+//This file descripts all configurations and customization options. Remove the comment at the end of the line to make it work.
 
-```
 {
 	"admins": ["greg"], // User Administrator Accounts
 	"prng": "", // Pseudo-Random Number Generator, use the "static" value to define that a static seed should be used for test data
@@ -21,7 +20,7 @@ This file descripts all configurations and customization options. Remove the com
 			"minNumber": 5, // The minimum number of regions displayed in the Regions selection. Default: 5
 			"aboutLink": "" // A link to a page that explains regions, if not set then none link is shown. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		},
-		"i18nHelpLink": "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto" // A link to a page that give instructions how to translate. Default: "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto", Set this value to "" to hide the link in the UI. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+		"i18nHelpLink": "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto", // A link to a page that give instructions how to translate. Default: "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto", Set this value to "" to hide the link in the UI. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 		"matomo": {
 			"url": "https://analytics.mydomain.com/",
 			"site": 1 // Matomo id
@@ -55,7 +54,7 @@ This file descripts all configurations and customization options. Remove the com
 			{
 				"link": "https://about.openki.net/",
 				"key": "footer.aboutOpenki", // text from the entry. The value is a translation key from i18next it must be defined in code
-				"title_key": "navigation.footer.about.title" // text that is shown on hover the entry. The value is a translation key from i18next it must be defined in code
+				"title_key": "navigation.footer.about.title", // text that is shown on hover the entry. The value is a translation key from i18next it must be defined in code
 				// as a alternative for "key" you can set "text" for the text from the link
 				"text": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 			},
@@ -106,9 +105,9 @@ This file descripts all configurations and customization options. Remove the com
 		"s3": { // file storage
 			"publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name"
 		},
-		apiMaxLimit: 100 // Maximum number of entities that the api returns. Default: 100. If the parameter "limit" is not set in the URL, the API always returns 100 entities whatever this setting is set to.
+		"apiMaxLimit": 100 // Maximum number of entities that the api returns. Default: 100. If the parameter "limit" is not set in the URL, the API always returns 100 entities whatever this setting is set to.
 	},
-	"siteEmail": "" // Sender e-mail address in mails
+	"siteEmail": "", // Sender e-mail address in mails
 	"reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"}, // Sender and recipient address for "Report problem" function
 	"robots": false, // Tells robots/crawlers whether to index the website or not
 	"printLog": false, // Print the log on the server in the console, usually only for development
@@ -153,4 +152,3 @@ This file descripts all configurations and customization options. Remove the com
 		  }
 		]
 }
-```
