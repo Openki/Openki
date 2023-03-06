@@ -9,6 +9,8 @@ import { Blaze, Handlebars } from 'meteor/blaze';
 import { Spacebars } from 'meteor/spacebars';
 import { initReactI18next } from 'react-i18next';
 
+import { PublicSettings } from '/imports/utils/PublicSettings';
+
 // eslint-disable-next-line no-constant-condition
 if (false) {
 	// whitelist, this is needed for meteor's dynamic-import module, to allow dynamic loading of modules
@@ -19,8 +21,9 @@ if (false) {
 	import(`/imports/startup/both/i18n/am.json`);
 	import(`/imports/startup/both/i18n/ar.json`);
 	import(`/imports/startup/both/i18n/da.json`);
-	import(`/imports/startup/both/i18n/de-ZH.json`);
 	import(`/imports/startup/both/i18n/de.json`);
+	import(`/imports/startup/both/i18n/de-ZH.json`);
+	import(`/imports/startup/both/i18n/de-zuerich-lernt.json`);
 	import(`/imports/startup/both/i18n/el.json`);
 	import(`/imports/startup/both/i18n/es.json`);
 	import(`/imports/startup/both/i18n/fa.json`);
@@ -60,7 +63,8 @@ if (localStorageSupported) {
 // and only load translations we need
 backends.push(
 	resourcesToBackend((language, _namespace, callback) => {
-		import(`/imports/startup/both/i18n/${language}.json`)
+		const fileName = PublicSettings.i18nMapping?.[language] || language;
+		import(`/imports/startup/both/i18n/${fileName}.json`)
 			.then((resources) => {
 				callback(null, resources);
 			})
