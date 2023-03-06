@@ -44,7 +44,7 @@
 			, "title_key": "navigation.footer.faq.title"
 			}
 		,	{ "link": "https://gitlab.com/Openki/Openki/"
-			, "key": "navigation.footer.sourceCodeOnGitLab"
+			, "key": "navigation.footer.sourceCode"
 			, "title_key": "navigation.footer.codeOnGitLab"
 			}
 		,	{ "link": "https://about.openki.net/privacy-policy/"
