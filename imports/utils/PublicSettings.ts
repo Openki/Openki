@@ -32,6 +32,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
 	},
 	/** A link to a page that give instructions how to translate. */
 	i18nHelpLink: Match.Maybe(LocalizedValuePattern),
+	i18nMapping: Match.Maybe(Match.ObjectIncluding<Record<string, string>>({})),
 	publicTenants: [String],
 	matomo: Match.Maybe(
 		Match.OneOf(
