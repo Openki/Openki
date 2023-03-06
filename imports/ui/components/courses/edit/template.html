@@ -36,7 +36,7 @@
 				{{/if}}
 				<div class="edit-page-body course-edit-body {{editBodyClasses}}">
 					{{#if _id}}
-						{{> regionTag}}
+						{{> regionTag this}}
 					{{/if}}
 					{{#if showSavedMessage}}
 						<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -100,7 +100,7 @@
 												   {{checkCategory}} />
 											<label class="form-check-label {{isChecked}}"
 												   for="courseEditCategory{{this}}">
-												{{> categoryLabel}}
+												{{> categoryLabel category=this}}
 												{{#if hasSubcategories this}}
 													<i
 													   class="fa-solid fa-angle-down fa-fw {{isChecked}}"></i>
@@ -115,7 +115,7 @@
 													   {{checkCategory}} />
 												<label class="form-check-label {{isChecked}}"
 													   for="courseEditSubCategory{{this}}">
-													{{> categoryLabel}}
+													{{> categoryLabel category=this}}
 												</label>
 											</div>
 										{{/each}}
@@ -124,7 +124,7 @@
 									<label
 										   class="form-label">{{i18n 'course.edit.categories' 'Categories'}}</label>
 									{{#if categories}}
-										{{> courseCategories this}}
+										{{> courseCategories categories=this.categories}}
 									{{/if}}
 									{{#unless categories}}
 										<div>

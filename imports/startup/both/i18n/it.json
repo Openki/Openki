@@ -34,7 +34,7 @@
 	"calendar.previous.year.short": "anno precedente",
 	"calendar.weekNumber": "settimana",
 	"calendar.windowtitle": "Calendario",
-	"categories.show_courses": "Mostra tutti i corsi in",
+	"categories.show_courses": "Mostra tutti i corsi in {CATEGORY}",
 	"category.biology": "Biologia",
 	"category.chemistry": "Chimica",
 	"category.computer": "Computer",

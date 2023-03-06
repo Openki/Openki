@@ -1,14 +1,5 @@
 <template name="footer">
-	<footer class="footer bg-brand">
-		{{#each links}}
-			<a class="footer-link" href="{{link}}" title="{{title}}">
-				{{text}}
-			</a>
-		{{/each}}
-		<span title="{{fullInfo}}" class="footer-deployed-version">
-			{{version}} {{commit}}
-			<br>
-			{{i18n "footer.deployedAt" "deployed:"}} {{dateFormat deployed}}
-		</span>
-	</footer>
+	<div>
+		{{> React (component Footer)}}
+	</div>
 </template>

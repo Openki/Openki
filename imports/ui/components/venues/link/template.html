@@ -1,26 +1,5 @@
 <template name="venueLink">
-	{{#if venue.name}}
-		{{#if venue._id}}
-			<div class="tag tag-link venue-tag">
-				<a class="js-venue-link" data-bs-toggle="tooltip"
-				   data-bs-title="{{i18n 'location.link.tooltip' 'Show details of {VENUE}' VENUE=venue.name attr=true}}"
-				   href="{{pathFor 'venueDetails' data=venue}}"
-				   target="{{#if openInNewTab}}_blank{{/if}}">
-					<span class="fa-solid fa-house fa-fw" aria-hidden="true"></span>
-					{{venue.name}}
-				</a>
-			</div>
-		{{else}}
-			<div class="tag">
-				<span class="fa-solid fa-house fa-fw" aria-hidden="true"></span>
-				{{venue.name}}
-			</div>
-		{{/if}}
-		{{#if room}}
-			<div class="tag">
-				<span class="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
-				{{room}}
-			</div>
-		{{/if}}
-	{{/if}}
+	<span>
+		{{> React (component VenueLink)}}
+	</span>
 </template>

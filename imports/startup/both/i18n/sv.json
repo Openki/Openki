@@ -31,7 +31,7 @@
 	"calendar.previous.year.short": "föregående år",
 	"calendar.weekNumber": "Vecka",
 	"calendar.windowtitle": "Kalender",
-	"categories.show_courses": "Visa alla kurser i",
+	"categories.show_courses": "Visa alla kurser i {CATEGORY}",
 	"category.artistry": "Konst",
 	"category.biology": "Biologi",
 	"category.chemistry": "Kemi",

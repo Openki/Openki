@@ -36,7 +36,7 @@
 								</div>
 								{{#if course.categories}}
 									<div class="course-details-categories">
-										{{> courseCategories course}}
+										{{> courseCategories categories=course.categories}}
 									</div>
 								{{/if}}
 								{{> courseGroupList course}}

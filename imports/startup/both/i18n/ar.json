@@ -46,7 +46,7 @@
 	"calendar.previous.year.short": "السنة الماضية",
 	"calendar.weekNumber": "أسبوع",
 	"calendar.windowtitle": "التقويم",
-	"categories.show_courses": "عرض كل الدروس في",
+	"categories.show_courses": " {CATEGORY} عرض كل الدروس في",
 	"category.artistry": "الفنية",
 	"category.basicskills": "مهارات أساسية",
 	"category.biology": "مادة الاحياء",

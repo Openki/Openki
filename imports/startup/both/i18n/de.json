@@ -48,7 +48,7 @@
 	"calendar.previous.year.short": "früheres Jahr",
 	"calendar.weekNumber": "Woche",
 	"calendar.windowtitle": "Kalender",
-	"categories.show_courses": "Zeige alle Kurse in",
+	"categories.show_courses": "Zeige alle Kurse in {CATEGORY}",
 	"category.artistry": "Manege / Artistik",
 	"category.basicskills": "Grundkompetenzen",
 	"category.biology": "Biologie",

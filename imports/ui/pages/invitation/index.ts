@@ -48,7 +48,7 @@ template.events({
 				);
 
 				// Reload regions to load regions from tenant
-				RegionSelection.subscribe(instance.data.invitation.tenant, false);
+				RegionSelection.subscribe(instance, instance.data.invitation.tenant, false);
 
 				Router.go('/');
 
