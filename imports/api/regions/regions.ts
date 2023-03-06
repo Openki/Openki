@@ -164,7 +164,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 			selector.tenant = filter.tenant;
 		}
 
-		return this.find(selector, options);
+		return this.find(selector, options) as Mongo.Cursor<RegionEntity, RegionModel>;
 	}
 }
 

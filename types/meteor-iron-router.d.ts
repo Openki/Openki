@@ -5,27 +5,17 @@ declare module 'meteor/iron:router' {
 	 * Only Route Options is documented here to descrip route.
 	 */
 	namespace Router {
-		interface RouteThis<
-			P extends Record<string, string> | Record<string, never>,
-			Q extends Record<string, string> | unknown,
-		> {
-			params: P & { query: Q };
+		interface RouteThis {
+			params: Record<string, string | undefined> & {
+				query: Record<string, string | undefined | never>;
+			};
 		}
-		interface HookThis<
-			D,
-			P extends Record<string, string> | Record<string, never>,
-			Q extends Record<string, string> | unknown,
-		> extends RouteThis<P, Q> {
+		interface HookThis<D> extends RouteThis {
 			data(): D;
 			next(): void;
 		}
 
-		interface RouteOptions<
-			D = never,
-			P extends Record<string, string> = Record<string, never>,
-			Q extends Record<string, string> | unknown = unknown,
-			T extends Record<string, unknown> = Record<string, never>,
-		> {
+		interface RouteOptions<D> {
 			/**
 			 * The name of the route.
 			 * Used to reference the route in path helpers and to find a default template
@@ -72,7 +62,7 @@ declare module 'meteor/iron:router' {
 			 * automatically uses the loading hook.
 			 */
 			waitOn?: (
-				this: RouteThis<P, Q> & T,
+				this: RouteThis,
 			) =>
 				| Meteor.SubscriptionHandle
 				| (() => boolean)
@@ -86,7 +76,7 @@ declare module 'meteor/iron:router' {
 			 * example, the "dataNotFound" plugin calls this function to see if it
 			 * returns a null value, and if so, renders the not found template.
 			 */
-			data?: (this: RouteThis<P, Q> & T) => D;
+			data?: (this: RouteThis) => D;
 
 			/**
 			 * Called when the route is first run. It is not called again if the route reruns
@@ -95,30 +85,30 @@ declare module 'meteor/iron:router' {
 			 * hook won't run again if the route is reloaded via hot code push. You must call
 			 * `this.next()` to continue calling the next function.
 			 */
-			onRun?: (this: HookThis<D, P, Q> & T) => void;
+			onRun?: (this: HookThis<D>) => void;
 			/**
 			 * Called if the route reruns because its computation is invalidated. Similarly to
 			 * `onBeforeAction`, if you want to continue calling the next function, you must
 			 * call `this.next()`.
 			 */
-			onRerun?: (this: HookThis<D, P, Q> & T) => void;
+			onRerun?: (this: HookThis<D>) => void;
 			/**
 			 * Called before the route or "action" function is run. These hooks behave
 			 * specially. If you want to continue calling the next function you must call
 			 * `this.next()`. If you don't, downstream `onBeforeAction` hooks and your action
 			 * function will not be called.
 			 */
-			onBeforeAction?: (this: HookThis<D, P, Q> & T) => void;
+			onBeforeAction?: (this: HookThis<D>) => void;
 			/**
 			 * Called after your route/action function has run or had a chance to run. These
 			 * hooks behave like normal hooks and you don't need to call `this.next()` to move
 			 * from one to the next.
 			 */
-			onAfterAction?: (this: RouteThis<P, Q> & { data(): D } & T) => void;
+			onAfterAction?: (this: RouteThis & { data(): D }) => void;
 			/**
 			 * Called when the route is stopped, typically right before a new route is run.
 			 */
-			onStop?: (this: RouteThis<P, Q> & { data(): D } & T) => void;
+			onStop?: (this: RouteThis & { data(): D }) => void;
 
 			/**
 			 * The same thing as providing a function as the second parameter. You can
@@ -149,18 +139,26 @@ declare module 'meteor/iron:router' {
 			 */
 			where?: 'server';
 		}
-		function route<
-			D = never,
-			P extends Record<string, string> = Record<string, never>,
-			Q extends Record<string, string> | unknown = unknown,
-			T extends Record<string, unknown> = Record<string, never>,
-		>(pathOrRouteName: string, options: RouteOptions<D, P, Q, T>): void;
+		function route<D>(pathOrRouteName: string, options: RouteOptions<D>): void;
 
 		/**
 		 * Return a fully qualified url for the route, given a set of parmeters and
 		 * options like hash and query.
 		 */
 		function url(
+			routeName: string,
+			params?: Record<string, any>,
+			options?: {
+				query?: string | Record<string, any>;
+				hash?: string;
+			},
+		): string;
+
+		/**
+		 * Returns a relative path given a route name, data context and optional query
+		 * and hash parameters.
+		 */
+		function path(
 			routeName: string,
 			params?: Record<string, any>,
 			options?: {
@@ -180,7 +178,7 @@ declare module 'meteor/iron:router' {
 
 		function current(): {
 			params: Record<string, string | undefined> & {
-				query: Record<string, string | undefined>;
+				query: Record<string, string | undefined | never>;
 				hash: string | null;
 			};
 			route: { getName(): string; options: { template: string } };

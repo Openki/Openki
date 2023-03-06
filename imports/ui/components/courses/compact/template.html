@@ -10,7 +10,7 @@
 								  data-bs-title="{{i18n '_label.internal' attr=true}}"></span>
 						{{/if}}
 						<div class="course-compact-title" title="{{name}}">{{name}}</div>
-						{{> courseCategories this}}
+						{{> courseCategories categories=this.categories}}
 					</div>
 					{{#if nextEvent}}
 						{{> courseCompactEvent}}

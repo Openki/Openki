@@ -51,16 +51,12 @@ const jSendResponder = function (res: any, process: any) {
 	}
 };
 
-Router.route<
-	never,
-	{ handler: 'groups' | 'venues' | 'events' | 'courses' },
-	{ sort?: string; limit?: string; skip?: string }
->('api.0.json', {
+Router.route('api.0.json', {
 	path: '/api/0/json/:handler',
 	where: 'server',
 	action() {
 		jSendResponder(this.response, () => {
-			const handler = this.params.handler;
+			const handler = this.params.handler as 'groups' | 'venues' | 'events' | 'courses';
 			if (!Object.prototype.hasOwnProperty.call(Api, handler)) {
 				throw new NoActionError('Invalid action');
 			}

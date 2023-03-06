@@ -18,8 +18,8 @@
 						{{course.name}}
 					</h2>
 
-					{{> courseCategories course}}
-					{{> regionTag}}
+					{{> courseCategories categories=course.categories}}
+					{{> regionTag this}}
 					{{#each info in customFields}}
 						<p>
 							<strong>{{info.displayText}}</strong>: <span
@@ -135,7 +135,7 @@
 		</div>
 		<div class="details-body event-details-body">
 			{{#unless courseId}}
-				{{> regionTag}}
+				{{> regionTag this}}
 			{{/unless}}
 			<div class="details-content">
 				{{#if internal}}
@@ -158,7 +158,7 @@
 							{{/if}}
 
 							<div class="tag-group multiline mt-1">
-								{{> venueLink}}
+								{{> venueLink venue=venue room=room}}
 							</div>
 							{{#if venue.address}}
 								<div class="tag">
