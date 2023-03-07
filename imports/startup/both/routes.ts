@@ -520,7 +520,7 @@ RouterAsync.route('createEvent', {
 		if (courseId) {
 			return { course: Courses.details.subscribe(courseId) };
 		}
-		return undefined;
+		return {};
 	},
 	data() {
 		const subs = this.subscriptions();
