@@ -30,13 +30,6 @@
 			{{/if}}
 			<div class="event">
 				{{#if editing}}
-					<h3>
-						{{#if _id}}
-							{{i18n 'event.details.edit.edit' 'Edit event'}}
-						{{else}}
-							{{i18n 'event.details.edit.add' 'Create an event'}}
-						{{/if}}
-					</h3>
 					{{> eventEdit}}
 				{{else}}
 					{{> eventDisplay}}
@@ -126,6 +119,9 @@
 <template name="eventDisplay">
 	<div class="page-component">
 		<div class="details-header event-details-header">
+			{{#unless courseId}}
+				{{> regionTag this}}
+			{{/unless}}
 			<p class="h3">
 				<span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
 				{{weekdayFormat startLocal}} {{calendarDayShort startLocal}}
@@ -134,9 +130,6 @@
 			</p>
 		</div>
 		<div class="details-body event-details-body">
-			{{#unless courseId}}
-				{{> regionTag this}}
-			{{/unless}}
 			<div class="details-content">
 				{{#if internal}}
 					<span class="details-internal" data-bs-toggle="tooltip"
