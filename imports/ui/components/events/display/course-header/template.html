@@ -1,14 +1,5 @@
 <template name="eventCourseHeader">
-	<div class="event-course-header" {{eventCourseHeaderAttr course}}>
-		<a href="{{pathFor 'showCourse' _id=courseId}}" class="event-course-header-link">
-			<i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
-			{{i18n 'event.details.viewCourse' 'To the course overview'}}
-		</a>
-		<h2>
-			{{course.name}}
-		</h2>
-
-		{{> courseCategories categories=course.categories}}
-		{{> regionTag region=this.region}}
+	<div>
+		{{> React (component EventCourseHeader)}}
 	</div>
 </template>

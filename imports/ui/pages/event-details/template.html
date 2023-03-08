@@ -8,27 +8,9 @@
 	<div class="row">
 		<div class="col-lg-8">
 			{{#if course}}
-				<div class="event-course-header" {{eventCourseHeaderAttr course}}>
-					<a href="{{pathFor 'showCourse' _id=courseId}}"
-					   class="event-course-header-link">
-						<i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
-						{{i18n 'event.details.viewCourse' 'To the course overview'}}
-					</a>
-					<h2>
-						{{course.name}}
-					</h2>
-
-					{{> courseCategories categories=course.categories}}
-					{{> regionTag this}}
-					{{#each info in customFields}}
-						<p>
-							<strong>{{info.displayText}}</strong>: <span
-								  style="white-space: pre-line;">{{info.value}}</span>
-						</p>
-					{{/each}}
-				</div>
+				{{> eventCourseHeader courseId=course._id regionId=region categories=categories title=course.name image=course.publicImageUrl}}
 			{{/if}}
-			<div class="event">
+			<div class="event{{#if course}} course-event{{/if}}">
 				{{#if editing}}
 					{{> eventEdit}}
 				{{else}}
@@ -143,6 +125,13 @@
 						<p class="event-details-description">
 							{{{description}}}
 						</p>
+
+						{{#each info in customFields}}
+							<p>
+								<strong>{{info.displayText}}</strong>: <span
+									  style="white-space: pre-line;">{{info.value}}</span>
+							</p>
+						{{/each}}
 					</div>
 					<div class="col-md-5">
 						<div class="details-map">

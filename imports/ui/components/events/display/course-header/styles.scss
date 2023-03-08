@@ -12,7 +12,7 @@ $header-bg: darken($blue-lighter, 5%);
 	position: relative;
 	transition: background-color 0.15s;
 
-	&.highlight {
+	&:hover {
 		background-color: darken($header-bg, 2%);
 	}
 
@@ -29,11 +29,4 @@ $header-bg: darken($blue-lighter, 5%);
 
 .event-course-header-link + .course-categories {
 	margin-top: 5px;
-}
-
-.event-course-header + .event {
-	border-color: $header-bg;
-	border-style: solid;
-	border-width: 0 5px 5px;
-	padding: 15px;
 }

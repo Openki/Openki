@@ -27,6 +27,7 @@ import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
+import '/imports/ui/components/events/display/course-header';
 import '/imports/ui/components/events/edit';
 import '/imports/ui/components/events/participants';
 import '/imports/ui/components/events/replication';
@@ -135,20 +136,6 @@ import './styles.scss';
 			return Template.instance().getCourseTitleIfAny();
 		},
 
-		eventCourseHeaderAttr(course: CourseModel) {
-			const src = course?.publicImageUrl();
-			if (!src) {
-				return {};
-			}
-
-			return {
-				style: `
-	background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${src}');
-	background-position: center;
-	background-size: cover;`,
-			};
-		},
-
 		acceptsParticipants(this: EventModel) {
 			// no maxParticipants
 			if (!this.maxParticipants) {
@@ -170,29 +157,6 @@ import './styles.scss';
 				return Courses.findOne(this.courseId);
 			}
 			return false;
-		},
-		customFields() {
-			if (!this.courseId) {
-				return [];
-			}
-			const course = Courses.findOne(this.courseId);
-
-			if (!course) {
-				return [];
-			}
-
-			const user = Meteor.user();
-
-			const isEditor = user && course.editableBy(user);
-
-			return (
-				course.customFields
-					?.filter((i) => i.visibleFor === 'all' || (i.visibleFor === 'editors' && isEditor))
-					.map((i) => ({
-						displayText: getLocalizedValue(i.displayText),
-						value: i.value,
-					})) || []
-			);
 		},
 
 		editing() {
@@ -222,14 +186,6 @@ import './styles.scss';
 	});
 
 	template.events({
-		'mouseover .event-course-header, mouseout .event-course-header'(event, instance) {
-			instance.$(event.currentTarget as any).toggleClass('highlight', event.type === 'mouseover');
-		},
-
-		'click .event-course-header'() {
-			Router.go('showCourse', { _id: this.courseId });
-		},
-
 		async 'click .js-event-delete-confirm'(_event, instance) {
 			const oEvent = instance.data;
 			const { title, region } = oEvent;
@@ -346,6 +302,29 @@ import './styles.scss';
 		},
 		replicating() {
 			return Template.instance().replicating.get();
+		},
+		customFields() {
+			if (!this.courseId) {
+				return [];
+			}
+			const course = Courses.findOne(this.courseId);
+
+			if (!course) {
+				return [];
+			}
+
+			const user = Meteor.user();
+
+			const isEditor = user && course.editableBy(user);
+
+			return (
+				course.customFields
+					?.filter((i) => i.visibleFor === 'all' || (i.visibleFor === 'editors' && isEditor))
+					.map((i) => ({
+						displayText: getLocalizedValue(i.displayText),
+						value: i.value,
+					})) || []
+			);
 		},
 	});
 
