@@ -1,0 +1,39 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+$header-bg: darken($blue-lighter, 5%);
+
+.event-course-header {
+	background-color: $header-bg;
+	border-color: $header-bg;
+	border-style: solid;
+	border-width: 5px 5px 0;
+	cursor: pointer;
+	padding: 10px;
+	position: relative;
+	transition: background-color 0.15s;
+
+	&.highlight {
+		background-color: darken($header-bg, 2%);
+	}
+
+	.region-tag {
+		inset-block-start: -5px;
+		inset-inline-end: -5px;
+	}
+}
+
+.event-course-header > h2 {
+	margin: 0;
+	padding-bottom: 5px;
+}
+
+.event-course-header-link + .course-categories {
+	margin-top: 5px;
+}
+
+.event-course-header + .event {
+	border-color: $header-bg;
+	border-style: solid;
+	border-width: 0 5px 5px;
+	padding: 15px;
+}
