@@ -1,57 +1,56 @@
-import { ReactiveVar } from 'meteor/reactive-var';
-import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { useTranslation } from 'react-i18next';
+import { Template } from 'meteor/templating';
+import React from 'react';
 
-import { CourseModel } from '/imports/api/courses/courses';
-import { EventModel } from '/imports/api/events/events';
+import { CourseCategories } from '/imports/ui/components/courses/categories';
+import { RegionTag } from '/imports/ui/components/regions/tag';
 
-import '/imports/ui/components/buttons';
-import '/imports/ui/components/courses/categories';
-import '/imports/ui/components/events/edit';
-import '/imports/ui/components/events/participants';
-import '/imports/ui/components/events/replication';
-import '/imports/ui/components/groups/list';
-import '/imports/ui/components/price-policy';
-import '/imports/ui/components/regions/tag';
-import '/imports/ui/components/sharing';
-import '/imports/ui/components/report';
-import '/imports/ui/components/venues/link';
-
-import './template.html';
 import './styles.scss';
 
 export type Data = {
+	courseId: string;
 	regionId: string;
+	categories: string[];
+	title: string;
 	image: string;
 };
 
-const Template = TemplateAny as TemplateStaticTyped<'eventCourseHeader', Data>;
+export function EventCourseHeader(props: Data) {
+	const { t } = useTranslation();
+	return (
+		<div
+			className="event-course-header"
+			onClick={() => {
+				Router.go('showCourse', { _id: props.courseId });
+			}}
+			style={
+				props.image
+					? {
+							backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${props.image}')`,
+							backgroundPosition: 'center',
+							backgroundSize: 'cover',
+					  }
+					: undefined
+			}
+		>
+			<a
+				href={Router.path('showCourse', { _id: props.courseId })}
+				className="event-course-header-link"
+			>
+				<i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+				{t('event.details.viewCourse', 'To the course overview')}
+			</a>
+			<h2>{props.title}</h2>
 
-const template = Template.eventCourseHeader;
+			<CourseCategories categories={props.categories} />
+			<RegionTag region={props.regionId} />
+		</div>
+	);
+}
 
-template.helpers({
-	eventCourseHeaderAttr(course: CourseModel) {
-		const src = course?.publicImageUrl();
-		if (!src) {
-			return {};
-		}
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
 
-		return {
-			style: `
-	background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${src}');
-	background-position: center;
-	background-size: cover;`,
-		};
-	},
-});
-
-template.events({
-	'mouseover .event-course-header, mouseout .event-course-header'(event, instance) {
-		instance.$(event.currentTarget as any).toggleClass('highlight', event.type === 'mouseover');
-	},
-
-	'click .event-course-header'() {
-		Router.go('showCourse', { _id: this.courseId });
-	},
-});
+Template.registerHelper(EventCourseHeader.name, () => EventCourseHeader);
