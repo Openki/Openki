@@ -237,7 +237,6 @@
 	"event.delete.confirm.button.busy": "Sletter begivenhet …",
 	"event.detail.download_cal": "Last ned begivenhet til min kalender",
 	"event.details.download": "Last ned",
-	"event.details.edit.add": "Opprett en begivenhet",
 	"event.details.edit.edit": "Rediger begivenhet",
 	"event.details.i-participate-yes": "Du er nå registrert. Din registrering er bindende.",
 	"event.details.isFullyBooked": "Begivenheten er fulltegnet",
