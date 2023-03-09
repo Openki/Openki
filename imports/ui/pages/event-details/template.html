@@ -100,17 +100,11 @@
 
 <template name="eventDisplay">
 	<div class="page-component">
-		<div class="details-header event-details-header">
-			{{#unless courseId}}
-				{{> regionTag this}}
-			{{/unless}}
-			<p class="h3">
-				<span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-				{{weekdayFormat startLocal}} {{calendarDayShort startLocal}}
-				<br><small><span class="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
-					{{timeFormat startLocal}} - {{timeFormat endLocal}}</small>
-			</p>
-		</div>
+		{{#if courseId}}
+			{{> eventHeader start=startLocal end=endLocal}}
+		{{else}}
+			{{> eventHeader regionId=this.region start=startLocal end=endLocal}}
+		{{/if}}
 		<div class="details-body event-details-body">
 			<div class="details-content">
 				{{#if internal}}

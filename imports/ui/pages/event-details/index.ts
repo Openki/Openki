@@ -28,6 +28,7 @@ import * as Analytics from '/imports/ui/lib/analytics';
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
 import '/imports/ui/components/events/display/course-header';
+import '/imports/ui/components/events/display/header';
 import '/imports/ui/components/events/edit';
 import '/imports/ui/components/events/participants';
 import '/imports/ui/components/events/replication';
