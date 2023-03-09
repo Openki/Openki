@@ -76,18 +76,6 @@ $header-bg: darken($blue-lighter, 5%);
 	width: 100%;
 }
 
-// ** Internal indicator dot
-//========================================================================================
-.details-internal {
-	background-color: #f00;
-	border-radius: 50%;
-	height: 5px;
-	left: 6px;
-	position: absolute;
-	top: 6px;
-	width: 5px;
-}
-
 .event-detail-register-dropdown {
 	background-color: $event-page-component-bg;
 }
