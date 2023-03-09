@@ -1,0 +1,11 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.internal-indicator {
+	background-color: #f00;
+	border-radius: 50%;
+	height: 5px;
+	left: 6px;
+	position: absolute;
+	top: 6px;
+	width: 5px;
+}
