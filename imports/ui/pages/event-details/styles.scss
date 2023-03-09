@@ -40,10 +40,6 @@ $header-bg: darken($blue-lighter, 5%);
 	z-index: 10000;
 }
 
-.event-details-header {
-	background: $event-header-bg;
-	padding: 20px 15px 10px;
-}
 
 .event-details-description {
 	@include break-word;
