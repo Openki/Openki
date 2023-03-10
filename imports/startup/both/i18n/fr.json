@@ -300,7 +300,6 @@
 	"event.description.placeholder": "Décrivez votre événement aussi précisément que possible. Cela permet à chacun de savoir comment préparer l'événement et à quoi s'attendre pour cette rencontre (niveau, prérequis, activités, méthodes pédagogiques, quoi amener, etc.)",
 	"event.detail.download_cal": "Télécharger cet événement dans mon calendrier",
 	"event.details.download": "Télécharger",
-	"event.details.edit.edit": "Modifier l'événement",
 	"event.details.i-participate-no": "Faites savoir que vous participez à cet événement. Votre inscription est obligatoire.",
 	"event.details.i-participate-yes": "Vous êtes maintenant enregistré. Votre inscription est obligatoire.",
 	"event.details.isFullyBooked": "L'évènement est complet",
