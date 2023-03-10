@@ -511,7 +511,6 @@ RouterAsync.route('showCourse', {
 RouterAsync.route('createEvent', {
 	path: 'event/create',
 	template: 'eventPage',
-	notFoundTemplate: 'eventNotFound',
 	async onRun() {
 		await import('/imports/ui/pages/event-details');
 	},
