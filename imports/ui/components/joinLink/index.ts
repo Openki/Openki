@@ -1,14 +1,16 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
+import { i18n } from '/imports/startup/both/i18next';
 
 import { TenantModel } from '/imports/api/tenants/tenants';
 import * as JoinLinks from '/imports/api/joinLinks/publications';
+import * as JoinLinksMethodes from '/imports/api/joinLinks/methods';
 
+import { ReactiveVar } from 'meteor/reactive-var';
 import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
 
+import '/imports/ui/components/remove-confirmation';
 import './create';
 import './rebuild';
-import './remove';
 
 import './template.html';
 
@@ -41,5 +43,20 @@ template.helpers({
 	joinLink() {
 		const instance = Template.instance();
 		return instance.joinLink.get()?.()?.fetch()[0];
+	},
+
+	removeConfirmationAttr() {
+		const instance = Template.instance();
+		return {
+			confirmText: i18n(
+				'joinLink.reallydelete',
+				'Please confirm that you would like to delete this join link.',
+			),
+			confirmButton: i18n('joinLink.confirm.button', 'Delete this join link'),
+			onRemove: async () => {
+				await JoinLinksMethodes.remove(instance.data.tenant._id);
+			},
+			busyButton: i18n('joinLink.confirm.button.busy', 'Deleting join link…'),
+		};
 	},
 });
