@@ -414,7 +414,7 @@ RouterAsync.route('profile', {
 		const userId = Meteor.userId();
 
 		if (!userId) {
-			return undefined;
+			return {};
 		}
 
 		return {
@@ -439,7 +439,7 @@ RouterAsync.route('profile', {
 		} = {};
 		const user = Meteor.user();
 		const subs = this.subscriptions();
-		if (user && subs) {
+		if (user && subs && subs.tenants) {
 			const userdata = {
 				_id: user._id,
 				name: user.getDisplayName(),
@@ -617,7 +617,7 @@ RouterAsync.route('invitation', {
 		const tenantId = this.params?.query?.tenant;
 		const invitationToken = this.params?.token;
 		if (!tenantId || !invitationToken) {
-			return undefined;
+			return {};
 		}
 
 		return {
@@ -650,7 +650,7 @@ RouterAsync.route('join', {
 		const tenantId = this.params?.query?.tenant;
 		const joinToken = this.params?.token;
 		if (!tenantId || !joinToken) {
-			return undefined;
+			return {};
 		}
 
 		return {
