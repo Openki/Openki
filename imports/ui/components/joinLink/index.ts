@@ -8,7 +8,7 @@ import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
 
 import './create';
 import './rebuild';
-import './remove';
+import '../remove-confirmation';
 
 import './template.html';
 
