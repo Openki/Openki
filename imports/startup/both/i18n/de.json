@@ -302,8 +302,6 @@
 	"event.description.placeholder": "Beschreibe deine Veranstaltung so ausführlich wie möglich. Das hilft anderen Leuten sich darauf vorzubereiten und zu wissen, was sie von diesem Treffen erwarten können (z.B. Niveau, Voraussetzungen, Aktivitäten, Lernmethoden, was mensch mitnehmen muss etc.)",
 	"event.detail.download_cal": "Veranstaltung in meinen Kalender eintragen",
 	"event.details.download": "Herunterladen",
-	"event.details.edit.add": "Eine Veranstaltung erstellen",
-	"event.details.edit.edit": "Veranstaltung bearbeiten",
 	"event.details.i-participate-no": "Gib Bescheid, ob du an diesem Event teilnimmst. Die Anmeldung ist bindend.",
 	"event.details.i-participate-yes": "Du bist jetzt angemeldet. Die Anmeldung ist bindend.",
 	"event.details.isFullyBooked": "Die Veranstaltung ist ausgebucht",
