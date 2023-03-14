@@ -11,7 +11,7 @@ export type Props = {
 	busyButton: string;
 };
 
-export function RemoveConfirmation(props: Props) {
+export function DeleteConfirmation(props: Props) {
 	const { t } = useTranslation();
 	const [isConfirm, setIsConfirm] = useState(false);
 	const [isBusy, setIsBusy] = useState(false);
@@ -30,7 +30,7 @@ export function RemoveConfirmation(props: Props) {
 		);
 	}
 	return (
-		<div className="remove-confirmation">
+		<div className="delete-confirmation">
 			<p>{props.confirmText}</p>
 			<div className="form-actions">
 				{!isBusy ? (
@@ -69,4 +69,4 @@ export function RemoveConfirmation(props: Props) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(RemoveConfirmation.name, () => RemoveConfirmation);
+Template.registerHelper(DeleteConfirmation.name, () => DeleteConfirmation);
