@@ -1,0 +1,34 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.group-tag {
+	@include tag($group-bg, $group-label-color);
+}
+
+.group-tag-btn {
+	@include tag-btn($group-bg, $group-label-color);
+}
+
+.group-tag-is-organizer {
+	border-left: 2px solid rgba(150, 197, 149, 0.5);
+}
+
+.group-tools {
+	padding: 10px 0;
+}
+
+.group-tool-dialog {
+	padding: 10px;
+
+	&.add {
+		background-color: rgba($success, 0.35);
+	}
+
+	&.danger {
+		background-color: rgba($danger, 0.2);
+	}
+}
+
+.group-tool-dialog > .btn {
+	margin-top: 10px;
+	width: 100%;
+}
