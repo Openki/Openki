@@ -9,6 +9,8 @@ import { RegionModel } from '/imports/api/regions/regions';
 
 import '/imports/ui/components/map';
 import type { LocEntity, MarkerEntity } from '/imports/ui/components/map';
+import '/imports/ui/components/delete-confirm-dialog';
+import type { Props as DeleteConfirmDialogProps } from '/imports/ui/components/delete-confirm-dialog';
 
 import './template.html';
 import './styles.scss';
@@ -69,6 +71,33 @@ template.helpers({
 
 		return region.editableBy(Meteor.user());
 	},
+	deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
+		const instance = Template.instance();
+		return {
+			confirmText: i18n(
+				'region.reallydelete',
+				'Please confirm that you would like to delete this region with all courses, events and venues. This cannot be undone.',
+			),
+			confirmButton: i18n('region.detail.remove', 'Remove this region'),
+			busyButton: i18n('region.detail.remove.busy', 'Deleting region…'),
+			onCancel: async () => {
+				instance.state.set('verifyDelete', false);
+			},
+			onRemove: async () => {
+				const { region } = instance.data;
+				instance.busy('deleting');
+				try {
+					await instance.data.onDelete();
+
+					Alert.success(i18n('region.removed', 'Removed region "{NAME}".', { NAME: region.name }));
+				} catch (err) {
+					Alert.serverError(err, i18n('region.deleting.error', 'Deleting the region went wrong'));
+				} finally {
+					instance.busy(false);
+				}
+			},
+		};
+	},
 });
 
 template.events({
@@ -79,23 +108,5 @@ template.events({
 
 	'click .js-region-delete'(_event, instance) {
 		instance.state.set('verifyDelete', true);
-	},
-
-	'click .js-region-delete-cancel'(_event, instance) {
-		instance.state.set('verifyDelete', false);
-	},
-
-	async 'click .js-region-delete-confirm'(_event, instance) {
-		const { region } = instance.data;
-		instance.busy('deleting');
-		try {
-			await instance.data.onDelete();
-
-			Alert.success(i18n('region.removed', 'Removed region "{NAME}".', { NAME: region.name }));
-		} catch (err) {
-			Alert.serverError(err, i18n('region.deleting.error', 'Deleting the region went wrong'));
-		} finally {
-			instance.busy(false);
-		}
 	},
 });
