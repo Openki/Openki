@@ -1,6 +1,6 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
-.remove-confirmation {
+.delete-confirmation {
 	$background-color: lighten($danger, 20%);
 
 	background-color: $background-color;

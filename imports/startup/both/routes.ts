@@ -631,7 +631,7 @@ RouterAsync.route('invitation', {
 			return undefined;
 		}
 
-		const invitation = sub.invitation();
+		const invitation = sub.invitation?.();
 		if (!invitation) {
 			return undefined;
 		}
@@ -664,7 +664,7 @@ RouterAsync.route('join', {
 			return undefined;
 		}
 
-		const joinLink = sub.joinLink();
+		const joinLink = sub.joinLink?.();
 		if (!joinLink) {
 			return undefined;
 		}

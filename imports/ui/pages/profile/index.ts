@@ -27,7 +27,7 @@ import '/imports/ui/components/profiles/verify-email';
 import '/imports/ui/components/venues/link';
 import '/imports/ui/components/avatar';
 import '/imports/ui/components/editable';
-import '/imports/ui/components/remove-confirmation';
+import '/imports/ui/components/delete-confirmation';
 
 import './template.html';
 import './styles.scss';
