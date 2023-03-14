@@ -8,7 +8,7 @@ import * as JoinLinksMethodes from '/imports/api/joinLinks/methods';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
 
-import '/imports/ui/components/remove-confirmation';
+import '/imports/ui/components/delete-confirmation';
 import './create';
 import './rebuild';
 
