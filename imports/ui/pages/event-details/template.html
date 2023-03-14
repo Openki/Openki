@@ -156,7 +156,7 @@
 		{{/if}}
 		{{#if mayEdit}}
 			{{#if expanded}}
-				{{> eventDeleteConfirmDialog}}
+				{{> deleteConfirmDialog deleteConfirmDialogAttr}}
 			{{else}}
 				{{#unless replicating}}
 					<div class="actions">
@@ -185,20 +185,7 @@
     events. It's the pesky translation strings where I think we'll run into
     trouble when we try to unite them.
 -->
-<template name="eventDeleteConfirmDialog">
-	<div class="event-delete-confirmation">
-		<p>{{i18n 'event.reallydelete' 'Please confirm that you would like to delete this event. This might confuse other users and cannot be undone.'}}
-		</p>
-		<div class="form-actions">
-			{{> buttonDeleteConfirm
-				event="js-event-delete-confirm"
-				textIdle=(i18n 'event.delete.confirm.button' 'Delete this event')
-				textBusy=(i18n 'event.delete.confirm.button.busy' 'Deleting event…')
-			}}
-			{{> buttonCancel event="js-collapse"}}
-		</div>
-	</div>
-</template>
+
 
 <template name="eventGroupList">
 	<div class="tag-group multiline">
