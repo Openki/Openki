@@ -1,20 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Promise } from 'meteor/promise';
 
 import './styles.scss';
-
-function useAsync(asyncFn: () => Promise<void>, onSuccess: () => void) {
-	useEffect(() => {
-		let isActive = true;
-		asyncFn().then(() => {
-			if (isActive) onSuccess();
-		});
-		return () => {
-			isActive = false;
-		};
-	}, [asyncFn, onSuccess]);
-}
 
 export type Props = {
 	confirmText: string;
