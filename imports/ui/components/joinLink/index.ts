@@ -8,7 +8,7 @@ import * as JoinLinksMethodes from '/imports/api/joinLinks/methods';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
 
-import '/imports/ui/components/delete-confirmation';
+import '/imports/ui/components/delete-confirm';
 import './create';
 import './rebuild';
 
@@ -45,7 +45,7 @@ template.helpers({
 		return instance.joinLink.get()?.()?.fetch()[0];
 	},
 
-	removeConfirmationAttr() {
+	deleteConfirmAttr() {
 		const instance = Template.instance();
 		return {
 			confirmText: i18n(

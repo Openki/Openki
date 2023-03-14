@@ -111,7 +111,7 @@
 						{{/unless}}
 					</div>
 					{{#if state 'verifyDelete'}}
-						{{> venueDeleteConfirmDialog}}
+						{{> deleteConfirmDialog deleteConfirmDialogAttr}}
 					{{/if}}
 				{{/if}}
 			</div>
@@ -144,7 +144,7 @@
 </template>
 
 <template name="venueDeleteConfirmDialog">
-	<div class="venue-delete-confirmation">
+	<div class="venue-delete-confirm">
 		<p>{{i18n 'venue.reallydelete' 'Please confirm that you would like to delete this venue. This cannot be undone.'}}
 		</p>
 		<div class="form-actions">

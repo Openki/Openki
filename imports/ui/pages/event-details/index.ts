@@ -9,7 +9,7 @@ import moment from 'moment';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Courses } from '/imports/api/courses/courses';
-import { EventModel, Events, EventVenueEntity } from '/imports/api/events/events';
+import { EventModel, Events } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
