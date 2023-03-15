@@ -35,7 +35,7 @@ import '/imports/ui/components/courses/files';
 import '/imports/ui/components/courses/members';
 import '/imports/ui/components/courses/roles';
 import '/imports/ui/components/editable';
-import '/imports/ui/components/groups/list';
+import '/imports/ui/components/groups/tag';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
 import '/imports/ui/components/sharing';
