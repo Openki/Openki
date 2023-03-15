@@ -4,7 +4,6 @@ import { Template } from 'meteor/templating';
 
 import * as JoinLinks from '/imports/api/joinLinks/methods';
 
-
 export function JoinLinkCreate(props: { tenantId: string }) {
 	const { t } = useTranslation();
 
