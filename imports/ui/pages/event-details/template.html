@@ -10,6 +10,10 @@
 			{{#if course}}
 				<div class="event-course-header" {{eventCourseHeaderAttr course}}>
 					<a href="{{pathFor 'showCourse' _id=courseId}}"
+					   class="back-to-course-overview" title={{i18n 'event.details.viewCourse'}}>
+						<i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+					</a>
+					<a href="{{pathFor 'showCourse' _id=courseId}}"
 					   class="event-course-header-link">
 						<i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
 						{{i18n 'event.details.viewCourse' 'To the course overview'}}
@@ -17,7 +21,6 @@
 					<h2>
 						{{course.name}}
 					</h2>
-
 					{{> courseCategories course}}
 					{{> regionTag}}
 					{{#each info in customFields}}
