@@ -198,7 +198,7 @@
 <template name="courseGroupList">
 	<div class="tag-group multiline">
 		{{#each groupId in groups}}
-			{{> groupName groupId=groupId isOrganizer=(isOrganizer groupId)}}
+			{{> groupTag groupId=groupId isOrganizer=(isOrganizer groupId)}}
 			{{#if (isOrganizer groupId)}}
 				<div class="tag group-tag addon">
 					<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"

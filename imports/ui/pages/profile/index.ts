@@ -21,7 +21,7 @@ import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/buttons';
-import '/imports/ui/components/groups/list';
+import '/imports/ui/components/groups/tag';
 import '/imports/ui/components/profiles/course-list';
 import '/imports/ui/components/profiles/verify-email';
 import '/imports/ui/components/venues/link';
@@ -225,7 +225,7 @@ template.helpers({
 	isAdmin() {
 		return UserPrivilegeUtils.privilegedTo('admin');
 	},
-	removeConfirmationAttr() {
+	deleteConfirmationAttr() {
 		return {
 			confirmText: i18n(
 				'profile.reallydelete',
