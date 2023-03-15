@@ -14,7 +14,7 @@
 	</div>
 	<div class="page-component">
 		{{#if hasResults}}
-			{{> courseList courses=results}}
+			{{> courseList courses=results groupTagEvents=groupTagEvents}}
 
 			{{#unless Template.subscriptionsReady}}
 				{{> loadingPage}}
