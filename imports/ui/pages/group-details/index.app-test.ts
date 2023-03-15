@@ -96,7 +96,7 @@ if (Meteor.isClient) {
 						`Details of the new course ${randomTitle} are shown`,
 					);
 					assert.match(
-						$('.js-group-label').text(),
+						$('.group-tag > a').text(),
 						/SKG/,
 						'The course is in the group it was created in',
 					);
@@ -154,7 +154,7 @@ if (Meteor.isClient) {
 						`Details of the new course ${randomTitle} are shown`,
 					);
 					assert.match(
-						$('.js-group-label').text(),
+						$('.group-tag > a').text(),
 						/ASZ/,
 						'The course is in the group it was created in',
 					);
