@@ -190,7 +190,7 @@
 <template name="eventGroupList">
 	<div class="tag-group multiline">
 		{{#each allGroups}}
-			{{> groupName groupId=this isOrganizer=isOrganizer}}
+			{{> groupTag groupId=this isOrganizer=isOrganizer}}
 			{{#if isOrganizer}}
 				<div class="tag group-tag addon">
 					<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"

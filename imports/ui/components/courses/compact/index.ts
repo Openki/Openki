@@ -9,13 +9,23 @@ import { CourseModel } from '/imports/api/courses/courses';
 import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
 
 import '/imports/ui/components/courses/categories';
-import '/imports/ui/components/groups/list';
+import '/imports/ui/components/groups/tag';
 
 import './template.html';
 import './styles.scss';
 
 {
-	const Template = TemplateAny as TemplateStaticTyped<'courseCompact', CourseModel>;
+	const Template = TemplateAny as TemplateStaticTyped<
+		'courseCompact',
+		{
+			course: CourseModel;
+			groupTagEvents: (groupId: string) => {
+				onMouseOver: () => void;
+				onMouseOut: () => void;
+				onClick: () => void;
+			};
+		}
+	>;
 
 	const template = Template.courseCompact;
 
@@ -37,27 +47,26 @@ import './styles.scss';
 		background-repeat: no-repeat;`;
 		},
 
-		courseStateClasses() {
+		courseStateClasses(course: CourseModel) {
 			const classes = [];
 
-			if (this.nextEvent) {
+			if (course.nextEvent) {
 				classes.push('has-upcoming-events');
-			} else if (this.lastEvent) {
+			} else if (course.lastEvent) {
 				classes.push('has-past-events');
 			} else {
 				classes.push('is-proposal');
 			}
 
-			if (this.archived) {
+			if (course.archived) {
 				classes.push('is-archived');
 			}
 
 			return classes.join(' ');
 		},
 
-		filterPreviewClasses(this: CourseModel) {
+		filterPreviewClasses(course: CourseModel) {
 			const filterPreviewClasses = [];
-			const course = this;
 
 			const roles = Roles.map((role) => role.type);
 
@@ -81,16 +90,27 @@ import './styles.scss';
 			return filterPreviewClasses.join(' ');
 		},
 
-		isOrganizer(this: CourseModel, groupId: any) {
-			return this.groupOrganizers.includes(groupId);
+		groupTagAttr(course: CourseModel, groupId: string) {
+			const instance = Template.instance();
+			return {
+				groupId,
+				isOrganizer: course.groupOrganizers.includes(groupId),
+				onClick: () => {
+					instance.data.groupTagEvents(groupId).onClick();
+				},
+				onMouseOver: () => {
+					instance.$('.course-compact').toggleClass('elevate-child');
+					instance.data.groupTagEvents(groupId).onMouseOver();
+				},
+				onMouseOut: () => {
+					instance.$('.course-compact').toggleClass('elevate-child');
+					instance.data.groupTagEvents(groupId).onMouseOut();
+				},
+			};
 		},
 	});
 
 	template.events({
-		'mouseover .js-group-label, mouseout .js-group-label'(_e, instance) {
-			instance.$('.course-compact').toggleClass('elevate-child');
-		},
-
 		'mouseover .js-category-label, mouseout .js-category-label'(_e, instance) {
 			instance.$('.course-compact').toggleClass('elevate-child');
 		},
