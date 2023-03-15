@@ -45,7 +45,7 @@ template.helpers({
 		return instance.joinLink.get()?.()?.fetch()[0];
 	},
 
-	removeConfirmationAttr() {
+	deleteConfirmationAttr() {
 		const instance = Template.instance();
 		return {
 			confirmText: i18n(
