@@ -228,6 +228,7 @@ RouterAsync.route('framePropose', {
 			internal: Predicates.flag,
 			hidePricePolicy: Predicates.flag,
 			hideCategories: Predicates.flag,
+			singleEvent: Predicates.flag,
 		};
 		const query = new Filtering(predicates).read(this.params.query).done().toQuery() as any;
 
