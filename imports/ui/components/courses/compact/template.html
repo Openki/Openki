@@ -6,8 +6,7 @@
 					 style="{{courseCss course}}">
 					<div class="course-compact-content col-8">
 						{{#if course.internal}}
-							<span class="course-compact-internal" data-bs-toggle="tooltip"
-								  data-bs-title="{{i18n '_label.internal' attr=true}}"></span>
+							{{> internalIndicator}}
 						{{/if}}
 						<div class="course-compact-title" title="{{name}}">{{course.name}}</div>
 						{{> courseCategories categories=course.categories}}
