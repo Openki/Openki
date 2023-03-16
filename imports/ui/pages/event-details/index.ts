@@ -8,8 +8,8 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import moment from 'moment';
 
 import * as Alert from '/imports/api/alerts/alert';
-import { CourseModel, Courses } from '/imports/api/courses/courses';
-import { EventModel, Events, EventVenueEntity } from '/imports/api/events/events';
+import { Courses } from '/imports/api/courses/courses';
+import { EventModel, Events } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
@@ -27,6 +27,8 @@ import * as Analytics from '/imports/ui/lib/analytics';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
+import '/imports/ui/components/events/display/course-header';
+import '/imports/ui/components/events/display/header';
 import '/imports/ui/components/events/edit';
 import '/imports/ui/components/events/participants';
 import '/imports/ui/components/events/replication';
@@ -36,6 +38,9 @@ import '/imports/ui/components/regions/tag';
 import '/imports/ui/components/sharing';
 import '/imports/ui/components/report';
 import '/imports/ui/components/venues/link';
+import '/imports/ui/components/internal-indicator';
+import '/imports/ui/components/delete-confirm-dialog';
+import type { Props as DeleteConfirmDialogProps } from '/imports/ui/components/delete-confirm-dialog';
 
 import './template.html';
 import './styles.scss';
@@ -135,20 +140,6 @@ import './styles.scss';
 			return Template.instance().getCourseTitleIfAny();
 		},
 
-		eventCourseHeaderAttr(course: CourseModel) {
-			const src = course?.publicImageUrl();
-			if (!src) {
-				return {};
-			}
-
-			return {
-				style: `
-	background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${src}');
-	background-position: center;
-	background-size: cover;`,
-			};
-		},
-
 		acceptsParticipants(this: EventModel) {
 			// no maxParticipants
 			if (!this.maxParticipants) {
@@ -170,29 +161,6 @@ import './styles.scss';
 				return Courses.findOne(this.courseId);
 			}
 			return false;
-		},
-		customFields() {
-			if (!this.courseId) {
-				return [];
-			}
-			const course = Courses.findOne(this.courseId);
-
-			if (!course) {
-				return [];
-			}
-
-			const user = Meteor.user();
-
-			const isEditor = user && course.editableBy(user);
-
-			return (
-				course.customFields
-					?.filter((i) => i.visibleFor === 'all' || (i.visibleFor === 'editors' && isEditor))
-					.map((i) => ({
-						displayText: getLocalizedValue(i.displayText),
-						value: i.value,
-					})) || []
-			);
 		},
 
 		editing() {
@@ -222,48 +190,6 @@ import './styles.scss';
 	});
 
 	template.events({
-		'mouseover .event-course-header, mouseout .event-course-header'(event, instance) {
-			instance.$(event.currentTarget as any).toggleClass('highlight', event.type === 'mouseover');
-		},
-
-		'click .event-course-header'() {
-			Router.go('showCourse', { _id: this.courseId });
-		},
-
-		async 'click .js-event-delete-confirm'(_event, instance) {
-			const oEvent = instance.data;
-			const { title, region } = oEvent;
-			const course = oEvent.courseId;
-			instance.busy('deleting');
-
-			Template.instance().editing.set(false);
-			try {
-				await EventsMethods.remove(oEvent._id);
-
-				Alert.success(
-					i18n('eventDetails.eventRemoved', 'The "{TITLE}" event has been deleted.', {
-						TITLE: title,
-					}),
-				);
-
-				Analytics.trackEvent(
-					'Event deletions',
-					'Event deletions as team',
-					Regions.findOne(region)?.nameEn,
-				);
-
-				if (course) {
-					Router.go('showCourse', { _id: course });
-				} else {
-					Router.go('/');
-				}
-			} catch (err) {
-				Alert.serverError(err, i18n('eventDetails.eventRemoved.error', 'Could not remove event'));
-			} finally {
-				instance.busy(false);
-			}
-		},
-
 		'click .js-event-edit'(_event, instance) {
 			instance.editing.set(true);
 		},
@@ -314,7 +240,7 @@ import './styles.scss';
 	const Template = TemplateMixins.Expandible(
 		TemplateAny as TemplateStaticTyped<
 			'eventDisplay',
-			{ region: string; venue?: EventVenueEntity },
+			EventModel,
 			{ locationTracker: LocationTracker; replicating: ReactiveVar<boolean> }
 		>,
 		'eventDisplay',
@@ -346,6 +272,76 @@ import './styles.scss';
 		},
 		replicating() {
 			return Template.instance().replicating.get();
+		},
+		customFields() {
+			if (!this.courseId) {
+				return [];
+			}
+			const course = Courses.findOne(this.courseId);
+
+			if (!course) {
+				return [];
+			}
+
+			const user = Meteor.user();
+
+			const isEditor = user && course.editableBy(user);
+
+			return (
+				course.customFields
+					?.filter((i) => i.visibleFor === 'all' || (i.visibleFor === 'editors' && isEditor))
+					.map((i) => ({
+						displayText: getLocalizedValue(i.displayText),
+						value: i.value,
+					})) || []
+			);
+		},
+		deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
+			const instance = Template.instance();
+			return {
+				confirmText: i18n(
+					'event.reallydelete',
+					'Please confirm that you would like to delete this event. This might confuse other users and cannot be undone.',
+				),
+				confirmButton: i18n('event.delete.confirm.button', 'Delete this event'),
+				busyButton: i18n('event.delete.confirm.button.busy', 'Deleting event…'),
+				onRemove: async () => {
+					const oEvent = instance.data;
+					const { title, region } = oEvent;
+					const course = oEvent.courseId;
+
+					(instance.parentInstance() as any).editing.set(false);
+					try {
+						await EventsMethods.remove(oEvent._id);
+
+						Alert.success(
+							i18n('eventDetails.eventRemoved', 'The "{TITLE}" event has been deleted.', {
+								TITLE: title,
+							}),
+						);
+
+						Analytics.trackEvent(
+							'Event deletions',
+							'Event deletions as team',
+							Regions.findOne(region)?.nameEn,
+						);
+
+						if (course) {
+							Router.go('showCourse', { _id: course });
+						} else {
+							Router.go('/');
+						}
+					} catch (err) {
+						Alert.serverError(
+							err,
+							i18n('eventDetails.eventRemoved.error', 'Could not remove event'),
+						);
+					}
+				},
+				onCancel: async () => {
+					Session.set('verify', false);
+				},
+			};
 		},
 	});
 

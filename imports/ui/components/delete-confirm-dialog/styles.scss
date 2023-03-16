@@ -1,6 +1,6 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
-.delete-confirmation {
+.delete-confirm-dialog {
 	$background-color: lighten($danger, 20%);
 
 	background-color: $background-color;

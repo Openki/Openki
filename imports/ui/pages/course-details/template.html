@@ -14,8 +14,7 @@
 						<div class="course-details {{courseStateClasses course}}">
 							<div class="details-header" {{detailsHeaderAttr course}}>
 								{{#if course.internal}}
-									<span class="details-internal" data-bs-toggle="tooltip"
-										  data-bs-title="{{i18n '_label.internal' attr=true}}"></span>
+									{{> internalIndicator}}
 								{{/if}}
 								<div class="details-header-tags">
 									{{#if (isProposal course)}}
@@ -94,7 +93,7 @@
 </template>
 
 <template name="confirmDialog">
-	<div class="course-delete-confirmation">
+	<div class="course-delete-confirm">
 		<p>{{i18n 'course.reallydelete' 'Please confirm that you would like to delete {COURSE}. This cannot be undone.' COURSE=course.name}}
 		</p>
 		<div class="form-actions">
