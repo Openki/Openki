@@ -4,14 +4,6 @@ import React from 'react';
 
 import './styles.scss';
 
-export type Data = {
-	courseId: string;
-	regionId: string;
-	categories: string[];
-	title: string;
-	image: string;
-};
-
 export function InternalIndicator() {
 	const { t } = useTranslation();
 	return (
