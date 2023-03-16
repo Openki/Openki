@@ -133,18 +133,6 @@
 	color: $gray-800 !important;
 }
 
-// ** Internal indicator dot
-//========================================================================================
-.event-compact-internal {
-	background-color: #f00;
-	border-radius: 50%;
-	height: 3px;
-	left: 2px;
-	position: absolute;
-	top: 2px;
-	width: 3px;
-}
-
 // event fully booked
 //============================================================================================
 .event-fully-booked {

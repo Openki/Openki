@@ -27,7 +27,7 @@ import '/imports/ui/components/profiles/verify-email';
 import '/imports/ui/components/venues/link';
 import '/imports/ui/components/avatar';
 import '/imports/ui/components/editable';
-import '/imports/ui/components/delete-confirmation';
+import '/imports/ui/components/delete-confirm';
 
 import './template.html';
 import './styles.scss';
@@ -225,7 +225,7 @@ template.helpers({
 	isAdmin() {
 		return UserPrivilegeUtils.privilegedTo('admin');
 	},
-	deleteConfirmationAttr() {
+	deleteConfirmAttr() {
 		return {
 			confirmText: i18n(
 				'profile.reallydelete',

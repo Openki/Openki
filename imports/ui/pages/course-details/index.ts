@@ -40,6 +40,7 @@ import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
 import '/imports/ui/components/sharing';
 import '/imports/ui/components/report';
+import '/imports/ui/components/internal-indicator';
 
 import './template.html';
 import './styles.scss';

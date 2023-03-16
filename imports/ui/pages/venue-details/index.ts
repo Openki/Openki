@@ -23,6 +23,8 @@ import '/imports/ui/components/events/list';
 import '/imports/ui/components/map';
 import '/imports/ui/components/profile-link';
 import '/imports/ui/components/venues/edit';
+import '/imports/ui/components/delete-confirm-dialog';
+import type { Props as DeleteConfirmDialogProps } from '/imports/ui/components/delete-confirm-dialog';
 
 import './template.html';
 import './styles.scss';
@@ -178,6 +180,35 @@ template.helpers({
 		const count = instance.pastEvents.get()?.().count() || 0;
 		return count > (instance.state.get('pastEventLimit') || 0);
 	},
+
+	deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
+		const instance = Template.instance();
+		return {
+			confirmText: i18n(
+				'venue.reallydelete',
+				'Please confirm that you would like to delete this venue. This cannot be undone.',
+			),
+			confirmButton: i18n('venue.detail.remove', 'Remove this venue'),
+			busyButton: i18n('venue.detail.remove.busy', 'Deleting venue…'),
+			onCancel: async () => {
+				instance.state.set('verifyDelete', false);
+			},
+			onRemove: async () => {
+				const { venue } = instance.data;
+				instance.busy('deleting');
+				try {
+					await VenuesMethods.remove(venue._id);
+
+					Alert.success(i18n('venue.removed', 'Removed venue "{NAME}".', { NAME: venue.name }));
+					Router.go('profile');
+				} catch (err) {
+					Alert.serverError(err, i18n('venue.removed.error', 'Deleting the venue went wrong'));
+				} finally {
+					instance.busy(false);
+				}
+			},
+		};
+	},
 });
 
 template.events({
@@ -188,25 +219,6 @@ template.events({
 
 	'click .js-venue-delete'(_event, instance) {
 		instance.state.set('verifyDelete', true);
-	},
-
-	'click .js-venue-delete-cancel'(_event, instance) {
-		instance.state.set('verifyDelete', false);
-	},
-
-	async 'click .js-venue-delete-confirm'(_event, instance) {
-		const { venue } = instance.data;
-		instance.busy('deleting');
-		try {
-			await VenuesMethods.remove(venue._id);
-
-			Alert.success(i18n('venue.removed', 'Removed venue "{NAME}".', { NAME: venue.name }));
-			Router.go('profile');
-		} catch (err) {
-			Alert.serverError(err, i18n('venue.removed.error', 'Deleting the venue went wrong'));
-		} finally {
-			instance.busy(false);
-		}
 	},
 
 	'click .js-show-more-upcoming-events'(_event, instance) {
