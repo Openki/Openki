@@ -120,6 +120,7 @@ export const SaveFieldPattern = {
 	unsubs: Match.Optional([String]),
 	groups: Match.Optional([String]),
 	internal: Match.Optional(Boolean),
+	singleEvent: Match.Optional(Boolean),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
@@ -209,6 +210,10 @@ export const save = ServerMethod(
 		}
 		if (changes.internal !== undefined) {
 			set.internal = changes.internal;
+		}
+		
+		if (changes.singleEvent !== undefined) {
+			set.singleEvent = changes.singleEvent;
 		}
 
 		if (course.isNew()) {
