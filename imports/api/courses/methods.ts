@@ -211,7 +211,7 @@ export const save = ServerMethod(
 		if (changes.internal !== undefined) {
 			set.internal = changes.internal;
 		}
-		
+
 		if (changes.singleEvent !== undefined) {
 			set.singleEvent = changes.singleEvent;
 		}
