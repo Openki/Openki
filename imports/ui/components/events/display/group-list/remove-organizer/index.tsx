@@ -1,50 +1,80 @@
 import { i18n } from '/imports/startup/both/i18next';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Template } from 'meteor/templating';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { EventModel } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
-import { Groups } from '/imports/api/groups/groups';
 
-import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
-import * as TemplateMixins from '/imports/ui/lib/template-mixins';
+import { name } from '/imports/ui/lib/group-name-helpers';
+import { useDetails } from '/imports/api/groups/publications';
 
-const Template = TemplateMixins.Expandible(
-	TemplateAny as TemplateStaticTyped<
-		'eventGroupRemoveOrganizer',
-		{ event: EventModel; groupId: string }
-	>,
-	'eventGroupRemoveOrganizer',
-);
+export function EventGroupRemoveOrganizer(props: { event: EventModel; groupId: string }) {
+	const { t } = useTranslation();
+	const [isExpanded, setIsExpanded] = useState(false);
 
-const template = Template.eventGroupRemoveOrganizer;
+	const { event, groupId } = props;
+	const [isLoading, group] = useDetails(groupId);
 
-template.helpers(GroupNameHelpers);
-template.events({
-	async 'click .js-removeOrganizer'(_e, instance) {
-		const { event } = instance.data;
-		const { groupId } = instance.data;
+	if (isLoading()) {
+		return null;
+	}
 
-		try {
-			await EventsMethods.editing(event._id, groupId, false);
+	if (!isExpanded) {
+		return (
+			<a
+				href="#"
+				className="btn btn-danger"
+				onClick={(e) => {
+					e.stopPropagation();
+					setIsExpanded(true);
+				}}
+			>
+				<span className="fa-solid fa-xmark fa-fw" aria-hidden="true"></span>
+				{t('course.group.removeOrgText')}
+			</a>
+		);
+	}
 
-			const groupName = Groups.findOne(groupId)?.name;
-			Alert.success(
-				i18n(
-					'eventGroupAdd.membersCanNoLongerEditEvent',
-					'Members of the group "{GROUP}" can no longer edit the "{EVENT}" event.',
-					{ GROUP: groupName, EVENT: event.title },
-				),
-			);
-			instance.collapse();
-		} catch (err) {
-			Alert.serverError(
-				err,
-				i18n(
-					'eventGroupAdd.membersCanNoLongerEditEvent.error',
-					'Failed to remove organizer status',
-				),
-			);
-		}
-	},
-});
+	return (
+		<div className="group-tool-dialog danger">
+			{t('course.group.confirmRemoveOrgText', { NAME: name(group) })}
+			<button
+				type="button"
+				className="btn btn-danger"
+				onClick={async () => {
+					try {
+						await EventsMethods.editing(event._id, groupId, false);
+
+						Alert.success(
+							i18n(
+								'eventGroupAdd.membersCanNoLongerEditEvent',
+								'Members of the group "{GROUP}" can no longer edit the "{EVENT}" event.',
+								{ GROUP: name(group), EVENT: event.title },
+							),
+						);
+
+						setIsExpanded(false);
+					} catch (err) {
+						Alert.serverError(
+							err,
+							i18n(
+								'eventGroupAdd.membersCanNoLongerEditEvent.error',
+								'Failed to remove organizer status',
+							),
+						);
+					}
+				}}
+			>
+				{t('course.group.confimRemoveOrgButton')}
+			</button>
+		</div>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper(EventGroupRemoveOrganizer.name, () => EventGroupRemoveOrganizer);
