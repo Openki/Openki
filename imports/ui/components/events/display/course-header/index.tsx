@@ -22,7 +22,7 @@ export function EventCourseHeader(props: Data) {
 		<div
 			className="event-course-header"
 			onClick={() => {
-				Router.go('showCourse', { _id: props.courseId });
+				Router.go('showCourse', { _id: props.courseId }, { query: { force: '1' } });
 			}}
 			style={
 				props.image
@@ -34,15 +34,11 @@ export function EventCourseHeader(props: Data) {
 					: undefined
 			}
 		>
-			<a
-				href={Router.path('showCourse', { _id: props.courseId })}
-				className="event-course-header-link"
-			>
+			<a href={Router.path('showCourse', { _id: props.courseId }, { query: { force: '1' } })}>
 				<i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
 				{t('event.details.viewCourse', 'To the course overview')}
 			</a>
 			<h2>{props.title}</h2>
-
 			<CourseCategories categories={props.categories} />
 			<RegionTag region={props.regionId} />
 		</div>
