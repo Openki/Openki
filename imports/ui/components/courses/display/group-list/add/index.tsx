@@ -34,7 +34,6 @@ import '/imports/ui/components/courses/display/group-list/remove-organizer';
 
 import './template.html';
 
-
 {
 	const Template = TemplateMixins.Expandible(
 		TemplateAny as TemplateStaticTyped<'courseGroupAdd', CourseModel>,
