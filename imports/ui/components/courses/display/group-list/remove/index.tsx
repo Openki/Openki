@@ -1,65 +1,69 @@
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import * as Alert from '/imports/api/alerts/alert';
-import { Groups } from '/imports/api/groups/groups';
-import * as CoursesMethods from '/imports/api/courses/methods';
 import { CourseModel } from '/imports/api/courses/courses';
+import { useDetails } from '/imports/api/groups/publications';
+import * as CoursesMethods from '/imports/api/courses/methods';
 
-import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
-import * as TemplateMixins from '/imports/ui/lib/template-mixins';
+import { name } from '/imports/ui/lib/group-name-helpers';
 
-import { i18n } from '/imports/startup/both/i18next';
+export function CourseGroupRemove(props: { course: CourseModel; groupId: string }) {
+	const { t } = useTranslation();
+	const { course, groupId } = props;
+	const [isLoading, group] = useDetails(groupId);
+	const [isExpanded, setIsExpanded] = useState(false);
 
-import '/imports/ui/components/buttons';
-import '/imports/ui/components/courses/categories';
-import '/imports/ui/components/courses/discussion';
-import '/imports/ui/components/courses/edit';
-import '/imports/ui/components/courses/events';
-import '/imports/ui/components/courses/history';
-import '/imports/ui/components/courses/files';
-import '/imports/ui/components/courses/members';
-import '/imports/ui/components/courses/roles';
-import '/imports/ui/components/editable';
-import '/imports/ui/components/groups/tag';
-import '/imports/ui/components/price-policy';
-import '/imports/ui/components/regions/tag';
-import '/imports/ui/components/sharing';
-import '/imports/ui/components/report';
-import '/imports/ui/components/internal-indicator';
-import '/imports/ui/components/courses/display/group-list/remove-organizer';
-import '/imports/ui/components/courses/display/group-list/make-organizer';
+	if (isLoading()) {
+		return null;
+	}
 
+	if (!isExpanded) {
+		return (
+			<button
+				type="button"
+				className="btn btn-danger"
+				onClick={(e) => {
+					e.stopPropagation();
+					setIsExpanded(true);
+				}}
+			>
+				{t('course.group.remove', 'Remove')}
+			</button>
+		);
+	}
+
+	return (
+		<div className="group-tool-dialog danger">
+			{t('course.group.confirmRemoveText', 'Stop listing the "{NAME}" group as promoters?', {
+				NAME: name(group),
+			})}
+			<button
+				type="button"
+				className="btn btn-danger"
+				onClick={async () => {
+					try {
+						await CoursesMethods.promote(course._id, groupId, false);
+
+						Alert.success(
+							t('courseGroupAdd.groupRemoved', '{GROUP} was removed from {COURSE}.', {
+								GROUP: name(group),
+								COURSE: course.name,
+							}),
+						);
+					} catch (err) {
+						Alert.serverError(err, t('courseGroupAdd.groupRemoved.error', 'Removing failed'));
+					}
+				}}
+			>
+				{t('course.group.confirmRemoveButton', 'Delist')}
+			</button>
+		</div>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
 import './template.html';
 
-
-{
-	const Template = TemplateMixins.Expandible(
-		TemplateAny as TemplateStaticTyped<
-			'courseGroupRemove',
-			{ groupId: string; course: CourseModel }
-		>,
-		'courseGroupRemove',
-	);
-	const template = Template.courseGroupRemove;
-	template.helpers(GroupNameHelpers);
-	template.events({
-		async 'click .js-remove'(_event, instance) {
-			const { course, groupId } = instance.data;
-
-			try {
-				await CoursesMethods.promote(course._id, groupId, false);
-
-				const groupName = Groups.findOne(groupId)?.name;
-				Alert.success(
-					i18n('courseGroupAdd.groupRemoved', '{GROUP} was removed from {COURSE}.', {
-						GROUP: groupName,
-						COURSE: course.name,
-					}),
-				);
-				instance.collapse();
-			} catch (err) {
-				Alert.serverError(err, i18n('courseGroupAdd.groupRemoved.error', 'Removing failed'));
-			}
-		},
-	});
-}
+Template.registerHelper(CourseGroupRemove.name, () => CourseGroupRemove);

@@ -1,15 +1,5 @@
-
 <template name="courseGroupRemove">
-	{{#if expanded}}
-		<div class="group-tool-dialog danger">
-			{{i18n 'course.group.confirmRemoveText' 'Stop listing the "{NAME}" group as promoters?' NAME=(name groupId)}}
-			<button type="button" class="btn btn-danger js-remove">
-				{{i18n 'course.group.confirmRemoveButton' "Delist"}}
-			</button>
-		</div>
-	{{else}}
-		<button type="button" class="js-expand btn btn-danger">
-			{{i18n 'course.group.remove' 'Remove'}}
-		</button>
-	{{/if}}
+	<div>
+		{{> React (component CourseGroupRemove)}}
+	</div>
 </template>
