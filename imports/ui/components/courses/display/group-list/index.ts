@@ -1,16 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
 
-import * as Alert from '/imports/api/alerts/alert';
-import { Groups } from '/imports/api/groups/groups';
-import * as CoursesMethods from '/imports/api/courses/methods';
 import { CourseModel } from '/imports/api/courses/courses';
-
-import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
-import * as TemplateMixins from '/imports/ui/lib/template-mixins';
-
-import { i18n } from '/imports/startup/both/i18next';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
