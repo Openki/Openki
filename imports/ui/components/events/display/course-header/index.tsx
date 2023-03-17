@@ -13,6 +13,7 @@ export type Props = {
 	headerlink?: string;
 	regionId: string;
 	categories: string[];
+	groups?: string[];
 	title: string;
 	image: string;
 };
