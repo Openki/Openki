@@ -8,21 +8,24 @@ import { RegionTag } from '/imports/ui/components/regions/tag';
 
 import './styles.scss';
 
-export type Data = {
-	courseId: string;
+export type Props = {
+	backlink: string;
+	headerlink?: string;
 	regionId: string;
 	categories: string[];
 	title: string;
 	image: string;
 };
 
-export function EventCourseHeader(props: Data) {
+export function EventCourseHeader(props: Props) {
 	const { t } = useTranslation();
 	return (
 		<div
-			className="event-course-header"
+			className={`event-course-header${props.headerlink ? ' event-course-header-link' : ''}`}
 			onClick={() => {
-				Router.go('showCourse', { _id: props.courseId }, { query: { force: '1' } });
+				if (props.headerlink) {
+					Router.go(props.headerlink);
+				}
 			}}
 			style={
 				props.image
@@ -34,7 +37,7 @@ export function EventCourseHeader(props: Data) {
 					: undefined
 			}
 		>
-			<a href={Router.path('showCourse', { _id: props.courseId }, { query: { force: '1' } })}>
+			<a href={props.backlink}>
 				<i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
 				{t('event.details.viewCourse', 'To the course overview')}
 			</a>
