@@ -1,16 +1,5 @@
 <template name="courseGroupMakeOrganizer">
-	{{#if expanded}}
-		<div class="group-tool-dialog add">
-			{{i18n 'course.group.confirmOrgText' 'Add members of the "{NAME}" group as editors?' NAME=(name groupId)}}
-			{{i18n 'course.group.confirmOrgNotes' "All members of the group will be able to edit the course and create new events for it."}}
-			<button type="button" class="btn btn-success js-makeOrganizer">
-				{{i18n 'course.group.confimOrgButton' "Give editing rights"}}
-			</button>
-		</div>
-	{{else}}
-		<a href="#" class="js-expand btn btn-success">
-			<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
-			{{i18n 'course.group.addOrgText' "Give editing rights"}}
-		</a>
-	{{/if}}
+	<div>
+		{{> React (component CourseGroupMakeOrganizer)}}
+	</div>
 </template>
