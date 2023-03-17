@@ -1,15 +1,5 @@
 <template name="eventGroupRemoveOrganizer">
-	{{#if expanded}}
-		<div class="group-tool-dialog danger">
-			{{i18n 'course.group.confirmRemoveOrgText' NAME=(name groupId)}}
-			<button type="button" class="btn btn-danger js-removeOrganizer">
-				{{i18n 'course.group.confimRemoveOrgButton'}}
-			</button>
-		</div>
-	{{else}}
-		<a href="#" class="js-expand btn btn-danger">
-			<span class="fa-solid fa-xmark fa-fw" aria-hidden="true"></span>
-			{{i18n 'course.group.removeOrgText' NAME=(name groupId)}}
-		</a>
-	{{/if}}
+	<div>
+		{{> React (component EventGroupRemoveOrganizer)}}
+	</div>
 </template>
