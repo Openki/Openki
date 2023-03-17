@@ -1,5 +1,4 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { Groups } from '/imports/api/groups/groups';
