@@ -1,69 +1,79 @@
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import * as Alert from '/imports/api/alerts/alert';
-import { Groups } from '/imports/api/groups/groups';
-import * as CoursesMethods from '/imports/api/courses/methods';
 import { CourseModel } from '/imports/api/courses/courses';
+import { useDetails } from '/imports/api/groups/publications';
+import * as CoursesMethods from '/imports/api/courses/methods';
 
-import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
-import * as TemplateMixins from '/imports/ui/lib/template-mixins';
+import { name } from '/imports/ui/lib/group-name-helpers';
 
-import { i18n } from '/imports/startup/both/i18next';
+export function CourseGroupRemoveOrganizer(props: { course: CourseModel; groupId: string }) {
+	const { t } = useTranslation();
+	const { course, groupId } = props;
+	const [isLoading, group] = useDetails(groupId);
+	const [isExpanded, setIsExpanded] = useState(false);
 
-import '/imports/ui/components/buttons';
-import '/imports/ui/components/courses/categories';
-import '/imports/ui/components/courses/discussion';
-import '/imports/ui/components/courses/edit';
-import '/imports/ui/components/courses/events';
-import '/imports/ui/components/courses/history';
-import '/imports/ui/components/courses/files';
-import '/imports/ui/components/courses/members';
-import '/imports/ui/components/courses/roles';
-import '/imports/ui/components/editable';
-import '/imports/ui/components/groups/tag';
-import '/imports/ui/components/price-policy';
-import '/imports/ui/components/regions/tag';
-import '/imports/ui/components/sharing';
-import '/imports/ui/components/report';
-import '/imports/ui/components/internal-indicator';
+	if (isLoading()) {
+		return null;
+	}
 
+	if (!isExpanded) {
+		return (
+			<a
+				href="#"
+				className="btn btn-danger"
+				onClick={(e) => {
+					e.stopPropagation();
+					setIsExpanded(true);
+				}}
+			>
+				<span className="fa-solid fa-xmark fa-fw" aria-hidden="true"></span>
+				{t('course.group.removeOrgText', 'Remove editing rights')}
+			</a>
+		);
+	}
+
+	return (
+		<div className="group-tool-dialog danger">
+			{t(
+				'course.group.confirmRemoveOrgText',
+				'Revoke all editing rights from the "{NAME}" group?',
+				{ NAME: name(group) },
+			)}
+			<button
+				type="button"
+				className="btn btn-danger"
+				onClick={async () => {
+					try {
+						await CoursesMethods.editing(course._id, groupId, false);
+
+						Alert.success(
+							t(
+								'courseGroupAdd.membersCanNoLongerEditCourse',
+								'Members of {GROUP} can no longer edit {COURSE}.',
+								{ GROUP: name(group), COURSE: course.name },
+							),
+						);
+					} catch (err) {
+						Alert.serverError(
+							err,
+							t(
+								'courseGroupAdd.membersCanNoLongerEditCourse.error',
+								'Failed to remove organizer status',
+							),
+						);
+					}
+				}}
+			>
+				{t('course.group.confimRemoveOrgButton', 'Take away editing rights')}
+			</button>
+		</div>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
 import './template.html';
 
-{
-	const Template = TemplateMixins.Expandible(
-		TemplateAny as TemplateStaticTyped<
-			'courseGroupRemoveOrganizer',
-			{ groupId: string; course: CourseModel }
-		>,
-		'courseGroupRemoveOrganizer',
-	);
-	const template = Template.courseGroupRemoveOrganizer;
-	template.helpers(GroupNameHelpers);
-	template.events({
-		async 'click .js-removeOrganizer'(_event, instance) {
-			const { course, groupId } = instance.data;
-
-			try {
-				await CoursesMethods.editing(course._id, groupId, false);
-
-				const groupName = Groups.findOne(groupId)?.name;
-				Alert.success(
-					i18n(
-						'courseGroupAdd.membersCanNoLongerEditCourse',
-						'Members of {GROUP} can no longer edit {COURSE}.',
-						{ GROUP: groupName, COURSE: course.name },
-					),
-				);
-				instance.collapse();
-			} catch (err) {
-				Alert.serverError(
-					err,
-					i18n(
-						'courseGroupAdd.membersCanNoLongerEditCourse.error',
-						'Failed to remove organizer status',
-					),
-				);
-			}
-		},
-	});
-}
+Template.registerHelper(CourseGroupRemoveOrganizer.name, () => CourseGroupRemoveOrganizer);

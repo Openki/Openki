@@ -1,16 +1,5 @@
-
 <template name="courseGroupRemoveOrganizer">
-	{{#if expanded}}
-		<div class="group-tool-dialog danger">
-			{{i18n 'course.group.confirmRemoveOrgText' 'Revoke all editing rights from the "{NAME}" group?' NAME=(name groupId)}}
-			<button type="button" class="btn btn-danger js-removeOrganizer">
-				{{i18n 'course.group.confimRemoveOrgButton' "Take away editing rights"}}
-			</button>
-		</div>
-	{{else}}
-		<a href="#" class="js-expand btn btn-danger">
-			<span class="fa-solid fa-xmark fa-fw" aria-hidden="true"></span>
-			{{i18n 'course.group.removeOrgText' "Remove editing rights"}}
-		</a>
-	{{/if}}
+	<div>
+		{{> React (component CourseGroupRemoveOrganizer)}}
+	</div>
 </template>
