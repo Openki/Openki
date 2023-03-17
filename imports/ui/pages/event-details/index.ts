@@ -95,7 +95,9 @@ import './styles.scss';
 		instance.editing = new ReactiveVar(!event._id);
 		instance.state = new ReactiveDict();
 		instance.state.setDefault({ registerDropdown: false, unregisterDropdown: false });
-		instance.subscribe('courseDetails', event.courseId);
+		if (event.courseId) {
+			instance.subscribe('courseDetails', event.courseId);
+		}
 
 		instance.addParticipant = () => {
 			instance.busy('registering');
