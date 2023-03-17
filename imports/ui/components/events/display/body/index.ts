@@ -24,7 +24,7 @@ import '/imports/ui/components/events/display/header';
 import '/imports/ui/components/events/edit';
 import '/imports/ui/components/events/participants';
 import '/imports/ui/components/events/replication';
-import '/imports/ui/components/events/display/groupList';
+import '/imports/ui/components/events/display/group-list';
 import '/imports/ui/components/groups/tag';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
