@@ -1,73 +1,98 @@
-import { Meteor } from 'meteor/meteor';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import React from 'react';
 import { _ } from 'meteor/underscore';
+import { useTranslation } from 'react-i18next';
 
 import * as Alert from '/imports/api/alerts/alert';
-import { Groups } from '/imports/api/groups/groups';
-import * as CoursesMethods from '/imports/api/courses/methods';
 import { CourseModel } from '/imports/api/courses/courses';
+import { useDetails } from '/imports/api/groups/publications';
+import * as CoursesMethods from '/imports/api/courses/methods';
+import { useUser } from '/imports/utils/react-meteor-data';
 
-import { GroupNameHelpers } from '/imports/ui/lib/group-name-helpers';
-import * as TemplateMixins from '/imports/ui/lib/template-mixins';
+import { name } from '/imports/ui/lib/group-name-helpers';
 
-import { i18n } from '/imports/startup/both/i18next';
+function GroupToAdd(props: { course: CourseModel; groupId: string }) {
+	const { t } = useTranslation();
+	const { course, groupId } = props;
+	const [isLoading, group] = useDetails(groupId);
 
-import '/imports/ui/components/buttons';
-import '/imports/ui/components/courses/categories';
-import '/imports/ui/components/courses/discussion';
-import '/imports/ui/components/courses/edit';
-import '/imports/ui/components/courses/events';
-import '/imports/ui/components/courses/history';
-import '/imports/ui/components/courses/files';
-import '/imports/ui/components/courses/members';
-import '/imports/ui/components/courses/roles';
-import '/imports/ui/components/editable';
-import '/imports/ui/components/groups/tag';
-import '/imports/ui/components/price-policy';
-import '/imports/ui/components/regions/tag';
-import '/imports/ui/components/sharing';
-import '/imports/ui/components/report';
-import '/imports/ui/components/internal-indicator';
-import '/imports/ui/components/courses/display/group-list/remove';
-import '/imports/ui/components/courses/display/group-list/make-organizer';
-import '/imports/ui/components/courses/display/group-list/remove-organizer';
+	if (isLoading()) {
+		return null;
+	}
 
+	return (
+		<li>
+			<button
+				className="btn btn-link"
+				type="button"
+				value={groupId}
+				onClick={async () => {
+					try {
+						await CoursesMethods.promote(course._id, groupId, true);
+
+						Alert.success(
+							t('courseGroupAdd.groupAdded', '{GROUP} was added to promote {COURSE}.', {
+								GROUP: name(group),
+								COURSE: course.name,
+							}),
+						);
+					} catch (err) {
+						Alert.serverError(err, t('courseGroupAdd.groupAdded.error', 'Adding failed'));
+					}
+				}}
+			>
+				{name(group)}
+			</button>
+		</li>
+	);
+}
+
+export function CourseGroupAdd(course: CourseModel) {
+	const { t } = useTranslation();
+
+	const user = useUser();
+
+	const groupsToAdd = user && _.difference(user.groups, course.groups);
+
+	if (!groupsToAdd) {
+		return null;
+	}
+
+	return (
+		<div className="btn-group tag-btn group-tag-btn align-top">
+			<button
+				type="button"
+				className="dropdown-toggle"
+				aria-expanded="false"
+				aria-haspopup="true"
+				data-bs-toggle="dropdown"
+			>
+				<span className="fa-solid fa-plus fa-fw" aria-hidden="true"></span>
+				<span>{t('course.group.addText', 'link a group')}</span>
+			</button>
+			<ul className="dropdown-menu dialog-dropdown">
+				<li className="dropdown-header">
+					{t('grouplist.addgroups.header', 'Add group')}
+					<button type="button" className="btn-close"></button>
+				</li>
+				<li>
+					<hr className="dropdown-divider" />
+				</li>
+				{groupsToAdd.map((groupId) => (
+					<GroupToAdd key={groupId} course={course} groupId={groupId} />
+				))}
+
+				<li className="dialog-dropdown-btn">
+					<a href="{{pathFor 'groupDetails' _id='create'}}" className="btn btn-success">
+						{t('profile.createNewGroup.button')}
+					</a>
+				</li>
+			</ul>
+		</div>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
 import './template.html';
 
-{
-	const Template = TemplateMixins.Expandible(
-		TemplateAny as TemplateStaticTyped<'courseGroupAdd', CourseModel>,
-		'courseGroupAdd',
-	);
-	const template = Template.courseGroupAdd;
-	template.helpers(GroupNameHelpers);
-	template.helpers({
-		groupsToAdd() {
-			const course = Template.instance().data;
-			const user = Meteor.user();
-			return user && _.difference(user.groups, course.groups);
-		},
-	});
-
-	template.events({
-		async 'click .js-add-group'(event, instance) {
-			const course = instance.data;
-			const groupId = (event.currentTarget as HTMLInputElement).value;
-
-			try {
-				await CoursesMethods.promote(course._id, groupId, true);
-
-				const groupName = Groups.findOne(groupId)?.name;
-				Alert.success(
-					i18n('courseGroupAdd.groupAdded', '{GROUP} was added to promote {COURSE}.', {
-						GROUP: groupName,
-						COURSE: course.name,
-					}),
-				);
-				instance.collapse();
-			} catch (err) {
-				Alert.serverError(err, i18n('courseGroupAdd.groupAdded.error', 'Adding failed'));
-			}
-		},
-	});
-}
+Template.registerHelper(CourseGroupAdd.name, () => CourseGroupAdd);
