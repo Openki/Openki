@@ -28,6 +28,10 @@ import '/imports/ui/components/regions/tag';
 import '/imports/ui/components/sharing';
 import '/imports/ui/components/report';
 import '/imports/ui/components/internal-indicator';
+import '/imports/ui/components/courses/display/group-list/add';
+import '/imports/ui/components/courses/display/group-list/remove';
+import '/imports/ui/components/courses/display/group-list/make-organizer';
+import '/imports/ui/components/courses/display/group-list/remove-organizer';
 
 import './template.html';
 
@@ -59,146 +63,6 @@ import './template.html';
 				});
 			}
 			return tools;
-		},
-	});
-}
-{
-	const Template = TemplateMixins.Expandible(
-		TemplateAny as TemplateStaticTyped<'courseGroupAdd', CourseModel>,
-		'courseGroupAdd',
-	);
-	const template = Template.courseGroupAdd;
-	template.helpers(GroupNameHelpers);
-	template.helpers({
-		groupsToAdd() {
-			const course = Template.instance().data;
-			const user = Meteor.user();
-			return user && _.difference(user.groups, course.groups);
-		},
-	});
-
-	template.events({
-		async 'click .js-add-group'(event, instance) {
-			const course = instance.data;
-			const groupId = (event.currentTarget as HTMLInputElement).value;
-
-			try {
-				await CoursesMethods.promote(course._id, groupId, true);
-
-				const groupName = Groups.findOne(groupId)?.name;
-				Alert.success(
-					i18n('courseGroupAdd.groupAdded', '{GROUP} was added to promote {COURSE}.', {
-						GROUP: groupName,
-						COURSE: course.name,
-					}),
-				);
-				instance.collapse();
-			} catch (err) {
-				Alert.serverError(err, i18n('courseGroupAdd.groupAdded.error', 'Adding failed'));
-			}
-		},
-	});
-}
-{
-	const Template = TemplateMixins.Expandible(
-		TemplateAny as TemplateStaticTyped<
-			'courseGroupRemove',
-			{ groupId: string; course: CourseModel }
-		>,
-		'courseGroupRemove',
-	);
-	const template = Template.courseGroupRemove;
-	template.helpers(GroupNameHelpers);
-	template.events({
-		async 'click .js-remove'(_event, instance) {
-			const { course, groupId } = instance.data;
-
-			try {
-				await CoursesMethods.promote(course._id, groupId, false);
-
-				const groupName = Groups.findOne(groupId)?.name;
-				Alert.success(
-					i18n('courseGroupAdd.groupRemoved', '{GROUP} was removed from {COURSE}.', {
-						GROUP: groupName,
-						COURSE: course.name,
-					}),
-				);
-				instance.collapse();
-			} catch (err) {
-				Alert.serverError(err, i18n('courseGroupAdd.groupRemoved.error', 'Removing failed'));
-			}
-		},
-	});
-}
-{
-	const Template = TemplateMixins.Expandible(
-		TemplateAny as TemplateStaticTyped<
-			'courseGroupMakeOrganizer',
-			{ groupId: string; course: CourseModel }
-		>,
-		'courseGroupMakeOrganizer',
-	);
-	const template = Template.courseGroupMakeOrganizer;
-	template.helpers(GroupNameHelpers);
-	template.events({
-		async 'click .js-makeOrganizer'(_event, instance) {
-			const { course, groupId } = instance.data;
-
-			try {
-				await CoursesMethods.editing(course._id, groupId, true);
-
-				const groupName = Groups.findOne(groupId)?.name;
-				Alert.success(
-					i18n('courseGroupAdd.membersCanEditCourse', 'Members of {GROUP} can now edit {COURSE}.', {
-						GROUP: groupName,
-						COURSE: course.name,
-					}),
-				);
-				instance.collapse();
-			} catch (err) {
-				Alert.serverError(
-					err,
-					i18n('courseGroupAdd.membersCanEditCourse.error', 'Failed to give editing rights'),
-				);
-			}
-		},
-	});
-}
-{
-	const Template = TemplateMixins.Expandible(
-		TemplateAny as TemplateStaticTyped<
-			'courseGroupRemoveOrganizer',
-			{ groupId: string; course: CourseModel }
-		>,
-		'courseGroupRemoveOrganizer',
-	);
-	const template = Template.courseGroupRemoveOrganizer;
-	template.helpers(GroupNameHelpers);
-	template.events({
-		async 'click .js-removeOrganizer'(_event, instance) {
-			const { course, groupId } = instance.data;
-
-			try {
-				await CoursesMethods.editing(course._id, groupId, false);
-
-				const groupName = Groups.findOne(groupId)?.name;
-				Alert.success(
-					i18n(
-						'courseGroupAdd.membersCanNoLongerEditCourse',
-						'Members of {GROUP} can no longer edit {COURSE}.',
-						{ GROUP: groupName, COURSE: course.name },
-					),
-				);
-				instance.collapse();
-			} catch (err) {
-				Alert.serverError(
-					err,
-					i18n(
-						'courseGroupAdd.membersCanNoLongerEditCourse.error',
-						'Failed to remove organizer status',
-					),
-				);
-			}
 		},
 	});
 }
