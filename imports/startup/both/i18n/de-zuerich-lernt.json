@@ -118,7 +118,7 @@
 	"course.createEventInfo": "Verwenden Sie dieses Formular, wenn Sie eine einmalige, bereits organisierte Veranstaltung veröffentlichen möchten. Ansonsten können Sie hier eine Lektion erstellen oder vorschlagen:",
 	"course.delete.confirm.archiveButton": "Lieber archivieren",
 	"course.delete.confirm.button": "Lösche diese Lektion und seine Veranstaltungen",
-	"course.description.placeholder": "Beschreibe deine Idee, damit mehr Leute deinen Vorschlag finden und wissen was sie erwartet.",
+	"course.description.placeholder": "Beschreibe deine Idee, damit mehr Leute deinen Vorschlag finden und wissen was sie erwartet. (Maximal 300 Zeichen)",
 	"course.detail.remove.other.team": "Diese Person aus dem Organisationsteam nehmen?",
 	"course.detail.remove.yourself.team": "Dich selbst aus dem Oranisationsteam nehmen? Nur andere Mitglieder können dich wieder hinzufügen.",
 	"course.details.eventsLoadingHeader": "Veranstaltungen",
