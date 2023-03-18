@@ -73,9 +73,3 @@ export function CourseGroupMakeOrganizer(props: { course: CourseModel; groupId: 
 		</div>
 	);
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import './template.html';
-
-Template.registerHelper(CourseGroupMakeOrganizer.name, () => CourseGroupMakeOrganizer);
