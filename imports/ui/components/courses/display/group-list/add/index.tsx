@@ -46,10 +46,12 @@ function GroupToAdd(props: { course: CourseModel; groupId: string }) {
 	);
 }
 
-export function CourseGroupAdd(course: CourseModel) {
+export function CourseGroupAdd(props: { course: CourseModel }) {
 	const { t } = useTranslation();
 
 	const user = useUser();
+
+	const { course } = props;
 
 	const groupsToAdd = user && _.difference(user.groups, course.groups);
 
@@ -90,9 +92,3 @@ export function CourseGroupAdd(course: CourseModel) {
 		</div>
 	);
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import './template.html';
-
-Template.registerHelper(CourseGroupAdd.name, () => CourseGroupAdd);

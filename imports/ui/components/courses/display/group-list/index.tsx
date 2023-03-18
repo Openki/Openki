@@ -1,59 +1,92 @@
-import { Meteor } from 'meteor/meteor';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useUser } from '/imports/utils/react-meteor-data';
 
 import { CourseModel } from '/imports/api/courses/courses';
 
-import '/imports/ui/components/buttons';
-import '/imports/ui/components/courses/categories';
-import '/imports/ui/components/courses/discussion';
-import '/imports/ui/components/courses/edit';
-import '/imports/ui/components/courses/events';
-import '/imports/ui/components/courses/history';
-import '/imports/ui/components/courses/files';
-import '/imports/ui/components/courses/members';
-import '/imports/ui/components/courses/roles';
-import '/imports/ui/components/editable';
-import '/imports/ui/components/groups/tag';
-import '/imports/ui/components/price-policy';
-import '/imports/ui/components/regions/tag';
-import '/imports/ui/components/sharing';
-import '/imports/ui/components/report';
-import '/imports/ui/components/internal-indicator';
-import '/imports/ui/components/courses/display/group-list/add';
-import '/imports/ui/components/courses/display/group-list/remove';
-import '/imports/ui/components/courses/display/group-list/make-organizer';
-import '/imports/ui/components/courses/display/group-list/remove-organizer';
+import { GroupTag } from '/imports/ui/components/groups/tag';
+import { CourseGroupAdd } from '/imports/ui/components/courses/display/group-list/add';
+import { CourseGroupRemove } from '/imports/ui/components/courses/display/group-list/remove';
+import { CourseGroupRemoveOrganizer } from '/imports/ui/components/courses/display/group-list/remove-organizer';
+import { CourseGroupMakeOrganizer } from '/imports/ui/components/courses/display/group-list/make-organizer';
 
+export function CourseGroupList(props: { course: CourseModel }) {
+	const { t } = useTranslation();
+	const user = useUser();
+	const { course } = props;
+
+	function tools(groupId: string) {
+		return (
+			<>
+				{user?.mayPromoteWith(groupId) || course.editableBy(user) ? (
+					<li className="dialog-dropdown-btn">
+						<CourseGroupRemove course={course} groupId={groupId} />
+					</li>
+				) : null}
+				{user && course.editableBy(user) ? (
+					<li className="dialog-dropdown-btn">
+						{course.groupOrganizers.includes(groupId) ? (
+							<CourseGroupRemoveOrganizer course={course} groupId={groupId} />
+						) : (
+							<CourseGroupMakeOrganizer course={course} groupId={groupId} />
+						)}
+					</li>
+				) : null}
+			</>
+		);
+	}
+
+	return (
+		<div className="tag-group multiline">
+			{course.groups.map((groupId) => {
+				const isOrganizer = course.groupOrganizers.includes(groupId);
+				return (
+					<React.Fragment key={groupId}>
+						<GroupTag groupId={groupId} isOrganizer={isOrganizer} />
+						{isOrganizer ? (
+							<div className="tag group-tag addon">
+								<span
+									className="fa-solid fa-bullhorn fa-fw"
+									aria-hidden="true"
+									title={t('grouplist.organizer.title', '{COURSE} is co-organized by this group', {
+										COURSE: course.name,
+									})}
+								></span>
+							</div>
+						) : null}
+
+						{tools(groupId) ? (
+							<div className="btn-group tag-btn group-tag-btn addon align-top">
+								<button
+									type="button"
+									className="dropdown-toggle"
+									aria-expanded="false"
+									aria-haspopup="true"
+									data-bs-toggle="dropdown"
+								></button>
+								<ul className="dropdown-menu dialog-dropdown">
+									<li className="dropdown-header">
+										{t('grouplist.editgroup.header', 'Edit group')}
+										<button type="button" className="btn-close"></button>
+									</li>
+									<li>
+										<hr className="dropdown-divider" />
+									</li>
+									{tools(groupId)}
+								</ul>
+							</div>
+						) : null}
+					</React.Fragment>
+				);
+			})}
+
+			<CourseGroupAdd course={course} />
+		</div>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
 import './template.html';
 
-{
-	const Template = TemplateAny as TemplateStaticTyped<'courseGroupList', CourseModel>;
-
-	const template = Template.courseGroupList;
-
-	template.helpers({
-		isOrganizer(groupId: string) {
-			const course = Template.instance().data;
-			return course.groupOrganizers.includes(groupId);
-		},
-		tools(groupId: string) {
-			const tools = [];
-			const user = Meteor.user();
-			const course = Template.instance().data;
-			if (user?.mayPromoteWith(groupId) || course.editableBy(user)) {
-				tools.push({
-					template: 'courseGroupRemove',
-					data: { groupId, course },
-				});
-			}
-			if (user && course.editableBy(user)) {
-				const hasOrgRights = course.groupOrganizers.includes(groupId);
-				tools.push({
-					template: hasOrgRights ? 'courseGroupRemoveOrganizer' : 'courseGroupMakeOrganizer',
-					data: { groupId, course },
-				});
-			}
-			return tools;
-		},
-	});
-}
+Template.registerHelper(CourseGroupList.name, () => CourseGroupList);
