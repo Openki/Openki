@@ -11,7 +11,7 @@
 				{{#unless course.singleEvent}}
 					{{> eventCourseHeader backlink=courseLink headerlink=courseLink regionId=region categories=categories title=course.name image=course.publicImageUrl}}
 				{{else}}
-					{{> eventCourseHeader backlink=courseLink regionId=region categories=categories title=title image=course.publicImageUrl}}
+					{{> eventCourseHeader course=course backlink=courseLink regionId=region categories=categories title=title image=course.publicImageUrl}}
 				{{/unless}}
 			{{/if}}
 			<div class="event{{#if course}} course-event{{/if}}">

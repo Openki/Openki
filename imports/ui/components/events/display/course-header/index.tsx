@@ -3,12 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { Template } from 'meteor/templating';
 import React from 'react';
 
+import { CourseModel } from '/imports/api/courses/courses';
+
 import { CourseCategories } from '/imports/ui/components/courses/categories';
 import { RegionTag } from '/imports/ui/components/regions/tag';
+import { CourseGroupList } from '/imports/ui/components/courses/display/group-list';
 
 import './styles.scss';
 
 export type Props = {
+	course?: CourseModel;
 	backlink: string;
 	headerlink?: string;
 	regionId: string;
@@ -44,6 +48,7 @@ export function EventCourseHeader(props: Props) {
 			</a>
 			<h2>{props.title}</h2>
 			<CourseCategories categories={props.categories} />
+			{props.course ? <CourseGroupList course={props.course} /> : null}
 			<RegionTag region={props.regionId} />
 		</div>
 	);
