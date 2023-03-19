@@ -26,46 +26,6 @@ $header-bg: darken($blue-lighter, 5%);
 	margin-top: 15px;
 }
 
-.event-details-body {
-	background: $event-body-bg;
-	height: calc(#{'100% - 70px'});
-}
-
-.event-details-body .grouplist {
-	margin-bottom: 10px;
-}
-
-.event-details-body .grouplist .dropdown-menu {
-	z-index: 10000;
-}
-
-.event-details-description {
-	@include break-word;
-	margin-top: 10px;
-}
-
-.event-details-body .shariff {
-	background-color: $event-body-bg;
-	margin-bottom: 15px;
-}
-
-.event-details-price-policy {
-	padding: 0 15px;
-}
-
-.btn-event {
-	font-size: 18px;
-	font-weight: bold;
-	text-align: start;
-}
-
-.event-page-btn {
-	@include btn-lg;
-	margin-top: 3px;
-	text-align: start;
-	width: 100%;
-}
-
 .event-detail-register-dropdown {
 	background-color: $event-page-component-bg;
 }
