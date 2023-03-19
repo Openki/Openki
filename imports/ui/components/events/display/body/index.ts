@@ -75,6 +75,9 @@ import './styles.scss';
 		replicating() {
 			return Template.instance().replicating.get();
 		},
+		singleEvent() {
+			return Courses.findOne(this.courseId)?.singleEvent;
+		},
 		customFields() {
 			if (!this.courseId) {
 				return [];
