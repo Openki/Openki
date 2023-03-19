@@ -12,9 +12,11 @@
 				{{/if}}
 				<div class="row">
 					<div class="col-md-7">
-						<h3>{{this.title}}</h3>
+						{{#unless singleEvent}}
+							<h3>{{this.title}}</h3>
 
-						{{> eventGroupList this}}
+							{{> eventGroupList this}}
+						{{/unless}}
 						<p class="event-details-description">
 							{{{description}}}
 						</p>
