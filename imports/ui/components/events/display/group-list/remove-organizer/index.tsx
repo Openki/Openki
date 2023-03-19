@@ -1,4 +1,3 @@
-import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -48,7 +47,7 @@ export function EventGroupRemoveOrganizer(props: { event: EventModel; groupId: s
 						await EventsMethods.editing(event._id, groupId, false);
 
 						Alert.success(
-							i18n(
+							t(
 								'eventGroupAdd.membersCanNoLongerEditEvent',
 								'Members of the group "{GROUP}" can no longer edit the "{EVENT}" event.',
 								{ GROUP: name(group), EVENT: event.title },
@@ -59,7 +58,7 @@ export function EventGroupRemoveOrganizer(props: { event: EventModel; groupId: s
 					} catch (err) {
 						Alert.serverError(
 							err,
-							i18n(
+							t(
 								'eventGroupAdd.membersCanNoLongerEditEvent.error',
 								'Failed to remove organizer status',
 							),

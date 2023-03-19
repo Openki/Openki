@@ -1,5 +1,6 @@
 import React from 'react';
 import { _ } from 'meteor/underscore';
+import { Router } from 'meteor/iron:router';
 import { useTranslation } from 'react-i18next';
 
 import * as Alert from '/imports/api/alerts/alert';
@@ -84,7 +85,7 @@ export function CourseGroupAdd(props: { course: CourseModel }) {
 				))}
 
 				<li className="dialog-dropdown-btn">
-					<a href="{{pathFor 'groupDetails' _id='create'}}" className="btn btn-success">
+					<a href={Router.path('groupDetails', { _id: 'create' })} className="btn btn-success">
 						{t('profile.createNewGroup.button')}
 					</a>
 				</li>
