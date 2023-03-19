@@ -42,6 +42,7 @@ export type Data = {
 	hidePricePolicy: boolean;
 	roles: string[];
 	creatorsRoles: string[];
+	singleEvent?: boolean;
 } & Partial<CourseModel>;
 
 {
@@ -448,6 +449,10 @@ export type Data = {
 				if (!changes.region) {
 					Alert.serverError(i18n('course.edit.error.region', 'Please select a region') as string);
 					return;
+				}
+
+				if (data.singleEvent !== undefined) {
+					changes.singleEvent = data.singleEvent;
 				}
 
 				changes.groups = instance.getGroups();

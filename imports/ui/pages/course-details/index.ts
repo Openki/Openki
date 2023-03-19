@@ -277,7 +277,16 @@ import './styles.scss';
 			instance.collapse();
 
 			const { course } = instance.data;
-			Router.go('showCourse', course, { query: { edit: 'course' } });
+
+			const query: {
+				edit: string;
+				force?: string;
+			} = { edit: 'course' };
+			const force = Router.current().params.query.force;
+			if (force) {
+				query.force = force;
+			}
+			Router.go('showCourse', course, { query });
 		},
 	});
 }

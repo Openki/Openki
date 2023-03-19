@@ -228,6 +228,7 @@ RouterAsync.route('framePropose', {
 			internal: Predicates.flag,
 			hidePricePolicy: Predicates.flag,
 			hideCategories: Predicates.flag,
+			singleEvent: Predicates.flag,
 		};
 		const query = new Filtering(predicates).read(this.params.query).done().toQuery() as any;
 
@@ -480,6 +481,15 @@ RouterAsync.route('resetPassword', {
 RouterAsync.route('showCourse', {
 	path: 'course/:_id/:slug?',
 	template: 'courseDetailsPage',
+	action() {
+		const course = Courses.details.subscribe(this.params._id as string)();
+		if (course?.singleEvent && course.nextEvent && this.params.query.force !== '1') {
+			this.redirect('showEvent', course.nextEvent);
+		} else {
+			this.render();
+		}
+	},
+
 	async onRun() {
 		await import('/imports/ui/pages/course-details');
 	},

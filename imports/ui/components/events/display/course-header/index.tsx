@@ -3,26 +3,34 @@ import { useTranslation } from 'react-i18next';
 import { Template } from 'meteor/templating';
 import React from 'react';
 
+import { CourseModel } from '/imports/api/courses/courses';
+
 import { CourseCategories } from '/imports/ui/components/courses/categories';
 import { RegionTag } from '/imports/ui/components/regions/tag';
+import { CourseGroupList } from '/imports/ui/components/courses/display/group-list';
 
 import './styles.scss';
 
-export type Data = {
-	courseId: string;
+export type Props = {
+	course?: CourseModel;
+	backlink: string;
+	headerlink?: string;
 	regionId: string;
 	categories: string[];
+	groups?: string[];
 	title: string;
 	image: string;
 };
 
-export function EventCourseHeader(props: Data) {
+export function EventCourseHeader(props: Props) {
 	const { t } = useTranslation();
 	return (
 		<div
-			className="event-course-header"
+			className={`event-course-header${props.headerlink ? ' event-course-header-link' : ''}`}
 			onClick={() => {
-				Router.go('showCourse', { _id: props.courseId });
+				if (props.headerlink) {
+					Router.go(props.headerlink);
+				}
 			}}
 			style={
 				props.image
@@ -34,16 +42,13 @@ export function EventCourseHeader(props: Data) {
 					: undefined
 			}
 		>
-			<a
-				href={Router.path('showCourse', { _id: props.courseId })}
-				className="event-course-header-link"
-			>
+			<a href={props.backlink}>
 				<i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
 				{t('event.details.viewCourse', 'To the course overview')}
 			</a>
 			<h2>{props.title}</h2>
-
 			<CourseCategories categories={props.categories} />
+			{props.course ? <CourseGroupList course={props.course} /> : null}
 			<RegionTag region={props.regionId} />
 		</div>
 	);
