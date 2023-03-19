@@ -82,7 +82,7 @@ i18next
 			backends,
 			backendOptions: [
 				{
-					expirationTime: 7 * 24 * 60 * 60 * 1000, // 7 days
+					expirationTime: 60 * 60 * 1000, // 1h   (7 * 24 * 60 * 60 * 1000 = 7 days)
 				},
 			],
 		},
