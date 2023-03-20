@@ -24,7 +24,7 @@ if (Meteor.isClient) {
 				});
 
 				await waitFor(() => {
-					$('.group-tag-btn .dialog-dropdown-btn').trigger('click');
+					$('.dropdown-menu .btn-success')[0].click();
 					assert(
 						$('.group-tag-btn .dialog-dropdown-btn .btn-success').length > 0,
 						`Give editing rights to group button is shown`,
@@ -32,7 +32,7 @@ if (Meteor.isClient) {
 				});
 
 				await waitFor(() => {
-					$('.group-tool-dialog.add .btn-success').trigger('click');
+					$('.dropdown-menu .btn-success')[0].click();
 					assert($('.group-tag-is-organizer').length > 0, `Group is organizer`);
 				});
 			});
