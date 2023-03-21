@@ -10,6 +10,7 @@ import { hasRole, hasRoleUser } from '/imports/utils/course-role-utils';
 
 import '/imports/ui/components/courses/categories';
 import '/imports/ui/components/groups/tag';
+import '/imports/ui/components/internal-indicator';
 
 import './template.html';
 import './styles.scss';
