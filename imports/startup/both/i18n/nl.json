@@ -29,7 +29,7 @@
 	"calendar.previous.year.short": "vorige jaar",
 	"calendar.weekNumber": "Week",
 	"calendar.windowtitle": "Kalender",
-	"categories.show_courses": "Toon alle cursussen in",
+	"categories.show_courses": "Toon alle cursussen in {CATEGORY}",
 	"category.artistry": "Kunsten",
 	"category.biology": "Biologie",
 	"category.chemistry": "Scheikunde",

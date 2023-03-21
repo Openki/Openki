@@ -1,20 +1,24 @@
 <template name="eventEdit">
 	<form>
 		<div class="edit-page">
-			{{#unless hasParentCourse}}
+			<h3>
 				{{#if _id}}
-					<h2>{{i18n 'course.event.edit.edit' 'Edit event'}}</h2>
+					{{i18n 'course.event.edit.edit' 'Edit event'}}
 				{{else}}
-					<h2>{{i18n 'course.event.edit.add' 'Add event'}}</h2>
+					{{i18n 'course.event.edit.add' 'Create an event'}}
+				{{/if}}
+			</h3>
+			{{#unless hasParentCourse}}
+				{{#unless _id}}
 					{{i18n 'course.createEventInfo' 'Use this form to publish a singular, one-off, already organized event. Otherwise create or propose a course here:'}}
 					<a
 					   href="{{pathFor 'proposeCourse'}}">{{i18n 'menue.ProposeCourse' 'Propose a course'}}</a>
-				{{/if}}
+				{{/unless}}
 			{{/unless}}
 
 			<div class="edit-page-header event-edit">
 				{{#if showRegionTag}}
-					{{> regionTag}}
+					{{> regionTag this}}
 				{{/if}}
 				<div class="mb-3">
 					<label

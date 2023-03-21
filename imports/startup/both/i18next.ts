@@ -7,6 +7,7 @@ import LocalStorageBackend from 'i18next-localstorage-backend';
 import { LanguagesRaw } from '/imports/api/languages/languages';
 import { Blaze, Handlebars } from 'meteor/blaze';
 import { Spacebars } from 'meteor/spacebars';
+import { initReactI18next } from 'react-i18next';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 
@@ -76,6 +77,7 @@ backends.push(
 i18next
 	.use(ICU)
 	.use(ChainedBackend)
+	.use(initReactI18next) // passes i18n down to react-i18next
 	.init({
 		fallbackLng: 'en',
 		backend: {

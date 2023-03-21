@@ -37,5 +37,5 @@ a:focus,
 }
 
 .bg-brand {
-	background-color: var(--openki-brand) !important;
+	background-color: css-var('openki-brand') !important;
 }

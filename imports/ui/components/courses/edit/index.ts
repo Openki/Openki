@@ -42,6 +42,7 @@ export type Data = {
 	hidePricePolicy: boolean;
 	roles: string[];
 	creatorsRoles: string[];
+	singleEvent?: boolean;
 } & Partial<CourseModel>;
 
 {
@@ -98,6 +99,45 @@ export type Data = {
 		instance.savedCourseId = new ReactiveVar(undefined);
 		instance.showSavedMessage = new ReactiveVar(false);
 
+		function getRegion() {
+			const data = Template.currentData();
+			const courseId = data._id || '';
+			const isNew = courseId === '';
+			if (isNew) {
+				if (data.isFrame && data.region) {
+					// The region was preset for the frame
+					Regions.findOne({ _id: data.region });
+				} else if (Regions.findFilter({}, 2).count() === 1) {
+					// There is only one region
+					return Regions.findOne();
+				} else {
+					return Regions.currentRegion();
+				}
+			}
+			return undefined;
+		}
+
+		instance.getGroups = () => {
+			const data = Template.currentData();
+			const groups = [];
+
+			const defaultTeamGroup = getRegion()?.defaultTeamGroup;
+			if (defaultTeamGroup) {
+				groups.push(defaultTeamGroup);
+			}
+
+			if (data && data instanceof Course && !(data as CourseModel).isNew()) {
+				groups.push(...data.groupOrganizers);
+			} else if (!data.isFrame) {
+				if (data.group) {
+					groups.push(data.group);
+				}
+			} else if (data.teamGroups?.length > 0) {
+				groups.push(...data.teamGroups);
+			}
+			return groups;
+		};
+
 		instance.autorun(() => {
 			const data = Template.currentData();
 
@@ -107,19 +147,9 @@ export type Data = {
 			instance.state.set('editingCategories', !data._id);
 			instance.state.set('selectedCategories', data.categories);
 
-			if (data && data instanceof Course && !(data as CourseModel).isNew()) {
-				data.groupOrganizers.forEach((g) => {
-					instance.subscribe('group', g);
-				});
-			} else if (!data.isFrame) {
-				if (data.group) {
-					instance.subscribe('group', data.group);
-				}
-			} else if (data.teamGroups) {
-				data.teamGroups.forEach((g) => {
-					instance.subscribe('group', g);
-				});
-			}
+			instance.getGroups().forEach((g) => {
+				instance.subscribe('group', g);
+			});
 
 			if (data.isFrame) {
 				// When we're in the propose frame, show a simplified role selection
@@ -169,22 +199,6 @@ export type Data = {
 		};
 
 		instance.getSavedCourse = () => Courses.findOne(instance.savedCourseId.get());
-
-		instance.getGroups = () => {
-			const data = Template.currentData();
-			const groups = [];
-
-			if (data && data instanceof Course && !(data as CourseModel).isNew()) {
-				groups.push(...data.groupOrganizers);
-			} else if (!data.isFrame) {
-				if (data.group) {
-					groups.push(data.group);
-				}
-			} else if (data.teamGroups?.length > 0) {
-				groups.push(...data.teamGroups);
-			}
-			return groups;
-		};
 
 		instance.customFields = (type?: 'singleLine' | 'multiLine') => {
 			const groups = instance.getGroups();
@@ -448,6 +462,16 @@ export type Data = {
 				if (!changes.region) {
 					Alert.serverError(i18n('course.edit.error.region', 'Please select a region') as string);
 					return;
+				}
+
+				if (data.singleEvent !== undefined) {
+					changes.singleEvent = data.singleEvent;
+				} else {
+					const singleEvent = Regions.findOne({ _id: changes.region })?.singleEvents;
+
+					if (singleEvent !== undefined) {
+						changes.singleEvent = singleEvent;
+					}
 				}
 
 				changes.groups = instance.getGroups();

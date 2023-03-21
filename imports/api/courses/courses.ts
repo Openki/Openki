@@ -61,6 +61,7 @@ export interface CourseEntity {
 	roles: string[];
 	members: CourseMemberEntity[];
 	internal: boolean;
+	singleEvent: boolean;
 	archived: boolean;
 	history: {
 		dateTime: Date;

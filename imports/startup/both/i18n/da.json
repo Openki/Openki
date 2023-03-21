@@ -22,7 +22,7 @@
 	"calendar.previous.year.long": "Gå til forrige år",
 	"calendar.previous.year.short": "forrige år",
 	"calendar.weekNumber": "Uge",
-	"categories.show_courses": "Vis alle kurser i",
+	"categories.show_courses": "Vis alle kurser i {CATEGORY}",
 	"category.artistry": "Artisteri (gøgleri, akrobatik)",
 	"category.biology": "Biologi",
 	"category.chemistry": "Kemi",

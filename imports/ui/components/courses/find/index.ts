@@ -14,7 +14,7 @@ import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
 
-import '/imports/ui/components/groups/list';
+import '/imports/ui/components/groups/tag';
 import '/imports/ui/components/courses/edit';
 import '/imports/ui/components/courses/list';
 import '/imports/ui/components/courses/filter';
@@ -120,75 +120,6 @@ template.onCreated(function () {
 	});
 });
 
-template.events({
-	'mouseover .js-category-label'(this: string, _event, instance) {
-		FilterPreview({
-			property: 'category',
-			id: this,
-			activate: true,
-			delayed: true,
-			instance,
-		});
-	},
-
-	'mouseout .js-category-label'(this: string, _event, instance) {
-		FilterPreview({
-			property: 'category',
-			id: this,
-			activate: false,
-			delayed: true,
-			instance,
-		});
-	},
-
-	'mouseover .js-group-label, mouseout .js-group-label'(
-		this: { groupId: string },
-		event,
-		instance,
-	) {
-		FilterPreview({
-			property: 'group',
-			id: this.groupId,
-			activate: event.type === 'mouseover',
-			delayed: true,
-			instance,
-		});
-	},
-
-	'click .js-category-label'(_event, instance) {
-		Tooltips.hide();
-		instance.filter.add('categories', `${this}`).done();
-		instance.updateUrl();
-		window.scrollTo(0, 0);
-	},
-
-	'click .js-group-label'() {
-		Tooltips.hide();
-		window.scrollTo(0, 0);
-	},
-
-	'click .js-toggle-filter'(_event, instance) {
-		const showingFilters = !instance.showingFilters.get();
-		instance.showingFilters.set(showingFilters);
-
-		if (!showingFilters) {
-			filters.forEach((filter) => instance.filter.disable(filter as any));
-			instance.filter.done();
-			instance.updateUrl();
-		}
-	},
-
-	'click .js-all-regions-btn'() {
-		RegionSelection.change('all');
-	},
-
-	'click .js-more-courses'(_event, instance) {
-		const { courseLimit } = instance;
-		courseLimit.set(courseLimit.get() + instance.courseBlockSize);
-		instance.updateUrl();
-	},
-});
-
 template.helpers({
 	searchFieldAttr() {
 		const instance = Template.instance();
@@ -261,5 +192,85 @@ template.helpers({
 
 	isMobile() {
 		return Viewport.get().width <= ScssVars.screenXS;
+	},
+
+	groupTagEvents() {
+		return () => (groupId: string) => {
+			const instance = Template.instance();
+			return {
+				onMouseOver: () => {
+					FilterPreview({
+						property: 'group',
+						id: groupId,
+						activate: true,
+						delayed: true,
+						instance,
+					});
+				},
+				onMouseOut: () => {
+					FilterPreview({
+						property: 'group',
+						id: groupId,
+						activate: false,
+						delayed: true,
+						instance,
+					});
+				},
+				onClick: () => {
+					Tooltips.hide();
+					window.scrollTo(0, 0);
+				},
+			};
+		};
+	},
+});
+
+template.events({
+	'mouseover .js-category-label'(event, instance) {
+		FilterPreview({
+			property: 'category',
+			id: event.target.dataset.category as string,
+			activate: true,
+			delayed: true,
+			instance,
+		});
+	},
+
+	'mouseout .js-category-label'(event, instance) {
+		FilterPreview({
+			property: 'category',
+			id: event.target.dataset.category as string,
+			activate: false,
+			delayed: true,
+			instance,
+		});
+	},
+
+	'click .js-category-label'(_event, instance) {
+		Tooltips.hide();
+		instance.filter.add('categories', `${this}`).done();
+		instance.updateUrl();
+		window.scrollTo(0, 0);
+	},
+
+	'click .js-toggle-filter'(_event, instance) {
+		const showingFilters = !instance.showingFilters.get();
+		instance.showingFilters.set(showingFilters);
+
+		if (!showingFilters) {
+			filters.forEach((filter) => instance.filter.disable(filter as any));
+			instance.filter.done();
+			instance.updateUrl();
+		}
+	},
+
+	'click .js-all-regions-btn'() {
+		RegionSelection.change('all');
+	},
+
+	'click .js-more-courses'(_event, instance) {
+		const { courseLimit } = instance;
+		courseLimit.set(courseLimit.get() + instance.courseBlockSize);
+		instance.updateUrl();
 	},
 });

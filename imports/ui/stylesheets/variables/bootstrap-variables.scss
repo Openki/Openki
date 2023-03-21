@@ -78,7 +78,7 @@ $zindex-navbar-fixed: 1030 !default;
 $navbar-nav-link-padding-x: 1rem;
 $navbar-toggler-focus-width: 0;
 $navbar-brand-padding-y: 0.5rem;
-$navbar-default-border: #{'hsl(var(--openki-brand-hs) calc(var(--openki-brand-l) - 6.5%))'} !default;
+$navbar-default-border: css-darken('openki-brand', 6.5%) !default;
 $navbar-dark-color: $white;
 
 // Nav

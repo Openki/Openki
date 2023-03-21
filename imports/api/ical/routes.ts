@@ -82,7 +82,7 @@ Router.route('calEvent', {
 	path: 'cal/event/:_id.ics',
 	where: 'server',
 	action() {
-		sendIcal(Events.find({ _id: this.params._id }), this.response);
+		sendIcal(Events.find({ _id: this.params._id as string }), this.response);
 	},
 });
 
@@ -90,6 +90,6 @@ Router.route('calCourse', {
 	path: 'cal/course/:slug,:_id.ics',
 	where: 'server',
 	action() {
-		sendIcal(Events.find({ courseId: this.params._id }), this.response);
+		sendIcal(Events.find({ courseId: this.params._id as string }), this.response);
 	},
 });
