@@ -32,8 +32,8 @@ $edit-page-border: 7px;
 	}
 }
 
-.edit-page-header > .region-tag,
-.edit-page-body > .region-tag {
+.edit-page-header .region-tag,
+.edit-page-body .region-tag {
 	inset-block-start: -$edit-page-border;
 	inset-inline-end: -$edit-page-border;
 }
