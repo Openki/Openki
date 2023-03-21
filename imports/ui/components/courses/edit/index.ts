@@ -99,9 +99,32 @@ export type Data = {
 		instance.savedCourseId = new ReactiveVar(undefined);
 		instance.showSavedMessage = new ReactiveVar(false);
 
+		function getRegion() {
+			const data = Template.currentData();
+			const courseId = data._id || '';
+			const isNew = courseId === '';
+			if (isNew) {
+				if (data.isFrame && data.region) {
+					// The region was preset for the frame
+					Regions.findOne({ _id: data.region });
+				} else if (Regions.findFilter({}, 2).count() === 1) {
+					// There is only one region
+					return Regions.findOne();
+				} else {
+					return Regions.currentRegion();
+				}
+			}
+			return undefined;
+		}
+
 		instance.getGroups = () => {
 			const data = Template.currentData();
 			const groups = [];
+
+			const defaultTeamGroup = getRegion()?.defaultTeamGroup;
+			if (defaultTeamGroup) {
+				groups.push(defaultTeamGroup);
+			}
 
 			if (data && data instanceof Course && !(data as CourseModel).isNew()) {
 				groups.push(...data.groupOrganizers);
@@ -443,6 +466,12 @@ export type Data = {
 
 				if (data.singleEvent !== undefined) {
 					changes.singleEvent = data.singleEvent;
+				} else {
+					const singleEvent = Regions.findOne({ _id: changes.region })?.singleEvents;
+
+					if (singleEvent !== undefined) {
+						changes.singleEvent = singleEvent;
+					}
 				}
 
 				changes.groups = instance.getGroups();
