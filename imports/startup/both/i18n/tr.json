@@ -41,7 +41,7 @@
 	"calendar.previous.year.short": "önceki yıl",
 	"calendar.weekNumber": "Hafta",
 	"calendar.windowtitle": "Takvim",
-	"categories.show_courses": "Bütün kursları göster",
+	"categories.show_courses": "Bütün kursları göster {CATEGORY}",
 	"category.artistry": "Sanatçılık",
 	"category.basicskills": "Temel Yetenekler",
 	"category.biology": "Biyoloji",

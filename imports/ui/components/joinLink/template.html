@@ -16,7 +16,7 @@
 				{{> joinLinkRebuild tenantId=tenant._id}}
 			</div>
 			<div class="col-auto">
-				{{> joinLinkRemove tenantId=tenant._id}}
+				{{> deleteConfirm deleteConfirmAttr}}
 			</div>
 		</form>
 	{{/unless}}

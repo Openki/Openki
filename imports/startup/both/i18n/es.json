@@ -42,7 +42,7 @@
 	"calendar.previous.year.short": "año anterior",
 	"calendar.weekNumber": "Semana",
 	"calendar.windowtitle": "Calendario",
-	"categories.show_courses": "Mostrar todos los cursos en",
+	"categories.show_courses": "Mostrar todos los cursos en {CATEGORY}",
 	"category.artistry": "Artista",
 	"category.basicskills": "Habilidades básicas",
 	"category.biology": "Biología",

@@ -5,23 +5,34 @@ import { _ } from 'meteor/underscore';
 import moment from 'moment';
 import momentTz from 'moment-timezone';
 
-import { CourseMemberEntity, CourseModel, Courses } from '/imports/api/courses/courses';
+import { CourseMemberEntity, CourseModel } from '/imports/api/courses/courses';
 import {
 	EventEntity,
 	EventModel,
-	Events,
 	FindFilter as EventsFindFilter,
 	OEvent,
+	FindParams as EventParamPredicates,
 } from '/imports/api/events/events';
-import { Group, GroupEntity, GroupModel, Groups } from '/imports/api/groups/groups';
-import { Region, RegionModel, Regions } from '/imports/api/regions/regions';
-import { InfoPages, InfoPagesEntity } from '/imports/api/infoPages/infoPages';
-import { Tenant, TenantModel, Tenants } from '/imports/api/tenants/tenants';
-import { RoleEntity, Roles } from '/imports/api/roles/roles';
-import { Venues, Venue, VenueModel } from '/imports/api/venues/venues';
-import { UserModel, Users } from '/imports/api/users/users';
-import { InvitationEntity, Invitations } from '/imports/api/invitations/invitations';
-import { JoinLinkEntity, JoinLinks } from '/imports/api/joinLinks/joinLinks';
+import { Group, GroupEntity, GroupModel } from '/imports/api/groups/groups';
+import * as Groups from '/imports/api/groups/publications';
+import { Region, RegionModel } from '/imports/api/regions/regions';
+import * as Regions from '/imports/api/regions/publications';
+import * as InfoPages from '/imports/api/infoPages/publications';
+import { Tenant, TenantEntity, TenantModel } from '/imports/api/tenants/tenants';
+import { Roles } from '/imports/api/roles/roles';
+import {
+	Venue,
+	VenueEntity,
+	VenueModel,
+	FindParams as VenueParamPredicates,
+} from '/imports/api/venues/venues';
+import * as Venues from '/imports/api/venues/publications';
+import * as Events from '/imports/api/events/publications';
+import * as Tenants from '/imports/api/tenants/publications';
+import * as Courses from '/imports/api/courses/publications';
+import * as Invitations from '/imports/api/invitations/publications';
+import * as JoinLinks from '/imports/api/joinLinks/publications';
+import * as Users from '/imports/api/users/publications';
 
 import { Filtering } from '/imports/utils/filtering';
 import { LocalTime } from '/imports/utils/local-time';
@@ -35,8 +46,12 @@ import * as Analytics from '/imports/ui/lib/analytics';
 import { CourseTemplate } from '/imports/ui/lib/course-template';
 import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 
-const makeFilterQuery = function (params: Record<string, string>) {
-	const filter = Events.Filtering().read(params).done();
+import type { Data as GroupDetailsData } from '/imports/ui/pages/group-details';
+import type { Data as VenuesMapData } from '/imports/ui/pages/venues-map';
+import type { Data as AdminTenantsData } from '/imports/ui/pages/admin/tenants';
+
+const makeFilterQuery = function (params: Record<string, string | undefined>) {
+	const filter = new Filtering(EventParamPredicates).read(params).done();
 
 	const query = filter.toQuery() as EventsFindFilter;
 
@@ -82,19 +97,16 @@ RouterAsync.route('adminPanel', {
 	},
 });
 
-RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, string>>(
-	'calendar',
-	{
-		path: 'calendar',
-		template: 'calendarPage',
-		async onRun() {
-			await import('/imports/ui/pages/calendar');
-		},
-		data() {
-			return this.params.query;
-		},
+RouterAsync.route('calendar', {
+	path: 'calendar',
+	template: 'calendarPage',
+	async onRun() {
+		await import('/imports/ui/pages/calendar');
 	},
-);
+	data() {
+		return this.params.query;
+	},
+});
 
 RouterAsync.route('featureGroup', {
 	path: 'admin/feature-group',
@@ -110,17 +122,15 @@ RouterAsync.route('tenants', {
 	async onRun() {
 		await import('/imports/ui/pages/admin/tenants');
 	},
-	waitOn() {
-		return Meteor.subscribe('Tenants.findFilter');
+	subscriptions() {
+		return { findFilter: Tenants.findFilter.subscribe() };
+	},
+	data(): AdminTenantsData {
+		return { tenants: this.subscriptions()?.findFilter() };
 	},
 });
 
-RouterAsync.route<
-	Record<string, string> & {
-		internal: boolean;
-		region: string;
-	}
->('home', {
+RouterAsync.route('home', {
 	path: '/',
 	template: 'findPage',
 	yieldRegions: {
@@ -148,118 +158,109 @@ RouterAsync.route('users', {
 	},
 });
 
-RouterAsync.route<{ cssRules: string[] }, Record<string, never>, Record<string, string>>(
-	'frameCalendar',
-	{
-		path: '/frame/calendar',
-		template: 'frameCalendarPage',
-		layoutTemplate: 'frameLayout',
-		async onRun() {
-			await import('/imports/ui/pages/frames/calendar');
-		},
-		data() {
-			const cssRules = new CssFromQuery(this.params.query, [
-				['itembg', 'background-color', '.frame-list-item'],
-				['itemcolor', 'color', '.frame-list-item'],
-				['linkcolor', 'color', '.frame-list-item a'],
-				['regionbg', 'background-color', '.frame-list-item-region'],
-				['regioncolor', 'color', '.frame-list-item-region'],
-			]).getCssRules();
-			return { cssRules };
-		},
+RouterAsync.route('frameCalendar', {
+	path: '/frame/calendar',
+	template: 'frameCalendarPage',
+	layoutTemplate: 'frameLayout',
+	async onRun() {
+		await import('/imports/ui/pages/frames/calendar');
 	},
-);
-
-RouterAsync.route<{ cssRules: string[] }, Record<string, never>, Record<string, string>>(
-	'frameCourselist',
-	{
-		path: '/frame/courselist',
-		template: 'frameCourselistPage',
-		layoutTemplate: 'frameLayout',
-		async onRun() {
-			await import('/imports/ui/pages/frames/courselist');
-		},
-		data() {
-			const cssRules = new CssFromQuery(this.params.query, [
-				['itembg', 'background-color', '.frame-list-item'],
-				['itemcolor', 'color', '.frame-list-item'],
-				['linkcolor', 'color', '.frame-list-item a'],
-				['regionbg', 'background-color', '.frame-list-item-region'],
-				['regioncolor', 'color', '.frame-list-item-region'],
-			]).getCssRules();
-			const hideInterested = Number.parseInt(this.params.query.hideInterested, 10) || 0;
-			return { cssRules, hideInterested };
-		},
+	data() {
+		const cssRules = new CssFromQuery(this.params.query, [
+			['itembg', 'background-color', '.frame-list-item'],
+			['itemcolor', 'color', '.frame-list-item'],
+			['linkcolor', 'color', '.frame-list-item a'],
+			['regionbg', 'background-color', '.frame-list-item-region'],
+			['regioncolor', 'color', '.frame-list-item-region'],
+		]).getCssRules();
+		return { cssRules };
 	},
-);
+});
 
-RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, string>>(
-	'frameEvents',
-	{
-		path: '/frame/events',
-		template: 'frameEventsPage',
-		layoutTemplate: 'frameLayout',
-		async onRun() {
-			await import('/imports/ui/pages/frames/events');
-		},
-		data() {
-			return this.params.query;
-		},
+RouterAsync.route('frameCourselist', {
+	path: '/frame/courselist',
+	template: 'frameCourselistPage',
+	layoutTemplate: 'frameLayout',
+	async onRun() {
+		await import('/imports/ui/pages/frames/courselist');
 	},
-);
-
-RouterAsync.route<{ cssRules: string[] } & any, Record<string, never>, Record<string, string>>(
-	'framePropose',
-	{
-		path: '/frame/propose',
-		template: 'frameProposePage',
-		layoutTemplate: 'frameLayout',
-		async onRun() {
-			await import('/imports/ui/pages/frames/propose');
-		},
-		waitOn: () => Meteor.subscribe('Regions'),
-		data() {
-			const predicates = {
-				region: Predicates.id,
-				addTeamGroups: Predicates.ids,
-				neededRoles: Predicates.ids,
-				setCreatorsRoles: Predicates.ids,
-				internal: Predicates.flag,
-				hidePricePolicy: Predicates.flag,
-				hideCategories: Predicates.flag,
-			};
-			const query = new Filtering(predicates).read(this.params.query).done().toQuery() as any;
-
-			if (query.addTeamGroups) {
-				// For security reasons only 5 groups are allowed
-				query.teamGroups = query.addTeamGroups.slice(0, 5);
-			}
-			delete query.addTeamGroups;
-
-			if (!query.neededRoles) {
-				query.neededRoles = ['mentor'];
-			}
-			if (query.setCreatorsRoles) {
-				query.hideRoleSelection = true;
-			} else {
-				query.setCreatorsRoles = [];
-			}
-			query.roles = ['mentor', 'host'].filter(
-				(role) => query.neededRoles.includes(role) || query.setCreatorsRoles.includes(role),
-			);
-			delete query.neededRoles;
-
-			query.creatorsRoles = ['mentor', 'host'].filter((role) =>
-				query.setCreatorsRoles.includes(role),
-			);
-			delete query.setCreatorsRoles;
-
-			query.isFrame = true;
-
-			return query;
-		},
+	data() {
+		const cssRules = new CssFromQuery(this.params.query, [
+			['itembg', 'background-color', '.frame-list-item'],
+			['itemcolor', 'color', '.frame-list-item'],
+			['linkcolor', 'color', '.frame-list-item a'],
+			['regionbg', 'background-color', '.frame-list-item-region'],
+			['regioncolor', 'color', '.frame-list-item-region'],
+		]).getCssRules();
+		const hideInterested = Number.parseInt(this.params.query.hideInterested || '', 10) || 0;
+		return { cssRules, hideInterested };
 	},
-);
+});
+
+RouterAsync.route('frameEvents', {
+	path: '/frame/events',
+	template: 'frameEventsPage',
+	layoutTemplate: 'frameLayout',
+	async onRun() {
+		await import('/imports/ui/pages/frames/events');
+	},
+	data() {
+		return this.params.query;
+	},
+});
+
+RouterAsync.route('framePropose', {
+	path: '/frame/propose',
+	template: 'frameProposePage',
+	layoutTemplate: 'frameLayout',
+	async onRun() {
+		await import('/imports/ui/pages/frames/propose');
+	},
+	subscriptions() {
+		return { regions: Regions.all.subscribe() };
+	},
+	data() {
+		const predicates = {
+			region: Predicates.id,
+			addTeamGroups: Predicates.ids,
+			neededRoles: Predicates.ids,
+			setCreatorsRoles: Predicates.ids,
+			internal: Predicates.flag,
+			hidePricePolicy: Predicates.flag,
+			hideCategories: Predicates.flag,
+			singleEvent: Predicates.flag,
+		};
+		const query = new Filtering(predicates).read(this.params.query).done().toQuery() as any;
+
+		if (query.addTeamGroups) {
+			// For security reasons only 5 groups are allowed
+			query.teamGroups = query.addTeamGroups.slice(0, 5);
+		}
+		delete query.addTeamGroups;
+
+		if (!query.neededRoles) {
+			query.neededRoles = ['mentor'];
+		}
+		if (query.setCreatorsRoles) {
+			query.hideRoleSelection = true;
+		} else {
+			query.setCreatorsRoles = [];
+		}
+		query.roles = ['mentor', 'host'].filter(
+			(role) => query.neededRoles.includes(role) || query.setCreatorsRoles.includes(role),
+		);
+		delete query.neededRoles;
+
+		query.creatorsRoles = ['mentor', 'host'].filter((role) =>
+			query.setCreatorsRoles.includes(role),
+		);
+		delete query.setCreatorsRoles;
+
+		query.isFrame = true;
+
+		return query;
+	},
+});
 
 RouterAsync.route('frameSchedule', {
 	path: '/frame/schedule',
@@ -270,49 +271,34 @@ RouterAsync.route('frameSchedule', {
 	},
 });
 
-RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, string>>(
-	'frameWeek',
-	{
-		path: '/frame/week',
-		template: 'frameWeekPage',
-		layoutTemplate: 'frameLayout',
-		async onRun() {
-			await import('/imports/ui/pages/frames/week');
-		},
-		data() {
-			return this.params.query;
-		},
+RouterAsync.route('frameWeek', {
+	path: '/frame/week',
+	template: 'frameWeekPage',
+	layoutTemplate: 'frameLayout',
+	async onRun() {
+		await import('/imports/ui/pages/frames/week');
 	},
-);
+	data() {
+		return this.params.query;
+	},
+});
 
-RouterAsync.route<
-	| {
-			courseQuery: Record<string, string> & {
-				group: string;
-				region: string | undefined;
-			};
-			group: GroupModel;
-			showCourses: boolean;
-	  }
-	| undefined,
-	{ _id: string },
-	Record<string, string>
->('groupDetails', {
+RouterAsync.route('groupDetails', {
 	path: 'group/:_id/:short?',
 	template: 'groupDetailsPage',
 	async onRun() {
 		await import('/imports/ui/pages/group-details');
 	},
-	waitOn() {
-		return [Meteor.subscribe('group', this.params._id)];
+	subscriptions() {
+		return { details: Groups.details.subscribe(this.params._id as string) };
 	},
-	data() {
-		let group;
+	data(): GroupDetailsData | undefined {
+		let group: GroupModel | undefined;
 		const isNew = this.params._id === 'create';
 		if (isNew) {
 			group = new Group() as GroupModel;
 		} else {
-			group = Groups.findOne(this.params._id);
+			group = this.subscriptions()?.details();
 		}
 
 		if (!group) {
@@ -332,46 +318,21 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<
-	{
-		today: Mongo.Cursor<EventEntity, EventModel>;
-		future: Mongo.Cursor<EventEntity, EventModel>;
-		ongoing: Mongo.Cursor<EventEntity, EventModel>;
-		filter: Record<string, any>;
-	},
-	Record<string, never>,
-	Record<string, string>
->('kioskEvents', {
+RouterAsync.route('kioskEvents', {
 	path: '/kiosk/events',
 	template: 'kioskEventsPage',
 	layoutTemplate: 'kioskLayout',
 	async onRun() {
 		await import('/imports/ui/pages/kiosk/events');
 	},
-	waitOn() {
+	subscriptions() {
 		const now = reactiveNow.get(); // Time dependency so this will be reactively updated
-
-		const filter = Events.Filtering().read(this.params.query).done();
-		Session.set('kioskFilter', filter.toParams());
-
-		const queryFuture = filter.toQuery() as EventsFindFilter;
-		queryFuture.after = now;
-
-		const queryOngoing = filter.toQuery() as EventsFindFilter;
-		queryOngoing.ongoing = now;
-
-		return [
-			Meteor.subscribe('Events.findFilter', queryFuture, 20),
-			Meteor.subscribe('Events.findFilter', queryOngoing),
-		];
-	},
-	data() {
-		const now = reactiveNow.get();
 		const tomorrow = new Date(now);
 		tomorrow.setHours(tomorrow.getHours() + 24);
 		tomorrow.setHours(0);
 
-		const filter = Events.Filtering().read(this.params.query).done();
+		const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+		Session.set('kioskFilter', filter.toParams());
 
 		const queryFuture = filter.toQuery() as EventsFindFilter;
 		queryFuture.after = tomorrow;
@@ -383,11 +344,22 @@ RouterAsync.route<
 		const queryNow = filter.toQuery() as EventsFindFilter;
 		queryNow.ongoing = now;
 
+		return {
+			today: Events.findFilter.subscribe(queryToday, 20),
+			future: Events.findFilter.subscribe(queryFuture, 10),
+			ongoing: Events.findFilter.subscribe(queryNow),
+		};
+	},
+	data() {
+		const sub = this.subscriptions();
+
+		const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+
 		const filterParams = filter.toQuery();
 		return {
-			today: Events.findFilter(queryToday, 20),
-			future: Events.findFilter(queryFuture, 10),
-			ongoing: Events.findFilter(queryNow),
+			today: sub?.today(),
+			future: sub?.future(),
+			ongoing: sub?.ongoing(),
 			filter: filterParams,
 		};
 	},
@@ -401,7 +373,7 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, string>>('log', {
+RouterAsync.route('log', {
 	path: '/log',
 	template: 'logPage',
 	async onRun() {
@@ -412,23 +384,19 @@ RouterAsync.route<Record<string, string>, Record<string, never>, Record<string, 
 	},
 });
 
-RouterAsync.route<
-	| undefined
-	| {
-			page: InfoPagesEntity;
-	  },
-	{ page_slug: string }
->('info', {
+RouterAsync.route('info', {
 	path: 'info/:page_slug',
 	template: 'infoPage',
 	async onRun() {
 		await import('/imports/ui/pages/info');
 	},
-	waitOn() {
-		return [Meteor.subscribe('infoPage', this.params.page_slug, Session.get('locale'))];
+	subscriptions() {
+		return {
+			infoPage: InfoPages.details.subscribe(this.params.page_slug as string, Session.get('locale')),
+		};
 	},
 	data() {
-		const page = InfoPages.findOne({ slug: this.params.page_slug });
+		const page = this.subscriptions()?.infoPage();
 		if (!page) {
 			return undefined;
 		}
@@ -437,31 +405,50 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<any>('profile', {
+RouterAsync.route('profile', {
 	path: 'profile',
 	template: 'profilePage',
 	async onRun() {
 		await import('/imports/ui/pages/profile');
 	},
-	waitOn() {
-		return [
-			Meteor.subscribe('Tenants.findFilter', { adminOf: true }),
-			Meteor.subscribe('Groups.findFilter', { own: true }),
-			Meteor.subscribe('Venues.findFilter', { editor: Meteor.userId() }),
-		];
+	subscriptions() {
+		const userId = Meteor.userId();
+
+		if (!userId) {
+			return {};
+		}
+
+		return {
+			tenants: Tenants.findFilter.subscribe({ adminOf: true }),
+			venues: Venues.findFilter.subscribe({ editor: userId }),
+			groups: Groups.findFilter.subscribe({ own: true }),
+		};
 	},
 	data() {
-		const data: any = {};
+		const data: {
+			user?: {
+				_id: string;
+				name: string;
+				notifications: boolean;
+				allowPrivateMessages: boolean;
+				tenants: Mongo.Cursor<TenantEntity, TenantModel> | never[];
+				groups: Mongo.Cursor<GroupEntity, GroupModel>;
+				venues: Mongo.Cursor<VenueEntity, VenueModel>;
+				email: string;
+				verified: boolean;
+			};
+		} = {};
 		const user = Meteor.user();
-		if (user) {
+		const subs = this.subscriptions();
+		if (user && subs && subs.tenants) {
 			const userdata = {
 				_id: user._id,
 				name: user.getDisplayName(),
 				notifications: user.notifications,
 				allowPrivateMessages: user.allowPrivateMessages,
-				tenants: Tenants.findFilter({ adminOf: true }),
-				groups: Groups.findFilter({ own: true }),
-				venues: Venues.findFilter({ editor: user._id }),
+				tenants: subs.tenants(),
+				groups: subs.groups(),
+				venues: subs.venues(),
 				email: user.emails?.[0]?.address,
 				verified: user.emails?.[0]?.verified || false,
 			};
@@ -480,14 +467,7 @@ RouterAsync.route('proposeCourse', {
 	data: CourseTemplate,
 });
 
-RouterAsync.route<
-	{
-		token: string;
-	},
-	{
-		token: string;
-	}
->('resetPassword', {
+RouterAsync.route('resetPassword', {
 	path: 'reset-password/:token',
 	template: 'resetPasswordPage',
 	async onRun() {
@@ -498,40 +478,35 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<
-	| {
-			edit: boolean;
-			rolesDetails: {
-				role: RoleEntity;
-				subscribed: boolean;
-				comment: string | undefined;
-				course: CourseModel;
-			}[];
-			course: CourseModel;
-			member: CourseMemberEntity | undefined;
-			select: string;
-	  }
-	| undefined,
-	Record<string, never>,
-	{ edit: string; select: string }
->('showCourse', {
+RouterAsync.route('showCourse', {
 	path: 'course/:_id/:slug?',
 	template: 'courseDetailsPage',
+	action() {
+		const course = Courses.details.subscribe(this.params._id as string)();
+		if (course?.singleEvent && course.nextEvent && this.params.query.force !== '1') {
+			this.redirect('showEvent', course.nextEvent);
+		} else {
+			this.render();
+		}
+	},
+
 	async onRun() {
 		await import('/imports/ui/pages/course-details');
 	},
-	waitOn() {
-		return Meteor.subscribe('courseDetails', this.params._id);
+	subscriptions() {
+		return { courses: Courses.details.subscribe(this.params._id as string) };
 	},
 	data() {
-		const course = Courses.findOne({ _id: this.params._id });
+		const course = this.subscriptions()?.courses();
 
 		if (!course) {
 			return undefined;
 		}
 
 		const userId = Meteor.userId();
-		const member = course.members?.find((memberCandidate) => memberCandidate.user === userId);
+		const member = course.members?.find(
+			(memberCandidate: CourseMemberEntity) => memberCandidate.user === userId,
+		);
 		const data = {
 			edit: !!this.params.query.edit,
 			rolesDetails: loadRoles(course, member),
@@ -543,51 +518,57 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<
-	(EventModel & { new?: boolean; startLocal?: string; endLocal?: string }) | undefined,
-	Record<string, never>,
-	{ courseId: string }
->('showEvent', {
+RouterAsync.route('createEvent', {
+	path: 'event/create',
+	template: 'eventPage',
+	async onRun() {
+		await import('/imports/ui/pages/event-details');
+	},
+	subscriptions() {
+		const { courseId } = this.params.query;
+		if (courseId) {
+			return { course: Courses.details.subscribe(courseId) };
+		}
+		return {};
+	},
+	data() {
+		const subs = this.subscriptions();
+
+		const propose = LocalTime.now().startOf('hour');
+		const event = _.extend(new OEvent(), {
+			new: true,
+			startLocal: LocalTime.toString(propose),
+			endLocal: LocalTime.toString(moment(propose).add(2, 'hour')),
+		}) as EventModel & { new?: boolean; startLocal?: string; endLocal?: string };
+		const course = subs?.course?.();
+		if (course) {
+			event.title = course.name;
+			event.courseId = course._id;
+			event.region = course.region;
+			event.description = course.description;
+			event.internal = course.internal;
+		}
+
+		return event;
+	},
+});
+
+RouterAsync.route('showEvent', {
 	path: 'event/:_id/:slug?',
 	template: 'eventPage',
 	notFoundTemplate: 'eventNotFound',
 	async onRun() {
 		await import('/imports/ui/pages/event-details');
 	},
-	waitOn() {
-		const subs = [Meteor.subscribe('event', this.params._id)];
-		const { courseId } = this.params.query;
-		if (courseId) {
-			subs.push(Meteor.subscribe('courseDetails', courseId));
-		}
-		return subs;
+	subscriptions() {
+		return {
+			event: Events.details.subscribe(this.params._id as string),
+		};
 	},
 	data() {
-		let event: (EventModel & { new?: boolean; startLocal?: string; endLocal?: string }) | undefined;
-		const create = this.params._id === 'create';
-		if (create) {
-			const propose = LocalTime.now().startOf('hour');
-			event = _.extend(new OEvent(), {
-				new: true,
-				startLocal: LocalTime.toString(propose),
-				endLocal: LocalTime.toString(moment(propose).add(2, 'hour')),
-			}) as EventModel & { new?: boolean; startLocal?: string; endLocal?: string };
-			const course = Courses.findOne(this.params.query.courseId);
-			if (course) {
-				event.title = course.name;
-				event.courseId = course._id;
-				event.region = course.region;
-				event.description = course.description;
-				event.internal = course.internal;
-			}
-		} else {
-			event = Events.findOne({ _id: this.params._id });
-			if (!event) {
-				return undefined;
-			}
-		}
+		const subs = this.subscriptions();
 
-		return event;
+		return subs?.event();
 	},
 });
 
@@ -599,10 +580,7 @@ RouterAsync.route('stats', {
 	},
 });
 
-RouterAsync.route<{
-	tenant: TenantModel;
-	region: RegionModel;
-}>('tenantCreate', {
+RouterAsync.route('tenantCreate', {
 	path: 'tenant/create',
 	template: 'tenantCreatePage',
 	async onRun() {
@@ -619,141 +597,110 @@ RouterAsync.route<{
 	},
 });
 
-RouterAsync.route<{ tenant: TenantModel } | undefined, { _id: string; slug?: string }>(
-	'tenantDetails',
-	{
-		path: 'tenant/:_id/:short?',
-		template: 'tenantDetailsPage',
-		async onRun() {
-			await import('/imports/ui/pages/tenant-details');
-		},
-		waitOn() {
-			return [Meteor.subscribe('tenant', this.params._id)];
-		},
-		data() {
-			const tenant = Tenants.findOne({ _id: this.params._id });
-
-			if (!tenant) {
-				return undefined;
-			}
-
-			return { tenant };
-		},
+RouterAsync.route('tenantDetails', {
+	path: 'tenant/:_id/:short?',
+	template: 'tenantDetailsPage',
+	async onRun() {
+		await import('/imports/ui/pages/tenant-details');
 	},
-);
+	subscriptions() {
+		return { tenant: Tenants.details.subscribe(this.params._id as string) };
+	},
+	data() {
+		const tenant = this.subscriptions()?.tenant();
 
-RouterAsync.route<
-	{ tenant: TenantModel; invitation: InvitationEntity } | undefined,
-	{ token: string },
-	{ tenant: string }
->('invitation', {
+		if (!tenant) {
+			return undefined;
+		}
+
+		return { tenant };
+	},
+});
+
+RouterAsync.route('invitation', {
 	path: 'invitation/:token',
 	template: 'invitationPage',
 	async onRun() {
 		await import('/imports/ui/pages/invitation');
 	},
-	waitOn() {
-		return [Meteor.subscribe('invitation', this.params?.query?.tenant, this.params?.token)];
+	subscriptions() {
+		const tenantId = this.params?.query?.tenant;
+		const invitationToken = this.params?.token;
+		if (!tenantId || !invitationToken) {
+			return {};
+		}
+
+		return {
+			invitation: Invitations.details.subscribe(tenantId, invitationToken),
+		};
 	},
 	data() {
-		const tenant = Tenants.findOne({ _id: this.params?.query?.tenant });
-		if (!tenant) {
+		const sub = this.subscriptions();
+
+		if (!sub) {
 			return undefined;
 		}
 
-		const invitation = Invitations.findOne({
-			tenant: this.params?.query?.tenant,
-			token: this.params?.token,
-		});
+		const invitation = sub.invitation?.();
 		if (!invitation) {
 			return undefined;
 		}
 
-		return { tenant, invitation };
+		return invitation;
 	},
 });
 
-RouterAsync.route<
-	{ tenant: TenantModel; joinLink: JoinLinkEntity } | undefined,
-	{ token: string },
-	{ tenant: string }
->('join', {
+RouterAsync.route('join', {
 	path: 'join/:token',
 	template: 'joinPage',
 	async onRun() {
 		await import('/imports/ui/pages/join');
 	},
-	waitOn() {
-		return [Meteor.subscribe('joinLink', this.params?.query?.tenant, this.params?.token)];
+	subscriptions() {
+		const tenantId = this.params?.query?.tenant;
+		const joinToken = this.params?.token;
+		if (!tenantId || !joinToken) {
+			return {};
+		}
+
+		return {
+			joinLink: JoinLinks.details.subscribe(tenantId, joinToken),
+		};
 	},
 	data() {
-		const tenant = Tenants.findOne({ _id: this.params?.query?.tenant });
-		if (!tenant) {
+		const sub = this.subscriptions();
+
+		if (!sub) {
 			return undefined;
 		}
 
-		const joinLink = JoinLinks.findOne({
-			tenant: this.params?.query?.tenant,
-			token: this.params?.token,
-		});
+		const joinLink = sub.joinLink?.();
 		if (!joinLink) {
 			return undefined;
 		}
 
-		return { tenant, joinLink };
+		return joinLink;
 	},
 });
 
-RouterAsync.route<
-	| never[]
-	| {
-			days: {
-				moment: moment.Moment;
-				relStart: number;
-				relEnd: number;
-			}[];
-			hours: {
-				moment: moment.Moment;
-				relStart: number;
-				relEnd: number;
-			}[];
-			grouped: {
-				perRoom: {
-					room: string;
-					venue: VenueModel;
-					rows: (EventEntity & {
-						relStart: number;
-						relEnd: number;
-					})[];
-				}[];
-				venue: VenueModel;
-			}[];
-	  },
-	Record<string, string>,
-	Record<string, string>,
-	{
-		future_length: Mongo.Cursor<EventEntity, EventModel>;
-	}
->('timetable', {
+RouterAsync.route('timetable', {
 	path: '/kiosk/timetable',
 	template: 'kioskTimetablePage',
 	layoutTemplate: 'kioskLayout',
 	async onRun() {
 		await import('/imports/ui/pages/kiosk/timetable');
 	},
-	waitOn() {
-		return Meteor.subscribe('Events.findFilter', makeFilterQuery(this.params.query), 200);
+	subscriptions() {
+		return { events: Events.findFilter.subscribe(makeFilterQuery(this.params.query), 200) };
 	},
 	data() {
-		const query = makeFilterQuery(this.params.query);
-
 		let start: moment.MomentInput;
 		let end: moment.MomentInput;
 
-		const events = Events.findFilter(query, 200).fetch();
+		const events = this.subscriptions?.()?.events().fetch();
 
 		// collect time when first event starts and last event ends
-		events.forEach((event) => {
+		events.forEach((event: EventModel) => {
 			if (!start || event.start < start) {
 				start = event.start;
 			}
@@ -845,7 +792,7 @@ RouterAsync.route<
 			return perVenue[id].perRoom[room].rows;
 		};
 
-		events.forEach((originalEvent) => {
+		events.forEach((originalEvent: EventModel) => {
 			const event: EventEntity & {
 				relStart: number;
 				relEnd: number;
@@ -896,32 +843,22 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<
-	| undefined
-	| {
-			user: UserModel;
-			alterPrivileges: boolean;
-			privileges: {
-				[role: string]: boolean;
-			};
-			inviteGroups: Mongo.Cursor<GroupEntity, GroupModel>;
-			showPrivileges: number | true;
-	  },
-	{ _id: string }
->('userprofile', {
+RouterAsync.route('userprofile', {
 	path: 'user/:_id/:username?',
 	template: 'userprofilePage',
 	async onRun() {
 		await import('/imports/ui/pages/userprofile');
 	},
-	waitOn() {
-		return [
-			Meteor.subscribe('user', this.params._id),
-			Meteor.subscribe('Groups.findFilter', { own: true }),
-		];
+	subscriptions() {
+		return {
+			groups: Groups.findFilter.subscribe({ own: true }),
+			user: Users.details.subscribe(this.params._id as string),
+		};
 	},
 	data() {
-		const user = Users.findOne({ _id: this.params._id });
+		const sub = this.subscriptions();
+
+		const user = sub?.user();
 		if (!user) {
 			return undefined; // not loaded?
 		}
@@ -943,17 +880,13 @@ RouterAsync.route<
 			user,
 			alterPrivileges,
 			privileges,
-			inviteGroups: Groups.findFilter({ own: true }),
+			inviteGroups: sub?.groups(),
 			showPrivileges,
 		};
 	},
 });
 
-RouterAsync.route<
-	{ isNew: boolean; region: RegionModel },
-	Record<string, never>,
-	{ tenant: string }
->('regionCreate', {
+RouterAsync.route('regionCreate', {
 	path: 'region/create',
 	template: 'regionDetailsPage',
 	async onRun() {
@@ -961,7 +894,14 @@ RouterAsync.route<
 	},
 	data() {
 		const region = new Region() as RegionModel;
-		region.tenant = this.params.query.tenant;
+
+		const tenantId = this.params.query.tenant;
+
+		if (!tenantId) {
+			return undefined;
+		}
+
+		region.tenant = tenantId;
 		region.tz = momentTz.tz.guess();
 		return {
 			isNew: true,
@@ -970,57 +910,51 @@ RouterAsync.route<
 	},
 });
 
-RouterAsync.route<{ region: RegionModel } | undefined, { _id: string; slug?: string }>(
-	'regionDetails',
-	{
-		path: 'region/:_id/:slug?',
-		template: 'regionDetailsPage',
-		async onRun() {
-			await import('/imports/ui/pages/region-details');
-		},
-		waitOn() {
-			return [Meteor.subscribe('regionDetails', this.params._id)];
-		},
-		data() {
-			const region = Regions.findOne(this.params._id);
+RouterAsync.route('regionDetails', {
+	path: 'region/:_id/:slug?',
+	template: 'regionDetailsPage',
+	async onRun() {
+		await import('/imports/ui/pages/region-details');
+	},
+	subscriptions() {
+		return { details: Regions.details.subscribe(this.params._id as string) };
+	},
+	data() {
+		const region = this.subscriptions()?.details();
 
-			if (!region) {
+		if (!region) {
+			return undefined; // Not found
+		}
+
+		return { region };
+	},
+});
+
+RouterAsync.route('venueDetails', {
+	path: 'venue/:_id/:slug?',
+	template: 'venueDetailsPage',
+	async onRun() {
+		await import('/imports/ui/pages/venue-details');
+	},
+	subscriptions() {
+		return { details: Venues.details.subscribe(this.params._id as string) };
+	},
+	data() {
+		const id = this.params._id;
+
+		let venue: VenueModel | undefined;
+		if (id === 'create') {
+			venue = new Venue() as VenueModel;
+		} else {
+			venue = this.subscriptions()?.details();
+			if (!venue) {
 				return undefined; // Not found
 			}
+		}
 
-			return { region };
-		},
+		return { venue };
 	},
-);
-
-RouterAsync.route<{ venue: VenueModel } | undefined, { _id: string; slug?: string }>(
-	'venueDetails',
-	{
-		path: 'venue/:_id/:slug?',
-		template: 'venueDetailsPage',
-		async onRun() {
-			await import('/imports/ui/pages/venue-details');
-		},
-		waitOn() {
-			return [Meteor.subscribe('venueDetails', this.params._id)];
-		},
-		data() {
-			const id = this.params._id;
-
-			let venue: VenueModel | undefined;
-			if (id === 'create') {
-				venue = new Venue() as VenueModel;
-			} else {
-				venue = Venues.findOne({ _id: this.params._id });
-				if (!venue) {
-					return undefined; // Not found
-				}
-			}
-
-			return { venue };
-		},
-	},
-);
+});
 
 RouterAsync.route('venuesMap', {
 	path: 'venues',
@@ -1028,7 +962,20 @@ RouterAsync.route('venuesMap', {
 	async onRun() {
 		await import('/imports/ui/pages/venues-map');
 	},
-	waitOn() {
-		return Meteor.subscribe('venues', CleanedRegion(Session.get('region')));
+	subscriptions() {
+		const filter = new Filtering(VenueParamPredicates);
+		const region = CleanedRegion(Session.get('region'));
+		if (region) {
+			filter.add('region', region);
+		}
+		filter.read(this.params.query).done();
+		const query = filter.toQuery();
+		return { venues: Venues.findFilter.subscribe(query) };
+	},
+	data(): VenuesMapData {
+		return {
+			region: CleanedRegion(Session.get('region')),
+			venues: this.subscriptions()?.venues(),
+		};
 	},
 });

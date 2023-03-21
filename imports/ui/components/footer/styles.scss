@@ -20,7 +20,7 @@ footer {
 	padding: $footer-padding-vertical 10px;
 
 	&:hover {
-		background-color: #{'hsl(var(--openki-brand-hs) calc(var(--openki-brand-l) + 10%))'};
+		background-color: css-lighten('openki-brand', 10%);
 		color: $white;
 		text-decoration: none;
 	}

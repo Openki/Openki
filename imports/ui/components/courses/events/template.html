@@ -120,8 +120,7 @@
 
 <template name="courseEventAdd">
 	<div class="event-caption-wrap">
-		<a class="btn p-0"
-		   href="{{pathFor 'showEvent' _id='create' query=(concat 'courseId=' course._id)}}"
+		<a class="btn p-0" href="{{pathFor 'createEvent' query=(concat 'courseId=' course._id)}}"
 		   title="{{i18n 'course.event.edit.add' attr=true}}">
 			<div
 				 class="event-caption event-caption-placeholder event-caption-action event-caption-add">

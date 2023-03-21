@@ -1,19 +1,5 @@
 <template name="joinLinkRebuild">
-	{{#unless state 'confirm'}}
-		<button class="btn btn-add js-join-link-rebuild" type="button">
-			{{i18n 'joinLink.rebuild' 'Create a new link'}}
-		</button>
-	{{else}}
-		<div class="join-link-rebuild-confirmation">
-			<p>
-				{{i18n 'joinLink.reallyrebuild' 'Please confirm that you would like to create a new link. Existing link will be revoked.'}}
-			</p>
-			<div class="form-actions">
-				<button class="btn btn-add js-join-link-rebuild-confirm" type="button">
-					{{i18n 'joinLink.rebuild' 'Create a new link'}}
-				</button>
-				{{> buttonCancel event="js-join-link-rebuild-collapse"}}
-			</div>
-		</div>
-	{{/unless}}
+	<div>
+		{{> React (component JoinLinkRebuild)}}
+	</div>
 </template>

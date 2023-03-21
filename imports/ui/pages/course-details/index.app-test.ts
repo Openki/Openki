@@ -18,18 +18,21 @@ if (Meteor.isClient) {
 
 				await waitFor(() => {
 					assert(
-						$('.group-tag-btn .js-expand').length > 0,
+						$('.group-tag-btn .dialog-dropdown-btn').length > 0,
 						`Show info editing rights to group button is shown`,
 					);
 				});
 
 				await waitFor(() => {
-					$('.group-tag-btn .js-expand').trigger('click');
-					assert($('.js-makeOrganizer').length > 0, `Give editing rights to group button is shown`);
+					$('.dropdown-menu .btn-success')[0].click();
+					assert(
+						$('.group-tag-btn .dialog-dropdown-btn .btn-success').length > 0,
+						`Give editing rights to group button is shown`,
+					);
 				});
 
 				await waitFor(() => {
-					$('.js-makeOrganizer').trigger('click');
+					$('.dropdown-menu .btn-success')[0].click();
 					assert($('.group-tag-is-organizer').length > 0, `Group is organizer`);
 				});
 			});

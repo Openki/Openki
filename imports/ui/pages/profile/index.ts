@@ -21,12 +21,13 @@ import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/buttons';
-import '/imports/ui/components/groups/list';
+import '/imports/ui/components/groups/tag';
 import '/imports/ui/components/profiles/course-list';
 import '/imports/ui/components/profiles/verify-email';
 import '/imports/ui/components/venues/link';
 import '/imports/ui/components/avatar';
 import '/imports/ui/components/editable';
+import '/imports/ui/components/delete-confirm';
 
 import './template.html';
 import './styles.scss';
@@ -224,6 +225,21 @@ template.helpers({
 	isAdmin() {
 		return UserPrivilegeUtils.privilegedTo('admin');
 	},
+	deleteConfirmAttr() {
+		return {
+			confirmText: i18n(
+				'profile.reallydelete',
+				'Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.',
+			),
+			confirmButton: i18n('profile.delete.confirm.button', 'Delete my user and all its profile'),
+			onRemove: async () => {
+				await usersMethods.selfRemove();
+
+				Alert.success(i18n('profile.deleted', 'Your account has been deleted'));
+			},
+			busyButton: i18n('profile.delete.confirm.button.busy', 'Deleting profile…'),
+		};
+	},
 });
 
 template.events({
@@ -234,23 +250,6 @@ template.events({
 
 	'click .js-change-pwd-cancel'(_event, instance) {
 		instance.changingPass.set(false);
-	},
-
-	'click .js-expand'(_event, instance) {
-		instance.changingPass.set(false);
-	},
-
-	async 'click .js-profile-delete-confirm-btn'(_event, instance) {
-		instance.busy('deleting');
-
-		instance.collapse(); // Wait for server to log us out.
-		try {
-			await usersMethods.selfRemove();
-
-			Alert.success(i18n('profile.deleted', 'Your account has been deleted'));
-		} finally {
-			instance.busy(false);
-		}
 	},
 
 	async 'submit .js-email-form'(event, instance) {
