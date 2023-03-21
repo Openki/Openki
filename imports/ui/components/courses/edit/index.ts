@@ -99,6 +99,22 @@ export type Data = {
 		instance.savedCourseId = new ReactiveVar(undefined);
 		instance.showSavedMessage = new ReactiveVar(false);
 
+		instance.getGroups = () => {
+			const data = Template.currentData();
+			const groups = [];
+
+			if (data && data instanceof Course && !(data as CourseModel).isNew()) {
+				groups.push(...data.groupOrganizers);
+			} else if (!data.isFrame) {
+				if (data.group) {
+					groups.push(data.group);
+				}
+			} else if (data.teamGroups?.length > 0) {
+				groups.push(...data.teamGroups);
+			}
+			return groups;
+		};
+
 		instance.autorun(() => {
 			const data = Template.currentData();
 
@@ -108,19 +124,9 @@ export type Data = {
 			instance.state.set('editingCategories', !data._id);
 			instance.state.set('selectedCategories', data.categories);
 
-			if (data && data instanceof Course && !(data as CourseModel).isNew()) {
-				data.groupOrganizers.forEach((g) => {
-					instance.subscribe('group', g);
-				});
-			} else if (!data.isFrame) {
-				if (data.group) {
-					instance.subscribe('group', data.group);
-				}
-			} else if (data.teamGroups) {
-				data.teamGroups.forEach((g) => {
-					instance.subscribe('group', g);
-				});
-			}
+			instance.getGroups().forEach((g) => {
+				instance.subscribe('group', g);
+			});
 
 			if (data.isFrame) {
 				// When we're in the propose frame, show a simplified role selection
@@ -170,22 +176,6 @@ export type Data = {
 		};
 
 		instance.getSavedCourse = () => Courses.findOne(instance.savedCourseId.get());
-
-		instance.getGroups = () => {
-			const data = Template.currentData();
-			const groups = [];
-
-			if (data && data instanceof Course && !(data as CourseModel).isNew()) {
-				groups.push(...data.groupOrganizers);
-			} else if (!data.isFrame) {
-				if (data.group) {
-					groups.push(data.group);
-				}
-			} else if (data.teamGroups?.length > 0) {
-				groups.push(...data.teamGroups);
-			}
-			return groups;
-		};
 
 		instance.customFields = (type?: 'singleLine' | 'multiLine') => {
 			const groups = instance.getGroups();
