@@ -7,10 +7,11 @@ import * as Alert from '/imports/api/alerts/alert';
 import { Roles } from '/imports/api/roles/roles';
 import { Subscribe, Unsubscribe, Message, processChange } from '/imports/api/courses/subscription';
 import { CourseMemberEntity, CourseModel } from '/imports/api/courses/courses';
-import { Users } from '/imports/api/users/users';
+import * as Users from '/imports/api/users/publications';
 
 import { Editable } from '/imports/ui/lib/editable';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
 
 import '/imports/ui/components/editable';
 import '/imports/ui/components/participant/contact';
@@ -111,6 +112,7 @@ import './styles.scss';
 		'courseMember',
 		{ member: CourseMemberEntity; course: CourseModel },
 		{
+			user: ReactiveVar<SubscriptionType<(typeof Users)['details']> | undefined>;
 			editableMessage: Editable;
 			subscribeToTeam: () => Subscribe | undefined;
 			removeFromTeam: () => Unsubscribe | undefined;
@@ -121,9 +123,14 @@ import './styles.scss';
 
 	template.onCreated(function () {
 		const instance = this;
-		const data = instance.data;
+		const { course } = instance.data;
 
-		instance.subscribe('user', data.member.user);
+		instance.user = new ReactiveVar(undefined);
+
+		instance.autorun(() => {
+			const { member } = Template.currentData();
+			instance.user.set(Users.details.subscribe(instance, member.user));
+		});
 
 		instance.editableMessage = new Editable(
 			false,
@@ -131,7 +138,7 @@ import './styles.scss';
 			undefined,
 			{
 				onSave: async (newMessage) => {
-					const change = new Message(data.course, Meteor.user(), newMessage);
+					const change = new Message(course, Meteor.user(), newMessage);
 					await processChange(change);
 				},
 				onSuccess: () => {
@@ -148,17 +155,17 @@ import './styles.scss';
 		});
 
 		instance.subscribeToTeam = () => {
-			const user = Users.findOne(data.member.user);
+			const user = instance.user.get()?.();
 			if (!user) return undefined; // Probably not loaded yet
 
-			return new Subscribe(data.course, user, 'team', 'interested');
+			return new Subscribe(course, user, 'team', 'interested');
 		};
 
 		instance.removeFromTeam = () => {
-			const user = Users.findOne(data.member.user);
+			const user = instance.user.get()?.();
 			if (!user) return undefined; // Probably not loaded yet
 
-			return new Unsubscribe(data.course, user, 'team');
+			return new Unsubscribe(course, user, 'team');
 		};
 	});
 

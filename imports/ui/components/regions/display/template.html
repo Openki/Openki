@@ -49,23 +49,8 @@
 				{{/unless}}
 			</div>
 			{{#if (state 'verifyDelete')}}
-				{{> regionDeleteConfirmDialog}}
+				{{> deleteConfirmDialog deleteConfirmDialogAttr}}
 			{{/if}}
 		{{/if}}
-	</div>
-</template>
-
-<template name="regionDeleteConfirmDialog">
-	<div class="region-delete-confirmation">
-		<p>{{i18n 'region.reallydelete' 'Please confirm that you would like to delete this region with all courses, events and venues. This cannot be undone.'}}
-		</p>
-		<div class="form-actions">
-			{{> buttonDeleteConfirm
-				event="js-region-delete-confirm"
-				textIdle=(i18n 'region.detail.remove' 'Remove this region')
-				textBusy=(i18n 'region.detail.remove.busy' 'Deleting region…')
-			}}
-			{{> buttonCancel event="js-region-delete-cancel"}}
-		</div>
 	</div>
 </template>

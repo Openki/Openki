@@ -1,25 +1,24 @@
 <template name="courseCompact">
 	{{#if Template.subscriptionsReady}}
 		<div class="col">
-			<a href="{{pathFor 'showCourse'}}">
-				<div class="row mx-0 align-items-start course-compact {{courseStateClasses}} {{filterPreviewClasses}}"
-					 style="{{courseCss this}}">
+			<a href="{{pathFor 'showCourse' _id=course._id slug=course.slug}}">
+				<div class="row mx-0 align-items-start course-compact {{courseStateClasses course}} {{filterPreviewClasses course}}"
+					 style="{{courseCss course}}">
 					<div class="course-compact-content col-8">
-						{{#if internal}}
-							<span class="course-compact-internal" data-bs-toggle="tooltip"
-								  data-bs-title="{{i18n '_label.internal' attr=true}}"></span>
+						{{#if course.internal}}
+							{{> internalIndicator}}
 						{{/if}}
-						<div class="course-compact-title" title="{{name}}">{{name}}</div>
-						{{> courseCategories this}}
+						<div class="course-compact-title" title="{{name}}">{{course.name}}</div>
+						{{> courseCategories categories=course.categories}}
 					</div>
 					{{#if nextEvent}}
-						{{> courseCompactEvent}}
+						{{> courseCompactEvent course}}
 					{{else}}
-						{{> courseCompactRoles}}
+						{{> courseCompactRoles course}}
 					{{/if}}
 					<div class="tag-group course-groups">
-						{{#each group in groups}}
-							{{> groupName groupId=group isOrganizer=(isOrganizer group)}}
+						{{#each group in course.groups}}
+							{{> groupTag (groupTagAttr course group)}}
 						{{/each}}
 					</div>
 				</div>

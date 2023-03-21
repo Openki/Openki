@@ -42,6 +42,10 @@ export interface RegionEntity {
 	futureEventCount: number;
 	/** ID of featured group */
 	featuredGroup: string;
+	/** Team group that is added to all courses on create. */
+	defaultTeamGroup?: string;
+	/** Courses in this region are default single events. */
+	singleEvents?: boolean;
 	/**
 	 * If set the calendar page jumps automatic to this date.
 	 */
@@ -164,7 +168,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 			selector.tenant = filter.tenant;
 		}
 
-		return this.find(selector, options);
+		return this.find(selector, options) as Mongo.Cursor<RegionEntity, RegionModel>;
 	}
 }
 

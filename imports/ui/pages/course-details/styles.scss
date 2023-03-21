@@ -18,7 +18,7 @@
 
 // ** Course buttons
 //========================================================================================
-.course-delete-confirmation {
+.course-delete-confirm {
 	$background-color: tint-color($danger, 20%);
 
 	background-color: $background-color;
@@ -80,18 +80,6 @@
 	color: shade-color($background-color, 65%);
 	margin-bottom: 1px;
 	padding: 8px;
-}
-
-// ** Internal indicator dot
-//========================================================================================
-.details-internal {
-	background-color: #f00;
-	border-radius: 50%;
-	height: 5px;
-	left: 6px;
-	position: absolute;
-	top: 6px;
-	width: 5px;
 }
 
 // ** Title

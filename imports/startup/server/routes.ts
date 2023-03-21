@@ -7,7 +7,7 @@ import * as Profile from '/imports/utils/profile';
 Router.route('profileNotificationsUnsubscribe', {
 	path: '/profile/notifications/unsubscribe/:token',
 	action() {
-		const unsubToken = this.params.token;
+		const unsubToken = this.params.token as string;
 
 		const accepted = Profile.Notifications.unsubscribe(unsubToken);
 
@@ -30,7 +30,7 @@ Router.route('profileNotificationsUnsubscribe', {
 Router.route('profilePrivateMessagesUnsubscribe', {
 	path: '/profile/privatemessages/unsubscribe/:token',
 	action() {
-		const unsubToken = this.params.token;
+		const unsubToken = this.params.token as string;
 
 		const accepted = Profile.PrivateMessages.unsubscribe(unsubToken);
 

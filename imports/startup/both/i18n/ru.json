@@ -7,7 +7,7 @@
     "calendar.next.year.short": "следующий год",
     "calendar.weekNumber": "неделя",
     "calendar.windowtitle": "календарь",
-    "categories.show_courses": "показать все курсы в",
+    "categories.show_courses": "показать все курсы в {CATEGORY}",
     "category.biology": "биология",
     "category.chemistry": "химия",
     "category.computer": "компьютер",
