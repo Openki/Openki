@@ -1,0 +1,48 @@
+import { Router } from 'meteor/iron:router';
+import { Session } from 'meteor/session';
+import { useTranslation } from 'react-i18next';
+import React from 'react';
+import { Template } from 'meteor/templating';
+
+import * as UrlTools from '/imports/utils/url-tools';
+
+import './styles.scss';
+
+function buildBackLink() {
+	const filterParams = Session.get('kioskFilter');
+	if (!filterParams) {
+		return undefined;
+	}
+
+	delete filterParams.region; // HACK region is kept in the session (for bad reasons)
+	const queryString = UrlTools.paramsToQueryString(filterParams);
+
+	const options: { query?: string } = {};
+	if (queryString.length) {
+		options.query = queryString;
+	}
+
+	return Router.url('kioskEvents', {}, options);
+}
+
+export function KioskLink() {
+	const { t } = useTranslation();
+
+	const link = buildBackLink();
+	if (link) {
+		return (
+			<a href={link}>
+				<button type="button" className="back-to-kiosk">
+					{t('backToKiosk', 'Return to overview')}
+				</button>
+			</a>
+		);
+	}
+	return null;
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper(KioskLink.name, () => KioskLink);

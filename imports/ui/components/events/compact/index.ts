@@ -4,8 +4,9 @@ import moment from 'moment';
 
 import { EventModel } from '/imports/api/events/events';
 
-import '/imports/ui/components/groups/list';
+import '/imports/ui/components/groups/tag';
 import '/imports/ui/components/venues/link';
+import '/imports/ui/components/internal-indicator';
 
 import './template.html';
 import './styles.scss';

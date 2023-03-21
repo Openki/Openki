@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import { LogCollection, LogEntity } from '/imports/api/log/factory';
 import { Log } from '/imports/api/log/log';
+import * as Logs from '/imports/api/log/publications';
 
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
@@ -13,6 +14,7 @@ import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as UrlTools from '/imports/utils/url-tools';
 import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
+import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
 
 import './template.html';
 import './styles.scss';
@@ -23,8 +25,9 @@ import './styles.scss';
 		// LogCollection.Filtering Params are allowed as data input
 		Parameters<ReturnType<LogCollection['Filtering']>['read']>[0],
 		{
-			filter: ReturnType<LogCollection['Filtering']>;
+			logs: ReactiveVar<SubscriptionType<(typeof Logs)['findFilter']> | undefined>;
 			limit: ReactiveVar<number>;
+			filter: ReturnType<LogCollection['Filtering']>;
 			updateUrl: () => boolean;
 		}
 	>;
@@ -57,6 +60,7 @@ import './styles.scss';
 			return true;
 		};
 
+		instance.logs = new ReactiveVar(undefined);
 		instance.limit = new ReactiveVar(batchLoad);
 
 		const filter = Log.Filtering();
@@ -75,7 +79,7 @@ import './styles.scss';
 			// Have some extra log entries ready so that they are shown immediately
 			// when more are demanded
 			const overLimit = instance.limit.get() + batchLoad + 1;
-			instance.subscribe('log', filterQuery, overLimit);
+			instance.logs.set(Logs.findFilter.subscribe(instance, filterQuery, overLimit));
 		});
 	});
 
@@ -102,17 +106,15 @@ import './styles.scss';
 		hasMore() {
 			const instance = Template.instance();
 
-			const filterQuery = instance.filter.toQuery();
 			const limit = instance.limit.get();
-			const results = Log.findFilter(filterQuery, limit + 1);
+			const results = instance.logs.get()?.().count() || 0;
 
-			return results.count() > limit;
+			return results > limit;
 		},
 
 		results() {
 			const instance = Template.instance();
-			const filterQuery = instance.filter.toQuery();
-			const entries = Log.findFilter(filterQuery, instance.limit.get()).fetch();
+			const entries = instance.logs.get()?.().fetch().slice(0, instance.limit.get()) || [];
 			let last: moment.Moment | false = false;
 			const inter: (LogEntity | { interval: string })[] = [];
 			entries.forEach((entry) => {

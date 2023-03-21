@@ -23,7 +23,7 @@
 	"calendar.previous.year.long": "前往上一年",
 	"calendar.previous.year.short": "上一年",
 	"calendar.weekNumber": "周",
-	"categories.show_courses": "显示所有",
+	"categories.show_courses": "显示所有 {CATEGORY}",
 	"category.artistry": "艺术",
 	"category.biology": "生物学",
 	"category.chemistry": "化学",

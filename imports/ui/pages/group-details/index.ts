@@ -23,13 +23,18 @@ import '/imports/ui/components/groups/settings';
 import './template.html';
 import './styles.scss';
 
+export type Data = {
+	courseQuery: Record<string, string | undefined> & {
+		group: string;
+		region: string | undefined;
+	};
+	group: GroupModel;
+	showCourses: boolean;
+};
+
 const TemplateBase = TemplateAny as TemplateStaticTyped<
 	'groupDetailsPage',
-	{
-		courseQuery: unknown;
-		group: GroupModel;
-		showCourses: boolean;
-	},
+	Data,
 	{
 		mayEdit: ReactiveVar<boolean>;
 		editingSettings: ReactiveVar<boolean>;
