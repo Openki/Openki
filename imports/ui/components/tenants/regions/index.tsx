@@ -74,4 +74,4 @@ export function TenantRegions(props: Data) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(TenantRegions.name, () => TenantRegions);
+Template.registerHelper('TenantRegions', () => TenantRegions);

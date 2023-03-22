@@ -178,4 +178,4 @@ export function PricePolicy(props: Props) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(PricePolicy.name, () => PricePolicy);
+Template.registerHelper('PricePolicy', () => PricePolicy);

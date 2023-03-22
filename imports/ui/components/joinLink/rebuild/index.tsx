@@ -61,4 +61,4 @@ export function JoinLinkRebuild(props: { tenantId: string }) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(JoinLinkRebuild.name, () => JoinLinkRebuild);
+Template.registerHelper('JoinLinkRebuild', () => JoinLinkRebuild);

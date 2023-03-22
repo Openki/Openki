@@ -179,4 +179,4 @@ export function InvitationsList(props: Props) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(InvitationsList.name, () => InvitationsList);
+Template.registerHelper('InvitationsList', () => InvitationsList);

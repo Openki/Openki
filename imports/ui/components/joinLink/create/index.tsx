@@ -24,4 +24,4 @@ export function JoinLinkCreate(props: { tenantId: string }) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(JoinLinkCreate.name, () => JoinLinkCreate);
+Template.registerHelper('JoinLinkCreate', () => JoinLinkCreate);

@@ -55,4 +55,4 @@ export function DeleteConfirmDialog(props: Props) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(DeleteConfirmDialog.name, () => DeleteConfirmDialog);
+Template.registerHelper('DeleteConfirmDialog', () => DeleteConfirmDialog);

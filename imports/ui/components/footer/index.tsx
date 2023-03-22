@@ -94,4 +94,4 @@ function Footer() {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(Footer.name, () => Footer);
+Template.registerHelper('Footer', () => Footer);

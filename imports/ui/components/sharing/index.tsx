@@ -51,4 +51,4 @@ export function Sharing() {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(Sharing.name, () => Sharing);
+Template.registerHelper('Sharing', () => Sharing);

@@ -24,4 +24,4 @@ export function ProfileLink(props: { userId: string }) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(ProfileLink.name, () => ProfileLink);
+Template.registerHelper('ProfileLink', () => ProfileLink);

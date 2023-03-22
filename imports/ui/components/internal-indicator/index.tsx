@@ -19,4 +19,4 @@ export function InternalIndicator() {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(InternalIndicator.name, () => InternalIndicator);
+Template.registerHelper('InternalIndicator', () => InternalIndicator);

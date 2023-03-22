@@ -117,4 +117,4 @@ export function EmailValidation() {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(EmailValidation.name, () => EmailValidation);
+Template.registerHelper('EmailValidation', () => EmailValidation);
