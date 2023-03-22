@@ -142,7 +142,7 @@ export class Course {
 export const FindFilterPattern = {
 	tenants: Match.Maybe([String]),
 	region: Match.Maybe(String),
-	state: Match.Maybe(StringEnum('proposal', 'resting', 'upcomingEvent')),
+	state: Match.Maybe([StringEnum('proposal', 'resting', 'upcomingEvent')]),
 	userInvolved: Match.Maybe(String),
 	createdby: Match.Maybe(String),
 	categories: Match.Maybe([String]),
@@ -194,7 +194,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 			search: Predicates.string,
 			group: Predicates.string,
 			categories: Predicates.ids,
-			state: Predicates.string,
+			state: Predicates.ids,
 			needsRole: Predicates.ids,
 			internal: Predicates.flag,
 			archived: Predicates.flag,
@@ -280,25 +280,26 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 			find.region = filter.region;
 		}
 
-		if (filter.state === 'proposal') {
-			find.lastEvent = { $eq: null };
-			find.futureEvents = { $eq: 0 };
-			order.push(['time_lastedit', 'desc']);
-		}
+		if (filter.state) {
+			const $or = [];
 
-		if (filter.state === 'resting') {
-			find.lastEvent = { $ne: null };
-			find.futureEvents = { $eq: 0 };
-			order.push(['time_lastedit', 'desc']);
-			order.push(['nextEvent.start', 'asc']);
-		}
+			if (filter.state.includes('proposal')) {
+				$or.push({ lastEvent: { $eq: null }, futureEvents: { $eq: 0 } });
+			}
 
-		if (filter.state === 'upcomingEvent') {
-			find.futureEvents = { $gt: 0 };
-			order.push(['nextEvent.start', 'asc']);
-			order.push(['time_lastedit', 'desc']);
-		}
+			if (filter.state.includes('resting')) {
+				$or.push({ lastEvent: { $ne: null }, futureEvents: { $eq: 0 } });
+			}
 
+			if (filter.state.includes('upcomingEvent')) {
+				$or.push({ futureEvents: { $gt: 0 } });
+				if (filter.state.length === 1) {
+					order.push(['nextEvent.start', 'asc']);
+				}
+			}
+
+			find.$and = [{ $or }];
+		}
 		order.push(['time_lastedit', 'desc']);
 		order.push(['time_created', 'desc']);
 
@@ -360,7 +361,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 				],
 			}));
 
-			find.$and = searchQueries;
+			find.$and = [...(find.$and || []), ...searchQueries];
 		}
 
 		options.sort = order;

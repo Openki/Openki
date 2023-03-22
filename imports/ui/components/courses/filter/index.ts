@@ -90,7 +90,7 @@ import './styles.scss';
 
 			classes.push(stateFilter.cssClass);
 
-			if (parentInstance.filter.get('state') === stateFilter.name) {
+			if ((parentInstance.filter.get('state') || []).includes(stateFilter.name)) {
 				classes.push('active');
 			}
 
