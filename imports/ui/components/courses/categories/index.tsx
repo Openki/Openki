@@ -49,5 +49,5 @@ export function CourseCategories(props: { categories: string[] }) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(CategoryLabel.name, () => CategoryLabel);
-Template.registerHelper(CourseCategories.name, () => CourseCategories);
+Template.registerHelper('CategoryLabel', () => CategoryLabel);
+Template.registerHelper('CourseCategories', () => CourseCategories);

@@ -45,4 +45,4 @@ export function DeleteConfirm(props: Props) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(DeleteConfirm.name, () => DeleteConfirm);
+Template.registerHelper('DeleteConfirm', () => DeleteConfirm);

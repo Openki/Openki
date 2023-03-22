@@ -79,4 +79,4 @@ export function VenueLink(props: {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(VenueLink.name, () => VenueLink);
+Template.registerHelper('VenueLink', () => VenueLink);

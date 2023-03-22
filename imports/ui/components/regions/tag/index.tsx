@@ -29,4 +29,4 @@ export function RegionTag(props: { region: string }) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(RegionTag.name, () => RegionTag);
+Template.registerHelper('RegionTag', () => RegionTag);

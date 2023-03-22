@@ -37,4 +37,4 @@ export function EventHeader(props: Data) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(EventHeader.name, () => EventHeader);
+Template.registerHelper('EventHeader', () => EventHeader);

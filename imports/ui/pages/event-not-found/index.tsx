@@ -39,4 +39,4 @@ export function EventNotFound() {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(EventNotFound.name, () => EventNotFound);
+Template.registerHelper('EventNotFound', () => EventNotFound);

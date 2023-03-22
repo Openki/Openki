@@ -69,4 +69,4 @@ function SearchField(props: {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(SearchField.name, () => SearchField);
+Template.registerHelper('SearchField', () => SearchField);

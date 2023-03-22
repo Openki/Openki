@@ -52,4 +52,4 @@ export function GroupTag(props: {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(GroupTag.name, () => GroupTag);
+Template.registerHelper('GroupTag', () => GroupTag);

@@ -59,4 +59,4 @@ export function VerifyEmail() {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(VerifyEmail.name, () => VerifyEmail);
+Template.registerHelper('VerifyEmail', () => VerifyEmail);

@@ -45,4 +45,4 @@ export function KioskLink() {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(KioskLink.name, () => KioskLink);
+Template.registerHelper('KioskLink', () => KioskLink);

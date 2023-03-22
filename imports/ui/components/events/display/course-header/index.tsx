@@ -58,4 +58,4 @@ export function EventCourseHeader(props: Props) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(EventCourseHeader.name, () => EventCourseHeader);
+Template.registerHelper('EventCourseHeader', () => EventCourseHeader);

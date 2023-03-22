@@ -76,4 +76,4 @@ export function EventGroupRemoveOrganizer(props: { event: EventModel; groupId: s
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper(EventGroupRemoveOrganizer.name, () => EventGroupRemoveOrganizer);
+Template.registerHelper('EventGroupRemoveOrganizer', () => EventGroupRemoveOrganizer);
