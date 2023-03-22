@@ -11,7 +11,7 @@
 						<div class="course-compact-title" title="{{name}}">{{course.name}}</div>
 						{{> courseCategories categories=course.categories}}
 					</div>
-					{{#if nextEvent}}
+					{{#if course.nextEvent}}
 						{{> courseCompactEvent course}}
 					{{else}}
 						{{> courseCompactRoles course}}
