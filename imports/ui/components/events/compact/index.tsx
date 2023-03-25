@@ -98,9 +98,3 @@ template.helpers({
 		};
 	},
 });
-
-template.events({
-	'mouseover .js-venue-link, mouseout .js-venue-link'(_event, instance) {
-		instance.$('.event-compact').toggleClass('elevate-child');
-	},
-});
