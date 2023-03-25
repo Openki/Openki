@@ -1,46 +1,64 @@
-import { i18n } from '/imports/startup/both/i18next';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Router } from 'meteor/iron:router';
+import { useTranslation } from 'react-i18next';
+import React from 'react';
+import { Template } from 'meteor/templating';
 
-import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<'adminPanelPage'>;
+export function AdminPanelPage() {
+	const { t } = useTranslation();
 
-const template = Template.adminPanelPage;
+	const tasks = [
+		{
+			name: t('adminPanel.tasks.log', 'Show log'),
+			icon: 'fa-regular fa-rectangle-list',
+			route: 'log',
+		},
+		{
+			name: t('adminPanel.tasks.featuredGroup', 'Feature group'),
+			icon: 'fa-solid fa-users',
+			route: 'featureGroup',
+		},
+		{
+			name: t('adminPanel.tasks.users', 'Users'),
+			icon: 'fa-solid fa-user',
+			route: 'users',
+		},
+		{
+			name: t('adminPanel.tasks.venues', 'Venues'),
+			icon: 'fa-solid fa-house',
+			route: 'venuesMap',
+		},
+		{
+			name: t('adminPanel.tasks.stats', 'Stats'),
+			icon: 'fa-solid fa-chart-line',
+			route: 'stats',
+		},
+		{
+			name: t('adminPanel.tasks.tenants', 'Organizations'),
+			icon: 'fa-solid fa-sitemap',
+			route: 'tenants',
+		},
+	];
 
-template.helpers({
-	tasks() {
-		return [
-			{
-				name: i18n('adminPanel.tasks.log', 'Show log'),
-				icon: 'fa-regular fa-rectangle-list',
-				route: 'log',
-			},
-			{
-				name: i18n('adminPanel.tasks.featuredGroup', 'Feature group'),
-				icon: 'fa-solid fa-users',
-				route: 'featureGroup',
-			},
-			{
-				name: i18n('adminPanel.tasks.users', 'Users'),
-				icon: 'fa-solid fa-user',
-				route: 'users',
-			},
-			{
-				name: i18n('adminPanel.tasks.venues', 'Venues'),
-				icon: 'fa-solid fa-house',
-				route: 'venuesMap',
-			},
-			{
-				name: i18n('adminPanel.tasks.stats', 'Stats'),
-				icon: 'fa-solid fa-chart-line',
-				route: 'stats',
-			},
-			{
-				name: i18n('adminPanel.tasks.tenants', 'Organizations'),
-				icon: 'fa-solid fa-sitemap',
-				route: 'tenants',
-			},
-		];
-	},
-});
+	return (
+		<div className="row">
+			{tasks.map((task) => (
+				<div key={task.route} className="col-12 col-sm-6 col-md-4 mb-4">
+					<a href={Router.path(task.route)}>
+						<div className="admin-task js-admin-task">
+							<i className={`${task.icon} fa-2x`} aria-hidden="true"></i>
+							<h3>{task.name}</h3>
+						</div>
+					</a>
+				</div>
+			))}
+		</div>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper('AdminPanelPage', () => AdminPanelPage);
