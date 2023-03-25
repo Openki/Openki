@@ -27,7 +27,7 @@ export interface EventVenueEntity {
 	 */
 	_id?: string;
 	/** Descriptive name for the venue */
-	name?: string;
+	name: string;
 	/** Event location in GeoJSON format */
 	loc?: Geodata;
 	/** Address string where the event will take place */
@@ -140,6 +140,13 @@ export class OEvent {
 		}
 
 		return FileStorage.generatePublicUrl(this.courseImage);
+	}
+
+	isFullyBooked(this: EventModel) {
+		if (!this.maxParticipants) {
+			return false;
+		}
+		return (this.participants?.length || 0) >= this.maxParticipants;
 	}
 }
 

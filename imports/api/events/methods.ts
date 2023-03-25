@@ -577,7 +577,7 @@ Meteor.methods({
 
 				if (!_.isObject(event.venue)) {
 					// This happens only at creation when the field was not initialized correctly
-					Events.update(event._id, { $set: { venue: {} } });
+					Events.update(event._id, { $set: { venue: { name: '' } } });
 					resolve(false);
 					return;
 				}

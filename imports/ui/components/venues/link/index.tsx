@@ -3,9 +3,19 @@ import { Router } from 'meteor/iron:router';
 import { Template } from 'meteor/templating';
 import { useTranslation } from 'react-i18next';
 
-import { VenueModel } from '/imports/api/venues/venues';
-
 import './styles.scss';
+
+export type Venue = {
+	_id?: string;
+	name: string;
+	slug?: string;
+};
+
+export type Props = {
+	venue: Venue;
+	room?: string | undefined;
+	openInNewTab?: boolean | undefined;
+};
 
 function Venue(props: { name: string }) {
 	const { name } = props;
@@ -17,14 +27,13 @@ function Venue(props: { name: string }) {
 	);
 }
 
-function VenueTag(props: { venue: VenueModel; openInNewTab?: boolean | undefined }) {
+function VenueTag(props: { venue: Venue; openInNewTab?: boolean | undefined }) {
 	const { t } = useTranslation();
 	const { venue, openInNewTab } = props;
 	if (venue?._id) {
 		return (
 			<div className="tag tag-link venue-tag">
 				<a
-					className="js-venue-link"
 					data-bs-toggle="tooltip"
 					data-bs-title={t('location.link.tooltip', 'Show details of {VENUE}', {
 						VENUE: venue.name,
@@ -58,11 +67,7 @@ function RoomTag(props: { name: string | undefined }) {
 	);
 }
 
-export function VenueLink(props: {
-	venue: VenueModel;
-	room?: string | undefined;
-	openInNewTab?: boolean | undefined;
-}) {
+export function VenueLink(props: Props) {
 	const { venue, room, openInNewTab } = props;
 	if (venue?.name) {
 		return (
