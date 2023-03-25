@@ -6,9 +6,8 @@ import React from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 
 import { useDetails } from '/imports/api/version/publications';
-import { Regions } from '/imports/api/regions/regions';
 
-import { getSiteName } from '/imports/utils/getSiteName';
+import { useSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 
@@ -16,7 +15,7 @@ import './styles.scss';
 
 function Links() {
 	const { t } = useTranslation();
-	const siteName = getSiteName(useTracker(() => Regions.currentRegion()));
+	const siteName = useSiteName();
 
 	function links() {
 		return PublicSettings.footerLinks.map((linkSpec) => ({
