@@ -1,40 +1,77 @@
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
+import { Router } from 'meteor/iron:router';
+import { useTranslation } from 'react-i18next';
+import React from 'react';
+import { Template } from 'meteor/templating';
 
-import * as Groups from '/imports/api/groups/publications';
-import { Regions } from '/imports/api/regions/regions';
+import { useDetails } from '/imports/api/groups/publications';
 
-import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
+import { useCurrentRegion } from '/imports/utils/useCurrentRegion';
+import { useSiteName } from '/imports/utils/getSiteName';
 
-import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<
-	'featuredGroup',
-	Record<string, unknown>,
-	{ featuredGroup: ReactiveVar<SubscriptionType<(typeof Groups)['details']> | undefined> }
->;
+function FeaturedGroupBody(props: { groupId: string }) {
+	const { t } = useTranslation();
 
-const template = Template.featuredGroup;
+	const siteName = useSiteName();
 
-template.onCreated(function () {
-	const instance = this;
+	const [featuredGroupIsLoading, featuredGroup] = useDetails(props.groupId);
 
-	instance.featuredGroup = new ReactiveVar(undefined);
+	if (featuredGroupIsLoading() || !featuredGroup) {
+		return null;
+	}
 
-	instance.autorun(() => {
-		const region = Regions.currentRegion();
-		const featuredGroupId = region?.featuredGroup;
-		if (!featuredGroupId) {
-			instance.featuredGroup.set(undefined);
-		} else {
-			instance.featuredGroup.set(Groups.details.subscribe(instance, featuredGroupId));
-		}
-	});
-});
+	return (
+		<div className="featured-group-body">
+			{featuredGroup.logoUrl ? (
+				<div className="featured-group-body-logo">
+					<img className="featured-group-logo" src={featuredGroup.publicLogoUrl()} />
+				</div>
+			) : null}
 
-template.helpers({
-	featuredGroup() {
-		return Template.instance().featuredGroup.get()?.();
-	},
-});
+			<div className="featured-group-body-content">
+				<div className="featured-group-name">
+					{featuredGroup.name} ({featuredGroup.short})
+				</div>
+				<div className="featured-group-links">
+					<a href={Router.path('groupDetails', { _id: featuredGroup._id })}>
+						{t('featuredGroup.coursesOnOpenki', 'Check out the courses of {GROUP} on {SITENAME}!', {
+							GROUP: featuredGroup.name,
+							SITENAME: siteName,
+						})}
+					</a>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+export function FeaturedGroup() {
+	const { t } = useTranslation();
+
+	const currentRegion = useCurrentRegion();
+
+	if (!currentRegion || !currentRegion.featuredGroup) {
+		return null;
+	}
+
+	return (
+		<div className="container">
+			<div className="featured-group">
+				<div className="featured-group-header">
+					<span className="fa-solid fa-star fa-fw" aria-hidden="true"></span>{' '}
+					{t('featuredGroup.heading', 'Featured group in {REGION}', {
+						REGION: currentRegion.name,
+					})}
+				</div>
+				<FeaturedGroupBody groupId={currentRegion.featuredGroup} />
+			</div>
+		</div>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper('FeaturedGroup', () => FeaturedGroup);

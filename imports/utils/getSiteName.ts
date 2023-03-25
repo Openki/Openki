@@ -1,4 +1,5 @@
 import { PublicSettings } from './PublicSettings';
+import { useCurrentRegion } from './useCurrentRegion';
 import { RegionModel } from '/imports/api/regions/regions';
 
 export function getSiteName(region?: RegionModel): string {
@@ -7,4 +8,9 @@ export function getSiteName(region?: RegionModel): string {
 	}
 
 	return PublicSettings.siteName;
+}
+
+export function useSiteName() {
+	const currentRegion = useCurrentRegion();
+	return getSiteName(currentRegion);
 }
