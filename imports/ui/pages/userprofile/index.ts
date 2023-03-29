@@ -1,7 +1,6 @@
-import { Tooltips } from 'meteor/lookback:tooltips';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { i18n } from '/imports/startup/both/i18next';
+import { Mongo } from 'meteor/mongo';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
@@ -11,16 +10,20 @@ import { GroupEntity } from '/imports/api/groups/groups';
 import * as GroupsMethods from '/imports/api/groups/methods';
 import { UserModel } from '/imports/api/users/users';
 import * as usersMethods from '/imports/api/users/methods';
+import * as emailMethods from '/imports/api/emails/methods';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
-
+import { i18n } from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { checkContribution } from '/imports/utils/checkContribution';
+import * as Tooltips from '/imports/utils/Tooltips';
 
 import '/imports/ui/components/profiles/course-list';
 import '/imports/ui/components/profiles/verify-email';
 import '/imports/ui/components/avatar';
 import '/imports/ui/components/send-message';
+import type { Data as SendMessageData } from '/imports/ui/components/send-message';
 
 import './template.html';
 
@@ -42,6 +45,13 @@ const template = Template.userprofilePage;
 
 template.onCreated(function () {
 	const instance = this;
+
+	instance.autorun(() => {
+		const { user } = Template.currentData();
+		const title = i18n('profile.windowtitle', 'Profile of {USER}', { USER: user.getDisplayName() });
+		Metatags.setCommonTags(title);
+	});
+
 	instance.busy(false);
 	const userId = instance.data.user._id;
 
@@ -98,6 +108,20 @@ template.helpers({
 
 		return data.inviteGroups?.count && data.inviteGroups.count() > 0;
 	},
+
+	sendMessageAttr(): SendMessageData {
+		const { data } = Template.instance();
+
+		return {
+			placeholder: i18n('profile.mail.placeholder', 'Hi {USER}. I wanted to tell you…', {
+				USER: data.user.username,
+			}),
+			onSend: async (message, options) => {
+				await emailMethods.sendPrivateMessage(data.user._id, message, options);
+			},
+		};
+	},
+
 	numberOfCoursesAffectedByDelete() {
 		return Template.instance().coursesCreatedBy().length;
 	},
@@ -184,6 +208,7 @@ template.events({
 
 	async 'click .js-group-expel-btn'(this: GroupEntity, _event, instance) {
 		Tooltips.hide();
+
 		const { _id: groupId, name } = this;
 		const { data } = instance;
 		const userId = data.user._id;

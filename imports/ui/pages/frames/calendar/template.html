@@ -7,29 +7,25 @@
 		/* beautify ignore:end */
 
 	</style>
-	{{#if pageReady}}
-		{{#if days}}
-			{{#each day in days}}
-				<h4 class="frame-list-title">{{day}}</h4>
-				{{#each event in (eventsOn day)}}
-					{{> frameCalendarEvent event}}
-				{{/each}}
-			{{/each}}
-			{{#unless ready}}
-				{{> loadingRow}}
-			{{/unless}}
-			{{#if moreEvents}}
-				<div class="show-more">
-					<button class="btn btn-secondary js-show-more-events" type="button">
-						{{i18n 'frame.calendar.showMoreEvents' 'Show more events'}}
-					</button>
-				</div>
-			{{/if}}
-		{{else}}
+	{{#each day in days}}
+		<h4 class="frame-list-title">{{day}}</h4>
+		{{#each event in (eventsOn day)}}
+			{{> frameCalendarEvent event}}
+		{{/each}}
+	{{/each}}
+	{{#if Template.subscriptionsReady}}
+		{{#unless days}}
 			<h2 class="mt-5 text-center">{{i18n 'frame.calendar.noEvents' 'No events planned'}}</h2>
+		{{/unless}}
+		{{#if moreEvents}}
+			<div class="mt-2 text-center">
+				<button class="btn btn-secondary js-show-more-events" type="button">
+					{{i18n '_button.more'}}
+				</button>
+			</div>
 		{{/if}}
 	{{else}}
-		{{> loadingPage}}
+		{{> loadingRow}}
 	{{/if}}
 </template>
 
@@ -39,6 +35,16 @@
 			<span class="frame-list-item-toggle-indicator">
 				<i class="fa-solid fa-angle-down"></i>
 			</span>
+			<div class="frame-list-free-seats" data-bs-toggle="tooltip" data-bs-title="{{#if isUnlimited}}
+									{{i18n 'frame.list.reservation.status.unlimited.tooltip' '{RESERVEDSEATS} of unlimited seats reserved' RESERVEDSEATS=getAttendees}}
+								{{else}}
+									{{i18n 'frame.list.reservation.status.tooltip' '{RESERVEDSEATS} of {TOTALSEATS} seats reserved' RESERVEDSEATS=getAttendees TOTALSEATS=getTotalAvailableSeats}}
+								{{/if}}">
+				{{getAttendees}}/{{getTotalAvailableSeats}}
+
+			</div>
+			<i class="fa fa-user frame-list-free-seats" aria-hidden="true"></i>
+
 			<span class="frame-list-item-time">
 				{{timeFormat start}}
 			</span>
@@ -46,22 +52,23 @@
 			{{#if allRegions}}
 				<span class="badge bg-primary frame-list-item-region">{{regionName}}</span>
 			{{/if}}
+
 		</h4>
 		{{#if expanded}}
-			<div class="frame-list-item-body">
-				<div class="frame-list-item-property">
-					<div class="frame-list-item-label">
-						{{i18n 'frame.eventsList.when' 'When:'}}
+			<div class="p-2">
+				<div class="row">
+					<div class="col-4 col-sm-2">
+						<strong>{{i18n 'frame.eventsList.when' 'When:'}}</strong>
 					</div>
-					<div class="frame-list-item-content">
+					<div class="col-8 col-sm-10">
 						{{timeFormat start}} - {{timeFormat end}}
 					</div>
 				</div>
-				<div class="frame-list-item-property">
-					<div class="frame-list-item-label">
-						{{i18n 'frame.eventsList.where' 'Where:'}}
+				<div class="row">
+					<div class="col-4 col-sm-2">
+						<strong>{{i18n 'frame.eventsList.where' 'Where:'}}</strong>
 					</div>
-					<div class="frame-list-item-content">
+					<div class="col-8 col-sm-10">
 						{{#if venue._id}}
 							<a href="{{pathFor 'venueDetails' _id=venue._id}}" target="_blank">
 								{{venue.name}}
@@ -74,21 +81,17 @@
 						{{/if}}
 					</div>
 				</div>
-				<div class="frame-list-item-property frame-list-item-description">
-					<div class="frame-list-item-label">
-						{{i18n 'frame.eventsList.description' 'Description:'}}
+				<div class="row">
+					<div class="col-sm-2">
+						<strong>{{i18n 'frame.eventsList.description' 'Description:'}}</strong>
 					</div>
-					<div class="frame-list-item-content">
+					<div class="col-sm-10">
 						{{{description}}}
 					</div>
 				</div>
-				<div class="frame-list-item-links">
-					<a class="btn" href="{{pathFor 'showEvent'}}" target="_blank">
+				<div class="mt-2 d-grid d-sm-flex">
+					<a class="btn btn-outline-dark" href="{{pathFor 'showEvent'}}" target="_blank">
 						{{i18n 'frame.calendar.moreAboutThisEvent' 'More about this event on {SITENAME}' SITENAME=siteName}}
-					</a>
-					<a href="{{pathFor 'calEvent' this}}"
-					   class="btn js-download js-track-cal-download">
-						{{i18n 'frame.calendar.download' 'Download'}}
 					</a>
 				</div>
 			</div>

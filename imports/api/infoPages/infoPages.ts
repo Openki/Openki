@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 /** DB-Model */
-interface InfoPagesEntity {
+export interface InfoPagesEntity {
 	/** URL-path of the page /info/:slug */
 	slug: string;
 	/** eg. en, de, de-ZH */
@@ -40,5 +40,3 @@ export class InfoPagesCollection extends Mongo.Collection<InfoPagesEntity> {
 }
 
 export const InfoPages = new InfoPagesCollection();
-
-export default InfoPages;

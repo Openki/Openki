@@ -22,10 +22,10 @@ if (Meteor.isClient) {
 			await waitFor(haveEditfield);
 			await MeteorAsync.loginWithPassword('Seee', 'greg');
 
-			$('input[value=mentor]').trigger('click');
+			$('input[value=mentor]:first').trigger('click');
 			$('.js-title').val(randomTitle);
 			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			$('.js-course-edit-save').trigger('click');
+			$('.js-course-edit-save:first').trigger('click');
 
 			const link = await waitFor(() => {
 				const alertLink = $('.alert a');
@@ -33,7 +33,7 @@ if (Meteor.isClient) {
 					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
-				return alertLink.attr('href');
+				return alertLink.attr('href') as string;
 			});
 
 			// The link opens in a new window so we can't just trigger('click')
@@ -53,10 +53,10 @@ if (Meteor.isClient) {
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 
-			$('input[value=mentor]').trigger('click');
+			$('input[value=mentor]:first').trigger('click');
 			$('.js-title').val(randomTitle);
 			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			$('.js-course-edit-save').trigger('click');
+			$('.js-course-edit-save:first').trigger('click');
 
 			const link = await waitFor(() => {
 				const alertLink = $('.alert a');
@@ -64,7 +64,7 @@ if (Meteor.isClient) {
 					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
-				return alertLink.attr('href');
+				return alertLink.attr('href') as string;
 			});
 
 			// The link opens in a new window so we can't just trigger('click')
@@ -72,7 +72,8 @@ if (Meteor.isClient) {
 
 			await waitFor(() => {
 				assert(
-					$('.group-cc89c5e476').length > 0 && $('.group-573edec5d6').length > 0,
+					$('.group-tag a[href^="/group/cc89c5e476"]').length > 0 &&
+						$('.group-tag a[href^="/group/573edec5d6"]').length > 0,
 					'Multiple groups added in the created course',
 				);
 			});
@@ -87,7 +88,7 @@ if (Meteor.isClient) {
 
 			$('.js-title').val(randomTitle);
 			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			$('.js-course-edit-save').trigger('click');
+			$('.js-course-edit-save:first').trigger('click');
 
 			const link = await waitFor(() => {
 				const alertLink = $('.alert a');
@@ -95,7 +96,7 @@ if (Meteor.isClient) {
 					alertLink.text().includes(randomTitle),
 					'A message that the course was created is shown',
 				);
-				return alertLink.attr('href');
+				return alertLink.attr('href') as string;
 			});
 
 			// The link opens in a new window so we can't just trigger('click')
@@ -126,7 +127,7 @@ if (Meteor.isClient) {
 
 			$('.js-title').val(randomTitle);
 			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-			$('.js-course-edit-save').trigger('click');
+			$('.js-course-edit-save:first').trigger('click');
 
 			await waitFor(() => {
 				assert(

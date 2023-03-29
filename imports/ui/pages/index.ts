@@ -1,5 +1,3 @@
-import './calendar';
-import './event-details';
-import './info';
-import './find';
+import './loading';
 import './not-found';
+import './event-not-found';

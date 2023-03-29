@@ -1,26 +1,35 @@
 import moment from 'moment';
+import { Mongo } from 'meteor/mongo';
 
 import { CourseEntity, CourseModel, Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 
 export interface Stats {
-	detail: {
-		group: string | undefined;
-		groupName: string;
-		numCourses: number;
-		activeCourses: number;
-		passedEvents: number;
-		futureEvents: number;
-		usersParticipating: number;
-	}[];
 	total: {
-		group: string;
 		numCourses: number;
 		activeCourses: number;
 		passedEvents: number;
 		futureEvents: number;
 		usersParticipating: number;
+	};
+	group: {
+		groups: {
+			id: string | undefined;
+			name: string | undefined;
+			numCourses: number;
+			activeCourses: number;
+			passedEvents: number;
+			futureEvents: number;
+			usersParticipating: number;
+		}[];
+		total: {
+			numCourses: number;
+			activeCourses: number;
+			passedEvents: number;
+			futureEvents: number;
+			usersParticipating: number;
+		};
 	};
 }
 
@@ -44,14 +53,13 @@ function getGroupIds(courses: Mongo.Cursor<CourseEntity, CourseModel>) {
 
 function getGroupStatsTotal(stats: Stats) {
 	const totalStats = {
-		group: 'total',
 		numCourses: 0,
 		activeCourses: 0,
 		passedEvents: 0,
 		futureEvents: 0,
 		usersParticipating: 0,
 	};
-	stats.detail.forEach((stat) => {
+	stats.group.groups.forEach((stat) => {
 		totalStats.numCourses += stat.numCourses;
 		totalStats.activeCourses += stat.activeCourses;
 		totalStats.passedEvents += stat.passedEvents;
@@ -98,22 +106,19 @@ function getActiveCoursesStats(courses: Mongo.Cursor<CourseEntity, CourseModel>)
 	return activeCourses;
 }
 
-function getGroupStats(region: string, group?: string | undefined) {
-	let groupFilter: string | RegExp | Mongo.FieldExpression<string> | undefined = group;
-	if (!groupFilter) {
-		groupFilter = { $eq: [] } as any;
+function getGroupStats(regionId: string, groupId?: string) {
+	const courseFilter: Mongo.Selector<CourseEntity> = {};
+
+	if (regionId) {
+		courseFilter.region = regionId;
 	}
 
-	const groupRow = Groups.findOne({ _id: group }, { fields: { name: 1 } });
+	let name: string | undefined;
+	if (groupId) {
+		const groupRow = Groups.findOne({ _id: groupId }, { fields: { name: 1 } });
+		name = groupRow?.name;
 
-	const groupName = groupRow?.name || 'ungrouped';
-
-	const courseFilter: Mongo.Selector<CourseEntity> = {
-		groups: groupFilter,
-	};
-
-	if (region) {
-		courseFilter.region = region;
+		courseFilter.groups = groupId;
 	}
 
 	const courses = Courses.find(courseFilter);
@@ -122,8 +127,29 @@ function getGroupStats(region: string, group?: string | undefined) {
 	const { passedEvents, futureEvents } = getEventStats(courses);
 	const usersParticipating = getUsersParticpating(courses);
 	return {
-		group,
-		groupName,
+		id: groupId,
+		name,
+		numCourses,
+		activeCourses,
+		passedEvents,
+		futureEvents,
+		usersParticipating,
+	};
+}
+
+function getStatsTotal(regionId: string) {
+	const courseFilter: Mongo.Selector<CourseEntity> = {};
+
+	if (regionId) {
+		courseFilter.region = regionId;
+	}
+
+	const courses = Courses.find(courseFilter);
+	const numCourses = courses.count();
+	const activeCourses = getActiveCoursesStats(courses);
+	const { passedEvents, futureEvents } = getEventStats(courses);
+	const usersParticipating = getUsersParticpating(courses);
+	return {
 		numCourses,
 		activeCourses,
 		passedEvents,
@@ -134,16 +160,15 @@ function getGroupStats(region: string, group?: string | undefined) {
 
 export function getRegionStats(regionFilter: string) {
 	const groupIds = getGroupIds(getCourses(regionFilter));
-	const stats: Stats = { detail: [], total: [] as any };
+	const stats: Stats = { total: {} as any, group: { groups: [], total: {} as any } };
 
 	groupIds.forEach((groupId) => {
-		stats.detail.push(getGroupStats(regionFilter, groupId));
+		stats.group.groups.push(getGroupStats(regionFilter, groupId));
 	});
 	// courses without groups
-	stats.detail.push(getGroupStats(regionFilter));
-	stats.detail.sort((a, b) => b.numCourses - a.numCourses);
-	stats.total = getGroupStatsTotal(stats);
+	stats.group.groups.push(getGroupStats(regionFilter));
+	stats.group.groups.sort((a, b) => b.numCourses - a.numCourses);
+	stats.group.total = getGroupStatsTotal(stats);
+	stats.total = getStatsTotal(regionFilter);
 	return stats;
 }
-
-export default getRegionStats;

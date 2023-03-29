@@ -1,34 +1,5 @@
 <template name="tenantRegions">
-	<h3>
-		{{i18n 'tenant.details.regions.title' 'Regions'}}
-	</h3>
-	<div class="row responsive-table-head">
-		<div class="col-md-4">{{i18n 'tenant.details.regions.name' 'Name'}}</div>
-		<div class="col-md-4">{{i18n 'tenant.details.regions.numberOfCourses' 'Number of courses'}}
-		</div>
-		<div class="col-md-4">
-			{{i18n 'tenant.details.regions.numberOfUpcomingEvents' 'Number of upcoming events'}}
-		</div>
+	<div>
+		{{> React (component TenantRegions)}}
 	</div>
-	{{#each region in regions}}
-		<div class="row responsive-table-row">
-			<div class="col-6 responsive-table-head">{{i18n 'tenant.details.regions.name'}}</div>
-			<div class="col-6 col-md-4"><a
-				   href="{{pathFor 'regionDetails' _id=region._id}}">{{region.name}}</a></div>
-			<div class="col-6 responsive-table-head">
-				{{i18n 'tenant.details.regions.numberOfCourses'}}
-			</div>
-			<div class="col-6 col-md-4">{{region.courseCount}}</div>
-			<div class="col-6 responsive-table-head">
-				{{i18n 'tenant.details.regions.numberOfUpcomingEvents'}}
-			</div>
-			<div class="col-6 col-md-4">{{region.futureEventCount}}</div>
-		</div>
-	{{/each}}
-	{{#if showAddRegion}}
-		<a class="btn btn-add"
-		   href="{{pathFor 'regionCreate' query=(concat 'tenant=' tenant._id)}}">
-			{{i18n 'tenant.details.regions.createNew.button' 'Create a new region'}}
-		</a>
-	{{/if}}
 </template>

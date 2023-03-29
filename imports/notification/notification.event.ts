@@ -10,7 +10,7 @@ import { Log } from '/imports/api/log/log';
 import { RegionModel, Regions } from '/imports/api/regions/regions';
 import { UserModel } from '/imports/api/users/users';
 
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import { getSiteName } from '/imports/utils/getSiteName';
 
 interface Body {
@@ -143,8 +143,6 @@ export function Model(entry: { body: Body }) {
 				eventStart: startMoment.format('LT'),
 				eventEnd: endMoment.format('LT'),
 				venueLine,
-				regionName: region.name,
-				timeZone: endMoment.format('z'), // Ignoring the possibility that event start could have a different offset like when going from CET to CEST
 				eventLink: Router.url('showEvent', event, { query: 'campaign=eventNotify' }),
 				registerToEventLink: Router.url('showEvent', event, {
 					query: 'action=register&campaign=eventNotify',

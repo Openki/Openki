@@ -1,30 +1,31 @@
-<template name="calendar">
-	{{> calendarNavMulti date=startDate}}
+<template name="calendarPage">
+	{{> calendarNavMulti date=startDate setIsAttendeeFilterOn=setterToBePassedToChild}}
 	<div class="container calendar-container">
 		<div class="page-component">
-			{{#each day in days}}
-				{{> calendarDayFormat day=day filter=filter}}
-				<hr>
-			{{/each}}
+			{{#if Template.subscriptionsReady}}
+				{{#each day in days}}
+					{{> calendarDay day=day filter=instance.filter isAttendeeFilterOn=isAttendeeFilterOn}}
+					<hr>
+				{{/each}}
+			{{else}}
+				{{> loadingRow}}
+			{{/if}}
 		</div>
+
 	</div>
 </template>
 
-<template name="calendarDayFormat">
+<template name="calendarDay">
 	<div class="js-calendar-date calendar-date">
 		{{calendarDayFormat day.start}}
 	</div>
-	{{#if eventsReady}}
-		{{#unless hasEvents}}
-			<br>
-			{{i18n 'calendar.noCoursesThisDay' "There are no events on this day"}}
-		{{/unless}}
-		{{#if hasEvents}}
-			<div class="calendar-event-list">
-				{{> eventList dataEvents=events withDate=false}}
-			</div>
-		{{/if}}
+	{{#if hasEvents}}
+		<div class="calendar-event-list">
+			{{> eventList dataEvents=(maybeFilteredEvents events isAttendeeFilterOn=isAttendeeFilterOn) withDate=false withImage=true}}
+			{{! maybeFilteredEvents is a template helper that gives back a list of events in function of two arguments: events and isAttendeeFilterOn }}
+		</div>
 	{{else}}
-		{{> loadingRow}}
+		<br>
+		{{i18n 'calendar.noCoursesThisDay' "There are no events on this day"}}
 	{{/if}}
 </template>

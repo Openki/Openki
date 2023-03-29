@@ -1,37 +1,5 @@
 <template name="eventCompact">
-	<div class="event-compact-wrap">
-		<a href="{{pathFor 'showEvent'}}">
-			<div class="event-compact {{eventCompactClasses}}">
-				<div class="event-compact-header">
-					{{#if withDate}}
-						<span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
-						{{weekdayFormat startLocal}}
-						{{calendarDayShort startLocal}}
-						<br>
-					{{/if}}
-					<span class="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
-					<span class="event-compact-time">
-						{{timeFormat startLocal}} - {{timeFormat endLocal}}
-					</span>
-					<br>
-					<div class="tag-group">
-						{{> venueLink}}
-					</div>
-				</div>
-				<div class="event-compact-body">
-					{{#if internal}}
-						<span class="event-compact-internal"
-							  data-tooltip="{{i18n 'eventCompact.internal_event' 'Internal event'}}"></span>
-					{{/if}}
-					<h4 class="event-compact-title">
-						{{plain title}}
-					</h4>
-					<br />
-					<p class="event-compact-description">
-						{{plain description}}
-					</p>
-				</div>
-			</div>
-		</a>
+	<div>
+		{{> React (component EventCompact)}}
 	</div>
 </template>

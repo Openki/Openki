@@ -6,7 +6,7 @@ import { _ } from 'meteor/underscore';
 
 import { EventVenueEntity } from '/imports/api/events/events';
 import * as Alert from '/imports/api/alerts/alert';
-import { FindFilter, VenueEntity, Venues } from '/imports/api/venues/venues';
+import { FindFilter, Venues } from '/imports/api/venues/venues';
 import { UserModel, Users } from '/imports/api/users/users';
 
 import {
@@ -95,7 +95,7 @@ template.onCreated(function () {
 				if (mark.presetAddress) {
 					updLocation.address = mark.presetAddress;
 				}
-				if ('preset' in mark && mark.preset) {
+				if (mark.preset) {
 					updLocation._id = mark._id;
 					updLocation.editor = mark.editor;
 					updLocation.name = mark.presetName;
@@ -147,14 +147,14 @@ template.onCreated(function () {
 
 		instance.subscribe('Venues.findFilter', query, 10);
 		Venues.findFilter(localQuery).observe({
-			added(originalLocation: VenueEntity) {
-				const location = {
+			added(originalLocation) {
+				const location: ProposedMarkerEntity = {
 					...originalLocation,
 					proposed: true,
 					preset: true,
 					presetName: originalLocation.name,
 					presetAddress: originalLocation.address,
-				} as ProposedMarkerEntity;
+				};
 				instance.locationTracker.markers.insert(location);
 			},
 		});
@@ -189,7 +189,7 @@ template.helpers({
 	},
 
 	hostProfileLink() {
-		return Router.url('userprofile', Template.instance().venueEditor.get());
+		return Router.url('userprofile', Template.instance().venueEditor.get() as any);
 	},
 
 	eventMarkers() {
@@ -202,18 +202,13 @@ template.helpers({
 		// We return a function so the reactive dependency on locationState is
 		// established from within the map template which will call it. The
 		// craziness is strong with this one.
-		return function () {
-			return !location.get().loc;
-		};
+		return () => !location.get().loc;
 	},
 
 	allowRemoving() {
-		const { locationIs } = Template.instance();
-		const { location } = Template.instance();
+		const { locationIs, location } = Template.instance();
 
-		return function () {
-			return locationIs('own') && location.get().loc;
-		};
+		return () => locationIs('own') && !!location.get().loc;
 	},
 
 	hoverClass() {
@@ -265,10 +260,22 @@ template.events({
 			}
 			_.each(found, (foundLocation) => {
 				const marker = {
-					loc: { type: 'Point', coordinates: [foundLocation.lon, foundLocation.lat] },
+					loc: {
+						type: 'Point',
+						coordinates: [
+							Number.parseFloat(foundLocation.lon),
+							Number.parseFloat(foundLocation.lat),
+						],
+					},
 					proposed: true,
-					presetAddress: foundLocation.display_name,
-					name: foundLocation.display_name,
+					presetAddress: foundLocation.display_name.replace(
+						/[^\d]*(\d+), ([^,]+),.*, ([^,]+), (\d+), [^,]+/,
+						'$2 $1, $4 $3',
+					),
+					name: foundLocation.display_name.replace(
+						/[^\d]*(\d+), ([^,]+),.*, ([^,]+), (\d+), [^,]+/,
+						'$2 $1, $4 $3',
+					),
 				} as ProposedMarkerEntity;
 				instance.locationTracker.markers.insert(marker);
 			});

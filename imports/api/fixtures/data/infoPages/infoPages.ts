@@ -25,5 +25,3 @@ export const infoPages = [
 		body: faqFr,
 	},
 ];
-
-export default infoPages;

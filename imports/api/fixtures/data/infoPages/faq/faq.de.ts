@@ -26,7 +26,7 @@ Uns ist bewusst, dass es verschiedene zusätzliche Features gibt, welche die Sel
 Nicht nur die Software von Openki ist Open-Source, sondern auch deren Entwicklung und Organisation wird offengelegt. Das heisst zum Beispiel, du siehst [hier](https://gitlab.com/Openki/Openki/issues), welches die nächsten geplanten technischen Schritte sind und darfst dort gerne aktiv an der Diskussion teilnehmen.
 Alternativ kannst du einfach auch eine Email mit deinen Vorschlägen an: openki-core[ät]lists.xiala.net senden.
 
-Falls du bei der Übersetzung von Openki helfen möchtest, findest du hier die benötigten Informationen: [openki.net/translate](https://openki.net/translate)
+Falls du bei der Übersetzung von Openki helfen möchtest, findest du hier die benötigten Informationen: [online Übersetzer](https://gitlab.com/Openki/Openki/-/wikis/i18n-howto)
 
 <!-- ### Gibt es ähnliche Projekte wie Openki? TODO VERGLICHS-TABELLE EINFÜGEN? -->
 
@@ -191,4 +191,3 @@ Openki.net ist standardmässig SSL verschlüsselt. Dies ist die gleiche Technolo
 
 ### Wo gibts Antworten auf technische Fragen?
 Die technische Dokumentation ist in unserem [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home) zu finden.`;
-export default body;

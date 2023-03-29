@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
@@ -11,7 +12,6 @@ import { CourseModel } from '/imports/api/courses/courses';
 import { reactiveNow } from '/imports/utils/reactive-now';
 
 import '/imports/ui/components/events/list';
-import '/imports/ui/components/loading';
 import '/imports/ui/components/courses/delete-events';
 
 import './template.html';
@@ -22,7 +22,6 @@ import './styles.scss';
 		'courseEvents',
 		{ course: CourseModel },
 		{
-			eventSub: Meteor.SubscriptionHandle;
 			state: ReactiveDict<{ showAllEvents: boolean; showModal: boolean }>;
 			deleteCourseEventsArgs: { onShowEventsDeleteModal: () => void };
 			deleteEventsModalArgs: { onShowEventsDeleteModal: () => void };
@@ -39,7 +38,7 @@ import './styles.scss';
 		const instance = this;
 		const courseId = this.data.course._id;
 
-		instance.eventSub = instance.subscribe('eventsForCourse', courseId);
+		instance.subscribe('eventsForCourse', courseId);
 
 		const maxEventsShown = 4;
 		instance.state = new ReactiveDict();
@@ -87,10 +86,6 @@ import './styles.scss';
 		haveMoreEvents() {
 			const instance = Template.instance();
 			return instance.haveMoreEvents() && !instance.state.get('showAllEvents');
-		},
-
-		ready() {
-			return Template.instance().eventSub.ready();
 		},
 
 		deleteCourseEventsArgs() {
@@ -164,7 +159,9 @@ import './styles.scss';
 
 	template.events({
 		'mouseover/mouseout .event-caption-action'(event, instance) {
-			instance.$(event.currentTarget as any).toggleClass('placeholder', event.type === 'mouseout');
+			instance
+				.$(event.currentTarget as any)
+				.toggleClass('event-caption-placeholder', event.type === 'mouseout');
 		},
 	});
 }

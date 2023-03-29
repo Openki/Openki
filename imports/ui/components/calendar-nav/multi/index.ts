@@ -7,7 +7,7 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import { Spacebars } from 'meteor/spacebars';
 import moment from 'moment';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 
 import * as UrlTools from '/imports/utils/url-tools';
 
@@ -17,7 +17,7 @@ import '../styles.scss';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'calendarNavMulti',
-		unknown,
+		{ date: unknown; setIsAttendeeFilterOn: (state: boolean) => void },
 		{ currentUnit: ReactiveVar<string> }
 	>;
 
@@ -48,15 +48,22 @@ import '../styles.scss';
 			}
 		});
 	});
+
+	template.events({
+		'change .js-filter-own-events'(event) {
+			// call the parent method that gets passed into this template as a (prop) argument
+			Template.instance().data.setIsAttendeeFilterOn((event.target as HTMLInputElement).checked);
+		},
+	});
 }
 
 {
 	const units = ['week', 'month', 'year'] as const;
 
 	type Direction = 'previous' | 'next';
-	type Unit = typeof units[number];
+	type Unit = (typeof units)[number];
 
-	const updateUrl = function (filter: ReturnType<typeof Events['Filtering']>) {
+	const updateUrl = function (filter: ReturnType<(typeof Events)['Filtering']>) {
 		const filterParams = filter.toParams();
 		delete filterParams.region; // HACK region is kept in the session (for bad reasons)
 		const queryString = UrlTools.paramsToQueryString(filterParams);
@@ -70,8 +77,8 @@ import '../styles.scss';
 	};
 	const mvDateHandler = function (unit: Unit, instance: any) {
 		const amount = instance.data.direction === 'previous' ? -1 : 1;
-		const filter = instance.parentInstance(2).filter as ReturnType<typeof Events['Filtering']>;
-		const start = filter.get('start');
+		const filter = instance.parentInstance(2).filter as ReturnType<(typeof Events)['Filtering']>;
+		const start = filter.get('start') as moment.Moment;
 		const weekCorrection = unit === 'week' ? 0 : 1;
 
 		if (amount < 0) {

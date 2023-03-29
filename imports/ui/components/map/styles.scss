@@ -5,7 +5,8 @@
 	width: 200px;
 }
 
-.map-box {
+.map-box,
+.map-fullscreen {
 	.fa-regular,
 	.fa-brands,
 	.fa-solid {
@@ -16,10 +17,10 @@
 .map-fullscreen {
 	bottom: 0;
 	left: 0;
-	position: fixed;
 	right: 0;
+	// position: fixed; Does not work on iOS check index.ts how it is fixed
 	top: 0;
-	z-index: 9999;
+	z-index: $zindex-map;
 }
 
 .map-fullscreen .fa-map-marker {
@@ -33,6 +34,10 @@
 .map {
 	height: 100%;
 	width: 100%;
+}
+
+.leaflet-right .comp-icon {
+	margin-right: 18px;
 }
 
 .leaflet-marker-pane .leaflet-marker-icon {

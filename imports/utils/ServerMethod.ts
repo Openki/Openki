@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { MeteorAsync } from './promisify';
 
 /**
  * Registers a function as a meteor method and makes it callable.
@@ -9,31 +8,42 @@ import { MeteorAsync } from './promisify';
  *
  * Inspired by the Advanced Method Boilerplate in the Meteor Guide.
  * https://guide.meteor.com/methods.html#advanced-boilerplate
+ *
+ * @param name Name of method.
+ * @param run Function called on the server each time a client invokes it. Inside the function,
+ * `this` is the method invocation handler object.
+ * @returns A callable and typesafe function for the client, that returns a promise
  */
 export function ServerMethod<T extends any[], R>(
 	name: string,
-	run: (this: Meteor.MethodThisType, ...args: T) => R,
+	run: (this: Meteor.MethodThisType, ...args: T) => R | Promise<R>,
 	options: {
 		/**
-		 * When a Method is called, it usually runs twice—once on the client to simulate the result
+		 * When a method is called, it usually runs twice—once on the client to simulate the result
 		 * for Optimistic UI, and again on the server to make the actual change to the database.
 		 * Some methods can not simulated on the client (for example, if you didn’t load some data
-		 * on the client that the Method needs to do the simulation properly). With
+		 * on the client that the method needs to do the simulation properly). With
 		 * `{ simulation: false }` you can disable simulation in this case. Default is `true`
 		 */
 		simulation: boolean;
 	} = { simulation: true },
 ) {
+	// register
 	Meteor.methods({
+		// wrap the call to handle options
 		[name](...args) {
+			// this runs on the server (and is simulated on the client)
+
 			if (Meteor.isClient && !options.simulation) {
+				// do nothing on the client if simulation is deactivated
 				return undefined;
 			}
+
+			// everyting is okay, do the work
 			return run.call(this, ...args);
 		},
 	});
 
-	return ((...args: T) => MeteorAsync.call(name, ...args)) as (...args: T) => Promise<R>;
+	// give back a callable and typesafe function for the client
+	return ((...args: T) => Meteor.callAsync(name, ...args)) as (...args: T) => Promise<R>;
 }
-
-export default ServerMethod;

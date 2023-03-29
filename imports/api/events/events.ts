@@ -1,4 +1,5 @@
 import { Mongo } from 'meteor/mongo';
+import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 // eslint-disable-next-line import/no-cycle
@@ -10,9 +11,10 @@ import { UserModel } from '/imports/api/users/users';
 
 import * as AsyncTools from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
+import * as FileStorage from '/imports/utils/FileStorage';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { FieldSort, FieldSortPattern, Sort } from '/imports/utils/sort-spec';
@@ -25,7 +27,7 @@ export interface EventVenueEntity {
 	 */
 	_id?: string;
 	/** Descriptive name for the venue */
-	name?: string;
+	name: string;
 	/** Event location in GeoJSON format */
 	loc?: Geodata;
 	/** Address string where the event will take place */
@@ -96,6 +98,8 @@ export interface EventEntity {
 	start: Date;
 	/** (calculated) date object calculated from endLocal field. */
 	end: Date;
+	/** (calculated) image from the course */
+	courseImage: string;
 }
 
 export type EventModel = OEvent & EventEntity;
@@ -129,24 +133,41 @@ export class OEvent {
 			return timeA.hour() === timeB.hour() && timeA.minute() === timeB.minute();
 		});
 	}
+
+	publicImageUrl(this: EventModel) {
+		if (!this.courseImage) {
+			return undefined;
+		}
+
+		return FileStorage.generatePublicUrl(this.courseImage);
+	}
+
+	isFullyBooked(this: EventModel) {
+		if (!this.maxParticipants) {
+			return false;
+		}
+		return (this.participants?.length || 0) >= this.maxParticipants;
+	}
 }
 
 export const FindFilterPattern = {
 	/** string of words to search for */
 	search: Match.Maybe(String),
-	/** include only events that overlap the given
-	 * period (list of start and end date) */
+	/** include only events that overlap the given period (list of start and end date) */
 	period: Match.Maybe(Tuple<[start: DateConstructor, end: DateConstructor]>(Date, Date)),
-	/** only events that end after this date */
+	/** only events that end after this date (so it also includes ongoning events at this point in time) */
 	start: Match.Maybe(Date),
-	/** only events that ended before this date */
-	before: Match.Maybe(Date),
-	/** only events that are ongoing during this date */
-	ongoing: Match.Maybe(Date),
-	/** only events that started before this date */
-	end: Match.Maybe(Date),
 	/**  only events starting after this date */
 	after: Match.Maybe(Date),
+	/** only events that are ongoing during this date */
+	ongoing: Match.Maybe(Date),
+	/**
+	 * only events that ended before this date, if none "after" is given this also changes the
+	 * order of events
+	 */
+	before: Match.Maybe(Date),
+	/** only events that started before this date, (so it also includes ongoning events at this point in time) */
+	end: Match.Maybe(Date),
 	/** only events at this venue (ID) */
 	venue: Match.Maybe(String),
 	/** only events at this venues (IDs) */
@@ -169,8 +190,28 @@ export const FindFilterPattern = {
 	course: Match.Maybe(String),
 	/** only events that are internal (if true) or public (if false) */
 	internal: Match.Maybe(Boolean),
+	/** only events with given participant (ID) */
+	participant: Match.Maybe(String),
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
+
+export const FindParams = {
+	course: Predicates.id,
+	region: Predicates.id,
+	participant: Predicates.id,
+	search: Predicates.string,
+	categories: Predicates.ids,
+	group: Predicates.id,
+	groups: Predicates.ids,
+	venue: Predicates.id,
+	venues: Predicates.ids,
+	room: Predicates.string,
+	start: Predicates.date,
+	after: Predicates.date,
+	before: Predicates.date,
+	end: Predicates.date,
+	internal: Predicates.flag,
+};
 
 export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> {
 	constructor() {
@@ -188,30 +229,24 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		}
 	}
 
-	insert(event: EventModel, callback?: (err?: unknown, _id?: string) => void) {
+	insert(event: Mongo.OptionalId<EventEntity>, callback?: (err?: unknown, _id?: string) => void) {
 		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
 
 		return super.insert(enrichedEvent, callback);
 	}
 
+	insertAsync(
+		event: Mongo.OptionalId<EventEntity>,
+		callback?: (err?: unknown, _id?: string) => void,
+	) {
+		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
+
+		return super.insertAsync(enrichedEvent, callback);
+	}
+
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
-		return new Filtering({
-			course: Predicates.id,
-			region: Predicates.id,
-			search: Predicates.string,
-			categories: Predicates.ids,
-			group: Predicates.id,
-			groups: Predicates.ids,
-			venue: Predicates.id,
-			venues: Predicates.ids,
-			room: Predicates.string,
-			start: Predicates.date,
-			before: Predicates.date,
-			after: Predicates.date,
-			end: Predicates.date,
-			internal: Predicates.flag,
-		});
+		return new Filtering(FindParams);
 	}
 
 	/**
@@ -258,43 +293,6 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 				update.courseGroups = courseGroups;
 				update.allGroups = _.union(event.groups, courseGroups);
 			}
-
-			this.rawCollection().updateMany({ _id: event._id }, { $set: update }, {}, (err, result) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(result?.modifiedCount === 0);
-				}
-			});
-		});
-	}
-
-	/**
-	 * Recalculate the group-related fields of an event
-	 * @param eventId the event to update
-	 */
-	updateCategories(eventId: string) {
-		AsyncTools.untilClean((resolve, reject) => {
-			const event = this.findOne(eventId);
-
-			if (!event) {
-				// Nothing was successfully updated, we're done.
-				resolve(true);
-				return;
-			}
-
-			if (!event.courseId) {
-				resolve(true);
-				return;
-			}
-			// categories comes from the parent course
-
-			const course = Courses.findOne(event.courseId);
-			if (!course) {
-				throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
-			}
-
-			const update: Partial<EventEntity> = { categories: course.categories };
 
 			this.rawCollection().updateMany({ _id: event._id }, { $set: update }, {}, (err, result) => {
 				if (err) {
@@ -415,6 +413,10 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 			find.courseId = filter.course;
 		}
 
+		if (filter.participant) {
+			find.participants = filter.participant;
+		}
+
 		if (filter.internal !== undefined) {
 			find.internal = Boolean(filter.internal);
 		}
@@ -444,5 +446,3 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 }
 
 export const Events = new EventsCollection();
-
-export default Events;

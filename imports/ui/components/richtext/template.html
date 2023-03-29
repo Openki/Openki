@@ -4,7 +4,7 @@
 	</div>
 	{{#if characterLimitReached}}
 		<div class="invalid-feedback">
-			{{i18n 'richtext.maxlength' 'Too many characters used. {MAXNUMBER} are allowed. Please remove {NUMBER} characters to be able to save.' NUMBER=removeNumberOfCharacters MAXNUMBER=maxlength}}
+			{{i18n '_inputField.maxlength'  NUMBER=removeNumberOfCharacters MAXNUMBER=maxlength}}
 		</div>
 	{{/if}}
 </template>

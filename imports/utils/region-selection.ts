@@ -2,60 +2,62 @@ import { Accounts } from 'meteor/accounts-base';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
-import { Regions } from '/imports/api/regions/regions';
+import * as Regions from '/imports/api/regions/publications';
 import * as usersMethods from '/imports/api/users/methods';
+import { RegionModel } from '/imports/api/regions/regions';
 
 import * as UserLocation from '/imports/utils/user-location';
 import * as UrlTools from '/imports/utils/url-tools';
+import { Subscriber } from '/imports/utils/ServerPublishBlaze';
 
 /**
  * List of routes that show different results when the region changes.
  */
-export const regionDependentRoutes = ['home', 'find', 'calendar', 'venuesMap', 'groupDetails'];
+export const regionDependentRoutes = ['home', 'calendar', 'venuesMap', 'groupDetails'];
+
+function persistRegion(region: string) {
+	try {
+		localStorage.setItem('region', region); // to survive page reload
+	} catch {
+		// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+	}
+	Session.set('region', region);
+}
 
 /**
  * @param tenantId the tenant where the region should be.
  */
-function useAsRegion(regionIdOrName: string, tenantId?: string) {
+function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: string) {
 	if (!regionIdOrName) {
 		return false;
 	}
 
 	// Special case 'all'
 	if (!tenantId && regionIdOrName === 'all') {
-		try {
-			localStorage.setItem('region', regionIdOrName);
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
-		Session.set('region', regionIdOrName);
+		persistRegion(regionIdOrName);
 		return true;
 	}
 
 	// Normal case region ID
 	if (
-		Regions.findOne(tenantId ? { tenant: tenantId, _id: regionIdOrName } : { _id: regionIdOrName })
+		regions.some(
+			tenantId
+				? (r) => r.tenant === tenantId && r._id === regionIdOrName
+				: (r) => r._id === regionIdOrName,
+		)
 	) {
-		try {
-			localStorage.setItem('region', regionIdOrName);
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
-		Session.set('region', regionIdOrName);
+		persistRegion(regionIdOrName);
 		return true;
 	}
 
 	// Special case by name so you can do ?region=Spilistan
-	const region = Regions.findOne(
-		tenantId ? { tenant: tenantId, name: regionIdOrName } : { name: regionIdOrName },
+	const region = regions.find(
+		tenantId
+			? (r) => r.tenant === tenantId && r.name === regionIdOrName
+			: (r) => r.name === regionIdOrName,
 	);
 	if (region) {
-		try {
-			localStorage.setItem('region', region._id);
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
-		Session.set('region', region._id);
+		persistRegion(region._id);
 		return true;
 	}
 
@@ -67,18 +69,23 @@ function useAsRegion(regionIdOrName: string, tenantId?: string) {
  * @param preferredTenant On set: Prefer a particular tenant when detection.
  * @param confirmAutodectionByUser On true: Let the user approve the automatic region selection/detection.
  */
-export function subscribe(preferredTenant?: string, confirmAutodectionByUser = true) {
-	Meteor.subscribe('Regions', async () => {
+export async function subscribe(
+	instance: Subscriber,
+	preferredTenant?: string,
+	confirmAutodectionByUser = true,
+) {
+	const findFilter = Regions.findFilter.subscribe(instance, async () => {
 		const selectors = [
 			Session.get('region'),
 			UrlTools.queryParam('region'),
 			localStorage?.getItem('region'),
-		].filter(Boolean);
+		].filter(Boolean) as string[];
 
+		const regions = findFilter().fetch();
 		if (preferredTenant) {
 			// check if we can find a region for a preferred tenant
 
-			if (selectors.some((s) => useAsRegion(s, preferredTenant))) {
+			if (selectors.some((s) => useAsRegion(regions, s, preferredTenant))) {
 				return;
 			}
 
@@ -91,8 +98,9 @@ export function subscribe(preferredTenant?: string, confirmAutodectionByUser = t
 				console.log(`Region autodetection error: ${err}`);
 			}
 
-			preferredTenantRegion = preferredTenantRegion || Regions.findOne({ preferredTenant });
-			if (preferredTenantRegion && useAsRegion(preferredTenantRegion._id)) {
+			preferredTenantRegion =
+				preferredTenantRegion || regions.find((r) => r.tenant === preferredTenant);
+			if (preferredTenantRegion && useAsRegion(regions, preferredTenantRegion._id)) {
 				// found a region for the preferred tenant
 				if (confirmAutodectionByUser) {
 					Session.set('showRegionSplash', true);
@@ -104,12 +112,11 @@ export function subscribe(preferredTenant?: string, confirmAutodectionByUser = t
 		}
 
 		// If any of these regions are usable we stop here
-		if (selectors.some((s) => useAsRegion(s))) {
+		if (selectors.some((s) => useAsRegion(regions, s))) {
 			return;
 		}
 
-		const regions = Regions.findFilter({}, 2).fetch();
-		if (regions.length === 1 && useAsRegion(regions[0]._id)) {
+		if (regions.length === 1 && useAsRegion(regions, regions[0]._id)) {
 			// there is only one region on this instance or visible for this user
 			return;
 		}
@@ -127,10 +134,10 @@ export function subscribe(preferredTenant?: string, confirmAutodectionByUser = t
 		}
 
 		if (region) {
-			useAsRegion(region._id);
+			useAsRegion(regions, region._id);
 		} else {
 			// Give up
-			useAsRegion('all');
+			useAsRegion(regions, 'all');
 		}
 
 		if (confirmAutodectionByUser) {
@@ -153,27 +160,17 @@ export function init() {
 		if (user) {
 			const { regionId } = user.profile;
 			if (regionId) {
-				try {
-					localStorage.setItem('region', regionId);
-				} catch {
-					// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-				}
-				Session.set('region', regionId);
+				persistRegion(regionId);
 			}
 		}
 	});
 
-	subscribe();
+	subscribe(Meteor);
 }
 
-export function change(regionId: string) {
-	try {
-		localStorage.setItem('region', regionId); // to survive page reload
-	} catch {
-		// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-	}
-	Session.set('region', regionId);
+export async function change(regionId: string) {
+	persistRegion(regionId);
 	if (regionId !== 'all' && Meteor.userId()) {
-		usersMethods.regionChange(regionId);
+		await usersMethods.regionChange(regionId);
 	}
 }

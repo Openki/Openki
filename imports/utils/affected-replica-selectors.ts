@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { EventEntity } from '/imports/api/events/events';
 
 export function AffectedReplicaSelectors(
@@ -26,5 +27,3 @@ export function AffectedReplicaSelectors(
 
 	return selector;
 }
-
-export default AffectedReplicaSelectors;

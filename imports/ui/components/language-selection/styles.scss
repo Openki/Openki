@@ -1,6 +1,6 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
-.language-selection .dropdown-menu {
+.navbar .language-selection .dropdown-menu {
 	@include media-breakpoint-down(lg) {
 		background: none;
 		border: 0;
@@ -10,4 +10,8 @@
 		margin-right: 0 !important;
 		position: initial;
 	}
+}
+
+.language-name {
+	display: inline-block;
 }

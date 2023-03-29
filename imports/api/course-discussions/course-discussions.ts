@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 /** DB-Model */
@@ -30,5 +31,3 @@ export class CourseDiscussionsCollection extends Mongo.Collection<CourseDiscussi
 	}
 }
 export const CourseDiscussions = new CourseDiscussionsCollection();
-
-export default CourseDiscussions;

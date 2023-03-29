@@ -19,7 +19,7 @@
 		<div class="row">
 			<div class="col filter-component">
 				<h4 class="filter-component-header">
-					{{i18n 'find.filter.courseStates' 'Course states'}}
+					{{i18n 'find.filter.courseStates' 'States'}}
 				</h4>
 				<div class="row gx-3">
 					{{#each stateFilter in stateFilters}}
@@ -45,7 +45,6 @@
 									 title="{{i18n 'filterCaptions.archived.title' 'Show only courses that are archived' attr=true}}">
 									<span class="filter-caption-text">
 										{{i18n 'filterCaptions.archived.label' 'Archived'}}
-										<i class="fa-solid fa-xmark fa-fw" aria-hidden="true"></i>
 										<i class="fa-solid fa-check fa-fw" aria-hidden="true"></i>
 									</span>
 								</div>
@@ -71,7 +70,7 @@
 <template name="additionalFilters">
 	<div aria-label="filter-course-roles" class="col-md-3 filter-component" role="group">
 		<h4 class="filter-component-header">
-			{{i18n 'find.filter.courseRoles' 'Course roles'}}
+			{{i18n 'find.filter.courseRoles' 'Roles'}}
 		</h4>
 		{{#each role in roles}}
 			<button class="filter-course-role js-filter-course-role {{roleClasses role}}"

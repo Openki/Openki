@@ -1,26 +1,27 @@
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
-import { Session } from 'meteor/session';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
+import { Session } from 'meteor/session';
 
 import * as Alert from '/imports/api/alerts/alert';
-import Categories from '/imports/api/categories/categories';
+import { Categories } from '/imports/api/categories/categories';
 import { Course, CourseMemberEntity, CourseModel, Courses } from '/imports/api/courses/courses';
 import * as CoursesMethods from '/imports/api/courses/methods';
 import { GroupEntityCustomCourseFields, Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { RoleEntity, Roles } from '/imports/api/roles/roles';
 
-import { Editable } from '/imports/ui/lib/editable';
-import { PleaseLogin } from '/imports/ui/lib/please-login';
-
+import { PublicSettings } from '/imports/utils/PublicSettings';
 import * as StringTools from '/imports/utils/string-tools';
 import { hasRoleUser } from '/imports/utils/course-role-utils';
+
 import * as Analytics from '/imports/ui/lib/analytics';
+import { Editable } from '/imports/ui/lib/editable';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
@@ -41,6 +42,7 @@ export type Data = {
 	hidePricePolicy: boolean;
 	roles: string[];
 	creatorsRoles: string[];
+	singleEvent?: boolean;
 } & Partial<CourseModel>;
 
 {
@@ -80,6 +82,7 @@ export type Data = {
 				'course.description.placeholder',
 				'Describe your idea, so more people find it and know what to expect.',
 			),
+			PublicSettings.courseDescriptionMax,
 		);
 
 		instance.state = new ReactiveDict();
@@ -96,6 +99,45 @@ export type Data = {
 		instance.savedCourseId = new ReactiveVar(undefined);
 		instance.showSavedMessage = new ReactiveVar(false);
 
+		function getRegion() {
+			const data = Template.currentData();
+			const courseId = data._id || '';
+			const isNew = courseId === '';
+			if (isNew) {
+				if (data.isFrame && data.region) {
+					// The region was preset for the frame
+					Regions.findOne({ _id: data.region });
+				} else if (Regions.findFilter({}, 2).count() === 1) {
+					// There is only one region
+					return Regions.findOne();
+				} else {
+					return Regions.currentRegion();
+				}
+			}
+			return undefined;
+		}
+
+		instance.getGroups = () => {
+			const data = Template.currentData();
+			const groups = [];
+
+			const defaultTeamGroup = getRegion()?.defaultTeamGroup;
+			if (defaultTeamGroup) {
+				groups.push(defaultTeamGroup);
+			}
+
+			if (data && data instanceof Course && !(data as CourseModel).isNew()) {
+				groups.push(...data.groupOrganizers);
+			} else if (!data.isFrame) {
+				if (data.group) {
+					groups.push(data.group);
+				}
+			} else if (data.teamGroups?.length > 0) {
+				groups.push(...data.teamGroups);
+			}
+			return groups;
+		};
+
 		instance.autorun(() => {
 			const data = Template.currentData();
 
@@ -105,19 +147,9 @@ export type Data = {
 			instance.state.set('editingCategories', !data._id);
 			instance.state.set('selectedCategories', data.categories);
 
-			if (data && data instanceof Course && !(data as CourseModel).isNew()) {
-				data.groupOrganizers.forEach((g) => {
-					instance.subscribe('group', g);
-				});
-			} else if (!data.isFrame) {
-				if (data.group) {
-					instance.subscribe('group', data.group);
-				}
-			} else if (data.teamGroups) {
-				data.teamGroups.forEach((g) => {
-					instance.subscribe('group', g);
-				});
-			}
+			instance.getGroups().forEach((g) => {
+				instance.subscribe('group', g);
+			});
 
 			if (data.isFrame) {
 				// When we're in the propose frame, show a simplified role selection
@@ -167,22 +199,6 @@ export type Data = {
 		};
 
 		instance.getSavedCourse = () => Courses.findOne(instance.savedCourseId.get());
-
-		instance.getGroups = () => {
-			const data = Template.currentData();
-			const groups = [];
-
-			if (data && data instanceof Course && !(data as CourseModel).isNew()) {
-				groups.push(...data.groupOrganizers);
-			} else if (!data.isFrame) {
-				if (data.group) {
-					groups.push(data.group);
-				}
-			} else if (data.teamGroups?.length > 0) {
-				groups.push(...data.teamGroups);
-			}
-			return groups;
-		};
 
 		instance.customFields = (type?: 'singleLine' | 'multiLine') => {
 			const groups = instance.getGroups();
@@ -409,13 +425,26 @@ export type Data = {
 			} as unknown as Required<CoursesMethods.SaveFields>;
 
 			if (changes.name.length === 0) {
-				Alert.serverError(i18n('course.edit.error.title', 'Please provide a title'));
+				Alert.serverError(i18n('course.edit.error.title', 'Please provide a title') as string);
 				return;
 			}
 
 			const newDescription = instance.editableDescription.getEdited();
 			if (newDescription) {
 				changes.description = newDescription;
+			}
+
+			const numberOfCharacters = instance.editableDescription.getNumberOfCharacters();
+			if (PublicSettings.courseDescriptionMax && numberOfCharacters) {
+				if (numberOfCharacters > PublicSettings.courseDescriptionMax) {
+					Alert.error(
+						i18n('_inputField.maxlength', {
+							MAXNUMBER: PublicSettings.courseDescriptionMax,
+							NUMBER: numberOfCharacters - PublicSettings.courseDescriptionMax,
+						}),
+					);
+					return;
+				}
 			}
 
 			let courseId = data._id || '';
@@ -431,8 +460,18 @@ export type Data = {
 					changes.region = instance.$('.js-select-region').val() as string;
 				}
 				if (!changes.region) {
-					Alert.serverError(i18n('course.edit.error.region', 'Please select a region'));
+					Alert.serverError(i18n('course.edit.error.region', 'Please select a region') as string);
 					return;
+				}
+
+				if (data.singleEvent !== undefined) {
+					changes.singleEvent = data.singleEvent;
+				} else {
+					const singleEvent = Regions.findOne({ _id: changes.region })?.singleEvents;
+
+					if (singleEvent !== undefined) {
+						changes.singleEvent = singleEvent;
+					}
 				}
 
 				changes.groups = instance.getGroups();
@@ -487,7 +526,7 @@ export type Data = {
 			instance.busy('saving');
 			PleaseLogin(instance, async () => {
 				try {
-					courseId = (await CoursesMethods.save(courseId, changes)) as string;
+					courseId = await CoursesMethods.save(courseId, changes);
 
 					if (instance.data.isFrame) {
 						instance.savedCourseId.set(courseId);
@@ -505,7 +544,7 @@ export type Data = {
 					} else {
 						if (isNew) {
 							Alert.success(
-								i18n('message.courseCreated', 'The course "{NAME}" has been created!', {
+								i18n('message.courseCreated', '{NAME} has been created!', {
 									NAME: changes.name,
 								}),
 							);
@@ -519,21 +558,16 @@ export type Data = {
 							);
 						} else {
 							Alert.success(
-								i18n(
-									'message.courseChangesSaved',
-									'Your changes to the course "{NAME}" have been saved.',
-									{ NAME: changes.name },
-								),
+								i18n('message.courseChangesSaved', 'Your changes to {NAME} have been saved.', {
+									NAME: changes.name,
+								}),
 							);
 						}
 
 						Router.go('showCourse', { _id: courseId });
 					}
 				} catch (err) {
-					Alert.serverError(
-						err,
-						i18n('message.courseChangesSaved.error', 'Saving the course went wrong'),
-					);
+					Alert.serverError(err, i18n('message.courseChangesSaved.error', 'Saving went wrong'));
 				} finally {
 					instance.busy(false);
 				}
@@ -560,9 +594,9 @@ export type Data = {
 			const checked = instance.$(`input.cat_${catKey}`).prop('checked');
 			if (checked) {
 				selectedCategories.push(catKey);
-				selectedCategories = _.uniq(selectedCategories);
+				selectedCategories = [...new Set(selectedCategories)]; // make unique
 			} else {
-				selectedCategories = _.without(selectedCategories, catKey);
+				selectedCategories = selectedCategories.filter((c) => c !== catKey);
 
 				if (Categories[catKey]) {
 					// Remove all the subcategories as well

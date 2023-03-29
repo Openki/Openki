@@ -1,9 +1,11 @@
+import { Mongo } from 'meteor/mongo';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { _ } from 'meteor/underscore';
 import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Session } from 'meteor/session';
-import { Tracker } from 'meteor/tracker';
+
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import './template.html';
 import './styles.scss';
@@ -24,21 +26,19 @@ export interface MarkerEntity {
 	loc: LocEntity;
 }
 
-/* Display markers on an interactive map
- *
- * Expected data
- * markers: A cursor of geojson documents
+/**
+ * Display markers on an interactive map
  */
 const Template = TemplateAny as TemplateStaticTyped<
 	'map',
 	{
 		maxZoom?: number;
-		mini: boolean;
 		markers: Mongo.Collection<MarkerEntity>;
-		allowPlacing: () => boolean;
-		allowRemoving: () => boolean;
+		allowPlacing?: () => boolean;
+		allowRemoving?: () => boolean;
 	},
 	{
+		cancelNextFitBounds: boolean;
 		fullscreen: ReactiveVar<boolean>;
 		proposeMarker: () => void;
 		removeMarker: () => void;
@@ -74,12 +74,13 @@ const FaCompIcon = function (opClass: string, icClass: string) {
 
 const OpenkiControl: new (options: {
 	icon: () => HTMLElement;
-	action: string;
+	class: string;
 	title: string;
+	position?: string;
 }) => L.Control = L.Control.extend({
 	options: {
 		icon: null,
-		action: '',
+		class: '',
 		title: '',
 		position: 'topright',
 	},
@@ -90,7 +91,7 @@ const OpenkiControl: new (options: {
 
 	onAdd() {
 		const elem = this.options.icon();
-		L.DomUtil.addClass(elem, this.options.action);
+		L.DomUtil.addClass(elem, this.options.class);
 		elem.setAttribute('title', this.options.title);
 		return elem;
 	},
@@ -108,6 +109,7 @@ template.onRendered(function () {
 	const options = {
 		zoomControl: false,
 		attributionControl: false,
+		dragging: !L.Browser.mobile,
 	};
 
 	const map = L.map(instance.find('.map'), options).setView(L.latLng(0, 0), 1);
@@ -118,15 +120,19 @@ template.onRendered(function () {
 		de() {
 			return L.tileLayer('//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
 				maxZoom,
-				attribution:
-					'&copy; Openstreetmap Deutschland | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+			});
+		},
+		'de-ZH'() {
+			return L.tileLayer('//{s}.tile.osm.ch/name-gsw/{z}/{x}/{y}.png', {
+				maxZoom,
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			});
 		},
 		fr() {
 			return L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
 				maxZoom,
-				attribution:
-					'&copy; Openstreetmap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			});
 		},
 		default() {
@@ -151,8 +157,8 @@ template.onRendered(function () {
 
 	// Depending on view state, different controls are shown
 	const zoomControl = L.control.zoom({
-		zoomInTitle: i18n('map.zoomInTitle', 'zoom in'),
-		zoomOutTitle: i18n('map.zoomOutTitle', 'zoom out'),
+		zoomInTitle: i18n('map.zoomInTitle', 'Zoom in') ?? '',
+		zoomOutTitle: i18n('map.zoomOutTitle', 'Zoom out') ?? '',
 	});
 	const attributionControl = L.control.attribution();
 	const scaleControl = L.control.scale({
@@ -160,32 +166,31 @@ template.onRendered(function () {
 	});
 	const fullscreenControl = new OpenkiControl({
 		icon: FaIcon('fa-solid fa-maximize'),
-		action: 'js-make-fullscreen',
+		class: 'js-make-fullscreen',
 		title: i18n('map.fullscreen', 'big map'),
 	});
 	const closeFullscreenControl = new OpenkiControl({
 		icon: FaIcon('fa-solid fa-xmark'),
-		action: 'js-close-fullscreen fa-2x',
+		class: 'js-close-fullscreen fa-2x',
 		title: i18n('map.fullscreenClose', 'close'),
 	});
 	const addMarkerControl = new OpenkiControl({
 		icon: FaCompIcon('fa-solid fa-plus', 'fa-solid fa-location-dot'),
-		action: 'js-add-marker',
-		title: i18n('map.addMarker', 'set marker'),
+		class: 'js-add-marker comp-icon',
+		title: i18n('map.addMarker', 'Set marker'),
+		position: 'bottomright',
 	});
 	const removeMarkerControl = new OpenkiControl({
 		icon: FaCompIcon('fa-solid fa-minus', 'fa-solid fa-location-dot'),
-		action: 'js-remove-marker',
-		title: i18n('map.removeMarker', 'remove the marker'),
+		class: 'js-remove-marker comp-icon',
+		title: i18n('map.removeMarker', 'Remove marker'),
+		position: 'bottomright',
 	});
 
 	instance.autorun(() => {
 		const fullscreen = instance.fullscreen.get();
-		const { mini } = instance.data;
 
-		const show = function (control: { shown?: boolean } & L.Control, originalToggle: boolean) {
-			const toggle = Boolean(originalToggle);
-
+		const show = function (control: { shown?: boolean } & L.Control, toggle: boolean) {
 			if (control.shown === undefined) {
 				/* eslint-disable-next-line no-param-reassign */
 				control.shown = false;
@@ -199,22 +204,25 @@ template.onRendered(function () {
 				} else {
 					map.removeControl(control);
 				}
+			} else if (control.shown) {
+				map.removeControl(control);
+				map.addControl(control);
 			}
 		};
 
-		show(attributionControl, fullscreen || !mini);
-		show(zoomControl, !mini);
+		show(attributionControl, true);
+		show(zoomControl, true);
 		show(scaleControl, fullscreen);
-		show(fullscreenControl, !mini && !fullscreen);
+		show(fullscreenControl, !fullscreen);
 		show(closeFullscreenControl, fullscreen);
 
 		// This is actually a function we can call to establish a reactive
 		// dependeny into the other instance.
 		const { allowPlacing } = instance.data;
-		show(addMarkerControl, allowPlacing && allowPlacing());
+		show(addMarkerControl, !!allowPlacing && allowPlacing());
 
 		const { allowRemoving } = instance.data;
-		show(removeMarkerControl, allowRemoving && allowRemoving());
+		show(removeMarkerControl, !!allowRemoving && allowRemoving());
 	});
 
 	const geojsonProposedMarkerOptions = {
@@ -229,6 +237,11 @@ template.onRendered(function () {
 	// Zoom to show all markers
 	// This is debounc'd so it's only done after the last marker in a series is added
 	const fitBounds = _.debounce(() => {
+		if (instance.cancelNextFitBounds) {
+			instance.cancelNextFitBounds = false;
+			return;
+		}
+
 		const bounds = L.latLngBounds([]);
 		let count = 0;
 		Object.values(layers).forEach((layer) => {
@@ -256,7 +269,6 @@ template.onRendered(function () {
 
 	fitBounds();
 
-	// This must be one of the ugliest pieces of code I've written ever
 	const mainIcon = L.divIcon({
 		html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
 	});
@@ -271,14 +283,14 @@ template.onRendered(function () {
 				centers[mark._id] = L.geoJSON(mark.loc).getBounds();
 			} else {
 				const marker = L.geoJSON(mark.loc, {
-					pointToLayer(_feature: any, latlng: L.LatLngExpression) {
+					pointToLayer(_feature, latlng) {
 						let m;
 						if (mark.proposed) {
 							m = L.circleMarker(latlng, geojsonProposedMarkerOptions);
 						} else {
 							m = L.marker(latlng, {
 								icon: mainIcon,
-								draggable: mark.draggable,
+								draggable: mark.draggable ?? false,
 							});
 						}
 						// When the marker is clicked, mark it as 'selected' in the collection,
@@ -344,12 +356,27 @@ template.onRendered(function () {
 		});
 	});
 
-	Tracker.autorun(() => {
-		instance.fullscreen.get();
-		window.setTimeout(() => {
-			map.invalidateSize();
-			fitBounds();
-		}, 0);
+	instance.autorun(async () => {
+		const fullscreen = instance.fullscreen.get();
+
+		await MeteorAsync.defer();
+
+		if (fullscreen) {
+			instance.find('.map-box,.map-fullscreen').setAttribute('style', 'position: fixed'); // Fix for iOS
+			map.dragging.enable();
+		} else {
+			instance.find('.map-box,.map-fullscreen').setAttribute('style', '');
+			if (!L.Browser.mobile) {
+				map.dragging.enable();
+			} else {
+				map.dragging.disable();
+			}
+		}
+
+		await MeteorAsync.defer();
+
+		map.invalidateSize();
+		fitBounds();
 	});
 
 	instance.proposeMarker = function () {
@@ -373,33 +400,12 @@ template.helpers({
 		}
 		return 'map-box';
 	},
-
-	mapStyleInner() {
-		const style = [];
-		if (Template.instance().fullscreen.get()) {
-			style.push('z-index: 9999');
-		}
-		return style.join(';');
-	},
-
-	fullscreen() {
-		return Template.instance().fullscreen.get();
-	},
-
-	fullscreenControl() {
-		const instance = Template.instance();
-		return !instance.data.mini && !instance.fullscreen.get();
-	},
 });
 
 template.events({
-	click(_event, instance) {
-		if (instance.data.mini) {
-			instance.fullscreen.set(true);
-		}
-	},
-
 	'mousedown .js-add-marker'(_event, instance) {
+		// eslint-disable-next-line no-param-reassign
+		instance.cancelNextFitBounds = true;
 		instance.proposeMarker();
 	},
 

@@ -1,6 +1,6 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
-.js-search-field {
+.search-field {
 	width: 100%;
 
 	@include media-breakpoint-up(md) {
@@ -8,6 +8,6 @@
 	}
 }
 
-.js-search-input {
+.search-input {
 	font-size: large;
 }

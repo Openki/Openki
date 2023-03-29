@@ -1,28 +1,16 @@
 import { promisify } from 'es6-promisify';
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { Tracker } from 'meteor/tracker';
+import { Promise } from 'meteor/promise';
+
+promisify.Promise = Promise;
 
 /**
  * This contains some async/Promise wrapper for existing meteor function,
  * so those can be used mit asnyc/await.
  */
 export const MeteorAsync = {
-	call:
-		// On the server there should be a callAsync: https://docs.meteor.com/changelog.html#v14420170407
-		Meteor.callAsync
-			? Meteor.callAsync
-			: Meteor.call &&
-			  ((name: string, ...args: unknown[]) =>
-					new Promise((resolve, reject) => {
-						Meteor.call(name, ...args, (err: unknown, res: unknown) => {
-							if (err) {
-								reject(err);
-							} else {
-								resolve(res);
-							}
-						});
-					})),
-
 	subscribe:
 		Meteor.subscribe &&
 		(function () {
@@ -47,6 +35,19 @@ export const MeteorAsync = {
 			password: string,
 		) => Promise<void>),
 	logout: Meteor.logout && promisify<void>(Meteor.logout),
+	setTimeout:
+		Meteor.setTimeout &&
+		((delay: number) =>
+			new Promise((resolve) => {
+				Meteor.setTimeout(resolve, delay);
+			})),
+	/** Defer execution of a function to run asynchronously in the background (similar to `MeteorAsync.delay(func, 0)`. */
+	defer:
+		Meteor.defer &&
+		(() =>
+			new Promise((resolve) => {
+				Meteor.defer(resolve);
+			})),
 };
 
 /**
@@ -59,4 +60,11 @@ export const AccountsAsync = {
 	resetPassword: Accounts.resetPassword && promisify(Accounts.resetPassword),
 };
 
-export default MeteorAsync;
+export const TrackerAsync = {
+	/**
+	 * `Tracker.afterFlush` runs code when all consequent of a tracker based change (such as a route
+	 * change) have occured.
+	 * Source: https://guide.meteor.com/testing.html#full-app-integration-test
+	 */
+	afterFlush: Tracker.afterFlush && promisify(Tracker.afterFlush),
+};

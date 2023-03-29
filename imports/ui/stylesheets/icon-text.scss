@@ -4,8 +4,8 @@
 
 .icon-text-icon,
 .icon-text-text {
-	@include td-text-align(left);
 	display: table-cell;
+	text-align: start;
 	vertical-align: top;
 }
 
@@ -14,5 +14,5 @@
 }
 
 .icon-text-icon > i {
-	color: $brand-primary;
+	color: $primary;
 }

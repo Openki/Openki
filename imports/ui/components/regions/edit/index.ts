@@ -6,7 +6,7 @@ import { Geodata, RegionEntity } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 
 import { LocationTracker, MainMarkerEntity } from '/imports/ui/lib/location-tracker';
-import PleaseLogin from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable';
@@ -25,6 +25,7 @@ export interface Data {
 export interface OnSaveFields {
 	name: string;
 	tz: string;
+	description: string;
 	loc: Geodata;
 }
 
@@ -57,6 +58,7 @@ export interface OnSaveFields {
 			const changes = {
 				name: instance.$('.js-name').val(),
 				tz: instance.$('.js-timezone').val(),
+				description: instance.$('.js-description').val(),
 			} as OnSaveFields;
 
 			if (!changes.name) {
@@ -172,7 +174,7 @@ export interface OnSaveFields {
 			const { data } = Template.instance();
 			const { locationTracker } = data;
 
-			return () => locationTracker.getLocation();
+			return () => !!locationTracker.getLocation();
 		},
 	});
 }

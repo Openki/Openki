@@ -32,7 +32,7 @@ Nevertheless, we are aware that there are several additional features that could
 
 Not only Openki's software is open-source, but its development and organization is also fully transparent. This means, for example, that you can see and participate in the discussion on our next technical steps in our [issue tracker](https://gitlab.com/Openki/Openki/issues). Alternatively, you can send an email with your suggestions to: openki-core [at] lists.xiala.net.
 
-You can also help translate Openki using the [online translator](https://openki.net/translate).
+You can also help translate Openki using the [online translator](https://gitlab.com/Openki/Openki/-/wikis/i18n-howto).
 
 
 ### Who administers the Openki.net website?
@@ -183,5 +183,3 @@ For now, region admins cannot be contacted directly. Please send an e-mail reque
 
 ### Where can I find answers to technical questions?
 Detailed technical documentation can be found in our [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home).`;
-
-export default body;

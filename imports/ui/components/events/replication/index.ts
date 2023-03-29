@@ -8,7 +8,7 @@ import { EventModel } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import * as Alert from '/imports/api/alerts/alert';
 
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
@@ -211,7 +211,6 @@ template.events({
 					endLocal: LocalTime.toString(moment(endLocal).add(days, 'days')),
 					title: instance.data.title,
 					description: instance.data.description,
-					venue: instance.data.venue,
 					room: instance.data.room || '',
 					region: instance.data.region,
 					groups: instance.data.groups,
@@ -221,16 +220,15 @@ template.events({
 					maxParticipants: instance.data.maxParticipants,
 				};
 
-				const { courseId } = instance.data;
+				const { courseId, venue } = instance.data;
+				if (venue) {
+					replicaEvent.venue = venue;
+				}
 				if (courseId) {
 					replicaEvent.courseId = courseId;
 				}
 
-				// To create a new event, pass an empty Id
-				const eventId = '';
-				const args = { eventId, changes: replicaEvent };
-
-				EventsMethods.save(args)
+				EventsMethods.save('', replicaEvent)
 					.then(() => {
 						removed += 1;
 					})

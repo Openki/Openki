@@ -8,7 +8,7 @@
 					{{i18n 'users.courselist.userCourses' '{NAME} is involved in the following courses' NAME=getName}}
 				{{/if}}
 			</h3>
-			{{#if ready}}
+			{{#if Template.subscriptionsReady}}
 				<div>
 					{{#each role in roles}}
 						{{#if coursesByRoleCount role.type false}}
@@ -31,10 +31,10 @@
 							{{#if ownProfile}}
 								{{i18n (roleMyList role.type)}}
 							{{else}}
-								{{i18n (roleUserList role.type) NAME=getName}}
+								{{i18n (roleUserList role.type) NAME=user.getDisplayName}}
 							{{/if}}
 						</h3>
-						{{> courseList coursesByRole role.type false}}
+						{{> courseList courses=(coursesByRole role.type false) small=true}}
 					{{/if}}
 				{{/each}}
 				{{#each role in roles}}
@@ -47,10 +47,10 @@
 								{{#if ownProfile}}
 									{{i18n (roleMyListPast role.type)}}
 								{{else}}
-									{{i18n (roleUserListPast role.type) NAME=getName}}
+									{{i18n (roleUserListPast role.type) NAME=user.getDisplayName}}
 								{{/if}}
 							</h3>
-							{{> courseList coursesByRole role.type true}}
+							{{> courseList courses=(coursesByRole role.type true) small=true}}
 						{{/if}}
 					{{/if}}
 				{{/each}}

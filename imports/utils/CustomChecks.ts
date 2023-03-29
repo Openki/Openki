@@ -5,22 +5,30 @@ type PickNotUndefined<T> = {
 	[P in keyof T as Extract<T[P], undefined> extends never ? P : never]: T[P];
 };
 
-/** Make properties that are may be undefined also optional. */
-type UndefinedToOptional<T> = Partial<T> & Pick<T, keyof PickNotUndefined<T>>;
+/** Helper type utility to remove undefined and null from the properties types */
+type RecursiveNonNullable<T> = { [P in keyof T]: NonNullable<T[P]> };
 
-/** Recursive make properties that are may be undefined also optional. */
-export type RecursiveUndefinedToOptional<T> = UndefinedToOptional<{
+/** Make properties that are may be undefined optional. */
+type UndefinedToOptional<T> = RecursiveNonNullable<Partial<T>> & Pick<T, keyof PickNotUndefined<T>>;
+
+/** Recursive make properties that are may be undefined optional. */
+type RecursiveUndefinedToOptional<T> = UndefinedToOptional<{
 	[P in keyof T]: T[P] extends (infer U)[]
 		? RecursiveUndefinedToOptional<U>[]
 		: T[P] extends object
 		? RecursiveUndefinedToOptional<T[P]>
 		: T[P] extends object | undefined
 		? RecursiveUndefinedToOptional<T[P]> | undefined
+		: T[P] extends object | undefined | null
+		? RecursiveUndefinedToOptional<T[P]> | undefined | null
 		: T[P];
 }>;
 
+/** Match.Optional and Match.Maybe behaves diffrent when the pattern is a property of a object or not. */
+type BaseOrObjectMatchHelper<T> = T extends object ? RecursiveUndefinedToOptional<T> : T;
+
 /** Convert a meteor/check Match.Pattern to a typescript type */
-export type Type<T extends Match.Pattern> = RecursiveUndefinedToOptional<Match.PatternMatch<T>>;
+export type Type<T extends Match.Pattern> = BaseOrObjectMatchHelper<Match.PatternMatch<T>>;
 
 export function Tuple<T extends readonly Match.Pattern[]>(...pattern: [...T]) {
 	return Match.Where(function (values) {
@@ -45,7 +53,7 @@ export function StringEnum<T extends readonly string[]>(...values: T) {
 	return Match.Where(function (str) {
 		check(str, String);
 		return values.includes(str);
-	}) as Match.Matcher<typeof values[number]>;
+	}) as Match.Matcher<(typeof values)[number]>;
 }
 
 export function Record<T extends Match.Pattern>(type: T) {

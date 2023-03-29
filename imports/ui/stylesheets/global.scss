@@ -1,23 +1,10 @@
-.admin-active-task {
-	margin-top: 15px;
-}
-
-.admin-back-to-dashboard > i {
-	@include td-margin(right, 5px);
+.mh-none {
+	max-height: none !important;
 }
 
 .checkmark {
 	@include td-padding(left, 5px);
 	color: $green-dark;
-}
-
-.profilelink {
-	color: $gray-dark;
-
-	&:hover {
-		color: $brand-primary;
-		text-decoration: none;
-	}
 }
 
 .leaflet-top {
@@ -40,12 +27,6 @@ a:focus,
 	text-decoration: none;
 }
 
-.course-compact.elevate-child,
-.course-compact.elevate-child:hover {
-	box-shadow: none;
-	transition: box-shadow $default-transition-time;
-}
-
 .collapsing,
 .fade {
 	transition: none;
@@ -53,4 +34,8 @@ a:focus,
 
 .cursor-pointer:hover {
 	cursor: pointer;
+}
+
+.bg-brand {
+	background-color: css-var('openki-brand') !important;
 }

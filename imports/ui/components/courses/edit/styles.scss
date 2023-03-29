@@ -15,6 +15,10 @@
 	}
 }
 
+.course-edit-body .dropdown {
+	position: relative;
+}
+
 .proposed-courses {
 	border: 1px solid $primary;
 	max-height: 200px;
@@ -27,7 +31,7 @@
 	font-size: 1.2rem;
 	font-weight: 600;
 	margin-top: 8.5px;
-	text-align: left;
+	text-align: start;
 }
 
 .proposed-courses > .dropdown-header > {
@@ -40,11 +44,7 @@
 	}
 }
 
-.dropdown {
-	position: relative;
-}
-
-.proposed-courses > .close-dropdown-button > {
+.proposed-courses > .close-dropdown-button {
 	left: 50%;
 	margin-bottom: 8px;
 	margin-top: 8px;

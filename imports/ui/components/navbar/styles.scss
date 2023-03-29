@@ -1,0 +1,214 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+/* stylelint-disable selector-max-compound-selectors */
+
+.navbar {
+	background-image: none;
+	transition: box-shadow $default-transition-time;
+
+	@include media-breakpoint-down(lg) {
+		.dropdown-legend {
+			color: $black;
+		}
+
+		.dropdown-menu > li > a,
+		.dropdown-menu > li > .btn-link {
+			color: $white;
+		}
+	}
+
+	.dropdown-menu {
+		/* align dropdown with bottom of navbar */
+		top: 106%;
+	}
+}
+
+.navbar-toggler {
+	border: 0 !important;
+}
+
+.navbar-collapse {
+	@include media-breakpoint-down(lg) {
+		border-top: 1px solid $navbar-default-border;
+		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+	}
+}
+
+@include media-breakpoint-down(lg) {
+	.navbar-collapse {
+		max-height: 386px;
+		overflow: auto;
+	}
+}
+
+.navbar-container {
+	max-width: 1600px;
+}
+
+.navbar-brand {
+	position: relative;
+	vertical-align: center;
+}
+
+.navbar-brand > .connecting {
+	text-shadow: 0 0 1px $green-dark;
+}
+
+.navbar-brand > .no-connection {
+	text-shadow: 0 0 1px $red;
+}
+
+.navbar-brand > img {
+	display: inline-block;
+	height: 49px;
+	margin-bottom: -22px;
+	margin-top: -15px;
+	position: relative;
+}
+
+.site-name {
+	font-size: x-large;
+	transition: text-shadow $default-transition-time;
+	vertical-align: top;
+}
+
+.site-stage {
+	bottom: 2px;
+	color: $gray-800;
+	font-size: small;
+	font-weight: bold;
+	inset-inline-end: 0;
+	position: absolute;
+	transform: rotate(345deg);
+	transition: text-shadow $default-transition-time;
+}
+
+.navbar-brand:hover {
+	text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+}
+
+.navbar-brand:hover > .site-name,
+.navbar-brand:hover > .site-stage {
+	color: $white;
+}
+
+.nav-item {
+	position: relative;
+}
+
+.navbar .nav-link {
+	cursor: pointer;
+	font-size: large;
+	transition-duration: $default-transition-time;
+	transition-property: #{'background-color, box-shadow, text-shadow'};
+
+	@include media-breakpoint-down(lg) {
+		border-bottom: 1px solid $navbar-default-border;
+	}
+
+	&:hover {
+		text-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+	}
+}
+
+.nav-marker-bar {
+	background-color: transparent;
+	bottom: -6px;
+	height: 6px;
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	transition-duration: $default-transition-time;
+	transition-property: #{'background-color, opacity'};
+	width: 100%;
+}
+
+.nav-marker-caret {
+	border: 5px solid;
+	border-color: transparent transparent $body-bg;
+	bottom: 0;
+	box-shadow: 0 5px 5px -5px $white;
+	height: 0;
+	left: 50%;
+	opacity: 0;
+	position: absolute;
+	transition: opacity $default-transition-time;
+	width: 0;
+}
+
+.nav-link.active {
+	@include media-breakpoint-down(lg) {
+		background-color: css-lighten('openki-brand', 10%);
+	}
+}
+
+.nav-link.active .nav-marker-caret {
+	@include media-breakpoint-up(lg) {
+		opacity: 1;
+	}
+}
+
+.nav-link.active.calendar-link > .nav-marker-caret {
+	@include media-breakpoint-up(lg) {
+		border-bottom-color: $calendar-nav-bg;
+	}
+}
+
+.nav-link.active.calendar-link.navbar-link-covering > .nav-marker-bar {
+	@include media-breakpoint-up(lg) {
+		background-color: $calendar-nav-bg;
+		opacity: 1;
+	}
+}
+
+.navbar-covering {
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-covering .nav-marker-caret {
+	opacity: 0;
+}
+
+.navbar-covering .nav-link.active,
+.navbar-covering .nav-link.active:hover,
+.navbar-covering .nav-link.active:focus {
+	@include media-breakpoint-up(lg) {
+		background-color: css-lighten('openki-brand', 10%);
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+	}
+}
+
+.navbar .js-region-search-form,
+.navbar .js-language-selection-form {
+	margin: 4px 0;
+}
+
+.navbar-toggler .fa-bars {
+	transform: scale(1.7, 1);
+}
+
+.navbar-toggler.collapsed .fa-bars,
+.navbar-toggler .fa-x {
+	display: block;
+}
+
+.navbar-toggler .fa-bars,
+.navbar-toggler.collapsed .fa-x {
+	display: none;
+}
+
+.navbar-collapse {
+	margin-inline-end: calc(var(--bs-gutter-x) * -0.5);
+	margin-inline-start: calc(var(--bs-gutter-x) * -0.5);
+}
+
+.navbar-custom-modal {
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	height: 100%; /* Full height */
+	left: 0;
+	overflow: auto; /* Enable scroll if needed */
+	position: fixed;
+	top: 0;
+	width: 100%; /* Full width */
+	z-index: 1001;
+}
