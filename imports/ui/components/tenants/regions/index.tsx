@@ -16,7 +16,7 @@ export function TenantRegions(props: Data) {
 
 	const { t } = useTranslation();
 	const user = useUser();
-	const [isLoading, regions] = useFindFilter({ tenant: tenant._id });
+	const [isLoading, regions] = useFindFilter({ tenants: [tenant._id] });
 
 	if (isLoading()) {
 		return null;
