@@ -47,7 +47,9 @@ import './styles.scss';
 			if (event) {
 				title = i18n('event.windowtitle', '{DATE} — {EVENT}', {
 					EVENT: event.title,
-					DATE: moment(event.start).calendar(),
+					DATE: moment(event.start)
+						.locale(Session.get('timeLocale') || 'en')
+						.calendar(),
 				});
 				description = i18n('event.metatag.description', '{VENUE} in {REGION}', {
 					REGION: Regions.findOne(event.region)?.name,
