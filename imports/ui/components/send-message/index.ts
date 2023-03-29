@@ -12,13 +12,16 @@ import '/imports/ui/components/profiles/verify-email';
 
 import './template.html';
 import './styles.scss';
-import { SendEmailOptions } from '/imports/api/emails/methods';
 
-interface Data {
-	courseId?: string;
-	eventId?: string;
-	recipientId: string;
-	onDone?: () => void;
+export interface Data {
+	placeholder: string;
+	onSend: (
+		message: string,
+		options: {
+			revealAddress: boolean;
+			sendCopy: boolean;
+		},
+	) => Promise<void>;
 }
 
 const Template = TemplateAny as TemplateStaticTyped<
@@ -47,16 +50,6 @@ template.onCreated(function () {
 
 template.onRendered(function () {
 	this.$('.js-email-message').trigger('select');
-});
-
-template.helpers({
-	hasEmail() {
-		return Meteor.user()?.hasEmail() || false;
-	},
-
-	hasVerifiedEmail() {
-		return Meteor.user()?.hasVerifiedEmail() || false;
-	},
 });
 
 template.events({
@@ -101,32 +94,22 @@ template.events({
 				return;
 			}
 
-			const options: SendEmailOptions = {
+			const options = {
 				revealAddress: state.get('revealAddress') || false,
 				sendCopy: state.get('sendCopy') || false,
 			};
 
 			const { data } = instance;
-			if (data.courseId) {
-				options.courseId = data.courseId;
-			}
-
-			if (data.eventId) {
-				options.eventId = data.eventId;
-			}
 
 			try {
-				await emailMethods.sendEmail(data.recipientId, message, options);
+				await data.onSend(message, options);
 				Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
-				instance.$('.js-email-message').val('');
-				if (data.onDone) {
-					data.onDone();
-				}
 			} catch (err) {
 				Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
 			} finally {
 				instance.busy(false);
 			}
+			instance.$('.js-email-message').val('');
 		});
 	},
 });

@@ -1,0 +1,87 @@
+import React from 'react';
+import { Router } from 'meteor/iron:router';
+import { Template } from 'meteor/templating';
+import { useTranslation } from 'react-i18next';
+
+import './styles.scss';
+
+export type Venue = {
+	_id?: string;
+	name: string;
+	slug?: string;
+};
+
+export type Props = {
+	venue: Venue;
+	room?: string | undefined;
+	openInNewTab?: boolean | undefined;
+};
+
+function Venue(props: { name: string }) {
+	const { name } = props;
+	return (
+		<>
+			<span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
+			{name}
+		</>
+	);
+}
+
+function VenueTag(props: { venue: Venue; openInNewTab?: boolean | undefined }) {
+	const { t } = useTranslation();
+	const { venue, openInNewTab } = props;
+	if (venue?._id) {
+		return (
+			<div className="tag tag-link venue-tag">
+				<a
+					data-bs-toggle="tooltip"
+					data-bs-title={t('location.link.tooltip', 'Show details of {VENUE}', {
+						VENUE: venue.name,
+					})}
+					href={Router.url('venueDetails', venue)}
+					target={openInNewTab ? '_blank' : ''}
+				>
+					<Venue name={venue.name} />
+				</a>
+			</div>
+		);
+	}
+
+	return (
+		<div className="tag">
+			<Venue name={venue?.name} />
+		</div>
+	);
+}
+
+function RoomTag(props: { name: string | undefined }) {
+	const { name } = props;
+	if (!name) {
+		return null;
+	}
+	return (
+		<div className="tag">
+			<span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>&nbsp;
+			{name}
+		</div>
+	);
+}
+
+export function VenueLink(props: Props) {
+	const { venue, room, openInNewTab } = props;
+	if (venue?.name) {
+		return (
+			<>
+				<VenueTag venue={venue} openInNewTab={openInNewTab} /> <RoomTag name={room} />
+			</>
+		);
+	}
+
+	return null;
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper('VenueLink', () => VenueLink);

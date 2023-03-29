@@ -1,9 +1,7 @@
-import { Tooltips } from 'meteor/lookback:tooltips';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Tracker } from 'meteor/tracker';
 import moment from 'moment';
 
 import { Courses } from '/imports/api/courses/courses';
@@ -14,8 +12,13 @@ import {
 import * as CourseDiscussionsMethods from '/imports/api/course-discussions/methods';
 import { EditCommentFields, PostCommentFields } from '/imports/api/course-discussions/methods';
 import * as Alert from '/imports/api/alerts/alert';
+
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as Tooltips from '/imports/utils/Tooltips';
+import { TrackerAsync } from '/imports/utils/promisify';
+
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/richtext';
@@ -32,7 +35,6 @@ import './styles.scss';
 		{
 			count: ReactiveVar<number>;
 			limit: ReactiveVar<number>;
-			sub: Meteor.SubscriptionHandle;
 			notifyAll: ReactiveVar<boolean>;
 		}
 	>;
@@ -49,15 +51,15 @@ import './styles.scss';
 		const limit = select ? 0 : 3;
 		instance.limit = new ReactiveVar(limit);
 
-		instance.sub = instance.subscribe('discussion', instance.data.courseId, () => {
+		instance.subscribe('discussion', instance.data.courseId, async () => {
 			if (select) {
 				// Wait for the templates to render before trying to jump there.
-				Tracker.afterFlush(() => {
-					// Jump to the selected comment.
-					// This method should work for screenreaders too.
-					window.location.hash = `#comment${select}`;
-					RouterAutoscroll.scheduleScroll();
-				});
+				await TrackerAsync.afterFlush();
+
+				// Jump to the selected comment.
+				// This method should work for screenreaders too.
+				window.location.hash = `#comment${select}`;
+				routerAutoscroll.scheduleScroll();
 			}
 		});
 
@@ -65,10 +67,6 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		ready() {
-			return Template.instance().sub.ready();
-		},
-
 		posts() {
 			const instance = Template.instance();
 			const { data } = instance;
@@ -252,7 +250,7 @@ import './styles.scss';
 
 		mayEdit() {
 			const post = Template.instance().data;
-			return CourseDiscussionUtils.mayEditPost(Meteor.user(), post);
+			return CourseDiscussionUtils.mayEditPost(Meteor.user() ?? undefined, post);
 		},
 
 		mayDelete() {
@@ -261,7 +259,7 @@ import './styles.scss';
 			if (!course) {
 				throw new Error('Unexpected falsy: course');
 			}
-			return CourseDiscussionUtils.mayDeletePost(Meteor.user(), course, post);
+			return CourseDiscussionUtils.mayDeletePost(Meteor.user() ?? undefined, course, post);
 		},
 
 		hasBeenEdited() {
@@ -275,7 +273,7 @@ import './styles.scss';
 			instance.$('.js-discussion-edit').trigger('click');
 			(instance.parentInstance(2) as any).notifyAll.set(true);
 			window.location.hash = '#discussion';
-			RouterAutoscroll.scheduleScroll();
+			routerAutoscroll.scheduleScroll();
 		},
 
 		'click .js-discussion-edit'(event, instance) {
@@ -301,6 +299,7 @@ import './styles.scss';
 		instance.anon = new ReactiveVar(!instance.data.userId);
 		instance.validComment = new ReactiveVar(!!instance.data.text.trim());
 	});
+
 	template.onRendered(function () {
 		const instance = this;
 		instance.$('.discussion-edit-title').trigger('select');
@@ -329,7 +328,7 @@ import './styles.scss';
 		},
 
 		anonDisabled() {
-			if (Meteor.user()) {
+			if (Meteor.userId()) {
 				return {};
 			}
 			return { disabled: 1 };
@@ -359,8 +358,13 @@ import './styles.scss';
 				return false;
 			}
 
-			const course = Courses.findOne(this.courseId);
 			const user = Meteor.user();
+
+			if (UserPrivilegeUtils.privileged(user, 'admin')) {
+				return true;
+			}
+
+			const course = Courses.findOne(this.courseId);
 
 			return !!(
 				course?.userHasRole(user?._id, 'team') ||

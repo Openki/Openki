@@ -9,18 +9,20 @@ import * as RegionSelection from '/imports/utils/region-selection';
 import { Introduction } from '/imports/ui/lib/introduction';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as Tooltips from '/imports/utils/Tooltips';
 
+import '/imports/ui/layouts/root.html';
 import '/imports/ui/components/account-tasks';
 import '/imports/ui/components/alerts';
 import '/imports/ui/components/email-request';
 import '/imports/ui/components/email-validation';
 import '/imports/ui/components/featured-group';
 import '/imports/ui/components/footer';
-import '/imports/ui/components/introduction/introduction';
+import '/imports/ui/components/introduction';
 import '/imports/ui/components/kiosk-link';
-import '/imports/ui/components/navbar/navbar';
+import '/imports/ui/components/navbar';
 import '/imports/ui/components/regions/splash';
 
 import './template.html';
@@ -56,7 +58,7 @@ template.helpers({
 
 	isNotAdminPanel() {
 		const { route } = Router.current();
-		return route && route.getName() !== 'adminPanel';
+		return !(route?.getName() === 'adminPanel');
 	},
 });
 
@@ -64,7 +66,7 @@ template.events({
 	// Clicks on the logo toggle the intro blurb, but only when already on home
 	'click .js-toggle-introduction'() {
 		const { route } = Router.current();
-		if (route?.options.template === 'findWrap') {
+		if (route?.getName() === 'home') {
 			Introduction.showIntro();
 		}
 	},
@@ -76,6 +78,7 @@ template.onRendered(() => {
 		Viewport.update();
 	});
 	Session.set('isRetina', window.devicePixelRatio === 2);
+	Tooltips.enable();
 });
 
 template.events({
@@ -88,4 +91,4 @@ template.events({
 	},
 });
 
-RouterAutoscroll.marginTop = ScssVars.navbarHeight;
+routerAutoscroll.marginTop = ScssVars.navbarHeight;

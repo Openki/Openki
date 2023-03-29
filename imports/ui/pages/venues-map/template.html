@@ -12,12 +12,8 @@
 			<div class="col-2 d-none d-md-block">
 				{{#if haveVenues}}
 					<ul class="list-group">
-						{{#each venues}}
-							<li
-								class='list-group-item list-group-item-action list-group-item-primary js-location-candidate {{hoverClass}}'>
-								{{name}}
-								<div class="address"><small>{{address}}</small></div>
-							</li>
+						{{#each venue in venues}}
+							{{> locationCandidate marker=venue handles=handles}}
 						{{/each}}
 					</ul>
 				{{else}}
@@ -32,4 +28,12 @@
 		</div>
 	</div>
 
+</template>
+
+<template name="locationCandidate">
+	<li
+		class='list-group-item list-group-item-action list-group-item-primary js-location-candidate {{hoverClass}}'>
+		{{marker.name}}
+		<div class="address"><small>{{marker.address}}</small></div>
+	</li>
 </template>

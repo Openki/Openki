@@ -1,6 +1,5 @@
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
@@ -13,7 +12,10 @@ import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import { Store, Editable } from '/imports/ui/lib/editable';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as Analytics from '/imports/ui/lib/analytics';
+import { i18n } from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
+import '/imports/ui/components/courses/find';
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/editable';
 import '/imports/ui/components/groups/settings';
@@ -21,13 +23,18 @@ import '/imports/ui/components/groups/settings';
 import './template.html';
 import './styles.scss';
 
+export type Data = {
+	courseQuery: Record<string, string | undefined> & {
+		group: string;
+		region: string | undefined;
+	};
+	group: GroupModel;
+	showCourses: boolean;
+};
+
 const TemplateBase = TemplateAny as TemplateStaticTyped<
 	'groupDetailsPage',
-	{
-		courseQuery: unknown;
-		group: GroupModel;
-		showCourses: boolean;
-	},
+	Data,
 	{
 		mayEdit: ReactiveVar<boolean>;
 		editingSettings: ReactiveVar<boolean>;
@@ -51,6 +58,11 @@ template.onCreated(function () {
 	const instance = this;
 
 	instance.busy(false);
+
+	instance.autorun(() => {
+		const data = Template.currentData();
+		Metatags.setCommonTags(data.group.name);
+	});
 
 	const { group } = instance.data;
 	const groupId = group._id;
@@ -86,6 +98,7 @@ template.onCreated(function () {
 	instance.editableName = new Editable(
 		false,
 		i18n('group.name.placeholder', 'Name of your group, institution, community or program'),
+		undefined,
 		showControls
 			? {
 					...handleSaving,
@@ -99,6 +112,7 @@ template.onCreated(function () {
 	instance.editableShort = new Editable(
 		false,
 		i18n('group.short.placeholder', 'Abbreviation'),
+		undefined,
 		showControls
 			? {
 					...handleSaving,
@@ -112,6 +126,7 @@ template.onCreated(function () {
 	instance.editableClaim = new Editable(
 		false,
 		i18n('group.claim.placeholder', 'The core idea'),
+		undefined,
 		showControls
 			? {
 					...handleSaving,
@@ -128,6 +143,7 @@ template.onCreated(function () {
 			'group.description.placeholder',
 			'Describe the audience, the interests and activities of your group.',
 		),
+		undefined,
 		showControls
 			? {
 					...handleSaving,
@@ -206,6 +222,20 @@ template.helpers({
 	},
 });
 
+function allSet(group: {
+	name: string | undefined;
+	short: string | undefined;
+	claim: string | undefined;
+	description: string | undefined;
+}): group is {
+	name: string;
+	short: string;
+	claim: string;
+	description: string;
+} {
+	return Object.values(group).every((u) => u);
+}
+
 template.events({
 	'click .js-group-settings'(_event, instance) {
 		instance.editingSettings.set(!instance.editingSettings.get());
@@ -221,11 +251,8 @@ template.events({
 
 		instance.errors.reset();
 
-		if (Object.values(group).some((u) => !u)) {
+		if (!allSet(group)) {
 			instance.errors.add('emptyField');
-		}
-
-		if (instance.errors.present()) {
 			return;
 		}
 

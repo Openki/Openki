@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 
@@ -7,8 +8,7 @@ import { UserModel } from '/imports/api/users/users';
 
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 
-import '/imports/ui/components/courses/list/course-list';
-import '/imports/ui/components/loading';
+import '/imports/ui/components/courses/list';
 
 import './template.html';
 import './styles.scss';
@@ -20,7 +20,6 @@ const Template = TemplateAny as TemplateStaticTyped<
 		ownProfile: boolean;
 	},
 	{
-		courseSub: Meteor.SubscriptionHandle;
 		coursesByRole: (role: string, archived: boolean) => Mongo.Cursor<CourseEntity, CourseModel>;
 	}
 >;
@@ -31,11 +30,11 @@ template.onCreated(function () {
 	const instance = this;
 	const id = instance.data.user._id;
 
-	instance.courseSub = instance.subscribe('Courses.findFilter', {
+	instance.subscribe('Courses.findFilter', {
 		userInvolved: id,
 		archived: false,
 	});
-	instance.courseSub = instance.subscribe('Courses.findFilter', {
+	instance.subscribe('Courses.findFilter', {
 		userInvolved: id,
 		archived: true,
 	});
@@ -81,16 +80,6 @@ Template.usersCourselist.helpers({
 		return `roles.${role}.myList.past`;
 	},
 
-	getName() {
-		const { username } = Template.currentData().user;
-		if (username) {
-			return username;
-		}
-		return false;
-	},
-	ready() {
-		return Template.instance().courseSub.ready();
-	},
 	isInvolved() {
 		const userId = Template.currentData().user._id;
 		return (

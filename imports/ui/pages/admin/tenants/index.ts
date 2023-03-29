@@ -1,14 +1,22 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Tenants } from '/imports/api/tenants/tenants';
+
+import { TenantEntity, TenantModel } from '/imports/api/tenants/tenants';
+
+import { i18n } from '/imports/startup/both/i18next';
+import * as Metatags from '/imports/utils/metatags';
 
 import './template.html';
 
-const Template = TemplateAny as TemplateStaticTyped<'adminTenantsPage'>;
+export type Data = { tenants: Mongo.Cursor<TenantEntity, TenantModel> | never[] };
+
+const Template = TemplateAny as TemplateStaticTyped<'adminTenantsPage', Data>;
 
 const template = Template.adminTenantsPage;
 
-template.helpers({
-	tenants() {
-		return Tenants.find();
-	},
+template.onCreated(function () {
+	const instance = this;
+
+	instance.autorun(() => {
+		Metatags.setCommonTags(i18n('tenants.windowtitle', 'Organizations'));
+	});
 });

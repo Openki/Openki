@@ -27,6 +27,7 @@
 		"strictPropertyInitialization": true, // Enusre non-undefined class properties are initialized in the constructor.
 		"strictFunctionTypes": true, // Disable bivariant parameter checking for function types.
 		"strictNullChecks": true, // The null and undefined values are not in the domain of every type and are only assignable to themselves and any.
+		"exactOptionalPropertyTypes": true, // Differentiate between undefined and not present
 		/* Module Resolution Options */
 		"baseUrl": ".",
 		"paths": {
@@ -37,7 +38,9 @@
 		"allowUmdGlobalAccess": true, // Needed for leaflet meteor package
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
-		"preserveSymlinks": true
+		"preserveSymlinks": true,
+
+		"skipLibCheck": true // because of a error in ./node_modules/i18next-chained-backend/ and ./node_modules/i18next-localstorage-backend/
 	},
 	"include": ["./", "./node_modules/@types", "./types"],
 	"exclude": ["./.meteor/", "./packages/", "./node_modules/@types/node/ts3.6/" /* Fix a error, assert defined at two places.*/]

@@ -73,4 +73,3 @@ export const LocalTime = {
 		return moment.utc().add(moment().utcOffset(), 'minutes');
 	},
 };
-export default LocalTime;

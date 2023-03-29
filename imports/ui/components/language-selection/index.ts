@@ -2,12 +2,14 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 
 import { LanguageEntity, LanguagesRaw, Languages } from '/imports/api/languages/languages';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import * as StringTools from '/imports/utils/string-tools';
+import { MeteorAsync } from '/imports/utils/promisify';
 
 import './template.html';
 import './styles.scss';
@@ -44,7 +46,13 @@ import './styles.scss';
 	template.helpers({
 		inNavbarClasses() {
 			if (this.inNavbar) {
-				return 'col-6-sm-auto px-0';
+				return 'nav-item text-center col col-lg-auto';
+			}
+			return '';
+		},
+		inNavbarClassesLink() {
+			if (this.inNavbar) {
+				return 'text-white';
 			}
 			return '';
 		},
@@ -98,7 +106,7 @@ import './styles.scss';
 	template.helpers({
 		inNavbarClasses() {
 			if (this.inNavbar) {
-				return 'col-6-sm-auto px-0';
+				return 'nav-item text-center col col-lg-auto';
 			}
 			return '';
 		},
@@ -143,7 +151,7 @@ import './styles.scss';
 		},
 	});
 
-	const updateLanguageSearch = _.debounce((instance: ReturnType<typeof Template['instance']>) => {
+	const updateLanguageSearch = _.debounce((instance: ReturnType<(typeof Template)['instance']>) => {
 		let search = instance.$('.js-language-search').val();
 		search = String(search).trim();
 		if (!(instance.languageSearch.get() === search)) {
@@ -155,6 +163,8 @@ import './styles.scss';
 	template.events({
 		'click .js-language-link'(this: LanguageEntity, event, instance) {
 			event.preventDefault();
+
+			routerAutoscroll.cancelNext();
 
 			// eslint-disable-next-line no-param-reassign
 			instance.searchHasFocus = false;
@@ -168,7 +178,7 @@ import './styles.scss';
 			} catch {
 				// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
 			}
-			// The db user update happens in the client/main.js in Tracker.autorun(() => { ...
+			// The db user update happens in the /imports/startup/client/locale.ts in Tracker.autorun(() => { ...
 			Session.set('locale', lg);
 
 			(instance.parentInstance() as any).searchingLanguages.set(false);
@@ -193,11 +203,11 @@ import './styles.scss';
 			instance.searchHasFocus = event.type === 'focusin';
 		},
 
-		'show.bs.dropdown'(_event, instance) {
+		async 'show.bs.dropdown'(_event, instance) {
 			if (!instance.searchHasFocus) {
-				Meteor.defer(() => {
-					instance.$('.js-language-search').trigger('select');
-				});
+				await MeteorAsync.defer();
+
+				instance.$('.js-language-search').trigger('select');
 			}
 		},
 

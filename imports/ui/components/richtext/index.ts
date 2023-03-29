@@ -1,5 +1,6 @@
 import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Session } from 'meteor/session';
 
 import MediumEditor from 'medium-editor';
 

@@ -5,13 +5,13 @@ export class CssFromQuery {
 	 * @param properties the customizable properties to add
 	 */
 	constructor(
-		public query: { [param: string]: string },
+		public query: { [param: string]: string | undefined },
 		properties: [key: string, name: string, selector: string][] = [],
 	) {
 		// define a default set of customizable properties
 		this.addCustomizableProperties([
 			['bgcolor', 'background-color', 'body'],
-			['color', 'color', 'body'],
+			['color', 'color', 'body, i'],
 			['fontsize', 'font-size', '*'],
 		]);
 
@@ -20,7 +20,7 @@ export class CssFromQuery {
 
 	/**
 	 * Add customizable properties
-	 * @param  properties the customizable properties to add
+	 * @param properties the customizable properties to add
 	 */
 	addCustomizableProperties(properties: [key: string, name: string, selector: string][]) {
 		properties.forEach((property) => {
@@ -42,7 +42,7 @@ export class CssFromQuery {
 						cssValue = `#${queryValue.substring(0, 8)}`;
 					}
 				} else {
-					const intVal = parseInt(queryValue, 10);
+					const intVal = Number.parseInt(queryValue, 10);
 					if (!Number.isNaN(intVal)) {
 						cssValue = `${Math.max(0, Math.min(1000, intVal))}px`;
 					}
@@ -56,5 +56,3 @@ export class CssFromQuery {
 		return cssRules;
 	}
 }
-
-export default CssFromQuery;

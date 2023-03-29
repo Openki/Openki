@@ -1,9 +1,13 @@
 /* prettier-ignore */
 /* stylelint-disable */
 
+
+//** Global text color on `<body>`.
+$body-color: $gray-800;
+
 // ** Tabs
 //========================================================================================
-$tab-content-bg: tint-color($blue-lighter, 5%);
+$tab-content-bg: lighten($blue-lighter, 5%);
 $tab-content-border-width: 1px;
 
 // ** Box shadow
@@ -24,7 +28,7 @@ $details-header-padding-horizontal:              15px;
 
 // ** Events
 //========================================================================================
-$event-body-bg:                                  $blue-lighter;
+$event-body-bg:                                  tint-color($green, 65%);
 $event-header-bg:                                $green;
 
 $event-compact-height:                           200px;
@@ -32,7 +36,8 @@ $event-compact-seperator-height:                 3px;
 
 $event-compact-with-date-height:                 220px;
 
-$event-page-component-bg:                        $blue-lighter;
+$event-page-component-bg:                        tint-color($green, 65%);
+$event-trashcan-color:                           #bfbfbf;
 
 // ** Courses
 //========================================================================================
@@ -42,6 +47,8 @@ $has-upcoming-events-bg:                         $blue-lighter;
 $proposal-border-style:                          dashed;
 $has-past-events-border-style:                   solid;
 $archived-color:                                 #f5ecc6;
+
+$course-page-role-icon-color:                   #4c4c4c;
 
 $course-compact-next-event-bg:                   $green;
 $course-compact-next-event-color:                $gray-800;
@@ -53,7 +60,7 @@ $course-member-comment-border-color:             shade-color($blue-lighter, 40%)
 
 // ** Category
 //========================================================================================
-$category-bg:                                    lighten($gray-400, 5%);
+$category-bg:                                    rgba(206,212,218,0.5);
 
 // ** Group
 //========================================================================================
@@ -97,3 +104,13 @@ $kiosk-wrap-padding-vertical:                    $kiosk-wrap-padding-horizontal;
 //========================================================================================
 $footer-height:                                  50px;
 $footer-padding-vertical: 						 15px;
+
+// ** Z-index master list
+$zindex-editable-image:							 900;
+$zindex-file-upload:							 900;
+$zindex-map: 									 9999;
+$zindex-back-to-kiosk: 							 1000;
+
+// ** Default values
+//========================================================================================
+$default-transition-time:                        .25s;

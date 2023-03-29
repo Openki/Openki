@@ -77,7 +77,7 @@ export const ids: Predicate<string[]> = function (param) {
 			},
 		};
 	};
-	return make(_.uniq(param.split(',')));
+	return make([...new Set(param.split(','))]);
 };
 
 export const flag: Predicate<boolean> = function (param) {
@@ -98,6 +98,38 @@ export const flag: Predicate<boolean> = function (param) {
 		},
 		param() {
 			return state ? '1' : '0';
+		},
+		query() {
+			return state;
+		},
+		equals(other) {
+			return other.get() === state;
+		},
+	};
+};
+
+export const integer: Predicate<number> = function (param) {
+	if (param === undefined) {
+		return undefined;
+	}
+	const state = Number.parseInt(param, 10);
+
+	if (!Number.isInteger(state)) {
+		throw new FilteringReadError('', 'Invalid integer');
+	}
+
+	return {
+		merge(other) {
+			return other;
+		},
+		without() {
+			return undefined;
+		},
+		get() {
+			return state;
+		},
+		param() {
+			return state.toString();
 		},
 		query() {
 			return state;

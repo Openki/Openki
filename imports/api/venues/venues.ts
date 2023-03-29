@@ -26,7 +26,7 @@ export interface VenueEntity {
 	description: string;
 	/** ID */
 	region?: string;
-	loc?: Geodata;
+	loc: Geodata;
 	address: string;
 	route: string;
 	/** ID */
@@ -79,6 +79,8 @@ export const FindFilterPattern = {
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
+export const FindParams = { region: Predicates.id };
+
 export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 	facilityOptions = [
 		'projector',
@@ -107,7 +109,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
-		return new Filtering({ region: Predicates.id });
+		return new Filtering(FindParams);
 	}
 
 	/**
@@ -182,5 +184,3 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 }
 
 export const Venues = new VenueCollection();
-
-export default Venues;

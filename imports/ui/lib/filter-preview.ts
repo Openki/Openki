@@ -1,3 +1,5 @@
+import { Blaze } from 'meteor/blaze';
+
 /**
  * Give a preview of a filter by highlighting the matching courses
  */
@@ -50,5 +52,3 @@ export function FilterPreview(options: {
 		label.parent().toggleClass('highlight');
 	}
 }
-
-export default FilterPreview;

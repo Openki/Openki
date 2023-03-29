@@ -1,46 +1,5 @@
 <template name="emailValidation">
-	{{#if showEmailValidation}}
-		{{> emailValidationModal}}
-	{{/if}}
-</template>
-
-<template name="emailValidationModal">
-	<div class="js-email-validation-modal modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">
-						<span class="fa-solid fa-circle-exclamation fa-fw"
-							  aria-hidden="true"></span>
-						{{i18n 'validate.email.title' 'Validate e-mail address'}}
-					</h4>
-					<span class="btn-close" data-bs-dismiss="modal"></span>
-				</div>
-				<div class="modal-body">
-					<span>
-						<p>
-							{{i18n 'validate.email.text.greeting' 'Hey "{NAME}"' NAME=currentUser.username}}
-						</p>
-						<p>
-							{{i18n 'validate.email.text.para1' 'You have not validated your e-mail address yet.'}}
-						</p>
-					</span>
-					<div class="mb-3">
-						<button class="js-send-validation-email btn btn-add form-control"
-								{{disabledIfBusy}}>
-							{{#if busy 'sending'}}
-								<span class="fa-solid fa-circle-notch fa-spin fa-fw"
-									  aria-hidden="true"></span>
-								{{i18n 'send.validation.submit.busy' 'Sending…'}}
-							{{else}}
-								<span class="fa-solid fa-paper-plane fa-fw"
-									  aria-hidden="true"></span>
-								{{i18n 'send.validation.email' 'Send me a validation e-mail.'}}
-							{{/if}}
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
+	<div>
+		{{> React (component EmailValidation)}}
 	</div>
 </template>

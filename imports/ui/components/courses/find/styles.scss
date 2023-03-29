@@ -1,0 +1,24 @@
+@import '{}/imports/ui/stylesheets/variables/index';
+
+.find-heading {
+	color: $primary;
+	margin-top: 0;
+}
+
+.no-results {
+	font-size: large;
+	max-width: 400px;
+}
+
+.no-results-body > .fa-exclamation-circle {
+	color: $warning;
+}
+
+.no-results > .btn-group {
+	margin-top: 10px;
+}
+
+.filter-no-match,
+.filter-no-match-delayed {
+	opacity: 0.33;
+}

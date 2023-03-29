@@ -1,21 +1,21 @@
 import { i18n } from '/imports/startup/both/i18next';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
-import { Tracker } from 'meteor/tracker';
 import { Spacebars } from 'meteor/spacebars';
 import { Blaze } from 'meteor/blaze';
 import moment from 'moment';
+import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Regions } from '/imports/api/regions/regions';
-import { Users } from '/imports/api/users/users';
-import * as usersMethods from '/imports/api/users/methods';
 import { Roles } from '/imports/api/roles/roles';
+
 import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue, LocalizedValue } from '/imports/utils/getLocalizedValue';
-import { ReactiveDict } from 'meteor/reactive-dict';
-import { UserEntity } from '/imports/api/fixtures/ensureFixture';
+import { buildCssVariableColor } from '/imports/utils/getColor';
 import { checkContribution } from '/imports/utils/checkContribution';
+import { locationFormat } from '/imports/utils/location-format';
+import { getCachedUser, getUserName } from '/imports/ui/lib/getUserName';
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -76,6 +76,10 @@ const helpers: { [name: string]: Function } = {
 		return getLocalizedValue(value);
 	},
 
+	buildCssVariableColor(name: string, value: string) {
+		return buildCssVariableColor(name, value);
+	},
+
 	log(context: unknown) {
 		if (window.console) {
 			/* eslint-disable-next-line no-console */
@@ -102,14 +106,14 @@ const helpers: { [name: string]: Function } = {
 		if (!date) {
 			return false;
 		}
-		return toMomentWithTimeLocale(date).format('LL');
+		return toMomentWithTimeLocale(date).format('ll');
 	},
 
 	dateTimeLong(date: moment.MomentInput) {
 		if (!date) {
 			return false;
 		}
-		return toMomentWithTimeLocale(date).format('LLLL');
+		return toMomentWithTimeLocale(date).format('llll');
 	},
 
 	timeFormat(date: moment.MomentInput) {
@@ -155,6 +159,10 @@ const helpers: { [name: string]: Function } = {
 			return false;
 		}
 		return toMomentWithTimeLocale(date).format('dddd, Do MMMM');
+	},
+
+	locationFormat(loc: { coordinates: [number, number] }) {
+		return locationFormat(loc);
 	},
 
 	/**
@@ -244,122 +252,51 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 /**
  * Register username and contribution helper. Cache the user data.
  */
-{
-	// We cache the username lookups
-	// To prevent unlimited cache-growth, after a enough lookups we
-	// build a new cache from the old
-	const cacheLimit = 1000;
-	let cache: { [id: string]: Pick<UserEntity, 'username' | 'contribution'> } = {};
-	let previousCache: typeof cache = {};
-	let lookups = 0;
-	const pending: { [id: string]: Tracker.Dependency } = {};
+Template.registerHelper('username', function (userId: string) {
+	return getUserName(userId);
+});
 
-	// Update the cache if users are pushed to the collection
-	Users.find({}, { fields: { _id: 1, username: 1, contribution: 1 } }).observe({
-		added(user) {
-			cache[user._id] = user;
-		},
-		changed(user) {
-			cache[user._id] = user;
-		},
-	});
+Template.registerHelper('contribution', function (userId: string) {
+	if (!userId) {
+		return '';
+	}
 
-	const getCachedUser = (userId: string) => {
-		// Consult cache
-		let cachedUser = cache[userId];
-		if (cachedUser === undefined) {
-			// Consult old cache
-			cachedUser = previousCache[userId];
+	const contribution = PublicSettings.contribution;
 
-			// Carry to new cache if it was present in the old
-			if (cachedUser !== undefined) {
-				cache[userId] = cachedUser;
-			}
-		}
+	if (!contribution) {
+		return '';
+	}
 
-		if (cachedUser === undefined) {
-			// Substitute until the name (or its absence) is loaded
-			cachedUser = { username: '◌' };
+	const cachedUser = getCachedUser(userId);
 
-			if (pending[userId]) {
-				pending[userId].depend();
-			} else {
-				// Cache miss, now we'll have to round-trip to the server
-				lookups += 1;
-				pending[userId] = new Tracker.Dependency();
-				pending[userId].depend();
+	if (!cachedUser) {
+		return '';
+	}
 
-				// Cycle the cache if it's full
-				if (cacheLimit < lookups) {
-					previousCache = cache;
-					cache = {};
-					lookups = 0;
-				}
+	if (!checkContribution(cachedUser.contribution)) {
+		return '';
+	}
 
-				usersMethods
-					.name(userId)
-					.then((user) => {
-						cache[userId] = user || { username: '?!' };
-						pending[userId].changed();
-						delete pending[userId];
-					})
-					.catch((err) => {
-						/* eslint-disable-next-line no-console */
-						console.warn(err);
-					});
-			}
-		}
+	return Spacebars.SafeString(
+		`<a href="${getLocalizedValue(
+			contribution.link,
+		)}" data-bs-toggle="tooltip" data-bs-title="${Blaze._escape(
+			i18n(
+				'user.hasContributed',
+				'{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.',
+				{
+					USERNAME: cachedUser.getDisplayName(),
+					SITENAME: getSiteName(Regions.currentRegion()),
+					ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
+				},
+			),
+		)}"><sup><i class="${contribution.icon}" aria-hidden="true"></i></sup></a>`,
+	);
+});
 
-		return cachedUser;
-	};
-
-	Template.registerHelper('username', function (userId: string) {
-		if (!userId) {
-			return i18n('noUser_placeholder', 'someone');
-		}
-
-		const cachedUser = getCachedUser(userId);
-
-		if (!cachedUser) {
-			return `userId: ${userId}`;
-		}
-
-		return cachedUser.username;
-	});
-
-	Template.registerHelper('contribution', function (userId: string) {
-		if (!userId) {
-			return '';
-		}
-
-		const contribution = PublicSettings.contribution;
-
-		if (!contribution) {
-			return '';
-		}
-
-		const cachedUser = getCachedUser(userId);
-
-		if (!cachedUser) {
-			return '';
-		}
-
-		if (!checkContribution(cachedUser.contribution)) {
-			return '';
-		}
-
-		return Spacebars.SafeString(
-			`<a href="${getLocalizedValue(contribution.link)}" data-tooltip="${Blaze._escape(
-				i18n(
-					'user.hasContributed',
-					'{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.',
-					{
-						USERNAME: cachedUser.username,
-						SITENAME: getSiteName(Regions.currentRegion()),
-						ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
-					},
-				),
-			)}"><sup><i class="${contribution.icon}" aria-hidden="true"></i></sup></a>`,
-		);
-	});
-}
+/** Utility to simplify the map of a Blaze component to a React component for backwards compatibility. */
+Template.registerHelper('component', function (this: any, f: any) {
+	const self = { ...this };
+	self.component = f;
+	return self;
+});

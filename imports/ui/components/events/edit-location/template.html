@@ -10,7 +10,7 @@
 			</em>
 		</p>
 		<div class="row">
-			<div class="col">
+			<div class="col-md-7">
 				{{#if locationIsPreset}}
 					<div class="event-edit-location-selected">
 						<span class="fa-solid fa-location-dot fa-fw" aria-hidden="true"></span>
@@ -37,7 +37,7 @@
 				{{else}}
 					<div class="input-group event-edit-location-searchbar">
 						<input type="text" class="form-control js-location-search-input"
-							   placeholder="{{i18n 'event.edit.locationNamePlaceholder' 'Where to?' attr=true}}"
+							   placeholder="{{i18n 'event.edit.locationNamePlaceholder' 'Address or name of venue' attr=true}}"
 							   value="{{location.name}}" />
 						<button type="submit" class="btn btn-go js-location-search-btn">
 							{{i18n 'event.edit.addressSearch' "Search"}}
@@ -64,19 +64,18 @@
 							{{/each}}
 						</ul>
 					{{else}}
-						<div>
+						<p>
 							{{i18n 'event.edit.locations.foundnone' 'No locations found.'}}
-						</div>
+						</p>
+						<p>
+							{{i18n 'profile.createNewVenue.question' 'Are you responsible for this venue?'}}
+							<a href="{{pathFor 'venueDetails' _id='create'}}"
+							   target="_blank">{{i18n 'profile.createNewVenue.linkText' 'Set up a venue that is visible to others and can be reused.'}}</a>
+						</p>
 					{{/if}}
-					<p>
-						{{i18n 'profile.createNewVenue.linkText' 'If you like to create a venue that can be later used again, we suggest you'}}
-						<a href="{{pathFor 'venueDetails' _id='create'}}" target="_blank">
-							{{i18n 'profile.createNewVenue.link' 'set up a new venue'}}
-						</a>
-					</p>
 				{{/if}}
 			</div>
-			<div class="col event-edit-location-map">
+			<div class="col-md-5 event-edit-location-map">
 				{{> map markers=eventMarkers allowPlacing=allowPlacing allowRemoving=allowRemoving}}
 			</div>
 		</div>

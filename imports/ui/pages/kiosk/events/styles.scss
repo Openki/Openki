@@ -47,7 +47,7 @@
 	.fa-regular,
 	.fa-brands,
 	.fa-solid {
-		color: $blue;
+		color: $primary;
 	}
 }
 
@@ -156,7 +156,7 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 .kiosk-event-today .kiosk-event-moment,
 .kiosk-event-upcoming .kiosk-event-moment {
 	@include td-float(left);
-	@include td-text-align(left);
+	text-align: start;
 }
 
 // ** Location
@@ -164,7 +164,7 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 .kiosk-event-today .kiosk-event-location,
 .kiosk-event-upcoming .kiosk-event-location {
 	@include td-float(right);
-	@include td-text-align(right);
+	text-align: end;
 }
 
 // ** Body
@@ -181,11 +181,5 @@ $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 //========================================================================================
 .kiosk-event-title {
 	color: $gray-800;
-	display: inline;
-}
-
-// ** Description
-//========================================================================================
-.kiosk-event-description {
 	display: inline;
 }

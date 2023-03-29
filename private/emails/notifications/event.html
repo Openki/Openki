@@ -2,13 +2,13 @@
 	<tr>
 		<td>
 			<span class="title">
-				{{i18n "notification.event.mail.greeting" "Hi {USERNAME}" USERNAME=username lng=locale}}
+				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
 			</span>
 			<p>
 				{{#if new}}
-					{{i18n 'notification.event.mail.new' 'A new event was just published for the "{COURSE}" course:' COURSE=course lng=locale}}
+					{{i18n 'notification.event.mail.new' 'A new event was just published for {COURSE}:' COURSE=course lng=locale}}
 				{{else}}
-					{{i18n 'notification.event.mail.changed' 'The following event for {COURSE} course changed:' COURSE=course lng=locale}}
+					{{i18n 'notification.event.mail.changed' 'The following event for {COURSE} changed:' COURSE=course lng=locale}}
 				{{/if}}
 			</p>
 			{{#if additionalMessage}}
@@ -18,17 +18,16 @@
 				<table class="comment-box">
 					<tr>
 						<td>
-							{{additionalMessage}}
+							<span class="pre">{{additionalMessage}}</span>
 						</td>
 					</tr>
 				</table>
 			{{/if}}
 
-			<table style="margin: 2em auto; width: 92%;">
+			<table class="event">
 				<tr>
-					<td bgcolor="#c1f2ae" style="padding: 15px;">
-						<a href="{{eventLink}}"
-						   style="color: #333 !important; text-decoration: none !important;">
+					<td class="event-header">
+						<a href="{{eventLink}}">
 							<strong>
 								{{eventDate}}
 								<br />
@@ -45,16 +44,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td height="2px" style="font-size: 2px;">
+					<td class="event-gap">
 					</td>
 				</tr>
 				<tr>
-					<td bgcolor="#d9eaf2" style="padding: 15px;">
-						<p style="font-size: 14px; font-weight: bold;">
+					<td class="event-body">
+						<p class="title">
 							{{event.title}}
-						</p>
-						<p style="font-weight: bold;">
-							{{i18n "notification.event.mail.titleDescription" "Description" lng=locale}}
 						</p>
 						<p>
 							{{{event.description}}}
@@ -62,9 +58,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td width="350" style="padding: 5px; text-align:right;">
-						<a href="{{calLink}}"
-						   style="color: #00f !important; text-decoration: none !important;">
+					<td class="event-link">
+						<a href="{{calLink}}">
 							{{i18n "notification.event.mail.linkCalendar" "Add this event to my calendar" lng=locale}}
 						</a>
 						<br />
@@ -84,7 +79,7 @@
 			</p>
 			<p class="text-center">
 				<a href="{{unsubscribeFromCourseLink}}">
-					{{i18n "notification.event.mail.unsubscribe" "Unsubscribe from course" lng=locale}}
+					{{i18n "notification.event.mail.unsubscribe" "Unsubscribe from {COURSE}" COURSE=course lng=locale}}
 				</a>
 			</p>
 		</td>
@@ -94,16 +89,16 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{i18n 'notification.event.mail.notice' 'You receive this e-mail because you are involved in the "{COURSE}" course.' COURSE=course lng=locale}}
+						{{i18n 'notification.event.mail.notice' 'You receive this e-mail because you are involved in {COURSE}.' COURSE=course lng=locale}}
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<a
-						   href="{{unsubLink}}">{{i18n "notification.event.mail.unsubLink" "Unsubscribe from all automated notifications." SITENAME=siteName lng=locale}}</a>
+						   href="{{unsubLink}}">{{i18n "email.base.unsubscribeLink.automatedNotifications" SITENAME=siteName lng=locale}}</a>
 						&nbsp;
 						<a
-						   href="{{urlFor 'profile' query='campaign=eventNotify'}}">{{i18n "notification.event.mail.profileLink" "Visit your profile" lng=locale}}</a>
+						   href="{{urlFor 'profile' query='campaign=eventNotify'}}">{{i18n "email.base.profileLink" lng=locale}}</a>
 					</td>
 				</tr>
 			</table>

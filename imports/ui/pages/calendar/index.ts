@@ -1,74 +1,93 @@
-import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
+import { ReactiveDict } from 'meteor/reactive-dict';
+import { i18n } from '/imports/startup/both/i18next';
+import { Session } from 'meteor/session';
 
-import { Events, FindFilter } from '/imports/api/events/events';
+import { EventModel, Events, FindFilter } from '/imports/api/events/events';
+import { Regions } from '/imports/api/regions/regions';
+
+import { MeteorAsync } from '/imports/utils/promisify';
+import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/calendar-nav/multi';
 import '/imports/ui/components/events/list';
-import '/imports/ui/components/loading';
 
 import './template.html';
 import './styles.scss';
 
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		'calendar',
-		unknown,
-		{ filter: ReturnType<typeof Events['Filtering']>; eventSub: Meteor.SubscriptionHandle }
+		'calendarPage',
+		Record<string, string>,
+		{
+			filter: ReturnType<(typeof Events)['Filtering']>;
+			state: ReactiveDict<{
+				isAttendeeFilterOn: boolean;
+			}>;
+			setIsAttendeeFilterOn: (state: boolean) => void;
+		}
 	>;
 
-	const template = Template.calendar;
+	const template = Template.calendarPage;
 
 	template.onCreated(function () {
 		const instance = this;
 
+		instance.autorun(() => {
+			Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
+		});
+
 		const filter = Events.Filtering();
 		instance.filter = filter;
 
+		instance.state = new ReactiveDict();
+		instance.state.setDefault({ isAttendeeFilterOn: false });
+		instance.setIsAttendeeFilterOn = (state: boolean) => {
+			this.state.set('isAttendeeFilterOn', state);
+		};
+
 		// Read URL state
 		instance.autorun(() => {
-			const { query } = Router.current().params;
+			const data = Template.currentData();
 
 			// Show internal events only when a group or venue is specified
-			if (!query.group && !query.venue && query.internal === undefined) {
-				query.internal = false;
+			if (!data.group && !data.venue && data.internal === undefined) {
+				data.internal = '0';
 			}
 
+			const start = Regions.currentRegion()?.calendarStartDate || new Date();
 			filter
 				.clear()
-				.add('start', moment().startOf('week').toISOString())
-				.read(query)
+				.add('start', moment(start).startOf('week').toISOString())
+				.read(data)
 				.add('region', Session.get('region'))
 				.done();
-		});
 
-		instance.autorun(() => {
 			const filterQuery = filter.toQuery() as FindFilter;
 
-			const start = filter.get('start').toDate();
-			const limit = filter.get('start').add(1, 'week').toDate();
+			const startMoment = filter.get('start') as moment.Moment;
+			const after = startMoment.toDate();
+			const end = startMoment.add(1, 'week').toDate();
 
-			filterQuery.period = [start, limit];
-			instance.eventSub = instance.subscribe('Events.findFilter', filterQuery);
+			filterQuery.after = after;
+			filterQuery.end = end;
+			instance.subscribe('Events.findFilter', filterQuery);
 		});
 	});
 
 	template.onRendered(function () {
 		const instance = Template.instance();
 		// change of week does not trigger onRendered again
-		this.autorun(() => {
+		instance.autorun(async () => {
 			// only do this in the current week
-			if (moment().format('w') === instance.filter.get('start').format('w')) {
-				if (instance.eventSub.ready()) {
-					Meteor.defer(function () {
-						const elem = instance.$('.js-calendar-date').eq(moment().weekday());
+			if (moment().format('w') === instance.filter.get('start')?.format('w')) {
+				if (instance.subscriptionsReady()) {
+					await MeteorAsync.defer();
+					const elem = instance.$('.js-calendar-date').eq(moment().weekday());
 
-						// calendar nav and topnav are together 103 px fixed height, we add 7px margin
-						window.scrollTo(0, (elem.offset() || { top: 0 }).top - 110);
-					});
+					// calendar nav and topnav are together 103 px fixed height, we add 7px margin
+					window.scrollTo(0, (elem.offset() || { top: 0 }).top - 110);
 				}
 			}
 		});
@@ -77,9 +96,8 @@ import './styles.scss';
 	template.helpers({
 		days() {
 			const start = Template.instance().filter.get('start');
-			let i = 0;
 			const days = [];
-			for (; i < 7; i += 1) {
+			for (let i = 0; i < 7; i += 1) {
 				days.push({
 					start: moment(start).add(i, 'days'),
 					end: moment(start).add(i + 1, 'days'),
@@ -87,46 +105,58 @@ import './styles.scss';
 			}
 			return days;
 		},
-		filter() {
-			return Template.instance().filter;
-		},
 		startDate() {
 			return moment(Template.instance().filter.get('start'));
+		},
+		setterToBePassedToChild() {
+			// returns a function
+			return Template.instance().setIsAttendeeFilterOn;
+		},
+		isAttendeeFilterOn() {
+			// returns a value of the state (true / false)
+			return Template.instance().state.get('isAttendeeFilterOn');
 		},
 	});
 }
 {
 	const Template = TemplateAny as TemplateStaticTyped<
-		'calendarDayFormat',
+		'calendarDay',
 		{
 			day: {
 				start: moment.Moment;
 				end: moment.Moment;
 			};
-			filter: ReturnType<typeof Events['Filtering']>;
+			filter: ReturnType<(typeof Events)['Filtering']>;
+			isAttendeeFilterOn: boolean;
 		}
 	>;
 
-	const template = Template.calendarDayFormat;
+	const template = Template.calendarDay;
 
 	template.helpers({
 		hasEvents() {
-			const data = Template.currentData();
+			const data = Template.instance().data;
 			const filterQuery = data.filter.toQuery() as FindFilter;
 			filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
 
 			return Events.findFilter(filterQuery, 1).count() > 0;
 		},
 		events() {
-			const data = Template.currentData();
+			const data = Template.instance().data;
 			const filterQuery = data.filter.toQuery() as FindFilter;
 			filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
 
 			return Events.findFilter(filterQuery);
 		},
-		eventsReady() {
-			const instance = Template.instance();
-			return (instance.parentInstance() as any).eventSub.ready();
+		maybeFilteredEvents(events: EventModel[], filters: any) {
+			let maybeFilteredEvents = [...events];
+			const userId = Meteor.userId();
+			if (filters.hash.isAttendeeFilterOn && userId) {
+				maybeFilteredEvents = maybeFilteredEvents.filter((event) => {
+					return event.participants?.includes(userId);
+				});
+			}
+			return maybeFilteredEvents;
 		},
 	});
 }

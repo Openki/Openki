@@ -25,11 +25,6 @@
 	padding-top: $form-group-margin-bottom;
 }
 
-.page-link {
-	display: block;
-	margin-bottom: 10px;
-}
-
 .details-header {
 	padding: 10px $details-header-padding-horizontal;
 	position: relative;
@@ -65,14 +60,7 @@
 }
 
 .details-map {
-	padding-top: $form-group-margin-bottom;
 	width: 100%;
-
-	@media (min-width: $screen-sm) {
-		@include td-float(right);
-		@include td-padding-all(0, 0, 0, $form-group-margin-bottom);
-		width: 300px;
-	}
 }
 
 .details-map .map-box {
@@ -81,14 +69,14 @@
 }
 
 .details-map .coordinates {
-	@include td-margin-all(5px, 5px, 5px, 0);
-	@include td-text-align(right);
+	margin: 5px;
+	text-align: end;
 }
 
 .details-form {
 	@include clearfix;
-	background-color: lighten($brand-success, 10%);
-	border-color: $brand-success;
+	background-color: lighten($success, 10%);
+	border-color: $success;
 	border-style: solid;
 	border-width: 1px;
 	padding: ($grid-gutter-width / 2);
@@ -102,32 +90,9 @@
 	margin-bottom: 0;
 }
 
-.details-form-element:nth-child(1):nth-last-child(2),
-.details-form-element:nth-child(2):nth-last-child(1) {
-	@include td-make-sm-column(6);
-	padding: 0;
-	width: 100%;
-}
-
-.details-form-element:nth-child(1):nth-last-child(2) {
-	@media (min-width: $screen-sm) {
-		@include td-padding(right, ($grid-gutter-width / 2));
-	}
-}
-
-.details-form-element:nth-child(2):nth-last-child(1) {
-	@media (min-width: $screen-sm) {
-		@include td-padding(left, ($grid-gutter-width / 2));
-	}
-}
-
-.details-form-element > h3 {
-	margin-top: 0;
-}
-
 .details-addition {
-	background-color: $gray-lightest;
-	border-color: darken($gray-lightest, 3%);
+	background-color: $gray-200;
+	border-color: darken($gray-200, 3%);
 	border-style: solid;
 	border-width: 1px;
 	padding: $form-group-margin-bottom;
@@ -140,9 +105,4 @@
 
 .details-addition > *:last-child {
 	margin-bottom: 0;
-}
-
-.details-info-btn {
-	@include td-make-sm-column(9);
-	@include td-make-sm-column-offset(3);
 }

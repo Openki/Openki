@@ -15,7 +15,7 @@ import * as UrlTools from '/imports/utils/url-tools';
 
 // Try to guess a sensible language
 Meteor.startup(() => {
-	const useLocale = function (lang: string | false | null | undefined) {
+	const setLocale = function (lang: string | false | null | undefined) {
 		if (!lang) {
 			return false;
 		}
@@ -43,10 +43,10 @@ Meteor.startup(() => {
 	};
 
 	// Check query parameter and cookies
-	if (useLocale(UrlTools.queryParam('lg'))) {
+	if (setLocale(UrlTools.queryParam('lg'))) {
 		return;
 	}
-	if (useLocale(localStorage?.getItem('locale'))) {
+	if (setLocale(localStorage?.getItem('locale'))) {
 		return;
 	}
 
@@ -55,22 +55,22 @@ Meteor.startup(() => {
 	// too lazy to implement this. It would become obsolete anyway.
 	if (navigator.languages) {
 		for (let i = 0; i < navigator.languages.length; i += 1) {
-			if (useLocale(navigator.languages[i])) return;
+			if (setLocale(navigator.languages[i])) return;
 		}
 	}
 
 	// Here we ask for the browser UI language which may not be what the visitor
 	// wanted. Oh well.
-	if (useLocale(navigator.language)) {
+	if (setLocale(navigator.language)) {
 		return;
 	}
 
 	// Give up. Here's to Cultural Homogenization.
-	useLocale('en');
+	setLocale('en');
 });
 
 Meteor.startup(() => {
-	Tracker.autorun(() => {
+	Tracker.autorun(async () => {
 		const desiredLocale = Session.get('locale');
 
 		if (!desiredLocale) {
@@ -91,7 +91,7 @@ Meteor.startup(() => {
 		$('html').toggleClass('rtl', isRTL);
 
 		if (Meteor.userId()) {
-			UsersMethods.updateLocale(lang);
+			await UsersMethods.updateLocale(desiredLocale);
 		}
 
 		// Tell moment to switch the locale

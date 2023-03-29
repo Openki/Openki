@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import { Session } from 'meteor/session';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
+import { Session } from 'meteor/session';
 
 import { UserModel } from '/imports/api/users/users';
 
@@ -25,32 +25,49 @@ export interface RegionEntity {
 	tenant: string;
 	name: string;
 	nameEn: string;
-
 	slug: string;
 	loc?: Geodata;
 	/** ex: "UTC+01:00" */
 	tz: string;
+	/** description for the user */
+	description: string;
 	/**
 	 * Number of courses in that region, calculated field (does not count internal or archived
 	 * courses)
 	 */
 	courseCount: number;
 	/**
-	 * Number of future events in that region, calculated field (does not count internal courses)
+	 * Number of future events in that region, calculated field (does not count internal events)
 	 */
 	futureEventCount: number;
 	/** ID of featured group */
 	featuredGroup: string;
+	/** Team group that is added to all courses on create. */
+	defaultTeamGroup?: string;
+	/** Courses in this region are default single events. */
+	singleEvents?: boolean;
+	/**
+	 * If set the calendar page jumps automatic to this date.
+	 */
+	calendarStartDate?: Date;
 	custom?: {
 		siteName?: string;
 		siteStage?: string;
 		headerLogo?: {
-			/** The logo in the top left corner. Can be a logo from the /public/logo/* folder or a base64 encoded string. */
+			/**
+			 * The logo in the top left corner. Can be a logo from the /public/logo/* folder, from
+			 * our s3 file storage (must start with the "publicUrlBase" setting) or a base64 encoded
+			 * string.
+			 */
 			src: string;
 			alt: string;
 		};
 		headerLogoKiosk?: {
-			/** The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the /public/logo/* folder or a base64 encoded string. */
+			/**
+			 * The logo in the top left corner from the /kiosk/events/ page. Can be a logo from the
+			 * /public/logo/* folder, from our s3 file storage (must start with the "publicUrlBase"
+			 * setting) or a base64 encoded string.
+			 */
 			src: string;
 			alt: string;
 		};
@@ -72,7 +89,7 @@ export class Region {
 	/**
 	 * Check whether a user may edit the region.
 	 */
-	editableBy(this: RegionModel, user?: UserModel) {
+	editableBy(this: RegionModel, user?: UserModel | null) {
 		if (!user) {
 			return false;
 		}
@@ -110,7 +127,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 	currentRegion() {
 		const regionId = Session.get('region');
 
-		if (!regionId) {
+		if (!regionId || regionId === 'all') {
 			return undefined;
 		}
 
@@ -151,10 +168,8 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 			selector.tenant = filter.tenant;
 		}
 
-		return this.find(selector, options);
+		return this.find(selector, options) as Mongo.Cursor<RegionEntity, RegionModel>;
 	}
 }
 
 export const Regions = new RegionsCollection();
-
-export default Regions;

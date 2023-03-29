@@ -3,7 +3,7 @@ import { Users } from '/imports/api/users/users';
 /**
  * merge the profile locale into the base locale
  */
-export default function update() {
+export function update() {
 	let updated = 0;
 
 	Users.find({})

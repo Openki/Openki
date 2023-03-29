@@ -1,17 +1,16 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import $ from 'jquery';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
+import { Spacebars } from 'meteor/spacebars';
+import { i18n } from '/imports/startup/both/i18next';
+import { Session } from 'meteor/session';
 
 import { EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
-import * as Analytics from '/imports/ui/lib/analytics';
-
-import '/imports/ui/components/loading';
+import * as Metatags from '/imports/utils/metatags';
 
 import './template.html';
 
@@ -22,7 +21,6 @@ import './template.html';
 		{
 			groupedEvents: ReactiveVar<_.Dictionary<EventModel[]>>;
 			days: ReactiveVar<string[]>;
-			pageReady: ReactiveVar<boolean>;
 			limit: ReactiveVar<number>;
 		}
 	>;
@@ -32,12 +30,15 @@ import './template.html';
 	template.onCreated(function () {
 		const instance = this;
 
+		instance.autorun(() => {
+			Metatags.setCommonTags(i18n('calendar.windowtitle', 'Calendar'));
+		});
+
 		instance.groupedEvents = new ReactiveVar({});
 		instance.days = new ReactiveVar([]);
-		instance.pageReady = new ReactiveVar(false);
 
 		const { query } = Router.current().params;
-		instance.limit = new ReactiveVar(parseInt(query.count, 10) || 200);
+		instance.limit = new ReactiveVar(parseInt(query.count || '', 10) || 200);
 
 		let startDate = moment();
 		if (query.start) {
@@ -67,14 +68,11 @@ import './template.html';
 				filterQuery.internal = false;
 			}
 
-			instance.subscribe('Events.findFilter', filterQuery, limit + 1, {
-				onReady: () => {
-					if (!instance.pageReady.get()) {
-						instance.pageReady.set(true);
-					}
-				},
-			});
+			instance.subscribe('Events.findFilter', filterQuery, limit + 1);
+		});
 
+		instance.autorun(() => {
+			const limit = instance.limit.get();
 			const events = Events.find({}, { sort: { start: 1 }, limit }).fetch();
 			const groupedEvents = _.groupBy(events, (event) => moment(event.start).format('LL'));
 
@@ -84,14 +82,6 @@ import './template.html';
 	});
 
 	template.helpers({
-		pageReady() {
-			return Template.instance().pageReady.get();
-		},
-
-		ready() {
-			return Template.instance().subscriptionsReady();
-		},
-
 		days() {
 			return Template.instance().days.get();
 		},
@@ -119,8 +109,10 @@ import './template.html';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'frameCalendarEvent',
-		unknown,
-		{ expanded: ReactiveVar<boolean> }
+		EventModel,
+		{
+			expanded: ReactiveVar<boolean>;
+		}
 	>;
 
 	const template = Template.frameCalendarEvent;
@@ -139,6 +131,21 @@ import './template.html';
 		},
 
 		expanded: () => Template.instance().expanded.get(),
+
+		getAttendees() {
+			const { data } = Template.instance();
+			return data.participants?.length || 0;
+		},
+
+		getTotalAvailableSeats() {
+			const { data } = Template.instance();
+			return data.maxParticipants || Spacebars.SafeString('&#8734;');
+		},
+
+		isUnlimited() {
+			const { data } = Template.instance();
+			return !data.maxParticipants;
+		},
 	});
 
 	template.events({
@@ -146,14 +153,6 @@ import './template.html';
 			$(event.currentTarget).toggleClass('active');
 			instance.$('.frame-list-item-time').toggle();
 			instance.expanded.set(!instance.expanded.get());
-		},
-
-		'click .js-track-cal-download'() {
-			Analytics.trackEvent(
-				'Events downloads',
-				'Event downloads via calendar frame',
-				Regions.findOne(this.region)?.nameEn,
-			);
 		},
 	});
 }

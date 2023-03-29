@@ -2,15 +2,14 @@ import $ from 'jquery';
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Session } from 'meteor/session';
 
 import { Regions } from '/imports/api/regions/regions';
 import { CourseModel, Courses } from '/imports/api/courses/courses';
-import * as Metatags from '/imports/utils/metatags';
-import SortSpec from '/imports/utils/sort-spec';
 
-import '/imports/ui/components/loading';
+import * as Metatags from '/imports/utils/metatags';
+import { SortSpec } from '/imports/utils/sort-spec';
 
 import './template.html';
 
@@ -19,7 +18,6 @@ import './template.html';
 		'frameCourselistPage',
 		unknown,
 		{
-			sort: string;
 			limit: ReactiveVar<number>;
 		}
 	>;
@@ -27,13 +25,17 @@ import './template.html';
 	const template = Template.frameCourselistPage;
 
 	template.onCreated(function () {
-		Metatags.setCommonTags(i18n('course.list.windowtitle', 'Courses'));
+		const instance = this;
+
+		instance.autorun(() => {
+			Metatags.setCommonTags(i18n('course.list.windowtitle', 'Courses'));
+		});
 
 		const query = Router.current().params.query;
-		this.sort = query.sort;
-		this.limit = new ReactiveVar(parseInt(query.count, 10) || 5);
+		const sort = query.sort;
+		instance.limit = new ReactiveVar(parseInt(query.count || '', 10) || 5);
 
-		this.autorun(() => {
+		instance.autorun(() => {
 			const filter = Courses.Filtering().read(query).done();
 
 			const filterQuery = filter.toQuery();
@@ -43,9 +45,9 @@ import './template.html';
 				filterQuery.internal = false;
 			}
 
-			const sorting = this.sort ? SortSpec.fromString(this.sort) : SortSpec.unordered();
+			const sorting = sort ? SortSpec.fromString(sort) : SortSpec.unordered();
 
-			this.subscribe(
+			instance.subscribe(
 				'Courses.findFilter',
 				filterQuery,
 				this.limit.get() + 1,
@@ -54,13 +56,10 @@ import './template.html';
 			);
 		});
 
-		this.subscribe('Regions');
+		instance.subscribe('Regions');
 	});
 
 	template.helpers({
-		ready() {
-			return Template.instance().subscriptionsReady();
-		},
 		courses() {
 			return Courses.find(
 				{},
