@@ -41,9 +41,9 @@ template.helpers({
 		return `left: ${this.relStart * 100}%; right: ${this.relEnd * 100}%;`;
 	},
 	showDay(m: moment.Moment) {
-		return m.format('dddd, LL');
+		return m.locale(Session.get('timeLocale') || 'en').format('dddd, LL');
 	},
 	showHour(m: moment.Moment) {
-		return m.format('H');
+		return m.locale(Session.get('timeLocale') || 'en').format('H');
 	},
 });

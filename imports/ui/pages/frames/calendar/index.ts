@@ -74,7 +74,11 @@ import './template.html';
 		instance.autorun(() => {
 			const limit = instance.limit.get();
 			const events = Events.find({}, { sort: { start: 1 }, limit }).fetch();
-			const groupedEvents = _.groupBy(events, (event) => moment(event.start).format('LL'));
+			const groupedEvents = _.groupBy(events, (event) =>
+				moment(event.start)
+					.locale(Session.get('timeLocale') || 'en')
+					.format('LL'),
+			);
 
 			instance.groupedEvents.set(groupedEvents);
 			instance.days.set(Object.keys(groupedEvents));
