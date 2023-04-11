@@ -9,7 +9,6 @@ import { Tenants } from '/imports/api/tenants/tenants';
 import { UserModel, Users } from '/imports/api/users/users';
 import { Log } from '/imports/api/log/log';
 
-import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
