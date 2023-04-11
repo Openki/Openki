@@ -43,12 +43,12 @@
 				{{getAttendees}}/{{getTotalAvailableSeats}}
 
 			</div>
-			<i class="fa fa-user frame-list-free-seats" aria-hidden="true"></i>
+			<i class="fa-solid fa-user frame-list-free-seats" aria-hidden="true"></i>
 
 			<span class="frame-list-item-time">
 				{{timeFormat start}}
 			</span>
-			{{title}}
+			<strong>{{title}}</strong>
 			{{#if allRegions}}
 				<span class="badge bg-primary frame-list-item-region">{{regionName}}</span>
 			{{/if}}

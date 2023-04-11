@@ -1,7 +1,7 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
 .timetable {
-	min-height: 100%;
+	min-height: 100vh;
 	overflow: hidden;
 	padding-top: 5px;
 }
@@ -46,7 +46,7 @@
 		z-index: 1;
 	}
 
-	&--room {
+	&-room {
 		border-top-width: 0;
 	}
 }

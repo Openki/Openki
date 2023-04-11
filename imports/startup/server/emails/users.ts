@@ -5,10 +5,10 @@ import { Accounts } from 'meteor/accounts-base';
 import juice from 'juice';
 import { Spacebars } from 'meteor/spacebars';
 
-import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 import { UserModel } from '/imports/api/users/users';
+import { toEmailLogo } from '/imports/utils/toEmailLogo';
 
 if (PrivateSettings.siteEmail) {
 	Accounts.emailTemplates.from = PrivateSettings.siteEmail;
@@ -67,7 +67,7 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
+				logo: toEmailLogo(emailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
 			username: (user as UserModel).getDisplayName(),
@@ -129,7 +129,7 @@ Accounts.emailTemplates.resetPassword.html = function (user, url) {
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
+				logo: toEmailLogo(emailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
 			username: (user as UserModel).getDisplayName(),

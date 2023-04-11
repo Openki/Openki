@@ -14,10 +14,10 @@ import { Users } from '/imports/api/users/users';
 import { Notification } from '/imports/notification/notification';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { ServerMethod } from '/imports/utils/ServerMethod';
-import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 import { Type } from '/imports/utils/CustomChecks';
+import { toEmailLogo } from '/imports/utils/toEmailLogo';
 
 export const sendVerificationEmail = ServerMethod(
 	'sendVerificationEmail',
@@ -125,7 +125,7 @@ export const sendReport = ServerMethod(
 			title,
 			site: {
 				url: Meteor.absoluteUrl(),
-				logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
+				logo: toEmailLogo(emailLogo),
 				name: siteName,
 			},
 			report: reportMessage,
