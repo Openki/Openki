@@ -111,6 +111,7 @@
 	"siteEmail": "", // Sender e-mail address in mails
 	"reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"}, // Sender and recipient address for "Report problem" function
 	"robots": false, // Tells robots/crawlers whether to index the website or not
+	"hideProfiles": false, // Tells robots/crawlers not to index user profiles (/user/*)
 	"printLog": false, // Print the log on the server in the console, usually only for development
 	"service": { // OAuth
 		"facebook": {
