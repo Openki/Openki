@@ -710,7 +710,12 @@ RouterAsync.route('timetable', {
 		});
 
 		if (!start || !end) {
-			return [];
+			return {
+				days: [],
+				hours: [],
+				grouped: [],
+				future_length: 0,
+			};
 		}
 
 		start = moment(start).startOf('hour');
