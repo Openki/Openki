@@ -78,7 +78,7 @@ interface Vars {
 	siteName: string;
 	customSiteName?: string;
 	customEmailLogo?: string;
-	site: { url: string; logo: string; name: string };
+	site: { brand: string; url: string; logo: string; name: string };
 	customSiteUrl?: string;
 	locale: string;
 	username: string;
@@ -157,6 +157,7 @@ export function send(entry: LogEntity & { body: { model: string; recipients: str
 				vars.customSiteName = vars.customSiteName || vars.siteName;
 				const emailLogo = vars.customEmailLogo || PublicSettings.emailLogo;
 				vars.site = {
+					brand: PublicSettings.theme.brand,
 					url: vars.customSiteUrl || Meteor.absoluteUrl(),
 					logo: toEmailLogo(emailLogo),
 					name: vars.customSiteName || vars.siteName,
