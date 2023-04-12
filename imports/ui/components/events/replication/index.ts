@@ -190,8 +190,8 @@ template.events({
 		instance.pickDays.set(days);
 	},
 
-	'show.bs.tab a[data-toggle="tab"]'(event, instance) {
-		const targetHref = $(event.target).attr('href');
+	'show.bs.tab button[data-bs-toggle="tab"]'(event, instance) {
+		const targetHref = $(event.target).attr('data-bs-target');
 		instance.usingPicker.set(targetHref === '#datepicker');
 	},
 
