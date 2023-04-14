@@ -19,8 +19,8 @@ import * as notificationJoin from '/imports/notification/notification.join';
 import * as notificationGroupCourse from '/imports/notification/notification.group.course';
 import * as notificationPrivateMessage from '/imports/notification/notification.private-message';
 
-import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
+import { toEmailLogo } from '/imports/utils/toEmailLogo';
 
 export const Notification = {
 	Event: notificationEvent,
@@ -78,7 +78,7 @@ interface Vars {
 	siteName: string;
 	customSiteName?: string;
 	customEmailLogo?: string;
-	site: { url: string; logo: string; name: string };
+	site: { brand: string; url: string; logo: string; name: string };
 	customSiteUrl?: string;
 	locale: string;
 	username: string;
@@ -157,8 +157,9 @@ export function send(entry: LogEntity & { body: { model: string; recipients: str
 				vars.customSiteName = vars.customSiteName || vars.siteName;
 				const emailLogo = vars.customEmailLogo || PublicSettings.emailLogo;
 				vars.site = {
+					brand: PublicSettings.theme.brand,
 					url: vars.customSiteUrl || Meteor.absoluteUrl(),
-					logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
+					logo: toEmailLogo(emailLogo),
 					name: vars.customSiteName || vars.siteName,
 				};
 				vars.locale = userLocale;
