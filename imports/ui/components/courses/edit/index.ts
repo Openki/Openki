@@ -28,6 +28,7 @@ import '/imports/ui/components/courses/categories';
 import '/imports/ui/components/editable';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
+import '/imports/ui/components/edit-custom-fields';
 
 import './template.html';
 import './styles.scss';
@@ -106,13 +107,13 @@ export type Data = {
 			if (isNew) {
 				if (data.isFrame && data.region) {
 					// The region was preset for the frame
-					Regions.findOne({ _id: data.region });
-				} else if (Regions.findFilter({}, 2).count() === 1) {
+					return Regions.findOne({ _id: data.region });
+				}
+				if (Regions.findFilter({}, 2).count() === 1) {
 					// There is only one region
 					return Regions.findOne();
-				} else {
-					return Regions.currentRegion();
 				}
+				return Regions.currentRegion();
 			}
 			return undefined;
 		}
@@ -273,10 +274,6 @@ export type Data = {
 			return (
 				Template.instance().showRegionSelection() || Template.instance().customFields().length > 0
 			);
-		},
-
-		getCustomFieldValue(name: string) {
-			return Template.currentData().customFields?.filter((a) => a.name === name)[0]?.value;
 		},
 
 		hideCategories() {
