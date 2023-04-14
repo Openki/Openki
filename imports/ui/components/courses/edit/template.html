@@ -176,30 +176,11 @@
 									</div>
 								{{/if}}
 
-								{{#each field in instance.customFields "singleLine"}}
-									<div class="mb-3">
-										<label class="form-label"
-											   for="course-custom-field-{{field.name}}">{{localized field.editText}}</label>
-										<input type="text"
-											   class="form-control js-custom-field-{{field.name}}"
-											   id="course-custom-field-{{field.name}}"
-											   placeholder="{{localized field.editPlaceholder}}"
-											   value="{{getCustomFieldValue field.name}}">
-									</div>
-								{{/each}}
+								{{> editCustomFields fields=(instance.customFields "singleLine") values=customFields}}
 							</div>
 						{{/if}}
 					</div>
-					{{#each field in instance.customFields "multiLine"}}
-						<div class="mb-3">
-							<label class="form-label"
-								   for="course-custom-field-{{field.name}}">{{localized field.editText}}</label>
-							<textarea class="form-control js-custom-field-{{field.name}}"
-									  id="course-custom-field-{{field.name}}"
-									  placeholder="{{localized field.editPlaceholder}}"
-									  rows="3">{{getCustomFieldValue field.name}}</textarea>
-						</div>
-					{{/each}}
+					{{> editCustomFields fields=(instance.customFields "multiLine") values=customFields}}
 
 					{{#if instance.showInternalCheckbox}}
 						<div class="mb-3">
