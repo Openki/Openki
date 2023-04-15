@@ -33,10 +33,6 @@ export function EditCategories(props: Props) {
 		const selectedCategories = props.categories;
 		return selectedCategories?.includes(self);
 	}
-	function isChecked2(self: string) {
-		const selectedCategories = props.categories;
-		return selectedCategories?.includes(self) ? 'checkbox-checked' : '';
-	}
 
 	function onChange(a: ChangeEvent<HTMLInputElement>) {
 		const catKey = a.target.name;
@@ -62,46 +58,40 @@ export function EditCategories(props: Props) {
 			<label className="form-label mb-0">
 				{t('course.edit.edit_categories', 'Edit Categories')}
 			</label>
-			{availableCategories().map((self) => {
+			{availableCategories().map((category) => {
 				return (
-					<React.Fragment key={self}>
+					<React.Fragment key={category}>
 						<div className="form-check mt-2">
 							<input
-								className={`form-check-input js-category-checkbox cat_${self}`}
-								name={self}
+								className="form-check-input"
+								name={category}
 								type="checkbox"
 								value="1"
-								id={`courseEditCategory${self}`}
-								checked={isChecked(self)}
+								id={`editCategory${category}`}
+								checked={isChecked(category)}
 								onChange={onChange}
 							/>
-							<label
-								className={`form-check-label ${isChecked2(self)}`}
-								htmlFor={`courseEditCategory${self}`}
-							>
-								<CategoryLabel category={self} />
-								{hasSubcategories(self) ? (
-									<i className={`fa-solid fa-angle-down fa-fw ${isChecked2(self)}`}></i>
+							<label className="form-check-label" htmlFor={`editCategory${category}`}>
+								<CategoryLabel category={category} />
+								{hasSubcategories(category) ? (
+									<i className="fa-solid fa-angle-down fa-fw"></i>
 								) : null}
 							</label>
 						</div>
-						{availableSubcategories(self).map((self2) => {
+						{availableSubcategories(category).map((subcategory) => {
 							return (
-								<div className="form-check ms-4" key={self2}>
+								<div className="form-check ms-4" key={subcategory}>
 									<input
-										className={`form-check-input js-category-checkbox cat_${self2}`}
-										name={self2}
+										className="form-check-input"
+										name={subcategory}
 										type="checkbox"
 										value="1"
-										id={`courseEditSubCategory${self2}`}
-										checked={isChecked(self2)}
+										id={`editSubCategory${subcategory}`}
+										checked={isChecked(subcategory)}
 										onChange={onChange}
 									/>
-									<label
-										className={`form-check-label ${isChecked2}`}
-										htmlFor={`courseEditSubCategory${self2}`}
-									>
-										<CategoryLabel category={self2} />
+									<label className="form-check-label" htmlFor={`editSubCategory${subcategory}`}>
+										<CategoryLabel category={subcategory} />
 									</label>
 								</div>
 							);
