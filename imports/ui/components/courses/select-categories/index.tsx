@@ -11,7 +11,7 @@ export type Props = {
 	categories: string[];
 };
 
-export function EditCategories(props: Props) {
+export function SelectCategories(props: Props) {
 	const { t } = useTranslation();
 
 	function availableCategories() {
@@ -107,4 +107,4 @@ export function EditCategories(props: Props) {
 // eslint-disable-next-line import/first
 import './template.html';
 
-Template.registerHelper('EditCategories', () => EditCategories);
+Template.registerHelper('SelectCategories', () => SelectCategories);

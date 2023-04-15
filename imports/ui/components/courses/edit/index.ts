@@ -24,7 +24,7 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
-import '/imports/ui/components/courses/edit-categories';
+import '/imports/ui/components/courses/select-categories';
 import '/imports/ui/components/editable';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
@@ -252,7 +252,7 @@ export type Data = {
 			return this.isFrame && this.hideCategories;
 		},
 
-		editCategoriesAttr() {
+		selectCategoriesAttr() {
 			const instance = Template.instance();
 			return {
 				categories: instance.state.get('selectedCategories'),
