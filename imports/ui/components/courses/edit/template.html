@@ -90,36 +90,7 @@
 						{{#unless hideCategories}}
 							<div class="col-md">
 								{{#if (state 'editingCategories')}}
-									<label
-										   class="form-label mb-0">{{i18n 'course.edit.edit_categories' 'Edit Categories'}}</label>
-									{{#each availableCategories}}
-										<div class="form-check mt-2">
-											<input class='form-check-input js-category-checkbox cat_{{this}}'
-												   name='{{this}}' type='checkbox' value="1"
-												   id="courseEditCategory{{this}}"
-												   {{checkCategory}} />
-											<label class="form-check-label {{isChecked}}"
-												   for="courseEditCategory{{this}}">
-												{{> categoryLabel category=this}}
-												{{#if hasSubcategories this}}
-													<i
-													   class="fa-solid fa-angle-down fa-fw {{isChecked}}"></i>
-												{{/if}}
-											</label>
-										</div>
-										{{#each availableSubcategories this}}
-											<div class="form-check ms-4">
-												<input class="form-check-input js-category-checkbox cat_{{this}}"
-													   name='{{this}}' type='checkbox' value="1"
-													   id="courseEditSubCategory{{this}}"
-													   {{checkCategory}} />
-												<label class="form-check-label {{isChecked}}"
-													   for="courseEditSubCategory{{this}}">
-													{{> categoryLabel category=this}}
-												</label>
-											</div>
-										{{/each}}
-									{{/each}}
+									{{> editCategories editCategoriesAttr}}
 								{{else}}
 									<label
 										   class="form-label">{{i18n 'course.edit.categories' 'Categories'}}</label>
