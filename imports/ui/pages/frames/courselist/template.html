@@ -10,6 +10,8 @@
 
 	{{#each course in courses}}
 		{{> frameCourselistCourse course=course hideInterested=hideInterested}}
+	{{else}}
+		{{i18n 'frame.courselist.empty' 'There is nothing here yet'}}
 	{{/each}}
 	{{#unless Template.subscriptionsReady}}
 		{{> loadingRow}}
