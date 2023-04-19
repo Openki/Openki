@@ -154,9 +154,11 @@
 					</div>
 				{{/if}}
 
-				<div class="mb-3">
-					{{> editCustomFields fields=(instance.customFields) values=customFields}}
-				</div>
+				{{#if instance.customFields.length}}
+					<div class="mb-3">
+						{{> editCustomFields fields=(instance.customFields) values=customFields}}
+					</div>
+				{{/if}}
 
 				<div class="mb-3">
 					<div class="form-check">
