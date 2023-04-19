@@ -1,16 +1,15 @@
-import { Meteor } from 'meteor/meteor';
-import { i18n } from '/imports/startup/both/i18next';
-import { ReactiveDict } from 'meteor/reactive-dict';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+/* eslint-disable no-nested-ternary */
+import { Template } from 'meteor/templating';
+import { useTranslation } from 'react-i18next';
+import React, { useState } from 'react';
 
 import * as Alert from '/imports/api/alerts/alert';
-import * as emailMethods from '/imports/api/emails/methods';
 
-import { PleaseLogin } from '/imports/ui/lib/please-login';
+import { useUser } from '/imports/utils/react-meteor-data';
 
-import '/imports/ui/components/profiles/verify-email';
+import { VerifyEmail } from '/imports/ui/components/profiles/verify-email';
+import { PleaseLogin } from '/imports/ui/components/please-login';
 
-import './template.html';
 import './styles.scss';
 
 export interface Data {
@@ -24,92 +23,127 @@ export interface Data {
 	) => Promise<void>;
 }
 
-const Template = TemplateAny as TemplateStaticTyped<
-	'sendMessage',
-	Data,
-	{
-		state: ReactiveDict<{
-			revealAddress: boolean;
-			sendCopy: boolean;
-			verificationMailSent: boolean;
-		}>;
-	}
->;
+export function SendMessage(props: Data) {
+	const { t } = useTranslation();
+	const currentUser = useUser();
+	const [isBusy, setIsBusy] = useState(false);
+	const [message, setMessage] = useState('');
+	const [revealAddress, setRevealAddress] = useState(false);
+	const [sendCopy, setSendCopy] = useState(false);
 
-const template = Template.sendMessage;
+	return (
+		<PleaseLogin
+			type="form"
+			onSubmit={async () => {
+				setIsBusy(true);
 
-template.onCreated(function () {
-	this.busy(false);
-	this.state = new ReactiveDict();
-	this.state.setDefault({
-		revealAddress: false,
-		sendCopy: false,
-		verificationMailSent: false,
-	});
-});
+				if (message.length < 2) {
+					Alert.error(t('profile.mail.longertext', 'longer text please'));
+					setIsBusy(false);
+					return;
+				}
 
-template.onRendered(function () {
-	this.$('.js-email-message').trigger('select');
-});
+				const options = {
+					revealAddress,
+					sendCopy,
+				};
 
-template.events({
-	async 'click .js-verify-mail'(_event, instance) {
-		instance.state.set('verificationMailSent', true);
+				try {
+					await props.onSend(message, options);
+					Alert.success(t('profile.mail.sent', 'Your message was sent'));
+				} catch (err) {
+					Alert.serverError(err, t('profile.mail.sendFailed', 'Your message was not sent'));
+				} finally {
+					setIsBusy(false);
+				}
+				setMessage('');
+			}}
+		>
+			<div className="mb-3">
+				<textarea
+					className="form-control send-message-textarea js-email-message"
+					placeholder={props.placeholder}
+					autoFocus={true}
+					value={message}
+					onChange={(event) => {
+						setMessage(event.target.value);
+					}}
+				></textarea>
+			</div>
+			{currentUser?.hasEmail() ? (
+				currentUser?.hasVerifiedEmail() ? (
+					<>
+						<div className="form-check">
+							<input
+								className="form-check-input"
+								name="sendCopy"
+								type="checkbox"
+								value=""
+								id="sendMessageSendCopyCheck"
+								onChange={(event) => {
+									setSendCopy(event.target.checked);
+								}}
+							/>
+							<label className="form-check-label" htmlFor="sendMessageSendCopyCheck">
+								{t('profile.mail.copy', 'Send me a copy of this message')}
+							</label>
+						</div>
+						<div className="form-check">
+							<input
+								className="form-check-input"
+								name="revealAddress"
+								type="checkbox"
+								value=""
+								id="sendMessageRevealAddressCheck"
+								onChange={(event) => {
+									setRevealAddress(event.target.checked);
+								}}
+							/>
+							<label className="form-check-label" htmlFor="sendMessageRevealAddressCheck">
+								{t('profile.mail.attachmail', 'Attach my e-mail address')}
+							</label>
+						</div>
+					</>
+				) : (
+					<div className="card mb-3">
+						<div className="card-header bg-warning">
+							<span className="fa-regular fa-circle-check" aria-hidden="true"></span>{' '}
+							{t('sendMessage.plsVerifyEmail', 'Please verify your e-mail address')}
+						</div>
+						<div className="card-body p-3">
+							<p>
+								{t(
+									'userprofile.infoForUnverifiedMail',
+									'Verify your e-mail address to receive a copy or to attach it to the message.',
+								)}
+							</p>
+							<VerifyEmail />
+						</div>
+					</div>
+				)
+			) : null}
 
-		const user = Meteor.user();
+			<div className="form-actions">
+				<button type="submit" className="btn btn-save" disabled={isBusy}>
+					{isBusy ? (
+						<>
+							<span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{' '}
+							{t('userprofile.sendmail-btn.busy', 'Sending e-mail…')}
+						</>
+					) : (
+						<>
+							<span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>{' '}
+							{t('userprofile.sendmail-btn', 'Send e-mail')}
+						</>
+					)}
+				</button>
+			</div>
+		</PleaseLogin>
+	);
+}
 
-		if (!user) {
-			throw new Error('Unexpected null: user');
-		}
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
 
-		try {
-			await emailMethods.sendVerificationEmail();
-
-			Alert.success(i18n('profile.sentVerificationMail', { MAIL: user.emails[0].address }));
-		} catch (err) {
-			instance.state.set('verificationMailSent', false);
-			Alert.serverError(
-				err,
-				i18n('profile.sendVerificationMailFailed', 'Could not send verification e-mail'),
-			);
-		}
-	},
-
-	'change input[type="checkbox"]'(event, instance) {
-		const target = instance.$((event as any).currentTarget as any);
-		instance.state.set(target.attr('name') as any, target.prop('checked'));
-	},
-
-	async 'submit .js-send-message'(event, instance) {
-		event.preventDefault();
-
-		instance.busy('sending');
-		PleaseLogin(instance, async () => {
-			const { state } = instance;
-			const message = instance.$('.js-email-message').val() as string;
-
-			if (message.length < 2) {
-				Alert.error(i18n('profile.mail.longertext', 'longer text please'));
-				instance.busy(false);
-				return;
-			}
-
-			const options = {
-				revealAddress: state.get('revealAddress') || false,
-				sendCopy: state.get('sendCopy') || false,
-			};
-
-			const { data } = instance;
-
-			try {
-				await data.onSend(message, options);
-				Alert.success(i18n('profile.mail.sent', 'Your message was sent'));
-			} catch (err) {
-				Alert.serverError(err, i18n('profile.mail.sendFailed', 'Your message was not sent'));
-			} finally {
-				instance.busy(false);
-			}
-			instance.$('.js-email-message').val('');
-		});
-	},
-});
+Template.registerHelper('SendMessage', () => SendMessage);
