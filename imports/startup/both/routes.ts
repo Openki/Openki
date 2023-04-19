@@ -484,7 +484,7 @@ RouterAsync.route('showCourse', {
 	action() {
 		const course = Courses.details.subscribe(this.params._id as string)();
 		if (course?.singleEvent && course.nextEvent && this.params.query.force !== '1') {
-			this.redirect('showEvent', course.nextEvent);
+			this.redirect('showEvent', course.nextEvent, { replaceState: true });
 		} else {
 			this.render();
 		}
