@@ -433,6 +433,7 @@
   "forgotPassword.emailSent.error": "We were unable to send a mail to this address",
   "frame.calendar.moreAboutThisEvent": "More about this event on {SITENAME}",
   "frame.calendar.noEvents": "No events planned",
+  "frame.courselist.empty": "There is nothing here yet",
   "frame.courseList.interestedPersons": "Interested people",
   "frame.courseList.moreAboutThisCourse": "More on {SITENAME}",
   "frame.eventsList.description": "Description:",
