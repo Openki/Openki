@@ -729,7 +729,6 @@
   "profile.preferenceslink": "Account settings",
   "profile.reallydelete": "Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.",
   "profile.sendingVerificationMail": "You will be sent a verification e-mail to click shortly.",
-  "profile.sendVerificationMailFailed": "Could not send verification e-mail",
   "profile.sentVerificationMail": "Verification mail has been sent to your address: \"{MAIL}\".",
   "profile.sentVerificationMail.error": "Could not send verification e-mail",
   "profile.setHasContributed.alert": "User has contributed",
