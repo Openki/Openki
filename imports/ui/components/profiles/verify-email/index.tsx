@@ -48,7 +48,7 @@ export function VerifyEmail() {
 				}
 			}}
 		>
-			<span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>{' '}
+			<span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>&nbsp;
 			{t('profile.verifymail', 'Resend verification e-mail')}
 		</button>
 	);
