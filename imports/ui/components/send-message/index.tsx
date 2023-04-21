@@ -127,12 +127,13 @@ export function SendMessage(props: Data) {
 				<button type="submit" className="btn btn-save" disabled={isBusy}>
 					{isBusy ? (
 						<>
-							<span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{' '}
+							<span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+							&nbsp;
 							{t('userprofile.sendmail-btn.busy', 'Sending e-mail…')}
 						</>
 					) : (
 						<>
-							<span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>{' '}
+							<span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>&nbsp;
 							{t('userprofile.sendmail-btn', 'Send e-mail')}
 						</>
 					)}
