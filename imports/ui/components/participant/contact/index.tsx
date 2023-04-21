@@ -1,89 +1,54 @@
-import { ReactiveDict } from 'meteor/reactive-dict';
-import { Meteor } from 'meteor/meteor';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+/* eslint-disable no-nested-ternary */
+import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import bootstrap from 'bootstrap';
+import { Template } from 'meteor/templating';
 
-import { Users } from '/imports/api/users/users';
 import * as emailMethods from '/imports/api/emails/methods';
 import { EventModel } from '/imports/api/events/events';
 import { CourseModel } from '/imports/api/courses/courses';
 import { SendPrivateMessageOptions } from '/imports/api/emails/methods';
+import { useUserId } from 'meteor/react-meteor-accounts';
+import * as Users from '/imports/api/users/publications';
 
-import { i18n } from '/imports/startup/both/i18next';
-import { MeteorAsync } from '/imports/utils/promisify';
+import { SendMessage, Data as SendMessageData } from '/imports/ui/components/send-message';
 
-import '/imports/ui/components/send-message';
-import type { Data as SendMessageData } from '/imports/ui/components/send-message';
+export function ParticipantContact(data: {
+	participant: string;
+	course?: CourseModel;
+	event?: EventModel;
+}) {
+	const modalRef = useRef(null);
+	const { t } = useTranslation();
+	const [showModal, setShowModal] = useState(false);
+	const userId = useUserId();
+	const [isLoading, participant] = Users.useDetails(data.participant);
 
-import './template.html';
-
-const Template = TemplateAny as TemplateStaticTyped<
-	'participantContact',
-	{ participant: string; course?: CourseModel; event?: EventModel },
-	{
-		state: ReactiveDict<{
-			showModal: boolean;
-		}>;
-	}
->;
-
-const template = Template.participantContact;
-
-template.onCreated(function () {
-	const instance = this;
-
-	instance.state = new ReactiveDict();
-
-	instance.state.setDefault({
-		showModal: false,
-	});
-
-	instance.autorun(async () => {
-		const { participant } = Template.currentData();
-		instance.subscribe('user', participant);
-	});
-});
-
-template.onRendered(function () {
-	const instance = this;
-
-	instance.autorun(async () => {
-		if (instance.state.get('showModal')) {
-			await MeteorAsync.defer();
-
-			instance.$('.js-participant-contact-modal').modal('show');
+	useEffect(() => {
+		if (!showModal) {
+			return;
 		}
+		const element = modalRef.current as unknown as Element;
+		bootstrap.Modal.getOrCreateInstance(element).show();
+		element.addEventListener('hidden.bs.modal', () => {
+			setShowModal(false);
+		});
 	});
-});
 
-template.helpers({
-	showParticipantContact() {
-		const { data } = Template.instance();
-
-		const userId = Meteor.userId();
+	function showParticipantContact() {
 		if (!userId) {
 			return false;
 		}
 
 		return userId !== data.participant;
-	},
+	}
 
-	userAcceptsPrivateMessages() {
-		const { data } = Template.instance();
-
-		const user = Users.findOne(data.participant);
-		return user?.acceptsPrivateMessages;
-	},
-
-	sendMessageAttr(): SendMessageData {
-		const instance = Template.instance();
-		const { data } = instance;
-		const user = Users.findOne(data.participant);
-
+	function sendMessageAttr(): SendMessageData {
 		return {
-			placeholder: i18n(
+			placeholder: t(
 				'participantContact.sendMessage.placeholder',
 				'Hi {USER}. I wanted to tell you…',
-				{ USER: user?.getDisplayName() },
+				{ USER: participant?.getDisplayName() },
 			),
 			onSend: async (message, options) => {
 				const sendPrivateMessageOptions = options as SendPrivateMessageOptions;
@@ -94,18 +59,75 @@ template.helpers({
 					sendPrivateMessageOptions.eventId = data.event?._id;
 				}
 				await emailMethods.sendPrivateMessage(data.participant, message, sendPrivateMessageOptions);
-				instance.$('.js-participant-contact-modal').modal('hide');
+				const element = modalRef.current as unknown as Element;
+				bootstrap.Modal.getOrCreateInstance(element).hide();
 			},
 		};
-	},
-});
+	}
 
-template.events({
-	'click .js-show-participant-contact-modal'(_event, instance) {
-		instance.state.set('showModal', true);
-	},
+	return (
+		<>
+			{showParticipantContact() ? (
+				<>
+					<div className="d-inline-block">
+						{!isLoading() ? (
+							participant?.acceptsPrivateMessages ? (
+								<button
+									className="btn btn-link p-0"
+									type="button"
+									onClick={() => {
+										setShowModal(true);
+									}}
+								>
+									<i className="fa-solid fa-envelope fa-fw"></i>
+								</button>
+							) : (
+								<button className="btn btn-link p-0 disabled" type="button" disabled>
+									<i
+										className="fa-solid fa-envelope fa-fw"
+										title={t(
+											'user.acceptsPrivateMessages.false',
+											'User does not accept private messages from users',
+										)}
+									></i>
+								</button>
+							)
+						) : null}
+					</div>
+					{showModal ? (
+						<div className="modal" tabIndex={-1} role="dialog" ref={modalRef}>
+							<div className="modal-dialog modal-sm" role="document">
+								<div className="modal-content">
+									<div className="modal-header">
+										<h4 className="modal-title">
+											<span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
+											&nbsp;
+											{t('participantContactModal.writeMessageTo', 'Write a message to {USER}', {
+												USER: participant?.getDisplayName(),
+											})}
+										</h4>
+										<button
+											type="button"
+											className="btn-close"
+											data-bs-dismiss="modal"
+											aria-label="Close"
+										></button>
+									</div>
+									<div className="modal-body">
+										<SendMessage {...sendMessageAttr()} />
+									</div>
+								</div>
+							</div>
+						</div>
+					) : null}
+				</>
+			) : null}
+		</>
+	);
+}
 
-	'hidden.bs.modal .js-participant-contact-modal'(_event, instance) {
-		instance.state.set('showModal', false);
-	},
-});
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper('ParticipantContact', () => ParticipantContact);
