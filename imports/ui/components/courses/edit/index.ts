@@ -8,7 +8,6 @@ import { _ } from 'meteor/underscore';
 import { Session } from 'meteor/session';
 
 import * as Alert from '/imports/api/alerts/alert';
-import { Categories } from '/imports/api/categories/categories';
 import { Course, CourseMemberEntity, CourseModel, Courses } from '/imports/api/courses/courses';
 import * as CoursesMethods from '/imports/api/courses/methods';
 import { GroupEntityCustomCourseFields, Groups } from '/imports/api/groups/groups';
@@ -25,9 +24,11 @@ import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
+import '/imports/ui/components/courses/select-categories';
 import '/imports/ui/components/editable';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
+import '/imports/ui/components/edit-custom-fields';
 
 import './template.html';
 import './styles.scss';
@@ -106,13 +107,13 @@ export type Data = {
 			if (isNew) {
 				if (data.isFrame && data.region) {
 					// The region was preset for the frame
-					Regions.findOne({ _id: data.region });
-				} else if (Regions.findFilter({}, 2).count() === 1) {
+					return Regions.findOne({ _id: data.region });
+				}
+				if (Regions.findFilter({}, 2).count() === 1) {
 					// There is only one region
 					return Regions.findOne();
-				} else {
-					return Regions.currentRegion();
 				}
+				return Regions.currentRegion();
 			}
 			return undefined;
 		}
@@ -230,24 +231,6 @@ export type Data = {
 			return 'btn-edit';
 		},
 
-		availableCategories() {
-			return Object.keys(Categories);
-		},
-
-		hasSubcategories(category: string) {
-			return Categories[category].length > 0;
-		},
-
-		availableSubcategories(category: string) {
-			// Hide if parent categories not selected
-			const selectedCategories = Template.instance().state.get('selectedCategories');
-			if (!selectedCategories?.includes(category)) {
-				return [];
-			}
-
-			return Categories[category];
-		},
-
 		availableRoles() {
 			return Roles.filter((role) => {
 				// Roles that are always on are not selectable here
@@ -259,28 +242,24 @@ export type Data = {
 			});
 		},
 
-		isChecked() {
-			const selectedCategories = Template.instance().state.get('selectedCategories');
-			return selectedCategories?.includes(`${this}`) ? 'checkbox-checked' : '';
-		},
-
-		checkCategory() {
-			const selectedCategories = Template.instance().state.get('selectedCategories');
-			return selectedCategories?.includes(`${this}`) ? 'checked' : '';
-		},
-
 		showMoreInfo() {
 			return (
 				Template.instance().showRegionSelection() || Template.instance().customFields().length > 0
 			);
 		},
 
-		getCustomFieldValue(name: string) {
-			return Template.currentData().customFields?.filter((a) => a.name === name)[0]?.value;
-		},
-
 		hideCategories() {
 			return this.isFrame && this.hideCategories;
+		},
+
+		selectCategoriesAttr() {
+			const instance = Template.instance();
+			return {
+				categories: instance.state.get('selectedCategories'),
+				onChange: (selectedCategories: string[]) => {
+					instance.state.set('selectedCategories', selectedCategories);
+				},
+			};
 		},
 
 		isInternal() {
@@ -586,25 +565,6 @@ export type Data = {
 
 		'click .js-edit-categories'() {
 			Template.instance().state.set('editingCategories', true);
-		},
-
-		'change .js-category-checkbox'(_event, instance) {
-			const catKey = `${this}`;
-			let selectedCategories = instance.state.get('selectedCategories') || [];
-			const checked = instance.$(`input.cat_${catKey}`).prop('checked');
-			if (checked) {
-				selectedCategories.push(catKey);
-				selectedCategories = [...new Set(selectedCategories)]; // make unique
-			} else {
-				selectedCategories = selectedCategories.filter((c) => c !== catKey);
-
-				if (Categories[catKey]) {
-					// Remove all the subcategories as well
-					selectedCategories = _.difference(selectedCategories, Categories[catKey]);
-				}
-			}
-
-			instance.state.set('selectedCategories', selectedCategories);
 		},
 	});
 }

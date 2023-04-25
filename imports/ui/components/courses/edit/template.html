@@ -90,36 +90,7 @@
 						{{#unless hideCategories}}
 							<div class="col-md">
 								{{#if (state 'editingCategories')}}
-									<label
-										   class="form-label mb-0">{{i18n 'course.edit.edit_categories' 'Edit Categories'}}</label>
-									{{#each availableCategories}}
-										<div class="form-check mt-2">
-											<input class='form-check-input js-category-checkbox cat_{{this}}'
-												   name='{{this}}' type='checkbox' value="1"
-												   id="courseEditCategory{{this}}"
-												   {{checkCategory}} />
-											<label class="form-check-label {{isChecked}}"
-												   for="courseEditCategory{{this}}">
-												{{> categoryLabel category=this}}
-												{{#if hasSubcategories this}}
-													<i
-													   class="fa-solid fa-angle-down fa-fw {{isChecked}}"></i>
-												{{/if}}
-											</label>
-										</div>
-										{{#each availableSubcategories this}}
-											<div class="form-check ms-4">
-												<input class="form-check-input js-category-checkbox cat_{{this}}"
-													   name='{{this}}' type='checkbox' value="1"
-													   id="courseEditSubCategory{{this}}"
-													   {{checkCategory}} />
-												<label class="form-check-label {{isChecked}}"
-													   for="courseEditSubCategory{{this}}">
-													{{> categoryLabel category=this}}
-												</label>
-											</div>
-										{{/each}}
-									{{/each}}
+									{{> selectCategories selectCategoriesAttr}}
 								{{else}}
 									<label
 										   class="form-label">{{i18n 'course.edit.categories' 'Categories'}}</label>
@@ -176,30 +147,11 @@
 									</div>
 								{{/if}}
 
-								{{#each field in instance.customFields "singleLine"}}
-									<div class="mb-3">
-										<label class="form-label"
-											   for="course-custom-field-{{field.name}}">{{localized field.editText}}</label>
-										<input type="text"
-											   class="form-control js-custom-field-{{field.name}}"
-											   id="course-custom-field-{{field.name}}"
-											   placeholder="{{localized field.editPlaceholder}}"
-											   value="{{getCustomFieldValue field.name}}">
-									</div>
-								{{/each}}
+								{{> editCustomFields fields=(instance.customFields "singleLine") values=customFields}}
 							</div>
 						{{/if}}
 					</div>
-					{{#each field in instance.customFields "multiLine"}}
-						<div class="mb-3">
-							<label class="form-label"
-								   for="course-custom-field-{{field.name}}">{{localized field.editText}}</label>
-							<textarea class="form-control js-custom-field-{{field.name}}"
-									  id="course-custom-field-{{field.name}}"
-									  placeholder="{{localized field.editPlaceholder}}"
-									  rows="3">{{getCustomFieldValue field.name}}</textarea>
-						</div>
-					{{/each}}
+					{{> editCustomFields fields=(instance.customFields "multiLine") values=customFields}}
 
 					{{#if instance.showInternalCheckbox}}
 						<div class="mb-3">

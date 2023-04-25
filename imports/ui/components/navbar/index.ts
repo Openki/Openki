@@ -47,14 +47,11 @@ import './styles.scss';
 		// if not collapsed give the navbar and active menu item a
 		// class for when not at top
 		if (Viewport.get().width > gridFloatBreakpoint) {
-			$(window).on('scroll', () => {
-				const navbar = instance.$('.navbar');
-				const activeNavLink = instance.$('.navbar-link.active');
-				const notAtTop = ($(window).scrollTop() || 0) > 5;
+			const navbar = instance.$('.navbar');
+			const activeNavLink = instance.$('.navbar-link.active');
 
-				navbar.toggleClass('navbar-covering', notAtTop);
-				activeNavLink.toggleClass('navbar-link-covering', notAtTop);
-			});
+			navbar.addClass('navbar-covering');
+			activeNavLink.addClass('navbar-link-covering');
 		} else {
 			$(document).on('click', (event) => {
 				if (this.$(event.target as any).parents('.navbar-collapse').length === 0) {

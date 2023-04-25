@@ -27,6 +27,13 @@ export interface CourseMemberEntity {
 	comment: string;
 }
 
+export type CourseCustomField = Pick<
+	GroupEntityCustomCourseFields,
+	'name' | 'displayText' | 'visibleFor'
+> & {
+	value: string;
+};
+
 /** DB-Model */
 export interface CourseEntity {
 	_id: string;
@@ -48,9 +55,7 @@ export interface CourseEntity {
 	slug: string;
 	/** ID_region */
 	region: string;
-	customFields: (Pick<GroupEntityCustomCourseFields, 'name' | 'displayText' | 'visibleFor'> & {
-		value: string;
-	})[];
+	customFields: CourseCustomField[];
 	/** ID_user */
 	createdby: string;
 	// eslint-disable-next-line camelcase

@@ -19,11 +19,17 @@ export const [details, useDetails] = ServerPublishOne(
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
 	'Regions.findFilter',
-	(filter?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) => {
-		if (filter?.tenant && !visibleTenants().includes(filter.tenant)) {
-			throw new Meteor.Error(401, 'Not permitted');
+	(filter: FindFilter = {}, limit?: number, skip?: number, sort?: FieldSort[]) => {
+		let tenants;
+		if (filter.tenants) {
+			if (!filter.tenants.every((t) => visibleTenants().includes(t))) {
+				throw new Meteor.Error(401, 'Not permitted');
+			}
+			tenants = filter.tenants;
+		} else {
+			tenants = visibleTenants();
 		}
 
-		return Regions.findFilter(filter, limit, skip, sort);
+		return Regions.findFilter({ ...filter, tenants }, limit, skip, sort);
 	},
 );

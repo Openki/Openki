@@ -93,13 +93,13 @@ export function EventCompact(props: {
 					>
 						{withDate ? (
 							<>
-								<span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+								<span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{' '}
 								{weekdayFormat(event.startLocal)}
 								{calendarDayShort(event.startLocal)}
 								<br />
 							</>
 						) : null}
-						<span className="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
+						<span className="fa-regular fa-clock fa-fw" aria-hidden="true"></span>{' '}
 						<span className="event-compact-time">
 							{timeFormat(event.startLocal)} - {timeFormat(event.endLocal)}
 						</span>

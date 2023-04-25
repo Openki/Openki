@@ -8,6 +8,10 @@ Meteor.startup(() => {
 		robots.addLine('Disallow: /');
 	} else {
 		robots.addLine('User-agent: *');
-		robots.addLine('Disallow: ');
+		if (PrivateSettings.hideProfiles === true) {
+			robots.addLine('Disallow: /user/');
+		} else {
+			robots.addLine('Disallow: ');
+		}
 	}
 });
