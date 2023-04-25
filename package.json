@@ -70,6 +70,7 @@
     "eslint": "8.36.0",
     "eslint-config-airbnb-base-typescript-prettier": "5.1.0",
     "eslint-import-resolver-meteor": "0.4.0",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-react-hooks": "4.6.0",
     "i18next-parser": "7.7.0",
