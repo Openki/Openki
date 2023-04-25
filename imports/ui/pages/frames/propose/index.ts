@@ -1,6 +1,6 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
-import i18n from '/imports/startup/both/i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/account-tasks';

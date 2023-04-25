@@ -40,5 +40,3 @@ export class InfoPagesCollection extends Mongo.Collection<InfoPagesEntity> {
 }
 
 export const InfoPages = new InfoPagesCollection();
-
-export default InfoPages;

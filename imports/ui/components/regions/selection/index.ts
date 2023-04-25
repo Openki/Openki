@@ -1,19 +1,17 @@
-import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Session } from 'meteor/session';
 
 import { RegionEntity, RegionModel, Regions } from '/imports/api/regions/regions';
-
-import { FilterPreview } from '/imports/ui/lib/filter-preview';
-
-import { hasMultipleRegions } from '/imports/utils/region-selection';
 
 import * as RegionSelection from '/imports/utils/region-selection';
 import * as StringTools from '/imports/utils/string-tools';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import { MeteorAsync } from '/imports/utils/promisify';
+
+import { FilterPreview } from '/imports/ui/lib/filter-preview';
 
 import './template.html';
 import './styles.scss';
@@ -36,7 +34,9 @@ import './styles.scss';
 	});
 
 	template.helpers({
-		hasMultipleRegions,
+		hasMultipleRegions() {
+			return Regions.findFilter({}, 2).count() > 1;
+		},
 	});
 }
 
@@ -48,7 +48,7 @@ import './styles.scss';
 	template.helpers({
 		inNavbarClasses() {
 			if (this.inNavbar) {
-				return 'col-6-sm-auto px-0';
+				return 'nav-item text-center col col-lg-auto';
 			}
 			return '';
 		},
@@ -189,7 +189,7 @@ import './styles.scss';
 	template.helpers({
 		inNavbarClasses() {
 			if (this.inNavbar) {
-				return 'col-6-sm-auto px-0';
+				return 'nav-item text-center col col-lg-auto';
 			}
 			return '';
 		},

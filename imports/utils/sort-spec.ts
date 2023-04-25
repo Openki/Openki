@@ -50,5 +50,3 @@ SortSpec.fromString = function (spec: string) {
  * builds a SortSpec which imposes no ordering.
  */
 SortSpec.unordered = () => SortSpec([]);
-
-export default SortSpec;

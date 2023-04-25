@@ -83,17 +83,20 @@ export class LocationTracker {
 		return (this.markers.findOne({ main: true }) as MainMarkerEntity)?.loc;
 	}
 
+	clearRegion() {
+		this.markers.remove({ center: true });
+	}
+
 	setRegion(regionId: string) {
 		const region = Regions.findOne(regionId);
 
-		this.markers.remove({ center: true });
-		if (region?.loc) {
-			this.markers.insert({
-				loc: region.loc,
-				center: true,
-			});
+		if (!region?.loc) {
+			return;
 		}
+
+		this.markers.insert({
+			loc: region.loc,
+			center: true,
+		});
 	}
 }
-
-export default LocationTracker;

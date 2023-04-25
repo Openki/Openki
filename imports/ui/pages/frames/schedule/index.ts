@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { EventModel, Events } from '/imports/api/events/events';
 
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import { reactiveNow } from '/imports/utils/reactive-now';
 
 import './template.html';
@@ -260,13 +260,20 @@ template.onCreated(function () {
 template.helpers({
 	month() {
 		const instance = Template.instance();
-		return moment(instance.scheduleStart.get()).format('MMMM');
+		return moment(instance.scheduleStart.get())
+			.locale(Session.get('timeLocale') || 'en')
+			.format('MMMM');
 	},
 
 	days() {
 		const instance = Template.instance();
 		const scheduleStart = instance.scheduleStart.get();
-		return instance.days.get().map((day) => moment(scheduleStart).add(day, 'days').format('dddd'));
+		return instance.days.get().map((day) =>
+			moment(scheduleStart)
+				.add(day, 'days')
+				.locale(Session.get('timeLocale') || 'en')
+				.format('dddd'),
+		);
 	},
 
 	intervals() {
@@ -274,7 +281,10 @@ template.helpers({
 		const slots = instance.slots.get();
 
 		return instance.intervals.get().map((mins) => {
-			const intervalStart = moment().hour(0).minute(mins);
+			const intervalStart = moment()
+				.locale(Session.get('timeLocale') || 'en')
+				.hour(0)
+				.minute(mins);
 			return {
 				intervalStart,
 				intervalLabel: intervalStart.format('LT'),

@@ -7,6 +7,7 @@ import { UserModel } from '/imports/api/users/users';
 import { EventEntity } from '/imports/api/events/events';
 // eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from './tenantDenormalizer';
+import * as interestedDenormalizer from './interestedDenormalizer';
 
 import { hasRoleUser } from '/imports/utils/course-role-utils';
 import { PublicSettings } from '/imports/utils/PublicSettings';
@@ -25,6 +26,13 @@ export interface CourseMemberEntity {
 	roles: string[];
 	comment: string;
 }
+
+export type CourseCustomField = Pick<
+	GroupEntityCustomCourseFields,
+	'name' | 'displayText' | 'visibleFor'
+> & {
+	value: string;
+};
 
 /** DB-Model */
 export interface CourseEntity {
@@ -47,11 +55,7 @@ export interface CourseEntity {
 	slug: string;
 	/** ID_region */
 	region: string;
-	customFields: (Pick<GroupEntityCustomCourseFields, 'name' | 'displayText' | 'visibleFor'> & {
-		value: string;
-	})[];
-	/** (what for?) */
-	date: Date;
+	customFields: CourseCustomField[];
 	/** ID_user */
 	createdby: string;
 	// eslint-disable-next-line camelcase
@@ -62,6 +66,7 @@ export interface CourseEntity {
 	roles: string[];
 	members: CourseMemberEntity[];
 	internal: boolean;
+	singleEvent: boolean;
 	archived: boolean;
 	history: {
 		dateTime: Date;
@@ -79,7 +84,7 @@ export interface CourseEntity {
 	nextEvent: EventEntity | null;
 	/** (calculated) most recent event object, only includes the _id and start field */
 	lastEvent: EventEntity | null;
-	/** (calculated) */
+	/** (calculated) based to members.length, to support sorting by number of interested user over url params */
 	interested: number;
 }
 
@@ -142,7 +147,7 @@ export class Course {
 export const FindFilterPattern = {
 	tenants: Match.Maybe([String]),
 	region: Match.Maybe(String),
-	state: Match.Maybe(StringEnum('proposal', 'resting', 'upcomingEvent')),
+	state: Match.Maybe([StringEnum('proposal', 'resting', 'upcomingEvent')]),
 	userInvolved: Match.Maybe(String),
 	createdby: Match.Maybe(String),
 	categories: Match.Maybe([String]),
@@ -171,9 +176,20 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 		course: Mongo.OptionalId<CourseEntity>,
 		callback?: (err: unknown | undefined, id?: string) => void,
 	) {
-		const enrichedCourse = tenantDenormalizer.beforeInsert(course);
+		let enrichedCourse = tenantDenormalizer.beforeInsert(course);
+		enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
 
 		return super.insert(enrichedCourse, callback);
+	}
+
+	async insertAsync(
+		course: Mongo.OptionalId<CourseEntity>,
+		callback?: (err: unknown | undefined, id?: string) => void,
+	) {
+		let enrichedCourse = tenantDenormalizer.beforeInsert(course);
+		enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
+
+		return super.insertAsync(enrichedCourse, callback);
 	}
 
 	// eslint-disable-next-line class-methods-use-this
@@ -183,42 +199,10 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 			search: Predicates.string,
 			group: Predicates.string,
 			categories: Predicates.ids,
-			state: Predicates.string,
+			state: Predicates.ids,
 			needsRole: Predicates.ids,
 			internal: Predicates.flag,
 			archived: Predicates.flag,
-		});
-	}
-
-	/**
-	 * Update the number of interested user
-	 */
-	updateInterested(courseId: string) {
-		AsyncTools.untilClean((resolve, reject) => {
-			const course = this.findOne(courseId);
-
-			if (!course) {
-				// If the course doesn't exist it doesn't need updating
-				resolve(true);
-				return;
-			}
-
-			this.rawCollection().updateMany(
-				{ _id: course._id },
-				{
-					$set: {
-						interested: course.members?.length || 0,
-					},
-				},
-				{},
-				(err, result) => {
-					if (err) {
-						reject(err);
-					} else {
-						resolve(result?.modifiedCount === 0);
-					}
-				},
-			);
 		});
 	}
 
@@ -301,25 +285,26 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 			find.region = filter.region;
 		}
 
-		if (filter.state === 'proposal') {
-			find.lastEvent = { $eq: null };
-			find.futureEvents = { $eq: 0 };
-			order.push(['time_lastedit', 'desc']);
-		}
+		if (filter.state) {
+			const $or = [];
 
-		if (filter.state === 'resting') {
-			find.lastEvent = { $ne: null };
-			find.futureEvents = { $eq: 0 };
-			order.push(['time_lastedit', 'desc']);
-			order.push(['nextEvent.start', 'asc']);
-		}
+			if (filter.state.includes('proposal')) {
+				$or.push({ lastEvent: { $eq: null }, futureEvents: { $eq: 0 } });
+			}
 
-		if (filter.state === 'upcomingEvent') {
-			find.futureEvents = { $gt: 0 };
-			order.push(['nextEvent.start', 'asc']);
-			order.push(['time_lastedit', 'desc']);
-		}
+			if (filter.state.includes('resting')) {
+				$or.push({ lastEvent: { $ne: null }, futureEvents: { $eq: 0 } });
+			}
 
+			if (filter.state.includes('upcomingEvent')) {
+				$or.push({ futureEvents: { $gt: 0 } });
+				if (filter.state.length === 1) {
+					order.push(['nextEvent.start', 'asc']);
+				}
+			}
+
+			find.$and = [{ $or }];
+		}
 		order.push(['time_lastedit', 'desc']);
 		order.push(['time_created', 'desc']);
 
@@ -381,7 +366,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 				],
 			}));
 
-			find.$and = searchQueries;
+			find.$and = [...(find.$and || []), ...searchQueries];
 		}
 
 		options.sort = order;
@@ -403,5 +388,3 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 }
 
 export const Courses = new CoursesCollection();
-
-export default Courses;

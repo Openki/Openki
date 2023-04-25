@@ -4,26 +4,32 @@
 			<div class="col-md">
 				<nav>
 					<ul class="nav nav-tabs replica-nav-tabs">
-						<li role="presentation" class="active">
-							<a href="#frequency" data-toggle="tab">
+						<li class="nav-item" role="presentation">
+							<button class="nav-link active" id="frequency-tab" data-bs-toggle="tab"
+									data-bs-target="#frequency" type="button" role="tab"
+									aria-controls="frequency" aria-selected="true">
 								<span class="fa-solid fa-list-ul fa-fw" aria-hidden="true"></span>
 								{{i18n 'event.replication.changeToPattern' 'Select frequency'}}
-							</a>
+							</button>
 						</li>
-						<li role="presentation">
-							<a href="#datepicker" data-toggle="tab">
+						<li class="nav-item" role="presentation">
+							<button class="nav-link" id="datepicker-tab" data-bs-toggle="tab"
+									data-bs-target="#datepicker" type="button" role="tab"
+									aria-controls="datepicker" aria-selected="false">
 								<span class="fa-regular fa-calendar-check fa-fw"
 									  aria-hidden="true"></span>
 								{{i18n 'event.replication.changeToPicker' 'Pick dates'}}
-							</a>
+							</button>
 						</li>
 					</ul>
 				</nav>
 				<div class="tab-content replica-tab-content">
-					<div class="tab-pane" id="datepicker">
+					<div class="tab-pane" id="datepicker" role="tabpanel"
+						 aria-labelledby="datepicker-tab" tabindex="0">
 						<div class="js-replicate-datepick"></div>
 					</div>
-					<div class="tab-pane mb-3 active" id="frequency">
+					<div class="tab-pane mb-3 active" id="frequency" role="tabpanel"
+						 aria-labelledby="frequency-tab" tabindex="0">
 						<label class="form-label" for="replicateStart">
 							{{i18n 'event.replication.interval.start' 'Interval Start'}}
 						</label>
@@ -115,7 +121,7 @@
 					<label
 						   class="form-label">{{i18n 'event.replication.noDates' 'No date(s) selected'}}</label>
 					<div class="replica-event-captions">
-						<div class="event-caption placeholder">
+						<div class="event-caption event-caption-placeholder">
 							<div class="event-caption-header-wrap">
 								<div class="event-caption-header">
 									<span class="fa-solid fa-map-pin"></span>

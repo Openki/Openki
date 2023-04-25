@@ -8,7 +8,7 @@ import { EventModel } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import * as Alert from '/imports/api/alerts/alert';
 
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 
@@ -190,8 +190,8 @@ template.events({
 		instance.pickDays.set(days);
 	},
 
-	'show.bs.tab a[data-toggle="tab"]'(event, instance) {
-		const targetHref = $(event.target).attr('href');
+	'show.bs.tab button[data-bs-toggle="tab"]'(event, instance) {
+		const targetHref = $(event.target).attr('data-bs-target');
 		instance.usingPicker.set(targetHref === '#datepicker');
 	},
 

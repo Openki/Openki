@@ -1,10 +1,121 @@
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 
-import { Record } from '/imports/utils/CustomChecks';
+import { Record, Type } from '/imports/utils/CustomChecks';
 import { LocalizedValue, LocalizedValuePattern } from '/imports/utils/getLocalizedValue';
 
 // See settings-example.json.md for full documentation
+
+export const PublicSettingsPattern = Match.ObjectIncluding({
+	siteName: String,
+	/** The text top left at the logo */
+	siteStage: String,
+	/** Shows a banner saying that this is only for testing */
+	testWarning: Boolean,
+	/** The logo in the top left corner */
+	headerLogo: { src: String, alt: String },
+	/** The logo in the top left corner from the /kiosk/events/ page. */
+	headerLogoKiosk: { src: String, alt: String },
+	/** The default image used for avatars */
+	avatarLogo: { src: String, alt: String },
+	/** The image to be shown in social media */
+	ogLogo: { src: String },
+	emailLogo: String,
+	theme: {
+		brand: String,
+	},
+	regionSelection: {
+		/** The minimum number of regions displayed in the Regions selection. */
+		minNumber: Number,
+		/** A link to a page that explains regions, if not set then none link is shown. */
+		aboutLink: Match.Maybe(LocalizedValuePattern),
+	},
+	/** A link to a page that give instructions how to translate. */
+	i18nHelpLink: Match.Maybe(LocalizedValuePattern),
+	i18nMapping: Match.Maybe(Match.ObjectIncluding<Record<string, string>>({})),
+	publicTenants: [String],
+	matomo: Match.Maybe(
+		Match.OneOf(
+			{
+				jsPath: String,
+				phpPath: String,
+			},
+			{
+				url: String,
+				site: Match.Integer,
+				jsPath: String,
+				phpPath: String,
+			},
+		),
+	),
+	pricePolicyEnabled: Boolean,
+	feature: {
+		/** toggle visibility of login services */
+		login: { google: Boolean, facebook: Boolean, github: Boolean },
+		/** allow user without name and password */
+		visitorUser: Boolean,
+	},
+	nav: {
+		brandLink: String,
+		home: Boolean,
+		proposeCourse: Boolean,
+		calendar: Boolean,
+		customEntries: [
+			{
+				link: String,
+				icon: String,
+				/**
+				 * text from the link. The value is a translation key from i18next it must be
+				 * defined in code
+				 */
+				key: Match.Maybe(String),
+				/** as a alternative for "key" */
+				text: Match.Maybe(LocalizedValuePattern),
+			},
+		],
+	},
+	footerLinks: [
+		{
+			link: String,
+			/**
+			 * text from the link. The value is a translation key from i18next it must be
+			 * defined in code
+			 */
+			key: Match.Maybe(String),
+			/** text that is shown on hover the link */
+			title_key: Match.Maybe(String),
+			/** as a alternative for "key" */
+			text: Match.Maybe(LocalizedValuePattern),
+		},
+	],
+	faqLink: LocalizedValuePattern,
+	pricePolicyLink: LocalizedValuePattern,
+	courseGuideLink: LocalizedValuePattern,
+	aboutLink: LocalizedValuePattern,
+	/** Contribution to the plattform. */
+	contribution: Match.Maybe({
+		icon: String,
+		/** forbidden chars in username */
+		forbiddenChars: [String],
+		link: LocalizedValuePattern,
+	}) as Match.Matcher<{
+		icon: string;
+		forbiddenChars: string[];
+		link: LocalizedValue;
+	}>,
+	/** Max characters allowed for the description-field of courses. */
+	courseDescriptionMax: Match.Maybe(Number),
+	/** Max characters allowed for the description-field of events. */
+	eventDescriptionMax: Match.Maybe(Number),
+	/**  Categories for courses, main and/or sub categories */
+	categories: Record([String]),
+	/** file storage */
+	s3: {
+		publicUrlBase: String,
+	},
+});
+
+export type PublicSettings = Type<typeof PublicSettingsPattern>;
 
 const defaults = {
 	siteName: 'Hmmm',
@@ -14,6 +125,9 @@ const defaults = {
 	headerLogoKiosk: { src: '', alt: '' },
 	avatarLogo: { src: '', alt: '' },
 	ogLogo: { src: 'openki_logo_2018.png' },
+	theme: {
+		brand: '#38829c',
+	},
 	regionSelection: { minNumber: 5, aboutLink: '' },
 	i18nHelpLink: 'https://gitlab.com/Openki/Openki/-/wikis/i18n-howto',
 	publicTenants: [] as string[],
@@ -24,6 +138,14 @@ const defaults = {
 	pricePolicyEnabled: true,
 	feature: {
 		login: { google: false, facebook: false, github: false },
+		visitorUser: false,
+	},
+	nav: {
+		brandLink: '/',
+		home: true,
+		proposeCourse: true,
+		calendar: true,
+		customEntries: [] as { link: string; icon: string; key?: string; text?: string }[],
 	},
 	// eslint-disable-next-line camelcase
 	footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
@@ -37,6 +159,7 @@ const defaults = {
 		de: 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf',
 	},
 	aboutLink: 'https://about.openki.net',
+	courseDescriptionMax: 15000,
 	eventDescriptionMax: 15000,
 	categories: {},
 };
@@ -48,94 +171,9 @@ const publicSettings = { ...defaults, ...Meteor.settings.public };
 publicSettings.matomo = { ...defaults.matomo, ...Meteor.settings.public.matomo };
 
 // Check that everything is set as expected in the settings.
-check(
-	publicSettings,
-	Match.ObjectIncluding({
-		siteName: String,
-		/** The text top left at the logo */
-		siteStage: String,
-		/** Shows a banner saying that this is only for testing */
-		testWarning: Boolean,
-		/** The logo in the top left corner */
-		headerLogo: { src: String, alt: String },
-		/** The logo in the top left corner from the /kiosk/events/ page. */
-		headerLogoKiosk: { src: String, alt: String },
-		/** The default image used for avatars */
-		avatarLogo: { src: String, alt: String },
-		/** The image to be shown in social media */
-		ogLogo: { src: String },
-		emailLogo: String,
-		regionSelection: {
-			/** The minimum number of regions displayed in the Regions selection. */
-			minNumber: Number,
-			/** A link to a page that explains regions, if not set then none link is shown. */
-			aboutLink: Match.Maybe(LocalizedValuePattern),
-		},
-		/** A link to a page that give instructions how to translate. */
-		i18nHelpLink: Match.Maybe(LocalizedValuePattern),
-		publicTenants: [String],
-		matomo: Match.Maybe(
-			Match.OneOf(
-				{
-					jsPath: String,
-					phpPath: String,
-				},
-				{
-					url: String,
-					site: Match.Integer,
-					jsPath: String,
-					phpPath: String,
-				},
-			),
-		),
-		pricePolicyEnabled: Boolean,
-		feature: {
-			/** toggle visibility of login services */
-			login: { google: Boolean, facebook: Boolean, github: Boolean },
-		},
-		footerLinks: [
-			{
-				link: String,
-				/**
-				 * text from the link. The value is a translation key from i18next it must be
-				 * defined in code
-				 */
-				key: Match.Maybe(String),
-				/** text that is shown on hover the link */
-				title_key: Match.Maybe(String),
-				/** as a alternative for "key" */
-				text: Match.Maybe(LocalizedValuePattern),
-			},
-		],
-		faqLink: LocalizedValuePattern,
-		pricePolicyLink: LocalizedValuePattern,
-		courseGuideLink: LocalizedValuePattern,
-		aboutLink: LocalizedValuePattern,
-		/** Contribution to the plattform. */
-		contribution: Match.Maybe({
-			icon: String,
-			/** forbidden chars in username */
-			forbiddenChars: [String],
-			link: LocalizedValuePattern,
-		}) as Match.Matcher<{
-			icon: string;
-			forbiddenChars: string[];
-			link: LocalizedValue;
-		}>,
-		/** Max characters allowed for the description-field of events. */
-		eventDescriptionMax: Match.Maybe(Number),
-		/**  Categories for courses, main and/or sub categories */
-		categories: Record([String]),
-		/** file storage */
-		s3: {
-			publicUrlBase: String,
-		},
-	}),
-);
+check(publicSettings, PublicSettingsPattern);
 
 /**
  * Get access to some settings from the `Meteor.settings.public` enriched with default values.
  */
-export const PublicSettings = publicSettings;
-
-export default PublicSettings;
+export const PublicSettings = publicSettings as PublicSettings;

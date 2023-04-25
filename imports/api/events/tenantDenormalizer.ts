@@ -1,3 +1,5 @@
+import { Mongo } from 'meteor/mongo';
+
 import { Regions } from '/imports/api/regions/regions';
 // eslint-disable-next-line import/no-cycle
 import { EventEntity, Events } from '/imports/api/events/events';
@@ -19,7 +21,7 @@ export function onStartUp() {
 	console.log(`events.tenantDenormalizer.onStartUp: ${updated} affected events`);
 }
 
-export function beforeInsert(event: EventEntity) {
+export function beforeInsert(event: Mongo.OptionalId<EventEntity>) {
 	if (!event.region) {
 		throw new Error('Unexpected falsy: event.region');
 	}

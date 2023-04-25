@@ -4,19 +4,20 @@ import { Email } from 'meteor/email';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Meteor } from 'meteor/meteor';
 import moment from 'moment';
+import { Router } from 'meteor/iron:router';
 import juice from 'juice';
+import { Spacebars } from 'meteor/spacebars';
 
-import Version from '/imports/api/version/version';
+import { Version } from '/imports/api/version/version';
 import { Users } from '/imports/api/users/users';
 
 import { Notification } from '/imports/notification/notification';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import * as HtmlTools from '/imports/utils/html-tools';
 import { ServerMethod } from '/imports/utils/ServerMethod';
-import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 import { Type } from '/imports/utils/CustomChecks';
+import { toEmailLogo } from '/imports/utils/toEmailLogo';
 
 export const sendVerificationEmail = ServerMethod(
 	'sendVerificationEmail',
@@ -31,20 +32,20 @@ export const sendVerificationEmail = ServerMethod(
 	{ simulation: false },
 );
 
-export const SendEmailOptionsPattern = {
+export const SendPrivateMessageOptionsPattern = {
 	revealAddress: Boolean,
 	sendCopy: Boolean,
 	courseId: Match.Optional(String),
 	eventId: Match.Optional(String),
 };
-export type SendEmailOptions = Type<typeof SendEmailOptionsPattern>;
+export type SendPrivateMessageOptions = Type<typeof SendPrivateMessageOptionsPattern>;
 
-export const sendEmail = ServerMethod(
+export const sendPrivateMessage = ServerMethod(
 	'sendEmail',
-	(userId: string, message: string, options: SendEmailOptions) => {
+	(userId: string, message: string, options: SendPrivateMessageOptions) => {
 		check(userId, String);
 		check(message, String);
-		check(options, SendEmailOptionsPattern);
+		check(options, SendPrivateMessageOptionsPattern);
 
 		const operator = Meteor.user();
 		if (!operator) {
@@ -78,7 +79,7 @@ export const sendEmail = ServerMethod(
 	},
 );
 
-export const report = ServerMethod(
+export const sendReport = ServerMethod(
 	'report',
 	(title: string, location: string, userAgent: string, reportMessage: string) => {
 		check(title, String);
@@ -87,10 +88,11 @@ export const report = ServerMethod(
 		check(reportMessage, String);
 
 		let reporter = 'A fellow visitor';
-		const rootUrl = Meteor.absoluteUrl();
 		const user = Meteor.user();
 		if (user) {
-			reporter = `<a href='${rootUrl}user/${user._id}'>${HtmlTools.plainToHtml(user.username)}</a>`;
+			reporter = Spacebars.SafeString(
+				`<a href='${Router.url('userprofile', user)}'>${user.getDisplayName()}</a>`,
+			);
 		}
 		moment.locale('en');
 
@@ -122,8 +124,9 @@ export const report = ServerMethod(
 			subject,
 			title,
 			site: {
+				brand: PublicSettings.theme.brand,
 				url: Meteor.absoluteUrl(),
-				logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
+				logo: toEmailLogo(emailLogo),
 				name: siteName,
 			},
 			report: reportMessage,

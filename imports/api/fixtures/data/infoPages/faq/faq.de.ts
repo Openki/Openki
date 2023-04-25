@@ -191,4 +191,3 @@ Openki.net ist standardmässig SSL verschlüsselt. Dies ist die gleiche Technolo
 
 ### Wo gibts Antworten auf technische Fragen?
 Die technische Dokumentation ist in unserem [GitLab wiki](https://gitlab.com/Openki/Openki/wikis/home) zu finden.`;
-export default body;

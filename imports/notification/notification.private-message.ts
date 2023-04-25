@@ -1,17 +1,20 @@
 import { Match, check } from 'meteor/check';
 import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
-import { i18n } from '/imports/startup/both/i18next';
+import { Spacebars } from 'meteor/spacebars';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Log } from '/imports/api/log/log';
 import { UserModel, Users } from '/imports/api/users/users';
 import { RegionModel, Regions } from '/imports/api/regions/regions';
+import { Events } from '/imports/api/events/events';
 
+import { i18n } from '/imports/startup/both/i18next';
 import * as HtmlTools from '/imports/utils/html-tools';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { getSiteName } from '/imports/utils/getSiteName';
+import { LocalTime } from '/imports/utils/local-time';
 
 interface Body {
 	message: string;
@@ -103,7 +106,7 @@ export function Model(entry: { body: Body }) {
 			}
 		},
 
-		vars(lng: string, actualRecipient: UserModel, unsubToken: string) {
+		vars(userLocale: string, actualRecipient: UserModel, unsubToken: string) {
 			if (!sender) {
 				throw new Error('Sender does not exist (0.o)');
 			}
@@ -111,7 +114,10 @@ export function Model(entry: { body: Body }) {
 				throw new Error('targetRecipient does not exist (0.o)');
 			}
 
-			const subjectvars = { SENDER: StringTools.truncate(sender.username, 10), lng };
+			const subjectvars = {
+				SENDER: StringTools.truncate(sender.getDisplayName(), 10),
+				lng: userLocale,
+			};
 			const subject = i18n(
 				'notification.privateMessage.mail.subject',
 				'Private message from {SENDER}',
@@ -122,14 +128,6 @@ export function Model(entry: { body: Body }) {
 			// Find out whether this is the copy sent to the sender.
 			const senderCopy = sender._id === actualRecipient._id;
 
-			let region: RegionModel | undefined;
-			if (actualRecipient.profile?.regionId) {
-				region = Regions.findOne(actualRecipient.profile?.regionId);
-			}
-
-			const emailLogo = region?.custom?.emailLogo;
-			const siteName = getSiteName(region);
-
 			const vars = {
 				unsubLink: Router.url('profilePrivateMessagesUnsubscribe', { token: unsubToken }),
 				sender,
@@ -137,23 +135,25 @@ export function Model(entry: { body: Body }) {
 				subject,
 				message: htmlizedMessage,
 				senderCopy,
-				recipientName: targetRecipient.username,
+				recipientName: targetRecipient.getDisplayName(),
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=privateMessage`,
-				customSiteName: siteName,
-				customEmailLogo: emailLogo,
+				customSiteName: undefined as string | undefined,
+				customEmailLogo: undefined as string | undefined,
 				fromAddress: '',
-				courseName: '',
-				courseLink: '',
+				course: '',
+				event: '',
 			};
 
-			if (!senderCopy && body.revealSenderAddress) {
+			if (body.revealSenderAddress) {
 				const senderAddress = sender.verifiedEmailAddress();
-				if (senderAddress) {
-					vars.fromAddress = senderAddress;
-				} else {
+				if (!senderAddress) {
 					throw new Meteor.Error(400, 'no verified email address');
 				}
+				vars.fromAddress = senderAddress;
 			}
+
+			let region: RegionModel | undefined;
+			let regionId = actualRecipient.profile?.regionId;
 
 			const courseContextId = body.context.course;
 			if (courseContextId) {
@@ -161,11 +161,44 @@ export function Model(entry: { body: Body }) {
 				if (!course) {
 					throw new Meteor.Error(404, 'course not found');
 				}
-				vars.courseName = course.name;
-				vars.courseLink = Router.url('showCourse', course, {
+				const courseLink = Router.url('showCourse', course, {
 					query: 'campaign=privateMessage',
 				});
+				vars.course = Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`);
+
+				regionId = course.region;
 			}
+
+			const eventContextId = body.context.event;
+			if (eventContextId) {
+				const event = Events.findOne(eventContextId);
+				if (!event) {
+					throw new Meteor.Error(404, 'event not found');
+				}
+
+				// Show dates in local time and in users locale
+				const regionZone = LocalTime.zone(event.region);
+				const startMoment = regionZone.at(event.start);
+				startMoment.locale(userLocale);
+
+				const title = i18n('notification.privateMessage.mail.title', '{DATE} — {EVENT}', {
+					EVENT: event.title,
+					DATE: startMoment.calendar(),
+				});
+				const eventLink = Router.url('showEvent', event, {
+					query: 'campaign=privateMessage',
+				});
+				vars.event = Spacebars.SafeString(`<a href="${eventLink}">${title}</a>`);
+
+				regionId = event.region;
+			}
+
+			if (regionId) {
+				region = Regions.findOne(regionId);
+			}
+
+			vars.customEmailLogo = region?.custom?.emailLogo;
+			vars.customSiteName = getSiteName(region);
 
 			return vars;
 		},

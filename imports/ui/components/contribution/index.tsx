@@ -1,0 +1,66 @@
+import React from 'react';
+import { useTracker } from 'meteor/react-meteor-data';
+import { useTranslation } from 'react-i18next';
+import * as Tooltips from '/imports/utils/Tooltips';
+
+import { useCurrentRegion } from '/imports/utils/useCurrentRegion';
+import { checkContribution } from '/imports/utils/checkContribution';
+import { PublicSettings } from '/imports/utils/PublicSettings';
+import { getCachedUser } from '/imports/ui/lib/getUserName';
+import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
+import { getSiteName } from '/imports/utils/getSiteName';
+
+export type Props = {
+	userId: string;
+};
+
+export function Contribution(props: Props) {
+	const { t } = useTranslation();
+	const currentRegion = useCurrentRegion();
+	const { userId } = props;
+	const cachedUser = useTracker(() => getCachedUser(userId));
+
+	if (!userId) {
+		return null;
+	}
+
+	const contribution = PublicSettings.contribution;
+
+	if (!contribution) {
+		return null;
+	}
+
+	if (!cachedUser) {
+		return null;
+	}
+
+	if (!checkContribution(cachedUser.contribution)) {
+		return null;
+	}
+
+	return (
+		<a
+			href={getLocalizedValue(contribution.link)}
+			data-bs-toggle="tooltip"
+			data-bs-title={t(
+				'user.hasContributed',
+				'{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.',
+				{
+					USERNAME: cachedUser.getDisplayName(),
+					SITENAME: getSiteName(currentRegion),
+					ICON: `<i class='${contribution.icon}' aria-hidden='true'></i>`,
+				},
+			)}
+		>
+			<sup>
+				<i className={contribution.icon} aria-hidden="true" />
+			</sup>
+		</a>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper('Contribution', () => Contribution);

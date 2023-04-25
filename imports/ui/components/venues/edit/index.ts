@@ -10,10 +10,10 @@ import { Regions } from '/imports/api/regions/regions';
 import { VenueModel, Venues } from '/imports/api/venues/venues';
 import * as VenuesMethods from '/imports/api/venues/methods';
 
-import CleanedRegion from '/imports/ui/lib/cleaned-region';
 import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as Analytics from '/imports/ui/lib/analytics';
+import { CleanedRegion } from '/imports/ui/lib/cleaned-region';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/richtext';

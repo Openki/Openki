@@ -2,13 +2,13 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import moment from 'moment';
 import { Router } from 'meteor/iron:router';
 
-import Events from '/imports/api/events/events';
+import { Events } from '/imports/api/events/events';
 
 import * as UrlTools from '/imports/utils/url-tools';
 import { reactiveNow } from '/imports/utils/reactive-now';
 import { Filtering } from '/imports/utils/filtering';
 import * as Predicates from '/imports/utils/predicates';
-import i18n from '/imports/startup/both/i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/events/list';
@@ -25,7 +25,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 	Record<string, string>,
 	{
 		date: moment.Moment;
-		filter: ReturnType<typeof Events['Filtering']>;
+		filter: ReturnType<(typeof Events)['Filtering']>;
 		limit: number;
 		update: () => void;
 	}

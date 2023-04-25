@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 function getNowWithoutSeconds() {
@@ -23,5 +24,3 @@ Meteor.setInterval(() => {
 		reactiveNow.set(now);
 	}
 }, 1000 * 5);
-
-export default reactiveNow;

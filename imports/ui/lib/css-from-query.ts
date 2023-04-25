@@ -5,7 +5,7 @@ export class CssFromQuery {
 	 * @param properties the customizable properties to add
 	 */
 	constructor(
-		public query: { [param: string]: string },
+		public query: { [param: string]: string | undefined },
 		properties: [key: string, name: string, selector: string][] = [],
 	) {
 		// define a default set of customizable properties
@@ -56,5 +56,3 @@ export class CssFromQuery {
 		return cssRules;
 	}
 }
-
-export default CssFromQuery;

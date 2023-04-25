@@ -1,58 +1,61 @@
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
+import { ServiceConfiguration } from 'meteor/service-configuration';
 import { Accounts } from 'meteor/accounts-base';
 
 import * as usersMethods from '/imports/api/users/methods';
 import { UserModel, UserProfile } from '/imports/api/users/users';
 
 import { isEmail } from '/imports/utils/email-tools';
-import PrivateSettings from '/imports/utils/PrivateSettings';
+import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
 Meteor.startup(() => {
 	const serviceConf = PrivateSettings.service;
-	if (serviceConf) {
-		if (serviceConf.google) {
-			ServiceConfiguration.configurations.upsert(
-				{
-					service: 'google',
+	if (!serviceConf) {
+		return;
+	}
+
+	if (serviceConf.google) {
+		ServiceConfiguration.configurations.upsert(
+			{
+				service: 'google',
+			},
+			{
+				$set: {
+					loginStyle: 'popup',
+					clientId: serviceConf.google.clientId,
+					secret: serviceConf.google.secret,
 				},
-				{
-					$set: {
-						loginStyle: 'popup',
-						clientId: serviceConf.google.clientId,
-						secret: serviceConf.google.secret,
-					},
+			},
+		);
+	}
+	if (serviceConf.facebook) {
+		ServiceConfiguration.configurations.upsert(
+			{
+				service: 'facebook',
+			},
+			{
+				$set: {
+					loginStyle: 'popup',
+					appId: serviceConf.facebook.appId,
+					secret: serviceConf.facebook.secret,
 				},
-			);
-		}
-		if (serviceConf.facebook) {
-			ServiceConfiguration.configurations.upsert(
-				{
-					service: 'facebook',
+			},
+		);
+	}
+	if (serviceConf.github) {
+		ServiceConfiguration.configurations.upsert(
+			{
+				service: 'github',
+			},
+			{
+				$set: {
+					loginStyle: 'popup',
+					clientId: serviceConf.github.clientId,
+					secret: serviceConf.github.secret,
 				},
-				{
-					$set: {
-						loginStyle: 'popup',
-						appId: serviceConf.facebook.appId,
-						secret: serviceConf.facebook.secret,
-					},
-				},
-			);
-		}
-		if (serviceConf.github) {
-			ServiceConfiguration.configurations.upsert(
-				{
-					service: 'github',
-				},
-				{
-					$set: {
-						loginStyle: 'popup',
-						clientId: serviceConf.github.clientId,
-						secret: serviceConf.github.secret,
-					},
-				},
-			);
-		}
+			},
+		);
 	}
 });
 
@@ -139,14 +142,13 @@ Accounts.onCreateUser((options: any, originalUser) => {
 	return user;
 });
 
-Accounts.onLogin(() => {
+Accounts.onLogin(async () => {
+	await usersMethods.updateLastLogin();
+
 	const user = Meteor.user();
-
-	usersMethods.updateLastLogin();
-
 	// generate a avatar color for every new user
 	if (user && user.avatar?.color === undefined) {
-		usersMethods.updateAvatarColor();
+		await usersMethods.updateAvatarColor();
 	}
 });
 

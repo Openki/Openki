@@ -2,16 +2,17 @@ import juice from 'juice';
 import { Meteor } from 'meteor/meteor';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Router } from 'meteor/iron:router';
+import { Spacebars } from 'meteor/spacebars';
 
 import { InvitationEntity, Invitations } from '/imports/api/invitations/invitations';
 import { Tenants } from '/imports/api/tenants/tenants';
 import { UserModel, Users } from '/imports/api/users/users';
 import { Log } from '/imports/api/log/log';
 
-import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { toEmailLogo } from '/imports/utils/toEmailLogo';
 
 function sendInvitation(invitation: InvitationEntity) {
 	const tenant = Tenants.findOne(invitation.tenant);
@@ -38,8 +39,9 @@ function sendInvitation(invitation: InvitationEntity) {
 	let message = SSR.render('invitationEmail', {
 		subject,
 		site: {
+			brand: PublicSettings.theme.brand,
 			url: Meteor.absoluteUrl(),
-			logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
+			logo: toEmailLogo(emailLogo),
 			name: siteName,
 		},
 		tenant,
@@ -49,7 +51,9 @@ function sendInvitation(invitation: InvitationEntity) {
 			query: `tenant=${invitation.tenant}&campaign=invitationEmail`,
 		}),
 		moreLink: getLocalizedValue(PublicSettings.aboutLink, locale),
-		reportEmail: PrivateSettings.reporter.recipient,
+		reportEmail: Spacebars.SafeString(
+			`<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
+		),
 		locale,
 	});
 

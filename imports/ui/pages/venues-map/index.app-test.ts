@@ -2,9 +2,10 @@ import { assert } from 'chai';
 import { Router } from 'meteor/iron:router';
 import $ from 'jquery';
 import { Meteor } from 'meteor/meteor';
+import { MeteorAsync } from '/imports/utils/promisify';
+import { Session } from 'meteor/session';
 
 import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
-import { MeteorAsync } from '/imports/utils/promisify';
 
 if (Meteor.isClient) {
 	describe('Venues map', function () {

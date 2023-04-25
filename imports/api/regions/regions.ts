@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import { Session } from 'meteor/session';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
+import { Session } from 'meteor/session';
 
 import { UserModel } from '/imports/api/users/users';
 
@@ -37,11 +37,15 @@ export interface RegionEntity {
 	 */
 	courseCount: number;
 	/**
-	 * Number of future events in that region, calculated field (does not count internal courses)
+	 * Number of future events in that region, calculated field (does not count internal events)
 	 */
 	futureEventCount: number;
 	/** ID of featured group */
 	featuredGroup: string;
+	/** Team group that is added to all courses on create. */
+	defaultTeamGroup?: string;
+	/** Courses in this region are default single events. */
+	singleEvents?: boolean;
 	/**
 	 * If set the calendar page jumps automatic to this date.
 	 */
@@ -85,7 +89,7 @@ export class Region {
 	/**
 	 * Check whether a user may edit the region.
 	 */
-	editableBy(this: RegionModel, user?: UserModel) {
+	editableBy(this: RegionModel, user?: UserModel | null) {
 		if (!user) {
 			return false;
 		}
@@ -98,8 +102,8 @@ export class Region {
 }
 
 export const FindFilterPattern = {
-	/** restrict to regions in that tenant */
-	tenant: Match.Maybe(String),
+	/** restrict to given tenants */
+	tenants: Match.Maybe([String]),
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
@@ -160,14 +164,12 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 			options.skip = skip;
 		}
 
-		if (filter.tenant) {
-			selector.tenant = filter.tenant;
+		if (filter.tenants && filter.tenants.length > 0) {
+			selector.tenant = { $in: filter.tenants };
 		}
 
-		return this.find(selector, options);
+		return this.find(selector, options) as Mongo.Cursor<RegionEntity, RegionModel>;
 	}
 }
 
 export const Regions = new RegionsCollection();
-
-export default Regions;

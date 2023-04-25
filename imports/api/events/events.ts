@@ -1,4 +1,5 @@
 import { Mongo } from 'meteor/mongo';
+import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 import { Match, check } from 'meteor/check';
 // eslint-disable-next-line import/no-cycle
@@ -10,7 +11,7 @@ import { UserModel } from '/imports/api/users/users';
 
 import * as AsyncTools from '/imports/utils/async-tools';
 import { Filtering } from '/imports/utils/filtering';
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import * as Predicates from '/imports/utils/predicates';
 import * as StringTools from '/imports/utils/string-tools';
 import * as FileStorage from '/imports/utils/FileStorage';
@@ -26,7 +27,7 @@ export interface EventVenueEntity {
 	 */
 	_id?: string;
 	/** Descriptive name for the venue */
-	name?: string;
+	name: string;
 	/** Event location in GeoJSON format */
 	loc?: Geodata;
 	/** Address string where the event will take place */
@@ -140,6 +141,13 @@ export class OEvent {
 
 		return FileStorage.generatePublicUrl(this.courseImage);
 	}
+
+	isFullyBooked(this: EventModel) {
+		if (!this.maxParticipants) {
+			return false;
+		}
+		return (this.participants?.length || 0) >= this.maxParticipants;
+	}
 }
 
 export const FindFilterPattern = {
@@ -187,6 +195,24 @@ export const FindFilterPattern = {
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
+export const FindParams = {
+	course: Predicates.id,
+	region: Predicates.id,
+	participant: Predicates.id,
+	search: Predicates.string,
+	categories: Predicates.ids,
+	group: Predicates.id,
+	groups: Predicates.ids,
+	venue: Predicates.id,
+	venues: Predicates.ids,
+	room: Predicates.string,
+	start: Predicates.date,
+	after: Predicates.date,
+	before: Predicates.date,
+	end: Predicates.date,
+	internal: Predicates.flag,
+};
+
 export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> {
 	constructor() {
 		super('Events', {
@@ -203,31 +229,24 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		}
 	}
 
-	insert(event: EventEntity, callback?: (err?: unknown, _id?: string) => void) {
+	insert(event: Mongo.OptionalId<EventEntity>, callback?: (err?: unknown, _id?: string) => void) {
 		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
 
 		return super.insert(enrichedEvent, callback);
 	}
 
+	insertAsync(
+		event: Mongo.OptionalId<EventEntity>,
+		callback?: (err?: unknown, _id?: string) => void,
+	) {
+		const enrichedEvent = tenantDenormalizer.beforeInsert(event);
+
+		return super.insertAsync(enrichedEvent, callback);
+	}
+
 	// eslint-disable-next-line class-methods-use-this
 	Filtering() {
-		return new Filtering({
-			course: Predicates.id,
-			region: Predicates.id,
-			participant: Predicates.id,
-			search: Predicates.string,
-			categories: Predicates.ids,
-			group: Predicates.id,
-			groups: Predicates.ids,
-			venue: Predicates.id,
-			venues: Predicates.ids,
-			room: Predicates.string,
-			start: Predicates.date,
-			after: Predicates.date,
-			before: Predicates.date,
-			end: Predicates.date,
-			internal: Predicates.flag,
-		});
+		return new Filtering(FindParams);
 	}
 
 	/**
@@ -274,43 +293,6 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 				update.courseGroups = courseGroups;
 				update.allGroups = _.union(event.groups, courseGroups);
 			}
-
-			this.rawCollection().updateMany({ _id: event._id }, { $set: update }, {}, (err, result) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(result?.modifiedCount === 0);
-				}
-			});
-		});
-	}
-
-	/**
-	 * Recalculate the group-related fields of an event
-	 * @param eventId the event to update
-	 */
-	updateCategories(eventId: string) {
-		AsyncTools.untilClean((resolve, reject) => {
-			const event = this.findOne(eventId);
-
-			if (!event) {
-				// Nothing was successfully updated, we're done.
-				resolve(true);
-				return;
-			}
-
-			if (!event.courseId) {
-				resolve(true);
-				return;
-			}
-			// categories comes from the parent course
-
-			const course = Courses.findOne(event.courseId);
-			if (!course) {
-				throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
-			}
-
-			const update: Partial<EventEntity> = { categories: course.categories };
 
 			this.rawCollection().updateMany({ _id: event._id }, { $set: update }, {}, (err, result) => {
 				if (err) {
@@ -464,5 +446,3 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 }
 
 export const Events = new EventsCollection();
-
-export default Events;

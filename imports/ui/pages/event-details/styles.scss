@@ -2,26 +2,6 @@
 
 $header-bg: darken($blue-lighter, 5%);
 
-.event-course-header {
-	background-color: $header-bg;
-	border-color: $header-bg;
-	border-style: solid;
-	border-width: 5px 5px 0;
-	cursor: pointer;
-	padding: 10px;
-	position: relative;
-	transition: background-color 0.15s;
-
-	&.highlight {
-		background-color: darken($header-bg, 2%);
-	}
-
-	.region-tag {
-		right: -5px;
-		top: -5px;
-	}
-}
-
 .event-page-component-header {
 	$background-color: $blue;
 
@@ -35,16 +15,7 @@ $header-bg: darken($blue-lighter, 5%);
 	margin: 0;
 }
 
-.event-course-header > h2 {
-	margin: 0;
-	padding-bottom: 5px;
-}
-
-.event-course-header-link + .course-categories {
-	margin-top: 5px;
-}
-
-.event-course-header + .event {
+.event.course-event {
 	border-color: $header-bg;
 	border-style: solid;
 	border-width: 0 5px 5px;
@@ -53,71 +24,6 @@ $header-bg: darken($blue-lighter, 5%);
 
 .event + .page-component {
 	margin-top: 15px;
-}
-
-.event-details-body {
-	background: $event-body-bg;
-	height: calc(#{'100% - 70px'});
-}
-
-.event-details-body .grouplist {
-	margin-bottom: 10px;
-}
-
-.event-details-body .grouplist .dropdown-menu {
-	z-index: 10000;
-}
-
-.event-details-header {
-	background: $event-header-bg;
-	padding: 20px 15px 10px;
-}
-
-.event-details-description {
-	@include break-word;
-	margin-top: 10px;
-}
-
-.event-details-body .shariff {
-	background-color: $event-body-bg;
-	margin-bottom: 15px;
-}
-
-.event-details-price-policy {
-	padding: 0 15px;
-}
-
-.event-delete-confirmation {
-	$background-color: lighten($danger, 20%);
-
-	background-color: $background-color;
-	border: 1px solid darken($background-color, 20%);
-	padding: 15px 15px 0;
-}
-
-.btn-event {
-	font-size: 18px;
-	font-weight: bold;
-	text-align: start;
-}
-
-.event-page-btn {
-	@include btn-lg;
-	margin-top: 3px;
-	text-align: start;
-	width: 100%;
-}
-
-// ** Internal indicator dot
-//========================================================================================
-.details-internal {
-	background-color: #f00;
-	border-radius: 50%;
-	height: 5px;
-	left: 6px;
-	position: absolute;
-	top: 6px;
-	width: 5px;
 }
 
 .event-detail-register-dropdown {

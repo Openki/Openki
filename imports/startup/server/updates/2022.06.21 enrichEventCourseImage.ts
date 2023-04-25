@@ -1,5 +1,5 @@
-import Courses from '/imports/api/courses/courses';
-import Events from '/imports/api/events/events';
+import { Courses } from '/imports/api/courses/courses';
+import { Events } from '/imports/api/events/events';
 
 export function update() {
 	let updated = 0;
@@ -16,5 +16,3 @@ export function update() {
 
 	return updated;
 }
-
-export default update;

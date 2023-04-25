@@ -13,8 +13,8 @@
 @import '{}/node_modules/bootstrap/scss/transitions';
 @import '{}/node_modules/bootstrap/scss/dropdown';
 @import '{}/node_modules/bootstrap/scss/button-group';
-// @import '{}/node_modules/bootstrap/scss/nav';
-// @import '{}/node_modules/bootstrap/scss/navbar';
+@import '{}/node_modules/bootstrap/scss/nav';
+@import '{}/node_modules/bootstrap/scss/navbar';
 @import '{}/node_modules/bootstrap/scss/card';
 // @import '{}/node_modules/bootstrap/scss/accordion';
 // @import '{}/node_modules/bootstrap/scss/breadcrumb';
@@ -26,11 +26,12 @@
 @import '{}/node_modules/bootstrap/scss/close';
 // @import '{}/node_modules/bootstrap/scss/toasts';
 @import '{}/node_modules/bootstrap/scss/modal';
-// @import '{}/node_modules/bootstrap/scss/tooltip';
+@import '{}/node_modules/bootstrap/scss/tooltip';
 // @import '{}/node_modules/bootstrap/scss/popover';
 // @import '{}/node_modules/bootstrap/scss/carousel';
 // @import '{}/node_modules/bootstrap/scss/spinners';
 // @import '{}/node_modules/bootstrap/scss/offcanvas';
+@import '{}/node_modules/bootstrap/scss/placeholders';
 
 // Optional Bootstrap Helpers
 @import '{}/node_modules/bootstrap/scss/helpers';

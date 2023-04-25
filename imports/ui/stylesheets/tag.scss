@@ -16,12 +16,17 @@
 	margin-left: -5px;
 }
 
-.tag-group > .tag {
+.tag-group .tag {
 	font-size: $font-size-base;
 	margin-left: 5px;
 }
 
-.tag-group.multiline > .tag {
+/* Fix: Temporarily until completely switched to react. */
+.tag-group > div:not(.tag) {
+	display: inline-block;
+}
+
+.tag-group.multiline .tag {
 	margin-bottom: 5px;
 }
 

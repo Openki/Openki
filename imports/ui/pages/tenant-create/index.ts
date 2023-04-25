@@ -10,7 +10,7 @@ import * as RegionsMethods from '/imports/api/regions/methods';
 import { LocationTracker } from '/imports/ui/lib/location-tracker';
 import { PleaseLogin } from '/imports/ui/lib/please-login';
 import * as Analytics from '/imports/ui/lib/analytics';
-import i18n from '/imports/startup/both/i18next';
+import { i18n } from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/buttons';
@@ -60,26 +60,19 @@ template.events({
 		event.preventDefault();
 
 		const tenantName = instance.$('.js-tenant-name').val() as string;
-
 		if (!tenantName) {
 			Alert.error(i18n('tenant.create.plsGiveName', 'Please give a organization name'));
 			return;
 		}
 
-		const changes = {
-			name: instance.$('.js-name').val() as string,
-			tz: instance.$('.js-timezone').val() as string,
-		} as Omit<RegionsMethods.CreateFields, 'tenant'>;
-
-		if (!changes.name) {
+		const name = instance.$('.js-name').val() as string;
+		if (!name) {
 			Alert.error(i18n('tenant.region.create.plsGiveName', 'Please give your region a name'));
 			return;
 		}
 
 		const loc = instance.locationTracker.getLocation();
-		if (loc) {
-			changes.loc = loc;
-		} else {
+		if (!loc) {
 			Alert.error(
 				i18n(
 					'tenant.region.create.plsSelectPointOnMap',
@@ -88,6 +81,13 @@ template.events({
 			);
 			return;
 		}
+
+		const changes: Omit<RegionsMethods.CreateFields, 'tenant'> = {
+			name,
+			tz: instance.$('.js-timezone').val() as string,
+			loc,
+			description: instance.$('.js-description').val() as string,
+		};
 
 		instance.busy('saving');
 		PleaseLogin(instance, async () => {

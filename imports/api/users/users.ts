@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { _ } from 'meteor/underscore';
+import { i18n } from '/imports/startup/both/i18next';
 
 export type Role = 'admin';
 
@@ -113,6 +114,10 @@ export interface UserEntity extends Meteor.User {
 export type UserModel = User & UserEntity;
 
 export class User {
+	getDisplayName(this: Pick<UserEntity, 'username'>) {
+		return this.username || i18n('user.visitor', 'Visitor');
+	}
+
 	/**
 	 * Check whether the user may promote things with the given group.
 	 * The user must be a member of the group to be allowed to promote things with it.
@@ -185,5 +190,3 @@ Users.currentUser = function () {
 	anon.anon = true;
 	return anon;
 };
-
-export default Users;
