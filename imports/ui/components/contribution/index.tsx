@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 import { useTranslation } from 'react-i18next';
-import * as Tooltips from '/imports/utils/Tooltips';
 
 import { useCurrentRegion } from '/imports/utils/useCurrentRegion';
 import { checkContribution } from '/imports/utils/checkContribution';
