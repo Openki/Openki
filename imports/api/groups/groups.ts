@@ -40,6 +40,7 @@ export interface GroupEntity {
 	customCourseFields?: GroupEntityCustomCourseFields[];
 	/** List of userIds */
 	members: string[];
+	createdby: string;
 }
 export type GroupModel = Group & GroupEntity;
 
@@ -156,5 +157,3 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
 }
 
 export const Groups = new GroupsCollection();
-
-export default Groups;

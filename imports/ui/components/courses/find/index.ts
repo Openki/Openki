@@ -4,17 +4,19 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 
 import { Courses } from '/imports/api/courses/courses';
 
-import CourseTemplate from '/imports/ui/lib/course-template';
+import * as UrlTools from '/imports/utils/url-tools';
+import * as Tooltips from '/imports/utils/Tooltips';
+
+import { CourseTemplate } from '/imports/ui/lib/course-template';
 import * as RegionSelection from '/imports/utils/region-selection';
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as Viewport from '/imports/ui/lib/viewport';
-import * as UrlTools from '/imports/utils/url-tools';
 
-import '/imports/ui/components/groups/list';
-import '/imports/ui/components/courses/list/course-list';
+import '/imports/ui/components/groups/tag';
 import '/imports/ui/components/courses/edit';
+import '/imports/ui/components/courses/list';
 import '/imports/ui/components/courses/filter';
 import '/imports/ui/components/search-field';
 
@@ -35,7 +37,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 
 		courseBlockSize: number;
 		courseLimit: ReactiveVar<number>;
-		filter: ReturnType<typeof Courses['Filtering']>;
+		filter: ReturnType<(typeof Courses)['Filtering']>;
 	}
 >;
 
@@ -67,7 +69,7 @@ template.onCreated(function () {
 			options.query = queryString;
 		}
 
-		RouterAutoscroll.cancelNext();
+		routerAutoscroll.cancelNext();
 
 		const router = Router.current();
 		Router.go(router.route.getName(), { _id: router.params._id }, options);
@@ -116,73 +118,6 @@ template.onCreated(function () {
 
 		instance.subscribe('Courses.findFilter', filterQuery, limit);
 	});
-});
-
-template.events({
-	'mouseover .js-category-label'(this: string, _event, instance) {
-		FilterPreview({
-			property: 'category',
-			id: this,
-			activate: true,
-			delayed: true,
-			instance,
-		});
-	},
-
-	'mouseout .js-category-label'(this: string, _event, instance) {
-		FilterPreview({
-			property: 'category',
-			id: this,
-			activate: false,
-			delayed: true,
-			instance,
-		});
-	},
-
-	'mouseover .js-group-label, mouseout .js-group-label'(
-		this: { groupId: string },
-		event,
-		instance,
-	) {
-		FilterPreview({
-			property: 'group',
-			id: this.groupId,
-			activate: event.type === 'mouseover',
-			delayed: true,
-			instance,
-		});
-	},
-
-	'click .js-category-label'(_event, instance) {
-		instance.filter.add('categories', `${this}`).done();
-		instance.updateUrl();
-		window.scrollTo(0, 0);
-	},
-
-	'click .js-group-label'() {
-		window.scrollTo(0, 0);
-	},
-
-	'click .js-toggle-filter'(_event, instance) {
-		const showingFilters = !instance.showingFilters.get();
-		instance.showingFilters.set(showingFilters);
-
-		if (!showingFilters) {
-			filters.forEach((filter) => instance.filter.disable(filter as any));
-			instance.filter.done();
-			instance.updateUrl();
-		}
-	},
-
-	'click .js-all-regions-btn'() {
-		RegionSelection.change('all');
-	},
-
-	'click .js-more-courses'(_event, instance) {
-		const { courseLimit } = instance;
-		courseLimit.set(courseLimit.get() + instance.courseBlockSize);
-		instance.updateUrl();
-	},
 });
 
 template.helpers({
@@ -257,5 +192,85 @@ template.helpers({
 
 	isMobile() {
 		return Viewport.get().width <= ScssVars.screenXS;
+	},
+
+	groupTagEvents() {
+		return () => (groupId: string) => {
+			const instance = Template.instance();
+			return {
+				onMouseOver: () => {
+					FilterPreview({
+						property: 'group',
+						id: groupId,
+						activate: true,
+						delayed: true,
+						instance,
+					});
+				},
+				onMouseOut: () => {
+					FilterPreview({
+						property: 'group',
+						id: groupId,
+						activate: false,
+						delayed: true,
+						instance,
+					});
+				},
+				onClick: () => {
+					Tooltips.hide();
+					window.scrollTo(0, 0);
+				},
+			};
+		};
+	},
+});
+
+template.events({
+	'mouseover .js-category-label'(event, instance) {
+		FilterPreview({
+			property: 'category',
+			id: event.target.dataset.category as string,
+			activate: true,
+			delayed: true,
+			instance,
+		});
+	},
+
+	'mouseout .js-category-label'(event, instance) {
+		FilterPreview({
+			property: 'category',
+			id: event.target.dataset.category as string,
+			activate: false,
+			delayed: true,
+			instance,
+		});
+	},
+
+	'click .js-category-label'(_event, instance) {
+		Tooltips.hide();
+		instance.filter.add('categories', `${this}`).done();
+		instance.updateUrl();
+		window.scrollTo(0, 0);
+	},
+
+	'click .js-toggle-filter'(_event, instance) {
+		const showingFilters = !instance.showingFilters.get();
+		instance.showingFilters.set(showingFilters);
+
+		if (!showingFilters) {
+			filters.forEach((filter) => instance.filter.disable(filter as any));
+			instance.filter.done();
+			instance.updateUrl();
+		}
+	},
+
+	'click .js-all-regions-btn'() {
+		RegionSelection.change('all');
+	},
+
+	'click .js-more-courses'(_event, instance) {
+		const { courseLimit } = instance;
+		courseLimit.set(courseLimit.get() + instance.courseBlockSize);
+		instance.updateUrl();
 	},
 });

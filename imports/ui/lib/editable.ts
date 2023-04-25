@@ -72,10 +72,13 @@ export class Editable {
 		| {
 				getEdited: () => string | undefined;
 				getTotalFocusTimeInSeconds: () => number;
+				numberOfCharacters: ReactiveVar<number>;
 		  }
 		| undefined;
 
-	constructor(multiline = false, placeholderText = '', store?: Store) {
+	maxlength?: number | undefined;
+
+	constructor(multiline = false, placeholderText = '', maxlength?: number, store?: Store) {
 		this.multiline = multiline;
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		this.store = store || {};
@@ -84,6 +87,7 @@ export class Editable {
 		this.text = new ReactiveVar('');
 		this.changed = new ReactiveVar(!store);
 		this.editingInstance = undefined;
+		this.maxlength = maxlength;
 	}
 
 	/**
@@ -108,6 +112,10 @@ export class Editable {
 		return this.editingInstance?.getTotalFocusTimeInSeconds() || 0;
 	}
 
+	getNumberOfCharacters() {
+		return this.editingInstance?.numberOfCharacters.get();
+	}
+
 	/**
 	 * ends editing mode such as when changes have been saved
 	 */
@@ -118,6 +126,7 @@ export class Editable {
 	connect(instance: {
 		getEdited: () => string | undefined;
 		getTotalFocusTimeInSeconds: () => number;
+		numberOfCharacters: ReactiveVar<number>;
 	}): State {
 		this.editingInstance = instance;
 		return {
@@ -130,5 +139,3 @@ export class Editable {
 		};
 	}
 }
-
-export default Editable;

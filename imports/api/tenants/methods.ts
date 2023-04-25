@@ -6,30 +6,30 @@ import { Users } from '/imports/api/users/users';
 import * as usersTenantsDenormalizer from '/imports/api/users/tenantsDenormalizer';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 
-export const create = ServerMethod('tenant.create', (changes: Pick<TenantEntity, 'name'>) => {
+export const create = ServerMethod('tenant.create', async (changes: Pick<TenantEntity, 'name'>) => {
 	check(changes, {
 		name: String,
 	});
 
-	const user = Meteor.user();
-	if (!user) {
+	const userId = Meteor.userId();
+	if (!userId) {
 		throw new Meteor.Error(401, 'please log in');
 	}
 
 	const set: Pick<TenantEntity, 'name' | 'members' | 'admins'> = {
 		name: changes.name.trim().substring(0, 40),
-		members: [user._id],
-		admins: [user._id],
+		members: [userId],
+		admins: [userId],
 	};
 
-	const tenantId = Tenants.insert(set);
+	const tenantId = await Tenants.insertAsync(set);
 
-	usersTenantsDenormalizer.afterTenantCreate(user._id, tenantId);
+	await usersTenantsDenormalizer.afterTenantCreate(userId, tenantId);
 
 	return tenantId;
 });
 
-function membershipMutationPreconditionCheck(userId: string, tenantId: string) {
+async function membershipMutationPreconditionCheck(userId: string, tenantId: string) {
 	check(userId, String);
 	check(tenantId, String);
 
@@ -38,7 +38,7 @@ function membershipMutationPreconditionCheck(userId: string, tenantId: string) {
 		throw new Meteor.Error(401, 'Not permitted');
 	}
 
-	const tenant = Tenants.findOne(tenantId);
+	const tenant = await Tenants.findOneAsync(tenantId);
 	if (!tenant) {
 		throw new Meteor.Error(401, 'Not permitted');
 	}
@@ -48,51 +48,57 @@ function membershipMutationPreconditionCheck(userId: string, tenantId: string) {
 		throw new Meteor.Error(401, 'Not permitted');
 	}
 
-	if (Users.find(userId, { limit: 1 }).count() === 0) {
+	if (!(await Users.findOneAsync(userId, { fields: { _id: 1 } }))) {
 		throw new Meteor.Error(404, 'User not found');
 	}
 
 	return tenant;
 }
 
-export const addMember = ServerMethod('tenant.addMember', (userId: string, tenantId: string) => {
-	membershipMutationPreconditionCheck(userId, tenantId);
+export const addMember = ServerMethod(
+	'tenant.addMember',
+	async (userId: string, tenantId: string) => {
+		await membershipMutationPreconditionCheck(userId, tenantId);
 
-	Tenants.update(tenantId, { $addToSet: { members: userId } });
+		await Tenants.updateAsync(tenantId, { $addToSet: { members: userId } });
 
-	usersTenantsDenormalizer.afterTenantAddMember(userId, tenantId);
-});
+		await usersTenantsDenormalizer.afterTenantAddMember(userId, tenantId);
+	},
+);
 
 export const removeMember = ServerMethod(
 	'tenant.removeMember',
-	(userId: string, tenantId: string) => {
-		const tenant = membershipMutationPreconditionCheck(userId, tenantId);
+	async (userId: string, tenantId: string) => {
+		const tenant = await membershipMutationPreconditionCheck(userId, tenantId);
 
 		if (tenant.admins.includes(userId)) {
 			throw new Meteor.Error(401, 'Not permitted, delete the member from the admin list first');
 		}
 
-		Tenants.update(tenantId, { $pull: { members: userId } });
+		await Tenants.updateAsync(tenantId, { $pull: { members: userId } });
 
-		usersTenantsDenormalizer.afterTenantRemoveMember(userId, tenantId);
+		await usersTenantsDenormalizer.afterTenantRemoveMember(userId, tenantId);
 	},
 );
 
-export const addAdmin = ServerMethod('tenant.addAdmin', (userId: string, tenantId: string) => {
-	membershipMutationPreconditionCheck(userId, tenantId);
+export const addAdmin = ServerMethod(
+	'tenant.addAdmin',
+	async (userId: string, tenantId: string) => {
+		await membershipMutationPreconditionCheck(userId, tenantId);
 
-	Tenants.update(tenantId, { $addToSet: { admins: userId, members: userId } });
+		await Tenants.updateAsync(tenantId, { $addToSet: { admins: userId, members: userId } });
 
-	usersTenantsDenormalizer.afterTenantAddAdmin(userId, tenantId);
-});
+		await usersTenantsDenormalizer.afterTenantAddAdmin(userId, tenantId);
+	},
+);
 
 export const removeAdmin = ServerMethod(
 	'tenant.removeAdmin',
-	(userId: string, tenantId: string) => {
-		membershipMutationPreconditionCheck(userId, tenantId);
+	async (userId: string, tenantId: string) => {
+		await membershipMutationPreconditionCheck(userId, tenantId);
 
-		Tenants.update(tenantId, { $pull: { admins: userId } });
+		await Tenants.updateAsync(tenantId, { $pull: { admins: userId } });
 
-		usersTenantsDenormalizer.afterTenantRemoveAdmin(userId, tenantId);
+		await usersTenantsDenormalizer.afterTenantRemoveAdmin(userId, tenantId);
 	},
 );

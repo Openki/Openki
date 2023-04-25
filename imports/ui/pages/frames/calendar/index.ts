@@ -1,15 +1,15 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 import moment from 'moment';
 import { Spacebars } from 'meteor/spacebars';
+import { i18n } from '/imports/startup/both/i18next';
+import { Session } from 'meteor/session';
 
 import { EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
-import i18n from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import './template.html';
@@ -74,7 +74,11 @@ import './template.html';
 		instance.autorun(() => {
 			const limit = instance.limit.get();
 			const events = Events.find({}, { sort: { start: 1 }, limit }).fetch();
-			const groupedEvents = _.groupBy(events, (event) => moment(event.start).format('LL'));
+			const groupedEvents = _.groupBy(events, (event) =>
+				moment(event.start)
+					.locale(Session.get('timeLocale') || 'en')
+					.format('LL'),
+			);
 
 			instance.groupedEvents.set(groupedEvents);
 			instance.days.set(Object.keys(groupedEvents));

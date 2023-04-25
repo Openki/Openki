@@ -17,5 +17,3 @@ export function locationFormat(location: { coordinates: [number, number] }) {
 		LON: coordinateToString(location.coordinates[0]),
 	});
 }
-
-export default locationFormat;

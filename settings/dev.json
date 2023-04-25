@@ -9,6 +9,9 @@
 		"avatarLogo": { "src": "openki-logo-web-avatar-2020.svg", "alt": "User Avatar" },
 		"ogLogo": { "src": "openki_logo_2018.png" },
 		"emailLogo": "emails/openki.png",
+		"theme": {
+			"brand": "#9c3838"
+		},
 		"publicTenants": ["8410c099a7"],
 		"regionSelection": {
 			"minNumber": 5,
@@ -20,7 +23,16 @@
 				"google": true,
 				"facebook": true,
 				"github": true
-			}
+			},
+			"visitorUser": true
+		},
+		"nav":
+		{	
+			"brandLink":"/",
+			"home": true,
+			"proposeCourse": true,
+			"calendar": true,
+			"customEntries": [ ]
 		},
 		"footerLinks":
 		[	{ "link": "https://about.openki.net/"
@@ -32,8 +44,12 @@
 			, "title_key": "navigation.footer.faq.title"
 			}
 		,	{ "link": "https://gitlab.com/Openki/Openki/"
-			, "text": "GitLab"
+			, "key": "navigation.footer.sourceCode"
 			, "title_key": "navigation.footer.codeOnGitLab"
+			}
+		,	{ "link": "https://about.openki.net/privacy-policy/"
+			, "key": "main.privacyPolicy"
+			, "title_key": "main.privacyPolicy.tooltip"
 			}
 		],
 		"faqLink": "/info/faq",
@@ -54,6 +70,7 @@
 				, "de": "https://about.openki.net/ueber-uns/spenden/"
 				}
 			},
+		"courseDescriptionMax": 500,
 		"eventDescriptionMax": 500,
 		"categories": {"sports":
 			[

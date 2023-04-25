@@ -6,9 +6,7 @@
 // ** Component header
 //========================================================================================
 .course-page-component-header {
-	$background-color: $blue;
-
-	background: $background-color;
+	background: $blue;
 	color: $white;
 	padding: 15px;
 }
@@ -20,7 +18,7 @@
 
 // ** Course buttons
 //========================================================================================
-.course-delete-confirmation {
+.course-delete-confirm {
 	$background-color: tint-color($danger, 20%);
 
 	background-color: $background-color;
@@ -82,18 +80,6 @@
 	color: shade-color($background-color, 65%);
 	margin-bottom: 1px;
 	padding: 8px;
-}
-
-// ** Internal indicator dot
-//========================================================================================
-.details-internal {
-	background-color: #f00;
-	border-radius: 50%;
-	height: 5px;
-	left: 6px;
-	position: absolute;
-	top: 6px;
-	width: 5px;
 }
 
 // ** Title
@@ -195,6 +181,20 @@ $course-details-content-padding-horizontal: (
 .course-details-content::after,
 .course-details-content::before {
 	width: $course-details-content-padding-horizontal;
+}
+
+.course-description {
+	max-height: 280px; // ca 300px - 1 rem
+}
+
+.course-description-fade-wrap {
+	position: relative;
+}
+
+.course-description-fade-bottom {
+	@include gradient-y(transparent, #ebf4f8);
+	bottom: 0;
+	height: 60px;
 }
 
 // ** Description

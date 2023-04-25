@@ -90,7 +90,7 @@ import './styles.scss';
 
 			classes.push(stateFilter.cssClass);
 
-			if (parentInstance.filter.get('state') === stateFilter.name) {
+			if ((parentInstance.filter.get('state') || []).includes(stateFilter.name)) {
 				classes.push('active');
 			}
 
@@ -140,7 +140,7 @@ import './styles.scss';
 			const parentInstance = instance.parentInstance() as any;
 			const filterName = instance.$(event.currentTarget as any).data('filter-name');
 
-			parentInstance.filter.toggle('state', filterName).done();
+			parentInstance.filter.disable('state').toggle('state', filterName).done();
 
 			parentInstance.updateUrl();
 		},

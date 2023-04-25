@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { i18n } from '/imports/startup/both/i18next';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
@@ -5,12 +6,11 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { RegionModel } from '/imports/api/regions/regions';
-import { UserModel } from '/imports/api/users/users';
-
-import { locationFormat } from '/imports/utils/location-format';
 
 import '/imports/ui/components/map';
 import type { LocEntity, MarkerEntity } from '/imports/ui/components/map';
+import '/imports/ui/components/delete-confirm-dialog';
+import type { Props as DeleteConfirmDialogProps } from '/imports/ui/components/delete-confirm-dialog';
 
 import './template.html';
 import './styles.scss';
@@ -44,7 +44,7 @@ template.onCreated(function () {
 	const markers = new Mongo.Collection<MarkerEntity>(null); // Local collection for in-memory storage
 	instance.markers = markers;
 
-	this.setLocation = (loc) => {
+	instance.setLocation = (loc) => {
 		markers.remove({ main: true });
 		if (!loc) {
 			return;
@@ -67,21 +67,36 @@ template.onRendered(function () {
 
 template.helpers({
 	mayEdit() {
-		const { region } = Template.currentData();
+		const { region } = Template.instance().data;
 
-		return region.editableBy(Meteor.user() as UserModel);
+		return region.editableBy(Meteor.user());
 	},
+	deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
+		const instance = Template.instance();
+		return {
+			confirmText: i18n(
+				'region.reallydelete',
+				'Please confirm that you would like to delete this region with all courses, events and venues. This cannot be undone.',
+			),
+			confirmButton: i18n('region.detail.remove', 'Remove this region'),
+			busyButton: i18n('region.detail.remove.busy', 'Deleting region…'),
+			onCancel: async () => {
+				instance.state.set('verifyDelete', false);
+			},
+			onRemove: async () => {
+				const { region } = instance.data;
+				instance.busy('deleting');
+				try {
+					await instance.data.onDelete();
 
-	verifyDelete() {
-		return Template.instance().state.get('verifyDelete');
-	},
-
-	markers() {
-		return Template.instance().markers;
-	},
-
-	locationDisplay(loc: LocEntity) {
-		return locationFormat(loc);
+					Alert.success(i18n('region.removed', 'Removed region "{NAME}".', { NAME: region.name }));
+				} catch (err) {
+					Alert.serverError(err, i18n('region.deleting.error', 'Deleting the region went wrong'));
+				} finally {
+					instance.busy(false);
+				}
+			},
+		};
 	},
 });
 
@@ -93,23 +108,5 @@ template.events({
 
 	'click .js-region-delete'(_event, instance) {
 		instance.state.set('verifyDelete', true);
-	},
-
-	'click .js-region-delete-cancel'(_event, instance) {
-		instance.state.set('verifyDelete', false);
-	},
-
-	async 'click .js-region-delete-confirm'(_event, instance) {
-		const { region } = instance.data;
-		instance.busy('deleting');
-		try {
-			await instance.data.onDelete();
-
-			Alert.success(i18n('region.removed', 'Removed region "{NAME}".', { NAME: region.name }));
-		} catch (err) {
-			Alert.serverError(err, i18n('region.deleting.error', 'Deleting the region went wrong'));
-		} finally {
-			instance.busy(false);
-		}
 	},
 });

@@ -112,5 +112,3 @@ export class TenantsCollection extends Mongo.Collection<TenantEntity, TenantMode
 }
 
 export const Tenants = new TenantsCollection();
-
-export default Tenants;

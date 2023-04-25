@@ -3,6 +3,7 @@ import { Router } from 'meteor/iron:router';
 import $ from 'jquery';
 import { Meteor } from 'meteor/meteor';
 import { MeteorAsync } from '/imports/utils/promisify';
+import { Session } from 'meteor/session';
 
 import { Users } from '/imports/api/users/users';
 
@@ -39,8 +40,9 @@ if (Meteor.isClient) {
 			};
 			const contributionIconIsPresent = () => {
 				assert(
-					$('a[data-tooltip^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart')
-						.length > 0,
+					$(
+						'a[data-bs-toggle="tooltip"][data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart',
+					).length > 0,
 					'Icon is present',
 				);
 			};
@@ -76,8 +78,9 @@ if (Meteor.isClient) {
 			};
 			const contributionIconIsNotPresent = () => {
 				assert(
-					$('a[data-tooltip^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart')
-						.length === 0,
+					$(
+						'a[data-bs-toggle="tooltip"][data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart',
+					).length === 0,
 					'Icon is not present',
 				);
 			};

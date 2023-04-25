@@ -80,25 +80,26 @@
 				<div class="discussion-post-header">
 					{{> discussionProfileLink userId}}
 					<span class="discussion-post-header-sub">
-						<span data-tooltip="{{dateFormat time_created}}">
+						<span data-bs-toggle="tooltip"
+							  data-bs-title="{{dateFormat time_created attr=true}}">
 							{{fromNow time_created}}
 						</span>
 						{{#if notifyAll}}
-							<i class="fa-solid fa-bell" aria-hidden="true"
-							   data-tooltip="{{i18n 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
+							<i class="fa-solid fa-bell" aria-hidden="true" data-bs-toggle="tooltip"
+							   data-bs-title="{{i18n 'course.discussion.allNotified' 'All co-learners notifed' attr=true}}"></i>
 						{{/if}}
 						{{#if hasBeenEdited}}
 							-
 							{{i18n 'course.discussion.lastUpdate' 'Last update'}}:
-							<span data-tooltip="{{dateFormat time_updated}}">
+							<span data-bs-toggle="tooltip"
+								  data-bs-title="{{dateFormat time_updated attr=true}}">
 								{{fromNow time_updated}}
 							</span>
 						{{/if}}
 					</span>
 					<span class="discussion-buttons">
 						{{#if mayEdit}}
-							<button type="button" class="js-discussion-edit discussion-edit-btn"
-									data-tooltip="{{i18n '_button.edit'}}">
+							<button type="button" class="js-discussion-edit discussion-edit-btn">
 								<span class="fa-solid fa-pen-to-square" aria-hidden="true"></span>
 							</button>
 						{{/if}}
@@ -133,17 +134,20 @@
 					{{/if}}
 					{{#unless new}}
 						<span class="discussion-post-header-sub">
-							<span data-tooltip="{{dateFormat time_created}}">
+							<span data-bs-toggle="tooltip"
+								  data-bs-title="{{dateFormat time_created attr=true}}">
 								{{fromNow time_created}}
 							</span>
 							{{#if notifyAll}}
 								<i class="fa-solid fa-bell" aria-hidden="true"
-								   data-tooltip="{{i18n 'course.discussion.allNotified' 'All co-learners notifed'}}"></i>
+								   data-bs-toggle="tooltip"
+								   data-bs-title="{{i18n 'course.discussion.allNotified' 'All co-learners notifed' attr=true}}"></i>
 							{{/if}}
 							{{#if hasBeenEdited}}
 								-
 								{{i18n 'course.discussion.lastUpdate' 'Last update'}}:
-								<span data-tooltip="{{dateFormat time_updated}}">
+								<span data-bs-toggle="tooltip"
+									  data-bs-title="{{dateFormat time_updated attr=true}}">
 									{{fromNow time_updated}}
 								</span>
 							{{/if}}
@@ -205,7 +209,7 @@
 
 <template name="discussionProfileLink">
 	{{#if this}}
-		{{> profileLink}}
+		{{> profileLink userId=this}}
 		{{contribution this}}
 	{{else}}
 		<span class="username">
@@ -229,8 +233,7 @@
 <template name="removeCommentDropdown">
 	<span class="dropdown">
 		<button type="button" class="discussion-delete-btn" aria-expanded="false"
-				aria-haspopup="true" data-bs-toggle="dropdown"
-				data-tooltip="{{i18n '_button.delete'}}">
+				data-bs-toggle="dropdown">
 			<span class="fa-solid fa-xmark" aria-hidden="true"></span>
 		</button>
 		<ul class="dropdown-menu dialog-dropdown right">

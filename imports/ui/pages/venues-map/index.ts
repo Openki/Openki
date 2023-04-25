@@ -1,30 +1,29 @@
 import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { i18n } from '/imports/startup/both/i18next';
 
 import { Regions } from '/imports/api/regions/regions';
-import { Venues } from '/imports/api/venues/venues';
+import { VenueEntity, VenueModel } from '/imports/api/venues/venues';
 
-import i18n from '/imports/startup/both/i18next';
 import * as Metatags from '/imports/utils/metatags';
 
 import { LocationTracker, MarkerEntity } from '/imports/ui/lib/location-tracker';
-import { Filtering } from '/imports/utils/filtering';
-import { Predicate } from '/imports/utils/predicates';
 
 import '/imports/ui/components/map';
 
 import './template.html';
 import './styles.scss';
 
+export interface Data {
+	region: string | undefined;
+	venues: Mongo.Cursor<VenueEntity, VenueModel>;
+}
+
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'venuesMapPage',
-		Record<string, unknown>,
+		Data,
 		{
-			filter: Filtering<{
-				region: Predicate<string, string, string>;
-			}>;
 			locationTracker: LocationTracker;
 		}
 	>;
@@ -38,28 +37,20 @@ import './styles.scss';
 			Metatags.setCommonTags(i18n('venue.map.windowtitle', 'Venues map'));
 		});
 
-		instance.filter = Venues.Filtering();
-		instance.autorun(() => {
-			instance.filter.clear();
-			instance.filter.add('region', Session.get('region'));
-			instance.filter.read(Router.current().params.query);
-			instance.filter.done();
-		});
-
 		instance.locationTracker = new LocationTracker();
 
 		instance.autorun(() => {
-			const regionId = Session.get('region');
-			instance.locationTracker.setRegion(regionId);
-		});
+			const { region, venues } = Template.currentData();
 
-		instance.autorun(() => {
-			const query = instance.filter.toQuery();
-			instance.subscribe('Venues.findFilter', query);
+			instance.locationTracker.clearRegion();
+			if (region) {
+				instance.locationTracker.setRegion(region);
+			}
 
 			// Here we assume venues are not changed or removed.
 			instance.locationTracker.markers.remove({});
-			Venues.findFilter(query).observe({
+
+			venues.observe({
 				added(originalLocation) {
 					const location = {
 						...originalLocation,
@@ -88,8 +79,8 @@ import './styles.scss';
 		},
 
 		regionName() {
-			const regionId = Template.instance().filter.get('region');
-			return Regions.findOne(regionId)?.name || false;
+			const { region } = Template.instance().data;
+			return Regions.findOne(region)?.name || false;
 		},
 
 		handles() {

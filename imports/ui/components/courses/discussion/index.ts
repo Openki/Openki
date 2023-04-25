@@ -1,4 +1,3 @@
-import { Tooltips } from 'meteor/lookback:tooltips';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -13,10 +12,13 @@ import {
 import * as CourseDiscussionsMethods from '/imports/api/course-discussions/methods';
 import { EditCommentFields, PostCommentFields } from '/imports/api/course-discussions/methods';
 import * as Alert from '/imports/api/alerts/alert';
+
 import * as CourseDiscussionUtils from '/imports/utils/course-discussion-utils';
-import RouterAutoscroll from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import * as Tooltips from '/imports/utils/Tooltips';
 import { TrackerAsync } from '/imports/utils/promisify';
+
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/richtext';
@@ -57,7 +59,7 @@ import './styles.scss';
 				// Jump to the selected comment.
 				// This method should work for screenreaders too.
 				window.location.hash = `#comment${select}`;
-				RouterAutoscroll.scheduleScroll();
+				routerAutoscroll.scheduleScroll();
 			}
 		});
 
@@ -248,7 +250,7 @@ import './styles.scss';
 
 		mayEdit() {
 			const post = Template.instance().data;
-			return CourseDiscussionUtils.mayEditPost(Meteor.user(), post);
+			return CourseDiscussionUtils.mayEditPost(Meteor.user() ?? undefined, post);
 		},
 
 		mayDelete() {
@@ -257,7 +259,7 @@ import './styles.scss';
 			if (!course) {
 				throw new Error('Unexpected falsy: course');
 			}
-			return CourseDiscussionUtils.mayDeletePost(Meteor.user(), course, post);
+			return CourseDiscussionUtils.mayDeletePost(Meteor.user() ?? undefined, course, post);
 		},
 
 		hasBeenEdited() {
@@ -271,7 +273,7 @@ import './styles.scss';
 			instance.$('.js-discussion-edit').trigger('click');
 			(instance.parentInstance(2) as any).notifyAll.set(true);
 			window.location.hash = '#discussion';
-			RouterAutoscroll.scheduleScroll();
+			routerAutoscroll.scheduleScroll();
 		},
 
 		'click .js-discussion-edit'(event, instance) {
@@ -297,6 +299,7 @@ import './styles.scss';
 		instance.anon = new ReactiveVar(!instance.data.userId);
 		instance.validComment = new ReactiveVar(!!instance.data.text.trim());
 	});
+
 	template.onRendered(function () {
 		const instance = this;
 		instance.$('.discussion-edit-title').trigger('select');
@@ -325,7 +328,7 @@ import './styles.scss';
 		},
 
 		anonDisabled() {
-			if (Meteor.user()) {
+			if (Meteor.userId()) {
 				return {};
 			}
 			return { disabled: 1 };

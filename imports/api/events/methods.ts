@@ -11,22 +11,23 @@ import { Subscribe, processChange } from '/imports/api/courses/subscription';
 import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as courseTimeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 import * as courseImageDenormalizer from '/imports/api/events/courseImageDenormalizer';
+import * as categoriesDenormalizer from '/imports/api/events/categoriesDenormalizer';
 import { EventEntity, EventModel, Events, OEvent } from '/imports/api/events/events';
 import { Groups } from '/imports/api/groups/groups';
 import { Regions } from '/imports/api/regions/regions';
 import { VenueModel, Venues } from '/imports/api/venues/venues';
 
 import { Notification } from '/imports/notification/notification';
-
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
 import * as AsyncTools from '/imports/utils/async-tools';
 import * as HtmlTools from '/imports/utils/html-tools';
-import LocalTime from '/imports/utils/local-time';
+import { LocalTime } from '/imports/utils/local-time';
 import * as StringTools from '/imports/utils/string-tools';
 import * as UpdateMethods from '/imports/utils/update-methods';
 import { ServerMethod } from '/imports/utils/ServerMethod';
 import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
 import { GroupPromoters } from '/imports/utils/update-methods';
+import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 
 /**
  * @param updateOptions What should be updated
@@ -309,7 +310,10 @@ export const save = ServerMethod(
 		if (isNew) {
 			editFields.createdBy = user._id;
 			editFields.groupOrganizers = [];
-			const enrichedEvent = courseImageDenormalizer.beforeInsert(editFields as EventEntity);
+			let enrichedEvent = courseImageDenormalizer.beforeInsert(editFields as EventEntity);
+			if (editFields.courseId) {
+				enrichedEvent = categoriesDenormalizer.beforeInsert(editFields as EventEntity);
+			}
 			// eslint-disable-next-line no-param-reassign
 			eventId = Events.insert(enrichedEvent);
 
@@ -321,7 +325,6 @@ export const save = ServerMethod(
 					slug: editFields.slug as string,
 					startLocal: editFields.startLocal as string,
 				});
-				Meteor.call('event.updateCategories', { _id: eventId });
 			}
 		} else {
 			Events.update(eventId, { $set: editFields });
@@ -376,7 +379,6 @@ export const save = ServerMethod(
 		if (Meteor.isServer) {
 			Meteor.call('event.updateVenue', eventId, AsyncTools.logErrors);
 			Meteor.call('event.updateGroups', eventId, AsyncTools.logErrors);
-			Meteor.call('event.updateCategories', eventId, AsyncTools.logErrors);
 			Meteor.call('region.updateCounters', event.region, AsyncTools.logErrors);
 
 			// the assumption is that all replicas have the same course if any
@@ -407,6 +409,9 @@ export const remove = ServerMethod('event.remove', (eventId: string) => {
 	}
 
 	Events.remove(eventId);
+
+	// unlink child replicas
+	Events.update({ replicaOf: event._id }, { $unset: { replicaOf: true } }, { multi: true });
 
 	if (event.courseId) {
 		courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
@@ -455,7 +460,7 @@ export const addParticipant = ServerMethod(
 	/**
 	 * @param eventId The event to register for
 	 */
-	(eventId: string) => {
+	async (eventId: string) => {
 		check(eventId, String);
 
 		const user = Meteor.user();
@@ -476,8 +481,10 @@ export const addParticipant = ServerMethod(
 
 		Events.update({ _id: eventId }, { $addToSet: { participants: user._id } });
 
-		// Send notifications
+		// Send notifications to user
 		Notification.Rsvp.record(eventId, user._id);
+		// Send notification to team
+		Notification['Rsvp.Team'].record(eventId, user._id);
 
 		// if you cant load course its probably because the event doesnt have one
 		const course = Courses.findOne(event.courseId);
@@ -485,10 +492,10 @@ export const addParticipant = ServerMethod(
 			return;
 		}
 
-		const change = new Subscribe(course, user, 'participant');
+		const change = new Subscribe(course, user, 'participant', 'rsvp');
 
 		if (change.validFor(user)) {
-			processChange(change);
+			await processChange(change);
 		}
 	},
 );
@@ -514,6 +521,45 @@ export const removeParticipant = ServerMethod('event.removeParticipant', (eventI
 	Events.update({ _id: eventId }, { $pull: { participants: userId } });
 });
 
+export const ContactParticipantsOptionsPattern = {
+	revealAddress: Boolean,
+	sendCopy: Boolean,
+};
+export type ContactParticipantsOptions = Type<typeof ContactParticipantsOptionsPattern>;
+
+export const contactParticipants = ServerMethod(
+	'event.contactParticipants',
+	(eventId: string, message: string, options: ContactParticipantsOptions) => {
+		check(eventId, String);
+		check(message, String);
+		check(options, ContactParticipantsOptionsPattern);
+
+		const operator = Meteor.user();
+		if (!operator) {
+			throw new Meteor.Error(401, 'please log in');
+		}
+		const event = Events.findOne(eventId);
+		if (!event) {
+			throw new Meteor.Error(404, 'event not found');
+		}
+		if (
+			!event.editableBy(operator) &&
+			!operator.groups.some((g) => event.groupOrganizers.includes(g)) &&
+			!UserPrivilegeUtils.privileged(operator, 'admin')
+		) {
+			throw new Meteor.Error(401, 'not permitted');
+		}
+
+		Notification['Event.ContactParticipants'].record(
+			operator._id,
+			message,
+			eventId,
+			options.revealAddress,
+			options.sendCopy,
+		);
+	},
+);
+
 Meteor.methods({
 	/**
 	 * Update the venue field for all events matching the selector
@@ -534,7 +580,7 @@ Meteor.methods({
 
 				if (!_.isObject(event.venue)) {
 					// This happens only at creation when the field was not initialized correctly
-					Events.update(event._id, { $set: { venue: {} } });
+					Events.update(event._id, { $set: { venue: { name: '' } } });
 					resolve(false);
 					return;
 				}
@@ -588,16 +634,6 @@ Meteor.methods({
 		const idOnly = { fields: { _id: 1 } };
 		Events.find(selector, idOnly).forEach((event) => {
 			Events.updateGroups(event._id);
-		});
-	},
-
-	/**
-	 * Enrich the categories from the course
-	 */
-	'event.updateCategories'(selector) {
-		const idOnly = { fields: { _id: 1 } };
-		Events.find(selector, idOnly).forEach((event) => {
-			Events.updateCategories(event._id);
 		});
 	},
 });

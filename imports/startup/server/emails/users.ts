@@ -3,10 +3,12 @@ import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { Accounts } from 'meteor/accounts-base';
 import juice from 'juice';
+import { Spacebars } from 'meteor/spacebars';
 
-import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { UserModel } from '/imports/api/users/users';
+import { toEmailLogo } from '/imports/utils/toEmailLogo';
 
 if (PrivateSettings.siteEmail) {
 	Accounts.emailTemplates.from = PrivateSettings.siteEmail;
@@ -22,13 +24,16 @@ Meteor.startup(() => {
 Accounts.emailTemplates.verifyEmail.subject = function (user) {
 	return i18n('verifyEmail.subject', '[{SITE}] Welcome to the {SITE} community, {NAME}', {
 		SITE: Accounts.emailTemplates.siteName,
-		NAME: user.username,
+		NAME: (user as UserModel).getDisplayName(),
 		lng: user.locale,
 	});
 };
 
 Accounts.emailTemplates.verifyEmail.text = function (user, url) {
-	return `${i18n('verifyEmail.email.gretting', { NAME: user.username, lng: user.locale })}
+	return `${i18n('email.base.greeting', {
+		USERNAME: (user as UserModel).getDisplayName(),
+		lng: user.locale,
+	})}
 	
 ${i18n('verifyEmail.email.introduction', {
 	SITE: Accounts.emailTemplates.siteName,
@@ -40,15 +45,15 @@ ${i18n('verifyEmail.email.verification', {
 })}
 ${url}
 
-${i18n('verifyEmail.email.farewell', {
+${i18n('email.base.farewell', {
 	lng: user.locale,
 })}
-${i18n('verifyEmail.email.postscript', {
+${i18n('email.base.postscript', {
 	SITE: Accounts.emailTemplates.siteName,
 	lng: user.locale,
 })}
 
-${i18n('verifyEmail.email.unexpected', {
+${i18n('email.base.unexpected', {
 	REPORTEMAIL: PrivateSettings.reporter.recipient,
 	lng: user.locale,
 })}`;
@@ -61,13 +66,16 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 			subject: Accounts.emailTemplates.verifyEmail.subject?.(user),
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
+				brand: PublicSettings.theme.brand,
 				url: Meteor.absoluteUrl(),
-				logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
+				logo: toEmailLogo(emailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
-			username: user.username,
+			username: (user as UserModel).getDisplayName(),
 			url,
-			reportEmail: PrivateSettings.reporter.recipient,
+			reportEmail: Spacebars.SafeString(
+				`<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
+			),
 			locale: user.locale,
 		}),
 	);
@@ -85,7 +93,10 @@ Accounts.urls.resetPassword = function (token) {
 };
 
 Accounts.emailTemplates.resetPassword.text = function (user, url) {
-	return `${i18n('resetPassword.email.gretting', { NAME: user.username, lng: user.locale })}
+	return `${i18n('email.base.greeting', {
+		USERNAME: (user as UserModel).getDisplayName(),
+		lng: user.locale,
+	})}
 				
 ${i18n('resetPassword.email.introduction', {
 	SITE: Accounts.emailTemplates.siteName,
@@ -97,15 +108,15 @@ ${i18n('resetPassword.email.verification', {
 })}
 ${url}
 
-${i18n('resetPassword.email.farewell', {
+${i18n('email.base.farewell', {
 	lng: user.locale,
 })}
-${i18n('resetPassword.email.postscript', {
+${i18n('email.base.postscript', {
 	SITE: Accounts.emailTemplates.siteName,
 	lng: user.locale,
 })}
 
-${i18n('resetPassword.email.unexpected', {
+${i18n('email.base.unexpected', {
 	REPORTEMAIL: PrivateSettings.reporter.recipient,
 	lng: user.locale,
 })}`;
@@ -118,13 +129,16 @@ Accounts.emailTemplates.resetPassword.html = function (user, url) {
 			subject: Accounts.emailTemplates.resetPassword.subject?.(user),
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
+				brand: PublicSettings.theme.brand,
 				url: Meteor.absoluteUrl(),
-				logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
+				logo: toEmailLogo(emailLogo),
 				name: Accounts.emailTemplates.siteName,
 			},
-			username: user.username,
+			username: (user as UserModel).getDisplayName(),
 			url,
-			reportEmail: PrivateSettings.reporter.recipient,
+			reportEmail: Spacebars.SafeString(
+				`<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
+			),
 			locale: user.locale,
 		}),
 	);

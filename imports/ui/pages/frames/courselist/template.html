@@ -10,14 +10,16 @@
 
 	{{#each course in courses}}
 		{{> frameCourselistCourse course=course hideInterested=hideInterested}}
+	{{else}}
+		{{i18n 'frame.courselist.empty' 'There is nothing here yet'}}
 	{{/each}}
 	{{#unless Template.subscriptionsReady}}
 		{{> loadingRow}}
 	{{/unless}}
 	{{#if moreCourses}}
-		<div class="show-more">
+		<div class="mt-2 text-center">
 			<button class="js-show-more-courses btn btn-secondary" type="button">
-				{{i18n 'frame.courselist.showMore' 'Show more courses'}}
+				{{i18n '_button.more'}}
 			</button>
 		</div>
 	{{/if}}
@@ -44,18 +46,19 @@
 			{{/if}}
 		</h4>
 		{{#if expanded}}
-			<div class="frame-list-item-body">
-				<div class="frame-list-item-property frame-list-item-description">
-					<div class="frame-list-item-label">
-						{{i18n 'frame.eventsList.description'}}
+			<div class="p-2">
+				<div class="row">
+					<div class="col-sm-2">
+						<strong>{{i18n 'frame.eventsList.description'}}</strong>
 					</div>
-					<div class="frame-list-item-content">
+					<div class="col-sm-10">
 						{{{course.description}}}
 					</div>
 				</div>
-				<div class="frame-list-item-links">
-					<a class="btn" href="{{pathFor 'showCourse' data=course}}" target="_blank">
-						{{i18n 'frame.courseList.moreAboutThisCourse' 'More about this course on {SITENAME}' SITENAME=siteName}}
+				<div class="mt-2 d-grid d-sm-flex">
+					<a class="btn btn-outline-dark" href="{{pathFor 'showCourse' data=course}}"
+					   target="_blank">
+						{{i18n 'frame.courseList.moreAboutThisCourse' 'More on {SITENAME}' SITENAME=siteName}}
 					</a>
 				</div>
 			</div>

@@ -23,7 +23,15 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 		console.log(result);
 	};
 
-	const ifCollectionEmpty = <T, U>(collection: Mongo.Collection<T, U>, methods: string[]) => {
+	const ifCollectionEmpty = <
+		T extends {
+			[key: string]: any;
+		},
+		U,
+	>(
+		collection: Mongo.Collection<T, U>,
+		methods: string[],
+	) => {
 		if (collection.find().count() === 0) {
 			methods.forEach((method) => {
 				Meteor.call(method, logResult);

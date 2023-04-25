@@ -72,11 +72,13 @@ const FaCompIcon = function (opClass: string, icClass: string) {
 	};
 };
 
-const OpenkiControl: new (options: {
+const IconControl: new (options: {
 	icon: () => HTMLElement;
-	class: string;
+	class?: string;
 	title: string;
 	position?: string;
+	onClick?: () => void;
+	onMouseDown?: () => void;
 }) => L.Control = L.Control.extend({
 	options: {
 		icon: null,
@@ -90,9 +92,17 @@ const OpenkiControl: new (options: {
 	},
 
 	onAdd() {
-		const elem = this.options.icon();
-		L.DomUtil.addClass(elem, this.options.class);
+		const elem = this.options.icon() as HTMLElement;
+		if (this.options.class) {
+			L.DomUtil.addClass(elem, this.options.class);
+		}
 		elem.setAttribute('title', this.options.title);
+		if (this.options.onClick) {
+			elem.addEventListener('click', this.options.onClick);
+		}
+		if (this.options.onMouseDown) {
+			elem.addEventListener('mousedown', this.options.onMouseDown);
+		}
 		return elem;
 	},
 });
@@ -164,27 +174,40 @@ template.onRendered(function () {
 	const scaleControl = L.control.scale({
 		imperial: Session.equals('locale', 'en'),
 	});
-	const fullscreenControl = new OpenkiControl({
+	const fullscreenControl = new IconControl({
 		icon: FaIcon('fa-solid fa-maximize'),
-		class: 'js-make-fullscreen',
 		title: i18n('map.fullscreen', 'big map'),
+		onClick: () => {
+			instance.fullscreen.set(true);
+		},
 	});
-	const closeFullscreenControl = new OpenkiControl({
+	const closeFullscreenControl = new IconControl({
 		icon: FaIcon('fa-solid fa-xmark'),
-		class: 'js-close-fullscreen fa-2x',
+		class: 'fa-2x',
 		title: i18n('map.fullscreenClose', 'close'),
+		onClick: () => {
+			instance.fullscreen.set(false);
+		},
 	});
-	const addMarkerControl = new OpenkiControl({
+	const addMarkerControl = new IconControl({
 		icon: FaCompIcon('fa-solid fa-plus', 'fa-solid fa-location-dot'),
-		class: 'js-add-marker comp-icon',
+		class: 'comp-icon',
 		title: i18n('map.addMarker', 'Set marker'),
 		position: 'bottomright',
+		onMouseDown: () => {
+			// eslint-disable-next-line no-param-reassign
+			instance.cancelNextFitBounds = true;
+			instance.proposeMarker();
+		},
 	});
-	const removeMarkerControl = new OpenkiControl({
+	const removeMarkerControl = new IconControl({
 		icon: FaCompIcon('fa-solid fa-minus', 'fa-solid fa-location-dot'),
-		class: 'js-remove-marker comp-icon',
+		class: 'comp-icon',
 		title: i18n('map.removeMarker', 'Remove marker'),
 		position: 'bottomright',
+		onClick: () => {
+			instance.removeMarker();
+		},
 	});
 
 	instance.autorun(() => {
@@ -403,24 +426,6 @@ template.helpers({
 });
 
 template.events({
-	'mousedown .js-add-marker'(_event, instance) {
-		// eslint-disable-next-line no-param-reassign
-		instance.cancelNextFitBounds = true;
-		instance.proposeMarker();
-	},
-
-	'click .js-remove-marker'(_event, instance) {
-		instance.removeMarker();
-	},
-
-	'click .js-make-fullscreen'(_event, instance) {
-		instance.fullscreen.set(true);
-	},
-
-	'click .js-close-fullscreen'(_event, instance) {
-		instance.fullscreen.set(false);
-	},
-
 	keyup(event, instance) {
 		// Press escape to close fullscreen
 		if ((event as any).keyCode === 27) {

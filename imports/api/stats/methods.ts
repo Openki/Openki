@@ -14,5 +14,3 @@ export const region = ServerMethod('stats.region', (regionId: string) => {
 	}
 	return {} as Stats;
 });
-
-export default region;
