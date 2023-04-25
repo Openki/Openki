@@ -10,13 +10,10 @@ import { EventModel } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { Regions } from '/imports/api/regions/regions';
 
-import { LocationTracker } from '/imports/ui/lib/location-tracker';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
-
-import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
-
 import * as Analytics from '/imports/ui/lib/analytics';
 
+import '/imports/ui/components/courses/files';
 import '/imports/ui/components/buttons';
 import '/imports/ui/components/courses/categories';
 import '/imports/ui/components/events/display/course-header';
@@ -24,6 +21,7 @@ import '/imports/ui/components/events/display/header';
 import '/imports/ui/components/events/edit';
 import '/imports/ui/components/events/participants';
 import '/imports/ui/components/events/replication';
+import '/imports/ui/components/events/display/content';
 import '/imports/ui/components/events/display/group-list';
 import '/imports/ui/components/groups/tag';
 import '/imports/ui/components/price-policy';
@@ -36,14 +34,13 @@ import '/imports/ui/components/delete-confirm-dialog';
 import type { Props as DeleteConfirmDialogProps } from '/imports/ui/components/delete-confirm-dialog';
 
 import './template.html';
-import './styles.scss';
 
 {
 	const Template = TemplateMixins.Expandible(
 		TemplateAny as TemplateStaticTyped<
 			'eventDisplay',
 			EventModel,
-			{ locationTracker: LocationTracker; replicating: ReactiveVar<boolean> }
+			{ replicating: ReactiveVar<boolean> }
 		>,
 		'eventDisplay',
 	);
@@ -52,54 +49,18 @@ import './styles.scss';
 
 	template.onCreated(function () {
 		const instance = this;
-		instance.locationTracker = new LocationTracker();
 		instance.replicating = new ReactiveVar(false);
-	});
-
-	template.onRendered(function () {
-		const instance = this;
-		instance.locationTracker.setRegion(instance.data.region);
-		instance.locationTracker.setLocation(instance.data.venue);
 	});
 
 	template.helpers({
 		mayEdit() {
 			return this.editableBy(Meteor.user());
 		},
-		eventMarkers() {
-			return Template.instance().locationTracker.markers;
-		},
-		hasVenue(this: EventModel) {
-			return this.venue?.loc;
-		},
 		replicating() {
 			return Template.instance().replicating.get();
 		},
 		singleEvent() {
 			return Courses.findOne(this.courseId)?.singleEvent;
-		},
-		customFields() {
-			if (!this.courseId) {
-				return [];
-			}
-			const course = Courses.findOne(this.courseId);
-
-			if (!course) {
-				return [];
-			}
-
-			const user = Meteor.user();
-
-			const isEditor = user && course.editableBy(user);
-
-			return (
-				course.customFields
-					?.filter((i) => i.visibleFor === 'all' || (i.visibleFor === 'editors' && isEditor))
-					.map((i) => ({
-						displayText: getLocalizedValue(i.displayText),
-						value: i.value,
-					})) || []
-			);
 		},
 		deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
 			const instance = Template.instance();

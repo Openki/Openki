@@ -88,6 +88,9 @@ i18next
 				},
 			],
 		},
+		react: {
+			useSuspense: false,
+		},
 	});
 
 if (Meteor.isServer) {

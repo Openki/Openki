@@ -47,7 +47,9 @@ import './styles.scss';
 			if (event) {
 				title = i18n('event.windowtitle', '{DATE} — {EVENT}', {
 					EVENT: event.title,
-					DATE: moment(event.start).calendar(),
+					DATE: moment(event.start)
+						.locale(Session.get('timeLocale') || 'en')
+						.calendar(),
 				});
 				description = i18n('event.metatag.description', '{VENUE} in {REGION}', {
 					REGION: Regions.findOne(event.region)?.name,
@@ -116,6 +118,15 @@ import './styles.scss';
 				return Courses.findOne(this.courseId);
 			}
 			return false;
+		},
+
+		mayEdit() {
+			const event = Template.instance().data;
+			const user = Meteor.user();
+			if (!user) {
+				return false;
+			}
+			return event.editableBy(user);
 		},
 
 		editing() {

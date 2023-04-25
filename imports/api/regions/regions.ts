@@ -102,8 +102,8 @@ export class Region {
 }
 
 export const FindFilterPattern = {
-	/** restrict to regions in that tenant */
-	tenant: Match.Maybe(String),
+	/** restrict to given tenants */
+	tenants: Match.Maybe([String]),
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
@@ -164,8 +164,8 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
 			options.skip = skip;
 		}
 
-		if (filter.tenant) {
-			selector.tenant = filter.tenant;
+		if (filter.tenants && filter.tenants.length > 0) {
+			selector.tenant = { $in: filter.tenants };
 		}
 
 		return this.find(selector, options) as Mongo.Cursor<RegionEntity, RegionModel>;

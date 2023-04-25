@@ -126,7 +126,9 @@ import './styles.scss';
 	template.helpers({
 		dateToRelativeString(date: moment.MomentInput) {
 			if (date) {
-				const relative = moment().to(date);
+				const relative = moment()
+					.locale(Session.get('timeLocale') || 'en')
+					.to(date);
 				return relative.charAt(0).toUpperCase() + relative.slice(1);
 			}
 			return false;

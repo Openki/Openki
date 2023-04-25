@@ -19,7 +19,6 @@
 
 .frame-list-item-header {
 	font-size: 1.1em;
-	font-weight: bold;
 	margin: 0;
 	padding: 7px;
 	transition: background-color $default-transition-time;
@@ -47,7 +46,6 @@
 
 .frame-list-item-time {
 	@include td-margin(right, 10px);
-	font-weight: normal;
 }
 
 .frame-list-item-region {
@@ -58,8 +56,6 @@
 .frame-list-free-seats {
 	@include td-float(right);
 	display: inline-block;
-	font-family: var(--bs-body-font-family);
-	font-weight: normal;
 	margin-right: 15px;
 	position: relative;
 	text-align: right;

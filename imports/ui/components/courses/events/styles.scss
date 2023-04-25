@@ -8,6 +8,12 @@
 	position: relative;
 }
 
+@media only screen and (max-width: 767px) {
+	.course-events {
+	  height: 350px;
+	}
+  }
+  
 .container .course-event-list .event-compact-wrap {
 	@include make-col(6);
 	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
