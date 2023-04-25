@@ -180,6 +180,8 @@ Router.route('frameCalendar', {
 			['linkcolor', 'color', '.frame-list-item a'],
 			['regionbg', 'background-color', '.frame-list-item-region'],
 			['regioncolor', 'color', '.frame-list-item-region'],
+			['datefontsize', 'font-size', '.frame-list-title'],
+			['timefontsize', 'font-size', '.frame-list-item-time'],
 		]).getCssRules();
 		return { cssRules };
 	},
