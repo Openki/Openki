@@ -43,10 +43,19 @@ export function EventCourseHeader(props: Props) {
 			}
 		>
 			{props.backlink ? (
-				<a href={props.backlink}>
-					<i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
-					{t('event.details.viewCourse', 'To the course overview')}
-				</a>
+				<>
+					<a
+						className="back-to-course-overview"
+						href={props.backlink}
+						title={t('event.details.viewCourse')}
+					>
+						<i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+					</a>
+					<a href={props.backlink}>
+						<i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+						{t('event.details.viewCourse', 'To the course overview')}
+					</a>
+				</>
 			) : null}
 			<h2>{props.title}</h2>
 			<CourseCategories categories={props.categories} />
