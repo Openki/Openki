@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import bootstrap from 'bootstrap';
+import Modal from 'bootstrap/js/dist/modal';
 import { Template } from 'meteor/templating';
 
 import * as emailMethods from '/imports/api/emails/methods';
@@ -29,7 +29,7 @@ export function ParticipantContact(data: {
 			return;
 		}
 		const element = modalRef.current as unknown as Element;
-		bootstrap.Modal.getOrCreateInstance(element).show();
+		Modal.getOrCreateInstance(element).show();
 		element.addEventListener('hidden.bs.modal', () => {
 			setShowModal(false);
 		});
@@ -60,7 +60,7 @@ export function ParticipantContact(data: {
 				}
 				await emailMethods.sendPrivateMessage(data.participant, message, sendPrivateMessageOptions);
 				const element = modalRef.current as unknown as Element;
-				bootstrap.Modal.getOrCreateInstance(element).hide();
+				Modal.getOrCreateInstance(element).hide();
 			},
 		};
 	}
