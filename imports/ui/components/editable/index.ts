@@ -161,7 +161,6 @@ function EditableMixing<
 				// list of supported html tags / formatting. Should be same as in the saneHtml(...) function
 				buttons: ['h4', 'bold', 'italic', 'underline', 'anchor', 'unorderedlist', 'orderedlist'],
 			},
-			disableExtraSpaces: true,
 			disableDoubleReturn: true,
 			placeholder: {
 				hideOnClick: false,
