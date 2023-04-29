@@ -39,6 +39,7 @@ function sendInvitation(invitation: InvitationEntity) {
 	let message = SSR.render('invitationEmail', {
 		subject,
 		site: {
+			brand: PublicSettings.theme.brand,
 			url: Meteor.absoluteUrl(),
 			logo: toEmailLogo(emailLogo),
 			name: siteName,

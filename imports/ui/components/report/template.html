@@ -4,16 +4,19 @@
 	{{/if}}
 	{{#if reporting}}
 		<div class="report p-3">
-			<form>
-				<div class="mb-3 {{errorClass 'reportMessage'}}">
+			<form class="js-report-send needs-validation" novalidate>
+				<div class="mb-3">
 					<label class="form-label"
 						   for="reportMessage">{{i18n 'report.text' 'Please tell us what is wrong.'}}</label>
 					<textarea class="js-report-message form-control" id="reportMessage" rows="3"
-							  placeholder="{{i18n 'report.placeholder' 'My hovercraft is full of eels.' attr=true}}"></textarea>
-					{{errorMessage 'reportMessage'}}
+							  placeholder="{{i18n 'report.placeholder' 'My hovercraft is full of eels.' attr=true}}"
+							  required minlength="5"></textarea>
+					<div class="invalid-feedback">
+						{{i18n 'report.warning.tooShort' 'The report message is too short! Please write more than 5 characters.'}}
+					</div>
 				</div>
 				<div class="d-flex gap-2 justify-content-end">
-					<button type="button" class='btn btn-save js-report-send'>
+					<button type="submit" class='btn btn-save'>
 						<span class="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
 						{{i18n 'report.report' 'Send report'}}
 					</button>

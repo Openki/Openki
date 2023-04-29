@@ -6,29 +6,17 @@ import * as Alert from '/imports/api/alerts/alert';
 import * as emailMethods from '/imports/api/emails/methods';
 
 import '/imports/ui/components/buttons';
-import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 
 import './template.html';
 import './styles.scss';
 
-const TemplateBase = TemplateAny as TemplateStaticTyped<
+const Template = TemplateAny as TemplateStaticTyped<
 	'report',
 	Record<string, unknown>,
 	{
 		state: ReactiveVar<string>;
 	}
 >;
-
-const Template = TemplateMixins.FormfieldErrors(TemplateBase, 'report', {
-	reportMessage: {
-		text: () =>
-			i18n(
-				'report.warning.tooShort',
-				'The report message is too short! Please write more than 5 characters.',
-			),
-		field: 'reportMessage',
-	},
-});
 
 const template = Template.report;
 
@@ -56,18 +44,10 @@ template.events({
 		instance.state.set('');
 	},
 
-	async 'click .js-report-send'(event, instance) {
+	async 'submit .js-report-send'(event, instance) {
 		event.preventDefault();
-		instance.errors.reset();
 
 		const message = instance.$('.js-report-message').val() as string;
-		if (!message || message.length <= 5) {
-			instance.errors.add('reportMessage');
-		}
-
-		if (instance.errors.present()) {
-			return;
-		}
 
 		instance.state.set('sending');
 		try {

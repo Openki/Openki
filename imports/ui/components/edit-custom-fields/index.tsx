@@ -1,0 +1,51 @@
+import { Template } from 'meteor/templating';
+import React from 'react';
+
+import { CourseCustomField } from '/imports/api/courses/courses';
+import { GroupEntityCustomCourseFields } from '/imports/api/groups/groups';
+
+import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
+
+export type Props = {
+	fields: GroupEntityCustomCourseFields[];
+	values: CourseCustomField[] | undefined;
+};
+
+export function EditCustomFields(props: Props) {
+	function value(name: string) {
+		return props.values?.filter((a) => a.name === name)[0]?.value;
+	}
+
+	return props.fields.map((field) => {
+		return (
+			<div key={field.name} className="mb-3">
+				<label className="form-label" htmlFor={`course-custom-field-${field.name}`}>
+					{getLocalizedValue(field.editText)}
+				</label>
+				{!field.type || field.type === 'singleLine' ? (
+					<input
+						type="text"
+						className={`form-control js-custom-field-${field.name}`}
+						id={`course-custom-field-${field.name}`}
+						placeholder={getLocalizedValue(field.editPlaceholder)}
+						defaultValue={value(field.name)}
+					/>
+				) : (
+					<textarea
+						className={`form-control js-custom-field-${field.name}`}
+						id={`course-custom-field-${field.name}`}
+						placeholder={getLocalizedValue(field.editPlaceholder)}
+						rows={3}
+						defaultValue={value(field.name)}
+					></textarea>
+				)}
+			</div>
+		);
+	});
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper('EditCustomFields', () => EditCustomFields);

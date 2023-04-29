@@ -66,6 +66,7 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
 			subject: Accounts.emailTemplates.verifyEmail.subject?.(user),
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
+				brand: PublicSettings.theme.brand,
 				url: Meteor.absoluteUrl(),
 				logo: toEmailLogo(emailLogo),
 				name: Accounts.emailTemplates.siteName,
@@ -128,6 +129,7 @@ Accounts.emailTemplates.resetPassword.html = function (user, url) {
 			subject: Accounts.emailTemplates.resetPassword.subject?.(user),
 			siteName: Accounts.emailTemplates.siteName,
 			site: {
+				brand: PublicSettings.theme.brand,
 				url: Meteor.absoluteUrl(),
 				logo: toEmailLogo(emailLogo),
 				name: Accounts.emailTemplates.siteName,
