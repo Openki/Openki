@@ -439,7 +439,7 @@
 	"profile.passwordChangedSuccess": "Du har endret passordet ditt.",
 	"profile.passwordShort": "Ditt ønskede passord er for kort.",
 	"profile.preferenceslink": "Kontoinnstillinger",
-	"profile.sendVerificationMailFailed": "Kunne ikke sende e-postbekreftelse",
+	"profile.sentVerificationMail.error": "Kunne ikke sende e-postbekreftelse",
 	"profile.sendingVerificationMail": "Du vil få en e-postbekreftelse du kan klikke snart.",
 	"profile.settings.windowtitle": "Mine profilinnstillinger - {USER}",
 	"profile.tenants": "Mine organisasjoner",

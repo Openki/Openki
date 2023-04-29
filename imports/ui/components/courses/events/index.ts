@@ -59,7 +59,9 @@ import './styles.scss';
 		};
 
 		instance.futureEvents = function () {
-			const limit = instance.state.get('showAllEvents') ? 0 : maxEventsShown;
+			const isMobileScreen = window.innerWidth <= 767;
+			// eslint-disable-next-line no-nested-ternary
+			const limit = instance.state.get('showAllEvents') ? 0 : isMobileScreen ? 2 : 4;
 
 			return Events.findFilter({ course: courseId, after: reactiveNow.get() }, limit);
 		};

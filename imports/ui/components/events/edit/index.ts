@@ -20,6 +20,8 @@ import { EventModel, Events, EventVenueEntity } from '/imports/api/events/events
 import * as EventsMethods from '/imports/api/events/methods';
 import { Regions } from '/imports/api/regions/regions';
 import { SaveFields } from '/imports/api/events/methods';
+import { GroupEntityCustomCourseFields, Groups } from '/imports/api/groups/groups';
+import * as CoursesMethods from '/imports/api/courses/methods';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { AffectedReplicaSelectors } from '/imports/utils/affected-replica-selectors';
@@ -35,6 +37,7 @@ import '/imports/ui/components/richtext';
 import '/imports/ui/components/events/edit-location';
 import '/imports/ui/components/price-policy';
 import '/imports/ui/components/regions/tag';
+import '/imports/ui/components/edit-custom-fields';
 
 import './template.html';
 import './styles.scss';
@@ -69,6 +72,7 @@ const Template = TemplateAny as TemplateStaticTyped<
 		selectedRegion: ReactiveVar<string>;
 		selectedLocation: ReactiveVar<Partial<EventVenueEntity>>;
 		notifyChecked: ReactiveVar<boolean>;
+		customFields: () => GroupEntityCustomCourseFields[];
 	}
 >;
 
@@ -101,7 +105,13 @@ template.onCreated(function () {
 	if (!parent) throw new Error('Unexpected undefined: parent');
 
 	instance.parent = parent;
-	instance.selectedRegion = new ReactiveVar(instance.data.region || Session.get('region'));
+	{
+		let region: string | undefined = instance.data.region;
+		if (Regions.findFilter({}, 2).count() === 1) {
+			region = region || Regions.findOne()?._id;
+		}
+		instance.selectedRegion = new ReactiveVar(region || Session.get('region'));
+	}
 	instance.selectedLocation = new ReactiveVar(
 		instance.data.venue || ({} as Partial<EventVenueEntity>),
 	);
@@ -110,6 +120,78 @@ template.onCreated(function () {
 	// attached to a course. Otherwise there is nobody to inform.
 	const notifyPreset = !!(event.courseId && instance.data.new);
 	instance.notifyChecked = new ReactiveVar(notifyPreset);
+
+	function getRegion() {
+		let region;
+		if (instance.data.courseId) {
+			const course = Courses.findOne(instance.data.courseId);
+			if (!course) {
+				throw new Error('Unexpected undefined: course');
+			}
+
+			region = course.region;
+		} else {
+			const selectedRegion = instance.selectedRegion.get();
+			if (!selectedRegion || selectedRegion === 'all') {
+				return undefined;
+			}
+			region = selectedRegion;
+		}
+
+		if (region) {
+			// The region was preset for the frame
+			return Regions.findOne({ _id: region });
+		}
+		if (Regions.findFilter({}, 2).count() === 1) {
+			// There is only one region
+			return Regions.findOne();
+		}
+		return Regions.currentRegion();
+	}
+
+	function getGroups() {
+		const { courseId } = Template.currentData();
+		const groups = [];
+
+		// We have this 'secret' feature where you can set a group ID
+		// in the URL to assign a group to the event on creation
+		if (Router.current().params.query.group) {
+			groups.push(Router.current().params.query.group as string);
+		}
+
+		const defaultTeamGroup = getRegion()?.defaultTeamGroup;
+		if (defaultTeamGroup) {
+			groups.push(defaultTeamGroup);
+		}
+
+		if (courseId) {
+			const course = Courses.findOne(courseId);
+			if (!course) {
+				throw new Error('Unexpected undefined: course');
+			}
+			groups.push(...course.groupOrganizers);
+		}
+
+		return groups;
+	}
+
+	instance.autorun(() => {
+		getGroups().forEach((g) => {
+			instance.subscribe('group', g);
+		});
+	});
+
+	instance.customFields = (type?: 'singleLine' | 'multiLine') => {
+		const groups = getGroups();
+
+		return (
+			Groups.find({ _id: { $in: groups } })
+				.fetch()
+				.flatMap((g) => g.customCourseFields || [])
+				// when type is undefined all will get back
+				.filter((g) => !type || (g.type || 'singleLine') === type)
+		);
+	};
 });
 
 function getEventStartMoment(instance: ReturnType<(typeof Template)['instance']>) {
@@ -318,6 +400,13 @@ template.helpers({
 	notifyChecked() {
 		return Template.instance().notifyChecked.get();
 	},
+	customFields() {
+		const courseId = Template.instance().data.courseId;
+		if (courseId) {
+			return Courses.findOne({ _id: courseId })?.customFields;
+		}
+		return undefined;
+	},
 });
 
 template.events({
@@ -423,6 +512,15 @@ template.events({
 			}
 		}
 
+		const customFields = instance.customFields().map((i) => {
+			return {
+				name: i.name,
+				displayText: i.displayText,
+				value: instance.$(`.js-custom-field-${i.name}`).val() as string,
+				visibleFor: i.visibleFor,
+			};
+		});
+
 		const updateReplicasInfos = instance.state.get('updateReplicasInfos');
 		const updateReplicasTime =
 			!instance.state.get('startDayChanged') &&
@@ -503,6 +601,11 @@ template.events({
 						}),
 					);
 				}
+
+				if (instance.data.courseId) {
+					await CoursesMethods.save(instance.data.courseId, { customFields });
+				}
+
 				(instance.parent as any).editing.set(false);
 			} catch (err) {
 				Alert.serverError(

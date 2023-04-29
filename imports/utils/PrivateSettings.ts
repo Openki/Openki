@@ -21,6 +21,8 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
 	},
 	/** Tells robots/crawlers whether to index the website or not */
 	robots: Boolean,
+	/** Tells robots/crawlers not to index user profiles (/user/*) */
+	hideProfiles: Boolean,
 	/** Print the log on the server in the console, usually only for development */
 	printLog: Boolean,
 	/** OAuth */
@@ -82,6 +84,7 @@ if (Meteor.isServer) {
 			recipient: 'admins@openki.net',
 		},
 		robots: true,
+		hideProfiles: false,
 		printLog: false,
 		startup: { buildDbCacheAsync: false },
 		apiMaxLimit: 100,
