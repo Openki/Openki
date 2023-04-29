@@ -9,10 +9,10 @@ import { Tenants } from '/imports/api/tenants/tenants';
 import { UserModel, Users } from '/imports/api/users/users';
 import { Log } from '/imports/api/log/log';
 
-import { base64PngImageData } from '/imports/utils/base64-png-image-data';
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { toEmailLogo } from '/imports/utils/toEmailLogo';
 
 function sendInvitation(invitation: InvitationEntity) {
 	const tenant = Tenants.findOne(invitation.tenant);
@@ -39,8 +39,9 @@ function sendInvitation(invitation: InvitationEntity) {
 	let message = SSR.render('invitationEmail', {
 		subject,
 		site: {
+			brand: PublicSettings.theme.brand,
 			url: Meteor.absoluteUrl(),
-			logo: emailLogo.startsWith('data:image/') ? emailLogo : base64PngImageData(emailLogo),
+			logo: toEmailLogo(emailLogo),
 			name: siteName,
 		},
 		tenant,

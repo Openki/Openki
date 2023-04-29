@@ -12,6 +12,7 @@ import * as Viewport from '/imports/ui/lib/viewport';
 import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import * as Tooltips from '/imports/utils/Tooltips';
+import * as FormsValidation from '/imports/utils/FormsValidation';
 
 import '/imports/ui/layouts/root.html';
 import '/imports/ui/components/account-tasks';
@@ -79,6 +80,7 @@ template.onRendered(() => {
 	});
 	Session.set('isRetina', window.devicePixelRatio === 2);
 	Tooltips.enable();
+	FormsValidation.enable();
 });
 
 template.events({

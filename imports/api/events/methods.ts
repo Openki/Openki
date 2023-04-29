@@ -410,6 +410,9 @@ export const remove = ServerMethod('event.remove', (eventId: string) => {
 
 	Events.remove(eventId);
 
+	// unlink child replicas
+	Events.update({ replicaOf: event._id }, { $unset: { replicaOf: true } }, { multi: true });
+
 	if (event.courseId) {
 		courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
 			title: event.title,

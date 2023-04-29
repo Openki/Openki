@@ -570,7 +570,6 @@
 	"profile.passwordShort": "كلمة المرور قصيرة جدا. معذرة.",
 	"profile.preferenceslink": "إعدادات الحساب",
 	"profile.reallydelete": "يرجى تأكيد رغبتك في حذف ملفك الشخصي. هذا الاجراء لا يمكن التراجع عنه. ستحتاج إلى إنشاء حساب جديد إذا كنت تريد استخدام الموقع مرة أخرى.",
-	"profile.sendVerificationMailFailed": "تعذر إرسال رسالة التأكيد الإلكترونية",
 	"profile.sendingVerificationMail": "تم إرسال بريد إلكتروني يؤكد عنوانك.",
 	"profile.sentVerificationMail": "تم إرسال رسالة تأكيد بالبريد الإلكتروني إلى عنوانك: \"{MAIL}\".",
 	"profile.sentVerificationMail.error": "تعذر إرسال بريد إلكتروني للتحقق",

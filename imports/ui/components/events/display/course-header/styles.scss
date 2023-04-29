@@ -29,3 +29,17 @@ $header-bg: darken($blue-lighter, 5%);
 	margin: 0;
 	padding-bottom: 5px;
 }
+
+.back-to-course-overview i {
+	align-items: center;
+	color: #38829c77;
+	float: right;
+	font-size: 60px;
+	margin: 15px 75px 0 0;
+	transition: transform 0.5s ease-in-out;
+}
+
+.back-to-course-overview:hover i {
+	display: block;
+	transform: translateX(-60px);
+}
