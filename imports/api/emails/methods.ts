@@ -124,6 +124,7 @@ export const sendReport = ServerMethod(
 			subject,
 			title,
 			site: {
+				brand: PublicSettings.theme.brand,
 				url: Meteor.absoluteUrl(),
 				logo: toEmailLogo(emailLogo),
 				name: siteName,

@@ -116,14 +116,14 @@ if (Meteor.isClient) {
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 
-			assert($('.js-category-checkbox').length > 0, 'Categories are usually present.');
+			assert($('.form-check .category-tag').length > 0, 'Categories are usually present.');
 
 			Router.go('/frame/propose?hideCategories=1');
 
 			await waitForSubscriptions();
 			await waitFor(haveEditfield);
 
-			assert($('.js-category-checkbox').length === 0, 'Param hides categories.');
+			assert($('.form-check .category-tag').length === 0, 'Param hides categories.');
 
 			$('.js-title').val(randomTitle);
 			$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan

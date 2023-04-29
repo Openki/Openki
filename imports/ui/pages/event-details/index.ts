@@ -120,6 +120,15 @@ import './styles.scss';
 			return false;
 		},
 
+		mayEdit() {
+			const event = Template.instance().data;
+			const user = Meteor.user();
+			if (!user) {
+				return false;
+			}
+			return event.editableBy(user);
+		},
+
 		editing() {
 			return this.new || Template.instance().editing.get();
 		},

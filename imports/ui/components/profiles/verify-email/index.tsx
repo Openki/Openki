@@ -26,11 +26,10 @@ export function VerifyEmail() {
 		<button
 			type="button"
 			className="btn btn-secondary js-verify-mail-btn"
-			onClick={async (e) => {
-				e.preventDefault();
+			onClick={async (event) => {
+				event.preventDefault();
 
 				setSending(true);
-
 				try {
 					await emailMethods.sendVerificationEmail();
 					Alert.success(
@@ -49,7 +48,7 @@ export function VerifyEmail() {
 				}
 			}}
 		>
-			<span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
+			<span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>&nbsp;
 			{t('profile.verifymail', 'Resend verification e-mail')}
 		</button>
 	);

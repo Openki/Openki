@@ -680,7 +680,6 @@
 	"profile.passwordShort": "Votre mot de passe est trop court. Désolé.",
 	"profile.preferenceslink": "Préférences de compte",
 	"profile.reallydelete": "S'il vous plaît, confirmez-nous que vous aimeriez supprimer votre profil. Ce sera définitif donc vous devrez re-créer un compte si vous voulez à nouveau utiliser ce site.",
-	"profile.sendVerificationMailFailed": "L'email n'a pu être vérifié",
 	"profile.sendingVerificationMail": "Un email de vérification vous sera très prochainement envoyé.",
 	"profile.sentVerificationMail": "Un email de vérification vous a été envoyé à : \"{MAIL}\".",
 	"profile.sentVerificationMail.error": "Échec de l'envoi de l'email de vérification",

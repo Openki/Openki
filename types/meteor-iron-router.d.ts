@@ -173,6 +173,7 @@ declare module 'meteor/iron:router' {
 			options?: {
 				query?: string | Record<string, any>;
 				hash?: string;
+				replaceState?: boolean;
 			},
 		): void;
 

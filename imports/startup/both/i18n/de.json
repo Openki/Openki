@@ -634,7 +634,7 @@
 	"profile.passwordMismatch": "Sorry, deine Passwörter stimmen nicht überein",
 	"profile.passwordShort": "Dein gewünschtes Passwort ist zu kurz. Sorry.",
 	"profile.reallydelete": "Bitte bestätige, dass Du Dein Profil löschen willst. Dies kann nicht rückgängig gemacht werden. Du musst einen neuen Account erstellen, falls du die Seite mal wieder benutzen willst.",
-	"profile.sendVerificationMailFailed": "Die E-Mail zur Bestätigung konnte nicht versendet werden",
+	"profile.sentVerificationMail.error": "Die E-Mail zur Bestätigung konnte nicht versendet werden",
 	"profile.sendingVerificationMail": "Eine E-Mail zur Bestätigung deiner Adresse wurde versendet.",
 	"profile.sentVerificationMail": "Eine E-Mail zur Bestätigung wurde an deine Adresse gesendet: \"{MAIL}\".",
 	"profile.settings.windowtitle": "Meine Profileinstellungen – {USER}",

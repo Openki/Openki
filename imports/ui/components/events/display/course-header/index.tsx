@@ -13,7 +13,7 @@ import './styles.scss';
 
 export type Props = {
 	course?: CourseModel;
-	backlink: string;
+	backlink?: string;
 	headerlink?: string;
 	regionId: string;
 	categories: string[];
@@ -42,10 +42,21 @@ export function EventCourseHeader(props: Props) {
 					: undefined
 			}
 		>
-			<a href={props.backlink}>
-				<i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
-				{t('event.details.viewCourse', 'To the course overview')}
-			</a>
+			{props.backlink ? (
+				<>
+					<a
+						className="back-to-course-overview"
+						href={props.backlink}
+						title={t('event.details.viewCourse')}
+					>
+						<i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+					</a>
+					<a href={props.backlink}>
+						<i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+						{t('event.details.viewCourse', 'To the course overview')}
+					</a>
+				</>
+			) : null}
 			<h2>{props.title}</h2>
 			<CourseCategories categories={props.categories} />
 			{props.course ? <CourseGroupList course={props.course} /> : null}
