@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import { useUserId } from 'meteor/react-meteor-accounts';
-import bootstrap from 'bootstrap';
+import Modal from 'bootstrap/js/dist/modal';
 import { Template } from 'meteor/templating';
 
 import { EventModel } from '/imports/api/events/events';
@@ -52,7 +52,7 @@ export function EventParticipants(data: { event: EventModel }) {
 			return;
 		}
 		const element = modalRef.current as unknown as Element;
-		bootstrap.Modal.getOrCreateInstance(element).show();
+		Modal.getOrCreateInstance(element).show();
 		element.addEventListener('hidden.bs.modal', () => {
 			setShowModal(false);
 		});
@@ -98,7 +98,7 @@ export function EventParticipants(data: { event: EventModel }) {
 			onSend: async (message, options) => {
 				EventsMethods.contactParticipants(data.event._id, message, options);
 				const element = modalRef.current as unknown as Element;
-				bootstrap.Modal.getOrCreateInstance(element).hide();
+				Modal.getOrCreateInstance(element).hide();
 			},
 		};
 	}

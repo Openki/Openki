@@ -29,25 +29,3 @@ $header-bg: darken($blue-lighter, 5%);
 .event-detail-register-dropdown {
 	background-color: $event-page-component-bg;
 }
-
-.event-notfound-text {
-	left: 50%;
-	position: absolute;
-	text-align: center;
-	top: 50%;
-	transform: translate(-50%, -50%);
-}
-
-.back-to-course-overview i {
-	align-items: center;
-	color: #38829c77;
-	float: right;
-	font-size: 60px;
-	margin: 15px 75px 0 0;
-	transition: transform 0.5s ease-in-out;
-}
-
-.back-to-course-overview:hover {
-	display: block;
-	transform: translateX(-60px);
-}
