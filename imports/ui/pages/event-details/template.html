@@ -8,28 +8,15 @@
 	<div class="row">
 		<div class="col-lg-8">
 			{{#if course}}
-				<div class="event-course-header" {{eventCourseHeaderAttr course}}>
-					<a href="{{pathFor 'showCourse' _id=courseId}}"
-					   class="back-to-course-overview" title={{i18n 'event.details.viewCourse'}}>
-						<i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
-					</a>
-					<a href="{{pathFor 'showCourse' _id=courseId}}"
-					   class="event-course-header-link">
-						<i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
-						{{i18n 'event.details.viewCourse' 'To the course overview'}}
-					</a>
-					<h2>
-						{{course.name}}
-					</h2>
-					{{> courseCategories course}}
-					{{> regionTag}}
-					{{#each info in customFields}}
-						<p>
-							<strong>{{info.displayText}}</strong>: <span
-								  style="white-space: pre-line;">{{info.value}}</span>
-						</p>
-					{{/each}}
-				</div>
+				{{#unless course.singleEvent}}
+					{{> eventCourseHeader backlink=courseLink headerlink=courseLink regionId=region categories=categories title=course.name image=course.publicImageUrl}}
+				{{else}}
+					{{#if mayEdit}}
+						{{> eventCourseHeader course=course backlink=courseLink regionId=region categories=categories title=title image=course.publicImageUrl}}
+					{{else}}
+						{{> eventCourseHeader course=course regionId=region categories=categories title=title image=course.publicImageUrl}}
+					{{/if}}
+				{{/unless}}
 			{{/if}}
 			<div class="event{{#if course}} course-event{{/if}}">
 				{{#if editing}}
