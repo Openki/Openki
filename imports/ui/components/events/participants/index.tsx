@@ -1,14 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef, useState } from 'react';
-import { useUserId } from 'meteor/react-meteor-accounts';
 import Modal from 'bootstrap/js/dist/modal';
+import { useUserId, useUser } from '/imports/utils/react-meteor-data';
 import { Template } from 'meteor/templating';
 
 import { EventModel } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { useUser } from '/imports/utils/react-meteor-data';
 
 import { ParticipantContact } from '/imports/ui/components/participant/contact';
 import { ProfileLink } from '/imports/ui/components/profile-link';
