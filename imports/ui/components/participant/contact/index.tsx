@@ -2,13 +2,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Modal from 'bootstrap/js/dist/modal';
+import { useUserId } from '/imports/utils/react-meteor-data';
 import { Template } from 'meteor/templating';
 
 import * as emailMethods from '/imports/api/emails/methods';
 import { EventModel } from '/imports/api/events/events';
 import { CourseModel } from '/imports/api/courses/courses';
 import { SendPrivateMessageOptions } from '/imports/api/emails/methods';
-import { useUserId } from 'meteor/react-meteor-accounts';
 import * as Users from '/imports/api/users/publications';
 
 import { SendMessage, Data as SendMessageData } from '/imports/ui/components/send-message';

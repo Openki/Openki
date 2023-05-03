@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import React from 'react';
 import { Router } from 'meteor/iron:router';
-import { useUserId } from 'meteor/react-meteor-accounts';
+import { useUserId } from '/imports/utils/react-meteor-data';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
