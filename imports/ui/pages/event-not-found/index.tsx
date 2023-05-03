@@ -1,7 +1,7 @@
 import React from 'react';
 import { Template } from 'meteor/templating';
 import { useTranslation } from 'react-i18next';
-import { useUserId } from 'meteor/react-meteor-accounts';
+import { useUserId } from '/imports/utils/react-meteor-data';
 
 import './styles.scss';
 
