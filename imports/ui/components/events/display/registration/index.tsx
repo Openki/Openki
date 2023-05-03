@@ -5,22 +5,22 @@ import { Template } from 'meteor/templating';
 import React, { useState } from 'react';
 import { useUser } from '/imports/utils/react-meteor-data';
 import moment from 'moment';
+import { useDateTimeFormat } from '/imports/utils/react-moment-format';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { EventModel } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { Regions } from '/imports/api/regions/regions';
+import { useDetails } from '/imports/api/courses/publications';
 
-import { PleaseLogin } from '../../../please-login';
+import { PleaseLogin } from '/imports/ui/components/please-login';
+import { EventParticipants } from '/imports/ui/components/events/participants';
+import { Report } from '/imports/ui/components/report';
+import { ButtonCancel } from '/imports/ui/components/buttons';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 
 import './styles.scss';
-import { EventParticipants } from '../../participants';
-import { Report } from '../../../report';
-import { useDetails } from '/imports/api/courses/publications';
-import { ButtonCancel } from '../../../buttons';
-import { useDateTimeFormat } from '/imports/utils/react-moment-format';
 
 function ButtonRegister(props: { onClick: () => void; busy?: boolean | undefined }) {
 	const { t } = useTranslation();
@@ -94,10 +94,11 @@ function ButtonUnregister(props: {
 	);
 }
 
-export function EventRegistration(data: EventModel) {
+export function EventRegistration(props: { event: EventModel }) {
+	const { event } = props;
 	const user = useUser();
 
-	const [isLoading, course] = useDetails(data.courseId || '-1');
+	const [isLoading, course] = useDetails(event.courseId || '-1');
 
 	const { t } = useTranslation();
 	const [registerDropdown, setRegisterDropdown] = useState(false);
@@ -108,9 +109,9 @@ export function EventRegistration(data: EventModel) {
 	async function addParticipant() {
 		setIsBusy('registering');
 		try {
-			await EventsMethods.addParticipant(data._id);
+			await EventsMethods.addParticipant(event._id);
 
-			Analytics.trackEvent('RSVPs', 'RSVPs as participant', Regions.findOne(data.region)?.nameEn);
+			Analytics.trackEvent('RSVPs', 'RSVPs as participant', Regions.findOne(event.region)?.nameEn);
 		} catch (err) {
 			Alert.serverError(err);
 		}
@@ -120,32 +121,32 @@ export function EventRegistration(data: EventModel) {
 		return user?.getDisplayName() || t('eventDetails.notLoggedIn', '(not logged in?)');
 	}
 	function courseTitle() {
-		if (data.courseId) {
+		if (event.courseId) {
 			return course?.name;
 		}
 		return undefined;
 	}
 	function acceptsParticipants() {
 		// no maxParticipants
-		if (!data.maxParticipants) {
+		if (!event.maxParticipants) {
 			return true;
 		}
 
-		if (!data.participants) {
+		if (!event.participants) {
 			return true;
 		}
 
-		if (data.participants.length < data.maxParticipants) {
+		if (event.participants.length < event.maxParticipants) {
 			return true;
 		}
 		return false;
 	}
 	function isFuture() {
-		return moment().isBefore(data.end);
+		return moment().isBefore(event.end);
 	}
 	function userRegisteredForEvent() {
 		const userId = user?._id;
-		return userId && data.participants?.includes(userId);
+		return userId && event.participants?.includes(userId);
 	}
 	function anyDropdown() {
 		return unregisterDropdown || registerDropdown;
@@ -207,31 +208,29 @@ export function EventRegistration(data: EventModel) {
 												'Do you want to reserve a seat as {USERNAME} for the event "{EVENTTITLE}" on the {DATE}? Your reservation is binding.',
 												{
 													USERNAME: userName(),
-													EVENTTITLE: data.title,
-													DATE: dateFormat(data.startLocal),
+													EVENTTITLE: event.title,
+													DATE: dateFormat(event.startLocal),
 												},
 											)}
 										</p>
-										<p>
-											<div className="row justify-content-between align-items-center">
-												<div className="col-lg-4 d-grid">
-													<ButtonCancel
-														onClick={() => {
-															setRegisterDropdown(false);
-														}}
-													/>
-												</div>
-												<div className="col-lg-7 d-grid">
-													<ButtonRegister
-														onClick={async () => {
-															await addParticipant();
-															setRegisterDropdown(false);
-														}}
-														busy={isBusy === 'registering'}
-													/>
-												</div>
+										<div className="row justify-content-between align-items-center pb-3">
+											<div className="col-lg-4 d-grid">
+												<ButtonCancel
+													onClick={() => {
+														setRegisterDropdown(false);
+													}}
+												/>
 											</div>
-										</p>
+											<div className="col-lg-7 d-grid">
+												<ButtonRegister
+													onClick={async () => {
+														await addParticipant();
+														setRegisterDropdown(false);
+													}}
+													busy={isBusy === 'registering'}
+												/>
+											</div>
+										</div>
 									</>
 								)
 							) : (
@@ -255,45 +254,43 @@ export function EventRegistration(data: EventModel) {
 											{t(
 												'event.details.want-to-withdraw',
 												'Do you want to withdraw your registration for the event "{EVENTTITLE}" on the {DATE}?',
-												{ EVENTTITLE: data.title, DATE: dateFormat(data.startLocal) },
+												{ EVENTTITLE: event.title, DATE: dateFormat(event.startLocal) },
 											)}
 										</p>
-										<p>
-											<div className="row justify-content-between align-items-center">
-												<div className="col-lg-4 d-grid">
-													<ButtonCancel
-														onClick={() => {
-															setUnregisterDropdown(false);
-														}}
-													/>
-												</div>
-												<div className="col-lg-7 d-grid">
-													<ButtonUnregister
-														onClick={async () => {
-															setIsBusy('unregistering');
-
-															try {
-																await EventsMethods.removeParticipant(data._id);
-
-																Analytics.trackEvent(
-																	'Unsubscribes RSVPs',
-																	'Unsubscribes RSVPs as participant',
-																	Regions.findOne(data.region)?.nameEn,
-																);
-															} catch (err) {
-																Alert.serverError(err, 'could not remove participant');
-															} finally {
-																setIsBusy('');
-															}
-															setUnregisterDropdown(false);
-														}}
-														busy={isBusy === 'unregistering'}
-													/>
-												</div>
+										<div className="row justify-content-between align-items-center pb-3">
+											<div className="col-lg-4 d-grid">
+												<ButtonCancel
+													onClick={() => {
+														setUnregisterDropdown(false);
+													}}
+												/>
 											</div>
-										</p>
+											<div className="col-lg-7 d-grid">
+												<ButtonUnregister
+													onClick={async () => {
+														setIsBusy('unregistering');
+
+														try {
+															await EventsMethods.removeParticipant(event._id);
+
+															Analytics.trackEvent(
+																'Unsubscribes RSVPs',
+																'Unsubscribes RSVPs as participant',
+																Regions.findOne(event.region)?.nameEn,
+															);
+														} catch (err) {
+															Alert.serverError(err, 'could not remove participant');
+														} finally {
+															setIsBusy('');
+														}
+														setUnregisterDropdown(false);
+													}}
+													busy={isBusy === 'unregistering'}
+												/>
+											</div>
+										</div>
 										{!isLoading() && courseTitle() ? (
-											<p>
+											<p className="pb-3">
 												{t(
 													'event.details.youStayEnrolled',
 													'Note that you will stay enrolled as interested for {COURSETITLE}.',
@@ -310,7 +307,7 @@ export function EventRegistration(data: EventModel) {
 			) : null}
 
 			<div className="page-component">
-				<EventParticipants event={data} />
+				<EventParticipants event={event} />
 			</div>
 			<div className="page-component">
 				<Report />
