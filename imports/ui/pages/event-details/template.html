@@ -27,7 +27,9 @@
 			</div>
 		</div>
 		{{#unless editing}}
-			{{> eventRegistration}}
+			<div class="col-lg-4">
+				{{> eventRegistration event=this}}
+			</div>
 		{{/unless}}
 	</div>
 </template>
