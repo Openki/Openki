@@ -11,7 +11,7 @@ import { EventModel } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { Regions } from '/imports/api/regions/regions';
 
-import { PleaseLogin } from '/imports/ui/lib/please-login';
+import { PleaseLogin } from '../../../please-login';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 
@@ -22,14 +22,11 @@ import { useDetails } from '/imports/api/courses/publications';
 import { ButtonCancel } from '../../../buttons';
 import { useDateTimeFormat } from '/imports/utils/react-moment-format';
 
-function ButtonRegister(props: {
-	onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-	busy?: boolean | undefined;
-}) {
+function ButtonRegister(props: { onClick: () => void; busy?: boolean | undefined }) {
 	const { t } = useTranslation();
 
 	return (
-		<button
+		<PleaseLogin
 			type="button"
 			className="btn btn-add btn-event text-center"
 			onClick={props.onClick}
@@ -43,7 +40,7 @@ function ButtonRegister(props: {
 			) : (
 				t('event.details.register-register', 'Register')
 			)}
-		</button>
+		</PleaseLogin>
 	);
 }
 
@@ -108,22 +105,15 @@ export function EventRegistration(data: EventModel) {
 	const [isBusy, setIsBusy] = useState('');
 	const { dateFormat } = useDateTimeFormat();
 
-	function addParticipant() {
+	async function addParticipant() {
 		setIsBusy('registering');
-		PleaseLogin(instance, async () => {
-			try {
-				await EventsMethods.addParticipant(data._id);
+		try {
+			await EventsMethods.addParticipant(data._id);
 
-				Analytics.trackEvent('RSVPs', 'RSVPs as participant', Regions.findOne(data.region)?.nameEn);
-			} catch (err) {
-				Alert.serverError(err);
-			}
-		});
-	}
-
-	// register from email
-	if (Router.current().params.query.action === 'register') {
-		addParticipant();
+			Analytics.trackEvent('RSVPs', 'RSVPs as participant', Regions.findOne(data.region)?.nameEn);
+		} catch (err) {
+			Alert.serverError(err);
+		}
 	}
 
 	function userName() {
@@ -162,7 +152,16 @@ export function EventRegistration(data: EventModel) {
 	}
 
 	return (
-		<div className="col-lg-4">
+		<>
+			{Router.current().params.query.action === 'register' ? (
+				<PleaseLogin
+					type="auto"
+					onRender={() => {
+						// register from email
+						addParticipant();
+					}}
+				/>
+			) : null}
 			{isFuture() ? (
 				<>
 					<div className="page-component">
@@ -190,7 +189,7 @@ export function EventRegistration(data: EventModel) {
 					>
 						{!userRegisteredForEvent() ? (
 							acceptsParticipants() ? (
-								registerDropdown ? (
+								!registerDropdown ? (
 									<button
 										type="button"
 										className="btn btn-add btn-event"
@@ -198,7 +197,7 @@ export function EventRegistration(data: EventModel) {
 											setRegisterDropdown(true);
 										}}
 									>
-										{t('event.details.withdraw-registration' ,'Withdraw my registration')}
+										{t('event.details.reserve-a-seat', 'Reserve a seat')}
 									</button>
 								) : (
 									<>
@@ -224,8 +223,8 @@ export function EventRegistration(data: EventModel) {
 												</div>
 												<div className="col-lg-7 d-grid">
 													<ButtonRegister
-														onClick={() => {
-															addParticipant();
+														onClick={async () => {
+															await addParticipant();
 															setRegisterDropdown(false);
 														}}
 														busy={isBusy === 'registering'}
@@ -248,7 +247,7 @@ export function EventRegistration(data: EventModel) {
 											setUnregisterDropdown(true);
 										}}
 									>
-										{t('event.details.reserve-a-seat', 'Reserve a seat')}
+										{t('event.details.withdraw-registration', 'Withdraw my registration')}
 									</button>
 								) : (
 									<>
@@ -293,17 +292,17 @@ export function EventRegistration(data: EventModel) {
 												</div>
 											</div>
 										</p>
+										{!isLoading() && courseTitle() ? (
+											<p>
+												{t(
+													'event.details.youStayEnrolled',
+													'Note that you will stay enrolled as interested for {COURSETITLE}.',
+													{ COURSETITLE: courseTitle() },
+												)}
+											</p>
+										) : null}
 									</>
 								)}
-								: {(isLoading() && courseTitle()?
-								<p>
-									{t(
-										'event.details.youStayEnrolled',
-										'Note that you will stay enrolled as interested for {COURSETITLE}.',
-										{ COURSETITLE: courseTitle() },
-									)}
-								</p>
-								:null)}
 							</>
 						)}
 					</div>
@@ -316,7 +315,7 @@ export function EventRegistration(data: EventModel) {
 			<div className="page-component">
 				<Report />
 			</div>
-		</div>
+		</>
 	);
 }
 
