@@ -5,44 +5,21 @@ import { Template } from 'meteor/templating';
 import React, { useState } from 'react';
 import { useUser } from '/imports/utils/react-meteor-data';
 import moment from 'moment';
-import { useDateTimeFormat } from '/imports/utils/react-moment-format';
 
 import * as Alert from '/imports/api/alerts/alert';
 import { EventModel } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 import { Regions } from '/imports/api/regions/regions';
-import { useDetails } from '/imports/api/courses/publications';
 
 import { PleaseLogin } from '/imports/ui/components/please-login';
 import { EventParticipants } from '/imports/ui/components/events/participants';
 import { Report } from '/imports/ui/components/report';
-import { ButtonCancel } from '/imports/ui/components/buttons';
+import { RegisterPanel } from './register-panel';
+import { UnregisterPanel } from './unregister-panel';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 
 import './styles.scss';
-
-function ButtonRegister(props: { onClick: () => void; busy?: boolean | undefined }) {
-	const { t } = useTranslation();
-
-	return (
-		<PleaseLogin
-			type="button"
-			className="btn btn-add btn-event text-center"
-			onClick={props.onClick}
-			disabled={props.busy}
-		>
-			{props.busy ? (
-				<>
-					<span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{' '}
-					{t('_button.registering', 'Registering…')}
-				</>
-			) : (
-				t('event.details.register-register', 'Register')
-			)}
-		</PleaseLogin>
-	);
-}
 
 function ButtonRegistrationClosed(props: {
 	onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
@@ -69,42 +46,11 @@ function ButtonRegistrationClosed(props: {
 	);
 }
 
-function ButtonUnregister(props: {
-	onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-	busy?: boolean | undefined;
-}) {
-	const { t } = useTranslation();
-
-	return (
-		<button
-			type="button"
-			className="btn btn-danger btn-event text-center"
-			onClick={props.onClick}
-			disabled={props.busy}
-		>
-			{props.busy ? (
-				<>
-					<span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{' '}
-					{t('_button.unregistering', 'Unregistering…')}
-				</>
-			) : (
-				t('event.details.unregister-withdraw', 'Withdraw')
-			)}
-		</button>
-	);
-}
-
 export function EventRegistration(props: { event: EventModel }) {
 	const { event } = props;
 	const user = useUser();
-
-	const [isLoading, course] = useDetails(event.courseId || '-1');
-
 	const { t } = useTranslation();
-	const [registerDropdown, setRegisterDropdown] = useState(false);
-	const [unregisterDropdown, setUnregisterDropdown] = useState(false);
 	const [isBusy, setIsBusy] = useState('');
-	const { dateFormat } = useDateTimeFormat();
 
 	async function addParticipant() {
 		setIsBusy('registering');
@@ -117,15 +63,6 @@ export function EventRegistration(props: { event: EventModel }) {
 		}
 	}
 
-	function userName() {
-		return user?.getDisplayName() || t('eventDetails.notLoggedIn', '(not logged in?)');
-	}
-	function courseTitle() {
-		if (event.courseId) {
-			return course?.name;
-		}
-		return undefined;
-	}
 	function acceptsParticipants() {
 		// no maxParticipants
 		if (!event.maxParticipants) {
@@ -147,9 +84,6 @@ export function EventRegistration(props: { event: EventModel }) {
 	function userRegisteredForEvent() {
 		const userId = user?._id;
 		return userId && event.participants?.includes(userId);
-	}
-	function anyDropdown() {
-		return unregisterDropdown || registerDropdown;
 	}
 
 	return (
@@ -183,124 +117,41 @@ export function EventRegistration(props: { event: EventModel }) {
 								  )}
 						</b>
 					</div>
-					<div
-						className={`page-component ${
-							anyDropdown() ? 'pt-3 px-3 event-detail-register-dropdown' : ''
-						}`}
-					>
+					<div className="page-component">
 						{!userRegisteredForEvent() ? (
 							acceptsParticipants() ? (
-								!registerDropdown ? (
-									<button
-										type="button"
-										className="btn btn-add btn-event"
-										onClick={() => {
-											setRegisterDropdown(true);
-										}}
-									>
-										{t('event.details.reserve-a-seat', 'Reserve a seat')}
-									</button>
-								) : (
-									<>
-										<p>
-											{t(
-												'event.details.want-to-register',
-												'Do you want to reserve a seat as {USERNAME} for the event "{EVENTTITLE}" on the {DATE}? Your reservation is binding.',
-												{
-													USERNAME: userName(),
-													EVENTTITLE: event.title,
-													DATE: dateFormat(event.startLocal),
-												},
-											)}
-										</p>
-										<div className="row justify-content-between align-items-center pb-3 gap-3">
-											<div className="col-lg-4 d-grid">
-												<ButtonCancel
-													onClick={() => {
-														setRegisterDropdown(false);
-													}}
-												/>
-											</div>
-											<div className="col-lg-7 d-grid">
-												<ButtonRegister
-													onClick={async () => {
-														await addParticipant();
-														setRegisterDropdown(false);
-													}}
-													busy={isBusy === 'registering'}
-												/>
-											</div>
-										</div>
-									</>
-								)
+								<RegisterPanel
+									busy={isBusy === 'registering'}
+									event={event}
+									onRegister={async () => {
+										await addParticipant();
+									}}
+								/>
 							) : (
 								<ButtonRegistrationClosed busy={isBusy === 'registering'} />
 							)
 						) : (
-							<>
-								{!unregisterDropdown ? (
-									<button
-										type="button"
-										className="btn btn-add btn-event"
-										onClick={() => {
-											setUnregisterDropdown(true);
-										}}
-									>
-										{t('event.details.withdraw-registration', 'Withdraw my registration')}
-									</button>
-								) : (
-									<>
-										<p>
-											{t(
-												'event.details.want-to-withdraw',
-												'Do you want to withdraw your registration for the event "{EVENTTITLE}" on the {DATE}?',
-												{ EVENTTITLE: event.title, DATE: dateFormat(event.startLocal) },
-											)}
-										</p>
-										<div className="row justify-content-between align-items-center pb-3 gap-3">
-											<div className="col-lg-4 d-grid">
-												<ButtonCancel
-													onClick={() => {
-														setUnregisterDropdown(false);
-													}}
-												/>
-											</div>
-											<div className="col-lg-7 d-grid">
-												<ButtonUnregister
-													onClick={async () => {
-														setIsBusy('unregistering');
+							<UnregisterPanel
+								busy={isBusy === 'unregistering'}
+								event={event}
+								onUnregister={async () => {
+									setIsBusy('unregistering');
 
-														try {
-															await EventsMethods.removeParticipant(event._id);
+									try {
+										await EventsMethods.removeParticipant(event._id);
 
-															Analytics.trackEvent(
-																'Unsubscribes RSVPs',
-																'Unsubscribes RSVPs as participant',
-																Regions.findOne(event.region)?.nameEn,
-															);
-														} catch (err) {
-															Alert.serverError(err, 'could not remove participant');
-														} finally {
-															setIsBusy('');
-														}
-														setUnregisterDropdown(false);
-													}}
-													busy={isBusy === 'unregistering'}
-												/>
-											</div>
-										</div>
-										{!isLoading() && courseTitle() ? (
-											<p className="pb-3">
-												{t(
-													'event.details.youStayEnrolled',
-													'Note that you will stay enrolled as interested for {COURSETITLE}.',
-													{ COURSETITLE: courseTitle() },
-												)}
-											</p>
-										) : null}
-									</>
-								)}
-							</>
+										Analytics.trackEvent(
+											'Unsubscribes RSVPs',
+											'Unsubscribes RSVPs as participant',
+											Regions.findOne(event.region)?.nameEn,
+										);
+									} catch (err) {
+										Alert.serverError(err, 'could not remove participant');
+									} finally {
+										setIsBusy('');
+									}
+								}}
+							/>
 						)}
 					</div>
 				</>
