@@ -213,7 +213,7 @@ export function EventRegistration(props: { event: EventModel }) {
 												},
 											)}
 										</p>
-										<div className="row justify-content-between align-items-center pb-3">
+										<div className="row justify-content-between align-items-center pb-3 gap-3">
 											<div className="col-lg-4 d-grid">
 												<ButtonCancel
 													onClick={() => {
@@ -257,7 +257,7 @@ export function EventRegistration(props: { event: EventModel }) {
 												{ EVENTTITLE: event.title, DATE: dateFormat(event.startLocal) },
 											)}
 										</p>
-										<div className="row justify-content-between align-items-center pb-3">
+										<div className="row justify-content-between align-items-center pb-3 gap-3">
 											<div className="col-lg-4 d-grid">
 												<ButtonCancel
 													onClick={() => {
