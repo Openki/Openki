@@ -68,6 +68,6 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
 			{props.children}
 		</button>
 	) : (
-		props.children
+		props.children || null
 	);
 }
