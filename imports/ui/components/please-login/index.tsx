@@ -1,26 +1,31 @@
-import { useUserId } from 'meteor/react-meteor-accounts';
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
 
-import { useSessionEquals } from '/imports/utils/react-meteor-data';
+import { useSessionEquals, useUserId } from '/imports/utils/react-meteor-data';
 
-export interface FormProps {
+interface AutoProps {
+	type: 'auto';
+	onRender: () => void;
+}
+
+interface FormProps {
 	type: 'form';
 	onSubmit: () => void;
 }
 
-export interface ButtonProps {
+interface ButtonProps {
 	type: 'button';
 	onClick: () => void;
 	disabled?: boolean | undefined;
 }
-export interface Props {
-	type: 'form' | 'button';
+interface Props {
+	type: 'auto' | 'form' | 'button';
 	className?: string | undefined;
 	children?: any;
 }
 
-export function PleaseLogin(props: Props & (FormProps | ButtonProps)) {
-	const [actionActive, setActionActive] = useState(false);
+export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)) {
+	const [actionActive, setActionActive] = useState(props.type === 'auto');
 	const [openedLogin, setOpenedLogin] = useState(false);
 	const userId = useUserId();
 	const notPleaseLogin = useSessionEquals('pleaseLogin', false);
@@ -30,9 +35,11 @@ export function PleaseLogin(props: Props & (FormProps | ButtonProps)) {
 			if (userId) {
 				setActionActive(false);
 				// if the user is logged in call the save function
-				if (props.type === 'form') {
+				if (props.type === 'auto') {
+					props.onRender();
+				} else if (props.type === 'form') {
 					props.onSubmit();
-				} else {
+				} else if (props.type === 'button') {
 					props.onClick();
 				}
 			} else if (!openedLogin) {
@@ -56,9 +63,11 @@ export function PleaseLogin(props: Props & (FormProps | ButtonProps)) {
 		<form className={props.className} onSubmit={handleEvent}>
 			{props.children}
 		</form>
-	) : (
+	) : props.type === 'button' ? (
 		<button className={props.className} onClick={handleEvent} disabled={props.disabled}>
 			{props.children}
 		</button>
+	) : (
+		props.children || null
 	);
 }
