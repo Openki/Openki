@@ -45,7 +45,7 @@ export interface Method<T> {
 	};
 }
 
-function registerMethod<T>(method: Method<T>): void {
+function registerMethod<T>(method: Method<T>): (params: T) => void {
 	const apply = function (params: T) {
 		const change = method.read(params);
 		try {
@@ -82,6 +82,8 @@ function registerMethod<T>(method: Method<T>): void {
 	};
 
 	Meteor.methods({ [method.method]: apply });
+
+	return apply;
 }
 
 function loadCourse(courseId: string) {
@@ -97,9 +99,9 @@ function loadCourse(courseId: string) {
 	return course;
 }
 
-registerMethod(Subscribe);
-registerMethod(Unsubscribe);
-registerMethod(Message);
+export const subscribe = registerMethod(Subscribe);
+export const unsubscribe = registerMethod(Unsubscribe);
+export const message = registerMethod(Message);
 
 export const CustomFieldPattern = {
 	name: String,

@@ -1,0 +1,108 @@
+import React, { useState } from 'react';
+import { Template } from 'meteor/templating';
+import { useTranslation } from 'react-i18next';
+
+import * as Alert from '/imports/api/alerts/alert';
+import * as emailMethods from '/imports/api/emails/methods';
+
+import { ButtonCancel } from '../buttons';
+
+import './styles.scss';
+
+export function Report() {
+	const { t } = useTranslation();
+	const [state, setState] = useState('');
+	const [message, setMessage] = useState('');
+
+	function reporting() {
+		return state === 'reporting';
+	}
+	function sending() {
+		return state === 'sending';
+	}
+
+	return (
+		<>
+			{sending() ? t('report.sending', 'Report is being sent…') : null}
+			{reporting() ? (
+				<div className="report p-3">
+					<form
+						className="needs-validation"
+						noValidate
+						onSubmit={async () => {
+							setState('sending');
+							try {
+								await emailMethods.sendReport(
+									document.title,
+									window.location.href,
+									navigator.userAgent,
+									message,
+								);
+								Alert.success(
+									t(
+										'report.confirm',
+										'Your report was sent. A human will try to find an appropriate solution.',
+									),
+								);
+							} catch (err) {
+								Alert.serverError(err, t('report.notSent', 'Your report could not be sent'));
+							} finally {
+								setState('');
+							}
+						}}
+					>
+						<div className="mb-3">
+							<label className="form-label" htmlFor="reportMessage">
+								{t('report.text', 'Please tell us what is wrong.')}
+							</label>
+							<textarea
+								className="form-control"
+								id="reportMessage"
+								rows={5}
+								placeholder={t('report.placeholder', 'My hovercraft is full of eels.')}
+								required
+								minLength={6}
+								onChange={(event) => {
+									setMessage(event.target.value);
+								}}
+							></textarea>
+							<div className="invalid-feedback">
+								{t(
+									'report.warning.tooShort',
+									'The report message is too short! Please write more than 5 characters.',
+								)}
+							</div>
+						</div>
+						<div className="d-flex gap-2 justify-content-end">
+							<button type="submit" className="btn btn-save">
+								<span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>{' '}
+								{t('report.report', 'Send report')}
+							</button>
+							<ButtonCancel
+								onClick={() => {
+									setState('');
+								}}
+							/>
+						</div>
+					</form>
+				</div>
+			) : (
+				<button
+					type="button"
+					className="btn btn-secondary"
+					onClick={() => {
+						setState('reporting');
+					}}
+				>
+					{t('report.open', 'Report problem')}
+				</button>
+			)}
+		</>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper('Report', () => Report);
