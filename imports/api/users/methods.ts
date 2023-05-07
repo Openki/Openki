@@ -251,7 +251,11 @@ export const adminRemove = ServerMethod(
 		// eslint-disable-next-line no-restricted-syntax
 		for await (const course of courses) {
 			Events.update({ courseId: course._id }, { $pull: { editors: userId } }, { multi: true });
-			Events.update({ courseId: course._id }, { $pull: { participants: userId } }, { multi: true });
+			Events.update(
+				{ courseId: course._id },
+				{ $pull: { participants: { user: userId } } },
+				{ multi: true },
+			);
 
 			Courses.update({ _id: course._id }, { $pull: { members: { user: userId } } });
 			Courses.update({ _id: course._id }, { $pull: { editors: userId } });

@@ -20,6 +20,10 @@ import { PublicSettings } from '/imports/utils/PublicSettings';
 import { FieldSort, FieldSortPattern, Sort } from '/imports/utils/sort-spec';
 import { Tuple, Type } from '/imports/utils/CustomChecks';
 
+export interface EventParticipantEntity {
+	user: string;
+}
+
 export interface EventVenueEntity {
 	/**
 	 * Optional reference to a document in the Venues collection. If this is set, the fields
@@ -73,7 +77,7 @@ export interface EventEntity {
 	groupOrganizers: string[];
 	/** ID of the replication parent, only cloned events have this */
 	replicaOf?: string;
-	participants?: string[];
+	participants?: EventParticipantEntity[];
 	/** maximum participants of event */
 	maxParticipants: number;
 	/**
@@ -142,11 +146,22 @@ export class OEvent {
 		return FileStorage.generatePublicUrl(this.courseImage);
 	}
 
+	attendedBy(this: EventModel, userId: string | null | undefined) {
+		if (!userId) {
+			return false;
+		}
+		return this.participants?.some((p) => p.user === userId) || false;
+	}
+
+	numberOfParticipants(this: EventModel) {
+		return this.participants?.length || 0;
+	}
+
 	isFullyBooked(this: EventModel) {
 		if (!this.maxParticipants) {
 			return false;
 		}
-		return (this.participants?.length || 0) >= this.maxParticipants;
+		return this.numberOfParticipants() >= this.maxParticipants;
 	}
 }
 
@@ -414,7 +429,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		}
 
 		if (filter.participant) {
-			find.participants = filter.participant;
+			find['participants.user'] = filter.participant;
 		}
 
 		if (filter.internal !== undefined) {
