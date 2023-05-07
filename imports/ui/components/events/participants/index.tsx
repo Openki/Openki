@@ -39,6 +39,7 @@ function EventParticipant(props: { participant: string; event: EventModel }) {
 }
 
 export function EventParticipants(data: { event: EventModel }) {
+	const { event } = data;
 	const { t } = useTranslation();
 	const modalRef = useRef(null);
 	const user = useUser();
@@ -57,30 +58,19 @@ export function EventParticipants(data: { event: EventModel }) {
 		});
 	});
 
-	function howManyEnrolled() {
-		const event = data.event;
-
-		return event.participants?.length || 0;
-	}
-
 	function howManyFreePlaces() {
-		const event = data.event;
-		const occupied = event.participants?.length || 0;
+		const occupied = event.numberOfParticipants();
 		return event.maxParticipants - occupied;
 	}
 
 	function canNotifyAll() {
-		const { participants } = data.event;
-
-		if (!(participants && participants.length > 1)) {
+		if (!(event.numberOfParticipants() > 1)) {
 			return false;
 		}
 
 		if (UserPrivilegeUtils.privilegedTo('admin')) {
 			return true;
 		}
-
-		const event = data.event;
 
 		return !!(
 			(user && event?.editableBy(user)) ||
@@ -95,7 +85,7 @@ export function EventParticipants(data: { event: EventModel }) {
 				"Hi there, I'm looking forward for tomorrow. Please bring your laptops. And don't forget to opt out now if you can't attend in order to free your seat.",
 			),
 			onSend: async (message, options) => {
-				EventsMethods.contactParticipants(data.event._id, message, options);
+				EventsMethods.contactParticipants(event._id, message, options);
 				const element = modalRef.current as unknown as Element;
 				Modal.getOrCreateInstance(element).hide();
 			},
@@ -103,21 +93,21 @@ export function EventParticipants(data: { event: EventModel }) {
 	}
 
 	function sortedParticipants() {
-		const { participants } = data.event;
-		if (user?._id && participants?.includes(user._id)) {
+		const participants = event.participants?.map((p) => p.user) || [];
+		if (user?._id && event.attendedBy(user._id)) {
 			const userArrayPosition = participants.indexOf(user._id);
 			// remove current user form array and read him at index 0
 			participants.splice(userArrayPosition, 1); // remove
 			participants.splice(0, 0, user._id); // read
 		}
-		return participants?.slice(0, participantsDisplayLimit);
+		return participants.slice(0, participantsDisplayLimit);
 	}
 
 	function limited() {
 		return (
 			participantsDisplayLimit &&
-			data.event.participants &&
-			data.event.participants?.length > participantsDisplayLimit
+			event.participants &&
+			event.participants.length > participantsDisplayLimit
 		);
 	}
 
@@ -155,7 +145,7 @@ export function EventParticipants(data: { event: EventModel }) {
 					{t(
 						'event.details.paticipants.title',
 						'{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }',
-						{ NUM: howManyEnrolled() },
+						{ NUM: event.numberOfParticipants() },
 					)}
 					{canNotifyAll() ? (
 						<i
@@ -166,7 +156,7 @@ export function EventParticipants(data: { event: EventModel }) {
 						></i>
 					) : null}
 					<br />
-					{data.event.maxParticipants ? (
+					{event.maxParticipants ? (
 						<span className="free-places">
 							{t(
 								'event.details.participants.free.places',
@@ -177,12 +167,10 @@ export function EventParticipants(data: { event: EventModel }) {
 					) : null}
 				</h4>
 			</div>
-			{data.event.participants ? (
+			{event.participants ? (
 				<div className="event-participants">
 					{sortedParticipants()?.map((participant) => {
-						return (
-							<EventParticipant key={participant} participant={participant} event={data.event} />
-						);
+						return <EventParticipant key={participant} participant={participant} event={event} />;
 					})}
 					{limited() ? (
 						<button

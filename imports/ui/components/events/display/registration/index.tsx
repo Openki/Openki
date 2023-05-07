@@ -63,27 +63,8 @@ export function EventRegistration(props: { event: EventModel }) {
 		}
 	}
 
-	function acceptsParticipants() {
-		// no maxParticipants
-		if (!event.maxParticipants) {
-			return true;
-		}
-
-		if (!event.participants) {
-			return true;
-		}
-
-		if (event.participants.length < event.maxParticipants) {
-			return true;
-		}
-		return false;
-	}
 	function isFuture() {
 		return moment().isBefore(event.end);
-	}
-	function userRegisteredForEvent() {
-		const userId = user?._id;
-		return userId && event.participants?.includes(userId);
 	}
 
 	return (
@@ -106,7 +87,7 @@ export function EventRegistration(props: { event: EventModel }) {
 					</div>
 					<div className="page-component">
 						<b>
-							{!userRegisteredForEvent()
+							{!event.attendedBy(user?._id)
 								? t(
 										'event.details.i-participate-no',
 										'Let it be known you are participating in this event. Your registration is binding.',
@@ -118,8 +99,8 @@ export function EventRegistration(props: { event: EventModel }) {
 						</b>
 					</div>
 					<div className="page-component">
-						{!userRegisteredForEvent() ? (
-							acceptsParticipants() ? (
+						{!event.attendedBy(user?._id) ? (
+							!event.isFullyBooked() ? (
 								<RegisterPanel
 									busy={isBusy === 'registering'}
 									event={event}

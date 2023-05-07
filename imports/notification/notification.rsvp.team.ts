@@ -135,7 +135,7 @@ export function Model(entry: { body: Body }) {
 				event: eventTitle,
 				newParticipant: Spacebars.SafeString(`<strong>${newParticipant.getDisplayName()}</strong>`),
 				subject,
-				participantsCount: event.participants?.length ?? 0,
+				participantsCount: event.numberOfParticipants(),
 				email: Spacebars.SafeString(`<span style="color:blue">${PrivateSettings.siteEmail}</span>`),
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=rsvpTeamNotify`,
 				customSiteName: siteName,
