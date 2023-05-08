@@ -9,7 +9,11 @@ import { EventModel } from '/imports/api/events/events';
 import { PleaseLogin } from '/imports/ui/components/please-login';
 import { ButtonCancel } from '/imports/ui/components/buttons';
 
-function ButtonRegister(props: { onClick: () => void; busy?: boolean | undefined }) {
+function ButtonRegister(props: {
+	forTwo: boolean;
+	onClick: () => void;
+	busy?: boolean | undefined;
+}) {
 	const { t } = useTranslation();
 
 	return (
@@ -24,8 +28,10 @@ function ButtonRegister(props: { onClick: () => void; busy?: boolean | undefined
 					<span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{' '}
 					{t('_button.registering', 'Registering…')}
 				</>
-			) : (
+			) : !props.forTwo ? (
 				t('event.details.register-register', 'Register')
+			) : (
+				t('event.details.register-registerForTwo', 'Register for 2 seats')
 			)}
 		</PleaseLogin>
 	);
@@ -34,13 +40,14 @@ function ButtonRegister(props: { onClick: () => void; busy?: boolean | undefined
 export function RegisterPanel(props: {
 	event: EventModel;
 	busy: boolean;
-	onRegister: () => Promise<void>;
+	onRegister: (company: number) => Promise<void>;
 }) {
 	const { event, busy, onRegister } = props;
 	const { t } = useTranslation();
 	const user = useUser();
 	const { dateFormat } = useDateTimeFormat();
 	const [registerDropdown, setRegisterDropdown] = useState(false);
+	const [registerWithCompany, setRegisterWithCompany] = useState(false);
 
 	function userName() {
 		return user?.getDisplayName() || t('eventDetails.notLoggedIn', '(not logged in?)');
@@ -71,6 +78,24 @@ export function RegisterPanel(props: {
 							},
 						)}
 					</p>
+					{!event.maxParticipants || event.maxParticipants - event.numberOfParticipants() > 1 ? (
+						<div className="form-check form-switch mb-2">
+							<input
+								className="form-check-input"
+								type="checkbox"
+								role="switch"
+								id="registerWithCompany"
+								onChange={(e) => {
+									setRegisterWithCompany(e.target.checked);
+								}}
+								checked={registerWithCompany}
+							/>
+							<label className="form-check-label" htmlFor="registerWithCompany">
+								{t('event.details.register-with-company', 'I want to reserve for two people')}
+							</label>
+						</div>
+					) : null}
+
 					<div className="row justify-content-between align-items-center gap-3">
 						<div className="col-lg-4 d-grid">
 							<ButtonCancel
@@ -81,8 +106,9 @@ export function RegisterPanel(props: {
 						</div>
 						<div className="col-lg-7 d-grid">
 							<ButtonRegister
+								forTwo={registerWithCompany}
 								onClick={async () => {
-									await onRegister();
+									await onRegister(registerWithCompany ? 1 : 0);
 									setRegisterDropdown(false);
 								}}
 								busy={busy}

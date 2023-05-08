@@ -4,7 +4,7 @@ import Modal from 'bootstrap/js/dist/modal';
 import { useUserId, useUser } from '/imports/utils/react-meteor-data';
 import { Template } from 'meteor/templating';
 
-import { EventModel } from '/imports/api/events/events';
+import { EventModel, EventParticipantEntity } from '/imports/api/events/events';
 import * as EventsMethods from '/imports/api/events/methods';
 
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
@@ -16,12 +16,13 @@ import { Contribution } from '/imports/ui/components/contribution';
 
 import './styles.scss';
 
-function EventParticipant(props: { participant: string; event: EventModel }) {
+function EventParticipant(props: { participant: EventParticipantEntity; event: EventModel }) {
 	const userId = useUserId();
+	const { t } = useTranslation();
 	const { participant, event } = props;
 
 	function ownUserParticipantClass() {
-		if (participant === userId) {
+		if (participant.user === userId) {
 			return 'is-own-user';
 		}
 		return '';
@@ -29,11 +30,20 @@ function EventParticipant(props: { participant: string; event: EventModel }) {
 
 	return (
 		<div className={`event-participant ${ownUserParticipantClass()}`}>
-			<ProfileLink userId={participant} />
+			<ProfileLink userId={participant.user} />
 			&nbsp;
-			<Contribution userId={participant} />
+			<Contribution userId={participant.user} />
 			&nbsp;
-			<ParticipantContact participant={participant} event={event} />
+			<ParticipantContact participant={participant.user} event={event} />
+			{participant.company ? (
+				<strong
+					className="float-end p-1 bg-primary text-light"
+					data-bs-toggle="tooltip"
+					data-bs-title={t('eventParticipant.iBringCompany', 'Brings company.')}
+				>
+					+{participant.company} <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+				</strong>
+			) : null}
 		</div>
 	);
 }
@@ -64,7 +74,7 @@ export function EventParticipants(data: { event: EventModel }) {
 	}
 
 	function canNotifyAll() {
-		if (!(event.numberOfParticipants() > 1)) {
+		if (!((event.participants?.length || 0) > 1)) {
 			return false;
 		}
 
@@ -93,12 +103,13 @@ export function EventParticipants(data: { event: EventModel }) {
 	}
 
 	function sortedParticipants() {
-		const participants = event.participants?.map((p) => p.user) || [];
+		const participants = event.participants || [];
 		if (user?._id && event.attendedBy(user._id)) {
-			const userArrayPosition = participants.indexOf(user._id);
+			const userArrayPosition = participants.findIndex((p) => p.user === user._id);
+			const userParticipant = participants[userArrayPosition];
 			// remove current user form array and read him at index 0
 			participants.splice(userArrayPosition, 1); // remove
-			participants.splice(0, 0, user._id); // read
+			participants.splice(0, 0, userParticipant); // read
 		}
 		return participants.slice(0, participantsDisplayLimit);
 	}
@@ -170,7 +181,9 @@ export function EventParticipants(data: { event: EventModel }) {
 			{event.participants ? (
 				<div className="event-participants">
 					{sortedParticipants()?.map((participant) => {
-						return <EventParticipant key={participant} participant={participant} event={event} />;
+						return (
+							<EventParticipant key={participant.user} participant={participant} event={event} />
+						);
 					})}
 					{limited() ? (
 						<button
