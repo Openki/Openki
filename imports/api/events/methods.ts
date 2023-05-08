@@ -7,8 +7,7 @@ import { _ } from 'meteor/underscore';
 import moment from 'moment';
 
 import { Courses } from '/imports/api/courses/courses';
-import { subscribe } from '/imports/api/courses/methods';
-import { Subscribe } from '/imports/api/courses/subscription';
+import { Subscribe, processChange } from '/imports/api/courses/subscription';
 import * as courseHistoryDenormalizer from '/imports/api/courses/historyDenormalizer';
 import * as courseTimeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
 import * as courseImageDenormalizer from '/imports/api/events/courseImageDenormalizer';
@@ -461,7 +460,7 @@ export const addParticipant = ServerMethod(
 	/**
 	 * @param eventId The event to register for
 	 */
-	async (eventId: string) => {
+	async function (eventId: string) {
 		check(eventId, String);
 
 		const user = Meteor.user();
@@ -495,8 +494,7 @@ export const addParticipant = ServerMethod(
 
 		const change = new Subscribe(course, user, 'participant', 'rsvp');
 		if (change.validFor(user)) {
-			// Todo: Hotfix, improve in future
-			subscribe({ courseId: course._id, userId: user._id, role: 'participant', reason: 'rsvp' });
+			await processChange(change, { isSimulation: this.isSimulation });
 		}
 	},
 );
