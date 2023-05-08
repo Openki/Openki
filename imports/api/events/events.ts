@@ -22,6 +22,7 @@ import { Tuple, Type } from '/imports/utils/CustomChecks';
 
 export interface EventParticipantEntity {
 	user: string;
+	company?: number;
 }
 
 export interface EventVenueEntity {
@@ -78,7 +79,7 @@ export interface EventEntity {
 	/** ID of the replication parent, only cloned events have this */
 	replicaOf?: string;
 	participants?: EventParticipantEntity[];
-	/** maximum participants of event */
+	/** maximum participants of event, 0 means no participant limit */
 	maxParticipants: number;
 	/**
 	 * (calculated) list of group._id inherited from course (if courseId is set) ("promote groups"
@@ -154,7 +155,7 @@ export class OEvent {
 	}
 
 	numberOfParticipants(this: EventModel) {
-		return this.participants?.length || 0;
+		return this.participants?.map((p) => (p.company || 0) + 1).reduce((a, b) => a + b, 0) || 0;
 	}
 
 	isFullyBooked(this: EventModel) {

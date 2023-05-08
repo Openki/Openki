@@ -52,10 +52,10 @@ export function EventRegistration(props: { event: EventModel }) {
 	const { t } = useTranslation();
 	const [isBusy, setIsBusy] = useState('');
 
-	async function addParticipant() {
+	async function addParticipant(company = 0) {
 		setIsBusy('registering');
 		try {
-			await EventsMethods.addParticipant(event._id);
+			await EventsMethods.addParticipant(event._id, company);
 
 			Analytics.trackEvent('RSVPs', 'RSVPs as participant', Regions.findOne(event.region)?.nameEn);
 		} catch (err) {
@@ -102,10 +102,10 @@ export function EventRegistration(props: { event: EventModel }) {
 						{!event.attendedBy(user?._id) ? (
 							!event.isFullyBooked() ? (
 								<RegisterPanel
-									busy={isBusy === 'registering'}
 									event={event}
-									onRegister={async () => {
-										await addParticipant();
+									busy={isBusy === 'registering'}
+									onRegister={async (company) => {
+										await addParticipant(company);
 									}}
 								/>
 							) : (
