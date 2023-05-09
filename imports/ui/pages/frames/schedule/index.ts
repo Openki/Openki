@@ -174,7 +174,7 @@ template.onCreated(function () {
 		const days: _.Dictionary<number> = {};
 
 		// Map of slots where events were found. Each slot holds a list of events.
-		const slots: { [mins: number]: { [day: number]: EventViewModel[] } } = {};
+		const slots: { [mins: string]: { [day: string]: EventViewModel[] } } = {};
 
 		// Count occurences of first few chars in event titles
 		// This helps coloring the events so they're easier to scan.
@@ -203,14 +203,14 @@ template.onCreated(function () {
 			const mins = Math.max(intervalStart, closestSeparator || 0);
 			intervals[mins] = mins;
 
-			if (!slots[mins]) {
-				slots[mins] = {};
+			if (!slots[`${mins}`]) {
+				slots[`${mins}`] = {};
 			}
-			if (!slots[mins][day]) {
-				slots[mins][day] = [];
+			if (!slots[`${mins}`][`${day}`]) {
+				slots[`${mins}`][`${day}`] = [];
 			}
 
-			slots[mins][day].push(event);
+			slots[`${mins}`][`${day}`].push(event);
 
 			const kindId = event.title.substring(0, 5);
 			if (!kinds[kindId]) {
@@ -238,8 +238,8 @@ template.onCreated(function () {
 			return false;
 		};
 
-		_.each(slots, (dayslots, min) => {
-			_.each(dayslots, (slot, day) => {
+		Object.entries(slots).forEach(([min, dayslots]) => {
+			Object.entries(dayslots).forEach(([day, slot]) => {
 				slots[min][day] = _.sortBy(slot, (event) => {
 					const dayslotKindRank = (instance.kindMap(event.title) || 100) + 100;
 					const countRank = 10000 - repetitionCount[event.repKey];
