@@ -4,7 +4,7 @@ import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import moment from 'moment';
 
-import { EventModel, Events } from '/imports/api/events/events';
+import { EventEntity, Events } from '/imports/api/events/events';
 
 import { LocalTime } from '/imports/utils/local-time';
 import { reactiveNow } from '/imports/utils/reactive-now';
@@ -12,9 +12,9 @@ import { reactiveNow } from '/imports/utils/reactive-now';
 import './template.html';
 import './styles.scss';
 
-type EventViewModel = EventModel & {
-	repKeyDay?: string;
-	repKey?: string;
+type EventViewModel = EventEntity & {
+	repKeyDay: string;
+	repKey: string;
 	repCount: number;
 };
 
@@ -174,7 +174,7 @@ template.onCreated(function () {
 		const days: _.Dictionary<number> = {};
 
 		// Map of slots where events were found. Each slot holds a list of events.
-		const slots: any = {};
+		const slots: { [mins: number]: { [day: number]: EventViewModel[] } } = {};
 
 		// Count occurences of first few chars in event titles
 		// This helps coloring the events so they're easier to scan.
