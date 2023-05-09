@@ -62,6 +62,9 @@ import './template.html';
 		singleEvent() {
 			return Courses.findOne(this.courseId)?.singleEvent;
 		},
+		course() {
+			return Courses.findOne(this.courseId);
+		},
 		deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
 			const instance = Template.instance();
 			return {
