@@ -74,6 +74,12 @@ template.onCreated(function () {
 			} else {
 				Alert.error(`${change} not valid for ${user}`);
 			}
+
+			// After unsubscribe got to the event. Equals in route 'showCourse'.
+			const course = instance.data.course;
+			if (course?.singleEvent && course.nextEvent) {
+				Router.go('showEvent', course.nextEvent, { replaceState: true });
+			}
 		});
 	}
 });
