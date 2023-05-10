@@ -24,7 +24,8 @@
 				"facebook": true,
 				"github": true
 			},
-			"visitorUser": true
+			"visitorUser": true,
+			"rsvpWithCompany": true
 		},
 		"nav":
 		{	

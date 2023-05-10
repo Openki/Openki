@@ -1,5 +1,6 @@
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
+import merge from 'deepmerge';
 
 import { Record, Type } from '/imports/utils/CustomChecks';
 import { LocalizedValue, LocalizedValuePattern } from '/imports/utils/getLocalizedValue';
@@ -54,6 +55,8 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
 		login: { google: Boolean, facebook: Boolean, github: Boolean },
 		/** allow user without name and password */
 		visitorUser: Boolean,
+		/** allow rsvp with +1 / for two seats */
+		rsvpWithCompany: Boolean,
 	},
 	nav: {
 		brandLink: String,
@@ -139,6 +142,7 @@ const defaults = {
 	feature: {
 		login: { google: false, facebook: false, github: false },
 		visitorUser: false,
+		rsvpWithCompany: false,
 	},
 	nav: {
 		brandLink: '/',
@@ -164,8 +168,7 @@ const defaults = {
 	categories: {},
 };
 
-// none deep merge
-const publicSettings = { ...defaults, ...Meteor.settings.public };
+const publicSettings = merge(defaults, Meteor.settings.public);
 
 // seperate merge of matomo to make jsPath and phpPath optional
 publicSettings.matomo = { ...defaults.matomo, ...Meteor.settings.public.matomo };
