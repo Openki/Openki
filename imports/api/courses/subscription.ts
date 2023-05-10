@@ -15,9 +15,13 @@ import { hasRole } from '/imports/utils/course-role-utils';
 import { Notification } from '/imports/notification/notification';
 import { StringEnum, Type } from '/imports/utils/CustomChecks';
 
-export async function processChange<T>(change: Change<T>) {
+export async function processChange<T>(change: Change<T>, options?: { isSimulation: boolean }) {
 	try {
-		await Meteor.callAsync(change.constructor.method, change.dict());
+		if (Meteor.isClient && options?.isSimulation) {
+			Meteor.call(change.constructor.method, change.dict());
+		} else {
+			await Meteor.callAsync(change.constructor.method, change.dict());
+		}
 	} catch (err) {
 		/* eslint-disable-next-line no-console */
 		console.log(err);

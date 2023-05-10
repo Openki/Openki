@@ -460,7 +460,7 @@ export const addParticipant = ServerMethod(
 	/**
 	 * @param eventId The event to register for
 	 */
-	async (eventId: string) => {
+	async function (eventId: string) {
 		check(eventId, String);
 
 		const user = Meteor.user();
@@ -493,9 +493,8 @@ export const addParticipant = ServerMethod(
 		}
 
 		const change = new Subscribe(course, user, 'participant', 'rsvp');
-
 		if (change.validFor(user)) {
-			await processChange(change);
+			await processChange(change, { isSimulation: this.isSimulation });
 		}
 	},
 );
