@@ -33,7 +33,8 @@
 				"facebook": true,
 				"github": true
 			},
-			"visitorUser": true // allow user without name and password
+			"visitorUser": true, // allow user without name and password, Default: false
+			"rsvpWithCompany": true // allow rsvp with +1 / for two seats, Default: false
 		},
 		"nav":
 		{
@@ -67,7 +68,7 @@
 			{ "link": "https://gitlab.com/Openki/Openki/"
 			, "key": "navigation.footer.powerdByOpenki"
 			, "title_key": "navigation.footer.codeOnGitLab"
-			}
+			},
 			{ "link": "https://about.openki.net/privacy-policy/"
 			, "key": "main.privacyPolicy"
 			, "title_key": "main.privacyPolicy.tooltip"
@@ -101,7 +102,7 @@
 				[
 					"subcategoryname1",
 					"subcategoryname2"
-				],
+				]
 		},
 		"s3": { // file storage
 			"publicUrlBase": "https://984b.objectstorage.nineapis.ch/v1/AUTH_01234-xyz123/bucket-name"

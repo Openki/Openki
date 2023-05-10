@@ -8,6 +8,7 @@ import { EventModel } from '/imports/api/events/events';
 
 import { PleaseLogin } from '/imports/ui/components/please-login';
 import { ButtonCancel } from '/imports/ui/components/buttons';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
 function ButtonRegister(props: {
 	forTwo: boolean;
@@ -78,7 +79,8 @@ export function RegisterPanel(props: {
 							},
 						)}
 					</p>
-					{!event.maxParticipants || event.maxParticipants - event.numberOfParticipants() > 1 ? (
+					{PublicSettings.feature.rsvpWithCompany &&
+					(!event.maxParticipants || event.maxParticipants - event.numberOfParticipants() > 1) ? (
 						<div className="form-check form-switch mb-2">
 							<input
 								className="form-check-input"
