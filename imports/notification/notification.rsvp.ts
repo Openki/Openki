@@ -32,13 +32,13 @@ export function record(eventId: string, participantId: string) {
 		throw new Meteor.Error(`No user entry for ${participantId}`);
 	}
 
-	const body = {} as Body;
-	body.eventId = event._id;
-	body.participantId = participant._id;
+	const body: Body = {
+		eventId: event._id,
+		participantId: participant._id,
 
-	body.recipients = [participant._id];
-
-	body.model = 'Rsvp';
+		recipients: [participant._id],
+		model: 'Rsvp',
+	};
 
 	Log.record('Notification.Send', [event._id, participant._id], body);
 }
