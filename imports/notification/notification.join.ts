@@ -49,14 +49,14 @@ export function record(courseId: string, participantId: string, newRole: string,
 	const body: Body = {
 		courseId: course._id,
 		participantId: participant._id,
+		newRole,
+		message,
 
 		// Don't send to new member, they know
 		recipients: course
 			.membersWithRole('team')
 			.map((m) => m.user)
 			.filter((r) => r !== participantId),
-		newRole,
-		message,
 		model: 'Join',
 	};
 
