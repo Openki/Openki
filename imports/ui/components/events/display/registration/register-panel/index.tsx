@@ -93,7 +93,7 @@ export function RegisterPanel(props: {
 								checked={registerWithCompany}
 							/>
 							<label className="form-check-label" htmlFor="registerWithCompany">
-								{t('event.details.register-with-company', 'I want to reserve for two people')}
+								{t('event.details.register-with-company', 'I want to reserve for two persons.')}
 							</label>
 						</div>
 					) : null}
