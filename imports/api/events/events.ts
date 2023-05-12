@@ -319,7 +319,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		check(skip, Match.Maybe(Match.Integer));
 		check(sort, Match.Maybe([FieldSortPattern]));
 
-		const find: Mongo.Selector<EventEntity> = {};
+		const find: any = {};
 		const and = [];
 
 		const options: Mongo.Options<EventEntity> = {};
@@ -373,7 +373,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		}
 
 		if (inVenues.length > 0) {
-			find['venue._id'] = { $in: inVenues };
+			find.venue = { _id: { $in: inVenues } };
 		}
 
 		if (filter.room) {

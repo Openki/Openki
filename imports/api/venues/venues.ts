@@ -125,7 +125,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 		check(skip, Match.Maybe(Match.Integer));
 		check(sort, Match.Maybe([FieldSortPattern]));
 
-		const find: Mongo.Selector<VenueEntity> = {};
+		const find: any = {};
 
 		const options: Mongo.Options<VenueEntity> = { sort };
 
@@ -159,7 +159,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
 			if (filter.region) {
 				findRecent.region = filter.region;
 			}
-			const findRecentOptions = {
+			const findRecentOptions: Mongo.Options<EventEntity> = {
 				sort: { time_lastedit: -1 },
 				limit: (limit || 10) * 1.5, // Get more so after distinct/uniq we reach the limit
 				fields: { 'venue._id': 1 },

@@ -13,7 +13,7 @@ export interface UserProfile {
 export interface UserEntity extends Meteor.User {
 	/** ID */
 	_id: string;
-	tenants: { _id: string; privileges: string[] }[];
+	tenants: { _id: string; privileges?: string[] }[];
 	createdAt: Date;
 	services: {
 		password: {

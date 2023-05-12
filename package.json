@@ -86,7 +86,7 @@
     "typescript": "4.9.4"
   },
   "scripts": {
-    "dev": "npm run extract-translations && npm run type-check && meteor --inspect --settings settings/dev.json",
+    "dev": "npm run extract-translations && meteor lint && npm run type-check && meteor --inspect --settings settings/dev.json",
     "test": "npm run type-check && MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
     "app-test": "npm run type-check && MOCHA_GREP=$npm_config_grep TEST_BROWSER_DRIVER=chrome TEST_CHROME_ARGS=--user-data-dir=$(mktemp -u -p $HOME -t tmp4meteor_tests.XXXXXXXXXX) meteor test --full-app --once --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
     "test-live": "npm run type-check && MOCHA_GREP=$npm_config_grep meteor test --full-app --driver-package meteortesting:mocha --inspect --settings settings/ci.json",
