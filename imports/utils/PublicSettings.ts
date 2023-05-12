@@ -56,7 +56,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
 		/** allow user without name and password */
 		visitorUser: Boolean,
 		/** allow rsvp with +1 / for two seats */
-		rsvpWithCompany: Boolean,
+		rsvpWithCompanions: Boolean,
 	},
 	nav: {
 		brandLink: String,
@@ -142,7 +142,7 @@ const defaults = {
 	feature: {
 		login: { google: false, facebook: false, github: false },
 		visitorUser: false,
-		rsvpWithCompany: false,
+		rsvpWithCompanions: false,
 	},
 	nav: {
 		brandLink: '/',
