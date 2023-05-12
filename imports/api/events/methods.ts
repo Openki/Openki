@@ -460,9 +460,9 @@ export const addParticipant = ServerMethod(
 	/**
 	 * @param eventId The event to register for
 	 */
-	async function (eventId: string, company: number) {
+	async function (eventId: string, companions: number) {
 		check(eventId, String);
-		check(company, Number);
+		check(companions, Number);
 
 		const user = Meteor.user();
 		if (!user) {
@@ -480,12 +480,15 @@ export const addParticipant = ServerMethod(
 			throw new Meteor.Error(401, 'cannot register, event has already passed');
 		}
 
-		Events.update({ _id: eventId }, { $addToSet: { participants: { user: user._id, company } } });
+		Events.update(
+			{ _id: eventId },
+			{ $addToSet: { participants: { user: user._id, companions } } },
+		);
 
 		// Send notifications to user
-		Notification.Rsvp.record(eventId, user._id, company);
+		Notification.Rsvp.record(eventId, user._id, companions);
 		// Send notification to team
-		Notification['Rsvp.Team'].record(eventId, user._id, company);
+		Notification['Rsvp.Team'].record(eventId, user._id, companions);
 
 		// if you cant load course its probably because the event doesnt have one
 		const course = Courses.findOne(event.courseId);

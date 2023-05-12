@@ -35,13 +35,14 @@ function EventParticipant(props: { participant: EventParticipantEntity; event: E
 			<Contribution userId={participant.user} />
 			&nbsp;
 			<ParticipantContact participant={participant.user} event={event} />
-			{participant.company ? (
+			{participant.companions ? (
 				<strong
 					className="float-end p-1 bg-primary text-light"
 					data-bs-toggle="tooltip"
-					data-bs-title={t('eventParticipant.iBringCompany', 'Brings company.')}
+					data-bs-title={t('eventParticipant.iBringCompanions', 'Brings companion.')}
 				>
-					+{participant.company} <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+					+{participant.companions}{' '}
+					<span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
 				</strong>
 			) : null}
 		</div>

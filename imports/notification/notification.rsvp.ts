@@ -14,15 +14,15 @@ import { getSiteName } from '/imports/utils/getSiteName';
 interface Body {
 	eventId: string;
 	participantId: string;
-	company: number;
+	companions: number;
 	recipients: string[];
 	model: string;
 }
 
-export function record(eventId: string, participantId: string, company: number) {
+export function record(eventId: string, participantId: string, companions: number) {
 	check(eventId, String);
 	check(participantId, String);
-	check(company, Number);
+	check(companions, Number);
 
 	const event = Events.findOne(eventId);
 	if (!event) {
@@ -37,7 +37,7 @@ export function record(eventId: string, participantId: string, company: number) 
 	const body: Body = {
 		eventId: event._id,
 		participantId: participant._id,
-		company,
+		companions,
 		recipients: [participant._id],
 		model: 'Rsvp',
 	};
@@ -109,7 +109,7 @@ export function Model(entry: { body: Body }) {
 
 			return {
 				username: actualRecipient.getDisplayName(),
-				company: body.company,
+				companions: body.companions,
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				event,
 				eventDate: startMoment.format('LL'),

@@ -41,14 +41,14 @@ function ButtonRegister(props: {
 export function RegisterPanel(props: {
 	event: EventModel;
 	busy: boolean;
-	onRegister: (company: number) => Promise<void>;
+	onRegister: (companions: number) => Promise<void>;
 }) {
 	const { event, busy, onRegister } = props;
 	const { t } = useTranslation();
 	const user = useUser();
 	const { dateFormat } = useDateTimeFormat();
 	const [registerDropdown, setRegisterDropdown] = useState(false);
-	const [registerWithCompany, setRegisterWithCompany] = useState(false);
+	const [registerWithCompanions, setRegisterWithCompanions] = useState(false);
 
 	function userName() {
 		return user?.getDisplayName() || t('eventDetails.notLoggedIn', '(not logged in?)');
@@ -79,21 +79,21 @@ export function RegisterPanel(props: {
 							},
 						)}
 					</p>
-					{PublicSettings.feature.rsvpWithCompany &&
+					{PublicSettings.feature.rsvpWithCompanions &&
 					(!event.maxParticipants || event.maxParticipants - event.numberOfParticipants() > 1) ? (
 						<div className="form-check form-switch mb-2">
 							<input
 								className="form-check-input"
 								type="checkbox"
 								role="switch"
-								id="registerWithCompany"
+								id="registerWithCompanions"
 								onChange={(e) => {
-									setRegisterWithCompany(e.target.checked);
+									setRegisterWithCompanions(e.target.checked);
 								}}
-								checked={registerWithCompany}
+								checked={registerWithCompanions}
 							/>
-							<label className="form-check-label" htmlFor="registerWithCompany">
-								{t('event.details.register-with-company', 'I want to reserve for two persons.')}
+							<label className="form-check-label" htmlFor="registerWithCompanions">
+								{t('event.details.register-with-companions', 'I want to reserve for two persons.')}
 							</label>
 						</div>
 					) : null}
@@ -108,9 +108,9 @@ export function RegisterPanel(props: {
 						</div>
 						<div className="col-lg-7 d-grid">
 							<ButtonRegister
-								forTwo={registerWithCompany}
+								forTwo={registerWithCompanions}
 								onClick={async () => {
-									await onRegister(registerWithCompany ? 1 : 0);
+									await onRegister(registerWithCompanions ? 1 : 0);
 									setRegisterDropdown(false);
 								}}
 								busy={busy}

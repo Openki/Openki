@@ -22,7 +22,7 @@ import { Tuple, Type } from '/imports/utils/CustomChecks';
 
 export interface EventParticipantEntity {
 	user: string;
-	company?: number;
+	companions?: number;
 }
 
 export interface EventVenueEntity {
@@ -155,7 +155,7 @@ export class OEvent {
 	}
 
 	numberOfParticipants(this: EventModel) {
-		return this.participants?.map((p) => (p.company || 0) + 1).reduce((a, b) => a + b, 0) || 0;
+		return this.participants?.map((p) => (p.companions || 0) + 1).reduce((a, b) => a + b, 0) || 0;
 	}
 
 	isFullyBooked(this: EventModel) {

@@ -18,15 +18,15 @@ interface Body {
 	eventId: string;
 	courseId: string;
 	participantId: string;
-	company: number;
+	companions: number;
 	recipients: string[];
 	model: string;
 }
 
-export function record(eventId: string, participantId: string, company: number) {
+export function record(eventId: string, participantId: string, companions: number) {
 	check(eventId, String);
 	check(participantId, String);
-	check(company, Number);
+	check(companions, Number);
 
 	const event = Events.findOne(eventId);
 	if (!event) {
@@ -51,7 +51,7 @@ export function record(eventId: string, participantId: string, company: number) 
 		eventId: event._id,
 		courseId: course._id,
 		participantId: participant._id,
-		company,
+		companions,
 
 		// Don't send to new member, they know
 		recipients: course
@@ -137,7 +137,7 @@ export function Model(entry: { body: Body }) {
 				course: course.name,
 				event: eventTitle,
 				newParticipant: Spacebars.SafeString(`<strong>${newParticipant.getDisplayName()}</strong>`),
-				companyOfNewParticipant: body.company,
+				companionsOfNewParticipant: body.companions,
 				subject,
 				participantsCount: event.numberOfParticipants(),
 				email: Spacebars.SafeString(`<span style="color:blue">${PrivateSettings.siteEmail}</span>`),
