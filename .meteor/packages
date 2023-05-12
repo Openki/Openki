@@ -54,6 +54,7 @@ blaze-hot
 
 # DEV
 msavin:mongol
+zodern:types
 typescript@4.9.4
 
 # Test

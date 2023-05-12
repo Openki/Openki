@@ -142,7 +142,7 @@ export function installRouterActions() {
 	Router.onAfterAction(() => {
 		// Router.onAfterAction sometimes fires more than once on each page run.
 		// https://github.com/iron-meteor/iron-router/issues/1031
-		if (Tracker.currentComputation.firstRun) {
+		if (Tracker.currentComputation?.firstRun) {
 			trytrack((t) => {
 				if (started) {
 					t.setGenerationTimeMs(new Date().getTime() - started.getTime());

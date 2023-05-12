@@ -152,7 +152,7 @@ import './styles.scss';
 
 		instance.autorun(() => {
 			const { member } = Template.currentData();
-			instance.editableMessage.setText(member.comment);
+			instance.editableMessage.setText(member.comment || '');
 		});
 
 		instance.subscribeToTeam = () => {
