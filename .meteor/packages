@@ -49,6 +49,8 @@ es5-shim@4.8.0                  # ECMAScript 5 compatibility for older browsers
 ecmascript@0.16.6               # Enable ECMAScript2015+ syntax in app code
 standard-minifier-js@2.8.1      # JS minifier run for production mode
 standard-minifier-css@1.9.0     # Enables PostCSS
+hot-module-replacement          # Support Hot Module Replacement
+blaze-hot
 
 # DEV
 msavin:mongol
