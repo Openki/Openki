@@ -35,13 +35,11 @@ export function record(commentId: string) {
 		throw new Meteor.Error(`No course entry for ${commentId}`);
 	}
 
-	const body = {} as Body;
-	body.commentId = comment._id;
-
+	let recipients;
 	if (comment.notifyAll) {
-		body.recipients = course.members.map((m) => m.user);
+		recipients = course.members.map((m) => m.user);
 	} else {
-		let recipients = [];
+		recipients = [];
 
 		recipients = course.membersWithRole('team').map((m) => m.user);
 
@@ -65,10 +63,14 @@ export function record(commentId: string) {
 			recipients = recipients.filter((r) => r !== comment.userId);
 		}
 
-		body.recipients = _.uniq(recipients);
+		recipients = _.uniq(recipients);
 	}
 
-	body.model = 'Comment';
+	const body: Body = {
+		commentId: comment._id,
+		recipients,
+		model: 'Comment',
+	};
 
 	Log.record('Notification.Send', [course._id, comment._id], body);
 }

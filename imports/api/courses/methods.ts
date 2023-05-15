@@ -358,7 +358,7 @@ export const deleteImage = ServerMethod(
 		const update = { image: '' };
 
 		const set = timeLasteditDenormalizer.beforeDeleteImage();
-		Courses.update(course._id, { $unset: update, $set: set });
+		Courses.update(course._id, { $unset: update, $set: set } as Mongo.Modifier<CourseEntity>);
 		historyDenormalizer.afterDeleteImage(courseId, user._id);
 		eventsCourseImageDenormalizer.afterCourseDeleteImage(courseId);
 
