@@ -135,7 +135,7 @@ export class LogCollection extends Mongo.Collection<LogEntity> {
 		check(filter, FindFilterPattern);
 		check(limit, Match.Integer);
 
-		const query: Mongo.Selector<LogEntity> = {};
+		const query: any = {};
 		if (filter.start) query.ts = { $lte: filter.start };
 		if (filter.rel) query.$or = [{ _id: { $in: filter.rel } }, { rel: { $in: filter.rel } }];
 		if (filter.tr) query.tr = { $in: filter.tr };

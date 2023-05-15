@@ -1,5 +1,6 @@
 import { Match, check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 
 import { Regions } from '/imports/api/regions/regions';
 import { VenueEntity, Venues } from '/imports/api/venues/venues';
@@ -52,7 +53,7 @@ export const save = ServerMethod('venue.save', async (venueId: string, changes: 
 	}
 
 	/* Changes we want to perform */
-	const set = { updated: new Date() } as VenueEntity;
+	const set = { updated: new Date() } as Mongo.OptionalId<VenueEntity>;
 
 	if (changes.description) {
 		set.description = HtmlTools.saneHtml(changes.description.trim().substring(0, 640 * 1024));

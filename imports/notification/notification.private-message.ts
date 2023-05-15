@@ -77,9 +77,10 @@ export function record(
 	const body: Body = {
 		message,
 		sender: senderId,
-		recipients,
 		targetRecipient: recipientId,
 		revealSenderAddress,
+
+		recipients,
 		model: 'PrivateMessage',
 		context,
 	};

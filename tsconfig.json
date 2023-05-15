@@ -32,7 +32,12 @@
 		"baseUrl": ".",
 		"paths": {
 			/* Support absolute /imports/* with a leading '/' */
-			"/*": ["*"]
+			"/*": ["*"],
+			/* Using Core Types */
+			"meteor/*": [
+				"node_modules/@types/meteor/*",
+				".meteor/local/types/packages.d.ts"
+			  ]
 		},
 		"moduleResolution": "node",
 		"allowUmdGlobalAccess": true, // Needed for leaflet meteor package

@@ -24,7 +24,7 @@ import { StringEnum, Type } from '/imports/utils/CustomChecks';
 export interface CourseMemberEntity {
 	user: string;
 	roles: string[];
-	comment: string;
+	comment?: string | undefined;
 }
 
 export type CourseCustomField = Pick<
@@ -259,7 +259,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 		check(skip, Match.Maybe(Match.Integer));
 		check(sort, Match.Maybe([FieldSortPattern]));
 
-		const find: Mongo.Selector<CourseEntity> = {};
+		const find: any = {};
 		const options: Mongo.Options<CourseEntity> = {};
 		const order = sort;
 
