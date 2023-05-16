@@ -9,7 +9,7 @@
 	"_button.more": "Mehr anzeigen",
 	"_button.registering": "Registrieren…",
 	"_button.save": "Speichern",
-	"_button.saving": "Speichert… (Bitte nach oben scrollen)",
+	"_button.saving": "Speichert…",
 	"_button.unregistering": "Meldet ab…",
 	"_clientError": "Es tut uns leid, es gab einen Fehler: \"{ERROR}.\"",
 	"_inputField.maxlength": "Zu viele Zeichen benutzt in der Beschreibung. {MAXNUMBER} sind erlaubt. Bitte entferne mindestens {NUMBER} Zeichen um speichern zu können (wegen begrenztem Platz im Programmheft).",
