@@ -218,16 +218,17 @@ export const save = ServerMethod(
 
 		if (course.isNew()) {
 			// You can add newly created courses to any group
-			const testedGroups =
-				changes.groups?.map((groupId: string) => {
-					const group = Groups.findOne(groupId);
-					if (!group) {
-						throw new Meteor.Error(404, `no group with id ${groupId}`);
-					}
-					return group._id;
-				}) || [];
-			set.groups = testedGroups;
-			set.groupOrganizers = testedGroups;
+			let groups = changes.groups || [];
+			groups = [...new Set(groups)]; // make unique
+			groups = groups.map((groupId) => {
+				const group = Groups.findOne(groupId);
+				if (!group) {
+					throw new Meteor.Error(404, `no group with id ${groupId}`);
+				}
+				return group._id;
+			});
+			set.groups = groups;
+			set.groupOrganizers = groups;
 
 			/* region cannot be changed */
 			const region = Regions.findOne({ _id: changes.region });

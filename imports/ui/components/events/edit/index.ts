@@ -172,7 +172,8 @@ template.onCreated(function () {
 			groups.push(...course.groupOrganizers);
 		}
 
-		return groups;
+		// remove double groups
+		return [...new Set(groups)];
 	}
 
 	instance.autorun(() => {
