@@ -152,9 +152,9 @@ export const deleteLogo = ServerMethod(
 			FileStorage.remove(group.logoUrl);
 		}
 
-		const update = { logoUrl: '' };
+		const update: Mongo.Modifier<GroupEntity> = { $unset: { logoUrl: '' } };
 
-		Groups.update(group._id, { $unset: update });
+		Groups.update(group._id, update);
 
 		return groupId;
 	},
