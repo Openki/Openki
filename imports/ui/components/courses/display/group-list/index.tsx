@@ -55,7 +55,7 @@ export function CourseGroupList(props: { course: CourseModel }) {
 							</div>
 						) : null}
 
-						{tools(groupId) ? (
+						{user?.mayPromoteWith(groupId) || course.editableBy(user) ? (
 							<div className="btn-group tag-btn group-tag-btn addon align-top">
 								<button
 									type="button"

@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import { Match, check } from 'meteor/check';
+import { Mongo } from 'meteor/mongo';
 
 import { LanguagesRaw, Languages, LanguageEntity } from '/imports/api/languages/languages';
 
@@ -54,9 +55,9 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
 	(filter: FindFilter) => {
 		check(filter, Match.Maybe(FindFilterPattern));
 
-		const selector = {
+		const selector: Mongo.Selector<LanguageEntity> = {
 			_id: filter.code,
-		} as Mongo.Query<LanguageEntity>;
+		};
 
 		if (typeof filter.visible === 'boolean') {
 			selector.visible = filter.visible;

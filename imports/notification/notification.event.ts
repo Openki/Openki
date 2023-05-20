@@ -18,7 +18,6 @@ interface Body {
 	eventId: string;
 	additionalMessage: string | undefined;
 	recipients: string[];
-	courseId: string;
 	model: string;
 }
 
@@ -46,21 +45,17 @@ export function record(eventId: string, isNew: boolean, additionalMessage?: stri
 		course = Courses.findOne(event.courseId);
 	}
 
-	const body = {} as Body;
-	body.new = isNew;
-	body.eventId = event._id;
-	body.additionalMessage = additionalMessage;
+	const body: Body = {
+		new: isNew,
+		eventId: event._id,
+		additionalMessage,
 
-	// The list of recipients is built right away so that only course members
-	// at the time of event creation will get the notice even if sending is
-	// delayed.
-	body.recipients = [];
-	if (course) {
-		body.recipients = course.members.map((m) => m.user);
-		body.courseId = course._id;
-	}
-
-	body.model = 'Event';
+		// The list of recipients is built right away so that only course members
+		// at the time of event creation will get the notice even if sending is
+		// delayed.
+		recipients: course?.members.map((m) => m.user) || [],
+		model: 'Event',
+	};
 
 	Log.record('Notification.Send', course ? [course._id] : [], body);
 }
@@ -149,7 +144,7 @@ export function Model(entry: { body: Body }) {
 				}),
 				course: Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`),
 				unsubscribeFromCourseLink: Router.url('showCourse', course, {
-					query: 'unsubscribe=participant&campaign=eventNotify',
+					query: 'unsubscribe=participant&force=1&campaign=eventNotify',
 				}),
 				calLink: Router.url('calEvent', event, { query: 'campaign=eventNotify' }),
 				new: entry.body.new,

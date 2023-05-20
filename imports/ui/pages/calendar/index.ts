@@ -152,9 +152,7 @@ import './styles.scss';
 			let maybeFilteredEvents = [...events];
 			const userId = Meteor.userId();
 			if (filters.hash.isAttendeeFilterOn && userId) {
-				maybeFilteredEvents = maybeFilteredEvents.filter((event) => {
-					return event.participants?.includes(userId);
-				});
+				maybeFilteredEvents = maybeFilteredEvents.filter((event) => event.attendedBy(userId));
 			}
 			return maybeFilteredEvents;
 		},
