@@ -13,6 +13,7 @@ import {
 	CenteredMarkerEntity,
 	LocationTracker,
 	MainMarkerEntity,
+	MarkerEntity,
 	ProposedMarkerEntity,
 	RemoveMarkerEntity,
 	SelectedMarkerEntity,
@@ -290,7 +291,7 @@ template.events({
 		instance.search.set('');
 	},
 
-	'click .js-location-candidate'(_event, instance) {
+	'click .js-location-candidate'(this: MarkerEntity, _event, instance) {
 		instance.locationTracker.markers.update(this._id, { $set: { selected: true } });
 	},
 
@@ -309,7 +310,7 @@ template.events({
 		instance.location.set(updLocation);
 	},
 
-	'mouseenter .js-location-candidate'(_event, instance) {
+	'mouseenter .js-location-candidate'(this: MarkerEntity, _event, instance) {
 		instance.locationTracker.markers.update({}, { $set: { hover: false } }, { multi: true });
 		instance.locationTracker.markers.update(this._id, { $set: { hover: true } });
 	},

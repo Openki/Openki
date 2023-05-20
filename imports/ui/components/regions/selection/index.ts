@@ -2,6 +2,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 import { Session } from 'meteor/session';
+import { Mongo } from 'meteor/mongo';
 
 import { RegionEntity, RegionModel, Regions } from '/imports/api/regions/regions';
 

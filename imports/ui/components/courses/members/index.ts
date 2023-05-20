@@ -12,6 +12,7 @@ import * as Users from '/imports/api/users/publications';
 import { Editable } from '/imports/ui/lib/editable';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
 import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
+import * as Tooltips from '/imports/utils/Tooltips';
 
 import '/imports/ui/components/editable';
 import '/imports/ui/components/participant/contact';
@@ -151,14 +152,14 @@ import './styles.scss';
 
 		instance.autorun(() => {
 			const { member } = Template.currentData();
-			instance.editableMessage.setText(member.comment);
+			instance.editableMessage.setText(member.comment || '');
 		});
 
 		instance.subscribeToTeam = () => {
 			const user = instance.user.get()?.();
 			if (!user) return undefined; // Probably not loaded yet
 
-			return new Subscribe(course, user, 'team', 'interested');
+			return new Subscribe(Template.currentData().course, user, 'team', 'interested');
 		};
 
 		instance.removeFromTeam = () => {
@@ -219,6 +220,7 @@ import './styles.scss';
 	template.events({
 		async 'click .js-add-to-team-btn'(event, instance) {
 			event.preventDefault();
+			Tooltips.hide();
 			const change = instance.subscribeToTeam();
 			if (!change) {
 				throw new Error('Unexpected falsy: change');
@@ -227,6 +229,7 @@ import './styles.scss';
 		},
 		async 'click .js-remove-team'(event, instance) {
 			event.preventDefault();
+			Tooltips.hide();
 			const change = instance.removeFromTeam();
 			if (!change) {
 				throw new Error('Unexpected falsy: change');

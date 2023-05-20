@@ -14,13 +14,15 @@ import { getSiteName } from '/imports/utils/getSiteName';
 interface Body {
 	eventId: string;
 	participantId: string;
+	companions: number;
 	recipients: string[];
 	model: string;
 }
 
-export function record(eventId: string, participantId: string) {
+export function record(eventId: string, participantId: string, companions: number) {
 	check(eventId, String);
 	check(participantId, String);
+	check(companions, Number);
 
 	const event = Events.findOne(eventId);
 	if (!event) {
@@ -32,13 +34,13 @@ export function record(eventId: string, participantId: string) {
 		throw new Meteor.Error(`No user entry for ${participantId}`);
 	}
 
-	const body = {} as Body;
-	body.eventId = event._id;
-	body.participantId = participant._id;
-
-	body.recipients = [participant._id];
-
-	body.model = 'Rsvp';
+	const body: Body = {
+		eventId: event._id,
+		participantId: participant._id,
+		companions,
+		recipients: [participant._id],
+		model: 'Rsvp',
+	};
 
 	Log.record('Notification.Send', [event._id, participant._id], body);
 }
@@ -107,6 +109,7 @@ export function Model(entry: { body: Body }) {
 
 			return {
 				username: actualRecipient.getDisplayName(),
+				companions: body.companions,
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				event,
 				eventDate: startMoment.format('LL'),

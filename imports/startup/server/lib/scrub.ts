@@ -84,7 +84,7 @@ export class ScrubRule {
 			// so that the count in the result is correct. Records
 			// where all the fields were already unset must not show
 			// up in the count of newly unset records.
-			const fieldSelects: Mongo.Query<LogEntity>[] = [];
+			const fieldSelects: { [selector: string]: { $exists: boolean } }[] = [];
 			this.unset.forEach((name) => {
 				const selector = `body.${name}`;
 				expr[selector] = '';
@@ -92,7 +92,7 @@ export class ScrubRule {
 			});
 			log.update(
 				{ $and: [select, { $or: fieldSelects }] },
-				{ $unset: expr },
+				{ $unset: expr } as Mongo.Modifier<LogEntity>,
 				{ multi: true },
 				recordResult,
 			);

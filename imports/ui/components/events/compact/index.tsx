@@ -14,13 +14,6 @@ import { useDateTimeFormat } from '/imports/utils/react-moment-format';
 
 import './styles.scss';
 
-function userAttendsEvent(participants: string[] | undefined, userId: string | null) {
-	if (!userId) {
-		return false;
-	}
-	return participants?.includes(userId);
-}
-
 function eventCompactClasses(event: EventModel, withDate: boolean) {
 	const classes = [];
 	if (withDate) {
@@ -88,7 +81,7 @@ export function EventCompact(props: {
 					) : null}
 					<div
 						className={`event-compact-header${
-							userAttendsEvent(event.participants, userId) ? ' user-attends-event' : ''
+							event.attendedBy(userId) ? ' user-attends-event' : ''
 						}`}
 					>
 						{withDate ? (
