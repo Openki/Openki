@@ -285,7 +285,7 @@ export const save = ServerMethod(
 			// if maxParticipants is 0 or no participants registered yet,
 			// we dont need this check, 0 means no participant limit.
 			if (event.participants && event.maxParticipants) {
-				const numParticipantsRegistered = event.participants.length;
+				const numParticipantsRegistered = event.numberOfParticipants();
 				if (numParticipantsRegistered > editFields.maxParticipants) {
 					throw new Meteor.Error(
 						400,
@@ -460,8 +460,9 @@ export const addParticipant = ServerMethod(
 	/**
 	 * @param eventId The event to register for
 	 */
-	async function (eventId: string) {
+	async function (eventId: string, companions: number) {
 		check(eventId, String);
+		check(companions, Number);
 
 		const user = Meteor.user();
 		if (!user) {
@@ -479,12 +480,15 @@ export const addParticipant = ServerMethod(
 			throw new Meteor.Error(401, 'cannot register, event has already passed');
 		}
 
-		Events.update({ _id: eventId }, { $addToSet: { participants: user._id } });
+		Events.update(
+			{ _id: eventId },
+			{ $addToSet: { participants: { user: user._id, companions } } },
+		);
 
 		// Send notifications to user
-		Notification.Rsvp.record(eventId, user._id);
+		Notification.Rsvp.record(eventId, user._id, companions);
 		// Send notification to team
-		Notification['Rsvp.Team'].record(eventId, user._id);
+		Notification['Rsvp.Team'].record(eventId, user._id, companions);
 
 		// if you cant load course its probably because the event doesnt have one
 		const course = Courses.findOne(event.courseId);
@@ -517,7 +521,7 @@ export const removeParticipant = ServerMethod('event.removeParticipant', (eventI
 		throw new Meteor.Error(401, 'cannot unregister, event has already passed');
 	}
 
-	Events.update({ _id: eventId }, { $pull: { participants: userId } });
+	Events.update({ _id: eventId }, { $pull: { participants: { user: userId } } });
 });
 
 export const ContactParticipantsOptionsPattern = {

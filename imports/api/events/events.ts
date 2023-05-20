@@ -20,6 +20,11 @@ import { PublicSettings } from '/imports/utils/PublicSettings';
 import { FieldSort, FieldSortPattern, Sort } from '/imports/utils/sort-spec';
 import { Tuple, Type } from '/imports/utils/CustomChecks';
 
+export interface EventParticipantEntity {
+	user: string;
+	companions?: number;
+}
+
 export interface EventVenueEntity {
 	/**
 	 * Optional reference to a document in the Venues collection. If this is set, the fields
@@ -73,8 +78,8 @@ export interface EventEntity {
 	groupOrganizers: string[];
 	/** ID of the replication parent, only cloned events have this */
 	replicaOf?: string;
-	participants?: string[];
-	/** maximum participants of event */
+	participants?: EventParticipantEntity[];
+	/** maximum participants of event, 0 means no participant limit */
 	maxParticipants: number;
 	/**
 	 * (calculated) list of group._id inherited from course (if courseId is set) ("promote groups"
@@ -142,11 +147,22 @@ export class OEvent {
 		return FileStorage.generatePublicUrl(this.courseImage);
 	}
 
+	attendedBy(this: EventModel, userId: string | null | undefined) {
+		if (!userId) {
+			return false;
+		}
+		return this.participants?.some((p) => p.user === userId) || false;
+	}
+
+	numberOfParticipants(this: EventModel) {
+		return this.participants?.map((p) => (p.companions || 0) + 1).reduce((a, b) => a + b, 0) || 0;
+	}
+
 	isFullyBooked(this: EventModel) {
 		if (!this.maxParticipants) {
 			return false;
 		}
-		return (this.participants?.length || 0) >= this.maxParticipants;
+		return this.numberOfParticipants() >= this.maxParticipants;
 	}
 }
 
@@ -319,7 +335,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		check(skip, Match.Maybe(Match.Integer));
 		check(sort, Match.Maybe([FieldSortPattern]));
 
-		const find: Mongo.Selector<EventEntity> = {};
+		const find: any = {};
 		const and = [];
 
 		const options: Mongo.Options<EventEntity> = {};
@@ -373,7 +389,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		}
 
 		if (inVenues.length > 0) {
-			find['venue._id'] = { $in: inVenues };
+			find.venue = { _id: { $in: inVenues } };
 		}
 
 		if (filter.room) {
@@ -414,7 +430,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		}
 
 		if (filter.participant) {
-			find.participants = filter.participant;
+			find['participants.user'] = filter.participant;
 		}
 
 		if (filter.internal !== undefined) {

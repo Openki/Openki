@@ -136,7 +136,8 @@ export type Data = {
 			} else if (data.teamGroups?.length > 0) {
 				groups.push(...data.teamGroups);
 			}
-			return groups;
+			// remove double groups
+			return [...new Set(groups)];
 		};
 
 		instance.autorun(() => {
