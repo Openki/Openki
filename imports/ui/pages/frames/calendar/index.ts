@@ -138,7 +138,7 @@ import './template.html';
 
 		getAttendees() {
 			const { data } = Template.instance();
-			return data.participants?.length || 0;
+			return data.numberOfParticipants();
 		},
 
 		getTotalAvailableSeats() {
