@@ -13,6 +13,7 @@
     "aws-sdk": "2.1365.0",
     "bootstrap": "5.2.3",
     "bootstrap-datepicker": "1.9.0",
+    "deepmerge": "4.3.1",
     "es6-promisify": "7.0.0",
     "i18next": "22.0.4",
     "i18next-chained-backend": "4.2.0",

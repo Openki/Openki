@@ -51,9 +51,9 @@ export function record(
 		throw new Meteor.Error(`No event for ${eventId}`);
 	}
 
-	const participants = event.participants;
+	const participants = event.participants?.map((p) => p.user);
 
-	if (!participants) {
+	if (!participants?.length) {
 		throw new Meteor.Error(`Event ${eventId} has none participants.`);
 	}
 
