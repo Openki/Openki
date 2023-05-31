@@ -427,7 +427,7 @@
 	"frame.calendar.noEvents": "Noch keine Lektion geplant",
 	"frame.courseList.interestedPersons": "Interessierte Personen",
 	"frame.courseList.moreAboutThisCourse": "Mehr auf {SITENAME}",
-	"frame.courselist.empty": "Es wurde noch keine Lektion vorgeschlagen",
+	"frame.courselist.empty": "Es wurde keine neue Lektion vorgeschlagen",
 	"frame.eventsList.description": "Beschreibung:",
 	"frame.eventsList.when": "Wann:",
 	"frame.eventsList.where": "Wo:",
