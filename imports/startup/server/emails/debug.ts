@@ -3,8 +3,12 @@ import { Email } from 'meteor/email';
 import fs from 'fs';
 
 if (Meteor.isDevelopment) {
+	Email.customTransport = () => {
+		// disable email log See: https://docs.meteor.com/api/email.html#Email-customTransport
+	};
+
 	// Create /.temp to output emails as html files for testing
-	(Email as any).hookSend((email: any) => {
+	Email.hookSend((email: any) => {
 		fs.writeFile(
 			`${process.env.PWD}/.temp/${new Date().toISOString()} ${email.subject}.html`,
 			email.html,
