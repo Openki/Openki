@@ -1,9 +1,9 @@
 {{#emailBase subject=subject site=site}}
 	<tr>
 		<td>
-			<span class="title">
+			<h5 class="title">
 				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
-			</span>
+			</h5>
 			<p>
 				{{i18n "notification.rsvp.team.mail.intro" '{COMPANIONS, plural, =0{{USERNAME} } other{{USERNAME} and companion } }just reserved a seat for event "{EVENT}".' USERNAME=newParticipant COMPANIONS=companionsOfNewParticipant EVENT=event lng=locale}}
 			</p>
