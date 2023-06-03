@@ -6,9 +6,9 @@
 					{{i18n "notification.privateMessage.mail.copyintro" 'This is a copy of your message that was sent to "{RECIPIENT}"' RECIPIENT=recipientName lng=locale}}
 				</p>
 			{{/if}}
-			<span class="title">
+			<h5 class="title">
 				{{i18n "email.base.greeting" USERNAME=recipientName lng=locale}}
-			</span>
+			</h5>
 			<p>
 				{{i18n "notification.privateMessage.mail.intro" 'You got a private message from:' lng=locale}}
 				<a href="{{senderLink}}">{{sender.getDisplayName}}</a>

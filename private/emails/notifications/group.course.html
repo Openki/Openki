@@ -1,9 +1,9 @@
 {{#emailBase subject=subject site=site}}
 	<tr>
 		<td>
-			<span class="title">
+			<h5 class="title">
 				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
-			</span>
+			</h5>
 			<p>
 				{{i18n "notification.group.course.mail.intro" '{CREATER} just proposed {COURSE} in your group {GROUPS}.' CREATER=creater.getDisplayName COURSE=course GROUPS=groups lng=locale}}
 			</p>
