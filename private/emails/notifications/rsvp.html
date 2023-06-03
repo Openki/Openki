@@ -1,9 +1,9 @@
 {{#emailBase subject=subject site=site}}
 	<tr>
 		<td>
-			<span class="title">
+			<h5 class="title">
 				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
-			</span>
+			</h5>
 			<p>
 				{{i18n 'notification.rsvp.mail.intro' 'We are looking forward to see {COMPANIONS, plural, =0{you} other{you and your companion} } on {DATE}. Your {COMPANIONS, plural, =0{seat is} other{seats are} } reserved. If you can not join the event, please let the organizers know by withdrawing your registration.' DATE=eventDate COMPANIONS=companions lng=locale}}
 			</p>
@@ -35,9 +35,9 @@
 				</tr>
 				<tr>
 					<td class="event-body">
-						<p class="title">
+						<h5 class="title">
 							{{event.title}}
-						</p>
+						</h5>
 						<p>
 							{{{event.description}}}
 						</p>

@@ -10,6 +10,30 @@
 			background-color: #f0f3f4;
 			font-size: 16px;
 		}
+		
+		table {
+			border: 0;
+			border-spacing: 0;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		td {
+			font-family: Source Sans Pro, sans-serif;
+			font-size: 12px;
+			vertical-align: top;
+			margin: 0;
+		}
+
+		td {
+			border-collapse: collapse;
+			/* Handling long words and urls */
+			hyphens: auto;
+			overflow-wrap: break-word;
+			word-break: break-all;
+			word-break: break-word;
+			word-wrap: break-word;
+		}
 
 		.container {
 			background-color: #fff;
@@ -49,13 +73,14 @@
 		.logo-wrapper {
 			padding: 0 6px 0 20px;
 			vertical-align: top;
-			width: 45px;
+			width: 1%;
 		}
 
 		.logo {
 			border: 0;
 			display: block;
-			width: 45px;
+			height: 45px;
+			max-width: 90px;
 			outline: none;
 			text-decoration: none;
 		}
@@ -64,6 +89,7 @@
 			font-size: 22px;
 			font-weight: lighter;
 			padding: 0;
+			margin: 0;
 		}
 
 		.site-name {
@@ -75,6 +101,7 @@
 		.title {
 			font-size: 16px;
 			font-weight: bold;
+			margin: 0;
 		}
 
 		p,
@@ -162,36 +189,16 @@
 			text-decoration: none !important;
 		}
 
-		table {
-			border: 0;
-			border-spacing: 0;
-			margin-left: auto;
-			margin-right: auto;
-		}
-
-		td {
-			font-family: Source Sans Pro, sans-serif;
-			font-size: 12px;
-			vertical-align: top;
-		}
-
-		td {
-			border-collapse: collapse;
-			/* Handling long words and urls */
-			hyphens: auto;
-			overflow-wrap: break-word;
-			word-break: break-all;
-			word-break: break-word;
-			word-wrap: break-word;
-		}
-
 		.button {
 			background-color: #3f819e;
 			border-radius: 5px;
 			color: #fff !important;
 			display: inline-block;
 			font-size: 14px;
-			padding: 12px 18px;
+			border-top: 12px solid #3f819e;
+			border-right: 18px solid #3f819e;
+			border-bottom: 12px solid #3f819e;
+			border-left: 18px solid #3f819e;
 			text-decoration: none;
 		}
 
@@ -238,10 +245,12 @@
 								<img class="logo" src="{{site.logo}}" />
 							</a>
 						</td>
-						<td class="site-name-wrapper">
-							<a class="site-name" href="{{site.url}}">
-								{{site.name}}
-							</a>
+						<td>
+							<h4 class="site-name-wrapper">
+								<a class="site-name" href="{{site.url}}">
+									{{site.name}}
+								</a>
+							</h4>
 						</td>
 					</tr>
 				</table>
