@@ -814,6 +814,9 @@ RouterAsync.route('timetable', {
 				relEnd: number;
 			})[][];
 			roomRows.forEach((roomRow) => {
+				if (placed) {
+					return;
+				}
 				let last: any;
 				roomRow.forEach((placedEvent: any) => {
 					if (!last || placedEvent.end > last) {
@@ -823,9 +826,7 @@ RouterAsync.route('timetable', {
 				if (last <= event.start) {
 					roomRow.push(event);
 					placed = true;
-					return false;
 				}
-				return true;
 			});
 			if (!placed) {
 				roomRows.push([event]);
