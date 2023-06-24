@@ -161,7 +161,13 @@ template.helpers({
 
 	upcomingEvents() {
 		const instance = Template.instance();
-		return (instance.upcomingEvents.get()?.().fetch() || []).slice(0, -1);
+		const events = instance.upcomingEvents.get()?.().fetch() || [];
+
+		if (events.length > (instance.state.get('upcomingEventLimit') || 0)) {
+			// The last event is to check if there are any more.
+			return events.slice(0, -1);
+		}
+		return events;
 	},
 
 	hasMoreUpcomingEvents() {
@@ -172,7 +178,13 @@ template.helpers({
 
 	pastEvents() {
 		const instance = Template.instance();
-		return (instance.pastEvents.get()?.().fetch() || []).slice(0, -1);
+		const events = instance.pastEvents.get()?.().fetch() || [];
+
+		if (events.length > (instance.state.get('pastEventLimit') || 0)) {
+			// The last event is to check if there are any more.
+			return events.slice(0, -1);
+		}
+		return events;
 	},
 
 	hasMorePastEvents() {
