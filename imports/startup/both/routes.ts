@@ -841,6 +841,7 @@ RouterAsync.route('timetable', {
 		});
 
 		return {
+			now: (moment.utc().toDate().getTime() - timestampStart) / span,
 			days: Object.values(days),
 			hours: Object.values(hours),
 			grouped,

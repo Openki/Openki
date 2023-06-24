@@ -4,10 +4,12 @@
 	min-height: 100vh;
 	overflow: hidden;
 	padding-top: 5px;
+	position: relative;
 }
 
 .timetable-header {
 	@include td-margin(left, 12em);
+	position: relative;
 }
 
 .timetable-days,
@@ -126,4 +128,19 @@
 
 .timetable-event-title:hover ~ .timetable-event-description {
 	min-width: 200px;
+}
+
+.vertical-wrapper {
+	height: 100vh;
+	position: absolute;
+	width: 100%;
+}
+
+.vertical {
+	border-left: 3px solid #f00;
+	height: 100%;
+	left: 50%;
+	opacity: 30%;
+	position: absolute;
+	z-index: 1;
 }
