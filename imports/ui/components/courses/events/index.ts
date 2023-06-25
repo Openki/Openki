@@ -10,6 +10,8 @@ import { Regions } from '/imports/api/regions/regions';
 import { CourseModel } from '/imports/api/courses/courses';
 
 import { reactiveNow } from '/imports/utils/reactive-now';
+import { ScssVars } from '/imports/ui/lib/scss-vars';
+import * as Viewport from '/imports/ui/lib/viewport';
 
 import '/imports/ui/components/events/list';
 import '/imports/ui/components/courses/delete-events';
@@ -22,7 +24,7 @@ import './styles.scss';
 		'courseEvents',
 		{ course: CourseModel },
 		{
-			state: ReactiveDict<{ showAllEvents: boolean; showModal: boolean }>;
+			state: ReactiveDict<{ maxEventsShown: number; showAllEvents: boolean; showModal: boolean }>;
 			deleteCourseEventsArgs: { onShowEventsDeleteModal: () => void };
 			deleteEventsModalArgs: { onShowEventsDeleteModal: () => void };
 			haveEvents: () => boolean;
@@ -40,9 +42,18 @@ import './styles.scss';
 
 		instance.subscribe('eventsForCourse', courseId);
 
-		const maxEventsShown = 4;
 		instance.state = new ReactiveDict();
-		instance.state.setDefault({ showAllEvents: false, showModal: false });
+		instance.state.setDefault({
+			maxEventsShown: 2,
+			showAllEvents: false,
+			showModal: false,
+		});
+
+		instance.autorun(() => {
+			const isMobileScreen = Viewport.get().width <= ScssVars.screenXS;
+			const maxEventsShown = isMobileScreen ? 2 : 4;
+			instance.state.set('maxEventsShown', maxEventsShown);
+		});
 
 		instance.haveEvents = function () {
 			return Events.findFilter({ course: courseId, start: reactiveNow.get() }, 1).count() > 0;
@@ -50,7 +61,8 @@ import './styles.scss';
 
 		instance.haveMoreEvents = function () {
 			return (
-				Events.findFilter({ course: courseId, start: reactiveNow.get() }).count() > maxEventsShown
+				Events.findFilter({ course: courseId, start: reactiveNow.get() }).count() >
+				(instance.state.get('maxEventsShown') || 2)
 			);
 		};
 
@@ -59,9 +71,10 @@ import './styles.scss';
 		};
 
 		instance.futureEvents = function () {
-			const isMobileScreen = window.innerWidth <= 767;
 			// eslint-disable-next-line no-nested-ternary
-			const limit = instance.state.get('showAllEvents') ? 0 : isMobileScreen ? 2 : 4;
+			const limit = instance.state.get('showAllEvents')
+				? 0
+				: instance.state.get('maxEventsShown') || 2;
 
 			return Events.findFilter({ course: courseId, after: reactiveNow.get() }, limit);
 		};
@@ -120,29 +133,7 @@ import './styles.scss';
 			instance.state.set('showAllEvents', true);
 		},
 
-		'scroll .js-scrollable-container'(_event, instance) {
-			const scrollableContainer = instance.$('.js-scrollable-container');
 
-			// Use dom element to get true height of clipped div
-			// https://stackoverflow.com/questions/4612992/get-full-height-of-a-clipped-div#5627286
-			const trueHeight = scrollableContainer[0].scrollHeight;
-			const visibleHeight = scrollableContainer.height() || 0;
-			const scrollTop = scrollableContainer.scrollTop() || 0;
-
-			// Compute height and subtract a possible deviation
-			const computedHeight = trueHeight - visibleHeight - 1;
-
-			instance.$('.fade-top ').fadeIn(200);
-
-			if (scrollTop === 0) {
-				instance.$('.fade-top').fadeOut(200);
-			} else if (scrollTop >= computedHeight) {
-				instance.$('.fade-bottom').fadeOut(200);
-			} else {
-				instance.$('.fade-top').fadeIn(200);
-				instance.$('.fade-bottom').fadeIn(200);
-			}
-		},
 
 		'click .js-track-cal-download'(_event, instance) {
 			Analytics.trackEvent(
