@@ -341,12 +341,14 @@ RouterAsync.route('kioskEvents', {
 		queryToday.after = now;
 		queryToday.before = tomorrow;
 
+		const limit = parseInt(this.params.query.count || '', 10) || 20;
+
 		const queryNow = filter.toQuery() as EventsFindFilter;
 		queryNow.ongoing = now;
 
 		return {
-			today: Events.findFilter.subscribe(queryToday, 20),
-			future: Events.findFilter.subscribe(queryFuture, 10),
+			today: Events.findFilter.subscribe(queryToday, limit),
+			future: Events.findFilter.subscribe(queryFuture, limit),
 			ongoing: Events.findFilter.subscribe(queryNow),
 		};
 	},
