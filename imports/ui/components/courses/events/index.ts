@@ -133,8 +133,6 @@ import './styles.scss';
 			instance.state.set('showAllEvents', true);
 		},
 
-
-
 		'click .js-track-cal-download'(_event, instance) {
 			Analytics.trackEvent(
 				'Events downloads',
