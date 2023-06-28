@@ -341,12 +341,14 @@ RouterAsync.route('kioskEvents', {
 		queryToday.after = now;
 		queryToday.before = tomorrow;
 
+		const limit = parseInt(this.params.query.count || '', 10) || 20;
+
 		const queryNow = filter.toQuery() as EventsFindFilter;
 		queryNow.ongoing = now;
 
 		return {
-			today: Events.findFilter.subscribe(queryToday, 20),
-			future: Events.findFilter.subscribe(queryFuture, 10),
+			today: Events.findFilter.subscribe(queryToday, limit),
+			future: Events.findFilter.subscribe(queryFuture, limit),
 			ongoing: Events.findFilter.subscribe(queryNow),
 		};
 	},
@@ -814,6 +816,9 @@ RouterAsync.route('timetable', {
 				relEnd: number;
 			})[][];
 			roomRows.forEach((roomRow) => {
+				if (placed) {
+					return;
+				}
 				let last: any;
 				roomRow.forEach((placedEvent: any) => {
 					if (!last || placedEvent.end > last) {
@@ -823,9 +828,7 @@ RouterAsync.route('timetable', {
 				if (last <= event.start) {
 					roomRow.push(event);
 					placed = true;
-					return false;
 				}
-				return true;
 			});
 			if (!placed) {
 				roomRows.push([event]);
@@ -840,6 +843,7 @@ RouterAsync.route('timetable', {
 		});
 
 		return {
+			now: (moment.utc().toDate().getTime() - timestampStart) / span,
 			days: Object.values(days),
 			hours: Object.values(hours),
 			grouped,

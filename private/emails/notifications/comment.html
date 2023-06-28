@@ -1,9 +1,9 @@
 {{#emailBase subject=subject site=site}}
 	<tr>
 		<td>
-			<span class="title">
+			<h5 class="title">
 				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
-			</span>
+			</h5>
 			<p>
 				{{#if commenter}}
 					{{i18n "notification.comment.mail.intro" 'There was a comment by {USERNAME} on {COURSE}:' USERNAME=commenterName COURSE=course.name lng=locale}}
@@ -14,9 +14,9 @@
 			<table class="comment-box">
 				<tr>
 					<td>
-						<span class="title">
+						<h5 class="title">
 							{{comment.title}}
-						</span>
+						</h5>
 						<p>
 							{{{comment.text}}}
 						</p>

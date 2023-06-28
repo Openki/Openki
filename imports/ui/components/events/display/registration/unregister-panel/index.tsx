@@ -85,8 +85,8 @@ export function UnregisterPanel(props: {
 						<div className="col-lg-7 d-grid">
 							<ButtonUnregister
 								onClick={async () => {
-									await onUnregister();
 									setUnregisterDropdown(false);
+									await onUnregister();
 								}}
 								busy={busy}
 							/>

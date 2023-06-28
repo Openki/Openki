@@ -147,7 +147,7 @@
 	<div class="tab-content course-details-content">
 		<div class="tab-pane {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}} active"
 			 id="description" role="tabpanel" aria-labelledby="description-tab" tabindex="0">
-			<div class="fade-wrap">
+			<div class="course-description-fade-wrap">
 				<div
 					 class="course-description {{#unless state 'descriptionTruncated'}}mh-none overflow-visible{{else}}overflow-hidden{{/unless}}">
 					{{> courseDetailsDescription editableDescription=editableDescription course=course}}
@@ -159,7 +159,7 @@
 					{{/each}}
 				</div>
 				{{#if state 'descriptionTruncated'}}
-					<div class="fade-bottom course-description-fade-bottom"></div>
+					<div class="course-description-fade-bottom"></div>
 				{{/if}}
 			</div>
 			{{#if state 'descriptionTruncated'}}
