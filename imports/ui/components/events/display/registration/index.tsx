@@ -60,6 +60,8 @@ export function EventRegistration(props: { event: EventModel }) {
 			Analytics.trackEvent('RSVPs', 'RSVPs as participant', Regions.findOne(event.region)?.nameEn);
 		} catch (err) {
 			Alert.serverError(err);
+		} finally {
+			setIsBusy('');
 		}
 	}
 

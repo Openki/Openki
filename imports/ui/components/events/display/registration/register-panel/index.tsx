@@ -110,8 +110,8 @@ export function RegisterPanel(props: {
 							<ButtonRegister
 								forTwo={registerWithCompanions}
 								onClick={async () => {
-									await onRegister(registerWithCompanions ? 1 : 0);
 									setRegisterDropdown(false);
+									await onRegister(registerWithCompanions ? 1 : 0);
 								}}
 								busy={busy}
 							/>

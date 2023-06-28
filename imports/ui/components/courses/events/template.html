@@ -2,73 +2,67 @@
 	{{#if Template.subscriptionsReady}}
 		{{#if instance.haveEvents}}
 			<div class="page-component">
-				<div class="fade-wrap">
-					<div class="course-events js-scrollable-container">
-						{{#if havePastEvents}}
-							<div class="course-page-component-header">
-								<h4>
-									<span class="fa-regular fa-calendar-days fa-fw"
-										  aria-hidden="true"></span>&nbsp;
-									{{i18n 'course.events.pastList' 'Previous events'}}
-								</h4>
-								{{#if haveFutureEvents}}
-									<a href="#future_events" class="link">
-										<span class="fa-solid fa-arrow-down"></span>
-										{{i18n 'course.events.futureListLink' 'future events'}}
-									</a>
-								{{/if}}
-							</div>
-							<div class="course-event-list">
-								{{> eventList dataEvents=pastEvents withDate=true}}
-							</div>
-						{{/if}}
-						{{#if haveOngoingEvents}}
-							<div class="course-page-component-header">
-								<h4>
-									<span class="fa-regular fa-calendar-days fa-fw"
-										  aria-hidden="true"></span>&nbsp;
-									{{i18n 'course.events.ongoinglist' 'Ongoing events'}}
-								</h4>
-								{{#if havePastEvents}}
-									<a href="#past_events" class="past-events-link">
-										<span class="fa-solid fa-arrow-up"></span>
-										{{i18n 'course.events.pastListLink' 'past events'}}
-									</a>
-								{{/if}}
-							</div>
-							<div class="course-event-list">
-								{{> eventList dataEvents=instance.ongoingEvents withDate=false}}
-							</div>
-						{{/if}}
+				{{#if havePastEvents}}
+					<div class="course-page-component-header">
+						<h4>
+							<span class="fa-regular fa-calendar-days fa-fw"
+								  aria-hidden="true"></span>&nbsp;
+							{{i18n 'course.events.pastList' 'Previous events'}}
+						</h4>
 						{{#if haveFutureEvents}}
-							<div class="course-page-component-header">
-								<h4>
-									<span class="fa-regular fa-calendar-days fa-fw"
-										  aria-hidden="true"></span>&nbsp;
-									{{i18n 'course.events.upcominglist' '{NUM, plural, =0{No upcoming events yet} one{1 upcoming event} other{# upcoming events} }' NUM=upcomingEventsCount}}
-								</h4>
-								{{#if havePastEvents}}
-									<a href="#past_events" class="past-events-link">
-										<span class="fa-solid fa-arrow-up"></span>
-										{{i18n 'course.events.pastListLink' 'past events'}}
-									</a>
-								{{/if}}
-							</div>
-							<div class="course-event-list">
-								{{> eventList dataEvents=instance.futureEvents withDate=true}}
-							</div>
-							<div class="mt-2 text-center">
-								{{#if haveMoreEvents}}
-									<button type="button" class="btn btn-add js-show-all-events">
-										{{i18n 'course.events.showAllEvents' 'Show all'}}
-									</button>
-								{{/if}}
-							</div>
+							<a href="#future_events" class="link">
+								<span class="fa-solid fa-arrow-down"></span>
+								{{i18n 'course.events.futureListLink' 'future events'}}
+							</a>
 						{{/if}}
 					</div>
-					<div class="fade-top"></div>
-					<div class="fade-bottom"></div>
-				</div>
+					<div class="course-event-list">
+						{{> eventList dataEvents=pastEvents withDate=true}}
+					</div>
+				{{/if}}
+				{{#if haveOngoingEvents}}
+					<div class="course-page-component-header">
+						<h4>
+							<span class="fa-regular fa-calendar-days fa-fw"
+								  aria-hidden="true"></span>&nbsp;
+							{{i18n 'course.events.ongoinglist' 'Ongoing events'}}
+						</h4>
+						{{#if havePastEvents}}
+							<a href="#past_events" class="past-events-link">
+								<span class="fa-solid fa-arrow-up"></span>
+								{{i18n 'course.events.pastListLink' 'past events'}}
+							</a>
+						{{/if}}
+					</div>
+					<div class="course-event-list">
+						{{> eventList dataEvents=instance.ongoingEvents withDate=false}}
+					</div>
+				{{/if}}
+				{{#if haveFutureEvents}}
+					<div class="course-page-component-header">
+						<h4>
+							<span class="fa-regular fa-calendar-days fa-fw"
+								  aria-hidden="true"></span>&nbsp;
+							{{i18n 'course.events.upcominglist' '{NUM, plural, =0{No upcoming events yet} one{1 upcoming event} other{# upcoming events} }' NUM=upcomingEventsCount}}
+						</h4>
+						{{#if havePastEvents}}
+							<a href="#past_events" class="past-events-link">
+								<span class="fa-solid fa-arrow-up"></span>
+								{{i18n 'course.events.pastListLink' 'past events'}}
+							</a>
+						{{/if}}
+					</div>
+					<div class="course-event-list">
+						{{> eventList dataEvents=instance.futureEvents withDate=true}}
+					</div>
+					<div class="mt-2 text-center">
+						{{#if haveMoreEvents}}
+							<button type="button" class="btn btn-add js-show-all-events">
+								{{i18n 'course.events.showAllEvents' 'Show all'}}
+							</button>
+						{{/if}}
+					</div>
+				{{/if}}
 			</div>
 		{{else}}
 			<div class="page-component">
