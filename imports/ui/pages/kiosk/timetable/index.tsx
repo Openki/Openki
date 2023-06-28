@@ -17,6 +17,7 @@ interface RelStartEnd {
 }
 
 export interface Props {
+	now: number;
 	days: ({
 		moment: moment.Moment;
 	} & RelStartEnd)[];
@@ -63,6 +64,12 @@ export function KioskTimetablePage(props: Props) {
 						);
 					})}
 				</div>
+				<div className="vertical-wrapper">
+					<div
+						className="vertical"
+						style={position({ relStart: props.now, relEnd: props.now + 1 })}
+					></div>
+				</div>
 				<div className="timetable-hours">
 					{props.hours.map((hour) => {
 						return (
@@ -89,14 +96,15 @@ export function KioskTimetablePage(props: Props) {
 									}`}
 								>
 									<div className="timetable-location text-start">
-										<span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
-										{event.venue.name}
+										<span className="text-nowrap">
+											<span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
+											{event.venue.name}
+										</span>{' '}
 										{event.room ? (
-											<>
+											<span className="text-nowrap">
 												<span className="fa-solid fa-signs-post fa-fw" aria-hidden="true"></span>
-												&nbsp;
-												{event.room}
-											</>
+												&nbsp;{event.room}
+											</span>
 										) : null}
 									</div>
 									{event.rows.map((row, index3) => {

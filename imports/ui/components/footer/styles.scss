@@ -3,7 +3,7 @@
 footer {
 	color: $white;
 	font-size: medium;
-	height: $footer-height + 1px;
+	min-height: $footer-height + 1px;
 	position: relative;
 	text-align: center;
 	width: 100%;
@@ -16,7 +16,8 @@ footer {
 
 .footer-link {
 	color: $white;
-	line-height: $footer-height;
+	display: inline-block;
+	line-height: $footer-height - 2 * $footer-padding-vertical;
 	padding: $footer-padding-vertical 10px;
 
 	&:hover {
