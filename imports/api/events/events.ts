@@ -389,7 +389,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 		}
 
 		if (inVenues.length > 0) {
-			find.venue = { _id: { $in: inVenues } };
+			find['venue._id'] = { $in: inVenues };
 		}
 
 		if (filter.room) {
