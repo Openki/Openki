@@ -64,12 +64,14 @@ export function KioskTimetablePage(props: Props) {
 						);
 					})}
 				</div>
-				<div className="vertical-wrapper">
-					<div
-						className="vertical"
-						style={position({ relStart: props.now, relEnd: props.now + 1 })}
-					></div>
-				</div>
+				{props.future_length ? (
+					<div className="vertical-wrapper">
+						<div
+							className="vertical"
+							style={position({ relStart: props.now, relEnd: props.now + 1 })}
+						></div>
+					</div>
+				) : null}
 				<div className="timetable-hours">
 					{props.hours.map((hour) => {
 						return (
