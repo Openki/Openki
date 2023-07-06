@@ -12,6 +12,7 @@ import { Regions } from '/imports/api/regions/regions';
 
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Analytics from '/imports/ui/lib/analytics';
+import { PleaseLogin } from '/imports/ui/lib/please-login';
 
 import '/imports/ui/components/courses/files';
 import '/imports/ui/components/buttons';
@@ -34,13 +35,14 @@ import '/imports/ui/components/delete-confirm-dialog';
 import type { Props as DeleteConfirmDialogProps } from '/imports/ui/components/delete-confirm-dialog';
 
 import './template.html';
+import './styles.scss';
 
 {
 	const Template = TemplateMixins.Expandible(
 		TemplateAny as TemplateStaticTyped<
 			'eventDisplay',
 			EventModel,
-			{ replicating: ReactiveVar<boolean> }
+			{ replicating: ReactiveVar<boolean>; canceling: ReactiveVar<boolean> }
 		>,
 		'eventDisplay',
 	);
@@ -50,11 +52,16 @@ import './template.html';
 	template.onCreated(function () {
 		const instance = this;
 		instance.replicating = new ReactiveVar(false);
+		instance.canceling = new ReactiveVar(false);
 	});
 
 	template.helpers({
-		mayEdit() {
-			return this.editableBy(Meteor.user());
+		mayEdit(event: EventModel) {
+			const user = Meteor.user();
+			if (!user) {
+				return false;
+			}
+			return event.editableBy(user);
 		},
 		replicating() {
 			return Template.instance().replicating.get();
@@ -64,6 +71,12 @@ import './template.html';
 		},
 		course() {
 			return Courses.findOne(this.courseId);
+		},
+		isExpanded() {
+			return Template.instance().canceling.get() || Template.instance().expanded();
+		},
+		cancelConfirmDialogAttr() {
+			return { event: Template.instance().data };
 		},
 		deleteConfirmDialogAttr(): DeleteConfirmDialogProps {
 			const instance = Template.instance();
@@ -118,6 +131,58 @@ import './template.html';
 		'click .js-show-replication'(_event, instance) {
 			instance.replicating.set(true);
 			instance.collapse();
+		},
+		'click .js-cancel'(_event, instance) {
+			instance.canceling.set(true);
+			instance.collapse();
+		},
+		'click .js-cancel-event-close'(_event, instance) {
+			instance.canceling.set(false);
+		},
+		async 'click .js-event-cancel'(_event, instance) {
+			instance.busy('cancel');
+			PleaseLogin(instance, async () => {
+				const event = instance.data;
+				try {
+					await EventsMethods.cancel(event._id);
+
+					instance.canceling.set(false);
+					Alert.success(
+						i18n('event.details.message.eventHasBeenCanceled', '{EVENT} was canceled.', {
+							EVENT: event.title,
+						}),
+					);
+				} catch (err) {
+					Alert.serverError(
+						err,
+						i18n('event.details.message.eventHasBeenCanceled.error', 'Archiving went wrong'),
+					);
+				} finally {
+					instance.busy(false);
+				}
+			});
+		},
+
+		async 'click .js-event-uncancel'(_event, instance) {
+			instance.busy('unarchive');
+			PleaseLogin(instance, async () => {
+				const event = instance.data;
+				try {
+					await EventsMethods.uncancel(event._id);
+					Alert.success(
+						i18n('event.details.message.eventHasBeenUncanceled', '{EVENT} has been uncaneled.', {
+							EVENT: event.title,
+						}),
+					);
+				} catch (err) {
+					Alert.serverError(
+						err,
+						i18n('event.details.message.eventHasBeenUncanceled.error', 'Uncanceling went wrong'),
+					);
+				} finally {
+					instance.busy(false);
+				}
+			});
 		},
 
 		'click .js-track-cal-download'(_event, instance) {

@@ -563,6 +563,34 @@ export const contactParticipants = ServerMethod(
 	},
 );
 
+export const cancel = ServerMethod('event.cancel', async (eventId: string) => {
+	check(eventId, String);
+
+	const event = await Events.findOneAsync({ _id: eventId });
+	if (!event) {
+		throw new Meteor.Error(404, 'no such event');
+	}
+	const user = Meteor.user();
+	if (!user || !event.editableBy(user)) {
+		throw new Meteor.Error(401, 'edit not permitted');
+	}
+	await Events.updateAsync(event._id, { $set: { canceled: true } });
+});
+
+export const uncancel = ServerMethod('event.uncancel', async (eventId: string) => {
+	check(eventId, String);
+
+	const event = await Events.findOneAsync({ _id: eventId });
+	if (!event) {
+		throw new Meteor.Error(404, 'no such event');
+	}
+	const user = Meteor.user();
+	if (!user || !event.editableBy(user)) {
+		throw new Meteor.Error(401, 'edit not permitted');
+	}
+	await Events.updateAsync(event._id, { $set: { canceled: false } });
+});
+
 Meteor.methods({
 	/**
 	 * Update the venue field for all events matching the selector
