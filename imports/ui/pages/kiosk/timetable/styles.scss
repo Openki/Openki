@@ -132,9 +132,9 @@
 
 .vertical-wrapper {
 	height: 100vh;
+	pointer-events: none;
 	position: absolute;
 	width: 100%;
-	pointer-events: none;
 }
 
 .vertical {
