@@ -3,7 +3,7 @@
 		<div class="row course-page g-3">
 			<div class="col-lg-8">
 				<div class="page-component">
-					{{#if (isArchived course)}}
+					{{#if course.archived}}
 						<div class="alert alert-archived text-center" role="alert">
 							<strong>{{i18n 'course.archive.alert' '{COURSE} is archived and not active anymore.' COURSE=course.name}}</strong>
 						</div>
@@ -48,11 +48,11 @@
 						{{#if (mayEdit course)}}
 							<div class="actions">
 								{{> buttonEdit event="js-course-edit"}}
-								{{#if (isArchived course)}}
+								{{#if course.archived}}
 									{{> buttonCourseUnarchive}}
 								{{/if}}
 								{{#unless expanded}}
-									{{#unless (isArchived course)}}
+									{{#unless course.archived}}
 										{{> buttonCourseArchive 
 										buttonClass="btn-archive"
 										textIdle=(i18n 'course.archive.archiveButton.archive' 'Archive')
@@ -61,9 +61,9 @@
 									{{> buttonDelete event="js-expand"}}
 								{{/unless}}
 							</div>
-						{{/if}}
-						{{#if expanded}}
-							{{> confirmDialog hasArchiveButton=(isArchived course) course=course}}
+							{{#if expanded}}
+								{{> confirmDialog hasArchiveButton=course.archived course=course}}
+							{{/if}}
 						{{/if}}
 						{{> courseRoles roles=rolesDetails}}
 					{{/if}}
