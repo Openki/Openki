@@ -566,15 +566,25 @@ export const contactParticipants = ServerMethod(
 export const cancel = ServerMethod('event.cancel', async (eventId: string) => {
 	check(eventId, String);
 
+	const operator = Meteor.user();
+	if (!operator) {
+		throw new Meteor.Error(401, 'please log in');
+	}
 	const event = await Events.findOneAsync({ _id: eventId });
 	if (!event) {
 		throw new Meteor.Error(404, 'no such event');
 	}
-	const user = Meteor.user();
-	if (!user || !event.editableBy(user)) {
+	if (
+		!event.editableBy(operator) &&
+		!operator.groups.some((g) => event.groupOrganizers.includes(g)) &&
+		!UserPrivilegeUtils.privileged(operator, 'admin')
+	) {
 		throw new Meteor.Error(401, 'edit not permitted');
 	}
+
 	await Events.updateAsync(event._id, { $set: { canceled: true } });
+
+	Notification['Event.Canceled'].record(operator._id, eventId);
 });
 
 export const uncancel = ServerMethod('event.uncancel', async (eventId: string) => {

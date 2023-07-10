@@ -1,0 +1,32 @@
+{{#emailBase subject=subject site=site}}
+	<tr>
+		<td>
+			<h5 class="title">
+				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
+			</h5>
+			<p>
+				{{i18n "notification.event.canceled.mail.intro" '{EVENT} got canceled...' EVENT=eventTitle lng=locale}}
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table class="footer">
+				<tr>
+					<td>
+						{{i18n 'notification.event.canceled.mail.notice' 'You receive this e-mail because you are involved in {EVENT}.' EVENT=eventTitle lng=locale}}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a
+						href="{{unsubLink}}">{{i18n "email.base.unsubscribeLink.automatedNotifications" SITENAME=siteName lng=locale}}</a>
+					 &nbsp;
+						<a
+						   href="{{urlFor 'profile' query='campaign=eventContactParticipants'}}">{{i18n "email.base.profileLink" lng=locale}}</a>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{{/emailBase}}
