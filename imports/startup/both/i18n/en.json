@@ -298,6 +298,7 @@
   "emailrequest.text.para2": "Providing an email-address ensures you stay informed when you join a course and allows the mentor / other users to send you direct messages. It is easy to unsubscribe from such notifications and your user data will stay protected and is never traded.",
   "emailrequest.title": "Add e-mail address",
   "event.cancel.confirm.button": "Cancel {EVENT}",
+  "event.canceled.alert": "{EVENT} got canceled.",
   "event.canceling": "Canceling...",
   "event.delete.confirm.button": "Delete this event",
   "event.delete.confirm.button.busy": "Deleting event…",
