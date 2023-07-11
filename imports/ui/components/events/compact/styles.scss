@@ -136,7 +136,7 @@
 // event canceled
 //============================================================================================
 .event-canceled {
-	background-color: rgba(249, 146, 72, 0.4);
+	background-color: $canceled-color;
 	border-radius: 5px;
 	color: $white;
 	display: flow-root;
@@ -146,6 +146,7 @@
 	font-weight: 950;
 	left: 5%;
 	margin-block-start: 18px;
+	opacity: 0.4;
 	padding: 5px;
 	position: absolute;
 	text-align: center;
