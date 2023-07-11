@@ -31,8 +31,8 @@ import '/imports/ui/components/sharing';
 import '/imports/ui/components/report';
 import '/imports/ui/components/venues/link';
 import '/imports/ui/components/internal-indicator';
-import '/imports/ui/components/delete-confirm-dialog';
-import type { Props as DeleteConfirmDialogProps } from '/imports/ui/components/delete-confirm-dialog';
+import './delete-confirm-dialog';
+import type { Props as DeleteConfirmDialogProps } from './delete-confirm-dialog';
 
 import './template.html';
 import './styles.scss';
@@ -83,9 +83,10 @@ import './styles.scss';
 			return {
 				confirmText: i18n(
 					'event.reallydelete',
-					'Please confirm that you would like to delete this event. This might confuse other users and cannot be undone.',
+					'Please confirm that you would like to delete this event. This might confuse other users and cannot be undone. The event will be permenently deleted and not visible any more.',
 				),
-				confirmButton: i18n('event.delete.confirm.button', 'Delete this event'),
+				confirmButton: i18n('event.delete.confirm.button', 'Delete event without notifing anyone'),
+				cancelButton: i18n('event.delete.confirm.cancel.button', 'Rather mark as canceled'),
 				busyButton: i18n('event.delete.confirm.button.busy', 'Deleting event…'),
 				onRemove: async () => {
 					const oEvent = instance.data;
