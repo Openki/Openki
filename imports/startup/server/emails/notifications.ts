@@ -8,6 +8,10 @@ import * as Notification from '/imports/notification/notification';
 Meteor.startup(() => {
 	SSR.compileTemplate('notificationEventEmail', Assets.getText('emails/notifications/event.html'));
 	SSR.compileTemplate(
+		'notificationEventCanceledEmail',
+		Assets.getText('emails/notifications/event.canceled.html'),
+	);
+	SSR.compileTemplate(
 		'notificationEventContactParticipantsEmail',
 		Assets.getText('emails/notifications/event.contact-participants.html'),
 	);

@@ -11,6 +11,7 @@ import { LogEntity } from '/imports/api/log/factory';
 import { UserModel, Users } from '/imports/api/users/users';
 
 import * as notificationEvent from '/imports/notification/notification.event';
+import * as notificationEventCanceled from '/imports/notification/notification.event.canceled';
 import * as notificationEventContactParticipants from '/imports/notification/notification.event.contact-participants';
 import * as notificationRsvp from '/imports/notification/notification.rsvp';
 import * as notificationRsvpTeam from '/imports/notification/notification.rsvp.team';
@@ -24,6 +25,7 @@ import { toEmailLogo } from '/imports/utils/toEmailLogo';
 
 export const Notification = {
 	Event: notificationEvent,
+	'Event.Canceled': notificationEventCanceled,
 	'Event.ContactParticipants': notificationEventContactParticipants,
 	Rsvp: notificationRsvp,
 	'Rsvp.Team': notificationRsvpTeam,
