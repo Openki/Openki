@@ -70,6 +70,7 @@ export interface EventEntity {
 	courseId?: string;
 	/** (Events are only displayed when group or venue-filter is active) */
 	internal: boolean;
+	/** Shows the event as canceled. */
 	canceled?: boolean;
 	/** list of group._id that promote this event ("promote groups"). */
 	groups: string[];
