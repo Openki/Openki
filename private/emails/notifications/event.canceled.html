@@ -7,6 +7,16 @@
 			<p>
 				{{i18n "notification.event.canceled.mail.intro" 'You have been registered for {EVENT}. Unfortunately the event just got cancelled.' EVENT=eventTitle lng=locale}}
 			</p>
+			<p>
+				{{i18n "notification.event.canceled.mail.personalMessage" 'The Organizer has left the following message for you:' lng=locale}}
+			</p>
+			<table class="comment-box">
+				<tr>
+					<td>
+						{{{message}}}
+					</td>
+				</tr>
+			</table>
 			<table class="event">
 				<tr>
 					<td class="event-header">

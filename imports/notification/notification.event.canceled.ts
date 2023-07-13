@@ -16,6 +16,7 @@ import { LocalTime } from '/imports/utils/local-time';
 interface Body {
 	sender: string;
 	event: string;
+	message: string;
 	recipients: string[];
 	model: string;
 }
@@ -24,10 +25,12 @@ interface Body {
  * Record the intent to send cancellation message
  * @param senderId id of the user that canceled the event
  * @param eventId id of the event that are canceld
+ * @param message custom message
  */
-export function record(senderId: string, eventId: string) {
+export function record(senderId: string, eventId: string, message: string) {
 	check(senderId, String);
 	check(eventId, String);
+	check(message, String);
 
 	const recipients = [];
 
@@ -47,6 +50,7 @@ export function record(senderId: string, eventId: string) {
 	const body: Body = {
 		event: eventId,
 		sender: senderId,
+		message,
 		recipients,
 		model: 'Event.Canceled',
 	};
@@ -123,6 +127,7 @@ export function Model(entry: { body: Body }) {
 				customSiteName: siteName,
 				customEmailLogo: emailLogo,
 				eventTitle: '',
+				message: entry.body.message,
 			};
 
 			const eventFullTitle = i18n('notification.event.canceled.mail.title', '{DATE} — {EVENT}', {

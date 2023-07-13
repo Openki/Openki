@@ -141,11 +141,13 @@ import './styles.scss';
 			instance.canceling.set(false);
 		},
 		async 'click .js-event-cancel'(_event, instance) {
+			const reason = instance.$('.js-event-cancel-message').val() as string;
+
 			instance.busy('cancel');
 			PleaseLogin(instance, async () => {
 				const event = instance.data;
 				try {
-					await EventsMethods.cancel(event._id);
+					await EventsMethods.cancel(event._id, reason);
 
 					instance.canceling.set(false);
 					Alert.success(
