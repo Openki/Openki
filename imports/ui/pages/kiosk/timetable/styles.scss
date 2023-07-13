@@ -93,7 +93,7 @@
 	&:hover {
 		box-shadow: 0 5px 8px $default-shadow;
 		height: 70px;
-		min-width: 200px;
+		min-width: 400px;
 	}
 }
 
@@ -127,7 +127,7 @@
 }
 
 .timetable-event-title:hover ~ .timetable-event-description {
-	min-width: 200px;
+	min-width: 400px;
 }
 
 .vertical-wrapper {
