@@ -21,7 +21,7 @@ interface Body {
 }
 
 /**
- * Record the intent to send a private message
+ * Record the intent to send cancellation message
  * @param senderId id of the user that canceled the event
  * @param eventId id of the event that are canceld
  */
@@ -85,7 +85,7 @@ export function Model(entry: { body: Body }) {
 			};
 			const subject = i18n(
 				'notification.event.canceled.mail.subject',
-				'{EVENT} canceled',
+				'Canceled: {EVENT}',
 				subjectvars,
 			);
 
@@ -98,6 +98,11 @@ export function Model(entry: { body: Body }) {
 				query: 'campaign=eventCanceled',
 			});
 
+			// Show dates in local time and in users locale
+			const regionZone = LocalTime.zone(event.region);
+			const startMoment = regionZone.at(event.start);
+			startMoment.locale(userLocale);
+
 			const vars = {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				sender,
@@ -107,13 +112,11 @@ export function Model(entry: { body: Body }) {
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventCanceled`,
 				customSiteName: siteName,
 				customEmailLogo: emailLogo,
-				eventTitle: '',
+				eventTitleDate: '',
+				eventTitle: event.title,
+				eventDate: startMoment.calendar(),
 			};
 
-			// Show dates in local time and in users locale
-			const regionZone = LocalTime.zone(event.region);
-			const startMoment = regionZone.at(event.start);
-			startMoment.locale(userLocale);
 
 			const eventFullTitle = i18n('notification.event.canceled.mail.title', '{DATE} — {EVENT}', {
 				EVENT: event.title,
@@ -123,7 +126,7 @@ export function Model(entry: { body: Body }) {
 				query: 'campaign=eventCanceled',
 			});
 
-			vars.eventTitle = Spacebars.SafeString(`<a href="${eventUrl}">${eventFullTitle}</a>`);
+			vars.eventTitleDate = Spacebars.SafeString(`<a href="${eventUrl}">${eventFullTitle}</a>`);
 
 			return vars;
 		},
