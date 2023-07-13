@@ -5,8 +5,53 @@
 				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
 			</h5>
 			<p>
-				{{i18n "notification.event.canceled.mail.intro" 'You have been registered for {EVENT} on {DATE}. Unfortunately the event just got cancelled.' EVENT=eventTitle DATE=eventDate lng=locale}}
+				{{i18n "notification.event.canceled.mail.intro" 'You have been registered for {EVENT}. Unfortunately the event just got cancelled.' EVENT=eventTitle lng=locale}}
 			</p>
+			<table class="event">
+				<tr>
+					<td class="event-header">
+						<a href="{{eventLink}}">
+							<strong>
+								{{eventDate}}
+								<br />
+								{{eventStart}}
+								{{#if eventEnd}}
+									- {{eventEnd}}
+								{{/if}}
+							</strong>
+							{{#if venueLine}}
+								<br />
+								{{venueLine}}
+							{{/if}}
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td class="event-gap">
+					</td>
+				</tr>
+				<tr>
+					<td class="event-canceled text-center">
+						<strong>
+							{{i18n 'notification.event.canceled.mail.canceled' 'This event got canceled' lng=locale}}
+						</strong>
+					</td>
+				</tr>
+				<tr>
+					<td class="event-gap">
+					</td>
+				</tr>
+				<tr>
+					<td class="event-body">
+						<h5 class="title">
+							{{event.title}}
+						</h5>
+						<p>
+							{{{event.description}}}
+						</p>
+					</td>
+				</tr>
+			</table>
 		</td>
 	</tr>
 	<tr>
@@ -14,14 +59,14 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{i18n 'notification.event.canceled.mail.notice' 'You receive this e-mail because you are involved in {EVENT}.' EVENT=eventTitleDate lng=locale}}
+						{{i18n 'notification.event.canceled.mail.notice' 'You receive this e-mail because you are involved in {EVENT}.' EVENT=eventTitle lng=locale}}
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<a
-						href="{{unsubLink}}">{{i18n "email.base.unsubscribeLink.automatedNotifications" SITENAME=siteName lng=locale}}</a>
-					 &nbsp;
+						   href="{{unsubLink}}">{{i18n "email.base.unsubscribeLink.automatedNotifications" SITENAME=siteName lng=locale}}</a>
+						&nbsp;
 						<a
 						   href="{{urlFor 'profile' query='campaign=eventContactParticipants'}}">{{i18n "email.base.profileLink" lng=locale}}</a>
 					</td>
