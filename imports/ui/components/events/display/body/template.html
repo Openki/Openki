@@ -1,6 +1,6 @@
 <template name="eventDisplay">
 	<div class="page-component">
-		{{#if mayEdit}}
+		{{#if mayEdit this}}
 			{{#if singleEvent}}
 				<nav>
 					<ul class="nav nav-tabs" role="tablist">
@@ -45,13 +45,10 @@
 		{{/if}}
 		{{#if replicating}}
 			{{> eventReplication}}
-		{{/if}}
-		{{#if mayEdit}}
-			{{#if expanded}}
-				{{> deleteConfirmDialog deleteConfirmDialogAttr}}
-			{{else}}
-				{{#unless replicating}}
-					<div class="actions">
+		{{else}}
+			{{#if (mayEdit this)}}
+				<div class="actions">
+					{{#unless isExpanded}}
 						{{> buttonEdit event="js-event-edit"}}
 						<button type="button" class="btn btn-edit js-show-replication">
 							{{i18n 'event.details.repl_menu_btn' 'Repeat'}}
@@ -61,10 +58,42 @@
 						   title="{{i18n 'event.detail.download_cal' 'Download event to my calendar' attr=true}}">
 							{{i18n 'event.details.download' 'Download'}}
 						</a>
+						{{#unless this.canceled}}
+							<button type="button" class="btn btn-remove js-cancel">
+								{{i18n 'event.details.cancel' 'Cancel'}}
+							</button>
+						{{else}}
+							<button type="button" class="btn btn-edit js-event-uncancel">
+								{{i18n 'event.details.uncancel' 'Uncancel'}}
+							</button>
+						{{/unless}}
 						{{> buttonDelete event="js-expand"}}
-					</div>
-				{{/unless}}
+					{{/unless}}
+				</div>
+				{{#if expanded}}
+					{{> eventDeleteConfirmDialog deleteConfirmDialogAttr}}
+				{{/if}}
+				{{#if instance.canceling.get}}
+					{{> cancelConfirmDialog cancelConfirmDialogAttr}}
+				{{/if}}
 			{{/if}}
 		{{/if}}
+	</div>
+</template>
+
+<template name="cancelConfirmDialog">
+	<div class="event-cancel-confirm">
+		<p>{{i18n 'event.reallycancel' 'Please confirm the cancelation of this event. It will be displayed as "canceled" and all attending {PARTICIPANTS} users will be automatically informed by email about the cancelation of this event.' PARTICIPANTS=event.participants.length}}
+		</p>
+		<div class="form-actions">
+			{{> buttonDeleteConfirm
+				event="js-event-cancel"
+				textIdle=(i18n 'event.cancel.confirm.button' 'Cancel {EVENT}' EVENT=event.title)
+				textBusy=(i18n 'event.canceling' 'Canceling...')
+			}}
+			<button type="button" class="btn btn-edit js-cancel-event-close">
+				{{i18n 'event.details.close' 'Close'}}
+			</button>
+		</div>
 	</div>
 </template>

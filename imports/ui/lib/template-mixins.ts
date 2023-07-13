@@ -35,7 +35,7 @@ export function Expandible<N extends string, D, T extends Record<string, unknown
 	const Template = TemplateBase as TemplateStaticTyped<
 		N,
 		D,
-		T & { _expander: string; collapse: () => void }
+		T & { _expander: string; expanded: () => void; collapse: () => void }
 	>;
 
 	const template = Template[templateName];
@@ -44,6 +44,9 @@ export function Expandible<N extends string, D, T extends Record<string, unknown
 		const instance = this;
 		const expander = Random.id(); // Token to keep track of which Expandible is open
 		instance._expander = expander; // Read by event handlers
+		instance.expanded = () => {
+			return Session.equals('verify', instance._expander);
+		};
 		instance.collapse = () => {
 			if (Session.equals('verify', expander)) {
 				Session.set('verify', false);
@@ -52,8 +55,7 @@ export function Expandible<N extends string, D, T extends Record<string, unknown
 	});
 	template.helpers({
 		expanded() {
-			const instance = Template.instance();
-			return Session.equals('verify', instance._expander);
+			return Template.instance().expanded();
 		},
 	});
 	template.events({

@@ -102,17 +102,19 @@ export function EventRegistration(props: { event: EventModel }) {
 					</div>
 					<div className="page-component">
 						{!event.attendedBy(user?._id) ? (
-							!event.isFullyBooked() ? (
-								<RegisterPanel
-									event={event}
-									busy={isBusy === 'registering'}
-									onRegister={async (companions) => {
-										await addParticipant(companions);
-									}}
-								/>
-							) : (
-								<ButtonRegistrationClosed busy={isBusy === 'registering'} />
-							)
+							!event.canceled ? (
+								!event.isFullyBooked() ? (
+									<RegisterPanel
+										event={event}
+										busy={isBusy === 'registering'}
+										onRegister={async (companions) => {
+											await addParticipant(companions);
+										}}
+									/>
+								) : (
+									<ButtonRegistrationClosed busy={isBusy === 'registering'} />
+								)
+							) : null
 						) : (
 							<UnregisterPanel
 								busy={isBusy === 'unregistering'}
