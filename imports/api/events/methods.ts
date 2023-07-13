@@ -584,7 +584,9 @@ export const cancel = ServerMethod('event.cancel', async (eventId: string) => {
 
 	await Events.updateAsync(event._id, { $set: { canceled: true } });
 
-	Notification['Event.Canceled'].record(operator._id, eventId);
+	if (event.participants?.length) {
+		Notification['Event.Canceled'].record(operator._id, eventId);
+	}
 });
 
 export const uncancel = ServerMethod('event.uncancel', async (eventId: string) => {

@@ -60,11 +60,11 @@
 						</a>
 						{{#unless this.canceled}}
 							<button type="button" class="btn btn-remove js-cancel">
-								{{i18n 'event.details.cancel' 'Cancel'}}
+								{{i18n 'event.details.cancel' 'Cancel this event'}}
 							</button>
 						{{else}}
 							<button type="button" class="btn btn-edit js-event-uncancel">
-								{{i18n 'event.details.uncancel' 'Uncancel'}}
+								{{i18n 'event.details.uncancel' 'Uncancel this event'}}
 							</button>
 						{{/unless}}
 						{{> buttonDelete event="js-expand"}}
@@ -83,7 +83,7 @@
 
 <template name="cancelConfirmDialog">
 	<div class="event-cancel-confirm">
-		<p>{{i18n 'event.reallycancel' 'Please confirm the cancelation of this event. It will be displayed as "canceled" and all attending {PARTICIPANTS} users will be automatically informed by email about the cancelation of this event.' PARTICIPANTS=event.participants.length}}
+		<p>{{i18n 'event.reallycancel' 'Please confirm the cancellation of this event. It will be displayed as "canceled" and all attending {PARTICIPANTS} users will be automatically informed by email about the cancellation of this event.' PARTICIPANTS=event.participants.length}}
 		</p>
 		<div class="form-actions">
 			{{> buttonDeleteConfirm

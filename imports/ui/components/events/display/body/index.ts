@@ -83,9 +83,9 @@ import './styles.scss';
 			return {
 				confirmText: i18n(
 					'event.reallydelete',
-					'Please confirm that you would like to delete this event. This might confuse other users and cannot be undone. The event will be permenently deleted and not visible any more.',
+					'Please confirm that you would like to delete this event. This might confuse other users and cannot be undone. The event will be permanently deleted and not visible any more.',
 				),
-				confirmButton: i18n('event.delete.confirm.button', 'Delete event without notifing anyone'),
+				confirmButton: i18n('event.delete.confirm.button', 'Delete event without notifying anyone'),
 				cancelButton: i18n('event.delete.confirm.cancel.button', 'Rather mark as canceled'),
 				busyButton: i18n('event.delete.confirm.button.busy', 'Deleting event…'),
 				onRemove: async () => {
@@ -156,7 +156,7 @@ import './styles.scss';
 				} catch (err) {
 					Alert.serverError(
 						err,
-						i18n('event.details.message.eventHasBeenCanceled.error', 'Archiving went wrong'),
+						i18n('event.details.message.eventHasBeenCanceled.error', 'Cancelling went wrong'),
 					);
 				} finally {
 					instance.busy(false);
@@ -178,7 +178,7 @@ import './styles.scss';
 				} catch (err) {
 					Alert.serverError(
 						err,
-						i18n('event.details.message.eventHasBeenUncanceled.error', 'Uncanceling went wrong'),
+						i18n('event.details.message.eventHasBeenUncanceled.error', 'Uncancelling went wrong'),
 					);
 				} finally {
 					instance.busy(false);
