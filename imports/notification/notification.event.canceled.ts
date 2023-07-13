@@ -4,8 +4,8 @@ import { Meteor } from 'meteor/meteor';
 import { Spacebars } from 'meteor/spacebars';
 
 import { Log } from '/imports/api/log/log';
-import { UserModel, Users } from '/imports/api/users/users';
-import { Regions } from '/imports/api/regions/regions';
+import { UserModel } from '/imports/api/users/users';
+import { RegionModel, Regions } from '/imports/api/regions/regions';
 import { Events } from '/imports/api/events/events';
 
 import { i18n } from '/imports/startup/both/i18next';
@@ -56,8 +56,12 @@ export function record(senderId: string, eventId: string) {
 
 export function Model(entry: { body: Body }) {
 	const { body } = entry;
-	const sender = Users.findOne(body.sender);
 	const event = Events.findOne(body.event);
+
+	let region: RegionModel | undefined;
+	if (event?.region) {
+		region = Regions.findOne(event.region);
+	}
 
 	return {
 		accepted(actualRecipient: UserModel) {
@@ -71,16 +75,15 @@ export function Model(entry: { body: Body }) {
 		},
 
 		vars(userLocale: string, _actualRecipient: UserModel, unsubToken: string) {
-			if (!sender) {
-				throw new Error('Sender does not exist (0.o)');
-			}
 			if (!event) {
 				throw new Error('Event does not exist (0.o)');
+			}
+			if (!region) {
+				throw new Error('Region does not exist (0.o)');
 			}
 
 			const subjectvars = {
 				EVENT: StringTools.truncate(event.title, 50),
-				SENDER: StringTools.truncate(sender.getDisplayName(), 10),
 				lng: userLocale,
 			};
 			const subject = i18n(
@@ -89,34 +92,38 @@ export function Model(entry: { body: Body }) {
 				subjectvars,
 			);
 
-			const region = Regions.findOne(event.region);
+			// Show dates in local time and in users locale
+			const regionZone = LocalTime.zone(event.region);
+
+			const startMoment = regionZone.at(event.start);
+			startMoment.locale(userLocale);
+
+			const endMoment = regionZone.at(event.end);
+			endMoment.locale(userLocale);
 
 			const emailLogo = region?.custom?.emailLogo;
 			const siteName = getSiteName(region);
 
-			const senderUrl = Router.url('userprofile', sender, {
-				query: 'campaign=eventCanceled',
-			});
-
-			// Show dates in local time and in users locale
-			const regionZone = LocalTime.zone(event.region);
-			const startMoment = regionZone.at(event.start);
-			startMoment.locale(userLocale);
+			const { venue } = event;
+			let venueLine: string | undefined;
+			if (venue) {
+				venueLine = [venue.name, venue.address].filter(Boolean).join(', ');
+			}
 
 			const vars = {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
-				sender,
-				senderLink: senderUrl,
-				senderName: Spacebars.SafeString(`<a href="${senderUrl}">${sender.getDisplayName()}</a>`),
+				event,
+				eventDate: startMoment.format('LL'),
+				eventStart: startMoment.format('LT'),
+				eventEnd: endMoment.format('LT'),
+				venueLine,
+				eventLink: Router.url('showEvent', event, { query: 'campaign=eventNotify' }),
 				subject,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventCanceled`,
 				customSiteName: siteName,
 				customEmailLogo: emailLogo,
-				eventTitleDate: '',
-				eventTitle: event.title,
-				eventDate: startMoment.calendar(),
+				eventTitle: '',
 			};
-
 
 			const eventFullTitle = i18n('notification.event.canceled.mail.title', '{DATE} — {EVENT}', {
 				EVENT: event.title,
@@ -126,7 +133,7 @@ export function Model(entry: { body: Body }) {
 				query: 'campaign=eventCanceled',
 			});
 
-			vars.eventTitleDate = Spacebars.SafeString(`<a href="${eventUrl}">${eventFullTitle}</a>`);
+			vars.eventTitle = Spacebars.SafeString(`<a href="${eventUrl}">${eventFullTitle}</a>`);
 
 			return vars;
 		},
