@@ -85,6 +85,21 @@
 	<div class="event-cancel-confirm">
 		<p>{{i18n 'event.reallycancel' 'Please confirm the cancellation of this event. It will be displayed as "canceled" and all attending {PARTICIPANTS} users will be automatically informed by email about the cancellation of this event.' PARTICIPANTS=event.participants.length}}
 		</p>
+		{{#if event.participants.length}}
+			<label class="form-label" for="event-cancel-message">
+				{{i18n 'event.cancel.reason' 'Reason'}}
+			</label>
+			<div class="mb-3">
+				<div class="input-group">
+					<span class="input-group-text">
+						<span class="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>
+					</span>
+					<textarea rows="3" class="form-control js-event-cancel-message"
+							  id="event-cancel-message" maxlength="2000"
+							  placeholder="{{i18n 'event.cancel.reason.placeholder' 'Please add a reason here. (This message will be sent to all the registered users and not be visible here afterwards)' attr=true}}"></textarea>
+				</div>
+			</div>
+		{{/if}}
 		<div class="form-actions">
 			{{> buttonDeleteConfirm
 				event="js-event-cancel"
