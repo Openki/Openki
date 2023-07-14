@@ -10,6 +10,7 @@ import './register-api';
 import './robots';
 import './sitemaps';
 import './api.json';
+import './api.xml';
 
 import './emails';
 import './login';
