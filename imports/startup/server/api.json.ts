@@ -1,7 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { WebApp } from 'meteor/webapp';
 
-import { Api } from '/imports/Api';
+import { jsonApi } from '/imports/Api';
 import { FieldOrdering } from '/imports/utils/field-ordering';
 import { FilteringReadError } from '/imports/utils/filtering';
 import { SortSpec } from '/imports/utils/sort-spec';
@@ -57,7 +57,7 @@ Router.route('api.0.json', {
 	action() {
 		jSendResponder(this.response, () => {
 			const handler = this.params.handler as 'groups' | 'venues' | 'events' | 'courses';
-			if (!Object.prototype.hasOwnProperty.call(Api, handler)) {
+			if (!Object.prototype.hasOwnProperty.call(jsonApi, handler)) {
 				throw new NoActionError('Invalid action');
 			}
 
@@ -74,7 +74,7 @@ Router.route('api.0.json', {
 			const selectedLimit = Number.parseInt(query.limit || '', 10) || 100; // If nothing is specified, 100 enities are returned.
 			const limit = Math.max(0, Math.min(PrivateSettings.apiMaxLimit, selectedLimit));
 			const skip = Number.parseInt(query.skip || '', 10) || 0;
-			const results = Api[handler](filter, limit, skip, sorting.spec());
+			const results = jsonApi[handler](filter, limit, skip, sorting.spec());
 
 			// Sort the results again so computed fields are sorted too
 			// WARNING: In many cases this will be too late, because the limit
