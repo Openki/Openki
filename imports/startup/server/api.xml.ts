@@ -1,7 +1,8 @@
 import { Router } from 'meteor/iron:router';
 import { WebApp } from 'meteor/webapp';
+import { toXML } from 'jstoxml';
 
-import { Api } from '/imports/Api';
+import { jsonApi } from '/imports/Api';
 import { FieldOrdering } from '/imports/utils/field-ordering';
 import { FilteringReadError } from '/imports/utils/filtering';
 import { SortSpec } from '/imports/utils/sort-spec';
@@ -20,15 +21,17 @@ class NoActionError {
 	}
 }
 
-const jSendResponder = function (res: any, process: any) {
+const xmlSendResponder = function (res: any, process: any) {
 	try {
-		const body = {
+		const body =   `<?xml version="1.0" encoding="UTF-8"?> ${process()}`;
+        /* {
 			status: 'success',
 			data: process(),
-		};
-		res.statusCode = 200;
-		res.setHeader('Content-Type', 'application/json; charset=utf-8');
-		res.end(JSON.stringify(body, null, '\t'));
+		}; */
+        console.log('booty', body);
+        res.statusCode = 200;
+		res.setHeader('Content-Type', 'application/xml');
+		res.end(body);
 	} catch (e) {
 		const body: any = {};
 		if (e instanceof FilteringReadError || e instanceof NoActionError) {
@@ -55,9 +58,9 @@ Router.route('api.0.xml', {
 	path: '/api/0/xml/:handler',
 	where: 'server',
 	action() {
-		jSendResponder(this.response, () => {
-			const handler = this.params.handler as 'groups' | 'venues' | 'events' | 'courses';
-			if (!Object.prototype.hasOwnProperty.call(Api, handler)) {
+		xmlSendResponder(this.response, () => {
+			const handler = this.params.handler as 'events';
+			if (!Object.prototype.hasOwnProperty.call(jsonApi, handler)) {
 				throw new NoActionError('Invalid action');
 			}
 
@@ -74,12 +77,15 @@ Router.route('api.0.xml', {
 			const selectedLimit = Number.parseInt(query.limit || '', 10) || 100; // If nothing is specified, 100 enities are returned.
 			const limit = Math.max(0, Math.min(PrivateSettings.apiMaxLimit, selectedLimit));
 			const skip = Number.parseInt(query.skip || '', 10) || 0;
-			const results = Api[handler](filter, limit, skip, sorting.spec());
+			const results = jsonApi[handler](filter, limit, skip, sorting.spec());
+            const orderedResults = FieldOrdering(sorting).sorted(results as any);
+			return '<events>' + toXML(orderedResults,{indent: '    '}) + '</events>';
 
 			// Sort the results again so computed fields are sorted too
 			// WARNING: In many cases this will be too late, because the limit
 			// has already excluded results.
-			return FieldOrdering(sorting).sorted(results as any);
+			/* TODO */
+            // return FieldOrdering(sorting).sorted(results as any);
 		});
 	},
 });
