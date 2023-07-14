@@ -81,6 +81,7 @@ export const Api = {
 				link: Router.url('showEvent', ev),
 				internal: ev.internal,
 				room: ev.room,
+				slug: ev.slug,
 			} as {
 				id: string;
 				title: string;
@@ -94,6 +95,7 @@ export const Api = {
 				link: string;
 				internal: boolean;
 				room: string;
+				slug: string | undefined;
 				createdBy?: { id: string; name: string };
 				venue?: {
 					id: string | undefined;
