@@ -1,6 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { WebApp } from 'meteor/webapp';
 import { toXML } from 'jstoxml';
+import moment from 'moment';
 import { Api } from '/imports/Api';
 import { FieldOrdering } from '/imports/utils/field-ordering';
 import { FilteringReadError } from '/imports/utils/filtering';
@@ -21,7 +22,7 @@ class NoActionError {
 }
 
 const orderedResults = (params: any) => {
-	const handler = params.handler as 'groups' | 'venues' | 'events' | 'courses' | 'schedule';
+	const handler = params.handler as 'groups' | 'venues' | 'events' | 'courses';
 	if (!Object.prototype.hasOwnProperty.call(Api, handler)) {
 		throw new NoActionError('Invalid action');
 	}
@@ -117,37 +118,79 @@ const xmlSendResponder = function (res: any, process: Function) {
 	}
 };
 
-const toCccFormat = (jsonEvent: any) => {
-	return {
-		event: {
-			...jsonEvent,
-			guid: jsonEvent.id,
-			doNotRecord: false,
+const sortByTimeAndRoom = (results: any) =>  results.reduce(
+	(accumulator: any, current: any)=>{
+		const currentDate = moment(current.start).format('YYYY-MM-DD')
+		const currentRoom = current.venue.name || current.room;
+		if (currentDate in accumulator) {
+			const dateEvents = accumulator[currentDate];
+			if (currentRoom in dateEvents) {
+				dateEvents[currentRoom].push(current);
+			} else {
+				dateEvents[currentRoom] = [current];
+			}
+		} else {
+			accumulator[currentDate] = {
+				[currentRoom]: [current]
+			}
 		}
-	}
-}
-
-const sortByTimeAndRoom = (results) => {
-
-}
+		return accumulator;
+	}, {})
 
 Router.route('api.0.xml', {
-	path: '/api/0/xml/schedule',
+	path: '/api/0/xml/:handler',
 	where: 'server',
 	action() {
 		xmlSendResponder(this.response, () => {
-			const jsonResults = orderedResults(this.params);
-			const cccResults = jsonResults.map(res => toCccFormat(res));
-			const resultsByTimeAndRoom = sortByTimeAndRoom(cccResults);
-
-			return `
-			
+			const results = orderedResults(this.params);
+			const resultsByTimeAndRoom = sortByTimeAndRoom(results);
+			  
+			let returnString = `
 			<schedule xsi:noNamespaceSchemaLocation="https://c3voc.de/schedule/schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   			<generator name="human" />
   			<version>1.0</version>
-  				${toXML(cccResults, {indent: '    '})}
-			</schedule>
 			`
+			let dayIdx = 1;
+			for (const [date, dateEvents] of Object.entries(resultsByTimeAndRoom)) {
+				returnString += `
+				<day date="${date}" end="${moment(date).add(1, 'day').startOf('day')}" index="${dayIdx++}" start="${moment(date).startOf('day')}">
+				`;
+
+				// @ts-ignore
+				for (const [room, roomEvents] of Object.entries(dateEvents)) {
+					returnString += `<room name="${room}">`
+					// @ts-ignore
+					roomEvents.forEach(event=> {
+						returnString += `
+						 <event guid="${event.id}" id="${event.id}">
+							<date>${date}</date>
+							<start>${event.start}</start>
+							<duration>${event.duration}</duration>
+							<room>${room}</room>
+							<slug>${event.slug}</slug>
+							<url>${event.link}</url>
+							<recording></recording>
+							<title>${event.title.substring(0,  10)} I will fix this</title>
+							<subtitle>${event.subtitle}</subtitle>
+							<track></track>
+							<type></type>
+							<language></language>
+							<abstract></abstract>
+							<description>${event.description}</description>
+							<logo></logo>
+							<persons></persons>
+							<links></links>
+							<attachments></attachments>
+							<do-not-record>false</do-not-record>
+						 </event>
+						`
+					})
+					returnString += `</room>`
+				}
+				returnString += `</day>`
+			}
+  			returnString += `</schedule>`
+			return returnString;
 		});
 	},
 });
