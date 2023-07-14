@@ -1,7 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Router } from 'meteor/iron:router';
 import moment from 'moment';
-import { toXML } from 'jstoxml';
 import { Users } from '/imports/api/users/users';
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
@@ -55,126 +54,7 @@ function maybeUrl(route: string, context: { _id?: string } | undefined) {
 	return Router.url(route, context);
 }
 
-export const xmlApi =  {
-	events: apiResponse(
-		Events,
-		(ev) => {
-			const evr = {
-				id: ev._id,
-				guid: ev._id,
-				title: ev.title,
-				description: ev.description,
-				startLocal: ev.startLocal,
-				endLocal: ev.endLocal,
-				start: ev.start,
-				end: ev.end,
-				duration: moment(ev.end).diff(ev.start) / 60000, // Minutes
-				maxParticipants: ev.maxParticipants,
-				link: Router.url('showEvent', ev),
-				internal: ev.internal,
-				room: ev.room,
-				doNotRecord: false,
-			} as {
-				id: string;
-				guid: string;
-				title: string;
-				description: string;
-				startLocal: string;
-				endLocal: string;
-				start: Date;
-				end: Date;
-				duration: number;
-				maxParticipants: number;
-				link: string;
-				internal: boolean;
-				room: string;
-				doNotRecord: boolean;
-				createdBy?: { id: string; name: string };
-				venue?: {
-					id: string | undefined;
-					name: string | undefined;
-					address: string | undefined;
-					loc: Geodata | undefined;
-					link: string | undefined;
-				};
-				course?: {
-					id: string;
-					name: string;
-					link: string;
-					image?: string;
-					customFields?: { name: string; value: string }[];
-				};
-				groups: {
-					id: string;
-					name: string;
-					short: string;
-					link: string;
-				}[];
-			};
-
-			const creator = Users.findOne(ev.createdBy);
-			if (creator) {
-				evr.createdBy = {
-					id: creator._id,
-					name: creator.getDisplayName(),
-				};
-			}
-
-			if (ev.venue) {
-				evr.venue = {
-					id: ev.venue._id,
-					name: ev.venue.name,
-					address: ev.venue.address,
-					loc: ev.venue.loc,
-					link: maybeUrl('venueDetails', ev.venue),
-				};
-			}
-
-			if (ev.courseId) {
-				const course = Courses.findOne(ev.courseId);
-				if (course) {
-					evr.course = {
-						id: ev.courseId,
-						name: course.name,
-						link: Router.url('showCourse', course),
-						customFields: course.customFields
-							?.filter((f) => f.visibleFor === 'all')
-							.map((f) => ({
-								name: f.name,
-								value: f.value,
-							})),
-					};
-
-					const image = course.publicImageUrl();
-					if (image) {
-						evr.course.image = image;
-					}
-				}
-			}
-
-			evr.groups = [];
-			const groups = ev.allGroups || [];
-			groups.forEach((groupId) => {
-				const group = Groups.findOne(groupId);
-				if (group) {
-					evr.groups.push({
-						id: group._id,
-						name: group.name,
-						short: group.short,
-						link: Router.url('groupDetails', group),
-					});
-				}
-			});
-			console.log('xxxxxmmmm',  toXML(evr,{indent: '    '}));
-
-			return toXML(evr,{indent: '    '});
-		},
-		{ tenants: visibleTenants() },
-	),
-
-};
-
-export const jsonApi = {
+export const Api = {
 	groups: apiResponse(Groups, (originalGroup) => {
 		const group = { ...originalGroup } as typeof originalGroup & { link: string };
 		group.link = Router.url('groupDetails', group);
