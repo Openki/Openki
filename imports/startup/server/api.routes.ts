@@ -21,7 +21,7 @@ class NoActionError {
 }
 
 const orderedResults = (params: any) => {
-	const handler = params.handler as 'groups' | 'venues' | 'events' | 'courses';
+	const handler = params.handler as 'groups' | 'venues' | 'events' | 'courses' | 'schedule';
 	if (!Object.prototype.hasOwnProperty.call(Api, handler)) {
 		throw new NoActionError('Invalid action');
 	}
@@ -117,7 +117,7 @@ const xmlSendResponder = function (res: any, process: Function) {
 	}
 };
 
-const toFahrplanFormat = (jsonEvent: any) => {
+const toCccFormat = (jsonEvent: any) => {
 	return {
 		event: {
 			...jsonEvent,
@@ -127,24 +127,27 @@ const toFahrplanFormat = (jsonEvent: any) => {
 	}
 }
 
+const sortByTimeAndRoom = (results) => {
+
+}
+
 Router.route('api.0.xml', {
-	path: '/api/0/xml/:handler',
+	path: '/api/0/xml/schedule',
 	where: 'server',
 	action() {
 		xmlSendResponder(this.response, () => {
 			const jsonResults = orderedResults(this.params);
-			const fahrplanResults = jsonResults.map(res => toFahrplanFormat(res));
+			const cccResults = jsonResults.map(res => toCccFormat(res));
+			const resultsByTimeAndRoom = sortByTimeAndRoom(cccResults);
+
 			return `
 			
 			<schedule xsi:noNamespaceSchemaLocation="https://c3voc.de/schedule/schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   			<generator name="human" />
   			<version>1.0</version>
-  				${toXML(fahrplanResults, {indent: '    '})}
+  				${toXML(cccResults, {indent: '    '})}
 			</schedule>
 			`
-
-//            const orderedResults = FieldOrdering(sorting).sorted(results as any);
-//			return '<events>' + toXML(orderedResults,{indent: '    '}) + '</events>';
 		});
 	},
 });

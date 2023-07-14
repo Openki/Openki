@@ -1,0 +1,60 @@
+<schedule>
+  <generator name="frab" version="0.7" url="https://github.com/frab/frab" />
+  <version>1.3</version>
+  <conference>
+    <acronym>33c3</acronym>
+    <title>33. Chaos Communication Congress</title>
+    <start>2016-12-27</start>
+    <end>2016-12-30</end>
+    <days>4</days>
+    <timeslot_duration>00:15</timeslot_duration>
+    <time_zone_name>Europe/Amsterdam</time_zone_name>
+    <base_url>https://fahrplan.events.ccc.de/congress/2016/Fahrplan/</base_url>
+  </conference>
+  <day date="2016-12-27" end="2016-12-28T04:00:00+01:00" index="1" start="2016-12-27T10:00:00+01:00">
+    <room name="Saal 1">
+      <event guid="c06dd4c2-c637-445d-9c72-92204a35eeff" id="8264">
+        <date>2016-12-27T20:30:00+01:00</date>
+        <start>20:30</start>
+        <duration>01:00</duration>
+        <room>Saal 6</room>
+        <slug>33c3-8264-netzpolitik_in_der_schweiz_2016</slug>
+        <url>https://fahrplan.events.ccc.de/congress/2016/Fahrplan/events/8264.html</url>
+        <recording>
+          <license>CC BY 4.0</license>
+          <optout>false</optout>
+        </recording>
+        <title>Netzpolitik in der Schweiz 2016</title>
+        <subtitle>Grundrechte per Volksentscheid versenken</subtitle>
+        <track>CCC</track>
+        <type>lecture</type>
+        <language>de</language>
+        <abstract>
+Ein Überblick zur netzpolitischen Situation in der Schweiz. Wir geben einen umfassenden Rückblick auf das ereignissreiche Jahr 2016, in dem die Schweizer Bevölkerung über gleich zwei Massenüberwachungsgesetze entschieden hat. Die netzpolitischen Gruppierungen haben mit viel Einsatz gegen die Gesetze gekämpft . Wir berichten darüber, wie wir das angengangen sind, wie es ausgegangen ist und was wir dabei gelernt haben. Zudem machen wir einen Ausblick auf kommende netzpolitische Herausforderungen.
+        </abstract>
+        <description>
+In Sachen Netzpolitik hat sich im Jahr 2016, seit unserem letzten Vortrag zu dem Thema, viel getan. Gleich zu Beginn 2016 kam die Nachricht, dass das Referendum zum NDG erfolgreich war. Damit hat das Schweizer Stimmvolk die Chance erhalten, über das Geheimdienstgesetz (NDG) abzustimmen. Mit dem Zustandekommen des Referendums war aber erst die halbe Arbeit getan. Es galt nun der in Gang gesetzten staatlichen Propagandamaschinerie sowie einigen, insbesondere bürgerlichen, Parteien entgegenzuwirken. Die netzpolitischen Gruppierungen waren also gefragt, sich aktiv, parteipolitisch unabhängig und mit technischen Fakten in den Abstimmungskampf einzubringen. Am 25. September 2016 hat dann das Schweizer Stimmvolk über das neue Nachrichtendienstgesetz entschieden: 65% der Bevölkerung hat das gesetz angenommen, nur gerade 35 % teilten unsere Meinung. Im Frühling hat das Parlament gleich das nächste fragwürdige Gesetz verabschiedet - das revidierte Bundesgesetz betreffend die Überwachung des Post- und Fernmeldeverkehrs (BÜPF). Auch gegen dieses Gesetz hat die Schweizer Netzgemeinde, unterstützt von einer ganzen Reihe Jungparteien, umgehend das Referendum ergriffen. Das Sammeln der Unterschriften wurde diesmal aus den Räumen des CCC Zürich (CCCZH) koordiniert, da es sich abgesehen von der stark netzpolitisch verankerten Pirtatenpartei, nicht um eine parteipolitische Initiative handelte. Auch wenn das Referendum gegen das BÜPF leider nicht erfolgreich war, so haben wir bei der Zusammenarbeit mit einem gross gestreuten Kommittee, beim Sammeln auf der Strasse und dem Auszählen und bescheinigen der Unterschriften viel gelernt und somit nicht Gold, aber immerhin Silber und Bronze abgeräumt. Auch wenn mit 2016 ein - mit Bezug auf die Schweizer Netzpolitik - besonders düsters Jahr zu Ende geht, so ist für die Zukunft noch einiges ausstehend. Zum Schluss wollen wir einen kurzen Überblick geben über das was kommt. Detaillierte Erklärungen zum politischen System in der Schweiz und der (damals) aktuellen Lage haben wir im Vortrag am 32c3 gegeben: https://media.ccc.de/v/32c3-7205-netzpolitik_in_der_schweiz Im Anschluss an den Talk gibt es eine ausgedehnte Diskussions- und Fragesession zu den behandelten Themen im Raum A.1: Siehe hier: https://events.ccc.de/congress/2016/wiki/Session:Netzpolitik_in_der_Schweiz_2017
+        </description>
+        <logo>/system/events/logos/000/008/264/large/buepf_tux.jpg</logo>
+        <persons>
+          <person id="6379">Hakuna MaMate</person>
+        </persons>
+        <links>
+          <link href="https://www.ccc-ch.ch/">Chaos Computer Club Schweiz</link>
+          <link href="https://www.digitale-gesellschaft.ch">Digitale Gesellschaft Schweiz</link>
+          <link href="https://stopbuepf.ch/">Referendumsplattform BÜPF</link>
+          <link href="https://www.nachrichtendienstgesetz.ch">Referendumsplattform NDG</link>
+        </links>
+        <attachments>
+          <attachment href="/system/event_attachments/attachments/000/003/131/original/talk_33c3_netzpolitik.pdf?1482965202">Slides</attachment>
+        </attachments>
+      </event>
+      …
+    </room>
+    <room name="Saal 2">…</room>
+    …
+  </day>
+  <day date="2016-12-28" end="2016-12-29T04:00:00+01:00" index="2" start="2016-12-28T10:00:00+01:00">…</day>
+  <day date="2016-12-29" end="2016-12-30T04:00:00+01:00" index="3" start="2016-12-29T10:00:00+01:00">…</day>
+  <day date="2016-12-30" end="2016-12-30T23:00:00+01:00" index="4" start="2016-12-30T10:00:00+01:00">…</day>
+</schedule>
