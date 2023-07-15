@@ -13,7 +13,6 @@ import { Filtering } from '/imports/utils/filtering';
 import { ParamWrapper, Predicate } from '/imports/utils/predicates';
 import { FieldSort } from '/imports/utils/sort-spec';
 
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type ExtractQuery<P> = P extends ParamWrapper<infer _G, infer Q> ? Q : never;
 
