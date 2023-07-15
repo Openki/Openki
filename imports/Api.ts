@@ -30,6 +30,7 @@ export interface ApiCollection<
 		skip?: number,
 		sort?: FieldSort[],
 	): Mongo.Cursor<T, U>;
+
 	Filtering(): Filtering<P>;
 }
 
