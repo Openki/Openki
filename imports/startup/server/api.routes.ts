@@ -1,6 +1,5 @@
 import { Router } from 'meteor/iron:router';
 import { WebApp } from 'meteor/webapp';
-import { toXML } from 'jstoxml';
 import moment from 'moment';
 import { Api } from '/imports/Api';
 import { FieldOrdering } from '/imports/utils/field-ordering';
@@ -137,6 +136,10 @@ const sortByTimeAndRoom = (results: any) =>  results.reduce(
 		return accumulator;
 	}, {})
 
+	const removeHtmlTags = (str: String) => {
+		return str ?
+		str.replace(/<[^>]*>/g, "") : '';
+	}
 Router.route('api.0.xml', {
 	path: '/api/0/xml/:handler',
 	where: 'server',
@@ -170,13 +173,13 @@ Router.route('api.0.xml', {
 							<slug>${event.slug}</slug>
 							<url>${event.link}</url>
 							<recording></recording>
-							<title>${event.title.substring(0,  10)} I will fix this</title>
-							<subtitle>${event.subtitle}</subtitle>
+							<title>${removeHtmlTags(event.title)}</title>
+							<subtitle>${removeHtmlTags(event.subtitle)}</subtitle>
 							<track></track>
 							<type></type>
 							<language></language>
 							<abstract></abstract>
-							<description>${event.description}</description>
+							<description>${removeHtmlTags(event.description)}</description>
 							<logo></logo>
 							<persons></persons>
 							<links></links>
