@@ -90,7 +90,7 @@ Router.route('api.0.json', {
 
 const xmlSendResponder = function (res: any, process: any) {
 	try {
-		const body = process();
+		const body = `<?xml version="1.0" encoding="UTF-8"?> ${process()}`;
 		res.statusCode = 200;
 		res.setHeader('Content-Type', 'application/xml');
 		res.end(body);
@@ -153,7 +153,6 @@ Router.route('api.0.xml', {
 			const resultsByTimeAndRoom = sortByTimeAndRoom(results);
 
 			let returnString = `
-			<?xml version="1.0" encoding="UTF-8"?> 
 			<schedule xsi:noNamespaceSchemaLocation="https://c3voc.de/schedule/schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   			<generator name="human" />
   			<version>1.0</version>
@@ -197,10 +196,10 @@ Router.route('api.0.xml', {
 								<abstract></abstract>
 								<description>${removeHtmlTags(event.description)}</description>
 								<logo></logo>
-								<persons>
+								<persons>	
 							`
 							event.groups.forEach((group: any)=>{
-								returnString += `       <person id="${group.id}">${group.name}</person>`
+								returnString += `<person id="${group.id}">${group.name}</person>`
 							})
 							returnString += `
 								</persons>
