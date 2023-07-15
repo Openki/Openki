@@ -88,9 +88,9 @@ Router.route('api.0.json', {
 	},
 });
 
-const xmlSendResponder = function (res: any, process: AnimationPlayState) {
+const xmlSendResponder = function (res: any, process: any) {
 	try {
-		const body = `<?xml version="1.0" encoding="UTF-8"?> ${process()}`;
+		const body = process();
 		res.statusCode = 200;
 		res.setHeader('Content-Type', 'application/xml');
 		res.end(body);
@@ -139,17 +139,33 @@ const removeHtmlTags = (str: string) => {
 	return str ? str.replace(/<[^>]*>/g, '') : '';
 };
 Router.route('api.0.xml', {
-	path: '/api/0/xml/:handler',
+	path: '/api/0/xml/schedule',
 	where: 'server',
 	action() {
 		xmlSendResponder(this.response, () => {
-			const results = orderedResults(this.params);
+			const { query } = this.params;
+			const filter = { ...query };
+			delete filter.sort;
+			delete filter.limit;
+			delete filter.skip;
+			const results = Api['events'](filter, PrivateSettings.apiMaxLimit, 0, SortSpec.unordered().spec());
+		
 			const resultsByTimeAndRoom = sortByTimeAndRoom(results);
 
 			let returnString = `
+			<?xml version="1.0" encoding="UTF-8"?> 
 			<schedule xsi:noNamespaceSchemaLocation="https://c3voc.de/schedule/schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   			<generator name="human" />
   			<version>1.0</version>
+			  <conference>
+				<acronym>A2023</acronym>
+				<title>Anarchy 2023</title>
+				<start>2023-07-19</start>
+				<end>2023-07-23</end>
+				<days>5</days>
+				<time_zone_name>Europe/Zurich</time_zone_name>
+				<base_url>https://anarchy2023.org/en/program/workshops</base_url>
+			</conference>			
 			`;
 			let dayIdx = 1;
 			for (const [date, dateEvents] of Object.entries(resultsByTimeAndRoom)) {
@@ -165,27 +181,33 @@ Router.route('api.0.xml', {
 					// @ts-ignore
 					roomEvents.forEach((event) => {
 						returnString += `
-						 <event guid="${event.id}" id="${event.id}">
-							<date>${date}</date>
-							<start>${event.start}</start>
-							<duration>${event.duration}</duration>
-							<room>${room}</room>
-							<slug>${event.slug}</slug>
-							<url>${event.link}</url>
-							<recording></recording>
-							<title>${removeHtmlTags(event.title)}</title>
-							<subtitle>${removeHtmlTags(event.subtitle)}</subtitle>
-							<track></track>
-							<type></type>
-							<language></language>
-							<abstract></abstract>
-							<description>${removeHtmlTags(event.description)}</description>
-							<logo></logo>
-							<persons></persons>
-							<links></links>
-							<attachments></attachments>
-							<do-not-record>false</do-not-record>
-						 </event>
+							<event guid="${event.id}" id="${event.id}">
+								<date>${date}</date>
+								<start>${event.start}</start>
+								<duration>${event.duration}</duration>
+								<room>${room}</room>
+								<slug>${event.slug || ''}</slug>
+								<url>${event.link || ''}</url>
+								<recording></recording>
+								<title>${removeHtmlTags(event.title)}</title>
+								<subtitle>${removeHtmlTags(event.subtitle)}</subtitle>
+								<track></track>
+								<type></type>
+								<language></language>
+								<abstract></abstract>
+								<description>${removeHtmlTags(event.description)}</description>
+								<logo></logo>
+								<persons>
+							`
+							event.groups.forEach((group: any)=>{
+								returnString += `       <person id="${group.id}">${group.name}</person>`
+							})
+							returnString += `
+								</persons>
+								<links></links>
+								<attachments></attachments>
+								<do-not-record>false</do-not-record>
+							</event>
 						`;
 					});
 					returnString += `</room>`;
