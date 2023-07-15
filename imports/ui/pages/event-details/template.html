@@ -7,6 +7,11 @@
 <template name="event">
 	<div class="row">
 		<div class="col-lg-8 mb-3">
+			{{#if this.canceled}}
+				<div class="alert alert-canceled text-center" role="alert">
+					<strong>{{i18n 'event.canceled.alert' '{EVENT} got canceled.' EVENT=this.title}}</strong>
+				</div>
+			{{/if}}
 			{{#if course}}
 				{{#unless course.singleEvent}}
 					{{> eventCourseHeader backlink=courseLink headerlink=courseLink regionId=region categories=categories title=course.name image=course.publicImageUrl}}
