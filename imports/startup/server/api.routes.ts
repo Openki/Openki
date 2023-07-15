@@ -135,9 +135,16 @@ const sortByTimeAndRoom = (results: ApiEvent[]) =>
 		return accumulator;
 	}, {});
 
-const removeHtmlTags = (str: string) => {
-	return str ? str.replace(/<[^>]*>/g, '') : '';
-};
+const sanitizeXMLvalues = (str: string) =>
+	str
+		? str
+				.replace(/<.*?>/g, '')
+				.replace(/&/g, '&amp;')
+				.replace(/>/g, '&gt;')
+				.replace(/</g, '&lt;')
+				.replace(/"/g, '&quot;')
+		: '';
+
 Router.route('api.0.xml', {
 	path: '/api/0/xml/schedule',
 	where: 'server',
@@ -175,12 +182,12 @@ Router.route('api.0.xml', {
 			// eslint-disable-next-line no-restricted-syntax
 			for (const [date, dateEvents] of Object.entries(resultsByTimeAndRoom)) {
 				returnString += `
-				<day date="${date}" end="${moment(date)
-					.add(1, 'day')
-					// eslint-disable-next-line no-plusplus
-					.startOf('day')}" index="${dayIdx++}" start="${moment(date).startOf('day')}">
+				<day date="${date}" 
+				     end="${moment(date).add(1, 'day').startOf('day').format('YYYY-MM-DDTHH:mm:ssZ')}"
+					 index="${dayIdx}" 
+					 start="${moment(date).startOf('day').format('YYYY-MM-DDTHH:mm:ssZ')}">
 				`;
-
+				dayIdx += 1;
 				// eslint-disable-next-line no-restricted-syntax
 				for (const [room, roomEvents] of Object.entries(dateEvents)) {
 					returnString += `<room name="${room}">`;
@@ -190,20 +197,20 @@ Router.route('api.0.xml', {
 						(event) => {
 							returnString += `
 							<event guid="${event.id}" id="${event.id}">
-								<date>${date}</date>
-								<start>${event.start}</start>
-								<duration>${event.duration}</duration>
+								<date>${moment(date).format('YYYY-MM-DDTHH:mm:ssZ')}</date>
+								<start>${moment(event.start).format('HH:mm')}</start>
+								<duration>${Math.floor(event.duration / 60)}:${event.duration % 60}</duration>
 								<room>${room}</room>
 								<slug>${event.slug || ''}</slug>
 								<url>${event.link || ''}</url>
 								<recording></recording>
-								<title>${removeHtmlTags(event.title)}</title>
+								<title>${sanitizeXMLvalues(event.title)}</title>
 								<subtitle></subtitle>
 								<track></track>
 								<type></type>
 								<language></language>
 								<abstract></abstract>
-								<description>${removeHtmlTags(event.description)}</description>
+								<description>${sanitizeXMLvalues(event.description)}</description>
 								<logo></logo>
 								<persons>	
 							`;
