@@ -33,6 +33,43 @@ export interface ApiCollection<
 	Filtering(): Filtering<P>;
 }
 
+export type ApiEvent = {
+	id: string;
+	title: string;
+	description: string;
+	startLocal: string;
+	endLocal: string;
+	start: Date;
+	end: Date;
+	duration: number;
+	maxParticipants: number;
+	link: string;
+	internal: boolean;
+	room: string;
+	slug: string | undefined;
+	createdBy?: { id: string; name: string };
+	venue?: {
+		id: string | undefined;
+		name: string | undefined;
+		address: string | undefined;
+		loc: Geodata | undefined;
+		link: string | undefined;
+	};
+	course?: {
+		id: string;
+		name: string;
+		link: string;
+		image?: string;
+		customFields?: { name: string; value: string }[];
+	};
+	groups: {
+		id: string;
+		name: string;
+		short: string;
+		link: string;
+	}[];
+};
+
 function apiResponse<T, U, F extends { [name: string]: Predicate<any> }, R>(
 	collection: ApiCollection<T, U, F, ToFilter<F> & typeof additionalFilters>,
 	formatter: (model: U) => R,
@@ -81,42 +118,7 @@ export const Api = {
 				internal: ev.internal,
 				room: ev.room,
 				slug: ev.slug,
-			} as {
-				id: string;
-				title: string;
-				description: string;
-				startLocal: string;
-				endLocal: string;
-				start: Date;
-				end: Date;
-				duration: number;
-				maxParticipants: number;
-				link: string;
-				internal: boolean;
-				room: string;
-				slug: string | undefined;
-				createdBy?: { id: string; name: string };
-				venue?: {
-					id: string | undefined;
-					name: string | undefined;
-					address: string | undefined;
-					loc: Geodata | undefined;
-					link: string | undefined;
-				};
-				course?: {
-					id: string;
-					name: string;
-					link: string;
-					image?: string;
-					customFields?: { name: string; value: string }[];
-				};
-				groups: {
-					id: string;
-					name: string;
-					short: string;
-					link: string;
-				}[];
-			};
+			} as ApiEvent;
 
 			const creator = Users.findOne(ev.createdBy);
 			if (creator) {

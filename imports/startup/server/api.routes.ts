@@ -1,7 +1,7 @@
 import { Router } from 'meteor/iron:router';
 import { WebApp } from 'meteor/webapp';
 import moment from 'moment';
-import { Api } from '/imports/Api';
+import { Api, ApiEvent } from '/imports/Api';
 import { FieldOrdering } from '/imports/utils/field-ordering';
 import { FilteringReadError } from '/imports/utils/filtering';
 import { SortSpec } from '/imports/utils/sort-spec';
@@ -116,10 +116,10 @@ const xmlSendResponder = function (res: any, process: any) {
 	}
 };
 
-const sortByTimeAndRoom = (results: any) =>
-	results.reduce((accumulator: any, current: any) => {
+const sortByTimeAndRoom = (results: ApiEvent[]) =>
+	results.reduce((accumulator: { [date: string]: { [room: string]: ApiEvent[] } }, current) => {
 		const currentDate = moment(current.start).format('YYYY-MM-DD');
-		const currentRoom = current.venue.name || current.room;
+		const currentRoom = current.venue?.name || current.room;
 		if (currentDate in accumulator) {
 			const dateEvents = accumulator[currentDate];
 			if (currentRoom in dateEvents) {
@@ -148,8 +148,13 @@ Router.route('api.0.xml', {
 			delete filter.sort;
 			delete filter.limit;
 			delete filter.skip;
-			const results = Api['events'](filter, PrivateSettings.apiMaxLimit, 0, SortSpec.unordered().spec());
-		
+			const results = Api.events(
+				filter,
+				PrivateSettings.apiMaxLimit,
+				0,
+				SortSpec.unordered().spec(),
+			);
+
 			const resultsByTimeAndRoom = sortByTimeAndRoom(results);
 
 			let returnString = `
@@ -167,19 +172,23 @@ Router.route('api.0.xml', {
 			</conference>			
 			`;
 			let dayIdx = 1;
+			// eslint-disable-next-line no-restricted-syntax
 			for (const [date, dateEvents] of Object.entries(resultsByTimeAndRoom)) {
 				returnString += `
 				<day date="${date}" end="${moment(date)
 					.add(1, 'day')
+					// eslint-disable-next-line no-plusplus
 					.startOf('day')}" index="${dayIdx++}" start="${moment(date).startOf('day')}">
 				`;
 
-				// @ts-ignore
+				// eslint-disable-next-line no-restricted-syntax
 				for (const [room, roomEvents] of Object.entries(dateEvents)) {
 					returnString += `<room name="${room}">`;
-					// @ts-ignore
-					roomEvents.forEach((event) => {
-						returnString += `
+					// eslint-disable-next-line no-loop-func
+					roomEvents.forEach(
+						// eslint-disable-next-line no-loop-func
+						(event) => {
+							returnString += `
 							<event guid="${event.id}" id="${event.id}">
 								<date>${date}</date>
 								<start>${event.start}</start>
@@ -189,7 +198,7 @@ Router.route('api.0.xml', {
 								<url>${event.link || ''}</url>
 								<recording></recording>
 								<title>${removeHtmlTags(event.title)}</title>
-								<subtitle>${removeHtmlTags(event.subtitle)}</subtitle>
+								<subtitle></subtitle>
 								<track></track>
 								<type></type>
 								<language></language>
@@ -197,10 +206,10 @@ Router.route('api.0.xml', {
 								<description>${removeHtmlTags(event.description)}</description>
 								<logo></logo>
 								<persons>	
-							`
-							event.groups.forEach((group: any)=>{
-								returnString += `<person id="${group.id}">${group.name}</person>`
-							})
+							`;
+							event.groups.forEach((group) => {
+								returnString += `<person id="${group.id}">${group.name}</person>`;
+							});
 							returnString += `
 								</persons>
 								<links></links>
@@ -208,7 +217,8 @@ Router.route('api.0.xml', {
 								<do-not-record>false</do-not-record>
 							</event>
 						`;
-					});
+						},
+					);
 					returnString += `</room>`;
 				}
 				returnString += `</day>`;
