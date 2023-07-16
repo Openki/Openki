@@ -197,7 +197,7 @@ Router.route('api.0.xml', {
 							const duration = `${Math.floor(event.duration / 60)}:${durationMinutes}`;
 							returnString += `
 							<event guid="${event.id}" id="${event.id}">
-								<date>${moment(date).format('YYYY-MM-DDTHH:mm:ssZ')}</date>
+								<date>${moment(event.start).format('YYYY-MM-DDTHH:mm:ssZ')}</date>
 								<start>${moment(event.start).format('HH:mm')}</start>
 								<duration>${duration}</duration>								
  								<room>${room}</room>
