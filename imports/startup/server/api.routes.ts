@@ -7,6 +7,8 @@ import { FilteringReadError } from '/imports/utils/filtering';
 import { SortSpec } from '/imports/utils/sort-spec';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
+type HandlerType = 'groups' | 'venues' | 'events' | 'courses';
+
 WebApp.rawConnectHandlers.use('/api', (_req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	return next();
@@ -20,8 +22,7 @@ class NoActionError {
 	}
 }
 
-const orderedResults = (params: any) => {
-	const handler = params.handler as 'groups' | 'venues' | 'events' | 'courses';
+const orderedResults = (params: any, handler: HandlerType): ApiEvent[] => {
 	if (!Object.prototype.hasOwnProperty.call(Api, handler)) {
 		throw new NoActionError('Invalid action');
 	}
@@ -44,10 +45,10 @@ const orderedResults = (params: any) => {
 	// Sort the results again so computed fields are sorted too
 	// WARNING: In many cases this will be too late, because the limit
 	// has already excluded results.
-	return FieldOrdering(sorting).sorted(results as any);
+	return FieldOrdering(sorting).sorted(results as any) as ApiEvent[];
 };
 
-const jsonSendResponder = function (res: any, process: any) {
+const jsonSendResponder = function(res: any, process: any) {
 	try {
 		const body = {
 			status: 'success',
@@ -83,12 +84,12 @@ Router.route('api.0.json', {
 	where: 'server',
 	action() {
 		jsonSendResponder(this.response, () => {
-			return orderedResults(this.params);
+			return orderedResults(this.params, this.params.handler);
 		});
 	},
 });
 
-const xmlSendResponder = function (res: any, process: any) {
+const xmlSendResponder = function(res: any, process: any) {
 	try {
 		const body = `<?xml version="1.0" encoding="UTF-8"?> ${process()}`;
 		res.statusCode = 200;
@@ -117,9 +118,16 @@ const xmlSendResponder = function (res: any, process: any) {
 };
 
 const sortByTimeAndRoom = (results: ApiEvent[]) =>
-	results.reduce((accumulator: { [date: string]: { [room: string]: ApiEvent[] } }, current) => {
+	results.reduce((accumulator: { [date: string]: { [room: string]: ApiEvent[] } }, current: ApiEvent) => {
 		const currentDate = moment(current.start).format('YYYY-MM-DD');
-		const currentRoom = current.venue?.name || current.room;
+
+		let currentRoom;
+		if (current.venue?.name && current.room) {
+			currentRoom = `${current.venue?.name} (${current.room})`;
+		} else {
+			currentRoom = current.venue?.name || current.room;
+		}
+		
 		if (currentDate in accumulator) {
 			const dateEvents = accumulator[currentDate];
 			if (currentRoom in dateEvents) {
@@ -138,11 +146,11 @@ const sortByTimeAndRoom = (results: ApiEvent[]) =>
 const sanitizeXMLvalues = (str: string) =>
 	str
 		? str
-				.replace(/<.*?>/g, '')
-				.replace(/&/g, '&amp;')
-				.replace(/>/g, '&gt;')
-				.replace(/</g, '&lt;')
-				.replace(/"/g, '&quot;')
+			.replace(/<.*?>/g, '')
+			.replace(/&/g, '&amp;')
+			.replace(/>/g, '&gt;')
+			.replace(/</g, '&lt;')
+			.replace(/"/g, '&quot;')
 		: '';
 
 Router.route('api.0.xml', {
@@ -150,17 +158,7 @@ Router.route('api.0.xml', {
 	where: 'server',
 	action() {
 		xmlSendResponder(this.response, () => {
-			const { query } = this.params;
-			const filter = { ...query };
-			delete filter.sort;
-			delete filter.limit;
-			delete filter.skip;
-			const results = Api.events(
-				filter,
-				PrivateSettings.apiMaxLimit,
-				0,
-				SortSpec.unordered().spec(),
-			);
+			const results = orderedResults(this.params, 'events');
 
 			const resultsByTimeAndRoom = sortByTimeAndRoom(results);
 
@@ -194,19 +192,23 @@ Router.route('api.0.xml', {
 					// eslint-disable-next-line no-loop-func
 					roomEvents.forEach(
 						// eslint-disable-next-line no-loop-func
-						(event) => {
+						(event: any) => {
+							const durationMinutes = (`00${(event.duration % 60)}`).slice(-2);
+							const duration = `${Math.floor(event.duration / 60)}:${durationMinutes}`;
 							returnString += `
 							<event guid="${event.id}" id="${event.id}">
 								<date>${moment(date).format('YYYY-MM-DDTHH:mm:ssZ')}</date>
 								<start>${moment(event.start).format('HH:mm')}</start>
-								<duration>${Math.floor(event.duration / 60)}:${event.duration % 60}</duration>
-								<room>${room}</room>
+								<duration>${duration}</duration>								
+ 								<room>${room}</room>
 								<slug>${event.slug || ''}</slug>
 								<url>${event.link || ''}</url>
-								<recording></recording>
+								<recording>
+									<license/>
+									<optout>false</optout>
+								</recording>
 								<title>${sanitizeXMLvalues(event.title)}</title>
 								<subtitle></subtitle>
-								<track></track>
 								<type></type>
 								<language></language>
 								<abstract></abstract>
@@ -214,14 +216,14 @@ Router.route('api.0.xml', {
 								<logo></logo>
 								<persons>	
 							`;
-							event.groups.forEach((group) => {
+							// eslint-disable-next-line no-loop-func
+							event.groups.forEach((group: any) => {
 								returnString += `<person id="${group.id}">${group.name}</person>`;
 							});
 							returnString += `
 								</persons>
 								<links></links>
 								<attachments></attachments>
-								<do-not-record>false</do-not-record>
 							</event>
 						`;
 						},
