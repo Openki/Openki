@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Template } from 'meteor/templating';
 import React from 'react';
 import { Router } from 'meteor/iron:router';
@@ -19,7 +20,7 @@ function eventCompactClasses(event: EventModel, withDate: boolean) {
 	if (withDate) {
 		classes.push('has-date');
 	}
-	if (moment().isAfter(event.end) || event.isFullyBooked()) {
+	if (moment().isAfter(event.end) || event.isFullyBooked() || event.canceled) {
 		classes.push('is-past');
 	}
 
@@ -74,7 +75,9 @@ export function EventCompact(props: {
 				target={openInNewTab ? '_blank' : ''}
 			>
 				<div className={`event-compact ${eventCompactClasses(event, withDate)}`}>
-					{event.isFullyBooked() ? (
+					{event.canceled ? (
+						<span className="event-canceled">{t('course.event.canceled', 'Canceled')}</span>
+					) : event.isFullyBooked() ? (
 						<span className="event-fully-booked">
 							{t('course.event.fullyBooked', 'Fully booked')}
 						</span>

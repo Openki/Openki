@@ -105,7 +105,7 @@ export function Model(entry: { body: Body }) {
 				throw new Error('Sender does not exist (0.o)');
 			}
 			if (!event) {
-				throw new Error('Course does not exist (0.o)');
+				throw new Error('Event does not exist (0.o)');
 			}
 
 			const subjectvars = {
@@ -133,7 +133,7 @@ export function Model(entry: { body: Body }) {
 			});
 
 			const vars = {
-				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
+				unsubLink: Router.url('profilePrivateMessagesUnsubscribe', { token: unsubToken }),
 				sender,
 				senderLink: senderUrl,
 				senderName: Spacebars.SafeString(`<a href="${senderUrl}">${sender.getDisplayName()}</a>`),
