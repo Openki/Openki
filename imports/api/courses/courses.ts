@@ -67,7 +67,7 @@ export interface CourseEntity {
 	members: CourseMemberEntity[];
 	internal: boolean;
 	singleEvent: boolean;
-	archived: boolean;
+	archived?: boolean;
 	history: {
 		dateTime: Date;
 		type: string;

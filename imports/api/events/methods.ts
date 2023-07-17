@@ -563,6 +563,55 @@ export const contactParticipants = ServerMethod(
 	},
 );
 
+export const cancel = ServerMethod(
+	'event.cancel',
+	async (eventId: string, comment?: string | null) => {
+		check(eventId, String);
+		check(comment, Match.Maybe(String));
+
+		const operator = Meteor.user();
+		if (!operator) {
+			throw new Meteor.Error(401, 'please log in');
+		}
+		const event = await Events.findOneAsync({ _id: eventId });
+		if (!event) {
+			throw new Meteor.Error(404, 'no such event');
+		}
+		if (
+			!event.editableBy(operator) &&
+			!operator.groups.some((g) => event.groupOrganizers.includes(g)) &&
+			!UserPrivilegeUtils.privileged(operator, 'admin')
+		) {
+			throw new Meteor.Error(401, 'edit not permitted');
+		}
+
+		await Events.updateAsync(event._id, { $set: { canceled: true } });
+
+		if (event.participants?.length) {
+			if (comment) {
+				// eslint-disable-next-line no-param-reassign
+				comment = comment.trim().substring(0, 2000).trim();
+			}
+
+			Notification['Event.Canceled'].record(operator._id, eventId, comment || '');
+		}
+	},
+);
+
+export const uncancel = ServerMethod('event.uncancel', async (eventId: string) => {
+	check(eventId, String);
+
+	const event = await Events.findOneAsync({ _id: eventId });
+	if (!event) {
+		throw new Meteor.Error(404, 'no such event');
+	}
+	const user = Meteor.user();
+	if (!user || !event.editableBy(user)) {
+		throw new Meteor.Error(401, 'edit not permitted');
+	}
+	await Events.updateAsync(event._id, { $set: { canceled: false } });
+});
+
 Meteor.methods({
 	/**
 	 * Update the venue field for all events matching the selector

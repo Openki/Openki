@@ -9,7 +9,7 @@ import './routes';
 import './register-api';
 import './robots';
 import './sitemaps';
-import './api.json';
+import './api.routes';
 
 import './emails';
 import './login';

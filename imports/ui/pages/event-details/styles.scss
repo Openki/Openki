@@ -2,6 +2,14 @@
 
 $header-bg: darken($blue-lighter, 5%);
 
+.alert-canceled {
+	@include alert-variant(
+		$canceled-color,
+		darken($canceled-color, 5%),
+		darken($canceled-color, 60%)
+	);
+}
+
 .event-page-component-header {
 	$background-color: $blue;
 

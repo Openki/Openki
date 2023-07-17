@@ -175,9 +175,6 @@ import './styles.scss';
 		isProposal(course: CourseModel) {
 			return !course.nextEvent && !course.lastEvent;
 		},
-		isArchived(course: CourseModel) {
-			return course?.archived;
-		},
 	});
 
 	template.events({
@@ -228,6 +225,7 @@ import './styles.scss';
 				const { course } = instance.data;
 				try {
 					await CoursesMethods.archive(course._id);
+					instance.collapse();
 
 					Alert.success(
 						i18n('courseDetailsPage.message.courseHasBeenArchived', '{COURSE} was archived.', {
