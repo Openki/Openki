@@ -71,6 +71,16 @@ const xmlSendResponder = function (res: any, process: any) {
 	}
 };
 
+const pseudoHash = function(str: string) {
+    let hash = 0;
+    for (let i = 0, len = str.length; i < len; i++) {
+        let chr = str.charCodeAt(i);
+        hash = (hash << 5) - hash + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+}
+
 
 Router.route('api.0.xml', {
 	path: '/api/0/xml/schedule',
@@ -116,7 +126,7 @@ Router.route('api.0.xml', {
 							const durationMinutes = (`00${(event.duration % 60)}`).slice(-2);
 							const duration = `${Math.floor(event.duration / 60)}:${durationMinutes}`;
 							returnString += `
-							<event id="${event.id}" guid="${uuidv5(event.id, OPENKI_UUID_NAMESPACE)}">
+							<event id="${pseudoHash(event.id)}" guid="${uuidv5(event.id, OPENKI_UUID_NAMESPACE)}">
 								<date>${moment(event.start).format('YYYY-MM-DDTHH:mm:ssZ')}</date>
 								<start>${moment(event.start).format('HH:mm')}</start>
 								<duration>${duration}</duration>								
