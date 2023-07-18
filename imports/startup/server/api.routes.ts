@@ -122,23 +122,23 @@ const sortByTimeAndRoom = (results: ApiEvent[]) =>
 		const currentDate = moment(current.start).format('YYYY-MM-DD');
 
 		let currentRoom;
-		if (current.venue?.name && current.room) {
-			currentRoom = `${current.venue?.name} (${current.room})`;
-		} else {
-			currentRoom = current.venue?.name || current.room;
-		}
-		
-		if (currentDate in accumulator) {
-			const dateEvents = accumulator[currentDate];
-			if (currentRoom in dateEvents) {
-				dateEvents[currentRoom].push(current);
+		if (current.id) { 
+			if (current.venue?.name && current.room) {
+				currentRoom = `${current.venue?.name} (${current.room})`;
 			} else {
-				dateEvents[currentRoom] = [current];
+				currentRoom = current.venue?.name || current.room;
 			}
-		} else {
-			accumulator[currentDate] = {
-				[currentRoom]: [current],
-			};
+			
+			if (currentDate in accumulator) {
+				const dateEvents = accumulator[currentDate];
+				if (currentRoom in dateEvents) {
+					dateEvents[currentRoom].push(current);
+				} else {
+					dateEvents[currentRoom] = [current];
+				}
+			} else {
+				accumulator[currentDate] = {[currentRoom]: [current],};
+			}
 		}
 		return accumulator;
 	}, {});
@@ -167,7 +167,7 @@ Router.route('api.0.xml', {
   			<generator name="human" />
   			<version>1.0</version>
 			  <conference>
-				<acronym>A2023</acronym>
+				<acronym>anarchy23</acronym>
 				<title>Anarchy 2023</title>
 				<start>2023-07-19</start>
 				<end>2023-07-23</end>
