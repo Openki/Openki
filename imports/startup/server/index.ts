@@ -9,7 +9,8 @@ import './routes';
 import './register-api';
 import './robots';
 import './sitemaps';
-import './api.routes';
+import './apiRoutes/api.routes.json';
+import './apiRoutes/api.routes.xml';
 
 import './emails';
 import './login';
