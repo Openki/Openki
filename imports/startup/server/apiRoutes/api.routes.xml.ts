@@ -1,95 +1,49 @@
-import { Router } from 'meteor/iron:router';
-import { WebApp } from 'meteor/webapp';
 import moment from 'moment';
-import { Api, ApiEvent } from '/imports/Api';
-import { FieldOrdering } from '/imports/utils/field-ordering';
+import { v5 as uuidv5 } from 'uuid';
+import { ApiEvent } from '/imports/Api';
+import { Router } from 'meteor/iron:router';
 import { FilteringReadError } from '/imports/utils/filtering';
-import { SortSpec } from '/imports/utils/sort-spec';
-import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { NoActionError, orderedResults } from './api.routes.utils';
 
-type HandlerType = 'groups' | 'venues' | 'events' | 'courses';
+const OPENKI_UUID_NAMESPACE = 'bfcc029a-5d16-4863-af43-17277e2e717b';
 
-WebApp.rawConnectHandlers.use('/api', (_req, res, next) => {
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	return next();
-});
+const sortByTimeAndRoom = (results: ApiEvent[]) =>
+	results.reduce((accumulator: { [date: string]: { [room: string]: ApiEvent[] } }, current: ApiEvent) => {
+		const currentDate = moment(current.start).format('YYYY-MM-DD');
 
-class NoActionError {
-	message: string;
+		let currentRoom;
+		if (current.venue?.name && current.room) {
+			currentRoom = `${current.venue?.name} (${current.room})`;
+		} else {
+			currentRoom = current.venue?.name || current.room;
+		}
 
-	constructor(message: string) {
-		this.message = message;
-	}
-}
-
-const orderedResults = (params: any, handler: HandlerType): ApiEvent[] => {
-	if (!Object.prototype.hasOwnProperty.call(Api, handler)) {
-		throw new NoActionError('Invalid action');
-	}
-
-	const { query } = params;
-
-	const sortStr = query.sort;
-	const sorting = sortStr ? SortSpec.fromString(sortStr) : SortSpec.unordered();
-
-	const filter = { ...query };
-	delete filter.sort;
-	delete filter.limit;
-	delete filter.skip;
-
-	const selectedLimit = Number.parseInt(query.limit || '', 10) || 100; // If nothing is specified, 100 enities are returned.
-	const limit = Math.max(0, Math.min(PrivateSettings.apiMaxLimit, selectedLimit));
-	const skip = Number.parseInt(query.skip || '', 10) || 0;
-	const results = Api[handler](filter, limit, skip, sorting.spec());
-
-	// Sort the results again so computed fields are sorted too
-	// WARNING: In many cases this will be too late, because the limit
-	// has already excluded results.
-	return FieldOrdering(sorting).sorted(results as any) as ApiEvent[];
-};
-
-const jsonSendResponder = function(res: any, process: any) {
-	try {
-		const body = {
-			status: 'success',
-			data: process(),
-		};
-		res.statusCode = 200;
-		res.setHeader('Content-Type', 'application/json; charset=utf-8');
-		res.end(JSON.stringify(body, null, '\t'));
-	} catch (e) {
-		const body: any = {};
-		if (e instanceof FilteringReadError || e instanceof NoActionError) {
-			res.statusCode = 400;
-			body.status = 'fail';
-			body.data = {};
-			if ((e as any).name) {
-				body.data[(e as any).name] = e.message;
+		if (currentDate in accumulator) {
+			const dateEvents = accumulator[currentDate];
+			if (currentRoom in dateEvents) {
+				dateEvents[currentRoom].push(current);
 			} else {
-				body.data.error = e.message;
+				dateEvents[currentRoom] = [current];
 			}
 		} else {
-			/* eslint-disable-next-line no-console */
-			console.log(e, e.stack);
-			res.statusCode = 500;
-			body.status = 'error';
-			body.message = 'Server error';
+			accumulator[currentDate] = {
+				[currentRoom]: [current],
+			};
 		}
-		res.end(JSON.stringify(body, null, '\t'));
-	}
-};
+		return accumulator;
+	}, {});
 
-Router.route('api.0.json', {
-	path: '/api/0/json/:handler',
-	where: 'server',
-	action() {
-		jsonSendResponder(this.response, () => {
-			return orderedResults(this.params, this.params.handler);
-		});
-	},
-});
+const sanitizeXMLvalues = (str: string) =>
+	str
+		? str
+			.replace(/<.*?>/g, '')
+			.replace(/&/g, '&amp;')
+			.replace(/>/g, '&gt;')
+			.replace(/</g, '&lt;')
+			.replace(/"/g, '&quot;')
+		: '';
 
-const xmlSendResponder = function(res: any, process: any) {
+const xmlSendResponder = function (res: any, process: any) {
 	try {
 		const body = `<?xml version="1.0" encoding="UTF-8"?> ${process()}`;
 		res.statusCode = 200;
@@ -117,41 +71,6 @@ const xmlSendResponder = function(res: any, process: any) {
 	}
 };
 
-const sortByTimeAndRoom = (results: ApiEvent[]) =>
-	results.reduce((accumulator: { [date: string]: { [room: string]: ApiEvent[] } }, current: ApiEvent) => {
-		const currentDate = moment(current.start).format('YYYY-MM-DD');
-
-		let currentRoom;
-		if (current.venue?.name && current.room) {
-			currentRoom = `${current.venue?.name} (${current.room})`;
-		} else {
-			currentRoom = current.venue?.name || current.room;
-		}
-		
-		if (currentDate in accumulator) {
-			const dateEvents = accumulator[currentDate];
-			if (currentRoom in dateEvents) {
-				dateEvents[currentRoom].push(current);
-			} else {
-				dateEvents[currentRoom] = [current];
-			}
-		} else {
-			accumulator[currentDate] = {
-				[currentRoom]: [current],
-			};
-		}
-		return accumulator;
-	}, {});
-
-const sanitizeXMLvalues = (str: string) =>
-	str
-		? str
-			.replace(/<.*?>/g, '')
-			.replace(/&/g, '&amp;')
-			.replace(/>/g, '&gt;')
-			.replace(/</g, '&lt;')
-			.replace(/"/g, '&quot;')
-		: '';
 
 Router.route('api.0.xml', {
 	path: '/api/0/xml/schedule',
@@ -176,6 +95,7 @@ Router.route('api.0.xml', {
 				<base_url>https://anarchy2023.org/en/program/workshops</base_url>
 			</conference>			
 			`;
+
 			let dayIdx = 1;
 			// eslint-disable-next-line no-restricted-syntax
 			for (const [date, dateEvents] of Object.entries(resultsByTimeAndRoom)) {
@@ -196,7 +116,7 @@ Router.route('api.0.xml', {
 							const durationMinutes = (`00${(event.duration % 60)}`).slice(-2);
 							const duration = `${Math.floor(event.duration / 60)}:${durationMinutes}`;
 							returnString += `
-							<event guid="${event.id}" id="${event.id}">
+							<event id="${event.id}" guid="${uuidv5(event.id, OPENKI_UUID_NAMESPACE)}">
 								<date>${moment(event.start).format('YYYY-MM-DDTHH:mm:ssZ')}</date>
 								<start>${moment(event.start).format('HH:mm')}</start>
 								<duration>${duration}</duration>								
