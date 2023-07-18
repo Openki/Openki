@@ -167,7 +167,7 @@ Router.route('api.0.xml', {
   			<generator name="human" />
   			<version>1.0</version>
 			  <conference>
-				<acronym>A2023</acronym>
+				<acronym>anarchy23</acronym>
 				<title>Anarchy 2023</title>
 				<start>2023-07-19</start>
 				<end>2023-07-23</end>
