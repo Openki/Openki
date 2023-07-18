@@ -122,23 +122,23 @@ const sortByTimeAndRoom = (results: ApiEvent[]) =>
 		const currentDate = moment(current.start).format('YYYY-MM-DD');
 
 		let currentRoom;
-		if (current.id) { 
-			if (current.venue?.name && current.room) {
-				currentRoom = `${current.venue?.name} (${current.room})`;
+		if (current.venue?.name && current.room) {
+			currentRoom = `${current.venue?.name} (${current.room})`;
+		} else {
+			currentRoom = current.venue?.name || current.room;
+		}
+		
+		if (currentDate in accumulator) {
+			const dateEvents = accumulator[currentDate];
+			if (currentRoom in dateEvents) {
+				dateEvents[currentRoom].push(current);
 			} else {
-				currentRoom = current.venue?.name || current.room;
+				dateEvents[currentRoom] = [current];
 			}
-			
-			if (currentDate in accumulator) {
-				const dateEvents = accumulator[currentDate];
-				if (currentRoom in dateEvents) {
-					dateEvents[currentRoom].push(current);
-				} else {
-					dateEvents[currentRoom] = [current];
-				}
-			} else {
-				accumulator[currentDate] = {[currentRoom]: [current],};
-			}
+		} else {
+			accumulator[currentDate] = {
+				[currentRoom]: [current],
+			};
 		}
 		return accumulator;
 	}, {});
