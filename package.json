@@ -42,7 +42,8 @@
     "select2-theme-bootstrap5": "0.1.1",
     "shariff": "3.2.1",
     "tinycolor2": "1.6.0",
-    "url-join": "5.0.0"
+    "url-join": "5.0.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/bootstrap": "5.2.6",
@@ -63,6 +64,7 @@
     "@types/seedrandom": "3.0.4",
     "@types/select2": "4.0.57",
     "@types/tinycolor2": "1.4.3",
+    "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "5.54.1",
     "@typescript-eslint/parser": "5.54.1",
     "autoprefixer": "10.4.14",
