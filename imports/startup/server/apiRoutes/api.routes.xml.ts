@@ -8,39 +8,42 @@ import { NoActionError, orderedResults } from './api.routes.utils';
 const OPENKI_UUID_NAMESPACE = 'bfcc029a-5d16-4863-af43-17277e2e717b';
 
 const sortByTimeAndRoom = (results: ApiEvent[]) =>
-	results.reduce((accumulator: { [date: string]: { [room: string]: ApiEvent[] } }, current: ApiEvent) => {
-		const currentDate = moment(current.start).format('YYYY-MM-DD');
+	results.reduce(
+		(accumulator: { [date: string]: { [room: string]: ApiEvent[] } }, current: ApiEvent) => {
+			const currentDate = moment(current.start).format('YYYY-MM-DD');
 
-		let currentRoom;
-		if (current.venue?.name && current.room) {
-			currentRoom = `${current.venue?.name} (${current.room})`;
-		} else {
-			currentRoom = current.venue?.name || current.room;
-		}
-
-		if (currentDate in accumulator) {
-			const dateEvents = accumulator[currentDate];
-			if (currentRoom in dateEvents) {
-				dateEvents[currentRoom].push(current);
+			let currentRoom;
+			if (current.venue?.name && current.room) {
+				currentRoom = `${current.venue?.name} (${current.room})`;
 			} else {
-				dateEvents[currentRoom] = [current];
+				currentRoom = current.venue?.name || current.room;
 			}
-		} else {
-			accumulator[currentDate] = {
-				[currentRoom]: [current],
-			};
-		}
-		return accumulator;
-	}, {});
+
+			if (currentDate in accumulator) {
+				const dateEvents = accumulator[currentDate];
+				if (currentRoom in dateEvents) {
+					dateEvents[currentRoom].push(current);
+				} else {
+					dateEvents[currentRoom] = [current];
+				}
+			} else {
+				accumulator[currentDate] = {
+					[currentRoom]: [current],
+				};
+			}
+			return accumulator;
+		},
+		{},
+	);
 
 const sanitizeXMLvalues = (str: string) =>
 	str
 		? str
-			.replace(/<.*?>/g, '')
-			.replace(/&/g, '&amp;')
-			.replace(/>/g, '&gt;')
-			.replace(/</g, '&lt;')
-			.replace(/"/g, '&quot;')
+				.replace(/<.*?>/g, '')
+				.replace(/&/g, '&amp;')
+				.replace(/>/g, '&gt;')
+				.replace(/</g, '&lt;')
+				.replace(/"/g, '&quot;')
 		: '';
 
 const xmlSendResponder = function (res: any, process: any) {
@@ -71,16 +74,17 @@ const xmlSendResponder = function (res: any, process: any) {
 	}
 };
 
-const pseudoHash = function(str: string) {
-    let hash = 0;
-    for (let i = 0, len = str.length; i < len; i++) {
-        let chr = str.charCodeAt(i);
-        hash = (hash << 5) - hash + chr;
-        hash |= 0; // Convert to 32bit integer
-    }
-    return hash;
-}
-
+const pseudoHash = function (str: string) {
+	let hash = 0;
+	for (let i = 0, len = str.length; i < len; i += 1) {
+		const chr = str.charCodeAt(i);
+		// eslint-disable-next-line no-bitwise
+		hash = (hash << 5) - hash + chr;
+		// eslint-disable-next-line no-bitwise
+		hash |= 0; // Convert to 32bit integer
+	}
+	return hash;
+};
 
 Router.route('api.0.xml', {
 	path: '/api/0/xml/schedule',
@@ -123,7 +127,7 @@ Router.route('api.0.xml', {
 					roomEvents.forEach(
 						// eslint-disable-next-line no-loop-func
 						(event: any) => {
-							const durationMinutes = (`00${(event.duration % 60)}`).slice(-2);
+							const durationMinutes = `00${event.duration % 60}`.slice(-2);
 							const duration = `${Math.floor(event.duration / 60)}:${durationMinutes}`;
 							returnString += `
 							<event id="${pseudoHash(event.id)}" guid="${uuidv5(event.id, OPENKI_UUID_NAMESPACE)}">
