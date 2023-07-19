@@ -1,9 +1,11 @@
 import moment from 'moment';
 import { v5 as uuidv5 } from 'uuid';
+import { create } from 'xmlbuilder2';
 import { ApiEvent } from '/imports/Api';
 import { Router } from 'meteor/iron:router';
 import { FilteringReadError } from '/imports/utils/filtering';
 import { NoActionError, orderedResults } from './api.routes.utils';
+import { textPlain } from '/imports/utils/html-tools';
 
 const OPENKI_UUID_NAMESPACE = 'bfcc029a-5d16-4863-af43-17277e2e717b';
 
@@ -36,19 +38,9 @@ const sortByTimeAndRoom = (results: ApiEvent[]) =>
 		{},
 	);
 
-const sanitizeXMLvalues = (str: string) =>
-	str
-		? str
-				.replace(/<.*?>/g, '')
-				.replace(/&/g, '&amp;')
-				.replace(/>/g, '&gt;')
-				.replace(/</g, '&lt;')
-				.replace(/"/g, '&quot;')
-		: '';
-
 const xmlSendResponder = function (res: any, process: any) {
 	try {
-		const body = `<?xml version="1.0" encoding="UTF-8"?> ${process()}`;
+		const body = process();
 		res.statusCode = 200;
 		res.setHeader('Content-Type', 'application/xml');
 		res.end(body);
@@ -95,79 +87,123 @@ Router.route('api.0.xml', {
 
 			const resultsByTimeAndRoom = sortByTimeAndRoom(results);
 
-			let returnString = `
-			<schedule xsi:noNamespaceSchemaLocation="https://c3voc.de/schedule/schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  			<generator name="human" />
-  			<version>1.0</version>
-			  <conference>
-				<acronym>anarchy23</acronym>
-				<title>Anarchy 2023</title>
-				<start>2023-07-19</start>
-				<end>2023-07-23</end>
-				<days>5</days>
-				<time_zone_name>Europe/Zurich</time_zone_name>
-				<base_url>https://anarchy2023.org/en/program/workshops</base_url>
-			</conference>			
-			`;
+			const scheduleNode = create({ version: '1.0' }).ele('schedule', {
+				'xsi:noNamespaceSchemaLocation': 'https://c3voc.de/schedule/schema.xsd',
+				'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+			});
+			scheduleNode.ele('generator', { name: 'human' });
+			scheduleNode.ele('version').txt('1.0');
+			scheduleNode
+				.ele('conference')
+				.ele('acronym')
+				.txt('anarchy23')
+				.up()
+				.ele('title')
+				.txt('Anarchy 2023')
+				.up()
+				.ele('start')
+				.txt('2023-07-19')
+				.up()
+				.ele('end')
+				.txt('2023-07-23')
+				.up()
+				.ele('days')
+				.txt('5')
+				.up()
+				.ele('time_zone_name')
+				.txt('Europe/Zurich')
+				.up()
+				.ele('base_url')
+				.txt('https://anarchy2023.org/en/program/workshops')
+				.up();
 
 			let dayIdx = 1;
 			// eslint-disable-next-line no-restricted-syntax
 			for (const [date, dateEvents] of Object.entries(resultsByTimeAndRoom)) {
-				returnString += `
-				<day date="${date}" 
-				     end="${moment(date).add(1, 'day').startOf('day').format('YYYY-MM-DDTHH:mm:ssZ')}"
-					 index="${dayIdx}" 
-					 start="${moment(date).startOf('day').format('YYYY-MM-DDTHH:mm:ssZ')}">
-				`;
+				const dayNode = scheduleNode.ele('day', {
+					date,
+					end: moment(date).add(1, 'day').startOf('day').format('YYYY-MM-DDTHH:mm:ssZ'),
+					index: dayIdx,
+					start: moment(date).startOf('day').format('YYYY-MM-DDTHH:mm:ssZ'),
+				});
+
 				dayIdx += 1;
 				// eslint-disable-next-line no-restricted-syntax
 				for (const [room, roomEvents] of Object.entries(dateEvents)) {
-					returnString += `<room name="${room}">`;
+					const roomNode = dayNode.ele('room', {
+						name: room,
+					});
 					// eslint-disable-next-line no-loop-func
 					roomEvents.forEach(
 						// eslint-disable-next-line no-loop-func
 						(event: any) => {
 							const durationMinutes = `00${event.duration % 60}`.slice(-2);
 							const duration = `${Math.floor(event.duration / 60)}:${durationMinutes}`;
-							returnString += `
-							<event id="${pseudoHash(event.id)}" guid="${uuidv5(event.id, OPENKI_UUID_NAMESPACE)}">
-								<date>${moment(event.start).format('YYYY-MM-DDTHH:mm:ssZ')}</date>
-								<start>${moment(event.start).format('HH:mm')}</start>
-								<duration>${duration}</duration>								
- 								<room>${room}</room>
-								<slug>${event.slug || ''}</slug>
-								<url>${event.link || ''}</url>
-								<recording>
-									<license/>
-									<optout>false</optout>
-								</recording>
-								<title>${sanitizeXMLvalues(event.title)}</title>
-								<subtitle></subtitle>
-								<type></type>
-								<language></language>
-								<abstract></abstract>
-								<description>${sanitizeXMLvalues(event.description)}</description>
-								<logo></logo>
-								<persons>	
-							`;
+							const eventNode = roomNode
+								.ele('event', {
+									id: pseudoHash(event.id),
+									guid: uuidv5(event.id, OPENKI_UUID_NAMESPACE),
+								})
+								.ele('date')
+								.txt(moment(event.start).format('YYYY-MM-DDTHH:mm:ssZ'))
+								.up()
+								.ele('start')
+								.txt(moment(event.start).format('HH:mm'))
+								.up()
+								.ele('duration')
+								.txt(duration)
+								.up()
+								.ele('room')
+								.txt(room)
+								.up()
+								.ele('slug')
+								.txt(event.slug || '')
+								.up()
+								.ele('url')
+								.txt(event.link || '')
+								.up()
+								.ele('recording')
+								.ele('license')
+								.up()
+								.ele('optout')
+								.txt('false')
+								.up()
+								.up()
+								.ele('title')
+								.txt(event.title)
+								.up()
+								.ele('subtitle')
+								.up()
+								.ele('type')
+								.up()
+								.ele('language')
+								.up()
+								.ele('abstract')
+								.up()
+								.ele('description')
+								.txt(textPlain(event.description))
+								.up()
+								.ele('logo')
+								.up()
+								.ele('links')
+								.up()
+								.ele('attachements')
+								.up();
+
+							const persons = eventNode.ele('persons');
 							// eslint-disable-next-line no-loop-func
 							event.groups.forEach((group: any) => {
-								returnString += `<person id="${group.id}">${group.name}</person>`;
+								persons
+									.ele('person', {
+										id: group.id,
+									})
+									.txt(group.name);
 							});
-							returnString += `
-								</persons>
-								<links></links>
-								<attachments></attachments>
-							</event>
-						`;
 						},
 					);
-					returnString += `</room>`;
 				}
-				returnString += `</day>`;
 			}
-			returnString += `</schedule>`;
-			return returnString;
+			return scheduleNode.end({ prettyPrint: true });
 		});
 	},
 });
