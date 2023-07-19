@@ -8,7 +8,7 @@ WebApp.rawConnectHandlers.use('/api', (_req, res, next) => {
 	return next();
 });
 
-const jsonSendResponder = function(res: any, process: any) {
+const jsonSendResponder = function (res: any, process: any) {
 	try {
 		const body = {
 			status: 'success',
