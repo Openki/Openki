@@ -37,7 +37,7 @@ export interface VenueEntity {
 	maxWorkplaces: number;
 	/** For keys see: Venues.facilityOptions */
 	facilities: {
-		[key: string]: string;
+		[key: string]: boolean;
 	};
 	otherFacilities?: string;
 	createdby: string;
