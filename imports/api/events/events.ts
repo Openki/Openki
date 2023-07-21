@@ -133,9 +133,9 @@ export class OEvent {
 		this: { startLocal: string; endLocal: string },
 		event: { startLocal: string; endLocal: string },
 	) {
-		return ['startLocal', 'endLocal'].every((time) => {
-			const timeA = LocalTime.fromString((this as any)[time]);
-			const timeB = LocalTime.fromString((event as any)[time]);
+		return (['startLocal', 'endLocal'] as const).every((time) => {
+			const timeA = LocalTime.fromString(this[time]);
+			const timeB = LocalTime.fromString(event[time]);
 
 			return timeA.hour() === timeB.hour() && timeA.minute() === timeB.minute();
 		});

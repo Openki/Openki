@@ -30,7 +30,7 @@ export function waitForSubscriptions(): Promise<void> {
 export function waitFor<T>(assertion: () => T, timeout = 10000): Promise<T> {
 	return new Promise((resolve, reject) => {
 		const start = new Date().getTime();
-		let interval: any = false;
+		let interval: false | NodeJS.Timer = false;
 
 		const clearWatchers = () => {
 			if (interval) {
