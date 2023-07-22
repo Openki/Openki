@@ -209,7 +209,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 				course.region = prng() > 0.85 ? '9JyFCoKWkxnf8LWPh' : 'EZqQLGL4PtFCxCNrp';
 			}
 
-			course.members.forEach((member: any) => {
+			course.members.forEach((member) => {
 				// eslint-disable-next-line no-param-reassign
 				member.user = ensure.user(member.user, course.region)._id;
 			});
