@@ -14,12 +14,14 @@ dump/
 .temp
 
 .npm
+.meteor/versions
 
 settings.json
 server/version.js
 node_modules/
 
 .vscode/
+.idea/
 
 tsconfig.tsbuildinfo
 jsconfig.json
