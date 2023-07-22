@@ -84,6 +84,8 @@ Run linters and type check with these commands:
     meteor npm run es-lint
     meteor npm run sass-lint
 
+### Run auto formatting
+
 Format files and automatically fix fixable problems with these commands:
 
     meteor npm run es-lint -- --fix
