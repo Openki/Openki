@@ -29,14 +29,14 @@ export async function processChange<T>(change: Change<T>, options?: { isSimulati
 	}
 }
 
-const checkUser = function (obj: User) {
+const checkUser = function (obj: unknown) {
 	if (!(obj instanceof User)) {
 		throw new Meteor.Error('Match failed', 'Expected User object');
 	}
 	return obj as UserModel;
 };
 
-const checkCourse = function (obj: Course) {
+const checkCourse = function (obj: unknown) {
 	if (!(obj instanceof Course)) {
 		throw new Meteor.Error('Match failed', 'Expected Course object');
 	}
