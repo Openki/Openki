@@ -119,7 +119,13 @@ export function KioskTimetablePage(props: Props) {
 															className="timetable-event"
 															style={position(entry)}
 														>
-															<div className="timetable-event-title">{entry.title}</div>
+															<div
+																className={`timetable-event-title ${
+																	entry.canceled ? 'timetable-event-title-canceled' : ''
+																}`}
+															>
+																{entry.title}
+															</div>
 															<div className="timetable-event-time">
 																<span
 																	className="fa-regular fa-clock fa-fw"
@@ -130,6 +136,11 @@ export function KioskTimetablePage(props: Props) {
 															<div className="timetable-event-description">
 																{textPlain(entry.description)}
 															</div>
+															{entry.canceled ? (
+																<span className="timetable-event-canceled-panel">
+																	{t('_label.canceled', 'Canceled')}
+																</span>
+															) : null}
 														</div>
 													);
 												})}
