@@ -206,8 +206,10 @@ export const FindFilterPattern = {
 	groups: Match.Maybe([String]),
 	/** only events for this course (ID) */
 	course: Match.Maybe(String),
-	/** only events that are internal (if true) or public (if false) */
+	/** only events that are internal (if true) or public (if false), Default: Show both */
 	internal: Match.Maybe(Boolean),
+	/** only events that are canceled (if true) or not canceled (if false), Default: Show both */
+	canceled: Match.Maybe(Boolean),
 	/** only events with given participant (ID) */
 	participant: Match.Maybe(String),
 };
@@ -229,6 +231,7 @@ export const FindParams = {
 	before: Predicates.date,
 	end: Predicates.date,
 	internal: Predicates.flag,
+	canceled: Predicates.flag,
 };
 
 export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> {
@@ -437,6 +440,14 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 
 		if (filter.internal !== undefined) {
 			find.internal = Boolean(filter.internal);
+		}
+
+		if (filter.canceled !== undefined) {
+			if (filter.canceled) {
+				find.canceled = { $eq: true };
+			} else {
+				find.canceled = { $ne: true };
+			}
 		}
 
 		if (filter.search) {
