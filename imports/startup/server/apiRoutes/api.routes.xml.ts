@@ -83,6 +83,7 @@ Router.route('api.0.xml', {
 	where: 'server',
 	action() {
 		xmlSendResponder(this.response, () => {
+			this.params.query.canceled = this.params.query.canceled ?? '0';
 			const results = orderedResults(this.params, 'events');
 
 			const resultsByTimeAndRoom = sortByTimeAndRoom(results);
