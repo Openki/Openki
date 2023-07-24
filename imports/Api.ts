@@ -46,6 +46,7 @@ export type ApiEvent = {
 	maxParticipants: number;
 	link: string;
 	internal: boolean;
+	canceled: boolean;
 	room: string;
 	slug: string | undefined;
 	createdBy?: { id: string; name: string };
@@ -117,6 +118,7 @@ export const Api = {
 				maxParticipants: ev.maxParticipants,
 				link: Router.url('showEvent', ev),
 				internal: ev.internal,
+				canceled: ev.canceled,
 				room: ev.room,
 				slug: ev.slug,
 			} as ApiEvent;
