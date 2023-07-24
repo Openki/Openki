@@ -75,7 +75,7 @@ const pseudoHash = function (str: string) {
 		// eslint-disable-next-line no-bitwise
 		hash |= 0; // Convert to 32bit integer
 	}
-	return hash;
+	return hash < 0 ? hash* -1 : hash;
 };
 
 Router.route('api.0.xml', {
