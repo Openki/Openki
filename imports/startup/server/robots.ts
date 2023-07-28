@@ -1,8 +1,9 @@
 import { robots } from 'meteor/gadicohen:robots-txt';
 import { Meteor } from 'meteor/meteor';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { runBackgroundTasks } from '/imports/utils/background-tasks';
 
-Meteor.startup(() => {
+runBackgroundTasks && Meteor.startup(() => {
 	if (PrivateSettings.robots === false) {
 		robots.addLine('User-agent: *');
 		robots.addLine('Disallow: /');

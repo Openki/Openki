@@ -14,6 +14,8 @@ import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 import { toEmailLogo } from '/imports/utils/toEmailLogo';
 
+import { runBackgroundTasks } from '/imports/utils/background-tasks';
+
 function sendInvitation(invitation: InvitationEntity) {
 	const tenant = Tenants.findOne(invitation.tenant);
 	if (!tenant) {
@@ -93,7 +95,7 @@ function handleInvitation(invitation: InvitationEntity) {
 }
 
 // Watch for new invitations
-Meteor.startup(() => {
+runBackgroundTasks && Meteor.startup(() => {
 	SSR.compileTemplate('invitationEmail', Assets.getText('emails/invitation.html'));
 
 	Invitations.find({ status: 'created' }).observe({

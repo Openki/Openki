@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { SSR } from 'meteor/meteorhacks:ssr';
+import { runBackgroundTasks } from '/imports/utils/background-tasks';
 
-Meteor.startup(() => {
+runBackgroundTasks && Meteor.startup(() => {
 	SSR.compileTemplate('reportEmail', Assets.getText('emails/report.html'));
 });

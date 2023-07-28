@@ -41,7 +41,9 @@ interface UpdatesAppliedEntity {
 
 const UpdatesApplied = new Mongo.Collection<UpdatesAppliedEntity>('UpdatesApplied');
 
-Meteor.startup(() => {
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
+
+runBackgroundTasks && Meteor.startup(() => {
 	const skipInitial = UpdatesApplied.find().count() === 0;
 
 	Object.entries(UpdatesAvailable).forEach(([name, updateAvailable]) => {

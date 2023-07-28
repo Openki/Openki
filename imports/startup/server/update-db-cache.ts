@@ -52,7 +52,9 @@ function updateDbCacheFields() {
 	);
 }
 
-Meteor.startup(async () => {
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
+
+runBackgroundTasks && Meteor.startup(async () => {
 	/* Initialize cache-fields on startup (Also called calculated fields or denomalized data) */
 	if (PrivateSettings.startup.buildDbCacheAsync) {
 		await MeteorAsync.defer();
