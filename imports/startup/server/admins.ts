@@ -4,7 +4,9 @@ import { Users } from '/imports/api/users/users';
 
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
-Meteor.startup(() => {
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
+
+runBackgroundTasks && Meteor.startup(() => {
 	PrivateSettings.admins.forEach((username) => {
 		const user = Users.findOne({ username });
 		if (user) {

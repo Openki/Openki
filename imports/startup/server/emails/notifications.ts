@@ -3,9 +3,10 @@ import { SSR } from 'meteor/meteorhacks:ssr';
 
 import { Log } from '/imports/api/log/log';
 import * as Notification from '/imports/notification/notification';
+import { runBackgroundTasks } from '/imports/utils/background-tasks';
 
 // Watch the Log for event notifications
-Meteor.startup(() => {
+runBackgroundTasks && Meteor.startup(() => {
 	SSR.compileTemplate('notificationEventEmail', Assets.getText('emails/notifications/event.html'));
 	SSR.compileTemplate(
 		'notificationEventCanceledEmail',

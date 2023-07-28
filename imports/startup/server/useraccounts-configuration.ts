@@ -8,8 +8,9 @@ import { UserModel, UserProfile } from '/imports/api/users/users';
 
 import { isEmail } from '/imports/utils/email-tools';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { runBackgroundTasks } from '/imports/utils/background-tasks';
 
-Meteor.startup(() => {
+runBackgroundTasks && Meteor.startup(() => {
 	const serviceConf = PrivateSettings.service;
 	if (!serviceConf) {
 		return;

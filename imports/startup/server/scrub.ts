@@ -6,7 +6,9 @@ import { Log } from '/imports/api/log/log';
 import { Scrubber } from '/imports/startup/server/lib/scrub';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
-Meteor.startup(() => {
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
+
+runBackgroundTasks && Meteor.startup(() => {
 	const scrubSettings = PrivateSettings.scrub;
 	if (scrubSettings) {
 		const scrubber = Scrubber.read(scrubSettings);

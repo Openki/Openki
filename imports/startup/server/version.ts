@@ -2,7 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { Version } from '/imports/api/version/version';
 import { _ } from 'meteor/underscore';
 
-Meteor.startup(() => {
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
+
+runBackgroundTasks && Meteor.startup(() => {
 	const runningVersion = Version.findOne();
 	if (
 		typeof VERSION !== 'undefined' &&
