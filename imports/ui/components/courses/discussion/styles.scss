@@ -80,7 +80,7 @@ $discussion-post-bg: $blue-lighter;
 	@include td-margin(right, -10px);
 }
 
-.js-delete-comment {
+.discussion-delete-comment {
 	margin-top: 5px;
 	padding: 6px 24px;
 }
