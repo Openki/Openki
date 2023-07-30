@@ -1,29 +1,5 @@
 <template name="courseCompact">
-	{{#if Template.subscriptionsReady}}
-		<div class="col">
-			<a href="{{pathFor 'showCourse' _id=course._id slug=course.slug}}">
-				<div class="row mx-0 align-items-start course-compact {{courseStateClasses course}} {{filterPreviewClasses course}}"
-					 style="{{courseCss course}}">
-					<div class="course-compact-content col-8">
-						{{#if course.internal}}
-							{{> internalIndicator}}
-						{{/if}}
-						<div class="course-compact-title" title="{{name}}">{{course.name}}</div>
-						{{> courseCategories categories=course.categories}}
-					</div>
-					{{#if course.nextEvent}}
-						{{> courseCompactEvent course=course}}
-					{{else}}
-						{{> courseCompactRoles course=course}}
-					{{/if}}
-					<div class="tag-group course-groups">
-						{{#each group in course.groups}}
-							{{> groupTag (groupTagAttr course group)}}
-						{{/each}}
-					</div>
-				</div>
-			</a>
-		</div>
-	{{/if}}
+	<div>
+		{{> React (component CourseCompact)}}
+	</div>
 </template>
-

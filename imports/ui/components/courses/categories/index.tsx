@@ -11,8 +11,13 @@ export function CategoryLabel(props: { category: string }) {
 	return <div className="tag category-tag">{t(`category.${category}`)}</div>;
 }
 
-function CategoryLabelLinked(props: { category: string }) {
-	const { category } = props;
+function CategoryLabelLinked(props: {
+	category: string;
+	onClick?: (() => Promise<void>) | undefined;
+	onMouseOver?: (() => Promise<void>) | undefined;
+	onMouseOut?: (() => Promise<void>) | undefined;
+}) {
+	const { category, onMouseOver, onMouseOut, onClick } = props;
 	const { t } = useTranslation();
 	return (
 		<div className="tag tag-link category-tag">
@@ -23,6 +28,9 @@ function CategoryLabelLinked(props: { category: string }) {
 				data-bs-title={`${t('categories.show_courses', 'Show all in {CATEGORY}', {
 					CATEGORY: t(`category.${category}`),
 				})}`}
+				onMouseOver={onMouseOver}
+				onMouseOut={onMouseOut}
+				onClick={onClick}
 				href={Router.url('home', {}, { query: `categories=${category}` })}
 			>
 				{t(`category.${category}`)}
@@ -31,15 +39,26 @@ function CategoryLabelLinked(props: { category: string }) {
 	);
 }
 
-export function CourseCategories(props: { categories: string[] }) {
-	const { categories } = props;
+export function CourseCategories(props: {
+	categories: string[];
+	onClick?: () => Promise<void>;
+	onMouseOver?: () => Promise<void>;
+	onMouseOut?: () => Promise<void>;
+}) {
+	const { categories, onMouseOver, onMouseOut, onClick } = props;
 	if (!categories?.length) {
 		return null;
 	}
 	return (
 		<div className="tag-group multiline course-categories">
 			{categories.map((c) => (
-				<CategoryLabelLinked key={c} category={c} />
+				<CategoryLabelLinked
+					key={c}
+					category={c}
+					onMouseOver={onMouseOver}
+					onMouseOut={onMouseOut}
+					onClick={onClick}
+				/>
 			))}
 		</div>
 	);

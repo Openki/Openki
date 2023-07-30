@@ -15,26 +15,18 @@ export function CourseCompactEvent(props: { course: CourseModel }) {
 		<div className="course-compact-next-event col">
 			{nextEvent?.venue?.name ? (
 				<div className="course-compact-next-event-component">
-					<i className="fa-solid fa-house fa-fw" aria-hidden="true"></i>
-					{nextEvent.venue.name}
+					<i className="fa-solid fa-house fa-fw" aria-hidden="true"></i>&nbsp;{nextEvent.venue.name}
 				</div>
 			) : null}
 			<div className="course-compact-next-event-component">
-				<i className="fa-regular fa-clock fa-fw" aria-hidden="true"></i>
+				<i className="fa-regular fa-clock fa-fw" aria-hidden="true"></i>&nbsp;
 				<span title={`${dateShort(nextEvent?.startLocal)} ${timeFormat(nextEvent?.startLocal)}`}>
 					{dateToRelativeString(nextEvent?.startLocal)}
 				</span>
 			</div>
 			<div className="course-compact-next-event-component">
-				<i className={`${roleIcon('participant')}`} aria-hidden="true"></i>
-				{members.length}
+				<i className={`${roleIcon('participant')}`} aria-hidden="true"></i>&nbsp;{members.length}
 			</div>
 		</div>
 	);
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import './template.html';
-
-Template.registerHelper('CourseCompactEvent', () => CourseCompactEvent);
