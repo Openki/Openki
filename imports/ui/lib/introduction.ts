@@ -1,5 +1,22 @@
 import { Router } from 'meteor/iron:router';
 import { Session } from 'meteor/session';
+import { useSession, useSessionEquals } from '/imports/utils/react-meteor-data';
+import { useCurrentRouteName } from './useCurrentRouteName';
+
+export function useShownIntro() {
+	return useSessionEquals('ShowIntro', true);
+}
+
+export function useOpenedIntro() {
+	const opened = useSession('OpenedIntro');
+	const routeName = useCurrentRouteName();
+
+	if (opened !== undefined) {
+		return opened;
+	}
+
+	return routeName === 'home';
+}
 
 export const Introduction = {
 	init() {
