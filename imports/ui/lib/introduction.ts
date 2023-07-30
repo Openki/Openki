@@ -26,6 +26,11 @@ export const Introduction = {
 
 	showIntro() {
 		Session.set('ShowIntro', true);
+		try {
+			localStorage.removeItem('intro');
+		} catch {
+			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+		}
 	},
 
 	shownIntro: () => Session.equals('ShowIntro', true),
