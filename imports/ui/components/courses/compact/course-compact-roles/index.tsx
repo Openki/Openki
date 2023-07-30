@@ -133,15 +133,9 @@ export function CourseCompactRoles(props: { course: CourseModel }) {
 				data-bs-toggle="tooltip"
 				data-bs-title={`${participantTooltip()}`}
 			>
-				<i className={`${roleIcon('participant')}`} aria-hidden="true"></i>
+				<i className={`${roleIcon('participant')}`} aria-hidden="true"></i>&nbsp;
 				{course.members.length}
 			</div>
 		</div>
 	);
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import './template.html';
-
-Template.registerHelper('CourseCompactRoles', () => CourseCompactRoles);
