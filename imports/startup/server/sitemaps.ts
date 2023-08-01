@@ -3,6 +3,7 @@ import { Router } from 'meteor/iron:router';
 
 import { Courses } from '/imports/api/courses/courses';
 import { Events } from '/imports/api/events/events';
+import { Venues } from '/imports/api/venues/venues';
 import { visibleTenants } from '/imports/utils/visible-tenants';
 
 // To compress all sitemap as gzip file
@@ -12,6 +13,7 @@ sitemaps.add('/sitemap.xml', () => {
 	const out: { page: string; lastmod: Date }[] = [];
 	const courses = Courses.findFilter({ tenants: visibleTenants(), internal: false });
 	const events = Events.findFilter({ tenants: visibleTenants(), internal: false });
+	const venues = Venues.findFilter({ });
 
 	courses.forEach((course) => {
 		out.push({
@@ -23,6 +25,12 @@ sitemaps.add('/sitemap.xml', () => {
 		out.push({
 			page: Router.url('showEvent', event),
 			lastmod: event.time_lastedit,
+		});
+	});
+	venues.forEach((venue) => {
+		out.push({
+			page: Router.url('venueDetails', venue),
+			lastmod: venue.updated,
 		});
 	});
 	return out;
