@@ -13,6 +13,7 @@ Meteor.startup(() => {
 			start: { $gt: moment().add(30, 'minutes').toDate(), $lt: moment().add(1, 'days').toDate() },
 			// ignore canceled events
 			canceled: { $ne: true },
+			sendReminder: { $eq: true },
 		}).forEachAsync(async (event) => {
 			const alreadySent = await Log.find({
 				tr: 'Notification.Send',

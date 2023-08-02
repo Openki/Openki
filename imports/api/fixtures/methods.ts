@@ -16,6 +16,7 @@ import { Users } from '/imports/api/users/users';
 import { InfoPages } from '/imports/api/infoPages/infoPages';
 import { infoPages } from './data/infoPages/infoPages';
 
+import { PublicSettings } from '/imports/utils/PublicSettings';
 import * as HtmlTools from '/imports/utils/html-tools';
 import { LocalTime } from '/imports/utils/local-time';
 import * as StringTools from '/imports/utils/string-tools';
@@ -143,6 +144,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 
 				event.venue = ensure.venue(e.venue, e.region);
 				event.internal = Boolean(e.internal);
+				event.sendReminder = PublicSettings.sendReminderPreset;
 
 				const regionZone = LocalTime.zone(e.region);
 
@@ -283,6 +285,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 				}
 
 				event.internal = prng() < 0.07;
+				event.sendReminder = PublicSettings.sendReminderPreset;
 
 				event.courseId = course._id;
 				event._id = ensure.fixedId([course._id, `${n}`]);
