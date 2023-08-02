@@ -5,7 +5,15 @@
 				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
 			</h5>
 			<p>
-				{{i18n "notification.event.reminder.mail.intro" 'We like to remind youthat you are registered for "{EVENT}". We are looking forward to see you tomorrow.' EVENT=eventTitle lng=locale}}
+				{{i18n "notification.event.reminder.mail.intro" 'We like to remind you that you are registered for "{EVENT}". We are looking forward to see you tomorrow.' EVENT=eventTitle lng=locale}}
+			</p>
+			<p class="gap-md text-center">
+				{{i18n "notification.event.reminder.informUnregisterEvent" "In case you can not make it, it's important to let the organizers know now:" lng=locale}}
+			</p>
+			<p class="text-center">
+				<a class="button" href="{{unregisterToEventLink}}">
+					{{i18n "notification.event.reminder.unregisterEvent" "Un-enroll" lng=locale}}
+				</a>
 			</p>
 			<table class="event">
 				<tr>
@@ -38,6 +46,14 @@
 						<p>
 							{{{event.description}}}
 						</p>
+					</td>
+				</tr>
+				<tr>
+					<td class="event-link">
+						<a href="{{calLink}}">
+							{{i18n "notification.event.mail.linkCalendar" "Add this event to my calendar" lng=locale}}
+						</a>
+						<br />
 					</td>
 				</tr>
 			</table>
