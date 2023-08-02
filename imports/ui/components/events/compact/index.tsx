@@ -27,19 +27,6 @@ function eventCompactClasses(event: EventModel, withDate: boolean) {
 	return classes.join(' ');
 }
 
-function showImage(event: EventModel, withImage: boolean) {
-	if (!withImage) {
-		return false;
-	}
-
-	const src = event?.publicImageUrl();
-	if (!src) {
-		return false;
-	}
-
-	return true;
-}
-
 function bodyStyle(event: EventModel, withImage: boolean) {
 	if (!withImage) {
 		return {};
