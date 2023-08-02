@@ -9,19 +9,16 @@ import { Notification } from '/imports/notification/notification';
 Meteor.startup(() => {
 	const reminderCall = Meteor.bindEnvironment(async () => {
 		await Events.find({
-			start: { $gt: moment().toDate(), $lt: moment().add(1, 'days').toDate() },
+			// get all events in the next 24 h, do not send reminder if the event starts in 30 minutes (if an error case happened)
+			start: { $gt: moment().add(30, 'minutes').toDate(), $lt: moment().add(1, 'days').toDate() },
 		}).forEachAsync(async (event) => {
-			if (!event.participants?.length) {
-				return;
-			}
-
-			const allreadySend = await Log.find({
+			const alreadySent = await Log.find({
 				tr: 'Notification.Send',
 				rel: event._id,
 				'body.model': 'Event.Reminder',
 			}).countAsync();
 
-			if (allreadySend) {
+			if (alreadySent) {
 				return;
 			}
 
