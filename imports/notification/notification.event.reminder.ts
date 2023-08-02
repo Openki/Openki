@@ -67,7 +67,7 @@ export function Model(entry: { body: Body }) {
 			}
 		},
 
-		vars(userLocale: string, _actualRecipient: UserModel, unsubToken: string) {
+		vars(userLocale: string, actualRecipient: UserModel, unsubToken: string) {
 			if (!event) {
 				throw new Error('Event does not exist (0.o)');
 			}
@@ -104,6 +104,8 @@ export function Model(entry: { body: Body }) {
 			}
 
 			const vars = {
+				companions:
+					event.participants?.filter((p) => p.user === actualRecipient._id)[0].companions || 0,
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				event,
 				eventDate: startMoment.format('LL'),
