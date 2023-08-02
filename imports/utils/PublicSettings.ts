@@ -49,7 +49,10 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
 			},
 		),
 	),
+	/** by true, show only indicative prices (DE: Richtpreise), default is true */
 	pricePolicyEnabled: Boolean,
+	/** Should a reminder be sent by default or not. Default is true */
+	sendReminderPreset: Boolean,
 	feature: {
 		/** toggle visibility of login services */
 		login: { google: Boolean, facebook: Boolean, github: Boolean },
@@ -57,6 +60,8 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
 		visitorUser: Boolean,
 		/** allow rsvp with +1 / for two seats */
 		rsvpWithCompanions: Boolean,
+		/** allow to edit whether to remind or not, Default: true */
+		sendReminderIsEditable: Boolean,
 	},
 	nav: {
 		brandLink: String,
@@ -139,10 +144,12 @@ const defaults = {
 		phpPath: 'js/',
 	},
 	pricePolicyEnabled: true,
+	sendReminderPreset: true,
 	feature: {
 		login: { google: false, facebook: false, github: false },
 		visitorUser: false,
 		rsvpWithCompanions: false,
+		sendReminderIsEditable: true,
 	},
 	nav: {
 		brandLink: '/',

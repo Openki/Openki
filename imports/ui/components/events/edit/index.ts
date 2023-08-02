@@ -51,6 +51,7 @@ type NewEventModel = {
 	region: string;
 	description: string;
 	internal: boolean;
+	sendReminder: boolean;
 };
 
 export type EventEditData =
@@ -387,6 +388,10 @@ template.helpers({
 		return this.internal ? 'checked' : null;
 	},
 
+	sendReminder() {
+		return this.sendReminder ? 'checked' : null;
+	},
+
 	course(this: EventEditData) {
 		const { courseId } = this;
 		if (courseId) {
@@ -470,6 +475,7 @@ template.events({
 			startLocal: LocalTime.toString(start),
 			endLocal: LocalTime.toString(end),
 			internal: instance.$('.js-check-event-internal').is(':checked'),
+			sendReminder: instance.$('.js-check-event-send-reminder').is(':checked'),
 			maxParticipants,
 		} as SaveFields;
 
