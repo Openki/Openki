@@ -67,10 +67,13 @@
 
 // ** Body
 //========================================================================================
+.event-compact-body-wrap {
+	flex-grow: 1;
+}
+
 .event-compact-body {
 	@include ellipsis-multiline(5);
 
-	flex-grow: 1;
 	margin: 10px;
 	padding: 0;
 	position: relative;
