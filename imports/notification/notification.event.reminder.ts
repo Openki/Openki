@@ -120,17 +120,14 @@ export function Model(entry: { body: Body }) {
 				customSiteName: siteName,
 				customEmailLogo: emailLogo,
 				eventTitle: '',
+				eventCalendar: startMoment.calendar(),
 			};
 
-			const eventFullTitle = i18n('notification.event.reminder.mail.title', '{DATE} — {EVENT}', {
-				EVENT: event.title,
-				DATE: startMoment.calendar(),
-			});
 			const eventUrl = Router.url('showEvent', event, {
 				query: 'campaign=eventReminder',
 			});
 
-			vars.eventTitle = Spacebars.SafeString(`<a href="${eventUrl}">${eventFullTitle}</a>`);
+			vars.eventTitle = Spacebars.SafeString(`<a href="${eventUrl}">${event.title}</a>`);
 
 			return vars;
 		},

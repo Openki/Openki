@@ -5,7 +5,7 @@
 				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
 			</h5>
 			<p>
-				{{i18n "notification.event.reminder.mail.intro" 'We like to remind you that you are registered for "{EVENT}". We are looking forward to see you tomorrow.' EVENT=eventTitle lng=locale}}
+				{{i18n "notification.event.reminder.mail.intro" 'We like to remind you that you are registered for "{EVENTTITLE}". We are looking forward to see you {EVENTDATE}.' EVENTTITLE=eventTitle EVENTDATE=eventCalendar lng=locale}}
 			</p>
 			<p class="gap-md text-center">
 				{{i18n "notification.event.reminder.informUnregisterEvent" "In case you can not make it, it's important to let the organizers know now:" lng=locale}}
@@ -64,7 +64,7 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{i18n 'notification.event.reminder.mail.notice' 'You receive this e-mail because you are involved in {EVENT}.' EVENT=eventTitle lng=locale}}
+						{{i18n 'notification.event.reminder.mail.notice' 'You receive this e-mail because you are involved in {EVENTTITLE}.' EVENTTITLE=eventTitle lng=locale}}
 					</td>
 				</tr>
 				<tr>
