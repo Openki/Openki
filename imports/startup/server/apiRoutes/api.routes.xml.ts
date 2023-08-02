@@ -83,6 +83,7 @@ Router.route('api.0.xml', {
 	where: 'server',
 	action() {
 		xmlSendResponder(this.response, () => {
+			// Hide canceled events in schedule
 			this.params.query.canceled = this.params.query.canceled ?? '0';
 			const results = orderedResults(this.params, 'events');
 
@@ -92,7 +93,7 @@ Router.route('api.0.xml', {
 				'xsi:noNamespaceSchemaLocation': 'https://c3voc.de/schedule/schema.xsd',
 				'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
 			});
-			scheduleNode.ele('generator', { name: 'human' });
+			scheduleNode.ele('generator', { name: 'openki' });
 			scheduleNode.ele('version').txt('1.0');
 			scheduleNode
 				.ele('conference')
