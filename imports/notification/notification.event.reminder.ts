@@ -48,7 +48,7 @@ export function record(eventId: string) {
 		model: 'Event.Reminder',
 	};
 
-	Log.record('Notification.Send', [ eventId, ...recipients], body);
+	Log.record('Notification.Send', [eventId, ...recipients], body);
 }
 
 export function Model(entry: { body: Body }) {
@@ -115,6 +115,10 @@ export function Model(entry: { body: Body }) {
 				eventEnd: endMoment.format('LT'),
 				venueLine,
 				eventLink: Router.url('showEvent', event, { query: 'campaign=eventReminder' }),
+				unregisterToEventLink: Router.url('showEvent', event, {
+					query: 'action=unregister&campaign=eventReminder',
+				}),
+				calLink: Router.url('calEvent', event, { query: 'campaign=eventReminder' }),
 				subject,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventReminder`,
 				customSiteName: siteName,
