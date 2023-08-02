@@ -27,19 +27,6 @@ function eventCompactClasses(event: EventModel, withDate: boolean) {
 	return classes.join(' ');
 }
 
-function showImage(event: EventModel, withImage: boolean) {
-	if (!withImage) {
-		return false;
-	}
-
-	const src = event?.publicImageUrl();
-	if (!src) {
-		return false;
-	}
-
-	return true;
-}
-
 function bodyStyle(event: EventModel, withImage: boolean) {
 	if (!withImage) {
 		return {};
@@ -113,9 +100,7 @@ export function EventCompact(props: {
 						<h4 className="event-compact-title">{event.title}</h4>
 						<br />
 						<p
-							className={`event-compact-description${
-								showImage(event, withImage) ? ' event-compact-description-with-image' : ''
-							}`}
+							className={`event-compact-description`}
 							dangerouslySetInnerHTML={{ __html: event.description }}
 						></p>
 					</div>

@@ -121,7 +121,7 @@ export function Model(entry: { body: Body }) {
 				eventStart: startMoment.format('LT'),
 				eventEnd: endMoment.format('LT'),
 				venueLine,
-				eventLink: Router.url('showEvent', event, { query: 'campaign=eventNotify' }),
+				eventLink: Router.url('showEvent', event, { query: 'campaign=eventCanceled' }),
 				subject,
 				customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventCanceled`,
 				customSiteName: siteName,

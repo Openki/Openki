@@ -13,7 +13,10 @@ export function ProfileLink(props: { userId: string }) {
 	return (
 		<a
 			className="profilelink"
-			href={Router.path('userprofile', { _id: props.userId, username: userName })}
+			href={Router.path('userprofile', {
+				_id: props.userId,
+				username: encodeURIComponent(userName),
+			})}
 		>
 			{userName}
 		</a>
