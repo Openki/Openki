@@ -12,6 +12,10 @@ Meteor.startup(() => {
 		Assets.getText('emails/notifications/event.canceled.html'),
 	);
 	SSR.compileTemplate(
+		'notificationEventReminderEmail',
+		Assets.getText('emails/notifications/event.reminder.html'),
+	);
+	SSR.compileTemplate(
 		'notificationEventContactParticipantsEmail',
 		Assets.getText('emails/notifications/event.contact-participants.html'),
 	);
