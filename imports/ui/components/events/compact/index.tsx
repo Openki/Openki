@@ -61,10 +61,7 @@ export function EventCompact(props: {
 				href={Router.path('showEvent', { _id: event._id, slug: event.slug })}
 				target={openInNewTab ? '_blank' : ''}
 			>
-				<div
-					className={`event-compact ${eventCompactClasses(event, withDate)}`}
-					style={bodyStyle(event, withImage)}
-				>
+				<div className={`event-compact ${eventCompactClasses(event, withDate)}`}>
 					{event.canceled ? (
 						<span className="event-canceled">{t('_label.canceled', 'Canceled')}</span>
 					) : event.isFullyBooked() ? (
@@ -98,14 +95,16 @@ export function EventCompact(props: {
 							</>
 						) : null}
 					</div>
-					<div className="event-compact-body">
-						{event.internal ? <InternalIndicator /> : null}
-						<h4 className="event-compact-title">{event.title}</h4>
-						<br />
-						<p
-							className={`event-compact-description`}
-							dangerouslySetInnerHTML={{ __html: event.description }}
-						></p>
+					<div className="event-compact-body-wrap" style={bodyStyle(event, withImage)}>
+						<div className="event-compact-body">
+							{event.internal ? <InternalIndicator /> : null}
+							<h4 className="event-compact-title">{event.title}</h4>
+							<br />
+							<p
+								className={`event-compact-description`}
+								dangerouslySetInnerHTML={{ __html: event.description }}
+							></p>
+						</div>
 					</div>
 				</div>
 			</a>
