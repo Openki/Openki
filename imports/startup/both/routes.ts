@@ -873,14 +873,11 @@ RouterAsync.route('userprofile', {
 		}
 
 		// What privileges the user has
-		const privileges = (['admin'] as ['admin']).reduce<{ [role: string]: boolean }>(
-			(originalPs, p) => {
-				const ps = { ...originalPs };
-				ps[p] = UserPrivilegeUtils.privileged(user, p);
-				return ps;
-			},
-			{},
-		);
+		const privileges = (['admin'] as const).reduce<{ [role: string]: boolean }>((originalPs, p) => {
+			const ps = { ...originalPs };
+			ps[p] = UserPrivilegeUtils.privileged(user, p);
+			return ps;
+		}, {});
 
 		const alterPrivileges = UserPrivilegeUtils.privilegedTo('admin');
 		const showPrivileges = alterPrivileges || user.privileges?.length;
