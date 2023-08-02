@@ -7,7 +7,6 @@ import moment from 'moment';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Regions } from '/imports/api/regions/regions';
-import { Roles } from '/imports/api/roles/roles';
 
 import { getSiteName } from '/imports/utils/getSiteName';
 import { PublicSettings } from '/imports/utils/PublicSettings';
@@ -16,6 +15,7 @@ import { buildCssVariableColor } from '/imports/utils/getColor';
 import { checkContribution } from '/imports/utils/checkContribution';
 import { locationFormat } from '/imports/utils/location-format';
 import { getCachedUser, getUserName } from '/imports/ui/lib/getUserName';
+import { roleIcon } from '/imports/utils/role';
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -46,11 +46,7 @@ const helpers: { [name: string]: Function } = {
 	},
 
 	roleIcon(type: string) {
-		if (!type) {
-			return '';
-		}
-
-		return Roles.find((r) => r.type === type)?.icon || '';
+		return roleIcon(type);
 	},
 
 	regions() {

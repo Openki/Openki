@@ -49,7 +49,7 @@ if (Meteor.isClient) {
 				$('.js-discussion-edit').trigger('click');
 
 				await waitFor(() => {
-					assert($('.js-notify-all').length > 0, `Notify all co-learners checkbox is shown`);
+					assert($('.js-notify-all').length > 0, `Notify all interested checkbox is shown`);
 				});
 
 				$('.js-post-text').html('Hello to all').trigger('keyup');
