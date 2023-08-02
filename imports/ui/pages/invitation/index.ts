@@ -53,7 +53,7 @@ template.events({
 				Router.go('/');
 
 				Alert.success(
-					i18n('invitation.join.success', 'You joined to tenant "{NAME}".', {
+					i18n('invitation.join.success', 'You joined "{NAME}".', {
 						NAME: instance.data.tenant.name,
 					}),
 				);
