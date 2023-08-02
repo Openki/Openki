@@ -86,7 +86,7 @@
 						</span>
 						{{#if notifyAll}}
 							<i class="fa-solid fa-bell" aria-hidden="true" data-bs-toggle="tooltip"
-							   data-bs-title="{{i18n 'course.discussion.allNotified' 'All co-learners notifed' attr=true}}"></i>
+							   data-bs-title="{{i18n 'course.discussion.allNotified' 'All interested notifed' attr=true}}"></i>
 						{{/if}}
 						{{#if hasBeenEdited}}
 							-
@@ -141,7 +141,7 @@
 							{{#if notifyAll}}
 								<i class="fa-solid fa-bell" aria-hidden="true"
 								   data-bs-toggle="tooltip"
-								   data-bs-title="{{i18n 'course.discussion.allNotified' 'All co-learners notifed' attr=true}}"></i>
+								   data-bs-title="{{i18n 'course.discussion.allNotified' 'All interested notified' attr=true}}"></i>
 							{{/if}}
 							{{#if hasBeenEdited}}
 								-
@@ -171,7 +171,7 @@
 									   {{notifyAllChecked}} value="" id="canNotifyAllCheck">
 								<label class="form-check-label" for="canNotifyAllCheck">
 									<i class="fa-solid fa-bell" aria-hidden="true"></i>
-									{{i18n 'course.discussion.notifyAll' 'Notify all co-learners'}}
+									{{i18n 'course.discussion.notifyAll' 'Notify all interested'}}
 								</label>
 							</div>
 						{{/if}}
@@ -248,7 +248,8 @@
 				{{i18n 'comment.delete.confirm' 'Delete this comment?'}}
 			</li>
 			<li class="dialog-dropdown-btn">
-				<button type="button" class="btn btn-remove js-delete-comment">
+				<button type="button"
+						class="btn btn-remove js-delete-comment discussion-delete-comment">
 					{{i18n 'course.discussion.deleteCommentButton' 'Delete'}}
 				</button>
 			</li>
