@@ -5,7 +5,7 @@
 				{{i18n "email.base.greeting" USERNAME=username lng=locale}}
 			</h5>
 			<p>
-				{{i18n "notification.event.reminder.mail.intro" 'We like to remind you that you are registered for "{EVENTTITLE}". We are looking forward to see you {EVENTDATE}.' EVENTTITLE=eventTitle EVENTDATE=eventCalendar lng=locale}}
+				{{i18n "notification.event.reminder.mail.intro" 'We like to remind you that you are registered for "{EVENTTITLE}". We are looking forward to see {COMPANIONS, plural, =0{you} other{you and your companion} } {EVENTDATE}.' EVENTTITLE=eventTitle EVENTDATE=eventCalendar COMPANIONS=companions lng=locale}}
 			</p>
 			<p class="gap-md text-center">
 				{{i18n "notification.event.reminder.informUnregisterEvent" "In case you can not make it, it's important to let the organizers know now:" lng=locale}}
