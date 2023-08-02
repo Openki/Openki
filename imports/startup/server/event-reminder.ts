@@ -11,6 +11,8 @@ Meteor.startup(() => {
 		await Events.find({
 			// get all events in the next 24 h, do not send reminder if the event starts in 30 minutes (if an error case happened)
 			start: { $gt: moment().add(30, 'minutes').toDate(), $lt: moment().add(1, 'days').toDate() },
+			// ignore canceled events
+			canceled: { $ne: true },
 		}).forEachAsync(async (event) => {
 			const alreadySent = await Log.find({
 				tr: 'Notification.Send',
