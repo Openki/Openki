@@ -65,6 +65,24 @@ export function EventRegistration(props: { event: EventModel }) {
 		}
 	}
 
+	async function removeParticipant() {
+		setIsBusy('unregistering');
+
+		try {
+			await EventsMethods.removeParticipant(event._id);
+
+			Analytics.trackEvent(
+				'Unsubscribes RSVPs',
+				'Unsubscribes RSVPs as participant',
+				Regions.findOne(event.region)?.nameEn,
+			);
+		} catch (err) {
+			Alert.serverError(err, 'could not remove participant');
+		} finally {
+			setIsBusy('');
+		}
+	}
+
 	function isFuture() {
 		return moment().isBefore(event.end);
 	}
@@ -77,6 +95,15 @@ export function EventRegistration(props: { event: EventModel }) {
 					onRender={() => {
 						// register from email
 						addParticipant();
+					}}
+				/>
+			) : null}
+			{Router.current().params.query.action === 'unregister' ? (
+				<PleaseLogin
+					type="auto"
+					onRender={() => {
+						// unregister from email
+						removeParticipant();
 					}}
 				/>
 			) : null}
@@ -120,21 +147,7 @@ export function EventRegistration(props: { event: EventModel }) {
 								busy={isBusy === 'unregistering'}
 								event={event}
 								onUnregister={async () => {
-									setIsBusy('unregistering');
-
-									try {
-										await EventsMethods.removeParticipant(event._id);
-
-										Analytics.trackEvent(
-											'Unsubscribes RSVPs',
-											'Unsubscribes RSVPs as participant',
-											Regions.findOne(event.region)?.nameEn,
-										);
-									} catch (err) {
-										Alert.serverError(err, 'could not remove participant');
-									} finally {
-										setIsBusy('');
-									}
+									await removeParticipant();
 								}}
 							/>
 						)}

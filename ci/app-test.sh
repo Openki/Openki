@@ -9,3 +9,7 @@ meteor npm i
 meteor node -v && meteor npm version
 
 meteor npm run app-test
+
+# Run app-tests with:
+#     meteor npm run app-test
+# or  meteor npm run test-live

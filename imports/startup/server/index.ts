@@ -16,4 +16,5 @@ import './emails';
 import './login';
 import './useraccounts-configuration';
 import './version';
+import './event-reminder';
 import './scrub';

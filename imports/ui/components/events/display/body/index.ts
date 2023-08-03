@@ -173,9 +173,13 @@ import './styles.scss';
 				try {
 					await EventsMethods.uncancel(event._id);
 					Alert.success(
-						i18n('event.details.message.eventHasBeenUncanceled', '{EVENT} has been uncaneled.', {
-							EVENT: event.title,
-						}),
+						i18n(
+							'event.details.message.eventHasBeenUncanceled',
+							'{EVENT} has been uncaneled. No notifications have been sent.',
+							{
+								EVENT: event.title,
+							},
+						),
 					);
 				} catch (err) {
 					Alert.serverError(

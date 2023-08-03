@@ -70,19 +70,22 @@ Further reading in our [wiki](https://gitlab.com/Openki/Openki/-/wikis/Docs%20fo
 
 ### Running the tests
 
-To run the app-tests, you need a `chromedriver` binary. On Debian, you can get one with  `apt install chromuim-driver`. Also make sure to run `meteor npm install`.
-
 Run tests with:
-
+    meteor npm run test
+    meteor npm run test-live
     meteor npm run app-test
 
-**Note:** Add `--grep=<pattern>` at the end to only run tests that match the pattern. eg. `meteor npm run app-test --grep="Propose course via frame"`
+Add `--grep=<pattern>` at the end to only run tests that match the pattern. eg. `meteor npm run test-live --grep="Propose course via frame"`
+
+**Note:**  To run the app-tests, you need a `chromedriver` binary. On Debian, you can get one with  `apt install chromuim-driver`. Also make sure to run `meteor npm install`.
 
 Run linters and type check with these commands:
 
     meteor npm run type-check
     meteor npm run es-lint
     meteor npm run sass-lint
+
+### Run auto formatting
 
 Format files and automatically fix fixable problems with these commands:
 

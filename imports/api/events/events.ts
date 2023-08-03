@@ -70,6 +70,8 @@ export interface EventEntity {
 	courseId?: string;
 	/** (Events are only displayed when group or venue-filter is active) */
 	internal: boolean;
+	/** Send a reminder to all attendees of an event just before the event starts */
+	sendReminder: boolean;
 	/** Shows the event as canceled. */
 	canceled?: boolean;
 	/** list of group._id that promote this event ("promote groups"). */
@@ -133,9 +135,9 @@ export class OEvent {
 		this: { startLocal: string; endLocal: string },
 		event: { startLocal: string; endLocal: string },
 	) {
-		return ['startLocal', 'endLocal'].every((time) => {
-			const timeA = LocalTime.fromString((this as any)[time]);
-			const timeB = LocalTime.fromString((event as any)[time]);
+		return (['startLocal', 'endLocal'] as const).every((time) => {
+			const timeA = LocalTime.fromString(this[time]);
+			const timeB = LocalTime.fromString(event[time]);
 
 			return timeA.hour() === timeB.hour() && timeA.minute() === timeB.minute();
 		});
@@ -206,8 +208,10 @@ export const FindFilterPattern = {
 	groups: Match.Maybe([String]),
 	/** only events for this course (ID) */
 	course: Match.Maybe(String),
-	/** only events that are internal (if true) or public (if false) */
+	/** only events that are internal (if true) or public (if false), Default: Show both */
 	internal: Match.Maybe(Boolean),
+	/** only events that are canceled (if true) or not canceled (if false), Default: Show both */
+	canceled: Match.Maybe(Boolean),
 	/** only events with given participant (ID) */
 	participant: Match.Maybe(String),
 };
@@ -229,6 +233,7 @@ export const FindParams = {
 	before: Predicates.date,
 	end: Predicates.date,
 	internal: Predicates.flag,
+	canceled: Predicates.flag,
 };
 
 export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> {
@@ -437,6 +442,14 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 
 		if (filter.internal !== undefined) {
 			find.internal = Boolean(filter.internal);
+		}
+
+		if (filter.canceled !== undefined) {
+			if (filter.canceled) {
+				find.canceled = { $eq: true };
+			} else {
+				find.canceled = { $ne: true };
+			}
 		}
 
 		if (filter.search) {
