@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo -e "\e[1;33mRun tests with:\e[0m"
-echo -e "\e[33m    meteor npm run test\e[0m"
+echo -e "\e[1;33mRun tests with:\e[21m
+    meteor npm run test\e[0m"
 
 set -xe
 
