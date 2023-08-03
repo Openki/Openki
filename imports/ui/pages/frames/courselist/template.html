@@ -11,7 +11,8 @@
 	{{#each course in courses}}
 		{{> frameCourselistCourse course=course hideInterested=hideInterested}}
 	{{else}}
-		<h2 class="mt-5 text-center">{{i18n 'frame.courselist.empty' 'There is nothing here yet'}}</h2>
+		<h2 class="mt-5 text-center">{{i18n 'frame.courselist.empty' 'There is nothing here yet'}}
+		</h2>
 	{{/each}}
 	{{#unless Template.subscriptionsReady}}
 		{{> loadingRow}}

@@ -30,7 +30,7 @@
 </template>
 
 <template name="frameCalendarEvent">
-	<div class="frame-list-item">
+	<div class="frame-list-item {{#if canceled}}frame-list-item-canceled{{/if}}">
 		<h4 class="frame-list-item-header js-toggle-event-details">
 			<span class="frame-list-item-toggle-indicator">
 				<i class="fa-solid fa-angle-down"></i>
@@ -41,7 +41,6 @@
 									{{i18n 'frame.list.reservation.status.tooltip' '{RESERVEDSEATS} of {TOTALSEATS} seats reserved' RESERVEDSEATS=getAttendees TOTALSEATS=getTotalAvailableSeats}}
 								{{/if}}">
 				{{getAttendees}}/{{getTotalAvailableSeats}}
-
 			</div>
 			<i class="fa-solid fa-user frame-list-free-seats" aria-hidden="true"></i>
 

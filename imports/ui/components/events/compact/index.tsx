@@ -27,19 +27,6 @@ function eventCompactClasses(event: EventModel, withDate: boolean) {
 	return classes.join(' ');
 }
 
-function showImage(event: EventModel, withImage: boolean) {
-	if (!withImage) {
-		return false;
-	}
-
-	const src = event?.publicImageUrl();
-	if (!src) {
-		return false;
-	}
-
-	return true;
-}
-
 function bodyStyle(event: EventModel, withImage: boolean) {
 	if (!withImage) {
 		return {};
@@ -76,7 +63,7 @@ export function EventCompact(props: {
 			>
 				<div className={`event-compact ${eventCompactClasses(event, withDate)}`}>
 					{event.canceled ? (
-						<span className="event-canceled">{t('course.event.canceled', 'Canceled')}</span>
+						<span className="event-canceled">{t('_label.canceled', 'Canceled')}</span>
 					) : event.isFullyBooked() ? (
 						<span className="event-fully-booked">
 							{t('course.event.fullyBooked', 'Fully booked')}
@@ -108,16 +95,16 @@ export function EventCompact(props: {
 							</>
 						) : null}
 					</div>
-					<div className="event-compact-body" style={bodyStyle(event, withImage)}>
-						{event.internal ? <InternalIndicator /> : null}
-						<h4 className="event-compact-title">{event.title}</h4>
-						<br />
-						<p
-							className={`event-compact-description${
-								showImage(event, withImage) ? ' event-compact-description-with-image' : ''
-							}`}
-							dangerouslySetInnerHTML={{ __html: event.description }}
-						></p>
+					<div className="event-compact-body-wrap" style={bodyStyle(event, withImage)}>
+						<div className="event-compact-body">
+							{event.internal ? <InternalIndicator /> : null}
+							<h4 className="event-compact-title">{event.title}</h4>
+							<br />
+							<p
+								className={`event-compact-description`}
+								dangerouslySetInnerHTML={{ __html: event.description }}
+							></p>
+						</div>
 					</div>
 				</div>
 			</a>

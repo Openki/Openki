@@ -80,5 +80,12 @@ export function useDateTimeFormat() {
 			}
 			return toMomentWithTimeLocale(date).format('dddd, Do MMMM');
 		},
+		dateToRelativeString(date: moment.MomentInput) {
+			if (!date) {
+				return '';
+			}
+			const relative = toMomentWithTimeLocale().to(date);
+			return relative.charAt(0).toUpperCase() + relative.slice(1);
+		},
 	};
 }

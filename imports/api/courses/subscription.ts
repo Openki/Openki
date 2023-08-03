@@ -29,14 +29,14 @@ export async function processChange<T>(change: Change<T>, options?: { isSimulati
 	}
 }
 
-const checkUser = function (obj: any) {
+const checkUser = function (obj: unknown) {
 	if (!(obj instanceof User)) {
 		throw new Meteor.Error('Match failed', 'Expected User object');
 	}
 	return obj as UserModel;
 };
 
-const checkCourse = function (obj: any) {
+const checkCourse = function (obj: unknown) {
 	if (!(obj instanceof Course)) {
 		throw new Meteor.Error('Match failed', 'Expected Course object');
 	}
@@ -353,9 +353,12 @@ export class Unsubscribe extends Change<{
 		Courses.update({ _id: this.course._id, 'members.user': this.user._id }, update);
 
 		// Housekeeping: Remove members that have no role left
-		Courses.update({ _id: this.course._id }, {
-			$pull: { members: { roles: { $size: 0 } } },
-		} as any);
+		Courses.update(
+			{ _id: this.course._id },
+			{
+				$pull: { members: { roles: { $size: 0 } } },
+			},
+		);
 
 		// Update member related calculated fields
 		interestedDenormalizer.afterUnsubscribe(this.course._id);

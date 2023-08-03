@@ -75,7 +75,7 @@ const pseudoHash = function (str: string) {
 		// eslint-disable-next-line no-bitwise
 		hash |= 0; // Convert to 32bit integer
 	}
-	return hash;
+	return hash < 0 ? hash * -1 : hash;
 };
 
 Router.route('api.0.xml', {
@@ -83,6 +83,8 @@ Router.route('api.0.xml', {
 	where: 'server',
 	action() {
 		xmlSendResponder(this.response, () => {
+			// Hide canceled events in schedule
+			this.params.query.canceled = this.params.query.canceled ?? '0';
 			const results = orderedResults(this.params, 'events');
 
 			const resultsByTimeAndRoom = sortByTimeAndRoom(results);
@@ -91,7 +93,7 @@ Router.route('api.0.xml', {
 				'xsi:noNamespaceSchemaLocation': 'https://c3voc.de/schedule/schema.xsd',
 				'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
 			});
-			scheduleNode.ele('generator', { name: 'human' });
+			scheduleNode.ele('generator', { name: 'openki' });
 			scheduleNode.ele('version').txt('1.0');
 			scheduleNode
 				.ele('conference')

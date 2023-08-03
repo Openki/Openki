@@ -8,5 +8,7 @@ meteor update --patch
 meteor npm i
 meteor node -v && meteor npm version
 
-
 meteor npm run test
+
+# Run tests with:
+#     meteor npm run test

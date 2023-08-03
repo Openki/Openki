@@ -7,7 +7,7 @@ import { Session } from 'meteor/session';
 import { EventModel, Events, FindFilter } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
-import { MeteorAsync } from '/imports/utils/promisify';
+import { MeteorAsync, TrackerAsync } from '/imports/utils/promisify';
 import * as Metatags from '/imports/utils/metatags';
 
 import '/imports/ui/components/calendar-nav/multi';
@@ -83,11 +83,12 @@ import './styles.scss';
 			// only do this in the current week
 			if (moment().format('w') === instance.filter.get('start')?.format('w')) {
 				if (instance.subscriptionsReady()) {
+					await TrackerAsync.afterFlush();
 					await MeteorAsync.defer();
 					const elem = instance.$('.js-calendar-date').eq(moment().weekday());
 
-					// calendar nav and topnav are together 103 px fixed height, we add 7px margin
-					window.scrollTo(0, (elem.offset() || { top: 0 }).top - 110);
+					// calendar nav and topnav are together 137px fixed height, we add 3px margin
+					window.scrollTo(0, (elem.offset() || { top: 0 }).top - 140);
 				}
 			}
 		});
