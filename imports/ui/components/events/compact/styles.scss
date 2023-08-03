@@ -72,10 +72,10 @@
 }
 
 .event-compact-body {
-	@include ellipsis-multiline(5);
+	@include ellipsis-multiline(4);
 
 	margin: 10px;
-	max-height: $event-compact-height - 60px;
+	max-height: $event-compact-height - 80px;
 	padding: 0;
 	position: relative;
 }
