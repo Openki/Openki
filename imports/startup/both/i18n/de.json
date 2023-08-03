@@ -356,7 +356,7 @@
 	"event.edit.plzProvideDescr": "Bitte eine Beschreibung eingeben",
 	"event.edit.plzProvideTitle": "Bitte einen Titel eingeben",
 	"event.edit.plzSelectRegion": "Bitte Region wählen",
-	"event.edit.sendReminder": "Senden Sie 24 Stunden vor Veranstaltungsbeginn eine Erinnerungs-E-Mail an alle Teilnehmer.",
+	"event.edit.sendReminder": "Senden Sie 24 Stunden vor Veranstaltungsbeginn eine Erinnerungs-E-Mail an alle Teilnehmer_innen.",
 	"event.edit.startDayChanged": "Die Aktualisierung der Kopien, wenn der Starttag geändert wurde, wird (noch) nicht unterstützt.",
 	"event.edit.startInPast": "Die Veranstaltung beginnt in der Vergangenheit. Haben Sie ein Startdatum und eine Startzeit ausgewählt?",
 	"event.edit.updateChangedReplicasTime": "Überschreibe auch die Zeit dieser {NUM, plural, one{Veranstaltung} other{Veranstaltungen} }",
