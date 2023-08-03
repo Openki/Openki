@@ -95,11 +95,12 @@ function handleInvitation(invitation: InvitationEntity) {
 }
 
 // Watch for new invitations
-runBackgroundTasks && Meteor.startup(() => {
-	SSR.compileTemplate('invitationEmail', Assets.getText('emails/invitation.html'));
+if (runBackgroundTasks)
+	Meteor.startup(() => {
+		SSR.compileTemplate('invitationEmail', Assets.getText('emails/invitation.html'));
 
-	Invitations.find({ status: 'created' }).observe({
-		added: handleInvitation,
-		changed: handleInvitation,
+		Invitations.find({ status: 'created' }).observe({
+			added: handleInvitation,
+			changed: handleInvitation,
+		});
 	});
-});
