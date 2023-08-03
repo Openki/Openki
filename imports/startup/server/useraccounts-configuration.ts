@@ -8,58 +8,56 @@ import { UserModel, UserProfile } from '/imports/api/users/users';
 
 import { isEmail } from '/imports/utils/email-tools';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
-import { runBackgroundTasks } from '/imports/utils/background-tasks';
 
-if (runBackgroundTasks)
-	Meteor.startup(() => {
-		const serviceConf = PrivateSettings.service;
-		if (!serviceConf) {
-			return;
-		}
+Meteor.startup(() => {
+	const serviceConf = PrivateSettings.service;
+	if (!serviceConf) {
+		return;
+	}
 
-		if (serviceConf.google) {
-			ServiceConfiguration.configurations.upsert(
-				{
-					service: 'google',
+	if (serviceConf.google) {
+		ServiceConfiguration.configurations.upsert(
+			{
+				service: 'google',
+			},
+			{
+				$set: {
+					loginStyle: 'popup',
+					clientId: serviceConf.google.clientId,
+					secret: serviceConf.google.secret,
 				},
-				{
-					$set: {
-						loginStyle: 'popup',
-						clientId: serviceConf.google.clientId,
-						secret: serviceConf.google.secret,
-					},
+			},
+		);
+	}
+	if (serviceConf.facebook) {
+		ServiceConfiguration.configurations.upsert(
+			{
+				service: 'facebook',
+			},
+			{
+				$set: {
+					loginStyle: 'popup',
+					appId: serviceConf.facebook.appId,
+					secret: serviceConf.facebook.secret,
 				},
-			);
-		}
-		if (serviceConf.facebook) {
-			ServiceConfiguration.configurations.upsert(
-				{
-					service: 'facebook',
+			},
+		);
+	}
+	if (serviceConf.github) {
+		ServiceConfiguration.configurations.upsert(
+			{
+				service: 'github',
+			},
+			{
+				$set: {
+					loginStyle: 'popup',
+					clientId: serviceConf.github.clientId,
+					secret: serviceConf.github.secret,
 				},
-				{
-					$set: {
-						loginStyle: 'popup',
-						appId: serviceConf.facebook.appId,
-						secret: serviceConf.facebook.secret,
-					},
-				},
-			);
-		}
-		if (serviceConf.github) {
-			ServiceConfiguration.configurations.upsert(
-				{
-					service: 'github',
-				},
-				{
-					$set: {
-						loginStyle: 'popup',
-						clientId: serviceConf.github.clientId,
-						secret: serviceConf.github.secret,
-					},
-				},
-			);
-		}
-	});
+			},
+		);
+	}
+});
 
 Accounts.validateNewUser((user) => {
 	if (user.emails) {
