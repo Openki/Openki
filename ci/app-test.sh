@@ -10,6 +10,6 @@ meteor node -v && meteor npm version
 
 meteor npm run app-test
 
-# Run app-tests with:
-#     meteor npm run app-test
-# or  meteor npm run test-live
+echo "Run app-tests with:"
+echo "    meteor npm run app-test"
+echo "or  meteor npm run test-live"
