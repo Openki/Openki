@@ -75,6 +75,7 @@
 	@include ellipsis-multiline(5);
 
 	margin: 10px;
+	max-height: $event-compact-height - 60px;
 	padding: 0;
 	position: relative;
 }
