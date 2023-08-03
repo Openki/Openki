@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "Run app-tests with:"
-echo "    meteor npm run app-test"
-echo "or  meteor npm run test-live"
+echo -e "\e[1;33mRun app-tests with:"
+echo -e "\e[33m    meteor npm run app-test"
+echo -e "\e[33mor  meteor npm run test-live"
 
 set -xe
 

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "Format files and automatically fix fixable problems with these commands:"
-echo "    meteor npm run es-lint -- --fix"
-echo "    meteor npm run sass-lint -- --fix"
+echo -e "\e[1;33mFormat files and automatically fix fixable problems with these commands:"
+echo -e "\e[33m    meteor npm run es-lint -- --fix"
+echo -e "\e[33m    meteor npm run sass-lint -- --fix"
 
 set -xe
 
