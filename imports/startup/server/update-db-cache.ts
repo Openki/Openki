@@ -10,6 +10,7 @@ import * as Profile from '/imports/utils/profile';
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 import * as AsyncTools from '/imports/utils/async-tools';
 import { MeteorAsync } from '/imports/utils/promisify';
+import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 function updateDbCacheFields() {
 	// Resync location cache in events
@@ -51,8 +52,6 @@ function updateDbCacheFields() {
 		60 * 1000, // Check every minute
 	);
 }
-
-import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
 runBackgroundTasks && Meteor.startup(async () => {
 	/* Initialize cache-fields on startup (Also called calculated fields or denomalized data) */

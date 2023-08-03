@@ -6,7 +6,9 @@ import { Events } from '/imports/api/events/events';
 import { Log } from '/imports/api/log/log';
 import { Notification } from '/imports/notification/notification';
 
-Meteor.startup(() => {
+import { runBackgroundTasks } from '/imports/utils/background-tasks';
+
+runBackgroundTasks && Meteor.startup(() => {
 	const reminderCall = Meteor.bindEnvironment(async () => {
 		await Events.find({
 			// get all events in the next 24 h, do not send reminder if the event starts in 30 minutes (if an error case happened)
