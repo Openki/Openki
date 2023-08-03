@@ -68,8 +68,7 @@
 // ** Body
 //========================================================================================
 .event-compact-body-wrap {
-	display: flex;
-	flex: 1 0 auto;
+	flex-grow: 1;
 }
 
 .event-compact-body {
