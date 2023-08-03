@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { SSR } from 'meteor/meteorhacks:ssr';
 
- Meteor.startup(() => {
+Meteor.startup(() => {
 	SSR.compileTemplate('reportEmail', Assets.getText('emails/report.html'));
 });
