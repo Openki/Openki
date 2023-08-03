@@ -17,10 +17,15 @@ if (PrivateSettings.siteEmail) {
 
 Accounts.emailTemplates.siteName = PublicSettings.siteName;
 
-runBackgroundTasks && Meteor.startup(() => {
-	SSR.compileTemplate('userVerifyEmail', Assets.getText('emails/users/verify.html'));
-	SSR.compileTemplate('userResetPasswordEmail', Assets.getText('emails/users/resetPassword.html'));
-});
+if (runBackgroundTasks) {
+	Meteor.startup(() => {
+		SSR.compileTemplate('userVerifyEmail', Assets.getText('emails/users/verify.html'));
+		SSR.compileTemplate(
+			'userResetPasswordEmail',
+			Assets.getText('emails/users/resetPassword.html'),
+		);
+	});
+}
 
 Accounts.emailTemplates.verifyEmail.subject = function (user) {
 	return i18n('verifyEmail.subject', '[{SITE}] Welcome to the {SITE} community, {NAME}', {

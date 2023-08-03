@@ -14,7 +14,7 @@ import { InfoPages } from '/imports/api/infoPages/infoPages';
 
 import { PrivateSettings } from '/imports/utils/PrivateSettings';
 
-import { runBackgroundTasks } from "/imports/utils/background-tasks";
+import { runBackgroundTasks } from '/imports/utils/background-tasks';
 
 if (runBackgroundTasks && Meteor.isServer && PrivateSettings.testdata) {
 	const logResult = (error: unknown, result: unknown) => {
