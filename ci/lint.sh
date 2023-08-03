@@ -12,6 +12,6 @@ meteor npm run es-lint
 
 meteor npm run type-check
 
-# Format files and automatically fix fixable problems with these commands:
-#     meteor npm run es-lint -- --fix
-#     meteor npm run sass-lint -- --fix
+echo "Format files and automatically fix fixable problems with these commands:"
+echo "    meteor npm run es-lint -- --fix"
+echo "    meteor npm run sass-lint -- --fix"
