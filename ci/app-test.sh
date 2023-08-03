@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo -e "\e[1;33mRun app-tests with:\e[21m
+    meteor npm run app-test
+    or  meteor npm run test-live\e[0m"
+
 set -xe
 
 Xvfb "${DISPLAY}" -screen 0 1024x768x24 > /dev/null 2>&1 &
@@ -9,7 +13,3 @@ meteor npm i
 meteor node -v && meteor npm version
 
 meteor npm run app-test
-
-echo "Run app-tests with:"
-echo "    meteor npm run app-test"
-echo "or  meteor npm run test-live"
