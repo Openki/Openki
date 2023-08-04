@@ -11,7 +11,7 @@ import { visibleTenants } from '/imports/utils/visible-tenants';
 sitemaps.config('gzip', true);
 
 sitemaps.add('/sitemap.xml', () => {
-	const out = [];
+	const out: object[] = [];
 	const courses = Courses.findFilter({ tenants: visibleTenants(), internal: false });
 	const events = Events.findFilter({ tenants: visibleTenants(), internal: false });
 	const venues = Venues.find();
