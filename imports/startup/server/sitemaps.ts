@@ -13,7 +13,7 @@ sitemaps.add('/sitemap.xml', () => {
 	const out: { page: string; lastmod: Date }[] = [];
 	const courses = Courses.findFilter({ tenants: visibleTenants(), internal: false });
 	const events = Events.findFilter({ tenants: visibleTenants(), internal: false });
-	const venues = Venues.findFilter({ });
+	const venues = Venues.findFilter({});
 
 	courses.forEach((course) => {
 		out.push({
