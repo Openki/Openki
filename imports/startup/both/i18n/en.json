@@ -248,7 +248,6 @@
   "course.subnav.history": "History",
   "course.title.Discussion": "Discussion",
   "course.title.placeholder": "What are you interested in?",
-  "course.windowtitle": "Course: {COURSE}",
   "courseDetails.message.descriptionChanged": "The description of {NAME} has been changed.",
   "courseDetails.message.nameChanged": "The name has been changed to \"{NAME}\".",
   "courseDetails.showMore": "show more",
