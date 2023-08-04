@@ -192,7 +192,9 @@ RouterAsync.route('frameCourselist', {
 			['linkcolor', 'color', '.frame-list-item a'],
 			['regionbg', 'background-color', '.frame-list-item-region'],
 			['regioncolor', 'color', '.frame-list-item-region'],
+			['itemfontweight', 'font-weight', '.frame-list-item-header'],
 		]).getCssRules();
+
 		const hideInterested = Number.parseInt(this.params.query.hideInterested || '', 10) || 0;
 		return { cssRules, hideInterested };
 	},
