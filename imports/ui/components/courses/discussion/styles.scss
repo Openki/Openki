@@ -163,3 +163,25 @@ $discussion-edit-bg: lighten($gray-400, 10%);
 .discussion-post-new + .discussion-conversation {
 	padding-top: 0;
 }
+
+// ** Component header
+//========================================================================================
+.course-page-component-header {
+	background: $blue;
+	color: $white;
+	padding: 15px;
+}
+
+.course-page-component-header > h4 {
+	font-weight: bold;
+	margin: 0;
+}
+
+// ** Component buttons
+//========================================================================================
+.course-page-btn {
+	margin-top: $course-details-seperator-height;
+	padding: 10px 12px;
+	text-align: start;
+	width: 100%;
+}
