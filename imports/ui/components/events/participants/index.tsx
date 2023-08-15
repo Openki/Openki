@@ -125,7 +125,7 @@ export function EventParticipants(data: { event: EventModel }) {
 
 	return (
 		<>
-			<div className="event-page-component-header">
+			<div className="page-component-header">
 				{showModal ? (
 					<div className="modal" tabIndex={-1} role="dialog" ref={modalRef}>
 						<div className="modal-dialog modal-sm" role="document">
@@ -188,7 +188,7 @@ export function EventParticipants(data: { event: EventModel }) {
 					})}
 					{limited() ? (
 						<button
-							className="btn btn-add event-page-btn"
+							className="btn btn-add page-component-btn"
 							type="button"
 							onClick={() => {
 								setParticipantsDisplayLimit(participantsDisplayLimit + IncreaseBy);
