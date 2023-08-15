@@ -9,6 +9,8 @@ import { Courses } from '/imports/api/courses/courses';
 import { EventModel, Events } from '/imports/api/events/events';
 import { Regions } from '/imports/api/regions/regions';
 
+import { ScssVars } from '/imports/ui/lib/scss-vars';
+import * as Viewport from '/imports/ui/lib/viewport';
 import * as Metatags from '/imports/utils/metatags';
 import { appendAsJsonLdToBody } from '/imports/utils/event-to-json-ld';
 
@@ -99,6 +101,10 @@ import './styles.scss';
 			return (
 				Meteor.user()?.getDisplayName() || i18n('eventDetails.notLoggedIn', '(not logged in?)')
 			);
+		},
+
+		mobileViewport() {
+			return Viewport.get().width <= ScssVars.screenMD;
 		},
 
 		select() {

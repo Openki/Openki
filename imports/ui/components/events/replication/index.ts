@@ -217,6 +217,7 @@ template.events({
 					// delegate the same replicaOf ID for this replica if the replicated event is also a replica
 					replicaOf: instance.data.replicaOf || instance.data._id,
 					internal: instance.data.internal,
+					sendReminder: instance.data.sendReminder,
 					maxParticipants: instance.data.maxParticipants,
 				};
 
