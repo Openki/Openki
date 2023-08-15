@@ -30,6 +30,25 @@
 	padding-top: $form-group-margin-bottom;
 }
 
+.page-component-header {
+	background: $blue;
+	color: $white;
+	padding: 15px;
+}
+
+.page-component-header > h4 {
+	font-weight: bold;
+	margin: 0;
+}
+
+.page-component-btn {
+	@include btn-lg;
+	margin-top: $page-component-seperator-height;
+	padding: 10px 12px;
+	text-align: start;
+	width: 100%;
+}
+
 .details-header {
 	padding: 10px $details-header-padding-horizontal;
 	position: relative;

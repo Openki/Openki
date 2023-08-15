@@ -38,10 +38,10 @@
 		{{/unless}}
 	</div>
 	{{#if course.singleEvent}}
-	<div class="row">
-		<div class="col-lg-8 mb-3">
-		{{> discussion courseId=course._id select=select}}
-	</div>
-</div>
+		<div class="row">
+			<div class="col-lg-8 mb-3">
+				{{> discussion courseId=course._id select=select}}
+			</div>
+		</div>
 	{{/if}}
 </template>
