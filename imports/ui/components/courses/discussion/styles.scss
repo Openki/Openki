@@ -9,8 +9,8 @@
 	padding-top: 0;
 }
 
-.course-page-btn + .discussion-conversation {
-	margin-top: $course-details-seperator-height;
+.page-component-btn + .discussion-conversation {
+	margin-top: $page-component-seperator-height;
 }
 
 $discussion-thumb-width: 50;
@@ -155,33 +155,11 @@ $discussion-edit-bg: lighten($gray-400, 10%);
 }
 
 .discussion-post-new {
-	margin-top: $course-details-seperator-height;
+	margin-top: $page-component-seperator-height;
 	padding: 15px ($grid-gutter-width / 2);
 	width: 100%;
 }
 
 .discussion-post-new + .discussion-conversation {
 	padding-top: 0;
-}
-
-// ** Component header
-//========================================================================================
-.course-page-component-header {
-	background: $blue;
-	color: $white;
-	padding: 15px;
-}
-
-.course-page-component-header > h4 {
-	font-weight: bold;
-	margin: 0;
-}
-
-// ** Component buttons
-//========================================================================================
-.course-page-btn {
-	margin-top: $course-details-seperator-height;
-	padding: 10px 12px;
-	text-align: start;
-	width: 100%;
 }
