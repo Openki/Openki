@@ -110,7 +110,7 @@ export function EventRegistration(props: { event: EventModel }) {
 			{isFuture() ? (
 				<>
 					<div className="page-component">
-						<div className="event-page-component-header">
+						<div className="page-component-header">
 							<h4>{t('event.details.registration', 'Registration')}</h4>
 						</div>
 					</div>
