@@ -13,7 +13,6 @@ import { Regions } from '/imports/api/regions/regions';
 
 import { PleaseLogin } from '/imports/ui/components/please-login';
 import { EventParticipants } from '/imports/ui/components/events/participants';
-import { Report } from '/imports/ui/components/report';
 import { RegisterPanel } from './register-panel';
 import { UnregisterPanel } from './unregister-panel';
 
@@ -157,9 +156,6 @@ export function EventRegistration(props: { event: EventModel }) {
 
 			<div className="page-component">
 				<EventParticipants event={event} />
-			</div>
-			<div className="page-component">
-				<Report />
 			</div>
 		</>
 	);
