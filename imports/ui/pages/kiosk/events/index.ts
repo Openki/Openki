@@ -40,13 +40,13 @@ import './styles.scss';
 			}
 			return '';
 		},
-		groupShort(groupId: string) {
+		groupName(groupId: string) {
 			const instance = Template.instance();
 			instance.subscribe('group', groupId);
 
 			const group = Groups.findOne({ _id: groupId });
 			if (group) {
-				return group.short;
+				return group.name;
 			}
 			return '';
 		},
