@@ -28,6 +28,7 @@ import { ServerMethod } from '/imports/utils/ServerMethod';
 import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
 import { GroupPromoters } from '/imports/utils/update-methods';
 import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { PublicSettings } from '/imports/utils/PublicSettings';
 
 /**
  * @param updateOptions What should be updated
@@ -117,6 +118,7 @@ export const UpdateFieldsPattern = {
 	startLocal: Match.Optional(String),
 	endLocal: Match.Optional(String),
 	internal: Match.Optional(Boolean),
+	sendReminder: Match.Optional(Boolean),
 	maxParticipants: Match.Optional(Match.Integer),
 };
 export type UpdateFields = Type<typeof UpdateFieldsPattern>;
@@ -215,6 +217,9 @@ export const save = ServerMethod(
 			}
 
 			editFields.internal = !!editFields.internal;
+			editFields.sendReminder = PublicSettings.feature.sendReminderIsEditable
+				? !!editFields.sendReminder
+				: PublicSettings.sendReminderPreset;
 
 			// Synthesize event document because the code below relies on it
 			event = _.extend(new OEvent(), {

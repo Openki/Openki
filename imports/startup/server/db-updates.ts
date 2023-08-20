@@ -16,6 +16,9 @@ import { update as update20210421EnsureCourseArchivedField } from './updates/202
 import { update as update20210513ensureTenantAdminsField } from './updates/2021.05.13 ensureTenantAdminsField';
 import { update as update20220621EnrichEventCourseImage } from './updates/2022.06.21 enrichEventCourseImage';
 import { update as update20230506extendEventParticipants } from './updates/2023.05.06 extendEventParticipants';
+import { update as update20230802ensureEventSendReminderField } from './updates/2023.08.02 ensureEventSendReminderField';
+
+import { runBackgroundTasks } from '/imports/utils/background-tasks';
 
 const UpdatesAvailable: { [name: string]: () => number } = {
 	'2020.12.16 mergeUserLocale': update20201216MergeUserLocale,
@@ -30,6 +33,7 @@ const UpdatesAvailable: { [name: string]: () => number } = {
 	'2021.05.13 ensureTenantAdminsField': update20210513ensureTenantAdminsField,
 	'2022.06.21 enrichEventCourseImage': update20220621EnrichEventCourseImage,
 	'2023.05.06 extendEventParticipants': update20230506extendEventParticipants,
+	'2023.08.02 ensureEventSendReminderField': update20230802ensureEventSendReminderField,
 };
 
 interface UpdatesAppliedEntity {
@@ -41,29 +45,30 @@ interface UpdatesAppliedEntity {
 
 const UpdatesApplied = new Mongo.Collection<UpdatesAppliedEntity>('UpdatesApplied');
 
-Meteor.startup(() => {
-	const skipInitial = UpdatesApplied.find().count() === 0;
+if (runBackgroundTasks)
+	Meteor.startup(() => {
+		const skipInitial = UpdatesApplied.find().count() === 0;
 
-	Object.entries(UpdatesAvailable).forEach(([name, updateAvailable]) => {
-		if (UpdatesApplied.find({ name }).count() === 0) {
-			const entry: UpdatesAppliedEntity = {
-				name,
-				affected: 0,
-				run: new Date(),
-			};
+		Object.entries(UpdatesAvailable).forEach(([name, updateAvailable]) => {
+			if (UpdatesApplied.find({ name }).count() === 0) {
+				const entry: UpdatesAppliedEntity = {
+					name,
+					affected: 0,
+					run: new Date(),
+				};
 
-			if (skipInitial) {
-				/* eslint-disable-next-line no-console */
-				console.log(`Skipping update ${name}`);
-			} else {
-				/* eslint-disable-next-line no-console */
-				console.log(`Applying update ${name}`);
-				entry.affected = updateAvailable();
-				entry.applied = new Date();
-				/* eslint-disable-next-line no-console */
-				console.log(`${name}: ${entry.affected} affected documents`);
+				if (skipInitial) {
+					/* eslint-disable-next-line no-console */
+					console.log(`Skipping update ${name}`);
+				} else {
+					/* eslint-disable-next-line no-console */
+					console.log(`Applying update ${name}`);
+					entry.affected = updateAvailable();
+					entry.applied = new Date();
+					/* eslint-disable-next-line no-console */
+					console.log(`${name}: ${entry.affected} affected documents`);
+				}
+				UpdatesApplied.insert(entry);
 			}
-			UpdatesApplied.insert(entry);
-		}
+		});
 	});
-});

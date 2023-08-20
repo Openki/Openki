@@ -34,6 +34,7 @@ import * as Invitations from '/imports/api/invitations/publications';
 import * as JoinLinks from '/imports/api/joinLinks/publications';
 import * as Users from '/imports/api/users/publications';
 
+import { PublicSettings } from '/imports/utils/PublicSettings';
 import { Filtering } from '/imports/utils/filtering';
 import { LocalTime } from '/imports/utils/local-time';
 import { reactiveNow } from '/imports/utils/reactive-now';
@@ -191,7 +192,9 @@ RouterAsync.route('frameCourselist', {
 			['linkcolor', 'color', '.frame-list-item a'],
 			['regionbg', 'background-color', '.frame-list-item-region'],
 			['regioncolor', 'color', '.frame-list-item-region'],
+			['itemfontweight', 'font-weight', '.frame-list-item-header'],
 		]).getCssRules();
+
 		const hideInterested = Number.parseInt(this.params.query.hideInterested || '', 10) || 0;
 		return { cssRules, hideInterested };
 	},
@@ -541,6 +544,7 @@ RouterAsync.route('createEvent', {
 			new: true,
 			startLocal: LocalTime.toString(propose),
 			endLocal: LocalTime.toString(moment(propose).add(2, 'hour')),
+			sendReminder: PublicSettings.sendReminderPreset,
 		}) as EventModel & { new?: boolean; startLocal?: string; endLocal?: string };
 		const course = subs?.course?.();
 		if (course) {

@@ -24,6 +24,7 @@ $shadow-sm-blur:                                 4px;
 
 // ** Detail pages
 //========================================================================================
+$page-component-seperator-height:                3px;
 $details-header-padding-horizontal:              15px;
 
 // ** Events
@@ -55,7 +56,6 @@ $course-compact-next-event-bg:                   $green;
 $course-compact-next-event-color:                $gray-800;
 
 $course-page-component-bg:                       $blue-lighter;
-$course-details-seperator-height:                3px;
 
 $course-member-comment-border-color:             shade-color($blue-lighter, 40%);
 
@@ -75,8 +75,8 @@ $region-color:                                    $red-darkest;
 
 // ** Venue
 //========================================================================================
-$venue-bg:                                       desaturate($green, 40%);
-$venue-color:                                    $red-darkest;
+$venue-bg:                                       #c9dfc19e;
+$venue-color:                                    #4a4a4a;
 
 // ** User
 //========================================================================================

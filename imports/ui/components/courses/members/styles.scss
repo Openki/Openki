@@ -1,7 +1,7 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
 .course-members {
-	margin-top: $course-details-seperator-height;
+	margin-top: $page-component-seperator-height;
 }
 
 .contact-members {
@@ -22,7 +22,7 @@
 }
 
 .course-member + .course-member {
-	margin-top: $course-details-seperator-height;
+	margin-top: $page-component-seperator-height;
 }
 
 .course-member > .profilelink {

@@ -13,7 +13,6 @@ import { Regions } from '/imports/api/regions/regions';
 
 import { PleaseLogin } from '/imports/ui/components/please-login';
 import { EventParticipants } from '/imports/ui/components/events/participants';
-import { Report } from '/imports/ui/components/report';
 import { RegisterPanel } from './register-panel';
 import { UnregisterPanel } from './unregister-panel';
 
@@ -65,6 +64,24 @@ export function EventRegistration(props: { event: EventModel }) {
 		}
 	}
 
+	async function removeParticipant() {
+		setIsBusy('unregistering');
+
+		try {
+			await EventsMethods.removeParticipant(event._id);
+
+			Analytics.trackEvent(
+				'Unsubscribes RSVPs',
+				'Unsubscribes RSVPs as participant',
+				Regions.findOne(event.region)?.nameEn,
+			);
+		} catch (err) {
+			Alert.serverError(err, 'could not remove participant');
+		} finally {
+			setIsBusy('');
+		}
+	}
+
 	function isFuture() {
 		return moment().isBefore(event.end);
 	}
@@ -80,10 +97,19 @@ export function EventRegistration(props: { event: EventModel }) {
 					}}
 				/>
 			) : null}
+			{Router.current().params.query.action === 'unregister' ? (
+				<PleaseLogin
+					type="auto"
+					onRender={() => {
+						// unregister from email
+						removeParticipant();
+					}}
+				/>
+			) : null}
 			{isFuture() ? (
 				<>
 					<div className="page-component">
-						<div className="event-page-component-header">
+						<div className="page-component-header">
 							<h4>{t('event.details.registration', 'Registration')}</h4>
 						</div>
 					</div>
@@ -120,21 +146,7 @@ export function EventRegistration(props: { event: EventModel }) {
 								busy={isBusy === 'unregistering'}
 								event={event}
 								onUnregister={async () => {
-									setIsBusy('unregistering');
-
-									try {
-										await EventsMethods.removeParticipant(event._id);
-
-										Analytics.trackEvent(
-											'Unsubscribes RSVPs',
-											'Unsubscribes RSVPs as participant',
-											Regions.findOne(event.region)?.nameEn,
-										);
-									} catch (err) {
-										Alert.serverError(err, 'could not remove participant');
-									} finally {
-										setIsBusy('');
-									}
+									await removeParticipant();
 								}}
 							/>
 						)}
@@ -144,9 +156,6 @@ export function EventRegistration(props: { event: EventModel }) {
 
 			<div className="page-component">
 				<EventParticipants event={event} />
-			</div>
-			<div className="page-component">
-				<Report />
 			</div>
 		</>
 	);

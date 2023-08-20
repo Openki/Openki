@@ -1,6 +1,6 @@
+import fs from 'fs';
 import { Meteor } from 'meteor/meteor';
 import { Email } from 'meteor/email';
-import fs from 'fs';
 
 if (Meteor.isDevelopment) {
 	Email.customTransport = () => {

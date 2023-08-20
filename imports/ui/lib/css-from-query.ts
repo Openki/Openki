@@ -13,6 +13,7 @@ export class CssFromQuery {
 			['bgcolor', 'background-color', 'body'],
 			['color', 'color', 'body, i'],
 			['fontsize', 'font-size', '*'],
+			['fontweight', 'font-weight', 'p'],
 		]);
 
 		this.addCustomizableProperties(properties);
@@ -40,6 +41,11 @@ export class CssFromQuery {
 				if (property.name.includes('color')) {
 					if (queryValue.match(/^[0-9A-F]+$/i)) {
 						cssValue = `#${queryValue.substring(0, 8)}`;
+					}
+				} else if (property.name.includes('font-weight')) {
+					const intVal = Number.parseInt(queryValue, 10);
+					if (!Number.isNaN(intVal)) {
+						cssValue = `${Math.max(0, Math.min(1000, intVal))}`;
 					}
 				} else {
 					const intVal = Number.parseInt(queryValue, 10);
