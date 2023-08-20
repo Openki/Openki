@@ -30,10 +30,26 @@
 					{{> eventDisplay}}
 				{{/if}}
 			</div>
+			{{#unless mobileViewport}}
+				{{#unless editing}}
+					{{#if course.singleEvent}}
+						{{> discussion courseId=course._id select=select}}
+					{{/if}}
+				{{/unless}}
+			{{/unless}}
 		</div>
 		{{#unless editing}}
 			<div class="col-lg-4">
 				{{> eventRegistration event=this}}
+				{{#if mobileViewport}}
+					{{#if course.singleEvent}}
+						{{> discussion courseId=course._id select=select}}
+					{{/if}}
+				{{/if}}
+				{{! style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react. }}
+				<div class="page-component" style="margin-top: 15px;">
+					{{> report}}
+				</div>
 			</div>
 		{{/unless}}
 	</div>

@@ -10,19 +10,6 @@ $header-bg: darken($blue-lighter, 5%);
 	);
 }
 
-.event-page-component-header {
-	$background-color: $blue;
-
-	background: $background-color;
-	color: $white;
-	padding: 15px;
-}
-
-.event-page-component-header > h4 {
-	font-weight: bold;
-	margin: 0;
-}
-
 .event.course-event {
 	border-color: $header-bg;
 	border-style: solid;

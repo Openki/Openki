@@ -1,6 +1,7 @@
-<template name="discussion">
-	<div class="page-component discussion" id="discussion">
-		<div class="course-page-component-header">
+<template name="discussion">				
+	{{! style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react. }}
+	<div class="page-component discussion" id="discussion" style="margin-top: 15px;">
+		<div class="page-component-header">
 			<h4>
 				<span class="fa-solid fa-comments fa-fw" aria-hidden="true"></span>&nbsp;
 				{{i18n 'course.title.Discussion' 'Discussion'}}
@@ -14,7 +15,8 @@
 				</div>
 			{{/each}}
 			{{#if limited}}
-				<button class="btn btn-lg btn-add course-page-btn js-show-all-posts" type="button">
+				<button class="btn btn-add page-component-btn js-show-all-posts"
+						type="button">
 					<i class="fa-solid fa-chevron-down fa-fw" aria-hidden="true"></i>
 					{{i18n 'course.discussions.showAllComment' 'Show all {NUM} comments' NUM=count}}
 				</button>
@@ -61,7 +63,7 @@
 				</button>
 			</div>
 		{{else}}
-			<button type="button" class="btn btn-lg btn-add course-page-btn js-discussion-edit"
+			<button type="button" class="btn btn-add page-component-btn js-discussion-edit"
 					{{disabledIfBusy}}>
 				{{#if busy 'saving'}}
 					<span class="fa-solid fa-circle-notch fa-spin fa-fw"
@@ -86,7 +88,7 @@
 						</span>
 						{{#if notifyAll}}
 							<i class="fa-solid fa-bell" aria-hidden="true" data-bs-toggle="tooltip"
-							   data-bs-title="{{i18n 'course.discussion.allNotified' 'All interested notifed' attr=true}}"></i>
+							   data-bs-title="{{i18n 'course.discussion.allNotified' 'All interested notified' attr=true}}"></i>
 						{{/if}}
 						{{#if hasBeenEdited}}
 							-

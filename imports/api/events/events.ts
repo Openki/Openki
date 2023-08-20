@@ -70,6 +70,8 @@ export interface EventEntity {
 	courseId?: string;
 	/** (Events are only displayed when group or venue-filter is active) */
 	internal: boolean;
+	/** Send a reminder to all attendees of an event just before the event starts */
+	sendReminder: boolean;
 	/** Shows the event as canceled. */
 	canceled?: boolean;
 	/** list of group._id that promote this event ("promote groups"). */

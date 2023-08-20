@@ -277,6 +277,16 @@
 									  placeholder="{{i18n 'event.edit.additionalMessage' 'If you feel good about doing so, describe what members of the course should know. (This message is only sent to the interested users and will not be visible in the event description afterwards.)' attr=true}}"></textarea>
 						</div>
 					{{/if}}
+					{{#if PublicSettings.feature.sendReminderIsEditable}}
+						<div class="form-check">
+							<input class="form-check-input js-check-event-send-reminder"
+								   type="checkbox" value="" id="eventEditSendReminderCheck"
+								   {{sendReminder}}>
+							<label class="form-check-label" for="eventEditSendReminderCheck">
+								{{i18n 'event.edit.sendReminder' 'Send a reminder e-mail to all participants 24 hours before the event starts.'}}
+							</label>
+						</div>
+					{{/if}}
 				</div>
 
 				<div class="form-actions">

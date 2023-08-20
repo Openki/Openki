@@ -98,7 +98,7 @@ import './styles.scss';
 
 	template.events({
 		'click .js-contact-members'() {
-			$('.course-page-btn.js-discussion-edit').trigger('notifyAll');
+			$('.page-component-btn.js-discussion-edit').trigger('notifyAll');
 		},
 
 		'click .js-show-more-members'(_e, instance) {

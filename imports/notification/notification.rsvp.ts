@@ -66,7 +66,7 @@ export function Model(entry: { body: Body }) {
 			}
 		},
 
-		vars(userLocale: string, actualRecipient: UserModel, unsubToken: string) {
+		vars(userLocale: string, _actualRecipient: UserModel, unsubToken: string) {
 			if (!newParticipant) {
 				throw new Error('New participant does not exist (0.o)');
 			}
@@ -108,7 +108,6 @@ export function Model(entry: { body: Body }) {
 			const emailLogo = region.custom?.emailLogo;
 
 			return {
-				username: actualRecipient.getDisplayName(),
 				companions: body.companions,
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
 				event,
