@@ -475,7 +475,7 @@
 	"groupSettings.memberAdded": "\"{MEMBER}\" wurde zum Austragungsort \"{GROUP}\" hinzugefügt",
 	"groupSettings.memberRemoved": "\"{MEMBER}\" wurde von \"{GROUP}\" entfernt",
 	"grouplist.addgroups.header": "Füge eine Austragungsort hinzu",
-	"grouplist.editgroup.header": "Entferne Austragungsort",
+	"grouplist.editgroup.header": "Austragungsort bearbeiten",
 	"grouplist.organizer.title": "Die Lektion wird von diesem Austragungsort mitorganisiert",
 	"introduction.1_teachOrLearn": "Du willst etwas lernen, oder anderen etwas beibringen.",
 	"introduction.2_searchNPropose": "Du suchst, ob es das Thema schon gibt. Wenn nicht, schlage es einfach vor.",
