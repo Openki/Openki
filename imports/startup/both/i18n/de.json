@@ -545,7 +545,7 @@
 	"joinPage.newUser": "{TENANT} beitreten",
 	"joinPage.no": "Nein, Danke",
 	"joinPage.show.siteTitle": "{TENANT} beitreten",
-	"joinPage.text": "Werde Teil der Organisation {TENANT} und schlage, diskutiere, entwickle, organisiere und veröffentliche Kurse mit {INVITER} und anderen netten Menschen in der Organisation {TENANT} vor.",
+	"joinPage.text": "Werde Teil der Organisation {TENANT} und schlage, diskutiere, entwickle, organisiere und veröffentliche Kurse mit {INVITER} und anderen netten Menschen in der Organisation {TENANT}.",
 	"joinPage.welcome": "Willkommen bei {SITENAME}!",
 	"kiosk.future": "Zukünftige Veranstaltungen:",
 	"kiosk.noFutureEvents": "Es gibt keine zukünftigen Veranstaltungen",
