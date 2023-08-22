@@ -24,7 +24,7 @@
 	"adminPanel.backToDashboard": "Zurück zur Übersicht",
 	"adminPanel.heading": "Admin-Bereich",
 	"adminPanel.pleaseLogin": "Nur für Administrator_innen",
-	"adminPanel.tasks.featuredGroup": "Gruppe \"featured\" kennzeichnen",
+	"adminPanel.tasks.featuredGroup": "Gruppe als \"featured\" kennzeichnen",
 	"adminPanel.tasks.log": "Log anzeigen",
 	"adminPanel.tasks.stats": "Statistiken",
 	"adminPanel.tasks.tenants": "Organisationen",
