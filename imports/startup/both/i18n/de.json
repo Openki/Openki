@@ -243,7 +243,7 @@
 	"course.roles.messageInfoMentor": "ein (optionaler) Text mit Informationen zu deiner Erfahrung mit dem Thema",
 	"course.roles.messageInfoParticipant": "ein (optionaler) Text mit z. B. Wünschen, Grüßen oder Interessen",
 	"course.roles.removeTeam": "Aus dem Team ausschliessen",
-	"course.roles.retract": "Nicht mehr",
+	"course.roles.retract": "Zurückziehen",
 	"course.roles.unsubscribed": "Bei {NAME} abgemeldet",
 	"course.save.error": "Konnte nicht gespeichert werden",
 	"course.subnav.descr": "Beschreibung",
