@@ -15,6 +15,7 @@ import { getSiteName } from '/imports/utils/getSiteName';
 
 import '/imports/ui/components/regions/selection';
 import '/imports/ui/components/language-selection';
+import './test-warning-ticker';
 
 import './template.html';
 import './styles.scss';
