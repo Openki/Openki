@@ -111,37 +111,3 @@
 		{{/if}}
 	{{/if}}
 </template>
-
-<template name='userFrame'>
-	<div class="user-frame">
-		{{> ownUserFrame}}
-	</div>
-</template>
-
-<template name="ownUserFrame">
-	<div class="ownuser-frame">
-		<div class="mb-3 ownuser-frame-welcome">
-			{{i18n 'login.frame.welcome' 'Welcome {NAME}.' NAME=currentUser.getDisplayName}}
-		</div>
-		<div class="mb-3">
-			<a class="btn btn-secondary form-control"
-			   href="{{pathFor 'userprofile' _id=currentUser._id}}">
-				<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
-				{{i18n 'login.frame.profile' 'Public profile'}}
-			</a>
-		</div>
-		<div class="mb-3">
-			<a class="btn btn-secondary form-control" href="{{pathFor 'profile'}}">
-				<span class="fa-solid fa-gears fa-fw" aria-hidden="true"></span>
-				{{i18n 'login.frame.settings' 'Account settings'}}
-			</a>
-		</div>
-		<div class="mb-3">
-			<button type="button" class="btn btn-secondary js-logout form-control">
-				<span class="fa-solid fa-right-from-bracket fa-fw" aria-hidden="true"></span>
-				{{i18n 'login.logout' 'Log out'}}
-			</button>
-		</div>
-	</div>
-</template>
-
