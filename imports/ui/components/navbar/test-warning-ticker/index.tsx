@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Template } from 'meteor/templating';
 
 export function TestWarningTicker() {
 	const { t } = useTranslation();
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignore
-	return (
+
+	return (<>
+		{/* @ts-ignore */}
 		<marquee
 			bgcolor="#000"
 			direction="left"
@@ -18,9 +19,9 @@ export function TestWarningTicker() {
 			<span style={{ paddingLeft: '10em' }}> </span>☠ &nbsp;{' '}
 			{t('menue.Testpage2', 'All data will be erased regularly.')} &nbsp; ☠
 			<span style={{ paddingLeft: '10em' }}> </span>
-			{/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
 			{/* @ts-ignore */}
 		</marquee>
+	</>
 	);
 }
 
