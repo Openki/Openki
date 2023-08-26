@@ -17,9 +17,9 @@ import './styles.scss';
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'languageSelectionWrap',
-		Record<string, unknown>,
+		{ inNavbar?: boolean },
 		{
-			searchingLanguages: ReactiveVar<false>;
+			searchingLanguages: ReactiveVar<boolean>;
 		}
 	>;
 
@@ -32,6 +32,17 @@ import './styles.scss';
 	});
 
 	template.helpers({
+		languageDisplayAttr() {
+			const instance = Template.instance();
+			return {
+				inNavbar: instance.data.inNavbar,
+				onClick: () => {
+					instance.searchingLanguages.set(true);
+				}
+
+			};
+		},
+
 		searchingLanguages() {
 			return Template.instance().searchingLanguages.get();
 		},
@@ -39,19 +50,19 @@ import './styles.scss';
 }
 
 {
-	const Template = TemplateAny as TemplateStaticTyped<'languageDisplay'>;
+	const Template = TemplateAny as TemplateStaticTyped<'languageDisplay', { inNavbar: boolean, onClick: () => void }>;
 
 	const template = Template.languageDisplay;
 
 	template.helpers({
 		inNavbarClasses() {
-			if (this.inNavbar) {
+			if (Template.instance().data.inNavbar) {
 				return 'nav-item text-center col col-lg-auto';
 			}
 			return '';
 		},
 		inNavbarClassesLink() {
-			if (this.inNavbar) {
+			if (Template.instance().data.inNavbar) {
 				return 'text-white';
 			}
 			return '';
@@ -63,7 +74,7 @@ import './styles.scss';
 
 	template.events({
 		'click .js-language-display'(_event, instance) {
-			(instance.parentInstance() as any).searchingLanguages.set(true);
+			instance.data.onClick();
 		},
 	});
 }
