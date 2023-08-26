@@ -16,27 +16,18 @@ import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'languageSelection',
-	Record<string, unknown>,
+	{ onClose: () => void },
 	{
 		searchHasFocus: boolean;
 		languageSearch: ReactiveVar<string>;
-		close: () => void;
 	}
 >;
 
 const template = Template.languageSelection;
 
 template.onCreated(function () {
+	const instance = this;
 	this.languageSearch = new ReactiveVar('');
-
-	// create a function to toggle displaying the regionSelection
-	// only if it is placed inside a wrap
-	this.close = () => {
-		const searchingLanguages = (this.parentInstance() as any).searchingLanguages;
-		if (searchingLanguages.get()) {
-			searchingLanguages.set(false);
-		}
-	};
 });
 
 template.onRendered(function () {
@@ -45,7 +36,7 @@ template.onRendered(function () {
 	instance.$('.js-language-search').trigger('select');
 
 	instance.$('.dropdown').on('hide.bs.dropdown', () => {
-		(instance.parentInstance() as any).searchingLanguages.set(false);
+		instance.data.onClose();
 	});
 });
 
@@ -127,7 +118,7 @@ template.events({
 		// The db user update happens in the /imports/startup/client/locale.ts in Tracker.autorun(() => { ...
 		Session.set('locale', lg);
 
-		(instance.parentInstance() as any).searchingLanguages.set(false);
+		instance.data.onClose();
 	},
 	'keyup .js-language-search'(_event, instance) {
 		// eslint-disable-next-line no-param-reassign
@@ -159,7 +150,7 @@ template.events({
 
 	'hide.bs.dropdown'(_event, instance) {
 		if (!instance.searchHasFocus) {
-			instance.close();
+			instance.data.onClose();
 			return true;
 		}
 
