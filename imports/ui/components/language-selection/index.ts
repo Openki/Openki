@@ -24,6 +24,18 @@ template.onCreated(function () {
 });
 
 template.helpers({
+	languageSelectionAttr() {
+		const instance = Template.instance();
+		return {
+			inNavbar: instance.data.inNavbar,
+			onClose: () => {
+				const searchingLanguages = instance.searchingLanguages;
+				if (searchingLanguages.get()) {
+					searchingLanguages.set(false);
+				}
+			},
+		};
+	},
 	languageDisplayAttr() {
 		const instance = Template.instance();
 		return {
