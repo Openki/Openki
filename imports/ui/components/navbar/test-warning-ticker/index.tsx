@@ -6,22 +6,23 @@ import { Template } from 'meteor/templating';
 export function TestWarningTicker() {
 	const { t } = useTranslation();
 
-	return (<>
-		{/* @ts-ignore */}
-		<marquee
-			bgcolor="#000"
-			direction="left"
-			scrollamount="5"
-			scrolldelay="1"
-			style={{ color: 'white', position: 'absolute', top: '50px' }}
-		>
-			⚠ &nbsp; {t('menue.Testpage', 'This is only a testpage.')} &nbsp; ⚠
-			<span style={{ paddingLeft: '10em' }}> </span>☠ &nbsp;{' '}
-			{t('menue.Testpage2', 'All data will be erased regularly.')} &nbsp; ☠
-			<span style={{ paddingLeft: '10em' }}> </span>
+	return (
+		<>
 			{/* @ts-ignore */}
-		</marquee>
-	</>
+			<marquee
+				bgcolor="#000"
+				direction="left"
+				scrollamount="5"
+				scrolldelay="1"
+				style={{ color: 'white', position: 'absolute', top: '50px' }}
+			>
+				⚠ &nbsp; {t('menue.Testpage', 'This is only a testpage.')} &nbsp; ⚠
+				<span style={{ paddingLeft: '10em' }}> </span>☠ &nbsp;{' '}
+				{t('menue.Testpage2', 'All data will be erased regularly.')} &nbsp; ☠
+				<span style={{ paddingLeft: '10em' }}> </span>
+				{/* @ts-ignore */}
+			</marquee>
+		</>
 	);
 }
 
