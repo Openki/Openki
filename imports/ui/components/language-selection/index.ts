@@ -4,12 +4,14 @@ import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating'
 import { _ } from 'meteor/underscore';
 import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 
-import { LanguageEntity, LanguagesRaw, Languages } from '/imports/api/languages/languages';
+import { LanguageEntity, Languages } from '/imports/api/languages/languages';
 
 import { PublicSettings } from '/imports/utils/PublicSettings';
 import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import * as StringTools from '/imports/utils/string-tools';
 import { MeteorAsync } from '/imports/utils/promisify';
+
+import "./language-display"
 
 import './template.html';
 import './styles.scss';
@@ -48,38 +50,6 @@ import './styles.scss';
 	});
 }
 
-{
-	const Template = TemplateAny as TemplateStaticTyped<
-		'languageDisplay',
-		{ inNavbar: boolean; onClick: () => void }
-	>;
-
-	const template = Template.languageDisplay;
-
-	template.helpers({
-		inNavbarClasses() {
-			if (Template.instance().data.inNavbar) {
-				return 'nav-item text-center col col-lg-auto';
-			}
-			return '';
-		},
-		inNavbarClassesLink() {
-			if (Template.instance().data.inNavbar) {
-				return 'text-white';
-			}
-			return '';
-		},
-		setLanguage() {
-			return LanguagesRaw[Session.get('locale')];
-		},
-	});
-
-	template.events({
-		'click .js-language-display'(_event, instance) {
-			instance.data.onClick();
-		},
-	});
-}
 {
 	const Template = TemplateAny as TemplateStaticTyped<
 		'languageSelection',
