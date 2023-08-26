@@ -3,17 +3,26 @@ import { useTranslation } from 'react-i18next';
 import { Template } from 'meteor/templating';
 
 export function TestWarningTicker() {
-    const { t } = useTranslation();
-    // @ts-ignore
-    return <marquee bgcolor="#000" direction="left" scrollamount="5" scrolldelay="1" style={{ color: "white", position: "absolute", top: "50px" }}>
-        ⚠ &nbsp; {t('menue.Testpage', 'This is only a testpage.')} &nbsp; ⚠
-        <span style={{ paddingLeft: "10em" }}> </span>
-        ☠ &nbsp; {t('menue.Testpage2', 'All data will be erased regularly.')} &nbsp; ☠
-        <span style={{ paddingLeft: "10em" }}> </span>
-        {/* @ts-ignore */}
-    </marquee>
+	const { t } = useTranslation();
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	return (
+		<marquee
+			bgcolor="#000"
+			direction="left"
+			scrollamount="5"
+			scrolldelay="1"
+			style={{ color: 'white', position: 'absolute', top: '50px' }}
+		>
+			⚠ &nbsp; {t('menue.Testpage', 'This is only a testpage.')} &nbsp; ⚠
+			<span style={{ paddingLeft: '10em' }}> </span>☠ &nbsp;{' '}
+			{t('menue.Testpage2', 'All data will be erased regularly.')} &nbsp; ☠
+			<span style={{ paddingLeft: '10em' }}> </span>
+			{/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+			{/* @ts-ignore */}
+		</marquee>
+	);
 }
-
 
 // for Blaze
 // eslint-disable-next-line import/first
