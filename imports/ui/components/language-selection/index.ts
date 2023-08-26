@@ -38,8 +38,7 @@ import './styles.scss';
 				inNavbar: instance.data.inNavbar,
 				onClick: () => {
 					instance.searchingLanguages.set(true);
-				}
-
+				},
 			};
 		},
 
@@ -50,7 +49,10 @@ import './styles.scss';
 }
 
 {
-	const Template = TemplateAny as TemplateStaticTyped<'languageDisplay', { inNavbar: boolean, onClick: () => void }>;
+	const Template = TemplateAny as TemplateStaticTyped<
+		'languageDisplay',
+		{ inNavbar: boolean; onClick: () => void }
+	>;
 
 	const template = Template.languageDisplay;
 
