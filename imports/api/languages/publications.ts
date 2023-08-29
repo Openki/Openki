@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import { Match, check } from 'meteor/check';
 import { Mongo } from 'meteor/mongo';
 
@@ -11,31 +10,37 @@ const weblateMapping = { de_ZH: 'de-ZH', nb_NO: 'nb' } as { [weblateCode: string
 
 const languages = { ...LanguagesRaw };
 
-/** Enrich Languages with stats from weblate */
-(async function enrichLanguages() {
-	try {
-		// See: https://docs.weblate.org/en/latest/api.html#exports
-		const response = await fetch(
-			'https://hosted.weblate.org/exports/stats/openki/openki/?format=json',
-		);
-		const stats = (await response.json()) as {
-			code: string;
-			translated_percent: number;
-		}[];
+if (Meteor.isServer) {
+	// eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+	const fetch = require('node-fetch').default;
 
-		Object.entries(languages).forEach(([code, value]) => {
-			const translatedPercent = stats.filter((s) => (weblateMapping[s.code] || s.code) === code)[0]
-				?.translated_percent;
+	/** Enrich Languages with stats from weblate */
+	(async function enrichLanguages() {
+		try {
+			// See: https://docs.weblate.org/en/latest/api.html#exports
+			const response = await fetch(
+				'https://hosted.weblate.org/exports/stats/openki/openki/?format=json',
+			);
+			const stats = (await response.json()) as {
+				code: string;
+				translated_percent: number;
+			}[];
 
-			if (translatedPercent) {
-				// eslint-disable-next-line no-param-reassign
-				value.translatedPercent = Math.round(translatedPercent);
-			}
-		});
-	} catch {
-		// ignore it
-	}
-})();
+			Object.entries(languages).forEach(([code, value]) => {
+				const translatedPercent = stats.filter(
+					(s) => (weblateMapping[s.code] || s.code) === code,
+				)[0]?.translated_percent;
+
+				if (translatedPercent) {
+					// eslint-disable-next-line no-param-reassign
+					value.translatedPercent = Math.round(translatedPercent);
+				}
+			});
+		} catch {
+			// ignore it
+		}
+	})();
+}
 
 export const FindFilterPattern = {
 	code: Match.Maybe(String),
