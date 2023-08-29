@@ -1,6 +1,5 @@
 import { Session } from 'meteor/session';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
 
 import { LanguagesRaw } from '/imports/api/languages/languages';
 
