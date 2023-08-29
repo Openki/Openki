@@ -26,7 +26,6 @@ const Template = TemplateAny as TemplateStaticTyped<
 const template = Template.languageSelection;
 
 template.onCreated(function () {
-	const instance = this;
 	this.languageSearch = new ReactiveVar('');
 });
 
@@ -49,7 +48,7 @@ template.helpers({
 	},
 
 	setLanguage() {
-		return Languages.find(Session.get('locale'));
+		return Languages.find(Session.get('locale')).fetch()[0];
 	},
 
 	languages() {
