@@ -21,7 +21,7 @@ export function EventNotFound() {
 	}
 	return (
 		<div className="event-notfound-text px-3">
-			<h3>{t('user.not.logged_in', 'Could not find this event. Maybe you must log in!')}</h3>
+			<h3>{t('user.not.logged_in', 'Could not find this event. Maybe you must log in?')}</h3>
 			<button
 				className="btn btn-save"
 				onClick={() => {
