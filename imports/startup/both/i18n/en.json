@@ -948,7 +948,7 @@
   "update.username.failed": "Could not update username.",
   "user.acceptsPrivateMessages.false": "User does not accept private messages from users",
   "user.hasContributed": "{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.",
-  "user.not.logged_in": "Could not find this event. Maybe you must log in!",
+  "user.not.logged_in": "Could not find this event. Maybe you must log in?",
   "user.visitor": "Visitor",
   "userprofile.groups.header": "Edit groups",
   "userprofile.infoForUnverifiedMail": "Verify your e-mail address to receive a copy or to attach it to the message.",
