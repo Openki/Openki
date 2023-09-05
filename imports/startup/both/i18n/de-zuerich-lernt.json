@@ -572,7 +572,7 @@
 	"login.frame.settings": "Profileinstellungen",
 	"login.frame.visitor.mailDisclaimer": "Durch die Angabe einer E-Mail-Adresse können Benutzer_innen dich benachrichtigen, z.B. über neue Ereignisse.",
 	"login.frame.welcome": "Hallo {NAME}.",
-	"login.login.submit": "Anmelden (mit bestehendem User)",
+	"login.login.submit": "Einloggen",
 	"login.login.submit.busy": "Anmelden…",
 	"login.login.title": "Einloggen",
 	"login.logout": "Abmelden",
