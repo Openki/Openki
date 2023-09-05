@@ -9,24 +9,6 @@
 	}
 }
 
-.user-frame {
-	@include media-breakpoint-down(md) {
-		@include clearfix;
-		background-color: $dropdown-bg;
-		padding-top: 15px;
-	}
-}
-
-.ownuser-frame {
-	padding: 0 ($grid-gutter-width / 2);
-}
-
-.ownuser-frame-welcome {
-	font-size: $h3-font-size;
-	margin-top: 10px;
-	text-align: center;
-}
-
 .login {
 	padding-top: 10px;
 }
@@ -48,5 +30,5 @@
 
 .forgot-pwd-mail-info {
 	display: inline-block;
-	margin-top: -10px;
+	margin-top: -25px;
 }
