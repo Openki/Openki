@@ -44,3 +44,11 @@ li + .dialog-dropdown-btn,
 .dialog-dropdown-btn > .btn {
 	width: 100%;
 }
+
+/* 
+  backwards compatibility: a Blaze component to a React component for. 
+  Can be removed after complet migration.
+*/
+.dialog-dropdown-btn > div:not([class]) > .btn {
+	width: 100%;
+}

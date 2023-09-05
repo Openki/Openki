@@ -37,11 +37,12 @@ import './styles.scss';
 	const template = Template.eventGroupList;
 
 	template.helpers({
-		isOrganizer(this: EventModel) {
+		isOrganizer(this: string) {
+			const groupId = String(this);
 			const { editors } = Template.instance().data;
-			return editors?.includes(this._id);
+			return editors?.includes(groupId);
 		},
-		tools() {
+		tools(this: string) {
 			const tools = [];
 			const user = Meteor.user();
 			if (user) {

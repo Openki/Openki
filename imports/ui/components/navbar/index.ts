@@ -15,6 +15,8 @@ import { getSiteName } from '/imports/utils/getSiteName';
 
 import '/imports/ui/components/regions/selection';
 import '/imports/ui/components/language-selection';
+import './test-warning-ticker';
+import './user-frame';
 
 import './template.html';
 import './styles.scss';
@@ -201,27 +203,6 @@ import './styles.scss';
 	template.events({
 		'click .js-open-login'() {
 			$('.js-account-tasks').modal('show');
-		},
-	});
-}
-{
-	const Template = TemplateAny as TemplateStaticTyped<'ownUserFrame'>;
-
-	const template = Template.ownUserFrame;
-
-	template.events({
-		'click .js-logout'(event) {
-			event.preventDefault();
-			Meteor.logout();
-
-			const routeName = Router.current().route?.getName();
-			if (routeName === 'profile') {
-				Router.go('userprofile', Meteor.user() ?? undefined);
-			}
-		},
-
-		'click .btn'() {
-			$('.collapse').collapse('hide');
 		},
 	});
 }
