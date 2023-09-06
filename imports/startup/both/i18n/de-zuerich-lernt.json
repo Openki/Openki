@@ -466,7 +466,7 @@
 	"frame.login.username": "Dein Name",
 	"frame.login.usernameOrEmail": "Benutzername oder E-Mail",
 	"frame.visitor.email": "E-Mail",
-	"frameCalendar.nothingOnThisDay": "Entspann dich, heute ist nichts los.",
+	"frameCalendar.nothingOnThisDay": "Es gibt keine zukünftigen Lektionen an diesem Tag",
 	"group.claim.placeholder": "Das zentrale Thema des Austragungsortes",
 	"group.description.placeholder": "Beschreib die Interessen, die Zielgruppe und die Aktivitäten des Austragungsortes.",
 	"group.details.error.allMandatory": "Alle vier Felder sind obligatorisch.",
