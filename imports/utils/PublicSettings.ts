@@ -96,7 +96,7 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
 			text: Match.Maybe(LocalizedValuePattern),
 		},
 	],
-	/** Text displayed in the registration form to link to the Privacy Policy and Terms and Conditions. Can be markdown with html. */
+	/** Text displayed in the registration form to link to the Privacy Policy and Terms and Conditions. Can be markdown. Default: undefined (not shown) */
 	dataProtectionLaw: Match.Maybe(LocalizedValuePattern),
 	faqLink: LocalizedValuePattern,
 	pricePolicyLink: LocalizedValuePattern,
