@@ -81,6 +81,7 @@
 			, "title_key": "main.privacyPolicy.tooltip"
 			}
 		]
+	, "dataProtectionLaw": "By continuing I accept the <a href='https://about.openki.net/en/privacy-policy/' target='_blank'>Privacy Policy</a> and <a href='https://about.openki.net/terms-and-conditions/' target='_blank'>Terms of Service</a>" // Text displayed in the registration form to link to the Privacy Policy and Terms and Conditions. Can be markdown with html. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 	, "faqLink": "/info/faq" // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 	, "pricePolicyLink": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 	, "courseGuideLink": "..." // this setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
