@@ -143,6 +143,7 @@ export function Model(entry: { body: Body }) {
 					query: 'action=register&campaign=eventNotify',
 				}),
 				course: Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`),
+				courseName: course.name,
 				unsubscribeFromCourseLink: Router.url('showCourse', course, {
 					query: 'unsubscribe=participant&force=1&campaign=eventNotify',
 				}),
