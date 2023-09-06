@@ -8,15 +8,15 @@ import * as Alert from '/imports/api/alerts/alert';
 import * as UsersMethods from '/imports/api/users/methods';
 import { Regions } from '/imports/api/regions/regions';
 
-
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import * as TemplateMixins from '/imports/ui/lib/template-mixins';
 import * as Viewport from '/imports/ui/lib/viewport';
 import * as Analytics from '/imports/ui/lib/analytics';
 import { CleanedRegion } from '/imports/ui/lib/cleaned-region';
 
+import './data-protection-law';
+
 import './template.html';
-import './styles.scss';
 
 const Template = TemplateMixins.FormfieldErrors(
 	TemplateAny as TemplateStaticTyped<'registerFrame'>,
