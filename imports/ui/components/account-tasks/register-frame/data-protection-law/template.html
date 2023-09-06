@@ -1,7 +1,5 @@
 <template name="dataProtectionLaw">
-	{{#if PublicSettings.dataProtectionLaw}}
-		<div class="mb-3 register-data-protection-law">
-			{{#markdown}}{{PublicSettings.dataProtectionLaw}}{{/markdown}}
-		</div>
-	{{/if}}
+	<div>
+		{{> React (component DataProtectionLaw)}}
+	</div>
 </template>
