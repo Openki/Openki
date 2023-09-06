@@ -48,11 +48,7 @@
 				</div>
 			</div>
 		</div>
-		{{#if PublicSettings.dataProtectionLaw}}
-			<div class="mb-3 register-data-protection-law">
-				{{#markdown}}{{PublicSettings.dataProtectionLaw}}{{/markdown}}
-			</div>
-		{{/if}}
+		{{> dataProtectionLaw}}
 		<div class="mb-3">
 			<button type="submit" class="btn btn-add form-control js-register" {{disabledIfBusy}}>
 				{{#if busy 'registering'}}
