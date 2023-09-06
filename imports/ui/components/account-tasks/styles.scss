@@ -17,18 +17,3 @@
 	border-top: 1px solid lighten($gray-400, 10%);
 	margin: 15px 0;
 }
-
-.register-data-protection-law p {
-	background-color: rgba($warning, 0.25);
-	border: 1px solid $warning;
-	border-radius: 4px;
-	color: $text-muted;
-	display: block;
-	margin-top: 7.5px;
-	padding: 10px;
-}
-
-.forgot-pwd-mail-info {
-	display: inline-block;
-	margin-top: -25px;
-}
