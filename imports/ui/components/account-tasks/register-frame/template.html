@@ -1,0 +1,69 @@
+<template name="registerFrame">
+	<form>
+		<div class="mb-3 {{errorClass 'username'}}">
+			<div class="input-group">
+				<span class="input-group-text">
+					<span class="fa-solid fa-user fa-fw" aria-hidden="true"></span>
+				</span>
+				<input class="form-control js-username" type="text"
+					   placeholder="{{i18n 'frame.login.username' 'Username' attr=true}}" />
+			</div>
+			{{errorMessage 'username'}}
+		</div>
+		<div class="mb-3 {{errorClass 'password'}}">
+			<div class="input-group">
+				<span class="input-group-text">
+					<span class="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
+				</span>
+				<input class="form-control js-password"
+					   placeholder="{{i18n '_inputField.password' attr=true}}" type="password" />
+			</div>
+			{{errorMessage 'password'}}
+		</div>
+		<div class="mb-3">
+			<div class="row g-2 align-items-center">
+				<div class="col {{errorClass 'email'}}">
+					<div class="input-group">
+						<span class="input-group-text">
+							<span class="fa-solid fa-envelope fa-fw" aria-hidden="true"></span>
+						</span>
+						<input class="form-control js-email"
+							   placeholder="{{i18n 'frame.login.email' 'E-Mail' attr=true}}"
+							   type="email" />
+					</div>
+				</div>
+				<div class="col-auto">
+					<a class="text-muted" data-bs-toggle="collapse" href="#email-info" role="button"
+					   aria-expanded="false" aria-controls="email-info">
+						<i class="fa-solid fa-circle-info fa-lg" aria-hidden="true"></i>
+					</a>
+				</div>
+			</div>
+			<div class="{{errorClass 'email'}}">
+				{{errorMessage 'email'}}
+			</div>
+			<div class="collapse" id="email-info">
+				<div class="text-muted">
+					{{i18n 'login.frame.register.mailDisclaimer' 'Providing an e-mail address allows other users to contact you and is needed to recover your password in case you forget it.'}}
+				</div>
+			</div>
+		</div>
+		{{> dataProtectionLaw}}
+		<div class="mb-3">
+			<button type="submit" class="btn btn-add form-control js-register" {{disabledIfBusy}}>
+				{{#if busy 'registering'}}
+					<span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+					{{i18n 'login.register.submit.busy' 'Registering…'}}
+				{{else}}
+					{{i18n 'login.register.submit'}}
+				{{/if}}
+			</button>
+		</div>
+		<hr>
+		<div class="mb-3">
+			<button class="js-back-to-login btn btn-secondary form-control" type="button">
+				{{i18n 'login.register.backToLogin' 'Go back to login'}}
+			</button>
+		</div>
+	</form>
+</template>
