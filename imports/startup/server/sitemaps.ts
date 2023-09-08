@@ -11,7 +11,7 @@ import { visibleTenants } from '/imports/utils/visible-tenants';
 sitemaps.config('gzip', true);
 
 sitemaps.add('/sitemap.xml', () => {
-	const out: object[] = [];
+	const out: { page: string; lastmod?: Date }[] = [];
 	const courses = Courses.findFilter({ tenants: visibleTenants(), internal: false });
 	const events = Events.findFilter({ tenants: visibleTenants(), internal: false });
 	const venues = Venues.find();
@@ -41,5 +41,5 @@ sitemaps.add('/sitemap.xml', () => {
 			page: Router.url('groupDetails', group),
 		});
 	});
-       return out;
+	return out;
 });
