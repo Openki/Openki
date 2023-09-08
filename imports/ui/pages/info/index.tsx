@@ -1,88 +1,79 @@
 import { Router } from 'meteor/iron:router';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import React, { useEffect } from 'react';
+import { Template } from 'meteor/templating';
+import ReactMarkdown from 'react-markdown';
 import $ from 'jquery';
 
 import { InfoPagesEntity } from '/imports/api/infoPages/infoPages';
 
+import { routerAutoscroll } from '/imports/ui/lib/router-autoscroll';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
 import { MeteorAsync } from '/imports/utils/promisify';
 import * as Metatags from '/imports/utils/metatags';
 
-import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<
-	'infoPage',
-	{ page: InfoPagesEntity },
-	{ headerTag: string; contentTags: string; scrollTo: (id: string) => void }
->;
+export function InfoPage(props: { page: InfoPagesEntity }) {
+	const headerTag = 'h2, h3';
+	const contentTags = 'p, ul';
 
-const template = Template.infoPage;
+	const { page } = props;
 
-template.onCreated(function () {
-	const instance = this;
+	routerAutoscroll.cancelNext();
 
-	instance.autorun(() => {
-		const { page } = Template.currentData();
-		if (page) {
-			Metatags.setCommonTags(page.title);
-		}
-	});
-
-	instance.headerTag = 'h3';
-	instance.contentTags = 'p, ul';
-
-	instance.scrollTo = async (id) => {
+	async function scrollTo(id: string) {
 		const idSelector = `#${decodeURIComponent(id)}`;
-		const targetTitle = instance.$(idSelector);
+		const targetTitle = $(idSelector);
 		if (targetTitle.length) {
 			await MeteorAsync.defer();
 
-			targetTitle.nextUntil(instance.headerTag).show();
+			targetTitle.nextUntil(headerTag).show();
 			$(window).scrollTop(targetTitle.position().top - ScssVars.navbarHeight);
 		}
-	};
-});
+	}
 
-template.onRendered(function () {
-	const instance = this;
+	useEffect(() => {
+		if (page) {
+			Metatags.setCommonTags(page.title);
+		}
 
-	// in order to create nice IDs for the questions also for non-english
-	// alphabets we make our own ones
-	instance.$(instance.headerTag).each((_index, element) => {
-		const title = $(element);
-		const id = title
-			.text()
-			.trim()
-			.toLowerCase()
-			.replace(/[_+.,!?@#$%^&*();\\/|<>"'=]/g, '')
-			.replace(/[ ]/g, '-');
+		// in order to create nice IDs for the questions also for non-english
+		// alphabets we make our own ones
+		$(headerTag).each((_index, element) => {
+			const title = $(element);
+			const id = title
+				.text()
+				.trim()
+				.toLowerCase()
+				.replace(/[_+.,!?@#$%^&*();\\/|<>"'=]/g, '')
+				.replace(/[ ]/g, '-');
 
-		title.attr('id', id);
+			title.attr('id', id);
+		});
+
+		const { hash } = Router.current().params;
+		if (hash) {
+			scrollTo(hash);
+		}
+
+		$('a[href^="#"]').attr('target', '');
+
+		$(headerTag).on('click', function (event) {
+			const title = $(event.currentTarget);
+			title.nextUntil(headerTag, contentTags).toggle();
+			title.toggleClass('active');
+		});
 	});
 
-	this.$('a').not('[href^="#"]').attr('target', '_blank');
+	return (
+		<div className="container mw-md info-page">
+			<ReactMarkdown linkTarget="_blank" children={page.body} skipHtml={true} />
+		</div>
+	);
+}
 
-	const { hash } = Router.current().params;
-	if (hash) {
-		this.scrollTo(hash);
-	}
-});
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
 
-template.events({
-	'click h3'(event, instance) {
-		const title = $(event.currentTarget);
-		title.nextUntil(instance.headerTag, instance.contentTags).toggle();
-		title.toggleClass('active');
-	},
-
-	'click a[href^="#"]'(event, instance) {
-		event.preventDefault();
-		const href = $(event.currentTarget).attr('href');
-		const id = href?.substring(1); // Drop the hash-char
-		if (!id) {
-			return;
-		}
-		instance.scrollTo(id);
-	},
-});
+Template.registerHelper('InfoPage', () => InfoPage);
