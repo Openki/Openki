@@ -82,6 +82,12 @@
 	}
 }
 
+.timetable-event-left {
+	&:hover {
+		left: auto !important;
+	}
+}
+
 .timetable-event-title {
 	background-color: $success;
 	font-size: 28px;

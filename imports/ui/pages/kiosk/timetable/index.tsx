@@ -116,12 +116,14 @@ export function KioskTimetablePage(props: Props) {
 													return (
 														<div
 															key={entry._id}
-															className="timetable-event"
+															className={`timetable-event${
+																entry.relStart > 0.5 ? ' timetable-event-left' : ''
+															}`}
 															style={position(entry)}
 														>
 															<div
-																className={`timetable-event-title ${
-																	entry.canceled ? 'timetable-event-title-canceled' : ''
+																className={`timetable-event-title${
+																	entry.canceled ? ' timetable-event-title-canceled' : ''
 																}`}
 															>
 																{entry.title}
