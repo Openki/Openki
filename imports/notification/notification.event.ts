@@ -84,7 +84,7 @@ export function Model(entry: { body: Body }) {
 			}
 		},
 
-		vars(userLocale: string, _actualRecipient: UserModel, unsubToken: string) {
+		vars(userLocale: string, actualRecipient: UserModel, unsubToken: string) {
 			if (!event) {
 				throw new Error('Event does not exist (0.o)');
 			}
@@ -139,6 +139,7 @@ export function Model(entry: { body: Body }) {
 				eventEnd: endMoment.format('LT'),
 				venueLine,
 				eventLink: Router.url('showEvent', event, { query: 'campaign=eventNotify' }),
+				recipientTakePart: !!event.participants?.find((p) => p.user === actualRecipient._id),
 				registerToEventLink: Router.url('showEvent', event, {
 					query: 'action=register&campaign=eventNotify',
 				}),

@@ -66,22 +66,24 @@
 					</td>
 				</tr>
 			</table>
-			<p class="gap-md text-center">
-				{{i18n "notification.event.mail.informRegisterEvent" "Let us know if you participate in this event:" lng=locale}}
-			</p>
-			<p class="text-center">
-				<a class="button" href="{{registerToEventLink}}">
-					{{i18n "notification.event.mail.registerEvent" "Yes, I take part." lng=locale}}
-				</a>
-			</p>
-			<p class="gap-md text-center">
-				{{i18n "notification.event.mail.notinterested" "Not interested anymore?" lng=locale}}
-			</p>
-			<p class="text-center">
-				<a href="{{unsubscribeFromCourseLink}}">
-					{{i18n "notification.event.mail.unsubscribe" "Unsubscribe from {COURSE}" COURSE=courseName lng=locale}}
-				</a>
-			</p>
+			{{#unless recipientTakePart}}
+				<p class="gap-md text-center">
+					{{i18n "notification.event.mail.informRegisterEvent" "Let us know if you participate in this event:" lng=locale}}
+				</p>
+				<p class="text-center">
+					<a class="button" href="{{registerToEventLink}}">
+						{{i18n "notification.event.mail.registerEvent" "Yes, I take part." lng=locale}}
+					</a>
+				</p>
+				<p class="gap-md text-center">
+					{{i18n "notification.event.mail.notinterested" "Not interested anymore?" lng=locale}}
+				</p>
+				<p class="text-center">
+					<a href="{{unsubscribeFromCourseLink}}">
+						{{i18n "notification.event.mail.unsubscribe" "Unsubscribe from {COURSE}" COURSE=courseName lng=locale}}
+					</a>
+				</p>
+			{{/unless}}
 		</td>
 	</tr>
 	<tr>
