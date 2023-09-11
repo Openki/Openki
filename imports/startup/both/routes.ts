@@ -697,7 +697,12 @@ RouterAsync.route('timetable', {
 		await import('/imports/ui/pages/kiosk/timetable');
 	},
 	subscriptions() {
-		return { events: Events.findFilter.subscribe(makeFilterQuery(this.params.query), 200) };
+		return {
+			events: Events.findFilter.subscribe(
+				{ ...{ canceled: false }, ...makeFilterQuery(this.params.query) },
+				200,
+			),
+		};
 	},
 	data() {
 		let start: moment.MomentInput;
