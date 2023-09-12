@@ -704,7 +704,7 @@ RouterAsync.route('timetable', {
 		await import('/imports/ui/pages/kiosk/timetable');
 	},
 	subscriptions() {
-		const control = this.params.query.control === '1';
+		const control = this.params.query.control !== '0';
 		const day = parseInt(this.params.query.day || '0', 10);
 		const query = makeFilterQuery(this.params.query, day, control);
 
@@ -713,7 +713,7 @@ RouterAsync.route('timetable', {
 		};
 	},
 	data() {
-		const control = this.params.query.control === '1';
+		const control = this.params.query.control !== '0';
 		const day = parseInt(this.params.query.day || '0', 10);
 		const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
 		let dayLimit: number | undefined;
