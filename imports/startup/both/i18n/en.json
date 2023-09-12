@@ -553,6 +553,8 @@
   "kiosk.noFutureEvents": "There are no future events",
   "kiosk.ongoing": "{NUM, plural, one{One ongoing event:} other{# ongoing events:} }",
   "kiosk.started": "Started",
+  "kiosk.timetable.nextDay": "Next day",
+  "kiosk.timetable.previousDay": "Previous day",
   "kiosk.today": "{NUM, plural, one{One event} other{# events} } later today:",
   "languageSelection.legend.language": "Language",
   "languageSelection.noLanguagesFound": "No languages found.",
