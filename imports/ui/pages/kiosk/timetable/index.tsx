@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Template } from 'meteor/templating';
 import React from 'react';
 import moment from 'moment';
@@ -187,8 +188,12 @@ export function KioskTimetablePage(props: Props) {
 																</a>
 															</div>
 															{entry.canceled ? (
-																<span className="timetable-event-canceled-panel">
-																	{t('_label.canceled', 'Canceled')}
+																<span className="timetable-event-canceled">
+																	{t('_event.state.canceled')}
+																</span>
+															) : entry.isFullyBooked() ? (
+																<span className="timetable-event-fully-booked">
+																	{t('_event.state.fullyBooked')}
 																</span>
 															) : null}
 														</div>

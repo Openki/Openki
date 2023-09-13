@@ -834,18 +834,17 @@ RouterAsync.route('timetable', {
 		};
 
 		events.forEach((originalEvent: EventModel) => {
-			const event: EventEntity & {
+			const event = originalEvent as EventModel & {
 				relStart: number;
 				relEnd: number;
-			} = {
-				...originalEvent,
-				relStart: (originalEvent.start.getTime() - timestampStart) / span,
-				relEnd: (timestampEnd - originalEvent.end.getTime()) / span,
 			};
+			event.relStart = (originalEvent.start.getTime() - timestampStart) / span;
+			event.relEnd = (timestampEnd - originalEvent.end.getTime()) / span;
+
 			let placed = false;
 
 			const room = event.room || null;
-			const roomRows = useVenue(event.venue, room) as unknown as (EventEntity & {
+			const roomRows = useVenue(event.venue, room) as unknown as (EventModel & {
 				relStart: number;
 				relEnd: number;
 			})[][];
