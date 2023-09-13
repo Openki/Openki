@@ -70,6 +70,15 @@
 
 <template name="kioskEvent">
 	<div class="kiosk-event-wrap-{{timePeriod}} col-6 col-lg-3 col-xl-2">
+		{{#if this.canceled}}
+			<span class="kiosk-event-canceled">{{i18n '_event.state.canceled'}}</span>
+		{{else}}
+			{{#if this.isFullyBooked}}
+				<span class="kiosk-event-fully-booked">
+					{{i18n '_event.state.fullyBooked'}}
+				</span>
+			{{/if}}
+		{{/if}}
 		<a href="{{pathFor 'showEvent'}}">
 			<div class="kiosk-event kiosk-event-{{timePeriod}}">
 				{{#unless isUpcoming}}
