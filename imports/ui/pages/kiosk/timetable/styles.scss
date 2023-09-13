@@ -116,12 +116,14 @@
 	line-height: 1.2em;
 	overflow: hidden;
 	padding: 4px 12px;
+}
 
-	&:hover {
-		box-shadow: 0 5px 8px $default-shadow;
-		height: 70px;
-		min-width: 400px;
-	}
+.timetable-event:hover .timetable-event-title {
+	box-shadow: 0 5px 8px $default-shadow;
+	height: auto;
+	min-height: 70px;
+	max-height: 110px;
+	min-width: 400px;
 }
 
 .timetable-event-title.timetable-event-title-canceled {
@@ -131,7 +133,7 @@
 	background-size: contain;
 }
 
-.timetable-event-title:hover.timetable-event-title-canceled {
+.timetable-event:hover .timetable-event-title-canceled {
 	background-image: none;
 }
 
@@ -153,18 +155,22 @@
 	padding: 4px 8px;
 }
 
-.timetable-event-title:hover ~ .timetable-event-time,
-.timetable-event-title:hover ~ .timetable-event-description {
+.timetable-event-description p {
+	@include ellipsis-multiline(5);
+}
+
+.timetable-event:hover .timetable-event-time,
+.timetable-event:hover .timetable-event-description {
 	box-shadow: 0 5px 8px $default-shadow;
 	display: block;
 	z-index: 1;
 }
 
-.timetable-event-title:hover ~ .timetable-event-time {
+.timetable-event:hover .timetable-event-time {
 	min-width: 130px;
 }
 
-.timetable-event-title:hover ~ .timetable-event-description {
+.timetable-event:hover .timetable-event-description {
 	min-width: 400px;
 }
 
@@ -172,7 +178,7 @@
 	display: none;
 }
 
-.timetable-event-title:hover ~ .timetable-event-canceled-panel {
+.timetable-event:hover .timetable-event-canceled-panel {
 	background-color: $canceled-color;
 	border-radius: 5px;
 	color: $white;

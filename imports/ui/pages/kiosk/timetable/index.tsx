@@ -178,7 +178,13 @@ export function KioskTimetablePage(props: Props) {
 																{timeFormat(entry.start)} - {timeFormat(entry.end)}
 															</div>
 															<div className="timetable-event-description">
-																{textPlain(entry.description)}
+																<p>{textPlain(entry.description)}</p>
+																<a
+																	className="btn btn-outline-dark"
+																	href={Router.url('showEvent', entry)}
+																>
+																	{t('kiosk.timetable.showDetails', 'Show details')}
+																</a>
 															</div>
 															{entry.canceled ? (
 																<span className="timetable-event-canceled-panel">

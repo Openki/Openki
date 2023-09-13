@@ -9,6 +9,7 @@ import * as UrlTools from '/imports/utils/url-tools';
 import './styles.scss';
 
 function buildBackLink() {
+	const routeName = Session.get('kioskRoute');
 	const filterParams = Session.get('kioskFilter');
 	if (!filterParams) {
 		return undefined;
@@ -22,7 +23,7 @@ function buildBackLink() {
 		options.query = queryString;
 	}
 
-	return Router.url('kioskEvents', {}, options);
+	return Router.url(routeName, {}, options);
 }
 
 export function KioskLink() {
