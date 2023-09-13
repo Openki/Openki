@@ -357,9 +357,9 @@ RouterAsync.route('kioskEvents', {
 		queryNow.ongoing = now;
 
 		return {
-			today: Events.findFilter.subscribe(queryToday, limit),
-			future: Events.findFilter.subscribe(queryFuture, limit),
-			ongoing: Events.findFilter.subscribe(queryNow),
+			today: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryToday }, limit),
+			future: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryFuture }, limit),
+			ongoing: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryNow }),
 		};
 	},
 	data() {
