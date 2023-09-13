@@ -342,6 +342,7 @@ RouterAsync.route('kioskEvents', {
 		tomorrow.setHours(0);
 
 		const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+		Session.set('kioskRoute', 'kioskEvents');
 		Session.set('kioskFilter', filter.toParams());
 
 		const queryFuture = filter.toQuery() as EventsFindFilter;
@@ -707,6 +708,10 @@ RouterAsync.route('timetable', {
 		const control = this.params.query.control !== '0';
 		const day = parseInt(this.params.query.day || '0', 10);
 		const query = makeFilterQuery(this.params.query, day, control);
+
+		const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+		Session.set('kioskRoute', 'timetable');
+		Session.set('kioskFilter', filter.toParams());
 
 		return {
 			events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }, 200),
