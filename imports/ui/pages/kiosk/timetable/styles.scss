@@ -9,8 +9,8 @@
 
 .timetable-day-control {
 	color: #38829c77;
-	font-size: 60px;
-	margin: 15px 15px -45px;
+	font-size: 100px;
+	margin: 15px 15px -75px;
 	position: absolute;
 	top: 50%;
 	transition: transform 0.5s ease-in-out;
@@ -108,9 +108,13 @@
 	}
 }
 
-.timetable-event-left {
+.timetable-event-right {
 	&:hover {
-		left: auto !important;
+		@include td-direction(rtl);
+	}
+
+	&:hover * {
+		direction: initial;
 	}
 }
 
