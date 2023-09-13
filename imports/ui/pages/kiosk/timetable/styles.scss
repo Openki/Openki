@@ -13,24 +13,15 @@
 	margin: 15px 15px -75px;
 	position: absolute;
 	top: 50%;
-	transition: transform 0.5s ease-in-out;
 	z-index: 1;
 }
 
 .timetable-day-control-previous {
 	left: 0;
-
-	&:hover {
-		transform: translateX(-30px);
-	}
 }
 
 .timetable-day-control-next {
 	right: 0;
-
-	&:hover {
-		transform: translateX(30px);
-	}
 }
 
 .timetable-header {
@@ -198,8 +189,6 @@
 	position: absolute;
 	text-align: center;
 	top: 40%;
-	transform: rotate(-27deg);
-	transform: rotate(-27d300eg);
 	transform: rotate(-27deg);
 	width: fit-content;
 	z-index: 300;
