@@ -56,3 +56,13 @@
 		float: $opposite-dir;
 	}
 }
+
+@mixin td-direction($dir) {
+	$opposite-dir: if($dir == ltr, rtl, ltr);
+
+	direction: $dir;
+
+	.rtl & {
+		direction: $opposite-dir;
+	}
+}

@@ -159,7 +159,7 @@ export function KioskTimetablePage(props: Props) {
 														<div
 															key={entry._id}
 															className={`timetable-event${
-																entry.relStart > 0.5 ? ' timetable-event-left' : ''
+																entry.relStart > 0.5 ? ' timetable-event-right' : ''
 															}`}
 															style={position(entry)}
 														>
