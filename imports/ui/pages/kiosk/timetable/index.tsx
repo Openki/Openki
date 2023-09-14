@@ -4,6 +4,7 @@ import React from 'react';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { Router } from 'meteor/iron:router';
+import { useUserId } from '/imports/utils/react-meteor-data';
 
 import { EventModel, Events } from '/imports/api/events/events';
 import { VenueModel } from '/imports/api/venues/venues';
@@ -45,6 +46,11 @@ export interface Props {
 export function KioskTimetablePage(props: Props) {
 	const { t } = useTranslation();
 	const { timeFormat } = useDateTimeFormat();
+	const userId = useUserId();
+	
+	if (userId) {
+		Meteor.logout();
+	}
 
 	function isRoomRow(room: string, index: number) {
 		return room && index !== 0;
