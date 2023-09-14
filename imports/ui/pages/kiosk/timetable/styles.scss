@@ -121,7 +121,7 @@
 	padding: 5px;
 	position: absolute;
 	text-align: center;
-	top: 38%;
+	top: 16%;
 	transform: rotate(-27deg);
 	transform: rotate(-27d300eg);
 	transform: rotate(-27deg);
@@ -146,7 +146,7 @@
 	padding: 5px;
 	position: absolute;
 	text-align: center;
-	top: 38%;
+	top: 16%;
 	transform: rotate(-27deg);
 	transform: rotate(-27d300eg);
 	transform: rotate(-27deg);
@@ -208,6 +208,7 @@
 	height: 12em;
 	overflow: hidden;
 	padding: 4px 8px;
+	position: relative;
 }
 
 .timetable-event-description p {
@@ -227,32 +228,6 @@
 
 .timetable-event:hover .timetable-event-description {
 	min-width: 400px;
-}
-
-.timetable-event-canceled-panel {
-	display: none;
-}
-
-.timetable-event:hover .timetable-event-canceled-panel {
-	background-color: $canceled-color;
-	border-radius: 5px;
-	color: $white;
-	display: inline;
-	display: flow-root;
-	font-family: monospace, sans-serif;
-	font-size: 2em;
-	font-stretch: narrower;
-	font-weight: 950;
-	left: 5%;
-	margin-block-start: 18px;
-	opacity: 0.4;
-	padding: 5px;
-	position: absolute;
-	text-align: center;
-	top: 40%;
-	transform: rotate(-27deg);
-	width: fit-content;
-	z-index: 300;
 }
 
 .vertical-wrapper {
