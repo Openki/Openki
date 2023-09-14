@@ -19,8 +19,8 @@
 	width: 60px;
 }
 
-.kiosk-logo-openki {
-	width: 40px;
+.kiosk-logo-brand {
+	height: 48px;
 }
 
 //== Heading
@@ -78,6 +78,10 @@
 
 // ** Event
 //========================================================================================
+.kiosk-event-wrap {
+	position: relative;
+}
+
 .kiosk-event {
 	overflow: hidden;
 }
@@ -98,6 +102,56 @@
 .kiosk-event-today,
 .kiosk-event-upcoming {
 	background-color: $event-body-bg;
+}
+
+// event canceled
+//============================================================================================
+.kiosk-event-canceled {
+	background-color: $canceled-color;
+	border-radius: 5px;
+	color: $white;
+	display: flow-root;
+	font-family: monospace, sans-serif;
+	font-size: 2em;
+	font-stretch: narrower;
+	font-weight: 950;
+	left: 5%;
+	margin-block-start: 18px;
+	opacity: 0.4;
+	padding: 5px;
+	position: absolute;
+	text-align: center;
+	top: 27%;
+	transform: rotate(-27deg);
+	transform: rotate(-27d300eg);
+	transform: rotate(-27deg);
+	width: fit-content;
+	z-index: 300;
+}
+
+// event fully booked
+//============================================================================================
+.kiosk-event-fully-booked {
+	background-color: #f99248;
+	border-radius: 5px;
+	color: $white;
+	display: flow-root;
+	font-family: monospace, sans-serif;
+	font-size: 2em;
+	font-stretch: narrower;
+	font-weight: 950;
+	left: 5%;
+	margin-block-start: 18px;
+	opacity: 0.4;
+	padding: 5px;
+	position: absolute;
+	text-align: center;
+	top: 27%;
+	transform: rotate(-27deg);
+	transform: rotate(-27d300eg);
+	transform: rotate(-27deg);
+	width: fit-content;
+	z-index: 300;
 }
 
 // ** Timecount

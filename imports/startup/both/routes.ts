@@ -51,22 +51,29 @@ import type { Data as GroupDetailsData } from '/imports/ui/pages/group-details';
 import type { Data as VenuesMapData } from '/imports/ui/pages/venues-map';
 import type { Data as AdminTenantsData } from '/imports/ui/pages/admin/tenants';
 
-const makeFilterQuery = function (params: Record<string, string | undefined>) {
+const makeFilterQuery = function (
+	params: Record<string, string | undefined>,
+	day: number,
+	oneDayOnly: boolean,
+) {
 	const filter = new Filtering(EventParamPredicates).read(params).done();
 
 	const query = filter.toQuery() as EventsFindFilter;
 
 	let start: moment.Moment | undefined;
 	if (params.start) {
-		start = moment(params.start);
+		start = moment(params.start).add(day, 'days');
 	}
 	if (!start || !start.isValid()) {
-		start = moment(reactiveNow.get()).startOf('day');
+		start = moment(reactiveNow.get()).startOf('day').add(day, 'days');
 	}
 
 	let end: moment.Moment | undefined;
-	if (params.end) {
-		end = moment(params.end);
+
+	if (!oneDayOnly) {
+		if (params.end) {
+			end = moment(params.end);
+		}
 	}
 	if (!end || !end.isValid()) {
 		end = moment(start).add(1, 'day');
@@ -335,6 +342,7 @@ RouterAsync.route('kioskEvents', {
 		tomorrow.setHours(0);
 
 		const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+		Session.set('kioskRoute', 'kioskEvents');
 		Session.set('kioskFilter', filter.toParams());
 
 		const queryFuture = filter.toQuery() as EventsFindFilter;
@@ -350,9 +358,9 @@ RouterAsync.route('kioskEvents', {
 		queryNow.ongoing = now;
 
 		return {
-			today: Events.findFilter.subscribe(queryToday, limit),
-			future: Events.findFilter.subscribe(queryFuture, limit),
-			ongoing: Events.findFilter.subscribe(queryNow),
+			today: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryToday }, limit),
+			future: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryFuture }, limit),
+			ongoing: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryNow }),
 		};
 	},
 	data() {
@@ -697,9 +705,27 @@ RouterAsync.route('timetable', {
 		await import('/imports/ui/pages/kiosk/timetable');
 	},
 	subscriptions() {
-		return { events: Events.findFilter.subscribe(makeFilterQuery(this.params.query), 200) };
+		const control = this.params.query.control !== '0';
+		const day = parseInt(this.params.query.day || '0', 10);
+		const query = makeFilterQuery(this.params.query, day, control);
+
+		const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+		Session.set('kioskRoute', 'timetable');
+		Session.set('kioskFilter', filter.toParams());
+
+		return {
+			events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }, 200),
+		};
 	},
 	data() {
+		const control = this.params.query.control !== '0';
+		const day = parseInt(this.params.query.day || '0', 10);
+		const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+		let dayLimit: number | undefined;
+		if (filter.get('start') && filter.get('end')) {
+			dayLimit = moment(filter.get('end')).diff(filter.get('start'), 'days');
+		}
+
 		let start: moment.MomentInput;
 		let end: moment.MomentInput;
 
@@ -717,6 +743,10 @@ RouterAsync.route('timetable', {
 
 		if (!start || !end) {
 			return {
+				control,
+				day,
+				dayLimit,
+				filter,
 				days: [],
 				hours: [],
 				grouped: [],
@@ -738,8 +768,8 @@ RouterAsync.route('timetable', {
 		const cursor = moment(start);
 		do {
 			const month = cursor.month();
-			const day = cursor.day();
-			days[`${month}${day}`] = {
+			const cursorDay = cursor.day();
+			days[`${month}${cursorDay}`] = {
 				moment: moment(cursor).startOf('day'),
 				relStart: Math.max(
 					-0.1,
@@ -751,7 +781,7 @@ RouterAsync.route('timetable', {
 				),
 			};
 			const hour = cursor.hour();
-			hours[`${month}${day}${hour}`] = {
+			hours[`${month}${cursorDay}${hour}`] = {
 				moment: moment(cursor).startOf('hour'),
 				relStart: Math.max(
 					-0.1,
@@ -804,18 +834,17 @@ RouterAsync.route('timetable', {
 		};
 
 		events.forEach((originalEvent: EventModel) => {
-			const event: EventEntity & {
+			const event = originalEvent as EventModel & {
 				relStart: number;
 				relEnd: number;
-			} = {
-				...originalEvent,
-				relStart: (originalEvent.start.getTime() - timestampStart) / span,
-				relEnd: (timestampEnd - originalEvent.end.getTime()) / span,
 			};
+			event.relStart = (originalEvent.start.getTime() - timestampStart) / span;
+			event.relEnd = (timestampEnd - originalEvent.end.getTime()) / span;
+
 			let placed = false;
 
 			const room = event.room || null;
-			const roomRows = useVenue(event.venue, room) as unknown as (EventEntity & {
+			const roomRows = useVenue(event.venue, room) as unknown as (EventModel & {
 				relStart: number;
 				relEnd: number;
 			})[][];
@@ -843,10 +872,21 @@ RouterAsync.route('timetable', {
 		// the room name, so "null" (meaning no room) comes first.
 		const grouped = Object.values(perVenue).map((venueData) => {
 			const perRoom = Object.values(venueData.perRoom).sort();
-			return { ...venueData, perRoom };
+			return {
+				control,
+				day,
+				dayLimit,
+				filter,
+				...venueData,
+				perRoom,
+			};
 		});
 
 		return {
+			control,
+			day,
+			dayLimit,
+			filter,
 			now: (moment.utc().toDate().getTime() - timestampStart) / span,
 			days: Object.values(days),
 			hours: Object.values(hours),

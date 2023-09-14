@@ -63,11 +63,9 @@ export function EventCompact(props: {
 			>
 				<div className={`event-compact ${eventCompactClasses(event, withDate)}`}>
 					{event.canceled ? (
-						<span className="event-canceled">{t('_label.canceled', 'Canceled')}</span>
+						<span className="event-canceled">{t('_event.state.canceled')}</span>
 					) : event.isFullyBooked() ? (
-						<span className="event-fully-booked">
-							{t('course.event.fullyBooked', 'Fully booked')}
-						</span>
+						<span className="event-fully-booked">{t('_event.state.fullyBooked')}</span>
 					) : null}
 					<div
 						className={`event-compact-header${
