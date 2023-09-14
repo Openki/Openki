@@ -1,12 +1,16 @@
+/* eslint-disable no-nested-ternary */
 import { Template } from 'meteor/templating';
 import React from 'react';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+import { Router } from 'meteor/iron:router';
+import { useUserId } from '/imports/utils/react-meteor-data';
 
-import { EventModel } from '/imports/api/events/events';
+import { EventModel, Events } from '/imports/api/events/events';
 import { VenueModel } from '/imports/api/venues/venues';
 
 import { textPlain } from '/imports/utils/html-tools';
+import * as UrlTools from '/imports/utils/url-tools';
 import { useDateTimeFormat } from '/imports/utils/react-moment-format';
 
 import './styles.scss';
@@ -17,6 +21,10 @@ interface RelStartEnd {
 }
 
 export interface Props {
+	control: boolean;
+	day: number;
+	dayLimit: number | undefined;
+	filter: ReturnType<(typeof Events)['Filtering']>;
 	now: number;
 	days: ({
 		moment: moment.Moment;
@@ -38,6 +46,11 @@ export interface Props {
 export function KioskTimetablePage(props: Props) {
 	const { t } = useTranslation();
 	const { timeFormat } = useDateTimeFormat();
+	const userId = useUserId();
+	
+	if (userId) {
+		Meteor.logout();
+	}
 
 	function isRoomRow(room: string, index: number) {
 		return room && index !== 0;
@@ -51,9 +64,45 @@ export function KioskTimetablePage(props: Props) {
 	function showHour(m: moment.Moment) {
 		return m.locale(Session.get('timeLocale') || 'en').format('H');
 	}
+	function controlDay(add: number) {
+		const filterParams = props.filter.toParams() as Record<string, string>;
+
+		filterParams.control = props.control ? '1' : '0';
+		filterParams.day = `${props.day + add}`;
+		const queryString = UrlTools.paramsToQueryString(filterParams);
+
+		const options: { query?: string } = {};
+		if (queryString.length) {
+			options.query = queryString;
+		}
+
+		return Router.url(Router.current().route.getName(), {}, options);
+	}
 
 	return (
 		<div className="container-fluid timetable">
+			{props.control ? (
+				<>
+					{props.day > 0 ? (
+						<a
+							className="timetable-day-control timetable-day-control-previous"
+							href={controlDay(-1)}
+							title={t('kiosk.timetable.previousDay', 'Previous day')}
+						>
+							<i className="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>
+						</a>
+					) : null}
+					{typeof props.dayLimit === 'undefined' || props.dayLimit - 1 > props.day ? (
+						<a
+							className="timetable-day-control timetable-day-control-next"
+							href={controlDay(1)}
+							title={t('kiosk.timetable.nextDay', 'Next day')}
+						>
+							<i className="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i>
+						</a>
+					) : null}
+				</>
+			) : null}
 			<div className="timetable-header">
 				<div className="timetable-days">
 					{props.days.map((day) => {
@@ -116,12 +165,14 @@ export function KioskTimetablePage(props: Props) {
 													return (
 														<div
 															key={entry._id}
-															className="timetable-event"
+															className={`timetable-event${
+																entry.relStart > 0.5 ? ' timetable-event-right' : ''
+															}`}
 															style={position(entry)}
 														>
 															<div
-																className={`timetable-event-title ${
-																	entry.canceled ? 'timetable-event-title-canceled' : ''
+																className={`timetable-event-title${
+																	entry.canceled ? ' timetable-event-title-canceled' : ''
 																}`}
 															>
 																{entry.title}
@@ -134,11 +185,21 @@ export function KioskTimetablePage(props: Props) {
 																{timeFormat(entry.start)} - {timeFormat(entry.end)}
 															</div>
 															<div className="timetable-event-description">
-																{textPlain(entry.description)}
+																<p>{textPlain(entry.description)}</p>
+																<a
+																	className="btn btn-outline-dark"
+																	href={Router.url('showEvent', entry)}
+																>
+																	{t('kiosk.timetable.showDetails', 'Show details')}
+																</a>
 															</div>
 															{entry.canceled ? (
-																<span className="timetable-event-canceled-panel">
-																	{t('_label.canceled', 'Canceled')}
+																<span className="timetable-event-canceled">
+																	{t('_event.state.canceled')}
+																</span>
+															) : entry.isFullyBooked() ? (
+																<span className="timetable-event-fully-booked">
+																	{t('_event.state.fullyBooked')}
 																</span>
 															) : null}
 														</div>

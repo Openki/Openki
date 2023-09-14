@@ -61,7 +61,7 @@ Sobald eine Person einen Kurs auf Openki vorschlägt, wird sie automatisch zur e
 Ein "Host" ist die Person, die sich um den Ort kümmert, wo ein Kurs stattfinden soll: Sie besitzt Zugang zum Veranstaltungsraum, klärt im Voraus die Verfügbarkeit ab, ist Kontaktperson zu den Besitzer*innen / Hausabwart*innen / etc. und ist dafür verantwortlich, dass die jeweiligen Hausrichtlinien kommuniziert und eingehalten werden.
 
 ### Was sind Gruppen?
-Gruppen sind bereits bestehende Organisationen, Communities usw., welche Openki dazu verwenden, ihre Kurse zu organisieren. Mehr dazu siehe im Abschnit ["Gruppen"](#Gruppen) unten.
+Gruppen sind bereits bestehende Organisationen, Communities usw., welche Openki dazu verwenden, ihre Kurse zu organisieren. Mehr dazu siehe im Abschnit ["Gruppen"](#gruppen) unten.
 
 
 

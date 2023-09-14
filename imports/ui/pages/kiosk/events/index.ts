@@ -24,6 +24,10 @@ import './styles.scss';
 	template.onCreated(function () {
 		const instance = this;
 
+		if (Meteor.userId()) {
+			Meteor.logout();
+		}
+
 		instance.autorun(() => {
 			Metatags.setCommonTags(i18n('event.list.windowtitle', 'Events'));
 		});

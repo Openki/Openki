@@ -91,8 +91,8 @@ export function Model(entry: { body: Body }) {
 
 	return {
 		accepted(actualRecipient: UserModel) {
-			if (actualRecipient.notifications === false) {
-				throw new Error('User wishes to not receive automated notifications');
+			if (!actualRecipient.allowPrivateMessages) {
+				throw new Error('User wishes to not receive private messages from users');
 			}
 
 			if (!actualRecipient.hasEmail()) {
