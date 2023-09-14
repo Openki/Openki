@@ -47,7 +47,7 @@ export function KioskTimetablePage(props: Props) {
 	const { t } = useTranslation();
 	const { timeFormat } = useDateTimeFormat();
 	const userId = useUserId();
-	
+
 	if (userId) {
 		Meteor.logout();
 	}
@@ -185,6 +185,15 @@ export function KioskTimetablePage(props: Props) {
 																{timeFormat(entry.start)} - {timeFormat(entry.end)}
 															</div>
 															<div className="timetable-event-description">
+																{entry.canceled ? (
+																	<span className="timetable-event-canceled">
+																		{t('_event.state.canceled')}
+																	</span>
+																) : entry.isFullyBooked() ? (
+																	<span className="timetable-event-fully-booked">
+																		{t('_event.state.fullyBooked')}
+																	</span>
+																) : null}
 																<p>{textPlain(entry.description)}</p>
 																<a
 																	className="btn btn-outline-dark"
@@ -193,15 +202,6 @@ export function KioskTimetablePage(props: Props) {
 																	{t('kiosk.timetable.showDetails', 'Show details')}
 																</a>
 															</div>
-															{entry.canceled ? (
-																<span className="timetable-event-canceled">
-																	{t('_event.state.canceled')}
-																</span>
-															) : entry.isFullyBooked() ? (
-																<span className="timetable-event-fully-booked">
-																	{t('_event.state.fullyBooked')}
-																</span>
-															) : null}
 														</div>
 													);
 												})}
