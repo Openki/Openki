@@ -69,7 +69,7 @@
 </template>
 
 <template name="kioskEvent">
-	<div class="kiosk-event-wrap-{{timePeriod}} col-6 col-lg-3 col-xl-2">
+	<div class="kiosk-event-wrap kiosk-event-wrap-{{timePeriod}} col-6 col-lg-3 col-xl-2">
 		{{#if this.canceled}}
 			<span class="kiosk-event-canceled">{{i18n '_event.state.canceled'}}</span>
 		{{else}}
