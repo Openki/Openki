@@ -16,7 +16,7 @@ export function Display(props: { inNavbar: boolean; onClick: () => void }) {
 	return (
 		<li className={inNavbarClasses()}>
 			<a className="nav-link text-white" onClick={props.onClick}>
-				<span className="fa-solid fa-location-dot" aria-hidden="true"></span>{' '}
+				<span className="fa-solid fa-location-dot" aria-hidden="true"></span>&nbsp;
 				{currentRegion ? currentRegion.name : t('menue.All regions', 'All regions')}
 			</a>
 		</li>
