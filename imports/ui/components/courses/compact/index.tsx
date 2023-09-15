@@ -14,7 +14,7 @@ import { CourseCompactRoles } from './course-compact-roles';
 
 import './styles.scss';
 
-export function CourseCompact(data: {
+export function CourseCompact(props: {
 	course: CourseModel;
 	groupTagEvents: (groupId: string) => {
 		onMouseOver: () => Promise<void>;
@@ -22,7 +22,7 @@ export function CourseCompact(data: {
 		onClick: () => Promise<void>;
 	};
 }) {
-	const { course } = data;
+	const { course, groupTagEvents } = props;
 	const elementRef = useRef<HTMLDivElement>(null);
 
 	function courseCss() {
@@ -91,15 +91,15 @@ export function CourseCompact(data: {
 			groupId,
 			isOrganizer: course.groupOrganizers.includes(groupId),
 			onClick: async () => {
-				await data.groupTagEvents(groupId).onClick();
+				await groupTagEvents(groupId).onClick();
 			},
 			onMouseOver: async () => {
 				elementRef.current?.classList.toggle('elevate-child');
-				await data.groupTagEvents(groupId).onMouseOver();
+				await groupTagEvents(groupId).onMouseOver();
 			},
 			onMouseOut: async () => {
 				elementRef.current?.classList.toggle('elevate-child');
-				await data.groupTagEvents(groupId).onMouseOut();
+				await groupTagEvents(groupId).onMouseOut();
 			},
 		};
 	}
