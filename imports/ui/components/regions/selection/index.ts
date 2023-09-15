@@ -13,6 +13,7 @@ import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
 import { MeteorAsync } from '/imports/utils/promisify';
 
 import { FilterPreview } from '/imports/ui/lib/filter-preview';
+import './display';
 
 import './template.html';
 import './styles.scss';
@@ -38,26 +39,15 @@ import './styles.scss';
 		hasMultipleRegions() {
 			return Regions.findFilter({}, 2).count() > 1;
 		},
-	});
-}
 
-{
-	const Template = TemplateAny as TemplateStaticTyped<'regionSelectionDisplay'>;
-
-	const template = Template.regionSelectionDisplay;
-
-	template.helpers({
-		inNavbarClasses() {
-			if (this.inNavbar) {
-				return 'nav-item text-center col col-lg-auto';
-			}
-			return '';
-		},
-	});
-
-	template.events({
-		'click .js-region-selection-display'(_event, instance) {
-			(instance.parentInstance() as any).state.set('searchingRegions', true);
+		regionSelectionDisplayAttr() {
+			const instance = Template.instance();
+			return {
+				inNavbar: this.inNavbar,
+				onClick: () => {
+					instance.state.set('searchingRegions', true);
+				},
+			};
 		},
 	});
 }
