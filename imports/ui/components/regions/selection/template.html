@@ -4,7 +4,7 @@
 			{{#if state 'searchingRegions'}}
 				{{> regionSelection inNavbar=inNavbar}}
 			{{else}}
-				{{> regionSelectionDisplay inNavbar=inNavbar}}
+				{{> regionSelectionDisplay regionSelectionDisplayAttr}}
 			{{/if}}
 		{{/if}}
 	{{/if}}
@@ -115,19 +115,6 @@
 				<span class="checkmark fa-solid fa-check"></span>
 			{{/if}}
 			{{regionNameMarked}}
-		</a>
-	</li>
-</template>
-
-<template name="regionSelectionDisplay">
-	<li class="{{inNavbarClasses}}">
-		<a class="nav-link text-white js-region-selection-display">
-			<span class="fa-solid fa-location-dot" aria-hidden="true"></span>
-			{{#if currentRegionName}}
-				{{currentRegionName}}
-			{{else}}
-				{{i18n 'menue.All regions' 'All regions'}}
-			{{/if}}
 		</a>
 	</li>
 </template>
