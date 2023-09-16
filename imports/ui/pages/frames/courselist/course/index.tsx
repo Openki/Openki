@@ -1,0 +1,76 @@
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import $ from 'jquery';
+import { useSessionEquals } from '/imports/utils/react-meteor-data';
+import { useSiteName } from '/imports/utils/getSiteName';
+
+import { Regions } from '/imports/api/regions/regions';
+import { CourseModel } from '/imports/api/courses/courses';
+
+export function Course(props: { course: CourseModel; hideInterested: boolean }) {
+	const { course, hideInterested } = props;
+	const { t } = useTranslation();
+	const allRegions = useSessionEquals('region', 'all');
+	const [isExpanded, setIsExpanded] = useState(false);
+	const siteName = useSiteName();
+
+	function regionOf() {
+		return Regions.findOne(course.region)?.name;
+	}
+	function interestedPersons() {
+		return course.members.length;
+	}
+
+	return (
+		<div className="frame-list-item">
+			<h4
+				className="frame-list-item-header"
+				onClick={(event) => {
+					$(event.currentTarget).toggleClass('active');
+					setIsExpanded(!isExpanded);
+				}}
+			>
+				<span className="frame-list-item-toggle-indicator">
+					<i className="fa-solid fa-angle-down"></i>
+				</span>
+				{!hideInterested ? (
+					<span
+						className="frame-list-item-interested"
+						title={t('frame.courseList.interestedPersons', 'Interested people')}
+					>
+						<i className="fa-solid fa-user fa-fw"></i>
+						{interestedPersons()}
+					</span>
+				) : null}
+				{course.name}
+				{allRegions ? (
+					<span className="badge bg-primary frame-list-item-region">{regionOf()}</span>
+				) : null}
+			</h4>
+			{isExpanded ? (
+				<div className="p-2">
+					<div className="row">
+						<div className="col-sm-2">
+							<strong>{t('frame.eventsList.description')}</strong>
+						</div>
+						<div
+							className="col-sm-10"
+							dangerouslySetInnerHTML={{ __html: course.description }}
+						></div>
+					</div>
+					<div className="mt-2 d-grid d-sm-flex">
+						<a
+							className="btn btn-outline-dark"
+							href="{{pathFor 'showCourse' data=course}}"
+							target="_blank"
+						>
+							{t('frame.courseList.moreAboutThisCourse', 'More on {SITENAME}', {
+								SITENAME: siteName,
+							})}
+						</a>
+					</div>
+				</div>
+			) : null}
+		</div>
+	);
+}

@@ -1,27 +1,5 @@
 <template name="frameCourselistPage">
-	<style type="text/css">
-		/* beautify ignore:start */
-		{{#each cssRule in cssRules}}
-			{{cssRule}}
-		{{/each}}
-		/* beautify ignore:end */
-
-	</style>
-
-	{{#each course in courses}}
-		{{> frameCourselistCourse course=course hideInterested=hideInterested}}
-	{{else}}
-		<h2 class="mt-5 text-center">{{i18n 'frame.courselist.empty' 'There is nothing here yet'}}
-		</h2>
-	{{/each}}
-	{{#unless Template.subscriptionsReady}}
-		{{> loadingRow}}
-	{{/unless}}
-	{{#if moreCourses}}
-		<div class="mt-2 text-center">
-			<button class="js-show-more-courses btn btn-secondary" type="button">
-				{{i18n '_button.more'}}
-			</button>
-		</div>
-	{{/if}}
+	<div>
+		{{> React (component CourselistPage)}}
+	</div>
 </template>
