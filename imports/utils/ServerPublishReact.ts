@@ -18,7 +18,10 @@ export function createPublicationMany<A extends any[], T>(
 		const queryArgs = removeCallback(args);
 		return [
 			isLoading,
-			useFind<T>(() => queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs)),
+			useFind<T>(
+				() => queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs),
+				[JSON.stringify(queryArgs)],
+			),
 		];
 	};
 }
