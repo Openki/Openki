@@ -1,6 +1,7 @@
 import { Meteor, Subscription } from 'meteor/meteor';
-import { useFind, useSubscribe } from 'meteor/react-meteor-data';
+import { useFind, useSubscribe, useTracker } from 'meteor/react-meteor-data';
 import { publish, QueryBuilder, removeCallback } from './ServerPublishUtils';
+import { useUserId } from './react-meteor-data';
 
 export interface Publication<A extends any[], T> {
 	/**
@@ -15,12 +16,13 @@ export function createPublicationMany<A extends any[], T>(
 ) {
 	return function (...args: A) {
 		const isLoading = useSubscribe(name, ...args);
+		const userId = useUserId();
 		const queryArgs = removeCallback(args);
 		return [
 			isLoading,
-			useFind<T>(
-				() => queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs),
-				[JSON.stringify(queryArgs)],
+			useTracker(
+				() => queryBuilder.call({ userId }, ...queryArgs).fetch(),
+				[JSON.stringify(queryArgs), userId],
 			),
 		];
 	};
