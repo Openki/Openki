@@ -5,29 +5,58 @@ import { useSearchParams } from '/imports/utils/react-meteor-router';
 import { Courses, FindFilter } from '/imports/api/courses/courses';
 
 import * as Metatags from '/imports/utils/metatags';
+import { CssFromQuery } from '/imports/ui/lib/css-from-query';
 import { SortSpec } from '/imports/utils/sort-spec';
 
 import { LoadingRow } from '../../loading';
 import { useFindFilter } from '/imports/api/courses/publications';
 import { Course } from './course';
 
-export function CourselistPage(props: { cssRules: string[]; hideInterested: boolean }) {
-	const { cssRules, hideInterested } = props;
-	const { t } = useTranslation();
-
+function useOptions() {
 	const query = useSearchParams();
-	const sort = query.sort;
-	const [limit, setLimit] = useState(parseInt(query.count || '', 10) || 5);
 
 	const filter = Courses.Filtering().read(query).done();
-
 	const filterQuery = filter.toQuery() as FindFilter;
 	// Show internal events only when a group is specified
 	if (!filterQuery.group && filterQuery.internal === undefined) {
 		filterQuery.internal = false;
 	}
-	const sorting = sort ? SortSpec.fromString(sort) : SortSpec.unordered();
-	const [isLoading, coursesList] = useFindFilter(filterQuery, limit + 1, undefined, sorting.spec());
+
+	const count = parseInt(query.count || '', 10) || 5;
+
+	const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
+
+	const hideInterested = !!Number.parseInt(query.hideInterested || '', 10) || false;
+
+	const style = new CssFromQuery(query, [
+		['itembg', 'background-color', '.frame-list-item'],
+		['itemcolor', 'color', '.frame-list-item'],
+		['linkcolor', 'color', '.frame-list-item a'],
+		['regionbg', 'background-color', '.frame-list-item-region'],
+		['regioncolor', 'color', '.frame-list-item-region'],
+		['itemfontweight', 'font-weight', '.frame-list-item-header'],
+	]).getCssRules();
+
+	return {
+		filter: filterQuery,
+		count,
+		sort: sort.spec(),
+		hideInterested,
+		style,
+	};
+}
+
+export function CourselistPage() {
+	const { t } = useTranslation();
+	const options = useOptions();
+	const [limit, setLimit] = useState(options.count);
+
+	const [isLoading, coursesList] = useFindFilter(
+		options.filter,
+		limit + 1,
+		undefined,
+		options.sort,
+	);
 
 	Metatags.setCommonTags(t('course.list.windowtitle', 'Courses'));
 
@@ -40,14 +69,14 @@ export function CourselistPage(props: { cssRules: string[]; hideInterested: bool
 
 	return (
 		<>
-			<style type="text/css">{cssRules.map((cssRule) => cssRule)}</style>
+			<style type="text/css">{options.style.map((rule) => rule)}</style>
 			{courses().length === 0 ? (
 				<h2 className="mt-5 text-center">
 					{t('frame.courselist.empty', 'There is nothing here yet')}
 				</h2>
 			) : null}
 			{courses().map((course) => (
-				<Course key={course._id} course={course} hideInterested={hideInterested} />
+				<Course key={course._id} course={course} hideInterested={options.hideInterested} />
 			))}
 			{isLoading() ? <LoadingRow /> : null}
 			{moreCourses() ? (

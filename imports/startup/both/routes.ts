@@ -192,19 +192,6 @@ RouterAsync.route('frameCourselist', {
 	async onRun() {
 		await import('/imports/ui/pages/frames/courselist');
 	},
-	data() {
-		const cssRules = new CssFromQuery(this.params.query, [
-			['itembg', 'background-color', '.frame-list-item'],
-			['itemcolor', 'color', '.frame-list-item'],
-			['linkcolor', 'color', '.frame-list-item a'],
-			['regionbg', 'background-color', '.frame-list-item-region'],
-			['regioncolor', 'color', '.frame-list-item-region'],
-			['itemfontweight', 'font-weight', '.frame-list-item-header'],
-		]).getCssRules();
-
-		const hideInterested = Number.parseInt(this.params.query.hideInterested || '', 10) || 0;
-		return { cssRules, hideInterested };
-	},
 });
 
 RouterAsync.route('frameEvents', {
