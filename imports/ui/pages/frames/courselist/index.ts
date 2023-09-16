@@ -1,121 +1,82 @@
-import $ from 'jquery';
 import { Router } from 'meteor/iron:router';
 import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Session } from 'meteor/session';
 
-import { Regions } from '/imports/api/regions/regions';
-import { CourseModel, Courses } from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 
 import * as Metatags from '/imports/utils/metatags';
 import { SortSpec } from '/imports/utils/sort-spec';
 
+import './course';
+
 import './template.html';
 
-{
-	const Template = TemplateAny as TemplateStaticTyped<
-		'frameCourselistPage',
-		unknown,
-		{
-			limit: ReactiveVar<number>;
+const Template = TemplateAny as TemplateStaticTyped<
+	'frameCourselistPage',
+	unknown,
+	{
+		limit: ReactiveVar<number>;
+	}
+>;
+
+const template = Template.frameCourselistPage;
+
+template.onCreated(function () {
+	const instance = this;
+
+	instance.autorun(() => {
+		Metatags.setCommonTags(i18n('course.list.windowtitle', 'Courses'));
+	});
+
+	const query = Router.current().params.query;
+	const sort = query.sort;
+	instance.limit = new ReactiveVar(parseInt(query.count || '', 10) || 5);
+
+	instance.autorun(() => {
+		const filter = Courses.Filtering().read(query).done();
+
+		const filterQuery = filter.toQuery();
+
+		// Show internal events only when a group is specified
+		if (!filterQuery.group && filterQuery.internal === undefined) {
+			filterQuery.internal = false;
 		}
-	>;
 
-	const template = Template.frameCourselistPage;
+		const sorting = sort ? SortSpec.fromString(sort) : SortSpec.unordered();
 
-	template.onCreated(function () {
-		const instance = this;
-
-		instance.autorun(() => {
-			Metatags.setCommonTags(i18n('course.list.windowtitle', 'Courses'));
-		});
-
-		const query = Router.current().params.query;
-		const sort = query.sort;
-		instance.limit = new ReactiveVar(parseInt(query.count || '', 10) || 5);
-
-		instance.autorun(() => {
-			const filter = Courses.Filtering().read(query).done();
-
-			const filterQuery = filter.toQuery();
-
-			// Show internal events only when a group is specified
-			if (!filterQuery.group && filterQuery.internal === undefined) {
-				filterQuery.internal = false;
-			}
-
-			const sorting = sort ? SortSpec.fromString(sort) : SortSpec.unordered();
-
-			instance.subscribe(
-				'Courses.findFilter',
-				filterQuery,
-				this.limit.get() + 1,
-				undefined,
-				sorting.spec(),
-			);
-		});
-
-		instance.subscribe('Regions');
+		instance.subscribe(
+			'Courses.findFilter',
+			filterQuery,
+			this.limit.get() + 1,
+			undefined,
+			sorting.spec(),
+		);
 	});
 
-	template.helpers({
-		courses() {
-			return Courses.find(
-				{},
-				{
-					limit: Template.instance().limit.get(),
-				},
-			);
-		},
-		moreCourses() {
-			const limit = Template.instance().limit.get();
-			const courseCount = Courses.find({}, { limit: limit + 1 }).count();
+	instance.subscribe('Regions');
+});
 
-			return courseCount > limit;
-		},
-	});
+template.helpers({
+	courses() {
+		return Courses.find(
+			{},
+			{
+				limit: Template.instance().limit.get(),
+			},
+		);
+	},
+	moreCourses() {
+		const limit = Template.instance().limit.get();
+		const courseCount = Courses.find({}, { limit: limit + 1 }).count();
 
-	template.events({
-		'click .js-show-more-courses'(_event, instance) {
-			const { limit } = instance;
-			limit.set(limit.get() + 5);
-		},
-	});
-}
+		return courseCount > limit;
+	},
+});
 
-{
-	const Template = TemplateAny as TemplateStaticTyped<
-		'frameCourselistCourse',
-		unknown,
-		{ expanded: ReactiveVar<boolean> }
-	>;
-
-	const template = Template.frameCourselistCourse;
-
-	template.onCreated(function () {
-		this.expanded = new ReactiveVar(false);
-	});
-
-	template.helpers({
-		allRegions() {
-			return Session.equals('region', 'all');
-		},
-		regionOf(course: CourseModel) {
-			return Regions.findOne(course.region)?.name;
-		},
-		expanded() {
-			return Template.instance().expanded.get();
-		},
-		interestedPersons(course: CourseModel) {
-			return course.members.length;
-		},
-	});
-
-	template.events({
-		'click .js-toggle-course-details'(event, instance) {
-			$(event.currentTarget).toggleClass('active');
-			instance.expanded.set(!instance.expanded.get());
-		},
-	});
-}
+template.events({
+	'click .js-show-more-courses'(_event, instance) {
+		const { limit } = instance;
+		limit.set(limit.get() + 5);
+	},
+});
