@@ -1,4 +1,4 @@
-<template name="discussion">				
+<template name="discussion">
 	{{! style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react. }}
 	<div class="page-component discussion" id="discussion" style="margin-top: 15px;">
 		<div class="page-component-header">
@@ -15,8 +15,7 @@
 				</div>
 			{{/each}}
 			{{#if limited}}
-				<button class="btn btn-add page-component-btn js-show-all-posts"
-						type="button">
+				<button class="btn btn-add page-component-btn js-show-all-posts" type="button">
 					<i class="fa-solid fa-chevron-down fa-fw" aria-hidden="true"></i>
 					{{i18n 'course.discussions.showAllComment' 'Show all {NUM} comments' NUM=count}}
 				</button>
@@ -211,12 +210,12 @@
 
 <template name="discussionProfileLink">
 	{{#if this}}
-		{{> profileLink userId=this}}
+		<strong>{{> profileLink userId=this}}</strong>
 		{{contribution this}}
 	{{else}}
-		<span class="username">
+		<strong>
 			{{i18n 'comment.profileLink.anonymous' 'Anonymous'}}
-		</span>
+		</strong>
 	{{/if}}
 </template>
 

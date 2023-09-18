@@ -63,11 +63,6 @@ $discussion-post-bg: $blue-lighter;
 	background: darken($discussion-post-bg, 5%);
 }
 
-.discussion-post-header .profilelink,
-.discussion-post-header .username {
-	font-weight: bold;
-}
-
 .discussion-buttons {
 	@include td-float(right);
 }
