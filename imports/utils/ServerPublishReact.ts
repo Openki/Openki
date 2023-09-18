@@ -1,5 +1,5 @@
 import { Meteor, Subscription } from 'meteor/meteor';
-import { useFind, useSubscribe, useTracker } from 'meteor/react-meteor-data';
+import { useSubscribe, useTracker } from 'meteor/react-meteor-data';
 import { publish, QueryBuilder, removeCallback } from './ServerPublishUtils';
 import { useUserId } from './react-meteor-data';
 
