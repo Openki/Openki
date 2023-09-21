@@ -204,6 +204,13 @@
 	margin-inline-start: calc(var(--bs-gutter-x) * -0.5);
 }
 
+.navbar .navbar-nav > .open > .login-dropdown,
+.navbar .navbar-nav > .dropdown > .login-dropdown {
+	@include media-breakpoint-up(md) {
+		min-width: 300px;
+	}
+}
+
 .navbar-custom-modal {
 	background-color: rgb(0, 0, 0); /* Fallback color */
 	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */

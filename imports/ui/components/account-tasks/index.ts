@@ -1,396 +1,68 @@
-import { Meteor } from 'meteor/meteor';
-import { i18n } from '/imports/startup/both/i18next';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Session } from 'meteor/session';
-import { Random } from 'meteor/random';
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { AccountsAsync, MeteorAsync } from '/imports/utils/promisify';
-
-import * as Alert from '/imports/api/alerts/alert';
-import * as UsersMethods from '/imports/api/users/methods';
-import { Regions } from '/imports/api/regions/regions';
-
-import { PublicSettings } from '/imports/utils/PublicSettings';
-import { isEmail } from '/imports/utils/email-tools';
-
-import { ScssVars } from '/imports/ui/lib/scss-vars';
-import * as TemplateMixins from '/imports/ui/lib/template-mixins';
-import * as Viewport from '/imports/ui/lib/viewport';
-import * as Analytics from '/imports/ui/lib/analytics';
-import { CleanedRegion } from '/imports/ui/lib/cleaned-region';
 
 import './register-frame';
 import './forgot-pwd-frame';
+import './visitor-frame';
+import './login-frame';
 
 import './template.html';
 import './styles.scss';
 
-{
-	const Template = TemplateAny as TemplateStaticTyped<
-		'accountTasks',
-		unknown,
-		{
-			accountTask: ReactiveVar<string>;
-			transferUsername: boolean;
-			transferPassword: boolean;
-			transferMail: boolean;
+const Template = TemplateAny as TemplateStaticTyped<
+	'accountTasks',
+	unknown,
+	{
+		accountTask: ReactiveVar<string>;
+		transferUsername: boolean;
+		transferPassword: boolean;
+		transferMail: boolean;
+	}
+>;
+
+const template = Template.accountTasks;
+
+template.onCreated(function () {
+	const instance = this;
+
+	instance.accountTask = new ReactiveVar('login');
+	instance.autorun(() => {
+		if (Session.equals('pleaseLogin', true)) {
+			instance.$('.js-account-tasks').modal('show');
 		}
-	>;
-
-	const template = Template.accountTasks;
-
-	template.onCreated(function () {
-		const instance = this;
-
-		instance.accountTask = new ReactiveVar('login');
-		instance.autorun(() => {
-			if (Session.equals('pleaseLogin', true)) {
-				instance.$('.js-account-tasks').modal('show');
-			}
-		});
 	});
+});
 
-	template.helpers({
-		activeAccountTask(task: string) {
-			return Template.instance().accountTask.get() === task;
-		},
-		pleaseLogin() {
-			return Session.get('pleaseLogin');
-		},
-	});
+template.helpers({
+	activeAccountTask(task: string) {
+		return Template.instance().accountTask.get() === task;
+	},
+	pleaseLogin() {
+		return Session.get('pleaseLogin');
+	},
+});
 
-	template.events({
-		'show.bs.modal .js-account-tasks'(_event, instance) {
-			/* eslint-disable-next-line no-param-reassign */
-			instance.transferUsername = false;
-			/* eslint-disable-next-line no-param-reassign */
-			instance.transferPassword = false;
-			/* eslint-disable-next-line no-param-reassign */
-			instance.transferMail = false;
-		},
+template.events({
+	'show.bs.modal .js-account-tasks'(_event, instance) {
+		/* eslint-disable-next-line no-param-reassign */
+		instance.transferUsername = false;
+		/* eslint-disable-next-line no-param-reassign */
+		instance.transferPassword = false;
+		/* eslint-disable-next-line no-param-reassign */
+		instance.transferMail = false;
+	},
 
-		'shown.bs.modal .js-account-tasks'(_event, instance) {
-			instance.$('input').first().trigger('select');
-		},
-
-		'hide.bs.modal .js-account-tasks'(_event, instance) {
-			instance.$('input').val('');
-		},
-
-		'hidden.bs.modal .js-account-tasks'(_event, instance) {
-			instance.accountTask.set('login');
-			Session.set('pleaseLogin', false);
-		},
-	});
-}
-
-{
-	const Template = TemplateMixins.FormfieldErrors(
-		TemplateAny as TemplateStaticTyped<
-			'loginFrame',
-			unknown,
-			{
-				OAuthServices: {
-					key: string;
-					name: string;
-					serviceName: string;
-				}[];
-			}
-		>,
-		'loginFrame',
-		{
-			noUsername: {
-				text: () =>
-					i18n(
-						'login.warning.noUserName',
-						'Please enter your username or e-mail address to log in.',
-					),
-				field: 'username',
-			},
-			'Incorrect password': {
-				text: () => i18n('login.password.password_incorrect', 'Incorrect password'),
-				field: 'password',
-			},
-			'User not found': {
-				text: () => i18n('login.username.usr_doesnt_exist', 'This user does not exist.'),
-				field: 'username',
-			},
-			'User has no password set': {
-				text: () => i18n('login.username.no_password_set', 'Please log in below.'),
-				field: 'username',
-			},
-		},
-	);
-
-	const template = Template.loginFrame;
-
-	template.onCreated(function () {
-		const instance = this;
-
-		instance.busy(false);
-
-		const oAuthServices = [];
-		const login = PublicSettings.feature.login;
-		if (login.google) {
-			oAuthServices.push({
-				key: 'google',
-				name: 'Google',
-				serviceName: 'Google',
-			});
-		}
-		if (login.facebook) {
-			oAuthServices.push({
-				key: 'facebook',
-				name: 'Facebook',
-				serviceName: 'Facebook',
-			});
-		}
-		if (login.github) {
-			oAuthServices.push({
-				key: 'github',
-				name: 'GitHub',
-				serviceName: 'Github',
-			});
-		}
-		instance.OAuthServices = oAuthServices;
-	});
-
-	template.onRendered(function () {
-		const { transferMail } = this.parentInstance() as any;
-		if (transferMail) {
-			this.$('.js-username').val(transferMail);
-		}
-
-		this.$('input').first().trigger('select');
-	});
-
-	template.helpers({
-		OAuthServices() {
-			return Template.instance().OAuthServices;
-		},
-	});
-
-	template.events({
-		'click .js-forgot-pwd-btn'(event, instance) {
-			event.preventDefault();
-
-			const username = instance.$('.js-username').val() as string;
-			if (isEmail(username)) {
-				/* eslint-disable-next-line no-param-reassign */
-				(instance.parentInstance() as any).transferMail = username;
-			}
-
-			(instance.parentInstance() as any).accountTask.set('recoverPwd');
-		},
-
-		'click .js-visitor-open'(_event, instance) {
-			const parentInstance = instance.parentInstance() as any;
-
-			parentInstance.accountTask.set('visitor');
-		},
-
-		'click .js-register-open'(_event, instance) {
-			let username = instance.$('.js-username').val() as string;
-			const password = instance.$('.js-password').val() as string;
-			let email;
-
-			// Sometimes people register with their email address in the first field
-			// Move entered username over to email field if it contains a @
-			if (isEmail(username)) {
-				email = username;
-				username = '';
-			}
-
-			const parentInstance = instance.parentInstance() as any;
-			parentInstance.transferUsername = username;
-			parentInstance.transferPassword = password;
-			parentInstance.transferMail = email;
-
-			parentInstance.accountTask.set('register');
-		},
-
-		async 'submit form, click .js-login'(event, instance) {
-			event.preventDefault();
-			instance.errors.reset();
-
-			const user = instance.$('.js-username').val() as string;
-			if (!user) {
-				instance.errors.add('noUsername');
-			}
-
-			if (instance.errors.present()) {
-				return;
-			}
-
-			const password = instance.$('.js-password').val() as string;
-
-			instance.busy('logging-in');
-			try {
-				await MeteorAsync.loginWithPassword(user, password);
-
-				if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
-					$('#bs-navbar-collapse').collapse('hide');
-				}
-				$('.js-account-tasks').modal('hide');
-
-				const regionId = CleanedRegion(Session.get('region'));
-				if (regionId) {
-					await UsersMethods.regionChange(regionId);
-				}
-
-				await UsersMethods.updateLocale(Session.get('locale'));
-
-				Analytics.trackEvent(
-					'Logins',
-					'Logins with password',
-					regionId ? Regions.findOne(regionId)?.nameEn : '',
-				);
-			} catch (err) {
-				instance.errors.add(err.reason);
-			} finally {
-				instance.busy(false);
-			}
-		},
-
-		async 'click .js-oauth-btn'(event, instance) {
-			event.preventDefault();
-
-			const { service } = event.currentTarget.dataset;
-			const loginMethod = `loginWith${service}`;
-			if (!(Meteor as any)[loginMethod]) {
-				Alert.serverError(new Error(`don't have ${loginMethod}`));
-				return;
-			}
-
-			instance.busy(service);
-			(Meteor as any)[loginMethod]({}, async (err: any) => {
-				instance.busy(false);
-				if (err) {
-					Alert.serverError(err);
-				} else {
-					if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
-						$('#bs-navbar-collapse').collapse('hide');
-					}
-					$('.js-account-tasks').modal('hide');
-
-					const regionId = CleanedRegion(Session.get('region'));
-					if (regionId) {
-						await UsersMethods.regionChange(regionId);
-					}
-
-					await UsersMethods.updateLocale(Session.get('locale'));
-
-					Analytics.trackEvent(
-						'Logins',
-						`Logins with ${service}`,
-						Regions.findOne(Meteor.user()?.profile.regionId)?.nameEn,
-					);
-				}
-			});
-		},
-	});
-}
-
-{
-	const Template = TemplateMixins.FormfieldErrors(
-		TemplateAny as TemplateStaticTyped<'visitorFrame'>,
-		'visitorFrame',
-		{
-			noEmail: {
-				text() {
-					return i18n(
-						'visitor.warning.noEmailProvided',
-						'Please enter an email-address to continue.',
-					);
-				},
-				field: 'email',
-			},
-			'email invalid': {
-				text() {
-					return i18n('register.warning.emailNotValid');
-				},
-				field: 'email',
-			},
-			'Email already exists.': {
-				text() {
-					return i18n(
-						'visitor.warning.emailExists',
-						'This email already exists. Have you tried resetting your password?',
-					);
-				},
-				field: 'email',
-			},
-		},
-	);
-
-	const template = Template.visitorFrame;
-
-	template.onCreated(function () {
-		const instance = this;
-		instance.busy(false);
-	});
-
-	template.onRendered(function () {
-		const instance = this;
-
+	'shown.bs.modal .js-account-tasks'(_event, instance) {
 		instance.$('input').first().trigger('select');
-	});
+	},
 
-	template.events({
-		async 'click .js-visitor'(event, instance) {
-			event.preventDefault();
-			instance.errors.reset();
+	'hide.bs.modal .js-account-tasks'(_event, instance) {
+		instance.$('input').val('');
+	},
 
-			const email = instance.$('.js-email').val() as string;
-			if (!email) {
-				instance.errors.add('noEmail');
-			}
-
-			if (instance.errors.present()) {
-				return;
-			}
-
-			instance.busy('registering');
-
-			try {
-				await AccountsAsync.createUser({
-					email,
-					password: Random.secret(),
-					locale: Session.get('locale'),
-				} as any);
-
-				if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
-					$('#bs-navbar-collapse').collapse('hide');
-				}
-				$('.js-account-tasks').modal('hide');
-
-				const regionId = CleanedRegion(Session.get('region'));
-				if (regionId) {
-					await UsersMethods.regionChange(regionId);
-				}
-
-				await UsersMethods.updateLocale(Session.get('locale'));
-
-				const user = Meteor.user();
-
-				if (!user) {
-					throw new Error('Unexpected falsy: user');
-				}
-
-				Analytics.trackEvent(
-					'Registers',
-					'Visitor',
-					Regions.findOne(user.profile.regionId)?.nameEn,
-				);
-			} catch (err) {
-				instance.errors.add(err.reason);
-			} finally {
-				instance.busy(false);
-			}
-		},
-
-		'click .js-back-to-login'(_event, instance) {
-			(instance.parentInstance() as any).accountTask.set('login');
-		},
-	});
-}
+	'hidden.bs.modal .js-account-tasks'(_event, instance) {
+		instance.accountTask.set('login');
+		Session.set('pleaseLogin', false);
+	},
+});
