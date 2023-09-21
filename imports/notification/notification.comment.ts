@@ -3,6 +3,7 @@ import { Router } from 'meteor/iron:router';
 import { Meteor } from 'meteor/meteor';
 import { i18n } from '/imports/startup/both/i18next';
 import { _ } from 'meteor/underscore';
+import { Spacebars } from 'meteor/spacebars';
 
 import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
 import { CourseModel, Courses } from '/imports/api/courses/courses';
@@ -140,12 +141,16 @@ export function Model(entry: { body: Body }) {
 			}
 			const emailLogo = region?.custom?.emailLogo;
 			const siteName = getSiteName(region);
+			const courseLink = Router.url('showCourse', course, {
+				query: `campaign=commentNotify`,
+			});
+			const commentLink = Router.url('showCourse', course, {
+				query: `select=${comment._id}&campaign=commentNotify`,
+			});
 			return {
 				unsubLink: Router.url('profileNotificationsUnsubscribe', { token: unsubToken }),
-				course,
-				courseLink: Router.url('showCourse', course, {
-					query: `select=${comment._id}&campaign=commentNotify`,
-				}),
+				course: Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`),
+				commentLink,
 				subject,
 				comment,
 				commenter,

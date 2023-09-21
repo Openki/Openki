@@ -6,9 +6,9 @@
 			</h5>
 			<p>
 				{{#if commenter}}
-					{{i18n "notification.comment.mail.intro" 'There was a comment by {USERNAME} on {COURSE}:' USERNAME=commenterName COURSE=course.name lng=locale}}
+					{{i18n "notification.comment.mail.intro" 'There was a comment by {USERNAME} on {COURSE}:' USERNAME=commenterName COURSE=course lng=locale}}
 				{{else}}
-					{{i18n "notification.comment.mail.intro.anon" 'There was an anonymous comment on {COURSE}:' COURSE=course.name lng=locale}}
+					{{i18n "notification.comment.mail.intro.anon" 'There was an anonymous comment on {COURSE}:' COURSE=course lng=locale}}
 				{{/if}}
 			</p>
 			<table class="comment-box">
@@ -25,7 +25,7 @@
 			</table>
 			<p>
 				<a
-				   href="{{courseLink}}">{{i18n "notification.comment.mail.linktext" '➜ See comment on {SITENAME}' SITENAME=customSiteName lng=locale}}</a>
+				   href="{{commentLink}}">{{i18n "notification.comment.mail.linktext" '➜ See comment on {SITENAME}' SITENAME=customSiteName lng=locale}}</a>
 				{{#if commenter}}
 					<br />
 					<a
@@ -39,7 +39,11 @@
 			<table class="footer">
 				<tr>
 					<td>
-						{{i18n "email.base.receiveNote.courseTeam" COURSE=course.name lng=locale}}
+						{{#if comment.notifyAll}}
+							{{i18n "notification.event.mail.notice" COURSE=course lng=locale}}
+						{{else}}
+							{{i18n "email.base.receiveNote.courseTeam" COURSE=course lng=locale}}
+						{{/if}}
 					</td>
 				</tr>
 				<tr>
