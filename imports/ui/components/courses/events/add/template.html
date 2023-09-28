@@ -1,21 +1,5 @@
 <template name="courseEventAdd">
-	<div class="event-caption-wrap">
-		<a class="btn p-0" href="{{pathFor 'createEvent' query=(concat 'courseId=' course._id)}}"
-		   title="{{i18n 'course.event.edit.add' attr=true}}">
-			<div
-				 class="event-caption event-caption-placeholder event-caption-action event-caption-add">
-				<div class="event-caption-header-wrap">
-					<div class="event-caption-header">
-						<div class="event-caption-pseudoborder"></div>
-					</div>
-				</div>
-				<div class="event-caption-body-wrap">
-					<div class="event-caption-body"></div>
-				</div>
-				<span class="event-caption-icon">
-					<i class="fa-solid fa-plus fa-2x"></i>
-				</span>
-			</div>
-		</a>
+	<div style="display: inline-block;">
+		{{> React (component CourseEventAdd)}}
 	</div>
 </template>

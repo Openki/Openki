@@ -1,18 +1,48 @@
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Router } from 'meteor/iron:router';
 
 import { CourseModel } from '/imports/api/courses/courses';
 
+export function Add(props: { course: CourseModel }) {
+	const { t } = useTranslation();
+	const { course } = props;
+
+	return (
+		<div className="event-caption-wrap">
+			<a
+				className="btn p-0"
+				href={Router.path('createEvent', undefined, { query: { courseId: course._id } })}
+				title={t('course.event.edit.add')}
+			>
+				<div
+					className="event-caption event-caption-placeholder event-caption-action event-caption-add"
+					onMouseOver={(event) => {
+						$(event.currentTarget).toggleClass('event-caption-placeholder', false);
+					}}
+					onMouseOut={(event) => {
+						$(event.currentTarget).toggleClass('event-caption-placeholder', true);
+					}}
+				>
+					<div className="event-caption-header-wrap">
+						<div className="event-caption-header">
+							<div className="event-caption-pseudoborder"></div>
+						</div>
+					</div>
+					<div className="event-caption-body-wrap">
+						<div className="event-caption-body"></div>
+					</div>
+					<span className="event-caption-icon">
+						<i className="fa-solid fa-plus fa-2x"></i>
+					</span>
+				</div>
+			</a>
+		</div>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
 import './template.html';
-import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<'courseEventAdd', { course: CourseModel }>;
-
-const template = Template.courseEventAdd;
-
-template.events({
-	'mouseover/mouseout .event-caption-action'(event, instance) {
-		instance
-			.$(event.currentTarget as any)
-			.toggleClass('event-caption-placeholder', event.type === 'mouseout');
-	},
-});
+Template.registerHelper('CourseEventAdd', () => Add);
