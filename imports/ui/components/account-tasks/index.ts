@@ -8,7 +8,6 @@ import './visitor-frame';
 import './login-frame';
 
 import './template.html';
-import './styles.scss';
 
 const Template = TemplateAny as TemplateStaticTyped<
 	'accountTasks',
