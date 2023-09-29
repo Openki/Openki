@@ -4,14 +4,6 @@
 	position: relative;
 }
 
-.delete-events-details {
-	color: $gray-700;
-
-	&:hover {
-		color: $gray-700;
-	}
-}
-
 .delete-events-modal .panel {
 	margin: 0;
 }
@@ -31,8 +23,4 @@
 .selected-events {
 	max-height: 300px;
 	overflow: auto;
-}
-
-.delete-events-events-title {
-	margin-bottom: 5px;
 }

@@ -1,0 +1,18 @@
+<template name="deleteEventsEvent">
+	<span class="delete-events-events-title">
+		{{title}}
+	</span>
+	<span class="delete-events-details">
+		<span class="delete-events-details-component">
+			<span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+			{{weekdayFormat start}}
+			{{dateFormat start}}
+		</span>
+		<span class="delete-events-details-component">
+			<span class="fa-regular fa-clock fa-fw" aria-hidden="true"></span>
+			{{timeFormat start}}
+			-
+			{{timeFormat end}}
+		</span>
+	</span>
+</template>
