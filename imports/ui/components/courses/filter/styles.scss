@@ -1,4 +1,4 @@
-@import '{}/imports/ui/stylesheets/variables/index';
+@import "{}/imports/ui/stylesheets/variables/index";
 
 .filter {
 	margin-top: 20px;
@@ -88,7 +88,7 @@
 	opacity: 0.75;
 	text-align: center;
 	transition-duration: 0.15s;
-	transition-property: #{'box-shadow opacity'};
+	transition-property: #{"box-shadow opacity"};
 	width: 100%;
 
 	&.is-proposal {
@@ -112,7 +112,7 @@
 		box-shadow: 0 0 4px rgba(67, 223, 37, 1);
 		opacity: 1;
 		transition-duration: 0.15s;
-		transition-property: #{'box-shadow opacity'};
+		transition-property: #{"box-shadow opacity"};
 	}
 }
 

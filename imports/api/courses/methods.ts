@@ -1,100 +1,100 @@
-import { Match, check } from 'meteor/check';
-import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
-import { i18n } from '/imports/startup/both/i18next';
+import { Match, check } from "meteor/check";
+import { Meteor } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
+import { i18n } from "/imports/startup/both/i18next";
 
-import { Courses, Course, CourseEntity, CourseModel } from '/imports/api/courses/courses';
-import { Events } from '/imports/api/events/events';
-import { Groups } from '/imports/api/groups/groups';
-import { Regions } from '/imports/api/regions/regions';
-import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
-import { Roles } from '/imports/api/roles/roles';
-import * as UpdateMethods from '/imports/utils/update-methods';
-import * as historyDenormalizer from '/imports/api/courses/historyDenormalizer';
-import * as timeLasteditDenormalizer from '/imports/api/courses/timeLasteditDenormalizer';
-import * as eventsCategoriesDenormalizer from '/imports/api/events/categoriesDenormalizer';
-import * as eventsCourseImageDenormalizer from '/imports/api/events/courseImageDenormalizer';
-import { Log } from '/imports/api/log/log';
-import { UserModel } from '/imports/api/users/users';
+import { Courses, Course, CourseEntity, CourseModel } from "/imports/api/courses/courses";
+import { Events } from "/imports/api/events/events";
+import { Groups } from "/imports/api/groups/groups";
+import { Regions } from "/imports/api/regions/regions";
+import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
+import { Roles } from "/imports/api/roles/roles";
+import * as UpdateMethods from "/imports/utils/update-methods";
+import * as historyDenormalizer from "/imports/api/courses/historyDenormalizer";
+import * as timeLasteditDenormalizer from "/imports/api/courses/timeLasteditDenormalizer";
+import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
+import * as eventsCourseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
+import { Log } from "/imports/api/log/log";
+import { UserModel } from "/imports/api/users/users";
 
-import { Subscribe, Unsubscribe, Message } from './subscription';
+import { Subscribe, Unsubscribe, Message } from "./subscription";
 
-import { Notification } from '/imports/notification/notification';
+import { Notification } from "/imports/notification/notification";
 
-import * as AsyncTools from '/imports/utils/async-tools';
-import { ServerMethod } from '/imports/utils/ServerMethod';
-import * as StringTools from '/imports/utils/string-tools';
-import * as HtmlTools from '/imports/utils/html-tools';
-import { LocalizedValuePattern } from '/imports/utils/getLocalizedValue';
-import * as FileStorage from '/imports/utils/FileStorage';
-import { StringEnum, Type } from '/imports/utils/CustomChecks';
-import { GroupPromoters } from '/imports/utils/update-methods';
+import * as AsyncTools from "/imports/utils/async-tools";
+import { ServerMethod } from "/imports/utils/ServerMethod";
+import * as StringTools from "/imports/utils/string-tools";
+import * as HtmlTools from "/imports/utils/html-tools";
+import { LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
+import * as FileStorage from "/imports/utils/FileStorage";
+import { StringEnum, Type } from "/imports/utils/CustomChecks";
+import { GroupPromoters } from "/imports/utils/update-methods";
 
 export interface Method<T> {
-	method: string;
-	read: (params: T) => {
-		validate(): void;
-		permitted: (user: UserModel | undefined | null) => boolean;
-		provide(
-			rel: string[],
-			body: {
-				operatorId: string | undefined;
-			},
-		): void;
-		apply(): void;
-	};
+  method: string;
+  read: (params: T) => {
+    validate(): void;
+    permitted: (user: UserModel | undefined | null) => boolean;
+    provide(
+      rel: string[],
+      body: {
+        operatorId: string | undefined;
+      }
+    ): void;
+    apply(): void;
+  };
 }
 
 function registerMethod<T>(method: Method<T>): void {
-	const apply = function (params: T) {
-		const change = method.read(params);
-		try {
-			change.validate();
-		} catch (message) {
-			throw new Meteor.Error('invalid', `Invalid change ${change}:${message}`, message);
-		}
+  const apply = function (params: T) {
+    const change = method.read(params);
+    try {
+      change.validate();
+    } catch (message) {
+      throw new Meteor.Error("invalid", `Invalid change ${change}:${message}`, message);
+    }
 
-		const operator = Meteor.user();
+    const operator = Meteor.user();
 
-		if (!change.permitted(operator)) {
-			throw new Meteor.Error(
-				'not-permitted',
-				`Change not permitted: ${change}`,
-				`operator: ${operator?._id}`,
-			);
-		}
+    if (!change.permitted(operator)) {
+      throw new Meteor.Error(
+        "not-permitted",
+        `Change not permitted: ${change}`,
+        `operator: ${operator?._id}`
+      );
+    }
 
-		const rel = [operator?._id as string];
-		const body = { operatorId: operator?._id };
-		change.provide(rel, body);
-		const result = Log.record(method.method, rel, body);
-		try {
-			change.apply();
-		} catch (message) {
-			result.error(message);
-			throw new Meteor.Error(
-				'error-applying',
-				`Error applying change ${change}: ${message}`,
-				message,
-			);
-		}
-		result.success();
-	};
+    const rel = [operator?._id as string];
+    const body = { operatorId: operator?._id };
+    change.provide(rel, body);
+    const result = Log.record(method.method, rel, body);
+    try {
+      change.apply();
+    } catch (message) {
+      result.error(message);
+      throw new Meteor.Error(
+        "error-applying",
+        `Error applying change ${change}: ${message}`,
+        message
+      );
+    }
+    result.success();
+  };
 
-	Meteor.methods({ [method.method]: apply });
+  Meteor.methods({ [method.method]: apply });
 }
 
 function loadCourse(courseId: string) {
-	// new!
-	if (courseId === '') {
-		return new Course() as CourseModel;
-	}
+  // new!
+  if (courseId === "") {
+    return new Course() as CourseModel;
+  }
 
-	const course = Courses.findOne({ _id: courseId });
-	if (!course) {
-		throw new Meteor.Error(404, 'Course not found');
-	}
-	return course;
+  const course = Courses.findOne({ _id: courseId });
+  if (!course) {
+    throw new Meteor.Error(404, "Course not found");
+  }
+  return course;
 }
 
 registerMethod(Subscribe);
@@ -102,270 +102,270 @@ registerMethod(Unsubscribe);
 registerMethod(Message);
 
 export const CustomFieldPattern = {
-	name: String,
-	displayText: LocalizedValuePattern,
-	value: String,
-	visibleFor: StringEnum('all', 'editors'),
+  name: String,
+  displayText: LocalizedValuePattern,
+  value: String,
+  visibleFor: StringEnum("all", "editors"),
 };
 export type CustomField = Type<typeof CustomFieldPattern>;
 
 export const SaveFieldPattern = {
-	description: Match.Optional(String),
-	categories: Match.Optional([String]),
-	name: Match.Optional(String),
-	region: Match.Optional(String),
-	customFields: Match.Optional([CustomFieldPattern]),
-	roles: Match.Optional(Match.ObjectIncluding<Record<string, boolean>>({})),
-	subs: Match.Optional([String]),
-	unsubs: Match.Optional([String]),
-	groups: Match.Optional([String]),
-	internal: Match.Optional(Boolean),
-	singleEvent: Match.Optional(Boolean),
+  description: Match.Optional(String),
+  categories: Match.Optional([String]),
+  name: Match.Optional(String),
+  region: Match.Optional(String),
+  customFields: Match.Optional([CustomFieldPattern]),
+  roles: Match.Optional(Match.ObjectIncluding<Record<string, boolean>>({})),
+  subs: Match.Optional([String]),
+  unsubs: Match.Optional([String]),
+  groups: Match.Optional([String]),
+  internal: Match.Optional(Boolean),
+  singleEvent: Match.Optional(Boolean),
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
 export const save = ServerMethod(
-	'course.save',
+  "course.save",
 
-	async (courseId: string, changes: SaveFields) => {
-		check(courseId, String);
-		check(changes, SaveFieldPattern);
+  async (courseId: string, changes: SaveFields) => {
+    check(courseId, String);
+    check(changes, SaveFieldPattern);
 
-		const user = Meteor.user();
-		if (!user) {
-			throw new Meteor.Error(401, 'please log in');
-		}
+    const user = Meteor.user();
+    if (!user) {
+      throw new Meteor.Error(401, "please log in");
+    }
 
-		const course = loadCourse(courseId);
+    const course = loadCourse(courseId);
 
-		if (!course.editableBy(user)) {
-			throw new Meteor.Error(401, 'edit not permitted');
-		}
+    if (!course.editableBy(user)) {
+      throw new Meteor.Error(401, "edit not permitted");
+    }
 
-		/* Changes we want to perform */
-		const set = {} as Mongo.OptionalId<CourseEntity>;
+    /* Changes we want to perform */
+    const set = {} as Mongo.OptionalId<CourseEntity>;
 
-		if (changes.roles) {
-			Roles.forEach((role) => {
-				const { type } = role;
-				const shouldHave = !!(role.preset || changes.roles?.[type]);
-				const have = course.roles.includes(type);
+    if (changes.roles) {
+      Roles.forEach((role) => {
+        const { type } = role;
+        const shouldHave = !!(role.preset || changes.roles?.[type]);
+        const have = course.roles.includes(type);
 
-				if (have && !shouldHave) {
-					Courses.update(
-						{ _id: courseId },
-						{ $pull: { roles: type } },
-						{ multi: true },
-						AsyncTools.checkUpdateOne,
-					);
+        if (have && !shouldHave) {
+          Courses.update(
+            { _id: courseId },
+            { $pull: { roles: type } },
+            { multi: true },
+            AsyncTools.checkUpdateOne
+          );
 
-					// HACK
-					// due to a mongo limitation we can't { $pull { 'members.roles': type } }
-					// so we keep removing one by one until there are none left
-					while (
-						Courses.update(
-							{ _id: courseId, 'members.roles': type },
-							{ $pull: { 'members.$.roles': type } },
-						)
-					);
-				}
-				if (!have && shouldHave) {
-					if (course.isNew()) {
-						set.roles = set.roles || [];
-						set.roles.push(type);
-					} else {
-						Courses.update(
-							{ _id: courseId },
-							{ $addToSet: { roles: type } },
-							{ multi: true },
-							AsyncTools.checkUpdateOne,
-						);
-					}
-				}
-			});
-		}
+          // HACK
+          // due to a mongo limitation we can't { $pull { 'members.roles': type } }
+          // so we keep removing one by one until there are none left
+          while (
+            Courses.update(
+              { _id: courseId, "members.roles": type },
+              { $pull: { "members.$.roles": type } }
+            )
+          );
+        }
+        if (!have && shouldHave) {
+          if (course.isNew()) {
+            set.roles = set.roles || [];
+            set.roles.push(type);
+          } else {
+            Courses.update(
+              { _id: courseId },
+              { $addToSet: { roles: type } },
+              { multi: true },
+              AsyncTools.checkUpdateOne
+            );
+          }
+        }
+      });
+    }
 
-		if (changes.description) {
-			// 640 k ought to be enough for everybody  -- Mao
-			set.description = changes.description.substring(0, 640 * 1024);
-			if (Meteor.isServer) {
-				set.description = HtmlTools.saneHtml(set.description);
-			}
-		}
+    if (changes.description) {
+      // 640 k ought to be enough for everybody  -- Mao
+      set.description = changes.description.substring(0, 640 * 1024);
+      if (Meteor.isServer) {
+        set.description = HtmlTools.saneHtml(set.description);
+      }
+    }
 
-		if (changes.categories) {
-			set.categories = changes.categories.slice(0, 20);
-		}
-		if (changes.name) {
-			set.name = StringTools.saneTitle(changes.name).substring(0, 1000);
-			set.slug = StringTools.slug(set.name);
-		}
-		if (changes.customFields) {
-			set.customFields = changes.customFields.map((i) => ({
-				name: i.name.substring(0, 50),
-				displayText: i.displayText,
-				value: i.value.substring(0, 2000),
-				visibleFor: i.visibleFor,
-			}));
-		}
-		if (changes.internal !== undefined) {
-			set.internal = changes.internal;
-		}
+    if (changes.categories) {
+      set.categories = changes.categories.slice(0, 20);
+    }
+    if (changes.name) {
+      set.name = StringTools.saneTitle(changes.name).substring(0, 1000);
+      set.slug = StringTools.slug(set.name);
+    }
+    if (changes.customFields) {
+      set.customFields = changes.customFields.map((i) => ({
+        name: i.name.substring(0, 50),
+        displayText: i.displayText,
+        value: i.value.substring(0, 2000),
+        visibleFor: i.visibleFor,
+      }));
+    }
+    if (changes.internal !== undefined) {
+      set.internal = changes.internal;
+    }
 
-		if (changes.singleEvent !== undefined) {
-			set.singleEvent = changes.singleEvent;
-		}
+    if (changes.singleEvent !== undefined) {
+      set.singleEvent = changes.singleEvent;
+    }
 
-		if (course.isNew()) {
-			// You can add newly created courses to any group
-			let groups = changes.groups || [];
-			groups = [...new Set(groups)]; // make unique
-			groups = groups.map((groupId) => {
-				const group = Groups.findOne(groupId);
-				if (!group) {
-					throw new Meteor.Error(404, `no group with id ${groupId}`);
-				}
-				return group._id;
-			});
-			set.groups = groups;
-			set.groupOrganizers = groups;
+    if (course.isNew()) {
+      // You can add newly created courses to any group
+      let groups = changes.groups || [];
+      groups = [...new Set(groups)]; // make unique
+      groups = groups.map((groupId) => {
+        const group = Groups.findOne(groupId);
+        if (!group) {
+          throw new Meteor.Error(404, `no group with id ${groupId}`);
+        }
+        return group._id;
+      });
+      set.groups = groups;
+      set.groupOrganizers = groups;
 
-			/* region cannot be changed */
-			const region = Regions.findOne({ _id: changes.region });
-			if (!region) {
-				throw new Meteor.Error(404, 'region missing');
-			}
-			set.region = region._id;
+      /* region cannot be changed */
+      const region = Regions.findOne({ _id: changes.region });
+      if (!region) {
+        throw new Meteor.Error(404, "region missing");
+      }
+      set.region = region._id;
 
-			/* When a course is created, the creator is automatically added as sole member of the team */
-			set.members = [
-				{
-					user: user._id,
-					roles: ['participant', 'team'],
-					comment: i18n('courses.creator.defaultMessage', '(has proposed this course)', {
-						lng: user.locale,
-					}),
-				},
-			];
-			set.archived = false;
-			set.createdby = user._id;
-			set.time_created = new Date();
-			const enrichedSet = timeLasteditDenormalizer.beforeInsert(set);
-			/* eslint-disable-next-line no-param-reassign */
-			courseId = Courses.insert(enrichedSet);
+      /* When a course is created, the creator is automatically added as sole member of the team */
+      set.members = [
+        {
+          user: user._id,
+          roles: ["participant", "team"],
+          comment: i18n("courses.creator.defaultMessage", "(has proposed this course)", {
+            lng: user.locale,
+          }),
+        },
+      ];
+      set.archived = false;
+      set.createdby = user._id;
+      set.time_created = new Date();
+      const enrichedSet = timeLasteditDenormalizer.beforeInsert(set);
+      /* eslint-disable-next-line no-param-reassign */
+      courseId = Courses.insert(enrichedSet);
 
-			if (set.groupOrganizers.length > 0) {
-				Notification['Group.Course'].record(courseId);
-			}
+      if (set.groupOrganizers.length > 0) {
+        Notification["Group.Course"].record(courseId);
+      }
 
-			// Init calculated fields
-			Meteor.call('course.updateNextEvent', courseId);
-			Courses.updateGroups(courseId);
-		} else {
-			const enrichedSet = timeLasteditDenormalizer.beforeUpdate(set);
-			Courses.update({ _id: courseId }, { $set: enrichedSet });
+      // Init calculated fields
+      Meteor.call("course.updateNextEvent", courseId);
+      Courses.updateGroups(courseId);
+    } else {
+      const enrichedSet = timeLasteditDenormalizer.beforeUpdate(set);
+      Courses.update({ _id: courseId }, { $set: enrichedSet });
 
-			historyDenormalizer.afterUpdate(courseId, user._id);
-			if (changes.categories) {
-				// if categories are update, update those from the event
-				eventsCategoriesDenormalizer.afterCourseUpdateCategories({
-					_id: courseId,
-					categories: changes.categories,
-				});
-			}
-		}
+      historyDenormalizer.afterUpdate(courseId, user._id);
+      if (changes.categories) {
+        // if categories are update, update those from the event
+        eventsCategoriesDenormalizer.afterCourseUpdateCategories({
+          _id: courseId,
+          categories: changes.categories,
+        });
+      }
+    }
 
-		if (changes.subs) {
-			const changedCourse = Courses.findOne(courseId);
-			changes.subs.forEach((role: string) => {
-				const change = new Subscribe(changedCourse, user, role, 'interested');
-				if (change.validFor(user)) {
-					change.apply();
-				}
-			});
-		}
-		if (changes.unsubs) {
-			const changedCourse = Courses.findOne(courseId);
-			changes.unsubs.forEach((role: string) => {
-				const change = new Unsubscribe(changedCourse, user, role);
-				if (change.validFor(user)) {
-					change.apply();
-				}
-			});
-		}
+    if (changes.subs) {
+      const changedCourse = Courses.findOne(courseId);
+      changes.subs.forEach((role: string) => {
+        const change = new Subscribe(changedCourse, user, role, "interested");
+        if (change.validFor(user)) {
+          change.apply();
+        }
+      });
+    }
+    if (changes.unsubs) {
+      const changedCourse = Courses.findOne(courseId);
+      changes.unsubs.forEach((role: string) => {
+        const change = new Unsubscribe(changedCourse, user, role);
+        if (change.validFor(user)) {
+          change.apply();
+        }
+      });
+    }
 
-		return courseId;
-	},
+    return courseId;
+  }
 );
 
 export const updateImage = ServerMethod(
-	'course.update.image',
-	async (courseId: string, file: FileStorage.UploadFile) => {
-		check(courseId, String);
-		check(file, FileStorage.UploadFilePattern);
+  "course.update.image",
+  async (courseId: string, file: FileStorage.UploadFile) => {
+    check(courseId, String);
+    check(file, FileStorage.UploadFilePattern);
 
-		const user = Meteor.user();
-		if (!user) {
-			throw new Meteor.Error(401, 'please log-in');
-		}
+    const user = Meteor.user();
+    if (!user) {
+      throw new Meteor.Error(401, "please log-in");
+    }
 
-		// Load group from DB
-		const course = loadCourse(courseId);
+    // Load group from DB
+    const course = loadCourse(courseId);
 
-		if (course.isNew() || !course.editableBy(user)) {
-			throw new Meteor.Error(401, 'Denied');
-		}
+    if (course.isNew() || !course.editableBy(user)) {
+      throw new Meteor.Error(401, "Denied");
+    }
 
-		if (course.image && !course.image.startsWith('https://')) {
-			FileStorage.remove(course.image);
-		}
+    if (course.image && !course.image.startsWith("https://")) {
+      FileStorage.remove(course.image);
+    }
 
-		const result = await FileStorage.upload('courses/image/', file);
+    const result = await FileStorage.upload("courses/image/", file);
 
-		const image = result.fullFileName;
-		const update = { image };
+    const image = result.fullFileName;
+    const update = { image };
 
-		const enrichedSet = timeLasteditDenormalizer.beforeUpdateImage(update);
-		Courses.update(course._id, { $set: enrichedSet });
-		historyDenormalizer.afterUpdateImage(courseId, user._id);
-		eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, image);
+    const enrichedSet = timeLasteditDenormalizer.beforeUpdateImage(update);
+    Courses.update(course._id, { $set: enrichedSet });
+    historyDenormalizer.afterUpdateImage(courseId, user._id);
+    eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, image);
 
-		return courseId;
-	},
-	{ simulation: false },
+    return courseId;
+  },
+  { simulation: false }
 );
 
 export const deleteImage = ServerMethod(
-	'course.delete.image',
-	async (courseId: string) => {
-		check(courseId, String);
+  "course.delete.image",
+  async (courseId: string) => {
+    check(courseId, String);
 
-		const user = Meteor.user();
-		if (!user) {
-			throw new Meteor.Error(401, 'please log-in');
-		}
+    const user = Meteor.user();
+    if (!user) {
+      throw new Meteor.Error(401, "please log-in");
+    }
 
-		// Load group from DB
-		const course = loadCourse(courseId);
+    // Load group from DB
+    const course = loadCourse(courseId);
 
-		if (course.isNew() || !course.editableBy(user)) {
-			throw new Meteor.Error(401, 'Denied');
-		}
+    if (course.isNew() || !course.editableBy(user)) {
+      throw new Meteor.Error(401, "Denied");
+    }
 
-		if (course.image && !course.image.startsWith('https://')) {
-			FileStorage.remove(course.image);
-		}
+    if (course.image && !course.image.startsWith("https://")) {
+      FileStorage.remove(course.image);
+    }
 
-		const update = { image: '' };
+    const update = { image: "" };
 
-		const set = timeLasteditDenormalizer.beforeDeleteImage();
-		Courses.update(course._id, { $unset: update, $set: set } as Mongo.Modifier<CourseEntity>);
-		historyDenormalizer.afterDeleteImage(courseId, user._id);
-		eventsCourseImageDenormalizer.afterCourseDeleteImage(courseId);
+    const set = timeLasteditDenormalizer.beforeDeleteImage();
+    Courses.update(course._id, { $unset: update, $set: set } as Mongo.Modifier<CourseEntity>);
+    historyDenormalizer.afterDeleteImage(courseId, user._id);
+    eventsCourseImageDenormalizer.afterCourseDeleteImage(courseId);
 
-		return courseId;
-	},
-	{ simulation: false },
+    return courseId;
+  },
+  { simulation: false }
 );
 
 /**
@@ -376,8 +376,8 @@ export const deleteImage = ServerMethod(
  *
  */
 export const promote = ServerMethod(
-	'course.promote',
-	UpdateMethods.promote(Courses as unknown as GroupPromoters),
+  "course.promote",
+  UpdateMethods.promote(Courses as unknown as GroupPromoters)
 );
 
 /**
@@ -388,104 +388,104 @@ export const promote = ServerMethod(
  *
  */
 export const editing = ServerMethod(
-	'course.editing',
-	UpdateMethods.editing(Courses as unknown as GroupPromoters),
+  "course.editing",
+  UpdateMethods.editing(Courses as unknown as GroupPromoters)
 );
 
-export const archive = ServerMethod('course.archive', async (courseId: string) => {
-	check(courseId, String);
+export const archive = ServerMethod("course.archive", async (courseId: string) => {
+  check(courseId, String);
 
-	const course = await Courses.findOneAsync({ _id: courseId });
-	if (!course) {
-		throw new Meteor.Error(404, 'no such course');
-	}
-	if (!course.editableBy(Meteor.user())) {
-		throw new Meteor.Error(401, 'edit not permitted');
-	}
-	await Courses.updateAsync(course._id, { $set: { archived: true } });
+  const course = await Courses.findOneAsync({ _id: courseId });
+  if (!course) {
+    throw new Meteor.Error(404, "no such course");
+  }
+  if (!course.editableBy(Meteor.user())) {
+    throw new Meteor.Error(401, "edit not permitted");
+  }
+  await Courses.updateAsync(course._id, { $set: { archived: true } });
 });
 
-export const unarchive = ServerMethod('course.unarchive', async (courseId: string) => {
-	check(courseId, String);
+export const unarchive = ServerMethod("course.unarchive", async (courseId: string) => {
+  check(courseId, String);
 
-	const course = await Courses.findOneAsync({ _id: courseId });
-	if (!course) {
-		throw new Meteor.Error(404, 'no such course');
-	}
-	if (!course.editableBy(Meteor.user())) {
-		throw new Meteor.Error(401, 'edit not permitted');
-	}
-	await Courses.updateAsync(course._id, { $set: { archived: false } });
+  const course = await Courses.findOneAsync({ _id: courseId });
+  if (!course) {
+    throw new Meteor.Error(404, "no such course");
+  }
+  if (!course.editableBy(Meteor.user())) {
+    throw new Meteor.Error(401, "edit not permitted");
+  }
+  await Courses.updateAsync(course._id, { $set: { archived: false } });
 });
 
-export const remove = ServerMethod('course.remove', async (courseId: string) => {
-	check(courseId, String);
+export const remove = ServerMethod("course.remove", async (courseId: string) => {
+  check(courseId, String);
 
-	const course = await Courses.findOneAsync({ _id: courseId });
-	if (!course) {
-		throw new Meteor.Error(404, 'no such course');
-	}
-	if (!course.editableBy(Meteor.user())) {
-		throw new Meteor.Error(401, 'edit not permitted');
-	}
-	await Events.removeAsync({ courseId });
-	await CourseDiscussions.removeAsync({ courseId });
-	await Courses.removeAsync(courseId);
+  const course = await Courses.findOneAsync({ _id: courseId });
+  if (!course) {
+    throw new Meteor.Error(404, "no such course");
+  }
+  if (!course.editableBy(Meteor.user())) {
+    throw new Meteor.Error(401, "edit not permitted");
+  }
+  await Events.removeAsync({ courseId });
+  await CourseDiscussions.removeAsync({ courseId });
+  await Courses.removeAsync(courseId);
 });
 
 Meteor.methods({
-	/**
-	 * Update the nextEvent field for the courses matching the selector
-	 */
-	'course.updateNextEvent'(selector) {
-		Courses.find(selector).forEach((course) => {
-			const futureEvents = Events.find({
-				courseId: course._id,
-				start: { $gt: new Date() },
-			}).count();
+  /**
+   * Update the nextEvent field for the courses matching the selector
+   */
+  "course.updateNextEvent"(selector) {
+    Courses.find(selector).forEach((course) => {
+      const futureEvents = Events.find({
+        courseId: course._id,
+        start: { $gt: new Date() },
+      }).count();
 
-			const nextEvent = Events.findOne(
-				{ courseId: course._id, start: { $gt: new Date() } },
-				{
-					sort: { start: 1 },
-					fields: {
-						startLocal: 1,
-						start: 1,
-						_id: 1,
-						venue: 1,
-					},
-				},
-			);
+      const nextEvent = Events.findOne(
+        { courseId: course._id, start: { $gt: new Date() } },
+        {
+          sort: { start: 1 },
+          fields: {
+            startLocal: 1,
+            start: 1,
+            _id: 1,
+            venue: 1,
+          },
+        }
+      );
 
-			const lastEvent = Events.findOne(
-				{ courseId: course._id, start: { $lt: new Date() } },
-				{
-					sort: { start: -1 },
-					fields: {
-						startLocal: 1,
-						start: 1,
-						_id: 1,
-						venue: 1,
-					},
-				},
-			);
+      const lastEvent = Events.findOne(
+        { courseId: course._id, start: { $lt: new Date() } },
+        {
+          sort: { start: -1 },
+          fields: {
+            startLocal: 1,
+            start: 1,
+            _id: 1,
+            venue: 1,
+          },
+        }
+      );
 
-			Courses.update(course._id, {
-				$set: {
-					futureEvents,
-					nextEvent: nextEvent || null,
-					lastEvent: lastEvent || null,
-				},
-			});
-		});
-	},
+      Courses.update(course._id, {
+        $set: {
+          futureEvents,
+          nextEvent: nextEvent || null,
+          lastEvent: lastEvent || null,
+        },
+      });
+    });
+  },
 
-	/**
-	 * Recalculate the editors field
-	 */
-	'course.updateGroups'(selector) {
-		Courses.find(selector).forEach((course) => {
-			Courses.updateGroups(course._id);
-		});
-	},
+  /**
+   * Recalculate the editors field
+   */
+  "course.updateGroups"(selector) {
+    Courses.find(selector).forEach((course) => {
+      Courses.updateGroups(course._id);
+    });
+  },
 });

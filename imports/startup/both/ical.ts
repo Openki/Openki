@@ -1,1 +1,1 @@
-import '/imports/api/ical/routes';
+import "/imports/api/ical/routes";

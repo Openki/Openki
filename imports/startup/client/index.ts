@@ -1,28 +1,28 @@
-import './client-error';
-import './extend-instance';
-import './locale';
-import './templates';
-import './dark-mode';
-import './template-helpers';
-import './translations.html';
-import './useraccounts-configuration';
+import "./client-error";
+import "./extend-instance";
+import "./locale";
+import "./templates";
+import "./dark-mode";
+import "./template-helpers";
+import "./translations.html";
+import "./useraccounts-configuration";
 
-import { Meteor } from 'meteor/meteor';
-import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
+import { Meteor } from "meteor/meteor";
+import { Router } from "meteor/iron:router";
+import { Session } from "meteor/session";
 
-import * as RegionSelection from '/imports/utils/region-selection';
-import * as Tooltips from '/imports/utils/Tooltips';
+import * as RegionSelection from "/imports/utils/region-selection";
+import * as Tooltips from "/imports/utils/Tooltips";
 
-import { Introduction } from '/imports/ui/lib/introduction';
+import { Introduction } from "/imports/ui/lib/introduction";
 
-import './bootstrap';
+import "./bootstrap";
 
 Router.onStop(function () {
-	Tooltips.hide();
+  Tooltips.hide();
 
-	// close any verification dialogs still open
-	Session.set('verify', false);
+  // close any verification dialogs still open
+  Session.set("verify", false);
 });
 
 Meteor.startup(RegionSelection.init);

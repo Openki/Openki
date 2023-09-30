@@ -1,4 +1,4 @@
-@import '{}/imports/ui/stylesheets/variables/index';
+@import "{}/imports/ui/stylesheets/variables/index";
 /* stylelint-disable selector-max-id, selector-max-compound-selectors */
 
 .introduction {
@@ -59,7 +59,7 @@
 		opacity: 0.5;
 
 		@include media-breakpoint-down(sm) {
-			content: '';
+			content: "";
 			display: block;
 			text-align: center;
 		}
@@ -73,7 +73,7 @@
 
 	&::after {
 		color: lighten($gray-600, 15%);
-		content: '';
+		content: "";
 		font-family: FontAwesome;
 		font-size: 16px;
 		inset-inline-end: 0;
@@ -82,14 +82,14 @@
 		top: 6px;
 
 		@include media-breakpoint-down(sm) {
-			content: '' !important;
+			content: "" !important;
 		}
 	}
 }
 
 .rtl {
 	.introduction-steps > .col > h2::after {
-		content: '\f060';
+		content: "\f060";
 		right: auto;
 	}
 }
@@ -97,25 +97,25 @@
 .introduction-steps > .col:nth-of-type(2) > h2::after,
 .introduction-steps > .col:nth-of-type(4) > h2::after {
 	@include media-breakpoint-down(md) {
-		content: '' !important;
+		content: "" !important;
 	}
 }
 
 .introduction-steps > .col:nth-of-type(3) > h2::after {
 	@include media-breakpoint-up(md) {
 		@include media-breakpoint-down(lg) {
-			content: '' !important;
+			content: "" !important;
 		}
 	}
 }
 
 .introduction-steps > .col:last-of-type {
 	&::after {
-		content: '' !important;
+		content: "" !important;
 	}
 
 	> h2::after {
-		content: '' !important;
+		content: "" !important;
 	}
 }
 

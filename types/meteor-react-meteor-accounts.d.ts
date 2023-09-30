@@ -1,5 +1,5 @@
-import { UserModel } from '/imports/api/users/users';
+import { UserModel } from "/imports/api/users/users";
 
-declare module 'meteor/react-meteor-accounts' {
-	export declare function useUser(): UserModel | null;
+declare module "meteor/react-meteor-accounts" {
+  export declare function useUser(): UserModel | null;
 }

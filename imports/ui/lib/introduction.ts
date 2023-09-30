@@ -1,64 +1,64 @@
-import { Router } from 'meteor/iron:router';
-import { Session } from 'meteor/session';
-import { useSession, useSessionEquals } from '/imports/utils/react-meteor-data';
-import { useCurrentRouteName } from './useCurrentRouteName';
+import { Router } from "meteor/iron:router";
+import { Session } from "meteor/session";
+import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
+import { useCurrentRouteName } from "./useCurrentRouteName";
 
 export function useShownIntro() {
-	return useSessionEquals('ShowIntro', true);
+  return useSessionEquals("ShowIntro", true);
 }
 
 export function useOpenedIntro() {
-	const opened = useSession('OpenedIntro');
-	const routeName = useCurrentRouteName();
+  const opened = useSession("OpenedIntro");
+  const routeName = useCurrentRouteName();
 
-	if (opened !== undefined) {
-		return opened;
-	}
+  if (opened !== undefined) {
+    return opened;
+  }
 
-	return routeName === 'home';
+  return routeName === "home";
 }
 
 export const Introduction = {
-	init() {
-		Session.set('ShowIntro', localStorage?.getItem('intro') !== 'done');
-		Session.set('OpenedIntro', undefined);
-	},
+  init() {
+    Session.set("ShowIntro", localStorage?.getItem("intro") !== "done");
+    Session.set("OpenedIntro", undefined);
+  },
 
-	showIntro() {
-		Session.set('ShowIntro', true);
-		try {
-			localStorage.removeItem('intro');
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
-	},
+  showIntro() {
+    Session.set("ShowIntro", true);
+    try {
+      localStorage.removeItem("intro");
+    } catch {
+      // ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+    }
+  },
 
-	shownIntro: () => Session.equals('ShowIntro', true),
+  shownIntro: () => Session.equals("ShowIntro", true),
 
-	openedIntro() {
-		const opened = Session.get('OpenedIntro');
-		if (opened !== undefined) {
-			return opened;
-		}
+  openedIntro() {
+    const opened = Session.get("OpenedIntro");
+    if (opened !== undefined) {
+      return opened;
+    }
 
-		const routeName = Router.current().route?.getName();
-		return routeName === 'home';
-	},
+    const routeName = Router.current().route?.getName();
+    return routeName === "home";
+  },
 
-	openIntro() {
-		Session.set('OpenedIntro', true);
-	},
+  openIntro() {
+    Session.set("OpenedIntro", true);
+  },
 
-	closeIntro() {
-		Session.set('OpenedIntro', false);
-	},
+  closeIntro() {
+    Session.set("OpenedIntro", false);
+  },
 
-	doneIntro() {
-		Session.set('ShowIntro', false);
-		try {
-			localStorage.setItem('intro', 'done');
-		} catch {
-			// ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
-		}
-	},
+  doneIntro() {
+    Session.set("ShowIntro", false);
+    try {
+      localStorage.setItem("intro", "done");
+    } catch {
+      // ignore See: https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem#exceptions
+    }
+  },
 };

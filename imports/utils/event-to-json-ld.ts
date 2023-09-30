@@ -1,20 +1,20 @@
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from "meteor/meteor";
 
-import { EventModel } from '/imports/api/events/events';
-import { Geodata } from '/imports/api/regions/regions';
+import { EventModel } from "/imports/api/events/events";
+import { Geodata } from "/imports/api/regions/regions";
 
-import { PublicSettings } from '/imports/utils/PublicSettings';
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 function getSiteDefaultImage() {
-	const ogLogo = PublicSettings.ogLogo.src;
+  const ogLogo = PublicSettings.ogLogo.src;
 
-	if (ogLogo.startsWith(PublicSettings.s3.publicUrlBase)) {
-		// in our s3 file storage
-		return ogLogo;
-	}
+  if (ogLogo.startsWith(PublicSettings.s3.publicUrlBase)) {
+    // in our s3 file storage
+    return ogLogo;
+  }
 
-	// in the openki repository folder "public/logo/"
-	return Meteor.absoluteUrl(`logo/${ogLogo}`);
+  // in the openki repository folder "public/logo/"
+  return Meteor.absoluteUrl(`logo/${ogLogo}`);
 }
 
 /**
@@ -22,7 +22,7 @@ function getSiteDefaultImage() {
  * @param data the event data
  */
 function checkJsonLdMinReqs(data: EventModel) {
-	return !!(data.title && data.startLocal && data.endLocal && data.venue);
+  return !!(data.title && data.startLocal && data.endLocal && data.venue);
 }
 
 /**
@@ -30,14 +30,14 @@ function checkJsonLdMinReqs(data: EventModel) {
  * @return jsonLd geo part
  */
 function addGeoToJsonLd(data: Geodata | undefined) {
-	if (data?.coordinates?.length === 2) {
-		return {
-			'@type': 'GeoCoordinates',
-			latitude: data.coordinates[1],
-			longitude: data.coordinates[0],
-		};
-	}
-	return undefined;
+  if (data?.coordinates?.length === 2) {
+    return {
+      "@type": "GeoCoordinates",
+      latitude: data.coordinates[1],
+      longitude: data.coordinates[0],
+    };
+  }
+  return undefined;
 }
 
 /**
@@ -48,14 +48,14 @@ function addGeoToJsonLd(data: Geodata | undefined) {
  * @return jsonLd-fragment for offers
  */
 function addOffersToJsonLd() {
-	if (PublicSettings.pricePolicyEnabled) {
-		return {
-			'@type': 'AggregateOffer',
-			price: 'free',
-		};
-	}
+  if (PublicSettings.pricePolicyEnabled) {
+    return {
+      "@type": "AggregateOffer",
+      price: "free",
+    };
+  }
 
-	return undefined;
+  return undefined;
 }
 /**
  * Add performer information to jsonLd. use groups as perfomers,
@@ -64,10 +64,10 @@ function addOffersToJsonLd() {
  * @return jsonLd-fragment for performer
  */
 function addPerformerToJsonLd() {
-	return {
-		'@type': 'PerformingGroup',
-		name: 'co-created',
-	};
+  return {
+    "@type": "PerformingGroup",
+    name: "co-created",
+  };
 }
 
 /**
@@ -77,28 +77,28 @@ function addPerformerToJsonLd() {
  * @return jsonLd
  */
 function createJsonLd(data: EventModel) {
-	return {
-		'@context': 'https://schema.org',
-		'@type': 'Event',
-		name: data.title,
-		startDate: data.startLocal,
-		endDate: data.endLocal,
-		location: data.venue
-			? {
-					'@type': 'Place',
-					address: {
-						'@type': 'PostalAddress',
-						addressLocality: data.venue.name,
-					},
-					name: data.venue.name,
-					geo: addGeoToJsonLd(data.venue.loc),
-			  }
-			: undefined,
-		description: data.description || data.title,
-		image: getSiteDefaultImage(),
-		offers: addOffersToJsonLd(),
-		performer: addPerformerToJsonLd(),
-	};
+  return {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: data.title,
+    startDate: data.startLocal,
+    endDate: data.endLocal,
+    location: data.venue
+      ? {
+          "@type": "Place",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: data.venue.name,
+          },
+          name: data.venue.name,
+          geo: addGeoToJsonLd(data.venue.loc),
+        }
+      : undefined,
+    description: data.description || data.title,
+    image: getSiteDefaultImage(),
+    offers: addOffersToJsonLd(),
+    performer: addPerformerToJsonLd(),
+  };
 }
 
 /**
@@ -107,14 +107,14 @@ function createJsonLd(data: EventModel) {
  * @param data the event data
  */
 export function appendAsJsonLdToBody(data: EventModel) {
-	if (checkJsonLdMinReqs(data)) {
-		$(() => {
-			const jsonLdTag = document.createElement('script');
-			jsonLdTag.type = 'application/ld+json';
-			const jsonLd = createJsonLd(data);
-			const jsonLdTextNode = document.createTextNode(JSON.stringify(jsonLd, null, 4));
-			jsonLdTag.appendChild(jsonLdTextNode);
-			$('body').append(jsonLdTag);
-		});
-	}
+  if (checkJsonLdMinReqs(data)) {
+    $(() => {
+      const jsonLdTag = document.createElement("script");
+      jsonLdTag.type = "application/ld+json";
+      const jsonLd = createJsonLd(data);
+      const jsonLdTextNode = document.createTextNode(JSON.stringify(jsonLd, null, 4));
+      jsonLdTag.appendChild(jsonLdTextNode);
+      $("body").append(jsonLdTag);
+    });
+  }
 }

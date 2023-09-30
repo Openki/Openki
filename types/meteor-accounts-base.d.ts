@@ -1,9 +1,9 @@
-import { UserModel } from '/imports/api/users/users';
+import { UserModel } from "/imports/api/users/users";
 
-declare module 'meteor/accounts-base' {
-	namespace Accounts {
-		function validateNewUser(func: (user: UserModel) => boolean): boolean;
+declare module "meteor/accounts-base" {
+  namespace Accounts {
+    function validateNewUser(func: (user: UserModel) => boolean): boolean;
 
-		function removeDefaultRateLimit(): void;
-	}
+    function removeDefaultRateLimit(): void;
+  }
 }

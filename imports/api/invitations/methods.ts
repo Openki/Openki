@@ -1,91 +1,91 @@
-import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
-import { check } from 'meteor/check';
-import { Random } from 'meteor/random';
+import { Meteor } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
+import { check } from "meteor/check";
+import { Random } from "meteor/random";
 
-import { InvitationEntity, Invitations } from './invitations';
-import { Tenants } from '/imports/api/tenants/tenants';
-import { ServerMethod } from '/imports/utils/ServerMethod';
-import * as usersTenantsDenormalizer from '/imports/api/users/tenantsDenormalizer';
+import { InvitationEntity, Invitations } from "./invitations";
+import { Tenants } from "/imports/api/tenants/tenants";
+import { ServerMethod } from "/imports/utils/ServerMethod";
+import * as usersTenantsDenormalizer from "/imports/api/users/tenantsDenormalizer";
 
 async function tenantMutationPreconditionCheck(tenantId: string) {
-	check(tenantId, String);
+  check(tenantId, String);
 
-	const tenant = await Tenants.findOneAsync(tenantId);
-	if (!tenant) {
-		throw new Meteor.Error(401, 'Not permitted');
-	}
+  const tenant = await Tenants.findOneAsync(tenantId);
+  if (!tenant) {
+    throw new Meteor.Error(401, "Not permitted");
+  }
 
-	// Only current tenant admins (or instance admins) may draft other people into it
-	if (!tenant.editableBy(Meteor.user())) {
-		throw new Meteor.Error(401, 'Not permitted');
-	}
+  // Only current tenant admins (or instance admins) may draft other people into it
+  if (!tenant.editableBy(Meteor.user())) {
+    throw new Meteor.Error(401, "Not permitted");
+  }
 }
 
 export const createMany = ServerMethod(
-	'invitation.createMany',
-	async (tenantId: string, emails: string[]) => {
-		check(tenantId, String);
-		check(emails, [String]);
+  "invitation.createMany",
+  async (tenantId: string, emails: string[]) => {
+    check(tenantId, String);
+    check(emails, [String]);
 
-		await tenantMutationPreconditionCheck(tenantId);
+    await tenantMutationPreconditionCheck(tenantId);
 
-		const createdAt = new Date();
-		const createdBy = Meteor.userId();
+    const createdAt = new Date();
+    const createdBy = Meteor.userId();
 
-		// eslint-disable-next-line no-restricted-syntax
-		for await (const i of emails.map(
-			(e) =>
-				({
-					tenant: tenantId,
-					to: e,
-					token: Random.secret(),
-					status: 'created',
-					createdAt,
-					createdBy,
-				} as Mongo.OptionalId<InvitationEntity>),
-		)) {
-			// Update or insert
-			await Invitations.upsertAsync(
-				// Selector
-				{ tenant: i.tenant, to: i.to },
-				// Modifier
-				{ $set: i, $unset: { acceptedBy: true } },
-			);
-		}
-	},
+    // eslint-disable-next-line no-restricted-syntax
+    for await (const i of emails.map(
+      (e) =>
+        ({
+          tenant: tenantId,
+          to: e,
+          token: Random.secret(),
+          status: "created",
+          createdAt,
+          createdBy,
+        } as Mongo.OptionalId<InvitationEntity>)
+    )) {
+      // Update or insert
+      await Invitations.upsertAsync(
+        // Selector
+        { tenant: i.tenant, to: i.to },
+        // Modifier
+        { $set: i, $unset: { acceptedBy: true } }
+      );
+    }
+  }
 );
 
 export const remove = ServerMethod(
-	'invitation.remove',
-	async (tenantId: string, invitationId: string) => {
-		check(invitationId, String);
+  "invitation.remove",
+  async (tenantId: string, invitationId: string) => {
+    check(invitationId, String);
 
-		await tenantMutationPreconditionCheck(tenantId);
+    await tenantMutationPreconditionCheck(tenantId);
 
-		await Invitations.removeAsync({ _id: invitationId, tenant: tenantId });
-	},
+    await Invitations.removeAsync({ _id: invitationId, tenant: tenantId });
+  }
 );
 
-export const join = ServerMethod('invitation.join', async (tenantId: string, token: string) => {
-	check(tenantId, String);
-	check(token, String);
+export const join = ServerMethod("invitation.join", async (tenantId: string, token: string) => {
+  check(tenantId, String);
+  check(token, String);
 
-	const invitation = await Invitations.findOneAsync({ tenant: tenantId, token });
-	if (!invitation || invitation.status === 'accepted') {
-		throw new Meteor.Error(401, 'Not permitted');
-	}
+  const invitation = await Invitations.findOneAsync({ tenant: tenantId, token });
+  if (!invitation || invitation.status === "accepted") {
+    throw new Meteor.Error(401, "Not permitted");
+  }
 
-	const userId = Meteor.userId();
-	if (!userId) {
-		throw new Meteor.Error(401, 'please log in');
-	}
+  const userId = Meteor.userId();
+  if (!userId) {
+    throw new Meteor.Error(401, "please log in");
+  }
 
-	await Tenants.updateAsync(tenantId, { $addToSet: { members: userId } });
+  await Tenants.updateAsync(tenantId, { $addToSet: { members: userId } });
 
-	await Invitations.updateAsync(invitation._id, {
-		$set: { status: 'accepted', acceptedBy: userId },
-	});
+  await Invitations.updateAsync(invitation._id, {
+    $set: { status: "accepted", acceptedBy: userId },
+  });
 
-	await usersTenantsDenormalizer.afterInvitationJoin(userId, tenantId);
+  await usersTenantsDenormalizer.afterInvitationJoin(userId, tenantId);
 });

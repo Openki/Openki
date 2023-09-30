@@ -1,4 +1,4 @@
-import { Mongo } from 'meteor/mongo';
+import { Mongo } from "meteor/mongo";
 
 // ======== DB-Model: ========
 // "basic"         -> String    "v0.4.2-alpha"
@@ -12,14 +12,14 @@ import { Mongo } from 'meteor/mongo';
 // ===========================
 
 export interface VersionEntity {
-	basic: string;
-	complete: string;
-	branch: string;
-	commit: string;
-	commitDate: string;
-	commitShort: string;
-	activation: Date;
-	lastStart: Date;
+  basic: string;
+  complete: string;
+  branch: string;
+  commit: string;
+  commitDate: string;
+  commitShort: string;
+  activation: Date;
+  lastStart: Date;
 }
 
-export const Version = new Mongo.Collection<VersionEntity>('Version');
+export const Version = new Mongo.Collection<VersionEntity>("Version");

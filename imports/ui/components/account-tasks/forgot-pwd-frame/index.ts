@@ -1,79 +1,79 @@
-import { i18n } from '/imports/startup/both/i18next';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { AccountsAsync } from '/imports/utils/promisify';
+import { i18n } from "/imports/startup/both/i18next";
+import { ReactiveVar } from "meteor/reactive-var";
+import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { AccountsAsync } from "/imports/utils/promisify";
 
-import * as Alert from '/imports/api/alerts/alert';
+import * as Alert from "/imports/api/alerts/alert";
 
-import { isEmail } from '/imports/utils/email-tools';
+import { isEmail } from "/imports/utils/email-tools";
 
-import './template.html';
-import './styles.scss';
+import "./template.html";
+import "./styles.scss";
 
 const Template = TemplateAny as TemplateStaticTyped<
-	'forgotPwdFrame',
-	unknown,
-	{ emailIsValid: ReactiveVar<boolean> }
+  "forgotPwdFrame",
+  unknown,
+  { emailIsValid: ReactiveVar<boolean> }
 >;
 
 const template = Template.forgotPwdFrame;
 
 template.onCreated(function () {
-	const instance = this;
-	instance.busy(false);
-	instance.emailIsValid = new ReactiveVar(false);
+  const instance = this;
+  instance.busy(false);
+  instance.emailIsValid = new ReactiveVar(false);
 });
 
 template.onRendered(function () {
-	const instance = this;
-	const { transferMail } = instance.parentInstance() as any;
-	if (transferMail) {
-		instance.$('.js-reset-pw-email').val(transferMail);
-		instance.emailIsValid.set(true);
-	}
+  const instance = this;
+  const { transferMail } = instance.parentInstance() as any;
+  if (transferMail) {
+    instance.$(".js-reset-pw-email").val(transferMail);
+    instance.emailIsValid.set(true);
+  }
 
-	instance.$('input').first().trigger('select');
+  instance.$("input").first().trigger("select");
 });
 
 template.helpers({
-	noValidEmail() {
-		return !Template.instance().emailIsValid.get();
-	},
+  noValidEmail() {
+    return !Template.instance().emailIsValid.get();
+  },
 });
 
 template.events({
-	'input, change, paste, keyup, mouseup'(_event, instance) {
-		const email = instance.$('.js-reset-pw-email').val() as string;
-		instance.emailIsValid.set(isEmail(email));
-	},
+  "input, change, paste, keyup, mouseup"(_event, instance) {
+    const email = instance.$(".js-reset-pw-email").val() as string;
+    instance.emailIsValid.set(isEmail(email));
+  },
 
-	async submit(event, instance) {
-		event.preventDefault();
-		instance.busy('requesting-pw-reset');
+  async submit(event, instance) {
+    event.preventDefault();
+    instance.busy("requesting-pw-reset");
 
-		try {
-			await AccountsAsync.forgotPassword({
-				email: instance.$('.js-reset-pw-email').val() as string,
-			});
+    try {
+      await AccountsAsync.forgotPassword({
+        email: instance.$(".js-reset-pw-email").val() as string,
+      });
 
-			Alert.success(
-				i18n(
-					'forgotPassword.emailSent',
-					'An e-mail with further instructions on how to reset your password has been sent to you.',
-				),
-			);
-			(instance.parentInstance() as any).accountTask.set('login');
-		} catch (err) {
-			Alert.serverError(
-				err,
-				i18n('forgotPassword.emailSent.error', 'We were unable to send a mail to this address'),
-			);
-		} finally {
-			instance.busy(false);
-		}
-	},
+      Alert.success(
+        i18n(
+          "forgotPassword.emailSent",
+          "An e-mail with further instructions on how to reset your password has been sent to you."
+        )
+      );
+      (instance.parentInstance() as any).accountTask.set("login");
+    } catch (err) {
+      Alert.serverError(
+        err,
+        i18n("forgotPassword.emailSent.error", "We were unable to send a mail to this address")
+      );
+    } finally {
+      instance.busy(false);
+    }
+  },
 
-	'click .js-reset-pwd-close-btn'(_event, instance) {
-		(instance.parentInstance() as any).accountTask.set('login');
-	},
+  "click .js-reset-pwd-close-btn"(_event, instance) {
+    (instance.parentInstance() as any).accountTask.set("login");
+  },
 });

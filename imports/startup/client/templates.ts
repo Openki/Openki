@@ -1,18 +1,18 @@
-import { Router } from 'meteor/iron:router';
+import { Router } from "meteor/iron:router";
 
-import * as Metatags from '/imports/utils/metatags';
+import * as Metatags from "/imports/utils/metatags";
 
-import '/imports/ui/layouts';
-import '/imports/ui/pages';
+import "/imports/ui/layouts";
+import "/imports/ui/pages";
 
 Router.configure({
-	layoutTemplate: 'layout',
-	notFoundTemplate: 'notFound',
-	loadingTemplate: 'loadingPage',
+  layoutTemplate: "layout",
+  notFoundTemplate: "notFound",
+  loadingTemplate: "loadingPage",
 });
-Router.onBeforeAction('dataNotFound');
+Router.onBeforeAction("dataNotFound");
 
 Router.onBeforeAction(function () {
-	Metatags.removeAll();
-	this.next();
+  Metatags.removeAll();
+  this.next();
 });

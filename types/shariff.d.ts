@@ -1,1 +1,1 @@
-declare module 'shariff';
+declare module "shariff";

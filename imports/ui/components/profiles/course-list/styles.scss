@@ -1,4 +1,4 @@
-@import '{}/imports/ui/stylesheets/variables/index';
+@import "{}/imports/ui/stylesheets/variables/index";
 
 /* stylelint-disable-next-line selector-no-qualifying-type */
 .profile-courselist h3[id] {
@@ -25,7 +25,7 @@
 .profile-courselist .role-label {
 	cursor: pointer;
 	transition-duration: 0.25s;
-	transition-property: #{'color background box-shadow'};
+	transition-property: #{"color background box-shadow"};
 
 	&:hover,
 	&:focus {

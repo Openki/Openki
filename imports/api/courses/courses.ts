@@ -1,390 +1,390 @@
-import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
-import { _ } from 'meteor/underscore';
-import { Match, check } from 'meteor/check';
+import { Meteor } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
+import { _ } from "meteor/underscore";
+import { Match, check } from "meteor/check";
 
-import { UserModel } from '/imports/api/users/users';
-import { EventEntity } from '/imports/api/events/events';
+import { UserModel } from "/imports/api/users/users";
+import { EventEntity } from "/imports/api/events/events";
 // eslint-disable-next-line import/no-cycle
-import * as tenantDenormalizer from './tenantDenormalizer';
-import * as interestedDenormalizer from './interestedDenormalizer';
+import * as tenantDenormalizer from "./tenantDenormalizer";
+import * as interestedDenormalizer from "./interestedDenormalizer";
 
-import { hasRoleUser } from '/imports/utils/course-role-utils';
-import { PublicSettings } from '/imports/utils/PublicSettings';
-import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import * as AsyncTools from '/imports/utils/async-tools';
-import { Filtering } from '/imports/utils/filtering';
-import * as Predicates from '/imports/utils/predicates';
-import * as FileStorage from '/imports/utils/FileStorage';
-import * as StringTools from '/imports/utils/string-tools';
-import { GroupEntityCustomCourseFields } from '/imports/api/groups/groups';
-import { FieldSort, FieldSortPattern } from '/imports/utils/sort-spec';
-import { StringEnum, Type } from '/imports/utils/CustomChecks';
+import { hasRoleUser } from "/imports/utils/course-role-utils";
+import { PublicSettings } from "/imports/utils/PublicSettings";
+import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
+import * as AsyncTools from "/imports/utils/async-tools";
+import { Filtering } from "/imports/utils/filtering";
+import * as Predicates from "/imports/utils/predicates";
+import * as FileStorage from "/imports/utils/FileStorage";
+import * as StringTools from "/imports/utils/string-tools";
+import { GroupEntityCustomCourseFields } from "/imports/api/groups/groups";
+import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
+import { StringEnum, Type } from "/imports/utils/CustomChecks";
 
 export interface CourseMemberEntity {
-	user: string;
-	roles: string[];
-	comment?: string | undefined;
+  user: string;
+  roles: string[];
+  comment?: string | undefined;
 }
 
 export type CourseCustomField = Pick<
-	GroupEntityCustomCourseFields,
-	'name' | 'displayText' | 'visibleFor'
+  GroupEntityCustomCourseFields,
+  "name" | "displayText" | "visibleFor"
 > & {
-	value: string;
+  value: string;
 };
 
 /** DB-Model */
 export interface CourseEntity {
-	_id: string;
-	tenant: string;
-	name: string;
-	/** ID categories */
-	categories: string[];
-	/** (not used) */
-	tags: string[];
-	/** List ID_groups ("promote groups") */
-	groups: string[];
-	/**
-	 * List of group ID that are allowed to edit the course ("team groups", based on the ui design:
-	 * Every "team group" promotes the course and is part of the groups list)
-	 */
-	groupOrganizers: string[];
-	description: string;
-	image: string;
-	slug: string;
-	/** ID_region */
-	region: string;
-	customFields: CourseCustomField[];
-	/** ID_user */
-	createdby: string;
-	// eslint-disable-next-line camelcase
-	time_created: Date;
-	// eslint-disable-next-line camelcase
-	time_lastedit: Date;
-	/** [role-keys] */
-	roles: string[];
-	members: CourseMemberEntity[];
-	internal: boolean;
-	singleEvent: boolean;
-	archived?: boolean;
-	history: {
-		dateTime: Date;
-		type: string;
-		data: object;
-	}[];
-	/**
-	 * (calculated) List of user and group id allowed to edit the course, calculated from members
-	 * and groupOrganizers
-	 */
-	editors: string[];
-	/** (calculated) count of events still in the future for this course */
-	futureEvents: number;
-	/** (calculated) next upcoming event object, only includes the _id and start field */
-	nextEvent: EventEntity | null;
-	/** (calculated) most recent event object, only includes the _id and start field */
-	lastEvent: EventEntity | null;
-	/** (calculated) based to members.length, to support sorting by number of interested user over url params */
-	interested: number;
+  _id: string;
+  tenant: string;
+  name: string;
+  /** ID categories */
+  categories: string[];
+  /** (not used) */
+  tags: string[];
+  /** List ID_groups ("promote groups") */
+  groups: string[];
+  /**
+   * List of group ID that are allowed to edit the course ("team groups", based on the ui design:
+   * Every "team group" promotes the course and is part of the groups list)
+   */
+  groupOrganizers: string[];
+  description: string;
+  image: string;
+  slug: string;
+  /** ID_region */
+  region: string;
+  customFields: CourseCustomField[];
+  /** ID_user */
+  createdby: string;
+  // eslint-disable-next-line camelcase
+  time_created: Date;
+  // eslint-disable-next-line camelcase
+  time_lastedit: Date;
+  /** [role-keys] */
+  roles: string[];
+  members: CourseMemberEntity[];
+  internal: boolean;
+  singleEvent: boolean;
+  archived?: boolean;
+  history: {
+    dateTime: Date;
+    type: string;
+    data: object;
+  }[];
+  /**
+   * (calculated) List of user and group id allowed to edit the course, calculated from members
+   * and groupOrganizers
+   */
+  editors: string[];
+  /** (calculated) count of events still in the future for this course */
+  futureEvents: number;
+  /** (calculated) next upcoming event object, only includes the _id and start field */
+  nextEvent: EventEntity | null;
+  /** (calculated) most recent event object, only includes the _id and start field */
+  lastEvent: EventEntity | null;
+  /** (calculated) based to members.length, to support sorting by number of interested user over url params */
+  interested: number;
 }
 
 export type CourseModel = Course & CourseEntity;
 
 export class Course {
-	members: CourseMemberEntity[] = [];
+  members: CourseMemberEntity[] = [];
 
-	roles: string[] = [];
+  roles: string[] = [];
 
-	groupOrganizers: string[] = [];
+  groupOrganizers: string[] = [];
 
-	/**
-	 * Check if the course is new (not yet saved).
-	 */
-	isNew(this: CourseModel) {
-		return !this._id;
-	}
+  /**
+   * Check if the course is new (not yet saved).
+   */
+  isNew(this: CourseModel) {
+    return !this._id;
+  }
 
-	isPrivate(this: CourseModel) {
-		return !PublicSettings.publicTenants.includes(this.tenant);
-	}
+  isPrivate(this: CourseModel) {
+    return !PublicSettings.publicTenants.includes(this.tenant);
+  }
 
-	/**
-	 * Check whether a user may edit the course.
-	 */
-	editableBy(this: CourseModel, user: UserModel | null | undefined) {
-		if (!user) {
-			return false;
-		}
-		return (
-			this.isNew() /* Anybody may create a new course */ ||
-			UserPrivilegeUtils.privileged(user, 'admin') /* Admins can edit all courses */ ||
-			_.intersection(user.badges, this.editors).length > 0
-		);
-	}
+  /**
+   * Check whether a user may edit the course.
+   */
+  editableBy(this: CourseModel, user: UserModel | null | undefined) {
+    if (!user) {
+      return false;
+    }
+    return (
+      this.isNew() /* Anybody may create a new course */ ||
+      UserPrivilegeUtils.privileged(user, "admin") /* Admins can edit all courses */ ||
+      _.intersection(user.badges, this.editors).length > 0
+    );
+  }
 
-	/**
-	 * Get list of members with specified role
-	 * @param role like 'team'
-	 */
-	membersWithRole(this: CourseModel, role: string) {
-		check(role, String);
-		return this.members.filter((member) => member.roles.includes(role));
-	}
+  /**
+   * Get list of members with specified role
+   * @param role like 'team'
+   */
+  membersWithRole(this: CourseModel, role: string) {
+    check(role, String);
+    return this.members.filter((member) => member.roles.includes(role));
+  }
 
-	userHasRole(this: CourseModel, userId: string | undefined | null, role: string) {
-		return hasRoleUser(this.members, role, userId);
-	}
+  userHasRole(this: CourseModel, userId: string | undefined | null, role: string) {
+    return hasRoleUser(this.members, role, userId);
+  }
 
-	publicImageUrl(this: CourseModel) {
-		if (!this.image) {
-			return undefined;
-		}
+  publicImageUrl(this: CourseModel) {
+    if (!this.image) {
+      return undefined;
+    }
 
-		return FileStorage.generatePublicUrl(this.image);
-	}
+    return FileStorage.generatePublicUrl(this.image);
+  }
 }
 
 export const FindFilterPattern = {
-	tenants: Match.Maybe([String]),
-	region: Match.Maybe(String),
-	state: Match.Maybe([StringEnum('proposal', 'resting', 'upcomingEvent')]),
-	userInvolved: Match.Maybe(String),
-	createdby: Match.Maybe(String),
-	categories: Match.Maybe([String]),
-	group: Match.Maybe(String),
-	internal: Match.Maybe(Boolean),
-	search: Match.Maybe(String),
-	needsRole: Match.Maybe([StringEnum('host', 'mentor', 'team')]),
-	archived: Match.Maybe(Boolean),
+  tenants: Match.Maybe([String]),
+  region: Match.Maybe(String),
+  state: Match.Maybe([StringEnum("proposal", "resting", "upcomingEvent")]),
+  userInvolved: Match.Maybe(String),
+  createdby: Match.Maybe(String),
+  categories: Match.Maybe([String]),
+  group: Match.Maybe(String),
+  internal: Match.Maybe(Boolean),
+  search: Match.Maybe(String),
+  needsRole: Match.Maybe([StringEnum("host", "mentor", "team")]),
+  archived: Match.Maybe(Boolean),
 };
 export type FindFilter = Type<typeof FindFilterPattern>;
 
 export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseModel> {
-	constructor() {
-		super('Courses', {
-			transform(course) {
-				return _.extend(new Course(), course);
-			},
-		});
+  constructor() {
+    super("Courses", {
+      transform(course) {
+        return _.extend(new Course(), course);
+      },
+    });
 
-		if (Meteor.isServer) {
-			this.createIndex({ tenant: 1, archived: 1, region: 1, time_lastedit: 1, groups: 1 });
-		}
-	}
+    if (Meteor.isServer) {
+      this.createIndex({ tenant: 1, archived: 1, region: 1, time_lastedit: 1, groups: 1 });
+    }
+  }
 
-	insert(
-		course: Mongo.OptionalId<CourseEntity>,
-		callback?: (err: unknown | undefined, id?: string) => void,
-	) {
-		let enrichedCourse = tenantDenormalizer.beforeInsert(course);
-		enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
+  insert(
+    course: Mongo.OptionalId<CourseEntity>,
+    callback?: (err: unknown | undefined, id?: string) => void
+  ) {
+    let enrichedCourse = tenantDenormalizer.beforeInsert(course);
+    enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
 
-		return super.insert(enrichedCourse, callback);
-	}
+    return super.insert(enrichedCourse, callback);
+  }
 
-	async insertAsync(
-		course: Mongo.OptionalId<CourseEntity>,
-		callback?: (err: unknown | undefined, id?: string) => void,
-	) {
-		let enrichedCourse = tenantDenormalizer.beforeInsert(course);
-		enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
+  async insertAsync(
+    course: Mongo.OptionalId<CourseEntity>,
+    callback?: (err: unknown | undefined, id?: string) => void
+  ) {
+    let enrichedCourse = tenantDenormalizer.beforeInsert(course);
+    enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
 
-		return super.insertAsync(enrichedCourse, callback);
-	}
+    return super.insertAsync(enrichedCourse, callback);
+  }
 
-	// eslint-disable-next-line class-methods-use-this
-	Filtering() {
-		return new Filtering({
-			region: Predicates.id,
-			search: Predicates.string,
-			group: Predicates.string,
-			categories: Predicates.ids,
-			state: Predicates.ids,
-			needsRole: Predicates.ids,
-			internal: Predicates.flag,
-			archived: Predicates.flag,
-		});
-	}
+  // eslint-disable-next-line class-methods-use-this
+  Filtering() {
+    return new Filtering({
+      region: Predicates.id,
+      search: Predicates.string,
+      group: Predicates.string,
+      categories: Predicates.ids,
+      state: Predicates.ids,
+      needsRole: Predicates.ids,
+      internal: Predicates.flag,
+      archived: Predicates.flag,
+    });
+  }
 
-	/**
-	 * Update list of editors
-	 */
-	updateGroups(courseId: string) {
-		AsyncTools.untilClean((resolve, reject) => {
-			const course = this.findOne(courseId);
+  /**
+   * Update list of editors
+   */
+  updateGroups(courseId: string) {
+    AsyncTools.untilClean((resolve, reject) => {
+      const course = this.findOne(courseId);
 
-			if (!course) {
-				// If the course doesn't exist it doesn't need updating
-				resolve(true);
-				return;
-			}
+      if (!course) {
+        // If the course doesn't exist it doesn't need updating
+        resolve(true);
+        return;
+      }
 
-			const editors = course.groupOrganizers.slice();
+      const editors = course.groupOrganizers.slice();
 
-			course.members.forEach((member) => {
-				if (member.roles.includes('team')) {
-					editors.push(member.user);
-				}
-			});
+      course.members.forEach((member) => {
+        if (member.roles.includes("team")) {
+          editors.push(member.user);
+        }
+      });
 
-			const update = { $set: { editors } };
+      const update = { $set: { editors } };
 
-			this.rawCollection().updateMany({ _id: course._id }, update, {}, (err, result) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(result?.modifiedCount === 0);
-				}
-			});
-		}).then(
-			() => {
-				// At some point we'll have to figure out a proper caching hierarchy
-				Meteor.call('event.updateGroups', { courseId });
-			},
-			(reason) => {
-				/* eslint-disable-next-line no-console */
-				console.log(`Failed updateGroups: ${reason}`);
-			},
-		);
-	}
+      this.rawCollection().updateMany({ _id: course._id }, update, {}, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result?.modifiedCount === 0);
+        }
+      });
+    }).then(
+      () => {
+        // At some point we'll have to figure out a proper caching hierarchy
+        Meteor.call("event.updateGroups", { courseId });
+      },
+      (reason) => {
+        /* eslint-disable-next-line no-console */
+        console.log(`Failed updateGroups: ${reason}`);
+      }
+    );
+  }
 
-	/**
-	 * @param limit how many to find
-	 * @param skip skip this many before returning results
-	 * @param sort list of fields to sort by
-	 */
-	findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort: FieldSort[] = []) {
-		check(filter, Match.Maybe(FindFilterPattern));
-		check(limit, Match.Maybe(Match.Integer));
-		check(skip, Match.Maybe(Match.Integer));
-		check(sort, Match.Maybe([FieldSortPattern]));
+  /**
+   * @param limit how many to find
+   * @param skip skip this many before returning results
+   * @param sort list of fields to sort by
+   */
+  findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort: FieldSort[] = []) {
+    check(filter, Match.Maybe(FindFilterPattern));
+    check(limit, Match.Maybe(Match.Integer));
+    check(skip, Match.Maybe(Match.Integer));
+    check(sort, Match.Maybe([FieldSortPattern]));
 
-		const find: any = {};
-		const options: Mongo.Options<CourseEntity> = {};
-		const order = sort;
+    const find: any = {};
+    const options: Mongo.Options<CourseEntity> = {};
+    const order = sort;
 
-		if (limit > 0) {
-			options.limit = limit;
-		}
+    if (limit > 0) {
+      options.limit = limit;
+    }
 
-		if (skip > 0) {
-			options.skip = skip;
-		}
+    if (skip > 0) {
+      options.skip = skip;
+    }
 
-		if (!filter.archived) {
-			find.archived = { $ne: true }; // hide archived by default
-		} else {
-			find.archived = { $eq: true }; // only show archived
-		}
+    if (!filter.archived) {
+      find.archived = { $ne: true }; // hide archived by default
+    } else {
+      find.archived = { $eq: true }; // only show archived
+    }
 
-		if (filter.tenants && filter.tenants.length > 0) {
-			find.tenant = { $in: filter.tenants };
-		}
+    if (filter.tenants && filter.tenants.length > 0) {
+      find.tenant = { $in: filter.tenants };
+    }
 
-		if (filter.region && filter.region !== 'all') {
-			find.region = filter.region;
-		}
+    if (filter.region && filter.region !== "all") {
+      find.region = filter.region;
+    }
 
-		if (filter.state) {
-			const $or = [];
+    if (filter.state) {
+      const $or = [];
 
-			if (filter.state.includes('proposal')) {
-				$or.push({ lastEvent: { $eq: null }, futureEvents: { $eq: 0 } });
-			}
+      if (filter.state.includes("proposal")) {
+        $or.push({ lastEvent: { $eq: null }, futureEvents: { $eq: 0 } });
+      }
 
-			if (filter.state.includes('resting')) {
-				$or.push({ lastEvent: { $ne: null }, futureEvents: { $eq: 0 } });
-			}
+      if (filter.state.includes("resting")) {
+        $or.push({ lastEvent: { $ne: null }, futureEvents: { $eq: 0 } });
+      }
 
-			if (filter.state.includes('upcomingEvent')) {
-				$or.push({ futureEvents: { $gt: 0 } });
-				if (filter.state.length === 1) {
-					order.push(['nextEvent.start', 'asc']);
-				}
-			}
+      if (filter.state.includes("upcomingEvent")) {
+        $or.push({ futureEvents: { $gt: 0 } });
+        if (filter.state.length === 1) {
+          order.push(["nextEvent.start", "asc"]);
+        }
+      }
 
-			find.$and = [{ $or }];
-		}
-		order.push(['time_lastedit', 'desc']);
-		order.push(['time_created', 'desc']);
+      find.$and = [{ $or }];
+    }
+    order.push(["time_lastedit", "desc"]);
+    order.push(["time_created", "desc"]);
 
-		const mustHaveRoles = [];
-		const missingRoles = [];
+    const mustHaveRoles = [];
+    const missingRoles = [];
 
-		const { needsRole } = filter;
-		if (needsRole) {
-			if (needsRole.includes('host')) {
-				missingRoles.push('host');
-				mustHaveRoles.push('host');
-			}
+    const { needsRole } = filter;
+    if (needsRole) {
+      if (needsRole.includes("host")) {
+        missingRoles.push("host");
+        mustHaveRoles.push("host");
+      }
 
-			if (needsRole.includes('mentor')) {
-				missingRoles.push('mentor');
-				mustHaveRoles.push('mentor');
-			}
+      if (needsRole.includes("mentor")) {
+        missingRoles.push("mentor");
+        mustHaveRoles.push("mentor");
+      }
 
-			if (needsRole.includes('team')) {
-				missingRoles.push('team');
-				// All courses have the team role so we don't need to restrict to those having it
-			}
-		}
+      if (needsRole.includes("team")) {
+        missingRoles.push("team");
+        // All courses have the team role so we don't need to restrict to those having it
+      }
+    }
 
-		if (filter.userInvolved) {
-			find['members.user'] = filter.userInvolved;
-		}
+    if (filter.userInvolved) {
+      find["members.user"] = filter.userInvolved;
+    }
 
-		if (filter.createdby) {
-			find.createdby = filter.createdby;
-		}
+    if (filter.createdby) {
+      find.createdby = filter.createdby;
+    }
 
-		if (filter.categories) {
-			find.categories = { $all: filter.categories };
-		}
+    if (filter.categories) {
+      find.categories = { $all: filter.categories };
+    }
 
-		if (filter.group) {
-			find.groups = filter.group;
-		}
+    if (filter.group) {
+      find.groups = filter.group;
+    }
 
-		if (missingRoles.length > 0) {
-			find['members.roles'] = { $nin: missingRoles };
-		}
+    if (missingRoles.length > 0) {
+      find["members.roles"] = { $nin: missingRoles };
+    }
 
-		if (mustHaveRoles.length > 0) {
-			find.roles = { $all: mustHaveRoles };
-		}
+    if (mustHaveRoles.length > 0) {
+      find.roles = { $all: mustHaveRoles };
+    }
 
-		if (filter.internal !== undefined) {
-			find.internal = Boolean(filter.internal);
-		}
+    if (filter.internal !== undefined) {
+      find.internal = Boolean(filter.internal);
+    }
 
-		if (filter.search) {
-			const searchTerms = filter.search.split(/\s+/);
-			const searchQueries = searchTerms.map((searchTerm) => ({
-				$or: [
-					{ name: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
-					{ description: { $regex: StringTools.escapeRegex(searchTerm), $options: 'i' } },
-				],
-			}));
+    if (filter.search) {
+      const searchTerms = filter.search.split(/\s+/);
+      const searchQueries = searchTerms.map((searchTerm) => ({
+        $or: [
+          { name: { $regex: StringTools.escapeRegex(searchTerm), $options: "i" } },
+          { description: { $regex: StringTools.escapeRegex(searchTerm), $options: "i" } },
+        ],
+      }));
 
-			find.$and = [...(find.$and || []), ...searchQueries];
-		}
+      find.$and = [...(find.$and || []), ...searchQueries];
+    }
 
-		options.sort = order;
+    options.sort = order;
 
-		// Load only data that is useful for list views.
-		options.fields = {
-			'members.comment': 0,
-			history: 0,
-			'nextEvent.editors': 0,
-			'nextEvent.facilities': 0,
-			'nextEvent.loc': 0,
-			'lastEvent.editors': 0,
-			'lastEvent.facilities': 0,
-			'lastEvent.loc': 0,
-		};
+    // Load only data that is useful for list views.
+    options.fields = {
+      "members.comment": 0,
+      history: 0,
+      "nextEvent.editors": 0,
+      "nextEvent.facilities": 0,
+      "nextEvent.loc": 0,
+      "lastEvent.editors": 0,
+      "lastEvent.facilities": 0,
+      "lastEvent.loc": 0,
+    };
 
-		return this.find(find, options) as Mongo.Cursor<CourseEntity, CourseModel>;
-	}
+    return this.find(find, options) as Mongo.Cursor<CourseEntity, CourseModel>;
+  }
 }
 
 export const Courses = new CoursesCollection();

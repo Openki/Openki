@@ -1,5 +1,5 @@
-import { Regions } from '/imports/api/regions/regions';
-import moment from 'moment-timezone';
+import { Regions } from "/imports/api/regions/regions";
+import moment from "moment-timezone";
 
 /**
  * Serialize local time for mongo
@@ -28,48 +28,48 @@ import moment from 'moment-timezone';
  */
 
 export const LocalTime = {
-	zone(regionId: string) {
-		const region = Regions.findOne(regionId);
-		if (!region) {
-			throw new Error(`Unable to load region ${regionId}`);
-		}
+  zone(regionId: string) {
+    const region = Regions.findOne(regionId);
+    if (!region) {
+      throw new Error(`Unable to load region ${regionId}`);
+    }
 
-		const { tz } = region;
+    const { tz } = region;
 
-		return {
-			fromString(date: string) {
-				return moment.tz(date, tz);
-			},
-			toString(date: Date | moment.Moment) {
-				return moment.tz(date, tz).format('YYYY-MM-DD[T]HH:mm');
-			},
-			at(date: Date) {
-				return moment.tz(date, tz);
-			},
-		};
-	},
+    return {
+      fromString(date: string) {
+        return moment.tz(date, tz);
+      },
+      toString(date: Date | moment.Moment) {
+        return moment.tz(date, tz).format("YYYY-MM-DD[T]HH:mm");
+      },
+      at(date: Date) {
+        return moment.tz(date, tz);
+      },
+    };
+  },
 
-	/**
-	 * Turn a moment object into a local date string without time offset
-	 */
-	toString(date: Date | moment.Moment) {
-		return moment(date).format('YYYY-MM-DD[T]HH:mm');
-	},
+  /**
+   * Turn a moment object into a local date string without time offset
+   */
+  toString(date: Date | moment.Moment) {
+    return moment(date).format("YYYY-MM-DD[T]HH:mm");
+  },
 
-	/**
-	 * Read local date from string
-	 *
-	 * Note that the returned date will be faux UTC.
-	 */
-	fromString(dateStr: string, timeStr?: string) {
-		if (timeStr) {
-			return moment.utc(`${dateStr} ${timeStr}`, 'L LT');
-		}
+  /**
+   * Read local date from string
+   *
+   * Note that the returned date will be faux UTC.
+   */
+  fromString(dateStr: string, timeStr?: string) {
+    if (timeStr) {
+      return moment.utc(`${dateStr} ${timeStr}`, "L LT");
+    }
 
-		return moment.utc(dateStr);
-	},
+    return moment.utc(dateStr);
+  },
 
-	now() {
-		return moment.utc().add(moment().utcOffset(), 'minutes');
-	},
+  now() {
+    return moment.utc().add(moment().utcOffset(), "minutes");
+  },
 };

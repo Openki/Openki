@@ -1,180 +1,180 @@
-import { Match, check } from 'meteor/check';
-import { Meteor } from 'meteor/meteor';
-import merge from 'deepmerge';
+import { Match, check } from "meteor/check";
+import { Meteor } from "meteor/meteor";
+import merge from "deepmerge";
 
-import { Record, Type } from '/imports/utils/CustomChecks';
-import { LocalizedValue, LocalizedValuePattern } from '/imports/utils/getLocalizedValue';
+import { Record, Type } from "/imports/utils/CustomChecks";
+import { LocalizedValue, LocalizedValuePattern } from "/imports/utils/getLocalizedValue";
 
 // See settings-example.json.md for full documentation
 
 export const PublicSettingsPattern = Match.ObjectIncluding({
-	siteName: String,
-	/** The text top left at the logo */
-	siteStage: String,
-	/** Shows a banner saying that this is only for testing */
-	testWarning: Boolean,
-	/** The logo in the top left corner */
-	headerLogo: { src: String, alt: String },
-	/** The logo in the top left corner from the /kiosk/events/ page. */
-	headerLogoKiosk: { src: String, alt: String },
-	/** The default image used for avatars */
-	avatarLogo: { src: String, alt: String },
-	/** The image to be shown in social media */
-	ogLogo: { src: String },
-	emailLogo: String,
-	theme: {
-		brand: String,
-	},
-	regionSelection: {
-		/** The minimum number of regions displayed in the Regions selection. */
-		minNumber: Number,
-		/** A link to a page that explains regions, if not set then none link is shown. */
-		aboutLink: Match.Maybe(LocalizedValuePattern),
-	},
-	/** A link to a page that give instructions how to translate. */
-	i18nHelpLink: Match.Maybe(LocalizedValuePattern),
-	i18nMapping: Match.Maybe(Match.ObjectIncluding<Record<string, string>>({})),
-	publicTenants: [String],
-	matomo: Match.Maybe(
-		Match.OneOf(
-			{
-				jsPath: String,
-				phpPath: String,
-			},
-			{
-				url: String,
-				site: Match.Integer,
-				jsPath: String,
-				phpPath: String,
-			},
-		),
-	),
-	/** by true, show only indicative prices (DE: Richtpreise), default is true */
-	pricePolicyEnabled: Boolean,
-	/** Should a reminder be sent by default or not. Default is true */
-	sendReminderPreset: Boolean,
-	feature: {
-		/** toggle visibility of login services */
-		login: { google: Boolean, facebook: Boolean, github: Boolean },
-		/** allow user without name and password */
-		visitorUser: Boolean,
-		/** allow rsvp with +1 / for two seats */
-		rsvpWithCompanions: Boolean,
-		/** allow to edit whether to remind or not, Default: true */
-		sendReminderIsEditable: Boolean,
-	},
-	nav: {
-		brandLink: String,
-		home: Boolean,
-		proposeCourse: Boolean,
-		calendar: Boolean,
-		customEntries: [
-			{
-				link: String,
-				icon: String,
-				/**
-				 * text from the link. The value is a translation key from i18next it must be
-				 * defined in code
-				 */
-				key: Match.Maybe(String),
-				/** as a alternative for "key" */
-				text: Match.Maybe(LocalizedValuePattern),
-			},
-		],
-	},
-	footerLinks: [
-		{
-			link: String,
-			/**
-			 * text from the link. The value is a translation key from i18next it must be
-			 * defined in code
-			 */
-			key: Match.Maybe(String),
-			/** text that is shown on hover the link */
-			title_key: Match.Maybe(String),
-			/** as a alternative for "key" */
-			text: Match.Maybe(LocalizedValuePattern),
-		},
-	],
-	/** Text displayed in the registration form to link to the Privacy Policy and Terms and Conditions. Can be markdown. Default: undefined (not shown) */
-	dataProtectionLaw: Match.Maybe(LocalizedValuePattern),
-	faqLink: LocalizedValuePattern,
-	pricePolicyLink: LocalizedValuePattern,
-	courseGuideLink: LocalizedValuePattern,
-	aboutLink: LocalizedValuePattern,
-	/** Contribution to the plattform. */
-	contribution: Match.Maybe({
-		icon: String,
-		/** forbidden chars in username */
-		forbiddenChars: [String],
-		link: LocalizedValuePattern,
-	}) as Match.Matcher<{
-		icon: string;
-		forbiddenChars: string[];
-		link: LocalizedValue;
-	}>,
-	/** Max characters allowed for the description-field of courses. */
-	courseDescriptionMax: Match.Maybe(Number),
-	/** Max characters allowed for the description-field of events. */
-	eventDescriptionMax: Match.Maybe(Number),
-	/**  Categories for courses, main and/or sub categories */
-	categories: Record([String]),
-	/** file storage */
-	s3: {
-		publicUrlBase: String,
-	},
+  siteName: String,
+  /** The text top left at the logo */
+  siteStage: String,
+  /** Shows a banner saying that this is only for testing */
+  testWarning: Boolean,
+  /** The logo in the top left corner */
+  headerLogo: { src: String, alt: String },
+  /** The logo in the top left corner from the /kiosk/events/ page. */
+  headerLogoKiosk: { src: String, alt: String },
+  /** The default image used for avatars */
+  avatarLogo: { src: String, alt: String },
+  /** The image to be shown in social media */
+  ogLogo: { src: String },
+  emailLogo: String,
+  theme: {
+    brand: String,
+  },
+  regionSelection: {
+    /** The minimum number of regions displayed in the Regions selection. */
+    minNumber: Number,
+    /** A link to a page that explains regions, if not set then none link is shown. */
+    aboutLink: Match.Maybe(LocalizedValuePattern),
+  },
+  /** A link to a page that give instructions how to translate. */
+  i18nHelpLink: Match.Maybe(LocalizedValuePattern),
+  i18nMapping: Match.Maybe(Match.ObjectIncluding<Record<string, string>>({})),
+  publicTenants: [String],
+  matomo: Match.Maybe(
+    Match.OneOf(
+      {
+        jsPath: String,
+        phpPath: String,
+      },
+      {
+        url: String,
+        site: Match.Integer,
+        jsPath: String,
+        phpPath: String,
+      }
+    )
+  ),
+  /** by true, show only indicative prices (DE: Richtpreise), default is true */
+  pricePolicyEnabled: Boolean,
+  /** Should a reminder be sent by default or not. Default is true */
+  sendReminderPreset: Boolean,
+  feature: {
+    /** toggle visibility of login services */
+    login: { google: Boolean, facebook: Boolean, github: Boolean },
+    /** allow user without name and password */
+    visitorUser: Boolean,
+    /** allow rsvp with +1 / for two seats */
+    rsvpWithCompanions: Boolean,
+    /** allow to edit whether to remind or not, Default: true */
+    sendReminderIsEditable: Boolean,
+  },
+  nav: {
+    brandLink: String,
+    home: Boolean,
+    proposeCourse: Boolean,
+    calendar: Boolean,
+    customEntries: [
+      {
+        link: String,
+        icon: String,
+        /**
+         * text from the link. The value is a translation key from i18next it must be
+         * defined in code
+         */
+        key: Match.Maybe(String),
+        /** as a alternative for "key" */
+        text: Match.Maybe(LocalizedValuePattern),
+      },
+    ],
+  },
+  footerLinks: [
+    {
+      link: String,
+      /**
+       * text from the link. The value is a translation key from i18next it must be
+       * defined in code
+       */
+      key: Match.Maybe(String),
+      /** text that is shown on hover the link */
+      title_key: Match.Maybe(String),
+      /** as a alternative for "key" */
+      text: Match.Maybe(LocalizedValuePattern),
+    },
+  ],
+  /** Text displayed in the registration form to link to the Privacy Policy and Terms and Conditions. Can be markdown. Default: undefined (not shown) */
+  dataProtectionLaw: Match.Maybe(LocalizedValuePattern),
+  faqLink: LocalizedValuePattern,
+  pricePolicyLink: LocalizedValuePattern,
+  courseGuideLink: LocalizedValuePattern,
+  aboutLink: LocalizedValuePattern,
+  /** Contribution to the plattform. */
+  contribution: Match.Maybe({
+    icon: String,
+    /** forbidden chars in username */
+    forbiddenChars: [String],
+    link: LocalizedValuePattern,
+  }) as Match.Matcher<{
+    icon: string;
+    forbiddenChars: string[];
+    link: LocalizedValue;
+  }>,
+  /** Max characters allowed for the description-field of courses. */
+  courseDescriptionMax: Match.Maybe(Number),
+  /** Max characters allowed for the description-field of events. */
+  eventDescriptionMax: Match.Maybe(Number),
+  /**  Categories for courses, main and/or sub categories */
+  categories: Record([String]),
+  /** file storage */
+  s3: {
+    publicUrlBase: String,
+  },
 });
 
 export type PublicSettings = Type<typeof PublicSettingsPattern>;
 
 const defaults = {
-	siteName: 'Hmmm',
-	siteStage: '',
-	testWarning: false,
-	headerLogo: { src: '', alt: '' },
-	headerLogoKiosk: { src: '', alt: '' },
-	avatarLogo: { src: '', alt: '' },
-	ogLogo: { src: 'openki_logo_2018.png' },
-	theme: {
-		brand: '#38829c',
-	},
-	regionSelection: { minNumber: 5, aboutLink: '' },
-	i18nHelpLink: 'https://gitlab.com/Openki/Openki/-/wikis/i18n-howto',
-	publicTenants: [] as string[],
-	matomo: {
-		jsPath: 'js/',
-		phpPath: 'js/',
-	},
-	pricePolicyEnabled: true,
-	sendReminderPreset: true,
-	feature: {
-		login: { google: false, facebook: false, github: false },
-		visitorUser: false,
-		rsvpWithCompanions: false,
-		sendReminderIsEditable: true,
-	},
-	nav: {
-		brandLink: '/',
-		home: true,
-		proposeCourse: true,
-		calendar: true,
-		customEntries: [] as { link: string; icon: string; key?: string; text?: string }[],
-	},
-	// eslint-disable-next-line camelcase
-	footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
-	faqLink: '/info/faq',
-	pricePolicyLink: {
-		en: '/info/faq#why-can-not-i-ask-for-a-fixed-price-as-a-mentor',
-		de: '/info/faq#dürfen-kurse-etwas-kosten',
-	},
-	courseGuideLink: {
-		en: 'https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf',
-		de: 'https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf',
-	},
-	aboutLink: 'https://about.openki.net',
-	courseDescriptionMax: 15000,
-	eventDescriptionMax: 15000,
-	categories: {},
+  siteName: "Hmmm",
+  siteStage: "",
+  testWarning: false,
+  headerLogo: { src: "", alt: "" },
+  headerLogoKiosk: { src: "", alt: "" },
+  avatarLogo: { src: "", alt: "" },
+  ogLogo: { src: "openki_logo_2018.png" },
+  theme: {
+    brand: "#38829c",
+  },
+  regionSelection: { minNumber: 5, aboutLink: "" },
+  i18nHelpLink: "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto",
+  publicTenants: [] as string[],
+  matomo: {
+    jsPath: "js/",
+    phpPath: "js/",
+  },
+  pricePolicyEnabled: true,
+  sendReminderPreset: true,
+  feature: {
+    login: { google: false, facebook: false, github: false },
+    visitorUser: false,
+    rsvpWithCompanions: false,
+    sendReminderIsEditable: true,
+  },
+  nav: {
+    brandLink: "/",
+    home: true,
+    proposeCourse: true,
+    calendar: true,
+    customEntries: [] as { link: string; icon: string; key?: string; text?: string }[],
+  },
+  // eslint-disable-next-line camelcase
+  footerLinks: [] as { link: string; key?: string; title_key?: string; text?: string }[],
+  faqLink: "/info/faq",
+  pricePolicyLink: {
+    en: "/info/faq#why-can-not-i-ask-for-a-fixed-price-as-a-mentor",
+    de: "/info/faq#dürfen-kurse-etwas-kosten",
+  },
+  courseGuideLink: {
+    en: "https://about.openki.net/wp-content/uploads/2019/05/How-to-organize-my-first-Openki-course.pdf",
+    de: "https://about.openki.net/wp-content/uploads/2019/05/Wie-organisiere-ich-ein-Openki-Treffen.pdf",
+  },
+  aboutLink: "https://about.openki.net",
+  courseDescriptionMax: 15000,
+  eventDescriptionMax: 15000,
+  categories: {},
 };
 
 const publicSettings = merge(defaults, Meteor.settings.public);

@@ -1,4 +1,4 @@
-@import '{}/imports/ui/stylesheets/variables/index';
+@import "{}/imports/ui/stylesheets/variables/index";
 
 // *** Course details ***
 //=======================
@@ -139,7 +139,7 @@
 	&::before,
 	&::after {
 		border-top: $tab-content-border-width solid $blue;
-		content: '';
+		content: "";
 		height: 100%;
 		position: absolute;
 		top: $tab-content-border-width * -1;
