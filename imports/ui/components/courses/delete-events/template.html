@@ -1,21 +1,5 @@
 <template name="deleteCourseEvents">
-	<div class="event-caption-wrap">
-		<button class="btn p-0 js-show-events-delete-modal"
-				title="{{i18n 'course.event.edit.deleteEvents' 'Delete events' attr=true}}">
-			<div
-				 class="event-caption event-caption-placeholder event-caption-action event-caption-delete">
-				<div class="event-caption-header-wrap">
-					<div class="event-caption-header">
-						<div class="event-caption-pseudoborder"></div>
-					</div>
-				</div>
-				<div class="event-caption-body-wrap">
-					<div class="event-caption-body"></div>
-				</div>
-				<span class="event-caption-icon">
-					<i class="fa-solid fa-trash-can fa-2x"></i>
-				</span>
-			</div>
-		</button>
+	<div style="display: inline-block;">
+		{{> React (component DeleteCourseEvents)}}
 	</div>
 </template>
