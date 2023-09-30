@@ -4,8 +4,6 @@
 		"target": "es2018",
 		"module": "esNext",
 		"lib": ["esnext", "dom"],
-		"allowJs": true,
-		"checkJs": true,
 		"jsx": "preserve",
 		"incremental": true,
 		"noEmit": true,
