@@ -19,7 +19,7 @@ function Option(props: { groupId: string }) {
   );
 }
 
-export function FilterGroups(data: {
+export function FilterGroups(props: {
   availableGroups: string[] | undefined;
   selectedGroups: string[] | undefined;
   onAdd: (group: string) => void;
@@ -27,7 +27,7 @@ export function FilterGroups(data: {
 }) {
   const { t } = useTranslation();
 
-  if (!data.availableGroups) {
+  if (!props.availableGroups) {
     return null;
   }
 
@@ -35,13 +35,13 @@ export function FilterGroups(data: {
     <ReactSelect2
       className="groups-select form-control"
       multiple={true}
-      defaultValue={data.selectedGroups}
+      defaultValue={props.selectedGroups}
       placeholder={t("filterGroups.placeholder", "Choose group")}
       noResults={t("filterGroups.no-groups-found", "No groups found")}
-      onSelect={data.onAdd}
-      onUnselect={data.onRemove}
+      onSelect={props.onAdd}
+      onUnselect={props.onRemove}
     >
-      {data.availableGroups.map((groupId) => (
+      {props.availableGroups.map((groupId) => (
         <Option key={groupId} groupId={groupId} />
       ))}
     </ReactSelect2>

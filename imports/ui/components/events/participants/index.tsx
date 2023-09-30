@@ -49,8 +49,8 @@ function EventParticipant(props: { participant: EventParticipantEntity; event: E
   );
 }
 
-export function EventParticipants(data: { event: EventModel }) {
-  const { event } = data;
+export function EventParticipants(props: { event: EventModel }) {
+  const { event } = props;
   const { t } = useTranslation();
   const modalRef = useRef(null);
   const user = useUser();

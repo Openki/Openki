@@ -13,7 +13,10 @@ import { Event } from "./event";
 
 import "./styles.scss";
 
-export function Modal(data: { upcomingEvents: EventModel[]; onHideEventsDeleteModal: () => void }) {
+export function Modal(props: {
+  upcomingEvents: EventModel[];
+  onHideEventsDeleteModal: () => void;
+}) {
   const { t } = useTranslation();
   const [isBusy, setIsBusy] = useState(false);
   const [selectedEvents, setSelectedEvents] = useState([] as EventModel[]);
@@ -32,10 +35,10 @@ export function Modal(data: { upcomingEvents: EventModel[]; onHideEventsDeleteMo
 
   // set allEventsSelected to true if all events are selected
   useEffect(() => {
-    const events = data.upcomingEvents;
+    const events = props.upcomingEvents;
     const newAllEventsSelected = events.length === selectedEvents.length;
     setAllEventsSelected(newAllEventsSelected);
-  }, [data.upcomingEvents, selectedEvents.length]);
+  }, [props.upcomingEvents, selectedEvents.length]);
 
   // close confirmation dialog if no events are selected
   useEffect(() => {
@@ -50,7 +53,7 @@ export function Modal(data: { upcomingEvents: EventModel[]; onHideEventsDeleteMo
     $(".js-delete-events-modal")
       .modal("show")
       .on("hidden.bs.modal", function () {
-        data.onHideEventsDeleteModal();
+        props.onHideEventsDeleteModal();
       });
   });
 
@@ -198,7 +201,7 @@ export function Modal(data: { upcomingEvents: EventModel[]; onHideEventsDeleteMo
             ) : (
               <>
                 <div className="delete-events-list">
-                  {data.upcomingEvents.map((event) => {
+                  {props.upcomingEvents.map((event) => {
                     return (
                       <div key={event._id} className="form-check">
                         <input
@@ -253,7 +256,7 @@ export function Modal(data: { upcomingEvents: EventModel[]; onHideEventsDeleteMo
                       if (allEventsSelected) {
                         newSelectedEvents = [];
                       } else {
-                        newSelectedEvents = data.upcomingEvents;
+                        newSelectedEvents = props.upcomingEvents;
                       }
 
                       setSelectedEvents(newSelectedEvents);
