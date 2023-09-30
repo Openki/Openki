@@ -1,7 +1,6 @@
 import { Mongo } from 'meteor/mongo';
-import { i18n } from '/imports/startup/both/i18next';
-import { ReactiveDict } from 'meteor/reactive-dict';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
 import { Regions } from '/imports/api/regions/regions';
@@ -11,176 +10,275 @@ import { EventEntity, EventModel } from '/imports/api/events/events';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 
-import './event';
+import { Event } from './event';
 
-import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<
-	'deleteEventsModal',
-	{ upcomingEvents: Mongo.Cursor<EventEntity, EventModel>; onHideEventsDeleteModal: () => void },
-	{
-		state: ReactiveDict<{
-			selectedEvents: EventModel[];
-			allEventsSelected: boolean;
-			showDeleteConfirm: boolean;
-		}>;
+export function Modal(data: {
+	upcomingEvents: Mongo.Cursor<EventEntity, EventModel>;
+	onHideEventsDeleteModal: () => void;
+}) {
+	const { t } = useTranslation();
+	const [isBusy, setIsBusy] = useState(false);
+	const [selectedEvents, setSelectedEvents] = useState([] as EventModel[]);
+	const [allEventsSelected, setAllEventsSelected] = useState(false);
+	const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+	function isSelected(event: EventModel) {
+		return !!selectedEvents?.find((e) => e._id === event._id);
 	}
->;
-
-const template = Template.deleteEventsModal;
-
-template.onCreated(function () {
-	this.busy(false);
-
-	this.state = new ReactiveDict();
-	this.state.setDefault({
-		selectedEvents: [],
-		allEventsSelected: false,
-		showDeleteConfirm: false,
-	});
+	function numSelectedEvents() {
+		return selectedEvents.length || 0;
+	}
+	function noEventsSelected() {
+		return selectedEvents.length === 0;
+	}
 
 	// set allEventsSelected to true if all events are selected
-	this.autorun(() => {
-		const cursor = Template.currentData().upcomingEvents;
-		const allEventsSelected = cursor.count() === this.state.get('selectedEvents')?.length;
-		this.state.set({ allEventsSelected });
-	});
+	useEffect(() => {
+		const cursor = data.upcomingEvents;
+		const newAllEventsSelected = cursor.count() === selectedEvents.length;
+		setAllEventsSelected(newAllEventsSelected);
+	}, [data.upcomingEvents, selectedEvents.length]);
 
 	// close confirmation dialog if no events are selected
-	this.autorun(() => {
-		if (this.state.get('showDeleteConfirm')) {
-			if (!this.state.get('selectedEvents')?.length) {
-				this.state.set('showDeleteConfirm', false);
+	useEffect(() => {
+		if (showDeleteConfirm) {
+			if (!selectedEvents.length) {
+				setShowDeleteConfirm(false);
 			}
 		}
+	}, [showDeleteConfirm, selectedEvents.length]);
+
+	useLayoutEffect(() => {
+		$('.js-delete-events-modal')
+			.modal('show')
+			.on('hidden.bs.modal', function () {
+				data.onHideEventsDeleteModal();
+			});
 	});
-});
 
-template.onRendered(function () {
-	this.$('.js-delete-events-modal').modal('show');
-});
+	return (
+		<div className="modal delete-events-modal js-delete-events-modal" tabIndex={-1} role="dialog">
+			<div className="modal-dialog modal-sm" role="document">
+				<div className="modal-content">
+					<div className="modal-header">
+						<h4 className="modal-title">
+							<span className="fa-solid fa-trash-can fa-fw" aria-hidden="true"></span>{' '}
+							{t('deleteEventsModal.title', 'Delete events')}
+						</h4>
+						<button
+							type="button"
+							className="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div className="modal-body">
+						{showDeleteConfirm ? (
+							<>
+								<div className="card">
+									<div className="card-header text-white bg-danger">
+										{t('deleteEventsModal.confirm', 'Confirm deletion of events')}
+									</div>
+									<div className="card-body">
+										{t(
+											'deleteEventsModal.reallyDelete',
+											'Delete {NUM, plural, one{this event} other{these # events} }?',
+											{ NUM: numSelectedEvents() },
+										)}
+									</div>
+									<ul className="list-group list-group-flush selected-events">
+										{selectedEvents.map((event) => {
+											return (
+												<li key={event._id} className="list-group-item list-group-item-danger">
+													<button
+														type="button"
+														className="btn-close float-end"
+														aria-label="Close"
+														onClick={() => {
+															setSelectedEvents(
+																selectedEvents.filter((se) => se._id !== event._id),
+															);
+														}}
+													></button>
+													<Event event={event} />
+												</li>
+											);
+										})}
+									</ul>
+									<div className="card-body">
+										<div className="delete-events-actions">
+											<button
+												type="button"
+												className="btn btn-danger"
+												disabled={isBusy}
+												onClick={() => {
+													setIsBusy(true);
 
-template.helpers({
-	isSelected(this: EventModel) {
-		return Template.instance()
-			.state.get('selectedEvents')
-			?.find((e) => e._id === this._id);
-	},
+													const events = selectedEvents;
+													let removed = 0;
+													let responses = 0;
+													events?.forEach((event) => {
+														EventsMethods.remove(event._id)
+															.then(() => {
+																removed += 1;
+															})
+															.catch((err) => {
+																const start = moment(event.startLocal).format('llll');
+																Alert.serverError(
+																	err,
+																	t(
+																		'deleteEventsModal.errWithReason',
+																		'Could not delete the "{TITLE} ({START})" event.',
+																		{ TITLE: event.title, START: start },
+																	),
+																);
+															})
+															.finally(() => {
+																responses += 1;
+																if (responses === events.length) {
+																	setIsBusy(false);
+																	setShowDeleteConfirm(false);
+																	if (removed) {
+																		Alert.success(
+																			t(
+																				'deleteEventsModal.sucess',
+																				'{NUM, plural, one{Event was} other{# events were} } successfully deleted.',
+																				{ NUM: removed },
+																			),
+																		);
 
-	numSelectedEvents() {
-		return Template.instance().state.get('selectedEvents')?.length || 0;
-	},
+																		Analytics.trackEvent(
+																			'Events deletions',
+																			'Events deletions as team',
+																			Regions.findOne(event.region)?.nameEn,
+																			removed,
+																		);
+																	}
+																	if (removed === responses) {
+																		setSelectedEvents([]);
+																		$('.js-delete-events-modal').modal('hide');
+																	}
+																}
+															});
+													});
+												}}
+											>
+												{isBusy ? (
+													<>
+														<span
+															className="fa-solid fa-circle-notch fa-spin fa-fw"
+															aria-hidden="true"
+														></span>
+														{t(
+															'deleteEventsModal.deletingEvents',
+															'Deleting {NUM, plural, one{event} other{events} }…',
+															{ NUM: numSelectedEvents() },
+														)}
+													</>
+												) : (
+													t(
+														'deleteEventsModal.confirmDeleteEvents',
+														'Delete {NUM, plural, one{event} other{events} }',
+														{ NUM: numSelectedEvents() },
+													)
+												)}
+											</button>{' '}
+											<button
+												type="button"
+												className="btn btn-secondary"
+												disabled={isBusy}
+												onClick={() => {
+													setShowDeleteConfirm(false);
+												}}
+											>
+												{t('_button.cancel')}
+											</button>
+										</div>
+									</div>
+								</div>
+							</>
+						) : (
+							<>
+								<div className="delete-events-list">
+									{data.upcomingEvents.map((event) => {
+										return (
+											<div key={event._id} className="form-check">
+												<input
+													className="form-check-input"
+													type="checkbox"
+													value=""
+													id={`deleteEventsListCheck${event._id}`}
+													checked={isSelected(event)}
+													disabled={isBusy}
+													onChange={(e) => {
+														let newSelectedEvents;
 
-	disabledIfNoEventsSelected() {
-		if (Template.instance().state.get('selectedEvents')?.length === 0) {
-			return 'disabled';
-		}
-		return '';
-	},
-});
+														if (e.target.checked) {
+															newSelectedEvents = [...selectedEvents, event];
+														} else {
+															newSelectedEvents = selectedEvents.filter(
+																(se) => se._id !== event._id,
+															);
+														}
 
-template.events({
-	'hidden.bs.modal .js-delete-events-modal'(_event, instance) {
-		instance.data.onHideEventsDeleteModal();
-	},
+														setSelectedEvents(newSelectedEvents);
+													}}
+												/>
+												<label
+													className="form-check-label mb-1"
+													htmlFor={`deleteEventsListCheck${event._id}`}
+												>
+													<Event event={event} />
+												</label>
+											</div>
+										);
+									})}
+								</div>
+								<div className="delete-events-actions">
+									<button
+										className="btn btn-danger"
+										disabled={noEventsSelected()}
+										onClick={() => {
+											setShowDeleteConfirm(true);
+										}}
+									>
+										{t(
+											'deleteEventsModal.deleteEvents',
+											'Delete {NUM, plural, =0{event} one{event} other{# events} }',
+											{ NUM: numSelectedEvents() },
+										)}
+									</button>{' '}
+									<button
+										className="btn btn-secondary"
+										onClick={() => {
+											let newSelectedEvents: EventModel[];
+											if (allEventsSelected) {
+												newSelectedEvents = [];
+											} else {
+												newSelectedEvents = data.upcomingEvents.fetch();
+											}
 
-	'click .js-toggle-all'(_event, instance) {
-		let selectedEvents: EventModel[];
-		if (instance.state.get('allEventsSelected')) {
-			selectedEvents = [];
-		} else {
-			selectedEvents = instance.data.upcomingEvents.fetch();
-		}
+											setSelectedEvents(newSelectedEvents);
+										}}
+									>
+										{allEventsSelected
+											? t('deleteEventsModal.clearSelection', 'Clear selection')
+											: t('deleteEventsModal.selectAll', 'Select all')}
+									</button>
+								</div>
+							</>
+						)}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
 
-		instance.state.set({ selectedEvents });
-	},
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
 
-	'change input[type="checkbox"]'(this: EventModel, event, instance) {
-		let selectedEvents = instance.state.get('selectedEvents');
-
-		if (!selectedEvents) {
-			throw new Error('Unexpected falsy: selectedEvents');
-		}
-
-		if ((event.target as HTMLInputElement).checked) {
-			selectedEvents.push(this);
-		} else {
-			selectedEvents = selectedEvents.filter((e) => e._id !== this._id);
-		}
-
-		instance.state.set({ selectedEvents });
-	},
-
-	'click .js-show-delete-confirm'(_event, instance) {
-		instance.state.set('showDeleteConfirm', true);
-	},
-
-	'click .js-deselect-event'(e, instance) {
-		const eventId = instance.$(e.target as any).data('event-id');
-		const selectedEvents = instance.state.get('selectedEvents');
-		if (!selectedEvents) {
-			throw new Error('Unexpected falsy: selectedEvents');
-		}
-		instance.state.set(
-			'selectedEvents',
-			selectedEvents.filter((event) => event._id !== eventId),
-		);
-	},
-
-	'click .js-delete-events'(_e, instance) {
-		instance.busy('deleting');
-
-		const events = instance.state.get('selectedEvents');
-		let removed = 0;
-		let responses = 0;
-		events?.forEach((event) => {
-			EventsMethods.remove(event._id)
-				.then(() => {
-					removed += 1;
-				})
-				.catch((err) => {
-					const start = moment(event.startLocal).format('llll');
-					Alert.serverError(
-						err,
-						i18n(
-							'deleteEventsModal.errWithReason',
-							'Could not delete the "{TITLE} ({START})" event.',
-							{ TITLE: event.title, START: start },
-						),
-					);
-				})
-				.finally(() => {
-					responses += 1;
-					if (responses === events.length) {
-						instance.busy(false);
-						instance.state.set('showDeleteConfirm', false);
-						if (removed) {
-							Alert.success(
-								i18n(
-									'deleteEventsModal.sucess',
-									'{NUM, plural, one{Event was} other{# events were} } successfully deleted.',
-									{ NUM: removed },
-								),
-							);
-
-							Analytics.trackEvent(
-								'Events deletions',
-								'Events deletions as team',
-								Regions.findOne(event.region)?.nameEn,
-								removed,
-							);
-						}
-						if (removed === responses) {
-							instance.state.set('selectedEvents', []);
-							instance.$('.js-delete-events-modal').modal('hide');
-						}
-					}
-				});
-		});
-	},
-
-	'click .js-cancel'(_event, instance) {
-		instance.state.set('showDeleteConfirm', false);
-	},
-});
+Template.registerHelper('DeleteEventsModal', () => Modal);
