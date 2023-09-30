@@ -1,53 +1,59 @@
-import { Meteor } from "meteor/meteor";
-import { i18n } from "/imports/startup/both/i18next";
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useUser } from "meteor/react-meteor-accounts";
 
 import * as usersMethods from "/imports/api/users/methods";
 import * as Alert from "/imports/api/alerts/alert";
 
-import "../avatar";
+import { Avatar } from "../avatar";
 
-import "./template.html";
 import "./styles.scss";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "avatarForm",
-  unknown,
-  { tempColor: ReactiveVar<number> }
->;
+export function AvatarForm() {
+  const { t } = useTranslation();
+  const user = useUser();
+  const [color, setColor] = useState(user?.avatar.color || 0);
 
-const template = Template.avatarForm;
+  return (
+    <div className="avatar-form">
+      <Avatar color={color} className="profile-avatar" />
 
-template.onCreated(function () {
-  this.tempColor = new ReactiveVar(Meteor.user()?.avatar?.color || 0);
-});
+      <div className="mb-3">
+        <label className="sr-only" htmlFor="avatarColorRange">
+          {t("profile.avatar.inputLabel", "Change hair color")}
+        </label>
+        <input
+          type="range"
+          min="0"
+          max="360"
+          className="avatar-form-input"
+          id="avatarColorRange"
+          value={color}
+          onInput={(event) => {
+            const newColor = parseInt(event.currentTarget.value, 10);
+            if (newColor === color) {
+              return;
+            }
+            setColor(newColor);
+          }}
+          onChange={async () => {
+            // only update the color if it has changed
+            if (user?.avatar?.color === color) {
+              return;
+            }
 
-template.onRendered(() => {
-  $("#avatarColorRange").val(Template.instance().tempColor.get());
-});
+            await usersMethods.updateAvatarColor(color);
 
-template.helpers({
-  color() {
-    return Template.instance().tempColor.get();
-  },
-});
+            Alert.success(t("profile.updated", "Updated profile"));
+          }}
+        />
+      </div>
+    </div>
+  );
+}
 
-template.events({
-  "input .js-change-avatar-color"(event, instance) {
-    instance.tempColor.set(parseInt((event.target as HTMLInputElement).value, 10));
-  },
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
 
-  async "change .js-change-avatar-color"(_event, instance) {
-    const newColor = Number(instance.tempColor.get());
-
-    // only update the color if it has changed
-    if (Meteor.user()?.avatar?.color === newColor) {
-      return;
-    }
-
-    await usersMethods.updateAvatarColor(newColor);
-
-    Alert.success(i18n("profile.updated", "Updated profile"));
-  },
-});
+Template.registerHelper("AvatarForm", () => AvatarForm);

@@ -8,7 +8,7 @@ import "./styles.scss";
 import { useUserId } from "/imports/utils/react-meteor-data";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 
-export function Avatar(data: { color?: number; userId?: string; class?: string }) {
+export function Avatar(data: { color?: number; userId?: string; className?: string }) {
   const currenctUserId = useUserId();
 
   const userId = data.userId || currenctUserId;
@@ -31,7 +31,7 @@ export function Avatar(data: { color?: number; userId?: string; class?: string }
 
   if (isLoading()) {
     <img
-      className={`avatar-image ${data.class} placeholder-rainbow`}
+      className={`avatar-image ${data.className} placeholder-rainbow`}
       src={`/logo/${PublicSettings.avatarLogo.src}`}
       alt={getLocalizedValue(PublicSettings.avatarLogo.alt)}
     />;
@@ -39,7 +39,7 @@ export function Avatar(data: { color?: number; userId?: string; class?: string }
 
   return (
     <img
-      className={`avatar-image ${data.class}`}
+      className={`avatar-image ${data.className}`}
       style={{ filter: `hue-rotate(-${color()}deg)` }}
       src={`/logo/${PublicSettings.avatarLogo.src}`}
       alt={getLocalizedValue(PublicSettings.avatarLogo.alt)}
