@@ -1,51 +1,54 @@
-import { Meteor } from "meteor/meteor";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React from "react";
 
-import { Users } from "/imports/api/users/users";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
-import "./template.html";
+import * as Users from "/imports/api/users/publications";
+
 import "./styles.scss";
+import { useUserId } from "/imports/utils/react-meteor-data";
+import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "avatar",
-  { color?: number; userId?: string; class?: string }
->;
+export function Avatar(data: { color?: number; userId?: string; class?: string }) {
+  const currenctUserId = useUserId();
 
-const template = Template.avatar;
+  const userId = data.userId || currenctUserId;
 
-template.onCreated(function () {
-  const data = this.data;
-
-  if (data.color !== undefined) {
-    return;
+  if (!userId) {
+    throw new Error("Unexpected falsy: userId");
   }
 
-  if (data.userId !== undefined) {
-    this.subscribe("user", data.userId);
-  }
-});
+  const [isLoading, user] = Users.useDetails(userId);
 
-template.helpers({
-  color() {
-    const data = Template.instance().data;
-
+  function color() {
     // the form sets the color directly
     if (data.color !== undefined) {
       return data.color;
     }
 
     // otherwise get the color from a user
-    const user = Users.findOne(data.userId || Meteor.userId() || undefined);
-    const color = user?.avatar?.color;
+    return user?.avatar?.color || 0;
+  }
 
-    if (color === undefined) {
-      return 0;
-    }
+  if (isLoading()) {
+    <img
+      className={`avatar-image ${data.class} placeholder-rainbow`}
+      src={`/logo/${PublicSettings.avatarLogo.src}`}
+      alt={getLocalizedValue(PublicSettings.avatarLogo.alt)}
+    />;
+  }
 
-    return color;
-  },
+  return (
+    <img
+      className={`avatar-image ${data.class}`}
+      style={{ filter: `hue-rotate(-${color()}deg)` }}
+      src={`/logo/${PublicSettings.avatarLogo.src}`}
+      alt={getLocalizedValue(PublicSettings.avatarLogo.alt)}
+    />
+  );
+}
 
-  class() {
-    return Template.instance().data.class || "";
-  },
-});
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("Avatar", () => Avatar);
