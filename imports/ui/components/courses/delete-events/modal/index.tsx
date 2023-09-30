@@ -1,4 +1,3 @@
-import { Mongo } from 'meteor/mongo';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
@@ -6,7 +5,7 @@ import moment from 'moment';
 import { Regions } from '/imports/api/regions/regions';
 import * as Alert from '/imports/api/alerts/alert';
 import * as EventsMethods from '/imports/api/events/methods';
-import { EventEntity, EventModel } from '/imports/api/events/events';
+import { EventModel } from '/imports/api/events/events';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 
@@ -14,10 +13,7 @@ import { Event } from './event';
 
 import './styles.scss';
 
-export function Modal(data: {
-	upcomingEvents: Mongo.Cursor<EventEntity, EventModel>;
-	onHideEventsDeleteModal: () => void;
-}) {
+export function Modal(data: { upcomingEvents: EventModel[]; onHideEventsDeleteModal: () => void }) {
 	const { t } = useTranslation();
 	const [isBusy, setIsBusy] = useState(false);
 	const [selectedEvents, setSelectedEvents] = useState([] as EventModel[]);
@@ -36,8 +32,8 @@ export function Modal(data: {
 
 	// set allEventsSelected to true if all events are selected
 	useEffect(() => {
-		const cursor = data.upcomingEvents;
-		const newAllEventsSelected = cursor.count() === selectedEvents.length;
+		const events = data.upcomingEvents;
+		const newAllEventsSelected = events.length === selectedEvents.length;
 		setAllEventsSelected(newAllEventsSelected);
 	}, [data.upcomingEvents, selectedEvents.length]);
 
@@ -257,7 +253,7 @@ export function Modal(data: {
 											if (allEventsSelected) {
 												newSelectedEvents = [];
 											} else {
-												newSelectedEvents = data.upcomingEvents.fetch();
+												newSelectedEvents = data.upcomingEvents;
 											}
 
 											setSelectedEvents(newSelectedEvents);

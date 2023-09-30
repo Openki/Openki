@@ -7,9 +7,9 @@ import { EventCompact } from '/imports/ui/components/events/compact';
 
 export function EventList(props: {
 	dataEvents: EventModel[];
-	withDate: boolean;
-	withImage: boolean;
-	openInNewTab: boolean;
+	withDate?: boolean | undefined;
+	withImage?: boolean | undefined;
+	openInNewTab?: boolean | undefined;
 }) {
 	const { dataEvents, withDate, withImage, openInNewTab } = props;
 

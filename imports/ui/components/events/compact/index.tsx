@@ -15,7 +15,7 @@ import { useDateTimeFormat } from '/imports/utils/react-moment-format';
 
 import './styles.scss';
 
-function eventCompactClasses(event: EventModel, withDate: boolean) {
+function eventCompactClasses(event: EventModel, withDate?: boolean) {
 	const classes = [];
 	if (withDate) {
 		classes.push('has-date');
@@ -27,7 +27,7 @@ function eventCompactClasses(event: EventModel, withDate: boolean) {
 	return classes.join(' ');
 }
 
-function bodyStyle(event: EventModel, withImage: boolean) {
+function bodyStyle(event: EventModel, withImage?: boolean | undefined) {
 	if (!withImage) {
 		return {};
 	}
@@ -46,9 +46,9 @@ function bodyStyle(event: EventModel, withImage: boolean) {
 
 export function EventCompact(props: {
 	event: EventModel;
-	withDate: boolean;
-	withImage: boolean;
-	openInNewTab: boolean;
+	withDate?: boolean | undefined;
+	withImage?: boolean | undefined;
+	openInNewTab?: boolean | undefined;
 }) {
 	const { event, withDate, withImage, openInNewTab } = props;
 	const { t } = useTranslation();
