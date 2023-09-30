@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 function getNowWithoutSeconds() {
@@ -15,6 +16,10 @@ function getNowWithoutSeconds() {
  * changed all minutes (with an accuracy of +-5 seconds).
  */
 export const reactiveNow = new ReactiveVar(getNowWithoutSeconds());
+
+export function useReactiveNow() {
+	return useTracker(() => reactiveNow.get());
+}
 
 // Check for update all 5 seconds
 Meteor.setInterval(() => {

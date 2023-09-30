@@ -1,143 +1,202 @@
-import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
-import { ReactiveDict } from 'meteor/reactive-dict';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+/* eslint-disable no-nested-ternary */
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useUser } from '/imports/utils/react-meteor-data';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 
-import { EventEntity, EventModel, Events } from '/imports/api/events/events';
+import * as EventsPub from '/imports/api/events/publications';
 import { Regions } from '/imports/api/regions/regions';
 import { CourseModel } from '/imports/api/courses/courses';
 
-import { reactiveNow } from '/imports/utils/reactive-now';
+import { useReactiveNow } from '/imports/utils/reactive-now';
 import { ScssVars } from '/imports/ui/lib/scss-vars';
-import * as Viewport from '/imports/ui/lib/viewport';
+import { useViewportSize } from '/imports/ui/lib/useViewportSize';
 
-import '/imports/ui/components/events/list';
-import '/imports/ui/components/courses/delete-events';
-import '/imports/ui/components/courses/events/add';
+import { LoadingRow } from '/imports/ui/pages/loading';
+import { Add } from './add';
+import { DeleteEvents } from '/imports/ui/components/courses/delete-events';
+import { Modal as DeleteEventsModal } from '/imports/ui/components/courses/delete-events/modal';
+import { EventList } from '/imports/ui/components/events/list';
 
-import './template.html';
 import './styles.scss';
 
-const Template = TemplateAny as TemplateStaticTyped<
-	'courseEvents',
-	{ course: CourseModel },
-	{
-		state: ReactiveDict<{ maxEventsShown: number; showAllEvents: boolean; showModal: boolean }>;
-		deleteCourseEventsArgs: { onShowEventsDeleteModal: () => void };
-		deleteEventsModalArgs: { onShowEventsDeleteModal: () => void };
-		haveEvents: () => boolean;
-		haveMoreEvents: () => boolean;
-		ongoingEvents: () => Mongo.Cursor<EventEntity, EventModel>;
-		futureEvents: () => Mongo.Cursor<EventEntity, EventModel>;
+export function Events(props: { course: CourseModel }) {
+	const { t } = useTranslation();
+	const { course } = props;
+	const courseId = course._id;
+	const user = useUser();
+	const now = useReactiveNow();
+	const viewport = useViewportSize();
+
+	const isMobileScreen = viewport.width <= ScssVars.screenXS;
+	const maxEventsShown = isMobileScreen ? 2 : 4;
+
+	const [showAllEvents, setShowAllEvents] = useState(false);
+	const [showModal, setShowModal] = useState(false);
+
+	const [isLoading, events] = EventsPub.useForCourse(courseId);
+
+	function haveEvents() {
+		return !!events.find((e) => e.end >= now);
 	}
->;
 
-const template = Template.courseEvents;
+	function haveMoreEvents() {
+		return events.filter((e) => e.end >= now).length > maxEventsShown;
+	}
 
-template.onCreated(function () {
-	const instance = this;
-	const courseId = this.data.course._id;
+	function ongoingEvents() {
+		return events.filter((e) => e.start <= now && e.end >= now);
+	}
 
-	instance.subscribe('eventsForCourse', courseId);
+	function futureEvents() {
+		const upcomingEvents = events.filter((e) => e.start > now);
 
-	instance.state = new ReactiveDict();
-	instance.state.setDefault({
-		maxEventsShown: 2,
-		showAllEvents: false,
-		showModal: false,
-	});
+		if (showAllEvents) {
+			return upcomingEvents;
+		}
 
-	instance.autorun(() => {
-		const isMobileScreen = Viewport.get().width <= ScssVars.screenXS;
-		const maxEventsShown = isMobileScreen ? 2 : 4;
-		instance.state.set('maxEventsShown', maxEventsShown);
-	});
+		return upcomingEvents.slice(0, maxEventsShown);
+	}
 
-	instance.haveEvents = function () {
-		return Events.findFilter({ course: courseId, start: reactiveNow.get() }, 1).count() > 0;
-	};
-
-	instance.haveMoreEvents = function () {
-		return (
-			Events.findFilter({ course: courseId, start: reactiveNow.get() }).count() >
-			(instance.state.get('maxEventsShown') || 2)
-		);
-	};
-
-	instance.ongoingEvents = function () {
-		return Events.findFilter({ course: courseId, ongoing: reactiveNow.get() });
-	};
-
-	instance.futureEvents = function () {
-		// eslint-disable-next-line no-nested-ternary
-		const limit = instance.state.get('showAllEvents')
-			? 0
-			: instance.state.get('maxEventsShown') || 2;
-
-		return Events.findFilter({ course: courseId, after: reactiveNow.get() }, limit);
-	};
-});
-
-template.helpers({
-	upcomingEventsCount() {
-		const course = Template.instance().data;
-		return course.course.futureEvents;
-	},
-	mayAdd() {
-		const { data } = Template.instance();
-		return data.course.editableBy(Meteor.user());
-	},
-
-	haveOngoingEvents() {
-		return Template.instance().ongoingEvents().count() > 0;
-	},
-
-	haveFutureEvents() {
-		return Template.instance().futureEvents().count() > 0;
-	},
-
-	haveMoreEvents() {
-		const instance = Template.instance();
-		return instance.haveMoreEvents() && !instance.state.get('showAllEvents');
-	},
-
-	deleteCourseEventsArgs() {
-		const instance = Template.instance();
+	function upcomingEventsCount() {
+		return course.futureEvents;
+	}
+	function mayAdd() {
+		return course.editableBy(user);
+	}
+	function haveOngoingEvents() {
+		return ongoingEvents().length > 0;
+	}
+	function haveFutureEvents() {
+		return futureEvents().length > 0;
+	}
+	function showHaveMoreEvents() {
+		return haveMoreEvents() && !showAllEvents;
+	}
+	function deleteCourseEventsArgs() {
 		return {
 			onShowEventsDeleteModal: () => {
-				instance.state.set('showModal', true);
+				setShowModal(true);
 			},
 		};
-	},
-
-	deleteEventsModalArgs() {
-		const instance = Template.instance();
-		const { data } = instance;
-		const upcomingEvents = Events.findFilter({
-			course: data.course._id,
-			after: reactiveNow.get(),
-		});
+	}
+	function deleteEventsModalArgs() {
+		const upcomingEvents = events.filter((e) => e.start > now);
 		return {
 			upcomingEvents,
 			onHideEventsDeleteModal() {
-				instance.state.set('showModal', false);
+				setShowModal(false);
 			},
 		};
-	},
-});
+	}
 
-template.events({
-	'click .js-show-all-events'(_event, instance) {
-		instance.state.set('showAllEvents', true);
-	},
+	return (
+		<>
+			{!isLoading() ? (
+				haveEvents() ? (
+					<div className="page-component">
+						{haveOngoingEvents() ? (
+							<>
+								<div className="page-component-header">
+									<h4>
+										<span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+										&nbsp;
+										{t('course.events.ongoinglist', 'Ongoing events')}
+									</h4>
+								</div>
+								<div className="course-event-list">
+									<EventList dataEvents={ongoingEvents()} />
+								</div>
+							</>
+						) : null}
 
-	'click .js-track-cal-download'(_event, instance) {
-		Analytics.trackEvent(
-			'Events downloads',
-			'Events downloads via course details',
-			Regions.findOne(instance.data.course.region)?.nameEn,
-		);
-	},
-});
+						{haveFutureEvents() ? (
+							<>
+								<div className="page-component-header">
+									<h4>
+										<span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
+										&nbsp;
+										{t(
+											'course.events.upcominglist',
+											'{NUM, plural, =0{No upcoming events yet} one{1 upcoming event} other{# upcoming events} }',
+											{ NUM: upcomingEventsCount() },
+										)}
+									</h4>
+								</div>
+								<div className="course-event-list">
+									<EventList dataEvents={futureEvents()} withDate={true} />
+								</div>
+								<div className="mt-2 text-center">
+									{showHaveMoreEvents() ? (
+										<button
+											type="button"
+											className="btn btn-add"
+											onClick={() => {
+												setShowAllEvents(true);
+											}}
+										>
+											{t('course.events.showAllEvents', 'Show all')}
+										</button>
+									) : null}
+								</div>
+							</>
+						) : null}
+					</div>
+				) : (
+					<div className="page-component">
+						<div className="page-component-header">
+							<h4>
+								<span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>&nbsp;
+								{t('course.details.noEvents', 'No events planned')}
+							</h4>
+						</div>
+					</div>
+				)
+			) : (
+				<div className="page-component">
+					<div className="page-component-header">
+						<h4>
+							<span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>&nbsp;
+							{t('course.details.eventsLoadingHeader', 'Events')}
+						</h4>
+					</div>
+					<LoadingRow />
+				</div>
+			)}
+
+			{mayAdd() ? (
+				<div className="page-component course-event-tasks">
+					<Add course={course} />
+					{haveEvents() ? <DeleteEvents {...deleteCourseEventsArgs()} /> : null}
+					{showModal ? <DeleteEventsModal {...deleteEventsModalArgs()} /> : null}
+				</div>
+			) : null}
+
+			{!isLoading() && haveEvents() ? (
+				<div className="page-component">
+					<a
+						className="js-track-cal-download"
+						href="{{pathFor 'calCourse'}}"
+						target="_blank"
+						onClick={() => {
+							Analytics.trackEvent(
+								'Events downloads',
+								'Events downloads via course details',
+								Regions.findOne(course.region)?.nameEn,
+							);
+						}}
+					>
+						{t('course.download_cal', 'Download events to my calendar')}
+					</a>
+				</div>
+			) : null}
+		</>
+	);
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import './template.html';
+
+Template.registerHelper('CourseEvents', () => Events);
