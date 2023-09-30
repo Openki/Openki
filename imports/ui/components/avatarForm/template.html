@@ -1,13 +1,6 @@
 
 <template name="avatarForm">
-	<div class="avatar-form">
-		{{> avatar color=color class="profile-avatar"}}
-
-		<div class="mb-3">
-			<label class="sr-only"
-				   for="avatarColorRange">{{i18n 'profile.avatar.inputLabel' 'Change hair color'}}</label>
-			<input type="range" min="0" max="360" class="avatar-form-input js-change-avatar-color"
-				   id="avatarColorRange">
-		</div>
+	<div>
+		{{> React (component AvatarForm)}}
 	</div>
 </template>
