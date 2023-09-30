@@ -13,7 +13,7 @@ import * as Users from "/imports/api/users/publications";
 
 import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
 
-export function ParticipantContact(data: {
+export function ParticipantContact(props: {
   participant: string;
   course?: CourseModel;
   event?: EventModel;
@@ -22,7 +22,7 @@ export function ParticipantContact(data: {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const userId = useUserId();
-  const [isLoading, participant] = Users.useDetails(data.participant);
+  const [isLoading, participant] = Users.useDetails(props.participant);
 
   useEffect(() => {
     if (!showModal) {
@@ -40,7 +40,7 @@ export function ParticipantContact(data: {
       return false;
     }
 
-    return userId !== data.participant;
+    return userId !== props.participant;
   }
 
   function sendMessageAttr(): SendMessageData {
@@ -52,13 +52,17 @@ export function ParticipantContact(data: {
       ),
       onSend: async (message, options) => {
         const sendPrivateMessageOptions = options as SendPrivateMessageOptions;
-        if (data.course) {
-          sendPrivateMessageOptions.courseId = data.course?._id;
+        if (props.course) {
+          sendPrivateMessageOptions.courseId = props.course?._id;
         }
-        if (data.event) {
-          sendPrivateMessageOptions.eventId = data.event?._id;
+        if (props.event) {
+          sendPrivateMessageOptions.eventId = props.event?._id;
         }
-        await emailMethods.sendPrivateMessage(data.participant, message, sendPrivateMessageOptions);
+        await emailMethods.sendPrivateMessage(
+          props.participant,
+          message,
+          sendPrivateMessageOptions
+        );
         const element = modalRef.current as unknown as Element;
         Modal.getOrCreateInstance(element).hide();
       },
