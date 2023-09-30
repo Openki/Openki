@@ -25,7 +25,7 @@ import "/imports/ui/components/groups/tag";
 import "/imports/ui/components/profiles/course-list";
 import "/imports/ui/components/profiles/verify-email";
 import "/imports/ui/components/venues/link";
-import "/imports/ui/components/avatar";
+import "/imports/ui/components/avatarForm";
 import "/imports/ui/components/editable";
 import "/imports/ui/components/delete-confirm";
 
