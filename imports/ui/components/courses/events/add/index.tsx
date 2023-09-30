@@ -15,15 +15,7 @@ export function Add(props: { course: CourseModel }) {
 				href={Router.path('createEvent', undefined, { query: { courseId: course._id } })}
 				title={t('course.event.edit.add')}
 			>
-				<div
-					className="event-caption event-caption-placeholder event-caption-action event-caption-add"
-					onMouseOver={(event) => {
-						$(event.currentTarget).toggleClass('event-caption-placeholder', false);
-					}}
-					onMouseOut={(event) => {
-						$(event.currentTarget).toggleClass('event-caption-placeholder', true);
-					}}
-				>
+				<div className="event-caption event-caption-placeholder event-caption-action event-caption-add">
 					<div className="event-caption-header-wrap">
 						<div className="event-caption-header">
 							<div className="event-caption-pseudoborder"></div>
