@@ -1,116 +1,116 @@
-import { assert } from 'chai';
-import { Router } from 'meteor/iron:router';
-import $ from 'jquery';
-import { Meteor } from 'meteor/meteor';
+import { assert } from "chai";
+import { Router } from "meteor/iron:router";
+import $ from "jquery";
+import { Meteor } from "meteor/meteor";
 
-import { waitForSubscriptions, waitFor } from '/imports/ClientUtils.app-test';
-import { MeteorAsync } from '/imports/utils/promisify';
+import { waitForSubscriptions, waitFor } from "/imports/ClientUtils.app-test";
+import { MeteorAsync } from "/imports/utils/promisify";
 
 if (Meteor.isClient) {
-	describe('Course details', () => {
-		describe('Organizer group course', function () {
-			this.timeout(30000);
+  describe("Course details", () => {
+    describe("Organizer group course", function () {
+      this.timeout(30000);
 
-			it('should allow to set a group as organizer', async () => {
-				Router.go('/course/e49ed1ce5d');
-				await MeteorAsync.loginWithPassword('greg', 'greg');
-				await waitForSubscriptions();
+      it("should allow to set a group as organizer", async () => {
+        Router.go("/course/e49ed1ce5d");
+        await MeteorAsync.loginWithPassword("greg", "greg");
+        await waitForSubscriptions();
 
-				await waitFor(() => {
-					assert(
-						$('.group-tag-btn .dialog-dropdown-btn').length > 0,
-						`Show info editing rights to group button is shown`,
-					);
-				});
+        await waitFor(() => {
+          assert(
+            $(".group-tag-btn .dialog-dropdown-btn").length > 0,
+            `Show info editing rights to group button is shown`
+          );
+        });
 
-				await waitFor(() => {
-					$('.dropdown-menu .btn-success')[0].click();
-					assert(
-						$('.group-tag-btn .dialog-dropdown-btn .btn-success').length > 0,
-						`Give editing rights to group button is shown`,
-					);
-				});
+        await waitFor(() => {
+          $(".dropdown-menu .btn-success")[0].click();
+          assert(
+            $(".group-tag-btn .dialog-dropdown-btn .btn-success").length > 0,
+            `Give editing rights to group button is shown`
+          );
+        });
 
-				await waitFor(() => {
-					$('.dropdown-menu .btn-success')[0].click();
-					assert($('.group-tag-is-organizer').length > 0, `Group is organizer`);
-				});
-			});
+        await waitFor(() => {
+          $(".dropdown-menu .btn-success")[0].click();
+          assert($(".group-tag-is-organizer").length > 0, `Group is organizer`);
+        });
+      });
 
-			it('should allow a member a organizer group to send a message to all', async () => {
-				Router.go('/course/e49ed1ce5d');
-				await MeteorAsync.loginWithPassword('Normalo', 'greg');
-				await waitForSubscriptions();
+      it("should allow a member a organizer group to send a message to all", async () => {
+        Router.go("/course/e49ed1ce5d");
+        await MeteorAsync.loginWithPassword("Normalo", "greg");
+        await waitForSubscriptions();
 
-				await waitFor(() => {
-					assert($('.js-discussion-edit').length > 0, `Write a comment is shown`);
-				});
+        await waitFor(() => {
+          assert($(".js-discussion-edit").length > 0, `Write a comment is shown`);
+        });
 
-				$('.js-discussion-edit').trigger('click');
+        $(".js-discussion-edit").trigger("click");
 
-				await waitFor(() => {
-					assert($('.js-notify-all').length > 0, `Notify all interested checkbox is shown`);
-				});
+        await waitFor(() => {
+          assert($(".js-notify-all").length > 0, `Notify all interested checkbox is shown`);
+        });
 
-				$('.js-post-text').html('Hello to all').trigger('keyup');
-				await waitFor(() => {
-					assert($('.discussion-save-btn:not([disabled])').length > 0, `Save button is active`);
-				});
+        $(".js-post-text").html("Hello to all").trigger("keyup");
+        await waitFor(() => {
+          assert($(".discussion-save-btn:not([disabled])").length > 0, `Save button is active`);
+        });
 
-				$('.discussion-save-btn').trigger('click');
-				await waitFor(() => {
-					assert($('.discussion-post-body').length > 0, `Message is visible`);
-				});
-			});
-		});
-		describe('Archive course', function () {
-			this.timeout(30000);
+        $(".discussion-save-btn").trigger("click");
+        await waitFor(() => {
+          assert($(".discussion-post-body").length > 0, `Message is visible`);
+        });
+      });
+    });
+    describe("Archive course", function () {
+      this.timeout(30000);
 
-			it('should allow to archive a course internal', async () => {
-				const randomTitle = `ARCHIVED${1000 + Math.floor(Math.random() * 9000)}`;
+      it("should allow to archive a course internal", async () => {
+        const randomTitle = `ARCHIVED${1000 + Math.floor(Math.random() * 9000)}`;
 
-				Router.go('/');
-				const haveEditfield = () => {
-					assert($('.js-title').length > 0, 'New course edit field present');
-				};
-				await MeteorAsync.loginWithPassword('greg', 'greg');
-				await waitForSubscriptions();
-				await waitFor(haveEditfield);
+        Router.go("/");
+        const haveEditfield = () => {
+          assert($(".js-title").length > 0, "New course edit field present");
+        };
+        await MeteorAsync.loginWithPassword("greg", "greg");
+        await waitForSubscriptions();
+        await waitFor(haveEditfield);
 
-				// Create the course
-				$('.js-title').val(randomTitle);
-				$('.js-select-region').val('9JyFCoKWkxnf8LWPh'); // Testistan
-				$('.js-course-edit-save').trigger('click');
+        // Create the course
+        $(".js-title").val(randomTitle);
+        $(".js-select-region").val("9JyFCoKWkxnf8LWPh"); // Testistan
+        $(".js-course-edit-save").trigger("click");
 
-				// We should be redirected to the created course
+        // We should be redirected to the created course
 
-				await waitFor(() => {
-					assert(
-						$('.course-details').length > 0,
-						`Details of the new course ${randomTitle} are shown`,
-					);
-				});
+        await waitFor(() => {
+          assert(
+            $(".course-details").length > 0,
+            `Details of the new course ${randomTitle} are shown`
+          );
+        });
 
-				$('.js-course-archive').trigger('click');
+        $(".js-course-archive").trigger("click");
 
-				Router.go('/');
+        Router.go("/");
 
-				await waitFor(() => {
-					assert(
-						!$('body').text().includes(randomTitle),
-						`The archived course should not be visible on the start page ${window.location}`,
-					);
-				}, 5000);
+        await waitFor(() => {
+          assert(
+            !$("body").text().includes(randomTitle),
+            `The archived course should not be visible on the start page ${window.location}`
+          );
+        }, 5000);
 
-				Router.go('/?archived=1');
+        Router.go("/?archived=1");
 
-				await waitFor(() => {
-					assert(
-						!$('body').text().includes(randomTitle),
-						`The archived course should be visible on the start page ${window.location} with archived filter on`,
-					);
-				}, 5000);
-			});
-		});
-	});
+        await waitFor(() => {
+          assert(
+            !$("body").text().includes(randomTitle),
+            `The archived course should be visible on the start page ${window.location} with archived filter on`
+          );
+        }, 5000);
+      });
+    });
+  });
 }

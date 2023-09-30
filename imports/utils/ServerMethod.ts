@@ -1,4 +1,4 @@
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from "meteor/meteor";
 
 /**
  * Registers a function as a meteor method and makes it callable.
@@ -15,35 +15,35 @@ import { Meteor } from 'meteor/meteor';
  * @returns A callable and typesafe function for the client, that returns a promise
  */
 export function ServerMethod<T extends any[], R>(
-	name: string,
-	run: (this: Meteor.MethodThisType, ...args: T) => R | Promise<R>,
-	options: {
-		/**
-		 * When a method is called, it usually runs twice—once on the client to simulate the result
-		 * for Optimistic UI, and again on the server to make the actual change to the database.
-		 * Some methods can not simulated on the client (for example, if you didn’t load some data
-		 * on the client that the method needs to do the simulation properly). With
-		 * `{ simulation: false }` you can disable simulation in this case. Default is `true`
-		 */
-		simulation: boolean;
-	} = { simulation: true },
+  name: string,
+  run: (this: Meteor.MethodThisType, ...args: T) => R | Promise<R>,
+  options: {
+    /**
+     * When a method is called, it usually runs twice—once on the client to simulate the result
+     * for Optimistic UI, and again on the server to make the actual change to the database.
+     * Some methods can not simulated on the client (for example, if you didn’t load some data
+     * on the client that the method needs to do the simulation properly). With
+     * `{ simulation: false }` you can disable simulation in this case. Default is `true`
+     */
+    simulation: boolean;
+  } = { simulation: true }
 ) {
-	// register
-	Meteor.methods({
-		// wrap the call to handle options
-		[name](...args) {
-			// this runs on the server (and is simulated on the client)
+  // register
+  Meteor.methods({
+    // wrap the call to handle options
+    [name](...args) {
+      // this runs on the server (and is simulated on the client)
 
-			if (Meteor.isClient && !options.simulation) {
-				// do nothing on the client if simulation is deactivated
-				return undefined;
-			}
+      if (Meteor.isClient && !options.simulation) {
+        // do nothing on the client if simulation is deactivated
+        return undefined;
+      }
 
-			// everyting is okay, do the work
-			return run.call(this, ...args);
-		},
-	});
+      // everyting is okay, do the work
+      return run.call(this, ...args);
+    },
+  });
 
-	// give back a callable and typesafe function for the client
-	return ((...args: T) => Meteor.callAsync(name, ...args)) as (...args: T) => Promise<R>;
+  // give back a callable and typesafe function for the client
+  return ((...args: T) => Meteor.callAsync(name, ...args)) as (...args: T) => Promise<R>;
 }

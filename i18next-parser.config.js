@@ -9,41 +9,41 @@ module.exports = {
 	lexers: {
 		html: [
 			{
-				lexer: 'HandlebarsLexer', // We use BlazeJS. The Template syntax is Spacebars, a
+				lexer: "HandlebarsLexer", // We use BlazeJS. The Template syntax is Spacebars, a
 				// variant of Handlebars
-				functions: ['i18n'], // Array of functions to match
+				functions: ["i18n"], // Array of functions to match
 			},
 		],
 
 		js: [
 			{
-				lexer: 'JavascriptLexer', // if you're writing jsx inside .js files, change this to JsxLexer
-				functions: ['i18n'], // Array of functions to match
+				lexer: "JavascriptLexer", // if you're writing jsx inside .js files, change this to JsxLexer
+				functions: ["i18n"], // Array of functions to match
 			},
 		],
 		ts: [
 			{
-				lexer: 'JavascriptLexer',
-				functions: ['i18n'], // Array of functions to match
+				lexer: "JavascriptLexer",
+				functions: ["i18n"], // Array of functions to match
 			},
 		],
 		tsx: [
 			{
-				lexer: 'JsxLexer',
-				functions: ['t'], // Array of functions to match
+				lexer: "JsxLexer",
+				functions: ["t"], // Array of functions to match
 			},
 		],
 
 		default: [
 			{
-				lexer: 'JavascriptLexer',
-				functions: ['i18n'], // Array of functions to match
+				lexer: "JavascriptLexer",
+				functions: ["i18n"], // Array of functions to match
 			},
 		],
 	},
 
 	// An array of the locales in your applications
-	locales: ['en'],
+	locales: ["en"],
 
 	// Namespace separator used in your translation keys
 	// If you want to use plain english keys, separators such as `.` and `:` will conflict. You might want to set `keySeparator: false` and `namespaceSeparator: false`. That way, `t('Status: Loading…')` will not think that there are a namespace and three separator dots for instance.
@@ -52,11 +52,11 @@ module.exports = {
 	// Supports $LOCALE and $NAMESPACE injection
 	// Supports JSON (.json) and YAML (.yml) file formats
 	// Where to write the locale files relative to process.cwd()
-	output: 'imports/startup/both/i18n/$LOCALE.json',
+	output: "imports/startup/both/i18n/$LOCALE.json",
 
 	// An array of globs that describe where to look for source files
 	// relative to the location of the configuration file
-	input: ['imports/**/*.{js,html,ts,tsx}', 'private/emails/**/*.html'],
+	input: ["imports/**/*.{js,html,ts,tsx}", "private/emails/**/*.html"],
 
 	// Whether or not to sort the catalog
 	sort: true,

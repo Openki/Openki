@@ -1,102 +1,102 @@
-import { Mongo } from 'meteor/mongo';
-import { Geodata, Regions } from '/imports/api/regions/regions';
+import { Mongo } from "meteor/mongo";
+import { Geodata, Regions } from "/imports/api/regions/regions";
 
 export type PresetMarkerEntity = {
-	preset: true;
+  preset: true;
 
-	presetName: string;
-	presetAddress: string;
-	editor: string;
+  presetName: string;
+  presetAddress: string;
+  editor: string;
 };
 
 export type ProposedMarkerEntity = {
-	proposed: true;
+  proposed: true;
 
-	_id: string;
-	loc: Geodata;
+  _id: string;
+  loc: Geodata;
 
-	presetAddress: string;
-	name: string;
+  presetAddress: string;
+  name: string;
 } & PresetMarkerEntity;
 
 export type SelectedMarkerEntity = {
-	selected: true;
+  selected: true;
 };
 
 export type MainMarkerEntity = {
-	main: true;
+  main: true;
 
-	_id: string;
-	loc: Geodata;
-	draggable?: boolean;
+  _id: string;
+  loc: Geodata;
+  draggable?: boolean;
 };
 
 export type CenteredMarkerEntity = {
-	/** Marks that have the center flage set are not displayed but used for anchoring the map */
-	center: true;
+  /** Marks that have the center flage set are not displayed but used for anchoring the map */
+  center: true;
 
-	_id: string;
-	loc: Geodata;
+  _id: string;
+  loc: Geodata;
 };
 
 export type RemoveMarkerEntity = {
-	remove: true;
+  remove: true;
 
-	_id: string;
-	loc: Geodata;
+  _id: string;
+  loc: Geodata;
 };
 
 export type MarkerEntity = {
-	_id: string;
-	hover?: boolean;
+  _id: string;
+  hover?: boolean;
 } & (
-	| MainMarkerEntity
-	| CenteredMarkerEntity
-	| RemoveMarkerEntity
-	| ProposedMarkerEntity
-	| PresetMarkerEntity
+  | MainMarkerEntity
+  | CenteredMarkerEntity
+  | RemoveMarkerEntity
+  | ProposedMarkerEntity
+  | PresetMarkerEntity
 );
 
 export class LocationTracker {
-	/** Local collection for in-memory storage */
-	public markers = new Mongo.Collection<MarkerEntity>(null);
+  /** Local collection for in-memory storage */
+  public markers = new Mongo.Collection<MarkerEntity>(null);
 
-	setLocation(location: { loc?: Geodata } | undefined, draggable = false, soft = false) {
-		if (soft) {
-			const marker = this.markers.findOne({ main: true }) as MainMarkerEntity;
-			if (marker && location?.loc) {
-				this.markers.update({ _id: marker._id }, { $set: { loc: location.loc, draggable } });
-				return;
-			}
-		}
-		this.markers.remove({ main: true });
-		if (location?.loc) {
-			this.markers.insert({
-				loc: location.loc,
-				main: true,
-				draggable,
-			});
-		}
-	}
+  setLocation(location: { loc?: Geodata } | undefined, draggable = false, soft = false) {
+    if (soft) {
+      const marker = this.markers.findOne({ main: true }) as MainMarkerEntity;
+      if (marker && location?.loc) {
+        this.markers.update({ _id: marker._id }, { $set: { loc: location.loc, draggable } });
+        return;
+      }
+    }
+    this.markers.remove({ main: true });
+    if (location?.loc) {
+      this.markers.insert({
+        loc: location.loc,
+        main: true,
+        draggable,
+      });
+    }
+  }
 
-	getLocation() {
-		return (this.markers.findOne({ main: true }) as MainMarkerEntity)?.loc;
-	}
+  getLocation() {
+    return (this.markers.findOne({ main: true }) as MainMarkerEntity)?.loc;
+  }
 
-	clearRegion() {
-		this.markers.remove({ center: true });
-	}
+  clearRegion() {
+    this.markers.remove({ center: true });
+  }
 
-	setRegion(regionId: string) {
-		const region = Regions.findOne(regionId);
+  setRegion(regionId: string) {
+    const region = Regions.findOne(regionId);
 
-		if (!region?.loc) {
-			return;
-		}
+    if (!region?.loc) {
+      return;
+    }
 
-		this.markers.insert({
-			loc: region.loc,
-			center: true,
-		});
-	}
+    this.markers.insert({
+      loc: region.loc,
+      center: true,
+    });
+  }
 }

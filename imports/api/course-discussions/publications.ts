@@ -1,11 +1,11 @@
-import { check } from 'meteor/check';
+import { check } from "meteor/check";
 
-import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
+import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
 
-import { ServerPublishMany } from '/imports/utils/ServerPublish';
+import { ServerPublishMany } from "/imports/utils/ServerPublish";
 
-export const [forCourse, useForCourse] = ServerPublishMany('discussion', (courseId: string) => {
-	check(courseId, String);
+export const [forCourse, useForCourse] = ServerPublishMany("discussion", (courseId: string) => {
+  check(courseId, String);
 
-	return CourseDiscussions.find({ courseId });
+  return CourseDiscussions.find({ courseId });
 });

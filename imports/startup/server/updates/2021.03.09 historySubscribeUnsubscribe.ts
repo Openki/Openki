@@ -1,42 +1,42 @@
-import { Courses } from '/imports/api/courses/courses';
-import { Log } from '/imports/api/log/log';
+import { Courses } from "/imports/api/courses/courses";
+import { Log } from "/imports/api/log/log";
 
 export function update() {
-	let updated = 0;
+  let updated = 0;
 
-	Log.find({ tr: 'Courses.Subscribe' })
-		.fetch()
-		.forEach((entry) => {
-			const { courseId, userId, role } = entry.body as any;
+  Log.find({ tr: "Courses.Subscribe" })
+    .fetch()
+    .forEach((entry) => {
+      const { courseId, userId, role } = entry.body as any;
 
-			Courses.update(courseId, {
-				$addToSet: {
-					history: {
-						dateTime: entry.ts,
-						type: 'userSubscribed',
-						data: { user: userId, role },
-					},
-				},
-			});
-			updated += 1;
-		});
+      Courses.update(courseId, {
+        $addToSet: {
+          history: {
+            dateTime: entry.ts,
+            type: "userSubscribed",
+            data: { user: userId, role },
+          },
+        },
+      });
+      updated += 1;
+    });
 
-	Log.find({ tr: 'Courses.Unsubscribe' })
-		.fetch()
-		.forEach((entry) => {
-			const { courseId, userId, role } = entry.body as any;
+  Log.find({ tr: "Courses.Unsubscribe" })
+    .fetch()
+    .forEach((entry) => {
+      const { courseId, userId, role } = entry.body as any;
 
-			Courses.update(courseId, {
-				$addToSet: {
-					history: {
-						dateTime: entry.ts,
-						type: 'userUnsubscribed',
-						data: { user: userId, role },
-					},
-				},
-			});
-			updated += 1;
-		});
+      Courses.update(courseId, {
+        $addToSet: {
+          history: {
+            dateTime: entry.ts,
+            type: "userUnsubscribed",
+            data: { user: userId, role },
+          },
+        },
+      });
+      updated += 1;
+    });
 
-	return updated;
+  return updated;
 }

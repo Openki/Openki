@@ -7,7 +7,7 @@
 $enable-gradients: true;
 
 // Include functions first (so we can manipulate colors, SVGs, calc, etc)
-@import '{}/node_modules/bootstrap/scss/functions'; // Required
+@import "{}/node_modules/bootstrap/scss/functions"; // Required
 
 // Default variable overrides
 $secondary: #f0f0f0;
@@ -22,7 +22,7 @@ $secondary: #f0f0f0;
 $font-size-root: 14px;
 $font-size-large: ceil($font-size-root * 1.25) !default;
 
-$font-family-sans-serif: 'Source Sans Pro', sans-serif !default;
+$font-family-sans-serif: "Source Sans Pro", sans-serif !default;
 
 // Components
 //
@@ -68,7 +68,7 @@ $hr-color: $blue-lighter;
 
 $modal-sm: 400px;
 
-@import '{}/node_modules/bootstrap/scss/variables'; // Required
+@import "{}/node_modules/bootstrap/scss/variables"; // Required
 
 // Navbar
 $nav-link-padding-y: 0.822rem;
@@ -78,7 +78,7 @@ $zindex-navbar-fixed: 1030 !default;
 $navbar-nav-link-padding-x: 1rem;
 $navbar-toggler-focus-width: 0;
 $navbar-brand-padding-y: 0.5rem;
-$navbar-default-border: css-darken('openki-brand', 6.5%) !default;
+$navbar-default-border: css-darken("openki-brand", 6.5%) !default;
 $navbar-dark-color: $white;
 
 // Nav
@@ -96,7 +96,7 @@ $tooltip-font-size: $font-size-base;
 // Modify Bootstrap maps
 
 $custom-grid-breakpoints: (
-	'sm': 480px,
+	"sm": 480px,
 );
 $grid-breakpoints: map-merge($grid-breakpoints, $custom-grid-breakpoints);
 
@@ -106,22 +106,22 @@ $grid-breakpoints: map-merge($grid-breakpoints, $custom-grid-breakpoints);
 
 $container-max-widths: map-remove($container-max-widths, xxl);
 
-@import '{}/node_modules/bootstrap/scss/maps'; // Optional
+@import "{}/node_modules/bootstrap/scss/maps"; // Optional
 
-@import '{}/node_modules/bootstrap/scss/mixins'; // Required
+@import "{}/node_modules/bootstrap/scss/mixins"; // Required
 
-@import '{}/node_modules/bootstrap/scss/utilities'; // Optional
+@import "{}/node_modules/bootstrap/scss/utilities"; // Optional
 
 // Add grid-breakpoints to max-width utilites: mw-sm, mw-md, ...
 
 $utilities: map-merge(
 	$utilities,
 	(
-		'max-width':
+		"max-width":
 			map-merge(
-				map-get($utilities, 'max-width'),
+				map-get($utilities, "max-width"),
 				(
-					values: map-merge(map-get(map-get($utilities, 'max-width'), 'values'), $grid-breakpoints),
+					values: map-merge(map-get(map-get($utilities, "max-width"), "values"), $grid-breakpoints),
 				)
 			),
 	)

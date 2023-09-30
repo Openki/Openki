@@ -1,114 +1,114 @@
-import { ReactiveDict } from 'meteor/reactive-dict';
-import { Router } from 'meteor/iron:router';
+import { ReactiveDict } from "meteor/reactive-dict";
+import { Router } from "meteor/iron:router";
 
-import { MeteorAsync, TrackerAsync } from '/imports/utils/promisify';
+import { MeteorAsync, TrackerAsync } from "/imports/utils/promisify";
 
 // use _jQuery if available, otherwise support IE9+
 function getScrollTop() {
-	// uses solution from http://stackoverflow.com/questions/871399/cross-browser-method-for-detecting-the-scrolltop-of-the-browser-window
-	return document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
+  // uses solution from http://stackoverflow.com/questions/871399/cross-browser-method-for-detecting-the-scrolltop-of-the-browser-window
+  return document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
 }
 
 async function waitUntil(conditionFn: () => boolean) {
-	if (!conditionFn()) {
-		await MeteorAsync.setTimeout(50);
+  if (!conditionFn()) {
+    await MeteorAsync.setTimeout(50);
 
-		await waitUntil(conditionFn);
-	}
+    await waitUntil(conditionFn);
+  }
 }
 function whenReady(callFn: () => void) {
-	return async function (this: { ready: () => boolean; _rendered: boolean }) {
-		if (this.ready()) {
-			await waitUntil(() => this._rendered);
-			callFn();
-		}
-	};
+  return async function (this: { ready: () => boolean; _rendered: boolean }) {
+    if (this.ready()) {
+      await waitUntil(() => this._rendered);
+      callFn();
+    }
+  };
 }
 
 // Based on the router-autoscroll package version 0.1.8
 
 class RouterAutoscroll {
-	private backToPosition: number | undefined;
+  private backToPosition: number | undefined;
 
-	// Saved positions will survive a hot code push
-	private scrollPositions = new ReactiveDict<Record<string, number>>('okgrow-router-autoscroll');
+  // Saved positions will survive a hot code push
+  private scrollPositions = new ReactiveDict<Record<string, number>>("okgrow-router-autoscroll");
 
-	private _cancelNext = false;
+  private _cancelNext = false;
 
-	public marginTop = 0;
+  public marginTop = 0;
 
-	constructor() {
-		const self = this;
+  constructor() {
+    const self = this;
 
-		// TODO use history state so we don't litter
-		window.onpopstate = () => {
-			this.backToPosition = this.scrollPositions.get(window.location.href);
-		};
+    // TODO use history state so we don't litter
+    window.onpopstate = () => {
+      this.backToPosition = this.scrollPositions.get(window.location.href);
+    };
 
-		Router.onBeforeAction(async function (this: { next: () => void }) {
-			if (!self._cancelNext) {
-				document.documentElement.style.scrollBehavior = 'auto';
-				window.scrollTo({ top: 0, behavior: 'auto' });
-				document.documentElement.style.scrollBehavior = '';
-			}
+    Router.onBeforeAction(async function (this: { next: () => void }) {
+      if (!self._cancelNext) {
+        document.documentElement.style.scrollBehavior = "auto";
+        window.scrollTo({ top: 0, behavior: "auto" });
+        document.documentElement.style.scrollBehavior = "";
+      }
 
-			this.next();
-		});
-		Router.onAfterAction(
-			whenReady(() => {
-				if (self._cancelNext) {
-					self._cancelNext = false;
-				} else {
-					self.scheduleScroll();
-				}
-			}),
-		);
-		Router.onStop(() => this.saveScrollPosition());
-	}
+      this.next();
+    });
+    Router.onAfterAction(
+      whenReady(() => {
+        if (self._cancelNext) {
+          self._cancelNext = false;
+        } else {
+          self.scheduleScroll();
+        }
+      })
+    );
+    Router.onStop(() => this.saveScrollPosition());
+  }
 
-	private saveScrollPosition() {
-		this.scrollPositions.set(window.location.href, getScrollTop());
-	}
+  private saveScrollPosition() {
+    this.scrollPositions.set(window.location.href, getScrollTop());
+  }
 
-	// Scroll to the right place after changing routes. "The right place" is:
-	// 1. The previous position if we're returning via the back button
-	// 2. The element whose id is specified in the URL hash
-	// 3. The top of page otherwise
-	private getScrollToPosition() {
-		if (this.backToPosition) {
-			const oldPosition = this.backToPosition;
-			this.backToPosition = undefined;
-			return oldPosition;
-		}
+  // Scroll to the right place after changing routes. "The right place" is:
+  // 1. The previous position if we're returning via the back button
+  // 2. The element whose id is specified in the URL hash
+  // 3. The top of page otherwise
+  private getScrollToPosition() {
+    if (this.backToPosition) {
+      const oldPosition = this.backToPosition;
+      this.backToPosition = undefined;
+      return oldPosition;
+    }
 
-		const id = window.location.hash.replace('#', '');
+    const id = window.location.hash.replace("#", "");
 
-		const element = id && document.getElementById(id);
-		if (element) {
-			return element.getBoundingClientRect().top + getScrollTop() - this.marginTop;
-		}
+    const element = id && document.getElementById(id);
+    if (element) {
+      return element.getBoundingClientRect().top + getScrollTop() - this.marginTop;
+    }
 
-		return 0;
-	}
+    return 0;
+  }
 
-	private static scrollToPos(position: number | undefined) {
-		if (position === undefined) return;
-		window.scrollTo({ top: position, behavior: 'auto' });
-	}
+  private static scrollToPos(position: number | undefined) {
+    if (position === undefined) return;
+    window.scrollTo({ top: position, behavior: "auto" });
+  }
 
-	public async scheduleScroll() {
-		await TrackerAsync.afterFlush();
+  public async scheduleScroll() {
+    await TrackerAsync.afterFlush();
 
-		await MeteorAsync.defer();
+    await MeteorAsync.defer();
 
-		const position = this.getScrollToPosition();
-		RouterAutoscroll.scrollToPos(position);
-	}
+    const position = this.getScrollToPosition();
+    RouterAutoscroll.scrollToPos(position);
+  }
 
-	/** Do not scroll the next time you normally would */
-	public cancelNext() {
-		this._cancelNext = true;
-	}
+  /** Do not scroll the next time you normally would */
+  public cancelNext() {
+    this._cancelNext = true;
+  }
 }
 
 export const routerAutoscroll = new RouterAutoscroll();

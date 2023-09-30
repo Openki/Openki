@@ -1,7 +1,7 @@
-import seedrandom from 'seedrandom';
+import seedrandom from "seedrandom";
 
-import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
 export function Prng(staticseed: string) {
-	return seedrandom(PrivateSettings.prng === 'static' ? staticseed : undefined);
+  return seedrandom(PrivateSettings.prng === "static" ? staticseed : undefined);
 }

@@ -1,48 +1,48 @@
-import { DocHead } from 'meteor/kadira:dochead';
-import { Meteor } from 'meteor/meteor';
+import { DocHead } from "meteor/kadira:dochead";
+import { Meteor } from "meteor/meteor";
 
-import { PublicSettings } from '/imports/utils/PublicSettings';
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 // See: https://guide.meteor.com/deployment.html#seo
 
 function getSiteTitlePrefix() {
-	return `${PublicSettings.siteName}  - `;
+  return `${PublicSettings.siteName}  - `;
 }
 
 function getSiteDefaultImage() {
-	const ogLogo = PublicSettings.ogLogo.src;
+  const ogLogo = PublicSettings.ogLogo.src;
 
-	if (ogLogo.startsWith(PublicSettings.s3.publicUrlBase)) {
-		// in our s3 file storage
-		return ogLogo;
-	}
+  if (ogLogo.startsWith(PublicSettings.s3.publicUrlBase)) {
+    // in our s3 file storage
+    return ogLogo;
+  }
 
-	// in the openki repository folder "public/logo/"
-	return Meteor.absoluteUrl(`logo/${ogLogo}`);
+  // in the openki repository folder "public/logo/"
+  return Meteor.absoluteUrl(`logo/${ogLogo}`);
 }
 
 export function removeAll() {
-	DocHead.setTitle(PublicSettings.siteName);
-	DocHead.removeDocHeadAddedTags();
+  DocHead.setTitle(PublicSettings.siteName);
+  DocHead.removeDocHeadAddedTags();
 }
 
-export function setCommonTags(title: string, description = '') {
-	const fullTitle = getSiteTitlePrefix() + title;
-	const image = getSiteDefaultImage();
+export function setCommonTags(title: string, description = "") {
+  const fullTitle = getSiteTitlePrefix() + title;
+  const image = getSiteDefaultImage();
 
-	DocHead.setTitle(fullTitle);
+  DocHead.setTitle(fullTitle);
 
-	DocHead.addMeta({ property: 'og:type', content: 'website' });
-	DocHead.addMeta({ property: 'og:title', content: fullTitle });
-	DocHead.addMeta({ property: 'og:image', content: image });
+  DocHead.addMeta({ property: "og:type", content: "website" });
+  DocHead.addMeta({ property: "og:title", content: fullTitle });
+  DocHead.addMeta({ property: "og:image", content: image });
 
-	DocHead.addMeta({ name: 'twitter:card', content: 'summary' });
-	DocHead.addMeta({ name: 'twitter:title', content: fullTitle });
-	DocHead.addMeta({ name: 'twitter:image', content: image });
+  DocHead.addMeta({ name: "twitter:card", content: "summary" });
+  DocHead.addMeta({ name: "twitter:title", content: fullTitle });
+  DocHead.addMeta({ name: "twitter:image", content: image });
 
-	if (description) {
-		DocHead.addMeta({ name: 'description', content: description });
-		DocHead.addMeta({ property: 'og:description', content: description });
-		DocHead.addMeta({ name: 'twitter:description', content: description });
-	}
+  if (description) {
+    DocHead.addMeta({ name: "description", content: description });
+    DocHead.addMeta({ property: "og:description", content: description });
+    DocHead.addMeta({ name: "twitter:description", content: description });
+  }
 }

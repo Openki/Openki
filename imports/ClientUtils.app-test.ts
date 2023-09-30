@@ -1,20 +1,20 @@
-import { DDP } from 'meteor/ddp-client';
-import { Meteor } from 'meteor/meteor';
-import { Promise } from 'meteor/promise';
-import { AssertionError } from 'chai';
+import { DDP } from "meteor/ddp-client";
+import { Meteor } from "meteor/meteor";
+import { Promise } from "meteor/promise";
+import { AssertionError } from "chai";
 
 /**
  * Returns a promise which resolves when all subscriptions are done.
  */
 export function waitForSubscriptions(): Promise<void> {
-	return new Promise((resolve) => {
-		const poll = Meteor.setInterval(() => {
-			if (DDP._allSubscriptionsReady()) {
-				Meteor.clearInterval(poll);
-				resolve();
-			}
-		}, 200);
-	});
+  return new Promise((resolve) => {
+    const poll = Meteor.setInterval(() => {
+      if (DDP._allSubscriptionsReady()) {
+        Meteor.clearInterval(poll);
+        resolve();
+      }
+    }, 200);
+  });
 }
 
 /**
@@ -28,37 +28,37 @@ export function waitForSubscriptions(): Promise<void> {
 
  */
 export function waitFor<T>(assertion: () => T, timeout = 10000): Promise<T> {
-	return new Promise((resolve, reject) => {
-		const start = new Date().getTime();
-		let interval: false | NodeJS.Timer = false;
+  return new Promise((resolve, reject) => {
+    const start = new Date().getTime();
+    let interval: false | NodeJS.Timer = false;
 
-		const clearWatchers = () => {
-			if (interval) {
-				clearInterval(interval);
-			}
-		};
+    const clearWatchers = () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
 
-		const tryIt = () => {
-			try {
-				const result = assertion();
-				clearWatchers();
-				resolve(result);
-				return true;
-			} catch (e) {
-				if (e instanceof AssertionError) {
-					if (new Date().getTime() - start < timeout) {
-						return false;
-					}
-				}
-				clearWatchers();
-				reject(e);
-			}
-			return false;
-		};
+    const tryIt = () => {
+      try {
+        const result = assertion();
+        clearWatchers();
+        resolve(result);
+        return true;
+      } catch (e) {
+        if (e instanceof AssertionError) {
+          if (new Date().getTime() - start < timeout) {
+            return false;
+          }
+        }
+        clearWatchers();
+        reject(e);
+      }
+      return false;
+    };
 
-		if (tryIt()) {
-			return;
-		}
-		interval = setInterval(tryIt, 100);
-	});
+    if (tryIt()) {
+      return;
+    }
+    interval = setInterval(tryIt, 100);
+  });
 }

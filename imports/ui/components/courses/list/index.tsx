@@ -1,33 +1,33 @@
-import React from 'react';
+import React from "react";
 
-import { CourseCompact } from '/imports/ui/components/courses/compact';
-import { CourseModel } from '/imports/api/courses/courses';
+import { CourseCompact } from "/imports/ui/components/courses/compact";
+import { CourseModel } from "/imports/api/courses/courses";
 
 export type Props = {
-	courses: CourseModel[];
-	groupTagEvents: (groupId: string) => {
-		onMouseOver: () => Promise<void>;
-		onMouseOut: () => Promise<void>;
-		onClick: () => Promise<void>;
-	};
-	small?: boolean;
+  courses: CourseModel[];
+  groupTagEvents: (groupId: string) => {
+    onMouseOver: () => Promise<void>;
+    onMouseOut: () => Promise<void>;
+    onClick: () => Promise<void>;
+  };
+  small?: boolean;
 };
 
 export function CourseList(props: Props) {
-	const { courses, groupTagEvents, small } = props;
-	return (
-		<div
-			className={`row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3 ${!small ? 'row-cols-xl-4' : ''}`}
-		>
-			{courses.map((course) => (
-				<CourseCompact key={course._id} course={course} groupTagEvents={groupTagEvents} />
-			))}
-		</div>
-	);
+  const { courses, groupTagEvents, small } = props;
+  return (
+    <div
+      className={`row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3 ${!small ? "row-cols-xl-4" : ""}`}
+    >
+      {courses.map((course) => (
+        <CourseCompact key={course._id} course={course} groupTagEvents={groupTagEvents} />
+      ))}
+    </div>
+  );
 }
 
 // for Blaze
 // eslint-disable-next-line import/first
-import './template.html';
+import "./template.html";
 
-Template.registerHelper('CourseList', () => CourseList);
+Template.registerHelper("CourseList", () => CourseList);

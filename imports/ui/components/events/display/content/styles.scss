@@ -1,8 +1,8 @@
-@import '{}/imports/ui/stylesheets/variables/index';
+@import "{}/imports/ui/stylesheets/variables/index";
 
 .event-details-body {
 	background: $event-body-bg;
-	height: calc(#{'100% - 70px'});
+	height: calc(#{"100% - 70px"});
 }
 
 .event-details-description {

@@ -1,18 +1,18 @@
-import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
+import { Meteor } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
 
 /** DB-Model */
 export interface InfoPagesEntity {
-	/** URL-path of the page /info/:slug */
-	slug: string;
-	/** eg. en, de, de-ZH */
-	locale: string;
-	/** Helps to find the most exact language. eg. de-ZH: 3, de: 2, en: 1 */
-	accuracy: number;
-	/** title of the page, shown in the browser's title bar or in the page's tab */
-	title: string;
-	/** the content of the page, its supports markdown */
-	body: string;
+  /** URL-path of the page /info/:slug */
+  slug: string;
+  /** eg. en, de, de-ZH */
+  locale: string;
+  /** Helps to find the most exact language. eg. de-ZH: 3, de: 2, en: 1 */
+  accuracy: number;
+  /** title of the page, shown in the browser's title bar or in the page's tab */
+  title: string;
+  /** the content of the page, its supports markdown */
+  body: string;
 }
 
 /*
@@ -30,13 +30,13 @@ Openki ist eine offene Bildungsplattform.`
  */
 
 export class InfoPagesCollection extends Mongo.Collection<InfoPagesEntity> {
-	constructor() {
-		super('InfoPages');
+  constructor() {
+    super("InfoPages");
 
-		if (Meteor.isServer) {
-			this.createIndex({ slug: 1, locale: 1, accuracy: -1 });
-		}
-	}
+    if (Meteor.isServer) {
+      this.createIndex({ slug: 1, locale: 1, accuracy: -1 });
+    }
+  }
 }
 
 export const InfoPages = new InfoPagesCollection();

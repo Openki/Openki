@@ -1,17 +1,17 @@
-import { robots } from 'meteor/gadicohen:robots-txt';
-import { Meteor } from 'meteor/meteor';
-import { PrivateSettings } from '/imports/utils/PrivateSettings';
+import { robots } from "meteor/gadicohen:robots-txt";
+import { Meteor } from "meteor/meteor";
+import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
 Meteor.startup(() => {
-	if (PrivateSettings.robots === false) {
-		robots.addLine('User-agent: *');
-		robots.addLine('Disallow: /');
-	} else {
-		robots.addLine('User-agent: *');
-		if (PrivateSettings.hideProfiles === true) {
-			robots.addLine('Disallow: /user/');
-		} else {
-			robots.addLine('Disallow: ');
-		}
-	}
+  if (PrivateSettings.robots === false) {
+    robots.addLine("User-agent: *");
+    robots.addLine("Disallow: /");
+  } else {
+    robots.addLine("User-agent: *");
+    if (PrivateSettings.hideProfiles === true) {
+      robots.addLine("Disallow: /user/");
+    } else {
+      robots.addLine("Disallow: ");
+    }
+  }
 });

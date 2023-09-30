@@ -1,142 +1,142 @@
-import { useTranslation } from 'react-i18next';
-import React, { useEffect } from 'react';
-import { Template } from 'meteor/templating';
+import { useTranslation } from "react-i18next";
+import React, { useEffect } from "react";
+import { Template } from "meteor/templating";
 
-import { PublicSettings } from '/imports/utils/PublicSettings';
+import { PublicSettings } from "/imports/utils/PublicSettings";
 import {
-	Introduction as IntroductionUtil,
-	useOpenedIntro,
-	useShownIntro,
-} from '/imports/ui/lib/introduction';
-import { getSiteName } from '/imports/utils/getSiteName';
-import { ScssVars } from '/imports/ui/lib/scss-vars';
-import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
-import { PricePolicy } from '/imports/ui/components/price-policy';
-import { useViewportSize } from '/imports/ui/lib/useViewportSize';
-import { useCurrentRouteName } from '/imports/ui/lib/useCurrentRouteName';
+  Introduction as IntroductionUtil,
+  useOpenedIntro,
+  useShownIntro,
+} from "/imports/ui/lib/introduction";
+import { getSiteName } from "/imports/utils/getSiteName";
+import { ScssVars } from "/imports/ui/lib/scss-vars";
+import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
+import { PricePolicy } from "/imports/ui/components/price-policy";
+import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+import { useCurrentRouteName } from "/imports/ui/lib/useCurrentRouteName";
 
-import './styles.scss';
+import "./styles.scss";
 
 export function Introduction(props: { hasPricePolicy: boolean }) {
-	const { hasPricePolicy } = props;
-	const { t } = useTranslation();
-	const viewportSize = useViewportSize();
-	const routeName = useCurrentRouteName();
-	const shownIntro = useShownIntro();
-	const openedIntro = useOpenedIntro();
+  const { hasPricePolicy } = props;
+  const { t } = useTranslation();
+  const viewportSize = useViewportSize();
+  const routeName = useCurrentRouteName();
+  const shownIntro = useShownIntro();
+  const openedIntro = useOpenedIntro();
 
-	useEffect(() => {
-		// use $screen-xxs (from scss) to compare with the width of window
-		const { screenXXS } = ScssVars;
-		if (viewportSize.width < screenXXS) {
-			IntroductionUtil.closeIntro();
-		}
-	});
+  useEffect(() => {
+    // use $screen-xxs (from scss) to compare with the width of window
+    const { screenXXS } = ScssVars;
+    if (viewportSize.width < screenXXS) {
+      IntroductionUtil.closeIntro();
+    }
+  });
 
-	function isInCalendar() {
-		return routeName === 'calendar';
-	}
+  function isInCalendar() {
+    return routeName === "calendar";
+  }
 
-	if (!shownIntro) {
-		return null;
-	}
+  if (!shownIntro) {
+    return null;
+  }
 
-	return (
-		<div className={`container ${isInCalendar() ? 'calendar-introduction' : null}`}>
-			<div className="introduction">
-				<h3>
-					<a
-						href="#"
-						onClick={() => {
-							if (openedIntro) {
-								IntroductionUtil.closeIntro();
-							} else {
-								IntroductionUtil.openIntro();
-							}
-						}}
-					>
-						{openedIntro ? (
-							<span className="fa-solid fa-angle-up fa-fw" aria-hidden="true"></span>
-						) : (
-							<span className="fa-solid fa-angle-down fa-fw" aria-hidden="true"></span>
-						)}
-						{t('introduction.Title', 'What does {SITENAME} do for you?', {
-							SITENAME: getSiteName(),
-						})}
-					</a>
-					<a
-						className="introduction-close-btn"
-						href="#"
-						title={t('introduction.close.title', 'Close introduction')}
-						onClick={() => {
-							IntroductionUtil.doneIntro();
-						}}
-					>
-						<span className="remove-btn fa-solid fa-xmark" aria-hidden="true"></span>
-					</a>
-				</h3>
-				{openedIntro ? (
-					<div className="introduction-content">
-						<div className="introduction-steps row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
-							<div className="col">
-								<h2>
-									<span className="fa-regular fa-lightbulb" aria-hidden="true"></span>
-								</h2>
-								{t('introduction.1_teachOrLearn', 'You want to learn something, or teach others.')}
-							</div>
-							<div className="col">
-								<h2>
-									<span className="fa-solid fa-magnifying-glass" aria-hidden="true"></span>
-								</h2>
-								{t(
-									'introduction.2_searchNPropose',
-									'You search if the course already exists. If not, just propose it.',
-								)}
-							</div>
-							<div className="col">
-								<h2>
-									<span className="fa-solid fa-graduation-cap" aria-hidden="true"></span>
-								</h2>
-								{t(
-									'introduction.3_enrole',
-									'Everybody can join your course as participant, mentor or host.',
-								)}
-							</div>
-							<div className="col">
-								<h2>
-									<span className="fa-regular fa-calendar-check" aria-hidden="true"></span>
-								</h2>
-								{t('introduction.4_schedule', 'When everybody needed is in, a date gets fixed.')}
-							</div>
-							<div className="col">
-								<h2>
-									<span className="fa-solid fa-rocket" aria-hidden="true"></span>
-								</h2>
-								{t('introduction.5_takePlace', 'The course takes place.')}
-							</div>
-							<div className="col">
-								<h2>
-									<span className="fa-solid fa-circle-info" aria-hidden="true"></span>
-								</h2>
-								{t('introduction.more', 'More info:')}
-								<br />
-								<a href={getLocalizedValue(PublicSettings.aboutLink)}>
-									{t('main.about_link', 'About')}
-								</a>
-								<br />
-								<a href={getLocalizedValue(PublicSettings.faqLink)}>{t('main.faq_link', 'FAQ')}</a>
-							</div>
-						</div>
-						{hasPricePolicy ? <PricePolicy /> : null}
-					</div>
-				) : null}
-			</div>
-		</div>
-	);
+  return (
+    <div className={`container ${isInCalendar() ? "calendar-introduction" : null}`}>
+      <div className="introduction">
+        <h3>
+          <a
+            href="#"
+            onClick={() => {
+              if (openedIntro) {
+                IntroductionUtil.closeIntro();
+              } else {
+                IntroductionUtil.openIntro();
+              }
+            }}
+          >
+            {openedIntro ? (
+              <span className="fa-solid fa-angle-up fa-fw" aria-hidden="true"></span>
+            ) : (
+              <span className="fa-solid fa-angle-down fa-fw" aria-hidden="true"></span>
+            )}
+            {t("introduction.Title", "What does {SITENAME} do for you?", {
+              SITENAME: getSiteName(),
+            })}
+          </a>
+          <a
+            className="introduction-close-btn"
+            href="#"
+            title={t("introduction.close.title", "Close introduction")}
+            onClick={() => {
+              IntroductionUtil.doneIntro();
+            }}
+          >
+            <span className="remove-btn fa-solid fa-xmark" aria-hidden="true"></span>
+          </a>
+        </h3>
+        {openedIntro ? (
+          <div className="introduction-content">
+            <div className="introduction-steps row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6">
+              <div className="col">
+                <h2>
+                  <span className="fa-regular fa-lightbulb" aria-hidden="true"></span>
+                </h2>
+                {t("introduction.1_teachOrLearn", "You want to learn something, or teach others.")}
+              </div>
+              <div className="col">
+                <h2>
+                  <span className="fa-solid fa-magnifying-glass" aria-hidden="true"></span>
+                </h2>
+                {t(
+                  "introduction.2_searchNPropose",
+                  "You search if the course already exists. If not, just propose it."
+                )}
+              </div>
+              <div className="col">
+                <h2>
+                  <span className="fa-solid fa-graduation-cap" aria-hidden="true"></span>
+                </h2>
+                {t(
+                  "introduction.3_enrole",
+                  "Everybody can join your course as participant, mentor or host."
+                )}
+              </div>
+              <div className="col">
+                <h2>
+                  <span className="fa-regular fa-calendar-check" aria-hidden="true"></span>
+                </h2>
+                {t("introduction.4_schedule", "When everybody needed is in, a date gets fixed.")}
+              </div>
+              <div className="col">
+                <h2>
+                  <span className="fa-solid fa-rocket" aria-hidden="true"></span>
+                </h2>
+                {t("introduction.5_takePlace", "The course takes place.")}
+              </div>
+              <div className="col">
+                <h2>
+                  <span className="fa-solid fa-circle-info" aria-hidden="true"></span>
+                </h2>
+                {t("introduction.more", "More info:")}
+                <br />
+                <a href={getLocalizedValue(PublicSettings.aboutLink)}>
+                  {t("main.about_link", "About")}
+                </a>
+                <br />
+                <a href={getLocalizedValue(PublicSettings.faqLink)}>{t("main.faq_link", "FAQ")}</a>
+              </div>
+            </div>
+            {hasPricePolicy ? <PricePolicy /> : null}
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
 }
 
 // for Blaze
 // eslint-disable-next-line import/first
-import './template.html';
+import "./template.html";
 
-Template.registerHelper('Introduction', () => Introduction);
+Template.registerHelper("Introduction", () => Introduction);
