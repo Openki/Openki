@@ -1,37 +1,43 @@
-import { Session } from "meteor/session";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React from "react";
+import { useSession } from "/imports/utils/react-meteor-data";
 
 import { LanguagesRaw } from "/imports/api/languages/languages";
 
-import "./template.html";
+export function Display(props: { inNavbar: boolean; onClick: () => void }) {
+  const locale = useSession("locale");
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "languageDisplay",
-  { inNavbar: boolean; onClick: () => void }
->;
-
-const template = Template.languageDisplay;
-
-template.helpers({
-  inNavbarClasses() {
-    if (Template.instance().data.inNavbar) {
+  function inNavbarClasses() {
+    if (props.inNavbar) {
       return "nav-item text-center col col-lg-auto";
     }
     return "";
-  },
-  inNavbarClassesLink() {
-    if (Template.instance().data.inNavbar) {
+  }
+  function inNavbarClassesLink() {
+    if (props.inNavbar) {
       return "text-white";
     }
     return "";
-  },
-  setLanguage() {
-    return LanguagesRaw[Session.get("locale")];
-  },
-});
+  }
+  function setLanguage() {
+    return LanguagesRaw[locale];
+  }
 
-template.events({
-  "click .js-language-display"(_event, instance) {
-    instance.data.onClick();
-  },
-});
+  return (
+    <li className={inNavbarClasses()}>
+      <a
+        className={`nav-link ${inNavbarClassesLink()}`}
+        onClick={() => {
+          props.onClick();
+        }}
+      >
+        <span className="fa-solid fa-globe fa-fw" aria-hidden="true"></span> {setLanguage().short}
+      </a>
+    </li>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("LanguageDisplay", () => Display);
