@@ -1,6 +1,5 @@
 import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
 
-import './event';
 import './modal';
 
 import './template.html';

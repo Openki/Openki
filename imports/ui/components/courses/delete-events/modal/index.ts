@@ -11,6 +11,8 @@ import { EventEntity, EventModel } from '/imports/api/events/events';
 
 import * as Analytics from '/imports/ui/lib/analytics';
 
+import './event';
+
 import './template.html';
 import './styles.scss';
 
