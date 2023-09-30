@@ -26,9 +26,3 @@ export function Event(props: { event: EventModel }) {
 		</>
 	);
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import './template.html';
-
-Template.registerHelper('DeleteEventsEvent', () => Event);
