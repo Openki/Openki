@@ -18,6 +18,9 @@ import "/imports/ui/components/editable";
 import "/imports/ui/components/participant/contact";
 import "/imports/ui/components/profile-link";
 
+import "./member";
+import "./remove-from-team-dropdown";
+
 import "./template.html";
 import "./styles.scss";
 
