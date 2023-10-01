@@ -124,6 +124,20 @@ template.helpers({
     const mayChangeComment = member.user === Meteor.userId();
     return member.comment || mayChangeComment;
   },
+
+  removeFromTeamDropdownAttr() {
+    const instance = Template.instance();
+    return {
+      member: instance.data.member,
+      onClick: async () => {
+        const change = instance.removeFromTeam();
+        if (!change) {
+          throw new Error("Unexpected falsy: change");
+        }
+        await processChange(change);
+      },
+    };
+  },
 });
 
 template.events({
@@ -131,15 +145,6 @@ template.events({
     event.preventDefault();
     Tooltips.hide();
     const change = instance.subscribeToTeam();
-    if (!change) {
-      throw new Error("Unexpected falsy: change");
-    }
-    await processChange(change);
-  },
-  async "click .js-remove-team"(event, instance) {
-    event.preventDefault();
-    Tooltips.hide();
-    const change = instance.removeFromTeam();
     if (!change) {
       throw new Error("Unexpected falsy: change");
     }
