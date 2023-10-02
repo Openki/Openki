@@ -1,20 +1,22 @@
 import $ from "jquery";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
 import { Router } from "meteor/iron:router";
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import moment from "moment";
 
 import { Events } from "/imports/api/events/events";
 
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import * as UrlTools from "/imports/utils/url-tools";
 
-import "./control";
-import { Direction, Unit } from "./control";
+import { useCurrentRouteName } from "/imports/ui/lib/useCurrentRouteName";
 
-import "./template.html";
+import { Control, Direction, Unit } from "./control";
+
 import "../styles.scss";
 
-const updateUrl = function (filter: ReturnType<(typeof Events)["Filtering"]>) {
+function updateUrl(routerName: string, filter: ReturnType<(typeof Events)["Filtering"]>) {
   const filterParams = filter.toParams();
   delete filterParams.region; // HACK region is kept in the session (for bad reasons)
   const queryString = UrlTools.paramsToQueryString(filterParams);
@@ -24,9 +26,10 @@ const updateUrl = function (filter: ReturnType<(typeof Events)["Filtering"]>) {
     options.query = queryString;
   }
 
-  Router.go(Router.current().route.getName(), {}, options);
-};
-const mvDateHandler = function (
+  Router.go(routerName, {}, options);
+}
+function mvDateHandler(
+  routerName: string,
   unit: Unit,
   direction: Direction,
   filter: ReturnType<(typeof Events)["Filtering"]>
@@ -41,63 +44,98 @@ const mvDateHandler = function (
     start.add(amount, unit).add(weekCorrection, "week").startOf("week");
   }
   filter.add("start", start).done();
-  updateUrl(filter);
+  updateUrl(routerName, filter);
   return false;
-};
+}
+export function Multi(props: {
+  date: moment.Moment;
+  filter: ReturnType<(typeof Events)["Filtering"]>;
+  setIsAttendeeFilterOn: (state: boolean) => void;
+}) {
+  const { date, filter, setIsAttendeeFilterOn } = props;
+  const { t } = useTranslation();
+  const { weekNr, dateLong, dateShort } = useDateTimeFormat();
+  const currentUser = useUser();
+  const routerName = useCurrentRouteName();
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "calendarNavMulti",
-  { date: unknown; setIsAttendeeFilterOn: (state: boolean) => void },
-  { currentUnit: ReactiveVar<string> }
->;
+  const [currentUnit, setCurrentUnit] = useState<Unit>("week");
 
-const template = Template.calendarNavMulti;
-
-template.helpers({
-  endDateTo(date: moment.Moment) {
+  function endDateTo() {
     return moment(date).add(6, "days");
-  },
+  }
 
-  controlAttr(direction: Direction) {
-    const instance = Template.instance();
-    const unit = instance.currentUnit.get();
+  function controlAttr(direction: Direction) {
+    const unit = currentUnit;
     return {
       unit,
       direction,
       onChangeDate: () => {
-        mvDateHandler(unit as Unit, direction, (instance.parentInstance() as any).filter);
+        mvDateHandler(routerName, unit, direction, filter);
       },
       onChangeUnit: (value: Unit) => {
-        instance.currentUnit.set(value);
-        mvDateHandler(value, direction, (instance.parentInstance() as any).filter);
+        setCurrentUnit(value);
+        mvDateHandler(routerName, value, direction, filter);
       },
     };
-  },
-});
+  }
 
-template.onCreated(function () {
-  this.currentUnit = new ReactiveVar("week");
-});
+  useEffect(() => {
+    const navContainer = $(".calendar-nav-container");
+    navContainer.slideDown();
 
-template.onRendered(function () {
-  const navContainer = this.$(".calendar-nav-container");
-  navContainer.slideDown();
+    $(window).on("scroll", () => {
+      const isCovering = navContainer.hasClass("calendar-nav-container-covering");
+      const atTop = ($(window).scrollTop() || 0) < 5;
 
-  $(window).on("scroll", () => {
-    const isCovering = navContainer.hasClass("calendar-nav-container-covering");
-    const atTop = ($(window).scrollTop() || 0) < 5;
-
-    if (!isCovering && !atTop) {
-      navContainer.addClass("calendar-nav-container-covering");
-    } else if (isCovering && atTop) {
-      navContainer.removeClass("calendar-nav-container-covering");
-    }
+      if (!isCovering && !atTop) {
+        navContainer.addClass("calendar-nav-container-covering");
+      } else if (isCovering && atTop) {
+        navContainer.removeClass("calendar-nav-container-covering");
+      }
+    });
   });
-});
 
-template.events({
-  "change .js-filter-own-events"(event) {
-    // call the parent method that gets passed into this template as a (prop) argument
-    Template.instance().data.setIsAttendeeFilterOn((event.target as HTMLInputElement).checked);
-  },
-});
+  return (
+    <div className="calendar-nav-container text-center">
+      <div className="calendar-nav">
+        <Control {...controlAttr("previous")} />
+        <div className="calendar-nav-moment">
+          <div className="lead">
+            {t("calendar.weekNumber", "Week")} {weekNr(date)}
+          </div>
+          <div>
+            <span className="d-none d-md-inline-block">
+              {dateLong(date)} - {dateLong(endDateTo())}
+            </span>
+            <span className="d-md-none">
+              {dateShort(date)} - {dateShort(endDateTo())}
+            </span>
+          </div>
+        </div>
+        <Control {...controlAttr("next")} />
+      </div>
+      {currentUser ? (
+        <div className="form-check form-switch align-content-center text-center pb-2">
+          <input
+            type="checkbox"
+            id="filter-own-events"
+            className="form-check-input float-none"
+            name="filter-own-events"
+            onClick={(event) => {
+              setIsAttendeeFilterOn(event.currentTarget.checked);
+            }}
+          />{" "}
+          <label htmlFor="filter-own-events">
+            {t("calendar.filter-own-events", "Show my events only")}
+          </label>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("CalendarNavMulti", () => Multi);

@@ -117,6 +117,9 @@ import "./styles.scss";
       // returns a value of the state (true / false)
       return Template.instance().state.get("isAttendeeFilterOn");
     },
+    filter() {
+      return Template.instance().filter;
+    },
   });
 }
 {

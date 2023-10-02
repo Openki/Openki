@@ -1,5 +1,5 @@
 <template name="calendarPage">
-	{{> calendarNavMulti date=startDate setIsAttendeeFilterOn=setterToBePassedToChild}}
+	{{> calendarNavMulti date=startDate filter=filter setIsAttendeeFilterOn=setterToBePassedToChild}}
 	<div class="container calendar-container">
 		<div class="page-component">
 			{{#if Template.subscriptionsReady}}
