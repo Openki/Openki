@@ -1,12 +1,49 @@
 import $ from "jquery";
+import { Router } from "meteor/iron:router";
 import { ReactiveVar } from "meteor/reactive-var";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import moment from "moment";
+
+import { Events } from "/imports/api/events/events";
+
+import * as UrlTools from "/imports/utils/url-tools";
 
 import "./control";
 
 import "./template.html";
 import "../styles.scss";
+import { Direction, Unit } from "./control";
+
+const updateUrl = function (filter: ReturnType<(typeof Events)["Filtering"]>) {
+  const filterParams = filter.toParams();
+  delete filterParams.region; // HACK region is kept in the session (for bad reasons)
+  const queryString = UrlTools.paramsToQueryString(filterParams);
+
+  const options: { query?: string } = {};
+  if (queryString.length) {
+    options.query = queryString;
+  }
+
+  Router.go(Router.current().route.getName(), {}, options);
+};
+const mvDateHandler = function (
+  unit: Unit,
+  direction: Direction,
+  filter: ReturnType<(typeof Events)["Filtering"]>
+) {
+  const amount = direction === "previous" ? -1 : 1;
+  const start = filter.get("start") as moment.Moment;
+  const weekCorrection = unit === "week" ? 0 : 1;
+
+  if (amount < 0) {
+    start.add(amount, unit).startOf("week");
+  } else {
+    start.add(amount, unit).add(weekCorrection, "week").startOf("week");
+  }
+  filter.add("start", start).done();
+  updateUrl(filter);
+  return false;
+};
 
 const Template = TemplateAny as TemplateStaticTyped<
   "calendarNavMulti",
@@ -19,6 +56,22 @@ const template = Template.calendarNavMulti;
 template.helpers({
   endDateTo(date: moment.Moment) {
     return moment(date).add(6, "days");
+  },
+
+  controlAttr(direction: Direction) {debugger
+    const instance = Template.instance();
+    const unit = instance.currentUnit.get();
+    return {
+      unit,
+      direction,
+      onChangeDate: () => {
+        mvDateHandler(unit as Unit, direction, (instance.parentInstance() as any).filter);
+      },
+      onChangeUnit: (value: Unit) => {
+        instance.currentUnit.set(value);
+        mvDateHandler(value, direction, (instance.parentInstance() as any).filter);
+      },
+    };
   },
 });
 
