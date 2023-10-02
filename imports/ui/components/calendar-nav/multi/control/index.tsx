@@ -57,30 +57,22 @@ export function Control(props: {
           <span className="fa-solid fa-list-ul fa-fw" aria-hidden="true"></span>
         </button>
         <ul className="dropdown-menu">
-          {units.map((unit) => {
-            return (
-              <li>
-                <a
-                  className="dropdown-item"
-                  href="#"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    onChangeUnit(unit);
-                  }}
-                >
-                  {calendarNavText(unit, "long")}
-                </a>
-              </li>
-            );
-          })}
+          {units.map((unit) => (
+            <li key={unit}>
+              <a
+                className="dropdown-item"
+                href="#"
+                onClick={(event) => {
+                  event.preventDefault();
+                  onChangeUnit(unit);
+                }}
+              >
+                {calendarNavText(unit, "long")}
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("CalendarNavMultiControl", () => Control);
