@@ -9,10 +9,10 @@ import { Events } from "/imports/api/events/events";
 import * as UrlTools from "/imports/utils/url-tools";
 
 import "./control";
+import { Direction, Unit } from "./control";
 
 import "./template.html";
 import "../styles.scss";
-import { Direction, Unit } from "./control";
 
 const updateUrl = function (filter: ReturnType<(typeof Events)["Filtering"]>) {
   const filterParams = filter.toParams();
@@ -58,7 +58,7 @@ template.helpers({
     return moment(date).add(6, "days");
   },
 
-  controlAttr(direction: Direction) {debugger
+  controlAttr(direction: Direction) {
     const instance = Template.instance();
     const unit = instance.currentUnit.get();
     return {

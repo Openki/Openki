@@ -1,60 +1,86 @@
-import { i18n } from "/imports/startup/both/i18next";
-import { Session } from "meteor/session";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { Spacebars } from "meteor/spacebars";
-
-import "./template.html";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { useSessionEquals } from "/imports/utils/react-meteor-data";
 
 const units = ["week", "month", "year"] as const;
 
 export type Direction = "previous" | "next";
 export type Unit = (typeof units)[number];
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "calendarNavMultiControl",
-  {
-    unit: Unit;
-    direction: Direction;
-    onChangeDate: () => void;
-    onChangeUnit: (value: Unit) => void;
+function Arrow(props: { direction: Direction }) {
+  let isRTL = useSessionEquals("textDirectionality", "rtl");
+
+  if (props.direction === "previous") {
+    isRTL = !isRTL;
   }
->;
 
-const template = Template.calendarNavMultiControl;
+  const direction = isRTL ? "left" : "right";
 
-template.events({
-  "click .js-change-date"(event, instance) {
-    event.preventDefault();
-    instance.data.onChangeDate();
-  },
+  return <span className={`fa-solid fa-arrow-${direction} fa-fw`} aria-hidden="true"></span>;
+}
 
-  "click .js-change-unit"(this: Unit, event, instance) {
-    event.preventDefault();
-    instance.data.onChangeUnit(this);
-  },
-});
+export function Control(props: {
+  unit: Unit;
+  direction: Direction;
+  onChangeDate: () => void;
+  onChangeUnit: (value: Unit) => void;
+}) {
+  const { unit: currentUnit, direction, onChangeDate, onChangeUnit } = props;
+  const { t } = useTranslation();
 
-template.helpers({
-  arrow() {
-    const data = Template.currentData();
+  function calendarNavText(unit: string, length: string) {
+    return t(`calendar.${direction}.${unit}.${length}`);
+  }
 
-    let isRTL = Session.equals("textDirectionality", "rtl");
+  return (
+    <div className="calendar-nav-control">
+      <div className="btn-group">
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={(event) => {
+            event.preventDefault();
+            onChangeDate();
+          }}
+        >
+          <Arrow direction={direction} />{" "}
+          <span className="d-none d-md-inline-block">{calendarNavText(currentUnit, "short")}</span>
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          aria-expanded="false"
+          aria-haspopup="true"
+          data-bs-toggle="dropdown"
+          data-bs-reference="parent"
+        >
+          <span className="fa-solid fa-list-ul fa-fw" aria-hidden="true"></span>
+        </button>
+        <ul className="dropdown-menu">
+          {units.map((unit) => {
+            return (
+              <li>
+                <a
+                  className="dropdown-item"
+                  href="#"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    onChangeUnit(unit);
+                  }}
+                >
+                  {calendarNavText(unit, "long")}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+}
 
-    if (data.direction === "previous") {
-      isRTL = !isRTL;
-    }
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
 
-    const direction = isRTL ? "left" : "right";
-    return Spacebars.SafeString(
-      `<span class="fa-solid fa-arrow-${direction} fa-fw" aria-hidden="true"></span>`
-    );
-  },
-
-  calendarNavText(direction: string, unit: string, length: string) {
-    return i18n(`calendar.${direction}.${unit}.${length}`);
-  },
-
-  units() {
-    return units;
-  },
-});
+Template.registerHelper("CalendarNavMultiControl", () => Control);
