@@ -1,8 +1,8 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { ReactiveDict } from "meteor/reactive-dict";
-import { ReactiveVar } from "meteor/reactive-var";
+import { useTranslation } from "react-i18next";
+import React, { useState } from "react";
 
-import "./template.html";
+import { ButtonSave, ButtonCancel } from "../buttons";
+
 import "./styles.scss";
 
 // feature detection for drag&drop upload
@@ -19,99 +19,127 @@ export interface UploadFile {
   content: string;
 }
 
-export interface Data {
+export interface Props {
   accept: string;
   onUpload: (file: UploadFile) => void;
   onCancel: () => void;
 }
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "fileUpload",
-  Data,
-  {
-    droppedFile: ReactiveVar<File | undefined>;
-    state: ReactiveDict<{
-      supportsDragndrop: boolean;
-      progress: "start" | "ready" | "uploading" | "done";
-      dragover: boolean;
-    }>;
+export function FileUpload(props: Props) {
+  const { accept, onUpload, onCancel } = props;
+  const { t } = useTranslation();
+  const [droppedFile, setDroppedFile] = useState<File | undefined>(undefined);
+  const [progress, setProgress] = useState<"start" | "ready" | "uploading" | "done">("start");
+  const [dragover, setDragover] = useState(false);
+
+  function fileName() {
+    return droppedFile?.name;
   }
->;
 
-const template = Template.fileUpload;
+  return (
+    <>
+      <form
+        encType="multipart/form-data"
+        noValidate={true}
+        className="text-center file-upload{{#if (state 'supportsDragndrop')}} supports-dragndrop{{/if}}{{#if (state 'dragover')}} is-dragover{{/if}}"
+        onDragOver={() => {
+          setDragover(true);
+        }}
+        onDragEnter={() => {
+          setDragover(true);
+        }}
+        onDragLeave={() => {
+          setDragover(false);
+        }}
+        onDragEnd={() => {
+          setDragover(false);
+        }}
+        onDrop={(event) => {
+          setDragover(false);
 
-template.onCreated(function () {
-  const instance = this;
+          setDroppedFile(event.dataTransfer.files[0]);
+          setProgress("ready");
+        }}
+      >
+        <input
+          type="file"
+          accept={accept}
+          className="d-none"
+          id="file"
+          onChange={(event) => {
+            setDroppedFile(event.target?.files?.[0]);
+            setProgress("ready");
+          }}
+        />
+        <label htmlFor="file">
+          <div className="mb-1">
+            <i className="fa-regular fa-file-lines fa-5x" aria-hidden="true"></i>
+          </div>
+          {dragover ? (
+            <div className="file-upload-drop">
+              {t("fileUpload.drop.text", "Drop it like it's hot!")}
+            </div>
+          ) : (
+            <>
+              {progress === "start" ? (
+                <>
+                  <strong>{t("fileUpload.choose.text", "Choose a file")}</strong>
 
-  instance.droppedFile = new ReactiveVar(undefined);
-  instance.state = new ReactiveDict();
-  instance.state.setDefault({
-    supportsDragndrop,
-    progress: "start",
-    dragover: false,
-  });
-});
+                  {supportsDragndrop ? (
+                    <span className="file-upload-dragndrop">
+                      {t("fileUpload.drag.text", "or drag it here")}
+                    </span>
+                  ) : null}
+                </>
+              ) : null}
+              {progress === "uploading" ? (
+                <div className="file-upload-uploading">
+                  {t("fileUpload.uploading.text", "Uploading…")}
+                </div>
+              ) : null}
+              {progress === "ready" ? fileName : null}
+            </>
+          )}
+        </label>
+      </form>
+      {progress === "ready" ? (
+        <div className="file-upload-controls">
+          <ButtonSave
+            onClick={() => {
+              if (!droppedFile) {
+                throw new Error(`Unexpected undefined: file`);
+              }
 
-template.helpers({
-  fileName() {
-    return Template.instance().droppedFile.get()?.name;
-  },
-});
+              setProgress("uploading");
 
-template.events({
-  "drag/dragstart/dragend/dragover/dragenter/dragleave/drop form"(event) {
-    // preventing the unwanted behaviours
-    event.preventDefault();
-    event.stopPropagation();
-  },
+              const reader = new FileReader();
 
-  "dragover/dragenter form"(_event, instance) {
-    instance.state.set("dragover", true);
-  },
+              reader.onload = () => {
+                onUpload({
+                  lastModified: new Date(droppedFile.lastModified),
+                  size: droppedFile.size,
+                  mimeType: droppedFile.type,
+                  content: reader.result as string,
+                });
+                setProgress("done");
+              };
 
-  "dragleave/dragend/drop form"(_event, instance) {
-    instance.state.set("dragover", false);
-  },
+              reader.readAsBinaryString(droppedFile);
+            }}
+          />
+          <ButtonCancel
+            onClick={() => {
+              onCancel();
+            }}
+          />
+        </div>
+      ) : null}
+    </>
+  );
+}
 
-  'change input[type="file"]'(event, instance) {
-    instance.droppedFile.set((event.target as any).files[0]);
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
 
-    instance.state.set("progress", "ready");
-  },
-
-  "drop form"(event, instance) {
-    instance.droppedFile.set(((event as any).originalEvent.dataTransfer as DataTransfer).files[0]);
-
-    instance.state.set("progress", "ready");
-  },
-
-  "click .js-file-upload-upload"(event, instance) {
-    event.preventDefault();
-
-    const droppedFile = instance.droppedFile.get();
-    if (!droppedFile) {
-      throw new Error(`Unexpected undefined: file`);
-    }
-
-    instance.state.set("progress", "uploading");
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      instance.data.onUpload({
-        lastModified: new Date(droppedFile.lastModified),
-        size: droppedFile.size,
-        mimeType: droppedFile.type,
-        content: reader.result as string,
-      });
-      instance.state.set("progress", "done");
-    };
-
-    reader.readAsBinaryString(droppedFile);
-  },
-
-  "click .js-file-upload-cancel"(event) {
-    event.preventDefault();
-    Template.instance().data.onCancel();
-  },
-});
+Template.registerHelper("FileUpload", () => FileUpload);
