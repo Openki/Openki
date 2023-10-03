@@ -4,6 +4,24 @@ import { useTranslation } from "react-i18next";
 
 import "/imports/ui/components/buttons";
 
+export function ButtonSave(props: {
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  disabled?: boolean | undefined;
+  isBusy?: boolean | undefined;
+}) {
+  const { t } = useTranslation();
+  return (
+    <button
+      type="button"
+      className="btn btn-save text-nowrap"
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
+      {!props.isBusy ? t("_button.save") : t("_button.saving", "Saving…")}
+    </button>
+  );
+}
+
 export function ButtonCancel(props: {
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   disabled?: boolean | undefined;
