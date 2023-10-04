@@ -12,7 +12,7 @@ import * as UrlTools from "/imports/utils/url-tools";
 
 import { useCurrentRouteName } from "/imports/ui/lib/useCurrentRouteName";
 
-import { Control, Direction, Unit } from "./control";
+import { Control } from "./control";
 
 import "../styles.scss";
 
@@ -137,5 +137,6 @@ export function Multi(props: {
 // for Blaze
 // eslint-disable-next-line import/first
 import "./template.html";
+import { Direction, Unit } from "../Arrow";
 
 Template.registerHelper("CalendarNavMulti", () => Multi);

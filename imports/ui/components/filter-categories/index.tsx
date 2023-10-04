@@ -9,7 +9,7 @@ import "/imports/ui/components/courses/categories";
 
 import "./styles.scss";
 
-function FilterCategories(props: {
+export function FilterCategories(props: {
   categories: string[] | undefined;
   onAdd: (category: string) => void;
   onRemove: (category: string) => void;

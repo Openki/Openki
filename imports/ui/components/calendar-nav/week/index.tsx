@@ -1,14 +1,17 @@
+import React, { useEffect } from "react";
 import $ from "jquery";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import moment from "moment";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useTranslation } from "react-i18next";
 
-import "/imports/ui/components/search-field";
-import "/imports/ui/components/filter-groups";
-import "/imports/ui/components/filter-categories";
-import "./control";
+import { Control } from "./control";
+import { FilterGroups } from "/imports/ui/components/filter-groups";
+import { Direction } from "../Arrow";
 
-import "./template.html";
 import "../styles.scss";
+import { SearchField } from "../../search-field";
+import { FilterCategories } from "../../filter-categories";
 
 export type Data = {
   hideSwitches: boolean;
@@ -26,13 +29,50 @@ export type Data = {
   onChangeAttendingEventsOnly: (state: boolean) => void;
 };
 
+export function CalendarNavWeek(data: Data) {
+  const { hideSwitches, date, availableGroups } = data;
+  const { weekNr, dateLong, dateShort } = useDateTimeFormat();
+  const currentUser = useUser();
+  const { t } = useTranslation();
 
-  const Template = TemplateAny as TemplateStaticTyped<"calendarNavWeek", Data>;
+  function endDateTo() {
+    return moment(date).add(6, "days");
+  }
 
-  const template = Template.calendarNavWeek;
+  function controlAttr(direction: Direction) {
+    return {
+      direction,
+      onChangeDate: () => {
+        const amount = direction === "previous" ? -7 : 7;
 
-  template.onRendered(function () {
-    const navContainer = this.$(".calendar-nav-container");
+        const newDate = data.date.add(amount, "day");
+
+        data.onChangeDate(newDate);
+      },
+    };
+  }
+
+  function searchFieldAttr() {
+    return { search: data.search, onChange: data.onChangeSearch };
+  }
+  function filterGroupsAttr() {
+    return {
+      availableGroups: data.availableGroups,
+      selectedGroups: data.selectedGroups,
+      onAdd: data.onAddGroup,
+      onRemove: data.onRemoveGroup,
+    };
+  }
+  function filterCategoriesAttr() {
+    return {
+      categories: data.categories,
+      onAdd: data.onAddCategory,
+      onRemove: data.onRemoveCategory,
+    };
+  }
+
+  useEffect(() => {
+    const navContainer = $(".js-calendar-nav-container");
     navContainer.slideDown();
 
     $(window).on("scroll", () => {
@@ -46,42 +86,76 @@ export type Data = {
       }
     });
   });
-  template.helpers({
-    endDateTo(date: moment.Moment) {
-      return moment(date).add(6, "days");
-    },
-    searchFieldAttr() {
-      const data = Template.instance().data;
-      return { search: data.search, onChange: data.onChangeSearch };
-    },
-    filterGroupsAttr() {
-      const data = Template.instance().data;
-      return {
-        availableGroups: data.availableGroups,
-        selectedGroups: data.selectedGroups,
-        onAdd: data.onAddGroup,
-        onRemove: data.onRemoveGroup,
-      };
-    },
-    filterCategoriesAttr() {
-      const data = Template.instance().data;
-      return {
-        categories: data.categories,
-        onAdd: data.onAddCategory,
-        onRemove: data.onRemoveCategory,
-      };
-    },
-  });
 
-  template.events({
-    "click .js-filter-own-events"(event) {
-      const radioSwitch = event.target as HTMLInputElement;
-      if (Meteor.userId()) {
-        Template.instance().data.onChangeAttendingEventsOnly(radioSwitch.checked);
-      } else {
-        radioSwitch.checked = false;
-        $(".js-account-tasks").modal("show");
-      }
-    },
-  });
+  return (
+    <div className="js-calendar-nav-container calendar-nav-container flex-container">
+      <div className="row align-items-center p-1">
+        <div className="col-md-3 col-lg-4 p-1">
+          <SearchField {...searchFieldAttr()} />
+        </div>
+        <div className="col-md-6 col-lg-4 p-1">
+          <div className="row justify-content-center align-items-center">
+            {!hideSwitches ? <Control {...controlAttr("previous")} /> : null}
+            <div className="col-auto text-center">
+              <div className="lead">
+                {t("calendar.weekNumber", "Week")} {weekNr(date)}
+              </div>
+              <div>
+                <span className="d-none d-md-inline-block">
+                  {dateLong(date)} - {dateLong(endDateTo())}
+                </span>
+                <span className="d-md-none">
+                  {dateShort(date)} - {dateShort(endDateTo())}
+                </span>
+              </div>
+            </div>
+            {!hideSwitches ? <Control {...controlAttr("next")} /> : null}
+          </div>
+        </div>
+        <div className="row align-items-center">
+          {availableGroups ? (
+            <>
+              <div className="col-md-3 col-lg-2 p-1">
+                <FilterGroups {...filterGroupsAttr()} />
+              </div>
+              <div className="col-md-3 col-lg-2 p-1">
+                <FilterCategories {...filterCategoriesAttr()} />
+              </div>
+            </>
+          ) : (
+            <div className="offset-lg-2 col-md-4 col-lg-2 p-1">
+              <FilterCategories {...filterCategoriesAttr()} />
+            </div>
+          )}
+        </div>
+        {currentUser ? (
+          <div
+            className={`${!availableGroups ? "offset-md-4 offset-lg-2 " : ""}col-md-8 col-lg-4 p-1`}
+          >
+            <div className="form-check form-switch">
+              <input
+                type="checkbox"
+                id="filter-own-events"
+                className="form-check-input float-none"
+                name="filter-own-events"
+                onClick={(event) => {
+                  const radioSwitch = event.currentTarget;
+                  data.onChangeAttendingEventsOnly(radioSwitch.checked);
+                }}
+              />{" "}
+              <label htmlFor="filter-own-events">
+                {t("calendar.filter-own-events", "Show my events only")}
+              </label>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
 
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("CalendarNavWeek", () => CalendarNavWeek);

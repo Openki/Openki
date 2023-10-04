@@ -1,50 +1,28 @@
-import { i18n } from "/imports/startup/both/i18next";
-import { Session } from "meteor/session";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { Spacebars } from "meteor/spacebars";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { Arrow, Direction } from "../../Arrow";
 
-import "./template.html";
+export function Control(props: { direction: Direction; onChangeDate: () => void }) {
+  const { direction, onChangeDate } = props;
+  const { t } = useTranslation();
 
-type Direction = "previous" | "next";
+  function text(length: string) {
+    return t(`calendar.${direction}.week.${length}`);
+  }
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "calendarNavWeekControl",
-  { direction: Direction }
->;
-
-const template = Template.calendarNavWeekControl;
-
-template.events({
-  "click .js-change-date"(event, instance) {
-    event.preventDefault();
-
-    const parentData = instance.parentInstance()?.data;
-
-    const amount = instance.data.direction === "previous" ? -7 : 7;
-
-    const newDate = parentData.date.add(amount, "day");
-
-    parentData.onChangeDate(newDate);
-  },
-});
-
-template.helpers({
-  arrow() {
-    const data = Template.instance().data;
-
-    let isRTL = Session.equals("textDirectionality", "rtl");
-
-    if (data.direction === "previous") {
-      isRTL = !isRTL;
-    }
-
-    const direction = isRTL ? "left" : "right";
-    return Spacebars.SafeString(
-      `<span class="fa-solid fa-arrow-${direction} fa-fw" aria-hidden="true"></span>`
-    );
-  },
-
-  text(direction: string, length: string) {
-    return i18n(`calendar.${direction}.week.${length}`);
-  },
-});
+  return (
+    <div className="col-auto px-4">
+      <button
+        type="button"
+        className="btn btn-secondary js-change-date"
+        onClick={(event) => {
+          event.preventDefault();
+          onChangeDate();
+        }}
+      >
+        <Arrow direction={direction} />{" "}
+        <span className="d-none d-md-inline-block">{text("short")}</span>
+      </button>
+    </div>
+  );
+}

@@ -5,7 +5,7 @@ import { Template } from "meteor/templating";
 
 import "./styles.scss";
 
-function SearchField(props: {
+export function SearchField(props: {
   search: string | undefined;
   onChange: (newValue: string) => void;
   onFocusOut?: () => void;
