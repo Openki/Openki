@@ -8,6 +8,7 @@ import moment from "moment";
 import "/imports/ui/components/search-field";
 import "/imports/ui/components/filter-groups";
 import "/imports/ui/components/filter-categories";
+import "./control";
 
 import "./template.html";
 import "../styles.scss";
