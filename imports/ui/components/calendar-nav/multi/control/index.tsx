@@ -1,23 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useSessionEquals } from "/imports/utils/react-meteor-data";
-
-const units = ["week", "month", "year"] as const;
-
-export type Direction = "previous" | "next";
-export type Unit = (typeof units)[number];
-
-function Arrow(props: { direction: Direction }) {
-  let isRTL = useSessionEquals("textDirectionality", "rtl");
-
-  if (props.direction === "previous") {
-    isRTL = !isRTL;
-  }
-
-  const direction = isRTL ? "left" : "right";
-
-  return <span className={`fa-solid fa-arrow-${direction} fa-fw`} aria-hidden="true"></span>;
-}
+import { Arrow, Direction, Unit, units } from "../../Arrow";
 
 export function Control(props: {
   unit: Unit;
@@ -28,7 +11,7 @@ export function Control(props: {
   const { unit: currentUnit, direction, onChangeDate, onChangeUnit } = props;
   const { t } = useTranslation();
 
-  function calendarNavText(unit: string, length: string) {
+  function text(unit: string, length: string) {
     return t(`calendar.${direction}.${unit}.${length}`);
   }
 
@@ -44,7 +27,7 @@ export function Control(props: {
           }}
         >
           <Arrow direction={direction} />{" "}
-          <span className="d-none d-md-inline-block">{calendarNavText(currentUnit, "short")}</span>
+          <span className="d-none d-md-inline-block">{text(currentUnit, "short")}</span>
         </button>
         <button
           type="button"
@@ -67,7 +50,7 @@ export function Control(props: {
                   onChangeUnit(unit);
                 }}
               >
-                {calendarNavText(unit, "long")}
+                {text(unit, "long")}
               </a>
             </li>
           ))}
