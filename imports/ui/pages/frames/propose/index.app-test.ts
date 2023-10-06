@@ -31,7 +31,7 @@ if (Meteor.isClient) {
         const alertLink = $(".alert a");
         assert(
           alertLink.text().includes(randomTitle),
-          "A message that the course was created is shown"
+          "A message that the course was created is shown",
         );
         return alertLink.attr("href") as string;
       });
@@ -42,7 +42,7 @@ if (Meteor.isClient) {
       await waitFor(() => {
         assert(
           $(".course-role-enrolled button[name=mentor]").length >= 0,
-          "Listed as mentor in the created course"
+          "Listed as mentor in the created course",
         );
       });
     });
@@ -62,7 +62,7 @@ if (Meteor.isClient) {
         const alertLink = $(".alert a");
         assert(
           alertLink.text().includes(randomTitle),
-          "A message that the course was created is shown"
+          "A message that the course was created is shown",
         );
         return alertLink.attr("href") as string;
       });
@@ -74,7 +74,7 @@ if (Meteor.isClient) {
         assert(
           $('.group-tag a[href^="/group/cc89c5e476"]').length > 0 &&
             $('.group-tag a[href^="/group/573edec5d6"]').length > 0,
-          "Multiple groups added in the created course"
+          "Multiple groups added in the created course",
         );
       });
     });
@@ -94,7 +94,7 @@ if (Meteor.isClient) {
         const alertLink = $(".alert a");
         assert(
           alertLink.text().includes(randomTitle),
-          "A message that the course was created is shown"
+          "A message that the course was created is shown",
         );
         return alertLink.attr("href") as string;
       });
@@ -105,7 +105,7 @@ if (Meteor.isClient) {
       await waitFor(() => {
         assert(
           $(".course-role-enrolled button[name=mentor]").length >= 0,
-          "Listed as mentor in the created course"
+          "Listed as mentor in the created course",
         );
       });
     });
@@ -132,7 +132,7 @@ if (Meteor.isClient) {
       await waitFor(() => {
         assert(
           $(".alert a").text().includes(randomTitle),
-          "A message that the course was created is shown"
+          "A message that the course was created is shown",
         );
       });
     });

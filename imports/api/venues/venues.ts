@@ -171,7 +171,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
         ...new Set(
           recentEvents
             .map((event) => event.venue?._id) // get ids
-            .filter((venueId) => venueId) // filter empty ids
+            .filter((venueId) => venueId), // filter empty ids
         ),
       ] // make unique with Set
         .slice(0, limit || 10); // and limit it

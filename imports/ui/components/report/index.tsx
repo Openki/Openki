@@ -36,13 +36,13 @@ export function Report() {
                   document.title,
                   window.location.href,
                   navigator.userAgent,
-                  message
+                  message,
                 );
                 Alert.success(
                   t(
                     "report.confirm",
-                    "Your report was sent. A human will try to find an appropriate solution."
-                  )
+                    "Your report was sent. A human will try to find an appropriate solution.",
+                  ),
                 );
               } catch (err) {
                 Alert.serverError(err, t("report.notSent", "Your report could not be sent"));
@@ -69,7 +69,7 @@ export function Report() {
               <div className="invalid-feedback">
                 {t(
                   "report.warning.tooShort",
-                  "The report message is too short! Please write more than 5 characters."
+                  "The report message is too short! Please write more than 5 characters.",
                 )}
               </div>
             </div>

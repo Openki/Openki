@@ -54,7 +54,7 @@ template.onCreated(function () {
       user,
       instance.data.role.type,
       "interested",
-      comment
+      comment,
     );
   };
 
@@ -69,7 +69,7 @@ template.onCreated(function () {
         Alert.success(
           i18n("course.roles.unsubscribed", "Unsubscribed from {NAME}", {
             NAME: instance.data.course.name,
-          })
+          }),
         );
       } else {
         Alert.error(`${change} not valid for ${user}`);
@@ -127,7 +127,7 @@ template.events({
       Analytics.trackEvent(
         "Enrollments in courses",
         `Enrollments in courses as ${data.role.type}`,
-        Regions.findOne(data.course.region)?.nameEn
+        Regions.findOne(data.course.region)?.nameEn,
       );
     });
   },
@@ -149,7 +149,7 @@ template.events({
     Analytics.trackEvent(
       "Unsubscribes from courses",
       `Unsubscribes from courses as ${data.role.type}`,
-      Regions.findOne(data.course.region)?.nameEn
+      Regions.findOne(data.course.region)?.nameEn,
     );
   },
 

@@ -80,7 +80,7 @@ export namespace Notifications {
     userId: string,
     enable: boolean,
     relatedId: string | undefined,
-    reason: string
+    reason: string,
   ) {
     check(userId, String);
     check(enable, Boolean);
@@ -141,7 +141,7 @@ export namespace PrivateMessages {
     userId: string,
     enable: boolean,
     relatedId: string | undefined,
-    reason: string
+    reason: string,
   ) {
     check(userId, String);
     check(enable, Boolean);

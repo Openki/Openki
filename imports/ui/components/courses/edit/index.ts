@@ -81,9 +81,9 @@ export type Data = {
       true,
       i18n(
         "course.description.placeholder",
-        "Describe your idea, so more people find it and know what to expect."
+        "Describe your idea, so more people find it and know what to expect.",
       ),
-      PublicSettings.courseDescriptionMax
+      PublicSettings.courseDescriptionMax,
     );
 
     instance.state = new ReactiveDict();
@@ -157,7 +157,7 @@ export type Data = {
         // When we're in the propose frame, show a simplified role selection
         instance.state.set(
           "simpleRoleSelection",
-          !this.data.hideRoleSelection && this.data.roles.includes("mentor")
+          !this.data.hideRoleSelection && this.data.roles.includes("mentor"),
         );
         instance.state.set("fullRoleSelection", false);
 
@@ -371,7 +371,7 @@ export type Data = {
     "change input[name=role]"(_event, instance) {
       instance.state.set(
         "simpleSelectedRole",
-        instance.$("input[name=role]:checked").val() as string
+        instance.$("input[name=role]:checked").val() as string,
       );
     },
 
@@ -421,7 +421,7 @@ export type Data = {
             i18n("_inputField.maxlength", {
               MAXNUMBER: PublicSettings.courseDescriptionMax,
               NUMBER: numberOfCharacters - PublicSettings.courseDescriptionMax,
-            })
+            }),
           );
           return;
         }
@@ -519,14 +519,14 @@ export type Data = {
                 changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"
               }`,
               Regions.findOne(changes.region)?.nameEn,
-              instance.editableDescription.getTotalFocusTimeInSeconds()
+              instance.editableDescription.getTotalFocusTimeInSeconds(),
             );
           } else {
             if (isNew) {
               Alert.success(
                 i18n("message.courseCreated", "{NAME} has been created!", {
                   NAME: changes.name,
-                })
+                }),
               );
               Analytics.trackEvent(
                 "Course creations",
@@ -534,13 +534,13 @@ export type Data = {
                   changes.subs.length > 0 ? changes.subs.sort().join(" and ") : "participant"
                 }`,
                 Regions.findOne(changes.region)?.nameEn,
-                instance.editableDescription.getTotalFocusTimeInSeconds()
+                instance.editableDescription.getTotalFocusTimeInSeconds(),
               );
             } else {
               Alert.success(
                 i18n("message.courseChangesSaved", "Your changes to {NAME} have been saved.", {
                   NAME: changes.name,
-                })
+                }),
               );
             }
 

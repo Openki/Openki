@@ -41,7 +41,7 @@ export function CourseGroupMakeOrganizer(props: { course: CourseModel; groupId: 
       })}
       {t(
         "course.group.confirmOrgNotes",
-        "All members of the group will be able to edit the course and create new events for it."
+        "All members of the group will be able to edit the course and create new events for it.",
       )}
       <button
         type="button"
@@ -57,13 +57,13 @@ export function CourseGroupMakeOrganizer(props: { course: CourseModel; groupId: 
                 {
                   GROUP: name(group),
                   COURSE: course.name,
-                }
-              )
+                },
+              ),
             );
           } catch (err) {
             Alert.serverError(
               err,
-              t("courseGroupAdd.membersCanEditCourse.error", "Failed to give editing rights")
+              t("courseGroupAdd.membersCanEditCourse.error", "Failed to give editing rights"),
             );
           }
         }}

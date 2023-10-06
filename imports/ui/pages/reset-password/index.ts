@@ -55,7 +55,7 @@ template.onCreated(function () {
       instance.passwordNotSame.set(
         !!passwordConfirm &&
           password.length <= passwordConfirm.length &&
-          password !== passwordConfirm
+          password !== passwordConfirm,
       );
       instance.passwordValid.set(password.length > 0 && password === passwordConfirm);
     }

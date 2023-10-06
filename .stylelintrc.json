@@ -1,7 +1,7 @@
 {
-	"extends": ["stylelint-config-sass-guidelines", "stylelint-prettier/recommended"],
-	"plugins": ["stylelint-prettier"],
-	"rules": {
-		"prettier/prettier": [true, { "severity": "warning" }]
-	}
+  "extends": ["stylelint-config-sass-guidelines", "stylelint-config-prettier"],
+  "plugins": ["stylelint-prettier"],
+  "rules": {
+    "prettier/prettier": [true, { "severity": "warning" }]
+  }
 }

@@ -29,7 +29,7 @@ function Disclaimer() {
         {t(
           "pricePolicy.disclaimer",
           "Education should be open to everyone. That's why {SITENAME} only allows suggested/orientation prices.",
-          { SITENAME: siteName }
+          { SITENAME: siteName },
         )}
       </div>
     </div>

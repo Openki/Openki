@@ -12,6 +12,7 @@ import * as UrlTools from "/imports/utils/url-tools";
 
 import { useCurrentRouteName } from "/imports/ui/lib/useCurrentRouteName";
 
+import { Direction, Unit } from "../Arrow";
 import { Control } from "./control";
 
 import "../styles.scss";
@@ -32,7 +33,7 @@ function mvDateHandler(
   routerName: string,
   unit: Unit,
   direction: Direction,
-  filter: ReturnType<(typeof Events)["Filtering"]>
+  filter: ReturnType<(typeof Events)["Filtering"]>,
 ) {
   const amount = direction === "previous" ? -1 : 1;
   const start = filter.get("start") as moment.Moment;
@@ -137,6 +138,5 @@ export function Multi(props: {
 // for Blaze
 // eslint-disable-next-line import/first
 import "./template.html";
-import { Direction, Unit } from "../Arrow";
 
 Template.registerHelper("CalendarNavMulti", () => Multi);

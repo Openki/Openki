@@ -19,7 +19,7 @@ function EditableMixing<
   D extends Editable,
   T extends Record<string, unknown> & {
     numberOfCharacters: ReactiveVar<number>;
-  }
+  },
 >(TemplateBase: TemplateStaticTyped<N, D, T>, templateName: N) {
   const Template = TemplateMixins.FormfieldErrors(
     TemplateBase as TemplateStaticTyped<
@@ -36,7 +36,7 @@ function EditableMixing<
         reset: () => void;
       }
     >,
-    templateName
+    templateName,
   );
 
   const template = Template[templateName];
@@ -219,7 +219,7 @@ function EditableMixing<
     });
     $editable.on("blur", () => {
       totalFocusTimeInSeconds += Math.round(
-        (Date.now() - (startGettingFocus || Date.now())) / 1000
+        (Date.now() - (startGettingFocus || Date.now())) / 1000,
       );
     });
   });

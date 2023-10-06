@@ -28,7 +28,7 @@ const getEventFrequency = (
   originStart: moment.Moment,
   startDate: moment.Moment,
   endDate: moment.Moment,
-  frequency: string
+  frequency: string,
 ) => {
   const frequencies: {
     [name: string]: {
@@ -107,8 +107,8 @@ template.onCreated(function () {
       moment(instance.data.start),
       instance.replicateStartDate.get(),
       instance.replicateEndDate.get(),
-      "weekly"
-    )
+      "weekly",
+    ),
   );
 });
 
@@ -239,7 +239,7 @@ template.events({
               error,
               i18n("eventReplication.errWithReason", 'Could not create the copy on "{START}".', {
                 START: start,
-              })
+              }),
             );
           })
           .finally(() => {
@@ -256,8 +256,8 @@ template.events({
                       TITLE: instance.data.title,
                       NUM: removed,
                       DATE: start,
-                    }
-                  )
+                    },
+                  ),
                 );
               }
               if (removed === responses) {
@@ -295,7 +295,7 @@ template.events({
     const frequency = instance.$(".js-replicate-frequency:checked").val() as string;
 
     instance.calcDays.set(
-      getEventFrequency(moment(instance.data.start), startDate, endDate, frequency)
+      getEventFrequency(moment(instance.data.start), startDate, endDate, frequency),
     );
   },
 

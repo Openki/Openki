@@ -38,7 +38,7 @@ export function logErrors(error: Error, result: unknown) {
  */
 // eslint-disable-next-line import/no-mutable-exports
 export let untilClean: (
-  clean: (resolve: (value: boolean) => void, reject: (reason?: unknown) => void) => void
+  clean: (resolve: (value: boolean) => void, reject: (reason?: unknown) => void) => void,
 ) => Promise<void>;
 
 if (Meteor.isServer) {
@@ -46,7 +46,7 @@ if (Meteor.isServer) {
 
   const tryClean = function (
     clean: (resolve: (value: boolean) => void, reject: (reason?: unknown) => void) => void,
-    tries: number
+    tries: number,
   ): Promise<void> {
     return new Promise((resolve, reject) => {
       clean(resolve, reject);
@@ -59,7 +59,7 @@ if (Meteor.isServer) {
             // we can cache them (then the cache updates would have to be throttled) or
             // that the clean function is broken (much more likely).
             throw new Error(
-              `Giving up after trying to apply cleaning function ${maxTries} times: ${clean}`
+              `Giving up after trying to apply cleaning function ${maxTries} times: ${clean}`,
             );
           }
           return tryClean(clean, tries - 1);
@@ -74,7 +74,7 @@ if (Meteor.isServer) {
         } catch {
           // ignore
         }
-      }
+      },
     );
   };
 

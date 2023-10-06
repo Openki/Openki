@@ -17,5 +17,5 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
     }
 
     return Log.findFilter(filter, limit);
-  }
+  },
 );

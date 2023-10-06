@@ -97,7 +97,7 @@ export function Model(entry: { body: Body }) {
       const subject = i18n(
         "notification.join.mail.subject",
         "{USER} joined {COURSE}: {ROLE}",
-        subjectvars
+        subjectvars,
       );
 
       const figures = ["host", "mentor", "participant"]

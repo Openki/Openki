@@ -39,7 +39,7 @@ const ReplicaSync = function (
     infos?: boolean | undefined;
     time?: boolean | undefined;
     changedReplicas?: { time?: boolean | undefined } | undefined;
-  }
+  },
 ) {
   let affected = 0;
 
@@ -146,7 +146,7 @@ export const save = ServerMethod(
     updateReplicasTime?: boolean | null,
     updateChangedReplicasTime?: boolean | null,
     sendNotifications?: boolean | null,
-    comment?: string | null
+    comment?: string | null,
   ) => {
     check(eventId, String);
 
@@ -295,7 +295,7 @@ export const save = ServerMethod(
           throw new Meteor.Error(
             400,
             `the minimal possible value is ${numParticipantsRegistered}, ` +
-              `because ${numParticipantsRegistered} users have already registered.`
+              `because ${numParticipantsRegistered} users have already registered.`,
           );
         }
       }
@@ -361,7 +361,7 @@ export const save = ServerMethod(
         const affectedReplicaMessage = i18n(
           "notification.event.affectedReplicaMessage",
           "These changes have also been applied to {NUM, plural, one{the later copy} other{# later copies} }",
-          { NUM: affectedReplicaCount, lng: user.locale }
+          { NUM: affectedReplicaCount, lng: user.locale },
         );
 
         if (comment === null || comment === undefined) {
@@ -393,7 +393,7 @@ export const save = ServerMethod(
     }
 
     return eventId;
-  }
+  },
 );
 
 export const remove = ServerMethod("event.remove", (eventId: string) => {
@@ -439,7 +439,7 @@ export const remove = ServerMethod("event.remove", (eventId: string) => {
  */
 export const promote = ServerMethod(
   "event.promote",
-  UpdateMethods.promote(Events as unknown as GroupPromoters)
+  UpdateMethods.promote(Events as unknown as GroupPromoters),
 );
 
 /**
@@ -452,7 +452,7 @@ export const promote = ServerMethod(
  */
 export const editing = ServerMethod(
   "event.editing",
-  UpdateMethods.editing(Events as unknown as GroupPromoters)
+  UpdateMethods.editing(Events as unknown as GroupPromoters),
 );
 
 /**
@@ -487,7 +487,7 @@ export const addParticipant = ServerMethod(
 
     Events.update(
       { _id: eventId },
-      { $addToSet: { participants: { user: user._id, companions } } }
+      { $addToSet: { participants: { user: user._id, companions } } },
     );
 
     // Send notifications to user
@@ -505,7 +505,7 @@ export const addParticipant = ServerMethod(
     if (change.validFor(user)) {
       await processChange(change, { isSimulation: this.isSimulation });
     }
-  }
+  },
 );
 
 export const removeParticipant = ServerMethod("event.removeParticipant", (eventId: string) => {
@@ -563,9 +563,9 @@ export const contactParticipants = ServerMethod(
       message,
       eventId,
       options.revealAddress,
-      options.sendCopy
+      options.sendCopy,
     );
-  }
+  },
 );
 
 export const cancel = ServerMethod(
@@ -600,7 +600,7 @@ export const cancel = ServerMethod(
 
       Notification["Event.Canceled"].record(operator._id, eventId, comment || "");
     }
-  }
+  },
 );
 
 export const uncancel = ServerMethod("event.uncancel", async (eventId: string) => {

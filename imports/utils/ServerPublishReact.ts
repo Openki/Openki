@@ -12,7 +12,7 @@ export interface Publication<A extends any[], T> {
 
 export function createPublicationMany<A extends any[], T>(
   name: string,
-  queryBuilder: QueryBuilder<A, Mongo.Cursor<T, T>>
+  queryBuilder: QueryBuilder<A, Mongo.Cursor<T, T>>,
 ) {
   return function (...args: A) {
     const isLoading = useSubscribe(name, ...args);
@@ -22,7 +22,7 @@ export function createPublicationMany<A extends any[], T>(
       isLoading,
       useTracker(
         () => queryBuilder.call({ userId }, ...queryArgs).fetch(),
-        [JSON.stringify(queryArgs), userId]
+        [JSON.stringify(queryArgs), userId],
       ),
     ];
   };
@@ -30,7 +30,7 @@ export function createPublicationMany<A extends any[], T>(
 
 export function createPublicationOne<A extends any[], T>(
   name: string,
-  queryBuilder: QueryBuilder<A, T>
+  queryBuilder: QueryBuilder<A, T>,
 ): Publication<A, T> {
   return function (...args: A): [() => boolean, T] {
     const isLoading = useSubscribe(name, ...args);
@@ -53,7 +53,7 @@ export function createPublicationOne<A extends any[], T>(
  */
 export function ServerPublishMany<A extends any[], T>(
   name: string,
-  publisher: (this: Pick<Subscription, "userId">, ...args: A) => Mongo.Cursor<T>
+  publisher: (this: Pick<Subscription, "userId">, ...args: A) => Mongo.Cursor<T>,
 ): Publication<A, T[]>;
 
 /**
@@ -75,13 +75,13 @@ export function ServerPublishMany<A extends any[], T>(
 export function ServerPublishMany<A extends any[], T>(
   name: string,
   publisher: (this: Subscription, ...args: A) => undefined,
-  queryBuilder: QueryBuilder<A, Mongo.Cursor<T>>
+  queryBuilder: QueryBuilder<A, Mongo.Cursor<T>>,
 ): Publication<A, T[]>;
 
 export function ServerPublishMany<A extends any[], T>(
   name: string,
   publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T> | undefined,
-  queryBuilder: QueryBuilder<A, Mongo.Cursor<T>> = publisher as QueryBuilder<A, Mongo.Cursor<T>>
+  queryBuilder: QueryBuilder<A, Mongo.Cursor<T>> = publisher as QueryBuilder<A, Mongo.Cursor<T>>,
 ) {
   publish(name, publisher);
 
@@ -108,7 +108,7 @@ export function ServerPublishMany<A extends any[], T>(
 export function ServerPublishOne<A extends any[], T>(
   name: string,
   publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T>,
-  queryBuilder: QueryBuilder<A, T>
+  queryBuilder: QueryBuilder<A, T>,
 ): Publication<A, T> {
   publish(name, publisher);
 

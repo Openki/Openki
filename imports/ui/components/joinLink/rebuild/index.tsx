@@ -33,7 +33,7 @@ export function JoinLinkRebuild(props: { tenantId: string }) {
       <p>
         {t(
           "joinLink.reallyrebuild",
-          "Please confirm that you would like to create a new link. Existing link will be revoked."
+          "Please confirm that you would like to create a new link. Existing link will be revoked.",
         )}
       </p>
       <div className="form-actions">

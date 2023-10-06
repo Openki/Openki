@@ -248,7 +248,7 @@ template.events({
 
     try {
       const response = await fetch(
-        `https://nominatim.openstreetmap.org?${new URLSearchParams(nominatimQuery)}`
+        `https://nominatim.openstreetmap.org?${new URLSearchParams(nominatimQuery)}`,
       );
       const found = await response.json();
       markers.remove({ proposed: true });
@@ -256,7 +256,7 @@ template.events({
         Alert.warning(
           i18n("event.edit.noResultsforAddress", 'Found no results for the address "{ADDRESS}"', {
             ADDRESS: search,
-          })
+          }),
         );
       }
       _.each(found, (foundLocation) => {
@@ -271,11 +271,11 @@ template.events({
           proposed: true,
           presetAddress: foundLocation.display_name.replace(
             /[^\d]*(\d+), ([^,]+),.*, ([^,]+), (\d+), [^,]+/,
-            "$2 $1, $4 $3"
+            "$2 $1, $4 $3",
           ),
           name: foundLocation.display_name.replace(
             /[^\d]*(\d+), ([^,]+),.*, ([^,]+), (\d+), [^,]+/,
-            "$2 $1, $4 $3"
+            "$2 $1, $4 $3",
           ),
         } as ProposedMarkerEntity;
         instance.locationTracker.markers.insert(marker);

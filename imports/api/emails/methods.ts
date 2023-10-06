@@ -29,7 +29,7 @@ export const sendVerificationEmail = ServerMethod(
 
     Accounts.sendVerificationEmail(userId);
   },
-  { simulation: false }
+  { simulation: false },
 );
 
 export const SendPrivateMessageOptionsPattern = {
@@ -74,9 +74,9 @@ export const sendPrivateMessage = ServerMethod(
       message,
       options.revealAddress,
       options.sendCopy,
-      context
+      context,
     );
-  }
+  },
 );
 
 export const sendReport = ServerMethod(
@@ -91,7 +91,7 @@ export const sendReport = ServerMethod(
     const user = Meteor.user();
     if (user) {
       reporter = Spacebars.SafeString(
-        `<a href='${Router.url("userprofile", user)}'>${user.getDisplayName()}</a>`
+        `<a href='${Router.url("userprofile", user)}'>${user.getDisplayName()}</a>`,
       );
     }
     moment.locale("en");
@@ -149,5 +149,5 @@ export const sendReport = ServerMethod(
 
     Email.send(email);
   },
-  { simulation: false }
+  { simulation: false },
 );

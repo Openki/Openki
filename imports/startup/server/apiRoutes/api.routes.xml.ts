@@ -35,7 +35,7 @@ const sortByTimeAndRoom = (results: ApiEvent[]) =>
       }
       return accumulator;
     },
-    {}
+    {},
   );
 
 const xmlSendResponder = function (res: any, process: any) {
@@ -201,7 +201,7 @@ Router.route("api.0.xml", {
                   })
                   .txt(group.name);
               });
-            }
+            },
           );
         }
       }

@@ -14,7 +14,7 @@ if (Meteor.isClient) {
       const haveEditfield = () => {
         assert(
           $(".group-details-name [contenteditable=true]").length > 0,
-          "Group name edit field present"
+          "Group name edit field present",
         );
       };
 
@@ -55,7 +55,7 @@ if (Meteor.isClient) {
         await waitFor(() => {
           assert(
             $(".alert.alert-success").text().includes(randomTitle),
-            "A message that the course was created is shown"
+            "A message that the course was created is shown",
           );
           assert($(".group-details-name").text().includes(randomTitle), "The title is visible");
         });
@@ -93,12 +93,12 @@ if (Meteor.isClient) {
         await waitFor(() => {
           assert(
             $(".course-details").length > 0,
-            `Details of the new course ${randomTitle} are shown`
+            `Details of the new course ${randomTitle} are shown`,
           );
           assert.match(
             $(".group-tag > a").text(),
             /SKG/,
-            "The course is in the group it was created in"
+            "The course is in the group it was created in",
           );
         });
 
@@ -151,12 +151,12 @@ if (Meteor.isClient) {
         await waitFor(() => {
           assert(
             $(".course-details").length > 0,
-            `Details of the new course ${randomTitle} are shown`
+            `Details of the new course ${randomTitle} are shown`,
           );
           assert.match(
             $(".group-tag > a").text(),
             /ASZ/,
-            "The course is in the group it was created in"
+            "The course is in the group it was created in",
           );
         });
 
@@ -165,7 +165,7 @@ if (Meteor.isClient) {
         await waitFor(() => {
           assert(
             !$("body").text().includes(randomTitle),
-            `The internal course should not be visible on the start page ${window.location}`
+            `The internal course should not be visible on the start page ${window.location}`,
           );
         }, 5000);
       });

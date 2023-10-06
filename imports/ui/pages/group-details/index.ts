@@ -80,7 +80,7 @@ template.onCreated(function () {
       Alert.success(
         i18n("groupDetails.changesSaved", 'Changes to the "{GROUP}" group have been saved.', {
           GROUP: group?.name,
-        })
+        }),
       );
     },
     onError: (err) => {
@@ -88,7 +88,7 @@ template.onCreated(function () {
         err as string | Error,
         i18n("groupDetails.saveError", 'Could not save the "{GROUP}" group', {
           GROUP: group?.name,
-        })
+        }),
       );
     },
   };
@@ -106,7 +106,7 @@ template.onCreated(function () {
             await GroupsMethods.save(groupId, { name: newName });
           },
         }
-      : undefined
+      : undefined,
   );
 
   instance.editableShort = new Editable(
@@ -120,7 +120,7 @@ template.onCreated(function () {
             await GroupsMethods.save(groupId, { short: newShort });
           },
         }
-      : undefined
+      : undefined,
   );
 
   instance.editableClaim = new Editable(
@@ -134,14 +134,14 @@ template.onCreated(function () {
             await GroupsMethods.save(groupId, { claim: newClaim });
           },
         }
-      : undefined
+      : undefined,
   );
 
   instance.editableDescription = new Editable(
     true,
     i18n(
       "group.description.placeholder",
-      "Describe the audience, the interests and activities of your group."
+      "Describe the audience, the interests and activities of your group.",
     ),
     undefined,
     showControls
@@ -151,7 +151,7 @@ template.onCreated(function () {
             await GroupsMethods.save(groupId, { description: newDescription });
           },
         }
-      : undefined
+      : undefined,
   );
 
   instance.autorun(() => {
@@ -269,7 +269,7 @@ template.events({
         Alert.success(
           i18n("groupDetails.groupCreated", 'The "{GROUP}" group was created.', {
             GROUP: group.name,
-          })
+          }),
         );
 
         Analytics.trackEvent("Group creations", "Group creations");

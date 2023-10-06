@@ -1,33 +1,33 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .venue {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .venue .name {
-	font-size: medium;
+  font-size: medium;
 }
 
 .venue .description {
-	color: $gray-800;
-	font-size: small;
+  color: $gray-800;
+  font-size: small;
 }
 
 .location-details-header {
-	background-color: $venue-bg;
-	color: $venue-color;
+  background-color: $venue-bg;
+  color: $venue-color;
 }
 
 .location-details-header > img {
-	@include td-float(right);
-	@include td-padding(left, ($grid-gutter-width / 2));
-	height: 90px;
+  @include td-float(right);
+  @include td-padding(left, ($grid-gutter-width / 2));
+  height: 90px;
 }
 
 .location-details-body {
-	background-color: $blue-lighter;
+  background-color: $blue-lighter;
 }
 
 .venue-property-title {
-	font-weight: bold;
+  font-weight: bold;
 }

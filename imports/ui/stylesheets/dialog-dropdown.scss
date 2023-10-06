@@ -1,48 +1,48 @@
 .dropdown-menu.dialog-dropdown {
-	min-width: 250px;
+  min-width: 250px;
 }
 
 .dialog-dropdown {
-	padding: 10px 0;
-	word-break: normal;
+  padding: 10px 0;
+  word-break: normal;
 
-	&.right {
-		left: auto;
-		right: 0;
-	}
+  &.right {
+    left: auto;
+    right: 0;
+  }
 }
 
 .dialog-dropdown > .dropdown-header {
-	padding-left: 10px;
-	padding-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .dialog-dropdown > .dropdown-divider {
-	margin-left: 10px;
-	margin-right: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .dialog-dropdown-text {
-	padding: 0 10px;
+  padding: 0 10px;
 }
 
 .dialog-dropdown > li > .btn-link {
-	padding-left: 10px;
-	padding-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .dialog-dropdown-btn {
-	padding: 0 10px;
-	position: relative;
+  padding: 0 10px;
+  position: relative;
 }
 
 li + .dialog-dropdown-btn,
 .dialog-dropdown-btn + .dialog-dropdown-btn {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 .dialog-dropdown-btn > .btn {
-	width: 100%;
+  width: 100%;
 }
 
 /* 
@@ -50,5 +50,5 @@ li + .dialog-dropdown-btn,
   Can be removed after complet migration.
 */
 .dialog-dropdown-btn > div:not([class]) > .btn {
-	width: 100%;
+  width: 100%;
 }

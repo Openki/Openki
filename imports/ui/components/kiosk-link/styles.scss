@@ -1,25 +1,29 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .back-to-kiosk {
-	@include td-pos(right, 50px);
-	background-color: $blue-lighter;
-	border: 4px solid #38829c;
-	border-radius: 50%;
-	bottom: 50px;
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	font-size: 22px;
-	font-weight: bold;
-	height: 150px;
-	padding: 30px 20px 0;
-	padding-top: 0;
-	position: fixed;
-	text-align: center;
-	vertical-align: middle;
-	width: 150px;
-	z-index: $zindex-back-to-kiosk;
+  @include td-pos(right, 50px);
+  background-color: $blue-lighter;
+  border: 4px solid #38829c;
+  border-radius: 50%;
+  bottom: 50px;
+  box-shadow:
+    0 8px 16px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  font-size: 22px;
+  font-weight: bold;
+  height: 150px;
+  padding: 30px 20px 0;
+  padding-top: 0;
+  position: fixed;
+  text-align: center;
+  vertical-align: middle;
+  width: 150px;
+  z-index: $zindex-back-to-kiosk;
 
-	&:hover {
-		background-color: $green-alternative;
-		box-shadow: 0 18px 24px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-	}
+  &:hover {
+    background-color: $green-alternative;
+    box-shadow:
+      0 18px 24px 0 rgba(0, 0, 0, 0.24),
+      0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
 }

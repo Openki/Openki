@@ -117,7 +117,7 @@ export function Model(entry: { body: Body }) {
       const subject = i18n(
         "notification.rsvp.team.mail.subject",
         "{DATE} {TITLE} - User just reserved a seat",
-        subjectvars
+        subjectvars,
       );
 
       const emailLogo = region?.custom?.emailLogo;

@@ -44,7 +44,7 @@ template.events({
       try {
         await InvitationsMethods.join(
           instance.data.invitation.tenant,
-          instance.data.invitation.token
+          instance.data.invitation.token,
         );
 
         // Reload regions to load regions from tenant
@@ -55,7 +55,7 @@ template.events({
         Alert.success(
           i18n("invitation.join.success", 'You joined "{NAME}".', {
             NAME: instance.data.tenant.name,
-          })
+          }),
         );
       } catch (err) {
         Alert.serverError(err, i18n("invitation.join.error", "Join not worked."));

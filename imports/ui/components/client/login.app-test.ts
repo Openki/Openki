@@ -27,7 +27,7 @@ if (Meteor.isClient) {
           }
           expect(response.token).to.be.a("string");
           return done();
-        }
+        },
       );
     });
 
@@ -42,7 +42,7 @@ if (Meteor.isClient) {
           expect(err).to.be.an("object");
           expect(err.error).to.equal(403);
           done();
-        }
+        },
       );
     });
 
@@ -57,7 +57,7 @@ if (Meteor.isClient) {
           expect(err).to.be.an("object");
           expect(err.error).to.equal(403);
           done();
-        }
+        },
       );
     });
   });

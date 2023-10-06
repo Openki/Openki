@@ -39,7 +39,7 @@ if (Meteor.isClient) {
               Users.find({ username: dummy, acceptsPrivateMessages: true }).observe({
                 added: resolve,
               });
-            }
+            },
           );
         }));
     });
@@ -70,7 +70,7 @@ if (Meteor.isClient) {
                   .catch((err) => {
                     assert.isNotOk(err, "not expecting username-change errors");
                   });
-              })
+              }),
           )
           .then(() => {
             // check if username has changed to the correct string

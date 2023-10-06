@@ -13,7 +13,7 @@ export function DataProtectionLaw() {
   }
 
   return (
-    <div className="mb-3 register-data-protection-law">
+    <div className="mb-3 register-data-protection-law text-body-secondary">
       <ReactMarkdown linkTarget="_blank" children={dataProtectionLaw} />
     </div>
   );

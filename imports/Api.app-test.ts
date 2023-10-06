@@ -33,7 +33,7 @@ const AssertAscendingString = function (base: string, message: string) {
     const side = current.localeCompare(lowerNext);
     if (side > 0) {
       throw new AssertionError(
-        `${message}. But the string '${current}' orders after '${lowerNext}'`
+        `${message}. But the string '${current}' orders after '${lowerNext}'`,
       );
     }
     current = lowerNext;
@@ -82,7 +82,7 @@ if (Meteor.isClient) {
           // Because we start at the current time, this test will also detect events
           // in the past as order violation
           starts.forEach(
-            AssertAscending(new Date(), "event are sorted next first when no order specified")
+            AssertAscending(new Date(), "event are sorted next first when no order specified"),
           );
         });
         it("sorts by start-date", async () => {
@@ -93,7 +93,7 @@ if (Meteor.isClient) {
           const json = await result.json();
           const starts = json.data.map((e: any) => new Date(e.start).valueOf());
           starts.forEach(
-            AssertAscending(new Date(), "ascending ordering of start-dates was requested")
+            AssertAscending(new Date(), "ascending ordering of start-dates was requested"),
           );
         });
 
@@ -140,8 +140,8 @@ if (Meteor.isClient) {
           starts.forEach(
             AssertDescending(
               new Date(),
-              "when filtering for past dates events are sorted newest-first when no order is specified"
-            )
+              "when filtering for past dates events are sorted newest-first when no order is specified",
+            ),
           );
         });
       });

@@ -41,9 +41,9 @@ if (Meteor.isClient) {
       const contributionIconIsPresent = () => {
         assert(
           $(
-            'a[data-bs-toggle="tooltip"][data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart'
+            'a[data-bs-toggle="tooltip"][data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart',
           ).length > 0,
-          "Icon is present"
+          "Icon is present",
         );
       };
 
@@ -79,9 +79,9 @@ if (Meteor.isClient) {
       const contributionIconIsNotPresent = () => {
         assert(
           $(
-            'a[data-bs-toggle="tooltip"][data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart'
+            'a[data-bs-toggle="tooltip"][data-bs-title^="Sandro supported Hmmm with a donation."] i.fa-solid.fa-heart',
           ).length === 0,
-          "Icon is not present"
+          "Icon is not present",
         );
       };
 

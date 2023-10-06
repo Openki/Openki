@@ -12,7 +12,7 @@ export function onStartUp() {
     updated += Courses.update(
       { region: region._id },
       { $set: { tenant: region.tenant } },
-      { multi: true }
+      { multi: true },
     );
   });
 

@@ -93,7 +93,7 @@ export function EventParticipants(props: { event: EventModel }) {
     return {
       placeholder: t(
         "eventParticipants.sendMessage.placeholder",
-        "Hi there, I'm looking forward for tomorrow. Please bring your laptops. And don't forget to opt out now if you can't attend in order to free your seat."
+        "Hi there, I'm looking forward for tomorrow. Please bring your laptops. And don't forget to opt out now if you can't attend in order to free your seat.",
       ),
       onSend: async (message, options) => {
         EventsMethods.contactParticipants(event._id, message, options);
@@ -135,7 +135,7 @@ export function EventParticipants(props: { event: EventModel }) {
                     <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
                     {t(
                       "participantContactModal.writeMessageToAllAttendees",
-                      "Write a message to all participants"
+                      "Write a message to all participants",
                     )}
                   </h4>
                   <button
@@ -157,7 +157,7 @@ export function EventParticipants(props: { event: EventModel }) {
           {t(
             "event.details.paticipants.title",
             "{NUM, plural, =0{No participants yet} one{1 Participant} other{# Participants} }",
-            { NUM: event.numberOfParticipants() }
+            { NUM: event.numberOfParticipants() },
           )}
           {canNotifyAll() ? (
             <i
@@ -173,7 +173,7 @@ export function EventParticipants(props: { event: EventModel }) {
               {t(
                 "event.details.participants.free.places",
                 "{NUM, plural, =0{No free seats} one{one free seat} other{# free seats} }",
-                { NUM: howManyFreePlaces() }
+                { NUM: howManyFreePlaces() },
               )}
             </span>
           ) : null}

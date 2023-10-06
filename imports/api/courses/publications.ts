@@ -13,11 +13,11 @@ export const [details, useDetails] = ServerPublishOne(
 
     return Courses.find({ _id: courseId, tenant: { $in: visibleTenants() } });
   },
-  (courseId: string) => Courses.findOne({ _id: courseId, tenant: { $in: visibleTenants() } })
+  (courseId: string) => Courses.findOne({ _id: courseId, tenant: { $in: visibleTenants() } }),
 );
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
   "Courses.findFilter",
   (filter?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
-    Courses.findFilter({ ...filter, tenants: visibleTenants() }, limit, skip, sort)
+    Courses.findFilter({ ...filter, tenants: visibleTenants() }, limit, skip, sort),
 );

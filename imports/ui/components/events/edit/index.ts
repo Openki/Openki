@@ -114,7 +114,7 @@ template.onCreated(function () {
     instance.selectedRegion = new ReactiveVar(region || Session.get("region"));
   }
   instance.selectedLocation = new ReactiveVar(
-    instance.data.venue || ({} as Partial<EventVenueEntity>)
+    instance.data.venue || ({} as Partial<EventVenueEntity>),
   );
 
   // Sending an event notification is only possible when the event is
@@ -199,7 +199,7 @@ template.onCreated(function () {
 function getEventStartMoment(instance: ReturnType<(typeof Template)["instance"]>) {
   return LocalTime.fromString(
     instance.$(".js-event-start-date").val() as string,
-    instance.$(".js-event-start-time").val() as string
+    instance.$(".js-event-start-time").val() as string,
   );
 }
 
@@ -207,7 +207,7 @@ function getEventEndMoment(instance: ReturnType<(typeof Template)["instance"]>) 
   const startMoment = getEventStartMoment(instance);
   let endMoment = LocalTime.fromString(
     startMoment.format("L"),
-    instance.$(".js-event-end-time").val() as string
+    instance.$(".js-event-end-time").val() as string,
   );
 
   // If the end time is earlier than the start time, assume the event
@@ -218,7 +218,7 @@ function getEventEndMoment(instance: ReturnType<(typeof Template)["instance"]>) 
   if (endMoment.diff(startMoment) < 0) {
     endMoment = LocalTime.fromString(
       startMoment.add(1, "day").format("L"),
-      instance.$(".js-event-end-time").val() as string
+      instance.$(".js-event-end-time").val() as string,
     );
   }
 
@@ -428,8 +428,8 @@ template.events({
           "The date format must be of the {EXAMPLEDATE} format.",
           {
             EXAMPLEDATE: exampleDate,
-          }
-        )
+          },
+        ),
       );
       return;
     }
@@ -453,14 +453,14 @@ template.events({
           i18n("_inputField.maxlength", {
             MAXNUMBER: PublicSettings.eventDescriptionMax,
             NUMBER: $description.text().length - PublicSettings.eventDescriptionMax,
-          })
+          }),
         );
         return;
       }
     }
 
     const maxParticipants = validateMaxParticipants(
-      (instance.$(".js-event-max-participants").val() as string) || "0"
+      (instance.$(".js-event-max-participants").val() as string) || "0",
     );
     // validation was unsuccessful
     if (maxParticipants === false) {
@@ -486,8 +486,8 @@ template.events({
         Alert.error(
           i18n(
             "event.edit.startInPast",
-            "The event starts in the past. Have you selected a start date and time?"
-          )
+            "The event starts in the past. Have you selected a start date and time?",
+          ),
         );
         return;
       }
@@ -504,7 +504,7 @@ template.events({
         editevent.region = instance.selectedRegion.get();
         if (!editevent.region || editevent.region === "all") {
           Alert.error(
-            i18n("event.edit.plzSelectRegion", "Please select the region for this event")
+            i18n("event.edit.plzSelectRegion", "Please select the region for this event"),
           );
           return;
         }
@@ -548,7 +548,7 @@ template.events({
           updateReplicasTime,
           updateChangedReplicasTime,
           sendNotifications,
-          addNotificationMessage
+          addNotificationMessage,
         );
         if (!result) {
           throw new Error("Unexpected undefined: eventId");
@@ -560,7 +560,7 @@ template.events({
           Alert.success(
             i18n("message.eventCreated", 'The event "{TITLE}" has been created!', {
               TITLE: editevent.title,
-            })
+            }),
           );
 
           const course = Courses.findOne(editevent.courseId);
@@ -588,16 +588,16 @@ template.events({
                 1000 /
                 60 /
                 60 /
-                24 /* Umrechnung in Tage */
-            )
+                24 /* Umrechnung in Tage */,
+            ),
           );
         } else {
           Alert.success(
             i18n(
               "message.eventChangesSaved",
               'Your changes to the event "{TITLE}" have been saved.',
-              { TITLE: editevent.title }
-            )
+              { TITLE: editevent.title },
+            ),
           );
         }
 
@@ -605,7 +605,7 @@ template.events({
           Alert.success(
             i18n("eventEdit.replicatesUpdated", 'Replicas of "{TITLE}" have also been updated.', {
               TITLE: editevent.title,
-            })
+            }),
           );
         }
 
@@ -617,7 +617,7 @@ template.events({
       } catch (err) {
         Alert.serverError(
           err,
-          i18n("eventEdit.replicatesUpdated.error", "Saving the event went wrong")
+          i18n("eventEdit.replicatesUpdated.error", "Saving the event went wrong"),
         );
       } finally {
         instance.busy(false);
@@ -653,7 +653,7 @@ template.events({
   "change .js-event-duration, change .js-event-start-date, change .js-event-start-time"(
     this: EventEditData,
     _event,
-    instance
+    instance,
   ) {
     updateTimes(instance, true);
     const newStart = getEventStartMoment(instance);

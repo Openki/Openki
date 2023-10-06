@@ -54,7 +54,7 @@ import type { Data as AdminTenantsData } from "/imports/ui/pages/admin/tenants";
 const makeFilterQuery = function (
   params: Record<string, string | undefined>,
   day: number,
-  oneDayOnly: boolean
+  oneDayOnly: boolean,
 ) {
   const filter = new Filtering(EventParamPredicates).read(params).done();
 
@@ -252,12 +252,12 @@ RouterAsync.route("framePropose", {
       query.setCreatorsRoles = [];
     }
     query.roles = ["mentor", "host"].filter(
-      (role) => query.neededRoles.includes(role) || query.setCreatorsRoles.includes(role)
+      (role) => query.neededRoles.includes(role) || query.setCreatorsRoles.includes(role),
     );
     delete query.neededRoles;
 
     query.creatorsRoles = ["mentor", "host"].filter((role) =>
-      query.setCreatorsRoles.includes(role)
+      query.setCreatorsRoles.includes(role),
     );
     delete query.setCreatorsRoles;
 
@@ -513,7 +513,7 @@ RouterAsync.route("showCourse", {
 
     const userId = Meteor.userId();
     const member = course.members?.find(
-      (memberCandidate: CourseMemberEntity) => memberCandidate.user === userId
+      (memberCandidate: CourseMemberEntity) => memberCandidate.user === userId,
     );
     const data = {
       edit: !!this.params.query.edit,
@@ -768,11 +768,11 @@ RouterAsync.route("timetable", {
         moment: moment(cursor).startOf("day"),
         relStart: Math.max(
           -0.1,
-          (moment(cursor).startOf("day").toDate().getTime() - timestampStart) / span
+          (moment(cursor).startOf("day").toDate().getTime() - timestampStart) / span,
         ),
         relEnd: Math.max(
           -0.1,
-          (timestampEnd - moment(cursor).startOf("day").add(1, "day").toDate().getTime()) / span
+          (timestampEnd - moment(cursor).startOf("day").add(1, "day").toDate().getTime()) / span,
         ),
       };
       const hour = cursor.hour();
@@ -780,11 +780,11 @@ RouterAsync.route("timetable", {
         moment: moment(cursor).startOf("hour"),
         relStart: Math.max(
           -0.1,
-          (moment(cursor).startOf("hour").toDate().getTime() - timestampStart) / span
+          (moment(cursor).startOf("hour").toDate().getTime() - timestampStart) / span,
         ),
         relEnd: Math.max(
           -0.1,
-          (timestampEnd - moment(cursor).startOf("hour").add(1, "hour").toDate().getTime()) / span
+          (timestampEnd - moment(cursor).startOf("hour").add(1, "hour").toDate().getTime()) / span,
         ),
       };
       cursor.add(1, "hour");

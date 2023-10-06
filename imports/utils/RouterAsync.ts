@@ -13,22 +13,22 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
     data?: (
       this: Router.RouteThis & {
         subscriptions: (this: Router.RouteThis) => S;
-      }
+      },
     ) => D;
-  }
+  },
 ): void;
 export function route<D>(
   pathOrRouteName: string,
   options: Omit<Router.RouteOptions<D>, "data"> & {
     onRun?: () => Promise<unknown>;
-  }
+  },
 ): void;
 export function route<D>(
   pathOrRouteName: string,
   options: Omit<Router.RouteOptions<D>, "data"> & {
     onRun?: () => Promise<unknown>;
     data: (this: Router.RouteThis) => D;
-  }
+  },
 ): void;
 export function route<D, S extends Record<string, SubscriptionHandle<any>> | undefined>(
   pathOrRouteName: string,
@@ -38,9 +38,9 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
     data?: (
       this: Router.RouteThis & {
         subscriptions: (this: Router.RouteThis) => S;
-      }
+      },
     ) => D;
-  }
+  },
 ) {
   const subscriptions = options.subscriptions;
   // eslint-disable-next-line no-param-reassign
@@ -54,7 +54,7 @@ export function route<D, S extends Record<string, SubscriptionHandle<any>> | und
     // eslint-disable-next-line no-param-reassign
     options.waitOn = function () {
       return Object.values(subscriptions.call(this)).map(
-        (s) => () => (s as SubscriptionHandle<any>).isLoading()
+        (s) => () => (s as SubscriptionHandle<any>).isLoading(),
       );
     };
 

@@ -82,7 +82,7 @@ export function Model(entry: { body: Body }) {
       const subject = i18n(
         "notification.event.reminder.mail.subject",
         "Reminder: {EVENT}",
-        subjectvars
+        subjectvars,
       );
 
       // Show dates in local time and in users locale

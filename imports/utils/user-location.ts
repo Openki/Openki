@@ -38,7 +38,7 @@ export async function detect(tenant?: string) {
         }
       : {
           loc: { $near: { $geometry: location, $maxDistance: maxDistance } },
-        }
+        },
   );
 
   if (!region) {

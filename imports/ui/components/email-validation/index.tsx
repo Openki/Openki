@@ -38,7 +38,7 @@ function EmailValidationModal(props: { user: UserModel }) {
     } catch (err) {
       Alert.serverError(
         err,
-        t("profile.sentVerificationMail.error", "Could not send verification e-mail")
+        t("profile.sentVerificationMail.error", "Could not send verification e-mail"),
       );
     } finally {
       setIsBusy(false);

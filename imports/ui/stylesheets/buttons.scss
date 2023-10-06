@@ -1,99 +1,101 @@
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
 
 .btn {
-	transition: border-color 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out;
 }
 
 .btn-primary:focus {
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(56, 130, 156, 0.6);
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.075) inset,
+    0 0 8px rgba(56, 130, 156, 0.6);
 }
 
 .remove-btn {
-	background-color: transparent;
-	border: 0;
-	color: $gray-500;
-	padding: 0;
+  background-color: transparent;
+  border: 0;
+  color: $gray-500;
+  padding: 0;
 
-	&:hover {
-		color: $gray-800;
-		cursor: pointer;
-	}
+  &:hover {
+    color: $gray-800;
+    cursor: pointer;
+  }
 }
 
 .btn-icon {
-	background: none;
-	border: 0;
-	cursor: pointer;
-	font-size: $font-size-sm;
-	margin-inline-start: 5px;
-	padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  margin-inline-start: 5px;
+  padding: 0;
 }
 
 .btn-secondary {
-	border-color: tint-color($blue, 65%);
+  border-color: tint-color($blue, 65%);
 
-	&:hover {
-		border-color: tint-color($blue, 65%);
-	}
+  &:hover {
+    border-color: tint-color($blue, 65%);
+  }
 }
 
 .btn-go {
-	@extend .btn-primary;
+  @extend .btn-primary;
 }
 
 .btn-primary,
 .btn-go {
-	color: $white;
+  color: $white;
 
-	&:hover {
-		color: $white;
-	}
+  &:hover {
+    color: $white;
+  }
 }
 
 .btn-add,
 .btn-save {
-	@extend .btn-success;
+  @extend .btn-success;
 }
 
 .btn-edit {
-	@extend .btn-secondary;
+  @extend .btn-secondary;
 }
 
 .btn-archive {
-	@extend .btn-secondary;
+  @extend .btn-secondary;
 
-	&:hover {
-		@extend .btn-warning;
-		border-color: $warning;
-	}
+  &:hover {
+    @extend .btn-warning;
+    border-color: $warning;
+  }
 }
 
 .btn-cancel,
 .btn-delete,
 .btn-remove {
-	@extend .btn-secondary;
+  @extend .btn-secondary;
 
-	&:hover {
-		@extend .btn-danger;
-		border-color: $danger;
-		color: $black !important;
-	}
+  &:hover {
+    @extend .btn-danger;
+    border-color: $danger;
+    color: $black !important;
+  }
 }
 
 $external-servies: (
-	google: #4285f4,
-	facebook: #3b5998,
-	github: #333,
+  google: #4285f4,
+  facebook: #3b5998,
+  github: #333,
 );
 
 @each $color, $value in $external-servies {
-	.btn-#{$color} {
-		@include button-variant($value, $value, $white);
-		font-weight: bold;
+  .btn-#{$color} {
+    @include button-variant($value, $value, $white);
+    font-weight: bold;
 
-		&[disabled] {
-			background-color: $color;
-			color: $white;
-		}
-	}
+    &[disabled] {
+      background-color: $color;
+      color: $white;
+    }
+  }
 }

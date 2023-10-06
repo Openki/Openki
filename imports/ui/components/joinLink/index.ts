@@ -50,7 +50,7 @@ template.helpers({
     return {
       confirmText: i18n(
         "joinLink.reallydelete",
-        "Please confirm that you would like to delete this join link."
+        "Please confirm that you would like to delete this join link.",
       ),
       confirmButton: i18n("joinLink.confirm.button", "Delete this join link"),
       onRemove: async () => {

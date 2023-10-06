@@ -16,7 +16,7 @@ describe("Ordering by object fields ", () => {
     SortSpec([
       ["a", "asc"],
       ["b", "asc"],
-    ])
+    ]),
   ).ordering();
   const byB = FieldOrdering(SortSpec([["b", "asc"]])).ordering();
   const byBDesc = FieldOrdering(SortSpec([["b", "desc"]])).ordering();

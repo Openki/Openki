@@ -10,7 +10,7 @@ export type QueryBuilder<A extends any[], T> = (
 export function publish<
   A extends any[],
   C extends readonly Mongo.Cursor<any>[],
-  T extends Record<C>
+  T extends Record<C>,
 >(name: string, publisher: (this: Subscription, ...args: A) => void | T) {
   if (Meteor.isServer) {
     // on the server register the publisher / publish the record set

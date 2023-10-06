@@ -121,7 +121,7 @@ export class Subscribe extends Change<{
       Users.findOne(body.userId),
       body.role,
       body.reason,
-      body.comment
+      body.comment,
     );
   }
 
@@ -130,7 +130,7 @@ export class Subscribe extends Change<{
     user: UserModel | undefined,
     role: string,
     reason: Reason,
-    comment?: string | undefined
+    comment?: string | undefined,
   ) {
     super();
 
@@ -212,7 +212,7 @@ export class Subscribe extends Change<{
     rel: string[],
     body: {
       operatorId: string | undefined;
-    }
+    },
   ) {
     rel.push(this.user._id);
     Object.assign(body, this.dict());
@@ -224,20 +224,20 @@ export class Subscribe extends Change<{
     // filled to avoid seeing empty list of roles.
     Courses.update(
       { _id: this.course._id, "members.user": { $ne: this.user._id } },
-      { $addToSet: { members: { user: this.user._id, roles: [this.role] } } }
+      { $addToSet: { members: { user: this.user._id, roles: [this.role] } } },
     );
 
     // Now that we're sure she's listed, add the role too.
     // If we just added her, this is a no-op.
     Courses.update(
       { _id: this.course._id, "members.user": this.user._id },
-      { $addToSet: { "members.$.roles": this.role } }
+      { $addToSet: { "members.$.roles": this.role } },
     );
 
     if (this.comment) {
       Courses.update(
         { _id: this.course._id, "members.user": this.user._id },
-        { $set: { "members.$.comment": this.comment } }
+        { $set: { "members.$.comment": this.comment } },
       );
     }
 
@@ -332,7 +332,7 @@ export class Unsubscribe extends Change<{
     rel: string[],
     body: {
       operatorId: string | undefined;
-    }
+    },
   ) {
     rel.push(this.user._id);
     rel.push(this.course._id);
@@ -347,7 +347,7 @@ export class Unsubscribe extends Change<{
       Events.update(
         { courseId: this.course._id },
         { $pull: { editors: this.user._id } },
-        { multi: true }
+        { multi: true },
       );
     }
     Courses.update({ _id: this.course._id, "members.user": this.user._id }, update);
@@ -357,7 +357,7 @@ export class Unsubscribe extends Change<{
       { _id: this.course._id },
       {
         $pull: { members: { roles: { $size: 0 } } },
-      }
+      },
     );
 
     // Update member related calculated fields
@@ -392,7 +392,7 @@ export class Message extends Change<{
   constructor(
     course: CourseModel | undefined,
     user: UserModel | null | undefined,
-    message: string | undefined
+    message: string | undefined,
   ) {
     super();
 
@@ -435,7 +435,7 @@ export class Message extends Change<{
     rel: string[],
     body: {
       operatorId: string | undefined;
-    }
+    },
   ) {
     rel.push(this.user._id);
     rel.push(this.course._id);
@@ -445,7 +445,7 @@ export class Message extends Change<{
   apply() {
     Courses.update(
       { _id: this.course._id, "members.user": this.user._id },
-      { $set: { "members.$.comment": this.message } }
+      { $set: { "members.$.comment": this.message } },
     );
   }
 }

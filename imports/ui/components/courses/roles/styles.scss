@@ -2,54 +2,54 @@
 
 .course-role-title,
 .course-role-title-enroll {
-	font-size: 1.25rem;
-	line-height: 1.1;
-	padding: 13px;
-	width: 100%;
+  font-size: 1.25rem;
+  line-height: 1.1;
+  padding: 13px;
+  width: 100%;
 }
 
 .course-role-title {
-	padding: 8px 13px;
+  padding: 8px 13px;
 }
 
 .course-role-title {
-	background: $user-bg;
+  background: $user-bg;
 
-	> span {
-		vertical-align: middle;
-	}
+  > span {
+    vertical-align: middle;
+  }
 }
 
 .course-role-title-enroll {
-	background: $green;
+  background: $green;
 }
 
 .role-unsubscribe-btn {
-	@include td-margin(left, 5px);
-	font-size: medium;
-	padding: 3px 12px;
+  @include td-margin(left, 5px);
+  font-size: medium;
+  padding: 3px 12px;
 }
 
 .course-role-enroll,
 .course-role-enrolled {
-	margin-top: $page-component-seperator-height;
+  margin-top: $page-component-seperator-height;
 }
 
 .course-role-enroll-options {
-	@include clearfix;
-	background: $course-page-component-bg;
-	padding: 15px 15px 0;
+  @include clearfix;
+  background: $course-page-component-bg;
+  padding: 15px 15px 0;
 }
 
 .course-role-first-steps {
-	background-color: lighten($user-bg, 10%);
-	padding: 15px;
+  background-color: lighten($user-bg, 10%);
+  padding: 15px;
 }
 
 .course-role-first-steps .btn {
-	margin-top: 15px;
+  margin-top: 15px;
 }
 
 .coursepage-role-icon {
-	color: $course-page-role-icon-color;
+  color: $course-page-role-icon-color;
 }

@@ -62,7 +62,7 @@ declare module "meteor/iron:router" {
        * automatically uses the loading hook.
        */
       waitOn?: (
-        this: RouteThis
+        this: RouteThis,
       ) =>
         | Meteor.SubscriptionHandle
         | (() => boolean)
@@ -128,10 +128,10 @@ declare module "meteor/iron:router" {
             options?: {
               query?: string | Record<string, any>;
               hash?: string;
-            }
+            },
           ) => void;
           render: (templateName?: string) => void;
-        } & T
+        } & T,
       ) => void;
 
       /**
@@ -151,7 +151,7 @@ declare module "meteor/iron:router" {
       options?: {
         query?: string | Record<string, any>;
         hash?: string;
-      }
+      },
     ): string;
 
     /**
@@ -164,7 +164,7 @@ declare module "meteor/iron:router" {
       options?: {
         query?: string | Record<string, any>;
         hash?: string;
-      }
+      },
     ): string;
 
     function go(
@@ -174,7 +174,7 @@ declare module "meteor/iron:router" {
         query?: string | Record<string, any>;
         hash?: string;
         replaceState?: boolean;
-      }
+      },
     ): void;
 
     function current(): {

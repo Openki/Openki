@@ -46,7 +46,7 @@ import "./styles.scss";
           label: i18n("filterCaptions.resting.label", "Resting"),
           title: i18n(
             "filterCaptions.resting.title",
-            "Courses with passed but without upcoming events"
+            "Courses with passed but without upcoming events",
           ),
         },
       ];
@@ -207,7 +207,7 @@ import "./styles.scss";
         },
       ].map(
         // add icon from Roles collection to role object
-        (role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon })
+        (role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon }),
       );
     });
   });

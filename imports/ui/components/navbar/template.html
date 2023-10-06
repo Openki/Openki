@@ -1,5 +1,5 @@
 <template name="navbar">
-	<nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-brand">
+	<nav class="navbar navbar-expand-lg fixed-top bg-brand" data-bs-theme="dark">
 		{{#if PublicSettings.testWarning}}
 			{{> testWarningTicker}}
 		{{/if}}
@@ -76,11 +76,11 @@
 						</li>
 					{{/each}}
 				</ul>
-				<ul class="navbar-nav flex-row">
+				<ul class="navbar-nav flex-row" data-bs-theme="light">
 					{{> regionSelectionWrap inNavbar=true}}
 					{{> languageSelectionWrap inNavbar=true}}
 				</ul>
-				<ul class="navbar-nav text-center">
+				<ul class="navbar-nav text-center" data-bs-theme="light">
 					<li class="dropdown login-link">
 						{{> loginButton}}
 						<div class="dropdown-menu dropdown-menu-end login-dropdown">

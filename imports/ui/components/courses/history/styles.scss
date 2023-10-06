@@ -1,88 +1,88 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .course-history {
-	@include clearfix;
-	padding-bottom: 10px;
+  @include clearfix;
+  padding-bottom: 10px;
 }
 
 .timeline-pre,
 .timeline-post {
-	height: 30px;
+  height: 30px;
 }
 
 .timeline-start,
 .timeline-end {
-	height: 100%;
-	margin: auto;
-	width: 1px;
+  height: 100%;
+  margin: auto;
+  width: 1px;
 }
 
 .timeline-start {
-	@include gradient-y($blue-lighter, $primary);
+  @include gradient-y($blue-lighter, $primary);
 }
 
 .timeline-end {
-	@include gradient-y($primary, $blue-lighter, 0%, 100%);
+  @include gradient-y($primary, $blue-lighter, 0%, 100%);
 }
 
 .timeline-eventdate {
-	@include ellipsis;
-	color: rgb(109, 112, 112);
-	height: 20px;
-	padding: 0;
-	text-align: end;
+  @include ellipsis;
+  color: rgb(109, 112, 112);
+  height: 20px;
+  padding: 0;
+  text-align: end;
 
-	&.active {
-		color: $gray-800;
-	}
+  &.active {
+    color: $gray-800;
+  }
 }
 
 .timeline-eventline-container {
-	height: 20px;
-	padding: 0;
+  height: 20px;
+  padding: 0;
 }
 
 .timeline-eventline {
-	background: $primary;
-	height: 100%;
-	margin: auto;
-	width: 1px;
+  background: $primary;
+  height: 100%;
+  margin: auto;
+  width: 1px;
 }
 
 .timeline-eventpoint {
-	background: $primary;
-	border-radius: 50%;
-	bottom: 13px;
-	height: 7px;
-	margin: auto;
-	position: relative;
-	transition: background-color 0.25s;
-	width: 7px;
+  background: $primary;
+  border-radius: 50%;
+  bottom: 13px;
+  height: 7px;
+  margin: auto;
+  position: relative;
+  transition: background-color 0.25s;
+  width: 7px;
 
-	&.active {
-		background: $danger;
-	}
+  &.active {
+    background: $danger;
+  }
 }
 
 .coursehistory-event {
-	@include ellipsis;
-	height: 20px;
-	padding: 0;
+  @include ellipsis;
+  height: 20px;
+  padding: 0;
 
-	&:hover a {
-		color: $gray-800;
-		/* stylelint-disable-next-line max-nesting-depth */
-		&:hover {
-			text-decoration: underline;
-		}
-	}
+  &:hover a {
+    color: $gray-800;
+    /* stylelint-disable-next-line max-nesting-depth */
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 
-	a {
-		color: $primary;
-	}
+  a {
+    color: $primary;
+  }
 
-	h4 {
-		padding-top: 10px;
-		text-align: center;
-	}
+  h4 {
+    padding-top: 10px;
+    text-align: center;
+  }
 }

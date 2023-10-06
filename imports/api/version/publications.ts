@@ -5,6 +5,6 @@ import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublis
 export const [details, useDetails] = ServerPublishOne(
   "version.details",
   () => Version.find(),
-  () => Version.findOne()
+  () => Version.findOne(),
 );
 export const [all, useAll] = ServerPublishMany("version", () => Version.find());

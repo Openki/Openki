@@ -19,7 +19,7 @@ if (Meteor.isClient) {
         await waitFor(() => {
           assert(
             $(".group-tag-btn .dialog-dropdown-btn").length > 0,
-            `Show info editing rights to group button is shown`
+            `Show info editing rights to group button is shown`,
           );
         });
 
@@ -27,7 +27,7 @@ if (Meteor.isClient) {
           $(".dropdown-menu .btn-success")[0].click();
           assert(
             $(".group-tag-btn .dialog-dropdown-btn .btn-success").length > 0,
-            `Give editing rights to group button is shown`
+            `Give editing rights to group button is shown`,
           );
         });
 
@@ -87,7 +87,7 @@ if (Meteor.isClient) {
         await waitFor(() => {
           assert(
             $(".course-details").length > 0,
-            `Details of the new course ${randomTitle} are shown`
+            `Details of the new course ${randomTitle} are shown`,
           );
         });
 
@@ -98,7 +98,7 @@ if (Meteor.isClient) {
         await waitFor(() => {
           assert(
             !$("body").text().includes(randomTitle),
-            `The archived course should not be visible on the start page ${window.location}`
+            `The archived course should not be visible on the start page ${window.location}`,
           );
         }, 5000);
 
@@ -107,7 +107,7 @@ if (Meteor.isClient) {
         await waitFor(() => {
           assert(
             !$("body").text().includes(randomTitle),
-            `The archived course should be visible on the start page ${window.location} with archived filter on`
+            `The archived course should be visible on the start page ${window.location} with archived filter on`,
           );
         }, 5000);
       });

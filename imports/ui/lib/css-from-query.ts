@@ -6,7 +6,7 @@ export class CssFromQuery {
    */
   constructor(
     public query: { [param: string]: string | undefined },
-    properties: [key: string, name: string, selector: string][] = []
+    properties: [key: string, name: string, selector: string][] = [],
   ) {
     // define a default set of customizable properties
     this.addCustomizableProperties([

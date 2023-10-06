@@ -72,14 +72,14 @@ template.helpers({
             i18n(
               "groupSettings.group.logo.updated",
               'Changes to the "{GROUP}" group settings have been saved.',
-              { GROUP: groupName }
-            )
+              { GROUP: groupName },
+            ),
           );
           parentInstance.editingSettings.set(false);
         } catch (err) {
           Alert.serverError(
             err,
-            i18n("groupSettings.group.logo.updated.error", "Could not save settings")
+            i18n("groupSettings.group.logo.updated.error", "Could not save settings"),
           );
         } finally {
           instance.busy(false);
@@ -99,14 +99,14 @@ template.helpers({
                 i18n(
                   "groupSettings.group.logo.removed",
                   'Changes to the "{GROUP}" group settings have been saved.',
-                  { GROUP: groupName }
-                )
+                  { GROUP: groupName },
+                ),
               );
               parentInstance.editingSettings.set(false);
             } catch (err) {
               Alert.serverError(
                 err,
-                i18n("groupSettings.group.logo.removed.error", "Could not save settings")
+                i18n("groupSettings.group.logo.removed.error", "Could not save settings"),
               );
             } finally {
               instance.busy(false);
@@ -155,7 +155,7 @@ template.events({
         i18n("groupSettings.memberAdded", '"{MEMBER}" has been added to the "{GROUP}" group', {
           MEMBER: memberName,
           GROUP: groupName,
-        })
+        }),
       );
     } catch (err) {
       Alert.serverError(err, i18n("groupSettings.memberAdded.error", "Could not add member"));
@@ -173,8 +173,8 @@ template.events({
         i18n(
           "groupSettings.memberRemoved",
           '"{MEMBER}" has been removed from the "{GROUP}" group',
-          { MEMBER: memberName, GROUP: groupName }
-        )
+          { MEMBER: memberName, GROUP: groupName },
+        ),
       );
     } catch (err) {
       Alert.serverError(err, i18n("groupSettings.memberRemoved.error", "Could not remove member"));

@@ -30,7 +30,7 @@ import { Spacebars } from "meteor/spacebars";
  */
 export function Expandible<N extends string, D, T extends Record<string, unknown>>(
   TemplateBase: TemplateStaticTyped<N, D, T>,
-  templateName: N
+  templateName: N,
 ) {
   const Template = TemplateBase as TemplateStaticTyped<
     N,
@@ -78,7 +78,7 @@ export interface MultiExpandibleTemplateProps {
 /** Like Expandible but multiple expandibles can be open at the same time. */
 export function MultiExpandible<N extends string, D, T extends Record<string, unknown>>(
   TemplateBase: TemplateStaticTyped<N, D, T>,
-  templateName: N
+  templateName: N,
 ) {
   const Template = TemplateBase as TemplateStaticTyped<
     N,
@@ -173,7 +173,7 @@ export interface FormfieldErrorsMapping {
 export function FormfieldErrors<N extends string, D, T extends Record<string, unknown>>(
   TemplateBase: TemplateStaticTyped<N, D, T>,
   templateName: N,
-  mapping?: FormfieldErrorsMapping
+  mapping?: FormfieldErrorsMapping,
 ) {
   const Template = TemplateBase as TemplateStaticTyped<
     N,

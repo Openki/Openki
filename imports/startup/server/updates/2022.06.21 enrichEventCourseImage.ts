@@ -10,7 +10,7 @@ export function update() {
       updated += Events.update(
         { courseId: course._id },
         { $set: { courseImage: course.image } },
-        { multi: true }
+        { multi: true },
       );
     });
 

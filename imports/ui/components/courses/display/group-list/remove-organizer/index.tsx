@@ -39,7 +39,7 @@ export function CourseGroupRemoveOrganizer(props: { course: CourseModel; groupId
       {t(
         "course.group.confirmRemoveOrgText",
         'Revoke all editing rights from the "{NAME}" group?',
-        { NAME: name(group) }
+        { NAME: name(group) },
       )}
       <button
         type="button"
@@ -52,16 +52,16 @@ export function CourseGroupRemoveOrganizer(props: { course: CourseModel; groupId
               t(
                 "courseGroupAdd.membersCanNoLongerEditCourse",
                 "Members of {GROUP} can no longer edit {COURSE}.",
-                { GROUP: name(group), COURSE: course.name }
-              )
+                { GROUP: name(group), COURSE: course.name },
+              ),
             );
           } catch (err) {
             Alert.serverError(
               err,
               t(
                 "courseGroupAdd.membersCanNoLongerEditCourse.error",
-                "Failed to remove organizer status"
-              )
+                "Failed to remove organizer status",
+              ),
             );
           }
         }}

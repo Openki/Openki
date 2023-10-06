@@ -56,14 +56,14 @@ export const FieldOrdering = function (sortSpec: { spec: () => FieldSort[] }) {
       .reduceRight(
         (
           chain: (a: Record<string, T>, b: Record<string, T>) => number,
-          [field, order]: FieldSort
+          [field, order]: FieldSort,
         ) => {
           const fieldComp = FieldComp(field);
           const directedComp = order === "asc" ? fieldComp : swap(fieldComp);
           return (a: Record<string, T>, b: Record<string, T>) =>
             directedComp<T>(a, b) || chain(a, b);
         },
-        equal
+        equal,
       );
   const copy = <T>(list: T[]) => list.slice();
 

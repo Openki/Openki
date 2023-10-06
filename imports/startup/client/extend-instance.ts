@@ -3,7 +3,7 @@ import { ReactiveVar } from "meteor/reactive-var";
 
 Blaze.TemplateInstance.prototype.parentInstance = function (
   this: any,
-  levels = 1
+  levels = 1,
 ): Blaze.TemplateInstance | undefined {
   let { view } = this;
   while (view) {
@@ -18,7 +18,7 @@ Blaze.TemplateInstance.prototype.parentInstance = function (
 
 Blaze.TemplateInstance.prototype.busy = function (
   this: any,
-  activity: string | boolean | undefined
+  activity: string | boolean | undefined,
 ) {
   if (!this.business) {
     this.business = new ReactiveVar(activity);

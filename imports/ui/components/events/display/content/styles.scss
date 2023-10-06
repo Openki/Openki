@@ -1,20 +1,20 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .event-details-body {
-	background: $event-body-bg;
-	height: calc(#{"100% - 70px"});
+  background: $event-body-bg;
+  height: calc(#{"100% - 70px"});
 }
 
 .event-details-description {
-	@include break-word;
-	margin-top: 10px;
+  @include break-word;
+  margin-top: 10px;
 }
 
 .event-details-body .shariff {
-	background-color: $event-body-bg;
-	margin-bottom: 15px;
+  background-color: $event-body-bg;
+  margin-bottom: 15px;
 }
 
 .event-details-price-policy {
-	padding: 0 15px;
+  padding: 0 15px;
 }
