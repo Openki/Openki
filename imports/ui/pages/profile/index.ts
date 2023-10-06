@@ -106,13 +106,13 @@ template.onCreated(function () {
   if (instance.notificationsUnsubscribeSuccess()) {
     Analytics.trackEvent(
       "Unsubscribes from notifications",
-      "Unsubscribes from notifications via e-mail"
+      "Unsubscribes from notifications via e-mail",
     );
   }
   if (instance.privateMessagesUnsubscribeSuccess()) {
     Analytics.trackEvent(
       "Unsubscribes from notifications",
-      "Unsubscribes from private messages via e-mail"
+      "Unsubscribes from private messages via e-mail",
     );
   }
 
@@ -131,7 +131,7 @@ template.onCreated(function () {
           message: () =>
             i18n(
               "warning.userExists",
-              "This username is already in use. Please choose another one."
+              "This username is already in use. Please choose another one.",
             ),
         },
         {
@@ -145,13 +145,13 @@ template.onCreated(function () {
       onSuccess: () => {
         Alert.success(i18n("profile.updated", "Updated profile"));
       },
-    }
+    },
   );
   instance.editableDescription = new Editable(
     true,
     i18n(
       "profile.description.placeholder",
-      "About you. Let the community know what your interests are."
+      "About you. Let the community know what your interests are.",
     ),
     undefined,
     {
@@ -161,7 +161,7 @@ template.onCreated(function () {
       onSuccess: () => {
         Alert.success(i18n("profile.updated", "Updated profile"));
       },
-    }
+    },
   );
 
   instance.autorun(() => {
@@ -229,7 +229,7 @@ template.helpers({
     return {
       confirmText: i18n(
         "profile.reallydelete",
-        "Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again."
+        "Please confirm that you would like to delete your profile. This cannot be undone, you will have to create a new account if you want to use this site again.",
       ),
       confirmButton: i18n("profile.delete.confirm.button", "Delete my user and all its profile"),
       onRemove: async () => {
@@ -280,7 +280,7 @@ template.events({
       if (!allow)
         Analytics.trackEvent(
           "Unsubscribes from notifications",
-          "Unsubscribes from automated notifications via profile"
+          "Unsubscribes from automated notifications via profile",
         );
     } catch (err) {
       instance.errors.add(err.error);
@@ -299,7 +299,7 @@ template.events({
       if (!allow)
         Analytics.trackEvent(
           "Unsubscribes from notifications",
-          "Unsubscribes from private messages via profile"
+          "Unsubscribes from private messages via profile",
         );
     } catch (err) {
       instance.errors.add(err.error);
@@ -324,7 +324,7 @@ template.events({
         if (err) {
           Alert.serverError(
             err,
-            i18n("profile.passwordChangeError", "Could not change your password")
+            i18n("profile.passwordChangeError", "Could not change your password"),
           );
         } else {
           Alert.success(i18n("profile.passwordChangedSuccess", "You have changed your password."));

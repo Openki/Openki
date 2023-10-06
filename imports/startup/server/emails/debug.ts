@@ -13,7 +13,7 @@ if (Meteor.isDevelopment) {
       `${process.env.PWD}/.temp/${new Date().toISOString()} ${email.subject}.html`,
       email.html,
       // eslint-disable-next-line @typescript-eslint/no-empty-function
-      () => {}
+      () => {},
     );
 
     return true;

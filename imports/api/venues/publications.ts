@@ -25,11 +25,11 @@ export const [details, useDetails] = ServerPublishOne(
   },
   function (venueId: string) {
     return Venues.findOne(venueId);
-  }
+  },
 );
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
   "Venues.findFilter",
   (find?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
-    Venues.findFilter(find, limit, skip, sort)
+    Venues.findFilter(find, limit, skip, sort),
 );

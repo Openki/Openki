@@ -1,49 +1,51 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 
 .editable-image {
-	background-color: $blue-lighter;
-	font-size: 1.25rem;
-	padding: 30px 20px 20px;
-	position: relative;
+  background-color: $blue-lighter;
+  font-size: 1.25rem;
+  padding: 30px 20px 20px;
+  position: relative;
 }
 
 .editable-image.supports-dragndrop {
-	outline: 2px dashed #92b0b3;
-	outline-offset: -10px;
+  outline: 2px dashed #92b0b3;
+  outline-offset: -10px;
 
-	transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
+  transition:
+    outline-offset 0.15s ease-in-out,
+    background-color 0.15s linear;
 }
 
 .editable-image.is-dragover {
-	background-color: $white;
-	outline-color: $blue-lighter;
-	outline-offset: -20px;
+  background-color: $white;
+  outline-color: $blue-lighter;
+  outline-offset: -20px;
 }
 
 .editable-image-drop {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .editable-image-uploading {
-	font-style: italic;
+  font-style: italic;
 }
 
 .editable-image label {
-	cursor: pointer;
-	display: inline-block;
-	max-width: 80%;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+  cursor: pointer;
+  display: inline-block;
+  max-width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .editable-image label:hover strong {
-	color: $primary;
+  color: $primary;
 }
 
 .editable-image-controls {
-	margin-left: 10px;
-	margin-top: 7px;
-	position: absolute;
-	z-index: $zindex-editable-image;
+  margin-left: 10px;
+  margin-top: 7px;
+  position: absolute;
+  z-index: $zindex-editable-image;
 }

@@ -1,129 +1,129 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 /* stylelint-disable selector-max-id, selector-max-compound-selectors */
 
 .introduction {
-	$background-color: lighten($gray-200, 5%);
+  $background-color: lighten($gray-200, 5%);
 
-	@include clearfix;
-	background-color: $background-color;
-	margin-top: 15px;
-	padding: 2px ($grid-gutter-width / 2);
-	position: relative;
-	transition: background-color 1s;
+  @include clearfix;
+  background-color: $background-color;
+  margin-top: 15px;
+  padding: 2px ($grid-gutter-width / 2);
+  position: relative;
+  transition: background-color 1s;
 
-	&:hover {
-		background-color: darken($background-color, 2%);
-	}
+  &:hover {
+    background-color: darken($background-color, 2%);
+  }
 }
 
 .introduction h3 {
-	color: $primary;
-	margin: 5px 0 6px;
+  color: $primary;
+  margin: 5px 0 6px;
 }
 
 .calendar-introduction {
-	margin-top: 90px;
+  margin-top: 90px;
 }
 
 .calendar-introduction + #maincontent > .container {
-	padding-top: 0;
+  padding-top: 0;
 }
 
 .introduction-close-btn {
-	font-size: large;
-	inset-inline-end: 13px;
-	position: absolute;
-	top: 10px;
+  font-size: large;
+  inset-inline-end: 13px;
+  position: absolute;
+  top: 10px;
 }
 
 .introduction-content {
-	border-top: 1px solid $gray-300;
-	margin-top: 5px;
-	padding: 12px ($grid-gutter-width / 2);
+  border-top: 1px solid $gray-300;
+  margin-top: 5px;
+  padding: 12px ($grid-gutter-width / 2);
 }
 
 .introduction-steps {
-	font-size: medium;
-	text-align: center;
+  font-size: medium;
+  text-align: center;
 }
 
 .introduction-steps > .col {
-	margin-bottom: 8px;
-	position: relative;
-	text-align: center;
+  margin-bottom: 8px;
+  position: relative;
+  text-align: center;
 
-	&::after {
-		color: lighten($gray-600, 15%);
-		font-family: FontAwesome;
-		font-size: 16px;
-		opacity: 0.5;
+  &::after {
+    color: lighten($gray-600, 15%);
+    font-family: FontAwesome;
+    font-size: 16px;
+    opacity: 0.5;
 
-		@include media-breakpoint-down(sm) {
-			content: "";
-			display: block;
-			text-align: center;
-		}
-	}
+    @include media-breakpoint-down(sm) {
+      content: '';
+      display: block;
+      text-align: center;
+    }
+  }
 }
 
 .introduction-steps > .col > h2 {
-	margin-bottom: 8px;
-	margin-top: 0;
-	text-align: center;
+  margin-bottom: 8px;
+  margin-top: 0;
+  text-align: center;
 
-	&::after {
-		color: lighten($gray-600, 15%);
-		content: "";
-		font-family: FontAwesome;
-		font-size: 16px;
-		inset-inline-end: 0;
-		opacity: 0.5;
-		position: absolute;
-		top: 6px;
+  &::after {
+    color: lighten($gray-600, 15%);
+    content: '';
+    font-family: FontAwesome;
+    font-size: 16px;
+    inset-inline-end: 0;
+    opacity: 0.5;
+    position: absolute;
+    top: 6px;
 
-		@include media-breakpoint-down(sm) {
-			content: "" !important;
-		}
-	}
+    @include media-breakpoint-down(sm) {
+      content: '' !important;
+    }
+  }
 }
 
 .rtl {
-	.introduction-steps > .col > h2::after {
-		content: "\f060";
-		right: auto;
-	}
+  .introduction-steps > .col > h2::after {
+    content: '\f060';
+    right: auto;
+  }
 }
 
 .introduction-steps > .col:nth-of-type(2) > h2::after,
 .introduction-steps > .col:nth-of-type(4) > h2::after {
-	@include media-breakpoint-down(md) {
-		content: "" !important;
-	}
+  @include media-breakpoint-down(md) {
+    content: '' !important;
+  }
 }
 
 .introduction-steps > .col:nth-of-type(3) > h2::after {
-	@include media-breakpoint-up(md) {
-		@include media-breakpoint-down(lg) {
-			content: "" !important;
-		}
-	}
+  @include media-breakpoint-up(md) {
+    @include media-breakpoint-down(lg) {
+      content: '' !important;
+    }
+  }
 }
 
 .introduction-steps > .col:last-of-type {
-	&::after {
-		content: "" !important;
-	}
+  &::after {
+    content: '' !important;
+  }
 
-	> h2::after {
-		content: "" !important;
-	}
+  > h2::after {
+    content: '' !important;
+  }
 }
 
 .introduction-steps > .col > h2 > {
-	.fa-regular,
-	.fa-brands,
-	.fa-solid {
-		color: $primary;
-		opacity: 0.6;
-	}
+  .fa-regular,
+  .fa-brands,
+  .fa-solid {
+    color: $primary;
+    opacity: 0.6;
+  }
 }

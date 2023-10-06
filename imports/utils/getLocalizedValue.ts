@@ -4,7 +4,7 @@ import { Session } from "meteor/session";
 /** allows localised value eg. with `getLocalizedValue(...)` to have a string per language. */
 export const LocalizedValuePattern = Match.OneOf(
   String,
-  Match.ObjectIncluding<Record<string, string | undefined>>({})
+  Match.ObjectIncluding<Record<string, string | undefined>>({}),
 );
 
 export type LocalizedValue = Match.PatternMatch<typeof LocalizedValuePattern>;
@@ -18,7 +18,7 @@ export type LocalizedValue = Match.PatternMatch<typeof LocalizedValuePattern>;
  */
 export function getLocalizedValue(
   setting: LocalizedValue | undefined | null,
-  locale: string = Session.get("locale")
+  locale: string = Session.get("locale"),
 ) {
   if (!setting) {
     return undefined;

@@ -51,7 +51,7 @@ const Template = TemplateMixins.FormfieldErrors(
       text: () => i18n("login.username.no_password_set", "Please log in below."),
       field: "username",
     },
-  }
+  },
 );
 
 const template = Template.loginFrame;
@@ -175,7 +175,7 @@ template.events({
       Analytics.trackEvent(
         "Logins",
         "Logins with password",
-        regionId ? Regions.findOne(regionId)?.nameEn : ""
+        regionId ? Regions.findOne(regionId)?.nameEn : "",
       );
     } catch (err) {
       instance.errors.add(err.reason);
@@ -215,7 +215,7 @@ template.events({
         Analytics.trackEvent(
           "Logins",
           `Logins with ${service}`,
-          Regions.findOne(Meteor.user()?.profile.regionId)?.nameEn
+          Regions.findOne(Meteor.user()?.profile.regionId)?.nameEn,
         );
       }
     });

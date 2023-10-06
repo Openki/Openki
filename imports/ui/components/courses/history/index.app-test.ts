@@ -32,7 +32,7 @@ if (Meteor.isClient) {
       await waitFor(() => {
         assert(
           $(".course-details").length > 0,
-          `Details of the new course ${randomTitle} are shown`
+          `Details of the new course ${randomTitle} are shown`,
         );
       });
 
@@ -41,7 +41,7 @@ if (Meteor.isClient) {
         assert.isAbove(
           $(".coursehistory-event").length,
           lastNumberOfHistoryEntries,
-          "A history entry should be presend for course created."
+          "A history entry should be presend for course created.",
         );
       });
     });
@@ -67,7 +67,7 @@ if (Meteor.isClient) {
         assert.isAbove(
           $(".coursehistory-event").length,
           lastNumberOfHistoryEntries,
-          "A history entry should be presend for user subscribe."
+          "A history entry should be presend for user subscribe.",
         );
       });
     });

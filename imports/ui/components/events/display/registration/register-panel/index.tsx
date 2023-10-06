@@ -76,7 +76,7 @@ export function RegisterPanel(props: {
                 USERNAME: userName(),
                 EVENTTITLE: event.title,
                 DATE: dateFormat(event.startLocal),
-              }
+              },
             )}
           </p>
           {PublicSettings.feature.rsvpWithCompanions &&

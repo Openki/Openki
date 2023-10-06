@@ -133,7 +133,7 @@ export class OEvent {
 
   sameTime(
     this: { startLocal: string; endLocal: string },
-    event: { startLocal: string; endLocal: string }
+    event: { startLocal: string; endLocal: string },
   ) {
     return (["startLocal", "endLocal"] as const).every((time) => {
       const timeA = LocalTime.fromString(this[time]);
@@ -260,7 +260,7 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
 
   insertAsync(
     event: Mongo.OptionalId<EventEntity>,
-    callback?: (err?: unknown, _id?: string) => void
+    callback?: (err?: unknown, _id?: string) => void,
   ) {
     const enrichedEvent = tenantDenormalizer.beforeInsert(event);
 

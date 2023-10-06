@@ -67,7 +67,7 @@ export const create = ServerMethod(
     // Todo: check this already when the user writes into the textarea? is there a limit for course descriptions?
 
     return Regions.insert(set);
-  }
+  },
 );
 
 export const UpdateFieldsPattern = {
@@ -149,7 +149,7 @@ export const remove = ServerMethod("region.remove", (regionId: string) => {
   if (Courses.find({ region: regionId }).count() > 20) {
     throw new Meteor.Error(
       401,
-      "Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake."
+      "Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.",
     );
   }
 
@@ -170,7 +170,7 @@ export const featureGroup = ServerMethod(
     check(groupId, String);
 
     Regions.update(regionId, { $set: { featuredGroup: groupId } });
-  }
+  },
 );
 
 export const unsetFeaturedGroup = ServerMethod("region.unsetFeaturedGroup", (regionId: string) => {

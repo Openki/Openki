@@ -53,7 +53,7 @@ function Invitations(props: { tenantId: string; invitations: InvitationEntity[] 
             data-bs-toggle="tooltip"
             data-bs-title={t(
               "invitations.list.remove.tooltip",
-              "Removing the invitation has no effect on the member who has already accepted."
+              "Removing the invitation has no effect on the member who has already accepted.",
             )}
             data-bs-custom-class="tooltip-compact"
           ></span>
@@ -108,8 +108,8 @@ function Invitations(props: { tenantId: string; invitations: InvitationEntity[] 
                       err,
                       t(
                         "tenant.settings.invitations.removed.error",
-                        "Invitations could not be removed."
-                      )
+                        "Invitations could not be removed.",
+                      ),
                     );
                   }
                 }}

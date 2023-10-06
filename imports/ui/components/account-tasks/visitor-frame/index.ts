@@ -24,7 +24,7 @@ const Template = TemplateMixins.FormfieldErrors(
       text() {
         return i18n(
           "visitor.warning.noEmailProvided",
-          "Please enter an email-address to continue."
+          "Please enter an email-address to continue.",
         );
       },
       field: "email",
@@ -39,12 +39,12 @@ const Template = TemplateMixins.FormfieldErrors(
       text() {
         return i18n(
           "visitor.warning.emailExists",
-          "This email already exists. Have you tried resetting your password?"
+          "This email already exists. Have you tried resetting your password?",
         );
       },
       field: "email",
     },
-  }
+  },
 );
 
 const template = Template.visitorFrame;

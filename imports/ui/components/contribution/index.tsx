@@ -48,7 +48,7 @@ export function Contribution(props: Props) {
           USERNAME: cachedUser.getDisplayName(),
           SITENAME: getSiteName(currentRegion),
           ICON: `<i class='${contribution.icon}' aria-hidden='true'></i>`,
-        }
+        },
       )}
     >
       <sup>

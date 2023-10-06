@@ -16,7 +16,7 @@ export function VerifyEmail() {
         <br />
         {t(
           "profile.sendingVerificationMail",
-          "You will be sent a verification e-mail to click shortly."
+          "You will be sent a verification e-mail to click shortly.",
         )}
       </div>
     );
@@ -36,14 +36,14 @@ export function VerifyEmail() {
             t(
               "profile.sentVerificationMail",
               'Verification mail has been sent to your address: "{MAIL}".',
-              { MAIL: Meteor.user()?.emails[0].address }
-            )
+              { MAIL: Meteor.user()?.emails[0].address },
+            ),
           );
         } catch (err) {
           setSending(false);
           Alert.serverError(
             err,
-            t("profile.sentVerificationMail.error", "Could not send verification e-mail")
+            t("profile.sentVerificationMail.error", "Could not send verification e-mail"),
           );
         }
       }}

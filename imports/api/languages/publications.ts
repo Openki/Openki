@@ -19,7 +19,7 @@ if (Meteor.isServer) {
     try {
       // See: https://docs.weblate.org/en/latest/api.html#exports
       const response = await fetch(
-        "https://hosted.weblate.org/exports/stats/openki/openki/?format=json"
+        "https://hosted.weblate.org/exports/stats/openki/openki/?format=json",
       );
       const stats = (await response.json()) as {
         code: string;
@@ -28,7 +28,7 @@ if (Meteor.isServer) {
 
       Object.entries(languages).forEach(([code, value]) => {
         const translatedPercent = stats.filter(
-          (s) => (weblateMapping[s.code] || s.code) === code
+          (s) => (weblateMapping[s.code] || s.code) === code,
         )[0]?.translated_percent;
 
         if (translatedPercent) {
@@ -69,5 +69,5 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
     }
 
     return Languages.find(selector);
-  }
+  },
 );

@@ -55,7 +55,7 @@ export function CourselistPage() {
     options.filter,
     limit + 1,
     undefined,
-    options.sort
+    options.sort,
   );
 
   Metatags.setCommonTags(t("course.list.windowtitle", "Courses"));

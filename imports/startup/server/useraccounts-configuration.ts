@@ -26,7 +26,7 @@ Meteor.startup(() => {
           clientId: serviceConf.google.clientId,
           secret: serviceConf.google.secret,
         },
-      }
+      },
     );
   }
   if (serviceConf.facebook) {
@@ -40,7 +40,7 @@ Meteor.startup(() => {
           appId: serviceConf.facebook.appId,
           secret: serviceConf.facebook.secret,
         },
-      }
+      },
     );
   }
   if (serviceConf.github) {
@@ -54,7 +54,7 @@ Meteor.startup(() => {
           clientId: serviceConf.github.clientId,
           secret: serviceConf.github.secret,
         },
-      }
+      },
     );
   }
 });

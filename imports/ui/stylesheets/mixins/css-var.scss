@@ -1,11 +1,11 @@
 @function css-var($name) {
-	@return var(--#{$name});
+  @return var(--#{$name});
 }
 
 @function css-darken($name, $amount) {
-	@return #{"hsl(var(--" + $name + "-hs) calc(var(--" + $name + "-l) - " + $amount + "))"};
+  @return #{'hsl(var(--' + $name + '-hs) calc(var(--' + $name + '-l) - ' + $amount + '))'};
 }
 
 @function css-lighten($name, $amount) {
-	@return #{"hsl(var(--" + $name + "-hs) calc(var(--" + $name + "-l) + " + $amount + "))"};
+  @return #{'hsl(var(--' + $name + '-hs) calc(var(--' + $name + '-l) + ' + $amount + '))'};
 }

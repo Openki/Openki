@@ -50,7 +50,7 @@ function Footer() {
     return (
       version &&
       `${version.complete} on "${version.branch}" from ${version.commitDate} - restarted: ${moment(
-        version.lastStart
+        version.lastStart,
       )
         .locale(locale)
         .format("lll")}`

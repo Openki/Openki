@@ -11,7 +11,7 @@ export function onStartUp() {
     updated += Events.update(
       { courseId: course._id },
       { $set: { categories: course.categories || [] } },
-      { multi: true }
+      { multi: true },
     );
   });
 
@@ -33,6 +33,6 @@ export function afterCourseUpdateCategories(course: { _id: string; categories: s
   Events.update(
     { courseId: course._id },
     { $set: { categories: course.categories } },
-    { multi: true }
+    { multi: true },
   );
 }

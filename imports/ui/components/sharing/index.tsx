@@ -40,7 +40,7 @@ export function Sharing() {
         className="shariff"
         data-mail-body={`${t(
           "sharing.mailbody.quote",
-          "look what I found, are you interested?"
+          "look what I found, are you interested?",
         )} {url}`}
       ></div>
     </div>

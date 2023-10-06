@@ -43,7 +43,7 @@ export async function afterTenantAddAdmin(userId: string, tenantId: string) {
 export async function afterTenantRemoveAdmin(userId: string, tenantId: string) {
   await Users.updateAsync(
     { _id: userId, "tenants._id": tenantId },
-    { $pull: { "tenants.$.privileges": "admin" } }
+    { $pull: { "tenants.$.privileges": "admin" } },
   );
 }
 

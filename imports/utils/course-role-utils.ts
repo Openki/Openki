@@ -26,7 +26,7 @@ export function hasRole(members: CourseMemberEntity[] | undefined, role: string 
 export function hasRoleUser(
   members: CourseMemberEntity[],
   role: string,
-  userId: string | undefined | null
+  userId: string | undefined | null,
 ) {
   if (!userId) {
     return false;

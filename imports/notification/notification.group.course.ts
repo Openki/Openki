@@ -35,7 +35,7 @@ export function record(courseId: string) {
     ...new Set(
       Groups.find({ _id: { $in: course.groupOrganizers } })
         .map((g) => g.members)
-        .flat()
+        .flat(),
     ),
   ];
 
@@ -88,7 +88,7 @@ export function Model(entry: { body: Body }) {
       const subject = i18n(
         "notification.group.course.mail.subject",
         "{COURSE} proposed in {GROUPS}",
-        subjectvars
+        subjectvars,
       );
 
       let region: RegionModel | undefined;
@@ -110,9 +110,9 @@ export function Model(entry: { body: Body }) {
               (g) =>
                 `<a href="${Router.url("groupDetails", g, {
                   query: "campaign=groupCourseNotify",
-                })}">${g.name}</a>`
+                })}">${g.name}</a>`,
             )
-            .join(", ")
+            .join(", "),
         ),
         creater,
         subject,

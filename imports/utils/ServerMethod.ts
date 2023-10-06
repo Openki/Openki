@@ -26,7 +26,7 @@ export function ServerMethod<T extends any[], R>(
      * `{ simulation: false }` you can disable simulation in this case. Default is `true`
      */
     simulation: boolean;
-  } = { simulation: true }
+  } = { simulation: true },
 ) {
   // register
   Meteor.methods({

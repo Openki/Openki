@@ -29,7 +29,7 @@ const Template = TemplateMixins.FormfieldErrors(TemplateBase, "invitationsCreate
     text: () =>
       i18n(
         "tenant.settings.invitations.error.notValid",
-        "Some of the e-mail addresses are invalid."
+        "Some of the e-mail addresses are invalid.",
       ),
     field: "invitations-emails",
   },
@@ -104,14 +104,14 @@ template.events({
       await InvitationsMethods.createMany(instance.data.tenant._id, instance.getEmails());
 
       Alert.success(
-        i18n("tenant.settings.invitations.creation.success", "Invitations have been created.")
+        i18n("tenant.settings.invitations.creation.success", "Invitations have been created."),
       );
 
       instance.reset();
     } catch (err) {
       Alert.serverError(
         err,
-        i18n("tenant.settings.invitations.creation.error", "Invitations could not be created.")
+        i18n("tenant.settings.invitations.creation.error", "Invitations could not be created."),
       );
     } finally {
       instance.busy(false);

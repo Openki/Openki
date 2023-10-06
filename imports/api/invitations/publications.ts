@@ -27,7 +27,7 @@ export const details = ServerPublishBlaze(
     }
 
     return { invitation, tenant: Tenants.findOne(tenantId) };
-  }
+  },
 );
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
@@ -45,5 +45,5 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
     }
 
     return Invitations.findFilter(filter, limit, skip, sort);
-  }
+  },
 );

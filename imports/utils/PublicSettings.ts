@@ -46,8 +46,8 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
         site: Match.Integer,
         jsPath: String,
         phpPath: String,
-      }
-    )
+      },
+    ),
   ),
   /** by true, show only indicative prices (DE: Richtpreise), default is true */
   pricePolicyEnabled: Boolean,

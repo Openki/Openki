@@ -100,8 +100,8 @@ template.events({
         i18n(
           "tenantSettings.memberAdded",
           '"{MEMBER}" has been added to the "{TENANT}" organization',
-          { MEMBER: memberName, TENANT: tenantName }
-        )
+          { MEMBER: memberName, TENANT: tenantName },
+        ),
       );
     } catch (err) {
       Alert.serverError(err, i18n("tenantSettings.memberAdded.error", "Could not add member"));
@@ -122,8 +122,8 @@ template.events({
         i18n(
           "tenantSettings.memberRemoved",
           '"{MEMBER}" has been removed from the "{TENANT}" organization',
-          { MEMBER: memberName, TENANT: tenantName }
-        )
+          { MEMBER: memberName, TENANT: tenantName },
+        ),
       );
     } catch (err) {
       Alert.serverError(err, i18n("tenantSettings.memberRemoved.error", "Could not remove member"));
@@ -147,8 +147,8 @@ template.events({
         i18n(
           "tenantSettings.adminAdded",
           '"{ADMIN}" has been added as admin of the "{TENANT}" organization',
-          { ADMIN: adminName, TENANT: tenantName }
-        )
+          { ADMIN: adminName, TENANT: tenantName },
+        ),
       );
     } catch (err) {
       Alert.serverError(err, i18n("tenantSettings.adminAdded.error", "Could not add admin"));
@@ -169,8 +169,8 @@ template.events({
         i18n(
           "tenantSettings.adminRemoved",
           '"{ADMIN}" has been removed as admin of the "{TENANT}" organization',
-          { ADMIN: adminName, TENANT: tenantName }
-        )
+          { ADMIN: adminName, TENANT: tenantName },
+        ),
       );
     } catch (err) {
       Alert.serverError(err, i18n("tenantSettings.adminRemoved.error", "Could not remove admin"));

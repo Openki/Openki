@@ -1,76 +1,76 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 
 //== Kiosk
 //----------------------------------------
 .kiosk {
-	padding-bottom: 10.5px;
-	padding-top: 10.5px;
+  padding-bottom: 10.5px;
+  padding-top: 10.5px;
 }
 
 //== Logo
 //----------------------------------------
 .kiosk-logo {
-	@include td-margin(right, 15px);
-	line-height: $line-height-base;
-	vertical-align: text-bottom;
+  @include td-margin(right, 15px);
+  line-height: $line-height-base;
+  vertical-align: text-bottom;
 }
 
 .kiosk-logo-group {
-	width: 60px;
+  width: 60px;
 }
 
 .kiosk-logo-brand {
-	height: 48px;
+  height: 48px;
 }
 
 //== Heading
 //----------------------------------------
 .kiosk-heading {
-	@include td-margin-all(0, 15px, 0, 0);
-	display: inline-block;
-	font-size: $h1-font-size;
-	line-height: $line-height-base;
-	padding-bottom: 15px;
+  @include td-margin-all(0, 15px, 0, 0);
+  display: inline-block;
+  font-size: $h1-font-size;
+  line-height: $line-height-base;
+  padding-bottom: 15px;
 }
 
 //== Region selection
 //----------------------------------------
 .kiosk-language-selection {
-	display: inline-block;
-	line-height: $line-height-base;
+  display: inline-block;
+  line-height: $line-height-base;
 }
 
 .kiosk-language-selection > li {
-	list-style: none;
+  list-style: none;
 }
 
 .kiosk-language-selection > li > {
-	.fa-regular,
-	.fa-brands,
-	.fa-solid {
-		color: $primary;
-	}
+  .fa-regular,
+  .fa-brands,
+  .fa-solid {
+    color: $primary;
+  }
 }
 
 .kiosk-language-selection > li > .dropdown-menu {
-	@include td-pos(left, auto);
-	@include td-pos(right, 0);
+  @include td-pos(left, auto);
+  @include td-pos(right, 0);
 }
 
 //== Clock
 //----------------------------------------
 .kiosk-moment {
-	@include td-float(right);
-	line-height: $line-height-base;
+  @include td-float(right);
+  line-height: $line-height-base;
 }
 
 .kiosk-moment-time {
-	font-size: $h2-font-size;
+  font-size: $h2-font-size;
 }
 
 .kiosk-moment-date {
-	@include td-margin(left, 5px);
-	font-size: $h4-font-size;
+  @include td-margin(left, 5px);
+  font-size: $h4-font-size;
 }
 
 // *** Kiosk event ***
@@ -79,96 +79,96 @@
 // ** Event
 //========================================================================================
 .kiosk-event-wrap {
-	position: relative;
+  position: relative;
 }
 
 .kiosk-event {
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .kiosk-event-ongoing {
-	background-color: rgba($orange, 0.3);
+  background-color: rgba($orange, 0.3);
 }
 
 .kiosk-event-ongoing,
 .kiosk-event-today {
-	height: 200px;
+  height: 200px;
 }
 
 .kiosk-event-upcoming {
-	height: 150px;
+  height: 150px;
 }
 
 .kiosk-event-today,
 .kiosk-event-upcoming {
-	background-color: $event-body-bg;
+  background-color: $event-body-bg;
 }
 
 // event canceled
 //============================================================================================
 .kiosk-event-canceled {
-	background-color: $canceled-color;
-	border-radius: 5px;
-	color: $white;
-	display: flow-root;
-	font-family: monospace, sans-serif;
-	font-size: 2em;
-	font-stretch: narrower;
-	font-weight: 950;
-	left: 5%;
-	margin-block-start: 18px;
-	opacity: 0.4;
-	padding: 5px;
-	position: absolute;
-	text-align: center;
-	top: 27%;
-	transform: rotate(-27deg);
-	transform: rotate(-27d300eg);
-	transform: rotate(-27deg);
-	width: fit-content;
-	z-index: 300;
+  background-color: $canceled-color;
+  border-radius: 5px;
+  color: $white;
+  display: flow-root;
+  font-family: monospace, sans-serif;
+  font-size: 2em;
+  font-stretch: narrower;
+  font-weight: 950;
+  left: 5%;
+  margin-block-start: 18px;
+  opacity: 0.4;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  top: 27%;
+  transform: rotate(-27deg);
+  transform: rotate(-27d300eg);
+  transform: rotate(-27deg);
+  width: fit-content;
+  z-index: 300;
 }
 
 // event fully booked
 //============================================================================================
 .kiosk-event-fully-booked {
-	background-color: #f99248;
-	border-radius: 5px;
-	color: $white;
-	display: flow-root;
-	font-family: monospace, sans-serif;
-	font-size: 2em;
-	font-stretch: narrower;
-	font-weight: 950;
-	left: 5%;
-	margin-block-start: 18px;
-	opacity: 0.4;
-	padding: 5px;
-	position: absolute;
-	text-align: center;
-	top: 27%;
-	transform: rotate(-27deg);
-	transform: rotate(-27d300eg);
-	transform: rotate(-27deg);
-	width: fit-content;
-	z-index: 300;
+  background-color: #f99248;
+  border-radius: 5px;
+  color: $white;
+  display: flow-root;
+  font-family: monospace, sans-serif;
+  font-size: 2em;
+  font-stretch: narrower;
+  font-weight: 950;
+  left: 5%;
+  margin-block-start: 18px;
+  opacity: 0.4;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  top: 27%;
+  transform: rotate(-27deg);
+  transform: rotate(-27d300eg);
+  transform: rotate(-27deg);
+  width: fit-content;
+  z-index: 300;
 }
 
 // ** Timecount
 //========================================================================================
 .kiosk-event-timecount {
-	padding: 2px ($grid-gutter-width / 3);
+  padding: 2px ($grid-gutter-width / 3);
 }
 
 $event-ongoing-header-bg: $beige;
 
 .kiosk-event-ongoing > .kiosk-event-timecount {
-	background-color: lighten($event-ongoing-header-bg, 18%);
+  background-color: lighten($event-ongoing-header-bg, 18%);
 }
 
 .kiosk-event-today > .kiosk-event-timecount,
 .kiosk-event-upcoming > .kiosk-event-timecount {
-	background-color: lighten($event-header-bg, 13%);
+  background-color: lighten($event-header-bg, 13%);
 }
 
 // ** Header
@@ -177,64 +177,64 @@ $kiosk-event-component-padding-vertical: $grid-gutter-width / 3;
 $kiosk-event-component-padding-horizontal: $grid-gutter-width / 2;
 
 .kiosk-event-header {
-	@include clearfix;
-	color: $gray-800;
-	font-size: medium;
-	padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal;
+  @include clearfix;
+  color: $gray-800;
+  font-size: medium;
+  padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal;
 }
 
 .kiosk-event-ongoing > .kiosk-event-header {
-	background-color: $event-ongoing-header-bg;
+  background-color: $event-ongoing-header-bg;
 }
 
 .kiosk-event-today > .kiosk-event-header,
 .kiosk-event-upcoming > .kiosk-event-header {
-	background-color: $event-header-bg;
+  background-color: $event-header-bg;
 }
 
 // ** Moment & Location
 //========================================================================================
 .kiosk-event-moment,
 .kiosk-event-location {
-	@include ellipsis;
+  @include ellipsis;
 }
 
 .kiosk-event-today .kiosk-event-moment,
 .kiosk-event-today .kiosk-event-location,
 .kiosk-event-upcoming .kiosk-event-moment,
 .kiosk-event-upcoming .kiosk-event-location {
-	width: 50%;
+  width: 50%;
 }
 
 // ** Moment
 //========================================================================================
 .kiosk-event-today .kiosk-event-moment,
 .kiosk-event-upcoming .kiosk-event-moment {
-	@include td-float(left);
-	text-align: start;
+  @include td-float(left);
+  text-align: start;
 }
 
 // ** Location
 //========================================================================================
 .kiosk-event-today .kiosk-event-location,
 .kiosk-event-upcoming .kiosk-event-location {
-	@include td-float(right);
-	text-align: end;
+  @include td-float(right);
+  text-align: end;
 }
 
 // ** Body
 //========================================================================================
 .kiosk-event-body {
-	@include ellipsis-multiline(2);
+  @include ellipsis-multiline(2);
 
-	border-top: $event-compact-seperator-height solid $body-bg;
-	margin: 0 0 $kiosk-event-component-padding-vertical;
-	padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal 0;
+  border-top: $event-compact-seperator-height solid $body-bg;
+  margin: 0 0 $kiosk-event-component-padding-vertical;
+  padding: $kiosk-event-component-padding-vertical $kiosk-event-component-padding-horizontal 0;
 }
 
 // ** Title
 //========================================================================================
 .kiosk-event-title {
-	color: $gray-800;
-	display: inline;
+  color: $gray-800;
+  display: inline;
 }

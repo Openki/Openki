@@ -198,7 +198,7 @@ template.helpers({
     return {
       confirmText: i18n(
         "venue.reallydelete",
-        "Please confirm that you would like to delete this venue. This cannot be undone."
+        "Please confirm that you would like to delete this venue. This cannot be undone.",
       ),
       confirmButton: i18n("venue.detail.remove", "Remove this venue"),
       busyButton: i18n("venue.detail.remove.busy", "Deleting venue…"),

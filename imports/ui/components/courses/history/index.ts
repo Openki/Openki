@@ -28,7 +28,7 @@ template.helpers({
         dateTime: e.start,
         template: "eventHeldHistoryEntry",
         data: e,
-      }))
+      })),
     );
 
     // merge with all history entries
@@ -37,7 +37,7 @@ template.helpers({
         dateTime: e.dateTime,
         template: `${e.type}HistoryEntry`,
         data: e.data,
-      })) || [])
+      })) || []),
     );
 
     // and with the course creation

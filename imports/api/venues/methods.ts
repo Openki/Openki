@@ -18,7 +18,7 @@ export const SaveFieldPattern = {
     Match.OneOf(null, {
       type: StringEnum("Point"),
       coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
-    })
+    }),
   ),
   address: Match.Optional(String),
   route: Match.Optional(String),

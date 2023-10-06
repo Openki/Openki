@@ -147,7 +147,7 @@ template.events({
     } catch (err) {
       Alert.serverError(
         err,
-        i18n("profile.setHasContributed.error", "Unable to set user has contributed.")
+        i18n("profile.setHasContributed.error", "Unable to set user has contributed."),
       );
     }
   },
@@ -161,7 +161,7 @@ template.events({
     } catch (err) {
       Alert.serverError(
         err,
-        i18n("profile.unsetHasContributed.error", "Unable to unset user has contributed.")
+        i18n("profile.unsetHasContributed.error", "Unable to unset user has contributed."),
       );
     }
   },
@@ -201,7 +201,7 @@ template.events({
     } catch (err) {
       Alert.serverError(
         err,
-        i18n("profile.group.drafted.error", "Unable to draft user into group")
+        i18n("profile.group.drafted.error", "Unable to draft user into group"),
       );
     }
   },
@@ -220,7 +220,7 @@ template.events({
     } catch (err) {
       Alert.serverError(
         err,
-        i18n("profile.group.expelled.error", "Unable to expel user from group")
+        i18n("profile.group.expelled.error", "Unable to expel user from group"),
       );
     }
   },

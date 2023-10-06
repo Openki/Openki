@@ -132,7 +132,7 @@ export const ensure = {
           createdAt: new Date(time - age),
           lastLogin: new Date(time - age / 30),
         } as any,
-      }
+      },
     );
 
     if (verified) {
@@ -140,7 +140,7 @@ export const ensure = {
         { _id: id },
         {
           $set: { "emails.0.verified": true },
-        }
+        },
       );
     }
 

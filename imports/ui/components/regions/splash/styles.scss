@@ -1,50 +1,50 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 
 .regions-splash .modal-header {
-	background-color: $primary;
-	color: $white;
+  background-color: $primary;
+  color: $white;
 }
 
 .regions-splash-header {
-	margin-top: 0;
+  margin-top: 0;
 }
 
 .regions-splash-header > {
-	.fa-regular,
-	.fa-brands,
-	.fa-solid {
-		color: $primary;
-	}
+  .fa-regular,
+  .fa-brands,
+  .fa-solid {
+    color: $primary;
+  }
 }
 
 .regions-splash input {
-	width: 100%;
+  width: 100%;
 
-	&:hover {
-		cursor: pointer;
-	}
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .regions-splash-login {
-	margin-top: 15px;
+  margin-top: 15px;
 }
 
 .regions-splash .dropdown-menu {
-	width: 100%;
+  width: 100%;
 }
 
 .regions-splash-selection {
-	display: table;
-	width: 100%;
+  display: table;
+  width: 100%;
 }
 
 .regions-splash-selection > * {
-	display: table-cell;
-	vertical-align: top;
+  display: table-cell;
+  vertical-align: top;
 }
 
 .regions-splash-selection .js-region-search-form {
-	@include td-padding(right, 5px);
-	position: relative;
-	width: 100%;
+  @include td-padding(right, 5px);
+  position: relative;
+  width: 100%;
 }

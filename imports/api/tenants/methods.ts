@@ -63,7 +63,7 @@ export const addMember = ServerMethod(
     await Tenants.updateAsync(tenantId, { $addToSet: { members: userId } });
 
     await usersTenantsDenormalizer.afterTenantAddMember(userId, tenantId);
-  }
+  },
 );
 
 export const removeMember = ServerMethod(
@@ -78,7 +78,7 @@ export const removeMember = ServerMethod(
     await Tenants.updateAsync(tenantId, { $pull: { members: userId } });
 
     await usersTenantsDenormalizer.afterTenantRemoveMember(userId, tenantId);
-  }
+  },
 );
 
 export const addAdmin = ServerMethod(
@@ -89,7 +89,7 @@ export const addAdmin = ServerMethod(
     await Tenants.updateAsync(tenantId, { $addToSet: { admins: userId, members: userId } });
 
     await usersTenantsDenormalizer.afterTenantAddAdmin(userId, tenantId);
-  }
+  },
 );
 
 export const removeAdmin = ServerMethod(
@@ -100,5 +100,5 @@ export const removeAdmin = ServerMethod(
     await Tenants.updateAsync(tenantId, { $pull: { admins: userId } });
 
     await usersTenantsDenormalizer.afterTenantRemoveAdmin(userId, tenantId);
-  }
+  },
 );

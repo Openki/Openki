@@ -49,7 +49,7 @@ export function CourseGroupRemove(props: { course: CourseModel; groupId: string 
               t("courseGroupAdd.groupRemoved", "{GROUP} was removed from {COURSE}.", {
                 GROUP: name(group),
                 COURSE: course.name,
-              })
+              }),
             );
           } catch (err) {
             Alert.serverError(err, t("courseGroupAdd.groupRemoved.error", "Removing failed"));

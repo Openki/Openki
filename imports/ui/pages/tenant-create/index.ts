@@ -76,8 +76,8 @@ template.events({
       Alert.error(
         i18n(
           "tenant.region.create.plsSelectPointOnMap",
-          'Please add a marker on the map by clicking on the "+" sign.'
-        )
+          'Please add a marker on the map by clicking on the "+" sign.',
+        ),
       );
       return;
     }
@@ -100,14 +100,14 @@ template.events({
         Alert.success(
           i18n("privateRegion.saving.success", 'Created region "{NAME}".', {
             NAME: changes.name,
-          })
+          }),
         );
 
         Analytics.trackEvent("Tenant creations", "Tenant with region creations");
       } catch (err) {
         Alert.serverError(
           err,
-          i18n("privateRegion.creating.error", "Creating the region went wrong")
+          i18n("privateRegion.creating.error", "Creating the region went wrong"),
         );
       } finally {
         instance.busy(false);

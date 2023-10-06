@@ -1,22 +1,22 @@
 /* stylelint-disable-next-line selector-class-pattern */
 .select2-selection--multiple::before {
-	border-left: 4px solid transparent;
-	border-right: 4px solid transparent;
-	border-top: 5px solid #888;
-	content: "";
-	position: absolute;
-	right: 7px;
-	top: 42%;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid #888;
+  content: '';
+  position: absolute;
+  right: 7px;
+  top: 42%;
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
 .select2-search--inline {
-	font-size: 110%;
+  font-size: 110%;
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
 .select2-results__option {
-	line-height: 1.3;
-	padding-bottom: 0 !important;
-	padding-top: 0 !important;
+  line-height: 1.3;
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
 }

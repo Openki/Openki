@@ -14,7 +14,7 @@ export function EventNotFound() {
       <h3 className="event-notfound-text px-3">
         {t(
           "event.not_exists",
-          "Could not find this event. Maybe it was deleted, or never existed in the first place."
+          "Could not find this event. Maybe it was deleted, or never existed in the first place.",
         )}
       </h3>
     );

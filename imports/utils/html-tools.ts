@@ -19,7 +19,7 @@ export function plainToHtml(text: string) {
     .replace(/(?:\r\n|\r|\n)/g, "<br />")
     .replace(
       /(\bhttps?:\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|;])/gi,
-      "<a href='$1'>$1</a>"
+      "<a href='$1'>$1</a>",
     );
 }
 

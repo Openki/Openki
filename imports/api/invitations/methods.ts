@@ -43,17 +43,17 @@ export const createMany = ServerMethod(
           status: "created",
           createdAt,
           createdBy,
-        } as Mongo.OptionalId<InvitationEntity>)
+        }) as Mongo.OptionalId<InvitationEntity>,
     )) {
       // Update or insert
       await Invitations.upsertAsync(
         // Selector
         { tenant: i.tenant, to: i.to },
         // Modifier
-        { $set: i, $unset: { acceptedBy: true } }
+        { $set: i, $unset: { acceptedBy: true } },
       );
     }
-  }
+  },
 );
 
 export const remove = ServerMethod(
@@ -64,7 +64,7 @@ export const remove = ServerMethod(
     await tenantMutationPreconditionCheck(tenantId);
 
     await Invitations.removeAsync({ _id: invitationId, tenant: tenantId });
-  }
+  },
 );
 
 export const join = ServerMethod("invitation.join", async (tenantId: string, token: string) => {

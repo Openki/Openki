@@ -22,7 +22,7 @@ export function SearchField(props: {
       onChange(newValue);
       // we don't updateURL() here, only after the field loses focus
     }, 200),
-    []
+    [],
   );
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {

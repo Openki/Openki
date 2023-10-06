@@ -61,7 +61,7 @@ class RouterAutoscroll {
         } else {
           self.scheduleScroll();
         }
-      })
+      }),
     );
     Router.onStop(() => this.saveScrollPosition());
   }

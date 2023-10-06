@@ -1,39 +1,39 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 
 .loading-row,
 .loading-page {
-	width: 100%;
-	z-index: 1029;
+  width: 100%;
+  z-index: 1029;
 }
 
 .loading-row img,
 .loading-page img {
-	height: 1.2em;
-	vertical-align: -0.3em;
+  height: 1.2em;
+  vertical-align: -0.3em;
 }
 
 .loading-row,
 .loading-page {
-	.fa-regular,
-	.fa-brands,
-	.fa-solid {
-		color: $green;
-	}
+  .fa-regular,
+  .fa-brands,
+  .fa-solid {
+    color: $green;
+  }
 }
 
 .loading-page {
-	padding-top: 10% 5px 5px;
+  padding-top: 10% 5px 5px;
 }
 
 .loading-page h1 {
-	text-align: center;
+  text-align: center;
 }
 
 .loading-row {
-	padding: 15px 5px;
-	position: static;
+  padding: 15px 5px;
+  position: static;
 }
 
 .loading-row h1 {
-	font-size: large;
+  font-size: large;
 }

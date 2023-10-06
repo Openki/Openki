@@ -54,7 +54,7 @@ function sendInvitation(invitation: InvitationEntity) {
     }),
     moreLink: getLocalizedValue(PublicSettings.aboutLink, locale),
     reportEmail: Spacebars.SafeString(
-      `<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`
+      `<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
     ),
     locale,
   });
@@ -78,7 +78,7 @@ function handleInvitation(invitation: InvitationEntity) {
   const result = Log.record(
     "Invitation.Send",
     [invitation.createdBy, invitation.tenant],
-    invitation
+    invitation,
   ); // For traceability
   try {
     sendInvitation(invitation);

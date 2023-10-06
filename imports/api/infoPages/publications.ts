@@ -25,5 +25,5 @@ export const [details, useDetails] = ServerPublishOne(
     }
     locales.push("en");
     return InfoPages.findOne({ slug, locale: { $in: locales } }, { sort: { accuracy: -1 } });
-  }
+  },
 );

@@ -120,7 +120,7 @@ export function trackEvent(category: string, action: string, name?: string, valu
     console.info(
       `Analytics.Event: {category: ${category}, action: ${action}${name ? `, name: ${name}` : ""}${
         value ? `, value: ${value}` : ""
-      }}`
+      }}`,
     );
   }
 }

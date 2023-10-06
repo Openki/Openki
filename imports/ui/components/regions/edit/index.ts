@@ -73,8 +73,8 @@ export interface OnSaveFields {
         Alert.error(
           i18n(
             "region.create.plsSelectPointOnMap",
-            'Please add a marker on the map by clicking on the "+" sign.'
-          )
+            'Please add a marker on the map by clicking on the "+" sign.',
+          ),
         );
         return;
       }
@@ -87,7 +87,7 @@ export interface OnSaveFields {
           Alert.success(
             i18n("region.saving.success", 'Saved changes to region "{NAME}".', {
               NAME: changes.name,
-            })
+            }),
           );
         } catch (err) {
           Alert.serverError(err, i18n("region.saving.error", "Saving the region went wrong"));

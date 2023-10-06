@@ -26,13 +26,13 @@ export const [details, useDetails] = ServerPublishOne(
   },
   (eventId: string) => {
     return Events.findOne({ _id: eventId, tenant: { $in: visibleTenants() } });
-  }
+  },
 );
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
   "Events.findFilter",
   (filter?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
-    Events.findFilter({ ...filter, tenants: visibleTenants() }, limit, skip, sort)
+    Events.findFilter({ ...filter, tenants: visibleTenants() }, limit, skip, sort),
 );
 
 export const [forCourse, useForCourse] = ServerPublishMany(
@@ -41,7 +41,7 @@ export const [forCourse, useForCourse] = ServerPublishMany(
     check(courseId, String);
 
     return Events.find({ courseId, tenant: { $in: visibleTenants() } });
-  }
+  },
 );
 
 export const [affectedReplica, useAffectedReplica] = ServerPublishMany(
@@ -59,5 +59,5 @@ export const [affectedReplica, useAffectedReplica] = ServerPublishMany(
       throw new Meteor.Error(400, `provided event id ${eventId} is invalid`);
     }
     return Events.find(AffectedReplicaSelectors(event));
-  }
+  },
 );

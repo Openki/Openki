@@ -120,7 +120,7 @@ import "./styles.scss";
       return Router.path(
         "showCourse",
         { _id: event.courseId },
-        course?.singleEvent ? { query: { force: "1" } } : {}
+        course?.singleEvent ? { query: { force: "1" } } : {},
       );
     },
 
