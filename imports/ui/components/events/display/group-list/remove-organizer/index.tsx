@@ -50,8 +50,8 @@ export function EventGroupRemoveOrganizer(props: { event: EventModel; groupId: s
               t(
                 "eventGroupAdd.membersCanNoLongerEditEvent",
                 'Members of the group "{GROUP}" can no longer edit the "{EVENT}" event.',
-                { GROUP: name(group), EVENT: event.title }
-              )
+                { GROUP: name(group), EVENT: event.title },
+              ),
             );
 
             setIsExpanded(false);
@@ -60,8 +60,8 @@ export function EventGroupRemoveOrganizer(props: { event: EventModel; groupId: s
               err,
               t(
                 "eventGroupAdd.membersCanNoLongerEditEvent.error",
-                "Failed to remove organizer status"
-              )
+                "Failed to remove organizer status",
+              ),
             );
           }
         }}

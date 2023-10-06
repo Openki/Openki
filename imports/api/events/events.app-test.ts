@@ -33,7 +33,7 @@ if (Meteor.isClient) {
 
         assert.isEmpty(
           eventsAsGast.filter((c) => c.tenant && !PublicSettings.publicTenants.includes(c.tenant)),
-          "don't show events from not public"
+          "don't show events from not public",
         );
       });
 
@@ -52,18 +52,18 @@ if (Meteor.isClient) {
         assert.includeMembers(
           eventsAsSchufien.map((c) => c._id),
           eventsAsGast.map((c) => c._id),
-          "shows public events as logged in user"
+          "shows public events as logged in user",
         );
 
         assert.isTrue(
           eventsAsSchufien.length > eventsAsGast.length,
-          "shows private events as logged in user"
+          "shows private events as logged in user",
         );
         assert.isNotEmpty(
           eventsAsSchufien.filter(
-            (c) => c.tenant && schufien.tenants.some((t) => t._id === c.tenant)
+            (c) => c.tenant && schufien.tenants.some((t) => t._id === c.tenant),
           ),
-          "shows private events as logged in user"
+          "shows private events as logged in user",
         );
       });
     });

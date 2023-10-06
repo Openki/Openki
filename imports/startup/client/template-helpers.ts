@@ -275,7 +275,7 @@ Template.registerHelper("contribution", function (userId: string) {
 
   return Spacebars.SafeString(
     `<a href="${getLocalizedValue(
-      contribution.link
+      contribution.link,
     )}" data-bs-toggle="tooltip" data-bs-title="${Blaze._escape(
       i18n(
         "user.hasContributed",
@@ -284,9 +284,9 @@ Template.registerHelper("contribution", function (userId: string) {
           USERNAME: cachedUser.getDisplayName(),
           SITENAME: getSiteName(Regions.currentRegion()),
           ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
-        }
-      )
-    )}"><sup><i class="${contribution.icon}" aria-hidden="true"></i></sup></a>`
+        },
+      ),
+    )}"><sup><i class="${contribution.icon}" aria-hidden="true"></i></sup></a>`,
   );
 });
 

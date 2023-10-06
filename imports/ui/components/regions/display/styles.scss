@@ -1,14 +1,14 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 
 .region-details-header {
-	background-color: $region-bg;
-	color: $region-color;
+  background-color: $region-bg;
+  color: $region-color;
 }
 
 .region-details-body {
-	background-color: $blue-lighter;
+  background-color: $blue-lighter;
 }
 
 .region-property-title {
-	font-weight: bold;
+  font-weight: bold;
 }

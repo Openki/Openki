@@ -1,31 +1,31 @@
-@import "variables/index";
+@import 'variables/index';
 
-@import "{}/node_modules/@fortawesome/fontawesome-free/css/all";
-@import "bootstrap";
+@import '{}/node_modules/@fortawesome/fontawesome-free/css/all';
+@import 'bootstrap';
 
-@import "bootstrap-datepicker";
+@import 'bootstrap-datepicker';
 
-@import "fonts";
+@import 'fonts';
 
-@import "medium-editor";
+@import 'medium-editor';
 
-@import "global";
-@import "layout";
-@import "actions";
-@import "buttons";
-@import "dropdown";
-@import "input-group";
-@import "forms";
-@import "dialog-dropdown";
-@import "icon-text";
-@import "list-group";
-@import "modals";
-@import "responsive-table";
-@import "event-caption";
-@import "tag";
-@import "nav-tabs";
-@import "detail-pages";
-@import "edit-pages";
-@import "frame-list";
+@import 'global';
+@import 'layout';
+@import 'actions';
+@import 'buttons';
+@import 'dropdown';
+@import 'input-group';
+@import 'forms';
+@import 'dialog-dropdown';
+@import 'icon-text';
+@import 'list-group';
+@import 'modals';
+@import 'responsive-table';
+@import 'event-caption';
+@import 'tag';
+@import 'nav-tabs';
+@import 'detail-pages';
+@import 'edit-pages';
+@import 'frame-list';
 
-@import "mocha";
+@import 'mocha';

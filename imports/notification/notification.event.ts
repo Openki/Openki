@@ -117,7 +117,7 @@ export function Model(entry: { body: Body }) {
         subject = i18n(
           "notification.event.mail.subject.changed",
           "Fixed {DATE}: {TITLE}",
-          subjectvars
+          subjectvars,
         );
       }
 

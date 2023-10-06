@@ -180,7 +180,7 @@ template.events({
     const $description = instance.$(".js-description");
     if (!$description.text()) {
       Alert.error(
-        i18n("venue.create.plsProvideDescription", "Please provide a description for your venue")
+        i18n("venue.create.plsProvideDescription", "Please provide a description for your venue"),
       );
       return;
     }
@@ -219,14 +219,14 @@ template.events({
         Alert.success(
           i18n("venue.saving.success", 'Saved changes to venue "{NAME}".', {
             NAME: changes.name,
-          })
+          }),
         );
 
         if (instance.isNew) {
           Analytics.trackEvent(
             "Venue creations",
             "Venue creations",
-            Regions.findOne(changes.region)?.nameEn
+            Regions.findOne(changes.region)?.nameEn,
           );
 
           Router.go("venueDetails", { _id: res });

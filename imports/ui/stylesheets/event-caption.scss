@@ -1,126 +1,126 @@
 .event-caption {
-	display: table;
-	height: 50px;
-	position: relative;
-	text-align: center;
+  display: table;
+  height: 50px;
+  position: relative;
+  text-align: center;
 }
 
 .event-caption-header-wrap {
-	display: table-row;
+  display: table-row;
 }
 
 $event-caption-header-bg: $event-header-bg;
 $event-caption-border: $yellow;
 
 .event-caption-header {
-	background-color: $event-caption-header-bg;
-	border-color: $event-caption-border;
-	border-style: solid;
-	border-width: 1.5px 1.5px 0;
-	display: table-cell;
-	font-size: small;
-	padding: 3px;
-	position: relative;
-	transition: border-color $default-transition-time;
-	vertical-align: top;
+  background-color: $event-caption-header-bg;
+  border-color: $event-caption-border;
+  border-style: solid;
+  border-width: 1.5px 1.5px 0;
+  display: table-cell;
+  font-size: small;
+  padding: 3px;
+  position: relative;
+  transition: border-color $default-transition-time;
+  vertical-align: top;
 }
 
 .event-caption-header > .fa-map-pin {
-	@include td-pos(left, 50%);
-	color: $body-color;
-	font-size: 8px;
-	position: absolute;
-	top: -5px;
-	transform: rotate(10deg);
+  @include td-pos(left, 50%);
+  color: $body-color;
+  font-size: 8px;
+  position: absolute;
+  top: -5px;
+  transform: rotate(10deg);
 }
 
 .event-caption-pseudoborder {
-	background-color: $white;
-	bottom: 0;
-	height: 1px;
-	left: 0;
-	position: absolute;
-	width: 100%;
+  background-color: $white;
+  bottom: 0;
+  height: 1px;
+  left: 0;
+  position: absolute;
+  width: 100%;
 }
 
 .event-caption-body-wrap {
-	display: table-row;
-	height: 70%;
+  display: table-row;
+  height: 70%;
 }
 
 $event-caption-body-bg: $event-body-bg;
 
 .event-caption-body {
-	background-color: $event-caption-body-bg;
-	border-color: $event-caption-border;
-	border-style: solid;
-	border-width: 0 1.5px 1.5px;
-	color: $body-color;
-	display: table-cell;
-	padding: 3px;
-	transition: border-color $default-transition-time;
-	vertical-align: middle;
+  background-color: $event-caption-body-bg;
+  border-color: $event-caption-border;
+  border-style: solid;
+  border-width: 0 1.5px 1.5px;
+  color: $body-color;
+  display: table-cell;
+  padding: 3px;
+  transition: border-color $default-transition-time;
+  vertical-align: middle;
 }
 
 .event-caption-placeholder:not(:hover) .event-caption-header {
-	background-color: rgba(desaturate($event-caption-header-bg, 55%), 0.5);
+  background-color: rgba(desaturate($event-caption-header-bg, 55%), 0.5);
 }
 
 .event-caption-placeholder:not(:hover) .event-caption-body {
-	background-color: rgba(desaturate($event-caption-body-bg, 50%), 0.5);
-	color: transparent;
-	text-shadow: 0 0 1.5px rgba(0, 0, 0, 0.5);
+  background-color: rgba(desaturate($event-caption-body-bg, 50%), 0.5);
+  color: transparent;
+  text-shadow: 0 0 1.5px rgba(0, 0, 0, 0.5);
 }
 
 .event-caption-placeholder:not(:hover) .event-caption-header,
 .event-caption-placeholder:not(:hover) .event-caption-body {
-	border-color: $gray-200;
+  border-color: $gray-200;
 }
 
 .event-caption-wrap {
-	display: inline-block;
+  display: inline-block;
 }
 
 .event-caption-wrap + .event-caption-wrap {
-	@include td-margin(left, 15px);
+  @include td-margin(left, 15px);
 }
 
 .event-caption-wrap .btn:hover {
-	border-color: transparent;
+  border-color: transparent;
 }
 
 .event-caption-action {
-	width: 65px;
+  width: 65px;
 }
 
 .event-caption-add .event-caption-body,
 .event-caption-add .event-caption-header {
-	border-color: darken($green, 25%);
+  border-color: darken($green, 25%);
 }
 
 .event-caption-delete .event-caption-body,
 .event-caption-delete .event-caption-header {
-	border-color: lighten($red, 5%);
+  border-color: lighten($red, 5%);
 }
 
 .event-caption-action.event-caption-placeholder:not(:hover) .event-caption-body {
-	text-shadow: 0 0 0;
+  text-shadow: 0 0 0;
 }
 
 .event-caption-icon {
-	@include td-pos(right, -5%);
-	bottom: 0;
-	position: absolute;
+  @include td-pos(right, -5%);
+  bottom: 0;
+  position: absolute;
 }
 
 .event-caption-add .event-caption-icon {
-	color: $green-dark;
+  color: $green-dark;
 }
 
 .event-caption-delete .event-caption-icon {
-	color: $event-trashcan-color;
+  color: $event-trashcan-color;
 }
 
 .event-caption-delete:hover .event-caption-icon {
-	color: $red;
+  color: $red;
 }

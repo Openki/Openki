@@ -45,11 +45,11 @@ function updateDbCacheFields() {
       Meteor.call(
         "course.updateNextEvent",
         { "nextEvent.start": { $lt: new Date() } },
-        AsyncTools.logErrors
+        AsyncTools.logErrors,
       );
       Meteor.call("region.updateCounters", {}, AsyncTools.logErrors);
     },
-    60 * 1000 // Check every minute
+    60 * 1000, // Check every minute
   );
 }
 

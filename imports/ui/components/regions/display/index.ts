@@ -76,7 +76,7 @@ template.helpers({
     return {
       confirmText: i18n(
         "region.reallydelete",
-        "Please confirm that you would like to delete this region with all courses, events and venues. This cannot be undone."
+        "Please confirm that you would like to delete this region with all courses, events and venues. This cannot be undone.",
       ),
       confirmButton: i18n("region.detail.remove", "Remove this region"),
       busyButton: i18n("region.detail.remove.busy", "Deleting region…"),

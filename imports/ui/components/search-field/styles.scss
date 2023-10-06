@@ -1,13 +1,13 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 
 .search-field {
-	width: 100%;
+  width: 100%;
 
-	@include media-breakpoint-up(md) {
-		max-width: 500px;
-	}
+  @include media-breakpoint-up(md) {
+    max-width: 500px;
+  }
 }
 
 .search-input {
-	font-size: large;
+  font-size: large;
 }

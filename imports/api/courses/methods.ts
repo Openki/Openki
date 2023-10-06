@@ -39,7 +39,7 @@ export interface Method<T> {
       rel: string[],
       body: {
         operatorId: string | undefined;
-      }
+      },
     ): void;
     apply(): void;
   };
@@ -60,7 +60,7 @@ function registerMethod<T>(method: Method<T>): void {
       throw new Meteor.Error(
         "not-permitted",
         `Change not permitted: ${change}`,
-        `operator: ${operator?._id}`
+        `operator: ${operator?._id}`,
       );
     }
 
@@ -75,7 +75,7 @@ function registerMethod<T>(method: Method<T>): void {
       throw new Meteor.Error(
         "error-applying",
         `Error applying change ${change}: ${message}`,
-        message
+        message,
       );
     }
     result.success();
@@ -156,7 +156,7 @@ export const save = ServerMethod(
             { _id: courseId },
             { $pull: { roles: type } },
             { multi: true },
-            AsyncTools.checkUpdateOne
+            AsyncTools.checkUpdateOne,
           );
 
           // HACK
@@ -165,7 +165,7 @@ export const save = ServerMethod(
           while (
             Courses.update(
               { _id: courseId, "members.roles": type },
-              { $pull: { "members.$.roles": type } }
+              { $pull: { "members.$.roles": type } },
             )
           );
         }
@@ -178,7 +178,7 @@ export const save = ServerMethod(
               { _id: courseId },
               { $addToSet: { roles: type } },
               { multi: true },
-              AsyncTools.checkUpdateOne
+              AsyncTools.checkUpdateOne,
             );
           }
         }
@@ -295,7 +295,7 @@ export const save = ServerMethod(
     }
 
     return courseId;
-  }
+  },
 );
 
 export const updateImage = ServerMethod(
@@ -332,7 +332,7 @@ export const updateImage = ServerMethod(
 
     return courseId;
   },
-  { simulation: false }
+  { simulation: false },
 );
 
 export const deleteImage = ServerMethod(
@@ -365,7 +365,7 @@ export const deleteImage = ServerMethod(
 
     return courseId;
   },
-  { simulation: false }
+  { simulation: false },
 );
 
 /**
@@ -377,7 +377,7 @@ export const deleteImage = ServerMethod(
  */
 export const promote = ServerMethod(
   "course.promote",
-  UpdateMethods.promote(Courses as unknown as GroupPromoters)
+  UpdateMethods.promote(Courses as unknown as GroupPromoters),
 );
 
 /**
@@ -389,7 +389,7 @@ export const promote = ServerMethod(
  */
 export const editing = ServerMethod(
   "course.editing",
-  UpdateMethods.editing(Courses as unknown as GroupPromoters)
+  UpdateMethods.editing(Courses as unknown as GroupPromoters),
 );
 
 export const archive = ServerMethod("course.archive", async (courseId: string) => {
@@ -454,7 +454,7 @@ Meteor.methods({
             _id: 1,
             venue: 1,
           },
-        }
+        },
       );
 
       const lastEvent = Events.findOne(
@@ -467,7 +467,7 @@ Meteor.methods({
             _id: 1,
             venue: 1,
           },
-        }
+        },
       );
 
       Courses.update(course._id, {

@@ -1,13 +1,13 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 
 .course-members {
-	margin-top: $page-component-seperator-height;
+  margin-top: $page-component-seperator-height;
 }
 
 .contact-members {
-	@include td-float(right);
+  @include td-float(right);
 
-	&:hover {
-		cursor: pointer;
-	}
+  &:hover {
+    cursor: pointer;
+  }
 }

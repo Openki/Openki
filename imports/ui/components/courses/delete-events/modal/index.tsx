@@ -84,7 +84,7 @@ export function Modal(props: {
                     {t(
                       "deleteEventsModal.reallyDelete",
                       "Delete {NUM, plural, one{this event} other{these # events} }?",
-                      { NUM: numSelectedEvents() }
+                      { NUM: numSelectedEvents() },
                     )}
                   </div>
                   <ul className="list-group list-group-flush selected-events">
@@ -97,7 +97,7 @@ export function Modal(props: {
                             aria-label="Close"
                             onClick={() => {
                               setSelectedEvents(
-                                selectedEvents.filter((se) => se._id !== event._id)
+                                selectedEvents.filter((se) => se._id !== event._id),
                               );
                             }}
                           ></button>
@@ -130,8 +130,8 @@ export function Modal(props: {
                                   t(
                                     "deleteEventsModal.errWithReason",
                                     'Could not delete the "{TITLE} ({START})" event.',
-                                    { TITLE: event.title, START: start }
-                                  )
+                                    { TITLE: event.title, START: start },
+                                  ),
                                 );
                               })
                               .finally(() => {
@@ -144,15 +144,15 @@ export function Modal(props: {
                                       t(
                                         "deleteEventsModal.sucess",
                                         "{NUM, plural, one{Event was} other{# events were} } successfully deleted.",
-                                        { NUM: removed }
-                                      )
+                                        { NUM: removed },
+                                      ),
                                     );
 
                                     Analytics.trackEvent(
                                       "Events deletions",
                                       "Events deletions as team",
                                       Regions.findOne(event.region)?.nameEn,
-                                      removed
+                                      removed,
                                     );
                                   }
                                   if (removed === responses) {
@@ -173,14 +173,14 @@ export function Modal(props: {
                             {t(
                               "deleteEventsModal.deletingEvents",
                               "Deleting {NUM, plural, one{event} other{events} }…",
-                              { NUM: numSelectedEvents() }
+                              { NUM: numSelectedEvents() },
                             )}
                           </>
                         ) : (
                           t(
                             "deleteEventsModal.confirmDeleteEvents",
                             "Delete {NUM, plural, one{event} other{events} }",
-                            { NUM: numSelectedEvents() }
+                            { NUM: numSelectedEvents() },
                           )
                         )}
                       </button>{" "}
@@ -218,7 +218,7 @@ export function Modal(props: {
                               newSelectedEvents = [...selectedEvents, event];
                             } else {
                               newSelectedEvents = selectedEvents.filter(
-                                (se) => se._id !== event._id
+                                (se) => se._id !== event._id,
                               );
                             }
 
@@ -246,7 +246,7 @@ export function Modal(props: {
                     {t(
                       "deleteEventsModal.deleteEvents",
                       "Delete {NUM, plural, =0{event} one{event} other{# events} }",
-                      { NUM: numSelectedEvents() }
+                      { NUM: numSelectedEvents() },
                     )}
                   </button>{" "}
                   <button

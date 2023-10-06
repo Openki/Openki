@@ -19,7 +19,7 @@ export interface Data {
     options: {
       revealAddress: boolean;
       sendCopy: boolean;
-    }
+    },
   ) => Promise<void>;
 }
 
@@ -114,7 +114,7 @@ export function SendMessage(props: Data) {
               <p>
                 {t(
                   "userprofile.infoForUnverifiedMail",
-                  "Verify your e-mail address to receive a copy or to attach it to the message."
+                  "Verify your e-mail address to receive a copy or to attach it to the message.",
                 )}
               </p>
               <VerifyEmail />

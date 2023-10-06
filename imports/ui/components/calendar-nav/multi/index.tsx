@@ -33,7 +33,7 @@ function mvDateHandler(
   routerName: string,
   unit: Unit,
   direction: Direction,
-  filter: ReturnType<(typeof Events)["Filtering"]>
+  filter: ReturnType<(typeof Events)["Filtering"]>,
 ) {
   const amount = direction === "previous" ? -1 : 1;
   const start = filter.get("start") as moment.Moment;

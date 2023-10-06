@@ -1,10 +1,10 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 
 .profilelink {
-	color: $gray-800;
+  color: $gray-800;
 
-	&:hover {
-		color: $primary;
-		text-decoration: none;
-	}
+  &:hover {
+    color: $primary;
+    text-decoration: none;
+  }
 }

@@ -95,7 +95,7 @@ export function Model(entry: { body: Body }) {
       const subject = i18n(
         "notification.rsvp.mail.subject",
         "Confirmation {DATE} {TITLE}",
-        subjectvars
+        subjectvars,
       );
 
       const { venue } = event;

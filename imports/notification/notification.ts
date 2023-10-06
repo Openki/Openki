@@ -54,7 +54,7 @@ export namespace SendResult {
     sent: boolean,
     recipient: string,
     message: unknown,
-    reason: string
+    reason: string,
   ) {
     check(sent, Boolean);
     check(unsubToken, Match.Maybe(String));
@@ -114,7 +114,7 @@ export function send(entry: LogEntity & { body: { model: string; recipients: str
           vars(
             userLocale: string,
             user: UserModel,
-            unsubToken: string
+            unsubToken: string,
           ): {
             fromAddress?: string;
             customSiteName?: string;

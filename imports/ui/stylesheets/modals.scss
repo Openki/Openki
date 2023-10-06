@@ -1,10 +1,10 @@
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
 
 .modal-header {
-	background: $primary;
-	color: $white;
+  background: $primary;
+  color: $white;
 }
 
 .modal-header .btn-close {
-	@extend .btn-close-white;
+  @extend .btn-close-white;
 }

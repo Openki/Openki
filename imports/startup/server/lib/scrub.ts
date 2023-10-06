@@ -30,7 +30,7 @@ export class ScrubRule {
     grace: number,
     select: Mongo.Selector<LogEntity>,
     remove = false,
-    unset: string[] | undefined = undefined
+    unset: string[] | undefined = undefined,
   ) {
     check(name, String);
     this.name = name;
@@ -94,7 +94,7 @@ export class ScrubRule {
         { $and: [select, { $or: fieldSelects }] },
         { $unset: expr } as Mongo.Modifier<LogEntity>,
         { multi: true },
-        recordResult
+        recordResult,
       );
     }
   }
@@ -110,7 +110,7 @@ export class Scrubber {
       select: Mongo.Selector<LogEntity>;
       remove?: boolean;
       unset?: string[];
-    }[]
+    }[],
   ) {
     check(d, [Object]);
     return new Scrubber(d.map(ScrubRule.read));

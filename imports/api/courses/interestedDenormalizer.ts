@@ -20,7 +20,7 @@ async function updateAsync(courseId: string) {
 
   await Courses.updateAsync(
     { _id: course._id },
-    { $set: { interested: course.members?.length || 0 } }
+    { $set: { interested: course.members?.length || 0 } },
   );
 }
 

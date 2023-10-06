@@ -1,10 +1,10 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 
 .event-notfound-text {
-	left: 0;
-	position: absolute;
-	right: 0;
-	text-align: center;
-	top: 50%;
-	transform: translate(0, -50%);
+  left: 0;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 50%;
+  transform: translate(0, -50%);
 }

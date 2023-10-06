@@ -59,14 +59,14 @@ template.events({
       Alert.success(
         i18n(
           "forgotPassword.emailSent",
-          "An e-mail with further instructions on how to reset your password has been sent to you."
-        )
+          "An e-mail with further instructions on how to reset your password has been sent to you.",
+        ),
       );
       (instance.parentInstance() as any).accountTask.set("login");
     } catch (err) {
       Alert.serverError(
         err,
-        i18n("forgotPassword.emailSent.error", "We were unable to send a mail to this address")
+        i18n("forgotPassword.emailSent.error", "We were unable to send a mail to this address"),
       );
     } finally {
       instance.busy(false);

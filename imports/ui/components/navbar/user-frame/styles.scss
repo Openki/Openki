@@ -1,20 +1,20 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 /* stylelint-disable selector-max-compound-selectors */
 
 .user-frame {
-	@include media-breakpoint-down(md) {
-		@include clearfix;
-		background-color: $dropdown-bg;
-		padding-top: 15px;
-	}
+  @include media-breakpoint-down(md) {
+    @include clearfix;
+    background-color: $dropdown-bg;
+    padding-top: 15px;
+  }
 }
 
 .ownuser-frame {
-	padding: 0 ($grid-gutter-width / 2);
+  padding: 0 ($grid-gutter-width / 2);
 }
 
 .ownuser-frame-welcome {
-	font-size: $h3-font-size;
-	margin-top: 10px;
-	text-align: center;
+  font-size: $h3-font-size;
+  margin-top: 10px;
+  text-align: center;
 }

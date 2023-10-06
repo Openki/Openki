@@ -120,7 +120,7 @@ export function Events(props: { course: CourseModel }) {
                     {t(
                       "course.events.upcominglist",
                       "{NUM, plural, =0{No upcoming events yet} one{1 upcoming event} other{# upcoming events} }",
-                      { NUM: upcomingEventsCount() }
+                      { NUM: upcomingEventsCount() },
                     )}
                   </h4>
                 </div>
@@ -183,7 +183,7 @@ export function Events(props: { course: CourseModel }) {
               Analytics.trackEvent(
                 "Events downloads",
                 "Events downloads via course details",
-                Regions.findOne(course.region)?.nameEn
+                Regions.findOne(course.region)?.nameEn,
               );
             }}
           >

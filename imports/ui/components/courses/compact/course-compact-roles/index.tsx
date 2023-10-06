@@ -44,7 +44,7 @@ export function CourseCompactRoles(props: { course: CourseModel }) {
       tooltip = t(
         "course.compact.interestedCount",
         "{NUM, plural, =0{Nobody is} one{One person is} other{# persons are} } interested",
-        { NUM: numMembers }
+        { NUM: numMembers },
       );
 
       if (numMembers > 1 && isParticipant) {

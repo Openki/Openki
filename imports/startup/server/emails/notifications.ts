@@ -10,37 +10,37 @@ if (runBackgroundTasks)
   Meteor.startup(() => {
     SSR.compileTemplate(
       "notificationEventEmail",
-      Assets.getText("emails/notifications/event.html")
+      Assets.getText("emails/notifications/event.html"),
     );
     SSR.compileTemplate(
       "notificationEventCanceledEmail",
-      Assets.getText("emails/notifications/event.canceled.html")
+      Assets.getText("emails/notifications/event.canceled.html"),
     );
     SSR.compileTemplate(
       "notificationEventReminderEmail",
-      Assets.getText("emails/notifications/event.reminder.html")
+      Assets.getText("emails/notifications/event.reminder.html"),
     );
     SSR.compileTemplate(
       "notificationEventContactParticipantsEmail",
-      Assets.getText("emails/notifications/event.contact-participants.html")
+      Assets.getText("emails/notifications/event.contact-participants.html"),
     );
     SSR.compileTemplate("notificationRsvpEmail", Assets.getText("emails/notifications/rsvp.html"));
     SSR.compileTemplate(
       "notificationRsvpTeamEmail",
-      Assets.getText("emails/notifications/rsvp.team.html")
+      Assets.getText("emails/notifications/rsvp.team.html"),
     );
     SSR.compileTemplate(
       "notificationCommentEmail",
-      Assets.getText("emails/notifications/comment.html")
+      Assets.getText("emails/notifications/comment.html"),
     );
     SSR.compileTemplate("notificationJoinEmail", Assets.getText("emails/notifications/join.html"));
     SSR.compileTemplate(
       "notificationGroupCourseEmail",
-      Assets.getText("emails/notifications/group.course.html")
+      Assets.getText("emails/notifications/group.course.html"),
     );
     SSR.compileTemplate(
       "notificationPrivateMessageEmail",
-      Assets.getText("emails/notifications/privateMessage.html")
+      Assets.getText("emails/notifications/privateMessage.html"),
     );
 
     // To avoid sending stale notifications, only consider records added in the

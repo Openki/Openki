@@ -61,7 +61,7 @@ import "./styles.scss";
       },
       { editableName: Editable; editableDescription: Editable }
     >,
-    "courseDetailsPage"
+    "courseDetailsPage",
   );
 
   const template = Template.courseDetailsPage;
@@ -87,7 +87,7 @@ import "./styles.scss";
         Alert.success(
           i18n("courseDetails.message.nameChanged", 'The name has been changed to "{NAME}".', {
             NAME: newName,
-          })
+          }),
         );
       },
       onError: (err) => {
@@ -108,14 +108,14 @@ import "./styles.scss";
             i18n(
               "courseDetails.message.descriptionChanged",
               "The description of {NAME} has been changed.",
-              { NAME: course.name }
-            )
+              { NAME: course.name },
+            ),
           );
         },
         onError: (err) => {
           Alert.serverError(err as string | Error, i18n("course.save.error"));
         },
-      }
+      },
     );
 
     instance.autorun(() => {
@@ -189,7 +189,7 @@ import "./styles.scss";
           Alert.success(
             i18n("courseDetailsPage.message.courseHasBeenDeleted", "{COURSE} was deleted.", {
               COURSE: course.name,
-            })
+            }),
           );
 
           let role;
@@ -204,14 +204,14 @@ import "./styles.scss";
           Analytics.trackEvent(
             "Course deletions",
             `Course deletions as ${role}`,
-            Regions.findOne(course.region)?.nameEn
+            Regions.findOne(course.region)?.nameEn,
           );
 
           Router.go("/");
         } catch (err) {
           Alert.serverError(
             err,
-            i18n("courseDetailsPage.message.courseHasBeenDeleted.error", "Removing went wrong")
+            i18n("courseDetailsPage.message.courseHasBeenDeleted.error", "Removing went wrong"),
           );
         } finally {
           instance.busy(false);
@@ -230,12 +230,12 @@ import "./styles.scss";
           Alert.success(
             i18n("courseDetailsPage.message.courseHasBeenArchived", "{COURSE} was archived.", {
               COURSE: course.name,
-            })
+            }),
           );
         } catch (err) {
           Alert.serverError(
             err,
-            i18n("courseDetailsPage.message.courseHasBeenArchived.error", "Archiving went wrong")
+            i18n("courseDetailsPage.message.courseHasBeenArchived.error", "Archiving went wrong"),
           );
         } finally {
           instance.busy(false);
@@ -254,16 +254,16 @@ import "./styles.scss";
             i18n(
               "courseDetailsPage.message.courseHasBeenUnarchived",
               "{COURSE} has been unarchived.",
-              { COURSE: course.name }
-            )
+              { COURSE: course.name },
+            ),
           );
         } catch (err) {
           Alert.serverError(
             err,
             i18n(
               "courseDetailsPage.message.courseHasBeenUnarchived.error",
-              "Unarchiving went wrong"
-            )
+              "Unarchiving went wrong",
+            ),
           );
         } finally {
           instance.busy(false);

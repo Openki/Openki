@@ -34,7 +34,7 @@ function GroupToAdd(props: { course: CourseModel; groupId: string }) {
               t("courseGroupAdd.groupAdded", "{GROUP} was added to promote {COURSE}.", {
                 GROUP: name(group),
                 COURSE: course.name,
-              })
+              }),
             );
           } catch (err) {
             Alert.serverError(err, t("courseGroupAdd.groupAdded.error", "Adding failed"));

@@ -2,7 +2,7 @@ import { Mongo } from "meteor/mongo";
 import { EventEntity } from "/imports/api/events/events";
 
 export function AffectedReplicaSelectors(
-  event: { _id: string; start: Date; replicaOf?: string } | { _id: undefined }
+  event: { _id: string; start: Date; replicaOf?: string } | { _id: undefined },
 ) {
   // If the event itself is not in the DB, we don't expect it to have replicas
   if (!event._id) return { _id: "" }; // Finds nothing

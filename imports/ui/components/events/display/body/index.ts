@@ -44,7 +44,7 @@ import "./styles.scss";
       EventModel,
       { replicating: ReactiveVar<boolean>; canceling: ReactiveVar<boolean> }
     >,
-    "eventDisplay"
+    "eventDisplay",
   );
 
   const template = Template.eventDisplay;
@@ -83,7 +83,7 @@ import "./styles.scss";
       return {
         confirmText: i18n(
           "event.reallydelete",
-          "Please confirm that you would like to delete this event. This might confuse other users and cannot be undone. The event will be permanently deleted and not visible any more."
+          "Please confirm that you would like to delete this event. This might confuse other users and cannot be undone. The event will be permanently deleted and not visible any more.",
         ),
         confirmButton: i18n("event.delete.confirm.button", "Delete event without notifying anyone"),
         cancelButton: i18n("event.delete.confirm.cancel.button", "Rather mark as canceled"),
@@ -100,13 +100,13 @@ import "./styles.scss";
             Alert.success(
               i18n("eventDetails.eventRemoved", 'The "{TITLE}" event has been deleted.', {
                 TITLE: title,
-              })
+              }),
             );
 
             Analytics.trackEvent(
               "Event deletions",
               "Event deletions as team",
-              Regions.findOne(region)?.nameEn
+              Regions.findOne(region)?.nameEn,
             );
 
             if (course) {
@@ -117,7 +117,7 @@ import "./styles.scss";
           } catch (err) {
             Alert.serverError(
               err,
-              i18n("eventDetails.eventRemoved.error", "Could not remove event")
+              i18n("eventDetails.eventRemoved.error", "Could not remove event"),
             );
           }
         },
@@ -153,12 +153,12 @@ import "./styles.scss";
           Alert.success(
             i18n("event.details.message.eventHasBeenCanceled", "{EVENT} was canceled.", {
               EVENT: event.title,
-            })
+            }),
           );
         } catch (err) {
           Alert.serverError(
             err,
-            i18n("event.details.message.eventHasBeenCanceled.error", "Cancelling went wrong")
+            i18n("event.details.message.eventHasBeenCanceled.error", "Cancelling went wrong"),
           );
         } finally {
           instance.busy(false);
@@ -178,13 +178,13 @@ import "./styles.scss";
               "{EVENT} has been uncaneled. No notifications have been sent.",
               {
                 EVENT: event.title,
-              }
-            )
+              },
+            ),
           );
         } catch (err) {
           Alert.serverError(
             err,
-            i18n("event.details.message.eventHasBeenUncanceled.error", "Uncancelling went wrong")
+            i18n("event.details.message.eventHasBeenUncanceled.error", "Uncancelling went wrong"),
           );
         } finally {
           instance.busy(false);
@@ -196,7 +196,7 @@ import "./styles.scss";
       Analytics.trackEvent(
         "Events downloads",
         "Event downloads via event details",
-        Regions.findOne(instance.data.region)?.nameEn
+        Regions.findOne(instance.data.region)?.nameEn,
       );
     },
   });

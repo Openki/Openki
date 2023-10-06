@@ -29,10 +29,10 @@ if (runBackgroundTasks && Meteor.isServer && PrivateSettings.testdata) {
     T extends {
       [key: string]: any;
     },
-    U
+    U,
   >(
     collection: Mongo.Collection<T, U>,
-    methods: string[]
+    methods: string[],
   ) => {
     if (collection.find().count() === 0) {
       methods.forEach((method) => {

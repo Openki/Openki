@@ -39,7 +39,10 @@ export interface LogEntity {
 
 class ResultLogger {
   // eslint-disable-next-line no-useless-constructor
-  constructor(public id: string, public log: LogCollection) {}
+  constructor(
+    public id: string,
+    public log: LogCollection,
+  ) {}
 
   success(message?: string) {
     this.record(true, message);

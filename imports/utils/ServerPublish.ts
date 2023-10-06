@@ -17,7 +17,7 @@ import { publish, QueryBuilder } from "./ServerPublishUtils";
  */
 export function ServerPublishMany<A extends any[], T, U>(
   name: string,
-  publisher: (this: Pick<Subscription, "userId">, ...args: A) => Mongo.Cursor<T, U>
+  publisher: (this: Pick<Subscription, "userId">, ...args: A) => Mongo.Cursor<T, U>,
 ): [Blaze.Publication<A, Mongo.Cursor<T, U>>, React.Publication<A, U[]>];
 
 /**
@@ -39,13 +39,13 @@ export function ServerPublishMany<A extends any[], T, U>(
 export function ServerPublishMany<A extends any[], T, U>(
   name: string,
   publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T, U> | void,
-  queryBuilder: QueryBuilder<A, U>
+  queryBuilder: QueryBuilder<A, U>,
 ): [Blaze.Publication<A, Mongo.Cursor<T, U>>, React.Publication<A, U[]>];
 
 export function ServerPublishMany<A extends any[], T, U>(
   name: string,
   publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T, U> | void,
-  queryBuilder: QueryBuilder<A, U> = publisher as any as QueryBuilder<A, U>
+  queryBuilder: QueryBuilder<A, U> = publisher as any as QueryBuilder<A, U>,
 ) {
   publish(name, publisher);
   return [
@@ -57,7 +57,7 @@ export function ServerPublishMany<A extends any[], T, U>(
 export function ServerPublishOne<A extends any[], T, U>(
   name: string,
   publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T, U>,
-  queryBuilder: QueryBuilder<A, U>
+  queryBuilder: QueryBuilder<A, U>,
 ): [Blaze.Publication<A, U>, React.Publication<A, U>] {
   publish(name, publisher);
 

@@ -32,7 +32,7 @@ const Template = TemplateMixins.FormfieldErrors(
       text() {
         return i18n(
           "register.warning.userExists",
-          "This username is already in use. Please choose another one."
+          "This username is already in use. Please choose another one.",
         );
       },
       field: "username",
@@ -47,7 +47,7 @@ const Template = TemplateMixins.FormfieldErrors(
       text() {
         return i18n(
           "register.warning.noEmailProvided",
-          "Please enter an email-address to register."
+          "Please enter an email-address to register.",
         );
       },
       field: "email",
@@ -62,12 +62,12 @@ const Template = TemplateMixins.FormfieldErrors(
       text() {
         return i18n(
           "register.warning.emailExists",
-          "This email already exists. Have you tried resetting your password?"
+          "This email already exists. Have you tried resetting your password?",
         );
       },
       field: "email",
     },
-  }
+  },
 );
 
 const template = Template.registerFrame;
@@ -155,14 +155,14 @@ template.events({
         i18n(
           "profile.sentVerificationMail",
           'Verification mail has been sent to your address: "{MAIL}".',
-          { MAIL: user.emails[0].address }
-        )
+          { MAIL: user.emails[0].address },
+        ),
       );
 
       Analytics.trackEvent(
         "Registers",
         "Registers with password",
-        Regions.findOne(user.profile.regionId)?.nameEn
+        Regions.findOne(user.profile.regionId)?.nameEn,
       );
     } catch (err) {
       instance.errors.add(err.reason);

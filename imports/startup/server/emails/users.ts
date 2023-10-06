@@ -74,10 +74,10 @@ Accounts.emailTemplates.verifyEmail.html = function (user, url) {
       username: (user as UserModel).getDisplayName(),
       url,
       reportEmail: Spacebars.SafeString(
-        `<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`
+        `<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
       ),
       locale: user.locale,
-    })
+    }),
   );
 };
 
@@ -137,9 +137,9 @@ Accounts.emailTemplates.resetPassword.html = function (user, url) {
       username: (user as UserModel).getDisplayName(),
       url,
       reportEmail: Spacebars.SafeString(
-        `<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`
+        `<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
       ),
       locale: user.locale,
-    })
+    }),
   );
 };

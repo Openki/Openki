@@ -31,7 +31,7 @@ export const [simple, useSimple] = ServerPublishOne(
     const fields: Mongo.FieldSpecifier = { username: 1, contribution: 1 };
 
     return Users.findOne(userId, { fields });
-  }
+  },
 );
 
 export const [details, useDetails] = ServerPublishOne(
@@ -71,7 +71,7 @@ export const [details, useDetails] = ServerPublishOne(
     }
 
     return Users.findOne(userId, { fields });
-  }
+  },
 );
 
 export const [findFilter, useFindFilter] = ServerPublishMany("userSearch", (search: string) => {

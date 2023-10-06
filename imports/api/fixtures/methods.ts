@@ -291,7 +291,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
         event._id = ensure.fixedId([course._id, `${n}`]);
         event.title = `${course.name} ${_.sample(words)}`;
         event.description = HtmlTools.saneHtml(
-          words.slice(0, 10 + Math.floor(prng() * 30)).join(" ")
+          words.slice(0, 10 + Math.floor(prng() * 30)).join(" "),
         );
         event.groups = course.groups;
 
@@ -321,7 +321,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
         event.startLocal = LocalTime.toString(date);
         event.start = regionZone.fromString(event.startLocal).toDate();
         event.endLocal = LocalTime.toString(
-          new Date(date.getTime() + humandistrib(prng) * 1000 * 60 * 4)
+          new Date(date.getTime() + humandistrib(prng) * 1000 * 60 * 4),
         );
         event.end = regionZone.fromString(event.endLocal).toDate();
 
@@ -357,7 +357,7 @@ if (Meteor.isServer && PrivateSettings.testdata) {
         comment.courseId = course._id;
         comment.title = _.sample(words, 1 + Math.floor(prng() * 3)).join(" ");
         comment.text = HtmlTools.saneHtml(
-          _.sample(words, 5).join(" ") + _.sample(words, Math.floor(prng() * 30)).join(" ")
+          _.sample(words, 5).join(" ") + _.sample(words, Math.floor(prng() * 30)).join(" "),
         );
 
         comment.time_created = sometimesAfter(course.time_created);

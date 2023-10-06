@@ -87,7 +87,7 @@ template.onCreated(function () {
       } catch (ex) {
         // eslint-disable-next-line no-console
         console.info(
-          `Some browsers do not support this. It is okay to use the original. Errormessage: ${ex}`
+          `Some browsers do not support this. It is okay to use the original. Errormessage: ${ex}`,
         );
         rezisedFile = file;
       }

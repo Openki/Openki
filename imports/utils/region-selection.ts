@@ -43,7 +43,7 @@ function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: 
     regions.some(
       tenantId
         ? (r) => r.tenant === tenantId && r._id === regionIdOrName
-        : (r) => r._id === regionIdOrName
+        : (r) => r._id === regionIdOrName,
     )
   ) {
     persistRegion(regionIdOrName);
@@ -54,7 +54,7 @@ function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: 
   const region = regions.find(
     tenantId
       ? (r) => r.tenant === tenantId && r.name === regionIdOrName
-      : (r) => r.name === regionIdOrName
+      : (r) => r.name === regionIdOrName,
   );
   if (region) {
     persistRegion(region._id);
@@ -72,7 +72,7 @@ function useAsRegion(regions: RegionModel[], regionIdOrName: string, tenantId?: 
 export async function subscribe(
   instance: Subscriber,
   preferredTenant?: string,
-  confirmAutodectionByUser = true
+  confirmAutodectionByUser = true,
 ) {
   const findFilter = Regions.findFilter.subscribe(instance, async () => {
     const selectors = [

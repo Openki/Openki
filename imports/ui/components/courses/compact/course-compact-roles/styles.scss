@@ -1,33 +1,33 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 
 .course-compact-roles {
-	inset-inline-end: -7px;
-	padding: 0;
-	position: relative;
-	top: -7px;
+  inset-inline-end: -7px;
+  padding: 0;
+  position: relative;
+  top: -7px;
 }
 
 .course-compact-role {
-	text-align: center;
+  text-align: center;
 }
 
 .course-compact-role + .course-compact-role {
-	margin-top: 3px;
+  margin-top: 3px;
 }
 
 .course-compact-role-needed {
-	background-color: $role-needed-bg;
-	color: $role-needed-color;
+  background-color: $role-needed-bg;
+  color: $role-needed-color;
 }
 
 .course-compact-role-occupied {
-	$background-color: $green;
+  $background-color: $green;
 
-	background-color: $background-color;
-	color: desaturate(darken($background-color, 40%), 50%);
+  background-color: $background-color;
+  color: desaturate(darken($background-color, 40%), 50%);
 }
 
 .course-compact-role-occupied-by-user {
-	background-color: $user-bg;
-	color: desaturate(darken($user-bg, 40%), 60%);
+  background-color: $user-bg;
+  color: desaturate(darken($user-bg, 40%), 60%);
 }

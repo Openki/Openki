@@ -1,44 +1,44 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 
 /* stylelint-disable max-nesting-depth, selector-no-qualifying-type */
 .info-page {
-	h2 {
-		color: $primary;
-	}
+  h2 {
+    color: $primary;
+  }
 
-	p + h2,
-	ul + h2 {
-		margin-top: 30px;
-	}
+  p + h2,
+  ul + h2 {
+    margin-top: 30px;
+  }
 
-	h3 {
-		border-bottom: 1px solid $blue-lighter;
-		cursor: pointer;
-		font-size: 1.2em;
-		padding-bottom: 5px;
-		transition: border-color 0.15s;
+  h3 {
+    border-bottom: 1px solid $blue-lighter;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding-bottom: 5px;
+    transition: border-color 0.15s;
 
-		&:hover {
-			background-color: #ebf4f8;
-			border-color: $primary;
-		}
+    &:hover {
+      background-color: #ebf4f8;
+      border-color: $primary;
+    }
 
-		&.active {
-			background-color: #9fc5d6;
-			padding: 0.5rem;
-		}
-	}
+    &.active {
+      background-color: #9fc5d6;
+      padding: 0.5rem;
+    }
+  }
 
-	p,
-	ul {
-		font-size: 1.05em;
-	}
+  p,
+  ul {
+    font-size: 1.05em;
+  }
 
-	h2,
-	h3 {
-		~ p,
-		~ ul {
-			display: none;
-		}
-	}
+  h2,
+  h3 {
+    ~ p,
+    ~ ul {
+      display: none;
+    }
+  }
 }

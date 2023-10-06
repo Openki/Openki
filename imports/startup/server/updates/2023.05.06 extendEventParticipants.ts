@@ -15,7 +15,7 @@ export function update() {
                 return { user: p as unknown as string };
               }) || [],
           },
-        }
+        },
       );
     });
 

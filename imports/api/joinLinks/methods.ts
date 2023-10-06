@@ -39,7 +39,7 @@ export const create = ServerMethod("joinLinks.create", async (tenantId: string) 
         createdAt,
         createdBy,
       },
-    }
+    },
   );
 });
 

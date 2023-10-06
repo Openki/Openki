@@ -1,247 +1,247 @@
-@import "{}/imports/ui/stylesheets/variables/index";
+@import '{}/imports/ui/stylesheets/variables/index';
 
 .timetable {
-	min-height: 100vh;
-	overflow: hidden;
-	padding-top: 5px;
-	position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  padding-top: 5px;
+  position: relative;
 }
 
 .timetable-day-control {
-	color: #38829c77;
-	font-size: 100px;
-	margin: 15px 15px -75px;
-	position: absolute;
-	top: 50%;
-	z-index: 1;
+  color: #38829c77;
+  font-size: 100px;
+  margin: 15px 15px -75px;
+  position: absolute;
+  top: 50%;
+  z-index: 1;
 }
 
 .timetable-day-control-previous {
-	left: 0;
+  left: 0;
 }
 
 .timetable-day-control-next {
-	right: 0;
+  right: 0;
 }
 
 .timetable-header {
-	@include td-margin(left, 12em);
-	position: relative;
+  @include td-margin(left, 12em);
+  position: relative;
 }
 
 .timetable-days,
 .timetable-hours {
-	height: 2em;
-	margin-bottom: 2px;
-	position: relative;
+  height: 2em;
+  margin-bottom: 2px;
+  position: relative;
 }
 
 .timetable-day {
-	border: solid;
-	border-color: #ddd;
-	border-width: 3px 0 0 0.5px;
-	height: 2em;
-	margin-bottom: 2px;
-	position: absolute;
-	text-align: center;
+  border: solid;
+  border-color: #ddd;
+  border-width: 3px 0 0 0.5px;
+  height: 2em;
+  margin-bottom: 2px;
+  position: absolute;
+  text-align: center;
 }
 
 .timetable-hour {
-	border: solid;
-	border-color: #ddd;
-	border-width: 3px 0 0 0.5px;
-	height: 10000px;
-	padding-left: 5px;
-	position: absolute;
-	text-align: left;
+  border: solid;
+  border-color: #ddd;
+  border-width: 3px 0 0 0.5px;
+  height: 10000px;
+  padding-left: 5px;
+  position: absolute;
+  text-align: left;
 }
 
 .timetable-row {
-	border-top: 2px solid #aaa;
-	position: relative;
-	z-index: 0;
+  border-top: 2px solid #aaa;
+  position: relative;
+  z-index: 0;
 
-	&:hover {
-		z-index: 1;
-	}
+  &:hover {
+    z-index: 1;
+  }
 
-	&-room {
-		border-top-width: 0;
-	}
+  &-room {
+    border-top-width: 0;
+  }
 }
 
 .timetable-location {
-	@include td-pos(left, -1em);
-	max-height: 100%;
-	overflow: hidden;
-	padding: 0 1em;
-	position: absolute;
-	width: 12em;
+  @include td-pos(left, -1em);
+  max-height: 100%;
+  overflow: hidden;
+  padding: 0 1em;
+  position: absolute;
+  width: 12em;
 }
 
 .timetable-row-section {
-	@include td-margin(left, 12em);
-	height: 45px;
-	position: relative;
+  @include td-margin(left, 12em);
+  height: 45px;
+  position: relative;
 
-	&:hover {
-		z-index: 1;
-	}
+  &:hover {
+    z-index: 1;
+  }
 }
 
 .timetable-event {
-	color: $black;
-	margin: 0.1em;
-	position: absolute;
+  color: $black;
+  margin: 0.1em;
+  position: absolute;
 
-	&:hover {
-		z-index: 1;
-	}
+  &:hover {
+    z-index: 1;
+  }
 }
 
 .timetable-event-canceled,
 .timetable-event-fully-booked {
-	display: none;
+  display: none;
 }
 
 // event canceled
 //============================================================================================
 .timetable-event:hover .timetable-event-canceled {
-	background-color: $canceled-color;
-	border-radius: 5px;
-	color: $white;
-	display: flow-root;
-	font-family: monospace, sans-serif;
-	font-size: 2em;
-	font-stretch: narrower;
-	font-weight: 950;
-	left: 2%;
-	margin-block-start: 18px;
-	opacity: 0.4;
-	padding: 5px;
-	position: absolute;
-	text-align: center;
-	top: 16%;
-	transform: rotate(-27deg);
-	transform: rotate(-27d300eg);
-	transform: rotate(-27deg);
-	width: fit-content;
-	z-index: 300;
+  background-color: $canceled-color;
+  border-radius: 5px;
+  color: $white;
+  display: flow-root;
+  font-family: monospace, sans-serif;
+  font-size: 2em;
+  font-stretch: narrower;
+  font-weight: 950;
+  left: 2%;
+  margin-block-start: 18px;
+  opacity: 0.4;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  top: 16%;
+  transform: rotate(-27deg);
+  transform: rotate(-27d300eg);
+  transform: rotate(-27deg);
+  width: fit-content;
+  z-index: 300;
 }
 
 // event fully booked
 //============================================================================================
 .timetable-event:hover .timetable-event-fully-booked {
-	background-color: #f99248;
-	border-radius: 5px;
-	color: $white;
-	display: flow-root;
-	font-family: monospace, sans-serif;
-	font-size: 2em;
-	font-stretch: narrower;
-	font-weight: 950;
-	left: 2%;
-	margin-block-start: 18px;
-	opacity: 0.4;
-	padding: 5px;
-	position: absolute;
-	text-align: center;
-	top: 16%;
-	transform: rotate(-27deg);
-	transform: rotate(-27d300eg);
-	transform: rotate(-27deg);
-	width: fit-content;
-	z-index: 300;
+  background-color: #f99248;
+  border-radius: 5px;
+  color: $white;
+  display: flow-root;
+  font-family: monospace, sans-serif;
+  font-size: 2em;
+  font-stretch: narrower;
+  font-weight: 950;
+  left: 2%;
+  margin-block-start: 18px;
+  opacity: 0.4;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  top: 16%;
+  transform: rotate(-27deg);
+  transform: rotate(-27d300eg);
+  transform: rotate(-27deg);
+  width: fit-content;
+  z-index: 300;
 }
 
 .timetable-event-right {
-	&:hover {
-		@include td-direction(rtl);
-	}
+  &:hover {
+    @include td-direction(rtl);
+  }
 
-	&:hover * {
-		direction: initial;
-	}
+  &:hover * {
+    direction: initial;
+  }
 }
 
 .timetable-event-title {
-	background-color: $success;
-	font-size: 28px;
-	height: 43px;
-	line-height: 1.2em;
-	overflow: hidden;
-	padding: 4px 12px;
+  background-color: $success;
+  font-size: 28px;
+  height: 43px;
+  line-height: 1.2em;
+  overflow: hidden;
+  padding: 4px 12px;
 }
 
 .timetable-event:hover .timetable-event-title {
-	box-shadow: 0 5px 8px $default-shadow;
-	height: auto;
-	max-height: 110px;
-	min-height: 70px;
-	min-width: 400px;
+  box-shadow: 0 5px 8px $default-shadow;
+  height: auto;
+  max-height: 110px;
+  min-height: 70px;
+  min-width: 400px;
 }
 
 .timetable-event-title.timetable-event-title-canceled {
-	background-image: url("data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E %3C%21--%20Created%20with%20Inkscape%20%28http%3A%2F%2Fwww.inkscape.org%2F%29%20--%3E %3Csvg %20%20%20xmlns%3Asvg%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 %20%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 %20%20%20version%3D%221.0%22 %20%20%20width%3D%22100%22 %20%20%20height%3D%22100%22 %20%20%20id%3D%22svg8978%22%3E %20%20%3Cdefs %20%20%20%20%20id%3D%22defs8980%22%20%2F%3E %20%20%3Cg %20%20%20%20%20id%3D%22layer1%22%3E %20%20%20%20%3Cpath %20%20%20%20%20%20%20d%3D%22M%206.3895625%2C6.4195626%20C%2093.580437%2C93.610437%2093.580437%2C93.610437%2093.580437%2C93.610437%22 %20%20%20%20%20%20%20style%3D%22fill%3Anone%3Bfill-rule%3Aevenodd%3Bstroke%3A%23ff0000%3Bstroke-width%3A18.05195999%3Bstroke-linecap%3Abutt%3Bstroke-linejoin%3Amiter%3Bstroke-miterlimit%3A4%3Bstroke-dasharray%3Anone%3Bstroke-opacity%3A1%22 %20%20%20%20%20%20%20id%3D%22path8986%22%20%2F%3E %20%20%20%20%3Cpath %20%20%20%20%20%20%20d%3D%22M%206.3894001%2C93.6106%20C%2093.830213%2C6.4194003%2093.830213%2C6.4194003%2093.830213%2C6.4194003%22 %20%20%20%20%20%20%20style%3D%22fill%3Anone%3Bfill-rule%3Aevenodd%3Bstroke%3A%23ff0000%3Bstroke-width%3A17.80202103%3Bstroke-linecap%3Abutt%3Bstroke-linejoin%3Amiter%3Bstroke-miterlimit%3A4%3Bstroke-dasharray%3Anone%3Bstroke-opacity%3A1%22 %20%20%20%20%20%20%20id%3D%22path8988%22%20%2F%3E %20%20%3C%2Fg%3E %3C%2Fsvg%3E");
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: contain;
+  background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E %3C%21--%20Created%20with%20Inkscape%20%28http%3A%2F%2Fwww.inkscape.org%2F%29%20--%3E %3Csvg %20%20%20xmlns%3Asvg%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 %20%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 %20%20%20version%3D%221.0%22 %20%20%20width%3D%22100%22 %20%20%20height%3D%22100%22 %20%20%20id%3D%22svg8978%22%3E %20%20%3Cdefs %20%20%20%20%20id%3D%22defs8980%22%20%2F%3E %20%20%3Cg %20%20%20%20%20id%3D%22layer1%22%3E %20%20%20%20%3Cpath %20%20%20%20%20%20%20d%3D%22M%206.3895625%2C6.4195626%20C%2093.580437%2C93.610437%2093.580437%2C93.610437%2093.580437%2C93.610437%22 %20%20%20%20%20%20%20style%3D%22fill%3Anone%3Bfill-rule%3Aevenodd%3Bstroke%3A%23ff0000%3Bstroke-width%3A18.05195999%3Bstroke-linecap%3Abutt%3Bstroke-linejoin%3Amiter%3Bstroke-miterlimit%3A4%3Bstroke-dasharray%3Anone%3Bstroke-opacity%3A1%22 %20%20%20%20%20%20%20id%3D%22path8986%22%20%2F%3E %20%20%20%20%3Cpath %20%20%20%20%20%20%20d%3D%22M%206.3894001%2C93.6106%20C%2093.830213%2C6.4194003%2093.830213%2C6.4194003%2093.830213%2C6.4194003%22 %20%20%20%20%20%20%20style%3D%22fill%3Anone%3Bfill-rule%3Aevenodd%3Bstroke%3A%23ff0000%3Bstroke-width%3A17.80202103%3Bstroke-linecap%3Abutt%3Bstroke-linejoin%3Amiter%3Bstroke-miterlimit%3A4%3Bstroke-dasharray%3Anone%3Bstroke-opacity%3A1%22 %20%20%20%20%20%20%20id%3D%22path8988%22%20%2F%3E %20%20%3C%2Fg%3E %3C%2Fsvg%3E');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .timetable-event:hover .timetable-event-title-canceled {
-	background-image: none;
+  background-image: none;
 }
 
 .timetable-event-time {
-	background-color: #eee;
-	display: none;
-	height: 1.4em;
-	overflow: hidden;
-	padding: 0 6px;
-	position: absolute;
-	top: -20px;
+  background-color: #eee;
+  display: none;
+  height: 1.4em;
+  overflow: hidden;
+  padding: 0 6px;
+  position: absolute;
+  top: -20px;
 }
 
 .timetable-event-description {
-	background-color: $blue-lighter;
-	display: none;
-	height: 12em;
-	overflow: hidden;
-	padding: 4px 8px;
-	position: relative;
+  background-color: $blue-lighter;
+  display: none;
+  height: 12em;
+  overflow: hidden;
+  padding: 4px 8px;
+  position: relative;
 }
 
 .timetable-event-description p {
-	@include ellipsis-multiline(5);
+  @include ellipsis-multiline(5);
 }
 
 .timetable-event:hover .timetable-event-time,
 .timetable-event:hover .timetable-event-description {
-	box-shadow: 0 5px 8px $default-shadow;
-	display: block;
-	z-index: 1;
+  box-shadow: 0 5px 8px $default-shadow;
+  display: block;
+  z-index: 1;
 }
 
 .timetable-event:hover .timetable-event-time {
-	min-width: 130px;
+  min-width: 130px;
 }
 
 .timetable-event:hover .timetable-event-description {
-	min-width: 400px;
+  min-width: 400px;
 }
 
 .vertical-wrapper {
-	height: 100vh;
-	pointer-events: none;
-	position: absolute;
-	width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
 }
 
 .vertical {
-	border-left: 3px solid #f00;
-	height: 100%;
-	left: 50%;
-	opacity: 30%;
-	position: absolute;
-	z-index: 1;
+  border-left: 3px solid #f00;
+  height: 100%;
+  left: 50%;
+  opacity: 30%;
+  position: absolute;
+  z-index: 1;
 }

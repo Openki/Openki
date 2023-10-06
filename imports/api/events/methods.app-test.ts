@@ -117,7 +117,7 @@ if (Meteor.isClient) {
 
           assert.isAbove(
             (newCourse as CourseModel).time_lastedit.getTime(),
-            (oldCourse as CourseModel).time_lastedit.getTime()
+            (oldCourse as CourseModel).time_lastedit.getTime(),
           );
         } finally {
           handle.stop();

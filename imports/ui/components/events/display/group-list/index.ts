@@ -77,7 +77,7 @@ import "./styles.scss";
 {
   const Template = TemplateMixins.Expandible(
     TemplateAny as TemplateStaticTyped<"eventGroupAdd", EventModel>,
-    "eventGroupAdd"
+    "eventGroupAdd",
   );
 
   const template = Template.eventGroupAdd;
@@ -103,8 +103,8 @@ import "./styles.scss";
           i18n(
             "eventGroupAdd.groupAdded",
             'The group "{GROUP}" has been added to promote the "{EVENT}" event.',
-            { GROUP: groupName, EVENT: event.title }
-          )
+            { GROUP: groupName, EVENT: event.title },
+          ),
         );
         instance.collapse();
       } catch (err) {
@@ -117,7 +117,7 @@ import "./styles.scss";
 {
   const Template = TemplateMixins.Expandible(
     TemplateAny as TemplateStaticTyped<"eventGroupRemove", { event: EventModel; groupId: string }>,
-    "eventGroupRemove"
+    "eventGroupRemove",
   );
 
   const template = Template.eventGroupRemove;
@@ -136,8 +136,8 @@ import "./styles.scss";
           i18n(
             "eventGroupAdd.groupRemoved",
             'The group "{GROUP}" has been removed from the "{EVENT}" event.',
-            { GROUP: groupName, EVENT: event.title }
-          )
+            { GROUP: groupName, EVENT: event.title },
+          ),
         );
         instance.collapse();
       } catch (err) {
@@ -153,7 +153,7 @@ import "./styles.scss";
       "eventGroupMakeOrganizer",
       { event: EventModel; groupId: string }
     >,
-    "eventGroupMakeOrganizer"
+    "eventGroupMakeOrganizer",
   );
 
   const template = Template.eventGroupMakeOrganizer;
@@ -172,14 +172,14 @@ import "./styles.scss";
           i18n(
             "eventGroupAdd.membersCanEditEvent",
             'Members of the group "{GROUP}" can now edit the "{EVENT}" event.',
-            { GROUP: groupName, EVENT: event.title }
-          )
+            { GROUP: groupName, EVENT: event.title },
+          ),
         );
         instance.collapse();
       } catch (err) {
         Alert.serverError(
           err,
-          i18n("eventGroupAdd.membersCanEditEvent.error", "Failed to give group editing rights")
+          i18n("eventGroupAdd.membersCanEditEvent.error", "Failed to give group editing rights"),
         );
       }
     },

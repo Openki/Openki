@@ -4,7 +4,10 @@ import { ParamWrapper, Predicate } from "imports/utils/predicates";
 
 export class FilteringReadError {
   // eslint-disable-next-line no-useless-constructor
-  constructor(public name: string, public message: string) {}
+  constructor(
+    public name: string,
+    public message: string,
+  ) {}
 }
 
 /**
