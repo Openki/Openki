@@ -1,4 +1,4 @@
-@import '{}/imports/ui/stylesheets/variables/index';
+@import "{}/imports/ui/stylesheets/variables/index";
 
 .shariff-wrapper {
   padding: 15px;
@@ -43,7 +43,7 @@ $shariff-bg-color: #77b8e9;
 }
 
 @function map-bg($bg, $bg-hover) {
-  @return ('bg': $bg, 'bg-hover': $bg-hover);
+  @return ("bg": $bg, "bg-hover": $bg-hover);
 }
 
 .shariff-button > a {

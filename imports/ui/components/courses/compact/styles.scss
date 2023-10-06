@@ -1,4 +1,4 @@
-@import '{}/imports/ui/stylesheets/variables/index';
+@import "{}/imports/ui/stylesheets/variables/index";
 
 // ** Compact
 //========================================================================================
@@ -10,7 +10,7 @@
   height: 150px;
   position: relative;
   transition-duration: 0.1s;
-  transition-property: #{'box-shadow opacity'};
+  transition-property: #{"box-shadow opacity"};
 
   &:hover {
     box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;

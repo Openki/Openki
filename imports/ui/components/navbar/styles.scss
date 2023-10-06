@@ -1,4 +1,4 @@
-@import '{}/imports/ui/stylesheets/variables/index';
+@import "{}/imports/ui/stylesheets/variables/index";
 /* stylelint-disable selector-max-compound-selectors */
 
 .navbar {
@@ -99,7 +99,7 @@
   cursor: pointer;
   font-size: large;
   transition-duration: $default-transition-time;
-  transition-property: #{'background-color, box-shadow, text-shadow'};
+  transition-property: #{"background-color, box-shadow, text-shadow"};
 
   @include media-breakpoint-down(lg) {
     border-bottom: 1px solid $navbar-default-border;
@@ -118,7 +118,7 @@
   opacity: 0;
   position: absolute;
   transition-duration: $default-transition-time;
-  transition-property: #{'background-color, opacity'};
+  transition-property: #{"background-color, opacity"};
   width: 100%;
 }
 
@@ -137,7 +137,7 @@
 
 .nav-link.active {
   @include media-breakpoint-down(lg) {
-    background-color: css-lighten('openki-brand', 10%);
+    background-color: css-lighten("openki-brand", 10%);
   }
 }
 
@@ -172,7 +172,7 @@
 .navbar-covering .nav-link.active:hover,
 .navbar-covering .nav-link.active:focus {
   @include media-breakpoint-up(lg) {
-    background-color: css-lighten('openki-brand', 10%);
+    background-color: css-lighten("openki-brand", 10%);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   }
 }
