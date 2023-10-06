@@ -158,6 +158,14 @@ RouterAsync.route("home", {
   },
 });
 
+RouterAsync.route("dashboard", {
+  path: "dashboard",
+  template: "dashboardPage",
+  async onRun() {
+    await import("/imports/ui/pages/dashboard");
+  },
+});
+
 RouterAsync.route("users", {
   path: "admin/users",
   template: "adminUsersPage",
