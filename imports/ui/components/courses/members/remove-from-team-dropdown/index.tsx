@@ -27,7 +27,7 @@ export function RemoveFromTeamDropdown(props: { member: CourseMemberEntity; onCl
     >
       <button
         type="button"
-        className="btn btn-sm btn-close btn-close-white"
+        className="btn btn-sm btn-close"
         aria-expanded="false"
         data-bs-toggle="dropdown"
       ></button>

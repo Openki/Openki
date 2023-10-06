@@ -106,6 +106,8 @@ $grid-breakpoints: map-merge($grid-breakpoints, $custom-grid-breakpoints);
 
 $container-max-widths: map-remove($container-max-widths, xxl);
 
+@import '{}/node_modules/bootstrap/scss/variables-dark';
+
 @import '{}/node_modules/bootstrap/scss/maps'; // Optional
 
 @import '{}/node_modules/bootstrap/scss/mixins'; // Required

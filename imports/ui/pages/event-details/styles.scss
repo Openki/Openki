@@ -2,14 +2,6 @@
 
 $header-bg: darken($blue-lighter, 5%);
 
-.alert-canceled {
-  @include alert-variant(
-    $canceled-color,
-		darken($canceled-color, 5%),
-		darken($canceled-color, 60%)
-	);
-}
-
 .event.course-event {
   border-color: $header-bg;
   border-style: solid;
