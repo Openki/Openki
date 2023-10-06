@@ -266,6 +266,7 @@
   "courseGroupAdd.membersCanNoLongerEditCourse.error": "Failed to remove organizer status",
   "courseMember.messageChanged": "Your enroll-message has been changed.",
   "courses.creator.defaultMessage": "(has proposed this course)",
+  "dashboard.title": "Dashboard",
   "deleteEventsModal.clearSelection": "Clear selection",
   "deleteEventsModal.confirm": "Confirm deletion of events",
   "deleteEventsModal.confirmDeleteEvents": "Delete {NUM, plural, one{event} other{events} }",
