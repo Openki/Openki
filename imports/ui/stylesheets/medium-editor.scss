@@ -3,21 +3,21 @@
 
 .medium-editor-placeholder,
 .medium-editor-placeholder-relative {
-	&:hover {
-		cursor: text;
-	}
+  &:hover {
+    cursor: text;
+  }
 
-	&::after {
-		font-style: normal;
-		margin: 0;
-		padding: 0;
-		position: relative;
-		white-space: normal;
-	}
+  &::after {
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    white-space: normal;
+  }
 }
 
 // medium-editor-placeholder-relative is used from medium-editor for a fix in firefox
 .medium-editor-placeholder-relative::after {
-	// Normalize with none relative
-	color: #b3b3b1;
+  // Normalize with none relative
+  color: #b3b3b1;
 }

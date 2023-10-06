@@ -7,7 +7,7 @@ export type Sort = Type<typeof SortPattern>;
 
 export const FieldSortPattern = Tuple<[field: StringConstructor, sort: typeof SortPattern]>(
   String,
-  SortPattern
+  SortPattern,
 );
 
 export type FieldSort = Type<typeof FieldSortPattern>;
@@ -42,7 +42,7 @@ SortSpec.fromString = function (spec: string) {
           return [field.slice(1), "desc"];
         }
         return [field, "asc"];
-      })
+      }),
   );
 };
 

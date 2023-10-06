@@ -78,7 +78,7 @@ import "./styles.scss";
         },
         {
           sort: { time_updated: -1 },
-        }
+        },
       ).fetch();
 
       const count = posts.length;
@@ -165,7 +165,7 @@ import "./styles.scss";
 
       const replies = CourseDiscussions.find(
         { parentId: post._id },
-        { sort: { time_created: 1 } }
+        { sort: { time_created: 1 } },
       ).fetch();
 
       const limit = instance.limit.get();
@@ -420,7 +420,7 @@ import "./styles.scss";
       } catch (err) {
         Alert.serverError(
           err,
-          i18n("courseDiscussions.postComment.error", "Posting your comment went wrong")
+          i18n("courseDiscussions.postComment.error", "Posting your comment went wrong"),
         );
       } finally {
         instance.busy(false);

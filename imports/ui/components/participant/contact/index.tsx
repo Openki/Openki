@@ -48,7 +48,7 @@ export function ParticipantContact(props: {
       placeholder: t(
         "participantContact.sendMessage.placeholder",
         "Hi {USER}. I wanted to tell you…",
-        { USER: participant?.getDisplayName() }
+        { USER: participant?.getDisplayName() },
       ),
       onSend: async (message, options) => {
         const sendPrivateMessageOptions = options as SendPrivateMessageOptions;
@@ -61,7 +61,7 @@ export function ParticipantContact(props: {
         await emailMethods.sendPrivateMessage(
           props.participant,
           message,
-          sendPrivateMessageOptions
+          sendPrivateMessageOptions,
         );
         const element = modalRef.current as unknown as Element;
         Modal.getOrCreateInstance(element).hide();
@@ -91,7 +91,7 @@ export function ParticipantContact(props: {
                     className="fa-solid fa-envelope fa-fw"
                     title={t(
                       "user.acceptsPrivateMessages.false",
-                      "User does not accept private messages from users"
+                      "User does not accept private messages from users",
                     )}
                   ></i>
                 </button>

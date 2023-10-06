@@ -71,7 +71,7 @@ export function UnregisterPanel(props: {
             {t(
               "event.details.want-to-withdraw",
               'Do you want to withdraw your registration for the event "{EVENTTITLE}" on the {DATE}?',
-              { EVENTTITLE: event.title, DATE: dateFormat(event.startLocal) }
+              { EVENTTITLE: event.title, DATE: dateFormat(event.startLocal) },
             )}
           </p>
           <div className="row justify-content-between align-items-center gap-3">
@@ -97,7 +97,7 @@ export function UnregisterPanel(props: {
               {t(
                 "event.details.youStayEnrolled",
                 "Note that you will stay enrolled as interested for {COURSETITLE}.",
-                { COURSETITLE: courseTitle() }
+                { COURSETITLE: courseTitle() },
               )}
             </p>
           ) : null}

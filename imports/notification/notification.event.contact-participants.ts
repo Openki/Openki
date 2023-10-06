@@ -36,7 +36,7 @@ export function record(
   message: string,
   eventId: string,
   revealSenderAddress: boolean,
-  sendCopyToSender: boolean
+  sendCopyToSender: boolean,
 ) {
   check(senderId, String);
   check(message, String);
@@ -116,7 +116,7 @@ export function Model(entry: { body: Body }) {
       const subject = i18n(
         "notification.event.contact-participants.mail.subject",
         "Message from {SENDER} to all attendees of {EVENT}",
-        subjectvars
+        subjectvars,
       );
       const htmlizedMessage = HtmlTools.plainToHtml(entry.body.message);
 
@@ -166,7 +166,7 @@ export function Model(entry: { body: Body }) {
         {
           EVENT: event.title,
           DATE: startMoment.calendar(),
-        }
+        },
       );
       const eventUrl = Router.url("showEvent", event, {
         query: "campaign=eventContactParticipants",

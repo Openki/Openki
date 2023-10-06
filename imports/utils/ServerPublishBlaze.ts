@@ -25,7 +25,7 @@ export interface Publication<A extends any[], T> {
 
 export function createPublication<A extends any[], T>(
   name: string,
-  queryBuilder: QueryBuilder<A, T>
+  queryBuilder: QueryBuilder<A, T>,
 ) {
   return {
     subscribe(...args: A) {
@@ -54,7 +54,7 @@ export function createPublication<A extends any[], T>(
 export type SubscriptionType<
   P extends Publication<A, T>,
   A extends any[] = any,
-  T = any
+  T = any,
 > = ReturnType<P["subscribe"]>;
 
 /**
@@ -72,10 +72,10 @@ export type SubscriptionType<
 export function ServerPublish<
   A extends any[],
   C extends readonly Mongo.Cursor<any>[],
-  T extends Record<C>
+  T extends Record<C>,
 >(
   name: string,
-  publisher: (this: Pick<Subscription, "userId">, ...args: A) => T
+  publisher: (this: Pick<Subscription, "userId">, ...args: A) => T,
 ): Publication<A, T>;
 
 /**
@@ -98,22 +98,22 @@ export function ServerPublish<
   A extends any[],
   C extends readonly Mongo.Cursor<any>[],
   T extends Record<C>,
-  Q
+  Q,
 >(
   name: string,
   publisher: (this: Subscription, ...args: A) => T | void,
-  queryBuilder: QueryBuilder<A, Q>
+  queryBuilder: QueryBuilder<A, Q>,
 ): Publication<A, Q>;
 
 export function ServerPublish<
   A extends any[],
   C extends readonly Mongo.Cursor<any>[],
   T extends Record<C>,
-  Q extends T | any
+  Q extends T | any,
 >(
   name: string,
   publisher: (this: Subscription, ...args: A) => T | void,
-  queryBuilder: QueryBuilder<A, Q> = publisher as QueryBuilder<A, Q>
+  queryBuilder: QueryBuilder<A, Q> = publisher as QueryBuilder<A, Q>,
 ) {
   publish(name, publisher);
 
@@ -135,7 +135,7 @@ export function ServerPublish<
  */
 export function ServerPublishMany<A extends any[], T extends Mongo.Cursor<any>>(
   name: string,
-  publisher: (this: Pick<Subscription, "userId">, ...args: A) => T
+  publisher: (this: Pick<Subscription, "userId">, ...args: A) => T,
 ): Publication<A, T>;
 
 /**
@@ -157,13 +157,13 @@ export function ServerPublishMany<A extends any[], T extends Mongo.Cursor<any>>(
 export function ServerPublishMany<A extends any[], T>(
   name: string,
   publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T> | undefined,
-  queryBuilder: QueryBuilder<A, T>
+  queryBuilder: QueryBuilder<A, T>,
 ): Publication<A, T>;
 
 export function ServerPublishMany<A extends any[], T>(
   name: string,
   publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T> | undefined,
-  queryBuilder: QueryBuilder<A, T> = publisher as any as QueryBuilder<A, T>
+  queryBuilder: QueryBuilder<A, T> = publisher as any as QueryBuilder<A, T>,
 ) {
   return ServerPublish(name, publisher as any, queryBuilder as any);
 }
@@ -171,7 +171,7 @@ export function ServerPublishMany<A extends any[], T>(
 export function ServerPublishOne<A extends any[], T>(
   name: string,
   publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T>,
-  queryBuilder: QueryBuilder<A, T>
+  queryBuilder: QueryBuilder<A, T>,
 ) {
   return ServerPublish(name, publisher, queryBuilder);
 }

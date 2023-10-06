@@ -27,7 +27,7 @@ export function RemoveFromTeamDropdown(props: { member: CourseMemberEntity; onCl
     >
       <button
         type="button"
-        className="btn btn-sm btn-close btn-close-white"
+        className="btn btn-sm btn-close"
         aria-expanded="false"
         data-bs-toggle="dropdown"
       ></button>
@@ -45,7 +45,7 @@ export function RemoveFromTeamDropdown(props: { member: CourseMemberEntity; onCl
           {isNotPriviledgedSelf()
             ? t(
                 "course.detail.remove.yourself.team",
-                "Remove yourself from the team? Only another member can add you back."
+                "Remove yourself from the team? Only another member can add you back.",
               )
             : t("course.detail.remove.other.team", "Remove this member from the team?")}
         </li>

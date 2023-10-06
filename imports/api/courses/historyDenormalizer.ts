@@ -68,7 +68,7 @@ export function afterEventInsert(
     title: string;
     slug: string;
     startLocal: string;
-  }
+  },
 ) {
   Courses.update(courseId, {
     $addToSet: {
@@ -90,7 +90,7 @@ export function afterEventUpdate(
     slug: string;
     startLocal: string;
     replicasUpdated: boolean;
-  }
+  },
 ) {
   Courses.update(courseId, {
     $addToSet: {
@@ -109,7 +109,7 @@ export function afterEventRemove(
   event: {
     title: string;
     startLocal: string;
-  }
+  },
 ) {
   Courses.update(courseId, {
     $addToSet: {

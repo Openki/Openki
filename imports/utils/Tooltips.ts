@@ -3,7 +3,7 @@ import Tooltip from "bootstrap/js/dist/tooltip";
 export function create(target: ParentNode = document) {
   const tooltipTriggerList = target.querySelectorAll('[data-bs-toggle="tooltip"]');
   [...(tooltipTriggerList as any)].map((tooltipTriggerEl) =>
-    Tooltip.getOrCreateInstance(tooltipTriggerEl, { html: true })
+    Tooltip.getOrCreateInstance(tooltipTriggerEl, { html: true }),
   );
 }
 

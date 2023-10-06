@@ -36,7 +36,7 @@ export function generatePublicUrl(fullFileName: string) {
 export async function upload(directoryName: string, file: UploadFile) {
   const fullKey = path.join(
     directoryName,
-    `${new Mongo.ObjectID().toHexString()}.${mime.extension(file.mimeType)}`
+    `${new Mongo.ObjectID().toHexString()}.${mime.extension(file.mimeType)}`,
   );
 
   const s3 = createS3Client();

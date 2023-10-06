@@ -96,7 +96,7 @@ $tooltip-font-size: $font-size-base;
 // Modify Bootstrap maps
 
 $custom-grid-breakpoints: (
-	"sm": 480px,
+  "sm": 480px,
 );
 $grid-breakpoints: map-merge($grid-breakpoints, $custom-grid-breakpoints);
 
@@ -105,6 +105,8 @@ $grid-breakpoints: map-merge($grid-breakpoints, $custom-grid-breakpoints);
 // Define the maximum width of `.container` for different screen sizes.
 
 $container-max-widths: map-remove($container-max-widths, xxl);
+
+@import "{}/node_modules/bootstrap/scss/variables-dark";
 
 @import "{}/node_modules/bootstrap/scss/maps"; // Optional
 
@@ -115,14 +117,14 @@ $container-max-widths: map-remove($container-max-widths, xxl);
 // Add grid-breakpoints to max-width utilites: mw-sm, mw-md, ...
 
 $utilities: map-merge(
-	$utilities,
-	(
-		"max-width":
-			map-merge(
-				map-get($utilities, "max-width"),
-				(
-					values: map-merge(map-get(map-get($utilities, "max-width"), "values"), $grid-breakpoints),
-				)
-			),
-	)
+  $utilities,
+  (
+    "max-width":
+      map-merge(
+        map-get($utilities, "max-width"),
+        (
+          values: map-merge(map-get(map-get($utilities, "max-width"), "values"), $grid-breakpoints),
+        )
+      ),
+  )
 );

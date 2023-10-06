@@ -56,7 +56,7 @@ template.onCreated(function () {
       onSuccess: () => {
         Alert.success(i18n("courseMember.messageChanged", "Your enroll-message has been changed."));
       },
-    }
+    },
   );
 
   instance.autorun(() => {

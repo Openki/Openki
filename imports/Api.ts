@@ -22,13 +22,13 @@ export interface ApiCollection<
   T,
   U,
   P extends { [name: string]: Predicate<any> },
-  F = ToFilter<P>
+  F = ToFilter<P>,
 > {
   findFilter(
     filter?: Partial<F>,
     limit?: number,
     skip?: number,
-    sort?: FieldSort[]
+    sort?: FieldSort[],
   ): Mongo.Cursor<T, U>;
 
   Filtering(): Filtering<P>;
@@ -75,7 +75,7 @@ export type ApiEvent = {
 function apiResponse<T, U, F extends { [name: string]: Predicate<any> }, R>(
   collection: ApiCollection<T, U, F, ToFilter<F> & typeof additionalFilters>,
   formatter: (model: U) => R,
-  additionalFilters = {}
+  additionalFilters = {},
 ) {
   return (filter = {}, limit = 0, skip = 0, sort?: FieldSort[]) => {
     const query = collection.Filtering().readAndValidate(filter).done().toQuery();
@@ -179,7 +179,7 @@ export const Api = {
 
       return evr;
     },
-    { tenants: visibleTenants() }
+    { tenants: visibleTenants() },
   ),
   courses: apiResponse(
     Courses,
@@ -255,6 +255,6 @@ export const Api = {
 
       return course;
     },
-    { tenants: visibleTenants() }
+    { tenants: visibleTenants() },
   ),
 };

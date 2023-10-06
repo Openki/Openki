@@ -75,7 +75,7 @@ template.onCreated(function () {
             const h = Math.floor(hm / 100);
             const m = hm % 100;
             return h * 60 + m;
-          }) /* convert to minutes */
+          }) /* convert to minutes */,
       ),
     ];
     instance.separators.set(seps);
@@ -167,7 +167,7 @@ template.onCreated(function () {
         rIntervals[separator] = separator;
         return rIntervals;
       },
-      {}
+      {},
     );
 
     // List of days where events where found
@@ -228,7 +228,7 @@ template.onCreated(function () {
     // Build list of most used titles (first few chars)
     const mostUsedKinds = _.sortBy(Object.entries(kinds), (kv) => -kv[1]);
     const kindRank = _.object(
-      mostUsedKinds.slice(0, 15).map((kv, rank) => [kv[0], rank + 1])
+      mostUsedKinds.slice(0, 15).map((kv, rank) => [kv[0], rank + 1]),
     ) as _.Dictionary<number>;
     instance.kindMap = function (title: string) {
       const kindId = title.substring(0, 5);
@@ -272,7 +272,7 @@ template.helpers({
       moment(scheduleStart)
         .add(day, "days")
         .locale(Session.get("timeLocale") || "en")
-        .format("dddd")
+        .format("dddd"),
     );
   },
 

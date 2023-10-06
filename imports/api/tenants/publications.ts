@@ -56,11 +56,11 @@ export const [details, useDetails] = ServerPublishOne(
       fields.admins = 1;
     }
     return Tenants.findOne(filter, { fields });
-  }
+  },
 );
 
 export const findFilter = ServerPublish(
   "Tenants.findFilter",
   (find?: FindFilter, limit?: number, skip?: number, sort?: FieldSort[]) =>
-    Tenants.findFilter(find, limit, skip, sort)
+    Tenants.findFilter(find, limit, skip, sort),
 );

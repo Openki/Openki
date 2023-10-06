@@ -33,7 +33,7 @@ if (Meteor.isClient) {
 
         assert.isEmpty(
           coursesAsGast.filter((c) => c.tenant && !PublicSettings.publicTenants.includes(c.tenant)),
-          "don't show courses from not public"
+          "don't show courses from not public",
         );
       });
 
@@ -54,18 +54,18 @@ if (Meteor.isClient) {
         assert.includeMembers(
           coursesAsSchufien.map((c) => c._id),
           coursesAsGast.map((c) => c._id),
-          "shows public courses as logged in user"
+          "shows public courses as logged in user",
         );
 
         assert.isTrue(
           coursesAsSchufien.length > coursesAsGast.length,
-          "shows private courses as logged in user"
+          "shows private courses as logged in user",
         );
         assert.isNotEmpty(
           coursesAsSchufien.filter(
-            (c) => c.tenant && schufien.tenants.some((t) => t._id === c.tenant)
+            (c) => c.tenant && schufien.tenants.some((t) => t._id === c.tenant),
           ),
-          "shows private courses as logged in user"
+          "shows private courses as logged in user",
         );
       });
 

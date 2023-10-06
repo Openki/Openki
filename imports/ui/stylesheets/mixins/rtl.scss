@@ -1,68 +1,68 @@
 @mixin td-padding($dir, $x) {
-	$opposite-dir: if($dir == left, right, left);
+  $opposite-dir: if($dir == left, right, left);
 
-	padding-#{$dir}: $x;
+  padding-#{$dir}: $x;
 
-	.rtl & {
-		padding-#{$dir}: 0;
-		padding-#{$opposite-dir}: $x;
-	}
+  .rtl & {
+    padding-#{$dir}: 0;
+    padding-#{$opposite-dir}: $x;
+  }
 }
 
 @mixin td-padding-all($top, $right, $bottom, $left) {
-	padding: $top $right $bottom $left;
+  padding: $top $right $bottom $left;
 
-	.rtl & {
-		padding: $top $left $bottom $right;
-	}
+  .rtl & {
+    padding: $top $left $bottom $right;
+  }
 }
 
 @mixin td-margin($dir, $x) {
-	$opposite-dir: if($dir == left, right, left);
+  $opposite-dir: if($dir == left, right, left);
 
-	margin-#{$dir}: $x;
+  margin-#{$dir}: $x;
 
-	.rtl & {
-		margin-#{$dir}: 0;
-		margin-#{$opposite-dir}: $x;
-	}
+  .rtl & {
+    margin-#{$dir}: 0;
+    margin-#{$opposite-dir}: $x;
+  }
 }
 
 @mixin td-margin-all($top, $right, $bottom, $left) {
-	margin: $top $right $bottom $left;
+  margin: $top $right $bottom $left;
 
-	.rtl & {
-		margin: $top $left $bottom $right;
-	}
+  .rtl & {
+    margin: $top $left $bottom $right;
+  }
 }
 
 @mixin td-pos($dir, $x) {
-	$opposite-dir: if($dir == left, right, left);
+  $opposite-dir: if($dir == left, right, left);
 
-	#{$dir}: $x;
+  #{$dir}: $x;
 
-	.rtl & {
-		#{$dir}: auto;
-		#{$opposite-dir}: $x;
-	}
+  .rtl & {
+    #{$dir}: auto;
+    #{$opposite-dir}: $x;
+  }
 }
 
 @mixin td-float($dir) {
-	$opposite-dir: if($dir == left, right, left);
+  $opposite-dir: if($dir == left, right, left);
 
-	float: $dir;
+  float: $dir;
 
-	.rtl & {
-		float: $opposite-dir;
-	}
+  .rtl & {
+    float: $opposite-dir;
+  }
 }
 
 @mixin td-direction($dir) {
-	$opposite-dir: if($dir == ltr, rtl, ltr);
+  $opposite-dir: if($dir == ltr, rtl, ltr);
 
-	direction: $dir;
+  direction: $dir;
 
-	.rtl & {
-		direction: $opposite-dir;
-	}
+  .rtl & {
+    direction: $opposite-dir;
+  }
 }

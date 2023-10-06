@@ -77,7 +77,7 @@ import "./template.html";
       const groupedEvents = _.groupBy(events, (event) =>
         moment(event.start)
           .locale(Session.get("timeLocale") || "en")
-          .format("LL")
+          .format("LL"),
       );
 
       instance.groupedEvents.set(groupedEvents);

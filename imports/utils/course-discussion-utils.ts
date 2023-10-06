@@ -6,7 +6,7 @@ import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 export function mayDeletePost(
   user: UserModel | undefined | null,
   course: { members: CourseMemberEntity[] },
-  post: { userId?: string }
+  post: { userId?: string },
 ) {
   if (!user) {
     return false;

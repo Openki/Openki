@@ -61,14 +61,15 @@
 						</button>
 					</div>
 					<div class="col-auto">
-						<a class="text-muted" data-bs-toggle="collapse" href="#{{service.key}}-info"
-						   role="button" aria-expanded="false" aria-controls="{{service.key}}-info">
+						<a class="text-body-secondary" data-bs-toggle="collapse"
+						   href="#{{service.key}}-info" role="button" aria-expanded="false"
+						   aria-controls="{{service.key}}-info">
 							<i class="fa-solid fa-circle-info fa-lg" aria-hidden="true"></i>
 						</a>
 					</div>
 				</div>
 				<div class="collapse" id="{{service.key}}-info">
-					<div class="text-muted">
+					<div class="text-body-secondary">
 						{{i18n 'login.OAuth.info' '{SITENAME} is getting your user-information (username, e-mail address, …) from that service. It will not grant access to data or info about your activity here, except the fact that you logged in.' SITENAME=siteName}}
 					</div>
 				</div>

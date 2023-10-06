@@ -6,180 +6,180 @@
 // ** Wrap
 //========================================================================================
 .event-compact-wrap {
-	@include make-col-ready();
-	padding: ($grid-gutter-width / 3) ($grid-gutter-width / 3 * 2);
+  @include make-col-ready();
+  padding: ($grid-gutter-width / 3) ($grid-gutter-width / 3 * 2);
 }
 
 .frame-events-fluid .event-compact-wrap {
-	@include make-col(6);
+  @include make-col(6);
 
-	@include media-breakpoint-up(sm) {
-		@include make-col(4);
-	}
+  @include media-breakpoint-up(sm) {
+    @include make-col(4);
+  }
 
-	@include media-breakpoint-up(md) {
-		@include make-col(3);
-	}
+  @include media-breakpoint-up(md) {
+    @include make-col(3);
+  }
 
-	@include media-breakpoint-up(xl) {
-		@include make-col(2);
-	}
+  @include media-breakpoint-up(xl) {
+    @include make-col(2);
+  }
 }
 
 .container .event-compact-wrap {
-	@include make-col(6);
+  @include make-col(6);
 
-	@include media-breakpoint-up(md) {
-		@include make-col(4);
-	}
-	@include media-breakpoint-up(lg) {
-		@include make-col(3);
-	}
+  @include media-breakpoint-up(md) {
+    @include make-col(4);
+  }
+  @include media-breakpoint-up(lg) {
+    @include make-col(3);
+  }
 }
 
 .container.mw-md .event-compact-wrap {
-	@include make-col(6);
+  @include make-col(6);
 
-	@include media-breakpoint-up(md) {
-		@include make-col(4);
-	}
+  @include media-breakpoint-up(md) {
+    @include make-col(4);
+  }
 }
 
 // ** Compact
 //========================================================================================
 .event-compact {
-	background: $event-body-bg;
-	display: flex;
-	flex-flow: column;
-	height: $event-compact-height;
-	overflow: hidden;
-	position: relative;
-	transition: box-shadow 0.15s;
+  background: $event-body-bg;
+  display: flex;
+  flex-flow: column;
+  height: $event-compact-height;
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.15s;
 
-	&:hover {
-		box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
-	}
+  &:hover {
+    box-shadow: $shadow-lg-offset-x $shadow-lg-offset-y $shadow-lg-blur $default-shadow;
+  }
 }
 
 .event-compact.has-date {
-	height: $event-compact-with-date-height;
+  height: $event-compact-with-date-height;
 }
 
 // ** Body
 //========================================================================================
 .event-compact-body-wrap {
-	flex-grow: 1;
+  flex-grow: 1;
 }
 
 .event-compact-body {
-	@include ellipsis-multiline(5);
+  @include ellipsis-multiline(5);
 
-	margin: 10px;
-	max-height: $event-compact-height - 60px;
-	padding: 0;
-	position: relative;
+  margin: 10px;
+  max-height: $event-compact-height - 60px;
+  padding: 0;
+  position: relative;
 }
 
 // ** Header
 //========================================================================================
 .event-compact-header {
-	@include ellipsis;
-	background: $event-header-bg;
-	border-bottom: $event-compact-seperator-height solid $body-bg;
-	color: $gray-800;
-	display: table;
-	padding: 7px;
+  @include ellipsis;
+  background: $event-header-bg;
+  border-bottom: $event-compact-seperator-height solid $body-bg;
+  color: $gray-800;
+  display: table;
+  padding: 7px;
 
-	&.user-attends-event {
-		background: $user-bg;
-	}
+  &.user-attends-event {
+    background: $user-bg;
+  }
 }
 
 .event-compact-header .fa-clock-o,
 .event-compact-header .event-compact-time {
-	margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 // ** Past event
 //========================================================================================
 .event-compact.is-past {
-	background-color: desaturate(lighten($event-body-bg, 5%), 20%);
+  background-color: desaturate(lighten($event-body-bg, 5%), 20%);
 }
 
 .event-compact.is-past > .event-compact-header {
-	background-color: desaturate(lighten($event-header-bg, 5%), 50%);
+  background-color: desaturate(lighten($event-header-bg, 5%), 50%);
 }
 
 // ** Title
 //========================================================================================
 .event-compact-title {
-	color: $gray-800;
-	display: inline;
-	font-weight: 501;
-	padding: 0;
+  color: $gray-800;
+  display: inline;
+  font-weight: 501;
+  padding: 0;
 }
 
 .event-compact-title::after {
-	// Simulate margin: 0 0 0.25rem;
-	content: "";
-	display: inline-block;
-	height: $h4-font-size + 0.9rem;
-	vertical-align: top;
+  // Simulate margin: 0 0 0.25rem;
+  content: "";
+  display: inline-block;
+  height: $h4-font-size + 0.9rem;
+  vertical-align: top;
 }
 
 // ** Description
 //========================================================================================
 .event-compact-description {
-	color: $gray-800;
-	display: inline;
+  color: $gray-800;
+  display: inline;
 }
 
 // event canceled
 //============================================================================================
 .event-canceled {
-	background-color: $canceled-color;
-	border-radius: 5px;
-	color: $white;
-	display: flow-root;
-	font-family: monospace, sans-serif;
-	font-size: 2em;
-	font-stretch: narrower;
-	font-weight: 950;
-	left: 5%;
-	margin-block-start: 18px;
-	opacity: 0.4;
-	padding: 5px;
-	position: absolute;
-	text-align: center;
-	top: 40%;
-	transform: rotate(-27deg);
-	transform: rotate(-27d300eg);
-	transform: rotate(-27deg);
-	width: fit-content;
-	z-index: 300;
+  background-color: $canceled-color;
+  border-radius: 5px;
+  color: $white;
+  display: flow-root;
+  font-family: monospace, sans-serif;
+  font-size: 2em;
+  font-stretch: narrower;
+  font-weight: 950;
+  left: 5%;
+  margin-block-start: 18px;
+  opacity: 0.4;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  top: 40%;
+  transform: rotate(-27deg);
+  transform: rotate(-27d300eg);
+  transform: rotate(-27deg);
+  width: fit-content;
+  z-index: 300;
 }
 
 // event fully booked
 //============================================================================================
 .event-fully-booked {
-	background-color: #f99248;
-	border-radius: 5px;
-	color: $white;
-	display: flow-root;
-	font-family: monospace, sans-serif;
-	font-size: 2em;
-	font-stretch: narrower;
-	font-weight: 950;
-	left: 5%;
-	margin-block-start: 18px;
-	opacity: 0.4;
-	padding: 5px;
-	position: absolute;
-	text-align: center;
-	top: 40%;
-	transform: rotate(-27deg);
-	transform: rotate(-27d300eg);
-	transform: rotate(-27deg);
-	width: fit-content;
-	z-index: 300;
+  background-color: #f99248;
+  border-radius: 5px;
+  color: $white;
+  display: flow-root;
+  font-family: monospace, sans-serif;
+  font-size: 2em;
+  font-stretch: narrower;
+  font-weight: 950;
+  left: 5%;
+  margin-block-start: 18px;
+  opacity: 0.4;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  top: 40%;
+  transform: rotate(-27deg);
+  transform: rotate(-27d300eg);
+  transform: rotate(-27deg);
+  width: fit-content;
+  z-index: 300;
 }

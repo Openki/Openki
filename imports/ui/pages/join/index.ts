@@ -52,7 +52,7 @@ template.events({
         Alert.success(
           i18n("joinPage.join.success", 'You joined to tenant "{NAME}".', {
             NAME: instance.data.tenant.name,
-          })
+          }),
         );
       } catch (err) {
         Alert.serverError(err, i18n("joinPage.join.error", "Join not worked."));

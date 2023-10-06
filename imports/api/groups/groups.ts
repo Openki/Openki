@@ -107,7 +107,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
     },
     limit?: number,
     skip?: number,
-    sort?: FieldSort[] | undefined
+    sort?: FieldSort[] | undefined,
   ): Mongo.Cursor<GroupEntity, GroupModel>;
 
   /**
@@ -121,7 +121,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
     filter: FindFilter,
     limit?: number,
     skip?: number,
-    sort?: FieldSort[]
+    sort?: FieldSort[],
   ): Mongo.Cursor<GroupEntity, GroupModel>;
 
   findFilter(filter: FindFilter = {}, limit = 0, skip = 0, sort?: FieldSort[]) {

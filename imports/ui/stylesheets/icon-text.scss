@@ -1,18 +1,18 @@
 .icon-text {
-	display: table;
+  display: table;
 }
 
 .icon-text-icon,
 .icon-text-text {
-	display: table-cell;
-	text-align: start;
-	vertical-align: top;
+  display: table-cell;
+  text-align: start;
+  vertical-align: top;
 }
 
 .icon-text-icon {
-	padding-right: 3px;
+  padding-right: 3px;
 }
 
 .icon-text-icon > i {
-	color: $primary;
+  color: $primary;
 }

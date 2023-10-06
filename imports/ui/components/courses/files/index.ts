@@ -38,7 +38,7 @@ template.helpers({
             } catch (err) {
               Alert.serverError(
                 err,
-                i18n("course.edit.image.removed.error", "Could not remove image.")
+                i18n("course.edit.image.removed.error", "Could not remove image."),
               );
             }
           }

@@ -93,7 +93,7 @@ export function Model(entry: { body: Body }) {
       const subject = i18n(
         "notification.event.canceled.mail.subject",
         "Canceled: {EVENT}",
-        subjectvars
+        subjectvars,
       );
 
       // Show dates in local time and in users locale

@@ -125,13 +125,13 @@ export function Model(entry: { body: Body }) {
         subject = i18n(
           "notification.comment.mail.subject",
           "Comment on {COURSE} by {COMMENTER}: {TITLE}",
-          subjectvars
+          subjectvars,
         );
       } else {
         subject = i18n(
           "notification.comment.mail.subject.anon",
           "Anonymous comment on {COURSE}: {TITLE}",
-          subjectvars
+          subjectvars,
         );
       }
 
@@ -157,7 +157,7 @@ export function Model(entry: { body: Body }) {
         commenterLink: Router.url(
           "userprofile",
           { _id: comment.userId, username: commenterName },
-          { query: "campaign=commentNotify" }
+          { query: "campaign=commentNotify" },
         ),
         commenterName,
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=commentNotify`,

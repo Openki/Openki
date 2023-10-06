@@ -174,7 +174,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 
   insert(
     course: Mongo.OptionalId<CourseEntity>,
-    callback?: (err: unknown | undefined, id?: string) => void
+    callback?: (err: unknown | undefined, id?: string) => void,
   ) {
     let enrichedCourse = tenantDenormalizer.beforeInsert(course);
     enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
@@ -184,7 +184,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 
   async insertAsync(
     course: Mongo.OptionalId<CourseEntity>,
-    callback?: (err: unknown | undefined, id?: string) => void
+    callback?: (err: unknown | undefined, id?: string) => void,
   ) {
     let enrichedCourse = tenantDenormalizer.beforeInsert(course);
     enrichedCourse = interestedDenormalizer.beforeInsert(enrichedCourse);
@@ -244,7 +244,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
       (reason) => {
         /* eslint-disable-next-line no-console */
         console.log(`Failed updateGroups: ${reason}`);
-      }
+      },
     );
   }
 

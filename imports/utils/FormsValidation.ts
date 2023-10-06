@@ -14,7 +14,7 @@ export function create(target: ParentNode = document) {
 
         form.classList.add("was-validated");
       },
-      false
+      false,
     );
   });
 }

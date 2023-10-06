@@ -26,7 +26,7 @@ export const details = ServerPublish(
     }
 
     return { joinLink, tenant: Tenants.findOne(tenantId) };
-  }
+  },
 );
 
 export const findFilter = ServerPublish(
@@ -44,5 +44,5 @@ export const findFilter = ServerPublish(
     }
 
     return JoinLinks.findFilter(filter, limit, skip, sort);
-  }
+  },
 );

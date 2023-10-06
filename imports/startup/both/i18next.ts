@@ -71,7 +71,7 @@ backends.push(
       .catch((error) => {
         callback(error, null);
       });
-  })
+  }),
 );
 
 i18next
@@ -149,7 +149,7 @@ Template.registerHelper(
   function (
     key: string,
     defaultValueOrData: string | { hash?: Record<string, unknown> } = {},
-    data?: { hash: Record<string, unknown> }
+    data?: { hash: Record<string, unknown> },
   ) {
     // defaultValue is optional
     if (typeof defaultValueOrData === "string") {
@@ -162,7 +162,7 @@ Template.registerHelper(
       }
       // We can use SafeString because i18n encodes all non-safe strings
       return Spacebars.SafeString(
-        i18n(key, defaultValueOrData, { ...data?.hash, escapeText: true })
+        i18n(key, defaultValueOrData, { ...data?.hash, escapeText: true }),
       );
     }
 
@@ -175,5 +175,5 @@ Template.registerHelper(
     }
     // We can use SafeString because i18n encodes all non-safe strings
     return Spacebars.SafeString(i18n(key, { ...defaultValueOrData.hash, escapeText: true }));
-  }
+  },
 );

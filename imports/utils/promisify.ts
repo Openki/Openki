@@ -32,7 +32,7 @@ export const MeteorAsync = {
     Meteor.loginWithPassword &&
     (promisify(Meteor.loginWithPassword) as (
       user: string | { email: string } | { username: string } | { id: string },
-      password: string
+      password: string,
     ) => Promise<void>),
   logout: Meteor.logout && promisify<void>(Meteor.logout),
   setTimeout:

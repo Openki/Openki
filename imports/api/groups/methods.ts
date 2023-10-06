@@ -128,7 +128,7 @@ export const updateLogo = ServerMethod(
 
     return groupId;
   },
-  { simulation: false }
+  { simulation: false },
 );
 
 export const deleteLogo = ServerMethod(
@@ -158,7 +158,7 @@ export const deleteLogo = ServerMethod(
 
     return groupId;
   },
-  { simulation: false }
+  { simulation: false },
 );
 
 export const updateMembership = ServerMethod(
@@ -199,5 +199,5 @@ export const updateMembership = ServerMethod(
     if (Meteor.isServer) {
       Meteor.call("user.updateBadges", user._id);
     }
-  }
+  },
 );

@@ -44,7 +44,7 @@ export function record(
   message: string,
   revealSenderAddress: boolean,
   sendCopyToSender: boolean,
-  context: { course?: string; event?: string }
+  context: { course?: string; event?: string },
 ) {
   check(senderId, String);
   check(recipientId, String);
@@ -122,7 +122,7 @@ export function Model(entry: { body: Body }) {
       const subject = i18n(
         "notification.privateMessage.mail.subject",
         "Private message from {SENDER}",
-        subjectvars
+        subjectvars,
       );
       const htmlizedMessage = HtmlTools.plainToHtml(entry.body.message);
 

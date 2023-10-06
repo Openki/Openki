@@ -8,13 +8,13 @@ import { FieldSort } from "/imports/utils/sort-spec";
 import { visibleTenants } from "/imports/utils/visible-tenants";
 
 export const [all, useAll] = ServerPublishMany("Regions", () =>
-  Regions.find({ tenant: { $in: visibleTenants() } })
+  Regions.find({ tenant: { $in: visibleTenants() } }),
 );
 
 export const [details, useDetails] = ServerPublishOne(
   "regionDetails",
   (regionId: string) => Regions.find({ _id: regionId, tenant: { $in: visibleTenants() } }),
-  (regionId: string) => Regions.findOne({ _id: regionId, tenant: { $in: visibleTenants() } })
+  (regionId: string) => Regions.findOne({ _id: regionId, tenant: { $in: visibleTenants() } }),
 );
 
 export const [findFilter, useFindFilter] = ServerPublishMany(
@@ -31,5 +31,5 @@ export const [findFilter, useFindFilter] = ServerPublishMany(
     }
 
     return Regions.findFilter({ ...filter, tenants }, limit, skip, sort);
-  }
+  },
 );

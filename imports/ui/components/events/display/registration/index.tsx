@@ -73,7 +73,7 @@ export function EventRegistration(props: { event: EventModel }) {
       Analytics.trackEvent(
         "Unsubscribes RSVPs",
         "Unsubscribes RSVPs as participant",
-        Regions.findOne(event.region)?.nameEn
+        Regions.findOne(event.region)?.nameEn,
       );
     } catch (err) {
       Alert.serverError(err, "could not remove participant");
@@ -118,11 +118,11 @@ export function EventRegistration(props: { event: EventModel }) {
               {!event.attendedBy(user?._id)
                 ? t(
                     "event.details.i-participate-no",
-                    "Let it be known you are participating in this event. Your registration is binding."
+                    "Let it be known you are participating in this event. Your registration is binding.",
                   )
                 : t(
                     "event.details.i-participate-yes",
-                    "You are now registered. Your registration is binding."
+                    "You are now registered. Your registration is binding.",
                   )}
             </b>
           </div>

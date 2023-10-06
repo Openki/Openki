@@ -58,7 +58,7 @@ export function serverError(errorOrMessage: Error | string, message?: string) {
     const errorMessage = i18n(
       "_serverErrorMessageOnly",
       'There was an error on the server: "{MESSAGE}." Sorry about this.',
-      { MESSAGE: errorOrMessage }
+      { MESSAGE: errorOrMessage },
     );
 
     _alert("error", errorMessage, 60000);
@@ -69,7 +69,7 @@ export function serverError(errorOrMessage: Error | string, message?: string) {
     const errorMessage = i18n(
       "_serverError",
       'There was an error on the server: "{MESSAGE} ({ERROR})." Sorry about this.',
-      { ERROR: errorOrMessage, MESSAGE: message }
+      { ERROR: errorOrMessage, MESSAGE: message },
     );
 
     _alert("error", errorMessage, 60000);

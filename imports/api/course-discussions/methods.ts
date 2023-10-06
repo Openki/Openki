@@ -95,7 +95,7 @@ export const postComment = ServerMethod(
     Notification.Comment.record(commentId);
 
     return commentId;
-  }
+  },
 );
 
 export const EditCommentFieldsPattern = {
@@ -124,7 +124,7 @@ export const editComment = ServerMethod(
     update.time_updated = new Date();
 
     await CourseDiscussions.updateAsync(originalComment._id, { $set: update });
-  }
+  },
 );
 
 export const deleteComment = ServerMethod(
@@ -154,5 +154,5 @@ export const deleteComment = ServerMethod(
 
     await CourseDiscussions.removeAsync({ _id: comment._id });
     await CourseDiscussions.removeAsync({ parentId: comment._id });
-  }
+  },
 );

@@ -65,7 +65,7 @@ export const updateDescription = ServerMethod("user.updateDescription", (descrip
   if (!result) {
     throw new ValidationError(
       [{ name: "description", type: "descriptionError" }],
-      "Failed to update description"
+      "Failed to update description",
     );
   }
 });
@@ -93,7 +93,7 @@ export const updateUsername = ServerMethod(
     if (saneUsername.length === 0) {
       throw new ValidationError(
         [{ name: "username", type: "noUserName" }],
-        "username cannot be empty"
+        "username cannot be empty",
       );
     }
 
@@ -104,7 +104,7 @@ export const updateUsername = ServerMethod(
     if (Accounts.findUserByUsername(saneUsername)) {
       throw new ValidationError(
         [{ name: "username", type: "userExists" }],
-        "username is already taken"
+        "username is already taken",
       );
     }
 
@@ -112,11 +112,11 @@ export const updateUsername = ServerMethod(
     if (!result) {
       throw new ValidationError(
         [{ name: "username", type: "nameError" }],
-        "Failed to update username"
+        "Failed to update username",
       );
     }
   },
-  { simulation: false }
+  { simulation: false },
 );
 
 /**
@@ -135,7 +135,7 @@ export const updateAutomatedNotification = ServerMethod(
     if (user.notifications !== allow) {
       Profile.Notifications.change(user._id, allow, undefined, "profile change");
     }
-  }
+  },
 );
 
 /**
@@ -150,14 +150,14 @@ export const updatePrivateMessages = ServerMethod(
     if (!user) {
       throw new ValidationError(
         [{ name: "allowPrivateMessages", type: "plzLogin" }],
-        "Not logged-in"
+        "Not logged-in",
       );
     }
 
     if (user.allowPrivateMessages !== allow) {
       Profile.PrivateMessages.change(user._id, allow, undefined, "profile change");
     }
-  }
+  },
 );
 
 /**
@@ -185,7 +185,7 @@ export const updateEmail = ServerMethod(
     if (!newEmail) {
       throw new ValidationError(
         [{ name: "email", type: "noEmail" }],
-        "Please enter an e-mail address."
+        "Please enter an e-mail address.",
       );
     }
 
@@ -201,7 +201,7 @@ export const updateEmail = ServerMethod(
 
     Profile.Email.change(user._id, newEmail, "profile change");
   },
-  { simulation: false }
+  { simulation: false },
 );
 
 export const selfRemove = ServerMethod("user.self.remove", () => {
@@ -254,7 +254,7 @@ export const adminRemove = ServerMethod(
       Events.update(
         { courseId: course._id },
         { $pull: { participants: { user: userId } } },
-        { multi: true }
+        { multi: true },
       );
 
       Courses.update({ _id: course._id }, { $pull: { members: { user: userId } } });
@@ -278,7 +278,7 @@ export const adminRemove = ServerMethod(
       deletedCourses,
       numberOfDeletedEvents,
     });
-  }
+  },
 );
 
 export const addPrivilege = ServerMethod(
@@ -300,9 +300,9 @@ export const addPrivilege = ServerMethod(
       { _id: user._id },
       { $addToSet: { privileges: privilege } },
       { multi: true },
-      AsyncTools.checkUpdateOne
+      AsyncTools.checkUpdateOne,
     );
-  }
+  },
 );
 
 export const removePrivilege = ServerMethod(
@@ -329,9 +329,9 @@ export const removePrivilege = ServerMethod(
       { _id: user._id },
       { $pull: { privileges: privilege } },
       { multi: true },
-      AsyncTools.checkUpdateOne
+      AsyncTools.checkUpdateOne,
     );
-  }
+  },
 );
 
 export const setHasContributed = ServerMethod("user.setHasContributed", (userId: string) => {
