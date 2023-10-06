@@ -1,4 +1,4 @@
-@import '{}/imports/ui/stylesheets/variables/index';
+@import "{}/imports/ui/stylesheets/variables/index";
 
 footer {
   color: $white;
@@ -21,7 +21,7 @@ footer {
   padding: $footer-padding-vertical 10px;
 
   &:hover {
-    background-color: css-lighten('openki-brand', 10%);
+    background-color: css-lighten("openki-brand", 10%);
     color: $white;
     text-decoration: none;
   }
