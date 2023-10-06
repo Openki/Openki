@@ -115,3 +115,11 @@ $zindex-back-to-kiosk: 							 1000;
 // ** Default values
 //========================================================================================
 $default-transition-time:                        .25s;
+
+$custom-colors: (
+	"canceled-color": $canceled-color,
+	"$archived-color": $archived-color,
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);

@@ -1,15 +1,5 @@
 @import '{}/imports/ui/stylesheets/variables/index';
 
-// *** Course details ***
-//=======================
-.alert-archived {
-  @include alert-variant(
-    $archived-color,
-		darken($archived-color, 5%),
-		darken($archived-color, 60%)
-	);
-}
-
 // ** Course buttons
 //========================================================================================
 .course-delete-confirm {

@@ -1,45 +1,49 @@
 .mh-none {
-  max-height: none !important;
+	max-height: none !important;
 }
 
 .checkmark {
-  @include td-padding(left, 5px);
-  color: $green-dark;
+	@include td-padding(left, 5px);
+	color: $green-dark;
 }
 
 .leaflet-top {
-  z-index: auto;
+	z-index: auto;
 }
 
 select:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .select-placeholder:hover {
-  cursor: not-allowed;
+	cursor: not-allowed;
 }
 
 a:hover,
 .btn-link:hover,
 a:focus,
 .btn-link:focus {
-  box-shadow: none !important;
-  text-decoration: none;
+	box-shadow: none !important;
+	text-decoration: none;
 }
 
 .collapsing,
 .fade {
-  transition: none;
+	transition: none;
 }
 
 .cursor-pointer:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .bg-brand {
-  background-color: css-var('openki-brand') !important;
+	background-color: css-var("openki-brand") !important;
 }
 
 .border-none {
-  border: 0 !important;
+	border: 0 !important;
+}
+
+.btn-close {
+	filter: var(--bs-btn-close-white-filter);
 }
