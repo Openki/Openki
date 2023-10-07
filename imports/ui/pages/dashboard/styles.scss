@@ -26,6 +26,7 @@
     border-color: $archived-color;
   }
 }
+
 .card-course .card-title {
   @include ellipsis-multiline(2);
 
