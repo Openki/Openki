@@ -93,6 +93,8 @@ $tooltip-bg: $blue;
 $tooltip-opacity: 1;
 $tooltip-font-size: $font-size-base;
 
+@import "{}/node_modules/bootstrap/scss/variables-dark";
+
 // Modify Bootstrap maps
 
 $custom-grid-breakpoints: (
@@ -106,9 +108,42 @@ $grid-breakpoints: map-merge($grid-breakpoints, $custom-grid-breakpoints);
 
 $container-max-widths: map-remove($container-max-widths, xxl);
 
-@import "{}/node_modules/bootstrap/scss/variables-dark";
+$canceled-color:                                 #ff5252;
+$archived-color:                                 #f5ecc6;
+
+$custom-colors: (
+  "canceled": $canceled-color,
+  "archived": $archived-color,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+// https://github.com/twbs/bootstrap/issues/39155#issuecomment-1711508093
+$canceled-text-emphasis:   shade-color($canceled-color, 60%) !default;
+$canceled-bg-subtle:       tint-color($canceled-color, 80%) !default;
+$canceled-border-subtle:   tint-color($canceled-color, 60%) !default;
+
+$archived-text-emphasis:   shade-color($archived-color, 60%) !default;
+$archived-bg-subtle:       tint-color($archived-color, 80%) !default;
+$archived-border-subtle:   tint-color($archived-color, 60%) !default;
 
 @import "{}/node_modules/bootstrap/scss/maps"; // Optional
+
+$custom-theme-colors-text: (
+    "canceled": $canceled-text-emphasis,
+    "archived": $archived-text-emphasis
+);
+$custom-theme-colors-bg-subtle: (
+    "canceled": $canceled-bg-subtle,
+    "archived": $archived-bg-subtle
+);
+$custom-theme-colors-border-subtle: (
+    "canceled": $canceled-border-subtle,
+    "archived": $archived-border-subtle
+);
+$theme-colors-text: map-merge($theme-colors-text, $custom-theme-colors-text);
+$theme-colors-bg-subtle: map-merge($theme-colors-bg-subtle, $custom-theme-colors-bg-subtle);
+$theme-colors-border-subtle: map-merge($theme-colors-border-subtle, $custom-theme-colors-border-subtle);
 
 @import "{}/node_modules/bootstrap/scss/mixins"; // Required
 

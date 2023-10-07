@@ -31,7 +31,6 @@ $details-header-padding-horizontal:              15px;
 //========================================================================================
 $event-body-bg:                                  tint-color($green, 65%);
 $event-header-bg:                                $green;
-$canceled-color:								 #ff5252;
 
 $event-compact-height:                           200px;
 $event-compact-seperator-height:                 3px;
@@ -48,9 +47,8 @@ $course-border-color:                            $blue-lighter;
 $has-upcoming-events-bg:                         $blue-lighter;
 $proposal-border-style:                          dashed;
 $has-past-events-border-style:                   solid;
-$archived-color:                                 #f5ecc6;
 
-$course-page-role-icon-color:                   #4c4c4c;
+$course-page-role-icon-color:                    #4c4c4c;
 
 $course-compact-next-event-bg:                   $green;
 $course-compact-next-event-color:                $gray-800;
@@ -66,7 +64,7 @@ $category-bg:                                    rgba(206,212,218,0.5);
 // ** Group
 //========================================================================================
 $group-bg:                                       $green-alternative;
-$group-label-color: 							 $blue;
+$group-label-color:                              $blue;
 
 // ** Region
 //========================================================================================
@@ -94,7 +92,7 @@ $calendar-nav-bg:                                $blue-lighter;
 // ** Tenant
 //========================================================================================
 $tenant-bg:                                       $green-alternative;
-$tenant-label-color: 							  $blue;
+$tenant-label-color:                              $blue;
 
 // ** Kiosk
 //========================================================================================
@@ -104,22 +102,17 @@ $kiosk-wrap-padding-vertical:                    $kiosk-wrap-padding-horizontal;
 // ** Footer
 //========================================================================================
 $footer-height:                                  50px;
-$footer-padding-vertical: 						 15px;
+$footer-padding-vertical:                        15px;
 
 // ** Z-index master list
-$zindex-editable-image:							 900;
-$zindex-file-upload:							 900;
-$zindex-map: 									 9999;
-$zindex-back-to-kiosk: 							 1000;
+$zindex-editable-image:                          900;
+$zindex-file-upload:                             900;
+$zindex-map:                                     9999;
+$zindex-back-to-kiosk:                           1000;
 
 // ** Default values
 //========================================================================================
 $default-transition-time:                        .25s;
 
-$custom-colors: (
-	"canceled-color": $canceled-color,
-	"$archived-color": $archived-color,
-);
 
-// Merge the maps
-$theme-colors: map-merge($theme-colors, $custom-colors);
+
