@@ -64,7 +64,7 @@ import "./styles.scss";
         .add("region", Session.get("region"))
         .done();
 
-      const filterQuery = filter.toQuery() as FindFilter;
+      const filterQuery = filter.toQuery();
 
       const startMoment = filter.get("start") as moment.Moment;
       const after = startMoment.toDate();
@@ -140,14 +140,14 @@ import "./styles.scss";
   template.helpers({
     hasEvents() {
       const data = Template.instance().data;
-      const filterQuery = data.filter.toQuery() as FindFilter;
+      const filterQuery: FindFilter = data.filter.toQuery();
       filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
 
       return Events.findFilter(filterQuery, 1).count() > 0;
     },
     events() {
       const data = Template.instance().data;
-      const filterQuery = data.filter.toQuery() as FindFilter;
+      const filterQuery: FindFilter = data.filter.toQuery();
       filterQuery.period = [data.day.start.toDate(), data.day.end.toDate()];
 
       return Events.findFilter(filterQuery);

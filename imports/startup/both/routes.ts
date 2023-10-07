@@ -58,7 +58,7 @@ const makeFilterQuery = function (
 ) {
   const filter = new Filtering(EventParamPredicates).read(params).done();
 
-  const query = filter.toQuery() as EventsFindFilter;
+  const query: EventsFindFilter = filter.toQuery();
 
   let start: moment.Moment | undefined;
   if (params.start) {
@@ -332,16 +332,16 @@ RouterAsync.route("kioskEvents", {
     Session.set("kioskRoute", "kioskEvents");
     Session.set("kioskFilter", filter.toParams());
 
-    const queryFuture = filter.toQuery() as EventsFindFilter;
+    const queryFuture: EventsFindFilter = filter.toQuery();
     queryFuture.after = tomorrow;
 
-    const queryToday = filter.toQuery() as EventsFindFilter;
+    const queryToday: EventsFindFilter = filter.toQuery();
     queryToday.after = now;
     queryToday.before = tomorrow;
 
     const limit = parseInt(this.params.query.count || "", 10) || 20;
 
-    const queryNow = filter.toQuery() as EventsFindFilter;
+    const queryNow: EventsFindFilter = filter.toQuery();
     queryNow.ongoing = now;
 
     return {
