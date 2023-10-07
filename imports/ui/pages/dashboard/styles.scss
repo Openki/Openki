@@ -1,12 +1,12 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .card-course {
-  inline-size: 300px;
-  min-inline-size: 300px;
   block-size: 185px;
-  overflow: hidden;
   border-color: $course-border-color;
+  border-radius: 0;
   border-style: solid;
   border-width: $course-border-width;
-  border-radius: 0;
+  inline-size: 300px;
+  min-inline-size: 300px;
+  overflow: hidden;
 }
