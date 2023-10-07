@@ -2,26 +2,62 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
+import { Courses as CourseCollection, CourseModel } from "/imports/api/courses/courses";
+import * as Courses from "/imports/api/courses/publications";
+
 import * as Metatags from "/imports/utils/metatags";
 import { Filtering } from "/imports/utils/filtering";
 import { Publication } from "/imports/utils/ServerPublishReact";
-
-import { Courses as CourseCollection, CourseModel } from "/imports/api/courses/courses";
-import * as Courses from "/imports/api/courses/publications";
 
 import "./styles.scss";
 
 export function CourseCard(props: { course: CourseModel }) {
   const { course } = props;
+
+  function courseCss() {
+    if (!course.nextEvent) {
+      return {};
+    }
+
+    const src = course?.publicImageUrl();
+    if (!src) {
+      return {};
+    }
+
+    return {
+      backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.75)), url('${src}')`,
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+    };
+  }
+
+  function courseStateClasses() {
+    const classes = [];
+
+    if (course.nextEvent) {
+      classes.push("has-upcoming-events");
+    } else if (course.lastEvent) {
+      classes.push("has-past-events");
+    } else {
+      classes.push("is-proposal");
+    }
+
+    if (course.archived) {
+      classes.push("is-archived");
+    }
+
+    return classes.join(" ");
+  }
+
   return (
-    <div className="card card-course me-1">
+    <div className={`card card-course ${courseStateClasses()} me-1`} style={courseCss()}>
       <div className="card-body">
         <h5 className="card-title">
           <a className="stretched-link" href={Router.path("showCourse", course)}>
             {course.name}
           </a>
         </h5>
-        <p className="card-text">{course.description}</p>
       </div>
     </div>
   );
@@ -88,7 +124,7 @@ export function DashboardPage() {
             {t("dashboard.more", "More")}
           </a>
           <h2>{h.title}</h2>
-          <div className="d-flex flex-row flex-nowrap pb-2 overflow-x-scroll">
+          <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
             {h.data.map(h.component)}
           </div>
         </div>
