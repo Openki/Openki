@@ -7,6 +7,7 @@ import * as Courses from "/imports/api/courses/publications";
 
 import * as Metatags from "/imports/utils/metatags";
 import { Filtering } from "/imports/utils/filtering";
+import { SortSpec } from "/imports/utils/sort-spec";
 import { Publication } from "/imports/utils/ServerPublishReact";
 
 import "./styles.scss";
@@ -90,6 +91,11 @@ export function DashboardPage() {
     },
     {
       entity: "course",
+      title: t("explore.newProposals.title", "New proposals"),
+      query: "state=proposal&sort=time_created",
+    },
+    {
+      entity: "course",
       title: t("explore.lookingForMentors.title", "Looking for mentors"),
       query: "needsRole=mentor",
     },
@@ -108,7 +114,11 @@ export function DashboardPage() {
     const params = Object.fromEntries(urlParams);
     filter.read(params);
     const query = filter.done().toQuery();
-    const [isLoading, data] = handler.find(query);
+
+    const sortParam = params.sort;
+    const sort = sortParam ? SortSpec.fromString(sortParam) : SortSpec.unordered();
+
+    const [isLoading, data] = handler.find(query, 30, 0, sort.spec());
     return { isLoading, data, route: handler.route, component: handler.component, ...i };
   });
 
