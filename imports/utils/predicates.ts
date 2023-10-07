@@ -175,3 +175,90 @@ export const date: Predicate<moment.Moment, Date, string | moment.Moment> = func
     },
   };
 };
+
+export function createEnumPredicate<T extends readonly string[]>(...values: readonly [...T]) {
+  const enumPredicate: Predicate<T[number]> = function (param) {
+    if (param === undefined) {
+      return undefined;
+    }
+
+    const state = values.find((v) => v.toUpperCase() === param.toUpperCase());
+
+    if (typeof state === "undefined") {
+      throw new FilteringReadError("", "Invalid value");
+    }
+
+    return {
+      merge(other) {
+        return other;
+      },
+      without() {
+        return undefined;
+      },
+      get() {
+        return state;
+      },
+      param() {
+        return state;
+      },
+      query() {
+        return state;
+      },
+      equals(other) {
+        return other.get() === state;
+      },
+    };
+  };
+
+  return enumPredicate;
+}
+
+export function createEnumsPredicate<T extends readonly string[]>(...states: readonly [...T]) {
+  const enumsPredicate: Predicate<T[number][]> = function (param) {
+    if (param === undefined) {
+      return undefined;
+    }
+
+    const make = function (params: string[]): ParamWrapper<T[number][]> {
+      const values = params.map((v) => {
+        const state = states.find((s) => s.toUpperCase() === v.toUpperCase());
+
+        if (typeof state === "undefined") {
+          throw new FilteringReadError("", "Invalid value");
+        }
+        return state;
+      });
+
+      return {
+        merge(other) {
+          return make(_.union(values, other.get()));
+        },
+        without(predicate) {
+          const diff = _.difference(values, predicate.get());
+          if (diff.length === 0) {
+            return undefined;
+          }
+          return make(diff);
+        },
+        get() {
+          return values;
+        },
+        param() {
+          return values.join(",");
+        },
+        query() {
+          return values;
+        },
+        equals(other) {
+          const otherStates = other.get();
+          return (
+            values.length === otherStates.length &&
+            _.intersection(values, otherStates).length === values.length
+          );
+        },
+      };
+    };
+    return make([...new Set(param.split(","))]);
+  };
+  return enumsPredicate;
+}
