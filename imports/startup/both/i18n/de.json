@@ -367,7 +367,7 @@
 	"event.metatag.description": "{VENUE} in {REGION}",
 	"event.not_exists": "Diese Veranstaltung konnte nicht gefunden werden. Vielleicht wurde sie gelöscht oder hat überhaupt nie existiert.",
 	"event.not_exists.unlogged": "Anmelden/Registrieren",
-	"event.reallycancel": "Bitte bestätige das Absagen von dieser Veranstaltung. Sie wird dann als \"Abgesagt\" angezeigt und alle {PARTICIPANTS} angemeldeten Nutzer_innen werden per E-Mail über die Absage informiert.",
+	"event.reallycancel": "Bitte bestätige das Absagen von dieser Veranstaltung. Sie wird dann als \"Abgesagt\" angezeigt und alle {NUM} angemeldeten Nutzer_innen werden per E-Mail über die Absage informiert.",
 	"event.reallydelete": "Bitte bestätige, dass du diese Veranstaltung löschen möchtest. Dies könnte andere Benutzer_innen verwirren und kann nicht rückgängig gemacht werden. Die Veranstaltung wird dauerhaft gelöscht und nicht mehr sichtbar sein.",
 	"event.replicate.successCondensed": "Geklonte Veranstaltung \"{TITLE}\" {NUM, plural, one{für} other{# mal bis} } {DATE}",
 	"event.replication.changeToPattern": "Frequenz wählen",
