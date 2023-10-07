@@ -118,7 +118,7 @@ export function DashboardPage() {
     const sortParam = params.sort;
     const sort = sortParam ? SortSpec.fromString(sortParam) : SortSpec.unordered();
 
-    const [isLoading, data] = handler.find(query, 30, 0, sort.spec());
+    const [isLoading, data] = handler.find(query, 10, 0, sort.spec());
     return { isLoading, data, route: handler.route, component: handler.component, ...i };
   });
 
@@ -131,7 +131,7 @@ export function DashboardPage() {
       {!h.isLoading() ? (
         <div className="container mb-4">
           <a className="float-end" href={Router.path(h.route, undefined, { query: h.query })}>
-            {t("dashboard.more", "More")}
+            {t("dashboard.showAll", "Show all >")}
           </a>
           <h2>{h.title}</h2>
           <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
