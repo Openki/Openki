@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
 import * as Metatags from "/imports/utils/metatags";
+import { Filtering } from "/imports/utils/filtering";
+import { Publication } from "/imports/utils/ServerPublishReact";
 
 import { Courses as CourseCollection, CourseModel } from "/imports/api/courses/courses";
 import * as Courses from "/imports/api/courses/publications";
@@ -25,46 +27,74 @@ export function CourseCard(props: { course: CourseModel }) {
   );
 }
 
+const mapping: {
+  [name: string]: {
+    route: string;
+    filter: () => Filtering<any>;
+    find: Publication<any, any>;
+    component: (entity: any) => React.JSX.Element;
+  };
+} = {
+  course: {
+    route: "home",
+    filter: CourseCollection.Filtering,
+    find: Courses.useFindFilter,
+    component: (course: CourseModel) => <CourseCard key={course._id} course={course} />,
+  },
+};
+
 export function DashboardPage() {
   const { t } = useTranslation();
-  const [recentActivitiesCoursesIsLoading, recentActivitiesCourses] = Courses.useFindFilter();
 
-  const filter = CourseCollection.Filtering();
-  const urlParams = new URLSearchParams("needsRole=mentor");
-  const params = Object.fromEntries(urlParams);
-  filter.read(params);
-  const query = filter.done().toQuery();
+  const list = [
+    {
+      entity: "course",
+      title: t("explore.recentActivities.title", "Recent activities"),
+      query: "",
+    },
+    {
+      entity: "course",
+      title: t("explore.lookingForMentors.title", "Looking for mentors"),
+      query: "needsRole=mentor",
+    },
+    {
+      entity: "course",
+      title: t("explore.lookingForVenues.title", "Looking for venues"),
+      query: "needsRole=venues",
+    },
+  ];
 
-  const [lookingForMentorsIsLoading, lookingForMentorsCourses] = Courses.useFindFilter(query);
+  const hooks = list.map((i) => {
+    const handler = mapping[i.entity];
+
+    const filter = handler.filter();
+    const urlParams = new URLSearchParams(i.query);
+    const params = Object.fromEntries(urlParams);
+    filter.read(params);
+    const query = filter.done().toQuery();
+    const [isLoading, data] = handler.find(query);
+    return { isLoading, data, route: handler.route, component: handler.component, ...i };
+  });
 
   useEffect(() => {
     Metatags.setCommonTags(t("dashboard.title", "Dashboard"));
   });
 
-  return (
-    <>
-      {!recentActivitiesCoursesIsLoading() ? (
+  return hooks.map((h, i) => (
+    <React.Fragment key={i}>
+      {!h.isLoading() ? (
         <div className="container mb-4">
-          <h2>{t("explore.recentActivities.title", "Recent activities")}</h2>
+          <a className="float-end" href={Router.path(h.route, undefined, { query: h.query })}>
+            {t("dashboard.more", "More")}
+          </a>
+          <h2>{h.title}</h2>
           <div className="d-flex flex-row flex-nowrap pb-2 overflow-x-scroll">
-            {recentActivitiesCourses.map((course) => (
-              <CourseCard key={course._id} course={course} />
-            ))}
+            {h.data.map(h.component)}
           </div>
         </div>
       ) : null}
-      {!lookingForMentorsIsLoading() ? (
-        <div className="container mb-4">
-          <h2>{t("explore.lookingForMentors.title", "Looking for mentors")}</h2>
-          <div className="d-flex flex-row flex-nowrap pb-2 overflow-x-scroll">
-            {lookingForMentorsCourses.map((course) => (
-              <CourseCard key={course._id} course={course} />
-            ))}
-          </div>
-        </div>
-      ) : null}
-    </>
-  );
+    </React.Fragment>
+  ));
 }
 
 // for Blaze
