@@ -16,7 +16,7 @@ function useOptions() {
   const query = useSearchParams();
 
   const filter = Courses.Filtering().read(query).done();
-  const filterQuery = filter.toQuery() as FindFilter;
+  const filterQuery: FindFilter = filter.toQuery();
   // Show internal events only when a group is specified
   if (!filterQuery.group && filterQuery.internal === undefined) {
     filterQuery.internal = false;

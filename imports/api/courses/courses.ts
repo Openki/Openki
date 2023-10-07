@@ -199,8 +199,8 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
       search: Predicates.string,
       group: Predicates.string,
       categories: Predicates.ids,
-      state: Predicates.ids,
-      needsRole: Predicates.ids,
+      state: Predicates.createEnumsPredicate("proposal", "resting", "upcomingEvent"),
+      needsRole: Predicates.createEnumsPredicate("host", "mentor", "team"),
       internal: Predicates.flag,
       archived: Predicates.flag,
     });

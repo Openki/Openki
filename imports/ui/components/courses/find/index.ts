@@ -154,7 +154,7 @@ template.helpers({
 
   hasResults() {
     const filterQuery = Template.instance().filter.toQuery();
-    return Courses.findFilter(filterQuery as any, 1).count() > 0;
+    return Courses.findFilter(filterQuery, 1).count() > 0;
   },
 
   hasMore() {
@@ -162,7 +162,7 @@ template.helpers({
 
     const filterQuery = instance.filter.toQuery();
     const limit = instance.courseLimit.get();
-    const results = Courses.findFilter(filterQuery as any, limit + 1);
+    const results = Courses.findFilter(filterQuery, limit + 1);
 
     return results.count() > limit;
   },
@@ -171,7 +171,7 @@ template.helpers({
     const instance = Template.instance();
     const filterQuery = instance.filter.toQuery();
 
-    return Courses.findFilter(filterQuery as any, instance.courseLimit.get());
+    return Courses.findFilter(filterQuery, instance.courseLimit.get());
   },
 
   filteredRegion() {
