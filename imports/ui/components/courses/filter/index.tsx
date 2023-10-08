@@ -119,7 +119,7 @@ export function Filter(props: Props) {
           <h4 className="filter-component-header">{t("find.filter.courseStates", "States")}</h4>
           <div className="row gx-3">
             {StateFilters.map((stateFilter) => (
-              <div className="col filter-captions-column">
+              <div key={stateFilter.name} className="col filter-captions-column">
                 <div className="filter-caption-wrap">
                   <div
                     className={`filter-caption ${stateFilterClasses(stateFilter)}`}

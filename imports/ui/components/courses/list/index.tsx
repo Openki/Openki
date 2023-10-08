@@ -20,7 +20,9 @@ export function CourseList(props: Props) {
       className={`row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3 ${!small ? "row-cols-xl-4" : ""}`}
     >
       {courses.map((course) => (
-        <CourseCompact key={course._id} course={course} groupTagEvents={groupTagEvents} />
+        <div key={course._id} className="col">
+          <CourseCompact course={course} groupTagEvents={groupTagEvents} />
+        </div>
       ))}
     </div>
   );

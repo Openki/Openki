@@ -10,7 +10,7 @@ import { Filtering } from "/imports/utils/filtering";
 import { SortSpec } from "/imports/utils/sort-spec";
 import { Publication } from "/imports/utils/ServerPublishReact";
 
-import { CourseCompact } from "../../components/courses/compact2";
+import { CourseCompact } from "../../components/courses/compact";
 
 const mapping: {
   [name: string]: {
@@ -25,21 +25,26 @@ const mapping: {
     filter: CourseCollection.Filtering,
     find: Courses.useFindFilter,
     component: (course: CourseModel) => (
-      <CourseCompact
+      <div
         key={course._id}
-        course={course}
-        groupTagEvents={() => ({
-          onMouseOver: async () => {
-            /**/
-          },
-          onMouseOut: async () => {
-            /**/
-          },
-          onClick: async () => {
-            /**/
-          },
-        })}
-      />
+        className="me-2"
+        style={{ inlineSize: "300px", minInlineSize: "300px" }}
+      >
+        <CourseCompact
+          course={course}
+          groupTagEvents={() => ({
+            onMouseOver: async () => {
+              /**/
+            },
+            onMouseOut: async () => {
+              /**/
+            },
+            onClick: async () => {
+              /**/
+            },
+          })}
+        />
+      </div>
     ),
   },
 };

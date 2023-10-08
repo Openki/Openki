@@ -14,14 +14,16 @@ import { CourseCompactRoles } from "./course-compact-roles";
 
 import "./styles.scss";
 
-export function CourseCompact(props: {
+export type Props = {
   course: CourseModel;
-  groupTagEvents: (groupId: string) => {
+  groupTagEvents?: (groupId: string) => {
     onMouseOver: () => Promise<void>;
     onMouseOut: () => Promise<void>;
     onClick: () => Promise<void>;
   };
-}) {
+};
+
+export function CourseCompact(props: Props) {
   const { course, groupTagEvents } = props;
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -91,61 +93,53 @@ export function CourseCompact(props: {
       groupId,
       isOrganizer: course.groupOrganizers.includes(groupId),
       onClick: async () => {
-        await groupTagEvents(groupId).onClick();
+        await groupTagEvents?.(groupId).onClick();
       },
       onMouseOver: async () => {
-        elementRef.current?.classList.toggle("elevate-child");
-        await groupTagEvents(groupId).onMouseOver();
+        elementRef.current?.classList.add("elevate-child");
+        await groupTagEvents?.(groupId).onMouseOver();
       },
       onMouseOut: async () => {
-        elementRef.current?.classList.toggle("elevate-child");
-        await groupTagEvents(groupId).onMouseOut();
+        elementRef.current?.classList.remove("elevate-child");
+        await groupTagEvents?.(groupId).onMouseOut();
       },
     };
   }
 
   return (
-    <div className="col">
-      <a href={Router.path("showCourse", { _id: course._id, slug: course.slug })}>
-        <div
-          ref={elementRef}
-          className={`row mx-0 align-items-start course-compact ${courseStateClasses()} ${filterPreviewClasses()}`}
-          style={courseCss()}
-        >
-          <div className="course-compact-content col-8">
-            {course.internal ? <InternalIndicator /> : null}
-            <div className="course-compact-title" title={course.name}>
-              {course.name}
-            </div>
-            <CourseCategories
-              categories={course.categories}
-              onMouseOver={async () => {
-                elementRef.current?.classList.toggle("elevate-child");
-              }}
-              onMouseOut={async () => {
-                elementRef.current?.classList.toggle("elevate-child");
-              }}
-            />
+    <a href={Router.path("showCourse", { _id: course._id, slug: course.slug })}>
+      <div
+        ref={elementRef}
+        className={`row mx-0 align-items-start course-compact ${courseStateClasses()} ${filterPreviewClasses()}`}
+        style={courseCss()}
+      >
+        <div className="course-compact-content col-8">
+          {course.internal ? <InternalIndicator /> : null}
+          <div className="course-compact-title" title={course.name}>
+            {course.name}
           </div>
-          {course.nextEvent ? (
-            <CourseCompactEvent course={course} />
-          ) : (
-            <CourseCompactRoles course={course} />
-          )}
-
-          <div className="tag-group course-groups">
-            {course.groups.map((group) => (
-              <GroupTag key={group} {...groupTagAttr(group)} />
-            ))}
-          </div>
+          <CourseCategories
+            categories={course.categories}
+            onMouseOver={async () => {
+              elementRef.current?.classList.add("elevate-child");
+            }}
+            onMouseOut={async () => {
+              elementRef.current?.classList.remove("elevate-child");
+            }}
+          />
         </div>
-      </a>
-    </div>
+        {course.nextEvent ? (
+          <CourseCompactEvent course={course} />
+        ) : (
+          <CourseCompactRoles course={course} />
+        )}
+
+        <div className="tag-group course-groups">
+          {course.groups.map((group) => (
+            <GroupTag key={group} {...groupTagAttr(group)} />
+          ))}
+        </div>
+      </div>
+    </a>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("CourseCompact", () => CourseCompact);
