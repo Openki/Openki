@@ -120,6 +120,8 @@ export class Filtering<T extends { [name: string]: Predicate<any> }> {
   toggle(name: keyof T): Filtering<T>;
 
   /** eg. for string and id */
+  toggle(name: keyof T, param: string): Filtering<T>;
+
   toggle(name: keyof T, param?: string) {
     if (!param) {
       // overload: toggle(name)

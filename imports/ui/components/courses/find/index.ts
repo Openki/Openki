@@ -18,6 +18,7 @@ import "/imports/ui/components/groups/tag";
 import "/imports/ui/components/courses/edit";
 import "/imports/ui/components/courses/list";
 import "/imports/ui/components/courses/filter";
+import { VisibleFilters, type Props as FilterProps } from "/imports/ui/components/courses/filter";
 import "/imports/ui/components/search-field";
 
 import "./template.html";
@@ -130,6 +131,105 @@ template.helpers({
       },
       onFocusOut: () => {
         instance.updateUrl();
+      },
+    };
+  },
+
+  filterAttr(): FilterProps {
+    const instance = Template.instance();
+    return {
+      showingFilters: instance.showingFilters.get(),
+      // check if one of the filters indicated as filters is active
+      active: VisibleFilters.some((filter) => instance.filter.get(filter)),
+      onToggleFilters: () => {
+        const { showingFilters } = instance;
+
+        if (showingFilters.get()) {
+          VisibleFilters.forEach((filter) => {
+            instance.filter.disable(filter);
+          });
+
+          instance.filter.done();
+          instance.updateUrl();
+          showingFilters.set(false);
+        } else {
+          showingFilters.set(true);
+        }
+      },
+      state: instance.filter.get("state") || [],
+      onStateClick: (state) => {
+        instance.filter.disable("state").toggle("state", state.name).done();
+
+        instance.updateUrl();
+      },
+      onStateMouseOver: (state) => {
+        if (!instance.filter.get("state")) {
+          FilterPreview({
+            property: "state",
+            id: state.cssClass,
+            activate: true,
+          });
+        }
+      },
+      onStateMouseOut: (state) => {
+        if (!instance.filter.get("state")) {
+          FilterPreview({
+            property: "state",
+            id: state.cssClass,
+            activate: false,
+          });
+        }
+      },
+      archived: instance.filter.get("archived") || false,
+      onArchivedClick: () => {
+        instance.filter.toggle("archived").done();
+        instance.updateUrl();
+      },
+      onArchivedMouseOver: () => {
+        if (!instance.filter.get("archived")) {
+          FilterPreview({
+            property: "is",
+            id: "archived",
+            activate: true,
+          });
+        }
+      },
+      onArchivedMouseOut: () => {
+        if (!instance.filter.get("archived")) {
+          FilterPreview({
+            property: "is",
+            id: "archived",
+            activate: false,
+          });
+        }
+      },
+      categories: instance.filter.get("categories") || [],
+      onCategoryAdd: (category: string) => {
+        instance.filter.add("categories", category).done();
+        instance.updateUrl();
+      },
+      onCategoryRemove: (category: string) => {
+        instance.filter.remove("categories", category).done();
+        instance.updateUrl();
+      },
+      needsRole: instance.filter.get("needsRole") || [],
+      onNeedsRoleClick: (role) => {
+        instance.filter.toggle("needsRole", role).done();
+        instance.updateUrl();
+      },
+      onNeedsRoleMouseOut: (role) => {
+        FilterPreview({
+          property: "role",
+          id: role,
+          activate: false,
+        });
+      },
+      onNeedsRoleMouseOver: (role) => {
+        FilterPreview({
+          property: "role",
+          id: role,
+          activate: true,
+        });
       },
     };
   },

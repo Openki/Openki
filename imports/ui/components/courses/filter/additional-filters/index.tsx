@@ -1,96 +1,99 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { i18n } from "/imports/startup/both/i18next";
+import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { Roles } from "/imports/api/roles/roles";
 
-import { FilterPreview } from "/imports/ui/lib/filter-preview";
+import { FilterCategories } from "/imports/ui/components/filter-categories";
 
-import "/imports/ui/components/filter-categories";
-
-import "./template.html";
 import "./styles.scss";
+
+export type Props = {
+  categories: string[];
+  onCategoryAdd: (category: string) => void;
+  onCategoryRemove: (category: string) => void;
+  needsRole: string[];
+  onNeedsRoleClick: (role: string) => void;
+  onNeedsRoleMouseOver: (role: string) => void;
+  onNeedsRoleMouseOut: (role: string) => void;
+};
 
 type Role = { icon?: string | undefined; name: string; label: string };
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "additionalFilters",
-  unknown,
-  { findInstance: any; roles: Role[] }
->;
+export function AdditionalFilters(props: Props) {
+  const { t } = useTranslation();
 
-const template = Template.additionalFilters;
+  const roles = [
+    {
+      name: "team",
+      label: t("find.needsOrganizer", "Looking for an organizer"),
+    },
+    {
+      name: "mentor",
+      label: t("find.needsMentor", "Looking for a mentor"),
+    },
+    {
+      name: "host",
+      label: t("find.needsHost", "Looking for a host"),
+    },
+  ].map(
+    // add icon from Roles collection to role object
+    (role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon }),
+  );
 
-template.onCreated(function () {
-  this.findInstance = this.parentInstance(2);
-  this.autorun(() => {
-    this.roles = [
-      {
-        name: "team",
-        label: i18n("find.needsOrganizer", "Looking for an organizer"),
-      },
-      {
-        name: "mentor",
-        label: i18n("find.needsMentor", "Looking for a mentor"),
-      },
-      {
-        name: "host",
-        label: i18n("find.needsHost", "Looking for a host"),
-      },
-    ].map(
-      // add icon from Roles collection to role object
-      (role) => ({ ...role, icon: Roles.find((r) => r.type === role.name)?.icon }),
-    );
-  });
-});
-
-template.helpers({
-  roles() {
-    return Template.instance().roles;
-  },
-
-  roleClasses(role: Role) {
+  function roleClasses(role: Role) {
     const classes = [];
-    const { findInstance } = Template.instance();
-    const needsRoleFilter = findInstance.filter.get("needsRole");
+    const needsRoleFilter = props.needsRole;
 
     if (needsRoleFilter?.includes(role.name)) {
       classes.push("active");
     }
 
     return classes.join(" ");
-  },
-
-  filterCategoriesAttr() {
-    const { findInstance } = Template.instance();
+  }
+  function filterCategoriesAttr() {
     return {
-      categories: findInstance.filter.get("categories"),
-      onAdd: (category: string) => {
-        findInstance.filter.add("categories", category).done();
-        findInstance.updateUrl();
-      },
-      onRemove: (category: string) => {
-        findInstance.filter.remove("categories", category).done();
-        findInstance.updateUrl();
-      },
+      categories: props.categories,
+      onAdd: props.onCategoryAdd,
+      onRemove: props.onCategoryRemove,
     };
-  },
-});
+  }
 
-template.events({
-  "click .js-filter-course-role"(event, instance) {
-    const { findInstance } = instance;
-    const filterName = instance.$(event.currentTarget as any).data("filter-name");
+  return (
+    <>
+      <div aria-label="filter-course-roles" className="col-md-3 filter-component" role="group">
+        <h4 className="filter-component-header">{t("find.filter.courseRoles", "Roles")}</h4>
+        {roles.map((role) => (
+          <button
+            className={`filter-course-role ${roleClasses(role)}`}
+            type="button"
+            onMouseOver={() => {
+              props.onNeedsRoleMouseOver(role.name);
+            }}
+            onMouseOut={() => {
+              props.onNeedsRoleMouseOut(role.name);
+            }}
+            onClick={() => {
+              props.onNeedsRoleClick(role.name);
+            }}
+          >
+            <span className="filter-course-role-icon">
+              <i className={`${role.icon} fa-fw`} aria-hidden="true"></i>
+            </span>
+            {role.label}
+            <i className="fa-solid fa-check" aria-hidden="true"></i>
+          </button>
+        ))}
+      </div>
+      <div className="col-md-3 filter-component">
+        <h4 className="filter-component-header">{t("find.filter.categories", "Categories")}</h4>
+        <FilterCategories {...filterCategoriesAttr()} />
+      </div>
+    </>
+  );
+}
 
-    findInstance.filter.toggle("needsRole", filterName).done();
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
 
-    findInstance.updateUrl();
-  },
-
-  "mouseover .js-filter-course-role, mouseout .js-filter-course-role"(event, instance) {
-    FilterPreview({
-      property: "role",
-      id: instance.$(event.currentTarget as any).data("filter-name"),
-      activate: event.type === "mouseover",
-    });
-  },
-});
+Template.registerHelper("AdditionalFilters", () => AdditionalFilters);
