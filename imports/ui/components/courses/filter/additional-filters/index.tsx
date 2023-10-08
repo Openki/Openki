@@ -64,6 +64,7 @@ export function AdditionalFilters(props: Props) {
         <h4 className="filter-component-header">{t("find.filter.courseRoles", "Roles")}</h4>
         {roles.map((role) => (
           <button
+            key={role.name}
             className={`filter-course-role ${roleClasses(role)}`}
             type="button"
             onMouseOver={() => {

@@ -295,7 +295,7 @@ template.helpers({
   },
 
   groupTagEvents() {
-    return () => (groupId: string) => {
+    return (groupId: string) => {
       const instance = Template.instance();
       return {
         onMouseOver: () => {
