@@ -5,6 +5,7 @@ import { FilterPreview } from "/imports/ui/lib/filter-preview";
 
 import "/imports/ui/components/courses/categories";
 import "./additional-filters";
+import type { Props as AdditionalFiltersProps } from "./additional-filters";
 
 import "./template.html";
 import "./styles.scss";
@@ -112,6 +113,41 @@ template.helpers({
 
   showingFilters() {
     return (Template.instance().parentInstance() as any).showingFilters.get();
+  },
+
+  additionalFiltersAttr(): AdditionalFiltersProps {
+    const parentInstance = Template.instance().parentInstance() as any;
+
+    return {
+      categories: parentInstance.filter.get("categories"),
+      onCategoryAdd: (category: string) => {
+        parentInstance.filter.add("categories", category).done();
+        parentInstance.updateUrl();
+      },
+      onCategoryRemove: (category: string) => {
+        parentInstance.filter.remove("categories", category).done();
+        parentInstance.updateUrl();
+      },
+      needsRole: parentInstance.filter.get("needsRole"),
+      onNeedsRoleClick: (role) => {
+        parentInstance.filter.toggle("needsRole", role).done();
+        parentInstance.updateUrl();
+      },
+      onNeedsRoleMouseOut: (role) => {
+        FilterPreview({
+          property: "role",
+          id: role,
+          activate: false,
+        });
+      },
+      onNeedsRoleMouseOver: (role) => {
+        FilterPreview({
+          property: "role",
+          id: role,
+          activate: true,
+        });
+      },
+    };
   },
 });
 
