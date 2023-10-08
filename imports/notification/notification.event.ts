@@ -139,7 +139,7 @@ export function Model(entry: { body: Body }) {
         eventEnd: endMoment.format("LT"),
         venueLine,
         eventLink: Router.url("showEvent", event, { query: "campaign=eventNotify" }),
-        recipientTakePart: !!event.participants?.find((p) => p.user === actualRecipient._id),
+        recipientTakePart: event.participants?.some((p) => p.user === actualRecipient._id),
         registerToEventLink: Router.url("showEvent", event, {
           query: "action=register&campaign=eventNotify",
         }),

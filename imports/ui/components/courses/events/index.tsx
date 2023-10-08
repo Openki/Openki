@@ -38,7 +38,7 @@ export function Events(props: { course: CourseModel }) {
   const [isLoading, events] = EventsPub.useForCourse(courseId);
 
   function haveEvents() {
-    return !!events.find((e) => e.end >= now);
+    return events.some((e) => e.end >= now);
   }
 
   function haveMoreEvents() {
