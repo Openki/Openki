@@ -107,39 +107,38 @@ export function CourseCompact(props: Props) {
   }
 
   return (
-    <a href={Router.path("showCourse", { _id: course._id, slug: course.slug })}>
-      <div
-        ref={elementRef}
-        className={`row mx-0 align-items-start course-compact ${courseStateClasses()} ${filterPreviewClasses()}`}
-        style={courseCss()}
-      >
-        <div className="course-compact-content col-8">
-          {course.internal ? <InternalIndicator /> : null}
-          <div className="course-compact-title" title={course.name}>
+    <div
+      ref={elementRef}
+      className={`row mx-0 align-items-start course-compact ${courseStateClasses()} ${filterPreviewClasses()}`}
+      style={courseCss()}
+    >
+      <div className="course-compact-content col-8">
+        {course.internal ? <InternalIndicator /> : null}
+        <div className="course-compact-title" title={course.name}>
+          <a className="stretched-link" href={Router.path("showCourse", course)}>
             {course.name}
-          </div>
-          <CourseCategories
-            categories={course.categories}
-            onMouseOver={async () => {
-              elementRef.current?.classList.add("elevate-child");
-            }}
-            onMouseOut={async () => {
-              elementRef.current?.classList.remove("elevate-child");
-            }}
-          />
+          </a>
         </div>
-        {course.nextEvent ? (
-          <CourseCompactEvent course={course} />
-        ) : (
-          <CourseCompactRoles course={course} />
-        )}
-
-        <div className="tag-group course-groups">
-          {course.groups.map((group) => (
-            <GroupTag key={group} {...groupTagAttr(group)} />
-          ))}
-        </div>
+        <CourseCategories
+          categories={course.categories}
+          onMouseOver={async () => {
+            elementRef.current?.classList.add("elevate-child");
+          }}
+          onMouseOut={async () => {
+            elementRef.current?.classList.remove("elevate-child");
+          }}
+        />
       </div>
-    </a>
+      {course.nextEvent ? (
+        <CourseCompactEvent course={course} />
+      ) : (
+        <CourseCompactRoles course={course} />
+      )}
+      <div className="tag-group course-groups">
+        {course.groups.map((group) => (
+          <GroupTag key={group} {...groupTagAttr(group)} />
+        ))}
+      </div>
+    </div>
   );
 }

@@ -5,6 +5,9 @@
   padding: 0;
   position: relative;
   top: -7px;
+
+  /* Move over stretched-link */
+  z-index: 2;
 }
 
 .course-compact-role {
