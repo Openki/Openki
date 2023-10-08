@@ -24,7 +24,7 @@ export function Modal(props: {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   function isSelected(event: EventModel) {
-    return !!selectedEvents?.find((e) => e._id === event._id);
+    return !!selectedEvents?.some((e) => e._id === event._id);
   }
   function numSelectedEvents() {
     return selectedEvents.length || 0;

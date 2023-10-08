@@ -65,7 +65,7 @@ export const ensure = {
       return;
     }
 
-    if (user.tenants?.find((t) => t._id === region.tenant)) {
+    if (user.tenants?.some((t) => t._id === region.tenant)) {
       return;
     }
 
