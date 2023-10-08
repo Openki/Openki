@@ -122,51 +122,6 @@
   line-height: 40px;
 }
 
-.filter-course-role {
-  background-color: transparent;
-  border: 0;
-  display: block;
-  margin: 0;
-  padding: 0;
-  text-align: start;
-
-  &:hover {
-    color: $primary;
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &.active {
-    color: darken($green, 50%);
-  }
-}
-
-.filter-course-role + .filter-course-role {
-  margin-top: 5px;
-}
-
-.filter-course-role-icon {
-  @include td-margin(right, 5px);
-  background-color: $role-needed-bg;
-  color: $role-needed-color;
-  display: inline-block;
-  padding: 3px 5px;
-}
-
-.filter-course-role .checkmark {
-  display: none;
-}
-
-.filter-course-role.active .checkmark {
-  display: inline;
-}
-
-.filter-categories-select {
-  margin-bottom: 10px;
-  padding: 0;
-}
 
 .filter-no-categories-found {
   padding: 5px 10px;
