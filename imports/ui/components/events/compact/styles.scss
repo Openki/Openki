@@ -3,48 +3,6 @@
 // *** Event compact ***
 //======================
 
-// ** Wrap
-//========================================================================================
-.event-compact-wrap {
-  @include make-col-ready();
-  padding: ($grid-gutter-width / 3) ($grid-gutter-width / 3 * 2);
-}
-
-.frame-events-fluid .event-compact-wrap {
-  @include make-col(6);
-
-  @include media-breakpoint-up(sm) {
-    @include make-col(4);
-  }
-
-  @include media-breakpoint-up(md) {
-    @include make-col(3);
-  }
-
-  @include media-breakpoint-up(xl) {
-    @include make-col(2);
-  }
-}
-
-.container .event-compact-wrap {
-  @include make-col(6);
-
-  @include media-breakpoint-up(md) {
-    @include make-col(4);
-  }
-  @include media-breakpoint-up(lg) {
-    @include make-col(3);
-  }
-}
-
-.container.mw-md .event-compact-wrap {
-  @include make-col(6);
-
-  @include media-breakpoint-up(md) {
-    @include make-col(4);
-  }
-}
-
 // ** Compact
 //========================================================================================
 .event-compact {

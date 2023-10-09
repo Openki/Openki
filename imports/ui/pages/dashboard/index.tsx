@@ -3,7 +3,9 @@ import { useTranslation } from "react-i18next";
 import { Router } from "meteor/iron:router";
 
 import { Courses as CourseCollection, CourseModel } from "/imports/api/courses/courses";
+import { Events as EventCollection, EventModel } from "/imports/api/events/events";
 import * as Courses from "/imports/api/courses/publications";
+import * as Events from "/imports/api/events/publications";
 
 import * as Metatags from "/imports/utils/metatags";
 import { Filtering } from "/imports/utils/filtering";
@@ -11,6 +13,7 @@ import { SortSpec } from "/imports/utils/sort-spec";
 import { Publication } from "/imports/utils/ServerPublishReact";
 
 import { CourseCompact } from "../../components/courses/compact";
+import { EventCompact } from "../../components/events/compact";
 
 const mapping: {
   [name: string]: {
@@ -30,20 +33,17 @@ const mapping: {
         className="me-2"
         style={{ inlineSize: "300px", minInlineSize: "300px" }}
       >
-        <CourseCompact
-          course={course}
-          groupTagEvents={() => ({
-            onMouseOver: async () => {
-              /**/
-            },
-            onMouseOut: async () => {
-              /**/
-            },
-            onClick: async () => {
-              /**/
-            },
-          })}
-        />
+        <CourseCompact course={course} />
+      </div>
+    ),
+  },
+  event: {
+    route: "calendar",
+    filter: EventCollection.Filtering,
+    find: Events.useFindFilter,
+    component: (event: EventModel) => (
+      <div key={event._id} className="me-2" style={{ inlineSize: "250px", minInlineSize: "250px" }}>
+        <EventCompact event={event} withDate={true} withImage={true} />
       </div>
     ),
   },
@@ -57,6 +57,11 @@ export function DashboardPage() {
       entity: "course",
       title: t("explore.recentActivities.title", "Recent activities"),
       query: "internal=0",
+    },
+    {
+      entity: "event",
+      title: t("explore.upcomingEvents.title", "Upcoming events"),
+      query: "after=now&sort=start&internal=0",
     },
     {
       entity: "course",

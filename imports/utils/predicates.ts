@@ -146,7 +146,7 @@ export const date: Predicate<moment.Moment, Date, string | moment.Moment> = func
   }
   let value: moment.Moment;
   if (param === "now") {
-    value = moment();
+    value = moment().startOf("minute");
   } else {
     value = moment(param, ["YYYY-MM-DD", moment.ISO_8601]); // Param is ISO date or moment() object
     if (!value.isValid()) {
