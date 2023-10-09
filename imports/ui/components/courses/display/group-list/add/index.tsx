@@ -11,9 +11,8 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 
-function GroupToAdd(props: { course: CourseModel; groupId: string }) {
+function GroupToAdd({ course, groupId }: { course: CourseModel; groupId: string }) {
   const { t } = useTranslation();
-  const { course, groupId } = props;
   const [isLoading, group] = useDetails(groupId);
 
   if (isLoading()) {
@@ -47,12 +46,11 @@ function GroupToAdd(props: { course: CourseModel; groupId: string }) {
   );
 }
 
-export function CourseGroupAdd(props: { course: CourseModel }) {
+export type Props = { course: CourseModel };
+
+export function CourseGroupAdd({ course }: Props) {
   const { t } = useTranslation();
-
   const user = useUser();
-
-  const { course } = props;
 
   const groupsToAdd = user && _.difference(user.groups, course.groups);
 

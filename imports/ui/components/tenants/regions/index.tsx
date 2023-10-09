@@ -7,13 +7,11 @@ import { useTranslation } from "react-i18next";
 import { useFindFilter } from "/imports/api/regions/publications";
 import { TenantModel } from "/imports/api/tenants/tenants";
 
-export interface Data {
+export interface Props {
   tenant: TenantModel;
 }
 
-export function TenantRegions(props: Data) {
-  const { tenant } = props;
-
+export function TenantRegions({ tenant }: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const [isLoading, regions] = useFindFilter({ tenants: [tenant._id] });

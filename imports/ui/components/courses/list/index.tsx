@@ -13,8 +13,7 @@ export type Props = {
   small?: boolean;
 };
 
-export function CourseList(props: Props) {
-  const { courses, groupTagEvents, small } = props;
+export function CourseList({ courses, groupTagEvents, small }: Props) {
   return (
     <div
       className={`row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3 ${!small ? "row-cols-xl-4" : ""}`}

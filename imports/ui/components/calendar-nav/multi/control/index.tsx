@@ -2,13 +2,14 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Arrow, Direction, Unit, units } from "../../Arrow";
 
-export function Control(props: {
+export type Props = {
   unit: Unit;
   direction: Direction;
   onChangeDate: () => void;
   onChangeUnit: (value: Unit) => void;
-}) {
-  const { unit: currentUnit, direction, onChangeDate, onChangeUnit } = props;
+};
+
+export function Control({ unit: currentUnit, direction, onChangeDate, onChangeUnit }: Props) {
   const { t } = useTranslation();
 
   function text(unit: string, length: string) {

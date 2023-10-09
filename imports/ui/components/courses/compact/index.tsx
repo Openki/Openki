@@ -23,8 +23,7 @@ export type Props = {
   };
 };
 
-export function CourseCompact(props: Props) {
-  const { course, groupTagEvents } = props;
+export function CourseCompact({ course, groupTagEvents }: Props) {
   const elementRef = useRef<HTMLDivElement>(null);
 
   function courseCss() {

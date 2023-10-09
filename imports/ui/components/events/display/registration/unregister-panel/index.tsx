@@ -33,12 +33,13 @@ function ButtonUnregister(props: {
   );
 }
 
-export function UnregisterPanel(props: {
+export type Props = {
   event: EventModel;
   busy: boolean;
   onUnregister: () => Promise<void>;
-}) {
-  const { event, busy, onUnregister } = props;
+};
+
+export function UnregisterPanel({ event, busy, onUnregister }: Props) {
   const { dateFormat } = useDateTimeFormat();
 
   const [isLoading, course] = useDetails(event.courseId || "-1");

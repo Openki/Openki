@@ -7,8 +7,12 @@ import { useSiteName } from "/imports/utils/getSiteName";
 import { Regions } from "/imports/api/regions/regions";
 import { CourseModel } from "/imports/api/courses/courses";
 
-export function Course(props: { course: CourseModel; hideInterested: boolean }) {
-  const { course, hideInterested } = props;
+export type Props = {
+  course: CourseModel;
+  hideInterested: boolean;
+};
+
+export function Course({ course, hideInterested }: Props) {
   const { t } = useTranslation();
   const allRegions = useSessionEquals("region", "all");
   const [isExpanded, setIsExpanded] = useState(false);

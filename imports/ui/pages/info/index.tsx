@@ -13,11 +13,13 @@ import * as Metatags from "/imports/utils/metatags";
 
 import "./styles.scss";
 
-export function InfoPage(props: { page: InfoPagesEntity }) {
+export type Props = {
+  page: InfoPagesEntity;
+};
+
+export function InfoPage({ page }: Props) {
   const headerTag = "h2, h3";
   const contentTags = "p, ul";
-
-  const { page } = props;
 
   routerAutoscroll.cancelNext();
 

@@ -16,10 +16,15 @@ import { Contribution } from "/imports/ui/components/contribution";
 
 import "./styles.scss";
 
-function EventParticipant(props: { participant: EventParticipantEntity; event: EventModel }) {
+function EventParticipant({
+  participant,
+  event,
+}: {
+  participant: EventParticipantEntity;
+  event: EventModel;
+}) {
   const userId = useUserId();
   const { t } = useTranslation();
-  const { participant, event } = props;
 
   function ownUserParticipantClass() {
     if (participant.user === userId) {
@@ -49,8 +54,11 @@ function EventParticipant(props: { participant: EventParticipantEntity; event: E
   );
 }
 
-export function EventParticipants(props: { event: EventModel }) {
-  const { event } = props;
+export type Props = {
+  event: EventModel;
+};
+
+export function EventParticipants({ event }: Props) {
   const { t } = useTranslation();
   const modalRef = useRef(null);
   const user = useUser();

@@ -17,8 +17,7 @@ export type Props = {
   openInNewTab?: boolean | undefined;
 };
 
-function Venue(props: { name: string }) {
-  const { name } = props;
+function Venue({ name }: { name: string }) {
   return (
     <>
       <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
@@ -27,9 +26,8 @@ function Venue(props: { name: string }) {
   );
 }
 
-function VenueTag(props: { venue: Venue; openInNewTab?: boolean | undefined }) {
+function VenueTag({ venue, openInNewTab }: { venue: Venue; openInNewTab?: boolean | undefined }) {
   const { t } = useTranslation();
-  const { venue, openInNewTab } = props;
   if (venue?._id) {
     return (
       <div className="tag tag-link venue-tag">
@@ -54,8 +52,7 @@ function VenueTag(props: { venue: Venue; openInNewTab?: boolean | undefined }) {
   );
 }
 
-function RoomTag(props: { name: string | undefined }) {
-  const { name } = props;
+function RoomTag({ name }: { name: string | undefined }) {
   if (!name) {
     return null;
   }
@@ -67,17 +64,15 @@ function RoomTag(props: { name: string | undefined }) {
   );
 }
 
-export function VenueLink(props: Props) {
-  const { venue, room, openInNewTab } = props;
-  if (venue?.name) {
-    return (
-      <>
-        <VenueTag venue={venue} openInNewTab={openInNewTab} /> <RoomTag name={room} />
-      </>
-    );
+export function VenueLink({ venue, room, openInNewTab }: Props) {
+  if (!venue?.name) {
+    return null;
   }
-
-  return null;
+  return (
+    <>
+      <VenueTag venue={venue} openInNewTab={openInNewTab} /> <RoomTag name={room} />
+    </>
+  );
 }
 
 // for Blaze

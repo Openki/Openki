@@ -9,9 +9,11 @@ import * as Alert from "/imports/api/alerts/alert";
 import * as emailMethods from "/imports/api/emails/methods";
 import { UserModel } from "/imports/api/users/users";
 
-function EmailValidationModal(props: { user: UserModel }) {
-  const { user } = props;
+export type Props = {
+  user: UserModel;
+};
 
+function EmailValidationModal({ user }: Props) {
   const { t } = useTranslation();
   const [isBusy, setIsBusy] = useState(false);
   const emailValidationModalClosed = useSessionEquals("emailValidationModalClosed", true);

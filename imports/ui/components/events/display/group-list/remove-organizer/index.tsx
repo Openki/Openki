@@ -9,11 +9,15 @@ import * as EventsMethods from "/imports/api/events/methods";
 import { name } from "/imports/ui/lib/group-name-helpers";
 import { useDetails } from "/imports/api/groups/publications";
 
-export function EventGroupRemoveOrganizer(props: { event: EventModel; groupId: string }) {
+export type Props = {
+  event: EventModel;
+  groupId: string;
+};
+
+export function EventGroupRemoveOrganizer({ event, groupId }: Props) {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const { event, groupId } = props;
   const [isLoading, group] = useDetails(groupId);
 
   if (isLoading()) {

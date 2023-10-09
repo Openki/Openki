@@ -8,8 +8,11 @@ import { ReactSelect2 } from "/imports/ui/components/react-select2";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 
-function Option(props: { groupId: string }) {
-  const { groupId } = props;
+export type Props = {
+  groupId: string;
+};
+
+function Option({ groupId }: Props) {
   const [isLoading, group] = useDetails(groupId);
 
   return (

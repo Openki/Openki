@@ -5,19 +5,24 @@ import React from "react";
 
 import "./styles.scss";
 
-export function CategoryLabel(props: { category: string }) {
-  const { category } = props;
+export type CategoryLabelProps = { category: string };
+
+export function CategoryLabel({ category }: CategoryLabelProps) {
   const { t } = useTranslation();
   return <div className="tag category-tag">{t(`category.${category}`)}</div>;
 }
 
-function CategoryLabelLinked(props: {
+function CategoryLabelLinked({
+  category,
+  onMouseOver,
+  onMouseOut,
+  onClick,
+}: {
   category: string;
   onClick?: (() => Promise<void>) | undefined;
   onMouseOver?: (() => Promise<void>) | undefined;
   onMouseOut?: (() => Promise<void>) | undefined;
 }) {
-  const { category, onMouseOver, onMouseOut, onClick } = props;
   const { t } = useTranslation();
   return (
     <div className="tag tag-link category-tag">
@@ -39,13 +44,19 @@ function CategoryLabelLinked(props: {
   );
 }
 
-export function CourseCategories(props: {
+export type CourseCategoriesProps = {
   categories: string[];
   onClick?: () => Promise<void>;
   onMouseOver?: () => Promise<void>;
   onMouseOut?: () => Promise<void>;
-}) {
-  const { categories, onMouseOver, onMouseOut, onClick } = props;
+};
+
+export function CourseCategories({
+  categories,
+  onMouseOver,
+  onMouseOut,
+  onClick,
+}: CourseCategoriesProps) {
   if (!categories?.length) {
     return null;
   }
