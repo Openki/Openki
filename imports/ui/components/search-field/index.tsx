@@ -5,13 +5,14 @@ import { Template } from "meteor/templating";
 
 import "./styles.scss";
 
-export function SearchField(props: {
+export type Props = {
   search: string | undefined;
   onChange: (newValue: string) => void;
   onFocusOut?: () => void;
-}) {
-  const { onChange, onFocusOut } = props;
-  const [value, setValue] = useState(props.search ?? "");
+};
+
+export function SearchField({ search, onChange, onFocusOut }: Props) {
+  const [value, setValue] = useState(search ?? "");
 
   const { t } = useTranslation();
 

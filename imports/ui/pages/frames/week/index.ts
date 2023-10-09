@@ -17,7 +17,7 @@ import * as Metatags from "/imports/utils/metatags";
 
 import "/imports/ui/components/events/list";
 import "/imports/ui/components/calendar-nav/week";
-import type { Data as CalendarNavData } from "/imports/ui/components/calendar-nav/week";
+import type { Props as CalendarNavData } from "/imports/ui/components/calendar-nav/week";
 
 import "./template.html";
 import "./styles.scss";

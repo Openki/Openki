@@ -29,9 +29,13 @@ function statusFormat(t: TFunction<"translation", undefined>, status: Status) {
   }
 }
 
-function Invitations(props: { tenantId: string; invitations: InvitationEntity[] }) {
-  const { tenantId, invitations } = props;
-
+function Invitations({
+  tenantId,
+  invitations,
+}: {
+  tenantId: string;
+  invitations: InvitationEntity[];
+}) {
   const { t } = useTranslation();
   const { dateFormat, timeFormat } = useDateTimeFormat();
 
@@ -128,9 +132,7 @@ export interface Props {
   tenantId: string;
 }
 
-export function InvitationsList(props: Props) {
-  const { tenantId } = props;
-
+export function InvitationsList({ tenantId }: Props) {
   const { t } = useTranslation();
   const [showAccepted, setShowAccepted] = useState(false);
   const [isLoading, invitations] = useFindFilter({ tenant: tenantId });

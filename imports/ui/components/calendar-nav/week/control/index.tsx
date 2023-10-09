@@ -2,8 +2,9 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Arrow, Direction } from "../../Arrow";
 
-export function Control(props: { direction: Direction; onChangeDate: () => void }) {
-  const { direction, onChangeDate } = props;
+export type Props = { direction: Direction; onChangeDate: () => void };
+
+export function Control({ direction, onChangeDate }: Props) {
   const { t } = useTranslation();
 
   function text(length: string) {

@@ -13,10 +13,9 @@ export type Props = {
   userId: string;
 };
 
-export function Contribution(props: Props) {
+export function Contribution({ userId }: Props) {
   const { t } = useTranslation();
   const currentRegion = useCurrentRegion();
-  const { userId } = props;
   const cachedUser = useTracker(() => getCachedUser(userId));
 
   if (!userId) {

@@ -21,10 +21,12 @@ import { EventList } from "/imports/ui/components/events/list";
 
 import "./styles.scss";
 
-export function Events(props: { course: CourseModel }) {
+export type Props = {
+  course: CourseModel;
+};
+
+export function Events({ course }: Props) {
   const { t } = useTranslation();
-  const { course } = props;
-  const courseId = course._id;
   const user = useUser();
   const now = useReactiveNow();
   const viewport = useViewportSize();
@@ -35,7 +37,7 @@ export function Events(props: { course: CourseModel }) {
   const [showAllEvents, setShowAllEvents] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const [isLoading, events] = EventsPub.useForCourse(courseId);
+  const [isLoading, events] = EventsPub.useForCourse(course._id);
 
   function haveEvents() {
     return events.some((e) => e.end >= now);

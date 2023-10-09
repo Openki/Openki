@@ -9,8 +9,9 @@ import { roleIcon } from "/imports/utils/role";
 
 import "./styles.scss";
 
-export function CourseCompactRoles(props: { course: CourseModel }) {
-  const { course } = props;
+export type Props = { course: CourseModel };
+
+export function CourseCompactRoles({ course }: Props) {
   const userId = useUserId();
   const { t } = useTranslation();
 

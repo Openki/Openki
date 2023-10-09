@@ -45,8 +45,11 @@ function ButtonRegistrationClosed(props: {
   );
 }
 
-export function EventRegistration(props: { event: EventModel }) {
-  const { event } = props;
+export type Props = {
+  event: EventModel;
+};
+
+export function EventRegistration({ event }: Props) {
   const user = useUser();
   const { t } = useTranslation();
   const [isBusy, setIsBusy] = useState("");

@@ -9,8 +9,12 @@ import * as Tooltips from "/imports/utils/Tooltips";
 
 import "./styles.scss";
 
-export function RemoveFromTeamDropdown(props: { member: CourseMemberEntity; onClick: () => void }) {
-  const { member } = props;
+export type Props = {
+  member: CourseMemberEntity;
+  onClick: () => void;
+};
+
+export function RemoveFromTeamDropdown({ member, onClick }: Props) {
   const { t } = useTranslation();
   const user = useUser();
 
@@ -55,7 +59,7 @@ export function RemoveFromTeamDropdown(props: { member: CourseMemberEntity; onCl
             className="btn btn-danger"
             onClick={() => {
               Tooltips.hide();
-              props.onClick();
+              onClick();
             }}
           >
             {t("course.group.remove", "Remove")}

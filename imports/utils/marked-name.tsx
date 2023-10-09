@@ -1,7 +1,11 @@
 import React from "react";
 
-export function MarkedName(props: { search: string; name: string }) {
-  const { search, name } = props;
+export type Props = {
+  search: string;
+  name: string;
+};
+
+export function MarkedName({ search, name }: Props) {
   if (search === "") {
     return name;
   }

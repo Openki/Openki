@@ -38,12 +38,13 @@ function ButtonRegister(props: {
   );
 }
 
-export function RegisterPanel(props: {
+export type Props = {
   event: EventModel;
   busy: boolean;
   onRegister: (companions: number) => Promise<void>;
-}) {
-  const { event, busy, onRegister } = props;
+};
+
+export function RegisterPanel({ event, busy, onRegister }: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const { dateFormat } = useDateTimeFormat();

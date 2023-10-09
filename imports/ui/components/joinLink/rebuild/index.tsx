@@ -8,9 +8,11 @@ import { ButtonCancel } from "/imports/ui/components/buttons";
 
 import "./styles.scss";
 
-export function JoinLinkRebuild(props: { tenantId: string }) {
-  const { tenantId } = props;
+export type Props = {
+  tenantId: string;
+};
 
+export function JoinLinkRebuild({ tenantId }: Props) {
   const { t } = useTranslation();
   const [confirm, setConfirm] = useState(false);
 

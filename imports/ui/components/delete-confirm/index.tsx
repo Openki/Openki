@@ -10,10 +10,9 @@ export type Props = {
   busyButton: string;
 };
 
-export function DeleteConfirm(props: Props) {
+export function DeleteConfirm({ confirmText, confirmButton, onRemove, busyButton }: Props) {
   const { t } = useTranslation();
   const [isConfirm, setIsConfirm] = useState(false);
-  const { confirmText, confirmButton, onRemove, busyButton } = props;
 
   if (!isConfirm) {
     return (

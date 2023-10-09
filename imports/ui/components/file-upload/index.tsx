@@ -25,8 +25,7 @@ export interface Props {
   onCancel: () => void;
 }
 
-export function FileUpload(props: Props) {
-  const { accept, onUpload, onCancel } = props;
+export function FileUpload({ accept, onUpload, onCancel }: Props) {
   const { t } = useTranslation();
   const [droppedFile, setDroppedFile] = useState<File | undefined>(undefined);
   const [progress, setProgress] = useState<"start" | "ready" | "uploading" | "done">("start");

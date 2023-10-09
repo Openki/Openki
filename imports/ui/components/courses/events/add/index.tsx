@@ -4,9 +4,12 @@ import { Router } from "meteor/iron:router";
 
 import { CourseModel } from "/imports/api/courses/courses";
 
-export function Add(props: { course: CourseModel }) {
+export type Props = {
+  course: CourseModel;
+};
+
+export function Add({ course }: Props) {
   const { t } = useTranslation();
-  const { course } = props;
 
   return (
     <div className="event-caption-wrap">

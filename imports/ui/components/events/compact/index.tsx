@@ -44,13 +44,14 @@ function bodyStyle(event: EventModel, withImage?: boolean | undefined) {
   };
 }
 
-export function EventCompact(props: {
+export type Props = {
   event: EventModel;
   withDate?: boolean | undefined;
   withImage?: boolean | undefined;
   openInNewTab?: boolean | undefined;
-}) {
-  const { event, withDate, withImage, openInNewTab } = props;
+};
+
+export function EventCompact({ event, withDate, withImage, openInNewTab }: Props) {
   const { t } = useTranslation();
   const { weekdayFormat, calendarDayShort, timeFormat } = useDateTimeFormat();
   const userId = useUserId();

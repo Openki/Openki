@@ -17,8 +17,11 @@ import { useCurrentRouteName } from "/imports/ui/lib/useCurrentRouteName";
 
 import "./styles.scss";
 
-export function Introduction(props: { hasPricePolicy: boolean }) {
-  const { hasPricePolicy } = props;
+export type Props = {
+  hasPricePolicy: boolean;
+};
+
+export function Introduction({ hasPricePolicy }: Props) {
   const { t } = useTranslation();
   const viewportSize = useViewportSize();
   const routeName = useCurrentRouteName();

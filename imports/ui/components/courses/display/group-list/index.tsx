@@ -10,10 +10,11 @@ import { CourseGroupRemove } from "/imports/ui/components/courses/display/group-
 import { CourseGroupRemoveOrganizer } from "/imports/ui/components/courses/display/group-list/remove-organizer";
 import { CourseGroupMakeOrganizer } from "/imports/ui/components/courses/display/group-list/make-organizer";
 
-export function CourseGroupList(props: { course: CourseModel }) {
+export type Props = { course: CourseModel };
+
+export function CourseGroupList({ course }: Props) {
   const { t } = useTranslation();
   const user = useUser();
-  const { course } = props;
 
   function tools(groupId: string) {
     return (

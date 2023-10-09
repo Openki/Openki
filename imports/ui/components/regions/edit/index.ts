@@ -146,8 +146,8 @@ export interface OnSaveFields {
 
   template.helpers({
     regionMarkers() {
-      const { data } = Template.instance();
-      return data.locationTracker.markers;
+      const { locationTracker } = Template.instance().data;
+      return locationTracker.markers;
     },
 
     timezones() {
@@ -155,13 +155,12 @@ export interface OnSaveFields {
     },
 
     isCurrentTimezone(timezone: string) {
-      const { data } = Template.instance();
-      return data.region.tz === timezone;
+      const { region } = Template.instance().data;
+      return region.tz === timezone;
     },
 
     allowPlacing() {
-      const { data } = Template.instance();
-      const { locationTracker } = data;
+      const { locationTracker } = Template.instance().data;
 
       // We return a function so the reactive dependency on locationState is
       // established from within the map template which will call it.
@@ -171,8 +170,7 @@ export interface OnSaveFields {
     },
 
     allowRemoving() {
-      const { data } = Template.instance();
-      const { locationTracker } = data;
+      const { locationTracker } = Template.instance().data;
 
       return () => !!locationTracker.getLocation();
     },

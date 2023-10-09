@@ -8,9 +8,13 @@ import * as CoursesMethods from "/imports/api/courses/methods";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 
-export function CourseGroupRemoveOrganizer(props: { course: CourseModel; groupId: string }) {
+export type Props = {
+  course: CourseModel;
+  groupId: string;
+};
+
+export function CourseGroupRemoveOrganizer({ course, groupId }: Props) {
   const { t } = useTranslation();
-  const { course, groupId } = props;
   const [isLoading, group] = useDetails(groupId);
   const [isExpanded, setIsExpanded] = useState(false);
 

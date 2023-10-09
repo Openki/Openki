@@ -7,14 +7,14 @@ import { EventCompact } from "/imports/ui/components/events/compact";
 
 import "./styles.scss";
 
-export function EventList(props: {
+export type Props = {
   dataEvents: EventModel[];
   withDate?: boolean | undefined;
   withImage?: boolean | undefined;
   openInNewTab?: boolean | undefined;
-}) {
-  const { dataEvents, withDate, withImage, openInNewTab } = props;
+};
 
+export function EventList({ dataEvents, withDate, withImage, openInNewTab }: Props) {
   return (
     <div className="container-fluid">
       <div className="row">

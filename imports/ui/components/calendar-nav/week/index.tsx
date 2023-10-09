@@ -13,7 +13,7 @@ import "../styles.scss";
 import { SearchField } from "../../search-field";
 import { FilterCategories } from "../../filter-categories";
 
-export type Data = {
+export type Props = {
   hideSwitches: boolean;
   search: string;
   onChangeSearch: (newValue: string) => void;
@@ -29,8 +29,8 @@ export type Data = {
   onChangeAttendingEventsOnly: (state: boolean) => void;
 };
 
-export function CalendarNavWeek(data: Data) {
-  const { hideSwitches, date, availableGroups } = data;
+export function CalendarNavWeek(props: Props) {
+  const { hideSwitches, date, availableGroups } = props;
   const { weekNr, dateLong, dateShort } = useDateTimeFormat();
   const currentUser = useUser();
   const { t } = useTranslation();
@@ -45,29 +45,29 @@ export function CalendarNavWeek(data: Data) {
       onChangeDate: () => {
         const amount = direction === "previous" ? -7 : 7;
 
-        const newDate = data.date.add(amount, "day");
+        const newDate = props.date.add(amount, "day");
 
-        data.onChangeDate(newDate);
+        props.onChangeDate(newDate);
       },
     };
   }
 
   function searchFieldAttr() {
-    return { search: data.search, onChange: data.onChangeSearch };
+    return { search: props.search, onChange: props.onChangeSearch };
   }
   function filterGroupsAttr() {
     return {
-      availableGroups: data.availableGroups,
-      selectedGroups: data.selectedGroups,
-      onAdd: data.onAddGroup,
-      onRemove: data.onRemoveGroup,
+      availableGroups: props.availableGroups,
+      selectedGroups: props.selectedGroups,
+      onAdd: props.onAddGroup,
+      onRemove: props.onRemoveGroup,
     };
   }
   function filterCategoriesAttr() {
     return {
-      categories: data.categories,
-      onAdd: data.onAddCategory,
-      onRemove: data.onRemoveCategory,
+      categories: props.categories,
+      onAdd: props.onAddCategory,
+      onRemove: props.onRemoveCategory,
     };
   }
 
@@ -140,7 +140,7 @@ export function CalendarNavWeek(data: Data) {
                 name="filter-own-events"
                 onClick={(event) => {
                   const radioSwitch = event.currentTarget;
-                  data.onChangeAttendingEventsOnly(radioSwitch.checked);
+                  props.onChangeAttendingEventsOnly(radioSwitch.checked);
                 }}
               />{" "}
               <label htmlFor="filter-own-events">

@@ -29,6 +29,7 @@ function updateUrl(routerName: string, filter: ReturnType<(typeof Events)["Filte
 
   Router.go(routerName, {}, options);
 }
+
 function mvDateHandler(
   routerName: string,
   unit: Unit,
@@ -48,12 +49,14 @@ function mvDateHandler(
   updateUrl(routerName, filter);
   return false;
 }
-export function Multi(props: {
+
+export type Props = {
   date: moment.Moment;
   filter: ReturnType<(typeof Events)["Filtering"]>;
   setIsAttendeeFilterOn: (state: boolean) => void;
-}) {
-  const { date, filter, setIsAttendeeFilterOn } = props;
+};
+
+export function Multi({ date, filter, setIsAttendeeFilterOn }: Props) {
   const { t } = useTranslation();
   const { weekNr, dateLong, dateShort } = useDateTimeFormat();
   const currentUser = useUser();
