@@ -5,6 +5,8 @@ import { EventModel } from "/imports/api/events/events";
 
 import { EventCompact } from "/imports/ui/components/events/compact";
 
+import "./styles.scss";
+
 export function EventList(props: {
   dataEvents: EventModel[];
   withDate?: boolean | undefined;
@@ -17,13 +19,15 @@ export function EventList(props: {
     <div className="container-fluid">
       <div className="row">
         {dataEvents.map((event) => (
-          <EventCompact
-            key={event._id}
-            event={event}
-            withDate={withDate}
-            withImage={withImage}
-            openInNewTab={openInNewTab}
-          />
+          <div className="event-compact-wrap">
+            <EventCompact
+              key={event._id}
+              event={event}
+              withDate={withDate}
+              withImage={withImage}
+              openInNewTab={openInNewTab}
+            />
+          </div>
         ))}
       </div>
     </div>
