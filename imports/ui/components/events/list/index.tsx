@@ -19,9 +19,8 @@ export function EventList(props: {
     <div className="container-fluid">
       <div className="row">
         {dataEvents.map((event) => (
-          <div className="event-compact-wrap">
+          <div key={event._id} className="event-compact-wrap">
             <EventCompact
-              key={event._id}
               event={event}
               withDate={withDate}
               withImage={withImage}
