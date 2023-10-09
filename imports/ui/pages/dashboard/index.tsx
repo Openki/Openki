@@ -4,8 +4,10 @@ import { Router } from "meteor/iron:router";
 
 import { Courses as CourseCollection, CourseModel } from "/imports/api/courses/courses";
 import { Events as EventCollection, EventModel } from "/imports/api/events/events";
+import { Groups as GroupCollection, GroupModel } from "/imports/api/groups/groups";
 import * as Courses from "/imports/api/courses/publications";
 import * as Events from "/imports/api/events/publications";
+import * as Groups from "/imports/api/groups/publications";
 
 import * as Metatags from "/imports/utils/metatags";
 import { Filtering } from "/imports/utils/filtering";
@@ -14,6 +16,21 @@ import { Publication } from "/imports/utils/ServerPublishReact";
 
 import { CourseCompact } from "../../components/courses/compact";
 import { EventCompact } from "../../components/events/compact";
+
+import "./styles.scss";
+
+function bodyStyle(imageUrl: string) {
+  const src = imageUrl;
+  if (!src) {
+    return {};
+  }
+
+  return {
+    backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.75)), url('${src}')`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+  };
+}
 
 const mapping: {
   [name: string]: {
@@ -44,6 +61,34 @@ const mapping: {
     component: (event: EventModel) => (
       <div key={event._id} className="me-2" style={{ inlineSize: "250px", minInlineSize: "250px" }}>
         <EventCompact event={event} withDate={true} withImage={true} />
+      </div>
+    ),
+  },
+  group: {
+    route: "",
+    filter: GroupCollection.Filtering,
+    find: Groups.useFindFilter,
+    component: (group: GroupModel) => (
+      <div key={group._id} className="me-2">
+        <div
+          className="card card-group border-0 rounded-0"
+          style={{
+            inlineSize: "200px",
+            minInlineSize: "200px",
+            blockSize: "120px",
+            maxBlockSize: "120px",
+            ...bodyStyle(group.publicLogoUrl()),
+          }}
+        >
+          <div className="card-body">
+            <h5 className="card-title">
+              <a className="stretched-link" href={Router.path("groupDetails", group)}>
+                {group.name}
+              </a>
+            </h5>
+            <p className="card-text">{group.claim}</p>
+          </div>
+        </div>
       </div>
     ),
   },
@@ -78,6 +123,18 @@ export function DashboardPage() {
       title: t("explore.lookingForVenues.title", "Looking for venues"),
       query: "needsRole=venues&internal=0",
     },
+    {
+      entity: "course",
+      title: "ASZ",
+      query: "group=b0f1a82d36",
+      showAll: "/group/b0f1a82d36/ASZ",
+    },
+    {
+      entity: "group",
+      title: t("explore.activeGroups.title", "Active groups"),
+      query: "",
+      showAll: "/api/0/json/groups",
+    },
   ];
 
   const hooks = list.map((i) => {
@@ -106,7 +163,7 @@ export function DashboardPage() {
         <div className="container mb-4">
           <a
             className="btn btn-sm btn-success float-end"
-            href={Router.path(h.route, undefined, { query: h.query })}
+            href={h.showAll || Router.path(h.route, undefined, { query: h.query })}
           >
             {t("dashboard.showAll", "Show all >")}
           </a>

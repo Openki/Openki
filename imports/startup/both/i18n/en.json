@@ -400,6 +400,7 @@
   "eventParticipant.iBringCompanions": "Brings companion.",
   "eventParticipants.sendMessage.placeholder": "Hi there, I'm looking forward for tomorrow. Please bring your laptops. And don't forget to opt out now if you can't attend in order to free your seat.",
   "eventReplication.errWithReason": "Could not create the copy on \"{START}\".",
+  "explore.activeGroups.title": "Active groups",
   "explore.lookingForMentors.title": "Looking for mentors",
   "explore.lookingForVenues.title": "Looking for venues",
   "explore.newProposals.title": "New proposals",

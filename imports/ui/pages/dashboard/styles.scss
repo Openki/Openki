@@ -1,0 +1,18 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.card-group {
+  inline-size: 200px;
+  min-inline-size: 200px;
+  block-size: 120px;
+  max-block-size: 120px;
+  background-color: $group-bg;
+
+  .card-title,
+  .card-text {
+    @include ellipsis-multiline(2);
+  }
+
+  a {
+    color: $gray-700;
+  }
+}
