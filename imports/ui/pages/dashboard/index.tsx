@@ -61,7 +61,7 @@ export function DashboardPage() {
     {
       entity: "event",
       title: t("explore.upcomingEvents.title", "Upcoming events"),
-      query: "after=now&sort=start&internal=0",
+      query: "after=now&sort=start&internal=0&canceled=0",
     },
     {
       entity: "course",

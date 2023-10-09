@@ -56,53 +56,56 @@ export function EventCompact(props: {
   const userId = useUserId();
 
   return (
-    <a
-      href={Router.path("showEvent", { _id: event._id, slug: event.slug })}
-      target={openInNewTab ? "_blank" : ""}
-    >
-      <div className={`event-compact ${eventCompactClasses(event, withDate)}`}>
-        {event.canceled ? (
-          <span className="event-canceled">{t("_event.state.canceled")}</span>
-        ) : event.isFullyBooked() ? (
-          <span className="event-fully-booked">{t("_event.state.fullyBooked")}</span>
-        ) : null}
-        <div
-          className={`event-compact-header${event.attendedBy(userId) ? " user-attends-event" : ""}`}
-        >
-          {withDate ? (
-            <>
-              <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
-              {weekdayFormat(event.startLocal)}
-              {calendarDayShort(event.startLocal)}
-              <br />
-            </>
-          ) : null}
-          <span className="fa-regular fa-clock fa-fw" aria-hidden="true"></span>{" "}
-          <span className="event-compact-time">
-            {timeFormat(event.startLocal)} - {timeFormat(event.endLocal)}
-          </span>
-          {event.venue ? (
-            <>
-              <br />
-              <div className="tag-group">
-                <VenueLink venue={event.venue} room={event.room} openInNewTab={openInNewTab} />
-              </div>
-            </>
-          ) : null}
-        </div>
-        <div className="event-compact-body-wrap" style={bodyStyle(event, withImage)}>
-          <div className="event-compact-body">
-            {event.internal ? <InternalIndicator /> : null}
-            <h4 className="event-compact-title">{event.title}</h4>
+    <div className={`event-compact ${eventCompactClasses(event, withDate)}`}>
+      {event.canceled ? (
+        <span className="event-canceled">{t("_event.state.canceled")}</span>
+      ) : event.isFullyBooked() ? (
+        <span className="event-fully-booked">{t("_event.state.fullyBooked")}</span>
+      ) : null}
+      <div
+        className={`event-compact-header${event.attendedBy(userId) ? " user-attends-event" : ""}`}
+      >
+        {withDate ? (
+          <>
+            <span className="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>{" "}
+            {weekdayFormat(event.startLocal)}
+            {calendarDayShort(event.startLocal)}
             <br />
-            <p
-              className={`event-compact-description`}
-              dangerouslySetInnerHTML={{ __html: event.description }}
-            ></p>
-          </div>
+          </>
+        ) : null}
+        <span className="fa-regular fa-clock fa-fw" aria-hidden="true"></span>{" "}
+        <span className="event-compact-time">
+          {timeFormat(event.startLocal)} - {timeFormat(event.endLocal)}
+        </span>
+        {event.venue ? (
+          <>
+            <br />
+            <div className="tag-group">
+              <VenueLink venue={event.venue} room={event.room} openInNewTab={openInNewTab} />
+            </div>
+          </>
+        ) : null}
+      </div>
+      <div className="event-compact-body-wrap" style={bodyStyle(event, withImage)}>
+        <div className="event-compact-body">
+          {event.internal ? <InternalIndicator /> : null}
+          <h4 className="event-compact-title">
+            <a
+              className="stretched-link"
+              href={Router.path("showEvent", event)}
+              target={openInNewTab ? "_blank" : ""}
+            >
+              {event.title}
+            </a>
+          </h4>
+          <br />
+          <p
+            className={`event-compact-description`}
+            dangerouslySetInnerHTML={{ __html: event.description }}
+          ></p>
         </div>
       </div>
-    </a>
+    </div>
   );
 }
 

@@ -35,7 +35,6 @@
   margin: 10px;
   max-height: $event-compact-height - 60px;
   padding: 0;
-  position: relative;
 }
 
 // ** Header
@@ -50,6 +49,12 @@
 
   &.user-attends-event {
     background: $user-bg;
+  }
+
+  /* Move over stretched-link */
+  .tag-group {
+    position: relative;
+    z-index: 2;
   }
 }
 
@@ -71,10 +76,13 @@
 // ** Title
 //========================================================================================
 .event-compact-title {
-  color: $gray-800;
   display: inline;
   font-weight: 501;
   padding: 0;
+
+  a {
+    color: $gray-800;
+  }
 }
 
 .event-compact-title::after {
@@ -114,7 +122,7 @@
   transform: rotate(-27d300eg);
   transform: rotate(-27deg);
   width: fit-content;
-  z-index: 300;
+  z-index: 0;
 }
 
 // event fully booked
@@ -139,5 +147,5 @@
   transform: rotate(-27d300eg);
   transform: rotate(-27deg);
   width: fit-content;
-  z-index: 300;
+  z-index: 0;
 }
