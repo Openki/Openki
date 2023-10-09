@@ -8,7 +8,7 @@ import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import "./styles.scss";
 
 export function CourseCompactEvent(props: { course: CourseModel }) {
-  const { nextEvent, members } = props.course;
+  const { nextEvent } = props.course;
   const { dateShort, timeFormat, dateToRelativeString } = useDateTimeFormat();
 
   return (
@@ -25,7 +25,8 @@ export function CourseCompactEvent(props: { course: CourseModel }) {
         </span>
       </div>
       <div className="course-compact-next-event-component">
-        <i className={`${roleIcon("participant")}`} aria-hidden="true"></i>&nbsp;{members.length}
+        <i className={`${roleIcon("participant")}`} aria-hidden="true"></i>&nbsp;
+        {nextEvent?.numberOfParticipants()}
       </div>
     </div>
   );

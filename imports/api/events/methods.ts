@@ -505,6 +505,8 @@ export const addParticipant = ServerMethod(
     if (change.validFor(user)) {
       await processChange(change, { isSimulation: this.isSimulation });
     }
+
+    Meteor.call("course.updateNextEvent", event.courseId);
   },
 );
 
@@ -527,6 +529,8 @@ export const removeParticipant = ServerMethod("event.removeParticipant", (eventI
   }
 
   Events.update({ _id: eventId }, { $pull: { participants: { user: userId } } });
+
+  Meteor.call("course.updateNextEvent", event.courseId);
 });
 
 export const ContactParticipantsOptionsPattern = {
