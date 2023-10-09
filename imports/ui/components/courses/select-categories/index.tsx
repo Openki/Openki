@@ -34,7 +34,7 @@ export function SelectCategories(props: Props) {
     return selectedCategories?.includes(self);
   }
 
-  function onChange(a: ChangeEvent<HTMLInputElement>) {
+  function handleChange(a: ChangeEvent<HTMLInputElement>) {
     const catKey = a.target.name;
     let selectedCategories = props.categories || [];
     const checked = a.target.checked;
@@ -69,7 +69,7 @@ export function SelectCategories(props: Props) {
                 value="1"
                 id={`editCategory${category}`}
                 checked={isChecked(category)}
-                onChange={onChange}
+                onChange={handleChange}
               />
               <label className="form-check-label" htmlFor={`editCategory${category}`}>
                 <CategoryLabel category={category} />
@@ -88,7 +88,7 @@ export function SelectCategories(props: Props) {
                     value="1"
                     id={`editSubCategory${subcategory}`}
                     checked={isChecked(subcategory)}
-                    onChange={onChange}
+                    onChange={handleChange}
                   />
                   <label className="form-check-label" htmlFor={`editSubCategory${subcategory}`}>
                     <CategoryLabel category={subcategory} />
