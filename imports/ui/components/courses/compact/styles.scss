@@ -83,10 +83,12 @@
   height: 55px;
   margin-bottom: 0;
   overflow: hidden;
-
-  /* Move over stretched-link */
-  position: relative;
-  z-index: 2;
+  
+  .category-tag {
+    /* Move over stretched-link */
+    position: relative;
+    z-index: 2;
+  }
 }
 
 // ** Grouplist

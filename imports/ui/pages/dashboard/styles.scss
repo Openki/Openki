@@ -1,11 +1,11 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .card-group {
-  inline-size: 200px;
-  min-inline-size: 200px;
-  block-size: 120px;
-  max-block-size: 120px;
   background-color: $group-bg;
+  block-size: 120px;
+  inline-size: 200px;
+  max-block-size: 120px;
+  min-inline-size: 200px;
 
   .card-title,
   .card-text {
