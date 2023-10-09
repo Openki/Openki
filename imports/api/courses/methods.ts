@@ -442,10 +442,11 @@ Meteor.methods({
       const futureEvents = Events.find({
         courseId: course._id,
         start: { $gt: new Date() },
+        canceled: { $ne: true },
       }).count();
 
       const nextEvent = Events.findOne(
-        { courseId: course._id, start: { $gt: new Date() } },
+        { courseId: course._id, start: { $gt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: 1 },
           fields: {
@@ -453,12 +454,13 @@ Meteor.methods({
             start: 1,
             _id: 1,
             venue: 1,
+            participants: 1,
           },
         },
       );
 
       const lastEvent = Events.findOne(
-        { courseId: course._id, start: { $lt: new Date() } },
+        { courseId: course._id, start: { $lt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: -1 },
           fields: {
@@ -466,6 +468,7 @@ Meteor.methods({
             start: 1,
             _id: 1,
             venue: 1,
+            participants: 1,
           },
         },
       );

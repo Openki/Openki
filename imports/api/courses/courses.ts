@@ -4,7 +4,7 @@ import { _ } from "meteor/underscore";
 import { Match, check } from "meteor/check";
 
 import { UserModel } from "/imports/api/users/users";
-import { EventEntity } from "/imports/api/events/events";
+import { EventModel, OEvent } from "/imports/api/events/events";
 // eslint-disable-next-line import/no-cycle
 import * as tenantDenormalizer from "./tenantDenormalizer";
 import * as interestedDenormalizer from "./interestedDenormalizer";
@@ -81,9 +81,9 @@ export interface CourseEntity {
   /** (calculated) count of events still in the future for this course */
   futureEvents: number;
   /** (calculated) next upcoming event object, only includes the _id and start field */
-  nextEvent: EventEntity | null;
+  nextEvent: EventModel | null;
   /** (calculated) most recent event object, only includes the _id and start field */
-  lastEvent: EventEntity | null;
+  lastEvent: EventModel | null;
   /** (calculated) based to members.length, to support sorting by number of interested user over url params */
   interested: number;
 }
@@ -163,7 +163,17 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
   constructor() {
     super("Courses", {
       transform(course) {
-        return _.extend(new Course(), course);
+        const courseModel = _.extend(new Course(), course);
+
+        if (courseModel.nextEvent) {
+          courseModel.nextEvent = _.extend(new OEvent(), courseModel.nextEvent);
+        }
+
+        if (courseModel.lastEvent) {
+          courseModel.lastEvent = _.extend(new OEvent(), courseModel.lastEvent);
+        }
+
+        return courseModel;
       },
     });
 
