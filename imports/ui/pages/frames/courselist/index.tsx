@@ -69,7 +69,7 @@ export function CourselistPage() {
 
   return (
     <>
-      <style type="text/css">{options.style.map((rule) => rule)}</style>
+      <style>{options.style.map((rule) => rule)}</style>
       {courses().length === 0 ? (
         <h2 className="mt-5 text-center">
           {t("frame.courselist.empty", "There is nothing here yet")}
