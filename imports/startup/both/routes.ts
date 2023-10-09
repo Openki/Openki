@@ -347,7 +347,7 @@ RouterAsync.route("kioskEvents", {
     queryToday.after = now;
     queryToday.before = tomorrow;
 
-    const limit = parseInt(this.params.query.count || "", 10) || 20;
+    const limit = Number.parseInt(this.params.query.count || "", 10) || 20;
 
     const queryNow: EventsFindFilter = filter.toQuery();
     queryNow.ongoing = now;
@@ -701,7 +701,7 @@ RouterAsync.route("timetable", {
   },
   subscriptions() {
     const control = this.params.query.control !== "0";
-    const day = parseInt(this.params.query.day || "0", 10);
+    const day = Number.parseInt(this.params.query.day || "0", 10);
     const query = makeFilterQuery(this.params.query, day, control);
 
     const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
@@ -714,7 +714,7 @@ RouterAsync.route("timetable", {
   },
   data() {
     const control = this.params.query.control !== "0";
-    const day = parseInt(this.params.query.day || "0", 10);
+    const day = Number.parseInt(this.params.query.day || "0", 10);
     const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
     let dayLimit: number | undefined;
     if (filter.get("start") && filter.get("end")) {

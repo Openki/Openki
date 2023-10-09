@@ -30,7 +30,7 @@ export function AvatarForm() {
           id="avatarColorRange"
           value={color}
           onInput={(event) => {
-            const newColor = parseInt(event.currentTarget.value, 10);
+            const newColor = Number.parseInt(event.currentTarget.value, 10);
             if (newColor === color) {
               return;
             }

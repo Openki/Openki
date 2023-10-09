@@ -167,7 +167,7 @@ template.events({
     }
 
     const maxWorkplaces =
-      parseInt(instance.$(".js-maxWorkplaces").val() as string, 10) || undefined; // give back undefined in case of NaN or 0
+      Number.parseInt(instance.$(".js-maxWorkplaces").val() as string, 10) || undefined; // give back undefined in case of NaN or 0
     if (maxWorkplaces && maxWorkplaces > 0) {
       changes.maxWorkplaces = maxWorkplaces;
     }

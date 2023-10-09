@@ -22,7 +22,7 @@ function useOptions() {
     filterQuery.internal = false;
   }
 
-  const count = parseInt(query.count || "", 10) || 5;
+  const count = Number.parseInt(query.count || "", 10) || 5;
 
   const sort = query.sort ? SortSpec.fromString(query.sort) : SortSpec.unordered();
 
