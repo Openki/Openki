@@ -97,47 +97,6 @@ if (Meteor.isClient) {
   Analytics.installRouterActions();
 }
 
-RouterAsync.route("adminPanel", {
-  path: "admin",
-  template: "adminPanelPage",
-  async onRun() {
-    await import("/imports/ui/pages/admin/panel");
-  },
-});
-
-RouterAsync.route("calendar", {
-  path: "calendar",
-  template: "calendarPage",
-  async onRun() {
-    await import("/imports/ui/pages/calendar");
-  },
-  data() {
-    return this.params.query;
-  },
-});
-
-RouterAsync.route("featureGroup", {
-  path: "admin/feature-group",
-  template: "adminFeatureGroupPage",
-  async onRun() {
-    await import("/imports/ui/pages/admin/feature-group");
-  },
-});
-
-RouterAsync.route("tenants", {
-  path: "admin/tenants",
-  template: "adminTenantsPage",
-  async onRun() {
-    await import("/imports/ui/pages/admin/tenants");
-  },
-  subscriptions() {
-    return { findFilter: Tenants.findFilter.subscribe() };
-  },
-  data(): AdminTenantsData {
-    return { tenants: this.subscriptions()?.findFilter() };
-  },
-});
-
 RouterAsync.route("home", {
   path: "/",
   template: "findPage",
@@ -166,122 +125,11 @@ RouterAsync.route("dashboard", {
   },
 });
 
-RouterAsync.route("users", {
-  path: "admin/users",
-  template: "adminUsersPage",
+RouterAsync.route("calendar", {
+  path: "calendar",
+  template: "calendarPage",
   async onRun() {
-    await import("/imports/ui/pages/admin/users");
-  },
-});
-
-RouterAsync.route("frameCalendar", {
-  path: "/frame/calendar",
-  template: "frameCalendarPage",
-  layoutTemplate: "frameLayout",
-  async onRun() {
-    await import("/imports/ui/pages/frames/calendar");
-  },
-  data() {
-    const cssRules = new CssFromQuery(this.params.query, [
-      ["itembg", "background-color", ".frame-list-item"],
-      ["itemcolor", "color", ".frame-list-item"],
-      ["linkcolor", "color", ".frame-list-item a"],
-      ["regionbg", "background-color", ".frame-list-item-region"],
-      ["regioncolor", "color", ".frame-list-item-region"],
-    ]).getCssRules();
-    return { cssRules };
-  },
-});
-
-RouterAsync.route("frameCourselist", {
-  path: "/frame/courselist",
-  template: "frameCourselistPage",
-  layoutTemplate: "frameLayout",
-  async onRun() {
-    await import("/imports/ui/pages/frames/courselist");
-  },
-});
-
-RouterAsync.route("frameEvents", {
-  path: "/frame/events",
-  template: "frameEventsPage",
-  layoutTemplate: "frameLayout",
-  async onRun() {
-    await import("/imports/ui/pages/frames/events");
-  },
-  data() {
-    return this.params.query;
-  },
-});
-
-RouterAsync.route("framePropose", {
-  path: "/frame/propose",
-  template: "frameProposePage",
-  layoutTemplate: "frameLayout",
-  async onRun() {
-    await import("/imports/ui/pages/frames/propose");
-  },
-  subscriptions() {
-    return { regions: Regions.all.subscribe() };
-  },
-  data() {
-    const predicates = {
-      region: Predicates.id,
-      addTeamGroups: Predicates.ids,
-      neededRoles: Predicates.ids,
-      setCreatorsRoles: Predicates.ids,
-      internal: Predicates.flag,
-      hidePricePolicy: Predicates.flag,
-      hideCategories: Predicates.flag,
-      singleEvent: Predicates.flag,
-    };
-    const query = new Filtering(predicates).read(this.params.query).done().toQuery() as any;
-
-    if (query.addTeamGroups) {
-      // For security reasons only 5 groups are allowed
-      query.teamGroups = query.addTeamGroups.slice(0, 5);
-    }
-    delete query.addTeamGroups;
-
-    if (!query.neededRoles) {
-      query.neededRoles = ["mentor"];
-    }
-    if (query.setCreatorsRoles) {
-      query.hideRoleSelection = true;
-    } else {
-      query.setCreatorsRoles = [];
-    }
-    query.roles = ["mentor", "host"].filter(
-      (role) => query.neededRoles.includes(role) || query.setCreatorsRoles.includes(role),
-    );
-    delete query.neededRoles;
-
-    query.creatorsRoles = ["mentor", "host"].filter((role) =>
-      query.setCreatorsRoles.includes(role),
-    );
-    delete query.setCreatorsRoles;
-
-    query.isFrame = true;
-
-    return query;
-  },
-});
-
-RouterAsync.route("frameSchedule", {
-  path: "/frame/schedule",
-  template: "frameSchedulePage",
-  layoutTemplate: "frameLayout",
-  async onRun() {
-    await import("/imports/ui/pages/frames/schedule");
-  },
-});
-
-RouterAsync.route("frameWeek", {
-  path: "/frame/week",
-  template: "frameWeekPage",
-  layoutTemplate: "frameLayout",
-  async onRun() {
-    await import("/imports/ui/pages/frames/week");
+    await import("/imports/ui/pages/calendar");
   },
   data() {
     return this.params.query;
@@ -320,75 +168,6 @@ RouterAsync.route("groupDetails", {
       group,
       showCourses: !isNew,
     };
-  },
-});
-
-RouterAsync.route("kioskEvents", {
-  path: "/kiosk/events",
-  template: "kioskEventsPage",
-  layoutTemplate: "kioskLayout",
-  async onRun() {
-    await import("/imports/ui/pages/kiosk/events");
-  },
-  subscriptions() {
-    const now = reactiveNow.get(); // Time dependency so this will be reactively updated
-    const tomorrow = new Date(now);
-    tomorrow.setHours(tomorrow.getHours() + 24);
-    tomorrow.setHours(0);
-
-    const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
-    Session.set("kioskRoute", "kioskEvents");
-    Session.set("kioskFilter", filter.toParams());
-
-    const queryFuture: EventsFindFilter = filter.toQuery();
-    queryFuture.after = tomorrow;
-
-    const queryToday: EventsFindFilter = filter.toQuery();
-    queryToday.after = now;
-    queryToday.before = tomorrow;
-
-    const limit = Number.parseInt(this.params.query.count || "", 10) || 20;
-
-    const queryNow: EventsFindFilter = filter.toQuery();
-    queryNow.ongoing = now;
-
-    return {
-      today: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryToday }, limit),
-      future: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryFuture }, limit),
-      ongoing: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryNow }),
-    };
-  },
-  data() {
-    const sub = this.subscriptions();
-
-    const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
-
-    const filterParams = filter.toQuery();
-    return {
-      today: sub?.today(),
-      future: sub?.future(),
-      ongoing: sub?.ongoing(),
-      filter: filterParams,
-    };
-  },
-  onAfterAction() {
-    (this as any).timer = Meteor.setInterval(() => {
-      Session.set("seconds", new Date());
-    }, 1000);
-  },
-  onStop() {
-    Meteor.clearInterval((this as any).timer);
-  },
-});
-
-RouterAsync.route("log", {
-  path: "/log",
-  template: "logPage",
-  async onRun() {
-    await import("/imports/ui/pages/log");
-  },
-  data() {
-    return this.params.query;
   },
 });
 
@@ -692,6 +471,312 @@ RouterAsync.route("join", {
   },
 });
 
+RouterAsync.route("userprofile", {
+  path: "user/:_id/:username?",
+  template: "userprofilePage",
+  async onRun() {
+    await import("/imports/ui/pages/userprofile");
+  },
+  subscriptions() {
+    return {
+      groups: Groups.findFilter.subscribe({ own: true }),
+      user: Users.details.subscribe(this.params._id as string),
+    };
+  },
+  data() {
+    const sub = this.subscriptions();
+
+    const user = sub?.user();
+    if (!user) {
+      return undefined; // not loaded?
+    }
+
+    // What privileges the user has
+    const privileges = (["admin"] as const).reduce<{ [role: string]: boolean }>((originalPs, p) => {
+      const ps = { ...originalPs };
+      ps[p] = UserPrivilegeUtils.privileged(user, p);
+      return ps;
+    }, {});
+
+    const alterPrivileges = UserPrivilegeUtils.privilegedTo("admin");
+    const showPrivileges = alterPrivileges || user.privileges?.length;
+
+    return {
+      user,
+      alterPrivileges,
+      privileges,
+      inviteGroups: sub?.groups(),
+      showPrivileges,
+    };
+  },
+});
+
+RouterAsync.route("regionCreate", {
+  path: "region/create",
+  template: "regionDetailsPage",
+  async onRun() {
+    await import("/imports/ui/pages/region-details");
+  },
+  data() {
+    const region = new Region() as RegionModel;
+
+    const tenantId = this.params.query.tenant;
+
+    if (!tenantId) {
+      return undefined;
+    }
+
+    region.tenant = tenantId;
+    region.tz = momentTz.tz.guess();
+    return {
+      isNew: true,
+      region,
+    };
+  },
+});
+
+RouterAsync.route("regionDetails", {
+  path: "region/:_id/:slug?",
+  template: "regionDetailsPage",
+  async onRun() {
+    await import("/imports/ui/pages/region-details");
+  },
+  subscriptions() {
+    return { details: Regions.details.subscribe(this.params._id as string) };
+  },
+  data() {
+    const region = this.subscriptions()?.details();
+
+    if (!region) {
+      return undefined; // Not found
+    }
+
+    return { region };
+  },
+});
+
+RouterAsync.route("venueDetails", {
+  path: "venue/:_id/:slug?",
+  template: "venueDetailsPage",
+  async onRun() {
+    await import("/imports/ui/pages/venue-details");
+  },
+  subscriptions() {
+    return { details: Venues.details.subscribe(this.params._id as string) };
+  },
+  data() {
+    const id = this.params._id;
+
+    let venue: VenueModel | undefined;
+    if (id === "create") {
+      venue = new Venue() as VenueModel;
+    } else {
+      venue = this.subscriptions()?.details();
+      if (!venue) {
+        return undefined; // Not found
+      }
+    }
+
+    return { venue };
+  },
+});
+
+RouterAsync.route("venuesMap", {
+  path: "venues",
+  template: "venuesMapPage",
+  async onRun() {
+    await import("/imports/ui/pages/venues-map");
+  },
+  subscriptions() {
+    const filter = new Filtering(VenueParamPredicates);
+    const region = CleanedRegion(Session.get("region"));
+    if (region) {
+      filter.add("region", region);
+    }
+    filter.read(this.params.query).done();
+    const query = filter.toQuery();
+    return { venues: Venues.findFilter.subscribe(query) };
+  },
+  data(): VenuesMapData {
+    return {
+      region: CleanedRegion(Session.get("region")),
+      venues: this.subscriptions()?.venues(),
+    };
+  },
+});
+
+RouterAsync.route("frameCalendar", {
+  path: "/frame/calendar",
+  template: "frameCalendarPage",
+  layoutTemplate: "frameLayout",
+  async onRun() {
+    await import("/imports/ui/pages/frames/calendar");
+  },
+  data() {
+    const cssRules = new CssFromQuery(this.params.query, [
+      ["itembg", "background-color", ".frame-list-item"],
+      ["itemcolor", "color", ".frame-list-item"],
+      ["linkcolor", "color", ".frame-list-item a"],
+      ["regionbg", "background-color", ".frame-list-item-region"],
+      ["regioncolor", "color", ".frame-list-item-region"],
+    ]).getCssRules();
+    return { cssRules };
+  },
+});
+
+RouterAsync.route("frameCourselist", {
+  path: "/frame/courselist",
+  template: "frameCourselistPage",
+  layoutTemplate: "frameLayout",
+  async onRun() {
+    await import("/imports/ui/pages/frames/courselist");
+  },
+});
+
+RouterAsync.route("frameEvents", {
+  path: "/frame/events",
+  template: "frameEventsPage",
+  layoutTemplate: "frameLayout",
+  async onRun() {
+    await import("/imports/ui/pages/frames/events");
+  },
+  data() {
+    return this.params.query;
+  },
+});
+
+RouterAsync.route("framePropose", {
+  path: "/frame/propose",
+  template: "frameProposePage",
+  layoutTemplate: "frameLayout",
+  async onRun() {
+    await import("/imports/ui/pages/frames/propose");
+  },
+  subscriptions() {
+    return { regions: Regions.all.subscribe() };
+  },
+  data() {
+    const predicates = {
+      region: Predicates.id,
+      addTeamGroups: Predicates.ids,
+      neededRoles: Predicates.ids,
+      setCreatorsRoles: Predicates.ids,
+      internal: Predicates.flag,
+      hidePricePolicy: Predicates.flag,
+      hideCategories: Predicates.flag,
+      singleEvent: Predicates.flag,
+    };
+    const query = new Filtering(predicates).read(this.params.query).done().toQuery() as any;
+
+    if (query.addTeamGroups) {
+      // For security reasons only 5 groups are allowed
+      query.teamGroups = query.addTeamGroups.slice(0, 5);
+    }
+    delete query.addTeamGroups;
+
+    if (!query.neededRoles) {
+      query.neededRoles = ["mentor"];
+    }
+    if (query.setCreatorsRoles) {
+      query.hideRoleSelection = true;
+    } else {
+      query.setCreatorsRoles = [];
+    }
+    query.roles = ["mentor", "host"].filter(
+      (role) => query.neededRoles.includes(role) || query.setCreatorsRoles.includes(role),
+    );
+    delete query.neededRoles;
+
+    query.creatorsRoles = ["mentor", "host"].filter((role) =>
+      query.setCreatorsRoles.includes(role),
+    );
+    delete query.setCreatorsRoles;
+
+    query.isFrame = true;
+
+    return query;
+  },
+});
+
+RouterAsync.route("frameSchedule", {
+  path: "/frame/schedule",
+  template: "frameSchedulePage",
+  layoutTemplate: "frameLayout",
+  async onRun() {
+    await import("/imports/ui/pages/frames/schedule");
+  },
+});
+
+RouterAsync.route("frameWeek", {
+  path: "/frame/week",
+  template: "frameWeekPage",
+  layoutTemplate: "frameLayout",
+  async onRun() {
+    await import("/imports/ui/pages/frames/week");
+  },
+  data() {
+    return this.params.query;
+  },
+});
+
+RouterAsync.route("kioskEvents", {
+  path: "/kiosk/events",
+  template: "kioskEventsPage",
+  layoutTemplate: "kioskLayout",
+  async onRun() {
+    await import("/imports/ui/pages/kiosk/events");
+  },
+  subscriptions() {
+    const now = reactiveNow.get(); // Time dependency so this will be reactively updated
+    const tomorrow = new Date(now);
+    tomorrow.setHours(tomorrow.getHours() + 24);
+    tomorrow.setHours(0);
+
+    const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+    Session.set("kioskRoute", "kioskEvents");
+    Session.set("kioskFilter", filter.toParams());
+
+    const queryFuture: EventsFindFilter = filter.toQuery();
+    queryFuture.after = tomorrow;
+
+    const queryToday: EventsFindFilter = filter.toQuery();
+    queryToday.after = now;
+    queryToday.before = tomorrow;
+
+    const limit = Number.parseInt(this.params.query.count || "", 10) || 20;
+
+    const queryNow: EventsFindFilter = filter.toQuery();
+    queryNow.ongoing = now;
+
+    return {
+      today: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryToday }, limit),
+      future: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryFuture }, limit),
+      ongoing: Events.findFilter.subscribe({ ...{ canceled: false }, ...queryNow }),
+    };
+  },
+  data() {
+    const sub = this.subscriptions();
+
+    const filter = new Filtering(EventParamPredicates).read(this.params.query).done();
+
+    const filterParams = filter.toQuery();
+    return {
+      today: sub?.today(),
+      future: sub?.future(),
+      ongoing: sub?.ongoing(),
+      filter: filterParams,
+    };
+  },
+  onAfterAction() {
+    (this as any).timer = Meteor.setInterval(() => {
+      Session.set("seconds", new Date());
+    }, 1000);
+  },
+  onStop() {
+    Meteor.clearInterval((this as any).timer);
+  },
+});
+
 RouterAsync.route("timetable", {
   path: "/kiosk/timetable",
   template: "kioskTimetablePage",
@@ -891,136 +976,51 @@ RouterAsync.route("timetable", {
   },
 });
 
-RouterAsync.route("userprofile", {
-  path: "user/:_id/:username?",
-  template: "userprofilePage",
+RouterAsync.route("adminPanel", {
+  path: "admin",
+  template: "adminPanelPage",
   async onRun() {
-    await import("/imports/ui/pages/userprofile");
-  },
-  subscriptions() {
-    return {
-      groups: Groups.findFilter.subscribe({ own: true }),
-      user: Users.details.subscribe(this.params._id as string),
-    };
-  },
-  data() {
-    const sub = this.subscriptions();
-
-    const user = sub?.user();
-    if (!user) {
-      return undefined; // not loaded?
-    }
-
-    // What privileges the user has
-    const privileges = (["admin"] as const).reduce<{ [role: string]: boolean }>((originalPs, p) => {
-      const ps = { ...originalPs };
-      ps[p] = UserPrivilegeUtils.privileged(user, p);
-      return ps;
-    }, {});
-
-    const alterPrivileges = UserPrivilegeUtils.privilegedTo("admin");
-    const showPrivileges = alterPrivileges || user.privileges?.length;
-
-    return {
-      user,
-      alterPrivileges,
-      privileges,
-      inviteGroups: sub?.groups(),
-      showPrivileges,
-    };
+    await import("/imports/ui/pages/admin/panel");
   },
 });
 
-RouterAsync.route("regionCreate", {
-  path: "region/create",
-  template: "regionDetailsPage",
+RouterAsync.route("featureGroup", {
+  path: "admin/feature-group",
+  template: "adminFeatureGroupPage",
   async onRun() {
-    await import("/imports/ui/pages/region-details");
-  },
-  data() {
-    const region = new Region() as RegionModel;
-
-    const tenantId = this.params.query.tenant;
-
-    if (!tenantId) {
-      return undefined;
-    }
-
-    region.tenant = tenantId;
-    region.tz = momentTz.tz.guess();
-    return {
-      isNew: true,
-      region,
-    };
+    await import("/imports/ui/pages/admin/feature-group");
   },
 });
 
-RouterAsync.route("regionDetails", {
-  path: "region/:_id/:slug?",
-  template: "regionDetailsPage",
+RouterAsync.route("tenants", {
+  path: "admin/tenants",
+  template: "adminTenantsPage",
   async onRun() {
-    await import("/imports/ui/pages/region-details");
+    await import("/imports/ui/pages/admin/tenants");
   },
   subscriptions() {
-    return { details: Regions.details.subscribe(this.params._id as string) };
+    return { findFilter: Tenants.findFilter.subscribe() };
   },
-  data() {
-    const region = this.subscriptions()?.details();
-
-    if (!region) {
-      return undefined; // Not found
-    }
-
-    return { region };
+  data(): AdminTenantsData {
+    return { tenants: this.subscriptions()?.findFilter() };
   },
 });
 
-RouterAsync.route("venueDetails", {
-  path: "venue/:_id/:slug?",
-  template: "venueDetailsPage",
+RouterAsync.route("users", {
+  path: "admin/users",
+  template: "adminUsersPage",
   async onRun() {
-    await import("/imports/ui/pages/venue-details");
-  },
-  subscriptions() {
-    return { details: Venues.details.subscribe(this.params._id as string) };
-  },
-  data() {
-    const id = this.params._id;
-
-    let venue: VenueModel | undefined;
-    if (id === "create") {
-      venue = new Venue() as VenueModel;
-    } else {
-      venue = this.subscriptions()?.details();
-      if (!venue) {
-        return undefined; // Not found
-      }
-    }
-
-    return { venue };
+    await import("/imports/ui/pages/admin/users");
   },
 });
 
-RouterAsync.route("venuesMap", {
-  path: "venues",
-  template: "venuesMapPage",
+RouterAsync.route("log", {
+  path: "/log",
+  template: "logPage",
   async onRun() {
-    await import("/imports/ui/pages/venues-map");
+    await import("/imports/ui/pages/log");
   },
-  subscriptions() {
-    const filter = new Filtering(VenueParamPredicates);
-    const region = CleanedRegion(Session.get("region"));
-    if (region) {
-      filter.add("region", region);
-    }
-    filter.read(this.params.query).done();
-    const query = filter.toQuery();
-    return { venues: Venues.findFilter.subscribe(query) };
-  },
-  data(): VenuesMapData {
-    return {
-      region: CleanedRegion(Session.get("region")),
-      venues: this.subscriptions()?.venues(),
-    };
+  data() {
+    return this.params.query;
   },
 });
