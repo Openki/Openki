@@ -9,6 +9,7 @@ import * as Courses from "/imports/api/courses/publications";
 import * as Events from "/imports/api/events/publications";
 import * as Groups from "/imports/api/groups/publications";
 
+import { useFeaturedGroup } from "/imports/utils/useCurrentRegion";
 import * as Metatags from "/imports/utils/metatags";
 import { Filtering } from "/imports/utils/filtering";
 import { SortSpec } from "/imports/utils/sort-spec";
@@ -96,8 +97,15 @@ const mapping: {
 
 export function DashboardPage() {
   const { t } = useTranslation();
+  const featuredGroup = useFeaturedGroup();
 
   const list = [
+    {
+      entity: "course",
+      title: featuredGroup?.name ?? "",
+      query: `group=${featuredGroup?._id}`,
+      showAll: `/group/${featuredGroup?._id}`,
+    },
     {
       entity: "course",
       title: t("explore.recentActivities.title", "Recent activities"),
@@ -159,7 +167,7 @@ export function DashboardPage() {
 
   return hooks.map((h, i) => (
     <React.Fragment key={i}>
-      {!h.isLoading() ? (
+      {!h.isLoading() && h.data.length > 0 ? (
         <div className="container mb-4">
           <a
             className="btn btn-sm btn-success float-end"
