@@ -360,11 +360,69 @@ RouterAsync.route("showEvent", {
   },
 });
 
-RouterAsync.route("stats", {
-  path: "stats",
-  template: "statsPage",
+RouterAsync.route("userprofile", {
+  path: "user/:_id/:username?",
+  template: "userprofilePage",
   async onRun() {
-    await import("/imports/ui/pages/stats");
+    await import("/imports/ui/pages/userprofile");
+  },
+  subscriptions() {
+    return {
+      groups: Groups.findFilter.subscribe({ own: true }),
+      user: Users.details.subscribe(this.params._id as string),
+    };
+  },
+  data() {
+    const sub = this.subscriptions();
+
+    const user = sub?.user();
+    if (!user) {
+      return undefined; // not loaded?
+    }
+
+    // What privileges the user has
+    const privileges = (["admin"] as const).reduce<{ [role: string]: boolean }>((originalPs, p) => {
+      const ps = { ...originalPs };
+      ps[p] = UserPrivilegeUtils.privileged(user, p);
+      return ps;
+    }, {});
+
+    const alterPrivileges = UserPrivilegeUtils.privilegedTo("admin");
+    const showPrivileges = alterPrivileges || user.privileges?.length;
+
+    return {
+      user,
+      alterPrivileges,
+      privileges,
+      inviteGroups: sub?.groups(),
+      showPrivileges,
+    };
+  },
+});
+
+RouterAsync.route("venueDetails", {
+  path: "venue/:_id/:slug?",
+  template: "venueDetailsPage",
+  async onRun() {
+    await import("/imports/ui/pages/venue-details");
+  },
+  subscriptions() {
+    return { details: Venues.details.subscribe(this.params._id as string) };
+  },
+  data() {
+    const id = this.params._id;
+
+    let venue: VenueModel | undefined;
+    if (id === "create") {
+      venue = new Venue() as VenueModel;
+    } else {
+      venue = this.subscriptions()?.details();
+      if (!venue) {
+        return undefined; // Not found
+      }
+    }
+
+    return { venue };
   },
 });
 
@@ -468,116 +526,6 @@ RouterAsync.route("join", {
     }
 
     return joinLink;
-  },
-});
-
-RouterAsync.route("userprofile", {
-  path: "user/:_id/:username?",
-  template: "userprofilePage",
-  async onRun() {
-    await import("/imports/ui/pages/userprofile");
-  },
-  subscriptions() {
-    return {
-      groups: Groups.findFilter.subscribe({ own: true }),
-      user: Users.details.subscribe(this.params._id as string),
-    };
-  },
-  data() {
-    const sub = this.subscriptions();
-
-    const user = sub?.user();
-    if (!user) {
-      return undefined; // not loaded?
-    }
-
-    // What privileges the user has
-    const privileges = (["admin"] as const).reduce<{ [role: string]: boolean }>((originalPs, p) => {
-      const ps = { ...originalPs };
-      ps[p] = UserPrivilegeUtils.privileged(user, p);
-      return ps;
-    }, {});
-
-    const alterPrivileges = UserPrivilegeUtils.privilegedTo("admin");
-    const showPrivileges = alterPrivileges || user.privileges?.length;
-
-    return {
-      user,
-      alterPrivileges,
-      privileges,
-      inviteGroups: sub?.groups(),
-      showPrivileges,
-    };
-  },
-});
-
-RouterAsync.route("regionCreate", {
-  path: "region/create",
-  template: "regionDetailsPage",
-  async onRun() {
-    await import("/imports/ui/pages/region-details");
-  },
-  data() {
-    const region = new Region() as RegionModel;
-
-    const tenantId = this.params.query.tenant;
-
-    if (!tenantId) {
-      return undefined;
-    }
-
-    region.tenant = tenantId;
-    region.tz = momentTz.tz.guess();
-    return {
-      isNew: true,
-      region,
-    };
-  },
-});
-
-RouterAsync.route("regionDetails", {
-  path: "region/:_id/:slug?",
-  template: "regionDetailsPage",
-  async onRun() {
-    await import("/imports/ui/pages/region-details");
-  },
-  subscriptions() {
-    return { details: Regions.details.subscribe(this.params._id as string) };
-  },
-  data() {
-    const region = this.subscriptions()?.details();
-
-    if (!region) {
-      return undefined; // Not found
-    }
-
-    return { region };
-  },
-});
-
-RouterAsync.route("venueDetails", {
-  path: "venue/:_id/:slug?",
-  template: "venueDetailsPage",
-  async onRun() {
-    await import("/imports/ui/pages/venue-details");
-  },
-  subscriptions() {
-    return { details: Venues.details.subscribe(this.params._id as string) };
-  },
-  data() {
-    const id = this.params._id;
-
-    let venue: VenueModel | undefined;
-    if (id === "create") {
-      venue = new Venue() as VenueModel;
-    } else {
-      venue = this.subscriptions()?.details();
-      if (!venue) {
-        return undefined; // Not found
-      }
-    }
-
-    return { venue };
   },
 });
 
@@ -1006,11 +954,63 @@ RouterAsync.route("tenants", {
   },
 });
 
+RouterAsync.route("regionCreate", {
+  path: "region/create",
+  template: "regionDetailsPage",
+  async onRun() {
+    await import("/imports/ui/pages/region-details");
+  },
+  data() {
+    const region = new Region() as RegionModel;
+
+    const tenantId = this.params.query.tenant;
+
+    if (!tenantId) {
+      return undefined;
+    }
+
+    region.tenant = tenantId;
+    region.tz = momentTz.tz.guess();
+    return {
+      isNew: true,
+      region,
+    };
+  },
+});
+
+RouterAsync.route("regionDetails", {
+  path: "region/:_id/:slug?",
+  template: "regionDetailsPage",
+  async onRun() {
+    await import("/imports/ui/pages/region-details");
+  },
+  subscriptions() {
+    return { details: Regions.details.subscribe(this.params._id as string) };
+  },
+  data() {
+    const region = this.subscriptions()?.details();
+
+    if (!region) {
+      return undefined; // Not found
+    }
+
+    return { region };
+  },
+});
+
 RouterAsync.route("users", {
   path: "admin/users",
   template: "adminUsersPage",
   async onRun() {
     await import("/imports/ui/pages/admin/users");
+  },
+});
+
+RouterAsync.route("stats", {
+  path: "stats",
+  template: "statsPage",
+  async onRun() {
+    await import("/imports/ui/pages/stats");
   },
 });
 
