@@ -136,6 +136,14 @@ RouterAsync.route("calendar", {
   },
 });
 
+RouterAsync.route("exploreGroups", {
+  path: "/explore/groups",
+  template: "exploreGroupsPage",
+  async onRun() {
+    await import("/imports/ui/pages/explore/groups");
+  },
+});
+
 RouterAsync.route("groupDetails", {
   path: "group/:_id/:short?",
   template: "groupDetailsPage",
