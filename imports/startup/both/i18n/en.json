@@ -406,6 +406,7 @@
   "explore.newProposals.title": "New proposals",
   "explore.recentActivities.title": "Recent activities",
   "explore.upcomingEvents.title": "Upcoming events",
+  "exploreGroups.title": "Groups",
   "featuredGroup.coursesOnOpenki": "Check out the courses of {GROUP} on {SITENAME}!",
   "featuredGroup.heading": "Featured group in {REGION}",
   "featureGroup.deleteButton": "Remove the featured group for \"{REGION}\"",

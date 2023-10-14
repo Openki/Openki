@@ -66,20 +66,14 @@ const mapping: {
     ),
   },
   group: {
-    route: "",
+    route: "exploreGroups",
     filter: GroupCollection.Filtering,
     find: Groups.useFindFilter,
     component: (group: GroupModel) => (
       <div key={group._id} className="me-2">
         <div
           className="card card-group border-0 rounded-0"
-          style={{
-            inlineSize: "200px",
-            minInlineSize: "200px",
-            blockSize: "120px",
-            maxBlockSize: "120px",
-            ...bodyStyle(group.publicLogoUrl()),
-          }}
+          style={bodyStyle(group.publicLogoUrl())}
         >
           <div className="card-body">
             <h5 className="card-title">
@@ -141,7 +135,6 @@ export function DashboardPage() {
       entity: "group",
       title: t("explore.activeGroups.title", "Active groups"),
       query: "",
-      showAll: "/api/0/json/groups",
     },
   ];
 
