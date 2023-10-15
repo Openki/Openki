@@ -5,7 +5,7 @@
   block-size: 120px;
   inline-size: 200px;
   max-block-size: 120px;
-  min-inline-size: 200px;
+  max-inline-size: 100%;
 
   .card-title,
   .card-text {
