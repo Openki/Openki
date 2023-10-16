@@ -1,3 +1,3 @@
-declare module 'meteor/meteorhacks:ssr' {
-	const SSR: any;
+declare module "meteor/meteorhacks:ssr" {
+  const SSR: any;
 }

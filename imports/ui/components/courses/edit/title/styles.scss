@@ -1,0 +1,28 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.course-edit-body .dropdown {
+  position: relative;
+}
+
+.proposed-courses > .dropdown-header {
+  margin-top: 8.5px;
+  text-align: start;
+}
+
+.proposed-courses > .dropdown-header > {
+  .fa-regular,
+  .fa-brands,
+  .fa-solid {
+    color: $blue;
+    font-size: 1.5rem;
+    margin-right: 7px;
+  }
+}
+
+.proposed-courses > .close-dropdown-button {
+  left: 50%;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  position: relative;
+  transform: translateX(-50%);
+}

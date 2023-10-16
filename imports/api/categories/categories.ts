@@ -1,3 +1,3 @@
-import { PublicSettings } from '/imports/utils/PublicSettings';
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 export const Categories = { ...PublicSettings.categories };

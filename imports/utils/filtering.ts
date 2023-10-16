@@ -1,10 +1,13 @@
-import { _ } from 'meteor/underscore';
-import { Tracker } from 'meteor/tracker';
-import { ParamWrapper, Predicate } from 'imports/utils/predicates';
+import { _ } from "meteor/underscore";
+import { Tracker } from "meteor/tracker";
+import { ParamWrapper, Predicate } from "imports/utils/predicates";
 
 export class FilteringReadError {
-	// eslint-disable-next-line no-useless-constructor
-	constructor(public name: string, public message: string) {}
+  // eslint-disable-next-line no-useless-constructor
+  constructor(
+    public name: string,
+    public message: string,
+  ) {}
 }
 
 /**
@@ -12,183 +15,185 @@ export class FilteringReadError {
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type GetPredicateT1<C extends Predicate<any>> = C extends Predicate<infer T1, infer _T2, infer _T3>
-	? T1
-	: unknown;
+  ? T1
+  : unknown;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type GetPredicateT3<C extends Predicate<any>> = C extends Predicate<infer _T1, infer _T2, infer T3>
-	? T3
-	: unknown;
+  ? T3
+  : unknown;
 
 export class Filtering<T extends { [name: string]: Predicate<any> }> {
-	private _predicates: { [name in keyof T]+?: ReturnType<T[name]> } = {};
+  private _predicates: { [name in keyof T]+?: ReturnType<T[name]> } = {};
 
-	private _settledPredicates: { [name in keyof T]+?: ReturnType<T[name]> } = {};
+  private _settledPredicates: { [name in keyof T]+?: ReturnType<T[name]> } = {};
 
-	private _dep = new Tracker.Dependency();
+  private _dep = new Tracker.Dependency();
 
-	// eslint-disable-next-line no-useless-constructor
-	constructor(private _availablePredicates: T) {}
+  // eslint-disable-next-line no-useless-constructor
+  constructor(private _availablePredicates: T) {}
 
-	clear() {
-		this._predicates = {};
-		return this;
-	}
+  clear() {
+    this._predicates = {};
+    return this;
+  }
 
-	get<N extends keyof T>(name: N): GetPredicateT1<T[N]> | undefined {
-		if (Tracker.active) {
-			this._dep.depend();
-		}
-		return this._settledPredicates[name]?.get();
-	}
+  get<N extends keyof T>(name: N): GetPredicateT1<T[N]> | undefined {
+    if (Tracker.active) {
+      this._dep.depend();
+    }
+    return this._settledPredicates[name]?.get();
+  }
 
-	add<N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string) {
-		try {
-			if (!this._availablePredicates[name]) {
-				throw new FilteringReadError('', `No predicate ${name as string}`);
-			}
-			const toAdd = this._availablePredicates[name](param);
-			if (!toAdd) {
-				return this; // Filter construction failed, leave as-is
-			}
+  add<N extends keyof T>(name: N, param: GetPredicateT3<T[N]> | string) {
+    try {
+      if (!this._availablePredicates[name]) {
+        throw new FilteringReadError("", `No predicate ${name as string}`);
+      }
+      const toAdd = this._availablePredicates[name](param);
+      if (!toAdd) {
+        return this; // Filter construction failed, leave as-is
+      }
 
-			const predicate = this._predicates[name];
+      const predicate = this._predicates[name];
 
-			if (predicate) {
-				this._predicates[name] = predicate.merge(toAdd) as any;
-			} else {
-				this._predicates[name] = toAdd as any;
-			}
-			if (!this._predicates[name]) {
-				delete this._predicates[name];
-			}
-			return this;
-		} catch (e) {
-			if (e instanceof FilteringReadError) {
-				e.name = name as string;
-			}
-			throw e;
-		}
-	}
+      if (predicate) {
+        this._predicates[name] = predicate.merge(toAdd) as any;
+      } else {
+        this._predicates[name] = toAdd as any;
+      }
+      if (!this._predicates[name]) {
+        delete this._predicates[name];
+      }
+      return this;
+    } catch (e) {
+      if (e instanceof FilteringReadError) {
+        e.name = name as string;
+      }
+      throw e;
+    }
+  }
 
-	read(list: Partial<{ [name in keyof T]: string | undefined }>) {
-		Object.entries(list).forEach(([name, value]) => {
-			try {
-				if (value !== undefined) {
-					this.add(name, value as string);
-				}
-			} catch (e) {
-				if (!(e instanceof FilteringReadError)) {
-					throw e;
-				}
-			}
-		});
-		return this;
-	}
+  read(list: Partial<{ [name in keyof T]: string | undefined }>) {
+    Object.entries(list).forEach(([name, value]) => {
+      try {
+        if (value !== undefined) {
+          this.add(name, value as string);
+        }
+      } catch (e) {
+        if (!(e instanceof FilteringReadError)) {
+          throw e;
+        }
+      }
+    });
+    return this;
+  }
 
-	readAndValidate(list: Partial<{ [name in keyof T]: string }>) {
-		Object.keys(list).forEach((name) => this.add(name, list[name] as string));
-		return this;
-	}
+  readAndValidate(list: Partial<{ [name in keyof T]: string }>) {
+    Object.keys(list).forEach((name) => this.add(name, list[name] as string));
+    return this;
+  }
 
-	remove(name: keyof T, param?: string) {
-		try {
-			if (!this._availablePredicates[name]) {
-				throw new FilteringReadError('', `No predicate ${name as string}`);
-			}
-			const toRemove = this._availablePredicates[name](param as any);
+  remove(name: keyof T, param?: string) {
+    try {
+      if (!this._availablePredicates[name]) {
+        throw new FilteringReadError("", `No predicate ${name as string}`);
+      }
+      const toRemove = this._availablePredicates[name](param as any);
 
-			const predicate = this._predicates[name];
-			if (predicate) {
-				(this._predicates[name] as any) = predicate.without(toRemove as any);
-			}
-			if (!this._predicates[name]) {
-				delete this._predicates[name];
-			}
-			return this;
-		} catch (e) {
-			if (e instanceof FilteringReadError) {
-				e.name = name as string;
-			}
-			throw e;
-		}
-	}
+      const predicate = this._predicates[name];
+      if (predicate) {
+        (this._predicates[name] as any) = predicate.without(toRemove as any);
+      }
+      if (!this._predicates[name]) {
+        delete this._predicates[name];
+      }
+      return this;
+    } catch (e) {
+      if (e instanceof FilteringReadError) {
+        e.name = name as string;
+      }
+      throw e;
+    }
+  }
 
-	/** eg. for flag */
-	toggle(name: keyof T): Filtering<T>;
+  /** eg. for flag */
+  toggle(name: keyof T): Filtering<T>;
 
-	/** eg. for string and id */
-	toggle(name: keyof T, param?: string) {
-		if (!param) {
-			// overload: toggle(name)
-			if (this.get(name)) {
-				this.disable(name);
-			} else {
-				this.add(name, '1');
-			}
-		}
-		// overload: toggle(name, param)
-		else if (this.get(name)?.includes(param)) {
-			this.remove(name, param);
-		} else {
-			this.add(name, param);
-		}
+  /** eg. for string and id */
+  toggle(name: keyof T, param: string): Filtering<T>;
 
-		return this;
-	}
+  toggle(name: keyof T, param?: string) {
+    if (!param) {
+      // overload: toggle(name)
+      if (this.get(name)) {
+        this.disable(name);
+      } else {
+        this.add(name, "1");
+      }
+    }
+    // overload: toggle(name, param)
+    else if (this.get(name)?.includes(param)) {
+      this.remove(name, param);
+    } else {
+      this.add(name, param);
+    }
 
-	disable(name: keyof T) {
-		delete this._predicates[name];
-		return this;
-	}
+    return this;
+  }
 
-	done() {
-		const settled = this._settledPredicates;
-		this._settledPredicates = _.clone(this._predicates);
+  disable(name: keyof T) {
+    delete this._predicates[name];
+    return this;
+  }
 
-		// Now find out whether the predicates changed
-		const settlingNames = Object.keys(this._predicates);
-		const settledNames = Object.keys(settled);
+  done() {
+    const settled = this._settledPredicates;
+    this._settledPredicates = _.clone(this._predicates);
 
-		let same =
-			settlingNames.length === settledNames.length &&
-			_.intersection(settlingNames, settledNames).length === settlingNames.length;
+    // Now find out whether the predicates changed
+    const settlingNames = Object.keys(this._predicates);
+    const settledNames = Object.keys(settled);
 
-		if (same) {
-			// Look closer
-			Object.keys(this._predicates).every((name) => {
-				same = (this._predicates[name] as any).equals(settled[name]);
-				return same;
-			});
-		}
-		if (!same) {
-			this._dep.changed();
-		}
-		return this;
-	}
+    let same =
+      settlingNames.length === settledNames.length &&
+      _.intersection(settlingNames, settledNames).length === settlingNames.length;
 
-	/** Convert back to query params that can be used as param in a url. */
-	toParams() {
-		if (Tracker.active) {
-			this._dep.depend();
-		}
-		const params: { [name in keyof T]+?: string } = {};
-		Object.entries(this._settledPredicates).forEach(([name, value]) => {
-			params[name as keyof T] = value?.param();
-		});
-		return params;
-	}
+    if (same) {
+      // Look closer
+      Object.keys(this._predicates).every((name) => {
+        same = (this._predicates[name] as any).equals(settled[name]);
+        return same;
+      });
+    }
+    if (!same) {
+      this._dep.changed();
+    }
+    return this;
+  }
 
-	/** Convert to a filter object that can be send to a server method oder publisher */
-	toQuery() {
-		if (Tracker.active) {
-			this._dep.depend();
-		}
-		const query: {
-			[name in keyof T]+?: ReturnType<Extract<ReturnType<T[name]>, ParamWrapper>['query']>;
-		} = {};
-		Object.entries(this._settledPredicates).forEach(([name, value]) => {
-			query[name as keyof T] = value?.query();
-		});
-		return query;
-	}
+  /** Convert back to query params that can be used as param in a url. */
+  toParams() {
+    if (Tracker.active) {
+      this._dep.depend();
+    }
+    const params: { [name in keyof T]+?: string } = {};
+    Object.entries(this._settledPredicates).forEach(([name, value]) => {
+      params[name as keyof T] = value?.param();
+    });
+    return params;
+  }
+
+  /** Convert to a filter object that can be send to a server method oder publisher */
+  toQuery() {
+    if (Tracker.active) {
+      this._dep.depend();
+    }
+    const query: {
+      [name in keyof T]+?: ReturnType<Extract<ReturnType<T[name]>, ParamWrapper>["query"]>;
+    } = {};
+    Object.entries(this._settledPredicates).forEach(([name, value]) => {
+      query[name as keyof T] = value?.query();
+    });
+    return query;
+  }
 }

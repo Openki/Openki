@@ -1,37 +1,42 @@
-import { Meteor, Subscription } from 'meteor/meteor';
-import { useFind, useSubscribe } from 'meteor/react-meteor-data';
-import { publish, QueryBuilder, removeCallback } from './ServerPublishUtils';
+import { Meteor, Subscription } from "meteor/meteor";
+import { useSubscribe, useTracker } from "meteor/react-meteor-data";
+import { publish, QueryBuilder, removeCallback } from "./ServerPublishUtils";
+import { useUserId } from "./react-meteor-data";
 
 export interface Publication<A extends any[], T> {
-	/**
-	 * Subscribe to the record set.
-	 */
-	(...args: A): [isLoading: () => boolean, data: T];
+  /**
+   * Subscribe to the record set.
+   */
+  (...args: A): [isLoading: () => boolean, data: T];
 }
 
 export function createPublicationMany<A extends any[], T>(
-	name: string,
-	queryBuilder: QueryBuilder<A, Mongo.Cursor<T, T>>,
+  name: string,
+  queryBuilder: QueryBuilder<A, Mongo.Cursor<T, T>>,
 ) {
-	return function (...args: A) {
-		const isLoading = useSubscribe(name, ...args);
-		const queryArgs = removeCallback(args);
-		return [
-			isLoading,
-			useFind<T>(() => queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs)),
-		];
-	};
+  return function (...args: A) {
+    const isLoading = useSubscribe(name, ...args);
+    const userId = useUserId();
+    const queryArgs = removeCallback(args);
+    return [
+      isLoading,
+      useTracker(
+        () => queryBuilder.call({ userId }, ...queryArgs).fetch(),
+        [JSON.stringify(queryArgs), userId],
+      ),
+    ];
+  };
 }
 
 export function createPublicationOne<A extends any[], T>(
-	name: string,
-	queryBuilder: QueryBuilder<A, T>,
+  name: string,
+  queryBuilder: QueryBuilder<A, T>,
 ): Publication<A, T> {
-	return function (...args: A): [() => boolean, T] {
-		const isLoading = useSubscribe(name, ...args);
-		const queryArgs = removeCallback(args);
-		return [isLoading, queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs)];
-	};
+  return function (...args: A): [() => boolean, T] {
+    const isLoading = useSubscribe(name, ...args);
+    const queryArgs = removeCallback(args);
+    return [isLoading, queryBuilder.call({ userId: Meteor.userId() }, ...queryArgs)];
+  };
 }
 
 /**
@@ -47,8 +52,8 @@ export function createPublicationOne<A extends any[], T>(
  * @returns A Publication that a client can subscribe to.
  */
 export function ServerPublishMany<A extends any[], T>(
-	name: string,
-	publisher: (this: Pick<Subscription, 'userId'>, ...args: A) => Mongo.Cursor<T>,
+  name: string,
+  publisher: (this: Pick<Subscription, "userId">, ...args: A) => Mongo.Cursor<T>,
 ): Publication<A, T[]>;
 
 /**
@@ -68,20 +73,20 @@ export function ServerPublishMany<A extends any[], T>(
  * @returns A Publication that a client can subscribe to.
  */
 export function ServerPublishMany<A extends any[], T>(
-	name: string,
-	publisher: (this: Subscription, ...args: A) => undefined,
-	queryBuilder: QueryBuilder<A, Mongo.Cursor<T>>,
+  name: string,
+  publisher: (this: Subscription, ...args: A) => undefined,
+  queryBuilder: QueryBuilder<A, Mongo.Cursor<T>>,
 ): Publication<A, T[]>;
 
 export function ServerPublishMany<A extends any[], T>(
-	name: string,
-	publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T> | undefined,
-	queryBuilder: QueryBuilder<A, Mongo.Cursor<T>> = publisher as QueryBuilder<A, Mongo.Cursor<T>>,
+  name: string,
+  publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T> | undefined,
+  queryBuilder: QueryBuilder<A, Mongo.Cursor<T>> = publisher as QueryBuilder<A, Mongo.Cursor<T>>,
 ) {
-	publish(name, publisher);
+  publish(name, publisher);
 
-	// give back a Publication that a client can subscribe
-	return createPublicationMany<A, T>(name, queryBuilder);
+  // give back a Publication that a client can subscribe
+  return createPublicationMany<A, T>(name, queryBuilder);
 }
 
 /**
@@ -101,12 +106,12 @@ export function ServerPublishMany<A extends any[], T>(
  * @returns A Publication that a client can subscribe to.
  */
 export function ServerPublishOne<A extends any[], T>(
-	name: string,
-	publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T>,
-	queryBuilder: QueryBuilder<A, T>,
+  name: string,
+  publisher: (this: Subscription, ...args: A) => Mongo.Cursor<T>,
+  queryBuilder: QueryBuilder<A, T>,
 ): Publication<A, T> {
-	publish(name, publisher);
+  publish(name, publisher);
 
-	// give back a Publication that a client can subscribe
-	return createPublicationOne<A, T>(name, queryBuilder);
+  // give back a Publication that a client can subscribe
+  return createPublicationOne<A, T>(name, queryBuilder);
 }

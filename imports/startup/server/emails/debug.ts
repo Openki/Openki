@@ -1,21 +1,21 @@
-import fs from 'fs';
-import { Meteor } from 'meteor/meteor';
-import { Email } from 'meteor/email';
+import fs from "fs";
+import { Meteor } from "meteor/meteor";
+import { Email } from "meteor/email";
 
 if (Meteor.isDevelopment) {
-	Email.customTransport = () => {
-		// disable email log See: https://docs.meteor.com/api/email.html#Email-customTransport
-	};
+  Email.customTransport = () => {
+    // disable email log See: https://docs.meteor.com/api/email.html#Email-customTransport
+  };
 
-	// Create /.temp to output emails as html files for testing
-	Email.hookSend((email: any) => {
-		fs.writeFile(
-			`${process.env.PWD}/.temp/${new Date().toISOString()} ${email.subject}.html`,
-			email.html,
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			() => {},
-		);
+  // Create /.temp to output emails as html files for testing
+  Email.hookSend((email: any) => {
+    fs.writeFile(
+      `${process.env.PWD}/.temp/${new Date().toISOString()} ${email.subject}.html`,
+      email.html,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      () => {},
+    );
 
-		return true;
-	});
+    return true;
+  });
 }

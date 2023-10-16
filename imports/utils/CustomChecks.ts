@@ -1,8 +1,8 @@
-import { Match, check } from 'meteor/check';
+import { Match, check } from "meteor/check";
 
 /** Helper type utility to filter out not undefined properties: https://www.typescriptlang.org/docs/handbook/2/mapped-types.html */
 type PickNotUndefined<T> = {
-	[P in keyof T as Extract<T[P], undefined> extends never ? P : never]: T[P];
+  [P in keyof T as Extract<T[P], undefined> extends never ? P : never]: T[P];
 };
 
 /** Helper type utility to remove undefined and null from the properties types */
@@ -13,15 +13,15 @@ type UndefinedToOptional<T> = RecursiveNonNullable<Partial<T>> & Pick<T, keyof P
 
 /** Recursive make properties that are may be undefined optional. */
 type RecursiveUndefinedToOptional<T> = UndefinedToOptional<{
-	[P in keyof T]: T[P] extends (infer U)[]
-		? RecursiveUndefinedToOptional<U>[]
-		: T[P] extends object
-		? RecursiveUndefinedToOptional<T[P]>
-		: T[P] extends object | undefined
-		? RecursiveUndefinedToOptional<T[P]> | undefined
-		: T[P] extends object | undefined | null
-		? RecursiveUndefinedToOptional<T[P]> | undefined | null
-		: T[P];
+  [P in keyof T]: T[P] extends (infer U)[]
+    ? RecursiveUndefinedToOptional<U>[]
+    : T[P] extends object
+    ? RecursiveUndefinedToOptional<T[P]>
+    : T[P] extends object | undefined
+    ? RecursiveUndefinedToOptional<T[P]> | undefined
+    : T[P] extends object | undefined | null
+    ? RecursiveUndefinedToOptional<T[P]> | undefined | null
+    : T[P];
 }>;
 
 /** Match.Optional and Match.Maybe behaves diffrent when the pattern is a property of a object or not. */
@@ -31,39 +31,39 @@ type BaseOrObjectMatchHelper<T> = T extends object ? RecursiveUndefinedToOptiona
 export type Type<T extends Match.Pattern> = BaseOrObjectMatchHelper<Match.PatternMatch<T>>;
 
 export function Tuple<T extends readonly Match.Pattern[]>(...pattern: [...T]) {
-	return Match.Where(function (values) {
-		check(values, [Match.Any]);
+  return Match.Where(function (values) {
+    check(values, [Match.Any]);
 
-		if (values.length !== pattern.length) {
-			return false;
-		}
+    if (values.length !== pattern.length) {
+      return false;
+    }
 
-		values.forEach((value, index) => {
-			check(value, pattern[index]);
-		});
-		return true;
-	}) as unknown as Match.Matcher<{
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
-		[K in keyof T]: Match.PatternMatch<T[K]>;
-	}>;
+    values.forEach((value, index) => {
+      check(value, pattern[index]);
+    });
+    return true;
+  }) as unknown as Match.Matcher<{
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    [K in keyof T]: Match.PatternMatch<T[K]>;
+  }>;
 }
 
 export function StringEnum<T extends readonly string[]>(...values: T) {
-	return Match.Where(function (str) {
-		check(str, String);
-		return values.includes(str);
-	}) as Match.Matcher<(typeof values)[number]>;
+  return Match.Where(function (str) {
+    check(str, String);
+    return values.includes(str);
+  }) as Match.Matcher<(typeof values)[number]>;
 }
 
 export function Record<T extends Match.Pattern>(type: T) {
-	return Match.Where((c) => {
-		check(c, Object);
-		Object.values(c).forEach((value) => {
-			check(value, type);
-		});
-		return true;
-	}) as Match.Matcher<{
-		[category: string]: Match.PatternMatch<T>;
-	}>;
+  return Match.Where((c) => {
+    check(c, Object);
+    Object.values(c).forEach((value) => {
+      check(value, type);
+    });
+    return true;
+  }) as Match.Matcher<{
+    [category: string]: Match.PatternMatch<T>;
+  }>;
 }

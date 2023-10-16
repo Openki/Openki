@@ -1,7 +1,7 @@
-declare module 'meteor/blaze' {
-	const Handlebars: any;
+declare module "meteor/blaze" {
+  const Handlebars: any;
 
-	namespace Blaze {
-		function _escape(str: string): string;
-	}
+  namespace Blaze {
+    function _escape(str: string): string;
+  }
 }

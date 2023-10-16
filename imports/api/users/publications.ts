@@ -1,81 +1,81 @@
-import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
-import { check } from 'meteor/check';
+import { Meteor } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
+import { check } from "meteor/check";
 
-import { Users } from '/imports/api/users/users';
+import { Users } from "/imports/api/users/users";
 
-import { userSearchPrefix } from '/imports/utils/user-search-prefix';
-import { ServerPublishMany, ServerPublishOne } from '/imports/utils/ServerPublish';
-import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
+import { userSearchPrefix } from "/imports/utils/user-search-prefix";
+import { ServerPublishMany, ServerPublishOne } from "/imports/utils/ServerPublish";
+import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 
 if (Meteor.isServer) {
-	// Always publish their own data for logged-in users
-	// https://github.com/meteor/guide/issues/651
-	Meteor.publish(null, function () {
-		return Users.find(this.userId as any);
-	});
+  // Always publish their own data for logged-in users
+  // https://github.com/meteor/guide/issues/651
+  Meteor.publish(null, function () {
+    return Users.find(this.userId as any);
+  });
 }
 
 export const [simple, useSimple] = ServerPublishOne(
-	'user.simple',
-	(userId: string) => {
-		check(userId, String);
+  "user.simple",
+  (userId: string) => {
+    check(userId, String);
 
-		// Public fields from users
-		const fields: Mongo.FieldSpecifier = { username: 1, contribution: 1 };
+    // Public fields from users
+    const fields: Mongo.FieldSpecifier = { username: 1, contribution: 1 };
 
-		return Users.find(userId, { fields });
-	},
-	(userId: string) => {
-		// Public fields from users
-		const fields: Mongo.FieldSpecifier = { username: 1, contribution: 1 };
+    return Users.find(userId, { fields });
+  },
+  (userId: string) => {
+    // Public fields from users
+    const fields: Mongo.FieldSpecifier = { username: 1, contribution: 1 };
 
-		return Users.findOne(userId, { fields });
-	},
+    return Users.findOne(userId, { fields });
+  },
 );
 
 export const [details, useDetails] = ServerPublishOne(
-	'user',
-	(userId: string) => {
-		check(userId, String);
+  "user",
+  (userId: string) => {
+    check(userId, String);
 
-		// Public fields from users
-		const fields: Mongo.FieldSpecifier = {
-			username: 1,
-			description: 1,
-			acceptsPrivateMessages: 1,
-			contribution: 1,
-			'avatar.color': 1,
-		};
+    // Public fields from users
+    const fields: Mongo.FieldSpecifier = {
+      username: 1,
+      description: 1,
+      acceptsPrivateMessages: 1,
+      contribution: 1,
+      "avatar.color": 1,
+    };
 
-		// Admins may see other's privileges
-		if (UserPrivilegeUtils.privileged(Meteor.userId(), 'admin')) {
-			fields.privileges = 1;
-		}
+    // Admins may see other's privileges
+    if (UserPrivilegeUtils.privileged(Meteor.userId(), "admin")) {
+      fields.privileges = 1;
+    }
 
-		return Users.find(userId, { fields });
-	},
-	(userId: string) => {
-		// Public fields from users
-		const fields: Mongo.FieldSpecifier = {
-			username: 1,
-			description: 1,
-			acceptsPrivateMessages: 1,
-			contribution: 1,
-			'avatar.color': 1,
-		};
+    return Users.find(userId, { fields });
+  },
+  (userId: string) => {
+    // Public fields from users
+    const fields: Mongo.FieldSpecifier = {
+      username: 1,
+      description: 1,
+      acceptsPrivateMessages: 1,
+      contribution: 1,
+      "avatar.color": 1,
+    };
 
-		// Admins may see other's privileges
-		if (UserPrivilegeUtils.privileged(Meteor.userId(), 'admin')) {
-			fields.privileges = 1;
-		}
+    // Admins may see other's privileges
+    if (UserPrivilegeUtils.privileged(Meteor.userId(), "admin")) {
+      fields.privileges = 1;
+    }
 
-		return Users.findOne(userId, { fields });
-	},
+    return Users.findOne(userId, { fields });
+  },
 );
 
-export const [findFilter, useFindFilter] = ServerPublishMany('userSearch', (search: string) => {
-	check(search, String);
+export const [findFilter, useFindFilter] = ServerPublishMany("userSearch", (search: string) => {
+  check(search, String);
 
-	return userSearchPrefix(search, { fields: { username: 1 }, limit: 10 });
+  return userSearchPrefix(search, { fields: { username: 1 }, limit: 10 });
 });

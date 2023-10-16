@@ -1,187 +1,187 @@
-import { Router } from 'meteor/iron:router';
-import { i18n } from '/imports/startup/both/i18next';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Router } from "meteor/iron:router";
+import { i18n } from "/imports/startup/both/i18next";
+import { ReactiveVar } from "meteor/reactive-var";
+import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
-import * as Alert from '/imports/api/alerts/alert';
-import { GroupModel, GroupEntity, Groups } from '/imports/api/groups/groups';
-import * as GroupsMethods from '/imports/api/groups/methods';
-import { Users } from '/imports/api/users/users';
+import * as Alert from "/imports/api/alerts/alert";
+import { GroupModel, GroupEntity, Groups } from "/imports/api/groups/groups";
+import * as GroupsMethods from "/imports/api/groups/methods";
+import { Users } from "/imports/api/users/users";
 
-import { userSearchPrefix } from '/imports/utils/user-search-prefix';
+import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 
-import '/imports/ui/components/buttons';
-import '/imports/ui/components/editable-image';
-import type { UploadImage, Data as EditableImageData } from '/imports/ui/components/editable-image';
+import "/imports/ui/components/buttons";
+import "/imports/ui/components/editable-image";
+import type { UploadImage, Data as EditableImageData } from "/imports/ui/components/editable-image";
 
-import './template.html';
-import './styles.scss';
+import "./template.html";
+import "./styles.scss";
 
 const Template = TemplateAny as TemplateStaticTyped<
-	'groupSettings',
-	{
-		group: GroupModel;
-	},
-	{ userSearch: ReactiveVar<string> }
+  "groupSettings",
+  {
+    group: GroupModel;
+  },
+  { userSearch: ReactiveVar<string> }
 >;
 
 const template = Template.groupSettings;
 
 template.onCreated(function () {
-	const instance = this;
+  const instance = this;
 
-	instance.busy(false);
+  instance.busy(false);
 
-	instance.userSearch = new ReactiveVar('');
+  instance.userSearch = new ReactiveVar("");
 
-	instance.autorun(() => {
-		const search = instance.userSearch.get();
-		if (search.length > 0) {
-			instance.subscribe('userSearch', search);
-		}
-	});
+  instance.autorun(() => {
+    const search = instance.userSearch.get();
+    if (search.length > 0) {
+      instance.subscribe("userSearch", search);
+    }
+  });
 });
 
 template.helpers({
-	foundUsers(group: GroupEntity) {
-		const instance = Template.instance();
+  foundUsers(group: GroupEntity) {
+    const instance = Template.instance();
 
-		const search = instance.userSearch.get();
-		if (search === '') {
-			return false;
-		}
+    const search = instance.userSearch.get();
+    if (search === "") {
+      return false;
+    }
 
-		return userSearchPrefix(search, { exclude: group.members, limit: 30 });
-	},
+    return userSearchPrefix(search, { exclude: group.members, limit: 30 });
+  },
 
-	logoFileUploadArgs(): EditableImageData {
-		const instance = Template.instance();
-		return {
-			thumbnail: { src: instance.data.group?.publicLogoUrl?.(), maxSize: 150 },
-			maxSize: 100,
-			async onUpload(file: UploadImage) {
-				const parentInstance = instance.parentInstance() as any; // Not available in callback
+  logoFileUploadArgs(): EditableImageData {
+    const instance = Template.instance();
+    return {
+      thumbnail: { src: instance.data.group?.publicLogoUrl?.(), maxSize: 150 },
+      maxSize: 100,
+      async onUpload(file: UploadImage) {
+        const parentInstance = instance.parentInstance() as any; // Not available in callback
 
-				instance.busy('saving');
+        instance.busy("saving");
 
-				const groupId = instance.data.group._id;
-				try {
-					await GroupsMethods.updateLogo(groupId, file);
-					const groupName = Groups.findOne(groupId)?.name;
-					Alert.success(
-						i18n(
-							'groupSettings.group.logo.updated',
-							'Changes to the "{GROUP}" group settings have been saved.',
-							{ GROUP: groupName },
-						),
-					);
-					parentInstance.editingSettings.set(false);
-				} catch (err) {
-					Alert.serverError(
-						err,
-						i18n('groupSettings.group.logo.updated.error', 'Could not save settings'),
-					);
-				} finally {
-					instance.busy(false);
-				}
-			},
-			onDelete: instance.data.group?.logoUrl
-				? async function () {
-						const parentInstance = instance.parentInstance() as any; // Not available in callback
+        const groupId = instance.data.group._id;
+        try {
+          await GroupsMethods.updateLogo(groupId, file);
+          const groupName = Groups.findOne(groupId)?.name;
+          Alert.success(
+            i18n(
+              "groupSettings.group.logo.updated",
+              'Changes to the "{GROUP}" group settings have been saved.',
+              { GROUP: groupName },
+            ),
+          );
+          parentInstance.editingSettings.set(false);
+        } catch (err) {
+          Alert.serverError(
+            err,
+            i18n("groupSettings.group.logo.updated.error", "Could not save settings"),
+          );
+        } finally {
+          instance.busy(false);
+        }
+      },
+      onDelete: instance.data.group?.logoUrl
+        ? async function () {
+            const parentInstance = instance.parentInstance() as any; // Not available in callback
 
-						instance.busy('deleting');
+            instance.busy("deleting");
 
-						const groupId = instance.data.group._id;
-						try {
-							await GroupsMethods.deleteLogo(groupId);
-							const groupName = Groups.findOne(groupId)?.name;
-							Alert.success(
-								i18n(
-									'groupSettings.group.logo.removed',
-									'Changes to the "{GROUP}" group settings have been saved.',
-									{ GROUP: groupName },
-								),
-							);
-							parentInstance.editingSettings.set(false);
-						} catch (err) {
-							Alert.serverError(
-								err,
-								i18n('groupSettings.group.logo.removed.error', 'Could not save settings'),
-							);
-						} finally {
-							instance.busy(false);
-						}
-				  }
-				: undefined,
-		};
-	},
+            const groupId = instance.data.group._id;
+            try {
+              await GroupsMethods.deleteLogo(groupId);
+              const groupName = Groups.findOne(groupId)?.name;
+              Alert.success(
+                i18n(
+                  "groupSettings.group.logo.removed",
+                  'Changes to the "{GROUP}" group settings have been saved.',
+                  { GROUP: groupName },
+                ),
+              );
+              parentInstance.editingSettings.set(false);
+            } catch (err) {
+              Alert.serverError(
+                err,
+                i18n("groupSettings.group.logo.removed.error", "Could not save settings"),
+              );
+            } finally {
+              instance.busy(false);
+            }
+          }
+        : undefined,
+    };
+  },
 
-	kioskEventURL(group: GroupEntity) {
-		return Router.url('kioskEvents', {}, { query: { group: group._id } });
-	},
-	timetableURL(group: GroupEntity) {
-		return Router.url('timetable', {}, { query: { group: group._id } });
-	},
-	scheduleURL(group: GroupEntity) {
-		return Router.url('frameSchedule', {}, { query: { group: group._id } });
-	},
-	frameEventsURL(group: GroupEntity) {
-		return Router.url('frameEvents', {}, { query: { group: group._id } });
-	},
-	frameWeekURL(group: GroupEntity) {
-		return Router.url('frameWeek', {}, { query: { group: group._id } });
-	},
-	frameCalendarURL(group: GroupEntity) {
-		return Router.url('frameCalendar', {}, { query: { group: group._id } });
-	},
-	frameListURL(group: GroupEntity) {
-		return Router.url('frameCourselist', {}, { query: { group: group._id } });
-	},
+  kioskEventURL(group: GroupEntity) {
+    return Router.url("kioskEvents", {}, { query: { group: group._id } });
+  },
+  timetableURL(group: GroupEntity) {
+    return Router.url("timetable", {}, { query: { group: group._id } });
+  },
+  scheduleURL(group: GroupEntity) {
+    return Router.url("frameSchedule", {}, { query: { group: group._id } });
+  },
+  frameEventsURL(group: GroupEntity) {
+    return Router.url("frameEvents", {}, { query: { group: group._id } });
+  },
+  frameWeekURL(group: GroupEntity) {
+    return Router.url("frameWeek", {}, { query: { group: group._id } });
+  },
+  frameCalendarURL(group: GroupEntity) {
+    return Router.url("frameCalendar", {}, { query: { group: group._id } });
+  },
+  frameListURL(group: GroupEntity) {
+    return Router.url("frameCourselist", {}, { query: { group: group._id } });
+  },
 });
 
 template.events({
-	'keyup .js-search-users'(_event, instance) {
-		instance.userSearch.set(instance.$('.js-search-users').val() as string);
-	},
+  "keyup .js-search-users"(_event, instance) {
+    instance.userSearch.set(instance.$(".js-search-users").val() as string);
+  },
 
-	async 'click .js-member-add-btn'(this: { _id: string }) {
-		const memberId = this._id;
-		const groupId = Router.current().params._id as string;
-		try {
-			await GroupsMethods.updateMembership(memberId, groupId, true);
-			const memberName = Users.findOne(memberId)?.getDisplayName();
-			const groupName = Groups.findOne(groupId)?.name;
-			Alert.success(
-				i18n('groupSettings.memberAdded', '"{MEMBER}" has been added to the "{GROUP}" group', {
-					MEMBER: memberName,
-					GROUP: groupName,
-				}),
-			);
-		} catch (err) {
-			Alert.serverError(err, i18n('groupSettings.memberAdded.error', 'Could not add member'));
-		}
-	},
+  async "click .js-member-add-btn"(this: { _id: string }) {
+    const memberId = this._id;
+    const groupId = Router.current().params._id as string;
+    try {
+      await GroupsMethods.updateMembership(memberId, groupId, true);
+      const memberName = Users.findOne(memberId)?.getDisplayName();
+      const groupName = Groups.findOne(groupId)?.name;
+      Alert.success(
+        i18n("groupSettings.memberAdded", '"{MEMBER}" has been added to the "{GROUP}" group', {
+          MEMBER: memberName,
+          GROUP: groupName,
+        }),
+      );
+    } catch (err) {
+      Alert.serverError(err, i18n("groupSettings.memberAdded.error", "Could not add member"));
+    }
+  },
 
-	async 'click .js-member-remove-btn'() {
-		const memberId = `${this}`;
-		const groupId = Router.current().params._id as string;
-		try {
-			await GroupsMethods.updateMembership(memberId, groupId, false);
-			const memberName = Users.findOne(memberId)?.getDisplayName();
-			const groupName = Groups.findOne(groupId)?.name;
-			Alert.success(
-				i18n(
-					'groupSettings.memberRemoved',
-					'"{MEMBER}" has been removed from the "{GROUP}" group',
-					{ MEMBER: memberName, GROUP: groupName },
-				),
-			);
-		} catch (err) {
-			Alert.serverError(err, i18n('groupSettings.memberRemoved.error', 'Could not remove member'));
-		}
-	},
+  async "click .js-member-remove-btn"() {
+    const memberId = `${this}`;
+    const groupId = Router.current().params._id as string;
+    try {
+      await GroupsMethods.updateMembership(memberId, groupId, false);
+      const memberName = Users.findOne(memberId)?.getDisplayName();
+      const groupName = Groups.findOne(groupId)?.name;
+      Alert.success(
+        i18n(
+          "groupSettings.memberRemoved",
+          '"{MEMBER}" has been removed from the "{GROUP}" group',
+          { MEMBER: memberName, GROUP: groupName },
+        ),
+      );
+    } catch (err) {
+      Alert.serverError(err, i18n("groupSettings.memberRemoved.error", "Could not remove member"));
+    }
+  },
 
-	'click .js-group-edit-cancel'(_event, instance) {
-		(instance.parentInstance() as any).editingSettings.set(false);
-	},
+  "click .js-group-edit-cancel"(_event, instance) {
+    (instance.parentInstance() as any).editingSettings.set(false);
+  },
 });

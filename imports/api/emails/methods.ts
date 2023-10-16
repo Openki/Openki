@@ -1,153 +1,153 @@
-import { Accounts } from 'meteor/accounts-base';
-import { Match, check } from 'meteor/check';
-import { Email } from 'meteor/email';
-import { SSR } from 'meteor/meteorhacks:ssr';
-import { Meteor } from 'meteor/meteor';
-import moment from 'moment';
-import { Router } from 'meteor/iron:router';
-import juice from 'juice';
-import { Spacebars } from 'meteor/spacebars';
+import { Accounts } from "meteor/accounts-base";
+import { Match, check } from "meteor/check";
+import { Email } from "meteor/email";
+import { SSR } from "meteor/meteorhacks:ssr";
+import { Meteor } from "meteor/meteor";
+import moment from "moment";
+import { Router } from "meteor/iron:router";
+import juice from "juice";
+import { Spacebars } from "meteor/spacebars";
 
-import { Version } from '/imports/api/version/version';
-import { Users } from '/imports/api/users/users';
+import { Version } from "/imports/api/version/version";
+import { Users } from "/imports/api/users/users";
 
-import { Notification } from '/imports/notification/notification';
-import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { ServerMethod } from '/imports/utils/ServerMethod';
-import { PublicSettings } from '/imports/utils/PublicSettings';
-import { PrivateSettings } from '/imports/utils/PrivateSettings';
-import { Type } from '/imports/utils/CustomChecks';
-import { toEmailLogo } from '/imports/utils/toEmailLogo';
+import { Notification } from "/imports/notification/notification";
+import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
+import { ServerMethod } from "/imports/utils/ServerMethod";
+import { PublicSettings } from "/imports/utils/PublicSettings";
+import { PrivateSettings } from "/imports/utils/PrivateSettings";
+import { Type } from "/imports/utils/CustomChecks";
+import { toEmailLogo } from "/imports/utils/toEmailLogo";
 
 export const sendVerificationEmail = ServerMethod(
-	'sendVerificationEmail',
-	() => {
-		const userId = Meteor.userId();
-		if (!userId) {
-			throw new Meteor.Error(401, 'please log in');
-		}
+  "sendVerificationEmail",
+  () => {
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new Meteor.Error(401, "please log in");
+    }
 
-		Accounts.sendVerificationEmail(userId);
-	},
-	{ simulation: false },
+    Accounts.sendVerificationEmail(userId);
+  },
+  { simulation: false },
 );
 
 export const SendPrivateMessageOptionsPattern = {
-	revealAddress: Boolean,
-	sendCopy: Boolean,
-	courseId: Match.Optional(String),
-	eventId: Match.Optional(String),
+  revealAddress: Boolean,
+  sendCopy: Boolean,
+  courseId: Match.Optional(String),
+  eventId: Match.Optional(String),
 };
 export type SendPrivateMessageOptions = Type<typeof SendPrivateMessageOptionsPattern>;
 
 export const sendPrivateMessage = ServerMethod(
-	'sendEmail',
-	(userId: string, message: string, options: SendPrivateMessageOptions) => {
-		check(userId, String);
-		check(message, String);
-		check(options, SendPrivateMessageOptionsPattern);
+  "sendEmail",
+  (userId: string, message: string, options: SendPrivateMessageOptions) => {
+    check(userId, String);
+    check(message, String);
+    check(options, SendPrivateMessageOptionsPattern);
 
-		const operator = Meteor.user();
-		if (!operator) {
-			throw new Meteor.Error(401, 'please log in');
-		}
+    const operator = Meteor.user();
+    if (!operator) {
+      throw new Meteor.Error(401, "please log in");
+    }
 
-		const recipient = Users.findOne(userId);
-		if (!recipient) {
-			throw new Meteor.Error(404, 'no such user');
-		}
-		if (!recipient.acceptsPrivateMessages && !UserPrivilegeUtils.privileged(operator, 'admin')) {
-			throw new Meteor.Error(401, 'this user does not accept private messages from users');
-		}
+    const recipient = Users.findOne(userId);
+    if (!recipient) {
+      throw new Meteor.Error(404, "no such user");
+    }
+    if (!recipient.acceptsPrivateMessages && !UserPrivilegeUtils.privileged(operator, "admin")) {
+      throw new Meteor.Error(401, "this user does not accept private messages from users");
+    }
 
-		const context: { course?: string; event?: string } = {};
-		if (options.courseId) {
-			context.course = options.courseId;
-		}
-		if (options.eventId) {
-			context.event = options.eventId;
-		}
+    const context: { course?: string; event?: string } = {};
+    if (options.courseId) {
+      context.course = options.courseId;
+    }
+    if (options.eventId) {
+      context.event = options.eventId;
+    }
 
-		Notification.PrivateMessage.record(
-			operator._id,
-			recipient._id,
-			message,
-			options.revealAddress,
-			options.sendCopy,
-			context,
-		);
-	},
+    Notification.PrivateMessage.record(
+      operator._id,
+      recipient._id,
+      message,
+      options.revealAddress,
+      options.sendCopy,
+      context,
+    );
+  },
 );
 
 export const sendReport = ServerMethod(
-	'report',
-	(title: string, location: string, userAgent: string, reportMessage: string) => {
-		check(title, String);
-		check(location, String);
-		check(userAgent, String);
-		check(reportMessage, String);
+  "report",
+  (title: string, location: string, userAgent: string, reportMessage: string) => {
+    check(title, String);
+    check(location, String);
+    check(userAgent, String);
+    check(reportMessage, String);
 
-		let reporter = 'A fellow visitor';
-		const user = Meteor.user();
-		if (user) {
-			reporter = Spacebars.SafeString(
-				`<a href='${Router.url('userprofile', user)}'>${user.getDisplayName()}</a>`,
-			);
-		}
-		moment.locale('en');
+    let reporter = "A fellow visitor";
+    const user = Meteor.user();
+    if (user) {
+      reporter = Spacebars.SafeString(
+        `<a href='${Router.url("userprofile", user)}'>${user.getDisplayName()}</a>`,
+      );
+    }
+    moment.locale("en");
 
-		const { siteName } = Accounts.emailTemplates;
+    const { siteName } = Accounts.emailTemplates;
 
-		const version = Version.findOne();
-		let versionString = '';
-		if (version) {
-			const fullVersion = version.basic + (version.branch !== 'master' ? ` ${version.branch}` : '');
-			const commit = version.commitShort;
-			const deployDate = moment(version.activation).format('lll');
-			const restart = moment(version.lastStart).format('lll');
-			versionString =
-				`<br>The running version is [${siteName}] ${fullVersion}  @ commit ${commit}` +
-				`<br>It was deployed on ${deployDate},` +
-				`<br>and last restarted on ${restart}.`;
-		}
+    const version = Version.findOne();
+    let versionString = "";
+    if (version) {
+      const fullVersion = version.basic + (version.branch !== "master" ? ` ${version.branch}` : "");
+      const commit = version.commitShort;
+      const deployDate = moment(version.activation).format("lll");
+      const restart = moment(version.lastStart).format("lll");
+      versionString =
+        `<br>The running version is [${siteName}] ${fullVersion}  @ commit ${commit}` +
+        `<br>It was deployed on ${deployDate},` +
+        `<br>and last restarted on ${restart}.`;
+    }
 
-		const subjectPrefix = `[${siteName}] `;
+    const subjectPrefix = `[${siteName}] `;
 
-		const subject = `Report: ${title}`;
+    const subject = `Report: ${title}`;
 
-		const reportEmail = PrivateSettings.reporter;
+    const reportEmail = PrivateSettings.reporter;
 
-		const emailLogo = PublicSettings.emailLogo;
-		let message = SSR.render('reportEmail', {
-			reporter,
-			location,
-			subject,
-			title,
-			site: {
-				brand: PublicSettings.theme.brand,
-				url: Meteor.absoluteUrl(),
-				logo: toEmailLogo(emailLogo),
-				name: siteName,
-			},
-			report: reportMessage,
-			versionString,
-			timeNow: new Date(),
-			userAgent,
-		});
+    const emailLogo = PublicSettings.emailLogo;
+    let message = SSR.render("reportEmail", {
+      reporter,
+      location,
+      subject,
+      title,
+      site: {
+        brand: PublicSettings.theme.brand,
+        url: Meteor.absoluteUrl(),
+        logo: toEmailLogo(emailLogo),
+        name: siteName,
+      },
+      report: reportMessage,
+      versionString,
+      timeNow: new Date(),
+      userAgent,
+    });
 
-		// Template can't handle DOCTYPE header, so we add the thing here.
-		const DOCTYPE =
-			'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-		message = DOCTYPE + message;
+    // Template can't handle DOCTYPE header, so we add the thing here.
+    const DOCTYPE =
+      '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+    message = DOCTYPE + message;
 
-		const email = {
-			from: reportEmail.sender,
-			to: reportEmail.recipient,
-			subject: subjectPrefix + subject,
-			html: juice(message),
-		};
+    const email = {
+      from: reportEmail.sender,
+      to: reportEmail.recipient,
+      subject: subjectPrefix + subject,
+      html: juice(message),
+    };
 
-		Email.send(email);
-	},
-	{ simulation: false },
+    Email.send(email);
+  },
+  { simulation: false },
 );

@@ -1,15 +1,15 @@
 .page-component {
-	@include clearfix;
+  @include clearfix;
 }
 
 .page-component + .page-component {
-	margin-top: 15px;
+  margin-top: 15px;
 }
 
 .page-component > h2,
 .page-component > h3 {
-	margin-bottom: $form-group-margin-bottom;
-	margin-top: 0;
+  margin-bottom: $form-group-margin-bottom;
+  margin-top: 0;
 }
 
 .page-component > .btn:first-child,
@@ -18,115 +18,115 @@
   Can be removed after complet migration.
 */
 .page-component > div:not([class]) > .btn:first-child {
-	width: 100%;
+  width: 100%;
 }
 
 .page-component > .frame-events {
-	padding: 0;
+  padding: 0;
 }
 
 .page-component-seperated {
-	border-top: 1px solid $blue-lighter;
-	padding-top: $form-group-margin-bottom;
+  border-top: 1px solid $blue-lighter;
+  padding-top: $form-group-margin-bottom;
 }
 
 .page-component-header {
-	background: $blue;
-	color: $white;
-	padding: 15px;
+  background: $blue;
+  color: $white;
+  padding: 15px;
 }
 
 .page-component-header > h4 {
-	font-weight: bold;
-	margin: 0;
+  font-weight: bold;
+  margin: 0;
 }
 
 .page-component-btn {
-	@include btn-lg;
-	margin-top: $page-component-seperator-height;
-	padding: 10px 12px;
-	text-align: start;
-	width: 100%;
+  @include btn-lg;
+  margin-top: $page-component-seperator-height;
+  padding: 10px 12px;
+  text-align: start;
+  width: 100%;
 }
 
 .details-header {
-	padding: 10px $details-header-padding-horizontal;
-	position: relative;
+  padding: 10px $details-header-padding-horizontal;
+  position: relative;
 }
 
 .details-header > h2,
 .details-header > h3 {
-	margin-top: 0;
+  margin-top: 0;
 }
 
 .details-header > *:last-child {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .details-body {
-	margin-top: 3px;
-	position: relative;
+  margin-top: 3px;
+  position: relative;
 }
 
 .details-content {
-	@include clearfix;
-	height: 100%;
-	padding: ($grid-gutter-width / 2);
+  @include clearfix;
+  height: 100%;
+  padding: ($grid-gutter-width / 2);
 }
 
 .details-content > h3,
 .details-content > h4 {
-	margin-top: 0;
+  margin-top: 0;
 }
 
 .details-content > *:last-child {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .details-map {
-	width: 100%;
+  width: 100%;
 }
 
 .details-map .map-box {
-	height: 300px;
-	width: 100%;
+  height: 300px;
+  width: 100%;
 }
 
 .details-map .coordinates {
-	margin: 5px;
-	text-align: end;
+  margin: 5px;
+  text-align: end;
 }
 
 .details-form {
-	@include clearfix;
-	background-color: lighten($success, 10%);
-	border-color: $success;
-	border-style: solid;
-	border-width: 1px;
-	padding: ($grid-gutter-width / 2);
+  @include clearfix;
+  background-color: lighten($success, 10%);
+  border-color: $success;
+  border-style: solid;
+  border-width: 1px;
+  padding: ($grid-gutter-width / 2);
 }
 
 .details-form > h3 {
-	margin-top: 0;
+  margin-top: 0;
 }
 
 .details-form > form > *:last-child {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .details-addition {
-	background-color: $gray-200;
-	border-color: darken($gray-200, 3%);
-	border-style: solid;
-	border-width: 1px;
-	padding: $form-group-margin-bottom;
+  background-color: $gray-200;
+  border-color: darken($gray-200, 3%);
+  border-style: solid;
+  border-width: 1px;
+  padding: $form-group-margin-bottom;
 }
 
 .details-addition > h3,
 .details-addition > h4 {
-	margin-top: 0;
+  margin-top: 0;
 }
 
 .details-addition > *:last-child {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }

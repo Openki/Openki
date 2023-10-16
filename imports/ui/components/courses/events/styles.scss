@@ -1,20 +1,24 @@
-@import '{}/imports/ui/stylesheets/variables/index';
+@import "{}/imports/ui/stylesheets/variables/index";
 
 .container .course-event-list .event-compact-wrap {
-	@include make-col(6);
-	padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+  @include make-col(6);
+  padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
 }
 
 .course-event-list {
-	@include clearfix;
-	margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 4) * -1);
-	width: auto;
+  @include clearfix;
+  margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 4) * -1);
+  width: auto;
 }
 
 .page-component-header + .course-event-list {
-	padding-top: 10px;
+  padding-top: 10px;
 }
 
 .course-event-list + .page-component-header {
-	margin-top: 10px;
+  margin-top: 10px;
+}
+
+.course-event-tasks {
+  position: relative;
 }

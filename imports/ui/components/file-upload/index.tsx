@@ -1,0 +1,144 @@
+import { useTranslation } from "react-i18next";
+import React, { useState } from "react";
+
+import { ButtonSave, ButtonCancel } from "../buttons";
+
+import "./styles.scss";
+
+// feature detection for drag&drop upload
+const supportsDragndrop = (function () {
+  const div = document.createElement("div");
+  return "draggable" in div || ("ondragstart" in div && "ondrop" in div);
+})();
+
+export interface UploadFile {
+  lastModified: Date;
+  size: number;
+  mimeType: string;
+  /** As BinaryString */
+  content: string;
+}
+
+export interface Props {
+  accept: string;
+  onUpload: (file: UploadFile) => void;
+  onCancel: () => void;
+}
+
+export function FileUpload({ accept, onUpload, onCancel }: Props) {
+  const { t } = useTranslation();
+  const [droppedFile, setDroppedFile] = useState<File | undefined>(undefined);
+  const [progress, setProgress] = useState<"start" | "ready" | "uploading" | "done">("start");
+  const [dragover, setDragover] = useState(false);
+
+  function fileName() {
+    return droppedFile?.name;
+  }
+
+  return (
+    <>
+      <form
+        encType="multipart/form-data"
+        noValidate={true}
+        className="text-center file-upload{{#if (state 'supportsDragndrop')}} supports-dragndrop{{/if}}{{#if (state 'dragover')}} is-dragover{{/if}}"
+        onDragOver={() => {
+          setDragover(true);
+        }}
+        onDragEnter={() => {
+          setDragover(true);
+        }}
+        onDragLeave={() => {
+          setDragover(false);
+        }}
+        onDragEnd={() => {
+          setDragover(false);
+        }}
+        onDrop={(event) => {
+          setDragover(false);
+
+          setDroppedFile(event.dataTransfer.files[0]);
+          setProgress("ready");
+        }}
+      >
+        <input
+          type="file"
+          accept={accept}
+          className="d-none"
+          id="file"
+          onChange={(event) => {
+            setDroppedFile(event.target?.files?.[0]);
+            setProgress("ready");
+          }}
+        />
+        <label htmlFor="file">
+          <div className="mb-1">
+            <i className="fa-regular fa-file-lines fa-5x" aria-hidden="true"></i>
+          </div>
+          {dragover ? (
+            <div className="file-upload-drop">
+              {t("fileUpload.drop.text", "Drop it like it's hot!")}
+            </div>
+          ) : (
+            <>
+              {progress === "start" ? (
+                <>
+                  <strong>{t("fileUpload.choose.text", "Choose a file")}</strong>
+
+                  {supportsDragndrop ? (
+                    <span className="file-upload-dragndrop">
+                      {t("fileUpload.drag.text", "or drag it here")}
+                    </span>
+                  ) : null}
+                </>
+              ) : null}
+              {progress === "uploading" ? (
+                <div className="file-upload-uploading">
+                  {t("fileUpload.uploading.text", "Uploading…")}
+                </div>
+              ) : null}
+              {progress === "ready" ? fileName : null}
+            </>
+          )}
+        </label>
+      </form>
+      {progress === "ready" ? (
+        <div className="file-upload-controls">
+          <ButtonSave
+            onClick={() => {
+              if (!droppedFile) {
+                throw new Error(`Unexpected undefined: file`);
+              }
+
+              setProgress("uploading");
+
+              const reader = new FileReader();
+
+              reader.onload = () => {
+                onUpload({
+                  lastModified: new Date(droppedFile.lastModified),
+                  size: droppedFile.size,
+                  mimeType: droppedFile.type,
+                  content: reader.result as string,
+                });
+                setProgress("done");
+              };
+
+              reader.readAsBinaryString(droppedFile);
+            }}
+          />
+          <ButtonCancel
+            onClick={() => {
+              onCancel();
+            }}
+          />
+        </div>
+      ) : null}
+    </>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("FileUpload", () => FileUpload);

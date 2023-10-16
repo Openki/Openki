@@ -1,211 +1,211 @@
-import moment from 'moment';
-import { v5 as uuidv5 } from 'uuid';
-import { create } from 'xmlbuilder2';
-import { ApiEvent } from '/imports/Api';
-import { Router } from 'meteor/iron:router';
-import { FilteringReadError } from '/imports/utils/filtering';
-import { NoActionError, orderedResults } from './api.routes.utils';
-import { textPlain } from '/imports/utils/html-tools';
+import moment from "moment";
+import { v5 as uuidv5 } from "uuid";
+import { create } from "xmlbuilder2";
+import { ApiEvent } from "/imports/Api";
+import { Router } from "meteor/iron:router";
+import { FilteringReadError } from "/imports/utils/filtering";
+import { NoActionError, orderedResults } from "./api.routes.utils";
+import { textPlain } from "/imports/utils/html-tools";
 
-const OPENKI_UUID_NAMESPACE = 'bfcc029a-5d16-4863-af43-17277e2e717b';
+const OPENKI_UUID_NAMESPACE = "bfcc029a-5d16-4863-af43-17277e2e717b";
 
 const sortByTimeAndRoom = (results: ApiEvent[]) =>
-	results.reduce(
-		(accumulator: { [date: string]: { [room: string]: ApiEvent[] } }, current: ApiEvent) => {
-			const currentDate = moment(current.start).format('YYYY-MM-DD');
+  results.reduce(
+    (accumulator: { [date: string]: { [room: string]: ApiEvent[] } }, current: ApiEvent) => {
+      const currentDate = moment(current.start).format("YYYY-MM-DD");
 
-			let currentRoom;
-			if (current.venue?.name && current.room) {
-				currentRoom = `${current.venue?.name} (${current.room})`;
-			} else {
-				currentRoom = current.venue?.name || current.room;
-			}
+      let currentRoom;
+      if (current.venue?.name && current.room) {
+        currentRoom = `${current.venue?.name} (${current.room})`;
+      } else {
+        currentRoom = current.venue?.name || current.room;
+      }
 
-			if (currentDate in accumulator) {
-				const dateEvents = accumulator[currentDate];
-				if (currentRoom in dateEvents) {
-					dateEvents[currentRoom].push(current);
-				} else {
-					dateEvents[currentRoom] = [current];
-				}
-			} else {
-				accumulator[currentDate] = {
-					[currentRoom]: [current],
-				};
-			}
-			return accumulator;
-		},
-		{},
-	);
+      if (currentDate in accumulator) {
+        const dateEvents = accumulator[currentDate];
+        if (currentRoom in dateEvents) {
+          dateEvents[currentRoom].push(current);
+        } else {
+          dateEvents[currentRoom] = [current];
+        }
+      } else {
+        accumulator[currentDate] = {
+          [currentRoom]: [current],
+        };
+      }
+      return accumulator;
+    },
+    {},
+  );
 
 const xmlSendResponder = function (res: any, process: any) {
-	try {
-		const body = process();
-		res.statusCode = 200;
-		res.setHeader('Content-Type', 'application/xml');
-		res.end(body);
-	} catch (e) {
-		const body: any = {};
-		if (e instanceof FilteringReadError || e instanceof NoActionError) {
-			res.statusCode = 400;
-			body.status = 'fail';
-			body.data = {};
-			if ((e as any).name) {
-				body.data[(e as any).name] = e.message;
-			} else {
-				body.data.error = e.message;
-			}
-		} else {
-			/* eslint-disable-next-line no-console */
-			console.log(e, e.stack);
-			res.statusCode = 500;
-			body.status = 'error';
-			body.message = 'Server error';
-		}
-		res.end(JSON.stringify(body, null, '\t'));
-	}
+  try {
+    const body = process();
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/xml");
+    res.end(body);
+  } catch (e) {
+    const body: any = {};
+    if (e instanceof FilteringReadError || e instanceof NoActionError) {
+      res.statusCode = 400;
+      body.status = "fail";
+      body.data = {};
+      if ((e as any).name) {
+        body.data[(e as any).name] = e.message;
+      } else {
+        body.data.error = e.message;
+      }
+    } else {
+      /* eslint-disable-next-line no-console */
+      console.log(e, e.stack);
+      res.statusCode = 500;
+      body.status = "error";
+      body.message = "Server error";
+    }
+    res.end(JSON.stringify(body, null, "\t"));
+  }
 };
 
 const pseudoHash = function (str: string) {
-	let hash = 0;
-	for (let i = 0, len = str.length; i < len; i += 1) {
-		const chr = str.charCodeAt(i);
-		// eslint-disable-next-line no-bitwise
-		hash = (hash << 5) - hash + chr;
-		// eslint-disable-next-line no-bitwise
-		hash |= 0; // Convert to 32bit integer
-	}
-	return hash < 0 ? hash * -1 : hash;
+  let hash = 0;
+  for (let i = 0, len = str.length; i < len; i += 1) {
+    const chr = str.charCodeAt(i);
+    // eslint-disable-next-line no-bitwise
+    hash = (hash << 5) - hash + chr;
+    // eslint-disable-next-line no-bitwise
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash < 0 ? hash * -1 : hash;
 };
 
-Router.route('api.0.xml', {
-	path: '/api/0/xml/schedule',
-	where: 'server',
-	action() {
-		xmlSendResponder(this.response, () => {
-			// Hide canceled events in schedule
-			this.params.query.canceled = this.params.query.canceled ?? '0';
-			const results = orderedResults(this.params, 'events');
+Router.route("api.0.xml", {
+  path: "/api/0/xml/schedule",
+  where: "server",
+  action() {
+    xmlSendResponder(this.response, () => {
+      // Hide canceled events in schedule
+      this.params.query.canceled = this.params.query.canceled ?? "0";
+      const results = orderedResults(this.params, "events");
 
-			const resultsByTimeAndRoom = sortByTimeAndRoom(results);
+      const resultsByTimeAndRoom = sortByTimeAndRoom(results);
 
-			const scheduleNode = create({ version: '1.0' }).ele('schedule', {
-				'xsi:noNamespaceSchemaLocation': 'https://c3voc.de/schedule/schema.xsd',
-				'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-			});
-			scheduleNode.ele('generator', { name: 'openki' });
-			scheduleNode.ele('version').txt('1.0');
-			scheduleNode
-				.ele('conference')
-				.ele('acronym')
-				.txt('anarchy23')
-				.up()
-				.ele('title')
-				.txt('Anarchy 2023')
-				.up()
-				.ele('start')
-				.txt('2023-07-19')
-				.up()
-				.ele('end')
-				.txt('2023-07-23')
-				.up()
-				.ele('days')
-				.txt('5')
-				.up()
-				.ele('time_zone_name')
-				.txt('Europe/Zurich')
-				.up()
-				.ele('base_url')
-				.txt('https://anarchy2023.org/en/program/workshops')
-				.up();
+      const scheduleNode = create({ version: "1.0" }).ele("schedule", {
+        "xsi:noNamespaceSchemaLocation": "https://c3voc.de/schedule/schema.xsd",
+        "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+      });
+      scheduleNode.ele("generator", { name: "openki" });
+      scheduleNode.ele("version").txt("1.0");
+      scheduleNode
+        .ele("conference")
+        .ele("acronym")
+        .txt("anarchy23")
+        .up()
+        .ele("title")
+        .txt("Anarchy 2023")
+        .up()
+        .ele("start")
+        .txt("2023-07-19")
+        .up()
+        .ele("end")
+        .txt("2023-07-23")
+        .up()
+        .ele("days")
+        .txt("5")
+        .up()
+        .ele("time_zone_name")
+        .txt("Europe/Zurich")
+        .up()
+        .ele("base_url")
+        .txt("https://anarchy2023.org/en/program/workshops")
+        .up();
 
-			let dayIdx = 1;
-			// eslint-disable-next-line no-restricted-syntax
-			for (const [date, dateEvents] of Object.entries(resultsByTimeAndRoom)) {
-				const dayNode = scheduleNode.ele('day', {
-					date,
-					end: moment(date).add(1, 'day').startOf('day').format('YYYY-MM-DDTHH:mm:ssZ'),
-					index: dayIdx,
-					start: moment(date).startOf('day').format('YYYY-MM-DDTHH:mm:ssZ'),
-				});
+      let dayIdx = 1;
+      // eslint-disable-next-line no-restricted-syntax
+      for (const [date, dateEvents] of Object.entries(resultsByTimeAndRoom)) {
+        const dayNode = scheduleNode.ele("day", {
+          date,
+          end: moment(date).add(1, "day").startOf("day").format("YYYY-MM-DDTHH:mm:ssZ"),
+          index: dayIdx,
+          start: moment(date).startOf("day").format("YYYY-MM-DDTHH:mm:ssZ"),
+        });
 
-				dayIdx += 1;
-				// eslint-disable-next-line no-restricted-syntax
-				for (const [room, roomEvents] of Object.entries(dateEvents)) {
-					const roomNode = dayNode.ele('room', {
-						name: room,
-					});
-					// eslint-disable-next-line no-loop-func
-					roomEvents.forEach(
-						// eslint-disable-next-line no-loop-func
-						(event: any) => {
-							const durationMinutes = `00${event.duration % 60}`.slice(-2);
-							const duration = `${Math.floor(event.duration / 60)}:${durationMinutes}`;
-							const eventNode = roomNode
-								.ele('event', {
-									id: pseudoHash(event.id),
-									guid: uuidv5(event.id, OPENKI_UUID_NAMESPACE),
-								})
-								.ele('date')
-								.txt(moment(event.start).format('YYYY-MM-DDTHH:mm:ssZ'))
-								.up()
-								.ele('start')
-								.txt(moment(event.start).format('HH:mm'))
-								.up()
-								.ele('duration')
-								.txt(duration)
-								.up()
-								.ele('room')
-								.txt(room)
-								.up()
-								.ele('slug')
-								.txt(event.slug || '')
-								.up()
-								.ele('url')
-								.txt(event.link || '')
-								.up()
-								.ele('recording')
-								.ele('license')
-								.up()
-								.ele('optout')
-								.txt('false')
-								.up()
-								.up()
-								.ele('title')
-								.txt(event.title)
-								.up()
-								.ele('subtitle')
-								.up()
-								.ele('type')
-								.up()
-								.ele('language')
-								.up()
-								.ele('abstract')
-								.up()
-								.ele('description')
-								.txt(textPlain(event.description))
-								.up()
-								.ele('logo')
-								.up()
-								.ele('links')
-								.up()
-								.ele('attachements')
-								.up();
+        dayIdx += 1;
+        // eslint-disable-next-line no-restricted-syntax
+        for (const [room, roomEvents] of Object.entries(dateEvents)) {
+          const roomNode = dayNode.ele("room", {
+            name: room,
+          });
+          // eslint-disable-next-line no-loop-func
+          roomEvents.forEach(
+            // eslint-disable-next-line no-loop-func
+            (event: any) => {
+              const durationMinutes = `00${event.duration % 60}`.slice(-2);
+              const duration = `${Math.floor(event.duration / 60)}:${durationMinutes}`;
+              const eventNode = roomNode
+                .ele("event", {
+                  id: pseudoHash(event.id),
+                  guid: uuidv5(event.id, OPENKI_UUID_NAMESPACE),
+                })
+                .ele("date")
+                .txt(moment(event.start).format("YYYY-MM-DDTHH:mm:ssZ"))
+                .up()
+                .ele("start")
+                .txt(moment(event.start).format("HH:mm"))
+                .up()
+                .ele("duration")
+                .txt(duration)
+                .up()
+                .ele("room")
+                .txt(room)
+                .up()
+                .ele("slug")
+                .txt(event.slug || "")
+                .up()
+                .ele("url")
+                .txt(event.link || "")
+                .up()
+                .ele("recording")
+                .ele("license")
+                .up()
+                .ele("optout")
+                .txt("false")
+                .up()
+                .up()
+                .ele("title")
+                .txt(event.title)
+                .up()
+                .ele("subtitle")
+                .up()
+                .ele("type")
+                .up()
+                .ele("language")
+                .up()
+                .ele("abstract")
+                .up()
+                .ele("description")
+                .txt(textPlain(event.description))
+                .up()
+                .ele("logo")
+                .up()
+                .ele("links")
+                .up()
+                .ele("attachements")
+                .up();
 
-							const persons = eventNode.ele('persons');
-							// eslint-disable-next-line no-loop-func
-							event.groups.forEach((group: any) => {
-								persons
-									.ele('person', {
-										id: group.id,
-									})
-									.txt(group.name);
-							});
-						},
-					);
-				}
-			}
-			return scheduleNode.end({ prettyPrint: true });
-		});
-	},
+              const persons = eventNode.ele("persons");
+              // eslint-disable-next-line no-loop-func
+              event.groups.forEach((group: any) => {
+                persons
+                  .ele("person", {
+                    id: group.id,
+                  })
+                  .txt(group.name);
+              });
+            },
+          );
+        }
+      }
+      return scheduleNode.end({ prettyPrint: true });
+    });
+  },
 });

@@ -1,0 +1,145 @@
+import $ from "jquery";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useUser } from "/imports/utils/react-meteor-data";
+import { Router } from "meteor/iron:router";
+import moment from "moment";
+
+import { Events } from "/imports/api/events/events";
+
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import * as UrlTools from "/imports/utils/url-tools";
+
+import { useCurrentRouteName } from "/imports/ui/lib/useCurrentRouteName";
+
+import { Direction, Unit } from "../Arrow";
+import { Control } from "./control";
+
+import "../styles.scss";
+
+function updateUrl(routerName: string, filter: ReturnType<(typeof Events)["Filtering"]>) {
+  const filterParams = filter.toParams();
+  delete filterParams.region; // HACK region is kept in the session (for bad reasons)
+  const queryString = UrlTools.paramsToQueryString(filterParams);
+
+  const options: { query?: string } = {};
+  if (queryString.length) {
+    options.query = queryString;
+  }
+
+  Router.go(routerName, {}, options);
+}
+
+function mvDateHandler(
+  routerName: string,
+  unit: Unit,
+  direction: Direction,
+  filter: ReturnType<(typeof Events)["Filtering"]>,
+) {
+  const amount = direction === "previous" ? -1 : 1;
+  const start = filter.get("start") as moment.Moment;
+  const weekCorrection = unit === "week" ? 0 : 1;
+
+  if (amount < 0) {
+    start.add(amount, unit).startOf("week");
+  } else {
+    start.add(amount, unit).add(weekCorrection, "week").startOf("week");
+  }
+  filter.add("start", start).done();
+  updateUrl(routerName, filter);
+  return false;
+}
+
+export type Props = {
+  date: moment.Moment;
+  filter: ReturnType<(typeof Events)["Filtering"]>;
+  setIsAttendeeFilterOn: (state: boolean) => void;
+};
+
+export function Multi({ date, filter, setIsAttendeeFilterOn }: Props) {
+  const { t } = useTranslation();
+  const { weekNr, dateLong, dateShort } = useDateTimeFormat();
+  const currentUser = useUser();
+  const routerName = useCurrentRouteName();
+
+  const [currentUnit, setCurrentUnit] = useState<Unit>("week");
+
+  function endDateTo() {
+    return moment(date).add(6, "days");
+  }
+
+  function controlAttr(direction: Direction) {
+    const unit = currentUnit;
+    return {
+      unit,
+      direction,
+      onChangeDate: () => {
+        mvDateHandler(routerName, unit, direction, filter);
+      },
+      onChangeUnit: (value: Unit) => {
+        setCurrentUnit(value);
+        mvDateHandler(routerName, value, direction, filter);
+      },
+    };
+  }
+
+  useEffect(() => {
+    const navContainer = $(".calendar-nav-container");
+    navContainer.slideDown();
+
+    $(window).on("scroll", () => {
+      const isCovering = navContainer.hasClass("calendar-nav-container-covering");
+      const atTop = ($(window).scrollTop() || 0) < 5;
+
+      if (!isCovering && !atTop) {
+        navContainer.addClass("calendar-nav-container-covering");
+      } else if (isCovering && atTop) {
+        navContainer.removeClass("calendar-nav-container-covering");
+      }
+    });
+  });
+
+  return (
+    <div className="calendar-nav-container text-center">
+      <div className="calendar-nav">
+        <Control {...controlAttr("previous")} />
+        <div className="calendar-nav-moment">
+          <div className="lead">
+            {t("calendar.weekNumber", "Week")} {weekNr(date)}
+          </div>
+          <div>
+            <span className="d-none d-md-inline-block">
+              {dateLong(date)} - {dateLong(endDateTo())}
+            </span>
+            <span className="d-md-none">
+              {dateShort(date)} - {dateShort(endDateTo())}
+            </span>
+          </div>
+        </div>
+        <Control {...controlAttr("next")} />
+      </div>
+      {currentUser ? (
+        <div className="form-check form-switch align-content-center text-center pb-2">
+          <input
+            type="checkbox"
+            id="filter-own-events"
+            className="form-check-input float-none"
+            name="filter-own-events"
+            onClick={(event) => {
+              setIsAttendeeFilterOn(event.currentTarget.checked);
+            }}
+          />{" "}
+          <label htmlFor="filter-own-events">
+            {t("calendar.filter-own-events", "Show my events only")}
+          </label>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("CalendarNavMulti", () => Multi);

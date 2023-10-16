@@ -1,9 +1,9 @@
-import { Tenants } from '/imports/api/tenants/tenants';
+import { Tenants } from "/imports/api/tenants/tenants";
 
 export function update() {
-	let updated = 0;
+  let updated = 0;
 
-	updated += Tenants.update({}, { $set: { admins: [] } }, { multi: true });
+  updated += Tenants.update({}, { $set: { admins: [] } }, { multi: true });
 
-	return updated;
+  return updated;
 }

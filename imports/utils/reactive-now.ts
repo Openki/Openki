@@ -1,13 +1,14 @@
-import { Meteor } from 'meteor/meteor';
-import { ReactiveVar } from 'meteor/reactive-var';
+import { Meteor } from "meteor/meteor";
+import { useTracker } from "meteor/react-meteor-data";
+import { ReactiveVar } from "meteor/reactive-var";
 
 function getNowWithoutSeconds() {
-	const now = new Date();
+  const now = new Date();
 
-	now.setSeconds(0);
-	now.setMilliseconds(0);
+  now.setSeconds(0);
+  now.setMilliseconds(0);
 
-	return now;
+  return now;
 }
 
 /**
@@ -16,11 +17,15 @@ function getNowWithoutSeconds() {
  */
 export const reactiveNow = new ReactiveVar(getNowWithoutSeconds());
 
+export function useReactiveNow() {
+  return useTracker(() => reactiveNow.get());
+}
+
 // Check for update all 5 seconds
 Meteor.setInterval(() => {
-	const now = getNowWithoutSeconds();
-	const old = reactiveNow.get();
-	if (old.getTime() !== now.getTime()) {
-		reactiveNow.set(now);
-	}
+  const now = getNowWithoutSeconds();
+  const old = reactiveNow.get();
+  if (old.getTime() !== now.getTime()) {
+    reactiveNow.set(now);
+  }
 }, 1000 * 5);

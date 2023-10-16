@@ -4,8 +4,6 @@
 		"target": "es2018",
 		"module": "esNext",
 		"lib": ["esnext", "dom"],
-		"allowJs": true,
-		"checkJs": true,
 		"jsx": "preserve",
 		"incremental": true,
 		"noEmit": true,
@@ -48,5 +46,5 @@
 		"skipLibCheck": true // because of a error in ./node_modules/i18next-chained-backend/ and ./node_modules/i18next-localstorage-backend/
 	},
 	"include": ["./", "./node_modules/@types", "./types"],
-	"exclude": ["./.meteor/", "./packages/", "./node_modules/@types/node/ts3.6/" /* Fix a error, assert defined at two places.*/]
+	"exclude": ["./.meteor/", "./packages/"]
 }

@@ -1,39 +1,39 @@
 .edit-page h2 {
-	margin-top: 0;
+  margin-top: 0;
 }
 
 $edit-page-border: 7px;
 
 .edit-page-header {
-	margin-top: 10px;
-	position: relative;
+  margin-top: 10px;
+  position: relative;
 
-	@include media-breakpoint-up(sm) {
-		border-width: $edit-page-border $edit-page-border 0;
-		padding: 20px 30px 0;
-	}
+  @include media-breakpoint-up(sm) {
+    border-width: $edit-page-border $edit-page-border 0;
+    padding: 20px 30px 0;
+  }
 }
 
 .edit-page-body {
-	padding-bottom: 10px;
-	position: relative;
+  padding-bottom: 10px;
+  position: relative;
 
-	@include media-breakpoint-up(sm) {
-		border-width: $edit-page-border;
-		margin-top: 10px;
-		padding: 20px 30px 10px;
-	}
+  @include media-breakpoint-up(sm) {
+    border-width: $edit-page-border;
+    margin-top: 10px;
+    padding: 20px 30px 10px;
+  }
 }
 
 .edit-page-header + .edit-page-body {
-	@include media-breakpoint-up(sm) {
-		border-top-width: 0;
-		margin-top: 0;
-	}
+  @include media-breakpoint-up(sm) {
+    border-top-width: 0;
+    margin-top: 0;
+  }
 }
 
 .edit-page-header .region-tag,
 .edit-page-body .region-tag {
-	inset-block-start: -$edit-page-border;
-	inset-inline-end: -$edit-page-border;
+  inset-block-start: -$edit-page-border;
+  inset-inline-end: -$edit-page-border;
 }

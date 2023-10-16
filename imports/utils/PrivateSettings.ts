@@ -1,70 +1,70 @@
-import { Match, check } from 'meteor/check';
-import { Meteor } from 'meteor/meteor';
-import { StringEnum, Type } from './CustomChecks';
+import { Match, check } from "meteor/check";
+import { Meteor } from "meteor/meteor";
+import { StringEnum, Type } from "./CustomChecks";
 
 export const PrivateSettingsPattern = Match.ObjectIncluding({
-	/** User Administrator Accounts */
-	admins: [String],
-	/** Pseudo-Random Number Generator */
-	prng: StringEnum('', 'static'),
-	/** Generates test data, is not needed for the productive system */
-	testdata: Boolean,
-	/** Sender e-mail address in mails */
-	siteEmail: String,
-	/**
-	 * Sender and recipient address for "Report problem" function. The recipient is also
-	 * visible in e-mail that are send to users.
-	 */
-	reporter: {
-		sender: String,
-		recipient: String,
-	},
-	/** Tells robots/crawlers whether to index the website or not */
-	robots: Boolean,
-	/** Tells robots/crawlers not to index user profiles (/user/*) */
-	hideProfiles: Boolean,
-	/** Print the log on the server in the console, usually only for development */
-	printLog: Boolean,
-	/** OAuth */
-	service: Match.Maybe({
-		facebook: {
-			appId: String,
-			secret: String,
-		},
-		github: {
-			clientId: String,
-			secret: String,
-		},
-		google: {
-			clientId: String,
-			secret: String,
-		},
-	}),
-	/** Delete entries from the log or remove critical information */
-	scrub: Match.Maybe([
-		{
-			name: String,
-			comment: Match.Maybe(String),
-			grace: Number,
-			select: Object,
-			remove: Match.Maybe(Boolean),
-			unset: Match.Maybe([String]),
-		},
-	]),
-	/** file storage */
-	s3: {
-		region: String,
-		bucketEndpoint: String,
-		bucketName: String,
-		accessKeyId: String,
-		secretAccessKey: String,
-	},
-	startup: {
-		/** Build the cache in the db async or sync */
-		buildDbCacheAsync: Boolean,
-	},
-	/** Maximum number of entities that the api returns. */
-	apiMaxLimit: Number,
+  /** User Administrator Accounts */
+  admins: [String],
+  /** Pseudo-Random Number Generator */
+  prng: StringEnum("", "static"),
+  /** Generates test data, is not needed for the productive system */
+  testdata: Boolean,
+  /** Sender e-mail address in mails */
+  siteEmail: String,
+  /**
+   * Sender and recipient address for "Report problem" function. The recipient is also
+   * visible in e-mail that are send to users.
+   */
+  reporter: {
+    sender: String,
+    recipient: String,
+  },
+  /** Tells robots/crawlers whether to index the website or not */
+  robots: Boolean,
+  /** Tells robots/crawlers not to index user profiles (/user/*) */
+  hideProfiles: Boolean,
+  /** Print the log on the server in the console, usually only for development */
+  printLog: Boolean,
+  /** OAuth */
+  service: Match.Maybe({
+    facebook: {
+      appId: String,
+      secret: String,
+    },
+    github: {
+      clientId: String,
+      secret: String,
+    },
+    google: {
+      clientId: String,
+      secret: String,
+    },
+  }),
+  /** Delete entries from the log or remove critical information */
+  scrub: Match.Maybe([
+    {
+      name: String,
+      comment: Match.Maybe(String),
+      grace: Number,
+      select: Object,
+      remove: Match.Maybe(Boolean),
+      unset: Match.Maybe([String]),
+    },
+  ]),
+  /** file storage */
+  s3: {
+    region: String,
+    bucketEndpoint: String,
+    bucketName: String,
+    accessKeyId: String,
+    secretAccessKey: String,
+  },
+  startup: {
+    /** Build the cache in the db async or sync */
+    buildDbCacheAsync: Boolean,
+  },
+  /** Maximum number of entities that the api returns. */
+  apiMaxLimit: Number,
 });
 
 export type PrivateSettings = Type<typeof PrivateSettingsPattern>;
@@ -72,29 +72,29 @@ export type PrivateSettings = Type<typeof PrivateSettingsPattern>;
 let privateSettings;
 
 if (Meteor.isServer) {
-	// See settings-example.json.md for full documentation
+  // See settings-example.json.md for full documentation
 
-	const defaults = {
-		admins: [] as string[],
-		prng: '',
-		testdata: false,
-		siteEmail: '',
-		reporter: {
-			sender: 'reporter@mail.openki.net',
-			recipient: 'admins@openki.net',
-		},
-		robots: true,
-		hideProfiles: false,
-		printLog: false,
-		startup: { buildDbCacheAsync: false },
-		apiMaxLimit: 100,
-	};
+  const defaults = {
+    admins: [] as string[],
+    prng: "",
+    testdata: false,
+    siteEmail: "",
+    reporter: {
+      sender: "reporter@mail.openki.net",
+      recipient: "admins@openki.net",
+    },
+    robots: true,
+    hideProfiles: false,
+    printLog: false,
+    startup: { buildDbCacheAsync: false },
+    apiMaxLimit: 100,
+  };
 
-	// none deep merge
-	privateSettings = { ...defaults, ...Meteor.settings, ...{ public: undefined } };
+  // none deep merge
+  privateSettings = { ...defaults, ...Meteor.settings, ...{ public: undefined } };
 
-	// Check that everything is set as expected in the settings.
-	check(privateSettings, PrivateSettingsPattern);
+  // Check that everything is set as expected in the settings.
+  check(privateSettings, PrivateSettingsPattern);
 }
 
 /**

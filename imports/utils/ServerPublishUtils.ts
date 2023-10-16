@@ -1,42 +1,42 @@
-import { Meteor, Subscription } from 'meteor/meteor';
+import { Meteor, Subscription } from "meteor/meteor";
 
 export type Record<T extends readonly Mongo.Cursor<any>[]> = Mongo.Cursor<any> | [...T] | undefined;
 
 export type QueryBuilder<A extends any[], T> = (
-	this: { userId: ReturnType<(typeof Meteor)['userId']> },
-	...args: A
+  this: { userId: ReturnType<(typeof Meteor)["userId"]> },
+  ...args: A
 ) => T;
 
 export function publish<
-	A extends any[],
-	C extends readonly Mongo.Cursor<any>[],
-	T extends Record<C>,
+  A extends any[],
+  C extends readonly Mongo.Cursor<any>[],
+  T extends Record<C>,
 >(name: string, publisher: (this: Subscription, ...args: A) => void | T) {
-	if (Meteor.isServer) {
-		// on the server register the publisher / publish the record set
-		// wrap the call to handle options
-		Meteor.publish(name, function (...args) {
-			// everyting is okay, do the work
-			const result = publisher.call(this, ...args);
-			if (result === undefined) {
-				this.ready();
-			}
-			return result;
-		});
-	}
+  if (Meteor.isServer) {
+    // on the server register the publisher / publish the record set
+    // wrap the call to handle options
+    Meteor.publish(name, function (...args) {
+      // everyting is okay, do the work
+      const result = publisher.call(this, ...args);
+      if (result === undefined) {
+        this.ready();
+      }
+      return result;
+    });
+  }
 }
 
 export function removeCallback<A extends any[]>(args: A) {
-	const result = [...args];
-	if (result.length) {
-		const lastParam = result[result.length - 1];
-		if (
-			lastParam &&
-			(typeof lastParam === 'function' ||
-				[lastParam.onReady, lastParam.onStop].some((f) => typeof f === 'function'))
-		) {
-			result.pop();
-		}
-	}
-	return result;
+  const result = [...args];
+  if (result.length) {
+    const lastParam = result[result.length - 1];
+    if (
+      lastParam &&
+      (typeof lastParam === "function" ||
+        [lastParam.onReady, lastParam.onStop].some((f) => typeof f === "function"))
+    ) {
+      result.pop();
+    }
+  }
+  return result;
 }

@@ -1,45 +1,45 @@
-@import '{}/imports/ui/stylesheets/variables/index';
+@import "{}/imports/ui/stylesheets/variables/index";
 
 $header-bg: darken($blue-lighter, 5%);
 
 .event-course-header {
-	background-color: $header-bg;
-	border-color: $header-bg;
-	border-style: solid;
-	border-width: 5px 5px 0;
-	padding: 10px;
-	position: relative;
-	transition: background-color 0.15s;
+  background-color: $header-bg;
+  border-color: $header-bg;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  padding: 10px;
+  position: relative;
+  transition: background-color 0.15s;
 
-	&:hover {
-		background-color: darken($header-bg, 2%);
-	}
+  &:hover {
+    background-color: darken($header-bg, 2%);
+  }
 
-	.region-tag {
-		inset-block-start: -5px;
-		inset-inline-end: -5px;
-	}
+  .region-tag {
+    inset-block-start: -5px;
+    inset-inline-end: -5px;
+  }
 }
 
 .event-course-header-link {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .event-course-header > h2 {
-	margin: 0;
-	padding-bottom: 5px;
+  margin: 0;
+  padding-bottom: 5px;
 }
 
 .back-to-course-overview i {
-	align-items: center;
-	color: #38829c77;
-	float: right;
-	font-size: 60px;
-	margin: 15px 75px 0 0;
-	transition: transform 0.5s ease-in-out;
+  align-items: center;
+  color: #38829c77;
+  float: right;
+  font-size: 60px;
+  margin: 15px 75px 0 0;
+  transition: transform 0.5s ease-in-out;
 }
 
 .back-to-course-overview:hover i {
-	display: block;
-	transform: translateX(-60px);
+  display: block;
+  transform: translateX(-60px);
 }

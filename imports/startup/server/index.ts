@@ -1,20 +1,20 @@
-import './fixtures';
-import './db-updates';
-import './update-db-cache';
-import './admins';
+import "./fixtures";
+import "./db-updates";
+import "./update-db-cache";
+import "./admins";
 
-import './lib/extendPrototypeToJSON';
+import "./lib/extendPrototypeToJSON";
 
-import './routes';
-import './register-api';
-import './robots';
-import './sitemaps';
-import './apiRoutes/api.routes.json';
-import './apiRoutes/api.routes.xml';
+import "./routes";
+import "./register-api";
+import "./robots";
+import "./sitemaps";
+import "./apiRoutes/api.routes.json";
+import "./apiRoutes/api.routes.xml";
 
-import './emails';
-import './login';
-import './useraccounts-configuration';
-import './version';
-import './event-reminder';
-import './scrub';
+import "./emails";
+import "./login";
+import "./useraccounts-configuration";
+import "./version";
+import "./event-reminder";
+import "./scrub";

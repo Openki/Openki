@@ -1,15 +1,15 @@
-import { Session } from 'meteor/session';
+import { Session } from "meteor/session";
 
 export function update() {
-	const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
-	Session.set('viewportWidth', viewportWidth);
+  Session.set("viewportWidth", viewportWidth);
 }
 
 export function get() {
-	if (Session.get('viewportWidth') === undefined) {
-		update();
-	}
+  if (Session.get("viewportWidth") === undefined) {
+    update();
+  }
 
-	return { width: Session.get('viewportWidth') };
+  return { width: Session.get("viewportWidth") };
 }

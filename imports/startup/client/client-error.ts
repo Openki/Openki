@@ -1,69 +1,69 @@
-import { Meteor } from 'meteor/meteor';
-import { Random } from 'meteor/random';
+import { Meteor } from "meteor/meteor";
+import { Random } from "meteor/random";
 
-import * as LogMethods from '/imports/api/log/methods';
+import * as LogMethods from "/imports/api/log/methods";
 
 const clientId = Random.id();
 
 const reportToServer = function (error: Error) {
-	const report = {
-		name: error.name,
-		message: error.message,
-		location: window.location.href,
-		stack: error.stack || '',
-		tsClient: new Date(),
-		clientId,
-		userAgent: window.navigator.userAgent,
-	};
-	LogMethods.clientError(report);
+  const report = {
+    name: error.name,
+    message: error.message,
+    location: window.location.href,
+    stack: error.stack || "",
+    tsClient: new Date(),
+    clientId,
+    userAgent: window.navigator.userAgent,
+  };
+  LogMethods.clientError(report);
 };
 
-window.addEventListener('error', (event) => {
-	reportToServer(event.error);
+window.addEventListener("error", (event) => {
+  reportToServer(event.error);
 });
 
 const buffer: string[] = [];
 const discriminatoryReporting = function (args: [msg: string, error?: Error] | string[]) {
-	const msg = args[0];
+  const msg = args[0];
 
-	// "Exception from Tracker recompute function:"
-	if (msg.startsWith('Exception from Tracker')) {
-		// Boring, followed by "Error: ..."
-		return;
-	}
+  // "Exception from Tracker recompute function:"
+  if (msg.startsWith("Exception from Tracker")) {
+    // Boring, followed by "Error: ..."
+    return;
+  }
 
-	// "Error: No such function: ..."
-	if (msg.startsWith('Error:')) {
-		buffer.push(msg);
-		return;
-	}
+  // "Error: No such function: ..."
+  if (msg.startsWith("Error:")) {
+    buffer.push(msg);
+    return;
+  }
 
-	// "Blaze.View.prototy..."
-	if (msg.startsWith('Blaze.')) {
-		// There's a template name in there right?
-		const templateNames = /Template\.[^_]\w+/g;
-		buffer.push(msg.match(templateNames)?.join(',') || '');
-		reportToServer({
-			name: 'TemplateError',
-			message: buffer.join('; '),
-		});
-		buffer.length = 0;
-		return;
-	}
+  // "Blaze.View.prototy..."
+  if (msg.startsWith("Blaze.")) {
+    // There's a template name in there right?
+    const templateNames = /Template\.[^_]\w+/g;
+    buffer.push(msg.match(templateNames)?.join(",") || "");
+    reportToServer({
+      name: "TemplateError",
+      message: buffer.join("; "),
+    });
+    buffer.length = 0;
+    return;
+  }
 
-	// Sometimes an error is passed as second argument
-	if (args[1] instanceof Error) {
-		reportToServer(args[1]);
-		return;
-	}
+  // Sometimes an error is passed as second argument
+  if (args[1] instanceof Error) {
+    reportToServer(args[1]);
+    return;
+  }
 
-	// Log all the things!
-	reportToServer({ name: 'Meteor._debug', message: args.join(' ') });
+  // Log all the things!
+  reportToServer({ name: "Meteor._debug", message: args.join(" ") });
 };
 
 // wrap the Meteor debug function
 const meteorDebug = Meteor._debug;
 Meteor._debug = function (...args: [msg: string, error: Error] | string[]) {
-	meteorDebug.apply(this, args);
-	discriminatoryReporting(args);
+  meteorDebug.apply(this, args);
+  discriminatoryReporting(args);
 };

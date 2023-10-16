@@ -1,3 +1,3 @@
-declare module 'meteor/ddp-client' {
-	const DDP: any;
+declare module "meteor/ddp-client" {
+  const DDP: any;
 }

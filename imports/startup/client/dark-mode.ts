@@ -1,13 +1,13 @@
 if (
-	window.location.search.includes('upcoming') &&
-	window.location.search.includes('computer') &&
-	window.location.search.includes('experimental') &&
-	window.location.search.length === 55
+  window.location.search.includes("upcoming") &&
+  window.location.search.includes("computer") &&
+  window.location.search.includes("experimental") &&
+  window.location.search.length === 55
 ) {
-	const style = document.createElement('style');
+  const style = document.createElement("style");
 
-	// add CSS styles for dark mode
-	style.innerHTML = `
+  // add CSS styles for dark mode
+  style.innerHTML = `
 		html,
 		body,
 		#wrap {
@@ -24,5 +24,5 @@ if (
 		}
 `;
 
-	document.head.appendChild(style);
+  document.head.appendChild(style);
 }

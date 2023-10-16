@@ -1,71 +1,71 @@
 /* stylelint-disable selector-no-qualifying-type */
 
 .tag {
-	display: inline-block;
+  display: inline-block;
 }
 
 .tag-link > a {
-	transition: color $default-transition-time;
+  transition: color $default-transition-time;
 }
 
 .tag-group {
-	// Set the font-size of the parent element to 0, in order to remove whitespace
-	// made visible because of 'display: inline-block' property
-	// https://stackoverflow.com/questions/19038799#19038859
-	font-size: 0;
-	margin-left: -5px;
+  // Set the font-size of the parent element to 0, in order to remove whitespace
+  // made visible because of 'display: inline-block' property
+  // https://stackoverflow.com/questions/19038799#19038859
+  font-size: 0;
+  margin-left: -5px;
 }
 
 .tag-group .tag {
-	font-size: $font-size-base;
-	margin-left: 5px;
+  font-size: $font-size-base;
+  margin-left: 5px;
 }
 
 /* Fix: Temporarily until completely switched to react. */
 .tag-group > div:not(.tag) {
-	display: inline-block;
+  display: inline-block;
 }
 
 .tag-group.multiline .tag {
-	margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .tag.addon {
-	margin-left: 0;
+  margin-left: 0;
 }
 
 .tag-btn {
-	display: inline-block;
-	margin-bottom: 5px;
-	vertical-align: top;
+  display: inline-block;
+  margin-bottom: 5px;
+  vertical-align: top;
 }
 
 .tag-btn > button {
-	border: 0;
-	font-size: $font-size-base;
-	padding: 1px 4px;
+  border: 0;
+  font-size: $font-size-base;
+  padding: 1px 4px;
 }
 
 .tag-btn.addon > button,
 .tag-link.addon {
-	border-style: solid;
-	border-width: 0 0 0 1px;
+  border-style: solid;
+  border-width: 0 0 0 1px;
 }
 
 .tag-btn:not(.addon),
 .tag-btn.addon + .tag,
 .tag + .tag-btn:not(.addon) {
-	@include td-margin(left, 5px);
+  @include td-margin(left, 5px);
 }
 
 .tag-link,
 .tag-btn > button {
-	transition-duration: $default-transition-time;
-	transition-property: #{'color background-color border-color box-shadow'};
+  transition-duration: $default-transition-time;
+  transition-property: #{"color background-color border-color box-shadow"};
 
-	&:hover,
-	&:focus,
-	&.highlight {
-		box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
-	}
+  &:hover,
+  &:focus,
+  &.highlight {
+    box-shadow: $shadow-sm-offset-x $shadow-sm-offset-y $shadow-sm-blur $default-shadow;
+  }
 }

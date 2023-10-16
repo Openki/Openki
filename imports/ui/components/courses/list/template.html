@@ -1,8 +1,5 @@
 <template name="courseList">
-	<div
-		 class="row g-2 row-cols-1 row-cols-sm-2 row-cols-lg-3 {{#unless small}}row-cols-xl-4{{/unless}}">
-		{{#each course in courses}}
-			{{> courseCompact course=course groupTagEvents=groupTagEvents}}
-		{{/each}}
-	</div>
+  <div>
+    {{> React (component CourseList)}}
+  </div>
 </template>
