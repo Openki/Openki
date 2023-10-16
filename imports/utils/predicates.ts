@@ -84,7 +84,7 @@ export const flag: Predicate<boolean> = function (param) {
   if (param === undefined) {
     return undefined;
   }
-  const state = Boolean(parseInt(param, 2));
+  const state = Boolean(Number.parseInt(param, 2));
 
   return {
     merge(other) {

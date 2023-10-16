@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { Router } from "meteor/iron:router";
+import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { useTranslation } from "react-i18next";
 import { Template } from "meteor/templating";
 import React, { useState } from "react";
@@ -51,6 +51,7 @@ export type Props = {
 
 export function EventRegistration({ event }: Props) {
   const user = useUser();
+  const searchParams = useSearchParams();
   const { t } = useTranslation();
   const [isBusy, setIsBusy] = useState("");
 
@@ -91,7 +92,7 @@ export function EventRegistration({ event }: Props) {
 
   return (
     <>
-      {Router.current().params.query.action === "register" ? (
+      {searchParams.action === "register" ? (
         <PleaseLogin
           type="auto"
           onRender={() => {
@@ -100,7 +101,7 @@ export function EventRegistration({ event }: Props) {
           }}
         />
       ) : null}
-      {Router.current().params.query.action === "unregister" ? (
+      {searchParams.action === "unregister" ? (
         <PleaseLogin
           type="auto"
           onRender={() => {

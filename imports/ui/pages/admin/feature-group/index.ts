@@ -14,8 +14,9 @@ const Template = TemplateAny as TemplateStaticTyped<"adminFeatureGroupPage">;
 const template = Template.adminFeatureGroupPage;
 
 template.onCreated(function () {
-  this.subscribe("Groups.findFilter", {});
-  this.busy(false);
+  const instance = this;
+  instance.subscribe("Groups.findFilter", {});
+  instance.busy(false);
 });
 
 template.helpers({

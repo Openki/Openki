@@ -235,7 +235,7 @@ export function Modal(props: {
                     );
                   })}
                 </div>
-                <div className="delete-events-actions">
+                <div>
                   <button
                     className="btn btn-danger"
                     disabled={noEventsSelected()}

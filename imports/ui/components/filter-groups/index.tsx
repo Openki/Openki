@@ -8,11 +8,11 @@ import { ReactSelect2 } from "/imports/ui/components/react-select2";
 
 import { name } from "/imports/ui/lib/group-name-helpers";
 
-export type Props = {
+type OptionProps = {
   groupId: string;
 };
 
-function Option({ groupId }: Props) {
+function Option({ groupId }: OptionProps) {
   const [isLoading, group] = useDetails(groupId);
 
   return (
@@ -22,15 +22,17 @@ function Option({ groupId }: Props) {
   );
 }
 
-export function FilterGroups(props: {
+export type Props = {
   availableGroups: string[] | undefined;
   selectedGroups: string[] | undefined;
   onAdd: (group: string) => void;
   onRemove: (group: string) => void;
-}) {
+};
+
+export function FilterGroups({ availableGroups, selectedGroups, onAdd, onRemove }: Props) {
   const { t } = useTranslation();
 
-  if (!props.availableGroups) {
+  if (!availableGroups) {
     return null;
   }
 
@@ -38,13 +40,13 @@ export function FilterGroups(props: {
     <ReactSelect2
       className="groups-select form-control"
       multiple={true}
-      defaultValue={props.selectedGroups}
+      defaultValue={selectedGroups}
       placeholder={t("filterGroups.placeholder", "Choose group")}
       noResults={t("filterGroups.no-groups-found", "No groups found")}
-      onSelect={props.onAdd}
-      onUnselect={props.onRemove}
+      onSelect={onAdd}
+      onUnselect={onRemove}
     >
-      {props.availableGroups.map((groupId) => (
+      {availableGroups.map((groupId) => (
         <Option key={groupId} groupId={groupId} />
       ))}
     </ReactSelect2>
