@@ -1,6 +1,6 @@
-import { Router } from "meteor/iron:router";
 import React, { useEffect } from "react";
 import { Template } from "meteor/templating";
+import { useParams } from "/imports/utils/react-meteor-router";
 import ReactMarkdown from "react-markdown";
 import $ from "jquery";
 
@@ -20,6 +20,7 @@ export type Props = {
 export function InfoPage({ page }: Props) {
   const headerTag = "h2, h3";
   const contentTags = "p, ul";
+  const params = useParams();
 
   routerAutoscroll.cancelNext();
 
@@ -53,7 +54,7 @@ export function InfoPage({ page }: Props) {
       title.attr("id", id);
     });
 
-    const { hash } = Router.current().params;
+    const { hash } = params;
     if (hash) {
       scrollTo(hash);
     }

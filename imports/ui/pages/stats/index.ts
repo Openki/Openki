@@ -25,21 +25,22 @@ const Template = TemplateAny as TemplateStaticTyped<
 const template = Template.statsPage;
 
 template.onCreated(function () {
+  const instance = this;
   function getRegionFromQuery() {
     const region: string = Router.current().params.query.region || Session.get("region");
 
     return region || "all";
   }
 
-  this.subscribe("Regions");
-  this.regionName = new ReactiveVar(false);
-  this.region = new ReactiveVar(getRegionFromQuery());
-  this.stats = new ReactiveVar(false);
+  instance.subscribe("Regions");
+  instance.regionName = new ReactiveVar(false);
+  instance.region = new ReactiveVar(getRegionFromQuery());
+  instance.stats = new ReactiveVar(false);
 
-  this.autorun(async () => {
-    this.stats.set(false);
-    const stats = await StatsMethods.region(this.region.get());
-    this.stats.set(stats);
+  instance.autorun(async () => {
+    instance.stats.set(false);
+    const stats = await StatsMethods.region(instance.region.get());
+    instance.stats.set(stats);
   });
 });
 

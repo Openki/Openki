@@ -9,46 +9,44 @@ import "/imports/ui/components/courses/categories";
 
 import "./styles.scss";
 
-export function FilterCategories(props: {
+export type Props = {
   categories: string[] | undefined;
   onAdd: (category: string) => void;
   onRemove: (category: string) => void;
-}) {
-  const categories = Object.keys(Categories);
+};
 
+export function FilterCategories({ categories, onAdd, onRemove }: Props) {
+  const allCategories = Object.keys(Categories);
   const { t } = useTranslation();
 
-  if (categories) {
-    return (
-      <ReactSelect2
-        className="categories-select form-control"
-        multiple={true}
-        defaultValue={props.categories}
-        placeholder={t("find.searchCategories.placeholder", "Choose categories")}
-        noResults={t("find.filter-no-categories-found", "No categories found")}
-        onSelect={props.onAdd}
-        onUnselect={props.onRemove}
-      >
-        {categories.map((category) => (
-          <React.Fragment key={category}>
-            <option className="categories-select-option" value={category}>
-              {t(`category.${category}`)}
-            </option>
-            {Categories[category].map((subcategory) => (
-              <option
-                key={subcategory}
-                className="categories-select-sub-option"
-                value={subcategory}
-              >
-                {t(`category.${subcategory}`)}
-              </option>
-            ))}
-          </React.Fragment>
-        ))}
-      </ReactSelect2>
-    );
+  if (!allCategories) {
+    return null;
   }
-  return null;
+
+  return (
+    <ReactSelect2
+      className="categories-select form-control"
+      multiple={true}
+      defaultValue={categories}
+      placeholder={t("find.searchCategories.placeholder", "Choose categories")}
+      noResults={t("find.filter-no-categories-found", "No categories found")}
+      onSelect={onAdd}
+      onUnselect={onRemove}
+    >
+      {allCategories.map((category) => (
+        <React.Fragment key={category}>
+          <option className="categories-select-option" value={category}>
+            {t(`category.${category}`)}
+          </option>
+          {Categories[category].map((subcategory) => (
+            <option key={subcategory} className="categories-select-sub-option" value={subcategory}>
+              {t(`category.${subcategory}`)}
+            </option>
+          ))}
+        </React.Fragment>
+      ))}
+    </ReactSelect2>
+  );
 }
 
 // for Blaze

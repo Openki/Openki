@@ -45,7 +45,7 @@ template.onCreated(function () {
   instance.repeatingOnly = new ReactiveVar(false);
 
   // Read query params
-  this.autorun(() => {
+  instance.autorun(() => {
     const query = Router.current().params.query as Record<string, string>;
 
     instance.repeatingOnly.set(Object.prototype.hasOwnProperty.call(query, "repeating"));
@@ -95,7 +95,7 @@ template.onCreated(function () {
     filter.done();
   });
 
-  this.autorun(() => {
+  instance.autorun(() => {
     instance.subscribe("Events.findFilter", filter.toQuery(), 500);
   });
 
@@ -106,7 +106,7 @@ template.onCreated(function () {
     return 0;
   };
 
-  this.autorun(() => {
+  instance.autorun(() => {
     const scheduleStart = moment(filter.get("after"));
     const interval = instance.interval.get();
 

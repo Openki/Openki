@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from "react";
 
 import { useSessionEquals, useUserId } from "/imports/utils/react-meteor-data";
@@ -35,12 +34,18 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
       if (userId) {
         setActionActive(false);
         // if the user is logged in call the save function
-        if (props.type === "auto") {
-          props.onRender();
-        } else if (props.type === "form") {
-          props.onSubmit();
-        } else if (props.type === "button") {
-          props.onClick();
+        switch (props.type) {
+          case "auto":
+            props.onRender();
+            break;
+          case "form":
+            props.onSubmit();
+            break;
+          case "button":
+            props.onClick();
+            break;
+          default:
+            throw new Error("Unexpected value: type");
         }
       } else if (!openedLogin) {
         // if the user is not logged in open up the login window
@@ -59,15 +64,20 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
     setActionActive(true);
   }
 
-  return props.type === "form" ? (
-    <form className={props.className} onSubmit={handleEvent}>
-      {props.children}
-    </form>
-  ) : props.type === "button" ? (
-    <button className={props.className} onClick={handleEvent} disabled={props.disabled}>
-      {props.children}
-    </button>
-  ) : (
-    props.children || null
-  );
+  switch (props.type) {
+    case "form":
+      return (
+        <form className={props.className} onSubmit={handleEvent}>
+          {props.children}
+        </form>
+      );
+    case "button":
+      return (
+        <button className={props.className} onClick={handleEvent} disabled={props.disabled}>
+          {props.children}
+        </button>
+      );
+    default:
+      return props.children || null;
+  }
 }
