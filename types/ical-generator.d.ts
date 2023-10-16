@@ -1,1 +1,1 @@
-declare module 'ical-generator';
+declare module "ical-generator";

@@ -1,21 +1,21 @@
-import { i18n } from '/imports/startup/both/i18next';
-import { Template } from 'meteor/templating';
-import { Session } from 'meteor/session';
-import { Spacebars } from 'meteor/spacebars';
-import { Blaze } from 'meteor/blaze';
-import moment from 'moment';
-import { ReactiveDict } from 'meteor/reactive-dict';
+import { i18n } from "/imports/startup/both/i18next";
+import { Template } from "meteor/templating";
+import { Session } from "meteor/session";
+import { Spacebars } from "meteor/spacebars";
+import { Blaze } from "meteor/blaze";
+import moment from "moment";
+import { ReactiveDict } from "meteor/reactive-dict";
 
-import { Regions } from '/imports/api/regions/regions';
+import { Regions } from "/imports/api/regions/regions";
 
-import { getSiteName } from '/imports/utils/getSiteName';
-import { PublicSettings } from '/imports/utils/PublicSettings';
-import { getLocalizedValue, LocalizedValue } from '/imports/utils/getLocalizedValue';
-import { buildCssVariableColor } from '/imports/utils/getColor';
-import { checkContribution } from '/imports/utils/checkContribution';
-import { locationFormat } from '/imports/utils/location-format';
-import { getCachedUser, getUserName } from '/imports/ui/lib/getUserName';
-import { roleIcon } from '/imports/utils/role';
+import { getSiteName } from "/imports/utils/getSiteName";
+import { PublicSettings } from "/imports/utils/PublicSettings";
+import { getLocalizedValue, LocalizedValue } from "/imports/utils/getLocalizedValue";
+import { buildCssVariableColor } from "/imports/utils/getColor";
+import { checkContribution } from "/imports/utils/checkContribution";
+import { locationFormat } from "/imports/utils/location-format";
+import { getCachedUser, getUserName } from "/imports/ui/lib/getUserName";
+import { roleIcon } from "/imports/utils/role";
 
 /**
  * Converts the input to a moment that the locale is set to timeLocale.
@@ -25,222 +25,222 @@ import { roleIcon } from '/imports/utils/role';
  * Calling Session.get('timeLocale') also makes the helper reactive.
  */
 function toMomentWithTimeLocale(date: moment.MomentInput) {
-	return moment(date).locale(Session.get('timeLocale') || 'en');
+  return moment(date).locale(Session.get("timeLocale") || "en");
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const helpers: { [name: string]: Function } = {
-	siteName() {
-		return getSiteName(Regions.currentRegion());
-	},
+  siteName() {
+    return getSiteName(Regions.currentRegion());
+  },
 
-	categoryName(name: string) {
-		return i18n(`category.${name}`);
-	},
+  categoryName(name: string) {
+    return i18n(`category.${name}`);
+  },
 
-	roleShort(type: string) {
-		if (!type) {
-			return '';
-		}
-		return i18n(`roles.${type}.short`);
-	},
+  roleShort(type: string) {
+    if (!type) {
+      return "";
+    }
+    return i18n(`roles.${type}.short`);
+  },
 
-	roleIcon(type: string) {
-		return roleIcon(type);
-	},
+  roleIcon(type: string) {
+    return roleIcon(type);
+  },
 
-	regions() {
-		return Regions.find();
-	},
+  regions() {
+    return Regions.find();
+  },
 
-	currentRegionName() {
-		return Regions.currentRegion()?.name || '';
-	},
+  currentRegionName() {
+    return Regions.currentRegion()?.name || "";
+  },
 
-	/**
-	 * @param id Region ID
-	 */
-	isCurrentRegion(id: string) {
-		return id && Session.equals('region', id);
-	},
+  /**
+   * @param id Region ID
+   */
+  isCurrentRegion(id: string) {
+    return id && Session.equals("region", id);
+  },
 
-	PublicSettings() {
-		return PublicSettings;
-	},
+  PublicSettings() {
+    return PublicSettings;
+  },
 
-	localized(value: LocalizedValue | null | undefined) {
-		return getLocalizedValue(value);
-	},
+  localized(value: LocalizedValue | null | undefined) {
+    return getLocalizedValue(value);
+  },
 
-	buildCssVariableColor(name: string, value: string) {
-		return buildCssVariableColor(name, value);
-	},
+  buildCssVariableColor(name: string, value: string) {
+    return buildCssVariableColor(name, value);
+  },
 
-	log(context: unknown) {
-		if (window.console) {
-			/* eslint-disable-next-line no-console */
-			console.log(arguments.length > 0 ? context : this);
-		}
-	},
+  log(context: unknown) {
+    if (window.console) {
+      /* eslint-disable-next-line no-console */
+      console.log(arguments.length > 0 ? context : this);
+    }
+  },
 
-	// Date & Time format helper
-	dateShort(date: moment.MomentInput) {
-		if (!date) {
-			return false;
-		}
-		return toMomentWithTimeLocale(date).format('l');
-	},
+  // Date & Time format helper
+  dateShort(date: moment.MomentInput) {
+    if (!date) {
+      return false;
+    }
+    return toMomentWithTimeLocale(date).format("l");
+  },
 
-	dateFormat(date: moment.MomentInput) {
-		if (!date) {
-			return false;
-		}
-		return toMomentWithTimeLocale(date).format('L');
-	},
+  dateFormat(date: moment.MomentInput) {
+    if (!date) {
+      return false;
+    }
+    return toMomentWithTimeLocale(date).format("L");
+  },
 
-	dateLong(date: moment.MomentInput) {
-		if (!date) {
-			return false;
-		}
-		return toMomentWithTimeLocale(date).format('ll');
-	},
+  dateLong(date: moment.MomentInput) {
+    if (!date) {
+      return false;
+    }
+    return toMomentWithTimeLocale(date).format("ll");
+  },
 
-	dateTimeLong(date: moment.MomentInput) {
-		if (!date) {
-			return false;
-		}
-		return toMomentWithTimeLocale(date).format('llll');
-	},
+  dateTimeLong(date: moment.MomentInput) {
+    if (!date) {
+      return false;
+    }
+    return toMomentWithTimeLocale(date).format("llll");
+  },
 
-	timeFormat(date: moment.MomentInput) {
-		if (!date) {
-			return false;
-		}
-		return toMomentWithTimeLocale(date).format('LT');
-	},
+  timeFormat(date: moment.MomentInput) {
+    if (!date) {
+      return false;
+    }
+    return toMomentWithTimeLocale(date).format("LT");
+  },
 
-	fromNow(date: moment.MomentInput) {
-		if (!date) {
-			return false;
-		}
-		return toMomentWithTimeLocale(date).fromNow();
-	},
+  fromNow(date: moment.MomentInput) {
+    if (!date) {
+      return false;
+    }
+    return toMomentWithTimeLocale(date).fromNow();
+  },
 
-	weekdayFormat(date: moment.MomentInput) {
-		if (!date) {
-			return false;
-		}
-		return toMomentWithTimeLocale(date).format('ddd');
-	},
+  weekdayFormat(date: moment.MomentInput) {
+    if (!date) {
+      return false;
+    }
+    return toMomentWithTimeLocale(date).format("ddd");
+  },
 
-	weekNr(date: moment.MomentInput) {
-		if (!date) {
-			return false;
-		}
-		return toMomentWithTimeLocale(date).week();
-	},
+  weekNr(date: moment.MomentInput) {
+    if (!date) {
+      return false;
+    }
+    return toMomentWithTimeLocale(date).week();
+  },
 
-	calendarDayShort(date: moment.MomentInput) {
-		if (!date) {
-			return false;
-		}
+  calendarDayShort(date: moment.MomentInput) {
+    if (!date) {
+      return false;
+    }
 
-		const momentForYear = toMomentWithTimeLocale(date);
-		const year = momentForYear.year() !== moment().year() ? ` ${momentForYear.format('YYYY')}` : '';
-		return toMomentWithTimeLocale(date).format('D. MMMM') + year;
-	},
+    const momentForYear = toMomentWithTimeLocale(date);
+    const year = momentForYear.year() !== moment().year() ? ` ${momentForYear.format("YYYY")}` : "";
+    return toMomentWithTimeLocale(date).format("D. MMMM") + year;
+  },
 
-	calendarDayFormat(date: moment.MomentInput) {
-		if (!date) {
-			return false;
-		}
-		return toMomentWithTimeLocale(date).format('dddd, Do MMMM');
-	},
+  calendarDayFormat(date: moment.MomentInput) {
+    if (!date) {
+      return false;
+    }
+    return toMomentWithTimeLocale(date).format("dddd, Do MMMM");
+  },
 
-	locationFormat(loc: { coordinates: [number, number] }) {
-		return locationFormat(loc);
-	},
+  locationFormat(loc: { coordinates: [number, number] }) {
+    return locationFormat(loc);
+  },
 
-	/**
-	 * Strip HTML markup
-	 */
-	plain(html: string) {
-		// Prevent words from sticking together
-		// eg. <p>Kloradf dadeq gsd.</p><p>Loradf dadeq gsd.</p> => Kloradf dadeq gsd. Loradf dadeq gsd.
-		const htmlPreparedForMinimalStyling = html
-			.replace(/<br \/>/g, '<br /> ')
-			.replace(/<p>/g, '<p> ')
-			.replace(/<\/p>/g, '</p> ')
-			.replace(/<h2>/g, '<h2> ')
-			.replace(/<\/h2>/g, '</h2> ')
-			.replace(/<h3>/g, '<h3> ')
-			.replace(/<\/h3>/g, '</h3> ');
-		// Source: https://stackoverflow.com/questions/822452/strip-html-from-text-javascript/47140708#47140708
-		const doc = new DOMParser().parseFromString(htmlPreparedForMinimalStyling, 'text/html');
-		return doc.body.textContent || '';
-	},
+  /**
+   * Strip HTML markup
+   */
+  plain(html: string) {
+    // Prevent words from sticking together
+    // eg. <p>Kloradf dadeq gsd.</p><p>Loradf dadeq gsd.</p> => Kloradf dadeq gsd. Loradf dadeq gsd.
+    const htmlPreparedForMinimalStyling = html
+      .replace(/<br \/>/g, "<br /> ")
+      .replace(/<p>/g, "<p> ")
+      .replace(/<\/p>/g, "</p> ")
+      .replace(/<h2>/g, "<h2> ")
+      .replace(/<\/h2>/g, "</h2> ")
+      .replace(/<h3>/g, "<h3> ")
+      .replace(/<\/h3>/g, "</h3> ");
+    // Source: https://stackoverflow.com/questions/822452/strip-html-from-text-javascript/47140708#47140708
+    const doc = new DOMParser().parseFromString(htmlPreparedForMinimalStyling, "text/html");
+    return doc.body.textContent || "";
+  },
 
-	/**
-	 * Compare activity to template business
-	 * This can be used to show a busy state while the template is working.
-	 *
-	 * Example: <button>{#if busy 'saving'}Saving...{else}Save now!{/if}</button>
-	 *
-	 * @param activity compare to this activity
-	 * @returns Whether business matches activity
-	 */
-	busy(activity?: string | boolean) {
-		const business = Template.instance().findBusiness();
-		return business.get() === activity;
-	},
+  /**
+   * Compare activity to template business
+   * This can be used to show a busy state while the template is working.
+   *
+   * Example: <button>{#if busy 'saving'}Saving...{else}Save now!{/if}</button>
+   *
+   * @param activity compare to this activity
+   * @returns Whether business matches activity
+   */
+  busy(activity?: string | boolean) {
+    const business = Template.instance().findBusiness();
+    return business.get() === activity;
+  },
 
-	/**
-	 * Disable buttons while there is business to do.
-	 *
-	 * Example <button {disableIfBusy}>I will be disabled when there is business.</button>
-	 *
-	 * @return 'disabled' if the template is currently busy, empty string otherwise.
-	 */
-	disabledIfBusy() {
-		const business = Template.instance().findBusiness();
-		return business.get() ? 'disabled' : '';
-	},
+  /**
+   * Disable buttons while there is business to do.
+   *
+   * Example <button {disableIfBusy}>I will be disabled when there is business.</button>
+   *
+   * @return 'disabled' if the template is currently busy, empty string otherwise.
+   */
+  disabledIfBusy() {
+    const business = Template.instance().findBusiness();
+    return business.get() ? "disabled" : "";
+  },
 
-	state(key: string) {
-		const state = (Template.instance() as any).state as ReactiveDict | undefined;
+  state(key: string) {
+    const state = (Template.instance() as any).state as ReactiveDict | undefined;
 
-		if (!(state instanceof ReactiveDict)) {
-			throw new Error('state is not a ReactiveDict');
-		}
+    if (!(state instanceof ReactiveDict)) {
+      throw new Error("state is not a ReactiveDict");
+    }
 
-		return state.get(key);
-	},
+    return state.get(key);
+  },
 
-	stateEquals(key: string, value: any) {
-		const state = (Template.instance() as any).state as ReactiveDict | undefined;
+  stateEquals(key: string, value: any) {
+    const state = (Template.instance() as any).state as ReactiveDict | undefined;
 
-		if (!(state instanceof ReactiveDict)) {
-			throw new Error('state is not a ReactiveDict');
-		}
+    if (!(state instanceof ReactiveDict)) {
+      throw new Error("state is not a ReactiveDict");
+    }
 
-		return state.equals(key, value);
-	},
+    return state.equals(key, value);
+  },
 
-	/**
-	 * This can be used to directly access instance methods without declaring
-	 * helpers.
-	 * @returns The instance for use in the template
-	 */
-	instance() {
-		return Template.instance();
-	},
+  /**
+   * This can be used to directly access instance methods without declaring
+   * helpers.
+   * @returns The instance for use in the template
+   */
+  instance() {
+    return Template.instance();
+  },
 
-	/**
-	 * Takes any number of arguments and returns them concatenated.
-	 */
-	concat(...strings: string[]) {
-		return Array.prototype.slice.call(strings, 0, -1).join('');
-	},
+  /**
+   * Takes any number of arguments and returns them concatenated.
+   */
+  concat(...strings: string[]) {
+    return Array.prototype.slice.call(strings, 0, -1).join("");
+  },
 };
 
 Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name, helper));
@@ -248,51 +248,51 @@ Object.entries(helpers).forEach(([name, helper]) => Template.registerHelper(name
 /**
  * Register username and contribution helper. Cache the user data.
  */
-Template.registerHelper('username', function (userId: string) {
-	return getUserName(userId);
+Template.registerHelper("username", function (userId: string) {
+  return getUserName(userId);
 });
 
-Template.registerHelper('contribution', function (userId: string) {
-	if (!userId) {
-		return '';
-	}
+Template.registerHelper("contribution", function (userId: string) {
+  if (!userId) {
+    return "";
+  }
 
-	const contribution = PublicSettings.contribution;
+  const contribution = PublicSettings.contribution;
 
-	if (!contribution) {
-		return '';
-	}
+  if (!contribution) {
+    return "";
+  }
 
-	const cachedUser = getCachedUser(userId);
+  const cachedUser = getCachedUser(userId);
 
-	if (!cachedUser) {
-		return '';
-	}
+  if (!cachedUser) {
+    return "";
+  }
 
-	if (!checkContribution(cachedUser.contribution)) {
-		return '';
-	}
+  if (!checkContribution(cachedUser.contribution)) {
+    return "";
+  }
 
-	return Spacebars.SafeString(
-		`<a href="${getLocalizedValue(
-			contribution.link,
-		)}" data-bs-toggle="tooltip" data-bs-title="${Blaze._escape(
-			i18n(
-				'user.hasContributed',
-				'{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.',
-				{
-					USERNAME: cachedUser.getDisplayName(),
-					SITENAME: getSiteName(Regions.currentRegion()),
-					ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
-				},
-			),
-		)}"><sup><i class="${contribution.icon}" aria-hidden="true"></i></sup></a>`,
-	);
+  return Spacebars.SafeString(
+    `<a href="${getLocalizedValue(
+      contribution.link,
+    )}" data-bs-toggle="tooltip" data-bs-title="${Blaze._escape(
+      i18n(
+        "user.hasContributed",
+        "{USERNAME} supported {SITENAME} with a donation. Click the {ICON} for how to contribute.",
+        {
+          USERNAME: cachedUser.getDisplayName(),
+          SITENAME: getSiteName(Regions.currentRegion()),
+          ICON: Spacebars.SafeString(`<i class="${contribution.icon}" aria-hidden="true"></i>`),
+        },
+      ),
+    )}"><sup><i class="${contribution.icon}" aria-hidden="true"></i></sup></a>`,
+  );
 });
 
 /** Utility to simplify the map of a Blaze component to a React component for backwards compatibility. */
-Template.registerHelper('component', function (this: any, f: any) {
-	const self = { ...this };
-	self.component = f;
-	return self;
+Template.registerHelper("component", function (this: any, f: any) {
+  const self = { ...this };
+  self.component = f;
+  return self;
 });

@@ -1,36 +1,36 @@
-@import '{}/imports/ui/stylesheets/variables/index';
-@import '{}/imports/ui/stylesheets/actions';
+@import "{}/imports/ui/stylesheets/variables/index";
+@import "{}/imports/ui/stylesheets/actions";
 
 .replica-tab-content {
-	border-color: $blue;
-	padding: 15px;
+  border-color: $blue;
+  padding: 15px;
 }
 
 .replica-date-weekday {
-	@include td-padding(right, $input-padding-x);
-	@include td-pos(right, 0);
-	color: $gray-600;
-	padding-top: $input-padding-y;
-	position: absolute;
-	top: 0;
-	z-index: 3;
+  @include td-padding(right, $input-padding-x);
+  @include td-pos(right, 0);
+  color: $gray-600;
+  padding-top: $input-padding-y;
+  position: absolute;
+  top: 0;
+  z-index: 3;
 }
 
 .replica-event-captions {
-	@include clearfix;
-	margin: -2.5px -5px;
-	padding-bottom: 10px;
+  @include clearfix;
+  margin: -2.5px -5px;
+  padding-bottom: 10px;
 }
 
 .replica-event-captions > .event-caption {
-	padding: 2.5px 5px;
+  padding: 2.5px 5px;
 }
 
 .replica-event-captions.highlighted .event-caption-header,
 .replica-event-captions.highlighted .event-caption-body {
-	border-color: darken($green, 25%);
+  border-color: darken($green, 25%);
 }
 
 .replicate-actions {
-	@extend %actions;
+  @extend %actions;
 }

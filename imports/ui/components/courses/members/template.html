@@ -1,105 +1,23 @@
 <template name="courseMembers">
-	<div class="page-component-header">
-		<h4>
-			<span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
-			{{i18n 'course.details.members.title' '{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }' NUM=howManyEnrolled}}
-			{{#if canNotifyAll}}
-				<i class="fa-solid fa-envelope contact-members js-contact-members"></i>
-			{{/if}}
-		</h4>
-	</div>
-	{{#if members}}
-		<div class="course-members">
-			{{#each member in sortedMembers}}
-				{{> courseMember member=member course=this}}
-			{{/each}}
-			{{#if limited}}
-				<button class="btn btn-add page-component-btn js-show-more-members"
-						type="button">
-					{{i18n '_button.more'}}
-				</button>
-			{{/if}}
-		</div>
-	{{/if}}
-</template>
-
-<template name="courseMember">
-	<div class="course-member {{ownUserMemberClass}}">
-		<div class="clearfix">
-			{{> profileLink userId=member.user}}
-			{{contribution member.user}}
-			{{> participantContact participant=member.user course=course}}
-			<div class="course-member-roles">
-				{{#if memberRoles.length}}
-					{{#each role in memberRoles}}
-						<div class='course-member-role float-end'>
-							<span class="course-member-role-text">
-								<span class="{{rolelistIcon role}} fa-fw" aria-hidden="true"></span>
-								<span class="role-short">{{roleShort role}}</span>
-							</span>
-							{{#if mayUnsubscribeFromTeam role}}
-								{{> removeFromTeamDropdown}}
-							{{/if}}
-						</div>
-					{{/each}}
-				{{/if}}
-				{{#if maySubscribeToTeam}}
-					<button type="button"
-							class="js-add-to-team-btn btn btn-sm btn-add float-end add-to-team-btn"
-							data-bs-toggle="tooltip"
-							data-bs-title="{{i18n 'course.roles.maketeam' 'Add to team' attr=true}}">
-						<span class="fa-solid fa-plus {{member.user}}"></span>
-						<span class="fa-solid fa-bullhorn fa-fw" aria-hidden="true"></span>
-					</button>
-				{{/if}}
-			</div>
-
-		</div>
-
-		{{#if showMemberComment}}
-			<div class="course-member-comment">
-				<div class="course-member-comment-arrow"></div>
-				<div class="course-member-comment-body">
-					{{#if editableMessage}}
-						{{> editable editableMessage}}
-					{{else}}
-						{{member.comment}}
-					{{/if}}
-				</div>
-			</div>
-		{{/if}}
-	</div>
-</template>
-
-<template name="removeFromTeamDropdown">
-	<span class="dropdown" data-bs-toggle="tooltip"
-		  data-bs-title="{{i18n 'course.roles.removeTeam' 'Remove from team' attr=true}}">
-		<button type="button" class="btn btn-sm btn-close btn-close-white" aria-expanded="false"
-				data-bs-toggle="dropdown"></button>
-		<ul class="dropdown-menu dialog-dropdown right">
-			<li class="dropdown-header">
-				{{#if isNotPriviledgedSelf}}
-					{{i18n 'course.details.removeTeam.self.header' 'Remove yourself from the team'}}
-				{{else}}
-					{{i18n 'course.details.removeTeam.others.header' 'Remove member from the team'}}
-				{{/if}}
-				<button type="button" class="btn-close"></button>
-			</li>
-			<li>
-				<hr class="dropdown-divider">
-			</li>
-			<li class="dialog-dropdown-text">
-				{{#if isNotPriviledgedSelf}}
-					{{i18n 'course.detail.remove.yourself.team' 'Remove yourself from the team? Only another member can add you back.'}}
-				{{else}}
-					{{i18n 'course.detail.remove.other.team' 'Remove this member from the team?'}}
-				{{/if}}
-			</li>
-			<li class="dialog-dropdown-btn">
-				<button type="button" class="btn btn-danger js-remove-team">
-					{{i18n 'course.group.remove' 'Remove'}}
-				</button>
-			</li>
-		</ul>
-	</span>
+  <div class="page-component-header">
+    <h4>
+      <span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>&nbsp;
+      {{i18n 'course.details.members.title' '{NUM, plural, =0{No interested yet} one{1 interested} other{# interested} }' NUM=howManyEnrolled}}
+      {{#if canNotifyAll}}
+        <i class="fa-solid fa-envelope contact-members js-contact-members"></i>
+      {{/if}}
+    </h4>
+  </div>
+  {{#if members}}
+    <div class="course-members">
+      {{#each member in sortedMembers}}
+        {{> courseMember member=member course=this}}
+      {{/each}}
+      {{#if limited}}
+        <button class="btn btn-add page-component-btn js-show-more-members" type="button">
+          {{i18n '_button.more'}}
+        </button>
+      {{/if}}
+    </div>
+  {{/if}}
 </template>

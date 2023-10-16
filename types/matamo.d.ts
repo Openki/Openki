@@ -1,7 +1,7 @@
 export {};
 
 declare global {
-	interface Window {
-		AnalyticsTracker: any;
-	}
+  interface Window {
+    AnalyticsTracker: any;
+  }
 }

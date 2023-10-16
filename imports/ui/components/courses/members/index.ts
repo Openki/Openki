@@ -1,257 +1,102 @@
-import { Meteor } from 'meteor/meteor';
-import { i18n } from '/imports/startup/both/i18next';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
+import { Meteor } from "meteor/meteor";
+import { ReactiveVar } from "meteor/reactive-var";
+import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
-import * as Alert from '/imports/api/alerts/alert';
-import { Roles } from '/imports/api/roles/roles';
-import { Subscribe, Unsubscribe, Message, processChange } from '/imports/api/courses/subscription';
-import { CourseMemberEntity, CourseModel } from '/imports/api/courses/courses';
-import * as Users from '/imports/api/users/publications';
+import { CourseModel } from "/imports/api/courses/courses";
 
-import { Editable } from '/imports/ui/lib/editable';
-import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import { SubscriptionType } from '/imports/utils/ServerPublishBlaze';
-import * as Tooltips from '/imports/utils/Tooltips';
+import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 
-import '/imports/ui/components/editable';
-import '/imports/ui/components/participant/contact';
-import '/imports/ui/components/profile-link';
+import "/imports/ui/components/editable";
+import "/imports/ui/components/participant/contact";
+import "/imports/ui/components/profile-link";
 
-import './template.html';
-import './styles.scss';
+import "./member";
+import "./remove-from-team-dropdown";
 
-{
-	const Template = TemplateAny as TemplateStaticTyped<
-		'courseMembers',
-		CourseModel | undefined,
-		{ increaseBy: number; membersDisplayLimit: ReactiveVar<number> }
-	>;
+import "./template.html";
+import "./styles.scss";
 
-	const template = Template.courseMembers;
+const Template = TemplateAny as TemplateStaticTyped<
+  "courseMembers",
+  CourseModel | undefined,
+  { increaseBy: number; membersDisplayLimit: ReactiveVar<number> }
+>;
 
-	template.onCreated(function () {
-		this.increaseBy = 10;
-		this.membersDisplayLimit = new ReactiveVar(this.increaseBy);
-	});
+const template = Template.courseMembers;
 
-	template.helpers({
-		howManyEnrolled() {
-			const course = Template.instance().data;
-			if (!course) {
-				return undefined;
-			}
-			return course.members.length;
-		},
+template.onCreated(function () {
+  this.increaseBy = 10;
+  this.membersDisplayLimit = new ReactiveVar(this.increaseBy);
+});
 
-		canNotifyAll() {
-			const user = Meteor.user();
+template.helpers({
+  howManyEnrolled() {
+    const course = Template.instance().data;
+    if (!course) {
+      return undefined;
+    }
+    return course.members.length;
+  },
 
-			if (UserPrivilegeUtils.privileged(user, 'admin')) {
-				return true;
-			}
+  canNotifyAll() {
+    const user = Meteor.user();
 
-			const course = Template.instance().data;
+    if (UserPrivilegeUtils.privileged(user, "admin")) {
+      return true;
+    }
 
-			return !!(
-				course?.userHasRole(user?._id, 'team') ||
-				user?.groups.some((g) => course?.groupOrganizers.includes(g))
-			);
-		},
+    const course = Template.instance().data;
 
-		ownUserMember() {
-			const course = Template.instance().data;
-			if (!course) {
-				return undefined;
-			}
-			return course.members.find((member) => member.user === Meteor.userId());
-		},
+    return !!(
+      course?.userHasRole(user?._id, "team") ||
+      user?.groups.some((g) => course?.groupOrganizers.includes(g))
+    );
+  },
 
-		sortedMembers() {
-			const course = Template.instance().data;
-			if (!course) {
-				return undefined;
-			}
-			const { members } = course;
-			members.sort((a, b) => {
-				const aRoles = a.roles.filter((role) => role !== 'participant');
-				const bRoles = b.roles.filter((role) => role !== 'participant');
-				return bRoles.length - aRoles.length;
-			});
-			// check if logged-in user is in members and if so put him on top
-			const userId = Meteor.userId();
-			if (userId && members.some((member) => member.user === userId)) {
-				const userArrayPosition = members.findIndex((member) => member.user === userId);
-				const currentMember = members[userArrayPosition];
-				// remove current user form array and readd him at index 0
-				members.splice(userArrayPosition, 1); // remove
-				members.splice(0, 0, currentMember); // readd
-			}
-			return members.slice(0, Template.instance().membersDisplayLimit.get());
-		},
+  ownUserMember() {
+    const course = Template.instance().data;
+    if (!course) {
+      return undefined;
+    }
+    return course.members.find((member) => member.user === Meteor.userId());
+  },
 
-		limited() {
-			const membersDisplayLimit = Template.instance().membersDisplayLimit.get();
-			return membersDisplayLimit && this.members.length > membersDisplayLimit;
-		},
-	});
+  sortedMembers() {
+    const course = Template.instance().data;
+    if (!course) {
+      return undefined;
+    }
+    const { members } = course;
+    members.sort((a, b) => {
+      const aRoles = a.roles.filter((role) => role !== "participant");
+      const bRoles = b.roles.filter((role) => role !== "participant");
+      return bRoles.length - aRoles.length;
+    });
+    // check if logged-in user is in members and if so put him on top
+    const userId = Meteor.userId();
+    if (userId && members.some((member) => member.user === userId)) {
+      const userArrayPosition = members.findIndex((member) => member.user === userId);
+      const currentMember = members[userArrayPosition];
+      // remove current user form array and readd him at index 0
+      members.splice(userArrayPosition, 1); // remove
+      members.splice(0, 0, currentMember); // readd
+    }
+    return members.slice(0, Template.instance().membersDisplayLimit.get());
+  },
 
-	template.events({
-		'click .js-contact-members'() {
-			$('.page-component-btn.js-discussion-edit').trigger('notifyAll');
-		},
+  limited() {
+    const membersDisplayLimit = Template.instance().membersDisplayLimit.get();
+    return membersDisplayLimit && this.members.length > membersDisplayLimit;
+  },
+});
 
-		'click .js-show-more-members'(_e, instance) {
-			const { membersDisplayLimit } = instance;
-			membersDisplayLimit.set(membersDisplayLimit.get() + instance.increaseBy);
-		},
-	});
-}
+template.events({
+  "click .js-contact-members"() {
+    $(".page-component-btn.js-discussion-edit").trigger("notifyAll");
+  },
 
-{
-	const Template = TemplateAny as TemplateStaticTyped<
-		'courseMember',
-		{ member: CourseMemberEntity; course: CourseModel },
-		{
-			user: ReactiveVar<SubscriptionType<(typeof Users)['details']> | undefined>;
-			editableMessage: Editable;
-			subscribeToTeam: () => Subscribe | undefined;
-			removeFromTeam: () => Unsubscribe | undefined;
-		}
-	>;
-
-	const template = Template.courseMember;
-
-	template.onCreated(function () {
-		const instance = this;
-		const { course } = instance.data;
-
-		instance.user = new ReactiveVar(undefined);
-
-		instance.autorun(() => {
-			const { member } = Template.currentData();
-			instance.user.set(Users.details.subscribe(instance, member.user));
-		});
-
-		instance.editableMessage = new Editable(
-			false,
-			i18n('roles.message.placeholder', 'My interests…'),
-			undefined,
-			{
-				onSave: async (newMessage) => {
-					const change = new Message(course, Meteor.user(), newMessage);
-					await processChange(change);
-				},
-				onSuccess: () => {
-					Alert.success(
-						i18n('courseMember.messageChanged', 'Your enroll-message has been changed.'),
-					);
-				},
-			},
-		);
-
-		instance.autorun(() => {
-			const { member } = Template.currentData();
-			instance.editableMessage.setText(member.comment || '');
-		});
-
-		instance.subscribeToTeam = () => {
-			const user = instance.user.get()?.();
-			if (!user) return undefined; // Probably not loaded yet
-
-			return new Subscribe(Template.currentData().course, user, 'team', 'interested');
-		};
-
-		instance.removeFromTeam = () => {
-			const user = instance.user.get()?.();
-			if (!user) return undefined; // Probably not loaded yet
-
-			return new Unsubscribe(course, user, 'team');
-		};
-	});
-
-	template.helpers({
-		ownUserMemberClass() {
-			const { member } = Template.instance().data;
-			if (member.user === Meteor.userId()) {
-				return 'is-own-user';
-			}
-			return '';
-		},
-
-		memberRoles() {
-			const { member } = Template.instance().data;
-			return member.roles.filter((role) => role !== 'participant');
-		},
-
-		maySubscribeToTeam() {
-			const change = Template.instance().subscribeToTeam?.();
-			return change?.validFor(Meteor.user());
-		},
-
-		rolelistIcon(roletype: string) {
-			if (roletype !== 'participant') {
-				return Roles.find((role) => role.type === roletype)?.icon || '';
-			}
-			return '';
-		},
-
-		editableMessage() {
-			const { member } = Template.instance().data;
-			const mayChangeComment = member.user === Meteor.userId();
-			return mayChangeComment && Template.instance().editableMessage;
-		},
-
-		mayUnsubscribeFromTeam(label: string) {
-			if (label !== 'team') {
-				return false;
-			}
-			const change = Template.instance().removeFromTeam();
-			return change && change.validFor(Meteor.user());
-		},
-
-		showMemberComment() {
-			const { member } = Template.instance().data;
-			const mayChangeComment = member.user === Meteor.userId();
-			return member.comment || mayChangeComment;
-		},
-	});
-
-	template.events({
-		async 'click .js-add-to-team-btn'(event, instance) {
-			event.preventDefault();
-			Tooltips.hide();
-			const change = instance.subscribeToTeam();
-			if (!change) {
-				throw new Error('Unexpected falsy: change');
-			}
-			await processChange(change);
-		},
-		async 'click .js-remove-team'(event, instance) {
-			event.preventDefault();
-			Tooltips.hide();
-			const change = instance.removeFromTeam();
-			if (!change) {
-				throw new Error('Unexpected falsy: change');
-			}
-			await processChange(change);
-		},
-	});
-}
-
-{
-	const Template = TemplateAny as TemplateStaticTyped<
-		'removeFromTeamDropdown',
-		{ member: CourseMemberEntity; course: CourseModel }
-	>;
-
-	const template = Template.removeFromTeamDropdown;
-
-	template.helpers({
-		isNotPriviledgedSelf() {
-			const { member } = Template.instance().data;
-			const notPriviledgedUser = !UserPrivilegeUtils.privilegedTo('admin');
-			return member.user === Meteor.userId() && notPriviledgedUser;
-		},
-	});
-}
+  "click .js-show-more-members"(_e, instance) {
+    const { membersDisplayLimit } = instance;
+    membersDisplayLimit.set(membersDisplayLimit.get() + instance.increaseBy);
+  },
+});

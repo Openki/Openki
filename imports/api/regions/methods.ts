@@ -1,203 +1,203 @@
-import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
-import { Match, check } from 'meteor/check';
+import { Meteor } from "meteor/meteor";
+import { Mongo } from "meteor/mongo";
+import { Match, check } from "meteor/check";
 
-import { Courses } from '/imports/api/courses/courses';
-import { CourseDiscussions } from '/imports/api/course-discussions/course-discussions';
-import { Events } from '/imports/api/events/events';
-import { RegionEntity, Regions } from './regions';
-import { Venues } from '/imports/api/venues/venues';
+import { Courses } from "/imports/api/courses/courses";
+import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
+import { Events } from "/imports/api/events/events";
+import { RegionEntity, Regions } from "./regions";
+import { Venues } from "/imports/api/venues/venues";
 
-import * as UserPrivilegeUtils from '/imports/utils/user-privilege-utils';
-import * as AsyncTools from '/imports/utils/async-tools';
-import { ServerMethod } from '/imports/utils/ServerMethod';
-import * as StringTools from '/imports/utils/string-tools';
-import { StringEnum, Tuple, Type } from '/imports/utils/CustomChecks';
+import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
+import * as AsyncTools from "/imports/utils/async-tools";
+import { ServerMethod } from "/imports/utils/ServerMethod";
+import * as StringTools from "/imports/utils/string-tools";
+import { StringEnum, Tuple, Type } from "/imports/utils/CustomChecks";
 
 export const CreateFieldsPattern = {
-	tenant: String,
-	name: String,
-	loc: {
-		type: StringEnum('Point'),
-		coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
-	},
-	tz: String,
-	description: String,
+  tenant: String,
+  name: String,
+  loc: {
+    type: StringEnum("Point"),
+    coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
+  },
+  tz: String,
+  description: String,
 };
 
 export type CreateFields = Type<typeof CreateFieldsPattern>;
 
 export const create = ServerMethod(
-	'region.create',
+  "region.create",
 
-	(changes: CreateFields) => {
-		check(changes, CreateFieldsPattern);
+  (changes: CreateFields) => {
+    check(changes, CreateFieldsPattern);
 
-		const user = Meteor.user();
-		if (!user) {
-			throw new Meteor.Error(401, 'please log in');
-		}
+    const user = Meteor.user();
+    if (!user) {
+      throw new Meteor.Error(401, "please log in");
+    }
 
-		if (
-			!UserPrivilegeUtils.privileged(user, 'admin') /* Admins can add regions */ &&
-			!user.isTenantAdmin(changes.tenant) /* or admins of a tenant */
-		) {
-			throw new Meteor.Error(401, 'not permitted');
-		}
+    if (
+      !UserPrivilegeUtils.privileged(user, "admin") /* Admins can add regions */ &&
+      !user.isTenantAdmin(changes.tenant) /* or admins of a tenant */
+    ) {
+      throw new Meteor.Error(401, "not permitted");
+    }
 
-		const set = {
-			tenant: changes.tenant,
-			courseCount: 0,
-			futureEventCount: 0,
-			createdby: user._id,
-			created: new Date(),
-			updated: new Date(),
-		} as Mongo.OptionalId<RegionEntity>;
+    const set = {
+      tenant: changes.tenant,
+      courseCount: 0,
+      futureEventCount: 0,
+      createdby: user._id,
+      created: new Date(),
+      updated: new Date(),
+    } as Mongo.OptionalId<RegionEntity>;
 
-		set.name = changes.name.trim().substring(0, 40);
-		set.nameEn = set.name;
-		set.slug = StringTools.slug(set.name);
+    set.name = changes.name.trim().substring(0, 40);
+    set.nameEn = set.name;
+    set.slug = StringTools.slug(set.name);
 
-		set.loc = changes.loc;
-		set.loc.type = 'Point';
+    set.loc = changes.loc;
+    set.loc.type = "Point";
 
-		set.tz = changes.tz.trim().substring(0, 40);
+    set.tz = changes.tz.trim().substring(0, 40);
 
-		set.description = changes.description.trim().substring(0, 1000);
-		// Todo: check this already when the user writes into the textarea? is there a limit for course descriptions?
+    set.description = changes.description.trim().substring(0, 1000);
+    // Todo: check this already when the user writes into the textarea? is there a limit for course descriptions?
 
-		return Regions.insert(set);
-	},
+    return Regions.insert(set);
+  },
 );
 
 export const UpdateFieldsPattern = {
-	name: Match.Maybe(String),
-	loc: Match.Maybe({
-		type: StringEnum('Point'),
-		coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
-	}),
-	tz: Match.Maybe(String),
-	description: Match.Maybe(String),
+  name: Match.Maybe(String),
+  loc: Match.Maybe({
+    type: StringEnum("Point"),
+    coordinates: Tuple<[long: NumberConstructor, lat: NumberConstructor]>(Number, Number),
+  }),
+  tz: Match.Maybe(String),
+  description: Match.Maybe(String),
 };
 
 export type UpdateFields = Type<typeof UpdateFieldsPattern>;
 
-export const update = ServerMethod('region.update', (regionId: string, changes: UpdateFields) => {
-	check(regionId, String);
-	check(changes, UpdateFieldsPattern);
+export const update = ServerMethod("region.update", (regionId: string, changes: UpdateFields) => {
+  check(regionId, String);
+  check(changes, UpdateFieldsPattern);
 
-	const user = Meteor.user();
-	if (!user) {
-		throw new Meteor.Error(401, 'please log in');
-	}
+  const user = Meteor.user();
+  if (!user) {
+    throw new Meteor.Error(401, "please log in");
+  }
 
-	const region = Regions.findOne(regionId);
-	if (!region) {
-		throw new Meteor.Error(404, 'region not found');
-	}
+  const region = Regions.findOne(regionId);
+  if (!region) {
+    throw new Meteor.Error(404, "region not found");
+  }
 
-	if (!region.editableBy(user)) {
-		throw new Meteor.Error(401, 'not permitted');
-	}
+  if (!region.editableBy(user)) {
+    throw new Meteor.Error(401, "not permitted");
+  }
 
-	/* Changes we want to perform */
+  /* Changes we want to perform */
 
-	const set = { updated: new Date() } as Partial<RegionEntity>;
+  const set = { updated: new Date() } as Partial<RegionEntity>;
 
-	if (changes.name) {
-		set.name = changes.name.trim().substring(0, 40);
-		set.nameEn = set.name;
-		set.slug = StringTools.slug(set.name);
-	}
+  if (changes.name) {
+    set.name = changes.name.trim().substring(0, 40);
+    set.nameEn = set.name;
+    set.slug = StringTools.slug(set.name);
+  }
 
-	if (changes.loc) {
-		const loc = changes.loc;
-		loc.type = 'Point';
-		set.loc = loc;
-	}
+  if (changes.loc) {
+    const loc = changes.loc;
+    loc.type = "Point";
+    set.loc = loc;
+  }
 
-	if (changes.tz) {
-		set.tz = changes.tz.trim().substring(0, 40);
-	}
+  if (changes.tz) {
+    set.tz = changes.tz.trim().substring(0, 40);
+  }
 
-	if (changes.description !== undefined) {
-		set.description = changes.description.trim().substring(0, 1000);
-	}
+  if (changes.description !== undefined) {
+    set.description = changes.description.trim().substring(0, 1000);
+  }
 
-	Regions.update({ _id: regionId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);
+  Regions.update({ _id: regionId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);
 
-	return regionId;
+  return regionId;
 });
 
-export const remove = ServerMethod('region.remove', (regionId: string) => {
-	check(regionId, String);
+export const remove = ServerMethod("region.remove", (regionId: string) => {
+  check(regionId, String);
 
-	const user = Meteor.user();
-	if (!user) {
-		throw new Meteor.Error(401, 'please log in');
-	}
+  const user = Meteor.user();
+  if (!user) {
+    throw new Meteor.Error(401, "please log in");
+  }
 
-	const region = Regions.findOne(regionId);
-	if (!region) {
-		throw new Meteor.Error(404, 'region not found');
-	}
+  const region = Regions.findOne(regionId);
+  if (!region) {
+    throw new Meteor.Error(404, "region not found");
+  }
 
-	if (!region.editableBy(user)) {
-		throw new Meteor.Error(401, 'not permitted');
-	}
+  if (!region.editableBy(user)) {
+    throw new Meteor.Error(401, "not permitted");
+  }
 
-	if (Courses.find({ region: regionId }).count() > 20) {
-		throw new Meteor.Error(
-			401,
-			'Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.',
-		);
-	}
+  if (Courses.find({ region: regionId }).count() > 20) {
+    throw new Meteor.Error(
+      401,
+      "Deleting regions with more than 20 courses is not allowed. Delete courses or contact an administrator. For safety reasons. So that an active region is not deleted by mistake.",
+    );
+  }
 
-	Events.remove({ region: regionId });
-	// CourseDiscussionEntity do not currently have a region.
-	Courses.find({ region: regionId }).forEach((c) => {
-		CourseDiscussions.remove({ courseId: c._id });
-	});
-	Courses.remove({ region: regionId });
-	Venues.remove({ region: regionId });
-	Regions.remove(regionId);
+  Events.remove({ region: regionId });
+  // CourseDiscussionEntity do not currently have a region.
+  Courses.find({ region: regionId }).forEach((c) => {
+    CourseDiscussions.remove({ courseId: c._id });
+  });
+  Courses.remove({ region: regionId });
+  Venues.remove({ region: regionId });
+  Regions.remove(regionId);
 });
 
 export const featureGroup = ServerMethod(
-	'region.featureGroup',
-	(regionId: string, groupId: string) => {
-		check(regionId, String);
-		check(groupId, String);
+  "region.featureGroup",
+  (regionId: string, groupId: string) => {
+    check(regionId, String);
+    check(groupId, String);
 
-		Regions.update(regionId, { $set: { featuredGroup: groupId } });
-	},
+    Regions.update(regionId, { $set: { featuredGroup: groupId } });
+  },
 );
 
-export const unsetFeaturedGroup = ServerMethod('region.unsetFeaturedGroup', (regionId: string) => {
-	check(regionId, String);
+export const unsetFeaturedGroup = ServerMethod("region.unsetFeaturedGroup", (regionId: string) => {
+  check(regionId, String);
 
-	Regions.update(regionId, { $set: { featuredGroup: '' } });
+  Regions.update(regionId, { $set: { featuredGroup: "" } });
 });
 
 Meteor.methods({
-	'region.updateCounters'(selector) {
-		// this denormalization is called every minutes for all regions in the server/main.js file, this ensures consistency.
-		Regions.find(selector).forEach((region) => {
-			// We don't use AsyncTools.untilClean() here because consistency doesn't matter
-			const regionId = region._id;
+  "region.updateCounters"(selector) {
+    // this denormalization is called every minutes for all regions in the server/main.js file, this ensures consistency.
+    Regions.find(selector).forEach((region) => {
+      // We don't use AsyncTools.untilClean() here because consistency doesn't matter
+      const regionId = region._id;
 
-			const courseCount = Courses.find({
-				region: regionId,
-				internal: { $ne: true },
-				archived: { $ne: true },
-			}).count();
-			const futureEventCount = Events.find({
-				region: regionId,
-				internal: { $ne: true },
-				start: { $gte: new Date() },
-			}).count();
+      const courseCount = Courses.find({
+        region: regionId,
+        internal: { $ne: true },
+        archived: { $ne: true },
+      }).count();
+      const futureEventCount = Events.find({
+        region: regionId,
+        internal: { $ne: true },
+        start: { $gte: new Date() },
+      }).count();
 
-			Regions.update(regionId, { $set: { courseCount, futureEventCount } });
-		});
-	},
+      Regions.update(regionId, { $set: { courseCount, futureEventCount } });
+    });
+  },
 });

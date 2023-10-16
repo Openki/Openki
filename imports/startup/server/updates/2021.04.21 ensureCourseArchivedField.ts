@@ -1,15 +1,15 @@
-import { Courses } from '/imports/api/courses/courses';
+import { Courses } from "/imports/api/courses/courses";
 
 export function update() {
-	let updated = 0;
+  let updated = 0;
 
-	Courses.find({ archived: { $exists: false } })
-		.fetch()
-		.forEach((orginalCourse) => {
-			const course = { ...orginalCourse };
-			course.archived = false;
-			updated += Courses.update(course._id, course);
-		});
+  Courses.find({ archived: { $exists: false } })
+    .fetch()
+    .forEach((orginalCourse) => {
+      const course = { ...orginalCourse };
+      course.archived = false;
+      updated += Courses.update(course._id, course);
+    });
 
-	return updated;
+  return updated;
 }

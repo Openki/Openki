@@ -1,151 +1,143 @@
-import React, { useRef } from 'react';
-import { Router } from 'meteor/iron:router';
+import React, { useRef } from "react";
+import { Router } from "meteor/iron:router";
 
-import { Roles } from '/imports/api/roles/roles';
-import { CourseModel } from '/imports/api/courses/courses';
+import { Roles } from "/imports/api/roles/roles";
+import { CourseModel } from "/imports/api/courses/courses";
 
-import { hasRole } from '/imports/utils/course-role-utils';
+import { hasRole } from "/imports/utils/course-role-utils";
 
-import { InternalIndicator } from '/imports/ui/components/internal-indicator';
-import { CourseCategories } from '/imports/ui/components/courses/categories';
-import { GroupTag } from '/imports/ui/components/groups/tag';
-import { CourseCompactEvent } from './course-compact-event';
-import { CourseCompactRoles } from './course-compact-roles';
+import { InternalIndicator } from "/imports/ui/components/internal-indicator";
+import { CourseCategories } from "/imports/ui/components/courses/categories";
+import { GroupTag } from "/imports/ui/components/groups/tag";
+import { CourseCompactEvent } from "./course-compact-event";
+import { CourseCompactRoles } from "./course-compact-roles";
 
-import './styles.scss';
+import "./styles.scss";
 
-export function CourseCompact(data: {
-	course: CourseModel;
-	groupTagEvents: (groupId: string) => {
-		onMouseOver: () => Promise<void>;
-		onMouseOut: () => Promise<void>;
-		onClick: () => Promise<void>;
-	};
-}) {
-	const { course } = data;
-	const elementRef = useRef<HTMLDivElement>(null);
+export type Props = {
+  course: CourseModel;
+  groupTagEvents?: (groupId: string) => {
+    onMouseOver: () => Promise<void>;
+    onMouseOut: () => Promise<void>;
+    onClick: () => Promise<void>;
+  };
+};
 
-	function courseCss() {
-		if (!course.nextEvent) {
-			return {};
-		}
+export function CourseCompact({ course, groupTagEvents }: Props) {
+  const elementRef = useRef<HTMLDivElement>(null);
 
-		const src = course?.publicImageUrl();
-		if (!src) {
-			return {};
-		}
+  function courseCss() {
+    if (!course.nextEvent) {
+      return {};
+    }
 
-		return {
-			backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.75)), url('${src}')`,
-			backgroundPosition: 'center',
-			backgroundSize: 'cover',
-			backgroundRepeat: 'no-repeat',
-		};
-	}
+    const src = course?.publicImageUrl();
+    if (!src) {
+      return {};
+    }
 
-	function courseStateClasses() {
-		const classes = [];
+    return {
+      backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.75)), url('${src}')`,
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+    };
+  }
 
-		if (course.nextEvent) {
-			classes.push('has-upcoming-events');
-		} else if (course.lastEvent) {
-			classes.push('has-past-events');
-		} else {
-			classes.push('is-proposal');
-		}
+  function courseStateClasses() {
+    const classes = [];
 
-		if (course.archived) {
-			classes.push('is-archived');
-		}
+    if (course.nextEvent) {
+      classes.push("has-upcoming-events");
+    } else if (course.lastEvent) {
+      classes.push("has-past-events");
+    } else {
+      classes.push("is-proposal");
+    }
 
-		return classes.join(' ');
-	}
+    if (course.archived) {
+      classes.push("is-archived");
+    }
 
-	function filterPreviewClasses() {
-		const classes = [];
+    return classes.join(" ");
+  }
 
-		const roles = Roles.map((role) => role.type);
+  function filterPreviewClasses() {
+    const classes = [];
 
-		roles.forEach((role) => {
-			const roleDisengaged = !hasRole(course.members, role);
-			if (course.roles.includes(role) && roleDisengaged) {
-				classes.push(`needs-role-${role}`);
-			}
-		});
+    const roles = Roles.map((role) => role.type);
 
-		course.categories?.forEach((category) => {
-			classes.push(`category-${category}`);
-		});
+    roles.forEach((role) => {
+      const roleDisengaged = !hasRole(course.members, role);
+      if (course.roles.includes(role) && roleDisengaged) {
+        classes.push(`needs-role-${role}`);
+      }
+    });
 
-		course.groups?.forEach((group) => {
-			classes.push(`group-${group}`);
-		});
+    course.categories?.forEach((category) => {
+      classes.push(`category-${category}`);
+    });
 
-		classes.push(`region-${course.region}`);
+    course.groups?.forEach((group) => {
+      classes.push(`group-${group}`);
+    });
 
-		return classes.join(' ');
-	}
+    classes.push(`region-${course.region}`);
 
-	function groupTagAttr(groupId: string) {
-		return {
-			groupId,
-			isOrganizer: course.groupOrganizers.includes(groupId),
-			onClick: async () => {
-				await data.groupTagEvents(groupId).onClick();
-			},
-			onMouseOver: async () => {
-				elementRef.current?.classList.toggle('elevate-child');
-				await data.groupTagEvents(groupId).onMouseOver();
-			},
-			onMouseOut: async () => {
-				elementRef.current?.classList.toggle('elevate-child');
-				await data.groupTagEvents(groupId).onMouseOut();
-			},
-		};
-	}
+    return classes.join(" ");
+  }
 
-	return (
-		<div className="col">
-			<a href={Router.path('showCourse', { _id: course._id, slug: course.slug })}>
-				<div
-					ref={elementRef}
-					className={`row mx-0 align-items-start course-compact ${courseStateClasses()} ${filterPreviewClasses()}`}
-					style={courseCss()}
-				>
-					<div className="course-compact-content col-8">
-						{course.internal ? <InternalIndicator /> : null}
-						<div className="course-compact-title" title={course.name}>
-							{course.name}
-						</div>
-						<CourseCategories
-							categories={course.categories}
-							onMouseOver={async () => {
-								elementRef.current?.classList.toggle('elevate-child');
-							}}
-							onMouseOut={async () => {
-								elementRef.current?.classList.toggle('elevate-child');
-							}}
-						/>
-					</div>
-					{course.nextEvent ? (
-						<CourseCompactEvent course={course} />
-					) : (
-						<CourseCompactRoles course={course} />
-					)}
+  function groupTagAttr(groupId: string) {
+    return {
+      groupId,
+      isOrganizer: course.groupOrganizers.includes(groupId),
+      onClick: async () => {
+        await groupTagEvents?.(groupId).onClick();
+      },
+      onMouseOver: async () => {
+        elementRef.current?.classList.add("elevate-child");
+        await groupTagEvents?.(groupId).onMouseOver();
+      },
+      onMouseOut: async () => {
+        elementRef.current?.classList.remove("elevate-child");
+        await groupTagEvents?.(groupId).onMouseOut();
+      },
+    };
+  }
 
-					<div className="tag-group course-groups">
-						{course.groups.map((group) => (
-							<GroupTag key={group} {...groupTagAttr(group)} />
-						))}
-					</div>
-				</div>
-			</a>
-		</div>
-	);
+  return (
+    <div
+      ref={elementRef}
+      className={`row mx-0 align-items-start course-compact ${courseStateClasses()} ${filterPreviewClasses()}`}
+      style={courseCss()}
+    >
+      <div className="course-compact-content col-8">
+        {course.internal ? <InternalIndicator /> : null}
+        <div className="course-compact-title" title={course.name}>
+          <a className="stretched-link" href={Router.path("showCourse", course)}>
+            {course.name}
+          </a>
+        </div>
+        <CourseCategories
+          categories={course.categories}
+          onMouseOver={async () => {
+            elementRef.current?.classList.add("elevate-child");
+          }}
+          onMouseOut={async () => {
+            elementRef.current?.classList.remove("elevate-child");
+          }}
+        />
+      </div>
+      {course.nextEvent ? (
+        <CourseCompactEvent course={course} />
+      ) : (
+        <CourseCompactRoles course={course} />
+      )}
+      <div className="tag-group course-groups">
+        {course.groups.map((group) => (
+          <GroupTag key={group} {...groupTagAttr(group)} />
+        ))}
+      </div>
+    </div>
+  );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import './template.html';
-
-Template.registerHelper('CourseCompact', () => CourseCompact);

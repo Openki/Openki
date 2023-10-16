@@ -1,26 +1,26 @@
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import { PublicSettings } from '/imports/utils/PublicSettings';
-import { getLocalizedValue } from '/imports/utils/getLocalizedValue';
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import { PublicSettings } from "/imports/utils/PublicSettings";
+import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 
-import './styles.scss';
+import "./styles.scss";
 
 export function DataProtectionLaw() {
-	const dataProtectionLaw = getLocalizedValue(PublicSettings.dataProtectionLaw);
+  const dataProtectionLaw = getLocalizedValue(PublicSettings.dataProtectionLaw);
 
-	if (!dataProtectionLaw) {
-		return null;
-	}
+  if (!dataProtectionLaw) {
+    return null;
+  }
 
-	return (
-		<div className="mb-3 register-data-protection-law">
-			<ReactMarkdown linkTarget="_blank" children={dataProtectionLaw} />
-		</div>
-	);
+  return (
+    <div className="mb-3 register-data-protection-law text-body-secondary">
+      <ReactMarkdown linkTarget="_blank" children={dataProtectionLaw} />
+    </div>
+  );
 }
 
 // for Blaze
 // eslint-disable-next-line import/first
-import './template.html';
+import "./template.html";
 
-Template.registerHelper('DataProtectionLaw', () => DataProtectionLaw);
+Template.registerHelper("DataProtectionLaw", () => DataProtectionLaw);

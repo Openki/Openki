@@ -1,50 +1,50 @@
-import { Router } from 'meteor/iron:router';
-import { WebApp } from 'meteor/webapp';
-import { FilteringReadError } from '/imports/utils/filtering';
-import { NoActionError, orderedResults } from './api.routes.utils';
+import { Router } from "meteor/iron:router";
+import { WebApp } from "meteor/webapp";
+import { FilteringReadError } from "/imports/utils/filtering";
+import { NoActionError, orderedResults } from "./api.routes.utils";
 
-WebApp.rawConnectHandlers.use('/api', (_req, res, next) => {
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	return next();
+WebApp.rawConnectHandlers.use("/api", (_req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  return next();
 });
 
 const jsonSendResponder = function (res: any, process: any) {
-	try {
-		const body = {
-			status: 'success',
-			data: process(),
-		};
-		res.statusCode = 200;
-		res.setHeader('Content-Type', 'application/json; charset=utf-8');
-		res.end(JSON.stringify(body, null, '\t'));
-	} catch (e) {
-		const body: any = {};
-		if (e instanceof FilteringReadError || e instanceof NoActionError) {
-			res.statusCode = 400;
-			body.status = 'fail';
-			body.data = {};
-			if ((e as any).name) {
-				body.data[(e as any).name] = e.message;
-			} else {
-				body.data.error = e.message;
-			}
-		} else {
-			/* eslint-disable-next-line no-console */
-			console.log(e, e.stack);
-			res.statusCode = 500;
-			body.status = 'error';
-			body.message = 'Server error';
-		}
-		res.end(JSON.stringify(body, null, '\t'));
-	}
+  try {
+    const body = {
+      status: "success",
+      data: process(),
+    };
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.end(JSON.stringify(body, null, "\t"));
+  } catch (e) {
+    const body: any = {};
+    if (e instanceof FilteringReadError || e instanceof NoActionError) {
+      res.statusCode = 400;
+      body.status = "fail";
+      body.data = {};
+      if ((e as any).name) {
+        body.data[(e as any).name] = e.message;
+      } else {
+        body.data.error = e.message;
+      }
+    } else {
+      /* eslint-disable-next-line no-console */
+      console.log(e, e.stack);
+      res.statusCode = 500;
+      body.status = "error";
+      body.message = "Server error";
+    }
+    res.end(JSON.stringify(body, null, "\t"));
+  }
 };
 
-Router.route('api.0.json', {
-	path: '/api/0/json/:handler',
-	where: 'server',
-	action() {
-		jsonSendResponder(this.response, () => {
-			return orderedResults(this.params, this.params.handler);
-		});
-	},
+Router.route("api.0.json", {
+  path: "/api/0/json/:handler",
+  where: "server",
+  action() {
+    jsonSendResponder(this.response, () => {
+      return orderedResults(this.params, this.params.handler);
+    });
+  },
 });

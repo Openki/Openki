@@ -1,4 +1,4 @@
-import { CourseMemberEntity } from '/imports/api/courses/courses';
+import { CourseMemberEntity } from "/imports/api/courses/courses";
 
 /**
  * Determine whether there is a member with the given role
@@ -7,13 +7,13 @@ import { CourseMemberEntity } from '/imports/api/courses/courses';
  * @return true if there is a member with the given role, and false otherwise.
  */
 export function hasRole(members: CourseMemberEntity[] | undefined, role: string | undefined) {
-	if (!members) {
-		return false;
-	}
-	if (!role) {
-		return false;
-	}
-	return members.some((member) => member.roles.includes(role));
+  if (!members) {
+    return false;
+  }
+  if (!role) {
+    return false;
+  }
+  return members.some((member) => member.roles.includes(role));
 }
 
 /**
@@ -24,12 +24,12 @@ export function hasRole(members: CourseMemberEntity[] | undefined, role: string 
  * @return whether the user has this role
  */
 export function hasRoleUser(
-	members: CourseMemberEntity[],
-	role: string,
-	userId: string | undefined | null,
+  members: CourseMemberEntity[],
+  role: string,
+  userId: string | undefined | null,
 ) {
-	if (!userId) {
-		return false;
-	}
-	return members.some((member) => member.user === userId && member.roles.includes(role));
+  if (!userId) {
+    return false;
+  }
+  return members.some((member) => member.user === userId && member.roles.includes(role));
 }

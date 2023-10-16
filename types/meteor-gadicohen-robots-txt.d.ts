@@ -1,3 +1,3 @@
-declare module 'meteor/gadicohen:robots-txt' {
-	const robots: any;
+declare module "meteor/gadicohen:robots-txt" {
+  const robots: any;
 }

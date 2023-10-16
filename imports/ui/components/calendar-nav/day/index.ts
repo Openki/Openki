@@ -1,119 +1,119 @@
-import $ from 'jquery';
-import { i18n } from '/imports/startup/both/i18next';
-import { Session } from 'meteor/session';
-import { Template as TemplateAny, TemplateStaticTyped } from 'meteor/templating';
-import { Spacebars } from 'meteor/spacebars';
-import moment from 'moment';
+import $ from "jquery";
+import { i18n } from "/imports/startup/both/i18next";
+import { Session } from "meteor/session";
+import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { Spacebars } from "meteor/spacebars";
+import moment from "moment";
 
-import '/imports/ui/components/search-field';
-import '/imports/ui/components/filter-groups';
-import '/imports/ui/components/filter-categories';
+import "/imports/ui/components/search-field";
+import "/imports/ui/components/filter-groups";
+import "/imports/ui/components/filter-categories";
 
-import './template.html';
-import '../styles.scss';
+import "./template.html";
+import "../styles.scss";
 
 export type Data = {
-	hideSwitches: boolean;
-	search: string;
-	onChangeSearch: (newValue: string) => void;
-	date: moment.Moment;
-	onChangeDate: (newDate: moment.Moment) => void;
-	availableGroups: string[];
-	selectedGroups: string[];
-	onAddGroup: (group: string) => void;
-	onRemoveGroup: (group: string) => void;
-	categories: string[];
-	onAddCategory: (category: string) => void;
-	onRemoveCategory: (category: string) => void;
+  hideSwitches: boolean;
+  search: string;
+  onChangeSearch: (newValue: string) => void;
+  date: moment.Moment;
+  onChangeDate: (newDate: moment.Moment) => void;
+  availableGroups: string[];
+  selectedGroups: string[];
+  onAddGroup: (group: string) => void;
+  onRemoveGroup: (group: string) => void;
+  categories: string[];
+  onAddCategory: (category: string) => void;
+  onRemoveCategory: (category: string) => void;
 };
 
 {
-	const Template = TemplateAny as TemplateStaticTyped<'calendarNavDay', Data>;
+  const Template = TemplateAny as TemplateStaticTyped<"calendarNavDay", Data>;
 
-	const template = Template.calendarNavDay;
+  const template = Template.calendarNavDay;
 
-	template.onRendered(function () {
-		const navContainer = this.$('.calendar-nav-container');
-		navContainer.slideDown();
+  template.onRendered(function () {
+    const navContainer = this.$(".calendar-nav-container");
+    navContainer.slideDown();
 
-		$(window).on('scroll', () => {
-			const isCovering = navContainer.hasClass('calendar-nav-container-covering');
-			const atTop = ($(window).scrollTop() || 0) < 5;
+    $(window).on("scroll", () => {
+      const isCovering = navContainer.hasClass("calendar-nav-container-covering");
+      const atTop = ($(window).scrollTop() || 0) < 5;
 
-			if (!isCovering && !atTop) {
-				navContainer.addClass('calendar-nav-container-covering');
-			} else if (isCovering && atTop) {
-				navContainer.removeClass('calendar-nav-container-covering');
-			}
-		});
-	});
-	template.helpers({
-		searchFieldAttr() {
-			const data = Template.instance().data;
-			return { search: data.search, onChange: data.onChangeSearch };
-		},
-		filterGroupsAttr() {
-			const data = Template.instance().data;
-			return {
-				availableGroups: data.availableGroups,
-				selectedGroups: data.selectedGroups,
-				onAdd: data.onAddGroup,
-				onRemove: data.onRemoveGroup,
-			};
-		},
-		filterCategoriesAttr() {
-			const data = Template.instance().data;
-			return {
-				categories: data.categories,
-				onAdd: data.onAddCategory,
-				onRemove: data.onRemoveCategory,
-			};
-		},
-	});
+      if (!isCovering && !atTop) {
+        navContainer.addClass("calendar-nav-container-covering");
+      } else if (isCovering && atTop) {
+        navContainer.removeClass("calendar-nav-container-covering");
+      }
+    });
+  });
+  template.helpers({
+    searchFieldAttr() {
+      const data = Template.instance().data;
+      return { search: data.search, onChange: data.onChangeSearch };
+    },
+    filterGroupsAttr() {
+      const data = Template.instance().data;
+      return {
+        availableGroups: data.availableGroups,
+        selectedGroups: data.selectedGroups,
+        onAdd: data.onAddGroup,
+        onRemove: data.onRemoveGroup,
+      };
+    },
+    filterCategoriesAttr() {
+      const data = Template.instance().data;
+      return {
+        categories: data.categories,
+        onAdd: data.onAddCategory,
+        onRemove: data.onRemoveCategory,
+      };
+    },
+  });
 }
 
 {
-	type Direction = 'previous' | 'next';
+  type Direction = "previous" | "next";
 
-	const Template = TemplateAny as TemplateStaticTyped<
-		'calendarNavDayControl',
-		{ direction: Direction }
-	>;
+  const Template = TemplateAny as TemplateStaticTyped<
+    "calendarNavDayControl",
+    { direction: Direction }
+  >;
 
-	const template = Template.calendarNavDayControl;
+  const template = Template.calendarNavDayControl;
 
-	template.events({
-		'click .js-change-date'(event, instance) {
-			event.preventDefault();
+  template.events({
+    "click .js-change-date"(event, instance) {
+      event.preventDefault();
 
-			const parentData = instance.parentInstance()?.data as Data;
+      const parentData = instance.parentInstance()?.data as Data;
 
-			const amount = instance.data.direction === 'previous' ? -1 : 1;
+      const amount = instance.data.direction === "previous" ? -1 : 1;
 
-			const newDate = parentData.date.add(amount, 'day');
+      const newDate = parentData.date.add(amount, "day");
 
-			parentData.onChangeDate(newDate);
-		},
-	});
+      parentData.onChangeDate(newDate);
+    },
+  });
 
-	template.helpers({
-		arrow() {
-			const data = Template.instance().data;
+  template.helpers({
+    arrow() {
+      const data = Template.instance().data;
 
-			let isRTL = Session.equals('textDirectionality', 'rtl');
+      let isRTL = Session.equals("textDirectionality", "rtl");
 
-			if (data.direction === 'previous') {
-				isRTL = !isRTL;
-			}
+      if (data.direction === "previous") {
+        isRTL = !isRTL;
+      }
 
-			const direction = isRTL ? 'left' : 'right';
-			return Spacebars.SafeString(
-				`<span class="fa-solid fa-arrow-${direction} fa-fw" aria-hidden="true"></span>`,
-			);
-		},
+      const direction = isRTL ? "left" : "right";
+      return Spacebars.SafeString(
+        `<span class="fa-solid fa-arrow-${direction} fa-fw" aria-hidden="true"></span>`,
+      );
+    },
 
-		text(direction: string, length: string) {
-			return i18n(`calendar.${direction}.day.${length}`);
-		},
-	});
+    text(direction: string, length: string) {
+      return i18n(`calendar.${direction}.day.${length}`);
+    },
+  });
 }

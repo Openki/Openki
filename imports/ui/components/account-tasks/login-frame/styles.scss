@@ -1,0 +1,10 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.login {
+  padding-top: 10px;
+}
+
+.login hr {
+  border-top: 1px solid lighten($gray-400, 10%);
+  margin: 15px 0;
+}

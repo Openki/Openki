@@ -1,111 +1,13 @@
-@import '{}/imports/ui/stylesheets/variables/index';
+@import "{}/imports/ui/stylesheets/variables/index";
 
 .course-members {
-	margin-top: $page-component-seperator-height;
+  margin-top: $page-component-seperator-height;
 }
 
 .contact-members {
-	@include td-float(right);
+  @include td-float(right);
 
-	&:hover {
-		cursor: pointer;
-	}
-}
-
-.course-member {
-	background: $course-page-component-bg;
-	padding: 10px ($grid-gutter-width / 2);
-
-	&.is-own-user {
-		background: $user-bg;
-	}
-}
-
-.course-member + .course-member {
-	margin-top: $page-component-seperator-height;
-}
-
-.course-member > .profilelink {
-	font-size: medium;
-}
-
-.course-member-roles {
-	float: right;
-	list-style: none;
-	margin: 0;
-
-	&:hover {
-		cursor: default;
-	}
-}
-
-.course-member-role {
-	background: $blue;
-	margin-left: 3px;
-	padding: 3px 6px 5px;
-	vertical-align: middle;
-}
-
-.course-member-role-text {
-	color: $white;
-	font-size: small;
-	font-weight: bold;
-}
-
-.team .course-member-role {
-	padding-right: 0;
-}
-
-.role-short {
-	text-transform: uppercase;
-}
-
-.add-to-team-btn {
-	@include td-margin(left, 6px);
-	margin-top: 2px;
-	padding: 2px 6px;
-}
-
-.course-member-comment {
-	@include clearfix;
-	padding-top: 10px;
-	position: relative;
-}
-
-.course-member-comment-arrow {
-	border: 5px solid;
-	border-color: transparent transparent $course-member-comment-border-color;
-	height: 0;
-	left: 8.5px;
-	position: absolute;
-	top: 0;
-	width: 0;
-}
-
-.course-member-comment-body {
-	@include td-float(left);
-	@include break-word;
-	background-color: lighten($blue-lighter, 6%);
-	border: 1px solid $course-member-comment-border-color;
-	border-radius: 3px;
-	font-size: $font-size-base;
-	max-width: 100%;
-	overflow: hidden;
-	padding: 5px 10px;
-}
-
-.course-participant-contact {
-	@include td-margin(left, 10px);
-	@include td-padding(left, 0);
-	display: inline-block;
-	font-size: medium;
-}
-
-.course-participant-contact .disabled .participant-contact-icon {
-	color: #c0c0c0;
-}
-
-.participant-contact-icon {
-	color: #8dc3d6;
-	font-size: 0.8em;
+  &:hover {
+    cursor: pointer;
+  }
 }

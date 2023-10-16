@@ -1,44 +1,44 @@
 @mixin tag($bg, $color, $bg-hover: darken($bg, 5%), $color-hover: $color) {
-	background-color: $bg;
-	color: $color;
-	padding: 1px 4px;
+  background-color: $bg;
+  color: $color;
+  padding: 1px 4px;
 
-	> a {
-		color: $color;
-	}
+  > a {
+    color: $color;
+  }
 
-	&.tag-link:hover,
-	&.tag-link:focus,
-	&.tag-link.highlight {
-		background-color: $bg-hover;
-	}
+  &.tag-link:hover,
+  &.tag-link:focus,
+  &.tag-link.highlight {
+    background-color: $bg-hover;
+  }
 
-	&.tag-link:hover > a {
-		color: $color-hover;
-	}
+  &.tag-link:hover > a {
+    color: $color-hover;
+  }
 
-	&.addon {
-		border-color: darken($bg, 10%);
-	}
+  &.addon {
+    border-color: darken($bg, 10%);
+  }
 }
 
 @mixin tag-btn($bg, $color, $bg-hover: darken($bg, 5%), $color-hover: $color) {
-	> button {
-		background-color: $bg;
-		border: 0;
-		color: $color;
-		font-size: $font-size-base;
+  > button {
+    background-color: $bg;
+    border: 0;
+    color: $color;
+    font-size: $font-size-base;
 
-		/* stylelint-disable selector-no-qualifying-type */
-		&:hover,
-		&:focus,
-		&.highlight {
-			background-color: $bg-hover;
-			color: $color-hover;
-		}
-	}
+    /* stylelint-disable selector-no-qualifying-type */
+    &:hover,
+    &:focus,
+    &.highlight {
+      background-color: $bg-hover;
+      color: $color-hover;
+    }
+  }
 
-	&.addon > button {
-		border-color: darken($bg, 10%);
-	}
+  &.addon > button {
+    border-color: darken($bg, 10%);
+  }
 }

@@ -1,54 +1,54 @@
-import { Blaze } from 'meteor/blaze';
+import { Blaze } from "meteor/blaze";
 
 /**
  * Give a preview of a filter by highlighting the matching courses
  */
 
 export function FilterPreview(options: {
-	/** property to filter for (e.g. category, region) */
-	property: string;
-	/** id/name of the property */
-	id: string;
-	/** de-/activate the preview effect */
-	activate: boolean;
-	/** delay the fade effect */
-	delayed?: boolean;
-	/** instance object for scoping */
-	instance?: Blaze.TemplateInstance;
+  /** property to filter for (e.g. category, region) */
+  property: string;
+  /** id/name of the property */
+  id: string;
+  /** de-/activate the preview effect */
+  activate: boolean;
+  /** delay the fade effect */
+  delayed?: boolean;
+  /** instance object for scoping */
+  instance?: Blaze.TemplateInstance;
 }) {
-	const instance = options.instance || false;
-	const course = instance ? instance.$('.course-compact') : $('.course-compact');
-	const { property } = options;
+  const instance = options.instance || false;
+  const course = instance ? instance.$(".course-compact") : $(".course-compact");
+  const { property } = options;
 
-	// build selector class
-	let selector;
+  // build selector class
+  let selector;
 
-	if (property === 'state') {
-		selector = options.id;
-	} else if (property === 'role') {
-		selector = `needs-role-${options.id}`;
-	} else {
-		selector = `${property}-${options.id}`;
-	}
+  if (property === "state") {
+    selector = options.id;
+  } else if (property === "role") {
+    selector = `needs-role-${options.id}`;
+  } else {
+    selector = `${property}-${options.id}`;
+  }
 
-	selector = `.${selector}`;
+  selector = `.${selector}`;
 
-	// create class for courses which are to be faded out and
-	// add a suffix if the fading effect is delayed
-	let fadeClass = 'filter-no-match';
-	if (options.delayed) {
-		fadeClass += '-delayed';
-	}
+  // create class for courses which are to be faded out and
+  // add a suffix if the fading effect is delayed
+  let fadeClass = "filter-no-match";
+  if (options.delayed) {
+    fadeClass += "-delayed";
+  }
 
-	// fade out the courses which don't match the selector
-	course.not(selector).toggleClass(fadeClass, options.activate);
+  // fade out the courses which don't match the selector
+  course.not(selector).toggleClass(fadeClass, options.activate);
 
-	// for properties which have labels used on the courses,
-	// highlight the labels too
-	if (property === 'category' || property === 'group') {
-		const labelClass = `.js-${property}-label${selector}`;
-		const label = instance ? instance.$(labelClass) : $(labelClass);
+  // for properties which have labels used on the courses,
+  // highlight the labels too
+  if (property === "category" || property === "group") {
+    const labelClass = `.js-${property}-label${selector}`;
+    const label = instance ? instance.$(labelClass) : $(labelClass);
 
-		label.parent().toggleClass('highlight');
-	}
+    label.parent().toggleClass("highlight");
+  }
 }

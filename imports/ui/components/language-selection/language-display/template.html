@@ -1,8 +1,5 @@
 <template name="languageDisplay">
-	<li class="{{inNavbarClasses}}">
-		<a class="nav-link {{inNavbarClassesLink}} js-language-display">
-			<span class="fa-solid fa-globe fa-fw" aria-hidden="true"></span>
-			{{setLanguage.short}}
-		</a>
-	</li>
+  <li class="nav-item text-center col col-lg-auto">
+    {{> React (component LanguageDisplay)}}
+  </li>
 </template>
