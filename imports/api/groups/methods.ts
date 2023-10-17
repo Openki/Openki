@@ -7,6 +7,7 @@ import { Users } from "/imports/api/users/users";
 import * as timeLastEditDenormalizer from "/imports/api/groups/timeLastEditDenormalizer";
 import { Group, GroupEntity, GroupModel, Groups } from "./groups";
 
+import * as AsyncTools from "/imports/utils/async-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
 import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as FileStorage from "/imports/utils/FileStorage";
@@ -166,6 +167,34 @@ export const deleteLogo = ServerMethod(
   },
   { simulation: false },
 );
+
+export const remove = ServerMethod("group.remove", (groupId: string) => {
+  check(groupId, String);
+
+  const user = Meteor.user();
+  if (!user) {
+    throw new Meteor.Error(401, "please log in");
+  }
+
+  const group = Groups.findOne(groupId);
+  if (!group) {
+    throw new Meteor.Error(404, "No such group");
+  }
+
+  if (!group.editableBy(user)) {
+    throw new Meteor.Error(401, "not permitted");
+  }
+
+  Groups.remove(groupId);
+
+  if (Meteor.isServer) {
+    // Update list of organizers per course
+    Meteor.call("course.updateGroups", { groups: groupId }, AsyncTools.logErrors);
+
+    // Update List of badges per user
+    Meteor.call("user.updateBadges", { groups: groupId }, AsyncTools.logErrors);
+  }
+});
 
 export const updateMembership = ServerMethod(
   "group.updateMembership",
