@@ -42,9 +42,9 @@ export interface GroupEntity {
   members: string[];
   createdby: string;
   // eslint-disable-next-line camelcase
-  time_created: Date;
+  time_created?: Date;
   // eslint-disable-next-line camelcase
-  time_lastedit: Date;
+  time_lastedit?: Date;
 }
 export type GroupModel = Group & GroupEntity;
 
