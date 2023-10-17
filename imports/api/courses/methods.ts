@@ -11,7 +11,7 @@ import { CourseDiscussions } from "/imports/api/course-discussions/course-discus
 import { Roles } from "/imports/api/roles/roles";
 import * as UpdateMethods from "/imports/utils/update-methods";
 import * as historyDenormalizer from "/imports/api/courses/historyDenormalizer";
-import * as timeLasteditDenormalizer from "/imports/api/courses/timeLasteditDenormalizer";
+import * as timeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
 import * as eventsCategoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
 import * as eventsCourseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import { Log } from "/imports/api/log/log";
@@ -250,7 +250,7 @@ export const save = ServerMethod(
       set.archived = false;
       set.createdby = user._id;
       set.time_created = new Date();
-      const enrichedSet = timeLasteditDenormalizer.beforeInsert(set);
+      const enrichedSet = timeLastEditDenormalizer.beforeInsert(set);
       /* eslint-disable-next-line no-param-reassign */
       courseId = Courses.insert(enrichedSet);
 
@@ -262,7 +262,7 @@ export const save = ServerMethod(
       Meteor.call("course.updateNextEvent", courseId);
       Courses.updateGroups(courseId);
     } else {
-      const enrichedSet = timeLasteditDenormalizer.beforeUpdate(set);
+      const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
       Courses.update({ _id: courseId }, { $set: enrichedSet });
 
       historyDenormalizer.afterUpdate(courseId, user._id);
@@ -325,7 +325,7 @@ export const updateImage = ServerMethod(
     const image = result.fullFileName;
     const update = { image };
 
-    const enrichedSet = timeLasteditDenormalizer.beforeUpdateImage(update);
+    const enrichedSet = timeLastEditDenormalizer.beforeUpdateImage(update);
     Courses.update(course._id, { $set: enrichedSet });
     historyDenormalizer.afterUpdateImage(courseId, user._id);
     eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, image);
@@ -358,7 +358,7 @@ export const deleteImage = ServerMethod(
 
     const update = { image: "" };
 
-    const set = timeLasteditDenormalizer.beforeDeleteImage();
+    const set = timeLastEditDenormalizer.beforeDeleteImage();
     Courses.update(course._id, { $unset: update, $set: set } as Mongo.Modifier<CourseEntity>);
     historyDenormalizer.afterDeleteImage(courseId, user._id);
     eventsCourseImageDenormalizer.afterCourseDeleteImage(courseId);
