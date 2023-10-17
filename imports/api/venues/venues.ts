@@ -162,7 +162,7 @@ export class VenueCollection extends Mongo.Collection<VenueEntity, VenueModel> {
       const findRecentOptions: Mongo.Options<EventEntity> = {
         sort: { time_lastedit: -1 },
         limit: (limit || 10) * 1.5, // Get more so after distinct/uniq we reach the limit
-        fields: { "venue._id": 1 },
+        projection: { "venue._id": 1 },
       };
 
       const recentEvents = Events.find(findRecent, findRecentOptions).fetch();

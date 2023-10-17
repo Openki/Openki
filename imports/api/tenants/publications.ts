@@ -27,13 +27,13 @@ export const [details, useDetails] = ServerPublishOne(
       filter.members = user._id;
     }
 
-    const fields: Mongo.FieldSpecifier = { ...Tenants.publicFields };
+    const projection: Mongo.FieldSpecifier = { ...Tenants.publicFields };
     // Only admins can see all tenant admins. Note: Admin privileg is not something that is
     // likely to happen and reactive changes are not needed.
     if (UserPrivilegeUtils.privileged(user, "admin") || user.isTenantAdmin(tenantId)) {
-      fields.admins = 1;
+      projection.admins = 1;
     }
-    return Tenants.find(filter, { fields });
+    return Tenants.find(filter, { projection });
   },
   (tenantId: string) => {
     const user = Meteor.user();
@@ -49,13 +49,13 @@ export const [details, useDetails] = ServerPublishOne(
       filter.members = user._id;
     }
 
-    const fields: Mongo.FieldSpecifier = { ...Tenants.publicFields };
+    const projection: Mongo.FieldSpecifier = { ...Tenants.publicFields };
     // Only admins can see all tenant admins. Note: Admin privileg is not something that is
     // likely to happen and reactive changes are not needed.
     if (UserPrivilegeUtils.privileged(user, "admin") || user.isTenantAdmin(tenantId)) {
-      fields.admins = 1;
+      projection.admins = 1;
     }
-    return Tenants.findOne(filter, { fields });
+    return Tenants.findOne(filter, { projection });
   },
 );
 

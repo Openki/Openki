@@ -6,9 +6,9 @@ import { Users } from "./users";
 export function onStartUp() {
   let updated = 0;
 
-  const tenants = Tenants.find({}, { fields: { _id: 1, members: 1, admins: 1 } }).fetch();
+  const tenants = Tenants.find({}, { projection: { _id: 1, members: 1, admins: 1 } }).fetch();
 
-  Users.find({}, { fields: { _id: 1 } }).forEach((u) => {
+  Users.find({}, { projection: { _id: 1 } }).forEach((u) => {
     const userTenants = tenants
       .filter((t) => t.members.includes(u._id) || t.admins.includes(u._id))
       .map((t) => ({ _id: t._id, privileges: t.admins.includes(u._id) ? ["admin"] : [] }));

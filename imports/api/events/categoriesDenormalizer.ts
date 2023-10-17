@@ -7,7 +7,7 @@ import { Courses } from "/imports/api/courses/courses";
 export function onStartUp() {
   let updated = 0;
 
-  Courses.find({}, { fields: { _id: 1, categories: 1 } }).forEach((course) => {
+  Courses.find({}, { projection: { _id: 1, categories: 1 } }).forEach((course) => {
     updated += Events.update(
       { courseId: course._id },
       { $set: { categories: course.categories || [] } },
