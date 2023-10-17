@@ -97,14 +97,20 @@
 
       {{#if isAdmin}}
         <p>
-          <strong>{{i18n 'group.settings.createdBy' 'Created by'}}</strong>:
-          <span>{{> profileLink userId=group.createdby}}</span>
-          <br />
-          <strong>{{i18n 'group.settings.timeCreated' 'Created at'}}</strong>:
-          <span>{{calendarDayFormat group.time_created}}</span>
-          <br />
-          <strong>{{i18n 'group.settings.timeLastEdit' 'Last edit at'}}</strong>:
-          <span>{{calendarDayFormat group.time_lastedit}}</span>
+          {{#if group.createdby}}
+            <strong>{{i18n 'group.settings.createdBy' 'Created by'}}</strong>:
+            <span>{{> profileLink userId=group.createdby}}</span>
+            <br />
+          {{/if}}
+          {{#if group.time_created}}
+            <strong>{{i18n 'group.settings.timeCreated' 'Created at'}}</strong>:
+            <span>{{calendarDayFormat group.time_created}}</span>
+            <br />
+          {{/if}}
+          {{#if group.time_lastedit}}
+            <strong>{{i18n 'group.settings.timeLastEdit' 'Last edit at'}}</strong>:
+            <span>{{calendarDayFormat group.time_lastedit}}</span>
+          {{/if}}
         </p>
       {{/if}}
     </div>
