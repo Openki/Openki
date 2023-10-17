@@ -94,6 +94,28 @@
         <li>iframe-List-Link: <a href="{{frameListURL group}}"
              target="_blank">{{frameListURL group}}</a></li>
       </ul>
+
+      {{#if isAdmin}}
+        <p>
+          <strong>{{i18n 'group.settings.createdBy' 'Created by'}}</strong>:
+          <span>{{> profileLink userId=group.createdby}}</span>
+          <br />
+          <strong>{{i18n 'group.settings.timeCreated' 'Created at'}}</strong>:
+          <span>{{calendarDayFormat group.time_created}}</span>
+          <br />
+          <strong>{{i18n 'group.settings.timeLastEdit' 'Last edit at'}}</strong>:
+          <span>{{calendarDayFormat group.time_lastedit}}</span>
+        </p>
+      {{/if}}
     </div>
+    {{#if isAdmin}}
+      <div class="actions">
+        {{> buttonDeleteConfirm
+				event="js-delete-confirm"
+				textIdle=(i18n 'group.delete.confirm.button' 'Delete {GROUP}' GROUP=group.name)
+				textBusy=(i18n '_button.deleting')
+			}}
+      </div>
+    {{/if}}
   </form>
 </template>

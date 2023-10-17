@@ -8,10 +8,12 @@ import { GroupModel, GroupEntity, Groups } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Users } from "/imports/api/users/users";
 
+import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 
 import "/imports/ui/components/buttons";
 import "/imports/ui/components/editable-image";
+import "/imports/ui/components/profile-link";
 import type { UploadImage, Data as EditableImageData } from "/imports/ui/components/editable-image";
 
 import "./template.html";
@@ -137,6 +139,10 @@ template.helpers({
   frameListURL(group: GroupEntity) {
     return Router.url("frameCourselist", {}, { query: { group: group._id } });
   },
+
+  isAdmin() {
+    return UserPrivilegeUtils.privilegedTo("admin");
+  },
 });
 
 template.events({
@@ -183,5 +189,10 @@ template.events({
 
   "click .js-group-edit-cancel"(_event, instance) {
     (instance.parentInstance() as any).editingSettings.set(false);
+  },
+
+  async "click .js-delete-confirm"(_event, instance) {
+    const groupId = instance.data.group._id;
+    await GroupsMethods.remove(groupId);
   },
 });
