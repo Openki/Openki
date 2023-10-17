@@ -9,7 +9,7 @@ import moment from "moment";
 import { Courses } from "/imports/api/courses/courses";
 import { Subscribe, processChange } from "/imports/api/courses/subscription";
 import * as courseHistoryDenormalizer from "/imports/api/courses/historyDenormalizer";
-import * as courseTimeLasteditDenormalizer from "/imports/api/courses/timeLasteditDenormalizer";
+import * as courseTimeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
 import * as courseImageDenormalizer from "/imports/api/events/courseImageDenormalizer";
 import * as categoriesDenormalizer from "/imports/api/events/categoriesDenormalizer";
 import { EventEntity, EventModel, Events, OEvent } from "/imports/api/events/events";
@@ -323,7 +323,7 @@ export const save = ServerMethod(
       eventId = Events.insert(enrichedEvent);
 
       if (editFields.courseId) {
-        courseTimeLasteditDenormalizer.afterEventInsert(editFields.courseId);
+        courseTimeLastEditDenormalizer.afterEventInsert(editFields.courseId);
         courseHistoryDenormalizer.afterEventInsert(editFields.courseId, user._id, {
           _id: eventId,
           title: editFields.title as string,
@@ -626,7 +626,7 @@ Meteor.methods({
    * Update the venue field for all events matching the selector
    */
   "event.updateVenue"(selector) {
-    const idOnly = { fields: { _id: 1 } };
+    const idOnly = { projection: { _id: 1 } };
     Events.find(selector, idOnly).forEach((originalEvent) => {
       const eventId = originalEvent._id;
 
@@ -692,7 +692,7 @@ Meteor.methods({
    * Update the group-related fields of events matching the selector
    */
   "event.updateGroups"(selector) {
-    const idOnly = { fields: { _id: 1 } };
+    const idOnly = { projection: { _id: 1 } };
     Events.find(selector, idOnly).forEach((event) => {
       Events.updateGroups(event._id);
     });

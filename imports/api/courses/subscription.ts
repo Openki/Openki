@@ -5,7 +5,7 @@ import { ValidationError } from "meteor/mdg:validation-error";
 import { Courses, Course, CourseModel } from "/imports/api/courses/courses";
 import * as interestedDenormalizer from "/imports/api/courses/interestedDenormalizer";
 import * as historyDenormalizer from "/imports/api/courses/historyDenormalizer";
-import * as timeLasteditDenormalizer from "/imports/api/courses/timeLasteditDenormalizer";
+import * as timeLastEditDenormalizer from "/imports/api/courses/timeLastEditDenormalizer";
 import * as Alert from "/imports/api/alerts/alert";
 import { Events } from "/imports/api/events/events";
 import { Users, User, UserModel } from "/imports/api/users/users";
@@ -245,7 +245,7 @@ export class Subscribe extends Change<{
     interestedDenormalizer.afterSubscribe(this.course._id);
     Courses.updateGroups(this.course._id);
 
-    timeLasteditDenormalizer.afterSubscribe(this.course._id);
+    timeLastEditDenormalizer.afterSubscribe(this.course._id);
     historyDenormalizer.afterSubscribe(this.course._id, this.user._id, this.role);
 
     if (this.reason === "interested") {
@@ -364,7 +364,7 @@ export class Unsubscribe extends Change<{
     interestedDenormalizer.afterUnsubscribe(this.course._id);
     Courses.updateGroups(this.course._id);
 
-    timeLasteditDenormalizer.afterUnsubscribe(this.course._id);
+    timeLastEditDenormalizer.afterUnsubscribe(this.course._id);
     historyDenormalizer.afterUnsubscribe(this.course._id, this.user._id, this.role);
   }
 }

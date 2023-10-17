@@ -2,12 +2,14 @@ import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { Match, check } from "meteor/check";
 import { _ } from "meteor/underscore";
-import * as HtmlTools from "/imports/utils/html-tools";
-import { Users } from "/imports/api/users/users";
-import { ServerMethod } from "/imports/utils/ServerMethod";
 
+import { Users } from "/imports/api/users/users";
+import * as timeLastEditDenormalizer from "/imports/api/groups/timeLastEditDenormalizer";
 import { Group, GroupEntity, GroupModel, Groups } from "./groups";
 
+import * as AsyncTools from "/imports/utils/async-tools";
+import * as HtmlTools from "/imports/utils/html-tools";
+import { ServerMethod } from "/imports/utils/ServerMethod";
 import * as FileStorage from "/imports/utils/FileStorage";
 import { UploadFilePattern } from "/imports/utils/FileStorage";
 import { Type } from "/imports/utils/CustomChecks";
@@ -49,13 +51,15 @@ export const save = ServerMethod("group.save", (groupId: string, changes: SaveFi
     throw new Meteor.Error(401, "Denied");
   }
 
+  let updates = {} as Mongo.OptionalId<GroupEntity>;
+
   if (group.isNew()) {
     // Saving user is added as first member of the group and as creater
     group.members.push(user._id);
-    group.createdby = user._id;
+    updates.createdby = user._id;
+    updates.time_created = new Date();
+    updates = timeLastEditDenormalizer.beforeInsert(updates);
   }
-
-  const updates = {} as Mongo.OptionalId<GroupEntity>;
   if (changes.short !== undefined) {
     let short = changes.short.trim();
     if (short.length === 0) {
@@ -92,7 +96,8 @@ export const save = ServerMethod("group.save", (groupId: string, changes: SaveFi
     groupId = Groups.insert(_.extend(group, updates));
     Meteor.call("user.updateBadges", user._id);
   } else {
-    Groups.update(group._id as string, { $set: updates });
+    updates = timeLastEditDenormalizer.beforeUpdate(updates);
+    Groups.update(group._id, { $set: updates });
   }
 
   return groupId;
@@ -124,7 +129,8 @@ export const updateLogo = ServerMethod(
 
     const update = { logoUrl: result.fullFileName };
 
-    Groups.update(group._id, { $set: update });
+    const enrichedSet = timeLastEditDenormalizer.beforeUpdateLogo(update);
+    Groups.update(group._id, { $set: enrichedSet });
 
     return groupId;
   },
@@ -154,12 +160,41 @@ export const deleteLogo = ServerMethod(
 
     const update: Mongo.Modifier<GroupEntity> = { $unset: { logoUrl: "" } };
 
-    Groups.update(group._id, update);
+    const set = timeLastEditDenormalizer.beforeDeleteLogo();
+    Groups.update(group._id, { ...update, $set: set });
 
     return groupId;
   },
   { simulation: false },
 );
+
+export const remove = ServerMethod("group.remove", (groupId: string) => {
+  check(groupId, String);
+
+  const user = Meteor.user();
+  if (!user) {
+    throw new Meteor.Error(401, "please log in");
+  }
+
+  const group = Groups.findOne(groupId);
+  if (!group) {
+    throw new Meteor.Error(404, "No such group");
+  }
+
+  if (!group.editableBy(user)) {
+    throw new Meteor.Error(401, "not permitted");
+  }
+
+  Groups.remove(groupId);
+
+  if (Meteor.isServer) {
+    // Update list of organizers per course
+    Meteor.call("course.updateGroups", { groups: groupId }, AsyncTools.logErrors);
+
+    // Update List of badges per user
+    Meteor.call("user.updateBadges", { groups: groupId }, AsyncTools.logErrors);
+  }
+});
 
 export const updateMembership = ServerMethod(
   "group.updateMembership",

@@ -98,7 +98,7 @@ function getActiveCoursesStats(courses: Mongo.Cursor<CourseEntity, CourseModel>)
         { start: { $lt: moment().add(6, "months").toDate() } },
       ],
     };
-    const activeEvent = Events.findOne(query, { fields: { groups: 1 } });
+    const activeEvent = Events.findOne(query, { projection: { groups: 1 } });
     if (activeEvent) {
       activeCourses += 1;
     }
@@ -115,7 +115,7 @@ function getGroupStats(regionId: string, groupId?: string) {
 
   let name: string | undefined;
   if (groupId) {
-    const groupRow = Groups.findOne({ _id: groupId }, { fields: { name: 1 } });
+    const groupRow = Groups.findOne({ _id: groupId }, { projection: { name: 1 } });
     name = groupRow?.name;
 
     courseFilter.groups = groupId;
