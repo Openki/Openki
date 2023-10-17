@@ -9,7 +9,7 @@ import { EventEntity, Events } from "/imports/api/events/events";
 export function onStartUp() {
   let updated = 0;
 
-  Regions.find({}, { fields: { _id: 1, tenant: 1 } }).forEach((region) => {
+  Regions.find({}, { projection: { _id: 1, tenant: 1 } }).forEach((region) => {
     updated += Events.update(
       { region: region._id },
       { $set: { tenant: region.tenant } },

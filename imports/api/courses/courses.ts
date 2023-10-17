@@ -308,15 +308,18 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
 
       if (filter.state.includes("upcomingEvent")) {
         $or.push({ futureEvents: { $gt: 0 } });
-        if (filter.state.length === 1) {
+        if (filter.state.length === 1 && order.length === 0) {
           order.push(["nextEvent.start", "asc"]);
         }
       }
 
       find.$and = [{ $or }];
     }
-    order.push(["time_lastedit", "desc"]);
-    order.push(["time_created", "desc"]);
+
+    if (order.length === 0) {
+      order.push(["time_lastedit", "desc"]);
+      order.push(["time_created", "desc"]);
+    }
 
     const mustHaveRoles = [];
     const missingRoles = [];
@@ -382,7 +385,7 @@ export class CoursesCollection extends Mongo.Collection<CourseEntity, CourseMode
     options.sort = order;
 
     // Load only data that is useful for list views.
-    options.fields = {
+    options.projection = {
       "members.comment": 0,
       history: 0,
       "nextEvent.editors": 0,

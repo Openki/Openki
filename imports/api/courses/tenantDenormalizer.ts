@@ -8,7 +8,7 @@ import { CourseEntity, Courses } from "/imports/api/courses/courses";
 export function onStartUp() {
   let updated = 0;
 
-  Regions.find({}, { fields: { _id: 1, tenant: 1 } }).forEach((region) => {
+  Regions.find({}, { projection: { _id: 1, tenant: 1 } }).forEach((region) => {
     updated += Courses.update(
       { region: region._id },
       { $set: { tenant: region.tenant } },

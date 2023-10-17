@@ -187,6 +187,8 @@ export const ensure = {
       members: [ensure.user("EdDillinger")._id],
       description: "Fixture group",
       createdby: ensure.user("EdDillinger")._id,
+      time_created: new Date(),
+      time_lastedit: new Date(),
     });
     /* eslint-disable-next-line no-console */
     console.log(`Added fixture group '${short}' id: ${id}`);

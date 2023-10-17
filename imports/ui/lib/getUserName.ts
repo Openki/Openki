@@ -14,7 +14,7 @@ let lookups = 0;
 const pending: { [id: string]: Tracker.Dependency } = {};
 
 // Update the cache if users are pushed to the collection
-Users.find({}, { fields: { _id: 1, username: 1, contribution: 1 } }).observe({
+Users.find({}, { projection: { _id: 1, username: 1, contribution: 1 } }).observe({
   added(user) {
     cache[user._id] = _.extend(new User(), user || { username: "?!" });
     if (pending[user._id]) {

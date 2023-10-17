@@ -8,7 +8,7 @@ export function userSearchPrefix(
   options: {
     limit?: number | undefined;
     exclude?: string[] | undefined;
-    fields?: Mongo.FieldSpecifier | undefined;
+    projection?: Mongo.FieldSpecifier | undefined;
   } = {},
 ) {
   const prefixExp = `^${prefix.replace(/([.*+?^${}()|[\]/\\])/g, "\\$1")}`;

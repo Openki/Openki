@@ -22,15 +22,15 @@ export const [simple, useSimple] = ServerPublishOne(
     check(userId, String);
 
     // Public fields from users
-    const fields: Mongo.FieldSpecifier = { username: 1, contribution: 1 };
+    const projection: Mongo.FieldSpecifier = { username: 1, contribution: 1 };
 
-    return Users.find(userId, { fields });
+    return Users.find(userId, { projection });
   },
   (userId: string) => {
     // Public fields from users
-    const fields: Mongo.FieldSpecifier = { username: 1, contribution: 1 };
+    const projection: Mongo.FieldSpecifier = { username: 1, contribution: 1 };
 
-    return Users.findOne(userId, { fields });
+    return Users.findOne(userId, { projection });
   },
 );
 
@@ -40,7 +40,7 @@ export const [details, useDetails] = ServerPublishOne(
     check(userId, String);
 
     // Public fields from users
-    const fields: Mongo.FieldSpecifier = {
+    const projection: Mongo.FieldSpecifier = {
       username: 1,
       description: 1,
       acceptsPrivateMessages: 1,
@@ -50,14 +50,14 @@ export const [details, useDetails] = ServerPublishOne(
 
     // Admins may see other's privileges
     if (UserPrivilegeUtils.privileged(Meteor.userId(), "admin")) {
-      fields.privileges = 1;
+      projection.privileges = 1;
     }
 
-    return Users.find(userId, { fields });
+    return Users.find(userId, { projection });
   },
   (userId: string) => {
     // Public fields from users
-    const fields: Mongo.FieldSpecifier = {
+    const projection: Mongo.FieldSpecifier = {
       username: 1,
       description: 1,
       acceptsPrivateMessages: 1,
@@ -67,15 +67,15 @@ export const [details, useDetails] = ServerPublishOne(
 
     // Admins may see other's privileges
     if (UserPrivilegeUtils.privileged(Meteor.userId(), "admin")) {
-      fields.privileges = 1;
+      projection.privileges = 1;
     }
 
-    return Users.findOne(userId, { fields });
+    return Users.findOne(userId, { projection });
   },
 );
 
 export const [findFilter, useFindFilter] = ServerPublishMany("userSearch", (search: string) => {
   check(search, String);
 
-  return userSearchPrefix(search, { fields: { username: 1 }, limit: 10 });
+  return userSearchPrefix(search, { projection: { username: 1 }, limit: 10 });
 });

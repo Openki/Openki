@@ -113,17 +113,17 @@ export function DashboardPage() {
     {
       entity: "course",
       title: t("explore.newProposals.title", "New proposals"),
-      query: "state=proposal&sort=time_created&internal=0",
+      query: "state=proposal&internal=0&sort=time_created",
     },
     {
       entity: "course",
       title: t("explore.lookingForMentors.title", "Looking for mentors"),
-      query: "needsRole=mentor&internal=0",
+      query: "needsRole=mentor&state=proposal,resting&internal=0",
     },
     {
       entity: "course",
       title: t("explore.lookingForVenues.title", "Looking for venues"),
-      query: "needsRole=venues&internal=0",
+      query: "needsRole=host&state=proposal,resting&internal=0",
     },
     {
       entity: "course",

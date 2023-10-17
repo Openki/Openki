@@ -30,7 +30,7 @@ function updateDbCacheFields() {
 
   // The `acceptsPrivateMessage` field is denormalized via `observe` to keep up to date after a
   // change is made.
-  Users.find({}, { fields: { allowPrivateMessages: 1, emails: 1 } }).observe({
+  Users.find({}, { projection: { allowPrivateMessages: 1, emails: 1 } }).observe({
     added: Profile.updateAcceptsPrivateMessages,
     changed: Profile.updateAcceptsPrivateMessages,
   });
