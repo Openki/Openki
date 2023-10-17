@@ -110,11 +110,7 @@
     </div>
     {{#if isAdmin}}
       <div class="actions">
-        {{> buttonDeleteConfirm
-				event="js-delete-confirm"
-				textIdle=(i18n 'group.delete.confirm.button' 'Delete {GROUP}' GROUP=group.name)
-				textBusy=(i18n '_button.deleting')
-			}}
+        {{> deleteConfirm deleteConfirmAttr}}
       </div>
     {{/if}}
   </form>

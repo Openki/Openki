@@ -14,6 +14,7 @@ import { userSearchPrefix } from "/imports/utils/user-search-prefix";
 import "/imports/ui/components/buttons";
 import "/imports/ui/components/editable-image";
 import "/imports/ui/components/profile-link";
+import "/imports/ui/components/delete-confirm";
 import type { UploadImage, Data as EditableImageData } from "/imports/ui/components/editable-image";
 
 import "./template.html";
@@ -139,9 +140,26 @@ template.helpers({
   frameListURL(group: GroupEntity) {
     return Router.url("frameCourselist", {}, { query: { group: group._id } });
   },
-
   isAdmin() {
     return UserPrivilegeUtils.privilegedTo("admin");
+  },
+  deleteConfirmAttr() {
+    const { group } = Template.instance().data;
+    return {
+      confirmText: i18n(
+        "group.reallydelete",
+        "Please confirm that you would like to delete {GROUP}. This cannot be undone.",
+        { GROUP: group.name },
+      ),
+      confirmButton: i18n("group.delete.confirm.button", "Delete {GROUP}", { GROUP: group.name }),
+      onRemove: async () => {
+        const groupId = group._id;
+        await GroupsMethods.remove(groupId);
+
+        Alert.success(i18n("group.deleted", "Group has been deleted"));
+      },
+      busyButton: i18n("group.delete.confirm.button.busy", "Deleting group…"),
+    };
   },
 });
 
@@ -189,10 +207,5 @@ template.events({
 
   "click .js-group-edit-cancel"(_event, instance) {
     (instance.parentInstance() as any).editingSettings.set(false);
-  },
-
-  async "click .js-delete-confirm"(_event, instance) {
-    const groupId = instance.data.group._id;
-    await GroupsMethods.remove(groupId);
   },
 });
