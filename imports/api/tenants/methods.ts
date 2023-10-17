@@ -48,7 +48,7 @@ async function membershipMutationPreconditionCheck(userId: string, tenantId: str
     throw new Meteor.Error(401, "Not permitted");
   }
 
-  if (!(await Users.findOneAsync(userId, { fields: { _id: 1 } }))) {
+  if (!(await Users.findOneAsync(userId, { projection: { _id: 1 } }))) {
     throw new Meteor.Error(404, "User not found");
   }
 

@@ -449,7 +449,7 @@ Meteor.methods({
         { courseId: course._id, start: { $gt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: 1 },
-          fields: {
+          projection: {
             startLocal: 1,
             start: 1,
             _id: 1,
@@ -463,7 +463,7 @@ Meteor.methods({
         { courseId: course._id, start: { $lt: new Date() }, canceled: { $ne: true } },
         {
           sort: { start: -1 },
-          fields: {
+          projection: {
             startLocal: 1,
             start: 1,
             _id: 1,

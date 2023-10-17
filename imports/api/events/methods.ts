@@ -626,7 +626,7 @@ Meteor.methods({
    * Update the venue field for all events matching the selector
    */
   "event.updateVenue"(selector) {
-    const idOnly = { fields: { _id: 1 } };
+    const idOnly = { projection: { _id: 1 } };
     Events.find(selector, idOnly).forEach((originalEvent) => {
       const eventId = originalEvent._id;
 
@@ -692,7 +692,7 @@ Meteor.methods({
    * Update the group-related fields of events matching the selector
    */
   "event.updateGroups"(selector) {
-    const idOnly = { fields: { _id: 1 } };
+    const idOnly = { projection: { _id: 1 } };
     Events.find(selector, idOnly).forEach((event) => {
       Events.updateGroups(event._id);
     });
