@@ -40,7 +40,7 @@ export interface GroupEntity {
   customCourseFields?: GroupEntityCustomCourseFields[];
   /** List of userIds */
   members: string[];
-  createdby: string;
+  createdby?: string;
   // eslint-disable-next-line camelcase
   time_created?: Date;
   // eslint-disable-next-line camelcase
