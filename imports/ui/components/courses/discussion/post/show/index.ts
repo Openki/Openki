@@ -16,6 +16,8 @@ import "/imports/ui/components/avatar";
 import "/imports/ui/components/profile-link";
 
 import "./remove-dropdown";
+import "./profile-link";
+import "./profile-icon";
 
 import "./template.html";
 

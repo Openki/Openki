@@ -69,26 +69,3 @@
     </div>
   {{/if}}
 </template>
-
-<template name="discussionProfileLink">
-  {{#if this}}
-    <strong>{{> profileLink userId=this}}</strong>
-    {{contribution this}}
-  {{else}}
-    <strong>
-      {{i18n 'comment.profileLink.anonymous' 'Anonymous'}}
-    </strong>
-  {{/if}}
-</template>
-
-<template name="discussionProfileIcon">
-  <div class="discussion-thumb">
-    {{#if this}}
-      <a href="{{pathFor 'userprofile' _id=this username=(username this)}}">
-        {{> avatar className='discussion-profile-icon' userId=this}}
-      </a>
-    {{else}}
-      {{> avatar className='discussion-profile-icon' color=0}}
-    {{/if}}
-  </div>
-</template>
