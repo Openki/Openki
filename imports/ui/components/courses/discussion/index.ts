@@ -12,6 +12,8 @@ import "/imports/ui/components/richtext";
 import "/imports/ui/components/avatar";
 import "/imports/ui/components/profile-link";
 
+import "./post";
+
 import "./template.html";
 import "./styles.scss";
 
