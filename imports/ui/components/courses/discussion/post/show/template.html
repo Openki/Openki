@@ -1,0 +1,120 @@
+<template name="postShow">
+  {{#if new}}
+    {{#if parentId}}
+      <div class="discussion-reply">
+        <button type="button" class="js-discussion-edit btn btn-add discussion-reply-btn"
+                {{disabledIfBusy}}>
+          {{#if busy 'saving'}}
+            <span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+            {{i18n '_button.saving'}}
+          {{else}}
+            {{i18n 'course.discussion.comment_answer' 'Answer'}}
+          {{/if}}
+        </button>
+      </div>
+    {{else}}
+      <button type="button" class="btn btn-add page-component-btn js-discussion-edit"
+              {{disabledIfBusy}}>
+        {{#if busy 'saving'}}
+          <span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>&nbsp;
+          {{i18n '_button.saving'}}
+        {{else}}
+          <span class="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>&nbsp;
+          {{i18n 'course.discussion.write_comment' 'Write a comment'}}
+        {{/if}}
+      </button>
+    {{/if}}
+  {{else}}
+    <div {{postClasses}} id="comment{{_id}}">
+      {{> discussionProfileIcon userId}}
+      <div class="discussion-post-content">
+        <div class="discussion-post-header">
+          {{> discussionProfileLink userId}}
+          <span class="discussion-post-header-sub">
+            <span data-bs-toggle="tooltip" data-bs-title="{{dateFormat time_created attr=true}}">
+              {{fromNow time_created}}
+            </span>
+            {{#if notifyAll}}
+              <i class="fa-solid fa-bell" aria-hidden="true" data-bs-toggle="tooltip"
+                 data-bs-title="{{i18n 'course.discussion.allNotified' 'All interested notified' attr=true}}"></i>
+            {{/if}}
+            {{#if hasBeenEdited}}
+              -
+              {{i18n 'course.discussion.lastUpdate' 'Last update'}}:
+              <span data-bs-toggle="tooltip" data-bs-title="{{dateFormat time_updated attr=true}}">
+                {{fromNow time_updated}}
+              </span>
+            {{/if}}
+          </span>
+          <span class="discussion-buttons">
+            {{#if mayEdit}}
+              <button type="button" class="js-discussion-edit discussion-edit-btn">
+                <span class="fa-solid fa-pen-to-square" aria-hidden="true"></span>
+              </button>
+            {{/if}}
+            {{#if mayDelete}}
+              {{> removeCommentDropdown}}
+            {{/if}}
+          </span>
+        </div>
+        <div class="discussion-post-body">
+          {{#if this.title}}
+            <h4 class="discussion-post-title">
+              {{this.title}}
+            </h4>
+          {{/if}}
+          <p>{{{text}}}</p>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+</template>
+
+<template name="discussionProfileLink">
+  {{#if this}}
+    <strong>{{> profileLink userId=this}}</strong>
+    {{contribution this}}
+  {{else}}
+    <strong>
+      {{i18n 'comment.profileLink.anonymous' 'Anonymous'}}
+    </strong>
+  {{/if}}
+</template>
+
+<template name="discussionProfileIcon">
+  <div class="discussion-thumb">
+    {{#if this}}
+      <a href="{{pathFor 'userprofile' _id=this username=(username this)}}">
+        {{> avatar className='discussion-profile-icon' userId=this}}
+      </a>
+    {{else}}
+      {{> avatar className='discussion-profile-icon' color=0}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="removeCommentDropdown">
+  <span class="dropdown">
+    <button type="button" class="discussion-delete-btn" aria-expanded="false"
+            data-bs-toggle="dropdown">
+      <span class="fa-solid fa-trash" aria-hidden="true"></span>
+    </button>
+    <ul class="dropdown-menu dialog-dropdown right">
+      <li class="dropdown-header">
+        {{i18n 'comment.delete.header' 'Delete comment'}}
+        <button type="button" class="btn-close"></button>
+      </li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
+      <li class="dialog-dropdown-text">
+        {{i18n 'comment.delete.confirm' 'Delete this comment?'}}
+      </li>
+      <li class="dialog-dropdown-btn">
+        <button type="button" class="btn btn-remove js-delete-comment discussion-delete-comment">
+          {{i18n 'course.discussion.deleteCommentButton' 'Delete'}}
+        </button>
+      </li>
+    </ul>
+  </span>
+</template>
