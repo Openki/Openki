@@ -1,6 +1,5 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-
 $discussion-thumb-width: 50;
 
 .discussion-thumb {
@@ -57,10 +56,6 @@ $discussion-post-bg: $blue-lighter;
 
 .discussion-edit-btn {
   @include td-margin(right, -5px);
-}
-
-.discussion-delete-btn {
-  @include td-margin(right, -10px);
 }
 
 .discussion-delete-comment {
