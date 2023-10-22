@@ -15,6 +15,8 @@ import "/imports/ui/components/richtext";
 import "/imports/ui/components/avatar";
 import "/imports/ui/components/profile-link";
 
+import "./remove-dropdown";
+
 import "./template.html";
 
 const Template = TemplateAny as TemplateStaticTyped<"postShow", CourseDiscussionEnity>;
