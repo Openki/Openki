@@ -1,0 +1,10 @@
+<template name="discussionProfileLink">
+  {{#if this}}
+    <strong>{{> profileLink userId=this}}</strong>
+    {{contribution this}}
+  {{else}}
+    <strong>
+      {{i18n 'comment.profileLink.anonymous' 'Anonymous'}}
+    </strong>
+  {{/if}}
+</template>
