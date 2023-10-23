@@ -26,10 +26,10 @@
     {{/if}}
   {{else}}
     <div {{postClasses}} id="comment{{_id}}">
-      {{> discussionProfileIcon userId}}
+      {{> discussionProfileIcon userId=userId}}
       <div class="discussion-post-content">
         <div class="discussion-post-header">
-          {{> discussionProfileLink userId}}
+          {{> discussionProfileLink userId=userId}}
           <span class="discussion-post-header-sub">
             <span data-bs-toggle="tooltip" data-bs-title="{{dateFormat time_created attr=true}}">
               {{fromNow time_created}}

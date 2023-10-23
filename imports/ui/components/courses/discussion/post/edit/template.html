@@ -1,12 +1,12 @@
 
 <template name="postEdit">
   <div class='{{postClass}} {{#if new}}{{#unless parentId}}discussion-post-new{{/unless}}{{/if}}'>
-    {{> discussionProfileIcon userId}}
+    {{> discussionProfileIcon userId=userId}}
     <div class="discussion-edit-content">
       <form>
         <div class="discussion-edit-header">
           {{#if showUserId}}
-            {{> discussionProfileLink userId}}
+            {{> discussionProfileLink userId=userId}}
           {{else}}
             <strong>{{i18n 'discussion.anonymous' 'Anonymous'}}</strong>
           {{/if}}
