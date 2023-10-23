@@ -14,11 +14,11 @@ import * as Tooltips from "/imports/utils/Tooltips";
 
 import "/imports/ui/components/buttons";
 import "/imports/ui/components/richtext";
-import "/imports/ui/components/avatar";
-import "/imports/ui/components/profile-link";
 
 import "./show";
 import "./edit";
+import "./profile-link";
+import "./profile-icon";
 
 import "./template.html";
 import "./styles.scss";
