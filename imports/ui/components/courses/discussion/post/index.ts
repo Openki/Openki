@@ -1,5 +1,4 @@
 import { Meteor } from "meteor/meteor";
-import { i18n } from "/imports/startup/both/i18next";
 import { ReactiveVar } from "meteor/reactive-var";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
@@ -7,10 +6,6 @@ import {
   CourseDiscussionEnity,
   CourseDiscussions,
 } from "/imports/api/course-discussions/course-discussions";
-import * as CourseDiscussionsMethods from "/imports/api/course-discussions/methods";
-import * as Alert from "/imports/api/alerts/alert";
-
-import * as Tooltips from "/imports/utils/Tooltips";
 
 import "/imports/ui/components/buttons";
 import "/imports/ui/components/richtext";
@@ -106,19 +101,5 @@ template.events({
 
   "click .js-discussion-cancel"() {
     Template.instance().editing.set(false);
-  },
-
-  async "click button.js-delete-comment"(event) {
-    const post = Template.instance().data;
-
-    Tooltips.hide();
-    event.stopImmediatePropagation();
-
-    try {
-      await CourseDiscussionsMethods.deleteComment(post._id);
-      Alert.success(i18n("discussionPost.deleted", "Comment deleted."));
-    } catch (err) {
-      Alert.serverError(err, i18n("discussionPost.deleted.error", "Could not delete comment"));
-    }
   },
 });

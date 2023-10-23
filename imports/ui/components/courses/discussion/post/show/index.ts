@@ -4,6 +4,8 @@ import moment from "moment";
 
 import { Courses } from "/imports/api/courses/courses";
 import { CourseDiscussionEnity } from "/imports/api/course-discussions/course-discussions";
+import * as CourseDiscussionsMethods from "/imports/api/course-discussions/methods";
+import * as Alert from "/imports/api/alerts/alert";
 
 import * as CourseDiscussionUtils from "/imports/utils/course-discussion-utils";
 import * as Tooltips from "/imports/utils/Tooltips";
@@ -18,6 +20,7 @@ import "/imports/ui/components/profile-link";
 import "./remove-dropdown";
 
 import "./template.html";
+import { i18n } from "/imports/startup/both/i18next";
 
 const Template = TemplateAny as TemplateStaticTyped<"postShow", CourseDiscussionEnity>;
 
@@ -54,6 +57,22 @@ template.helpers({
   hasBeenEdited() {
     const post = Template.instance().data;
     return moment(post.time_updated).isAfter(post.time_created);
+  },
+
+  removeDropdownAttr() {
+    const post = Template.instance().data;
+    return {
+      async onRemove() {
+        Tooltips.hide();
+
+        try {
+          await CourseDiscussionsMethods.deleteComment(post._id);
+          Alert.success(i18n("discussionPost.deleted", "Comment deleted."));
+        } catch (err) {
+          Alert.serverError(err, i18n("discussionPost.deleted.error", "Could not delete comment"));
+        }
+      },
+    };
   },
 });
 
