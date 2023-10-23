@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import $ from "jquery";
 import { useSessionEquals } from "/imports/utils/react-meteor-data";
 import { useSiteName } from "/imports/utils/getSiteName";
 
@@ -30,7 +29,7 @@ export function Course({ course, hideInterested }: Props) {
       <h4
         className="frame-list-item-header"
         onClick={(event) => {
-          $(event.currentTarget).toggleClass("active");
+          event.currentTarget.classList.toggle("active");
           setIsExpanded(!isExpanded);
         }}
       >
