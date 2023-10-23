@@ -1,25 +1,5 @@
 <template name="removeCommentDropdown">
-  <span class="dropdown">
-    <button type="button" class="discussion-delete-btn" aria-expanded="false"
-            data-bs-toggle="dropdown">
-      <span class="fa-solid fa-trash" aria-hidden="true"></span>
-    </button>
-    <ul class="dropdown-menu dialog-dropdown right">
-      <li class="dropdown-header">
-        {{i18n 'comment.delete.header' 'Delete comment'}}
-        <button type="button" class="btn-close"></button>
-      </li>
-      <li>
-        <hr class="dropdown-divider">
-      </li>
-      <li class="dialog-dropdown-text">
-        {{i18n 'comment.delete.confirm' 'Delete this comment?'}}
-      </li>
-      <li class="dialog-dropdown-btn">
-        <button type="button" class="btn btn-remove js-delete-comment discussion-delete-comment">
-          {{i18n 'course.discussion.deleteCommentButton' 'Delete'}}
-        </button>
-      </li>
-    </ul>
+  <span>
+    {{> React (component RemoveCommentDropdown)}}
   </span>
 </template>

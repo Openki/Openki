@@ -1,7 +1,52 @@
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/richtext";
-import "/imports/ui/components/avatar";
-import "/imports/ui/components/profile-link";
+import React from "react";
+import { useTranslation } from "react-i18next";
 
-import "./template.html";
 import "./styles.scss";
+
+export type Props = { onRemove: () => void };
+
+export function RemoveDropdown({ onRemove }: Props) {
+  const { t } = useTranslation();
+
+  return (
+    <span className="dropdown">
+      <button
+        type="button"
+        className="discussion-delete-btn"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+      >
+        <span className="fa-solid fa-trash" aria-hidden="true"></span>
+      </button>
+      <ul className="dropdown-menu dialog-dropdown right">
+        <li className="dropdown-header">
+          {t("comment.delete.header", "Delete comment")}
+          <button type="button" className="btn-close"></button>
+        </li>
+        <li>
+          <hr className="dropdown-divider" />
+        </li>
+        <li className="dialog-dropdown-text">
+          {t("comment.delete.confirm", "Delete this comment?")}
+        </li>
+        <li className="dialog-dropdown-btn">
+          <button
+            type="button"
+            className="btn btn-remove discussion-delete-comment"
+            onClick={() => {
+              onRemove();
+            }}
+          >
+            {t("course.discussion.deleteCommentButton", "Delete")}
+          </button>
+        </li>
+      </ul>
+    </span>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("RemoveCommentDropdown", () => RemoveDropdown);
