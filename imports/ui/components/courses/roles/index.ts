@@ -158,8 +158,6 @@ template.events({
   },
 
   "click .js-first-steps-comment"() {
-    $(".page-component-btn.js-discussion-edit").trigger("click");
-    window.location.hash = "#discussion";
-    routerAutoscroll.scheduleScroll();
+    $("#discussion").trigger("writeComment");
   },
 });

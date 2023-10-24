@@ -23,6 +23,7 @@ const Template = TemplateAny as TemplateStaticTyped<
   {
     count: ReactiveVar<number>;
     limit: ReactiveVar<number>;
+    edit: ReactiveVar<boolean>;
     notifyAll: ReactiveVar<boolean>;
   }
 >;
@@ -51,6 +52,7 @@ template.onCreated(function () {
     }
   });
 
+  instance.edit = new ReactiveVar(false);
   instance.notifyAll = new ReactiveVar(false);
 });
 
@@ -80,16 +82,23 @@ template.helpers({
     return posts;
   },
 
-  newPost() {
+  newPostAttr() {
     const instance = Template.instance();
     const { data } = instance;
 
     return {
-      new: true,
-      courseId: data.courseId,
-      userId: Meteor.userId(),
-      text: "",
-      notifyAll: instance.notifyAll.get(),
+      post: {
+        new: true,
+        courseId: data.courseId,
+        userId: Meteor.userId(),
+        text: "",
+        notifyAll: instance.notifyAll.get(),
+      },
+      edit: instance.edit.get(),
+      onCancel: () => {
+        instance.edit.set(false);
+        instance.notifyAll.set(false);
+      },
     };
   },
 
@@ -111,5 +120,16 @@ template.helpers({
 template.events({
   "click .js-show-all-posts"(_event, instance) {
     instance.limit.set(0);
+  },
+  "notifyAll #discussion"(_event, instance) {
+    instance.edit.set(true);
+    instance.notifyAll.set(true);
+    window.location.hash = "#discussion";
+    routerAutoscroll.scheduleScroll();
+  },
+  "writeComment #discussion"(_event, instance) {
+    instance.edit.set(true);
+    window.location.hash = "#discussion";
+    routerAutoscroll.scheduleScroll();
   },
 });

@@ -8,10 +8,15 @@ import { Avatar } from "/imports/ui/components/avatar";
 
 import "./styles.scss";
 
-export type Props = { userId: string };
+export type Props = { userId: string | undefined };
 
 export function DiscussionProfileIcon({ userId }: Props) {
-  const userName = useTracker(() => getUserName(userId));
+  const userName = useTracker(() => {
+    if (!userId) {
+      return "";
+    }
+    return getUserName(userId);
+  });
 
   return (
     <div className="discussion-thumb">

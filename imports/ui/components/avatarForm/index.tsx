@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useUser } from "meteor/react-meteor-accounts";
+import { useUser } from "/imports/utils/react-meteor-data";
 
 import * as usersMethods from "/imports/api/users/methods";
 import * as Alert from "/imports/api/alerts/alert";
