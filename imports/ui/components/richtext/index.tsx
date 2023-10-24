@@ -1,112 +1,128 @@
-import { i18n } from "/imports/startup/both/i18next";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { Session } from "meteor/session";
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useSessionEquals } from "/imports/utils/react-meteor-data";
 
 import MediumEditor from "medium-editor";
 
-import "./template.html";
 import "./styles.scss";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "richtext",
-  { class?: string; text?: string; placeholder?: string; maxlength?: number },
-  {
-    numberOfCharacters: ReactiveVar<number>;
-  }
->;
+export type Props = {
+  className?: string;
+  text?: string;
+  placeholder?: string;
+  maxlength?: number;
+  onChange?: (value: string) => void;
+};
 
-const template = Template.richtext;
+export function Richtext({ className, text, placeholder, maxlength, onChange }: Props) {
+  const { t } = useTranslation();
+  const elementRef = useRef<HTMLDivElement>(null);
+  const [numberOfCharacters, setNumberOfCharacters] = useState(0);
+  const isRTL = useSessionEquals("textDirectionality", "rtl");
 
-template.onCreated(function () {
-  const instance = this;
-
-  instance.numberOfCharacters = new ReactiveVar(0);
-});
-
-template.onRendered(function () {
-  const instance = this;
-  const $richtext = instance.$(".js-richtext");
-
-  $richtext.html(instance.data.text || "");
-  instance.autorun(() => {
-    $richtext.html(Template.currentData().text || "");
-  });
-
-  const isRTL = Session.equals("textDirectionality", "rtl");
-  const align = !isRTL ? "left" : "right";
-
-  const meOptions: MediumEditor.CoreOptions = {
-    toolbar: {
-      static: true,
-      sticky: true,
-      stickyTopOffset: 55,
-      align,
-      updateOnEmptySelection: true,
-      // list of supported html tags / formatting. Should be same as in the saneHtml(...) function
-      buttons: ["h4", "bold", "italic", "underline", "anchor", "unorderedlist", "orderedlist"],
-    },
-    disableDoubleReturn: true,
-    placeholder: {
-      hideOnClick: false,
-      text: instance.data.placeholder || i18n("richtext.placeholder.default", "Type your text"),
-    },
-    anchor: {
-      linkValidation: true,
-      placeholderText: i18n("richtext.link.placeholder", "Paste or type a link"),
-    },
-    autoLink: true,
-    buttonLabels: "fontawesome",
-  };
-
-  // Make titles translateable
-  const meExtensions = (MediumEditor as any).extensions;
-
-  const meButton = meExtensions.button.prototype.defaults;
-  meButton.h4.aria = i18n("richtext.button.h4.title", "subheader");
-  meButton.h4.contentFA = '<i class="fa fa-header">';
-  meButton.bold.aria = i18n("richtext.button.bold.title", "bold");
-  meButton.italic.aria = i18n("richtext.button.italic.title", "italic");
-  meButton.underline.aria = i18n("richtext.button.underline.title", "underline");
-  meButton.unorderedlist.aria = i18n("richtext.button.unorderedlist.title", "unordered list");
-  meButton.orderedlist.aria = i18n("richtext.button.orderedlist.title", "ordered list");
-
-  meExtensions.anchor.prototype.aria = i18n("richtext.button.anchor.title", "link");
-
-  // Initialize the editor interface
-  // eslint-disable-next-line no-new
-  new MediumEditor($richtext[0], meOptions);
-
-  instance.numberOfCharacters.set($richtext.text().trim().length);
-
-  $richtext.on("input", function () {
-    // Fix placeholder position on empty after change
-    if ($richtext.text().length === 0) {
-      $richtext.html("");
-    }
-
-    // Get the number of visible characters
-    instance.numberOfCharacters.set($richtext.text().trim().length);
-  });
-});
-
-template.helpers({
-  characterLimitReached() {
-    const instance = Template.instance();
-
-    if (!instance.data.maxlength) {
+  function characterLimitReached() {
+    if (!maxlength) {
       return false;
     }
-
-    return instance.numberOfCharacters.get() > instance.data.maxlength;
-  },
-
-  removeNumberOfCharacters() {
-    const instance = Template.instance();
-
-    if (!instance.data.maxlength) {
+    return numberOfCharacters > maxlength;
+  }
+  function removeNumberOfCharacters() {
+    if (!maxlength) {
       return 0;
     }
+    return numberOfCharacters - maxlength;
+  }
 
-    return instance.numberOfCharacters.get() - instance.data.maxlength;
-  },
-});
+  function handleChange(event: React.KeyboardEvent<HTMLDivElement>) {
+    const element = event.currentTarget;
+
+    let value = "";
+    if (element.innerText.trim()) {
+      value = element.innerHTML;
+    } else {
+      // Fix placeholder position on empty after change
+      element.innerHTML = "";
+    }
+    // Get the number of visible characters
+    setNumberOfCharacters(element.innerText.trim().length);
+
+    onChange?.(value);
+  }
+
+  useEffect(() => {
+    if (!elementRef.current) {
+      return;
+    }
+    elementRef.current.innerHTML = text || "";
+
+    const align = !isRTL ? "left" : "right";
+
+    const meOptions: MediumEditor.CoreOptions = {
+      toolbar: {
+        static: true,
+        sticky: true,
+        stickyTopOffset: 55,
+        align,
+        updateOnEmptySelection: true,
+        // list of supported html tags / formatting. Should be same as in the saneHtml(...) function
+        buttons: ["h4", "bold", "italic", "underline", "anchor", "unorderedlist", "orderedlist"],
+      },
+      disableDoubleReturn: true,
+      placeholder: {
+        hideOnClick: false,
+        text: placeholder || t("richtext.placeholder.default", "Type your text"),
+      },
+      anchor: {
+        linkValidation: true,
+        placeholderText: t("richtext.link.placeholder", "Paste or type a link"),
+      },
+      autoLink: true,
+      buttonLabels: "fontawesome",
+    };
+
+    // Make titles translateable
+    const meExtensions = (MediumEditor as any).extensions;
+
+    const meButton = meExtensions.button.prototype.defaults;
+    meButton.h4.aria = t("richtext.button.h4.title", "subheader");
+    meButton.h4.contentFA = '<i class="fa fa-header">';
+    meButton.bold.aria = t("richtext.button.bold.title", "bold");
+    meButton.italic.aria = t("richtext.button.italic.title", "italic");
+    meButton.underline.aria = t("richtext.button.underline.title", "underline");
+    meButton.unorderedlist.aria = t("richtext.button.unorderedlist.title", "unordered list");
+    meButton.orderedlist.aria = t("richtext.button.orderedlist.title", "ordered list");
+
+    meExtensions.anchor.prototype.aria = t("richtext.button.anchor.title", "link");
+
+    // Initialize the editor interface
+    // eslint-disable-next-line no-new
+    new MediumEditor(elementRef.current, meOptions);
+
+    setNumberOfCharacters(elementRef.current.innerText.trim().length);
+  }, [text, placeholder, t, isRTL]);
+
+  return (
+    <>
+      <div
+        className={`richtext form-control ${
+          characterLimitReached() ? "is-invalid" : ""
+        } richtext form-control ${className || ""}`}
+        ref={elementRef}
+        onKeyUp={handleChange}
+        onChange={handleChange}
+        onInput={handleChange}
+      ></div>
+      {characterLimitReached() ? (
+        <div className="invalid-feedback">
+          {t("_inputField.maxlength", { NUMBER: removeNumberOfCharacters(), MAXNUMBER: maxlength })}
+        </div>
+      ) : null}
+    </>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("Richtext", () => Richtext);
