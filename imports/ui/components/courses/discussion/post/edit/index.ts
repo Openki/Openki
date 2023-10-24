@@ -22,7 +22,12 @@ import "./template.html";
 const Template = TemplateAny as TemplateStaticTyped<
   "postEdit",
   CourseDiscussionEnity & { new?: true },
-  { anon: ReactiveVar<boolean>; validComment: ReactiveVar<boolean> }
+  {
+    anon: ReactiveVar<boolean>;
+    validComment: ReactiveVar<boolean>;
+    commentText: ReactiveVar<string>;
+    richtextPlaceholder: () => string;
+  }
 >;
 
 const template = Template.postEdit;
@@ -32,6 +37,13 @@ template.onCreated(function () {
 
   instance.anon = new ReactiveVar(!instance.data.userId);
   instance.validComment = new ReactiveVar(!!instance.data.text.trim());
+  instance.commentText = new ReactiveVar(instance.data.text);
+
+  instance.richtextPlaceholder = () => {
+    return Template.instance().data.parentId
+      ? i18n("course.discussion.text_placeholder_answer", "Your answer")
+      : i18n("course.discussion.text_placeholder", "Your comment");
+  };
 });
 
 template.onRendered(function () {
@@ -40,12 +52,6 @@ template.onRendered(function () {
 });
 
 template.helpers({
-  richtextPlaceholder() {
-    return Template.instance().data.parentId
-      ? i18n("course.discussion.text_placeholder_answer", "Your answer")
-      : i18n("course.discussion.text_placeholder", "Your comment");
-  },
-
   postClass() {
     return this.parentId ? "discussion-comment" : "discussion-post";
   },
@@ -105,14 +111,21 @@ template.helpers({
       user?.groups.some((g) => course?.groupOrganizers.includes(g))
     );
   },
+
+  richtextAttr() {
+    const instance = Template.instance();
+    return {
+      text: instance.data.text,
+      placeholder: instance.richtextPlaceholder(),
+      onChange(value: string) {
+        instance.validComment.set(!!value);
+        instance.commentText.set(value);
+      },
+    };
+  },
 });
 
 template.events({
-  "keyup .js-post-text, change .js-post-text"(_event, instance) {
-    const edited = instance.$(".js-post-text").text().trim();
-    instance.validComment.set(!!edited);
-  },
-
   change(_event, instance) {
     instance.anon.set(instance.$(".js-anon").prop("checked"));
   },
@@ -125,10 +138,7 @@ template.events({
       | PostCommentFields
       | EditCommentFields;
 
-    const $postText = instance.$(".js-post-text");
-    if ($postText.text().trim()) {
-      comment.text = $postText.html();
-    }
+    comment.text = instance.commentText.get();
 
     (instance.parentInstance() as any).editing.set(false);
     instance.busy("saving");

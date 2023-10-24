@@ -65,7 +65,7 @@ export function Show({ post, onEdit }: Props) {
     };
   }
 
-  function onEditClickHandler() {
+  function handleEditClick() {
     Tooltips.hide();
     onEdit();
   }
@@ -76,13 +76,13 @@ export function Show({ post, onEdit }: Props) {
         <button
           type="button"
           className="btn btn-add discussion-reply-btn"
-          onClick={onEditClickHandler}
+          onClick={handleEditClick}
         >
           {t("course.discussion.comment_answer", "Answer")}
         </button>
       </div>
     ) : (
-      <button type="button" className="btn btn-add page-component-btn" onClick={onEditClickHandler}>
+      <button type="button" className="btn btn-add page-component-btn" onClick={handleEditClick}>
         <span className="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>&nbsp;
         {t("course.discussion.write_comment", "Write a comment")}
       </button>
@@ -119,7 +119,7 @@ export function Show({ post, onEdit }: Props) {
           </span>
           <span className="discussion-buttons">
             {mayEdit() ? (
-              <button type="button" className="discussion-edit-btn" onClick={onEditClickHandler}>
+              <button type="button" className="discussion-edit-btn" onClick={handleEditClick}>
                 <span className="fa-solid fa-pen-to-square" aria-hidden="true"></span>
               </button>
             ) : null}
