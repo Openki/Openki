@@ -43,16 +43,19 @@ if (Meteor.isClient) {
         await waitForSubscriptions();
 
         await waitFor(() => {
-          assert($(".js-discussion-edit").length > 0, `Write a comment is shown`);
+          assert(
+            $("#discussion .btn-add.page-component-btn").length > 0,
+            `Write a comment is shown`,
+          );
         });
 
-        $(".js-discussion-edit").trigger("click");
+        $("#discussion").trigger("notifyAll");
 
         await waitFor(() => {
-          assert($(".js-notify-all").length > 0, `Notify all interested checkbox is shown`);
+          assert($("#canNotifyAllCheck").length > 0, `Notify all interested checkbox is shown`);
         });
 
-        $(".js-post-text").html("Hello to all").trigger("keyup");
+        $(".discussion-edit-body .richtext").html("Hello to all").trigger("keyup");
         await waitFor(() => {
           assert($(".discussion-save-btn:not([disabled])").length > 0, `Save button is active`);
         });

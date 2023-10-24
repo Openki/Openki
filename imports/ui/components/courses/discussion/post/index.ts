@@ -20,7 +20,7 @@ import "./styles.scss";
 
 const Template = TemplateAny as TemplateStaticTyped<
   "post",
-  CourseDiscussionEnity & { new?: true },
+  { post: CourseDiscussionEnity & { new?: true }; edit?: boolean; onCancel?: () => void },
   { isParent: boolean; editing: ReactiveVar<boolean>; limit: ReactiveVar<number> }
 >;
 
@@ -28,12 +28,17 @@ const template = Template.post;
 
 template.onCreated(function () {
   const instance = this;
-  const post = instance.data;
+  const { post, edit } = instance.data;
 
   instance.busy(false);
 
   instance.isParent = !post.new && !post.parentId;
-  instance.editing = new ReactiveVar(false);
+  instance.editing = new ReactiveVar(!!edit);
+
+  instance.autorun(() => {
+    const { edit: edit2 } = Template.currentData();
+    instance.editing = new ReactiveVar(!!edit2);
+  });
 
   instance.limit = new ReactiveVar(2);
 });
@@ -47,7 +52,7 @@ template.helpers({
     // Note that the 'discussion' subscription from the 'discussion' template
     // covers responses as well
     const instance = Template.instance();
-    const post = Template.instance().data;
+    const { post } = instance.data;
 
     if (!instance.isParent) {
       return false;
@@ -64,7 +69,7 @@ template.helpers({
 
   notAllResponsesShown() {
     const instance = Template.instance();
-    const post = instance.data;
+    const { post } = instance.data;
 
     if (!instance.isParent) {
       return false;
@@ -81,15 +86,27 @@ template.helpers({
   },
 
   newResponse() {
-    if (this.parentId) {
+    const instance = Template.instance();
+    const { post } = instance.data;
+    if (post.parentId) {
       return false;
     }
     return {
       new: true,
-      parentId: this._id,
-      courseId: this.courseId,
+      parentId: post._id,
+      courseId: post.courseId,
       userId: Meteor.userId(),
       text: "",
+    };
+  },
+
+  postShowAttr() {
+    const instance = Template.instance();
+    return {
+      post: instance.data.post,
+      onEdit: () => {
+        instance.editing.set(true);
+      },
     };
   },
 });
@@ -100,6 +117,8 @@ template.events({
   },
 
   "click .js-discussion-cancel"() {
-    Template.instance().editing.set(false);
+    const instance = Template.instance();
+    instance.editing.set(false);
+    instance.data.onCancel?.();
   },
 });

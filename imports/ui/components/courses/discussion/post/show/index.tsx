@@ -1,6 +1,7 @@
-import { Meteor } from "meteor/meteor";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+/* eslint-disable no-nested-ternary */
+import React from "react";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 import { Courses } from "/imports/api/courses/courses";
 import { CourseDiscussionEnity } from "/imports/api/course-discussions/course-discussions";
@@ -9,84 +10,134 @@ import * as Alert from "/imports/api/alerts/alert";
 
 import * as CourseDiscussionUtils from "/imports/utils/course-discussion-utils";
 import * as Tooltips from "/imports/utils/Tooltips";
+import { useUser } from "/imports/utils/react-meteor-data";
 
-import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
+import { DiscussionProfileIcon } from "../profile-icon";
+import { DiscussionProfileLink } from "../profile-link";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { RemoveDropdown } from "./remove-dropdown";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/richtext";
-import "/imports/ui/components/avatar";
-import "/imports/ui/components/profile-link";
+export type Props = {
+  post: CourseDiscussionEnity & { new?: true } & { saving?: boolean };
+  onEdit: () => void;
+};
 
-import "./remove-dropdown";
+export function Show({ post, onEdit }: Props) {
+  const { dateFormat, fromNow } = useDateTimeFormat();
+  const user = useUser();
+  const { t } = useTranslation();
 
-import "./template.html";
-import { i18n } from "/imports/startup/both/i18next";
-
-const Template = TemplateAny as TemplateStaticTyped<"postShow", CourseDiscussionEnity>;
-
-const template = Template.postShow;
-
-template.helpers({
-  postClasses() {
-    const post = Template.instance().data;
-
+  function postClasses() {
     const classes = [];
 
     classes.push(post.parentId ? "discussion-comment" : "discussion-post");
-    if (this.saving) {
+    if (post.saving) {
       classes.push("is-saving");
     }
 
-    return { class: classes.join(" ") };
-  },
-
-  mayEdit() {
-    const post = Template.instance().data;
-    return CourseDiscussionUtils.mayEditPost(Meteor.user() ?? undefined, post);
-  },
-
-  mayDelete() {
-    const post = Template.instance().data;
+    return classes.join(" ");
+  }
+  function mayEdit() {
+    return CourseDiscussionUtils.mayEditPost(user ?? undefined, post);
+  }
+  function mayDelete() {
     const course = Courses.findOne(post.courseId);
     if (!course) {
       throw new Error("Unexpected falsy: course");
     }
-    return CourseDiscussionUtils.mayDeletePost(Meteor.user() ?? undefined, course, post);
-  },
-
-  hasBeenEdited() {
-    const post = Template.instance().data;
+    return CourseDiscussionUtils.mayDeletePost(user ?? undefined, course, post);
+  }
+  function hasBeenEdited() {
     return moment(post.time_updated).isAfter(post.time_created);
-  },
-
-  removeDropdownAttr() {
-    const post = Template.instance().data;
+  }
+  function removeDropdownAttr() {
     return {
       async onRemove() {
         Tooltips.hide();
 
         try {
           await CourseDiscussionsMethods.deleteComment(post._id);
-          Alert.success(i18n("discussionPost.deleted", "Comment deleted."));
+          Alert.success(t("discussionPost.deleted", "Comment deleted."));
         } catch (err) {
-          Alert.serverError(err, i18n("discussionPost.deleted.error", "Could not delete comment"));
+          Alert.serverError(err, t("discussionPost.deleted.error", "Could not delete comment"));
         }
       },
     };
-  },
-});
+  }
 
-template.events({
-  "notifyAll .js-discussion-edit"(_event, instance) {
-    instance.$(".js-discussion-edit").trigger("click");
-    (instance.parentInstance(2) as any).notifyAll.set(true);
-    window.location.hash = "#discussion";
-    routerAutoscroll.scheduleScroll();
-  },
-
-  "click .js-discussion-edit"(event, instance) {
+  function onEditClickHandler() {
     Tooltips.hide();
-    event.stopImmediatePropagation();
-    (instance.parentInstance() as any).editing.set(true);
-  },
-});
+    onEdit();
+  }
+  
+  return post.new ? (
+    post.parentId ? (
+      <div className="discussion-reply">
+        <button
+          type="button"
+          className="btn btn-add discussion-reply-btn"
+          onClick={onEditClickHandler}
+        >
+          {t("course.discussion.comment_answer", "Answer")}
+        </button>
+      </div>
+    ) : (
+      <button type="button" className="btn btn-add page-component-btn" onClick={onEditClickHandler}>
+        <span className="fa-solid fa-pencil fa-fw" aria-hidden="true"></span>&nbsp;
+        {t("course.discussion.write_comment", "Write a comment")}
+      </button>
+    )
+  ) : (
+    <div className={postClasses()} id={`comment${post._id}`}>
+      <DiscussionProfileIcon userId={post.userId} />
+      <div className="discussion-post-content">
+        <div className="discussion-post-header">
+          <DiscussionProfileLink userId={post.userId} />{" "}
+          <span className="discussion-post-header-sub">
+            <span data-bs-toggle="tooltip" data-bs-title={dateFormat(post.time_created)}>
+              {fromNow(post.time_created)}
+            </span>
+            {post.notifyAll ? (
+              <>
+                {" "}
+                <i
+                  className="fa-solid fa-bell"
+                  aria-hidden="true"
+                  data-bs-toggle="tooltip"
+                  data-bs-title={t("course.discussion.allNotified", "All interested notified")}
+                ></i>
+              </>
+            ) : null}
+            {hasBeenEdited() ? (
+              <>
+                -{t("course.discussion.lastUpdate", "Last update")}:
+                <span data-bs-toggle="tooltip" data-bs-title={dateFormat(post.time_updated)}>
+                  {fromNow(post.time_updated)}
+                </span>
+              </>
+            ) : null}
+          </span>
+          <span className="discussion-buttons">
+            {mayEdit() ? (
+              <button type="button" className="discussion-edit-btn" onClick={onEditClickHandler}>
+                <span className="fa-solid fa-pen-to-square" aria-hidden="true"></span>
+              </button>
+            ) : null}
+            {mayDelete() ? <RemoveDropdown {...removeDropdownAttr()} /> : null}
+          </span>
+        </div>
+        <div className="discussion-post-body">
+          {post.title ? <h4 className="discussion-post-title">{post.title}</h4> : null}
+          <p dangerouslySetInnerHTML={{ __html: post.text }}></p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("PostShow", () => Show);
