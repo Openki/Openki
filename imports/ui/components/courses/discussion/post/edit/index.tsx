@@ -1,173 +1,268 @@
-import { Meteor } from "meteor/meteor";
-import { i18n } from "/imports/startup/both/i18next";
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+/* eslint-disable no-nested-ternary */
+import React, { useState } from "react";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
+import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
+import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useUser } from "/imports/utils/react-meteor-data";
 
-import { Courses } from "/imports/api/courses/courses";
 import { CourseDiscussionEnity } from "/imports/api/course-discussions/course-discussions";
 import * as CourseDiscussionsMethods from "/imports/api/course-discussions/methods";
 import { EditCommentFields, PostCommentFields } from "/imports/api/course-discussions/methods";
 import * as Alert from "/imports/api/alerts/alert";
+import * as Courses from "/imports/api/courses/publications";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
+import { DiscussionProfileIcon } from "../profile-icon";
+import { DiscussionProfileLink } from "../profile-link";
+import { Richtext } from "/imports/ui/components/richtext";
+import { ButtonCancel } from "/imports/ui/components/buttons";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/richtext";
-import "/imports/ui/components/avatar";
-import "/imports/ui/components/profile-link";
+export type Props = {
+  post: CourseDiscussionEnity & { new?: true };
+  onSave: () => void;
+  onCancel: () => void;
+};
 
-import "./template.html";
+export function Edit({ post, onSave, onCancel }: Props) {
+  const { dateFormat, fromNow } = useDateTimeFormat();
+  const user = useUser();
+  const { t } = useTranslation();
+  const [anon, setAnon] = useState(!post.userId);
+  const [validComment, setValidComment] = useState(!!post.text.trim());
+  const [commentTitle, setCommentTitle] = useState(post.title);
+  const [commentText, setCommentText] = useState(post.text);
+  const [isBusy, setIsBusy] = useState(false);
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "postEdit",
-  CourseDiscussionEnity & { new?: true },
-  {
-    anon: ReactiveVar<boolean>;
-    validComment: ReactiveVar<boolean>;
-    commentText: ReactiveVar<string>;
-    richtextPlaceholder: () => string;
-  }
->;
+  const [isLoading, course] = Courses.useDetails(post.courseId);
 
-const template = Template.postEdit;
-
-template.onCreated(function () {
-  const instance = this;
-
-  instance.anon = new ReactiveVar(!instance.data.userId);
-  instance.validComment = new ReactiveVar(!!instance.data.text.trim());
-  instance.commentText = new ReactiveVar(instance.data.text);
-
-  instance.richtextPlaceholder = () => {
-    return Template.instance().data.parentId
-      ? i18n("course.discussion.text_placeholder_answer", "Your answer")
-      : i18n("course.discussion.text_placeholder", "Your comment");
-  };
-});
-
-template.onRendered(function () {
-  const instance = this;
-  instance.$(".discussion-edit-title").trigger("select");
-});
-
-template.helpers({
-  postClass() {
-    return this.parentId ? "discussion-comment" : "discussion-post";
-  },
-
-  showUserId() {
-    return !this.new || !Template.instance().anon.get();
-  },
-
-  anonChecked() {
-    if (Template.instance().anon.get()) {
-      return { checked: 1 };
-    }
-    return {};
-  },
-
-  anonDisabled() {
-    if (Meteor.userId()) {
-      return {};
-    }
-    return { disabled: 1 };
-  },
-
-  enableWhenValid() {
-    return Template.instance().validComment.get() ? "" : "disabled";
-  },
-
-  hasBeenEdited() {
-    const post = Template.instance().data;
-    return moment(post.time_updated).isAfter(post.time_created);
-  },
-
-  notifyAllChecked() {
-    if (!this.new) {
-      return {};
-    }
-    if (this.notifyAll) {
-      return { checked: 1 };
-    }
-    return {};
-  },
-
-  canNotifyAll() {
-    if (Template.instance().anon.get()) {
+  function notifyAllChecked() {
+    if (!post.new) {
       return false;
     }
+    if (post.notifyAll) {
+      return true;
+    }
+    return false;
+  }
+  const [notifyAll, setNotifyAll] = useState(notifyAllChecked());
 
-    const user = Meteor.user();
+  const richtextPlaceholder = () => {
+    return post.parentId
+      ? t("course.discussion.text_placeholder_answer", "Your answer")
+      : t("course.discussion.text_placeholder", "Your comment");
+  };
+
+  function postClass() {
+    return post.parentId ? "discussion-comment" : "discussion-post";
+  }
+  function showUserId() {
+    return !post.new || !anon;
+  }
+
+  function anonDisabled() {
+    if (user?._id) {
+      return {};
+    }
+    return { disabled: true };
+  }
+  function hasBeenEdited() {
+    return moment(post.time_updated).isAfter(post.time_created);
+  }
+  function canNotifyAll() {
+    if (anon) {
+      return false;
+    }
 
     if (UserPrivilegeUtils.privileged(user, "admin")) {
       return true;
     }
 
-    const course = Courses.findOne(this.courseId);
+    if (!isLoading()) {
+      return false;
+    }
 
     return !!(
       course?.userHasRole(user?._id, "team") ||
       user?.groups.some((g) => course?.groupOrganizers.includes(g))
     );
-  },
-
-  richtextAttr() {
-    const instance = Template.instance();
+  }
+  function richtextAttr() {
     return {
-      text: instance.data.text,
-      placeholder: instance.richtextPlaceholder(),
+      text: post.text,
+      placeholder: richtextPlaceholder(),
       onChange(value: string) {
-        instance.validComment.set(!!value);
-        instance.commentText.set(value);
+        setValidComment(!!value);
+        setCommentText(value);
       },
     };
-  },
-});
+  }
 
-template.events({
-  change(_event, instance) {
-    instance.anon.set(instance.$(".js-anon").prop("checked"));
-  },
+  return (
+    <div className={`${postClass()} ${post.new && !post.parentId ? "discussion-post-new" : ""}`}>
+      <DiscussionProfileIcon userId={post.userId} />
+      <div className="discussion-edit-content">
+        <form
+          onSubmit={async (event) => {
+            event.preventDefault();
 
-  async submit(event, instance) {
-    event.stopImmediatePropagation();
-    event.preventDefault();
+            onSave();
 
-    const comment = { title: instance.$(".js-post-title").val() as string } as
-      | PostCommentFields
-      | EditCommentFields;
+            setIsBusy(true);
 
-    comment.text = instance.commentText.get();
+            const comment = { title: commentTitle || "" } as PostCommentFields | EditCommentFields;
 
-    (instance.parentInstance() as any).editing.set(false);
-    instance.busy("saving");
+            comment.text = commentText;
 
-    try {
-      if (instance.data.new) {
-        const postComment = comment as PostCommentFields;
-        postComment.courseId = instance.data.courseId;
+            try {
+              if (post.new) {
+                const postComment = comment as PostCommentFields;
+                postComment.courseId = post.courseId;
 
-        if (instance.data.parentId) {
-          postComment.parentId = instance.data.parentId;
-        }
+                if (post.parentId) {
+                  postComment.parentId = post.parentId;
+                }
 
-        postComment.anon = instance.$(".js-anon").prop("checked");
-        postComment.notifyAll = instance.$(".js-notify-all").prop("checked") || false;
+                postComment.anon = anon;
+                postComment.notifyAll = notifyAll;
 
-        await CourseDiscussionsMethods.postComment(postComment);
-      } else {
-        const editComment = comment as EditCommentFields;
-        editComment._id = instance.data._id;
-        await CourseDiscussionsMethods.editComment(editComment);
-      }
-    } catch (err) {
-      Alert.serverError(
-        err,
-        i18n("courseDiscussions.postComment.error", "Posting your comment went wrong"),
-      );
-    } finally {
-      instance.busy(false);
-    }
-  },
-});
+                await CourseDiscussionsMethods.postComment(postComment);
+              } else {
+                const editComment = comment as EditCommentFields;
+                editComment._id = post._id;
+                await CourseDiscussionsMethods.editComment(editComment);
+              }
+            } catch (err) {
+              Alert.serverError(
+                err,
+                t("courseDiscussions.postComment.error", "Posting your comment went wrong"),
+              );
+            } finally {
+              setIsBusy(false);
+            }
+          }}
+        >
+          <div className="discussion-edit-header">
+            {showUserId() ? (
+              <DiscussionProfileLink userId={post.userId} />
+            ) : (
+              <strong>{t("discussion.anonymous", "Anonymous")}</strong>
+            )}
+            {!post.new ? (
+              <span className="discussion-post-header-sub">
+                {" "}
+                <span data-bs-toggle="tooltip" data-bs-title={dateFormat(post.time_created)}>
+                  {fromNow(post.time_created)}
+                </span>
+                {post.notifyAll ? (
+                  <>
+                    {" "}
+                    <i
+                      className="fa-solid fa-bell"
+                      aria-hidden="true"
+                      data-bs-toggle="tooltip"
+                      data-bs-title={t("course.discussion.allNotified", "All interested notified")}
+                    ></i>
+                  </>
+                ) : null}
+                {hasBeenEdited() ? (
+                  <>
+                    {" "}
+                    - {t("course.discussion.lastUpdate", "Last update")}:{" "}
+                    <span data-bs-toggle="tooltip" data-bs-title={dateFormat(post.time_updated)}>
+                      {fromNow(post.time_updated)}
+                    </span>
+                  </>
+                ) : null}
+              </span>
+            ) : null}
+          </div>
+          <div className="discussion-edit-body">
+            <div className="mb-3">
+              <input
+                className="form-control form-control-lg"
+                type="text"
+                placeholder={`${t("course.discussion.title_placeholder", "Title")} ${t(
+                  "_inputField.optional",
+                )}`}
+                value={commentTitle}
+                onChange={(event) => {
+                  setCommentTitle(event.currentTarget.value);
+                }}
+                autoFocus={true}
+              />
+            </div>
+            <div className="mb-3">
+              <Richtext {...richtextAttr()} />
+            </div>
+            {post.new ? (
+              <>
+                {canNotifyAll() ? (
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      checked={notifyAll}
+                      id="canNotifyAllCheck"
+                      onChange={(event) => {
+                        setNotifyAll(event.currentTarget.checked);
+                      }}
+                    />
+                    <label className="form-check-label" htmlFor="canNotifyAllCheck">
+                      <i className="fa-solid fa-bell" aria-hidden="true"></i>&nbsp;
+                      {t("course.discussion.notifyAll", "Notify all interested")}
+                    </label>
+                  </div>
+                ) : null}
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={anon}
+                    {...anonDisabled()}
+                    id="anonymousCheck"
+                    onChange={(event) => {
+                      setAnon(event.currentTarget.checked);
+                    }}
+                  />
+                  <label
+                    className="form-check-label discussion-toggle-anonymous"
+                    htmlFor="anonymousCheck"
+                  >
+                    <i className="fa-solid fa-user-secret" aria-hidden="true"></i>&nbsp;
+                    {t("course.discussion.anon", "Anonymous comment")}
+                  </label>
+                </div>
+              </>
+            ) : null}
+
+            <div className="form-actions">
+              <button
+                type="submit"
+                className="btn btn-save discussion-save-btn"
+                disabled={!validComment || isBusy}
+              >
+                <span className="fa-solid fa-paper-plane fa-fw" aria-hidden="true"></span>
+                {post.new
+                  ? post.parentId
+                    ? t("course.discussion.comment_btn.answer", "Answer")
+                    : t("course.discussion.comment_btn.write", "Write")
+                  : t("course.discussion.comment_btn.update", "Update my comment")}
+              </button>
+              <ButtonCancel
+                onClick={() => {
+                  onCancel();
+                }}
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("PostEdit", () => Edit);
