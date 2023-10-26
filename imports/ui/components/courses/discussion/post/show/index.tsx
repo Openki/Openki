@@ -110,7 +110,8 @@ export function Show({ post, onEdit }: Props) {
             ) : null}
             {hasBeenEdited() ? (
               <>
-                -{t("course.discussion.lastUpdate", "Last update")}:
+                {" "}
+                - {t("course.discussion.lastUpdate", "Last update")}:{" "}
                 <span data-bs-toggle="tooltip" data-bs-title={dateFormat(post.time_updated)}>
                   {fromNow(post.time_updated)}
                 </span>

@@ -109,16 +109,24 @@ template.helpers({
       },
     };
   },
+
+  postEditAttr() {
+    const instance = Template.instance();
+    return {
+      post: instance.data.post,
+      onSave: () => {
+        instance.editing.set(false);
+      },
+      onCancel: () => {
+        instance.editing.set(false);
+        instance.data.onCancel?.();
+      },
+    };
+  },
 });
 
 template.events({
   "click .js-show-previous-replies"(_event, instance) {
     instance.limit.set(0);
-  },
-
-  "click .js-discussion-cancel"() {
-    const instance = Template.instance();
-    instance.editing.set(false);
-    instance.data.onCancel?.();
   },
 });
