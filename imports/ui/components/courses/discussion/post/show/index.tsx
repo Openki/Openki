@@ -135,9 +135,3 @@ export function Show({ post, onEdit }: Props) {
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("PostShow", () => Show);

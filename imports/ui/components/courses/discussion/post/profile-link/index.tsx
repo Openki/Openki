@@ -20,9 +20,3 @@ export function DiscussionProfileLink({ userId }: Props) {
     <strong>{t("comment.profileLink.anonymous", "Anonymous")}</strong>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("DiscussionProfileLink", () => DiscussionProfileLink);

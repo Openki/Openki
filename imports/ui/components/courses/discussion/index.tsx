@@ -24,10 +24,10 @@ export function Discussion({ select, courseId }: Props) {
 
   const [isLoading, posts] = CourseDiscussions.useForCourse(courseId);
 
-  function posts2() {
+  function dicussions() {
     let filteredPosts = posts
       .filter((p) => !p.parentId)
-      .sort((a, b) => b.time_created.getMilliseconds() - a.time_created.getMilliseconds());
+      .sort((a, b) => b.time_created.valueOf() - a.time_created.valueOf());
 
     if (limit) {
       filteredPosts = filteredPosts.slice(0, limit);
@@ -38,7 +38,7 @@ export function Discussion({ select, courseId }: Props) {
   function responses(postId: string) {
     return posts
       .filter((p) => p.parentId === postId)
-      .sort((a, b) => b.time_created.getMilliseconds() - a.time_created.getMilliseconds());
+      .sort((a, b) => b.time_created.valueOf() - a.time_created.valueOf());
   }
   function newPostAttr() {
     return {
@@ -46,6 +46,7 @@ export function Discussion({ select, courseId }: Props) {
         new: true,
         courseId,
         userId,
+        title: "",
         text: "",
         notifyAll,
       } as any,
@@ -58,7 +59,7 @@ export function Discussion({ select, courseId }: Props) {
   }
   function limited() {
     if (limit) {
-      return posts2().length > limit;
+      return posts.length > limit;
     }
     return false;
   }
@@ -87,6 +88,9 @@ export function Discussion({ select, courseId }: Props) {
   });
 
   useEffect(() => {
+    if (!select) {
+      return;
+    }
     // Jump to the selected comment.
     // This method should work for screenreaders too.
     window.location.hash = `#comment${select}`;
@@ -113,14 +117,14 @@ export function Discussion({ select, courseId }: Props) {
       ) : (
         <>
           <Post {...newPostAttr()} />
-          {posts2().map((post) => (
+          {dicussions().map((post) => (
             <div key={post._id} className="discussion-conversation">
               <Post post={post} responses={responses(post._id)} />
             </div>
           ))}
           {limited() ? (
             <button
-              className="btn btn-add page-component-btn js-show-all-posts"
+              className="btn btn-add page-component-btn"
               type="button"
               onClick={() => {
                 setLimit(0);
@@ -128,7 +132,7 @@ export function Discussion({ select, courseId }: Props) {
             >
               <i className="fa-solid fa-chevron-down fa-fw" aria-hidden="true"></i>
               {t("course.discussions.showAllComment", "Show all {NUM} comments", {
-                NUM: posts2().length,
+                NUM: posts.length,
               })}
             </button>
           ) : null}

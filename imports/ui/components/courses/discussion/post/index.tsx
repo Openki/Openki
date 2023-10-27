@@ -59,6 +59,7 @@ export function Post({ post, responses, edit, onCancel }: Props) {
       parentId: post._id,
       courseId: post.courseId,
       userId,
+      title: "",
       text: "",
     };
   }
@@ -97,8 +98,3 @@ export function Post({ post, responses, edit, onCancel }: Props) {
   );
 }
 
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("Post", () => Post);
