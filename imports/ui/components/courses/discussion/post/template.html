@@ -1,19 +1,5 @@
 <template name="post">
-  {{#if editing}}
-    {{> postEdit postEditAttr}}
-  {{else}}
-    {{> postShow postShowAttr}}
-  {{/if}}
-  {{#if notAllResponsesShown}}
-    <button class="mt-3 btn btn-link p-0 toggle-all-responses js-show-previous-replies"
-            type="button">
-      {{i18n 'course.discussions.showPreviousReplies' 'Show all previous answers'}}
-    </button>
-  {{/if}}
-  {{#each response in responses}}
-    {{> post post=response}}
-  {{/each}}
-  {{#if allowResponse}}
-    {{> post post=newResponse}}
-  {{/if}}
+  <div>
+    {{> React (component Post)}}
+  </div>
 </template>
