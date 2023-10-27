@@ -49,7 +49,7 @@ if (Meteor.isClient) {
           );
         });
 
-        $("#discussion").trigger("notifyAll");
+        document.getElementById("discussion")?.dispatchEvent(new Event("notifyAll"));
 
         await waitFor(() => {
           assert($("#canNotifyAllCheck").length > 0, `Notify all interested checkbox is shown`);
