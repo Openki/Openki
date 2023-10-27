@@ -1,132 +1,116 @@
-import { Meteor } from "meteor/meteor";
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useState } from "react";
+import { useUserId } from "/imports/utils/react-meteor-data";
+import { useTranslation } from "react-i18next";
 
 import {
   CourseDiscussionEnity,
   CourseDiscussions,
 } from "/imports/api/course-discussions/course-discussions";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/richtext";
+import { Edit } from "./edit";
+import { Show } from "./show";
 
-import "./show";
-import "./edit";
-import "./profile-link";
-import "./profile-icon";
-
-import "./template.html";
 import "./styles.scss";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "post",
-  { post: CourseDiscussionEnity & { new?: true }; edit?: boolean; onCancel?: () => void },
-  { isParent: boolean; editing: ReactiveVar<boolean>; limit: ReactiveVar<number> }
->;
+function Responses({ post }: { post: CourseDiscussionEnity & { new?: true } }) {
+  const { t } = useTranslation();
+  const [limit, setLimit] = useState(2);
 
-const template = Template.post;
-
-template.onCreated(function () {
-  const instance = this;
-  const { post, edit } = instance.data;
-
-  instance.busy(false);
-
-  instance.isParent = !post.new && !post.parentId;
-  instance.editing = new ReactiveVar(!!edit);
-
-  instance.autorun(() => {
-    const { edit: edit2 } = Template.currentData();
-    instance.editing = new ReactiveVar(!!edit2);
-  });
-
-  instance.limit = new ReactiveVar(2);
-});
-
-template.helpers({
-  editing() {
-    return Template.instance().editing.get();
-  },
-
-  responses() {
+  function responses() {
     // Note that the 'discussion' subscription from the 'discussion' template
     // covers responses as well
-    const instance = Template.instance();
-    const { post } = instance.data;
-
-    if (!instance.isParent) {
-      return false;
-    }
 
     const replies = CourseDiscussions.find(
       { parentId: post._id },
       { sort: { time_created: 1 } },
     ).fetch();
 
-    const limit = instance.limit.get();
     return limit ? replies.slice(-limit) : replies;
-  },
-
-  notAllResponsesShown() {
-    const instance = Template.instance();
-    const { post } = instance.data;
-
-    if (!instance.isParent) {
-      return false;
-    }
-
-    const limit = instance.limit.get();
+  }
+  function notAllResponsesShown() {
     const count = CourseDiscussions.find({ parentId: post._id }, { limit: limit + 1 }).count();
 
     return limit && count > limit;
-  },
+  }
 
-  allowResponse() {
-    return Template.instance().isParent;
-  },
+  return (
+    <>
+      {notAllResponsesShown() ? (
+        <button
+          className="mt-3 btn btn-link p-0 toggle-all-responses"
+          type="button"
+          onClick={() => {
+            setLimit(0);
+          }}
+        >
+          {t("course.discussions.showPreviousReplies", "Show all previous answers")}
+        </button>
+      ) : null}
+      {responses().map((response) => (
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        <Post post={response} />
+      ))}
+    </>
+  );
+}
 
-  newResponse() {
-    const instance = Template.instance();
-    const { post } = instance.data;
-    if (post.parentId) {
-      return false;
-    }
+export type Props = {
+  post: CourseDiscussionEnity & { new?: true };
+  edit?: boolean;
+  onCancel?: () => void;
+};
+
+export function Post({ post, edit, onCancel }: Props) {
+  const isParent = !post.new && !post.parentId;
+  const [editing, setEditing] = useState(!!edit);
+  const userId = useUserId();
+
+  function newResponse() {
     return {
       new: true,
       parentId: post._id,
       courseId: post.courseId,
-      userId: Meteor.userId(),
+      userId,
       text: "",
     };
-  },
-
-  postShowAttr() {
-    const instance = Template.instance();
+  }
+  function postShowAttr() {
     return {
-      post: instance.data.post,
+      post,
       onEdit: () => {
-        instance.editing.set(true);
+        setEditing(true);
       },
     };
-  },
-
-  postEditAttr() {
-    const instance = Template.instance();
+  }
+  function postEditAttr() {
     return {
-      post: instance.data.post,
+      post,
       onSave: () => {
-        instance.editing.set(false);
+        setEditing(false);
       },
       onCancel: () => {
-        instance.editing.set(false);
-        instance.data.onCancel?.();
+        setEditing(false);
+        onCancel?.();
       },
     };
-  },
-});
+  }
 
-template.events({
-  "click .js-show-previous-replies"(_event, instance) {
-    instance.limit.set(0);
-  },
-});
+  return (
+    <>
+      {editing ? <Edit {...postEditAttr()} /> : <Show {...postShowAttr()} />}
+
+      {isParent ? (
+        <>
+          <Responses post={post} />
+          <Post post={newResponse() as any} />
+        </>
+      ) : null}
+    </>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("Post", () => Post);
