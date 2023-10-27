@@ -1,135 +1,126 @@
-import { Meteor } from "meteor/meteor";
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useUserId } from "/imports/utils/react-meteor-data";
 
-import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
-import { TrackerAsync } from "/imports/utils/promisify";
+import * as CourseDiscussions from "/imports/api/course-discussions/publications";
 
 import { routerAutoscroll } from "/imports/ui/lib/router-autoscroll";
 
-import "/imports/ui/components/buttons";
-import "/imports/ui/components/richtext";
-import "/imports/ui/components/avatar";
-import "/imports/ui/components/profile-link";
+import { LoadingRow } from "/imports/ui/pages/loading";
+import { Post } from "./post";
 
-import "./post";
-
-import "./template.html";
 import "./styles.scss";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "discussion",
-  { select: string; courseId: string },
-  {
-    count: ReactiveVar<number>;
-    limit: ReactiveVar<number>;
-    edit: ReactiveVar<boolean>;
-    notifyAll: ReactiveVar<boolean>;
-  }
->;
+export type Props = { select: string; courseId: string };
 
-const template = Template.discussion;
-
-template.onCreated(function () {
-  const instance = this;
-
-  instance.count = new ReactiveVar(0);
+export function Discussion({ select, courseId }: Props) {
+  const { t } = useTranslation();
+  const userId = useUserId();
 
   // If we want to jump to a comment we don't fold the comments
-  const { select } = instance.data;
-  const limit = select ? 0 : 3;
-  instance.limit = new ReactiveVar(limit);
+  const [limit, setLimit] = useState(select ? 0 : 3);
+  const [edit, setEdit] = useState(false);
+  const [notifyAll, setNotifyAll] = useState(false);
 
-  instance.subscribe("discussion", instance.data.courseId, async () => {
-    if (select) {
-      // Wait for the templates to render before trying to jump there.
-      await TrackerAsync.afterFlush();
+  const [isLoading, posts] = CourseDiscussions.useForCourse(courseId);
 
-      // Jump to the selected comment.
-      // This method should work for screenreaders too.
-      window.location.hash = `#comment${select}`;
-      routerAutoscroll.scheduleScroll();
-    }
-  });
+  function posts2() {
+    let filteredPosts = posts
+      .filter((p) => !p.parentId)
+      .sort((a, b) => b.time_created.getMilliseconds() - a.time_created.getMilliseconds());
 
-  instance.edit = new ReactiveVar(false);
-  instance.notifyAll = new ReactiveVar(false);
-});
-
-template.helpers({
-  posts() {
-    const instance = Template.instance();
-    const { data } = instance;
-
-    let posts = CourseDiscussions.find(
-      {
-        courseId: data.courseId,
-        parentId: { $exists: false },
-      },
-      {
-        sort: { time_updated: -1 },
-      },
-    ).fetch();
-
-    const count = posts.length;
-    instance.count.set(count);
-
-    const limit = instance.limit.get();
     if (limit) {
-      posts = posts.slice(0, limit);
+      filteredPosts = filteredPosts.slice(0, limit);
     }
 
-    return posts;
-  },
-
-  newPostAttr() {
-    const instance = Template.instance();
-    const { data } = instance;
-
+    return filteredPosts;
+  }
+  function newPostAttr() {
     return {
       post: {
         new: true,
-        courseId: data.courseId,
-        userId: Meteor.userId(),
+        courseId,
+        userId,
         text: "",
-        notifyAll: instance.notifyAll.get(),
-      },
-      edit: instance.edit.get(),
+        notifyAll,
+      } as any,
+      edit,
       onCancel: () => {
-        instance.edit.set(false);
-        instance.notifyAll.set(false);
+        setEdit(false);
+        setNotifyAll(false);
       },
     };
-  },
-
-  limited() {
-    const instance = Template.instance();
-    const limit = instance.limit.get();
-
+  }
+  function limited() {
     if (limit) {
-      return instance.count.get() > limit;
+      return posts2().length > limit;
     }
     return false;
-  },
+  }
 
-  count() {
-    return Template.instance().count.get();
-  },
-});
+  useEffect(() => {
+    document.getElementById("#discussion")?.addEventListener("notifyAll", () => {
+      setEdit(true);
+      setNotifyAll(true);
+      window.location.hash = "#discussion";
+      routerAutoscroll.scheduleScroll();
+    });
+    document.getElementById("#discussion")?.addEventListener("writeComment", () => {
+      setEdit(true);
+      window.location.hash = "#discussion";
+      routerAutoscroll.scheduleScroll();
+    });
+  });
 
-template.events({
-  "click .js-show-all-posts"(_event, instance) {
-    instance.limit.set(0);
-  },
-  "notifyAll #discussion"(_event, instance) {
-    instance.edit.set(true);
-    instance.notifyAll.set(true);
-    window.location.hash = "#discussion";
+  useEffect(() => {
+    // Jump to the selected comment.
+    // This method should work for screenreaders too.
+    window.location.hash = `#comment${select}`;
     routerAutoscroll.scheduleScroll();
-  },
-  "writeComment #discussion"(_event, instance) {
-    instance.edit.set(true);
-    window.location.hash = "#discussion";
-    routerAutoscroll.scheduleScroll();
-  },
-});
+  });
+
+  // style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react.
+  return (
+    <div className="page-component discussion" id="discussion" style={{ marginTop: "15px" }}>
+      <div className="page-component-header">
+        <h4>
+          <span className="fa-solid fa-comments fa-fw" aria-hidden="true"></span>&nbsp;
+          {t("course.title.Discussion", "Discussion")}
+        </h4>
+      </div>
+
+      {isLoading() ? (
+        <LoadingRow />
+      ) : (
+        <>
+          <Post {...newPostAttr()} />
+          {posts2().map((post) => (
+            <div key={post._id} className="discussion-conversation">
+              <Post post={post} />
+            </div>
+          ))}
+          {limited() ? (
+            <button
+              className="btn btn-add page-component-btn js-show-all-posts"
+              type="button"
+              onClick={() => {
+                setLimit(0);
+              }}
+            >
+              <i className="fa-solid fa-chevron-down fa-fw" aria-hidden="true"></i>
+              {t("course.discussions.showAllComment", "Show all {NUM} comments", {
+                NUM: posts2().length,
+              })}
+            </button>
+          ) : null}
+        </>
+      )}
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("Discussion", () => Discussion);
