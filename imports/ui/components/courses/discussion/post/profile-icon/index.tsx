@@ -32,9 +32,3 @@ export function DiscussionProfileIcon({ userId }: Props) {
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("DiscussionProfileIcon", () => DiscussionProfileIcon);

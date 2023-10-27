@@ -260,9 +260,3 @@ export function Edit({ post, onSave, onCancel }: Props) {
     </div>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("PostEdit", () => Edit);
