@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUserId } from "/imports/utils/react-meteor-data";
 
@@ -16,11 +16,11 @@ export type Props = { select: string; courseId: string };
 export function Discussion({ select, courseId }: Props) {
   const { t } = useTranslation();
   const userId = useUserId();
-
   // If we want to jump to a comment we don't fold the comments
   const [limit, setLimit] = useState(select ? 0 : 3);
   const [edit, setEdit] = useState(false);
   const [notifyAll, setNotifyAll] = useState(false);
+  const elementRef = useRef<HTMLDivElement>(null);
 
   const [isLoading, posts] = CourseDiscussions.useForCourse(courseId);
 
@@ -34,6 +34,11 @@ export function Discussion({ select, courseId }: Props) {
     }
 
     return filteredPosts;
+  }
+  function responses(postId: string) {
+    return posts
+      .filter((p) => p.parentId === postId)
+      .sort((a, b) => b.time_created.getMilliseconds() - a.time_created.getMilliseconds());
   }
   function newPostAttr() {
     return {
@@ -59,17 +64,26 @@ export function Discussion({ select, courseId }: Props) {
   }
 
   useEffect(() => {
-    document.getElementById("#discussion")?.addEventListener("notifyAll", () => {
+    const element = elementRef.current;
+    const handleNotifyAll = () => {
       setEdit(true);
       setNotifyAll(true);
       window.location.hash = "#discussion";
       routerAutoscroll.scheduleScroll();
-    });
-    document.getElementById("#discussion")?.addEventListener("writeComment", () => {
+    };
+    element?.addEventListener("notifyAll", handleNotifyAll);
+
+    const handleWriteComment = () => {
       setEdit(true);
       window.location.hash = "#discussion";
       routerAutoscroll.scheduleScroll();
-    });
+    };
+    element?.addEventListener("writeComment", handleWriteComment);
+
+    return () => {
+      element?.removeEventListener("notifyAll", handleNotifyAll);
+      element?.removeEventListener("writeComment", handleWriteComment);
+    };
   });
 
   useEffect(() => {
@@ -81,7 +95,12 @@ export function Discussion({ select, courseId }: Props) {
 
   // style fixes a problem that occurs during the transition to react. This can be removed when everything is changed to react.
   return (
-    <div className="page-component discussion" id="discussion" style={{ marginTop: "15px" }}>
+    <div
+      className="page-component discussion"
+      id="discussion"
+      ref={elementRef}
+      style={{ marginTop: "15px" }}
+    >
       <div className="page-component-header">
         <h4>
           <span className="fa-solid fa-comments fa-fw" aria-hidden="true"></span>&nbsp;
@@ -96,7 +115,7 @@ export function Discussion({ select, courseId }: Props) {
           <Post {...newPostAttr()} />
           {posts2().map((post) => (
             <div key={post._id} className="discussion-conversation">
-              <Post post={post} />
+              <Post post={post} responses={responses(post._id)} />
             </div>
           ))}
           {limited() ? (

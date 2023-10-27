@@ -158,6 +158,6 @@ template.events({
   },
 
   "click .js-first-steps-comment"() {
-    $("#discussion").trigger("writeComment");
+    document.getElementById("discussion")?.dispatchEvent(new Event("writeComment"));
   },
 });
