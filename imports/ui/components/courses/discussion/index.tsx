@@ -35,10 +35,10 @@ export function Discussion({ select, courseId }: Props) {
 
     return filteredPosts;
   }
-  function responses(postId: string) {
+  function responses(discussionId: string) {
     return posts
-      .filter((p) => p.parentId === postId)
-      .sort((a, b) => b.time_created.valueOf() - a.time_created.valueOf());
+      .filter((p) => p.parentId === discussionId)
+      .sort((a, b) => a.time_created.valueOf() - b.time_created.valueOf());
   }
   function newPostAttr() {
     return {
