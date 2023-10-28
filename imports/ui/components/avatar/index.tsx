@@ -35,7 +35,7 @@ function UserAvatar(props: {
     return user?.avatar?.color || 0;
   }
 
-  if (isLoading()) {
+  if (isLoading() || color() === 0) {
     return <Anom className={props.className} />;
   }
 

@@ -105,8 +105,6 @@ export function Edit({ post, onSave, onCancel }: Props) {
           onSubmit={async (event) => {
             event.preventDefault();
 
-            onSave();
-
             setIsBusy(true);
 
             const comment = { title: commentTitle || "" } as PostCommentFields | EditCommentFields;
@@ -131,6 +129,8 @@ export function Edit({ post, onSave, onCancel }: Props) {
                 editComment._id = post._id;
                 await CourseDiscussionsMethods.editComment(editComment);
               }
+
+              onSave();
             } catch (err) {
               Alert.serverError(
                 err,
