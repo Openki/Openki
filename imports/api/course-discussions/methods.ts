@@ -98,7 +98,6 @@ export const postComment = ServerMethod(
 
     return commentId;
   },
-  { simulation: false },
 );
 
 export const EditCommentFieldsPattern = {
@@ -128,7 +127,6 @@ export const editComment = ServerMethod(
 
     await CourseDiscussions.updateAsync(originalComment._id, { $set: update });
   },
-  { simulation: false },
 );
 
 export const deleteComment = ServerMethod(
