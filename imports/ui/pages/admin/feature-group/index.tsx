@@ -1,75 +1,134 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { Session } from "meteor/session";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { Groups } from "/imports/api/groups/groups";
-import { Regions } from "/imports/api/regions/regions";
+import * as Groups from "/imports/api/groups/publications";
 import * as RegionsMethods from "/imports/api/regions/methods";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
 
-import "./template.html";
 import "./styles.scss";
 
-const Template = TemplateAny as TemplateStaticTyped<"adminFeatureGroupPage">;
+export function AdminFeatureGroupPage() {
+  const { t } = useTranslation();
+  const [isBusy, setIsBusy] = useState(false);
+  const currentRegion = useCurrentRegion();
+  const [groupToBeFeatured, setGroupToBeFeatured] = useState(currentRegion?.featuredGroup || "");
 
-const template = Template.adminFeatureGroupPage;
+  const [isLoading, groups] = Groups.useFindFilter({}, undefined, undefined, [["name", "asc"]]);
 
-template.onCreated(function () {
-  const instance = this;
-  instance.subscribe("Groups.findFilter", {});
-  instance.busy(false);
-});
-
-template.helpers({
-  groups() {
-    return Groups.find({}, { sort: { name: 1 } });
-  },
-  featuredGroup() {
-    const groupId = Regions.currentRegion()?.featuredGroup;
+  function featuredGroup() {
+    const groupId = currentRegion?.featuredGroup;
     if (!groupId) {
       return undefined;
     }
-    return Groups.findOne(groupId);
-  },
-});
+    return groups.find((g) => g._id === groupId);
+  }
 
-template.events({
-  async "submit .js-feature-group"(event, instance) {
-    event.preventDefault();
+  if (isLoading()) {
+    return null;
+  }
 
-    const regionId = Session.get("region");
-    if (!regionId) {
-      return;
-    }
+  return (
+    <>
+      {featuredGroup() ? (
+        <div className="admin-featured-group">
+          <div className="mb-2">
+            {t(
+              "featureGroup.groupIsFeatured",
+              'The "{GROUP}" group is featured for the "{REGION}" region.',
+              { GROUP: featuredGroup()?.name, REGION: currentRegion?.name },
+            )}
+          </div>
+          <button
+            type="button"
+            className="btn btn-delete js-unset-featured-group"
+            disabled={isBusy}
+            onClick={async () => {
+              if (!currentRegion) {
+                return;
+              }
 
-    const groupId = instance.$("#groupToBeFeatured").val() as string;
+              setIsBusy(true);
+              try {
+                await RegionsMethods.unsetFeaturedGroup(currentRegion._id);
+              } catch (err) {
+                Alert.serverError(err);
+              } finally {
+                setIsBusy(false);
+              }
+            }}
+          >
+            {isBusy ? (
+              <>
+                <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
+                {t("_button.deleting")}
+              </>
+            ) : (
+              t("featureGroup.deleteButton", 'Remove the featured group for "{REGION}"', {
+                REGION: currentRegion?.name,
+              })
+            )}
+          </button>
+        </div>
+      ) : null}
+      <h3>{t("featureGroup.featureGroup", "Feature group")}</h3>
+      <form
+        onSubmit={async (event) => {
+          event.preventDefault();
 
-    instance.busy("saving");
+          if (!currentRegion) {
+            return;
+          }
 
-    try {
-      await RegionsMethods.featureGroup(regionId, groupId);
-    } catch (err) {
-      Alert.serverError(err);
-    } finally {
-      instance.busy(false);
-    }
-  },
+          setIsBusy(true);
+          try {
+            await RegionsMethods.featureGroup(currentRegion._id, groupToBeFeatured);
+          } catch (err) {
+            Alert.serverError(err);
+          } finally {
+            setIsBusy(false);
+          }
+        }}
+      >
+        <div className="mb-3">
+          <select
+            className="form-select"
+            onChange={(event) => {
+              setGroupToBeFeatured(event.currentTarget.value);
+            }}
+            defaultValue={groupToBeFeatured}
+          >
+            <option value="" disabled className="select-placeholder">
+              {t("_selection.pleaseSelect")}
+            </option>
+            {groups.map((group) => (
+              <option key={group._id} value={group._id}>
+                {group.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-actions">
+          <button type="submit" className="btn btn-save" disabled={isBusy}>
+            {isBusy ? (
+              <>
+                <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
+                {t("_button.saving")}
+              </>
+            ) : (
+              t("featureGroup.saveButton", 'Feature this group in the "{REGION}" region', {
+                REGION: currentRegion?.name,
+              })
+            )}
+          </button>
+        </div>
+      </form>
+    </>
+  );
+}
 
-  async "click .js-unset-featured-group"(event, instance) {
-    event.preventDefault();
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
 
-    const regionId = Session.get("region");
-    if (!regionId) {
-      return;
-    }
-
-    instance.busy("deleting");
-
-    try {
-      await RegionsMethods.unsetFeaturedGroup(regionId);
-    } catch (err) {
-      Alert.serverError(err);
-    } finally {
-      instance.busy(false);
-    }
-  },
-});
+Template.registerHelper("AdminFeatureGroupPage", () => AdminFeatureGroupPage);
