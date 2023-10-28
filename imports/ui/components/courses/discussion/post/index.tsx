@@ -97,4 +97,3 @@ export function Post({ post, responses, edit, onCancel }: Props) {
     </>
   );
 }
-
