@@ -46,7 +46,7 @@ export function AdminPanelPage() {
       {tasks.map((task) => (
         <div key={task.route} className="col-12 col-sm-6 col-md-4 mb-4">
           <a href={Router.path(task.route)}>
-            <div className="admin-task js-admin-task">
+            <div className="admin-task">
               <i className={`${task.icon} fa-2x`} aria-hidden="true"></i>
               <h3>{task.name}</h3>
             </div>

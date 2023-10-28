@@ -41,7 +41,7 @@ export function AdminFeatureGroupPage() {
           </div>
           <button
             type="button"
-            className="btn btn-delete js-unset-featured-group"
+            className="btn btn-delete"
             disabled={isBusy}
             onClick={async () => {
               if (!currentRegion) {

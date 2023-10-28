@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
 
@@ -22,6 +22,7 @@ export function Modal(props: {
   const [selectedEvents, setSelectedEvents] = useState([] as EventModel[]);
   const [allEventsSelected, setAllEventsSelected] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const modalRef = useRef(null);
 
   function isSelected(event: EventModel) {
     return !!selectedEvents?.some((e) => e._id === event._id);
@@ -50,7 +51,10 @@ export function Modal(props: {
   }, [showDeleteConfirm, selectedEvents.length]);
 
   useLayoutEffect(() => {
-    $(".js-delete-events-modal")
+    if (!modalRef.current) {
+      return;
+    }
+    $(modalRef.current)
       .modal("show")
       .on("hidden.bs.modal", function () {
         props.onHideEventsDeleteModal();
@@ -58,7 +62,7 @@ export function Modal(props: {
   });
 
   return (
-    <div className="modal delete-events-modal js-delete-events-modal" tabIndex={-1} role="dialog">
+    <div className="modal delete-events-modal" ref={modalRef} tabIndex={-1} role="dialog">
       <div className="modal-dialog modal-sm" role="document">
         <div className="modal-content">
           <div className="modal-header">
@@ -157,7 +161,9 @@ export function Modal(props: {
                                   }
                                   if (removed === responses) {
                                     setSelectedEvents([]);
-                                    $(".js-delete-events-modal").modal("hide");
+                                    if (modalRef.current) {
+                                      $(modalRef.current).modal("hide");
+                                    }
                                   }
                                 }
                               });

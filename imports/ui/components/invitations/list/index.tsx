@@ -100,7 +100,7 @@ function Invitations({
             <div className="col-6 col-md-2">
               <button
                 type="button"
-                className="btn btn-sm btn-delete text-danger js-remove"
+                className="btn btn-sm btn-delete text-danger"
                 onClick={async () => {
                   try {
                     await InvitationsMethods.remove(tenantId, invitation._id);

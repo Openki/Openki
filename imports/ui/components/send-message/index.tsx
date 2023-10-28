@@ -61,7 +61,7 @@ export function SendMessage(props: Data) {
     >
       <div className="mb-3">
         <textarea
-          className="form-control send-message-textarea js-email-message"
+          className="form-control send-message-textarea"
           placeholder={props.placeholder}
           autoFocus={true}
           value={message}

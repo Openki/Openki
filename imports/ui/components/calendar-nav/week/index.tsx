@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import $ from "jquery";
 import moment from "moment";
 import { useUser } from "/imports/utils/react-meteor-data";
@@ -34,6 +34,7 @@ export function CalendarNavWeek(props: Props) {
   const { weekNr, dateLong, dateShort } = useDateTimeFormat();
   const currentUser = useUser();
   const { t } = useTranslation();
+  const elementRef = useRef(null);
 
   function endDateTo() {
     return moment(date).add(6, "days");
@@ -72,7 +73,10 @@ export function CalendarNavWeek(props: Props) {
   }
 
   useEffect(() => {
-    const navContainer = $(".js-calendar-nav-container");
+    if (!elementRef.current) {
+      return;
+    }
+    const navContainer = $(elementRef.current);
     navContainer.slideDown();
 
     $(window).on("scroll", () => {
@@ -88,7 +92,7 @@ export function CalendarNavWeek(props: Props) {
   });
 
   return (
-    <div className="js-calendar-nav-container calendar-nav-container flex-container">
+    <div className="calendar-nav-container flex-container" ref={elementRef}>
       <div className="row align-items-center p-1">
         <div className="col-md-3 col-lg-4 p-1">
           <SearchField {...searchFieldAttr()} />

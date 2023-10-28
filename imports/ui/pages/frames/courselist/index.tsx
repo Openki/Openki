@@ -82,7 +82,7 @@ export function CourselistPage() {
       {moreCourses() ? (
         <div className="mt-2 text-center">
           <button
-            className="js-show-more-courses btn btn-secondary"
+            className="btn btn-secondary"
             type="button"
             onClick={() => {
               setLimit(limit + 5);
