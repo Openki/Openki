@@ -120,13 +120,13 @@ export function LoginFrame({
       }}
     >
       <div className="login">
-        <div className={`mb-3 ${errors.username ? "has-error" : ""}`}>
-          <div className="input-group">
+        <div className="mb-3">
+          <div className="input-group has-validation">
             <span className="input-group-text">
               <span className="fa-solid fa-user fa-fw" aria-hidden="true"></span>
             </span>
             <input
-              className="form-control js-username"
+              className={`form-control ${errors.username ? "is-invalid" : ""}`}
               placeholder={t("frame.login.usernameOrEmail", "Username or e-mail address")}
               type="text"
               autoFocus={true}
@@ -137,16 +137,16 @@ export function LoginFrame({
                 });
               }}
             />
+            {errors.username ? <div className="invalid-feedback">{errors.username}</div> : null}
           </div>
-          {errors.username}
         </div>
-        <div className={`mb-3 ${errors.password ? "has-error" : ""}`}>
-          <div className="input-group">
+        <div className="mb-3">
+          <div className="input-group has-validation">
             <span className="input-group-text">
               <span className="fa-solid fa-lock fa-fw" aria-hidden="true"></span>
             </span>
             <input
-              className="form-control js-password"
+              className={`form-control ${errors.password ? "is-invalid" : ""}`}
               placeholder={t("_inputField.password")}
               type="password"
               onChange={(event) => {
@@ -156,8 +156,8 @@ export function LoginFrame({
                 });
               }}
             />
+            {errors.password ? <div className="invalid-feedback">{errors.password}</div> : null}
           </div>
-          {errors.password}
         </div>
         <div className="mb-3 text-end">
           <button
