@@ -841,7 +841,7 @@
 	"report.confirm": "Dein Bericht wurde gesendet. Ein menschliches Wesen wird sich voraussichtlich darum kümmern.",
 	"report.notSent": "Dein Bericht konnte nicht gesendet werden",
 	"report.open": "Problem melden",
-	"report.placeholder": "Mein Luftkissenfahrzeug ist voller Aale. \n \nMeine E-Mail ist: fredi@email.com",
+	"report.placeholder": "Diese Nachricht geht an den technischen Support von Zürich Lernt.\nBetrifft dein Problem eine Lektion, nutze bitte das \"Fragen und Antworten\" Feld.\n\nMeine E-Mail ist: fredi@email.example",
 	"report.report": "Bericht abschicken",
 	"report.sending": "Bericht wird gesendet…",
 	"report.text": "Bitte beschreibe dein Problem. Damit wir uns bei dir zurückmelden können, gebe uns gerne auch einen Kontakt, z.B. deine E-Mail oder Telefonnummer mit an. Danke.",
