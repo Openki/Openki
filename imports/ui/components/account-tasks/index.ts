@@ -10,6 +10,7 @@ import type { Props as RegisterFrameProps } from "./register-frame";
 import "./forgot-pwd-frame";
 import type { Props as ForgotPwdFrameProps } from "./forgot-pwd-frame";
 import "./visitor-frame";
+import type { Props as VisitorFrameProps } from "./visitor-frame";
 import "./login-frame";
 import type { Props as LoginFrameProps } from "./login-frame";
 
@@ -108,6 +109,23 @@ template.helpers({
     return {
       username: instance.transferUsername || "",
       password: instance.transferPassword || "",
+      email: instance.transferMail || "",
+      onRegister() {
+        if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
+          $("#bs-navbar-collapse").collapse("hide");
+        }
+        $(".js-account-tasks").modal("hide");
+      },
+      onBack() {
+        instance.accountTask.set("login");
+      },
+    };
+  },
+
+  visitorFrameAttr(): VisitorFrameProps {
+    const instance = Template.instance();
+
+    return {
       email: instance.transferMail || "",
       onRegister() {
         if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
