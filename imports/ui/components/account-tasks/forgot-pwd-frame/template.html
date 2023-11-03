@@ -1,39 +1,5 @@
 <template name="forgotPwdFrame">
-  <form class="js-reset-pw">
-    <div class="forgot_login">
-      <p>
-        {{i18n 'forgot.explanation' 'We will send you an e-mail with a link allowing you to reset your password.'}}
-      </p>
-      <div class="mb-3">
-        <div class="input-group">
-          <span class="input-group-text">
-            <span class="fa-solid fa-envelope"></span>
-          </span>
-          <input class="form-control js-reset-pw-email" aria-describedby="forgotPwdMailHelp"
-                 placeholder="{{i18n 'frame.login.email' 'E-Mail' attr=true}}" type="email" />
-        </div>
-        {{#if noValidEmail}}
-          <span id="forgotPwdMailHelp" class="form-text">
-            {{i18n 'forgot.notValid' "Please enter the address you signed up with."}}
-          </span>
-        {{/if}}
-      </div>
-      <div class="mb-3">
-        <button class="btn btn-save js-reset-pwd-btn form-control"
-                disabled="{{#if noValidEmail}}disabled{{/if}}" type="submit" {{disabledIfBusy}}>
-          {{#if busy 'requesting-pw-reset'}}
-            <span class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
-            {{i18n 'forgot.send.busy' 'Resetting password…'}}
-          {{else}}
-            {{i18n 'forgot.send' 'Reset my password'}}
-          {{/if}}
-        </button>
-      </div>
-      <div class="mb-3">
-        <button type="button" class="btn btn-cancel js-reset-pwd-close-btn form-control">
-          {{i18n '_button.cancel'}}
-        </button>
-      </div>
-    </div>
-  </form>
+  <div>
+    {{> React (component ForgotPwdFrame)}}
+  </div>
 </template>

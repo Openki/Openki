@@ -8,6 +8,7 @@ import * as Viewport from "/imports/ui/lib/viewport";
 import "./register-frame";
 import type { Props as RegisterFrameProps } from "./register-frame";
 import "./forgot-pwd-frame";
+import type { Props as ForgotPwdFrameProps } from "./forgot-pwd-frame";
 import "./visitor-frame";
 import "./login-frame";
 import type { Props as LoginFrameProps } from "./login-frame";
@@ -86,6 +87,21 @@ template.helpers({
       },
     };
   },
+
+  forgotPwdFrameAttr(): ForgotPwdFrameProps {
+    const instance = Template.instance();
+
+    return {
+      email: instance.transferMail || "",
+      onForgotPwd() {
+        instance.accountTask.set("login");
+      },
+      onClose() {
+        instance.accountTask.set("login");
+      },
+    };
+  },
+
   registerFrameAttr(): RegisterFrameProps {
     const instance = Template.instance();
 

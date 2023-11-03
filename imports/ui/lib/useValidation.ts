@@ -13,20 +13,22 @@ export function useValidation(mapping: {
     }));
   };
 
-  return [
-    errors,
-    add,
-    () => {
-      setErrors(() => ({}));
-      let validity = true;
-      Object.keys(mapping).forEach((key) => {
-        const m = mapping[key];
-        if (m.onCheckValidity && !m.onCheckValidity()) {
-          add(key);
-          validity = false;
-        }
-      });
-      return validity;
-    },
-  ] as const;
+  const checkValidity = () => {
+    setErrors(() => ({}));
+    let validity = true;
+    Object.keys(mapping).forEach((key) => {
+      const m = mapping[key];
+      if (m.onCheckValidity && !m.onCheckValidity()) {
+        add(key);
+        validity = false;
+      }
+    });
+    return validity;
+  };
+
+  return [errors, checkValidity, add] as readonly [
+    errors: { [field: string]: string },
+    checkValidity: () => boolean,
+    addError: (key: string) => void,
+  ];
 }

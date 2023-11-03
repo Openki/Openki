@@ -36,7 +36,7 @@
           {{else if activeAccountTask 'register'}}
             {{> registerFrame registerFrameAttr}}
           {{else if activeAccountTask 'recoverPwd'}}
-            {{> forgotPwdFrame}}
+            {{> forgotPwdFrame forgotPwdFrameAttr}}
           {{else}}
             {{> loginFrame loginFrameAttr}}
           {{/if}}
