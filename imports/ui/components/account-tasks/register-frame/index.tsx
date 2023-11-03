@@ -152,7 +152,6 @@ export function RegisterFrame({
               });
             }}
           />
-
           {errors.password ? <div className="invalid-feedback">{errors.password}</div> : null}
         </div>
       </div>
@@ -204,7 +203,6 @@ export function RegisterFrame({
         <button type="submit" className="btn btn-add form-control js-register" disabled={isBusy}>
           {isBusy ? (
             <>
-              {" "}
               <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
               {t("login.register.submit.busy", "Registering…")}
             </>

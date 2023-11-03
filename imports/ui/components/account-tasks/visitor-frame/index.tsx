@@ -1,115 +1,132 @@
-import { Meteor } from "meteor/meteor";
-import { i18n } from "/imports/startup/both/i18next";
-import { Session } from "meteor/session";
+import React, { useState } from "react";
 import { Random } from "meteor/random";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { AccountsAsync } from "/imports/utils/promisify";
 
 import * as UsersMethods from "/imports/api/users/methods";
-import { Regions } from "/imports/api/regions/regions";
 
-import { ScssVars } from "/imports/ui/lib/scss-vars";
-import * as TemplateMixins from "/imports/ui/lib/template-mixins";
-import * as Viewport from "/imports/ui/lib/viewport";
 import * as Analytics from "/imports/ui/lib/analytics";
-import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
+import { useValidation } from "/imports/ui/lib/useValidation";
+import { useSession } from "/imports/utils/react-meteor-data";
+import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
+import { useTranslation } from "react-i18next";
 
-import "./template.html";
+export type Props = {
+  email: string;
+  onRegister: () => void;
+  onBack: () => void;
+};
 
-const Template = TemplateMixins.FormfieldErrors(
-  TemplateAny as TemplateStaticTyped<"visitorFrame">,
-  "visitorFrame",
-  {
+export function RegisterFrame({ email = "", onRegister, onBack }: Props) {
+  const { t } = useTranslation();
+  const currentRegion = useCurrentRegion();
+  const locale = useSession("locale");
+  const [isBusy, setIsBusy] = useState(false);
+  const [visitorData, setVisitorData] = useState({ email });
+  const [errors, checkValidity, addError] = useValidation({
     noEmail: {
-      text() {
-        return i18n(
-          "visitor.warning.noEmailProvided",
-          "Please enter an email-address to continue.",
-        );
-      },
+      text: () =>
+        t("visitor.warning.noEmailProvided", "Please enter an email-address to continue."),
       field: "email",
+      onCheckValidity: () => !!visitorData.email,
     },
     "email invalid": {
-      text() {
-        return i18n("register.warning.emailNotValid");
-      },
+      text: () => t("register.warning.emailNotValid"),
       field: "email",
     },
     "Email already exists.": {
-      text() {
-        return i18n(
+      text: () =>
+        t(
           "visitor.warning.emailExists",
           "This email already exists. Have you tried resetting your password?",
-        );
-      },
+        ),
       field: "email",
     },
-  },
-);
+  });
 
-const template = Template.visitorFrame;
+  return (
+    <form
+      onSubmit={async (event) => {
+        event.preventDefault();
 
-template.onCreated(function () {
-  const instance = this;
-  instance.busy(false);
-});
+        if (!checkValidity()) {
+          return;
+        }
 
-template.onRendered(function () {
-  const instance = this;
+        setIsBusy(true);
 
-  instance.$("input").first().trigger("select");
-});
+        try {
+          await AccountsAsync.createUser({
+            ...visitorData,
+            password: Random.secret(),
+            locale,
+          } as any);
 
-template.events({
-  async "click .js-visitor"(event, instance) {
-    event.preventDefault();
-    instance.errors.reset();
+          onRegister();
 
-    const email = instance.$(".js-email").val() as string;
-    if (!email) {
-      instance.errors.add("noEmail");
-    }
+          if (currentRegion) {
+            await UsersMethods.regionChange(currentRegion._id);
+          }
 
-    if (instance.errors.present()) {
-      return;
-    }
+          await UsersMethods.updateLocale(locale);
 
-    instance.busy("registering");
-
-    try {
-      await AccountsAsync.createUser({
-        email,
-        password: Random.secret(),
-        locale: Session.get("locale"),
-      } as any);
-
-      if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
-        $("#bs-navbar-collapse").collapse("hide");
-      }
-      $(".js-account-tasks").modal("hide");
-
-      const regionId = CleanedRegion(Session.get("region"));
-      if (regionId) {
-        await UsersMethods.regionChange(regionId);
-      }
-
-      await UsersMethods.updateLocale(Session.get("locale"));
-
-      const user = Meteor.user();
-
-      if (!user) {
-        throw new Error("Unexpected falsy: user");
-      }
-
-      Analytics.trackEvent("Registers", "Visitor", Regions.findOne(user.profile.regionId)?.nameEn);
-    } catch (err) {
-      instance.errors.add(err.reason);
-    } finally {
-      instance.busy(false);
-    }
-  },
-
-  "click .js-back-to-login"(_event, instance) {
-    (instance.parentInstance() as any).accountTask.set("login");
-  },
-});
+          Analytics.trackEvent("Registers", "Visitor", currentRegion?.nameEn);
+        } catch (err) {
+          addError(err.reason);
+        } finally {
+          setIsBusy(false);
+        }
+      }}
+    >
+      <div className="mb-3">
+        <div className="input-group has-validation">
+          <span className="input-group-text">
+            <span className="fa-solid fa-envelope fa-fw" aria-hidden="true"></span>
+          </span>
+          <input
+            className={`form-control ${errors.email ? "is-invalid" : ""}`}
+            placeholder={t("frame.visitor.email", "E-Mail")}
+            type="email"
+            autoFocus={true}
+            onChange={(event) => {
+              setVisitorData({
+                ...visitorData,
+                email: event.target.value,
+              });
+            }}
+          />
+        </div>
+        {errors.email ? <div className="invalid-feedback">{errors.email}</div> : null}
+      </div>
+      <div className="mb-3">
+        {t(
+          "login.frame.visitor.mailDisclaimer",
+          "Providing an e-mail address allows use to notify you eg. about new events.",
+        )}
+      </div>
+      <div className="mb-3">
+        <button type="submit" className="btn btn-add form-control" disabled={isBusy}>
+          {isBusy ? (
+            <>
+              <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+              {t("login.visitor.submit.busy", "Registering…")}
+            </>
+          ) : (
+            t("login.visitor.submit")
+          )}
+        </button>
+      </div>
+      <hr />
+      <div className="mb-3">
+        <button
+          className="btn btn-secondary form-control"
+          type="button"
+          onClick={() => {
+            onBack();
+          }}
+        >
+          {t("login.visitor.backToLogin", "Go back to login")}
+        </button>
+      </div>
+    </form>
+  );
+}
