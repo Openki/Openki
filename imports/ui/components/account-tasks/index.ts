@@ -6,6 +6,7 @@ import { ScssVars } from "/imports/ui/lib/scss-vars";
 import * as Viewport from "/imports/ui/lib/viewport";
 
 import "./register-frame";
+import type { Props as RegisterFrameProps } from "./register-frame";
 import "./forgot-pwd-frame";
 import "./visitor-frame";
 import "./login-frame";
@@ -82,6 +83,24 @@ template.helpers({
           $("#bs-navbar-collapse").collapse("hide");
         }
         $(".js-account-tasks").modal("hide");
+      },
+    };
+  },
+  registerFrameAttr(): RegisterFrameProps {
+    const instance = Template.instance();
+
+    return {
+      username: instance.transferUsername || "",
+      password: instance.transferPassword || "",
+      email: instance.transferMail || "",
+      onRegister() {
+        if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
+          $("#bs-navbar-collapse").collapse("hide");
+        }
+        $(".js-account-tasks").modal("hide");
+      },
+      onBack() {
+        instance.accountTask.set("login");
       },
     };
   },

@@ -34,7 +34,7 @@
           {{#if activeAccountTask 'visitor'}}
             {{> visitorFrame}}
           {{else if activeAccountTask 'register'}}
-            {{> registerFrame}}
+            {{> registerFrame registerFrameAttr}}
           {{else if activeAccountTask 'recoverPwd'}}
             {{> forgotPwdFrame}}
           {{else}}

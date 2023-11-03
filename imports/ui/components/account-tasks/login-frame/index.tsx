@@ -12,7 +12,7 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
-import { useValidation } from "./useValidation";
+import { useValidation } from "../../../lib/useValidation";
 
 import "./styles.scss";
 
@@ -38,7 +38,9 @@ export function LoginFrame({
   const currentRegion = useCurrentRegion();
   const locale = useSession("locale");
 
-  const [isBusy, setIsBusy] = useState(false);
+  const [isBusy, setIsBusy] = useState<false | "Password" | "Google" | "Facebook" | "Github">(
+    false,
+  );
   const [loginData, setLoginData] = useState({ username, password });
 
   const [errors, addError, checkValidity] = useValidation({
@@ -99,7 +101,7 @@ export function LoginFrame({
           return;
         }
 
-        setIsBusy(true);
+        setIsBusy("Password");
         try {
           await MeteorAsync.loginWithPassword(loginData.username, loginData.password);
 
@@ -137,7 +139,6 @@ export function LoginFrame({
                 });
               }}
             />
-            {errors.username ? <div className="invalid-feedback">{errors.username}</div> : null}
           </div>
         </div>
         <div className="mb-3">
@@ -174,9 +175,9 @@ export function LoginFrame({
           <button
             type="submit"
             className="btn btn-secondary js-login form-control"
-            disabled={isBusy}
+            disabled={!!isBusy}
           >
-            {isBusy ? (
+            {isBusy === "Password" ? (
               <>
                 <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
                 {t("login.login.submit.busy", "Logging in…")}
@@ -194,13 +195,13 @@ export function LoginFrame({
                 <button
                   className={`btn btn-${service.key} form-control js-oauth-btn my-2`}
                   type="button"
-                  disabled={isBusy}
+                  disabled={!!isBusy}
                   onClick={() => {
                     const loginMethod = Meteor[`loginWith${service.serviceName}`];
                     if (!loginMethod) {
                       throw new Error(`don't have login method for ${service.serviceName}`);
                     }
-                    setIsBusy(true);
+                    setIsBusy(service.serviceName);
 
                     loginMethod({}, async (err) => {
                       try {
@@ -227,7 +228,7 @@ export function LoginFrame({
                     });
                   }}
                 >
-                  {isBusy ? (
+                  {isBusy === service.serviceName ? (
                     <>
                       <span
                         className="fa-solid fa-circle-notch fa-spin fa-fw"
