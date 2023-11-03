@@ -33,7 +33,7 @@ export function RegisterFrame({
   const locale = useSession("locale");
   const [isBusy, setIsBusy] = useState(false);
   const [registerData, setRegisterData] = useState({ username, password, email });
-  const [errors, addError, checkValidity] = useValidation({
+  const [errors, checkValidity, addError] = useValidation({
     noUsername: {
       text: () => t("register.warning.noUserName", "Please enter a name for your new user."),
       field: "username",

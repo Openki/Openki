@@ -43,7 +43,7 @@ export function LoginFrame({
   );
   const [loginData, setLoginData] = useState({ username, password });
 
-  const [errors, addError, checkValidity] = useValidation({
+  const [errors, checkValidity, addError] = useValidation({
     noUsername: {
       text: () =>
         t("login.warning.noUserName", "Please enter your username or e-mail address to log in."),

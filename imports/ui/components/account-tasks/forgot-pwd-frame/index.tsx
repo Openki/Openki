@@ -1,79 +1,127 @@
-import { i18n } from "/imports/startup/both/i18next";
-import { ReactiveVar } from "meteor/reactive-var";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useState } from "react";
 import { AccountsAsync } from "/imports/utils/promisify";
+import { useValidation } from "/imports/ui/lib/useValidation";
+import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 
 import { isEmail } from "/imports/utils/email-tools";
 
-import "./template.html";
 import "./styles.scss";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "forgotPwdFrame",
-  unknown,
-  { emailIsValid: ReactiveVar<boolean> }
->;
+export type Props = {
+  email: string;
+  onForgotPwd: () => void;
+  onClose: () => void;
+};
 
-const template = Template.forgotPwdFrame;
+export function ForgotPwdFrame({ email = "", onForgotPwd, onClose }: Props) {
+  const { t } = useTranslation();
+  const [isBusy, setIsBusy] = useState(false);
+  const [forgotPwdData, setForgotPwdData] = useState({ email });
+  const [errors, checkValidity] = useValidation({
+    noEmail: {
+      text: () => t("forgot.notValid", "Please enter the address you signed up with."),
+      field: "email",
+      onCheckValidity: () => isEmail(forgotPwdData.email),
+    },
+  });
 
-template.onCreated(function () {
-  const instance = this;
-  instance.busy(false);
-  instance.emailIsValid = new ReactiveVar(false);
-});
+  return (
+    <form
+      onSubmit={async (event) => {
+        event.preventDefault();
+        setIsBusy(true);
 
-template.onRendered(function () {
-  const instance = this;
-  const { transferMail } = instance.parentInstance() as any;
-  if (transferMail) {
-    instance.$(".js-reset-pw-email").val(transferMail);
-    instance.emailIsValid.set(true);
-  }
+        try {
+          await AccountsAsync.forgotPassword({
+            email: forgotPwdData.email,
+          });
 
-  instance.$("input").first().trigger("select");
-});
+          Alert.success(
+            t(
+              "forgotPassword.emailSent",
+              "An e-mail with further instructions on how to reset your password has been sent to you.",
+            ),
+          );
+          onForgotPwd();
+        } catch (err) {
+          Alert.serverError(
+            err,
+            t("forgotPassword.emailSent.error", "We were unable to send a mail to this address"),
+          );
+        } finally {
+          setIsBusy(false);
+        }
+      }}
+    >
+      <div className="forgot_login">
+        <p>
+          {t(
+            "forgot.explanation",
+            "We will send you an e-mail with a link allowing you to reset your password.",
+          )}
+        </p>
+        <div className="mb-3">
+          <div className="input-group">
+            <span className="input-group-text">
+              <span className="fa-solid fa-envelope"></span>
+            </span>
+            <input
+              className={`form-control ${errors.email ? "is-invalid" : ""}`}
+              aria-describedby="forgotPwdMailHelp"
+              placeholder={t("frame.login.email", "E-Mail")}
+              type="email"
+              autoFocus={true}
+              onChange={(event) => {
+                setForgotPwdData({
+                  ...forgotPwdData,
+                  email: event.target.value,
+                });
+              }}
+            />
+          </div>
+          {errors.email ? (
+            <div id="forgotPwdMailHelp" className="form-text">
+              {errors.email}
+            </div>
+          ) : null}
+        </div>
+        <div className="mb-3">
+          <button
+            className="btn btn-save js-reset-pwd-btn form-control"
+            disabled={checkValidity() || isBusy}
+            type="submit"
+          >
+            {isBusy ? (
+              <>
+                {" "}
+                <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+                {t("forgot.send.busy", "Resetting password…")}
+              </>
+            ) : (
+              t("forgot.send", "Reset my password")
+            )}
+          </button>
+        </div>
+        <div className="mb-3">
+          <button
+            type="button"
+            className="btn btn-cancel form-control"
+            onClick={() => {
+              onClose();
+            }}
+          >
+            {t("_button.cancel")}
+          </button>
+        </div>
+      </div>
+    </form>
+  );
+}
 
-template.helpers({
-  noValidEmail() {
-    return !Template.instance().emailIsValid.get();
-  },
-});
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
 
-template.events({
-  "input, change, paste, keyup, mouseup"(_event, instance) {
-    const email = instance.$(".js-reset-pw-email").val() as string;
-    instance.emailIsValid.set(isEmail(email));
-  },
-
-  async submit(event, instance) {
-    event.preventDefault();
-    instance.busy("requesting-pw-reset");
-
-    try {
-      await AccountsAsync.forgotPassword({
-        email: instance.$(".js-reset-pw-email").val() as string,
-      });
-
-      Alert.success(
-        i18n(
-          "forgotPassword.emailSent",
-          "An e-mail with further instructions on how to reset your password has been sent to you.",
-        ),
-      );
-      (instance.parentInstance() as any).accountTask.set("login");
-    } catch (err) {
-      Alert.serverError(
-        err,
-        i18n("forgotPassword.emailSent.error", "We were unable to send a mail to this address"),
-      );
-    } finally {
-      instance.busy(false);
-    }
-  },
-
-  "click .js-reset-pwd-close-btn"(_event, instance) {
-    (instance.parentInstance() as any).accountTask.set("login");
-  },
-});
+Template.registerHelper("ForgotPwdFrame", () => ForgotPwdFrame);
