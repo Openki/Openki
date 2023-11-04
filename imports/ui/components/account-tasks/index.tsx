@@ -60,16 +60,14 @@ function Title({ activeTask }: { activeTask: string }) {
 
 function Task({
   activeTask,
-  loginData,
   onSwitch,
   onLogin,
 }: {
   activeTask: string;
-  loginData: { username: string; password: string; email: string };
   onSwitch: (task: string) => void;
   onLogin: () => void;
 }) {
-  const [transferData, setTransferData] = useState(loginData);
+  const [transferData, setTransferData] = useState({ username: "", password: "", email: "" });
 
   function loginFrameAttr(): LoginFrameProps {
     return {
@@ -162,7 +160,7 @@ export function AccountTasks() {
   const pleaseLogin = useSessionEquals("pleaseLogin", true);
   const viewport = useViewportSize();
   const [activeTask, setActiveTask] = useState("login");
-  const [loginData, setLoginData] = useState({ username: "", password: "", email: "" });
+  const [show, setShow] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -173,14 +171,19 @@ export function AccountTasks() {
     const hidden = () => {
       setActiveTask("login");
       Session.set("pleaseLogin", false);
-      setLoginData({ username: "", password: "", email: "" });
+      setShow(false);
+    };
+    const shown = () => {
+      setShow(true);
     };
 
     const element = elementRef.current;
     element?.addEventListener("hidden.bs.modal", hidden);
+    element?.addEventListener("shown.bs.modal", shown);
 
     return () => {
       element?.removeEventListener("hidden.bs.modal", hidden);
+      element?.removeEventListener("shown.bs.modal", shown);
     };
   });
 
@@ -193,37 +196,38 @@ export function AccountTasks() {
       ref={elementRef}
     >
       <div className="modal-dialog modal-sm" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h4 className="modal-title">
-              <Title activeTask={activeTask} />
-            </h4>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div className="modal-body">
-            <Task
-              activeTask={activeTask}
-              loginData={loginData}
-              onSwitch={(task) => {
-                setActiveTask(task);
-              }}
-              onLogin={() => {
-                if (viewport.width <= ScssVars.gridFloatBreakpoint) {
-                  $("#bs-navbar-collapse").collapse("hide");
-                }
+        {show ? (
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4 className="modal-title">
+                <Title activeTask={activeTask} />
+              </h4>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <Task
+                activeTask={activeTask}
+                onSwitch={(task) => {
+                  setActiveTask(task);
+                }}
+                onLogin={() => {
+                  if (viewport.width <= ScssVars.gridFloatBreakpoint) {
+                    $("#bs-navbar-collapse").collapse("hide");
+                  }
 
-                if (elementRef.current) {
-                  Modal.getOrCreateInstance(elementRef.current).hide();
-                }
-              }}
-            />
+                  if (elementRef.current) {
+                    Modal.getOrCreateInstance(elementRef.current).hide();
+                  }
+                }}
+              />
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </div>
   );
