@@ -21,4 +21,4 @@ export const ScssVars = {
   // == Other Values
   // $navbar-height
   navbarHeight: 50, // defined at client/styles/_bootstrap-variables.scss L383
-};
+} as const;
