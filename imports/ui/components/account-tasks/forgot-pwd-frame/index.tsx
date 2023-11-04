@@ -15,28 +15,29 @@ export type Props = {
   onClose: () => void;
 };
 
-export function ForgotPwdFrame({ email = "", onForgotPwd, onClose }: Props) {
+export function ForgotPwdFrame(props: Props) {
+  const { onForgotPwd, onClose } = props;
   const { t } = useTranslation();
   const [isBusy, setIsBusy] = useState(false);
-  const [forgotPwdData, setForgotPwdData] = useState({ email });
-  const [errors, checkValidity] = useValidation({
-    noEmail: {
-      text: () => t("forgot.notValid", "Please enter the address you signed up with."),
-      field: "email",
-      onCheckValidity: () => isEmail(forgotPwdData.email),
+  const [email, setEmail] = useState(props.email);
+  const [errors, checkValidity] = useValidation(
+    {
+      noEmail: {
+        text: () => t("forgot.notValid", "Please enter the address you signed up with."),
+        field: "email",
+        onCheckValidity: () => isEmail(email),
+      },
     },
-  });
+    true,
+  );
 
   return (
     <form
       onSubmit={async (event) => {
         event.preventDefault();
         setIsBusy(true);
-
         try {
-          await AccountsAsync.forgotPassword({
-            email: forgotPwdData.email,
-          });
+          await AccountsAsync.forgotPassword({ email });
 
           Alert.success(
             t(
@@ -55,7 +56,7 @@ export function ForgotPwdFrame({ email = "", onForgotPwd, onClose }: Props) {
         }
       }}
     >
-      <div className="forgot_login">
+      <div>
         <p>
           {t(
             "forgot.explanation",
@@ -68,16 +69,15 @@ export function ForgotPwdFrame({ email = "", onForgotPwd, onClose }: Props) {
               <span className="fa-solid fa-envelope"></span>
             </span>
             <input
-              className={`form-control ${errors.email ? "is-invalid" : ""}`}
+              className="form-control"
               aria-describedby="forgotPwdMailHelp"
               placeholder={t("frame.login.email", "E-Mail")}
               type="email"
               autoFocus={true}
+              value={email}
               onChange={(event) => {
-                setForgotPwdData({
-                  ...forgotPwdData,
-                  email: event.target.value,
-                });
+                setEmail(event.target.value);
+                checkValidity();
               }}
             />
           </div>
@@ -90,7 +90,7 @@ export function ForgotPwdFrame({ email = "", onForgotPwd, onClose }: Props) {
         <div className="mb-3">
           <button
             className="btn btn-save js-reset-pwd-btn form-control"
-            disabled={checkValidity() || isBusy}
+            disabled={!!errors.email || isBusy}
             type="submit"
           >
             {isBusy ? (

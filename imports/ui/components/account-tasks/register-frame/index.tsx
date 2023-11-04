@@ -20,13 +20,7 @@ export type Props = {
   onBack: () => void;
 };
 
-export function RegisterFrame({
-  username = "",
-  password = "",
-  email = "",
-  onRegister,
-  onBack,
-}: Props) {
+export function RegisterFrame({ username, password, email, onRegister, onBack }: Props) {
   const { t } = useTranslation();
   const user = useUser();
   const currentRegion = useCurrentRegion();
@@ -126,6 +120,7 @@ export function RegisterFrame({
             type="text"
             placeholder={t("frame.login.username", "Username")}
             autoFocus={true}
+            value={registerData.username}
             onChange={(event) => {
               setRegisterData({
                 ...registerData,
@@ -145,6 +140,7 @@ export function RegisterFrame({
             className={`form-control ${errors.password ? "is-invalid" : ""}`}
             placeholder={t("_inputField.password")}
             type="password"
+            value={registerData.password}
             onChange={(event) => {
               setRegisterData({
                 ...registerData,
@@ -166,6 +162,7 @@ export function RegisterFrame({
                 className={`form-control ${errors.email ? "is-invalid" : ""}`}
                 placeholder={t("frame.login.email", "E-Mail")}
                 type="email"
+                value={registerData.email}
                 onChange={(event) => {
                   setRegisterData({
                     ...registerData,

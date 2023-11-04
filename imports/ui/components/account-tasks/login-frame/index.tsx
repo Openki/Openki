@@ -20,14 +20,14 @@ export type Props = {
   username: string;
   password: string;
   onForgotPassword: (loginData: { username: string; password: string }) => void;
-  onVisitorOpen: () => void;
+  onVisitorOpen: (loginData: { username: string }) => void;
   onRegisterOpen: (loginData: { username: string; password: string }) => void;
   onLogin: () => void;
 };
 
 export function LoginFrame({
-  username = "",
-  password = "",
+  username,
+  password,
   onForgotPassword,
   onVisitorOpen,
   onRegisterOpen,
@@ -53,6 +53,7 @@ export function LoginFrame({
     "Incorrect password": {
       text: () => t("login.password.password_incorrect", "Incorrect password"),
       field: "password",
+      onCheckValidity: () => !!loginData.password,
     },
     "User not found": {
       text: () => t("login.username.usr_doesnt_exist", "This user does not exist."),
@@ -132,6 +133,7 @@ export function LoginFrame({
               placeholder={t("frame.login.usernameOrEmail", "Username or e-mail address")}
               type="text"
               autoFocus={true}
+              value={loginData.username}
               onChange={(event) => {
                 setLoginData({
                   ...loginData,
@@ -139,6 +141,7 @@ export function LoginFrame({
                 });
               }}
             />
+            {errors.username ? <div className="invalid-feedback">{errors.username}</div> : null}
           </div>
         </div>
         <div className="mb-3">
@@ -150,6 +153,7 @@ export function LoginFrame({
               className={`form-control ${errors.password ? "is-invalid" : ""}`}
               placeholder={t("_inputField.password")}
               type="password"
+              value={loginData.password}
               onChange={(event) => {
                 setLoginData({
                   ...loginData,
@@ -280,7 +284,7 @@ export function LoginFrame({
                 className="btn btn-add form-control js-visitor-open my-2"
                 type="button"
                 onClick={() => {
-                  onVisitorOpen();
+                  onVisitorOpen(loginData);
                 }}
               >
                 {t("login.visitor.submit", "Continue as visitor")}

@@ -5,11 +5,12 @@ import { useSessionEquals } from "/imports/utils/react-meteor-data";
 
 import { isEmail } from "/imports/utils/email-tools";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
+import { useViewportSize } from "/imports/ui/lib/useViewportSize";
+
 import { LoginFrame, Props as LoginFrameProps } from "./login-frame";
 import { ForgotPwdFrame, Props as ForgotPwdFrameProps } from "./forgot-pwd-frame";
 import { VistiorFrame, Props as VisitorFrameProps } from "./visitor-frame";
 import { RegisterFrame, Props as RegisterFrameProps } from "./register-frame";
-import { useViewportSize } from "../../lib/useViewportSize";
 
 function Title({ activeTask }: { activeTask: string }) {
   const { t } = useTranslation();
@@ -79,7 +80,10 @@ function Task({
         }
         onSwitch("recoverPwd");
       },
-      onVisitorOpen() {
+      onVisitorOpen({ username }) {
+        if (isEmail(username)) {
+          setTransferData({ ...transferData, email: username });
+        }
         onSwitch("visitor");
       },
       onRegisterOpen({ username, password }) {
@@ -165,19 +169,28 @@ export function AccountTasks() {
     if (pleaseLogin && elementRef.current) {
       Modal.getOrCreateInstance(elementRef.current).show();
     }
-    elementRef.current?.addEventListener("hidden.bs.modal", () => {
+
+    const hidden = () => {
       setActiveTask("login");
       Session.set("pleaseLogin", false);
       setLoginData({ username: "", password: "", email: "" });
-    });
+    };
+
+    const element = elementRef.current;
+    element?.addEventListener("hidden.bs.modal", hidden);
+
+    return () => {
+      element?.removeEventListener("hidden.bs.modal", hidden);
+    };
   });
 
   return (
     <div
-      className="modal account-tasks js-account-tasks"
+      className="modal account-tasks"
       id="accountTaskModal"
       tabIndex={-1}
       role="dialog"
+      ref={elementRef}
     >
       <div className="modal-dialog modal-sm" role="document">
         <div className="modal-content">

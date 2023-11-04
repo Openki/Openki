@@ -16,18 +16,19 @@ export type Props = {
   onBack: () => void;
 };
 
-export function VistiorFrame({ email = "", onRegister, onBack }: Props) {
+export function VistiorFrame(props: Props) {
+  const { onRegister, onBack } = props;
   const { t } = useTranslation();
   const currentRegion = useCurrentRegion();
   const locale = useSession("locale");
   const [isBusy, setIsBusy] = useState(false);
-  const [visitorData, setVisitorData] = useState({ email });
+  const [email, setEmail] = useState(props.email);
   const [errors, checkValidity, addError] = useValidation({
     noEmail: {
       text: () =>
         t("visitor.warning.noEmailProvided", "Please enter an email-address to continue."),
       field: "email",
-      onCheckValidity: () => !!visitorData.email,
+      onCheckValidity: () => !!email,
     },
     "email invalid": {
       text: () => t("register.warning.emailNotValid"),
@@ -56,7 +57,7 @@ export function VistiorFrame({ email = "", onRegister, onBack }: Props) {
 
         try {
           await AccountsAsync.createUser({
-            ...visitorData,
+            email,
             password: Random.secret(),
             locale,
           } as any);
@@ -87,11 +88,9 @@ export function VistiorFrame({ email = "", onRegister, onBack }: Props) {
             placeholder={t("frame.visitor.email", "E-Mail")}
             type="email"
             autoFocus={true}
+            value={email}
             onChange={(event) => {
-              setVisitorData({
-                ...visitorData,
-                email: event.target.value,
-              });
+              setEmail(event.target.value);
             }}
           />
         </div>
