@@ -1,70 +1,89 @@
-import { ReactiveVar } from "meteor/reactive-var";
-import { Session } from "meteor/session";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import Modal from "bootstrap/js/dist/modal";
+import { useSessionEquals } from "/imports/utils/react-meteor-data";
 
-import { ScssVars } from "/imports/ui/lib/scss-vars";
-import * as Viewport from "/imports/ui/lib/viewport";
-
-import "./register-frame";
-import type { Props as RegisterFrameProps } from "./register-frame";
-import "./forgot-pwd-frame";
-import type { Props as ForgotPwdFrameProps } from "./forgot-pwd-frame";
-import "./visitor-frame";
-import type { Props as VisitorFrameProps } from "./visitor-frame";
-import "./login-frame";
-import type { Props as LoginFrameProps } from "./login-frame";
-
-import "./template.html";
 import { isEmail } from "/imports/utils/email-tools";
+import { ScssVars } from "/imports/ui/lib/scss-vars";
+import { LoginFrame, Props as LoginFrameProps } from "./login-frame";
+import { ForgotPwdFrame, Props as ForgotPwdFrameProps } from "./forgot-pwd-frame";
+import { VistiorFrame, Props as VisitorFrameProps } from "./visitor-frame";
+import { RegisterFrame, Props as RegisterFrameProps } from "./register-frame";
+import { useViewportSize } from "../../lib/useViewportSize";
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "accountTasks",
-  unknown,
-  {
-    accountTask: ReactiveVar<string>;
-    transferUsername: string | false;
-    transferPassword: string | false;
-    transferMail: string | false;
+function Title({ activeTask }: { activeTask: string }) {
+  const { t } = useTranslation();
+  const pleaseLogin = useSessionEquals("pleaseLogin", true);
+
+  switch (activeTask) {
+    case "login":
+      return pleaseLogin ? (
+        <>
+          <i className="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></i>
+          &nbsp;
+          {t("Please.login", "Please log in or register")}
+        </>
+      ) : (
+        <>
+          <i className="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true"></i>
+          &nbsp;
+          {t("login.login.title", "Log in")}
+        </>
+      );
+    case "recoverPwd":
+      return (
+        <>
+          <i className="fa-solid fa-unlock fa-fw" aria-hidden="true"></i>&nbsp;
+          {t("login.recoverPwd.title", "Recover Password")}
+        </>
+      );
+    case "visitor":
+      return (
+        <>
+          <i className="fa-solid fa-user-plus fa-fw" aria-hidden="true"></i>&nbsp;
+          {t("login.visitor.submit")}
+        </>
+      );
+    case "register":
+      return (
+        <>
+          <i className="fa-solid fa-user-plus fa-fw" aria-hidden="true"></i>&nbsp;
+          {t("login.register.submit")}
+        </>
+      );
+
+    default:
+      throw new Error("Unexpected value for activeAccountTask");
   }
->;
+}
 
-const template = Template.accountTasks;
+function Task({
+  activeTask,
+  loginData,
+  onSwitch,
+  onLogin,
+}: {
+  activeTask: string;
+  loginData: { username: string; password: string; email: string };
+  onSwitch: (task: string) => void;
+  onLogin: () => void;
+}) {
+  const [transferData, setTransferData] = useState(loginData);
 
-template.onCreated(function () {
-  const instance = this;
-
-  instance.accountTask = new ReactiveVar("login");
-  instance.autorun(() => {
-    if (Session.equals("pleaseLogin", true)) {
-      instance.$(".js-account-tasks").modal("show");
-    }
-  });
-});
-
-template.helpers({
-  activeAccountTask(task: string) {
-    return Template.instance().accountTask.get() === task;
-  },
-  pleaseLogin() {
-    return Session.get("pleaseLogin");
-  },
-  loginFrameAttr(): LoginFrameProps {
-    const instance = Template.instance();
-
+  function loginFrameAttr(): LoginFrameProps {
     return {
-      username: instance.transferUsername || "",
-      password: instance.transferPassword || "",
+      ...transferData,
       onForgotPassword({ username }) {
         if (isEmail(username)) {
-          instance.transferMail = username;
+          setTransferData({ ...transferData, email: username });
         }
-        instance.accountTask.set("recoverPwd");
+        onSwitch("recoverPwd");
       },
       onVisitorOpen() {
-        instance.accountTask.set("visitor");
+        onSwitch("visitor");
       },
       onRegisterOpen({ username, password }) {
-        let email;
+        let email = "";
 
         // Sometimes people register with their email address in the first field
         // Move entered username over to email field if it contains a @
@@ -74,92 +93,130 @@ template.helpers({
           username = "";
         }
 
-        instance.transferUsername = username;
-        instance.transferPassword = password;
-        instance.transferMail = email || "";
+        setTransferData({ username, password, email });
 
-        instance.accountTask.set("register");
+        onSwitch("register");
       },
       onLogin() {
-        if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
-          $("#bs-navbar-collapse").collapse("hide");
-        }
-        $(".js-account-tasks").modal("hide");
+        onLogin();
       },
     };
-  },
+  }
 
-  forgotPwdFrameAttr(): ForgotPwdFrameProps {
-    const instance = Template.instance();
-
+  function forgotPwdFrameAttr(): ForgotPwdFrameProps {
     return {
-      email: instance.transferMail || "",
+      ...transferData,
       onForgotPwd() {
-        instance.accountTask.set("login");
+        onSwitch("login");
       },
       onClose() {
-        instance.accountTask.set("login");
+        onSwitch("login");
       },
     };
-  },
+  }
 
-  registerFrameAttr(): RegisterFrameProps {
-    const instance = Template.instance();
-
+  function visitorFrameAttr(): VisitorFrameProps {
     return {
-      username: instance.transferUsername || "",
-      password: instance.transferPassword || "",
-      email: instance.transferMail || "",
+      ...transferData,
       onRegister() {
-        if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
-          $("#bs-navbar-collapse").collapse("hide");
-        }
-        $(".js-account-tasks").modal("hide");
+        onLogin();
       },
       onBack() {
-        instance.accountTask.set("login");
+        onSwitch("login");
       },
     };
-  },
+  }
 
-  visitorFrameAttr(): VisitorFrameProps {
-    const instance = Template.instance();
-
+  function registerFrameAttr(): RegisterFrameProps {
     return {
-      email: instance.transferMail || "",
+      ...transferData,
       onRegister() {
-        if (Viewport.get().width <= ScssVars.gridFloatBreakpoint) {
-          $("#bs-navbar-collapse").collapse("hide");
-        }
-        $(".js-account-tasks").modal("hide");
+        onLogin();
       },
       onBack() {
-        instance.accountTask.set("login");
+        onSwitch("login");
       },
     };
-  },
-});
+  }
 
-template.events({
-  "show.bs.modal .js-account-tasks"(_event, instance) {
-    /* eslint-disable-next-line no-param-reassign */
-    instance.transferUsername = false;
-    /* eslint-disable-next-line no-param-reassign */
-    instance.transferPassword = false;
-    /* eslint-disable-next-line no-param-reassign */
-    instance.transferMail = false;
-  },
+  switch (activeTask) {
+    case "login":
+      return <LoginFrame {...loginFrameAttr()} />;
+    case "recoverPwd":
+      return <ForgotPwdFrame {...forgotPwdFrameAttr()} />;
+    case "visitor":
+      return <VistiorFrame {...visitorFrameAttr()} />;
+    case "register":
+      return <RegisterFrame {...registerFrameAttr()} />;
 
-  "shown.bs.modal .js-account-tasks"(_event, instance) {
-    instance.$("input").first().trigger("select");
-  },
+    default:
+      throw new Error("Unexpected value for activeAccountTask");
+  }
+}
 
-  "hide.bs.modal .js-account-tasks"(_event, instance) {
-    instance.$("input").val("");
-  },
+export function AccountTasks() {
+  const pleaseLogin = useSessionEquals("pleaseLogin", true);
+  const viewport = useViewportSize();
+  const [activeTask, setActiveTask] = useState("login");
+  const [loginData, setLoginData] = useState({ username: "", password: "", email: "" });
+  const elementRef = useRef<HTMLDivElement>(null);
 
-  "hidden.bs.modal .js-account-tasks"(_event, instance) {
-    instance.accountTask.set("login");
-    Session.set("pleaseLogin", false);
-  },
-});
+  useEffect(() => {
+    if (pleaseLogin && elementRef.current) {
+      Modal.getOrCreateInstance(elementRef.current).show();
+    }
+    elementRef.current?.addEventListener("hidden.bs.modal", () => {
+      setActiveTask("login");
+      Session.set("pleaseLogin", false);
+      setLoginData({ username: "", password: "", email: "" });
+    });
+  });
+
+  return (
+    <div
+      className="modal account-tasks js-account-tasks"
+      id="accountTaskModal"
+      tabIndex={-1}
+      role="dialog"
+    >
+      <div className="modal-dialog modal-sm" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h4 className="modal-title">
+              <Title activeTask={activeTask} />
+            </h4>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div className="modal-body">
+            <Task
+              activeTask={activeTask}
+              loginData={loginData}
+              onSwitch={(task) => {
+                setActiveTask(task);
+              }}
+              onLogin={() => {
+                if (viewport.width <= ScssVars.gridFloatBreakpoint) {
+                  $("#bs-navbar-collapse").collapse("hide");
+                }
+
+                if (elementRef.current) {
+                  Modal.getOrCreateInstance(elementRef.current).hide();
+                }
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("AccountTasks", () => AccountTasks);

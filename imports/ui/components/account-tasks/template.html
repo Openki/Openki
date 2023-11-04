@@ -1,47 +1,5 @@
 <template name="accountTasks">
-  <div class="modal account-tasks js-account-tasks" id="accountTaskModal" tabindex="-1"
-       role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">
-            {{#if activeAccountTask 'login'}}
-              {{#if pleaseLogin}}
-                <i class="fa-solid fa-circle-exclamation fa-fw" aria-hidden="true"></i>
-                {{i18n 'Please.login' 'Please log in or register'}}
-              {{else}}
-                <i class="fa-solid fa-right-to-bracket fa-fw" aria-hidden="true"></i>
-                {{i18n 'login.login.title' 'Log in'}}
-              {{/if}}
-            {{/if}}
-            {{#if activeAccountTask 'visitor'}}
-              <i class="fa-solid fa-user-plus fa-fw" aria-hidden="true"></i>
-              {{i18n 'login.visitor.submit'}}
-            {{/if}}
-            {{#if activeAccountTask 'register'}}
-              <i class="fa-solid fa-user-plus fa-fw" aria-hidden="true"></i>
-              {{i18n 'login.register.submit'}}
-            {{/if}}
-            {{#if activeAccountTask 'recoverPwd'}}
-              <i class="fa-solid fa-unlock fa-fw" aria-hidden="true"></i>
-              {{i18n 'login.recoverPwd.title' 'Recover Password'}}
-            {{/if}}
-          </h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"
-                  aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          {{#if activeAccountTask 'visitor'}}
-            {{> visitorFrame}}
-          {{else if activeAccountTask 'register'}}
-            {{> registerFrame registerFrameAttr}}
-          {{else if activeAccountTask 'recoverPwd'}}
-            {{> forgotPwdFrame forgotPwdFrameAttr}}
-          {{else}}
-            {{> loginFrame loginFrameAttr}}
-          {{/if}}
-        </div>
-      </div>
-    </div>
+  <div>
+    {{> React (component AccountTasks)}}
   </div>
 </template>
