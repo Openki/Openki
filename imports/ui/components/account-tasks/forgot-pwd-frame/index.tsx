@@ -119,9 +119,3 @@ export function ForgotPwdFrame(props: Props) {
     </form>
   );
 }
-
-// for Blaze
-// eslint-disable-next-line import/first
-import "./template.html";
-
-Template.registerHelper("ForgotPwdFrame", () => ForgotPwdFrame);
