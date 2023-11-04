@@ -16,7 +16,7 @@ export type Props = {
   onBack: () => void;
 };
 
-export function RegisterFrame({ email = "", onRegister, onBack }: Props) {
+export function VistiorFrame({ email = "", onRegister, onBack }: Props) {
   const { t } = useTranslation();
   const currentRegion = useCurrentRegion();
   const locale = useSession("locale");
