@@ -1,9 +1,24 @@
 import { useState } from "react";
 
-export function useValidation(mapping: {
-  [name: string]: { onCheckValidity?: () => boolean; text: () => string; field: string };
-}) {
-  const [errors, setErrors] = useState<{ [field: string]: string }>({});
+export function useValidation(
+  mapping: {
+    [name: string]: { onCheckValidity?: () => boolean; text: () => string; field: string };
+  },
+  initialCheck = false,
+) {
+  const initialState: { [field: string]: string } = {};
+
+  if (initialCheck) {
+    Object.keys(mapping).forEach((key) => {
+      const m = mapping[key];
+      if (m.onCheckValidity && !m.onCheckValidity()) {
+        const field = mapping[key].field;
+        initialState[field] = mapping[key].text();
+      }
+    });
+  }
+
+  const [errors, setErrors] = useState(initialState);
 
   const add = (key: string) => {
     const field = mapping[key].field;

@@ -199,10 +199,4 @@ import "./styles.scss";
       return Accounts.loginServicesConfigured();
     },
   });
-
-  template.events({
-    "click .js-open-login"() {
-      $(".js-account-tasks").modal("show");
-    },
-  });
 }
