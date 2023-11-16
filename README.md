@@ -1,4 +1,4 @@
-Openki [![Build Status](https://travis-ci.org/Openki/Openki.svg?branch=master)](https://travis-ci.org/Openki/Openki) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250) [![Maintainability](https://api.codeclimate.com/v1/badges/49da9e86d8722b2162b8/maintainability)](https://codeclimate.com/github/Openki/Openki/maintainability)
+Openki [![pipeline](https://gitlab.com/Openki/Openki/badges/master/pipeline.svg?ignore_skipped=true)](https://gitlab.com/Openki/Openki/-/pipelines) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250) [![Maintainability](https://api.codeclimate.com/v1/badges/49da9e86d8722b2162b8/maintainability)](https://codeclimate.com/github/Openki/Openki/maintainability)
 ====
 
 **Platform for open education** – Free software built with [Meteor.js](https://meteor.com) and [React](https://react.dev/)
