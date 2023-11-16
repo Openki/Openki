@@ -1,10 +1,10 @@
 Openki [![Build Status](https://travis-ci.org/Openki/Openki.svg?branch=master)](https://travis-ci.org/Openki/Openki) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250) [![Maintainability](https://api.codeclimate.com/v1/badges/49da9e86d8722b2162b8/maintainability)](https://codeclimate.com/github/Openki/Openki/maintainability)
 ====
 
-**Platform for open education** – Free software built with [Meteor.js](https://meteor.com)
+**Platform for open education** – Free software built with [Meteor.js](https://meteor.com) and [React](https://react.dev/)
 
 An interactive web-platform to provide barrier-free access to education for everyone.
-It is a simple to use open-source tool for local, self-organized knowledge-exchange:
+Openki is a simple to use open-source tool for local, self-organized knowledge-exchange:
 As a foundation for mediating non-commercial education opportunities,
 as interface between people who are interested in similar subjects,
 and as an instrument which simplifies the organization of “peer-to-peer” sharing of knowledge.
@@ -16,15 +16,17 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 [  read on...](https://about.openki.net "our blog")
 <div align="right"> (★ Star us if you like the idea)</div>
 
+
+### Test it
+
 - Live: [openki.net](https://openki.net)
-- Demo/Playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Englistan "running here")
-- Concept: [about.openki.net](https://about.openki.net "our blog")
-- Contact: [dev-core[at]lists.openki.net](mailto:dev-core[_at_]lists.openki.net "write us")
+- Demo / playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Englistan "running here")
+- Beta: [dev.openki.net](https://dev.openki.net)
 
 ----
 
 ### Features
-- :pencil: Easily propose courses and events
+- :pencil: Easily propose Topics and events
 - :mag: Fulltext-search
 - :speech_balloon: Simple discussion-board per course
 - :computer: Infoscreen views with upcoming events for big and small screens ([Docs](https://gitlab.com/Openki/Openki/wikis/InfoScreens))
@@ -50,11 +52,12 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 - :closed_lock_with_key: more privacy settings
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
 - :iphone: Smartphone App
+- ...see more in our [issues](https://gitlab.com/Openki/Openki/-/issues/?sort=milestone&state=opened&not%5Blabel_name%5D%5B%5D=defect%3A%3Anot%20urgent&not%5Blabel_name%5D%5B%5D=defect%3A%3A&not%5Blabel_name%5D%5B%5D=urgent%20%E2%98%A0&label_name%5B%5D=size%3A%3Abig&first_page_size=20).
 
 ----
 
 ## Contribution
-All submissions are welcome. To submit a change, [fork this repo](https://gitlab.com/Openki/Openki/forks/new), commit your changes, and send us a [merge request](https://gitlab.com/Openki/Openki/merge_requests/new).<br />
+Submissions are welcome. To submit a change, [fork this repo](https://gitlab.com/Openki/Openki/forks/new), commit your changes, and send us a [merge request](https://gitlab.com/Openki/Openki/merge_requests/new).<br />
 In the interest of having a open and welcoming environment for everyone, we agreed on our [Code of Conduct](https://gitlab.com/Openki/Openki/wikis/Code-of-Conduct). By participating in this project you agree to abide by its terms.
 
 ### Installation (Linux, OSX and Windows)
@@ -104,6 +107,13 @@ In case you get weird errors when starting (eg. error 14) try this command:
 ### Documentation
 - The technical documentation is here on GitLab in the :book: [Wiki](https://gitlab.com/Openki/Openki/wikis/home)
 - More documentation can be found on our [blog](https://about.openki.net/?page_id=1043)
+
+
+### Contact
+- Technical Support (only concerning technical and conceptual aspects of the Web Platform): [support_ät_openki.net](mailto:support_ät_openki.net "write us")
+- Dev list: [dev-core_ät_lists.openki.net](mailto:dev-core[_ät_]lists.openki.net "write us")
+- Concerning regions: [regions_ät_openki.net](mailto:regions_ät_openki.net "write us")
+- Community (rooms, mentors, communication, etc): [community_ät_openki.net](mailto:community_ät_openki.net "write us")
 
 ### License
 - AGPL – GNU Affero General Public License 3.0
