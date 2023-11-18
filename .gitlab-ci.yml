@@ -55,7 +55,11 @@ app-test:
   script: ./ci/app-test.sh
   allow_failure: true
 
+# Code Quality by "Code Climate"
+include:
+  template: Code-Quality.gitlab-ci.yml
 
+# auto deploy triggers
 deploy_dev:
   stage: deploy
   variables:
