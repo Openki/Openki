@@ -57,13 +57,14 @@ app-test:
 
 # Code Quality by "Code Climate" and Browser Perfomance
 include:
-  template: 
-  - Code-Quality.gitlab-ci.yml
-  - Verify/Browser-Performance.gitlab-ci.yml
+  template:
+   Code-Quality.gitlab-ci.yml
+#   Verify/Browser-Performance.gitlab-ci.yml
 
-browser_performance:
-  variables:
-    URL: https://dev.openki.net
+#browser_performance:
+#  stage: test
+#  variables:
+#    URL: https://dev.openki.net
 
 # auto deploy triggers
 deploy_dev:
