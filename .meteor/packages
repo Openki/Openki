@@ -57,3 +57,4 @@ typescript@4.9.4
 
 # Test
 meteortesting:mocha@2.0.1       # A package for writing and running your meteor app and package tests with mocha
+meteortesting:browser-tests@1.5.1 # Fix test
