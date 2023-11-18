@@ -1,0 +1,35 @@
+---
+version: "2"
+plugins:
+  csslint:
+    enabled: true
+  coffeelint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - typescript
+      - javascript
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+  rubocop:
+    enabled: true
+exclude_patterns:
+- .meteor/
+- .gitlab/
+- .reuse
+- settings/
+- "**/node_modules/"
+- script/
+- "**/spec/"
+- "**/test/"
+- "**/tests/"
+- Tests/
+- "**/vendor/"
+- "**/*_test.go"
+- "**/*.d.ts"
+- "**/*.min.js"
+- "**/*.min.css"
