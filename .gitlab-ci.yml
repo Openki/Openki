@@ -57,8 +57,9 @@ app-test:
 
 # Code Quality by "Code Climate" and Browser Perfomance
 include:
-  template: Code-Quality.gitlab-ci.yml
-  template: Verify/Browser-Performance.gitlab-ci.yml
+  template: 
+  - Code-Quality.gitlab-ci.yml
+  - Verify/Browser-Performance.gitlab-ci.yml
 
 browser_performance:
   variables:
