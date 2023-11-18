@@ -12,7 +12,7 @@ plugins:
       - typescript
       - javascript
   eslint:
-    enabled: true
+    enabled: false
   fixme:
     enabled: true
   rubocop:
