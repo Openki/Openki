@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
@@ -45,6 +45,10 @@ export function Edit({ post, onSave, onCancel }: Props) {
     return false;
   }
   const [notifyAll, setNotifyAll] = useState(notifyAllChecked());
+  // Update notifyAll on prop change
+  useEffect(() => {
+    setNotifyAll(!!post.notifyAll);
+  }, [post.notifyAll]);
 
   const richtextPlaceholder = () => {
     return post.parentId
