@@ -207,6 +207,8 @@ export const FindFilterPattern = {
   /** the event must be in one of the group ID */
   groups: Match.Maybe([String]),
   /** the event must be in none of the group ID */
+  notGroup: Match.Maybe(String),
+  /** the event must be in none of the group ID */
   notGroups: Match.Maybe([String]),
   /** only events for this course (ID) */
   course: Match.Maybe(String),
@@ -227,6 +229,7 @@ export const FindParams = {
   categories: Predicates.ids,
   group: Predicates.id,
   groups: Predicates.ids,
+  notGroup: Predicates.id,
   notGroups: Predicates.ids,
   venue: Predicates.id,
   venues: Predicates.ids,
@@ -436,9 +439,9 @@ export class EventsCollection extends Mongo.Collection<EventEntity, EventModel> 
     }
 
     let notInGroups = [];
-    // if (filter.notGroup) {
-    //   notInGroups.push(filter.notGroup);
-    // }
+    if (filter.notGroup) {
+      notInGroups.push(filter.notGroup);
+    }
 
     if (filter.notGroups) {
       notInGroups = notInGroups.concat(filter.notGroups);
