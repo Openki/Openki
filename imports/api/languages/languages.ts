@@ -71,7 +71,7 @@ export const LanguagesRaw: { [abbreviation: string]: LanguageEntity } = {
     name: "한국어",
     short: "ko",
     english: "Korean",
-    visible: false,
+    visible: true,
   },
   nb: {
     lg: "nb",
