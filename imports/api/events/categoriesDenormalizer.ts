@@ -19,9 +19,9 @@ export function onStartUp() {
   console.log(`events.categoriesDenormalizer.onStartUp: ${updated} affected events`);
 }
 
-export function beforeInsert(event: EventEntity): EventEntity {
+export async function beforeInsert(event: EventEntity): Promise<EventEntity> {
   // categories comes from the parent course
-  const course = Courses.findOne(event.courseId);
+  const course = await Courses.findOneAsync(event.courseId);
   if (!course) {
     throw new Error(`Missing course ${event.courseId} for event ${event._id}`);
   }
