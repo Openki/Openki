@@ -2,7 +2,6 @@ import React from "react";
 
 import { CourseModel } from "/imports/api/courses/courses";
 
-import { roleIcon } from "/imports/utils/role";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
 import "./styles.scss";
@@ -25,7 +24,7 @@ export function CourseCompactEvent(props: { course: CourseModel }) {
         </span>
       </div>
       <div className="course-compact-next-event-component">
-        <i className={`${roleIcon("participant")}`} aria-hidden="true"></i>&nbsp;
+        <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>&nbsp;
         {nextEvent?.numberOfParticipants()}
       </div>
     </div>
