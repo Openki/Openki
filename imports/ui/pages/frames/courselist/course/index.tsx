@@ -6,6 +6,7 @@ import { useSiteName } from "/imports/utils/getSiteName";
 
 import { Regions } from "/imports/api/regions/regions";
 import { CourseModel } from "/imports/api/courses/courses";
+import { Router } from "meteor/iron:router";
 
 export type Props = {
   course: CourseModel;
@@ -65,7 +66,7 @@ export function Course({ course, hideInterested }: Props) {
           <div className="mt-2 d-grid d-sm-flex">
             <a
               className="btn btn-outline-dark"
-              href="{{pathFor 'showCourse' data=course}}"
+              href={Router.path("showCourse", course)}
               target="_blank"
             >
               {t("frame.courseList.moreAboutThisCourse", "More on {SITENAME}", {
