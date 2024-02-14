@@ -40,7 +40,10 @@ export const [forCourse, useForCourse] = ServerPublishMany(
   (courseId: string) => {
     check(courseId, String);
 
-    return Events.find({ courseId, tenant: { $in: visibleTenants() } });
+    return Events.find(
+      { courseId, tenant: { $in: visibleTenants() } },
+      { limit: 400, sort: [["time_created", "desc"]] }, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
+    );
   },
 );
 
