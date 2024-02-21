@@ -48,10 +48,8 @@ template.helpers({
     });
 
     // and sort by date time desc
-    historyEntries
+    return historyEntries
       .sort((a, b) => (b.dateTime?.getTime() || 0) - (a.dateTime?.getTime() || 0))
       .slice(0, 200); // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
-
-    return historyEntries;
   },
 });
