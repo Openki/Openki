@@ -104,7 +104,8 @@ if (Meteor.isServer && PrivateSettings.testdata) {
 
       // Always use same id for same group to avoid broken urls while testing
       group._id = ensure.fixedId([group.name, group.description]);
-      group.members = group.members?.map((name) => ensure.user(name, undefined)._id) || [];
+      group.members =
+        g.members?.map((name) => ({ user: ensure.user(name, undefined)._id, notify: true })) || [];
       Groups.insert(group);
     });
 

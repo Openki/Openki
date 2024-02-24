@@ -46,6 +46,10 @@ template.onCreated(function () {
 });
 
 template.helpers({
+  isCurrentUser(userId: string) {
+    return Meteor.userId() === userId;
+  },
+
   foundUsers(group: GroupEntity) {
     const instance = Template.instance();
 
@@ -54,7 +58,7 @@ template.helpers({
       return false;
     }
 
-    return userSearchPrefix(search, { exclude: group.members, limit: 30 });
+    return userSearchPrefix(search, { exclude: group.members.map((m) => m.user), limit: 30 });
   },
 
   logoFileUploadArgs(): EditableImageData {
@@ -202,6 +206,18 @@ template.events({
       );
     } catch (err) {
       Alert.serverError(err, i18n("groupSettings.memberRemoved.error", "Could not remove member"));
+    }
+  },
+
+  async "click .js-member-toggle-notify-btn"() {
+    const groupId = Router.current().params._id as string;
+    try {
+      await GroupsMethods.toggleMemberNotify(groupId);
+    } catch (err) {
+      Alert.serverError(
+        err,
+        i18n("groupSettings.memberToggleNotify.error", "Could not change members notify setting."),
+      );
     }
   },
 
