@@ -153,9 +153,6 @@ function EditableMixing<
 
     const meOptions: MediumEditor.CoreOptions = {
       toolbar: {
-        static: true,
-        sticky: true,
-        stickyTopOffset: 55,
         align,
         updateOnEmptySelection: true,
         // list of supported html tags / formatting. Should be same as in the saneHtml(...) function
