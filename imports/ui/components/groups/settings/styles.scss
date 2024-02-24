@@ -6,6 +6,10 @@ $group-member-bg: rgba($gray-600, 0.15);
   @include tag($group-member-bg, $body-color, $group-member-bg, $primary);
 }
 
+.group-member-tag-notify {
+  @include tag-btn($group-member-bg, $primary, $group-member-bg, $primary);
+}
+
 .group-member-tag-btn-remove {
   @include tag-btn($group-member-bg, $body-color, $danger, darken($danger, 30%));
 }

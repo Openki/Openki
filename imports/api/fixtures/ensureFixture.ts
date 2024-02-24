@@ -184,7 +184,7 @@ export const ensure = {
       name: short,
       short,
       claim: "",
-      members: [ensure.user("EdDillinger")._id],
+      members: [{ user: ensure.user("EdDillinger")._id, notify: true }],
       description: "Fixture group",
       createdby: ensure.user("EdDillinger")._id,
       time_created: new Date(),
