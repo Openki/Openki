@@ -67,6 +67,11 @@ export function Model(entry: { body: Body }) {
   const { body } = entry;
   const course = Courses.findOne(body.courseId);
   const newParticipant = Users.findOne(body.participantId);
+  const otherRecipients = Users.find({
+    _id: { $in: body.recipients.filter((r) => r !== body.participantId) },
+  })
+    .fetch()
+    .filter((r) => r.notifications && r.hasEmail());
 
   return {
     accepted(actualRecipient: UserModel) {
@@ -129,6 +134,7 @@ export function Model(entry: { body: Body }) {
         // invite into team
         appendCollaborationHint: body.newRole === "mentor",
         figures,
+        otherRecipients,
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=joinNotify`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
