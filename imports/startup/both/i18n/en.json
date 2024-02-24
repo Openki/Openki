@@ -288,6 +288,7 @@
   "email.base.postscript": "Kind regards, your {SITE} team",
   "email.base.profileLink": "Visit your profile",
   "email.base.receiveNote.courseTeam": "You receive this message because you're on the team of {COURSE}.",
+  "email.base.receiveNote.otherRecipients": "{OTHERRECIPIENTS} received this email as well.",
   "email.base.spamPrevention": "To make sure our emails do not enter in your SPAM folder, please add {MAIL} to your contacts.",
   "email.base.unexpected": "If you don't know why you got this e-mail, ignore it or send us a notification to: {REPORTEMAIL}",
   "email.base.unsubscribeLink.automatedNotifications": "Unsubscribe from all automated notifications.",
