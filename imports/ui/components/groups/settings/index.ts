@@ -4,7 +4,7 @@ import { ReactiveVar } from "meteor/reactive-var";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { GroupModel, GroupEntity, Groups } from "/imports/api/groups/groups";
+import { GroupModel, GroupEntity, Groups, GroupMemberEntity } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Users } from "/imports/api/users/users";
 
@@ -46,6 +46,10 @@ template.onCreated(function () {
 });
 
 template.helpers({
+  isCurrentUser(userId: string) {
+    return Meteor.userId() === userId;
+  },
+
   foundUsers(group: GroupEntity) {
     const instance = Template.instance();
 
@@ -54,7 +58,7 @@ template.helpers({
       return false;
     }
 
-    return userSearchPrefix(search, { exclude: group.members, limit: 30 });
+    return userSearchPrefix(search, { exclude: group.members.map((m) => m.user), limit: 30 });
   },
 
   logoFileUploadArgs(): EditableImageData {
@@ -186,8 +190,8 @@ template.events({
     }
   },
 
-  async "click .js-member-remove-btn"() {
-    const memberId = `${this}`;
+  async "click .js-member-remove-btn"(this: GroupMemberEntity) {
+    const memberId = this.user;
     const groupId = Router.current().params._id as string;
     try {
       await GroupsMethods.updateMembership(memberId, groupId, false);
@@ -202,6 +206,18 @@ template.events({
       );
     } catch (err) {
       Alert.serverError(err, i18n("groupSettings.memberRemoved.error", "Could not remove member"));
+    }
+  },
+
+  async "click .js-member-toggle-notify-btn"() {
+    const groupId = Router.current().params._id as string;
+    try {
+      await GroupsMethods.toggleMemberNotify(groupId);
+    } catch (err) {
+      Alert.serverError(
+        err,
+        i18n("groupSettings.memberToggleNotify.error", "Could not change members notify setting."),
+      );
     }
   },
 

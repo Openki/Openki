@@ -105,6 +105,13 @@ template.helpers({
     return "";
   },
 
+  rolelistIsProposal(roletype: string) {
+    if (roletype !== "participant") {
+      return Roles.find((role) => role.type === roletype)?.proposal;
+    }
+    return "";
+  },
+
   editableMessage() {
     const { member } = Template.instance().data;
     const mayChangeComment = member.user === Meteor.userId();

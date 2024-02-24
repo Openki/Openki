@@ -53,7 +53,7 @@
 }
 
 .tag-btn:not(.addon),
-.tag-btn.addon + .tag,
+.tag-btn.addon + .tag:not(.addon),
 .tag + .tag-btn:not(.addon) {
   @include td-margin(left, 5px);
 }

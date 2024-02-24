@@ -12,6 +12,7 @@ import { Filtering } from "/imports/utils/filtering";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
+import { CleanedRegion } from "/imports/ui/lib/cleaned-region";
 
 export interface Geodata {
   type: "Point";
@@ -127,7 +128,7 @@ export class RegionsCollection extends Mongo.Collection<RegionEntity, RegionMode
   currentRegion() {
     const regionId = Session.get("region");
 
-    if (!regionId || regionId === "all") {
+    if (!CleanedRegion(regionId)) {
       return undefined;
     }
 

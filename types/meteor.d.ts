@@ -7,6 +7,9 @@ declare module "meteor/meteor" {
       locale: string;
     }
 
-    function user(options?: { projection?: Mongo.FieldSpecifier }): UserModel | null;
+    function user(options?: { fields?: Mongo.FieldSpecifier | undefined }): UserModel | null;
+    function userAsync(options?: {
+      fields?: Mongo.FieldSpecifier | undefined;
+    }): Promise<UserModel | null>;
   }
 }

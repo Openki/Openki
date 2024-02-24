@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useUser } from "/imports/utils/react-meteor-data";
+import { Router } from "meteor/iron:router";
 
 import * as Analytics from "/imports/ui/lib/analytics";
 
@@ -178,8 +179,7 @@ export function Events({ course }: Props) {
       {!isLoading() && haveEvents() ? (
         <div className="page-component">
           <a
-            className="js-track-cal-download"
-            href="{{pathFor 'calCourse'}}"
+            href={Router.path("calCourse", course)}
             target="_blank"
             onClick={() => {
               Analytics.trackEvent(

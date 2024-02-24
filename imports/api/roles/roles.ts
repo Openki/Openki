@@ -6,21 +6,24 @@ export interface RoleEntity {
   icon: string;
   /** For always-on roles */
   preset?: boolean;
+  proposal?: boolean;
 }
 
 export const Roles: RoleEntity[] = [
   {
     type: "participant",
-    icon: "fa-solid fa-user",
+    icon: "fa-solid fa-thumbs-up",
     preset: true,
   },
   {
     type: "mentor",
     icon: "fa-solid fa-graduation-cap",
+    proposal: true,
   },
   {
     type: "host",
     icon: "fa-solid fa-house",
+    proposal: true,
   },
   {
     type: "team",

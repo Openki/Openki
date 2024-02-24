@@ -92,7 +92,7 @@ template.helpers({
 
 template.events({
   "click .js-contact-members"() {
-    $(".page-component-btn.js-discussion-edit").trigger("notifyAll");
+    document.getElementById("discussion")?.dispatchEvent(new Event("notifyAll"));
   },
 
   "click .js-show-more-members"(_e, instance) {

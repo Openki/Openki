@@ -15,7 +15,7 @@ export function Control({ direction, onChangeDate }: Props) {
     <div className="col-auto px-4">
       <button
         type="button"
-        className="btn btn-secondary js-change-date"
+        className="btn btn-secondary"
         onClick={(event) => {
           event.preventDefault();
           onChangeDate();

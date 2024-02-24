@@ -50,7 +50,7 @@ import "./styles.scss";
       if (event) {
         title = i18n("event.windowtitle", "{DATE} — {EVENT}", {
           EVENT: event.title,
-          DATE: moment(event.start)
+          DATE: moment(event.startLocal)
             .locale(Session.get("timeLocale") || "en")
             .calendar(),
         });

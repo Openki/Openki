@@ -55,7 +55,7 @@ export const save = ServerMethod("group.save", (groupId: string, changes: SaveFi
 
   if (group.isNew()) {
     // Saving user is added as first member of the group and as creater
-    group.members.push(user._id);
+    group.members.push({ user: user._id, notify: true });
     updates.createdby = user._id;
     updates.time_created = new Date();
     updates = timeLastEditDenormalizer.beforeInsert(updates);
@@ -221,9 +221,9 @@ export const updateMembership = ServerMethod(
 
     let update;
     if (join) {
-      update = { $addToSet: { members: user._id } };
+      update = { $addToSet: { members: { user: user._id, notify: true } } };
     } else {
-      update = { $pull: { members: user._id } };
+      update = { $pull: { members: { user: user._id } } };
     }
 
     // By using the restrictive selector that checks group membership we can
@@ -236,3 +236,29 @@ export const updateMembership = ServerMethod(
     }
   },
 );
+export const toggleMemberNotify = ServerMethod("group.toggleMemberNotify", (groupId: string) => {
+  check(groupId, String);
+
+  const sender = Meteor.user();
+  if (!sender) {
+    throw new Meteor.Error(401, "please log-in");
+  }
+
+  // Load group from DB
+  const group = loadGroup(groupId);
+
+  if (group.isNew()) {
+    throw new Meteor.Error(401, "Denied");
+  }
+
+  const groupMember = group.members.find((m) => m.user === sender._id);
+
+  if (!groupMember) {
+    throw new Meteor.Error(401, "Denied");
+  }
+
+  Groups.update(
+    { _id: group._id, "members.user": groupMember.user },
+    { $set: { "members.$.notify": !groupMember.notify } },
+  );
+});
