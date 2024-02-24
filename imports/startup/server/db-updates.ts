@@ -17,6 +17,7 @@ import { update as update20210513ensureTenantAdminsField } from "./updates/2021.
 import { update as update20220621EnrichEventCourseImage } from "./updates/2022.06.21 enrichEventCourseImage";
 import { update as update20230506extendEventParticipants } from "./updates/2023.05.06 extendEventParticipants";
 import { update as update20230802ensureEventSendReminderField } from "./updates/2023.08.02 ensureEventSendReminderField";
+import { update as update20240224refactorGroupMembers } from "./updates/2024.02.24 refactorGroupMembers";
 
 import { runBackgroundTasks } from "/imports/utils/background-tasks";
 
@@ -34,6 +35,7 @@ const UpdatesAvailable: { [name: string]: () => number } = {
   "2022.06.21 enrichEventCourseImage": update20220621EnrichEventCourseImage,
   "2023.05.06 extendEventParticipants": update20230506extendEventParticipants,
   "2023.08.02 ensureEventSendReminderField": update20230802ensureEventSendReminderField,
+  "2024.02.24 refactorGroupMembers": update20240224refactorGroupMembers,
 };
 
 interface UpdatesAppliedEntity {
