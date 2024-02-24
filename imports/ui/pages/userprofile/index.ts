@@ -83,7 +83,7 @@ template.helpers({
   },
 
   groupMember(group: GroupEntity, user: UserModel) {
-    return !!(user && group?.members?.includes(user._id));
+    return !!(user && group?.members?.some((m) => m.user === user._id));
   },
 
   showInviteGroups() {
