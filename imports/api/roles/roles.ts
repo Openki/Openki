@@ -12,7 +12,7 @@ export interface RoleEntity {
 export const Roles: RoleEntity[] = [
   {
     type: "participant",
-    icon: "fa-solid fa-user",
+    icon: "fa-solid fa-thumbs-up",
     preset: true,
   },
   {
