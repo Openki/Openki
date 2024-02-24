@@ -1,10 +1,5 @@
 <template name="richtext">
-  <div
-       class="js-richtext richtext form-control {{class}} {{#if characterLimitReached}}is-invalid{{/if}}">
+  <div>
+    {{> React (component Richtext)}}
   </div>
-  {{#if characterLimitReached}}
-    <div class="invalid-feedback">
-      {{i18n '_inputField.maxlength'  NUMBER=removeNumberOfCharacters MAXNUMBER=maxlength}}
-    </div>
-  {{/if}}
 </template>

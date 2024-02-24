@@ -43,7 +43,7 @@ export function GroupsPage() {
               className="card card-group border-0 rounded-0 mx-auto"
               style={bodyStyle(group.publicLogoUrl())}
             >
-              <div className="card-body">
+              <div className="card-body overflow-hidden">
                 <h5 className="card-title">
                   <a className="stretched-link" href={Router.path("groupDetails", group)}>
                     {group.name}

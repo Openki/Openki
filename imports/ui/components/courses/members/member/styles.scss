@@ -28,6 +28,12 @@
   margin-left: 3px;
   padding: 3px 6px 5px;
   vertical-align: middle;
+
+  &.is-proposal {
+    background-color: #99c5d5;
+    border: 3px dashed $blue;
+    padding: 0 3px 2px;
+  }
 }
 
 .course-member-role-text {

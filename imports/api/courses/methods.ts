@@ -304,7 +304,7 @@ export const updateImage = ServerMethod(
     check(courseId, String);
     check(file, FileStorage.UploadFilePattern);
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log-in");
     }
@@ -328,7 +328,7 @@ export const updateImage = ServerMethod(
     const enrichedSet = timeLastEditDenormalizer.beforeUpdateImage(update);
     Courses.update(course._id, { $set: enrichedSet });
     historyDenormalizer.afterUpdateImage(courseId, user._id);
-    eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, image);
+    await eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, image);
 
     return courseId;
   },
@@ -361,7 +361,7 @@ export const deleteImage = ServerMethod(
     const set = timeLastEditDenormalizer.beforeDeleteImage();
     Courses.update(course._id, { $unset: update, $set: set } as Mongo.Modifier<CourseEntity>);
     historyDenormalizer.afterDeleteImage(courseId, user._id);
-    eventsCourseImageDenormalizer.afterCourseDeleteImage(courseId);
+    await eventsCourseImageDenormalizer.afterCourseDeleteImage(courseId);
 
     return courseId;
   },

@@ -7,7 +7,8 @@
       <div class="course-member-roles">
         {{#if memberRoles.length}}
           {{#each role in memberRoles}}
-            <div class='course-member-role float-end'>
+            <div
+                 class='course-member-role float-end {{#if rolelistIsProposal role}}is-proposal{{/if}}'>
               <span class="course-member-role-text">
                 <span class="{{rolelistIcon role}} fa-fw" aria-hidden="true"></span>
                 <span class="role-short">{{roleShort role}}</span>

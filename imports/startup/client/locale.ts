@@ -5,7 +5,6 @@ import { Accounts } from "meteor/accounts-base";
 import { _ } from "meteor/underscore";
 import { Session } from "meteor/session";
 import { Tracker } from "meteor/tracker";
-import $ from "jquery";
 import "bootstrap-datepicker";
 
 import * as UsersMethods from "/imports/api/users/methods";
@@ -86,9 +85,9 @@ Meteor.startup(() => {
     Session.set("textDirectionality", textDirectionality);
 
     // Set lang and dir attribute and a class for dir.
-    $("html").attr("lang", lang);
-    $("html").attr("dir", textDirectionality);
-    $("html").toggleClass("rtl", isRTL);
+    document.documentElement.setAttribute("lang", lang);
+    document.documentElement.setAttribute("dir", textDirectionality);
+    document.documentElement.classList.toggle("rtl", isRTL);
 
     if (Meteor.userId()) {
       await UsersMethods.updateLocale(desiredLocale);

@@ -139,7 +139,7 @@ export type SaveFields = Partial<CreateFields> & UpdateFields;
  */
 export const save = ServerMethod(
   "event.save",
-  (
+  async (
     eventId: string,
     changes: SaveFields,
     updateReplicasInfos?: boolean | null,
@@ -315,15 +315,15 @@ export const save = ServerMethod(
     if (isNew) {
       editFields.createdBy = user._id;
       editFields.groupOrganizers = [];
-      let enrichedEvent = courseImageDenormalizer.beforeInsert(editFields as EventEntity);
+      let enrichedEvent = await courseImageDenormalizer.beforeInsert(editFields as EventEntity);
       if (editFields.courseId) {
-        enrichedEvent = categoriesDenormalizer.beforeInsert(editFields as EventEntity);
+        enrichedEvent = await categoriesDenormalizer.beforeInsert(editFields as EventEntity);
       }
       // eslint-disable-next-line no-param-reassign
       eventId = Events.insert(enrichedEvent);
 
       if (editFields.courseId) {
-        courseTimeLastEditDenormalizer.afterEventInsert(editFields.courseId);
+        await courseTimeLastEditDenormalizer.afterEventInsert(editFields.courseId);
         courseHistoryDenormalizer.afterEventInsert(editFields.courseId, user._id, {
           _id: eventId,
           title: editFields.title as string,
