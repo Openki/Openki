@@ -223,7 +223,7 @@ export const updateMembership = ServerMethod(
     if (join) {
       update = { $addToSet: { members: { user: user._id, notify: true } } };
     } else {
-      update = { $pull: { "members.user": user._id } };
+      update = { $pull: { members: { user: user._id } } };
     }
 
     // By using the restrictive selector that checks group membership we can

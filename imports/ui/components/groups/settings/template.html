@@ -27,9 +27,9 @@
                   {{username user}}
                   {{#unless isCurrentUser user}}
                     {{#if notify}}
-                      <i class="fa-solid fa-bell" aria-hidden="true"></i>
+                      <i class="fa-solid fa-bell fa-fw" aria-hidden="true"></i>
                     {{else}}
-                      <i class="fa-solid fa-bell-slash" aria-hidden="true"></i>
+                      <i class="fa-solid fa-bell-slash fa-fw" aria-hidden="true"></i>
                     {{/if}}
                   {{/unless}}
                 </button>
@@ -39,14 +39,14 @@
                   <div class="tag tag-btn group-member-tag-notify addon">
                     <button class="js-member-toggle-notify-btn" type="button"
                             title="{{i18n 'group.settings.member.turnNotifyOff' 'Turn my notifications off' attr=true}}">
-                      <i class="fa-solid fa-bell" aria-hidden="true"></i>
+                      <i class="fa-solid fa-bell fa-fw" aria-hidden="true"></i>
                     </button>
                   </div>
                 {{else}}
                   <div class="tag tag-btn group-member-tag-notify addon">
                     <button class="js-member-toggle-notify-btn" type="button"
                             title="{{i18n 'group.settings.member.turnNotifyOn' 'Turn my notifications on' attr=true}}">
-                      <i class="fa-solid fa-bell-slash" aria-hidden="true"></i>
+                      <i class="fa-solid fa-bell-slash fa-fw" aria-hidden="true"></i>
                     </button>
                   </div>
                 {{/if}}

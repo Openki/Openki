@@ -4,7 +4,7 @@ import { ReactiveVar } from "meteor/reactive-var";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 
 import * as Alert from "/imports/api/alerts/alert";
-import { GroupModel, GroupEntity, Groups } from "/imports/api/groups/groups";
+import { GroupModel, GroupEntity, Groups, GroupMemberEntity } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
 import { Users } from "/imports/api/users/users";
 
@@ -190,8 +190,8 @@ template.events({
     }
   },
 
-  async "click .js-member-remove-btn"() {
-    const memberId = `${this}`;
+  async "click .js-member-remove-btn"(this: GroupMemberEntity) {
+    const memberId = this.user;
     const groupId = Router.current().params._id as string;
     try {
       await GroupsMethods.updateMembership(memberId, groupId, false);
