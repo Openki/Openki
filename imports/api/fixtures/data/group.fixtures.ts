@@ -1,7 +1,14 @@
 // Groups are groups, organizations, institutions, virtual or real instituts, departments or
 // bodies...
 
-export const groups = [
+export const groups: {
+  name: string;
+  short: string;
+  claim: string;
+  description: string;
+  members?: string[];
+  logoUrl?: string;
+}[] = [
   {
     name: "Dynamo",
     short: "Dyn",
@@ -38,7 +45,7 @@ export const groups = [
     description:
       "Die Autonome Schule Zürich ist ein selbstverwaltetes Bildungsprojekt in Zürich. Es werden zahlreiche Kurse kostenlos angeboten, wobei stets die Möglichkeit besteht sich an Kursen bzw. am Schulprojekt zu beteiligen. Essentiell sind dabei die Deutschkurse, welche besonders für MigrantInnen und Sans-Papiers einen hürdenfreien und emanzipatorischen Zugang zur Sprache ermöglichen.",
     members: ["greg"],
-    logo: "/zurich/groups/ASZ.png",
+    logoUrl: "/zurich/groups/ASZ.png",
   },
   {
     name: "Schweizerische Gesellschaft für Mechatronische Kunst",
@@ -152,7 +159,6 @@ export const groups = [
     claim: "\n\t\t\t",
     description: "\n\t\t\t",
     logoUrl: "",
-    backgroundUrl: "",
   },
   {
     name: "",
