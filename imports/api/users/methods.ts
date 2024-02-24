@@ -428,7 +428,7 @@ Meteor.methods({
         }
 
         const groups: string[] = [];
-        Groups.find({ members: user._id }).forEach((group) => {
+        Groups.find({ "members.user": user._id }).forEach((group) => {
           groups.push(group._id);
         });
 

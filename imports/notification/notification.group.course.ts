@@ -35,7 +35,9 @@ export function record(courseId: string) {
     ...new Set(
       Groups.find({ _id: { $in: course.groupOrganizers } })
         .map((g) => g.members)
-        .flat(),
+        .flat()
+        .filter((m) => m.notify)
+        .map((m) => m.user),
     ),
   ];
 
@@ -77,7 +79,9 @@ export function Model(entry: { body: Body }) {
     },
 
     vars(lng: string, actualRecipient: UserModel, unsubToken: string) {
-      const recipientsGroups = groups.filter((g) => g.members.includes(actualRecipient._id));
+      const recipientsGroups = groups.filter((g) =>
+        g.members.some((m) => m.user === actualRecipient._id),
+      );
 
       const subjectvars = {
         COURSE: StringTools.truncate(course.name, 10),
