@@ -165,6 +165,7 @@ export function AccountTasks() {
 
   useEffect(() => {
     if (pleaseLogin && elementRef.current) {
+      setShow(true);
       Modal.getOrCreateInstance(elementRef.current).show();
     }
 
@@ -185,7 +186,7 @@ export function AccountTasks() {
       element?.removeEventListener("hidden.bs.modal", hidden);
       element?.removeEventListener("shown.bs.modal", shown);
     };
-  });
+  }, [pleaseLogin]);
 
   return (
     <div
