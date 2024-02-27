@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import moment from "moment";
 import { Template } from "meteor/templating";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSessionEquals, useUser } from "/imports/utils/react-meteor-data";
 
@@ -17,10 +17,11 @@ function EmailValidationModal({ user }: Props) {
   const { t } = useTranslation();
   const [isBusy, setIsBusy] = useState(false);
   const emailValidationModalClosed = useSessionEquals("emailValidationModalClosed", true);
+  const elementRef = useRef(null);
 
   useEffect(() => {
-    if (!emailValidationModalClosed) {
-      $(".js-email-validation-modal")
+    if (!emailValidationModalClosed && elementRef.current) {
+      $(elementRef.current)
         .modal("show")
         .on("hide.bs.modal", function () {
           Session.set("emailValidationModalClosed", true);
@@ -36,7 +37,9 @@ function EmailValidationModal({ user }: Props) {
       await emailMethods.sendVerificationEmail();
 
       Alert.success(t("profile.sentVerificationMail", { MAIL: Meteor.user()?.emails[0].address }));
-      $(".js-email-validation-modal").modal("hide");
+      if (elementRef.current) {
+        $(elementRef.current).modal("hide");
+      }
     } catch (err) {
       Alert.serverError(
         err,
@@ -48,7 +51,7 @@ function EmailValidationModal({ user }: Props) {
   }
 
   return (
-    <div className="js-email-validation-modal modal" tabIndex={-1} role="dialog">
+    <div className="modal" ref={elementRef} tabIndex={-1} role="dialog">
       <div className="modal-dialog modal-sm" role="document">
         <div className="modal-content">
           <div className="modal-header">

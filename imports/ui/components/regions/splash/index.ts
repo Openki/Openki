@@ -1,6 +1,5 @@
 import { Session } from "meteor/session";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import $ from "jquery";
 
 import "/imports/ui/components/regions/selection";
 
@@ -33,7 +32,6 @@ template.events({
   },
 
   "click .js-login-for-region"(_event, instance) {
-    $(".js-account-tasks").modal("show");
     instance.$(".js-region-splash").modal("hide");
   },
 });

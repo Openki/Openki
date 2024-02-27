@@ -29,7 +29,9 @@ export function Report() {
           <form
             className="needs-validation"
             noValidate
-            onSubmit={async () => {
+            onSubmit={async (event) => {
+              event.preventDefault();
+
               setState("sending");
               try {
                 await emailMethods.sendReport(

@@ -7,6 +7,7 @@ import {
   CourseDiscussions,
 } from "/imports/api/course-discussions/course-discussions";
 import * as CourseDiscussionUtils from "/imports/utils/course-discussion-utils";
+import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { Notification } from "/imports/notification/notification";
 import * as StringTools from "/imports/utils/string-tools";
 import * as HtmlTools from "/imports/utils/html-tools";
@@ -58,7 +59,8 @@ export const postComment = ServerMethod(
       saneComment.userId = user._id;
       saneComment.notifyAll =
         comment.notifyAll &&
-        (course.userHasRole(user._id, "team") ||
+        (UserPrivilegeUtils.privileged(user, "admin") ||
+          course.userHasRole(user._id, "team") ||
           user.groups.some((g) => course?.groupOrganizers.includes(g)));
     }
 

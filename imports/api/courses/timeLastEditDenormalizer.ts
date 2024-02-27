@@ -48,6 +48,6 @@ export function afterUnsubscribe(courseId: string) {
 /**
  * Update the modification date of the course
  */
-export function afterEventInsert(courseId: string) {
-  Courses.update(courseId, { $set: { time_lastedit: new Date() } });
+export async function afterEventInsert(courseId: string) {
+  await Courses.updateAsync(courseId, { $set: { time_lastedit: new Date() } });
 }

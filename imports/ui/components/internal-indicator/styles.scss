@@ -8,4 +8,7 @@
   position: absolute;
   top: 3px;
   width: 5px;
+
+  /* Move over stretched-link */
+  z-index: 2;
 }
