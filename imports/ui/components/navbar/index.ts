@@ -56,8 +56,8 @@ import "./styles.scss";
       activeNavLink.addClass("navbar-link-covering");
     } else {
       $(document).on("click", (event) => {
-        if (this.$(event.target as any).parents(".navbar-collapse").length === 0) {
-          this.$(".navbar-collapse").collapse("hide");
+        if (instance.$(event.target as any).parents(".navbar-collapse").length === 0) {
+          instance.$(".navbar-collapse").collapse("hide");
         }
       });
     }
@@ -67,7 +67,7 @@ import "./styles.scss";
       if (Viewport.get().width > ScssVars.gridFloatBreakpoint) {
         // this closes the navbar via jquery, which triggers an event that will
         // change the (blaze) state and close the modal as well
-        this.$(".navbar-collapse").collapse("hide");
+        instance.$(".navbar-collapse").collapse("hide");
       }
     });
   });
@@ -197,12 +197,6 @@ import "./styles.scss";
   template.helpers({
     loginServicesConfigured() {
       return Accounts.loginServicesConfigured();
-    },
-  });
-
-  template.events({
-    "click .js-open-login"() {
-      $(".js-account-tasks").modal("show");
     },
   });
 }

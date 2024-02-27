@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TFunction } from "i18next";
 import { Template } from "meteor/templating";
-import $ from "jquery";
 
 import { InvitationEntity, Status } from "/imports/api/invitations/invitations";
 import { useFindFilter } from "/imports/api/invitations/publications";
@@ -101,10 +100,8 @@ function Invitations({
             <div className="col-6 col-md-2">
               <button
                 type="button"
-                className="btn btn-sm btn-delete text-danger js-remove"
-                onClick={async (event) => {
-                  event.preventDefault();
-
+                className="btn btn-sm btn-delete text-danger"
+                onClick={async () => {
                   try {
                     await InvitationsMethods.remove(tenantId, invitation._id);
                   } catch (err) {
@@ -162,7 +159,7 @@ export function InvitationsList({ tenantId }: Props) {
           value=""
           id="invitationsListShowAcceptedCheck"
           onChange={(event) => {
-            setShowAccepted($(event.currentTarget).prop("checked"));
+            setShowAccepted(event.currentTarget.checked);
           }}
         />
         <label className="form-check-label" htmlFor="invitationsListShowAcceptedCheck">

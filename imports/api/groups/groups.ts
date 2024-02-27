@@ -27,6 +27,11 @@ export interface GroupEntityCustomCourseFields {
   type?: "singleLine" | "multiLine";
 }
 
+export interface GroupMemberEntity {
+  user: string;
+  notify: boolean;
+}
+
 /** DB-Model */
 export interface GroupEntity {
   /** ID */
@@ -38,8 +43,8 @@ export interface GroupEntity {
   logoUrl?: string;
   /** Customize the inputs that the user can enter when creating and editing a course. */
   customCourseFields?: GroupEntityCustomCourseFields[];
-  /** List of userIds */
-  members: string[];
+  /** List of userIds with notify */
+  members: GroupMemberEntity[];
   createdby?: string;
   // eslint-disable-next-line camelcase
   time_created?: Date;
@@ -49,7 +54,7 @@ export interface GroupEntity {
 export type GroupModel = Group & GroupEntity;
 
 export class Group {
-  members = [];
+  members = [] as GroupMemberEntity[];
 
   /**
    * Check if the group is new (not yet saved).
@@ -68,7 +73,7 @@ export class Group {
     return (
       this.isNew() /* Anybody may create a new group */ ||
       UserPrivilegeUtils.privileged(user, "admin") /* Admins can edit all groups */ ||
-      this.members?.includes(user._id) /* User must be member of group to edit it */
+      this.members?.some((m) => m.user === user._id) /* User must be member of group to edit it */
     );
   }
 
@@ -134,7 +139,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
     check(skip, Match.Maybe(Match.Integer));
     check(sort, Match.Maybe([FieldSortPattern]));
 
-    const find: Mongo.Selector<GroupEntity> = {};
+    const find: any = {};
 
     const options: Mongo.Options<GroupEntity> = { sort };
 
@@ -153,7 +158,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
         return [];
       }
 
-      find.members = me;
+      find["members.user"] = me;
     }
 
     return this.find(find, options);

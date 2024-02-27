@@ -1,7 +1,6 @@
 import { Session } from "meteor/session";
 import { Router } from "meteor/iron:router";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import $ from "jquery";
 
 import { Regions } from "/imports/api/regions/regions";
 
@@ -75,7 +74,7 @@ template.events({
 
 template.onRendered(() => {
   Viewport.update();
-  $(window).on("resize", () => {
+  window.addEventListener("resize", () => {
     Viewport.update();
   });
   Session.set("isRetina", window.devicePixelRatio === 2);

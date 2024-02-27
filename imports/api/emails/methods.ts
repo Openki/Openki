@@ -42,7 +42,7 @@ export type SendPrivateMessageOptions = Type<typeof SendPrivateMessageOptionsPat
 
 export const sendPrivateMessage = ServerMethod(
   "sendEmail",
-  (userId: string, message: string, options: SendPrivateMessageOptions) => {
+  async (userId: string, message: string, options: SendPrivateMessageOptions) => {
     check(userId, String);
     check(message, String);
     check(options, SendPrivateMessageOptionsPattern);
@@ -52,7 +52,7 @@ export const sendPrivateMessage = ServerMethod(
       throw new Meteor.Error(401, "please log in");
     }
 
-    const recipient = Users.findOne(userId);
+    const recipient = await Users.findOneAsync(userId);
     if (!recipient) {
       throw new Meteor.Error(404, "no such user");
     }
@@ -81,7 +81,7 @@ export const sendPrivateMessage = ServerMethod(
 
 export const sendReport = ServerMethod(
   "report",
-  (title: string, location: string, userAgent: string, reportMessage: string) => {
+  async (title: string, location: string, userAgent: string, reportMessage: string) => {
     check(title, String);
     check(location, String);
     check(userAgent, String);
@@ -98,7 +98,7 @@ export const sendReport = ServerMethod(
 
     const { siteName } = Accounts.emailTemplates;
 
-    const version = Version.findOne();
+    const version = await Version.findOneAsync();
     let versionString = "";
     if (version) {
       const fullVersion = version.basic + (version.branch !== "master" ? ` ${version.branch}` : "");

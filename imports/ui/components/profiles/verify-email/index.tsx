@@ -25,7 +25,7 @@ export function VerifyEmail() {
   return (
     <button
       type="button"
-      className="btn btn-secondary js-verify-mail-btn"
+      className="btn btn-secondary"
       onClick={async (event) => {
         event.preventDefault();
 

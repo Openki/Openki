@@ -1,50 +1,66 @@
 import React from "react";
+import { useUserId } from "/imports/utils/react-meteor-data";
+import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Users from "/imports/api/users/publications";
 
 import "./styles.scss";
-import { useUserId } from "/imports/utils/react-meteor-data";
-import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 
-export function Avatar(data: { color?: number; userId?: string; className?: string }) {
-  const currenctUserId = useUserId();
+function Anom({ className }: { className?: string | undefined }) {
+  return (
+    <img
+      className={`avatar-image ${className} placeholder-rainbow`}
+      src={`/logo/${PublicSettings.avatarLogo.src}`}
+      alt={getLocalizedValue(PublicSettings.avatarLogo.alt)}
+    />
+  );
+}
 
-  const userId = data.userId || currenctUserId;
-
-  if (!userId) {
-    throw new Error("Unexpected falsy: userId");
-  }
-
-  const [isLoading, user] = Users.useDetails(userId);
+function UserAvatar(props: {
+  color?: number | undefined;
+  userId: string;
+  className?: string | undefined;
+}) {
+  const [isLoading, user] = Users.useDetails(props.userId);
 
   function color() {
     // the form sets the color directly
-    if (data.color !== undefined) {
-      return data.color;
+    if (props.color !== undefined) {
+      return props.color;
     }
 
     // otherwise get the color from a user
     return user?.avatar?.color || 0;
   }
 
-  if (isLoading()) {
-    <img
-      className={`avatar-image ${data.className} placeholder-rainbow`}
-      src={`/logo/${PublicSettings.avatarLogo.src}`}
-      alt={getLocalizedValue(PublicSettings.avatarLogo.alt)}
-    />;
+  if (isLoading() || color() === 0) {
+    return <Anom className={props.className} />;
   }
 
   return (
     <img
-      className={`avatar-image ${data.className}`}
+      className={`avatar-image ${props.className}`}
       style={{ filter: `hue-rotate(-${color()}deg)` }}
       src={`/logo/${PublicSettings.avatarLogo.src}`}
       alt={getLocalizedValue(PublicSettings.avatarLogo.alt)}
     />
   );
+}
+
+export type Props = { color?: number; userId?: string; className?: string };
+
+export function Avatar(props: Props) {
+  const currenctUserId = useUserId();
+
+  const userId = props.userId || currenctUserId;
+
+  if (!userId) {
+    return <Anom className={props.className} />;
+  }
+
+  return <UserAvatar color={props.color} userId={userId} className={props.className} />;
 }
 
 // for Blaze
