@@ -21,10 +21,10 @@ template.helpers({
 
     // add past events
     historyEntries.push(
-      ...Events.find({
-        courseId: course._id,
-        start: { $lt: new Date() },
-      }).map((e) => ({
+      ...Events.find(
+        { courseId: course._id, start: { $lt: new Date() } },
+        { limit: 100 }, // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
+      ).map((e) => ({
         dateTime: e.start,
         template: "eventHeldHistoryEntry",
         data: e,
