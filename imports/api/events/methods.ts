@@ -165,7 +165,7 @@ export const save = ServerMethod(
 
     const editFields = changes as Partial<EventEntity>;
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -178,7 +178,7 @@ export const save = ServerMethod(
     if (isNew) {
       editFields.time_created = now;
       if (editFields.courseId) {
-        const course = Courses.findOne(editFields.courseId);
+        const course = await Courses.findOneAsync(editFields.courseId);
         if (!course) {
           throw new Meteor.Error(404, "course not found");
         }
@@ -188,7 +188,7 @@ export const save = ServerMethod(
       }
 
       if (editFields.replicaOf) {
-        const parent = Events.findOne(editFields.replicaOf);
+        const parent = await Events.findOneAsync(editFields.replicaOf);
         if (!parent) {
           throw new Meteor.Error(404, "replica parent not found");
         }
@@ -228,7 +228,7 @@ export const save = ServerMethod(
         editors: [user._id],
       });
     } else {
-      const result = Events.findOne(eventId);
+      const result = await Events.findOneAsync(eventId);
       if (!result) {
         throw new Meteor.Error(404, "No such event");
       }
@@ -239,7 +239,7 @@ export const save = ServerMethod(
       throw new Meteor.Error(401, "not permitted");
     }
 
-    const region = Regions.findOne(event.region);
+    const region = await Regions.findOneAsync(event.region);
 
     if (!region) {
       throw new Meteor.Error(400, "Region not found");
@@ -320,7 +320,7 @@ export const save = ServerMethod(
         enrichedEvent = await categoriesDenormalizer.beforeInsert(editFields as EventEntity);
       }
       // eslint-disable-next-line no-param-reassign
-      eventId = Events.insert(enrichedEvent);
+      eventId = await Events.insertAsync(enrichedEvent);
 
       if (editFields.courseId) {
         await courseTimeLastEditDenormalizer.afterEventInsert(editFields.courseId);
