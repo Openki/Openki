@@ -9,6 +9,7 @@ import * as Analytics from "/imports/ui/lib/analytics";
 import * as EventsPub from "/imports/api/events/publications";
 import { Regions } from "/imports/api/regions/regions";
 import { CourseModel } from "/imports/api/courses/courses";
+import { EventModel } from "/imports/api/events/events";
 
 import { useReactiveNow } from "/imports/utils/reactive-now";
 import { ScssVars } from "/imports/ui/lib/scss-vars";
@@ -26,6 +27,16 @@ export type Props = {
   course: CourseModel;
 };
 
+function compareByStartDate(event1: EventModel, event2: EventModel) {
+  if (event1.start < event2.start) {
+    return -1;
+  }
+  if (event1.start > event2.start) {
+    return 1;
+  }
+  return 0;
+}
+
 export function Events({ course }: Props) {
   const { t } = useTranslation();
   const user = useUser();
@@ -41,19 +52,19 @@ export function Events({ course }: Props) {
   const [isLoading, events] = EventsPub.useForCourse(course._id);
 
   function haveEvents() {
-    return events.some((e) => e.end >= now);
+    return events.sort(compareByStartDate).some((e) => e.end >= now);
   }
 
   function haveMoreEvents() {
-    return events.filter((e) => e.end >= now).length > maxEventsShown;
+    return events.sort(compareByStartDate).filter((e) => e.end >= now).length > maxEventsShown;
   }
 
   function ongoingEvents() {
-    return events.filter((e) => e.start <= now && e.end >= now);
+    return events.sort(compareByStartDate).filter((e) => e.start <= now && e.end >= now);
   }
 
   function futureEvents() {
-    const upcomingEvents = events.filter((e) => e.start > now);
+    const upcomingEvents = events.sort(compareByStartDate).filter((e) => e.start > now);
 
     if (showAllEvents) {
       return upcomingEvents;
@@ -85,7 +96,7 @@ export function Events({ course }: Props) {
     };
   }
   function deleteEventsModalArgs() {
-    const upcomingEvents = events.filter((e) => e.start > now);
+    const upcomingEvents = events.sort(compareByStartDate).filter((e) => e.start > now);
     return {
       upcomingEvents,
       onHideEventsDeleteModal() {
