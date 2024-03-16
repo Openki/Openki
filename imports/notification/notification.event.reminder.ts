@@ -108,7 +108,7 @@ export function Model(entry: { body: Body }) {
           event.participants?.filter((p) => p.user === actualRecipient._id)[0].companions || 0,
         unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         event,
-        eventDate: startMoment.format("LL"),
+        eventDate: startMoment.format("LLLL"),
         eventStart: startMoment.format("LT"),
         eventEnd: endMoment.format("LT"),
         venueLine,
