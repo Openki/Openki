@@ -172,7 +172,7 @@
 	"course.edit.savedMessage": "Dein Vorschlag wurde gespeichert!",
 	"course.edit.title": "Titel",
 	"course.event.edit.AddMessage": "Nachricht hinzufügen",
-	"course.event.edit.add": "Lektion festlegen",
+	"course.event.edit.add": "Lektion festlegen (Bitte nur in Absprache mit einem Austragungsort)",
 	"course.event.edit.date_start": "Datum",
 	"course.event.edit.deleteEvents": "Dieses Datum löschen",
 	"course.event.edit.desc": "Beschreibung",
