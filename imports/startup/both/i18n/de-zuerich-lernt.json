@@ -640,7 +640,7 @@
 	"notification.event.canceled.mail.canceled": "Diese Veranstaltung wurde abgesagt",
 	"notification.event.canceled.mail.intro": "Du warst für {EVENT} angemeldet. Leider wurde die Lektion gerade abgesagt.",
 	"notification.event.canceled.mail.notice": "Du erhälst diese E-Mail weil bei {EVENT} involviert bist.",
-	"notification.event.canceled.mail.personalMessage": "Der Veranstalter_in hat folgende Nachricht für dich hinterlassen:",
+	"notification.event.canceled.mail.personalMessage": "Der_die Veranstalter_in hat folgende Nachricht für dich hinterlassen:",
 	"notification.event.canceled.mail.subject": "Abgesagt: {EVENT}",
 	"notification.event.canceled.mail.title": "{DATE} — {EVENT}",
 	"notification.event.contact-participants.mail.copyintro": "Dies ist eine Kopie der von dir gesendeten Nachricht.",
