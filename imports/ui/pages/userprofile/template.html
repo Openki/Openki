@@ -9,6 +9,7 @@
         <div class="col-9">
           <h1 class="mt-4">
             {{i18n 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.getDisplayName}}
+          </h1>
             {{#if ownuser}}
               ({{i18n 'profile.its_you' "It's you!"}})
             {{else}}
@@ -28,7 +29,6 @@
                 {{/if}}
               {{/if}}
             {{/if}}
-          </h1>
 
           <p class="profile-description">{{{this.user.description}}}</p>
 
