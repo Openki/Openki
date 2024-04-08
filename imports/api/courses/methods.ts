@@ -377,7 +377,15 @@ export const deleteImage = ServerMethod(
  */
 export const promote = ServerMethod(
   "course.promote",
-  UpdateMethods.promote(Courses as unknown as GroupPromoters),
+  (courseId: string, groupId: string, enable: boolean) => {
+    UpdateMethods.promote(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
+    historyDenormalizer.afterGroupPromoteUpdate(
+      courseId,
+      groupId,
+      enable,
+      Meteor.userId() as string,
+    );
+  },
 );
 
 /**
@@ -389,7 +397,10 @@ export const promote = ServerMethod(
  */
 export const editing = ServerMethod(
   "course.editing",
-  UpdateMethods.editing(Courses as unknown as GroupPromoters),
+  (courseId: string, groupId: string, enable: boolean) => {
+    UpdateMethods.editing(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
+    historyDenormalizer.afterGroupOrgaUpdate(courseId, groupId, enable, Meteor.userId() as string);
+  },
 );
 
 export const archive = ServerMethod("course.archive", async (courseId: string) => {
