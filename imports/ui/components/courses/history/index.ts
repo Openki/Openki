@@ -1,4 +1,5 @@
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { Meteor } from "meteor/meteor";
 
 import { Events } from "/imports/api/events/events";
 import { CourseModel } from "/imports/api/courses/courses";
@@ -19,6 +20,13 @@ template.helpers({
 
     const historyEntries: { dateTime: Date | undefined; template: string; data: object }[] = [];
 
+    const user = Meteor.user();
+
+    const history =
+      user && course.editableBy(user)
+        ? course.history
+        : course.history.filter((e) => e.type !== "groupPromote" && e.type !== "groupOrga");
+
     // add past events
     historyEntries.push(
       ...Events.find(
@@ -33,7 +41,7 @@ template.helpers({
 
     // merge with all history entries
     historyEntries.push(
-      ...(course.history?.map((e) => ({
+      ...(history?.map((e) => ({
         dateTime: e.dateTime,
         template: `${e.type}HistoryEntry`,
         data: e.data,
@@ -48,8 +56,8 @@ template.helpers({
     });
 
     // and sort by date time desc
-    historyEntries.sort((a, b) => (b.dateTime?.getTime() || 0) - (a.dateTime?.getTime() || 0));
-
-    return historyEntries;
+    return historyEntries
+      .sort((a, b) => (b.dateTime?.getTime() || 0) - (a.dateTime?.getTime() || 0))
+      .slice(0, 200); // Hack: https://gitlab.com/Openki/Openki/-/issues/1768
   },
 });

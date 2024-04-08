@@ -60,6 +60,39 @@ export function afterUnsubscribe(courseId: string, userId: string, roleType: str
   });
 }
 
+export function afterGroupPromoteUpdate(
+  courseId: string,
+  groupId: string,
+  enable: boolean,
+  userId: string,
+) {
+  Courses.update(courseId, {
+    $addToSet: {
+      history: {
+        dateTime: new Date(),
+        type: "groupPromote",
+        data: { user: userId, group: groupId, enable },
+      },
+    },
+  });
+}
+export function afterGroupOrgaUpdate(
+  courseId: string,
+  groupId: string,
+  enable: boolean,
+  userId: string,
+) {
+  Courses.update(courseId, {
+    $addToSet: {
+      history: {
+        dateTime: new Date(),
+        type: "groupOrga",
+        data: { user: userId, group: groupId, enable },
+      },
+    },
+  });
+}
+
 export function afterEventInsert(
   courseId: string,
   userId: string,
