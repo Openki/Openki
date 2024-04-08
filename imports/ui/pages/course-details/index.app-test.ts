@@ -39,7 +39,7 @@ if (Meteor.isClient) {
 
       it("should allow a member a organizer group to send a message to all", async () => {
         Router.go("/course/e49ed1ce5d");
-        await MeteorAsync.loginWithPassword("Normalo", "greg");
+        await MeteorAsync.loginWithPassword("greg", "greg");
         await waitForSubscriptions();
 
         await waitFor(() => {
@@ -55,7 +55,12 @@ if (Meteor.isClient) {
           assert($("#canNotifyAllCheck").length > 0, `Notify all interested checkbox is shown`);
         });
 
-        $(".discussion-edit-body .richtext").html("Hello to all").trigger("keyup");
+        $(".discussion-edit-body .richtext").html("Hello to all");
+
+        document
+          .querySelector(".discussion-edit-body .richtext")
+          ?.dispatchEvent(new Event("keyup", { bubbles: true }));
+
         await waitFor(() => {
           assert($(".discussion-save-btn:not([disabled])").length > 0, `Save button is active`);
         });
