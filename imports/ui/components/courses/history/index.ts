@@ -25,7 +25,7 @@ template.helpers({
     const history =
       user && course.editableBy(user)
         ? course.history
-        : course.history.filter((e) => e.type !== "groupPromote" && e.type !== "groupOrga");
+        : course.history?.filter((e) => e.type !== "groupPromote" && e.type !== "groupOrga");
 
     // add past events
     historyEntries.push(
