@@ -396,10 +396,10 @@ export const save = ServerMethod(
   },
 );
 
-export const remove = ServerMethod("event.remove", (eventId: string) => {
+export const remove = ServerMethod("event.remove", async (eventId: string) => {
   check(eventId, String);
 
-  const user = Meteor.user();
+  const user = await Meteor.userAsync();
   if (!user) {
     throw new Meteor.Error(401, "please log in");
   }
@@ -469,7 +469,7 @@ export const addParticipant = ServerMethod(
     check(eventId, String);
     check(companions, Number);
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -541,12 +541,12 @@ export type ContactParticipantsOptions = Type<typeof ContactParticipantsOptionsP
 
 export const contactParticipants = ServerMethod(
   "event.contactParticipants",
-  (eventId: string, message: string, options: ContactParticipantsOptions) => {
+  async (eventId: string, message: string, options: ContactParticipantsOptions) => {
     check(eventId, String);
     check(message, String);
     check(options, ContactParticipantsOptionsPattern);
 
-    const operator = Meteor.user();
+    const operator = await Meteor.userAsync();
     if (!operator) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -578,7 +578,7 @@ export const cancel = ServerMethod(
     check(eventId, String);
     check(comment, Match.Maybe(String));
 
-    const operator = Meteor.user();
+    const operator = await Meteor.userAsync();
     if (!operator) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -614,7 +614,7 @@ export const uncancel = ServerMethod("event.uncancel", async (eventId: string) =
   if (!event) {
     throw new Meteor.Error(404, "no such event");
   }
-  const user = Meteor.user();
+  const user = await Meteor.userAsync();
   if (!user || !event.editableBy(user)) {
     throw new Meteor.Error(401, "edit not permitted");
   }
