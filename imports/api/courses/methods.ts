@@ -410,7 +410,7 @@ export const archive = ServerMethod("course.archive", async (courseId: string) =
   if (!course) {
     throw new Meteor.Error(404, "no such course");
   }
-  if (!course.editableBy(Meteor.user())) {
+  if (!course.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
   await Courses.updateAsync(course._id, { $set: { archived: true } });
@@ -423,7 +423,7 @@ export const unarchive = ServerMethod("course.unarchive", async (courseId: strin
   if (!course) {
     throw new Meteor.Error(404, "no such course");
   }
-  if (!course.editableBy(Meteor.user())) {
+  if (!course.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
   await Courses.updateAsync(course._id, { $set: { archived: false } });
@@ -436,7 +436,7 @@ export const remove = ServerMethod("course.remove", async (courseId: string) => 
   if (!course) {
     throw new Meteor.Error(404, "no such course");
   }
-  if (!course.editableBy(Meteor.user())) {
+  if (!course.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
   await Events.removeAsync({ courseId });

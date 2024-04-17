@@ -47,7 +47,7 @@ export const sendPrivateMessage = ServerMethod(
     check(message, String);
     check(options, SendPrivateMessageOptionsPattern);
 
-    const operator = Meteor.user();
+    const operator = await Meteor.userAsync();
     if (!operator) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -88,7 +88,7 @@ export const sendReport = ServerMethod(
     check(reportMessage, String);
 
     let reporter = "A fellow visitor";
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (user) {
       reporter = Spacebars.SafeString(
         `<a href='${Router.url("userprofile", user)}'>${user.getDisplayName()}</a>`,

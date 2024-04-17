@@ -34,7 +34,7 @@ export const save = ServerMethod("venue.save", async (venueId: string, changes: 
   check(venueId, String);
   check(changes, SaveFieldPattern);
 
-  const user = Meteor.user();
+  const user = await Meteor.userAsync();
   if (!user) {
     throw new Meteor.Error(401, "please log in");
   }
@@ -47,7 +47,7 @@ export const save = ServerMethod("venue.save", async (venueId: string, changes: 
       throw new Meteor.Error(404, "Venue not found");
     }
 
-    if (!venue.editableBy(Meteor.user())) {
+    if (!venue.editableBy(await Meteor.userAsync())) {
       throw new Meteor.Error(401, "Please log in");
     }
   }
@@ -128,7 +128,7 @@ export const remove = ServerMethod("venue.remove", async (venueId: string) => {
     throw new Meteor.Error(404, "No such venue");
   }
 
-  if (!venue.editableBy(Meteor.user())) {
+  if (!venue.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "Please log in");
   }
 
