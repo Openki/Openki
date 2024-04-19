@@ -235,14 +235,12 @@ export const adminRemove = ServerMethod(
     let numberOfDeletedEvents = 0;
     if (options.courses) {
       // Remove courses created by this user
-      Courses.find({ createdby: userId })
-        .fetch()
-        .forEach((course) => {
-          deletedCourses.push(course);
-          numberOfDeletedEvents += Events.remove({ courseId: course._id });
-        });
+      (await Courses.find({ createdby: userId }).fetchAsync()).forEach((course) => {
+        deletedCourses.push(course);
+        numberOfDeletedEvents += Events.remove({ courseId: course._id });
+      });
 
-      Courses.remove({ createdby: userId });
+      await Courses.removeAsync({ createdby: userId });
     }
 
     // Updated courses and events he is involted
@@ -250,26 +248,30 @@ export const adminRemove = ServerMethod(
 
     // eslint-disable-next-line no-restricted-syntax
     for await (const course of courses) {
-      Events.update({ courseId: course._id }, { $pull: { editors: userId } }, { multi: true });
-      Events.update(
+      await Events.updateAsync(
+        { courseId: course._id },
+        { $pull: { editors: userId } },
+        { multi: true },
+      );
+      await Events.updateAsync(
         { courseId: course._id },
         { $pull: { participants: { user: userId } } },
         { multi: true },
       );
 
-      Courses.update({ _id: course._id }, { $pull: { members: { user: userId } } });
-      Courses.update({ _id: course._id }, { $pull: { editors: userId } });
+      await Courses.updateAsync({ _id: course._id }, { $pull: { members: { user: userId } } });
+      await Courses.updateAsync({ _id: course._id }, { $pull: { editors: userId } });
 
       // Update member related calculated fields
       await courseInterestedDenormalizer.afterUserAdminRemove(course._id);
       Courses.updateGroups(course._id);
     }
 
-    const user = Users.findOne(userId) as any;
+    const user = (await Users.findOneAsync(userId)) as any;
 
     delete user.services;
 
-    Users.remove({ _id: userId });
+    await Users.removeAsync({ _id: userId });
 
     Log.record("user.admin.remove", [operatorId, userId], {
       operatorId,
@@ -283,7 +285,7 @@ export const adminRemove = ServerMethod(
 
 export const addPrivilege = ServerMethod(
   "user.addPrivilege",
-  (userId: string, privilege: "admin") => {
+  async (userId: string, privilege: "admin") => {
     check(userId, String);
     check(privilege, String);
 
@@ -292,11 +294,11 @@ export const addPrivilege = ServerMethod(
       return;
     }
 
-    const user = Users.findOne({ _id: userId });
+    const user = await Users.findOneAsync({ _id: userId });
     if (!user) {
       throw new Meteor.Error(404, "User not found");
     }
-    Users.update(
+    await Users.updateAsync(
       { _id: user._id },
       { $addToSet: { privileges: privilege } },
       { multi: true },
@@ -311,7 +313,7 @@ export const removePrivilege = ServerMethod(
     check(userId, String);
     check(privilege, String);
 
-    const user = Users.findOne({ _id: userId });
+    const user = await Users.findOneAsync({ _id: userId });
     if (!user) {
       throw new Meteor.Error(404, "User not found");
     }
@@ -325,7 +327,7 @@ export const removePrivilege = ServerMethod(
       return;
     }
 
-    Users.update(
+    await Users.updateAsync(
       { _id: user._id },
       { $pull: { privileges: privilege } },
       { multi: true },
@@ -343,12 +345,12 @@ export const setHasContributed = ServerMethod("user.setHasContributed", async (u
     return;
   }
 
-  const user = Users.findOne({ _id: userId });
+  const user = await Users.findOneAsync({ _id: userId });
   if (!user) {
     throw new Meteor.Error(404, "User not found");
   }
 
-  Users.update({ _id: user._id }, { $set: { contribution: new Date() } });
+  await Users.updateAsync({ _id: user._id }, { $set: { contribution: new Date() } });
 
   Log.record("user.hasContributed.set", [operator?._id, userId], {
     operatorId: operator?._id,
@@ -367,12 +369,12 @@ export const unsetHasContributed = ServerMethod(
       return;
     }
 
-    const user = Users.findOne({ _id: userId });
+    const user = await Users.findOneAsync({ _id: userId });
     if (!user) {
       throw new Meteor.Error(404, "User not found");
     }
 
-    Users.update({ _id: user._id }, { $unset: { contribution: "" } });
+    await Users.updateAsync({ _id: user._id }, { $unset: { contribution: "" } });
 
     Log.record("user.hasContributed.unset", [operator?._id, userId], {
       operatorId: operator?._id,
@@ -381,16 +383,16 @@ export const unsetHasContributed = ServerMethod(
   },
 );
 
-export const hidePricePolicy = ServerMethod("user.hidePricePolicy", () => {
+export const hidePricePolicy = ServerMethod("user.hidePricePolicy", async () => {
   const userId = Meteor.userId();
   if (!userId) {
     throw new Meteor.Error(401, "please log in");
   }
 
-  Users.update(userId, { $set: { hidePricePolicy: true } });
+  await Users.updateAsync(userId, { $set: { hidePricePolicy: true } });
 });
 
-export const updateLocale = ServerMethod("user.updateLocale", (locale: string) => {
+export const updateLocale = ServerMethod("user.updateLocale", async (locale: string) => {
   check(locale, String);
 
   const userId = Meteor.userId();
@@ -398,18 +400,18 @@ export const updateLocale = ServerMethod("user.updateLocale", (locale: string) =
     throw new Meteor.Error(401, "please log in");
   }
 
-  Users.update(userId, {
+  await Users.updateAsync(userId, {
     $set: { locale },
   });
 });
 
-export const updateLastLogin = ServerMethod("user.updateLastLogin", () => {
+export const updateLastLogin = ServerMethod("user.updateLastLogin", async () => {
   const userId = Meteor.userId();
   if (!userId) {
     throw new Meteor.Error(401, "please log in");
   }
 
-  Users.update(userId, {
+  await Users.updateAsync(userId, {
     $set: { lastLogin: new Date() },
   });
 });
