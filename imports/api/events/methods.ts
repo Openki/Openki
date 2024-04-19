@@ -324,7 +324,7 @@ export const save = ServerMethod(
 
       if (editFields.courseId) {
         await courseTimeLastEditDenormalizer.afterEventInsert(editFields.courseId);
-        courseHistoryDenormalizer.afterEventInsert(editFields.courseId, user._id, {
+        await courseHistoryDenormalizer.afterEventInsert(editFields.courseId, user._id, {
           _id: eventId,
           title: editFields.title as string,
           slug: editFields.slug as string,
@@ -346,7 +346,7 @@ export const save = ServerMethod(
       }
 
       if (event.courseId) {
-        courseHistoryDenormalizer.afterEventUpdate(event.courseId, user._id, {
+        await courseHistoryDenormalizer.afterEventUpdate(event.courseId, user._id, {
           _id: eventId,
           title: editFields.title as string,
           slug: editFields.slug as string,
@@ -404,7 +404,7 @@ export const remove = ServerMethod("event.remove", async (eventId: string) => {
     throw new Meteor.Error(401, "please log in");
   }
 
-  const event = Events.findOne(eventId);
+  const event = await Events.findOneAsync(eventId);
   if (!event) {
     throw new Meteor.Error(404, "No such event");
   }
@@ -413,13 +413,17 @@ export const remove = ServerMethod("event.remove", async (eventId: string) => {
     throw new Meteor.Error(401, "not permitted");
   }
 
-  Events.remove(eventId);
+  await Events.removeAsync(eventId);
 
   // unlink child replicas
-  Events.update({ replicaOf: event._id }, { $unset: { replicaOf: true } }, { multi: true });
+  await Events.updateAsync(
+    { replicaOf: event._id },
+    { $unset: { replicaOf: true } },
+    { multi: true },
+  );
 
   if (event.courseId) {
-    courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
+    await courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
       title: event.title,
       startLocal: event.startLocal,
     });
@@ -474,7 +478,7 @@ export const addParticipant = ServerMethod(
       throw new Meteor.Error(401, "please log in");
     }
 
-    const event = Events.findOne(eventId);
+    const event = await Events.findOneAsync(eventId);
     // ignore broken eventIds
     if (!event) {
       return;
@@ -485,7 +489,7 @@ export const addParticipant = ServerMethod(
       throw new Meteor.Error(401, "cannot register, event has already passed");
     }
 
-    Events.update(
+    await Events.updateAsync(
       { _id: eventId },
       { $addToSet: { participants: { user: user._id, companions } } },
     );
@@ -496,7 +500,7 @@ export const addParticipant = ServerMethod(
     Notification["Rsvp.Team"].record(eventId, user._id, companions);
 
     // if you cant load course its probably because the event doesnt have one
-    const course = Courses.findOne(event.courseId);
+    const course = await Courses.findOneAsync(event.courseId);
     if (!course) {
       return;
     }
@@ -510,28 +514,31 @@ export const addParticipant = ServerMethod(
   },
 );
 
-export const removeParticipant = ServerMethod("event.removeParticipant", (eventId: string) => {
-  check(eventId, String);
+export const removeParticipant = ServerMethod(
+  "event.removeParticipant",
+  async (eventId: string) => {
+    check(eventId, String);
 
-  const userId = Meteor.userId();
-  if (!userId) {
-    throw new Meteor.Error(401, "please log in");
-  }
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new Meteor.Error(401, "please log in");
+    }
 
-  const event = Events.findOne(eventId);
-  // ignore broken eventIds
-  if (!event) {
-    return;
-  }
-  // dont allow participant-mutations if event has passed
-  if (moment().isAfter(event.end)) {
-    throw new Meteor.Error(401, "cannot unregister, event has already passed");
-  }
+    const event = await Events.findOneAsync(eventId);
+    // ignore broken eventIds
+    if (!event) {
+      return;
+    }
+    // dont allow participant-mutations if event has passed
+    if (moment().isAfter(event.end)) {
+      throw new Meteor.Error(401, "cannot unregister, event has already passed");
+    }
 
-  Events.update({ _id: eventId }, { $pull: { participants: { user: userId } } });
+    await Events.updateAsync({ _id: eventId }, { $pull: { participants: { user: userId } } });
 
-  Meteor.call("course.updateNextEvent", event.courseId);
-});
+    Meteor.call("course.updateNextEvent", event.courseId);
+  },
+);
 
 export const ContactParticipantsOptionsPattern = {
   revealAddress: Boolean,

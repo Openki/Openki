@@ -264,7 +264,7 @@ export const save = ServerMethod("course.save", async (courseId: string, changes
     const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
     await Courses.updateAsync({ _id: courseId }, { $set: enrichedSet });
 
-    historyDenormalizer.afterUpdate(courseId, user._id);
+    await historyDenormalizer.afterUpdate(courseId, user._id);
     if (changes.categories) {
       // if categories are update, update those from the event
       eventsCategoriesDenormalizer.afterCourseUpdateCategories({
@@ -324,8 +324,8 @@ export const updateImage = ServerMethod(
     const update = { image };
 
     const enrichedSet = timeLastEditDenormalizer.beforeUpdateImage(update);
-    Courses.update(course._id, { $set: enrichedSet });
-    historyDenormalizer.afterUpdateImage(courseId, user._id);
+    await Courses.updateAsync(course._id, { $set: enrichedSet });
+    await historyDenormalizer.afterUpdateImage(courseId, user._id);
     await eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, image);
 
     return courseId;
@@ -357,8 +357,11 @@ export const deleteImage = ServerMethod(
     const update = { image: "" };
 
     const set = timeLastEditDenormalizer.beforeDeleteImage();
-    Courses.update(course._id, { $unset: update, $set: set } as Mongo.Modifier<CourseEntity>);
-    historyDenormalizer.afterDeleteImage(courseId, user._id);
+    await Courses.updateAsync(course._id, {
+      $unset: update,
+      $set: set,
+    } as Mongo.Modifier<CourseEntity>);
+    await historyDenormalizer.afterDeleteImage(courseId, user._id);
     await eventsCourseImageDenormalizer.afterCourseDeleteImage(courseId);
 
     return courseId;
@@ -375,9 +378,9 @@ export const deleteImage = ServerMethod(
  */
 export const promote = ServerMethod(
   "course.promote",
-  (courseId: string, groupId: string, enable: boolean) => {
+  async (courseId: string, groupId: string, enable: boolean) => {
     UpdateMethods.promote(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
-    historyDenormalizer.afterGroupPromoteUpdate(
+    await historyDenormalizer.afterGroupPromoteUpdate(
       courseId,
       groupId,
       enable,
@@ -395,9 +398,14 @@ export const promote = ServerMethod(
  */
 export const editing = ServerMethod(
   "course.editing",
-  (courseId: string, groupId: string, enable: boolean) => {
+  async (courseId: string, groupId: string, enable: boolean) => {
     UpdateMethods.editing(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
-    historyDenormalizer.afterGroupOrgaUpdate(courseId, groupId, enable, Meteor.userId() as string);
+    await historyDenormalizer.afterGroupOrgaUpdate(
+      courseId,
+      groupId,
+      enable,
+      Meteor.userId() as string,
+    );
   },
 );
 
