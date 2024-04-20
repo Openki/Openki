@@ -1,4 +1,4 @@
-image: openki/meteor-chromium:1.1.3
+image: registry.gitlab.com/openki/sysadmin/docker-ci-container:latest
 
 
 stages:
