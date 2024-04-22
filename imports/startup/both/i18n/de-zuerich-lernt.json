@@ -727,7 +727,7 @@
 	"profile.administration.title": "Administration",
 	"profile.avatar.inputLabel": "Haarfarbe ändern",
 	"profile.changePass": "Mein Passwort ändern",
-	"profile.createNewGroup.button": "Austragungsort erstellen",
+	"profile.createNewGroup.button": " ",
 	"profile.createNewVenue.button": "Eine neue Räumlichkeit erstellen",
 	"profile.createNewVenue.linkText": "Erstelle eine öffentliche Räumlichkeit, die wieder ausgewählt werden kann.",
 	"profile.createNewVenue.question": "Bist du verantwortlich für diese Räumlichkeit?",
