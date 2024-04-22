@@ -1,7 +1,7 @@
 import { Courses } from "./courses";
 
-export function afterUpdate(courseId: string, userId: string) {
-  Courses.update(courseId, {
+export async function afterUpdate(courseId: string, userId: string) {
+  await Courses.updateAsync(courseId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -12,8 +12,8 @@ export function afterUpdate(courseId: string, userId: string) {
   });
 }
 
-export function afterUpdateImage(courseId: string, userId: string) {
-  Courses.update(courseId, {
+export async function afterUpdateImage(courseId: string, userId: string) {
+  await Courses.updateAsync(courseId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -24,8 +24,8 @@ export function afterUpdateImage(courseId: string, userId: string) {
   });
 }
 
-export function afterDeleteImage(courseId: string, userId: string) {
-  Courses.update(courseId, {
+export async function afterDeleteImage(courseId: string, userId: string) {
+  await Courses.updateAsync(courseId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -36,7 +36,7 @@ export function afterDeleteImage(courseId: string, userId: string) {
   });
 }
 
-export function afterSubscribe(courseId: string, userId: string, roleType: string) {
+export async function afterSubscribe(courseId: string, userId: string, roleType: string) {
   Courses.update(courseId, {
     $addToSet: {
       history: {
@@ -60,7 +60,40 @@ export function afterUnsubscribe(courseId: string, userId: string, roleType: str
   });
 }
 
-export function afterEventInsert(
+export async function afterGroupPromoteUpdate(
+  courseId: string,
+  groupId: string,
+  enable: boolean,
+  userId: string,
+) {
+  await Courses.updateAsync(courseId, {
+    $addToSet: {
+      history: {
+        dateTime: new Date(),
+        type: "groupPromote",
+        data: { user: userId, group: groupId, enable },
+      },
+    },
+  });
+}
+export async function afterGroupOrgaUpdate(
+  courseId: string,
+  groupId: string,
+  enable: boolean,
+  userId: string,
+) {
+  await Courses.updateAsync(courseId, {
+    $addToSet: {
+      history: {
+        dateTime: new Date(),
+        type: "groupOrga",
+        data: { user: userId, group: groupId, enable },
+      },
+    },
+  });
+}
+
+export async function afterEventInsert(
   courseId: string,
   userId: string,
   event: {
@@ -70,7 +103,7 @@ export function afterEventInsert(
     startLocal: string;
   },
 ) {
-  Courses.update(courseId, {
+  await Courses.updateAsync(courseId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -81,7 +114,7 @@ export function afterEventInsert(
   });
 }
 
-export function afterEventUpdate(
+export async function afterEventUpdate(
   courseId: string,
   userId: string,
   event: {
@@ -92,7 +125,7 @@ export function afterEventUpdate(
     replicasUpdated: boolean;
   },
 ) {
-  Courses.update(courseId, {
+  await Courses.updateAsync(courseId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
@@ -103,7 +136,7 @@ export function afterEventUpdate(
   });
 }
 
-export function afterEventRemove(
+export async function afterEventRemove(
   courseId: string,
   userId: string,
   event: {
@@ -111,7 +144,7 @@ export function afterEventRemove(
     startLocal: string;
   },
 ) {
-  Courses.update(courseId, {
+  await Courses.updateAsync(courseId, {
     $addToSet: {
       history: {
         dateTime: new Date(),
