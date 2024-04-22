@@ -84,13 +84,13 @@ function registerMethod<T>(method: Method<T>): void {
   Meteor.methods({ [method.method]: apply });
 }
 
-function loadCourse(courseId: string) {
+async function loadCourse(courseId: string) {
   // new!
   if (courseId === "") {
     return new Course() as CourseModel;
   }
 
-  const course = Courses.findOne({ _id: courseId });
+  const course = await Courses.findOneAsync({ _id: courseId });
   if (!course) {
     throw new Meteor.Error(404, "Course not found");
   }
@@ -124,35 +124,33 @@ export const SaveFieldPattern = {
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
-export const save = ServerMethod(
-  "course.save",
+export const save = ServerMethod("course.save", async (courseId: string, changes: SaveFields) => {
+  check(courseId, String);
+  check(changes, SaveFieldPattern);
 
-  async (courseId: string, changes: SaveFields) => {
-    check(courseId, String);
-    check(changes, SaveFieldPattern);
+  const user = await Meteor.userAsync();
+  if (!user) {
+    throw new Meteor.Error(401, "please log in");
+  }
 
-    const user = Meteor.user();
-    if (!user) {
-      throw new Meteor.Error(401, "please log in");
-    }
+  const course = await loadCourse(courseId);
 
-    const course = loadCourse(courseId);
+  if (!course.editableBy(user)) {
+    throw new Meteor.Error(401, "edit not permitted");
+  }
 
-    if (!course.editableBy(user)) {
-      throw new Meteor.Error(401, "edit not permitted");
-    }
+  /* Changes we want to perform */
+  const set = {} as Mongo.OptionalId<CourseEntity>;
 
-    /* Changes we want to perform */
-    const set = {} as Mongo.OptionalId<CourseEntity>;
-
-    if (changes.roles) {
-      Roles.forEach((role) => {
+  if (changes.roles) {
+    await Promise.all(
+      Roles.map(async (role) => {
         const { type } = role;
         const shouldHave = !!(role.preset || changes.roles?.[type]);
         const have = course.roles.includes(type);
 
         if (have && !shouldHave) {
-          Courses.update(
+          await Courses.updateAsync(
             { _id: courseId },
             { $pull: { roles: type } },
             { multi: true },
@@ -174,7 +172,7 @@ export const save = ServerMethod(
             set.roles = set.roles || [];
             set.roles.push(type);
           } else {
-            Courses.update(
+            await Courses.updateAsync(
               { _id: courseId },
               { $addToSet: { roles: type } },
               { multi: true },
@@ -182,121 +180,121 @@ export const save = ServerMethod(
             );
           }
         }
-      });
-    }
+      }),
+    );
+  }
 
-    if (changes.description) {
-      // 640 k ought to be enough for everybody  -- Mao
-      set.description = changes.description.substring(0, 640 * 1024);
-      if (Meteor.isServer) {
-        set.description = HtmlTools.saneHtml(set.description);
+  if (changes.description) {
+    // 640 k ought to be enough for everybody  -- Mao
+    set.description = changes.description.substring(0, 640 * 1024);
+    if (Meteor.isServer) {
+      set.description = HtmlTools.saneHtml(set.description);
+    }
+  }
+
+  if (changes.categories) {
+    set.categories = changes.categories.slice(0, 20);
+  }
+  if (changes.name) {
+    set.name = StringTools.saneTitle(changes.name).substring(0, 1000);
+    set.slug = StringTools.slug(set.name);
+  }
+  if (changes.customFields) {
+    set.customFields = changes.customFields.map((i) => ({
+      name: i.name.substring(0, 50),
+      displayText: i.displayText,
+      value: i.value.substring(0, 2000),
+      visibleFor: i.visibleFor,
+    }));
+  }
+  if (changes.internal !== undefined) {
+    set.internal = changes.internal;
+  }
+
+  if (changes.singleEvent !== undefined) {
+    set.singleEvent = changes.singleEvent;
+  }
+
+  if (course.isNew()) {
+    // You can add newly created courses to any group
+    let groups = changes.groups || [];
+    groups = [...new Set(groups)]; // make unique
+    groups = groups.map((groupId) => {
+      const group = Groups.findOne(groupId);
+      if (!group) {
+        throw new Meteor.Error(404, `no group with id ${groupId}`);
       }
+      return group._id;
+    });
+    set.groups = groups;
+    set.groupOrganizers = groups;
+
+    /* region cannot be changed */
+    const region = Regions.findOne({ _id: changes.region });
+    if (!region) {
+      throw new Meteor.Error(404, "region missing");
+    }
+    set.region = region._id;
+
+    /* When a course is created, the creator is automatically added as sole member of the team */
+    set.members = [
+      {
+        user: user._id,
+        roles: ["participant", "team"],
+        comment: i18n("courses.creator.defaultMessage", "(has proposed this course)", {
+          lng: user.locale,
+        }),
+      },
+    ];
+    set.archived = false;
+    set.createdby = user._id;
+    set.time_created = new Date();
+    const enrichedSet = timeLastEditDenormalizer.beforeInsert(set);
+    /* eslint-disable-next-line no-param-reassign */
+    courseId = await Courses.insertAsync(enrichedSet);
+
+    if (set.groupOrganizers.length > 0) {
+      Notification["Group.Course"].record(courseId);
     }
 
+    // Init calculated fields
+    Meteor.call("course.updateNextEvent", courseId);
+    Courses.updateGroups(courseId);
+  } else {
+    const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
+    await Courses.updateAsync({ _id: courseId }, { $set: enrichedSet });
+
+    await historyDenormalizer.afterUpdate(courseId, user._id);
     if (changes.categories) {
-      set.categories = changes.categories.slice(0, 20);
-    }
-    if (changes.name) {
-      set.name = StringTools.saneTitle(changes.name).substring(0, 1000);
-      set.slug = StringTools.slug(set.name);
-    }
-    if (changes.customFields) {
-      set.customFields = changes.customFields.map((i) => ({
-        name: i.name.substring(0, 50),
-        displayText: i.displayText,
-        value: i.value.substring(0, 2000),
-        visibleFor: i.visibleFor,
-      }));
-    }
-    if (changes.internal !== undefined) {
-      set.internal = changes.internal;
-    }
-
-    if (changes.singleEvent !== undefined) {
-      set.singleEvent = changes.singleEvent;
-    }
-
-    if (course.isNew()) {
-      // You can add newly created courses to any group
-      let groups = changes.groups || [];
-      groups = [...new Set(groups)]; // make unique
-      groups = groups.map((groupId) => {
-        const group = Groups.findOne(groupId);
-        if (!group) {
-          throw new Meteor.Error(404, `no group with id ${groupId}`);
-        }
-        return group._id;
-      });
-      set.groups = groups;
-      set.groupOrganizers = groups;
-
-      /* region cannot be changed */
-      const region = Regions.findOne({ _id: changes.region });
-      if (!region) {
-        throw new Meteor.Error(404, "region missing");
-      }
-      set.region = region._id;
-
-      /* When a course is created, the creator is automatically added as sole member of the team */
-      set.members = [
-        {
-          user: user._id,
-          roles: ["participant", "team"],
-          comment: i18n("courses.creator.defaultMessage", "(has proposed this course)", {
-            lng: user.locale,
-          }),
-        },
-      ];
-      set.archived = false;
-      set.createdby = user._id;
-      set.time_created = new Date();
-      const enrichedSet = timeLastEditDenormalizer.beforeInsert(set);
-      /* eslint-disable-next-line no-param-reassign */
-      courseId = Courses.insert(enrichedSet);
-
-      if (set.groupOrganizers.length > 0) {
-        Notification["Group.Course"].record(courseId);
-      }
-
-      // Init calculated fields
-      Meteor.call("course.updateNextEvent", courseId);
-      Courses.updateGroups(courseId);
-    } else {
-      const enrichedSet = timeLastEditDenormalizer.beforeUpdate(set);
-      Courses.update({ _id: courseId }, { $set: enrichedSet });
-
-      historyDenormalizer.afterUpdate(courseId, user._id);
-      if (changes.categories) {
-        // if categories are update, update those from the event
-        eventsCategoriesDenormalizer.afterCourseUpdateCategories({
-          _id: courseId,
-          categories: changes.categories,
-        });
-      }
-    }
-
-    if (changes.subs) {
-      const changedCourse = Courses.findOne(courseId);
-      changes.subs.forEach((role: string) => {
-        const change = new Subscribe(changedCourse, user, role, "interested");
-        if (change.validFor(user)) {
-          change.apply();
-        }
+      // if categories are update, update those from the event
+      eventsCategoriesDenormalizer.afterCourseUpdateCategories({
+        _id: courseId,
+        categories: changes.categories,
       });
     }
-    if (changes.unsubs) {
-      const changedCourse = Courses.findOne(courseId);
-      changes.unsubs.forEach((role: string) => {
-        const change = new Unsubscribe(changedCourse, user, role);
-        if (change.validFor(user)) {
-          change.apply();
-        }
-      });
-    }
+  }
 
-    return courseId;
-  },
-);
+  if (changes.subs) {
+    const changedCourse = await Courses.findOneAsync(courseId);
+    changes.subs.forEach((role: string) => {
+      const change = new Subscribe(changedCourse, user, role, "interested");
+      if (change.validFor(user)) {
+        change.apply();
+      }
+    });
+  }
+  if (changes.unsubs) {
+    const changedCourse = await Courses.findOneAsync(courseId);
+    changes.unsubs.forEach((role: string) => {
+      const change = new Unsubscribe(changedCourse, user, role);
+      if (change.validFor(user)) {
+        change.apply();
+      }
+    });
+  }
+
+  return courseId;
+});
 
 export const updateImage = ServerMethod(
   "course.update.image",
@@ -310,7 +308,7 @@ export const updateImage = ServerMethod(
     }
 
     // Load group from DB
-    const course = loadCourse(courseId);
+    const course = await loadCourse(courseId);
 
     if (course.isNew() || !course.editableBy(user)) {
       throw new Meteor.Error(401, "Denied");
@@ -326,8 +324,8 @@ export const updateImage = ServerMethod(
     const update = { image };
 
     const enrichedSet = timeLastEditDenormalizer.beforeUpdateImage(update);
-    Courses.update(course._id, { $set: enrichedSet });
-    historyDenormalizer.afterUpdateImage(courseId, user._id);
+    await Courses.updateAsync(course._id, { $set: enrichedSet });
+    await historyDenormalizer.afterUpdateImage(courseId, user._id);
     await eventsCourseImageDenormalizer.afterCourseUpdateImage(courseId, image);
 
     return courseId;
@@ -346,7 +344,7 @@ export const deleteImage = ServerMethod(
     }
 
     // Load group from DB
-    const course = loadCourse(courseId);
+    const course = await loadCourse(courseId);
 
     if (course.isNew() || !course.editableBy(user)) {
       throw new Meteor.Error(401, "Denied");
@@ -359,8 +357,11 @@ export const deleteImage = ServerMethod(
     const update = { image: "" };
 
     const set = timeLastEditDenormalizer.beforeDeleteImage();
-    Courses.update(course._id, { $unset: update, $set: set } as Mongo.Modifier<CourseEntity>);
-    historyDenormalizer.afterDeleteImage(courseId, user._id);
+    await Courses.updateAsync(course._id, {
+      $unset: update,
+      $set: set,
+    } as Mongo.Modifier<CourseEntity>);
+    await historyDenormalizer.afterDeleteImage(courseId, user._id);
     await eventsCourseImageDenormalizer.afterCourseDeleteImage(courseId);
 
     return courseId;
@@ -377,7 +378,15 @@ export const deleteImage = ServerMethod(
  */
 export const promote = ServerMethod(
   "course.promote",
-  UpdateMethods.promote(Courses as unknown as GroupPromoters),
+  async (courseId: string, groupId: string, enable: boolean) => {
+    UpdateMethods.promote(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
+    await historyDenormalizer.afterGroupPromoteUpdate(
+      courseId,
+      groupId,
+      enable,
+      Meteor.userId() as string,
+    );
+  },
 );
 
 /**
@@ -389,7 +398,15 @@ export const promote = ServerMethod(
  */
 export const editing = ServerMethod(
   "course.editing",
-  UpdateMethods.editing(Courses as unknown as GroupPromoters),
+  async (courseId: string, groupId: string, enable: boolean) => {
+    UpdateMethods.editing(Courses as unknown as GroupPromoters)(courseId, groupId, enable);
+    await historyDenormalizer.afterGroupOrgaUpdate(
+      courseId,
+      groupId,
+      enable,
+      Meteor.userId() as string,
+    );
+  },
 );
 
 export const archive = ServerMethod("course.archive", async (courseId: string) => {
@@ -399,7 +416,7 @@ export const archive = ServerMethod("course.archive", async (courseId: string) =
   if (!course) {
     throw new Meteor.Error(404, "no such course");
   }
-  if (!course.editableBy(Meteor.user())) {
+  if (!course.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
   await Courses.updateAsync(course._id, { $set: { archived: true } });
@@ -412,7 +429,7 @@ export const unarchive = ServerMethod("course.unarchive", async (courseId: strin
   if (!course) {
     throw new Meteor.Error(404, "no such course");
   }
-  if (!course.editableBy(Meteor.user())) {
+  if (!course.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
   await Courses.updateAsync(course._id, { $set: { archived: false } });
@@ -425,7 +442,7 @@ export const remove = ServerMethod("course.remove", async (courseId: string) => 
   if (!course) {
     throw new Meteor.Error(404, "no such course");
   }
-  if (!course.editableBy(Meteor.user())) {
+  if (!course.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "edit not permitted");
   }
   await Events.removeAsync({ courseId });
