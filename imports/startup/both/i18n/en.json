@@ -603,6 +603,7 @@
   "login.OAuth.loginWith": "Login with",
   "login.password.password_incorrect": "Incorrect password",
   "login.recoverPwd.title": "Recover Password",
+  "login.register.agreeEmails": "I agree on receiving occasional emails about {SITENAME}.",
   "login.register.backToLogin": "Go back to login",
   "login.register.submit": "Create account",
   "login.register.submit.busy": "Registering…",
