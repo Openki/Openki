@@ -109,6 +109,9 @@ export interface UserEntity extends Meteor.User {
    * true. This is visible to other users.
    */
   acceptsPrivateMessages: boolean;
+
+  /** The user agrees to receive occasional e-mails. */
+  allowNews: boolean;
 }
 
 export type UserModel = User & UserEntity;
