@@ -471,6 +471,7 @@ Meteor.methods({
             start: 1,
             _id: 1,
             venue: 1,
+            noRsvp: 1,
             participants: 1,
           },
         },
