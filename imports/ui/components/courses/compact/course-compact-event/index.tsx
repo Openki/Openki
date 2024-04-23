@@ -23,10 +23,12 @@ export function CourseCompactEvent(props: { course: CourseModel }) {
           {dateToRelativeString(nextEvent?.startLocal)}
         </span>
       </div>
-      <div className="course-compact-next-event-component">
-        <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>&nbsp;
-        {nextEvent?.numberOfParticipants()}
-      </div>
+      {!nextEvent?.noRsvp ? (
+        <div className="course-compact-next-event-component">
+          <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>&nbsp;
+          {nextEvent?.numberOfParticipants()}
+        </div>
+      ) : null}
     </div>
   );
 }
