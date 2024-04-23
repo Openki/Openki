@@ -117,50 +117,59 @@ export function EventRegistration({ event }: Props) {
               <h4>{t("event.details.registration", "Registration")}</h4>
             </div>
           </div>
-          <div className="page-component">
-            <b>
-              {!event.attendedBy(user?._id)
-                ? t(
-                    "event.details.i-participate-no",
-                    "Let it be known you are participating in this event. Your registration is binding.",
-                  )
-                : t(
-                    "event.details.i-participate-yes",
-                    "You are now registered. Your registration is binding.",
-                  )}
-            </b>
-          </div>
-          <div className="page-component">
-            {!event.attendedBy(user?._id) ? (
-              !event.canceled ? (
-                !event.isFullyBooked() ? (
-                  <RegisterPanel
+          {event.noRsvp ? (
+            <div className="page-component">
+              <b>{t("event.details.noRsvp", "Registration not required.")}</b>
+            </div>
+          ) : (
+            <>
+              <div className="page-component">
+                <b>
+                  {!event.attendedBy(user?._id)
+                    ? t(
+                        "event.details.i-participate-no",
+                        "Let it be known you are participating in this event. Your registration is binding.",
+                      )
+                    : t(
+                        "event.details.i-participate-yes",
+                        "You are now registered. Your registration is binding.",
+                      )}
+                </b>
+              </div>
+              <div className="page-component">
+                {!event.attendedBy(user?._id) ? (
+                  !event.canceled ? (
+                    !event.isFullyBooked() ? (
+                      <RegisterPanel
+                        event={event}
+                        busy={isBusy === "registering"}
+                        onRegister={async (companions) => {
+                          await addParticipant(companions);
+                        }}
+                      />
+                    ) : (
+                      <ButtonRegistrationClosed busy={isBusy === "registering"} />
+                    )
+                  ) : null
+                ) : (
+                  <UnregisterPanel
+                    busy={isBusy === "unregistering"}
                     event={event}
-                    busy={isBusy === "registering"}
-                    onRegister={async (companions) => {
-                      await addParticipant(companions);
+                    onUnregister={async () => {
+                      await removeParticipant();
                     }}
                   />
-                ) : (
-                  <ButtonRegistrationClosed busy={isBusy === "registering"} />
-                )
-              ) : null
-            ) : (
-              <UnregisterPanel
-                busy={isBusy === "unregistering"}
-                event={event}
-                onUnregister={async () => {
-                  await removeParticipant();
-                }}
-              />
-            )}
-          </div>
+                )}
+              </div>
+            </>
+          )}
         </>
       ) : null}
-
-      <div className="page-component">
-        <EventParticipants event={event} />
-      </div>
+      {!event.noRsvp ? (
+        <div className="page-component">
+          <EventParticipants event={event} />
+        </div>
+      ) : null}
     </>
   );
 }
