@@ -35,14 +35,16 @@
       <span class="frame-list-item-toggle-indicator">
         <i class="fa-solid fa-angle-down"></i>
       </span>
-      <div class="frame-list-free-seats" data-bs-toggle="tooltip" data-bs-title="{{#if isUnlimited}}
+      {{#unless noRsvp}}
+        <div class="frame-list-free-seats" data-bs-toggle="tooltip" data-bs-title="{{#if isUnlimited}}
 									{{i18n 'frame.list.reservation.status.unlimited.tooltip' '{RESERVEDSEATS} of unlimited seats reserved' RESERVEDSEATS=getAttendees}}
 								{{else}}
 									{{i18n 'frame.list.reservation.status.tooltip' '{RESERVEDSEATS} of {TOTALSEATS} seats reserved' RESERVEDSEATS=getAttendees TOTALSEATS=getTotalAvailableSeats}}
 								{{/if}}">
-        {{getAttendees}}/{{getTotalAvailableSeats}}
-      </div>
-      <i class="fa-solid fa-user frame-list-free-seats" aria-hidden="true"></i>
+          {{getAttendees}}/{{getTotalAvailableSeats}}
+        </div>
+        <i class="fa-solid fa-user frame-list-free-seats" aria-hidden="true"></i>
+      {{/unless}}
 
       <span class="frame-list-item-time">
         {{timeFormat start}}

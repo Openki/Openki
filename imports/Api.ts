@@ -43,6 +43,7 @@ export type ApiEvent = {
   start: Date;
   end: Date;
   duration: number;
+  noRsvp: boolean;
   maxParticipants: number;
   link: string;
   internal: boolean;
@@ -115,6 +116,7 @@ export const Api = {
         start: ev.start,
         end: ev.end,
         duration: moment(ev.end).diff(ev.start) / 60000, // Minutes
+        noRsvp: ev.noRsvp,
         maxParticipants: ev.maxParticipants,
         link: Router.url("showEvent", ev),
         internal: ev.internal,
