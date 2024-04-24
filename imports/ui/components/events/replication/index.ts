@@ -219,6 +219,7 @@ template.events({
           replicaOf: instance.data.replicaOf || instance.data._id,
           internal: instance.data.internal,
           sendReminder: instance.data.sendReminder,
+          noRsvp: instance.data.noRsvp,
           maxParticipants: instance.data.maxParticipants,
         };
 

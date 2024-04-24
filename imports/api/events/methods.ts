@@ -119,6 +119,7 @@ export const UpdateFieldsPattern = {
   endLocal: Match.Optional(String),
   internal: Match.Optional(Boolean),
   sendReminder: Match.Optional(Boolean),
+  noRsvp: Match.Optional(Boolean),
   maxParticipants: Match.Optional(Match.Integer),
 };
 export type UpdateFields = Type<typeof UpdateFieldsPattern>;
