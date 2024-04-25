@@ -125,33 +125,6 @@
               <input type="text" class="js-event-room form-control" size="40" value="{{room}}">
             </div>
           </div>
-          <div class="mb-3">
-            <div class="form-check">
-              <input class="form-check-input js-check-no-rsvp" type="checkbox" value=""
-                     id="eventEditNoRsvpCheck" {{noRsvp}}>
-              <label class="form-check-label" for="eventEditNoRsvpCheck">
-                {{i18n 'event.edit.noRsvp' 'No RSVP required'}}
-                {{#if noRsvpChecked}}
-                  <span class="form-text d-block">
-                    {{i18n 'event.edit.noRsvp.description' 'Registration is disabled. You might want to explain why in the description.'}}
-                  </span>
-                {{/if}}
-              </label>
-            </div>
-            {{#unless noRsvpChecked}}
-              <label class="form-label">
-                {{i18n 'course.event.edit.maxParticipants' 'maximal number of participants'}}
-                <small> {{i18n '_inputField.optional'}}</small>
-              </label>
-              <div class="input-group">
-                <span class="input-group-text">
-                  <span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>
-                </span>
-                <input type="text" class="js-event-max-participants form-control" size="1"
-                       value="{{maxParticipants}}">
-              </div>
-            {{/unless}}
-          </div>
         {{/if}}
 
         {{#if instance.customFields.length}}
@@ -159,6 +132,34 @@
             {{> editCustomFields fields=(instance.customFields) values=customFields}}
           </div>
         {{/if}}
+
+        <div class="mb-3">
+          <div class="form-check">
+            <input class="form-check-input js-check-no-rsvp" type="checkbox" value=""
+                   id="eventEditNoRsvpCheck" {{noRsvp}}>
+            <label class="form-check-label" for="eventEditNoRsvpCheck">
+              {{i18n 'event.edit.noRsvp' 'No reservation required'}}
+              {{#if noRsvpChecked}}
+                <span class="form-text d-block">
+                  {{i18n 'event.edit.noRsvp.description' 'Registration for this event is disabled. You might want to explain why in the description.'}}
+                </span>
+              {{/if}}
+            </label>
+          </div>
+          {{#unless noRsvpChecked}}
+            <label class="form-label">
+              {{i18n 'course.event.edit.maxParticipants' 'maximal number of participants'}}
+              <small> {{i18n '_inputField.optional'}}</small>
+            </label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <span class="fa-solid fa-users fa-fw" aria-hidden="true"></span>
+              </span>
+              <input type="text" class="js-event-max-participants form-control" size="1"
+                     value="{{maxParticipants}}">
+            </div>
+          {{/unless}}
+        </div>
 
         <div class="mb-3">
           <div class="form-check">
