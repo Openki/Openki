@@ -29,7 +29,7 @@
 			, "de": "/info/faq#was-ist-eine-openki-region"
 			}
 		}
-	, "i18nHelpLink_commented": "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto"
+	, "i18nHelpLink_commented": "https://gitlab.com/Openki/Openki/-/wikis/translation"
 	, "i18nMapping_commented": { "de": "de-zuerich-lernt" }
 	, "matomo_commented":
 		{ "url": "https://analytics.mydomain.com/"
