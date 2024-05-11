@@ -115,5 +115,13 @@ In case you get weird errors when starting (eg. error 14) try this command:
 - Concerning regions: [regions_ät_openki.net](mailto:regions_ät_openki.net "write us")
 - Community (rooms, mentors, communication, etc): [community_ät_openki.net](mailto:community_ät_openki.net "write us")
 
+### Help translating
+
+<a href="https://gitlab.com/Openki/Openki/-/wikis/translation/">
+<img src="https://hosted.weblate.org/widget/openki/287x66-grey.png" alt="Graphical translation status box from Weblate" />
+</a>
+
+To help translating, please visit our our [translation guide](https://gitlab.com/Openki/Openki/-/wikis/translation).
+
 ### License
 - AGPL – GNU Affero General Public License 3.0

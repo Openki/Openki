@@ -23,14 +23,18 @@ import { Type } from "/imports/utils/CustomChecks";
 /**
  * Set user region
  */
-export const regionChange = ServerMethod("user.regionChange", (newRegion: string) => {
-  const userId = Meteor.userId();
-  if (!userId) {
-    throw new Meteor.Error(401, "please log in");
-  }
+export const regionChange = ServerMethod(
+  "user.regionChange",
+  (newRegion: string) => {
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new Meteor.Error(401, "please log in");
+    }
 
-  Profile.Region.change(userId, newRegion, "client call");
-});
+    Profile.Region.change(userId, newRegion, "client call");
+  },
+  { simulation: false },
+);
 
 /**
  * Update user avatar color
@@ -392,18 +396,22 @@ export const hidePricePolicy = ServerMethod("user.hidePricePolicy", async () => 
   await Users.updateAsync(userId, { $set: { hidePricePolicy: true } });
 });
 
-export const updateLocale = ServerMethod("user.updateLocale", async (locale: string) => {
-  check(locale, String);
+export const updateLocale = ServerMethod(
+  "user.updateLocale",
+  async (locale: string) => {
+    check(locale, String);
 
-  const userId = Meteor.userId();
-  if (!userId) {
-    throw new Meteor.Error(401, "please log in");
-  }
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new Meteor.Error(401, "please log in");
+    }
 
-  await Users.updateAsync(userId, {
-    $set: { locale },
-  });
-});
+    await Users.updateAsync(userId, {
+      $set: { locale },
+    });
+  },
+  { simulation: false },
+);
 
 export const updateLastLogin = ServerMethod("user.updateLastLogin", async () => {
   const userId = Meteor.userId();
