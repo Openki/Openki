@@ -139,7 +139,7 @@ const defaults = {
     brand: "#38829c",
   },
   regionSelection: { minNumber: 5, aboutLink: "" },
-  i18nHelpLink: "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto",
+  i18nHelpLink: "https://gitlab.com/Openki/Openki/-/wikis/translation",
   publicTenants: [] as string[],
   matomo: {
     jsPath: "js/",

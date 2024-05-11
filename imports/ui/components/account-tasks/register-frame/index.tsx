@@ -24,7 +24,6 @@ export type Props = {
 
 export function RegisterFrame({ username, password, email, allowNews, onRegister, onBack }: Props) {
   const { t } = useTranslation();
-  const user = useUser();
   const currentRegion = useCurrentRegion();
   const sitename = useSiteName();
   const locale = useSession("locale");
@@ -93,15 +92,11 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
 
           await UsersMethods.updateLocale(locale);
 
-          if (!user) {
-            throw new Error("Unexpected falsy: user");
-          }
-
           Alert.success(
             t(
               "profile.sentVerificationMail",
               'Verification mail has been sent to your address: "{MAIL}".',
-              { MAIL: user.emails[0].address },
+              { MAIL: registerData.email },
             ),
           );
 
