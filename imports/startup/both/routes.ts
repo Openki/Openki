@@ -49,6 +49,7 @@ import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 
 import type { Data as GroupDetailsData } from "/imports/ui/pages/group-details";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
+import type { Data as EventsMapData } from "/imports/ui/pages/events-map";
 import type { Data as AdminTenantsData } from "/imports/ui/pages/admin/tenants";
 
 const makeFilterQuery = function (
@@ -568,19 +569,24 @@ RouterAsync.route("eventsMap", {
     await import("/imports/ui/pages/events-map");
   },
   subscriptions() {
-    const filter = new Filtering(VenueParamPredicates);
+    const now = reactiveNow.get(); // Time dependency so this will be reactively updated
     const region = CleanedRegion(Session.get("region"));
+
+    const filter = new Filtering(EventParamPredicates);
     if (region) {
       filter.add("region", region);
     }
     filter.read(this.params.query).done();
     const query = filter.toQuery();
-    return { venues: Venues.findFilter.subscribe(query) };
+    query.after = now;
+    return {
+      events: Events.findFilter.subscribe(query),
+    };
   },
-  data(): VenuesMapData {
+  data(): EventsMapData {
     return {
       region: CleanedRegion(Session.get("region")),
-      venues: this.subscriptions()?.venues(),
+      events: this.subscriptions()?.events(),
     };
   },
 });
