@@ -561,6 +561,30 @@ RouterAsync.route("venuesMap", {
   },
 });
 
+RouterAsync.route("eventsMap", {
+  path: "events/map",
+  template: "eventsMapPage",
+  async onRun() {
+    await import("/imports/ui/pages/events-map");
+  },
+  subscriptions() {
+    const filter = new Filtering(VenueParamPredicates);
+    const region = CleanedRegion(Session.get("region"));
+    if (region) {
+      filter.add("region", region);
+    }
+    filter.read(this.params.query).done();
+    const query = filter.toQuery();
+    return { venues: Venues.findFilter.subscribe(query) };
+  },
+  data(): VenuesMapData {
+    return {
+      region: CleanedRegion(Session.get("region")),
+      venues: this.subscriptions()?.venues(),
+    };
+  },
+});
+
 RouterAsync.route("frameCalendar", {
   path: "/frame/calendar",
   template: "frameCalendarPage",
