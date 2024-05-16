@@ -2,30 +2,33 @@ import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating"
 import { i18n } from "/imports/startup/both/i18next";
 
 import { Regions } from "/imports/api/regions/regions";
-import { VenueEntity, VenueModel } from "/imports/api/venues/venues";
+import { EventEntity, EventModel } from "/imports/api/events/events";
 
 import * as Metatags from "/imports/utils/metatags";
 
-import { LocationTracker, MarkerEntity } from "/imports/ui/lib/location-tracker";
+import type { MarkerEntity } from "/imports/ui/components/map2";
 
-import "/imports/ui/components/map";
-import "./location-candidate";
+import "/imports/ui/components/map2";
 
 import "./template.html";
 import "./styles.scss";
 
+const groupBy = <T>(array: T[], predicate: (value: T, index: number, array: T[]) => string) =>
+  array.reduce(
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    (acc, value, index, array) => {
+      (acc[predicate(value, index, array)] ||= []).push(value);
+      return acc;
+    },
+    {} as { [key: string]: T[] },
+  );
+
 export interface Data {
   region: string | undefined;
-  venues: Mongo.Cursor<VenueEntity, VenueModel>;
+  events: Mongo.Cursor<EventEntity, EventModel>;
 }
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "eventsMapPage",
-  Data,
-  {
-    locationTracker: LocationTracker;
-  }
->;
+const Template = TemplateAny as TemplateStaticTyped<"eventsMapPage", Data>;
 
 const template = Template.eventsMapPage;
 
@@ -33,66 +36,39 @@ template.onCreated(function () {
   const instance = this;
 
   instance.autorun(() => {
-    Metatags.setCommonTags(i18n("venue.map.windowtitle", "Venues map"));
-  });
-
-  instance.locationTracker = new LocationTracker();
-
-  instance.autorun(() => {
-    const { region, venues } = Template.currentData();
-
-    instance.locationTracker.clearRegion();
-    if (region) {
-      instance.locationTracker.setRegion(region);
-    }
-
-    // Here we assume venues are not changed or removed.
-    instance.locationTracker.markers.remove({});
-
-    venues.observe({
-      added(originalLocation) {
-        const location = {
-          ...originalLocation,
-          proposed: true,
-          preset: true,
-          presetName: originalLocation.name,
-          presetAddress: originalLocation.address,
-        } as MarkerEntity;
-        instance.locationTracker.markers.insert(location);
-      },
-    });
+    Metatags.setCommonTags(i18n("eventsMap.windowtitle", "Events map"));
   });
 });
 
 template.helpers({
-  venues() {
-    return Template.instance().locationTracker.markers.find();
-  },
-
-  haveVenues() {
-    return Template.instance().locationTracker.markers.find().count() > 0;
-  },
-
-  venueMarkers() {
-    return Template.instance().locationTracker.markers;
+  markers() {
+    const markers = Object.entries(
+      groupBy(
+        Template.instance()
+          .data.events.fetch()
+          .filter((e) => e.venue?._id),
+        (e) => e.venue?._id as string,
+      ),
+    ).map((g) => ({
+      loc: g[1][0].venue?.loc,
+      content: g[1][0].venue?.name + ": " + g[1].map((event) => event.title).join(),
+    }));
+    markers.push(
+      ...Template.instance()
+        .data.events.fetch()
+        .filter((e) => !e.venue?._id)
+        .map((event) => {
+          return {
+            loc: event.venue?.loc,
+            content: event.title,
+          } as any;
+        }),
+    );
+    return markers;
   },
 
   regionName() {
     const { region } = Template.instance().data;
     return Regions.findOne(region)?.name || false;
-  },
-
-  handles() {
-    const instance = Template.instance();
-    const { markers } = instance.locationTracker;
-    return {
-      onMouseEnter: (id: string) => {
-        markers.update({}, { $set: { hover: false } }, { multi: true });
-        markers.update(id, { $set: { hover: true } });
-      },
-      onMouseLeave: () => {
-        markers.update({}, { $set: { hover: false } }, { multi: true });
-      },
-    };
   },
 });
