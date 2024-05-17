@@ -52,7 +52,7 @@ template.helpers({
       _id: g[1][0].venue?._id as string,
       loc: g[1][0].venue?.loc,
       content: g[1][0].venue?.name + ": " + g[1].map((event) => event.title).join(),
-    }));
+    })) as any;
     markers.push(
       ...Template.instance()
         .data.events.fetch()

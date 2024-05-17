@@ -1,12 +1,9 @@
-import { ReactiveVar } from "meteor/reactive-var";
 import { _ } from "meteor/underscore";
 import { i18n } from "/imports/startup/both/i18next";
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { Session } from "meteor/session";
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { MeteorAsync } from "/imports/utils/promisify";
-
-import "./template.html";
 import "./styles.scss";
 
 export interface LocEntity {
@@ -19,27 +16,6 @@ export interface MarkerEntity {
   loc: LocEntity;
   content?: string;
 }
-
-/**
- * Display markers on an interactive map
- */
-const Template = TemplateAny as TemplateStaticTyped<
-  "map",
-  {
-    maxZoom?: number;
-    markers: MarkerEntity[];
-  },
-  {
-    cancelNextFitBounds: boolean;
-    fullscreen: ReactiveVar<boolean>;
-  }
->;
-
-const template = Template.map;
-
-template.onCreated(function () {
-  this.fullscreen = new ReactiveVar(false);
-});
 
 const FaIcon = function (faClass: string) {
   return function () {
@@ -82,13 +58,39 @@ const IconControl: new (options: {
   },
 });
 
-template.onRendered(function () {
-  const instance = this;
-  const maxZoom = instance.data.maxZoom || 19;
+export function Map(props: { maxZoom?: number; markers: MarkerEntity[] }) {
+  const { t } = useTranslation();
+  const [fullscreen, setFullscreen] = useState(false);
+  const [cancelNextFitBounds, setCancelNextFitBounds] = useState(false);
+  const elementRef = useRef<HTMLDivElement>(null);
 
+  // Depending on view state, different controls are shown
+  const zoomControl = L.control.zoom({
+    zoomInTitle: t("map.zoomInTitle", "Zoom in") as string,
+    zoomOutTitle: t("map.zoomOutTitle", "Zoom out") as string,
+  });
+  const attributionControl = L.control.attribution();
+  const scaleControl = L.control.scale({
+    imperial: Session.equals("locale", "en"),
+  });
+  const fullscreenControl = new IconControl({
+    icon: FaIcon("fa-solid fa-maximize"),
+    title: t("map.fullscreen", "big map"),
+    onClick: () => {
+      setFullscreen(true);
+    },
+  });
+  const closeFullscreenControl = new IconControl({
+    icon: FaIcon("fa-solid fa-xmark"),
+    class: "fa-2x",
+    title: i18n("map.fullscreenClose", "close"),
+    onClick: () => {
+      setFullscreen(false);
+    },
+  });
+
+  // ---
   const layers: { [id: string]: L.GeoJSON<any> } = {};
-
-  L.Icon.Default.imagePath = "packages/bevanhunt_leaflet/images";
 
   const options = {
     zoomControl: false,
@@ -96,38 +98,69 @@ template.onRendered(function () {
     dragging: !L.Browser.mobile,
   };
 
-  const map = L.map(instance.find(".map"), options).setView(L.latLng(0, 0), 1);
+  const mainIcon = L.divIcon({
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
+  });
 
-  // Add tiles depending on language
-  let tiles: L.TileLayer;
-  const tileLayers: { [lang: string]: () => L.TileLayer } = {
-    de() {
-      return L.tileLayer("//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png", {
-        maxZoom,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      });
-    },
-    "de-ZH"() {
-      return L.tileLayer("//{s}.tile.osm.ch/name-gsw/{z}/{x}/{y}.png", {
-        maxZoom,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      });
-    },
-    fr() {
-      return L.tileLayer("//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png", {
-        maxZoom,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      });
-    },
-    default() {
-      return L.tileLayer("//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      });
-    },
-  };
+  useEffect(() => {
+    if (!elementRef.current) {
+      return;
+    }
+    const map = L.map(elementRef.current, options).setView(L.latLng(0, 0), 1);
 
-  instance.autorun(() => {
+    // Zoom to show all markers
+    // This is debounc'd so it's only done after the last marker in a series is added
+    const fitBounds = _.debounce(() => {
+      if (cancelNextFitBounds) {
+        setCancelNextFitBounds(false);
+        return;
+      }
+
+      const bounds = L.latLngBounds([]);
+      Object.values(layers).forEach((layer) => {
+        bounds.extend(layer.getBounds());
+      });
+
+      if (bounds.isValid()) {
+        map.fitBounds(bounds, { padding: [20, 20] });
+      }
+    }, 100);
+
+    const maxZoom = props.maxZoom || 19;
+
+    L.Icon.Default.imagePath = "packages/bevanhunt_leaflet/images";
+
+    // Add tiles depending on language
+    let tiles: L.TileLayer | undefined;
+    const tileLayers: { [lang: string]: () => L.TileLayer } = {
+      de() {
+        return L.tileLayer("//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png", {
+          maxZoom,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        });
+      },
+      "de-ZH"() {
+        return L.tileLayer("//{s}.tile.osm.ch/name-gsw/{z}/{x}/{y}.png", {
+          maxZoom,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        });
+      },
+      fr() {
+        return L.tileLayer("//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png", {
+          maxZoom,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        });
+      },
+      default() {
+        return L.tileLayer("//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        });
+      },
+    };
+
+    // ---
+
     if (tiles) {
       map.removeLayer(tiles);
     }
@@ -136,36 +169,10 @@ template.onRendered(function () {
       tileF = tileLayers.default;
     }
     tiles = tileF();
-    tiles.addTo(map);
-  });
-
-  // Depending on view state, different controls are shown
-  const zoomControl = L.control.zoom({
-    zoomInTitle: i18n("map.zoomInTitle", "Zoom in") ?? "",
-    zoomOutTitle: i18n("map.zoomOutTitle", "Zoom out") ?? "",
-  });
-  const attributionControl = L.control.attribution();
-  const scaleControl = L.control.scale({
-    imperial: Session.equals("locale", "en"),
-  });
-  const fullscreenControl = new IconControl({
-    icon: FaIcon("fa-solid fa-maximize"),
-    title: i18n("map.fullscreen", "big map"),
-    onClick: () => {
-      instance.fullscreen.set(true);
-    },
-  });
-  const closeFullscreenControl = new IconControl({
-    icon: FaIcon("fa-solid fa-xmark"),
-    class: "fa-2x",
-    title: i18n("map.fullscreenClose", "close"),
-    onClick: () => {
-      instance.fullscreen.set(false);
-    },
-  });
-
-  instance.autorun(() => {
-    const fullscreen = instance.fullscreen.get();
+    if (map) {
+      tiles.addTo(map);
+    }
+    // ---
 
     const show = function (control: { shown?: boolean } & L.Control, toggle: boolean) {
       if (control.shown === undefined) {
@@ -192,34 +199,10 @@ template.onRendered(function () {
     show(scaleControl, fullscreen);
     show(fullscreenControl, !fullscreen);
     show(closeFullscreenControl, fullscreen);
-  });
 
-  // Zoom to show all markers
-  // This is debounc'd so it's only done after the last marker in a series is added
-  const fitBounds = _.debounce(() => {
-    if (instance.cancelNextFitBounds) {
-      instance.cancelNextFitBounds = false;
-      return;
-    }
+    // ---
 
-    const bounds = L.latLngBounds([]);
-    Object.values(layers).forEach((layer) => {
-      bounds.extend(layer.getBounds());
-    });
-
-    if (bounds.isValid()) {
-      map.fitBounds(bounds, { padding: [20, 20] });
-    }
-  }, 100);
-
-  fitBounds();
-
-  const mainIcon = L.divIcon({
-    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
-  });
-
-  instance.autorun(async () => {
-    const { markers } = instance.data;
+    const { markers } = props;
 
     markers.forEach((mark) => {
       const marker = L.geoJSON(mark.loc, {
@@ -236,24 +219,30 @@ template.onRendered(function () {
         },
       });
       layers[mark._id] = marker;
-      marker.addTo(map);
+      if (map) {
+        marker.addTo(map);
+      }
     });
 
-    await MeteorAsync.defer();
+    //await MeteorAsync.defer();
 
     fitBounds();
-  });
 
-  instance.autorun(async () => {
-    const fullscreen = instance.fullscreen.get();
+    // ---
 
-    await MeteorAsync.defer();
+    //await MeteorAsync.defer();
 
     if (fullscreen) {
-      instance.find(".map-box,.map-fullscreen").setAttribute("style", "position: fixed"); // Fix for iOS
+      const elements = elementRef.current?.querySelectorAll(".map-box, .map-fullscreen");
+      elements?.forEach((element) => {
+        element.setAttribute("style", "position: fixed");
+      });
       map.dragging.enable();
     } else {
-      instance.find(".map-box,.map-fullscreen").setAttribute("style", "");
+      const elements = elementRef.current?.querySelectorAll(".map-box, .map-fullscreen");
+      elements?.forEach((element) => {
+        element.setAttribute("style", "");
+      });
       if (!L.Browser.mobile) {
         map.dragging.enable();
       } else {
@@ -261,27 +250,31 @@ template.onRendered(function () {
       }
     }
 
-    await MeteorAsync.defer();
+    // await MeteorAsync.defer();
 
     map.invalidateSize();
+
     fitBounds();
   });
-});
 
-template.helpers({
-  mapContainerClass() {
-    if (Template.instance().fullscreen.get()) {
-      return "map-fullscreen";
-    }
-    return "map-box";
-  },
-});
+  return (
+    <div className={fullscreen ? "map-fullscreen" : "map-box"}>
+      <div className="map" ref={elementRef}></div>
+    </div>
+  );
+}
 
-template.events({
-  keyup(event, instance) {
-    // Press escape to close fullscreen
-    if ((event as any).keyCode === 27) {
-      instance.fullscreen.set(false);
-    }
-  },
-});
+// template.events({
+//   keyup(event, instance) {
+//     // Press escape to close fullscreen
+//     if ((event as any).keyCode === 27) {
+//       instance.fullscreen.set(false);
+//     }
+//   },
+// });
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("Map2", () => Map);
