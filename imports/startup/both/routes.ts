@@ -580,7 +580,7 @@ RouterAsync.route("eventsMap", {
     const query = filter.toQuery();
     query.after = now;
     return {
-      events: Events.findFilter.subscribe(query),
+      events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }),
     };
   },
   data(): EventsMapData {
