@@ -7,7 +7,6 @@ import { EventEntity, EventModel } from "/imports/api/events/events";
 import * as Metatags from "/imports/utils/metatags";
 
 import type { MarkerEntity } from "/imports/ui/components/map2";
-
 import "/imports/ui/components/map2";
 
 import "./template.html";
@@ -42,7 +41,7 @@ template.onCreated(function () {
 
 template.helpers({
   markers() {
-    const markers = Object.entries(
+    const markers: MarkerEntity[] = Object.entries(
       groupBy(
         Template.instance()
           .data.events.fetch()
@@ -50,6 +49,7 @@ template.helpers({
         (e) => e.venue?._id as string,
       ),
     ).map((g) => ({
+      _id: g[1][0].venue?._id as string,
       loc: g[1][0].venue?.loc,
       content: g[1][0].venue?.name + ": " + g[1].map((event) => event.title).join(),
     }));
@@ -59,6 +59,7 @@ template.helpers({
         .filter((e) => !e.venue?._id)
         .map((event) => {
           return {
+            _id: event._id,
             loc: event.venue?.loc,
             content: event.title,
           } as any;

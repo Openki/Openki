@@ -1,4 +1,3 @@
-import { Mongo } from "meteor/mongo";
 import { ReactiveVar } from "meteor/reactive-var";
 import { _ } from "meteor/underscore";
 import { i18n } from "/imports/startup/both/i18next";
@@ -88,7 +87,6 @@ template.onRendered(function () {
   const maxZoom = instance.data.maxZoom || 19;
 
   const layers: { [id: string]: L.GeoJSON<any> } = {};
-  const centers: { [id: string]: L.LatLngBounds } = {};
 
   L.Icon.Default.imagePath = "packages/bevanhunt_leaflet/images";
 
@@ -205,27 +203,12 @@ template.onRendered(function () {
     }
 
     const bounds = L.latLngBounds([]);
-    let count = 0;
     Object.values(layers).forEach((layer) => {
       bounds.extend(layer.getBounds());
-      count += 1;
     });
 
-    let zoom = maxZoom - 3; // Zoom out a little to give the user a better overview.
-
-    // Use center markers when there are no other markers
-    if (count < 1) {
-      Object.values(centers).forEach((center) => {
-        bounds.extend(center);
-        count += 1;
-      });
-      if (count === 1) {
-        zoom = maxZoom - 6;
-      }
-    }
-
     if (bounds.isValid()) {
-      map.fitBounds(bounds, { padding: [20, 20], maxZoom: zoom });
+      map.fitBounds(bounds, { padding: [20, 20] });
     }
   }, 100);
 
@@ -235,8 +218,7 @@ template.onRendered(function () {
     html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
   });
 
-  // Tracked so that observe() will be stopped when the template is destroyed
-  instance.autorun(() => {
+  instance.autorun(async () => {
     const { markers } = instance.data;
 
     markers.forEach((mark) => {
@@ -256,6 +238,8 @@ template.onRendered(function () {
       layers[mark._id] = marker;
       marker.addTo(map);
     });
+
+    await MeteorAsync.defer();
 
     fitBounds();
   });
