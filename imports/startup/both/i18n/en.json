@@ -488,6 +488,7 @@
   "frame.login.usernameOrEmail": "Username or e-mail address",
   "frame.visitor.email": "E-Mail",
   "frameCalendar.nothingOnThisDay": "Relax, nothing happening today.",
+  "frameEventsMap.windowtitle": "Events map",
   "group.claim.placeholder": "The core idea",
   "group.delete.confirm.button": "Delete {GROUP}",
   "group.delete.confirm.button.busy": "Deleting group…",

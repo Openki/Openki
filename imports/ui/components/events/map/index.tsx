@@ -15,6 +15,7 @@ import "./styles.scss";
 
 export interface Data {
   events: Mongo.Cursor<EventEntity, EventModel>;
+  fullscreen?: boolean;
 }
 
 const tileLayers: { [lang: string]: () => React.JSX.Element } = {
@@ -55,7 +56,7 @@ function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[])
   );
 }
 
-export function EventsMap(props: Data) {
+export function EventsMap({ events, fullscreen = true }: Data) {
   const locale = useSession("locale");
 
   const markerIcon = new DivIcon({
@@ -64,7 +65,7 @@ export function EventsMap(props: Data) {
 
   const markers = Object.entries(
     groupBy(
-      props.events.fetch().filter((e) => e.venue?._id),
+      events.fetch().filter((e) => e.venue?._id),
       (e) => e.venue?._id as string,
     ),
   ).map((g) => ({
@@ -74,7 +75,7 @@ export function EventsMap(props: Data) {
     events: g[1],
   }));
   markers.push(
-    ...props.events
+    ...events
       .fetch()
       .filter((e) => !e.venue?._id)
       .map((event) => {
@@ -109,7 +110,7 @@ export function EventsMap(props: Data) {
             </Popup>
           </Marker>
         ))}
-        <FullscreenControl />
+        {fullscreen ? <FullscreenControl /> : null}
       </MapContainer>
     </div>
   );
