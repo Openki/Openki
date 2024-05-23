@@ -50,7 +50,7 @@ template.helpers({
       ),
     ).map((g) => ({
       _id: g[1][0].venue?._id as string,
-      loc: g[1][0].venue?.loc,
+      loc: { lat: g[1][0].venue?.loc?.coordinates[1], lng: g[1][0].venue?.loc?.coordinates[0] },
       content: g[1][0].venue?.name + ": " + g[1].map((event) => event.title).join(),
     })) as any;
     markers.push(
@@ -60,7 +60,7 @@ template.helpers({
         .map((event) => {
           return {
             _id: event._id,
-            loc: event.venue?.loc,
+            loc: { lat: event.venue?.loc?.coordinates[1], lng: event.venue?.loc?.coordinates[0] },
             content: event.title,
           } as any;
         }),

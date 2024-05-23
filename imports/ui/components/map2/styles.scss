@@ -1,34 +1,16 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.map-box {
+.leaflet-container {
   height: 200px;
   width: 200px;
 }
 
-.map-box,
-.map-fullscreen {
+.leaflet-container {
   .fa-regular,
   .fa-brands,
   .fa-solid {
     font-size: 30px;
   }
-}
-
-.map-fullscreen {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  // position: fixed; Does not work on iOS check index.ts how it is fixed
-  top: 0;
-  z-index: $zindex-map;
-}
-
-.map-fullscreen .fa-map-marker {
-  font-size: 30px;
-}
-
-.map-fullscreen .fa-close {
-  font-size: 45px;
 }
 
 .map {
