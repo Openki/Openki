@@ -2,12 +2,11 @@ import React from "react";
 import { useSession } from "/imports/utils/react-meteor-data";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { DivIcon } from "leaflet";
-import { i18n } from "/imports/startup/both/i18next";
 import { useTranslation } from "react-i18next";
 import * as Metatags from "/imports/utils/metatags";
 
-import { Regions } from "/imports/api/regions/regions";
 import { EventEntity, EventModel } from "/imports/api/events/events";
+import { useDetails } from "/imports/api/regions/publications";
 
 import { FullscreenControl } from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/styles.css";
@@ -61,8 +60,13 @@ function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[])
 export function EventsMapPage(props: Data) {
   const { t } = useTranslation();
   const locale = useSession("locale");
+  const [isLoading, region] = useDetails(props.region || "-1");
 
-  Metatags.setCommonTags(i18n("eventsMap.windowtitle", "Events map"));
+  if (isLoading()) {
+    return null;
+  }
+
+  Metatags.setCommonTags(t("eventsMap.windowtitle", "Events map"));
 
   const markerIcon = new DivIcon({
     html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
@@ -94,17 +98,12 @@ export function EventsMapPage(props: Data) {
     return markers;
   }
 
-  function regionName() {
-    const { region } = Template.instance().data;
-    return Regions.findOne(region)?.name || false;
-  }
-
   return (
     <div className="container-fluid">
       <h1>
-        {regionName()
+        {region
           ? t("eventsMap.list.titleForRegion", "Events in region {REGION}", {
-              REGION: regionName(),
+              REGION: region.name,
             })
           : t("eventsMap.list.title", "Events")}
       </h1>
