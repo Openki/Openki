@@ -1,17 +1,5 @@
 <template name="eventsMapPage">
-  <div class="container-fluid">
-    <h1>
-      {{#if regionName}}
-        {{i18n 'eventsMap.list.titleForRegion' 'Events in region {REGION}' REGION=regionName}}
-      {{else}}
-        {{i18n 'eventsMap.list.title' 'Events'}}
-      {{/if}}
-    </h1>
-    <div class="row">
-      <div class="col-12 events-map-location-map">
-        {{> map markers=markers}}
-      </div>
-    </div>
+  <div>
+    {{> React (component EventsMapPage)}}
   </div>
-
 </template>
