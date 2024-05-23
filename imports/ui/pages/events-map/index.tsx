@@ -12,6 +12,8 @@ import { FullscreenControl } from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/styles.css";
 import "leaflet/dist/leaflet.css";
 
+import { EventCompact } from "../../components/events/compact";
+
 import "./styles.scss";
 
 export interface Data {
@@ -72,31 +74,30 @@ export function EventsMapPage(props: Data) {
     html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
   });
 
-  function getMarkers() {
-    const markers = Object.entries(
-      groupBy(
-        props.events.fetch().filter((e) => e.venue?._id),
-        (e) => e.venue?._id as string,
-      ),
-    ).map((g) => ({
-      _id: g[1][0].venue?._id as string,
-      loc: { lat: g[1][0].venue?.loc?.coordinates[1], lng: g[1][0].venue?.loc?.coordinates[0] },
-      content: g[1][0].venue?.name + ": " + g[1].map((event) => event.title).join(),
-    }));
-    markers.push(
-      ...props.events
-        .fetch()
-        .filter((e) => !e.venue?._id)
-        .map((event) => {
-          return {
-            _id: event._id,
-            loc: { lat: event.venue?.loc?.coordinates[1], lng: event.venue?.loc?.coordinates[0] },
-            content: event.title,
-          };
-        }),
-    );
-    return markers;
-  }
+  const markers = Object.entries(
+    groupBy(
+      props.events.fetch().filter((e) => e.venue?._id),
+      (e) => e.venue?._id as string,
+    ),
+  ).map((g) => ({
+    _id: g[1][0].venue?._id as string,
+    loc: { lat: g[1][0].venue?.loc?.coordinates[1], lng: g[1][0].venue?.loc?.coordinates[0] },
+    venue: g[1][0].venue?.name,
+    events: g[1],
+  }));
+  markers.push(
+    ...props.events
+      .fetch()
+      .filter((e) => !e.venue?._id)
+      .map((event) => {
+        return {
+          _id: event._id,
+          loc: { lat: event.venue?.loc?.coordinates[1], lng: event.venue?.loc?.coordinates[0] },
+          venue: event.venue?.name,
+          events: [event],
+        };
+      }),
+  );
 
   return (
     <div className="container-fluid">
@@ -109,11 +110,15 @@ export function EventsMapPage(props: Data) {
       </h1>
       <div className="row">
         <div className="col-12 events-map-location-map">
-          <MapContainer bounds={getMarkers().map((mark) => mark.loc) as any}>
+          <MapContainer bounds={markers.map((mark) => mark.loc) as any}>
             {(tileLayers[locale] || tileLayers.default)()}
-            {getMarkers().map((mark) => (
+            {markers.map((mark) => (
               <Marker key={mark._id} position={mark.loc as any} icon={markerIcon}>
-                <Popup>{mark.content}</Popup>
+                <Popup>
+                  {mark.events.map((event) => (
+                    <EventCompact event={event} />
+                  ))}
+                </Popup>
               </Marker>
             ))}
             <FullscreenControl />
