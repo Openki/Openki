@@ -1,67 +1,22 @@
 import React from "react";
-import { useSession } from "/imports/utils/react-meteor-data";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { DivIcon } from "leaflet";
 import { useTranslation } from "react-i18next";
 import * as Metatags from "/imports/utils/metatags";
 
 import { EventEntity, EventModel } from "/imports/api/events/events";
 import { useDetails } from "/imports/api/regions/publications";
 
-import { FullscreenControl } from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/styles.css";
 import "leaflet/dist/leaflet.css";
 
-import { EventList } from "../../components/events/list";
-
-import "./styles.scss";
+import { EventsMap } from "../../components/events/map";
 
 export interface Data {
   region: string | undefined;
   events: Mongo.Cursor<EventEntity, EventModel>;
 }
 
-const tileLayers: { [lang: string]: () => React.JSX.Element } = {
-  de: () => (
-    <TileLayer
-      url={"//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png"}
-      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
-    />
-  ),
-  "de-ZH": () => (
-    <TileLayer
-      url={"//{s}.tile.osm.ch/name-gsw/{z}/{x}/{y}.png"}
-      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
-    />
-  ),
-  fr: () => (
-    <TileLayer
-      url={"//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"}
-      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
-    />
-  ),
-  default: () => (
-    <TileLayer
-      url={"//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
-      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
-    />
-  ),
-};
-
-function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[]) => string) {
-  return array.reduce(
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    (acc, value, index, array) => {
-      (acc[predicate(value, index, array)] ||= []).push(value);
-      return acc;
-    },
-    {} as { [key: string]: T[] },
-  );
-}
-
 export function EventsMapPage(props: Data) {
   const { t } = useTranslation();
-  const locale = useSession("locale");
   const [isLoading, region] = useDetails(props.region || "-1");
 
   if (isLoading()) {
@@ -69,35 +24,6 @@ export function EventsMapPage(props: Data) {
   }
 
   Metatags.setCommonTags(t("eventsMap.windowtitle", "Events map"));
-
-  const markerIcon = new DivIcon({
-    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
-  });
-
-  const markers = Object.entries(
-    groupBy(
-      props.events.fetch().filter((e) => e.venue?._id),
-      (e) => e.venue?._id as string,
-    ),
-  ).map((g) => ({
-    _id: g[1][0].venue?._id as string,
-    loc: { lat: g[1][0].venue?.loc?.coordinates[1], lng: g[1][0].venue?.loc?.coordinates[0] },
-    venue: g[1][0].venue?.name,
-    events: g[1],
-  }));
-  markers.push(
-    ...props.events
-      .fetch()
-      .filter((e) => !e.venue?._id)
-      .map((event) => {
-        return {
-          _id: event._id,
-          loc: { lat: event.venue?.loc?.coordinates[1], lng: event.venue?.loc?.coordinates[0] },
-          venue: event.venue?.name,
-          events: [event],
-        };
-      }),
-  );
 
   return (
     <div className="container-fluid">
@@ -109,29 +35,8 @@ export function EventsMapPage(props: Data) {
           : t("eventsMap.list.title", "Events")}
       </h1>
       <div className="row">
-        <div className="col-12 events-map-location-map">
-          <MapContainer bounds={markers.map((mark) => mark.loc) as any}>
-            {(tileLayers[locale] || tileLayers.default)()}
-            {markers.map((mark) => (
-              <Marker key={mark._id} position={mark.loc as any} icon={markerIcon}>
-                <Popup>
-                  <h4>
-                    <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
-                    {mark.venue}
-                  </h4>
-                  <div className="course-event-list">
-                    <EventList
-                      dataEvents={mark.events}
-                      withDate={true}
-                      withImage={true}
-                      withVenue={false}
-                    />
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
-            <FullscreenControl />
-          </MapContainer>
+        <div className="col-12">
+          <EventsMap events={props.events} />
         </div>
       </div>
     </div>
