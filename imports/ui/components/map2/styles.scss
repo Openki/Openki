@@ -1,11 +1,6 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .leaflet-container {
-  height: 200px;
-  width: 200px;
-}
-
-.leaflet-container {
   .fa-regular,
   .fa-brands,
   .fa-solid {
@@ -13,34 +8,7 @@
   }
 }
 
-.map {
-  height: 100%;
-  width: 100%;
-}
-
-.leaflet-right .comp-icon {
-  margin-right: 18px;
-}
-
 .leaflet-marker-pane .leaflet-marker-icon {
   background: none;
   border: 0;
-}
-
-.leaflet-marker-pane .leaflet-marker-icon .fa-map-marker {
-  color: $black;
-
-  &:hover {
-    cursor: grabbing;
-  }
-}
-
-.leaflet-control-container .leaflet-right .leaflet-control:hover {
-  color: $primary;
-  cursor: pointer;
-}
-
-.leaflet-interactive:hover {
-  cursor: pointer;
-  fill: $yellow-dark;
 }

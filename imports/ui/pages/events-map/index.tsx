@@ -1,0 +1,132 @@
+import React from "react";
+import { useSession } from "/imports/utils/react-meteor-data";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { DivIcon } from "leaflet";
+import { i18n } from "/imports/startup/both/i18next";
+import { useTranslation } from "react-i18next";
+import * as Metatags from "/imports/utils/metatags";
+
+import { Regions } from "/imports/api/regions/regions";
+import { EventEntity, EventModel } from "/imports/api/events/events";
+
+import { FullscreenControl } from "react-leaflet-fullscreen";
+import "react-leaflet-fullscreen/styles.css";
+import "leaflet/dist/leaflet.css";
+
+import "./styles.scss";
+
+export interface Data {
+  region: string | undefined;
+  events: Mongo.Cursor<EventEntity, EventModel>;
+}
+
+const tileLayers: { [lang: string]: () => React.JSX.Element } = {
+  de: () => (
+    <TileLayer
+      url={"//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png"}
+      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
+    />
+  ),
+  "de-ZH": () => (
+    <TileLayer
+      url={"//{s}.tile.osm.ch/name-gsw/{z}/{x}/{y}.png"}
+      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
+    />
+  ),
+  fr: () => (
+    <TileLayer
+      url={"//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"}
+      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
+    />
+  ),
+  default: () => (
+    <TileLayer
+      url={"//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
+    />
+  ),
+};
+
+function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[]) => string) {
+  return array.reduce(
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    (acc, value, index, array) => {
+      (acc[predicate(value, index, array)] ||= []).push(value);
+      return acc;
+    },
+    {} as { [key: string]: T[] },
+  );
+}
+
+export function EventsMapPage(props: Data) {
+  const { t } = useTranslation();
+  const locale = useSession("locale");
+
+  Metatags.setCommonTags(i18n("eventsMap.windowtitle", "Events map"));
+
+  const markerIcon = new DivIcon({
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
+  });
+
+  function getMarkers() {
+    const markers = Object.entries(
+      groupBy(
+        props.events.fetch().filter((e) => e.venue?._id),
+        (e) => e.venue?._id as string,
+      ),
+    ).map((g) => ({
+      _id: g[1][0].venue?._id as string,
+      loc: { lat: g[1][0].venue?.loc?.coordinates[1], lng: g[1][0].venue?.loc?.coordinates[0] },
+      content: g[1][0].venue?.name + ": " + g[1].map((event) => event.title).join(),
+    }));
+    markers.push(
+      ...props.events
+        .fetch()
+        .filter((e) => !e.venue?._id)
+        .map((event) => {
+          return {
+            _id: event._id,
+            loc: { lat: event.venue?.loc?.coordinates[1], lng: event.venue?.loc?.coordinates[0] },
+            content: event.title,
+          };
+        }),
+    );
+    return markers;
+  }
+
+  function regionName() {
+    const { region } = Template.instance().data;
+    return Regions.findOne(region)?.name || false;
+  }
+
+  return (
+    <div className="container-fluid">
+      <h1>
+        {regionName()
+          ? t("eventsMap.list.titleForRegion", "Events in region {REGION}", {
+              REGION: regionName(),
+            })
+          : t("eventsMap.list.title", "Events")}
+      </h1>
+      <div className="row">
+        <div className="col-12 events-map-location-map">
+          <MapContainer bounds={getMarkers().map((mark) => mark.loc) as any}>
+            {(tileLayers[locale] || tileLayers.default)()}
+            {getMarkers().map((mark) => (
+              <Marker key={mark._id} position={mark.loc as any} icon={markerIcon}>
+                <Popup>{mark.content}</Popup>
+              </Marker>
+            ))}
+            <FullscreenControl />
+          </MapContainer>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("EventsMapPage", () => EventsMapPage);
