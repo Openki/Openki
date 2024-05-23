@@ -48,10 +48,17 @@ export type Props = {
   event: EventModel;
   withDate?: boolean | undefined;
   withImage?: boolean | undefined;
+  withVenue?: boolean | undefined;
   openInNewTab?: boolean | undefined;
 };
 
-export function EventCompact({ event, withDate, withImage, openInNewTab }: Props) {
+export function EventCompact({
+  event,
+  withDate,
+  withImage,
+  withVenue = true,
+  openInNewTab,
+}: Props) {
   const { t } = useTranslation();
   const { weekdayFormat, calendarDayShort, timeFormat } = useDateTimeFormat();
   const userId = useUserId();
@@ -77,7 +84,7 @@ export function EventCompact({ event, withDate, withImage, openInNewTab }: Props
         <span className="event-compact-time">
           {timeFormat(event.startLocal)} - {timeFormat(event.endLocal)}
         </span>
-        {event.venue ? (
+        {event.venue && withVenue ? (
           <>
             <br />
             <div className="tag-group">

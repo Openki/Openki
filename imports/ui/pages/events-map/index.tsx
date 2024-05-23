@@ -12,7 +12,7 @@ import { FullscreenControl } from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/styles.css";
 import "leaflet/dist/leaflet.css";
 
-import { EventCompact } from "../../components/events/compact";
+import { EventList } from "../../components/events/list";
 
 import "./styles.scss";
 
@@ -115,9 +115,18 @@ export function EventsMapPage(props: Data) {
             {markers.map((mark) => (
               <Marker key={mark._id} position={mark.loc as any} icon={markerIcon}>
                 <Popup>
-                  {mark.events.map((event) => (
-                    <EventCompact event={event} />
-                  ))}
+                  <h4>
+                    <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
+                    {mark.venue}
+                  </h4>
+                  <div className="course-event-list">
+                    <EventList
+                      dataEvents={mark.events}
+                      withDate={true}
+                      withImage={true}
+                      withVenue={false}
+                    />
+                  </div>
                 </Popup>
               </Marker>
             ))}

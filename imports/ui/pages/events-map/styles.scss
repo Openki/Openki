@@ -1,6 +1,20 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
-.leaflet-container {
+.events-map-location-map .course-event-list .event-compact-wrap {
+  @include make-col(6);
+  padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+}
+
+.events-map-location-map .course-event-list {
+  @include clearfix;
+  margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 4) * -1);
+  width: auto;
+}
+
+.leaflet-container .leaflet-marker-icon {
+  background: none;
+  border: 0;
+
   .fa-regular,
   .fa-brands,
   .fa-solid {
@@ -8,9 +22,8 @@
   }
 }
 
-.leaflet-marker-pane .leaflet-marker-icon {
-  background: none;
-  border: 0;
+.leaflet-popup-content .event-compact {
+  font-size: var(--bs-body-font-size);
 }
 
 .events-map-location-map > .leaflet-container {
