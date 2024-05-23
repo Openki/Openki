@@ -1,0 +1,20 @@
+.events-map-location-map,
+.events-map-location-map > .leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* 
+  backwards compatibility: a Blaze component to a React component for. 
+  Can be removed after complet migration.
+*/
+.frame-events-fluid > div {
+  height: 100%;
+  width: 100%;
+}
+
+.events-map-location-map > div > .leaflet-container,
+.events-map-location-map > div {
+  height: 100%;
+  width: 100%;
+}
