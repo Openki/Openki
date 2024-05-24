@@ -9,7 +9,7 @@ import moment from "moment";
 import { EventModel } from "/imports/api/events/events";
 
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
-import { VenueLink } from "/imports/ui/components/venues/link";
+import { RoomTag, VenueLink } from "/imports/ui/components/venues/link";
 
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
@@ -48,10 +48,17 @@ export type Props = {
   event: EventModel;
   withDate?: boolean | undefined;
   withImage?: boolean | undefined;
+  withVenue?: boolean | undefined;
   openInNewTab?: boolean | undefined;
 };
 
-export function EventCompact({ event, withDate, withImage, openInNewTab }: Props) {
+export function EventCompact({
+  event,
+  withDate,
+  withImage,
+  withVenue = true,
+  openInNewTab,
+}: Props) {
   const { t } = useTranslation();
   const { weekdayFormat, calendarDayShort, timeFormat } = useDateTimeFormat();
   const userId = useUserId();
@@ -77,12 +84,19 @@ export function EventCompact({ event, withDate, withImage, openInNewTab }: Props
         <span className="event-compact-time">
           {timeFormat(event.startLocal)} - {timeFormat(event.endLocal)}
         </span>
-        {event.venue ? (
+        {withVenue ? (
+          event.venue ? (
+            <>
+              <br />
+              <div className="tag-group">
+                <VenueLink venue={event.venue} room={event.room} openInNewTab={openInNewTab} />
+              </div>
+            </>
+          ) : null
+        ) : event.room ? (
           <>
             <br />
-            <div className="tag-group">
-              <VenueLink venue={event.venue} room={event.room} openInNewTab={openInNewTab} />
-            </div>
+            <RoomTag name={event.room} />
           </>
         ) : null}
       </div>
