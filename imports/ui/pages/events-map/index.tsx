@@ -10,6 +10,8 @@ import "leaflet/dist/leaflet.css";
 
 import { EventsMap } from "../../components/events/map";
 
+import "./styles.scss";
+
 export interface Data {
   region: string | undefined;
   events: Mongo.Cursor<EventEntity, EventModel>;
@@ -36,7 +38,7 @@ export function EventsMapPage(props: Data) {
       </h1>
       <div className="row">
         <div className="col-12">
-          <EventsMap events={props.events} />
+          <EventsMap events={props.events} openLinksInNewTab={false} />
         </div>
       </div>
     </div>

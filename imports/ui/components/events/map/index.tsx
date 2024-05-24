@@ -3,19 +3,21 @@ import { useSession } from "/imports/utils/react-meteor-data";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { DivIcon } from "leaflet";
 
-import { EventEntity, EventModel } from "/imports/api/events/events";
+import { EventEntity, EventModel, EventVenueEntity } from "/imports/api/events/events";
 
 import { FullscreenControl } from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/styles.css";
 import "leaflet/dist/leaflet.css";
 
 import { EventList } from "/imports/ui/components/events/list";
+import { VenueTag } from "../../venues/link";
 
 import "./styles.scss";
 
 export interface Data {
   events: Mongo.Cursor<EventEntity, EventModel>;
-  fullscreen?: boolean;
+  fullscreenControl?: boolean;
+  openLinksInNewTab?: boolean;
 }
 
 const tileLayers: { [lang: string]: () => React.JSX.Element } = {
@@ -56,7 +58,7 @@ function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[])
   );
 }
 
-export function EventsMap({ events, fullscreen = true }: Data) {
+export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab = false }: Data) {
   const locale = useSession("locale");
 
   const markerIcon = new DivIcon({
@@ -71,7 +73,7 @@ export function EventsMap({ events, fullscreen = true }: Data) {
   ).map((g) => ({
     _id: g[1][0].venue?._id as string,
     loc: { lat: g[1][0].venue?.loc?.coordinates[1], lng: g[1][0].venue?.loc?.coordinates[0] },
-    venue: g[1][0].venue?.name,
+    venue: g[1][0].venue,
     events: g[1],
   }));
   markers.push(
@@ -82,7 +84,7 @@ export function EventsMap({ events, fullscreen = true }: Data) {
         return {
           _id: event._id,
           loc: { lat: event.venue?.loc?.coordinates[1], lng: event.venue?.loc?.coordinates[0] },
-          venue: event.venue?.name,
+          venue: event.venue,
           events: [event],
         };
       }),
@@ -96,8 +98,7 @@ export function EventsMap({ events, fullscreen = true }: Data) {
           <Marker key={mark._id} position={mark.loc as any} icon={markerIcon}>
             <Popup>
               <h4>
-                <span className="fa-solid fa-house fa-fw" aria-hidden="true"></span>&nbsp;
-                {mark.venue}
+                <VenueTag venue={mark.venue as EventVenueEntity} openInNewTab={openLinksInNewTab} />
               </h4>
               <div className="course-event-list">
                 <EventList
@@ -105,12 +106,13 @@ export function EventsMap({ events, fullscreen = true }: Data) {
                   withDate={true}
                   withImage={true}
                   withVenue={false}
+                  openInNewTab={openLinksInNewTab}
                 />
               </div>
             </Popup>
           </Marker>
         ))}
-        {fullscreen ? <FullscreenControl /> : null}
+        {fullscreenControl ? <FullscreenControl /> : null}
       </MapContainer>
     </div>
   );
