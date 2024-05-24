@@ -1,0 +1,30 @@
+import React from "react";
+import { useTranslation } from "react-i18next";
+import * as Metatags from "/imports/utils/metatags";
+
+import { EventEntity, EventModel } from "/imports/api/events/events";
+
+import "react-leaflet-fullscreen/styles.css";
+import "leaflet/dist/leaflet.css";
+
+import { EventsMap } from "/imports/ui/components/events/map";
+
+import "./styles.scss";
+
+export interface Data {
+  events: Mongo.Cursor<EventEntity, EventModel>;
+}
+
+export function FrameEventsMapPage(props: Data) {
+  const { t } = useTranslation();
+
+  Metatags.setCommonTags(t("frameEventsMap.windowtitle", "Events map"));
+
+  return <EventsMap events={props.events} fullscreenControl={false} openLinksInNewTab={true} />;
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("FrameEventsMapPage", () => FrameEventsMapPage);
