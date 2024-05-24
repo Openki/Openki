@@ -26,7 +26,13 @@ function Venue({ name }: { name: string }) {
   );
 }
 
-function VenueTag({ venue, openInNewTab }: { venue: Venue; openInNewTab?: boolean | undefined }) {
+export function VenueTag({
+  venue,
+  openInNewTab,
+}: {
+  venue: Venue;
+  openInNewTab?: boolean | undefined;
+}) {
   const { t } = useTranslation();
   if (venue?._id) {
     return (
@@ -52,7 +58,7 @@ function VenueTag({ venue, openInNewTab }: { venue: Venue; openInNewTab?: boolea
   );
 }
 
-function RoomTag({ name }: { name: string | undefined }) {
+export function RoomTag({ name }: { name: string | undefined }) {
   if (!name) {
     return null;
   }

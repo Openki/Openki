@@ -20,7 +20,7 @@ export function FrameEventsMapPage(props: Data) {
 
   Metatags.setCommonTags(t("frameEventsMap.windowtitle", "Events map"));
 
-  return <EventsMap events={props.events} fullscreen={false} />;
+  return <EventsMap events={props.events} fullscreenControl={false} openLinksInNewTab={true} />;
 }
 
 // for Blaze

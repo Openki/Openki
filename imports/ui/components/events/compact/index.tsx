@@ -9,7 +9,7 @@ import moment from "moment";
 import { EventModel } from "/imports/api/events/events";
 
 import { InternalIndicator } from "/imports/ui/components/internal-indicator";
-import { VenueLink } from "/imports/ui/components/venues/link";
+import { RoomTag, VenueLink } from "/imports/ui/components/venues/link";
 
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 
@@ -84,12 +84,19 @@ export function EventCompact({
         <span className="event-compact-time">
           {timeFormat(event.startLocal)} - {timeFormat(event.endLocal)}
         </span>
-        {event.venue && withVenue ? (
+        {withVenue ? (
+          event.venue ? (
+            <>
+              <br />
+              <div className="tag-group">
+                <VenueLink venue={event.venue} room={event.room} openInNewTab={openInNewTab} />
+              </div>
+            </>
+          ) : null
+        ) : event.room ? (
           <>
             <br />
-            <div className="tag-group">
-              <VenueLink venue={event.venue} room={event.room} openInNewTab={openInNewTab} />
-            </div>
+            <RoomTag name={event.room} />
           </>
         ) : null}
       </div>
