@@ -58,16 +58,21 @@ function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[])
   );
 }
 
-export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab = false }: Data) {
+export function EventsMap({
+  events: eventsQuery,
+  fullscreenControl = true,
+  openLinksInNewTab = false,
+}: Data) {
   const locale = useSession("locale");
 
   const markerIcon = new DivIcon({
     html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
   });
 
+  const events = eventsQuery.fetch().filter((e) => e.venue?.loc);
   const markers = Object.entries(
     groupBy(
-      events.fetch().filter((e) => e.venue?._id),
+      events.filter((e) => e.venue?._id),
       (e) => e.venue?._id as string,
     ),
   ).map((g) => ({
@@ -78,7 +83,6 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
   }));
   markers.push(
     ...events
-      .fetch()
       .filter((e) => !e.venue?._id)
       .map((event) => {
         return {

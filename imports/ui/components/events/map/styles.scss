@@ -1,14 +1,15 @@
 @import "{}/imports/ui/stylesheets/variables/index";
 
 .events-map-location-map .course-event-list .event-compact-wrap {
-  @include make-col(6);
-  padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+  padding: 0 0 10px;
 }
 
-.events-map-location-map .course-event-list {
-  @include clearfix;
-  margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 4) * -1);
-  width: auto;
+.events-map-location-map .leaflet-popup-content {
+  width: 301px !important;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 10px;
+  padding-bottom: 10px;
 }
 
 .leaflet-container .leaflet-marker-icon {

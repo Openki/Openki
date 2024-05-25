@@ -8,7 +8,7 @@ import { useDetails } from "/imports/api/regions/publications";
 import "react-leaflet-fullscreen/styles.css";
 import "leaflet/dist/leaflet.css";
 
-import { EventsMap } from "../../components/events/map";
+import { EventsMap } from "/imports/ui/components/events/map";
 
 import "./styles.scss";
 
