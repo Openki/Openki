@@ -51,6 +51,8 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   ),
   /** by true, show only indicative prices (DE: Richtpreise), default is true */
   pricePolicyEnabled: Boolean,
+  /** by true, ask user to receive newsletter on account registration, default is true */
+  askNewsletterConsent: Boolean,
   /** Should a reminder be sent by default or not. Default is true */
   sendReminderPreset: Boolean,
   feature: {
@@ -146,6 +148,7 @@ const defaults = {
     phpPath: "js/",
   },
   pricePolicyEnabled: true,
+  askNewsletterConsent: true,
   sendReminderPreset: true,
   feature: {
     login: { google: false, facebook: false, github: false },
