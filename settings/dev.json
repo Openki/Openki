@@ -36,6 +36,7 @@
 		, "site": 0
 		}
 	, "pricePolicyEnabled": true
+  , "askNewsletterConsent": true
 	, "sendReminderPreset": true
 	, "feature":
 		{ "login":

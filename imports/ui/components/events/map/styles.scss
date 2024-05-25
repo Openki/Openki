@@ -1,0 +1,43 @@
+@import "{}/imports/ui/stylesheets/variables/index";
+
+.events-map-location-map .course-event-list .event-compact-wrap {
+  @include make-col(6);
+  padding: ($grid-gutter-width / 4) ($grid-gutter-width / 8);
+}
+
+.events-map-location-map .course-event-list {
+  @include clearfix;
+  margin: (($grid-gutter-width / 4) * -1) (($grid-gutter-width / 4) * -1);
+  width: auto;
+}
+
+.leaflet-container .leaflet-marker-icon {
+  background: none;
+  border: 0;
+
+  .fa-regular,
+  .fa-brands,
+  .fa-solid {
+    font-size: 30px;
+  }
+}
+
+.leaflet-popup-content .event-compact {
+  font-size: var(--bs-body-font-size);
+}
+
+.events-map-location-map,
+.events-map-location-map > .leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* 
+  backwards compatibility: a Blaze component to a React component for. 
+  Can be removed after complet migration.
+*/
+.events-map-location-map > div > .leaflet-container,
+.events-map-location-map > div {
+  height: 100%;
+  width: 100%;
+}

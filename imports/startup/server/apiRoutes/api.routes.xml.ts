@@ -38,9 +38,9 @@ const sortByTimeAndRoom = (results: ApiEvent[]) =>
     {},
   );
 
-const xmlSendResponder = function (res: any, process: any) {
+const xmlSendResponder = async function (res: any, process: any) {
   try {
-    const body = process();
+    const body = await process();
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/xml");
     res.end(body);
@@ -81,11 +81,11 @@ const pseudoHash = function (str: string) {
 Router.route("api.0.xml", {
   path: "/api/0/xml/schedule",
   where: "server",
-  action() {
-    xmlSendResponder(this.response, () => {
+  async action() {
+    await xmlSendResponder(this.response, async () => {
       // Hide canceled events in schedule
       this.params.query.canceled = this.params.query.canceled ?? "0";
-      const results = orderedResults(this.params, "events");
+      const results = await orderedResults(this.params, "events");
 
       const resultsByTimeAndRoom = sortByTimeAndRoom(results);
 

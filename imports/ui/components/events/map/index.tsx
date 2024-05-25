@@ -1,0 +1,125 @@
+import React from "react";
+import { useSession } from "/imports/utils/react-meteor-data";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { DivIcon } from "leaflet";
+
+import { EventEntity, EventModel, EventVenueEntity } from "/imports/api/events/events";
+
+import { FullscreenControl } from "react-leaflet-fullscreen";
+import "react-leaflet-fullscreen/styles.css";
+import "leaflet/dist/leaflet.css";
+
+import { EventList } from "/imports/ui/components/events/list";
+import { VenueTag } from "../../venues/link";
+
+import "./styles.scss";
+
+export interface Data {
+  events: Mongo.Cursor<EventEntity, EventModel>;
+  fullscreenControl?: boolean;
+  openLinksInNewTab?: boolean;
+}
+
+const tileLayers: { [lang: string]: () => React.JSX.Element } = {
+  de: () => (
+    <TileLayer
+      url={"//{s}.tile.openstreetmap.de/{z}/{x}/{y}.png"}
+      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
+    />
+  ),
+  "de-ZH": () => (
+    <TileLayer
+      url={"//{s}.tile.osm.ch/name-gsw/{z}/{x}/{y}.png"}
+      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
+    />
+  ),
+  fr: () => (
+    <TileLayer
+      url={"//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"}
+      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
+    />
+  ),
+  default: () => (
+    <TileLayer
+      url={"//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+      attribution={'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
+    />
+  ),
+};
+
+function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[]) => string) {
+  return array.reduce(
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    (acc, value, index, array) => {
+      (acc[predicate(value, index, array)] ||= []).push(value);
+      return acc;
+    },
+    {} as { [key: string]: T[] },
+  );
+}
+
+export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab = false }: Data) {
+  const locale = useSession("locale");
+
+  const markerIcon = new DivIcon({
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
+  });
+
+  const markers = Object.entries(
+    groupBy(
+      events.fetch().filter((e) => e.venue?._id),
+      (e) => e.venue?._id as string,
+    ),
+  ).map((g) => ({
+    _id: g[1][0].venue?._id as string,
+    loc: { lat: g[1][0].venue?.loc?.coordinates[1], lng: g[1][0].venue?.loc?.coordinates[0] },
+    venue: g[1][0].venue,
+    events: g[1],
+  }));
+  markers.push(
+    ...events
+      .fetch()
+      .filter((e) => !e.venue?._id)
+      .map((event) => {
+        return {
+          _id: event._id,
+          loc: { lat: event.venue?.loc?.coordinates[1], lng: event.venue?.loc?.coordinates[0] },
+          venue: event.venue,
+          events: [event],
+        };
+      }),
+  );
+
+  return (
+    <div className="events-map-location-map">
+      <MapContainer bounds={markers.map((mark) => mark.loc) as any}>
+        {(tileLayers[locale] || tileLayers.default)()}
+        {markers.map((mark) => (
+          <Marker key={mark._id} position={mark.loc as any} icon={markerIcon}>
+            <Popup>
+              <h4>
+                <VenueTag venue={mark.venue as EventVenueEntity} openInNewTab={openLinksInNewTab} />
+              </h4>
+              <div className="course-event-list">
+                <EventList
+                  dataEvents={mark.events}
+                  withDate={true}
+                  withImage={true}
+                  withVenue={false}
+                  openInNewTab={openLinksInNewTab}
+                />
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+        {fullscreenControl ? <FullscreenControl /> : null}
+      </MapContainer>
+    </div>
+  );
+}
+
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
+
+Template.registerHelper("EventsMap", () => EventsMap);
