@@ -136,6 +136,7 @@
                     </div>
                   </div>
                 {{/if}}
+                {{> editCustomFields fields=(instance.customFields "yesOrNo") values=customFields}}
 
                 {{> editCustomFields fields=(instance.customFields "singleLine") values=customFields}}
               </div>
