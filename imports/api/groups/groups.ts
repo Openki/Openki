@@ -23,8 +23,8 @@ export interface GroupEntityCustomCourseFields {
   displayText: LocalizedValue;
   /** Who will see the entered values. It will be copied to the course object. */
   visibleFor: "all" | "editors";
-  /** Optional: The type of field. 'singleLine' for single-line, 'multiLine' for multi-line input. Default: 'singleLine' */
-  type?: "singleLine" | "multiLine";
+  /** Optional: The type of field. 'singleLine' for single-line text, 'multiLine' for multi-line text, yesOrNo for a choice between yes and no. Default: 'singleLine' */
+  type?: "singleLine" | "multiLine" | "yesOrNo";
 }
 
 export interface GroupMemberEntity {

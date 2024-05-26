@@ -1,5 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { i18n } from "/imports/startup/both/i18next";
 
 import { Courses } from "/imports/api/courses/courses";
 import { EventModel } from "/imports/api/events/events";
@@ -77,7 +78,13 @@ import "./styles.scss";
           ?.filter((i) => i.visibleFor === "all" || (i.visibleFor === "editors" && isEditor))
           .map((i) => ({
             displayText: getLocalizedValue(i.displayText),
-            value: i.value,
+            value:
+              // eslint-disable-next-line no-nested-ternary
+              typeof i.value === "string"
+                ? i.value
+                : i.value
+                ? i18n("customField.yesOrNo.display.yes", "Yes")
+                : i18n("customField.yesOrNo.display.no", "No"),
           })) || []
       );
     },

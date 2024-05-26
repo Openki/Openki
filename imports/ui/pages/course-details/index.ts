@@ -351,7 +351,13 @@ import "./styles.scss";
           ?.filter((i) => i.visibleFor === "all" || (i.visibleFor === "editors" && isEditor))
           .map((i) => ({
             displayText: getLocalizedValue(i.displayText),
-            value: i.value,
+            value:
+              // eslint-disable-next-line no-nested-ternary
+              typeof i.value === "string"
+                ? i.value
+                : i.value
+                ? i18n("customField.yesOrNo.display.yes", "Yes")
+                : i18n("customField.yesOrNo.display.no", "No"),
           })) || []
       );
     },

@@ -17,28 +17,47 @@ export function EditCustomFields(props: Props) {
   }
 
   return props.fields.map((field) => {
+    if (field.type !== "yesOrNo")
+      return (
+        <div key={field.name} className="mb-3">
+          <label className="form-label" htmlFor={`course-custom-field-${field.name}`}>
+            {getLocalizedValue(field.editText)}
+          </label>
+          {!field.type || field.type === "singleLine" ? (
+            <input
+              type="text"
+              className={`form-control js-custom-field-${field.name}`}
+              id={`course-custom-field-${field.name}`}
+              placeholder={getLocalizedValue(field.editPlaceholder)}
+              defaultValue={value(field.name) as string}
+            />
+          ) : (
+            <textarea
+              className={`form-control js-custom-field-${field.name}`}
+              id={`course-custom-field-${field.name}`}
+              placeholder={getLocalizedValue(field.editPlaceholder)}
+              rows={3}
+              defaultValue={value(field.name) as string}
+            ></textarea>
+          )}
+        </div>
+      );
+
     return (
       <div key={field.name} className="mb-3">
-        <label className="form-label" htmlFor={`course-custom-field-${field.name}`}>
-          {getLocalizedValue(field.editText)}
-        </label>
-        {!field.type || field.type === "singleLine" ? (
+        <label className="form-label">{getLocalizedValue(field.editText)}</label>
+        <div key={field.name} className="form-check">
           <input
-            type="text"
-            className={`form-control js-custom-field-${field.name}`}
+            className={`form-check-input js-custom-field-${field.name}`}
+            type="checkbox"
+            value=""
             id={`course-custom-field-${field.name}`}
-            placeholder={getLocalizedValue(field.editPlaceholder)}
-            defaultValue={value(field.name)}
+            checked={value(field.name) as boolean}
           />
-        ) : (
-          <textarea
-            className={`form-control js-custom-field-${field.name}`}
-            id={`course-custom-field-${field.name}`}
-            placeholder={getLocalizedValue(field.editPlaceholder)}
-            rows={3}
-            defaultValue={value(field.name)}
-          ></textarea>
-        )}
+          <label className="form-check-label" htmlFor={`course-custom-field-${field.name}`}>
+            {getLocalizedValue(field.editPlaceholder)}
+          </label>
+        </div>
       </div>
     );
   });

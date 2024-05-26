@@ -63,7 +63,7 @@ export type ApiEvent = {
     name: string;
     link: string;
     image?: string;
-    customFields?: { name: string; value: string }[];
+    customFields?: { name: string; value: string | boolean }[];
   };
   groups: {
     id: string;
