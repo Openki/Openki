@@ -17,10 +17,16 @@ export interface Data {
 
 export function FrameEventsMapPage(props: Data) {
   const { t } = useTranslation();
+  const now = new Date();
 
   Metatags.setCommonTags(t("frameEventsMap.windowtitle", "Events map"));
 
-  return <EventsMap events={props.events} fullscreenControl={false} openLinksInNewTab={true} />;
+  return (
+    <EventsMap
+      events={props.events.fetch().filter((e) => e.start > now)}
+      openLinksInNewTab={true}
+    />
+  );
 }
 
 // for Blaze
