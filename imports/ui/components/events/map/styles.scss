@@ -2,14 +2,15 @@
 
 .events-map-location-map .course-event-list .event-compact-wrap {
   padding: 0 0 10px;
+  width: 100% !important;
 }
 
 .events-map-location-map .leaflet-popup-content {
-  width: 301px !important;
   max-height: 350px;
   overflow-y: auto;
-  padding-right: 10px;
   padding-bottom: 10px;
+  padding-right: 10px;
+  width: 301px !important;
 }
 
 .leaflet-container .leaflet-marker-icon {

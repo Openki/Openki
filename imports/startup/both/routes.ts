@@ -570,7 +570,6 @@ RouterAsync.route("eventsMap", {
     await import("/imports/ui/pages/events-map");
   },
   subscriptions() {
-    const now = reactiveNow.get(); // Time dependency so this will be reactively updated
     const region = CleanedRegion(Session.get("region"));
 
     const filter = new Filtering(EventParamPredicates);
@@ -579,7 +578,7 @@ RouterAsync.route("eventsMap", {
     }
     filter.read(this.params.query).done();
     const query = filter.toQuery();
-    query.after = now;
+    query.after = moment().startOf("day").toDate();
     return {
       events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }),
     };
@@ -600,12 +599,10 @@ RouterAsync.route("frame/eventsMap", {
     await import("/imports/ui/pages/frames/events-map");
   },
   subscriptions() {
-    const now = reactiveNow.get(); // Time dependency so this will be reactively updated
-
     const filter = new Filtering(EventParamPredicates);
     filter.read(this.params.query).done();
     const query = filter.toQuery();
-    query.after = now;
+    query.after = moment().startOf("day").toDate();
     return {
       events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }),
     };

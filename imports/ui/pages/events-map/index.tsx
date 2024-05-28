@@ -20,6 +20,7 @@ export interface Data {
 export function EventsMapPage(props: Data) {
   const { t } = useTranslation();
   const [isLoading, region] = useDetails(props.region || "-1");
+  const now = new Date();
 
   if (isLoading()) {
     return null;
@@ -38,7 +39,10 @@ export function EventsMapPage(props: Data) {
       </h1>
       <div className="row">
         <div className="col-12">
-          <EventsMap events={props.events} openLinksInNewTab={false} />
+          <EventsMap
+            events={props.events.fetch().filter((e) => e.start > now)}
+            openLinksInNewTab={false}
+          />
         </div>
       </div>
     </div>
