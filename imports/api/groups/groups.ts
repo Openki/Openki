@@ -25,6 +25,8 @@ export interface GroupEntityCustomCourseFields {
   visibleFor: "all" | "editors";
   /** Optional: The type of field. 'singleLine' for single-line text, 'multiLine' for multi-line text, trueOrFalse for a choice between true and false. Default: 'singleLine' */
   type?: "singleLine" | "multiLine" | "trueOrFalse";
+  /** Optional: By type trueOrFalse, you can set the default value. Default: false */
+  defaultValue?: boolean;
 }
 
 export interface GroupMemberEntity {
