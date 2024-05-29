@@ -22,8 +22,16 @@
 
           {{#each info in customFields}}
             <p>
-              <strong>{{info.displayText}}</strong>: <span
-                    style="white-space: pre-line;">{{info.value}}</span>
+              <strong>{{info.displayText}}</strong>:
+              {{#unless info.isTrueOrFalse}}
+                <span style="white-space: pre-line;">{{info.value}}</span>
+              {{else}}
+                {{#if info.value}}
+                  <input type="checkbox" checked disabled />
+                {{else}}
+                  <input type="checkbox" disabled />
+                {{/if}}
+              {{/unless}}
             </p>
           {{/each}}
         </div>

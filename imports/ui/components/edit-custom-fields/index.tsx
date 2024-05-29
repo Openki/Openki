@@ -17,7 +17,7 @@ export function EditCustomFields(props: Props) {
   }
 
   return props.fields.map((field) => {
-    if (field.type !== "yesOrNo")
+    if (field.type !== "trueOrFalse")
       return (
         <div key={field.name} className="mb-3">
           <label className="form-label" htmlFor={`course-custom-field-${field.name}`}>
