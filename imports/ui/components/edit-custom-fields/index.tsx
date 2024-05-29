@@ -52,7 +52,7 @@ export function EditCustomFields(props: Props) {
             type="checkbox"
             value=""
             id={`course-custom-field-${field.name}`}
-            defaultChecked={value(field.name) as boolean}
+            defaultChecked={(value(field.name) as boolean | undefined) ?? field.defaultValue}
           />
           <label className="form-check-label" htmlFor={`course-custom-field-${field.name}`}>
             {getLocalizedValue(field.editPlaceholder)}
