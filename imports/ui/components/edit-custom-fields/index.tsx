@@ -17,7 +17,7 @@ export function EditCustomFields(props: Props) {
   }
 
   return props.fields.map((field) => {
-    if (field.type !== "trueOrFalse")
+    if (field.type !== "boolean")
       return (
         <div key={field.name} className="mb-3">
           <label className="form-label" htmlFor={`course-custom-field-${field.name}`}>
@@ -55,7 +55,7 @@ export function EditCustomFields(props: Props) {
             defaultChecked={(value(field.name) as boolean | undefined) ?? field.defaultValue}
           />
           <label className="form-check-label" htmlFor={`course-custom-field-${field.name}`}>
-            {getLocalizedValue(field.editPlaceholder)}
+            {getLocalizedValue(field.editDescription)}
           </label>
         </div>
       </div>

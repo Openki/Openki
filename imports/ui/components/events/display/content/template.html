@@ -23,7 +23,7 @@
           {{#each info in customFields}}
             <p>
               <strong>{{info.displayText}}</strong>:
-              {{#unless info.isTrueOrFalse}}
+              {{#unless info.isboolean}}
                 <span style="white-space: pre-line;">{{info.value}}</span>
               {{else}}
                 {{#if info.value}}
