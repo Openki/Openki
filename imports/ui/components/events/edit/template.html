@@ -125,7 +125,28 @@
               <input type="text" class="js-event-room form-control" size="40" value="{{room}}">
             </div>
           </div>
+        {{/if}}
+
+        {{#if instance.customFields.length}}
           <div class="mb-3">
+            {{> editCustomFields fields=(instance.customFields) values=customFields}}
+          </div>
+        {{/if}}
+
+        <div class="mb-3">
+          <div class="form-check">
+            <input class="form-check-input js-check-no-rsvp" type="checkbox" value=""
+                   id="eventEditNoRsvpCheck" {{noRsvp}}>
+            <label class="form-check-label" for="eventEditNoRsvpCheck">
+              {{i18n 'event.edit.noRsvp' 'No reservation required'}}
+              {{#if noRsvpChecked}}
+                <span class="form-text d-block">
+                  {{i18n 'event.edit.noRsvp.description' 'Registration for this event is disabled. You might want to explain why in the description.'}}
+                </span>
+              {{/if}}
+            </label>
+          </div>
+          {{#unless noRsvpChecked}}
             <label class="form-label">
               {{i18n 'course.event.edit.maxParticipants' 'maximal number of participants'}}
               <small> {{i18n '_inputField.optional'}}</small>
@@ -137,14 +158,8 @@
               <input type="text" class="js-event-max-participants form-control" size="1"
                      value="{{maxParticipants}}">
             </div>
-          </div>
-        {{/if}}
-
-        {{#if instance.customFields.length}}
-          <div class="mb-3">
-            {{> editCustomFields fields=(instance.customFields) values=customFields}}
-          </div>
-        {{/if}}
+          {{/unless}}
+        </div>
 
         <div class="mb-3">
           <div class="form-check">
@@ -256,15 +271,17 @@
                         placeholder="{{i18n 'event.edit.additionalMessage' 'If you feel good about doing so, describe what members of the course should know. (This message is only sent to the interested users and will not be visible in the event description afterwards.)' attr=true}}"></textarea>
             </div>
           {{/if}}
-          {{#if PublicSettings.feature.sendReminderIsEditable}}
-            <div class="form-check">
-              <input class="form-check-input js-check-event-send-reminder" type="checkbox" value=""
-                     id="eventEditSendReminderCheck" {{sendReminder}}>
-              <label class="form-check-label" for="eventEditSendReminderCheck">
-                {{i18n 'event.edit.sendReminder' 'Send a reminder e-mail to all participants 24 hours before the event starts.'}}
-              </label>
-            </div>
-          {{/if}}
+          {{#unless noRsvpChecked}}
+            {{#if PublicSettings.feature.sendReminderIsEditable}}
+              <div class="form-check">
+                <input class="form-check-input js-check-event-send-reminder" type="checkbox"
+                       value="" id="eventEditSendReminderCheck" {{sendReminder}}>
+                <label class="form-check-label" for="eventEditSendReminderCheck">
+                  {{i18n 'event.edit.sendReminder' 'Send a reminder e-mail to all participants 24 hours before the event starts.'}}
+                </label>
+              </div>
+            {{/if}}
+          {{/unless}}
         </div>
 
         <div class="form-actions">

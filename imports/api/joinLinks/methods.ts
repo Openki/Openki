@@ -15,7 +15,7 @@ export const create = ServerMethod("joinLinks.create", async (tenantId: string) 
     throw new Meteor.Error(401, "Not permitted");
   }
 
-  const user = Meteor.user();
+  const user = await Meteor.userAsync();
 
   // Only current tenant admins (or instance admins) may draft other people into it
   if (!user || !tenant.editableBy(user)) {
@@ -52,7 +52,7 @@ export const remove = ServerMethod("joinLinks.remove", async (tenantId: string) 
   }
 
   // Only current tenant admins (or instance admins) may draft other people into it
-  if (!tenant.editableBy(Meteor.user())) {
+  if (!tenant.editableBy(await Meteor.userAsync())) {
     throw new Meteor.Error(401, "Not permitted");
   }
 

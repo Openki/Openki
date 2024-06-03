@@ -96,6 +96,7 @@ export function Model(entry: { body: Body }) {
         COURSE: StringTools.truncate(course.name, 10),
         USER: StringTools.truncate(newParticipant.getDisplayName(), 50),
         ROLE: roleTitle,
+        ROLETYPE: body.newRole,
         lng,
       };
 
@@ -105,7 +106,7 @@ export function Model(entry: { body: Body }) {
         subjectvars,
       );
 
-      const figures = ["host", "mentor", "participant"]
+      const figures = ["host", "mentor", "participant", "team"]
         .filter((role) => course.roles.includes(role))
         .map((role) => ({
           role: StringTools.capitalize(i18n(`roles.${role}.short`, { lng })),
@@ -128,6 +129,7 @@ export function Model(entry: { body: Body }) {
         subject,
         memberCount: course.members.length,
         roleTitle,
+        roleType: body.newRole,
         email: Spacebars.SafeString(`<span style="color:blue">${PrivateSettings.siteEmail}</span>`),
         message: body.message ? HtmlTools.plainToHtml(body.message) : undefined,
         // For Team members when a mentor joins, add a hint for possible collaboration or

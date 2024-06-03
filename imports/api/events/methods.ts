@@ -119,6 +119,7 @@ export const UpdateFieldsPattern = {
   endLocal: Match.Optional(String),
   internal: Match.Optional(Boolean),
   sendReminder: Match.Optional(Boolean),
+  noRsvp: Match.Optional(Boolean),
   maxParticipants: Match.Optional(Match.Integer),
 };
 export type UpdateFields = Type<typeof UpdateFieldsPattern>;
@@ -165,7 +166,7 @@ export const save = ServerMethod(
 
     const editFields = changes as Partial<EventEntity>;
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -178,7 +179,7 @@ export const save = ServerMethod(
     if (isNew) {
       editFields.time_created = now;
       if (editFields.courseId) {
-        const course = Courses.findOne(editFields.courseId);
+        const course = await Courses.findOneAsync(editFields.courseId);
         if (!course) {
           throw new Meteor.Error(404, "course not found");
         }
@@ -188,7 +189,7 @@ export const save = ServerMethod(
       }
 
       if (editFields.replicaOf) {
-        const parent = Events.findOne(editFields.replicaOf);
+        const parent = await Events.findOneAsync(editFields.replicaOf);
         if (!parent) {
           throw new Meteor.Error(404, "replica parent not found");
         }
@@ -228,7 +229,7 @@ export const save = ServerMethod(
         editors: [user._id],
       });
     } else {
-      const result = Events.findOne(eventId);
+      const result = await Events.findOneAsync(eventId);
       if (!result) {
         throw new Meteor.Error(404, "No such event");
       }
@@ -239,7 +240,7 @@ export const save = ServerMethod(
       throw new Meteor.Error(401, "not permitted");
     }
 
-    const region = Regions.findOne(event.region);
+    const region = await Regions.findOneAsync(event.region);
 
     if (!region) {
       throw new Meteor.Error(400, "Region not found");
@@ -320,11 +321,11 @@ export const save = ServerMethod(
         enrichedEvent = await categoriesDenormalizer.beforeInsert(editFields as EventEntity);
       }
       // eslint-disable-next-line no-param-reassign
-      eventId = Events.insert(enrichedEvent);
+      eventId = await Events.insertAsync(enrichedEvent);
 
       if (editFields.courseId) {
         await courseTimeLastEditDenormalizer.afterEventInsert(editFields.courseId);
-        courseHistoryDenormalizer.afterEventInsert(editFields.courseId, user._id, {
+        await courseHistoryDenormalizer.afterEventInsert(editFields.courseId, user._id, {
           _id: eventId,
           title: editFields.title as string,
           slug: editFields.slug as string,
@@ -346,7 +347,7 @@ export const save = ServerMethod(
       }
 
       if (event.courseId) {
-        courseHistoryDenormalizer.afterEventUpdate(event.courseId, user._id, {
+        await courseHistoryDenormalizer.afterEventUpdate(event.courseId, user._id, {
           _id: eventId,
           title: editFields.title as string,
           slug: editFields.slug as string,
@@ -396,15 +397,15 @@ export const save = ServerMethod(
   },
 );
 
-export const remove = ServerMethod("event.remove", (eventId: string) => {
+export const remove = ServerMethod("event.remove", async (eventId: string) => {
   check(eventId, String);
 
-  const user = Meteor.user();
+  const user = await Meteor.userAsync();
   if (!user) {
     throw new Meteor.Error(401, "please log in");
   }
 
-  const event = Events.findOne(eventId);
+  const event = await Events.findOneAsync(eventId);
   if (!event) {
     throw new Meteor.Error(404, "No such event");
   }
@@ -413,13 +414,17 @@ export const remove = ServerMethod("event.remove", (eventId: string) => {
     throw new Meteor.Error(401, "not permitted");
   }
 
-  Events.remove(eventId);
+  await Events.removeAsync(eventId);
 
   // unlink child replicas
-  Events.update({ replicaOf: event._id }, { $unset: { replicaOf: true } }, { multi: true });
+  await Events.updateAsync(
+    { replicaOf: event._id },
+    { $unset: { replicaOf: true } },
+    { multi: true },
+  );
 
   if (event.courseId) {
-    courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
+    await courseHistoryDenormalizer.afterEventRemove(event.courseId, user._id, {
       title: event.title,
       startLocal: event.startLocal,
     });
@@ -469,12 +474,12 @@ export const addParticipant = ServerMethod(
     check(eventId, String);
     check(companions, Number);
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log in");
     }
 
-    const event = Events.findOne(eventId);
+    const event = await Events.findOneAsync(eventId);
     // ignore broken eventIds
     if (!event) {
       return;
@@ -485,7 +490,7 @@ export const addParticipant = ServerMethod(
       throw new Meteor.Error(401, "cannot register, event has already passed");
     }
 
-    Events.update(
+    await Events.updateAsync(
       { _id: eventId },
       { $addToSet: { participants: { user: user._id, companions } } },
     );
@@ -496,7 +501,7 @@ export const addParticipant = ServerMethod(
     Notification["Rsvp.Team"].record(eventId, user._id, companions);
 
     // if you cant load course its probably because the event doesnt have one
-    const course = Courses.findOne(event.courseId);
+    const course = await Courses.findOneAsync(event.courseId);
     if (!course) {
       return;
     }
@@ -510,28 +515,31 @@ export const addParticipant = ServerMethod(
   },
 );
 
-export const removeParticipant = ServerMethod("event.removeParticipant", (eventId: string) => {
-  check(eventId, String);
+export const removeParticipant = ServerMethod(
+  "event.removeParticipant",
+  async (eventId: string) => {
+    check(eventId, String);
 
-  const userId = Meteor.userId();
-  if (!userId) {
-    throw new Meteor.Error(401, "please log in");
-  }
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new Meteor.Error(401, "please log in");
+    }
 
-  const event = Events.findOne(eventId);
-  // ignore broken eventIds
-  if (!event) {
-    return;
-  }
-  // dont allow participant-mutations if event has passed
-  if (moment().isAfter(event.end)) {
-    throw new Meteor.Error(401, "cannot unregister, event has already passed");
-  }
+    const event = await Events.findOneAsync(eventId);
+    // ignore broken eventIds
+    if (!event) {
+      return;
+    }
+    // dont allow participant-mutations if event has passed
+    if (moment().isAfter(event.end)) {
+      throw new Meteor.Error(401, "cannot unregister, event has already passed");
+    }
 
-  Events.update({ _id: eventId }, { $pull: { participants: { user: userId } } });
+    await Events.updateAsync({ _id: eventId }, { $pull: { participants: { user: userId } } });
 
-  Meteor.call("course.updateNextEvent", event.courseId);
-});
+    Meteor.call("course.updateNextEvent", event.courseId);
+  },
+);
 
 export const ContactParticipantsOptionsPattern = {
   revealAddress: Boolean,
@@ -541,12 +549,12 @@ export type ContactParticipantsOptions = Type<typeof ContactParticipantsOptionsP
 
 export const contactParticipants = ServerMethod(
   "event.contactParticipants",
-  (eventId: string, message: string, options: ContactParticipantsOptions) => {
+  async (eventId: string, message: string, options: ContactParticipantsOptions) => {
     check(eventId, String);
     check(message, String);
     check(options, ContactParticipantsOptionsPattern);
 
-    const operator = Meteor.user();
+    const operator = await Meteor.userAsync();
     if (!operator) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -578,7 +586,7 @@ export const cancel = ServerMethod(
     check(eventId, String);
     check(comment, Match.Maybe(String));
 
-    const operator = Meteor.user();
+    const operator = await Meteor.userAsync();
     if (!operator) {
       throw new Meteor.Error(401, "please log in");
     }
@@ -614,7 +622,7 @@ export const uncancel = ServerMethod("event.uncancel", async (eventId: string) =
   if (!event) {
     throw new Meteor.Error(404, "no such event");
   }
-  const user = Meteor.user();
+  const user = await Meteor.userAsync();
   if (!user || !event.editableBy(user)) {
     throw new Meteor.Error(401, "edit not permitted");
   }

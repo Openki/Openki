@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentRegion } from "/imports/utils/useCurrentRegion";
-import { useSession, useUser } from "/imports/utils/react-meteor-data";
+import { useSession } from "/imports/utils/react-meteor-data";
+import { useSiteName } from "/imports/utils/getSiteName";
 import { AccountsAsync } from "/imports/utils/promisify";
+import { PublicSettings } from "/imports/utils/PublicSettings";
 
 import * as Alert from "/imports/api/alerts/alert";
 import * as UsersMethods from "/imports/api/users/methods";
@@ -16,17 +18,18 @@ export type Props = {
   username: string;
   password: string;
   email: string;
+  allowNews: boolean;
   onRegister: () => void;
   onBack: () => void;
 };
 
-export function RegisterFrame({ username, password, email, onRegister, onBack }: Props) {
+export function RegisterFrame({ username, password, email, allowNews, onRegister, onBack }: Props) {
   const { t } = useTranslation();
-  const user = useUser();
   const currentRegion = useCurrentRegion();
+  const sitename = useSiteName();
   const locale = useSession("locale");
   const [isBusy, setIsBusy] = useState(false);
-  const [registerData, setRegisterData] = useState({ username, password, email });
+  const [registerData, setRegisterData] = useState({ username, password, email, allowNews });
   const [errors, checkValidity, addError] = useValidation({
     noUsername: {
       text: () => t("register.warning.noUserName", "Please enter a name for your new user."),
@@ -90,15 +93,11 @@ export function RegisterFrame({ username, password, email, onRegister, onBack }:
 
           await UsersMethods.updateLocale(locale);
 
-          if (!user) {
-            throw new Error("Unexpected falsy: user");
-          }
-
           Alert.success(
             t(
               "profile.sentVerificationMail",
               'Verification mail has been sent to your address: "{MAIL}".',
-              { MAIL: user.emails[0].address },
+              { MAIL: registerData.email },
             ),
           );
 
@@ -196,6 +195,31 @@ export function RegisterFrame({ username, password, email, onRegister, onBack }:
         </div>
       </div>
       <DataProtectionLaw />
+      {PublicSettings.askNewsletterConsent ? (
+        <div className="mb-3">
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              checked={registerData.allowNews}
+              onChange={(event) => {
+                setRegisterData({
+                  ...registerData,
+                  allowNews: event.target.checked,
+                });
+              }}
+              id="registerFrameAllowNewsCheck"
+            />
+            <label className="form-check-label" htmlFor="registerFrameAllowNewsCheck">
+              {t(
+                "login.register.agreeEmails",
+                "I agree on receiving occasional emails about {SITENAME}.",
+                { SITENAME: sitename },
+              )}
+            </label>
+          </div>
+        </div>
+      ) : null}
       <div className="mb-3">
         <button type="submit" className="btn btn-add form-control js-register" disabled={isBusy}>
           {isBusy ? (

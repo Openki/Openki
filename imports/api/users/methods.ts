@@ -23,14 +23,18 @@ import { Type } from "/imports/utils/CustomChecks";
 /**
  * Set user region
  */
-export const regionChange = ServerMethod("user.regionChange", (newRegion: string) => {
-  const userId = Meteor.userId();
-  if (!userId) {
-    throw new Meteor.Error(401, "please log in");
-  }
+export const regionChange = ServerMethod(
+  "user.regionChange",
+  (newRegion: string) => {
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new Meteor.Error(401, "please log in");
+    }
 
-  Profile.Region.change(userId, newRegion, "client call");
-});
+    Profile.Region.change(userId, newRegion, "client call");
+  },
+  { simulation: false },
+);
 
 /**
  * Update user avatar color
@@ -75,10 +79,10 @@ export const updateDescription = ServerMethod("user.updateDescription", (descrip
  */
 export const updateUsername = ServerMethod(
   "user.updateUsername",
-  (username: string) => {
+  async (username: string) => {
     check(username, String);
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new ValidationError([{ name: "username", type: "plzLogin" }], "Not logged-in");
     }
@@ -124,10 +128,10 @@ export const updateUsername = ServerMethod(
  */
 export const updateAutomatedNotification = ServerMethod(
   "user.updateAutomatedNotification",
-  (allow: boolean) => {
+  async (allow: boolean) => {
     check(allow, Boolean);
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new ValidationError([{ name: "notifications", type: "plzLogin" }], "Not logged-in");
     }
@@ -143,10 +147,10 @@ export const updateAutomatedNotification = ServerMethod(
  */
 export const updatePrivateMessages = ServerMethod(
   "user.updatePrivateMessages",
-  (allow: boolean) => {
+  async (allow: boolean) => {
     check(allow, Boolean);
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new ValidationError(
         [{ name: "allowPrivateMessages", type: "plzLogin" }],
@@ -165,10 +169,10 @@ export const updatePrivateMessages = ServerMethod(
  */
 export const updateEmail = ServerMethod(
   "user.updateEmail",
-  (email: string) => {
+  async (email: string) => {
     check(email, String);
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new ValidationError([{ name: "email", type: "plzLogin" }], "Not logged-in");
     }
@@ -204,8 +208,8 @@ export const updateEmail = ServerMethod(
   { simulation: false },
 );
 
-export const selfRemove = ServerMethod("user.self.remove", () => {
-  const user = Meteor.user();
+export const selfRemove = ServerMethod("user.self.remove", async () => {
+  const user = await Meteor.userAsync();
   if (user) {
     Users.remove({ _id: user._id });
   }
@@ -235,14 +239,12 @@ export const adminRemove = ServerMethod(
     let numberOfDeletedEvents = 0;
     if (options.courses) {
       // Remove courses created by this user
-      Courses.find({ createdby: userId })
-        .fetch()
-        .forEach((course) => {
-          deletedCourses.push(course);
-          numberOfDeletedEvents += Events.remove({ courseId: course._id });
-        });
+      (await Courses.find({ createdby: userId }).fetchAsync()).forEach((course) => {
+        deletedCourses.push(course);
+        numberOfDeletedEvents += Events.remove({ courseId: course._id });
+      });
 
-      Courses.remove({ createdby: userId });
+      await Courses.removeAsync({ createdby: userId });
     }
 
     // Updated courses and events he is involted
@@ -250,26 +252,30 @@ export const adminRemove = ServerMethod(
 
     // eslint-disable-next-line no-restricted-syntax
     for await (const course of courses) {
-      Events.update({ courseId: course._id }, { $pull: { editors: userId } }, { multi: true });
-      Events.update(
+      await Events.updateAsync(
+        { courseId: course._id },
+        { $pull: { editors: userId } },
+        { multi: true },
+      );
+      await Events.updateAsync(
         { courseId: course._id },
         { $pull: { participants: { user: userId } } },
         { multi: true },
       );
 
-      Courses.update({ _id: course._id }, { $pull: { members: { user: userId } } });
-      Courses.update({ _id: course._id }, { $pull: { editors: userId } });
+      await Courses.updateAsync({ _id: course._id }, { $pull: { members: { user: userId } } });
+      await Courses.updateAsync({ _id: course._id }, { $pull: { editors: userId } });
 
       // Update member related calculated fields
       await courseInterestedDenormalizer.afterUserAdminRemove(course._id);
       Courses.updateGroups(course._id);
     }
 
-    const user = Users.findOne(userId) as any;
+    const user = (await Users.findOneAsync(userId)) as any;
 
     delete user.services;
 
-    Users.remove({ _id: userId });
+    await Users.removeAsync({ _id: userId });
 
     Log.record("user.admin.remove", [operatorId, userId], {
       operatorId,
@@ -283,7 +289,7 @@ export const adminRemove = ServerMethod(
 
 export const addPrivilege = ServerMethod(
   "user.addPrivilege",
-  (userId: string, privilege: "admin") => {
+  async (userId: string, privilege: "admin") => {
     check(userId, String);
     check(privilege, String);
 
@@ -292,11 +298,11 @@ export const addPrivilege = ServerMethod(
       return;
     }
 
-    const user = Users.findOne({ _id: userId });
+    const user = await Users.findOneAsync({ _id: userId });
     if (!user) {
       throw new Meteor.Error(404, "User not found");
     }
-    Users.update(
+    await Users.updateAsync(
       { _id: user._id },
       { $addToSet: { privileges: privilege } },
       { multi: true },
@@ -307,16 +313,16 @@ export const addPrivilege = ServerMethod(
 
 export const removePrivilege = ServerMethod(
   "user.removePrivilege",
-  (userId: string, privilege: "admin") => {
+  async (userId: string, privilege: "admin") => {
     check(userId, String);
     check(privilege, String);
 
-    const user = Users.findOne({ _id: userId });
+    const user = await Users.findOneAsync({ _id: userId });
     if (!user) {
       throw new Meteor.Error(404, "User not found");
     }
 
-    const operator = Meteor.user();
+    const operator = await Meteor.userAsync();
 
     if (
       !operator ||
@@ -325,7 +331,7 @@ export const removePrivilege = ServerMethod(
       return;
     }
 
-    Users.update(
+    await Users.updateAsync(
       { _id: user._id },
       { $pull: { privileges: privilege } },
       { multi: true },
@@ -334,21 +340,21 @@ export const removePrivilege = ServerMethod(
   },
 );
 
-export const setHasContributed = ServerMethod("user.setHasContributed", (userId: string) => {
+export const setHasContributed = ServerMethod("user.setHasContributed", async (userId: string) => {
   check(userId, String);
 
-  const operator = Meteor.user();
+  const operator = await Meteor.userAsync();
 
   if (!operator || !UserPrivilegeUtils.privileged(operator, "admin")) {
     return;
   }
 
-  const user = Users.findOne({ _id: userId });
+  const user = await Users.findOneAsync({ _id: userId });
   if (!user) {
     throw new Meteor.Error(404, "User not found");
   }
 
-  Users.update({ _id: user._id }, { $set: { contribution: new Date() } });
+  await Users.updateAsync({ _id: user._id }, { $set: { contribution: new Date() } });
 
   Log.record("user.hasContributed.set", [operator?._id, userId], {
     operatorId: operator?._id,
@@ -356,57 +362,64 @@ export const setHasContributed = ServerMethod("user.setHasContributed", (userId:
   });
 });
 
-export const unsetHasContributed = ServerMethod("user.unsetHasContributed", (userId: string) => {
-  check(userId, String);
+export const unsetHasContributed = ServerMethod(
+  "user.unsetHasContributed",
+  async (userId: string) => {
+    check(userId, String);
 
-  const operator = Meteor.user();
+    const operator = await Meteor.userAsync();
 
-  if (!operator || !UserPrivilegeUtils.privileged(operator, "admin")) {
-    return;
-  }
+    if (!operator || !UserPrivilegeUtils.privileged(operator, "admin")) {
+      return;
+    }
 
-  const user = Users.findOne({ _id: userId });
-  if (!user) {
-    throw new Meteor.Error(404, "User not found");
-  }
+    const user = await Users.findOneAsync({ _id: userId });
+    if (!user) {
+      throw new Meteor.Error(404, "User not found");
+    }
 
-  Users.update({ _id: user._id }, { $unset: { contribution: "" } });
+    await Users.updateAsync({ _id: user._id }, { $unset: { contribution: "" } });
 
-  Log.record("user.hasContributed.unset", [operator?._id, userId], {
-    operatorId: operator?._id,
-    userId,
-  });
-});
+    Log.record("user.hasContributed.unset", [operator?._id, userId], {
+      operatorId: operator?._id,
+      userId,
+    });
+  },
+);
 
-export const hidePricePolicy = ServerMethod("user.hidePricePolicy", () => {
+export const hidePricePolicy = ServerMethod("user.hidePricePolicy", async () => {
   const userId = Meteor.userId();
   if (!userId) {
     throw new Meteor.Error(401, "please log in");
   }
 
-  Users.update(userId, { $set: { hidePricePolicy: true } });
+  await Users.updateAsync(userId, { $set: { hidePricePolicy: true } });
 });
 
-export const updateLocale = ServerMethod("user.updateLocale", (locale: string) => {
-  check(locale, String);
+export const updateLocale = ServerMethod(
+  "user.updateLocale",
+  async (locale: string) => {
+    check(locale, String);
 
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new Meteor.Error(401, "please log in");
+    }
+
+    await Users.updateAsync(userId, {
+      $set: { locale },
+    });
+  },
+  { simulation: false },
+);
+
+export const updateLastLogin = ServerMethod("user.updateLastLogin", async () => {
   const userId = Meteor.userId();
   if (!userId) {
     throw new Meteor.Error(401, "please log in");
   }
 
-  Users.update(userId, {
-    $set: { locale },
-  });
-});
-
-export const updateLastLogin = ServerMethod("user.updateLastLogin", () => {
-  const userId = Meteor.userId();
-  if (!userId) {
-    throw new Meteor.Error(401, "please log in");
-  }
-
-  Users.update(userId, {
+  await Users.updateAsync(userId, {
     $set: { lastLogin: new Date() },
   });
 });
@@ -428,7 +441,7 @@ Meteor.methods({
         }
 
         const groups: string[] = [];
-        Groups.find({ members: user._id }).forEach((group) => {
+        Groups.find({ "members.user": user._id }).forEach((group) => {
           groups.push(group._id);
         });
 

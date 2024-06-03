@@ -67,7 +67,12 @@ function Task({
   onSwitch: (task: string) => void;
   onLogin: () => void;
 }) {
-  const [transferData, setTransferData] = useState({ username: "", password: "", email: "" });
+  const [transferData, setTransferData] = useState({
+    username: "",
+    password: "",
+    email: "",
+    allowNews: false,
+  });
 
   function loginFrameAttr(): LoginFrameProps {
     return {
@@ -95,7 +100,7 @@ function Task({
           username = "";
         }
 
-        setTransferData({ username, password, email });
+        setTransferData({ username, password, email, allowNews: false });
 
         onSwitch("register");
       },
@@ -165,6 +170,7 @@ export function AccountTasks() {
 
   useEffect(() => {
     if (pleaseLogin && elementRef.current) {
+      setShow(true);
       Modal.getOrCreateInstance(elementRef.current).show();
     }
 
@@ -185,7 +191,7 @@ export function AccountTasks() {
       element?.removeEventListener("hidden.bs.modal", hidden);
       element?.removeEventListener("shown.bs.modal", shown);
     };
-  });
+  }, [pleaseLogin]);
 
   return (
     <div

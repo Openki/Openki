@@ -32,13 +32,14 @@
 			, "de": "..."
 			}
 		}
-	, "i18nHelpLink": "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto" // A link to a page that give instructions how to translate. Default: "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto", Set this value to "" to hide the link in the UI. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
+	, "i18nHelpLink": "https://gitlab.com/Openki/Openki/-/wikis/translation" // A link to a page that give instructions how to translate. Default: "https://gitlab.com/Openki/Openki/-/wikis/translation", Set this value to "" to hide the link in the UI. This setting can be a string or a object with key & values for every language `{ "en": "...", "de": "...", ... }`
 	, "i18nMapping": { "de": "de-zuerich-lernt" } // Define alternative translation files
 	, "matomo":
 		{ "url": "https://analytics.mydomain.com/"
 		, "site": 1 // Matomo id
 		}
 	, "pricePolicyEnabled": true // by true, show only indicative prices (DE: Richtpreise), default is true
+  , "askNewsletterConsent": true // by true, ask user to receive newsletter on account registration, default is true
 	, "sendReminderPreset": true // Should a reminder be sent by default or not. Default is true
 	, "feature":
 		{ "login": // toggle visibility of login services
@@ -138,7 +139,6 @@
 	, "s3": // file storage, private part
 	{ "region": "nine-cz42"
 	, "bucketEndpoint": "https://984b.objectstorage.nineapis.ch/bucket-name"
-	, "bucketName": "bucket-name"
 	, "accessKeyId": "abcd1234"
 	, "secretAccessKey": "123abcd"
 	}
