@@ -16,7 +16,7 @@ function getBucket() {
 function createS3Client() {
   return new S3({
     region: PrivateSettings.s3.region,
-    endpoint: new URL(PrivateSettings.s3.bucketEndpoint),
+    endpoint: PrivateSettings.s3.bucketEndpoint,
     bucketEndpoint: true,
     credentials: {
       accessKeyId: PrivateSettings.s3.accessKeyId,
@@ -61,11 +61,8 @@ export async function upload(directoryName: string, file: UploadFile) {
 }
 
 export function remove(fullFileName: string) {
-  return (
-    createS3Client()
-      .deleteObject({
-        Bucket: getBucket(),
-        Key: fullFileName,
-      })
-  );
+  return createS3Client().deleteObject({
+    Bucket: getBucket(),
+    Key: fullFileName,
+  });
 }
