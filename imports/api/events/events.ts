@@ -83,6 +83,8 @@ export interface EventEntity {
   /** ID of the replication parent, only cloned events have this */
   replicaOf?: string;
   participants?: EventParticipantEntity[];
+  /** Registration is disabled */
+  noRsvp: boolean;
   /** maximum participants of event, 0 means no participant limit */
   maxParticipants: number;
   /**
@@ -163,6 +165,9 @@ export class OEvent {
   }
 
   isFullyBooked(this: EventModel) {
+    if (this.noRsvp) {
+      return false;
+    }
     if (!this.maxParticipants) {
       return false;
     }

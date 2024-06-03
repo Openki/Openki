@@ -197,14 +197,15 @@ template.events({
 
   "click .js-replicate-btn"(_event, instance) {
     instance.busy("saving");
-    PleaseLogin(instance, () => {
+    PleaseLogin(instance, async () => {
       const startLocal = LocalTime.fromString(instance.data.startLocal);
       const endLocal = LocalTime.fromString(instance.data.endLocal);
 
       const replicaDays = instance.activeDays();
       let removed = 0;
       let responses = 0;
-      replicaDays.forEach((days) => {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const days of replicaDays) {
         /* create a new event for each time interval */
         const replicaEvent: EventsMethods.SaveFields = {
           startLocal: LocalTime.toString(moment(startLocal).add(days, "days")),
@@ -218,6 +219,7 @@ template.events({
           replicaOf: instance.data.replicaOf || instance.data._id,
           internal: instance.data.internal,
           sendReminder: instance.data.sendReminder,
+          noRsvp: instance.data.noRsvp,
           maxParticipants: instance.data.maxParticipants,
         };
 
@@ -229,45 +231,44 @@ template.events({
           replicaEvent.courseId = courseId;
         }
 
-        EventsMethods.save("", replicaEvent)
-          .then(() => {
-            removed += 1;
-          })
-          .catch((error) => {
-            const start = moment(replicaEvent.startLocal).format("llll");
-            Alert.serverError(
-              error,
-              i18n("eventReplication.errWithReason", 'Could not create the copy on "{START}".', {
-                START: start,
-              }),
-            );
-          })
-          .finally(() => {
-            responses += 1;
-            if (responses === replicaDays.length) {
-              instance.busy(false);
-              if (removed) {
-                const start = moment(replicaEvent.startLocal).format("llll");
-                Alert.success(
-                  i18n(
-                    "event.replicate.successCondensed",
-                    'Cloned event "{TITLE}" {NUM, plural, one{for} other{# times until} } {DATE}',
-                    {
-                      TITLE: instance.data.title,
-                      NUM: removed,
-                      DATE: start,
-                    },
-                  ),
-                );
-              }
-              if (removed === responses) {
-                const parentInstance = instance.parentInstance() as any;
-                parentInstance.replicating.set(false);
-                parentInstance.collapse();
-              }
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          await EventsMethods.save("", replicaEvent);
+          removed += 1;
+        } catch (error) {
+          const start = moment(replicaEvent.startLocal).format("llll");
+          Alert.serverError(
+            error,
+            i18n("eventReplication.errWithReason", 'Could not create the copy on "{START}".', {
+              START: start,
+            }),
+          );
+        } finally {
+          responses += 1;
+          if (responses === replicaDays.length) {
+            instance.busy(false);
+            if (removed) {
+              const start = moment(replicaEvent.startLocal).format("llll");
+              Alert.success(
+                i18n(
+                  "event.replicate.successCondensed",
+                  'Cloned event "{TITLE}" {NUM, plural, one{for} other{# times until} } {DATE}',
+                  {
+                    TITLE: instance.data.title,
+                    NUM: removed,
+                    DATE: start,
+                  },
+                ),
+              );
             }
-          });
-      });
+            if (removed === responses) {
+              const parentInstance = instance.parentInstance() as any;
+              parentInstance.replicating.set(false);
+              parentInstance.collapse();
+            }
+          }
+        }
+      }
     });
   },
 

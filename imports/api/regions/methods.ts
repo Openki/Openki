@@ -27,48 +27,44 @@ export const CreateFieldsPattern = {
 
 export type CreateFields = Type<typeof CreateFieldsPattern>;
 
-export const create = ServerMethod(
-  "region.create",
+export const create = ServerMethod("region.create", async (changes: CreateFields) => {
+  check(changes, CreateFieldsPattern);
 
-  (changes: CreateFields) => {
-    check(changes, CreateFieldsPattern);
+  const user = await Meteor.userAsync();
+  if (!user) {
+    throw new Meteor.Error(401, "please log in");
+  }
 
-    const user = Meteor.user();
-    if (!user) {
-      throw new Meteor.Error(401, "please log in");
-    }
+  if (
+    !UserPrivilegeUtils.privileged(user, "admin") /* Admins can add regions */ &&
+    !user.isTenantAdmin(changes.tenant) /* or admins of a tenant */
+  ) {
+    throw new Meteor.Error(401, "not permitted");
+  }
 
-    if (
-      !UserPrivilegeUtils.privileged(user, "admin") /* Admins can add regions */ &&
-      !user.isTenantAdmin(changes.tenant) /* or admins of a tenant */
-    ) {
-      throw new Meteor.Error(401, "not permitted");
-    }
+  const set = {
+    tenant: changes.tenant,
+    courseCount: 0,
+    futureEventCount: 0,
+    createdby: user._id,
+    created: new Date(),
+    updated: new Date(),
+  } as Mongo.OptionalId<RegionEntity>;
 
-    const set = {
-      tenant: changes.tenant,
-      courseCount: 0,
-      futureEventCount: 0,
-      createdby: user._id,
-      created: new Date(),
-      updated: new Date(),
-    } as Mongo.OptionalId<RegionEntity>;
+  set.name = changes.name.trim().substring(0, 40);
+  set.nameEn = set.name;
+  set.slug = StringTools.slug(set.name);
 
-    set.name = changes.name.trim().substring(0, 40);
-    set.nameEn = set.name;
-    set.slug = StringTools.slug(set.name);
+  set.loc = changes.loc;
+  set.loc.type = "Point";
 
-    set.loc = changes.loc;
-    set.loc.type = "Point";
+  set.tz = changes.tz.trim().substring(0, 40);
 
-    set.tz = changes.tz.trim().substring(0, 40);
+  set.description = changes.description.trim().substring(0, 1000);
+  // Todo: check this already when the user writes into the textarea? is there a limit for course descriptions?
 
-    set.description = changes.description.trim().substring(0, 1000);
-    // Todo: check this already when the user writes into the textarea? is there a limit for course descriptions?
-
-    return Regions.insert(set);
-  },
-);
+  return Regions.insert(set);
+});
 
 export const UpdateFieldsPattern = {
   name: Match.Maybe(String),
@@ -82,57 +78,60 @@ export const UpdateFieldsPattern = {
 
 export type UpdateFields = Type<typeof UpdateFieldsPattern>;
 
-export const update = ServerMethod("region.update", (regionId: string, changes: UpdateFields) => {
+export const update = ServerMethod(
+  "region.update",
+  async (regionId: string, changes: UpdateFields) => {
+    check(regionId, String);
+    check(changes, UpdateFieldsPattern);
+
+    const user = await Meteor.userAsync();
+    if (!user) {
+      throw new Meteor.Error(401, "please log in");
+    }
+
+    const region = Regions.findOne(regionId);
+    if (!region) {
+      throw new Meteor.Error(404, "region not found");
+    }
+
+    if (!region.editableBy(user)) {
+      throw new Meteor.Error(401, "not permitted");
+    }
+
+    /* Changes we want to perform */
+
+    const set = { updated: new Date() } as Partial<RegionEntity>;
+
+    if (changes.name) {
+      set.name = changes.name.trim().substring(0, 40);
+      set.nameEn = set.name;
+      set.slug = StringTools.slug(set.name);
+    }
+
+    if (changes.loc) {
+      const loc = changes.loc;
+      loc.type = "Point";
+      set.loc = loc;
+    }
+
+    if (changes.tz) {
+      set.tz = changes.tz.trim().substring(0, 40);
+    }
+
+    if (changes.description !== undefined) {
+      set.description = changes.description.trim().substring(0, 1000);
+    }
+
+    Regions.update({ _id: regionId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);
+
+    return regionId;
+  },
+);
+
+export const remove = ServerMethod("region.remove", async (regionId: string) => {
   check(regionId, String);
-  check(changes, UpdateFieldsPattern);
 
-  const user = Meteor.user();
-  if (!user) {
-    throw new Meteor.Error(401, "please log in");
-  }
-
-  const region = Regions.findOne(regionId);
-  if (!region) {
-    throw new Meteor.Error(404, "region not found");
-  }
-
-  if (!region.editableBy(user)) {
-    throw new Meteor.Error(401, "not permitted");
-  }
-
-  /* Changes we want to perform */
-
-  const set = { updated: new Date() } as Partial<RegionEntity>;
-
-  if (changes.name) {
-    set.name = changes.name.trim().substring(0, 40);
-    set.nameEn = set.name;
-    set.slug = StringTools.slug(set.name);
-  }
-
-  if (changes.loc) {
-    const loc = changes.loc;
-    loc.type = "Point";
-    set.loc = loc;
-  }
-
-  if (changes.tz) {
-    set.tz = changes.tz.trim().substring(0, 40);
-  }
-
-  if (changes.description !== undefined) {
-    set.description = changes.description.trim().substring(0, 1000);
-  }
-
-  Regions.update({ _id: regionId }, { $set: set }, { multi: true }, AsyncTools.checkUpdateOne);
-
-  return regionId;
-});
-
-export const remove = ServerMethod("region.remove", (regionId: string) => {
-  check(regionId, String);
-
-  const user = Meteor.user();
+  const user = await Meteor.userAsync();
   if (!user) {
     throw new Meteor.Error(401, "please log in");
   }

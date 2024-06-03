@@ -55,7 +55,6 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
   s3: {
     region: String,
     bucketEndpoint: String,
-    bucketName: String,
     accessKeyId: String,
     secretAccessKey: String,
   },

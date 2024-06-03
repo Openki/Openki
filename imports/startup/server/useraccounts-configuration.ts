@@ -138,7 +138,7 @@ Accounts.onCreateUser((options: any, originalUser) => {
 
   user.notifications = true;
   user.allowPrivateMessages = true;
-
+  user.allowNews = options.allowNews;
   return user;
 });
 

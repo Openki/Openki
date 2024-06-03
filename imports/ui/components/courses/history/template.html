@@ -48,6 +48,28 @@
   {{i18n 'course.history.userUnsubscribed' 'retract {ROLE}' ROLE=(roleShort role)}}
 </template>
 
+<template name="groupPromoteHistoryEntry">
+  {{> groupTag groupId=group full=true}}
+  {{#if enable}}
+    {{i18n 'course.history.groupPromote.added' 'got added by'}}
+  {{else}}
+    {{i18n 'course.history.groupPromote.removed' 'got removed by'}}
+  {{/if}}
+  {{> profileLink userId=user}}
+  {{contribution user}}
+</template>
+
+<template name="groupOrgaHistoryEntry">
+  {{> groupTag groupId=group full=true}}
+  {{#if enable}}
+    {{i18n 'course.history.groupOrga.added' 'got added as orga-group by'}}
+  {{else}}
+    {{i18n 'course.history.groupOrga.removed' 'got removed as orga-group by'}}
+  {{/if}}
+  {{> profileLink userId=user}}
+  {{contribution user}}
+</template>
+
 <template name="eventInsertedHistoryEntry">
   <span class="fa-regular fa-calendar-days fa-fw" aria-hidden="true"></span>
   <a href="{{pathFor 'showEvent'}}">

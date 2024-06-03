@@ -12,19 +12,41 @@ import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 
-export interface GroupEntityCustomCourseFields {
-  /** For internal us, must be unique in the list. */
-  name: string;
-  /** Used when the value is edited. */
-  editText: LocalizedValue;
-  /** Used when the value is edited as placeholder in the field. */
-  editPlaceholder: LocalizedValue;
-  /** Used when the value is shown. It will be copied to the course object. */
-  displayText: LocalizedValue;
-  /** Who will see the entered values. It will be copied to the course object. */
-  visibleFor: "all" | "editors";
-  /** Optional: The type of field. 'singleLine' for single-line, 'multiLine' for multi-line input. Default: 'singleLine' */
-  type?: "singleLine" | "multiLine";
+export type GroupEntityCustomCourseFields =
+  | {
+      /** For internal us, must be unique in the list. */
+      name: string;
+      /** Used when the value is edited. */
+      editText: LocalizedValue;
+      /** Used when the value is edited as placeholder in the field. */
+      editPlaceholder: LocalizedValue;
+      /** Used when the value is shown. It will be copied to the course object. */
+      displayText: LocalizedValue;
+      /** Who will see the entered values. It will be copied to the course object. */
+      visibleFor: "all" | "editors";
+      /** Optional: The type of field. 'singleLine' for single-line text, 'multiLine' for multi-line text, boolean for a choice between true and false. Default: 'singleLine' */
+      type?: "singleLine" | "multiLine";
+    }
+  | {
+      /** For internal us, must be unique in the list. */
+      name: string;
+      /** Used when the value is edited. */
+      editText: LocalizedValue;
+      /** Used when the value is edited as placeholder in the field. */
+      editDescription: LocalizedValue;
+      /** Used when the value is shown. It will be copied to the course object. */
+      displayText: LocalizedValue;
+      /** Who will see the entered values. It will be copied to the course object. */
+      visibleFor: "all" | "editors";
+      /** Optional: The type of field. 'singleLine' for single-line text, 'multiLine' for multi-line text, boolean for a choice between true and false. Default: 'singleLine' */
+      type: "boolean";
+      /** Optional: By type boolean, you can set the default value. Default: false */
+      defaultValue?: boolean;
+    };
+
+export interface GroupMemberEntity {
+  user: string;
+  notify: boolean;
 }
 
 /** DB-Model */
@@ -38,8 +60,8 @@ export interface GroupEntity {
   logoUrl?: string;
   /** Customize the inputs that the user can enter when creating and editing a course. */
   customCourseFields?: GroupEntityCustomCourseFields[];
-  /** List of userIds */
-  members: string[];
+  /** List of userIds with notify */
+  members: GroupMemberEntity[];
   createdby?: string;
   // eslint-disable-next-line camelcase
   time_created?: Date;
@@ -49,7 +71,7 @@ export interface GroupEntity {
 export type GroupModel = Group & GroupEntity;
 
 export class Group {
-  members = [];
+  members = [] as GroupMemberEntity[];
 
   /**
    * Check if the group is new (not yet saved).
@@ -68,7 +90,7 @@ export class Group {
     return (
       this.isNew() /* Anybody may create a new group */ ||
       UserPrivilegeUtils.privileged(user, "admin") /* Admins can edit all groups */ ||
-      this.members?.includes(user._id) /* User must be member of group to edit it */
+      this.members?.some((m) => m.user === user._id) /* User must be member of group to edit it */
     );
   }
 
@@ -134,7 +156,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
     check(skip, Match.Maybe(Match.Integer));
     check(sort, Match.Maybe([FieldSortPattern]));
 
-    const find: Mongo.Selector<GroupEntity> = {};
+    const find: any = {};
 
     const options: Mongo.Options<GroupEntity> = { sort };
 
@@ -153,7 +175,7 @@ export class GroupsCollection extends Mongo.Collection<GroupEntity, GroupModel> 
         return [];
       }
 
-      find.members = me;
+      find["members.user"] = me;
     }
 
     return this.find(find, options);

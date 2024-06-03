@@ -1,5 +1,6 @@
 import path from "path";
-import AWS from "aws-sdk";
+import { PutObjectCommandInput, S3 } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 import mime from "mime-types";
 import urljoin from "url-join";
 import { Mongo } from "meteor/mongo";
@@ -9,16 +10,18 @@ import { PrivateSettings } from "./PrivateSettings";
 import { PublicSettings } from "./PublicSettings";
 
 function getBucket() {
-  return PrivateSettings.s3.bucketName;
+  return PrivateSettings.s3.bucketEndpoint;
 }
 
 function createS3Client() {
-  return new AWS.S3({
+  return new S3({
     region: PrivateSettings.s3.region,
-    endpoint: new AWS.Endpoint(PrivateSettings.s3.bucketEndpoint),
-    s3BucketEndpoint: true,
-    accessKeyId: PrivateSettings.s3.accessKeyId,
-    secretAccessKey: PrivateSettings.s3.secretAccessKey,
+    endpoint: PrivateSettings.s3.bucketEndpoint,
+    bucketEndpoint: true,
+    credentials: {
+      accessKeyId: PrivateSettings.s3.accessKeyId,
+      secretAccessKey: PrivateSettings.s3.secretAccessKey,
+    },
   });
 }
 
@@ -41,7 +44,7 @@ export async function upload(directoryName: string, file: UploadFile) {
 
   const s3 = createS3Client();
 
-  const params: AWS.S3.PutObjectRequest = {
+  const params: PutObjectCommandInput = {
     Bucket: getBucket(),
     Key: fullKey,
     ContentType: file.mimeType,
@@ -49,15 +52,17 @@ export async function upload(directoryName: string, file: UploadFile) {
     Body: Buffer.from(file.content, "binary"),
   };
 
-  await s3.upload(params).promise();
+  await new Upload({
+    client: s3,
+    params,
+  }).done();
+
   return { fullFileName: fullKey, publicUrl: generatePublicUrl(fullKey) };
 }
 
 export function remove(fullFileName: string) {
-  return createS3Client()
-    .deleteObject({
-      Bucket: getBucket(),
-      Key: fullFileName,
-    })
-    .promise();
+  return createS3Client().deleteObject({
+    Bucket: getBucket(),
+    Key: fullFileName,
+  });
 }
