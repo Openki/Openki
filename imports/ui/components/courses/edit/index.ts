@@ -65,7 +65,7 @@ const Template = TemplateAny as TemplateStaticTyped<
     getSavedCourse: () => CourseModel | undefined;
     getGroups: () => string[];
     customFields: (
-      type?: "singleLine" | "multiLine" | "trueOrFalse",
+      type?: "singleLine" | "multiLine" | "boolean",
     ) => GroupEntityCustomCourseFields[];
     resetFields: () => void;
   }
@@ -203,7 +203,7 @@ template.onCreated(function () {
 
   instance.getSavedCourse = () => Courses.findOne(instance.savedCourseId.get());
 
-  instance.customFields = (type?: "singleLine" | "multiLine" | "trueOrFalse") => {
+  instance.customFields = (type?: "singleLine" | "multiLine" | "boolean") => {
     const groups = instance.getGroups();
 
     return (
@@ -496,7 +496,7 @@ template.events({
     }
 
     changes.customFields = instance.customFields().map((i) => {
-      if (i.type !== "trueOrFalse")
+      if (i.type !== "boolean")
         return {
           name: i.name,
           displayText: i.displayText,
