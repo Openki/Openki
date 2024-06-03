@@ -13,6 +13,7 @@
   "_event.state.canceled": "Canceled",
   "_event.state.fullyBooked": "Fully booked",
   "_inputField.maxlength": "Too many characters used. {MAXNUMBER} are allowed. Please remove {NUMBER} characters to be able to save.",
+  "_inputField.maxlength.notEditing": "There are too many characters here. You should edit it.",
   "_inputField.optional": "(optional)",
   "_inputField.password": "Password",
   "_label.internal": "Internal",
