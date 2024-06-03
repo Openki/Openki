@@ -67,6 +67,11 @@ export function Model(entry: { body: Body }) {
   const { body } = entry;
   const course = Courses.findOne(body.courseId);
   const newParticipant = Users.findOne(body.participantId);
+  const recipients = Users.find({
+    _id: { $in: body.recipients.filter((r) => r !== body.participantId) },
+  })
+    .fetch()
+    .filter((r) => r.notifications && r.hasEmail());
 
   return {
     accepted(actualRecipient: UserModel) {
@@ -78,7 +83,7 @@ export function Model(entry: { body: Body }) {
       }
     },
 
-    vars(lng: string, _actualRecipient: UserModel, unsubToken: string) {
+    vars(lng: string, actualRecipient: UserModel, unsubToken: string) {
       if (!newParticipant) {
         throw new Error("New participant does not exist (0.o)");
       }
@@ -131,6 +136,10 @@ export function Model(entry: { body: Body }) {
         // invite into team
         appendCollaborationHint: body.newRole === "mentor",
         figures,
+        otherRecipients: recipients
+          .filter((r) => r._id !== actualRecipient._id)
+          .map((r) => r.getDisplayName())
+          .join(", "),
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=joinNotify`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
