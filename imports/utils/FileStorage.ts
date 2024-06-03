@@ -10,7 +10,7 @@ import { PrivateSettings } from "./PrivateSettings";
 import { PublicSettings } from "./PublicSettings";
 
 function getBucket() {
-  return PrivateSettings.s3.bucketName;
+  return PrivateSettings.s3.bucketEndpoint;
 }
 
 function createS3Client() {
