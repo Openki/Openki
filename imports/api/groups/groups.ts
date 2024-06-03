@@ -12,20 +12,37 @@ import { LocalizedValue } from "/imports/utils/getLocalizedValue";
 import { FieldSort, FieldSortPattern } from "/imports/utils/sort-spec";
 import { Type } from "/imports/utils/CustomChecks";
 
-export interface GroupEntityCustomCourseFields {
-  /** For internal us, must be unique in the list. */
-  name: string;
-  /** Used when the value is edited. */
-  editText: LocalizedValue;
-  /** Used when the value is edited as placeholder in the field. */
-  editPlaceholder: LocalizedValue;
-  /** Used when the value is shown. It will be copied to the course object. */
-  displayText: LocalizedValue;
-  /** Who will see the entered values. It will be copied to the course object. */
-  visibleFor: "all" | "editors";
-  /** Optional: The type of field. 'singleLine' for single-line, 'multiLine' for multi-line input. Default: 'singleLine' */
-  type?: "singleLine" | "multiLine";
-}
+export type GroupEntityCustomCourseFields =
+  | {
+      /** For internal us, must be unique in the list. */
+      name: string;
+      /** Used when the value is edited. */
+      editText: LocalizedValue;
+      /** Used when the value is edited as placeholder in the field. */
+      editPlaceholder: LocalizedValue;
+      /** Used when the value is shown. It will be copied to the course object. */
+      displayText: LocalizedValue;
+      /** Who will see the entered values. It will be copied to the course object. */
+      visibleFor: "all" | "editors";
+      /** Optional: The type of field. 'singleLine' for single-line text, 'multiLine' for multi-line text, boolean for a choice between true and false. Default: 'singleLine' */
+      type?: "singleLine" | "multiLine";
+    }
+  | {
+      /** For internal us, must be unique in the list. */
+      name: string;
+      /** Used when the value is edited. */
+      editText: LocalizedValue;
+      /** Used when the value is edited as placeholder in the field. */
+      editDescription: LocalizedValue;
+      /** Used when the value is shown. It will be copied to the course object. */
+      displayText: LocalizedValue;
+      /** Who will see the entered values. It will be copied to the course object. */
+      visibleFor: "all" | "editors";
+      /** Optional: The type of field. 'singleLine' for single-line text, 'multiLine' for multi-line text, boolean for a choice between true and false. Default: 'singleLine' */
+      type: "boolean";
+      /** Optional: By type boolean, you can set the default value. Default: false */
+      defaultValue?: boolean;
+    };
 
 export interface GroupMemberEntity {
   user: string;

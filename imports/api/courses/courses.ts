@@ -31,7 +31,7 @@ export type CourseCustomField = Pick<
   GroupEntityCustomCourseFields,
   "name" | "displayText" | "visibleFor"
 > & {
-  value: string;
+  value: string | boolean;
 };
 
 /** DB-Model */
