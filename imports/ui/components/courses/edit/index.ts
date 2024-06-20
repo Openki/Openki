@@ -64,7 +64,9 @@ const Template = TemplateAny as TemplateStaticTyped<
     showInternalCheckbox: () => boolean;
     getSavedCourse: () => CourseModel | undefined;
     getGroups: () => string[];
-    customFields: (type?: "singleLine" | "multiLine") => GroupEntityCustomCourseFields[];
+    customFields: (
+      type?: "singleLine" | "multiLine" | "boolean",
+    ) => GroupEntityCustomCourseFields[];
     resetFields: () => void;
   }
 >;
@@ -201,7 +203,7 @@ template.onCreated(function () {
 
   instance.getSavedCourse = () => Courses.findOne(instance.savedCourseId.get());
 
-  instance.customFields = (type?: "singleLine" | "multiLine") => {
+  instance.customFields = (type?: "singleLine" | "multiLine" | "boolean") => {
     const groups = instance.getGroups();
 
     return (
@@ -494,10 +496,18 @@ template.events({
     }
 
     changes.customFields = instance.customFields().map((i) => {
+      if (i.type !== "boolean")
+        return {
+          name: i.name,
+          displayText: i.displayText,
+          value: instance.$(`.js-custom-field-${i.name}`).val() as string,
+          visibleFor: i.visibleFor,
+        };
+
       return {
         name: i.name,
         displayText: i.displayText,
-        value: instance.$(`.js-custom-field-${i.name}`).val() as string,
+        value: instance.$(`.js-custom-field-${i.name}`).prop("checked") as boolean,
         visibleFor: i.visibleFor,
       };
     });

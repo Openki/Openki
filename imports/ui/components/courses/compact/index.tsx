@@ -129,7 +129,7 @@ export function CourseCompact({ course, groupTagEvents }: Props) {
         />
       </div>
       {course.nextEvent ? (
-        <CourseCompactEvent course={course} />
+        <CourseCompactEvent event={course.nextEvent} />
       ) : (
         <CourseCompactRoles course={course} />
       )}

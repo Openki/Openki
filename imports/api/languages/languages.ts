@@ -66,6 +66,13 @@ export const LanguagesRaw: { [abbreviation: string]: LanguageEntity } = {
     english: "French",
     visible: true,
   },
+  it: {
+    lg: "it",
+    name: "Italiano",
+    short: "it",
+    english: "Italian",
+    visible: true,
+  },
   ko: {
     lg: "ko",
     name: "한국어",

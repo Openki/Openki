@@ -159,7 +159,6 @@
 , "s3":
 	{ "region": "us-east-1"
 	, "bucketEndpoint": "https://cz42.objects.nineapis.ch/bucket-openkitest2"
-	, "bucketName": "bucket-openkitest2"
 	, "accessKeyId": "63551d5ecx68qL2XqU7eQX-9hxxKs5CK"
 	, "secretAccessKey": "srnyHWbj9ZhDFlTQyY40vxBIBs8MVYgp"
 }
