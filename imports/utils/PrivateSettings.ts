@@ -11,6 +11,8 @@ export const PrivateSettingsPattern = Match.ObjectIncluding({
   testdata: Boolean,
   /** Sender e-mail address in mails */
   siteEmail: String,
+  /** "Reply to" adress in mails */
+  replyToEmail: Match.Maybe(String),
   /**
    * Sender and recipient address for "Report problem" function. The recipient is also
    * visible in e-mail that are send to users.

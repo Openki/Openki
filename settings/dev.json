@@ -153,6 +153,7 @@
 		}
 	}
 , "siteEmail": "HMMM@legit.example"
+, "replyToEmail": "HMMM@legit.example"
 , "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net" }
 , "robots": false
 , "printLog": true

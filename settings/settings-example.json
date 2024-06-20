@@ -118,6 +118,7 @@
 	, "apiMaxLimit": 100 // Maximum number of entities that the api returns. Default: 100. If the parameter "limit" is not set in the URL, the API always returns 100 entities whatever this setting is set to.
 	}
 , "siteEmail": "" // Sender e-mail address in mails
+, "replyToEmail": "" // "Reply to" adress in mails 
 , "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net"} // Sender and recipient address for "Report problem" function
 , "robots": false // Tells robots/crawlers whether to index the website or not
 , "hideProfiles": false // Tells robots/crawlers not to index user profiles (/user/*)
