@@ -155,9 +155,9 @@
                 <span style="white-space: pre-line;">{{info.value}}</span>
               {{else}}
                 {{#if info.value}}
-                  <input type="checkbox" checked disabled />
+                  {{i18n 'customField.boolean.yes' 'Yes'}}
                 {{else}}
-                  <input type="checkbox" disabled />
+                  {{i18n 'customField.boolean.no' 'No'}}
                 {{/if}}
               {{/unless}}
             </p>
