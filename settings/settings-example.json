@@ -139,7 +139,6 @@
 	, "s3": // file storage, private part
 	{ "region": "nine-cz42"
 	, "bucketEndpoint": "https://984b.objectstorage.nineapis.ch/bucket-name"
-	, "bucketName": "bucket-name"
 	, "accessKeyId": "abcd1234"
 	, "secretAccessKey": "123abcd"
 	}
