@@ -64,8 +64,9 @@ function sendInvitation(invitation: InvitationEntity) {
     '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
   message = DOCTYPE + message;
 
-  const email = {
+  const email: Email.EmailOptions = {
     from: Accounts.emailTemplates.from,
+    replyTo: PrivateSettings.replyToEmail,
     to: invitation.to,
     subject: subjectPrefix + subject,
     html: juice(message),
