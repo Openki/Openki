@@ -134,7 +134,7 @@ export function Model(entry: { body: Body }) {
       return {
         unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
         event,
-        eventDate: startMoment.format("LL"),
+        eventDate: startMoment.format("dddd, LL"),
         eventStart: startMoment.format("LT"),
         eventEnd: endMoment.format("LT"),
         venueLine,

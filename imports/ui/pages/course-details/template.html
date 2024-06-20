@@ -150,8 +150,16 @@
           {{> courseDetailsDescription editableDescription=editableDescription course=course}}
           {{#each info in customFields}}
             <p>
-              <strong>{{info.displayText}}</strong>: <span
-                    style="white-space: pre-line;">{{info.value}}</span>
+              <strong>{{info.displayText}}</strong>:
+              {{#unless info.isboolean}}
+                <span style="white-space: pre-line;">{{info.value}}</span>
+              {{else}}
+                {{#if info.value}}
+                  {{i18n 'customField.boolean.yes' 'Yes'}}
+                {{else}}
+                  {{i18n 'customField.boolean.no' 'No'}}
+                {{/if}}
+              {{/unless}}
             </p>
           {{/each}}
         </div>
