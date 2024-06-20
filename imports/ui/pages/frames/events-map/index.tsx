@@ -25,6 +25,7 @@ export function FrameEventsMapPage(props: Data) {
     <EventsMap
       events={props.events.fetch().filter((e) => e.start > now)}
       openLinksInNewTab={true}
+      fullscreenControl={false}
     />
   );
 }
