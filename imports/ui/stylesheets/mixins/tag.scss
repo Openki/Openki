@@ -1,7 +1,7 @@
 @mixin tag($bg, $color, $bg-hover: darken($bg, 5%), $color-hover: $color) {
   background-color: $bg;
   color: $color;
-  padding: 1px 4px;
+  padding: 0.07em 0.3em;
 
   > a {
     color: $color;

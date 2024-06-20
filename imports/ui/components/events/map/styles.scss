@@ -13,6 +13,10 @@
   width: 301px !important;
 }
 
+.leaflet-attribution-flag {
+  display: none !important;
+}
+
 .leaflet-container .leaflet-marker-icon {
   background: none;
   border: 0;
