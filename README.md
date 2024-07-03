@@ -121,7 +121,7 @@ In case you get weird errors when starting (eg. error 14) try this command:
 - Technical Support (only concerning technical and conceptual aspects of the Web Platform): [support_ät_openki.net](mailto:support_ät_openki.net "write us")
 - Concerning regions: [regions_ät_openki.net](mailto:regions_ät_openki.net "write us")
 - Community (rooms, mentors, communication, etc): [community_ät_openki.net](mailto:community_ät_openki.net "write us")
-- Sensitive, security related issues can be reported to the following email: [security_ät_openki.net](mailto:security_ät_openki.net "write us")
+- Sensitive, security related issues can be reported to the following email: [security_ät_openki.net](mailto:security_ät_openki.net "write us") [more info](https://gitlab.com/Openki/Openki/-/wikis/security)
 
 ### Help translating
 To help translating, please visit our our [translation guide](https://gitlab.com/Openki/Openki/-/wikis/translation).  
