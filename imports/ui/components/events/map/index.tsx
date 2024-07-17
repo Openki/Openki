@@ -61,7 +61,10 @@ function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[])
 export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab = false }: Data) {
   const locale = useSession("locale");
 
-  const markerIcon = new DivIcon({
+  const eventMarkerIcon = new DivIcon({
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); font-size: 30px;"></span>',
+  });
+  const venueMarkerIcon = new DivIcon({
     html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
   });
 
@@ -96,7 +99,11 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
       <MapContainer bounds={markers.map((mark) => mark.loc) as any}>
         {(tileLayers[locale] || tileLayers.default)()}
         {markers.map((mark) => (
-          <Marker key={mark._id} position={mark.loc as any} icon={markerIcon}>
+          <Marker
+            key={mark._id}
+            position={mark.loc as any}
+            icon={mark.venue?._id ? venueMarkerIcon : eventMarkerIcon}
+          >
             <Popup>
               <h4>
                 <VenueTag venue={mark.venue as EventVenueEntity} openInNewTab={openLinksInNewTab} />
