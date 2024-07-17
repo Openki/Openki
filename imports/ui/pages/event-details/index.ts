@@ -35,6 +35,8 @@ import "/imports/ui/components/delete-confirm-dialog";
 
 import "./template.html";
 import "./styles.scss";
+import { truncate } from "/imports/utils/string-tools";
+import { textPlain } from "/imports/utils/html-tools";
 
 {
   const Template = TemplateAny as TemplateStaticTyped<"eventPage">;
@@ -48,21 +50,21 @@ import "./styles.scss";
       let title;
       let description = "";
       if (event) {
-        title = i18n("event.windowtitle", "{DATE} — {EVENT}", {
+        title = i18n("event.windowtitle", "[🗓️ {DATE}] {EVENT}", {
           EVENT: event.title,
           DATE: moment(event.startLocal)
             .locale(Session.get("timeLocale") || "en")
-            .calendar(),
+            .format("lll"),
         });
-        description = i18n("event.metatag.description", "{VENUE} in {REGION}", {
+        description = `${i18n("event.metatag.description", "[🏠 {VENUE} in {REGION}]", {
           REGION: Regions.findOne(event.region)?.name,
           VENUE: event.venue?.name,
-        });
+        })} ${truncate(textPlain(event.description), 160)}`;
         appendAsJsonLdToBody(event);
       } else {
         title = i18n("event.windowtitle.create", "Create event");
       }
-      Metatags.setCommonTags(title, description);
+      Metatags.setCommonTags(title, description, event?.publicImageUrl());
     });
   });
 }

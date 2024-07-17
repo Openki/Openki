@@ -5,10 +5,6 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 
 // See: https://guide.meteor.com/deployment.html#seo
 
-function getSiteTitlePrefix() {
-  return `${PublicSettings.siteName}  - `;
-}
-
 function getSiteDefaultImage() {
   const ogLogo = PublicSettings.ogLogo.src;
 
@@ -26,19 +22,18 @@ export function removeAll() {
   DocHead.removeDocHeadAddedTags();
 }
 
-export function setCommonTags(title: string, description = "") {
-  const fullTitle = getSiteTitlePrefix() + title;
-  const image = getSiteDefaultImage();
-
-  DocHead.setTitle(fullTitle);
+export function setCommonTags(title: string, description = "", image = "") {
+  DocHead.setTitle(`${PublicSettings.siteName} - ${title}`);
 
   DocHead.addMeta({ property: "og:type", content: "website" });
-  DocHead.addMeta({ property: "og:title", content: fullTitle });
-  DocHead.addMeta({ property: "og:image", content: image });
+  DocHead.addMeta({ property: "og:site_name", content: PublicSettings.siteName });
+  DocHead.addMeta({ property: "og:title", content: title });
+  DocHead.addMeta({ property: "og:image", content: image || getSiteDefaultImage() });
 
   DocHead.addMeta({ name: "twitter:card", content: "summary" });
-  DocHead.addMeta({ name: "twitter:title", content: fullTitle });
-  DocHead.addMeta({ name: "twitter:image", content: image });
+  DocHead.addMeta({ name: "twitter:site", content: PublicSettings.siteName });
+  DocHead.addMeta({ name: "twitter:title", content: title });
+  DocHead.addMeta({ name: "twitter:image", content: image || getSiteDefaultImage() });
 
   if (description) {
     DocHead.addMeta({ name: "description", content: description });
