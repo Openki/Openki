@@ -69,35 +69,15 @@
 }
 
 .events-map-location-map .leaflet-marker-icon {
-  animation: pin-down 0.4s ease-in-out;
   text-shadow:
     -5px -5px 10px #ffffffab,
     5px -10px 10px #ffffffba,
     5px 5px 10px #0009,
     2px 3px 4px #000000bf;
 }
-@keyframes pin-down {
-  0% {
-    text-shadow:
-      -3px -3px 15px #ffffffab,
-      7px -8px 15px #ffffffba,
-      7px 7px 15px #0009,
-      3px 4px 9px #000000bf;
-    top: -5px;
-  }
-
-  100% {
-    text-shadow:
-      -5px -5px 10px #ffffffab,
-      5px -10px 10px #ffffffba,
-      5px 5px 10px #0009,
-      2px 3px 4px #000000bf;
-    top: 0;
-  }
-}
 
 .events-map-location-map .leaflet-marker-icon:hover {
-  animation: 0.4s ease-in-out 0s infinite alternate pin-top;
+  animation: 0.4s ease-in-out 0s 2 alternate pin-top;
   z-index: 10000 !important;
 }
 @keyframes pin-top {
