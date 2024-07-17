@@ -32,8 +32,10 @@
               <div class="details-map">
                 {{> map markers=instance.markers maxZoom=16}}
                 <div class="coordinates">
+                  <a href="{{geoLocationLink this.region.loc}}">
                   {{i18n 'regionDetails.coordinates' 'Coordinates:'}}
                   {{locationFormat this.region.loc}}
+                  </a>
                 </div>
               </div>
             </div>
