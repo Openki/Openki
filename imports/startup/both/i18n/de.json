@@ -373,7 +373,6 @@
 	"event.group.confirmOrgNotes": "Alle Mitglieder dieser Gruppe können dann diese Veranstaltung bearbeiten.",
 	"event.group.confirmRemoveText": "Gruppe {NAME} von dieser Veranstaltung entfernen?",
 	"event.list.windowtitle": "Veranstaltungen",
-	"event.metatag.description": "{VENUE} in {REGION}",
 	"event.not_exists": "Diese Veranstaltung konnte nicht gefunden werden. Vielleicht wurde sie gelöscht oder hat überhaupt nie existiert.",
 	"event.not_exists.unlogged": "Anmelden/Registrieren",
 	"event.reallycancel": "Bitte bestätige das Absagen von dieser Veranstaltung. Sie wird dann als \"Abgesagt\" angezeigt und alle {NUM} angemeldeten Nutzer_innen werden per E-Mail über die Absage informiert.",

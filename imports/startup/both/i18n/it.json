@@ -380,7 +380,6 @@
 	"event.group.confirmOrgNotes": "Tutti i membri di questo gruppo potranno modificare questo evento.",
 	"event.group.confirmRemoveText": "Rimuovi il gruppo \"{NAME}\" da questo evento?",
 	"event.list.windowtitle": "Eventi",
-	"event.metatag.description": "{VENUE} in {REGION}",
 	"event.not_exists": "Impossibile trovare questo evento. Forse è stato eliminato o non è mai esistito.",
 	"event.not_exists.unlogged": "Accedi/registrati",
 	"event.reallycancel": "Conferma l'annullamento di questo evento. Sarà visualizzato come \"annullato\" e {NUM, plural, one{un utente partecipante} other{tutti i # utenti partecipanti} } saranno automaticamente informati via email dell'annullamento di questo evento.",
