@@ -3,6 +3,8 @@ import { Meteor } from "meteor/meteor";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
 import { _ } from "meteor/underscore";
 import { ReactiveDict } from "meteor/reactive-dict";
+import { textPlain } from "/imports/utils/html-tools";
+import { truncate } from "/imports/utils/string-tools";
 
 import * as Alert from "/imports/api/alerts/alert";
 import { Regions } from "/imports/api/regions/regions";
@@ -71,8 +73,11 @@ import "./styles.scss";
 
     instance.autorun(() => {
       const { course } = Template.currentData();
-      const title = course.name;
-      Metatags.setCommonTags(title);
+      Metatags.setCommonTags(
+        course.name,
+        truncate(textPlain(course.description), 160),
+        course.publicImageUrl(),
+      );
     });
 
     instance.busy(false);
