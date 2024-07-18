@@ -277,6 +277,19 @@ export function LoginFrame({
           </React.Fragment>
         ))}
         <hr />
+        <div className="row g-2 align-items-center">
+          <div className="col">
+            <button
+              className="btn btn-add form-control js-register-open my-2"
+              type="button"
+              onClick={() => {
+                onRegisterOpen(loginData);
+              }}
+            >
+              {t("login.register.submit", "Create account")}
+            </button>
+          </div>
+        </div>
         {PublicSettings.feature.visitorUser ? (
           <div className="row g-2 align-items-center">
             <div className="col">
@@ -292,19 +305,6 @@ export function LoginFrame({
             </div>
           </div>
         ) : null}
-        <div className="row g-2 align-items-center">
-          <div className="col">
-            <button
-              className="btn btn-add form-control js-register-open my-2"
-              type="button"
-              onClick={() => {
-                onRegisterOpen(loginData);
-              }}
-            >
-              {t("login.register.submit", "Create account")}
-            </button>
-          </div>
-        </div>
       </div>
     </form>
   );
