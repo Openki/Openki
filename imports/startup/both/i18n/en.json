@@ -421,6 +421,7 @@
   "eventsMap.list.titleForRegion": "Events in region {REGION}",
   "eventsMap.windowtitle": "Events map",
   "explore.activeGroups.title": "Active groups",
+  "explore.eventsMap.title": "Events map",
   "explore.lookingForMentors.title": "Looking for mentors",
   "explore.lookingForVenues.title": "Looking for venues",
   "explore.newProposals.title": "New proposals",
