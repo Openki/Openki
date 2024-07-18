@@ -521,6 +521,7 @@
   "group.settings.title": "Settings",
   "group.settings.title.Members": "Members",
   "group.short.placeholder": "Abbreviation",
+  "group.windowtitle.create": "Create group",
   "groupDetails.changesSaved": "Changes to the \"{GROUP}\" group have been saved.",
   "groupDetails.groupCreated": "The \"{GROUP}\" group was created.",
   "groupDetails.saveError": "Could not save the \"{GROUP}\" group",
