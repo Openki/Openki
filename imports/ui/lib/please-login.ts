@@ -25,6 +25,7 @@ export function PleaseLogin(instance: Blaze.TemplateInstance, afterLogin: () => 
     } else {
       // if the user is not logged in open up the login window
 
+      Session.set("visitorUserAllowed", false);
       Session.set("pleaseLogin", true);
       openedLogin = true;
     }
