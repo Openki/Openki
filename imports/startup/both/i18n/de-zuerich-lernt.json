@@ -373,7 +373,6 @@
 	"event.group.confirmOrgNotes": "Alle Mitglieder dieses Austragungsortes können dann diese Lektion bearbeiten.",
 	"event.group.confirmRemoveText": "Austragungsort {NAME} von dieser Lektion entfernen?",
 	"event.list.windowtitle": "Veranstaltungen",
-	"event.metatag.description": "{VENUE} in {REGION}",
 	"event.not_exists": "Diese Lektion konnte nicht gefunden werden. Vielleicht wurde sie gelöscht oder hat überhaupt nie existiert.",
 	"event.not_exists.unlogged": "Anmelden/Registrieren",
 	"event.reallycancel": "Bitte bestätige das Absagen von diesem Event. Es wird dann als \"Abgesagt\" dargestellt und alle {NUM} angemeldeten Nutzer_innen werden per E-Mail über die Absage informiert.",
