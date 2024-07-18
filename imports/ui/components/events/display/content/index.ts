@@ -77,6 +77,7 @@ import "./styles.scss";
           ?.filter((i) => i.visibleFor === "all" || (i.visibleFor === "editors" && isEditor))
           .map((i) => ({
             displayText: getLocalizedValue(i.displayText),
+            isboolean: typeof i.value === "boolean",
             value: i.value,
           })) || []
       );

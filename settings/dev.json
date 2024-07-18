@@ -29,13 +29,14 @@
 			, "de": "/info/faq#was-ist-eine-openki-region"
 			}
 		}
-	, "i18nHelpLink_commented": "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto"
+	, "i18nHelpLink_commented": "https://gitlab.com/Openki/Openki/-/wikis/translation"
 	, "i18nMapping_commented": { "de": "de-zuerich-lernt" }
 	, "matomo_commented":
 		{ "url": "https://analytics.mydomain.com/"
 		, "site": 0
 		}
 	, "pricePolicyEnabled": true
+  , "askNewsletterConsent": true
 	, "sendReminderPreset": true
 	, "feature":
 		{ "login":
@@ -152,13 +153,13 @@
 		}
 	}
 , "siteEmail": "HMMM@legit.example"
+, "replyToEmail": "HMMM@legit.example"
 , "reporter": { "sender": "pingpong@mail.openki.net", "recipient": "badabuff@openki.net" }
 , "robots": false
 , "printLog": true
 , "s3":
 	{ "region": "us-east-1"
 	, "bucketEndpoint": "https://cz42.objects.nineapis.ch/bucket-openkitest2"
-	, "bucketName": "bucket-openkitest2"
 	, "accessKeyId": "63551d5ecx68qL2XqU7eQX-9hxxKs5CK"
 	, "secretAccessKey": "srnyHWbj9ZhDFlTQyY40vxBIBs8MVYgp"
 }

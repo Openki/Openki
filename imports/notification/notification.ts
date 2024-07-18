@@ -23,6 +23,7 @@ import * as notificationPrivateMessage from "/imports/notification/notification.
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { toEmailLogo } from "/imports/utils/toEmailLogo";
+import { PrivateSettings } from "../utils/PrivateSettings";
 
 export const Notification = {
   Event: notificationEvent,
@@ -130,7 +131,7 @@ export function send(entry: LogEntity & { body: { model: string; recipients: str
 
   entry.body.recipients.forEach((recipientId: string) => {
     if (!concluded[recipientId]) {
-      let mail = null;
+      let mail: Email.EmailOptions | null = null;
       let unsubToken = null;
 
       try {
@@ -153,8 +154,6 @@ export function send(entry: LogEntity & { body: { model: string; recipients: str
         unsubToken = Random.secret();
         const vars = model.vars(userLocale, user, unsubToken) as Vars;
 
-        const fromAddress = vars.fromAddress || Accounts.emailTemplates.from;
-
         // For everything that is global use siteName from global settings, eg. unsubscribe
         vars.siteName = siteName;
         // For everything context specifig us customSiteName from the region, eg. courses
@@ -176,7 +175,8 @@ export function send(entry: LogEntity & { body: { model: string; recipients: str
         message = DOCTYPE + message;
 
         mail = {
-          from: fromAddress,
+          from: Accounts.emailTemplates.from,
+          replyTo: vars.fromAddress || PrivateSettings.replyToEmail,
           to: address || undefined,
           subject: subjectPrefix + vars.subject,
           html: juice(message),

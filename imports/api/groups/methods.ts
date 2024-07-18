@@ -14,13 +14,13 @@ import * as FileStorage from "/imports/utils/FileStorage";
 import { UploadFilePattern } from "/imports/utils/FileStorage";
 import { Type } from "/imports/utils/CustomChecks";
 
-function loadGroup(groupId: string) {
+async function loadGroup(groupId: string) {
   // new!
   if (groupId === "") {
     return new Group() as GroupModel;
   }
 
-  const group = Groups.findOne({ _id: groupId });
+  const group = await Groups.findOneAsync({ _id: groupId });
   if (!group) {
     throw new Meteor.Error(404, "Group not found");
   }
@@ -35,17 +35,17 @@ export const SaveFieldPattern = {
 };
 export type SaveFields = Type<typeof SaveFieldPattern>;
 
-export const save = ServerMethod("group.save", (groupId: string, changes: SaveFields) => {
+export const save = ServerMethod("group.save", async (groupId: string, changes: SaveFields) => {
   check(groupId, String);
   check(changes, SaveFieldPattern);
 
-  const user = Meteor.user();
+  const user = await Meteor.userAsync();
   if (!user) {
     throw new Meteor.Error(401, "please log-in");
   }
 
   // Load group from DB
-  const group = loadGroup(groupId);
+  const group = await loadGroup(groupId);
 
   if (!group.editableBy(user)) {
     throw new Meteor.Error(401, "Denied");
@@ -109,13 +109,13 @@ export const updateLogo = ServerMethod(
     check(groupId, String);
     check(file, UploadFilePattern);
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log-in");
     }
 
     // Load group from DB
-    const group = loadGroup(groupId);
+    const group = await loadGroup(groupId);
 
     if (group.isNew() || !group.editableBy(user)) {
       throw new Meteor.Error(401, "Denied");
@@ -130,7 +130,7 @@ export const updateLogo = ServerMethod(
     const update = { logoUrl: result.fullFileName };
 
     const enrichedSet = timeLastEditDenormalizer.beforeUpdateLogo(update);
-    Groups.update(group._id, { $set: enrichedSet });
+    await Groups.updateAsync(group._id, { $set: enrichedSet });
 
     return groupId;
   },
@@ -142,13 +142,13 @@ export const deleteLogo = ServerMethod(
   async (groupId: string) => {
     check(groupId, String);
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log-in");
     }
 
     // Load group from DB
-    const group = loadGroup(groupId);
+    const group = await loadGroup(groupId);
 
     if (group.isNew() || !group.editableBy(user)) {
       throw new Meteor.Error(401, "Denied");
@@ -168,15 +168,15 @@ export const deleteLogo = ServerMethod(
   { simulation: false },
 );
 
-export const remove = ServerMethod("group.remove", (groupId: string) => {
+export const remove = ServerMethod("group.remove", async (groupId: string) => {
   check(groupId, String);
 
-  const user = Meteor.user();
+  const user = await Meteor.userAsync();
   if (!user) {
     throw new Meteor.Error(401, "please log in");
   }
 
-  const group = Groups.findOne(groupId);
+  const group = await Groups.findOneAsync(groupId);
   if (!group) {
     throw new Meteor.Error(404, "No such group");
   }
@@ -185,7 +185,7 @@ export const remove = ServerMethod("group.remove", (groupId: string) => {
     throw new Meteor.Error(401, "not permitted");
   }
 
-  Groups.remove(groupId);
+  await Groups.removeAsync(groupId);
 
   if (Meteor.isServer) {
     // Update list of organizers per course
@@ -198,17 +198,17 @@ export const remove = ServerMethod("group.remove", (groupId: string) => {
 
 export const updateMembership = ServerMethod(
   "group.updateMembership",
-  (userId: string, groupId: string, join: boolean) => {
+  async (userId: string, groupId: string, join: boolean) => {
     check(userId, String);
     check(groupId, String);
 
-    const sender = Meteor.user();
+    const sender = await Meteor.userAsync();
     if (!sender) {
       throw new Meteor.Error(401, "please log-in");
     }
 
     // Load group from DB
-    const group = loadGroup(groupId);
+    const group = await loadGroup(groupId);
 
     if (group.isNew() || !group.editableBy(sender)) {
       throw new Meteor.Error(401, "Denied");
@@ -236,29 +236,32 @@ export const updateMembership = ServerMethod(
     }
   },
 );
-export const toggleMemberNotify = ServerMethod("group.toggleMemberNotify", (groupId: string) => {
-  check(groupId, String);
+export const toggleMemberNotify = ServerMethod(
+  "group.toggleMemberNotify",
+  async (groupId: string) => {
+    check(groupId, String);
 
-  const sender = Meteor.user();
-  if (!sender) {
-    throw new Meteor.Error(401, "please log-in");
-  }
+    const sender = await Meteor.userAsync();
+    if (!sender) {
+      throw new Meteor.Error(401, "please log-in");
+    }
 
-  // Load group from DB
-  const group = loadGroup(groupId);
+    // Load group from DB
+    const group = await loadGroup(groupId);
 
-  if (group.isNew()) {
-    throw new Meteor.Error(401, "Denied");
-  }
+    if (group.isNew()) {
+      throw new Meteor.Error(401, "Denied");
+    }
 
-  const groupMember = group.members.find((m) => m.user === sender._id);
+    const groupMember = group.members.find((m) => m.user === sender._id);
 
-  if (!groupMember) {
-    throw new Meteor.Error(401, "Denied");
-  }
+    if (!groupMember) {
+      throw new Meteor.Error(401, "Denied");
+    }
 
-  Groups.update(
-    { _id: group._id, "members.user": groupMember.user },
-    { $set: { "members.$.notify": !groupMember.notify } },
-  );
-});
+    await Groups.updateAsync(
+      { _id: group._id, "members.user": groupMember.user },
+      { $set: { "members.$.notify": !groupMember.notify } },
+    );
+  },
+);

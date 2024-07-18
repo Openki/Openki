@@ -43,6 +43,7 @@ export type ApiEvent = {
   start: Date;
   end: Date;
   duration: number;
+  noRsvp: boolean;
   maxParticipants: number;
   link: string;
   internal: boolean;
@@ -62,7 +63,7 @@ export type ApiEvent = {
     name: string;
     link: string;
     image?: string;
-    customFields?: { name: string; value: string }[];
+    customFields?: { name: string; value: string | boolean }[];
   };
   groups: {
     id: string;
@@ -72,16 +73,26 @@ export type ApiEvent = {
   }[];
 };
 
-function apiResponse<T, U, F extends { [name: string]: Predicate<any> }, R>(
+async function apiResponse<T, U, F extends { [name: string]: Predicate<any> }, R>(
   collection: ApiCollection<T, U, F, ToFilter<F> & typeof additionalFilters>,
-  formatter: (model: U) => R,
+  formatter: (model: U) => Promise<R>,
   additionalFilters = {},
 ) {
-  return (filter = {}, limit = 0, skip = 0, sort?: FieldSort[]) => {
+  return async (filter = {}, limit = 0, skip = 0, sort?: FieldSort[]) => {
     const query = collection.Filtering().readAndValidate(filter).done().toQuery();
-    return collection
+    const models = await collection
       .findFilter({ ...query, ...additionalFilters }, limit, skip, sort)
-      .map(formatter);
+      .fetchAsync();
+
+    const formattedModels: R[] = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const model of models) {
+      // eslint-disable-next-line no-await-in-loop
+      const formattedModel = await formatter(model);
+      formattedModels.push(formattedModel);
+    }
+
+    return formattedModels;
   };
 }
 
@@ -93,19 +104,19 @@ function maybeUrl(route: string, context: { _id?: string } | undefined) {
 }
 
 export const Api = {
-  groups: apiResponse(Groups, (originalGroup) => {
+  groups: await apiResponse(Groups, async (originalGroup) => {
     const group = { ...originalGroup } as typeof originalGroup & { link: string };
     group.link = Router.url("groupDetails", group);
     return group;
   }),
-  venues: apiResponse(Venues, (originalVenue) => {
+  venues: await apiResponse(Venues, async (originalVenue) => {
     const venue = { ...originalVenue } as typeof originalVenue & { link: string };
     venue.link = Router.url("venueDetails", venue);
     return venue;
   }),
-  events: apiResponse(
+  events: await apiResponse(
     Events,
-    (ev) => {
+    async (ev) => {
       const evr = {
         id: ev._id,
         title: ev.title,
@@ -115,6 +126,7 @@ export const Api = {
         start: ev.start,
         end: ev.end,
         duration: moment(ev.end).diff(ev.start) / 60000, // Minutes
+        noRsvp: ev.noRsvp,
         maxParticipants: ev.maxParticipants,
         link: Router.url("showEvent", ev),
         internal: ev.internal,
@@ -123,7 +135,7 @@ export const Api = {
         slug: ev.slug,
       } as ApiEvent;
 
-      const creator = Users.findOne(ev.createdBy);
+      const creator = await Users.findOneAsync(ev.createdBy);
       if (creator) {
         evr.createdBy = {
           id: creator._id,
@@ -142,7 +154,7 @@ export const Api = {
       }
 
       if (ev.courseId) {
-        const course = Courses.findOne(ev.courseId);
+        const course = await Courses.findOneAsync(ev.courseId);
         if (course) {
           evr.course = {
             id: ev.courseId,
@@ -165,8 +177,10 @@ export const Api = {
 
       evr.groups = [];
       const groups = ev.allGroups || [];
-      groups.forEach((groupId) => {
-        const group = Groups.findOne(groupId);
+      // eslint-disable-next-line no-restricted-syntax
+      for (const groupId of groups) {
+        // eslint-disable-next-line no-await-in-loop
+        const group = await Groups.findOneAsync(groupId);
         if (group) {
           evr.groups.push({
             id: group._id,
@@ -175,15 +189,15 @@ export const Api = {
             link: Router.url("groupDetails", group),
           });
         }
-      });
+      }
 
       return evr;
     },
     { tenants: visibleTenants() },
   ),
-  courses: apiResponse(
+  courses: await apiResponse(
     Courses,
-    (orginalCourse) => {
+    async (orginalCourse) => {
       const course = {
         id: orginalCourse._id,
         name: orginalCourse.name,
@@ -223,7 +237,7 @@ export const Api = {
         }[];
       };
 
-      const region = Regions.findOne(orginalCourse.region);
+      const region = await Regions.findOneAsync(orginalCourse.region);
       if (region) {
         course.region = {
           id: region._id,
@@ -231,7 +245,7 @@ export const Api = {
         };
       }
 
-      const creator = Users.findOne(orginalCourse.createdby);
+      const creator = await Users.findOneAsync(orginalCourse.createdby);
       if (creator) {
         course.createdBy = {
           id: creator._id,
@@ -241,8 +255,8 @@ export const Api = {
 
       course.groups = [];
       const groups = orginalCourse.groups || [];
-      groups.forEach((groupId) => {
-        const group = Groups.findOne(groupId);
+      groups.forEach(async (groupId) => {
+        const group = await Groups.findOneAsync(groupId);
         if (group) {
           course.groups.push({
             id: group._id,

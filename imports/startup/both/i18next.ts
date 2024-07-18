@@ -56,7 +56,7 @@ try {
 const backends = [];
 
 if (localStorageSupported) {
-  // we use localstorage to cache translations for 7 days
+  // we use localstorage to cache translations for 1 hour  (see: backendOptions:expirationTime below)
   backends.push(LocalStorageBackend);
 }
 
