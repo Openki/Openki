@@ -1,6 +1,6 @@
 import { MeteorAsync } from "/imports/utils/promisify";
 import { useTranslation } from "react-i18next";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 import React, { useState } from "react";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -34,6 +34,7 @@ export function LoginFrame({
   onLogin,
 }: Props) {
   const { t } = useTranslation();
+  const visitorUserAllowed = useSessionEquals("visitorUserAllowed", true);
   const siteName = useSiteName();
   const currentRegion = useCurrentRegion();
   const locale = useSession("locale");
@@ -290,7 +291,7 @@ export function LoginFrame({
             </button>
           </div>
         </div>
-        {PublicSettings.feature.visitorUser ? (
+        {PublicSettings.feature.visitorUser && visitorUserAllowed ? (
           <div className="row g-2 align-items-center">
             <div className="col">
               <button
