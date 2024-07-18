@@ -9,26 +9,26 @@
         <div class="col-9">
           <h1 class="mt-4">
             {{i18n 'profile.users_profile_page' "{NAME}'s Profile" NAME=this.user.getDisplayName}}
-            {{#if ownuser}}
-              ({{i18n 'profile.its_you' "It's you!"}})
-            {{else}}
-              {{contribution this.user._id}}
-              {{#if alterPrivileges}}
-                {{#if PublicSettings.contribution}}
-                  {{#unless hasContributed}}
-                    <button type="button" class="btn btn-primary js-has-contributed">
-                      <i class="{{PublicSettings.contribution.icon}}" aria-hidden="true"></i>
-                      {{i18n 'profile.setHasContributed.button' 'Mark this user has contributed'}}
-                    </button>
-                  {{else}}
-                    <button type="button" class="btn btn-secondary js-unset-has-contributed">
-                      {{i18n 'profile.unsetHasContributed.button' 'Remove this user has contributed'}}
-                    </button>
-                  {{/unless}}
-                {{/if}}
+            {{contribution this.user._id}}
+          </h1>
+          {{#if ownuser}}
+            <em>({{i18n 'profile.its_you' "It's you."}})</em>
+          {{else}}
+            {{#if alterPrivileges}}
+              {{#if PublicSettings.contribution}}
+                {{#unless hasContributed}}
+                  <button type="button" class="btn btn-primary js-has-contributed">
+                    <i class="{{PublicSettings.contribution.icon}}" aria-hidden="true"></i>
+                    {{i18n 'profile.setHasContributed.button' 'Mark this user has contributed'}}
+                  </button>
+                {{else}}
+                  <button type="button" class="btn btn-secondary js-unset-has-contributed">
+                    {{i18n 'profile.unsetHasContributed.button' 'Remove this user has contributed'}}
+                  </button>
+                {{/unless}}
               {{/if}}
             {{/if}}
-          </h1>
+          {{/if}}
 
           <p class="profile-description">{{{this.user.description}}}</p>
 
