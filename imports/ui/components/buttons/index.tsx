@@ -39,6 +39,23 @@ export function ButtonCancel(props: {
   );
 }
 
+export function ButtonDelete(props: {
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  disabled?: boolean | undefined;
+}) {
+  const { t } = useTranslation();
+  return (
+    <button
+      type="button"
+      className="btn btn-delete text-nowrap text-danger"
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
+      {t("_button.delete")}
+    </button>
+  );
+}
+
 // for Blaze
 // eslint-disable-next-line import/first
 import "./template.html";
