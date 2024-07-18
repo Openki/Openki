@@ -17,6 +17,7 @@ import { Publication } from "/imports/utils/ServerPublishReact";
 
 import { CourseCompact } from "../../components/courses/compact";
 import { EventCompact } from "../../components/events/compact";
+import { EventsMap } from "../../components/events/map";
 
 import "./styles.scss";
 
@@ -34,18 +35,25 @@ function bodyStyle(imageUrl: string) {
 }
 
 const mapping: {
-  [name: string]: {
-    route: string;
-    filter: () => Filtering<any>;
-    find: Publication<any, any>;
-    component: (entity: any) => React.JSX.Element;
-  };
+  [name: string]:
+    | {
+        route: string;
+        filter: () => Filtering<any>;
+        find: Publication<any, any>;
+        element: (entity: any) => React.JSX.Element;
+      }
+    | {
+        route: string;
+        filter: () => Filtering<any>;
+        find: Publication<any, any>;
+        component: (entitys: any) => React.JSX.Element;
+      };
 } = {
   course: {
     route: "home",
     filter: CourseCollection.Filtering,
     find: Courses.useFindFilter,
-    component: (course: CourseModel) => (
+    element: (course: CourseModel) => (
       <div
         key={course._id}
         className="me-2"
@@ -59,7 +67,7 @@ const mapping: {
     route: "calendar",
     filter: EventCollection.Filtering,
     find: Events.useFindFilter,
-    component: (event: EventModel) => (
+    element: (event: EventModel) => (
       <div key={event._id} className="me-2" style={{ inlineSize: "250px", minInlineSize: "250px" }}>
         <EventCompact event={event} withDate={true} withImage={true} />
       </div>
@@ -69,7 +77,7 @@ const mapping: {
     route: "exploreGroups",
     filter: GroupCollection.Filtering,
     find: Groups.useFindFilter,
-    component: (group: GroupModel) => (
+    element: (group: GroupModel) => (
       <div key={group._id} className="me-2">
         <div
           className="card card-group border-0 rounded-0"
@@ -84,6 +92,16 @@ const mapping: {
             <p className="card-text">{group.claim}</p>
           </div>
         </div>
+      </div>
+    ),
+  },
+  eventsMap: {
+    route: "eventsMap",
+    filter: EventCollection.Filtering,
+    find: Events.useFindFilter,
+    component: (all: any) => (
+      <div style={{ height: "440px" }}>
+        <EventsMap events={all} openLinksInNewTab={false} />
       </div>
     ),
   },
@@ -136,6 +154,11 @@ export function DashboardPage() {
       title: t("explore.activeGroups.title", "Active groups"),
       query: "",
     },
+    {
+      entity: "eventsMap",
+      title: t("explore.eventsMap.title", "Events map"),
+      query: "after=now",
+    },
   ];
 
   const hooks = list.map((i) => {
@@ -151,7 +174,14 @@ export function DashboardPage() {
     const sort = sortParam ? SortSpec.fromString(sortParam) : SortSpec.unordered();
 
     const [isLoading, data] = handler.find(query, 10, 0, sort.spec());
-    return { isLoading, data, route: handler.route, component: handler.component, ...i };
+    return {
+      isLoading,
+      data,
+      route: handler.route,
+      element: (handler as any).element,
+      component: (handler as any).component,
+      ...i,
+    };
   });
 
   useEffect(() => {
@@ -169,9 +199,13 @@ export function DashboardPage() {
             {t("dashboard.showAll", "Show all >")}
           </a>
           <h2>{h.title}</h2>
-          <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
-            {h.data.map(h.component)}
-          </div>
+          {h.element ? (
+            <div className="d-flex flex-row flex-nowrap pb-3 overflow-x-scroll">
+              {h.data.map(h.element)}
+            </div>
+          ) : (
+            h.component?.(h.data)
+          )}
         </div>
       ) : null}
     </React.Fragment>

@@ -93,8 +93,10 @@
                   <div class="details-map">
                     {{> map markers=instance.markers}}
                     <div class="coordinates">
-                      {{i18n 'venueDetails.coordinates' 'Coordinates:'}}
-                      {{locationFormat this.venue.loc}}
+                      <a href="{{geoLocationLink this.venue.loc}}">
+                        {{i18n 'venueDetails.coordinates' 'Coordinates:'}}
+                        {{locationFormat this.venue.loc}}
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -118,7 +120,7 @@
     {{#if upcomingEvents}}
       <div class="page-component">
         <h2>{{i18n 'venue.details.upcomingEvents' "Upcoming events at this venue:"}}</h2>
-        {{> eventList dataEvents=upcomingEvents withDate=true}}
+        {{> eventList dataEvents=upcomingEvents withDate=true withVenue=false}}
         {{#if hasMoreUpcomingEvents}}
           <div class="clearfix"></div>
           <button type="button" class="btn btn-add js-show-more-upcoming-events">
@@ -130,7 +132,7 @@
     {{#if pastEvents}}
       <div class="page-component">
         <h2>{{i18n 'venue.details.pastEvents' "Past events:"}}</h2>
-        {{> eventList dataEvents=pastEvents withDate=true}}
+        {{> eventList dataEvents=pastEvents withDate=true withVenue=false}}
         {{#if hasMorePastEvents}}
           <div class="clearfix"></div>
           <button type="button" class="btn btn-add js-show-more-past-events">

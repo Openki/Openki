@@ -1,32 +1,34 @@
 import React from "react";
 
-import { CourseModel } from "/imports/api/courses/courses";
-
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+
+import { EventModel } from "/imports/api/events/events";
 
 import "./styles.scss";
 
-export function CourseCompactEvent(props: { course: CourseModel }) {
-  const { nextEvent } = props.course;
+export function CourseCompactEvent(props: { event: EventModel }) {
+  const { event } = props;
   const { dateShort, timeFormat, dateToRelativeString } = useDateTimeFormat();
 
   return (
     <div className="course-compact-next-event col">
-      {nextEvent?.venue?.name ? (
+      {event.venue?.name ? (
         <div className="course-compact-next-event-component">
-          <i className="fa-solid fa-house fa-fw" aria-hidden="true"></i>&nbsp;{nextEvent.venue.name}
+          <i className="fa-solid fa-house fa-fw" aria-hidden="true"></i>&nbsp;{event.venue.name}
         </div>
       ) : null}
       <div className="course-compact-next-event-component">
         <i className="fa-regular fa-clock fa-fw" aria-hidden="true"></i>&nbsp;
-        <span title={`${dateShort(nextEvent?.startLocal)} ${timeFormat(nextEvent?.startLocal)}`}>
-          {dateToRelativeString(nextEvent?.startLocal)}
+        <span title={`${dateShort(event?.startLocal)} ${timeFormat(event?.startLocal)}`}>
+          {dateToRelativeString(event?.startLocal)}
         </span>
       </div>
-      <div className="course-compact-next-event-component">
-        <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>&nbsp;
-        {nextEvent?.numberOfParticipants()}
-      </div>
+      {!event.noRsvp ? (
+        <div className="course-compact-next-event-component">
+          <i className="fa-solid fa-user fa-fw" aria-hidden="true"></i>&nbsp;
+          {event?.numberOfParticipants()}
+        </div>
+      ) : null}
     </div>
   );
 }

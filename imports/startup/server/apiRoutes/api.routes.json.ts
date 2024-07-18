@@ -8,11 +8,11 @@ WebApp.rawConnectHandlers.use("/api", (_req, res, next) => {
   return next();
 });
 
-const jsonSendResponder = function (res: any, process: any) {
+const jsonSendResponder = async function (res: any, process: any) {
   try {
     const body = {
       status: "success",
-      data: process(),
+      data: await process(),
     };
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -42,8 +42,8 @@ const jsonSendResponder = function (res: any, process: any) {
 Router.route("api.0.json", {
   path: "/api/0/json/:handler",
   where: "server",
-  action() {
-    jsonSendResponder(this.response, () => {
+  async action() {
+    await jsonSendResponder(this.response, () => {
       return orderedResults(this.params, this.params.handler);
     });
   },

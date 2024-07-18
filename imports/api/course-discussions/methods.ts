@@ -54,7 +54,7 @@ export const postComment = ServerMethod(
     }
     saneComment.courseId = course._id;
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (user && !comment.anon) {
       saneComment.userId = user._id;
       saneComment.notifyAll =
@@ -119,7 +119,7 @@ export const editComment = ServerMethod(
       throw new Meteor.Error(404, "no such comment");
     }
 
-    if (!CourseDiscussionUtils.mayEditPost(Meteor.user() ?? undefined, originalComment)) {
+    if (!CourseDiscussionUtils.mayEditPost(await Meteor.userAsync(), originalComment)) {
       throw new Meteor.Error(401, "you cant");
     }
 
@@ -134,7 +134,7 @@ export const deleteComment = ServerMethod(
   async (commentId: string) => {
     check(commentId, String);
 
-    const user = Meteor.user();
+    const user = await Meteor.userAsync();
     if (!user) {
       throw new Meteor.Error(401, "please log in");
     }

@@ -51,6 +51,8 @@ export const PublicSettingsPattern = Match.ObjectIncluding({
   ),
   /** by true, show only indicative prices (DE: Richtpreise), default is true */
   pricePolicyEnabled: Boolean,
+  /** by true, ask user to receive newsletter on account registration, default is true */
+  askNewsletterConsent: Boolean,
   /** Should a reminder be sent by default or not. Default is true */
   sendReminderPreset: Boolean,
   feature: {
@@ -139,13 +141,14 @@ const defaults = {
     brand: "#38829c",
   },
   regionSelection: { minNumber: 5, aboutLink: "" },
-  i18nHelpLink: "https://gitlab.com/Openki/Openki/-/wikis/i18n-howto",
+  i18nHelpLink: "https://gitlab.com/Openki/Openki/-/wikis/translation",
   publicTenants: [] as string[],
   matomo: {
     jsPath: "js/",
     phpPath: "js/",
   },
   pricePolicyEnabled: true,
+  askNewsletterConsent: true,
   sendReminderPreset: true,
   feature: {
     login: { google: false, facebook: false, github: false },

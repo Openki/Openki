@@ -72,6 +72,7 @@ const Template = TemplateAny as TemplateStaticTyped<
     parent: Blaze.TemplateInstance;
     selectedRegion: ReactiveVar<string>;
     selectedLocation: ReactiveVar<Partial<EventVenueEntity>>;
+    noRsvpChecked: ReactiveVar<boolean>;
     notifyChecked: ReactiveVar<boolean>;
     customFields: () => GroupEntityCustomCourseFields[];
   }
@@ -116,6 +117,8 @@ template.onCreated(function () {
   instance.selectedLocation = new ReactiveVar(
     instance.data.venue || ({} as Partial<EventVenueEntity>),
   );
+
+  instance.noRsvpChecked = new ReactiveVar(!!event.noRsvp);
 
   // Sending an event notification is only possible when the event is
   // attached to a course. Otherwise there is nobody to inform.
@@ -399,6 +402,13 @@ template.helpers({
     }
     return false;
   },
+
+  noRsvp() {
+    return Template.instance().noRsvpChecked.get() ? "checked" : null;
+  },
+  noRsvpChecked() {
+    return Template.instance().noRsvpChecked.get();
+  },
   maxParticipants() {
     // show empty input instead of 0
     return this.maxParticipants || "";
@@ -459,12 +469,20 @@ template.events({
       }
     }
 
-    const maxParticipants = validateMaxParticipants(
-      (instance.$(".js-event-max-participants").val() as string) || "0",
-    );
-    // validation was unsuccessful
-    if (maxParticipants === false) {
-      return;
+    const noRsvp = instance.$(".js-check-no-rsvp").is(":checked");
+
+    let maxParticipants;
+    if (!noRsvp) {
+      maxParticipants = validateMaxParticipants(
+        (instance.$(".js-event-max-participants").val() as string) || "0",
+      );
+      // validation was unsuccessful
+      if (maxParticipants === false) {
+        return;
+      }
+    } else {
+      // if no rsvp is set there is none limit for maxParticipants;
+      maxParticipants = 0;
     }
 
     const editevent = {
@@ -476,6 +494,7 @@ template.events({
       endLocal: LocalTime.toString(end),
       internal: instance.$(".js-check-event-internal").is(":checked"),
       sendReminder: instance.$(".js-check-event-send-reminder").is(":checked"),
+      noRsvp,
       maxParticipants,
     } as SaveFields;
 
@@ -641,6 +660,10 @@ template.events({
 
   "click .js-check-notify"(_event, instance) {
     instance.notifyChecked.set(instance.$(".js-check-notify").is(":checked"));
+  },
+
+  "click .js-check-no-rsvp"(_event, instance) {
+    instance.noRsvpChecked.set(instance.$(".js-check-no-rsvp").is(":checked"));
   },
 
   "change .js-event-start-date"(this: EventEditData, event, instance) {
