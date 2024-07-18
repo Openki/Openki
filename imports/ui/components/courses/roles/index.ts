@@ -117,19 +117,23 @@ template.events({
     const { data } = instance;
     const comment = (instance.$(".js-comment").val() as string).trim();
     instance.busy("enrolling");
-    PleaseLogin(instance, async () => {
-      await processChange(instance.courseSubscribe(comment));
-      routerAutoscroll.cancelNext();
-      instance.busy(false);
-      instance.state.set("showFirstSteps", true);
-      instance.state.set("enrolling", false);
+    PleaseLogin(
+      instance,
+      async () => {
+        await processChange(instance.courseSubscribe(comment));
+        routerAutoscroll.cancelNext();
+        instance.busy(false);
+        instance.state.set("showFirstSteps", true);
+        instance.state.set("enrolling", false);
 
-      Analytics.trackEvent(
-        "Enrollments in courses",
-        `Enrollments in courses as ${data.role.type}`,
-        Regions.findOne(data.course.region)?.nameEn,
-      );
-    });
+        Analytics.trackEvent(
+          "Enrollments in courses",
+          `Enrollments in courses as ${data.role.type}`,
+          Regions.findOne(data.course.region)?.nameEn,
+        );
+      },
+      data.role.type === "participant",
+    );
   },
 
   "click .js-role-enroll-cancel"(_event, instance) {
