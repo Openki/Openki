@@ -10,7 +10,7 @@ import { Events } from "/imports/api/events/events";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import * as UrlTools from "/imports/utils/url-tools";
 
-import { useCurrentRouteName } from "/imports/ui/lib/useCurrentRouteName";
+import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import { Direction, Unit } from "../Arrow";
 import { Control } from "./control";
