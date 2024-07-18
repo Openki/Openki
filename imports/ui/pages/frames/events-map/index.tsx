@@ -11,11 +11,11 @@ import { EventsMap } from "/imports/ui/components/events/map";
 
 import "./styles.scss";
 
-export interface Data {
+export interface Props {
   events: Mongo.Cursor<EventEntity, EventModel>;
 }
 
-export function FrameEventsMapPage(props: Data) {
+export function FrameEventsMapPage(props: Props) {
   const { t } = useTranslation();
   const now = new Date();
 
