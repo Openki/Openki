@@ -1,12 +1,12 @@
-import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
-import { ReactiveDict } from "meteor/reactive-dict";
-import { ReactiveVar } from "meteor/reactive-var";
+/* eslint-disable no-nested-ternary */
+import React, { useState, DragEvent, ChangeEvent } from "react";
 import ImageBlobReduce from "image-blob-reduce";
-import { i18n } from "/imports/startup/both/i18next";
+import { useTranslation } from "react-i18next";
 
 import * as Alert from "/imports/api/alerts/alert";
 
-import "./template.html";
+import { ButtonCancel, ButtonSave, ButtonDelete } from "../buttons";
+
 import "./styles.scss";
 
 // feature detection for drag&drop upload
@@ -15,7 +15,7 @@ const supportsDragndrop = (function () {
   return "draggable" in div || ("ondragstart" in div && "ondrop" in div);
 })();
 
-function id() {
+function createId() {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
 
@@ -35,55 +35,37 @@ export interface Data {
   onDelete?: (() => void) | undefined;
 }
 
-const Template = TemplateAny as TemplateStaticTyped<
-  "editableImage",
-  Data,
-  {
-    id: string;
-    droppedFile: ReactiveVar<UploadImage | undefined>;
-    state: ReactiveDict<{
-      supportsDragndrop: boolean;
-      progress: "display" | "edit" | "ready" | "uploading";
-      copyRights: false;
-      dragover: boolean;
-      preview: string | undefined;
-    }>;
-    onDrop: (file: File) => void;
-    onUpload: () => void;
-    onDelete: () => void;
-    onCancel: () => void;
-  }
->;
+export function EditableImage(data: Data) {
+  const { t } = useTranslation();
+  const [droppedFile, setDroppedFile] = useState<
+    | {
+        lastModified: Date;
+        name: string;
+        size: number;
+        mimeType: string;
+        content: string;
+      }
+    | undefined
+  >(undefined);
+  const [progress, setProgress] = useState("display");
+  const [copyRights, setCopyRights] = useState(false);
+  const [dragover, setDragover] = useState(false);
+  const [preview, setPreview] = useState<string | undefined>(undefined);
 
-const template = Template.editableImage;
+  const id = createId();
 
-template.onCreated(function () {
-  const instance = this;
-
-  instance.id = id();
-
-  instance.droppedFile = new ReactiveVar(undefined);
-  instance.state = new ReactiveDict();
-  instance.state.setDefault({
-    supportsDragndrop,
-    progress: "display",
-    copyRights: false,
-    dragover: false,
-    preview: undefined,
-  });
-
-  instance.onDrop = async (file: File) => {
+  async function onDrop(file: File) {
     if (!file.type.startsWith("image/")) {
-      Alert.error(i18n("editableImage.accept.error", "Only images are allowed."));
+      Alert.error(t("editableImage.accept.error", "Only images are allowed."));
       return;
     }
 
     let rezisedFile;
-    if (instance.data.maxSize) {
+    if (data.maxSize) {
       try {
         rezisedFile = await new ImageBlobReduce({
           pica: ImageBlobReduce.pica({ features: ["js", "wasm"] }),
-        }).toBlob(file, { max: instance.data.maxSize });
+        }).toBlob(file, { max: data.maxSize });
       } catch (ex) {
         // eslint-disable-next-line no-console
         console.info(
@@ -98,7 +80,7 @@ template.onCreated(function () {
     {
       const reader = new FileReader();
       reader.onload = () => {
-        instance.droppedFile.set({
+        setDroppedFile({
           lastModified: new Date(file.lastModified),
           name: file.name,
           size: file.size,
@@ -106,8 +88,8 @@ template.onCreated(function () {
           content: reader.result as string,
         });
 
-        instance.state.set("copyRights", false);
-        instance.state.set("progress", "ready");
+        setCopyRights(false);
+        setProgress("ready");
       };
       reader.readAsBinaryString(rezisedFile);
     }
@@ -115,128 +97,250 @@ template.onCreated(function () {
     {
       const reader = new FileReader();
       reader.onload = function () {
-        instance.state.set("preview", reader.result as string);
+        setPreview(reader.result as string);
       };
       reader.readAsDataURL(rezisedFile);
     }
-  };
+  }
 
-  instance.onUpload = () => {
-    const droppedFile = instance.droppedFile.get();
+  function onUpload() {
     if (!droppedFile) {
       throw new Error(`Unexpected undefined: file`);
     }
 
-    instance.state.set("progress", "uploading");
+    setProgress("uploading");
 
-    instance.data.onUpload(droppedFile);
+    data.onUpload(droppedFile);
 
-    instance.droppedFile.set(undefined);
-    instance.state.set("preview", undefined);
-    instance.state.set("progress", "display");
-  };
+    setDroppedFile(undefined);
+    setPreview(undefined);
+    setProgress("display");
+  }
 
-  instance.onDelete = () => {
-    if (instance.data.onDelete) {
-      instance.data.onDelete();
+  function onDelete() {
+    if (data.onDelete) {
+      data.onDelete();
     }
-    instance.droppedFile.set(undefined);
-    instance.state.set("preview", undefined);
-    instance.state.set("progress", "display");
-  };
+    setDroppedFile(undefined);
+    setPreview(undefined);
+    setProgress("display");
+  }
 
-  instance.onCancel = () => {
-    instance.droppedFile.set(undefined);
-    instance.state.set("preview", undefined);
-    instance.state.set("progress", "display");
-  };
-});
+  function onCancel() {
+    setDroppedFile(undefined);
+    setPreview(undefined);
+    setProgress("display");
+  }
 
-template.helpers({
-  thumbnailAttributes() {
-    const { data } = Template.instance();
-
+  function thumbnailAttributes() {
     if (!data.thumbnail?.maxSize) {
       return {};
     }
 
     return {
-      style: `max-width: ${data.thumbnail.maxSize}px; max-height: ${data.thumbnail.maxSize}px`,
+      style: { maxWidth: `${data.thumbnail.maxSize}px`, maxHeight: `${data.thumbnail.maxSize}px` },
     };
-  },
-  uploadButtonAttributes() {
-    const instance = Template.instance();
-
+  }
+  function uploadButtonAttributes() {
     const attributes: Record<string, unknown> = {
-      event: "js-editable-image-upload",
+      onClick: onUpload,
     };
 
-    if (!instance.state.get("copyRights")) {
+    if (!copyRights) {
       attributes.disabled = "disabled";
     }
 
     return attributes;
-  },
-  fileName() {
-    return Template.instance().droppedFile.get()?.name;
-  },
-  deleteAllowed() {
-    return !!Template.instance().data.onDelete;
-  },
-  copyRightsChecked() {
-    return Template.instance().state.get("copyRights") ? "checked" : "";
-  },
-});
+  }
+  function fileName() {
+    return droppedFile?.name;
+  }
 
-template.events({
-  "drag/dragstart/dragend/dragover/dragenter/dragleave/drop form"(event) {
-    // preventing the unwanted behaviours
+  function deleteAllowed() {
+    return data.onDelete;
+  }
+
+  function handleDragOver(event: DragEvent<HTMLFormElement>) {
     event.preventDefault();
     event.stopPropagation();
-  },
 
-  "dragover/dragenter form"(_event, instance) {
-    instance.state.set("dragover", true);
-  },
+    setDragover(true);
+  }
 
-  "dragleave/dragend/drop form"(_event, instance) {
-    instance.state.set("dragover", false);
-  },
+  function handleDragLeave(event: DragEvent<HTMLFormElement>) {
+    event.preventDefault();
+    event.stopPropagation();
 
-  async 'change input[type="file"]'(event, instance) {
-    const file = (event.target as any).files[0];
+    setDragover(false);
+  }
 
-    instance.onDrop(file);
-  },
+  function handleDrop(event: DragEvent<HTMLFormElement>) {
+    event.preventDefault();
+    event.stopPropagation();
 
-  async "drop form"(event, instance) {
-    const file = ((event as any).originalEvent.dataTransfer as DataTransfer).files[0];
+    setDragover(false);
 
-    instance.onDrop(file);
-  },
+    const file = event.dataTransfer.files[0];
+    onDrop(file);
+  }
 
-  "click .js-editable-image-edit"(event, instance) {
+  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.currentTarget.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    onDrop(file);
+  }
+
+  function handleEditClick(event: any) {
     event.preventDefault();
 
-    instance.state.set("progress", "edit");
-  },
+    setProgress("edit");
+  }
 
-  "change .js-check-copy-rights"(_event, instance) {
-    instance.state.set("copyRights", instance.$(".js-check-copy-rights").prop("checked"));
-  },
+  return progress !== "display" ? (
+    <>
+      <form
+        encType="multipart/form-data"
+        noValidate
+        className={`text-center editable-image${supportsDragndrop ? " supports-dragndrop" : ""}${
+          dragover ? " is-dragover" : ""
+        }`}
+        onDragOver={handleDragOver}
+        onDragEnter={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDragEnd={handleDragLeave}
+        onDrop={handleDrop}
+      >
+        <input
+          type="file"
+          accept="image/*"
+          className="d-none"
+          id="file"
+          onChange={handleFileChange}
+        />
+        <label htmlFor="file">
+          <div className="mb-1">
+            {preview ? (
+              <img {...thumbnailAttributes()} src={preview} />
+            ) : data.thumbnail?.src ? (
+              <img {...thumbnailAttributes()} src={data.thumbnail.src} />
+            ) : (
+              <i className="fa-regular fa-image fa-5x" aria-hidden="true"></i>
+            )}
+          </div>
+          {dragover ? (
+            <div className="editable-image-drop">
+              {t("fileUpload.drop.text", "Drop it like it's hot!")}
+            </div>
+          ) : progress === "edit" ? (
+            <>
+              {" "}
+              <span className="btn btn-secondary">
+                {t("fileUpload.choose.text", "Choose a file")}
+              </span>
+              {supportsDragndrop ? (
+                <>
+                  <br />
+                  <span className="editable-image-dragndrop">
+                    {t("fileUpload.drag.text", "or drag it here")}
+                  </span>
+                </>
+              ) : null}
+            </>
+          ) : progress === "uploading" ? (
+            <div className="editable-image-uploading">
+              {t("fileUpload.uploading.text", "Uploading…")}
+            </div>
+          ) : progress === "ready" ? (
+            fileName()
+          ) : (
+            ""
+          )}
+        </label>
 
-  "click .js-editable-image-upload"(event, instance) {
-    event.preventDefault();
-    instance.onUpload();
-  },
+        {progress === "ready" ? (
+          <div className="form-check text-start">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value=""
+              id="editableImageCopyRights"
+              checked={copyRights}
+              onChange={(event) => {
+                setCopyRights(event.currentTarget.checked);
+              }}
+            />
+            <label className="form-check-label" htmlFor="editableImageCopyRights">
+              {t("fileUpload.copyrights", "I have the copy rights to publish that file.")}
+            </label>
+          </div>
+        ) : null}
+      </form>
+      <div className="editable-image-controls">
+        {progress === "ready" ? (
+          <ButtonSave {...uploadButtonAttributes()} />
+        ) : deleteAllowed() ? (
+          <ButtonDelete onClick={onDelete} />
+        ) : null}{" "}
+        <ButtonCancel onClick={onCancel} />
+      </div>
+    </>
+  ) : (
+    <div>
+      {data.thumbnail?.src ? (
+        <img
+          className="cursor-pointer img-thumbnail"
+          {...thumbnailAttributes()}
+          src={data.thumbnail.src}
+          onClick={handleEditClick}
+        />
+      ) : (
+        <i
+          className="fa-regular fa-image fa-5x cursor-pointer"
+          aria-hidden="true"
+          onClick={handleEditClick}
+        ></i>
+      )}{" "}
+      <span
+        className="align-top fa-solid fa-pencil cursor-pointer"
+        onClick={handleEditClick}
+      ></span>
+      {data.thumbnail?.src ? (
+        <>
+          {" "}
+          <span
+            className="align-top fa-solid fa-eye cursor-pointer js-editable-image-show"
+            data-bs-toggle="modal"
+            data-bs-target={`#editable-image-${id}`}
+          ></span>
+          <div className="modal fade" id={`editable-image-${id}`} tabIndex={-1} aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered modal-xl">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body text-center">
+                  <img className="mw-100" src={data.thumbnail.src} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
+    </div>
+  );
+}
 
-  "click .js-editable-image-delete"(event, instance) {
-    event.preventDefault();
-    instance.onDelete();
-  },
+// for Blaze
+// eslint-disable-next-line import/first
+import "./template.html";
 
-  "click .js-editable-image-cancel"(event, instance) {
-    event.preventDefault();
-    instance.onCancel();
-  },
-});
+Template.registerHelper("EditableImage", () => EditableImage);
