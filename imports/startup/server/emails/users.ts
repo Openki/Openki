@@ -1,9 +1,9 @@
 import { SSR } from "meteor/meteorhacks:ssr";
 import { Meteor } from "meteor/meteor";
-import { i18n } from "/imports/startup/both/i18next";
 import { Accounts } from "meteor/accounts-base";
 import juice from "juice";
 import { Spacebars } from "meteor/spacebars";
+import i18next from "i18next";
 
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
@@ -15,7 +15,9 @@ Meteor.startup(() => {
   SSR.compileTemplate("userResetPasswordEmail", Assets.getText("emails/users/resetPassword.html"));
 });
 
-Accounts.emailTemplates.siteName = PublicSettings.siteName;
+const siteName = PublicSettings.siteName;
+
+Accounts.emailTemplates.siteName = siteName;
 
 if (PrivateSettings.siteEmail) {
   Accounts.emailTemplates.from = PrivateSettings.siteEmail;
@@ -23,40 +25,35 @@ if (PrivateSettings.siteEmail) {
 
 Accounts.emailTemplates.verifyEmail = {
   subject(user) {
-    return i18n("verifyEmail.subject", "[{SITE}] Welcome to the {SITE} community, {NAME}", {
-      SITE: Accounts.emailTemplates.siteName,
+    const t = i18next.getFixedT(user.locale);
+
+    return t("verifyEmail.subject", "[{SITE}] Welcome to the {SITE} community, {NAME}", {
+      SITE: siteName,
       NAME: (user as UserModel).getDisplayName(),
-      lng: user.locale,
     });
   },
 
   text(user, url) {
-    return `${i18n("email.base.greeting", {
+    const t = i18next.getFixedT(user.locale);
+
+    return `${t("email.base.greeting", {
       USERNAME: (user as UserModel).getDisplayName(),
-      lng: user.locale,
     })}
 	
-${i18n("verifyEmail.email.introduction", {
-  SITE: Accounts.emailTemplates.siteName,
-  lng: user.locale,
+${t("verifyEmail.email.introduction", {
+  SITE: siteName,
 })}
 
-${i18n("verifyEmail.email.verification", {
-  lng: user.locale,
-})}
+${t("verifyEmail.email.verification")}
 ${url}
 
-${i18n("email.base.farewell", {
-  lng: user.locale,
-})}
-${i18n("email.base.postscript", {
-  SITE: Accounts.emailTemplates.siteName,
-  lng: user.locale,
+${t("email.base.farewell")}
+${t("email.base.postscript", {
+  SITE: siteName,
 })}
 
-${i18n("email.base.unexpected", {
+${t("email.base.unexpected", {
   REPORTEMAIL: PrivateSettings.reporter.recipient,
-  lng: user.locale,
 })}`;
   },
 
@@ -65,12 +62,12 @@ ${i18n("email.base.unexpected", {
     return juice(
       SSR.render("userVerifyEmail", {
         subject: Accounts.emailTemplates.verifyEmail.subject?.(user),
-        siteName: Accounts.emailTemplates.siteName,
+        siteName,
         site: {
           brand: PublicSettings.theme.brand,
           url: Meteor.absoluteUrl(),
           logo: toEmailLogo(emailLogo),
-          name: Accounts.emailTemplates.siteName,
+          name: siteName,
         },
         username: (user as UserModel).getDisplayName(),
         url,
@@ -89,39 +86,34 @@ Accounts.urls.resetPassword = function (token) {
 
 Accounts.emailTemplates.resetPassword = {
   subject(user) {
-    return i18n("resetPassword.subject", "[{SITE}] Reset your password on {SITE}", {
-      SITE: Accounts.emailTemplates.siteName,
-      lng: user.locale,
+    const t = i18next.getFixedT(user.locale);
+
+    return t("resetPassword.subject", "[{SITE}] Reset your password on {SITE}", {
+      SITE: siteName,
     });
   },
 
   text(user, url) {
-    return `${i18n("email.base.greeting", {
+    const t = i18next.getFixedT(user.locale);
+
+    return `${t("email.base.greeting", {
       USERNAME: (user as UserModel).getDisplayName(),
-      lng: user.locale,
     })}
 				
-${i18n("resetPassword.email.introduction", {
-  SITE: Accounts.emailTemplates.siteName,
-  lng: user.locale,
+${t("resetPassword.email.introduction", {
+  SITE: siteName,
 })}
 
-${i18n("resetPassword.email.verification", {
-  lng: user.locale,
-})}
+${t("resetPassword.email.verification")}
 ${url}
 
-${i18n("email.base.farewell", {
-  lng: user.locale,
-})}
-${i18n("email.base.postscript", {
-  SITE: Accounts.emailTemplates.siteName,
-  lng: user.locale,
+${t("email.base.farewell")}
+${t("email.base.postscript", {
+  SITE: siteName,
 })}
 
-${i18n("email.base.unexpected", {
+${t("email.base.unexpected", {
   REPORTEMAIL: PrivateSettings.reporter.recipient,
-  lng: user.locale,
 })}`;
   },
 
@@ -130,12 +122,12 @@ ${i18n("email.base.unexpected", {
     return juice(
       SSR.render("userResetPasswordEmail", {
         subject: Accounts.emailTemplates.resetPassword.subject?.(user),
-        siteName: Accounts.emailTemplates.siteName,
+        siteName,
         site: {
           brand: PublicSettings.theme.brand,
           url: Meteor.absoluteUrl(),
           logo: toEmailLogo(emailLogo),
-          name: Accounts.emailTemplates.siteName,
+          name: siteName,
         },
         username: (user as UserModel).getDisplayName(),
         url,
