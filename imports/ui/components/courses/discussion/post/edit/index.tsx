@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
 import { useUser } from "/imports/utils/react-meteor-data";
 

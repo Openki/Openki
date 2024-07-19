@@ -8,7 +8,6 @@ import * as StatsMethods from "/imports/api/stats/methods";
 import { Stats } from "/imports/api/stats/stats";
 
 import { useSession, useUser } from "/imports/utils/react-meteor-data";
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 
 import { useAll, useDetails } from "/imports/api/regions/publications";
 
