@@ -1,3 +1,5 @@
+import React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { SSR } from "meteor/meteorhacks:ssr";
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
@@ -10,8 +12,19 @@ import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { UserModel } from "/imports/api/users/users";
 import { toEmailLogo } from "/imports/utils/toEmailLogo";
 
+import { Root } from "./templates/root";
+import { Verify } from "./templates/users/verify";
+
+function renderEmail(element: React.ReactNode) {
+  return juice(
+    `<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+${renderToStaticMarkup(element)}
+</html>`,
+  );
+}
+
 Meteor.startup(() => {
-  SSR.compileTemplate("userVerifyEmail", Assets.getText("emails/users/verify.html"));
   SSR.compileTemplate("userResetPasswordEmail", Assets.getText("emails/users/resetPassword.html"));
 });
 
@@ -58,24 +71,25 @@ ${t("email.base.unexpected", {
   },
 
   html(user, url) {
+    const t = i18next.getFixedT(user.locale);
     const emailLogo = PublicSettings.emailLogo;
-    return juice(
-      SSR.render("userVerifyEmail", {
-        subject: Accounts.emailTemplates.verifyEmail.subject?.(user),
-        siteName,
-        site: {
-          brand: PublicSettings.theme.brand,
-          url: Meteor.absoluteUrl(),
-          logo: toEmailLogo(emailLogo),
-          name: siteName,
-        },
-        username: (user as UserModel).getDisplayName(),
-        url,
-        reportEmail: Spacebars.SafeString(
-          `<a href="mailto:${PrivateSettings.reporter.recipient}">${PrivateSettings.reporter.recipient}</a>`,
-        ),
-        locale: user.locale,
-      }),
+
+    return renderEmail(
+      <Root
+        subject={Accounts.emailTemplates.verifyEmail.subject?.(user)}
+        brand={PublicSettings.theme.brand}
+        url={Meteor.absoluteUrl()}
+        logo={toEmailLogo(emailLogo)}
+        name={siteName}
+      >
+        <Verify
+          siteName={siteName}
+          userName={(user as UserModel).getDisplayName()}
+          url={url}
+          reportEmail={PrivateSettings.reporter.recipient}
+          t={t}
+        />
+      </Root>,
     );
   },
 };
@@ -119,6 +133,7 @@ ${t("email.base.unexpected", {
 
   html(user, url) {
     const emailLogo = PublicSettings.emailLogo;
+
     return juice(
       SSR.render("userResetPasswordEmail", {
         subject: Accounts.emailTemplates.resetPassword.subject?.(user),
