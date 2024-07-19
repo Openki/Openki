@@ -1,41 +1,39 @@
-import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { Email } from "meteor/email";
-import { SSR } from "meteor/meteorhacks:ssr";
 import { Random } from "meteor/random";
 import { Match, check } from "meteor/check";
-import juice from "juice";
+import i18next, { TFunction } from "i18next";
 
 import { Log } from "/imports/api/log/log";
 import { LogEntity } from "/imports/api/log/factory";
 import { UserModel, Users } from "/imports/api/users/users";
 
-import * as notificationEvent from "/imports/notification/notification.event";
-import * as notificationEventCanceled from "/imports/notification/notification.event.canceled";
-import * as notificationEventReminder from "/imports/notification/notification.event.reminder";
-import * as notificationEventContactParticipants from "/imports/notification/notification.event.contact-participants";
-import * as notificationRsvp from "/imports/notification/notification.rsvp";
-import * as notificationRsvpTeam from "/imports/notification/notification.rsvp.team";
+// import * as notificationEvent from "/imports/notification/notification.event";
+// import * as notificationEventCanceled from "/imports/notification/notification.event.canceled";
+// import * as notificationEventReminder from "/imports/notification/notification.event.reminder";
+// import * as notificationEventContactParticipants from "/imports/notification/notification.event.contact-participants";
+// import * as notificationRsvp from "/imports/notification/notification.rsvp";
+// import * as notificationRsvpTeam from "/imports/notification/notification.rsvp.team";
 import * as notificationComment from "/imports/notification/notification.comment";
-import * as notificationJoin from "/imports/notification/notification.join";
-import * as notificationGroupCourse from "/imports/notification/notification.group.course";
-import * as notificationPrivateMessage from "/imports/notification/notification.private-message";
+// import * as notificationJoin from "/imports/notification/notification.join";
+// import * as notificationGroupCourse from "/imports/notification/notification.group.course";
+// import * as notificationPrivateMessage from "/imports/notification/notification.private-message";
 
-import { PublicSettings } from "/imports/utils/PublicSettings";
-import { toEmailLogo } from "/imports/utils/toEmailLogo";
 import { PrivateSettings } from "../utils/PrivateSettings";
+import { renderToEmail } from "../utils/renderToEmail";
+import { Root, Props as RootProps } from "../emails/root";
 
 export const Notification = {
-  Event: notificationEvent,
-  "Event.Canceled": notificationEventCanceled,
-  "Event.Reminder": notificationEventReminder,
-  "Event.ContactParticipants": notificationEventContactParticipants,
-  Rsvp: notificationRsvp,
-  "Rsvp.Team": notificationRsvpTeam,
+  // Event: notificationEvent,
+  // "Event.Canceled": notificationEventCanceled,
+  // "Event.Reminder": notificationEventReminder,
+  // "Event.ContactParticipants": notificationEventContactParticipants,
+  // Rsvp: notificationRsvp,
+  // "Rsvp.Team": notificationRsvpTeam,
   Comment: notificationComment,
-  Join: notificationJoin,
-  "Group.Course": notificationGroupCourse,
-  PrivateMessage: notificationPrivateMessage,
+  // Join: notificationJoin,
+  // "Group.Course": notificationGroupCourse,
+  // PrivateMessage: notificationPrivateMessage,
 };
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -78,23 +76,39 @@ export namespace SendResult {
   }
 }
 
-interface Vars {
-  fromAddress?: string;
-  siteName: string;
-  customSiteName?: string;
-  customEmailLogo?: string;
-  site: { brand: string; url: string; logo: string; name: string };
-  customSiteUrl?: string;
-  locale: string;
-  username: string;
-  subject: string;
-}
+export type Model<T> = {
+  accepted(user: UserModel): void;
+  vars(
+    userLocale: string,
+    user: UserModel,
+    unsubToken: string,
+    t: TFunction,
+  ): {
+    fromAddress?: string | undefined;
+  } & RootProps &
+    // Remove some props
+    Omit<T, "siteName" | "customSiteName" | "username" | "t">;
+  template: (
+    props: {
+      fromAddress?: string | undefined;
+      siteName: string;
+      locale: string;
+      username: string;
+      t: TFunction;
+    } & RootProps &
+      T,
+  ) => React.JSX.Element;
+};
 
 /**
  * Handle event notification
  * @param entry Notification.Event log entry to process
  */
-export function send(entry: LogEntity & { body: { model: string; recipients: string[] } }) {
+export function send(
+  entry: LogEntity & { body: notificationComment.Body } & {
+    body: { model: string; recipients: string[] };
+  },
+) {
   // Find out for which recipients sending has already been attempted.
   const concluded: { [recipient: string]: boolean } = {};
 
@@ -110,21 +124,7 @@ export function send(entry: LogEntity & { body: { model: string; recipients: str
   const model = (
     Notification as {
       [name: string]: {
-        Model(_entry: unknown): {
-          accepted(user: UserModel): void;
-          vars(
-            userLocale: string,
-            user: UserModel,
-            unsubToken: string,
-          ): {
-            fromAddress?: string;
-            customSiteName?: string;
-            customEmailLogo?: string;
-            customSiteUrl?: string;
-            subject: string;
-          };
-          template: string;
-        };
+        Model<T>(_entry: unknown): Model<T>;
       };
     }
   )[entry.body.model].Model(entry);
@@ -146,40 +146,41 @@ export function send(entry: LogEntity & { body: { model: string; recipients: str
         const address = user.emailAddress();
 
         const username = user.getDisplayName();
-        const userLocale = user.locale || "en";
+        const locale = user.locale || "en";
+        const t = i18next.getFixedT(locale);
 
         const { siteName } = Accounts.emailTemplates;
         const subjectPrefix = `[${siteName}] `;
 
         unsubToken = Random.secret();
-        const vars = model.vars(userLocale, user, unsubToken) as Vars;
+        const vars = model.vars(locale, user, unsubToken, t);
 
-        // For everything that is global use siteName from global settings, eg. unsubscribe
-        vars.siteName = siteName;
-        // For everything context specifig us customSiteName from the region, eg. courses
-        vars.customSiteName = vars.customSiteName || vars.siteName;
-        const emailLogo = vars.customEmailLogo || PublicSettings.emailLogo;
-        vars.site = {
-          brand: PublicSettings.theme.brand,
-          url: vars.customSiteUrl || Meteor.absoluteUrl(),
-          logo: toEmailLogo(emailLogo),
-          name: vars.customSiteName || vars.siteName,
-        };
-        vars.locale = userLocale;
-        vars.username = username;
-        let message = SSR.render(model.template, vars);
-
-        // Template can't handle DOCTYPE header, so we add the thing here.
-        const DOCTYPE =
-          '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-        message = DOCTYPE + message;
+        const message = renderToEmail(
+          <Root
+            subject={vars.subject}
+            customSiteUrl={vars.customSiteUrl}
+            customEmailLogo={vars.customEmailLogo}
+            customSiteName={vars.customSiteName || siteName}
+          >
+            {model.template({
+              ...vars,
+              // For everything that is global use siteName from global settings, eg. unsubscribe
+              siteName,
+              // For everything context specifig us customSiteName from the region, eg. courses
+              customSiteName: vars.customSiteName || siteName,
+              locale,
+              username,
+              t,
+            })}
+          </Root>,
+        );
 
         mail = {
           from: Accounts.emailTemplates.from,
           replyTo: vars.fromAddress || PrivateSettings.replyToEmail,
           to: address || undefined,
           subject: subjectPrefix + vars.subject,
-          html: juice(message),
+          html: message,
         };
 
         Email.send(mail);
