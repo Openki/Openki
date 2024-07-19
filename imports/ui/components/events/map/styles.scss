@@ -68,7 +68,9 @@
   font-size: 24px;
 }
 
-.events-map-location-map .leaflet-marker-icon {
+.events-map-location-map .leaflet-marker-icon-shadow {
+  z-index: 0 !important;
+  pointer-events: none;
   text-shadow:
     -5px -5px 10px #ffffffab,
     5px -10px 10px #ffffffba,
@@ -76,11 +78,24 @@
     2px 3px 4px #000000bf;
 }
 
-.events-map-location-map .leaflet-marker-icon:hover {
+.events-map-location-map .leaflet-marker-icon-pin:hover {
   animation: 0.4s ease-in-out 0s 2 alternate pin-top;
   z-index: 10000 !important;
 }
 @keyframes pin-top {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: -5px;
+  }
+}
+
+.events-map-location-map .leaflet-marker-icon-pin:hover + .leaflet-marker-icon-shadow {
+  animation: 0.4s ease-in-out 0s 2 alternate shadow-top;
+}
+@keyframes shadow-top {
   0% {
     text-shadow:
       -5px -5px 10px #ffffffab,
