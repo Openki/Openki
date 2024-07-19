@@ -1,25 +1,17 @@
 import React from "react";
 import { TFunction } from "i18next";
 import { Router } from "meteor/iron:router";
+import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
-export function Verify({
-  siteName,
-  userName,
-  url,
-  reportEmail,
-  t,
-}: {
-  siteName: string;
-  userName: string;
-  url: string;
-  reportEmail: string;
-  t: TFunction;
-}) {
+export function Verify({ username, url, t }: { username: string; url: string; t: TFunction }) {
+  const siteName = Accounts.emailTemplates.siteName;
+  const reportEmail = PrivateSettings.reporter.recipient;
+
   return (
     <>
       <tr>
         <td>
-          <h5 className="title">{t("email.base.greeting", { USERNAME: userName })}</h5>
+          <h5 className="title">{t("email.base.greeting", { USERNAME: username })}</h5>
           <p>
             {t(
               "verifyEmail.email.introduction",

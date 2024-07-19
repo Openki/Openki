@@ -1,20 +1,13 @@
 import React from "react";
+import { PublicSettings } from "/imports/utils/PublicSettings";
+import { toEmailLogo } from "/imports/utils/toEmailLogo";
 
-export function Root({
-  subject,
-  brand,
-  url,
-  logo,
-  name,
-  children,
-}: {
-  subject: string | undefined;
-  brand: string;
-  url: string;
-  logo: string;
-  name: string;
-  children: any;
-}) {
+export function Root({ subject, children }: { subject: string | undefined; children: any }) {
+  const brand = PublicSettings.theme.brand;
+  const url = Meteor.absoluteUrl();
+  const logo = toEmailLogo(PublicSettings.emailLogo);
+  const name = Accounts.emailTemplates.siteName;
+
   return (
     <>
       <head>
@@ -83,9 +76,7 @@ export function Root({
           }
 
           .header tr {
-            /* beautify ignore:start */
             background-color: ${brand};
-            /* beautify ignore:end */
           }
 
           .header td {
@@ -232,9 +223,7 @@ export function Root({
           }
 
           .footer {
-            /* beautify ignore:start */
             border-top: solid 1px ${brand};
-            /* beautify ignore:end */
             color: #666;
             text-align: center;
             width: 100%;
