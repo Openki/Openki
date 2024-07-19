@@ -6,16 +6,15 @@ import i18next from "i18next";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { UserModel } from "/imports/api/users/users";
-import { toEmailLogo } from "/imports/utils/toEmailLogo";
 
 import { Root } from "./templates/root";
-import { Verify } from "./templates/users/verify";
-import { ResetPassword } from "./templates/users/resetPassword";
+import { Verify } from "./templates/users/verify.html";
+import { verify } from "./templates/users/verify.text";
+import { ResetPassword } from "./templates/users/resetPassword.html";
 import { renderToEmail } from "/imports/utils/renderToEmail";
+import { resetPassword } from "./templates/users/resetPassword.text";
 
-const siteName = PublicSettings.siteName;
-
-Accounts.emailTemplates.siteName = siteName;
+Accounts.emailTemplates.siteName = PublicSettings.siteName;
 
 if (PrivateSettings.siteEmail) {
   Accounts.emailTemplates.from = PrivateSettings.siteEmail;
@@ -26,7 +25,7 @@ Accounts.emailTemplates.verifyEmail = {
     const t = i18next.getFixedT(user.locale);
 
     return t("verifyEmail.subject", "[{SITE}] Welcome to the {SITE} community, {NAME}", {
-      SITE: siteName,
+      SITE: Accounts.emailTemplates.siteName,
       NAME: (user as UserModel).getDisplayName(),
     });
   },
@@ -34,46 +33,15 @@ Accounts.emailTemplates.verifyEmail = {
   text(user, url) {
     const t = i18next.getFixedT(user.locale);
 
-    return `${t("email.base.greeting", {
-      USERNAME: (user as UserModel).getDisplayName(),
-    })}
-	
-${t("verifyEmail.email.introduction", {
-  SITE: siteName,
-})}
-
-${t("verifyEmail.email.verification")}
-${url}
-
-${t("email.base.farewell")}
-${t("email.base.postscript", {
-  SITE: siteName,
-})}
-
-${t("email.base.unexpected", {
-  REPORTEMAIL: PrivateSettings.reporter.recipient,
-})}`;
+    return verify((user as UserModel).getDisplayName(), url, t);
   },
 
   html(user, url) {
     const t = i18next.getFixedT(user.locale);
-    const emailLogo = PublicSettings.emailLogo;
 
     return renderToEmail(
-      <Root
-        subject={Accounts.emailTemplates.verifyEmail.subject?.(user)}
-        brand={PublicSettings.theme.brand}
-        url={Meteor.absoluteUrl()}
-        logo={toEmailLogo(emailLogo)}
-        name={siteName}
-      >
-        <Verify
-          siteName={siteName}
-          userName={(user as UserModel).getDisplayName()}
-          url={url}
-          reportEmail={PrivateSettings.reporter.recipient}
-          t={t}
-        />
+      <Root subject={Accounts.emailTemplates.verifyEmail.subject?.(user)}>
+        <Verify username={(user as UserModel).getDisplayName()} url={url} t={t} />
       </Root>,
     );
   },
@@ -88,53 +56,22 @@ Accounts.emailTemplates.resetPassword = {
     const t = i18next.getFixedT(user.locale);
 
     return t("resetPassword.subject", "[{SITE}] Reset your password on {SITE}", {
-      SITE: siteName,
+      SITE: Accounts.emailTemplates.siteName,
     });
   },
 
   text(user, url) {
     const t = i18next.getFixedT(user.locale);
 
-    return `${t("email.base.greeting", {
-      USERNAME: (user as UserModel).getDisplayName(),
-    })}
-				
-${t("resetPassword.email.introduction", {
-  SITE: siteName,
-})}
-
-${t("resetPassword.email.verification")}
-${url}
-
-${t("email.base.farewell")}
-${t("email.base.postscript", {
-  SITE: siteName,
-})}
-
-${t("email.base.unexpected", {
-  REPORTEMAIL: PrivateSettings.reporter.recipient,
-})}`;
+    return resetPassword((user as UserModel).getDisplayName(), url, t);
   },
 
   html(user, url) {
     const t = i18next.getFixedT(user.locale);
-    const emailLogo = PublicSettings.emailLogo;
 
     return renderToEmail(
-      <Root
-        subject={Accounts.emailTemplates.resetPassword.subject?.(user)}
-        brand={PublicSettings.theme.brand}
-        url={Meteor.absoluteUrl()}
-        logo={toEmailLogo(emailLogo)}
-        name={siteName}
-      >
-        <ResetPassword
-          siteName={siteName}
-          userName={(user as UserModel).getDisplayName()}
-          url={url}
-          reportEmail={PrivateSettings.reporter.recipient}
-          t={t}
-        />
+      <Root subject={Accounts.emailTemplates.resetPassword.subject?.(user)}>
+        <ResetPassword username={(user as UserModel).getDisplayName()} url={url} t={t} />
       </Root>,
     );
   },
