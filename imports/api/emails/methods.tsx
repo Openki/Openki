@@ -13,8 +13,8 @@ import { ServerMethod } from "/imports/utils/ServerMethod";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Type } from "/imports/utils/CustomChecks";
 import { renderToEmail } from "/imports/utils/renderToEmail";
-import { Root } from "../../email/root";
-import { Report } from "../../email/report";
+import { Root } from "../../emails/root";
+import { Report } from "../../emails/report";
 
 export const sendVerificationEmail = ServerMethod(
   "sendVerificationEmail",
