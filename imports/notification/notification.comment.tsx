@@ -1,9 +1,7 @@
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { i18n } from "/imports/startup/both/i18next";
 import { _ } from "meteor/underscore";
-import { Spacebars } from "meteor/spacebars";
 
 import { CourseDiscussions } from "/imports/api/course-discussions/course-discussions";
 import { CourseModel, Courses } from "/imports/api/courses/courses";
@@ -13,8 +11,11 @@ import { Log } from "/imports/api/log/log";
 
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
+import React from "react";
+import { Model as NotificationModel } from "./notification";
+import { Comment, Props } from "/imports/emails/notifications/comment";
 
-interface Body {
+export interface Body {
   commentId: string;
   recipients: string[];
   model: string;
@@ -76,7 +77,7 @@ export function record(commentId: string) {
   Log.record("Notification.Send", [course._id, comment._id], body);
 }
 
-export function Model(entry: { body: Body }) {
+export function Model(entry: { body: Body }): NotificationModel<Props> {
   const comment = CourseDiscussions.findOne(entry.body.commentId);
 
   let course: CourseModel | undefined;
@@ -94,7 +95,7 @@ export function Model(entry: { body: Body }) {
   }
 
   return {
-    accepted(actualRecipient: UserModel) {
+    accepted(actualRecipient) {
       if (actualRecipient.notifications === false) {
         throw new Error("User wishes to not receive automated notifications");
       }
@@ -104,7 +105,7 @@ export function Model(entry: { body: Body }) {
       }
     },
 
-    vars(userLocale: string, _actualRecipient: UserModel, unsubToken: string) {
+    vars(_locale, _actualRecipient, unsubToken, t) {
       if (!comment) {
         throw new Error("Comment does not exist (0.o)");
       }
@@ -116,19 +117,18 @@ export function Model(entry: { body: Body }) {
         COURSE: StringTools.truncate(course.name, 10),
         TITLE: StringTools.truncate(comment.title, 50),
         COMMENTER: "",
-        lng: userLocale,
       };
 
       let subject;
       if (commenter) {
         subjectvars.COMMENTER = StringTools.truncate(commenterName || "", 20);
-        subject = i18n(
+        subject = t(
           "notification.comment.mail.subject",
           "Comment on {COURSE} by {COMMENTER}: {TITLE}",
           subjectvars,
         );
       } else {
-        subject = i18n(
+        subject = t(
           "notification.comment.mail.subject.anon",
           "Anonymous comment on {COURSE}: {TITLE}",
           subjectvars,
@@ -147,9 +147,10 @@ export function Model(entry: { body: Body }) {
       const commentLink = Router.url("showCourse", course, {
         query: `select=${comment._id}&campaign=commentNotify`,
       });
+
       return {
         unsubLink: Router.url("profileNotificationsUnsubscribe", { token: unsubToken }),
-        course: Spacebars.SafeString(`<a href="${courseLink}">${course.name}</a>`),
+        course: <a href={courseLink}>{course.name}</a>,
         commentLink,
         subject,
         comment,
@@ -165,6 +166,6 @@ export function Model(entry: { body: Body }) {
         customEmailLogo: emailLogo,
       };
     },
-    template: "notificationCommentEmail",
+    template: (props) => <Comment {...props} />,
   };
 }

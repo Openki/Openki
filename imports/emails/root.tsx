@@ -2,11 +2,24 @@ import React from "react";
 import { PublicSettings } from "/imports/utils/PublicSettings";
 import { toEmailLogo } from "/imports/utils/toEmailLogo";
 
-export function Root({ subject, children }: { subject: string | undefined; children: any }) {
+export type Props = {
+  subject: string | undefined;
+  customSiteUrl?: string | undefined;
+  customEmailLogo?: string | undefined;
+  customSiteName?: string | undefined;
+};
+
+export function Root({
+  subject,
+  customSiteUrl,
+  customEmailLogo,
+  customSiteName,
+  children,
+}: Props & { children: any }) {
   const brand = PublicSettings.theme.brand;
-  const url = Meteor.absoluteUrl();
-  const logo = toEmailLogo(PublicSettings.emailLogo);
-  const name = Accounts.emailTemplates.siteName;
+  const url = customSiteUrl || Meteor.absoluteUrl();
+  const logo = toEmailLogo(customEmailLogo || PublicSettings.emailLogo);
+  const name = customSiteName || Accounts.emailTemplates.siteName;
 
   return (
     <>
