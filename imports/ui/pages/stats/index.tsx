@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import * as StatsMethods from "/imports/api/stats/methods";
 import { Stats } from "/imports/api/stats/stats";
 
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession, useUser } from "/imports/utils/react-meteor-data";
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 
 import { useAll, useDetails } from "/imports/api/regions/publications";
@@ -18,6 +18,7 @@ import "./styles.scss";
 
 export function StatsPage() {
   const { t } = useTranslation();
+  const user = useUser();
   const regionSession = useSession("region");
   const searchParams = useSearchParams();
 
@@ -40,7 +41,7 @@ export function StatsPage() {
   }, [region]);
 
   function isAdmin() {
-    return UserPrivilegeUtils.privilegedTo("admin");
+    return user?.privileged("admin");
   }
   function regionName() {
     return currentRegion?.name || "";
