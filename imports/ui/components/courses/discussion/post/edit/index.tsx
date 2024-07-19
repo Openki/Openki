@@ -77,7 +77,7 @@ export function Edit({ post, onSave, onCancel }: Props) {
       return false;
     }
 
-    if (UserPrivilegeUtils.privileged(user, "admin")) {
+    if (user?.privileged("admin")) {
       return true;
     }
 

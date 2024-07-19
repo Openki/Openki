@@ -87,7 +87,7 @@ export function EventParticipants({ event }: Props) {
       return false;
     }
 
-    if (UserPrivilegeUtils.privilegedTo("admin")) {
+    if (user?.privileged("admin")) {
       return true;
     }
 
