@@ -1,5 +1,6 @@
 import { TFunction } from "i18next";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
+import { Accounts } from "meteor/accounts-base";
 
 export function verify(username: string, url: string, t: TFunction): string {
   const siteName = Accounts.emailTemplates.siteName;

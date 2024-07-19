@@ -7,12 +7,12 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { UserModel } from "/imports/api/users/users";
 
-import { Root } from "./templates/root";
-import { Verify } from "./templates/users/verify.html";
-import { verify } from "./templates/users/verify.text";
-import { ResetPassword } from "./templates/users/resetPassword.html";
+import { Root } from "../../../email/root";
+import { Verify } from "../../../email/users/verify.html";
+import { verify } from "../../../email/users/verify.text";
+import { ResetPassword } from "../../../email/users/resetPassword.html";
 import { renderToEmail } from "/imports/utils/renderToEmail";
-import { resetPassword } from "./templates/users/resetPassword.text";
+import { resetPassword } from "../../../email/users/resetPassword.text";
 
 Accounts.emailTemplates.siteName = PublicSettings.siteName;
 

@@ -1,4 +1,5 @@
 import { TFunction } from "i18next";
+import { Accounts } from "meteor/accounts-base";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
 export function resetPassword(username: string, url: string, t: TFunction): string {
