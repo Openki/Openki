@@ -1,5 +1,6 @@
 import React from "react";
 import { TFunction } from "i18next";
+import { Accounts } from "meteor/accounts-base";
 import { Router } from "meteor/iron:router";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
