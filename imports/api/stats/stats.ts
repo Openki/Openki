@@ -4,7 +4,7 @@ import { CourseEntity, CourseModel, Courses } from "/imports/api/courses/courses
 import { EventEntity, EventModel, Events } from "/imports/api/events/events";
 import { Groups } from "../groups/groups";
 
-interface Stat {
+export interface Stat {
   courses: {
     total: number;
     archived: number;
@@ -14,7 +14,7 @@ interface Stat {
   };
 }
 
-interface GroupStat extends Stat {
+export  interface GroupStat extends Stat {
   id?: string | undefined;
   name?: string | undefined;
 }
