@@ -1,7 +1,8 @@
 import { Mongo } from "meteor/mongo";
 
-import { CourseEntity, Courses } from "/imports/api/courses/courses";
-import { EventEntity, Events } from "/imports/api/events/events";
+import { CourseEntity, CourseModel, Courses } from "/imports/api/courses/courses";
+import { EventEntity, EventModel, Events } from "/imports/api/events/events";
+import { Groups } from "../groups/groups";
 
 interface Stat {
   courses: {
@@ -12,12 +13,14 @@ interface Stat {
   };
 }
 
+interface GroupStat extends Stat {
+  id?: string | undefined;
+  name?: string | undefined;
+}
+
 export interface Stats {
   region: Stat;
-  // groups: ({
-  //   id: string | undefined;
-  //   name: string | undefined;
-  // } & Stat)[];
+  groups: GroupStat[];
 }
 
 function getCourses(regionId: string) {
@@ -36,13 +39,56 @@ function getEvents(regionId: string) {
   return Events.find(filter).fetchAsync();
 }
 
+async function getGroups(courses: CourseModel[], events: EventModel[]) {
+  let groupIds = [];
+  groupIds.push(...courses.flatMap((c) => c.groups));
+  groupIds.push(...events.flatMap((e) => e.groups));
+  groupIds = [...new Set(groupIds)];
+
+  const groupEntities = await Groups.find(
+    {},
+    {
+      projection: { _id: 1, name: 1 },
+    },
+  ).fetchAsync();
+
+  return groupIds.map((g) => ({
+    id: g,
+    name: groupEntities.find((e) => e._id === g)?.name,
+  }));
+}
+
+function calcStats(courses: CourseModel[], events: EventModel[]) {
+  return {
+    courses: {
+      total: courses.filter((c) => !c.archived).length,
+    },
+    events: { total: events.length },
+  } as Stat;
+}
+
 export async function getRegionStats(region: string) {
   const courses = await getCourses(region);
   const events = await getEvents(region);
+  const groups = await getGroups(courses, events);
+
   return {
-    region: {
-      courses: { total: courses.filter((c) => !c.archived).length },
-      events: { total: events.length },
-    },
+    region: calcStats(courses, events),
+    groups: [
+      calcStats(
+        courses.filter((c) => !c.groups?.length),
+        events.filter((e) => !e.groups?.length && !e.allGroups?.length),
+      ),
+      ...groups.map(
+        (g) =>
+          ({
+            ...g,
+            ...calcStats(
+              courses.filter((c) => c.groups?.includes(g.id)),
+              events.filter((e) => e.allGroups?.includes(g.id) || e.groups?.includes(g.id)),
+            ),
+          }) as GroupStat,
+      ),
+    ],
   } as Stats;
 }

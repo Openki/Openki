@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "/imports/utils/react-meteor-router";
 import { useTranslation } from "react-i18next";
+import { Router } from "meteor/iron:router";
 
 import * as StatsMethods from "/imports/api/stats/methods";
 import { Stats } from "/imports/api/stats/stats";
@@ -102,7 +103,7 @@ export function StatsPage() {
                 <td className="course-stat number">
                   {t("region.stats.courses.total.description", "excl. archived")}
                 </td>
-                <td className="event-stat number"></td>
+                <td className="event-stat number">&nbsp;</td>
               </tr>
               <tr>
                 <td className="course-stat number">
@@ -123,29 +124,38 @@ export function StatsPage() {
               </tr>
             </tbody>
           </table>
-          {/* <div className="mt-5">
+          <div className="mt-5">
             <h2>{t("regions.stats.header", "Group statistics")}</h2>
             <table className="stats">
               <thead>
                 <tr>
                   <th>{t("region.stats.group", "Group")}</th>
-                  <th className="course-stat" colSpan={2}>{t("region.stats.courses", "Courses")}</th>
+                  <th className="course-stat" colSpan={1}>
+                    {t("region.stats.courses", "Courses")}
+                  </th>
                   <th className="event-stat" colSpan={2}>
                     {t("region.stats.events", "Events")}
                   </th>
-                  <th>{t("region.stats.usersParticipating", "Users participating")}</th>
+                  {/* <th>{t("region.stats.usersParticipating", "Users participating")}</th> */}
                 </tr>
                 <tr>
                   <th>&nbsp;</th>
                   <th className="course-stat">{t("region.stats.courses.total", "Total")}</th>
-                  <th className="course-stat">{t("region.stats.courses.active", "Active")}</th>
-                  <th className="event-stat">{t("region.stats.events.passed", "Passed")}</th>
-                  <th className="event-stat">{t("region.stats.events.future", "Future")}</th>
-                  <th>&nbsp;</th>
+                  {/* <th className="course-stat">{t("region.stats.courses.active", "Active")}</th> */}
+                  <th className="event-stat">{t("region.stats.events.total", "Total")}</th>
+                  {/* <th className="event-stat">{t("region.stats.events.future", "Future")}</th> */}
+                  {/* <th>&nbsp;</th> */}
                 </tr>
               </thead>
               <tbody>
-                {regionStats.group.groups.map((group) => {
+                <tr>
+                  <td>&nbsp;</td>
+                  <td className="course-stat number">
+                    {t("region.stats.courses.total.description", "excl. archived")}
+                  </td>
+                  <td className="event-stat number">&nbsp;</td>
+                </tr>
+                {stats.groups.map((group) => {
                   return (
                     <tr>
                       <td>
@@ -155,43 +165,17 @@ export function StatsPage() {
                           t("region.stats.ungrouped", "Ungrouped")
                         )}
                       </td>
-                      <td className="course-stat number">{group.numCourses}</td>
-                      <td className="course-stat number">{group.activeCourses}</td>
-                      <td className="event-stat number">{group.passedEvents}</td>
-                      <td className="event-stat number">{group.futureEvents}</td>
-                      <td className="number">{group.usersParticipating}</td>
+                      <td className="course-stat number">{group.courses.total}</td>
+                      {/* <td className="course-stat number">{group.activeCourses}</td> */}
+                      <td className="event-stat number">{group.events.total}</td>
+                      {/* <td className="event-stat number">{group.futureEvents}</td>
+                      <td className="number">{group.usersParticipating}</td> */}
                     </tr>
                   );
                 })}
-                <tr>
-                  <td>
-                    <strong>{t("region.stats.total", "Total")}</strong>
-                  </td>
-                  <td
-                    className="course-stat number"
-                    title={t(
-                      "region.stats.multipleParticipate",
-                      "Some users participate in multiple events",
-                    )}
-                  >
-                    <strong>{regionStats.total.numCourses}</strong>
-                  </td>
-                  <td className="course-stat number">
-                    <strong>{regionStats.group.total.activeCourses}</strong>
-                  </td>
-                  <td className="event-stat number">
-                    <strong>{regionStats.group.total.passedEvents}</strong>
-                  </td>
-                  <td className="event-stat number">
-                    <strong>{regionStats.group.total.futureEvents}</strong>
-                  </td>
-                  <td className="number">
-                    <strong>{regionStats.group.total.usersParticipating}</strong>
-                  </td>
-                </tr>
               </tbody>
             </table>
-          </div> */}
+          </div>
         </>
       ) : (
         <LoadingPage />
