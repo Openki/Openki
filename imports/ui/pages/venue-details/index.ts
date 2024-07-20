@@ -15,6 +15,8 @@ import { reactiveNow } from "/imports/utils/reactive-now";
 import { i18n } from "/imports/startup/both/i18next";
 import * as Metatags from "/imports/utils/metatags";
 import { SubscriptionType } from "/imports/utils/ServerPublishBlaze";
+import { textPlain } from "/imports/utils/html-tools";
+import { truncate } from "/imports/utils/string-tools";
 
 import { CenteredMarkerEntity, MainMarkerEntity } from "/imports/ui/lib/location-tracker";
 
@@ -64,7 +66,7 @@ template.onCreated(function () {
     } else {
       title = i18n("venue.edit.siteTitle.create", "Create Venue");
     }
-    Metatags.setCommonTags(title);
+    Metatags.setCommonTags(title, truncate(textPlain(venue.description || ""), 160));
   });
 
   instance.busy();
