@@ -14,6 +14,7 @@ import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { Model as NotificationModel } from "./notification";
 import { Comment, Props } from "/imports/emails/notifications/comment";
+import i18next from "i18next";
 
 export interface Body {
   commentId: string;
@@ -105,7 +106,9 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       }
     },
 
-    vars(lng, _actualRecipient, unsubToken, t) {
+    vars(lng, _actualRecipient, unsubToken) {
+      const t = i18next.getFixedT(lng);
+      
       if (!comment) {
         throw new Error("Comment does not exist (0.o)");
       }
@@ -164,7 +167,6 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=commentNotify`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
-        lng,
       };
     },
     template: (props) => <Comment {...props} />,
