@@ -9,7 +9,7 @@ import { LogEntity } from "/imports/api/log/factory";
 import { UserModel, Users } from "/imports/api/users/users";
 
 // import * as notificationEvent from "/imports/notification/notification.event";
- import * as notificationEventCanceled from "/imports/notification/notification.event.canceled";
+import * as notificationEventCanceled from "/imports/notification/notification.event.canceled";
 // import * as notificationEventReminder from "/imports/notification/notification.event.reminder";
 // import * as notificationEventContactParticipants from "/imports/notification/notification.event.contact-participants";
 // import * as notificationRsvp from "/imports/notification/notification.rsvp";
@@ -25,7 +25,7 @@ import { Root, Props as RootProps } from "../emails/root";
 
 export const Notification = {
   // Event: notificationEvent,
-   "Event.Canceled": notificationEventCanceled,
+  "Event.Canceled": notificationEventCanceled,
   // "Event.Reminder": notificationEventReminder,
   // "Event.ContactParticipants": notificationEventContactParticipants,
   // Rsvp: notificationRsvp,

@@ -1,8 +1,8 @@
-import { TFunction } from "i18next";
 import React from "react";
 import { CourseDiscussionEnity } from "/imports/api/course-discussions/course-discussions";
 import { UserModel } from "/imports/api/users/users";
 import { Router } from "meteor/iron:router";
+import { useTranslation } from "react-i18next";
 
 export interface Props {
   username: string;
@@ -16,7 +16,7 @@ export interface Props {
   commenterName: string | undefined;
   siteName: string;
   customSiteName: string;
-  t: TFunction;
+  lng: string;
 }
 
 export function Comment({
@@ -30,8 +30,10 @@ export function Comment({
   commenterName,
   siteName,
   customSiteName,
-  t,
+  lng,
 }: Props) {
+  const { t } = useTranslation(undefined, { lng });
+
   return (
     <>
       <tr>

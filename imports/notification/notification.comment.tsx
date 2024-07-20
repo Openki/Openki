@@ -1,3 +1,4 @@
+import React from "react";
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
@@ -11,7 +12,6 @@ import { Log } from "/imports/api/log/log";
 
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
-import React from "react";
 import { Model as NotificationModel } from "./notification";
 import { Comment, Props } from "/imports/emails/notifications/comment";
 
@@ -105,7 +105,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       }
     },
 
-    vars(_locale, _actualRecipient, unsubToken, t) {
+    vars(lng, _actualRecipient, unsubToken, t) {
       if (!comment) {
         throw new Error("Comment does not exist (0.o)");
       }
@@ -164,6 +164,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=commentNotify`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
+        lng,
       };
     },
     template: (props) => <Comment {...props} />,
