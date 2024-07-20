@@ -5,6 +5,10 @@
   width: 100% !important;
 }
 
+.events-map-location-map .leaflet-popup {
+  margin-bottom: 35px;
+}
+
 .events-map-location-map .leaflet-popup-content {
   max-height: 350px;
   overflow-y: auto;
@@ -13,22 +17,23 @@
   width: 301px !important;
 }
 
-.leaflet-attribution-flag {
+.events-map-location-map .leaflet-attribution-flag {
   display: none !important;
 }
 
-.leaflet-container .leaflet-marker-icon {
+.events-map-location-map .leaflet-marker-icon {
   background: none;
   border: 0;
+  color: $blue;
 
   .fa-regular,
   .fa-brands,
   .fa-solid {
-    font-size: 30px;
+    font-size: 40px;
   }
 }
 
-.leaflet-popup-content .event-compact {
+.events-map-location-map .leaflet-popup-content .event-compact {
   font-size: var(--bs-body-font-size);
 }
 
@@ -46,4 +51,66 @@
 .events-map-location-map > div {
   height: 100%;
   width: 100%;
+}
+
+.events-map-location-map .leaflet-popup-content > h4 {
+  background: $white;
+  margin-bottom: 0;
+  margin-right: -10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+.events-map-location-map .leaflet-container .leaflet-popup-close-button {
+  font-size: 24px;
+}
+
+.events-map-location-map .leaflet-marker-icon-shadow {
+  pointer-events: none;
+  text-shadow:
+    -5px -5px 10px #ffffffab,
+    5px -10px 10px #ffffffba,
+    5px 5px 10px #0009,
+    2px 3px 4px #000000bf;
+  z-index: 0 !important;
+}
+
+.events-map-location-map .leaflet-marker-icon-pin:hover {
+  animation: 0.4s ease-in-out 0s 2 alternate pin-top;
+  z-index: 10000 !important;
+}
+@keyframes pin-top {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: -5px;
+  }
+}
+
+.events-map-location-map .leaflet-marker-icon-pin:hover + .leaflet-marker-icon-shadow {
+  animation: 0.4s ease-in-out 0s 2 alternate shadow-top;
+}
+@keyframes shadow-top {
+  0% {
+    text-shadow:
+      -5px -5px 10px #ffffffab,
+      5px -10px 10px #ffffffba,
+      5px 5px 10px #0009,
+      2px 3px 4px #000000bf;
+    top: 0;
+  }
+
+  100% {
+    text-shadow:
+      -3px -3px 15px #ffffffab,
+      7px -8px 15px #ffffffba,
+      7px 7px 15px #0009,
+      3px 4px 9px #000000bf;
+    top: -5px;
+  }
 }

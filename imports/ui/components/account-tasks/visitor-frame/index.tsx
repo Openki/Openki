@@ -106,7 +106,7 @@ export function VistiorFrame(props: Props) {
         <button type="submit" className="btn btn-add form-control" disabled={isBusy}>
           {isBusy ? (
             <>
-              <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+              <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
               {t("login.visitor.submit.busy", "Registering…")}
             </>
           ) : (

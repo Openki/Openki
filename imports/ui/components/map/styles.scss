@@ -10,7 +10,7 @@
   .fa-regular,
   .fa-brands,
   .fa-solid {
-    font-size: 30px;
+    font-size: 35px;
   }
 }
 
@@ -43,6 +43,12 @@
 .leaflet-marker-pane .leaflet-marker-icon {
   background: none;
   border: 0;
+  color: $blue;
+  text-shadow:
+    -5px -5px 10px #ffffffab,
+    5px -10px 10px #ffffffba,
+    5px 5px 10px #0009,
+    2px 3px 4px #000000bf;
 }
 
 .leaflet-marker-pane .leaflet-marker-icon .fa-map-marker {

@@ -19,6 +19,7 @@ interface ButtonProps {
 }
 interface Props {
   type: "auto" | "form" | "button";
+  visitorUserAllowed?: boolean;
   className?: string | undefined;
   children?: any;
 }
@@ -49,6 +50,7 @@ export function PleaseLogin(props: Props & (AutoProps | FormProps | ButtonProps)
         }
       } else if (!openedLogin) {
         // if the user is not logged in open up the login window
+        Session.set("visitorUserAllowed", props.visitorUserAllowed || false);
         Session.set("pleaseLogin", true);
         setOpenedLogin(true);
       } else if (notPleaseLogin) {

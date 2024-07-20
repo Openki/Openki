@@ -254,7 +254,6 @@
 	"event.editVenue.contactHost": "Kontakt vert",
 	"event.group.confirmRemoveText": "Fjern {NAME}-gruppen fra denne begivenheten?",
 	"event.list.windowtitle": "Begivenheter",
-	"event.metatag.description": "{VENUE} i {REGION}",
 	"event.replication.changeToPattern": "Velg frekvens",
 	"event.replication.changeToPicker": "Velg dato",
 	"event.replication.freq.biWeekly": "hver andre uke",

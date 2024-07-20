@@ -50,7 +50,7 @@ import { CssFromQuery } from "/imports/ui/lib/css-from-query";
 import type { Data as GroupDetailsData } from "/imports/ui/pages/group-details";
 import type { Data as VenuesMapData } from "/imports/ui/pages/venues-map";
 import type { Data as EventsMapData } from "/imports/ui/pages/events-map";
-import type { Data as FrameEventsMapData } from "/imports/ui/pages/frames/events-map";
+import type { Props as FrameEventsMapProps } from "/imports/ui/pages/frames/events-map";
 import type { Data as AdminTenantsData } from "/imports/ui/pages/admin/tenants";
 
 const makeFilterQuery = function (
@@ -607,7 +607,7 @@ RouterAsync.route("frame/eventsMap", {
       events: Events.findFilter.subscribe({ ...{ canceled: false }, ...query }),
     };
   },
-  data(): FrameEventsMapData {
+  data(): FrameEventsMapProps {
     return {
       events: this.subscriptions()?.events(),
     };

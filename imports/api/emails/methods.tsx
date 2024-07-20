@@ -1,12 +1,8 @@
+import React from "react";
 import { Accounts } from "meteor/accounts-base";
 import { Match, check } from "meteor/check";
 import { Email } from "meteor/email";
-import { SSR } from "meteor/meteorhacks:ssr";
 import { Meteor } from "meteor/meteor";
-import moment from "moment";
-import { Router } from "meteor/iron:router";
-import juice from "juice";
-import { Spacebars } from "meteor/spacebars";
 
 import { Version } from "/imports/api/version/version";
 import { Users } from "/imports/api/users/users";
@@ -14,10 +10,11 @@ import { Users } from "/imports/api/users/users";
 import { Notification } from "/imports/notification/notification";
 import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import { ServerMethod } from "/imports/utils/ServerMethod";
-import { PublicSettings } from "/imports/utils/PublicSettings";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 import { Type } from "/imports/utils/CustomChecks";
-import { toEmailLogo } from "/imports/utils/toEmailLogo";
+import { renderToEmail } from "/imports/utils/renderToEmail";
+import { Root } from "../../emails/root";
+import { Report } from "../../emails/report";
 
 export const sendVerificationEmail = ServerMethod(
   "sendVerificationEmail",
@@ -87,64 +84,34 @@ export const sendReport = ServerMethod(
     check(userAgent, String);
     check(reportMessage, String);
 
-    let reporter = "A fellow visitor";
     const user = await Meteor.userAsync();
-    if (user) {
-      reporter = Spacebars.SafeString(
-        `<a href='${Router.url("userprofile", user)}'>${user.getDisplayName()}</a>`,
-      );
-    }
-    moment.locale("en");
-
-    const { siteName } = Accounts.emailTemplates;
 
     const version = await Version.findOneAsync();
-    let versionString = "";
-    if (version) {
-      const fullVersion = version.basic + (version.branch !== "master" ? ` ${version.branch}` : "");
-      const commit = version.commitShort;
-      const deployDate = moment(version.activation).format("lll");
-      const restart = moment(version.lastStart).format("lll");
-      versionString =
-        `<br>The running version is [${siteName}] ${fullVersion}  @ commit ${commit}` +
-        `<br>It was deployed on ${deployDate},` +
-        `<br>and last restarted on ${restart}.`;
-    }
 
+    const { siteName } = Accounts.emailTemplates;
     const subjectPrefix = `[${siteName}] `;
-
     const subject = `Report: ${title}`;
 
+    const message = renderToEmail(
+      <Root subject={subject}>
+        <Report
+          user={user}
+          version={version}
+          location={location}
+          title={title}
+          report={reportMessage}
+          userAgent={userAgent}
+        />
+      </Root>,
+    );
+
     const reportEmail = PrivateSettings.reporter;
-
-    const emailLogo = PublicSettings.emailLogo;
-    let message = SSR.render("reportEmail", {
-      reporter,
-      location,
-      subject,
-      title,
-      site: {
-        brand: PublicSettings.theme.brand,
-        url: Meteor.absoluteUrl(),
-        logo: toEmailLogo(emailLogo),
-        name: siteName,
-      },
-      report: reportMessage,
-      versionString,
-      timeNow: new Date(),
-      userAgent,
-    });
-
-    // Template can't handle DOCTYPE header, so we add the thing here.
-    const DOCTYPE =
-      '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-    message = DOCTYPE + message;
 
     const email: Email.EmailOptions = {
       from: reportEmail.sender,
       to: reportEmail.recipient,
       subject: subjectPrefix + subject,
-      html: juice(message),
+      html: message,
     };
 
     Email.send(email);

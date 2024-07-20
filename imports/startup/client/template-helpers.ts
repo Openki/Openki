@@ -161,6 +161,10 @@ const helpers: { [name: string]: Function } = {
     return locationFormat(loc);
   },
 
+  geoLocationLink(loc: { coordinates: [number, number] }) {
+    return `geo:${loc?.coordinates?.[1]},${loc?.coordinates?.[0]}`;
+  },
+
   /**
    * Strip HTML markup
    */

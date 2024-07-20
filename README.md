@@ -1,4 +1,5 @@
-Openki [![pipeline](https://gitlab.com/Openki/Openki/badges/master/pipeline.svg?ignore_skipped=true)](https://gitlab.com/Openki/Openki/-/pipelines) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250) [![Maintainability](https://api.codeclimate.com/v1/badges/49da9e86d8722b2162b8/maintainability)](https://codeclimate.com/github/Openki/Openki/maintainability)
+Openki [![pipeline](https://gitlab.com/Openki/Openki/badges/master/pipeline.svg?ignore_skipped=true)](https://gitlab.com/Openki/Openki/-/pipelines) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/250/badge)](https://bestpractices.coreinfrastructure.org/projects/250)
+
 ====
 
 **Platform for open education** – Free software built with [Meteor.js](https://meteor.com) and [React](https://react.dev/)
@@ -17,48 +18,56 @@ Beside the longterm public installations, Openki can be used at unconferences, B
 <div align="right"> (★ Star us if you like the idea)</div>
 
 
-### Test it
+### Use or try it
 
-- Live: [openki.net](https://openki.net)
-- Demo / playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Englistan "running here")
-- Beta: [dev.openki.net](https://dev.openki.net)
+Live: [openki.net](https://openki.net)  
+Demo / playground: [sandbox.openki.net](https://sandbox.openki.net/?region=Englistan "running here")  
+Pre-release: [dev.openki.net](https://dev.openki.net)  
 
 ----
 
 ### Features
-- :pencil: Easily propose Topics and events
-- :mag: Fulltext-search
-- :speech_balloon: Simple discussion-board per course
-- :computer: Infoscreen views with upcoming events for big and small screens ([Docs](https://gitlab.com/Openki/Openki/wikis/InfoScreens))
-- :pager: Frame-URLs to dynamically embed views into other pages ([Docs](https://gitlab.com/Openki/Openki/wikis/Frames))
-- :cat: Categories with sub-categories
-- :round_pushpin: Regions- and room-system
+
+Frontend:
+- :pencil: Easily propose topics and events
+- :speech_balloon: Simple discussion board per course
 - :mortar_board: Extendable participant roles
-- :white_flower: Groups-, community- and program-system and -filters
-- :date: Calendar and iCal exports ([Docs](https://gitlab.com/Openki/Openki/wikis/calendar-export))
-- :key: Single-Sign-on (OAuth: Facebook, Google)
-- :iphone: Responsive design: Mobile, tablet and desktop computers
-- :ideograph_advantage: I18n: In-browser-GUI for [crowdsourced translation](https://gitlab.com/Openki/Openki/-/wikis/i18n) (using [Weblate](https://hosted.weblate.org/projects/openki/openki/))
-- :envelope: Email notifications
-- :electric_plug: read-only JSON API
-- :door: private usage, multitenancy
+- :cat: Categories with sub-categories
+- :round_pushpin: Regions and venue system
+- :white_flower: Groups-, community- and program functionality with filters
+
+Integrations:
+- :computer: Multiple kiosk screen views with upcoming events ([docs](https://gitlab.com/Openki/Openki/wikis/InfoScreens))
+- :pager: Iframe-URLs to dynamically embed views into other pages ([docs](https://gitlab.com/Openki/Openki/wikis/Frames))
+- :date: Calendar and iCal exports ([docs](https://gitlab.com/Openki/Openki/wikis/calendar-export))
+- :key: Single-Sign-on (OAuth: Facebook, Google, GitHub...)
+- :ideograph_advantage: I18n: GUI for crowdsourced translation (using [Weblate](https://hosted.weblate.org/projects/openki/openki/)) ([docs](https://gitlab.com/Openki/Openki/-/wikis/i18n))
+- :electric_plug: JSON API, read-only ([docs](https://gitlab.com/Openki/Openki/-/wikis/JSON-API))
+
+Further:
+- :envelope: E-mail notifications
 - :mailbox: Private messaging
-- :ghost: Customizability, White Labeling
 - :open_file_folder: File upload
+- :mag: Fulltext-search
+- :iphone: Responsive design
+- :bar_chart: Statistics and evaluation
+- :door: multitenancy (internal, private usage)
+- :ghost: Customizability, some white labeling
+
 
 #### Intended features
-- :white_large_square: White-labeling for groups, locations and regions
-- :bar_chart: statistics
-- :closed_lock_with_key: more privacy settings
+- :white_large_square: White-labeling per groups, organizations and regions
+- :chart_with_upwards_trend: Visual statistics
+- :closed_lock_with_key: More privacy settings
 - :heavy_check_mark: Voting-/polling-system, fix-a-date schedules
 - :iphone: Smartphone App
-- ...see more in our [issues](https://gitlab.com/Openki/Openki/-/issues/?sort=milestone&state=opened&not%5Blabel_name%5D%5B%5D=defect%3A%3Anot%20urgent&not%5Blabel_name%5D%5B%5D=defect%3A%3A&not%5Blabel_name%5D%5B%5D=urgent%20%E2%98%A0&label_name%5B%5D=size%3A%3Abig&first_page_size=20).
+- ...see more in our [issues](https://gitlab.com/Openki/Openki/-/issues/?sort=milestone&state=opened&not%5Blabel_name%5D%5B%5D=defect%3A%3Anot%20urgent&not%5Blabel_name%5D%5B%5D=defect%3A%3A&not%5Blabel_name%5D%5B%5D=urgent%20%E2%98%A0&label_name%5B%5D=size%3A%3Abig&first_page_size=20).  
+Please upvote new features you would like to see or propose new ones.
 
-----
 
 ## Contribution
-Submissions are welcome. To submit a change, [fork this repo](https://gitlab.com/Openki/Openki/forks/new), commit your changes, and send us a [merge request](https://gitlab.com/Openki/Openki/merge_requests/new).<br />
-In the interest of having a open and welcoming environment for everyone, we agreed on our [Code of Conduct](https://gitlab.com/Openki/Openki/wikis/Code-of-Conduct). By participating in this project you agree to abide by its terms.
+Code submissions are welcome. To submit a change, [fork this repo](https://gitlab.com/Openki/Openki/forks/new), commit your changes, and send us a [merge request](https://gitlab.com/Openki/Openki/merge_requests/new).<br />
+In the interest of having an open and welcoming environment for everyone, we agreed on our [Code of Conduct](https://gitlab.com/Openki/Openki/wikis/Code-of-Conduct). By participating in this project you agree to abide by its terms.
 
 ### Installation (Linux, OSX and Windows)
 - To install Meteor locally, run: `curl https://install.meteor.com | sh`  (or download the [installer for Windows](https://install.meteor.com/windows))
@@ -109,19 +118,18 @@ In case you get weird errors when starting (eg. error 14) try this command:
 - More documentation can be found on our [blog](https://about.openki.net/?page_id=1043)
 
 
-### Contact
+### Contacts
 - Technical Support (only concerning technical and conceptual aspects of the Web Platform): [support_ät_openki.net](mailto:support_ät_openki.net "write us")
-- Dev list: [dev-core_ät_lists.openki.net](mailto:dev-core[_ät_]lists.openki.net "write us")
 - Concerning regions: [regions_ät_openki.net](mailto:regions_ät_openki.net "write us")
 - Community (rooms, mentors, communication, etc): [community_ät_openki.net](mailto:community_ät_openki.net "write us")
+- Sensitive, security related issues can be reported to the following email: [security_ät_openki.net](mailto:security_ät_openki.net "write us"). Here you get some [more info](https://gitlab.com/Openki/Openki/-/wikis/security) about it.
 
 ### Help translating
+To help translating, please visit our our [translation guide](https://gitlab.com/Openki/Openki/-/wikis/translation).  
 
 <a href="https://gitlab.com/Openki/Openki/-/wikis/translation/">
 <img src="https://hosted.weblate.org/widget/openki/287x66-grey.png" alt="Graphical translation status box from Weblate" />
 </a>
 
-To help translating, please visit our our [translation guide](https://gitlab.com/Openki/Openki/-/wikis/translation).
-
 ### License
-- AGPL – GNU Affero General Public License 3.0
+- [AGPL](https://gitlab.com/Openki/Openki/-/blob/dev/LICENSE) – GNU Affero General Public License 3.0

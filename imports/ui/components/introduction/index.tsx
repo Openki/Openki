@@ -13,7 +13,7 @@ import { ScssVars } from "/imports/ui/lib/scss-vars";
 import { getLocalizedValue } from "/imports/utils/getLocalizedValue";
 import { PricePolicy } from "/imports/ui/components/price-policy";
 import { useViewportSize } from "/imports/ui/lib/useViewportSize";
-import { useCurrentRouteName } from "/imports/ui/lib/useCurrentRouteName";
+import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import "./styles.scss";
 

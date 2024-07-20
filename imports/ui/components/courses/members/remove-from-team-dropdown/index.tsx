@@ -4,7 +4,6 @@ import { useUser } from "/imports/utils/react-meteor-data";
 
 import { CourseMemberEntity } from "/imports/api/courses/courses";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
 import * as Tooltips from "/imports/utils/Tooltips";
 
 import "./styles.scss";
@@ -19,7 +18,7 @@ export function RemoveFromTeamDropdown({ member, onClick }: Props) {
   const user = useUser();
 
   function isNotPriviledgedSelf() {
-    const notPriviledgedUser = !UserPrivilegeUtils.privileged(user, "admin");
+    const notPriviledgedUser = !user?.privileged("admin");
     return member.user === user?._id && notPriviledgedUser;
   }
 
