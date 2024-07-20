@@ -177,6 +177,7 @@ export function AccountTasks() {
     const hidden = () => {
       setActiveTask("login");
       Session.set("pleaseLogin", false);
+      Session.set("visitorUserAllowed", false);
       setShow(false);
     };
     const shown = () => {

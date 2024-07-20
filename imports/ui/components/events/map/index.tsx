@@ -61,8 +61,21 @@ function groupBy<T>(array: T[], predicate: (value: T, index: number, array: T[])
 export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab = false }: Data) {
   const locale = useSession("locale");
 
-  const markerIcon = new DivIcon({
+  const eventMarkerIcon = new DivIcon({
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); font-size: 35px;"></span>',
+    className: "leaflet-marker-icon-pin",
+  });
+  const venueMarkerIcon = new DivIcon({
     html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
+    className: "leaflet-marker-icon-pin",
+  });
+  const eventMarkerShadowIcon = new DivIcon({
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); font-size: 35px;"></span>',
+    className: "leaflet-marker-icon-shadow",
+  });
+  const venueMarkerShadowIcon = new DivIcon({
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"></span>',
+    className: "leaflet-marker-icon-shadow",
   });
 
   // eslint-disable-next-line no-param-reassign
@@ -96,22 +109,36 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
       <MapContainer bounds={markers.map((mark) => mark.loc) as any}>
         {(tileLayers[locale] || tileLayers.default)()}
         {markers.map((mark) => (
-          <Marker key={mark._id} position={mark.loc as any} icon={markerIcon}>
-            <Popup>
-              <h4>
-                <VenueTag venue={mark.venue as EventVenueEntity} openInNewTab={openLinksInNewTab} />
-              </h4>
-              <div className="course-event-list">
-                <EventList
-                  dataEvents={mark.events}
-                  withDate={true}
-                  withImage={true}
-                  withVenue={false}
-                  openInNewTab={openLinksInNewTab}
-                />
-              </div>
-            </Popup>
-          </Marker>
+          <>
+            <Marker
+              key={mark._id}
+              position={mark.loc as any}
+              icon={mark.venue?._id ? venueMarkerIcon : eventMarkerIcon}
+            >
+              <Popup>
+                <h4>
+                  <VenueTag
+                    venue={mark.venue as EventVenueEntity}
+                    openInNewTab={openLinksInNewTab}
+                  />
+                </h4>
+                <div className="course-event-list">
+                  <EventList
+                    dataEvents={mark.events}
+                    withDate={true}
+                    withImage={true}
+                    withVenue={false}
+                    openInNewTab={openLinksInNewTab}
+                  />
+                </div>
+              </Popup>
+            </Marker>
+            <Marker
+              key={mark._id + 2}
+              position={mark.loc as any}
+              icon={mark.venue?._id ? venueMarkerShadowIcon : eventMarkerShadowIcon}
+            ></Marker>
+          </>
         ))}
         {fullscreenControl ? <FullscreenControl /> : null}
       </MapContainer>

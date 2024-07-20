@@ -1,6 +1,6 @@
 import { MeteorAsync } from "/imports/utils/promisify";
 import { useTranslation } from "react-i18next";
-import { useSession } from "/imports/utils/react-meteor-data";
+import { useSession, useSessionEquals } from "/imports/utils/react-meteor-data";
 import React, { useState } from "react";
 
 import * as Alert from "/imports/api/alerts/alert";
@@ -34,6 +34,7 @@ export function LoginFrame({
   onLogin,
 }: Props) {
   const { t } = useTranslation();
+  const visitorUserAllowed = useSessionEquals("visitorUserAllowed", true);
   const siteName = useSiteName();
   const currentRegion = useCurrentRegion();
   const locale = useSession("locale");
@@ -277,7 +278,20 @@ export function LoginFrame({
           </React.Fragment>
         ))}
         <hr />
-        {PublicSettings.feature.visitorUser ? (
+        <div className="row g-2 align-items-center">
+          <div className="col">
+            <button
+              className="btn btn-add form-control js-register-open my-2"
+              type="button"
+              onClick={() => {
+                onRegisterOpen(loginData);
+              }}
+            >
+              {t("login.register.submit", "Create account")}
+            </button>
+          </div>
+        </div>
+        {PublicSettings.feature.visitorUser && visitorUserAllowed ? (
           <div className="row g-2 align-items-center">
             <div className="col">
               <button
@@ -292,19 +306,6 @@ export function LoginFrame({
             </div>
           </div>
         ) : null}
-        <div className="row g-2 align-items-center">
-          <div className="col">
-            <button
-              className="btn btn-add form-control js-register-open my-2"
-              type="button"
-              onClick={() => {
-                onRegisterOpen(loginData);
-              }}
-            >
-              {t("login.register.submit", "Create account")}
-            </button>
-          </div>
-        </div>
       </div>
     </form>
   );

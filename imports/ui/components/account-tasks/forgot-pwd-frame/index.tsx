@@ -95,8 +95,7 @@ export function ForgotPwdFrame(props: Props) {
           >
             {isBusy ? (
               <>
-                {" "}
-                <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+                <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
                 {t("forgot.send.busy", "Resetting password…")}
               </>
             ) : (

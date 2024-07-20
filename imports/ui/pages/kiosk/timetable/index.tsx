@@ -12,6 +12,7 @@ import { VenueModel } from "/imports/api/venues/venues";
 import { textPlain } from "/imports/utils/html-tools";
 import * as UrlTools from "/imports/utils/url-tools";
 import { useDateTimeFormat } from "/imports/utils/react-moment-format";
+import { useCurrentRouteName } from "/imports/utils/react-meteor-router";
 
 import "./styles.scss";
 
@@ -47,6 +48,7 @@ export function KioskTimetablePage(props: Props) {
   const { t } = useTranslation();
   const { timeFormat } = useDateTimeFormat();
   const userId = useUserId();
+  const routeName = useCurrentRouteName();
 
   if (userId) {
     Meteor.logout();
@@ -76,7 +78,7 @@ export function KioskTimetablePage(props: Props) {
       options.query = queryString;
     }
 
-    return Router.url(Router.current().route.getName(), {}, options);
+    return Router.url(routeName, {}, options);
   }
 
   return (

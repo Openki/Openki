@@ -7,8 +7,6 @@ import { Template } from "meteor/templating";
 import { EventModel, EventParticipantEntity } from "/imports/api/events/events";
 import * as EventsMethods from "/imports/api/events/methods";
 
-import * as UserPrivilegeUtils from "/imports/utils/user-privilege-utils";
-
 import { ParticipantContact } from "/imports/ui/components/participant/contact";
 import { ProfileLink } from "/imports/ui/components/profile-link";
 import { SendMessage, Data as SendMessageData } from "/imports/ui/components/send-message";
@@ -87,7 +85,7 @@ export function EventParticipants({ event }: Props) {
       return false;
     }
 
-    if (UserPrivilegeUtils.privilegedTo("admin")) {
+    if (user?.privileged("admin")) {
       return true;
     }
 

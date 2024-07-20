@@ -224,7 +224,7 @@ export function RegisterFrame({ username, password, email, allowNews, onRegister
         <button type="submit" className="btn btn-add form-control js-register" disabled={isBusy}>
           {isBusy ? (
             <>
-              <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>
+              <span className="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></span>{" "}
               {t("login.register.submit.busy", "Registering…")}
             </>
           ) : (

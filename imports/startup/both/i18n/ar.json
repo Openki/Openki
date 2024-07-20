@@ -363,7 +363,6 @@
 	"event.group.confirmOrgNotes": "يمكن لجميع أعضاء هذه المجموعة تحرير هذا الحدث.",
 	"event.group.confirmRemoveText": "إزالة المجموعة {NAME} من هذا الحدث؟",
 	"event.list.windowtitle": "احداث",
-	"event.metatag.description": "{VENUE} في {REGION}",
 	"event.not_exists": "تعذر العثور على هذا الحدث. ربما تم حذفه أو لم يكن موجودا على الإطلاق.",
 	"event.not_exists.unlogged": "تسجيل الدخول/التسجيل",
 	"event.reallycancel": "يرجى تأكيد إلغاء هذا الحدث. سيتم عرضه على أنه \"ملغى\" وسيتم إبلاغ جميع المستخدمين {NUM} الحاضرين تلقائيًا عن طريق البريد الإلكتروني بإلغاء هذا الحدث.",

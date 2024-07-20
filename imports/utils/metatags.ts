@@ -5,10 +5,6 @@ import { PublicSettings } from "/imports/utils/PublicSettings";
 
 // See: https://guide.meteor.com/deployment.html#seo
 
-function getSiteTitlePrefix() {
-  return `${PublicSettings.siteName}  - `;
-}
-
 function getSiteDefaultImage() {
   const ogLogo = PublicSettings.ogLogo.src;
 
@@ -26,23 +22,26 @@ export function removeAll() {
   DocHead.removeDocHeadAddedTags();
 }
 
-export function setCommonTags(title: string, description = "") {
-  const fullTitle = getSiteTitlePrefix() + title;
-  const image = getSiteDefaultImage();
+export function setCommonTags(title: string, description = "", image = "") {
+  // fix a bug in DocHead.AddMeta
+  const cleanedTitle = title.replace(/"/g, "'");
+  const cleanedDescription = description.replace(/"/g, "'");
 
-  DocHead.setTitle(fullTitle);
+  DocHead.setTitle(`${PublicSettings.siteName} - ${title}`);
 
   DocHead.addMeta({ property: "og:type", content: "website" });
-  DocHead.addMeta({ property: "og:title", content: fullTitle });
-  DocHead.addMeta({ property: "og:image", content: image });
+  DocHead.addMeta({ property: "og:site_name", content: PublicSettings.siteName });
+  DocHead.addMeta({ property: "og:title", content: cleanedTitle });
+  DocHead.addMeta({ property: "og:image", content: image || getSiteDefaultImage() });
 
-  DocHead.addMeta({ name: "twitter:card", content: "summary" });
-  DocHead.addMeta({ name: "twitter:title", content: fullTitle });
-  DocHead.addMeta({ name: "twitter:image", content: image });
+  DocHead.addMeta({ name: "twitter:card", content: !image ? "summary" : "summary_large_image" });
+  DocHead.addMeta({ name: "twitter:site", content: PublicSettings.siteName });
+  DocHead.addMeta({ name: "twitter:title", content: cleanedTitle });
+  DocHead.addMeta({ name: "twitter:image", content: image || getSiteDefaultImage() });
 
   if (description) {
-    DocHead.addMeta({ name: "description", content: description });
-    DocHead.addMeta({ property: "og:description", content: description });
-    DocHead.addMeta({ name: "twitter:description", content: description });
+    DocHead.addMeta({ name: "description", content: cleanedDescription });
+    DocHead.addMeta({ property: "og:description", content: cleanedDescription });
+    DocHead.addMeta({ name: "twitter:description", content: cleanedDescription });
   }
 }

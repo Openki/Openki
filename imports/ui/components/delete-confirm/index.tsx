@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
 
+import { ButtonDelete } from "/imports/ui/components/buttons";
 import { DeleteConfirmDialog } from "/imports/ui/components/delete-confirm-dialog";
 
 export type Props = {
@@ -11,20 +11,15 @@ export type Props = {
 };
 
 export function DeleteConfirm({ confirmText, confirmButton, onRemove, busyButton }: Props) {
-  const { t } = useTranslation();
   const [isConfirm, setIsConfirm] = useState(false);
 
   if (!isConfirm) {
     return (
-      <button
-        type="button"
-        className="btn btn-delete text-nowrap text-danger"
+      <ButtonDelete
         onClick={() => {
           setIsConfirm(true);
         }}
-      >
-        {t("_button.delete")}
-      </button>
+      />
     );
   }
   return (

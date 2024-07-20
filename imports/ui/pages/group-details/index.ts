@@ -2,6 +2,8 @@ import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
 import { ReactiveVar } from "meteor/reactive-var";
 import { Template as TemplateAny, TemplateStaticTyped } from "meteor/templating";
+import { truncate } from "/imports/utils/string-tools";
+import { textPlain } from "/imports/utils/html-tools";
 
 import { GroupModel, Groups } from "/imports/api/groups/groups";
 import * as GroupsMethods from "/imports/api/groups/methods";
@@ -61,7 +63,12 @@ template.onCreated(function () {
 
   instance.autorun(() => {
     const data = Template.currentData();
-    Metatags.setCommonTags(data.group.name);
+    const title = data.group.name || i18n("group.windowtitle.create", "Create group");
+    let description = "";
+    if (data.group.description) {
+      description = truncate(textPlain(data.group.claim), 160);
+    }
+    Metatags.setCommonTags(title, description, data.group.publicLogoUrl());
   });
 
   const { group } = instance.data;
