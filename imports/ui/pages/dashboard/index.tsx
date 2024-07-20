@@ -10,7 +10,7 @@ export function DashboardPage() {
   const { t } = useTranslation();
   const featuredGroup = useFeaturedGroup();
 
-  const list= [
+  const list = [
     {
       entity: "course",
       title: featuredGroup?.name ?? "",
