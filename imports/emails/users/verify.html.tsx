@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 export function Verify({ username, url, lng }: { username: string; url: string; lng: string }) {
   const { t } = useTranslation(undefined, { lng });
-  
+
   const siteName = Accounts.emailTemplates.siteName;
   const reportEmail = PrivateSettings.reporter.recipient;
 
