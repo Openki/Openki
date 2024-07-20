@@ -1,17 +1,17 @@
 import { check } from "meteor/check";
 import { Router } from "meteor/iron:router";
 import { Meteor } from "meteor/meteor";
-import { Spacebars } from "meteor/spacebars";
 
 import { Log } from "/imports/api/log/log";
 import { UserModel } from "/imports/api/users/users";
 import { RegionModel, Regions } from "/imports/api/regions/regions";
 import { Events } from "/imports/api/events/events";
 
-import { i18n } from "/imports/startup/both/i18next";
 import * as StringTools from "/imports/utils/string-tools";
 import { getSiteName } from "/imports/utils/getSiteName";
 import { LocalTime } from "/imports/utils/local-time";
+import { Model as NotificationModel } from "./notification";
+import { EventCanceled, Props } from "../emails/notifications/event.canceled";
 
 interface Body {
   sender: string;
@@ -58,7 +58,7 @@ export function record(senderId: string, eventId: string, message: string) {
   Log.record("Notification.Send", [senderId, eventId, ...recipients], body);
 }
 
-export function Model(entry: { body: Body }) {
+export function Model(entry: { body: Body }): NotificationModel<Props> {
   const { body } = entry;
   const event = Events.findOne(body.event);
 
@@ -78,7 +78,7 @@ export function Model(entry: { body: Body }) {
       }
     },
 
-    vars(userLocale: string, _actualRecipient: UserModel, unsubToken: string) {
+    vars(lng, _actualRecipient, unsubToken, t) {
       if (!event) {
         throw new Error("Event does not exist (0.o)");
       }
@@ -88,9 +88,8 @@ export function Model(entry: { body: Body }) {
 
       const subjectvars = {
         EVENT: StringTools.truncate(event.title, 50),
-        lng: userLocale,
       };
-      const subject = i18n(
+      const subject = t(
         "notification.event.canceled.mail.subject",
         "Canceled: {EVENT}",
         subjectvars,
@@ -100,10 +99,10 @@ export function Model(entry: { body: Body }) {
       const regionZone = LocalTime.zone(event.region);
 
       const startMoment = regionZone.at(event.start);
-      startMoment.locale(userLocale);
+      startMoment.locale(lng);
 
       const endMoment = regionZone.at(event.end);
-      endMoment.locale(userLocale);
+      endMoment.locale(lng);
 
       const emailLogo = region?.custom?.emailLogo;
       const siteName = getSiteName(region);
@@ -126,11 +125,12 @@ export function Model(entry: { body: Body }) {
         customSiteUrl: `${Meteor.absoluteUrl()}?campaign=eventCanceled`,
         customSiteName: siteName,
         customEmailLogo: emailLogo,
-        eventTitle: "",
+        eventTitle: undefined as React.JSX.Element | undefined,
         message: entry.body.message,
+        lng,
       };
 
-      const eventFullTitle = i18n("notification.event.canceled.mail.title", "{DATE} — {EVENT}", {
+      const eventFullTitle = t("notification.event.canceled.mail.title", "{DATE} — {EVENT}", {
         EVENT: event.title,
         DATE: startMoment.calendar(),
       });
@@ -138,10 +138,10 @@ export function Model(entry: { body: Body }) {
         query: "campaign=eventCanceled",
       });
 
-      vars.eventTitle = Spacebars.SafeString(`<a href="${eventUrl}">${eventFullTitle}</a>`);
+      vars.eventTitle = <a href={eventUrl}>{eventFullTitle}</a>;
 
       return vars;
     },
-    template: "notificationEventCanceledEmail",
+    template: (props) => <EventCanceled {...props} />,
   };
 }
