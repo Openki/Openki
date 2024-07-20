@@ -1,8 +1,10 @@
-import { TFunction } from "i18next";
+import i18next from "i18next";
 import { Accounts } from "meteor/accounts-base";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
 
-export function resetPassword(username: string, url: string, t: TFunction): string {
+export function resetPassword(username: string, url: string, lng: string): string {
+  const t = i18next.getFixedT(lng);
+
   const siteName = Accounts.emailTemplates.siteName;
   const reportEmail = PrivateSettings.reporter.recipient;
 
