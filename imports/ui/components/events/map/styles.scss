@@ -69,13 +69,13 @@
 }
 
 .events-map-location-map .leaflet-marker-icon-shadow {
-  z-index: 0 !important;
   pointer-events: none;
   text-shadow:
     -5px -5px 10px #ffffffab,
     5px -10px 10px #ffffffba,
     5px 5px 10px #0009,
     2px 3px 4px #000000bf;
+  z-index: 0 !important;
 }
 
 .events-map-location-map .leaflet-marker-icon-pin:hover {

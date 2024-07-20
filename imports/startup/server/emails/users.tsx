@@ -31,17 +31,13 @@ Accounts.emailTemplates.verifyEmail = {
   },
 
   text(user, url) {
-    const t = i18next.getFixedT(user.locale);
-
-    return verify((user as UserModel).getDisplayName(), url, t);
+    return verify((user as UserModel).getDisplayName(), url, user.locale);
   },
 
   html(user, url) {
-    const t = i18next.getFixedT(user.locale);
-
     return renderToEmail(
       <Root subject={Accounts.emailTemplates.verifyEmail.subject?.(user)}>
-        <Verify username={(user as UserModel).getDisplayName()} url={url} t={t} />
+        <Verify username={(user as UserModel).getDisplayName()} url={url} lng={user.locale} />
       </Root>,
     );
   },
@@ -61,17 +57,17 @@ Accounts.emailTemplates.resetPassword = {
   },
 
   text(user, url) {
-    const t = i18next.getFixedT(user.locale);
-
-    return resetPassword((user as UserModel).getDisplayName(), url, t);
+    return resetPassword((user as UserModel).getDisplayName(), url, user.locale);
   },
 
   html(user, url) {
-    const t = i18next.getFixedT(user.locale);
-
     return renderToEmail(
       <Root subject={Accounts.emailTemplates.resetPassword.subject?.(user)}>
-        <ResetPassword username={(user as UserModel).getDisplayName()} url={url} t={t} />
+        <ResetPassword
+          username={(user as UserModel).getDisplayName()}
+          url={url}
+          lng={user.locale}
+        />
       </Root>,
     );
   },
