@@ -1,18 +1,20 @@
 import React from "react";
-import { TFunction } from "i18next";
 import { Accounts } from "meteor/accounts-base";
 import { Router } from "meteor/iron:router";
 import { PrivateSettings } from "/imports/utils/PrivateSettings";
+import { useTranslation } from "react-i18next";
 
 export function ResetPassword({
   username,
   url,
-  t,
+  lng,
 }: {
   username: string;
   url: string;
-  t: TFunction;
+  lng: string;
 }) {
+  const { t } = useTranslation(undefined, { lng });
+
   const siteName = Accounts.emailTemplates.siteName;
   const reportEmail = PrivateSettings.reporter.recipient;
 
