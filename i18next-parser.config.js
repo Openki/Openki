@@ -24,7 +24,7 @@ module.exports = {
     ts: [
       {
         lexer: "JavascriptLexer",
-        functions: ["i18n", "t"], // Array of functions to match
+        functions: ["i18n"], // Array of functions to match
       },
     ],
     tsx: [
