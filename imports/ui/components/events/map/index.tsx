@@ -62,7 +62,7 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
   const locale = useSession("locale");
 
   const eventMarkerIcon = new DivIcon({
-    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); font-size: 35px;"></span>',
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); font-size: 30px;"></span>',
     className: "leaflet-marker-icon-pin",
   });
   const venueMarkerIcon = new DivIcon({
@@ -70,7 +70,7 @@ export function EventsMap({ events, fullscreenControl = true, openLinksInNewTab 
     className: "leaflet-marker-icon-pin",
   });
   const eventMarkerShadowIcon = new DivIcon({
-    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); font-size: 35px;"></span>',
+    html: '<span class="fa-solid fa-location-dot" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); font-size: 30px;"></span>',
     className: "leaflet-marker-icon-shadow",
   });
   const venueMarkerShadowIcon = new DivIcon({
