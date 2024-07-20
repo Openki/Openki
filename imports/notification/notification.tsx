@@ -2,7 +2,6 @@ import { Accounts } from "meteor/accounts-base";
 import { Email } from "meteor/email";
 import { Random } from "meteor/random";
 import { Match, check } from "meteor/check";
-import i18next, { TFunction } from "i18next";
 
 import { Log } from "/imports/api/log/log";
 import { LogEntity } from "/imports/api/log/factory";
@@ -79,22 +78,20 @@ export namespace SendResult {
 export type Model<T> = {
   accepted(user: UserModel): void;
   vars(
-    userLocale: string,
+    locale: string,
     user: UserModel,
     unsubToken: string,
-    t: TFunction,
   ): {
     fromAddress?: string | undefined;
   } & RootProps &
     // Remove some props
-    Omit<T, "siteName" | "customSiteName" | "username" | "t">;
+    Omit<T, "siteName" | "customSiteName" | "username">;
   template: (
     props: {
       fromAddress?: string | undefined;
       siteName: string;
       locale: string;
       username: string;
-      t: TFunction;
     } & RootProps &
       T,
   ) => React.JSX.Element;
@@ -147,13 +144,12 @@ export function send(
 
         const username = user.getDisplayName();
         const locale = user.locale || "en";
-        const t = i18next.getFixedT(locale);
 
         const { siteName } = Accounts.emailTemplates;
         const subjectPrefix = `[${siteName}] `;
 
         unsubToken = Random.secret();
-        const vars = model.vars(locale, user, unsubToken, t);
+        const vars = model.vars(locale, user, unsubToken);
 
         const message = renderToEmail(
           <Root
@@ -170,7 +166,6 @@ export function send(
               customSiteName: vars.customSiteName || siteName,
               locale,
               username,
-              t,
             })}
           </Root>,
         );

@@ -78,7 +78,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
       }
     },
 
-    vars(lng, _actualRecipient, unsubToken, t) {
+    vars(lng, _actualRecipient, unsubToken) {
       if (!event) {
         throw new Error("Event does not exist (0.o)");
       }
@@ -127,7 +127,7 @@ export function Model(entry: { body: Body }): NotificationModel<Props> {
         customEmailLogo: emailLogo,
         eventTitle: undefined as React.JSX.Element | undefined,
         message: entry.body.message,
-        lng,
+      
       };
 
       const eventFullTitle = t("notification.event.canceled.mail.title", "{DATE} — {EVENT}", {
