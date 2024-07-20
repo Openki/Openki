@@ -81,7 +81,7 @@ export function StatsPage() {
           <table className="stats">
             <thead>
               <tr>
-                <th className="course-stat" colSpan={1}>
+                <th className="course-stat" colSpan={2}>
                   {t("region.stats.courses", "Courses")}
                 </th>
                 <th className="event-stat" colSpan={2}>
@@ -92,6 +92,7 @@ export function StatsPage() {
               </tr>
               <tr>
                 <th className="course-stat">{t("region.stats.courses.total", "Total")}</th>
+                <th className="course-stat">{t("region.stats.courses.archived", "Archived")}</th>
                 {/* <th className="course-stat">{t("region.stats.courses.active", "Active")}</th> */}
                 <th className="event-stat">{t("region.stats.events.total", "Total")}</th>
                 {/*   <th className="event-stat">{t("region.stats.events.future", "Future")}</th>
@@ -103,11 +104,15 @@ export function StatsPage() {
                 <td className="course-stat number">
                   {t("region.stats.courses.total.description", "excl. archived")}
                 </td>
+                <td className="course-stat number">&nbsp;</td>
                 <td className="event-stat number">&nbsp;</td>
               </tr>
               <tr>
                 <td className="course-stat number">
                   <strong>{stats.region.courses.total}</strong>
+                </td>
+                <td className="course-stat number">
+                  <strong>{stats.region.courses.archived}</strong>
                 </td>
                 {/* <td className="course-stat numer">
                   <strong>{regionStats.total.activeCourses}</strong>
@@ -130,7 +135,7 @@ export function StatsPage() {
               <thead>
                 <tr>
                   <th>{t("region.stats.group", "Group")}</th>
-                  <th className="course-stat" colSpan={1}>
+                  <th className="course-stat" colSpan={2}>
                     {t("region.stats.courses", "Courses")}
                   </th>
                   <th className="event-stat" colSpan={2}>
@@ -141,6 +146,7 @@ export function StatsPage() {
                 <tr>
                   <th>&nbsp;</th>
                   <th className="course-stat">{t("region.stats.courses.total", "Total")}</th>
+                  <th className="course-stat">{t("region.stats.courses.archived", "Archived")}</th>
                   {/* <th className="course-stat">{t("region.stats.courses.active", "Active")}</th> */}
                   <th className="event-stat">{t("region.stats.events.total", "Total")}</th>
                   {/* <th className="event-stat">{t("region.stats.events.future", "Future")}</th> */}
@@ -153,6 +159,7 @@ export function StatsPage() {
                   <td className="course-stat number">
                     {t("region.stats.courses.total.description", "excl. archived")}
                   </td>
+                  <td className="course-stat number">&nbsp;</td>
                   <td className="event-stat number">&nbsp;</td>
                 </tr>
                 {stats.groups.map((group) => {
@@ -166,6 +173,7 @@ export function StatsPage() {
                         )}
                       </td>
                       <td className="course-stat number">{group.courses.total}</td>
+                      <td className="course-stat number">{group.courses.archived}</td>
                       {/* <td className="course-stat number">{group.activeCourses}</td> */}
                       <td className="event-stat number">{group.events.total}</td>
                       {/* <td className="event-stat number">{group.futureEvents}</td>

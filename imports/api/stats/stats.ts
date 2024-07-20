@@ -7,6 +7,7 @@ import { Groups } from "../groups/groups";
 interface Stat {
   courses: {
     total: number;
+    archived: number;
   };
   events: {
     total: number;
@@ -62,14 +63,15 @@ function calcStats(courses: CourseModel[], events: EventModel[]) {
   return {
     courses: {
       total: courses.filter((c) => !c.archived).length,
+      archived: courses.filter((c) => c.archived).length,
     },
     events: { total: events.length },
   } as Stat;
 }
 
-export async function getRegionStats(region: string) {
-  const courses = await getCourses(region);
-  const events = await getEvents(region);
+export async function getRegionStats(regionId: string) {
+  const courses = await getCourses(regionId);
+  const events = await getEvents(regionId);
   const groups = await getGroups(courses, events);
 
   return {
