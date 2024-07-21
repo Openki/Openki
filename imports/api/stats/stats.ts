@@ -11,6 +11,8 @@ export interface Stat {
     upcoming: number;
     resting: number;
     archived: number;
+    enrolements: number;
+    users: number;
   };
   events: {
     total: number;
@@ -67,8 +69,9 @@ async function getGroups(courses: CourseModel[], events: EventModel[]) {
   });
 }
 
-function calcStats(courses: CourseModel[], events: EventModel[]) {
+function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
   const notArchived = courses.filter((c) => !c.archived);
+  const members = courses.flatMap((c) => c.members);
   return {
     // inspired from courses.findFilter in /imports/api/courses/courses
     courses: {
@@ -77,10 +80,12 @@ function calcStats(courses: CourseModel[], events: EventModel[]) {
       resting: notArchived.filter((c) => c.lastEvent && !c.futureEvents).length,
       upcoming: notArchived.filter((c) => c.futureEvents > 0).length,
       archived: courses.filter((c) => c.archived).length,
+      enrolements: members.flatMap((m) => m.roles).length,
+      users: [...new Set(members.map((m) => m.user))].length,
     },
     // inspired from events.findFilter in /imports/api/events/events
     events: { total: events.length },
-  } as Stat;
+  };
 }
 
 export async function getRegionStats(regionId: string) {
