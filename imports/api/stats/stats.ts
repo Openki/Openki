@@ -18,6 +18,8 @@ export interface Stat {
     total: number;
     future: number;
     passed: number;
+    canceled: number;
+    fullyBooked: number;
   };
 }
 
@@ -92,6 +94,8 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
       total: events.length,
       future: events.filter((e) => e.start > now).length,
       passed: events.filter((e) => e.start <= now).length,
+      canceled: events.filter((e) => e.canceled).length,
+      fullyBooked: events.filter((e) => e.isFullyBooked()).length,
     },
   };
 }
