@@ -19,7 +19,7 @@ function Header() {
   const { t } = useTranslation();
   return (
     <>
-      <th className="course-stat" colSpan={3}>
+      <th className="course-stat" colSpan={5}>
         {t("region.stats.courses", "Courses")}
       </th>
       <th className="event-stat" colSpan={2}>
@@ -37,6 +37,8 @@ function SubHeader() {
     <>
       <th className="course-stat">{t("region.stats.courses.total", "Total")}</th>
       <th className="course-stat">{t("region.stats.courses.proposed", "Proposed")}</th>
+      <th className="course-stat">{t("region.stats.courses.resting", "Resting")}</th>
+      <th className="course-stat">{t("region.stats.courses.upcoming", "Upcoming")}</th>
       <th className="course-stat">{t("region.stats.courses.archived", "Archived")}</th>
       {/* <th className="course-stat">{t("region.stats.courses.active", "Active")}</th> */}
       <th className="event-stat">{t("region.stats.events.total", "Total")}</th>
@@ -56,6 +58,12 @@ function Descriptions() {
       <td className="course-stat number">
         {t("region.stats.courses.proposed.description", "no events")}
       </td>
+      <td className="course-stat number">
+        {t("region.stats.courses.resting.description", "only passed events")}
+      </td>
+      <td className="course-stat number">
+        {t("region.stats.courses.upcoming.description", "with planned event(s)")}
+      </td>
       <td className="course-stat number">&nbsp;</td>
       <td className="event-stat number">&nbsp;</td>
     </>
@@ -67,6 +75,8 @@ function Results({ stat }: { stat: Stat }) {
     <>
       <td className="course-stat number">{stat.courses.total}</td>
       <td className="course-stat number">{stat.courses.proposed}</td>
+      <td className="course-stat number">{stat.courses.resting}</td>
+      <td className="course-stat number">{stat.courses.upcoming}</td>
       <td className="course-stat number">{stat.courses.archived}</td>
       {/* <td className="course-stat number">{group.activeCourses}</td> */}
       <td className="event-stat number">{stat.events.total}</td>
