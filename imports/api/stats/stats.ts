@@ -7,6 +7,7 @@ import { Groups } from "../groups/groups";
 export interface Stat {
   courses: {
     total: number;
+    proposed: number;
     archived: number;
   };
   events: {
@@ -14,7 +15,7 @@ export interface Stat {
   };
 }
 
-export  interface GroupStat extends Stat {
+export interface GroupStat extends Stat {
   id?: string | undefined;
   name?: string | undefined;
 }
@@ -63,6 +64,7 @@ function calcStats(courses: CourseModel[], events: EventModel[]) {
   return {
     courses: {
       total: courses.filter((c) => !c.archived).length,
+      proposed: courses.filter((c) => !c.lastEvent && c.futureEvents === 0).length,
       archived: courses.filter((c) => c.archived).length,
     },
     events: { total: events.length },
@@ -70,17 +72,21 @@ function calcStats(courses: CourseModel[], events: EventModel[]) {
 }
 
 export async function getRegionStats(regionId: string) {
+  // load data into memorie
   const courses = await getCourses(regionId);
   const events = await getEvents(regionId);
   const groups = await getGroups(courses, events);
 
   return {
+    // calc stat for overview over all or one region
     region: calcStats(courses, events),
     groups: [
+      // calc stat for ungrouped
       calcStats(
         courses.filter((c) => !c.groups?.length),
         events.filter((e) => !e.groups?.length && !e.allGroups?.length),
       ),
+      // calc stat for every group
       ...groups.map(
         (g) =>
           ({
