@@ -22,6 +22,7 @@ export interface Stat {
     fullyBooked: number;
     totalRsvps: number;
     futureRsvps: number;
+    users: number;
   };
 }
 
@@ -41,7 +42,10 @@ function getCourses(regionId: string) {
   if (regionId && regionId !== "all") {
     filter.region = regionId;
   }
-  return Courses.find(filter).fetchAsync();
+  return Courses.find(filter, {
+    // Do not load any data into the memory that is not required
+    projection: { name: 0, slug: 0, description: 0, image: 0, customFields: 0, history: 0 },
+  }).fetchAsync();
 }
 
 function getEvents(regionId: string) {
@@ -49,9 +53,13 @@ function getEvents(regionId: string) {
   if (regionId && regionId !== "all") {
     filter.region = regionId;
   }
-  return Events.find(filter).fetchAsync();
+  return Events.find(filter, {
+    // Do not load any data into the memory that is not required
+    projection: { title: 0, slug: 0, description: 0, courseImage: 0 },
+  }).fetchAsync();
 }
 
+/** Get all groups that promotes courses or events */
 async function getGroups(courses: CourseModel[], events: EventModel[]) {
   let groupIds = [];
   groupIds.push(...courses.flatMap((c) => c.groups));
@@ -102,6 +110,7 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
       fullyBooked: events.filter((e) => e.isFullyBooked()).length,
       totalRsvps: events.map((e) => e.numberOfParticipants()).reduce((a, b) => a + b, 0),
       futureRsvps: future.map((e) => e.numberOfParticipants()).reduce((a, b) => a + b, 0),
+      users: [...new Set(future.flatMap((e) => e.participants?.map((p) => p.user) || []))].length,
     },
   };
 }
@@ -132,7 +141,14 @@ export async function getRegionStats(regionId: string) {
             ),
           }) as GroupStat,
       ),
-      // sort groups by number of active users
-    ].sort((a, b) => b.courses.users - a.courses.users),
+    ]
+      // sort groups by number of active users in events
+      //        then by number of active users in courses
+      //        then by number of events
+      //        then by number of courses
+      .sort((a, b) => b.courses.total + b.courses.archived - (a.courses.total + a.courses.archived))
+      .sort((a, b) => b.events.total - a.events.total)
+      .sort((a, b) => b.courses.users - a.courses.users)
+      .sort((a, b) => b.events.users - a.events.users),
   } as Stats;
 }
