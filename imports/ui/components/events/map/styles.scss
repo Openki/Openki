@@ -25,6 +25,7 @@
   background: none;
   border: 0;
   color: $blue;
+  -webkit-text-stroke: 1px #0000003d;
 
   .fa-regular,
   .fa-brands,
@@ -80,7 +81,6 @@
 
 .events-map-location-map .leaflet-marker-icon-pin:hover {
   animation: 0.4s ease-in-out 0s 2 alternate pin-top;
-  z-index: 10000 !important;
 }
 @keyframes pin-top {
   0% {
