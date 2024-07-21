@@ -38,7 +38,7 @@ function SubHeader() {
       <th className="course-stat">{t("region.stats.courses.resting", "Resting")}</th>
       <th className="course-stat">{t("region.stats.courses.upcoming", "Upcoming")}</th>
       <th className="course-stat">{t("region.stats.courses.archived", "Archived")}</th>
-      <th className="course-stat">{t("region.stats.courses.enrolements", "Enrolements")}</th>
+      <th className="course-stat">{t("region.stats.courses.enrollments", "Enrollments")}</th>
       <th className="course-stat">{t("region.stats.courses.users", "Users")}</th>
       <th className="event-stat">{t("region.stats.events.total", "Total")}</th>
       <th className="event-stat">{t("region.stats.events.future", "Future")}</th>
@@ -70,7 +70,7 @@ function Descriptions() {
       </td>
       <td className="course-stat text-center">&nbsp;</td>
       <td className="course-stat text-center">
-        {t("region.stats.courses.enrolements.description", "interested or any role")}
+        {t("region.stats.courses.enrollments.description", "interested or any role")}
       </td>
       <td className="course-stat text-center">
         {t("region.stats.courses.users.description", "unique accounts enrolled")}
@@ -105,7 +105,7 @@ function Results({ stat }: { stat: Stat }) {
       <td className="course-stat number">{stat.courses.resting}</td>
       <td className="course-stat number">{stat.courses.upcoming}</td>
       <td className="course-stat number">{stat.courses.archived}</td>
-      <td className="course-stat number">{stat.courses.enrolements}</td>
+      <td className="course-stat number">{stat.courses.enrollments}</td>
       <td className="course-stat number">{stat.courses.users}</td>
       <td className="event-stat number">{stat.events.total}</td>
       <td className="event-stat number">{stat.events.future}</td>
