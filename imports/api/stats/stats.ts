@@ -11,7 +11,7 @@ export interface Stat {
     upcoming: number;
     resting: number;
     archived: number;
-    enrolements: number;
+    enrollments: number;
     users: number;
   };
   events: {
@@ -108,7 +108,7 @@ function calcStats(courses: CourseModel[], events: EventModel[]): Stat {
       resting: notArchived.filter((c) => c.lastEvent && !c.futureEvents).length,
       upcoming: notArchived.filter((c) => c.futureEvents > 0).length,
       archived: courses.filter((c) => c.archived).length,
-      enrolements: members.flatMap((m) => m.roles).length,
+      enrollments: members.flatMap((m) => m.roles).length,
       users: unique(members.map((m) => m.user)).length,
     },
     // inspired from events.findFilter in /imports/api/events/events
