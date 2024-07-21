@@ -172,16 +172,18 @@ export function StatsPage() {
             <table className="stats">
               <thead>
                 <tr>
-                  <th>{t("region.stats.group", "Group")}</th>
+                  <th colSpan={2}>{t("region.stats.group", "Group")}</th>
                   <Header />
                 </tr>
                 <tr>
                   <th>&nbsp;</th>
+                  <th>{t("region.stats.group.members", "Members")}</th>
                   <SubHeader />
                 </tr>
               </thead>
               <tbody>
                 <tr>
+                  <td>&nbsp;</td>
                   <td>&nbsp;</td>
                   <Descriptions />
                 </tr>
@@ -195,6 +197,7 @@ export function StatsPage() {
                           t("region.stats.ungrouped", "Ungrouped")
                         )}
                       </td>
+                      <td>{group.members}</td>
                       <Results stat={group} />
                     </tr>
                   );
