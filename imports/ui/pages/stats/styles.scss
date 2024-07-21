@@ -25,6 +25,7 @@
   background-color: tint-color($green, 65%);
 }
 
-.stats tbody tr:hover td { 
+/* stylelint-disable-next-line selector-max-compound-selectors */
+.stats tbody tr:hover td {
   background-color: #ffa500 !important;
 }
