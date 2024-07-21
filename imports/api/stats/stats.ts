@@ -20,6 +20,7 @@ export interface Stat {
 export interface GroupStat extends Stat {
   id?: string | undefined;
   name?: string | undefined;
+  members?: number | undefined;
 }
 
 export interface Stats {
@@ -52,14 +53,18 @@ async function getGroups(courses: CourseModel[], events: EventModel[]) {
   const groupEntities = await Groups.find(
     {},
     {
-      projection: { _id: 1, name: 1 },
+      projection: { _id: 1, name: 1, members: 1 },
     },
   ).fetchAsync();
 
-  return groupIds.map((g) => ({
-    id: g,
-    name: groupEntities.find((e) => e._id === g)?.name,
-  }));
+  return groupIds.map((g) => {
+    const group = groupEntities.find((e) => e._id === g);
+    return {
+      id: g,
+      name: group?.name,
+      members: group?.members.length,
+    };
+  });
 }
 
 function calcStats(courses: CourseModel[], events: EventModel[]) {
